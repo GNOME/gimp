@@ -27,7 +27,7 @@
 
 #define PREVIEW_SIZE     400
 
-GtkWidget *make_preview            (void);
+GtkWidget *make_preview            (GimpGfig     *gfig);
 
 void       gfig_pos_enable         (GtkWidget    *widget,
                                     gpointer      data);

@@ -31,6 +31,24 @@
 #define MAX_UNDO         10
 #define MIN_UNDO         1
 
+struct _GimpGfig
+{
+  GimpPlugIn      parent_instance;
+  GtkApplication *app;
+
+  GtkWidget      *top_level_dlg;
+  gboolean        success;
+
+  GtkBuilder     *builder;
+};
+
+#define PLUG_IN_PROC   "plug-in-gfig"
+#define PLUG_IN_BINARY "gfig"
+#define PLUG_IN_ROLE   "gimp-gfig"
+
+#define GIMP_TYPE_GFIG  (gimp_gfig_get_type ())
+G_DECLARE_FINAL_TYPE (GimpGfig, gimp_gfig, GIMP, GFIG, GimpPlugIn)
+
 typedef struct
 {
   gint     gridspacing;
@@ -59,16 +77,16 @@ typedef struct
 
 void       object_start            (GdkPoint *pnt, gint);
 void       object_operation        (GdkPoint *pnt, gint);
-void       object_operation_start  (GdkPoint *pnt, gint shift_down);
+void       object_operation_start  (GimpGfig *gfig,
+                                    GdkPoint *pnt,
+                                    gint shift_down);
 void       object_operation_end    (GdkPoint *pnt, gint);
-void       object_end              (GdkPoint *pnt, gint shift_down);
+void       object_end              (GimpGfig *gfig,
+                                    GdkPoint *pnt,
+                                    gint shift_down);
 
 #define MAX_LOAD_LINE    256
 #define SQ_SIZE 8
-
-#define PLUG_IN_PROC   "plug-in-gfig"
-#define PLUG_IN_BINARY "gfig"
-#define PLUG_IN_ROLE   "gimp-gfig"
 
 extern gint       line_no;
 extern gint       preview_width, preview_height;
@@ -156,7 +174,8 @@ extern GFigContext *gfig_context;
 extern selection_option selopt;
 extern SelectItVals selvals;
 
-void       add_to_all_obj          (GFigObj    *fobj,
+void       add_to_all_obj          (GimpGfig   *gfig,
+                                    GFigObj    *fobj,
                                     GfigObject *obj);
 
 gchar *get_line (gchar *buf,
@@ -193,10 +212,11 @@ GtkWidget *num_sides_widget     (const gchar *d_title,
                                  gint         adj_min,
                                  gint         adj_max);
 
-void    setup_undo              (void);
+void    setup_undo              (GimpGfig    *gfig);
 void    draw_grid_clear         (void);
-void    prepend_to_all_obj      (GFigObj *fobj,
-                                 GList   *nobj);
+void    prepend_to_all_obj      (GimpGfig    *gfig,
+                                 GFigObj     *fobj,
+                                 GList       *nobj);
 
 void    gfig_draw_arc           (gint x,
                                  gint y,
@@ -213,7 +233,8 @@ void    gfig_draw_line          (gint x0,
                                  cairo_t *cr);
 
 void      gfig_paint_callback   (void);
-GFigObj  *gfig_load             (const gchar *filename,
+GFigObj  *gfig_load             (GimpGfig    *gfig,
+                                 const gchar *filename,
                                  const gchar *name);
 void   gfig_name_encode         (gchar *dest,
                                  gchar *src);
@@ -228,7 +249,7 @@ void   save_options             (GString *string);
 
 GString   *gfig_save_as_string     (void);
 gboolean   gfig_save_as_parasite   (void);
-GFigObj   *gfig_load_from_parasite (void);
+GFigObj   *gfig_load_from_parasite (GimpGfig *gfig);
 GFigObj   *gfig_new                (void);
 void       gfig_save_callbk        (void);
 void       paint_layer_fill        (gdouble x1,

@@ -216,7 +216,8 @@ d_ellipse_start (GdkPoint *pnt,
 }
 
 void
-d_ellipse_end (GdkPoint *pnt,
+d_ellipse_end (GimpGfig *gfig,
+               GdkPoint *pnt,
                gboolean  shift_down)
 {
   /* Under control point */
@@ -227,7 +228,7 @@ d_ellipse_end (GdkPoint *pnt,
     }
   else
     {
-      add_to_all_obj (gfig_context->current_obj, obj_creating);
+      add_to_all_obj (gfig, gfig_context->current_obj, obj_creating);
     }
 
   obj_creating = NULL;

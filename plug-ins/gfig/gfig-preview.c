@@ -51,7 +51,8 @@ static GtkWidget *pos_label;       /* XY pos marker */
 
 static void       gfig_preview_realize  (GtkWidget *widget);
 static gboolean   gfig_preview_events   (GtkWidget *widget,
-                                         GdkEvent  *event);
+                                         GdkEvent  *event,
+                                         gpointer   data);
 static gboolean   gfig_preview_draw     (GtkWidget *widget,
                                          cairo_t   *cr);
 
@@ -65,7 +66,7 @@ static void       gfig_pos_update        (gint      x,
 static void       gfig_pos_update_labels (gpointer  data);
 
 GtkWidget *
-make_preview (void)
+make_preview (GimpGfig *gfig)
 {
   GtkWidget *frame;
   GtkWidget *vbox;
@@ -82,7 +83,7 @@ make_preview (void)
 
   g_signal_connect (gfig_context->preview , "event",
                     G_CALLBACK (gfig_preview_events),
-                    NULL);
+                    gfig);
 
   g_signal_connect_after (gfig_context->preview , "draw",
                           G_CALLBACK (gfig_preview_draw),
@@ -179,7 +180,8 @@ gfig_preview_draw (GtkWidget *widget,
 
 static gboolean
 gfig_preview_events (GtkWidget *widget,
-                     GdkEvent  *event)
+                     GdkEvent  *event,
+                     gpointer   data)
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
@@ -203,7 +205,8 @@ gfig_preview_events (GtkWidget *widget,
               point.x = gfig_invscale_x (point.x);
               point.y = gfig_invscale_y (point.y);
             }
-          object_operation_start (&point, bevent->state & GDK_SHIFT_MASK);
+          object_operation_start (GIMP_GFIG (data), &point,
+                                  bevent->state & GDK_SHIFT_MASK);
 
           /* If constraining save start pnt */
           if (selvals.opts.snap2grid)
@@ -248,7 +251,7 @@ gfig_preview_events (GtkWidget *widget,
         {
           if (obj_creating)
             {
-              object_end (&point, bevent->state & GDK_SHIFT_MASK);
+              object_end (GIMP_GFIG (data), &point, bevent->state & GDK_SHIFT_MASK);
             }
           else
             break;

@@ -141,24 +141,38 @@ static GtkWidget      *tool_options_notebook;
 static GtkWidget      *fill_type_notebook;
 static guint           paint_timeout   = 0;
 
-static GtkActionGroup *gfig_actions    = NULL;
-
+static void       shape_change_state         (GSimpleAction *action,
+                                              GVariant      *new_state,
+                                              gpointer       user_data);
 
 static void       gfig_response              (GtkWidget *widget,
                                               gint       response_id,
                                               gpointer   data);
-static void       gfig_load_action_callback  (GtkAction *action,
-                                              gpointer   data);
-static void       gfig_save_action_callback  (GtkAction *action,
-                                              gpointer   data);
+static void       gfig_load_action           (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer       user_data);
+static void       gfig_save_action           (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer       user_data);
 static void       gfig_list_load_all         (const gchar *path);
 static void       gfig_list_free_all         (void);
 static void       create_notebook_pages      (GtkWidget *notebook);
 static void       select_filltype_callback   (GtkWidget *widget);
-static void       gfig_grid_action_callback  (GtkAction *action,
-                                              gpointer   data);
-static void       gfig_prefs_action_callback (GtkAction *action,
-                                              gpointer   data);
+static void       gfig_close_action          (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer       user_data);
+static void       gfig_undo_action           (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer       user_data);
+static void       gfig_clear_action          (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer       user_data);
+static void       gfig_grid_action           (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer       user_data);
+static void       gfig_prefs_action          (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer       user_data);
 static void       toggle_show_image          (void);
 static void       gridtype_combo_callback    (GtkWidget *widget,
                                               gpointer data);
@@ -173,39 +187,79 @@ static void     paint_combo_callback         (GtkWidget *widget,
                                               gpointer   data);
 
 static void     select_button_clicked        (gint       type);
-static void     select_button_clicked_lt     (void);
-static void     select_button_clicked_gt     (void);
-static void     select_button_clicked_eq     (void);
-static void     raise_selected_obj_to_top    (GtkWidget *widget,
-                                              gpointer   data);
-static void     lower_selected_obj_to_bottom (GtkWidget *widget,
-                                              gpointer   data);
-static void     raise_selected_obj           (GtkWidget *widget,
-                                              gpointer   data);
-static void     lower_selected_obj           (GtkWidget *widget,
-                                              gpointer   data);
+static void     select_button_clicked_lt     (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer       user_data);
+static void     select_button_clicked_gt     (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer       user_data);
+static void     select_button_clicked_eq     (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer       user_data);
+static void     raise_selected_obj_to_top    (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer       user_data);
+static void     lower_selected_obj_to_bottom (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer       user_data);
+static void     raise_selected_obj           (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer       user_data);
+static void     lower_selected_obj           (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer       user_data);
 
-static void     toggle_obj_type              (GtkRadioAction *action,
-                                              GtkRadioAction *current,
-                                              gpointer        data);
-
-static GtkUIManager *create_ui_manager       (GtkWidget *window);
+static void     toggle_obj_type              (DobjType   new_type);
 
 static void   gfig_scale_entry_update_double (GimpLabelSpin  *entry,
                                               gdouble        *value);
 static void   gfig_scale_entry_update_int    (GimpLabelSpin  *entry,
                                               gint           *value);
 
+/* GAction helper methods */
+static GtkWidget * add_tool_button            (GtkWidget     *toolbar,
+                                               const char    *action,
+                                               const char    *icon,
+                                               const char    *label,
+                                               const char    *tooltip);
+static void        add_tool_separator         (GtkWidget     *toolbar,
+                                               gboolean       expand);
+
+static const GActionEntry ACTIONS[] =
+{
+  /* Sub-menu options */
+  { "open", gfig_load_action },
+  { "save", gfig_save_action },
+  { "close", gfig_close_action },
+  { "undo", gfig_undo_action },
+  { "clear", gfig_clear_action },
+  { "grid", gfig_grid_action },
+  { "preferences", gfig_prefs_action },
+
+  /* Toolbar buttons */
+  { "raise", raise_selected_obj },
+  { "lower", lower_selected_obj },
+  { "top", raise_selected_obj_to_top },
+  { "bottom", lower_selected_obj_to_bottom },
+  { "show-prev", select_button_clicked_lt },
+  { "show-next", select_button_clicked_gt },
+  { "show-all", select_button_clicked_eq },
+
+  /* RadioButtons - only the default state is shown here. */
+  { "shape", shape_change_state, "s", "'line'", NULL },
+};
 
 gboolean
-gfig_dialog (void)
+gfig_dialog (GimpGfig *gfig)
 {
+  GAction      *action;
   GtkWidget    *main_hbox;
   GtkWidget    *vbox;
-  GFigObj      *gfig;
+  GFigObj      *gfig_obj;
   GimpParasite *parasite;
   GimpLayer    *newlayer;
   GtkWidget    *menubar;
+  GMenuModel   *model;
   GtkWidget    *toolbar;
   GtkWidget    *combo;
   GtkWidget    *frame;
@@ -215,7 +269,6 @@ gfig_dialog (void)
   GtkWidget    *toggle;
   GtkWidget    *right_vbox;
   GtkWidget    *hbox;
-  GtkUIManager *ui_manager;
   GtkWidget    *empty_label;
   gchar        *path;
 
@@ -289,48 +342,102 @@ gfig_dialog (void)
     }
 
   /* Start building the dialog up */
-  top_level_dlg = gimp_dialog_new (_("Gfig"), PLUG_IN_ROLE,
-                                   NULL, 0,
-                                   gimp_standard_help_func, PLUG_IN_PROC,
+  gfig->top_level_dlg = gimp_dialog_new (_("Gfig"), PLUG_IN_ROLE,
+                                         NULL, 0,
+                                         gimp_standard_help_func, PLUG_IN_PROC,
 
-                                   _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                   _("_Close"),  GTK_RESPONSE_OK,
+                                         _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                         _("_Close"),  GTK_RESPONSE_OK,
 
-                                   NULL);
+                                         NULL);
 
-  gimp_window_set_transient (GTK_WINDOW (top_level_dlg));
+  gtk_window_set_application (GTK_WINDOW (gfig->top_level_dlg), gfig->app);
+  gimp_window_set_transient (GTK_WINDOW (gfig->top_level_dlg));
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (top_level_dlg),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (gfig->top_level_dlg),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  g_signal_connect (top_level_dlg, "response",
+  g_signal_connect (gfig->top_level_dlg, "response",
                     G_CALLBACK (gfig_response),
-                    top_level_dlg);
+                    gfig);
 
   /* build the menu */
-  ui_manager = create_ui_manager (top_level_dlg);
-  menubar = gtk_ui_manager_get_widget (ui_manager, "/ui/gfig-menubar");
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (top_level_dlg))),
+  g_action_map_add_action_entries (G_ACTION_MAP (gfig->app),
+                                   ACTIONS, G_N_ELEMENTS (ACTIONS),
+                                   gfig);
+
+  model = G_MENU_MODEL (gtk_builder_get_object (gfig->builder, "gfig-menubar"));
+  menubar = gtk_menu_bar_new_from_model (model);
+
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (gfig->top_level_dlg))),
                       menubar, FALSE, FALSE, 0);
   gtk_widget_show (menubar);
-  toolbar = gtk_ui_manager_get_widget (ui_manager, "/ui/gfig-toolbar");
-  gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (top_level_dlg))),
+
+  toolbar = gtk_toolbar_new ();
+  add_tool_button (toolbar, "app.shape::line", GFIG_ICON_LINE,
+                   _("Line"), _("Create line"));
+  add_tool_button (toolbar, "app.shape::rectangle", GFIG_ICON_RECTANGLE,
+                   _("Rectangle"), _("Create rectangle"));
+  add_tool_button (toolbar, "app.shape::circle", GFIG_ICON_CIRCLE,
+                   _("Circle"), _("Create circle"));
+  add_tool_button (toolbar, "app.shape::ellipse", GFIG_ICON_ELLIPSE,
+                   _("Ellipse"), _("Create ellipse"));
+  add_tool_button (toolbar, "app.shape::arc", GFIG_ICON_CURVE,
+                   _("Arc"), _("Create arc"));
+  add_tool_button (toolbar, "app.shape::polygon", GFIG_ICON_POLYGON,
+                   _("Polygon"), _("Create reg polygon"));
+  add_tool_button (toolbar, "app.shape::star", GFIG_ICON_STAR,
+                   _("Star"), _("Create star"));
+  add_tool_button (toolbar, "app.shape::spiral", GFIG_ICON_SPIRAL,
+                   _("Spiral"), _("Create spiral"));
+  add_tool_button (toolbar, "app.shape::bezier", GFIG_ICON_BEZIER,
+                   _("Bezier"), _("Create bezier curve. "
+                           "Shift + Button ends object creation."));
+  add_tool_button (toolbar, "app.shape::move-obj", GFIG_ICON_MOVE_OBJECT,
+                   _("Move Object"), _("Move an object"));
+  add_tool_button (toolbar, "app.shape::move-point", GFIG_ICON_MOVE_POINT,
+                   _("Move Point"), _("Move a single point"));
+  add_tool_button (toolbar, "app.shape::copy", GFIG_ICON_COPY_OBJECT,
+                   _("Copy"), _("Copy an object"));
+  add_tool_button (toolbar, "app.shape::delete", GFIG_ICON_DELETE_OBJECT,
+                   _("Delete"), _("Delete an object"));
+  add_tool_button (toolbar, "app.shape::select", GFIG_ICON_SELECT_OBJECT,
+                   _("Select"), _("Select an object"));
+  add_tool_separator (toolbar, FALSE);
+  add_tool_button (toolbar, "app.raise", GIMP_ICON_GO_UP,
+                   _("Raise"), _("Raise selected object"));
+  add_tool_button (toolbar, "app.lower", GIMP_ICON_GO_DOWN,
+                   _("Lower"), _("Lower selected object"));
+  add_tool_button (toolbar, "app.raise", GIMP_ICON_GO_TOP,
+                   _("To Top"), _("Raise selected object to top"));
+  add_tool_button (toolbar, "app.lower", GIMP_ICON_GO_BOTTOM,
+                   _("To Bottom"), _("Lower selected object to bottom"));
+  add_tool_separator (toolbar, FALSE);
+  add_tool_button (toolbar, "app.show-prev", GIMP_ICON_GO_PREVIOUS,
+                   _("Show Previous"), _("Show previous object"));
+  add_tool_button (toolbar, "app.show-next", GIMP_ICON_GO_NEXT,
+                   _("Show Next"), _("Show next object"));
+  add_tool_button (toolbar, "app.show-all", GFIG_ICON_SHOW_ALL,
+                   _("Show All"), _("Show all object"));
+
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (gfig->top_level_dlg))),
                       toolbar, FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
 
-  gfig_dialog_action_set_sensitive ("undo", undo_level >= 0);
+  action = g_action_map_lookup_action (G_ACTION_MAP (gfig->app), "undo");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                               undo_level >= 0);
 
   /* Main box */
   main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
-  gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (top_level_dlg))),
+  gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (gfig->top_level_dlg))),
                     main_hbox, TRUE, TRUE, 0);
 
   /* Preview itself */
-  gtk_box_pack_start (GTK_BOX (main_hbox), make_preview (), FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_hbox), make_preview (gfig), FALSE, FALSE, 0);
 
   gtk_widget_show (gfig_context->preview);
 
@@ -526,13 +633,13 @@ gfig_dialog (void)
 
   gtk_widget_show (main_hbox);
 
-  gtk_widget_show (top_level_dlg);
+  gtk_widget_show (gfig->top_level_dlg);
 
-  gfig = gfig_load_from_parasite ();
-  if (gfig)
+  gfig_obj = gfig_load_from_parasite (gfig);
+  if (gfig_obj)
     {
-      gfig_list_insert (gfig);
-      new_obj_2edit (gfig);
+      gfig_list_insert (gfig_obj);
+      new_obj_2edit (gfig, gfig_obj);
       gfig_style_set_context_from_style (&gfig_context->default_style);
       gfig_style_apply (&gfig_context->default_style);
     }
@@ -540,10 +647,52 @@ gfig_dialog (void)
   gfig_context->enable_repaint = TRUE;
   gfig_paint_callback ();
 
-  gtk_main ();
-
   /* FIXME */
   return TRUE;
+}
+
+static void shape_change_state (GSimpleAction *action,
+                                GVariant      *new_state,
+                                gpointer       user_data)
+{
+  gchar    *str;
+  DobjType  new_type = LINE;
+
+  str = g_strdup_printf ("%s",  g_variant_get_string (new_state, NULL));
+
+  if (! strcmp (str, "line"))
+    new_type = LINE;
+  else if (! strcmp (str, "rectangle"))
+    new_type = RECTANGLE;
+  else if (! strcmp (str, "circle"))
+    new_type = CIRCLE;
+  else if (! strcmp (str, "ellipse"))
+    new_type = ELLIPSE;
+  else if (! strcmp (str, "arc"))
+    new_type = ARC;
+  else if (! strcmp (str, "polygon"))
+    new_type = POLY;
+  else if (! strcmp (str, "star"))
+    new_type = STAR;
+  else if (! strcmp (str, "spiral"))
+    new_type = SPIRAL;
+  else if (! strcmp (str, "bezier"))
+    new_type = BEZIER;
+  else if (! strcmp (str, "move-obj"))
+    new_type = MOVE_OBJ;
+  else if (! strcmp (str, "move-point"))
+    new_type = MOVE_POINT;
+  else if (! strcmp (str, "copy"))
+    new_type = COPY_OBJ;
+  else if (! strcmp (str, "delete"))
+    new_type = DEL_OBJ;
+  else if (! strcmp (str, "select"))
+    new_type = SELECT_OBJ;
+
+  g_free (str);
+
+  g_simple_action_set_state (action, new_state);
+  toggle_obj_type (new_type);
 }
 
 static void
@@ -551,7 +700,7 @@ gfig_response (GtkWidget *widget,
                gint       response_id,
                gpointer   data)
 {
-  GFigObj *gfig;
+  GFigObj *gfig_obj;
 
   switch (response_id)
     {
@@ -567,11 +716,11 @@ gfig_response (GtkWidget *widget,
         {
           free_all_objs (gfig_context->current_obj->obj_list);
           gfig_context->current_obj->obj_list = NULL;
-          gfig = gfig_load_from_parasite ();
-          if (gfig)
+          gfig_obj = gfig_load_from_parasite (GIMP_GFIG (data));
+          if (gfig_obj)
             {
-              gfig_list_insert (gfig);
-              new_obj_2edit (gfig);
+              gfig_list_insert (gfig_obj);
+              new_obj_2edit (GIMP_GFIG (data), gfig_obj);
             }
           gfig_context->enable_repaint = TRUE;
           gfig_paint_callback ();
@@ -586,30 +735,8 @@ gfig_response (GtkWidget *widget,
       break;
     }
 
-  gtk_widget_destroy (widget);
-  gtk_main_quit ();
-}
-
-void
-gfig_dialog_action_set_sensitive (const gchar *name,
-                                  gboolean     sensitive)
-{
-  g_return_if_fail (name != NULL);
-
-  if (gfig_actions)
-    {
-      GtkAction *action = gtk_action_group_get_action (gfig_actions, name);
-
-      if (! action)
-        {
-          g_warning ("%s: Unable to set sensitivity of action "
-                     "which doesn't exist: %s",
-                     G_STRFUNC, name);
-          return;
-        }
-
-      g_object_set (action, "sensitive", sensitive ? TRUE : FALSE, NULL);
-    }
+  gtk_application_remove_window ((GIMP_GFIG (data))->app,
+                                 GTK_WINDOW ((GIMP_GFIG (data))->top_level_dlg));
 }
 
 static gchar *
@@ -631,8 +758,9 @@ gfig_get_user_writable_dir (void)
 }
 
 static void
-gfig_load_action_callback (GtkAction *action,
-                           gpointer   data)
+gfig_load_action (GSimpleAction *action,
+                  GVariant      *parameter,
+                  gpointer       user_data)
 {
   static GtkWidget *dialog = NULL;
 
@@ -642,7 +770,7 @@ gfig_load_action_callback (GtkAction *action,
 
       dialog =
         gtk_file_chooser_dialog_new (_("Load Gfig Object Collection"),
-                                     GTK_WINDOW (data),
+                                     NULL,
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 
                                      _("_Cancel"), GTK_RESPONSE_CANCEL,
@@ -661,7 +789,7 @@ gfig_load_action_callback (GtkAction *action,
 
       g_signal_connect (dialog, "response",
                         G_CALLBACK (load_file_chooser_response),
-                        NULL);
+                        user_data);
 
       dir = gfig_get_user_writable_dir ();
       if (dir)
@@ -680,8 +808,9 @@ gfig_load_action_callback (GtkAction *action,
 }
 
 static void
-gfig_save_action_callback (GtkAction *action,
-                           gpointer   data)
+gfig_save_action (GSimpleAction *action,
+                  GVariant      *parameter,
+                  gpointer       user_data)
 {
   static GtkWidget *dialog = NULL;
 
@@ -691,7 +820,7 @@ gfig_save_action_callback (GtkAction *action,
 
       dialog =
         gtk_file_chooser_dialog_new (_("Save Gfig Drawing"),
-                                     GTK_WINDOW (data),
+                                     NULL,
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
 
                                      _("_Cancel"), GTK_RESPONSE_CANCEL,
@@ -733,16 +862,23 @@ gfig_save_action_callback (GtkAction *action,
 }
 
 static void
-gfig_close_action_callback (GtkAction *action,
-                            gpointer   data)
+gfig_close_action (GSimpleAction *action,
+                   GVariant      *parameter,
+                   gpointer       user_data)
 {
-  gtk_dialog_response (GTK_DIALOG (data), GTK_RESPONSE_OK);
+  GimpGfig *gfig = GIMP_GFIG (user_data);
+
+  gtk_dialog_response (GTK_DIALOG (gfig->top_level_dlg), GTK_RESPONSE_OK);
 }
 
 static void
-gfig_undo_action_callback (GtkAction *action,
-                           gpointer   data)
+gfig_undo_action (GSimpleAction *action,
+                  GVariant      *parameter,
+                  gpointer       user_data)
 {
+  GAction  *action_undo;
+  GimpGfig *gfig = GIMP_GFIG (user_data);
+
   if (undo_level >= 0)
     {
       /* Free current objects an reinstate previous */
@@ -761,19 +897,23 @@ gfig_undo_action_callback (GtkAction *action,
         gfig_context->selected_obj = NULL;
     }
 
-  gfig_dialog_action_set_sensitive ("undo", undo_level >= 0);
+  action_undo = g_action_map_lookup_action (G_ACTION_MAP (gfig->app), "undo");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action_undo),
+                               undo_level >= 0);
+
   gfig_paint_callback ();
 }
 
 static void
-gfig_clear_action_callback (GtkWidget *widget,
-                          gpointer   data)
+gfig_clear_action (GSimpleAction *action,
+                   GVariant      *parameter,
+                   gpointer       user_data)
 {
   /* Make sure we can get back - if we have some objects to get back to */
   if (!gfig_context->current_obj->obj_list)
     return;
 
-  setup_undo ();
+  setup_undo (GIMP_GFIG (user_data));
   /* Free all objects */
   free_all_objs (gfig_context->current_obj->obj_list);
   gfig_context->current_obj->obj_list = NULL;
@@ -868,193 +1008,6 @@ gfig_list_free_all (void)
   gfig_list = NULL;
 }
 
-static GtkUIManager *
-create_ui_manager (GtkWidget *window)
-{
-  static GtkActionEntry actions[] =
-  {
-    { "gfig-menubar", NULL, "GFig Menu" },
-
-    { "gfig-file-menu", NULL, "_File" },
-
-    { "open", GIMP_ICON_DOCUMENT_OPEN,
-      N_("_Open..."), "<control>O", NULL,
-      G_CALLBACK (gfig_load_action_callback) },
-
-    { "save", GIMP_ICON_DOCUMENT_SAVE,
-      N_("_Save..."), "<control>S", NULL,
-      G_CALLBACK (gfig_save_action_callback) },
-
-    { "close", GIMP_ICON_CLOSE,
-      N_("_Close"), "<control>C", NULL,
-      G_CALLBACK (gfig_close_action_callback) },
-
-    { "gfig-edit-menu", NULL, "_Edit" },
-
-    { "undo", GIMP_ICON_EDIT_UNDO,
-      N_("_Undo"), "<control>Z", NULL,
-      G_CALLBACK (gfig_undo_action_callback) },
-
-    { "clear", GIMP_ICON_EDIT_CLEAR,
-      N_("_Clear"), NULL, NULL,
-      G_CALLBACK (gfig_clear_action_callback) },
-
-    { "grid", GIMP_ICON_GRID,
-      N_("_Grid"), "<control>G", NULL,
-      G_CALLBACK (gfig_grid_action_callback) },
-
-    { "prefs", GIMP_ICON_PREFERENCES_SYSTEM,
-      N_("_Preferences..."), "<control>P", NULL,
-      G_CALLBACK (gfig_prefs_action_callback) },
-
-    { "raise", GIMP_ICON_GO_UP,
-      N_("_Raise"), "<control>U", N_("Raise selected object"),
-      G_CALLBACK (raise_selected_obj) },
-
-    { "lower", GIMP_ICON_GO_DOWN,
-      N_("_Lower"), "<control>D", N_("Lower selected object"),
-      G_CALLBACK (lower_selected_obj) },
-
-    { "top", GIMP_ICON_GO_TOP,
-      N_("Raise to _top"), "<control>T", N_("Raise selected object to top"),
-      G_CALLBACK (raise_selected_obj_to_top) },
-
-    { "bottom", GIMP_ICON_GO_BOTTOM,
-      N_("Lower to _bottom"), "<control>B", N_("Lower selected object to bottom"),
-      G_CALLBACK (lower_selected_obj_to_bottom) },
-
-    { "show_previous", GIMP_ICON_GO_PREVIOUS,
-      N_("_Previous"), "<control>H", N_("Show previous object"),
-      G_CALLBACK (select_button_clicked_lt) },
-
-    { "show_next", GIMP_ICON_GO_NEXT,
-      N_("_Next"), "<control>L", N_("Show next object"),
-      G_CALLBACK (select_button_clicked_gt) },
-
-    { "show_all", GFIG_ICON_SHOW_ALL,
-      N_("Show _all"), "<control>A", N_("Show all objects"),
-      G_CALLBACK (select_button_clicked_eq) }
-  };
-  static GtkRadioActionEntry radio_actions[] =
-  {
-    { "line", GFIG_ICON_LINE,
-      NULL, "L", N_("Create line"), LINE },
-
-    { "rectangle", GFIG_ICON_RECTANGLE,
-      NULL, "R", N_("Create rectangle"), RECTANGLE },
-
-    { "circle", GFIG_ICON_CIRCLE,
-      NULL, "C", N_("Create circle"), CIRCLE },
-
-    { "ellipse", GFIG_ICON_ELLIPSE,
-      NULL, "E", N_("Create ellipse"), ELLIPSE },
-
-    { "arc", GFIG_ICON_CURVE,
-      NULL, "A", N_("Create arc"), ARC },
-
-    { "polygon", GFIG_ICON_POLYGON,
-      NULL, "P", N_("Create reg polygon"), POLY },
-
-    { "star", GFIG_ICON_STAR,
-      NULL, "S", N_("Create star"), STAR },
-
-    { "spiral", GFIG_ICON_SPIRAL,
-       NULL, "I", N_("Create spiral"), SPIRAL },
-
-    { "bezier", GFIG_ICON_BEZIER,
-      NULL, "B", N_("Create bezier curve. "
-                    "Shift + Button ends object creation."), BEZIER },
-
-    { "move_obj", GFIG_ICON_MOVE_OBJECT,
-      NULL, "M", N_("Move an object"), MOVE_OBJ },
-
-    { "move_point", GFIG_ICON_MOVE_POINT,
-      NULL, "V", N_("Move a single point"), MOVE_POINT },
-
-    { "copy", GFIG_ICON_COPY_OBJECT,
-      NULL, "Y", N_("Copy an object"), COPY_OBJ },
-
-    { "delete", GFIG_ICON_DELETE_OBJECT,
-      NULL, "D", N_("Delete an object"), DEL_OBJ },
-
-    { "select", GFIG_ICON_SELECT_OBJECT,
-      NULL, "A", N_("Select an object"), SELECT_OBJ }
-  };
-
-  GtkUIManager   *ui_manager = gtk_ui_manager_new ();
-
-  gfig_actions = gtk_action_group_new ("Actions");
-
-  gtk_action_group_set_translation_domain (gfig_actions, NULL);
-
-  gtk_action_group_add_actions (gfig_actions,
-                                actions,
-                                G_N_ELEMENTS (actions),
-                                window);
-  gtk_action_group_add_radio_actions (gfig_actions,
-                                      radio_actions,
-                                      G_N_ELEMENTS (radio_actions),
-                                      LINE,
-                                      G_CALLBACK (toggle_obj_type),
-                                      window);
-
-  gtk_window_add_accel_group (GTK_WINDOW (window),
-                              gtk_ui_manager_get_accel_group (ui_manager));
-  gtk_accel_group_lock (gtk_ui_manager_get_accel_group (ui_manager));
-
-  gtk_ui_manager_insert_action_group (ui_manager, gfig_actions, -1);
-  g_object_unref (gfig_actions);
-
-  gtk_ui_manager_add_ui_from_string (ui_manager,
-                                     "<ui>"
-                                     "  <menubar name=\"gfig-menubar\">"
-                                     "    <menu name=\"File\" action=\"gfig-file-menu\">"
-                                     "      <menuitem action=\"open\" />"
-                                     "      <menuitem action=\"save\" />"
-                                     "      <menuitem action=\"close\" />"
-                                     "    </menu>"
-                                     "    <menu name=\"Edit\" action=\"gfig-edit-menu\">"
-                                     "      <menuitem action=\"undo\" />"
-                                     "      <menuitem action=\"clear\" />"
-                                     "      <menuitem action=\"grid\" />"
-                                     "      <menuitem action=\"prefs\" />"
-                                     "    </menu>"
-                                     "  </menubar>"
-                                     "</ui>",
-                                     -1, NULL);
-  gtk_ui_manager_add_ui_from_string (ui_manager,
-                                     "<ui>"
-                                     "  <toolbar name=\"gfig-toolbar\">"
-                                     "    <toolitem action=\"line\" />"
-                                     "    <toolitem action=\"rectangle\" />"
-                                     "    <toolitem action=\"circle\" />"
-                                     "    <toolitem action=\"ellipse\" />"
-                                     "    <toolitem action=\"arc\" />"
-                                     "    <toolitem action=\"polygon\" />"
-                                     "    <toolitem action=\"star\" />"
-                                     "    <toolitem action=\"spiral\" />"
-                                     "    <toolitem action=\"bezier\" />"
-                                     "    <toolitem action=\"move_obj\" />"
-                                     "    <toolitem action=\"move_point\" />"
-                                     "    <toolitem action=\"copy\" />"
-                                     "    <toolitem action=\"delete\" />"
-                                     "    <toolitem action=\"select\" />"
-                                     "    <separator />"
-                                     "    <toolitem action=\"raise\" />"
-                                     "    <toolitem action=\"lower\" />"
-                                     "    <toolitem action=\"top\" />"
-                                     "    <toolitem action=\"bottom\" />"
-                                     "    <separator />"
-                                     "    <toolitem action=\"show_previous\" />"
-                                     "    <toolitem action=\"show_next\" />"
-                                     "    <toolitem action=\"show_all\" />"
-                                     "  </toolbar>"
-                                     "</ui>",
-                                     -1, NULL);
-
-  return ui_manager;
-}
-
 static void
 tool_option_no_option (GtkWidget *notebook)
 {
@@ -1085,8 +1038,9 @@ create_notebook_pages (GtkWidget *notebook)
 }
 
 static void
-raise_selected_obj_to_top (GtkWidget *widget,
-                           gpointer   data)
+raise_selected_obj_to_top (GSimpleAction *action,
+                           GVariant      *parameter,
+                           gpointer       user_data)
 {
   if (!gfig_context->selected_obj)
     return;
@@ -1111,8 +1065,9 @@ raise_selected_obj_to_top (GtkWidget *widget,
 }
 
 static void
-lower_selected_obj_to_bottom (GtkWidget *widget,
-                              gpointer   data)
+lower_selected_obj_to_bottom (GSimpleAction *action,
+                              GVariant      *parameter,
+                              gpointer       user_data)
 {
   if (!gfig_context->selected_obj)
     return;
@@ -1137,8 +1092,9 @@ lower_selected_obj_to_bottom (GtkWidget *widget,
 }
 
 static void
-raise_selected_obj (GtkWidget *widget,
-                    gpointer   data)
+raise_selected_obj (GSimpleAction *action,
+                    GVariant      *parameter,
+                    gpointer       user_data)
 {
   if (!gfig_context->selected_obj)
     return;
@@ -1169,8 +1125,9 @@ raise_selected_obj (GtkWidget *widget,
 
 
 static void
-lower_selected_obj (GtkWidget *widget,
-                    gpointer   data)
+lower_selected_obj (GSimpleAction *action,
+                    GVariant      *parameter,
+                    gpointer       user_data)
 {
   if (!gfig_context->selected_obj)
     return;
@@ -1235,8 +1192,9 @@ gfig_paint_delayed (void)
 }
 
 static void
-gfig_prefs_action_callback (GtkAction *widget,
-                            gpointer   data)
+gfig_prefs_action (GSimpleAction *action,
+                   GVariant      *parameter,
+                   gpointer       user_data)
 {
   static GtkWidget *dialog = NULL;
 
@@ -1250,7 +1208,7 @@ gfig_prefs_action_callback (GtkAction *widget,
       GtkAdjustment *scale_data;
 
       dialog = gimp_dialog_new (_("Options"), "gimp-gfig-options",
-                                GTK_WIDGET (data), 0, NULL, NULL,
+                                NULL, 0, NULL, NULL,
 
                                 _("_Close"),  GTK_RESPONSE_CLOSE,
 
@@ -1378,8 +1336,9 @@ gfig_prefs_action_callback (GtkAction *widget,
 }
 
 static void
-gfig_grid_action_callback (GtkAction *action,
-                           gpointer   data)
+gfig_grid_action (GSimpleAction *action,
+                  GVariant      *parameter,
+                  gpointer       user_data)
 {
   static GtkWidget *dialog = NULL;
 
@@ -1394,7 +1353,7 @@ gfig_grid_action_callback (GtkAction *action,
       GtkWidget *radius_scale;
 
       dialog = gimp_dialog_new (_("Grid"), "gimp-gfig-grid",
-                                GTK_WIDGET (data), 0, NULL, NULL,
+                                NULL, 0, NULL, NULL,
 
                                 _("_Close"),  GTK_RESPONSE_CLOSE,
 
@@ -1690,19 +1649,25 @@ select_button_clicked (gint type)
 }
 
 static void
-select_button_clicked_lt (void)
+select_button_clicked_lt (GSimpleAction *action,
+                          GVariant      *parameter,
+                          gpointer       user_data)
 {
   select_button_clicked (OBJ_SELECT_LT);
 }
 
 static void
-select_button_clicked_gt (void)
+select_button_clicked_gt (GSimpleAction *action,
+                          GVariant      *parameter,
+                          gpointer       user_data)
 {
   select_button_clicked (OBJ_SELECT_GT);
 }
 
 static void
-select_button_clicked_eq (void)
+select_button_clicked_eq (GSimpleAction *action,
+                          GVariant      *parameter,
+                          gpointer       user_data)
 {
   select_button_clicked (OBJ_SELECT_EQ);
 }
@@ -1862,7 +1827,7 @@ load_file_chooser_response (GtkFileChooser *chooser,
   if (response_id == GTK_RESPONSE_OK)
     {
       gchar   *filename;
-      GFigObj *gfig;
+      GFigObj *gfig_obj;
       GFigObj *current_saved;
 
       filename = gtk_file_chooser_get_filename (chooser);
@@ -1874,17 +1839,17 @@ load_file_chooser_response (GtkFileChooser *chooser,
            */
           current_saved = gfig_context->current_obj;
           gfig_context->current_obj = NULL;
-          gfig = gfig_load (filename, filename);
+          gfig_obj = gfig_load (GIMP_GFIG (data), filename, filename);
           gfig_context->current_obj = current_saved;
 
-          if (gfig)
+          if (gfig_obj)
             {
               /* Read only ?*/
               if (access (filename, W_OK))
-                gfig->obj_status |= GFIG_READONLY;
+                gfig_obj->obj_status |= GFIG_READONLY;
 
-              gfig_list_insert (gfig);
-              new_obj_2edit (gfig);
+              gfig_list_insert (gfig_obj);
+              new_obj_2edit (GIMP_GFIG (data), gfig_obj);
             }
         }
 
@@ -2030,21 +1995,17 @@ toggle_show_image (void)
 }
 
 static void
-toggle_obj_type (GtkRadioAction *action,
-                 GtkRadioAction *current,
-                 gpointer        data)
+toggle_obj_type (DobjType new_type)
 {
   /* cache of cursors.
-   * Must be larger than action values, i.e. NULL_OPER.
+   * Must be larger than DobjType values, i.e. NULL_OPER.
    * Test by clicking the "select object" icon.
    * C ensures is initialized to NULL.
    */
   static GdkCursor *p_cursors[NULL_OPER];
 
   GdkCursorType     ctype = GDK_LAST_CURSOR;
-  DobjType          new_type;
 
-  new_type = gtk_radio_action_get_current_value (action);
   if (selvals.otype != new_type)
     {
       /* Mem leak */
@@ -2221,4 +2182,39 @@ gfig_scale_entry_update_int (GimpLabelSpin *entry,
                              gint          *value)
 {
   *value = (gint) gimp_label_spin_get_value (entry);
+}
+
+static GtkWidget *
+add_tool_button (GtkWidget  *toolbar,
+                 const char *action,
+                 const char *icon,
+                 const char *label,
+                 const char *tooltip)
+{
+  GtkWidget   *tool_icon;
+  GtkToolItem *tool_button;
+
+  tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (GTK_WIDGET (tool_icon));
+  tool_button = gtk_tool_button_new (tool_icon, label);
+  gtk_widget_show (GTK_WIDGET (tool_button));
+  gtk_tool_item_set_tooltip_text (tool_button, tooltip);
+  gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (tool_button), action);
+
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), tool_button, -1);
+
+  return GTK_WIDGET (tool_button);
+}
+
+static void
+add_tool_separator (GtkWidget *toolbar,
+                    gboolean   expand)
+{
+  GtkToolItem *item;
+
+  item = gtk_separator_tool_item_new ();
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
+  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
+  gtk_tool_item_set_expand (item, expand);
+  gtk_widget_show (GTK_WIDGET (item));
 }

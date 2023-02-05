@@ -36,7 +36,8 @@ void d_poly_object_class_init (void);
 
 void d_poly_start             (GdkPoint   *pnt,
                                gboolean    shift_down);
-void d_poly_end               (GdkPoint   *pnt,
+void d_poly_end               (GimpGfig   *gfig,
+                               GdkPoint   *pnt,
                                gboolean    shift_down);
 
 #endif /* __GFIG_POLY_H__ */

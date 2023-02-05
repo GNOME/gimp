@@ -31,7 +31,8 @@ void d_star_object_class_init (void);
 
 void d_star_start             (GdkPoint  *pnt,
                                gboolean   shift_down);
-void d_star_end               (GdkPoint  *pnt,
+void d_star_end               (GimpGfig  *gfig,
+                               GdkPoint  *pnt,
                                gboolean   shift_down);
 
 

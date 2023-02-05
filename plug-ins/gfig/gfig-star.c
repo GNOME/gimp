@@ -397,10 +397,11 @@ d_star_start (GdkPoint *pnt,
 }
 
 void
-d_star_end (GdkPoint *pnt,
+d_star_end (GimpGfig *gfig,
+            GdkPoint *pnt,
             gboolean  shift_down)
 {
-  add_to_all_obj (gfig_context->current_obj, obj_creating);
+  add_to_all_obj (gfig, gfig_context->current_obj, obj_creating);
   obj_creating = NULL;
 }
 

@@ -98,9 +98,10 @@ void        d_save_object            (GfigObject *obj,
 
 void        free_all_objs            (GList      *objs);
 
-void        clear_undo               (void);
+void        clear_undo               (GimpGfig   *gfig);
 
-void        new_obj_2edit            (GFigObj    *obj);
+void        new_obj_2edit            (GimpGfig   *gfig,
+                                      GFigObj    *obj);
 
 void        gfig_init_object_classes (void);
 

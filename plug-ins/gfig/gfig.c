@@ -57,24 +57,9 @@
 
 #define GFIG_HEADER      "GFIG Version 0.2\n"
 
-typedef struct _Gfig      Gfig;
-typedef struct _GfigClass GfigClass;
-
-struct _Gfig
-{
-  GimpPlugIn parent_instance;
-};
-
-struct _GfigClass
-{
-  GimpPlugInClass parent_class;
-};
-
-
-#define GFIG_TYPE  (gfig_get_type ())
-#define GFIG (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GFIG_TYPE, Gfig))
-
 GType                   gfig_get_type         (void) G_GNUC_CONST;
+
+static void             gimp_gfig_finalize    (GObject              *object);
 
 static GList          * gfig_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * gfig_create_procedure (GimpPlugIn           *plug_in,
@@ -88,14 +73,17 @@ static GimpValueArray * gfig_run              (GimpProcedure        *procedure,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
+static void             on_app_activate       (GApplication         *gapp,
+                                               gpointer              user_data);
+
 static gint             load_options          (GFigObj              *gfig,
                                                FILE                 *fp);
 
 
 
-G_DEFINE_TYPE (Gfig, gfig, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (GimpGfig, gimp_gfig, GIMP_TYPE_PLUG_IN)
 
-GIMP_MAIN (GFIG_TYPE)
+GIMP_MAIN (GIMP_TYPE_GFIG)
 DEFINE_STD_SET_I18N
 
 
@@ -129,9 +117,12 @@ GdkPixbuf   *back_pixbuf = NULL;
 
 
 static void
-gfig_class_init (GfigClass *klass)
+gimp_gfig_class_init (GimpGfigClass *klass)
 {
   GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  GObjectClass    *object_class  = G_OBJECT_CLASS (klass);
+
+  object_class->finalize          = gimp_gfig_finalize;
 
   plug_in_class->query_procedures = gfig_query_procedures;
   plug_in_class->create_procedure = gfig_create_procedure;
@@ -139,9 +130,20 @@ gfig_class_init (GfigClass *klass)
 }
 
 static void
-gfig_init (Gfig *gfig)
+gimp_gfig_init (GimpGfig *gfig)
 {
 }
+
+static void
+gimp_gfig_finalize (GObject *object)
+{
+  GimpGfig *gfig = GIMP_GFIG (object);
+
+  G_OBJECT_CLASS (gimp_gfig_parent_class)->finalize (object);
+
+  g_clear_object (&gfig->builder);
+}
+
 
 static GList *
 gfig_query_procedures (GimpPlugIn *plug_in)
@@ -203,6 +205,7 @@ gfig_run (GimpProcedure        *procedure,
   GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               pwidth, pheight;
+  GimpGfig          *gfig;
 
   if (n_drawables != 1)
     {
@@ -220,6 +223,159 @@ gfig_run (GimpProcedure        *procedure,
     {
       drawable = drawables[0];
     }
+
+  gfig          = GIMP_GFIG (gimp_procedure_get_plug_in (procedure));
+  gfig->app     = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
+  gfig->success = FALSE;
+
+  gfig->builder = gtk_builder_new_from_string (
+      "<interface>"
+        "<menu id=\"gfig-menubar\">"
+          "<section>"
+            "<submenu>"
+              "<attribute name=\"label\">File</attribute>"
+                "<item>"
+                  "<attribute name=\"label\" translatable=\"yes\">Open</attribute>"
+                  "<attribute name=\"action\">app.open</attribute>"
+                "</item>"
+                "<item>"
+                  "<attribute name=\"label\" translatable=\"yes\">Save</attribute>"
+                  "<attribute name=\"action\">app.save</attribute>"
+                "</item>"
+                "<item>"
+                  "<attribute name=\"label\" translatable=\"yes\">Close</attribute>"
+                  "<attribute name=\"action\">app.close</attribute>"
+                "</item>"
+            "</submenu>"
+            "<submenu>"
+              "<attribute name=\"label\">Edit</attribute>"
+                "<item>"
+                  "<attribute name=\"label\" translatable=\"yes\">Undo</attribute>"
+                  "<attribute name=\"action\">app.undo</attribute>"
+                "</item>"
+                "<item>"
+                  "<attribute name=\"label\" translatable=\"yes\">Clear</attribute>"
+                  "<attribute name=\"action\">app.clear</attribute>"
+                "</item>"
+                "<item>"
+                  "<attribute name=\"label\" translatable=\"yes\">Grid</attribute>"
+                  "<attribute name=\"action\">app.grid</attribute>"
+                "</item>"
+                "<item>"
+                  "<attribute name=\"label\" translatable=\"yes\">Preferences</attribute>"
+                  "<attribute name=\"action\">app.preferences</attribute>"
+                "</item>"
+            "</submenu>"
+          "</section>"
+        "</menu>"
+        "<menu id=\"gfig-toolbar\">"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Line</attribute>"
+              "<attribute name=\"action\">app.shape</attribute>"
+              "<attribute name=\"target\">line</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Rectangle</attribute>"
+              "<attribute name=\"action\">app.shape</attribute>"
+              "<attribute name=\"target\">rectangle</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Circle</attribute>"
+              "<attribute name=\"action\">app.shape</attribute>"
+              "<attribute name=\"target\">circle</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Ellipse</attribute>"
+              "<attribute name=\"action\">app.shape</attribute>"
+              "<attribute name=\"target\">ellipse</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Arc</attribute>"
+              "<attribute name=\"action\">app.shape</attribute>"
+              "<attribute name=\"target\">arc</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Polygon</attribute>"
+              "<attribute name=\"action\">app.shape</attribute>"
+              "<attribute name=\"target\">polygon</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Star</attribute>"
+              "<attribute name=\"action\">app.shape</attribute>"
+              "<attribute name=\"target\">star</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Spiral</attribute>"
+              "<attribute name=\"action\">app.shape</attribute>"
+              "<attribute name=\"target\">spiral</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Bezier</attribute>"
+              "<attribute name=\"action\">app.shape</attribute>"
+              "<attribute name=\"target\">bezier</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Move Object</attribute>"
+              "<attribute name=\"action\">app.shape</attribute>"
+              "<attribute name=\"target\">move-obj</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Move Point</attribute>"
+              "<attribute name=\"action\">app.shape</attribute>"
+              "<attribute name=\"target\">move-point</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Copy</attribute>"
+              "<attribute name=\"action\">app.shape</attribute>"
+              "<attribute name=\"target\">copy</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Delete</attribute>"
+              "<attribute name=\"action\">app.shape</attribute>"
+              "<attribute name=\"target\">delete</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Select</attribute>"
+              "<attribute name=\"action\">app.shape</attribute>"
+              "<attribute name=\"target\">select</attribute>"
+            "</item>"
+          "</section>"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Raise</attribute>"
+              "<attribute name=\"action\">app.raise</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Lower</attribute>"
+              "<attribute name=\"action\">app.lower</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Top</attribute>"
+              "<attribute name=\"action\">app.top</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Bottom</attribute>"
+              "<attribute name=\"action\">app.bottom</attribute>"
+            "</item>"
+          "</section>"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Show Previous</attribute>"
+              "<attribute name=\"action\">app.show-prev</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Show Next</attribute>"
+              "<attribute name=\"action\">app.show-next</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Show All</attribute>"
+              "<attribute name=\"action\">app.show-all</attribute>"
+            "</item>"
+          "</section>"
+        "</menu>"
+      "</interface>",
+      -1);
 
   gfig_context = g_new0 (GFigContext, 1);
 
@@ -275,7 +431,11 @@ gfig_run (GimpProcedure        *procedure,
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      if (! gfig_dialog ())
+      g_signal_connect (gfig->app, "activate", G_CALLBACK (on_app_activate), gfig);
+      g_application_run (G_APPLICATION (gfig->app), 0, NULL);
+      g_clear_object (&gfig->app);
+
+      if (! gfig->success)
         {
           gimp_image_undo_group_end (gfig_context->image);
 
@@ -300,6 +460,38 @@ gfig_run (GimpProcedure        *procedure,
     gimp_displays_flush ();
 
   return gimp_procedure_new_return_values (procedure, status, NULL);
+}
+
+static void
+on_app_activate (GApplication *gapp,
+                 gpointer      user_data)
+{
+  GimpGfig *gfig = GIMP_GFIG (user_data);
+
+  gfig_dialog (gfig);
+
+  gtk_application_set_accels_for_action (gfig->app, "app.open", (const char*[]) { "<control>O", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.save", (const char*[]) { "<control>S", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.close", (const char*[]) { "<control>C", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.undo", (const char*[]) { "<control>Z", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.clear", (const char*[]) { NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.grid", (const char*[]) { "<control>G", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.preferences", (const char*[]) { "<control>P", NULL });
+
+  gtk_application_set_accels_for_action (gfig->app, "app.shape::line", (const char*[]) { "L", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.shape::rectangle", (const char*[]) { "R", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.shape::circle", (const char*[]) { "C", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.shape::ellipse", (const char*[]) { "E", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.shape::arc", (const char*[]) { "A", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.shape::polygon", (const char*[]) { "P", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.shape::star", (const char*[]) { "S", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.shape::spiral", (const char*[]) { "I", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.shape::bezier", (const char*[]) { "B", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.shape::move-obj", (const char*[]) { "M", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.shape::move-point", (const char*[]) { "V", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.shape::copy", (const char*[]) { "Y", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.shape::delete", (const char*[]) { "D", NULL });
+  gtk_application_set_accels_for_action (gfig->app, "app.shape::select", (const char*[]) { "A", NULL });
 }
 
 /*
@@ -414,9 +606,10 @@ gfig_new (void)
 }
 
 static void
-gfig_load_objs (GFigObj *gfig,
-                gint     load_count,
-                FILE    *fp)
+gfig_load_objs (GimpGfig *gfig,
+                GFigObj  *gfig_obj,
+                gint      load_count,
+                FILE     *fp)
 {
   GfigObject *obj;
   gchar       load_buf[MAX_LOAD_LINE];
@@ -437,7 +630,7 @@ gfig_load_objs (GFigObj *gfig,
 
       if (obj)
         {
-          add_to_all_obj (gfig, obj);
+          add_to_all_obj (gfig, gfig_obj, obj);
           offset2 = ftell (fp);
           fseek (fp, offset, SEEK_SET);
           gfig_load_style (&obj->style, fp);
@@ -451,10 +644,11 @@ gfig_load_objs (GFigObj *gfig,
 }
 
 GFigObj *
-gfig_load (const gchar *filename,
+gfig_load (GimpGfig    *gfig,
+           const gchar *filename,
            const gchar *name)
 {
-  GFigObj *gfig;
+  GFigObj *gfig_obj;
   FILE    *fp;
   gchar    load_buf[MAX_LOAD_LINE];
   gchar    str_buf[MAX_LOAD_LINE];
@@ -478,10 +672,10 @@ gfig_load (const gchar *filename,
       return NULL;
     }
 
-  gfig = gfig_new ();
+  gfig_obj = gfig_new ();
 
-  gfig->name = g_strdup (name);
-  gfig->filename = g_strdup (filename);
+  gfig_obj->name = g_strdup (name);
+  gfig_obj->filename = g_strdup (filename);
 
 
   /* HEADER
@@ -497,8 +691,8 @@ gfig_load (const gchar *filename,
   if (strcmp (magic1, "GFIG") || strcmp (magic2, "Version"))
     {
       g_message ("File '%s' is not a gfig file",
-                  gimp_filename_to_utf8 (gfig->filename));
-      gfig_free (gfig);
+                  gimp_filename_to_utf8 (gfig_obj->filename));
+      gfig_free (gfig_obj);
       fclose (fp);
       return NULL;
     }
@@ -506,46 +700,46 @@ gfig_load (const gchar *filename,
   get_line (load_buf, MAX_LOAD_LINE, fp, 0);
   sscanf (load_buf, "Name: %100s", str_buf);
   gfig_name_decode (load_buf, str_buf);
-  gfig->draw_name = g_strdup (load_buf);
+  gfig_obj->draw_name = g_strdup (load_buf);
 
   get_line (load_buf, MAX_LOAD_LINE, fp, 0);
   if (strncmp (load_buf, "Version: ", 9) == 0)
-    gfig->version = g_ascii_strtod (load_buf + 9, NULL);
+    gfig_obj->version = g_ascii_strtod (load_buf + 9, NULL);
 
   get_line (load_buf, MAX_LOAD_LINE, fp, 0);
   sscanf (load_buf, "ObjCount: %d", &load_count);
 
-  if (load_options (gfig, fp))
+  if (load_options (gfig_obj, fp))
     {
       g_message ("File '%s' corrupt file - Line %d Option section incorrect",
                  gimp_filename_to_utf8 (filename), line_no);
-      gfig_free (gfig);
+      gfig_free (gfig_obj);
       fclose (fp);
       return NULL;
     }
 
-  if (gfig_load_styles (gfig, fp))
+  if (gfig_load_styles (gfig_obj, fp))
     {
       g_message ("File '%s' corrupt file - Line %d Option section incorrect",
                  gimp_filename_to_utf8 (filename), line_no);
-      gfig_free (gfig);
+      gfig_free (gfig_obj);
       fclose (fp);
       return NULL;
     }
 
 
 
-  gfig_load_objs (gfig, load_count, fp);
+  gfig_load_objs (gfig, gfig_obj, load_count, fp);
 
   /* Check count ? */
 
-  chk_count = g_list_length (gfig->obj_list);
+  chk_count = g_list_length (gfig_obj->obj_list);
 
   if (chk_count != load_count)
     {
       g_message ("File '%s' corrupt file - Line %d Object count to small",
                  gimp_filename_to_utf8 (filename), line_no);
-      gfig_free (gfig);
+      gfig_free (gfig_obj);
       fclose (fp);
       return NULL;
     }
@@ -553,11 +747,11 @@ gfig_load (const gchar *filename,
   fclose (fp);
 
   if (!gfig_context->current_obj)
-    gfig_context->current_obj = gfig;
+    gfig_context->current_obj = gfig_obj;
 
-  gfig->obj_status = GFIG_OK;
+  gfig_obj->obj_status = GFIG_OK;
 
-  return gfig;
+  return gfig_obj;
 }
 
 void
@@ -790,14 +984,14 @@ gfig_save_as_parasite (void)
 }
 
 GFigObj *
-gfig_load_from_parasite (void)
+gfig_load_from_parasite (GimpGfig *gfig)
 {
   GFile        *file;
   FILE         *fp;
   GimpParasite *parasite;
   const gchar  *parasite_data;
   guint32       parasite_size;
-  GFigObj      *gfig;
+  GFigObj      *gfig_obj;
 
   parasite = gimp_item_get_parasite (GIMP_ITEM (gfig_context->drawable),
                                      "gfig");
@@ -821,13 +1015,13 @@ gfig_load_from_parasite (void)
 
   gimp_parasite_free (parasite);
 
-  gfig = gfig_load (g_file_peek_path (file), "(none)");
+  gfig_obj = gfig_load (gfig, g_file_peek_path (file), "(none)");
 
   g_file_delete (file, NULL, NULL);
 
   g_object_unref (file);
 
-  return gfig;
+  return gfig_obj;
 }
 
 void

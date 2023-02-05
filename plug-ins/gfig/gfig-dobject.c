@@ -341,7 +341,8 @@ get_nearest_objs (GFigObj  *obj,
 }
 
 void
-object_operation_start (GdkPoint *pnt,
+object_operation_start (GimpGfig *gfig,
+                        GdkPoint *pnt,
                         gboolean  shift_down)
 {
   GfigObject *new_obj;
@@ -355,7 +356,7 @@ object_operation_start (GdkPoint *pnt,
     {
       move_all_pnt = g_new (GdkPoint, 1);
       *move_all_pnt = *pnt; /* Structure copy */
-      setup_undo ();
+      setup_undo (gfig);
       return;
     }
 
@@ -364,7 +365,7 @@ object_operation_start (GdkPoint *pnt,
 
   gfig_context->selected_obj = operation_obj;
 
-  setup_undo ();
+  setup_undo (gfig);
 
   switch (selvals.otype)
     {
@@ -411,7 +412,7 @@ object_operation_start (GdkPoint *pnt,
         {
           gfig_style_copy (&new_obj->style, &operation_obj->style, "Object");
           scan_obj_points (new_obj->points, pnt);
-          add_to_all_obj (gfig_context->current_obj, new_obj);
+          add_to_all_obj (gfig, gfig_context->current_obj, new_obj);
           operation_obj = new_obj;
           selvals.otype = MOVE_COPY_OBJ;
           gtk_widget_queue_draw (gfig_context->preview);
@@ -710,10 +711,11 @@ draw_objects (GList    *objs,
 }
 
 void
-prepend_to_all_obj (GFigObj *fobj,
-                    GList   *nobj)
+prepend_to_all_obj (GimpGfig *gfig,
+                    GFigObj  *fobj,
+                    GList    *nobj)
 {
-  setup_undo (); /* Remember ME */
+  setup_undo (gfig); /* Remember ME */
 
   fobj->obj_list = g_list_concat (fobj->obj_list, nobj);
 }
@@ -732,7 +734,8 @@ scale_obj_points (DobjPoints *opnt,
 }
 
 void
-add_to_all_obj (GFigObj    *fobj,
+add_to_all_obj (GimpGfig   *gfig,
+                GFigObj    *fobj,
                 GfigObject *obj)
 {
   GList *nobj = NULL;
@@ -742,7 +745,7 @@ add_to_all_obj (GFigObj    *fobj,
   if (need_to_scale)
     scale_obj_points (obj->points, scale_x_factor, scale_y_factor);
 
-  prepend_to_all_obj (fobj, nobj);
+  prepend_to_all_obj (gfig, fobj, nobj);
 
   /* initialize style when we add the object */
   gfig_context->selected_obj = obj;
@@ -816,7 +819,8 @@ object_start (GdkPoint *pnt,
 }
 
 void
-object_end (GdkPoint *pnt,
+object_end (GimpGfig *gfig,
+            GdkPoint *pnt,
             gboolean  shift_down)
 {
   /* end for the current object */
@@ -826,31 +830,31 @@ object_end (GdkPoint *pnt,
   switch (selvals.otype)
     {
     case LINE:
-      d_line_end (pnt, shift_down);
+      d_line_end (gfig, pnt, shift_down);
       break;
     case RECTANGLE:
-      d_rectangle_end (pnt, shift_down);
+      d_rectangle_end (gfig, pnt, shift_down);
       break;
     case CIRCLE:
-      d_circle_end (pnt, shift_down);
+      d_circle_end (gfig, pnt, shift_down);
       break;
     case ELLIPSE:
-      d_ellipse_end (pnt, shift_down);
+      d_ellipse_end (gfig, pnt, shift_down);
       break;
     case POLY:
-      d_poly_end (pnt, shift_down);
+      d_poly_end (gfig, pnt, shift_down);
       break;
     case STAR:
-      d_star_end (pnt, shift_down);
+      d_star_end (gfig, pnt, shift_down);
       break;
     case ARC:
-      d_arc_end (pnt, shift_down);
+      d_arc_end (gfig, pnt, shift_down);
       break;
     case SPIRAL:
-      d_spiral_end (pnt, shift_down);
+      d_spiral_end (gfig, pnt, shift_down);
       break;
     case BEZIER:
-      d_bezier_end (pnt, shift_down);
+      d_bezier_end (gfig, pnt, shift_down);
       break;
     default:
       /* Internal error */
@@ -931,9 +935,10 @@ get_line (gchar *buf,
 }
 
 void
-clear_undo (void)
+clear_undo (GimpGfig *gfig)
 {
-  int lv;
+  int      lv;
+  GAction *action;
 
   for (lv = undo_level; lv >= 0; lv--)
     {
@@ -943,12 +948,16 @@ clear_undo (void)
 
   undo_level = -1;
 
-  gfig_dialog_action_set_sensitive ("undo", FALSE);
+  action = g_action_map_lookup_action (G_ACTION_MAP (gfig->app), "undo");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                               FALSE);
 }
 
 void
-setup_undo (void)
+setup_undo (GimpGfig *gfig)
 {
+  GAction *action;
+
   /* Copy object list to undo buffer */
 #if DEBUG
   printf ("setup undo level [%d]\n", undo_level);
@@ -978,21 +987,24 @@ setup_undo (void)
   undo_table[undo_level] =
     copy_all_objs (gfig_context->current_obj->obj_list);
 
-  gfig_dialog_action_set_sensitive ("undo", TRUE);
+  action = g_action_map_lookup_action (G_ACTION_MAP (gfig->app), "undo");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action), TRUE);
 
   gfig_context->current_obj->obj_status |= GFIG_MODIFIED;
 }
 
 void
-new_obj_2edit (GFigObj *obj)
+new_obj_2edit (GimpGfig *gfig,
+               GFigObj  *obj)
 {
+  GAction *action;
   GFigObj *old_current = gfig_context->current_obj;
 
   /* Clear undo levels */
   /* redraw the preview */
   /* Set up options as define in the selected object */
 
-  clear_undo ();
+  clear_undo (gfig);
 
   /* Point at this one */
   gfig_context->current_obj = obj;
@@ -1006,16 +1018,19 @@ new_obj_2edit (GFigObj *obj)
   /* redraw with new */
   gtk_widget_queue_draw (gfig_context->preview);
 
+  action = g_action_map_lookup_action (G_ACTION_MAP (gfig->app), "save");
   if (obj->obj_status & GFIG_READONLY)
     {
       g_message (_("Editing read-only object - "
                    "you will not be able to save it"));
 
-      gfig_dialog_action_set_sensitive ("save", FALSE);
+      g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                                   FALSE);
     }
   else
     {
-      gfig_dialog_action_set_sensitive ("save", TRUE);
+      g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                                   FALSE);
     }
 }
 

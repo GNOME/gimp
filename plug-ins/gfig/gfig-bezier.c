@@ -342,7 +342,8 @@ d_bezier_start (GdkPoint *pnt,
 }
 
 void
-d_bezier_end (GdkPoint *pnt,
+d_bezier_end (GimpGfig *gfig,
+              GdkPoint *pnt,
               gboolean  shift_down)
 {
   DobjPoints *l_pnt;
@@ -374,7 +375,7 @@ d_bezier_end (GdkPoint *pnt,
                               tmp_bezier->points->pnt.y, -1);
             }
 
-          add_to_all_obj (gfig_context->current_obj, obj_creating);
+          add_to_all_obj (gfig, gfig_context->current_obj, obj_creating);
         }
 
       /* small mem leak if !l_pnt ? */

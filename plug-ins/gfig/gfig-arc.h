@@ -29,7 +29,8 @@ void     d_arc_object_class_init (void);
 
 void     d_arc_start  (GdkPoint *pnt,
                        gboolean  shift_down);
-void     d_arc_end    (GdkPoint *pnt,
+void     d_arc_end    (GimpGfig *gfig,
+                       GdkPoint *pnt,
                        gboolean  shift_down);
 
 

@@ -29,7 +29,8 @@ void    d_circle_object_class_init (void);
 
 void    d_circle_start             (GdkPoint *pnt,
                                     gboolean  shift_down);
-void    d_circle_end               (GdkPoint *pnt,
+void    d_circle_end               (GimpGfig *gfig,
+                                    GdkPoint *pnt,
                                     gboolean  shift_down);
 
 #endif /* __GFIG_CIRCLE_H__ */

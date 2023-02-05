@@ -172,7 +172,8 @@ d_line_start (GdkPoint *pnt,
 }
 
 void
-d_line_end (GdkPoint *pnt,
+d_line_end (GimpGfig *gfig,
+            GdkPoint *pnt,
             gboolean  shift_down)
 {
   if (shift_down)
@@ -194,7 +195,7 @@ d_line_end (GdkPoint *pnt,
       else
         {
           tmp_line = obj_creating;
-          add_to_all_obj (gfig_context->current_obj, obj_creating);
+          add_to_all_obj (gfig, gfig_context->current_obj, obj_creating);
         }
 
       obj_creating = d_new_object (LINE, pnt->x, pnt->y);
@@ -217,7 +218,7 @@ d_line_end (GdkPoint *pnt,
         }
       else
         {
-          add_to_all_obj (gfig_context->current_obj, obj_creating);
+          add_to_all_obj (gfig, gfig_context->current_obj, obj_creating);
         }
       obj_creating = NULL;
       tmp_line = NULL;

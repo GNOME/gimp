@@ -28,7 +28,7 @@
 extern gint   undo_level;  /* Last slot filled in -1 = no undo */
 extern GList *undo_table[MAX_UNDO];
 
-gboolean  gfig_dialog                      (void);
+gboolean  gfig_dialog                      (GimpGfig    *gfig);
 void      gfig_dialog_action_set_sensitive (const gchar *name,
                                             gboolean     sensitive);
 

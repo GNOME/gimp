@@ -93,8 +93,9 @@ static void        d_update_arc_line   (GdkPoint   *pnt);
 static void        d_update_arc        (GdkPoint   *pnt);
 static void        d_arc_line_start    (GdkPoint   *pnt,
                                         gboolean    shift_down);
-static void        d_arc_line_end      (GdkPoint *pnt,
-                                        gboolean  shift_down);
+static void        d_arc_line_end      (GimpGfig   *gfig,
+                                        GdkPoint   *pnt,
+                                        gboolean    shift_down);
 
 /* Distance between two points. */
 static gdouble
@@ -649,7 +650,8 @@ d_arc_start (GdkPoint *pnt,
 }
 
 static void
-d_arc_line_end (GdkPoint *pnt,
+d_arc_line_end (GimpGfig *gfig,
+                GdkPoint *pnt,
                 gboolean  shift_down)
 {
   if (shift_down)
@@ -671,7 +673,7 @@ d_arc_line_end (GdkPoint *pnt,
       else
         {
           tmp_line = obj_creating;
-          add_to_all_obj (gfig_context->current_obj, obj_creating);
+          add_to_all_obj (gfig, gfig_context->current_obj, obj_creating);
         }
 
       obj_creating = d_new_object (LINE, pnt->x, pnt->y);
@@ -694,7 +696,7 @@ d_arc_line_end (GdkPoint *pnt,
         }
       else
         {
-          add_to_all_obj (gfig_context->current_obj, obj_creating);
+          add_to_all_obj (gfig, gfig_context->current_obj, obj_creating);
         }
       obj_creating = NULL;
       tmp_line = NULL;
@@ -703,7 +705,8 @@ d_arc_line_end (GdkPoint *pnt,
 }
 
 void
-d_arc_end (GdkPoint *pnt,
+d_arc_end (GimpGfig *gfig,
+           GdkPoint *pnt,
            gboolean  shift_down)
 {
   /* Under control point */
@@ -712,7 +715,7 @@ d_arc_end (GdkPoint *pnt,
       !tmp_line->points->next)
     {
       /* No arc created  - yet. Must have three points */
-      d_arc_line_end (pnt, TRUE);
+      d_arc_line_end (gfig, pnt, TRUE);
     }
   else
     {
@@ -720,7 +723,7 @@ d_arc_end (GdkPoint *pnt,
       /* Convert to an arc ... */
       tmp_line->type = ARC;
       tmp_line->class = &dobj_class[ARC];
-      d_arc_line_end (pnt, FALSE);
+      d_arc_line_end (gfig, pnt, FALSE);
       if (need_to_scale)
         {
           selvals.scaletoimage = 0;
