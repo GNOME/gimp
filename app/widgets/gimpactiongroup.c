@@ -332,16 +332,7 @@ gimp_action_group_add_action_with_accel (GimpActionGroup *action_group,
 
   g_action_map_add_action (G_ACTION_MAP (action_group->gimp->app), G_ACTION (action));
   if ((accelerator != NULL && g_strcmp0 (accelerator, "") != 0))
-    {
-      gchar* detailed_action_name;
-
-      detailed_action_name = g_strdup_printf ("app.%s",
-                                              g_action_get_name (G_ACTION (action)));
-      gtk_application_set_accels_for_action (GTK_APPLICATION (action_group->gimp->app),
-                                             detailed_action_name,
-                                             (const char*[]) { accelerator, NULL });
-      g_free (detailed_action_name);
-    }
+    gimp_action_set_accels (action, (const char*[]) { accelerator, NULL });
 
   /* TODO: remove the old logic with GtkAction. */
   gtk_action_group_add_action_with_accel ((GtkActionGroup *) action_group,

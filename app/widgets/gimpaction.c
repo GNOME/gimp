@@ -407,6 +407,59 @@ gimp_action_connect_accelerator (GimpAction  *action)
   gtk_action_connect_accelerator ((GtkAction *) action);
 }
 
+void
+gimp_action_set_accels (GimpAction   *action,
+                        const gchar **accels)
+{
+  GimpContext *context;
+  gchar       *detailed_action_name;
+
+  g_return_if_fail (GIMP_IS_ACTION (action));
+
+  context = GET_PRIVATE (action)->context;
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (GTK_IS_APPLICATION (context->gimp->app));
+
+  detailed_action_name = g_strdup_printf ("app.%s",
+                                          g_action_get_name (G_ACTION (action)));
+  gtk_application_set_accels_for_action (GTK_APPLICATION (context->gimp->app),
+                                         detailed_action_name,
+                                         accels);
+  g_free (detailed_action_name);
+}
+
+/**
+ * gimp_action_get_accels:
+ * @action: a #GimpAction
+ *
+ * Gets the accelerators that are currently associated with
+ * the given @action.
+ *
+ * Returns: (transfer full): accelerators for @action, as a %NULL-terminated
+ *          array. Free with g_strfreev() when no longer needed
+ */
+gchar **
+gimp_action_get_accels (GimpAction *action)
+{
+  gchar       **accels;
+  GimpContext  *context;
+  gchar        *detailed_action_name;
+
+  g_return_val_if_fail (GIMP_IS_ACTION (action), NULL);
+
+  context = GET_PRIVATE (action)->context;
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GTK_IS_APPLICATION (context->gimp->app), NULL);
+
+  detailed_action_name = g_strdup_printf ("app.%s",
+                                          g_action_get_name (G_ACTION (action)));
+  accels = gtk_application_get_accels_for_action (GTK_APPLICATION (context->gimp->app),
+                                                  detailed_action_name);
+  g_free (detailed_action_name);
+
+  return accels;
+}
+
 GSList *
 gimp_action_get_proxies (GimpAction *action)
 {
