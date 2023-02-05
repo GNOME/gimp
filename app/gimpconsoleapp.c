@@ -42,7 +42,6 @@ gimp_console_app_class_init (GimpConsoleAppClass *klass)
 {
   GObjectClass *gobj_class = G_OBJECT_CLASS (klass);
 
-  gobj_class->finalize     = gimp_core_app_finalize;
   gobj_class->get_property = gimp_core_app_get_property;
   gobj_class->set_property = gimp_core_app_set_property;
 

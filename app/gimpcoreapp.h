@@ -48,8 +48,6 @@ struct _GimpCoreAppInterface
   gpointer padding[12];
 };
 
-void               gimp_core_app_finalize              (GObject     *object);
-
 Gimp *             gimp_core_app_get_gimp              (GimpCoreApp *self);
 
 gboolean           gimp_core_app_get_quit              (GimpCoreApp *self);

@@ -98,14 +98,6 @@ gimp_core_app_default_init (GimpCoreAppInterface *iface)
 
 /* Protected functions. */
 
-void
-gimp_core_app_finalize (GObject *object)
-{
-  g_object_set_qdata (object,
-                      g_quark_from_static_string ("gimp-core-app-private"),
-                      NULL);
-}
-
 /**
  * gimp_container_view_install_properties:
  * @klass: the class structure for a type deriving from #GObject
