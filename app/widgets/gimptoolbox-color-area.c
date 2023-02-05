@@ -284,14 +284,6 @@ color_area_color_changed (GimpContext *context)
     gimp_display_grab_focus (gimp_context_get_display (context));
 }
 
-static gboolean
-accel_find_func (GtkAccelKey *key,
-                 GClosure    *closure,
-                 gpointer     data)
-{
-  return (GClosure *) data == closure;
-}
-
 static void
 color_area_tooltip (GimpFgBgEditor *editor,
                     GimpFgBgTarget  target,
@@ -336,30 +328,28 @@ color_area_tooltip (GimpFgBgEditor *editor,
 
       if (action)
         {
-          GtkAccelGroup *accel_group;
-          GClosure      *accel_closure;
-          GtkAccelKey   *accel_key;
+          gchar **accels = gimp_action_get_accels (action);
 
-          accel_closure = gimp_action_get_accel_closure (action);
-          accel_group   = gtk_accel_group_from_accel_closure (accel_closure);
-
-          accel_key = gtk_accel_group_find (accel_group,
-                                            accel_find_func,
-                                            accel_closure);
-
-          if (accel_key            &&
-              accel_key->accel_key &&
-              (accel_key->accel_flags & GTK_ACCEL_VISIBLE))
+          if (accels && accels[0])
             {
-              gchar *escaped = g_markup_escape_text (text, -1);
-              gchar *accel   = gtk_accelerator_get_label (accel_key->accel_key,
-                                                          accel_key->accel_mods);
+              guint           accel_key = 0;
+              GdkModifierType accel_mods = 0;
 
-              markup = g_strdup_printf ("%s  <b>%s</b>", escaped, accel);
+              gtk_accelerator_parse (accels[0], &accel_key, &accel_mods);
 
-              g_free (accel);
-              g_free (escaped);
+              if (accel_key != 0 || accel_mods != 0)
+                {
+                  gchar *escaped = g_markup_escape_text (text, -1);
+                  gchar *accel;
+
+                  accel  = gtk_accelerator_get_label (accel_key, accel_mods);
+                  markup = g_strdup_printf ("%s  <b>%s</b>", escaped, accel);
+                  g_free (escaped);
+                  g_free (accel);
+                }
             }
+
+          g_strfreev (accels);
         }
 
       if (markup)
