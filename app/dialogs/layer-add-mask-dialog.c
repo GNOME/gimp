@@ -64,7 +64,7 @@ static void       layer_add_mask_dialog_response         (GtkWidget          *di
 static gboolean   layer_add_mask_dialog_channel_selected (GimpContainerView  *view,
                                                           GList              *viewables,
                                                           GList              *paths,
-                                                          LayerAddMaskDialog *dialog);
+                                                          LayerAddMaskDialog *private);
 
 
 /*  public functions  */
