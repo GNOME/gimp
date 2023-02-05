@@ -328,25 +328,14 @@ color_area_tooltip (GimpFgBgEditor *editor,
 
       if (action)
         {
-          gchar **accels = gimp_action_get_accels (action);
+          gchar **accels = gimp_action_get_display_accels (action);
 
           if (accels && accels[0])
             {
-              guint           accel_key = 0;
-              GdkModifierType accel_mods = 0;
+              gchar *escaped = g_markup_escape_text (text, -1);
 
-              gtk_accelerator_parse (accels[0], &accel_key, &accel_mods);
-
-              if (accel_key != 0 || accel_mods != 0)
-                {
-                  gchar *escaped = g_markup_escape_text (text, -1);
-                  gchar *accel;
-
-                  accel  = gtk_accelerator_get_label (accel_key, accel_mods);
-                  markup = g_strdup_printf ("%s  <b>%s</b>", escaped, accel);
-                  g_free (escaped);
-                  g_free (accel);
-                }
+              markup = g_strdup_printf ("%s  <b>%s</b>", escaped, accels[0]);
+              g_free (escaped);
             }
 
           g_strfreev (accels);

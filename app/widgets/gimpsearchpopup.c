@@ -36,7 +36,6 @@
 #include "gimppopup.h"
 #include "gimpsearchpopup.h"
 #include "gimptoggleaction.h"
-#include "gimpuimanager.h"
 
 #include "gimp-intl.h"
 
@@ -109,11 +108,6 @@ static void       results_list_row_activated             (GtkTreeView       *tre
 static void       gimp_search_popup_run_selected         (GimpSearchPopup   *popup);
 static void       gimp_search_popup_setup_results        (GtkWidget        **results_list,
                                                           GtkWidget        **list_view);
-
-static gchar    * gimp_search_popup_find_accel_label     (GimpAction        *action);
-static gboolean   gimp_search_popup_view_accel_find_func (GtkAccelKey       *key,
-                                                          GClosure          *closure,
-                                                          gpointer           data);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpSearchPopup, gimp_search_popup, GIMP_TYPE_POPUP)
@@ -229,24 +223,24 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
                               GimpAction      *action,
                               gint             section)
 {
-  GtkTreeIter   iter;
-  GtkTreeIter   next_section;
-  GtkListStore *store;
-  GtkTreeModel *model;
-  gchar        *markup;
-  gchar        *action_name;
-  gchar        *label;
-  gchar        *escaped_label    = NULL;
-  const gchar  *icon_name;
-  gchar        *accel_string;
-  gchar        *escaped_accel    = NULL;
-  gboolean      has_shortcut     = FALSE;
-  const gchar  *tooltip;
-  gchar        *escaped_tooltip  = NULL;
-  gboolean      has_tooltip      = FALSE;
-  gboolean      sensitive        = FALSE;
-  const gchar  *sensitive_reason = NULL;
-  gchar        *escaped_reason   = NULL;
+  gchar        **accels;
+  GtkTreeIter    iter;
+  GtkTreeIter    next_section;
+  GtkListStore  *store;
+  GtkTreeModel  *model;
+  gchar         *markup;
+  gchar         *action_name;
+  gchar         *label;
+  gchar         *escaped_label    = NULL;
+  const gchar   *icon_name;
+  gchar         *escaped_accel    = NULL;
+  gboolean       has_shortcut     = FALSE;
+  const gchar   *tooltip;
+  gchar         *escaped_tooltip  = NULL;
+  gboolean       has_tooltip      = FALSE;
+  gboolean       sensitive        = FALSE;
+  const gchar   *sensitive_reason = NULL;
+  gchar         *escaped_reason   = NULL;
 
   label = g_strstrip (gimp_strip_uline (gimp_action_get_label (action)));
 
@@ -270,12 +264,13 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
       icon_name = gimp_action_get_icon_name (action);
     }
 
-  accel_string = gimp_search_popup_find_accel_label (action);
-  if (accel_string)
+  accels = gimp_action_get_display_accels (action);
+  if (accels && accels[0])
     {
-      escaped_accel = g_markup_escape_text (accel_string, -1);
+      escaped_accel = g_markup_escape_text (accels[0], -1);
       has_shortcut = TRUE;
     }
+  g_strfreev (accels);
 
   tooltip = gimp_action_get_tooltip (action);
   if (tooltip != NULL)
@@ -341,7 +336,6 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
                       COLUMN_SENSITIVE, sensitive,
                       -1);
 
-  g_free (accel_string);
   g_free (markup);
   g_free (action_name);
   g_free (label);
@@ -744,55 +738,4 @@ gimp_search_popup_setup_results (GtkWidget **results_list,
 
   gtk_container_add (GTK_CONTAINER (*list_view), *results_list);
   g_object_unref (G_OBJECT (store));
-}
-
-static gchar *
-gimp_search_popup_find_accel_label (GimpAction *action)
-{
-  guint            accel_key     = 0;
-  GdkModifierType  accel_mask    = 0;
-  GClosure        *accel_closure = NULL;
-  gchar           *accel_string;
-  GtkAccelGroup   *accel_group;
-  GimpUIManager   *manager;
-
-  manager       = gimp_ui_managers_from_name ("<Image>")->data;
-  accel_group   = gimp_ui_manager_get_accel_group (manager);
-  accel_closure = gimp_action_get_accel_closure (action);
-
-  if (accel_closure)
-    {
-      GtkAccelKey *key;
-
-      key = gtk_accel_group_find (accel_group,
-                                  gimp_search_popup_view_accel_find_func,
-                                  accel_closure);
-      if (key            &&
-          key->accel_key &&
-          key->accel_flags & GTK_ACCEL_VISIBLE)
-        {
-          accel_key  = key->accel_key;
-          accel_mask = key->accel_mods;
-        }
-    }
-
-  accel_string = gtk_accelerator_get_label (accel_key, accel_mask);
-
-  if (strcmp (g_strstrip (accel_string), "") == 0)
-    {
-      /* The value returned by gtk_accelerator_get_label() must be
-       * freed after use.
-       */
-      g_clear_pointer (&accel_string, g_free);
-    }
-
-  return accel_string;
-}
-
-static gboolean
-gimp_search_popup_view_accel_find_func (GtkAccelKey *key,
-                                        GClosure    *closure,
-                                        gpointer     data)
-{
-  return (GClosure *) data == closure;
 }

@@ -64,10 +64,6 @@ static void      debug_print_qdata_foreach     (GQuark       key_id,
                                                 gpointer     data,
                                                 gpointer     user_data);
 
-static gboolean  debug_accel_find_func         (GtkAccelKey *key,
-                                                GClosure    *closure,
-                                                gpointer     data);
-
 
 /*  public functions  */
 
@@ -193,18 +189,15 @@ debug_dump_keyboard_shortcuts_cmd_callback (GimpAction *action,
                                             GVariant   *value,
                                             gpointer    data)
 {
-  GimpDisplay      *display;
-  GimpImageWindow  *window;
-  GimpUIManager    *manager;
-  GtkAccelGroup    *accel_group;
-  GList            *group_it;
-  GList            *strings = NULL;
+  GimpDisplay     *display;
+  GimpImageWindow *window;
+  GimpUIManager   *manager;
+  GList           *group_it;
+  GList           *strings = NULL;
   return_if_no_display (display, data);
 
   window  = gimp_display_shell_get_window (gimp_display_get_shell (display));
   manager = gimp_image_window_get_ui_manager (window);
-
-  accel_group = gimp_ui_manager_get_accel_group (manager);
 
   /* Gather formatted strings of keyboard shortcuts */
   for (group_it = gimp_ui_manager_get_action_groups (manager);
@@ -220,43 +213,36 @@ debug_dump_keyboard_shortcuts_cmd_callback (GimpAction *action,
 
       for (action_it = actions; action_it; action_it = g_list_next (action_it))
         {
-          GimpAction  *action        = action_it->data;
-          const gchar *name          = gimp_action_get_name (action);
-          GClosure    *accel_closure = NULL;
+          gchar       **accels;
+          GimpAction   *action = action_it->data;
+          const gchar  *name   = gimp_action_get_name (action);
 
           if (strstr (name, "-menu")  ||
               strstr (name, "-popup") ||
               name[0] == '<')
               continue;
 
-          accel_closure = gimp_action_get_accel_closure (action);
+          accels = gimp_action_get_display_accels (action);
 
-          if (accel_closure)
+          if (accels && accels[0])
             {
-              GtkAccelKey *key = gtk_accel_group_find (accel_group,
-                                                       debug_accel_find_func,
-                                                       accel_closure);
-              if (key            &&
-                  key->accel_key &&
-                  key->accel_flags & GTK_ACCEL_VISIBLE)
-                {
-                  const gchar *label_tmp;
-                  gchar       *label;
-                  gchar       *key_string;
+              const gchar *label_tmp;
+              gchar       *label;
 
-                  label_tmp  = gimp_action_get_label (action);
-                  label      = gimp_strip_uline (label_tmp);
-                  key_string = gtk_accelerator_get_label (key->accel_key,
-                                                          key->accel_mods);
+              label_tmp  = gimp_action_get_label (action);
+              label      = gimp_strip_uline (label_tmp);
 
-                  strings = g_list_prepend (strings,
-                                            g_strdup_printf ("%-20s %s",
-                                                             key_string, label));
+              strings = g_list_prepend (strings,
+                                        g_strdup_printf ("%-20s %s",
+                                                         accels[0], label));
 
-                  g_free (key_string);
-                  g_free (label);
-                }
+              g_free (label);
+
+              for (gint i = 1; accels[i] != NULL; i++)
+                strings = g_list_prepend (strings, g_strdup (accels[i]));
             }
+
+          g_strfreev (accels);
         }
 
       g_list_free (actions);
@@ -435,12 +421,4 @@ debug_print_qdata_foreach (GQuark   key_id,
                            gpointer user_data)
 {
   g_print ("%s: %p\n", g_quark_to_string (key_id), data);
-}
-
-static gboolean
-debug_accel_find_func (GtkAccelKey *key,
-                       GClosure    *closure,
-                       gpointer     data)
-{
-  return (GClosure *) data == closure;
 }

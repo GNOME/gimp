@@ -996,60 +996,30 @@ gimp_window_set_transient_for (GtkWindow *window,
 #endif
 }
 
-static gboolean
-gimp_widget_accel_find_func (GtkAccelKey *key,
-                             GClosure    *closure,
-                             gpointer     data)
-{
-  return (GClosure *) data == closure;
-}
-
 static void
-gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
-                           guint            unused1,
-                           GdkModifierType  unused2,
-                           GClosure        *accel_closure,
-                           GtkWidget       *widget)
+gimp_widget_accels_changed (GimpAction   *action,
+                            const gchar **accels,
+                            GtkWidget    *widget)
 {
-  GClosure *widget_closure;
+  const gchar *tooltip;
+  const gchar *help_id;
 
-  widget_closure = g_object_get_data (G_OBJECT (widget), "gimp-accel-closure");
+  tooltip = gimp_action_get_tooltip (action);
+  help_id = gimp_action_get_help_id (action);
 
-  if (accel_closure == widget_closure)
+  if (accels && accels[0])
     {
-      GimpAction  *action;
-      GtkAccelKey *accel_key;
-      const gchar *tooltip;
-      const gchar *help_id;
+      gchar *escaped = g_markup_escape_text (tooltip, -1);
+      gchar *tmp     = g_strdup_printf ("%s  <b>%s</b>", escaped, accels[0]);
 
-      action = g_object_get_data (G_OBJECT (widget), "gimp-accel-action");
+      g_free (escaped);
 
-      tooltip = gimp_action_get_tooltip (action);
-      help_id = gimp_action_get_help_id (action);
-
-      accel_key = gtk_accel_group_find (accel_group,
-                                        gimp_widget_accel_find_func,
-                                        accel_closure);
-
-      if (accel_key            &&
-          accel_key->accel_key &&
-          (accel_key->accel_flags & GTK_ACCEL_VISIBLE))
-        {
-          gchar *escaped = g_markup_escape_text (tooltip, -1);
-          gchar *accel   = gtk_accelerator_get_label (accel_key->accel_key,
-                                                      accel_key->accel_mods);
-          gchar *tmp     = g_strdup_printf ("%s  <b>%s</b>", escaped, accel);
-
-          g_free (accel);
-          g_free (escaped);
-
-          gimp_help_set_help_data_with_markup (widget, tmp, help_id);
-          g_free (tmp);
-        }
-      else
-        {
-          gimp_help_set_help_data (widget, tooltip, help_id);
-        }
+      gimp_help_set_help_data_with_markup (widget, tmp, help_id);
+      g_free (tmp);
+    }
+  else
+    {
+      gimp_help_set_help_data (widget, tooltip, help_id);
     }
 }
 
@@ -1058,20 +1028,20 @@ static void   gimp_accel_help_widget_weak_notify (gpointer  accel_group,
 
 static void
 gimp_accel_help_accel_group_weak_notify (gpointer  widget,
-                                         GObject  *where_accel_group_was)
+                                         GObject  *where_action_was)
 {
   g_object_weak_unref (widget,
                        gimp_accel_help_widget_weak_notify,
-                       where_accel_group_was);
+                       where_action_was);
 
-  g_object_set_data (widget, "gimp-accel-group", NULL);
+  g_object_set_data (widget, "gimp-accel-help-action", NULL);
 }
 
 static void
-gimp_accel_help_widget_weak_notify (gpointer  accel_group,
+gimp_accel_help_widget_weak_notify (gpointer  action,
                                     GObject  *where_widget_was)
 {
-  g_object_weak_unref (accel_group,
+  g_object_weak_unref (action,
                        gimp_accel_help_accel_group_weak_notify,
                        where_widget_was);
 }
@@ -1080,53 +1050,47 @@ void
 gimp_widget_set_accel_help (GtkWidget  *widget,
                             GimpAction *action)
 {
-  GtkAccelGroup *accel_group;
-  GClosure      *accel_closure;
+  GimpAction *prev_action;
 
-  accel_group = g_object_get_data (G_OBJECT (widget), "gimp-accel-group");
+  prev_action = g_object_get_data (G_OBJECT (widget), "gimp-accel-help-action");
 
-  if (accel_group)
+  if (prev_action)
     {
-      g_signal_handlers_disconnect_by_func (accel_group,
-                                            gimp_widget_accel_changed,
+      g_signal_handlers_disconnect_by_func (prev_action,
+                                            gimp_widget_accels_changed,
                                             widget);
-      g_object_weak_unref (G_OBJECT (accel_group),
+      g_object_weak_unref (G_OBJECT (action),
                            gimp_accel_help_accel_group_weak_notify,
                            widget);
       g_object_weak_unref (G_OBJECT (widget),
                            gimp_accel_help_widget_weak_notify,
-                           accel_group);
-      g_object_set_data (G_OBJECT (widget), "gimp-accel-group", NULL);
+                           action);
+      g_object_set_data (G_OBJECT (widget), "gimp-accel-help-action", NULL);
     }
 
-  accel_closure = gimp_action_get_accel_closure (action);
-
-  if (accel_closure)
+  if (action)
     {
-      accel_group = gtk_accel_group_from_accel_closure (accel_closure);
+      gchar **accels;
 
-      g_object_set_data (G_OBJECT (widget), "gimp-accel-group",
-                         accel_group);
-      g_object_weak_ref (G_OBJECT (accel_group),
+      g_object_set_data (G_OBJECT (widget), "gimp-accel-help-action",
+                         action);
+      g_object_weak_ref (G_OBJECT (action),
                          gimp_accel_help_accel_group_weak_notify,
                          widget);
       g_object_weak_ref (G_OBJECT (widget),
                          gimp_accel_help_widget_weak_notify,
-                         accel_group);
+                         action);
 
-      g_object_set_data (G_OBJECT (widget), "gimp-accel-closure",
-                         accel_closure);
       g_object_set_data (G_OBJECT (widget), "gimp-accel-action",
                          action);
 
-      g_signal_connect_object (accel_group, "accel-changed",
-                               G_CALLBACK (gimp_widget_accel_changed),
+      g_signal_connect_object (action, "accels-changed",
+                               G_CALLBACK (gimp_widget_accels_changed),
                                widget, 0);
 
-      gimp_widget_accel_changed (accel_group,
-                                 0, 0,
-                                 accel_closure,
-                                 widget);
+      accels = gimp_action_get_display_accels (action);
+      gimp_widget_accels_changed (action, (const gchar **) accels, widget);
+      g_strfreev (accels);
     }
   else
     {
