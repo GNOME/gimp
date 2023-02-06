@@ -455,19 +455,15 @@ windows_actions_update_display_accels (GimpActionGroup *group)
 
       if (action)
         {
-          const gchar *accel_path;
-          guint        accel_key;
-
-          accel_path = gimp_action_get_accel_path (action);
+          gchar *accel;
 
           if (i < 9)
-            accel_key = GDK_KEY_1 + i;
+            accel = gtk_accelerator_name (GDK_KEY_1 + i, GDK_MOD1_MASK);
           else
-            accel_key = GDK_KEY_0;
+            accel = gtk_accelerator_name (GDK_KEY_0 + i, GDK_MOD1_MASK);
 
-          gtk_accel_map_change_entry (accel_path,
-                                      accel_key, GDK_MOD1_MASK,
-                                      TRUE);
+          gimp_action_set_accels (action, (const gchar*[]) { accel, NULL });
+          g_free (accel);
         }
     }
 }

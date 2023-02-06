@@ -386,19 +386,6 @@ gimp_action_is_sensitive (GimpAction   *action,
 }
 
 void
-gimp_action_set_accel_path (GimpAction  *action,
-                            const gchar *accel_path)
-{
-  gtk_action_set_accel_path ((GtkAction *) action, accel_path);
-}
-
-const gchar *
-gimp_action_get_accel_path (GimpAction *action)
-{
-  return gtk_action_get_accel_path ((GtkAction *) action);
-}
-
-void
 gimp_action_set_accel_group (GimpAction  *action,
                              GtkAccelGroup *accel_group)
 {

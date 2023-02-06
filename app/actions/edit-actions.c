@@ -235,7 +235,6 @@ edit_actions_setup (GimpActionGroup *group)
   GimpContext *context = gimp_get_user_context (group->gimp);
   GimpRGB      color;
   GimpPattern *pattern;
-  GimpAction  *action;
 
   gimp_action_group_add_actions (group, "edit-action",
                                  edit_actions,
@@ -250,11 +249,6 @@ edit_actions_setup (GimpActionGroup *group)
                                       edit_fill_actions,
                                       G_N_ELEMENTS (edit_fill_actions),
                                       edit_fill_cmd_callback);
-
-  action = gimp_action_group_get_action (group,
-                                         "edit-paste-as-new-image-short");
-  gimp_action_set_accel_path (action,
-                              "<Actions>/edit/edit-paste-as-new-image");
 
   g_signal_connect_object (context, "foreground-changed",
                            G_CALLBACK (edit_actions_foreground_changed),
