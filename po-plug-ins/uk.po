@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-01 20:28+0000\n"
-"PO-Revision-Date: 2023-02-02 10:59+0200\n"
+"POT-Creation-Date: 2023-02-06 05:13+0000\n"
+"PO-Revision-Date: 2023-02-06 11:39+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -44,10 +44,10 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/common/tile-small.c:308 plug-ins/common/van-gogh-lic.c:913
 #: plug-ins/common/warp.c:375 plug-ins/common/wavelet-decompose.c:190
 #: plug-ins/file-dds/dds.c:519 plug-ins/flame/flame.c:241
-#: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:212
+#: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:178
 #: plug-ins/gradient-flare/gradient-flare.c:935
-#: plug-ins/ifs-compose/ifs-compose.c:530 plug-ins/imagemap/imap_main.c:200
+#: plug-ins/ifs-compose/ifs-compose.c:533 plug-ins/imagemap/imap_main.c:200
 #: plug-ins/lighting/lighting-main.c:404
 #: plug-ins/map-object/map-object-main.c:496 plug-ins/pagecurl/pagecurl.c:302
 #, c-format
@@ -93,17 +93,17 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1669
 #: plug-ins/fractal-explorer/fractal-explorer.c:875
 #: plug-ins/fractal-explorer/fractal-explorer.c:1269
-#: plug-ins/gfig/gfig-dialog.c:296 plug-ins/gfig/gfig-dialog.c:648
-#: plug-ins/gfig/gfig-dialog.c:697 plug-ins/gimpressionist/brush.c:270
+#: plug-ins/gfig/gfig-dialog.c:349 plug-ins/gfig/gfig-dialog.c:776
+#: plug-ins/gfig/gfig-dialog.c:826 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/gimpressionist.c:142
 #: plug-ins/gimpressionist/orientmap.c:528
 #: plug-ins/gimpressionist/presets.c:642 plug-ins/gimpressionist/sizemap.c:401
 #: plug-ins/gradient-flare/gradient-flare.c:2517
 #: plug-ins/gradient-flare/gradient-flare.c:3367
 #: plug-ins/gradient-flare/gradient-flare.c:3479
-#: plug-ins/ifs-compose/ifs-compose.c:951
-#: plug-ins/ifs-compose/ifs-compose.c:2597
-#: plug-ins/ifs-compose/ifs-compose.c:2634 plug-ins/imagemap/imap_browse.c:80
+#: plug-ins/ifs-compose/ifs-compose.c:954
+#: plug-ins/ifs-compose/ifs-compose.c:2600
+#: plug-ins/ifs-compose/ifs-compose.c:2637 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:71
 #: plug-ins/imagemap/imap_file.c:124 plug-ins/lighting/lighting-ui.c:1038
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
@@ -189,7 +189,7 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:2518
 #: plug-ins/gradient-flare/gradient-flare.c:3480
-#: plug-ins/ifs-compose/ifs-compose.c:952
+#: plug-ins/ifs-compose/ifs-compose.c:955
 #: plug-ins/imagemap/imap_default_dialog.c:109
 #: plug-ins/lighting/lighting-ui.c:1039
 #: plug-ins/map-object/map-object-ui.c:1318 plug-ins/pagecurl/pagecurl.c:497
@@ -475,7 +475,7 @@ msgstr "_Вертикально"
 #: plug-ins/file-psd/psd-image-res-load.c:1076
 #: plug-ins/file-psd/psd-load.c:2502 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1576
-#: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1327
+#: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1285
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
 #: plug-ins/screenshot/screenshot-win32.c:315 plug-ins/twain/twain.c:661
@@ -811,8 +811,8 @@ msgstr "База випадковості"
 #: plug-ins/flame/flame.c:1104
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:801
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1632
-#: plug-ins/gfig/gfig-dialog.c:649 plug-ins/ifs-compose/ifs-compose.c:948
-#: plug-ins/ifs-compose/ifs-compose.c:2635 plug-ins/imagemap/imap_browse.c:81
+#: plug-ins/gfig/gfig-dialog.c:777 plug-ins/ifs-compose/ifs-compose.c:951
+#: plug-ins/ifs-compose/ifs-compose.c:2638 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:72 plug-ins/lighting/lighting-ui.c:608
 #: plug-ins/lighting/lighting-ui.c:1308
 msgid "_Open"
@@ -827,9 +827,9 @@ msgstr "_Відкрити"
 #: plug-ins/flame/flame.c:1112
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:818
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1670
-#: plug-ins/gfig/gfig-dialog.c:698 plug-ins/gimpressionist/brush.c:271
-#: plug-ins/ifs-compose/ifs-compose.c:949
-#: plug-ins/ifs-compose/ifs-compose.c:2598 plug-ins/imagemap/imap_file.c:125
+#: plug-ins/gfig/gfig-dialog.c:827 plug-ins/gimpressionist/brush.c:271
+#: plug-ins/ifs-compose/ifs-compose.c:952
+#: plug-ins/ifs-compose/ifs-compose.c:2601 plug-ins/imagemap/imap_file.c:125
 #: plug-ins/lighting/lighting-ui.c:601 plug-ins/lighting/lighting-ui.c:1164
 msgid "_Save"
 msgstr "_Зберегти"
@@ -992,10 +992,10 @@ msgstr "Графік поточних параметрів"
 
 #: plug-ins/common/cml-explorer.c:1983 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:168
-#: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:297
-#: plug-ins/gfig/gfig-dialog.c:889 plug-ins/gfig/gfig-dialog.c:1255
-#: plug-ins/gfig/gfig-dialog.c:1399 plug-ins/ifs-compose/ifs-compose.c:1251
-#: plug-ins/imagemap/imap_menu.c:156 plug-ins/metadata/metadata-viewer.c:287
+#: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:350
+#: plug-ins/gfig/gfig-dialog.c:1213 plug-ins/gfig/gfig-dialog.c:1358
+#: plug-ins/ifs-compose/ifs-compose.c:1254 plug-ins/imagemap/imap_menu.c:156
+#: plug-ins/metadata/metadata-viewer.c:287
 msgid "_Close"
 msgstr "З_акрити"
 
@@ -1021,7 +1021,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
-#: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2457
+#: plug-ins/gfig/gfig.c:1040 plug-ins/ifs-compose/ifs-compose.c:2460
 #: plug-ins/lighting/lighting-ui.c:1233
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1060,7 +1060,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/file-psd/psd-save.c:2218 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1855
-#: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
+#: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:670
 #: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
 #: plug-ins/lighting/lighting-ui.c:1377
 #, c-format
@@ -1121,7 +1121,7 @@ msgstr "Перебудувати мапу кольорів"
 #: plug-ins/common/sample-colorize.c:1413
 #: plug-ins/common/sphere-designer.c:2631 plug-ins/common/tile-small.c:531
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:809
-#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:950
+#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:953
 #: plug-ins/selection-to-path/selection-to-path.c:412
 msgid "_Reset"
 msgstr "_Скинути"
@@ -1488,7 +1488,7 @@ msgid "Automatic pre_view"
 msgstr "_Автоматичний перегляд"
 
 #. Options area, bottom of column
-#: plug-ins/common/curve-bend.c:1300 plug-ins/gfig/gfig-dialog.c:1252
+#: plug-ins/common/curve-bend.c:1300 plug-ins/gfig/gfig-dialog.c:1210
 msgid "Options"
 msgstr "Параметри"
 
@@ -1731,7 +1731,7 @@ msgid "Yellow"
 msgstr "Жовтий"
 
 #: plug-ins/common/decompose.c:215 plug-ins/common/warp.c:617
-#: plug-ins/flame/flame.c:1223 plug-ins/gfig/gfig-dialog.c:1495
+#: plug-ins/flame/flame.c:1223 plug-ins/gfig/gfig-dialog.c:1454
 msgid "Black"
 msgstr "Чорний"
 
@@ -5110,7 +5110,7 @@ msgstr "Малює сітку на зображенні"
 msgid "Drawing grid"
 msgstr "Малювання сітки"
 
-#: plug-ins/common/grid.c:757 plug-ins/gfig/gfig-dialog.c:1396
+#: plug-ins/common/grid.c:757 plug-ins/gfig/gfig-dialog.c:1355
 #: plug-ins/imagemap/imap_menu.c:223
 msgid "Grid"
 msgstr "Сітка"
@@ -5482,7 +5482,7 @@ msgstr "Текстура"
 
 #: plug-ins/common/qbist.c:1024
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:683
-#: plug-ins/gfig/gfig-dialog.c:895 plug-ins/imagemap/imap_menu.c:162
+#: plug-ins/imagemap/imap_menu.c:162
 msgid "_Undo"
 msgstr "В_ернути"
 
@@ -5773,6 +5773,7 @@ msgid "Wood"
 msgstr "Дерево"
 
 #: plug-ins/common/sphere-designer.c:343 plug-ins/flame/flame.c:820
+#: plug-ins/gfig/gfig-dialog.c:394
 msgid "Spiral"
 msgstr "Спіраль"
 
@@ -5866,7 +5867,7 @@ msgstr "Вікно вибору кольору"
 
 #. Scale
 #: plug-ins/common/sphere-designer.c:2833 plug-ins/gimpressionist/paper.c:191
-#: plug-ins/ifs-compose/ifs-compose.c:706
+#: plug-ins/ifs-compose/ifs-compose.c:709
 msgid "Scale:"
 msgstr "Масштаб:"
 
@@ -5974,7 +5975,7 @@ msgstr "Дрібна черепиця"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:498 plug-ins/ifs-compose/ifs-compose.c:762
+#: plug-ins/common/tile-small.c:498 plug-ins/ifs-compose/ifs-compose.c:765
 msgid "Flip"
 msgstr "Віддзеркалення"
 
@@ -6255,7 +6256,7 @@ msgstr "Розмір кроку:"
 
 #: plug-ins/common/warp.c:543
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:762
-#: plug-ins/ifs-compose/ifs-compose.c:1282
+#: plug-ins/ifs-compose/ifs-compose.c:1285
 msgid "Iterations:"
 msgstr "Число повторів:"
 
@@ -6329,7 +6330,7 @@ msgid "Vector mag:"
 msgstr "Довжина вектора:"
 
 #. Angle
-#: plug-ins/common/warp.c:808 plug-ins/ifs-compose/ifs-compose.c:720
+#: plug-ins/common/warp.c:808 plug-ins/ifs-compose/ifs-compose.c:723
 msgid "Angle:"
 msgstr "Кут:"
 
@@ -8352,7 +8353,7 @@ msgstr "Вихор"
 msgid "Horseshoe"
 msgstr "Підкова"
 
-#: plug-ins/flame/flame.c:815 plug-ins/gfig/gfig-dialog.c:1477
+#: plug-ins/flame/flame.c:815 plug-ins/gfig/gfig-dialog.c:1436
 msgid "Polar"
 msgstr "Полярність"
 
@@ -8518,7 +8519,7 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:541
-#: plug-ins/gfig/gfig-dialog.c:280 plug-ins/gimpressionist/utils.c:139
+#: plug-ins/gfig/gfig-dialog.c:333 plug-ins/gimpressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:998
 #, c-format
 msgid ""
@@ -8893,265 +8894,310 @@ msgstr "Перечитати фрактали"
 msgid "Add FractalExplorer Path"
 msgstr "Додати контур дослідника фракталів"
 
-#: plug-ins/gfig/gfig-bezier.c:401
+#: plug-ins/gfig/gfig-bezier.c:402
 msgid "Closed"
 msgstr "Замкнута"
 
-#: plug-ins/gfig/gfig-bezier.c:406
+#: plug-ins/gfig/gfig-bezier.c:407
 msgid "Close curve on completion"
 msgstr "Замикати криву на завершенні"
 
-#: plug-ins/gfig/gfig-bezier.c:411
+#: plug-ins/gfig/gfig-bezier.c:412
 msgid "Show Line Frame"
 msgstr "Показувати кадр лінії"
 
-#: plug-ins/gfig/gfig-bezier.c:416
+#: plug-ins/gfig/gfig-bezier.c:417
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr "Намалювати лінію між контрольними точками. Лише при створенні кривої."
 
 #. Start building the dialog up
-#: plug-ins/gfig/gfig-dialog.c:292
+#: plug-ins/gfig/gfig-dialog.c:345
 msgid "Gfig"
 msgstr "Gfig"
 
-#. Tool options notebook
-#: plug-ins/gfig/gfig-dialog.c:344
-msgid "Tool Options"
-msgstr "Параметри інструменту"
+#: plug-ins/gfig/gfig-dialog.c:380
+#| msgid "Linear"
+msgid "Line"
+msgstr "Лінія"
 
-#: plug-ins/gfig/gfig-dialog.c:361
-msgid "_Stroke"
-msgstr "_Обвести"
-
-#. Fill frame on right side
-#: plug-ins/gfig/gfig-dialog.c:407
-msgid "Fill"
-msgstr "Заповнення"
-
-#: plug-ins/gfig/gfig-dialog.c:421
-msgid "No fill"
-msgstr "Немає"
-
-#: plug-ins/gfig/gfig-dialog.c:422
-msgid "Color fill"
-msgstr "Колір"
-
-#: plug-ins/gfig/gfig-dialog.c:423
-msgid "Pattern fill"
-msgstr "Текстура"
-
-#: plug-ins/gfig/gfig-dialog.c:424
-msgid "Shape gradient"
-msgstr "Градієнт за формою"
-
-#: plug-ins/gfig/gfig-dialog.c:425
-msgid "Vertical gradient"
-msgstr "Вертикальний градієнти"
-
-#: plug-ins/gfig/gfig-dialog.c:426
-msgid "Horizontal gradient"
-msgstr "Горизонтальний градієнт"
-
-#. "show image" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:488
-msgid "Show image"
-msgstr "Показати зображення"
-
-#. "snap to grid" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:501
-msgctxt "checkbutton"
-msgid "Snap to grid"
-msgstr "Прилипати до сітки"
-
-#. "show grid" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:510
-msgid "Show grid"
-msgstr "Показати сітку"
-
-#: plug-ins/gfig/gfig-dialog.c:644
-msgid "Load Gfig Object Collection"
-msgstr "Завантаження набору об'єктів Gfig"
-
-#: plug-ins/gfig/gfig-dialog.c:693
-msgid "Save Gfig Drawing"
-msgstr "Збереження малюнку Gfig"
-
-#: plug-ins/gfig/gfig-dialog.c:857
-msgid "First Gfig"
-msgstr "Перший Gfig"
-
-#: plug-ins/gfig/gfig-dialog.c:881 plug-ins/imagemap/imap_menu.c:148
-msgid "_Open..."
-msgstr "_Відкрити…"
-
-#: plug-ins/gfig/gfig-dialog.c:885 plug-ins/imagemap/imap_menu.c:151
-msgid "_Save..."
-msgstr "З_берегти…"
-
-#: plug-ins/gfig/gfig-dialog.c:899
-msgid "_Clear"
-msgstr "О_чистити"
-
-#: plug-ins/gfig/gfig-dialog.c:903 plug-ins/imagemap/imap_menu.c:223
-msgid "_Grid"
-msgstr "С_ітка"
-
-#: plug-ins/gfig/gfig-dialog.c:907
-msgid "_Preferences..."
-msgstr "_Параметри..."
-
-#: plug-ins/gfig/gfig-dialog.c:911
-msgid "_Raise"
-msgstr "_Підняти"
-
-#: plug-ins/gfig/gfig-dialog.c:911
-msgid "Raise selected object"
-msgstr "Підняти вибрані об'єкти"
-
-#: plug-ins/gfig/gfig-dialog.c:915
-msgid "_Lower"
-msgstr "Н_ижньої"
-
-#: plug-ins/gfig/gfig-dialog.c:915
-msgid "Lower selected object"
-msgstr "Опустити вибрані об'єкти"
-
-#: plug-ins/gfig/gfig-dialog.c:919
-msgid "Raise to _top"
-msgstr "_Підняти вгору"
-
-#: plug-ins/gfig/gfig-dialog.c:919
-msgid "Raise selected object to top"
-msgstr "Підняти вибрані об'єкти на передній план"
-
-#: plug-ins/gfig/gfig-dialog.c:923
-msgid "Lower to _bottom"
-msgstr "_Опустити вниз"
-
-#: plug-ins/gfig/gfig-dialog.c:923
-msgid "Lower selected object to bottom"
-msgstr "Опустити вибрані об'єкт до самого низу"
-
-#: plug-ins/gfig/gfig-dialog.c:927
-msgid "_Previous"
-msgstr "_Попереднє"
-
-#: plug-ins/gfig/gfig-dialog.c:927
-msgid "Show previous object"
-msgstr "Показати попередній об'єкт"
-
-#: plug-ins/gfig/gfig-dialog.c:931
-msgid "_Next"
-msgstr "_Наступне"
-
-#: plug-ins/gfig/gfig-dialog.c:931
-msgid "Show next object"
-msgstr "Показати наступний об'єкт"
-
-#: plug-ins/gfig/gfig-dialog.c:935
-msgid "Show _all"
-msgstr "Показати _всі"
-
-#: plug-ins/gfig/gfig-dialog.c:935
-msgid "Show all objects"
-msgstr "Показати всі об'єкти"
-
-#: plug-ins/gfig/gfig-dialog.c:941
+#: plug-ins/gfig/gfig-dialog.c:380
 msgid "Create line"
 msgstr "Створити лінію"
 
-#: plug-ins/gfig/gfig-dialog.c:944
+#: plug-ins/gfig/gfig-dialog.c:382 plug-ins/gfig/gfig-dialog.c:1435
+#: plug-ins/imagemap/imap_menu.c:234
+msgid "Rectangle"
+msgstr "Прямокутник"
+
+#: plug-ins/gfig/gfig-dialog.c:382
 msgid "Create rectangle"
 msgstr "Створити прямокутник"
 
-#: plug-ins/gfig/gfig-dialog.c:947
+#: plug-ins/gfig/gfig-dialog.c:384
+#: plug-ins/gradient-flare/gradient-flare.c:4021
+#: plug-ins/imagemap/imap_menu.c:236
+msgid "Circle"
+msgstr "Коло"
+
+#: plug-ins/gfig/gfig-dialog.c:384
 msgid "Create circle"
 msgstr "Створити коло"
 
-#: plug-ins/gfig/gfig-dialog.c:950
+#: plug-ins/gfig/gfig-dialog.c:386
+msgid "Ellipse"
+msgstr "Еліпс"
+
+#: plug-ins/gfig/gfig-dialog.c:386
 msgid "Create ellipse"
 msgstr "Створити еліпс"
 
-#: plug-ins/gfig/gfig-dialog.c:953
+#: plug-ins/gfig/gfig-dialog.c:388
+msgid "Arc"
+msgstr "Дуга"
+
+#: plug-ins/gfig/gfig-dialog.c:388
 msgid "Create arc"
 msgstr "Створити дугу"
 
-#: plug-ins/gfig/gfig-dialog.c:956
+#: plug-ins/gfig/gfig-dialog.c:390
+#: plug-ins/gradient-flare/gradient-flare.c:4038
+#: plug-ins/imagemap/imap_menu.c:238
+msgid "Polygon"
+msgstr "Багатокутник"
+
+#: plug-ins/gfig/gfig-dialog.c:390
 msgid "Create reg polygon"
 msgstr "Створити правильний багатокутник"
 
-#: plug-ins/gfig/gfig-dialog.c:959
+#: plug-ins/gfig/gfig-dialog.c:392
+msgid "Star"
+msgstr "Зірка"
+
+#: plug-ins/gfig/gfig-dialog.c:392
 msgid "Create star"
 msgstr "Створити зірку"
 
-#: plug-ins/gfig/gfig-dialog.c:962
+#: plug-ins/gfig/gfig-dialog.c:394
 msgid "Create spiral"
 msgstr "Створити спіраль"
 
-#: plug-ins/gfig/gfig-dialog.c:965
+#: plug-ins/gfig/gfig-dialog.c:396
+msgid "Bezier"
+msgstr "Крива Безьє"
+
+#: plug-ins/gfig/gfig-dialog.c:396
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Створити криву Безьє. Shift + Кнопка миші завершує створення об'єкта."
 
-#: plug-ins/gfig/gfig-dialog.c:969
+#: plug-ins/gfig/gfig-dialog.c:399
+#| msgid "Move an object"
+msgid "Move Object"
+msgstr "Пересунути об'єкт"
+
+#: plug-ins/gfig/gfig-dialog.c:399
 msgid "Move an object"
 msgstr "Перемістити об'єкт"
 
-#: plug-ins/gfig/gfig-dialog.c:972
+#: plug-ins/gfig/gfig-dialog.c:401
+#| msgid "Mouse Pointer"
+msgid "Move Point"
+msgstr "Пересунути точку"
+
+#: plug-ins/gfig/gfig-dialog.c:401
 msgid "Move a single point"
 msgstr "Перемістити одну точку"
 
-#: plug-ins/gfig/gfig-dialog.c:975
-msgid "Copy an object"
-msgstr "Копіювати об'єкт"
-
-#: plug-ins/gfig/gfig-dialog.c:978
-msgid "Delete an object"
-msgstr "Видалити об'єкт"
-
-#: plug-ins/gfig/gfig-dialog.c:981
-msgid "Select an object"
-msgstr "Вибрати об'єкт"
-
-#: plug-ins/gfig/gfig-dialog.c:1063
-msgid "This tool has no options"
-msgstr "Цей інструмент не має параметрів"
-
-#. Put buttons in
-#: plug-ins/gfig/gfig-dialog.c:1274
-msgid "Show position"
-msgstr "Показати позицію"
-
-#: plug-ins/gfig/gfig-dialog.c:1286
-msgid "Show control points"
-msgstr "Показати контрольні точки"
-
-#: plug-ins/gfig/gfig-dialog.c:1302
-msgid "Antialiasing"
-msgstr "Згладжування"
-
-#: plug-ins/gfig/gfig-dialog.c:1319
-msgid "Max undo:"
-msgstr "Макс. кількість скасувань:"
-
-#: plug-ins/gfig/gfig-dialog.c:1326 plug-ins/gimpressionist/general.c:184
-msgid "Transparent"
-msgstr "Прозорий"
-
-#: plug-ins/gfig/gfig-dialog.c:1328
-msgid "Foreground"
-msgstr "Передній план"
-
-#: plug-ins/gfig/gfig-dialog.c:1329 plug-ins/gfig/gfig-dialog.c:1496
-msgid "White"
-msgstr "Білий"
-
-#: plug-ins/gfig/gfig-dialog.c:1330 plug-ins/imagemap/imap_cmd_copy.c:53
+#: plug-ins/gfig/gfig-dialog.c:403 plug-ins/gfig/gfig-dialog.c:1288
+#: plug-ins/imagemap/imap_cmd_copy.c:53
 #: plug-ins/imagemap/imap_cmd_copy_object.c:54
 #: plug-ins/imagemap/imap_menu.c:168
 msgid "Copy"
 msgstr "Копіювати"
 
-#: plug-ins/gfig/gfig-dialog.c:1339
+#: plug-ins/gfig/gfig-dialog.c:403
+msgid "Copy an object"
+msgstr "Копіювати об'єкт"
+
+#: plug-ins/gfig/gfig-dialog.c:405 plug-ins/ifs-compose/ifs-compose.c:1000
+#: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:172
+msgid "Delete"
+msgstr "Видалити"
+
+#: plug-ins/gfig/gfig-dialog.c:405
+msgid "Delete an object"
+msgstr "Видалити об'єкт"
+
+#: plug-ins/gfig/gfig-dialog.c:407 plug-ins/imagemap/imap_cmd_select.c:52
+msgid "Select"
+msgstr "Вибрати"
+
+#: plug-ins/gfig/gfig-dialog.c:407
+msgid "Select an object"
+msgstr "Вибрати об'єкт"
+
+#: plug-ins/gfig/gfig-dialog.c:410
+#| msgid "_Raise"
+msgid "Raise"
+msgstr "Підняти"
+
+#: plug-ins/gfig/gfig-dialog.c:410
+msgid "Raise selected object"
+msgstr "Підняти вибрані об'єкти"
+
+#: plug-ins/gfig/gfig-dialog.c:412
+#| msgid "_Lower"
+msgid "Lower"
+msgstr "Нижче"
+
+#: plug-ins/gfig/gfig-dialog.c:412
+msgid "Lower selected object"
+msgstr "Опустити вибрані об'єкти"
+
+#: plug-ins/gfig/gfig-dialog.c:414
+msgid "To Top"
+msgstr "На початок"
+
+#: plug-ins/gfig/gfig-dialog.c:414
+msgid "Raise selected object to top"
+msgstr "Підняти вибрані об'єкти на передній план"
+
+#: plug-ins/gfig/gfig-dialog.c:416
+#| msgid "Bottom:"
+msgid "To Bottom"
+msgstr "У кінець"
+
+#: plug-ins/gfig/gfig-dialog.c:416
+msgid "Lower selected object to bottom"
+msgstr "Опустити вибрані об'єкт до самого низу"
+
+#: plug-ins/gfig/gfig-dialog.c:419
+#| msgid "Show previous object"
+msgid "Show Previous"
+msgstr "Показати попереднє"
+
+#: plug-ins/gfig/gfig-dialog.c:419
+msgid "Show previous object"
+msgstr "Показати попередній об'єкт"
+
+#: plug-ins/gfig/gfig-dialog.c:421
+#| msgid "S_how Index"
+msgid "Show Next"
+msgstr "Показати наступне"
+
+#: plug-ins/gfig/gfig-dialog.c:421
+msgid "Show next object"
+msgstr "Показати наступний об'єкт"
+
+#: plug-ins/gfig/gfig-dialog.c:423
+#| msgid "Show _all"
+msgid "Show All"
+msgstr "Показати всі"
+
+#: plug-ins/gfig/gfig-dialog.c:423
+#| msgid "Show all objects"
+msgid "Show all object"
+msgstr "Показати всі об'єкти"
+
+#. Tool options notebook
+#: plug-ins/gfig/gfig-dialog.c:451
+msgid "Tool Options"
+msgstr "Параметри інструменту"
+
+#: plug-ins/gfig/gfig-dialog.c:468
+msgid "_Stroke"
+msgstr "_Обвести"
+
+#. Fill frame on right side
+#: plug-ins/gfig/gfig-dialog.c:514
+msgid "Fill"
+msgstr "Заповнення"
+
+#: plug-ins/gfig/gfig-dialog.c:528
+msgid "No fill"
+msgstr "Немає"
+
+#: plug-ins/gfig/gfig-dialog.c:529
+msgid "Color fill"
+msgstr "Колір"
+
+#: plug-ins/gfig/gfig-dialog.c:530
+msgid "Pattern fill"
+msgstr "Текстура"
+
+#: plug-ins/gfig/gfig-dialog.c:531
+msgid "Shape gradient"
+msgstr "Градієнт за формою"
+
+#: plug-ins/gfig/gfig-dialog.c:532
+msgid "Vertical gradient"
+msgstr "Вертикальний градієнти"
+
+#: plug-ins/gfig/gfig-dialog.c:533
+msgid "Horizontal gradient"
+msgstr "Горизонтальний градієнт"
+
+#. "show image" checkbutton at bottom of style frame
+#: plug-ins/gfig/gfig-dialog.c:595
+msgid "Show image"
+msgstr "Показати зображення"
+
+#. "snap to grid" checkbutton at bottom of style frame
+#: plug-ins/gfig/gfig-dialog.c:608
+msgctxt "checkbutton"
+msgid "Snap to grid"
+msgstr "Прилипати до сітки"
+
+#. "show grid" checkbutton at bottom of style frame
+#: plug-ins/gfig/gfig-dialog.c:617
+msgid "Show grid"
+msgstr "Показати сітку"
+
+#: plug-ins/gfig/gfig-dialog.c:772
+msgid "Load Gfig Object Collection"
+msgstr "Завантаження набору об'єктів Gfig"
+
+#: plug-ins/gfig/gfig-dialog.c:822
+msgid "Save Gfig Drawing"
+msgstr "Збереження малюнку Gfig"
+
+#: plug-ins/gfig/gfig-dialog.c:997
+msgid "First Gfig"
+msgstr "Перший Gfig"
+
+#: plug-ins/gfig/gfig-dialog.c:1016
+msgid "This tool has no options"
+msgstr "Цей інструмент не має параметрів"
+
+#. Put buttons in
+#: plug-ins/gfig/gfig-dialog.c:1232
+msgid "Show position"
+msgstr "Показати позицію"
+
+#: plug-ins/gfig/gfig-dialog.c:1244
+msgid "Show control points"
+msgstr "Показати контрольні точки"
+
+#: plug-ins/gfig/gfig-dialog.c:1260
+msgid "Antialiasing"
+msgstr "Згладжування"
+
+#: plug-ins/gfig/gfig-dialog.c:1277
+msgid "Max undo:"
+msgstr "Макс. кількість скасувань:"
+
+#: plug-ins/gfig/gfig-dialog.c:1284 plug-ins/gimpressionist/general.c:184
+msgid "Transparent"
+msgstr "Прозорий"
+
+#: plug-ins/gfig/gfig-dialog.c:1286
+msgid "Foreground"
+msgstr "Передній план"
+
+#: plug-ins/gfig/gfig-dialog.c:1287 plug-ins/gfig/gfig-dialog.c:1455
+msgid "White"
+msgstr "Білий"
+
+#: plug-ins/gfig/gfig-dialog.c:1297
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -9159,93 +9205,89 @@ msgstr ""
 "Тип тла шару. \"Копіювати\" призведе до копіювання попереднього шару перед "
 "виконанням малювання."
 
-#: plug-ins/gfig/gfig-dialog.c:1345
+#: plug-ins/gfig/gfig-dialog.c:1303
 msgid "Background:"
 msgstr "Тло:"
 
-#: plug-ins/gfig/gfig-dialog.c:1348
+#: plug-ins/gfig/gfig-dialog.c:1306
 msgid "Feather"
 msgstr "Перо"
 
-#: plug-ins/gfig/gfig-dialog.c:1370
+#: plug-ins/gfig/gfig-dialog.c:1328
 msgid "Radius:"
 msgstr "Радіус:"
 
-#: plug-ins/gfig/gfig-dialog.c:1427
+#: plug-ins/gfig/gfig-dialog.c:1386
 msgid "Grid spacing:"
 msgstr "Розмір комірки:"
 
-#: plug-ins/gfig/gfig-dialog.c:1443
+#: plug-ins/gfig/gfig-dialog.c:1402
 msgid "Polar grid sectors desired:"
 msgstr "Сектори полярної сітки:"
 
-#: plug-ins/gfig/gfig-dialog.c:1460
+#: plug-ins/gfig/gfig-dialog.c:1419
 msgid "Polar grid radius interval:"
 msgstr "Інтервал радіусів пол. сітки:"
 
-#: plug-ins/gfig/gfig-dialog.c:1476 plug-ins/imagemap/imap_menu.c:234
-msgid "Rectangle"
-msgstr "Прямокутник"
-
-#: plug-ins/gfig/gfig-dialog.c:1478
+#: plug-ins/gfig/gfig-dialog.c:1437
 msgid "Isometric"
 msgstr "Ізометрична"
 
-#: plug-ins/gfig/gfig-dialog.c:1487
+#: plug-ins/gfig/gfig-dialog.c:1446
 msgid "Grid type:"
 msgstr "Тип сітки:"
 
-#: plug-ins/gfig/gfig-dialog.c:1494
+#: plug-ins/gfig/gfig-dialog.c:1453
 #: plug-ins/gradient-flare/gradient-flare.c:749
 #: plug-ins/metadata/metadata-tags.c:238
 msgid "Normal"
 msgstr "Звичайна"
 
-#: plug-ins/gfig/gfig-dialog.c:1497
+#: plug-ins/gfig/gfig-dialog.c:1456
 msgid "Grey"
 msgstr "Сірий"
 
-#: plug-ins/gfig/gfig-dialog.c:1498
+#: plug-ins/gfig/gfig-dialog.c:1457
 msgid "Darker"
 msgstr "Темніше"
 
-#: plug-ins/gfig/gfig-dialog.c:1499
+#: plug-ins/gfig/gfig-dialog.c:1458
 msgid "Lighter"
 msgstr "Світліше"
 
-#: plug-ins/gfig/gfig-dialog.c:1500
+#: plug-ins/gfig/gfig-dialog.c:1459
 msgid "Very dark"
 msgstr "Дуже темний"
 
-#: plug-ins/gfig/gfig-dialog.c:1509
+#: plug-ins/gfig/gfig-dialog.c:1468
 msgid "Grid color:"
 msgstr "Колір сітки:"
 
-#: plug-ins/gfig/gfig-dialog.c:1728
+#: plug-ins/gfig/gfig-dialog.c:1693
 msgid "Sides:"
 msgstr "Сторони:"
 
-#: plug-ins/gfig/gfig-dialog.c:1737
+#: plug-ins/gfig/gfig-dialog.c:1702
 msgid "Right"
 msgstr "Справа"
 
-#: plug-ins/gfig/gfig-dialog.c:1738
+#: plug-ins/gfig/gfig-dialog.c:1703
 msgid "Left"
 msgstr "Зліва"
 
-#: plug-ins/gfig/gfig-dialog.c:1748 plug-ins/gimpressionist/orientation.c:140
+#: plug-ins/gfig/gfig-dialog.c:1713 plug-ins/gimpressionist/orientation.c:140
 msgid "Orientation:"
 msgstr "Орієнтація:"
 
-#: plug-ins/gfig/gfig-dobject.c:580
+#: plug-ins/gfig/gfig-dobject.c:581
 msgid "Hey, where has the object gone?"
 msgstr "Гей, куди подівся об'єкт?"
 
-#: plug-ins/gfig/gfig-dobject.c:922
+#: plug-ins/gfig/gfig-dobject.c:926
 msgid "Error reading file"
 msgstr "Помилка при зчитуванні файлу"
 
-#: plug-ins/gfig/gfig-dobject.c:1011
+#: plug-ins/gfig/gfig-dobject.c:1024
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Виправлення об'єкта лише для зчитування - ви не зможете зберегти його"
 
@@ -9253,12 +9295,12 @@ msgstr "Виправлення об'єкта лише для зчитуванн�
 msgid "Regular Polygon Number of Sides"
 msgstr "Кількість сторін правильного багатокутника"
 
-#: plug-ins/gfig/gfig-preview.c:319
+#: plug-ins/gfig/gfig-preview.c:322
 msgid "Object Details"
 msgstr "Подробиці про об'єкт"
 
 #. Position labels
-#: plug-ins/gfig/gfig-preview.c:370
+#: plug-ins/gfig/gfig-preview.c:373
 msgid "XY position:"
 msgstr "Позиція XY:"
 
@@ -9270,22 +9312,22 @@ msgstr "Кількість обертів спіралі"
 msgid "Star Number of Points"
 msgstr "Кількість променів зірки"
 
-#: plug-ins/gfig/gfig.c:168
+#: plug-ins/gfig/gfig.c:170
 msgid "_Gfig..."
 msgstr "_Gfig..."
 
-#: plug-ins/gfig/gfig.c:172
+#: plug-ins/gfig/gfig.c:174
 msgid "Create geometric shapes"
 msgstr "Створити геометричні фігури"
 
-#: plug-ins/gfig/gfig.c:782
+#: plug-ins/gfig/gfig.c:976
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Помилка при збереженні фігури як паразита: не вдається приєднати паразита до "
 "малюнка."
 
-#: plug-ins/gfig/gfig.c:812
+#: plug-ins/gfig/gfig.c:1006
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
@@ -10672,16 +10714,6 @@ msgstr "Градієнт ймовірності:"
 msgid "Shape of Second Flares"
 msgstr "Форма другого спалаху"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4021
-#: plug-ins/imagemap/imap_menu.c:236
-msgid "Circle"
-msgstr "Коло"
-
-#: plug-ins/gradient-flare/gradient-flare.c:4038
-#: plug-ins/imagemap/imap_menu.c:238
-msgid "Polygon"
-msgstr "Багатокутник"
-
 #: plug-ins/gradient-flare/gradient-flare.c:4072
 msgid "Random seed:"
 msgstr "База випадковості:"
@@ -10789,16 +10821,16 @@ msgstr ""
 "Помилка при аналізі файлу «%s»:\n"
 "%s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:426
+#: plug-ins/ifs-compose/ifs-compose.c:429
 msgid "_IFS Fractal..."
 msgstr "_IFS фрактал..."
 
-#: plug-ins/ifs-compose/ifs-compose.c:432
+#: plug-ins/ifs-compose/ifs-compose.c:435
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Створити фрактал Iterated Function System (IFS)"
 
 #. X
-#: plug-ins/ifs-compose/ifs-compose.c:678 plug-ins/lighting/lighting-ui.c:546
+#: plug-ins/ifs-compose/ifs-compose.c:681 plug-ins/lighting/lighting-ui.c:546
 #: plug-ins/map-object/map-object-ui.c:663
 #: plug-ins/map-object/map-object-ui.c:717
 #: plug-ins/map-object/map-object-ui.c:977
@@ -10807,7 +10839,7 @@ msgid "X:"
 msgstr "X:"
 
 #. Y
-#: plug-ins/ifs-compose/ifs-compose.c:692 plug-ins/lighting/lighting-ui.c:561
+#: plug-ins/ifs-compose/ifs-compose.c:695 plug-ins/lighting/lighting-ui.c:561
 #: plug-ins/map-object/map-object-ui.c:677
 #: plug-ins/map-object/map-object-ui.c:730
 #: plug-ins/map-object/map-object-ui.c:989
@@ -10817,158 +10849,152 @@ msgid "Y:"
 msgstr "Y:"
 
 #. Asym
-#: plug-ins/ifs-compose/ifs-compose.c:734
+#: plug-ins/ifs-compose/ifs-compose.c:737
 msgid "Asymmetry:"
 msgstr "Асиметрія:"
 
 #. Shear
-#: plug-ins/ifs-compose/ifs-compose.c:748
+#: plug-ins/ifs-compose/ifs-compose.c:751
 msgid "Shear:"
 msgstr "Нахил:"
 
 #. Simple color control section
-#: plug-ins/ifs-compose/ifs-compose.c:793
+#: plug-ins/ifs-compose/ifs-compose.c:796
 msgid "Simple"
 msgstr "Просте"
 
-#: plug-ins/ifs-compose/ifs-compose.c:802
+#: plug-ins/ifs-compose/ifs-compose.c:805
 msgid "IFS Fractal: Target"
 msgstr "IFS фрактал: ціль"
 
-#: plug-ins/ifs-compose/ifs-compose.c:808
+#: plug-ins/ifs-compose/ifs-compose.c:811
 msgid "Scale hue by:"
 msgstr "Масштабувати відтінок за:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:823
+#: plug-ins/ifs-compose/ifs-compose.c:826
 msgid "Scale value by:"
 msgstr "Масштабувати яскравість за:"
 
 #. Full color control section
-#: plug-ins/ifs-compose/ifs-compose.c:840
+#: plug-ins/ifs-compose/ifs-compose.c:843
 msgid "Full"
 msgstr "Повний"
 
-#: plug-ins/ifs-compose/ifs-compose.c:848
+#: plug-ins/ifs-compose/ifs-compose.c:851
 msgid "IFS Fractal: Red"
 msgstr "IFS фрактал: червоний"
 
-#: plug-ins/ifs-compose/ifs-compose.c:856
+#: plug-ins/ifs-compose/ifs-compose.c:859
 msgid "IFS Fractal: Green"
 msgstr "IFS фрактал: зелений"
 
-#: plug-ins/ifs-compose/ifs-compose.c:864
+#: plug-ins/ifs-compose/ifs-compose.c:867
 msgid "IFS Fractal: Blue"
 msgstr "IFS фрактал: синій"
 
-#: plug-ins/ifs-compose/ifs-compose.c:872
+#: plug-ins/ifs-compose/ifs-compose.c:875
 msgid "IFS Fractal: Black"
 msgstr "IFS фрактал: чорний"
 
-#: plug-ins/ifs-compose/ifs-compose.c:944
+#: plug-ins/ifs-compose/ifs-compose.c:947
 msgid "IFS Fractal"
 msgstr "IFS фрактал"
 
-#: plug-ins/ifs-compose/ifs-compose.c:988 plug-ins/imagemap/imap_cmd_move.c:85
+#: plug-ins/ifs-compose/ifs-compose.c:991 plug-ins/imagemap/imap_cmd_move.c:85
 #: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Перемістити"
 
-#: plug-ins/ifs-compose/ifs-compose.c:990
+#: plug-ins/ifs-compose/ifs-compose.c:993
 msgid "Rotate"
 msgstr "Обернути"
 
-#: plug-ins/ifs-compose/ifs-compose.c:992
+#: plug-ins/ifs-compose/ifs-compose.c:995
 msgid "Stretch"
 msgstr "Розтягти"
 
-#: plug-ins/ifs-compose/ifs-compose.c:995
-#| msgid "_New"
+#: plug-ins/ifs-compose/ifs-compose.c:998
 msgid "New"
 msgstr "Створити"
 
-#: plug-ins/ifs-compose/ifs-compose.c:997
-#: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:172
-msgid "Delete"
-msgstr "Видалити"
-
-#: plug-ins/ifs-compose/ifs-compose.c:999 plug-ins/imagemap/imap_menu.c:162
+#: plug-ins/ifs-compose/ifs-compose.c:1002 plug-ins/imagemap/imap_menu.c:162
 msgid "Undo"
 msgstr "Скасувати"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1001 plug-ins/imagemap/imap_menu.c:164
+#: plug-ins/ifs-compose/ifs-compose.c:1004 plug-ins/imagemap/imap_menu.c:164
 msgid "Redo"
 msgstr "Повернути"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1003
+#: plug-ins/ifs-compose/ifs-compose.c:1006
 #: plug-ins/imagemap/imap_cmd_select_all.c:50
 msgid "Select All"
 msgstr "Вибрати все"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1005
+#: plug-ins/ifs-compose/ifs-compose.c:1008
 msgid "Recompute Center"
 msgstr "Переобчислити центр"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1008
+#: plug-ins/ifs-compose/ifs-compose.c:1011
 msgid "Render Options"
 msgstr "Параметри візуалізації"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1067
+#: plug-ins/ifs-compose/ifs-compose.c:1070
 msgid "Spatial Transformation"
 msgstr "Просторове перетворення"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1073
+#: plug-ins/ifs-compose/ifs-compose.c:1076
 msgid "Color Transformation"
 msgstr "Перетворення кольорів"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1083
+#: plug-ins/ifs-compose/ifs-compose.c:1086
 msgid "Relative probability:"
 msgstr "Відносна вірогідність:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1247
+#: plug-ins/ifs-compose/ifs-compose.c:1250
 msgid "IFS Fractal Render Options"
 msgstr "Параметри візуалізації"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1269
+#: plug-ins/ifs-compose/ifs-compose.c:1272
 msgid "Max. memory:"
 msgstr "Макс. пам'ять:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1297
+#: plug-ins/ifs-compose/ifs-compose.c:1300
 msgid "Subdivide:"
 msgstr "Підрозділяти:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1311
+#: plug-ins/ifs-compose/ifs-compose.c:1314
 msgid "Spot radius:"
 msgstr "Радіус плями:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1384
+#: plug-ins/ifs-compose/ifs-compose.c:1387
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Візуалізація IFS (%d/%d)..."
 
-#: plug-ins/ifs-compose/ifs-compose.c:1536
+#: plug-ins/ifs-compose/ifs-compose.c:1539
 #, c-format
 msgid "Transformation %s"
 msgstr "Перетворення %s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2462
+#: plug-ins/ifs-compose/ifs-compose.c:2465
 msgid "Save failed"
 msgstr "Помилка при збереженні"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2545
-#: plug-ins/ifs-compose/ifs-compose.c:2558
+#: plug-ins/ifs-compose/ifs-compose.c:2548
+#: plug-ins/ifs-compose/ifs-compose.c:2561
 msgid "Open failed"
 msgstr "Не вдається відкрити"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2553
+#: plug-ins/ifs-compose/ifs-compose.c:2556
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Файл «%s» не є файлом IFS-фрактала."
 
-#: plug-ins/ifs-compose/ifs-compose.c:2593
+#: plug-ins/ifs-compose/ifs-compose.c:2596
 msgid "Save as IFS Fractal file"
 msgstr "Збереження як файл IFS-фрактала"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2630
+#: plug-ins/ifs-compose/ifs-compose.c:2633
 msgid "Open IFS Fractal file"
 msgstr "Відкривання файлу IFS-фрактала"
 
@@ -11162,10 +11188,6 @@ msgstr "Перемістити вгору"
 #: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_menu.c:170
 msgid "Paste"
 msgstr "Вставити"
-
-#: plug-ins/imagemap/imap_cmd_select.c:52
-msgid "Select"
-msgstr "Вибрати"
 
 #: plug-ins/imagemap/imap_cmd_select_next.c:50
 msgid "Select Next"
@@ -11397,8 +11419,16 @@ msgid "_File"
 msgstr "_Файл"
 
 #: plug-ins/imagemap/imap_menu.c:148
+msgid "_Open..."
+msgstr "_Відкрити…"
+
+#: plug-ins/imagemap/imap_menu.c:148
 msgid "Open"
 msgstr "Відкрити"
+
+#: plug-ins/imagemap/imap_menu.c:151
+msgid "_Save..."
+msgstr "З_берегти…"
 
 #: plug-ins/imagemap/imap_menu.c:151
 msgid "Save"
@@ -11519,6 +11549,10 @@ msgstr "_Масштаб"
 #: plug-ins/imagemap/imap_menu.c:222
 msgid "Area List"
 msgstr "Список областей"
+
+#: plug-ins/imagemap/imap_menu.c:223
+msgid "_Grid"
+msgstr "С_ітка"
 
 #: plug-ins/imagemap/imap_menu.c:232
 msgid "Arrow"
@@ -13119,6 +13153,24 @@ msgstr "_Сканер/Камера..."
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
 
+#~ msgid "_Clear"
+#~ msgstr "О_чистити"
+
+#~ msgid "_Preferences..."
+#~ msgstr "_Параметри..."
+
+#~ msgid "Raise to _top"
+#~ msgstr "_Підняти вгору"
+
+#~ msgid "Lower to _bottom"
+#~ msgstr "_Опустити вниз"
+
+#~ msgid "_Previous"
+#~ msgstr "_Попереднє"
+
+#~ msgid "_Next"
+#~ msgstr "_Наступне"
+
 #~ msgid "Re_center"
 #~ msgstr "Переобчислити _центрувати"
 
@@ -13290,9 +13342,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Find _Again"
 #~ msgstr "Шукати _далі"
-
-#~ msgid "S_how Index"
-#~ msgstr "_Показати зміст"
 
 #~ msgid "Toggle the visibility of the sidebar"
 #~ msgstr "Перемикнути видимість бокової панелі"
