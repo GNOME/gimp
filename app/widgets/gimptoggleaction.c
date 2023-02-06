@@ -53,7 +53,6 @@ struct _GimpToggleActionPrivate
 
 static void   gimp_toggle_action_g_action_iface_init (GActionInterface *iface);
 
-static void   gimp_toggle_action_constructed         (GObject          *object);
 static void   gimp_toggle_action_get_property        (GObject          *object,
                                                       guint             prop_id,
                                                       GValue           *value,
@@ -101,7 +100,6 @@ gimp_toggle_action_class_init (GimpToggleActionClass *klass)
   GtkActionClass       *action_class = GTK_ACTION_CLASS (klass);
   GtkToggleActionClass *toggle_class = GTK_TOGGLE_ACTION_CLASS (klass);
 
-  object_class->constructed   = gimp_toggle_action_constructed;
   object_class->get_property  = gimp_toggle_action_get_property;
   object_class->set_property  = gimp_toggle_action_set_property;
 
@@ -185,14 +183,6 @@ gimp_toggle_action_init (GimpToggleAction *action)
   action->priv->state_set_already = FALSE;
 
   gimp_action_init (GIMP_ACTION (action));
-}
-
-void
-gimp_toggle_action_constructed (GObject *object)
-{
-  G_OBJECT_CLASS (parent_class)->constructed (object);
-
-  gimp_action_constructed (object);
 }
 
 static void

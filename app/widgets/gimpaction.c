@@ -421,7 +421,10 @@ gimp_action_set_accels (GimpAction   *action,
   g_return_if_fail (GIMP_IS_ACTION (action));
 
   context = GET_PRIVATE (action)->context;
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  if (context == NULL)
+    return;
+
   g_return_if_fail (GTK_IS_APPLICATION (context->gimp->app));
 
   detailed_action_name = g_strdup_printf ("app.%s",
@@ -454,7 +457,10 @@ gimp_action_get_accels (GimpAction *action)
   g_return_val_if_fail (GIMP_IS_ACTION (action), NULL);
 
   context = GET_PRIVATE (action)->context;
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  if (context == NULL)
+    return NULL;
+
   g_return_val_if_fail (GTK_IS_APPLICATION (context->gimp->app), NULL);
 
   detailed_action_name = g_strdup_printf ("app.%s",
@@ -629,14 +635,6 @@ gimp_action_install_properties (GObjectClass *klass)
 
   g_object_class_override_property (klass, GIMP_ACTION_PROP_ELLIPSIZE,       "ellipsize");
   g_object_class_override_property (klass, GIMP_ACTION_PROP_MAX_WIDTH_CHARS, "max-width-chars");
-}
-
-void
-gimp_action_constructed (GObject *object)
-{
-  GimpActionPrivate *priv = GET_PRIVATE (object);
-
-  g_return_if_fail (priv->context != NULL);
 }
 
 void

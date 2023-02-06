@@ -128,7 +128,6 @@ GimpViewable * gimp_action_get_viewable       (GimpAction    *action);
 /* Protected functions. */
 
 void          gimp_action_install_properties  (GObjectClass  *klass);
-void          gimp_action_constructed         (GObject       *object);
 void          gimp_action_get_property        (GObject       *object,
                                                guint          property_id,
                                                GValue        *value,

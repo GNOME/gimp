@@ -53,7 +53,6 @@ struct _GimpRadioActionPrivate
 
 static void   gimp_radio_action_g_action_iface_init (GActionInterface *iface);
 
-void          gimp_radio_action_constructed         (GObject          *object);
 static void   gimp_radio_action_get_property        (GObject          *object,
                                                      guint             prop_id,
                                                      GValue           *value,
@@ -104,7 +103,6 @@ gimp_radio_action_class_init (GimpRadioActionClass *klass)
   GtkActionClass      *action_class = GTK_ACTION_CLASS (klass);
   GtkRadioActionClass *radio_class  = GTK_RADIO_ACTION_CLASS (klass);
 
-  object_class->constructed   = gimp_radio_action_constructed;
   object_class->get_property  = gimp_radio_action_get_property;
   object_class->set_property  = gimp_radio_action_set_property;
 
@@ -189,14 +187,6 @@ gimp_radio_action_init (GimpRadioAction *action)
   action->priv->state_set_already = FALSE;
 
   gimp_action_init (GIMP_ACTION (action));
-}
-
-void
-gimp_radio_action_constructed (GObject *object)
-{
-  G_OBJECT_CLASS (parent_class)->constructed (object);
-
-  gimp_action_constructed (object);
 }
 
 static void
