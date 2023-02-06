@@ -147,17 +147,7 @@ static void       gui_display_changed           (GimpContext        *context,
                                                  GimpDisplay        *display,
                                                  Gimp               *gimp);
 
-static void       gui_compare_accelerator       (gpointer            data,
-                                                 const gchar        *accel_path,
-                                                 guint               accel_key,
-                                                 GdkModifierType     accel_mods,
-                                                 gboolean            changed);
-static void       gui_check_unique_accelerator  (gpointer            data,
-                                                 const gchar        *accel_path,
-                                                 guint               accel_key,
-                                                 GdkModifierType     accel_mods,
-                                                 gboolean            changed);
-static gboolean   gui_check_action_exists       (const gchar        *accel_path);
+static void       gui_check_unique_accelerators (Gimp               *gimp);
 
 
 /*  private variables  */
@@ -610,8 +600,7 @@ gui_restore_after_callback (Gimp               *gimp,
   gimp_ui_manager_update (image_ui_manager, gimp);
 
   /* Check that every accelerator is unique. */
-  gtk_accel_map_foreach_unfiltered (NULL,
-                                    gui_check_unique_accelerator);
+  gui_check_unique_accelerators (gimp);
 
   gimp_action_history_init (gimp);
 
@@ -953,81 +942,78 @@ typedef struct
 accelData;
 
 static void
-gui_compare_accelerator (gpointer         data,
-                         const gchar     *accel_path,
-                         guint            accel_key,
-                         GdkModifierType  accel_mods,
-                         gboolean         changed)
+gui_check_unique_accelerators (Gimp *gimp)
 {
-  accelData *accel = data;
+  gchar **actions;
 
-  if (accel->key == accel_key && accel->mods == accel_mods &&
-      g_strcmp0 (accel->path, accel_path))
+  actions = g_action_group_list_actions (G_ACTION_GROUP (gimp->app));
+
+  for (gint i = 0; actions[i] != NULL; i++)
     {
-      g_printerr ("Actions \"%s\" and \"%s\" use the same accelerator.\n"
-                  "  Disabling the accelerator on \"%s\".\n",
-                  accel->path, accel_path, accel_path);
-      gtk_accel_map_change_entry (accel_path, 0, 0, FALSE);
-    }
-}
+      gchar **accels;
+      gchar  *detailed_name;
 
-static void
-gui_check_unique_accelerator (gpointer         data,
-                              const gchar     *accel_path,
-                              guint            accel_key,
-                              GdkModifierType  accel_mods,
-                              gboolean         changed)
-{
-  if (gtk_accelerator_valid (accel_key, accel_mods) &&
-      gui_check_action_exists (accel_path))
-    {
-      accelData accel;
+      detailed_name = g_strdup_printf ("app.%s", actions[i]);
 
-      accel.path = accel_path;
-      accel.key  = accel_key;
-      accel.mods = accel_mods;
-
-      gtk_accel_map_foreach_unfiltered (&accel,
-                                        gui_compare_accelerator);
-    }
-}
-
-static gboolean
-gui_check_action_exists (const gchar *accel_path)
-{
-  GimpUIManager *manager;
-  gboolean       action_exists = FALSE;
-  GList         *list;
-
-  manager = gimp_ui_managers_from_name ("<Image>")->data;
-
-  for (list = gimp_ui_manager_get_action_groups (manager);
-       list;
-       list = g_list_next (list))
-    {
-      GimpActionGroup *group   = list->data;
-      GList           *actions = NULL;
-      GList           *list2;
-
-      actions = gimp_action_group_list_actions (group);
-
-      for (list2 = actions; list2; list2 = g_list_next (list2))
+      accels = gtk_application_get_accels_for_action (GTK_APPLICATION (gimp->app),
+                                                      detailed_name);
+      for (gint j = 0; accels[j] != NULL; j++)
         {
-          GimpAction  *action = list2->data;
-          const gchar *path   = gimp_action_get_accel_path (action);
-
-          if (g_strcmp0 (path, accel_path) == 0)
+          for (gint k = i + 1; actions[k] != NULL; k++)
             {
-              action_exists = TRUE;
-              break;
+              gchar **accels2;
+              gchar  *detailed_name2;
+
+              detailed_name2 = g_strdup_printf ("app.%s", actions[k]);
+              accels2 = gtk_application_get_accels_for_action (GTK_APPLICATION (gimp->app),
+                                                               detailed_name2);
+              for (gint l = 0; accels2[l] != NULL; l++)
+                {
+                  if (g_strcmp0 (accels[j], accels2[l]) == 0)
+                    {
+                      GAction  *action;
+                      gchar    *disabled_action;
+                      gchar   **disabled_accels;
+                      gint      len;
+                      gint      remove;
+
+                      /* Just keep the first one (no reason other than we have
+                       * to choose), unless it's a secondary shortcut, and the
+                       * second is a primary shortcut.
+                       */
+                      if (l == 0 && j != 0)
+                        {
+                          disabled_action = actions[i];
+                          disabled_accels = accels;
+                          remove = j;
+                        }
+                      else
+                        {
+                          disabled_action = actions[k];
+                          disabled_accels = accels2;
+                          remove = l;
+                        }
+                      /* Remove only the duplicate shortcut but keep others. */
+                      len = g_strv_length (disabled_accels);
+                      g_free (disabled_accels[remove]);
+                      memmove (&disabled_accels[remove],
+                               &disabled_accels[remove + 1],
+                               sizeof (char *) * (len - remove));
+
+                      g_printerr ("Actions \"%s\" and \"%s\" use the same accelerator.\n"
+                                  "  Disabling the accelerator on \"%s\".\n",
+                                  actions[i], actions[k], disabled_action);
+
+                      action = g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
+                                                           disabled_action);
+                      gimp_action_set_accels (GIMP_ACTION (action),
+                                              (const gchar **) disabled_accels);
+                    }
+                }
+              g_strfreev (accels2);
             }
         }
-
-      g_list_free (actions);
-
-      if (action_exists)
-        break;
+      g_strfreev (accels);
     }
-
-  return action_exists;
+  g_strfreev (actions);
 }
