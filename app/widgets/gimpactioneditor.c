@@ -112,7 +112,7 @@ gimp_action_editor_new (GimpUIManager *manager,
   gtk_box_pack_start (GTK_BOX (editor), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
-  editor->view = gimp_action_view_new (manager, select_action, show_shortcuts);
+  editor->view = gimp_action_view_new (manager->gimp, select_action, show_shortcuts);
   gtk_widget_set_size_request (editor->view, 300, 400);
   gtk_container_add (GTK_CONTAINER (scrolled_window), editor->view);
   gtk_widget_show (editor->view);

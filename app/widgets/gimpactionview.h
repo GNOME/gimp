@@ -32,7 +32,6 @@ enum
   GIMP_ACTION_VIEW_COLUMN_NAME,
   GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,
   GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,
-  GIMP_ACTION_VIEW_COLUMN_ACCEL_CLOSURE,
   GIMP_ACTION_VIEW_N_COLUMNS
 };
 
@@ -51,7 +50,7 @@ struct _GimpActionView
 {
   GtkTreeView    parent_instance;
 
-  GimpUIManager *manager;
+  Gimp          *gimp;
   gboolean       show_shortcuts;
 
   gchar         *filter;
@@ -65,7 +64,7 @@ struct _GimpActionViewClass
 
 GType       gimp_action_view_get_type   (void) G_GNUC_CONST;
 
-GtkWidget * gimp_action_view_new        (GimpUIManager  *manager,
+GtkWidget * gimp_action_view_new        (Gimp           *gimp,
                                          const gchar    *select_action,
                                          gboolean        show_shortcuts);
 
