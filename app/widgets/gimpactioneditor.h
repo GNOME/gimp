@@ -47,9 +47,9 @@ struct _GimpActionEditorClass
 
 GType       gimp_action_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_action_editor_new      (GimpUIManager *manager,
-                                         const gchar   *select_action,
-                                         gboolean       show_shortcuts);
+GtkWidget * gimp_action_editor_new      (Gimp        *gimp,
+                                         const gchar *select_action,
+                                         gboolean     show_shortcuts);
 
 
 #endif  /*  __GIMP_ACTION_EDITOR_H__  */

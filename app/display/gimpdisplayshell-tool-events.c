@@ -144,7 +144,7 @@ static void       gimp_display_shell_untransform_event_coords (GimpDisplayShell 
                                                                GimpCoords        *image_coords,
                                                                gboolean          *update_software_cursor);
 
-static void       gimp_display_shell_activate_action          (GimpUIManager     *manager,
+static void       gimp_display_shell_activate_action          (Gimp              *gimp,
                                                                const gchar       *action_desc,
                                                                GVariant          *value);
 
@@ -725,12 +725,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
         else
           {
-            GimpImageWindow *window;
-            GimpUIManager   *manager;
-
-            window  = gimp_display_shell_get_window (shell);
-            manager = gimp_image_window_get_ui_manager (window);
-
             switch (shell->mod_action)
               {
               case GIMP_MODIFIER_ACTION_MENU:
@@ -752,7 +746,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 gimp_display_shell_stop_scrolling (shell, event);
                 break;
               case GIMP_MODIFIER_ACTION_ACTION:
-                gimp_display_shell_activate_action (manager, shell->mod_action_desc, NULL);
+                gimp_display_shell_activate_action (gimp, shell->mod_action_desc, NULL);
                 g_clear_pointer (&shell->mod_action_desc, g_free);
                 break;
               case GIMP_MODIFIER_ACTION_NONE:
@@ -1890,10 +1884,7 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
           action = gimp_tool_control_get_action_pixel_size (active_tool->control);
           if (action)
             {
-              GimpImageWindow *window  = gimp_display_shell_get_window (shell);
-              GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
-
-              gimp_display_shell_activate_action (manager, action,
+              gimp_display_shell_activate_action (gimp, action,
                                                   g_variant_new_double ((gdouble) size * size_multiplier));
 
               if (size_update_pos)
@@ -1915,14 +1906,11 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
 
               if (action)
                 {
-                  GimpImageWindow *window  = gimp_display_shell_get_window (shell);
-                  GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
-
                   /* Special trick with these enum actions. If using any
                    * positive value, we get the GIMP_ACTION_SELECT_SET behavior
                    * which sets to the given value.
                    */
-                  gimp_display_shell_activate_action (manager, action,
+                  gimp_display_shell_activate_action (gimp, action,
                                                       g_variant_new_int32 (size));
                 }
             }
@@ -1946,14 +1934,11 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
 
           if (action)
             {
-              GimpImageWindow *window  = gimp_display_shell_get_window (shell);
-              GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
-
               /* Special trick with these enum actions. If using any
                * positive value, we get the GIMP_ACTION_SELECT_SET behavior
                * which sets to the given value.
                */
-              gimp_display_shell_activate_action (manager, action,
+              gimp_display_shell_activate_action (gimp, action,
                                                   g_variant_new_int32 (size));
             }
         }
@@ -2402,42 +2387,37 @@ gimp_display_shell_untransform_event_coords (GimpDisplayShell *shell,
 }
 
 static void
-gimp_display_shell_activate_action (GimpUIManager *manager,
-                                    const gchar   *action_desc,
-                                    GVariant      *value)
+gimp_display_shell_activate_action (Gimp        *gimp,
+                                    const gchar *action_name,
+                                    GVariant    *value)
 {
-  gchar *group_name;
-  gchar *action_name;
-
-  g_return_if_fail (action_desc != NULL);
-
-  group_name  = g_strdup (action_desc);
-  action_name = strchr (group_name, '/');
+  g_return_if_fail (action_name != NULL);
 
   if (action_name)
     {
-      GimpAction *action;
+      GAction *action;
 
-      *action_name++ = '\0';
+      action = g_action_map_lookup_action (G_ACTION_MAP (gimp->app), action_name);
 
-      action = gimp_ui_manager_find_action (manager, group_name, action_name);
-
-      if (GIMP_IS_ENUM_ACTION (action) &&
-          GIMP_ENUM_ACTION (action)->value_variable)
+      if (action == NULL)
         {
-          gimp_action_emit_activate (action, value);
+          g_printerr ("%s: ignoring unknown action '%s'.\n",
+                      G_STRFUNC, action_name);
+        }
+      else if (GIMP_IS_ENUM_ACTION (action) &&
+               GIMP_ENUM_ACTION (action)->value_variable)
+        {
+          gimp_action_emit_activate (GIMP_ACTION (action), value);
         }
       else if (GIMP_IS_DOUBLE_ACTION (action))
         {
-          gimp_action_emit_activate (action, value);
+          gimp_action_emit_activate (GIMP_ACTION (action), value);
         }
       else
         {
-          gimp_action_activate (action);
+          gimp_action_activate (GIMP_ACTION (action));
         }
     }
-
-  g_free (group_name);
 }
 
 /* Replace gdk_event_triggers_context_menu() as we don't want to trigger

@@ -3052,7 +3052,8 @@ prefs_dialog_new (Gimp       *gimp,
                                   &top_iter,
                                   &child_iter);
 
-  vbox2 = gimp_modifiers_editor_new (GIMP_MODIFIERS_MANAGER (display_config->modifiers_manager));
+  vbox2 = gimp_modifiers_editor_new (GIMP_MODIFIERS_MANAGER (display_config->modifiers_manager),
+                                     gimp);
   gtk_widget_show (vbox2);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
 

@@ -28,7 +28,6 @@
 
 #include "widgets/gimpactioneditor.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpuimanager.h"
 
 #include "menus/menus.h"
 
@@ -81,8 +80,7 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  editor = gimp_action_editor_new (gimp_ui_managers_from_name ("<Image>")->data,
-                                   NULL, TRUE);
+  editor = gimp_action_editor_new (gimp, NULL, TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), editor, TRUE, TRUE, 0);
   gtk_widget_show (editor);
 

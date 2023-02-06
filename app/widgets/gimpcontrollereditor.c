@@ -682,7 +682,7 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
                         G_CALLBACK (gimp_controller_editor_edit_response),
                         editor);
 
-      view = gimp_action_editor_new (gimp_ui_managers_from_name ("<Image>")->data,
+      view = gimp_action_editor_new (editor->context->gimp,
                                      action_name, FALSE);
       gtk_container_set_border_width (GTK_CONTAINER (view), 12);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (editor->edit_dialog))),

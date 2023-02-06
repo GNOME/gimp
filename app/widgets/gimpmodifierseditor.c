@@ -28,6 +28,8 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
+
 #include "display/display-types.h"
 #include "display/gimpmodifiersmanager.h"
 
@@ -47,6 +49,7 @@ enum
 {
   PROP_0,
   PROP_MANAGER,
+  PROP_GIMP,
 };
 
 struct _GimpModifiersEditorPrivate
@@ -68,6 +71,7 @@ struct _GimpModifiersEditorPrivate
   GtkSizeGroup         *minus_size_group;
 
   GimpModifiersManager *manager;
+  Gimp                 *gimp;
   GHashTable           *rows;
 
   GtkTreeSelection     *action_selection;
@@ -145,6 +149,12 @@ gimp_modifiers_editor_class_init (GimpModifiersEditorClass *klass)
                                    g_param_spec_object ("manager", NULL, NULL,
                                                         GIMP_TYPE_MODIFIERS_MANAGER,
                                                         GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
@@ -256,7 +266,9 @@ gimp_modifiers_editor_set_property (GObject      *object,
     case PROP_MANAGER:
       editor->priv->manager = g_value_get_object (value);
       break;
-
+    case PROP_GIMP:
+      editor->priv->gimp = g_value_get_object (value);
+      break;
 
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -287,7 +299,8 @@ gimp_modifiers_editor_get_property (GObject    *object,
 /*  public functions  */
 
 GtkWidget *
-gimp_modifiers_editor_new (GimpModifiersManager *manager)
+gimp_modifiers_editor_new (GimpModifiersManager *manager,
+                           Gimp                 *gimp)
 {
   GimpModifiersEditor *editor;
 
@@ -295,6 +308,7 @@ gimp_modifiers_editor_new (GimpModifiersManager *manager)
 
   editor = g_object_new (GIMP_TYPE_MODIFIERS_EDITOR,
                          "manager", manager,
+                         "gimp",    gimp,
                          NULL);
 
   return GTK_WIDGET (editor);
@@ -475,7 +489,7 @@ gimp_modifiers_editor_add_mapping (GimpModifiersEditor *editor,
       if (action_name)
         action_name++;
 
-      if (strlen (action_name) > 0)
+      if (action_name && strlen (action_name) > 0)
         action_button = gtk_button_new_with_label (action_name);
     }
 
@@ -619,8 +633,6 @@ gimp_modifiers_editor_search_clicked (GtkWidget           *button,
                                       GimpModifiersEditor *editor)
 {
   gchar           *accel_name  = NULL;
-  gchar           *action_name = "action name";
-
   GtkWidget       *shortcut;
   GdkModifierType  modifiers;
 
@@ -691,8 +703,7 @@ gimp_modifiers_editor_search_clicked (GtkWidget           *button,
                         G_CALLBACK (gimp_modifiers_editor_search_response),
                         editor);
 
-      view = gimp_action_editor_new (gimp_ui_managers_from_name ("<Image>")->data,
-                                     action_name, FALSE);
+      view = gimp_action_editor_new (editor->priv->gimp, NULL, FALSE);
       gtk_container_set_border_width (GTK_CONTAINER (view), 12);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (edit_dialog))),
                           view, TRUE, TRUE, 0);
@@ -760,9 +771,7 @@ gimp_modifiers_editor_search_response (GtkWidget           *dialog,
               gimp_shortcut_button_get_keys (GIMP_SHORTCUT_BUTTON (shortcut), NULL, &modifiers);
 
               action_button = g_object_get_data (G_OBJECT (dialog), "shortcut-action-action");
-              action_desc = g_strdup_printf ("%s/%s",
-                                             gtk_action_group_get_name (group),
-                                             gimp_action_get_name (action));
+              action_desc = g_strdup (gimp_action_get_name (action));
 
               g_object_set_data_full (G_OBJECT (action_button), "shortcut-action-desc",
                                       action_desc, g_free);
