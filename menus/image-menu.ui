@@ -47,7 +47,6 @@
         <item><attribute name="action">app.file-revert</attribute></item>
       </section>
       <section>
-        <!-- TODO: overwrite and export same? -->
         <item><attribute name="action">app.file-overwrite</attribute></item>
         <item><attribute name="action">app.file-export</attribute></item>
         <item><attribute name="action">app.file-export-as</attribute></item>
@@ -291,13 +290,11 @@
             <item><attribute name="action">app.image-convert-u32</attribute></item>
             <item><attribute name="action">app.image-convert-half</attribute></item>
             <item><attribute name="action">app.image-convert-float</attribute></item>
-            <!-- TODO: this should be invisible except for special cases? -->
             <item><attribute name="action">app.image-convert-double</attribute></item>
           </section>
           <section>
             <item><attribute name="action">app.image-convert-linear</attribute></item>
             <item><attribute name="action">app.image-convert-non-linear</attribute></item>
-            <!-- TODO: this should be invisible except for special cases? -->
             <item><attribute name="action">app.image-convert-perceptual</attribute></item>
           </section>
         </submenu>
@@ -381,15 +378,12 @@
         <item><attribute name="action">app.layers-new-from-visible</attribute></item>
         <item><attribute name="action">app.layers-new-group</attribute></item>
         <item><attribute name="action">app.layers-duplicate</attribute></item>
-        <!-- TODO: visible only when relevant? -->
         <item><attribute name="action">app.layers-anchor</attribute></item>
         <item><attribute name="action">app.layers-merge-down</attribute></item>
-        <!-- TODO: visible only when relevant? -->
         <item><attribute name="action">app.layers-merge-group</attribute></item>
         <item><attribute name="action">app.layers-delete</attribute></item>
       </section>
       <section>
-        <!-- TODO: all 3 visible only when relevant? -->
         <item><attribute name="action">app.layers-text-discard</attribute></item>
         <item><attribute name="action">app.layers-text-to-vectors</attribute></item>
         <item><attribute name="action">app.layers-text-along-vectors</attribute></item>
