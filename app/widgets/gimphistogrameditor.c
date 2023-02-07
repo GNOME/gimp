@@ -53,6 +53,7 @@ enum
 
 static void     gimp_histogram_editor_docked_iface_init (GimpDockedInterface *iface);
 
+static void     gimp_histogram_editor_finalize      (GObject            *object);
 static void     gimp_histogram_editor_set_property  (GObject            *object,
                                                      guint               property_id,
                                                      const GValue       *value,
@@ -103,6 +104,7 @@ gimp_histogram_editor_class_init (GimpHistogramEditorClass *klass)
   GObjectClass         *object_class       = G_OBJECT_CLASS (klass);
   GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
+  object_class->finalize        = gimp_histogram_editor_finalize;
   object_class->set_property    = gimp_histogram_editor_set_property;
   object_class->get_property    = gimp_histogram_editor_get_property;
 
@@ -231,6 +233,15 @@ gimp_histogram_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 
   docked_iface->set_aux_info = gimp_histogram_editor_set_aux_info;
   docked_iface->get_aux_info = gimp_histogram_editor_get_aux_info;
+}
+
+static void
+gimp_histogram_editor_finalize (GObject *object)
+{
+  if (GIMP_HISTOGRAM_EDITOR (object)->idle_id)
+    g_source_remove (GIMP_HISTOGRAM_EDITOR (object)->idle_id);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
