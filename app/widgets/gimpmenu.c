@@ -63,25 +63,29 @@ struct _GimpMenuPrivate
 
 /*  local function prototypes  */
 
-static void   gimp_menu_dispose               (GObject             *object);
-static void   gimp_menu_set_property          (GObject             *object,
-                                               guint                property_id,
-                                               const GValue        *value,
-                                               GParamSpec          *pspec);
-static void   gimp_menu_get_property          (GObject             *object,
-                                               guint                property_id,
-                                               GValue              *value,
-                                               GParamSpec          *pspec);
+static void   gimp_menu_dispose                 (GObject             *object);
+static void   gimp_menu_set_property            (GObject             *object,
+                                                 guint                property_id,
+                                                 const GValue        *value,
+                                                 GParamSpec          *pspec);
+static void   gimp_menu_get_property            (GObject             *object,
+                                                 guint                property_id,
+                                                 GValue              *value,
+                                                 GParamSpec          *pspec);
 
-static void   gimp_menu_update                (GimpMenu            *menu,
-                                               GtkContainer        *container,
-                                               GMenuModel          *model);
-static void   gimp_menu_radio_item_toggled    (GtkWidget           *item,
-                                               GAction             *action);
+static void   gimp_menu_update                  (GimpMenu            *menu,
+                                                 GtkContainer        *container,
+                                                 GMenuModel          *model);
+static void   gimp_menu_radio_item_toggled      (GtkWidget           *item,
+                                                 GAction             *action);
 
-static void   gimp_menu_toggle_action_changed (GimpAction       *action,
-                                               GVariant         *value G_GNUC_UNUSED,
-                                               GtkCheckMenuItem *item);
+static void   gimp_menu_toggle_action_changed   (GimpAction          *action,
+                                                 GVariant            *value G_GNUC_UNUSED,
+                                                 GtkCheckMenuItem    *item);
+static void   gimp_menu_action_notify_sensitive (GimpAction          *action,
+                                                 const GParamSpec    *pspec,
+                                                 GtkCheckMenuItem    *item);
+
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpMenu, gimp_menu, GTK_TYPE_MENU_BAR)
 
@@ -290,6 +294,11 @@ gimp_menu_update (GimpMenu     *menu,
             }
 
           gtk_actionable_set_action_name (GTK_ACTIONABLE (item), action_name);
+          gtk_widget_set_sensitive (GTK_WIDGET (item),
+                                    gimp_action_is_sensitive (GIMP_ACTION (action), NULL));
+          g_signal_connect_object (action, "notify::sensitive",
+                                   G_CALLBACK (gimp_menu_action_notify_sensitive),
+                                   item, 0);
 
           if (gimp_action_get_tooltip (GIMP_ACTION (action)))
             gtk_widget_set_tooltip_text (item,
@@ -340,4 +349,13 @@ gimp_menu_toggle_action_changed (GimpAction       *action,
 
   gtk_actionable_set_action_name (GTK_ACTIONABLE (item), action_name);
   g_free (action_name);
+}
+
+static void
+gimp_menu_action_notify_sensitive (GimpAction       *action,
+                                   const GParamSpec *pspec,
+                                   GtkCheckMenuItem *item)
+{
+  gtk_widget_set_sensitive (GTK_WIDGET (item),
+                            gimp_action_is_sensitive (action, NULL));
 }

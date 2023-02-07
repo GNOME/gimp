@@ -57,6 +57,7 @@ struct _GimpActionPrivate
 {
   GimpContext           *context;
 
+  gboolean               sensitive;
   gchar                 *disable_reason;
 
   GimpRGB               *color;
@@ -121,6 +122,12 @@ gimp_action_default_init (GimpActionInterface *iface)
                                                             GIMP_TYPE_CONTEXT,
                                                             GIMP_PARAM_READWRITE |
                                                             G_PARAM_CONSTRUCT_ONLY));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_boolean ("sensitive",
+                                                             NULL, NULL,
+                                                             TRUE,
+                                                             GIMP_PARAM_READWRITE));
+
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   g_object_interface_install_property (iface,
                                        gimp_param_spec_rgb ("color",
@@ -155,6 +162,7 @@ gimp_action_init (GimpAction *action)
 
   priv = GET_PRIVATE (action);
 
+  priv->sensitive       = TRUE;
   priv->ellipsize       = PANGO_ELLIPSIZE_NONE;
   priv->max_width_chars = -1;
 
@@ -336,7 +344,9 @@ gimp_action_set_sensitive (GimpAction  *action,
 {
   GimpActionPrivate *priv = GET_PRIVATE (action);
 
-  gtk_action_set_sensitive ((GtkAction *) action, sensitive);
+  g_object_set (action,
+                "sensitive", sensitive,
+                NULL);
 
   g_clear_pointer (&priv->disable_reason, g_free);
   if (reason && ! sensitive)
@@ -347,9 +357,10 @@ gboolean
 gimp_action_get_sensitive (GimpAction   *action,
                            const gchar **reason)
 {
-  gboolean sensitive;
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+  gboolean           sensitive;
 
-  sensitive = gtk_action_get_sensitive ((GtkAction *) action);
+  sensitive = priv->sensitive;
 
   if (reason)
     {
@@ -370,16 +381,13 @@ gimp_action_is_sensitive (GimpAction   *action,
 {
   gboolean sensitive;
 
-  sensitive = gtk_action_is_sensitive ((GtkAction *) action);
+  sensitive = gimp_action_get_sensitive (action, reason);
 
-  if (reason)
+  if (sensitive)
     {
-      GimpActionPrivate *priv = GET_PRIVATE (action);
-
-      *reason = NULL;
-
-      if (! sensitive && priv->disable_reason != NULL)
-        *reason = (const gchar *) priv->disable_reason;
+      /* TODO: check if the action group itself is sensitive.
+       * See implementation of gtk_action_is_sensitive().
+       */
     }
 
   return sensitive;
@@ -632,6 +640,7 @@ void
 gimp_action_install_properties (GObjectClass *klass)
 {
   g_object_class_override_property (klass, GIMP_ACTION_PROP_CONTEXT,         "context");
+  g_object_class_override_property (klass, GIMP_ACTION_PROP_SENSITIVE,       "sensitive");
   g_object_class_override_property (klass, GIMP_ACTION_PROP_COLOR,           "color");
   g_object_class_override_property (klass, GIMP_ACTION_PROP_VIEWABLE,        "viewable");
 
@@ -653,6 +662,9 @@ gimp_action_get_property (GObject    *object,
     {
     case GIMP_ACTION_PROP_CONTEXT:
       g_value_set_object (value, priv->context);
+      break;
+    case GIMP_ACTION_PROP_SENSITIVE:
+      g_value_set_boolean (value, priv->sensitive);
       break;
     case GIMP_ACTION_PROP_COLOR:
       g_value_set_boxed (value, priv->color);
@@ -687,6 +699,9 @@ gimp_action_set_property (GObject      *object,
     {
     case GIMP_ACTION_PROP_CONTEXT:
       g_set_object (&priv->context, g_value_get_object (value));
+      break;
+    case GIMP_ACTION_PROP_SENSITIVE:
+      priv->sensitive = g_value_get_boolean (value);
       break;
     case GIMP_ACTION_PROP_COLOR:
       g_clear_pointer (&priv->color, g_free);
