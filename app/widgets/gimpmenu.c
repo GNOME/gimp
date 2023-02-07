@@ -87,7 +87,13 @@ static void   gimp_menu_action_notify_sensitive (GimpAction          *action,
                                                  GtkCheckMenuItem    *item);
 static void   gimp_menu_action_notify_visible   (GimpAction          *action,
                                                  const GParamSpec    *pspec,
-                                                 GtkCheckMenuItem    *item);
+                                                 GtkWidget           *item);
+static void   gimp_menu_action_notify_label     (GimpAction          *action,
+                                                 const GParamSpec    *pspec,
+                                                 GtkMenuItem         *item);
+static void   gimp_menu_action_notify_tooltip   (GimpAction          *action,
+                                                 const GParamSpec    *pspec,
+                                                 GtkWidget           *item);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpMenu, gimp_menu, GTK_TYPE_MENU_BAR)
@@ -297,6 +303,11 @@ gimp_menu_update (GimpMenu     *menu,
             }
 
           gtk_actionable_set_action_name (GTK_ACTIONABLE (item), action_name);
+
+          g_signal_connect_object (action, "notify::label",
+                                   G_CALLBACK (gimp_menu_action_notify_label),
+                                   item, 0);
+
           gtk_widget_set_sensitive (GTK_WIDGET (item),
                                     gimp_action_is_sensitive (GIMP_ACTION (action), NULL));
           g_signal_connect_object (action, "notify::sensitive",
@@ -306,6 +317,9 @@ gimp_menu_update (GimpMenu     *menu,
           if (gimp_action_get_tooltip (GIMP_ACTION (action)))
             gtk_widget_set_tooltip_text (item,
                                          gimp_action_get_tooltip (GIMP_ACTION (action)));
+          g_signal_connect_object (action, "notify::tooltip",
+                                   G_CALLBACK (gimp_menu_action_notify_tooltip),
+                                   item, 0);
 
           gtk_container_add (container, item);
 
@@ -374,4 +388,21 @@ gimp_menu_action_notify_visible (GimpAction       *action,
                                  GtkWidget        *item)
 {
   gtk_widget_set_visible (item, gimp_action_is_visible (action));
+}
+
+static void
+gimp_menu_action_notify_label (GimpAction       *action,
+                               const GParamSpec *pspec,
+                               GtkMenuItem      *item)
+{
+  gtk_menu_item_set_label (item, gimp_action_get_label (action));
+}
+
+static void
+gimp_menu_action_notify_tooltip (GimpAction       *action,
+                                 const GParamSpec *pspec,
+                                 GtkWidget        *item)
+{
+  gtk_widget_set_tooltip_text (item,
+                               gimp_action_get_tooltip (GIMP_ACTION (action)));
 }
