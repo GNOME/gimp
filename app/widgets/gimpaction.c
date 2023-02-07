@@ -522,7 +522,9 @@ gimp_action_get_proxies (GimpAction *action)
 void
 gimp_action_activate (GimpAction *action)
 {
-  gtk_action_activate ((GtkAction *) action);
+  g_return_if_fail (G_IS_ACTION (action));
+
+  g_action_activate (G_ACTION (action), NULL);
 }
 
 gint
