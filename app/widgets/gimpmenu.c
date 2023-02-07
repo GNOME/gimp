@@ -63,22 +63,25 @@ struct _GimpMenuPrivate
 
 /*  local function prototypes  */
 
-static void   gimp_menu_dispose            (GObject             *object);
-static void   gimp_menu_set_property       (GObject             *object,
-                                            guint                property_id,
-                                            const GValue        *value,
-                                            GParamSpec          *pspec);
-static void   gimp_menu_get_property       (GObject             *object,
-                                            guint                property_id,
-                                            GValue              *value,
-                                            GParamSpec          *pspec);
+static void   gimp_menu_dispose               (GObject             *object);
+static void   gimp_menu_set_property          (GObject             *object,
+                                               guint                property_id,
+                                               const GValue        *value,
+                                               GParamSpec          *pspec);
+static void   gimp_menu_get_property          (GObject             *object,
+                                               guint                property_id,
+                                               GValue              *value,
+                                               GParamSpec          *pspec);
 
-static void   gimp_menu_update             (GimpMenu            *menu,
-                                            GtkContainer        *container,
-                                            GMenuModel          *model);
-static void   gimp_menu_radio_item_toggled (GtkWidget           *item,
-                                            GAction             *action);
+static void   gimp_menu_update                (GimpMenu            *menu,
+                                               GtkContainer        *container,
+                                               GMenuModel          *model);
+static void   gimp_menu_radio_item_toggled    (GtkWidget           *item,
+                                               GAction             *action);
 
+static void   gimp_menu_toggle_action_changed (GimpAction       *action,
+                                               GVariant         *value G_GNUC_UNUSED,
+                                               GtkCheckMenuItem *item);
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpMenu, gimp_menu, GTK_TYPE_MENU_BAR)
 
@@ -262,6 +265,9 @@ gimp_menu_update (GimpMenu     *menu,
               gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
                                               gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action)));
               group = NULL;
+              g_signal_connect (action, "gimp-change-state",
+                                G_CALLBACK (gimp_menu_toggle_action_changed),
+                                item);
             }
           else if (GIMP_IS_RADIO_ACTION (action))
             {
@@ -273,6 +279,9 @@ gimp_menu_update (GimpMenu     *menu,
               g_signal_connect (item, "toggled",
                                 G_CALLBACK (gimp_menu_radio_item_toggled),
                                 action);
+              g_signal_connect (action, "gimp-change-state",
+                                G_CALLBACK (gimp_menu_toggle_action_changed),
+                                item);
             }
           else
             {
@@ -305,4 +314,30 @@ gimp_menu_radio_item_toggled (GtkWidget *item,
    * gimp_toggle_action_set_active().
    */
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), active);
+}
+
+static void
+gimp_menu_toggle_action_changed (GimpAction       *action,
+                                 /* Unused because this is used for 2 signals
+                                  * where the GVariant refers to different data.
+                                  */
+                                 GVariant         *value G_GNUC_UNUSED,
+                                 GtkCheckMenuItem *item)
+{
+  gchar    *action_name;
+  gboolean  active;
+
+  action_name = g_strdup (gtk_actionable_get_action_name (GTK_ACTIONABLE (item)));
+  /* TODO: use gimp_toggle_action_get_active() when GimpToggleAction and
+   * GimpRadioAction become direct parent of each other.
+   */
+  active      = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  /* Make sure we don't activate the action. */
+  gtk_actionable_set_action_name (GTK_ACTIONABLE (item), NULL);
+
+  gtk_check_menu_item_set_active (item, active);
+
+  gtk_actionable_set_action_name (GTK_ACTIONABLE (item), action_name);
+  g_free (action_name);
 }
