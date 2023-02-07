@@ -39,6 +39,14 @@ install_data(menus_files,
   install_dir: menus_dir,
 )
 
+ui_menus_files = files(
+  'image-menu.ui',
+)
+
+install_data(ui_menus_files,
+  install_dir: menus_dir,
+)
+
 unstable_menus_args = stable ? [] : [ '--stringparam', 'unstable-menus', 'yes' ]
 
 menus_built_files = []
@@ -71,6 +79,22 @@ if xmllint.found()
     # The output file is only useful as a flag file, so that the command
     # knows if it has been run already.
     output: [ 'validate_menus-output.xml' ],
+    build_by_default: true,
+    install: false
+  )
+
+  # XXX: no DTD validation as GtkBuilder UI format does not have a DTD (as far as
+  # we could find).
+  custom_target('validate_ui_menus',
+    command: [
+      xmllint,
+      '--output', '@OUTPUT@',
+      '--path', meson.current_source_dir(),
+      ui_menus_files, menus_built_files
+    ],
+    # The output file is only useful as a flag file, so that the command
+    # knows if it has been run already.
+    output: [ 'validate_ui_menus-output.xml' ],
     build_by_default: true,
     install: false
   )

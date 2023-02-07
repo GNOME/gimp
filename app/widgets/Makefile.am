@@ -272,6 +272,8 @@ libappwidgets_a_sources = \
 	gimplayermodecombobox.h		\
 	gimplayertreeview.c		\
 	gimplayertreeview.h		\
+	gimpmenu.c			\
+	gimpmenu.h			\
 	gimpmenudock.c			\
 	gimpmenudock.h			\
 	gimpmenufactory.c		\
