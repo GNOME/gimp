@@ -1,18 +1,18 @@
 # Swedish messages for libgimp.
-# Copyright © 1999-2020 Free Software Foundation, Inc.
+# Copyright © 1999-2023 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se> 2003.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2011, 2012.
 # Sebastian Rasmussen <sebras@gmail.com>, 2016, 2017.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2017, 2018, 2019, 2020.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2017, 2018, 2019, 2020, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-08-05 13:45+0000\n"
-"PO-Revision-Date: 2020-08-05 23:55+0200\n"
+"POT-Creation-Date: 2023-02-01 18:48+0000\n"
+"PO-Revision-Date: 2023-02-08 01:53+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1265
@@ -266,44 +266,44 @@ msgstr "Typsnittsval"
 msgid "Gradient Selection"
 msgstr "Gradientval"
 
-#: ../libgimp/gimpimagemetadata.c:514
+#: ../libgimp/gimpimagemetadata.c:671
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:703
+#: ../libgimp/gimpimagemetadata.c:862
 msgid "Background"
 msgstr "Bakgrund"
 
-#: ../libgimp/gimpimagemetadata.c:892
+#: ../libgimp/gimpimagemetadata.c:1051
 #, c-format
 msgid "Rotate %s?"
 msgstr "Rotera %s?"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:1057
 msgid "_Keep Original"
 msgstr "_Behåll original"
 
-#: ../libgimp/gimpimagemetadata.c:899 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:1058 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Rotera"
 
-#: ../libgimp/gimpimagemetadata.c:940
+#: ../libgimp/gimpimagemetadata.c:1099
 msgid "Original"
 msgstr "Original"
 
-#: ../libgimp/gimpimagemetadata.c:956
+#: ../libgimp/gimpimagemetadata.c:1115
 msgid "Rotated"
 msgstr "Roterad"
 
-#: ../libgimp/gimpimagemetadata.c:974
+#: ../libgimp/gimpimagemetadata.c:1133
 msgid "This image contains Exif orientation metadata."
 msgstr "Denna bild innehåller Exif-orienteringsmetadata."
 
-#: ../libgimp/gimpimagemetadata.c:992
+#: ../libgimp/gimpimagemetadata.c:1151
 msgid "Would you like to rotate the image?"
 msgstr "Vill du rotera bilden?"
 
-#: ../libgimp/gimpimagemetadata.c:1004
+#: ../libgimp/gimpimagemetadata.c:1163
 msgid "_Don't ask me again"
 msgstr "_Fråga mig inte igen"
 
@@ -1469,37 +1469,32 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Beskär med förhållande"
 
-#: ../libgimpbase/gimpmetadata.c:878
+#: ../libgimpbase/gimpmetadata.c:982
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Kan endast läsa in metadata från lokala filer"
 
-#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
-#, c-format
-msgid "Conversion of the filename to system codepage failed."
-msgstr "Konvertering av filnamnet till en systemteckentabell misslyckades."
-
-#: ../libgimpbase/gimpmetadata.c:949
+#: ../libgimpbase/gimpmetadata.c:1038
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Kan endast spara metadata till lokala filer"
 
-#: ../libgimpbase/gimpmetadata.c:1011
+#: ../libgimpbase/gimpmetadata.c:1086
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Ogiltig storlek på Exif-data."
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:1115
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Misslyckades med tolkning av Exif-data."
 
-#: ../libgimpbase/gimpmetadata.c:1090
+#: ../libgimpbase/gimpmetadata.c:1165
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Tolkning av IPTC-data misslyckades."
 
-#: ../libgimpbase/gimpmetadata.c:1138
+#: ../libgimpbase/gimpmetadata.c:1213
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Misslyckades med tolkning av XMP-data."
@@ -1716,80 +1711,101 @@ msgstr ""
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Färgen att använda för att markera färger som är utanför färgomfånget."
 
-#: ../libgimpconfig/gimpcolorconfig.c:198
+#: ../libgimpconfig/gimpcolorconfig.c:114
+msgid ""
+"When enabled, set the color scales to display 0...255 instead of percentages"
+msgstr ""
+"När aktiverad sätts färgskalorna till att visa 0...255 i stället för procent"
+
+#: ../libgimpconfig/gimpcolorconfig.c:118
+msgid ""
+"When enabled, set the color scales to display HSV blend mode instead of LCh"
+msgstr ""
+"När aktiverad sätts färgskalorna till att visa NMI-toningsläge i stället för "
+"LCh"
+
+#: ../libgimpconfig/gimpcolorconfig.c:210
 msgid "Mode of operation"
 msgstr "Operationsläge"
 
-#: ../libgimpconfig/gimpcolorconfig.c:206
+#: ../libgimpconfig/gimpcolorconfig.c:218
 msgid "Preferred RGB profile"
 msgstr "Föredragen RGB-profil"
 
-#: ../libgimpconfig/gimpcolorconfig.c:213
+#: ../libgimpconfig/gimpcolorconfig.c:225
 msgid "Preferred grayscale profile"
 msgstr "Föredragen gråskaleprofil"
 
-#: ../libgimpconfig/gimpcolorconfig.c:220
+#: ../libgimpconfig/gimpcolorconfig.c:232
 msgid "CMYK profile"
 msgstr "CMYK-profil"
 
-#: ../libgimpconfig/gimpcolorconfig.c:227
+#: ../libgimpconfig/gimpcolorconfig.c:239
 msgid "Monitor profile"
 msgstr "Skärmprofil"
 
-#: ../libgimpconfig/gimpcolorconfig.c:234
+#: ../libgimpconfig/gimpcolorconfig.c:246
 msgid "Use the system monitor profile"
 msgstr "Använd systemets skärmprofil"
 
-#: ../libgimpconfig/gimpcolorconfig.c:242
+#: ../libgimpconfig/gimpcolorconfig.c:254
 msgid "Simulation profile for soft-proofing"
 msgstr "Simuleringsprofil för korrektursimulering"
 
-#: ../libgimpconfig/gimpcolorconfig.c:249
+#: ../libgimpconfig/gimpcolorconfig.c:261
 msgid "Display rendering intent"
 msgstr "Visa renderingsåtergivning"
 
-#: ../libgimpconfig/gimpcolorconfig.c:257
+#: ../libgimpconfig/gimpcolorconfig.c:269
 msgid "Use black point compensation for the display"
 msgstr "Använd svartpunktskompensering för skärmen"
 
-#: ../libgimpconfig/gimpcolorconfig.c:264
+#: ../libgimpconfig/gimpcolorconfig.c:276
 msgid "Optimize display color transformations"
 msgstr "Optimera transformationer för visningsfärg"
 
-#: ../libgimpconfig/gimpcolorconfig.c:271
+#: ../libgimpconfig/gimpcolorconfig.c:283
 msgid "Soft-proofing rendering intent"
 msgstr "Korrektursimulera renderingsåtergivning"
 
-#: ../libgimpconfig/gimpcolorconfig.c:279
+#: ../libgimpconfig/gimpcolorconfig.c:291
 msgid "Use black point compensation for soft-proofing"
 msgstr "Använd svartpunktskompensering för korrektursimulering"
 
-#: ../libgimpconfig/gimpcolorconfig.c:286
+#: ../libgimpconfig/gimpcolorconfig.c:298
 msgid "Optimize soft-proofing color transformations"
 msgstr "Optimera färgtransformationer för korrektursimulering"
 
-#: ../libgimpconfig/gimpcolorconfig.c:293
+#: ../libgimpconfig/gimpcolorconfig.c:305
 msgid "Mark out of gamut colors"
 msgstr "Märk upp färger som är utanför färgomfång"
 
-#: ../libgimpconfig/gimpcolorconfig.c:300
+#: ../libgimpconfig/gimpcolorconfig.c:312
 msgid "Out of gamut warning color"
 msgstr "Varningsfärg för färger utanför färgomfång"
 
-#: ../libgimpconfig/gimpcolorconfig.c:657
-#: ../libgimpconfig/gimpcolorconfig.c:841
+#: ../libgimpconfig/gimpcolorconfig.c:320
+msgid "Show RGB 0..255 scales"
+msgstr "Visa RGB 0..255-skalor"
+
+#: ../libgimpconfig/gimpcolorconfig.c:327
+msgid "Show HSV instead of LCH"
+msgstr "Visa NMI i stället för LCH"
+
+#: ../libgimpconfig/gimpcolorconfig.c:695
+#: ../libgimpconfig/gimpcolorconfig.c:879
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Färgprofil ”%s” passar inte med RGB-färgrymd."
 
-#: ../libgimpconfig/gimpcolorconfig.c:699
-#: ../libgimpconfig/gimpcolorconfig.c:891
+#: ../libgimpconfig/gimpcolorconfig.c:737
+#: ../libgimpconfig/gimpcolorconfig.c:929
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Färgprofil ”%s” passar inte med GRÅ-färgrymd."
 
-#: ../libgimpconfig/gimpcolorconfig.c:741
-#: ../libgimpconfig/gimpcolorconfig.c:941
+#: ../libgimpconfig/gimpcolorconfig.c:779
+#: ../libgimpconfig/gimpcolorconfig.c:979
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Färgprofil ”%s” passar inte med CMYK-färgrymd."
@@ -2001,23 +2017,23 @@ msgstr "Tillverkare: "
 msgid "Copyright: "
 msgstr "Copyright: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:205
+#: ../libgimpwidgets/gimpcolorscales.c:206
 msgid "Scales"
 msgstr "Skalor"
 
-#: ../libgimpwidgets/gimpcolorscales.c:437
+#: ../libgimpwidgets/gimpcolorscales.c:445
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:439
+#: ../libgimpwidgets/gimpcolorscales.c:447
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:460
+#: ../libgimpwidgets/gimpcolorscales.c:468
 msgid "LCh"
 msgstr "LCh"
 
-#: ../libgimpwidgets/gimpcolorscales.c:462
+#: ../libgimpwidgets/gimpcolorscales.c:470
 msgid "HSV"
 msgstr "NMI"
 
@@ -2206,7 +2222,7 @@ msgstr "Ta bort den valda mappen från listan"
 msgid "Writable"
 msgstr "Skrivbar"
 
-#: ../libgimpwidgets/gimppickbutton.c:112
+#: ../libgimpwidgets/gimppickbutton.c:120
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2968,6 +2984,10 @@ msgstr "Kontrastcykler"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrast"
+
+#, c-format
+#~ msgid "Conversion of the filename to system codepage failed."
+#~ msgstr "Konvertering av filnamnet till en systemteckentabell misslyckades."
 
 #~ msgctxt "bucket-fill-area"
 #~ msgid "Fill whole selection"
