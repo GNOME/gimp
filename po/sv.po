@@ -1,11 +1,11 @@
 # Swedish messages for the GIMP.
-# Copyright © 1999-2022 Free Software Foundation, Inc.
+# Copyright © 1999-2023 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999, 2000.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2010, 2011, 2012.
 # Påvel Nicklasson <pavel@frimix.se>, 2014.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020, 2021, 2022.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020, 2021, 2022, 2023.
 # Sebastian Rasmussen <sebras@gmail.com>, 2017, 2018.
 # Luna Jernberg <droidbittin@gmail.com>, 2021.
 #
@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-16 14:11+0000\n"
-"PO-Revision-Date: 2022-06-23 22:43+0200\n"
+"POT-Creation-Date: 2023-02-01 18:48+0000\n"
+"PO-Revision-Date: 2023-02-08 23:46+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -1012,7 +1012,7 @@ msgstr ""
 "Du bör ha fått en kopia av GNU General Public License tillsammans med detta "
 "program. Om inte, se https://www.gnu.org/licenses/"
 
-#: ../app/gimp-update.c:385
+#: ../app/gimp-update.c:415
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -1319,7 +1319,7 @@ msgid "Images"
 msgstr "Bilder"
 
 #: ../app/actions/actions.c:195 ../app/dialogs/dialogs.c:372
-#: ../app/dialogs/resize-dialog.c:144 ../app/widgets/gimppickablepopup.c:227
+#: ../app/dialogs/resize-dialog.c:172 ../app/widgets/gimppickablepopup.c:227
 msgid "Layers"
 msgstr "Lager"
 
@@ -3369,7 +3369,7 @@ msgstr "240 sekunder"
 #: ../app/dialogs/preferences-dialog.c:667
 #: ../app/dialogs/preferences-dialog.c:1135
 #: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
-#: ../app/dialogs/resize-dialog.c:186
+#: ../app/dialogs/resize-dialog.c:226
 #: ../app/dialogs/resolution-calibrate-dialog.c:75
 #: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
 #: ../app/dialogs/template-options-dialog.c:118
@@ -6813,91 +6813,95 @@ msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "_Gråskala…"
 
-#: ../app/actions/image-commands.c:566
+#: ../app/actions/image-commands.c:569
 #, c-format
 msgid "Saving color profile failed: %s"
 msgstr "Sparande av färgprofil misslyckades: %s"
 
-#: ../app/actions/image-commands.c:606
+#: ../app/actions/image-commands.c:609
 msgid "Save Color Profile"
 msgstr "Spara färgprofil"
 
-#: ../app/actions/image-commands.c:655
+#: ../app/actions/image-commands.c:658
 msgid "Set Image Canvas Size"
 msgstr "Ställ in storlek på rityta"
 
-#: ../app/actions/image-commands.c:686 ../app/actions/image-commands.c:711
-#: ../app/actions/image-commands.c:1410
+#: ../app/actions/image-commands.c:689 ../app/actions/image-commands.c:714
+#: ../app/actions/image-commands.c:1420
 msgid "Resizing"
 msgstr "Ändrar storlek"
 
-#: ../app/actions/image-commands.c:745
+#: ../app/actions/image-commands.c:748
 msgid "Set Image Print Resolution"
 msgstr "Ställ in bildupplösning för utskrift"
 
-#: ../app/actions/image-commands.c:815 ../app/pdb/drawable-transform-cmds.c:174
+#: ../app/actions/image-commands.c:818 ../app/pdb/drawable-transform-cmds.c:174
 #: ../app/pdb/drawable-transform-cmds.c:269
 #: ../app/pdb/item-transform-cmds.c:228 ../app/tools/gimpfliptool.c:136
 msgid "Flipping"
 msgstr "Vänder"
 
-#: ../app/actions/image-commands.c:842 ../app/pdb/drawable-transform-cmds.c:650
+#: ../app/actions/image-commands.c:845 ../app/pdb/drawable-transform-cmds.c:650
 #: ../app/pdb/drawable-transform-cmds.c:749
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:536
 #: ../app/pdb/transform-tools-cmds.c:265 ../app/tools/gimprotatetool.c:131
 msgid "Rotating"
 msgstr "Roterar"
 
-#: ../app/actions/image-commands.c:870 ../app/actions/layers-commands.c:859
+#: ../app/actions/image-commands.c:873 ../app/actions/layers-commands.c:862
 msgid "Cannot crop because the current selection is empty."
 msgstr "Kan inte beskära eftersom den aktuella markeringen är tom."
 
-#: ../app/actions/image-commands.c:909
+#: ../app/actions/image-commands.c:912
 msgid "Cannot crop because the image has no content."
 msgstr "Kan inte beskära eftersom bilden inte har något innehåll."
 
-#: ../app/actions/image-commands.c:915
+#: ../app/actions/image-commands.c:918
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr "Kan inte beskära eftersom bilden redan är beskuren till innehållet."
 
-#: ../app/actions/image-commands.c:1081
+#: ../app/actions/image-commands.c:1084
 #, c-format
 msgid "Converting to RGB (%s)"
 msgstr "Konverterar till RGB (%s)"
 
-#: ../app/actions/image-commands.c:1119
+#: ../app/actions/image-commands.c:1122
 #, c-format
 msgid "Converting to grayscale (%s)"
 msgstr "Konverterar till gråskala (%s)"
 
-#: ../app/actions/image-commands.c:1181
+#: ../app/actions/image-commands.c:1184
 msgid "Converting to indexed colors"
 msgstr "Konverterar till indexerade färger"
 
-#: ../app/actions/image-commands.c:1269
+#: ../app/actions/image-commands.c:1272
 #, c-format
 msgid "Converting image to %s"
 msgstr "Konverterar bild till %s"
 
-#: ../app/actions/image-commands.c:1300
+#: ../app/actions/image-commands.c:1303
 msgid "Assign color profile"
 msgstr "Tilldela färgprofil"
 
-#: ../app/actions/image-commands.c:1346
+#: ../app/actions/image-commands.c:1349
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Konverterar till ”%s”"
 
-#: ../app/actions/image-commands.c:1452
+#: ../app/actions/image-commands.c:1433
+msgid "Change Canvas Size"
+msgstr "Ändra storlek på rityta"
+
+#: ../app/actions/image-commands.c:1481
 msgid "Change Print Size"
 msgstr "Ändra utskriftsstorlek"
 
-#: ../app/actions/image-commands.c:1496
+#: ../app/actions/image-commands.c:1525
 msgid "Scale Image"
 msgstr "Skala bild"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1505 ../app/actions/layers-commands.c:1668
+#: ../app/actions/image-commands.c:1534 ../app/actions/layers-commands.c:1671
 #: ../app/dialogs/preferences-dialog.c:1705
 #: ../app/pdb/drawable-transform-cmds.c:843
 #: ../app/pdb/drawable-transform-cmds.c:939
@@ -7771,49 +7775,49 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Till _nytt lager"
 
-#: ../app/actions/layers-commands.c:265 ../app/actions/layers-commands.c:1517
+#: ../app/actions/layers-commands.c:268 ../app/actions/layers-commands.c:1520
 msgid "Layer Attributes"
 msgstr "Lagerattribut"
 
-#: ../app/actions/layers-commands.c:268
+#: ../app/actions/layers-commands.c:271
 msgid "Edit Layer Attributes"
 msgstr "Redigera lagerattribut"
 
-#: ../app/actions/layers-commands.c:342
+#: ../app/actions/layers-commands.c:345
 #: ../app/widgets/gimpdrawabletreeview.c:343
 #: ../app/widgets/gimplayertreeview.c:905
 msgid "New Layer"
 msgstr "Nytt lager"
 
-#: ../app/actions/layers-commands.c:345
+#: ../app/actions/layers-commands.c:348
 msgid "Create a New Layer"
 msgstr "Skapa ett nytt lager"
 
-#: ../app/actions/layers-commands.c:447
+#: ../app/actions/layers-commands.c:450
 msgid "Visible"
 msgstr "Synlig"
 
-#: ../app/actions/layers-commands.c:762
+#: ../app/actions/layers-commands.c:765
 msgid "Set Layer Boundary Size"
 msgstr "Ställ in storlek på lagergräns"
 
-#: ../app/actions/layers-commands.c:826
+#: ../app/actions/layers-commands.c:829
 msgid "Scale Layer"
 msgstr "Skala lager"
 
-#: ../app/actions/layers-commands.c:869
+#: ../app/actions/layers-commands.c:872
 msgid "Crop Layer to Selection"
 msgstr "Beskär lager till markering"
 
-#: ../app/actions/layers-commands.c:900
+#: ../app/actions/layers-commands.c:903
 msgid "Crop Layer to Content"
 msgstr "Beskär lager till innehåll"
 
-#: ../app/actions/layers-commands.c:913
+#: ../app/actions/layers-commands.c:916
 msgid "Cannot crop because the active layer has no content."
 msgstr "Kan inte beskära eftersom det aktiva lagret inte har något innehåll."
 
-#: ../app/actions/layers-commands.c:920
+#: ../app/actions/layers-commands.c:923
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Kan inte beskära eftersom det aktiva lagret redan är beskuret till "
@@ -13644,7 +13648,7 @@ msgid "Gradient"
 msgstr "Gradient"
 
 #: ../app/core/gimpcontext.c:750 ../app/core/gimpcontext.c:751
-#: ../app/widgets/gimpcolorselectorpalette.c:59
+#: ../app/widgets/gimpcolorselectorpalette.c:60
 msgid "Palette"
 msgstr "Palett"
 
@@ -14026,7 +14030,7 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transformera lagergrupp"
 
-#: ../app/core/gimpimage.c:691 ../app/widgets/gimpsymmetryeditor.c:175
+#: ../app/core/gimpimage.c:691 ../app/widgets/gimpsymmetryeditor.c:181
 msgid "Symmetry"
 msgstr "Symmetri"
 
@@ -15025,6 +15029,7 @@ msgstr "Emulera penseldynamik"
 #. no undo (or redo) steps available
 #: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:410
 #: ../app/widgets/gimpsymmetryeditor.c:165
+#: ../app/widgets/gimpsymmetryeditor.c:175
 msgid "None"
 msgstr "Ingen"
 
@@ -15889,7 +15894,7 @@ msgid "Create a New Image"
 msgstr "Skapa en ny bild"
 
 #: ../app/dialogs/image-new-dialog.c:138
-#: ../app/dialogs/preferences-dialog.c:1767
+#: ../app/dialogs/preferences-dialog.c:1767 ../app/dialogs/resize-dialog.c:257
 msgid "_Template:"
 msgstr "_Mall:"
 
@@ -16083,7 +16088,7 @@ msgstr "X-position:"
 msgid "Offset Y:"
 msgstr "Y-position:"
 
-#: ../app/dialogs/layer-options-dialog.c:396 ../app/dialogs/resize-dialog.c:369
+#: ../app/dialogs/layer-options-dialog.c:396 ../app/dialogs/resize-dialog.c:516
 #: ../app/widgets/gimptemplateeditor.c:466
 msgid "_Fill with:"
 msgstr "_Fyll med:"
@@ -17948,62 +17953,86 @@ msgstr "Spara denna bild"
 msgid "Save as"
 msgstr "Spara som"
 
-#: ../app/dialogs/resize-dialog.c:143
+#: ../app/dialogs/resize-dialog.c:171
 msgid "Canvas Size"
 msgstr "Storlek på rityta"
 
-#: ../app/dialogs/resize-dialog.c:155 ../app/dialogs/scale-dialog.c:114
+#: ../app/dialogs/resize-dialog.c:183 ../app/dialogs/scale-dialog.c:114
 msgid "Layer Size"
 msgstr "Lagerstorlek"
 
-#: ../app/dialogs/resize-dialog.c:156
+#: ../app/dialogs/resize-dialog.c:184
 msgid "Fill With"
 msgstr "Fyll med"
 
-#: ../app/dialogs/resize-dialog.c:185
+#: ../app/dialogs/resize-dialog.c:225
 msgid "Re_set"
 msgstr "Åter_ställ"
 
-#: ../app/dialogs/resize-dialog.c:187
+#: ../app/dialogs/resize-dialog.c:227
 msgid "_Resize"
 msgstr "_Ändra storlek"
 
+#: ../app/dialogs/resize-dialog.c:294
+msgid "Reset the template selection"
+msgstr "Återställ mallvalet"
+
+#: ../app/dialogs/resize-dialog.c:301
+msgid ""
+"Template and image print resolution don't match.\n"
+"Choose how to scale the canvas:"
+msgstr ""
+"Utskriftsupplösning för mall och bild matchar inte.\n"
+"Välj hur ritytan ska skalas:"
+
+#. offset frame
 #. The offset frame
 #. offset frame
-#: ../app/dialogs/resize-dialog.c:230 ../app/tools/gimpalignoptions.c:100
+#: ../app/dialogs/resize-dialog.c:380 ../app/tools/gimpalignoptions.c:100
 #: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpgradientoptions.c:88
 #: ../app/tools/gimpoffsettool.c:129 ../app/tools/gimpoffsettool.c:459
 #: ../app/tools/gimptransform3dtool.c:343 ../app/widgets/gimpgrideditor.c:209
 msgid "Offset"
 msgstr "Position"
 
-#: ../app/dialogs/resize-dialog.c:259 ../app/tools/gimpoffsettool.c:488
+#: ../app/dialogs/resize-dialog.c:409 ../app/tools/gimpoffsettool.c:488
 #: ../app/tools/gimptransform3dtool.c:271
 #: ../app/tools/gimptransform3dtool.c:383
 msgid "_X:"
 msgstr "_X:"
 
-#: ../app/dialogs/resize-dialog.c:260 ../app/tools/gimpoffsettool.c:490
+#: ../app/dialogs/resize-dialog.c:410 ../app/tools/gimpoffsettool.c:490
 #: ../app/tools/gimptransform3dtool.c:272
 #: ../app/tools/gimptransform3dtool.c:389
 msgid "_Y:"
 msgstr "_Y:"
 
-#: ../app/dialogs/resize-dialog.c:277
+#. Button to center the image on canvas just below the preview.
+#: ../app/dialogs/resize-dialog.c:452
 msgid "C_enter"
 msgstr "C_entrera"
 
-#: ../app/dialogs/resize-dialog.c:331
+#: ../app/dialogs/resize-dialog.c:478
 msgid "Resize _layers:"
 msgstr "Ändra storlek på _lager:"
 
-#: ../app/dialogs/resize-dialog.c:379
+#: ../app/dialogs/resize-dialog.c:526
 msgid "Resize _text layers"
 msgstr "Ändra storlek på _textlager"
 
-#: ../app/dialogs/resize-dialog.c:390
+#: ../app/dialogs/resize-dialog.c:537
 msgid "Resizing text layers will make them uneditable"
 msgstr "Att skala om textlager kommer att göra dem oredigerbara"
+
+#: ../app/dialogs/resize-dialog.c:759
+#, c-format
+msgid "Scale template to %.2f ppi"
+msgstr "Skala mall till %.2f punkter/tum"
+
+#: ../app/dialogs/resize-dialog.c:764
+#, c-format
+msgid "Set image to %.2f ppi"
+msgstr "Ställ in bilden till %.2f punkter/tum"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:69
 msgid "Calibrate Monitor Resolution"
@@ -18645,33 +18674,33 @@ msgstr "%s för en begränsad axel"
 msgid "%s to zoom"
 msgstr "%s för att zooma"
 
-#: ../app/display/gimptoolhandlegrid.c:865
+#: ../app/display/gimptoolhandlegrid.c:896
 #: ../app/display/gimptooltransformgrid.c:1832
 msgid "Click-Drag to move"
 msgstr "Klicka och dra för att flytta"
 
-#: ../app/display/gimptoolhandlegrid.c:868
+#: ../app/display/gimptoolhandlegrid.c:899
 msgid "Click-Drag to rotate and scale"
 msgstr "Klicka och dra för att rotera och skala"
 
-#: ../app/display/gimptoolhandlegrid.c:871
+#: ../app/display/gimptoolhandlegrid.c:902
 msgid "Click-Drag to shear and scale"
 msgstr "Klicka och dra för att skeva och skala"
 
-#: ../app/display/gimptoolhandlegrid.c:874
+#: ../app/display/gimptoolhandlegrid.c:905
 #: ../app/display/gimptooltransformgrid.c:1820
 msgid "Click-Drag to change perspective"
 msgstr "Klicka och dra för att ändra perspektiv"
 
-#: ../app/display/gimptoolhandlegrid.c:885
+#: ../app/display/gimptoolhandlegrid.c:916
 msgid "Click to add a handle"
 msgstr "Klicka för att lägga till handtag"
 
-#: ../app/display/gimptoolhandlegrid.c:891
+#: ../app/display/gimptoolhandlegrid.c:922
 msgid "Click-Drag to move this handle"
 msgstr "Klicka och dra för att flytta detta handtag"
 
-#: ../app/display/gimptoolhandlegrid.c:896
+#: ../app/display/gimptoolhandlegrid.c:927
 msgid "Click-Drag to remove this handle"
 msgstr "Klicka och dra för att ta bort detta handtag"
 
