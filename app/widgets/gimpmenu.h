@@ -48,8 +48,8 @@ struct _GimpMenuClass
 
 GType        gimp_menu_get_type   (void) G_GNUC_CONST;
 
-GtkWidget  * gimp_menu_new        (GMenuModel *model,
-                                   Gimp       *gimp);
+GtkWidget  * gimp_menu_new        (GMenuModel    *model,
+                                   GimpUIManager *manager);
 
 
 #endif /* __GIMP_MENU_H__ */

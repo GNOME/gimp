@@ -398,6 +398,15 @@ plug_in_menus_add_proc (GimpUIManager       *manager,
                           GTK_UI_MANAGER_MENUITEM,
                           FALSE);
 
+  /* TODO: this will eventually replace gimp_ui_manager_add_ui().
+   * Also we will need to support more than "<Image>" menu only.
+   */
+  if (g_str_has_prefix (menu_path, "<Image>/"))
+    gimp_ui_manager_add_ui2 (manager,
+                             menu_path + 7,
+                             gimp_object_get_name (proc),
+                             FALSE);
+
   g_free (action_path);
 }
 

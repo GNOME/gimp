@@ -55,8 +55,16 @@ enum
   UPDATE,
   SHOW_TOOLTIP,
   HIDE_TOOLTIP,
+  UI_ADDED,
   LAST_SIGNAL
 };
+
+typedef struct
+{
+  gchar    *path;
+  gchar    *action_name;
+  gboolean  top;
+} GimpUIManagerMenuItem;
 
 
 static void       gimp_ui_manager_constructed         (GObject        *object);
@@ -106,6 +114,8 @@ static gboolean   gimp_ui_manager_item_key_press      (GtkWidget      *widget,
 static GtkWidget *find_widget_under_pointer           (GdkWindow      *window,
                                                        gint           *x,
                                                        gint           *y);
+
+static void       gimp_ui_manager_menu_item_free      (GimpUIManagerMenuItem *item);
 
 
 G_DEFINE_TYPE (GimpUIManager, gimp_ui_manager, GTK_TYPE_UI_MANAGER)
@@ -159,6 +169,17 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0,
                   G_TYPE_NONE);
+  manager_signals[UI_ADDED] =
+    g_signal_new ("ui-added",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpUIManagerClass, ui_added),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 3,
+                  G_TYPE_STRING,
+                  G_TYPE_STRING,
+                  G_TYPE_BOOLEAN);
+
 
   g_object_class_install_property (object_class, PROP_NAME,
                                    g_param_spec_string ("name",
@@ -258,6 +279,10 @@ gimp_ui_manager_finalize (GObject *object)
 
   g_clear_pointer (&manager->registered_uis, g_list_free);
   g_clear_pointer (&manager->name,           g_free);
+
+  g_list_free_full (manager->ui_items,
+                    (GDestroyNotify) gimp_ui_manager_menu_item_free);
+
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -509,6 +534,40 @@ gimp_ui_manager_remove_ui (GimpUIManager *manager,
                            guint          merge_id)
 {
   gtk_ui_manager_remove_ui ((GtkUIManager *) manager, merge_id);
+}
+
+void
+gimp_ui_manager_add_ui2 (GimpUIManager *manager,
+                         const gchar   *path,
+                         const gchar   *action_name,
+                         gboolean       top)
+{
+  GimpUIManagerMenuItem *item;
+
+  g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (action_name != NULL);
+
+  item = g_slice_new0 (GimpUIManagerMenuItem);
+  item->path        = g_strdup (path);
+  item->action_name = g_strdup (action_name);
+  item->top         = top;
+  manager->ui_items = g_list_prepend (manager->ui_items, item);
+
+  g_signal_emit (manager, manager_signals[UI_ADDED], 0, path, action_name, top);
+}
+
+void
+gimp_ui_manager_foreach_ui (GimpUIManager      *manager,
+                            GimpUIMenuCallback  callback,
+                            gpointer            user_data)
+{
+  for (GList *iter = g_list_last (manager->ui_items); iter; iter = iter->prev)
+    {
+      GimpUIManagerMenuItem *item = iter->data;
+
+      callback (manager, item->path, item->action_name, item->top, user_data);
+    }
 }
 
 void
@@ -1312,4 +1371,13 @@ find_widget_under_pointer (GdkWindow *window,
   *y = child_loc.y;
 
   return event_widget;
+}
+
+static void
+gimp_ui_manager_menu_item_free (GimpUIManagerMenuItem *item)
+{
+  g_free (item->path);
+  g_free (item->action_name);
+
+  g_slice_free (GimpUIManagerMenuItem, item);
 }

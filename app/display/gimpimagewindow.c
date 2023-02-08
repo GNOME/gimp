@@ -428,7 +428,7 @@ gimp_image_window_constructed (GObject *object)
                     G_CALLBACK (gimp_image_window_shell_events),
                     window);
 
-  private->new_menubar = gimp_menu_new (model, private->gimp);
+  private->new_menubar = gimp_menu_new (model, private->menubar_manager);
 
   gtk_box_pack_start (GTK_BOX (private->main_vbox),
                       private->new_menubar, FALSE, FALSE, 0);

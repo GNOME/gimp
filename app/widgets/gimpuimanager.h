@@ -22,6 +22,13 @@
 #define __GIMP_UI_MANAGER_H__
 
 
+typedef void (* GimpUIMenuCallback)  (GimpUIManager *manager,
+                                      const gchar   *path,
+                                      const gchar   *action_name,
+                                      gboolean       top,
+                                      gpointer       user_data);
+
+
 typedef struct _GimpUIManagerUIEntry GimpUIManagerUIEntry;
 
 struct _GimpUIManagerUIEntry
@@ -55,6 +62,8 @@ struct _GimpUIManager
   gchar        *name;
   Gimp         *gimp;
   GList        *registered_uis;
+
+  GList        *ui_items;
 };
 
 struct _GimpUIManagerClass
@@ -68,6 +77,10 @@ struct _GimpUIManagerClass
   void (* show_tooltip) (GimpUIManager *manager,
                          const gchar   *tooltip);
   void (* hide_tooltip) (GimpUIManager *manager);
+  void (* ui_added)     (GimpUIManager *manager,
+                         const gchar   *path,
+                         const gchar   *action_name,
+                         gboolean       top);
 };
 
 
@@ -105,6 +118,13 @@ void             gimp_ui_manager_add_ui         (GimpUIManager      *manager,
                                                  gboolean            top);
 void            gimp_ui_manager_remove_ui       (GimpUIManager      *manager,
                                                  guint               merge_id);
+void            gimp_ui_manager_add_ui2         (GimpUIManager      *manager,
+                                                 const gchar        *path,
+                                                 const gchar        *action_name,
+                                                 gboolean            top);
+void            gimp_ui_manager_foreach_ui      (GimpUIManager      *manager,
+                                                 GimpUIMenuCallback  callback,
+                                                 gpointer            user_data);
 
 void            gimp_ui_manager_ensure_update   (GimpUIManager      *manager);
 
