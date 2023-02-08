@@ -85,11 +85,6 @@ gimp_image_metadata_load_prepare (gint32        image_ID,
 
   metadata = gimp_metadata_load_from_file (file, error);
 
-  if (metadata)
-    {
-      gexiv2_metadata_erase_exif_thumbnail (GEXIV2_METADATA (metadata));
-    }
-
   return metadata;
 }
 
@@ -387,6 +382,25 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
       g_free (datetime_buf);
       g_date_time_unref (datetime);
 
+      /* EXIF Thumbnail */
+
+      if (gexiv2_metadata_has_exif (g2metadata))
+        {
+          gchar *value;
+
+          /* Check a required tag for a thumbnail to be present. */
+          value = gexiv2_metadata_get_tag_string (g2metadata,
+                                                 "Exif.Thumbnail.ImageLength");
+
+          if (! value)
+            *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+          else
+            g_free (value);
+        }
+      else
+        {
+          *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+        }
     }
 
   /* Thumbnail */
@@ -734,7 +748,7 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
       g_strfreev (iptc_data);
     }
 
-  if (flags & GIMP_METADATA_SAVE_THUMBNAIL)
+  if (flags & GIMP_METADATA_SAVE_THUMBNAIL && support_exif)
     {
       GdkPixbuf *thumb_pixbuf;
       gchar     *thumb_buffer;
@@ -801,6 +815,11 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
         }
 
       g_object_unref (thumb_pixbuf);
+    }
+  else
+    {
+      /* Remove Thumbnail */
+      gexiv2_metadata_erase_exif_thumbnail (new_g2metadata);
     }
 
   if (flags & GIMP_METADATA_SAVE_COLOR_PROFILE)
