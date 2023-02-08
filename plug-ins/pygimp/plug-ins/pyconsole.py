@@ -569,6 +569,7 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
 
         self.__start()
         self.run_on_raw_input = start_script
+        self.raw_input(self.ps1)
 
     def do_raw_input(self, text):
         if self.cmd_buffer:
