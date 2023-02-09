@@ -201,7 +201,7 @@ gimp_tool_options_editor_constructed (GObject *object)
                             GIMP_HELP_TOOL_OPTIONS_SAVE,
                             G_CALLBACK (gimp_tool_options_editor_save_clicked),
                             NULL,
-                            editor);
+                            G_OBJECT (editor));
 
   editor->p->restore_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
@@ -210,7 +210,7 @@ gimp_tool_options_editor_constructed (GObject *object)
                             GIMP_HELP_TOOL_OPTIONS_RESTORE,
                             G_CALLBACK (gimp_tool_options_editor_restore_clicked),
                             NULL,
-                            editor);
+                            G_OBJECT (editor));
 
   editor->p->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
@@ -219,7 +219,7 @@ gimp_tool_options_editor_constructed (GObject *object)
                             GIMP_HELP_TOOL_OPTIONS_DELETE,
                             G_CALLBACK (gimp_tool_options_editor_delete_clicked),
                             NULL,
-                            editor);
+                            G_OBJECT (editor));
 
   editor->p->reset_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor), "tool-options",

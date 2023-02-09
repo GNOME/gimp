@@ -1480,7 +1480,7 @@ gimp_gradient_tool_editor_init_stop_gui (GimpGradientTool *gradient_tool)
                           GIMP_ICON_EDIT_DELETE, _("Delete stop"),
                           NULL,
                           G_CALLBACK (gimp_gradient_tool_editor_stop_delete_clicked),
-                          NULL, gradient_tool);
+                          NULL, G_OBJECT (gradient_tool));
 }
 
 static void
@@ -1592,7 +1592,7 @@ gimp_gradient_tool_editor_init_midpoint_gui (GimpGradientTool *gradient_tool)
                             GIMP_ICON_DOCUMENT_NEW, _("New stop at midpoint"),
                             NULL,
                             G_CALLBACK (gimp_gradient_tool_editor_midpoint_new_stop_clicked),
-                            NULL, gradient_tool);
+                            NULL, G_OBJECT (gradient_tool));
 
   /* the center button */
   gradient_tool->midpoint_center_button =
@@ -1600,7 +1600,7 @@ gimp_gradient_tool_editor_init_midpoint_gui (GimpGradientTool *gradient_tool)
                             GIMP_ICON_CENTER_HORIZONTAL, _("Center midpoint"),
                             NULL,
                             G_CALLBACK (gimp_gradient_tool_editor_midpoint_center_clicked),
-                            NULL, gradient_tool);
+                            NULL, G_OBJECT (gradient_tool));
 }
 
 static void

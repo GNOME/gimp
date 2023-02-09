@@ -488,6 +488,21 @@ gimp_editor_popup_menu (GimpEditor           *editor,
   return FALSE;
 }
 
+/**
+ * gimp_editor_add_button:
+ * @editor:
+ * @icon_name:
+ * @tooltip:
+ * @help_id:
+ * @callback:
+ * @extended_callback:
+ * @callback_data:
+ *
+ * Creates a new button, connect @callback to the "clicked" signal and
+ * @extended_callback to the "extended-clicked" signal.
+ * The @callback_data has to be a %GObject so that we keep a ref on it and avoid
+ * bad surprises.
+ */
 GtkWidget *
 gimp_editor_add_button (GimpEditor  *editor,
                         const gchar *icon_name,
@@ -495,7 +510,7 @@ gimp_editor_add_button (GimpEditor  *editor,
                         const gchar *help_id,
                         GCallback    callback,
                         GCallback    extended_callback,
-                        gpointer     callback_data)
+                        GObject     *callback_data)
 {
   GtkWidget      *button;
   GtkWidget      *image;
@@ -516,14 +531,14 @@ gimp_editor_add_button (GimpEditor  *editor,
     gimp_help_set_help_data (button, tooltip, help_id);
 
   if (callback)
-    g_signal_connect (button, "clicked",
-                      callback,
-                      callback_data);
+    g_signal_connect_object (button, "clicked",
+                             callback,
+                             callback_data, 0);
 
   if (extended_callback)
-    g_signal_connect (button, "extended-clicked",
-                      extended_callback,
-                      callback_data);
+    g_signal_connect_object (button, "extended-clicked",
+                             extended_callback,
+                             callback_data, 0);
 
   image = gtk_image_new_from_icon_name (icon_name, button_icon_size);
   gtk_container_add (GTK_CONTAINER (button), image);

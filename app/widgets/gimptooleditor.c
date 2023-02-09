@@ -243,7 +243,7 @@ gimp_tool_editor_constructed (GObject *object)
                             _("Create a new tool group"), NULL,
                             G_CALLBACK (gimp_tool_editor_new_group_clicked),
                             NULL,
-                            tool_editor);
+                            G_OBJECT (tool_editor));
 
   tool_editor->priv->raise_button =
     gimp_editor_add_button (GIMP_EDITOR (tool_editor), GIMP_ICON_GO_UP,
@@ -251,7 +251,7 @@ gimp_tool_editor_constructed (GObject *object)
                             _("Raise this item to the top"),
                             G_CALLBACK (gimp_tool_editor_raise_clicked),
                             G_CALLBACK (gimp_tool_editor_raise_extend_clicked),
-                            tool_editor);
+                            G_OBJECT (tool_editor));
 
   tool_editor->priv->lower_button =
     gimp_editor_add_button (GIMP_EDITOR (tool_editor), GIMP_ICON_GO_DOWN,
@@ -259,21 +259,21 @@ gimp_tool_editor_constructed (GObject *object)
                             _("Lower this item to the bottom"),
                             G_CALLBACK (gimp_tool_editor_lower_clicked),
                             G_CALLBACK (gimp_tool_editor_lower_extend_clicked),
-                            tool_editor);
+                            G_OBJECT (tool_editor));
 
   tool_editor->priv->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (tool_editor), GIMP_ICON_EDIT_DELETE,
                             _("Delete this tool group"), NULL,
                             G_CALLBACK (gimp_tool_editor_delete_clicked),
                             NULL,
-                            tool_editor);
+                            G_OBJECT (tool_editor));
 
   tool_editor->priv->reset_button =
     gimp_editor_add_button (GIMP_EDITOR (tool_editor), GIMP_ICON_RESET,
                             _("Reset tool order and visibility"), NULL,
                             G_CALLBACK (gimp_tool_editor_reset_clicked),
                             NULL,
-                            tool_editor);
+                            G_OBJECT (tool_editor));
 
   gimp_tool_editor_update_sensitivity (tool_editor);
 }

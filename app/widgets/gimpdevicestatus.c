@@ -154,7 +154,7 @@ gimp_device_status_init (GimpDeviceStatus *status)
                             _("Save device status"), NULL,
                             G_CALLBACK (gimp_device_status_save_clicked),
                             NULL,
-                            status);
+                            G_OBJECT (status));
 }
 
 static void
