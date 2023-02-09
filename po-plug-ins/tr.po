@@ -1,21 +1,20 @@
 # Turkish translation for GIMP
-#
 # Copyright (C) 2001 Free Software Foundation, Inc.
-# Copyright (C) 2002-2022 gimp's COPYRIGHT HOLDER
+# Copyright (C) 2002-2023 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
 # Fatih Demir <kabalak@gtranslator.org>, 2001.
 # Muhammet Kara <muhammetk@gmail.com>, 2014.
 # Simge Sezgin <simgesezgin88@gmail.com>, 2015.
-# Sabri Ünal <libreajans@gmail.com>, 2019, 2020, 2022.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2019, 2022.
+# Sabri Ünal <libreajans@gmail.com>, 2019, 2020, 2022, 2023.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2019, 2022, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-21 04:28+0000\n"
-"PO-Revision-Date: 2022-12-11 15:28+0300\n"
+"POT-Creation-Date: 2023-02-08 23:08+0000\n"
+"PO-Revision-Date: 2023-02-09 16:08+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -347,7 +346,7 @@ msgid "Reset the speed of the animation"
 msgstr "Animasyon hızını sıfırla"
 
 #: ../plug-ins/common/animation-play.c:640
-#: ../plug-ins/common/animation-play.c:1364
+#: ../plug-ins/common/animation-play.c:1368
 msgid "Start playback"
 msgstr "Oynatmaya başla"
 
@@ -403,12 +402,12 @@ msgstr "Bellek kare kabına paylaştırılamadı."
 msgid "Invalid image. Did you close it?"
 msgstr "Geçersiz görüntü. Kapatılsın mı?"
 
-#: ../plug-ins/common/animation-play.c:1225
+#: ../plug-ins/common/animation-play.c:1229
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Kare %d / %d"
 
-#: ../plug-ins/common/animation-play.c:1364
+#: ../plug-ins/common/animation-play.c:1368
 msgid "Stop playback"
 msgstr "Oynatmayı durdur"
 
@@ -460,7 +459,7 @@ msgstr "_Dikey"
 #: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:2067 ../plug-ins/file-sgi/sgi.c:416
+#: ../plug-ins/file-psd/psd-load.c:2153 ../plug-ins/file-sgi/sgi.c:416
 #: ../plug-ins/file-tiff/file-tiff-load.c:1544
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -1057,7 +1056,7 @@ msgstr "CML Gezgini Parametrelerini Kaydet"
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
-#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1725
+#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1897
 #: ../plug-ins/file-tiff/file-tiff-save.c:970
 #: ../plug-ins/file-tiff/file-tiff-save.c:1072 ../plug-ins/flame/flame.c:450
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
@@ -1093,12 +1092,12 @@ msgstr "CML Gezgini Parametrelerini Yükle"
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
 #: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:96
-#: ../plug-ins/file-jpeg/jpeg-load.c:543 ../plug-ins/file-psd/psd-load.c:143
+#: ../plug-ins/file-jpeg/jpeg-load.c:543 ../plug-ins/file-psd/psd-load.c:146
 #: ../plug-ins/file-psd/psd-thumb-load.c:82 ../plug-ins/flame/flame.c:419
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:913
-#: ../plug-ins/gfig/gfig.c:426 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/gfig/gfig.c:426 ../plug-ins/help/gimphelplocale.c:255
+#: ../plug-ins/help/gimphelplocale.c:271
 #: ../plug-ins/lighting/lighting-ui.c:1376
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -2164,7 +2163,7 @@ msgstr "EOF (dosya sonu) ya da görüntü başlığı okunurken hata"
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:183
 #: ../plug-ins/file-faxg3/faxg3.c:220 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
-#: ../plug-ins/file-psd/psd-load.c:135
+#: ../plug-ins/file-psd/psd-load.c:138
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:299
@@ -2251,7 +2250,7 @@ msgstr "'%s': dosya sonu ya da palet verisi okunurken hata"
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:319
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
 #: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:290
-#: ../plug-ins/file-psd/psd-save.c:1696 ../plug-ins/file-sgi/sgi.c:584
+#: ../plug-ins/file-psd/psd-save.c:1868 ../plug-ins/file-sgi/sgi.c:584
 #: ../plug-ins/file-tiff/file-tiff-save.c:956
 #, c-format
 msgid "Exporting '%s'"
@@ -3069,13 +3068,13 @@ msgid "'%s' is not a PCX file"
 msgstr "'%s' PCX dosyası değil"
 
 #: ../plug-ins/common/file-pcx.c:413 ../plug-ins/file-bmp/bmp-load.c:726
-#: ../plug-ins/file-psd/psd-load.c:315
+#: ../plug-ins/file-psd/psd-load.c:318
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Desteklenmeyen veya geçersiz görüntü genişliği: %d"
 
 #: ../plug-ins/common/file-pcx.c:419 ../plug-ins/file-bmp/bmp-load.c:732
-#: ../plug-ins/file-psd/psd-load.c:307
+#: ../plug-ins/file-psd/psd-load.c:310
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Desteklenmeyen veya geçersiz görüntü yüksekliği: %d"
@@ -7141,112 +7140,112 @@ msgstr "JPEG görüntüsü"
 msgid "Export Preview"
 msgstr "Dışa Aktar Önizlemesi"
 
-#: ../plug-ins/file-psd/psd-load.c:228
+#: ../plug-ins/file-psd/psd-load.c:231
 #: ../plug-ins/file-psd/psd-thumb-load.c:130
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "PSD dosyası yükleme hatası: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:283
+#: ../plug-ins/file-psd/psd-load.c:286
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Geçersiz Photoshop belge dosyası"
 
-#: ../plug-ins/file-psd/psd-load.c:290
+#: ../plug-ins/file-psd/psd-load.c:293
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Desteklenmeyen dosya biçim sürümü: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:297
+#: ../plug-ins/file-psd/psd-load.c:300
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Dosyada çok fazla kanal var: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:324
+#: ../plug-ins/file-psd/psd-load.c:327
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Desteklenmeyen yada geçersiz görüntü boyutu: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:338 ../plug-ins/file-psd/psd-load.c:348
+#: ../plug-ins/file-psd/psd-load.c:341 ../plug-ins/file-psd/psd-load.c:351
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Desteklenmeyen renk modu: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:375
+#: ../plug-ins/file-psd/psd-load.c:378
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Desteklenmeyen bit derinliği: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:409 ../plug-ins/file-psd/psd-load.c:419
-#: ../plug-ins/file-psd/psd-load.c:630 ../plug-ins/file-psd/psd-load.c:912
+#: ../plug-ins/file-psd/psd-load.c:412 ../plug-ins/file-psd/psd-load.c:422
+#: ../plug-ins/file-psd/psd-load.c:633 ../plug-ins/file-psd/psd-load.c:915
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Bozuk dosya!"
 
-#: ../plug-ins/file-psd/psd-load.c:558
+#: ../plug-ins/file-psd/psd-load.c:561
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "%d katmanında çok fazla kanal var"
 
-#: ../plug-ins/file-psd/psd-load.c:566
+#: ../plug-ins/file-psd/psd-load.c:569
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Desteklenmeyen veya geçersiz katman yüksekliği: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:574
+#: ../plug-ins/file-psd/psd-load.c:577
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Desteklenmeyen veya geçersiz katman genişliği: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:583
+#: ../plug-ins/file-psd/psd-load.c:586
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Desteklenmeyen ya da geçersiz katman boyutu: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:668
+#: ../plug-ins/file-psd/psd-load.c:671
 #, c-format
 msgid "Unsupported or invalid mask info size: %d"
 msgstr "Desteklenmeyen yada geçersiz maske bilgisi boyutu: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:837
+#: ../plug-ins/file-psd/psd-load.c:840
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Desteklenmeyen veya geçersiz katman maskesi yüksekliği: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:845
+#: ../plug-ins/file-psd/psd-load.c:848
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Desteklenmeyen veya geçersiz katman maskesi genişliği: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:854
+#: ../plug-ins/file-psd/psd-load.c:857
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Desteklenmeyen ya da geçersiz katman maskesi boyutu: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1477 ../plug-ins/file-psd/psd-load.c:2040
+#: ../plug-ins/file-psd/psd-load.c:1540 ../plug-ins/file-psd/psd-load.c:2126
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Desteklenmeyen sıkıştırma biçimi. %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2187
+#: ../plug-ins/file-psd/psd-load.c:2273
 msgid "Extra"
 msgstr "Ek"
 
-#: ../plug-ins/file-psd/psd-load.c:2365
+#: ../plug-ins/file-psd/psd-load.c:2473
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Desteklenmeyen veya geçersiz kanal boyutu"
 
-#: ../plug-ins/file-psd/psd-load.c:2431
+#: ../plug-ins/file-psd/psd-load.c:2539
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Veri açması başarısız"
 
-#: ../plug-ins/file-psd/psd-save.c:463
+#: ../plug-ins/file-psd/psd-save.c:469
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Hata: GIMP temel görüntü türü PSD biçimine dönüştürülemiyor"
 
-#: ../plug-ins/file-psd/psd-save.c:1689
+#: ../plug-ins/file-psd/psd-save.c:1861
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7255,7 +7254,7 @@ msgstr ""
 "'%s' dışa aktarılamadı. PSD dosya biçimi 30,000 pikselden daha geniş ya da "
 "uzun görüntüleri desteklemiyor."
 
-#: ../plug-ins/file-psd/psd-save.c:1710
+#: ../plug-ins/file-psd/psd-save.c:1882
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -10605,12 +10604,17 @@ msgstr "GIO arkauçları eksik olabilir ve GVFS yüklemeniz gerekebilir?"
 msgid "Help ID '%s' unknown"
 msgstr "'%s' yardım kimliği bilinmiyor"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/gimphelplocale.c:218
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "İçerik '%s' adresinden yükleniyor"
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/gimphelplocale.c:239
+#, c-format
+msgid "Could not load data from '%s': %s"
+msgstr "'%s' dosyasından veri yüklenemedi: %s"
+
+#: ../plug-ins/help/gimphelplocale.c:311
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -12987,6 +12991,3 @@ msgstr "_Tarayıcı/Kamera..."
 #: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
-
-#~ msgid "bad image dimensions"
-#~ msgstr "hatalı görüntü boyutları"
