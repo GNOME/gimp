@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-25 17:39+0000\n"
-"PO-Revision-Date: 2023-01-27 16:44+0200\n"
+"POT-Creation-Date: 2023-02-09 18:49+0000\n"
+"PO-Revision-Date: 2023-02-09 23:13+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -6582,22 +6582,16 @@ msgid "Change the size of the layer content"
 msgstr "Зміна розміру вмісту шару"
 
 #: app/actions/layers-actions.c:250
-#| msgid "Crop Layer to Selection"
-#| msgid_plural "Crop %d Layers to Selection"
 msgctxt "layers-action"
 msgid "_Resize Layers to Selection"
 msgstr "_Підігнати розмір шарів за позначеним"
 
 #: app/actions/layers-actions.c:251
-#| msgctxt "image-action"
-#| msgid "Resize the image to the extents of the selection"
 msgctxt "layers-action"
 msgid "Resize the layers to the extents of the selection"
 msgstr "Змінити розмір шарів до розмірів позначеного"
 
 #: app/actions/layers-actions.c:256
-#| msgid "Crop Layer to Content"
-#| msgid_plural "Crop %d Layers to Content"
 msgctxt "layers-action"
 msgid "Crop Layers to C_ontent"
 msgstr "Обітнути шари до _вмісту"
@@ -28269,8 +28263,9 @@ msgid "[ Base Image ]"
 msgstr "[ Основне зображення ]"
 
 #: app/widgets/gimpvectorstreeview.c:111
-msgid "Lock path strokes"
-msgstr "Замкнути контур від змін"
+#| msgid "Lock _alpha"
+msgid "Lock path"
+msgstr "Зафіксувати контур"
 
 #: app/widgets/gimpvectorstreeview.c:114
 msgid "Lock path position"
@@ -28602,6 +28597,9 @@ msgstr ""
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Діагностика аварій GIMP"
+
+#~ msgid "Lock path strokes"
+#~ msgstr "Замкнути контур від змін"
 
 #~ msgctxt "layers-action"
 #~ msgid "_Crop to Selection"
