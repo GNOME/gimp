@@ -20,11 +20,8 @@ Core:
    (multi-item selection, ability to use regexp or glob search by enabling these
    in Preferences, etc.) rather than the default GTK selection popup for tree
    views.
- - Color scales widget settings regarding RGB 0..255/0..100 and LCh/HSV choices
-   are now stored across sessions.
  - All code is now multi-item aware (even though it might mean specififically
    forbidding using some features on multiple items).
- - DBus is now explicitly disabled on macOS.
  - Better support of non-ASCII characters in paths on Windows and other fixes
    for Windows: API un-deprecation, unicode variants of functions…
  - Copy|Cut-Paste code reworked further.
@@ -52,14 +49,16 @@ Plug-ins:
       still retaining the utf8 char and string behavior.
   - PSD:
     * PSD clipping paths: import and export support.
-  - help:
-    * macOS: https support now working fine for help files (bypassing
-      lack of support in GIO for macOS platform).
   - DDS:
     * OpenMP support enabled when available on the build machine.
   - All Python 3 plug-ins whose Python 2 variants used to have a GUI now also
     have one.
   - Script "Predator" removed.
+  - Plug-ins ported to GAction: animation-play, colormap-remap, ifs-compose,
+    gfig.
+  - PAM: import and export (formats: RAYSCALE, GRAYSCALE_ALPHA, RGB, RGB_ALPHA)
+    support added. PAM files are essentially PPM files with a different header
+    format and alpha/16 bit support.
 
 API:
 
@@ -76,21 +75,32 @@ API:
       + GimpGradient
       + GimpPalette
       + GimpPattern
+    * Improved annotations or usage:
+      + set_i18n() method of GimpPlugIn expects a UTF-8 catalog directory.
   - Changes in libgimpbase:
     * New functions:
       + gimp_bind_text_domain()
+    * Improved annotations or usage:
+      + gimp_locale_directory() returns a string in the OS encoding for all but
+        Windows (UTF-8), i.e. GLib "filename" encoding.
 
 Build:
 
   - meson: make sure libgimp does not depend on GTK+.
   - GLib requirement bumped to version 2.70 as minimum.
   - Improved C99 compatibility of IPC_RMID check.
+  - Windows: port fileicon.ico from gimp-2-10 with additional sizes for clearer
+    icons on different resolutions and displays.
 
 Debugging:
 
   - New --runtime option to `flatpak-releases` debugging script (a dev tool
     allowing for instance to bisect issues through flatpak builds). This option
     allows to list the runtime builds (additionally to the main GIMP flatpaks).
+
+Documentation:
+
+  - More developer docs is being moved to the new developer website.
 
 
 Overview of Changes from GIMP 2.99.12 to GIMP 2.99.14
@@ -509,6 +519,7 @@ Plug-ins:
       generation API.
     * Improved import dialog, ported to new dialog generation API, with
       factorized code to more easily handle more cases.
+    * High bit depth import/export support.
     * All the exportable formats can now be loaded back.
     * "file-raw-load" and "file-raw-save" procedures API are now much
       better with all relevant arguments.
