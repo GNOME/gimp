@@ -8,6 +8,87 @@ we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
 
+Overview of Changes from GIMP 2.10.32 to GIMP 2.10.34
+=====================================================
+
+Core:
+
+  - Check for updates now works on macOS.
+  - Update help IDs for better integration with the documentation website.
+  - Symmetry menu now disabled when no image is active.
+  - DBus fully disabled on macOS (in some case, it could even freeze GIMP
+    process when dbus is present yet not responding). Open With feature (e.g.
+    from file browsers) still work fine as it uses a different code path on
+    macOS. Other features using dbus (opening files or running batch commands
+    from a separate GIMP process) won't work, but they probably never did on
+    macOS anyway.
+  - "Canvas Size" dialog took too much vertical space and now better uses the
+    horizontal space by moving the preview and offset fiels to the right side,
+    and the "Center" button just below (backported from main development code).
+  - Backported template selector in resize dialog from main development code.
+  - Color scale preferences (0..255/0..100 and LCh/HSV settings in Colors
+    selection dialogs) are now remembered across sessions.
+  - Eye icon header added to the item tree views to make it more obvious where
+    to click for item visibility and links (backported from 2.99.10)
+
+Plug-ins:
+
+  - DDS: make GUI translatable.
+  - file-raw: added 16-bit per channel precision export.
+  - TIFF:
+    * Various bug fixes;
+    * better check for invalid resolutions on import;
+    * do not generated warnings for incorrect RichTIFFIPTC tags produced by
+      Adobe products (only output a message to stderr, for not completely
+      ignoring these);
+    * Loading "reduced" image or not is now an option. We use a heuristic for
+      the default value of said option (trying to guess if it's a thumbnail by
+      using common usage), but final decision is now up to one knowing the image
+      you load;
+    * Default TIFF export format is "normal" TIFF, not BigTIFF (making it
+      default was definitely an error in 2.10.32).
+  - PSD:
+    * Various bug fixes;
+    * Useless physical unit conversion removed;
+    * Backported improvement (2.99.10) for importing layers with clipping set
+      (leading to color bleeding);
+    * Backported improvements (2.99.10) for importing clipping layers;
+    * Paths are now exported.
+  - WebP: more informative error messages in some cases.
+  - Flame: various bug fixes.
+  - JPEG-XL:
+    * metadata import backported from the main development branch.
+    * Partial backport of JPEG-XL; export is always in 8bit lossless.
+  - HEIF: various bug fixes.
+  - Dicom: various bug fixes.
+  - Help: HTTP and HTTPS both working now on macOS.
+  - animation-play: fixed on macOS.
+
+Libgimpbase:
+
+  - GimpMetadata API (in particular the gimp_metadata_set_from_*() functions)
+    are now much less memory (backported from the main dev branch) when using
+    GExiv 0.12.2 or over. With some huge metadata, it could cause long freeze or
+    even crashes of plug-ins.
+
+Libgimpwidgets:
+
+  - Color-picking with X11 is now the default when compiled with X11, even if a
+    color-picking portal also exists, because it is always right, whereas
+    portals return color in display space without the space information itself
+    (i.e. without profiles).
+  - New dedicated GimpPickButton implementation for Windows.
+
+Build:
+
+  - Bumping minimum GEGL to version 0.4.38.
+  - Bumping minimum libjxl to version 0.7.0.
+  - New GIMP_RELEASE macro to tell if code is a release or in-between release
+    (different from GIMP_UNSTABLE which was telling if we are in a stable or
+    development branch).
+  - Our stable CI now uses Debian stable where Python2 is still present.
+
+
 Overview of Changes from GIMP 2.10.30 to GIMP 2.10.32
 =====================================================
 
