@@ -295,7 +295,7 @@ gimp_controller_list_init (GimpControllerList *list)
                             NULL,
                             G_CALLBACK (gimp_controller_list_edit_clicked),
                             NULL,
-                            list);
+                            G_OBJECT (list));
   list->up_button =
     gimp_editor_add_button (GIMP_EDITOR (list->dest),
                             GIMP_ICON_GO_UP,
@@ -303,7 +303,7 @@ gimp_controller_list_init (GimpControllerList *list)
                             NULL,
                             G_CALLBACK (gimp_controller_list_up_clicked),
                             NULL,
-                            list);
+                            G_OBJECT (list));
   list->down_button =
     gimp_editor_add_button (GIMP_EDITOR (list->dest),
                             GIMP_ICON_GO_DOWN,
@@ -311,7 +311,7 @@ gimp_controller_list_init (GimpControllerList *list)
                             NULL,
                             G_CALLBACK (gimp_controller_list_down_clicked),
                             NULL,
-                            list);
+                            G_OBJECT (list));
 
   gtk_widget_set_sensitive (list->edit_button, FALSE);
   gtk_widget_set_sensitive (list->up_button,   FALSE);

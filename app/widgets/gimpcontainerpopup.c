@@ -316,12 +316,12 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
                           _("Smaller Previews"), NULL,
                           G_CALLBACK (gimp_container_popup_smaller_clicked),
                           NULL,
-                          popup);
+                          G_OBJECT (popup));
   gimp_editor_add_button (editor, "zoom-in",
                           _("Larger Previews"), NULL,
                           G_CALLBACK (gimp_container_popup_larger_clicked),
                           NULL,
-                          popup);
+                          G_OBJECT (popup));
 
   button = gimp_editor_add_icon_box (editor, GIMP_TYPE_VIEW_TYPE, "gimp",
                                      G_CALLBACK (gimp_container_popup_view_type_toggled),
@@ -333,7 +333,7 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
                             popup->dialog_tooltip, NULL,
                             G_CALLBACK (gimp_container_popup_dialog_clicked),
                             NULL,
-                            popup);
+                            G_OBJECT (popup));
 
   gtk_widget_grab_focus (GTK_WIDGET (popup->editor));
 
@@ -404,7 +404,7 @@ gimp_container_popup_dialog_clicked (GtkWidget          *button,
                                              popup->dialog_factory,
                                              gimp_widget_get_monitor (button),
                                              popup->dialog_identifier);
-  g_signal_emit_by_name (popup, "confirm");
+  g_signal_emit_by_name (popup, "cancel");
 }
 
 static void

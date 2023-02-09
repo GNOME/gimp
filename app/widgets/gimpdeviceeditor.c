@@ -161,7 +161,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
                             NULL,
                             G_CALLBACK (gimp_device_editor_delete_clicked),
                             NULL,
-                            editor);
+                            G_OBJECT (editor));
 
   gtk_widget_set_sensitive (private->delete_button, FALSE);
 

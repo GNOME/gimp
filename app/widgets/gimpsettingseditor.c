@@ -193,7 +193,7 @@ gimp_settings_editor_constructed (GObject *object)
                             NULL,
                             G_CALLBACK (gimp_settings_editor_import_clicked),
                             NULL,
-                            editor);
+                            G_OBJECT (editor));
 
   private->export_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view),
@@ -202,7 +202,7 @@ gimp_settings_editor_constructed (GObject *object)
                             NULL,
                             G_CALLBACK (gimp_settings_editor_export_clicked),
                             NULL,
-                            editor);
+                            G_OBJECT (editor));
 
   private->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view),
@@ -211,7 +211,7 @@ gimp_settings_editor_constructed (GObject *object)
                             NULL,
                             G_CALLBACK (gimp_settings_editor_delete_clicked),
                             NULL,
-                            editor);
+                            G_OBJECT (editor));
 
   gtk_widget_set_sensitive (private->delete_button, FALSE);
 }

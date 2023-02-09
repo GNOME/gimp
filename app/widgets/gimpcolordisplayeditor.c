@@ -231,7 +231,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
                             NULL,
                             G_CALLBACK (gimp_color_display_editor_up_clicked),
                             NULL,
-                            editor);
+                            G_OBJECT (editor));
 
   editor->down_button =
     gimp_editor_add_button (GIMP_EDITOR (ed),
@@ -240,7 +240,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
                             NULL,
                             G_CALLBACK (gimp_color_display_editor_down_clicked),
                             NULL,
-                            editor);
+                            G_OBJECT (editor));
 
   gtk_widget_set_sensitive (editor->up_button,   FALSE);
   gtk_widget_set_sensitive (editor->down_button, FALSE);
