@@ -13,9 +13,10 @@ Overview of Changes from GIMP 2.10.32 to GIMP 2.10.34
 
 Core:
 
-  - Check for updates now works on macOS.
+  - Check for updates now works on macOS (backported from 2.99.14).
   - Update help IDs for better integration with the documentation website.
-  - Symmetry menu now disabled when no image is active.
+  - Symmetry dockable contents is now shown, yet deactivated, when no images are
+    opened, improving discoverability (backported from 2.99.14).
   - DBus fully disabled on macOS (in some case, it could even freeze GIMP
     process when dbus is present yet not responding). Open With feature (e.g.
     from file browsers) still work fine as it uses a different code path on
@@ -24,8 +25,8 @@ Core:
     macOS anyway.
   - "Canvas Size" dialog took too much vertical space and now better uses the
     horizontal space by moving the preview and offset fiels to the right side,
-    and the "Center" button just below (backported from main development code).
-  - Backported template selector in resize dialog from main development code.
+    and the "Center" button just below (backported from 2.99.8).
+  - Template selector (backported from 2.99.6) in resize dialog.
   - Color scale preferences (0..255/0..100 and LCh/HSV settings in Colors
     selection dialogs) are now remembered across sessions.
   - Eye icon header added to the item tree views to make it more obvious where
@@ -34,7 +35,8 @@ Core:
 Plug-ins:
 
   - DDS: make GUI translatable.
-  - file-raw: added 16-bit per channel precision export.
+  - file-raw: added 16-bit per channel precision export (partial backport from
+    2.99.12).
   - TIFF:
     * Various bug fixes;
     * better check for invalid resolutions on import;
@@ -44,7 +46,7 @@ Plug-ins:
     * Loading "reduced" image or not is now an option. We use a heuristic for
       the default value of said option (trying to guess if it's a thumbnail by
       using common usage), but final decision is now up to one knowing the image
-      you load;
+      you load (backported from 2.99.14);
     * Default TIFF export format is "normal" TIFF, not BigTIFF (making it
       default was definitely an error in 2.10.32).
   - PSD:
@@ -53,15 +55,18 @@ Plug-ins:
     * Backported improvement (2.99.10) for importing layers with clipping set
       (leading to color bleeding);
     * Backported improvements (2.99.10) for importing clipping layers;
-    * Paths are now exported.
+    * Paths are now exported (backported from 2.99.14).
   - WebP: more informative error messages in some cases.
   - Flame: various bug fixes.
   - JPEG-XL:
-    * metadata import backported from the main development branch.
-    * Partial backport of JPEG-XL; export is always in 8bit lossless.
+    * metadata import backported from 2.99.14 - (requires libjxl 0.7.0)
+    * Partial backport (2.99.8) of JPEG-XL export; export is always in 8bit
+      lossless.
   - HEIF: various bug fixes.
   - Dicom: various bug fixes.
-  - Help: HTTP and HTTPS both working now on macOS.
+  - help:
+    * macOS: https support now working fine for help files (bypassing
+      lack of support in GIO for macOS platform).
   - animation-play: fixed on macOS.
 
 Libgimpbase:
@@ -77,7 +82,8 @@ Libgimpwidgets:
     color-picking portal also exists, because it is always right, whereas
     portals return color in display space without the space information itself
     (i.e. without profiles).
-  - New dedicated GimpPickButton implementation for Windows.
+  - New dedicated GimpPickButton implementation for Windows (backported from
+    2.99.14).
 
 Build:
 
