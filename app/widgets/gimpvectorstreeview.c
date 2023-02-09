@@ -108,7 +108,7 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   iv_class->duplicate_action        = "vectors-duplicate";
   iv_class->delete_action           = "vectors-delete";
   iv_class->lock_content_icon_name  = GIMP_ICON_TOOL_PATH;
-  iv_class->lock_content_tooltip    = _("Lock path strokes");
+  iv_class->lock_content_tooltip    = _("Lock path");
   iv_class->lock_content_help_id    = GIMP_HELP_PATH_LOCK_STROKES;
   iv_class->lock_position_icon_name = GIMP_ICON_TOOL_MOVE;
   iv_class->lock_position_tooltip   = _("Lock path position");
