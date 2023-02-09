@@ -1,7 +1,7 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@posteo.net>, 2003-2020
+# Marco Ciampa <ciampix@posteo.net>, 2003-2023
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 # Luca Ferretti <elle.uca@libero.it>, 2006, 2009.
 #
@@ -31,8 +31,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 12:01+0200\n"
-"PO-Revision-Date: 2020-09-03 12:04+0200\n"
+"POT-Creation-Date: 2023-02-09 19:10+0100\n"
+"PO-Revision-Date: 2023-02-09 19:13+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -284,44 +284,44 @@ msgstr "Selezione tipo di carattere"
 msgid "Gradient Selection"
 msgstr "Selezione gradiente"
 
-#: ../libgimp/gimpimagemetadata.c:514
+#: ../libgimp/gimpimagemetadata.c:671
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:703
+#: ../libgimp/gimpimagemetadata.c:862
 msgid "Background"
 msgstr "Sfondo"
 
-#: ../libgimp/gimpimagemetadata.c:892
+#: ../libgimp/gimpimagemetadata.c:1051
 #, c-format
 msgid "Rotate %s?"
 msgstr "_Ruota %s?"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:1057
 msgid "_Keep Original"
 msgstr "_Mantieni l'originale"
 
-#: ../libgimp/gimpimagemetadata.c:899 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:1058 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Ruota"
 
-#: ../libgimp/gimpimagemetadata.c:940
+#: ../libgimp/gimpimagemetadata.c:1099
 msgid "Original"
 msgstr "Originale"
 
-#: ../libgimp/gimpimagemetadata.c:956
+#: ../libgimp/gimpimagemetadata.c:1115
 msgid "Rotated"
 msgstr "Ruotato"
 
-#: ../libgimp/gimpimagemetadata.c:974
+#: ../libgimp/gimpimagemetadata.c:1133
 msgid "This image contains Exif orientation metadata."
 msgstr "Questa immagine contiene metadati Exif di orientamento."
 
-#: ../libgimp/gimpimagemetadata.c:992
+#: ../libgimp/gimpimagemetadata.c:1151
 msgid "Would you like to rotate the image?"
 msgstr "Volete ruotare l'immagine?"
 
-#: ../libgimp/gimpimagemetadata.c:1004
+#: ../libgimp/gimpimagemetadata.c:1163
 msgid "_Don't ask me again"
 msgstr "Non chie_dere più"
 
@@ -1499,37 +1499,32 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Ritaglia all'aspetto"
 
-#: ../libgimpbase/gimpmetadata.c:878
+#: ../libgimpbase/gimpmetadata.c:982
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "È possibile caricare i metadati solo da file locali"
 
-#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
-#, c-format
-msgid "Conversion of the filename to system codepage failed."
-msgstr "Conversione del nome del file alla codepage di sistema fallita."
-
-#: ../libgimpbase/gimpmetadata.c:949
+#: ../libgimpbase/gimpmetadata.c:1038
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "È possibile salvare i metadati sono su file locali"
 
-#: ../libgimpbase/gimpmetadata.c:1011
+#: ../libgimpbase/gimpmetadata.c:1086
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Dimensione dati Exif non valida."
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:1115
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Fallita l'analisi dei dati Exif."
 
-#: ../libgimpbase/gimpmetadata.c:1090
+#: ../libgimpbase/gimpmetadata.c:1165
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Fallita l'analisi dei dati IPTC."
 
-#: ../libgimpbase/gimpmetadata.c:1138
+#: ../libgimpbase/gimpmetadata.c:1213
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Fallita l'analisi dei dati XMP."
@@ -1750,80 +1745,98 @@ msgstr ""
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Il colore da usare per contrassegnare i colori fuori gamma."
 
-#: ../libgimpconfig/gimpcolorconfig.c:198
+#: ../libgimpconfig/gimpcolorconfig.c:114
+msgid ""
+"When enabled, set the color scales to display 0...255 instead of percentages"
+msgstr "Se abilitata, imposta le scale di colore per mostrare 0...255 invece delle percentuali"
+
+#: ../libgimpconfig/gimpcolorconfig.c:118
+msgid ""
+"When enabled, set the color scales to display HSV blend mode instead of LCh"
+msgstr "Se abilitata, imposta le scale di colore per mostrare la modalità di fusione HSV invece di quella LCh"
+
+#: ../libgimpconfig/gimpcolorconfig.c:210
 msgid "Mode of operation"
 msgstr "Modalità di funzinamento"
 
-#: ../libgimpconfig/gimpcolorconfig.c:206
+#: ../libgimpconfig/gimpcolorconfig.c:218
 msgid "Preferred RGB profile"
 msgstr "Profilo RGB preferito"
 
-#: ../libgimpconfig/gimpcolorconfig.c:213
+#: ../libgimpconfig/gimpcolorconfig.c:225
 msgid "Preferred grayscale profile"
 msgstr "Profilo in scala di grigi preferito"
 
-#: ../libgimpconfig/gimpcolorconfig.c:220
+#: ../libgimpconfig/gimpcolorconfig.c:232
 msgid "CMYK profile"
 msgstr "Profilo CMYK"
 
-#: ../libgimpconfig/gimpcolorconfig.c:227
+#: ../libgimpconfig/gimpcolorconfig.c:239
 msgid "Monitor profile"
 msgstr "Profilo del monitor"
 
-#: ../libgimpconfig/gimpcolorconfig.c:234
+#: ../libgimpconfig/gimpcolorconfig.c:246
 msgid "Use the system monitor profile"
 msgstr "Usa il profilo del monitor di sistema"
 
-#: ../libgimpconfig/gimpcolorconfig.c:242
+#: ../libgimpconfig/gimpcolorconfig.c:254
 msgid "Simulation profile for soft-proofing"
 msgstr "Profilo di simulazione per il soft-proof"
 
-#: ../libgimpconfig/gimpcolorconfig.c:249
+#: ../libgimpconfig/gimpcolorconfig.c:261
 msgid "Display rendering intent"
 msgstr "Intento di rendering dello schermo"
 
-#: ../libgimpconfig/gimpcolorconfig.c:257
+#: ../libgimpconfig/gimpcolorconfig.c:269
 msgid "Use black point compensation for the display"
 msgstr "Usa la compensazione del punto nero per lo schermo"
 
-#: ../libgimpconfig/gimpcolorconfig.c:264
+#: ../libgimpconfig/gimpcolorconfig.c:276
 msgid "Optimize display color transformations"
 msgstr "Ottimizza le trasformazioni di colore dello schermo"
 
-#: ../libgimpconfig/gimpcolorconfig.c:271
+#: ../libgimpconfig/gimpcolorconfig.c:283
 msgid "Soft-proofing rendering intent"
 msgstr "Intento di rendering del softproof"
 
-#: ../libgimpconfig/gimpcolorconfig.c:279
+#: ../libgimpconfig/gimpcolorconfig.c:291
 msgid "Use black point compensation for soft-proofing"
 msgstr "Usa la compensazione del punto nero per il softproof"
 
-#: ../libgimpconfig/gimpcolorconfig.c:286
+#: ../libgimpconfig/gimpcolorconfig.c:298
 msgid "Optimize soft-proofing color transformations"
 msgstr "Ottimizza le trasformazioni di colore del soft-proof"
 
-#: ../libgimpconfig/gimpcolorconfig.c:293
+#: ../libgimpconfig/gimpcolorconfig.c:305
 msgid "Mark out of gamut colors"
 msgstr "Evidenzia i colori fuori gamut"
 
-#: ../libgimpconfig/gimpcolorconfig.c:300
+#: ../libgimpconfig/gimpcolorconfig.c:312
 msgid "Out of gamut warning color"
 msgstr "Colore di avvertimento fuori gamut"
 
-#: ../libgimpconfig/gimpcolorconfig.c:657
-#: ../libgimpconfig/gimpcolorconfig.c:841
+#: ../libgimpconfig/gimpcolorconfig.c:320
+msgid "Show RGB 0..255 scales"
+msgstr "Mostra scale RGB 0..255"
+
+#: ../libgimpconfig/gimpcolorconfig.c:327
+msgid "Show HSV instead of LCH"
+msgstr "Mostra HSV invece di LCH"
+
+#: ../libgimpconfig/gimpcolorconfig.c:695
+#: ../libgimpconfig/gimpcolorconfig.c:879
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Il profilo colore \"%s\" non è per una spazio colore RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:699
-#: ../libgimpconfig/gimpcolorconfig.c:891
+#: ../libgimpconfig/gimpcolorconfig.c:737
+#: ../libgimpconfig/gimpcolorconfig.c:929
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Il profilo colore \"%s\" non è per una spazio colore di grigi."
 
-#: ../libgimpconfig/gimpcolorconfig.c:741
-#: ../libgimpconfig/gimpcolorconfig.c:941
+#: ../libgimpconfig/gimpcolorconfig.c:779
+#: ../libgimpconfig/gimpcolorconfig.c:979
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Il profilo colore \"%s\" non è per una spazio colore CMYK."
@@ -2035,23 +2048,23 @@ msgstr "Produttore: "
 msgid "Copyright: "
 msgstr "Copyright: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:205
+#: ../libgimpwidgets/gimpcolorscales.c:206
 msgid "Scales"
 msgstr "Scale"
 
-#: ../libgimpwidgets/gimpcolorscales.c:437
+#: ../libgimpwidgets/gimpcolorscales.c:445
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:439
+#: ../libgimpwidgets/gimpcolorscales.c:447
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:460
+#: ../libgimpwidgets/gimpcolorscales.c:468
 msgid "LCh"
 msgstr "LCh"
 
-#: ../libgimpwidgets/gimpcolorscales.c:462
+#: ../libgimpwidgets/gimpcolorscales.c:470
 msgid "HSV"
 msgstr "HSV"
 
@@ -2241,7 +2254,7 @@ msgstr "Rimuovi la cartella selezionata dall'elenco"
 msgid "Writable"
 msgstr "Scrivibile"
 
-#: ../libgimpwidgets/gimppickbutton.c:112
+#: ../libgimpwidgets/gimppickbutton.c:120
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."

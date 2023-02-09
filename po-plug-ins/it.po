@@ -1,14 +1,14 @@
 # This is the Italian catalog for the standard GIMP Plugins.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 1999-2002
-# Marco Ciampa <ciampix@posteo.net>, 2003-2022
+# Marco Ciampa <ciampix@posteo.net>, 2003-2023
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-10 09:27+0200\n"
-"PO-Revision-Date: 2022-10-10 09:31+0200\n"
+"POT-Creation-Date: 2023-02-09 19:13+0100\n"
+"PO-Revision-Date: 2023-02-09 19:15+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -46,7 +46,7 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1902
+#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1908
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:702
 #: ../plug-ins/common/file-pdf-load.c:1282
@@ -68,7 +68,7 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
 #: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1983
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2643 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2664 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -111,7 +111,7 @@ msgstr "_Annulla"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1903
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1909
 #: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
@@ -336,7 +336,7 @@ msgid "Reset the speed of the animation"
 msgstr "Reimposta la velocità dell'animazione"
 
 #: ../plug-ins/common/animation-play.c:640
-#: ../plug-ins/common/animation-play.c:1364
+#: ../plug-ins/common/animation-play.c:1368
 msgid "Start playback"
 msgstr "Avvia l'esecuzione"
 
@@ -392,12 +392,12 @@ msgstr "La memoria non può essere allocata al contenitore del quadro."
 msgid "Invalid image. Did you close it?"
 msgstr "Immagine non valida. È stata chiusa?"
 
-#: ../plug-ins/common/animation-play.c:1225
+#: ../plug-ins/common/animation-play.c:1229
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Fotogramma %d di %d"
 
-#: ../plug-ins/common/animation-play.c:1364
+#: ../plug-ins/common/animation-play.c:1368
 msgid "Stop playback"
 msgstr "Ferma l'esecuzione"
 
@@ -449,8 +449,8 @@ msgstr "_Verticale"
 #: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:2067 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1524
+#: ../plug-ins/file-psd/psd-load.c:2153 ../plug-ins/file-sgi/sgi.c:416
+#: ../plug-ins/file-tiff/file-tiff-load.c:1544
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -1048,7 +1048,7 @@ msgstr "Salva parametri Esploratore CML"
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
-#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1725
+#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1897
 #: ../plug-ins/file-tiff/file-tiff-save.c:970
 #: ../plug-ins/file-tiff/file-tiff-save.c:1072 ../plug-ins/flame/flame.c:450
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
@@ -1084,12 +1084,12 @@ msgstr "Carica parametri Esploratore CML"
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
 #: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:96
-#: ../plug-ins/file-jpeg/jpeg-load.c:543 ../plug-ins/file-psd/psd-load.c:143
+#: ../plug-ins/file-jpeg/jpeg-load.c:543 ../plug-ins/file-psd/psd-load.c:146
 #: ../plug-ins/file-psd/psd-thumb-load.c:82 ../plug-ins/flame/flame.c:419
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:913
-#: ../plug-ins/gfig/gfig.c:426 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/gfig/gfig.c:426 ../plug-ins/help/gimphelplocale.c:255
+#: ../plug-ins/help/gimphelplocale.c:271
 #: ../plug-ins/lighting/lighting-ui.c:1376
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -2145,7 +2145,7 @@ msgstr ""
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:338
 #: ../plug-ins/common/file-gegl.c:322 ../plug-ins/common/file-gif-load.c:353
-#: ../plug-ins/common/file-heif.c:697 ../plug-ins/common/file-jp2-load.c:1077
+#: ../plug-ins/common/file-heif.c:703 ../plug-ins/common/file-jp2-load.c:1077
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1048
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1067
@@ -2156,10 +2156,10 @@ msgstr ""
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:183
 #: ../plug-ins/file-faxg3/faxg3.c:220 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
-#: ../plug-ins/file-psd/psd-load.c:135
+#: ../plug-ins/file-psd/psd-load.c:138
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:296
+#: ../plug-ins/file-tiff/file-tiff-load.c:299
 #, c-format
 msgid "Opening '%s'"
 msgstr "Apertura di '%s'"
@@ -2237,7 +2237,8 @@ msgstr ""
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:880
-#: ../plug-ins/common/file-html-table.c:238 ../plug-ins/common/file-pcx.c:761
+#: ../plug-ins/common/file-html-table.c:238
+#: ../plug-ins/common/file-jpegxl.c:778 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1278
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1216
@@ -2245,7 +2246,7 @@ msgstr ""
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:319
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
 #: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:290
-#: ../plug-ins/file-psd/psd-save.c:1696 ../plug-ins/file-sgi/sgi.c:584
+#: ../plug-ins/file-psd/psd-save.c:1868 ../plug-ins/file-sgi/sgi.c:584
 #: ../plug-ins/file-tiff/file-tiff-save.c:956
 #, c-format
 msgid "Exporting '%s'"
@@ -2618,75 +2619,75 @@ msgstr "Esporta immagini AVIF"
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Salva l'immagine in formato AV1 (AVIF)."
 
-#: ../plug-ins/common/file-heif.c:736 ../plug-ins/common/file-heif.c:769
-#: ../plug-ins/common/file-heif.c:808 ../plug-ins/common/file-heif.c:874
+#: ../plug-ins/common/file-heif.c:742 ../plug-ins/common/file-heif.c:775
+#: ../plug-ins/common/file-heif.c:814 ../plug-ins/common/file-heif.c:880
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Caricamento dell'immagine HEIF fallito: %s"
 
-#: ../plug-ins/common/file-heif.c:758
+#: ../plug-ins/common/file-heif.c:764
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Caricamento immagine HEIF fallito: il file in ingresso non contiene immagini "
 "leggibili"
 
-#: ../plug-ins/common/file-heif.c:1001
+#: ../plug-ins/common/file-heif.c:1007
 msgid "image content"
 msgstr "contenuto immagine"
 
-#: ../plug-ins/common/file-heif.c:1322
+#: ../plug-ins/common/file-heif.c:1328
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Esportazione di '%s' con codificatore %s"
 
-#: ../plug-ins/common/file-heif.c:1373 ../plug-ins/common/file-heif.c:1627
+#: ../plug-ins/common/file-heif.c:1379 ../plug-ins/common/file-heif.c:1633
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Codifica immagine HEIF fallita: %s"
 
-#: ../plug-ins/common/file-heif.c:1664
+#: ../plug-ins/common/file-heif.c:1670
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Scrittura immagine HEIF fallita: %s"
 
-#: ../plug-ins/common/file-heif.c:1753
+#: ../plug-ins/common/file-heif.c:1759
 msgid "primary"
 msgstr "primario"
 
-#: ../plug-ins/common/file-heif.c:1898
+#: ../plug-ins/common/file-heif.c:1904
 msgid "Load HEIF Image"
 msgstr "Carica immagine HEIF"
 
-#: ../plug-ins/common/file-heif.c:1912
+#: ../plug-ins/common/file-heif.c:1918
 msgid "Select Image"
 msgstr "Seleziona immagine"
 
-#: ../plug-ins/common/file-heif.c:2078
+#: ../plug-ins/common/file-heif.c:2084
 msgid "Nearly _lossless"
 msgstr "_Quasi senza perdite"
 
-#: ../plug-ins/common/file-heif.c:2082 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2088 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Qualità:"
 
-#: ../plug-ins/common/file-heif.c:2125
+#: ../plug-ins/common/file-heif.c:2131
 msgid "Bit depth:"
 msgstr "Profondità di colore:"
 
-#: ../plug-ins/common/file-heif.c:2131
+#: ../plug-ins/common/file-heif.c:2137
 msgid "8 bit/channel"
 msgstr "8 bit/canale"
 
-#: ../plug-ins/common/file-heif.c:2132
+#: ../plug-ins/common/file-heif.c:2138
 msgid "10 bit/channel"
 msgstr "10 bit/canale"
 
-#: ../plug-ins/common/file-heif.c:2133
+#: ../plug-ins/common/file-heif.c:2139
 msgid "12 bit/channel"
 msgstr "12 bit/canale"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2142 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2148 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:404
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
 msgid "Save color _profile"
@@ -2914,7 +2915,7 @@ msgstr "Impossibile convertire l'immagine JP2 xvYCC in \"%s\" a RGB."
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Spazio colore non supportato nell'immagine JP2: \"%s\"."
 
-#: ../plug-ins/common/file-jpegxl.c:71
+#: ../plug-ins/common/file-jpegxl.c:82 ../plug-ins/common/file-jpegxl.c:99
 msgid "JPEG XL image"
 msgstr "Immagine JPEG XL"
 
@@ -3064,13 +3065,13 @@ msgid "'%s' is not a PCX file"
 msgstr "'%s' non è un file PCX"
 
 #: ../plug-ins/common/file-pcx.c:413 ../plug-ins/file-bmp/bmp-load.c:726
-#: ../plug-ins/file-psd/psd-load.c:315
+#: ../plug-ins/file-psd/psd-load.c:318
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Larghezza immagine non supportata o non valida: %d"
 
 #: ../plug-ins/common/file-pcx.c:419 ../plug-ins/file-bmp/bmp-load.c:732
-#: ../plug-ins/file-psd/psd-load.c:307
+#: ../plug-ins/file-psd/psd-load.c:310
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Altezza immagine non supportata o non valida: %d"
@@ -3173,7 +3174,7 @@ msgid "Import from PDF"
 msgstr "Importa da PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3448
-#: ../plug-ins/file-tiff/file-tiff-load.c:2644
+#: ../plug-ins/file-tiff/file-tiff-load.c:2665
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "_Importa"
@@ -3299,7 +3300,7 @@ msgstr "Livelli come pagine (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1941
-#: ../plug-ins/file-tiff/file-tiff-load.c:1526
+#: ../plug-ins/file-tiff/file-tiff-load.c:1546
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
@@ -7165,113 +7166,113 @@ msgstr "Immagine JPEG"
 msgid "Export Preview"
 msgstr "Esporta anteprima"
 
-#: ../plug-ins/file-psd/psd-load.c:228
+#: ../plug-ins/file-psd/psd-load.c:231
 #: ../plug-ins/file-psd/psd-thumb-load.c:130
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Errore durante il caricamento del file PSD: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:283
+#: ../plug-ins/file-psd/psd-load.c:286
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Non è un file documento Photoshop valido"
 
-#: ../plug-ins/file-psd/psd-load.c:290
+#: ../plug-ins/file-psd/psd-load.c:293
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Versione del formato del file non supportata: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:297
+#: ../plug-ins/file-psd/psd-load.c:300
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Troppi canali nel file: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:324
+#: ../plug-ins/file-psd/psd-load.c:327
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Dimensioni immagine non supportate o non valide: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:338 ../plug-ins/file-psd/psd-load.c:348
+#: ../plug-ins/file-psd/psd-load.c:341 ../plug-ins/file-psd/psd-load.c:351
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Modalità di colore non supportata: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:375
+#: ../plug-ins/file-psd/psd-load.c:378
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Profondità di colore (in bit) non supportata: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:409 ../plug-ins/file-psd/psd-load.c:419
-#: ../plug-ins/file-psd/psd-load.c:630 ../plug-ins/file-psd/psd-load.c:912
+#: ../plug-ins/file-psd/psd-load.c:412 ../plug-ins/file-psd/psd-load.c:422
+#: ../plug-ins/file-psd/psd-load.c:633 ../plug-ins/file-psd/psd-load.c:915
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Il file è danneggiato!"
 
-#: ../plug-ins/file-psd/psd-load.c:558
+#: ../plug-ins/file-psd/psd-load.c:561
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Troppi canali nel livello: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:566
+#: ../plug-ins/file-psd/psd-load.c:569
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Altezza livello non supportata o non valida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:574
+#: ../plug-ins/file-psd/psd-load.c:577
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Larghezza livello non supportata o non valida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:583
+#: ../plug-ins/file-psd/psd-load.c:586
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Dimensioni livello non supportate o non valide: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:668
+#: ../plug-ins/file-psd/psd-load.c:671
 #, c-format
 msgid "Unsupported or invalid mask info size: %d"
 msgstr "Dimensione info maschera non supportata o non valida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:837
+#: ../plug-ins/file-psd/psd-load.c:840
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Altezza maschera di livello non supportata o non valida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:845
+#: ../plug-ins/file-psd/psd-load.c:848
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Larghezza maschera di livello non supportata o non valida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:854
+#: ../plug-ins/file-psd/psd-load.c:857
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Dimensioni maschera di livello non supportate o non valide: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1477 ../plug-ins/file-psd/psd-load.c:2040
+#: ../plug-ins/file-psd/psd-load.c:1540 ../plug-ins/file-psd/psd-load.c:2126
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Modalità di compressione non supportata: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2187
+#: ../plug-ins/file-psd/psd-load.c:2273
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2365
+#: ../plug-ins/file-psd/psd-load.c:2473
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Dimensione canale non supportata o non valida."
 
-#: ../plug-ins/file-psd/psd-load.c:2431
+#: ../plug-ins/file-psd/psd-load.c:2539
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Fallita la decompressione dati"
 
-#: ../plug-ins/file-psd/psd-save.c:463
+#: ../plug-ins/file-psd/psd-save.c:469
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Errore: impossibile convertire l'immagine di tipo base GIMP in modalità PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1689
+#: ../plug-ins/file-psd/psd-save.c:1861
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7280,7 +7281,7 @@ msgstr ""
 "Impossibile esportare \"%s\". Il formato del file PSD non supporta immagini "
 "più larghe o alte di 30.000 pixel."
 
-#: ../plug-ins/file-psd/psd-save.c:1710
+#: ../plug-ins/file-psd/psd-save.c:1882
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7474,17 +7475,17 @@ msgstr ""
 msgid "TIFF image"
 msgstr "Immagine TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:304
+#: ../plug-ins/file-tiff/file-tiff-load.c:307
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Immagine non TIFF oppure rovinata."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:335
+#: ../plug-ins/file-tiff/file-tiff-load.c:338
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "Il file TIFF \"%s\" non contiene cartelle"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:342
+#: ../plug-ins/file-tiff/file-tiff-load.c:345
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7499,7 +7500,7 @@ msgstr[1] ""
 "Conteggio cartella TIFF '%s' per intestazione fallito malgrado sembra ci "
 "siano %d pagine. Tentativo di caricare il file con questo assunto."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:468
+#: ../plug-ins/file-tiff/file-tiff-load.c:476
 msgid "Extra channels with unspecified data."
 msgstr "Canali extra con dati non specificati."
 
@@ -7510,17 +7511,17 @@ msgstr "Canali extra con dati non specificati."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:480
+#: ../plug-ins/file-tiff/file-tiff-load.c:488
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "TIFF non conforme: canali extra senza campo 'ExtraSamples'"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:562
+#: ../plug-ins/file-tiff/file-tiff-load.c:582
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 "Impossibile leggere pagina %d di %d. L'immagine potrebbe essere rovinata.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:591
+#: ../plug-ins/file-tiff/file-tiff-load.c:611
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7530,7 +7531,7 @@ msgstr ""
 "sul primo livello. I Livelli sotto il livello # %d verranno interpretati "
 "come non lineari."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:599
+#: ../plug-ins/file-tiff/file-tiff-load.c:619
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7540,36 +7541,36 @@ msgstr ""
 "a risultati errati sarebbe meglio optare per il caricamento di ogni livello "
 "come immagine separata."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:611
+#: ../plug-ins/file-tiff/file-tiff-load.c:631
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 "Profondità di colore sospetta: %d per la pagina %d. L'immagine potrebbe "
 "essere rovinata."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:685
+#: ../plug-ins/file-tiff/file-tiff-load.c:705
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Profondità di colore non supportata: %d per la pagina %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:700
+#: ../plug-ins/file-tiff/file-tiff-load.c:720
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Impossibile ottenere la larghezza immagine da '%s'"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:708
+#: ../plug-ins/file-tiff/file-tiff-load.c:728
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Impossibile ottenere la lunghezza immagine da '%s'"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:716
+#: ../plug-ins/file-tiff/file-tiff-load.c:736
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 "Dimensioni immagine (%u x %u) non valide per la pagina %d. L'immagine "
 "potrebbe essere rovinata."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:737
+#: ../plug-ins/file-tiff/file-tiff-load.c:757
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -7578,7 +7579,7 @@ msgstr ""
 "Impossibile ottenere fotometrica da '%s'. L'immagine è compressa CCITT, si "
 "assume min-è-bianco"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:744
+#: ../plug-ins/file-tiff/file-tiff-load.c:764
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -7588,14 +7589,14 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: ../plug-ins/file-tiff/file-tiff-load.c:776
+#: ../plug-ins/file-tiff/file-tiff-load.c:796
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
 msgstr ""
 "Tipo canale alfa non definito per %s. Si assume l'alfa non premoltiplicato"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:801
+#: ../plug-ins/file-tiff/file-tiff-load.c:821
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -7606,43 +7607,44 @@ msgstr ""
 "non è impostato anche se sono presenti canali extra. Si assume il primo "
 "canale extra come alfa non-premoltiplicato."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1090
+#: ../plug-ins/file-tiff/file-tiff-load.c:1110
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr ""
 "Compressione %u non valida o sconosciuta. Impostata senza compressione."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1148
+#: ../plug-ins/file-tiff/file-tiff-load.c:1168
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Impossibile creare una nuova immagine: %s"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1168
+#: ../plug-ins/file-tiff/file-tiff-load.c:1188
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-di-%d-pagine"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1313
+#: ../plug-ins/file-tiff/file-tiff-load.c:1333
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Tipo unità risoluzione sconosciuto %d, si assume dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: ../plug-ins/file-tiff/file-tiff-load.c:1323
+#: ../plug-ins/file-tiff/file-tiff-load.c:1343
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "Attenzione: risoluzione specificata senza tipo di unità, si assume dpi"
 
 #. xres but no yres
-#: ../plug-ins/file-tiff/file-tiff-load.c:1331
+#: ../plug-ins/file-tiff/file-tiff-load.c:1351
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "Attenzione: nessuna info per la risoluzione y, si assume uguale a x"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1348
+#: ../plug-ins/file-tiff/file-tiff-load.c:1368
 msgid "Invalid image resolution info, using default"
-msgstr "Informazioni risoluzione immagine non valide, uso il valore predefinito."
+msgstr ""
+"Informazioni risoluzione immagine non valide, uso il valore predefinito."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1407
+#: ../plug-ins/file-tiff/file-tiff-load.c:1427
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Impossibile ottenere le mappe colori da '%s'"
@@ -7652,68 +7654,72 @@ msgstr "Impossibile ottenere le mappe colori da '%s'"
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:1501
+#: ../plug-ins/file-tiff/file-tiff-load.c:1521
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "Numero di canali extra sospetto: %d. Immagine probabilmente rovinata."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1563
+#: ../plug-ins/file-tiff/file-tiff-load.c:1583
 msgid "TIFF Channel"
 msgstr "Canale TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1701
+#: ../plug-ins/file-tiff/file-tiff-load.c:1721
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Impossibile leggere dati dal TIFF \"%s\". Il file è probabilmente rovinato."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1772
+#: ../plug-ins/file-tiff/file-tiff-load.c:1792
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 "%s: formato immagine non supportato, nessun caricatore RGBA disponibile"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2084
-#: ../plug-ins/file-tiff/file-tiff-load.c:2281
+#: ../plug-ins/file-tiff/file-tiff-load.c:2104
+#: ../plug-ins/file-tiff/file-tiff-load.c:2301
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
 "Lettura tile fallita. L'immagine potrebbe essere rovinata alla riga %d."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:2093
-#: ../plug-ins/file-tiff/file-tiff-load.c:2290
+#: ../plug-ins/file-tiff/file-tiff-load.c:2113
+#: ../plug-ins/file-tiff/file-tiff-load.c:2310
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "La lettura della scanline è fallita. L'immagine potrebbe essere rovinata "
 "alla riga %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2639
+#: ../plug-ins/file-tiff/file-tiff-load.c:2660
 msgid "Import from TIFF"
 msgstr "Importa da TIFF"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:2681
+msgid "_Show reduced images"
+msgstr "Mo_stra immagini ridotte"
 
 #. Option to shrink the loaded image to its bounding box
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2696
+#: ../plug-ins/file-tiff/file-tiff-load.c:2715
 msgid "_Keep empty space around imported layers"
 msgstr "Mantieni lo spazio vuoto attorno ai livelli importati (_k)"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2713
+#: ../plug-ins/file-tiff/file-tiff-load.c:2732
 msgid "Process extra channel as:"
 msgstr "Elabora canale extra come:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2716
+#: ../plug-ins/file-tiff/file-tiff-load.c:2735
 msgid "_Non-premultiplied alpha"
 msgstr "Alfa _non-premoltiplicato"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2717
+#: ../plug-ins/file-tiff/file-tiff-load.c:2736
 msgid "Pre_multiplied alpha"
 msgstr "Alfa pre_moltiplicato"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2718
+#: ../plug-ins/file-tiff/file-tiff-load.c:2737
 msgid "Channe_l"
 msgstr "Cana_le"
 
@@ -10636,12 +10642,17 @@ msgstr "Forse mancano i backend GIO ed è necessario installare GVFS?"
 msgid "Help ID '%s' unknown"
 msgstr "ID dell'aiuto '%s' sconosciuto"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/gimphelplocale.c:218
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Caricamento indice da \"%s\""
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/gimphelplocale.c:239
+#, c-format
+msgid "Could not load data from '%s': %s"
+msgstr "Impossibile caricare dati da '%s': %s"
+
+#: ../plug-ins/help/gimphelplocale.c:311
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
