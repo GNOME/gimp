@@ -371,6 +371,51 @@
       </description>
     </release>
 
+    <release version="2.10.34" date="2023-02-12">
+      <description>
+        <p>
+          A new stable releases with a lot of bug fixes and a few enhancements:
+        </p>
+        <ul>
+          <li>
+            New template selector in "Canvas Size" dialog
+          </li>
+          <li>
+            "Change Color" dialogs: color scale (0..255/0..100) and models (LCh/HSV) settings remembered across sessions
+          </li>
+          <li>
+            New header with "visible" and "link" icons in item dockables
+          </li>
+          <li>
+            Clipping layers better supported when importing PSD files
+          </li>
+          <li>
+            Paths are now exported to PSD
+          </li>
+          <li>
+            JPEG-XL export added
+          </li>
+          <li>
+            Metadata in JPEG-XL import and export
+          </li>
+          <li>
+            New option "Show reduced images" when loading TIFF images
+          </li>
+          <li>
+            16-bit per channel export for raw image data
+          </li>
+          <li>
+            More plug-ins got bug-fixes: DDS, WebP, Flame, Animation Playback, HEIF, Dicom and Help
+          </li>
+          <li>
+            Color picking on X11 will ignore the Wayland portal; new implementation for color picking on Windows
+          </li>
+          <li>
+            Check for updates fixed on macOS
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.10.32" date="2022-06-12">
       <description>
         <p>
