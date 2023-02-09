@@ -530,6 +530,9 @@ gimp_histogram_view_draw_spike (GimpHistogramView    *view,
       break;
     }
 
+  y    = MAX (y,    0);
+  bg_y = MAX (bg_y, 0);
+
   if (bg_color)
     {
       gdk_cairo_set_source_rgba (cr, bg_color);
