@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ka\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-24 20:12+0000\n"
-"PO-Revision-Date: 2023-01-25 07:47+0100\n"
+"POT-Creation-Date: 2023-02-09 22:24+0000\n"
+"PO-Revision-Date: 2023-02-10 11:05+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -25352,7 +25352,7 @@ msgid "Percentage of width of brush"
 msgstr "ფუნჯის სიგანის პროცენტულობა"
 
 #: app/widgets/gimpbufferview.c:189 app/widgets/gimpbufferview.c:290
-#: app/widgets/gimpeditor.c:782
+#: app/widgets/gimpeditor.c:797
 msgid "(None)"
 msgstr "(არცერთი)"
 
@@ -27656,8 +27656,8 @@ msgid "[ Base Image ]"
 msgstr "[ საწყისი გამოსახულება ]"
 
 #: app/widgets/gimpvectorstreeview.c:111
-msgid "Lock path strokes"
-msgstr "კონტურის ცვლილებისგან დაცვა"
+msgid "Lock path"
+msgstr "კონტურის ჩაკეტვა"
 
 #: app/widgets/gimpvectorstreeview.c:114
 msgid "Lock path position"
@@ -27974,6 +27974,9 @@ msgstr "შეცდომა XCF-ის ჩაწერისას: პიქ�
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "GIMP-ის ავარიის გამოკვლევა"
+
+#~ msgid "Lock path strokes"
+#~ msgstr "კონტურის ცვლილებისგან დაცვა"
 
 #~ msgctxt "layers-action"
 #~ msgid "_Crop to Selection"
