@@ -756,10 +756,6 @@ render_page_to_surface (PopplerPage *page,
   poppler_page_render (page, cr);
   cairo_restore (cr);
 
-  cairo_set_operator (cr, CAIRO_OPERATOR_DEST_OVER);
-  cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
-  cairo_paint (cr);
-
   cairo_destroy (cr);
 
   return surface;
