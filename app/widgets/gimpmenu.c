@@ -662,6 +662,7 @@ gimp_menu_add_action (GimpMenu          *menu,
     }
 
   gtk_actionable_set_action_name (GTK_ACTIONABLE (item), action_name);
+  gimp_action_set_proxy (GIMP_ACTION (action), item);
 
   g_signal_connect_object (action, "notify::label",
                            G_CALLBACK (gimp_menu_action_notify_label),

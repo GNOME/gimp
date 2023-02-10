@@ -56,6 +56,8 @@ typedef struct _GimpActionPrivate GimpActionPrivate;
 struct _GimpActionPrivate
 {
   GimpContext           *context;
+  /* This recursive pointer is needed for the finalize(). */
+  GimpAction            *action;
 
   gboolean               sensitive;
   gchar                 *disable_reason;
@@ -64,6 +66,8 @@ struct _GimpActionPrivate
   GimpViewable          *viewable;
   PangoEllipsizeMode     ellipsize;
   gint                   max_width_chars;
+
+  GList                 *proxies;
 };
 
 
@@ -77,6 +81,9 @@ static void   gimp_action_label_notify      (GimpAction        *action,
 static void   gimp_action_tooltip_notify    (GimpAction        *action,
                                              const GParamSpec  *pspec,
                                              gpointer           data);
+
+static void   gimp_action_proxy_destroy     (GtkWidget         *proxy,
+                                             GimpAction        *action);
 
 
 G_DEFINE_INTERFACE (GimpAction, gimp_action, GTK_TYPE_ACTION)
@@ -162,9 +169,11 @@ gimp_action_init (GimpAction *action)
 
   priv = GET_PRIVATE (action);
 
+  priv->action          = action;
   priv->sensitive       = TRUE;
   priv->ellipsize       = PANGO_ELLIPSIZE_NONE;
   priv->max_width_chars = -1;
+  priv->proxies         = NULL;
 
   g_signal_connect (action, "notify::label",
                     G_CALLBACK (gimp_action_label_notify),
@@ -524,6 +533,7 @@ gimp_action_get_display_accels (GimpAction *action)
 GSList *
 gimp_action_get_proxies (GimpAction *action)
 {
+  /* TODO GAction: how exactly are these proxies set in the GtkAction API? */
   return gtk_action_get_proxies ((GtkAction *) action);
 }
 
@@ -727,14 +737,15 @@ gimp_action_set_property (GObject      *object,
 
   if (set_proxy)
     {
-      GSList *list;
+      /* Set or update the proxy rendering. */
+      for (GList *list = priv->proxies; list; list = list->next)
+        gimp_action_set_proxy (GIMP_ACTION (object), list->data);
 
-      for (list = gimp_action_get_proxies (GIMP_ACTION (object));
+      /* TODO GAction: remove when port complete. */
+      for (GSList *list = gimp_action_get_proxies (GIMP_ACTION (object));
            list;
            list = g_slist_next (list))
-        {
-          gimp_action_set_proxy (GIMP_ACTION (object), list->data);
-        }
+        gimp_action_set_proxy (GIMP_ACTION (object), list->data);
     }
 }
 
@@ -743,6 +754,7 @@ gimp_action_set_proxy (GimpAction *action,
                        GtkWidget  *proxy)
 {
   GimpActionPrivate *priv = GET_PRIVATE (action);
+  GtkWidget         *child;
 
   if (! GTK_IS_MENU_ITEM (proxy))
     return;
@@ -825,20 +837,27 @@ gimp_action_set_proxy (GimpAction *action,
         }
     }
 
-  {
-    GtkWidget *child = gtk_bin_get_child (GTK_BIN (proxy));
 
-    if (GTK_IS_BOX (child))
-      child = g_object_get_data (G_OBJECT (proxy), "gimp-menu-item-label");
+  child = gtk_bin_get_child (GTK_BIN (proxy));
 
-    if (GTK_IS_LABEL (child))
-      {
-        GtkLabel *label = GTK_LABEL (child);
+  if (GTK_IS_BOX (child))
+    child = g_object_get_data (G_OBJECT (proxy), "gimp-menu-item-label");
 
-        gtk_label_set_ellipsize (label, priv->ellipsize);
-        gtk_label_set_max_width_chars (label, priv->max_width_chars);
-      }
-  }
+  if (GTK_IS_LABEL (child))
+    {
+      GtkLabel *label = GTK_LABEL (child);
+
+      gtk_label_set_ellipsize (label, priv->ellipsize);
+      gtk_label_set_max_width_chars (label, priv->max_width_chars);
+    }
+
+  if (! g_list_find (priv->proxies, proxy))
+    {
+      priv->proxies = g_list_prepend (priv->proxies, proxy);
+      g_signal_connect (proxy, "destroy",
+                        gimp_action_proxy_destroy,
+                        action);
+    }
 }
 
 
@@ -876,6 +895,17 @@ gimp_action_private_finalize (GimpActionPrivate *priv)
   g_clear_pointer (&priv->color, g_free);
   g_clear_object  (&priv->viewable);
 
+  for (GList *iter = priv->proxies; iter; iter = iter->next)
+    /* TODO GAction: if an action associated to a proxy menu item disappears,
+     * shouldn't we also destroy the item itself (not just disconnect it)? It
+     * would now point to a non-existing action.
+     */
+    g_signal_handlers_disconnect_by_func (iter->data,
+                                          gimp_action_proxy_destroy,
+                                          priv->action);
+  g_list_free (priv->proxies);
+  priv->proxies = NULL;
+
   g_slice_free (GimpActionPrivate, priv);
 }
 
@@ -884,9 +914,26 @@ gimp_action_label_notify (GimpAction       *action,
                           const GParamSpec *pspec,
                           gpointer          data)
 {
-  GSList *list;
+  for (GList *iter = GET_PRIVATE (action)->proxies; iter; iter = iter->next)
+    {
+      if (GTK_IS_MENU_ITEM (iter->data))
+        {
+          GtkWidget *child = gtk_bin_get_child (GTK_BIN (iter->data));
 
-  for (list = gimp_action_get_proxies (action);
+          if (GTK_IS_BOX (child))
+            {
+              child = g_object_get_data (G_OBJECT (iter->data),
+                                         "gimp-menu-item-label");
+
+              if (GTK_IS_LABEL (child))
+                gtk_label_set_text (GTK_LABEL (child),
+                                    gimp_action_get_label (action));
+            }
+        }
+    }
+
+  /* TODO GAction: this will have to be removed after the port is complete. */
+  for (GSList *list = gimp_action_get_proxies (action);
        list;
        list = g_slist_next (list))
     {
@@ -920,4 +967,13 @@ gimp_action_tooltip_notify (GimpAction       *action,
     {
       gimp_action_set_proxy_tooltip (action, list->data);
     }
+}
+
+static void
+gimp_action_proxy_destroy (GtkWidget  *proxy,
+                           GimpAction *action)
+{
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
+  priv->proxies = g_list_remove (priv->proxies, proxy);
 }
