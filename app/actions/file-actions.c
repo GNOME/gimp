@@ -370,6 +370,7 @@ file_actions_last_opened_update (GimpContainer   *container,
               const gchar *name;
               gchar       *basename;
               gchar       *escaped;
+              gchar       *label;
 
               file = gimp_imagefile_get_file (imagefile);
 
@@ -377,17 +378,21 @@ file_actions_last_opened_update (GimpContainer   *container,
               basename = g_path_get_basename (name);
 
               escaped = gimp_escape_uline (basename);
-
               g_free (basename);
+              /* TRANSLATORS: the %s will be replaced by the file name of a
+               * recently opened image.
+               */
+              label   = g_strdup_printf (_("Open \"%s\""), escaped);
+              g_free (escaped);
 
               g_object_set (action,
-                            "label",    escaped,
+                            "label",    label,
                             "tooltip",  name,
                             "visible",  TRUE,
                             "viewable", imagefile,
                             NULL);
 
-               g_free (escaped);
+               g_free (label);
             }
         }
       else
