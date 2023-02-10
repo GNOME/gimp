@@ -30,6 +30,7 @@
 #include "core/gimp.h"
 
 #include "gimpaction.h"
+#include "gimpenumaction.h"
 #include "gimpmenu.h"
 #include "gimpprocedureaction.h"
 #include "gimpradioaction.h"
@@ -98,7 +99,7 @@ static void   gimp_menu_radio_item_toggled      (GtkWidget           *item,
 static void   gimp_menu_toggle_action_changed   (GimpAction          *action,
                                                  GVariant            *value G_GNUC_UNUSED,
                                                  GtkCheckMenuItem    *item);
-static void gimp_menu_procedure_action_activate (GtkMenuItem         *item,
+static void   gimp_menu_action_activate         (GtkMenuItem         *item,
                                                  GimpAction          *action);
 static void   gimp_menu_action_notify_sensitive (GimpAction          *action,
                                                  const GParamSpec    *pspec,
@@ -470,8 +471,8 @@ gimp_menu_toggle_action_changed (GimpAction       *action,
 }
 
 static void
-gimp_menu_procedure_action_activate (GtkMenuItem *item,
-                                     GimpAction  *action)
+gimp_menu_action_activate (GtkMenuItem *item,
+                           GimpAction  *action)
 {
   gimp_action_activate (action);
 }
@@ -642,7 +643,8 @@ gimp_menu_add_action (GimpMenu          *menu,
                         G_CALLBACK (gimp_menu_toggle_action_changed),
                         item);
     }
-  else if (GIMP_IS_PROCEDURE_ACTION (action))
+  else if (GIMP_IS_PROCEDURE_ACTION (action) ||
+           GIMP_IS_ENUM_ACTION (action))
     {
       item = gtk_menu_item_new_with_mnemonic (action_label);
 
@@ -650,7 +652,7 @@ gimp_menu_add_action (GimpMenu          *menu,
         *group = NULL;
 
       g_signal_connect (item, "activate",
-                        G_CALLBACK (gimp_menu_procedure_action_activate),
+                        G_CALLBACK (gimp_menu_action_activate),
                         action);
     }
   else
