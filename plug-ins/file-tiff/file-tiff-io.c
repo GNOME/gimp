@@ -278,29 +278,27 @@ tiff_io_error (const gchar *module,
                const gchar *fmt,
                va_list      ap)
 {
+  gchar *msg;
+
   /* Workaround for: http://bugzilla.gnome.org/show_bug.cgi?id=132297
    * Ignore the errors related to random access and JPEG compression
    */
   if (! strcmp (fmt, "Compression algorithm does not support random access"))
     return;
 
+  msg = g_strdup_vprintf (fmt, ap);
+
   if (g_strcmp0 (fmt, "Maximum TIFF file size exceeded") == 0)
-    {
-      /* @module in my tests were "TIFFAppendToStrip" but I wonder if
-       * this same error could not happen with other "modules".
-       */
-      tiff_file_size_error = TRUE;
-    }
+    /* @module in my tests were "TIFFAppendToStrip" but I wonder if
+     * this same error could not happen with other "modules".
+     */
+    tiff_file_size_error = TRUE;
   else
-    {
-      gchar *msg = g_strdup_vprintf (fmt, ap);
+    /* Easier for debugging to at least print messages on stderr. */
+    g_printerr ("LibTiff error: [%s] %s\n", module, msg);
 
-      /* Easier for debugging to at least print messages on stderr. */
-      g_printerr ("LibTiff error: [%s] %s\n", module, msg);
-      g_free (msg);
-    }
-
-  g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
+  g_log (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, "%s", msg);
+  g_free (msg);
 }
 
 static tsize_t
