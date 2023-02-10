@@ -88,33 +88,11 @@ plug_in_menus_setup (GimpUIManager *manager,
   GimpPlugInManager *plug_in_manager;
   GTree             *menu_entries;
   GSList            *list;
-  guint              merge_id;
-  gint               i;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
   plug_in_manager = manager->gimp->plug_in_manager;
-
-  merge_id = gimp_ui_manager_new_merge_id (manager);
-
-  for (i = 0; i < manager->gimp->config->filter_history_size; i++)
-    {
-      gchar *action_name;
-      gchar *action_path;
-
-      action_name = g_strdup_printf ("filter-recent-%02d", i + 1);
-      action_path = g_strdup_printf ("%s/Filters/Recently Used/Plug-ins",
-                                     ui_path);
-
-      gimp_ui_manager_add_ui (manager, merge_id,
-                              action_path, action_name, action_name,
-                              GTK_UI_MANAGER_MENUITEM,
-                              FALSE);
-
-      g_free (action_name);
-      g_free (action_path);
-    }
 
   menu_entries = g_tree_new_full ((GCompareDataFunc) strcmp, NULL,
                                   g_free,
@@ -398,14 +376,14 @@ plug_in_menus_add_proc (GimpUIManager       *manager,
                           GTK_UI_MANAGER_MENUITEM,
                           FALSE);
 
-  /* TODO: this will eventually replace gimp_ui_manager_add_ui().
+  /* TODO GMenu: this will eventually replace gimp_ui_manager_add_ui().
    * Also we will need to support more than "<Image>" menu only.
    */
   if (g_str_has_prefix (menu_path, "<Image>/"))
     gimp_ui_manager_add_ui2 (manager,
                              menu_path + 7,
                              gimp_object_get_name (proc),
-                             FALSE);
+                             NULL, FALSE);
 
   g_free (action_path);
 }
@@ -486,6 +464,11 @@ plug_in_menus_build_path (GimpUIManager *manager,
               GIMP_LOG (MENUS, "adding menu '%s' at path '%s' for action '%s'",
                         menu_item_name, action_path, menu_path);
 
+              /* TODO GMenu: I don't have the UI in the new API to add
+               * placeholder's items, separators and submenus (and not sure how
+               * much the later is needed as the main API should create submenus
+               * for us anyway). Look at this more carefully later.
+               */
               gimp_ui_manager_add_ui (manager, merge_id,
                                       parent_action_path, menu_item_name,
                                       menu_path,

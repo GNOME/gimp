@@ -18,7 +18,9 @@
         <submenu>
           <attribute name="label" translatable="yes" context="file-action">Open _Recent</attribute>
           <section>
-            <!-- TODO: in there the recent documents. -->
+            <!-- Placeholder for recently opened files. -->
+            <item><attribute name="label" translatable="no">Files</attribute></item>
+
           </section>
           <item><attribute name="action">app.dialogs-document-history</attribute></item>
         </submenu>
@@ -621,7 +623,8 @@
         <item><attribute name="action">app.filters-reshow</attribute></item>
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">Recently Used</attribute>
-          <!-- TODO: fill -->
+          <!-- Placeholder for recently used filters and plug-ins. -->
+          <item><attribute name="label" translatable="no">Filters</attribute></item>
         </submenu>
         <item><attribute name="action">app.plug-in-reset-all</attribute></item>
       </section>
@@ -833,7 +836,14 @@
         </submenu>
         <item><attribute name="action">app.dialogs-toolbox</attribute></item>
       </section>
-      <!-- TODO: list opened images. -->
+      <!-- Placeholder invisible item to know where to place opened images list -->
+      <section>
+      <item><attribute name="label" translatable="no">Images</attribute></item>
+      </section>
+      <!-- Placeholder invisible item - TODO GMenu: is this one actually working/used? -->
+      <section>
+        <item><attribute name="label" translatable="no">Docks</attribute></item>
+      </section>
       <section>
         <item><attribute name="action">app.windows-hide-docks</attribute></item>
         <item><attribute name="action">app.windows-show-tabs</attribute></item>

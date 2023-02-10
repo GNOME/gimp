@@ -63,6 +63,7 @@ typedef struct
 {
   gchar    *path;
   gchar    *action_name;
+  gchar    *placeholder;
   gboolean  top;
 } GimpUIManagerMenuItem;
 
@@ -175,7 +176,8 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpUIManagerClass, ui_added),
                   NULL, NULL, NULL,
-                  G_TYPE_NONE, 3,
+                  G_TYPE_NONE, 4,
+                  G_TYPE_STRING,
                   G_TYPE_STRING,
                   G_TYPE_STRING,
                   G_TYPE_BOOLEAN);
@@ -540,6 +542,7 @@ void
 gimp_ui_manager_add_ui2 (GimpUIManager *manager,
                          const gchar   *path,
                          const gchar   *action_name,
+                         const gchar   *placeholder,
                          gboolean       top)
 {
   GimpUIManagerMenuItem *item;
@@ -551,10 +554,11 @@ gimp_ui_manager_add_ui2 (GimpUIManager *manager,
   item = g_slice_new0 (GimpUIManagerMenuItem);
   item->path        = g_strdup (path);
   item->action_name = g_strdup (action_name);
+  item->placeholder = placeholder ? g_strdup (placeholder) : NULL;
   item->top         = top;
   manager->ui_items = g_list_prepend (manager->ui_items, item);
 
-  g_signal_emit (manager, manager_signals[UI_ADDED], 0, path, action_name, top);
+  g_signal_emit (manager, manager_signals[UI_ADDED], 0, path, action_name, placeholder, top);
 }
 
 void
@@ -566,7 +570,7 @@ gimp_ui_manager_foreach_ui (GimpUIManager      *manager,
     {
       GimpUIManagerMenuItem *item = iter->data;
 
-      callback (manager, item->path, item->action_name, item->top, user_data);
+      callback (manager, item->path, item->action_name, item->placeholder, item->top, user_data);
     }
 }
 

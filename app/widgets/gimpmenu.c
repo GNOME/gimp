@@ -62,6 +62,7 @@ struct _GimpMenuPrivate
   GMenuModel    *model;
 
   GTree         *submenus;
+  GTree         *placeholders;
   GRegex        *menu_delimiter_regex;
 };
 
@@ -87,6 +88,7 @@ static void   gimp_menu_update                  (GimpMenu            *menu,
 void          gimp_menu_ui_added                (GimpUIManager       *manager,
                                                  const gchar         *path,
                                                  const gchar         *action_name,
+                                                 const gchar         *placeholder,
                                                  gboolean             top,
                                                  GimpMenu            *menu);
 
@@ -118,8 +120,15 @@ static GtkContainer * gimp_menu_add_submenu     (GimpMenu            *menu,
                                                  const gchar        **key);
 static void   gimp_menu_add_action              (GimpMenu            *menu,
                                                  GtkContainer        *container,
+                                                 const gchar         *container_key,
                                                  const gchar         *action_name,
+                                                 const gchar         *placeholder,
+                                                 gboolean             top,
                                                  GtkRadioMenuItem   **group);
+static void   gimp_menu_add_placeholder         (GimpMenu            *menu,
+                                                 GtkContainer        *container,
+                                                 const gchar         *container_key,
+                                                 const gchar         *label);
 
 static gchar * gimp_menu_make_canonical_path    (GimpMenu            *menu,
                                                  const gchar         *path);
@@ -161,8 +170,10 @@ gimp_menu_init (GimpMenu *menu)
 {
   menu->priv = gimp_menu_get_instance_private (menu);
 
-  menu->priv->submenus = g_tree_new_full ((GCompareDataFunc) g_strcmp0, NULL,
-                                          g_free, NULL);
+  menu->priv->submenus     = g_tree_new_full ((GCompareDataFunc) g_strcmp0, NULL,
+                                              g_free, NULL);
+  menu->priv->placeholders = g_tree_new_full ((GCompareDataFunc) g_strcmp0, NULL,
+                                              g_free, NULL);
   menu->priv->menu_delimiter_regex = g_regex_new ("/+", 0, 0, NULL);
 }
 
@@ -195,6 +206,11 @@ gimp_menu_dispose (GObject *object)
     {
       g_tree_unref (menu->priv->submenus);
       menu->priv->submenus = NULL;
+    }
+  if (menu->priv->placeholders != NULL)
+    {
+      g_tree_unref (menu->priv->placeholders);
+      menu->priv->placeholders = NULL;
     }
   if (menu->priv->manager != NULL)
     {
@@ -325,9 +341,21 @@ gimp_menu_update (GimpMenu     *menu,
           subcontainer = gimp_menu_add_submenu (menu, label, container, parent_key, &key);
           gimp_menu_update (menu, subcontainer, key, submenu);
         }
+      else if (action_name == NULL)
+        {
+          /* Special case: we use items with no action and a label as
+           * placeholder which allows us to specify a placement in menus, which
+           * might not be only top or bottom.
+           */
+          g_return_if_fail (label != NULL);
+
+          group = NULL;
+
+          gimp_menu_add_placeholder (menu, container, parent_key, label);
+        }
       else
         {
-          gimp_menu_add_action (menu, container, action_name, &group);
+          gimp_menu_add_action (menu, container, parent_key, action_name, NULL, FALSE, &group);
         }
       g_free (label);
       g_free (action_name);
@@ -338,6 +366,7 @@ void
 gimp_menu_ui_added (GimpUIManager *manager,
                     const gchar   *path,
                     const gchar   *action_name,
+                    const gchar   *placeholder,
                     gboolean       top,
                     GimpMenu      *menu)
 {
@@ -396,7 +425,7 @@ gimp_menu_ui_added (GimpUIManager *manager,
       g_strfreev (sub_labels);
     }
 
-  gimp_menu_add_action (menu, container, action_name, NULL);
+  gimp_menu_add_action (menu, container, canonical_path, action_name, placeholder, top, NULL);
 
   g_free (canonical_path);
 }
@@ -461,7 +490,46 @@ gimp_menu_action_notify_visible (GimpAction       *action,
                                  const GParamSpec *pspec,
                                  GtkWidget        *item)
 {
+  GtkContainer *container;
+
   gtk_widget_set_visible (item, gimp_action_is_visible (action));
+
+  container = gtk_widget_get_parent (item);
+  if (gimp_action_is_visible (GIMP_ACTION (action)))
+    {
+      GtkWidget *widget = gtk_menu_get_attach_widget (GTK_MENU (container));
+
+      /* We must show the GtkMenuItem associated as submenu to the parent
+       * container.
+       */
+      if (G_TYPE_FROM_INSTANCE (widget) == GTK_TYPE_MENU_ITEM)
+        gtk_widget_show (widget);
+    }
+  else
+    {
+      GList    *children      = gtk_container_get_children (container);
+      gboolean  all_invisible = TRUE;
+
+      for (GList *iter = children; iter; iter = iter->next)
+        {
+          if (gtk_widget_get_visible (iter->data))
+            {
+              all_invisible = FALSE;
+              break;
+            }
+        }
+      g_list_free (children);
+
+      if (all_invisible)
+        {
+          GtkWidget *widget;
+
+          /* No need to leave empty submenus. */
+          widget = gtk_menu_get_attach_widget (GTK_MENU (container));
+          if (G_TYPE_FROM_INSTANCE (widget) == GTK_TYPE_MENU_ITEM)
+            gtk_widget_hide (widget);
+        }
+    }
 }
 
 static void
@@ -500,7 +568,6 @@ gimp_menu_add_submenu (GimpMenu      *menu,
 
   item = gtk_menu_item_new_with_mnemonic (label);
   gtk_container_add (parent, item);
-  gtk_widget_show (item);
 
   subcontainer = gtk_menu_new ();
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), subcontainer);
@@ -522,13 +589,17 @@ gimp_menu_add_submenu (GimpMenu      *menu,
 static void
 gimp_menu_add_action (GimpMenu          *menu,
                       GtkContainer      *container,
+                      const gchar       *container_key,
                       const gchar       *action_name,
+                      const gchar       *placeholder,
+                      gboolean           top,
                       GtkRadioMenuItem **group)
 {
   GApplication *app;
   GAction      *action;
   const gchar  *action_label;
   GtkWidget    *item;
+  GtkWidget    *sibling = NULL;
 
   app = menu->priv->manager->gimp->app;
 
@@ -609,13 +680,83 @@ gimp_menu_add_action (GimpMenu          *menu,
                            G_CALLBACK (gimp_menu_action_notify_tooltip),
                            item, 0);
 
-  gtk_container_add (container, item);
+  if (placeholder)
+    {
+      gchar *key = g_strconcat (container_key, "/", placeholder, NULL);
+
+      sibling = g_tree_lookup (menu->priv->placeholders, key);
+
+      if (! sibling)
+        g_warning ("%s: no placeholder item '%s'.", G_STRFUNC, key);
+
+      g_free (key);
+    }
+
+  if (sibling)
+    {
+      GList *children;
+      gint   position = 0;
+
+      /* I am assuming that the order of the children list reflects the
+       * position, though it is not clearly specified in the function docs. Yet
+       * I could find no other function giving me the position of some child in
+       * a container.
+       */
+      children = gtk_container_get_children (container);
+
+      for (GList *iter = children; iter; iter = iter->next)
+        {
+          if (iter->data == sibling)
+            break;
+          position++;
+        }
+      if (! top)
+        position++;
+
+      gtk_menu_shell_insert (GTK_MENU_SHELL (container), item, position);
+
+      g_list_free (children);
+    }
+  else
+    {
+      if (top)
+        gtk_menu_shell_prepend (GTK_MENU_SHELL (container), item);
+      else
+        gtk_menu_shell_append (GTK_MENU_SHELL (container), item);
+    }
 
   gtk_widget_set_visible (item,
                           gimp_action_is_visible (GIMP_ACTION (action)));
+  if (gimp_action_is_visible (GIMP_ACTION (action)))
+    {
+      GtkWidget *parent = gtk_menu_get_attach_widget (GTK_MENU (container));
+
+      /* Note that this is not the container we must show, but the menu item
+       * attached to the parent, in order not to leave empty submenus.
+       */
+      if (G_TYPE_FROM_INSTANCE (parent) == GTK_TYPE_MENU_ITEM)
+        gtk_widget_show (parent);
+    }
   g_signal_connect_object (action, "notify::visible",
                            G_CALLBACK (gimp_menu_action_notify_visible),
                            item, 0);
+}
+
+static void
+gimp_menu_add_placeholder (GimpMenu     *menu,
+                           GtkContainer *container,
+                           const gchar  *container_key,
+                           const gchar  *label)
+{
+  GtkWidget *item;
+
+  /* Placeholders are inserted yet never shown, on purpose. */
+  item = gtk_menu_item_new_with_mnemonic (label);
+  gtk_container_add (container, item);
+
+  g_tree_insert (menu->priv->placeholders,
+                 g_strconcat (container_key, "/", label, NULL),
+                 item);
 }
 
 static gchar *

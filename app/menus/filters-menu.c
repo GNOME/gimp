@@ -57,6 +57,8 @@ filters_menu_setup (GimpUIManager *manager,
                               action_path, action_name, action_name,
                               GTK_UI_MANAGER_MENUITEM,
                               FALSE);
+      gimp_ui_manager_add_ui2 (manager, "/Filters/Recently Used",
+                               action_name, "Filters", TRUE);
 
       g_free (action_name);
       g_free (action_path);

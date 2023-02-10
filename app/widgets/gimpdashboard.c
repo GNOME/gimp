@@ -5018,6 +5018,7 @@ gimp_dashboard_menu_setup (GimpUIManager *manager,
       action_name = g_strdup_printf ("dashboard-group-%s", group_info->name);
       action_path = g_strdup_printf ("%s/Groups/Groups", ui_path);
 
+      /* TODO GMenu: for the "/dashboard-popup/Groups/" apparently. */
       gimp_ui_manager_add_ui (manager, merge_id,
                               action_path, action_name, action_name,
                               GTK_UI_MANAGER_MENUITEM,

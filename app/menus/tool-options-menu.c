@@ -150,6 +150,9 @@ tool_options_menu_update_presets (GimpUIManager *manager,
                                      which_action, i);
       path        = g_strdup_printf ("%s/%s", ui_path, menu_path);
 
+      /* TODO GMenu: this is for the "/tool-options-popup/" which doesn't use
+       * our new infra with GAction/GMenu yet.
+       */
       gimp_ui_manager_add_ui (manager, merge_id,
                               path, action_name, action_name,
                               GTK_UI_MANAGER_MENUITEM,

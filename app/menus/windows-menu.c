@@ -253,6 +253,8 @@ windows_menu_image_notify (GimpDisplay      *display,
                                   action_path, action_name, action_name,
                                   GTK_UI_MANAGER_MENUITEM,
                                   FALSE);
+          gimp_ui_manager_add_ui2 (manager, "/Windows",
+                                   action_name, "Images", TRUE);
 
           full_path = g_strconcat (action_path, "/", action_name, NULL);
 
@@ -306,10 +308,13 @@ windows_menu_dock_window_added (GimpDialogFactory *factory,
   g_object_set_data (G_OBJECT (manager), merge_key,
                      GUINT_TO_POINTER (merge_id));
 
+  /* TODO GMenu: doesn't look like it's working, neither will old or new API. */
   gimp_ui_manager_add_ui (manager, merge_id,
                           action_path, action_name, action_name,
                           GTK_UI_MANAGER_MENUITEM,
                           FALSE);
+  gimp_ui_manager_add_ui2 (manager, "/Windows",
+                           action_name, "Docks", FALSE);
 
   g_free (merge_key);
   g_free (action_path);
@@ -365,10 +370,13 @@ windows_menu_recent_add (GimpContainer   *container,
   g_object_set_data (G_OBJECT (manager), merge_key,
                      GUINT_TO_POINTER (merge_id));
 
+  /* TODO GMenu: doesn't look like it's working, neither will old or new API. */
   gimp_ui_manager_add_ui (manager, merge_id,
                           action_path, action_name, action_name,
                           GTK_UI_MANAGER_MENUITEM,
                           TRUE);
+  gimp_ui_manager_add_ui2 (manager, "/Windows/Recently Closed Docks",
+                           action_name, NULL, TRUE);
 
   g_free (merge_key);
   g_free (action_path);

@@ -124,6 +124,14 @@ window_menu_display_opened (GdkDisplayManager *disp_manager,
                           GTK_UI_MANAGER_MENUITEM,
                           FALSE);
 
+  /* TODO GMenu: there is also a case with the dockable menu, which is not yet
+   * using our new GAction/GMenu-based code. In such case, the ui_path is
+   * "/dockable-popup/Move to Screen".
+   */
+  if (g_str_has_prefix (ui_path, "/image-menubar/"))
+    gimp_ui_manager_add_ui2 (manager, "/View/Move to Screen",
+                             action_name, NULL, FALSE);
+
   g_free (action_name);
   g_free (action_path);
 
