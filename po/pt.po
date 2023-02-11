@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-24 20:12+0000\n"
-"PO-Revision-Date: 2023-01-25 12:01+0000\n"
+"POT-Creation-Date: 2023-02-11 04:47+0000\n"
+"PO-Revision-Date: 2023-02-11 22:14+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -26229,7 +26229,7 @@ msgid "Percentage of width of brush"
 msgstr "Percentagem da largura do pincel"
 
 #: app/widgets/gimpbufferview.c:189 app/widgets/gimpbufferview.c:290
-#: app/widgets/gimpeditor.c:782
+#: app/widgets/gimpeditor.c:797
 msgid "(None)"
 msgstr "(nenhum)"
 
@@ -28587,9 +28587,7 @@ msgstr "A instalação do GIMP está incompleta:"
 
 #: app/widgets/gimpuimanager.c:858
 msgid "Please make sure the menu XML files are correctly installed."
-msgstr ""
-"Por favor verifique se os ficheiros XML do menu estão corretamente "
-"instalados."
+msgstr "Verifique se os ficheiros XML do menu estão corretamente instalados."
 
 #: app/widgets/gimpuimanager.c:864
 #, c-format
@@ -28601,8 +28599,8 @@ msgid "[ Base Image ]"
 msgstr "[ imagem base ]"
 
 #: app/widgets/gimpvectorstreeview.c:111
-msgid "Lock path strokes"
-msgstr "Bloquear traços do caminho"
+msgid "Lock path"
+msgstr "Bloquear caminho"
 
 #: app/widgets/gimpvectorstreeview.c:114
 msgid "Lock path position"
@@ -28940,6 +28938,9 @@ msgstr "Erro ao escrever XCF: BPC não suportado ao escrever o pixel: %d"
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Depuração de falha de sistema do GIMP"
+
+#~ msgid "Lock path strokes"
+#~ msgstr "Bloquear traços do caminho"
 
 #~ msgctxt "layers-action"
 #~ msgid "_Crop to Selection"
