@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-06 05:13+0000\n"
-"PO-Revision-Date: 2023-02-06 16:17+0100\n"
+"POT-Creation-Date: 2023-02-10 19:27+0000\n"
+"PO-Revision-Date: 2023-02-11 05:45+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -70,8 +70,8 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/common/depth-merge.c:733 plug-ins/common/destripe.c:484
 #: plug-ins/common/file-cel.c:1003 plug-ins/common/file-gif-save.c:1160
 #: plug-ins/common/file-heif.c:2354 plug-ins/common/file-jp2-load.c:976
-#: plug-ins/common/file-pdf-load.c:655 plug-ins/common/file-pdf-load.c:1065
-#: plug-ins/common/file-pdf-save.c:1093 plug-ins/common/file-ps.c:3588
+#: plug-ins/common/file-pdf-load.c:655 plug-ins/common/file-pdf-load.c:1061
+#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3588
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:546
 #: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
 #: plug-ins/common/hot.c:679 plug-ins/common/jigsaw.c:2498
@@ -272,11 +272,11 @@ msgstr ""
 
 #: plug-ins/common/align-layers.c:199
 msgid "Align Visi_ble Layers..."
-msgstr ""
+msgstr "_ხილული ფენების სწორება...."
 
 #: plug-ins/common/align-layers.c:203
 msgid "Align all visible layers of the image"
-msgstr ""
+msgstr "გამოსახულების ყველა ხილული ფენების სწორება"
 
 #: plug-ins/common/align-layers.c:257
 msgid "There are not enough layers to align."
@@ -284,7 +284,7 @@ msgstr ""
 
 #: plug-ins/common/align-layers.c:667
 msgid "Align Visible Layers"
-msgstr ""
+msgstr "ხილული ფენების სწორება"
 
 #: plug-ins/common/align-layers.c:691 plug-ins/common/align-layers.c:722
 msgctxt "align-style"
@@ -806,7 +806,7 @@ msgstr "_გახსნა"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1433 plug-ins/common/cml-explorer.c:2115
 #: plug-ins/common/curve-bend.c:1493 plug-ins/common/curve-bend.c:2031
-#: plug-ins/common/file-pdf-save.c:1092 plug-ins/common/qbist.c:891
+#: plug-ins/common/file-pdf-save.c:1112 plug-ins/common/qbist.c:891
 #: plug-ins/common/qbist.c:1040 plug-ins/common/sphere-designer.c:2290
 #: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:542
 #: plug-ins/flame/flame.c:1112
@@ -991,7 +991,7 @@ msgstr ""
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
 #: plug-ins/common/file-dicom.c:1559 plug-ins/common/file-mng.c:874
 #: plug-ins/common/file-mng.c:1221 plug-ins/common/file-pcx.c:908
-#: plug-ins/common/file-pdf-save.c:704 plug-ins/common/file-png.c:1504
+#: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1504
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
@@ -1908,7 +1908,7 @@ msgstr ""
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:395
 #: plug-ins/common/file-heif.c:879 plug-ins/common/file-jp2-load.c:1085
-#: plug-ins/common/file-pcx.c:402 plug-ins/common/file-pdf-load.c:820
+#: plug-ins/common/file-pcx.c:402 plug-ins/common/file-pdf-load.c:816
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
 #: plug-ins/common/file-pnm.c:708 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
@@ -2055,15 +2055,15 @@ msgstr "_სიმღვრიე:"
 
 #: plug-ins/common/file-compressor.c:213
 msgid "gzip archive"
-msgstr ""
+msgstr "gzip არქივი"
 
 #: plug-ins/common/file-compressor.c:232
 msgid "bzip archive"
-msgstr ""
+msgstr "bzip არქივი"
 
 #: plug-ins/common/file-compressor.c:251
 msgid "xz archive"
-msgstr ""
+msgstr "xz არქივი"
 
 #: plug-ins/common/file-compressor.c:438
 msgid "No sensible file extension, saving as compressed XCF."
@@ -2072,7 +2072,7 @@ msgstr ""
 #: plug-ins/common/file-compressor.c:462
 #, c-format
 msgid "Compressing '%s'"
-msgstr ""
+msgstr "'%s'-ის შეკუმშვა"
 
 #: plug-ins/common/file-compressor.c:500
 msgid "No sensible file extension, attempting to load with file magic."
@@ -2176,7 +2176,7 @@ msgstr ""
 #: plug-ins/common/file-gif-load.c:1038
 #, c-format
 msgid "Background (%d%s)"
-msgstr ""
+msgstr "ფონი (%d%s)"
 
 #: plug-ins/common/file-gif-load.c:1065
 #, c-format
@@ -2191,7 +2191,7 @@ msgstr "კადრი %d"
 #: plug-ins/common/file-gif-load.c:1096
 #, c-format
 msgid "Frame %d (%d%s)"
-msgstr ""
+msgstr "კადრი %d (%d%s)"
 
 #: plug-ins/common/file-gif-load.c:1127
 #, c-format
@@ -2206,7 +2206,7 @@ msgstr ""
 
 #: plug-ins/common/file-gif-save.c:240
 msgid "Image comment"
-msgstr ""
+msgstr "გამოსახულების კომენტარი"
 
 #: plug-ins/common/file-gif-save.c:346
 msgid "GIF format does not support multiple layers."
@@ -2276,7 +2276,7 @@ msgstr ""
 
 #: plug-ins/common/file-gif-save.c:1293
 msgid "_Forever"
-msgstr ""
+msgstr "_სამუდამოდ"
 
 #: plug-ins/common/file-gif-save.c:1305
 msgid "_Delay between frames where unspecified:"
@@ -2288,7 +2288,7 @@ msgstr "მილიწამი"
 
 #: plug-ins/common/file-gif-save.c:1317
 msgid "I don't care"
-msgstr ""
+msgstr "არ მაინტერესებს"
 
 #: plug-ins/common/file-gif-save.c:1319
 msgid "Cumulative layers (combine)"
@@ -2338,11 +2338,11 @@ msgstr "პიქსელი"
 
 #: plug-ins/common/file-gih.c:727
 msgid "Ce_ll size:"
-msgstr ""
+msgstr "_უჯრედის ზომა:"
 
 #: plug-ins/common/file-gih.c:739
 msgid "_Number of cells:"
-msgstr ""
+msgstr "_უჯრედების რაოდენობა:"
 
 #: plug-ins/common/file-gih.c:764
 msgid " Rows of "
@@ -2537,7 +2537,7 @@ msgstr ""
 
 #: plug-ins/common/file-html-table.c:153
 msgid "HTML table"
-msgstr ""
+msgstr "HTML ცხრილი"
 
 #: plug-ins/common/file-html-table.c:174
 msgid "Enable if you would like to have the table captioned."
@@ -2632,20 +2632,20 @@ msgstr ""
 
 #: plug-ins/common/file-html-table.c:675
 msgid "C_aption"
-msgstr ""
+msgstr "_წარწერა"
 
 #: plug-ins/common/file-html-table.c:689
 msgid "C_ell content:"
-msgstr ""
+msgstr "_უჯრედის შემცველობა:"
 
 #. HTML Table Options
 #: plug-ins/common/file-html-table.c:693
 msgid "Table Options"
-msgstr ""
+msgstr "ცხრილის პარამეტრები"
 
 #: plug-ins/common/file-html-table.c:706
 msgid "_Border:"
-msgstr ""
+msgstr "_საზღვარი:"
 
 #: plug-ins/common/file-html-table.c:718 plug-ins/common/file-ps.c:3676
 #: plug-ins/common/file-ps.c:3874 plug-ins/common/film.c:1067
@@ -2938,11 +2938,11 @@ msgstr "JNG + delta PNG"
 
 #: plug-ins/common/file-mng.c:1647
 msgid "All PNG"
-msgstr ""
+msgstr "ყველა PNG"
 
 #: plug-ins/common/file-mng.c:1648
 msgid "All JNG"
-msgstr ""
+msgstr "ყველა JNG"
 
 #: plug-ins/common/file-mng.c:1657
 msgid "Default chunks type:"
@@ -3107,53 +3107,53 @@ msgstr ""
 msgid "Could not load '%s': %s"
 msgstr ""
 
-#: plug-ins/common/file-pdf-load.c:861
+#: plug-ins/common/file-pdf-load.c:857
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: plug-ins/common/file-pdf-load.c:863 plug-ins/common/file-ps.c:1276
+#: plug-ins/common/file-pdf-load.c:859 plug-ins/common/file-ps.c:1276
 #, c-format
 msgid "%s-pages"
 msgstr ""
 
-#: plug-ins/common/file-pdf-load.c:1061
+#: plug-ins/common/file-pdf-load.c:1057
 msgid "Import from PDF"
-msgstr ""
+msgstr "PDF-დან შემოტანა"
 
-#: plug-ins/common/file-pdf-load.c:1066 plug-ins/common/file-ps.c:3589
+#: plug-ins/common/file-pdf-load.c:1062 plug-ins/common/file-ps.c:3589
 #: plug-ins/file-tiff/file-tiff-load.c:2712
 #: plug-ins/metadata/metadata-editor.c:4635
 msgid "_Import"
 msgstr "_იმპორტირება"
 
-#: plug-ins/common/file-pdf-load.c:1098
+#: plug-ins/common/file-pdf-load.c:1094
 msgid "Error getting number of pages from the given PDF file."
 msgstr ""
 
 #. "Load in reverse order" toggle button
-#: plug-ins/common/file-pdf-load.c:1139
+#: plug-ins/common/file-pdf-load.c:1135
 msgid "Load in reverse order"
 msgstr ""
 
-#: plug-ins/common/file-pdf-load.c:1157
+#: plug-ins/common/file-pdf-load.c:1153
 msgid "_Width (pixels):"
 msgstr "_სიგანე (პიქსელებში)"
 
-#: plug-ins/common/file-pdf-load.c:1158
+#: plug-ins/common/file-pdf-load.c:1154
 msgid "_Height (pixels):"
 msgstr "ს_იმაღლე (პიქსელებში)"
 
-#: plug-ins/common/file-pdf-load.c:1160
+#: plug-ins/common/file-pdf-load.c:1156
 msgid "_Resolution:"
 msgstr "_გარჩევადობა:"
 
 #. Antialiasing
-#: plug-ins/common/file-pdf-load.c:1171
+#: plug-ins/common/file-pdf-load.c:1167
 msgid "Use _Anti-aliasing"
 msgstr "მომრგვალება"
 
-#: plug-ins/common/file-pdf-load.c:1439 plug-ins/common/file-pdf-load.c:1440
+#: plug-ins/common/file-pdf-load.c:1435 plug-ins/common/file-pdf-load.c:1436
 #: plug-ins/common/file-svg.c:952 plug-ins/common/file-wmf.c:722
 #: plug-ins/print/print-page-layout.c:307
 #, c-format
@@ -3164,11 +3164,21 @@ msgstr "პიქსელი/%a"
 msgid "PDF"
 msgstr "PDF"
 
-#: plug-ins/common/file-pdf-save.c:387
+#: plug-ins/common/file-pdf-save.c:380 plug-ins/common/file-pdf-save.c:452
+#: plug-ins/common/file-pdf-save.c:1165
+msgid "_Fill transparent areas with background color"
+msgstr "გამჭვირვალე ადგილების ფონის ფერით _შევსება"
+
+#: plug-ins/common/file-pdf-save.c:381 plug-ins/common/file-pdf-save.c:453
+msgid ""
+"Fill transparent areas with background color if layer has an alpha channel"
+msgstr ""
+
+#: plug-ins/common/file-pdf-save.c:394
 msgid "_Create multipage PDF..."
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:715
+#: plug-ins/common/file-pdf-save.c:731
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -3177,7 +3187,7 @@ msgid ""
 "read only!"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:990
+#: plug-ins/common/file-pdf-save.c:1006
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -3185,54 +3195,54 @@ msgid ""
 "missing fonts before exporting, otherwise your design may not look right."
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1084
+#: plug-ins/common/file-pdf-save.c:1104
 msgid "Save to:"
 msgstr "შენახვა როგორც:"
 
-#: plug-ins/common/file-pdf-save.c:1088
+#: plug-ins/common/file-pdf-save.c:1108
 msgid "Browse..."
 msgstr "მოძებნა..."
 
-#: plug-ins/common/file-pdf-save.c:1089
+#: plug-ins/common/file-pdf-save.c:1109
 msgid "Multipage PDF export"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1125
+#: plug-ins/common/file-pdf-save.c:1145
 msgid "Remove the selected pages"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1135
+#: plug-ins/common/file-pdf-save.c:1155
 msgid "Add this image"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1140
+#: plug-ins/common/file-pdf-save.c:1160
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1145
+#: plug-ins/common/file-pdf-save.c:1170
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1150
+#: plug-ins/common/file-pdf-save.c:1175
 msgid "_Apply layer masks before saving"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1154
+#: plug-ins/common/file-pdf-save.c:1179
 msgid "Keeping the masks will not change the output"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1243 plug-ins/common/file-pdf-save.c:1316
-#: plug-ins/common/file-pdf-save.c:1414 plug-ins/common/file-ps.c:2080
+#: plug-ins/common/file-pdf-save.c:1268 plug-ins/common/file-pdf-save.c:1341
+#: plug-ins/common/file-pdf-save.c:1439 plug-ins/common/file-ps.c:2080
 #: plug-ins/file-tiff/file-tiff-load.c:1578
 #, c-format
 msgid "Page %d"
 msgstr "%d გვერდი"
 
-#: plug-ins/common/file-pdf-save.c:1283
+#: plug-ins/common/file-pdf-save.c:1308
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
 
-#: plug-ins/common/file-pdf-save.c:1461 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-save.c:1486 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
 
@@ -3308,7 +3318,7 @@ msgstr ""
 
 #: plug-ins/common/file-png.c:283
 msgid "_Pixel format"
-msgstr ""
+msgstr "_პიქსელის ფორმატი"
 
 #: plug-ins/common/file-png.c:284
 msgid "PNG export format"
@@ -3426,11 +3436,11 @@ msgstr "16 bpc GRAYA"
 
 #: plug-ins/common/file-pnm.c:314
 msgid "PNM Image"
-msgstr ""
+msgstr "PNM გამოსახულება"
 
 #: plug-ins/common/file-pnm.c:347
 msgid "PNM image"
-msgstr ""
+msgstr "PNM გამოსახულება"
 
 #: plug-ins/common/file-pnm.c:382
 msgid "PBM image"
@@ -3438,11 +3448,11 @@ msgstr "PBM გამოსახულება"
 
 #: plug-ins/common/file-pnm.c:417
 msgid "PGM image"
-msgstr ""
+msgstr "PGM გამოსახულება"
 
 #: plug-ins/common/file-pnm.c:452
 msgid "PPM image"
-msgstr ""
+msgstr "PPM გამოსახულება"
 
 #: plug-ins/common/file-pnm.c:487
 msgid "PAM image"
@@ -3450,7 +3460,7 @@ msgstr "PAM გამოსახულება"
 
 #: plug-ins/common/file-pnm.c:516
 msgid "PFM image"
-msgstr ""
+msgstr "PFM გამოსახულება"
 
 #: plug-ins/common/file-pnm.c:655
 #, c-format
@@ -3757,7 +3767,7 @@ msgstr ""
 #: plug-ins/common/file-psp.c:975
 #, c-format
 msgid "Seek error: %s"
-msgstr ""
+msgstr "გადახვევის შეცდომა: %s"
 
 #: plug-ins/common/file-psp.c:998
 msgid "Invalid general image attribute chunk size."
@@ -3936,27 +3946,27 @@ msgstr ""
 #.
 #: plug-ins/common/file-raw-data.c:2703
 msgid "RGB 8-bit"
-msgstr ""
+msgstr "RGB 8-ბიტიანი"
 
 #: plug-ins/common/file-raw-data.c:2704
 msgid "RGB 16-bit"
-msgstr ""
+msgstr "RGB 16-ბიტიანი"
 
 #: plug-ins/common/file-raw-data.c:2705
 msgid "RGB 32-bit"
-msgstr ""
+msgstr "RGB 32-ბიტიანი"
 
 #: plug-ins/common/file-raw-data.c:2707
 msgid "RGBA 8-bit"
-msgstr ""
+msgstr "RGBA 8-ბიტიანი"
 
 #: plug-ins/common/file-raw-data.c:2708
 msgid "RGBA 16-bit"
-msgstr ""
+msgstr "RGBA 16-ბიტიანი"
 
 #: plug-ins/common/file-raw-data.c:2709
 msgid "RGBA 32-bit"
-msgstr ""
+msgstr "RGBA 32-ბიტიანი"
 
 #: plug-ins/common/file-raw-data.c:2711
 msgid "RGB565"
@@ -3968,7 +3978,7 @@ msgstr "BGR565"
 
 #: plug-ins/common/file-raw-data.c:2714
 msgid "B&W 1 bit"
-msgstr ""
+msgstr "შავთეთრი 1-ბიტიანი"
 
 #: plug-ins/common/file-raw-data.c:2715
 msgid "Grayscale 2-bit"
@@ -4201,7 +4211,7 @@ msgstr "_სტანდარტული"
 
 #: plug-ins/common/file-svg.c:163
 msgid "SVG image"
-msgstr ""
+msgstr "SVG გამოსახულება"
 
 #: plug-ins/common/file-svg.c:367 plug-ins/common/file-svg.c:762
 msgid "Unknown reason"
@@ -4524,7 +4534,7 @@ msgstr ""
 
 #: plug-ins/common/file-xmc.c:1073
 msgid "A read error occurred."
-msgstr ""
+msgstr "წაკითხვის შეცდომა."
 
 #: plug-ins/common/file-xmc.c:1113
 msgid "Export Image as X11 Mouse Cursor"
@@ -4591,7 +4601,7 @@ msgstr "_საავტორო უფლებები:"
 
 #: plug-ins/common/file-xmc.c:1233
 msgid "Enter copyright information."
-msgstr ""
+msgstr "შეიყვანეთ საავტორო უფლებების ინფორმაცია."
 
 #: plug-ins/common/file-xmc.c:1239
 msgid "_License:"
@@ -4599,7 +4609,7 @@ msgstr "_ლიცენზია:"
 
 #: plug-ins/common/file-xmc.c:1243
 msgid "Enter license information."
-msgstr ""
+msgstr "შეიყვანეთ ლიცენზიის ინფორმაცია."
 
 #: plug-ins/common/file-xmc.c:1253
 msgid "_Other:"
@@ -4687,7 +4697,7 @@ msgstr ""
 
 #: plug-ins/common/file-xpm.c:399 plug-ins/common/file-xpm.c:856
 msgid "XPM file invalid"
-msgstr ""
+msgstr "XPM ფაილი არასწორია"
 
 #: plug-ins/common/file-xpm.c:691
 msgid "Unsupported drawable type"
@@ -4806,7 +4816,7 @@ msgstr "_ფერი:"
 #. Film numbering: Startindex/Font/color
 #: plug-ins/common/film.c:1105
 msgid "Numbering"
-msgstr ""
+msgstr "დანომრვა"
 
 #: plug-ins/common/film.c:1126
 msgid "Start _index:"
@@ -5111,7 +5121,7 @@ msgstr "_ფაილის სახელი:"
 #: plug-ins/common/mail.c:614
 msgctxt "email-address"
 msgid "_To:"
-msgstr ""
+msgstr "_ვის:"
 
 #: plug-ins/common/mail.c:628
 msgctxt "email-address"
@@ -5145,7 +5155,7 @@ msgstr ""
 
 #: plug-ins/common/nl-filter.c:1152
 msgid "Filter"
-msgstr ""
+msgstr "ფილტრი"
 
 #: plug-ins/common/nl-filter.c:1156
 msgid "_Alpha trimmed mean"
@@ -5211,15 +5221,15 @@ msgstr "სახელი"
 
 #: plug-ins/common/plugin-browser.c:607 plug-ins/common/plugin-browser.c:670
 msgid "Menu Path"
-msgstr ""
+msgstr "მენიუს ბილიკი"
 
 #: plug-ins/common/plugin-browser.c:615 plug-ins/common/plugin-browser.c:679
 msgid "Image Types"
-msgstr ""
+msgstr "გამოსახულების ტიპები"
 
 #: plug-ins/common/plugin-browser.c:625 plug-ins/common/plugin-browser.c:688
 msgid "Installation Date"
-msgstr ""
+msgstr "დაყენების თარიღი"
 
 #: plug-ins/common/plugin-browser.c:649
 msgid "List View"
@@ -5515,15 +5525,15 @@ msgstr ""
 
 #: plug-ins/common/sparkle.c:617
 msgid "_Natural color"
-msgstr ""
+msgstr "_ბუნებრივი ფერი"
 
 #: plug-ins/common/sparkle.c:618
 msgid "_Foreground color"
-msgstr ""
+msgstr "_წინა პლანის ფერი"
 
 #: plug-ins/common/sparkle.c:619
 msgid "_Background color"
-msgstr ""
+msgstr "_ფონის ფერი"
 
 #: plug-ins/common/sparkle.c:626
 msgid "Use the color of the image"
@@ -5786,21 +5796,21 @@ msgstr ""
 
 #: plug-ins/common/tile-small.c:578
 msgid "Ro_w:"
-msgstr ""
+msgstr "_მწკრივი:"
 
 #: plug-ins/common/tile-small.c:603
 msgid "Col_umn:"
-msgstr ""
+msgstr "_სვეტი:"
 
 #. Widget for selecting the Opacity
 #: plug-ins/common/tile-small.c:651
 msgid "O_pacity:"
-msgstr ""
+msgstr "_გაუმჭვირვალობა:"
 
 #. Lower frame saying how many segments
 #: plug-ins/common/tile-small.c:661
 msgid "Number of Segments"
-msgstr ""
+msgstr "სეგმენტების რაოდენობა"
 
 #: plug-ins/common/unit-editor.c:115
 msgid "Saved"
@@ -5916,27 +5926,27 @@ msgstr "_ID:"
 
 #: plug-ins/common/unit-editor.c:472
 msgid "_Factor:"
-msgstr ""
+msgstr "_ფაქტორი:"
 
 #: plug-ins/common/unit-editor.c:483
 msgid "_Digits:"
-msgstr ""
+msgstr "_ციფრები:"
 
 #: plug-ins/common/unit-editor.c:495
 msgid "_Symbol:"
-msgstr ""
+msgstr "_სიმბოლო:"
 
 #: plug-ins/common/unit-editor.c:507
 msgid "_Abbreviation:"
-msgstr ""
+msgstr "_აბრევიატურა:"
 
 #: plug-ins/common/unit-editor.c:519
 msgid "Si_ngular:"
-msgstr ""
+msgstr "_მხოლობითი:"
 
 #: plug-ins/common/unit-editor.c:531
 msgid "_Plural:"
-msgstr ""
+msgstr "_მრავლობითი:"
 
 #: plug-ins/common/unit-editor.c:574
 msgid "Incomplete input"
@@ -6285,7 +6295,7 @@ msgstr "დიდი"
 #: plug-ins/common/web-page.c:360
 msgctxt "web-page"
 msgid "Default"
-msgstr ""
+msgstr "ნაგულისხმები"
 
 #: plug-ins/common/web-page.c:361
 msgid "Small"
@@ -6490,7 +6500,7 @@ msgstr ""
 
 #: plug-ins/file-dds/ddswrite.c:2015
 msgid "_Compression:"
-msgstr ""
+msgstr "_შეკუმშვა:"
 
 #: plug-ins/file-dds/ddswrite.c:2020
 msgid "Use _perceptual error metric"
