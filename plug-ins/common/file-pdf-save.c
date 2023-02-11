@@ -114,11 +114,13 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SAVE_PROC               "file-pdf-save"
-#define SAVE2_PROC              "file-pdf-save2"
-#define SAVE_MULTI_PROC         "file-pdf-save-multi"
-#define PLUG_IN_BINARY          "file-pdf-save"
-#define PLUG_IN_ROLE            "gimp-file-pdf-save"
+#define SAVE_PROC                   "file-pdf-save"
+#define SAVE2_PROC                  "file-pdf-save2"
+#define SAVE_MULTI_PROC             "file-pdf-save-multi"
+#define SAVE_TRANSPARENT_PROC       "file-pdf-save-transparent"
+#define SAVE_MULTI_TRANSPARENT_PROC "file-pdf-save-multi-transparent"
+#define PLUG_IN_BINARY              "file-pdf-save"
+#define PLUG_IN_ROLE                "gimp-file-pdf-save"
 
 #define DATA_OPTIMIZE           "file-pdf-data-optimize"
 #define DATA_IMAGE_LIST         "file-pdf-data-multi-page"
@@ -151,6 +153,7 @@ typedef enum
   SA_APPLY_MASKS,
   SA_LAYERS_AS_PAGES,
   SA_REVERSE_ORDER,
+  SA_TRANSPARENT_BACKGROUND,
   SA_ARG_COUNT
 } SaveArgs;
 
@@ -164,6 +167,7 @@ typedef enum
   SMA_APPLY_MASKS,
   SMA_FILENAME,
   SMA_RAWFILENAME,
+  SMA_TRANSPARENT_BACKGROUND,
   SMA_ARG_COUNT
 } SaveMultiArgs;
 
@@ -174,6 +178,7 @@ typedef struct
   gboolean apply_masks;
   gboolean layers_as_pages;
   gboolean reverse_order;
+  gboolean transparent_background;
 } PdfOptimize;
 
 typedef struct
@@ -278,7 +283,8 @@ static PdfOptimize optimize =
   TRUE,  /* ignore_hidden */
   TRUE,  /* apply_masks */
   FALSE, /* layers_as_pages */
-  FALSE  /* reverse_order */
+  FALSE, /* reverse_order */
+  TRUE   /* transparent_background */
 };
 
 static GtkTreeModel *model;
@@ -326,6 +332,20 @@ query (void)
     { GIMP_PDB_INT32,    "reverse-order",   "Reverse the pages order (top layers first). TRUE or FALSE" }
   };
 
+  static GimpParamDef save_transparent_args[] =
+  {
+    { GIMP_PDB_INT32,    "run-mode",              "Run mode" },
+    { GIMP_PDB_IMAGE,    "image",                 "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",              "Input drawable" },
+    { GIMP_PDB_STRING,   "filename",              "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename",          "The name of the file to save the image in" },
+    { GIMP_PDB_INT32,    "vectorize",             "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
+    { GIMP_PDB_INT32,    "ignore-hidden",         "Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
+    { GIMP_PDB_INT32,    "apply-masks",           "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" },
+    { GIMP_PDB_INT32,    "layers-as-pages",       "Layers as pages (bottom layers first). TRUE or FALSE" },
+    { GIMP_PDB_INT32,    "fill-background-color", "Fill transparent areas with background color if layer has an alpha channel. TRUE or FALSE" }
+  };
+
   static GimpParamDef save_multi_args[] =
   {
     { GIMP_PDB_INT32,      "run-mode",        "Run mode" },
@@ -336,6 +356,19 @@ query (void)
     { GIMP_PDB_INT32,      "apply-masks",     "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" },
     { GIMP_PDB_STRING,     "filename",        "The name of the file to save the image in" },
     { GIMP_PDB_STRING,     "raw-filename",    "The name of the file to save the image in" }
+  };
+
+  static GimpParamDef save_multi_transparent_args[] =
+  {
+    { GIMP_PDB_INT32,      "run-mode",              "Run mode" },
+    { GIMP_PDB_INT32,      "count",                 "The amount of images entered (This will be the amount of pages). 1 <= count <= MAX_PAGE_COUNT" },
+    { GIMP_PDB_INT32ARRAY, "images",                "Input image for each page (An image can appear more than once)" },
+    { GIMP_PDB_INT32,      "vectorize",             "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
+    { GIMP_PDB_INT32,      "ignore-hidden",         "Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
+    { GIMP_PDB_INT32,      "apply-masks",           "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" },
+    { GIMP_PDB_STRING,     "filename",              "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,     "raw-filename",          "The name of the file to save the image in" },
+    { GIMP_PDB_INT32,      "fill-background-color", "Fill transparent areas with background color if layer has an alpha channel. TRUE or FALSE" }
   };
 
   gimp_install_procedure (SAVE_PROC,
@@ -370,6 +403,24 @@ query (void)
                           G_N_ELEMENTS (save2_args), 0,
                           save2_args, NULL);
 
+  gimp_install_procedure (SAVE_TRANSPARENT_PROC,
+                          "Save files in PDF format",
+                          "Saves files in Adobe's Portable Document Format. "
+                          "PDF is designed to be easily processed by a variety "
+                          "of different platforms, and is a distant cousin of "
+                          "PostScript.\n"
+                          "This procedure adds an extra parameter to "
+                          "file-pdf-save2 to optionally fill transparent "
+                          "areas with the background color",
+                          "Barak Itkin, Lionel N., Jehan",
+                          "Copyright Barak Itkin, Lionel N., Jehan",
+                          "August 2009, 2017",
+                          N_("Portable Document Format"),
+                          "RGB*, GRAY*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_transparent_args), 0,
+                          save_transparent_args, NULL);
+
   gimp_install_procedure (SAVE_MULTI_PROC,
                           "Save files in PDF format",
                           "Saves files in Adobe's Portable Document Format. "
@@ -384,6 +435,25 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_multi_args), 0,
                           save_multi_args, NULL);
+
+  gimp_install_procedure (SAVE_MULTI_TRANSPARENT_PROC,
+                          "Save files in PDF format",
+                          "Saves files in Adobe's Portable Document Format. "
+                          "PDF is designed to be easily processed by a variety "
+                          "of different platforms, and is a distant cousin of "
+                          "PostScript.\n"
+                          "This procedure adds an extra parameter to "
+                          "file-pdf-multi to optionally fill transparent "
+                          "areas with the background color",
+                          "Barak Itkin",
+                          "Copyright Barak Itkin",
+                          "August 2009",
+                          N_("_Create multipage PDF..."),
+                          "RGB*, GRAY*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_multi_transparent_args), 0,
+                          save_multi_transparent_args, NULL);
+
 
 #if 0
   gimp_plugin_menu_register (SAVE_MULTI_PROC,
@@ -567,11 +637,11 @@ run (const gchar      *name,
 
       layers = gimp_image_get_layers (image_ID, &n_layers);
 
-      /* Fill image with background color -
-       * otherwise the output PDF will always show white for background,
-       * and may display artifacts at transparency boundaries
+      /* Fill image with background color if transparent and
+       * user chose that option.
        */
-      if (gimp_drawable_has_alpha (layers[n_layers - 1]))
+      if (gimp_drawable_has_alpha (layers[n_layers - 1]) &&
+          optimize.transparent_background)
         {
           GimpRGB color;
 
@@ -655,8 +725,9 @@ init_vals (const gchar      *name,
   gint32   i;
   gint32   image;
 
-  if ((g_str_equal (name, SAVE_PROC) && nparams == SA_ARG_COUNT - 2) ||
-      (g_str_equal (name, SAVE2_PROC) && nparams == SA_ARG_COUNT))
+  if ((g_str_equal (name, SAVE_PROC) && nparams == SA_ARG_COUNT - 3)         ||
+      (g_str_equal (name, SAVE2_PROC) && nparams == SA_ARG_COUNT - 1)        ||
+      (g_str_equal (name, SAVE_TRANSPARENT_PROC) && nparams == SA_ARG_COUNT))
     {
       single = TRUE;
       *run_mode = param[SA_RUN_MODE].data.d_int32;
@@ -668,20 +739,21 @@ init_vals (const gchar      *name,
           optimize.apply_masks = param[SA_APPLY_MASKS].data.d_int32;
           optimize.vectorize = param[SA_VECTORIZE].data.d_int32;
           optimize.ignore_hidden = param[SA_IGNORE_HIDDEN].data.d_int32;
+          if (nparams >= SA_ARG_COUNT - 1)
+            {
+              optimize.layers_as_pages = param[SA_LAYERS_AS_PAGES].data.d_int32;
+              optimize.reverse_order = param[SA_REVERSE_ORDER].data.d_int32;
+            }
           if (nparams == SA_ARG_COUNT)
-          {
-            optimize.layers_as_pages = param[SA_LAYERS_AS_PAGES].data.d_int32;
-            optimize.reverse_order = param[SA_REVERSE_ORDER].data.d_int32;
-          }
+            optimize.transparent_background = param[SA_TRANSPARENT_BACKGROUND].data.d_int32;
         }
       else
         defaults = TRUE;
     }
-  else if (g_str_equal (name, SAVE_MULTI_PROC))
+  else if ((g_str_equal (name, SAVE_MULTI_PROC) && nparams == SMA_ARG_COUNT - 1)         ||
+           (g_str_equal (name, SAVE_MULTI_TRANSPARENT_PROC) && nparams == SMA_ARG_COUNT))
     {
       single = FALSE;
-      if (nparams != SMA_ARG_COUNT)
-        return FALSE;
 
       *run_mode = param[SMA_RUN_MODE].data.d_int32;
       image = -1;
@@ -690,6 +762,9 @@ init_vals (const gchar      *name,
       optimize.apply_masks = param[SMA_APPLY_MASKS].data.d_int32;
       optimize.vectorize = param[SMA_VECTORIZE].data.d_int32;
       optimize.ignore_hidden = param[SMA_IGNORE_HIDDEN].data.d_int32;
+
+      if (nparams == SA_ARG_COUNT)
+        optimize.transparent_background = param[SA_TRANSPARENT_BACKGROUND].data.d_int32;
     }
   else
     {
@@ -805,6 +880,7 @@ gui_single (void)
   GtkWidget *apply_c;
   GtkWidget *layers_as_pages_c;
   GtkWidget *reverse_order_c;
+  GtkWidget *fill_background_c;
   GtkWidget *frame;
   gchar     *text;
   gboolean   run;
@@ -819,6 +895,11 @@ gui_single (void)
                       vbox, TRUE, TRUE, 0);
 
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
+
+  fill_background_c = gtk_check_button_new_with_mnemonic (_("_Fill transparent areas with background color"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (fill_background_c),
+                                optimize.transparent_background);
+  gtk_box_pack_end (GTK_BOX (vbox), fill_background_c, TRUE, TRUE, 0);
 
   ignore_hidden_c = gtk_check_button_new_with_mnemonic (_("_Omit hidden layers and layers with zero opacity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_hidden_c),
@@ -873,6 +954,8 @@ gui_single (void)
 
   run = gtk_dialog_run (GTK_DIALOG (window)) == GTK_RESPONSE_OK;
 
+  optimize.transparent_background =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (fill_background_c));
   optimize.ignore_hidden =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ignore_hidden_c));
   optimize.vectorize =
@@ -902,6 +985,7 @@ gui_multi (void)
   GtkWidget   *file_hbox;
   GtkWidget   *vectorize_c;
   GtkWidget   *ignore_hidden_c;
+  GtkWidget   *fill_background_c;
   GtkWidget   *apply_c;
   GtkWidget   *scroll;
   GtkWidget   *page_view;
@@ -980,6 +1064,11 @@ gui_multi (void)
 
   gtk_box_pack_start (GTK_BOX (vbox), h_box, FALSE, FALSE, 0);
 
+  fill_background_c = gtk_check_button_new_with_mnemonic (_("_Fill transparent areas with background color"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (fill_background_c),
+                                optimize.transparent_background);
+  gtk_box_pack_end (GTK_BOX (vbox), fill_background_c, TRUE, TRUE, 0);
+
   ignore_hidden_c = gtk_check_button_new_with_mnemonic (_("_Omit hidden layers and layers with zero opacity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_hidden_c),
                                 optimize.ignore_hidden);
@@ -1021,6 +1110,8 @@ gui_multi (void)
   temp = gtk_entry_get_text (GTK_ENTRY (file_entry));
   g_stpcpy (file_name, temp);
 
+  optimize.transparent_background =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (fill_background_c));
   optimize.ignore_hidden =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ignore_hidden_c));
   optimize.vectorize =
