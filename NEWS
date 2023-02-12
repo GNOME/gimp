@@ -31,6 +31,9 @@ Core:
     selection dialogs) are now remembered across sessions.
   - Eye icon header added to the item tree views to make it more obvious where
     to click for item visibility and links (backported from 2.99.10)
+  - Revert color proofing behavior changed in 2.10.32 which resulted in
+    inconsistent past workflows.
+  - "Lock path strokes" tooltip for the dockable icon was renamed "Lock path".
 
 Plug-ins:
 
@@ -68,6 +71,11 @@ Plug-ins:
     * macOS: https support now working fine for help files (bypassing
       lack of support in GIO for macOS platform).
   - animation-play: fixed on macOS.
+  - PDF:
+    * Import: do not fill background in white, i.e. support importing
+      transparent PDF files.
+    * Export: new option "Fill transparent areas with background color" allowing
+      to decide whether to export a PDF with transparent background.
 
 Libgimpbase:
 
