@@ -692,6 +692,17 @@ gimp_image_convert_profile_layers (GimpImage                *image,
 
   while ((drawable = gimp_object_queue_pop (queue)))
     {
+      GimpItem   *item = GIMP_ITEM (drawable);
+      GeglBuffer *buffer;
+      gboolean    alpha;
+
+      alpha = gimp_drawable_has_alpha (drawable);
+
+      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                gimp_item_get_width  (item),
+                                                gimp_item_get_height (item)),
+                                gimp_image_get_layer_format (image, alpha));
+
       gimp_drawable_push_undo (drawable, NULL, NULL,
                                0, 0,
                                gimp_item_get_width  (GIMP_ITEM (drawable)),
@@ -700,13 +711,14 @@ gimp_image_convert_profile_layers (GimpImage                *image,
       gimp_gegl_convert_color_profile (gimp_drawable_get_buffer (drawable),
                                        NULL,
                                        src_profile,
-                                       gimp_drawable_get_buffer (drawable),
+                                       buffer,
                                        NULL,
                                        dest_profile,
                                        intent, bpc,
                                        progress);
 
-      gimp_drawable_update (drawable, 0, 0, -1, -1);
+      gimp_drawable_set_buffer (drawable, TRUE, NULL, buffer);
+      g_object_unref (buffer);
     }
 
   g_object_unref (queue);
