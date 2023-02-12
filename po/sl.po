@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-25 17:39+0000\n"
-"PO-Revision-Date: 2023-01-26 18:58+0100\n"
+"POT-Creation-Date: 2023-02-10 10:08+0000\n"
+"PO-Revision-Date: 2023-02-10 17:59+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -25811,7 +25811,7 @@ msgid "Percentage of width of brush"
 msgstr "Odstotek širine čopiča"
 
 #: app/widgets/gimpbufferview.c:189 app/widgets/gimpbufferview.c:290
-#: app/widgets/gimpeditor.c:782
+#: app/widgets/gimpeditor.c:797
 msgid "(None)"
 msgstr "(brez)"
 
@@ -28169,8 +28169,8 @@ msgid "[ Base Image ]"
 msgstr "[ Osnovna slika ]"
 
 #: app/widgets/gimpvectorstreeview.c:111
-msgid "Lock path strokes"
-msgstr "Zakleni poteze poti"
+msgid "Lock path"
+msgstr "Zakleni pot"
 
 #: app/widgets/gimpvectorstreeview.c:114
 msgid "Lock path position"
