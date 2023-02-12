@@ -208,7 +208,6 @@ gimp-debian/stable-autotools-distcheck:
         --enable-gtk-doc
     - make -j "$(nproc)"
     - make -j "$(nproc)" distcheck
-  allow_failure: true
 
 ## Ready-to-distribute ##
 
