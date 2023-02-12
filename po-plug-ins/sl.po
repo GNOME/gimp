@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-07 16:08+0000\n"
-"PO-Revision-Date: 2023-02-07 17:38+0100\n"
+"POT-Creation-Date: 2023-02-11 04:48+0000\n"
+"PO-Revision-Date: 2023-02-12 11:03+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -76,8 +76,8 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/common/depth-merge.c:733 plug-ins/common/destripe.c:484
 #: plug-ins/common/file-cel.c:1003 plug-ins/common/file-gif-save.c:1160
 #: plug-ins/common/file-heif.c:2354 plug-ins/common/file-jp2-load.c:976
-#: plug-ins/common/file-pdf-load.c:655 plug-ins/common/file-pdf-load.c:1065
-#: plug-ins/common/file-pdf-save.c:1093 plug-ins/common/file-ps.c:3588
+#: plug-ins/common/file-pdf-load.c:655 plug-ins/common/file-pdf-load.c:1061
+#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3588
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:546
 #: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
 #: plug-ins/common/hot.c:679 plug-ins/common/jigsaw.c:2498
@@ -821,7 +821,7 @@ msgstr "_Odpri"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1433 plug-ins/common/cml-explorer.c:2115
 #: plug-ins/common/curve-bend.c:1493 plug-ins/common/curve-bend.c:2031
-#: plug-ins/common/file-pdf-save.c:1092 plug-ins/common/qbist.c:891
+#: plug-ins/common/file-pdf-save.c:1112 plug-ins/common/qbist.c:891
 #: plug-ins/common/qbist.c:1040 plug-ins/common/sphere-designer.c:2290
 #: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:542
 #: plug-ins/flame/flame.c:1112
@@ -1010,7 +1010,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
 #: plug-ins/common/file-dicom.c:1559 plug-ins/common/file-mng.c:874
 #: plug-ins/common/file-mng.c:1221 plug-ins/common/file-pcx.c:908
-#: plug-ins/common/file-pdf-save.c:704 plug-ins/common/file-png.c:1504
+#: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1504
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
@@ -1940,7 +1940,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:395
 #: plug-ins/common/file-heif.c:879 plug-ins/common/file-jp2-load.c:1085
-#: plug-ins/common/file-pcx.c:402 plug-ins/common/file-pdf-load.c:820
+#: plug-ins/common/file-pcx.c:402 plug-ins/common/file-pdf-load.c:816
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
 #: plug-ins/common/file-pnm.c:708 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
@@ -3178,53 +3178,53 @@ msgstr "Napačno geslo! Poskusite znova:"
 msgid "Could not load '%s': %s"
 msgstr "»%s« ni mogoče naložiti: %s"
 
-#: plug-ins/common/file-pdf-load.c:861
+#: plug-ins/common/file-pdf-load.c:857
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: plug-ins/common/file-pdf-load.c:863 plug-ins/common/file-ps.c:1276
+#: plug-ins/common/file-pdf-load.c:859 plug-ins/common/file-ps.c:1276
 #, c-format
 msgid "%s-pages"
 msgstr "%s-strani"
 
-#: plug-ins/common/file-pdf-load.c:1061
+#: plug-ins/common/file-pdf-load.c:1057
 msgid "Import from PDF"
 msgstr "Uvozi iz PDF"
 
-#: plug-ins/common/file-pdf-load.c:1066 plug-ins/common/file-ps.c:3589
+#: plug-ins/common/file-pdf-load.c:1062 plug-ins/common/file-ps.c:3589
 #: plug-ins/file-tiff/file-tiff-load.c:2712
 #: plug-ins/metadata/metadata-editor.c:4635
 msgid "_Import"
 msgstr "_Uvozi"
 
-#: plug-ins/common/file-pdf-load.c:1098
+#: plug-ins/common/file-pdf-load.c:1094
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Napaka pri pridobivanju števila strani iz dane datoteke PDF."
 
 #. "Load in reverse order" toggle button
-#: plug-ins/common/file-pdf-load.c:1139
+#: plug-ins/common/file-pdf-load.c:1135
 msgid "Load in reverse order"
 msgstr "Naloži v obratnem vrstnem redu"
 
-#: plug-ins/common/file-pdf-load.c:1157
+#: plug-ins/common/file-pdf-load.c:1153
 msgid "_Width (pixels):"
 msgstr "_Širina (slik. točke):"
 
-#: plug-ins/common/file-pdf-load.c:1158
+#: plug-ins/common/file-pdf-load.c:1154
 msgid "_Height (pixels):"
 msgstr "_Višina (slik. točke):"
 
-#: plug-ins/common/file-pdf-load.c:1160
+#: plug-ins/common/file-pdf-load.c:1156
 msgid "_Resolution:"
 msgstr "_Ločljivost:"
 
 #. Antialiasing
-#: plug-ins/common/file-pdf-load.c:1171
+#: plug-ins/common/file-pdf-load.c:1167
 msgid "Use _Anti-aliasing"
 msgstr "Uporabi _glajenje robov"
 
-#: plug-ins/common/file-pdf-load.c:1439 plug-ins/common/file-pdf-load.c:1440
+#: plug-ins/common/file-pdf-load.c:1435 plug-ins/common/file-pdf-load.c:1436
 #: plug-ins/common/file-svg.c:952 plug-ins/common/file-wmf.c:722
 #: plug-ins/print/print-page-layout.c:307
 #, c-format
@@ -3235,11 +3235,21 @@ msgstr "slik. točk/%a"
 msgid "PDF"
 msgstr "PDF"
 
-#: plug-ins/common/file-pdf-save.c:387
+#: plug-ins/common/file-pdf-save.c:380 plug-ins/common/file-pdf-save.c:452
+#: plug-ins/common/file-pdf-save.c:1165
+msgid "_Fill transparent areas with background color"
+msgstr "_Zapolni prosojna področja z barvo ozadja"
+
+#: plug-ins/common/file-pdf-save.c:381 plug-ins/common/file-pdf-save.c:453
+msgid ""
+"Fill transparent areas with background color if layer has an alpha channel"
+msgstr "Zapolni prosojna področja z barvo ozadja, če ima plast kanal alfa"
+
+#: plug-ins/common/file-pdf-save.c:394
 msgid "_Create multipage PDF..."
 msgstr "_Ustvari večstranski PDF ..."
 
-#: plug-ins/common/file-pdf-save.c:715
+#: plug-ins/common/file-pdf-save.c:731
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -3252,7 +3262,7 @@ msgstr ""
 "Prepričajte se, da ste vnesli veljavno ime datoteke in da na izbranem mestu "
 "ni dovoljeno le branje!"
 
-#: plug-ins/common/file-pdf-save.c:990
+#: plug-ins/common/file-pdf-save.c:1006
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -3263,54 +3273,54 @@ msgstr ""
 "Priporočamo, da svoje plasti besedila pretvorite v sliko ali da namestite "
 "manjkajoče pisave pred izvozom, sicer vaše oblikovanje ne bo videti pravilno."
 
-#: plug-ins/common/file-pdf-save.c:1084
+#: plug-ins/common/file-pdf-save.c:1104
 msgid "Save to:"
 msgstr "Shrani v:"
 
-#: plug-ins/common/file-pdf-save.c:1088
+#: plug-ins/common/file-pdf-save.c:1108
 msgid "Browse..."
 msgstr "Prebrskaj ..."
 
-#: plug-ins/common/file-pdf-save.c:1089
+#: plug-ins/common/file-pdf-save.c:1109
 msgid "Multipage PDF export"
 msgstr "Izvoz večstranskega PDF"
 
-#: plug-ins/common/file-pdf-save.c:1125
+#: plug-ins/common/file-pdf-save.c:1145
 msgid "Remove the selected pages"
 msgstr "Izbrišite izbrane strani"
 
-#: plug-ins/common/file-pdf-save.c:1135
+#: plug-ins/common/file-pdf-save.c:1155
 msgid "Add this image"
 msgstr "Dodaj to sliko"
 
-#: plug-ins/common/file-pdf-save.c:1140
+#: plug-ins/common/file-pdf-save.c:1160
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr "Izp_usti skrite plasti in plasti z ničelno prekrivnostjo"
 
-#: plug-ins/common/file-pdf-save.c:1145
+#: plug-ins/common/file-pdf-save.c:1170
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "Pretvori _bitne slike v vektorsko grafiko, kjer je to mogoče"
 
-#: plug-ins/common/file-pdf-save.c:1150
+#: plug-ins/common/file-pdf-save.c:1175
 msgid "_Apply layer masks before saving"
 msgstr "Pre_d shranjevanjem uveljavi maske plasti"
 
-#: plug-ins/common/file-pdf-save.c:1154
+#: plug-ins/common/file-pdf-save.c:1179
 msgid "Keeping the masks will not change the output"
 msgstr "Ohranjanje mask ne bo spremenilo izhoda"
 
-#: plug-ins/common/file-pdf-save.c:1243 plug-ins/common/file-pdf-save.c:1316
-#: plug-ins/common/file-pdf-save.c:1414 plug-ins/common/file-ps.c:2080
+#: plug-ins/common/file-pdf-save.c:1268 plug-ins/common/file-pdf-save.c:1341
+#: plug-ins/common/file-pdf-save.c:1439 plug-ins/common/file-ps.c:2080
 #: plug-ins/file-tiff/file-tiff-load.c:1578
 #, c-format
 msgid "Page %d"
 msgstr "Stran %d"
 
-#: plug-ins/common/file-pdf-save.c:1283
+#: plug-ins/common/file-pdf-save.c:1308
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Napaka! Če želite shraniti datoteko, morate dodati vsaj eno sliko!"
 
-#: plug-ins/common/file-pdf-save.c:1461 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-save.c:1486 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Velikosti slike ni mogoče obvladati (širina ali višina)."
 
