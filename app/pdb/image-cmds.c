@@ -2263,7 +2263,35 @@ image_set_file_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gimp_image_set_file (image, file);
+      gchar *uri;
+      gchar *folded_uri;
+      gchar *folded_ext;
+
+      uri        = g_file_get_uri (file);
+      folded_uri = g_utf8_casefold (uri, -1);
+      folded_ext = g_utf8_casefold (".xcf", -1);
+
+      if (! g_str_has_suffix (folded_uri, folded_ext))
+        {
+          gchar *dot = g_strrstr (uri, ".");
+
+          if (dot != NULL && strstr (dot + 1, G_DIR_SEPARATOR_S) == NULL)
+            g_printerr ("%s: failure to set file '%s' with extension '%s'. "
+                        "The extension must be '.xcf'.\n",
+                        "gimp_image_set_file", uri, dot + 1);
+          else
+            g_printerr ("%s: failure to set file '%s' without extension. "
+                        "The extension must be '.xcf'.\n",
+                        "gimp_image_set_file", uri);
+
+          success = FALSE;
+        }
+      if (success)
+        gimp_image_set_file (image, file);
+
+      g_free (uri);
+      g_free (folded_uri);
+      g_free (folded_ext);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -4968,8 +4996,9 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-file");
   gimp_procedure_set_static_help (procedure,
-                                  "Sets the specified image's file.",
-                                  "This procedure sets the specified image's file.",
+                                  "Sets the specified XCF image's file.",
+                                  "This procedure sets the specified image's file.\n"
+                                  "This is to set the XCF file associated with your image. In particular, do not use this function to set the imported file in file import plug-ins. This is done by the core process.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",

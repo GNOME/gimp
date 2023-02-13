@@ -2615,9 +2615,12 @@ gimp_image_get_file (GimpImage *image)
  * @image: The image.
  * @file: The new image file.
  *
- * Sets the specified image's file.
+ * Sets the specified XCF image's file.
  *
  * This procedure sets the specified image's file.
+ * This is to set the XCF file associated with your image. In
+ * particular, do not use this function to set the imported file in
+ * file import plug-ins. This is done by the core process.
  *
  * Returns: TRUE on success.
  **/

@@ -2322,10 +2322,14 @@ CODE
 }
 
 sub image_set_file {
-    $blurb = "Sets the specified image's file.";
+    $blurb = "Sets the specified XCF image's file.";
 
     $help = <<'HELP';
 This procedure sets the specified image's file.
+
+This is to set the XCF file associated with your image. In particular, do not
+use this function to set the imported file in file import plug-ins. This is done
+by the core process.
 HELP
 
     &std_pdb_misc;
@@ -2340,7 +2344,35 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_image_set_file (image, file);
+  gchar *uri;
+  gchar *folded_uri;
+  gchar *folded_ext;
+
+  uri        = g_file_get_uri (file);
+  folded_uri = g_utf8_casefold (uri, -1);
+  folded_ext = g_utf8_casefold (".xcf", -1);
+
+  if (! g_str_has_suffix (folded_uri, folded_ext))
+    {
+      gchar *dot = g_strrstr (uri, ".");
+
+      if (dot != NULL && strstr (dot + 1, G_DIR_SEPARATOR_S) == NULL)
+        g_printerr ("%s: failure to set file '%s' with extension '%s'. "
+                    "The extension must be '.xcf'.\n",
+                    "gimp_image_set_file", uri, dot + 1);
+      else
+        g_printerr ("%s: failure to set file '%s' without extension. "
+                    "The extension must be '.xcf'.\n",
+                    "gimp_image_set_file", uri);
+
+      success = FALSE;
+    }
+  if (success)
+    gimp_image_set_file (image, file);
+
+  g_free (uri);
+  g_free (folded_uri);
+  g_free (folded_ext);
 }
 CODE
     );
