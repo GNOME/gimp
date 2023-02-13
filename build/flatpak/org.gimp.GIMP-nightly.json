@@ -506,8 +506,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.9/libde265-1.0.9.tar.gz",
-                            "sha256": "29bc6b64bf658d81a4446a3f98e0e4636fd4fd3d971b072d440cef987d5439de",
+                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.11/libde265-1.0.11.tar.gz",
+                            "sha256": "2f8f12cabbdb15e53532b7c1eb964d4e15d444db1be802505e6ac97a25035bab",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 11239,
@@ -663,8 +663,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/google/highway/archive/refs/tags/1.0.2.tar.gz",
-                            "sha256": "e8ef71236ac0d97f12d553ec1ffc5b6375d57b5f0b860c7447dd69b6ed1072db"
+                            "url": "https://github.com/google/highway/archive/refs/tags/1.0.3.tar.gz",
+                            "sha256": "566fc77315878473d9a6bd815f7de78c73734acdcb745c3dde8579560ac5440e"
                         }
                     ]
                 }
@@ -672,8 +672,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/libjxl/libjxl/archive/refs/tags/v0.8.0.tar.gz",
-                    "sha256": "6b4c140c1738acbed6b7d22858e0526373f0e9938e3f6c0a6b8943189195aad1"
+                    "url": "https://github.com/libjxl/libjxl/archive/refs/tags/v0.8.1.tar.gz",
+                    "sha256": "60f43921ad3209c9e180563025eda0c0f9b1afac51a2927b9ff59fff3950dc56"
                 }
             ]
         },
