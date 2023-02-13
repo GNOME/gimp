@@ -753,14 +753,14 @@ HELP
     {
       GeglNode  *node;
       node = gegl_node_new_child (NULL,
-                                  "operation",          "gegl:shadows-highlights",
-                                  "shadows",            shadows,
-                                  "highlights",         highlights,
-                                  "whitepoint",         whitepoint,
-                                  "radius",             radius,
-                                  "compress",           compress,
-                                  "shadows_correct",    shadows_ccorrect,
-                                  "highlights_correct", highlights_ccorrect,
+                                  "operation",           "gegl:shadows-highlights",
+                                  "shadows",             shadows,
+                                  "highlights",          highlights,
+                                  "whitepoint",          whitepoint,
+                                  "radius",              radius,
+                                  "compress",            compress,
+                                  "shadows-ccorrect",    shadows_ccorrect,
+                                  "highlights-ccorrect", highlights_ccorrect,
                                   NULL);
 
       gimp_drawable_apply_operation (drawable, progress,

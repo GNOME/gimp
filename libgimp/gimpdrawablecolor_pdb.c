@@ -622,7 +622,7 @@ gimp_drawable_levels_stretch (gint32 drawable_ID)
  *
  * This filter allows adjusting shadows and highlights in the image
  * separately. The implementation closely follow its counterpart in the
- * Darktable photography software
+ * Darktable photography software.
  *
  * Returns: TRUE on success.
  *
