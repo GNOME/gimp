@@ -159,7 +159,7 @@ file_save (Gimp                *gimp,
     {
       if (my_error)
         {
-          g_printerr ("%s: mounting remote volume failed, trying to upload"
+          g_printerr ("%s: mounting remote volume failed, trying to upload "
                       "the file: %s\n",
                       G_STRFUNC, my_error->message);
           g_clear_error (&my_error);

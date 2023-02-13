@@ -258,9 +258,27 @@ file_save_cmd_callback (GimpAction *action,
            ! GIMP_GUI_CONFIG (image->gimp->config)->trust_dirty_flag) ||
           file == NULL)
         {
-          GimpPlugInProcedure *save_proc = gimp_image_get_save_proc (image);
+          GimpPlugInProcedure *save_proc  = gimp_image_get_save_proc (image);
+          gboolean             valid_file = FALSE;
 
-          if (file && ! save_proc)
+          if (file)
+            {
+              gchar *uri = g_file_get_uri (file);
+
+              /* Non-valid URI (such as "Untitled.xcd" without a scheme) are
+               * considered non-native by GLib and will trigger remote file code
+               * path in file_save_dialog_save_image(), eventually failing with
+               * a weird error. When we encounter such non-valid URI, we just
+               * consider that the file was entered manually with a bogus name
+               * (possibly by some script or plug-in) and we fall through
+               * directly to showing the file dialog. The file name will still
+               * be useful as default file name.
+               */
+              valid_file = g_uri_is_valid (uri, G_URI_FLAGS_NONE, NULL);
+              g_free (uri);
+            }
+
+          if (valid_file && ! save_proc)
             {
               save_proc =
                 gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
@@ -268,7 +286,7 @@ file_save_cmd_callback (GimpAction *action,
                                                           file, NULL);
             }
 
-          if (file && save_proc)
+          if (valid_file && save_proc)
             {
               saved = file_save_dialog_save_image (GIMP_PROGRESS (display),
                                                    gimp, image, file,
