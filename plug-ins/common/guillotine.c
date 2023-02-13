@@ -289,7 +289,6 @@ guillotine (GimpImage *image,
               GFile     *new_file;
               gchar     *fileextension;
               gchar     *fileindex;
-              gint       pos;
 
               if (! new_image)
                 {
@@ -317,11 +316,20 @@ guillotine (GimpImage *image,
 
               /* get the position of the file extension - last . in filename */
               fileextension = strrchr (new_uri->str, '.');
-              pos           = fileextension - new_uri->str;
+              if (fileextension)
+                {
+                  gint pos;
+
+                  /* Truncate the extension. */
+                  pos = fileextension - new_uri->str;
+                  g_string_truncate (new_uri, pos);
+                }
 
               /* insert the coordinates before the extension */
-              g_string_insert (new_uri, pos, fileindex);
+              g_string_append (new_uri, fileindex);
               g_free (fileindex);
+
+              g_string_append (new_uri, ".xcf");
 
               new_file = g_file_new_for_uri (new_uri->str);
               g_string_free (new_uri, TRUE);
