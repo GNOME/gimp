@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ka\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-09 22:24+0000\n"
-"PO-Revision-Date: 2023-02-10 11:05+0100\n"
+"POT-Creation-Date: 2023-02-13 15:35+0000\n"
+"PO-Revision-Date: 2023-02-13 18:21+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -20277,12 +20277,17 @@ msgctxt "undo-type"
 msgid "Levels"
 msgstr "დონეები"
 
-#: app/pdb/drawable-color-cmds.c:672
+#: app/pdb/drawable-color-cmds.c:690
+msgctxt "undo-type"
+msgid "Shadows-Highlights"
+msgstr "ჩრდილები-სინათლე"
+
+#: app/pdb/drawable-color-cmds.c:730
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "პოსტერიზაცია"
 
-#: app/pdb/drawable-color-cmds.c:718
+#: app/pdb/drawable-color-cmds.c:776
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "ზღვარი"
