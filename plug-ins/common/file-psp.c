@@ -2461,8 +2461,6 @@ load_image (GFile   *file,
               goto error;
             }
 
-          gimp_image_set_file (image, file);
-
           gimp_image_set_resolution (image, ia.resolution, ia.resolution);
         }
       else

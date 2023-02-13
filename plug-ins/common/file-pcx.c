@@ -491,7 +491,6 @@ load_image (GFile   *file,
                               gimp_image_get_default_new_layer_mode (image));
     }
 
-  gimp_image_set_file (image, file);
   gimp_image_set_resolution (image, resolution_x, resolution_y);
 
   gimp_image_insert_layer (image, layer, NULL, 0);

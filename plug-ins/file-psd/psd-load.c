@@ -1339,7 +1339,6 @@ create_gimp_image (PSDimage *img_a,
   IFDBG(2) g_debug ("Create image");
   image = gimp_image_new_with_precision (img_a->columns, img_a->rows,
                                          img_a->base_type, precision);
-  gimp_image_set_file (image, file);
   gimp_image_undo_disable (image);
 
   return image;

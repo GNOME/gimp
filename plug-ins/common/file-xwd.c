@@ -1300,7 +1300,6 @@ create_new_image (GFile               *file,
   GimpImage *image;
 
   image = gimp_image_new (width, height, type);
-  gimp_image_set_file (image, file);
 
   *layer = gimp_layer_new (image, "Background", width, height,
                            gdtype,

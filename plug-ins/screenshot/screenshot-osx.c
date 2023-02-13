@@ -141,7 +141,6 @@ screenshot_osx_shoot (ScreenshotValues  *shootvals,
 
       *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
                                tmpfile);
-      gimp_image_set_file (*image, g_file_new_for_uri ("screenshot.png"));
 
       g_file_delete (tmpfile, NULL, NULL);
       g_free (command);

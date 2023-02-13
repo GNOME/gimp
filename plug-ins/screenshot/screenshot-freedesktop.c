@@ -107,7 +107,6 @@ screenshot_freedesktop_dbus_signal (GDBusProxy  *proxy,
               GFile *file = g_file_new_for_uri (uri);
 
               *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, file);
-              gimp_image_set_file (*image, g_file_new_for_path ("screenshot.png"));
 
               /* Delete the actual file. */
               g_file_delete (file, NULL, NULL);

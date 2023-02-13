@@ -170,7 +170,6 @@ icns_load (IcnsResource *icns,
 
   /* Largest .icns icon is 1024 x 1024 */
   image = gimp_image_new (1024, 1024, GIMP_RGB);
-  gimp_image_set_file (image, file);
 
   nResources = 0;
   while (resource_get_next (icns, &resources[nResources++])) {}

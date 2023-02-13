@@ -1101,7 +1101,6 @@ ReadImage (FILE     *fp,
     }
 
   image = gimp_image_new (info->width, info->height, itype);
-  gimp_image_set_file (image, file);
 
   if (gimp_cmap)
     gimp_image_set_colormap (image, gimp_cmap, info->colorMapLength);

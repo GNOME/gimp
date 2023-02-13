@@ -1031,8 +1031,6 @@ load_image (GFile        *file,
 
     }
 
-  gimp_image_set_file ((GimpImage *) image, file);
-
   /*
    * Load the colormap as necessary...
    */

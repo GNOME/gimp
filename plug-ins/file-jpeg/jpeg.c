@@ -464,20 +464,8 @@ jpeg_save (GimpProcedure        *procedure,
       switch (export)
         {
         case GIMP_EXPORT_EXPORT:
-          {
-            gchar *tmp = g_filename_from_utf8 (_("Export Preview"), -1,
-                                               NULL, NULL, NULL);
-            if (tmp)
-              {
-                GFile *file = g_file_new_for_path (tmp);
-                gimp_image_set_file (image, file);
-                g_object_unref (file);
-                g_free (tmp);
-              }
-
-            display = NULL;
-            separate_display = TRUE;
-          }
+          display = NULL;
+          separate_display = TRUE;
           break;
 
         case GIMP_EXPORT_IGNORE:

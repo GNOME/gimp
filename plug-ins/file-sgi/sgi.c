@@ -465,8 +465,6 @@ load_image (GFile   *file,
       return NULL;
     }
 
-  gimp_image_set_file (image, file);
-
   /*
    * Create the "background" layer to hold the image...
    */

@@ -257,8 +257,6 @@ load_image (GFile        *file,
       goto out;
     }
 
-  gimp_image_set_file (image, file);
-
   /* try to load an icc profile, it will be generated on the fly if
    * chromaticities are given
    */

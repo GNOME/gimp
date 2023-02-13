@@ -570,7 +570,6 @@ emitgimp (gint         hcol,
                    _("Could not create image."));
       return NULL;
     }
-  gimp_image_set_file (image, file);
 
   layer = gimp_layer_new (image, _("Background"),
                           hcol,

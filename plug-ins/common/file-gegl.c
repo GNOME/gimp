@@ -462,8 +462,6 @@ load_image (GFile        *file,
 
   image = gimp_image_new_with_precision (width, height,
                                          base_type, precision);
-  gimp_image_set_file (image, file);
-
   layer = gimp_layer_new (image,
                           _("Background"),
                           width, height,

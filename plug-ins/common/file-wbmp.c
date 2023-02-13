@@ -271,7 +271,6 @@ read_image (FILE    *fd,
                           GIMP_INDEXED_IMAGE, 100,
                           gimp_image_get_default_new_layer_mode (image));
 
-  gimp_image_set_file (image, file);
   gimp_image_set_colormap (image, mono, 2);
 
   gimp_image_insert_layer (image, layer, NULL, 0);

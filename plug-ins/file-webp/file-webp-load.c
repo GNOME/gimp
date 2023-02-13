@@ -282,8 +282,6 @@ load_image (GFile    *file,
 
   WebPMuxDelete (mux);
 
-  gimp_image_set_file (image, file);
-
   if (profile)
     g_object_unref (profile);
 

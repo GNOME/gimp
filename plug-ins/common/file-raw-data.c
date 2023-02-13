@@ -1833,7 +1833,6 @@ load_image (GFile                *file,
 
   data->image = gimp_image_new_with_precision (width, height, itype, precision);
 
-  gimp_image_set_file (data->image, file);
   layer = gimp_layer_new (data->image, _("Background"),
                           width, height, ltype, 100,
                           gimp_image_get_default_new_layer_mode (data->image));

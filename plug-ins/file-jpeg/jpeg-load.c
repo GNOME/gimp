@@ -230,7 +230,6 @@ load_image (GFile        *file,
                                              GIMP_PRECISION_U8_NON_LINEAR);
 
       gimp_image_undo_disable (image);
-      gimp_image_set_file (image, file);
 
       /* Step 5.0: save the original JPEG settings in a parasite */
       jpeg_detect_original_settings (&cinfo, image);

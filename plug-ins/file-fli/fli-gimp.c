@@ -559,7 +559,6 @@ load_image (GFile    *file,
     }
 
   image = gimp_image_new (fli_header.width, fli_header.height, GIMP_INDEXED);
-  gimp_image_set_file (image, file);
 
   fb  = g_malloc (fli_header.width * fli_header.height);
   ofb = g_malloc (fli_header.width * fli_header.height);

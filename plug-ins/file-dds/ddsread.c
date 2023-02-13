@@ -368,8 +368,6 @@ read_dds (GFile          *file,
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  gimp_image_set_file (image, file);
-
   if (hdr.pixelfmt.flags & DDPF_PALETTEINDEXED8)
     {
       d.palette = g_malloc (256 * 4);

@@ -871,7 +871,6 @@ load_image (GFile   *file,
     }
 
   image = gimp_image_new (width, height, GIMP_INDEXED);
-  gimp_image_set_file (image, file);
 
   if (comment)
     {

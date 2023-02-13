@@ -535,22 +535,8 @@ create_new_image (GFile              *file,
                   GeglBuffer        **buffer)
 {
   GimpImage *image;
-  GFile     *new_file;
-  gchar     *uri;
-  gchar     *new_uri;
 
   image = gimp_image_new_with_precision (width, height, itype, iprecision);
-
-  uri = g_file_get_uri (file);
-
-  new_uri = g_strdup_printf ("%s-img%d", uri, pagenum);
-  g_free (uri);
-
-  new_file = g_file_new_for_uri (new_uri);
-  g_free (new_uri);
-
-  gimp_image_set_file (image, new_file);
-  g_object_unref (new_file);
 
   gimp_image_undo_disable (image);
   *layer = gimp_layer_new (image, _("Background"), width, height,

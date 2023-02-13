@@ -443,8 +443,6 @@ load_image (GFile        *file,
                     error))
     {
       image = gimp_file_load (run_mode, file_out);
-      if (image)
-        gimp_image_set_file (image, file);
     }
 
   if (debug_prints)
@@ -542,9 +540,6 @@ load_thumbnail_image (GFile   *file,
                                                "[dt4gimp]");
           if (start_of_size)
             sscanf (start_of_size, "[dt4gimp] %d %d", width, height);
-
-          /* is this needed for thumbnails? */
-          gimp_image_set_file (image, file);
         }
     }
 

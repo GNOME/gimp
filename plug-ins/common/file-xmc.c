@@ -699,8 +699,6 @@ load_image (GFile   *file,
 
   image = gimp_image_new (img_width, img_height, GIMP_RGB);
 
-  gimp_image_set_file (image, file);
-
   if (! set_hotspot_to_parasite (image, hot_spot_x, hot_spot_y))
     {
       fclose (fp);

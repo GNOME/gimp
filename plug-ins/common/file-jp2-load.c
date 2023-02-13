@@ -1304,8 +1304,6 @@ load_image (GFile             *file,
   gimp_image = gimp_image_new_with_precision (width, height,
                                               base_type, image_precision);
 
-  gimp_image_set_file (gimp_image, file);
-
   if (profile)
     gimp_image_set_color_profile (gimp_image, profile);
 

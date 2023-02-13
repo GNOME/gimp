@@ -837,8 +837,6 @@ load_image (GFile   *file,
                                          (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY,
                                          precision);
 
-  gimp_image_set_file (image, file);
-
   switch (pnminfo->np)
     {
     case 0:

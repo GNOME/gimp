@@ -491,8 +491,6 @@ load_image (GFile   *file,
       return NULL;
     }
 
-  gimp_image_set_file (image, file);
-
   /* Create an indexed-alpha layer to hold the image... */
   if (bpp == 32)
     layer = gimp_layer_new (image, _("Background"), width, height,

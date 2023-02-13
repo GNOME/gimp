@@ -355,8 +355,6 @@ load_image (GFile        *file,
                     error))
     {
       image = gimp_file_load (run_mode, file_out);
-      if (image)
-        gimp_image_set_file (image, file);
     }
 
   /*if (rawtherapee_stdout) printf ("%s\n", rawtherapee_stdout);*/
@@ -473,11 +471,6 @@ load_thumbnail_image (GFile   *file,
       gimp_progress_update (0.5);
 
       image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, file_out);
-      if (image)
-        {
-          /* is this needed for thumbnails? */
-          gimp_image_set_file (image, file);
-        }
     }
 
   gimp_progress_update (1.0);

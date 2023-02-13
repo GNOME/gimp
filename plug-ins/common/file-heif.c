@@ -1164,7 +1164,6 @@ load_image (GFile              *file,
     }
 
   image = gimp_image_new_with_precision (width, height, GIMP_RGB, precision);
-  gimp_image_set_file (image, file);
 
   if (profile)
     {

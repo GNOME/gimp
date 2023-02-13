@@ -1032,7 +1032,6 @@ load_image (GFile   *file,
     return NULL;
 
   image = gimp_image_new (width, height, GIMP_RGB);
-  gimp_image_set_file (image, file);
   gimp_image_set_resolution (image,
                              load_vals.resolution, load_vals.resolution);
 

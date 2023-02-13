@@ -741,7 +741,6 @@ load_image (GFile   *file,
   image = gimp_image_new (dicominfo->width, dicominfo->height,
                           (dicominfo->samples_per_pixel >= 3 ?
                            GIMP_RGB : GIMP_GRAY));
-  gimp_image_set_file (image, file);
 
   layer = gimp_layer_new (image, _("Background"),
                           dicominfo->width, dicominfo->height,

@@ -844,29 +844,8 @@ load_image (PopplerDocument        *doc,
 
       if (! image)
         {
-          GFile *new_file;
-          gchar *uri;
-          gchar *new_uri;
-
           image = gimp_image_new (width, height, GIMP_RGB);
           gimp_image_undo_disable (image);
-
-          uri = g_file_get_uri (file);
-
-          if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
-            new_uri = g_strdup_printf (_("%s-%s"), uri, page_label);
-          else
-            new_uri = g_strdup_printf (_("%s-pages"), uri);
-
-          g_free (uri);
-
-          new_file = g_file_new_for_uri (new_uri);
-
-          g_free (new_uri);
-
-          gimp_image_set_file (image, new_file);
-
-          g_object_unref (new_file);
 
           gimp_image_set_resolution (image, resolution, resolution);
         }

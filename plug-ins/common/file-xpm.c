@@ -409,8 +409,6 @@ load_image (GFile   *file,
                           xpm_image.height,
                           GIMP_RGB);
 
-  gimp_image_set_file (image, file);
-
   /* fill it */
   parse_image (image, &xpm_image, cmap);
 

@@ -738,9 +738,6 @@ ReadImage (FILE                 *fd,
                           width, height,
                           image_type, 100,
                           gimp_image_get_default_new_layer_mode (image));
-
-  gimp_image_set_file (image, file);
-
   gimp_image_insert_layer (image, layer, NULL, 0);
 
   /* use g_malloc0 to initialize the dest buffer so that unspecified

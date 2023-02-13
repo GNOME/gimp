@@ -1021,7 +1021,6 @@ ReadImage (FILE        *fd,
         screenheight = height;
 
       *image = gimp_image_new (screenwidth, screenheight, GIMP_INDEXED);
-      gimp_image_set_file (*image, file);
 
       for (i = 0, j = 0; i < ncols; i++)
         {

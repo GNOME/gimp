@@ -721,8 +721,6 @@ ico_load_image (GFile        *file,
   D(("image size: %ix%i\n", max_width, max_height));
 
   image = gimp_image_new (max_width, max_height, GIMP_RGB);
-  if (! file_offset)
-    gimp_image_set_file (image, file);
 
   maxsize = max_width * max_height * 4;
   buf = g_new (guchar, max_width * max_height * 4);
@@ -923,7 +921,6 @@ ani_load_image (GFile   *file,
       gimp_parasite_free (parasite);
     }
 
-  gimp_image_set_file (image, file);
   gimp_progress_update (1.0);
 
   return image;

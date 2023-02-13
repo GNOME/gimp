@@ -1239,8 +1239,6 @@ load_image (GFile   *file,
       image = gimp_image_new (urx, ury, GIMP_RGB);
 
       gimp_image_undo_disable (image);
-
-      gimp_image_set_file (image, file);
       gimp_image_set_resolution (image,
                                  plvals.resolution,
                                  plvals.resolution);
@@ -2044,9 +2042,6 @@ create_new_image (GFile              *file,
 {
   GimpImage     *image;
   GimpImageType  gdtype;
-  GFile         *new_file;
-  gchar         *uri;
-  gchar         *new_uri;
   gchar         *tmp;
 
   switch (type)
@@ -2065,17 +2060,6 @@ create_new_image (GFile              *file,
   image = gimp_image_new_with_precision (width, height, type,
                                          GIMP_PRECISION_U8_NON_LINEAR);
   gimp_image_undo_disable (image);
-
-  uri = g_file_get_uri (file);
-
-  new_uri = g_strdup_printf ("%s-%d", uri, pagenum);
-  g_free (uri);
-
-  new_file = g_file_new_for_uri (new_uri);
-  g_free (new_uri);
-
-  gimp_image_set_file (image, new_file);
-  g_object_unref (new_file);
 
   tmp = g_strdup_printf (_("Page %d"), pagenum);
   *layer = gimp_layer_new (image, tmp, width, height,
