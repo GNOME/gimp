@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-09 14:41+0000\n"
-"PO-Revision-Date: 2023-02-09 22:28+0100\n"
+"POT-Creation-Date: 2023-02-13 13:18+0000\n"
+"PO-Revision-Date: 2023-02-13 15:50+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -5799,7 +5799,7 @@ msgstr "_Sepia…"
 #: ../app/actions/filters-actions.c:648
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
-msgstr "Skuggor-_högdagrar…"
+msgstr "Skuggor-_Högdagrar…"
 
 #: ../app/actions/filters-actions.c:653
 msgctxt "filters-action"
@@ -20503,7 +20503,7 @@ msgctxt "undo-type"
 msgid "Levels"
 msgstr "Nivåer"
 
-#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:680
+#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:738
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Färgreduktion"
@@ -20538,7 +20538,7 @@ msgstr "Färglägg"
 msgid "Hue-Saturation"
 msgstr "Nyans-Mättnad"
 
-#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:726
+#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:784
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Tröskel"
@@ -20561,6 +20561,11 @@ msgstr "Nyans-Mättnad"
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Invertera"
+
+#: ../app/pdb/drawable-color-cmds.c:698
+msgctxt "undo-type"
+msgid "Shadows-Highlights"
+msgstr "Skuggor-Högdagrar"
 
 #: ../app/pdb/drawable-transform-cmds.c:373
 #: ../app/pdb/drawable-transform-cmds.c:478
@@ -25380,7 +25385,7 @@ msgid "Percentage of width of brush"
 msgstr "Procent av penselns bredd"
 
 #: ../app/widgets/gimpbufferview.c:189 ../app/widgets/gimpbufferview.c:290
-#: ../app/widgets/gimpeditor.c:758
+#: ../app/widgets/gimpeditor.c:773
 msgid "(None)"
 msgstr "(Ingen)"
 
