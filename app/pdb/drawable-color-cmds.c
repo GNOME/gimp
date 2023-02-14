@@ -323,8 +323,8 @@ drawable_extract_component_invoker (GimpProcedure         *procedure,
             gegl_node_new_child (NULL,
                                  "operation", "gegl:component-extract",
                                  "component", component,
-                                 "invert", invert,
-                                 "linear", linear,
+                                 "invert",    invert,
+                                 "linear",    linear,
                                  NULL);
 
           gimp_drawable_apply_operation (drawable, progress,
@@ -1060,8 +1060,8 @@ register_drawable_color_procs (GimpPDB *pdb)
                                   "Extract a color model component.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
-                                         "",
-                                         "",
+                                         "Compatibility procedure. Please see 'gegl:component-extract' for credits.",
+                                         "Compatibility procedure. Please see 'gegl:component-extract' for credits.",
                                          "2021");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
@@ -1072,7 +1072,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("component",
                                                  "component",
-                                                 "Commponent (RGB Red (0), RGB Green (1), RGB Blue (2), Hue (3), HSV Saturation (4), HSV Value (5), HSL Saturation (6), HSL Lightness (7), CMYK Cyan (8), CMYK Magenta (9), CMYK Yellow (10), CMYK Key (11), Y'CbCr Y' (12), Y'CbCr Cb (13), Y'CbCr Cr (14), LAB L (15), LAB A (16), LAB B (17), LCH C(ab) (18), LCH H(ab) (19), Alpha (20))",
+                                                 "Component (RGB Red (0), RGB Green (1), RGB Blue (2), Hue (3), HSV Saturation (4), HSV Value (5), HSL Saturation (6), HSL Lightness (7), CMYK Cyan (8), CMYK Magenta (9), CMYK Yellow (10), CMYK Key (11), Y'CbCr Y' (12), Y'CbCr Cb (13), Y'CbCr Cr (14), LAB L (15), LAB A (16), LAB B (17), LCH C(ab) (18), LCH H(ab) (19), Alpha (20))",
                                                  0, 20, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1416,8 +1416,8 @@ register_drawable_color_procs (GimpPDB *pdb)
                                   "This filter allows adjusting shadows and highlights in the image separately. The implementation closely follow its counterpart in the Darktable photography software.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
-                                         "",
-                                         "",
+                                         "Compatibility procedure. Please see 'gegl:shadows-highlights' for credits.",
+                                         "Compatibility procedure. Please see 'gegl:shadows-highlights' for credits.",
                                          "2021");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",

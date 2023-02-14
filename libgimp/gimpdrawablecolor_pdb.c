@@ -288,7 +288,7 @@ gimp_drawable_curves_spline (GimpDrawable         *drawable,
 /**
  * gimp_drawable_extract_component:
  * @drawable: The drawable.
- * @component: Commponent (RGB Red (0), RGB Green (1), RGB Blue (2), Hue (3), HSV Saturation (4), HSV Value (5), HSL Saturation (6), HSL Lightness (7), CMYK Cyan (8), CMYK Magenta (9), CMYK Yellow (10), CMYK Key (11), Y'CbCr Y' (12), Y'CbCr Cb (13), Y'CbCr Cr (14), LAB L (15), LAB A (16), LAB B (17), LCH C(ab) (18), LCH H(ab) (19), Alpha (20)).
+ * @component: Component (RGB Red (0), RGB Green (1), RGB Blue (2), Hue (3), HSV Saturation (4), HSV Value (5), HSL Saturation (6), HSL Lightness (7), CMYK Cyan (8), CMYK Magenta (9), CMYK Yellow (10), CMYK Key (11), Y'CbCr Y' (12), Y'CbCr Cb (13), Y'CbCr Cr (14), LAB L (15), LAB A (16), LAB B (17), LCH C(ab) (18), LCH H(ab) (19), Alpha (20)).
  * @invert: Invert the extracted component.
  * @linear: Use linear output instead of gamma corrected.
  *
@@ -297,6 +297,8 @@ gimp_drawable_curves_spline (GimpDrawable         *drawable,
  * Extract a color model component.
  *
  * Returns: TRUE on success.
+ *
+ * Since: 2.10.34
  **/
 gboolean
 gimp_drawable_extract_component (GimpDrawable *drawable,
@@ -721,7 +723,7 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable)
  *
  * Returns: TRUE on success.
  *
- * Since: 2.10
+ * Since: 2.10.34
  **/
 gboolean
 gimp_drawable_shadows_highlights (GimpDrawable *drawable,
