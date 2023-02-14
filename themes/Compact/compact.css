@@ -1,0 +1,17 @@
+/* Set of common styles for the Compact theme for GIMP 3.0 */
+
+* {
+  -GimpToolPalette-tool-icon-size: small-toolbar;
+}
+
+toolpalette button {
+  padding: 0px;
+}
+
+button, tab {
+  padding: 0px;
+}
+
+paned separator {
+  padding: 1px;
+}

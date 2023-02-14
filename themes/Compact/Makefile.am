@@ -2,6 +2,6 @@
 
 themedatadir = $(gimpdatadir)/themes/Compact
 
-themedata_DATA = gimp.css gimp-dark.css
+themedata_DATA = gimp.css gimp-dark.css compact.css
 
 EXTRA_DIST = $(themedata_DATA)

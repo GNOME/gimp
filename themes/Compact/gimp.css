@@ -1,15 +1,4 @@
 /* Light variant for the Compact theme for GIMP 3.0 */
 
 @import url("../Default/gimp.css");
-
-* {
-  -GimpToolPalette-tool-icon-size: small-toolbar;
-}
-
-toolpalette button {
-  padding: 0px;
-}
-
-button, tab {
-  padding: 0px;
-}
+@import url("compact.css");
