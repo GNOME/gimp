@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-14 07:57+0000\n"
-"PO-Revision-Date: 2023-02-14 10:48+0000\n"
+"POT-Creation-Date: 2023-02-14 16:48+0000\n"
+"PO-Revision-Date: 2023-02-14 16:55+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -20966,37 +20966,42 @@ msgctxt "undo-type"
 msgid "Curves"
 msgstr "Curvas"
 
-#: app/pdb/drawable-color-cmds.c:325
+#: app/pdb/drawable-color-cmds.c:331
+msgctxt "undo-type"
+msgid "Extract Component"
+msgstr "Extrair componente"
+
+#: app/pdb/drawable-color-cmds.c:372
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Dessaturação"
 
-#: app/pdb/drawable-color-cmds.c:499
+#: app/pdb/drawable-color-cmds.c:546
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Matiz-Saturação"
 
-#: app/pdb/drawable-color-cmds.c:534 app/pdb/plug-in-compat-cmds.c:1585
+#: app/pdb/drawable-color-cmds.c:581 app/pdb/plug-in-compat-cmds.c:1585
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Inverter"
 
-#: app/pdb/drawable-color-cmds.c:602
+#: app/pdb/drawable-color-cmds.c:649
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Níveis"
 
-#: app/pdb/drawable-color-cmds.c:690
+#: app/pdb/drawable-color-cmds.c:737
 msgctxt "undo-type"
 msgid "Shadows-Highlights"
 msgstr "Sombras-Altas luzes"
 
-#: app/pdb/drawable-color-cmds.c:730
+#: app/pdb/drawable-color-cmds.c:777
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Posterizar"
 
-#: app/pdb/drawable-color-cmds.c:776
+#: app/pdb/drawable-color-cmds.c:823
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Tolerância"
