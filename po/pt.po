@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-11 04:47+0000\n"
-"PO-Revision-Date: 2023-02-11 22:14+0000\n"
+"POT-Creation-Date: 2023-02-14 07:57+0000\n"
+"PO-Revision-Date: 2023-02-14 10:48+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -2534,7 +2534,7 @@ msgstr "240 segundos"
 
 #: app/actions/dashboard-commands.c:118 app/actions/documents-commands.c:237
 #: app/actions/edit-commands.c:169 app/actions/error-console-commands.c:100
-#: app/actions/file-commands.c:431 app/actions/gradient-editor-commands.c:409
+#: app/actions/file-commands.c:449 app/actions/gradient-editor-commands.c:409
 #: app/actions/gradient-editor-commands.c:520
 #: app/actions/gradients-commands.c:79 app/actions/plug-in-commands.c:185
 #: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
@@ -2656,7 +2656,7 @@ msgid "Untitled"
 msgstr "Sem título"
 
 #: app/actions/data-commands.c:216 app/actions/documents-commands.c:194
-#: app/actions/file-commands.c:537
+#: app/actions/file-commands.c:555
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Não foi possível mostrar o ficheiro no gestor de ficheiros: %s"
@@ -4318,7 +4318,7 @@ msgstr "Exportar para %s"
 msgid "Over_write %s"
 msgstr "S_ubstituir “%s”"
 
-#: app/actions/file-commands.c:120 app/actions/file-commands.c:561
+#: app/actions/file-commands.c:120 app/actions/file-commands.c:579
 #: app/widgets/gimpopendialog.c:84
 msgid "Open Image"
 msgstr "Abrir imagem"
@@ -4327,46 +4327,46 @@ msgstr "Abrir imagem"
 msgid "Open Image as Layers"
 msgstr "Abrir imagem como camadas"
 
-#: app/actions/file-commands.c:289
+#: app/actions/file-commands.c:307
 msgid "No changes need to be saved"
 msgstr "Não existem alterações para guardar"
 
-#: app/actions/file-commands.c:296 app/actions/file-commands.c:772
+#: app/actions/file-commands.c:314 app/actions/file-commands.c:790
 #: app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Guardar imagem"
 
-#: app/actions/file-commands.c:302
+#: app/actions/file-commands.c:320
 msgid "Save a Copy of the Image"
 msgstr "Guardar uma cópia da imagem"
 
-#: app/actions/file-commands.c:380
+#: app/actions/file-commands.c:398
 msgid "Create New Template"
 msgstr "Criar novo modelo"
 
-#: app/actions/file-commands.c:384
+#: app/actions/file-commands.c:402
 msgid "Enter a name for this template"
 msgstr "Introduza um nome para este modelo"
 
-#: app/actions/file-commands.c:414
+#: app/actions/file-commands.c:432
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Não foi possível reverter. O ficheiro associado a esta imagem não existe."
 
-#: app/actions/file-commands.c:426
+#: app/actions/file-commands.c:444
 msgid "Revert Image"
 msgstr "Reverter imagem"
 
-#: app/actions/file-commands.c:432
+#: app/actions/file-commands.c:450
 msgid "_Revert"
 msgstr "_Reverter"
 
-#: app/actions/file-commands.c:450
+#: app/actions/file-commands.c:468
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Reverter '%s' para '%s'?"
 
-#: app/actions/file-commands.c:455
+#: app/actions/file-commands.c:473
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -4374,11 +4374,11 @@ msgstr ""
 "Ao reverter a imagem ao estado guardado no disco, perderá todas as "
 "alterações, incluindo todas as informações de reversão."
 
-#: app/actions/file-commands.c:794
+#: app/actions/file-commands.c:812
 msgid "(Unnamed Template)"
 msgstr "(modelo sem nome)"
 
-#: app/actions/file-commands.c:841
+#: app/actions/file-commands.c:859
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -20949,7 +20949,7 @@ msgstr "Selecionar 1º plano"
 #: app/pdb/drawable-color-cmds.c:85
 msgctxt "undo-type"
 msgid "Brightness-Contrast"
-msgstr "Brilho / contraste"
+msgstr "Brilho-Contraste"
 
 #: app/pdb/drawable-color-cmds.c:139
 msgctxt "undo-type"
@@ -20974,7 +20974,7 @@ msgstr "Dessaturação"
 #: app/pdb/drawable-color-cmds.c:499
 msgctxt "undo-type"
 msgid "Hue-Saturation"
-msgstr "Matiz / saturação"
+msgstr "Matiz-Saturação"
 
 #: app/pdb/drawable-color-cmds.c:534 app/pdb/plug-in-compat-cmds.c:1585
 msgctxt "undo-type"
@@ -20986,12 +20986,17 @@ msgctxt "undo-type"
 msgid "Levels"
 msgstr "Níveis"
 
-#: app/pdb/drawable-color-cmds.c:672
+#: app/pdb/drawable-color-cmds.c:690
+msgctxt "undo-type"
+msgid "Shadows-Highlights"
+msgstr "Sombras-Altas luzes"
+
+#: app/pdb/drawable-color-cmds.c:730
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Posterizar"
 
-#: app/pdb/drawable-color-cmds.c:718
+#: app/pdb/drawable-color-cmds.c:776
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Tolerância"
@@ -21438,7 +21443,7 @@ msgstr ""
 "O procedimento '%s' foi chamado com uma expressão UTF-8 inválida para o "
 "argumento “%s”."
 
-#: app/pdb/image-cmds.c:2448
+#: app/pdb/image-cmds.c:2476
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
