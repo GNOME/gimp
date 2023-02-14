@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-09 22:29+0000\n"
-"PO-Revision-Date: 2023-02-10 18:23+0100\n"
+"POT-Creation-Date: 2023-02-13 18:33+0000\n"
+"PO-Revision-Date: 2023-02-14 01:16+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -20496,7 +20496,7 @@ msgctxt "undo-type"
 msgid "Levels"
 msgstr "Ravni"
 
-#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:680
+#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:738
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Posteriziraj"
@@ -20531,7 +20531,7 @@ msgstr "Prebarvaj"
 msgid "Hue-Saturation"
 msgstr "Obarvanost-nasičenost"
 
-#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:726
+#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:784
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Prag"
@@ -20554,6 +20554,11 @@ msgstr "Obarvanost-nasičenost"
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Preobrni"
+
+#: ../app/pdb/drawable-color-cmds.c:698
+msgctxt "undo-type"
+msgid "Shadows-Highlights"
+msgstr "Sence-svetli toni"
 
 #: ../app/pdb/drawable-transform-cmds.c:373
 #: ../app/pdb/drawable-transform-cmds.c:478
