@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-08 23:08+0000\n"
-"PO-Revision-Date: 2023-02-09 16:08+0300\n"
+"POT-Creation-Date: 2023-02-14 20:37+0000\n"
+"PO-Revision-Date: 2023-02-14 04:15+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -59,8 +59,8 @@ msgstr "Görünür Katmanları Hizala"
 #: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1908
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:702
-#: ../plug-ins/common/file-pdf-load.c:1282
-#: ../plug-ins/common/file-pdf-save.c:936 ../plug-ins/common/file-ps.c:3447
+#: ../plug-ins/common/file-pdf-load.c:1278
+#: ../plug-ins/common/file-pdf-save.c:1020 ../plug-ins/common/file-ps.c:3447
 #: ../plug-ins/common/file-raw-data.c:1816 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
 #: ../plug-ins/common/filter-pack.c:1264 ../plug-ins/common/fractal-trace.c:711
@@ -452,7 +452,7 @@ msgstr "_Dikey"
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1375
-#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1111
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1116
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
@@ -851,7 +851,7 @@ msgstr "A_ç"
 #. The Save button
 #: ../plug-ins/common/cml-explorer.c:1317
 #: ../plug-ins/common/cml-explorer.c:2027 ../plug-ins/common/curve-bend.c:1567
-#: ../plug-ins/common/curve-bend.c:2173 ../plug-ins/common/file-pdf-save.c:935
+#: ../plug-ins/common/curve-bend.c:2173 ../plug-ins/common/file-pdf-save.c:1019
 #: ../plug-ins/common/qbist.c:763 ../plug-ins/common/qbist.c:893
 #: ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2618 ../plug-ins/flame/flame.c:483
@@ -1049,10 +1049,10 @@ msgstr "CML Gezgini Parametrelerini Kaydet"
 #: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-dicom.c:1524 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
-#: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
+#: ../plug-ins/common/file-pdf-save.c:550 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1173
 #: ../plug-ins/common/file-raw-data.c:1202 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1222 ../plug-ins/common/file-xmc.c:1504
+#: ../plug-ins/common/file-tga.c:1227 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
@@ -2153,7 +2153,7 @@ msgstr "EOF (dosya sonu) ya da görüntü başlığı okunurken hata"
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:338
 #: ../plug-ins/common/file-gegl.c:322 ../plug-ins/common/file-gif-load.c:353
 #: ../plug-ins/common/file-heif.c:703 ../plug-ins/common/file-jp2-load.c:1077
-#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1048
+#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1044
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1067
 #: ../plug-ins/common/file-raw-data.c:1277 ../plug-ins/common/file-sunras.c:429
@@ -2245,7 +2245,7 @@ msgstr "'%s': dosya sonu ya da palet verisi okunurken hata"
 #: ../plug-ins/common/file-jpegxl.c:778 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1278
-#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1216
+#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1221
 #: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:319
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
@@ -3129,8 +3129,9 @@ msgstr "'%s' dosyasına yazılamadı: %s"
 
 #: ../plug-ins/common/file-pdf-load.c:324
 #: ../plug-ins/common/file-pdf-load.c:343
-#: ../plug-ins/common/file-pdf-save.c:350
-#: ../plug-ins/common/file-pdf-save.c:367
+#: ../plug-ins/common/file-pdf-save.c:383
+#: ../plug-ins/common/file-pdf-save.c:400
+#: ../plug-ins/common/file-pdf-save.c:418
 msgid "Portable Document Format"
 msgstr "Taşınabilir Belge Biçimi"
 
@@ -3161,68 +3162,69 @@ msgstr "Hatalı parola! Lütfen doğru parolayı giriniz:"
 msgid "Could not load '%s': %s"
 msgstr "'%s' yüklenemedi: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:1085
+#: ../plug-ins/common/file-pdf-load.c:1081
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1087 ../plug-ins/common/file-ps.c:1197
+#: ../plug-ins/common/file-pdf-load.c:1083 ../plug-ins/common/file-ps.c:1197
 #, c-format
 msgid "%s-pages"
 msgstr "%s-sayfa"
 
-#: ../plug-ins/common/file-pdf-load.c:1278
+#: ../plug-ins/common/file-pdf-load.c:1274
 msgid "Import from PDF"
 msgstr "PDF dosyasından içe aktar"
 
-#: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3448
+#: ../plug-ins/common/file-pdf-load.c:1279 ../plug-ins/common/file-ps.c:3448
 #: ../plug-ins/file-tiff/file-tiff-load.c:2665
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "İçe _Aktar"
 
-#: ../plug-ins/common/file-pdf-load.c:1316
+#: ../plug-ins/common/file-pdf-load.c:1312
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Verilen PDF dosyasından sayfa sayısı alınırken hata."
 
 #. "Load in reverse order" toggle button
-#: ../plug-ins/common/file-pdf-load.c:1357
+#: ../plug-ins/common/file-pdf-load.c:1353
 msgid "Load in reverse order"
 msgstr "Ters düzende yükle"
 
-#: ../plug-ins/common/file-pdf-load.c:1375
+#: ../plug-ins/common/file-pdf-load.c:1371
 msgid "_Width (pixels):"
 msgstr "_Genişlik (piksel):"
 
-#: ../plug-ins/common/file-pdf-load.c:1376
+#: ../plug-ins/common/file-pdf-load.c:1372
 msgid "_Height (pixels):"
 msgstr "_Yükseklik (piksel):"
 
-#: ../plug-ins/common/file-pdf-load.c:1378
+#: ../plug-ins/common/file-pdf-load.c:1374
 msgid "_Resolution:"
 msgstr "_Çözünürlük:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1389
+#: ../plug-ins/common/file-pdf-load.c:1385
 msgid "Use _Anti-aliasing"
 msgstr "_Kenar Yumuşatma Kullan"
 
-#: ../plug-ins/common/file-pdf-load.c:1667
-#: ../plug-ins/common/file-pdf-load.c:1668 ../plug-ins/common/file-svg.c:852
+#: ../plug-ins/common/file-pdf-load.c:1663
+#: ../plug-ins/common/file-pdf-load.c:1664 ../plug-ins/common/file-svg.c:852
 #: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
 msgstr "piksel/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:382
+#: ../plug-ins/common/file-pdf-save.c:433
+#: ../plug-ins/common/file-pdf-save.c:451
 msgid "_Create multipage PDF..."
 msgstr "_Çok sayfalı PDF oluştur..."
 
-#: ../plug-ins/common/file-pdf-save.c:465
+#: ../plug-ins/common/file-pdf-save.c:535
 msgid "You must select a file to save!"
 msgstr "Kaydedilecek bir dosya seçmelisiniz!"
 
-#: ../plug-ins/common/file-pdf-save.c:491
+#: ../plug-ins/common/file-pdf-save.c:561
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -3235,83 +3237,88 @@ msgstr ""
 "Geçerli bir dosya adı girdiğinize ve seçilen konumun salt okunur olmadığına "
 "emin olun!"
 
-#: ../plug-ins/common/file-pdf-save.c:823
-#: ../plug-ins/common/file-pdf-save.c:983
+#: ../plug-ins/common/file-pdf-save.c:899
+#: ../plug-ins/common/file-pdf-save.c:1067
+msgid "_Fill transparent areas with background color"
+msgstr "Saydam alanları arka plan rengiyle _doldur"
+
+#: ../plug-ins/common/file-pdf-save.c:904
+#: ../plug-ins/common/file-pdf-save.c:1072
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr "_Gizli katmanları ve sıfır matlığa sahip katmanları dahil etme"
 
-#: ../plug-ins/common/file-pdf-save.c:828
-#: ../plug-ins/common/file-pdf-save.c:988
+#: ../plug-ins/common/file-pdf-save.c:909
+#: ../plug-ins/common/file-pdf-save.c:1077
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "_Bit eşlemleri mümkünse vektör grafiklerine dönüştür"
 
-#: ../plug-ins/common/file-pdf-save.c:833
-#: ../plug-ins/common/file-pdf-save.c:993
+#: ../plug-ins/common/file-pdf-save.c:914
+#: ../plug-ins/common/file-pdf-save.c:1082
 msgid "_Apply layer masks before saving"
 msgstr "Kaydetmeden önce katman _maskelerini uygula"
 
-#: ../plug-ins/common/file-pdf-save.c:837
-#: ../plug-ins/common/file-pdf-save.c:997
+#: ../plug-ins/common/file-pdf-save.c:918
+#: ../plug-ins/common/file-pdf-save.c:1086
 msgid "Keeping the masks will not change the output"
 msgstr "Maskeleri korumak çıktıyı değiştirmeyecek"
 
-#: ../plug-ins/common/file-pdf-save.c:843
+#: ../plug-ins/common/file-pdf-save.c:924
 #, c-format
 msgid "_Layers as pages (%s)"
 msgstr "Katmanlar _sayfa olarak (%s)"
 
-#: ../plug-ins/common/file-pdf-save.c:845
-#: ../plug-ins/common/file-pdf-save.c:1044
+#: ../plug-ins/common/file-pdf-save.c:926
+#: ../plug-ins/common/file-pdf-save.c:1135
 msgid "top layers first"
 msgstr "üst katmanlar önce"
 
-#: ../plug-ins/common/file-pdf-save.c:845
-#: ../plug-ins/common/file-pdf-save.c:1044
+#: ../plug-ins/common/file-pdf-save.c:926
+#: ../plug-ins/common/file-pdf-save.c:1135
 msgid "bottom layers first"
 msgstr "alt katmanlar önce"
 
-#: ../plug-ins/common/file-pdf-save.c:853
+#: ../plug-ins/common/file-pdf-save.c:934
 msgid "_Reverse the pages order"
 msgstr "Sayfa düzenini _tersine çevir"
 
-#: ../plug-ins/common/file-pdf-save.c:927
+#: ../plug-ins/common/file-pdf-save.c:1011
 msgid "Save to:"
 msgstr "Şuraya kaydet:"
 
-#: ../plug-ins/common/file-pdf-save.c:931
+#: ../plug-ins/common/file-pdf-save.c:1015
 msgid "Browse..."
 msgstr "Gözat..."
 
-#: ../plug-ins/common/file-pdf-save.c:932
+#: ../plug-ins/common/file-pdf-save.c:1016
 msgid "Multipage PDF export"
 msgstr "Çoklu sayfa PDF dışa aktarımı"
 
-#: ../plug-ins/common/file-pdf-save.c:968
+#: ../plug-ins/common/file-pdf-save.c:1052
 msgid "Remove the selected pages"
 msgstr "Seçili sayfaları kaldır"
 
-#: ../plug-ins/common/file-pdf-save.c:978
+#: ../plug-ins/common/file-pdf-save.c:1062
 msgid "Add this image"
 msgstr "Bu görüntüyü ekle"
 
-#: ../plug-ins/common/file-pdf-save.c:1042
+#: ../plug-ins/common/file-pdf-save.c:1133
 #, c-format
 msgid "Layers as pages (%s)"
 msgstr "Katmanlar sayfa olarak (%s)"
 
-#: ../plug-ins/common/file-pdf-save.c:1099
-#: ../plug-ins/common/file-pdf-save.c:1167
-#: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1941
+#: ../plug-ins/common/file-pdf-save.c:1190
+#: ../plug-ins/common/file-pdf-save.c:1258
+#: ../plug-ins/common/file-pdf-save.c:1356 ../plug-ins/common/file-ps.c:1941
 #: ../plug-ins/file-tiff/file-tiff-load.c:1546
 #, c-format
 msgid "Page %d"
 msgstr "Sayfa %d"
 
-#: ../plug-ins/common/file-pdf-save.c:1136
+#: ../plug-ins/common/file-pdf-save.c:1227
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Hata! Dosyayı kaydetmek için, en az bir görüntü eklenmelidir!"
 
-#: ../plug-ins/common/file-pdf-save.c:1312
+#: ../plug-ins/common/file-pdf-save.c:1403
 #: ../plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Görüntünü boyutu (ya genişlik ya da yükseklik) işlenemiyor."
@@ -4233,24 +4240,24 @@ msgstr "'%s'den uzantı okunamadı"
 msgid "Cannot read header from '%s'"
 msgstr "'%s'den sayfa başlığı okunamadı"
 
-#: ../plug-ins/common/file-tga.c:1434
+#: ../plug-ins/common/file-tga.c:1439
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1443 ../plug-ins/file-sgi/sgi.c:683
+#: ../plug-ins/common/file-tga.c:1448 ../plug-ins/file-sgi/sgi.c:683
 msgid "_RLE compression"
 msgstr "_RLE sıkıştırması"
 
-#: ../plug-ins/common/file-tga.c:1457
+#: ../plug-ins/common/file-tga.c:1462
 msgid "Or_igin:"
 msgstr "K_öken:"
 
-#: ../plug-ins/common/file-tga.c:1461
+#: ../plug-ins/common/file-tga.c:1466
 msgid "Bottom left"
 msgstr "Alt sol"
 
-#: ../plug-ins/common/file-tga.c:1462
+#: ../plug-ins/common/file-tga.c:1467
 msgid "Top left"
 msgstr "Üst sol"
 
@@ -6973,7 +6980,7 @@ msgstr "Simge #%i"
 msgid "Opening thumbnail for '%s'"
 msgstr "'%s' için küçük resim açılıyor"
 
-#: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:136
+#: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:137
 msgid "Microsoft Windows icon"
 msgstr "Microsoft Windows simgesi"
 
@@ -7612,7 +7619,7 @@ msgstr "Uyarı: y çözünürlük bilgisi yok, x ile aynı varsayılıyor"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1368
 msgid "Invalid image resolution info, using default"
-msgstr "Geçersiz çözünürlük bilgisi, varsayılan kullanılıyor"
+msgstr "Çözünürlük bilgisi geçersiz, öntanımlı kullanılıyor"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1427
 #, c-format
