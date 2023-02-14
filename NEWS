@@ -93,6 +93,13 @@ Libgimpwidgets:
   - New dedicated GimpPickButton implementation for Windows (backported from
     2.99.14).
 
+Libgimp:
+
+  - New wrapper functions around GEGL ops, which also map to items in our Color
+    menu:
+    * gimp_drawable_shadows_highlights()
+    * gimp_drawable_extract_component()
+
 Build:
 
   - Bumping minimum GEGL to version 0.4.38.
