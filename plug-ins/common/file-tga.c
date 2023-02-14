@@ -556,6 +556,11 @@ load_image (GFile   *file,
       if (info.imageType == TGA_TYPE_GRAY && info.bpp == 16)
         info.alphaBits = 8;
     }
+  else if (info.alphaBits == 4 && info.imageType == TGA_TYPE_COLOR && info.bpp == 32)
+    {
+      /* Incorrect TGA saved by Krita, see issue #9067*/
+      info.alphaBits = 8;
+    }
 
   switch (info.imageType)
     {
