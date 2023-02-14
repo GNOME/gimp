@@ -247,6 +247,7 @@ paned separator {
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto;
+  padding: 3px;
 }
 
 .view button {
