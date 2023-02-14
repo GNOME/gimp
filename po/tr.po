@@ -1,7 +1,6 @@
 # Turkish translation for GIMP
-#
 # Copyright (C) 2001,2003, 2004 Free Software Foundation, Inc.
-# Copyright (C) 2005-2022 gimp's COPYRIGHT HOLDER
+# Copyright (C) 2005-2023 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
 # Eski Sürüm Çevirmenleri
@@ -37,15 +36,15 @@
 # Güncel Sürüm Çevirmenleri
 # --------------------------------------
 # Muhammet Kara <muhammetk@gmail.com>, 2011, 2012, 2014, 2017.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2019-2022.
-# Sabri Ünal <libreajans@gmail.com>, 2018-2022.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2019-2023.
+# Sabri Ünal <libreajans@gmail.com>, 2018-2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-09 12:39+0000\n"
-"PO-Revision-Date: 2023-02-09 17:07+0300\n"
+"POT-Creation-Date: 2023-02-14 00:17+0000\n"
+"PO-Revision-Date: 2023-02-14 04:26+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -331,8 +330,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "\"Sample merged\" is now enabled by default for color picking"
-msgstr ""
-"\"Birleştirilmiş örnek\" renk seçimi için artık varsayılan olarak etkin"
+msgstr "\"Birleştirilmiş örnek\" renk seçimi için artık öntanımlı olarak etkin"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid ""
@@ -348,7 +346,7 @@ msgid ""
 "performs a lot better"
 msgstr ""
 "Matting Levin, çok daha iyi performans gösterdiği için artık Önalan Seçim "
-"aracının varsayılan motoru"
+"aracının öntanımlı motoru"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "New progressive performance logs and dashboard updates"
@@ -374,7 +372,7 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
-"Araç grupları artık varsayılan olarak tıklama yerine fareyle üzerine "
+"Araç grupları artık öntanımlı olarak tıklama yerine fareyle üzerine "
 "gelindiğinde genişliyor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
@@ -427,7 +425,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid "Tools are now grouped in the toolbox by default"
-msgstr "Araçlar artık varsayılan olarak araç kutusunda gruplanıyor"
+msgstr "Araçlar artık öntanımlı olarak araç kutusunda gruplanıyor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid "Sliders now use a compact style with improved user interaction"
@@ -664,7 +662,7 @@ msgstr "HiDPI desteği iyileştirmesi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid "New preference to choose the default export file type"
-msgstr "Varsayılan dışa aktarma dosya türünü belirlemek için yeni ayar"
+msgstr "Öntanımlı dışa aktarma dosya türünü belirlemek için yeni ayar"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid ""
@@ -1019,7 +1017,7 @@ msgstr "Çeşitli platformlarda ekran görüntüsü ve renk seçimi iyileştiril
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
 msgid "Metadata defaults preferences now available"
-msgstr "Üst veri varsayılan tercihleri artık kullanılabilir"
+msgstr "Üst veri öntanımlı tercihleri artık kullanılabilir"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
 msgid "Various GUI polishing"
@@ -1248,7 +1246,7 @@ msgstr "Bütün uyarıları ölümcül yap"
 
 #: ../app/main.c:270
 msgid "Output a gimprc file with default settings"
-msgstr "Varsayılan ayarlarla bir gimprc dosyası çıktıla"
+msgstr "Öntanımlı ayarlarla bir gimprc dosyası çıktıla"
 
 #: ../app/main.c:286
 msgid "Output a sorted list of deprecated procedures in the PDB"
@@ -7155,7 +7153,7 @@ msgstr "Öntanımlı Düzenleme İşlemi"
 #: ../app/actions/layers-actions.c:90
 msgctxt "layers-action"
 msgid "Activate the default edit action for this type of layer"
-msgstr "Bu katman türü için varsayılan düzenleme işlemini etkinleştir"
+msgstr "Bu katman türü için öntanımlı düzenleme işlemini etkinleştir"
 
 #: ../app/actions/layers-actions.c:95
 msgctxt "layers-action"
@@ -9200,7 +9198,7 @@ msgstr "Aracın Matlığı: Ayarla"
 #: ../app/actions/tools-actions.c:275
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set to Default Value"
-msgstr "Aracın Matlığı: Varsayılan Değere Ayarla"
+msgstr "Aracın Matlığı: Öntanımlı Değere Ayarla"
 
 #: ../app/actions/tools-actions.c:279
 msgctxt "tools-action"
@@ -9250,7 +9248,7 @@ msgstr "Aracın Boyutu: Ayarla"
 #: ../app/actions/tools-actions.c:319
 msgctxt "tools-action"
 msgid "Tool's Size: Set to Default Value"
-msgstr "Aracın Boyutu: Varsayılan Değere Ayarla"
+msgstr "Aracın Boyutu: Öntanımlı Değere Ayarla"
 
 #: ../app/actions/tools-actions.c:323
 msgctxt "tools-action"
@@ -9300,7 +9298,7 @@ msgstr "Aracın En Boy Oranı: Ayarla"
 #: ../app/actions/tools-actions.c:363
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set To Default Value"
-msgstr "Aracın En Boy Oranı: Varsayılan Değere Ayarla"
+msgstr "Aracın En Boy Oranı: Öntanımlı Değere Ayarla"
 
 #: ../app/actions/tools-actions.c:367
 msgctxt "tools-action"
@@ -9350,7 +9348,7 @@ msgstr "Aracın Açısı: Ayarla"
 #: ../app/actions/tools-actions.c:407
 msgctxt "tools-action"
 msgid "Tool's Angle: Set Angle To Default Value"
-msgstr "Aracın Açısı: Varsayılan Değere Ayarla"
+msgstr "Aracın Açısı: Öntanımlı Değere Ayarla"
 
 #: ../app/actions/tools-actions.c:411
 msgctxt "tools-action"
@@ -9400,7 +9398,7 @@ msgstr "Aracın Boşluğu: Ayarla"
 #: ../app/actions/tools-actions.c:451
 msgctxt "tools-action"
 msgid "Tool's Spacing: Set To Default Value"
-msgstr "Aracın Boşluğu: Varsayılan Değere Ayarla"
+msgstr "Aracın Boşluğu: Öntanımlı Değere Ayarla"
 
 #: ../app/actions/tools-actions.c:455
 msgctxt "tools-action"
@@ -9450,7 +9448,7 @@ msgstr "Aracın Sertliği: Ayarla"
 #: ../app/actions/tools-actions.c:495
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set to Default Value"
-msgstr "Aracın Sertliği: Varsayılan Değere Ayarla"
+msgstr "Aracın Sertliği: Öntanımlı Değere Ayarla"
 
 #: ../app/actions/tools-actions.c:499
 msgctxt "tools-action"
@@ -9500,7 +9498,7 @@ msgstr "Aracın Kuvveti: Ayarla"
 #: ../app/actions/tools-actions.c:539
 msgctxt "tools-action"
 msgid "Tool's Force: Set to Default Value"
-msgstr "Aracın Kuvveti: Varsayılan Değere Ayarla"
+msgstr "Aracın Kuvveti: Öntanımlı Değere Ayarla"
 
 #: ../app/actions/tools-actions.c:543
 msgctxt "tools-action"
@@ -11308,7 +11306,7 @@ msgstr "Gömülü kullanım profillerinin bir dosya açarken nasıl ele alınaca
 #: ../app/config/gimprc-blurbs.h:56
 msgid "Sets the default folder path for all color profile file dialogs."
 msgstr ""
-"Tüm renk profili dosya iletişim kutuları için varsayılan klasör yolunu "
+"Tüm renk profili dosya iletişim kutuları için öntanımlı klasör yolunu "
 "ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:59
@@ -11333,7 +11331,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:84
 msgid "Show full image content by default."
-msgstr "Tam görüntü içeriğini varsayılan olarak göster."
+msgstr "Tam görüntü içeriğini öntanımlı olarak göster."
 
 #: ../app/config/gimprc-blurbs.h:87
 msgid ""
@@ -11351,19 +11349,19 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:116
 msgid "Snap to guides by default in new image windows."
-msgstr "Yeni görüntü pencerelerinde varsayılan olarak kılavuzlara yasla."
+msgstr "Yeni görüntü pencerelerinde öntanımlı olarak kılavuzlara yasla."
 
 #: ../app/config/gimprc-blurbs.h:119
 msgid "Snap to the grid by default in new image windows."
-msgstr "Yeni görüntü pencerelerinde varsayılan olarak ızgaraya yasla."
+msgstr "Yeni görüntü pencerelerinde öntanımlı olarak ızgaraya yasla."
 
 #: ../app/config/gimprc-blurbs.h:122
 msgid "Snap to the canvas edges by default in new image windows."
-msgstr "Yeni görüntü pencerelerinde varsayılan olarak tuval kenarlarına yasla."
+msgstr "Yeni görüntü pencerelerinde öntanımlı olarak tuval kenarlarına yasla."
 
 #: ../app/config/gimprc-blurbs.h:125
 msgid "Snap to the active path by default in new image windows."
-msgstr "Yeni görüntü pencerelerinde varsayılan olarak etkin yola yasla."
+msgstr "Yeni görüntü pencerelerinde öntanımlı olarak etkin yola yasla."
 
 #: ../app/config/gimprc-blurbs.h:128
 msgid ""
@@ -11415,7 +11413,7 @@ msgstr "Süzgeç araçlarında kaç tane son ayarın tutulacağını belirler."
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid "Default to the last used settings in filter tools."
-msgstr "Süzgeç araçlarındaki son kullanılan ayarlara varsayılan."
+msgstr "Süzgeç araçlarındaki son kullanılan ayarlara öntanımlı."
 
 #: ../app/config/gimprc-blurbs.h:201
 msgid "Show advanced color options in filter tools."
@@ -11456,32 +11454,32 @@ msgstr "Ham sayısal kamera dosyalarını içe aktarmak için kullanılacak ekle
 
 #: ../app/config/gimprc-blurbs.h:224
 msgid "Export file type used by default."
-msgstr "Varsayılan olarak kullanılacak dışa aktarım dosya türü."
+msgstr "Öntanımlı olarak kullanılacak dışa aktarım dosya türü."
 
 #: ../app/config/gimprc-blurbs.h:227
 msgid "Export the image's color profile by default."
-msgstr "Görüntünün renk profilini varsayılan olarak dışa aktar."
+msgstr "Görüntünün renk profilini öntanımlı olarak dışa aktar."
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
 #.
 #: ../app/config/gimprc-blurbs.h:233
 msgid "Export Exif metadata by default."
-msgstr "Exif üst verisini varsayılan olarak dışa aktar."
+msgstr "Exif üst verisini öntanımlı olarak dışa aktar."
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle XMP by default.
 #.
 #: ../app/config/gimprc-blurbs.h:239
 msgid "Export XMP metadata by default."
-msgstr "XMP üst verisini varsayılan olarak dışa aktar."
+msgstr "XMP üst verisini öntanımlı olarak dışa aktar."
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle IPTC by default.
 #.
 #: ../app/config/gimprc-blurbs.h:245
 msgid "Export IPTC metadata by default."
-msgstr "IPTC üst verisini varsayılan olarak dışa aktar."
+msgstr "IPTC üst verisini öntanımlı olarak dışa aktar."
 
 #: ../app/config/gimprc-blurbs.h:248
 msgid "Try generating debug data for bug reporting when appropriate."
@@ -11900,7 +11898,7 @@ msgstr "Kullanılacak temanın adı."
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
-"'Renk Profiline Dönüştür' iletişim kutusu için varsayılan görselleştirme "
+"'Renk Profiline Dönüştür' iletişim kutusu için öntanımlı görselleştirme "
 "amacını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:531
@@ -11908,14 +11906,14 @@ msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr ""
-"'Renk Profiline Dönüştür' iletişim kutusu için varsayılan 'Siyah Nokta "
+"'Renk Profiline Dönüştür' iletişim kutusu için öntanımlı 'Siyah Nokta "
 "Dengelemesi' durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:535
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
-"'Hassasiyeti Dönüştür' iletişim kutusu için varsayılan katman titreme "
+"'Hassasiyeti Dönüştür' iletişim kutusu için öntanımlı katman titreme "
 "yöntemini ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:538
@@ -11923,26 +11921,26 @@ msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr ""
-"'Hassasiyeti Dönüştür' iletişim kutusu için varsayılan metin katmanı "
+"'Hassasiyeti Dönüştür' iletişim kutusu için öntanımlı metin katmanı "
 "titremesi yöntemini ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:541
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
-"'Hassasiyeti Dönüştür' iletişim kutusu için varsayılan kanal titreme "
+"'Hassasiyeti Dönüştür' iletişim kutusu için öntanımlı kanal titreme "
 "yöntemini ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:544
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
-msgstr "'İndeksliye Dönüştür' kutusu için varsayılan palet türünü ayarlar."
+msgstr "'İndeksliye Dönüştür' kutusu için öntanımlı palet türünü ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:547
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
-"'İndekliye Dönüştür' iletişim kutusu için varsayılan en fazla renk sayısını "
+"'İndekliye Dönüştür' iletişim kutusu için öntanımlı en fazla renk sayısını "
 "ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:550
@@ -11950,19 +11948,19 @@ msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
 msgstr ""
-"'İndekliye Dönüştür' iletişim kutusu için varsayılan 'Çift renkleri kaldır' "
+"'İndekliye Dönüştür' iletişim kutusu için öntanımlı 'Çift renkleri kaldır' "
 "durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:553
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
-"'İndekliye Dönüştür' iletişim kutusu için varsayılan titreme türünü ayarlar."
+"'İndekliye Dönüştür' iletişim kutusu için öntanımlı titreme türünü ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:556
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
-"'İndekliye Dönüştür' iletişim kutusu için varsayılan 'Saydamlık titremesi' "
+"'İndekliye Dönüştür' iletişim kutusu için öntanımlı 'Saydamlık titremesi' "
 "durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:559
@@ -11970,126 +11968,123 @@ msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
-"'İndekliye Dönüştür' iletişim kutusu için varsayılan 'Metin katmanları "
+"'İndekliye Dönüştür' iletişim kutusu için öntanımlı 'Metin katmanları "
 "titremesi' durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:562
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
-msgstr ""
-"'Tuval Boyutu' iletişim kutusu için varsayılan doldurma türünü ayarlar."
+msgstr "'Tuval Boyutu' iletişim kutusu için öntanımlı doldurma türünü ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:565
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
-"'Tuval Boyutu' iletişim kutusu için yeniden boyutlandırılacak varsayılan "
+"'Tuval Boyutu' iletişim kutusu için yeniden boyutlandırılacak öntanımlı "
 "katman kümesini ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:568
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
-"'Tuval Boyutu' iletişim kutusu için varsayılan 'Metin katmanlarını yeniden "
+"'Tuval Boyutu' iletişim kutusu için öntanımlı 'Metin katmanlarını yeniden "
 "boyutlandır' durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:571
 msgid "Sets the default layer name for the 'New Layer' dialog."
-msgstr "'Yeni Katman' iletişim kutusu için varsayılan katman adını ayarlar."
+msgstr "'Yeni Katman' iletişim kutusu için öntanımlı katman adını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:574
 msgid "Sets the default mode for the 'New Layer' dialog."
-msgstr "'Yeni Katman' iletişim kutusu için varsayılan kipi ayarlar."
+msgstr "'Yeni Katman' iletişim kutusu için öntanımlı kipi ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:577
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr ""
-"'Yeni Katman' iletişim kutusu için varsayılan harmanlama alanını ayarlar."
+"'Yeni Katman' iletişim kutusu için öntanımlı harmanlama alanını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:580
 msgid "Sets the default composite space for the 'New Layer' dialog."
-msgstr "'Yeni Katman' iletişim kutusu için varsayılan bileşik alanı ayarlar."
+msgstr "'Yeni Katman' iletişim kutusu için öntanımlı bileşik alanı ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:583
 msgid "Sets the default composite mode for the 'New Layer' dialog."
-msgstr "'Yeni Katman' iletişim kutusu için varsayılan bileşik kipini ayarlar."
+msgstr "'Yeni Katman' iletişim kutusu için öntanımlı bileşik kipini ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:586
 msgid "Sets the default opacity for the 'New Layer' dialog."
-msgstr "'Yeni Katman' iletişim kutusu için varsayılan matlığını ayarlar."
+msgstr "'Yeni Katman' iletişim kutusu için öntanımlı matlığını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:589
 msgid "Sets the default fill type for the 'New Layer' dialog."
-msgstr "'Yeni Katman' iletişim kutusu için varsayılan doldurma türünü ayarlar."
+msgstr "'Yeni Katman' iletişim kutusu için öntanımlı doldurma türünü ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:592
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
-"'Katman Sınır Boyutu' iletişim kutusu için varsayılan doldurma türünü "
-"ayarlar."
+"'Katman Sınır Boyutu' iletişim kutusu için öntanımlı doldurma türünü ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:595
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
-msgstr "'Katman Maskesi Ekle' iletişim kutusu için varsayılan maskeyi ayarlar."
+msgstr "'Katman Maskesi Ekle' iletişim kutusu için öntanımlı maskeyi ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:598
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
-"'Katman Maskesi Ekle' iletişim kutusu için varsayılan 'maskeyi ters çevir' "
+"'Katman Maskesi Ekle' iletişim kutusu için öntanımlı 'maskeyi ters çevir' "
 "durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:601
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
-"'Görünür Katmanları Birleştir' iletişim kutusu için varsayılan birleştirme "
+"'Görünür Katmanları Birleştir' iletişim kutusu için öntanımlı birleştirme "
 "türünü ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:604
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
-"'Görünür Katmanları Birleştir' iletişim kutusu için varsayılan 'Yalnızca "
+"'Görünür Katmanları Birleştir' iletişim kutusu için öntanımlı 'Yalnızca "
 "etkin küme' durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:607
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
-"'Görünen Katmanları Birleştir' iletişim kutusu için varsayılan 'Görünmez "
+"'Görünen Katmanları Birleştir' iletişim kutusu için öntanımlı 'Görünmez "
 "katmanlardan vazgeç' durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:610
 msgid "Sets the default channel name for the 'New Channel' dialog."
-msgstr "'Yeni Kanal' iletişim kutusu için varsayılan kanal adını ayarlar."
+msgstr "'Yeni Kanal' iletişim kutusu için öntanımlı kanal adını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:613
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
-msgstr "'Yeni Kanal' iletişim kutusu için varsayılan rengi ve matlığı ayarlar."
+msgstr "'Yeni Kanal' iletişim kutusu için öntanımlı rengi ve matlığı ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:616
 msgid "Sets the default path name for the 'New Path' dialog."
-msgstr "'Yeni Yol' iletişim kutusu için varsayılan yol adını ayarlar."
+msgstr "'Yeni Yol' iletişim kutusu için öntanımlı yol adını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:619
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr ""
-"'Yolu Dışa Aktar' iletişim kutusu için varsayılan klasör yolunu ayarlar."
+"'Yolu Dışa Aktar' iletişim kutusu için öntanımlı klasör yolunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:622
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
-"'Yolu Dışa Aktar' iletişim kutusu için varsayılan 'Etkin yolu dışa aktar' "
+"'Yolu Dışa Aktar' iletişim kutusu için öntanımlı 'Etkin yolu dışa aktar' "
 "durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:625
 msgid "Sets the default folder path for the 'Import Path' dialog."
-msgstr ""
-"'Yolu İçe Aktar' iletişim kutusu için varsayılan klasör yolunu ayarlar."
+msgstr "'Yolu İçe Aktar' iletişim kutusu için öntanımlı klasör yolunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:628
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
-"'Yolu İçe Aktar' iletişim kutusu için varsayılan 'İçe aktarılmış yolları "
+"'Yolu İçe Aktar' iletişim kutusu için öntanımlı 'İçe aktarılmış yolları "
 "birleştir' durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:631
@@ -12097,56 +12092,56 @@ msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
 msgstr ""
-"'Yolları İçe Aktar' iletişim kutusu için varsayılan 'İçe aktarılmış yolları "
+"'Yolları İçe Aktar' iletişim kutusu için öntanımlı 'İçe aktarılmış yolları "
 "ölçekle' durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:634
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
-msgstr "'Tüylü Seçim' iletişim kutusu için varsayılan tüy yarıçapını ayarlar."
+msgstr "'Tüylü Seçim' iletişim kutusu için öntanımlı tüy yarıçapını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:637
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Feather Selection' dialog."
 msgstr ""
-"'Tüylü Seçim' iletişim kutusu için varsayılan 'Seçilen alanlar görüntünün "
+"'Tüylü Seçim' iletişim kutusu için öntanımlı 'Seçilen alanlar görüntünün "
 "dışında devam ediyor' ayarını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:641
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr ""
-"'Seçimi Büyüt' iletişim kutusu için varsayılan büyüme yarıçapını ayarlar."
+"'Seçimi Büyüt' iletişim kutusu için öntanımlı büyüme yarıçapını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:644
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr ""
-"'Seçimi Küçült' iletişim kutusu için varsayılan küçültme yarıçapını ayarlar."
+"'Seçimi Küçült' iletişim kutusu için öntanımlı küçültme yarıçapını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:647
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
 msgstr ""
-"'Seçimi Küçült' iletişim kutusu için varsayılan 'Seçilen alanlar görüntünün "
+"'Seçimi Küçült' iletişim kutusu için öntanımlı 'Seçilen alanlar görüntünün "
 "dışında devam ediyor' ayarını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:651
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr ""
-"'Kenarlık Seçimi' iletişim kutusu için varsayılan sınır yarıçapını ayarlar."
+"'Kenarlık Seçimi' iletişim kutusu için öntanımlı sınır yarıçapını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:654
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
 msgstr ""
-"'Kenarlık Seçimi' iletişim kutusu için varsayılan 'Seçilen alanlar "
-"görüntünün dışında devam ediyor' ayarını ayarlar."
+"'Kenarlık Seçimi' iletişim kutusu için öntanımlı 'Seçilen alanlar görüntünün "
+"dışında devam ediyor' ayarını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:658
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr ""
-"'Kenarlık Seçimi' iletişim kutusu için varsayılan sınır biçemini ayarlar."
+"'Kenarlık Seçimi' iletişim kutusu için öntanımlı sınır biçemini ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:667
 msgid "Sets the size of the thumbnail shown in the Open dialog."
@@ -16822,7 +16817,7 @@ msgstr "Dışa Aktarma Politikaları"
 
 #: ../app/dialogs/preferences-dialog.c:1543
 msgid "Export the i_mage's color profile by default"
-msgstr "_Görüntünün renk profilini varsayılan olarak dışa aktar"
+msgstr "_Görüntünün renk profilini öntanımlı olarak dışa aktar"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -16832,7 +16827,7 @@ msgstr "_Görüntünün renk profilini varsayılan olarak dışa aktar"
 #: ../app/dialogs/preferences-dialog.c:1551
 msgid "Export _Exif metadata by default when available"
 msgstr ""
-"Kullanılabilir olduğunda, _EXIF üst verisini varsayılan olarak dışa aktar"
+"Kullanılabilir olduğunda, _EXIF üst verisini öntanımlı olarak dışa aktar"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -16842,7 +16837,7 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:1559
 msgid "Export _XMP metadata by default when available"
 msgstr ""
-"Kullanılabilir olduğunda, _XMP üst verisini varsayılan olarak dışa aktar"
+"Kullanılabilir olduğunda, _XMP üst verisini öntanımlı olarak dışa aktar"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -16852,7 +16847,7 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:1567
 msgid "Export _IPTC metadata by default when available"
 msgstr ""
-"Kullanılabilir olduğunda, _IPTC üst verisini varsayılan olarak dışa aktar"
+"Kullanılabilir olduğunda, _IPTC üst verisini öntanımlı olarak dışa aktar"
 
 #: ../app/dialogs/preferences-dialog.c:1570
 msgid "Metadata can contain sensitive information."
@@ -16865,7 +16860,7 @@ msgstr "Dışa Aktarma Dosya Türü"
 
 #: ../app/dialogs/preferences-dialog.c:1578
 msgid "Default export file t_ype:"
-msgstr "Varsa_yılan dışa aktarma dosya türü:"
+msgstr "Ö_ntanımlı dışa aktarma dosya türü:"
 
 #. Raw Image Importer
 #: ../app/dialogs/preferences-dialog.c:1582
@@ -17143,11 +17138,11 @@ msgstr "Araçları Yapılandır"
 #: ../app/dialogs/preferences-dialog.c:2218
 #: ../app/dialogs/preferences-dialog.c:2219
 msgid "Dialog Defaults"
-msgstr "İletişim Kutusu Varsayılanları"
+msgstr "İletişim Kutusu Öntanımlıları"
 
 #: ../app/dialogs/preferences-dialog.c:2228
 msgid "Reset Dialog _Defaults"
-msgstr "İletişim Kutusu _Varsayılanlarını Sıfırla"
+msgstr "İletişim Kutusu _Öntanımlılarını Sıfırla"
 
 #. Color profile import dialog
 #: ../app/dialogs/preferences-dialog.c:2236
@@ -17169,7 +17164,7 @@ msgstr "Profil klasörü:"
 
 #: ../app/dialogs/preferences-dialog.c:2251
 msgid "Select Default Folder for Color Profiles"
-msgstr "Renk Profilleri İçin Varsayılan Klasör Seç"
+msgstr "Renk Profilleri İçin Öntanımlı Klasör Seç"
 
 #. Convert to Color Profile Dialog
 #: ../app/dialogs/preferences-dialog.c:2255
@@ -17236,7 +17231,7 @@ msgstr "Son kullanılan ayarları koru:"
 
 #: ../app/dialogs/preferences-dialog.c:2327
 msgid "Default to the last used settings"
-msgstr "Son kullanılan ayarlara varsayılan"
+msgstr "Son kullanılan ayarlara öntanımlı"
 
 #: ../app/dialogs/preferences-dialog.c:2330
 msgid "Show advanced color options"
@@ -17323,7 +17318,7 @@ msgstr "Renk ve matlık:"
 
 #: ../app/dialogs/preferences-dialog.c:2413
 msgid "Default New Channel Color and Opacity"
-msgstr "Varsayılan Yeni Kanal Rengi ve Matlığı"
+msgstr "Öntanımlı Yeni Kanal Rengi ve Matlığı"
 
 #. New Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2418
@@ -17345,7 +17340,7 @@ msgstr "Dışa aktarma klasörü:"
 
 #: ../app/dialogs/preferences-dialog.c:2433
 msgid "Select Default Folder for Exporting Paths"
-msgstr "Yolları Dışa Aktar İçin Varsayılan Klasör Seç"
+msgstr "Yolları Dışa Aktar İçin Öntanımlı Klasör Seç"
 
 #: ../app/dialogs/preferences-dialog.c:2437
 msgid "Export the active path only"
@@ -17362,7 +17357,7 @@ msgstr "İçe aktarma klasörü:"
 
 #: ../app/dialogs/preferences-dialog.c:2447
 msgid "Select Default Folder for Importing Paths"
-msgstr "Yolları İçe Aktarmak İçin Varsayılan Klasör Seç"
+msgstr "Yolları İçe Aktarmak İçin Öntanımlı Klasör Seç"
 
 #: ../app/dialogs/preferences-dialog.c:2451
 msgid "Merge imported paths"
@@ -18722,7 +18717,7 @@ msgstr "Katman seçildi: '%s'"
 msgid "pixels"
 msgstr "piksel"
 
-#: ../app/display/gimpstatusbar.c:472
+#: ../app/display/gimpstatusbar.c:475
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Vazgeç <i>%s</i>"
@@ -20598,7 +20593,7 @@ msgctxt "undo-type"
 msgid "Levels"
 msgstr "Düzeyler"
 
-#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:680
+#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:738
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Posterleştir"
@@ -20633,7 +20628,7 @@ msgstr "Renklendir"
 msgid "Hue-Saturation"
 msgstr "Renk Tonu Doygunluğu"
 
-#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:726
+#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:784
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Eşik"
@@ -20656,6 +20651,11 @@ msgstr "Renk Tonu-Doygunluk"
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Tersine Çevir"
+
+#: ../app/pdb/drawable-color-cmds.c:698
+msgctxt "undo-type"
+msgid "Shadows-Highlights"
+msgstr "Gölgeleler-Vurgular"
 
 #: ../app/pdb/drawable-transform-cmds.c:373
 #: ../app/pdb/drawable-transform-cmds.c:478
@@ -25477,7 +25477,7 @@ msgid "Percentage of width of brush"
 msgstr "Fırça genişliğinin yüzdesi"
 
 #: ../app/widgets/gimpbufferview.c:189 ../app/widgets/gimpbufferview.c:290
-#: ../app/widgets/gimpeditor.c:758
+#: ../app/widgets/gimpeditor.c:773
 msgid "(None)"
 msgstr "(Hiçbiri)"
 
@@ -27757,8 +27757,8 @@ msgid "[ Base Image ]"
 msgstr "[ Temel Görüntü ]"
 
 #: ../app/widgets/gimpvectorstreeview.c:111
-msgid "Lock path strokes"
-msgstr "Yol darbelerini kilitle"
+msgid "Lock path"
+msgstr "Yolu kilitle"
 
 #: ../app/widgets/gimpvectorstreeview.c:114
 msgid "Lock path position"
@@ -28057,3 +28057,6 @@ msgstr "yuvarla"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "bulanık"
+
+#~ msgid "Lock path strokes"
+#~ msgstr "Yol darbelerini kilitle"
