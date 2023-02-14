@@ -181,8 +181,8 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-ico");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "ico");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
-                                      "0,string,\\0\\0\\1\\0");
+      /* We do not set magics here, since that interferes with certain types
+         of TGA images. */
 
       gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
@@ -211,8 +211,8 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                           "image/vnd.microsoft.icon");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "cur");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
-                                      "0,string,\\0\\0\\2\\0");
+      /* We do not set magics here, since that interferes with certain types
+         of TGA images. */
 
       gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
