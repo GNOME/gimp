@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-13 13:18+0000\n"
-"PO-Revision-Date: 2023-02-13 15:50+0100\n"
-"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
+"POT-Creation-Date: 2023-02-14 13:07+0000\n"
+"PO-Revision-Date: 2023-02-14 15:11+0100\n"
+"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
@@ -20498,18 +20498,18 @@ msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Ljusstyrka-Kontrast"
 
-#: ../app/pdb/color-cmds.c:148 ../app/pdb/drawable-color-cmds.c:610
+#: ../app/pdb/color-cmds.c:148 ../app/pdb/drawable-color-cmds.c:657
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Nivåer"
 
-#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:738
+#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:785
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Färgreduktion"
 
 #: ../app/pdb/color-cmds.c:286 ../app/pdb/color-cmds.c:327
-#: ../app/pdb/drawable-color-cmds.c:325
+#: ../app/pdb/drawable-color-cmds.c:372
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Avmätta"
@@ -20538,7 +20538,7 @@ msgstr "Färglägg"
 msgid "Hue-Saturation"
 msgstr "Nyans-Mättnad"
 
-#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:784
+#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:831
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Tröskel"
@@ -20552,17 +20552,22 @@ msgctxt "command"
 msgid "Foreground Select"
 msgstr "Förgrundsmarkering"
 
-#: ../app/pdb/drawable-color-cmds.c:507
+#: ../app/pdb/drawable-color-cmds.c:331
+msgctxt "undo-type"
+msgid "Extract Component"
+msgstr "Extrahera komponent"
+
+#: ../app/pdb/drawable-color-cmds.c:554
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Nyans-Mättnad"
 
-#: ../app/pdb/drawable-color-cmds.c:542
+#: ../app/pdb/drawable-color-cmds.c:589
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Invertera"
 
-#: ../app/pdb/drawable-color-cmds.c:698
+#: ../app/pdb/drawable-color-cmds.c:745
 msgctxt "undo-type"
 msgid "Shadows-Highlights"
 msgstr "Skuggor-Högdagrar"
