@@ -107,10 +107,11 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-ico");
-  gimp_register_magic_load_handler (LOAD_PROC,
-                                    "ico",
-                                    "",
-                                    "0,string,\\000\\001\\000\\000,0,string,\\000\\002\\000\\000");
+  /* We do not set magics here, since that interferes with certain types
+     of TGA images. */
+  gimp_register_load_handler (LOAD_PROC,
+                              "ico",
+                              "");
 
   gimp_install_procedure (LOAD_THUMB_PROC,
                           "Loads a preview from an Windows ICO file",
