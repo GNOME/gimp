@@ -58,4 +58,16 @@
 
 @define-color ruler-color            rgba(220,220,220,0.3);
 
-@import url("common.css");
+/*
+ * Paned separator handles
+ */
+paned.horizontal > separator {
+  background-image: url("ui/separator-handle-v.svg");
+}
+
+paned.vertical > separator {
+  background-image: url("ui/separator-handle-h.svg");
+}
+
+
+@import url("common-light.css");

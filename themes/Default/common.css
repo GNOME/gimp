@@ -1,4 +1,11 @@
-/* A light theme for GIMP 3.0 */
+/* A set of interface style definitions common to light and dark theme variants for GIMP 3.0
+ * The specific dark and light interface styles are defined in common-light.css, common-dark.css */
+
+/* The specific dark and light colors are defined in gimp-dark.css, gimp.css */
+
+/* Do not import this file directly from gimp.css or gimp-dark.css files, you will miss light/dark theme specific styles.
+ * Do import matching common-[dark,light].css */
+
 
 /* Hint for debugging themes:
  * first enable the GTK inspector with
@@ -234,9 +241,12 @@ entry selection {
 }
 
 paned separator {
-   background-image: none;
-   color: @border-color;
-   background-color: @border-color;
+  color: @border-color;
+  background-image: none;
+  background-color: @border-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
 }
 
 .view button {

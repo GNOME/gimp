@@ -1,0 +1,22 @@
+/* The specific light theme interface styles for GIMP 3.0 */
+/* Theme specific colors are defined in gimp.css */
+
+/* Hint for debugging themes:
+ * first enable the GTK inspector with
+   gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
+ * then (after restarting GIMP) call it up with ctrl+shift+i
+ * or from GIMP's UI: File > Debug > Start GtkInspector
+ */
+
+@import url("common.css");
+
+/*
+ * Paned separator handles
+ */
+paned.horizontal > separator {
+  background-image: url("ui/separator-handle-v.svg");
+}
+
+paned.vertical > separator {
+  background-image: url("ui/separator-handle-h.svg");
+}
