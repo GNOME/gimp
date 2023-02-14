@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-08 23:08+0000\n"
-"PO-Revision-Date: 2023-02-09 16:52+0300\n"
+"POT-Creation-Date: 2023-02-14 00:18+0000\n"
+"PO-Revision-Date: 2023-02-14 04:32+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -138,7 +138,7 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Varsayılan ayarları kullanarak indeksliye dönüştür\n"
+"Öntanımlı ayarları kullanarak indeksliye dönüştür\n"
 "(Sonucu ayarlamak için bunu kendiniz yapın)"
 
 #: ../libgimp/gimpexport.c:395
@@ -152,7 +152,7 @@ msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Bit eşlem varsayılan ayarlarını kullanarak indeksliye dönüştür\n"
+"Bit eşlem öntanımlı ayarlarını kullanarak indeksliye dönüştür\n"
 "(Sonucu ayarlamak için bunu kendiniz yapın)"
 
 #: ../libgimp/gimpexport.c:405
@@ -270,44 +270,44 @@ msgstr "Yazı Tipi Seçimi"
 msgid "Gradient Selection"
 msgstr "Renk Geçişi Seçimi"
 
-#: ../libgimp/gimpimagemetadata.c:671
+#: ../libgimp/gimpimagemetadata.c:685
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:862
+#: ../libgimp/gimpimagemetadata.c:881
 msgid "Background"
 msgstr "Artalan"
 
-#: ../libgimp/gimpimagemetadata.c:1051
+#: ../libgimp/gimpimagemetadata.c:1070
 #, c-format
 msgid "Rotate %s?"
 msgstr "%s döndürülsün mü?"
 
-#: ../libgimp/gimpimagemetadata.c:1057
+#: ../libgimp/gimpimagemetadata.c:1076
 msgid "_Keep Original"
 msgstr "Aslını _Koru"
 
-#: ../libgimp/gimpimagemetadata.c:1058 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:1077 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Döndür"
 
-#: ../libgimp/gimpimagemetadata.c:1099
+#: ../libgimp/gimpimagemetadata.c:1118
 msgid "Original"
 msgstr "Asıl Hali"
 
-#: ../libgimp/gimpimagemetadata.c:1115
+#: ../libgimp/gimpimagemetadata.c:1134
 msgid "Rotated"
 msgstr "Döndürüldü"
 
-#: ../libgimp/gimpimagemetadata.c:1133
+#: ../libgimp/gimpimagemetadata.c:1152
 msgid "This image contains Exif orientation metadata."
 msgstr "Bu görüntü Exif yönelim üst verisi içerir."
 
-#: ../libgimp/gimpimagemetadata.c:1151
+#: ../libgimp/gimpimagemetadata.c:1170
 msgid "Would you like to rotate the image?"
 msgstr "Bu görüntünün döndürülmesini istiyor musunuz?"
 
-#: ../libgimp/gimpimagemetadata.c:1163
+#: ../libgimp/gimpimagemetadata.c:1182
 msgid "_Don't ask me again"
 msgstr "Bana tekrar _sorma"
 
