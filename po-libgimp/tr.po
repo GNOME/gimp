@@ -1,5 +1,4 @@
 # Turkish translation for GIMP
-#
 # Copyright (C) 2001 Free Software Foundation, Inc.
 # Copyright (C) 2002-2023 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
@@ -16,16 +15,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-01 14:44+0000\n"
-"PO-Revision-Date: 2023-02-02 15:28+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2023-02-13 21:57+0000\n"
+"PO-Revision-Date: 2023-02-14 04:29+0300\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Launchpad-Export-Date: 2010-10-09 17:28+0000\n"
 "X-POOTLE-MTIME: 1436650713.000000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -111,7 +110,7 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Varsayılan ayarları kullanarak indeksliye dönüştür\n"
+"Öntanımlı ayarları kullanarak indeksliye dönüştür\n"
 "(Sonucu ayarlamak için bunu kendiniz yapın)"
 
 #: libgimp/gimpexport.c:432
@@ -125,7 +124,7 @@ msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Bit eşlem varsayılan ayarlarını kullanarak indeksliye dönüştür\n"
+"Bit eşlem öntanımlı ayarlarını kullanarak indeksliye dönüştür\n"
 "(Sonucu ayarlamak için bunu kendiniz yapın)"
 
 #: libgimp/gimpexport.c:442
@@ -368,8 +367,8 @@ msgstr ""
 #: libgimp/gimpprocedure.c:2020
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için yanlış bir değer türü ile "
 "çağrıldı (#%d). %s istendi, %s alındı."
