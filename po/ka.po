@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ka\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-13 15:35+0000\n"
-"PO-Revision-Date: 2023-02-13 18:21+0100\n"
+"POT-Creation-Date: 2023-02-14 16:20+0000\n"
+"PO-Revision-Date: 2023-02-14 17:45+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -2473,7 +2473,7 @@ msgstr "240 წამი"
 
 #: app/actions/dashboard-commands.c:118 app/actions/documents-commands.c:237
 #: app/actions/edit-commands.c:169 app/actions/error-console-commands.c:100
-#: app/actions/file-commands.c:431 app/actions/gradient-editor-commands.c:409
+#: app/actions/file-commands.c:449 app/actions/gradient-editor-commands.c:409
 #: app/actions/gradient-editor-commands.c:520
 #: app/actions/gradients-commands.c:79 app/actions/plug-in-commands.c:185
 #: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
@@ -2595,7 +2595,7 @@ msgid "Untitled"
 msgstr "უსათაურო"
 
 #: app/actions/data-commands.c:216 app/actions/documents-commands.c:194
-#: app/actions/file-commands.c:537
+#: app/actions/file-commands.c:555
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "ფაილმენეჯერში ჩვენების შეცდომა:%s"
@@ -3294,7 +3294,7 @@ msgstr "მოძვე_ლებული ჩანაწერების მ
 #: app/actions/documents-actions.c:102
 msgctxt "documents-action"
 msgid "Remove entries for which the corresponding file is not available"
-msgstr ""
+msgstr "ჩანაწერების წაშლა, რომლებისთვისაც შესაბამისი ფაილი ხელმისაწვდომი არაა"
 
 #: app/actions/documents-commands.c:230
 msgid "Clear Document History"
@@ -3574,7 +3574,7 @@ msgstr "მკაცრი დაბრუნება"
 #: app/actions/edit-actions.c:87
 msgctxt "edit-action"
 msgid "Undo the last operation, skipping visibility changes"
-msgstr ""
+msgstr "ბოლო ოპერაციის დაბრუნება, ხილვადობის ცვლილებების გამოტოვება"
 
 #: app/actions/edit-actions.c:92
 msgctxt "edit-action"
@@ -3585,6 +3585,7 @@ msgstr "მკაცრი გამეორება"
 msgctxt "edit-action"
 msgid "Redo the last operation that was undone, skipping visibility changes"
 msgstr ""
+"ბოლოს დაბრუნებული ოპერაციის გამეორება ხილვადობის ცვლილებების გამოტოვებით"
 
 #: app/actions/edit-actions.c:99
 msgctxt "edit-action"
@@ -4190,7 +4191,7 @@ msgstr "გატანა %s-ში"
 msgid "Over_write %s"
 msgstr "%s-ზე თავზე გადაწერა"
 
-#: app/actions/file-commands.c:120 app/actions/file-commands.c:561
+#: app/actions/file-commands.c:120 app/actions/file-commands.c:579
 #: app/widgets/gimpopendialog.c:84
 msgid "Open Image"
 msgstr "გამოსახულების გახსნა"
@@ -4199,55 +4200,55 @@ msgstr "გამოსახულების გახსნა"
 msgid "Open Image as Layers"
 msgstr "გამოსახულებების როგორც ფენის გახსნა"
 
-#: app/actions/file-commands.c:289
+#: app/actions/file-commands.c:307
 msgid "No changes need to be saved"
 msgstr "შესანახი ცვლილებების გარეშე"
 
-#: app/actions/file-commands.c:296 app/actions/file-commands.c:772
+#: app/actions/file-commands.c:314 app/actions/file-commands.c:790
 #: app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "გამოსახულების შენახვა"
 
-#: app/actions/file-commands.c:302
+#: app/actions/file-commands.c:320
 msgid "Save a Copy of the Image"
 msgstr "გამოსახულების ასლის შენახვა"
 
-#: app/actions/file-commands.c:380
+#: app/actions/file-commands.c:398
 msgid "Create New Template"
 msgstr "ახალი ნიმუშის შექმნა"
 
-#: app/actions/file-commands.c:384
+#: app/actions/file-commands.c:402
 msgid "Enter a name for this template"
 msgstr "შეიყვანეთ ამ ნიმუშის სახელი"
 
-#: app/actions/file-commands.c:414
+#: app/actions/file-commands.c:432
 msgid "Revert failed. No file name associated with this image."
 msgstr "აღდგენის შეცდომა. გამოსახულებას სახელი არ გააჩნია."
 
-#: app/actions/file-commands.c:426
+#: app/actions/file-commands.c:444
 msgid "Revert Image"
 msgstr "გამოსახულების აღდგენა"
 
-#: app/actions/file-commands.c:432
+#: app/actions/file-commands.c:450
 msgid "_Revert"
 msgstr "და_ბრუნება"
 
-#: app/actions/file-commands.c:450
+#: app/actions/file-commands.c:468
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "დავაბრუნო '%s' - '%s'-ით?"
 
-#: app/actions/file-commands.c:455
+#: app/actions/file-commands.c:473
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
 
-#: app/actions/file-commands.c:794
+#: app/actions/file-commands.c:812
 msgid "(Unnamed Template)"
 msgstr "(უსახელო ნიმუში)"
 
-#: app/actions/file-commands.c:841
+#: app/actions/file-commands.c:859
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -5025,7 +5026,7 @@ msgstr "_უკანასკნელის გამეორება"
 #: app/actions/filters-actions.c:782
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
-msgstr ""
+msgstr "ბოლოს გამოყენებული ფილტრის იგივე პარამეტრებით გაშვება"
 
 #: app/actions/filters-actions.c:787
 msgctxt "filters-action"
@@ -9457,7 +9458,7 @@ msgstr "როგორც _პარამეტრებში"
 #: app/actions/view-actions.c:161
 msgctxt "view-action"
 msgid "Reset color management to what's configured in preferences"
-msgstr ""
+msgstr "ფერების მართვის პარამეტრებში მითითებულ მნიშვნელობებზე დაბრუნება"
 
 #: app/actions/view-actions.c:166
 msgctxt "view-action"
@@ -9517,7 +9518,7 @@ msgstr "მტკიცე _ფერები"
 #: app/actions/view-actions.c:204
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
-msgstr ""
+msgstr "ფერების პროგრამული დამუშავებისთვის ამ ხედის გამოყენება"
 
 #: app/actions/view-actions.c:210
 msgctxt "view-action"
@@ -11034,7 +11035,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:474
 msgid "Show a tooltip when the pointer hovers over an item."
-msgstr ""
+msgstr "კურსორის გადატარებისას მისი მინიშნების ჩვენება."
 
 #: app/config/gimprc-blurbs.h:477
 msgid "Use GIMP in a single-window mode."
@@ -11118,7 +11119,7 @@ msgstr "გამოსაყენებელი თემის სახე�
 
 #: app/config/gimprc-blurbs.h:544
 msgid "Override theme-set icon sizes."
-msgstr ""
+msgstr "თემის დაყენებული ხატულის ზომების გადაფარვა."
 
 #: app/config/gimprc-blurbs.h:547
 msgid "The size of the icons to use."
@@ -20257,37 +20258,42 @@ msgctxt "undo-type"
 msgid "Curves"
 msgstr "მრუდები"
 
-#: app/pdb/drawable-color-cmds.c:325
+#: app/pdb/drawable-color-cmds.c:331
+msgctxt "undo-type"
+msgid "Extract Component"
+msgstr "კომპონენტის გამოყოფა"
+
+#: app/pdb/drawable-color-cmds.c:372
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "გაუფერულება"
 
-#: app/pdb/drawable-color-cmds.c:499
+#: app/pdb/drawable-color-cmds.c:546
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "ტონი-გაჯერებულობა"
 
-#: app/pdb/drawable-color-cmds.c:534 app/pdb/plug-in-compat-cmds.c:1585
+#: app/pdb/drawable-color-cmds.c:581 app/pdb/plug-in-compat-cmds.c:1585
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "ინვერსია"
 
-#: app/pdb/drawable-color-cmds.c:602
+#: app/pdb/drawable-color-cmds.c:649
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "დონეები"
 
-#: app/pdb/drawable-color-cmds.c:690
+#: app/pdb/drawable-color-cmds.c:737
 msgctxt "undo-type"
 msgid "Shadows-Highlights"
 msgstr "ჩრდილები-სინათლე"
 
-#: app/pdb/drawable-color-cmds.c:730
+#: app/pdb/drawable-color-cmds.c:777
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "პოსტერიზაცია"
 
-#: app/pdb/drawable-color-cmds.c:776
+#: app/pdb/drawable-color-cmds.c:823
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "ზღვარი"
@@ -20709,7 +20715,7 @@ msgid ""
 "'%s'."
 msgstr ""
 
-#: app/pdb/image-cmds.c:2448
+#: app/pdb/image-cmds.c:2476
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
