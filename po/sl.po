@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-10 10:08+0000\n"
-"PO-Revision-Date: 2023-02-10 17:59+0100\n"
+"POT-Creation-Date: 2023-02-13 21:55+0000\n"
+"PO-Revision-Date: 2023-02-14 01:15+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -20640,12 +20640,17 @@ msgctxt "undo-type"
 msgid "Levels"
 msgstr "Ravni"
 
-#: app/pdb/drawable-color-cmds.c:672
+#: app/pdb/drawable-color-cmds.c:690
+msgctxt "undo-type"
+msgid "Shadows-Highlights"
+msgstr "Sence-svetli toni"
+
+#: app/pdb/drawable-color-cmds.c:730
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Posteriziraj"
 
-#: app/pdb/drawable-color-cmds.c:718
+#: app/pdb/drawable-color-cmds.c:776
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Prag"
@@ -21081,7 +21086,7 @@ msgid ""
 msgstr ""
 "Procedura »%s« je bila klicana z neveljavnim nizom UTF-8 za argument »%s«."
 
-#: app/pdb/image-cmds.c:2448
+#: app/pdb/image-cmds.c:2476
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
