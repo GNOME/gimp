@@ -12,4 +12,8 @@ export BUILD builddir
 
 cd "$top_srcdir"/pdb
 $PERL pdbgen.pl app lib
-echo "/* Generated on `date`. */" > $top_builddir/pdb/stamp-pdbgen.h
+RET=$?
+if [ $RET -eq 0 ]; then
+  echo "/* Generated on `date`. */" > $top_builddir/pdb/stamp-pdbgen.h
+fi
+exit $RET
