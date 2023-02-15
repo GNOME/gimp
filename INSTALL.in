@@ -4,19 +4,29 @@ Installation instructions for GIMP @GIMP_APP_VERSION@
 
 There are some basic steps to building and installing GIMP.
 
-GIMP @GIMP_APP_VERSION@ replaces earlier GIMP 2.x versions. It is advised that you
+GIMP @GIMP_APP_VERSION@ replaces earlier GIMP 2.99.x versions. It is advised to
 uninstall them before installing GIMP @GIMP_APP_VERSION@. Since libgimp* libraries
-and data are all versionned anyway, it is possible to keep your older GIMP 2.x
-installation in parallel to GIMP @GIMP_APP_VERSION@ on a same prefix.
+and data are all versionned anyway, it is possible to keep your older
+GIMP 2.x installation in parallel to GIMP @GIMP_APP_VERSION@ on a same prefix.
 
-GIMP @GIMP_APP_VERSION@ is not backward compatible with GIMP 2.x version.
-Plug-ins and scripts written for GIMP 2.8, 2.6 or earlier GIMP 2.x
-versions will not work because the API changed.
+GIMP @GIMP_APP_VERSION@ is not backward compatible with GIMP 2.10 and earlier
+versions. Plug-ins and scripts written for GIMP 2.10, 2.8, 2.6 or
+earlier GIMP 2.x versions will not work because the API changed.
 
 The most important part is to make sure the requirements for a build
 are fulfilled. We depend on a number of tools and libraries which are
 listed below. For libraries this means you need to also have the
 header files installed.
+
+This file is generated (versions are filled by our build system) and
+focuses on keeping an up-to-date list of dependencies intended to
+packagers, contributors or whoever wants to compile GIMP from source.
+Building and running self-built software often requires more setup, in
+particular environment variables so that your system knows where to
+find the various pieces of the software. The following document can
+help in that regard:
+
+  https://developer.gimp.org/core/setup/build/
 
 
   ******************************************************************
