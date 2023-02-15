@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-13 21:55+0000\n"
-"PO-Revision-Date: 2023-02-14 01:15+0100\n"
+"POT-Creation-Date: 2023-02-15 11:15+0000\n"
+"PO-Revision-Date: 2023-02-15 23:08+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2526,7 +2526,7 @@ msgstr "240 s"
 
 #: app/actions/dashboard-commands.c:118 app/actions/documents-commands.c:237
 #: app/actions/edit-commands.c:169 app/actions/error-console-commands.c:100
-#: app/actions/file-commands.c:431 app/actions/gradient-editor-commands.c:409
+#: app/actions/file-commands.c:449 app/actions/gradient-editor-commands.c:409
 #: app/actions/gradient-editor-commands.c:520
 #: app/actions/gradients-commands.c:79 app/actions/plug-in-commands.c:185
 #: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
@@ -2648,7 +2648,7 @@ msgid "Untitled"
 msgstr "Neimenovano"
 
 #: app/actions/data-commands.c:216 app/actions/documents-commands.c:194
-#: app/actions/file-commands.c:537
+#: app/actions/file-commands.c:555
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Datoteke ni mogoče pokazati v upravljalniku datotek: %s"
@@ -4251,7 +4251,7 @@ msgstr "Izvozi v %s"
 msgid "Over_write %s"
 msgstr "Prepi_ši %s"
 
-#: app/actions/file-commands.c:120 app/actions/file-commands.c:561
+#: app/actions/file-commands.c:120 app/actions/file-commands.c:579
 #: app/widgets/gimpopendialog.c:84
 msgid "Open Image"
 msgstr "Odpri sliko"
@@ -4260,45 +4260,45 @@ msgstr "Odpri sliko"
 msgid "Open Image as Layers"
 msgstr "Odpri sliko kot plasti"
 
-#: app/actions/file-commands.c:289
+#: app/actions/file-commands.c:307
 msgid "No changes need to be saved"
 msgstr "Nobenih sprememb ni potrebno shraniti"
 
-#: app/actions/file-commands.c:296 app/actions/file-commands.c:772
+#: app/actions/file-commands.c:314 app/actions/file-commands.c:790
 #: app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Shrani sliko"
 
-#: app/actions/file-commands.c:302
+#: app/actions/file-commands.c:320
 msgid "Save a Copy of the Image"
 msgstr "Shrani kopijo slike"
 
-#: app/actions/file-commands.c:380
+#: app/actions/file-commands.c:398
 msgid "Create New Template"
 msgstr "Ustvari novo predlogo"
 
-#: app/actions/file-commands.c:384
+#: app/actions/file-commands.c:402
 msgid "Enter a name for this template"
 msgstr "Vnesite ime za predlogo"
 
-#: app/actions/file-commands.c:414
+#: app/actions/file-commands.c:432
 msgid "Revert failed. No file name associated with this image."
 msgstr "Povrnitev ni uspela. Nobena datoteka ni povezana s to sliko."
 
-#: app/actions/file-commands.c:426
+#: app/actions/file-commands.c:444
 msgid "Revert Image"
 msgstr "Povrni sliko"
 
-#: app/actions/file-commands.c:432
+#: app/actions/file-commands.c:450
 msgid "_Revert"
 msgstr "Po_vrni"
 
-#: app/actions/file-commands.c:450
+#: app/actions/file-commands.c:468
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Želite povrniti »%s« v »%s«?"
 
-#: app/actions/file-commands.c:455
+#: app/actions/file-commands.c:473
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -4306,11 +4306,11 @@ msgstr ""
 "S povrnitvijo slike v zadnje shranjeno stanje boste izgubili vse spremembe "
 "in podatke za razveljavitve."
 
-#: app/actions/file-commands.c:794
+#: app/actions/file-commands.c:812
 msgid "(Unnamed Template)"
 msgstr "(neimenovana predloga)"
 
-#: app/actions/file-commands.c:841
+#: app/actions/file-commands.c:859
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -20620,37 +20620,42 @@ msgctxt "undo-type"
 msgid "Curves"
 msgstr "Krivulje"
 
-#: app/pdb/drawable-color-cmds.c:325
+#: app/pdb/drawable-color-cmds.c:331
+msgctxt "undo-type"
+msgid "Extract Component"
+msgstr "Izvleci komponento"
+
+#: app/pdb/drawable-color-cmds.c:372
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Zmanjšaj nasičenost"
 
-#: app/pdb/drawable-color-cmds.c:499
+#: app/pdb/drawable-color-cmds.c:546
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Obarvanost-nasičenost"
 
-#: app/pdb/drawable-color-cmds.c:534 app/pdb/plug-in-compat-cmds.c:1585
+#: app/pdb/drawable-color-cmds.c:581 app/pdb/plug-in-compat-cmds.c:1585
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Preobrni"
 
-#: app/pdb/drawable-color-cmds.c:602
+#: app/pdb/drawable-color-cmds.c:649
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Ravni"
 
-#: app/pdb/drawable-color-cmds.c:690
+#: app/pdb/drawable-color-cmds.c:737
 msgctxt "undo-type"
 msgid "Shadows-Highlights"
 msgstr "Sence-svetli toni"
 
-#: app/pdb/drawable-color-cmds.c:730
+#: app/pdb/drawable-color-cmds.c:777
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Posteriziraj"
 
-#: app/pdb/drawable-color-cmds.c:776
+#: app/pdb/drawable-color-cmds.c:823
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Prag"
