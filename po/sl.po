@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-13 18:33+0000\n"
-"PO-Revision-Date: 2023-02-14 01:16+0100\n"
+"POT-Creation-Date: 2023-02-15 11:53+0000\n"
+"PO-Revision-Date: 2023-02-15 23:12+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -20491,18 +20491,18 @@ msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Svetlost-kontrast"
 
-#: ../app/pdb/color-cmds.c:148 ../app/pdb/drawable-color-cmds.c:610
+#: ../app/pdb/color-cmds.c:148 ../app/pdb/drawable-color-cmds.c:657
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Ravni"
 
-#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:738
+#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:785
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Posteriziraj"
 
 #: ../app/pdb/color-cmds.c:286 ../app/pdb/color-cmds.c:327
-#: ../app/pdb/drawable-color-cmds.c:325
+#: ../app/pdb/drawable-color-cmds.c:372
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Zmanjšaj nasičenost"
@@ -20531,7 +20531,7 @@ msgstr "Prebarvaj"
 msgid "Hue-Saturation"
 msgstr "Obarvanost-nasičenost"
 
-#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:784
+#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:831
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Prag"
@@ -20545,17 +20545,22 @@ msgctxt "command"
 msgid "Foreground Select"
 msgstr "Izbor ospredja"
 
-#: ../app/pdb/drawable-color-cmds.c:507
+#: ../app/pdb/drawable-color-cmds.c:331
+msgctxt "undo-type"
+msgid "Extract Component"
+msgstr "Izvleci komponento"
+
+#: ../app/pdb/drawable-color-cmds.c:554
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Obarvanost-nasičenost"
 
-#: ../app/pdb/drawable-color-cmds.c:542
+#: ../app/pdb/drawable-color-cmds.c:589
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Preobrni"
 
-#: ../app/pdb/drawable-color-cmds.c:698
+#: ../app/pdb/drawable-color-cmds.c:745
 msgctxt "undo-type"
 msgid "Shadows-Highlights"
 msgstr "Sence-svetli toni"
