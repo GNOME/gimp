@@ -49,7 +49,7 @@ open_cb (GtkWidget *dialog,
           return;
         }
 
-      load (filename);
+      load (filename, data);
       g_free (filename);
     }
 
@@ -57,7 +57,9 @@ open_cb (GtkWidget *dialog,
 }
 
 void
-do_file_open_dialog (void)
+do_file_open_dialog (GSimpleAction *action,
+                     GVariant      *parameter,
+                     gpointer       user_data)
 {
   static GtkWidget *dialog;
 
@@ -84,7 +86,7 @@ do_file_open_dialog (void)
                         &dialog);
       g_signal_connect (dialog, "response",
                         G_CALLBACK (open_cb),
-                        dialog);
+                        user_data);
     }
 
   gtk_window_present (GTK_WINDOW (dialog));
@@ -109,7 +111,9 @@ save_cb (GtkWidget *dialog,
 }
 
 void
-do_file_save_as_dialog (void)
+do_file_save_as_dialog (GSimpleAction *action,
+                        GVariant      *parameter,
+                        gpointer       user_data)
 {
   static GtkWidget *dialog;
 

@@ -38,7 +38,7 @@ static void   save_to_view (GtkTextBuffer *buffer,
                             ...) G_GNUC_PRINTF(2,3);
 
 static void
-save_to_view(GtkTextBuffer *buffer, const char* format, ...)
+save_to_view (GtkTextBuffer *buffer, const char* format, ...)
 {
    va_list ap;
    char scratch[1024];
@@ -53,7 +53,9 @@ save_to_view(GtkTextBuffer *buffer, const char* format, ...)
 }
 
 void
-do_source_dialog(void)
+do_source_dialog (GSimpleAction *action,
+                  GVariant      *parameter,
+                  gpointer       user_data)
 {
    static DefaultDialog_t *dialog;
    static GtkWidget *text;

@@ -23,6 +23,8 @@
 #ifndef _IMAP_ABOUT_H
 #define _IMAP_ABOUT_H
 
-void do_about_dialog(void);
+void do_about_dialog (GSimpleAction *action,
+                      GVariant      *parameter,
+                      gpointer       user_data);
 
 #endif /* _IMAP_ABOUT_H */

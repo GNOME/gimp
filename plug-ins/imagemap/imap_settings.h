@@ -23,6 +23,8 @@
 #ifndef _IMAP_SETTINGS_H
 #define _IMAP_SETTINGS_H
 
-void do_settings_dialog(void);
+void do_settings_dialog (GSimpleAction *action,
+                         GVariant      *parameter,
+                         gpointer       user_data);
 
 #endif /* _IMAP_SETTINGS_H */

@@ -32,7 +32,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 void
-object_handle_popup(ObjectPopup_t *popup, Object_t *obj, GdkEventButton *event)
+object_handle_popup (ObjectPopup_t  *popup,
+                     Object_t       *obj,
+                     GdkEventButton *event,
+                     GimpImap       *imap)
 {
   /* int position = object_get_position_in_list(obj) + 1; */
 
@@ -42,18 +45,25 @@ object_handle_popup(ObjectPopup_t *popup, Object_t *obj, GdkEventButton *event)
                             (position < g_list_length(obj->list->list))
                             ? TRUE : FALSE);
 #endif
+   gtk_menu_attach_to_widget (GTK_MENU (popup->menu), GTK_WIDGET (imap->dlg), NULL);
    gtk_menu_popup_at_pointer (GTK_MENU (popup->menu), (GdkEvent *) event);
 }
 
 void
-object_do_popup(Object_t *obj, GdkEventButton *event)
+object_do_popup (Object_t       *obj,
+                 GdkEventButton *event,
+                 gpointer        data)
 {
-   static ObjectPopup_t *popup;
+  static ObjectPopup_t *popup;
+  GMenuModel           *model;
+  GimpImap             *imap = GIMP_IMAP (data);
 
-   if (!popup)
+   if (! popup)
      {
-       popup = g_new (ObjectPopup_t, 1);
-       popup->menu = menu_get_widget ("/ObjectPopupMenu");
+       popup       = g_new (ObjectPopup_t, 1);
+       model       = G_MENU_MODEL (gtk_builder_get_object
+                                    (imap->builder, "imap-object-popup"));
+       popup->menu = gtk_menu_new_from_model (model);
      }
-   object_handle_popup (popup, obj, event);
+   object_handle_popup (popup, obj, event, imap);
 }

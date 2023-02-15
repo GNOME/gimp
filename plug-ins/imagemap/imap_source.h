@@ -23,6 +23,8 @@
 #ifndef _IMAP_SOURCE_H
 #define _IMAP_SOURCE_H
 
-void do_source_dialog(void);
+void do_source_dialog (GSimpleAction *action,
+                       GVariant      *parameter,
+                       gpointer       user_data);
 
 #endif /* _IMAP_SOURCE_H */

@@ -307,7 +307,8 @@ render_comment (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 }
 
 Selection_t*
-make_selection(ObjectList_t *object_list)
+make_selection (ObjectList_t *object_list,
+                GimpImap     *imap)
 {
   Selection_t *data = g_new(Selection_t, 1);
   GtkWidget *swin, *frame, *hbox;
@@ -331,7 +332,7 @@ make_selection(ObjectList_t *object_list)
   gtk_container_add(GTK_CONTAINER(frame), hbox);
   gtk_widget_show(hbox);
 
-  toolbar = make_selection_toolbar ();
+  toolbar = make_selection_toolbar (imap);
   gtk_box_pack_start (GTK_BOX (hbox), toolbar, TRUE, TRUE, 0);
 
   /* Create selection */
@@ -418,7 +419,7 @@ make_selection(ObjectList_t *object_list)
   /* Callbacks we are interested in */
   data->selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));
   gtk_tree_selection_set_mode (data->selection, GTK_SELECTION_MULTIPLE);
-  g_signal_connect (data->selection, "changed", G_CALLBACK(changed_cb), data);
+  g_signal_connect (data->selection, "changed", G_CALLBACK (changed_cb), data);
 
   /* Set object list callbacks we're interested in */
   object_list_add_add_cb (object_list, object_added_cb, data);

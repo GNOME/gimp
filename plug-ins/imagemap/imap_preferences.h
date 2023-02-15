@@ -49,8 +49,10 @@ typedef struct {
    ColorSelData_t       colors;
 } PreferencesData_t;
 
-void do_preferences_dialog(void);
-gboolean preferences_load(PreferencesData_t *data);
-void preferences_save(PreferencesData_t *data);
+void     do_preferences_dialog (GSimpleAction     *action,
+                                GVariant          *parameter,
+                                gpointer           user_data);
+gboolean preferences_load      (PreferencesData_t *data);
+void     preferences_save      (PreferencesData_t *data);
 
 #endif /* _IMAP_PREFERENCES_H */

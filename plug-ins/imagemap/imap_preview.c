@@ -128,10 +128,12 @@ render_preview (Preview_t *preview_base,
 }
 
 static gboolean
-arrow_cb(GtkWidget *widget, GdkEventButton *event, gpointer data)
+arrow_cb (GtkWidget      *widget,
+          GdkEventButton *event,
+          gpointer        data)
 {
    if (event->button == 1)
-      do_main_popup_menu(event);
+      do_main_popup_menu (event, data);
    return TRUE;
 }
 
@@ -254,9 +256,10 @@ scroll_adj_changed (GtkAdjustment *adj,
 }
 
 Preview_t *
-make_preview (GimpDrawable *drawable)
+make_preview (GimpDrawable *drawable,
+              gpointer      imap)
 {
-   Preview_t *data = g_new(Preview_t, 1);
+   Preview_t *data = g_new (Preview_t, 1);
    GtkAdjustment *hadj;
    GtkAdjustment *vadj;
    GtkWidget *preview;
@@ -310,7 +313,7 @@ make_preview (GimpDrawable *drawable)
 
    g_signal_connect (button, "button-press-event",
                      G_CALLBACK (arrow_cb),
-                     NULL);
+                     imap);
 
    arrow = gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT,
                                          GTK_ICON_SIZE_BUTTON);

@@ -23,9 +23,14 @@
 #ifndef _IMAP_FILE_H
 #define _IMAP_FILE_H
 
-void do_file_open_dialog(void);
-void do_file_save_as_dialog(void);
-void do_file_error_dialog(const char *error, const char *filename);
+void do_file_open_dialog    (GSimpleAction *action,
+                             GVariant      *parameter,
+                             gpointer       user_data);
+void do_file_save_as_dialog (GSimpleAction *action,
+                             GVariant      *parameter,
+                             gpointer       user_data);
+void do_file_error_dialog   (const char    *error,
+                             const char    *filename);
 
 gboolean load_csim (const char* filename);
 gboolean load_cern (const char* filename);

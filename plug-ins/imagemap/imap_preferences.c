@@ -271,7 +271,7 @@ preferences_save(PreferencesData_t *data)
 }
 
 static void
-preferences_ok_cb(gpointer data)
+preferences_ok_cb (gpointer data)
 {
    PreferencesDialog_t *param = (PreferencesDialog_t*) data;
    PreferencesData_t *old_data = param->old_data;
@@ -299,12 +299,11 @@ preferences_ok_cb(gpointer data)
       GTK_TOGGLE_BUTTON(param->use_doublesized));
 
    old_data->mru_size =
-      gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(param->mru_size));
+      gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(param->mru_size));
    old_data->undo_levels =
-      gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(param->undo_levels));
-   mru_set_size(mru, old_data->mru_size);
-   menu_build_mru_items(mru);
-   command_list_set_undo_level(old_data->undo_levels);
+      gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(param->undo_levels));
+   mru_set_size (mru, old_data->mru_size);
+   command_list_set_undo_level (old_data->undo_levels);
 
    get_button_colors (param, colors);
 
@@ -504,7 +503,9 @@ create_preferences_dialog(void)
 }
 
 void
-do_preferences_dialog(void)
+do_preferences_dialog (GSimpleAction *action,
+                       GVariant      *parameter,
+                       gpointer       user_data)
 {
    static PreferencesDialog_t *dialog;
    PreferencesData_t *old_data;

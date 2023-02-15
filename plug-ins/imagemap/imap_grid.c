@@ -68,12 +68,13 @@ static gint grid_top = 0;
 static GridType_t grid_type = GRID_LINES;
 
 static void
-grid_settings_ok_cb(gpointer data)
+grid_settings_ok_cb (gpointer data)
 {
-   GridDialog_t *param = (GridDialog_t*) data;
-   gboolean new_snap;
+   GimpImap     *imap  = GIMP_IMAP (data);
+   GridDialog_t *param = (GridDialog_t*) imap->grid_data;
+   gboolean      new_snap;
 
-   new_snap = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->snap));
+   new_snap = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (param->snap));
    grid_width = gtk_spin_button_get_value_as_int(
       GTK_SPIN_BUTTON(param->width));
    grid_height = gtk_spin_button_get_value_as_int(
@@ -83,18 +84,24 @@ grid_settings_ok_cb(gpointer data)
    grid_top = gtk_spin_button_get_value_as_int(
       GTK_SPIN_BUTTON(param->top));
 
-   if (grid_snap != new_snap) {
-      grid_snap = new_snap;
-      menu_check_grid(grid_snap);
-   }
+   if (grid_snap != new_snap)
+     {
+       GAction  *action;
+
+       grid_snap = new_snap;
+
+       action = g_action_map_lookup_action (G_ACTION_MAP (imap->app), "grid");
+       g_simple_action_set_enabled (G_SIMPLE_ACTION (action), grid_snap);
+     }
    preview_redraw();
 }
 
 static void
-snap_toggled_cb(GtkWidget *widget, gpointer data)
+snap_toggled_cb (GtkWidget *widget,
+                 gpointer   data)
 {
    GridDialog_t *param = (GridDialog_t*) data;
-   gint sensitive = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+   gint sensitive = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
 
    gtk_widget_set_sensitive(param->type_frame, sensitive);
    gtk_widget_set_sensitive(param->granularity_frame, sensitive);
@@ -170,7 +177,7 @@ left_changed_cb(GtkWidget *widget, gpointer data)
 }
 
 static void
-top_changed_cb(GtkWidget *widget, gpointer data)
+top_changed_cb (GtkWidget *widget, gpointer data)
 {
    GridDialog_t *dialog = (GridDialog_t*) data;
 
@@ -183,18 +190,21 @@ top_changed_cb(GtkWidget *widget, gpointer data)
 }
 
 static GridDialog_t*
-create_grid_settings_dialog(void)
+create_grid_settings_dialog (gpointer user_data)
 {
-   GridDialog_t *data = g_new(GridDialog_t, 1);
+   GimpImap        *imap = GIMP_IMAP (user_data);
+   GridDialog_t    *data = g_new (GridDialog_t, 1);
    DefaultDialog_t *dialog;
-   GtkWidget *main_grid, *grid, *label;
-   GtkWidget *frame;
-   GtkWidget *hbox;
-   GtkWidget *button;
-   GtkWidget *chain_button;
+   GtkWidget       *main_grid, *grid, *label;
+   GtkWidget       *frame;
+   GtkWidget       *hbox;
+   GtkWidget       *button;
+   GtkWidget       *chain_button;
 
    data->dialog = dialog = make_default_dialog(_("Grid Settings"));
-   default_dialog_set_ok_cb(dialog, grid_settings_ok_cb, (gpointer) data);
+   imap->grid_data = data;
+
+   default_dialog_set_ok_cb (dialog, grid_settings_ok_cb, (gpointer) imap);
    main_grid = default_dialog_add_grid (dialog);
 
    data->snap = gtk_check_button_new_with_mnemonic(_("_Snap-to grid enabled"));
@@ -290,7 +300,7 @@ create_grid_settings_dialog(void)
                     G_CALLBACK (toggle_preview_cb), (gpointer) data);
    gtk_widget_show(data->preview);
 
-   snap_toggled_cb(data->snap, data);
+   snap_toggled_cb (data->snap, data);
 
    gtk_widget_show(grid);
    gtk_widget_show(frame);
@@ -299,19 +309,21 @@ create_grid_settings_dialog(void)
 }
 
 void
-do_grid_settings_dialog(void)
+do_grid_settings_dialog (GSimpleAction *action,
+                         GVariant      *parameter,
+                         gpointer       user_data)
 {
    static GridDialog_t* dialog;
    GtkWidget *type;
 
    if (!dialog)
-      dialog = create_grid_settings_dialog();
+    dialog = create_grid_settings_dialog (user_data);
 
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->snap), grid_snap);
-   gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->width), grid_width);
-   gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->height), grid_height);
-   gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->left), grid_left);
-   gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->top), grid_top);
+   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->snap), grid_snap);
+   gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->width), grid_width);
+   gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->height), grid_height);
+   gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->left), grid_left);
+   gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->top), grid_top);
 
    if (grid_type == GRID_HIDDEN)
       type = dialog->hidden;
@@ -319,9 +331,9 @@ do_grid_settings_dialog(void)
       type = dialog->lines;
    else
       type = dialog->crosses;
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(type), TRUE);
+   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(type), TRUE);
 
-   default_dialog_show(dialog->dialog);
+   default_dialog_show (dialog->dialog);
 }
 
 static void
@@ -352,7 +364,9 @@ draw_crosses(cairo_t *cr, gint width, gint height)
 }
 
 void
-draw_grid(cairo_t *cr, gint width, gint height)
+draw_grid (cairo_t *cr,
+           gint     width,
+           gint     height)
 {
   if (grid_snap && grid_type != GRID_HIDDEN)
     {
@@ -370,28 +384,38 @@ draw_grid(cairo_t *cr, gint width, gint height)
 }
 
 void
-toggle_grid(void)
+toggle_grid (GSimpleAction  *action,
+             GVariant       *new_state,
+             gpointer        user_data)
 {
-   grid_snap = !grid_snap;
-   preview_redraw();
+  GtkToggleToolButton *grid_toggle;
+
+  grid_snap = ! grid_snap;
+  preview_redraw();
+
+  g_simple_action_set_state (action, new_state);
+  grid_toggle = GTK_TOGGLE_TOOL_BUTTON (GIMP_IMAP (user_data)->grid_toggle);
+
+  gtk_toggle_tool_button_set_active (grid_toggle, grid_snap);
 }
 
 static gint
-grid_nearest_x(gint x)
+grid_nearest_x (gint x)
 {
    return grid_left + (x - grid_left + grid_width / 2) / grid_width
       * grid_width;
 }
 
 static gint
-grid_nearest_y(gint y)
+grid_nearest_y (gint y)
 {
    return grid_top + (y - grid_top + grid_height / 2) / grid_height
       * grid_height;
 }
 
 void
-round_to_grid(gint *x, gint *y)
+round_to_grid (gint *x,
+               gint *y)
 {
    if (grid_snap) {
       *x = grid_nearest_x(*x);

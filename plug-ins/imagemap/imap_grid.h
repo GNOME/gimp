@@ -23,12 +23,19 @@
 #ifndef _IMAP_GRID_H
 #define _IMAP_GRID_H
 
-void do_grid_settings_dialog (void);
-void draw_grid (cairo_t *cr, gint width, gint height);
-void toggle_grid (void);
-void round_to_grid (gint *x, gint *y);
+void do_grid_settings_dialog (GSimpleAction     *action,
+                              GVariant          *parameter,
+                              gpointer           user_data);
+void draw_grid               (cairo_t           *cr,
+                              gint               width,
+                              gint               height);
+void toggle_grid             (GSimpleAction     *action,
+                              GVariant          *new_state,
+                              gpointer           user_data);
+void round_to_grid           (gint              *x,
+                              gint              *y);
 
-gboolean grid_near_x (gint x);
-gboolean grid_near_y (gint y);
+gboolean grid_near_x         (gint               x);
+gboolean grid_near_y         (gint               y);
 
 #endif /* _IMAP_GRID_H */

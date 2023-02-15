@@ -39,8 +39,9 @@ typedef struct {
    GdkCursorType cursor;
 } Preview_t;
 
-Preview_t *make_preview(GimpDrawable *drawable);
-void preview_redraw(void);
+Preview_t *make_preview (GimpDrawable *drawable,
+                         gpointer      imap);
+void preview_redraw     (void);
 
 void preview_unset_tmp_obj (Object_t *obj);
 void preview_set_tmp_obj (Object_t *obj);

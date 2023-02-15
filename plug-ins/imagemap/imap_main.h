@@ -24,49 +24,70 @@
 #define _IMAP_MAIN_H
 
 #include "imap_mru.h"
+#include "imap_grid.h"
 #include "imap_object.h"
 #include "imap_preferences.h"
 #include "imap_preview.h"
+
+struct _GimpImap
+{
+  GimpPlugIn      parent_instance;
+  GtkApplication *app;
+
+  GtkWidget      *dlg;
+  GtkWidget      *grid_toggle;
+
+  gpointer        grid_data;
+  gchar          *tmp_filename;
+  GimpDrawable   *drawable;
+  gboolean        success;
+
+  GtkBuilder     *builder;
+};
 
 #define PLUG_IN_PROC   "plug-in-imagemap"
 #define PLUG_IN_BINARY "imagemap"
 #define PLUG_IN_ROLE   "gimp-imagemap"
 
+#define GIMP_TYPE_IMAP  (gimp_imap_get_type ())
+G_DECLARE_FINAL_TYPE (GimpImap, gimp_imap, GIMP, IMAP, GimpPlugIn)
+
 typedef enum {NCSA, CERN, CSIM} MapFormat_t;
 
 typedef struct {
    MapFormat_t map_format;
-   gchar *image_name;
-   gchar *title;
-   gchar *author;
-   gchar *default_url;
-   gchar *description;
-   gint   old_image_width;
-   gint   old_image_height;
+   gchar   *image_name;
+   gchar   *title;
+   gchar   *author;
+   gchar   *default_url;
+   gchar   *description;
+   gint     old_image_width;
+   gint     old_image_height;
    gboolean color;              /* Color (TRUE) or Gray (FALSE) */
    gboolean show_gray;
 } MapInfo_t;
 
-void main_set_dimension(gint width, gint height);
-void main_clear_dimension(void);
-void load(const gchar *filename);
-void save_as(const gchar *filename);
-void dump_output(gpointer param, OutputFunc_t output);
-GtkWidget *get_dialog(void);
-MRU_t *get_mru(void);
-MapInfo_t *get_map_info(void);
-PreferencesData_t *get_preferences(void);
+void main_set_dimension (gint width, gint height);
+void main_clear_dimension (void);
+void load (const gchar *filename,
+           gpointer     data);
+void save_as (const gchar *filename);
+void dump_output (gpointer param, OutputFunc_t output);
+GtkWidget *get_dialog (void);
+MRU_t *get_mru (void);
+MapInfo_t *get_map_info (void);
+PreferencesData_t *get_preferences (void);
 
-gint get_image_width(void);
-gint get_image_height(void);
+gint get_image_width  (void);
+gint get_image_height (void);
 
-void set_busy_cursor(void);
-void remove_busy_cursor(void);
+void set_busy_cursor    (void);
+void remove_busy_cursor (void);
 
-void main_toolbar_set_grid(gboolean active);
+void main_toolbar_set_grid (gboolean active);
 
-void set_zoom(gint zoom_factor);
-gint get_real_coord(gint coord);
+void set_zoom       (gint zoom_factor);
+gint get_real_coord (gint coord);
 void draw_line(cairo_t *cr, gint x1, gint y1, gint x2,
                gint y2);
 void draw_rectangle(cairo_t *cr, gboolean filled, gint x, gint y,
@@ -83,43 +104,101 @@ void update_shape(Object_t *obj);
 void select_shape(GtkWidget *widget, GdkEventButton *event);
 void edit_shape(gint x, gint y);
 
-void do_popup_menu(GdkEventButton *event);
+void do_popup_menu (GdkEventButton *event,
+                    gpointer        data);
 void draw_shapes(cairo_t *cr);
 
 void show_url(void);
 void hide_url(void);
 
-void            set_preview_color          (GtkRadioAction *action,
-                                            GtkRadioAction *current,
+void            set_preview_color          (GSimpleAction  *action,
+                                            GVariant       *new_state,
                                             gpointer        user_data);
-void            set_zoom_factor            (GtkRadioAction *action,
-                                            GtkRadioAction *current,
+void            set_zoom_factor            (GSimpleAction  *action,
+                                            GVariant       *new_state,
                                             gpointer        user_data);
-void            set_func                   (GtkRadioAction *action,
-                                            GtkRadioAction *current,
+void            set_func                   (GSimpleAction  *action,
+                                            GVariant       *new_state,
                                             gpointer        user_data);
-void            do_edit_selected_shape     (void);
-void            do_zoom_in                 (void);
-void            do_zoom_out                (void);
-void            do_close                   (void);
-void            do_quit                    (void);
-void            do_undo                    (void);
-void            do_redo                    (void);
-void            do_cut                     (void);
-void            do_copy                    (void);
-void            do_paste                   (void);
-void            do_select_all              (void);
-void            do_deselect_all            (void);
-void            do_clear                   (void);
-void            do_move_up                 (void);
-void            do_move_down               (void);
-void            do_move_to_front           (void);
-void            do_send_to_back            (void);
-void            do_use_gimp_guides_dialog  (void);
-void            do_create_guides_dialog    (void);
-void            save                       (void);
-void            imap_help                  (void);
-void            toggle_area_list           (void);
+void            do_edit_selected_shape     (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_zoom_in                 (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_zoom_out                (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_close                   (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_quit                    (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_undo                    (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_redo                    (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_cut                     (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_copy                    (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_paste                   (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_select_all              (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_deselect_all            (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_clear                   (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_move_up                 (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_move_down               (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_move_to_front           (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_send_to_back            (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_use_gimp_guides_dialog  (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            do_create_guides_dialog    (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            save                       (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            imap_help                  (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
+void            toggle_area_list           (GSimpleAction *action,
+                                            GVariant      *new_state,
+                                            gpointer       user_data);
 const gchar *   get_image_name             (void);
+
+GtkWidget *     add_tool_button            (GtkWidget     *toolbar,
+                                            const char    *action,
+                                            const char    *icon,
+                                            const char    *label,
+                                            const char    *tooltip);
+GtkWidget *     add_toggle_button          (GtkWidget     *toolbar,
+                                            const char    *action,
+                                            const char    *icon,
+                                            const char    *label,
+                                            const char    *tooltip);
+void            add_tool_separator         (GtkWidget     *toolbar,
+                                            gboolean       expand);
 
 #endif /* _IMAP_MAIN_H */

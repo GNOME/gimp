@@ -46,7 +46,8 @@ typedef struct {
   CommandFactory_t cmd_edit;
 } Selection_t;
 
-Selection_t *make_selection(ObjectList_t *list);
+Selection_t *make_selection (ObjectList_t *list,
+                             GimpImap     *imap);
 void selection_toggle_visibility(Selection_t *selection);
 void selection_freeze(Selection_t *selection);
 void selection_thaw(Selection_t *selection);

@@ -32,8 +32,12 @@ typedef struct {
    Object_t  *obj;
 } ObjectPopup_t;
 
-void object_handle_popup(ObjectPopup_t *popup, Object_t *obj,
-                         GdkEventButton *event);
-void object_do_popup(Object_t *obj, GdkEventButton *event);
+void object_handle_popup (ObjectPopup_t  *popup,
+                          Object_t       *obj,
+                          GdkEventButton *event,
+                          GimpImap       *imap);
+void object_do_popup     (Object_t       *obj,
+                          GdkEventButton *event,
+                          gpointer        data);
 
 #endif /* _IMAP_OBJECT_POPUP_H */

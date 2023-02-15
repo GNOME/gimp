@@ -25,21 +25,29 @@
 
 #include "imap_object.h"
 
-typedef struct {
-   Object_t obj;
-   GList *points;
+typedef struct
+{
+  Object_t obj;
+  GList *points;
 } Polygon_t;
 
 #define ObjectToPolygon(obj) ((Polygon_t*) (obj))
 
-Object_t *create_polygon (GList *points);
-ObjectFactory_t *get_polygon_factory (guint state);
+Object_t        *create_polygon      (GList *points);
+ObjectFactory_t *get_polygon_factory (guint  state);
 
-void polygon_insert_point (void);
-void polygon_delete_point (void);
+void polygon_insert_point      (GSimpleAction *action,
+                                GVariant      *new_state,
+                                gpointer       user_data);
+void polygon_delete_point      (GSimpleAction *action,
+                                GVariant      *new_state,
+                                gpointer       user_data);
 
-void polygon_remove_last_point (Polygon_t *polygon);
-void polygon_append_point (Polygon_t *polygon, gint x, gint y);
-GdkPoint *new_point (gint x, gint y);
+void polygon_remove_last_point (Polygon_t     *polygon);
+void polygon_append_point      (Polygon_t     *polygon,
+                                gint           x,
+                                gint           y);
+GdkPoint *new_point            (gint           x,
+                                gint           y);
 
 #endif /* _IMAP_POLYGON_H */

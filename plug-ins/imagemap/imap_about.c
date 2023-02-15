@@ -30,7 +30,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 void
-do_about_dialog(void)
+do_about_dialog (GSimpleAction *action,
+                 GVariant      *parameter,
+                 gpointer       user_data)
 {
    static GtkWidget *dialog;
    if (!dialog)

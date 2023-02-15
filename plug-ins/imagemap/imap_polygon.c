@@ -65,7 +65,9 @@ static void polygon_write_cern(Object_t* obj, gpointer param,
                                OutputFunc_t output);
 static void polygon_write_ncsa(Object_t* obj, gpointer param,
                                OutputFunc_t output);
-static void polygon_do_popup(Object_t *obj, GdkEventButton *event);
+static void polygon_do_popup  (Object_t       *obj,
+                               GdkEventButton *event,
+                               gpointer        data);
 static const gchar* polygon_get_icon_name(void);
 
 static ObjectClass_t polygon_class = {
@@ -656,7 +658,9 @@ static gint _insert_x;
 static gint _insert_y;
 
 void
-polygon_insert_point(void)
+polygon_insert_point (GSimpleAction *action,
+                      GVariant      *new_state,
+                      gpointer       user_data)
 {
   Command_t *command = insert_point_command_new (_current_obj, _insert_x,
                                                  _insert_y, _insert_edge);
@@ -664,7 +668,9 @@ polygon_insert_point(void)
 }
 
 void
-polygon_delete_point(void)
+polygon_delete_point (GSimpleAction *action,
+                      GVariant      *new_state,
+                      gpointer       user_data)
 {
   Command_t *command = delete_point_command_new(_current_obj, _sash_point);
   command_execute (command);
@@ -708,30 +714,41 @@ polygon_near_edge(Object_t *obj, gint x, gint y)
 }
 
 static void
-polygon_handle_popup (GdkEventButton *event, gboolean near_sash,
-                      gboolean near_edge)
+polygon_handle_popup (GdkEventButton *event,
+                      GimpImap       *imap,
+                      gboolean        near_sash,
+                      gboolean        near_edge)
 {
-  GtkWidget *popup = menu_get_widget ("/PolygonPopupMenu");
-  GtkWidget *delete = menu_get_widget ("/PolygonPopupMenu/DeletePoint");
-  GtkWidget *insert = menu_get_widget ("/PolygonPopupMenu/InsertPoint");
+  GtkWidget  *menu;
+  GMenuModel *model;
+  GAction    *action;
 
-  gtk_widget_set_sensitive (delete, near_sash);
-  gtk_widget_set_sensitive (insert, near_edge);
+  model = G_MENU_MODEL (gtk_builder_get_object (imap->builder, "imap-polygon-popup"));
+  menu = gtk_menu_new_from_model (model);
 
-  gtk_menu_popup_at_pointer (GTK_MENU (popup), (GdkEvent *) event);
+  action = g_action_map_lookup_action (G_ACTION_MAP (imap->app), "insert-point");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action), near_edge);
+  action = g_action_map_lookup_action (G_ACTION_MAP (imap->app), "delete-point");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action), near_sash);
+
+  gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET (imap->dlg), NULL);
+  gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
 }
 
 static void
-polygon_do_popup(Object_t *obj, GdkEventButton *event)
+polygon_do_popup (Object_t       *obj,
+                  GdkEventButton *event,
+                  gpointer        data)
 {
-  gint x = get_real_coord ((gint) event->x);
-  gint y = get_real_coord ((gint) event->y);
+  gint       x   = get_real_coord ((gint) event->x);
+  gint       y   = get_real_coord ((gint) event->y);
+  GimpImap *imap = GIMP_IMAP (data);
 
   _current_obj = obj;
 
   if (polygon_near_sash (obj, x, y))
     {
-      polygon_handle_popup (event, TRUE, FALSE);
+      polygon_handle_popup (event, imap, TRUE, FALSE);
     }
   else
     {
@@ -739,13 +756,14 @@ polygon_do_popup(Object_t *obj, GdkEventButton *event)
       if (_insert_edge)
         {
           _insert_x = x;
-           _insert_y = y;
+          _insert_y = y;
 
-           polygon_handle_popup (event, FALSE, TRUE);
+          polygon_handle_popup (event,imap, FALSE, TRUE);
         }
-      else {
-        object_do_popup (obj, event);
-      }
+      else
+        {
+          object_do_popup (obj, event, imap);
+        }
     }
 }
 

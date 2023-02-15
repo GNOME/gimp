@@ -75,7 +75,9 @@ struct ObjectClass_t {
    void (*write_csim)(Object_t *obj, gpointer param, OutputFunc_t output);
    void (*write_cern)(Object_t *obj, gpointer param, OutputFunc_t output);
    void (*write_ncsa)(Object_t *obj, gpointer param, OutputFunc_t output);
-   void (*do_popup)(Object_t *obj, GdkEventButton *event);
+   void (*do_popup)(Object_t *obj,
+                    GdkEventButton *event,
+                    gpointer        data);
 
    const gchar* (*get_icon_name)(void);
 };

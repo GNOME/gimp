@@ -23,16 +23,16 @@
 #ifndef _IMAP_ICONS_H
 #define _IMAP_ICONS_H
 
-#define IMAP_ARROW        "imap-arrow"
-#define IMAP_CIRCLE       "imap-circle"
-#define IMAP_COORD        "imap-coord"
-#define IMAP_DIMENSION    "imap-dimension"
-#define IMAP_JAVA         "imap-java"
-#define IMAP_LINK         "imap-link"
-#define IMAP_POLYGON      "imap-polygon"
-#define IMAP_RECTANGLE    "imap-rectangle"
-#define IMAP_TO_BACK      "imap-to-back"
-#define IMAP_TO_FRONT     "imap-to-front"
+#define IMAP_ARROW        "imagemap-arrow"
+#define IMAP_CIRCLE       "imagemap-circle"
+#define IMAP_COORD        "imagemap-coord"
+#define IMAP_DIMENSION    "imagemap-dimension"
+#define IMAP_JAVA         "imagemap-java"
+#define IMAP_LINK         "imagemap-link"
+#define IMAP_POLYGON      "imagemap-polygon"
+#define IMAP_RECTANGLE    "imagemap-rectangle"
+#define IMAP_TO_BACK      "imagemap-to-back"
+#define IMAP_TO_FRONT     "imagemap-to-front"
 
 void init_icons (void);
 

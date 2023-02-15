@@ -39,6 +39,7 @@
 #include "imap_default_dialog.h"
 #include "imap_edit_area_info.h"
 #include "imap_file.h"
+#include "imap_grid.h"
 #include "imap_icons.h"
 #include "imap_main.h"
 #include "imap_menu.h"
@@ -61,24 +62,9 @@
 #define GET_REAL_COORD(x) ((x) / _zoom_factor)
 
 
-typedef struct _Imap      Imap;
-typedef struct _ImapClass ImapClass;
-
-struct _Imap
-{
-  GimpPlugIn parent_instance;
-};
-
-struct _ImapClass
-{
-  GimpPlugInClass parent_class;
-};
-
-
-#define IMAP_TYPE  (imap_get_type ())
-#define IMAP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), IMAP_TYPE, Imap))
-
 GType                   imap_get_type         (void) G_GNUC_CONST;
+
+static void             gimp_imap_finalize    (GObject              *object);
 
 static GList          * imap_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * imap_create_procedure (GimpPlugIn           *plug_in,
@@ -92,14 +78,21 @@ static GimpValueArray * imap_run              (GimpProcedure        *procedure,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
-static gint             dialog                (GimpDrawable         *drawable);
-static gint             zoom_in               (void);
-static gint             zoom_out              (void);
+static gint             dialog                (GimpImap             *imap);
+static gint             zoom_in               (gpointer              data);
+static gint             zoom_out              (gpointer              data);
+
+static void             on_app_activate       (GApplication         *gapp,
+                                               gpointer              user_data);
+static void             window_destroy        (GtkWidget            *widget,
+                                               gpointer              data);
 
 
-G_DEFINE_TYPE (Imap, imap, GIMP_TYPE_PLUG_IN)
 
-GIMP_MAIN (IMAP_TYPE)
+
+G_DEFINE_TYPE (GimpImap, gimp_imap, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (GIMP_TYPE_IMAP)
 DEFINE_STD_SET_I18N
 
 
@@ -127,11 +120,60 @@ static gpointer _button_press_param;
 
 static int      run_flag = 0;
 
+static const GActionEntry ACTIONS[] =
+{
+  /* Sub-menu options */
+  { "open", do_file_open_dialog },
+  { "save", save },
+  { "save-as", do_file_save_as_dialog },
+  { "close", do_close },
+  { "quit", do_quit },
+
+  { "cut", do_cut },
+  { "copy", do_copy },
+  { "paste", do_paste },
+  { "select-all", do_select_all },
+  { "deselect-all", do_deselect_all },
+  { "clear", do_clear },
+  { "undo", do_undo },
+  { "redo", do_redo },
+  { "zoom-in", do_zoom_in },
+  { "zoom-out", do_zoom_out },
+  { "move-to-front", do_move_to_front },
+  { "send-to-back", do_send_to_back },
+  { "move-up", do_move_up },
+  { "move-down", do_move_down },
+  { "insert-point", polygon_insert_point },
+  { "delete-point", polygon_delete_point },
+
+  { "preferences", do_preferences_dialog },
+  { "source", do_source_dialog },
+  { "edit-area-info", do_edit_selected_shape },
+  { "edit-map-info", do_settings_dialog },
+  { "grid-settings", do_grid_settings_dialog },
+  { "use-gimp-guides", do_use_gimp_guides_dialog },
+  { "create-guides", do_create_guides_dialog },
+
+  { "contents", imap_help },
+  { "about", do_about_dialog },
+
+  /* Toggle Options */
+  { "grid", NULL, NULL, "false", toggle_grid },
+  { "area-list", NULL, NULL, "true", toggle_area_list },
+
+  /* Radio Options */
+  { "zoom", set_zoom_factor, "s", "'1'", NULL },
+  { "colormode", set_preview_color, "s", "'color'", NULL },
+  { "shape", set_func, "s", "'arrow'", NULL },
+};
 
 static void
-imap_class_init (ImapClass *klass)
+gimp_imap_class_init (GimpImapClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  GimpPlugInClass *plug_in_class  = GIMP_PLUG_IN_CLASS (klass);
+  GObjectClass    *object_class   = G_OBJECT_CLASS (klass);
+
+  object_class->finalize          = gimp_imap_finalize;
 
   plug_in_class->query_procedures = imap_query_procedures;
   plug_in_class->create_procedure = imap_create_procedure;
@@ -139,8 +181,18 @@ imap_class_init (ImapClass *klass)
 }
 
 static void
-imap_init (Imap *imap)
+gimp_imap_init (GimpImap *imap)
 {
+}
+
+static void
+gimp_imap_finalize (GObject *object)
+{
+  GimpImap *imap = GIMP_IMAP (object);
+
+  G_OBJECT_CLASS (gimp_imap_parent_class)->finalize (object);
+
+  g_clear_object (&imap->builder);
 }
 
 static GList *
@@ -151,7 +203,7 @@ imap_query_procedures (GimpPlugIn *plug_in)
 
 static GimpProcedure *
 imap_create_procedure (GimpPlugIn  *plug_in,
-                           const gchar *name)
+                       const gchar *name)
 {
   GimpProcedure *procedure = NULL;
 
@@ -183,14 +235,394 @@ imap_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 imap_run (GimpProcedure        *procedure,
-         GimpRunMode           run_mode,
-         GimpImage            *image,
-         gint                  n_drawables,
-         GimpDrawable        **drawables,
-         const GimpValueArray *args,
-         gpointer              run_data)
+          GimpRunMode           run_mode,
+          GimpImage            *image,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
+          const GimpValueArray *args,
+          gpointer              run_data)
 {
+  GimpImap *imap;
+
   gegl_init (NULL, NULL);
+
+  imap            = GIMP_IMAP (gimp_procedure_get_plug_in (procedure));
+  imap->app       = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
+  imap->success   = FALSE;
+
+  imap->builder = gtk_builder_new_from_string (
+      "<interface>"
+        "<menu id=\"imap-menubar\">"
+            "<submenu>"
+              "<attribute name=\"label\">File</attribute>"
+                "<section>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Open</attribute>"
+                    "<attribute name=\"action\">app.open</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Save</attribute>"
+                    "<attribute name=\"action\">app.save</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Save As</attribute>"
+                    "<attribute name=\"action\">app.save-as</attribute>"
+                  "</item>"
+                "</section>"
+                "<section>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Close</attribute>"
+                    "<attribute name=\"action\">app.close</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Quit</attribute>"
+                    "<attribute name=\"action\">app.quit</attribute>"
+                  "</item>"
+                "</section>"
+            "</submenu>"
+            "<submenu>"
+              "<attribute name=\"label\">Edit</attribute>"
+                "<section id=\"imap-menubar-edit\">"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Undo</attribute>"
+                    "<attribute name=\"action\">app.undo</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Redo</attribute>"
+                    "<attribute name=\"action\">app.redo</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Cut</attribute>"
+                    "<attribute name=\"action\">app.cut</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Copy</attribute>"
+                    "<attribute name=\"action\">app.copy</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Paste</attribute>"
+                    "<attribute name=\"action\">app.paste</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Clear</attribute>"
+                    "<attribute name=\"action\">app.clear</attribute>"
+                  "</item>"
+                "</section>"
+                "<section>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Select All</attribute>"
+                    "<attribute name=\"action\">app.select-all</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Deselect All</attribute>"
+                    "<attribute name=\"action\">app.deselect-all</attribute>"
+                  "</item>"
+                "</section>"
+                "<section>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Edit Area Info</attribute>"
+                    "<attribute name=\"action\">app.edit-area-info</attribute>"
+                  "</item>"
+                "</section>"
+                "<section>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Preferences</attribute>"
+                    "<attribute name=\"action\">app.preferences</attribute>"
+                  "</item>"
+                "</section>"
+            "</submenu>"
+            "<submenu>"
+              "<attribute name=\"label\">View</attribute>"
+                "<section>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Area List</attribute>"
+                    "<attribute name=\"action\">app.area-list</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Source...</attribute>"
+                    "<attribute name=\"action\">app.source</attribute>"
+                  "</item>"
+                "</section>"
+                "<section>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Color</attribute>"
+                    "<attribute name=\"action\">app.colormode</attribute>"
+                    "<attribute name=\"target\">color</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Gray</attribute>"
+                    "<attribute name=\"action\">app.colormode</attribute>"
+                    "<attribute name=\"target\">gray</attribute>"
+                  "</item>"
+                "</section>"
+                "<section>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Zoom In</attribute>"
+                    "<attribute name=\"action\">app.zoom-in</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Zoom Out</attribute>"
+                    "<attribute name=\"action\">app.zoom-out</attribute>"
+                  "</item>"
+                  "<submenu>"
+                    "<attribute name=\"label\">Zoom To</attribute>"
+                      "<section>"
+                        "<item>"
+                          "<attribute name=\"label\" translatable=\"yes\">1:1</attribute>"
+                          "<attribute name=\"action\">app.zoom</attribute>"
+                          "<attribute name=\"target\">1</attribute>"
+                        "</item>"
+                        "<item>"
+                          "<attribute name=\"label\" translatable=\"yes\">1:2</attribute>"
+                          "<attribute name=\"action\">app.zoom</attribute>"
+                          "<attribute name=\"target\">2</attribute>"
+                        "</item>"
+                        "<item>"
+                          "<attribute name=\"label\" translatable=\"yes\">1:3</attribute>"
+                          "<attribute name=\"action\">app.zoom</attribute>"
+                          "<attribute name=\"target\">3</attribute>"
+                        "</item>"
+                        "<item>"
+                          "<attribute name=\"label\" translatable=\"yes\">1:4</attribute>"
+                          "<attribute name=\"action\">app.zoom</attribute>"
+                          "<attribute name=\"target\">4</attribute>"
+                        "</item>"
+                        "<item>"
+                          "<attribute name=\"label\" translatable=\"yes\">1:5</attribute>"
+                          "<attribute name=\"action\">app.zoom</attribute>"
+                          "<attribute name=\"target\">5</attribute>"
+                        "</item>"
+                        "<item>"
+                          "<attribute name=\"label\" translatable=\"yes\">1:6</attribute>"
+                          "<attribute name=\"action\">app.zoom</attribute>"
+                          "<attribute name=\"target\">6</attribute>"
+                        "</item>"
+                        "<item>"
+                          "<attribute name=\"label\" translatable=\"yes\">1:7</attribute>"
+                          "<attribute name=\"action\">app.zoom</attribute>"
+                          "<attribute name=\"target\">7</attribute>"
+                        "</item>"
+                        "<item>"
+                          "<attribute name=\"label\" translatable=\"yes\">1:8</attribute>"
+                          "<attribute name=\"action\">app.zoom</attribute>"
+                          "<attribute name=\"target\">8</attribute>"
+                        "</item>"
+                      "</section>"
+                  "</submenu>"
+                "</section>"
+            "</submenu>"
+            "<submenu>"
+              "<attribute name=\"label\">Mappings</attribute>"
+                "<section>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Arrow</attribute>"
+                    "<attribute name=\"action\">app.shape</attribute>"
+                    "<attribute name=\"target\">arrow</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Rectangle</attribute>"
+                    "<attribute name=\"action\">app.shape</attribute>"
+                    "<attribute name=\"target\">rectangle</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Circle</attribute>"
+                    "<attribute name=\"action\">app.shape</attribute>"
+                    "<attribute name=\"target\">circle</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Polygon</attribute>"
+                    "<attribute name=\"action\">app.shape</attribute>"
+                    "<attribute name=\"target\">polygon</attribute>"
+                  "</item>"
+              "</section>"
+              "<section>"
+                "<item>"
+                  "<attribute name=\"label\" translatable=\"yes\">Edit Map Info...</attribute>"
+                  "<attribute name=\"action\">app.edit-map-info</attribute>"
+                "</item>"
+              "</section>"
+            "</submenu>"
+            "<submenu>"
+              "<attribute name=\"label\">Tools</attribute>"
+                "<section>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Grid</attribute>"
+                    "<attribute name=\"action\">app.grid</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Grid Settings...</attribute>"
+                    "<attribute name=\"action\">app.grid-settings</attribute>"
+                  "</item>"
+                "</section>"
+                "<section>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Use GIMP Guides...</attribute>"
+                    "<attribute name=\"action\">app.use-gimp-guides</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Create Guides...</attribute>"
+                    "<attribute name=\"action\">app.create-guides</attribute>"
+                  "</item>"
+                "</section>"
+            "</submenu>"
+            "<submenu>"
+              "<attribute name=\"label\">Help</attribute>"
+                "<section>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Contents</attribute>"
+                    "<attribute name=\"action\">app.contents</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">About</attribute>"
+                    "<attribute name=\"action\">app.about</attribute>"
+                  "</item>"
+                "</section>"
+            "</submenu>"
+        "</menu>"
+
+        "<menu id=\"imap-selectionbar\">"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Move Up</attribute>"
+              "<attribute name=\"action\">app.move-up</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Move Down</attribute>"
+              "<attribute name=\"action\">app.move-down</attribute>"
+            "</item>"
+          "</section>"
+        "</menu>"
+
+        "<menu id=\"imap-main-popup\">"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Edit Map Info...</attribute>"
+              "<attribute name=\"action\">app.edit-map-info</attribute>"
+            "</item>"
+            "<submenu>"
+              "<attribute name=\"label\">Tools</attribute>"
+                "<section>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Arrow</attribute>"
+                    "<attribute name=\"action\">app.shape</attribute>"
+                    "<attribute name=\"target\">arrow</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Rectangle</attribute>"
+                    "<attribute name=\"action\">app.shape</attribute>"
+                    "<attribute name=\"target\">rectangle</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Circle</attribute>"
+                    "<attribute name=\"action\">app.shape</attribute>"
+                    "<attribute name=\"target\">circle</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Polygon</attribute>"
+                    "<attribute name=\"action\">app.shape</attribute>"
+                    "<attribute name=\"target\">polygon</attribute>"
+                  "</item>"
+                "</section>"
+            "</submenu>"
+            "<submenu>"
+              "<attribute name=\"label\">Zoom</attribute>"
+                "<section>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Zoom In</attribute>"
+                    "<attribute name=\"action\">app.zoom-in</attribute>"
+                  "</item>"
+                  "<item>"
+                    "<attribute name=\"label\" translatable=\"yes\">Zoom Out</attribute>"
+                    "<attribute name=\"action\">app.zoom-out</attribute>"
+                  "</item>"
+                "</section>"
+            "</submenu>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Grid</attribute>"
+              "<attribute name=\"action\">app.grid</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Grid Settings...</attribute>"
+              "<attribute name=\"action\">app.grid-settings</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Create Guides...</attribute>"
+              "<attribute name=\"action\">app.create-guides</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Paste</attribute>"
+              "<attribute name=\"action\">app.paste</attribute>"
+            "</item>"
+          "</section>"
+        "</menu>"
+
+        "<menu id=\"imap-object-popup\">"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Edit Area Info...</attribute>"
+              "<attribute name=\"action\">app.edit-area-info</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Delete Area</attribute>"
+              "<attribute name=\"action\">app.clear</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Move Up</attribute>"
+              "<attribute name=\"action\">app.move-up</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Move Down</attribute>"
+              "<attribute name=\"action\">app.move-down</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Cut</attribute>"
+              "<attribute name=\"action\">app.cut</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Copy</attribute>"
+              "<attribute name=\"action\">app.copy</attribute>"
+            "</item>"
+          "</section>"
+        "</menu>"
+
+        "<menu id=\"imap-polygon-popup\">"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Insert Point</attribute>"
+              "<attribute name=\"action\">app.insert-point</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Delete Point</attribute>"
+              "<attribute name=\"action\">app.delete-point</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Edit Area Info...</attribute>"
+              "<attribute name=\"action\">app.edit-area-info</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Delete Area</attribute>"
+              "<attribute name=\"action\">app.delete-area</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Move Up</attribute>"
+              "<attribute name=\"action\">app.move-up</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Move Down</attribute>"
+              "<attribute name=\"action\">app.move-down</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Cut</attribute>"
+              "<attribute name=\"action\">app.cut</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Copy</attribute>"
+              "<attribute name=\"action\">app.copy</attribute>"
+            "</item>"
+          "</section>"
+        "</menu>"
+      "</interface>",
+      -1);
 
   if (n_drawables != 1)
     {
@@ -214,13 +646,18 @@ imap_run (GimpProcedure        *procedure,
   _image_height = gimp_image_get_height (image);
 
   _map_info.color = gimp_drawable_is_rgb (_drawable);
+  imap->drawable  = _drawable;
 
   if (run_mode != GIMP_RUN_INTERACTIVE)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_CALLING_ERROR,
                                              NULL);
 
-  if (! dialog (_drawable))
+  g_signal_connect (imap->app, "activate", G_CALLBACK (on_app_activate), imap);
+  g_application_run (G_APPLICATION (imap->app), 0, NULL);
+  g_clear_object (&imap->app);
+
+  if (! imap->success)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              NULL);
@@ -231,107 +668,109 @@ imap_run (GimpProcedure        *procedure,
 }
 
 GtkWidget*
-get_dialog(void)
+get_dialog (void)
 {
   return _dlg;
 }
 
 MRU_t*
-get_mru(void)
+get_mru (void)
 {
-   if (!_mru)
-      _mru = mru_create();
-   return _mru;
+  if (!_mru)
+    _mru = mru_create();
+  return _mru;
 }
 
 MapInfo_t*
-get_map_info(void)
+get_map_info (void)
 {
-   return &_map_info;
+  return &_map_info;
 }
 
 PreferencesData_t*
-get_preferences(void)
+get_preferences (void)
 {
-   return &_preferences;
+  return &_preferences;
 }
 
 static void
-init_preferences(void)
+init_preferences (void)
 {
-   ColorSelData_t *colors = &_preferences.colors;
+  ColorSelData_t *colors = &_preferences.colors;
 
-   colors->normal_fg.red = 0;
-   colors->normal_fg.green = 0xFFFF;
-   colors->normal_fg.blue = 0;
+  colors->normal_fg.red = 0;
+  colors->normal_fg.green = 0xFFFF;
+  colors->normal_fg.blue = 0;
 
-   colors->normal_bg.red = 0;
-   colors->normal_bg.green = 0;
-   colors->normal_bg.blue = 0xFFFF;
+  colors->normal_bg.red = 0;
+  colors->normal_bg.green = 0;
+  colors->normal_bg.blue = 0xFFFF;
 
-   colors->selected_fg.red = 0xFFFF;
-   colors->selected_fg.green = 0;
-   colors->selected_fg.blue = 0;
+  colors->selected_fg.red = 0xFFFF;
+  colors->selected_fg.green = 0;
+  colors->selected_fg.blue = 0;
 
-   colors->selected_bg.red = 0;
-   colors->selected_bg.green = 0;
-   colors->selected_bg.blue = 0xFFFF;
+  colors->selected_bg.red = 0;
+  colors->selected_bg.green = 0;
+  colors->selected_bg.blue = 0xFFFF;
 
-   colors->interactive_fg.red = 0xFFFF;
-   colors->interactive_fg.green = 0;
-   colors->interactive_fg.blue = 0xFFFF;
+  colors->interactive_fg.red = 0xFFFF;
+  colors->interactive_fg.green = 0;
+  colors->interactive_fg.blue = 0xFFFF;
 
-   colors->interactive_bg.red = 0xFFFF;
-   colors->interactive_bg.green = 0xFFFF;
-   colors->interactive_bg.blue = 0;
+  colors->interactive_bg.red = 0xFFFF;
+  colors->interactive_bg.green = 0xFFFF;
+  colors->interactive_bg.blue = 0;
 
-   preferences_load(&_preferences);
+  preferences_load (&_preferences);
 
-   mru_set_size(_mru, _preferences.mru_size);
-   command_list_set_undo_level(_preferences.undo_levels);
+  mru_set_size (_mru, _preferences.mru_size);
+  command_list_set_undo_level (_preferences.undo_levels);
 }
 
 gint
-get_image_width(void)
+get_image_width (void)
 {
-   return _image_width;
+  return _image_width;
 }
 
 gint
-get_image_height(void)
+get_image_height (void)
 {
-   return _image_height;
+  return _image_height;
 }
 
 void
-set_busy_cursor(void)
+set_busy_cursor (void)
 {
-   preview_set_cursor(_preview, GDK_WATCH);
+  preview_set_cursor(_preview, GDK_WATCH);
 }
 
 void
-remove_busy_cursor(void)
+remove_busy_cursor (void)
 {
   gdk_window_set_cursor(gtk_widget_get_window (_dlg), NULL);
 }
 
 static gint
-zoom_in(void)
+zoom_in (gpointer data)
 {
-   if (_zoom_factor < MAX_ZOOM_FACTOR) {
-      set_zoom(_zoom_factor + 1);
-      menu_set_zoom(_zoom_factor);
-   }
+   if (_zoom_factor < MAX_ZOOM_FACTOR)
+     {
+       set_zoom (_zoom_factor + 1);
+       menu_set_zoom (data, _zoom_factor);
+     }
    return _zoom_factor;
 }
 
 static gint
-zoom_out(void)
+zoom_out (gpointer data)
 {
-   if (_zoom_factor > 1) {
-      set_zoom(_zoom_factor - 1);
-      menu_set_zoom(_zoom_factor);
-   }
+   if (_zoom_factor > 1)
+     {
+       set_zoom (_zoom_factor - 1);
+       menu_set_zoom (data, _zoom_factor);
+     }
    return _zoom_factor;
 }
 
@@ -393,11 +832,23 @@ draw_polygon(cairo_t *cr, GList *list)
 }
 
 void
-set_preview_color (GtkRadioAction *action, GtkRadioAction *current,
-                   gpointer user_data)
+set_preview_color (GSimpleAction  *action,
+                   GVariant       *new_state,
+                   gpointer        user_data)
 {
-  _map_info.show_gray = (gtk_radio_action_get_current_value (current) == 1);
-   set_zoom(_zoom_factor);
+  gchar *str;
+
+  str = g_strdup_printf ("%s", g_variant_get_string (new_state, NULL));
+
+  if (! strcmp (str, "gray"))
+    _map_info.show_gray = 1;
+  else
+    _map_info.show_gray = 0;
+
+  g_free (str);
+  g_simple_action_set_state (action, new_state);
+
+  set_zoom (_zoom_factor);
 }
 
 void
@@ -407,11 +858,20 @@ preview_redraw(void)
 }
 
 void
-set_zoom_factor (GtkRadioAction *action, GtkRadioAction *current,
-                 gpointer user_data)
+set_zoom_factor (GSimpleAction *action,
+                 GVariant      *new_state,
+                 gpointer       user_data)
 {
-  gint factor = gtk_radio_action_get_current_value (current);
-  set_zoom (factor + 1);
+  gchar *str;
+  gint   factor = 1;
+
+  str = g_strdup_printf ("%s", g_variant_get_string (new_state, NULL));
+  factor = atoi (str);
+  g_free (str);
+
+  set_zoom (factor);
+
+  g_simple_action_set_state (action, new_state);
 }
 
 const gchar *
@@ -433,29 +893,30 @@ arrow_on_button_press (GtkWidget      *widget,
 {
   if (gdk_event_triggers_context_menu ((GdkEvent *) event))
     {
-      do_popup_menu (event);
+      do_popup_menu (event, data);
     }
   else if (event->button == 1)
     {
       if (event->type == GDK_2BUTTON_PRESS)
-        edit_shape((gint) event->x, (gint) event->y);
+        edit_shape ((gint) event->x, (gint) event->y);
       else
-        select_shape(widget, event);
+        select_shape (widget, event);
     }
 
   return FALSE;
 }
 
 static void
-set_arrow_func(void)
+set_arrow_func (gpointer data)
 {
-   _button_press_func = arrow_on_button_press;
-   _cursor = GDK_TOP_LEFT_ARROW;
+   _button_press_func  = arrow_on_button_press;
+   _button_press_param = data;
+   _cursor             = GDK_TOP_LEFT_ARROW;
 }
 
 static void
-set_object_func(gboolean (*func)(GtkWidget*, GdkEventButton*,
-                                 gpointer), gpointer param)
+set_object_func (gboolean (*func)(GtkWidget*, GdkEventButton*,
+                                  gpointer), gpointer param)
 {
    _button_press_func = func;
    _button_press_param = param;
@@ -463,27 +924,44 @@ set_object_func(gboolean (*func)(GtkWidget*, GdkEventButton*,
 }
 
 void
-set_func(GtkRadioAction *action, GtkRadioAction *current,
-         gpointer user_data)
+set_func (GSimpleAction  *action,
+          GVariant       *new_state,
+          gpointer        user_data)
 {
-  gint value = gtk_radio_action_get_current_value (current);
+  gchar *str;
+  gint   value = 0;
+
+  str = g_strdup_printf ("%s", g_variant_get_string (new_state, NULL));
+  if (! strcmp (str, "arrow"))
+    value = 0;
+  else if (! strcmp (str, "rectangle"))
+    value = 1;
+  else if (! strcmp (str, "circle"))
+    value = 2;
+  else if (! strcmp (str, "polygon"))
+    value = 3;
+
+  g_free (str);
+
   switch (value)
     {
     case 0:
-      set_arrow_func();
+      set_arrow_func (user_data);
       break;
     case 1:
-      set_object_func(object_on_button_press, get_rectangle_factory);
+      set_object_func (object_on_button_press, get_rectangle_factory);
       break;
     case 2:
-      set_object_func(object_on_button_press, get_circle_factory);
+      set_object_func (object_on_button_press, get_circle_factory);
       break;
     case 3:
-      set_object_func(object_on_button_press, get_polygon_factory);
+      set_object_func (object_on_button_press, get_polygon_factory);
       break;
     default:
       break;
     }
+
+  g_simple_action_set_state (action, new_state);
 }
 
 void
@@ -505,33 +983,36 @@ update_shape(Object_t *obj)
 }
 
 void
-do_edit_selected_shape(void)
+do_edit_selected_shape (GSimpleAction *action,
+                        GVariant      *parameter,
+                        gpointer       user_data)
 {
    object_list_edit_selected(_shapes);
 }
 
 void
-do_popup_menu(GdkEventButton *event)
+do_popup_menu (GdkEventButton *event,
+               gpointer        data)
 {
-   gint x = GET_REAL_COORD((gint) event->x);
-   gint y = GET_REAL_COORD((gint) event->y);
-   Object_t *obj = object_list_find(_shapes, x, y);
-   if (obj) {
-      obj->class->do_popup(obj, event);
-   } else {
-      do_main_popup_menu(event);
-   }
+  gint x = GET_REAL_COORD((gint) event->x);
+  gint y = GET_REAL_COORD((gint) event->y);
+  Object_t *obj = object_list_find (_shapes, x, y);
+
+  if (obj)
+    obj->class->do_popup (obj, event, data);
+  else
+    do_main_popup_menu (event, data);
 }
 
 static void
-set_all_sensitivities(void)
+set_all_sensitivities (gpointer data)
 {
-   gint count = object_list_nr_selected(_shapes);
-   menu_shapes_selected(count);
+   gint count = object_list_nr_selected (_shapes);
+   menu_shapes_selected (count, data);
 }
 
 static void
-main_set_title(const char *filename)
+main_set_title (const char *filename)
 {
    char *title, *p;
 
@@ -552,33 +1033,34 @@ main_set_dimension(gint width, gint height)
 }
 
 void
-main_clear_dimension(void)
+main_clear_dimension (void)
 {
-   statusbar_clear_dimension(_statusbar);
+   statusbar_clear_dimension (_statusbar);
 }
 
 void
-show_url(void)
+show_url (void)
 {
    _show_url = TRUE;
 }
 
 void
-hide_url(void)
+hide_url (void)
 {
    _show_url = FALSE;
    statusbar_clear_status(_statusbar);
 }
 
 void
-select_shape(GtkWidget *widget, GdkEventButton *event)
+select_shape (GtkWidget      *widget,
+              GdkEventButton *event)
 {
    Object_t *obj;
-   gint x = GET_REAL_COORD((gint) event->x);
-   gint y = GET_REAL_COORD((gint) event->y);
+   gint x = GET_REAL_COORD ((gint) event->x);
+   gint y = GET_REAL_COORD ((gint) event->y);
    MoveSashFunc_t sash_func;
 
-   obj = object_list_near_sash(_shapes, x, y, &sash_func);
+   obj = object_list_near_sash (_shapes, x, y, &sash_func);
    if (obj) {                   /* Start resizing */
       Command_t *command = move_sash_command_new(widget, obj, x, y, sash_func);
       command_execute(command);
@@ -634,17 +1116,21 @@ edit_shape(gint x, gint y)
 }
 
 void
-do_zoom_in(void)
+do_zoom_in (GSimpleAction *action,
+            GVariant      *parameter,
+            gpointer       user_data)
 {
-   gint factor = zoom_in();
-   menu_set_zoom_sensitivity(factor);
+   gint factor = zoom_in (user_data);
+   menu_set_zoom_sensitivity (user_data, factor);
 }
 
 void
-do_zoom_out(void)
+do_zoom_out (GSimpleAction *action,
+             GVariant      *parameter,
+             gpointer       user_data)
 {
-   gint factor = zoom_out();
-   menu_set_zoom_sensitivity(factor);
+   gint factor = zoom_out (user_data);
+   menu_set_zoom_sensitivity (user_data, factor);
 }
 
 void
@@ -654,7 +1140,7 @@ draw_shapes(cairo_t *cr)
 }
 
 static void
-clear_map_info(void)
+clear_map_info (void)
 {
    const gchar *author = g_get_real_name();
 
@@ -671,26 +1157,28 @@ clear_map_info(void)
 }
 
 static void
-do_data_changed_dialog(void (*continue_cb)(gpointer), gpointer param)
+do_data_changed_dialog (void (*continue_cb)(gpointer),
+                        gpointer param)
 {
-   GtkWidget *dialog = gtk_message_dialog_new
-     (NULL,
-      GTK_DIALOG_DESTROY_WITH_PARENT,
-      GTK_MESSAGE_QUESTION,
-      GTK_BUTTONS_YES_NO,
-      _("Some data has been changed!"));
-   gtk_message_dialog_format_secondary_text
-     (GTK_MESSAGE_DIALOG (dialog),
-      _("Do you really want to discard your changes?"));
+  GtkWidget *dialog = gtk_message_dialog_new
+    (NULL,
+     GTK_DIALOG_DESTROY_WITH_PARENT,
+     GTK_MESSAGE_QUESTION,
+     GTK_BUTTONS_YES_NO,
+     _("Some data has been changed!"));
+  gtk_message_dialog_format_secondary_text
+    (GTK_MESSAGE_DIALOG (dialog),
+     _("Do you really want to discard your changes?"));
 
-   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES)
-     continue_cb (param);
+  if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES)
+    continue_cb (param);
 
-   gtk_widget_destroy (dialog);
+  gtk_widget_destroy (dialog);
 }
 
 static void
-check_if_changed(void (*func)(gpointer), gpointer param)
+check_if_changed (void (*func)(gpointer),
+                  gpointer param)
 {
    if (object_list_get_changed (_shapes))
      do_data_changed_dialog (func, param);
@@ -699,76 +1187,96 @@ check_if_changed(void (*func)(gpointer), gpointer param)
 }
 
 static void
-close_current(void)
+close_current (gpointer data)
 {
-   selection_freeze(_selection);
-   object_list_remove_all(_shapes);
-   selection_thaw(_selection);
-   clear_map_info();
-   main_set_title(NULL);
-   set_all_sensitivities();
-   preview_redraw();
-   object_list_clear_changed(_shapes);
-   command_list_remove_all();
+   selection_freeze (_selection);
+   object_list_remove_all (_shapes);
+   selection_thaw (_selection);
+   clear_map_info ();
+   main_set_title (NULL);
+   set_all_sensitivities (data);
+   preview_redraw ();
+   object_list_clear_changed (_shapes);
+   command_list_remove_all ();
 }
 
 static void
-really_close(gpointer data)
+really_close (gpointer data)
 {
-   close_current();
+  close_current (data);
 }
 
 void
-do_close(void)
+do_close (GSimpleAction *action,
+          GVariant      *parameter,
+          gpointer       user_data)
 {
-   check_if_changed(really_close, NULL);
+  check_if_changed (really_close, user_data);
 }
 
 static void
-really_quit(gpointer data)
+really_quit (gpointer data)
 {
-   preferences_save(&_preferences);
-   run_flag = 1;
-   gtk_widget_destroy(_dlg);
+  GimpImap *imap = NULL;
+
+  if (data)
+    {
+      imap = GIMP_IMAP (data);
+      imap->success = TRUE;
+    }
+
+  preferences_save (&_preferences);
+  run_flag = 1;
+
+  window_destroy (_dlg, imap);
 }
 
 void
-do_quit(void)
+do_quit (GSimpleAction *action,
+         GVariant      *parameter,
+         gpointer       user_data)
 {
-   check_if_changed(really_quit, NULL);
+  check_if_changed (really_quit, user_data);
 }
 
 void
-do_undo(void)
+do_undo (GSimpleAction *action,
+         GVariant      *parameter,
+         gpointer       user_data)
 {
-   selection_freeze(_selection);
-   last_command_undo();
-   selection_thaw(_selection);
-   preview_redraw();
+  selection_freeze (_selection);
+  last_command_undo ();
+  selection_thaw (_selection);
+  preview_redraw ();
 }
 
 void
-do_redo(void)
+do_redo (GSimpleAction *action,
+         GVariant      *parameter,
+         gpointer       user_data)
 {
-   selection_freeze(_selection);
-   last_command_redo();
-   selection_thaw(_selection);
-   preview_redraw();
+  selection_freeze (_selection);
+  last_command_redo ();
+  selection_thaw (_selection);
+  preview_redraw ();
 }
 
 void
-save(void)
+save (GSimpleAction *action,
+      GVariant      *parameter,
+      gpointer       user_data)
 {
-   if (_filename)
-      save_as(_filename);
-   else
-      do_file_save_as_dialog();
+  if (_filename)
+    save_as (_filename);
+  else
+    do_file_save_as_dialog (NULL, NULL, NULL);
 }
 
 static void
-write_cern_comment(gpointer param, OutputFunc_t output)
+write_cern_comment (gpointer     param,
+                    OutputFunc_t output)
 {
-   output(param, "rect (4096,4096) (4096,4096) imap:#$");
+  output(param, "rect (4096,4096) (4096,4096) imap:#$");
 }
 
 static void
@@ -864,18 +1372,22 @@ static void   save_to_file (gpointer    param,
                             const char *format,
                             ...) G_GNUC_PRINTF(2,3);
 
-static void
-save_to_file(gpointer param, const char* format, ...)
-{
-   va_list ap;
 
-   va_start(ap, format);
-   vfprintf((FILE*)param, format, ap);
-   va_end(ap);
+static void
+save_to_file (gpointer    param,
+              const char* format,
+              ...)
+{
+  va_list ap;
+
+  va_start (ap, format);
+  vfprintf ((FILE*) param, format, ap);
+  va_end(ap);
 }
 
 void
-dump_output(gpointer param, OutputFunc_t output)
+dump_output (gpointer     param,
+             OutputFunc_t output)
 {
    if (_map_info.map_format == NCSA)
       save_as_ncsa(param, output);
@@ -886,7 +1398,7 @@ dump_output(gpointer param, OutputFunc_t output)
 }
 
 void
-save_as(const gchar *filename)
+save_as (const gchar *filename)
 {
    FILE *out = g_fopen(filename, "w");
    if (out) {
@@ -902,7 +1414,7 @@ save_as(const gchar *filename)
 }
 
 static void
-do_image_size_changed_dialog(void)
+do_image_size_changed_dialog (void)
 {
    GtkWidget *dialog = gtk_message_dialog_new_with_markup
      (NULL,
@@ -925,62 +1437,77 @@ do_image_size_changed_dialog(void)
 }
 
 static void
-really_load(gpointer data)
+really_load (gpointer data)
 {
-   gchar *filename = (gchar*) data;
-   close_current();
+  GimpImap *imap = GIMP_IMAP (data);
+  gchar    *filename = imap->tmp_filename;
+  close_current (imap);
 
-   selection_freeze(_selection);
-   _map_info.old_image_width = _image_width;
-   _map_info.old_image_height = _image_height;
-   if (load_csim(filename)) {
+  selection_freeze(_selection);
+  _map_info.old_image_width = _image_width;
+  _map_info.old_image_height = _image_height;
+  if (load_csim(filename))
+    {
       _map_info.map_format = CSIM;
       if (_image_width != _map_info.old_image_width ||
-          _image_height != _map_info.old_image_height) {
-         do_image_size_changed_dialog();
-      }
-   } else if (load_ncsa(filename)) {
-      _map_info.map_format = NCSA;
-   } else if (load_cern(filename)) {
-      _map_info.map_format = CERN;
-   } else {
-      do_file_error_dialog( _("Couldn't read file:"), filename);
-      selection_thaw(_selection);
-      close_current();
-      return;
-   }
+          _image_height != _map_info.old_image_height)
+        {
+          do_image_size_changed_dialog();
+        }
+     }
+   else if (load_ncsa(filename))
+     {
+       _map_info.map_format = NCSA;
+     }
+   else if (load_cern(filename))
+     {
+       _map_info.map_format = CERN;
+     }
+   else
+     {
+       do_file_error_dialog ( _("Couldn't read file:"), filename);
+       selection_thaw(_selection);
+       close_current (imap);
+       return;
+     }
    mru_set_first(_mru, filename);
-   menu_build_mru_items(_mru);
 
-   selection_thaw(_selection);
-   main_set_title(filename);
-   object_list_clear_changed(_shapes);
-   preview_redraw();
+   selection_thaw (_selection);
+   main_set_title (filename);
+   object_list_clear_changed (_shapes);
+   preview_redraw ();
 }
 
 void
-load(const gchar *filename)
+load (const gchar *filename,
+      gpointer     data)
 {
-   static gchar *tmp_filename;
-   g_strreplace(&tmp_filename, filename);
-   check_if_changed(really_load, (gpointer) tmp_filename);
+  GimpImap *imap = GIMP_IMAP (data);
+
+  g_strreplace (&imap->tmp_filename, filename);
+  check_if_changed (really_load, imap);
 }
 
 void
-toggle_area_list(void)
+toggle_area_list (GSimpleAction  *action,
+                  GVariant       *new_state,
+                  gpointer        user_data)
 {
    selection_toggle_visibility(_selection);
+   g_simple_action_set_state (action, new_state);
 }
 
 static gboolean
-close_callback(GtkWidget *widget, gpointer data)
+close_callback (GtkWidget *widget,
+                gpointer   data)
 {
-   do_quit();
-   return TRUE;
+  do_quit (NULL, NULL, NULL);
+  return TRUE;
 }
 
 static gboolean
-preview_move(GtkWidget *widget, GdkEventMotion *event)
+preview_move (GtkWidget      *widget,
+              GdkEventMotion *event)
 {
    gint x = GET_REAL_COORD((gint) event->x);
    gint y = GET_REAL_COORD((gint) event->y);
@@ -1024,10 +1551,12 @@ preview_leave(GtkWidget *widget, GdkEventCrossing *event)
 }
 
 static gboolean
-button_press(GtkWidget* widget, GdkEventButton* event, gpointer data)
+button_press (GtkWidget*      widget,
+              GdkEventButton* event,
+              gpointer        data)
 {
   if (_button_press_func)
-    return _button_press_func(widget, event, _button_press_param);
+    return _button_press_func (widget, event, _button_press_param);
 
   return FALSE;
 }
@@ -1039,20 +1568,24 @@ static guint _keyval;
 static gint _dx, _dy;
 
 static void
-move_sash_selected_objects(gint dx, gint dy, gboolean fast)
+move_sash_selected_objects (gint     dx,
+                            gint     dy,
+                            gboolean fast)
 {
    if (fast) {
       dx *= 5;
       dy *= 5;
    }
 
-   object_list_move_sash_selected(_shapes, dx, dy);
+   object_list_move_sash_selected (_shapes, dx, dy);
 
    preview_redraw ();
 }
 
 static void
-move_selected_objects(gint dx, gint dy, gboolean fast)
+move_selected_objects (gint     dx,
+                       gint     dy,
+                       gboolean fast)
 {
    if (fast) {
       dx *= 5;
@@ -1141,7 +1674,7 @@ key_press_cb(GtkWidget *widget, GdkEventKey *event)
 }
 
 static gboolean
-key_release_cb(GtkWidget *widget, GdkEventKey *event)
+key_release_cb (GtkWidget *widget, GdkEventKey *event)
 {
    _keyval = event->keyval;
    _timeout = g_timeout_add(250, key_timeout_cb, NULL);
@@ -1149,68 +1682,87 @@ key_release_cb(GtkWidget *widget, GdkEventKey *event)
 }
 
 static void
-geometry_changed(Object_t *obj, gpointer data)
+geometry_changed (Object_t *obj,
+                  gpointer  data)
 {
    preview_redraw();
 }
 
 static void
-data_changed(Object_t *obj, gpointer data)
+data_changed (Object_t *obj,
+              gpointer  data)
 {
-   preview_redraw();
-   set_all_sensitivities();
+   preview_redraw ();
+   set_all_sensitivities (data);
 }
 
 static void
-data_selected(Object_t *obj, gpointer data)
+data_selected (Object_t *obj,
+               gpointer  data)
 {
-   set_all_sensitivities();
+   set_all_sensitivities (data);
 }
 
 void
-imap_help (void)
+imap_help (GSimpleAction *action,
+           GVariant      *parameter,
+           gpointer       user_data)
 {
   gimp_standard_help_func ("plug-in-imagemap", NULL);
 }
 
 void
-do_cut (void)
+do_cut (GSimpleAction *action,
+        GVariant      *parameter,
+        gpointer       user_data)
 {
   command_execute (cut_command_new (_shapes));
 }
 
 void
-do_copy (void)
+do_copy (GSimpleAction *action,
+         GVariant      *parameter,
+         gpointer       user_data)
 {
   command_execute (copy_command_new (_shapes));
 }
 
 void
-do_paste (void)
+do_paste (GSimpleAction *action,
+          GVariant      *parameter,
+          gpointer       user_data)
 {
   command_execute (paste_command_new (_shapes));
 }
 
 void
-do_select_all(void)
+do_select_all (GSimpleAction *action,
+               GVariant      *parameter,
+               gpointer       user_data)
 {
   command_execute (select_all_command_new (_shapes));
 }
 
 void
-do_deselect_all(void)
+do_deselect_all (GSimpleAction *action,
+                 GVariant      *parameter,
+                 gpointer       user_data)
 {
   command_execute (unselect_all_command_new (_shapes, NULL));
 }
 
 void
-do_clear(void)
+do_clear (GSimpleAction *action,
+          GVariant      *parameter,
+          gpointer       user_data)
 {
   command_execute (clear_command_new(_shapes));
 }
 
 void
-do_move_up(void)
+do_move_up (GSimpleAction *action,
+            GVariant      *parameter,
+            gpointer       user_data)
 {
   /* Fix me!
    Command_t *command = object_up_command_new(_current_obj->list,
@@ -1220,7 +1772,9 @@ do_move_up(void)
 }
 
 void
-do_move_down(void)
+do_move_down (GSimpleAction *action,
+              GVariant      *parameter,
+              gpointer       user_data)
 {
   /* Fix me!
    Command_t *command = object_down_command_new(_current_obj->list,
@@ -1230,25 +1784,33 @@ do_move_down(void)
 }
 
 void
-do_move_to_front(void)
+do_move_to_front (GSimpleAction *action,
+                  GVariant      *parameter,
+                  gpointer       user_data)
 {
   command_execute(move_to_front_command_new(_shapes));
 }
 
 void
-do_send_to_back(void)
+do_send_to_back (GSimpleAction *action,
+                 GVariant      *parameter,
+                 gpointer       user_data)
 {
   command_execute(send_to_back_command_new(_shapes));
 }
 
 void
-do_use_gimp_guides_dialog(void)
+do_use_gimp_guides_dialog (GSimpleAction *action,
+                           GVariant      *parameter,
+                           gpointer       user_data)
 {
   command_execute (gimp_guides_command_new (_shapes, _drawable));
 }
 
 void
-do_create_guides_dialog(void)
+do_create_guides_dialog (GSimpleAction *action,
+                         GVariant      *parameter,
+                         gpointer       user_data)
 {
   command_execute (guides_command_new (_shapes));
 }
@@ -1266,100 +1828,266 @@ factory_move_down(void)
 }
 
 static gint
-dialog (GimpDrawable *drawable)
+dialog (GimpImap *imap)
 {
-   GtkWidget    *dlg;
-   GtkWidget    *hbox;
-   GtkWidget    *main_vbox;
-   GtkWidget    *tools;
+  GtkWidget  *hbox;
+  GtkWidget  *menubar;
+  GMenuModel *model;
+  GtkWidget  *toolbar;
+  GtkWidget  *main_vbox;
+  GtkWidget  *tools;
 
-   gimp_ui_init (PLUG_IN_BINARY);
+  gimp_ui_init (PLUG_IN_BINARY);
 
-   set_arrow_func ();
+  set_arrow_func (imap);
 
-   _shapes = make_object_list();
+  _shapes = make_object_list();
 
-   _dlg = dlg = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-   gtk_window_set_resizable(GTK_WINDOW(dlg), TRUE);
+  _dlg = imap->dlg = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_resizable (GTK_WINDOW (imap->dlg), TRUE);
 
-   main_set_title(NULL);
-   gimp_help_connect (dlg, gimp_standard_help_func, PLUG_IN_PROC, NULL, NULL);
+  main_set_title (NULL);
+  gimp_help_connect (imap->dlg, gimp_standard_help_func, PLUG_IN_PROC, NULL, NULL);
 
-   gtk_window_set_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (imap->dlg), GTK_WIN_POS_MOUSE);
 
-   gimp_window_set_transient (GTK_WINDOW (dlg));
+  gtk_window_set_application (GTK_WINDOW (_dlg), imap->app);
+  gimp_window_set_transient (GTK_WINDOW (imap->dlg));
 
-   g_signal_connect (dlg, "delete-event",
-                     G_CALLBACK (close_callback), NULL);
-   g_signal_connect (dlg, "key-press-event",
-                     G_CALLBACK (key_press_cb), NULL);
-   g_signal_connect (dlg, "key-release-event",
-                     G_CALLBACK (key_release_cb), NULL);
+  g_action_map_add_action_entries (G_ACTION_MAP (imap->app),
+                                   ACTIONS, G_N_ELEMENTS (ACTIONS),
+                                   imap);
 
-   g_signal_connect (dlg, "destroy",
-                     G_CALLBACK (gtk_main_quit),
-                     NULL);
+  g_signal_connect (imap->dlg, "delete-event",
+                    G_CALLBACK (close_callback), NULL);
+  g_signal_connect (imap->dlg, "key-press-event",
+                    G_CALLBACK (key_press_cb), NULL);
+  g_signal_connect (imap->dlg, "key-release-event",
+                    G_CALLBACK (key_release_cb), NULL);
 
-   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-   gtk_container_add (GTK_CONTAINER (dlg), main_vbox);
-   gtk_widget_show (main_vbox);
+  g_signal_connect (imap->dlg, "destroy",
+                    G_CALLBACK (window_destroy),
+                    NULL);
 
-   init_icons();
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_container_add (GTK_CONTAINER (imap->dlg), main_vbox);
+  gtk_widget_show (main_vbox);
 
-   /* Create menu */
-   make_menu(main_vbox, dlg);
+  init_icons();
 
-   /* Create toolbar */
-   make_toolbar(main_vbox, dlg);
+  /* Create menu */
+  make_menu (imap);
+  model = G_MENU_MODEL (gtk_builder_get_object (imap->builder, "imap-menubar"));
+  menubar = gtk_menu_bar_new_from_model (model);
 
-   /*  Dialog area  */
-   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
-   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, TRUE, TRUE, 0);
-   gtk_widget_show(hbox);
+  gtk_box_pack_start (GTK_BOX (main_vbox), menubar, FALSE, FALSE, 0);
+  gtk_widget_show (menubar);
 
-   tools = make_tools(dlg);
-   /* selection_set_edit_command(tools, factory_edit); */
-   gtk_box_pack_start(GTK_BOX(hbox), tools, FALSE, FALSE, 0);
+  /* Create toolbar */
+  toolbar = gtk_toolbar_new ();
 
-   _preview = make_preview (drawable);
+  add_tool_button (toolbar, "app.open", GIMP_ICON_DOCUMENT_OPEN,
+                   _("Open"), _("Open"));
+  add_tool_button (toolbar, "app.save", GIMP_ICON_DOCUMENT_SAVE,
+                   _("Save"), _("Save"));
+  add_tool_separator (toolbar, FALSE);
+  add_tool_button (toolbar, "app.preferences", GIMP_ICON_PREFERENCES_SYSTEM,
+                   _("Preferences"), _("Preferences"));
+  add_tool_separator (toolbar, FALSE);
+  add_tool_button (toolbar, "app.undo", GIMP_ICON_EDIT_UNDO,
+                   _("Undo"), _("Undo"));
+  add_tool_button (toolbar, "app.redo", GIMP_ICON_EDIT_REDO,
+                   _("Redo"), _("Redo"));
+  add_tool_separator (toolbar, FALSE);
+  add_tool_button (toolbar, "app.cut", GIMP_ICON_EDIT_CUT,
+                   _("Cut"), _("Cut"));
+  add_tool_button (toolbar, "app.copy", GIMP_ICON_EDIT_COPY,
+                   _("Copy"), _("Copy"));
+  add_tool_button (toolbar, "app.paste", GIMP_ICON_EDIT_PASTE,
+                   _("Paste"), _("Paste"));
+  add_tool_separator (toolbar, FALSE);
+  add_tool_button (toolbar, "app.zoom-in", GIMP_ICON_ZOOM_IN,
+                   _("Zoom In"), _("Zoom In"));
+  add_tool_button (toolbar, "app.zoom-out", GIMP_ICON_ZOOM_OUT,
+                   _("Zoom Out"), _("Zoom Out"));
+  add_tool_separator (toolbar, FALSE);
+  add_tool_button (toolbar, "app.edit-map-info", GIMP_ICON_DIALOG_INFORMATION,
+                   _("Edit Map Info"), _("Edit Map Info"));
+  add_tool_separator (toolbar, FALSE);
+  add_tool_button (toolbar, "app.move-to-front", IMAP_TO_FRONT,
+                   _("Move Area to Front"), _("Move Area to Front"));
+  add_tool_button (toolbar, "app.send-to-back", IMAP_TO_BACK,
+                   _("Move Area to Bottom"), _("Move Area to Bottom"));
+  add_tool_separator (toolbar, FALSE);
+  imap->grid_toggle = add_toggle_button (toolbar, "app.grid", GIMP_ICON_GRID,
+                                         _("Grid"), _("Grid"));
+  add_tool_separator (toolbar, FALSE);
 
-   g_signal_connect(_preview->preview, "motion-notify-event",
-                    G_CALLBACK(preview_move), NULL);
-   g_signal_connect(_preview->preview, "enter-notify-event",
-                    G_CALLBACK(preview_enter), NULL);
-   g_signal_connect(_preview->preview, "leave-notify-event",
-                    G_CALLBACK(preview_leave), NULL);
-   g_signal_connect(_preview->preview, "button-press-event",
-                    G_CALLBACK(button_press), NULL);
-   gtk_box_pack_start (GTK_BOX (hbox), _preview->window, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (toolbar), 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), toolbar, FALSE, FALSE, 0);
+  gtk_widget_show (toolbar);
 
-   object_list_add_geometry_cb(_shapes, geometry_changed, NULL);
-   object_list_add_update_cb(_shapes, data_changed, NULL);
-   object_list_add_add_cb(_shapes, data_changed, NULL);
-   object_list_add_remove_cb(_shapes, data_changed, NULL);
-   object_list_add_move_cb(_shapes, data_changed, NULL);
-   object_list_add_select_cb(_shapes, data_selected, NULL);
+  /*  Dialog area  */
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, TRUE, TRUE, 0);
+  gtk_widget_show (hbox);
 
-   /* Selection */
-   _selection = make_selection(_shapes);
-   selection_set_move_up_command(_selection, factory_move_up);
-   selection_set_move_down_command(_selection, factory_move_down);
-   gtk_box_pack_start(GTK_BOX(hbox), _selection->container, FALSE, FALSE, 0);
+  /* Pointer tools area */
+  tools = gtk_toolbar_new ();
+  add_toggle_button (tools, "app.shape::arrow", GIMP_ICON_CURSOR,
+                     _("Arrow"), _("Select Existing Area"));
+  add_toggle_button (tools, "app.shape::rectangle", IMAP_RECTANGLE,
+                     _("Rectangle"), _("Define Rectangle area"));
+  add_toggle_button (tools, "app.shape::circle", IMAP_CIRCLE,
+                     _("Circle"), _("Define Circle/Oval area"));
+  add_toggle_button (tools, "app.shape::polygon", IMAP_POLYGON,
+                     _("Polygon"), _("Define Polygon area"));
+  add_tool_separator (tools, FALSE);
+  add_tool_button (tools, "app.edit-area-info", GIMP_ICON_EDIT,
+                   _("Edit Area Info..."), _("Edit selected area info"));
 
-   _statusbar = make_statusbar(main_vbox, dlg);
-   statusbar_set_zoom(_statusbar, 1);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (tools),
+                                  GTK_ORIENTATION_VERTICAL);
+  gtk_toolbar_set_style (GTK_TOOLBAR (tools), GTK_TOOLBAR_ICONS);
+  gtk_container_set_border_width (GTK_CONTAINER (tools), 0);
+  gtk_widget_show (tools);
+  gtk_box_pack_start (GTK_BOX (hbox), tools, FALSE, FALSE, 0);
 
-   gtk_widget_show(dlg);
+  _preview = make_preview (imap->drawable, imap);
 
-   _mru = mru_create();
-   init_preferences();
+  g_signal_connect(_preview->preview, "motion-notify-event",
+                   G_CALLBACK (preview_move), NULL);
+  g_signal_connect(_preview->preview, "enter-notify-event",
+                   G_CALLBACK (preview_enter), NULL);
+  g_signal_connect(_preview->preview, "leave-notify-event",
+                   G_CALLBACK (preview_leave), NULL);
+  g_signal_connect(_preview->preview, "button-press-event",
+                   G_CALLBACK (button_press), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), _preview->window, TRUE, TRUE, 0);
 
-   clear_map_info();
+  object_list_add_geometry_cb (_shapes, geometry_changed, NULL);
+  object_list_add_update_cb (_shapes, data_changed, imap);
+  object_list_add_add_cb (_shapes, data_changed, imap);
+  object_list_add_remove_cb (_shapes, data_changed, imap);
+  object_list_add_move_cb (_shapes, data_changed, imap);
+  object_list_add_select_cb (_shapes, data_selected, imap);
 
-   if (!mru_empty(_mru))
-      menu_build_mru_items(_mru);
+  /* Selection */
+  _selection = make_selection (_shapes, imap);
+  selection_set_move_up_command (_selection, factory_move_up);
+  selection_set_move_down_command (_selection, factory_move_down);
+  gtk_box_pack_start (GTK_BOX (hbox), _selection->container, FALSE, FALSE, 0);
 
-   gtk_main();
+  _statusbar = make_statusbar (main_vbox, imap->dlg);
+  statusbar_set_zoom (_statusbar, 1);
 
-   return run_flag;
+  gtk_widget_show (imap->dlg);
+
+  _mru = mru_create ();
+  init_preferences ();
+
+  clear_map_info ();
+
+  imap->success = TRUE;
+
+  return run_flag;
+}
+
+static void
+on_app_activate (GApplication *gapp,
+                 gpointer      user_data)
+{
+  GimpImap *imap = GIMP_IMAP (user_data);
+
+  dialog (imap);
+
+  gtk_application_set_accels_for_action (imap->app, "app.save-as", (const char*[]) { "<shift><control>S", NULL });
+  gtk_application_set_accels_for_action (imap->app, "app.close", (const char*[]) { "<primary>w", NULL });
+  gtk_application_set_accels_for_action (imap->app, "app.quit", (const char*[]) { "<primary>q", NULL });
+
+  gtk_application_set_accels_for_action (imap->app, "app.cut", (const char*[]) { "<primary>x", NULL });
+  gtk_application_set_accels_for_action (imap->app, "app.copy", (const char*[]) { "<primary>c", NULL });
+  gtk_application_set_accels_for_action (imap->app, "app.paste", (const char*[]) { "<primary>p", NULL });
+  gtk_application_set_accels_for_action (imap->app, "app.select-all", (const char*[]) { "<primary>A", NULL });
+  gtk_application_set_accels_for_action (imap->app, "app.deselect-all", (const char*[]) { "<shift><primary>A", NULL });
+
+  gtk_application_set_accels_for_action (imap->app, "app.zoom-in", (const char*[]) { "plus", NULL });
+  gtk_application_set_accels_for_action (imap->app, "app.zoom-out", (const char*[]) { "minus", NULL });
+}
+
+static void
+window_destroy (GtkWidget *widget,
+                gpointer   data)
+{
+  if (data)
+    {
+      GimpImap *imap = GIMP_IMAP (data);
+
+      gtk_application_remove_window (imap->app, GTK_WINDOW (imap->dlg));
+    }
+  else
+    {
+      gtk_widget_destroy (_dlg);
+    }
+}
+
+GtkWidget *
+add_tool_button (GtkWidget  *toolbar,
+                 const char *action,
+                 const char *icon,
+                 const char *label,
+                 const char *tooltip)
+{
+  GtkWidget   *tool_icon;
+  GtkToolItem *tool_button;
+
+  tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (GTK_WIDGET (tool_icon));
+  tool_button = gtk_tool_button_new (tool_icon, label);
+  gtk_widget_show (GTK_WIDGET (tool_button));
+  gtk_tool_item_set_tooltip_text (tool_button, tooltip);
+  gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (tool_button), action);
+
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), tool_button, -1);
+
+  return GTK_WIDGET (tool_button);
+}
+
+GtkWidget *
+add_toggle_button (GtkWidget  *toolbar,
+                   const char *action,
+                   const char *icon,
+                   const char *label,
+                   const char *tooltip)
+{
+  GtkWidget   *tool_icon;
+  GtkToolItem *toggle_tool_button;
+
+  tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (GTK_WIDGET (tool_icon));
+
+  toggle_tool_button = gtk_toggle_tool_button_new ();
+  gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (toggle_tool_button),
+                                   tool_icon);
+  gtk_tool_button_set_label (GTK_TOOL_BUTTON (toggle_tool_button), label);
+  gtk_widget_show (GTK_WIDGET (toggle_tool_button));
+  gtk_tool_item_set_tooltip_text (toggle_tool_button, tooltip);
+  gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (toggle_tool_button), action);
+
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), toggle_tool_button, -1);
+
+  return GTK_WIDGET (toggle_tool_button);
+}
+
+void
+add_tool_separator (GtkWidget *toolbar,
+                    gboolean   expand)
+{
+  GtkToolItem *item;
+
+  item = gtk_separator_tool_item_new ();
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
+  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
+  gtk_tool_item_set_expand (item, expand);
+  gtk_widget_show (GTK_WIDGET (item));
 }

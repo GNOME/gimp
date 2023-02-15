@@ -35,21 +35,21 @@
 
 typedef struct {
   DefaultDialog_t *dialog;
-  BrowseWidget_t *imagename;
-  GtkWidget     *filename;
-  GtkWidget     *title;
-  GtkWidget     *author;
-  GtkWidget     *default_url;
-  GtkWidget     *ncsa;
-  GtkWidget     *cern;
-  GtkWidget     *csim;
-  GtkTextBuffer *description;
+  BrowseWidget_t  *imagename;
+  GtkWidget       *filename;
+  GtkWidget       *title;
+  GtkWidget       *author;
+  GtkWidget       *default_url;
+  GtkWidget       *ncsa;
+  GtkWidget       *cern;
+  GtkWidget       *csim;
+  GtkTextBuffer   *description;
 } SettingsDialog_t;
 
 static MapFormat_t _map_format = CSIM;
 
 static void
-settings_ok_cb(gpointer data)
+settings_ok_cb (gpointer data)
 {
    SettingsDialog_t *param = (SettingsDialog_t*) data;
    MapInfo_t *info = get_map_info();
@@ -72,14 +72,14 @@ settings_ok_cb(gpointer data)
 }
 
 static void
-type_toggled_cb(GtkWidget *widget, gpointer data)
+type_toggled_cb (GtkWidget *widget, gpointer data)
 {
   if (gtk_widget_get_state_flags (widget) & GTK_STATE_FLAG_SELECTED)
     _map_format = (MapFormat_t) data;
 }
 
 static SettingsDialog_t*
-create_settings_dialog(void)
+create_settings_dialog (void)
 {
    SettingsDialog_t *data = g_new(SettingsDialog_t, 1);
    GtkWidget *grid, *view, *frame, *hbox, *label, *swin;
@@ -155,7 +155,9 @@ create_settings_dialog(void)
 }
 
 void
-do_settings_dialog(void)
+do_settings_dialog (GSimpleAction *action,
+                    GVariant      *parameter,
+                    gpointer       user_data)
 {
    static SettingsDialog_t *dialog;
    const char *filename = get_filename();

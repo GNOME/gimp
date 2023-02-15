@@ -47,19 +47,19 @@ typedef struct {
   gint        nr_off_mru_items;
 } Menu_t;
 
-GtkWidget *menu_get_widget(const gchar *path);
-Menu_t *make_menu(GtkWidget *main_vbox, GtkWidget *window);
-void menu_build_mru_items(MRU_t *mru);
-void menu_set_zoom_sensitivity(gint factor);
+Menu_t    *make_menu              (GimpImap       *imap);
+void menu_build_mru_items         (MRU_t          *mru);
+void menu_set_zoom_sensitivity    (gpointer        data,
+                                   gint            factor);
 
-void menu_set_zoom(gint factor);
-void menu_check_grid(gboolean check);
-void menu_shapes_selected(gint count);
+void menu_set_zoom                (gpointer        data,
+                                   gint            factor);
+void menu_shapes_selected         (gint            count,
+                                   gpointer        imap);
 
-void do_main_popup_menu(GdkEventButton *event);
+void do_main_popup_menu           (GdkEventButton *event,
+                                   gpointer        data);
 
-GtkWidget *make_toolbar(GtkWidget *main_vbox, GtkWidget *window);
-GtkWidget *make_tools(GtkWidget *window);
-GtkWidget *make_selection_toolbar(void);
+GtkWidget *make_selection_toolbar (GimpImap       *imap);
 
 #endif /* _IMAP_MENU_H */
