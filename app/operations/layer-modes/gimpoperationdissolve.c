@@ -101,7 +101,14 @@ gimp_operation_dissolve_process (GeglOperation       *op,
 
   for (y = result->y; y < result->y + result->height; y++)
     {
-      GRand *gr = g_rand_new_with_seed (random_table[y % RANDOM_TABLE_SIZE]);
+      GRand *gr;
+
+      /* The offset can be negative. I could just abs() the result, but we
+       * probably prefer to use different indexes of the table when possible for
+       * nicer randomization, so let's cycle the modulo so that -1 is the last
+       * table index.
+       */
+      gr = g_rand_new_with_seed (random_table[((y % RANDOM_TABLE_SIZE) + RANDOM_TABLE_SIZE) % RANDOM_TABLE_SIZE]);
 
       /* fast forward through the rows pseudo random sequence */
       for (x = 0; x < result->x; x++)
