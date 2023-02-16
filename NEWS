@@ -72,10 +72,20 @@ Plug-ins:
       lack of support in GIO for macOS platform).
   - animation-play: fixed on macOS.
   - PDF:
-    * Import: do not fill background in white, i.e. support importing
+    * Import: new option "Fill transparent areas with white" to fill the
+      background in white (ON by default as most office PDF writers seem to rely
+      on readers filling the background with white), allowing importing
       transparent PDF files.
     * Export: new option "Fill transparent areas with background color" allowing
       to decide whether to export a PDF with transparent background.
+  - TGA:
+    * Added a workaround to load wrongful TGA files exported by Krita (which
+      they fixed on their side too now, see Krita bug 464484).
+  - ICO and CUR:
+    * Magics detection for these formats has been removed (now using only using
+      filename extension) because it was interfering with the detection of
+      certain types of TGA images (which are likely more common than ICO and CUR
+      files, and extension for these should be reliable enough).
 
 Libgimpbase:
 
