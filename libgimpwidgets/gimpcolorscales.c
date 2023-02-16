@@ -104,6 +104,8 @@ struct _GimpColorScales
   GimpColorSelector  parent_instance;
 
   gboolean           show_rgb_u8;
+  GBinding          *show_rgb_u8_binding;
+  GBinding          *show_hsv_binding;
 
   GtkWidget         *lch_group;
   GtkWidget         *hsv_group;
@@ -374,6 +376,9 @@ gimp_color_scales_init (GimpColorScales *scales)
 
   gtk_box_set_spacing (GTK_BOX (scales), 5);
 
+  scales->show_rgb_u8_binding = NULL;
+  scales->show_hsv_binding    = NULL;
+
   /*  don't need the toggles for our own operation  */
   selector->toggles_visible = FALSE;
 
@@ -498,6 +503,9 @@ gimp_color_scales_dispose (GObject *object)
   GimpColorScales *scales = GIMP_COLOR_SCALES (object);
 
   g_clear_object (&scales->dummy_u8_toggle);
+
+  g_clear_pointer (&scales->show_rgb_u8_binding, g_binding_unbind);
+  g_clear_pointer (&scales->show_hsv_binding, g_binding_unbind);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -636,14 +644,17 @@ gimp_color_scales_set_config (GimpColorSelector *selector,
   GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
   gint             i;
 
+  g_clear_pointer (&scales->show_rgb_u8_binding, g_binding_unbind);
+  g_clear_pointer (&scales->show_hsv_binding, g_binding_unbind);
+
   if (config)
     {
-      g_object_bind_property (config, "show-rgb-u8",
-                              scales, "show-rgb-u8",
-                              G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
-      g_object_bind_property (config, "show-hsv",
-                              scales, "show-hsv",
-                              G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+      scales->show_rgb_u8_binding = g_object_bind_property (config, "show-rgb-u8",
+                                                            scales, "show-rgb-u8",
+                                                            G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+      scales->show_hsv_binding = g_object_bind_property (config, "show-hsv",
+                                                         scales, "show-hsv",
+                                                         G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
     }
 
   for (i = 0; i < G_N_ELEMENTS (scale_defs); i++)
