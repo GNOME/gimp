@@ -315,6 +315,7 @@ gimp_image_take_selected_layers (GimpImage *image,
   success = gimp_image_set_selected_layers (image, g_list_length (layers),
                                             (const GimpLayer **) sel_layers);
   g_list_free (layers);
+  g_free (sel_layers);
 
   return success;
 }
