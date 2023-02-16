@@ -30,6 +30,7 @@ main (int argc, char **argv)
   gchar             *input;
   gchar             *output;
   gint               dim;
+  gint               retval = 0;
 
   if (argc != 4)
     {
@@ -59,7 +60,6 @@ main (int argc, char **argv)
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, dim, dim);
   cr = cairo_create (surface);
   rsvg_handle_get_dimensions (handle, &original_dim);
-  cairo_surface_destroy (surface);
   cairo_scale (cr,
                (gdouble) dim / (gdouble) original_dim.width,
                (gdouble) dim / (gdouble) original_dim.height);
@@ -69,17 +69,21 @@ main (int argc, char **argv)
       g_fprintf (stderr,
                  "Error: failed to render '%s'\n",
                  input);
-      return 1;
+      retval = 1;
     }
 
-  if (cairo_surface_write_to_png (surface, output) != CAIRO_STATUS_SUCCESS)
+  if (retval == 0 &&
+      cairo_surface_write_to_png (surface, output) != CAIRO_STATUS_SUCCESS)
     {
       g_fprintf (stderr,
                  "Error: failed to write '%s'\n",
                  output);
-      return 1;
+      retval = 1;
     }
-  cairo_destroy (cr);
 
-  return 0;
+  cairo_surface_destroy (surface);
+  cairo_destroy (cr);
+  g_object_unref (handle);
+
+  return retval;
 }
