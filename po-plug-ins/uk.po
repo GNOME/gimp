@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-13 15:09+0000\n"
-"PO-Revision-Date: 2023-02-13 17:30+0200\n"
+"POT-Creation-Date: 2023-02-15 22:13+0000\n"
+"PO-Revision-Date: 2023-02-16 15:39+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: ../plug-ins/common/align-layers.c:158
@@ -52,8 +52,8 @@ msgstr "Вирівнювання видимих шарів"
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
 #: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1908
 #: ../plug-ins/common/file-jp2-load.c:961
-#: ../plug-ins/common/file-pdf-load.c:702
-#: ../plug-ins/common/file-pdf-load.c:1278
+#: ../plug-ins/common/file-pdf-load.c:708
+#: ../plug-ins/common/file-pdf-load.c:1338
 #: ../plug-ins/common/file-pdf-save.c:1020 ../plug-ins/common/file-ps.c:3447
 #: ../plug-ins/common/file-raw-data.c:1816 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
@@ -116,7 +116,7 @@ msgstr "_Скасувати"
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1909
-#: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
+#: ../plug-ins/common/file-pdf-load.c:709 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
 #: ../plug-ins/common/grid.c:678 ../plug-ins/common/hot.c:615
@@ -446,7 +446,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1375
-#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1111
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1116
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
@@ -1048,7 +1048,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: ../plug-ins/common/file-pdf-save.c:550 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1173
 #: ../plug-ins/common/file-raw-data.c:1202 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1222 ../plug-ins/common/file-xmc.c:1504
+#: ../plug-ins/common/file-tga.c:1227 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
@@ -1570,7 +1570,8 @@ msgstr "_Згин за кривою..."
 
 #: ../plug-ins/common/curve-bend.c:739 ../plug-ins/common/edge-dog.c:178
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr ""
+"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: ../plug-ins/common/curve-bend.c:748
 msgid "Cannot operate on layers with masks."
@@ -2147,7 +2148,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:338
 #: ../plug-ins/common/file-gegl.c:322 ../plug-ins/common/file-gif-load.c:353
 #: ../plug-ins/common/file-heif.c:703 ../plug-ins/common/file-jp2-load.c:1077
-#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1044
+#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1059
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1067
 #: ../plug-ins/common/file-raw-data.c:1277 ../plug-ins/common/file-sunras.c:429
@@ -2239,7 +2240,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: ../plug-ins/common/file-jpegxl.c:778 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1278
-#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1216
+#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1221
 #: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:319
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
@@ -3124,8 +3125,8 @@ msgstr "Нижня межа знаходиться за припустимими
 msgid "Writing to file '%s' failed: %s"
 msgstr "Помилка при записі до файлу «%s»: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:324
-#: ../plug-ins/common/file-pdf-load.c:343
+#: ../plug-ins/common/file-pdf-load.c:329
+#: ../plug-ins/common/file-pdf-load.c:348
 #: ../plug-ins/common/file-pdf-save.c:383
 #: ../plug-ins/common/file-pdf-save.c:400
 #: ../plug-ins/common/file-pdf-save.c:418
@@ -3136,7 +3137,7 @@ msgstr "Portable Document Format"
 #. * second is out-of-range page number, third is
 #. * number of pages. Specify order as in English if needed.
 #.
-#: ../plug-ins/common/file-pdf-load.c:507
+#: ../plug-ins/common/file-pdf-load.c:512
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
@@ -3147,71 +3148,77 @@ msgstr[1] ""
 msgstr[2] ""
 "Документ PDF «%1$s» має %3$d сторінок. Сторінка %2$d за межами діапазону."
 
-#: ../plug-ins/common/file-pdf-load.c:689
+#: ../plug-ins/common/file-pdf-load.c:695
 msgid "PDF is password protected, please input the password:"
 msgstr "PDF захищено паролем; введіть пароль:"
 
-#: ../plug-ins/common/file-pdf-load.c:699
+#: ../plug-ins/common/file-pdf-load.c:705
 msgid "Encrypted PDF"
 msgstr "Шифрований PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:726
+#: ../plug-ins/common/file-pdf-load.c:732
 msgid "Wrong password! Please input the right one:"
 msgstr "Хибний пароль! Введіть правильний:"
 
-#: ../plug-ins/common/file-pdf-load.c:744
+#: ../plug-ins/common/file-pdf-load.c:750
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Не вдалось завантажити «%s»: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:1081
+#: ../plug-ins/common/file-pdf-load.c:1096
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1083 ../plug-ins/common/file-ps.c:1197
+#: ../plug-ins/common/file-pdf-load.c:1098 ../plug-ins/common/file-ps.c:1197
 #, c-format
 msgid "%s-pages"
 msgstr "%s-сторінок"
 
-#: ../plug-ins/common/file-pdf-load.c:1274
+#: ../plug-ins/common/file-pdf-load.c:1334
 msgid "Import from PDF"
 msgstr "Імпорт з PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1279 ../plug-ins/common/file-ps.c:3448
+#: ../plug-ins/common/file-pdf-load.c:1339 ../plug-ins/common/file-ps.c:3448
 #: ../plug-ins/file-tiff/file-tiff-load.c:2665
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "_Імпортувати"
 
-#: ../plug-ins/common/file-pdf-load.c:1312
+#: ../plug-ins/common/file-pdf-load.c:1372
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Помилка при отриманні числа сторінок з даного PDF-файлу."
 
 #. "Load in reverse order" toggle button
-#: ../plug-ins/common/file-pdf-load.c:1353
+#: ../plug-ins/common/file-pdf-load.c:1416
 msgid "Load in reverse order"
 msgstr "Завантажити у зворотному порядку"
 
-#: ../plug-ins/common/file-pdf-load.c:1371
+#: ../plug-ins/common/file-pdf-load.c:1434
 msgid "_Width (pixels):"
 msgstr "_Ширина (у точках):"
 
-#: ../plug-ins/common/file-pdf-load.c:1372
+#: ../plug-ins/common/file-pdf-load.c:1435
 msgid "_Height (pixels):"
 msgstr "_Висота (у точках):"
 
-#: ../plug-ins/common/file-pdf-load.c:1374
+#: ../plug-ins/common/file-pdf-load.c:1437
 msgid "_Resolution:"
 msgstr "_Роздільна здатність:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1385
+#: ../plug-ins/common/file-pdf-load.c:1448
 msgid "Use _Anti-aliasing"
 msgstr "_Застосувати згладжування"
 
-#: ../plug-ins/common/file-pdf-load.c:1663
-#: ../plug-ins/common/file-pdf-load.c:1664 ../plug-ins/common/file-svg.c:852
+#. White Background
+#: ../plug-ins/common/file-pdf-load.c:1457
+#| msgid "_Fill transparent areas with background color"
+msgid "_Fill transparent areas with white"
+msgstr "Запов_нити прозорі області білим кольором"
+
+#: ../plug-ins/common/file-pdf-load.c:1743
+#: ../plug-ins/common/file-pdf-load.c:1744 ../plug-ins/common/file-svg.c:852
 #: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
@@ -3241,7 +3248,6 @@ msgstr ""
 
 #: ../plug-ins/common/file-pdf-save.c:899
 #: ../plug-ins/common/file-pdf-save.c:1067
-#| msgid "T_ransparent background"
 msgid "_Fill transparent areas with background color"
 msgstr "Запов_нити прозорі області кольором тла"
 
@@ -3400,11 +3406,13 @@ msgstr ""
 #: ../plug-ins/common/file-png.c:1577
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr ""
+"Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: ../plug-ins/common/file-png.c:1586
 #, c-format
-msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgid ""
+"Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -4241,24 +4249,24 @@ msgstr "Не вдається прочитати розширення з «%s»"
 msgid "Cannot read header from '%s'"
 msgstr "Не вдається зчитати заголовок з «%s»"
 
-#: ../plug-ins/common/file-tga.c:1434
+#: ../plug-ins/common/file-tga.c:1439
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1443 ../plug-ins/file-sgi/sgi.c:683
+#: ../plug-ins/common/file-tga.c:1448 ../plug-ins/file-sgi/sgi.c:683
 msgid "_RLE compression"
 msgstr "_RLE стиснення"
 
-#: ../plug-ins/common/file-tga.c:1457
+#: ../plug-ins/common/file-tga.c:1462
 msgid "Or_igin:"
 msgstr "_Початок координат:"
 
-#: ../plug-ins/common/file-tga.c:1461
+#: ../plug-ins/common/file-tga.c:1466
 msgid "Bottom left"
 msgstr "Знизу ліворуч"
 
-#: ../plug-ins/common/file-tga.c:1462
+#: ../plug-ins/common/file-tga.c:1467
 msgid "Top left"
 msgstr "Згори ліворуч"
 
@@ -6998,7 +7006,7 @@ msgstr "Значок #%i"
 msgid "Opening thumbnail for '%s'"
 msgstr "Відкривається перегляд для «%s»"
 
-#: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:136
+#: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:137
 msgid "Microsoft Windows icon"
 msgstr "Значок Microsoft Windows"
 
@@ -9215,7 +9223,8 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: ../plug-ins/gimpressionist/orientation.c:168
-msgid "Let the direction from the center determine the direction of the stroke"
+msgid ""
+"Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: ../plug-ins/gimpressionist/orientation.c:175
@@ -9330,7 +9339,8 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr ""
+"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: ../plug-ins/gimpressionist/orientmap.c:671
 msgid "A_ngle:"
@@ -10383,7 +10393,8 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3273
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr ""
+"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3283
 msgid "Delete Gradient Flare"
@@ -12821,7 +12832,8 @@ msgstr "Альтернативне оточення фільтра:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:191
 msgid "A second number of adjacent points to consider when filtering."
-msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr ""
+"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:201
 msgid "Filter Epsilon:"
