@@ -1,57 +1,57 @@
 # Swedish messages for GIMP Python.
-# Copyright © 2000-2003, 2007-2010, 2016, 2020 Free Software Foundation, Inc.
+# Copyright © 2000-2003, 2007-2010, 2016, 2020, 2023 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Tomas Ögren <stric@ing.umu.se>, 2001.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2010.
 # Sebastian Rasmussen <sebras@gmail.com>, 2015, 2016.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-09-14 16:05+0000\n"
-"PO-Revision-Date: 2020-09-14 18:49+0200\n"
+"POT-Creation-Date: 2023-02-18 12:56+0000\n"
+"PO-Revision-Date: 2023-02-18 14:01+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:395
+#: ../plug-ins/pygimp/gimpfu.py:396
 msgid "Missing exception information"
 msgstr "Undantagsinformation saknas"
 
-#: ../plug-ins/pygimp/gimpfu.py:404
+#: ../plug-ins/pygimp/gimpfu.py:405
 #, python-format
 msgid "An error occurred running %s"
 msgstr "Ett fel inträffade vid körning av %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:415
+#: ../plug-ins/pygimp/gimpfu.py:416
 msgid "_More Information"
 msgstr "_Mer information"
 
-#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
-#: ../plug-ins/pygimp/gimpfu.py:546
+#: ../plug-ins/pygimp/gimpfu.py:529 ../plug-ins/pygimp/gimpfu.py:541
+#: ../plug-ins/pygimp/gimpfu.py:547
 msgid "No"
 msgstr "Nej"
 
-#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
+#: ../plug-ins/pygimp/gimpfu.py:539 ../plug-ins/pygimp/gimpfu.py:547
 msgid "Yes"
 msgstr "Ja"
 
-#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:600 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu filväljare"
 
-#: ../plug-ins/pygimp/gimpfu.py:648
+#: ../plug-ins/pygimp/gimpfu.py:649
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu mappväljare"
 
-#: ../plug-ins/pygimp/gimpfu.py:737
+#: ../plug-ins/pygimp/gimpfu.py:738
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Ogiltig inmatning för \"%s\""
@@ -189,7 +189,7 @@ msgid "_Offset Palette..."
 msgstr "_Skifta i palett…"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
@@ -263,60 +263,60 @@ msgstr "Krominans (LCHab)"
 msgid "Hue (LCHab)"
 msgstr "Nyans (LCHab)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:313
 msgid "Sort the colors in a palette"
 msgstr "Sortera färgerna i en palett"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:332
 msgid "_Sort Palette..."
 msgstr "_Sortera palett…"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
 msgid "Se_lections"
 msgstr "_Markeringar"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "All"
 msgstr "Alla"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "Slice / Array"
 msgstr "Skiva / Vektor"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "Autoslice (fg->bg)"
 msgstr "Autoskivning (förgr->bakgr)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
 msgid "Partitioned"
 msgstr "Partitionerad"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
 msgid "Slice _expression"
 msgstr "Skiv_uttryck"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:340
 msgid "Channel to _sort"
 msgstr "Kanal att _sortera"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
 msgid "_Ascending"
 msgstr "_Stigande"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:343
 msgid "Secondary Channel to s_ort"
 msgstr "Sekundär kanal att s_ortera"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
 msgid "_Quantization"
 msgstr "_Kvantisering"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:347
 msgid "_Partitioning channel"
 msgstr "_Partitioneringskanal"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:349
 msgid "Partition q_uantization"
 msgstr "_Kvantisering för partitionering"
 
@@ -385,7 +385,7 @@ msgstr "Javascript för onmouseover och clicked"
 #. table caps are table cells on the edge of the table
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:449
 msgid "Skip animation for table caps"
-msgstr "Hoppa över animering för tabelltexter"
+msgstr "Hoppa över animering för kantceller"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:57
 msgid "Python Console"
