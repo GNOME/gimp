@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-14 13:07+0000\n"
-"PO-Revision-Date: 2023-02-14 15:11+0100\n"
-"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
+"POT-Creation-Date: 2023-02-15 11:53+0000\n"
+"PO-Revision-Date: 2023-02-18 13:52+0100\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
@@ -5219,7 +5219,7 @@ msgstr "För_vrängningar"
 #: ../app/actions/filters-actions.c:79
 msgctxt "filters-action"
 msgid "_Artistic"
-msgstr "Ar_tistisk"
+msgstr "Ar_tistiska"
 
 #: ../app/actions/filters-actions.c:81
 msgctxt "filters-action"
@@ -8995,12 +8995,12 @@ msgstr "Ta bort denna verktygsförinställning"
 #: ../app/actions/tool-presets-actions.c:93
 msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
-msgstr "Uppdatera ve_rktygsförinställning"
+msgstr "Uppdatera ve_rktygsförinställningar"
 
 #: ../app/actions/tool-presets-actions.c:94
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
-msgstr "Uppdatera verktygsförinställning"
+msgstr "Uppdatera verktygsförinställningar"
 
 #: ../app/actions/tool-presets-actions.c:102
 msgctxt "tool-presets-action"
@@ -10892,7 +10892,7 @@ msgstr "När aktiverat körs GIMP i ett enda fönster."
 #: ../app/actions/windows-actions.c:151
 msgctxt "windows-tabs-position-action"
 msgid "_Top"
-msgstr "_Topp"
+msgstr "Öv_erst"
 
 #: ../app/actions/windows-actions.c:152
 msgctxt "windows-tabs-position-action"
@@ -10902,7 +10902,7 @@ msgstr "Positionera flikarna längst upp"
 #: ../app/actions/windows-actions.c:156
 msgctxt "windows-tabs-position-action"
 msgid "_Bottom"
-msgstr "_Botten"
+msgstr "_Nederst"
 
 #: ../app/actions/windows-actions.c:157
 msgctxt "windows-tabs-position-action"
@@ -18135,7 +18135,7 @@ msgstr "Välj streckstil"
 
 #: ../app/dialogs/stroke-dialog.c:129
 msgid "_Stroke"
-msgstr "_Penseldrag"
+msgstr "_Stryk"
 
 #: ../app/dialogs/stroke-dialog.c:238
 msgid "P_aint tool:"
@@ -18147,7 +18147,7 @@ msgstr "_Emulera penseldynamik"
 
 #: ../app/dialogs/tips-dialog.c:99
 msgid "The GIMP tips file is empty!"
-msgstr "GIMP-tipsfilen kunde är tom!"
+msgstr "GIMP-tipsfilen är tom!"
 
 #: ../app/dialogs/tips-dialog.c:103
 msgid "The GIMP tips file appears to be missing!"
