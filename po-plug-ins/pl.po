@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-12 12:48+0100\n"
-"PO-Revision-Date: 2023-02-12 13:15+0100\n"
+"POT-Creation-Date: 2023-02-18 11:45+0100\n"
+"PO-Revision-Date: 2023-02-18 11:48+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -53,8 +53,8 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
 #: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1908
 #: ../plug-ins/common/file-jp2-load.c:961
-#: ../plug-ins/common/file-pdf-load.c:702
-#: ../plug-ins/common/file-pdf-load.c:1278
+#: ../plug-ins/common/file-pdf-load.c:708
+#: ../plug-ins/common/file-pdf-load.c:1338
 #: ../plug-ins/common/file-pdf-save.c:1020 ../plug-ins/common/file-ps.c:3447
 #: ../plug-ins/common/file-raw-data.c:1816 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
@@ -117,7 +117,7 @@ msgstr "_Anuluj"
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1909
-#: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
+#: ../plug-ins/common/file-pdf-load.c:709 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
 #: ../plug-ins/common/grid.c:678 ../plug-ins/common/hot.c:615
@@ -447,7 +447,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1375
-#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1111
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1116
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
@@ -1046,7 +1046,7 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/common/file-pdf-save.c:550 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1173
 #: ../plug-ins/common/file-raw-data.c:1202 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1222 ../plug-ins/common/file-xmc.c:1504
+#: ../plug-ins/common/file-tga.c:1227 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
@@ -2146,7 +2146,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:338
 #: ../plug-ins/common/file-gegl.c:322 ../plug-ins/common/file-gif-load.c:353
 #: ../plug-ins/common/file-heif.c:703 ../plug-ins/common/file-jp2-load.c:1077
-#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1044
+#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1059
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1067
 #: ../plug-ins/common/file-raw-data.c:1277 ../plug-ins/common/file-sunras.c:429
@@ -2238,7 +2238,7 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych palety"
 #: ../plug-ins/common/file-jpegxl.c:778 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1278
-#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1216
+#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1221
 #: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:319
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
@@ -3119,8 +3119,8 @@ msgstr "Dolna krawędź jest poza zakresem (musi być < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Zapisanie do pliku „%s” się nie powiodło: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:324
-#: ../plug-ins/common/file-pdf-load.c:343
+#: ../plug-ins/common/file-pdf-load.c:329
+#: ../plug-ins/common/file-pdf-load.c:348
 #: ../plug-ins/common/file-pdf-save.c:383
 #: ../plug-ins/common/file-pdf-save.c:400
 #: ../plug-ins/common/file-pdf-save.c:418
@@ -3131,7 +3131,7 @@ msgstr "PDF"
 #. * second is out-of-range page number, third is
 #. * number of pages. Specify order as in English if needed.
 #.
-#: ../plug-ins/common/file-pdf-load.c:507
+#: ../plug-ins/common/file-pdf-load.c:512
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
@@ -3141,71 +3141,76 @@ msgstr[1] ""
 "Dokument PDF „%1$s” ma %3$d strony. %2$d. strona jest spoza zakresu."
 msgstr[2] "Dokument PDF „%1$s” ma %3$d stron. %2$d. strona jest spoza zakresu."
 
-#: ../plug-ins/common/file-pdf-load.c:689
+#: ../plug-ins/common/file-pdf-load.c:695
 msgid "PDF is password protected, please input the password:"
 msgstr "Plik PDF jest chroniony hasłem, proszę je wpisać:"
 
-#: ../plug-ins/common/file-pdf-load.c:699
+#: ../plug-ins/common/file-pdf-load.c:705
 msgid "Encrypted PDF"
 msgstr "Zaszyfrowany plik PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:726
+#: ../plug-ins/common/file-pdf-load.c:732
 msgid "Wrong password! Please input the right one:"
 msgstr "Błędne hasło. Proszę wpisać właściwe:"
 
-#: ../plug-ins/common/file-pdf-load.c:744
+#: ../plug-ins/common/file-pdf-load.c:750
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Nie można wczytać „%s”: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:1081
+#: ../plug-ins/common/file-pdf-load.c:1096
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1083 ../plug-ins/common/file-ps.c:1197
+#: ../plug-ins/common/file-pdf-load.c:1098 ../plug-ins/common/file-ps.c:1197
 #, c-format
 msgid "%s-pages"
 msgstr "%s-stron"
 
-#: ../plug-ins/common/file-pdf-load.c:1274
+#: ../plug-ins/common/file-pdf-load.c:1334
 msgid "Import from PDF"
 msgstr "Import z PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1279 ../plug-ins/common/file-ps.c:3448
+#: ../plug-ins/common/file-pdf-load.c:1339 ../plug-ins/common/file-ps.c:3448
 #: ../plug-ins/file-tiff/file-tiff-load.c:2665
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "Zai_mportuj"
 
-#: ../plug-ins/common/file-pdf-load.c:1312
+#: ../plug-ins/common/file-pdf-load.c:1372
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Błąd podczas uzyskiwania liczby stron z podanego pliku PDF."
 
 #. "Load in reverse order" toggle button
-#: ../plug-ins/common/file-pdf-load.c:1353
+#: ../plug-ins/common/file-pdf-load.c:1416
 msgid "Load in reverse order"
 msgstr "Wczytanie w odwróconej kolejności"
 
-#: ../plug-ins/common/file-pdf-load.c:1371
+#: ../plug-ins/common/file-pdf-load.c:1434
 msgid "_Width (pixels):"
 msgstr "_Szerokość (piksele):"
 
-#: ../plug-ins/common/file-pdf-load.c:1372
+#: ../plug-ins/common/file-pdf-load.c:1435
 msgid "_Height (pixels):"
 msgstr "_Wysokość (piksele):"
 
-#: ../plug-ins/common/file-pdf-load.c:1374
+#: ../plug-ins/common/file-pdf-load.c:1437
 msgid "_Resolution:"
 msgstr "_Rozdzielczość:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1385
+#: ../plug-ins/common/file-pdf-load.c:1448
 msgid "Use _Anti-aliasing"
 msgstr "Użycie _wygładzania"
 
-#: ../plug-ins/common/file-pdf-load.c:1663
-#: ../plug-ins/common/file-pdf-load.c:1664 ../plug-ins/common/file-svg.c:852
+#. White Background
+#: ../plug-ins/common/file-pdf-load.c:1457
+msgid "_Fill transparent areas with white"
+msgstr "_Wypełnienie przezroczystych obszarów białym kolorem"
+
+#: ../plug-ins/common/file-pdf-load.c:1743
+#: ../plug-ins/common/file-pdf-load.c:1744 ../plug-ins/common/file-svg.c:852
 #: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
@@ -4234,24 +4239,24 @@ msgstr "Nie można odczytać rozszerzenia z pliku „%s”"
 msgid "Cannot read header from '%s'"
 msgstr "Nie można odczytać nagłówka z pliku „%s”"
 
-#: ../plug-ins/common/file-tga.c:1434
+#: ../plug-ins/common/file-tga.c:1439
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1443 ../plug-ins/file-sgi/sgi.c:683
+#: ../plug-ins/common/file-tga.c:1448 ../plug-ins/file-sgi/sgi.c:683
 msgid "_RLE compression"
 msgstr "Kompresja _RLE"
 
-#: ../plug-ins/common/file-tga.c:1457
+#: ../plug-ins/common/file-tga.c:1462
 msgid "Or_igin:"
 msgstr "_Oryginał:"
 
-#: ../plug-ins/common/file-tga.c:1461
+#: ../plug-ins/common/file-tga.c:1466
 msgid "Bottom left"
 msgstr "Dolny lewy"
 
-#: ../plug-ins/common/file-tga.c:1462
+#: ../plug-ins/common/file-tga.c:1467
 msgid "Top left"
 msgstr "Górny lewy"
 
@@ -6992,7 +6997,7 @@ msgstr "%i. ikona"
 msgid "Opening thumbnail for '%s'"
 msgstr "Otwieranie miniatury dla „%s”"
 
-#: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:136
+#: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:137
 msgid "Microsoft Windows icon"
 msgstr "Ikona systemu Microsoft Windows"
 
