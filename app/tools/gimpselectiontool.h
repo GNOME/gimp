@@ -39,6 +39,9 @@ struct _GimpSelectionTool
 
   SelectFunction  function;         /*  selection function        */
   GimpChannelOps  saved_operation;  /*  saved tool options state  */
+  GdkModifierType held_keys;        /*  only keys that have been pressed are
+                                        used to determine the modified
+                                        operation type - see issue #1589 */
 
   gint            change_count;
   gboolean        saved_show_selection;
