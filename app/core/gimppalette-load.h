@@ -31,7 +31,8 @@ typedef enum
   GIMP_PALETTE_FILE_FORMAT_PSP_PAL,  /* JASC's Paint Shop Pro color palette */
   GIMP_PALETTE_FILE_FORMAT_ACO,      /* Photoshop ACO color file            */
   GIMP_PALETTE_FILE_FORMAT_ASE,      /* Photoshop ASE color palette         */
-  GIMP_PALETTE_FILE_FORMAT_CSS       /* Cascaded Stylesheet file (CSS)      */
+  GIMP_PALETTE_FILE_FORMAT_CSS,      /* Cascaded Stylesheet file (CSS)      */
+  GIMP_PALETTE_FILE_FORMAT_SBZ       /* Swatchbooker SBZ file               */
 } GimpPaletteFileFormat;
 
 
@@ -60,6 +61,10 @@ GList               * gimp_palette_load_ase           (GimpContext   *context,
                                                        GInputStream  *input,
                                                        GError       **error);
 GList               * gimp_palette_load_css           (GimpContext   *context,
+                                                       GFile         *file,
+                                                       GInputStream  *input,
+                                                       GError       **error);
+GList               * gimp_palette_load_sbz           (GimpContext   *context,
                                                        GFile         *file,
                                                        GInputStream  *input,
                                                        GError       **error);
