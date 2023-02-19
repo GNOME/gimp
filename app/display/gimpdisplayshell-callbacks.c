@@ -296,7 +296,12 @@ gimp_display_shell_canvas_draw (GtkWidget        *widget,
   /*  ignore events on overlays  */
   if (gtk_cairo_should_draw_window (cr, gtk_widget_get_window (widget)))
     {
-      if (gimp_display_get_image (shell->display))
+      GimpImage *image = gimp_display_get_image (shell->display);
+
+      /* If we are currently converting the image, it might be in inconsistent
+       * state and should not be redrawn.
+       */
+      if (image != NULL && ! gimp_image_get_converting (image))
         {
           gimp_display_shell_canvas_draw_image (shell, cr);
         }

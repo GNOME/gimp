@@ -69,6 +69,8 @@ struct _GimpImagePrivate
   GimpColorRenderingIntent  simulation_intent;
   gboolean                  simulation_bpc;
 
+  gboolean           converting;            /*  color model or profile in middle of conversion?  */
+
   /*  Cached color transforms: from layer to sRGB u8 and double, and back    */
   gboolean            color_transforms_created;
   GimpColorTransform *transform_to_srgb_u8;
