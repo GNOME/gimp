@@ -75,6 +75,15 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   g_return_if_fail (scale > 0.0);
 
   image  = gimp_display_get_image (shell->display);
+
+  /* While converting, the render can be wrong; but worse, we rely on allocated
+   * data which might be the wrong size and this was a crash we had which was
+   * hard to diagnose as it doesn't always crash immediately (see discussions in
+   * #9136). This is why this assert is important. We want to make sure we never
+   * call this when the shell's image is in the inconsistent "converting" state.
+   */
+  g_return_if_fail (! gimp_image_get_converting (image));
+
   buffer = gimp_pickable_get_buffer (
     gimp_display_shell_get_pickable (shell));
 #ifdef USE_NODE_BLIT

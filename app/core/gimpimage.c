@@ -140,7 +140,8 @@ enum
   PROP_PRECISION,
   PROP_METADATA,
   PROP_BUFFER,
-  PROP_SYMMETRY
+  PROP_SYMMETRY,
+  PROP_CONVERTING,
 };
 
 
@@ -692,6 +693,12 @@ gimp_image_class_init (GimpImageClass *klass)
                                                        GIMP_TYPE_SYMMETRY,
                                                        GIMP_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_CONVERTING,
+                                   g_param_spec_boolean ("converting",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -1007,6 +1014,10 @@ gimp_image_set_property (GObject      *object,
       }
       break;
 
+    case PROP_CONVERTING:
+      private->converting = g_value_get_boolean (value);
+      break;
+
     case PROP_ID:
     case PROP_METADATA:
     case PROP_BUFFER:
@@ -1057,6 +1068,10 @@ gimp_image_get_property (GObject    *object,
                          G_TYPE_FROM_INSTANCE (private->active_symmetry) :
                          G_TYPE_NONE);
       break;
+    case PROP_CONVERTING:
+      g_value_set_boolean (value, private->converting);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -5143,4 +5158,34 @@ gimp_image_invalidate_previews (GimpImage *image)
 
   gimp_item_stack_invalidate_previews (layers);
   gimp_item_stack_invalidate_previews (channels);
+}
+
+/* Sets the image into a "converting" state, which is there to warn other code
+ * (such as shell render code) that the image properties might be in an
+ * inconsistent state. For instance when converting to another precision with
+ * gimp_image_convert_precision(), the babl format may be updated first, and the
+ * profile later, after all drawables are converted. Rendering the image
+ * in-between would at best render broken previews (at worst, crash, e.g.
+ * because we depend on allocated data which might have become too small).
+ */
+void
+gimp_image_set_converting (GimpImage *image,
+                           gboolean   converting)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  g_object_set (image,
+                "converting", converting,
+                NULL);
+}
+
+gboolean
+gimp_image_get_converting (GimpImage *image)
+{
+  GimpImagePrivate *private;
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  return private->converting;
 }

@@ -274,13 +274,17 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   /*  ignore events on overlays  */
   if (eevent->window == gtk_widget_get_window (widget))
     {
-      cairo_t *cr;
+      GimpImage *image = gimp_display_get_image (shell->display);
+      cairo_t   *cr;
 
       cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
       gdk_cairo_region (cr, eevent->region);
       cairo_clip (cr);
 
-      if (gimp_display_get_image (shell->display))
+      /* If we are currently converting the image, it might be in inconsistent
+       * state and should not be redrawn.
+       */
+      if (image != NULL && ! gimp_image_get_converting (image))
         {
           gimp_display_shell_canvas_draw_image (shell, cr);
         }

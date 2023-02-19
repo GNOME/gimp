@@ -135,6 +135,8 @@ gimp_image_convert_precision (GimpImage        *image,
   old_profile = gimp_image_get_color_profile (image);
   old_format  = gimp_image_get_layer_format (image, FALSE);
 
+  gimp_image_set_converting (image, TRUE);
+
   /*  Set the new precision  */
   g_object_set (image, "precision", precision, NULL);
 
@@ -226,6 +228,8 @@ gimp_image_convert_precision (GimpImage        *image,
 
       g_object_unref (new_profile);
     }
+
+  gimp_image_set_converting (image, FALSE);
 
   gimp_image_undo_group_end (image);
 
