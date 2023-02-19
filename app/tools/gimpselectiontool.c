@@ -104,6 +104,7 @@ gimp_selection_tool_init (GimpSelectionTool *selection_tool)
 {
   selection_tool->function             = SELECTION_SELECT;
   selection_tool->saved_operation      = GIMP_CHANNEL_OP_REPLACE;
+  selection_tool->held_keys            = 0;
 
   selection_tool->saved_show_selection = FALSE;
   selection_tool->undo                 = NULL;
@@ -163,8 +164,12 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
                modify_mask |
                GDK_MOD1_MASK;
 
+      selection_tool->held_keys &= state; /* clear the flags for released keys */
+
       if (press)
         {
+          selection_tool->held_keys |= key;
+
           if (key == state ||
               /* GimpPolygonSelectTool may mask-out part of the state, which
                * can cause the wrong mode to be restored on release if we don't
@@ -184,15 +189,28 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
           if (! state)
             {
               /*  last modifier released  */
-
               button_op = selection_tool->saved_operation;
             }
         }
 
-      if (state & GDK_MOD1_MASK)
+      if ((state & GDK_MOD1_MASK) ||
+         ((state & selection_tool->held_keys) == 0))
         {
           /*  if alt is down, pretend that neither
            *  shift nor control are down
+           *
+           *  The test for at least one flag being set in both state and
+           *  held keys is to prevent the problem described in issue #1589
+           *  where the modifier key is pressed to restrict the movement of a
+           *  floating layer. When the left mouse button is released this
+           *  function is called with a release event for the extend key and the
+           *  state parameter set to 4 to indicate that the modifier key is
+           *  pressed. Without this extra test the operation is set based on the
+           *  the setting of state (to GIMP_CHANNEL_OP_SUBTRACT). The next call
+           *  of this function is then for a press of the modifier key and,
+           *  because state = key = 4 selection_tool->saved_operation is set,
+           *  wrongly, to GIMP_CHANNEL_OP_SUBTRACT, overwriting the intended
+           *  setting
            */
           button_op = selection_tool->saved_operation;
         }
@@ -203,7 +221,8 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
            *  if there is actually a modifier pressed, so we don't
            *  override the "last modifier released" assignment above
            */
-          button_op = gimp_modifiers_to_channel_op (state);
+          button_op = gimp_modifiers_to_channel_op (state &
+                                                    selection_tool->held_keys);
         }
 
       if (button_op != options->operation)
