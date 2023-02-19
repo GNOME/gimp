@@ -587,7 +587,7 @@ gimp_palette_load_css (GimpContext   *context,
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  regex = g_regex_new (".*color.*:(?P<param>.*);", G_REGEX_CASELESS, 0, error);
+  regex = g_regex_new (".*color.*:(?P<param>.*)", G_REGEX_CASELESS, 0, error);
   if (! regex)
     return NULL;
 
