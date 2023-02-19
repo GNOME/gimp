@@ -288,7 +288,7 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
         {
           gimp_display_shell_canvas_draw_image (shell, cr);
         }
-      else
+      else if (image == NULL)
         {
           gimp_display_shell_canvas_draw_drop_zone (shell, cr);
         }
