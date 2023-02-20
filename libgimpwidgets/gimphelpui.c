@@ -329,6 +329,11 @@ gimp_help_menu_item_set_tooltip (GtkWidget   *widget,
 {
   g_return_if_fail (GTK_IS_MENU_ITEM (widget));
 
+  g_object_set (widget, "has-tooltip", FALSE, NULL);
+
+  g_signal_handlers_disconnect_by_func (widget,
+                                        gimp_help_menu_item_query_tooltip,
+                                        NULL);
   if (tooltip && help_id)
     {
       g_object_set (widget, "has-tooltip", TRUE, NULL);
@@ -336,14 +341,6 @@ gimp_help_menu_item_set_tooltip (GtkWidget   *widget,
       g_signal_connect (widget, "query-tooltip",
                         G_CALLBACK (gimp_help_menu_item_query_tooltip),
                         NULL);
-    }
-  else if (! tooltip)
-    {
-      g_object_set (widget, "has-tooltip", FALSE, NULL);
-
-      g_signal_handlers_disconnect_by_func (widget,
-                                            gimp_help_menu_item_query_tooltip,
-                                            NULL);
     }
 }
 

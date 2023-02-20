@@ -110,9 +110,6 @@ static void   gimp_menu_action_notify_visible   (GimpAction          *action,
 static void   gimp_menu_action_notify_label     (GimpAction          *action,
                                                  const GParamSpec    *pspec,
                                                  GtkMenuItem         *item);
-static void   gimp_menu_action_notify_tooltip   (GimpAction          *action,
-                                                 const GParamSpec    *pspec,
-                                                 GtkWidget           *item);
 
 static GtkContainer * gimp_menu_add_submenu     (GimpMenu            *menu,
                                                  const gchar         *label,
@@ -541,15 +538,6 @@ gimp_menu_action_notify_label (GimpAction       *action,
   gtk_menu_item_set_label (item, gimp_action_get_label (action));
 }
 
-static void
-gimp_menu_action_notify_tooltip (GimpAction       *action,
-                                 const GParamSpec *pspec,
-                                 GtkWidget        *item)
-{
-  gtk_widget_set_tooltip_text (item,
-                               gimp_action_get_tooltip (GIMP_ACTION (action)));
-}
-
 static GtkContainer *
 gimp_menu_add_submenu (GimpMenu      *menu,
                        const gchar   *label,
@@ -674,13 +662,6 @@ gimp_menu_add_action (GimpMenu          *menu,
                             gimp_action_is_sensitive (GIMP_ACTION (action), NULL));
   g_signal_connect_object (action, "notify::sensitive",
                            G_CALLBACK (gimp_menu_action_notify_sensitive),
-                           item, 0);
-
-  if (gimp_action_get_tooltip (GIMP_ACTION (action)))
-    gtk_widget_set_tooltip_text (item,
-                                 gimp_action_get_tooltip (GIMP_ACTION (action)));
-  g_signal_connect_object (action, "notify::tooltip",
-                           G_CALLBACK (gimp_menu_action_notify_tooltip),
                            item, 0);
 
   if (placeholder)

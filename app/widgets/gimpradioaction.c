@@ -80,9 +80,6 @@ static void   gimp_radio_action_set_state           (GimpAction       *gimp_acti
 static void   gimp_radio_action_g_activate          (GAction         *action,
                                                      GVariant        *parameter);
 
-static void   gimp_radio_action_connect_proxy       (GtkAction        *action,
-                                                     GtkWidget        *proxy);
-
 static void   gimp_radio_action_changed             (GtkRadioAction   *action,
                                                      GtkRadioAction   *current);
 
@@ -100,13 +97,10 @@ static void
 gimp_radio_action_class_init (GimpRadioActionClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GtkActionClass      *action_class = GTK_ACTION_CLASS (klass);
   GtkRadioActionClass *radio_class  = GTK_RADIO_ACTION_CLASS (klass);
 
   object_class->get_property  = gimp_radio_action_get_property;
   object_class->set_property  = gimp_radio_action_set_property;
-
-  action_class->connect_proxy = gimp_radio_action_connect_proxy;
 
   radio_class->changed        = gimp_radio_action_changed;
 
@@ -350,15 +344,6 @@ gimp_radio_action_g_activate (GAction  *action,
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), TRUE);
 
   gimp_action_history_action_activated (GIMP_ACTION (action));
-}
-
-static void
-gimp_radio_action_connect_proxy (GtkAction *action,
-                                 GtkWidget *proxy)
-{
-  GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
-
-  gimp_action_set_proxy_tooltip (GIMP_ACTION (action), proxy);
 }
 
 static void

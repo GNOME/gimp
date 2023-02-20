@@ -372,8 +372,6 @@ gimp_action_impl_connect_proxy (GtkAction *action,
   GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
 
   gimp_action_set_proxy (GIMP_ACTION (action), proxy);
-
-  gimp_action_set_proxy_tooltip (GIMP_ACTION (action), proxy);
 }
 
 

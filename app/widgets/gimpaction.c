@@ -72,18 +72,18 @@ struct _GimpActionPrivate
 
 
 static GimpActionPrivate *
-              gimp_action_get_private       (GimpAction        *action);
-static void   gimp_action_private_finalize  (GimpActionPrivate *priv);
+              gimp_action_get_private          (GimpAction        *action);
+static void   gimp_action_private_finalize     (GimpActionPrivate *priv);
 
-static void   gimp_action_label_notify      (GimpAction        *action,
-                                             const GParamSpec  *pspec,
-                                             gpointer           data);
-static void   gimp_action_tooltip_notify    (GimpAction        *action,
-                                             const GParamSpec  *pspec,
-                                             gpointer           data);
+static void   gimp_action_label_notify         (GimpAction        *action,
+                                                const GParamSpec  *pspec,
+                                                gpointer           data);
 
-static void   gimp_action_proxy_destroy     (GtkWidget         *proxy,
-                                             GimpAction        *action);
+static void   gimp_action_proxy_destroy        (GtkWidget         *proxy,
+                                                GimpAction        *action);
+
+static void   gimp_action_update_proxy_tooltip (GimpAction     *action,
+                                                GtkWidget      *proxy);
 
 
 G_DEFINE_INTERFACE (GimpAction, gimp_action, GTK_TYPE_ACTION)
@@ -133,7 +133,8 @@ gimp_action_default_init (GimpActionInterface *iface)
                                        g_param_spec_boolean ("sensitive",
                                                              NULL, NULL,
                                                              TRUE,
-                                                             GIMP_PARAM_READWRITE));
+                                                             GIMP_PARAM_READWRITE |
+                                                             G_PARAM_EXPLICIT_NOTIFY));
 
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   g_object_interface_install_property (iface,
@@ -178,9 +179,6 @@ gimp_action_init (GimpAction *action)
   g_signal_connect (action, "notify::label",
                     G_CALLBACK (gimp_action_label_notify),
                     NULL);
-  g_signal_connect (action, "notify::tooltip",
-                    G_CALLBACK (gimp_action_tooltip_notify),
-                    NULL);
 }
 
 
@@ -216,40 +214,6 @@ gimp_action_emit_change_state (GimpAction *action,
     g_variant_unref (value);
 }
 
-void
-gimp_action_set_proxy_tooltip (GimpAction *action,
-                               GtkWidget  *proxy)
-{
-  const gchar *tooltip;
-  const gchar *reason         = NULL;
-  gchar       *escaped_reason = NULL;
-  gchar       *markup;
-
-  g_return_if_fail (GIMP_IS_ACTION (action));
-  g_return_if_fail (GTK_IS_WIDGET (proxy));
-
-  tooltip = gimp_action_get_tooltip (action);
-
-  gimp_action_get_sensitive (action, &reason);
-  if (reason)
-    escaped_reason = g_markup_escape_text (reason, -1);
-
-  markup = g_strdup_printf ("%s%s"                                   /* Action tooltip  */
-                            "<i><span weight='light'>%s</span></i>", /* Inactive reason */
-                            tooltip,
-                            escaped_reason && tooltip ? "\n" : "",
-                            escaped_reason ? escaped_reason : "");
-
-  if (tooltip || escaped_reason)
-    gimp_help_set_help_data_with_markup (proxy, markup,
-                                         g_object_get_qdata (G_OBJECT (proxy),
-                                                             GIMP_HELP_ID));
-
-  g_free (escaped_reason);
-  g_free (markup);
-}
-
-
 const gchar *
 gimp_action_get_name (GimpAction *action)
 {
@@ -274,6 +238,8 @@ gimp_action_set_tooltip (GimpAction  *action,
                          const gchar *tooltip)
 {
   gtk_action_set_tooltip ((GtkAction *) action, tooltip);
+
+  gimp_action_update_proxy_tooltip (action, NULL);
 }
 
 const gchar *
@@ -317,6 +283,7 @@ gimp_action_set_help_id (GimpAction  *action,
   g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
                            g_strdup (help_id),
                            (GDestroyNotify) g_free);
+  gimp_action_update_proxy_tooltip (action, NULL);
 }
 
 const gchar *
@@ -353,13 +320,18 @@ gimp_action_set_sensitive (GimpAction  *action,
 {
   GimpActionPrivate *priv = GET_PRIVATE (action);
 
-  g_object_set (action,
-                "sensitive", sensitive,
-                NULL);
+  if (priv->sensitive != sensitive || (! sensitive && reason))
+    {
+      priv->sensitive = sensitive;
 
-  g_clear_pointer (&priv->disable_reason, g_free);
-  if (reason && ! sensitive)
-    priv->disable_reason = g_strdup (reason);
+      g_clear_pointer (&priv->disable_reason, g_free);
+      if (reason && ! sensitive)
+        priv->disable_reason = g_strdup (reason);
+
+      g_object_notify (G_OBJECT (action), "sensitive");
+
+      gimp_action_update_proxy_tooltip (action, NULL);
+    }
 }
 
 gboolean
@@ -711,7 +683,9 @@ gimp_action_set_property (GObject      *object,
       g_set_object (&priv->context, g_value_get_object (value));
       break;
     case GIMP_ACTION_PROP_SENSITIVE:
-      priv->sensitive = g_value_get_boolean (value);
+      gimp_action_set_sensitive (GIMP_ACTION (object),
+                                 g_value_get_boolean (value),
+                                 NULL);
       break;
     case GIMP_ACTION_PROP_COLOR:
       g_clear_pointer (&priv->color, g_free);
@@ -857,6 +831,8 @@ gimp_action_set_proxy (GimpAction *action,
       g_signal_connect (proxy, "destroy",
                         gimp_action_proxy_destroy,
                         action);
+
+      gimp_action_update_proxy_tooltip (action, proxy);
     }
 }
 
@@ -955,25 +931,51 @@ gimp_action_label_notify (GimpAction       *action,
 }
 
 static void
-gimp_action_tooltip_notify (GimpAction       *action,
-                            const GParamSpec *pspec,
-                            gpointer          data)
-{
-  GSList *list;
-
-  for (list = gimp_action_get_proxies (action);
-       list;
-       list = g_slist_next (list))
-    {
-      gimp_action_set_proxy_tooltip (action, list->data);
-    }
-}
-
-static void
 gimp_action_proxy_destroy (GtkWidget  *proxy,
                            GimpAction *action)
 {
   GimpActionPrivate *priv = GET_PRIVATE (action);
 
   priv->proxies = g_list_remove (priv->proxies, proxy);
+}
+
+static void
+gimp_action_update_proxy_tooltip (GimpAction *action,
+                                  GtkWidget  *proxy)
+{
+  GimpActionPrivate *priv;
+  const gchar       *tooltip;
+  const gchar       *help_id;
+  const gchar       *reason         = NULL;
+  gchar             *escaped_reason = NULL;
+  gchar             *markup;
+
+  g_return_if_fail (GIMP_IS_ACTION (action));
+
+  priv    = GET_PRIVATE (action);
+  tooltip = gimp_action_get_tooltip (action);
+  help_id = gimp_action_get_help_id (action);
+
+  gimp_action_get_sensitive (action, &reason);
+  if (reason)
+    escaped_reason = g_markup_escape_text (reason, -1);
+
+  markup = g_strdup_printf ("%s%s"                                   /* Action tooltip  */
+                            "<i><span weight='light'>%s</span></i>", /* Inactive reason */
+                            tooltip,
+                            escaped_reason && tooltip ? "\n" : "",
+                            escaped_reason ? escaped_reason : "");
+
+  if (proxy != NULL)
+    {
+      gimp_help_set_help_data_with_markup (proxy, markup, help_id);
+    }
+  else
+    {
+      for (GList *list = priv->proxies; list; list = list->next)
+        gimp_help_set_help_data_with_markup (list->data, markup, help_id);
+    }
+
+  g_free (escaped_reason);
+  g_free (markup);
 }

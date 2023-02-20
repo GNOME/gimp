@@ -67,9 +67,6 @@ void          gimp_action_emit_activate       (GimpAction    *action,
 void          gimp_action_emit_change_state   (GimpAction    *action,
                                                GVariant      *value);
 
-void          gimp_action_set_proxy_tooltip   (GimpAction    *action,
-                                               GtkWidget     *proxy);
-
 const gchar * gimp_action_get_name            (GimpAction    *action);
 
 void          gimp_action_set_label           (GimpAction    *action,
