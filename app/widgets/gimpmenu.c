@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
@@ -31,6 +32,7 @@
 
 #include "gimpaction.h"
 #include "gimpenumaction.h"
+#include "gimphelp-ids.h"
 #include "gimpmenu.h"
 #include "gimpprocedureaction.h"
 #include "gimpradioaction.h"
@@ -130,6 +132,9 @@ static void   gimp_menu_add_placeholder         (GimpMenu            *menu,
 
 static gchar * gimp_menu_make_canonical_path    (GimpMenu            *menu,
                                                  const gchar         *path);
+
+static void    gimp_menu_submenu_help_fun       (const gchar         *bogus_help_id,
+                                                 gpointer             help_data);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpMenu, gimp_menu, GTK_TYPE_MENU_BAR)
@@ -559,6 +564,24 @@ gimp_menu_add_submenu (GimpMenu      *menu,
   gtk_container_add (parent, item);
 
   subcontainer = gtk_menu_new ();
+  g_object_set_data (G_OBJECT (subcontainer), "gimp", menu->priv->manager->gimp);
+  /* The "key-press-event" signal does not reach individual items as
+   * GtkMenuShell's key_press_event() stops the signal first on the GtkMenu's
+   * level. Instead we bind F1 on each menu and submenu.
+   * Otherwise, it would have been nicer to do the binding inside GimpAction's
+   * code on all proxies (independently to the type of widget) for more generic
+   * usage.
+   * XXX: a possible evolution would be to make our own GtkMenu subclass
+   * (probably renaming current class to GimpMenuBar) and either move this code
+   * there (for other usages of a GtkMenu) or simply let the F1 key reach
+   * individual proxy widget, hence implementing the initial idea.
+   */
+  gimp_help_connect (subcontainer,
+                     gimp_menu_submenu_help_fun,
+                     GIMP_HELP_MAIN,
+                     subcontainer,
+                     NULL);
+
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), subcontainer);
   gtk_widget_show (subcontainer);
 
@@ -763,4 +786,49 @@ gimp_menu_make_canonical_path (GimpMenu    *menu,
   g_strfreev (split_path);
 
   return canonical_path;
+}
+
+static void
+gimp_menu_submenu_help_fun (const gchar *bogus_help_id,
+                            gpointer     help_data)
+{
+  gchar     *help_id     = NULL;
+  GtkMenu   *menu        = GTK_MENU (help_data);
+  Gimp      *gimp        = g_object_get_data (G_OBJECT (menu), "gimp");
+  GtkWidget *item;
+  gchar     *help_domain = NULL;
+  gchar     *help_string = NULL;
+  gchar     *domain_separator;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  item = gtk_menu_shell_get_selected_item (GTK_MENU_SHELL (menu));
+
+  if (item)
+    help_id = g_object_get_qdata (G_OBJECT (item), GIMP_HELP_ID);
+
+  if (help_id == NULL || strlen (help_id) == 0)
+    help_id = (gchar *) bogus_help_id;
+
+  help_id = g_strdup (help_id);
+
+  domain_separator = strchr (help_id, '?');
+
+  if (domain_separator)
+    {
+      *domain_separator = '\0';
+
+      help_domain = g_strdup (help_id);
+      help_string = g_strdup (domain_separator + 1);
+    }
+  else
+    {
+      help_string = g_strdup (help_id);
+    }
+
+  gimp_help (gimp, NULL, help_domain, help_string);
+
+  g_free (help_domain);
+  g_free (help_string);
+  g_free (help_id);
 }
