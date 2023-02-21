@@ -73,7 +73,7 @@
   </provides>
 
   <releases>
-    <release version="2.10.34" date="2023-02-12">
+    <release version="2.10.34" date="2023-02-21">
       <description>
         <_p>
           A new stable releases with a lot of bug fixes and a few enhancements:
