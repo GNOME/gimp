@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-14 23:00+0000\n"
-"PO-Revision-Date: 2023-02-15 12:51+0100\n"
+"POT-Creation-Date: 2023-02-19 17:35+0000\n"
+"PO-Revision-Date: 2023-02-20 17:47+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -10862,7 +10862,7 @@ msgstr "Redigera objekt"
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:146
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:250
 msgid "Use Gimp Guides"
-msgstr "Använd GIMP hjälplinjer"
+msgstr "Använd GIMP-hjälplinjer"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:159
 msgid "Al_ternate"
@@ -10944,7 +10944,7 @@ msgstr "Antal _nedåt:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:210
 msgid "Base _URL:"
-msgstr "Bas_URL:"
+msgstr "Bas-_URL:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:235
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
@@ -11030,7 +11030,7 @@ msgstr "_Webbplats"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:219
 msgid "_Ftp Site"
-msgstr "_Ftpplats"
+msgstr "_Ftp-plats"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:225
 msgid "_Gopher"
@@ -11074,7 +11074,7 @@ msgstr "_Målram namn/ID: (frivillig - används endast för RAMAR)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:281
 msgid "ALT te_xt: (optional)"
-msgstr "ALT te_xt: (frivillig)"
+msgstr "ALT-te_xt: (frivillig)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:284
 msgid "_Link"
