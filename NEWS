@@ -38,7 +38,7 @@ Core:
 Plug-ins:
 
   - DDS: make GUI translatable.
-  - file-raw: added 16-bit per channel precision export (partial backport from
+  - file-raw: added high bit depth precision export (partial backport from
     2.99.12).
   - TIFF:
     * Various bug fixes;
@@ -90,9 +90,9 @@ Plug-ins:
 Libgimpbase:
 
   - GimpMetadata API (in particular the gimp_metadata_set_from_*() functions)
-    are now much less memory (backported from the main dev branch) when using
-    GExiv 0.12.2 or over. With some huge metadata, it could cause long freeze or
-    even crashes of plug-ins.
+    are now much less memory-hungry (backported from the main dev branch) when
+    using GExiv 0.12.2 or over. With some huge metadata, it could cause long
+    freeze or even crashes of plug-ins.
 
 Libgimpwidgets:
 
