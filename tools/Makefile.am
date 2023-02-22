@@ -64,8 +64,11 @@ if ENABLE_VECTOR_ICONS
 endif
 
 # Build tools which must be built for the build platform.
+# Note: librsvg does not work well with at least -fsanitize=address so we
+# disable all sanitizers which might have been added as CFLAGS.
 colorsvg2png$(BUILD_EXEEXT): colorsvg2png.c
 	$(CC_FOR_BUILD) -o $@ $< $(CPPFLAGS_FOR_BUILD) $(CFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) \
+			         -fno-sanitize=all                                              \
 			         $(NATIVE_GLIB_LIBS) $(NATIVE_GLIB_CFLAGS) $(NATIVE_SVG_LIBS) $(NATIVE_SVG_CFLAGS)
 
 all-local: colorsvg2png$(BUILD_EXEEXT)
