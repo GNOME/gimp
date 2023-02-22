@@ -988,7 +988,7 @@ gimp_display_shell_popup_menu (GtkWidget *widget)
                             shell->display);
 
   gimp_ui_manager_ui_popup_at_widget (shell->popup_manager,
-                                      "/dummy-menubar/image-popup",
+                                      "/image-menubar",
                                       shell->origin,
                                       GDK_GRAVITY_EAST,
                                       GDK_GRAVITY_NORTH_WEST,

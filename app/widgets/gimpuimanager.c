@@ -97,10 +97,6 @@ static gboolean   gimp_ui_manager_entry_load          (GimpUIManager  *manager,
 static GimpUIManagerUIEntry *
                   gimp_ui_manager_entry_ensure        (GimpUIManager  *manager,
                                                        const gchar    *path);
-static void       gimp_ui_manager_menu_position       (GtkMenu        *menu,
-                                                       gint           *x,
-                                                       gint           *y,
-                                                       gpointer        data);
 static void       gimp_ui_manager_delete_popdown_data (GtkWidget      *widget,
                                                        GimpUIManager  *manager);
 static void       gimp_ui_manager_item_realize        (GtkWidget      *widget,
@@ -116,6 +112,8 @@ static GtkWidget *find_widget_under_pointer           (GdkWindow      *window,
                                                        gint           *x,
                                                        gint           *y);
 
+static void       gimp_ui_manager_fill_model          (GimpUIManager  *manager,
+                                                       GMenuModel     *model);
 static void       gimp_ui_manager_menu_item_free      (GimpUIManagerMenuItem *item);
 
 
@@ -522,8 +520,13 @@ gimp_ui_manager_get_model (GimpUIManager *manager,
                                     full_basename, NULL);
 
   if (entry->builder == NULL)
-    /* The model is owned by the builder which I have to keep around. */
-    entry->builder = gtk_builder_new_from_file (filename);
+    {
+      /* The model is owned by the builder which I have to keep around. */
+      entry->builder = gtk_builder_new_from_file (filename);
+
+      gimp_ui_manager_fill_model (manager,
+                                  G_MENU_MODEL (gtk_builder_get_object (entry->builder, path)));
+    }
 
   model = G_MENU_MODEL (gtk_builder_get_object (entry->builder, path));
   g_free (filename);
@@ -725,21 +728,19 @@ gimp_ui_manager_ui_popup_at_widget (GimpUIManager  *manager,
                                     GDestroyNotify  popdown_func,
                                     gpointer        popdown_data)
 {
-  GtkWidget *menu;
+  GMenuModel *model;
+  GtkWidget  *menu;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  menu = gimp_ui_manager_get_widget (manager, ui_path);
-
-  if (GTK_IS_MENU_ITEM (menu))
-    menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
+  model = gimp_ui_manager_get_model (manager, ui_path);
+  menu  = gtk_menu_new_from_model (model);
+  gtk_menu_attach_to_widget (GTK_MENU (menu), widget, NULL);
 
   if (! menu)
     return;
-
-  g_return_if_fail (GTK_IS_MENU (menu));
 
   if (popdown_func && popdown_data)
     {
@@ -759,24 +760,23 @@ gimp_ui_manager_ui_popup_at_widget (GimpUIManager  *manager,
 void
 gimp_ui_manager_ui_popup_at_pointer (GimpUIManager  *manager,
                                      const gchar    *ui_path,
+                                     GtkWidget      *attached_widget,
                                      const GdkEvent *trigger_event,
                                      GDestroyNotify  popdown_func,
                                      gpointer        popdown_data)
 {
-  GtkWidget *menu;
+  GMenuModel *model;
+  GtkWidget  *menu;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
-  menu = gimp_ui_manager_get_widget (manager, ui_path);
-
-  if (GTK_IS_MENU_ITEM (menu))
-    menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
+  model = gimp_ui_manager_get_model (manager, ui_path);
+  menu  = gtk_menu_new_from_model (model);
+  gtk_menu_attach_to_widget (GTK_MENU (menu), attached_widget, NULL);
 
   if (! menu)
     return;
-
-  g_return_if_fail (GTK_IS_MENU (menu));
 
   if (popdown_func && popdown_data)
     {
@@ -793,6 +793,7 @@ gimp_ui_manager_ui_popup_at_pointer (GimpUIManager  *manager,
 void
 gimp_ui_manager_ui_popup_at_rect (GimpUIManager      *manager,
                                   const gchar        *ui_path,
+                                  GtkWidget          *attached_widget,
                                   GdkWindow          *window,
                                   const GdkRectangle *rect,
                                   GdkGravity          rect_anchor,
@@ -801,20 +802,18 @@ gimp_ui_manager_ui_popup_at_rect (GimpUIManager      *manager,
                                   GDestroyNotify      popdown_func,
                                   gpointer            popdown_data)
 {
-  GtkWidget *menu;
+  GMenuModel *model;
+  GtkWidget  *menu;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
-  menu = gimp_ui_manager_get_widget (manager, ui_path);
-
-  if (GTK_IS_MENU_ITEM (menu))
-    menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
+  model = gimp_ui_manager_get_model (manager, ui_path);
+  menu  = gtk_menu_new_from_model (model);
+  gtk_menu_attach_to_widget (GTK_MENU (menu), attached_widget, NULL);
 
   if (! menu)
     return;
-
-  g_return_if_fail (GTK_IS_MENU (menu));
 
   if (popdown_func && popdown_data)
     {
@@ -1411,6 +1410,53 @@ find_widget_under_pointer (GdkWindow *window,
   *y = child_loc.y;
 
   return event_widget;
+}
+
+static void
+gimp_ui_manager_fill_model (GimpUIManager *manager,
+                            GMenuModel    *model)
+{
+  gint n_items;
+
+  g_return_if_fail (G_IS_MENU_MODEL (model));
+
+  n_items = g_menu_model_get_n_items (model);
+  for (int i = 0; i < n_items; i++)
+    {
+      GMenuModel *subsection;
+      GMenuModel *submenu;
+      gchar      *label       = NULL;
+      gchar      *action_name = NULL;
+
+      subsection = g_menu_model_get_item_link (model, i, G_MENU_LINK_SECTION);
+      submenu    = g_menu_model_get_item_link (model, i, G_MENU_LINK_SUBMENU);
+      g_menu_model_get_item_attribute (model, i, G_MENU_ATTRIBUTE_LABEL, "s", &label);
+      g_menu_model_get_item_attribute (model, i, G_MENU_ATTRIBUTE_ACTION, "s", &action_name);
+
+      if (subsection != NULL)
+        {
+          gimp_ui_manager_fill_model (manager, subsection);
+        }
+      else if (submenu != NULL)
+        {
+          gimp_ui_manager_fill_model (manager, submenu);
+        }
+      else if (action_name != NULL)
+        {
+          /* Update the label, unless it's a placeholder (no action name). */
+          GApplication *app;
+          GAction      *action;
+
+          app = manager->gimp->app;
+          action = g_action_map_lookup_action (G_ACTION_MAP (app), action_name + 4);
+          g_menu_remove (G_MENU (model), i);
+          g_menu_insert (G_MENU (model), i,
+                         gimp_action_get_label (GIMP_ACTION (action)),
+                         action_name);
+        }
+      g_free (label);
+      g_free (action_name);
+    }
 }
 
 static void

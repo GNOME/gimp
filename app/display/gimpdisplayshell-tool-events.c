@@ -286,7 +286,8 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
       if (gdk_event_triggers_context_menu (event))
         {
           gimp_ui_manager_ui_popup_at_pointer (shell->popup_manager,
-                                               "/dummy-menubar/image-popup",
+                                               "/image-menubar",
+                                               GTK_WIDGET (shell),
                                                (GdkEvent *) event,
                                                NULL, NULL);
           return TRUE;
@@ -2467,11 +2468,12 @@ gimp_display_triggers_context_menu (const GdkEvent   *event,
           if (! ui_manager)
             {
               ui_manager = shell->popup_manager;
-              ui_path    = "/dummy-menubar/image-popup";
+              ui_path    = "/image-menubar";
             }
 
-          gimp_ui_manager_ui_popup_at_pointer (ui_manager, ui_path, event,
-                                               NULL, NULL);
+          gimp_ui_manager_ui_popup_at_pointer (ui_manager, ui_path,
+                                               GTK_WIDGET (shell),
+                                               event, NULL, NULL);
           return TRUE;
         }
     }

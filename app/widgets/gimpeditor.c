@@ -483,7 +483,7 @@ gimp_editor_popup_menu_at_pointer (GimpEditor     *editor,
     {
       gimp_ui_manager_update (editor->priv->ui_manager, editor->priv->popup_data);
       gimp_ui_manager_ui_popup_at_pointer (editor->priv->ui_manager, editor->priv->ui_path,
-                                           trigger_event, NULL, NULL);
+                                           GTK_WIDGET (editor), trigger_event, NULL, NULL);
       return TRUE;
     }
 
@@ -504,7 +504,8 @@ gimp_editor_popup_menu_at_rect (GimpEditor         *editor,
     {
       gimp_ui_manager_update (editor->priv->ui_manager, editor->priv->popup_data);
       gimp_ui_manager_ui_popup_at_rect (editor->priv->ui_manager, editor->priv->ui_path,
-                                        window, rect, rect_anchor, menu_anchor,
+                                        GTK_WIDGET (editor), window,
+                                        rect, rect_anchor, menu_anchor,
                                         trigger_event, NULL, NULL);
       return TRUE;
     }

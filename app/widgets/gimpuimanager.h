@@ -164,12 +164,14 @@ void            gimp_ui_manager_ui_popup_at_widget
 void            gimp_ui_manager_ui_popup_at_pointer
                                             (GimpUIManager          *manager,
                                              const gchar            *ui_path,
+                                             GtkWidget              *attached_widget,
                                              const GdkEvent         *trigger_event,
                                              GDestroyNotify          popdown_func,
                                              gpointer                popdown_data);
 void            gimp_ui_manager_ui_popup_at_rect
                                             (GimpUIManager           *manager,
                                              const gchar             *ui_path,
+                                             GtkWidget               *attached_widget,
                                              GdkWindow               *window,
                                              const GdkRectangle      *rect,
                                              GdkGravity               rect_anchor,

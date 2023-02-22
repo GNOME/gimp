@@ -98,8 +98,6 @@ menus_init (Gimp              *gimp,
                                       NULL,
                                       "/image-menubar",
                                       "image-menu", image_menu_setup,
-                                      "/dummy-menubar",
-                                      "image-menu", image_menu_setup,
                                       "/quick-mask-popup",
                                       "quick-mask-menu", NULL,
                                       NULL);
