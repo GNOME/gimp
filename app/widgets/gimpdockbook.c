@@ -631,7 +631,7 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
       {
         GtkWidget *image = gimp_dockable_get_icon (dockable,
                                                    GTK_ICON_SIZE_MENU);
-        gimp_menu_item_set_image (GTK_MENU_ITEM (parent_menu_widget), image);
+        gimp_menu_item_set_image (GTK_MENU_ITEM (parent_menu_widget), image, NULL);
         gtk_widget_show (image);
       }
 

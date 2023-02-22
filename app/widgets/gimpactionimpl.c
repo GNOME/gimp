@@ -85,8 +85,6 @@ static GVariant *
               gimp_action_impl_get_state_hint     (GAction             *action);
 
 static void   gimp_action_impl_activate           (GtkAction           *action);
-static void   gimp_action_impl_connect_proxy      (GtkAction           *action,
-                                                   GtkWidget           *proxy);
 
 static void   gimp_action_impl_set_state          (GimpAction          *gimp_action,
                                                    GVariant            *value);
@@ -121,7 +119,6 @@ gimp_action_impl_class_init (GimpActionImplClass *klass)
   object_class->get_property  = gimp_action_impl_get_property;
 
   action_class->activate      = gimp_action_impl_activate;
-  action_class->connect_proxy = gimp_action_impl_connect_proxy;
 
   gimp_action_install_properties (object_class);
 
@@ -363,15 +360,6 @@ gimp_action_impl_activate (GtkAction *action)
   gimp_action_emit_activate (GIMP_ACTION (action), NULL);
 
   gimp_action_history_action_activated (GIMP_ACTION (action));
-}
-
-static void
-gimp_action_impl_connect_proxy (GtkAction *action,
-                                GtkWidget *proxy)
-{
-  GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
-
-  gimp_action_set_proxy (GIMP_ACTION (action), proxy);
 }
 
 

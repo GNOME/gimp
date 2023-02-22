@@ -54,7 +54,7 @@
 #include "core/gimp.h"
 #include "core/gimptoolinfo.h"
 
-#include "gimpaction.h"
+#include "gimpaccellabel.h"
 #include "gimpaction.h"
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
@@ -104,10 +104,12 @@ gimp_menu_item_get_image (GtkMenuItem *item)
 
 void
 gimp_menu_item_set_image (GtkMenuItem *item,
-                          GtkWidget   *image)
+                          GtkWidget   *image,
+                          GimpAction  *action)
 {
   GtkWidget *hbox;
   GtkWidget *label;
+  GtkWidget *accel_label;
   GtkWidget *old_image;
 
   g_return_if_fail (GTK_IS_MENU_ITEM (item));
@@ -117,19 +119,24 @@ gimp_menu_item_set_image (GtkMenuItem *item,
 
   if (! hbox)
     {
-      if (! image)
-        return;
-
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       g_object_set_data (G_OBJECT (item), "gimp-menu-item-hbox", hbox);
 
       label = gtk_bin_get_child (GTK_BIN (item));
       g_object_set_data (G_OBJECT (item), "gimp-menu-item-label", label);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
 
       g_object_ref (label);
       gtk_container_remove (GTK_CONTAINER (item), label);
       gtk_container_add (GTK_CONTAINER (hbox), label);
       g_object_unref (label);
+
+      accel_label = gimp_accel_label_new (action);
+      g_object_set_data (G_OBJECT (item), "gimp-menu-item-accel", accel_label);
+      gtk_container_add (GTK_CONTAINER (hbox), accel_label);
+      gtk_widget_set_hexpand (GTK_WIDGET (accel_label), TRUE);
+      gtk_label_set_xalign (GTK_LABEL (accel_label), 1.0);
+      gtk_widget_show (accel_label);
 
       gtk_container_add (GTK_CONTAINER (item), hbox);
       gtk_widget_show (hbox);

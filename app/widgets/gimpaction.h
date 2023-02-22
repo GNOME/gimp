@@ -111,8 +111,6 @@ void          gimp_action_set_accels          (GimpAction    *action,
 gchar **      gimp_action_get_accels          (GimpAction    *action);
 gchar **      gimp_action_get_display_accels  (GimpAction    *action);
 
-GSList      * gimp_action_get_proxies         (GimpAction    *action);
-
 void          gimp_action_activate            (GimpAction    *action);
 
 gint          gimp_action_name_compare        (GimpAction    *action1,

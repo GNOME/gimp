@@ -109,9 +109,6 @@ static void   gimp_menu_action_notify_sensitive (GimpAction          *action,
 static void   gimp_menu_action_notify_visible   (GimpAction          *action,
                                                  const GParamSpec    *pspec,
                                                  GtkWidget           *item);
-static void   gimp_menu_action_notify_label     (GimpAction          *action,
-                                                 const GParamSpec    *pspec,
-                                                 GtkMenuItem         *item);
 
 static GtkContainer * gimp_menu_add_submenu     (GimpMenu            *menu,
                                                  const gchar         *label,
@@ -535,14 +532,6 @@ gimp_menu_action_notify_visible (GimpAction       *action,
     }
 }
 
-static void
-gimp_menu_action_notify_label (GimpAction       *action,
-                               const GParamSpec *pspec,
-                               GtkMenuItem      *item)
-{
-  gtk_menu_item_set_label (item, gimp_action_get_label (action));
-}
-
 static GtkContainer *
 gimp_menu_add_submenu (GimpMenu      *menu,
                        const gchar   *label,
@@ -676,10 +665,6 @@ gimp_menu_add_action (GimpMenu          *menu,
 
   gtk_actionable_set_action_name (GTK_ACTIONABLE (item), action_name);
   gimp_action_set_proxy (GIMP_ACTION (action), item);
-
-  g_signal_connect_object (action, "notify::label",
-                           G_CALLBACK (gimp_menu_action_notify_label),
-                           item, 0);
 
   gtk_widget_set_sensitive (GTK_WIDGET (item),
                             gimp_action_is_sensitive (GIMP_ACTION (action), NULL));

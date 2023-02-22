@@ -502,13 +502,6 @@ gimp_action_get_display_accels (GimpAction *action)
   return accels;
 }
 
-GSList *
-gimp_action_get_proxies (GimpAction *action)
-{
-  /* TODO GAction: how exactly are these proxies set in the GtkAction API? */
-  return gtk_action_get_proxies ((GtkAction *) action);
-}
-
 void
 gimp_action_activate (GimpAction *action)
 {
@@ -714,12 +707,6 @@ gimp_action_set_property (GObject      *object,
       /* Set or update the proxy rendering. */
       for (GList *list = priv->proxies; list; list = list->next)
         gimp_action_set_proxy (GIMP_ACTION (object), list->data);
-
-      /* TODO GAction: remove when port complete. */
-      for (GSList *list = gimp_action_get_proxies (GIMP_ACTION (object));
-           list;
-           list = g_slist_next (list))
-        gimp_action_set_proxy (GIMP_ACTION (object), list->data);
     }
 }
 
@@ -728,7 +715,7 @@ gimp_action_set_proxy (GimpAction *action,
                        GtkWidget  *proxy)
 {
   GimpActionPrivate *priv = GET_PRIVATE (action);
-  GtkWidget         *child;
+  GtkWidget         *label;
 
   if (! GTK_IS_MENU_ITEM (proxy))
     return;
@@ -757,7 +744,7 @@ gimp_action_set_proxy (GimpAction *action,
 
           gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
           gtk_widget_set_size_request (area, width, height);
-          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), area);
+          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), area, action);
           gtk_widget_show (area);
         }
     }
@@ -794,7 +781,7 @@ gimp_action_set_proxy (GimpAction *action,
           view = gimp_view_new_full (priv->context, priv->viewable,
                                      width, height, border_width,
                                      FALSE, FALSE, FALSE);
-          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), view);
+          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), view, action);
           gtk_widget_show (view);
         }
     }
@@ -806,30 +793,27 @@ gimp_action_set_proxy (GimpAction *action,
 
       if (GIMP_IS_VIEW (image) || GIMP_IS_COLOR_AREA (image))
         {
-          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL);
+          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL, action);
           g_object_notify (G_OBJECT (action), "icon-name");
         }
     }
 
+  if (GTK_IS_LABEL (gtk_bin_get_child (GTK_BIN (proxy))))
+    /* Ensure we rebuild the contents of the GtkMenuItem with an image (which
+     * might be NULL), a label (taken from action) and an optional shortcut
+     * (also taken from action).
+     */
+    gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL, action);
 
-  child = gtk_bin_get_child (GTK_BIN (proxy));
-
-  if (GTK_IS_BOX (child))
-    child = g_object_get_data (G_OBJECT (proxy), "gimp-menu-item-label");
-
-  if (GTK_IS_LABEL (child))
-    {
-      GtkLabel *label = GTK_LABEL (child);
-
-      gtk_label_set_ellipsize (label, priv->ellipsize);
-      gtk_label_set_max_width_chars (label, priv->max_width_chars);
-    }
+  label = g_object_get_data (G_OBJECT (proxy), "gimp-menu-item-label");
+  gtk_label_set_ellipsize (GTK_LABEL (label), priv->ellipsize);
+  gtk_label_set_max_width_chars (GTK_LABEL (label), priv->max_width_chars);
 
   if (! g_list_find (priv->proxies, proxy))
     {
       priv->proxies = g_list_prepend (priv->proxies, proxy);
       g_signal_connect (proxy, "destroy",
-                        gimp_action_proxy_destroy,
+                        (GCallback) gimp_action_proxy_destroy,
                         action);
 
       gimp_action_update_proxy_tooltip (action, proxy);
@@ -886,48 +870,37 @@ gimp_action_private_finalize (GimpActionPrivate *priv)
 }
 
 static void
+gimp_action_set_proxy_label (GimpAction *action,
+                             GtkWidget  *proxy)
+{
+  if (GTK_IS_MENU_ITEM (proxy))
+    {
+      GtkWidget *child = gtk_bin_get_child (GTK_BIN (proxy));
+
+      if (GTK_IS_BOX (child))
+        {
+          child = g_object_get_data (G_OBJECT (proxy),
+                                     "gimp-menu-item-label");
+
+          if (GTK_IS_LABEL (child))
+            gtk_label_set_text_with_mnemonic (GTK_LABEL (child),
+                                              gimp_action_get_label (action));
+        }
+      else if (GTK_IS_LABEL (child))
+        {
+          gtk_menu_item_set_label (GTK_MENU_ITEM (proxy),
+                                   gimp_action_get_label (action));
+        }
+    }
+}
+
+static void
 gimp_action_label_notify (GimpAction       *action,
                           const GParamSpec *pspec,
                           gpointer          data)
 {
   for (GList *iter = GET_PRIVATE (action)->proxies; iter; iter = iter->next)
-    {
-      if (GTK_IS_MENU_ITEM (iter->data))
-        {
-          GtkWidget *child = gtk_bin_get_child (GTK_BIN (iter->data));
-
-          if (GTK_IS_BOX (child))
-            {
-              child = g_object_get_data (G_OBJECT (iter->data),
-                                         "gimp-menu-item-label");
-
-              if (GTK_IS_LABEL (child))
-                gtk_label_set_text (GTK_LABEL (child),
-                                    gimp_action_get_label (action));
-            }
-        }
-    }
-
-  /* TODO GAction: this will have to be removed after the port is complete. */
-  for (GSList *list = gimp_action_get_proxies (action);
-       list;
-       list = g_slist_next (list))
-    {
-      if (GTK_IS_MENU_ITEM (list->data))
-        {
-          GtkWidget *child = gtk_bin_get_child (GTK_BIN (list->data));
-
-          if (GTK_IS_BOX (child))
-            {
-              child = g_object_get_data (G_OBJECT (list->data),
-                                         "gimp-menu-item-label");
-
-              if (GTK_IS_LABEL (child))
-                gtk_label_set_text (GTK_LABEL (child),
-                                    gimp_action_get_label (action));
-            }
-        }
-    }
+    gimp_action_set_proxy_label (action, iter->data);
 }
 
 static void

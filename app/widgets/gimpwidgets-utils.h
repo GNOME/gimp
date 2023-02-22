@@ -24,7 +24,8 @@
 
 GtkWidget       * gimp_menu_item_get_image         (GtkMenuItem          *item);
 void              gimp_menu_item_set_image         (GtkMenuItem          *item,
-                                                    GtkWidget            *image);
+                                                    GtkWidget            *image,
+                                                    GimpAction           *action);
 
 void              gimp_menu_position               (GtkMenu              *menu,
                                                     gint                 *x,
