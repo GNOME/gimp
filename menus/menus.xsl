@@ -38,6 +38,13 @@
     <xsl:apply-templates />
   </xsl:template>
 
+  <!-- Strip the XInclude namespace declaration from the interface element -->
+  <xsl:template match="interface">
+    <interface>
+    <xsl:apply-templates />
+    </interface>
+  </xsl:template>
+
   <!-- need to strip the XInclude namespace declaration from the ui element -->
   <xsl:template match="ui">
     <ui>

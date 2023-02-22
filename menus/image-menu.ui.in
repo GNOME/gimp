@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<interface>
+<interface xmlns:xi="http://www.w3.org/2001/XInclude">
   <menu id="/image-menubar">
     <!-- File menu -->
     <submenu>
@@ -797,42 +797,7 @@
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="windows-action">_Dockable Dialogs</attribute>
-            <section>
-              <item><attribute name="action">app.dialogs-tool-options</attribute></item>
-              <item><attribute name="action">app.dialogs-device-status</attribute></item>
-            </section>
-            <section>
-              <item><attribute name="action">app.dialogs-layers</attribute></item>
-              <item><attribute name="action">app.dialogs-channels</attribute></item>
-              <item><attribute name="action">app.dialogs-vectors</attribute></item>
-              <item><attribute name="action">app.dialogs-indexed-palette</attribute></item>
-              <item><attribute name="action">app.dialogs-histogram</attribute></item>
-              <item><attribute name="action">app.dialogs-selection-editor</attribute></item>
-              <item><attribute name="action">app.dialogs-navigation</attribute></item>
-              <item><attribute name="action">app.dialogs-undo-history</attribute></item>
-              <item><attribute name="action">app.dialogs-cursor</attribute></item>
-              <item><attribute name="action">app.dialogs-sample-points</attribute></item>
-              <item><attribute name="action">app.dialogs-symmetry</attribute></item>
-            </section>
-            <section>
-              <item><attribute name="action">app.dialogs-colors</attribute></item>
-              <item><attribute name="action">app.dialogs-brushes</attribute></item>
-              <item><attribute name="action">app.dialogs-dynamics</attribute></item>
-              <item><attribute name="action">app.dialogs-mypaint-brushes</attribute></item>
-              <item><attribute name="action">app.dialogs-patterns</attribute></item>
-              <item><attribute name="action">app.dialogs-gradients</attribute></item>
-              <item><attribute name="action">app.dialogs-palettes</attribute></item>
-              <item><attribute name="action">app.dialogs-fonts</attribute></item>
-              <item><attribute name="action">app.dialogs-tool-presets</attribute></item>
-              <item><attribute name="action">app.dialogs-buffers</attribute></item>
-            </section>
-            <section>
-              <item><attribute name="action">app.dialogs-images</attribute></item>
-              <item><attribute name="action">app.dialogs-document-history</attribute></item>
-              <item><attribute name="action">app.dialogs-templates</attribute></item>
-              <item><attribute name="action">app.dialogs-error-console</attribute></item>
-              <item><attribute name="action">app.dialogs-dashboard</attribute></item>
-            </section>
+          <xi:include href="dialogs-menuitems.ui" />
         </submenu>
         <item><attribute name="action">app.dialogs-toolbox</attribute></item>
       </section>

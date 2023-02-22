@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface xmlns:xi="http://www.w3.org/2001/XInclude">
+  <menu id="/dockable-popup">
+    <submenu>
+      <attribute name="label" translatable="yes" context="file-action">_Add Tab</attribute>
+      <xi:include href="dialogs-menuitems.ui" />
+    </submenu>
+    <item><attribute name="action">app.dockable-close-tab</attribute></item>
+    <item><attribute name="action">app.dockable-detach-tab</attribute></item>
+    <item><attribute name="action">app.dockable-lock-tab</attribute></item>
+    <section>
+      <submenu>
+        <attribute name="label" translatable="yes" context="file-action">_Preview Size</attribute>
+        <item><attribute name="action">app.dockable-preview-size-tiny</attribute></item>
+        <item><attribute name="action">app.dockable-preview-size-extra-small</attribute></item>
+        <item><attribute name="action">app.dockable-preview-size-small</attribute></item>
+        <item><attribute name="action">app.dockable-preview-size-medium</attribute></item>
+        <item><attribute name="action">app.dockable-preview-size-large</attribute></item>
+        <item><attribute name="action">app.dockable-preview-size-extra-large</attribute></item>
+        <item><attribute name="action">app.dockable-preview-size-enormous</attribute></item>
+        <item><attribute name="action">app.dockable-preview-size-gigantic</attribute></item>
+      </submenu>
+      <submenu>
+        <attribute name="label" translatable="yes" context="file-action">_Tab Style</attribute>
+        <item><attribute name="action">app.dockable-tab-style-icon</attribute></item>
+        <item><attribute name="action">app.dockable-tab-style-preview</attribute></item>
+        <item><attribute name="action">app.dockable-tab-style-name</attribute></item>
+        <item><attribute name="action">app.dockable-tab-style-icon-name</attribute></item>
+        <item><attribute name="action">app.dockable-tab-style-preview-name</attribute></item>
+      </submenu>
+      <item><attribute name="action">app.dockable-view-type-list</attribute></item>
+      <item><attribute name="action">app.dockable-view-type-grid</attribute></item>
+      <item><attribute name="action">app.dockable-show-button-bar</attribute></item>
+    </section>
+    <section>
+      <item><attribute name="action">app.dock-show-image-menu</attribute></item>
+      <item><attribute name="action">app.dock-auto-follow-active</attribute></item>
+    </section>
+    <submenu>
+      <attribute name="label" translatable="yes" context="file-action">Move to Screen</attribute>
+      <section>
+        <item><attribute name="action">app.dock-open-display</attribute></item>
+      </section>
+    </submenu>
+  </menu>
+</interface>

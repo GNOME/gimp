@@ -39,19 +39,29 @@ install_data(menus_files,
   install_dir: menus_dir,
 )
 
-ui_menus_files = files(
-  'image-menu.ui',
-)
-
-install_data(ui_menus_files,
-  install_dir: menus_dir,
-)
-
 unstable_menus_args = stable ? [] : [ '--stringparam', 'unstable-menus', 'yes' ]
 
 menus_built_files = []
 foreach menu_filegen : [ 'dockable-menu.xml', 'image-menu.xml', ]
   menus_built_files += custom_target(menu_filegen,
+    input : [ menu_filegen +'.in', 'menus.xsl', ],
+    output: [ menu_filegen ],
+    command: [
+      xsltproc,
+      '--xinclude',
+      unstable_menus_args,
+      '--output', '@OUTPUT@',
+      '@INPUT1@',
+      '@INPUT0@',
+    ],
+    install: true,
+    install_dir: menus_dir,
+  )
+endforeach
+
+menus_ui_built_files = []
+foreach menu_filegen : [ 'dockable-menu.ui', 'image-menu.ui', ]
+  menus_ui_built_files += custom_target(menu_filegen,
     input : [ menu_filegen +'.in', 'menus.xsl', ],
     output: [ menu_filegen ],
     command: [
@@ -90,7 +100,7 @@ if xmllint.found()
       xmllint,
       '--output', '@OUTPUT@',
       '--path', meson.current_source_dir(),
-      ui_menus_files, menus_built_files
+      menus_ui_built_files
     ],
     # The output file is only useful as a flag file, so that the command
     # knows if it has been run already.
