@@ -435,6 +435,14 @@ if meson.is_cross_build() and not get_option('can-crosscompile-gir')
   ])
   warning(gobject_introspection_warning)
   warnings += gobject_introspection_warning
+elif get_option('b_sanitize') != 'none'
+  have_gobject_introspection = false
+  gobject_introspection_warning = '\n      '.join(['',
+    'GObject Introspection is disabled while building with a sanitizer.',
+    'See: https://gitlab.gnome.org/GNOME/gobject-introspection/-/issues/375'
+  ])
+  warning(gobject_introspection_warning)
+  warnings += gobject_introspection_warning
 else
   have_gobject_introspection = true
   libgimp_gir_includes = [
