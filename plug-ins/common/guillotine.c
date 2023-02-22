@@ -110,7 +110,7 @@ guillotine_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
       gimp_procedure_set_menu_label (procedure, _("Slice Using G_uides"));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Image/Crop");
+      gimp_procedure_add_menu_path (procedure, "<Image>/Image");
 
       gimp_procedure_set_documentation (procedure,
                                         _("Slice the image into subimages "

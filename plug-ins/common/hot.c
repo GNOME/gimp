@@ -247,7 +247,7 @@ hot_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
       gimp_procedure_set_menu_label (procedure, _("_Hot..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Modify");
+      gimp_procedure_add_menu_path (procedure, "<Image>/Colors");
 
       gimp_procedure_set_documentation (procedure,
                                         _("Find and fix pixels that may "
