@@ -63,6 +63,8 @@ struct _GimpActionPrivate
   gboolean               sensitive;
   gchar                 *disable_reason;
 
+  gboolean               visible;
+
   GimpRGB               *color;
   GimpViewable          *viewable;
   PangoEllipsizeMode     ellipsize;
@@ -136,6 +138,11 @@ gimp_action_default_init (GimpActionInterface *iface)
                                                              TRUE,
                                                              GIMP_PARAM_READWRITE |
                                                              G_PARAM_EXPLICIT_NOTIFY));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_boolean ("visible",
+                                                             NULL, NULL,
+                                                             TRUE,
+                                                             GIMP_PARAM_READWRITE));
 
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   g_object_interface_install_property (iface,
@@ -173,6 +180,7 @@ gimp_action_init (GimpAction *action)
 
   priv->action          = action;
   priv->sensitive       = TRUE;
+  priv->visible         = TRUE;
   priv->ellipsize       = PANGO_ELLIPSIZE_NONE;
   priv->max_width_chars = -1;
   priv->proxies         = NULL;
@@ -299,19 +307,32 @@ void
 gimp_action_set_visible (GimpAction *action,
                          gboolean    visible)
 {
-  gtk_action_set_visible ((GtkAction *) action, visible);
+  g_object_set (action,
+                "visible", visible,
+                NULL);
 }
 
 gboolean
 gimp_action_get_visible (GimpAction *action)
 {
-  return gtk_action_get_visible ((GtkAction *) action);
+  return GET_PRIVATE (action)->visible;
 }
 
 gboolean
 gimp_action_is_visible (GimpAction *action)
 {
-  return gtk_action_is_visible ((GtkAction *) action);
+  gboolean visible;
+
+  visible = gimp_action_get_visible (action);
+
+  if (visible)
+    {
+      /* TODO: check if the action group itself is visible.
+       * See implementation of gtk_action_is_visible().
+       */
+    }
+
+  return visible;
 }
 
 void
@@ -617,6 +638,8 @@ gimp_action_install_properties (GObjectClass *klass)
 {
   g_object_class_override_property (klass, GIMP_ACTION_PROP_CONTEXT,         "context");
   g_object_class_override_property (klass, GIMP_ACTION_PROP_SENSITIVE,       "sensitive");
+  g_object_class_override_property (klass, GIMP_ACTION_PROP_VISIBLE,         "visible");
+
   g_object_class_override_property (klass, GIMP_ACTION_PROP_COLOR,           "color");
   g_object_class_override_property (klass, GIMP_ACTION_PROP_VIEWABLE,        "viewable");
 
@@ -641,6 +664,9 @@ gimp_action_get_property (GObject    *object,
       break;
     case GIMP_ACTION_PROP_SENSITIVE:
       g_value_set_boolean (value, priv->sensitive);
+      break;
+    case GIMP_ACTION_PROP_VISIBLE:
+      g_value_set_boolean (value, priv->visible);
       break;
     case GIMP_ACTION_PROP_COLOR:
       g_value_set_boxed (value, priv->color);
@@ -680,6 +706,9 @@ gimp_action_set_property (GObject      *object,
       gimp_action_set_sensitive (GIMP_ACTION (object),
                                  g_value_get_boolean (value),
                                  NULL);
+      break;
+    case GIMP_ACTION_PROP_VISIBLE:
+      priv->visible = g_value_get_boolean (value);
       break;
     case GIMP_ACTION_PROP_COLOR:
       g_clear_pointer (&priv->color, g_free);
