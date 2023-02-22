@@ -128,7 +128,7 @@ webpage_create_procedure (GimpPlugIn  *plug_in,
                                       webpage_run, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("From _Webpage..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
+      gimp_procedure_add_menu_path (procedure, "<Image>/File/Create");
 
       gimp_procedure_set_documentation (procedure,
                                         _("Create an image of a webpage"),

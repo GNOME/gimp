@@ -138,7 +138,7 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
                                       screenshot_run, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("_Screenshot..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
+      gimp_procedure_add_menu_path (procedure, "<Image>/File/Create");
 
       gimp_procedure_set_documentation
         (procedure,
