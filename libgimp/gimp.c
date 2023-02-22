@@ -533,6 +533,8 @@ gimp_main (GType  plug_in_type,
   _gimp_plug_in_run (PLUG_IN);
 
   gimp_close ();
+  g_io_channel_unref (read_channel);
+  g_io_channel_unref (write_channel);
 
   return EXIT_SUCCESS;
 }
