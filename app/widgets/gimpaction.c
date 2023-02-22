@@ -65,6 +65,11 @@ struct _GimpActionPrivate
 
   gboolean               visible;
 
+  gchar                 *label;
+  gchar                 *tooltip;
+  gchar                 *icon_name;
+  GIcon                 *icon;
+
   GimpRGB               *color;
   GimpViewable          *viewable;
   PangoEllipsizeMode     ellipsize;
@@ -143,6 +148,29 @@ gimp_action_default_init (GimpActionInterface *iface)
                                                              NULL, NULL,
                                                              TRUE,
                                                              GIMP_PARAM_READWRITE));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_string ("label",
+                                                            NULL, NULL,
+                                                            NULL,
+                                                            GIMP_PARAM_READWRITE |
+                                                            G_PARAM_EXPLICIT_NOTIFY));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_string ("tooltip",
+                                                            NULL, NULL,
+                                                            NULL,
+                                                            GIMP_PARAM_READWRITE));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_string ("icon-name",
+                                                            NULL, NULL,
+                                                            NULL,
+                                                            GIMP_PARAM_READWRITE |
+                                                            G_PARAM_EXPLICIT_NOTIFY));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_object ("icon",
+                                                            NULL, NULL,
+                                                            G_TYPE_ICON,
+                                                            GIMP_PARAM_READWRITE |
+                                                            G_PARAM_EXPLICIT_NOTIFY));
 
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   g_object_interface_install_property (iface,
@@ -181,6 +209,10 @@ gimp_action_init (GimpAction *action)
   priv->action          = action;
   priv->sensitive       = TRUE;
   priv->visible         = TRUE;
+  priv->label           = NULL;
+  priv->tooltip         = NULL;
+  priv->icon_name       = NULL;
+  priv->icon            = NULL;
   priv->ellipsize       = PANGO_ELLIPSIZE_NONE;
   priv->max_width_chars = -1;
   priv->proxies         = NULL;
@@ -233,54 +265,106 @@ void
 gimp_action_set_label (GimpAction  *action,
                        const gchar *label)
 {
-  gtk_action_set_label ((GtkAction *) action, label);
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
+  if (g_strcmp0 (priv->label, label) != 0)
+    {
+      g_free (priv->label);
+      priv->label = g_strdup (label);
+
+      /* Set or update the proxy rendering. */
+      for (GList *list = priv->proxies; list; list = list->next)
+        gimp_action_set_proxy (action, list->data);
+
+      g_object_notify (G_OBJECT (action), "label");
+    }
 }
 
 const gchar *
 gimp_action_get_label (GimpAction *action)
 {
-  return gtk_action_get_label ((GtkAction *) action);
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
+  return priv->label;
 }
 
 void
 gimp_action_set_tooltip (GimpAction  *action,
                          const gchar *tooltip)
 {
-  gtk_action_set_tooltip ((GtkAction *) action, tooltip);
+  GimpActionPrivate *priv = GET_PRIVATE (action);
 
-  gimp_action_update_proxy_tooltip (action, NULL);
+  if (g_strcmp0 (priv->tooltip, tooltip) != 0)
+    {
+      g_free (priv->tooltip);
+      priv->tooltip = g_strdup (tooltip);
+
+      gimp_action_update_proxy_tooltip (action, NULL);
+
+      g_object_notify (G_OBJECT (action), "tooltip");
+    }
 }
 
 const gchar *
 gimp_action_get_tooltip (GimpAction *action)
 {
-  return gtk_action_get_tooltip ((GtkAction *) action);
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
+  return priv->tooltip;
 }
 
 void
 gimp_action_set_icon_name (GimpAction  *action,
                            const gchar *icon_name)
 {
-  gtk_action_set_icon_name ((GtkAction *) action, icon_name);
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
+  if (g_strcmp0 (priv->icon_name, icon_name) != 0)
+    {
+      g_free (priv->icon_name);
+      priv->icon_name = g_strdup (icon_name);
+
+      /* Set or update the proxy rendering. */
+      for (GList *list = priv->proxies; list; list = list->next)
+        gimp_action_set_proxy (action, list->data);
+
+      g_object_notify (G_OBJECT (action), "icon-name");
+    }
 }
 
 const gchar *
 gimp_action_get_icon_name (GimpAction *action)
 {
-  return gtk_action_get_icon_name ((GtkAction *) action);
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
+  return priv->icon_name;
 }
 
 void
 gimp_action_set_gicon (GimpAction *action,
                        GIcon      *icon)
 {
-  gtk_action_set_gicon ((GtkAction *) action, icon);
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
+  if (priv->icon != icon)
+    {
+      g_clear_object (&priv->icon);
+      priv->icon = g_object_ref (icon);
+
+      /* Set or update the proxy rendering. */
+      for (GList *list = priv->proxies; list; list = list->next)
+        gimp_action_set_proxy (action, list->data);
+
+      g_object_notify (G_OBJECT (action), "icon");
+    }
 }
 
 GIcon *
 gimp_action_get_gicon (GimpAction *action)
 {
-  return gtk_action_get_gicon ((GtkAction *) action);
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
+  return priv->icon ? g_object_ref (priv->icon) : NULL;
 }
 
 void
@@ -640,6 +724,11 @@ gimp_action_install_properties (GObjectClass *klass)
   g_object_class_override_property (klass, GIMP_ACTION_PROP_SENSITIVE,       "sensitive");
   g_object_class_override_property (klass, GIMP_ACTION_PROP_VISIBLE,         "visible");
 
+  g_object_class_override_property (klass, GIMP_ACTION_PROP_LABEL,           "label");
+  g_object_class_override_property (klass, GIMP_ACTION_PROP_TOOLTIP,         "tooltip");
+  g_object_class_override_property (klass, GIMP_ACTION_PROP_ICON_NAME,       "icon-name");
+  g_object_class_override_property (klass, GIMP_ACTION_PROP_ICON,            "icon");
+
   g_object_class_override_property (klass, GIMP_ACTION_PROP_COLOR,           "color");
   g_object_class_override_property (klass, GIMP_ACTION_PROP_VIEWABLE,        "viewable");
 
@@ -668,6 +757,20 @@ gimp_action_get_property (GObject    *object,
     case GIMP_ACTION_PROP_VISIBLE:
       g_value_set_boolean (value, priv->visible);
       break;
+
+    case GIMP_ACTION_PROP_LABEL:
+      g_value_set_string (value, priv->label);
+      break;
+    case GIMP_ACTION_PROP_TOOLTIP:
+      g_value_set_string (value, priv->tooltip);
+      break;
+    case GIMP_ACTION_PROP_ICON_NAME:
+      g_value_set_string (value, priv->icon_name);
+      break;
+    case GIMP_ACTION_PROP_ICON:
+      g_value_set_object (value, priv->icon);
+      break;
+
     case GIMP_ACTION_PROP_COLOR:
       g_value_set_boxed (value, priv->color);
       break;
@@ -710,6 +813,20 @@ gimp_action_set_property (GObject      *object,
     case GIMP_ACTION_PROP_VISIBLE:
       priv->visible = g_value_get_boolean (value);
       break;
+
+    case GIMP_ACTION_PROP_LABEL:
+      gimp_action_set_label (GIMP_ACTION (object), g_value_get_string (value));
+      break;
+    case GIMP_ACTION_PROP_TOOLTIP:
+      gimp_action_set_tooltip (GIMP_ACTION (object), g_value_get_string (value));
+      break;
+    case GIMP_ACTION_PROP_ICON_NAME:
+      gimp_action_set_icon_name (GIMP_ACTION (object), g_value_get_string (value));
+      break;
+    case GIMP_ACTION_PROP_ICON:
+      gimp_action_set_gicon (GIMP_ACTION (object), g_value_get_object (value));
+      break;
+
     case GIMP_ACTION_PROP_COLOR:
       g_clear_pointer (&priv->color, g_free);
       priv->color = g_value_dup_boxed (value);
@@ -926,6 +1043,11 @@ gimp_action_private_finalize (GimpActionPrivate *priv)
   g_clear_object  (&priv->context);
   g_clear_pointer (&priv->color, g_free);
   g_clear_object  (&priv->viewable);
+
+  g_free (priv->label);
+  g_free (priv->tooltip);
+  g_free (priv->icon_name);
+  g_clear_object (&priv->icon);
 
   for (GList *iter = priv->proxies; iter; iter = iter->next)
     /* TODO GAction: if an action associated to a proxy menu item disappears,
