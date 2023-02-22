@@ -2306,12 +2306,8 @@ AC_ARG_ENABLE(force-gir-cross-compilation,
 AC_MSG_CHECKING([if introspecting libgimp])
 warning_gir=
 build_gir=yes
-if test "x$cross_compiling" != xyes ||
-   test "x$enable_force_gir_cross_compilation" = xyes; then
-  # When not-cross-compiling, we always build with introspection.
-  # It's the basic case.
-  GOBJECT_INTROSPECTION_REQUIRE(introspection_required_version)
-else
+if test "x$cross_compiling" = xyes &&
+   test "x$enable_force_gir_cross_compilation" != xyes; then
   build_gir=no
   warning_gir="
 WARNING: GObject Introspection is disabled while cross-compiling because
@@ -2321,6 +2317,18 @@ WARNING: GObject Introspection is disabled while cross-compiling because
          this data natively.
          To forcefully build with GObject Introspection, set:
          --enable-force-gir-cross-compilation"
+else
+  sanitizing=`echo "$CFLAGS $CXXFLAGS $LDFLAGS" | grep "fsanitize="`
+  if test $? -eq 0; then
+    build_gir=no
+    warning_gir="
+WARNING: GObject Introspection is disabled when building with a sanitizer.
+         See: https://gitlab.gnome.org/GNOME/gobject-introspection/-/issues/375"
+  else
+    # When not-cross-compiling, we always build with introspection.
+    # It's the basic case.
+    GOBJECT_INTROSPECTION_REQUIRE(introspection_required_version)
+  fi
 fi
 AM_CONDITIONAL(HAVE_INTROSPECTION, test "x$build_gir" != xno)
 AC_MSG_RESULT([$build_gir])
