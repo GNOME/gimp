@@ -55,8 +55,6 @@ static void   gimp_procedure_action_get_property        (GObject          *objec
                                                          GParamSpec       *pspec);
 
 static void   gimp_procedure_action_activate            (GtkAction        *action);
-static void   gimp_procedure_action_connect_proxy       (GtkAction        *action,
-                                                         GtkWidget        *proxy);
 
 static void   gimp_procedure_action_g_activate          (GAction          *action,
                                                          GVariant         *parameter);
@@ -79,7 +77,6 @@ gimp_procedure_action_class_init (GimpProcedureActionClass *klass)
   object_class->get_property  = gimp_procedure_action_get_property;
 
   action_class->activate      = gimp_procedure_action_activate;
-  action_class->connect_proxy = gimp_procedure_action_connect_proxy;
 
   g_object_class_install_property (object_class, PROP_PROCEDURE,
                                    g_param_spec_object ("procedure",
@@ -168,48 +165,6 @@ gimp_procedure_action_activate (GtkAction *action)
                                  g_variant_new_uint64 (hack));
 
       gimp_action_history_action_activated (GIMP_ACTION (action));
-    }
-}
-
-static void
-gimp_procedure_action_connect_proxy (GtkAction *action,
-                                     GtkWidget *proxy)
-{
-  GimpProcedureAction *procedure_action = GIMP_PROCEDURE_ACTION (action);
-
-  GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
-
-  if (GTK_IS_MENU_ITEM (proxy) && procedure_action->procedure)
-    {
-      GdkPixbuf *pixbuf;
-
-      g_object_get (procedure_action->procedure,
-                    "icon-pixbuf", &pixbuf,
-                    NULL);
-
-      if (pixbuf)
-        {
-          GtkWidget *image;
-          gint       width;
-          gint       height;
-
-          gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
-
-          if (width  != gdk_pixbuf_get_width  (pixbuf) ||
-              height != gdk_pixbuf_get_height (pixbuf))
-            {
-              GdkPixbuf *copy;
-
-              copy = gdk_pixbuf_scale_simple (pixbuf, width, height,
-                                              GDK_INTERP_BILINEAR);
-              g_object_unref (pixbuf);
-              pixbuf = copy;
-            }
-
-          image = gtk_image_new_from_pixbuf (pixbuf);
-          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), image, action);
-          g_object_unref (pixbuf);
-        }
     }
 }
 

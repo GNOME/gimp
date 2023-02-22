@@ -36,6 +36,7 @@
 #include "core/gimpimagefile.h"  /* eek */
 
 #include "gimpaction.h"
+#include "gimpprocedureaction.h"
 #include "gimpview.h"
 #include "gimpviewrenderer.h"
 #include "gimpwidgets-utils.h"
@@ -787,14 +788,56 @@ gimp_action_set_proxy (GimpAction *action,
     }
   else
     {
-      GtkWidget *image;
+      GtkWidget *image = NULL;
 
-      image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
-
-      if (GIMP_IS_VIEW (image) || GIMP_IS_COLOR_AREA (image))
+      if (GIMP_IS_PROCEDURE_ACTION (action) &&
+          /* Some special cases GimpProcedureAction have no procedure attached
+           * (e.g. "filters-recent-*" actions.
+           */
+          G_IS_OBJECT (GIMP_PROCEDURE_ACTION (action)->procedure))
         {
-          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL, action);
-          g_object_notify (G_OBJECT (action), "icon-name");
+          /* Special-casing procedure actions as plug-ins can create icons with
+           * gimp_procedure_set_icon_pixbuf().
+           */
+          GdkPixbuf *pixbuf = NULL;
+
+          g_object_get (GIMP_PROCEDURE_ACTION (action)->procedure,
+                        "icon-pixbuf", &pixbuf,
+                        NULL);
+
+          if (pixbuf != NULL)
+            {
+              gint width;
+              gint height;
+
+              gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
+
+              if (width  != gdk_pixbuf_get_width  (pixbuf) ||
+                  height != gdk_pixbuf_get_height (pixbuf))
+                {
+                  GdkPixbuf *copy;
+
+                  copy = gdk_pixbuf_scale_simple (pixbuf, width, height,
+                                                  GDK_INTERP_BILINEAR);
+                  g_object_unref (pixbuf);
+                  pixbuf = copy;
+                }
+
+              image = gtk_image_new_from_pixbuf (pixbuf);
+              gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), image, action);
+              g_object_unref (pixbuf);
+            }
+        }
+
+      if (image == NULL)
+        {
+          image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
+
+          if (GIMP_IS_VIEW (image) || GIMP_IS_COLOR_AREA (image))
+            {
+              gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL, action);
+              g_object_notify (G_OBJECT (action), "icon-name");
+            }
         }
     }
 
