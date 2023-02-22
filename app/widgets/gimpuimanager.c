@@ -272,6 +272,7 @@ gimp_ui_manager_finalize (GObject *object)
 
       g_free (entry->ui_path);
       g_free (entry->basename);
+      g_clear_object (&entry->builder);
 
       if (entry->widget)
         g_object_unref (entry->widget);
@@ -506,6 +507,31 @@ gimp_ui_manager_get_widget (GimpUIManager *manager,
   return gtk_ui_manager_get_widget ((GtkUIManager *) manager, path);
 }
 
+GMenuModel *
+gimp_ui_manager_get_model (GimpUIManager *manager,
+                           const gchar   *path)
+{
+  GimpUIManagerUIEntry *entry;
+  GMenuModel           *model;
+  gchar                *filename;
+  gchar                *full_basename;
+
+  entry         = gimp_ui_manager_entry_ensure (manager, path);
+  full_basename = g_strconcat (entry->basename, ".ui", NULL);
+  filename      = g_build_filename (gimp_data_directory (), "menus",
+                                    full_basename, NULL);
+
+  if (entry->builder == NULL)
+    /* The model is owned by the builder which I have to keep around. */
+    entry->builder = gtk_builder_new_from_file (filename);
+
+  model = G_MENU_MODEL (gtk_builder_get_object (entry->builder, path));
+  g_free (filename);
+  g_free (full_basename);
+
+  return model;
+}
+
 gchar *
 gimp_ui_manager_get_ui (GimpUIManager *manager)
 {
@@ -684,6 +710,7 @@ gimp_ui_manager_ui_register (GimpUIManager          *manager,
   entry->setup_func = setup_func;
   entry->merge_id   = 0;
   entry->widget     = NULL;
+  entry->builder    = NULL;
 
   manager->registered_uis = g_list_prepend (manager->registered_uis, entry);
 }
@@ -846,8 +873,10 @@ gimp_ui_manager_entry_load (GimpUIManager         *manager,
                             GError               **error)
 {
   gchar       *filename            = NULL;
+  gchar       *full_basename;
   const gchar *menus_path_override = g_getenv ("GIMP_TESTING_MENUS_PATH");
 
+  full_basename = g_strconcat (entry->basename, ".xml", NULL);
   /* In order for test cases to be able to run without GIMP being
    * installed yet, allow them to override the menus directory to the
    * menus dir in the source root
@@ -859,7 +888,7 @@ gimp_ui_manager_entry_load (GimpUIManager         *manager,
 
       for (list = path; list; list = g_list_next (list))
         {
-          filename = g_build_filename (list->data, entry->basename, NULL);
+          filename = g_build_filename (list->data, full_basename, NULL);
 
           if (! list->next ||
               g_file_test (filename, G_FILE_TEST_EXISTS))
@@ -873,7 +902,7 @@ gimp_ui_manager_entry_load (GimpUIManager         *manager,
   else
     {
       filename = g_build_filename (gimp_data_directory (), "menus",
-                                   entry->basename, NULL);
+                                   full_basename, NULL);
     }
 
   if (manager->gimp->be_verbose)
@@ -884,6 +913,7 @@ gimp_ui_manager_entry_load (GimpUIManager         *manager,
                                                      filename, error);
 
   g_free (filename);
+  g_free (full_basename);
 
   if (! entry->merge_id)
     return FALSE;
@@ -923,11 +953,14 @@ gimp_ui_manager_entry_ensure (GimpUIManager *manager,
             }
           else
             {
+              gchar *full_basename = g_strconcat (entry->basename, ".xml", NULL);
+
               gimp_message (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                             _("There was an error parsing the menu definition "
                               "from %s: %s"),
-                            gimp_filename_to_utf8 (entry->basename),
+                            gimp_filename_to_utf8 (full_basename),
                             error->message);
+              g_free (full_basename);
             }
 
           g_clear_error (&error);
@@ -959,9 +992,12 @@ gimp_ui_manager_entry_ensure (GimpUIManager *manager,
         }
       else
         {
+          gchar *full_basename = g_strconcat (entry->basename, ".xml", NULL);
+
           g_warning ("%s: \"%s\" does not contain registered toplevel "
                      "widget \"%s\"",
-                     G_STRFUNC, entry->basename, entry->ui_path);
+                     G_STRFUNC, full_basename, entry->ui_path);
+          g_free (full_basename);
           return NULL;
         }
     }

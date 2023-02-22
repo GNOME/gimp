@@ -117,7 +117,6 @@ struct _GimpImageWindowPrivate
   GimpDisplayShell  *active_shell;
 
   GtkWidget         *main_vbox;
-  GtkWidget         *new_menubar;
   GtkWidget         *menubar;
   GtkWidget         *hbox;
   GtkWidget         *left_hpane;
@@ -349,9 +348,7 @@ gimp_image_window_constructed (GObject *object)
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   GimpMenuFactory        *menu_factory;
   GimpGuiConfig          *config;
-  GtkBuilder             *builder;
   GMenuModel             *model;
-  gchar                  *filename;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -389,11 +386,8 @@ gimp_image_window_constructed (GObject *object)
   gtk_widget_show (private->main_vbox);
 
   /* Create the menubar */
-  filename = g_build_filename (gimp_data_directory (), "menus",
-                               "image-menu.ui", NULL);
-
-  builder = gtk_builder_new_from_file (filename);
-  model = G_MENU_MODEL (gtk_builder_get_object (builder, "/image-menubar"));
+  model = gimp_ui_manager_get_model (private->menubar_manager,
+                                     "/image-menubar");
 
 #ifdef GDK_WINDOWING_QUARTZ
   /* macOS has its native menubar system, and this should support it. It means
@@ -403,9 +397,7 @@ gimp_image_window_constructed (GObject *object)
    */
   gtk_application_set_menubar (private->gimp->app, G_MENU_MODEL (model));
 #else
-  /* TODO: this is the old menubar system. It should go away soon. */
-  private->menubar = gimp_ui_manager_get_widget (private->menubar_manager,
-                                                 "/image-menubar");
+  private->menubar = gimp_menu_new (model, private->menubar_manager);
 
   gtk_box_pack_start (GTK_BOX (private->main_vbox),
                       private->menubar, FALSE, FALSE, 0);
@@ -427,33 +419,7 @@ gimp_image_window_constructed (GObject *object)
   g_signal_connect (private->menubar, "key-press-event",
                     G_CALLBACK (gimp_image_window_shell_events),
                     window);
-
-  private->new_menubar = gimp_menu_new (model, private->menubar_manager);
-
-  gtk_box_pack_start (GTK_BOX (private->main_vbox),
-                      private->new_menubar, FALSE, FALSE, 0);
-
-  /*  make sure we can activate accels even if the menubar is invisible
-   *  (see https://bugzilla.gnome.org/show_bug.cgi?id=137151)
-   */
-  g_signal_connect (private->new_menubar, "can-activate-accel",
-                    G_CALLBACK (gtk_true),
-                    NULL);
-
-  /*  active display callback  */
-  g_signal_connect (private->new_menubar, "button-press-event",
-                    G_CALLBACK (gimp_image_window_shell_events),
-                    window);
-  g_signal_connect (private->new_menubar, "button-release-event",
-                    G_CALLBACK (gimp_image_window_shell_events),
-                    window);
-  g_signal_connect (private->new_menubar, "key-press-event",
-                    G_CALLBACK (gimp_image_window_shell_events),
-                    window);
 #endif /* !GDK_WINDOWING_QUARTZ */
-
-  g_object_unref (builder);
-  g_free (filename);
 
   /* Create the hbox that contains docks and images */
   private->hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -1390,8 +1356,6 @@ gimp_image_window_set_show_menubar (GimpImageWindow *window,
 
   if (private->menubar)
     gtk_widget_set_visible (private->menubar, show);
-  if (private->new_menubar)
-    gtk_widget_set_visible (private->new_menubar, show);
 }
 
 gboolean

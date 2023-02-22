@@ -39,6 +39,7 @@ struct _GimpUIManagerUIEntry
   GimpUIManagerSetupFunc  setup_func;
   guint                   merge_id;
   GtkWidget              *widget;
+  GtkBuilder             *builder;
 };
 
 
@@ -106,6 +107,8 @@ GList         * gimp_ui_manager_get_action_groups   (GimpUIManager   *manager);
 GtkAccelGroup * gimp_ui_manager_get_accel_group (GimpUIManager      *manager);
 
 GtkWidget     * gimp_ui_manager_get_widget      (GimpUIManager      *manager,
+                                                 const gchar        *path);
+GMenuModel    * gimp_ui_manager_get_model       (GimpUIManager      *manager,
                                                  const gchar        *path);
 
 gchar          * gimp_ui_manager_get_ui         (GimpUIManager      *manager);

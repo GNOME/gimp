@@ -90,6 +90,7 @@ gimp_menu_factory_finalize (GObject *object)
 
           g_free (ui_entry->ui_path);
           g_free (ui_entry->basename);
+          g_clear_object (&ui_entry->builder);
 
           g_slice_free (GimpUIManagerUIEntry, ui_entry);
         }
