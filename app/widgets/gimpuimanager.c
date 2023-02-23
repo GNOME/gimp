@@ -37,6 +37,8 @@
 #include "gimpactiongroup.h"
 #include "gimphelp.h"
 #include "gimphelp-ids.h"
+#include "gimpmenu.h"
+#include "gimpmenushell.h"
 #include "gimptoggleaction.h"
 #include "gimpuimanager.h"
 
@@ -736,8 +738,9 @@ gimp_ui_manager_ui_popup_at_widget (GimpUIManager  *manager,
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   model = gimp_ui_manager_get_model (manager, ui_path);
-  menu  = gtk_menu_new_from_model (model);
+  menu  = gimp_menu_new (manager);
   gtk_menu_attach_to_widget (GTK_MENU (menu), widget, NULL);
+  gimp_menu_shell_fill (GIMP_MENU_SHELL (menu), model, NULL);
 
   if (! menu)
     return;
@@ -772,8 +775,9 @@ gimp_ui_manager_ui_popup_at_pointer (GimpUIManager  *manager,
   g_return_if_fail (ui_path != NULL);
 
   model = gimp_ui_manager_get_model (manager, ui_path);
-  menu  = gtk_menu_new_from_model (model);
+  menu  = gimp_menu_new (manager);
   gtk_menu_attach_to_widget (GTK_MENU (menu), attached_widget, NULL);
+  gimp_menu_shell_fill (GIMP_MENU_SHELL (menu), model, NULL);
 
   if (! menu)
     return;
@@ -809,8 +813,9 @@ gimp_ui_manager_ui_popup_at_rect (GimpUIManager      *manager,
   g_return_if_fail (ui_path != NULL);
 
   model = gimp_ui_manager_get_model (manager, ui_path);
-  menu  = gtk_menu_new_from_model (model);
+  menu  = gimp_menu_new (manager);
   gtk_menu_attach_to_widget (GTK_MENU (menu), attached_widget, NULL);
+  gimp_menu_shell_fill (GIMP_MENU_SHELL (menu), model, NULL);
 
   if (! menu)
     return;
