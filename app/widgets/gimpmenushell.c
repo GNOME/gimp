@@ -383,7 +383,10 @@ gimp_menu_shell_toggle_action_changed (GimpAction       *action,
   /* TODO: use gimp_toggle_action_get_active() when GimpToggleAction and
    * GimpRadioAction become direct parent of each other.
    */
-  active      = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (GIMP_IS_TOGGLE_ACTION (action))
+    active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
+  else
+    active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
   /* Make sure we don't activate the action. */
   gtk_actionable_set_action_name (GTK_ACTIONABLE (item), NULL);

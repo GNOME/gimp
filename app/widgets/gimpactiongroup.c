@@ -890,16 +890,16 @@ gimp_action_group_set_action_active (GimpActionGroup *group,
       return;
     }
 
-  if (! GTK_IS_TOGGLE_ACTION (action))
-    {
-      g_warning ("%s: Unable to set \"active\" of action "
-                 "which is not a GtkToggleAction: %s",
-                 G_STRFUNC, action_name);
-      return;
-    }
-
-  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-                                active ? TRUE : FALSE);
+  if (GTK_IS_TOGGLE_ACTION (action))
+    gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
+                                  active ? TRUE : FALSE);
+  else if (GIMP_IS_TOGGLE_ACTION (action))
+    gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
+                                   active ? TRUE : FALSE);
+  else
+    g_warning ("%s: Unable to set \"active\" of action "
+               "which is neither a GtkToggleAction or GimpToggleAction: %s",
+               G_STRFUNC, action_name);
 }
 
 void
