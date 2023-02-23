@@ -39,6 +39,30 @@ install_data(menus_files,
   install_dir: menus_dir,
 )
 
+ui_menus_files = files(
+  'brushes-menu.ui',
+  'buffers-menu.ui',
+  'channels-menu.ui',
+  'colormap-menu.ui',
+  'documents-menu.ui',
+  'dynamics-menu.ui',
+  'error-console-menu.ui',
+  'fonts-menu.ui',
+  'gradients-menu.ui',
+  'images-menu.ui',
+  'layers-menu.ui',
+  'mypaint-brushes-menu.ui',
+  'palettes-menu.ui',
+  'patterns-menu.ui',
+  'quick-mask-menu.ui',
+  'templates-menu.ui',
+  'vectors-menu.ui',
+)
+
+install_data(ui_menus_files,
+  install_dir: menus_dir,
+)
+
 unstable_menus_args = stable ? [] : [ '--stringparam', 'unstable-menus', 'yes' ]
 
 menus_built_files = []
@@ -100,7 +124,7 @@ if xmllint.found()
       xmllint,
       '--output', '@OUTPUT@',
       '--path', meson.current_source_dir(),
-      menus_ui_built_files
+      ui_menus_files, menus_ui_built_files
     ],
     # The output file is only useful as a flag file, so that the command
     # knows if it has been run already.

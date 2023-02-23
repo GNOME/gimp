@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/templates-popup">
+    <item><attribute name="action">app.templates-create-image</attribute></item>
+    <section>
+      <item><attribute name="action">app.templates-new</attribute></item>
+      <item><attribute name="action">app.templates-duplicate</attribute></item>
+      <item><attribute name="action">app.templates-edit</attribute></item>
+      <item><attribute name="action">app.templates-delete</attribute></item>
+    </section>
+  </menu>
+</interface>

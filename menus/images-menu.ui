@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/images-popup">
+    <item><attribute name="action">app.images-raise-views</attribute></item>
+    <item><attribute name="action">app.images-new-view</attribute></item>
+    <item><attribute name="action">app.images-delete</attribute></item>
+  </menu>
+</interface>

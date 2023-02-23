@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/brushes-popup">
+    <item><attribute name="action">app.brushes-edit</attribute></item>
+    <item><attribute name="action">app.brushes-open-as-image</attribute></item>
+    <section>
+      <item><attribute name="action">app.brushes-new</attribute></item>
+      <item><attribute name="action">app.brushes-duplicate</attribute></item>
+      <item><attribute name="action">app.brushes-copy-location</attribute></item>
+      <item><attribute name="action">app.brushes-show-in-file-manager</attribute></item>
+      <item><attribute name="action">app.brushes-delete</attribute></item>
+    </section>
+    <section>
+      <item><attribute name="action">app.brushes-refresh</attribute></item>
+    </section>
+  </menu>
+</interface>

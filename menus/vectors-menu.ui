@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/vectors-popup">
+    <item><attribute name="action">app.vectors-edit</attribute></item>
+    <item><attribute name="action">app.vectors-edit-attributes</attribute></item>
+    <submenu>
+      <attribute name="label">Color Tags</attribute>
+      <item><attribute name="action">app.vectors-color-tag-none</attribute></item>
+      <item><attribute name="action">app.vectors-color-tag-blue</attribute></item>
+      <item><attribute name="action">app.vectors-color-tag-green</attribute></item>
+      <item><attribute name="action">app.vectors-color-tag-yellow</attribute></item>
+      <item><attribute name="action">app.vectors-color-tag-orange</attribute></item>
+      <item><attribute name="action">app.vectors-color-tag-brown</attribute></item>
+      <item><attribute name="action">app.vectors-color-tag-red</attribute></item>
+      <item><attribute name="action">app.vectors-color-tag-violet</attribute></item>
+      <item><attribute name="action">app.vectors-color-tag-gray</attribute></item>
+    </submenu>
+    <section>
+      <item><attribute name="action">app.vectors-new</attribute></item>
+      <item><attribute name="action">app.vectors-raise</attribute></item>
+      <item><attribute name="action">app.vectors-lower</attribute></item>
+      <item><attribute name="action">app.vectors-duplicate</attribute></item>
+      <item><attribute name="action">app.vectors-delete</attribute></item>
+      <item><attribute name="action">app.vectors-merge-visible</attribute></item>
+    </section>
+    <section>
+      <item><attribute name="action">app.vectors-selection-replace</attribute></item>
+      <item><attribute name="action">app.vectors-selection-add</attribute></item>
+      <item><attribute name="action">app.vectors-selection-subtract</attribute></item>
+      <item><attribute name="action">app.vectors-selection-intersect</attribute></item>
+      <item><attribute name="action">app.vectors-selection-to-vectors</attribute></item>
+    </section>
+    <section>
+      <item><attribute name="action">app.vectors-fill</attribute></item>
+      <item><attribute name="action">app.vectors-stroke</attribute></item>
+    </section>
+    <section>
+      <item><attribute name="action">app.vectors-copy</attribute></item>
+      <item><attribute name="action">app.vectors-paste</attribute></item>
+      <item><attribute name="action">app.vectors-export</attribute></item>
+      <item><attribute name="action">app.vectors-import</attribute></item>
+    </section>
+  </menu>
+</interface>

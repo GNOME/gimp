@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/dynamics-popup">
+    <item><attribute name="action">app.dynamics-edit</attribute></item>
+    <section>
+      <item><attribute name="action">app.dynamics-new</attribute></item>
+      <item><attribute name="action">app.dynamics-duplicate</attribute></item>
+      <item><attribute name="action">app.dynamics-copy-location</attribute></item>
+      <item><attribute name="action">app.dynamics-show-in-file-manager</attribute></item>
+      <item><attribute name="action">app.dynamics-delete</attribute></item>
+    </section>
+    <section>
+      <item><attribute name="action">app.dynamics-refresh</attribute></item>
+    </section>
+  </menu>
+</interface>

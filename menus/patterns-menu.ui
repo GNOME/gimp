@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/patterns-popup">
+    <item><attribute name="action">app.patterns-open-as-image</attribute></item>
+
+    <!-- disabled because they are useless now
+    <item><attribute name="action">app.patterns-edit</attribute></item>
+    <section>
+      <item><attribute name="action">app.patterns-new</attribute></item>
+      <item><attribute name="action">app.patterns-duplicate</attribute></item>
+    </section>
+    -->
+
+    <item><attribute name="action">app.patterns-copy-location</attribute></item>
+    <item><attribute name="action">app.patterns-show-in-file-manager</attribute></item>
+    <item><attribute name="action">app.patterns-delete</attribute></item>
+    <section>
+      <item><attribute name="action">app.patterns-refresh</attribute></item>
+    </section>
+  </menu>
+</interface>

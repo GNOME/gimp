@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/quick-mask-popup">
+    <item><attribute name="action">app.quick-mask-toggle</attribute></item>
+    <section>
+      <item><attribute name="action">app.quick-mask-invert-on</attribute></item>
+      <item><attribute name="action">app.quick-mask-invert-off</attribute></item>
+    </section>
+    <section>
+      <item><attribute name="action">app.quick-mask-configure</attribute></item>
+    </section>
+  </menu>
+</interface>

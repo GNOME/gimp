@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/colormap-popup">
+    <item><attribute name="action">app.colormap-edit-color</attribute></item>
+    <item><attribute name="action">app.colormap-add-color-from-fg</attribute></item>
+    <item><attribute name="action">app.colormap-add-color-from-bg</attribute></item>
+    <section>
+      <item><attribute name="action">app.colormap-selection-replace</attribute></item>
+      <item><attribute name="action">app.colormap-selection-add</attribute></item>
+      <item><attribute name="action">app.colormap-selection-subtract</attribute></item>
+      <item><attribute name="action">app.colormap-selection-intersect</attribute></item>
+    </section>
+  </menu>
+</interface>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/documents-popup">
+    <item><attribute name="action">app.documents-open</attribute></item>
+    <item><attribute name="action">app.documents-raise-or-open</attribute></item>
+    <item><attribute name="action">app.documents-file-open-dialog</attribute></item>
+    <item><attribute name="action">app.documents-copy-location</attribute></item>
+    <item><attribute name="action">app.documents-show-in-file-manager</attribute></item>
+    <item><attribute name="action">app.documents-remove</attribute></item>
+    <item><attribute name="action">app.documents-clear</attribute></item>
+    <section>
+      <item><attribute name="action">app.documents-recreate-preview</attribute></item>
+      <item><attribute name="action">app.documents-reload-previews</attribute></item>
+      <item><attribute name="action">app.documents-remove-dangling</attribute></item>
+    </section>
+  </menu>
+</interface>

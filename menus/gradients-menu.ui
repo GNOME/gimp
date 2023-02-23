@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/gradients-popup">
+    <item><attribute name="action">app.gradients-edit</attribute></item>
+    <section>
+      <item><attribute name="action">app.gradients-new</attribute></item>
+      <item><attribute name="action">app.gradients-duplicate</attribute></item>
+      <item><attribute name="action">app.gradients-save-as-pov</attribute></item>
+      <item><attribute name="action">app.gradients-copy-location</attribute></item>
+      <item><attribute name="action">app.gradients-show-in-file-manager</attribute></item>
+      <item><attribute name="action">app.gradients-delete</attribute></item>
+    </section>
+    <section>
+      <item><attribute name="action">app.gradients-refresh</attribute></item>
+    </section>
+  </menu>
+</interface>

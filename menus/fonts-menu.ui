@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/fonts-popup">
+    <section>
+      <item><attribute name="action">app.fonts-refresh</attribute></item>
+    </section>
+  </menu>
+</interface>
