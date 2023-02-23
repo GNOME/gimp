@@ -847,6 +847,18 @@ palette_import_make_palette (ImportDialog *private)
                                   error->message);
             g_error_free (error);
           }
+        else
+          {
+            gint columns = gimp_palette_get_columns (palette);
+
+            if (columns > 0)
+              {
+                n_columns = columns;
+
+                gimp_label_spin_set_value (GIMP_LABEL_SPIN (private->columns),
+                                           n_columns);
+              }
+          }
       }
       break;
     }
