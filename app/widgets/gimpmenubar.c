@@ -1,8 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmenu.c
- * Copyright (C) 2022 Jehan
+ * gimpmenubar.c
+ * Copyright (C) 2023 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
 #include "gimpaction.h"
 #include "gimpenumaction.h"
 #include "gimphelp-ids.h"
-#include "gimpmenu.h"
+#include "gimpmenubar.h"
 #include "gimpprocedureaction.h"
 #include "gimpradioaction.h"
 #include "gimptoggleaction.h"
@@ -41,14 +41,14 @@
 
 
 /**
- * GimpMenu:
+ * GimpMenuBar:
  *
- * Our own menu widget.
+ * Our own menu bar widget.
  *
- * We cannot use the simpler gtk_menu_new_from_model() because it lacks
+ * We cannot use the simpler gtk_application_set_menubar() because it lacks
  * tooltip support and unfortunately GTK does not plan to implement this:
  * https://gitlab.gnome.org/GNOME/gtk/-/issues/785
- * This is why we need to implement our own GimpMenu subclass.
+ * This is why we need to implement our own GimpMenuBar subclass.
  */
 
 enum
@@ -59,7 +59,7 @@ enum
 };
 
 
-struct _GimpMenuPrivate
+struct _GimpMenuBarPrivate
 {
   GimpUIManager *manager;
   GMenuModel    *model;
@@ -72,84 +72,84 @@ struct _GimpMenuPrivate
 
 /*  local function prototypes  */
 
-static void   gimp_menu_constructed             (GObject             *object);
-static void   gimp_menu_dispose                 (GObject             *object);
-static void   gimp_menu_set_property            (GObject             *object,
-                                                 guint                property_id,
-                                                 const GValue        *value,
-                                                 GParamSpec          *pspec);
-static void   gimp_menu_get_property            (GObject             *object,
-                                                 guint                property_id,
-                                                 GValue              *value,
-                                                 GParamSpec          *pspec);
+static void   gimp_menu_bar_constructed             (GObject             *object);
+static void   gimp_menu_bar_dispose                 (GObject             *object);
+static void   gimp_menu_bar_set_property            (GObject             *object,
+                                                     guint                property_id,
+                                                     const GValue        *value,
+                                                     GParamSpec          *pspec);
+static void   gimp_menu_bar_get_property            (GObject             *object,
+                                                     guint                property_id,
+                                                     GValue              *value,
+                                                     GParamSpec          *pspec);
 
-static void   gimp_menu_update                  (GimpMenu            *menu,
-                                                 GtkContainer        *container,
-                                                 const gchar         *parent_key,
-                                                 GMenuModel          *model);
+static void   gimp_menu_bar_update                  (GimpMenuBar         *menu,
+                                                     GtkContainer        *container,
+                                                     const gchar         *parent_key,
+                                                     GMenuModel          *model);
 
-void          gimp_menu_ui_added                (GimpUIManager       *manager,
-                                                 const gchar         *path,
-                                                 const gchar         *action_name,
-                                                 const gchar         *placeholder,
-                                                 gboolean             top,
-                                                 GimpMenu            *menu);
+void          gimp_menu_bar_ui_added                (GimpUIManager       *manager,
+                                                     const gchar         *path,
+                                                     const gchar         *action_name,
+                                                     const gchar         *placeholder,
+                                                     gboolean             top,
+                                                     GimpMenuBar         *menu);
 
-static void   gimp_menu_radio_item_toggled      (GtkWidget           *item,
-                                                 GAction             *action);
+static void   gimp_menu_bar_radio_item_toggled      (GtkWidget           *item,
+                                                     GAction             *action);
 
-static void   gimp_menu_toggle_action_changed   (GimpAction          *action,
-                                                 GVariant            *value G_GNUC_UNUSED,
-                                                 GtkCheckMenuItem    *item);
-static void   gimp_menu_action_activate         (GtkMenuItem         *item,
-                                                 GimpAction          *action);
-static void   gimp_menu_action_notify_sensitive (GimpAction          *action,
-                                                 const GParamSpec    *pspec,
-                                                 GtkCheckMenuItem    *item);
-static void   gimp_menu_action_notify_visible   (GimpAction          *action,
-                                                 const GParamSpec    *pspec,
-                                                 GtkWidget           *item);
+static void   gimp_menu_bar_toggle_action_changed   (GimpAction          *action,
+                                                     GVariant            *value G_GNUC_UNUSED,
+                                                     GtkCheckMenuItem    *item);
+static void   gimp_menu_bar_action_activate         (GtkMenuItem         *item,
+                                                     GimpAction          *action);
+static void   gimp_menu_bar_action_notify_sensitive (GimpAction          *action,
+                                                     const GParamSpec    *pspec,
+                                                     GtkCheckMenuItem    *item);
+static void   gimp_menu_bar_action_notify_visible   (GimpAction          *action,
+                                                     const GParamSpec    *pspec,
+                                                     GtkWidget           *item);
 
-static GtkContainer * gimp_menu_add_submenu     (GimpMenu            *menu,
-                                                 const gchar         *label,
-                                                 GtkContainer        *parent,
-                                                 const gchar         *parent_key,
-                                                 const gchar        **key);
-static void   gimp_menu_add_action              (GimpMenu            *menu,
-                                                 GtkContainer        *container,
-                                                 const gchar         *container_key,
-                                                 const gchar         *action_name,
-                                                 const gchar         *placeholder,
-                                                 gboolean             top,
-                                                 GtkRadioMenuItem   **group);
-static void   gimp_menu_add_placeholder         (GimpMenu            *menu,
-                                                 GtkContainer        *container,
-                                                 const gchar         *container_key,
-                                                 const gchar         *label);
+static GtkContainer * gimp_menu_bar_add_submenu     (GimpMenuBar         *menu,
+                                                     const gchar         *label,
+                                                     GtkContainer        *parent,
+                                                     const gchar         *parent_key,
+                                                     const gchar        **key);
+static void   gimp_menu_bar_add_action              (GimpMenuBar         *menu,
+                                                     GtkContainer        *container,
+                                                     const gchar         *container_key,
+                                                     const gchar         *action_name,
+                                                     const gchar         *placeholder,
+                                                     gboolean             top,
+                                                     GtkRadioMenuItem   **group);
+static void   gimp_menu_bar_add_placeholder         (GimpMenuBar         *menu,
+                                                     GtkContainer        *container,
+                                                     const gchar         *container_key,
+                                                     const gchar         *label);
 
-static gchar * gimp_menu_make_canonical_path    (GimpMenu            *menu,
-                                                 const gchar         *path);
+static gchar * gimp_menu_bar_make_canonical_path    (GimpMenuBar         *menu,
+                                                     const gchar         *path);
 
-static void    gimp_menu_submenu_help_fun       (const gchar         *bogus_help_id,
-                                                 gpointer             help_data);
+static void    gimp_menu_bar_submenu_help_fun       (const gchar         *bogus_help_id,
+                                                     gpointer             help_data);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpMenu, gimp_menu, GTK_TYPE_MENU_BAR)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpMenuBar, gimp_menu_bar, GTK_TYPE_MENU_BAR)
 
-#define parent_class gimp_menu_parent_class
+#define parent_class gimp_menu_bar_parent_class
 
 
 /*  private functions  */
 
 static void
-gimp_menu_class_init (GimpMenuClass *klass)
+gimp_menu_bar_class_init (GimpMenuBarClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_menu_constructed;
-  object_class->dispose      = gimp_menu_dispose;
-  object_class->get_property = gimp_menu_get_property;
-  object_class->set_property = gimp_menu_set_property;
+  object_class->constructed  = gimp_menu_bar_constructed;
+  object_class->dispose      = gimp_menu_bar_dispose;
+  object_class->get_property = gimp_menu_bar_get_property;
+  object_class->set_property = gimp_menu_bar_set_property;
 
   g_object_class_install_property (object_class, PROP_MANAGER,
                                    g_param_spec_object ("manager",
@@ -166,80 +166,80 @@ gimp_menu_class_init (GimpMenuClass *klass)
 }
 
 static void
-gimp_menu_init (GimpMenu *menu)
+gimp_menu_bar_init (GimpMenuBar *bar)
 {
-  menu->priv = gimp_menu_get_instance_private (menu);
+  bar->priv = gimp_menu_bar_get_instance_private (bar);
 
-  menu->priv->submenus     = g_tree_new_full ((GCompareDataFunc) g_strcmp0, NULL,
+  bar->priv->submenus     = g_tree_new_full ((GCompareDataFunc) g_strcmp0, NULL,
                                               g_free, NULL);
-  menu->priv->placeholders = g_tree_new_full ((GCompareDataFunc) g_strcmp0, NULL,
+  bar->priv->placeholders = g_tree_new_full ((GCompareDataFunc) g_strcmp0, NULL,
                                               g_free, NULL);
-  menu->priv->menu_delimiter_regex = g_regex_new ("/+", 0, 0, NULL);
+  bar->priv->menu_delimiter_regex = g_regex_new ("/+", 0, 0, NULL);
 }
 
 static void
-gimp_menu_constructed (GObject *object)
+gimp_menu_bar_constructed (GObject *object)
 {
-  GimpMenu *menu = GIMP_MENU (object);
+  GimpMenuBar *bar = GIMP_MENU_BAR (object);
 
-  g_signal_connect (menu->priv->manager, "ui-added",
-                    G_CALLBACK (gimp_menu_ui_added),
-                    menu);
-  gimp_ui_manager_foreach_ui (menu->priv->manager,
-                              (GimpUIMenuCallback) gimp_menu_ui_added,
-                              menu);
+  g_signal_connect (bar->priv->manager, "ui-added",
+                    G_CALLBACK (gimp_menu_bar_ui_added),
+                    bar);
+  gimp_ui_manager_foreach_ui (bar->priv->manager,
+                              (GimpUIMenuCallback) gimp_menu_bar_ui_added,
+                              bar);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 }
 
 static void
-gimp_menu_dispose (GObject *object)
+gimp_menu_bar_dispose (GObject *object)
 {
-  GimpMenu *menu = GIMP_MENU (object);
+  GimpMenuBar *bar = GIMP_MENU_BAR (object);
 
-  if (menu->priv->menu_delimiter_regex != NULL)
+  if (bar->priv->menu_delimiter_regex != NULL)
     {
-      g_regex_unref (menu->priv->menu_delimiter_regex);
-      menu->priv->menu_delimiter_regex = NULL;
+      g_regex_unref (bar->priv->menu_delimiter_regex);
+      bar->priv->menu_delimiter_regex = NULL;
     }
-  if (menu->priv->submenus != NULL)
+  if (bar->priv->submenus != NULL)
     {
-      g_tree_unref (menu->priv->submenus);
-      menu->priv->submenus = NULL;
+      g_tree_unref (bar->priv->submenus);
+      bar->priv->submenus = NULL;
     }
-  if (menu->priv->placeholders != NULL)
+  if (bar->priv->placeholders != NULL)
     {
-      g_tree_unref (menu->priv->placeholders);
-      menu->priv->placeholders = NULL;
+      g_tree_unref (bar->priv->placeholders);
+      bar->priv->placeholders = NULL;
     }
-  if (menu->priv->manager != NULL)
+  if (bar->priv->manager != NULL)
     {
       /* The whole program may be quitting. */
-      g_signal_handlers_disconnect_by_func (menu->priv->manager,
-                                            G_CALLBACK (gimp_menu_ui_added),
-                                            menu);
+      g_signal_handlers_disconnect_by_func (bar->priv->manager,
+                                            G_CALLBACK (gimp_menu_bar_ui_added),
+                                            bar);
     }
-  g_clear_object (&menu->priv->model);
+  g_clear_object (&bar->priv->model);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_menu_set_property (GObject      *object,
-                        guint         property_id,
-                        const GValue *value,
-                        GParamSpec   *pspec)
+gimp_menu_bar_set_property (GObject      *object,
+                            guint         property_id,
+                            const GValue *value,
+                            GParamSpec   *pspec)
 {
-  GimpMenu *menu = GIMP_MENU (object);
+  GimpMenuBar *bar = GIMP_MENU_BAR (object);
 
   switch (property_id)
     {
     case PROP_MODEL:
-      menu->priv->model = g_value_dup_object (value);
-      gimp_menu_update (menu, NULL, NULL, NULL);
+      bar->priv->model = g_value_dup_object (value);
+      gimp_menu_bar_update (bar, NULL, NULL, NULL);
       break;
     case PROP_MANAGER:
-      g_set_weak_pointer (&menu->priv->manager, g_value_get_object (value));
+      g_set_weak_pointer (&bar->priv->manager, g_value_get_object (value));
       break;
 
     default:
@@ -249,17 +249,17 @@ gimp_menu_set_property (GObject      *object,
 }
 
 static void
-gimp_menu_get_property (GObject    *object,
-                        guint       property_id,
-                        GValue     *value,
-                        GParamSpec *pspec)
+gimp_menu_bar_get_property (GObject    *object,
+                            guint       property_id,
+                            GValue     *value,
+                            GParamSpec *pspec)
 {
-  GimpMenu *menu = GIMP_MENU (object);
+  GimpMenuBar *bar = GIMP_MENU_BAR (object);
 
   switch (property_id)
     {
     case PROP_MODEL:
-      g_value_set_object (value, menu->priv->model);
+      g_value_set_object (value, bar->priv->model);
       break;
 
     default:
@@ -272,13 +272,13 @@ gimp_menu_get_property (GObject    *object,
 /* Public functions */
 
 GtkWidget *
-gimp_menu_new (GMenuModel    *model,
-               GimpUIManager *manager)
+gimp_menu_bar_new (GMenuModel    *model,
+                   GimpUIManager *manager)
 {
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager) &&
                         G_IS_MENU_MODEL (model), NULL);
 
-  return g_object_new (GIMP_TYPE_MENU,
+  return g_object_new (GIMP_TYPE_MENU_BAR,
                        "model",   model,
                        "manager", manager,
                        NULL);
@@ -288,18 +288,18 @@ gimp_menu_new (GMenuModel    *model,
 /* Private functions */
 
 static void
-gimp_menu_update (GimpMenu     *menu,
-                  GtkContainer *container,
-                  const gchar  *parent_key,
-                  GMenuModel   *model)
+gimp_menu_bar_update (GimpMenuBar  *bar,
+                      GtkContainer *container,
+                      const gchar  *parent_key,
+                      GMenuModel   *model)
 {
   static GtkRadioMenuItem *group = NULL;
   gint                     n_items;
 
   if (container == NULL)
     {
-      container  = GTK_CONTAINER (menu);
-      model      = menu->priv->model;
+      container  = GTK_CONTAINER (bar);
+      model      = bar->priv->model;
       parent_key = "";
     }
 
@@ -325,7 +325,7 @@ gimp_menu_update (GimpMenu     *menu,
           gtk_container_add (container, item);
           gtk_widget_show (item);
 
-          gimp_menu_update (menu, container, parent_key, subsection);
+          gimp_menu_bar_update (bar, container, parent_key, subsection);
 
           item = gtk_separator_menu_item_new ();
           gtk_container_add (container, item);
@@ -338,8 +338,8 @@ gimp_menu_update (GimpMenu     *menu,
 
           group = NULL;
 
-          subcontainer = gimp_menu_add_submenu (menu, label, container, parent_key, &key);
-          gimp_menu_update (menu, subcontainer, key, submenu);
+          subcontainer = gimp_menu_bar_add_submenu (bar, label, container, parent_key, &key);
+          gimp_menu_bar_update (bar, subcontainer, key, submenu);
         }
       else if (action_name == NULL)
         {
@@ -351,11 +351,11 @@ gimp_menu_update (GimpMenu     *menu,
 
           group = NULL;
 
-          gimp_menu_add_placeholder (menu, container, parent_key, label);
+          gimp_menu_bar_add_placeholder (bar, container, parent_key, label);
         }
       else
         {
-          gimp_menu_add_action (menu, container, parent_key, action_name, NULL, FALSE, &group);
+          gimp_menu_bar_add_action (bar, container, parent_key, action_name, NULL, FALSE, &group);
         }
       g_free (label);
       g_free (action_name);
@@ -363,21 +363,21 @@ gimp_menu_update (GimpMenu     *menu,
 }
 
 void
-gimp_menu_ui_added (GimpUIManager *manager,
-                    const gchar   *path,
-                    const gchar   *action_name,
-                    const gchar   *placeholder,
-                    gboolean       top,
-                    GimpMenu      *menu)
+gimp_menu_bar_ui_added (GimpUIManager *manager,
+                        const gchar   *path,
+                        const gchar   *action_name,
+                        const gchar   *placeholder,
+                        gboolean       top,
+                        GimpMenuBar   *bar)
 {
   gchar        *canonical_path;
   GtkContainer *container = NULL;
   gchar        *new_path  = NULL;
   const gchar  *parent_key;
 
-  canonical_path = gimp_menu_make_canonical_path (menu, path);
+  canonical_path = gimp_menu_bar_make_canonical_path (bar, path);
 
-  container = g_tree_lookup (menu->priv->submenus, canonical_path);
+  container = g_tree_lookup (bar->priv->submenus, canonical_path);
   while (container == NULL)
     {
       gchar *tmp = new_path;
@@ -395,7 +395,7 @@ gimp_menu_ui_added (GimpUIManager *manager,
 
       *new_path = '\0';
 
-      container = g_tree_lookup (menu->priv->submenus, canonical_path);
+      container = g_tree_lookup (bar->priv->submenus, canonical_path);
     }
 
   if (new_path != NULL && new_path != canonical_path)
@@ -403,7 +403,7 @@ gimp_menu_ui_added (GimpUIManager *manager,
 
   if (container == NULL)
     {
-      container  = GTK_CONTAINER (menu);
+      container  = GTK_CONTAINER (bar);
       parent_key = "";
     }
   else
@@ -418,21 +418,21 @@ gimp_menu_ui_added (GimpUIManager *manager,
       sub_labels = g_strsplit (new_path, "/", -1);
       for (gint i = 0; sub_labels[i] != NULL; i++)
         if (g_strcmp0 (sub_labels[i], "") != 0)
-          container = gimp_menu_add_submenu (menu, sub_labels[i],
+          container = gimp_menu_bar_add_submenu (bar, sub_labels[i],
                                              container,
                                              parent_key,
                                              &parent_key);
       g_strfreev (sub_labels);
     }
 
-  gimp_menu_add_action (menu, container, canonical_path, action_name, placeholder, top, NULL);
+  gimp_menu_bar_add_action (bar, container, canonical_path, action_name, placeholder, top, NULL);
 
   g_free (canonical_path);
 }
 
 static void
-gimp_menu_radio_item_toggled (GtkWidget *item,
-                              GAction   *action)
+gimp_menu_bar_radio_item_toggled (GtkWidget *item,
+                                  GAction   *action)
 {
   gboolean active = gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (item));
 
@@ -444,12 +444,12 @@ gimp_menu_radio_item_toggled (GtkWidget *item,
 }
 
 static void
-gimp_menu_toggle_action_changed (GimpAction       *action,
-                                 /* Unused because this is used for 2 signals
-                                  * where the GVariant refers to different data.
-                                  */
-                                 GVariant         *value G_GNUC_UNUSED,
-                                 GtkCheckMenuItem *item)
+gimp_menu_bar_toggle_action_changed (GimpAction       *action,
+                                     /* Unused because this is used for 2 signals
+                                      * where the GVariant refers to different data.
+                                      */
+                                     GVariant         *value G_GNUC_UNUSED,
+                                     GtkCheckMenuItem *item)
 {
   gchar    *action_name;
   gboolean  active;
@@ -470,25 +470,25 @@ gimp_menu_toggle_action_changed (GimpAction       *action,
 }
 
 static void
-gimp_menu_action_activate (GtkMenuItem *item,
-                           GimpAction  *action)
+gimp_menu_bar_action_activate (GtkMenuItem *item,
+                               GimpAction  *action)
 {
   gimp_action_activate (action);
 }
 
 static void
-gimp_menu_action_notify_sensitive (GimpAction       *action,
-                                   const GParamSpec *pspec,
-                                   GtkCheckMenuItem *item)
+gimp_menu_bar_action_notify_sensitive (GimpAction       *action,
+                                       const GParamSpec *pspec,
+                                       GtkCheckMenuItem *item)
 {
   gtk_widget_set_sensitive (GTK_WIDGET (item),
                             gimp_action_is_sensitive (action, NULL));
 }
 
 static void
-gimp_menu_action_notify_visible (GimpAction       *action,
-                                 const GParamSpec *pspec,
-                                 GtkWidget        *item)
+gimp_menu_bar_action_notify_visible (GimpAction       *action,
+                                     const GParamSpec *pspec,
+                                     GtkWidget        *item)
 {
   GtkContainer *container;
 
@@ -533,11 +533,11 @@ gimp_menu_action_notify_visible (GimpAction       *action,
 }
 
 static GtkContainer *
-gimp_menu_add_submenu (GimpMenu      *menu,
-                       const gchar   *label,
-                       GtkContainer  *parent,
-                       const gchar   *parent_key,
-                       const gchar  **key)
+gimp_menu_bar_add_submenu (GimpMenuBar   *bar,
+                           const gchar   *label,
+                           GtkContainer  *parent,
+                           const gchar   *parent_key,
+                           const gchar  **key)
 {
   GtkWidget *subcontainer;
   GtkWidget *item;
@@ -547,13 +547,13 @@ gimp_menu_add_submenu (GimpMenu      *menu,
   g_return_val_if_fail (GTK_IS_CONTAINER (parent) && parent_key != NULL, NULL);
 
   if (parent == NULL)
-    parent = GTK_CONTAINER (menu);
+    parent = GTK_CONTAINER (bar);
 
   item = gtk_menu_item_new_with_mnemonic (label);
   gtk_container_add (parent, item);
 
   subcontainer = gtk_menu_new ();
-  g_object_set_data (G_OBJECT (subcontainer), "gimp", menu->priv->manager->gimp);
+  g_object_set_data (G_OBJECT (subcontainer), "gimp", bar->priv->manager->gimp);
   /* The "key-press-event" signal does not reach individual items as
    * GtkMenuShell's key_press_event() stops the signal first on the GtkMenu's
    * level. Instead we bind F1 on each menu and submenu.
@@ -561,12 +561,12 @@ gimp_menu_add_submenu (GimpMenu      *menu,
    * code on all proxies (independently to the type of widget) for more generic
    * usage.
    * XXX: a possible evolution would be to make our own GtkMenu subclass
-   * (probably renaming current class to GimpMenuBar) and either move this code
+   * (probably renaming current class to GimpMenuBarBar) and either move this code
    * there (for other usages of a GtkMenu) or simply let the F1 key reach
    * individual proxy widget, hence implementing the initial idea.
    */
   gimp_help_connect (subcontainer,
-                     gimp_menu_submenu_help_fun,
+                     gimp_menu_bar_submenu_help_fun,
                      GIMP_HELP_MAIN,
                      subcontainer,
                      NULL);
@@ -576,10 +576,10 @@ gimp_menu_add_submenu (GimpMenu      *menu,
 
   tmp = g_strconcat (parent_key ? parent_key : "", "/",
                      label, NULL);
-  new_key = gimp_menu_make_canonical_path (menu, tmp);
+  new_key = gimp_menu_bar_make_canonical_path (bar, tmp);
   g_free (tmp);
 
-  g_tree_insert (menu->priv->submenus, new_key, subcontainer);
+  g_tree_insert (bar->priv->submenus, new_key, subcontainer);
 
   if (key)
     *key = (const gchar *) new_key;
@@ -588,13 +588,13 @@ gimp_menu_add_submenu (GimpMenu      *menu,
 }
 
 static void
-gimp_menu_add_action (GimpMenu          *menu,
-                      GtkContainer      *container,
-                      const gchar       *container_key,
-                      const gchar       *action_name,
-                      const gchar       *placeholder,
-                      gboolean           top,
-                      GtkRadioMenuItem **group)
+gimp_menu_bar_add_action (GimpMenuBar       *bar,
+                          GtkContainer      *container,
+                          const gchar       *container_key,
+                          const gchar       *action_name,
+                          const gchar       *placeholder,
+                          gboolean           top,
+                          GtkRadioMenuItem **group)
 {
   GApplication *app;
   GAction      *action;
@@ -602,7 +602,7 @@ gimp_menu_add_action (GimpMenu          *menu,
   GtkWidget    *item;
   GtkWidget    *sibling = NULL;
 
-  app = menu->priv->manager->gimp->app;
+  app = bar->priv->manager->gimp->app;
 
   if (g_str_has_prefix (action_name, "app."))
     action = g_action_map_lookup_action (G_ACTION_MAP (app), action_name + 4);
@@ -623,24 +623,24 @@ gimp_menu_add_action (GimpMenu          *menu,
         *group = NULL;
 
       g_signal_connect (action, "gimp-change-state",
-                        G_CALLBACK (gimp_menu_toggle_action_changed),
+                        G_CALLBACK (gimp_menu_bar_toggle_action_changed),
                         item);
     }
   else if (GIMP_IS_RADIO_ACTION (action))
     {
       item = gtk_radio_menu_item_new_with_mnemonic_from_widget (group ? *group : NULL, action_label);
       gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
-                                      /* TODO: see comment in gimp_menu_radio_item_toggled(). */
+                                      /* TODO: see comment in gimp_menu_bar_radio_item_toggled(). */
                                       gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
 
       if (group)
         *group = GTK_RADIO_MENU_ITEM (item);
 
       g_signal_connect (item, "toggled",
-                        G_CALLBACK (gimp_menu_radio_item_toggled),
+                        G_CALLBACK (gimp_menu_bar_radio_item_toggled),
                         action);
       g_signal_connect (action, "gimp-change-state",
-                        G_CALLBACK (gimp_menu_toggle_action_changed),
+                        G_CALLBACK (gimp_menu_bar_toggle_action_changed),
                         item);
     }
   else if (GIMP_IS_PROCEDURE_ACTION (action) ||
@@ -652,7 +652,7 @@ gimp_menu_add_action (GimpMenu          *menu,
         *group = NULL;
 
       g_signal_connect (item, "activate",
-                        G_CALLBACK (gimp_menu_action_activate),
+                        G_CALLBACK (gimp_menu_bar_action_activate),
                         action);
     }
   else
@@ -669,14 +669,14 @@ gimp_menu_add_action (GimpMenu          *menu,
   gtk_widget_set_sensitive (GTK_WIDGET (item),
                             gimp_action_is_sensitive (GIMP_ACTION (action), NULL));
   g_signal_connect_object (action, "notify::sensitive",
-                           G_CALLBACK (gimp_menu_action_notify_sensitive),
+                           G_CALLBACK (gimp_menu_bar_action_notify_sensitive),
                            item, 0);
 
   if (placeholder)
     {
       gchar *key = g_strconcat (container_key, "/", placeholder, NULL);
 
-      sibling = g_tree_lookup (menu->priv->placeholders, key);
+      sibling = g_tree_lookup (bar->priv->placeholders, key);
 
       if (! sibling)
         g_warning ("%s: no placeholder item '%s'.", G_STRFUNC, key);
@@ -730,15 +730,15 @@ gimp_menu_add_action (GimpMenu          *menu,
         gtk_widget_show (parent);
     }
   g_signal_connect_object (action, "notify::visible",
-                           G_CALLBACK (gimp_menu_action_notify_visible),
+                           G_CALLBACK (gimp_menu_bar_action_notify_visible),
                            item, 0);
 }
 
 static void
-gimp_menu_add_placeholder (GimpMenu     *menu,
-                           GtkContainer *container,
-                           const gchar  *container_key,
-                           const gchar  *label)
+gimp_menu_bar_add_placeholder (GimpMenuBar  *bar,
+                               GtkContainer *container,
+                               const gchar  *container_key,
+                               const gchar  *label)
 {
   GtkWidget *item;
 
@@ -746,19 +746,19 @@ gimp_menu_add_placeholder (GimpMenu     *menu,
   item = gtk_menu_item_new_with_mnemonic (label);
   gtk_container_add (container, item);
 
-  g_tree_insert (menu->priv->placeholders,
+  g_tree_insert (bar->priv->placeholders,
                  g_strconcat (container_key, "/", label, NULL),
                  item);
 }
 
 static gchar *
-gimp_menu_make_canonical_path (GimpMenu    *menu,
-                               const gchar *path)
+gimp_menu_bar_make_canonical_path (GimpMenuBar *bar,
+                                   const gchar *path)
 {
   gchar **split_path;
   gchar  *canonical_path;
 
-  split_path = g_regex_split (menu->priv->menu_delimiter_regex,
+  split_path = g_regex_split (bar->priv->menu_delimiter_regex,
                               path, 0);
   canonical_path = g_strjoinv ("/", split_path);
   g_strfreev (split_path);
@@ -774,8 +774,8 @@ gimp_menu_make_canonical_path (GimpMenu    *menu,
 }
 
 static void
-gimp_menu_submenu_help_fun (const gchar *bogus_help_id,
-                            gpointer     help_data)
+gimp_menu_bar_submenu_help_fun (const gchar *bogus_help_id,
+                                gpointer     help_data)
 {
   gchar     *help_id     = NULL;
   GtkMenu   *menu        = GTK_MENU (help_data);

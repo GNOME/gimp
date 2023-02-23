@@ -137,7 +137,7 @@ libappwidgets_sources = [
   'gimplayermodebox.c',
   'gimplayermodecombobox.c',
   'gimplayertreeview.c',
-  'gimpmenu.c',
+  'gimpmenubar.c',
   'gimpmenudock.c',
   'gimpmenufactory.c',
   'gimpmessagebox.c',

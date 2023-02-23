@@ -50,7 +50,7 @@
 #include "widgets/gimpdockcolumns.h"
 #include "widgets/gimpdockcontainer.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpmenu.h"
+#include "widgets/gimpmenubar.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpsessioninfo-aux.h"
@@ -397,7 +397,7 @@ gimp_image_window_constructed (GObject *object)
    */
   gtk_application_set_menubar (private->gimp->app, G_MENU_MODEL (model));
 #else
-  private->menubar = gimp_menu_new (model, private->menubar_manager);
+  private->menubar = gimp_menu_bar_new (model, private->menubar_manager);
 
   gtk_box_pack_start (GTK_BOX (private->main_vbox),
                       private->menubar, FALSE, FALSE, 0);
