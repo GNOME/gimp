@@ -393,10 +393,10 @@
             Paths are now exported to PSD
           </li>
           <li>
-            JPEG-XL export added
+            JPEG XL export added
           </li>
           <li>
-            Metadata in JPEG-XL import and export
+            Metadata in JPEG XL import
           </li>
           <li>
             New option "Show reduced images" when loading TIFF images
