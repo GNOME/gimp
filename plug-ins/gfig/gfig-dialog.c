@@ -222,6 +222,11 @@ static GtkWidget * add_tool_button            (GtkWidget     *toolbar,
                                                const char    *icon,
                                                const char    *label,
                                                const char    *tooltip);
+static GtkWidget * add_toggle_button          (GtkWidget     *toolbar,
+                                               const char    *action,
+                                               const char    *icon,
+                                               const char    *label,
+                                               const char    *tooltip);
 static void        add_tool_separator         (GtkWidget     *toolbar,
                                                gboolean       expand);
 
@@ -376,35 +381,35 @@ gfig_dialog (GimpGfig *gfig)
   gtk_widget_show (menubar);
 
   toolbar = gtk_toolbar_new ();
-  add_tool_button (toolbar, "app.shape::line", GFIG_ICON_LINE,
-                   _("Line"), _("Create line"));
-  add_tool_button (toolbar, "app.shape::rectangle", GFIG_ICON_RECTANGLE,
+  add_toggle_button (toolbar, "app.shape::line", GFIG_ICON_LINE,
+                     _("Line"), _("Create line"));
+  add_toggle_button (toolbar, "app.shape::rectangle", GFIG_ICON_RECTANGLE,
                    _("Rectangle"), _("Create rectangle"));
-  add_tool_button (toolbar, "app.shape::circle", GFIG_ICON_CIRCLE,
-                   _("Circle"), _("Create circle"));
-  add_tool_button (toolbar, "app.shape::ellipse", GFIG_ICON_ELLIPSE,
-                   _("Ellipse"), _("Create ellipse"));
-  add_tool_button (toolbar, "app.shape::arc", GFIG_ICON_CURVE,
-                   _("Arc"), _("Create arc"));
-  add_tool_button (toolbar, "app.shape::polygon", GFIG_ICON_POLYGON,
-                   _("Polygon"), _("Create reg polygon"));
-  add_tool_button (toolbar, "app.shape::star", GFIG_ICON_STAR,
-                   _("Star"), _("Create star"));
-  add_tool_button (toolbar, "app.shape::spiral", GFIG_ICON_SPIRAL,
-                   _("Spiral"), _("Create spiral"));
-  add_tool_button (toolbar, "app.shape::bezier", GFIG_ICON_BEZIER,
-                   _("Bezier"), _("Create bezier curve. "
-                           "Shift + Button ends object creation."));
-  add_tool_button (toolbar, "app.shape::move-obj", GFIG_ICON_MOVE_OBJECT,
-                   _("Move Object"), _("Move an object"));
-  add_tool_button (toolbar, "app.shape::move-point", GFIG_ICON_MOVE_POINT,
-                   _("Move Point"), _("Move a single point"));
-  add_tool_button (toolbar, "app.shape::copy", GFIG_ICON_COPY_OBJECT,
-                   _("Copy"), _("Copy an object"));
-  add_tool_button (toolbar, "app.shape::delete", GFIG_ICON_DELETE_OBJECT,
-                   _("Delete"), _("Delete an object"));
-  add_tool_button (toolbar, "app.shape::select", GFIG_ICON_SELECT_OBJECT,
-                   _("Select"), _("Select an object"));
+  add_toggle_button (toolbar, "app.shape::circle", GFIG_ICON_CIRCLE,
+                     _("Circle"), _("Create circle"));
+  add_toggle_button (toolbar, "app.shape::ellipse", GFIG_ICON_ELLIPSE,
+                     _("Ellipse"), _("Create ellipse"));
+  add_toggle_button (toolbar, "app.shape::arc", GFIG_ICON_CURVE,
+                     _("Arc"), _("Create arc"));
+  add_toggle_button (toolbar, "app.shape::polygon", GFIG_ICON_POLYGON,
+                     _("Polygon"), _("Create reg polygon"));
+  add_toggle_button (toolbar, "app.shape::star", GFIG_ICON_STAR,
+                     _("Star"), _("Create star"));
+  add_toggle_button (toolbar, "app.shape::spiral", GFIG_ICON_SPIRAL,
+                     _("Spiral"), _("Create spiral"));
+  add_toggle_button (toolbar, "app.shape::bezier", GFIG_ICON_BEZIER,
+                     _("Bezier"), _("Create bezier curve. "
+                                    "Shift + Button ends object creation."));
+  add_toggle_button (toolbar, "app.shape::move-obj", GFIG_ICON_MOVE_OBJECT,
+                     _("Move Object"), _("Move an object"));
+  add_toggle_button (toolbar, "app.shape::move-point", GFIG_ICON_MOVE_POINT,
+                     _("Move Point"), _("Move a single point"));
+  add_toggle_button (toolbar, "app.shape::copy", GFIG_ICON_COPY_OBJECT,
+                     _("Copy"), _("Copy an object"));
+  add_toggle_button (toolbar, "app.shape::delete", GFIG_ICON_DELETE_OBJECT,
+                     _("Delete"), _("Delete an object"));
+  add_toggle_button (toolbar, "app.shape::select", GFIG_ICON_SELECT_OBJECT,
+                     _("Select"), _("Select an object"));
   add_tool_separator (toolbar, FALSE);
   add_tool_button (toolbar, "app.raise", GIMP_ICON_GO_UP,
                    _("Raise"), _("Raise selected object"));
@@ -2204,6 +2209,32 @@ add_tool_button (GtkWidget  *toolbar,
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), tool_button, -1);
 
   return GTK_WIDGET (tool_button);
+}
+
+GtkWidget *
+add_toggle_button (GtkWidget  *toolbar,
+                   const char *action,
+                   const char *icon,
+                   const char *label,
+                   const char *tooltip)
+{
+  GtkWidget   *tool_icon;
+  GtkToolItem *toggle_tool_button;
+
+  tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (GTK_WIDGET (tool_icon));
+
+  toggle_tool_button = gtk_toggle_tool_button_new ();
+  gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (toggle_tool_button),
+                                   tool_icon);
+  gtk_tool_button_set_label (GTK_TOOL_BUTTON (toggle_tool_button), label);
+  gtk_widget_show (GTK_WIDGET (toggle_tool_button));
+  gtk_tool_item_set_tooltip_text (toggle_tool_button, tooltip);
+  gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (toggle_tool_button), action);
+
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), toggle_tool_button, -1);
+
+  return GTK_WIDGET (toggle_tool_button);
 }
 
 static void

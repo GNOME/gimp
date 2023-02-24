@@ -116,7 +116,6 @@ typedef struct
 typedef struct
 {
   GtkWidget       *area;
-  GtkUIManager    *ui_manager;
   cairo_surface_t *surface;
 
   DesignOp         op;
@@ -312,6 +311,11 @@ static void        window_destroy         (GtkWidget       *widget,
                                            GimpIfs         *ifs);
 
 static GtkWidget * add_tool_button        (GtkWidget       *toolbar,
+                                           const char      *action,
+                                           const char      *icon,
+                                           const char      *label,
+                                           const char      *tooltip);
+static GtkWidget * add_toggle_button      (GtkWidget       *toolbar,
                                            const char      *action,
                                            const char      *icon,
                                            const char      *label,
@@ -987,12 +991,12 @@ ifs_compose_dialog (GimpIfs      *ifs,
                       main_vbox, TRUE, TRUE, 0);
 
   toolbar = gtk_toolbar_new ();
-  add_tool_button (toolbar, "app.transform::move", GIMP_ICON_TOOL_MOVE,
-                   NULL, _("Move"));
-  add_tool_button (toolbar, "app.transform::rotate", GIMP_ICON_TOOL_ROTATE,
-                   NULL, _("Rotate"));
-  add_tool_button (toolbar, "app.transform::stretch", GIMP_ICON_TOOL_PERSPECTIVE,
-                   NULL, _("Stretch"));
+  add_toggle_button (toolbar, "app.transform::move", GIMP_ICON_TOOL_MOVE,
+                     NULL, _("Move"));
+  add_toggle_button (toolbar, "app.transform::rotate", GIMP_ICON_TOOL_ROTATE,
+                     NULL, _("Rotate"));
+  add_toggle_button (toolbar, "app.transform::stretch", GIMP_ICON_TOOL_PERSPECTIVE,
+                     NULL, _("Stretch"));
   add_tool_separator (toolbar, FALSE);
   add_tool_button (toolbar, "app.new", GIMP_ICON_DOCUMENT_NEW,
                    NULL, _("New"));
@@ -2926,6 +2930,32 @@ add_tool_button (GtkWidget  *toolbar,
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), tool_button, -1);
 
   return GTK_WIDGET (tool_button);
+}
+
+GtkWidget *
+add_toggle_button (GtkWidget  *toolbar,
+                   const char *action,
+                   const char *icon,
+                   const char *label,
+                   const char *tooltip)
+{
+  GtkWidget   *tool_icon;
+  GtkToolItem *toggle_tool_button;
+
+  tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (GTK_WIDGET (tool_icon));
+
+  toggle_tool_button = gtk_toggle_tool_button_new ();
+  gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (toggle_tool_button),
+                                   tool_icon);
+  gtk_tool_button_set_label (GTK_TOOL_BUTTON (toggle_tool_button), label);
+  gtk_widget_show (GTK_WIDGET (toggle_tool_button));
+  gtk_tool_item_set_tooltip_text (toggle_tool_button, tooltip);
+  gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (toggle_tool_button), action);
+
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), toggle_tool_button, -1);
+
+  return GTK_WIDGET (toggle_tool_button);
 }
 
 static void
