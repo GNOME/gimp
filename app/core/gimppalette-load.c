@@ -437,12 +437,17 @@ gimp_palette_load_aco (GimpContext   *context,
 
   for (i = 0; i < number_of_colors; i++)
     {
-      gchar     color_info[10];
-      gint      color_space;
-      gint      w, x, y, z;
-      gboolean  color_ok = FALSE;
-      GimpRGB   color;
-      GError   *my_error = NULL;
+      gchar       color_info[10];
+      gint        color_space;
+      gint        w, x, y, z;
+      gint        xLab;
+      gint        yLab;
+      void       *pixels     = NULL;
+      const Babl *src_format = NULL;
+      const Babl *dst_format = babl_format ("R'G'B' double");
+      gboolean    color_ok   = FALSE;
+      GimpRGB     color;
+      GError     *my_error   = NULL;
 
       if (! g_input_stream_read_all (input, color_info, sizeof (color_info),
                                      &bytes_read, NULL, &my_error) ||
@@ -472,63 +477,77 @@ gimp_palette_load_aco (GimpContext   *context,
       x = (guchar) color_info[5] + ((guchar) color_info[4] << 8);
       y = (guchar) color_info[7] + ((guchar) color_info[6] << 8);
       z = (guchar) color_info[9] + ((guchar) color_info[8] << 8);
+      /* Lab-specific values */
+      xLab = (gint) color_info[5] | ((gint) color_info[4] << 8);
+      yLab = (gint) color_info[7] | ((gint) color_info[6] << 8);
+      if (xLab >= 32768)
+        xLab -= 65536;
+      if (yLab >= 32768)
+        yLab -= 65536;
 
       if (color_space == 0) /* RGB */
         {
-          gdouble R = ((gdouble) w) / 65536.0;
-          gdouble G = ((gdouble) x) / 65536.0;
-          gdouble B = ((gdouble) y) / 65536.0;
+          gdouble rgb[3] = { ((gdouble) w) / 65536.0,
+                             ((gdouble) x) / 65536.0,
+                             ((gdouble) y) / 65536.0 };
 
-          gimp_rgba_set (&color, R, G, B, 1.0);
+          src_format = babl_format ("R'G'B' double");
+          pixels     = rgb;
 
           color_ok = TRUE;
         }
       else if (color_space == 1) /* HSV */
         {
-          GimpHSV hsv;
+          gdouble hsv[3] = { ((gdouble) w) / 65536.0,
+                             ((gdouble) x) / 65536.0,
+                             ((gdouble) y) / 65536.0};
 
-          gdouble H = ((gdouble) w) / 65536.0;
-          gdouble S = ((gdouble) x) / 65536.0;
-          gdouble V = ((gdouble) y) / 65536.0;
-
-          gimp_hsva_set (&hsv, H, S, V, 1.0);
-          gimp_hsv_to_rgb (&hsv, &color);
+          src_format = babl_format ("HSV double");
+          pixels     = hsv;
 
           color_ok = TRUE;
         }
       else if (color_space == 2) /* CMYK */
         {
-          GimpCMYK cmyk;
+          gdouble cmyk[4] = { 1.0 - ((gdouble) w) / 65536.0,
+                              1.0 - ((gdouble) x) / 65536.0,
+                              1.0 - ((gdouble) y) / 65536.0,
+                              1.0 - ((gdouble) z) / 65536.0 };
 
-          gdouble C = 1.0 - (((gdouble) w) / 65536.0);
-          gdouble M = 1.0 - (((gdouble) x) / 65536.0);
-          gdouble Y = 1.0 - (((gdouble) y) / 65536.0);
-          gdouble K = 1.0 - (((gdouble) z) / 65536.0);
+          src_format = babl_format ("CMYK double");
+          pixels     = cmyk;
 
-          gimp_cmyka_set (&cmyk, C, M, Y, K, 1.0);
-          gimp_cmyk_to_rgb (&cmyk, &color);
+          color_ok = TRUE;
+        }
+      else if (color_space == 7) /* CIE Lab */
+        {
+          gdouble lab[3] = { ((gdouble) w) / 10000.0,
+                             ((gdouble) xLab) / 25500.0,
+                             ((gdouble) yLab) / 25500.0 };
+
+          src_format = babl_format ("CIE Lab float");
+          pixels     = lab;
 
           color_ok = TRUE;
         }
       else if (color_space == 8) /* Grayscale */
         {
-          gdouble K = 1.0 - (((gdouble) w) / 10000.0);
+          gdouble k[1] = { 1.0 - (((gdouble) w) / 10000.0) };
 
-          gimp_rgba_set (&color, K, K, K, 1.0);
+          src_format = babl_format ("Y' double");
+          pixels     = k;
 
           color_ok = TRUE;
         }
       else if (color_space == 9) /* Wide? CMYK */
         {
-          GimpCMYK cmyk;
+          gdouble cmyk[4] = { 1.0 - ((gdouble) w) / 10000.0,
+                              1.0 - ((gdouble) x) / 10000.0,
+                              1.0 - ((gdouble) y) / 10000.0,
+                              1.0 - ((gdouble) z) / 10000.0 };
 
-          gdouble C = 1.0 - (((gdouble) w) / 10000.0);
-          gdouble M = 1.0 - (((gdouble) x) / 10000.0);
-          gdouble Y = 1.0 - (((gdouble) y) / 10000.0);
-          gdouble K = 1.0 - (((gdouble) z) / 10000.0);
-
-          gimp_cmyka_set (&cmyk, C, M, Y, K, 1.0);
-          gimp_cmyk_to_rgb (&cmyk, &color);
+          src_format = babl_format ("CMYK double");
+          pixels     = cmyk;
 
           color_ok = TRUE;
         }
@@ -537,6 +556,10 @@ gimp_palette_load_aco (GimpContext   *context,
           g_printerr ("Unsupported color space (%d) in ACO file %s\n",
                       color_space, gimp_file_get_utf8_name (file));
         }
+
+      if (color_ok)
+        babl_process (babl_fish (src_format, dst_format), (gdouble *) pixels,
+                      &color, 1);
 
       if (format_version == 2)
         {
