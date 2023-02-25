@@ -104,7 +104,7 @@ build-image-win64:
     # specifically g++-mingw-w64-x86-64-posix and gcc-mingw-w64-x86-64-posix.
     # Note that we can't install both the -posix and -win32 versions since
     # update gcc-mingw-w64 (25).
-    - echo "automake autopoint build-essential cmake cpio g++-mingw-w64-x86-64-posix gcc-mingw-w64-x86-64-posix gettext git libgdk-pixbuf2.0-dev libglib2.0-bin librsvg2-dev meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm xsltproc" >> Dockerfile
+    - echo "automake autopoint build-essential cmake cpio g++-mingw-w64-x86-64-posix gcc-mingw-w64-x86-64-posix gettext git libgdk-pixbuf2.0-dev libglib2.0-bin librsvg2-dev meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm python3-zstandard xsltproc" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win64-latest --cache=true --cache-ttl=120h
 
@@ -127,7 +127,7 @@ build-image-win32:
     - echo "FROM debian:testing" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
-    - echo "automake autopoint build-essential cpio g++-mingw-w64-i686 gcc-mingw-w64-i686 gettext git libgdk-pixbuf2.0-dev libglib2.0-bin librsvg2-dev meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm xsltproc" >> Dockerfile
+    - echo "automake autopoint build-essential cpio g++-mingw-w64-i686 gcc-mingw-w64-i686 gettext git libgdk-pixbuf2.0-dev libglib2.0-bin librsvg2-dev meson pkg-config python3 python3-distutils python3-docutils python3-pip python3-zstandard rpm xsltproc" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win32-latest --cache=true --cache-ttl=120h
 
@@ -510,7 +510,6 @@ deps-win64:
     - cd crossroad
     - ./setup.py install --prefix=`pwd`/../.local
     - cd ..
-    - pip3 install zstandard
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - crossroad w64 gimp --run="build/windows/gitlab-ci/build-deps-crossroad.sh"
@@ -580,7 +579,6 @@ deps-win32:
     - cd crossroad
     - ./setup.py install --prefix=`pwd`/../.local
     - cd ..
-    - pip3 install zstandard
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - crossroad w32 gimp --run="build/windows/gitlab-ci/build-deps-crossroad.sh"
