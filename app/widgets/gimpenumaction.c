@@ -31,6 +31,18 @@
 #include "gimpenumaction.h"
 
 
+/**
+ * GimpEnumAction:
+ *
+ * An action storing an enum value.
+ *
+ * Note that several actions with different values of the same enum type are not
+ * exclusive. GimpEnumAction-s are simple on-activate actions and are not
+ * stateful. If you want a stateful group of actions whose state is represented
+ * by an enum type, you are instead looking for GimpRadioAction.
+ */
+
+
 enum
 {
   PROP_0,
@@ -50,8 +62,7 @@ static void   gimp_enum_action_get_property        (GObject          *object,
                                                     GValue           *value,
                                                     GParamSpec       *pspec);
 
-static void   gimp_enum_action_activate            (GtkAction        *action);
-static void   gimp_enum_action_g_activate          (GAction          *action,
+static void   gimp_enum_action_activate            (GAction          *action,
                                                     GVariant         *parameter);
 
 
@@ -64,13 +75,10 @@ G_DEFINE_TYPE_WITH_CODE (GimpEnumAction, gimp_enum_action, GIMP_TYPE_ACTION_IMPL
 static void
 gimp_enum_action_class_init (GimpEnumActionClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->set_property = gimp_enum_action_set_property;
   object_class->get_property = gimp_enum_action_get_property;
-
-  action_class->activate     = gimp_enum_action_activate;
 
   g_object_class_install_property (object_class, PROP_VALUE,
                                    g_param_spec_int ("value",
@@ -88,7 +96,7 @@ gimp_enum_action_class_init (GimpEnumActionClass *klass)
 static void
 gimp_enum_action_g_action_iface_init (GActionInterface *iface)
 {
-  iface->activate = gimp_enum_action_g_activate;
+  iface->activate = gimp_enum_action_activate;
 }
 
 static void
@@ -168,19 +176,8 @@ gimp_enum_action_new (const gchar *name,
 }
 
 static void
-gimp_enum_action_activate (GtkAction *action)
-{
-  GimpEnumAction *enum_action = GIMP_ENUM_ACTION (action);
-
-  gimp_action_emit_activate (GIMP_ACTION (enum_action),
-                             g_variant_new_int32 (enum_action->value));
-
-  gimp_action_history_action_activated (GIMP_ACTION (action));
-}
-
-static void
-gimp_enum_action_g_activate (GAction  *action,
-                             GVariant *parameter)
+gimp_enum_action_activate (GAction  *action,
+                           GVariant *parameter)
 {
   GimpEnumAction *enum_action = GIMP_ENUM_ACTION (action);
 
