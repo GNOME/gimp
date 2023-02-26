@@ -54,9 +54,7 @@ static void   gimp_procedure_action_get_property        (GObject          *objec
                                                          GValue           *value,
                                                          GParamSpec       *pspec);
 
-static void   gimp_procedure_action_activate            (GtkAction        *action);
-
-static void   gimp_procedure_action_g_activate          (GAction          *action,
+static void   gimp_procedure_action_activate            (GAction          *action,
                                                          GVariant         *parameter);
 
 
@@ -69,14 +67,11 @@ G_DEFINE_TYPE_WITH_CODE (GimpProcedureAction, gimp_procedure_action, GIMP_TYPE_A
 static void
 gimp_procedure_action_class_init (GimpProcedureActionClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize      = gimp_procedure_action_finalize;
   object_class->set_property  = gimp_procedure_action_set_property;
   object_class->get_property  = gimp_procedure_action_get_property;
-
-  action_class->activate      = gimp_procedure_action_activate;
 
   g_object_class_install_property (object_class, PROP_PROCEDURE,
                                    g_param_spec_object ("procedure",
@@ -88,7 +83,7 @@ gimp_procedure_action_class_init (GimpProcedureActionClass *klass)
 static void
 gimp_procedure_action_g_action_iface_init (GActionInterface *iface)
 {
-  iface->activate = gimp_procedure_action_g_activate;
+  iface->activate = gimp_procedure_action_activate;
 }
 
 static void
@@ -149,28 +144,8 @@ gimp_procedure_action_set_property (GObject      *object,
 }
 
 static void
-gimp_procedure_action_activate (GtkAction *action)
-{
-  GimpProcedureAction *procedure_action = GIMP_PROCEDURE_ACTION (action);
-
-  /* Not all actions have procedures associated with them, for example
-   * unused "filters-recent-[N]" actions, so check for NULL before we
-   * invoke the action
-   */
-  if (procedure_action->procedure)
-    {
-      gsize hack = GPOINTER_TO_SIZE (procedure_action->procedure);
-
-      gimp_action_emit_activate (GIMP_ACTION (action),
-                                 g_variant_new_uint64 (hack));
-
-      gimp_action_history_action_activated (GIMP_ACTION (action));
-    }
-}
-
-static void
-gimp_procedure_action_g_activate (GAction  *action,
-                                  GVariant *parameter)
+gimp_procedure_action_activate (GAction  *action,
+                                GVariant *parameter)
 {
   GimpProcedureAction *procedure_action = GIMP_PROCEDURE_ACTION (action);
 

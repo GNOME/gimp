@@ -70,7 +70,7 @@ static void   gimp_action_impl_get_property       (GObject             *object,
 /* XXX Implementations for our GimpAction are widely inspired by GSimpleAction
  * implementations.
  */
-static void   gimp_action_impl_g_activate         (GAction             *action,
+static void   gimp_action_impl_activate           (GAction             *action,
                                                    GVariant            *parameter);
 static void   gimp_action_impl_change_state       (GAction             *action,
                                                    GVariant            *value);
@@ -83,8 +83,6 @@ static GVariant *
               gimp_action_impl_get_state          (GAction             *action);
 static GVariant *
               gimp_action_impl_get_state_hint     (GAction             *action);
-
-static void   gimp_action_impl_activate           (GtkAction           *action);
 
 static void   gimp_action_impl_set_state          (GimpAction          *gimp_action,
                                                    GVariant            *value);
@@ -102,8 +100,7 @@ static guint gimp_action_impl_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_action_impl_class_init (GimpActionImplClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   gimp_action_impl_signals[CHANGE_STATE] =
     g_signal_new ("change-state",
@@ -117,8 +114,6 @@ gimp_action_impl_class_init (GimpActionImplClass *klass)
   object_class->finalize      = gimp_action_impl_finalize;
   object_class->set_property  = gimp_action_impl_set_property;
   object_class->get_property  = gimp_action_impl_get_property;
-
-  action_class->activate      = gimp_action_impl_activate;
 
   gimp_action_install_properties (object_class);
 
@@ -179,7 +174,7 @@ gimp_action_impl_class_init (GimpActionImplClass *klass)
 static void
 gimp_action_g_action_iface_init (GActionInterface *iface)
 {
-  iface->activate           = gimp_action_impl_g_activate;
+  iface->activate           = gimp_action_impl_activate;
   iface->change_state       = gimp_action_impl_change_state;
   iface->get_enabled        = gimp_action_impl_get_enabled;
   iface->get_name           = (const gchar* (*) (GAction*)) gimp_action_get_name;
@@ -285,8 +280,8 @@ gimp_action_impl_set_property (GObject      *object,
 }
 
 static void
-gimp_action_impl_g_activate (GAction  *action,
-                             GVariant *parameter)
+gimp_action_impl_activate (GAction  *action,
+                           GVariant *parameter)
 {
   gimp_action_emit_activate (GIMP_ACTION (action), parameter);
 
@@ -349,17 +344,6 @@ gimp_action_impl_get_state_hint (GAction *action)
     return g_variant_ref (impl->priv->state_hint);
   else
     return NULL;
-}
-
-static void
-gimp_action_impl_activate (GtkAction *action)
-{
-  if (GTK_ACTION_CLASS (parent_class)->activate)
-    GTK_ACTION_CLASS (parent_class)->activate (action);
-
-  gimp_action_emit_activate (GIMP_ACTION (action), NULL);
-
-  gimp_action_history_action_activated (GIMP_ACTION (action));
 }
 
 

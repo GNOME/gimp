@@ -49,9 +49,7 @@ static void   gimp_double_action_get_property        (GObject          *object,
                                                       GValue           *value,
                                                       GParamSpec       *pspec);
 
-static void   gimp_double_action_activate            (GtkAction        *action);
-
-static void   gimp_double_action_g_activate          (GAction          *action,
+static void   gimp_double_action_activate            (GAction          *action,
                                                       GVariant         *parameter);
 
 
@@ -64,13 +62,10 @@ G_DEFINE_TYPE_WITH_CODE (GimpDoubleAction, gimp_double_action, GIMP_TYPE_ACTION_
 static void
 gimp_double_action_class_init (GimpDoubleActionClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->set_property = gimp_double_action_set_property;
   object_class->get_property = gimp_double_action_get_property;
-
-  action_class->activate = gimp_double_action_activate;
 
   g_object_class_install_property (object_class, PROP_VALUE,
                                    g_param_spec_double ("value",
@@ -88,7 +83,7 @@ gimp_double_action_init (GimpDoubleAction *action)
 static void
 gimp_double_action_g_action_iface_init (GActionInterface *iface)
 {
-  iface->activate = gimp_double_action_g_activate;
+  iface->activate = gimp_double_action_activate;
 }
 
 static void
@@ -155,19 +150,8 @@ gimp_double_action_new (const gchar *name,
 }
 
 static void
-gimp_double_action_activate (GtkAction *action)
-{
-  GimpDoubleAction *double_action = GIMP_DOUBLE_ACTION (action);
-
-  gimp_action_emit_activate (GIMP_ACTION (action),
-                             g_variant_new_double (double_action->value));
-
-  gimp_action_history_action_activated (GIMP_ACTION (action));
-}
-
-static void
-gimp_double_action_g_activate (GAction  *action,
-                               GVariant *parameter)
+gimp_double_action_activate (GAction  *action,
+                             GVariant *parameter)
 {
   GimpDoubleAction *double_action = GIMP_DOUBLE_ACTION (action);
 

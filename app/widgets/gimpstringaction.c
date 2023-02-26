@@ -50,9 +50,7 @@ static void   gimp_string_action_get_property        (GObject          *object,
                                                       GValue           *value,
                                                       GParamSpec       *pspec);
 
-static void   gimp_string_action_activate            (GtkAction        *action);
-
-static void   gimp_string_action_g_activate          (GimpAction       *action,
+static void   gimp_string_action_activate            (GAction          *action,
                                                       GVariant         *parameter);
 
 
@@ -65,14 +63,11 @@ G_DEFINE_TYPE_WITH_CODE (GimpStringAction, gimp_string_action, GIMP_TYPE_ACTION_
 static void
 gimp_string_action_class_init (GimpStringActionClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize     = gimp_string_action_finalize;
   object_class->set_property = gimp_string_action_set_property;
   object_class->get_property = gimp_string_action_get_property;
-
-  action_class->activate = gimp_string_action_activate;
 
   g_object_class_install_property (object_class, PROP_VALUE,
                                    g_param_spec_string ("value",
@@ -84,7 +79,7 @@ gimp_string_action_class_init (GimpStringActionClass *klass)
 static void
 gimp_string_action_g_action_iface_init (GActionInterface *iface)
 {
-  iface->activate = gimp_string_action_g_activate;
+  iface->activate = gimp_string_action_activate;
 }
 
 static void
@@ -167,19 +162,8 @@ gimp_string_action_new (const gchar *name,
 }
 
 static void
-gimp_string_action_activate (GtkAction *action)
-{
-  GimpStringAction *string_action = GIMP_STRING_ACTION (action);
-
-  gimp_action_emit_activate (GIMP_ACTION (action),
-                             g_variant_new_string (string_action->value));
-
-  gimp_action_history_action_activated (GIMP_ACTION (action));
-}
-
-static void
-gimp_string_action_g_activate (GimpAction *action,
-                               GVariant   *parameter)
+gimp_string_action_activate (GAction  *action,
+                             GVariant *parameter)
 {
   GimpStringAction *string_action = GIMP_STRING_ACTION (action);
 
