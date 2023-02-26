@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-15 11:53+0000\n"
-"PO-Revision-Date: 2023-02-15 23:12+0100\n"
+"POT-Creation-Date: 2023-02-25 21:07+0000\n"
+"PO-Revision-Date: 2023-02-26 13:34+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -106,12 +106,12 @@ msgid "Paths are now exported to PSD"
 msgstr "Poti se zdaj izvažajo v PSD"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
-msgid "JPEG-XL export added"
-msgstr "Dodan izvoz JPEG-XL"
+msgid "JPEG XL export added"
+msgstr "Dodan izvoz JPEG XL"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
-msgid "Metadata in JPEG-XL import and export"
-msgstr "Metapodatki v uvozu in izvozu JPEG-XL"
+msgid "Metadata in JPEG XL import"
+msgstr "Metapodatki v uvozu in izvozu JPEG XL"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "New option \"Show reduced images\" when loading TIFF images"
@@ -3544,7 +3544,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:116 ../app/actions/tool-options-commands.c:75
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2180
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2195
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -14096,64 +14096,64 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Preoblikuj skupino plasti"
 
-#: ../app/core/gimpimage.c:691 ../app/widgets/gimpsymmetryeditor.c:181
+#: ../app/core/gimpimage.c:692 ../app/widgets/gimpsymmetryeditor.c:181
 msgid "Symmetry"
 msgstr "Simetrija"
 
-#: ../app/core/gimpimage.c:2425
+#: ../app/core/gimpimage.c:2440
 msgid " (exported)"
 msgstr " (izvožena)"
 
-#: ../app/core/gimpimage.c:2429
+#: ../app/core/gimpimage.c:2444
 msgid " (overwritten)"
 msgstr " (prepisana)"
 
-#: ../app/core/gimpimage.c:2438
+#: ../app/core/gimpimage.c:2453
 msgid " (imported)"
 msgstr " (uvožena)"
 
-#: ../app/core/gimpimage.c:2612 ../app/core/gimpimage.c:2626
-#: ../app/core/gimpimage.c:2669
+#: ../app/core/gimpimage.c:2627 ../app/core/gimpimage.c:2641
+#: ../app/core/gimpimage.c:2684
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Način plasti »%s« je bil dodan v %s"
 
-#: ../app/core/gimpimage.c:2684
+#: ../app/core/gimpimage.c:2699
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Skupine plasti so bile dodane v %s"
 
-#: ../app/core/gimpimage.c:2691
+#: ../app/core/gimpimage.c:2706
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Maske na skupinah plasti so bile dodane v %s"
 
-#: ../app/core/gimpimage.c:2707
+#: ../app/core/gimpimage.c:2722
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Slike z visoko bitno globino so dodane v %s"
 
-#: ../app/core/gimpimage.c:2719
+#: ../app/core/gimpimage.c:2734
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "V %s je bilo dodano notranje stiskanje zlib"
 
-#: ../app/core/gimpimage.c:2736
+#: ../app/core/gimpimage.c:2751
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Podpora za slikovne datoteke, večje od 4 GB, je bila dodana v %s"
 
-#: ../app/core/gimpimage.c:2832
+#: ../app/core/gimpimage.c:2847
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Spremeni ločljivost slike"
 
-#: ../app/core/gimpimage.c:2884
+#: ../app/core/gimpimage.c:2899
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Spremeni enoto slike"
 
-#: ../app/core/gimpimage.c:3835
+#: ../app/core/gimpimage.c:3850
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14161,47 +14161,47 @@ msgstr ""
 "Preverjanje veljavnosti parazita »gimp-comment« ni uspelo: komentar vsebuje "
 "neveljaven UTF-8"
 
-#: ../app/core/gimpimage.c:3894
+#: ../app/core/gimpimage.c:3909
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Sliki dodaj zajedalca"
 
-#: ../app/core/gimpimage.c:3936
+#: ../app/core/gimpimage.c:3951
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Odstrani zajedalca s slike"
 
-#: ../app/core/gimpimage.c:4667
+#: ../app/core/gimpimage.c:4682
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodaj plast"
 
-#: ../app/core/gimpimage.c:4709 ../app/core/gimpimage.c:4740
+#: ../app/core/gimpimage.c:4724 ../app/core/gimpimage.c:4755
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Odstrani plast"
 
-#: ../app/core/gimpimage.c:4734
+#: ../app/core/gimpimage.c:4749
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Odstrani plavajoči izbor"
 
-#: ../app/core/gimpimage.c:4901
+#: ../app/core/gimpimage.c:4916
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodaj kanal"
 
-#: ../app/core/gimpimage.c:4929 ../app/core/gimpimage.c:4953
+#: ../app/core/gimpimage.c:4944 ../app/core/gimpimage.c:4968
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Odstrani kanal"
 
-#: ../app/core/gimpimage.c:5009
+#: ../app/core/gimpimage.c:5024
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodaj pot"
 
-#: ../app/core/gimpimage.c:5039 ../app/core/gimpimage.c:5046
+#: ../app/core/gimpimage.c:5054 ../app/core/gimpimage.c:5061
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Odstrani pot"
@@ -14351,8 +14351,8 @@ msgid "Convert Image to 64 bit gamma floating point"
 msgstr "Pretvori sliko v 64-bitno s plavajočo vejico (gama)"
 
 #. dithering
-#: ../app/core/gimpimage-convert-precision.c:268
-#: ../app/core/gimpimage-convert-precision.c:289
+#: ../app/core/gimpimage-convert-precision.c:272
+#: ../app/core/gimpimage-convert-precision.c:293
 #: ../app/dialogs/convert-indexed-dialog.c:241
 #: ../app/dialogs/convert-precision-dialog.c:224
 #: ../app/tools/gimpgradientoptions.c:128
@@ -18412,7 +18412,7 @@ msgstr "Krmari po prikazu slike"
 msgid "Drop image files here to open them"
 msgstr "Semkaj spustite datoteke slik, ki jih želite odpreti."
 
-#: ../app/display/gimpdisplayshell-callbacks.c:621
+#: ../app/display/gimpdisplayshell-callbacks.c:625
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
