@@ -215,9 +215,9 @@ gimp_gradient_tool_init (GimpGradientTool *gradient_tool)
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_GRADIENT);
   gimp_tool_control_set_action_opacity     (tool->control,
-                                            "context/context-opacity-set");
+                                            "context-opacity-set");
   gimp_tool_control_set_action_object_1    (tool->control,
-                                            "context/context-gradient-select-set");
+                                            "context-gradient-select-set");
 
   gimp_draw_tool_set_default_status (GIMP_DRAW_TOOL (tool),
                                      _("Click-Drag to draw a gradient"));

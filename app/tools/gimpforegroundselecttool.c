@@ -248,7 +248,7 @@ gimp_foreground_select_tool_init (GimpForegroundSelectTool *fg_select)
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
 
   gimp_tool_control_set_action_size (tool->control,
-                                     "tools/tools-foreground-select-brush-size-set");
+                                     "tools-foreground-select-brush-size-set");
 
   fg_select->state = MATTING_STATE_FREE_SELECT;
   fg_select->grayscale_preview = NULL;

@@ -96,11 +96,11 @@ gimp_mybrush_tool_init (GimpMybrushTool *mybrush_tool)
 
   gimp_tool_control_set_tool_cursor       (tool->control, GIMP_TOOL_CURSOR_INK);
   gimp_tool_control_set_action_size       (tool->control,
-                                           "tools/tools-mypaint-brush-radius-set");
+                                           "tools-mypaint-brush-radius-set");
   gimp_tool_control_set_action_pixel_size (tool->control,
-                                           "tools/tools-mypaint-brush-pixel-size-set");
+                                           "tools-mypaint-brush-pixel-size-set");
   gimp_tool_control_set_action_hardness   (tool->control,
-                                           "tools/tools-mypaint-brush-hardness-set");
+                                           "tools-mypaint-brush-hardness-set");
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (mybrush_tool),
                                        GIMP_COLOR_PICK_TARGET_FOREGROUND);

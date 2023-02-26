@@ -310,7 +310,7 @@ gimp_transform_grid_tool_init (GimpTransformGridTool *tg_tool)
   gimp_tool_control_set_cursor           (tool->control,
                                           GIMP_CURSOR_CROSSHAIR_SMALL);
   gimp_tool_control_set_action_opacity   (tool->control,
-                                          "tools/tools-transform-preview-opacity-set");
+                                          "tools-transform-preview-opacity-set");
 
   tg_tool->strokes = g_ptr_array_new ();
 }

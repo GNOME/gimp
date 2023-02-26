@@ -158,7 +158,7 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
   gimp_tool_control_set_motion_mode    (tool->control, GIMP_MOTION_MODE_EXACT);
   gimp_tool_control_set_scroll_lock    (tool->control, TRUE);
   gimp_tool_control_set_action_opacity (tool->control,
-                                        "context/context-opacity-set");
+                                        "context-opacity-set");
 
   paint_tool->active          = TRUE;
   paint_tool->pick_colors     = FALSE;

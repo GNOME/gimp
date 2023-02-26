@@ -227,11 +227,11 @@ gimp_warp_tool_init (GimpWarpTool *self)
                                          GIMP_TOOL_CURSOR_WARP);
 
   gimp_tool_control_set_action_pixel_size (tool->control,
-                                           "tools/tools-warp-effect-pixel-size-set");
+                                           "tools-warp-effect-pixel-size-set");
   gimp_tool_control_set_action_size       (tool->control,
-                                           "tools/tools-warp-effect-size-set");
+                                           "tools-warp-effect-size-set");
   gimp_tool_control_set_action_hardness   (tool->control,
-                                           "tools/tools-warp-effect-hardness-set");
+                                           "tools-warp-effect-hardness-set");
 
   self->show_cursor = TRUE;
   self->draw_brush  = TRUE;

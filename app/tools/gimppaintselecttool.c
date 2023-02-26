@@ -211,10 +211,10 @@ gimp_paint_select_tool_init (GimpPaintSelectTool *ps_tool)
   gimp_tool_control_set_cursor_modifier (tool->control,
                                          GIMP_CURSOR_MODIFIER_PLUS);
   gimp_tool_control_set_action_pixel_size (tool->control,
-                                           "tools/tools-paint-select-pixel-size-set");
+                                           "tools-paint-select-pixel-size-set");
   /* TODO: the size-set action is not implemented. */
   gimp_tool_control_set_action_size       (tool->control,
-                                           "tools/tools-paint-select-size-set");
+                                           "tools-paint-select-size-set");
   ps_tool->image_mask  = NULL;
   ps_tool->trimap      = NULL;
   ps_tool->drawable    = NULL;

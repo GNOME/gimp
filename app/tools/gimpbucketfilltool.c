@@ -200,9 +200,9 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
   gimp_tool_control_set_tool_cursor     (tool->control,
                                          GIMP_TOOL_CURSOR_BUCKET_FILL);
   gimp_tool_control_set_action_opacity  (tool->control,
-                                         "context/context-opacity-set");
+                                         "context-opacity-set");
   gimp_tool_control_set_action_object_1 (tool->control,
-                                         "context/context-pattern-select-set");
+                                         "context-pattern-select-set");
 
   bucket_fill_tool->priv =
     gimp_bucket_fill_tool_get_instance_private (bucket_fill_tool);

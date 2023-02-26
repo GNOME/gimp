@@ -275,7 +275,7 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   gimp_tool_control_set_tool_cursor          (tool->control,
                                               GIMP_TOOL_CURSOR_TEXT);
   gimp_tool_control_set_action_object_1      (tool->control,
-                                              "context/context-font-select-set");
+                                              "context-font-select-set");
 }
 
 static void

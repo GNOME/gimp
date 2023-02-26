@@ -174,7 +174,7 @@ gimp_color_tool_init (GimpColorTool *color_tool)
   GimpTool *tool = GIMP_TOOL (color_tool);
 
   gimp_tool_control_set_action_size (tool->control,
-                                     "tools/tools-color-average-radius-set");
+                                     "tools-color-average-radius-set");
 }
 
 static void

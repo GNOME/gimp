@@ -185,7 +185,7 @@ gimp_perspective_clone_tool_init (GimpPerspectiveCloneTool *clone_tool)
   GimpTool *tool = GIMP_TOOL (clone_tool);
 
   gimp_tool_control_set_action_object_2 (tool->control,
-                                         "context/context-pattern-select-set");
+                                         "context-pattern-select-set");
 
   gimp_matrix3_identity (&clone_tool->transform);
   gimp_paint_tool_enable_multi_paint (GIMP_PAINT_TOOL (clone_tool));
