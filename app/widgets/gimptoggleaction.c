@@ -52,27 +52,29 @@ struct _GimpToggleActionPrivate
   gboolean active;
 };
 
-static void   gimp_toggle_action_g_action_iface_init (GActionInterface *iface);
+static void     gimp_toggle_action_g_action_iface_init (GActionInterface *iface);
 
-static void   gimp_toggle_action_get_property        (GObject          *object,
-                                                      guint             prop_id,
-                                                      GValue           *value,
-                                                      GParamSpec       *pspec);
-static void   gimp_toggle_action_set_property        (GObject          *object,
-                                                      guint             prop_id,
-                                                      const GValue     *value,
-                                                      GParamSpec       *pspec);
+static void     gimp_toggle_action_get_property        (GObject          *object,
+                                                        guint             prop_id,
+                                                        GValue           *value,
+                                                        GParamSpec       *pspec);
+static void     gimp_toggle_action_set_property        (GObject          *object,
+                                                        guint             prop_id,
+                                                        const GValue     *value,
+                                                        GParamSpec       *pspec);
 
-static gboolean gimp_toggle_action_get_enabled       (GAction          *action);
+static gboolean gimp_toggle_action_get_enabled         (GAction          *action);
 static const GVariantType *
-              gimp_toggle_action_get_state_type      (GAction          *action);
+                gimp_toggle_action_get_state_type      (GAction          *action);
 static GVariant *
-              gimp_toggle_action_get_state           (GAction          *action);
+                gimp_toggle_action_get_state           (GAction          *action);
 
-static void   gimp_toggle_action_g_activate          (GAction          *action,
-                                                      GVariant         *parameter);
+static void     gimp_toggle_action_activate            (GAction          *action,
+                                                        GVariant         *parameter);
 
-static void   gimp_toggle_action_toggle              (GimpToggleAction *action);
+static gboolean gimp_toggle_action_real_toggle         (GimpToggleAction *action);
+
+static void     gimp_toggle_action_toggle              (GimpToggleAction *action);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpToggleAction, gimp_toggle_action,
@@ -88,7 +90,8 @@ static guint gimp_toggle_action_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_toggle_action_class_init (GimpToggleActionClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass          *object_class = G_OBJECT_CLASS (klass);
+  GimpToggleActionClass *toggle_class = GIMP_TOGGLE_ACTION_CLASS (klass);
 
   gimp_toggle_action_signals[TOGGLED] =
     g_signal_new ("toggled",
@@ -100,6 +103,8 @@ gimp_toggle_action_class_init (GimpToggleActionClass *klass)
 
   object_class->get_property  = gimp_toggle_action_get_property;
   object_class->set_property  = gimp_toggle_action_set_property;
+
+  toggle_class->toggle        = gimp_toggle_action_real_toggle;
 
   gimp_action_install_properties (object_class);
 
@@ -122,7 +127,7 @@ static void
 gimp_toggle_action_g_action_iface_init (GActionInterface *iface)
 {
   iface->get_name       = (const gchar* (*) (GAction*)) gimp_action_get_name;
-  iface->activate       = gimp_toggle_action_g_activate;
+  iface->activate       = gimp_toggle_action_activate;
 
   iface->get_enabled    = gimp_toggle_action_get_enabled;
   iface->get_state_type = gimp_toggle_action_get_state_type;
@@ -200,30 +205,42 @@ gimp_toggle_action_get_state (GAction *action)
 }
 
 static void
-gimp_toggle_action_g_activate (GAction  *action,
-                               GVariant *parameter)
+gimp_toggle_action_activate (GAction  *action,
+                             GVariant *parameter)
 {
   gimp_toggle_action_toggle (GIMP_TOGGLE_ACTION (action));
 }
 
-static void
-gimp_toggle_action_toggle (GimpToggleAction *action)
+static gboolean
+gimp_toggle_action_real_toggle (GimpToggleAction *action)
 {
   gboolean value = gimp_toggle_action_get_active (action);
 
   gimp_action_emit_change_state (GIMP_ACTION (action),
                                  g_variant_new_boolean (! value));
   action->priv->active = ! value;
-  g_signal_emit (action, gimp_toggle_action_signals[TOGGLED], 0);
-  g_object_notify (G_OBJECT (action), "state");
 
-  gimp_action_history_action_activated (GIMP_ACTION (action));
+  /* Toggling always works for the base class. */
+  return TRUE;
+}
+
+static void
+gimp_toggle_action_toggle (GimpToggleAction *action)
+{
+  if (GIMP_TOGGLE_ACTION_GET_CLASS (action)->toggle != NULL &&
+      GIMP_TOGGLE_ACTION_GET_CLASS (action)->toggle (action))
+    {
+      g_signal_emit (action, gimp_toggle_action_signals[TOGGLED], 0);
+      g_object_notify (G_OBJECT (action), "state");
+
+      gimp_action_history_action_activated (GIMP_ACTION (action));
+    }
 }
 
 
 /*  public functions  */
 
-GtkToggleAction *
+GimpAction *
 gimp_toggle_action_new (const gchar *name,
                         const gchar *label,
                         const gchar *tooltip,
@@ -231,7 +248,7 @@ gimp_toggle_action_new (const gchar *name,
                         const gchar *help_id,
                         GimpContext *context)
 {
-  GtkToggleAction *action;
+  GimpAction *action;
 
   action = g_object_new (GIMP_TYPE_TOGGLE_ACTION,
                          "name",      name,
@@ -258,4 +275,14 @@ gboolean
 gimp_toggle_action_get_active (GimpToggleAction *action)
 {
   return action->priv->active;
+}
+
+
+/* Protected functions. */
+
+void
+_gimp_toggle_action_set_active (GimpToggleAction *action,
+                                gboolean          active)
+{
+  action->priv->active = active;
 }

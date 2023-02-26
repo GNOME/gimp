@@ -4,6 +4,7 @@
  * gimpradioaction.c
  * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
  * Copyright (C) 2008 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2023 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,59 +34,56 @@
 #include "gimpaction-history.h"
 #include "gimpradioaction.h"
 
+/**
+ * GimpRadioAction:
+ *
+ * An action which is part of a group of radio actions. It is guaranteed that at
+ * most one action is active in the group.
+ *
+ * The "state" in any of the actions of the group is the @value associated to
+ * the active action of the group.
+ */
 
 enum
 {
-  PROP_0,
-  PROP_ENABLED = GIMP_ACTION_PROP_LAST + 1,
-  PROP_PARAMETER_TYPE,
-  PROP_STATE_TYPE,
-  PROP_STATE
+  PROP_0 = GIMP_ACTION_PROP_LAST,
+  PROP_VALUE,
+  PROP_GROUP,
+  PROP_CURRENT_VALUE
 };
 
 struct _GimpRadioActionPrivate
 {
-  GVariantType *parameter_type;
-  GVariant     *state;
-  GVariant     *state_hint;
-  gboolean      state_set_already;
+  GSList *group;
+  gint    value;
 };
 
-static void   gimp_radio_action_g_action_iface_init (GActionInterface *iface);
+static void      gimp_radio_action_g_action_iface_init (GActionInterface *iface);
 
-static void   gimp_radio_action_get_property        (GObject          *object,
-                                                     guint             prop_id,
-                                                     GValue           *value,
-                                                     GParamSpec       *pspec);
-static void   gimp_radio_action_set_property        (GObject          *object,
-                                                     guint             prop_id,
-                                                     const GValue     *value,
-                                                     GParamSpec       *pspec);
+static void      gimp_radio_action_get_property        (GObject          *object,
+                                                        guint             prop_id,
+                                                        GValue           *value,
+                                                        GParamSpec       *pspec);
+static void      gimp_radio_action_set_property        (GObject          *object,
+                                                        guint             prop_id,
+                                                        const GValue     *value,
+                                                        GParamSpec       *pspec);
 
-static void   gimp_radio_action_change_state        (GAction          *action,
-                                                     GVariant         *value);
-static gboolean gimp_radio_action_get_enabled       (GAction          *action);
 static const GVariantType *
-              gimp_radio_action_get_parameter_type  (GAction          *action);
-static const GVariantType *
-              gimp_radio_action_get_state_type      (GAction          *action);
+                 gimp_radio_action_get_state_type      (GAction          *action);
 static GVariant *
-              gimp_radio_action_get_state           (GAction          *action);
-static GVariant *
-              gimp_radio_action_get_state_hint      (GAction          *action);
+                 gimp_radio_action_get_state           (GAction          *action);
+static void      gimp_radio_action_change_state        (GAction          *action,
+                                                        GVariant         *value);
 
-static void   gimp_radio_action_set_state           (GimpAction       *gimp_action,
-                                                     GVariant         *value);
+static void      gimp_radio_action_activate            (GAction          *action,
+                                                        GVariant         *parameter);
 
-static void   gimp_radio_action_g_activate          (GAction         *action,
-                                                     GVariant        *parameter);
-
-static void   gimp_radio_action_changed             (GtkRadioAction   *action,
-                                                     GtkRadioAction   *current);
+static gboolean  gimp_radio_action_toggle              (GimpToggleAction *action);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpRadioAction, gimp_radio_action,
-                         GTK_TYPE_RADIO_ACTION,
+                         GIMP_TYPE_TOGGLE_ACTION,
                          G_ADD_PRIVATE (GimpRadioAction)
                          G_IMPLEMENT_INTERFACE (G_TYPE_ACTION, gimp_radio_action_g_action_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_ACTION, NULL))
@@ -96,89 +94,76 @@ G_DEFINE_TYPE_WITH_CODE (GimpRadioAction, gimp_radio_action,
 static void
 gimp_radio_action_class_init (GimpRadioActionClass *klass)
 {
-  GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GtkRadioActionClass *radio_class  = GTK_RADIO_ACTION_CLASS (klass);
+  GObjectClass          *object_class = G_OBJECT_CLASS (klass);
+  GimpToggleActionClass *toggle_class = GIMP_TOGGLE_ACTION_CLASS (klass);
 
-  object_class->get_property  = gimp_radio_action_get_property;
-  object_class->set_property  = gimp_radio_action_set_property;
+  object_class->get_property = gimp_radio_action_get_property;
+  object_class->set_property = gimp_radio_action_set_property;
 
-  radio_class->changed        = gimp_radio_action_changed;
+  toggle_class->toggle       = gimp_radio_action_toggle;
 
   gimp_action_install_properties (object_class);
 
   /**
-   * GimpRadioAction:enabled:
+   * GimpRadioAction:value:
    *
-   * If @action is currently enabled.
-   *
-   * If the action is disabled then calls to g_action_activate() and
-   * g_action_change_state() have no effect.
+   * The value is an arbitrary integer which can be used as a convenient way to
+   * determine which action in the group is currently active in an ::activate
+   * signal handler.
+   * See gimp_radio_action_get_current_value() for convenient ways to get and
+   * set this property.
    **/
-  g_object_class_install_property (object_class, PROP_ENABLED,
-                                   g_param_spec_boolean ("enabled",
-                                                         "Enabled",
-                                                         "If the action can be activated",
-                                                         TRUE,
-                                                         GIMP_PARAM_READWRITE));
-  /**
-   * GimpRadioAction:parameter-type:
-   *
-   * The type of the parameter that must be given when activating the
-   * action.
-   **/
-  g_object_class_install_property (object_class, PROP_PARAMETER_TYPE,
-                                   g_param_spec_boxed ("parameter-type",
-                                                       "Parameter Type",
-                                                       "The type of GVariant passed to activate()",
-                                                       G_TYPE_VARIANT_TYPE,
-                                                       GIMP_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT_ONLY));
-  /**
-   * GimpRadioAction:state-type:
-   *
-   * The #GVariantType of the state that the action has, or %NULL if the
-   * action is stateless.
-   **/
-  g_object_class_install_property (object_class, PROP_STATE_TYPE,
-                                   g_param_spec_boxed ("state-type",
-                                                       "State Type",
-                                                       "The type of the state kept by the action",
-                                                       G_TYPE_VARIANT_TYPE,
-                                                       GIMP_PARAM_READABLE));
+  g_object_class_install_property (object_class, PROP_VALUE,
+                                   g_param_spec_int ("value",
+                                                     "Value",
+                                                     "The value returned by gimp_radio_action_get_current_value() when this action is the current action of its group.",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     0,
+                                                     GIMP_PARAM_READWRITE));
 
   /**
-   * GimpRadioAction:state:
+   * GimpRadioAction:group:
    *
-   * The state of the action, or %NULL if the action is stateless.
+   * Sets a new group for a radio action.
+   */
+  g_object_class_install_property (object_class, PROP_GROUP,
+                                   g_param_spec_object ("group",
+                                                        "Group",
+                                                        "The radio action whose group this action belongs to.",
+                                                        GIMP_TYPE_RADIO_ACTION,
+                                                        GIMP_PARAM_WRITABLE));
+  /**
+   * GimpRadioAction:value:
+   *
+   * The value property of the currently active member of the group to which
+   * this action belongs.
    **/
-  g_object_class_install_property (object_class, PROP_STATE,
-                                   g_param_spec_variant ("state",
-                                                         "State",
-                                                         "The state the action is in",
-                                                         G_VARIANT_TYPE_ANY,
-                                                         NULL,
-                                                         GIMP_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_CURRENT_VALUE,
+                                   g_param_spec_int ("current-value",
+                                                     "Current value",
+                                                     "The value property of the currently active member of the group to which this action belongs.",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     0,
+                                                     GIMP_PARAM_READWRITE));
 }
 
 static void
 gimp_radio_action_g_action_iface_init (GActionInterface *iface)
 {
-  iface->get_name           = (const gchar* (*) (GAction*)) gimp_action_get_name;
-  iface->activate           = gimp_radio_action_g_activate;
+  iface->get_name       = (const gchar* (*) (GAction*)) gimp_action_get_name;
+  iface->activate       = gimp_radio_action_activate;
 
-  iface->change_state       = gimp_radio_action_change_state;
-  iface->get_enabled        = gimp_radio_action_get_enabled;
-  iface->get_parameter_type = gimp_radio_action_get_parameter_type;
-  iface->get_state_type     = gimp_radio_action_get_state_type;
-  iface->get_state          = gimp_radio_action_get_state;
-  iface->get_state_hint     = gimp_radio_action_get_state_hint;
+  iface->change_state   = gimp_radio_action_change_state;
+  iface->get_state_type = gimp_radio_action_get_state_type;
+  iface->get_state      = gimp_radio_action_get_state;
 }
 
 static void
 gimp_radio_action_init (GimpRadioAction *action)
 {
-  action->priv                    = gimp_radio_action_get_instance_private (action);
-  action->priv->state_set_already = FALSE;
+  action->priv = gimp_radio_action_get_instance_private (action);
 
   gimp_action_init (GIMP_ACTION (action));
 }
@@ -193,17 +178,12 @@ gimp_radio_action_get_property (GObject    *object,
 
   switch (prop_id)
     {
-    case PROP_ENABLED:
-      g_value_set_boolean (value, gimp_radio_action_get_enabled (G_ACTION (action)));
+    case PROP_VALUE:
+      g_value_set_int (value, action->priv->value);
       break;
-    case PROP_PARAMETER_TYPE:
-      g_value_set_boxed (value, gimp_radio_action_get_parameter_type (G_ACTION (action)));
-      break;
-    case PROP_STATE_TYPE:
-      g_value_set_boxed (value, gimp_radio_action_get_state_type (G_ACTION (action)));
-      break;
-    case PROP_STATE:
-      g_value_take_variant (value, gimp_radio_action_get_state (G_ACTION (action)));
+    case PROP_CURRENT_VALUE:
+      g_value_set_int (value,
+                       gimp_radio_action_get_current_value (action));
       break;
 
     default:
@@ -222,30 +202,26 @@ gimp_radio_action_set_property (GObject      *object,
 
   switch (prop_id)
     {
-    case PROP_ENABLED:
-      gimp_action_set_sensitive (GIMP_ACTION (action),
-                                 g_value_get_boolean (value), NULL);
+    case PROP_VALUE:
+      action->priv->value = g_value_get_int (value);
       break;
-    case PROP_PARAMETER_TYPE:
-      action->priv->parameter_type = g_value_dup_boxed (value);
-      break;
-    case PROP_STATE:
-      /* The first time we see this (during construct) we should just
-       * take the state as it was handed to us.
-       *
-       * After that, we should make sure we go through the same checks
-       * as the C API.
-       */
-      if (!action->priv->state_set_already)
-        {
-          action->priv->state             = g_value_dup_variant (value);
-          action->priv->state_set_already = TRUE;
-        }
-      else
-        {
-          gimp_radio_action_set_state (GIMP_ACTION (action), g_value_get_variant (value));
-        }
+    case PROP_GROUP:
+      {
+        GimpRadioAction *arg;
+        GSList          *slist = NULL;
 
+        if (G_VALUE_HOLDS_OBJECT (value))
+          {
+            arg = GIMP_RADIO_ACTION (g_value_get_object (value));
+            if (arg)
+              slist = gimp_radio_action_get_group (arg);
+            gimp_radio_action_set_group (action, slist);
+          }
+      }
+    break;
+    case PROP_CURRENT_VALUE:
+      gimp_radio_action_set_current_value (action,
+                                           g_value_get_int (value));
       break;
 
     default:
@@ -258,108 +234,68 @@ static void
 gimp_radio_action_change_state (GAction  *action,
                                 GVariant *value)
 {
-  gimp_radio_action_set_state (GIMP_ACTION (action), value);
-}
+  g_return_if_fail (GIMP_IS_ACTION (action));
+  g_return_if_fail (value != NULL);
+  g_return_if_fail (g_variant_is_of_type (value, G_VARIANT_TYPE_INT32));
 
-static gboolean
-gimp_radio_action_get_enabled (GAction *action)
-{
-  return gimp_action_is_sensitive (GIMP_ACTION (action), NULL);
-}
-
-static const GVariantType *
-gimp_radio_action_get_parameter_type (GAction *action)
-{
-  GimpRadioAction *raction = GIMP_RADIO_ACTION (action);
-
-  return raction->priv->parameter_type;
+  gimp_radio_action_set_current_value (GIMP_RADIO_ACTION (action),
+                                       g_variant_get_int32 (value));
 }
 
 static const GVariantType *
 gimp_radio_action_get_state_type (GAction *action)
 {
-  GimpRadioAction *raction = GIMP_RADIO_ACTION (action);
-
-  if (raction->priv->state != NULL)
-    return g_variant_get_type (raction->priv->state);
-  else
-    return NULL;
+  return G_VARIANT_TYPE_INT32;
 }
 
 static GVariant *
 gimp_radio_action_get_state (GAction *action)
 {
-  GimpRadioAction *raction = GIMP_RADIO_ACTION (action);
+  GimpRadioAction *radio;
+  GVariant        *state;
 
-  return raction->priv->state ? g_variant_ref (raction->priv->state) : NULL;
-}
+  g_return_val_if_fail (GIMP_IS_RADIO_ACTION (action), NULL);
 
-static GVariant *
-gimp_radio_action_get_state_hint (GAction *action)
-{
-  GimpRadioAction *raction = GIMP_RADIO_ACTION (action);
+  radio = GIMP_RADIO_ACTION (action);
 
-  if (raction->priv->state_hint != NULL)
-    return g_variant_ref (raction->priv->state_hint);
-  else
-    return NULL;
+  state = g_variant_new_int32 (gimp_radio_action_get_current_value (radio));
+
+  return g_variant_ref_sink (state);
 }
 
 static void
-gimp_radio_action_set_state (GimpAction *gimp_action,
-                             GVariant   *value)
+gimp_radio_action_activate (GAction  *action,
+                            GVariant *parameter)
 {
-  GimpRadioAction    *action;
-  const GVariantType *state_type;
+  GimpRadioAction *radio;
 
-  g_return_if_fail (GIMP_IS_ACTION (gimp_action));
-  g_return_if_fail (value != NULL);
+  g_return_if_fail (GIMP_IS_RADIO_ACTION (action));
 
-  action = GIMP_RADIO_ACTION (gimp_action);
+  radio = GIMP_RADIO_ACTION (action);
 
-  state_type = action->priv->state ? g_variant_get_type (action->priv->state) : NULL;
+  gimp_radio_action_set_current_value (radio, radio->priv->value);
+}
 
-  g_return_if_fail (state_type != NULL);
-  g_return_if_fail (g_variant_is_of_type (value, state_type));
+static gboolean
+gimp_radio_action_toggle (GimpToggleAction *action)
+{
+  gboolean active = gimp_toggle_action_get_active (action);
 
-  g_variant_ref_sink (value);
-
-  if (! action->priv->state || ! g_variant_equal (action->priv->state, value))
+  if (! active)
     {
-      if (action->priv->state)
-        g_variant_unref (action->priv->state);
+      GimpRadioAction *radio = GIMP_RADIO_ACTION (action);
 
-      action->priv->state = g_variant_ref (value);
+      gimp_radio_action_set_current_value (radio, radio->priv->value);
 
-      g_object_notify (G_OBJECT (action), "state");
+      return gimp_toggle_action_get_active (action);
     }
-
-  g_variant_unref (value);
-}
-
-static void
-gimp_radio_action_g_activate (GAction  *action,
-                              GVariant *parameter)
-{
-  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), TRUE);
-
-  gimp_action_history_action_activated (GIMP_ACTION (action));
-}
-
-static void
-gimp_radio_action_changed (GtkRadioAction *action,
-                           GtkRadioAction *current)
-{
-  gint value = gtk_radio_action_get_current_value (action);
-
-  gimp_action_emit_change_state (GIMP_ACTION (action),
-                                 g_variant_new_int32 (value));
+  return FALSE;
 }
 
 
 /*  public functions  */
 
-GtkRadioAction *
+GimpAction *
 gimp_radio_action_new (const gchar *name,
                        const gchar *label,
                        const gchar *tooltip,
@@ -368,7 +304,7 @@ gimp_radio_action_new (const gchar *name,
                        gint         value,
                        GimpContext *context)
 {
-  GtkRadioAction *action;
+  GimpAction *action;
 
   action = g_object_new (GIMP_TYPE_RADIO_ACTION,
                          "name",      name,
@@ -379,7 +315,134 @@ gimp_radio_action_new (const gchar *name,
                          "context",   context,
                          NULL);
 
-  gimp_action_set_help_id (GIMP_ACTION (action), help_id);
+  gimp_action_set_help_id (action, help_id);
 
   return action;
+}
+
+GSList *
+gimp_radio_action_get_group (GimpRadioAction *action)
+{
+  g_return_val_if_fail (GIMP_IS_RADIO_ACTION (action), NULL);
+
+  return action->priv->group;
+}
+
+void
+gimp_radio_action_set_group (GimpRadioAction *action,
+                             GSList          *group)
+{
+  g_return_if_fail (GIMP_IS_RADIO_ACTION (action));
+  g_return_if_fail (! g_slist_find (group, action));
+
+  if (action->priv->group)
+    {
+      GSList *slist;
+
+      action->priv->group = g_slist_remove (action->priv->group, action);
+
+      for (slist = action->priv->group; slist; slist = slist->next)
+        {
+          GimpRadioAction *tmp_action = slist->data;
+
+          tmp_action->priv->group = action->priv->group;
+        }
+    }
+
+  action->priv->group = g_slist_prepend (group, action);
+
+  if (group)
+    {
+      GSList *slist;
+
+      for (slist = action->priv->group; slist; slist = slist->next)
+        {
+          GimpRadioAction *tmp_action = slist->data;
+
+          tmp_action->priv->group = action->priv->group;
+        }
+    }
+  else
+    {
+      gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action), TRUE);
+    }
+}
+
+gint
+gimp_radio_action_get_current_value (GimpRadioAction *action)
+{
+  GSList *slist;
+
+  g_return_val_if_fail (GIMP_IS_RADIO_ACTION (action), 0);
+
+  if (action->priv->group)
+    {
+      for (slist = action->priv->group; slist; slist = slist->next)
+        {
+          GimpToggleAction *toggle_action = slist->data;
+
+          if (gimp_toggle_action_get_active (toggle_action))
+            return GIMP_RADIO_ACTION (toggle_action)->priv->value;
+        }
+    }
+
+  return action->priv->value;
+}
+
+void
+gimp_radio_action_set_current_value (GimpRadioAction *action,
+                                     gint             current_value)
+{
+  GSList           *slist;
+  GimpToggleAction *changed1 = NULL;
+  GimpToggleAction *changed2 = NULL;
+
+  g_return_if_fail (GIMP_IS_RADIO_ACTION (action));
+
+  if (action->priv->group)
+    {
+      for (slist = action->priv->group; slist; slist = slist->next)
+        {
+          GimpToggleAction *toggle = slist->data;
+          GimpRadioAction  *radio  = slist->data;
+
+          if (radio->priv->value == current_value &&
+              ! gimp_toggle_action_get_active (toggle))
+            {
+              /* Change the "active" state but don't notify the property change
+               * immediately. We want to notify both "active" properties
+               * together so that we are always in consistent state.
+               */
+              _gimp_toggle_action_set_active (toggle, TRUE);
+              changed1 = toggle;
+            }
+          else if (gimp_toggle_action_get_active (toggle))
+            {
+              changed2 = toggle;
+            }
+        }
+    }
+
+  if (! changed1)
+    {
+      g_warning ("Radio group does not contain an action with value '%d'",
+                 current_value);
+    }
+  else
+    {
+      if (changed2)
+        {
+          _gimp_toggle_action_set_active (changed2, FALSE);
+          g_object_notify (G_OBJECT (changed2), "active");
+          g_signal_emit_by_name (changed2, "toggled");
+        }
+      g_object_notify (G_OBJECT (changed1), "active");
+
+      for (slist = action->priv->group; slist; slist = slist->next)
+        {
+          g_object_notify (slist->data, "current-value");
+          gimp_action_emit_change_state (GIMP_ACTION (slist->data),
+                                         g_variant_new_int32 (current_value));
+        }
+    }
 }

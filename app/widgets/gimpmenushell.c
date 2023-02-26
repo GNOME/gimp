@@ -354,11 +354,7 @@ gimp_menu_shell_radio_item_toggled (GtkWidget *item,
 {
   gboolean active = gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (item));
 
-  /* TODO: when we remove GtkAction dependency, GimpRadioAction should become a
-   * child of GimpToggleAction, and therefore, we'll be able to use
-   * gimp_toggle_action_set_active().
-   */
-  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), active);
+  gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action), active);
 }
 
 static void
@@ -380,13 +376,7 @@ gimp_menu_shell_toggle_action_changed (GimpAction       *action,
   gboolean  active;
 
   action_name = g_strdup (gtk_actionable_get_action_name (GTK_ACTIONABLE (item)));
-  /* TODO: use gimp_toggle_action_get_active() when GimpToggleAction and
-   * GimpRadioAction become direct parent of each other.
-   */
-  if (GIMP_IS_TOGGLE_ACTION (action))
-    active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
-  else
-    active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active      = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   /* Make sure we don't activate the action. */
   gtk_actionable_set_action_name (GTK_ACTIONABLE (item), NULL);
@@ -606,24 +596,11 @@ gimp_menu_shell_add_action (GimpMenuShell     *shell,
   action_label = gimp_action_get_label (GIMP_ACTION (action));
   g_return_if_fail (action_label != NULL);
 
-  if (GIMP_IS_TOGGLE_ACTION (action))
-    {
-      item  = gtk_check_menu_item_new_with_mnemonic (action_label);
-      gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
-                                      gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action)));
-      if (group)
-        *group = NULL;
-
-      g_signal_connect (action, "gimp-change-state",
-                        G_CALLBACK (gimp_menu_shell_toggle_action_changed),
-                        item);
-    }
-  else if (GIMP_IS_RADIO_ACTION (action))
+  if (GIMP_IS_RADIO_ACTION (action))
     {
       item = gtk_radio_menu_item_new_with_mnemonic_from_widget (group ? *group : NULL, action_label);
       gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
-                                      /* TODO: see comment in gimp_menu_radio_item_toggled(). */
-                                      gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
+                                      gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action)));
 
       if (group)
         *group = GTK_RADIO_MENU_ITEM (item);
@@ -631,7 +608,19 @@ gimp_menu_shell_add_action (GimpMenuShell     *shell,
       g_signal_connect (item, "toggled",
                         G_CALLBACK (gimp_menu_shell_radio_item_toggled),
                         action);
-      g_signal_connect (action, "gimp-change-state",
+      g_signal_connect (action, "change-state",
+                        G_CALLBACK (gimp_menu_shell_toggle_action_changed),
+                        item);
+    }
+  else if (GIMP_IS_TOGGLE_ACTION (action))
+    {
+      item  = gtk_check_menu_item_new_with_mnemonic (action_label);
+      gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+                                      gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action)));
+      if (group)
+        *group = NULL;
+
+      g_signal_connect (action, "change-state",
                         G_CALLBACK (gimp_menu_shell_toggle_action_changed),
                         item);
     }

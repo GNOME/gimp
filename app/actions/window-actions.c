@@ -26,6 +26,7 @@
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpradioaction.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "actions.h"
@@ -246,7 +247,7 @@ window_actions_display_closed (GdkDisplay      *display,
     {
       GSList *radio_group;
 
-      radio_group = gtk_radio_action_get_group (GTK_RADIO_ACTION (action));
+      radio_group = gimp_radio_action_get_group (GIMP_RADIO_ACTION (action));
       if (radio_group->data == (gpointer) action)
         radio_group = radio_group->next;
 

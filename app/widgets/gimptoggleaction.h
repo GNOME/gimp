@@ -51,13 +51,17 @@ struct _GimpToggleActionClass
 
   /* Signals */
 
-  void (* toggled) (GimpToggleAction *action);
+  void     (* toggled) (GimpToggleAction *action);
+
+  /* Private methods */
+
+  gboolean (* toggle)  (GimpToggleAction *action);
 };
 
 
 GType             gimp_toggle_action_get_type  (void) G_GNUC_CONST;
 
-GtkToggleAction * gimp_toggle_action_new       (const gchar *name,
+GimpAction      * gimp_toggle_action_new       (const gchar *name,
                                                 const gchar *label,
                                                 const gchar *tooltip,
                                                 const gchar *icon_name,
@@ -67,6 +71,12 @@ GtkToggleAction * gimp_toggle_action_new       (const gchar *name,
 void              gimp_toggle_action_set_active (GimpToggleAction *action,
                                                  gboolean          active);
 gboolean          gimp_toggle_action_get_active (GimpToggleAction *action);
+
+
+/* Protected functions */
+
+void             _gimp_toggle_action_set_active (GimpToggleAction *action,
+                                                 gboolean          active);
 
 
 #endif  /* __GIMP_TOGGLE_ACTION_H__ */

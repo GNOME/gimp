@@ -38,6 +38,7 @@
 #include "widgets/gimpcolordialog.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimptoggleaction.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
@@ -295,7 +296,7 @@ view_zoom_other_cmd_callback (GimpAction *action,
    * view_actions_set_zoom(), also this is really a GtkToggleAction
    * NOT a GimpToggleAction
    */
-  if (gtk_toggle_action_get_active ((GtkToggleAction *) action) &&
+  if (gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action)) &&
       shell->other_scale != gimp_zoom_model_get_factor (shell->zoom))
     {
       gimp_display_shell_scale_dialog (shell);

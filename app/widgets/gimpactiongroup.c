@@ -453,9 +453,9 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
 
   for (i = 0; i < n_entries; i++)
     {
-      GtkToggleAction *action;
-      const gchar     *label;
-      const gchar     *tooltip = NULL;
+      GimpAction  *action;
+      const gchar *label;
+      const gchar *tooltip = NULL;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
         continue;
@@ -482,7 +482,7 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
                                      entries[i].is_active);
 
       if (entries[i].callback)
-        g_signal_connect (action, "gimp-change-state",
+        g_signal_connect (action, "change-state",
                           G_CALLBACK (entries[i].callback),
                           group->user_data);
 
@@ -503,17 +503,17 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
                                      gint                        value,
                                      GimpActionCallback          callback)
 {
-  GtkRadioAction *first_action = NULL;
-  GimpContext    *context      = gimp_get_user_context (group->gimp);
-  gint            i;
+  GimpAction  *first_action = NULL;
+  GimpContext *context      = gimp_get_user_context (group->gimp);
+  gint         i;
 
   g_return_val_if_fail (GIMP_IS_ACTION_GROUP (group), NULL);
 
   for (i = 0; i < n_entries; i++)
     {
-      GtkRadioAction *action;
-      const gchar    *label;
-      const gchar    *tooltip = NULL;
+      GimpAction  *action;
+      const gchar *label;
+      const gchar *tooltip = NULL;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
         continue;
@@ -540,21 +540,20 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
       if (i == 0)
         first_action = action;
 
-      gtk_radio_action_set_group (action, radio_group);
-      radio_group = gtk_radio_action_get_group (action);
+      gimp_radio_action_set_group (GIMP_RADIO_ACTION (action), radio_group);
+      radio_group = gimp_radio_action_get_group (GIMP_RADIO_ACTION (action));
 
       if (value == entries[i].value)
-        gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), TRUE);
+        gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action), TRUE);
 
-      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
-                                               entries[i].accelerator);
+      gimp_action_group_add_action_with_accel (group, action, entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
       g_object_unref (action);
     }
 
   if (callback && first_action)
-    g_signal_connect (first_action, "gimp-change-state",
+    g_signal_connect (first_action, "change-state",
                       G_CALLBACK (callback),
                       group->user_data);
 
@@ -890,15 +889,12 @@ gimp_action_group_set_action_active (GimpActionGroup *group,
       return;
     }
 
-  if (GTK_IS_TOGGLE_ACTION (action))
-    gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-                                  active ? TRUE : FALSE);
-  else if (GIMP_IS_TOGGLE_ACTION (action))
+  if (GIMP_IS_TOGGLE_ACTION (action))
     gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
                                    active ? TRUE : FALSE);
   else
     g_warning ("%s: Unable to set \"active\" of action "
-               "which is neither a GtkToggleAction or GimpToggleAction: %s",
+               "which is not a GimpToggleAction: %s",
                G_STRFUNC, action_name);
 }
 

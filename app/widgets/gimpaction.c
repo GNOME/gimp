@@ -45,7 +45,6 @@
 enum
 {
   ACTIVATE,
-  CHANGE_STATE,
   ACCELS_CHANGED,
   LAST_SIGNAL
 };
@@ -109,15 +108,6 @@ gimp_action_default_init (GimpActionInterface *iface)
                   G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpActionInterface, activate),
-                  NULL, NULL, NULL,
-                  G_TYPE_NONE, 1,
-                  G_TYPE_VARIANT);
-
-  action_signals[CHANGE_STATE] =
-    g_signal_new ("gimp-change-state",
-                  G_TYPE_FROM_INTERFACE (iface),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpActionInterface, change_state),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_VARIANT);
@@ -249,7 +239,7 @@ gimp_action_emit_change_state (GimpAction *action,
   if (value)
     g_variant_ref_sink (value);
 
-  g_signal_emit (action, action_signals[CHANGE_STATE], 0, value);
+  g_signal_emit_by_name (action, "change-state", value);
 
   if (value)
     g_variant_unref (value);

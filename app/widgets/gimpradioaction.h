@@ -4,6 +4,7 @@
  * gimpradioaction.h
  * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
  * Copyright (C) 2008 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2023 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +23,7 @@
 #ifndef __GIMP_RADIO_ACTION_H__
 #define __GIMP_RADIO_ACTION_H__
 
+#include "gimptoggleaction.h"
 
 #define GIMP_TYPE_RADIO_ACTION            (gimp_radio_action_get_type ())
 #define GIMP_RADIO_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RADIO_ACTION, GimpRadioAction))
@@ -37,26 +39,34 @@ typedef struct _GimpRadioActionPrivate GimpRadioActionPrivate;
 
 struct _GimpRadioAction
 {
-  GtkRadioAction          parent_instance;
+  GimpToggleAction        parent_instance;
 
   GimpRadioActionPrivate *priv;
 };
 
 struct _GimpRadioActionClass
 {
-  GtkRadioActionClass  parent_class;
+  GimpToggleActionClass  parent_class;
 };
 
 
-GType            gimp_radio_action_get_type (void) G_GNUC_CONST;
+GType        gimp_radio_action_get_type          (void) G_GNUC_CONST;
 
-GtkRadioAction * gimp_radio_action_new      (const gchar *name,
-                                             const gchar *label,
-                                             const gchar *tooltip,
-                                             const gchar *icon_name,
-                                             const gchar *help_id,
-                                             gint         value,
-                                             GimpContext *context);
+GimpAction * gimp_radio_action_new               (const gchar *name,
+                                                  const gchar *label,
+                                                  const gchar *tooltip,
+                                                  const gchar *icon_name,
+                                                  const gchar *help_id,
+                                                  gint         value,
+                                                  GimpContext *context);
+
+GSList     * gimp_radio_action_get_group         (GimpRadioAction *action);
+void         gimp_radio_action_set_group         (GimpRadioAction *action,
+                                                  GSList          *group);
+
+gint         gimp_radio_action_get_current_value (GimpRadioAction *action);
+void         gimp_radio_action_set_current_value (GimpRadioAction *action,
+                                                  gint             current_value);
 
 
 #endif  /* __GIMP_RADIO_ACTION_H__ */
