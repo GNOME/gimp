@@ -1,0 +1,391 @@
+# Bulgarian translation of gimp-windows-installer po-file.
+# Copyright (C) 2023 Alexander Shopov <ash@kambanaria.org>.
+# This file is distributed under the same license as the GIMP package.
+# Alexander Shopov <ash@kambanaria.org>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-windows-installer master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2023-02-21 10:28+0000\n"
+"PO-Revision-Date: 2023-02-23 00:11+0200\n"
+"Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
+"Language-Team: Bulgarian <dict@fsa-bg.org>\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"master)  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: build/windows/installer/lang/setup.isl.xml.in:7
+msgid "License Agreement"
+msgstr "Лицензно споразумение"
+
+#: build/windows/installer/lang/setup.isl.xml.in:10
+msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
+msgstr "Инсталаторът е създаден от Jernej Simonèiè, jernej-gimp@ena.si"
+
+#: build/windows/installer/lang/setup.isl.xml.in:13
+#: build/windows/installer/lang/setup.isl.xml.in:16
+msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgstr "Тази версия на GIMP изисква версия на Windows 7 или по-нова."
+
+#: build/windows/installer/lang/setup.isl.xml.in:23
+msgid "Development version"
+msgstr "Версия за разработчици"
+
+#: build/windows/installer/lang/setup.isl.xml.in:28
+msgid ""
+"This is a development version of GIMP where some features may not be "
+"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"day-to-day work as it may be unstable, and you could lose your work.%nIf you "
+"encounter any problems, first verify that they haven't already been fixed in "
+"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"installation anyway?"
+msgstr ""
+"Тази версия на GIMP е за разработчици и тестъри — някои възможности може да "
+"не са завършени или да не са стабилни.%nТази версия не е за ежедневна "
+"употреба, защото може да забива и да загубите данни.%nАко срещнете проблеми, "
+"първо проверете дали вече не са поправени в GIT, преди да се свържете с "
+"разработчиците или да ги докладвате в Gitlab на GIMP:%n_https://gitlab.gnome."
+"org/GNOME/gimp/issues%n%nИскате ли да продължите с инсталацията въпреки това?"
+
+#: build/windows/installer/lang/setup.isl.xml.in:31
+#: build/windows/installer/lang/setup.isl.xml.in:54
+msgid "&Continue"
+msgstr "&Напред"
+
+#: build/windows/installer/lang/setup.isl.xml.in:34
+msgid "Exit"
+msgstr "Изход"
+
+#: build/windows/installer/lang/setup.isl.xml.in:44
+msgid ""
+"This version of GIMP requires a processor that supports SSE instructions."
+msgstr "Тази версия на GIMP изисква процесор, който поддържа инструкциите SSE."
+
+#: build/windows/installer/lang/setup.isl.xml.in:48
+msgid "Display settings problem"
+msgstr "Проблем с настройките на екрана"
+
+#: build/windows/installer/lang/setup.isl.xml.in:51
+msgid ""
+"Setup has detected that your Windows is not running in 32 bits-per-pixel "
+"display mode. This has been known to cause stability problems with GIMP, so "
+"it's recommended to change the display colour depth to 32BPP before "
+"continuing."
+msgstr ""
+"Инсталаторът засече, че Windows не работи в режим на 32 бита за пиксел. Това "
+"може да предизвика нестабилна работа на GIMP и ви препоръчваме да преминете "
+"към режим на 32 бита за пиксел, преди да продължите."
+
+#: build/windows/installer/lang/setup.isl.xml.in:57
+msgid "E&xit"
+msgstr "&Изход"
+
+#: build/windows/installer/lang/setup.isl.xml.in:61
+msgid ""
+"GIMP is now ready to be installed. Click the Install now button to install "
+"using the default settings, or click the Customize button if you'd like to "
+"have more control over what gets installed."
+msgstr ""
+"GIMP е готов за инсталация. Натиснете бутона „Инсталиране“, за да направите "
+"това със стандартните настройки, или натиснете бутона „Промяна“, за да ги "
+"промените."
+
+#: build/windows/installer/lang/setup.isl.xml.in:64
+msgid "&Install"
+msgstr "&Инсталиране"
+
+#: build/windows/installer/lang/setup.isl.xml.in:67
+msgid "&Customize"
+msgstr "&Промяна"
+
+#: build/windows/installer/lang/setup.isl.xml.in:72
+msgid "Compact installation"
+msgstr "Малка инсталация"
+
+#: build/windows/installer/lang/setup.isl.xml.in:76
+msgid "Custom installation"
+msgstr "Друга инсталация"
+
+#: build/windows/installer/lang/setup.isl.xml.in:80
+msgid "Full installation"
+msgstr "Пълна инсталация"
+
+#: build/windows/installer/lang/setup.isl.xml.in:85
+msgid "Description"
+msgstr "Описание"
+
+#: build/windows/installer/lang/setup.isl.xml.in:89
+msgid "GIMP"
+msgstr "GIMP"
+
+#: build/windows/installer/lang/setup.isl.xml.in:93
+msgid "GIMP and all default plug-ins"
+msgstr "GIMP и всички стандартни приставки"
+
+#: build/windows/installer/lang/setup.isl.xml.in:97
+msgid "Run-time libraries"
+msgstr "Библиотеки за работа"
+
+#: build/windows/installer/lang/setup.isl.xml.in:101
+msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
+msgstr "Библиотеки за работа на GIMP, включително и тези на GTK"
+
+#: build/windows/installer/lang/setup.isl.xml.in:105
+msgid "Debug symbols"
+msgstr "Символи за изчистване на грешки"
+
+#: build/windows/installer/lang/setup.isl.xml.in:109
+msgid "Include information to help with debugging GIMP"
+msgstr "Включване на информацията за изчистване на грешки в GIMP"
+
+#: build/windows/installer/lang/setup.isl.xml.in:113
+msgid "MS-Windows engine for GTK"
+msgstr "Подсистема в MS-Windows за GTK"
+
+#: build/windows/installer/lang/setup.isl.xml.in:117
+msgid "Native Windows look for GIMP"
+msgstr "Външен вид като Windows"
+
+#: build/windows/installer/lang/setup.isl.xml.in:121
+msgid "Support for old plug-ins"
+msgstr "Поддръжка на остарелите приставки"
+
+#: build/windows/installer/lang/setup.isl.xml.in:125
+msgid "Install libraries needed by old third-party plug-ins"
+msgstr "Инсталиране на библиотеките за приставките от трети страни"
+
+#: build/windows/installer/lang/setup.isl.xml.in:129
+#: build/windows/installer/lang/setup.isl.xml.in:133
+msgid "Translations"
+msgstr "Преводи"
+
+#: build/windows/installer/lang/setup.isl.xml.in:137
+msgid "Python scripting"
+msgstr "Скриптове на Python"
+
+#: build/windows/installer/lang/setup.isl.xml.in:141
+msgid "Allows you to use GIMP plugins written in Python scripting language."
+msgstr "Позволява ползването на приставки на GIMP написани на Python."
+
+#: build/windows/installer/lang/setup.isl.xml.in:145
+msgid "Lua scripting"
+msgstr "Скриптове на Lua"
+
+#: build/windows/installer/lang/setup.isl.xml.in:149
+msgid "Allows you to use GIMP plugins written in Lua scripting language."
+msgstr "Позволява ползването на приставки на GIMP написани на Lua."
+
+#: build/windows/installer/lang/setup.isl.xml.in:153
+msgid "MyPaint brushes"
+msgstr "Четки от MyPaint"
+
+#: build/windows/installer/lang/setup.isl.xml.in:157
+msgid "Install the default set of MyPaint brushes"
+msgstr "Инсталиране на стандартния набор от четки от MyPaint"
+
+#: build/windows/installer/lang/setup.isl.xml.in:161
+msgid "PostScript support"
+msgstr "Поддръжка на PostScript"
+
+#: build/windows/installer/lang/setup.isl.xml.in:165
+msgid "Allow GIMP to load PostScript files"
+msgstr "Позволяване на GIMP да зарежда файлове на PostScript"
+
+#: build/windows/installer/lang/setup.isl.xml.in:169
+msgid "Support for 32-bit plug-ins"
+msgstr "Поддръжка на 32-битови приставки"
+
+#: build/windows/installer/lang/setup.isl.xml.in:173
+msgid ""
+"Include files necessary for using 32-bit plug-ins.%nRequired for Python "
+"support."
+msgstr ""
+"Включване на файловете за поддръжка на 32-битовите приставки.%nНеобходимо е "
+"за поддръжката на Python."
+
+#: build/windows/installer/lang/setup.isl.xml.in:178
+msgid "Additional icons:"
+msgstr "Допълнителни икони:"
+
+#: build/windows/installer/lang/setup.isl.xml.in:182
+msgid "Create a &desktop icon"
+msgstr "Създаване на икона на &работния плот"
+
+#: build/windows/installer/lang/setup.isl.xml.in:186
+msgid "Create a &Quick Launch icon"
+msgstr "Създаване на икона за &бързо стартиране"
+
+#: build/windows/installer/lang/setup.isl.xml.in:190
+msgid "Remove previous GIMP version"
+msgstr "Премахване на предишната версия на GIMP"
+
+#: build/windows/installer/lang/setup.isl.xml.in:195
+msgid ""
+"There was a problem updating GIMP's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing GIMP."
+msgstr ""
+"Проблем при обновяване на средата на GIMP в „%1“. Ако имате проблеми при "
+"зареждане на приставки, пробвайте да преинсталирате GIMP."
+
+#: build/windows/installer/lang/setup.isl.xml.in:199
+msgid "Error extracting temporary data."
+msgstr "Грешка при извличане на временни данни."
+
+#: build/windows/installer/lang/setup.isl.xml.in:203
+msgid "Error updating Python interpreter info."
+msgstr "Грешка при обновяване на информацията за интерпретатора на Python."
+
+#: build/windows/installer/lang/setup.isl.xml.in:207
+msgid "Error updating MyPaint brushes info."
+msgstr "Грешка при обновяване на информацията на четките от MyPaint."
+
+#: build/windows/installer/lang/setup.isl.xml.in:211
+msgid "There was an error updating %1."
+msgstr "Грешка при обновяване на „%1“."
+
+#: build/windows/installer/lang/setup.isl.xml.in:215
+msgid "There was an error updating GIMP's configuration file %1."
+msgstr "Грешка при обновяване на файла с настройки на GIMP „%1“."
+
+#: build/windows/installer/lang/setup.isl.xml.in:220
+msgid "Edit with GIMP"
+msgstr "Редактиране с GIMP"
+
+#: build/windows/installer/lang/setup.isl.xml.in:225
+msgid "Select file associations"
+msgstr "Избор на асоциираните файлове"
+
+#: build/windows/installer/lang/setup.isl.xml.in:229
+msgid "Extensions:"
+msgstr "Разширения:"
+
+#: build/windows/installer/lang/setup.isl.xml.in:233
+msgid "Select the file types you wish to associate with GIMP"
+msgstr "Избор на видовете файлове, които да се отварят с GIMP"
+
+#: build/windows/installer/lang/setup.isl.xml.in:237
+msgid ""
+"This will make selected files open in GIMP when you double-click them in "
+"Explorer."
+msgstr ""
+"По-този начин избраните файлове ще се отварят с GIMP, когато двукратно "
+"натиснете върху тях с основния бутон на мишката в Explorer."
+
+#: build/windows/installer/lang/setup.isl.xml.in:241
+msgid "Select &All"
+msgstr "Избор на &всичко"
+
+#: build/windows/installer/lang/setup.isl.xml.in:245
+msgid "Unselect &All"
+msgstr "Избор на &нищо"
+
+#: build/windows/installer/lang/setup.isl.xml.in:249
+msgid "Select &Unused"
+msgstr "Избор на не&избраното"
+
+#: build/windows/installer/lang/setup.isl.xml.in:254
+msgid "File types to associate with GIMP:"
+msgstr "Видове файлове, които да се асоциират с GIMP:"
+
+#: build/windows/installer/lang/setup.isl.xml.in:258
+msgid "Removing previous version of GIMP:"
+msgstr "Изтриване на предишната версия на GIMP:"
+
+#: build/windows/installer/lang/setup.isl.xml.in:262
+msgid ""
+"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"the automatic uninstall of old version has failed.%n%nPlease remove the "
+"previous version of GIMP yourself before installing this version in %2, or "
+"choose a Custom install, and select a different installation folder.%n%nThe "
+"Setup will now exit."
+msgstr ""
+"GIMP %1 не може да се инсталира върху текущо инсталираната версия на GIMP, а "
+"автоматичната ѝ деинсталация не сработи.%n%nПробвайте ръчно да изтриете "
+"предишната версия на GIMP, преди да инсталирате тази в „%2“, или натиснете "
+"бутона „Промяна“, за да смените папката за инсталация.%n%nИнсталаторът спира "
+"работа."
+
+#: build/windows/installer/lang/setup.isl.xml.in:266
+msgid ""
+"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"Setup couldn't determine how to remove the old version automatically."
+"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+"before installing this version in %2, or choose a Custom install, and select "
+"a different installation folder.%n%nThe Setup will now exit."
+msgstr ""
+"GIMP %1 не може да се инсталира върху текущо инсталираната версия на GIMP, "
+"инсталаторът не може да определи как автоматично да я деинсталира."
+"%n%nПробвайте ръчно да изтриете предишната версия на GIMP заедно с "
+"приставките ѝ, преди да инсталирате тази в „%2“, или натиснете бутона "
+"„Промяна“, за да смените папката за инсталация.%n%nИнсталаторът спира работа."
+
+#: build/windows/installer/lang/setup.isl.xml.in:270
+msgid ""
+"Previous GIMP version was removed successfully, but Windows has to be "
+"restarted before the Setup can continue.%n%nAfter restarting your computer, "
+"Setup will continue next time an administrator logs in."
+msgstr ""
+"Предишната инсталация на GIMP е премахната успешно, но Windows трябва да се "
+"рестартира, за да продължи инсталацията.%n%nСлед рестартиране на компютъра "
+"инсталацията ще продължи при следващото вписване на администратор."
+
+#: build/windows/installer/lang/setup.isl.xml.in:275
+msgid "There was an error restarting the Setup. (%1)"
+msgstr "Грешка при рестартирането на инсталатора. (%1)"
+
+#: build/windows/installer/lang/setup.isl.xml.in:279
+msgid "Cleaning up old files..."
+msgstr "Изчистване на старите файлове…"
+
+#: build/windows/installer/lang/setup.isl.xml.in:284
+msgid "Remember: GIMP is Free Software.%n%nPlease visit"
+msgstr "Помнете: GIMP е Свободен софтуер.%n%nПосетете"
+
+#: build/windows/installer/lang/setup.isl.xml.in:288
+msgid "for free updates."
+msgstr "за свободно обновяване."
+
+#: build/windows/installer/lang/setup.isl.xml.in:292
+msgid "Setting up file associations..."
+msgstr "Настройване на поддържаните файлови разширения…"
+
+#: build/windows/installer/lang/setup.isl.xml.in:295
+msgid "Setting up environment for GIMP Python extension..."
+msgstr "Настройване на средата за разширенията на GIMP на Python…"
+
+#: build/windows/installer/lang/setup.isl.xml.in:298
+msgid "Setting up MyPaint brushes..."
+msgstr "Настройване на четките от MyPaint…"
+
+#: build/windows/installer/lang/setup.isl.xml.in:301
+msgid "Setting up GIMP environment..."
+msgstr "Настройване на средата на GIMP…"
+
+#: build/windows/installer/lang/setup.isl.xml.in:304
+msgid "Setting up GIMP configuration for 32-bit plug-in support..."
+msgstr "Настройване на GIMP за поддръжката на 32-битови приставки…"
+
+#: build/windows/installer/lang/setup.isl.xml.in:309
+msgid "Launch GIMP"
+msgstr "Стартиране на GIMP"
+
+#: build/windows/installer/lang/setup.isl.xml.in:314
+msgid "Removing add-on"
+msgstr "Изтриване на приставки"
+
+#: build/windows/installer/lang/setup.isl.xml.in:318
+msgid "Internal error (%1)."
+msgstr "Вътрешна грешки (%1)."
+
+#: build/windows/installer/lang/setup.isl.xml.in:323
+msgid ""
+"GIMP does not appear to be installed in the selected directory. Continue "
+"anyway?"
+msgstr ""
+"И да е инсталиран GIMP, не е в посочената папка. Искате ли да продължите "
+"въпреки това?"
