@@ -56,6 +56,7 @@ ui_menus_files = files(
   'patterns-menu.ui',
   'quick-mask-menu.ui',
   'templates-menu.ui',
+  'undo-menu.ui',
   'vectors-menu.ui',
 )
 

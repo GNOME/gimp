@@ -353,6 +353,7 @@ gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
 
           gimp_ui_manager_ui_popup_at_widget (manager,
                                               "/quick-mask-popup",
+                                              NULL, NULL,
                                               widget,
                                               GDK_GRAVITY_EAST,
                                               GDK_GRAVITY_SOUTH_WEST,

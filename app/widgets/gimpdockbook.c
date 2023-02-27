@@ -551,24 +551,12 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
   GimpUIManager *dialog_ui_manager;
   const gchar   *dialog_ui_path;
   gpointer       dialog_popup_data;
-  GtkWidget     *parent_menu_widget;
-  GimpAction    *parent_menu_action;
   GimpDockable  *dockable;
   gint           page_num;
 
   dockbook_ui_manager = gimp_dockbook_get_ui_manager (dockbook);
 
   if (! dockbook_ui_manager)
-    return FALSE;
-
-  parent_menu_widget =
-    gimp_ui_manager_get_widget (dockbook_ui_manager,
-                                "/dockable-popup/dockable-menu");
-  parent_menu_action =
-    gimp_ui_manager_get_action (dockbook_ui_manager,
-                                "/dockable-popup/dockable-menu");
-
-  if (! parent_menu_widget || ! parent_menu_action)
     return FALSE;
 
   page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
@@ -582,69 +570,6 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
                                               &dialog_ui_path,
                                               &dialog_popup_data);
 
-  if (dialog_ui_manager && dialog_ui_path)
-    {
-      GtkWidget  *child_menu_widget;
-      GimpAction *child_menu_action;
-      gchar      *label;
-
-      child_menu_widget =
-        gimp_ui_manager_get_widget (dialog_ui_manager, dialog_ui_path);
-
-      if (! child_menu_widget)
-        {
-          g_warning ("%s: UI manager '%s' has no widget at path '%s'",
-                     G_STRFUNC, dialog_ui_manager->name, dialog_ui_path);
-          return FALSE;
-        }
-
-      child_menu_action =
-        gimp_ui_manager_get_action (dialog_ui_manager,
-                                    dialog_ui_path);
-
-      if (! child_menu_action)
-        {
-          g_warning ("%s: UI manager '%s' has no action at path '%s'",
-                     G_STRFUNC, dialog_ui_manager->name, dialog_ui_path);
-          return FALSE;
-        }
-
-      g_object_get (child_menu_action,
-                    "label", &label,
-                    NULL);
-
-      g_object_set (parent_menu_action,
-                    "label",     label,
-                    "icon-name", gimp_dockable_get_icon_name (dockable),
-                    "visible",   TRUE,
-                    NULL);
-
-      g_free (label);
-
-      if (! GTK_IS_MENU (child_menu_widget))
-        {
-          g_warning ("%s: child_menu_widget (%p) is not a GtkMenu",
-                     G_STRFUNC, child_menu_widget);
-          return FALSE;
-        }
-
-      {
-        GtkWidget *image = gimp_dockable_get_icon (dockable,
-                                                   GTK_ICON_SIZE_MENU);
-        gimp_menu_item_set_image (GTK_MENU_ITEM (parent_menu_widget), image, NULL);
-        gtk_widget_show (image);
-      }
-
-      gtk_menu_item_set_submenu (GTK_MENU_ITEM (parent_menu_widget),
-                                 child_menu_widget);
-
-      gimp_ui_manager_update (dialog_ui_manager, dialog_popup_data);
-    }
-  else
-    {
-      g_object_set (parent_menu_action, "visible", FALSE, NULL);
-    }
-
   /*  an action callback may destroy both dockable and dockbook, so
    *  reference them for gimp_dockbook_menu_end()
    */
@@ -653,10 +578,10 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
                           g_object_ref (dockbook),
                           g_object_unref);
 
-  gimp_ui_manager_update (dockbook_ui_manager, dockable);
-
   gimp_ui_manager_ui_popup_at_widget (dockbook_ui_manager,
                                       "/dockable-popup",
+                                      dialog_ui_manager,
+                                      dialog_ui_path,
                                       dockbook->p->menu_button,
                                       GDK_GRAVITY_WEST,
                                       GDK_GRAVITY_NORTH_EAST,
@@ -670,23 +595,6 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
 static void
 gimp_dockbook_menu_end (GimpDockable *dockable)
 {
-  GimpUIManager *dialog_ui_manager;
-  const gchar   *dialog_ui_path;
-  gpointer       dialog_popup_data;
-
-  dialog_ui_manager = gimp_dockable_get_menu (dockable,
-                                              &dialog_ui_path,
-                                              &dialog_popup_data);
-
-  if (dialog_ui_manager && dialog_ui_path)
-    {
-      GtkWidget *child_menu_widget =
-        gimp_ui_manager_get_widget (dialog_ui_manager, dialog_ui_path);
-
-      if (child_menu_widget)
-        gtk_menu_detach (GTK_MENU (child_menu_widget));
-    }
-
   /*  release gimp_dockbook_show_menu()'s references  */
   g_object_set_data (G_OBJECT (dockable), GIMP_DOCKABLE_DETACH_REF_KEY, NULL);
   g_object_unref (dockable);

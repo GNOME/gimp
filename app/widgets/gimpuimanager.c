@@ -723,6 +723,8 @@ gimp_ui_manager_ui_register (GimpUIManager          *manager,
 void
 gimp_ui_manager_ui_popup_at_widget (GimpUIManager  *manager,
                                     const gchar    *ui_path,
+                                    GimpUIManager  *child_ui_manager,
+                                    const gchar    *child_ui_path,
                                     GtkWidget      *widget,
                                     GdkGravity      widget_anchor,
                                     GdkGravity      menu_anchor,
@@ -744,6 +746,19 @@ gimp_ui_manager_ui_popup_at_widget (GimpUIManager  *manager,
 
   if (! menu)
     return;
+
+  if (child_ui_manager != NULL && child_ui_path != NULL)
+    {
+      GMenuModel *child_model;
+      GtkWidget  *child_menu;
+
+      /* TODO GMenu: the "icon" attribute set in the .ui file should be visible. */
+      child_model = gimp_ui_manager_get_model (child_ui_manager, child_ui_path);
+      child_menu  = gimp_menu_new (child_ui_manager);
+      gimp_menu_shell_fill (GIMP_MENU_SHELL (child_menu), child_model, NULL);
+
+      gimp_menu_shell_merge (GIMP_MENU_SHELL (menu), GIMP_MENU_SHELL (child_menu), TRUE);
+    }
 
   if (popdown_func && popdown_data)
     {

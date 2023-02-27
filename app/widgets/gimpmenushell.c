@@ -157,6 +157,33 @@ gimp_menu_shell_fill (GimpMenuShell *shell,
     }
 }
 
+void
+gimp_menu_shell_merge (GimpMenuShell *shell,
+                       GimpMenuShell *shell2,
+                       gboolean       top)
+{
+  GList *children;
+  GList *iter;
+
+  children = gtk_container_get_children (GTK_CONTAINER (shell2));
+  iter     = top ? g_list_last (children) : children;
+  for (; iter; iter = top ? iter->prev : iter->next)
+    {
+      GtkWidget *item = iter->data;
+
+      g_object_ref (item);
+      gtk_container_remove (GTK_CONTAINER (shell2), item);
+      if (top)
+        gtk_menu_shell_prepend (GTK_MENU_SHELL (shell), item);
+      else
+        gtk_menu_shell_append (GTK_MENU_SHELL (shell), item);
+      g_object_unref (item);
+    }
+
+  g_list_free (children);
+  gtk_widget_destroy (GTK_WIDGET (shell2));
+}
+
 
 /* Protected functions. */
 

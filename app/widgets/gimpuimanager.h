@@ -155,6 +155,8 @@ void            gimp_ui_manager_ui_register (GimpUIManager          *manager,
 void            gimp_ui_manager_ui_popup_at_widget
                                             (GimpUIManager          *manager,
                                              const gchar            *ui_path,
+                                             GimpUIManager          *child_ui_manager,
+                                             const gchar            *child_ui_path,
                                              GtkWidget              *widget,
                                              GdkGravity              widget_anchor,
                                              GdkGravity              menu_anchor,

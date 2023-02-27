@@ -383,7 +383,7 @@ gimp_tool_options_editor_menu_popup (GimpToolOptionsEditor *editor,
                           gimp_editor_get_popup_data (gimp_editor));
 
   gimp_ui_manager_ui_popup_at_widget (gimp_editor_get_ui_manager (gimp_editor),
-                                      path,
+                                      path, NULL, NULL,
                                       button,
                                       GDK_GRAVITY_WEST,
                                       GDK_GRAVITY_NORTH_EAST,

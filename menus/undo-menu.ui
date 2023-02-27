@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/undo-popup">
+    <submenu>
+      <attribute name="label" translatable="yes" context="edit-action">Undo History Menu</attribute>
+      <attribute name="icon">edit-undo</attribute>
+      <item><attribute name="action">app.edit-undo</attribute></item>
+      <item><attribute name="action">app.edit-redo</attribute></item>
+      <item><attribute name="action">app.edit-undo-clear</attribute></item>
+    </submenu>
+  </menu>
+</interface>
