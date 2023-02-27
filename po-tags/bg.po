@@ -1,0 +1,28 @@
+# Bulgarian translation of gimp-tags po-file.
+# Copyright (C) 2023 Alexander Shopov <ash@kambanaria.org>.
+# This file is distributed under the same license as the GIMP package.
+# Alexander Shopov <ash@kambanaria.org>, 2023.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-tags master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2023-02-21 10:27+0000\n"
+"PO-Revision-Date: 2023-02-21 22:59+0200\n"
+"Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
+"Language-Team: Bulgarian <dict@fsa-bg.org>\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: data/tags/gimp-tags-default.xml.in:11 data/tags/gimp-tags-default.xml.in:19
+msgid "round"
+msgstr "кръгла"
+
+#. fuzzy as in a feathered, blurred, unfocused, soft brush
+#: data/tags/gimp-tags-default.xml.in:18
+msgid "fuzzy"
+msgstr "мъхната"
