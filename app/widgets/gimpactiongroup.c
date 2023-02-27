@@ -336,8 +336,7 @@ gimp_action_group_add_action_with_accel (GimpActionGroup *action_group,
 
   /* TODO: remove the old logic with GtkAction. */
   gtk_action_group_add_action_with_accel ((GtkActionGroup *) action_group,
-                                          (GtkAction *) action,
-                                          accelerator);
+                                          (GtkAction *) action, NULL);
 }
 
 void
