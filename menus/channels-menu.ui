@@ -2,31 +2,36 @@
 
 <interface>
   <menu id="/channels-popup">
-    <item><attribute name="action">app.channels-edit-attributes</attribute></item>
     <submenu>
-      <attribute name="label">Color Tags</attribute>
-      <item><attribute name="action">app.channels-color-tag-none</attribute></item>
-      <item><attribute name="action">app.channels-color-tag-blue</attribute></item>
-      <item><attribute name="action">app.channels-color-tag-green</attribute></item>
-      <item><attribute name="action">app.channels-color-tag-yellow</attribute></item>
-      <item><attribute name="action">app.channels-color-tag-orange</attribute></item>
-      <item><attribute name="action">app.channels-color-tag-brown</attribute></item>
-      <item><attribute name="action">app.channels-color-tag-red</attribute></item>
-      <item><attribute name="action">app.channels-color-tag-violet</attribute></item>
-      <item><attribute name="action">app.channels-color-tag-gray</attribute></item>
+      <attribute name="label" translatable="yes" context="channels-action">Channels Menu</attribute>
+      <attribute name="icon">gimp-channels</attribute>
+
+      <item><attribute name="action">app.channels-edit-attributes</attribute></item>
+      <submenu>
+        <attribute name="label">Color Tags</attribute>
+        <item><attribute name="action">app.channels-color-tag-none</attribute></item>
+        <item><attribute name="action">app.channels-color-tag-blue</attribute></item>
+        <item><attribute name="action">app.channels-color-tag-green</attribute></item>
+        <item><attribute name="action">app.channels-color-tag-yellow</attribute></item>
+        <item><attribute name="action">app.channels-color-tag-orange</attribute></item>
+        <item><attribute name="action">app.channels-color-tag-brown</attribute></item>
+        <item><attribute name="action">app.channels-color-tag-red</attribute></item>
+        <item><attribute name="action">app.channels-color-tag-violet</attribute></item>
+        <item><attribute name="action">app.channels-color-tag-gray</attribute></item>
+      </submenu>
+      <section>
+        <item><attribute name="action">app.channels-new</attribute></item>
+        <item><attribute name="action">app.channels-raise</attribute></item>
+        <item><attribute name="action">app.channels-lower</attribute></item>
+        <item><attribute name="action">app.channels-duplicate</attribute></item>
+        <item><attribute name="action">app.channels-delete</attribute></item>
+      </section>
+      <section>
+        <item><attribute name="action">app.channels-selection-replace</attribute></item>
+        <item><attribute name="action">app.channels-selection-add</attribute></item>
+        <item><attribute name="action">app.channels-selection-subtract</attribute></item>
+        <item><attribute name="action">app.channels-selection-intersect</attribute></item>
+      </section>
     </submenu>
-    <section>
-      <item><attribute name="action">app.channels-new</attribute></item>
-      <item><attribute name="action">app.channels-raise</attribute></item>
-      <item><attribute name="action">app.channels-lower</attribute></item>
-      <item><attribute name="action">app.channels-duplicate</attribute></item>
-      <item><attribute name="action">app.channels-delete</attribute></item>
-    </section>
-    <section>
-      <item><attribute name="action">app.channels-selection-replace</attribute></item>
-      <item><attribute name="action">app.channels-selection-add</attribute></item>
-      <item><attribute name="action">app.channels-selection-subtract</attribute></item>
-      <item><attribute name="action">app.channels-selection-intersect</attribute></item>
-    </section>
   </menu>
 </interface>

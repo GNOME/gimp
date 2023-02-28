@@ -48,7 +48,8 @@ GType           gimp_menu_shell_get_type            (void) G_GNUC_CONST;
 
 void            gimp_menu_shell_fill                (GimpMenuShell *shell,
                                                      GMenuModel    *model,
-                                                     const gchar   *update_signal);
+                                                     const gchar   *update_signal,
+                                                     gboolean       drop_top_submenu);
 void            gimp_menu_shell_merge               (GimpMenuShell *shell,
                                                      GimpMenuShell *shell2,
                                                      gboolean       top);

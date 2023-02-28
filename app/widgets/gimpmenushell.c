@@ -88,6 +88,8 @@ static void     gimp_menu_shell_action_notify_visible   (GimpAction           *a
                                                          const GParamSpec     *pspec,
                                                          GtkWidget            *item);
 
+static void     gimp_menu_shell_append_model_drop_top   (GimpMenuShell        *shell,
+                                                         GMenuModel           *model);
 static void     gimp_menu_shell_append_model            (GimpMenuShell        *shell,
                                                          GMenuModel           *model);
 static void     gimp_menu_shell_add_ui                  (GimpMenuShell        *shell,
@@ -128,7 +130,8 @@ gimp_menu_shell_default_init (GimpMenuShellInterface *iface)
 void
 gimp_menu_shell_fill (GimpMenuShell *shell,
                       GMenuModel    *model,
-                      const gchar   *update_signal)
+                      const gchar   *update_signal,
+                      gboolean       drop_top_submenu)
 {
   g_return_if_fail (GTK_IS_CONTAINER (shell));
 
@@ -136,7 +139,10 @@ gimp_menu_shell_fill (GimpMenuShell *shell,
                          (GtkCallback) gtk_widget_destroy,
                          NULL);
 
-  gimp_menu_shell_append_model (shell, model);
+  if (drop_top_submenu)
+    gimp_menu_shell_append_model_drop_top (shell, model);
+  else
+    gimp_menu_shell_append_model (shell, model);
 
   if (update_signal != NULL)
     {
@@ -483,6 +489,22 @@ gimp_menu_shell_action_notify_visible (GimpAction       *action,
 }
 
 static void
+gimp_menu_shell_append_model_drop_top (GimpMenuShell *shell,
+                                       GMenuModel    *model)
+{
+  GMenuModel *submenu = NULL;
+
+  g_return_if_fail (GTK_IS_CONTAINER (shell));
+
+  if (g_menu_model_get_n_items (model) == 1)
+    submenu = g_menu_model_get_item_link (model, 0, G_MENU_LINK_SUBMENU);
+
+  gimp_menu_shell_append_model (shell, submenu != NULL ? submenu : model);
+
+  g_clear_object (&submenu);
+}
+
+static void
 gimp_menu_shell_append_model (GimpMenuShell *shell,
                               GMenuModel    *model)
 {
@@ -601,6 +623,8 @@ gimp_menu_shell_append_model (GimpMenuShell *shell,
         }
       g_free (label);
       g_free (action_name);
+      g_clear_object (&submenu);
+      g_clear_object (&subsection);
     }
 }
 

@@ -2,85 +2,90 @@
 
 <interface>
   <menu id="/layers-popup">
-    <item><attribute name="action">app.layers-edit-text</attribute></item>
-    <item><attribute name="action">app.layers-edit-attributes</attribute></item>
     <submenu>
-      <attribute name="label">Blend Space</attribute>
-      <item><attribute name="action">app.layers-blend-space-auto</attribute></item>
-      <item><attribute name="action">app.layers-blend-space-rgb-linear</attribute></item>
-      <item><attribute name="action">app.layers-blend-space-rgb-perceptual</attribute></item>
+      <attribute name="label" translatable="yes" context="layers-action">Layers Menu</attribute>
+      <attribute name="icon">gimp-layers</attribute>
+
+      <item><attribute name="action">app.layers-edit-text</attribute></item>
+      <item><attribute name="action">app.layers-edit-attributes</attribute></item>
+      <submenu>
+        <attribute name="label">Blend Space</attribute>
+        <item><attribute name="action">app.layers-blend-space-auto</attribute></item>
+        <item><attribute name="action">app.layers-blend-space-rgb-linear</attribute></item>
+        <item><attribute name="action">app.layers-blend-space-rgb-perceptual</attribute></item>
+      </submenu>
+      <submenu>
+        <attribute name="label">Composite Space</attribute>
+        <item><attribute name="action">app.layers-composite-space-auto</attribute></item>
+        <item><attribute name="action">app.layers-composite-space-rgb-linear</attribute></item>
+        <item><attribute name="action">app.layers-composite-space-rgb-perceptual</attribute></item>
+      </submenu>
+      <submenu>
+        <attribute name="label">Composite Mode</attribute>
+        <item><attribute name="action">app.layers-composite-mode-auto</attribute></item>
+        <item><attribute name="action">app.layers-composite-mode-union</attribute></item>
+        <item><attribute name="action">app.layers-composite-mode-clip-to-backdrop</attribute></item>
+        <item><attribute name="action">app.layers-composite-mode-clip-to-layer</attribute></item>
+        <item><attribute name="action">app.layers-composite-mode-intersection</attribute></item>
+      </submenu>
+      <submenu>
+        <attribute name="label">Color Tags</attribute>
+        <item><attribute name="action">app.layers-color-tag-none</attribute></item>
+        <item><attribute name="action">app.layers-color-tag-blue</attribute></item>
+        <item><attribute name="action">app.layers-color-tag-green</attribute></item>
+        <item><attribute name="action">app.layers-color-tag-yellow</attribute></item>
+        <item><attribute name="action">app.layers-color-tag-orange</attribute></item>
+        <item><attribute name="action">app.layers-color-tag-brown</attribute></item>
+        <item><attribute name="action">app.layers-color-tag-red</attribute></item>
+        <item><attribute name="action">app.layers-color-tag-violet</attribute></item>
+        <item><attribute name="action">app.layers-color-tag-gray</attribute></item>
+      </submenu>
+      <section>
+        <item><attribute name="action">app.layers-new</attribute></item>
+        <item><attribute name="action">app.layers-new-from-visible</attribute></item>
+        <item><attribute name="action">app.layers-new-group</attribute></item>
+    <!--
+        <item><attribute name="action">app.layers-raise</attribute></item>
+        <item><attribute name="action">app.layers-raise-to-top</attribute></item>
+        <item><attribute name="action">app.layers-lower</attribute></item>
+        <item><attribute name="action">app.layers-lower-to-bottom</attribute></item>
+     -->
+        <item><attribute name="action">app.layers-duplicate</attribute></item>
+        <item><attribute name="action">app.layers-anchor</attribute></item>
+        <item><attribute name="action">app.layers-merge-down</attribute></item>
+        <item><attribute name="action">app.layers-merge-group</attribute></item>
+        <item><attribute name="action">app.layers-delete</attribute></item>
+      </section>
+      <section>
+        <item><attribute name="action">app.layers-text-discard</attribute></item>
+        <item><attribute name="action">app.layers-text-to-vectors</attribute></item>
+        <item><attribute name="action">app.layers-text-along-vectors</attribute></item>
+      </section>
+      <section>
+        <item><attribute name="action">app.layers-resize</attribute></item>
+        <item><attribute name="action">app.layers-resize-to-image</attribute></item>
+        <item><attribute name="action">app.layers-scale</attribute></item>
+      </section>
+      <section>
+        <item><attribute name="action">app.layers-mask-add</attribute></item>
+        <item><attribute name="action">app.layers-mask-apply</attribute></item>
+        <item><attribute name="action">app.layers-mask-delete</attribute></item>
+      </section>
+      <section>
+        <item><attribute name="action">app.layers-mask-show</attribute></item>
+        <item><attribute name="action">app.layers-mask-edit</attribute></item>
+        <item><attribute name="action">app.layers-mask-disable</attribute></item>
+        <item><attribute name="action">app.layers-mask-selection-replace</attribute></item>
+      </section>
+      <section>
+        <item><attribute name="action">app.layers-alpha-add</attribute></item>
+        <item><attribute name="action">app.layers-alpha-remove</attribute></item>
+        <item><attribute name="action">app.layers-alpha-selection-replace</attribute></item>
+      </section>
+      <section>
+        <item><attribute name="action">app.layers-merge-layers</attribute></item>
+        <item><attribute name="action">app.layers-flatten-image</attribute></item>
+      </section>
     </submenu>
-    <submenu>
-      <attribute name="label">Composite Space</attribute>
-      <item><attribute name="action">app.layers-composite-space-auto</attribute></item>
-      <item><attribute name="action">app.layers-composite-space-rgb-linear</attribute></item>
-      <item><attribute name="action">app.layers-composite-space-rgb-perceptual</attribute></item>
-    </submenu>
-    <submenu>
-      <attribute name="label">Composite Mode</attribute>
-      <item><attribute name="action">app.layers-composite-mode-auto</attribute></item>
-      <item><attribute name="action">app.layers-composite-mode-union</attribute></item>
-      <item><attribute name="action">app.layers-composite-mode-clip-to-backdrop</attribute></item>
-      <item><attribute name="action">app.layers-composite-mode-clip-to-layer</attribute></item>
-      <item><attribute name="action">app.layers-composite-mode-intersection</attribute></item>
-    </submenu>
-    <submenu>
-      <attribute name="label">Color Tags</attribute>
-      <item><attribute name="action">app.layers-color-tag-none</attribute></item>
-      <item><attribute name="action">app.layers-color-tag-blue</attribute></item>
-      <item><attribute name="action">app.layers-color-tag-green</attribute></item>
-      <item><attribute name="action">app.layers-color-tag-yellow</attribute></item>
-      <item><attribute name="action">app.layers-color-tag-orange</attribute></item>
-      <item><attribute name="action">app.layers-color-tag-brown</attribute></item>
-      <item><attribute name="action">app.layers-color-tag-red</attribute></item>
-      <item><attribute name="action">app.layers-color-tag-violet</attribute></item>
-      <item><attribute name="action">app.layers-color-tag-gray</attribute></item>
-    </submenu>
-    <section>
-      <item><attribute name="action">app.layers-new</attribute></item>
-      <item><attribute name="action">app.layers-new-from-visible</attribute></item>
-      <item><attribute name="action">app.layers-new-group</attribute></item>
-  <!--
-      <item><attribute name="action">app.layers-raise</attribute></item>
-      <item><attribute name="action">app.layers-raise-to-top</attribute></item>
-      <item><attribute name="action">app.layers-lower</attribute></item>
-      <item><attribute name="action">app.layers-lower-to-bottom</attribute></item>
-   -->
-      <item><attribute name="action">app.layers-duplicate</attribute></item>
-      <item><attribute name="action">app.layers-anchor</attribute></item>
-      <item><attribute name="action">app.layers-merge-down</attribute></item>
-      <item><attribute name="action">app.layers-merge-group</attribute></item>
-      <item><attribute name="action">app.layers-delete</attribute></item>
-    </section>
-    <section>
-      <item><attribute name="action">app.layers-text-discard</attribute></item>
-      <item><attribute name="action">app.layers-text-to-vectors</attribute></item>
-      <item><attribute name="action">app.layers-text-along-vectors</attribute></item>
-    </section>
-    <section>
-      <item><attribute name="action">app.layers-resize</attribute></item>
-      <item><attribute name="action">app.layers-resize-to-image</attribute></item>
-      <item><attribute name="action">app.layers-scale</attribute></item>
-    </section>
-    <section>
-      <item><attribute name="action">app.layers-mask-add</attribute></item>
-      <item><attribute name="action">app.layers-mask-apply</attribute></item>
-      <item><attribute name="action">app.layers-mask-delete</attribute></item>
-    </section>
-    <section>
-      <item><attribute name="action">app.layers-mask-show</attribute></item>
-      <item><attribute name="action">app.layers-mask-edit</attribute></item>
-      <item><attribute name="action">app.layers-mask-disable</attribute></item>
-      <item><attribute name="action">app.layers-mask-selection-replace</attribute></item>
-    </section>
-    <section>
-      <item><attribute name="action">app.layers-alpha-add</attribute></item>
-      <item><attribute name="action">app.layers-alpha-remove</attribute></item>
-      <item><attribute name="action">app.layers-alpha-selection-replace</attribute></item>
-    </section>
-    <section>
-      <item><attribute name="action">app.layers-merge-layers</attribute></item>
-      <item><attribute name="action">app.layers-flatten-image</attribute></item>
-    </section>
   </menu>
 </interface>

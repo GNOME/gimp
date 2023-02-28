@@ -135,7 +135,7 @@ gimp_menu_bar_set_property (GObject      *object,
     {
     case PROP_MODEL:
       bar->priv->model = g_value_dup_object (value);
-      gimp_menu_shell_fill (GIMP_MENU_SHELL (bar), bar->priv->model, "ui-added");
+      gimp_menu_shell_fill (GIMP_MENU_SHELL (bar), bar->priv->model, "ui-added", FALSE);
       break;
 
     default:
