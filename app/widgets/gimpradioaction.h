@@ -50,23 +50,26 @@ struct _GimpRadioActionClass
 };
 
 
-GType        gimp_radio_action_get_type          (void) G_GNUC_CONST;
+GType         gimp_radio_action_get_type          (void) G_GNUC_CONST;
 
-GimpAction * gimp_radio_action_new               (const gchar *name,
-                                                  const gchar *label,
-                                                  const gchar *tooltip,
-                                                  const gchar *icon_name,
-                                                  const gchar *help_id,
-                                                  gint         value,
-                                                  GimpContext *context);
+GimpAction  * gimp_radio_action_new               (const gchar *name,
+                                                   const gchar *label,
+                                                   const gchar *tooltip,
+                                                   const gchar *icon_name,
+                                                   const gchar *help_id,
+                                                   gint         value,
+                                                   GimpContext *context);
 
-GSList     * gimp_radio_action_get_group         (GimpRadioAction *action);
-void         gimp_radio_action_set_group         (GimpRadioAction *action,
-                                                  GSList          *group);
+GSList      * gimp_radio_action_get_group         (GimpRadioAction *action);
+void          gimp_radio_action_set_group         (GimpRadioAction *action,
+                                                   GSList          *group);
+void          gimp_radio_action_set_group_label   (GimpRadioAction *action,
+                                                   const gchar     *label);
+const gchar * gimp_radio_action_get_group_label   (GimpRadioAction *action);
 
-gint         gimp_radio_action_get_current_value (GimpRadioAction *action);
-void         gimp_radio_action_set_current_value (GimpRadioAction *action,
-                                                  gint             current_value);
+gint          gimp_radio_action_get_current_value (GimpRadioAction *action);
+void          gimp_radio_action_set_current_value (GimpRadioAction *action,
+                                                   gint             current_value);
 
 
 #endif  /* __GIMP_RADIO_ACTION_H__ */

@@ -48,6 +48,7 @@ ui_menus_files = files(
   'dynamics-menu.ui',
   'error-console-menu.ui',
   'fonts-menu.ui',
+  'gradient-editor-menu.ui',
   'gradients-menu.ui',
   'images-menu.ui',
   'layers-menu.ui',

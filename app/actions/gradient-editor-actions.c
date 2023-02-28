@@ -32,6 +32,7 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpgradienteditor.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpradioaction.h"
 
 #include "data-editor-commands.h"
 #include "gradient-editor-actions.h"
@@ -60,6 +61,9 @@ static const GimpActionEntry gradient_editor_actions[] =
   { "gradient-editor-save-right-color", GIMP_ICON_DOCUMENT_SAVE,
     NC_("gradient-editor-action", "Sa_ve Right Color To") },
 
+  /* TODO GMenu: remove these 2 bogus actions once old style XML menu files are
+   * deleted.
+   */
   { "gradient-editor-blending-func", NULL, "blending-function" },
   { "gradient-editor-coloring-type", NULL, "coloring-type"     },
 
@@ -577,6 +581,9 @@ gradient_editor_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_color (group, action, (color), (set_label))
 #define SET_LABEL(action,label) \
         gimp_action_group_set_action_label (group, action, (label))
+#define SET_GROUP_LABEL(action,label) \
+        gimp_radio_action_set_group_label (GIMP_RADIO_ACTION (gimp_action_group_get_action (group, action)), \
+                                           label)
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 #define SET_VISIBLE(action,condition) \
@@ -780,10 +787,10 @@ gradient_editor_actions_update (GimpActionGroup *group,
 
   if (! selection)
     {
-      SET_LABEL ("gradient-editor-blending-func",
-                 _("_Blending Function for Segment"));
-      SET_LABEL ("gradient-editor-coloring-type",
-                 _("Coloring _Type for Segment"));
+      SET_GROUP_LABEL ("gradient-editor-blending-linear",
+                       _("_Blending Function for Segment"));
+      SET_GROUP_LABEL ("gradient-editor-coloring-rgb",
+                       _("Coloring _Type for Segment"));
 
       SET_LABEL ("gradient-editor-flip",
                  _("_Flip Segment"));
@@ -802,10 +809,10 @@ gradient_editor_actions_update (GimpActionGroup *group,
     }
   else
     {
-      SET_LABEL ("gradient-editor-blending-func",
-                 _("_Blending Function for Selection"));
-      SET_LABEL ("gradient-editor-coloring-type",
-                 _("Coloring _Type for Selection"));
+      SET_GROUP_LABEL ("gradient-editor-blending-linear",
+                       _("_Blending Function for Selection"));
+      SET_GROUP_LABEL ("gradient-editor-coloring-rgb",
+                       _("Coloring _Type for Selection"));
 
       SET_LABEL ("gradient-editor-flip",
                  _("_Flip Selection"));

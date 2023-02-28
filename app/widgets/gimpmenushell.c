@@ -75,6 +75,9 @@ static void     gimp_menu_shell_radio_item_toggled      (GtkWidget            *i
 static void     gimp_menu_shell_action_activate         (GtkMenuItem          *item,
                                                          GimpAction           *action);
 
+static void     gimp_menu_shell_notify_group_label      (GimpRadioAction      *action,
+                                                         const GParamSpec     *pspec,
+                                                         GtkMenuItem          *item);
 static void     gimp_menu_shell_toggle_action_changed   (GimpAction           *action,
                                                          GVariant             *value G_GNUC_UNUSED,
                                                          GtkCheckMenuItem     *item);
@@ -392,6 +395,15 @@ gimp_menu_shell_action_activate (GtkMenuItem *item,
 }
 
 static void
+gimp_menu_shell_notify_group_label (GimpRadioAction  *action,
+                                    const GParamSpec *pspec,
+                                    GtkMenuItem      *item)
+{
+  gtk_menu_item_set_use_underline (item, TRUE);
+  gtk_menu_item_set_label (item, gimp_radio_action_get_group_label (action));
+}
+
+static void
 gimp_menu_shell_toggle_action_changed (GimpAction       *action,
                                        /* Unused because this is used for 2 signals
                                         * where the GVariant refers to different data.
@@ -508,6 +520,45 @@ gimp_menu_shell_append_model (GimpMenuShell *shell,
           item = gtk_separator_menu_item_new ();
           gtk_container_add (GTK_CONTAINER (shell), item);
           gtk_widget_show (item);
+        }
+      else if (submenu != NULL && label == NULL)
+        {
+          GApplication *app;
+          GAction      *action;
+          const gchar  *group_label;
+          GtkWidget    *subcontainer;
+          GtkWidget    *item;
+
+          group = NULL;
+
+          g_return_if_fail (action_name != NULL);
+
+          app    = priv->manager->gimp->app;
+          action = g_action_map_lookup_action (G_ACTION_MAP (app), action_name + 4);
+
+          /* As a special case, when a submenu has no label, we expect it to
+           * have an action attribute, which must be for a radio action. In such
+           * a case, we'll use the radio actions' group label as submenu title.
+           * See e.g.: menus/gradient-editor-menu.ui
+           */
+          g_return_if_fail (GIMP_IS_RADIO_ACTION (action));
+
+          group_label = gimp_radio_action_get_group_label (GIMP_RADIO_ACTION (action));
+
+          item = gtk_menu_item_new_with_mnemonic (group_label);
+          g_signal_connect_object (action, "notify::group-label",
+                                   G_CALLBACK (gimp_menu_shell_notify_group_label),
+                                   item, 0);
+          gtk_container_add (GTK_CONTAINER (shell), item);
+
+          subcontainer = gimp_menu_new (priv->manager);
+          gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), subcontainer);
+          gimp_menu_shell_append_model (GIMP_MENU_SHELL (subcontainer), submenu);
+          gtk_widget_show (subcontainer);
+
+          g_tree_insert (priv->submenus,
+                         gimp_menu_shell_make_canonical_path (group_label),
+                         subcontainer);
         }
       else if (submenu != NULL)
         {

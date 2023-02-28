@@ -49,17 +49,21 @@ enum
   PROP_0 = GIMP_ACTION_PROP_LAST,
   PROP_VALUE,
   PROP_GROUP,
+  PROP_GROUP_LABEL,
   PROP_CURRENT_VALUE
 };
 
 struct _GimpRadioActionPrivate
 {
   GSList *group;
+  gchar  *group_label;
+
   gint    value;
 };
 
 static void      gimp_radio_action_g_action_iface_init (GActionInterface *iface);
 
+static void      gimp_radio_action_finalize            (GObject          *object);
 static void      gimp_radio_action_get_property        (GObject          *object,
                                                         guint             prop_id,
                                                         GValue           *value,
@@ -97,6 +101,7 @@ gimp_radio_action_class_init (GimpRadioActionClass *klass)
   GObjectClass          *object_class = G_OBJECT_CLASS (klass);
   GimpToggleActionClass *toggle_class = GIMP_TOGGLE_ACTION_CLASS (klass);
 
+  object_class->finalize     = gimp_radio_action_finalize;
   object_class->get_property = gimp_radio_action_get_property;
   object_class->set_property = gimp_radio_action_set_property;
 
@@ -133,6 +138,19 @@ gimp_radio_action_class_init (GimpRadioActionClass *klass)
                                                         "The radio action whose group this action belongs to.",
                                                         GIMP_TYPE_RADIO_ACTION,
                                                         GIMP_PARAM_WRITABLE));
+
+  /**
+   * GimpRadioAction:group-label:
+   *
+   * Sets the group label. It will be common to all actions in a same group.
+   */
+  g_object_class_install_property (object_class, PROP_GROUP_LABEL,
+                                   g_param_spec_string ("group-label",
+                                                        "Group string",
+                                                        "The label for all the radio action in the group this action belongs to.",
+                                                        NULL,
+                                                        GIMP_PARAM_WRITABLE |
+                                                        G_PARAM_EXPLICIT_NOTIFY));
   /**
    * GimpRadioAction:value:
    *
@@ -165,7 +183,20 @@ gimp_radio_action_init (GimpRadioAction *action)
 {
   action->priv = gimp_radio_action_get_instance_private (action);
 
+  action->priv->group       = NULL;
+  action->priv->group_label = NULL;
+
   gimp_action_init (GIMP_ACTION (action));
+}
+
+static void
+gimp_radio_action_finalize (GObject *object)
+{
+  GimpRadioAction *radio = GIMP_RADIO_ACTION (object);
+
+  g_free (radio->priv->group_label);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -184,6 +215,10 @@ gimp_radio_action_get_property (GObject    *object,
     case PROP_CURRENT_VALUE:
       g_value_set_int (value,
                        gimp_radio_action_get_current_value (action));
+      break;
+    case PROP_GROUP_LABEL:
+      g_value_set_string (value,
+                          gimp_radio_action_get_group_label (action));
       break;
 
     default:
@@ -219,6 +254,9 @@ gimp_radio_action_set_property (GObject      *object,
           }
       }
     break;
+    case PROP_GROUP_LABEL:
+      gimp_radio_action_set_group_label (action, g_value_get_string (value));
+      break;
     case PROP_CURRENT_VALUE:
       gimp_radio_action_set_current_value (action,
                                            g_value_get_int (value));
@@ -350,10 +388,13 @@ gimp_radio_action_set_group (GimpRadioAction *action,
     }
 
   action->priv->group = g_slist_prepend (group, action);
+  g_clear_pointer (&action->priv->group_label, g_free);
 
   if (group)
     {
       GSList *slist;
+
+      action->priv->group_label = g_strdup (GIMP_RADIO_ACTION (group->data)->priv->group_label);
 
       for (slist = action->priv->group; slist; slist = slist->next)
         {
@@ -366,6 +407,37 @@ gimp_radio_action_set_group (GimpRadioAction *action,
     {
       gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action), TRUE);
     }
+
+  g_object_notify (G_OBJECT (action), "group-label");
+}
+
+void
+gimp_radio_action_set_group_label (GimpRadioAction *action,
+                                   const gchar     *label)
+{
+  GSList *slist;
+
+  g_return_if_fail (GIMP_IS_RADIO_ACTION (action));
+
+  for (slist = action->priv->group; slist; slist = slist->next)
+    {
+      GimpRadioAction *tmp_action = slist->data;
+
+      g_clear_pointer (&tmp_action->priv->group_label, g_free);
+
+      if (label != NULL)
+        tmp_action->priv->group_label = g_strdup (label);
+
+      g_object_notify (G_OBJECT (tmp_action), "group-label");
+    }
+}
+
+const gchar *
+gimp_radio_action_get_group_label (GimpRadioAction *action)
+{
+  g_return_val_if_fail (GIMP_IS_RADIO_ACTION (action), NULL);
+
+  return action->priv->group_label;
 }
 
 gint
