@@ -710,9 +710,9 @@ gimp_menu_shell_add_action (GimpMenuShell     *shell,
       g_signal_connect (item, "toggled",
                         G_CALLBACK (gimp_menu_shell_radio_item_toggled),
                         action);
-      g_signal_connect (action, "change-state",
-                        G_CALLBACK (gimp_menu_shell_toggle_action_changed),
-                        item);
+      g_signal_connect_object (action, "change-state",
+                               G_CALLBACK (gimp_menu_shell_toggle_action_changed),
+                               item, 0);
     }
   else if (GIMP_IS_TOGGLE_ACTION (action))
     {
@@ -722,9 +722,9 @@ gimp_menu_shell_add_action (GimpMenuShell     *shell,
       if (group)
         *group = NULL;
 
-      g_signal_connect (action, "change-state",
-                        G_CALLBACK (gimp_menu_shell_toggle_action_changed),
-                        item);
+      g_signal_connect_object (action, "change-state",
+                               G_CALLBACK (gimp_menu_shell_toggle_action_changed),
+                               item, 0);
     }
   else if (GIMP_IS_PROCEDURE_ACTION (action) ||
            GIMP_IS_ENUM_ACTION (action))
