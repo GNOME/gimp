@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-02-27 00:48+0000\n"
-"PO-Revision-Date: 2023-02-28 14:08+0000\n"
+"PO-Revision-Date: 2023-02-28 18:32+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -13971,16 +13971,16 @@ msgid "Multiple path selection was added in %s"
 msgstr "Vali með mörgum ferlum var bætt við í %s"
 
 #: app/core/gimpimage.c:2998
-#, fuzzy, c-format
+#, c-format
 #| msgid "Support for image files larger than 4GB was added in %s"
 msgid "Storing color tags in path was added in %s"
-msgstr "Stuðningi við skrár stærri en 4GB var bætt við í %s"
+msgstr "Stuðningi við að geyma litamerki í ferlum var bætt við í %s"
 
 #: app/core/gimpimage.c:3005
-#, fuzzy, c-format
+#, c-format
 #| msgid "Position locks on layer groups were added in %s"
 msgid "Storing locks in path was added in %s"
-msgstr "Læsing staðsetninga á hópuð lög var bætt við í %s"
+msgstr "Stuðningi við að geyma læsingar í ferlum var bætt við í %s"
 
 #: app/core/gimpimage.c:3019
 #, c-format
@@ -15515,7 +15515,7 @@ msgstr "_Ekki spyrja mig aftur"
 
 #: app/dialogs/color-profile-import-dialog.c:222
 msgid "Your choice can later be edited in Preferences > Color Management"
-msgstr ""
+msgstr "Þú getur breytt vali þínu síðar í Kjörstillingar > Litastýring"
 
 #: app/dialogs/convert-indexed-dialog.c:134
 msgid "Indexed Color Conversion"
@@ -21588,10 +21588,9 @@ msgid "Set text layer attribute"
 msgstr "Breyta eiginleikum textalags"
 
 #: app/pdb/text-layer-cmds.c:230
-#, fuzzy
 #| msgid "Set text layer attribute"
 msgid "Set text layer markup"
-msgstr "Breyta eiginleikum textalags"
+msgstr "Stja merkingu textalags"
 
 #: app/pdb/vectors-cmds.c:330
 msgid "Remove path stroke"
@@ -22324,7 +22323,7 @@ msgstr "Miðað við"
 #: app/tools/gimpalignoptions.c:149
 #| msgid "Reference image object a layer will be aligned on"
 msgid "Reference object targets will be aligned on"
-msgstr "Viðmiðunarmyndhluti sem atriði verða jöfnuð við"
+msgstr "Viðmiðunarmyndhluti sem markhlutar verða jafnaðir við"
 
 #: app/tools/gimpalignoptions.c:156
 #| msgctxt "line-art-source"
@@ -22334,7 +22333,7 @@ msgstr "Valin lög"
 
 #: app/tools/gimpalignoptions.c:157
 msgid "Selected layers will be aligned or distributed by the tool"
-msgstr ""
+msgstr "Völdum lögum verður jafnað eða dreift með verkfærinu"
 
 #: app/tools/gimpalignoptions.c:162
 #| msgctxt "undo-type"
@@ -22344,14 +22343,13 @@ msgstr "Valdir ferlar"
 
 #: app/tools/gimpalignoptions.c:163
 msgid "Selected paths will be aligned or distributed by the tool"
-msgstr ""
+msgstr "Völdum ferlum verður jafnað eða dreift með verkfærinu"
 
 #: app/tools/gimpalignoptions.c:168
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Change the size of the layer content"
 msgid "Use extents of layer contents"
-msgstr "Breyta stærð á innihaldi lagsins"
+msgstr "Nota útjaðra innihalds lagsins"
 
 #: app/tools/gimpalignoptions.c:169
 msgid ""
@@ -22366,11 +22364,10 @@ msgid "Targets"
 msgstr "Markhlutir"
 
 #: app/tools/gimpalignoptions.c:405
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Set a color profile on the image"
 msgid "Set anchor point of targets"
-msgstr "Setja litasnið fyrir myndina"
+msgstr "Setja festipunkt fyrir markhluti"
 
 #. TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd.
 #: app/tools/gimpalignoptions.c:424
@@ -22391,29 +22388,28 @@ msgstr "Veldu viðmiðunarhluta"
 
 #: app/tools/gimpalignoptions.c:483
 msgid "Align anchor points of targets on left edge of reference"
-msgstr ""
+msgstr "Jafna festipunkta markhluta á vinstri jaðar viðmiðunar"
 
 #: app/tools/gimpalignoptions.c:487
-#, fuzzy
 #| msgid "Transform in the local frame of reference"
 msgid "Align anchor points of targets on vertical middle of reference"
-msgstr "Umbreyta í staðværum tilvísunarramma"
+msgstr "Jafna festipunkta markhluta á lóðrétta miðju viðmiðunar"
 
 #: app/tools/gimpalignoptions.c:491
 msgid "Align anchor points of targets on right edge of reference"
-msgstr ""
+msgstr "Jafna festipunkta markhluta á hægri jaðar viðmiðunar"
 
 #: app/tools/gimpalignoptions.c:500
 msgid "Align anchor points of targets on top edge of reference"
-msgstr ""
+msgstr "Jafna festipunkta markhluta á efsta jaðar viðmiðunar"
 
 #: app/tools/gimpalignoptions.c:504
 msgid "Align anchor points of targets on horizontal middle of reference"
-msgstr ""
+msgstr "Jafna festipunkta markhluta á lárétta miðju viðmiðunar"
 
 #: app/tools/gimpalignoptions.c:508
 msgid "Align anchor points of targets on bottom of reference"
-msgstr ""
+msgstr "Jafna festipunkta markhluta neðst á viðmiðun"
 
 #. Distribute frame
 #: app/tools/gimpalignoptions.c:511
@@ -22421,10 +22417,9 @@ msgid "Distribute"
 msgstr "Dreifa"
 
 #: app/tools/gimpalignoptions.c:526
-#, fuzzy
 #| msgid "Distribute targets evenly in the horizontal"
 msgid "Distribute anchor points of targets evenly in the horizontal"
-msgstr "Dreifa markhlutum jafnt lárétt"
+msgstr "Dreifa festipunktum markhluta jafnt lárétt"
 
 #: app/tools/gimpalignoptions.c:529
 #| msgid "Distribute horizontal centers of targets"
@@ -22432,10 +22427,9 @@ msgid "Distribute horizontally with even horizontal gaps"
 msgstr "Dreifa lárétt með jöfnum láréttum bilum"
 
 #: app/tools/gimpalignoptions.c:538
-#, fuzzy
 #| msgid "Distribute targets evenly in the vertical"
 msgid "Distribute anchor points of targets evenly in the vertical"
-msgstr "Dreifa markhlutum jafnt lóðrétt"
+msgstr "Dreifa festipunktum markhluta jafnt lóðrétt"
 
 #: app/tools/gimpalignoptions.c:541
 #| msgid "Distribute vertical centers of targets"
@@ -22446,8 +22440,8 @@ msgstr "Dreifa lóðrétt með jöfnum lóðréttum bilum"
 #, c-format
 msgid "1 guide will be aligned or distributed"
 msgid_plural "%d guides will be aligned or distributed"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 stoðlínu verður jafnað eða dreift"
+msgstr[1] "%d stoðlínum verður jafnað eða dreift"
 
 #: app/tools/gimpalignoptions.c:822
 #, c-format
@@ -22503,22 +22497,19 @@ msgstr ""
 "Smelltu á lag, feril eða stoðlínu, eða Smella-Draga til að velja viðmiðun"
 
 #: app/tools/gimpaligntool.c:564
-#, fuzzy
 #| msgid "Click to pick this layer as first item"
 msgid "Click to pick this layer as reference"
-msgstr "Smelltu til að setja þetta lag sem fyrsta atriðið"
+msgstr "Smelltu til að velja þetta lag til viðmiðunar"
 
 #: app/tools/gimpaligntool.c:567
-#, fuzzy
 #| msgid "Click to pick this guide as first item"
 msgid "Click to pick this guide as reference"
-msgstr "Smelltu til að setja þessa stoðlínu sem fyrsta atriðið"
+msgstr "Smelltu til að velja þessa stoðlínu til viðmiðunar"
 
 #: app/tools/gimpaligntool.c:572
-#, fuzzy
 #| msgid "Click to pick this path as first item"
 msgid "Click to pick this path as reference"
-msgstr "Smelltu til að setja þennan feril sem fyrsta atriðið"
+msgstr "Smelltu til að velja þennan feril til viðmiðunar"
 
 #: app/tools/gimpaligntool.c:579
 msgid ""
@@ -22527,16 +22518,15 @@ msgid ""
 msgstr ""
 
 #: app/tools/gimpaligntool.c:583
-#, fuzzy
 #| msgid "Click to add this guide to the list"
 msgid "Click to select this guide for alignment"
-msgstr "Smelltu til að bæta þessari stoðlínu á listann"
+msgstr "Smelltu til að velja þessa stoðlínu til jöfnunar"
 
 #: app/tools/gimpaligntool.c:588
-#, fuzzy
 #| msgid "Click to add this guide to the list"
 msgid "Click to add this guide to the list of objects to align"
-msgstr "Smelltu til að bæta þessari stoðlínu á listann"
+msgstr ""
+"Smelltu til að bæta þessari stoðlínu á listann yfir hluti sem á að jafna"
 
 #: app/tools/gimpbrightnesscontrasttool.c:96
 msgid "Brightness-Contrast"
@@ -24910,10 +24900,9 @@ msgid "Style:"
 msgstr "Stíll:"
 
 #: app/tools/gimptextoptions.c:843
-#, fuzzy
 #| msgid "Other Options"
 msgid "Outline Options"
-msgstr "Aðrir valkostir"
+msgstr "Valkostir útlínu"
 
 #: app/tools/gimptextoptions.c:864
 msgid "Justify:"
@@ -27702,12 +27691,11 @@ msgid "Set layers mode"
 msgstr "Stilla ham laga"
 
 #: app/widgets/gimplayertreeview.c:1848
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Anchor the floating layer"
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
-msgstr "Festa fljótandi lagið"
+msgstr "Festa fljótandi laghuluna"
 
 #: app/widgets/gimplayertreeview.c:1851
 msgctxt "layers-action"
@@ -28296,10 +28284,9 @@ msgid "[ Base Image ]"
 msgstr "[ grunnmynd]"
 
 #: app/widgets/gimpvectorstreeview.c:111
-#, fuzzy
 #| msgid "Lock _alpha"
 msgid "Lock path"
-msgstr "Læsa _alfa-gegnsæislitrás"
+msgstr "Læsa ferli"
 
 #: app/widgets/gimpvectorstreeview.c:114
 msgid "Lock path position"
