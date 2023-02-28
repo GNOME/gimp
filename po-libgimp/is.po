@@ -3,13 +3,13 @@
 # Copyright (C) 2008, 2015 Free Software Foundation, Inc.
 #
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
-# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-09-06 17:58+0000\n"
-"PO-Revision-Date: 2022-09-08 16:48+0000\n"
+"POT-Creation-Date: 2023-02-27 00:49+0000\n"
+"PO-Revision-Date: 2023-02-28 13:17+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -19,11 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=1;\n"
 "X-Generator: Lokalize 21.12.3\n"
 
-#: libgimp/gimpbrushselectbutton.c:178
-msgid "Brush Selection"
-msgstr "Penslaval"
-
-#: libgimp/gimpbrushselectbutton.c:887 libgimp/gimppatternselectbutton.c:674
+#: libgimp/gimpbrushselectbutton.c:325 libgimp/gimppatternselectbutton.c:335
 msgid "_Browse..."
 msgstr "_Flakka..."
 
@@ -164,7 +160,7 @@ msgid "Confirm Save"
 msgstr "Staðfesta vistun"
 
 #: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:303 libgimpwidgets/gimpcolorbutton.c:553
+#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:553
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -186,7 +182,7 @@ msgid "_Ignore"
 msgstr "_Hunsa"
 
 #: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
-#: libgimp/gimpproceduredialog.c:275
+#: libgimp/gimpproceduredialog.c:277
 msgid "_Export"
 msgstr "_Flytja út"
 
@@ -225,18 +221,10 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:388
+#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:397
 #, c-format
 msgid "Export Image as %s"
 msgstr "Flytja mynd út sem %s"
-
-#: libgimp/gimpfontselectbutton.c:137
-msgid "Font Selection"
-msgstr "Val á leturgerð"
-
-#: libgimp/gimpgradientselectbutton.c:155
-msgid "Gradient Selection"
-msgstr "Litstigilsval"
 
 #: libgimp/gimpimagemetadata.c:306
 msgid "Background"
@@ -245,14 +233,6 @@ msgstr "Bakgrunnur"
 #: libgimp/gimpimagemetadata-save.c:654 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
-
-#: libgimp/gimppaletteselectbutton.c:136
-msgid "Palette Selection"
-msgstr "Litaspjaldsval"
-
-#: libgimp/gimppatternselectbutton.c:165
-msgid "Pattern Selection"
-msgstr "Mynsturval"
 
 #. procedure executed successfully
 #: libgimp/gimppdb.c:552
@@ -362,30 +342,30 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d aðgerð samsvarar fyrirspurn þinni"
 msgstr[1] "%d ferlar samsvara fyrirspurn þinni"
 
-#: libgimp/gimpprocedure.c:1906
+#: libgimp/gimpprocedure.c:1917
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Aðferðin '%s' skilaði engum gildum"
 
-#: libgimp/gimpprocedure.c:1997
+#: libgimp/gimpprocedure.c:2008
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"Aðferðin '%s' skilaði rangri tegund gildis fyrir niðurstöðugildið '%s' (#"
-"%d). Átti von á %s, fékk %s."
+"Aðferðin '%s' skilaði rangri tegund gildis fyrir niðurstöðugildið "
+"'%s' (#%d). Átti von á %s, fékk %s."
 
-#: libgimp/gimpprocedure.c:2009
+#: libgimp/gimpprocedure.c:2020
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
 "Aðferðin '%s' hefur verið kölluð fram með rangri tegund gildis fyrir "
 "frumbreytuna '%s' (#%d). Átti von á %s, fékk %s."
 
-#: libgimp/gimpprocedure.c:2044
+#: libgimp/gimpprocedure.c:2055
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -394,7 +374,7 @@ msgstr ""
 "Aðferðin '%s' skilaði '%s' sem niðurstöðugildi '%s' (#%d, tegund %s). Þetta "
 "gildi er fyrir utan sviðið."
 
-#: libgimp/gimpprocedure.c:2058
+#: libgimp/gimpprocedure.c:2069
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -403,12 +383,12 @@ msgstr ""
 "Aðferðin '%s' hefur verið kölluð fram með gildinu '%s' fyrir frumbreytuna "
 "'%s' (#%d, tegund %s). Þetta gildi er fyrir utan sviðið."
 
-#: libgimp/gimpprocedure.c:2102
+#: libgimp/gimpprocedure.c:2113
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Aðferðin '%s' svaraði með röngum UTF-8 streng fyrir frumbreytuna '%s'."
 
-#: libgimp/gimpprocedure.c:2112
+#: libgimp/gimpprocedure.c:2123
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -417,43 +397,65 @@ msgstr ""
 "Aðferðin '%s' hefur verið kölluð fram með röngum UTF-8 streng fyrir "
 "frumbreytuna '%s'."
 
-#: libgimp/gimpproceduredialog.c:273
+#: libgimp/gimpproceduredialog.c:275
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Opna"
 
-#: libgimp/gimpproceduredialog.c:277 libgimpwidgets/gimpcolorbutton.c:554
+#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:554
 #: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
 #: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
 #: libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "Í _lagi"
 
-#: libgimp/gimpproceduredialog.c:285 libgimpwidgets/gimpcolorbutton.c:552
+#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:552
 msgid "_Reset"
 msgstr "_Frumstilla"
 
-#: libgimp/gimpproceduredialog.c:337
+#: libgimp/gimpproceduredialog.c:339
 msgid "_Load Saved Settings"
 msgstr "H_laða inn vistuðum stillingum"
 
-#: libgimp/gimpproceduredialog.c:338
+#: libgimp/gimpproceduredialog.c:340
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Hlaða inn stillingum vistuðum með \"Vista stillingar\" hnappnum"
 
-#: libgimp/gimpproceduredialog.c:350
+#: libgimp/gimpproceduredialog.c:352
 msgid "_Save Settings"
 msgstr "Vi_sta stillingar"
 
-#: libgimp/gimpproceduredialog.c:351
+#: libgimp/gimpproceduredialog.c:353
 msgid "Store current settings for later reuse"
 msgstr "Geyma núverandi stillingar til notkunar síðar"
 
-#: libgimp/gimpproceduredialog.c:1964
+#: libgimp/gimpproceduredialog.c:734
+msgid "Brush Chooser"
+msgstr "Pensilval"
+
+#: libgimp/gimpproceduredialog.c:738
+msgid "Font Chooser"
+msgstr "Leturval"
+
+#: libgimp/gimpproceduredialog.c:742
+msgid "Gradient Chooser"
+msgstr "Litstigulsval"
+
+#: libgimp/gimpproceduredialog.c:746
+msgid "Palette Chooser"
+msgstr "Litaspjaldsval"
+
+#: libgimp/gimpproceduredialog.c:750
+#| msgctxt "clone-type"
+#| msgid "Pattern"
+msgid "Pattern Chooser"
+msgstr "Mynsturval"
+
+#: libgimp/gimpproceduredialog.c:1988
 msgid "Reset to _Initial Values"
 msgstr "Frumst_illa á upprunaleg gildi"
 
-#: libgimp/gimpproceduredialog.c:1973
+#: libgimp/gimpproceduredialog.c:1997
 msgid "Reset to _Factory Defaults"
 msgstr "_Frumstilla á gildi framleiðenda"
 
@@ -670,8 +672,6 @@ msgid "Black only"
 msgstr "Aðeins svart"
 
 #: libgimpbase/gimpbaseenums.c:245
-#| msgctxt "check-type"
-#| msgid "Mid-tone checks"
 msgctxt "check-type"
 msgid "Custom checks"
 msgstr "Sérsniðið köflótt"
@@ -1574,24 +1574,24 @@ msgstr "(ógildur UTF-8-strengur)"
 msgid "File path is NULL"
 msgstr "Skráarslóð er NÚLL"
 
-#: libgimpbase/gimputils.c:403 libgimpbase/gimputils.c:414
+#: libgimpbase/gimputils.c:402
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Villa við að umbreyta UTF-8 skráarheiti í wide char"
 
-#: libgimpbase/gimputils.c:422
+#: libgimpbase/gimputils.c:410
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() mistókst"
 
-#: libgimpbase/gimputils.c:459
+#: libgimpbase/gimputils.c:449
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Get ekki umbreytt '%s' í gilt NSURL."
 
-#: libgimpbase/gimputils.c:487
+#: libgimpbase/gimputils.c:477
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Tengingin við org.freedesktop.FileManager1 mistókst: "
 
-#: libgimpbase/gimputils.c:511
+#: libgimpbase/gimputils.c:501
 msgid "Calling ShowItems failed: "
 msgstr "Mistókst að kalla á ShowItems: "
 
@@ -1778,77 +1778,99 @@ msgstr ""
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Litur sem notaður er til að merkja þá liti sem falla utan litrófs."
 
-#: libgimpconfig/gimpcolorconfig.c:210
+#: libgimpconfig/gimpcolorconfig.c:114
+msgid ""
+"When enabled, set the color scales to display 0...255 instead of percentages"
+msgstr ""
+"Þegar þetta er virkt, eru litkvarðar stilltir á að birta 0...255 í stað"
+" prósentuhlutfalla"
+
+#: libgimpconfig/gimpcolorconfig.c:118
+msgid ""
+"When enabled, set the color scales to display HSV blend mode instead of LCh"
+msgstr ""
+"Þegar þetta er virkt, eru litkvarðar stilltir á að birta HSV-blöndunarham í"
+" stað LCh"
+
+#: libgimpconfig/gimpcolorconfig.c:222
 msgid "Mode of operation"
 msgstr "Aðgerðahamur"
 
-#: libgimpconfig/gimpcolorconfig.c:218
+#: libgimpconfig/gimpcolorconfig.c:230
 msgid "Preferred RGB profile"
 msgstr "Forgangs-RGB litasnið"
 
-#: libgimpconfig/gimpcolorconfig.c:225
+#: libgimpconfig/gimpcolorconfig.c:237
 msgid "Preferred grayscale profile"
 msgstr "Forgangs grátóna litasnið"
 
-#: libgimpconfig/gimpcolorconfig.c:232
+#: libgimpconfig/gimpcolorconfig.c:244
 msgid "CMYK profile"
 msgstr "CMYK litasnið"
 
-#: libgimpconfig/gimpcolorconfig.c:239
+#: libgimpconfig/gimpcolorconfig.c:251
 msgid "Monitor profile"
 msgstr "Litasnið skjás"
 
-#: libgimpconfig/gimpcolorconfig.c:246
+#: libgimpconfig/gimpcolorconfig.c:258
 msgid "Use the system monitor profile"
 msgstr "Reyna að nota skjálitasnið kerfisins"
 
-#: libgimpconfig/gimpcolorconfig.c:253
+#: libgimpconfig/gimpcolorconfig.c:265
 msgid "Simulation profile for soft-proofing"
 msgstr "Litasnið hermingar fyrir próförk"
 
-#: libgimpconfig/gimpcolorconfig.c:260
+#: libgimpconfig/gimpcolorconfig.c:272
 msgid "Display rendering intent"
 msgstr "Myndgerðarmarkmið fyrir skjá"
 
-#: libgimpconfig/gimpcolorconfig.c:268
+#: libgimpconfig/gimpcolorconfig.c:280
 msgid "Use black point compensation for the display"
 msgstr "Nota svartgildismótvægi (BPC) fyrir birtingu á skjá"
 
-#: libgimpconfig/gimpcolorconfig.c:275
+#: libgimpconfig/gimpcolorconfig.c:287
 msgid "Optimize display color transformations"
 msgstr "Besta litumbreytingar fyrir skjá"
 
-#: libgimpconfig/gimpcolorconfig.c:282
+#: libgimpconfig/gimpcolorconfig.c:294
 msgid "Soft-proofing rendering intent"
 msgstr "Myndgerðarmarkmið fyrir próförk"
 
-#: libgimpconfig/gimpcolorconfig.c:290
+#: libgimpconfig/gimpcolorconfig.c:302
 msgid "Use black point compensation for soft-proofing"
 msgstr "Nota svartgildismótvægi (BPC) fyrir próförk"
 
-#: libgimpconfig/gimpcolorconfig.c:297
+#: libgimpconfig/gimpcolorconfig.c:309
 msgid "Optimize soft-proofing color transformations"
 msgstr "Besta litumbreytingar fyrir sýndarpróförk"
 
-#: libgimpconfig/gimpcolorconfig.c:304
+#: libgimpconfig/gimpcolorconfig.c:316
 msgid "Mark out of gamut colors"
 msgstr "Merkja liti utan litrófs"
 
-#: libgimpconfig/gimpcolorconfig.c:311
+#: libgimpconfig/gimpcolorconfig.c:323
 msgid "Out of gamut warning color"
 msgstr "Aðvörunarlitur fyrir liti utan litrófs"
 
-#: libgimpconfig/gimpcolorconfig.c:661 libgimpconfig/gimpcolorconfig.c:854
+#: libgimpconfig/gimpcolorconfig.c:331
+msgid "Show RGB 0..255 scales"
+msgstr "Sýna RGB 0..255 kvarða"
+
+#: libgimpconfig/gimpcolorconfig.c:338
+msgid "Show HSV instead of LCH"
+msgstr "Sýna HSV í stað LCH"
+
+#: libgimpconfig/gimpcolorconfig.c:699 libgimpconfig/gimpcolorconfig.c:892
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Litasniðið '%s' er ekki fyrir RGB litrýmd."
 
-#: libgimpconfig/gimpcolorconfig.c:705 libgimpconfig/gimpcolorconfig.c:904
+#: libgimpconfig/gimpcolorconfig.c:743 libgimpconfig/gimpcolorconfig.c:942
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Litasniðið '%s' er ekki fyrir GRÁA litrýmd."
 
-#: libgimpconfig/gimpcolorconfig.c:749 libgimpconfig/gimpcolorconfig.c:954
+#: libgimpconfig/gimpcolorconfig.c:787 libgimpconfig/gimpcolorconfig.c:992
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Litasniðið '%s' er ekki fyrir CMYK litrýmd."
@@ -2041,23 +2063,23 @@ msgstr "Framleiðandi: "
 msgid "Copyright: "
 msgstr "Höfundarréttur: "
 
-#: libgimpwidgets/gimpcolorscales.c:205
+#: libgimpwidgets/gimpcolorscales.c:212
 msgid "Scales"
 msgstr "Kvarðar"
 
-#: libgimpwidgets/gimpcolorscales.c:434
+#: libgimpwidgets/gimpcolorscales.c:446
 msgid "0..100"
 msgstr "0..100"
 
-#: libgimpwidgets/gimpcolorscales.c:436
+#: libgimpwidgets/gimpcolorscales.c:448
 msgid "0..255"
 msgstr "0..255"
 
-#: libgimpwidgets/gimpcolorscales.c:457
+#: libgimpwidgets/gimpcolorscales.c:469
 msgid "LCh"
 msgstr "LCh"
 
-#: libgimpwidgets/gimpcolorscales.c:459
+#: libgimpwidgets/gimpcolorscales.c:471
 msgid "HSV"
 msgstr "HSV"
 
@@ -2183,7 +2205,7 @@ msgstr "Fjarlægja valda möppu úr lista"
 msgid "Writable"
 msgstr "Skrifanlegt"
 
-#: libgimpwidgets/gimppickbutton.c:120
+#: libgimpwidgets/gimppickbutton.c:123
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2946,6 +2968,21 @@ msgstr "Umferðir birtuskila"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Birtuskil"
+
+#~ msgid "Brush Selection"
+#~ msgstr "Penslaval"
+
+#~ msgid "Font Selection"
+#~ msgstr "Val á leturgerð"
+
+#~ msgid "Gradient Selection"
+#~ msgstr "Litstigilsval"
+
+#~ msgid "Palette Selection"
+#~ msgstr "Litaspjaldsval"
+
+#~ msgid "Pattern Selection"
+#~ msgstr "Mynsturval"
 
 #, c-format
 #~ msgid "Conversion of the filename to system codepage failed."
