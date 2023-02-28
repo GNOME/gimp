@@ -583,6 +583,9 @@ gimp_gradient_editor_set_selection (GimpGradientEditor  *editor,
 
   editor->control_sel_l = left;
   editor->control_sel_r = right;
+
+  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
+                          gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
 }
 
 void
@@ -1036,6 +1039,9 @@ gradient_editor_replace_selection (GimpGradientEditor  *editor,
 
   editor->control_sel_l = replace_seg;
   editor->control_sel_r = replace_last;
+
+  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
+                          gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
 }
 
 static void
@@ -1862,6 +1868,9 @@ control_select_single_segment (GimpGradientEditor  *editor,
 {
   editor->control_sel_l = seg;
   editor->control_sel_r = seg;
+
+  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
+                          gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
 }
 
 static void
@@ -1874,6 +1883,9 @@ control_extend_selection (GimpGradientEditor  *editor,
     editor->control_sel_l = seg;
   else
     editor->control_sel_r = seg;
+
+  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
+                          gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
 }
 
 /*****/
