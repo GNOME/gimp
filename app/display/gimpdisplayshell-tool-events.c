@@ -586,6 +586,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               {
               case GIMP_MODIFIER_ACTION_MENU:
                 gimp_display_triggers_context_menu (event, shell, gimp, &image_coords, TRUE);
+                shell->mod_action = GIMP_MODIFIER_ACTION_NONE;
                 break;
               case GIMP_MODIFIER_ACTION_PANNING:
               case GIMP_MODIFIER_ACTION_ZOOMING:
