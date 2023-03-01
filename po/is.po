@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-02-27 00:48+0000\n"
-"PO-Revision-Date: 2023-02-28 18:32+0000\n"
+"PO-Revision-Date: 2023-03-01 10:16+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -11707,12 +11707,16 @@ msgid ""
 "The first color to use in the transparency checkerboard, when Transparency "
 "Type is set to Custom colors."
 msgstr ""
+"Fyrsti liturinn sem á að nota í köflóttu reitunum sem tákna gegnsæi, þegar"
+" tegund gegnsæis er stillt á sérsniðna liti."
 
 #: app/config/gimprc-blurbs.h:730
 msgid ""
 "The second color to use in the transparency checkerboard, when Transparency "
 "Type is set to Custom colors."
 msgstr ""
+"Annar liturinn sem á að nota í köflóttu reitunum sem tákna gegnsæi, þegar"
+" tegund gegnsæis er stillt á sérsniðna liti."
 
 #: app/config/gimprc-blurbs.h:734
 msgid "Sets the manner in which transparency is displayed in images."
@@ -11720,7 +11724,7 @@ msgstr "Stillir hvernig gegnsæi í myndum í myndum."
 
 #: app/config/gimprc-blurbs.h:737
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr "Stillir stærð tiglana sem sýna gegnsæi."
+msgstr "Stillir stærð köflóttu reitanna sem sýna gegnsæi."
 
 #: app/config/gimprc-blurbs.h:740
 msgid ""
@@ -18754,6 +18758,8 @@ msgid ""
 "Toggle soft-proofing view when a soft-proofing profile is set\n"
 "Right-click to show the soft-proofing options"
 msgstr ""
+"Víxla sýn fyrir sýndarpróförk af/á þegar snið sýndarprófarkar er stillt\n"
+"Hægrismelltu til að birta valkosti fyrir sýndarpróförk"
 
 #: app/display/gimpstatusbar.c:492
 msgid "_Proof Colors"
@@ -22356,6 +22362,8 @@ msgid ""
 "Instead of aligning or distributing on layer borders, use its content "
 "bounding box"
 msgstr ""
+"Í stað þess að jafna eða dreifa miðað við jaðra lags, skal nota umgjarðir"
+" innihalds lagsins"
 
 #. Selected objects
 #: app/tools/gimpalignoptions.c:383
@@ -22373,7 +22381,7 @@ msgstr "Setja festipunkt fyrir markhluti"
 #: app/tools/gimpalignoptions.c:424
 #, c-format
 msgid "%s-pick target guides (%s-%s to add more)"
-msgstr ""
+msgstr "%s-veldu markstoðlínur (%s-%s til að bæta við fleiri)"
 
 #. Align frame
 #: app/tools/gimpalignoptions.c:441
@@ -22516,6 +22524,8 @@ msgid ""
 "Click on a guide to add it to objects to align, click anywhere else to "
 "unselect all guides"
 msgstr ""
+"Smelltu á stoðlínu til að bæta henni í þá hluti sem á að jafna, smelltu"
+" annarsstaðar til að afvelja allar stoðlínur"
 
 #: app/tools/gimpaligntool.c:583
 #| msgid "Click to add this guide to the list"
@@ -22611,6 +22621,8 @@ msgid ""
 "Consider pixels of selected layer and filled with the fill color as line art "
 "closure"
 msgstr ""
+"Tekur mið af mynddílum valins lags og fyllir með fyllilit þegar línuteikningu"
+" er lokað"
 
 #: app/tools/gimpbucketfilloptions.c:253
 msgid "Stroke borders"
@@ -22637,6 +22649,8 @@ msgid ""
 "Geometric analysis of the stroke contours to close line arts by splines/"
 "segments"
 msgstr ""
+"Flatarmálsgreining á útjöðrum stroku til að loka línumyndum miðað við"
+" sveiglínur/búta"
 
 #: app/tools/gimpbucketfilloptions.c:273
 msgid "Maximum gap length"
@@ -27721,7 +27735,7 @@ msgstr "Smelltu hér til að stilla breytilykla hnapps"
 
 #: app/widgets/gimpmodifierseditor.c:198
 msgid "Modifiers cannot be customized on the primary button."
-msgstr ""
+msgstr "Breytilykla er ekki hægt að sérsníða á aðalhnappnum."
 
 #: app/widgets/gimpmodifierseditor.c:338
 #, c-format
