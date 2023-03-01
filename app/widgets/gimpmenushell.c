@@ -70,7 +70,7 @@ static void     gimp_menu_shell_ui_added                (GimpUIManager        *m
                                                          gboolean              top,
                                                          GimpMenuShell        *shell);
 
-static void     gimp_menu_shell_radio_item_toggled      (GtkWidget            *item,
+static void     gimp_menu_shell_toggle_item_toggled     (GtkWidget            *item,
                                                          GAction              *action);
 static void     gimp_menu_shell_action_activate         (GtkMenuItem          *item,
                                                          GimpAction           *action);
@@ -78,8 +78,7 @@ static void     gimp_menu_shell_action_activate         (GtkMenuItem          *i
 static void     gimp_menu_shell_notify_group_label      (GimpRadioAction      *action,
                                                          const GParamSpec     *pspec,
                                                          GtkMenuItem          *item);
-static void     gimp_menu_shell_toggle_action_changed   (GimpAction           *action,
-                                                         GVariant             *value G_GNUC_UNUSED,
+static void     gimp_menu_shell_toggle_action_toggled   (GimpAction           *action,
                                                          GtkCheckMenuItem     *item);
 static void     gimp_menu_shell_action_notify_sensitive (GimpAction           *action,
                                                          const GParamSpec     *pspec,
@@ -393,12 +392,18 @@ gimp_menu_shell_ui_added (GimpUIManager *manager,
 }
 
 static void
-gimp_menu_shell_radio_item_toggled (GtkWidget *item,
-                                    GAction   *action)
+gimp_menu_shell_toggle_item_toggled (GtkWidget *item,
+                                     GAction   *action)
 {
   gboolean active = gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (item));
 
+  g_signal_handlers_block_by_func (action,
+                                   G_CALLBACK (gimp_menu_shell_toggle_action_toggled),
+                                   item);
   gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action), active);
+  g_signal_handlers_unblock_by_func (action,
+                                     G_CALLBACK (gimp_menu_shell_toggle_action_toggled),
+                                     item);
 }
 
 static void
@@ -418,26 +423,18 @@ gimp_menu_shell_notify_group_label (GimpRadioAction  *action,
 }
 
 static void
-gimp_menu_shell_toggle_action_changed (GimpAction       *action,
-                                       /* Unused because this is used for 2 signals
-                                        * where the GVariant refers to different data.
-                                        */
-                                       GVariant         *value G_GNUC_UNUSED,
+gimp_menu_shell_toggle_action_toggled (GimpAction       *action,
                                        GtkCheckMenuItem *item)
 {
-  gchar    *action_name;
-  gboolean  active;
+  gboolean active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
-  action_name = g_strdup (gtk_actionable_get_action_name (GTK_ACTIONABLE (item)));
-  active      = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
-
-  /* Make sure we don't activate the action. */
-  gtk_actionable_set_action_name (GTK_ACTIONABLE (item), NULL);
-
+  g_signal_handlers_block_by_func (item,
+                                   G_CALLBACK (gimp_menu_shell_toggle_item_toggled),
+                                   action);
   gtk_check_menu_item_set_active (item, active);
-
-  gtk_actionable_set_action_name (GTK_ACTIONABLE (item), action_name);
-  g_free (action_name);
+  g_signal_handlers_unblock_by_func (item,
+                                   G_CALLBACK (gimp_menu_shell_toggle_item_toggled),
+                                   action);
 }
 
 static void
@@ -706,32 +703,30 @@ gimp_menu_shell_add_action (GimpMenuShell     *shell,
   action_label = gimp_action_get_label (GIMP_ACTION (action));
   g_return_if_fail (action_label != NULL);
 
-  if (GIMP_IS_RADIO_ACTION (action))
+  if (GIMP_IS_TOGGLE_ACTION (action))
     {
-      item = gtk_radio_menu_item_new_with_mnemonic_from_widget (group ? *group : NULL, action_label);
+      if (GIMP_IS_RADIO_ACTION (action))
+        item = gtk_radio_menu_item_new_with_mnemonic_from_widget (group ? *group : NULL,
+                                                                  action_label);
+      else
+        item = gtk_check_menu_item_new_with_mnemonic (action_label);
+
       gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
                                       gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action)));
 
       if (group)
-        *group = GTK_RADIO_MENU_ITEM (item);
+        {
+          if (GIMP_IS_RADIO_ACTION (action))
+            *group = GTK_RADIO_MENU_ITEM (item);
+          else
+            *group = NULL;
+        }
 
       g_signal_connect (item, "toggled",
-                        G_CALLBACK (gimp_menu_shell_radio_item_toggled),
+                        G_CALLBACK (gimp_menu_shell_toggle_item_toggled),
                         action);
-      g_signal_connect_object (action, "change-state",
-                               G_CALLBACK (gimp_menu_shell_toggle_action_changed),
-                               item, 0);
-    }
-  else if (GIMP_IS_TOGGLE_ACTION (action))
-    {
-      item  = gtk_check_menu_item_new_with_mnemonic (action_label);
-      gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
-                                      gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action)));
-      if (group)
-        *group = NULL;
-
-      g_signal_connect_object (action, "change-state",
-                               G_CALLBACK (gimp_menu_shell_toggle_action_changed),
+      g_signal_connect_object (action, "toggled",
+                               G_CALLBACK (gimp_menu_shell_toggle_action_toggled),
                                item, 0);
     }
   else if (GIMP_IS_PROCEDURE_ACTION (action) ||
@@ -752,9 +747,10 @@ gimp_menu_shell_add_action (GimpMenuShell     *shell,
 
       if (group)
         *group = NULL;
+
+      gtk_actionable_set_action_name (GTK_ACTIONABLE (item), action_name);
     }
 
-  gtk_actionable_set_action_name (GTK_ACTIONABLE (item), action_name);
   gimp_action_set_proxy (GIMP_ACTION (action), item);
 
   gtk_widget_set_sensitive (GTK_WIDGET (item),

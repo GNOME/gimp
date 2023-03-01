@@ -312,6 +312,7 @@ gimp_radio_action_activate (GAction  *action,
   radio = GIMP_RADIO_ACTION (action);
 
   gimp_radio_action_set_current_value (radio, radio->priv->value);
+  g_signal_emit_by_name (radio, "toggled");
 }
 
 static gboolean
