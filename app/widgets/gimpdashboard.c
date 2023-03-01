@@ -5001,30 +5001,21 @@ void
 gimp_dashboard_menu_setup (GimpUIManager *manager,
                            const gchar   *ui_path)
 {
-  guint merge_id;
   Group group;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
-  merge_id = gimp_ui_manager_new_merge_id (manager);
-
   for (group = FIRST_GROUP; group < N_GROUPS; group++)
     {
       const GroupInfo *group_info = &groups[group];
       gchar           *action_name;
-      gchar           *action_path;
 
       action_name = g_strdup_printf ("dashboard-group-%s", group_info->name);
-      action_path = g_strdup_printf ("%s/Groups/Groups", ui_path);
 
-      /* TODO GMenu: for the "/dashboard-popup/Groups/" apparently. */
-      gimp_ui_manager_add_ui (manager, merge_id,
-                              action_path, action_name, action_name,
-                              GTK_UI_MANAGER_MENUITEM,
-                              FALSE);
+      gimp_ui_manager_add_ui2 (manager, "/Dashboard Menu/Groups",
+                               action_name, "Groups", FALSE);
 
       g_free (action_name);
-      g_free (action_path);
     }
 }

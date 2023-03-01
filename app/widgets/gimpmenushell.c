@@ -109,6 +109,10 @@ static gchar ** gimp_menu_shell_break_path              (GimpMenuShell         *
                                                          const gchar           *path);
 static gchar  * gimp_menu_shell_make_canonical_path     (const gchar           *path);
 
+static gboolean gimp_menu_shell_copy_placeholders       (gpointer               key,
+                                                         gpointer               item,
+                                                         GTree                 *placeholders);
+
 
 G_DEFINE_INTERFACE (GimpMenuShell, gimp_menu_shell, GTK_TYPE_MENU_SHELL)
 
@@ -189,8 +193,12 @@ gimp_menu_shell_merge (GimpMenuShell *shell,
       g_object_unref (item);
     }
 
-  g_list_free (children);
+  g_tree_foreach (GET_PRIVATE (shell2)->placeholders,
+                  (GTraverseFunc) gimp_menu_shell_copy_placeholders,
+                  GET_PRIVATE (shell)->placeholders);
+
   gtk_widget_destroy (GTK_WIDGET (shell2));
+  g_list_free (children);
 }
 
 
@@ -876,4 +884,13 @@ gimp_menu_shell_make_canonical_path (const gchar *path)
   g_strfreev (split_path);
 
   return canon_path;
+}
+
+static gboolean
+gimp_menu_shell_copy_placeholders (gpointer  key,
+                                   gpointer  item,
+                                   GTree    *placeholders)
+{
+  g_tree_insert (placeholders, g_strdup ((gchar *) key), item);
+  return FALSE;
 }

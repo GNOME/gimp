@@ -742,7 +742,7 @@ gimp_ui_manager_ui_popup_at_widget (GimpUIManager  *manager,
   model = gimp_ui_manager_get_model (manager, ui_path);
   menu  = gimp_menu_new (manager);
   gtk_menu_attach_to_widget (GTK_MENU (menu), widget, NULL);
-  gimp_menu_shell_fill (GIMP_MENU_SHELL (menu), model, NULL, TRUE);
+  gimp_menu_shell_fill (GIMP_MENU_SHELL (menu), model, "ui-added", TRUE);
 
   if (! menu)
     return;
@@ -755,7 +755,7 @@ gimp_ui_manager_ui_popup_at_widget (GimpUIManager  *manager,
       /* TODO GMenu: the "icon" attribute set in the .ui file should be visible. */
       child_model = gimp_ui_manager_get_model (child_ui_manager, child_ui_path);
       child_menu  = gimp_menu_new (child_ui_manager);
-      gimp_menu_shell_fill (GIMP_MENU_SHELL (child_menu), child_model, NULL, FALSE);
+      gimp_menu_shell_fill (GIMP_MENU_SHELL (child_menu), child_model, "ui-added", FALSE);
 
       gimp_menu_shell_merge (GIMP_MENU_SHELL (menu), GIMP_MENU_SHELL (child_menu), TRUE);
     }
@@ -795,7 +795,7 @@ gimp_ui_manager_ui_popup_at_pointer (GimpUIManager  *manager,
   model = gimp_ui_manager_get_model (manager, ui_path);
   menu  = gimp_menu_new (manager);
   gtk_menu_attach_to_widget (GTK_MENU (menu), attached_widget, NULL);
-  gimp_menu_shell_fill (GIMP_MENU_SHELL (menu), model, NULL, TRUE);
+  gimp_menu_shell_fill (GIMP_MENU_SHELL (menu), model, "ui-added", TRUE);
 
   if (! menu)
     return;
@@ -836,7 +836,7 @@ gimp_ui_manager_ui_popup_at_rect (GimpUIManager      *manager,
   model = gimp_ui_manager_get_model (manager, ui_path);
   menu  = gimp_menu_new (manager);
   gtk_menu_attach_to_widget (GTK_MENU (menu), attached_widget, NULL);
-  gimp_menu_shell_fill (GIMP_MENU_SHELL (menu), model, NULL, TRUE);
+  gimp_menu_shell_fill (GIMP_MENU_SHELL (menu), model, "ui-added", TRUE);
 
   if (! menu)
     return;

@@ -44,6 +44,7 @@ ui_menus_files = files(
   'buffers-menu.ui',
   'channels-menu.ui',
   'colormap-menu.ui',
+  'dashboard-menu.ui',
   'documents-menu.ui',
   'dynamics-menu.ui',
   'error-console-menu.ui',
