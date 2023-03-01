@@ -7,13 +7,13 @@
 # Helgi Þormar Þorbjörnsson  <helgi@trance.is>, 2004.
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
 # Sveinn í Felli <sveinki@nett.is>, 2009.
-# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016, 2017, 2018, 2019, 2020, 2022.
+# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016, 2017, 2018, 2019, 2020, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-09-06 22:35+0000\n"
-"PO-Revision-Date: 2022-09-08 16:53+0000\n"
+"POT-Creation-Date: 2023-02-26 12:35+0000\n"
+"PO-Revision-Date: 2023-03-01 10:23+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -78,65 +78,124 @@ msgid "Photo editing in GIMP"
 msgstr "Myndvinnsla í GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
+msgid "A new stable releases with a lot of bug fixes and a few enhancements:"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+#| msgid "Open the palette selection dialog"
+msgid "New template selector in \"Canvas Size\" dialog"
+msgstr "Nýtt val sniðmáta í glugganum \"Stærð myndflatar\""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+msgid ""
+"\"Change Color\" dialogs: color scale (0..255/0..100) and models (LCh/HSV) "
+"settings remembered across sessions"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+msgid "New header with \"visible\" and \"link\" icons in item dockables"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+msgid "Clipping layers better supported when importing PSD files"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+msgid "Paths are now exported to PSD"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+msgid "JPEG XL export added"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+msgid "Metadata in JPEG XL import"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+msgid "New option \"Show reduced images\" when loading TIFF images"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+msgid "16-bit per channel export for raw image data"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+msgid ""
+"More plug-ins got bug-fixes: DDS, WebP, Flame, Animation Playback, HEIF, "
+"Dicom and Help"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+msgid ""
+"Color picking on X11 will ignore the Wayland portal; new implementation for "
+"color picking on Windows"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#| msgid "Check for updates"
+msgid "Check for updates fixed on macOS"
+msgstr "Lagfæringar á leit að uppfærslum á macOS"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
 "GIMP continues strengthening its bases with this new version 2.10.32 fixing "
 "many bugs and improving format support. Notable changes:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "8 and 16-bit CMYK(A) TIFF files import is now supported"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
-#| msgid "HEIF import/export: color profile support"
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "BIGTIFF import and export are now supported"
 msgstr "Nú er stuðningur við BIGTIFF inn- og útflutning"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "JPEG XL files import is now supported"
 msgstr "Nú er stuðningur við innflutning JPEG XL skráa"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
 "DDS export has new \"Flip\" (useful for some game engine) and \"Visible "
 "layers\" options"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "Other improved format supports: BMP, DICOM, EPS, RAW, TGA, WebP"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "The screenshot plug-in on Windows has now an option to capture the cursor"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "Several usability improvements in official themes and icons"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
 "New support for localized glyphs ('locl') in Text tool depending on the "
 "value of the \"Language\" tool option"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "More robust XCF import"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "Several metadata handling improvements"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid ""
 "GIMP 2.10.30 fixes many bugs, updates backend implementations to follow OS "
 "evolutions, improves metadata support as well as support of several formats, "
 "such as PSD and AVIF."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
@@ -144,7 +203,7 @@ msgstr ""
 "GIMP 2.10.28 lagar vandamál við byggingu GIMP 2.10.26, þar sem sum gögn "
 "varðandi þemu voru ekki rétt uppsett."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
@@ -152,95 +211,95 @@ msgstr ""
 "GIMP 2.10.26 er fyrst og fremst útgáfa fyrir villulagfæringar, bæði í "
 "kjarna, skriftum og kóða viðbóta."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr ""
 "GIMP 2.10.24 er fyrst og fremst útgáfa fyrir villulagfæringar og bestanir. "
 "Helstar eru:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "GeoTIFF metadata support added"
 msgstr "Bætt við stuðningi við GeoTIFF-lýsigögn"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid ""
 "PDF import now proposes an option to load layers in reverse orders and "
 "allows fractional pixel density"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "Raw image import updated to handle API changes in darktable 3.6 and over"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
 "Stuðningur við fleiri skráasnið: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, "
 "PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "Many fixes and improvements to the metadata viewer and editor"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "New Kabyle translation"
 msgstr "Ný Kabyle-þýðing"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
 msgstr ""
 "GIMP 2.10.22 er fyrst og fremst útgáfa fyrir villulagfæringar og bestanir. "
 "Helstar eru:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Multiple improvements in Corel PaintShop Pro support"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "\"Sample merged\" is now enabled by default for color picking"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "New progressive performance logs and dashboard updates"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "Various bug fixes"
 msgstr "Ýmsar villuleiðréttingar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
@@ -248,161 +307,161 @@ msgstr ""
 "GIMP 2.10.20 kemur með margar villulagfæringar og bestanir ýmsum atriðum. "
 "Eftirtektarverðar breytingar eru:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing "
 "channels in the right order"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "On-canvas controls for the Vignette filter"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr ""
 "Nýjar síur: Blómi, Fókusafskerping, Linsuafskerping, Breytileg afskerping"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid "Over 30 bugfixes"
 msgstr "Yfir 30 villuleiðréttingar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid ""
 "GIMP 2.10.16 delivers several major usability improvements, a new tool for "
 "transformations in 3D space, new release checker, and the usual amount of "
 "bug fixes. Notable improvements:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid "Tools are now grouped in the toolbox by default"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid "Sliders now use a compact style with improved user interaction"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid "Vastly improved user experience for the transformation preview"
 msgstr "Mikið endurbætt upplifun notenda á forskoðun ummyndana"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid "New 3D Transform tool to rotate and pan items"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid "Much smoother brush outline motion on the canvas"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid "Update check to notify users that a new release/installer is available"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 msgid ""
 "GIMP 2.10.14 is again mostly a bug fix release, making GIMP rock-solid. "
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
 "has a few noteworthy improvements:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid "Free Select tool: improved copy-paste interaction"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid "Transform tools: new Image transform type to transform the whole image"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid "HEIF import/export: color profile support"
 msgstr "HEIF inn-/útflutningur: stuðningur við litasnið"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid "PDF export: text layers in layer groups now exported as texts"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid "TIFF import: now asks how to process unspecified TIFF channels"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid ""
 "GIMP 2.10.12 is a significant bug fix release, which is to be expected after "
 "a 2.10.10 with so many changes! Still, very cool improvements are also "
 "available, in particular for curves editing:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid "Improved curves interaction overall"
 msgstr "Bætt almenn víxlverkun ferla"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid "A few enhancements specific to the Curves tool"
 msgstr "Nokkrar endurbætur sérstaklega fyrir ferlaverkfærið"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid "Layer support in TIFF"
 msgstr "Stuðningur við lög í TIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "Discovery of user-installed fonts in Windows"
 msgstr "Leit að uppsettu letri notenda í Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "Incremental mode in the Dodge/Burn tool"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid "Free Select tool creates preliminary selection"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
 msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
@@ -410,7 +469,7 @@ msgstr ""
 "GIMP 2.10.10 er ansi mikil uppfærsla með mörgum nýjum eiginleikum og "
 "villulagfæringum. Eftirtektarverðar lagfæringar eru:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
@@ -418,11 +477,11 @@ msgstr ""
 "Fyllingarverkfæri: nýtt \"Fylla með greindri línumynd\" fyrir svæði í "
 "línumynd (line-art) sem ekki eru fullkomlega lokuð"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
@@ -430,70 +489,70 @@ msgstr ""
 "Fyllingarverkfærð gerir kleift að fylla \"áþekka liti\" og \"með greindri "
 "línumynd\" með því að halda músinni"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
 msgid "Scale tool scales around center even when using numeric input"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
 msgid "Parametric brushes now 32-bit float to avoid posterization"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid "Clipboard brushes and pattern can now be duplicated"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid "Several optimizations including faster layer group rendering"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr ""
 "Diskminnis- og biðminnisskrár eru ekki lengur vistaðar í stillingamöppuna"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid "HiDPI support improvements"
 msgstr "Endurbætur á HiDPI-stuðningi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid "New preference to choose the default export file type"
 msgstr "Ný kjörstilling til að velja sjálfgefna skráartegund útflutnings"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
@@ -501,17 +560,17 @@ msgstr ""
 "Nýr valkostur til að flytja út PNG, JPEG og TIFF með litasniði; alltaf "
 "flytja út PSD með litasniði"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
 msgid "New DDS format loading/exporting plug-in"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
@@ -519,29 +578,29 @@ msgstr ""
 "GIMP 2.10.4 er fyrst og fremst útgáfa fyrir villulagfæringar og bestanir. "
 "Helstar eru:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
@@ -549,47 +608,47 @@ msgstr ""
 "GIMP 2.10.6 kemur með margar villulagfæringar, bestanir og nýja eiginleika. "
 "Eftirtektarverðar breytingar eru:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr "Ný sía \"Lítil pláneta\" (gegl:stereographic-projection - rúmsjármynd)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
 msgid "New \"Long Shadow\" filter"
 msgstr "Ný 'Langur skuggi' sía"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr "Nýtt tungumál (þar með er GIMP þýtt á 81 tungumál): Marathi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
@@ -597,27 +656,27 @@ msgstr ""
 "GIMP 2.10.4 kemur með margar villulagfæringar og bestanir ýmsum atriðum. "
 "Eftirtektarverðar breytingar eru:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr "Hröð ræsing: innhleðsla á letri tefur ekki lengur fyrir ræsingu"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
@@ -625,14 +684,14 @@ msgstr ""
 "Uppfærsla á stjórnborði: nýr hópur um \"Minni\" og bætt framsetning á hóp um "
 "\"Diskminni\" þar sem birtast ýmsar mælingar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
 "fixed."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -640,17 +699,17 @@ msgid ""
 "policy in stable micro releases."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr "Vinnsla mynda með mikilli litadýpt (16/32-bitar á hverja litrás)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
@@ -658,32 +717,32 @@ msgstr ""
 "Litastýring er núna kjarnaeiginleiki, flestir viðmótshlutar og "
 "forskoðunarsvæði eru litastýrð"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
 msgid "Most tools improved, several new transformation tools"
 msgstr "Flest verkfæri betrumbætt, nokkur ný ummyndunarverkfæri"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
 "Bættur stuðningur við margar gerðir myndskráa, sérstaklega betri "
 "innflutningur PSD-skráa"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "Nýstudd skráasnið mynda: OpenEXR, RGBE, WebP, HGT…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
@@ -691,40 +750,40 @@ msgstr ""
 "Bætt stafræn málun: snúningur og fletting myndflatar, samhverf málun, "
 "MyPaint málunarpenslar…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr "Skoðun og meðhöndlun lýsigagna fyrir EXIF, XMP, IPTC og DICOM"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr "Grunnstuðningur við HiDPI: sjálfvirk eða notendastýrð stærð táknmynda"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "Ný þemu fyrir GIMP: Ljóst, Grátt, Dökkt, og Kerfislitir"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
 msgid "And much, much more…"
 msgstr "Og margt, margt fleira…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
 "order to provide a smoother painting experience. Bigger changes are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
@@ -732,21 +791,21 @@ msgstr ""
 "\"Ljóst\" og \"Dökkt\" þemu hafa verið endurskrifuð frá grunni til að losna "
 "við ýmis notkunarvandamál. \"Ljósara\" og \"Dekkra\" þemu voru fjarlægð."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
 "(yaw, pitch, roll)."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
 "warnings and critical errors when \"fatal-warnings\" debug key is set"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -756,11 +815,11 @@ msgstr ""
 "útgáfunni, með áherslu á villulagfæringar og stöðugleika. Fyrir utan margar "
 "leiðréttingar á villum, eru helstu eiginleikarnir þessir:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr "Nýtt tengjanlegt stjórnborð til að vakta notkun GIMP á tilföngum"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -768,34 +827,34 @@ msgstr ""
 "Nýr aflúsunargluggi til að útbúa afturrakningu og önnur villuleitargögn, á "
 "að virka hvetjandi til að tilkynna villur"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
 msgid "Unsaved images can now be recovered after a crash"
 msgstr "Óvistaðar myndir er hægt að endurheimta eftir hrun"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
 msgid "Layer masks on layer groups"
 msgstr "Laghulur á hópuð lög"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "Endurbættur stuðningur við JPEG 2000 vegna hárrar bitadýptar og marvíslegra "
 "litarýmda"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 "Endurbættur stuðningur við litaplokkara og skjámyndatöku á mörgum stýrikerfum"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
 msgid "Metadata defaults preferences now available"
 msgstr "Kjörstillingar sjálfgefinna lýsigagna eru núna tiltækar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
 msgid "Various GUI polishing"
 msgstr "Ýmis fínisering notandaviðmóts"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -803,47 +862,47 @@ msgstr ""
 "GIMP 2.9.8 kemur með breytingar litstigla á myndfleti auk ýmissa endurbóta "
 "með áherslu á villulagfæringar og stöðugleika."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
 msgid "On-canvas gradient editing"
 msgstr "Breyta litstiglum á myndfleti"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
 msgid "Notification when an image is over/underexposed"
 msgstr "Tilkynning þegar mynd er yfirlýst/undirlýst"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
 msgid "Better and faster color management"
 msgstr "Betri og hraðari litastýring"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr "Stuðningur við litaplokkara og skjámyndatöku í KDE Plasma á Wayland"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
 msgid "Paste in place feature"
 msgstr "Líma á staðnum eiginleiki"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
 msgid "Many usability improvements"
 msgstr "Margar endurbætur á notagildi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "Hægt er að birta handbina á umbeðnu tungumáli notandans"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Endurbætur á 'Aðskilja í smábylgjur'-síunni (Wavelet Decompose)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Bætt samhæfni við Photoshop .psd skrár"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
 msgid "New support for password-protected PDF"
 msgstr "Nýr stuðningur við PDF-skrár sem læst er með aðgangsorði"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Nýr stuðningur við HGT-skráasnið (gögn stafræns hæðarlíkans)"
 
@@ -1221,7 +1280,7 @@ msgid "Images"
 msgstr "Myndir"
 
 #: ../app/actions/actions.c:195 ../app/dialogs/dialogs.c:372
-#: ../app/dialogs/resize-dialog.c:144 ../app/widgets/gimppickablepopup.c:227
+#: ../app/dialogs/resize-dialog.c:172 ../app/widgets/gimppickablepopup.c:227
 msgid "Layers"
 msgstr "Lög"
 
@@ -3267,7 +3326,7 @@ msgstr "240 sekúndur"
 #: ../app/dialogs/preferences-dialog.c:667
 #: ../app/dialogs/preferences-dialog.c:1135
 #: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
-#: ../app/dialogs/resize-dialog.c:186
+#: ../app/dialogs/resize-dialog.c:226
 #: ../app/dialogs/resolution-calibrate-dialog.c:75
 #: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
 #: ../app/dialogs/template-options-dialog.c:118
@@ -3361,7 +3420,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:116 ../app/actions/tool-options-commands.c:75
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2180
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2195
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -6708,91 +6767,96 @@ msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "_Grátóna..."
 
-#: ../app/actions/image-commands.c:566
+#: ../app/actions/image-commands.c:569
 #, c-format
 msgid "Saving color profile failed: %s"
 msgstr "Tókst ekki að vista litasnið: %s"
 
-#: ../app/actions/image-commands.c:606
+#: ../app/actions/image-commands.c:609
 msgid "Save Color Profile"
 msgstr "Vista litasnið"
 
-#: ../app/actions/image-commands.c:655
+#: ../app/actions/image-commands.c:658
 msgid "Set Image Canvas Size"
 msgstr "Stilla stærð myndflatar"
 
-#: ../app/actions/image-commands.c:686 ../app/actions/image-commands.c:711
-#: ../app/actions/image-commands.c:1410
+#: ../app/actions/image-commands.c:689 ../app/actions/image-commands.c:714
+#: ../app/actions/image-commands.c:1420
 msgid "Resizing"
 msgstr "Breyti stærð"
 
-#: ../app/actions/image-commands.c:745
+#: ../app/actions/image-commands.c:748
 msgid "Set Image Print Resolution"
 msgstr "Stilla myndupplausn fyrir prentun"
 
-#: ../app/actions/image-commands.c:815 ../app/pdb/drawable-transform-cmds.c:174
+#: ../app/actions/image-commands.c:818 ../app/pdb/drawable-transform-cmds.c:174
 #: ../app/pdb/drawable-transform-cmds.c:269
 #: ../app/pdb/item-transform-cmds.c:228 ../app/tools/gimpfliptool.c:136
 msgid "Flipping"
 msgstr "Fletting"
 
-#: ../app/actions/image-commands.c:842 ../app/pdb/drawable-transform-cmds.c:650
+#: ../app/actions/image-commands.c:845 ../app/pdb/drawable-transform-cmds.c:650
 #: ../app/pdb/drawable-transform-cmds.c:749
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:536
 #: ../app/pdb/transform-tools-cmds.c:265 ../app/tools/gimprotatetool.c:131
 msgid "Rotating"
 msgstr "Sný"
 
-#: ../app/actions/image-commands.c:870 ../app/actions/layers-commands.c:859
+#: ../app/actions/image-commands.c:873 ../app/actions/layers-commands.c:862
 msgid "Cannot crop because the current selection is empty."
 msgstr "Get ekki utansniðið þar sem núverandi val er tómt."
 
-#: ../app/actions/image-commands.c:909
+#: ../app/actions/image-commands.c:912
 msgid "Cannot crop because the image has no content."
 msgstr "Get ekki utansniðið þar sem myndin er ekki með neinu innihaldi."
 
-#: ../app/actions/image-commands.c:915
+#: ../app/actions/image-commands.c:918
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr "Get ekki utansniðið þar sem myndin er þegar skorin að innihaldi sínu."
 
-#: ../app/actions/image-commands.c:1081
+#: ../app/actions/image-commands.c:1084
 #, c-format
 msgid "Converting to RGB (%s)"
 msgstr "Umbreyti í RGB (%s)"
 
-#: ../app/actions/image-commands.c:1119
+#: ../app/actions/image-commands.c:1122
 #, c-format
 msgid "Converting to grayscale (%s)"
 msgstr "Umbreyti í grátóna (%s)"
 
-#: ../app/actions/image-commands.c:1181
+#: ../app/actions/image-commands.c:1184
 msgid "Converting to indexed colors"
 msgstr "Breyti mynd í númeraða liti"
 
-#: ../app/actions/image-commands.c:1269
+#: ../app/actions/image-commands.c:1272
 #, c-format
 msgid "Converting image to %s"
 msgstr "Umbreyti mynd í '%s"
 
-#: ../app/actions/image-commands.c:1300
+#: ../app/actions/image-commands.c:1303
 msgid "Assign color profile"
 msgstr "Úthluta litasniði"
 
-#: ../app/actions/image-commands.c:1346
+#: ../app/actions/image-commands.c:1349
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Umbreyti í '%s'"
 
-#: ../app/actions/image-commands.c:1452
+#: ../app/actions/image-commands.c:1433
+#| msgid "Set Image Canvas Size"
+msgid "Change Canvas Size"
+msgstr "Stilla stærð myndflatar"
+
+#: ../app/actions/image-commands.c:1481
 msgid "Change Print Size"
 msgstr "Breyta prentstærð"
 
-#: ../app/actions/image-commands.c:1496
+#: ../app/actions/image-commands.c:1525
 msgid "Scale Image"
 msgstr "Kvarða mynd"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1505 ../app/actions/layers-commands.c:1668
+#: ../app/actions/image-commands.c:1534 ../app/actions/layers-commands.c:1671
 #: ../app/dialogs/preferences-dialog.c:1705
 #: ../app/pdb/drawable-transform-cmds.c:843
 #: ../app/pdb/drawable-transform-cmds.c:939
@@ -7664,49 +7728,49 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Í _nýtt lag"
 
-#: ../app/actions/layers-commands.c:265 ../app/actions/layers-commands.c:1517
+#: ../app/actions/layers-commands.c:268 ../app/actions/layers-commands.c:1520
 msgid "Layer Attributes"
 msgstr "Eiginleikar lags"
 
-#: ../app/actions/layers-commands.c:268
+#: ../app/actions/layers-commands.c:271
 msgid "Edit Layer Attributes"
 msgstr "Breyta eiginleikum lags"
 
-#: ../app/actions/layers-commands.c:342
+#: ../app/actions/layers-commands.c:345
 #: ../app/widgets/gimpdrawabletreeview.c:343
 #: ../app/widgets/gimplayertreeview.c:905
 msgid "New Layer"
 msgstr "Nýtt lag"
 
-#: ../app/actions/layers-commands.c:345
+#: ../app/actions/layers-commands.c:348
 msgid "Create a New Layer"
 msgstr "Búa til nýtt lag"
 
-#: ../app/actions/layers-commands.c:447
+#: ../app/actions/layers-commands.c:450
 msgid "Visible"
 msgstr "Sýnilegt"
 
-#: ../app/actions/layers-commands.c:762
+#: ../app/actions/layers-commands.c:765
 msgid "Set Layer Boundary Size"
 msgstr "Stilla mörk lags"
 
-#: ../app/actions/layers-commands.c:826
+#: ../app/actions/layers-commands.c:829
 msgid "Scale Layer"
 msgstr "Kvarða lag"
 
-#: ../app/actions/layers-commands.c:869
+#: ../app/actions/layers-commands.c:872
 msgid "Crop Layer to Selection"
 msgstr "Utansníða lag að myndvali"
 
-#: ../app/actions/layers-commands.c:900
+#: ../app/actions/layers-commands.c:903
 msgid "Crop Layer to Content"
 msgstr "Utansníða lag að innihaldi"
 
-#: ../app/actions/layers-commands.c:913
+#: ../app/actions/layers-commands.c:916
 msgid "Cannot crop because the active layer has no content."
 msgstr "Get ekki utansniðið þar sem virka lagið er ekki með neinu innihaldi."
 
-#: ../app/actions/layers-commands.c:920
+#: ../app/actions/layers-commands.c:923
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Get ekki utansniðið þar sem virka lagið er þegar skorið að innihaldi sínu."
@@ -11017,8 +11081,8 @@ msgstr "Ferill"
 #: ../app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "Þegar þetta er virkjað, verður mynd að virkri mynd þegar myndgluggi hennar "
 "fær fókus (verður virki glugginn á skjáborðinu). Þetta getur verið gagnlegt "
@@ -13507,7 +13571,7 @@ msgid "Gradient"
 msgstr "Litstigull"
 
 #: ../app/core/gimpcontext.c:750 ../app/core/gimpcontext.c:751
-#: ../app/widgets/gimpcolorselectorpalette.c:59
+#: ../app/widgets/gimpcolorselectorpalette.c:60
 msgid "Palette"
 msgstr "Litaspjald"
 
@@ -13891,64 +13955,64 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Ummynda lagahóp"
 
-#: ../app/core/gimpimage.c:691 ../app/widgets/gimpsymmetryeditor.c:175
+#: ../app/core/gimpimage.c:692 ../app/widgets/gimpsymmetryeditor.c:181
 msgid "Symmetry"
 msgstr "Samhverfa"
 
-#: ../app/core/gimpimage.c:2425
+#: ../app/core/gimpimage.c:2440
 msgid " (exported)"
 msgstr " (flutt út)"
 
-#: ../app/core/gimpimage.c:2429
+#: ../app/core/gimpimage.c:2444
 msgid " (overwritten)"
 msgstr " (yfirskrifað)"
 
-#: ../app/core/gimpimage.c:2438
+#: ../app/core/gimpimage.c:2453
 msgid " (imported)"
 msgstr " (flutt inn)"
 
-#: ../app/core/gimpimage.c:2612 ../app/core/gimpimage.c:2626
-#: ../app/core/gimpimage.c:2669
+#: ../app/core/gimpimage.c:2627 ../app/core/gimpimage.c:2641
+#: ../app/core/gimpimage.c:2684
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Lagahamnum '%s' var bætt við í %s"
 
-#: ../app/core/gimpimage.c:2684
+#: ../app/core/gimpimage.c:2699
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Lagahópum var bætt við í %s"
 
-#: ../app/core/gimpimage.c:2691
+#: ../app/core/gimpimage.c:2706
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Laghulum á hópuð lög var bætt við í %s"
 
-#: ../app/core/gimpimage.c:2707
+#: ../app/core/gimpimage.c:2722
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Myndum með hárri bitadýpt var bætt við í %s"
 
-#: ../app/core/gimpimage.c:2719
+#: ../app/core/gimpimage.c:2734
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Innri Zlib-þjöppun var bætt við í %s"
 
-#: ../app/core/gimpimage.c:2736
+#: ../app/core/gimpimage.c:2751
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Stuðningi við skrár stærri en 4GB var bætt við í %s"
 
-#: ../app/core/gimpimage.c:2832
+#: ../app/core/gimpimage.c:2847
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Breyta myndupplausn"
 
-#: ../app/core/gimpimage.c:2884
+#: ../app/core/gimpimage.c:2899
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Breyta einingum myndar"
 
-#: ../app/core/gimpimage.c:3835
+#: ../app/core/gimpimage.c:3850
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13956,47 +14020,47 @@ msgstr ""
 "Fullgilding á 'gimp-comment' sníkli mistókst: athugasemd inniheldur ógilt "
 "UTF-8"
 
-#: ../app/core/gimpimage.c:3894
+#: ../app/core/gimpimage.c:3909
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Festa sníkil við mynd"
 
-#: ../app/core/gimpimage.c:3936
+#: ../app/core/gimpimage.c:3951
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Fjarlægja sníkil úr mynd"
 
-#: ../app/core/gimpimage.c:4667
+#: ../app/core/gimpimage.c:4682
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Bæta við lagi"
 
-#: ../app/core/gimpimage.c:4709 ../app/core/gimpimage.c:4740
+#: ../app/core/gimpimage.c:4724 ../app/core/gimpimage.c:4755
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Fjarlægja lag"
 
-#: ../app/core/gimpimage.c:4734
+#: ../app/core/gimpimage.c:4749
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Fjarlægja fljótandi val"
 
-#: ../app/core/gimpimage.c:4901
+#: ../app/core/gimpimage.c:4916
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Bæta við litrás"
 
-#: ../app/core/gimpimage.c:4929 ../app/core/gimpimage.c:4953
+#: ../app/core/gimpimage.c:4944 ../app/core/gimpimage.c:4968
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Fjarlægja litrás"
 
-#: ../app/core/gimpimage.c:5009
+#: ../app/core/gimpimage.c:5024
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Bæta við ferli"
 
-#: ../app/core/gimpimage.c:5039 ../app/core/gimpimage.c:5046
+#: ../app/core/gimpimage.c:5054 ../app/core/gimpimage.c:5061
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Fjarlægja feril"
@@ -14143,8 +14207,8 @@ msgid "Convert Image to 64 bit gamma floating point"
 msgstr "Umbreyta myndinni í 64 bita litrófsaðlagaða fleytitölu"
 
 #. dithering
-#: ../app/core/gimpimage-convert-precision.c:268
-#: ../app/core/gimpimage-convert-precision.c:289
+#: ../app/core/gimpimage-convert-precision.c:272
+#: ../app/core/gimpimage-convert-precision.c:293
 #: ../app/dialogs/convert-indexed-dialog.c:241
 #: ../app/dialogs/convert-precision-dialog.c:224
 #: ../app/tools/gimpgradientoptions.c:128
@@ -14880,6 +14944,7 @@ msgstr "Herma eftir pensilhreyfingum"
 #. no undo (or redo) steps available
 #: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:410
 #: ../app/widgets/gimpsymmetryeditor.c:165
+#: ../app/widgets/gimpsymmetryeditor.c:175
 msgid "None"
 msgstr "Ekkert"
 
@@ -15738,7 +15803,7 @@ msgid "Create a New Image"
 msgstr "Búa til nýja mynd"
 
 #: ../app/dialogs/image-new-dialog.c:138
-#: ../app/dialogs/preferences-dialog.c:1767
+#: ../app/dialogs/preferences-dialog.c:1767 ../app/dialogs/resize-dialog.c:257
 msgid "_Template:"
 msgstr "Sniðmá_t:"
 
@@ -15931,7 +15996,7 @@ msgstr "Hliðrun X:"
 msgid "Offset Y:"
 msgstr "Hliðrun Y:"
 
-#: ../app/dialogs/layer-options-dialog.c:396 ../app/dialogs/resize-dialog.c:369
+#: ../app/dialogs/layer-options-dialog.c:396 ../app/dialogs/resize-dialog.c:516
 #: ../app/widgets/gimptemplateeditor.c:466
 msgid "_Fill with:"
 msgstr "_Fylla með:"
@@ -17796,62 +17861,89 @@ msgstr "Vista þessa mynd"
 msgid "Save as"
 msgstr "Vista sem"
 
-#: ../app/dialogs/resize-dialog.c:143
+#: ../app/dialogs/resize-dialog.c:171
 msgid "Canvas Size"
 msgstr "Stærð myndflatar"
 
-#: ../app/dialogs/resize-dialog.c:155 ../app/dialogs/scale-dialog.c:114
+#: ../app/dialogs/resize-dialog.c:183 ../app/dialogs/scale-dialog.c:114
 msgid "Layer Size"
 msgstr "Stærð lags"
 
-#: ../app/dialogs/resize-dialog.c:156
+#: ../app/dialogs/resize-dialog.c:184
 msgid "Fill With"
 msgstr "Fylla með"
 
-#: ../app/dialogs/resize-dialog.c:185
+#: ../app/dialogs/resize-dialog.c:225
 msgid "Re_set"
 msgstr "F_rumstilla"
 
-#: ../app/dialogs/resize-dialog.c:187
+#: ../app/dialogs/resize-dialog.c:227
 msgid "_Resize"
 msgstr "_Breyta stærð"
 
+#: ../app/dialogs/resize-dialog.c:294
+#| msgid "Replicate Selection"
+msgid "Reset the template selection"
+msgstr "Endurstilla val á sniðmátum"
+
+#: ../app/dialogs/resize-dialog.c:301
+msgid ""
+"Template and image print resolution don't match.\n"
+"Choose how to scale the canvas:"
+msgstr ""
+"Sniðmát og prentupplausn myndar samsvara ekki.\n"
+"Veldu hvernig eigi að kvarða myndflötinn:"
+
+#. offset frame
 #. The offset frame
 #. offset frame
-#: ../app/dialogs/resize-dialog.c:230 ../app/tools/gimpalignoptions.c:100
+#: ../app/dialogs/resize-dialog.c:380 ../app/tools/gimpalignoptions.c:100
 #: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpgradientoptions.c:88
 #: ../app/tools/gimpoffsettool.c:129 ../app/tools/gimpoffsettool.c:459
 #: ../app/tools/gimptransform3dtool.c:343 ../app/widgets/gimpgrideditor.c:209
 msgid "Offset"
 msgstr "Hliðrun"
 
-#: ../app/dialogs/resize-dialog.c:259 ../app/tools/gimpoffsettool.c:488
+#: ../app/dialogs/resize-dialog.c:409 ../app/tools/gimpoffsettool.c:488
 #: ../app/tools/gimptransform3dtool.c:271
 #: ../app/tools/gimptransform3dtool.c:383
 msgid "_X:"
 msgstr "_X:"
 
-#: ../app/dialogs/resize-dialog.c:260 ../app/tools/gimpoffsettool.c:490
+#: ../app/dialogs/resize-dialog.c:410 ../app/tools/gimpoffsettool.c:490
 #: ../app/tools/gimptransform3dtool.c:272
 #: ../app/tools/gimptransform3dtool.c:389
 msgid "_Y:"
 msgstr "_Y:"
 
-#: ../app/dialogs/resize-dialog.c:277
+#. Button to center the image on canvas just below the preview.
+#: ../app/dialogs/resize-dialog.c:452
 msgid "C_enter"
 msgstr "_Miðja"
 
-#: ../app/dialogs/resize-dialog.c:331
+#: ../app/dialogs/resize-dialog.c:478
 msgid "Resize _layers:"
 msgstr "Breyta stærð _laga:"
 
-#: ../app/dialogs/resize-dialog.c:379
+#: ../app/dialogs/resize-dialog.c:526
 msgid "Resize _text layers"
 msgstr "Breyta stærð _textalaga"
 
-#: ../app/dialogs/resize-dialog.c:390
+#: ../app/dialogs/resize-dialog.c:537
 msgid "Resizing text layers will make them uneditable"
 msgstr "Stærðarbreyting textalaga gerir þau óritanleg"
+
+#: ../app/dialogs/resize-dialog.c:759
+#, c-format
+#| msgid "_Scale imported paths to fit image"
+msgid "Scale template to %.2f ppi"
+msgstr "Kvarða sniðmát í %.2f ppi"
+
+#: ../app/dialogs/resize-dialog.c:764
+#, c-format
+#| msgid "Converting image to %s"
+msgid "Set image to %.2f ppi"
+msgstr "Setja mynd í %.2f ppi"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:69
 msgid "Calibrate Monitor Resolution"
@@ -18175,7 +18267,7 @@ msgstr "Flakka um sýniglugga myndar"
 msgid "Drop image files here to open them"
 msgstr "Slepptu myndskrám hér til að opna þær"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:621
+#: ../app/display/gimpdisplayshell-callbacks.c:625
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -18393,7 +18485,7 @@ msgstr "Lag valið: '%s'"
 msgid "pixels"
 msgstr "mynddílar"
 
-#: ../app/display/gimpstatusbar.c:472
+#: ../app/display/gimpstatusbar.c:475
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Hætta við <i>%s</i>"
@@ -18490,33 +18582,33 @@ msgstr "%s fyrir þrepaskipta ása"
 msgid "%s to zoom"
 msgstr "%s til að breyta aðdrætti"
 
-#: ../app/display/gimptoolhandlegrid.c:865
+#: ../app/display/gimptoolhandlegrid.c:896
 #: ../app/display/gimptooltransformgrid.c:1832
 msgid "Click-Drag to move"
 msgstr "Smelltu-Dragðu til að færa"
 
-#: ../app/display/gimptoolhandlegrid.c:868
+#: ../app/display/gimptoolhandlegrid.c:899
 msgid "Click-Drag to rotate and scale"
 msgstr "Smella-Draga til að snúa og kvarða"
 
-#: ../app/display/gimptoolhandlegrid.c:871
+#: ../app/display/gimptoolhandlegrid.c:902
 msgid "Click-Drag to shear and scale"
 msgstr "Smella-Draga til að skekkja og kvarða"
 
-#: ../app/display/gimptoolhandlegrid.c:874
+#: ../app/display/gimptoolhandlegrid.c:905
 #: ../app/display/gimptooltransformgrid.c:1820
 msgid "Click-Drag to change perspective"
 msgstr "Smelltu-Dragðu til að breyta fjarvídd (sjónarhorni)"
 
-#: ../app/display/gimptoolhandlegrid.c:885
+#: ../app/display/gimptoolhandlegrid.c:916
 msgid "Click to add a handle"
 msgstr "Smella til að bæta við haldfangi"
 
-#: ../app/display/gimptoolhandlegrid.c:891
+#: ../app/display/gimptoolhandlegrid.c:922
 msgid "Click-Drag to move this handle"
 msgstr "Smelltu-Dragðu til að færa þetta haldfang"
 
-#: ../app/display/gimptoolhandlegrid.c:896
+#: ../app/display/gimptoolhandlegrid.c:927
 msgid "Click-Drag to remove this handle"
 msgstr "Smelltu-Dragðu til að fjarlægja þetta haldfang"
 
@@ -20246,18 +20338,18 @@ msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Birtustig-Birtuskil"
 
-#: ../app/pdb/color-cmds.c:148 ../app/pdb/drawable-color-cmds.c:610
+#: ../app/pdb/color-cmds.c:148 ../app/pdb/drawable-color-cmds.c:657
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Litatíðnidreifing"
 
-#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:680
+#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:785
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Þrykkja"
 
 #: ../app/pdb/color-cmds.c:286 ../app/pdb/color-cmds.c:327
-#: ../app/pdb/drawable-color-cmds.c:325
+#: ../app/pdb/drawable-color-cmds.c:372
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Afmetta"
@@ -20286,7 +20378,7 @@ msgstr "Litþrykkja"
 msgid "Hue-Saturation"
 msgstr "Litblær-Litmettun"
 
-#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:726
+#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:831
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Litmörk"
@@ -20300,15 +20392,29 @@ msgctxt "command"
 msgid "Foreground Select"
 msgstr "Val forgrunns"
 
-#: ../app/pdb/drawable-color-cmds.c:507
+#: ../app/pdb/drawable-color-cmds.c:331
+#| msgctxt "filters-action"
+#| msgid "_Extract Component..."
+msgctxt "undo-type"
+msgid "Extract Component"
+msgstr "Afþjappa einingu (component)"
+
+#: ../app/pdb/drawable-color-cmds.c:554
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Litblær-Litmettun"
 
-#: ../app/pdb/drawable-color-cmds.c:542
+#: ../app/pdb/drawable-color-cmds.c:589
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Umhverfa"
+
+#: ../app/pdb/drawable-color-cmds.c:745
+#| msgctxt "filters-action"
+#| msgid "S_hadows-Highlights..."
+msgctxt "undo-type"
+msgid "Shadows-Highlights"
+msgstr "Skuggar-Hátónar"
 
 #: ../app/pdb/drawable-transform-cmds.c:373
 #: ../app/pdb/drawable-transform-cmds.c:478
@@ -20689,14 +20795,14 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"Aðferðin '%s' skilaði rangri tegund gildis fyrir niðurstöðugildið '%s' (#"
-"%d). Átti von á %s, fékk %s."
+"Aðferðin '%s' skilaði rangri tegund gildis fyrir niðurstöðugildið "
+"'%s' (#%d). Átti von á %s, fékk %s."
 
 #: ../app/pdb/gimpprocedure.c:765
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
 "Aðferðin '%s' hefur verið kölluð fram með rangri tegund gildis fyrir "
 "frumbreytuna '%s' (#%d). Átti von á %s, fékk %s."
@@ -25081,8 +25187,8 @@ msgstr "Flýtilykillinn \"%s“ er þegar notaður fyrir \"%s\" úr \"%s\" hópn
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr ""
-"Endurúthlutun á flytilyklinum mun valda því að hann verður fjarlægður úr \"%s"
-"\"."
+"Endurúthlutun á flytilyklinum mun valda því að hann verður fjarlægður úr "
+"\"%s\"."
 
 #: ../app/widgets/gimpactionview.c:784
 msgid "Invalid shortcut."
@@ -25116,7 +25222,7 @@ msgid "Percentage of width of brush"
 msgstr "Prósentuhlutfall af breidd pensils"
 
 #: ../app/widgets/gimpbufferview.c:189 ../app/widgets/gimpbufferview.c:290
-#: ../app/widgets/gimpeditor.c:758
+#: ../app/widgets/gimpeditor.c:773
 msgid "(None)"
 msgstr "(Engin)"
 
@@ -26865,7 +26971,7 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "litir"
 
-#: ../app/widgets/gimpitemtreeview.c:753
+#: ../app/widgets/gimpitemtreeview.c:763
 msgid "Lock:"
 msgstr "Læsing:"
 
@@ -27389,8 +27495,9 @@ msgid "[ Base Image ]"
 msgstr "[ grunnmynd]"
 
 #: ../app/widgets/gimpvectorstreeview.c:111
-msgid "Lock path strokes"
-msgstr "Læsa ferilstrokum"
+#| msgid "Lock _alpha"
+msgid "Lock path"
+msgstr "Læsa ferli"
 
 #: ../app/widgets/gimpvectorstreeview.c:114
 msgid "Lock path position"
@@ -27692,6 +27799,9 @@ msgstr "rúnnað"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "loðið"
+
+#~ msgid "Lock path strokes"
+#~ msgstr "Læsa ferilstrokum"
 
 #~ msgid ""
 #~ "Corrupt 'gimp-metadata' parasite discovered.\n"
