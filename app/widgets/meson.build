@@ -203,6 +203,7 @@ libappwidgets_sources = [
   'gimptexttag.c',
   'gimpthumbbox.c',
   'gimptoggleaction.c',
+  'gimptoolbar.c',
   'gimptoolbox-color-area.c',
   'gimptoolbox-dnd.c',
   'gimptoolbox-image-area.c',

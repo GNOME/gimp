@@ -851,51 +851,56 @@ void
 gimp_action_set_proxy (GimpAction *action,
                        GtkWidget  *proxy)
 {
-  GimpActionPrivate *priv = GET_PRIVATE (action);
+  GimpActionPrivate *priv        = GET_PRIVATE (action);
+  GtkWidget         *proxy_image = NULL;
+  GdkPixbuf         *pixbuf      = NULL;
   GtkWidget         *label;
 
-  if (! GTK_IS_MENU_ITEM (proxy))
+  if (! GTK_IS_MENU_ITEM (proxy) && ! GTK_IS_TOOL_BUTTON (proxy))
     return;
 
   if (priv->color)
     {
-      GtkWidget *area;
+      if (GTK_IS_MENU_ITEM (proxy))
+        proxy_image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
+      else
+        proxy_image = gtk_tool_button_get_label_widget (GTK_TOOL_BUTTON (proxy));
 
-      area = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
-
-      if (GIMP_IS_COLOR_AREA (area))
+      if (GIMP_IS_COLOR_AREA (proxy_image))
         {
-          gimp_color_area_set_color (GIMP_COLOR_AREA (area), priv->color);
+          gimp_color_area_set_color (GIMP_COLOR_AREA (proxy_image), priv->color);
+          proxy_image = NULL;
         }
       else
         {
           gint width, height;
 
-          area = gimp_color_area_new (priv->color,
+          proxy_image = gimp_color_area_new (priv->color,
                                       GIMP_COLOR_AREA_SMALL_CHECKS, 0);
-          gimp_color_area_set_draw_border (GIMP_COLOR_AREA (area), TRUE);
+          gimp_color_area_set_draw_border (GIMP_COLOR_AREA (proxy_image), TRUE);
 
           if (priv->context)
-            gimp_color_area_set_color_config (GIMP_COLOR_AREA (area),
+            gimp_color_area_set_color_config (GIMP_COLOR_AREA (proxy_image),
                                               priv->context->gimp->config->color_management);
 
           gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
-          gtk_widget_set_size_request (area, width, height);
-          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), area, action);
-          gtk_widget_show (area);
+          gtk_widget_set_size_request (proxy_image, width, height);
+          gtk_widget_show (proxy_image);
         }
     }
   else if (priv->viewable)
     {
-      GtkWidget *view;
+      if (GTK_IS_MENU_ITEM (proxy))
+        proxy_image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
+      else
+        proxy_image = gtk_tool_button_get_label_widget (GTK_TOOL_BUTTON (proxy));
 
-      view = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
-
-      if (GIMP_IS_VIEW (view) &&
+      if (GIMP_IS_VIEW (proxy_image) &&
           g_type_is_a (G_TYPE_FROM_INSTANCE (priv->viewable),
-                       GIMP_VIEW (view)->renderer->viewable_type))
+                       GIMP_VIEW (proxy_image)->renderer->viewable_type))
         {
-          gimp_view_set_viewable (GIMP_VIEW (view), priv->viewable);
+          gimp_view_set_viewable (GIMP_VIEW (proxy_image), priv->viewable);
+          proxy_image = NULL;
         }
       else
         {
@@ -915,17 +920,14 @@ gimp_action_set_proxy (GimpAction *action,
             }
 
           gtk_icon_size_lookup (size, &width, &height);
-          view = gimp_view_new_full (priv->context, priv->viewable,
-                                     width, height, border_width,
-                                     FALSE, FALSE, FALSE);
-          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), view, action);
-          gtk_widget_show (view);
+          proxy_image = gimp_view_new_full (priv->context, priv->viewable,
+                                            width, height, border_width,
+                                            FALSE, FALSE, FALSE);
+          gtk_widget_show (proxy_image);
         }
     }
   else
     {
-      GtkWidget *image = NULL;
-
       if (GIMP_IS_PROCEDURE_ACTION (action) &&
           /* Some special cases GimpProcedureAction have no procedure attached
            * (e.g. "filters-recent-*" actions.
@@ -935,8 +937,6 @@ gimp_action_set_proxy (GimpAction *action,
           /* Special-casing procedure actions as plug-ins can create icons with
            * gimp_procedure_set_icon_pixbuf().
            */
-          GdkPixbuf *pixbuf = NULL;
-
           g_object_get (GIMP_PROCEDURE_ACTION (action)->procedure,
                         "icon-pixbuf", &pixbuf,
                         NULL);
@@ -959,34 +959,64 @@ gimp_action_set_proxy (GimpAction *action,
                   pixbuf = copy;
                 }
 
-              image = gtk_image_new_from_pixbuf (pixbuf);
-              gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), image, action);
-              g_object_unref (pixbuf);
+              proxy_image = gtk_image_new_from_pixbuf (pixbuf);
             }
         }
 
-      if (image == NULL)
+      if (proxy_image == NULL)
         {
-          image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
+          if (GTK_IS_MENU_ITEM (proxy))
+            proxy_image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
+          else
+            proxy_image = gtk_tool_button_get_label_widget (GTK_TOOL_BUTTON (proxy));
 
-          if (GIMP_IS_VIEW (image) || GIMP_IS_COLOR_AREA (image))
+          if (GIMP_IS_VIEW (proxy_image) || GIMP_IS_COLOR_AREA (proxy_image))
             {
-              gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL, action);
+              if (GTK_IS_MENU_ITEM (proxy))
+                gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL, action);
+              else if (proxy_image)
+                gtk_widget_destroy (proxy_image);
+
               g_object_notify (G_OBJECT (action), "icon-name");
             }
+
+          proxy_image = NULL;
         }
     }
 
-  if (GTK_IS_LABEL (gtk_bin_get_child (GTK_BIN (proxy))))
-    /* Ensure we rebuild the contents of the GtkMenuItem with an image (which
-     * might be NULL), a label (taken from action) and an optional shortcut
-     * (also taken from action).
-     */
-    gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL, action);
+  if (proxy_image != NULL)
+    {
+      if (GTK_IS_MENU_ITEM (proxy))
+        {
+          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), proxy_image, action);
+        }
+      else /* GTK_IS_TOOL_BUTTON (proxy) */
+        {
+          GtkWidget *prev_widget;
+
+          prev_widget = gtk_tool_button_get_label_widget (GTK_TOOL_BUTTON (proxy));
+          if (prev_widget)
+            gtk_widget_destroy (prev_widget);
+
+          gtk_tool_button_set_label_widget (GTK_TOOL_BUTTON (proxy), proxy_image);
+        }
+    }
+  else if (GTK_IS_LABEL (gtk_bin_get_child (GTK_BIN (proxy))) &&
+           GTK_IS_MENU_ITEM (proxy))
+    {
+      /* Ensure we rebuild the contents of the GtkMenuItem with an image (which
+       * might be NULL), a label (taken from action) and an optional shortcut
+       * (also taken from action).
+       */
+      gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL, action);
+    }
 
   label = g_object_get_data (G_OBJECT (proxy), "gimp-menu-item-label");
-  gtk_label_set_ellipsize (GTK_LABEL (label), priv->ellipsize);
-  gtk_label_set_max_width_chars (GTK_LABEL (label), priv->max_width_chars);
+  if (label)
+    {
+      gtk_label_set_ellipsize (GTK_LABEL (label), priv->ellipsize);
+      gtk_label_set_max_width_chars (GTK_LABEL (label), priv->max_width_chars);
+    }
 
   if (! g_list_find (priv->proxies, proxy))
     {
@@ -997,6 +1027,8 @@ gimp_action_set_proxy (GimpAction *action,
 
       gimp_action_update_proxy_tooltip (action, proxy);
     }
+
+  g_clear_object (&pixbuf);
 }
 
 
