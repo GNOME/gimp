@@ -39,7 +39,7 @@
 #include "gimp-intl.h"
 
 
-#define SB_WIDTH 5
+#define SB_WIDTH 7
 
 
 enum
