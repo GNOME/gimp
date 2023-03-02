@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/tool-presets-popup">
+    <submenu>
+      <attribute name="label" translatable="yes" context="tool-presets-action">Tool Presets Menu</attribute>
+      <attribute name="icon">gimp-tool-preset</attribute>
+
+      <item><attribute name="action">app.tool-presets-edit</attribute></item>
+      <section>
+        <item><attribute name="action">app.tool-presets-new</attribute></item>
+        <item><attribute name="action">app.tool-presets-duplicate</attribute></item>
+        <item><attribute name="action">app.tool-presets-copy-location</attribute></item>
+        <item><attribute name="action">app.tool-presets-show-in-file-manager</attribute></item>
+        <item><attribute name="action">app.tool-presets-save</attribute></item>
+        <item><attribute name="action">app.tool-presets-restore</attribute></item>
+        <item><attribute name="action">app.tool-presets-delete</attribute></item>
+      </section>
+      <section>
+        <item><attribute name="action">app.tool-presets-refresh</attribute></item>
+      </section>
+    </submenu>
+  </menu>
+</interface>

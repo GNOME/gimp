@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/tool-preset-editor-popup">
+    <submenu>
+      <attribute name="label" translatable="yes" context="tool-preset-editor-action">Tool Preset Editor Menu</attribute>
+      <attribute name="icon">gimp-tool-preset</attribute>
+
+      <section>
+        <item><attribute name="action">app.tool-preset-editor-save</attribute></item>
+        <item><attribute name="action">app.tool-preset-editor-restore</attribute></item>
+      </section>
+      <item><attribute name="action">app.tool-preset-editor-edit-active</attribute></item>
+    </submenu>
+  </menu>
+</interface>

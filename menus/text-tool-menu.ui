@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/text-tool-popup">
+    <submenu>
+      <attribute name="label" translatable="yes" context="text-tool-action">Text Tool Menu</attribute>
+
+      <item><attribute name="action">app.text-tool-cut</attribute></item>
+      <item><attribute name="action">app.text-tool-copy</attribute></item>
+      <item><attribute name="action">app.text-tool-paste</attribute></item>
+      <item><attribute name="action">app.text-tool-delete</attribute></item>
+      <section>
+        <item><attribute name="action">app.text-tool-load</attribute></item>
+        <item><attribute name="action">app.text-tool-clear</attribute></item>
+      </section>
+      <section>
+        <item><attribute name="action">app.text-tool-text-to-path</attribute></item>
+        <item><attribute name="action">app.text-tool-text-along-path</attribute></item>
+      </section>
+      <item><attribute name="action">app.text-tool-direction-ltr</attribute></item>
+      <item><attribute name="action">app.text-tool-direction-rtl</attribute></item>
+      <item><attribute name="action">app.text-tool-direction-ttb-rtl</attribute></item>
+      <item><attribute name="action">app.text-tool-direction-ttb-rtl-upright</attribute></item>
+      <item><attribute name="action">app.text-tool-direction-ttb-ltr</attribute></item>
+      <item><attribute name="action">app.text-tool-direction-ttb-ltr-upright</attribute></item>
+    </submenu>
+  </menu>
+</interface>

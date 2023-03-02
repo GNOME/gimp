@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/tool-options-popup">
+    <submenu>
+      <attribute name="label" translatable="yes" context="tool-options-action">Tool Options Menu</attribute>
+      <attribute name="icon">gimp-tool-options</attribute>
+      <submenu>
+        <attribute name="label">Save</attribute>
+        <section>
+          <item><attribute name="action">app.tool-options-save-new-preset</attribute></item>
+        </section>
+      </submenu>
+      <item><attribute name="action">app.tool-options-restore-preset-menu</attribute></item>
+      <item><attribute name="action">app.tool-options-edit-preset-menu</attribute></item>
+      <item><attribute name="action">app.tool-options-delete-preset-menu</attribute></item>
+      <section>
+        <item><attribute name="action">app.tool-options-reset</attribute></item>
+        <item><attribute name="action">app.tool-options-reset-all</attribute></item>
+      </section>
+    </submenu>
+  </menu>
+</interface>

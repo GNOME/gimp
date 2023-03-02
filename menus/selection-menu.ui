@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/selection-popup">
+    <submenu>
+      <attribute name="label" translatable="yes" context="select-action">Selection Editor Menu</attribute>
+      <attribute name="icon">gimp-selection</attribute>
+
+      <item><attribute name="action">app.select-all</attribute></item>
+      <item><attribute name="action">app.select-none</attribute></item>
+      <item><attribute name="action">app.select-invert</attribute></item>
+      <item><attribute name="action">app.vectors-selection-from-vectors</attribute></item>
+      <item><attribute name="action">app.select-float</attribute></item>
+      <section>
+        <item><attribute name="action">app.select-feather</attribute></item>
+        <item><attribute name="action">app.select-sharpen</attribute></item>
+        <item><attribute name="action">app.select-shrink</attribute></item>
+        <item><attribute name="action">app.select-grow</attribute></item>
+        <item><attribute name="action">app.select-border</attribute></item>
+        <item><attribute name="action">app.select-flood</attribute></item>
+      </section>
+      <section>
+        <item><attribute name="action">app.select-save</attribute></item>
+        <item><attribute name="action">app.vectors-selection-to-vectors-short</attribute></item>
+      </section>
+      <item><attribute name="action">app.select-fill</attribute></item>
+      <item><attribute name="action">app.select-stroke</attribute></item>
+    </submenu>
+  </menu>
+</interface>

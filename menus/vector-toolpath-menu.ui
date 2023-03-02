@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/vector-toolpath-popup">
+    <section>
+      <item><attribute name="action">app.vector-toolpath-delete-anchor</attribute></item>
+      <item><attribute name="action">app.vector-toolpath-shift-start</attribute></item>
+    </section>
+    <item><attribute name="action">app.vector-toolpath-insert-anchor</attribute></item>
+    <item><attribute name="action">app.vector-toolpath-delete-segment</attribute></item>
+    <item><attribute name="action">app.vector-toolpath-reverse-stroke</attribute></item>
+  </menu>
+</interface>

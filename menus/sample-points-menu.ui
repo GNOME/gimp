@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/sample-points-popup">
+    <submenu>
+      <attribute name="label" translatable="yes" context="sample-points-action">Sample Point Menu</attribute>
+      <attribute name="icon">gimp-sample-point</attribute>
+
+      <item><attribute name="action">app.sample-points-sample-merged</attribute></item>
+    </submenu>
+  </menu>
+</interface>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/dynamics-editor-popup">
+    <submenu>
+      <attribute name="label" translatable="yes" context="dynamics-editor-action">Paint Dynamics Editor Menu</attribute>
+      <attribute name="icon">gimp-dynamics</attribute>
+      <item><attribute name="action">app.dynamics-editor-edit-active</attribute></item>
+    </submenu>
+  </menu>
+</interface>

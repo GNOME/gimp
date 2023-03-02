@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/palette-editor-popup">
+    <submenu>
+      <attribute name="label" translatable="yes" context="palette-editor-action">Palette Editor Menu</attribute>
+      <attribute name="icon">gtk-select-color</attribute>
+
+      <item><attribute name="action">app.palette-editor-edit-color</attribute></item>
+      <item><attribute name="action">app.palette-editor-new-color-fg</attribute></item>
+      <item><attribute name="action">app.palette-editor-new-color-bg</attribute></item>
+      <item><attribute name="action">app.palette-editor-delete-color</attribute></item>
+      <section>
+        <item><attribute name="action">app.palette-editor-zoom-out</attribute></item>
+        <item><attribute name="action">app.palette-editor-zoom-in</attribute></item>
+        <item><attribute name="action">app.palette-editor-zoom-all</attribute></item>
+      </section>
+      <item><attribute name="action">app.palette-editor-edit-active</attribute></item>
+    </submenu>
+  </menu>
+</interface>
