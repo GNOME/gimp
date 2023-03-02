@@ -37,6 +37,7 @@
 #include "gimptextbuffer.h"
 #include "gimptexteditor.h"
 #include "gimptextstyleeditor.h"
+#include "gimptoolbar.h"
 #include "gimpuimanager.h"
 
 #include "gimp-intl.h"
@@ -138,6 +139,7 @@ gimp_text_editor_new (const gchar     *title,
   GimpTextEditor *editor;
   GtkWidget      *content_area;
   GtkWidget      *toolbar;
+  GMenuModel     *toolbar_model;
   GtkWidget      *style_editor;
   GtkWidget      *scrolled_window;
   gboolean        use_header_bar;
@@ -179,8 +181,9 @@ gimp_text_editor_new (const gchar     *title,
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (editor));
 
-  toolbar = gimp_ui_manager_get_widget (editor->ui_manager,
-                                        "/text-editor-toolbar");
+  toolbar_model = gimp_ui_manager_get_model (editor->ui_manager,
+                                             "/text-editor-toolbar");
+  toolbar = gimp_toolbar_new (toolbar_model, editor->ui_manager);
 
   if (toolbar)
     {

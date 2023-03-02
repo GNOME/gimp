@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/text-editor-toolbar">
+    <section>
+      <item><attribute name="action">app.text-editor-load</attribute></item>
+      <item><attribute name="action">app.text-editor-clear</attribute></item>
+    </section>
+    <item><attribute name="action">app.text-editor-direction-ltr</attribute></item>
+    <item><attribute name="action">app.text-editor-direction-rtl</attribute></item>
+    <item><attribute name="action">app.text-editor-direction-ttb-rtl</attribute></item>
+    <item><attribute name="action">app.text-editor-direction-ttb-rtl-upright</attribute></item>
+    <item><attribute name="action">app.text-editor-direction-ttb-ltr</attribute></item>
+    <item><attribute name="action">app.text-editor-direction-ttb-ltr-upright</attribute></item>
+  </menu>
+</interface>
