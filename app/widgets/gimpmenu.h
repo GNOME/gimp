@@ -50,5 +50,9 @@ GType        gimp_menu_get_type   (void) G_GNUC_CONST;
 
 GtkWidget  * gimp_menu_new        (GimpUIManager *manager);
 
+void         gimp_menu_merge      (GimpMenu      *menu,
+                                   GimpMenu      *menu2,
+                                   gboolean       top);
+
 
 #endif /* __GIMP_MENU_H__ */

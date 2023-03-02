@@ -757,7 +757,7 @@ gimp_ui_manager_ui_popup_at_widget (GimpUIManager  *manager,
       child_menu  = gimp_menu_new (child_ui_manager);
       gimp_menu_shell_fill (GIMP_MENU_SHELL (child_menu), child_model, "ui-added", FALSE);
 
-      gimp_menu_shell_merge (GIMP_MENU_SHELL (menu), GIMP_MENU_SHELL (child_menu), TRUE);
+      gimp_menu_merge (GIMP_MENU (menu), GIMP_MENU (child_menu), TRUE);
     }
 
   if (popdown_func && popdown_data)

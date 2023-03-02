@@ -41,6 +41,16 @@ typedef struct _GimpMenuShellInterface GimpMenuShellInterface;
 struct _GimpMenuShellInterface
 {
   GTypeInterface base_interface;
+
+  /* Virtual functions. */
+
+  void          (* append)       (GimpMenuShell *shell,
+                                  GMenuModel    *model);
+  void          (* add_ui)       (GimpMenuShell  *shell,
+                                  const gchar   **paths,
+                                  const gchar    *action_name,
+                                  const gchar    *placeholder_key,
+                                  gboolean        top);
 };
 
 
@@ -50,9 +60,6 @@ void            gimp_menu_shell_fill                (GimpMenuShell *shell,
                                                      GMenuModel    *model,
                                                      const gchar   *update_signal,
                                                      gboolean       drop_top_submenu);
-void            gimp_menu_shell_merge               (GimpMenuShell *shell,
-                                                     GimpMenuShell *shell2,
-                                                     gboolean       top);
 
 
 /* Protected functions. */
@@ -67,6 +74,9 @@ void            gimp_menu_shell_set_property        (GObject       *object,
                                                      guint          property_id,
                                                      const GValue  *value,
                                                      GParamSpec    *pspec);
+
+GimpUIManager * gimp_menu_shell_get_manager         (GimpMenuShell *shell);
+gchar         * gimp_menu_shell_make_canonical_path (const gchar   *path);
 
 
 #endif  /* __GIMP_MENU_SHELL_H__ */
