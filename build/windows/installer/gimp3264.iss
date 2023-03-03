@@ -268,7 +268,6 @@ Name: "{autodesktop}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{
 
 [Files]
 ;setup files
-Source: "setup.ini"; Flags: dontcopy
 Source: "windows-installer-intro-small.bmp"; Flags: dontcopy
 Source: "installsplash.bmp"; Flags: dontcopy
 Source: "installsplash_small.bmp"; Flags: dontcopy
@@ -654,8 +653,6 @@ type
 
 var
 	lblComponentDescription: TNewStaticText;
-
-	SetupINI: String;
 
 	ReadyMemoRichText: String;
 
@@ -1726,8 +1723,6 @@ begin
 #endif
 
 	try
-		ExtractTemporaryFile('setup.ini');
-		SetupINI := ExpandConstant('{tmp}\setup.ini');
 		ExtractTemporaryFile('windows-installer-intro-small.bmp');
 		ExtractTemporaryFile('installsplash.bmp');
 		ExtractTemporaryFile('installsplash_small.bmp');
