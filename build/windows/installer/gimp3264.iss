@@ -885,7 +885,7 @@ begin
 	end;
 
 	//workaround for high-DPI awareness of Python plug-ins
-	if IsComponentSelected('py') then
+	if IsComponentSelected('py') or IsComponentSelected('gimp32on64\py') then
 	begin
 		EnvFile := ExpandConstant('{app}\lib\gimp\2.0\environ\pygimp.env');
 		DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);

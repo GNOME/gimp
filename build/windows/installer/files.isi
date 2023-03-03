@@ -65,7 +65,7 @@ Source: "{#GIMP_DIR}\{#DIR32}\lib\gimp\2.0\python\.debug\*.debug"; DestDir: "{ap
 #endif
 
 #ifdef DEBUG_SYMBOLS
-Source: "{#GIMP_DIR}\{#DIR}\*.debug"; Excludes: "\lib\gimp\2.0\plug-ins\twain\.debug\twain.exe.debug,\lib\gimp\2.0\plug-ins\file-ps\.debug\file-ps.exe.debug,\lib\gimp\2.0\python\.debug\*.debug"; DestDir: "{app}"; Components: gimp{#COMPONENT} and debug; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR}\{#DIR}\*.debug"; Excludes: "\lib\gimp\2.0\plug-ins\twain\.debug\twain.exe.debug,\lib\gimp\2.0\plug-ins\file-ps\.debug\file-ps.exe.debug,\lib\gimp\2.0\python\.debug\*.debug,\bin\.debug\gimp.exe.debug,\bin\.debug\gimp-console.exe.debug"; DestDir: "{app}"; Components: gimp{#COMPONENT} and debug; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\plug-ins\file-ps\.debug\file-ps.exe.debug"; DestDir: "{app}\lib\gimp\2.0\plug-ins\file-ps\.debug"; Components: gs and gimp{#COMPONENT} and debug; Flags: restartreplace ignoreversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\bin\.debug\*.dll.debug"; DestDir: "{app}\bin\.debug"; Components: deps{#COMPONENT} and debug; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete skipifsourcedoesntexist
 Source: "{#DEPS_DIR}\{#DDIR}\lib\*.debug"; DestDir: "{app}\lib"; Components: deps{#COMPONENT} and debug; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete skipifsourcedoesntexist
