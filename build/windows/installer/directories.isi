@@ -19,6 +19,9 @@
 #ifndef DIR64
 #define DIR64 "x86_64-w64-mingw32"
 #endif
+#ifndef DIRA64
+#define DIRA64 "aarch64-w64-mingw32"
+#endif
 
 #ifndef GIMP_DIR
 	#define GIMP_DIR "N:\gimp\output\" + VER_DIR
@@ -35,12 +38,19 @@
 #ifndef GIMP_DIR64
 	#define GIMP_DIR64 GIMP_DIR + "\" + DIR64
 #endif
+//AArch64 GIMP base directory (result of make install)
+#ifndef GIMP_DIRA64
+	#define GIMP_DIRA64 GIMP_DIR + "\" + DIR64
+#endif
 
 #ifndef DDIR32
 	#define DDIR32 DIR32
 #endif
 #ifndef DDIR64
 	#define DDIR64 DIR64
+#endif
+#ifndef DDIRA64
+	#define DDIRA64 DIRA64
 #endif
 
 //32-bit dependencies directory
@@ -50,6 +60,10 @@
 //64-bit dependencies directory
 #ifndef DEPS_DIR64
 	#define DEPS_DIR64 DEPS_DIR + "\" + DDIR64
+#endif
+//AArch64 dependencies directory
+#ifndef DEPS_DIR64
+	#define DEPS_DIRA64 DEPS_DIR + "\" + DDIRA64
 #endif
 
 #ifdef PYTHON

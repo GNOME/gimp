@@ -19,8 +19,8 @@
 
 #if Int(MINOR) % 2 == 1
  #define DEVEL="-dev"
- #define DIR_VER=MAJOR + "." + MINOR
+ #define DIR_VER=MICRO
 #else
  #define DEVEL=""
- #define DIR_VER=MAJOR + ".0"
+ #define DIR_VER="0"
 #endif

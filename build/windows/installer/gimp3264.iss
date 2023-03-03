@@ -89,11 +89,14 @@
 	#define DEPS_DIR "W:\msys64-gtk2\opt\comb"
 	#define DDIR32 "mingw32"
 	#define DDIR64 "mingw64"
-	#define PYTHON
-	#define LUA
-	#define DEBUG_SYMBOLS
+	#define PYTHON 
+	#define DEBUG_SYMBOLS 
 	#define NOCOMPRESSION
 #endif
+
+#define X86 1
+#define X64 2
+#define ARM64 3
 
 #include "directories.isi"
 #include "version.isi"
@@ -143,13 +146,15 @@ UninstallDisplayIcon={app}\bin\gimp-{#MAJOR}.{#MINOR}.exe
 UninstallFilesDir={app}\uninst
 
 MinVersion=6.1
-ArchitecturesInstallIn64BitMode=x64
+ArchitecturesInstallIn64BitMode=x64 arm64
 
 #ifdef NOCOMPRESSION
 ;UseSetupLdr=no
 OutputDir=_Output\unc
 Compression=none
 ;InternalCompressLevel=0
+DiskSpanning=yes
+DiskSliceSize=max
 #else
 OutputDir=_Output
 Compression=lzma2/ultra64
@@ -209,7 +214,7 @@ Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl,lang\sl.setup.islu"
 Name: "sv"; MessagesFile: "compiler:Languages\Unofficial\Swedish.isl,lang\sv.setup.isl"
 Name: "tr"; MessagesFile: "compiler:Languages\Turkish.isl,lang\tr.setup.isl"
 Name: "uk"; MessagesFile: "compiler:Languages\Ukrainian.isl,lang\uk.setup.isl"
-Name: "vi"; MessagesFile: "compiler:Languages\Vietnamese.isl,lang\vi.setup.isl"
+Name: "vi"; MessagesFile: "compiler:Languages\Unofficial\Vietnamese.isl,lang\vi.setup.isl"
 Name: "zh_CN"; MessagesFile: "compiler:Languages\Unofficial\ChineseSimplified.isl,lang\zh_CN.setup.isl"
 Name: "zh_TW"; MessagesFile: "compiler:Languages\Unofficial\ChineseTraditional.isl,lang\zh_TW.setup.isl"
 ;Name: "ro"; MessagesFile: "Romanian.islu,ro.setup.islu"
@@ -222,10 +227,16 @@ Name: custom; Description: "{cm:TypeCustom}"; Flags: iscustom
 
 [Components]
 Name: gimp32; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
-Name: gimp64; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('64')
+Name: gimp64; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('x64')
+Name: gimpARM64; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('arm64')
 
 Name: deps32; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('32')
-Name: deps64; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('64')
+Name: deps32\wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: dontinheritcheck disablenouninstallwarning; Check: Check3264('32')
+Name: deps32\compat; Description: "{cm:ComponentsCompat}"; Types: full custom; Flags: dontinheritcheck; Check: Check3264('32')
+Name: deps64; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('x64')
+Name: deps64\wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: dontinheritcheck disablenouninstallwarning; Check: Check3264('x64')
+Name: depsARM64; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('arm64')
+Name: depsARM64\wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: dontinheritcheck disablenouninstallwarning; Check: Check3264('arm64')
 
 #ifdef DEBUG_SYMBOLS
 Name: debug; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning
@@ -238,13 +249,14 @@ Name: loc; Description: "{cm:ComponentsTranslations}"; Types: full custom
 Name: mypaint; Description: "{cm:ComponentsMyPaint}"; Types: full custom
 
 #ifdef PYTHON
-Name: py; Description: "{cm:ComponentsPython}"; Types: full custom
-#endif
-#ifdef LUA
-Name: lua; Description: "{cm:ComponentsLua}"; Types: full custom
+Name: py; Description: "{cm:ComponentsPython}"; Types: full custom; Check: not Check3264('arm64')
 #endif
 
 Name: gimp32on64; Description: "{cm:ComponentsGimp32}"; Types: full custom; Flags: checkablealone; Check: Check3264('64')
+#ifdef PYTHON
+Name: gimp32on64\py; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('arm64')
+#endif
+Name: gimp32on64\compat; Description: "{cm:ComponentsCompat}"; Types: full custom; Flags: dontinheritcheck; Check: Check3264('64')
 
 [Tasks]
 Name: desktopicon; Description: "{cm:AdditionalIconsDesktop}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
@@ -256,29 +268,25 @@ Name: "{autodesktop}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{
 
 [Files]
 ;setup files
+Source: "setup.ini"; Flags: dontcopy
 Source: "windows-installer-intro-small.bmp"; Flags: dontcopy
-#ifndef DEVEL
 Source: "installsplash.bmp"; Flags: dontcopy
 Source: "installsplash_small.bmp"; Flags: dontcopy
-#else
-Source: "installsplash-devel.bmp"; Destname: "installsplash.bmp"; Flags: dontcopy
-Source: "installsplash_small-devel.bmp"; Destname: "installsplash_small.bmp"; Flags: dontcopy
-#endif
 
 #ifndef NOFILES
 ;files common to both 32 and 64-bit versions
-Source: "{#GIMP_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\environ\*"; DestDir: "{app}\lib\gimp\{#DIR_VER}\environ"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\interpreters\*"; DestDir: "{app}\lib\gimp\{#DIR_VER}\interpreters"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: gimp32 or gimp64; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\share\glib-2.0\schemas\*"; DestDir: "{app}\share\glib-2.0\schemas"; Components: deps32 or deps64; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
-;Source: "{#DEPS_DIR32}\share\enchant\*"; DestDir: "{app}\share\enchant"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\share\libwmf\*"; DestDir: "{app}\share\libwmf"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\share\icons\*"; DestDir: "{app}\share\icons"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\share\xml\*"; DestDir: "{app}\share\xml"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: gimp32 or gimp64 or gimpARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\2.{#DIR_VER}\environ\*"; DestDir: "{app}\lib\gimp\2.{#DIR_VER}\environ"; Components: gimp32 or gimp64 or gimpARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\2.{#DIR_VER}\interpreters\*"; DestDir: "{app}\lib\gimp\2.{#DIR_VER}\interpreters"; Components: gimp32 or gimp64 or gimpARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: gimp32 or gimp64 or gimpARM64; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\glib-2.0\schemas\*"; DestDir: "{app}\share\glib-2.0\schemas"; Components: deps32 or deps64 or depsARM64; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\enchant\*"; DestDir: "{app}\share\enchant"; Components: deps32 or deps64 or depsARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\libwmf\*"; DestDir: "{app}\share\libwmf"; Components: deps32 or deps64 or depsARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\themes\*"; DestDir: "{app}\share\themes"; Components: deps32 or deps64 or depsARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\xml\*"; DestDir: "{app}\share\xml"; Components: deps32 or deps64 or depsARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
-Source: "{#DEPS_DIR32}\share\poppler\*.*"; DestDir: "{app}\share\poppler"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\share\libthai\*"; DestDir: "{app}\share\libthai"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\poppler\*.*"; DestDir: "{app}\share\poppler"; Components: deps32 or deps64 or depsARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\libthai\*"; DestDir: "{app}\share\libthai"; Components: deps32 or deps64 or depsARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 Source: "{#DEPS_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
@@ -287,43 +295,48 @@ Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Component
 ;be picked by gimp
 Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
-Source: "{#DEPS_DIR32}\etc\fonts\*"; DestDir: "{app}\etc\fonts"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\etc\gtk-3.0\*"; DestDir: "{app}\etc\gtk-3.0"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\etc\fonts\*"; DestDir: "{app}\etc\fonts"; Components: deps32 or deps64 or depsARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\etc\gtk-2.0"; Excludes: gtkrc; Components: deps32 or deps64 or depsARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Components: deps32\wimp or deps64\wimp or depsARM64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;ghostscript TODO: detect version automatically
-Source: "{#DEPS_DIR32}\share\ghostscript\9.50\lib\*.*"; DestDir: "{app}\share\ghostscript\9.50\lib"; Components: gs and (gimp32 or gimp64); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\ghostscript\9.53.3\lib\*.*"; DestDir: "{app}\share\ghostscript\9.53.3\lib"; Components: gs and (gimp32 or gimp64 or gimpARM64); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 #ifdef PYTHON
 ;*.py files are the same on 32 and 64-bit
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\*.py"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-#endif
-
-#ifdef LUA
-Source: "{#DEPS_DIR32}\share\lua\5.1\*.*"; DestDir: "{app}\share\lua\5.1"; Components: lua; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\share\luajit-2.1.0-beta3\*.*"; DestDir: "{app}\share\luajit-2.1.0-beta3"; Components: lua; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: py or gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #endif
 
 ;64bit
-#define PLATFORM 64
+#define PLATFORM X64
+#include "files.isi"
+
+;AArch64
+#define PLATFORM ARM64
 #include "files.isi"
 
 ;32bit
-#define PLATFORM 32
+#define PLATFORM X86
 #include "files.isi"
-;special case, since 64bit version doesn't work, and is excluded in files.isi
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins"; Components: gimp32; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;32-on-64bit
 #include "32on64.isi"
 ;prefer 32bit twain plugin over 64bit because 64bit twain drivers are rare
-Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins\twain"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR64}\lib\gimp\{#DIR_VER}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins\twain"; Components: (not gimp32on64) and gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins\twain"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR64}\lib\gimp\2.0\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins\twain"; Components: (not gimp32on64) and gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIRA64}\lib\gimp\2.0\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins\twain"; Components: (not gimp32on64) and gimpARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+;plugins not available for AArch64
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\help-browser\help-browser.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins\help-browser"; Components: gimp32on64 and gimpARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\web-page\web-page.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins\web-page"; Components: gimp32on64 and gimpARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 ;special case due to MS-Windows engine
-Source: "{#DEPS_DIR32}\etc\gtk-3.0\*"; DestDir: "{app}\32\etc\gtk-3.0"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\32\etc\gtk-2.0"; Excludes: gtkrc; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\32\etc\gtk-2.0"; Components: gimp32on64 and deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+;compat libraries
+Source: "{#DEPS_DIR}\compat\*.dll"; DestDir: "{app}\32\"; Components: gimp32on64\compat; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
-Source: "{#DEPS_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp32 or gimp64; Flags: restartreplace sharedfile 32bit uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',32)
+Source: "{#DEPS_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp32 or gimp64 or gimpARM64; Flags: restartreplace sharedfile 32bit uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',32)
 Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp64; Flags: restartreplace sharedfile uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',64)
 
 ;overridden configuration files
@@ -559,18 +572,11 @@ Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\*.dll"
 ;gegl 0.2
 Type: filesandordirs; Name: "{app}\lib\gegl-0.2"
 ;old icons
-#ifndef DEVEL
 Type: files; Name: "{autoprograms}\GIMP 2.lnk"
 Type: files; Name: "{autodesktop}\GIMP 2.lnk"
-#endif
 ;get previous GIMP icon name from uninstall name in Registry
-#if Defined(DEVEL) && DEVEL != ""
-Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1,DisplayVersion|GIMP {#MAJOR}.{#MINOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1','DisplayVersion')
-Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1,DisplayVersion|GIMP {#MAJOR}.{#MINOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}.{#MINOR}_is1','DisplayVersion')
-#else
-Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1,DisplayVersion|GIMP {#MAJOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1','DisplayVersion')
-Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1,DisplayVersion|GIMP {#MAJOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1','DisplayVersion')
-#endif
+Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayVersion|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayVersion')
+Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayVersion|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayVersion')
 ;32-bit Python
 Type: filesandordirs; Name: "{app}\32\lib\gimp\2.0\python"
 Type: files; Name: "{app}\32\bin\python2w.exe"
@@ -588,8 +594,6 @@ Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environmen
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
-Type: files; Name: "{app}\lib\gimp\{#DIR_VER}\interpreters\lua.interp"
-Type: files; Name: "{app}\lib\gimp\{#DIR_VER}\environ\pygimp.env"
 ;need to clean out all the generated .pyc files
 Type: filesandordirs; Name: "{app}\Python\*"
 
@@ -651,6 +655,8 @@ type
 var
 	lblComponentDescription: TNewStaticText;
 
+	SetupINI: String;
+
 	ReadyMemoRichText: String;
 
 	WelcomeBitmapBottom: TBitmapImage;
@@ -671,10 +677,14 @@ var
 
 function Check3264(const pWhich: String): Boolean;
 begin
-	if pWhich = '64' then
+	if pWhich = '64' then //x64 or arm64
 		Result := Is64BitInstallMode() and (not Force32bitInstall)
 	else if pWhich = '32' then
 		Result := (not Is64BitInstallMode()) or Force32bitInstall
+	else if pWhich = 'x64' then
+		Result := Is64BitInstallMode() and IsX64 and (not Force32bitInstall)
+	else if pWhich = 'arm64' then
+		Result := Is64BitInstallMode() and IsARM64 and (not Force32bitInstall)
 	else
 		RaiseException('Unknown check');
 end;
@@ -783,57 +793,31 @@ begin
 end;
 
 
-procedure PrepareInterp();
-var InterpFile,InterpContent: String;
+procedure PreparePyGimp();
+var PyGimpInterp,Interp,PythonExe: String;
 begin
-#ifdef PYTHON
-	if IsComponentSelected('py') then
+	if IsComponentSelected('py') or IsComponentSelected('gimp32on64\py') then
 	begin
 		StatusLabel(CustomMessage('SettingUpPyGimp'),'');
 
-		InterpFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\interpreters\pygimp.interp');
-        DebugMsg('PrepareInterp','Writing interpreter file for gimp-python: ' + InterpFile);
+		PythonExe := '\bin\pythonw.exe';
+		if IsComponentSelected('gimp32on64\py') then //32-bit Python on AArch64
+			PythonExe := '\32' + PythonExe;
 
-#ifdef DEVEL
-	#define PYTHON="python.exe"
-#else
-	#define PYTHON="pythonw.exe"
-#endif
-
-		InterpContent := 'python=' + ExpandConstant('{app}\bin\{#PYTHON}') + #10 +
-		          'python3=' + ExpandConstant('{app}\bin\{#PYTHON}') + #10 +
-		          '/usr/bin/python=' + ExpandConstant('{app}\bin\{#PYTHON}') + #10 +
-		          '/usr/bin/python3=' + ExpandConstant('{app}\bin\{#PYTHON}') + #10 +
-		          ':Python:E::py::python:'#10;
+		PyGimpInterp := ExpandConstant('{app}\lib\gimp\2.0\interpreters\pygimp.interp');
+        DebugMsg('PreparePyGimp','Writing interpreter file for gimp-python: ' + PyGimpInterp);
 		
-		if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
+		Interp := 'python=' + ExpandConstant('{app}' + PythonExe) + #10 +
+		          'python2=' + ExpandConstant('{app}' + PythonExe) + #10 +
+		          '/usr/bin/python=' + ExpandConstant('{app}' + PythonExe) + #10':Python:E::py::python:'#10;
+		
+		if not SaveStringToUTF8File(PyGimpInterp,Interp,False) then
 		begin
-			DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
+			DebugMsg('PreparePyGimp','Problem writing the file. [' + Interp + ']');
 			SuppressibleMsgBox(CustomMessage('ErrorUpdatingPython') + ' (2)',mbInformation,mb_ok,IDOK);
 		end;
 
 	end;
-#endif
-
-#ifdef LUA
-	if IsComponentSelected('lua') then
-	begin
-		InterpFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\interpreters\lua.interp');
-        DebugMsg('PrepareInterp','Writing interpreter file for lua: ' + InterpFile);
-
-		InterpContent := 'lua=' + ExpandConstant('{app}\bin\luajit.exe') + #10 +
-		          'luajit=' + ExpandConstant('{app}\bin\luajit.exe') + #10 +
-		          '/usr/bin/luajit=' + ExpandConstant('{app}\bin\luajit.exe') + #10 +
-		          '/usr/bin/lua=' + ExpandConstant('{app}\bin\luajit.exe') + #10 +
-		          ':Lua:E::lua::luajit:'#10;
-		
-		if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
-		begin
-			DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
-			SuppressibleMsgBox(CustomMessage('ErrorUpdatingPython') + ' (2)',mbInformation,mb_ok,IDOK);
-		end;
-	end;
-#endif
 end;
 
 
@@ -844,7 +828,7 @@ begin
 	StatusLabel(CustomMessage('SettingUpEnvironment'),'');
 
 	//set PATH to be used by plug-ins
-	EnvFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\environ\default.env');
+	EnvFile := ExpandConstant('{app}\lib\gimp\2.0\environ\default.env');
 	DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
 
 	Env := #10'PATH=${gimp_installation_dir}\bin';
@@ -861,6 +845,11 @@ begin
 
 	end;
 
+	if IsComponentSelected('py') then
+		Env := Env + 'PYTHONPATH=${gimp_installation_dir}\lib\gimp\2.0\python;${gimp_plug_in_dir}\plug-ins\python-console' + #10
+	else if IsComponentSelected('gimp32on64\py') then
+		Env := Env + 'PYTHONPATH=${gimp_installation_dir}\32\lib\gimp\2.0\python;${gimp_plug_in_dir}\32\plug-ins\python-console' + #10;
+
 	DebugMsg('PrepareGimpEnvironment','Appending ' + Env);
 
 	if not SaveStringToUTF8File(EnvFile,Env,True) then
@@ -869,13 +858,13 @@ begin
 		SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
 	end;
 
-	//workaround for high-DPI awareness of Python plug-ins
-	if IsComponentSelected('py') then
+	// Disable check-update when run with specific option
+	if ExpandConstant('{param:disablecheckupdate|false}') = 'true' then
 	begin
-		EnvFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\environ\pygimp.env');
-		DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
+		EnvFile := ExpandConstant('{app}\share\gimp\{#DIR_VER}\gimp-release');
+		DebugMsg('DisableCheckUpdate','Disabling check-update in ' + EnvFile);
 
-		Env := '__COMPAT_LAYER=HIGHDPIAWARE' + #10
+		Env := 'check-update=false'
 
 		if not SaveStringToUTF8File(EnvFile,Env,True) then
 		begin
@@ -884,13 +873,13 @@ begin
 		end;
 	end;
 
-	// Disable check-update when run with specific option
-        if ExpandConstant('{param:disablecheckupdate|false}') = 'true' then
+	//workaround for high-DPI awareness of Python plug-ins
+	if IsComponentSelected('py') then
 	begin
-		EnvFile := ExpandConstant('{app}\share\gimp\{#DIR_VER}\gimp-release');
-		DebugMsg('DisableCheckUpdate','Disabling check-update in ' + EnvFile);
+		EnvFile := ExpandConstant('{app}\lib\gimp\2.0\environ\pygimp.env');
+		DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
 
-                Env := 'check-update=false'
+		Env := '__COMPAT_LAYER=HIGHDPIAWARE' + #10
 
 		if not SaveStringToUTF8File(EnvFile,Env,True) then
 		begin
@@ -1198,7 +1187,7 @@ var i,j: Integer;
 begin
 	DebugMsg('ComponentsListOnClick','');
 
-	Components := ['Gimp','Deps','Debug','Translations','MyPaint','Python','Ghostscript','Lua','Gimp32'];
+	Components := ['Gimp','Deps','Debug','GtkWimp','Translations','MyPaint','Python','Ghostscript','Gimp32','Compat'];
 	ComponentDesc := '';
 	
 	for i := 0 to TNewCheckListBox(pSender).Items.Count - 1 do
@@ -1587,7 +1576,7 @@ begin
 		end;
 		ssPostInstall:
 		begin
-			PrepareInterp();
+			PreparePyGimp();
 			PrepareGimpEnvironment();
 		end;
 	end;
@@ -1737,6 +1726,8 @@ begin
 #endif
 
 	try
+		ExtractTemporaryFile('setup.ini');
+		SetupINI := ExpandConstant('{tmp}\setup.ini');
 		ExtractTemporaryFile('windows-installer-intro-small.bmp');
 		ExtractTemporaryFile('installsplash.bmp');
 		ExtractTemporaryFile('installsplash_small.bmp');
