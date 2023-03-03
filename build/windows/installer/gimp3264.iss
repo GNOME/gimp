@@ -302,8 +302,10 @@ Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Compone
 Source: "{#DEPS_DIR32}\share\ghostscript\9.53.3\lib\*.*"; DestDir: "{app}\share\ghostscript\9.53.3\lib"; Components: gs and (gimp32 or gimp64 or gimpARM64); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 #ifdef PYTHON
-;*.py files are the same on 32 and 64-bit
+;most *.py files are the same on 32 and 64-bit
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: py or gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\lib\python2.7\*.py"; Excludes: "\_sysconfigdata.py,\plat-win32\STDDEF.py"; DestDir: "{app}\lib\python2.7"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\lib\python2.7\*.py"; Excludes: "\_sysconfigdata.py,\plat-win32\STDDEF.py"; DestDir: "{app}\32\lib\python2.7"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #endif
 
 ;64bit
@@ -324,15 +326,24 @@ Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0
 ;plugins not available for AArch64
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\help-browser\help-browser.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins\help-browser"; Components: gimp32on64 and gimpARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\web-page\web-page.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins\web-page"; Components: gimp32on64 and gimpARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+#ifdef DEBUG_SYMBOLS
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\help-browser\.debug\help-browser.exe.debug"; DestDir: "{app}\lib\gimp\2.0\plug-ins\help-browser\.debug"; Components: gimp32on64 and gimpARM64 and debug; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\web-page\.debug\web-page.exe.debug"; DestDir: "{app}\lib\gimp\2.0\plug-ins\web-page\.debug"; Components: gimp32on64 and gimpARM64 and debug; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+#endif
 ;prefer 32bit twain plugin over 64bit because 64bit twain drivers are rare
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins\twain"; Components: gimp32on64 or gimp32; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion solidbreak
 Source: "{#GIMP_DIR64}\lib\gimp\2.0\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins\twain"; Components: (not gimp32on64) and gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#GIMP_DIRA64}\lib\gimp\2.0\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins\twain"; Components: (not gimp32on64) and gimpARM64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+#ifdef DEBUG_SYMBOLS
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\twain\.debug\twain.exe.debug"; DestDir: "{app}\lib\gimp\2.0\plug-ins\twain\.debug"; Components: (gimp32on64 or gimp32) and debug; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion solidbreak
+Source: "{#GIMP_DIR64}\lib\gimp\2.0\plug-ins\twain\.debug\twain.exe.debug"; DestDir: "{app}\lib\gimp\2.0\plug-ins\twain\.debug"; Components: (not gimp32on64) and gimp64 and debug; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIRA64}\lib\gimp\2.0\plug-ins\twain\.debug\twain.exe.debug"; DestDir: "{app}\lib\gimp\2.0\plug-ins\twain\.debug"; Components: (not gimp32on64) and gimpARM64 and debug; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+#endif
 ;special case due to MS-Windows engine
 Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\32\etc\gtk-2.0"; Excludes: gtkrc; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\32\etc\gtk-2.0"; Components: gimp32on64 and deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 ;compat libraries
-Source: "{#DEPS_DIR}\compat\*.dll"; DestDir: "{app}"; Components: compat; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\compat\*.dll"; DestDir: "{app}"; Components: deps32\compat; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR}\compat\*.dll"; DestDir: "{app}\32\"; Components: gimp32on64\compat; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
