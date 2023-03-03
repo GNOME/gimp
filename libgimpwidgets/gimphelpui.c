@@ -335,13 +335,11 @@ gimp_help_menu_item_set_tooltip (GtkWidget   *widget,
                                         gimp_help_menu_item_query_tooltip,
                                         NULL);
   if (tooltip && help_id)
-    {
-      g_object_set (widget, "has-tooltip", TRUE, NULL);
-
-      g_signal_connect (widget, "query-tooltip",
-                        G_CALLBACK (gimp_help_menu_item_query_tooltip),
-                        NULL);
-    }
+    g_signal_connect (widget, "query-tooltip",
+                      G_CALLBACK (gimp_help_menu_item_query_tooltip),
+                      NULL);
+  if (tooltip)
+    g_object_set (widget, "has-tooltip", TRUE, NULL);
 }
 
 static gboolean
