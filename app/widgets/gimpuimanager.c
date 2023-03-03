@@ -119,6 +119,10 @@ static void       gimp_ui_manager_fill_model          (GimpUIManager  *manager,
                                                        GMenuModel     *model);
 static void       gimp_ui_manager_menu_item_free      (GimpUIManagerMenuItem *item);
 
+static void       gimp_ui_manager_popup_hidden        (GtkMenuShell          *popup,
+                                                       gpointer               user_data);
+static gboolean   gimp_ui_manager_popup_destroy       (GtkWidget             *popup);
+
 
 G_DEFINE_TYPE (GimpUIManager, gimp_ui_manager, GTK_TYPE_UI_MANAGER)
 
@@ -873,7 +877,7 @@ gimp_ui_manager_ui_popup_at_widget (GimpUIManager  *manager,
                             menu_anchor,
                             trigger_event);
   g_signal_connect (menu, "hide",
-                    G_CALLBACK (gtk_widget_destroy),
+                    G_CALLBACK (gimp_ui_manager_popup_hidden),
                     NULL);
 }
 
@@ -911,7 +915,7 @@ gimp_ui_manager_ui_popup_at_pointer (GimpUIManager  *manager,
 
   gtk_menu_popup_at_pointer (GTK_MENU (menu), trigger_event);
   g_signal_connect (menu, "hide",
-                    G_CALLBACK (gtk_widget_destroy),
+                    G_CALLBACK (gimp_ui_manager_popup_hidden),
                     NULL);
 }
 
@@ -955,7 +959,7 @@ gimp_ui_manager_ui_popup_at_rect (GimpUIManager      *manager,
                           rect, rect_anchor, menu_anchor,
                           trigger_event);
   g_signal_connect (menu, "hide",
-                    G_CALLBACK (gtk_widget_destroy),
+                    G_CALLBACK (gimp_ui_manager_popup_hidden),
                     NULL);
 }
 
@@ -1598,4 +1602,24 @@ gimp_ui_manager_menu_item_free (GimpUIManagerMenuItem *item)
   g_free (item->action_name);
 
   g_slice_free (GimpUIManagerMenuItem, item);
+}
+
+static void
+gimp_ui_manager_popup_hidden (GtkMenuShell *popup,
+                              gpointer      user_data)
+{
+  /* Destroying the popup would happen after we finish all other events related
+   * to this popup. Otherwise the action which might have been activated will
+   * not run because it happens after hiding.
+   */
+  g_idle_add ((GSourceFunc) gimp_ui_manager_popup_destroy, g_object_ref (popup));
+}
+
+static gboolean
+gimp_ui_manager_popup_destroy (GtkWidget *popup)
+{
+  gtk_menu_detach (GTK_MENU (popup));
+  g_object_unref (popup);
+
+  return G_SOURCE_REMOVE;
 }
