@@ -28,7 +28,7 @@ Root: HKA; Subkey: "Software\RegisteredApplications"; ValueType: string; ValueNa
 			#pragma message "Processing associations.list: " + FileLine
 ;
 Root: HKA; Subkey: "Software\Classes\.{#FileLine}\OpenWithProgids"; ValueType: string; ValueName: "GIMP2.{#FileLine}"; ValueData: ""; Flags: uninsdeletevalue
-Root: HKA; Subkey: "Software\Classes\GIMP2.{#FileLine}"; ValueType: string; ValueName: ""; ValueData: "GIMP {#ICON_VERSION}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\GIMP2.{#FileLine}"; ValueType: string; ValueName: ""; ValueData: "GIMP {#ICON_VERSION} {#UpperCase(FileLine)}"; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\Classes\GIMP2.{#FileLine}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe,1"
 Root: HKA; Subkey: "Software\Classes\GIMP2.{#FileLine}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"" ""%1"""
 Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#MAJOR}.{#MINOR}.exe\SupportedTypes"; ValueType: string; ValueName: ".{#FileLine}"; ValueData: ""
