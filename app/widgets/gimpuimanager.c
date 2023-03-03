@@ -58,6 +58,7 @@ enum
   SHOW_TOOLTIP,
   HIDE_TOOLTIP,
   UI_ADDED,
+  UI_REMOVED,
   LAST_SIGNAL
 };
 
@@ -181,7 +182,15 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
                   G_TYPE_STRING,
                   G_TYPE_STRING,
                   G_TYPE_BOOLEAN);
-
+  manager_signals[UI_REMOVED] =
+    g_signal_new ("ui-removed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpUIManagerClass, ui_removed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 2,
+                  G_TYPE_STRING,
+                  G_TYPE_STRING);
 
   g_object_class_install_property (object_class, PROP_NAME,
                                    g_param_spec_string ("name",
@@ -285,7 +294,6 @@ gimp_ui_manager_finalize (GObject *object)
 
   g_list_free_full (manager->ui_items,
                     (GDestroyNotify) gimp_ui_manager_menu_item_free);
-
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -513,10 +521,24 @@ gimp_ui_manager_get_model (GimpUIManager *manager,
 {
   GimpUIManagerUIEntry *entry;
   GMenuModel           *model;
+  gchar                *root;
+  gchar                *submenus;
   gchar                *filename;
   gchar                *full_basename;
+  GStrvBuilder         *paths_builder = g_strv_builder_new ();
+  GStrv                 paths;
+
+  root     = g_strdup (path);
+  submenus = strstr (root + 1, "/");
+  if (submenus != NULL)
+    {
+      *submenus = '\0';
+      if (++submenus == '\0')
+        submenus = NULL;
+    }
 
   entry         = gimp_ui_manager_entry_ensure (manager, path);
+  g_return_val_if_fail (entry != NULL, NULL);
   full_basename = g_strconcat (entry->basename, ".ui", NULL);
   filename      = g_build_filename (gimp_data_directory (), "menus",
                                     full_basename, NULL);
@@ -527,12 +549,61 @@ gimp_ui_manager_get_model (GimpUIManager *manager,
       entry->builder = gtk_builder_new_from_file (filename);
 
       gimp_ui_manager_fill_model (manager,
-                                  G_MENU_MODEL (gtk_builder_get_object (entry->builder, path)));
+                                  G_MENU_MODEL (gtk_builder_get_object (entry->builder, root)));
     }
 
-  model = G_MENU_MODEL (gtk_builder_get_object (entry->builder, path));
+  model = G_MENU_MODEL (gtk_builder_get_object (entry->builder, root));
   g_free (filename);
   g_free (full_basename);
+
+  g_return_val_if_fail (G_IS_MENU (model), NULL);
+
+  g_object_ref (model);
+  while (submenus != NULL)
+    {
+      const gchar *submenu = submenus;
+      gint         n_items;
+      gint         i;
+
+      submenus = strstr (submenu + 1, "/");
+      if (submenus != NULL)
+        {
+          *submenus = '\0';
+          if (++submenus == '\0')
+            submenus = NULL;
+        }
+
+      n_items = g_menu_model_get_n_items (model);
+      for (i = 0; i < n_items; i++)
+        {
+          GMenuModel *submodel;
+          gchar      *label = NULL;
+          gchar      *canon_label = NULL;
+
+          submodel = g_menu_model_get_item_link (model, i, G_MENU_LINK_SUBMENU);
+          g_menu_model_get_item_attribute (model, i, G_MENU_ATTRIBUTE_LABEL, "s", &label);
+          if (label)
+            canon_label = gimp_menu_shell_make_canonical_path (label);
+
+          if (submodel && g_strcmp0 (canon_label, submenu) == 0)
+            {
+              g_strv_builder_add (paths_builder, canon_label);
+              g_object_unref (model);
+              model = submodel;
+              g_free (label);
+              break;
+            }
+          g_clear_object (&submodel);
+          g_free (label);
+          g_free (canon_label);
+        }
+      g_return_val_if_fail (i < n_items, NULL);
+    }
+
+  paths = g_strv_builder_end (paths_builder);
+  g_strv_builder_unref (paths_builder);
+  g_object_set_data_full (model, "gimp-ui-manager-model-paths", paths, g_strfreev);
+  g_free (root);
 
   return model;
 }
@@ -567,6 +638,30 @@ gimp_ui_manager_remove_ui (GimpUIManager *manager,
                            guint          merge_id)
 {
   gtk_ui_manager_remove_ui ((GtkUIManager *) manager, merge_id);
+}
+
+void
+gimp_ui_manager_remove_uis (GimpUIManager *manager,
+                            const gchar   *action_name_prefix)
+{
+  GList *iter = manager->ui_items;
+
+  while (iter != NULL)
+    {
+      GimpUIManagerMenuItem *item         = iter->data;
+      GList                 *current_iter = iter;
+
+      /* Increment nearly in case we delete the list item. */
+      iter = iter->next;
+
+      if (action_name_prefix == NULL ||
+          g_str_has_prefix (item->action_name, action_name_prefix))
+        {
+          g_signal_emit (manager, manager_signals[UI_REMOVED], 0, item->path, item->action_name);
+          manager->ui_items = g_list_remove_link (manager->ui_items, current_iter);
+          gimp_ui_manager_menu_item_free (item);
+        }
+    }
 }
 
 void
@@ -739,10 +834,13 @@ gimp_ui_manager_ui_popup_at_widget (GimpUIManager  *manager,
   g_return_if_fail (ui_path != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  model = gimp_ui_manager_get_model (manager, ui_path);
   menu  = gimp_menu_new (manager);
   gtk_menu_attach_to_widget (GTK_MENU (menu), widget, NULL);
+
+  model = gimp_ui_manager_get_model (manager, ui_path);
+  g_return_if_fail (model != NULL);
   gimp_menu_shell_fill (GIMP_MENU_SHELL (menu), model, "ui-added", TRUE);
+  g_object_unref (model);
 
   if (! menu)
     return;
@@ -756,6 +854,7 @@ gimp_ui_manager_ui_popup_at_widget (GimpUIManager  *manager,
       child_model = gimp_ui_manager_get_model (child_ui_manager, child_ui_path);
       child_menu  = gimp_menu_new (child_ui_manager);
       gimp_menu_shell_fill (GIMP_MENU_SHELL (child_menu), child_model, "ui-added", FALSE);
+      g_object_unref (child_model);
 
       gimp_menu_merge (GIMP_MENU (menu), GIMP_MENU (child_menu), TRUE);
     }
@@ -796,6 +895,7 @@ gimp_ui_manager_ui_popup_at_pointer (GimpUIManager  *manager,
   menu  = gimp_menu_new (manager);
   gtk_menu_attach_to_widget (GTK_MENU (menu), attached_widget, NULL);
   gimp_menu_shell_fill (GIMP_MENU_SHELL (menu), model, "ui-added", TRUE);
+  g_object_unref (model);
 
   if (! menu)
     return;
@@ -837,6 +937,7 @@ gimp_ui_manager_ui_popup_at_rect (GimpUIManager      *manager,
   menu  = gimp_menu_new (manager);
   gtk_menu_attach_to_widget (GTK_MENU (menu), attached_widget, NULL);
   gimp_menu_shell_fill (GIMP_MENU_SHELL (menu), model, "ui-added", TRUE);
+  g_object_unref (model);
 
   if (! menu)
     return;
@@ -1485,6 +1586,8 @@ gimp_ui_manager_fill_model (GimpUIManager *manager,
         }
       g_free (label);
       g_free (action_name);
+      g_clear_object (&subsection);
+      g_clear_object (&submenu);
     }
 }
 

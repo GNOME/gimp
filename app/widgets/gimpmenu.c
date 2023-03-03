@@ -38,6 +38,8 @@
 #include "gimpradioaction.h"
 #include "gimpuimanager.h"
 
+#define GIMP_MENU_ACTION_KEY "gimp-menu-action"
+
 
 /**
  * GimpMenu:
@@ -73,6 +75,9 @@ static void     gimp_menu_add_ui                  (GimpMenuShell           *shel
                                                    const gchar             *action_name,
                                                    const gchar             *placeholder_key,
                                                    gboolean                 top);
+static void     gimp_menu_remove_ui               (GimpMenuShell           *shell,
+                                                   const gchar            **paths,
+                                                   const gchar             *action_name);
 
 static void     gimp_menu_add_placeholder         (GimpMenu                *menu,
                                                    const gchar             *label);
@@ -81,6 +86,8 @@ static void     gimp_menu_add_action              (GimpMenu                *menu
                                                    const gchar             *placeholder_key,
                                                    gboolean                 top,
                                                    GtkRadioMenuItem       **group);
+static void     gimp_menu_remove_action           (GimpMenu                *menu,
+                                                   const gchar             *action_name);
 
 static void     gimp_menu_toggle_item_toggled     (GtkWidget               *item,
                                                    GAction                 *action);
@@ -145,8 +152,9 @@ gimp_menu_init (GimpMenu *menu)
 static void
 gimp_menu_iface_init (GimpMenuShellInterface *iface)
 {
-  iface->append = gimp_menu_append;
-  iface->add_ui = gimp_menu_add_ui;
+  iface->append    = gimp_menu_append;
+  iface->add_ui    = gimp_menu_add_ui;
+  iface->remove_ui = gimp_menu_remove_ui;
 }
 
 static void
@@ -327,6 +335,31 @@ gimp_menu_add_ui (GimpMenuShell  *shell,
     }
 }
 
+static void
+gimp_menu_remove_ui (GimpMenuShell  *shell,
+                     const gchar   **paths,
+                     const gchar    *action_name)
+{
+  GimpMenu *menu = GIMP_MENU (shell);
+
+  g_return_if_fail (paths != NULL);
+
+  if (paths[0] == NULL)
+    {
+      gimp_menu_remove_action (menu, action_name);
+    }
+  else
+    {
+      GtkWidget *submenu = NULL;
+
+      submenu = g_tree_lookup (menu->priv->submenus, paths[0]);
+
+      g_return_if_fail (submenu != NULL);
+
+      gimp_menu_remove_ui (GIMP_MENU_SHELL (submenu), paths + 1, action_name);
+    }
+}
+
 
 /* Public functions */
 
@@ -466,6 +499,7 @@ gimp_menu_add_action (GimpMenu          *menu,
     }
 
   gimp_action_set_proxy (GIMP_ACTION (action), item);
+  g_object_set_data (G_OBJECT (item), GIMP_MENU_ACTION_KEY, action);
 
   gtk_widget_set_sensitive (GTK_WIDGET (item),
                             gimp_action_is_sensitive (GIMP_ACTION (action), NULL));
@@ -530,6 +564,45 @@ gimp_menu_add_action (GimpMenu          *menu,
   g_signal_connect_object (action, "notify::visible",
                            G_CALLBACK (gimp_menu_action_notify_visible),
                            item, 0);
+}
+
+static void
+gimp_menu_remove_action (GimpMenu    *menu,
+                         const gchar *action_name)
+{
+  GimpUIManager *manager;
+  GApplication  *app;
+  GList         *children;
+  GAction       *action;
+
+  g_return_if_fail (GIMP_IS_MENU (menu));
+
+  manager = gimp_menu_shell_get_manager (GIMP_MENU_SHELL (menu));
+  app     = manager->gimp->app;
+
+  if (g_str_has_prefix (action_name, "app."))
+    action = g_action_map_lookup_action (G_ACTION_MAP (app), action_name + 4);
+  else
+    action = g_action_map_lookup_action (G_ACTION_MAP (app), action_name);
+
+  g_return_if_fail (GIMP_IS_ACTION (action));
+
+  children = gtk_container_get_children (GTK_CONTAINER (menu));
+
+  for (GList *iter = children; iter; iter = iter->next)
+    {
+      GtkWidget *child = iter->data;
+      GAction   *item_action;
+
+      item_action = g_object_get_data (G_OBJECT (child), GIMP_MENU_ACTION_KEY);
+      if (item_action == action)
+        {
+          gtk_widget_destroy (child);
+          break;
+        }
+    }
+
+  g_list_free (children);
 }
 
 static void

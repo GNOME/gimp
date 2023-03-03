@@ -84,6 +84,9 @@ struct _GimpUIManagerClass
                          const gchar   *action_name,
                          const gchar   *placeholder,
                          gboolean       top);
+  void (* ui_removed)   (GimpUIManager *manager,
+                         const gchar   *path,
+                         const gchar   *action_name);
 };
 
 
@@ -123,6 +126,8 @@ void             gimp_ui_manager_add_ui         (GimpUIManager      *manager,
                                                  gboolean            top);
 void            gimp_ui_manager_remove_ui       (GimpUIManager      *manager,
                                                  guint               merge_id);
+void            gimp_ui_manager_remove_uis      (GimpUIManager      *manager,
+                                                 const gchar        *action_name_prefix);
 void            gimp_ui_manager_add_ui2         (GimpUIManager      *manager,
                                                  const gchar        *path,
                                                  const gchar        *action_name,

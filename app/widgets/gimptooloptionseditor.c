@@ -398,7 +398,7 @@ gimp_tool_options_editor_save_clicked (GtkWidget             *widget,
   if (gtk_widget_get_sensitive (editor->p->restore_button) /* evil but correct */)
     {
       gimp_tool_options_editor_menu_popup (editor, widget,
-                                           "/tool-options-popup/Save");
+                                           "/tool-options-popup/Tool Options Menu/Save Tool Preset");
     }
   else
     {
@@ -413,7 +413,7 @@ gimp_tool_options_editor_restore_clicked (GtkWidget             *widget,
                                           GimpToolOptionsEditor *editor)
 {
   gimp_tool_options_editor_menu_popup (editor, widget,
-                                       "/tool-options-popup/Restore");
+                                       "/tool-options-popup/Tool Options Menu/Restore Tool Preset");
 }
 
 static void
@@ -421,7 +421,7 @@ gimp_tool_options_editor_delete_clicked (GtkWidget             *widget,
                                          GimpToolOptionsEditor *editor)
 {
   gimp_tool_options_editor_menu_popup (editor, widget,
-                                       "/tool-options-popup/Delete");
+                                       "/tool-options-popup/Tool Options Menu/Delete Tool Preset");
 }
 
 static void

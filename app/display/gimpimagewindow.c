@@ -398,6 +398,7 @@ gimp_image_window_constructed (GObject *object)
   gtk_application_set_menubar (private->gimp->app, G_MENU_MODEL (model));
 #else
   private->menubar = gimp_menu_bar_new (model, private->menubar_manager);
+  g_object_unref (model);
 
   gtk_box_pack_start (GTK_BOX (private->main_vbox),
                       private->menubar, FALSE, FALSE, 0);

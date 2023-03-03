@@ -6,14 +6,24 @@
       <attribute name="label" translatable="yes" context="tool-options-action">Tool Options Menu</attribute>
       <attribute name="icon">gimp-tool-options</attribute>
       <submenu>
-        <attribute name="label">Save</attribute>
+        <attribute name="label" translatable="yes" context="tool-options-action">_Save Tool Preset</attribute>
+        <attribute name="icon">document-save</attribute>
         <section>
           <item><attribute name="action">app.tool-options-save-new-preset</attribute></item>
         </section>
       </submenu>
-      <item><attribute name="action">app.tool-options-restore-preset-menu</attribute></item>
-      <item><attribute name="action">app.tool-options-edit-preset-menu</attribute></item>
-      <item><attribute name="action">app.tool-options-delete-preset-menu</attribute></item>
+      <submenu>
+        <attribute name="label" translatable="yes" context="tool-options-action">_Restore Tool Preset</attribute>
+        <attribute name="icon">document-revert</attribute>
+      </submenu>
+      <submenu>
+        <attribute name="label" translatable="yes" context="tool-options-action">E_dit Tool Preset</attribute>
+        <attribute name="icon">gtk-edit</attribute>
+      </submenu>
+      <submenu>
+        <attribute name="label" translatable="yes" context="tool-options-action">_Delete Tool Preset</attribute>
+        <attribute name="icon">edit-delete</attribute>
+      </submenu>
       <section>
         <item><attribute name="action">app.tool-options-reset</attribute></item>
         <item><attribute name="action">app.tool-options-reset-all</attribute></item>

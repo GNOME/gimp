@@ -184,6 +184,7 @@ gimp_text_editor_new (const gchar     *title,
   toolbar_model = gimp_ui_manager_get_model (editor->ui_manager,
                                              "/text-editor-toolbar");
   toolbar = gimp_toolbar_new (toolbar_model, editor->ui_manager);
+  g_object_unref (toolbar_model);
 
   if (toolbar)
     {

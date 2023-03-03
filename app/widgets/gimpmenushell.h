@@ -51,6 +51,9 @@ struct _GimpMenuShellInterface
                                   const gchar    *action_name,
                                   const gchar    *placeholder_key,
                                   gboolean        top);
+  void          (* remove_ui)    (GimpMenuShell  *shell,
+                                  const gchar   **paths,
+                                  const gchar    *action_name);
 };
 
 
