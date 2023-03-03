@@ -18,20 +18,13 @@
 	#error "Unknown PLATFORM:" + PLATFORM
 #endif
 
-Source: "{#GIMP_DIR}\{#DIR}\*.dll"; DestDir: "{app}"; Components: gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#GIMP_DIR}\{#DIR}\*.dll"; DestDir: "{app}"; Components: gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete solidbreak
 Source: "{#GIMP_DIR}\{#DIR}\*.exe"; DestDir: "{app}"; Excludes: "\lib\gimp\2.0\plug-ins\twain\twain.exe,\lib\gimp\2.0\plug-ins\file-ps\file-ps.exe,\bin\gimp.exe,\bin\gimp-console.exe"; Components: gimp{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
-#ifdef DEBUG_SYMBOLS
-Source: "{#GIMP_DIR}\{#DIR}\*.debug"; DestDir: "{app}"; Components: gimp{#COMPONENT} and debug; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-#endif
 
 Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\plug-ins\file-ps\file-ps.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins\file-ps"; Components: gs and gimp{#COMPONENT}; Flags: restartreplace ignoreversion uninsrestartdelete
 
 Source: "{#DEPS_DIR}\{#DDIR}\bin\*.dll"; DestDir: "{app}\bin"; Excludes: "\bin\libgs*.dll"; Components: deps{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\bin\libgs*.dll"; DestDir: "{app}\bin"; Components: gs and deps{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
-#ifdef DEBUG_SYMBOLS
-Source: "{#DEPS_DIR}\{#DDIR}\bin\.debug\*.dll.debug"; DestDir: "{app}\bin\.debug"; Components: deps{#COMPONENT} and debug; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete skipifsourcedoesntexist
-Source: "{#DEPS_DIR}\{#DDIR}\lib\*.debug"; DestDir: "{app}\lib"; Components: deps{#COMPONENT} and debug; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete skipifsourcedoesntexist
-#endif
 
 Source: "{#DEPS_DIR}\{#DDIR}\bin\gspawn-win*.exe"; DestDir: "{app}\bin"; Components: deps{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\bin\gdk-pixbuf-query-loaders.exe"; DestDir: "{app}\bin"; Components: deps{#COMPONENT}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
@@ -53,10 +46,16 @@ Source: "{#DEPS_DIR}\{#DDIR}\bin\libpython2.7.dll"; DestDir: "{app}\bin"; Compon
 Source: "{#DEPS_DIR}\{#DDIR}\lib\python2.7\*"; DestDir: "{app}\lib\python2.7"; Components: py and gimp{#COMPONENT}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 	#else
 ;no AArch64 Python 2.7
-Source: "{#GIMP_DIR}\{#DIR32}\lib\gimp\2.0\python\*.p*"; Excludes: "*.debug"; DestDir: "{app}\32\lib\gimp\2.0\python"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR}\{#DIR32}\lib\gimp\2.0\python\*.p*"; Excludes: "*.debug"; DestDir: "{app}\32\lib\gimp\2.0\python"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion solidbreak
 Source: "{#DEPS_DIR}\{#DDIR32}\bin\python2w.exe"; DestDir: "{app}\32\bin"; DestName: "pythonw.exe"; Components: gimp32on64\py; Flags: restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR}\{#DDIR32}\bin\python2.exe"; DestDir: "{app}\32\bin"; DestName: "python.exe"; Components: gimp32on64\py; Flags: restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR}\{#DDIR32}\bin\libpython2.7.dll"; DestDir: "{app}\32\bin"; Components: gimp32on64\py; Flags: restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR}\{#DDIR32}\lib\python2.7\*"; DestDir: "{app}\32\lib\python2.7"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 	#endif
+#endif
+
+#ifdef DEBUG_SYMBOLS
+Source: "{#GIMP_DIR}\{#DIR}\*.debug"; DestDir: "{app}"; Components: gimp{#COMPONENT} and debug; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\bin\.debug\*.dll.debug"; DestDir: "{app}\bin\.debug"; Components: deps{#COMPONENT} and debug; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete skipifsourcedoesntexist
+Source: "{#DEPS_DIR}\{#DDIR}\lib\*.debug"; DestDir: "{app}\lib"; Components: deps{#COMPONENT} and debug; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete skipifsourcedoesntexist
 #endif
