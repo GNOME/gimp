@@ -34,9 +34,6 @@ void   debug_show_image_graph_cmd_callback        (GimpAction *action,
 void   debug_dump_menus_cmd_callback              (GimpAction *action,
                                                    GVariant   *value,
                                                    gpointer    data);
-void   debug_dump_managers_cmd_callback           (GimpAction *action,
-                                                   GVariant   *value,
-                                                   gpointer    data);
 void   debug_dump_keyboard_shortcuts_cmd_callback (GimpAction *action,
                                                    GVariant   *value,
                                                    gpointer    data);

@@ -55,10 +55,6 @@
 static gboolean  debug_benchmark_projection    (GimpDisplay *display);
 static gboolean  debug_show_image_graph        (GimpImage   *source_image);
 
-static void      debug_dump_menus_recurse_menu (GtkWidget   *menu,
-                                                gint         depth,
-                                                gchar       *path);
-
 static void      debug_print_qdata             (GimpObject  *object);
 static void      debug_print_qdata_foreach     (GQuark       key_id,
                                                 gpointer     data,
@@ -111,77 +107,6 @@ debug_show_image_graph_cmd_callback (GimpAction *action,
   return_if_no_image (source_image, data);
 
   g_idle_add ((GSourceFunc) debug_show_image_graph, g_object_ref (source_image));
-}
-
-void
-debug_dump_menus_cmd_callback (GimpAction *action,
-                               GVariant   *value,
-                               gpointer    data)
-{
-  GList *list;
-
-  for (list = gimp_menu_factory_get_registered_menus (global_menu_factory);
-       list;
-       list = g_list_next (list))
-    {
-      GimpMenuFactoryEntry *entry = list->data;
-      GList                *managers;
-
-      managers = gimp_ui_managers_from_name (entry->identifier);
-
-      if (managers)
-        {
-          GimpUIManager *manager = managers->data;
-          GList         *list;
-
-          for (list = manager->registered_uis; list; list = g_list_next (list))
-            {
-              GimpUIManagerUIEntry *ui_entry = list->data;
-
-              if (GTK_IS_MENU_SHELL (ui_entry->widget))
-                {
-                  g_print ("\n\n"
-                           "========================================\n"
-                           "Menu: %s%s\n"
-                           "========================================\n\n",
-                           entry->identifier, ui_entry->ui_path);
-
-                  debug_dump_menus_recurse_menu (ui_entry->widget, 1,
-                                                 entry->identifier);
-                  g_print ("\n");
-                }
-            }
-        }
-    }
-}
-
-void
-debug_dump_managers_cmd_callback (GimpAction *action,
-                                  GVariant   *value,
-                                  gpointer    data)
-{
-  GList *list;
-
-  for (list = gimp_menu_factory_get_registered_menus (global_menu_factory);
-       list;
-       list = g_list_next (list))
-    {
-      GimpMenuFactoryEntry *entry = list->data;
-      GList                *managers;
-
-      managers = gimp_ui_managers_from_name (entry->identifier);
-
-      if (managers)
-        {
-          g_print ("\n\n"
-                   "========================================\n"
-                   "UI Manager: %s\n"
-                   "========================================\n\n",
-                   entry->identifier);
-
-          g_print ("%s\n", gimp_ui_manager_get_ui (managers->data));
-        }
-    }
 }
 
 void
@@ -355,54 +280,6 @@ debug_show_image_graph (GimpImage *source_image)
   g_object_unref (source_image);
 
   return FALSE;
-}
-
-static void
-debug_dump_menus_recurse_menu (GtkWidget *menu,
-                               gint       depth,
-                               gchar     *path)
-{
-  GList *children;
-  GList *list;
-
-  children = gtk_container_get_children (GTK_CONTAINER (menu));
-
-  for (list = children; list; list = g_list_next (list))
-    {
-      GtkWidget *menu_item = GTK_WIDGET (list->data);
-      GtkWidget *child     = gtk_bin_get_child (GTK_BIN (menu_item));
-
-      if (GTK_IS_LABEL (child))
-        {
-          GtkWidget   *submenu;
-          const gchar *label;
-          gchar       *full_path;
-          gchar       *help_page;
-          gchar       *format_str;
-
-          label = gtk_label_get_text (GTK_LABEL (child));
-          full_path = g_strconcat (path, "/", label, NULL);
-
-          help_page = g_object_get_data (G_OBJECT (menu_item), "gimp-help-id");
-          help_page = g_strdup (help_page);
-
-          format_str = g_strdup_printf ("%%%ds%%%ds %%-20s %%s\n",
-                                        depth * 2, depth * 2 - 40);
-          g_print (format_str,
-                   "", label, "", help_page ? help_page : "");
-          g_free (format_str);
-          g_free (help_page);
-
-          submenu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu_item));
-
-          if (submenu)
-            debug_dump_menus_recurse_menu (submenu, depth + 1, full_path);
-
-          g_free (full_path);
-        }
-    }
-
-  g_list_free (children);
 }
 
 static void

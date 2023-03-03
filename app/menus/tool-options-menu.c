@@ -71,20 +71,7 @@ tool_options_menu_update (GimpUIManager *manager,
                           gpointer       update_data,
                           const gchar   *ui_path)
 {
-  guint merge_id;
-
-  merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
-                                                  "tool-options-merge-id"));
-
-  if (merge_id)
-    {
-      gimp_ui_manager_remove_ui (manager, merge_id);
-
-      g_object_set_data (G_OBJECT (manager), "tool-options-merge-id",
-                         GINT_TO_POINTER (0));
-
-      gimp_ui_manager_ensure_update (manager);
-    }
+  /* no-op. */
 }
 
 static void
@@ -112,8 +99,6 @@ tool_options_menu_update_after (GimpUIManager *manager,
 
   tool_options_menu_update_presets (manager, "Delete Tool Preset",
                                     "delete", tool_info->presets);
-
-  gimp_ui_manager_ensure_update (manager);
 }
 
 static void
@@ -138,7 +123,7 @@ tool_options_menu_update_presets (GimpUIManager *manager,
       action_name = g_strdup_printf ("%s%03d", action_prefix, i);
       path        = g_strdup_printf ("/Tool Options Menu/%s", menu_path);
 
-      gimp_ui_manager_add_ui2 (manager, path, action_name, NULL, FALSE);
+      gimp_ui_manager_add_ui (manager, path, action_name, NULL, FALSE);
 
       g_free (action_name);
       g_free (path);

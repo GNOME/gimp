@@ -60,16 +60,6 @@ static const GimpActionEntry debug_actions[] =
     debug_show_image_graph_cmd_callback,
     NULL },
 
-  { "debug-dump-items", NULL,
-    "_Dump Items", NULL, NULL,
-    debug_dump_menus_cmd_callback,
-    NULL },
-
-  { "debug-dump-managers", NULL,
-    "Dump _UI Managers", NULL, NULL,
-    debug_dump_managers_cmd_callback,
-    NULL },
-
   { "debug-dump-keyboard-shortcuts", NULL,
     "Dump _Keyboard Shortcuts", NULL, NULL,
     debug_dump_keyboard_shortcuts_cmd_callback,

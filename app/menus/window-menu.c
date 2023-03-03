@@ -92,48 +92,28 @@ window_menu_display_opened (GdkDisplayManager *disp_manager,
   const gchar *ui_path;
   const gchar *display_name;
   gchar       *action_name;
-  gchar       *action_path;
-  gchar       *merge_key;
-  guint        merge_id;
 
   group_name = g_object_get_data (G_OBJECT (manager),
                                   "move-to-screen-group-name");
   ui_path    = g_object_get_data (G_OBJECT (manager),
                                   "move-to-screen-ui-path");
 
-  action_path = g_strdup_printf ("%s/Move to Screen", ui_path);
-
   display_name = gdk_display_get_name (display);
   if (! display_name)
     display_name = "eek";
 
-  merge_key = g_strdup_printf ("%s-display-merge-id", display_name);
-
-  merge_id = gimp_ui_manager_new_merge_id (manager);
-  g_object_set_data (G_OBJECT (manager), merge_key,
-                     GUINT_TO_POINTER (merge_id));
-
-  g_free (merge_key);
-
-  action_name = g_strdup_printf ("%s-move-to-screen-%s",
-                                 group_name, display_name);
+  action_name = g_strdup_printf ("%s-move-to-screen-%s", group_name, display_name);
   gimp_make_valid_action_name (action_name);
-
-  gimp_ui_manager_add_ui (manager, merge_id,
-                          action_path, action_name, action_name,
-                          GTK_UI_MANAGER_MENUITEM,
-                          FALSE);
 
   /* TODO GMenu: there is also a case with the dockable menu, which is not yet
    * using our new GAction/GMenu-based code. In such case, the ui_path is
    * "/dockable-popup/Move to Screen".
    */
   if (g_str_has_prefix (ui_path, "/image-menubar/"))
-    gimp_ui_manager_add_ui2 (manager, "/View/Move to Screen",
-                             action_name, NULL, FALSE);
+    gimp_ui_manager_add_ui (manager, "/View/Move to Screen",
+                            action_name, NULL, FALSE);
 
   g_free (action_name);
-  g_free (action_path);
 
   g_signal_connect_object (display, "closed",
                            G_CALLBACK (window_menu_display_closed),
@@ -145,19 +125,17 @@ window_menu_display_closed (GdkDisplay    *display,
                             gboolean       is_error,
                             GimpUIManager *manager)
 {
+  const gchar *group_name;
   const gchar *display_name;
-  gchar       *merge_key;
-  guint        merge_id;
+  gchar       *action_name;
 
+  group_name = g_object_get_data (G_OBJECT (manager), "move-to-screen-group-name");
   display_name = gdk_display_get_name (display);
   if (! display_name)
     display_name = "eek";
 
-  merge_key = g_strdup_printf ("%s-display-merge-id", display_name);
-  merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
-                                                  merge_key));
-  g_free (merge_key);
+  action_name = g_strdup_printf ("%s-move-to-screen-%s", group_name, display_name);
+  gimp_ui_manager_remove_ui (manager, action_name);
 
-  if (merge_id)
-    gimp_ui_manager_remove_ui (manager, merge_id);
+  g_free (action_name);
 }

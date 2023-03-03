@@ -36,31 +36,20 @@ void
 filters_menu_setup (GimpUIManager *manager,
                     const gchar   *ui_path)
 {
-  guint merge_id;
-  gint  i;
+  gint i;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
-  merge_id = gimp_ui_manager_new_merge_id (manager);
-
   for (i = 0; i < gimp_filter_history_size (manager->gimp); i++)
     {
       gchar *action_name;
-      gchar *action_path;
 
       action_name = g_strdup_printf ("filters-recent-%02d", i + 1);
-      action_path = g_strdup_printf ("%s/Filters/Recently Used/Filters",
-                                     ui_path);
 
-      gimp_ui_manager_add_ui (manager, merge_id,
-                              action_path, action_name, action_name,
-                              GTK_UI_MANAGER_MENUITEM,
-                              FALSE);
-      gimp_ui_manager_add_ui2 (manager, "/Filters/Recently Used",
-                               action_name, "Filters", TRUE);
+      gimp_ui_manager_add_ui (manager, "/Filters/Recently Used",
+                              action_name, "Filters", TRUE);
 
       g_free (action_name);
-      g_free (action_path);
     }
 }

@@ -85,18 +85,11 @@ static void       gimp_ui_manager_get_property        (GObject        *object,
 static void       gimp_ui_manager_connect_proxy       (GtkUIManager   *manager,
                                                        GtkAction      *action,
                                                        GtkWidget      *proxy);
-static GtkWidget *gimp_ui_manager_get_widget_impl     (GtkUIManager   *manager,
-                                                       const gchar    *path);
-static GtkAction *gimp_ui_manager_get_action_impl     (GtkUIManager   *manager,
-                                                       const gchar    *path);
 static void       gimp_ui_manager_real_update         (GimpUIManager  *manager,
                                                        gpointer        update_data);
 static GimpUIManagerUIEntry *
                   gimp_ui_manager_entry_get           (GimpUIManager  *manager,
                                                        const gchar    *ui_path);
-static gboolean   gimp_ui_manager_entry_load          (GimpUIManager  *manager,
-                                                       GimpUIManagerUIEntry *entry,
-                                                       GError        **error);
 static GimpUIManagerUIEntry *
                   gimp_ui_manager_entry_ensure        (GimpUIManager  *manager,
                                                        const gchar    *path);
@@ -144,8 +137,6 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
   object_class->get_property   = gimp_ui_manager_get_property;
 
   manager_class->connect_proxy = gimp_ui_manager_connect_proxy;
-  manager_class->get_widget    = gimp_ui_manager_get_widget_impl;
-  manager_class->get_action    = gimp_ui_manager_get_action_impl;
 
   klass->update                = gimp_ui_manager_real_update;
 
@@ -287,9 +278,6 @@ gimp_ui_manager_finalize (GObject *object)
       g_free (entry->basename);
       g_clear_object (&entry->builder);
 
-      if (entry->widget)
-        g_object_unref (entry->widget);
-
       g_slice_free (GimpUIManagerUIEntry, entry);
     }
 
@@ -372,35 +360,6 @@ gimp_ui_manager_connect_proxy (GtkUIManager *manager,
                               G_CALLBACK (gimp_ui_manager_item_realize),
                               manager);
     }
-}
-
-static GtkWidget *
-gimp_ui_manager_get_widget_impl (GtkUIManager *manager,
-                                 const gchar  *path)
-{
-  GimpUIManagerUIEntry *entry;
-
-  entry = gimp_ui_manager_entry_ensure (GIMP_UI_MANAGER (manager), path);
-
-  if (entry)
-    {
-      if (! strcmp (entry->ui_path, path))
-        return entry->widget;
-
-      return GTK_UI_MANAGER_CLASS (parent_class)->get_widget (manager, path);
-    }
-
-  return NULL;
-}
-
-static GtkAction *
-gimp_ui_manager_get_action_impl (GtkUIManager *manager,
-                                 const gchar  *path)
-{
-  if (gimp_ui_manager_entry_ensure (GIMP_UI_MANAGER (manager), path))
-    return GTK_UI_MANAGER_CLASS (parent_class)->get_action (manager, path);
-
-  return NULL;
 }
 
 static void
@@ -527,8 +486,6 @@ gimp_ui_manager_get_model (GimpUIManager *manager,
   GMenuModel           *model;
   gchar                *root;
   gchar                *submenus;
-  gchar                *filename;
-  gchar                *full_basename;
   GStrvBuilder         *paths_builder = g_strv_builder_new ();
   GStrv                 paths;
 
@@ -537,28 +494,65 @@ gimp_ui_manager_get_model (GimpUIManager *manager,
   if (submenus != NULL)
     {
       *submenus = '\0';
-      if (++submenus == '\0')
+      if (*(++submenus) == '\0')
         submenus = NULL;
     }
 
   entry         = gimp_ui_manager_entry_ensure (manager, path);
   g_return_val_if_fail (entry != NULL, NULL);
-  full_basename = g_strconcat (entry->basename, ".ui", NULL);
-  filename      = g_build_filename (gimp_data_directory (), "menus",
-                                    full_basename, NULL);
 
   if (entry->builder == NULL)
     {
+      const gchar *menus_path_override = g_getenv ("GIMP_TESTING_MENUS_PATH");
+      gchar       *full_basename;
+      gchar       *filename;
+
+      full_basename = g_strconcat (entry->basename, ".ui", NULL);
+
+      /* In order for test cases to be able to run without GIMP being
+       * installed yet, allow them to override the menus directory to the
+       * menus dir in the source root
+       */
+      if (menus_path_override)
+        {
+          GList *paths = gimp_path_parse (menus_path_override, 2, FALSE, NULL);
+          GList *list;
+
+          for (list = paths; list; list = g_list_next (list))
+            {
+              filename = g_build_filename (list->data, full_basename, NULL);
+
+              if (! list->next ||
+                  g_file_test (filename, G_FILE_TEST_EXISTS))
+                break;
+
+              g_clear_pointer (&filename, g_free);
+            }
+
+          g_list_free_full (paths, g_free);
+        }
+      else
+        {
+          filename = g_build_filename (gimp_data_directory (), "menus", full_basename, NULL);
+        }
+
+      g_return_val_if_fail (filename != NULL, NULL);
+
+      if (manager->gimp->be_verbose)
+        g_print ("Loading menu '%s' for %s\n",
+                 gimp_filename_to_utf8 (filename), entry->ui_path);
+
       /* The model is owned by the builder which I have to keep around. */
       entry->builder = gtk_builder_new_from_file (filename);
 
       gimp_ui_manager_fill_model (manager,
                                   G_MENU_MODEL (gtk_builder_get_object (entry->builder, root)));
+
+      g_free (filename);
+      g_free (full_basename);
     }
 
   model = G_MENU_MODEL (gtk_builder_get_object (entry->builder, root));
-  g_free (filename);
-  g_free (full_basename);
 
   g_return_val_if_fail (G_IS_MENU (model), NULL);
 
@@ -573,7 +567,7 @@ gimp_ui_manager_get_model (GimpUIManager *manager,
       if (submenus != NULL)
         {
           *submenus = '\0';
-          if (++submenus == '\0')
+          if (*(++submenus) == '\0')
             submenus = NULL;
         }
 
@@ -606,42 +600,33 @@ gimp_ui_manager_get_model (GimpUIManager *manager,
 
   paths = g_strv_builder_end (paths_builder);
   g_strv_builder_unref (paths_builder);
-  g_object_set_data_full (model, "gimp-ui-manager-model-paths", paths, g_strfreev);
+  g_object_set_data_full (G_OBJECT (model), "gimp-ui-manager-model-paths",
+                          paths, (GDestroyNotify) g_strfreev);
   g_free (root);
 
   return model;
 }
 
-gchar *
-gimp_ui_manager_get_ui (GimpUIManager *manager)
-{
-  return gtk_ui_manager_get_ui ((GtkUIManager *) manager);
-}
-
-guint
-gimp_ui_manager_new_merge_id (GimpUIManager *manager)
-{
-  return gtk_ui_manager_new_merge_id ((GtkUIManager *) manager);
-}
-
-void
-gimp_ui_manager_add_ui (GimpUIManager        *manager,
-                        guint                 merge_id,
-                        const gchar          *path,
-                        const gchar          *name,
-                        const gchar          *action,
-                        GtkUIManagerItemType  type,
-                        gboolean              top)
-{
-  gtk_ui_manager_add_ui ((GtkUIManager *) manager, merge_id,
-                         path, name, action, type, top);
-}
-
 void
 gimp_ui_manager_remove_ui (GimpUIManager *manager,
-                           guint          merge_id)
+                           const gchar   *action_name)
 {
-  gtk_ui_manager_remove_ui ((GtkUIManager *) manager, merge_id);
+  GList *iter = manager->ui_items;
+
+  g_return_if_fail (action_name != NULL);
+
+  for (; iter != NULL; iter = iter->next)
+    {
+      GimpUIManagerMenuItem *item = iter->data;
+
+      if (g_strcmp0 (item->action_name, action_name) == 0)
+        {
+          g_signal_emit (manager, manager_signals[UI_REMOVED], 0, item->path, item->action_name);
+          manager->ui_items = g_list_remove_link (manager->ui_items, iter);
+          gimp_ui_manager_menu_item_free (item);
+          break;
+        }
+    }
 }
 
 void
@@ -669,11 +654,11 @@ gimp_ui_manager_remove_uis (GimpUIManager *manager,
 }
 
 void
-gimp_ui_manager_add_ui2 (GimpUIManager *manager,
-                         const gchar   *path,
-                         const gchar   *action_name,
-                         const gchar   *placeholder,
-                         gboolean       top)
+gimp_ui_manager_add_ui (GimpUIManager *manager,
+                        const gchar   *path,
+                        const gchar   *action_name,
+                        const gchar   *placeholder,
+                        gboolean       top)
 {
   GimpUIManagerMenuItem *item;
 
@@ -702,20 +687,6 @@ gimp_ui_manager_foreach_ui (GimpUIManager      *manager,
 
       callback (manager, item->path, item->action_name, item->placeholder, item->top, user_data);
     }
-}
-
-void
-gimp_ui_manager_ensure_update (GimpUIManager *manager)
-{
-  gtk_ui_manager_ensure_update ((GtkUIManager *) manager);
-}
-
-GimpAction *
-gimp_ui_manager_get_action (GimpUIManager *manager,
-                            const gchar   *path)
-{
-  return (GimpAction *) gtk_ui_manager_get_action ((GtkUIManager *) manager,
-                                                   path);
 }
 
 GimpAction *
@@ -812,8 +783,7 @@ gimp_ui_manager_ui_register (GimpUIManager          *manager,
   entry->ui_path    = g_strdup (ui_path);
   entry->basename   = g_strdup (basename);
   entry->setup_func = setup_func;
-  entry->merge_id   = 0;
-  entry->widget     = NULL;
+  entry->setup_done = FALSE;
   entry->builder    = NULL;
 
   manager->registered_uis = g_list_prepend (manager->registered_uis, entry);
@@ -1000,60 +970,6 @@ gimp_ui_manager_entry_get (GimpUIManager *manager,
   return NULL;
 }
 
-static gboolean
-gimp_ui_manager_entry_load (GimpUIManager         *manager,
-                            GimpUIManagerUIEntry  *entry,
-                            GError               **error)
-{
-  gchar       *filename            = NULL;
-  gchar       *full_basename;
-  const gchar *menus_path_override = g_getenv ("GIMP_TESTING_MENUS_PATH");
-
-  full_basename = g_strconcat (entry->basename, ".xml", NULL);
-  /* In order for test cases to be able to run without GIMP being
-   * installed yet, allow them to override the menus directory to the
-   * menus dir in the source root
-   */
-  if (menus_path_override)
-    {
-      GList *path = gimp_path_parse (menus_path_override, 2, FALSE, NULL);
-      GList *list;
-
-      for (list = path; list; list = g_list_next (list))
-        {
-          filename = g_build_filename (list->data, full_basename, NULL);
-
-          if (! list->next ||
-              g_file_test (filename, G_FILE_TEST_EXISTS))
-            break;
-
-          g_free (filename);
-        }
-
-      g_list_free_full (path, g_free);
-    }
-  else
-    {
-      filename = g_build_filename (gimp_data_directory (), "menus",
-                                   full_basename, NULL);
-    }
-
-  if (manager->gimp->be_verbose)
-    g_print ("loading menu '%s' for %s\n",
-             gimp_filename_to_utf8 (filename), entry->ui_path);
-
-  entry->merge_id = gtk_ui_manager_add_ui_from_file (GTK_UI_MANAGER (manager),
-                                                     filename, error);
-
-  g_free (filename);
-  g_free (full_basename);
-
-  if (! entry->merge_id)
-    return FALSE;
-
-  return TRUE;
-}
-
 static GimpUIManagerUIEntry *
 gimp_ui_manager_entry_ensure (GimpUIManager *manager,
                               const gchar   *path)
@@ -1068,71 +984,10 @@ gimp_ui_manager_entry_ensure (GimpUIManager *manager,
       return NULL;
     }
 
-  if (! entry->merge_id)
+  if (entry->setup_func && ! entry->setup_done)
     {
-      GError *error = NULL;
-
-      if (! gimp_ui_manager_entry_load (manager, entry, &error))
-        {
-          if (error->domain == G_FILE_ERROR &&
-              error->code == G_FILE_ERROR_EXIST)
-            {
-              gimp_message (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                            "%s\n\n%s\n\n%s",
-                            _("Your GIMP installation is incomplete:"),
-                            error->message,
-                            _("Please make sure the menu XML files are "
-                              "correctly installed."));
-            }
-          else
-            {
-              gchar *full_basename = g_strconcat (entry->basename, ".xml", NULL);
-
-              gimp_message (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                            _("There was an error parsing the menu definition "
-                              "from %s: %s"),
-                            gimp_filename_to_utf8 (full_basename),
-                            error->message);
-              g_free (full_basename);
-            }
-
-          g_clear_error (&error);
-          return NULL;
-        }
-    }
-
-  if (! entry->widget)
-    {
-      GtkUIManager *gtk_manager = GTK_UI_MANAGER (manager);
-
-      entry->widget =
-        GTK_UI_MANAGER_CLASS (parent_class)->get_widget (gtk_manager,
-                                                         entry->ui_path);
-
-      if (entry->widget)
-        {
-          g_object_ref (entry->widget);
-
-          /*  take ownership of popup menus  */
-          if (GTK_IS_MENU (entry->widget))
-            {
-              g_object_ref_sink (entry->widget);
-              g_object_unref (entry->widget);
-            }
-
-          if (entry->setup_func)
-            entry->setup_func (manager, entry->ui_path);
-        }
-      else
-        {
-          gchar *full_basename = g_strconcat (entry->basename, ".xml", NULL);
-
-          g_warning ("%s: \"%s\" does not contain registered toplevel "
-                     "widget \"%s\"",
-                     G_STRFUNC, full_basename, entry->ui_path);
-          g_free (full_basename);
-          return NULL;
-        }
+      entry->setup_func (manager, entry->ui_path);
+      entry->setup_done = TRUE;
     }
 
   return entry;

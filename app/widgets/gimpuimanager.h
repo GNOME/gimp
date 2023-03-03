@@ -37,8 +37,7 @@ struct _GimpUIManagerUIEntry
   gchar                  *ui_path;
   gchar                  *basename;
   GimpUIManagerSetupFunc  setup_func;
-  guint                   merge_id;
-  GtkWidget              *widget;
+  gboolean                setup_done;
   GtkBuilder             *builder;
 };
 
@@ -114,21 +113,11 @@ GtkWidget     * gimp_ui_manager_get_widget      (GimpUIManager      *manager,
 GMenuModel    * gimp_ui_manager_get_model       (GimpUIManager      *manager,
                                                  const gchar        *path);
 
-gchar          * gimp_ui_manager_get_ui         (GimpUIManager      *manager);
-
-guint            gimp_ui_manager_new_merge_id   (GimpUIManager      *manager);
-void             gimp_ui_manager_add_ui         (GimpUIManager      *manager,
-                                                 guint               merge_id,
-                                                 const gchar        *path,
-                                                 const gchar        *name,
-                                                 const gchar        *action,
-                                                 GtkUIManagerItemType type,
-                                                 gboolean            top);
 void            gimp_ui_manager_remove_ui       (GimpUIManager      *manager,
-                                                 guint               merge_id);
+                                                 const gchar        *action_name);
 void            gimp_ui_manager_remove_uis      (GimpUIManager      *manager,
                                                  const gchar        *action_name_prefix);
-void            gimp_ui_manager_add_ui2         (GimpUIManager      *manager,
+void            gimp_ui_manager_add_ui          (GimpUIManager      *manager,
                                                  const gchar        *path,
                                                  const gchar        *action_name,
                                                  const gchar        *placeholder,
@@ -137,10 +126,6 @@ void            gimp_ui_manager_foreach_ui      (GimpUIManager      *manager,
                                                  GimpUIMenuCallback  callback,
                                                  gpointer            user_data);
 
-void            gimp_ui_manager_ensure_update   (GimpUIManager      *manager);
-
-GimpAction    * gimp_ui_manager_get_action      (GimpUIManager      *manager,
-                                                 const gchar        *path);
 GimpAction    * gimp_ui_manager_find_action     (GimpUIManager      *manager,
                                                  const gchar        *group_name,
                                                  const gchar        *action_name);

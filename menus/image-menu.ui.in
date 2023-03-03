@@ -35,8 +35,6 @@
             <item><attribute name="action">app.debug-show-image-graph</attribute></item>
           </section>
           <section>
-            <item><attribute name="action">app.debug-dump-items</attribute></item>
-            <item><attribute name="action">app.debug-dump-managers</attribute></item>
             <item><attribute name="action">app.debug-dump-keyboard-shortcuts</attribute></item>
             <item><attribute name="action">app.debug-dump-attached-data</attribute></item>
           </section>
