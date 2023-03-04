@@ -65,6 +65,7 @@ struct _GimpUIManager
   GList        *registered_uis;
 
   GList        *ui_items;
+  GList        *action_groups;
 };
 
 struct _GimpUIManagerClass
@@ -99,12 +100,11 @@ GList         * gimp_ui_managers_from_name  (const gchar            *name);
 void            gimp_ui_manager_update      (GimpUIManager          *manager,
                                              gpointer                update_data);
 
-void            gimp_ui_manager_insert_action_group (GimpUIManager   *manager,
-                                                     GimpActionGroup *group,
-                                                     gint             pos);
-GimpActionGroup * gimp_ui_manager_get_action_group  (GimpUIManager   *manager,
-                                                     const gchar     *name);
-GList         * gimp_ui_manager_get_action_groups   (GimpUIManager   *manager);
+void            gimp_ui_manager_add_action_group   (GimpUIManager   *manager,
+                                                    GimpActionGroup *group);
+GimpActionGroup * gimp_ui_manager_get_action_group (GimpUIManager   *manager,
+                                                    const gchar     *name);
+GList         * gimp_ui_manager_get_action_groups  (GimpUIManager   *manager);
 
 GtkAccelGroup * gimp_ui_manager_get_accel_group (GimpUIManager      *manager);
 

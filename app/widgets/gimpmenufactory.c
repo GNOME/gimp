@@ -249,7 +249,7 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
                                        G_CALLBACK (gimp_menu_factory_manager_action_added),
                                        accel_group, 0);
 
-              gimp_ui_manager_insert_action_group (manager, group, -1);
+              gimp_ui_manager_add_action_group (manager, group);
               g_object_unref (group);
             }
 

@@ -208,8 +208,9 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
 static void
 gimp_ui_manager_init (GimpUIManager *manager)
 {
-  manager->name = NULL;
-  manager->gimp = NULL;
+  manager->name          = NULL;
+  manager->gimp          = NULL;
+  manager->action_groups = NULL;
 }
 
 static void
@@ -283,6 +284,7 @@ gimp_ui_manager_finalize (GObject *object)
 
   g_clear_pointer (&manager->registered_uis, g_list_free);
   g_clear_pointer (&manager->name,           g_free);
+  g_list_free_full (manager->action_groups, g_object_unref);
 
   g_list_free_full (manager->ui_items,
                     (GDestroyNotify) gimp_ui_manager_menu_item_free);
@@ -428,13 +430,11 @@ gimp_ui_manager_update (GimpUIManager *manager,
 }
 
 void
-gimp_ui_manager_insert_action_group (GimpUIManager   *manager,
-                                     GimpActionGroup *group,
-                                     gint             pos)
+gimp_ui_manager_add_action_group (GimpUIManager   *manager,
+                                  GimpActionGroup *group)
 {
-  gtk_ui_manager_insert_action_group ((GtkUIManager *) manager,
-                                      (GtkActionGroup *) group,
-                                      pos);
+  if (! g_list_find (manager->action_groups, group))
+    manager->action_groups = g_list_prepend (manager->action_groups, g_object_ref (group));
 }
 
 GimpActionGroup *
@@ -462,7 +462,7 @@ gimp_ui_manager_get_action_group (GimpUIManager *manager,
 GList *
 gimp_ui_manager_get_action_groups (GimpUIManager *manager)
 {
-  return gtk_ui_manager_get_action_groups ((GtkUIManager *) manager);
+  return manager->action_groups;
 }
 
 GtkAccelGroup *
