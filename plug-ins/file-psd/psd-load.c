@@ -3346,7 +3346,7 @@ load_dialog (PSDSupport *unsupported_features)
       gchar     *title   = g_strdup_printf ("<b>%s</b>\n%s\n",
                                             _("Compatibility Notice"),
                                             _("This PSD file contains features "
-                                              "that\n are not yet fully supported "
+                                              "that\nare not yet fully supported "
                                               "in GIMP:"));
 
       title_label = gtk_label_new (NULL);
@@ -3373,7 +3373,7 @@ load_dialog (PSDSupport *unsupported_features)
                                      "to raster layers."));
       if (unsupported_features->linked_layer)
         message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
-                                   _("Linked layers are  are not yet "
+                                   _("Linked layers are not yet "
                                      "supported and will be dropped."));
       if (unsupported_features->vector_mask)
         message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
