@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-18 11:45+0100\n"
-"PO-Revision-Date: 2023-02-18 11:48+0100\n"
+"POT-Creation-Date: 2023-03-05 13:48+0100\n"
+"PO-Revision-Date: 2023-03-05 13:50+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -117,12 +117,12 @@ msgid "Paths are now exported to PSD"
 msgstr "Ścieżki są teraz eksportowane do plików PSD"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
-msgid "JPEG-XL export added"
-msgstr "Dodano obsługę eksportu do JPEG-XL"
+msgid "JPEG XL export added"
+msgstr "Dodano obsługę eksportu do JPEG XL"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
-msgid "Metadata in JPEG-XL import and export"
-msgstr "Obsługa metadanych w imporcie i eksporcie JPEG-XL"
+msgid "Metadata in JPEG XL import"
+msgstr "Obsługa metadanych w imporcie JPEG XL"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "New option \"Show reduced images\" when loading TIFF images"
@@ -3576,7 +3576,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:116 ../app/actions/tool-options-commands.c:75
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2180
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2195
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -14197,64 +14197,64 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Przekształcenie grupy warstw"
 
-#: ../app/core/gimpimage.c:691 ../app/widgets/gimpsymmetryeditor.c:181
+#: ../app/core/gimpimage.c:692 ../app/widgets/gimpsymmetryeditor.c:181
 msgid "Symmetry"
 msgstr "Symetria"
 
-#: ../app/core/gimpimage.c:2425
+#: ../app/core/gimpimage.c:2440
 msgid " (exported)"
 msgstr " (wyeksportowany)"
 
-#: ../app/core/gimpimage.c:2429
+#: ../app/core/gimpimage.c:2444
 msgid " (overwritten)"
 msgstr " (zastąpiony)"
 
-#: ../app/core/gimpimage.c:2438
+#: ../app/core/gimpimage.c:2453
 msgid " (imported)"
 msgstr " (zaimportowany)"
 
-#: ../app/core/gimpimage.c:2612 ../app/core/gimpimage.c:2626
-#: ../app/core/gimpimage.c:2669
+#: ../app/core/gimpimage.c:2627 ../app/core/gimpimage.c:2641
+#: ../app/core/gimpimage.c:2684
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Tryb warstwy „%s” został dodany w %s"
 
-#: ../app/core/gimpimage.c:2684
+#: ../app/core/gimpimage.c:2699
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Grupy warstw zostały dodane w %s"
 
-#: ../app/core/gimpimage.c:2691
+#: ../app/core/gimpimage.c:2706
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Maski na grupach warstw zostały dodane w %s"
 
-#: ../app/core/gimpimage.c:2707
+#: ../app/core/gimpimage.c:2722
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Obrazy o głębi wysokobitowej zostały dodane w %s"
 
-#: ../app/core/gimpimage.c:2719
+#: ../app/core/gimpimage.c:2734
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Wewnętrzna kompresja zlib została dodana w %s"
 
-#: ../app/core/gimpimage.c:2736
+#: ../app/core/gimpimage.c:2751
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Obsługa plików obrazów większych niż 4 GB została dodana w %s"
 
-#: ../app/core/gimpimage.c:2832
+#: ../app/core/gimpimage.c:2847
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/gimpimage.c:2884
+#: ../app/core/gimpimage.c:2899
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Zmiana jednostki obrazu"
 
-#: ../app/core/gimpimage.c:3835
+#: ../app/core/gimpimage.c:3850
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14262,47 +14262,47 @@ msgstr ""
 "Sprawdzenie poprawności danych pasożytniczych „gimp-comment” się nie "
 "powiodło: komentarz zawiera nieprawidłowe UTF-8"
 
-#: ../app/core/gimpimage.c:3894
+#: ../app/core/gimpimage.c:3909
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Dołączenie do obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:3936
+#: ../app/core/gimpimage.c:3951
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Usunięcie z obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:4667
+#: ../app/core/gimpimage.c:4682
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/gimpimage.c:4709 ../app/core/gimpimage.c:4740
+#: ../app/core/gimpimage.c:4724 ../app/core/gimpimage.c:4755
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/gimpimage.c:4734
+#: ../app/core/gimpimage.c:4749
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Usunięcie oderwanego zaznaczenia"
 
-#: ../app/core/gimpimage.c:4901
+#: ../app/core/gimpimage.c:4916
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodanie kanału"
 
-#: ../app/core/gimpimage.c:4929 ../app/core/gimpimage.c:4953
+#: ../app/core/gimpimage.c:4944 ../app/core/gimpimage.c:4968
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/gimpimage.c:5009
+#: ../app/core/gimpimage.c:5024
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodanie ścieżki"
 
-#: ../app/core/gimpimage.c:5039 ../app/core/gimpimage.c:5046
+#: ../app/core/gimpimage.c:5054 ../app/core/gimpimage.c:5061
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Usunięcie ścieżki"
@@ -14458,8 +14458,8 @@ msgid "Convert Image to 64 bit gamma floating point"
 msgstr "Konwersja obrazu do trybu 64-bitowego (gamma, zmiennoprzecinkowego)"
 
 #. dithering
-#: ../app/core/gimpimage-convert-precision.c:268
-#: ../app/core/gimpimage-convert-precision.c:289
+#: ../app/core/gimpimage-convert-precision.c:272
+#: ../app/core/gimpimage-convert-precision.c:293
 #: ../app/dialogs/convert-indexed-dialog.c:241
 #: ../app/dialogs/convert-precision-dialog.c:224
 #: ../app/tools/gimpgradientoptions.c:128
@@ -18536,7 +18536,7 @@ msgstr "Kontroluje wyświetlanie obrazu"
 msgid "Drop image files here to open them"
 msgstr "Upuszczenie plików obrazów w tym miejscu otworzy je"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:621
+#: ../app/display/gimpdisplayshell-callbacks.c:625
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
