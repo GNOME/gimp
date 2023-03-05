@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-03 03:04+0000\n"
-"PO-Revision-Date: 2023-03-03 16:49+0200\n"
+"POT-Creation-Date: 2023-03-04 13:46+0000\n"
+"PO-Revision-Date: 2023-03-05 09:48+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
@@ -1448,7 +1448,8 @@ msgstr "Вигнути зображення, використовуючи дві
 
 #: plug-ins/common/curve-bend.c:697
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr ""
+"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:711
 msgid "Cannot operate on layers with masks."
@@ -3480,11 +3481,13 @@ msgstr ""
 #: plug-ins/common/file-png.c:1459
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr ""
+"Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: plug-ins/common/file-png.c:1468
 #, c-format
-msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgid ""
+"Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -4394,7 +4397,8 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:729
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr ""
+"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:736
 msgid "Retry without limits preventing to parse huge data?"
@@ -7430,7 +7434,6 @@ msgid "Failed to decompress data"
 msgstr "Не вдається розпакувати дані"
 
 #: plug-ins/file-psd/psd-load.c:3305
-#| msgid "Import from PDF"
 msgid "Import PSD"
 msgstr "Імпорт PSD"
 
@@ -7449,17 +7452,19 @@ msgstr ""
 "їх можна повторно застосувати при експортуванні."
 
 #: plug-ins/file-psd/psd-load.c:3347
-#| msgid "PSD Compatibility Notice"
 msgid "Compatibility Notice"
 msgstr "Зауваження щодо сумісності"
 
 #: plug-ins/file-psd/psd-load.c:3348
+#| msgid ""
+#| "This PSD file contains features that\n"
+#| " are not yet fully supported in GIMP:"
 msgid ""
 "This PSD file contains features that\n"
-" are not yet fully supported in GIMP:"
+"are not yet fully supported in GIMP:"
 msgstr ""
 "У цьому файлі PSD містяться можливості, підтримку\n"
-" яких ще не повністю реалізовано у GIMP:"
+"яких ще не повністю реалізовано у GIMP:"
 
 #: plug-ins/file-psd/psd-load.c:3362
 msgid "Adjustment layers are not yet supported and will be dropped."
@@ -7469,26 +7474,27 @@ msgstr "Підтримки шарів коригування ще не реал�
 msgid ""
 "Fill layers are partially supported and will be converted to raster layers."
 msgstr ""
-"Підтримку шарів заповнення реалізовано лише частково, їх буде перетворено на"
-" растрові шари."
+"Підтримку шарів заповнення реалізовано лише частково, їх буде перетворено на "
+"растрові шари."
 
 #: plug-ins/file-psd/psd-load.c:3371
 msgid ""
 "Text layers are partially supported and will be converted to raster layers."
 msgstr ""
-"Підтримку текстових шарів реалізовано лише частково, їх буде перетворено на"
-" растрові шари."
+"Підтримку текстових шарів реалізовано лише частково, їх буде перетворено на "
+"растрові шари."
 
 #: plug-ins/file-psd/psd-load.c:3376
-msgid "Linked layers are  are not yet supported and will be dropped."
+#| msgid "Linked layers are  are not yet supported and will be dropped."
+msgid "Linked layers are not yet supported and will be dropped."
 msgstr "Підтримки пов'язаних шарів ще не реалізовано, їх буде відкинуто."
 
 #: plug-ins/file-psd/psd-load.c:3380
 msgid ""
 "Vector masks are partially supported and will be converted to raster layers."
 msgstr ""
-"Підтримку векторних масок реалізовано лише частково, їх буде перетворено на"
-" растрові шари."
+"Підтримку векторних масок реалізовано лише частково, їх буде перетворено на "
+"растрові шари."
 
 #: plug-ins/file-psd/psd-load.c:3385
 msgid "Vector strokes are not yet supported and will be dropped."
@@ -9602,7 +9608,8 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid "Let the direction from the center determine the direction of the stroke"
+msgid ""
+"Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -9713,7 +9720,8 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr ""
+"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -10624,7 +10632,8 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: plug-ins/gradient-flare/gradient-flare.c:3352
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr ""
+"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: plug-ins/gradient-flare/gradient-flare.c:3362
 msgid "Delete Gradient Flare"
@@ -12889,7 +12898,8 @@ msgstr "Альтернативне оточення фільтра:"
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:181
 msgid "A second number of adjacent points to consider when filtering."
-msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr ""
+"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:191
 msgid "Filter Epsilon:"
