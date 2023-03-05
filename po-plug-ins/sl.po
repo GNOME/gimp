@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-03 03:04+0000\n"
-"PO-Revision-Date: 2023-03-03 09:31+0100\n"
+"POT-Creation-Date: 2023-03-04 13:46+0000\n"
+"PO-Revision-Date: 2023-03-05 11:42+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -7420,7 +7420,7 @@ msgstr "Obvestilo o združljivosti"
 #: plug-ins/file-psd/psd-load.c:3348
 msgid ""
 "This PSD file contains features that\n"
-" are not yet fully supported in GIMP:"
+"are not yet fully supported in GIMP:"
 msgstr ""
 "Ta datoteka PSD vsebuje lastnosti, ki\n"
 " še niso v celoti podprte v GIMP-u:"
@@ -7441,7 +7441,7 @@ msgstr ""
 "Besedilne plasti so delno podprte in bodo pretvorjene v rastrske plasti."
 
 #: plug-ins/file-psd/psd-load.c:3376
-msgid "Linked layers are  are not yet supported and will be dropped."
+msgid "Linked layers are not yet supported and will be dropped."
 msgstr "Povezane plasti še niso podprte in bodo izpuščene."
 
 #: plug-ins/file-psd/psd-load.c:3380
