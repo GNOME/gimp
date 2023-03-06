@@ -369,9 +369,6 @@ gimp_image_window_constructed (GObject *object)
                            G_CALLBACK (gimp_image_window_update_ui_manager),
                            window, G_CONNECT_SWAPPED);
 
-  gtk_window_add_accel_group (GTK_WINDOW (window),
-                              gimp_ui_manager_get_accel_group (private->menubar_manager));
-
   g_signal_connect (private->menubar_manager, "show-tooltip",
                     G_CALLBACK (gimp_image_window_show_tooltip),
                     window);

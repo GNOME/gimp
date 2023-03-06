@@ -289,7 +289,6 @@ gimp_dock_window_constructed (GObject *object)
   GimpGuiConfig   *config;
   GimpContext     *factory_context;
   GimpMenuFactory *menu_factory;
-  GtkAccelGroup   *accel_group;
   Gimp            *gimp;
   gint             menu_view_width  = -1;
   gint             menu_view_height = -1;
@@ -324,8 +323,6 @@ gimp_dock_window_constructed (GObject *object)
     gimp_menu_factory_manager_new (menu_factory,
                                    dock_window->p->ui_manager_name,
                                    dock_window);
-  accel_group = gimp_ui_manager_get_accel_group (dock_window->p->ui_manager);
-  gtk_window_add_accel_group (GTK_WINDOW (dock_window), accel_group);
 
   g_signal_connect_object (dock_window->p->context, "display-changed",
                            G_CALLBACK (gimp_dock_window_display_changed),

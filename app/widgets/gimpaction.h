@@ -107,10 +107,6 @@ gboolean      gimp_action_get_sensitive       (GimpAction    *action,
 gboolean      gimp_action_is_sensitive        (GimpAction    *action,
                                                const gchar  **reason);
 
-void          gimp_action_set_accel_group     (GimpAction    *action,
-                                               GtkAccelGroup *accel_group);
-void          gimp_action_connect_accelerator (GimpAction    *action);
-
 void          gimp_action_set_accels          (GimpAction    *action,
                                                const gchar  **accels);
 gchar **      gimp_action_get_accels          (GimpAction    *action);

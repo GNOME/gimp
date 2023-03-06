@@ -471,19 +471,6 @@ gimp_action_is_sensitive (GimpAction   *action,
   return sensitive;
 }
 
-void
-gimp_action_set_accel_group (GimpAction  *action,
-                             GtkAccelGroup *accel_group)
-{
-  gtk_action_set_accel_group ((GtkAction *) action, accel_group);
-}
-
-void
-gimp_action_connect_accelerator (GimpAction  *action)
-{
-  gtk_action_connect_accelerator ((GtkAction *) action);
-}
-
 /**
  * gimp_action_set_accels:
  * @action: a #GimpAction

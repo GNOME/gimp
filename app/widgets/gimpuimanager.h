@@ -22,6 +22,9 @@
 #define __GIMP_UI_MANAGER_H__
 
 
+#include "core/gimpobject.h"
+
+
 typedef void (* GimpUIMenuCallback)  (GimpUIManager *manager,
                                       const gchar   *path,
                                       const gchar   *action_name,
@@ -58,7 +61,7 @@ typedef struct _GimpUIManagerClass GimpUIManagerClass;
  */
 struct _GimpUIManager
 {
-  GtkUIManager  parent_instance;
+  GimpObject    parent_instance;
 
   gchar        *name;
   Gimp         *gimp;
@@ -70,7 +73,7 @@ struct _GimpUIManager
 
 struct _GimpUIManagerClass
 {
-  GtkUIManagerClass  parent_class;
+  GimpObjectClass    parent_class;
 
   GHashTable        *managers;
 
@@ -106,10 +109,6 @@ GimpActionGroup * gimp_ui_manager_get_action_group (GimpUIManager   *manager,
                                                     const gchar     *name);
 GList         * gimp_ui_manager_get_action_groups  (GimpUIManager   *manager);
 
-GtkAccelGroup * gimp_ui_manager_get_accel_group (GimpUIManager      *manager);
-
-GtkWidget     * gimp_ui_manager_get_widget      (GimpUIManager      *manager,
-                                                 const gchar        *path);
 GimpMenuModel * gimp_ui_manager_get_model       (GimpUIManager      *manager,
                                                  const gchar        *path);
 

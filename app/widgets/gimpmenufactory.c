@@ -191,15 +191,6 @@ gimp_menu_factory_get_registered_menus (GimpMenuFactory *factory)
   return factory->p->registered_menus;
 }
 
-static void
-gimp_menu_factory_manager_action_added (GimpActionGroup *group,
-                                        GimpAction      *action,
-                                        GtkAccelGroup   *accel_group)
-{
-  gimp_action_set_accel_group (action, accel_group);
-  gimp_action_connect_accelerator (action);
-}
-
 GimpUIManager *
 gimp_menu_factory_manager_new (GimpMenuFactory *factory,
                                const gchar     *identifier,
@@ -217,37 +208,17 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
       if (! strcmp (entry->identifier, identifier))
         {
           GimpUIManager *manager;
-          GtkAccelGroup *accel_group;
           GList         *list;
 
           manager = gimp_ui_manager_new (factory->p->gimp, entry->identifier);
-          accel_group = gimp_ui_manager_get_accel_group (manager);
 
           for (list = entry->action_groups; list; list = g_list_next (list))
             {
               GimpActionGroup *group;
-              GList           *actions;
-              GList           *list2;
 
               group = gimp_action_factory_group_new (factory->p->action_factory,
                                                      (const gchar *) list->data,
                                                      callback_data);
-
-              actions = gimp_action_group_list_actions (group);
-
-              for (list2 = actions; list2; list2 = g_list_next (list2))
-                {
-                  GimpAction *action = list2->data;
-
-                  gimp_action_set_accel_group (action, accel_group);
-                  gimp_action_connect_accelerator (action);
-                }
-
-              g_list_free (actions);
-
-              g_signal_connect_object (group, "action-added",
-                                       G_CALLBACK (gimp_menu_factory_manager_action_added),
-                                       accel_group, 0);
 
               gimp_ui_manager_add_action_group (manager, group);
               g_object_unref (group);

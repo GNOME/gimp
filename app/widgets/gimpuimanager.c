@@ -83,9 +83,6 @@ static void       gimp_ui_manager_get_property        (GObject        *object,
                                                        guint           prop_id,
                                                        GValue         *value,
                                                        GParamSpec     *pspec);
-static void       gimp_ui_manager_connect_proxy       (GtkUIManager   *manager,
-                                                       GtkAction      *action,
-                                                       GtkWidget      *proxy);
 static void       gimp_ui_manager_real_update         (GimpUIManager  *manager,
                                                        gpointer        update_data);
 static GimpUIManagerUIEntry *
@@ -96,18 +93,6 @@ static GimpUIManagerUIEntry *
                                                        const gchar    *path);
 static void       gimp_ui_manager_delete_popdown_data (GtkWidget      *widget,
                                                        GimpUIManager  *manager);
-static void       gimp_ui_manager_item_realize        (GtkWidget      *widget,
-                                                       GimpUIManager  *manager);
-static void       gimp_ui_manager_menu_item_select    (GtkWidget      *widget,
-                                                       GimpUIManager  *manager);
-static void       gimp_ui_manager_menu_item_deselect  (GtkWidget      *widget,
-                                                       GimpUIManager  *manager);
-static gboolean   gimp_ui_manager_item_key_press      (GtkWidget      *widget,
-                                                       GdkEventKey    *kevent,
-                                                       GimpUIManager  *manager);
-static GtkWidget *find_widget_under_pointer           (GdkWindow      *window,
-                                                       gint           *x,
-                                                       gint           *y);
 
 static void       gimp_ui_manager_menu_item_free      (GimpUIManagerMenuItem *item);
 
@@ -116,7 +101,7 @@ static void       gimp_ui_manager_popup_hidden        (GtkMenuShell          *po
 static gboolean   gimp_ui_manager_popup_destroy       (GtkWidget             *popup);
 
 
-G_DEFINE_TYPE (GimpUIManager, gimp_ui_manager, GTK_TYPE_UI_MANAGER)
+G_DEFINE_TYPE (GimpUIManager, gimp_ui_manager, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_ui_manager_parent_class
 
@@ -126,16 +111,13 @@ static guint manager_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_ui_manager_class_init (GimpUIManagerClass *klass)
 {
-  GObjectClass      *object_class  = G_OBJECT_CLASS (klass);
-  GtkUIManagerClass *manager_class = GTK_UI_MANAGER_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructed    = gimp_ui_manager_constructed;
   object_class->dispose        = gimp_ui_manager_dispose;
   object_class->finalize       = gimp_ui_manager_finalize;
   object_class->set_property   = gimp_ui_manager_set_property;
   object_class->get_property   = gimp_ui_manager_get_property;
-
-  manager_class->connect_proxy = gimp_ui_manager_connect_proxy;
 
   klass->update                = gimp_ui_manager_real_update;
 
@@ -341,29 +323,6 @@ gimp_ui_manager_get_property (GObject    *object,
 }
 
 static void
-gimp_ui_manager_connect_proxy (GtkUIManager *manager,
-                               GtkAction    *action,
-                               GtkWidget    *proxy)
-{
-  g_object_set_qdata (G_OBJECT (proxy), GIMP_HELP_ID,
-                      g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID));
-
-  if (GTK_IS_MENU_ITEM (proxy))
-    {
-      g_signal_connect (proxy, "select",
-                        G_CALLBACK (gimp_ui_manager_menu_item_select),
-                        manager);
-      g_signal_connect (proxy, "deselect",
-                        G_CALLBACK (gimp_ui_manager_menu_item_deselect),
-                        manager);
-
-      g_signal_connect_after (proxy, "realize",
-                              G_CALLBACK (gimp_ui_manager_item_realize),
-                              manager);
-    }
-}
-
-static void
 gimp_ui_manager_real_update (GimpUIManager *manager,
                              gpointer       update_data)
 {
@@ -462,19 +421,6 @@ GList *
 gimp_ui_manager_get_action_groups (GimpUIManager *manager)
 {
   return manager->action_groups;
-}
-
-GtkAccelGroup *
-gimp_ui_manager_get_accel_group (GimpUIManager *manager)
-{
-  return gtk_ui_manager_get_accel_group ((GtkUIManager *) manager);
-}
-
-GtkWidget *
-gimp_ui_manager_get_widget (GimpUIManager *manager,
-                            const gchar   *path)
-{
-  return gtk_ui_manager_get_widget ((GtkUIManager *) manager, path);
 }
 
 GimpMenuModel *
@@ -955,404 +901,6 @@ gimp_ui_manager_delete_popdown_data (GtkWidget     *widget,
                                         gimp_ui_manager_delete_popdown_data,
                                         manager);
   g_object_set_data (G_OBJECT (manager), "popdown-data", NULL);
-}
-
-static void
-gimp_ui_manager_item_realize (GtkWidget     *widget,
-                              GimpUIManager *manager)
-{
-  GtkWidget *menu;
-  GtkWidget *submenu;
-
-  g_signal_handlers_disconnect_by_func (widget,
-                                        gimp_ui_manager_item_realize,
-                                        manager);
-
-  menu = gtk_widget_get_parent (widget);
-
-  if (GTK_IS_MENU_SHELL (menu))
-    {
-      static GQuark quark_key_press_connected = 0;
-
-      if (! quark_key_press_connected)
-        quark_key_press_connected =
-          g_quark_from_static_string ("gimp-menu-item-key-press-connected");
-
-      if (! GPOINTER_TO_INT (g_object_get_qdata (G_OBJECT (menu),
-                                                 quark_key_press_connected)))
-        {
-          g_signal_connect (menu, "key-press-event",
-                            G_CALLBACK (gimp_ui_manager_item_key_press),
-                            manager);
-
-          g_object_set_qdata (G_OBJECT (menu),
-                              quark_key_press_connected,
-                              GINT_TO_POINTER (TRUE));
-        }
-    }
-
-  submenu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (widget));
-
-  if (submenu)
-    g_object_set_qdata (G_OBJECT (submenu), GIMP_HELP_ID,
-                        g_object_get_qdata (G_OBJECT (widget),
-                                            GIMP_HELP_ID));
-}
-
-static void
-gimp_ui_manager_menu_item_select (GtkWidget     *widget,
-                                  GimpUIManager *manager)
-{
-  GtkAction *action =
-    gtk_activatable_get_related_action (GTK_ACTIVATABLE (widget));
-
-  if (action)
-    {
-      const gchar *tooltip = gimp_action_get_tooltip (GIMP_ACTION (action));
-
-      if (tooltip)
-        g_signal_emit (manager, manager_signals[SHOW_TOOLTIP], 0, tooltip);
-    }
-}
-
-static void
-gimp_ui_manager_menu_item_deselect (GtkWidget     *widget,
-                                    GimpUIManager *manager)
-{
-  g_signal_emit (manager, manager_signals[HIDE_TOOLTIP], 0);
-}
-
-static gboolean
-gimp_ui_manager_item_key_press (GtkWidget     *widget,
-                                GdkEventKey   *kevent,
-                                GimpUIManager *manager)
-{
-  gchar *help_id = NULL;
-
-  while (! help_id && GTK_IS_MENU_SHELL (widget))
-    {
-      GtkWidget *menu_item;
-
-      menu_item = gtk_menu_shell_get_selected_item (GTK_MENU_SHELL (widget));
-
-      if (! menu_item && GTK_IS_MENU (widget))
-        {
-          GtkWidget *parent = gtk_widget_get_parent (widget);
-          GdkWindow *window = gtk_widget_get_window (parent);
-
-          if (window)
-            {
-              gint x, y;
-
-              gdk_window_get_pointer (window, &x, &y, NULL);
-              menu_item = find_widget_under_pointer (window, &x, &y);
-
-              if (menu_item && ! GTK_IS_MENU_ITEM (menu_item))
-                {
-                  menu_item = gtk_widget_get_ancestor (menu_item,
-                                                       GTK_TYPE_MENU_ITEM);
-
-                  if (! GTK_IS_MENU_ITEM (menu_item))
-                    menu_item = NULL;
-                }
-            }
-        }
-
-      /*  first, get the help page from the item...
-       */
-      if (menu_item)
-        {
-          help_id = g_object_get_qdata (G_OBJECT (menu_item), GIMP_HELP_ID);
-
-          if (help_id && ! strlen (help_id))
-            help_id = NULL;
-        }
-
-      /*  ...then try the parent menu...
-       */
-      if (! help_id)
-        {
-          help_id = g_object_get_qdata (G_OBJECT (widget), GIMP_HELP_ID);
-
-          if (help_id && ! strlen (help_id))
-            help_id = NULL;
-        }
-
-      /*  ...finally try the menu's parent (if any)
-       */
-      if (! help_id)
-        {
-          menu_item = NULL;
-
-          if (GTK_IS_MENU (widget))
-            menu_item = gtk_menu_get_attach_widget (GTK_MENU (widget));
-
-          if (! menu_item)
-            break;
-
-          widget = gtk_widget_get_parent (menu_item);
-
-          if (! widget)
-            break;
-        }
-    }
-
-  /*  For any valid accelerator key except F1, continue with the
-   *  standard GtkMenuShell callback and assign a new shortcut, but
-   *  don't assign a shortcut to the help menu entries ...
-   */
-  if (kevent->keyval != GDK_KEY_F1)
-    {
-      if (help_id                                   &&
-          gtk_accelerator_valid (kevent->keyval, 0) &&
-          (strcmp (help_id, GIMP_HELP_HELP)         == 0 ||
-           strcmp (help_id, GIMP_HELP_HELP_CONTEXT) == 0))
-        {
-          return TRUE;
-        }
-
-      return FALSE;
-    }
-
-  /*  ...finally, if F1 was pressed over any menu, show its help page...  */
-
-  if (help_id)
-    {
-      gchar *help_domain = NULL;
-      gchar *help_string = NULL;
-      gchar *domain_separator;
-
-      help_id = g_strdup (help_id);
-
-      domain_separator = strchr (help_id, '?');
-
-      if (domain_separator)
-        {
-          *domain_separator = '\0';
-
-          help_domain = g_strdup (help_id);
-          help_string = g_strdup (domain_separator + 1);
-        }
-      else
-        {
-          help_string = g_strdup (help_id);
-        }
-
-      gimp_help (manager->gimp, NULL, help_domain, help_string);
-
-      g_free (help_domain);
-      g_free (help_string);
-      g_free (help_id);
-    }
-
-  return TRUE;
-}
-
-
-/* Stuff below taken from gtktooltip.c
- */
-
-/* FIXME: remove this crack as soon as a GTK+ widget_under_pointer() is available */
-
-struct ChildLocation
-{
-  GtkWidget *child;
-  GtkWidget *container;
-
-  gint x;
-  gint y;
-};
-
-static void
-child_location_foreach (GtkWidget *child,
-                        gpointer   data)
-{
-  gint x, y;
-  struct ChildLocation *child_loc = data;
-
-  /* Ignore invisible widgets */
-  if (! gtk_widget_is_drawable (child))
-    return;
-
-  /* (child_loc->x, child_loc->y) are relative to
-   * child_loc->container's allocation.
-   */
-
-  if (! child_loc->child &&
-      gtk_widget_translate_coordinates (child_loc->container, child,
-                                        child_loc->x, child_loc->y,
-                                        &x, &y))
-    {
-      GtkAllocation child_allocation;
-
-      gtk_widget_get_allocation (child, &child_allocation);
-
-#ifdef DEBUG_TOOLTIP
-      g_print ("candidate: %s  alloc=[(%d,%d)  %dx%d]     (%d, %d)->(%d, %d)\n",
-               gtk_widget_get_name (child),
-               child_allocation.x,
-               child_allocation.y,
-               child_allocation.width,
-               child_allocation.height,
-               child_loc->x, child_loc->y,
-               x, y);
-#endif /* DEBUG_TOOLTIP */
-
-      /* (x, y) relative to child's allocation. */
-      if (x >= 0 && x < child_allocation.width
-          && y >= 0 && y < child_allocation.height)
-        {
-          if (GTK_IS_CONTAINER (child))
-            {
-              struct ChildLocation tmp = { NULL, NULL, 0, 0 };
-
-              /* Take (x, y) relative the child's allocation and
-               * recurse.
-               */
-              tmp.x = x;
-              tmp.y = y;
-              tmp.container = child;
-
-              gtk_container_forall (GTK_CONTAINER (child),
-                                    child_location_foreach, &tmp);
-
-              if (tmp.child)
-                child_loc->child = tmp.child;
-              else
-                child_loc->child = child;
-            }
-          else
-            {
-              child_loc->child = child;
-            }
-        }
-    }
-}
-
-/* Translates coordinates from dest_widget->window relative (src_x, src_y),
- * to allocation relative (dest_x, dest_y) of dest_widget.
- */
-static void
-window_to_alloc (GtkWidget *dest_widget,
-                 gint       src_x,
-                 gint       src_y,
-                 gint      *dest_x,
-                 gint      *dest_y)
-{
-  GtkAllocation dest_allocation;
-
-  gtk_widget_get_allocation (dest_widget, &dest_allocation);
-
-  /* Translate from window relative to allocation relative */
-  if (gtk_widget_get_has_window (dest_widget) &&
-      gtk_widget_get_parent (dest_widget))
-    {
-      gint wx, wy;
-
-      gdk_window_get_position (gtk_widget_get_window (dest_widget), &wx, &wy);
-
-      /* Offset coordinates if widget->window is smaller than
-       * widget->allocation.
-       */
-      src_x += wx - dest_allocation.x;
-      src_y += wy - dest_allocation.y;
-    }
-  else
-    {
-      src_x -= dest_allocation.x;
-      src_y -= dest_allocation.y;
-    }
-
-  if (dest_x)
-    *dest_x = src_x;
-  if (dest_y)
-    *dest_y = src_y;
-}
-
-static GtkWidget *
-find_widget_under_pointer (GdkWindow *window,
-                           gint      *x,
-                           gint      *y)
-{
-  GtkWidget *event_widget;
-  struct ChildLocation child_loc = { NULL, NULL, 0, 0 };
-
-  gdk_window_get_user_data (window, (void **)&event_widget);
-
-  if (! event_widget)
-    return NULL;
-
-#ifdef DEBUG_TOOLTIP
-  g_print ("event window %p (belonging to %p (%s))  (%d, %d)\n",
-           window, event_widget, gtk_widget_get_name (event_widget),
-           *x, *y);
-#endif
-
-  /* Coordinates are relative to event window */
-  child_loc.x = *x;
-  child_loc.y = *y;
-
-  /* We go down the window hierarchy to the widget->window,
-   * coordinates stay relative to the current window.
-   * We end up with window == widget->window, coordinates relative to that.
-   */
-  while (window && window != gtk_widget_get_window (event_widget))
-    {
-      gint px, py;
-
-      gdk_window_get_position (window, &px, &py);
-      child_loc.x += px;
-      child_loc.y += py;
-
-      window = gdk_window_get_parent (window);
-    }
-
-  /* Failing to find widget->window can happen for e.g. a detached handle box;
-   * chaining ::query-tooltip up to its parent probably makes little sense,
-   * and users better implement tooltips on handle_box->child.
-   * so we simply ignore the event for tooltips here.
-   */
-  if (!window)
-    return NULL;
-
-  /* Convert the window relative coordinates to allocation
-   * relative coordinates.
-   */
-  window_to_alloc (event_widget,
-                   child_loc.x, child_loc.y,
-                   &child_loc.x, &child_loc.y);
-
-  if (GTK_IS_CONTAINER (event_widget))
-    {
-      GtkWidget *container = event_widget;
-
-      child_loc.container = event_widget;
-      child_loc.child = NULL;
-
-      gtk_container_forall (GTK_CONTAINER (event_widget),
-                            child_location_foreach, &child_loc);
-
-      /* Here we have a widget, with coordinates relative to
-       * child_loc.container's allocation.
-       */
-
-      if (child_loc.child)
-        event_widget = child_loc.child;
-      else if (child_loc.container)
-        event_widget = child_loc.container;
-
-      /* Translate to event_widget's allocation */
-      gtk_widget_translate_coordinates (container, event_widget,
-                                        child_loc.x, child_loc.y,
-                                        &child_loc.x, &child_loc.y);
-
-    }
-
-  /* We return (x, y) relative to the allocation of event_widget. */
-  *x = child_loc.x;
-  *y = child_loc.y;
-
-  return event_widget;
 }
 
 static void

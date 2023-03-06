@@ -1046,19 +1046,6 @@ gimp_tool_button_reconstruct_menu (GimpToolButton *tool_button)
                         G_CALLBACK (gimp_tool_button_menu_leave_notify),
                         tool_button);
 
-      /* TODO: while porting to GAction, this part seems useless, as the toolbox
-       * is perfectly working. But maybe I'm missing something. So leaving this
-       * here for further investigation.
-       */
-#if 0
-      if (ui_manager)
-        {
-          gtk_menu_set_accel_group (
-            GTK_MENU (tool_button->priv->menu),
-            gimp_ui_manager_get_accel_group (ui_manager));
-        }
-#endif
-
       tool_button->priv->menu_items = g_hash_table_new (g_direct_hash,
                                                         g_direct_equal);
 
