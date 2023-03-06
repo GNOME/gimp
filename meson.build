@@ -1000,6 +1000,11 @@ if directx_sdk_path != '' and platform_windows
 endif
 conf.set('HAVE_DX_DINPUT', directx.found())
 
+cfitsio_dep = dependency('cfitsio', required: true)
+if cfitsio_dep.found()
+  MIMEtypes += 'image/fits'
+endif
+
 
 ################################################################################
 # Email sending

@@ -2206,6 +2206,13 @@ fi
 
 AM_CONDITIONAL(HAVE_DX_DINPUT, test "x$have_dx_dinput" = xyes)
 
+###################
+# Check for cfitsio
+###################
+
+PKG_CHECK_MODULES(CFITSIO, [cfitsio],, [add_deps_error([cfitsio])])
+MIME_TYPES="$MIME_TYPES;image/fits"
+
 
 ####################
 # Check for libgudev

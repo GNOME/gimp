@@ -791,6 +791,26 @@
             ]
         },
         {
+            "name": "cfitsio",
+            "config-opts": [
+                "--enable-reentrant"
+            ],
+            "make-args": ["shared"],
+            "cleanup": [
+                "/include",
+                "/lib/*.a",
+                "/lib/*.la",
+                "/lib/pkgconfig"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio-4.2.0.tar.gz",
+                    "sha256": "eba53d1b3f6e345632bb09a7b752ec7ced3d63ec5153a848380f3880c5d61889"
+                }
+            ]
+        },
+        {
             "name": "babl",
             "buildsystem": "meson",
             "config-opts": [

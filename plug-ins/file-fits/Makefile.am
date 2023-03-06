@@ -25,9 +25,7 @@ libexecdir = $(gimpplugindir)/plug-ins/file-fits
 libexec_PROGRAMS = file-fits
 
 file_fits_SOURCES = \
-	fits.c		\
-	fits-io.c	\
-	fits-io.h
+	fits.c
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
@@ -47,4 +45,5 @@ LDADD = \
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
+	$(CFITSIO_LIBS)		\
 	$(file_fits_RC)

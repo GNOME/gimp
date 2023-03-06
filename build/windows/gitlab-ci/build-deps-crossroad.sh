@@ -28,6 +28,7 @@ fi
 
 crossroad install appstream-glib              \
                   atk                         \
+                  cfitsio                     \
                   drmingw                     \
                   gexiv2                      \
                   glib2                       \
