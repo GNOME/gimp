@@ -349,6 +349,7 @@ gimp_image_window_constructed (GObject *object)
   GimpMenuFactory        *menu_factory;
   GimpGuiConfig          *config;
   GimpMenuModel          *model;
+  gboolean                use_gtk_menubar = TRUE;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -388,39 +389,48 @@ gimp_image_window_constructed (GObject *object)
   /* Create the menubar */
   model = gimp_ui_manager_get_model (private->menubar_manager, "/image-menubar");
 
-#ifdef GDK_WINDOWING_QUARTZ
-  /* macOS has its native menubar system, and this should support it. It means
-   * that we won't have tooltips on macOS menu though.
-   * TODO: Since the .ui file has no title/labels, I should edit the model to
-   * extract titles from actions.
+#ifndef GDK_WINDOWING_QUARTZ
+  /* macOS has its native menubar system, which is implemented by
+   * gtk_application_set_menubar(). Unfortunately the GTK menubar feature
+   * doesn't support tooltips (though for macOS, having "native" application
+   * menus was deemed worth the feature loss).
+   * As a special-case, we allow testing the GTK menubar through setting the
+   * environment variable GIMP_GTK_MENUBAR on non-macOS platforms.
    */
-  gtk_application_set_menubar (GTK_APPLICATION (private->gimp->app),
-                               G_MENU_MODEL (model));
-#else
-  private->menubar = gimp_menu_bar_new (model, private->menubar_manager);
-  g_object_unref (model);
-
-  gtk_box_pack_start (GTK_BOX (private->main_vbox),
-                      private->menubar, FALSE, FALSE, 0);
-
-  /*  make sure we can activate accels even if the menubar is invisible
-   *  (see https://bugzilla.gnome.org/show_bug.cgi?id=137151)
-   */
-  g_signal_connect (private->menubar, "can-activate-accel",
-                    G_CALLBACK (gtk_true),
-                    NULL);
-
-  /*  active display callback  */
-  g_signal_connect (private->menubar, "button-press-event",
-                    G_CALLBACK (gimp_image_window_shell_events),
-                    window);
-  g_signal_connect (private->menubar, "button-release-event",
-                    G_CALLBACK (gimp_image_window_shell_events),
-                    window);
-  g_signal_connect (private->menubar, "key-press-event",
-                    G_CALLBACK (gimp_image_window_shell_events),
-                    window);
+  use_gtk_menubar = (g_getenv ("GIMP_GTK_MENUBAR") != NULL);
 #endif /* !GDK_WINDOWING_QUARTZ */
+
+  if (use_gtk_menubar)
+    {
+      gtk_application_set_menubar (GTK_APPLICATION (private->gimp->app),
+                                   G_MENU_MODEL (model));
+    }
+  else
+    {
+      private->menubar = gimp_menu_bar_new (model, private->menubar_manager);
+      g_object_unref (model);
+
+      gtk_box_pack_start (GTK_BOX (private->main_vbox),
+                          private->menubar, FALSE, FALSE, 0);
+
+      /*  make sure we can activate accels even if the menubar is invisible
+       *  (see https://bugzilla.gnome.org/show_bug.cgi?id=137151)
+       */
+      g_signal_connect (private->menubar, "can-activate-accel",
+                        G_CALLBACK (gtk_true),
+                        NULL);
+
+      /*  active display callback  */
+      g_signal_connect (private->menubar, "button-press-event",
+                        G_CALLBACK (gimp_image_window_shell_events),
+                        window);
+      g_signal_connect (private->menubar, "button-release-event",
+                        G_CALLBACK (gimp_image_window_shell_events),
+                        window);
+      g_signal_connect (private->menubar, "key-press-event",
+                        G_CALLBACK (gimp_image_window_shell_events),
+                        window);
+    }
 
   /* Create the hbox that contains docks and images */
   private->hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
