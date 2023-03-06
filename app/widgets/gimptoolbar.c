@@ -35,6 +35,7 @@
 #include "gimpradioaction.h"
 #include "gimptoggleaction.h"
 #include "gimptoolbar.h"
+#include "gimpmenumodel.h"
 #include "gimpmenushell.h"
 #include "gimpuimanager.h"
 
@@ -53,36 +54,13 @@
  * actions as buttons).
  */
 
-enum
-{
-  PROP_0 = GIMP_MENU_SHELL_PROP_LAST,
-  PROP_MODEL
-};
-
-
-struct _GimpToolbarPrivate
-{
-  GMenuModel *model;
-};
-
 
 /*  local function prototypes  */
 
 static void   gimp_toolbar_iface_init              (GimpMenuShellInterface  *iface);
 
-static void   gimp_toolbar_constructed             (GObject                 *object);
-static void   gimp_toolbar_dispose                 (GObject                 *object);
-static void   gimp_toolbar_set_property            (GObject                 *object,
-                                                    guint                    property_id,
-                                                    const GValue            *value,
-                                                    GParamSpec              *pspec);
-static void   gimp_toolbar_get_property            (GObject                 *object,
-                                                    guint                    property_id,
-                                                    GValue                  *value,
-                                                    GParamSpec              *pspec);
-
 static void   gimp_toolbar_append                  (GimpMenuShell           *shell,
-                                                    GMenuModel              *model);
+                                                    GimpMenuModel           *model);
 static void   gimp_toolbar_add_ui                  (GimpMenuShell           *shell,
                                                     const gchar            **paths,
                                                     const gchar             *action_name,
@@ -108,7 +86,6 @@ static void   gimp_toolbar_action_notify_visible   (GimpAction              *act
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpToolbar, gimp_toolbar, GTK_TYPE_TOOLBAR,
-                         G_ADD_PRIVATE (GimpToolbar)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_MENU_SHELL, gimp_toolbar_iface_init))
 
 #define parent_class gimp_toolbar_parent_class
@@ -121,19 +98,10 @@ gimp_toolbar_class_init (GimpToolbarClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_toolbar_constructed;
-  object_class->dispose      = gimp_toolbar_dispose;
-  object_class->get_property = gimp_toolbar_get_property;
-  object_class->set_property = gimp_toolbar_set_property;
+  object_class->get_property = gimp_menu_shell_get_property;
+  object_class->set_property = gimp_menu_shell_set_property;
 
   gimp_menu_shell_install_properties (object_class);
-
-  g_object_class_install_property (object_class, PROP_MODEL,
-                                   g_param_spec_object ("model",
-                                                        NULL, NULL,
-                                                        G_TYPE_MENU_MODEL,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -146,78 +114,19 @@ gimp_toolbar_iface_init (GimpMenuShellInterface *iface)
 static void
 gimp_toolbar_init (GimpToolbar *bar)
 {
-  bar->priv = gimp_toolbar_get_instance_private (bar);
-
   gimp_menu_shell_init (GIMP_MENU_SHELL (bar));
 }
 
 static void
-gimp_toolbar_constructed (GObject *object)
-{
-  G_OBJECT_CLASS (parent_class)->constructed (object);
-}
-
-static void
-gimp_toolbar_dispose (GObject *object)
-{
-  GimpToolbar *bar = GIMP_TOOLBAR (object);
-
-  g_clear_object (&bar->priv->model);
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
-gimp_toolbar_set_property (GObject      *object,
-                           guint         property_id,
-                           const GValue *value,
-                           GParamSpec   *pspec)
-{
-  GimpToolbar *bar = GIMP_TOOLBAR (object);
-
-  switch (property_id)
-    {
-    case PROP_MODEL:
-      bar->priv->model = g_value_dup_object (value);
-      gimp_menu_shell_fill (GIMP_MENU_SHELL (bar), bar->priv->model, "ui-added", FALSE);
-      break;
-
-    default:
-      gimp_menu_shell_set_property (object, property_id, value, pspec);
-      break;
-    }
-}
-
-static void
-gimp_toolbar_get_property (GObject    *object,
-                           guint       property_id,
-                           GValue     *value,
-                           GParamSpec *pspec)
-{
-  GimpToolbar *bar = GIMP_TOOLBAR (object);
-
-  switch (property_id)
-    {
-    case PROP_MODEL:
-      g_value_set_object (value, bar->priv->model);
-      break;
-
-    default:
-      gimp_menu_shell_get_property (object, property_id, value, pspec);
-      break;
-    }
-}
-
-static void
 gimp_toolbar_append (GimpMenuShell *shell,
-                     GMenuModel    *model)
+                     GimpMenuModel *model)
 {
   GimpToolbar *toolbar = GIMP_TOOLBAR (shell);
   gint         n_items;
 
   g_return_if_fail (GTK_IS_CONTAINER (shell));
 
-  n_items = g_menu_model_get_n_items (model);
+  n_items = g_menu_model_get_n_items (G_MENU_MODEL (model));
   for (gint i = 0; i < n_items; i++)
     {
       GMenuModel *subsection;
@@ -225,10 +134,10 @@ gimp_toolbar_append (GimpMenuShell *shell,
       gchar      *label       = NULL;
       gchar      *action_name = NULL;
 
-      subsection = g_menu_model_get_item_link (model, i, G_MENU_LINK_SECTION);
-      submenu    = g_menu_model_get_item_link (model, i, G_MENU_LINK_SUBMENU);
-      g_menu_model_get_item_attribute (model, i, G_MENU_ATTRIBUTE_LABEL, "s", &label);
-      g_menu_model_get_item_attribute (model, i, G_MENU_ATTRIBUTE_ACTION, "s", &action_name);
+      subsection = g_menu_model_get_item_link (G_MENU_MODEL (model), i, G_MENU_LINK_SECTION);
+      submenu    = g_menu_model_get_item_link (G_MENU_MODEL (model), i, G_MENU_LINK_SUBMENU);
+      g_menu_model_get_item_attribute (G_MENU_MODEL (model), i, G_MENU_ATTRIBUTE_LABEL, "s", &label);
+      g_menu_model_get_item_attribute (G_MENU_MODEL (model), i, G_MENU_ATTRIBUTE_ACTION, "s", &action_name);
 
       if (subsection != NULL)
         {
@@ -238,7 +147,7 @@ gimp_toolbar_append (GimpMenuShell *shell,
           gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
           gtk_widget_show (GTK_WIDGET (item));
 
-          gimp_toolbar_append (shell, subsection);
+          gimp_toolbar_append (shell, GIMP_MENU_MODEL (subsection));
 
           item = gtk_separator_tool_item_new ();
           gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
@@ -290,7 +199,7 @@ gimp_toolbar_add_ui (GimpMenuShell  *shell,
 /* Public functions */
 
 GtkWidget *
-gimp_toolbar_new (GMenuModel    *model,
+gimp_toolbar_new (GimpMenuModel *model,
                   GimpUIManager *manager)
 {
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager) &&

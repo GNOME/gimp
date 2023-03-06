@@ -428,6 +428,7 @@ gimp_action_set_sensitive (GimpAction  *action,
 
       gimp_action_update_proxy_tooltip (action, NULL);
     }
+  g_object_notify (G_OBJECT (action), "enabled");
 }
 
 gboolean

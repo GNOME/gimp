@@ -32,8 +32,9 @@ enum
 {
   GIMP_MENU_SHELL_PROP_0,
   GIMP_MENU_SHELL_PROP_MANAGER,
+  GIMP_MENU_SHELL_PROP_MODEL,
 
-  GIMP_MENU_SHELL_PROP_LAST = GIMP_MENU_SHELL_PROP_MANAGER,
+  GIMP_MENU_SHELL_PROP_LAST = GIMP_MENU_SHELL_PROP_MODEL,
 };
 
 typedef struct _GimpMenuShellInterface GimpMenuShellInterface;
@@ -44,8 +45,8 @@ struct _GimpMenuShellInterface
 
   /* Virtual functions. */
 
-  void          (* append)       (GimpMenuShell *shell,
-                                  GMenuModel    *model);
+  void          (* append)       (GimpMenuShell  *shell,
+                                  GimpMenuModel  *model);
   void          (* add_ui)       (GimpMenuShell  *shell,
                                   const gchar   **paths,
                                   const gchar    *action_name,
@@ -60,12 +61,14 @@ struct _GimpMenuShellInterface
 GType           gimp_menu_shell_get_type            (void) G_GNUC_CONST;
 
 void            gimp_menu_shell_fill                (GimpMenuShell *shell,
-                                                     GMenuModel    *model,
-                                                     const gchar   *update_signal,
+                                                     GimpMenuModel *model,
                                                      gboolean       drop_top_submenu);
 
 
 /* Protected functions. */
+
+void            gimp_menu_shell_append              (GimpMenuShell *shell,
+                                                     GimpMenuModel *model);
 
 void            gimp_menu_shell_init                (GimpMenuShell *shell);
 void            gimp_menu_shell_install_properties  (GObjectClass  *klass);

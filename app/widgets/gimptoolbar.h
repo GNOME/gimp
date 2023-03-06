@@ -48,7 +48,7 @@ struct _GimpToolbarClass
 
 GType        gimp_toolbar_get_type   (void) G_GNUC_CONST;
 
-GtkWidget  * gimp_toolbar_new        (GMenuModel    *model,
+GtkWidget  * gimp_toolbar_new        (GimpMenuModel *model,
                                       GimpUIManager *manager);
 
 

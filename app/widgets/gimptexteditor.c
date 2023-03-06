@@ -139,7 +139,7 @@ gimp_text_editor_new (const gchar     *title,
   GimpTextEditor *editor;
   GtkWidget      *content_area;
   GtkWidget      *toolbar;
-  GMenuModel     *toolbar_model;
+  GimpMenuModel  *toolbar_model;
   GtkWidget      *style_editor;
   GtkWidget      *scrolled_window;
   gboolean        use_header_bar;

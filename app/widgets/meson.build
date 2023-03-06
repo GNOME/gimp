@@ -142,6 +142,7 @@ libappwidgets_sources = [
   'gimpmenushell.c',
   'gimpmenudock.c',
   'gimpmenufactory.c',
+  'gimpmenumodel.c',
   'gimpmessagebox.c',
   'gimpmessagedialog.c',
   'gimpmeter.c',

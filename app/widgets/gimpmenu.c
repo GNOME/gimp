@@ -33,6 +33,7 @@
 #include "gimpenumaction.h"
 #include "gimphelp-ids.h"
 #include "gimpmenu.h"
+#include "gimpmenumodel.h"
 #include "gimpmenushell.h"
 #include "gimpprocedureaction.h"
 #include "gimpradioaction.h"
@@ -69,7 +70,7 @@ static void     gimp_menu_iface_init              (GimpMenuShellInterface  *ifac
 static void     gimp_menu_finalize                (GObject                 *object);
 
 static void     gimp_menu_append                  (GimpMenuShell           *shell,
-                                                   GMenuModel              *model);
+                                                   GimpMenuModel           *model);
 static void     gimp_menu_add_ui                  (GimpMenuShell           *shell,
                                                    const gchar            **paths,
                                                    const gchar             *action_name,
@@ -170,7 +171,7 @@ gimp_menu_finalize (GObject *object)
 
 static void
 gimp_menu_append (GimpMenuShell *shell,
-                  GMenuModel    *model)
+                  GimpMenuModel *model)
 {
   static GtkRadioMenuItem *group   = NULL;
   GimpMenu                *menu    = GIMP_MENU (shell);
@@ -179,7 +180,7 @@ gimp_menu_append (GimpMenuShell *shell,
 
   g_return_if_fail (GTK_IS_CONTAINER (shell));
 
-  n_items = g_menu_model_get_n_items (model);
+  n_items = g_menu_model_get_n_items (G_MENU_MODEL (model));
   for (gint i = 0; i < n_items; i++)
     {
       GMenuModel *subsection;
@@ -187,10 +188,10 @@ gimp_menu_append (GimpMenuShell *shell,
       gchar      *label       = NULL;
       gchar      *action_name = NULL;
 
-      subsection = g_menu_model_get_item_link (model, i, G_MENU_LINK_SECTION);
-      submenu    = g_menu_model_get_item_link (model, i, G_MENU_LINK_SUBMENU);
-      g_menu_model_get_item_attribute (model, i, G_MENU_ATTRIBUTE_LABEL, "s", &label);
-      g_menu_model_get_item_attribute (model, i, G_MENU_ATTRIBUTE_ACTION, "s", &action_name);
+      subsection = g_menu_model_get_item_link (G_MENU_MODEL (model), i, G_MENU_LINK_SECTION);
+      submenu    = g_menu_model_get_item_link (G_MENU_MODEL (model), i, G_MENU_LINK_SUBMENU);
+      g_menu_model_get_item_attribute (G_MENU_MODEL (model), i, G_MENU_ATTRIBUTE_LABEL, "s", &label);
+      g_menu_model_get_item_attribute (G_MENU_MODEL (model), i, G_MENU_ATTRIBUTE_ACTION, "s", &action_name);
 
       if (subsection != NULL)
         {
@@ -202,7 +203,7 @@ gimp_menu_append (GimpMenuShell *shell,
           gtk_container_add (GTK_CONTAINER (shell), item);
           gtk_widget_show (item);
 
-          gimp_menu_append (shell, subsection);
+          gimp_menu_append (shell, GIMP_MENU_MODEL (subsection));
 
           item = gtk_separator_menu_item_new ();
           gtk_container_add (GTK_CONTAINER (shell), item);
@@ -240,7 +241,7 @@ gimp_menu_append (GimpMenuShell *shell,
 
           subcontainer = gimp_menu_new (manager);
           gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), subcontainer);
-          gimp_menu_append (GIMP_MENU_SHELL (subcontainer), submenu);
+          gimp_menu_append (GIMP_MENU_SHELL (subcontainer), GIMP_MENU_MODEL (submenu));
           gtk_widget_show (subcontainer);
 
           g_tree_insert (menu->priv->submenus,
@@ -263,7 +264,7 @@ gimp_menu_append (GimpMenuShell *shell,
 
           subcontainer = gimp_menu_new (manager);
           gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), subcontainer);
-          gimp_menu_append (GIMP_MENU_SHELL (subcontainer), submenu);
+          gimp_menu_append (GIMP_MENU_SHELL (subcontainer), GIMP_MENU_MODEL (submenu));
           gtk_widget_show (subcontainer);
 
           g_tree_insert (menu->priv->submenus,

@@ -348,7 +348,7 @@ gimp_image_window_constructed (GObject *object)
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   GimpMenuFactory        *menu_factory;
   GimpGuiConfig          *config;
-  GMenuModel             *model;
+  GimpMenuModel          *model;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -386,8 +386,7 @@ gimp_image_window_constructed (GObject *object)
   gtk_widget_show (private->main_vbox);
 
   /* Create the menubar */
-  model = gimp_ui_manager_get_model (private->menubar_manager,
-                                     "/image-menubar");
+  model = gimp_ui_manager_get_model (private->menubar_manager, "/image-menubar");
 
 #ifdef GDK_WINDOWING_QUARTZ
   /* macOS has its native menubar system, and this should support it. It means
@@ -395,7 +394,8 @@ gimp_image_window_constructed (GObject *object)
    * TODO: Since the .ui file has no title/labels, I should edit the model to
    * extract titles from actions.
    */
-  gtk_application_set_menubar (private->gimp->app, G_MENU_MODEL (model));
+  gtk_application_set_menubar (GTK_APPLICATION (private->gimp->app),
+                               G_MENU_MODEL (model));
 #else
   private->menubar = gimp_menu_bar_new (model, private->menubar_manager);
   g_object_unref (model);

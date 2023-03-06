@@ -48,7 +48,7 @@ struct _GimpMenuBarClass
 
 GType        gimp_menu_bar_get_type   (void) G_GNUC_CONST;
 
-GtkWidget  * gimp_menu_bar_new        (GMenuModel    *model,
+GtkWidget  * gimp_menu_bar_new        (GimpMenuModel *model,
                                        GimpUIManager *manager);
 
 

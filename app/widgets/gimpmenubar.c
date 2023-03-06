@@ -32,6 +32,7 @@
 #include "gimpaction.h"
 #include "gimpmenu.h"
 #include "gimpmenubar.h"
+#include "gimpmenumodel.h"
 #include "gimpmenushell.h"
 #include "gimpradioaction.h"
 #include "gimpuimanager.h"
@@ -57,9 +58,7 @@ enum
 
 struct _GimpMenuBarPrivate
 {
-  GMenuModel *model;
-
-  GTree         *menus;
+  GTree *menus;
 };
 
 
@@ -67,19 +66,10 @@ struct _GimpMenuBarPrivate
 
 static void   gimp_menu_bar_iface_init              (GimpMenuShellInterface  *iface);
 
-static void   gimp_menu_bar_constructed             (GObject                 *object);
 static void   gimp_menu_bar_dispose                 (GObject                 *object);
-static void   gimp_menu_bar_set_property            (GObject                 *object,
-                                                     guint                    property_id,
-                                                     const GValue            *value,
-                                                     GParamSpec              *pspec);
-static void   gimp_menu_bar_get_property            (GObject                 *object,
-                                                     guint                    property_id,
-                                                     GValue                  *value,
-                                                     GParamSpec              *pspec);
 
 static void   gimp_menu_bar_append                  (GimpMenuShell           *shell,
-                                                     GMenuModel              *model);
+                                                     GimpMenuModel           *model);
 static void   gimp_menu_bar_add_ui                  (GimpMenuShell           *shell,
                                                      const gchar            **paths,
                                                      const gchar             *action_name,
@@ -101,19 +91,11 @@ gimp_menu_bar_class_init (GimpMenuBarClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_menu_bar_constructed;
   object_class->dispose      = gimp_menu_bar_dispose;
-  object_class->get_property = gimp_menu_bar_get_property;
-  object_class->set_property = gimp_menu_bar_set_property;
+  object_class->get_property = gimp_menu_shell_get_property;
+  object_class->set_property = gimp_menu_shell_set_property;
 
   gimp_menu_shell_install_properties (object_class);
-
-  g_object_class_install_property (object_class, PROP_MODEL,
-                                   g_param_spec_object ("model",
-                                                        NULL, NULL,
-                                                        G_TYPE_MENU_MODEL,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -135,66 +117,18 @@ gimp_menu_bar_init (GimpMenuBar *bar)
 }
 
 static void
-gimp_menu_bar_constructed (GObject *object)
-{
-  G_OBJECT_CLASS (parent_class)->constructed (object);
-}
-
-static void
 gimp_menu_bar_dispose (GObject *object)
 {
   GimpMenuBar *bar = GIMP_MENU_BAR (object);
 
-  g_clear_object (&bar->priv->model);
   g_clear_pointer (&bar->priv->menus, g_tree_unref);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_menu_bar_set_property (GObject      *object,
-                            guint         property_id,
-                            const GValue *value,
-                            GParamSpec   *pspec)
-{
-  GimpMenuBar *bar = GIMP_MENU_BAR (object);
-
-  switch (property_id)
-    {
-    case PROP_MODEL:
-      bar->priv->model = g_value_dup_object (value);
-      gimp_menu_shell_fill (GIMP_MENU_SHELL (bar), bar->priv->model, "ui-added", FALSE);
-      break;
-
-    default:
-      gimp_menu_shell_set_property (object, property_id, value, pspec);
-      break;
-    }
-}
-
-static void
-gimp_menu_bar_get_property (GObject    *object,
-                            guint       property_id,
-                            GValue     *value,
-                            GParamSpec *pspec)
-{
-  GimpMenuBar *bar = GIMP_MENU_BAR (object);
-
-  switch (property_id)
-    {
-    case PROP_MODEL:
-      g_value_set_object (value, bar->priv->model);
-      break;
-
-    default:
-      gimp_menu_shell_get_property (object, property_id, value, pspec);
-      break;
-    }
-}
-
-static void
 gimp_menu_bar_append (GimpMenuShell *shell,
-                      GMenuModel    *model)
+                      GimpMenuModel *model)
 {
   GimpMenuBar   *bar     = GIMP_MENU_BAR (shell);
   GimpUIManager *manager = gimp_menu_shell_get_manager (GIMP_MENU_SHELL (shell));
@@ -202,7 +136,7 @@ gimp_menu_bar_append (GimpMenuShell *shell,
 
   g_return_if_fail (GTK_IS_CONTAINER (shell));
 
-  n_items = g_menu_model_get_n_items (model);
+  n_items = g_menu_model_get_n_items (G_MENU_MODEL (model));
   for (gint i = 0; i < n_items; i++)
     {
       GMenuModel *subsection;
@@ -210,10 +144,10 @@ gimp_menu_bar_append (GimpMenuShell *shell,
       gchar      *label       = NULL;
       gchar      *action_name = NULL;
 
-      subsection = g_menu_model_get_item_link (model, i, G_MENU_LINK_SECTION);
-      submenu    = g_menu_model_get_item_link (model, i, G_MENU_LINK_SUBMENU);
-      g_menu_model_get_item_attribute (model, i, G_MENU_ATTRIBUTE_LABEL, "s", &label);
-      g_menu_model_get_item_attribute (model, i, G_MENU_ATTRIBUTE_ACTION, "s", &action_name);
+      subsection = g_menu_model_get_item_link (G_MENU_MODEL (model), i, G_MENU_LINK_SECTION);
+      submenu    = g_menu_model_get_item_link (G_MENU_MODEL (model), i, G_MENU_LINK_SUBMENU);
+      g_menu_model_get_item_attribute (G_MENU_MODEL (model), i, G_MENU_ATTRIBUTE_LABEL, "s", &label);
+      g_menu_model_get_item_attribute (G_MENU_MODEL (model), i, G_MENU_ATTRIBUTE_ACTION, "s", &action_name);
 
       if (submenu != NULL)
         {
@@ -231,7 +165,7 @@ gimp_menu_bar_append (GimpMenuShell *shell,
 
           subcontainer = gimp_menu_new (manager);
           gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), subcontainer);
-          GIMP_MENU_SHELL_GET_INTERFACE (subcontainer)->append (GIMP_MENU_SHELL (subcontainer), submenu);
+          gimp_menu_shell_append (GIMP_MENU_SHELL (subcontainer), GIMP_MENU_MODEL (submenu));
           gtk_widget_show (subcontainer);
 
           g_tree_insert (bar->priv->menus,
@@ -305,7 +239,7 @@ gimp_menu_bar_add_ui (GimpMenuShell  *shell,
 /* Public functions */
 
 GtkWidget *
-gimp_menu_bar_new (GMenuModel    *model,
+gimp_menu_bar_new (GimpMenuModel *model,
                    GimpUIManager *manager)
 {
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager) &&

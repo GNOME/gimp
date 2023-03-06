@@ -110,7 +110,7 @@ GtkAccelGroup * gimp_ui_manager_get_accel_group (GimpUIManager      *manager);
 
 GtkWidget     * gimp_ui_manager_get_widget      (GimpUIManager      *manager,
                                                  const gchar        *path);
-GMenuModel    * gimp_ui_manager_get_model       (GimpUIManager      *manager,
+GimpMenuModel * gimp_ui_manager_get_model       (GimpUIManager      *manager,
                                                  const gchar        *path);
 
 void            gimp_ui_manager_remove_ui       (GimpUIManager      *manager,
