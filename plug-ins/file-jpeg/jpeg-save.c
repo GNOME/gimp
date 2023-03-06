@@ -152,7 +152,7 @@ background_jpeg_save (PreviewPersistent *pp)
 
           /* and load the preview */
           load_image (pp->file, GIMP_RUN_NONINTERACTIVE,
-                      TRUE, NULL, NULL);
+                      TRUE, NULL, NULL, NULL);
         }
 
       /* we cleanup here (load_image doesn't run in the background) */

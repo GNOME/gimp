@@ -322,8 +322,9 @@ jpeg_load (GimpProcedure        *procedure,
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
-  gboolean        resolution_loaded = FALSE;
-  GError         *error             = NULL;
+  gboolean        resolution_loaded  = FALSE;
+  gboolean        ps_metadata_loaded = FALSE;
+  GError         *error              = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -342,7 +343,7 @@ jpeg_load (GimpProcedure        *procedure,
     }
 
   image = load_image (file, run_mode, FALSE,
-                      &resolution_loaded, &error);
+                      &resolution_loaded, &ps_metadata_loaded, &error);
 
   if (image)
     {
