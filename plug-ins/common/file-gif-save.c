@@ -193,6 +193,7 @@ query (void)
   gimp_register_save_handler (SAVE_PROC, "gif", "");
   gimp_register_file_handler_uri (SAVE_PROC);
 
+  gimp_register_save_handler (SAVE2_PROC, "gif", "");
   gimp_register_file_handler_uri (SAVE2_PROC);
 }
 
