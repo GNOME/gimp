@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-16 14:08+0000\n"
-"PO-Revision-Date: 2023-02-16 18:36+0000\n"
+"POT-Creation-Date: 2023-03-05 12:54+0000\n"
+"PO-Revision-Date: 2023-03-07 19:14+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -54,7 +54,7 @@ msgstr "Exercitar uma cabra na linguagem C"
 #: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:178
 #: plug-ins/gradient-flare/gradient-flare.c:935
-#: plug-ins/ifs-compose/ifs-compose.c:533 plug-ins/imagemap/imap_main.c:632
+#: plug-ins/ifs-compose/ifs-compose.c:537 plug-ins/imagemap/imap_main.c:632
 #: plug-ins/lighting/lighting-main.c:404
 #: plug-ins/map-object/map-object-main.c:496 plug-ins/pagecurl/pagecurl.c:302
 #, c-format
@@ -100,17 +100,17 @@ msgstr "Exercitar uma cabra (C)"
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1669
 #: plug-ins/fractal-explorer/fractal-explorer.c:875
 #: plug-ins/fractal-explorer/fractal-explorer.c:1269
-#: plug-ins/gfig/gfig-dialog.c:349 plug-ins/gfig/gfig-dialog.c:776
-#: plug-ins/gfig/gfig-dialog.c:826 plug-ins/gimpressionist/brush.c:270
+#: plug-ins/gfig/gfig-dialog.c:354 plug-ins/gfig/gfig-dialog.c:781
+#: plug-ins/gfig/gfig-dialog.c:831 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/gimpressionist.c:142
 #: plug-ins/gimpressionist/orientmap.c:528
 #: plug-ins/gimpressionist/presets.c:642 plug-ins/gimpressionist/sizemap.c:401
 #: plug-ins/gradient-flare/gradient-flare.c:2517
 #: plug-ins/gradient-flare/gradient-flare.c:3367
 #: plug-ins/gradient-flare/gradient-flare.c:3479
-#: plug-ins/ifs-compose/ifs-compose.c:954
-#: plug-ins/ifs-compose/ifs-compose.c:2600
-#: plug-ins/ifs-compose/ifs-compose.c:2637 plug-ins/imagemap/imap_browse.c:80
+#: plug-ins/ifs-compose/ifs-compose.c:958
+#: plug-ins/ifs-compose/ifs-compose.c:2604
+#: plug-ins/ifs-compose/ifs-compose.c:2641 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:1038
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
@@ -187,7 +187,7 @@ msgstr "Exercitar uma cabra (JavaScript)"
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
 #: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
 #: plug-ins/common/warp.c:491 plug-ins/common/wavelet-decompose.c:410
-#: plug-ins/file-psd/psd-load.c:3283 plug-ins/flame/flame.c:717
+#: plug-ins/file-psd/psd-load.c:3308 plug-ins/flame/flame.c:717
 #: plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
@@ -196,7 +196,7 @@ msgstr "Exercitar uma cabra (JavaScript)"
 #: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:2518
 #: plug-ins/gradient-flare/gradient-flare.c:3480
-#: plug-ins/ifs-compose/ifs-compose.c:955
+#: plug-ins/ifs-compose/ifs-compose.c:959
 #: plug-ins/imagemap/imap_default_dialog.c:109
 #: plug-ins/lighting/lighting-ui.c:1039
 #: plug-ins/map-object/map-object-ui.c:1318 plug-ins/pagecurl/pagecurl.c:497
@@ -478,10 +478,10 @@ msgstr "_Vertical"
 #: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:271
 #: plug-ins/file-faxg3/faxg3.c:574 plug-ins/file-fits/fits.c:542
 #: plug-ins/file-jpeg/jpeg-load.c:225
-#: plug-ins/file-psd/psd-image-res-load.c:1076
-#: plug-ins/file-psd/psd-load.c:2501 plug-ins/file-sgi/sgi.c:472
+#: plug-ins/file-psd/psd-image-res-load.c:1082
+#: plug-ins/file-psd/psd-load.c:2510 plug-ins/file-sgi/sgi.c:472
 #: plug-ins/file-tiff/file-tiff-load.c:1538
-#: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1285
+#: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
 #: plug-ins/screenshot/screenshot-win32.c:315 plug-ins/twain/twain.c:661
@@ -815,8 +815,8 @@ msgstr "Semente aleatória"
 #: plug-ins/flame/flame.c:1104
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:801
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1632
-#: plug-ins/gfig/gfig-dialog.c:777 plug-ins/ifs-compose/ifs-compose.c:951
-#: plug-ins/ifs-compose/ifs-compose.c:2638 plug-ins/imagemap/imap_browse.c:81
+#: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:955
+#: plug-ins/ifs-compose/ifs-compose.c:2642 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:608
 #: plug-ins/lighting/lighting-ui.c:1308
 msgid "_Open"
@@ -831,9 +831,9 @@ msgstr "_Abrir"
 #: plug-ins/flame/flame.c:1112
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:818
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1670
-#: plug-ins/gfig/gfig-dialog.c:827 plug-ins/gimpressionist/brush.c:271
-#: plug-ins/ifs-compose/ifs-compose.c:952
-#: plug-ins/ifs-compose/ifs-compose.c:2601 plug-ins/imagemap/imap_file.c:129
+#: plug-ins/gfig/gfig-dialog.c:832 plug-ins/gimpressionist/brush.c:271
+#: plug-ins/ifs-compose/ifs-compose.c:956
+#: plug-ins/ifs-compose/ifs-compose.c:2605 plug-ins/imagemap/imap_file.c:129
 #: plug-ins/lighting/lighting-ui.c:601 plug-ins/lighting/lighting-ui.c:1164
 msgid "_Save"
 msgstr "_Guardar"
@@ -996,9 +996,9 @@ msgstr "Gráfico dos parâmetros atuais"
 
 #: plug-ins/common/cml-explorer.c:1983 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:168
-#: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:350
-#: plug-ins/gfig/gfig-dialog.c:1213 plug-ins/gfig/gfig-dialog.c:1358
-#: plug-ins/ifs-compose/ifs-compose.c:1254
+#: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:355
+#: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
+#: plug-ins/ifs-compose/ifs-compose.c:1258
 #: plug-ins/metadata/metadata-viewer.c:287
 msgid "_Close"
 msgstr "_Fechar"
@@ -1025,7 +1025,7 @@ msgstr "Guardar parâmetros do explorador CML"
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
-#: plug-ins/gfig/gfig.c:1040 plug-ins/ifs-compose/ifs-compose.c:2460
+#: plug-ins/gfig/gfig.c:1040 plug-ins/ifs-compose/ifs-compose.c:2464
 #: plug-ins/lighting/lighting-ui.c:1233
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1060,7 +1060,7 @@ msgstr "Carregar parâmetros do explorador CML"
 #: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
 #: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:955
 #: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:554
-#: plug-ins/file-psd/psd-load.c:159 plug-ins/file-psd/psd-load.c:164
+#: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-load.c:169
 #: plug-ins/file-psd/psd-save.c:2218 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1855
@@ -1125,7 +1125,7 @@ msgstr "Reordenar mapa de cores"
 #: plug-ins/common/sample-colorize.c:1413
 #: plug-ins/common/sphere-designer.c:2631 plug-ins/common/tile-small.c:531
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:809
-#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:953
+#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:957
 #: plug-ins/selection-to-path/selection-to-path.c:412
 msgid "_Reset"
 msgstr "_Repor"
@@ -1495,7 +1495,7 @@ msgid "Automatic pre_view"
 msgstr "Pré-visualizar _automático"
 
 #. Options area, bottom of column
-#: plug-ins/common/curve-bend.c:1300 plug-ins/gfig/gfig-dialog.c:1210
+#: plug-ins/common/curve-bend.c:1300 plug-ins/gfig/gfig-dialog.c:1215
 msgid "Options"
 msgstr "Opções"
 
@@ -1737,7 +1737,7 @@ msgid "Yellow"
 msgstr "Amarelo"
 
 #: plug-ins/common/decompose.c:215 plug-ins/common/warp.c:617
-#: plug-ins/flame/flame.c:1223 plug-ins/gfig/gfig-dialog.c:1454
+#: plug-ins/flame/flame.c:1223 plug-ins/gfig/gfig-dialog.c:1459
 msgid "Black"
 msgstr "Preto"
 
@@ -1961,7 +1961,7 @@ msgstr "EOF ou erro ao ler o cabeçalho da imagem"
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
 #: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-icns/file-icns-load.c:507
 #: plug-ins/file-ico/ico-load.c:674 plug-ins/file-ico/ico-load.c:784
-#: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:172
+#: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:177
 #: plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
 #: plug-ins/file-tiff/file-tiff-load.c:289
@@ -3105,13 +3105,13 @@ msgid "'%s' is not a PCX file"
 msgstr "'%s' não é um ficheiro PCX"
 
 #: plug-ins/common/file-pcx.c:445 plug-ins/common/file-wbmp.c:259
-#: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:363
+#: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:368
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Largura da imagem não suportada ou inválida: %d"
 
 #: plug-ins/common/file-pcx.c:451 plug-ins/common/file-wbmp.c:265
-#: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:355
+#: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:360
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Altura da imagem não suportada ou inválida: %d"
@@ -5118,7 +5118,7 @@ msgstr "Desenhar uma grelha na imagem"
 msgid "Drawing grid"
 msgstr "A desenhar a grelha"
 
-#: plug-ins/common/grid.c:757 plug-ins/gfig/gfig-dialog.c:1355
+#: plug-ins/common/grid.c:757 plug-ins/gfig/gfig-dialog.c:1360
 #: plug-ins/imagemap/imap_main.c:1923
 msgid "Grid"
 msgstr "Grelha"
@@ -5783,7 +5783,7 @@ msgid "Wood"
 msgstr "Madeira"
 
 #: plug-ins/common/sphere-designer.c:343 plug-ins/flame/flame.c:820
-#: plug-ins/gfig/gfig-dialog.c:394
+#: plug-ins/gfig/gfig-dialog.c:399
 msgid "Spiral"
 msgstr "Espiral"
 
@@ -5876,7 +5876,7 @@ msgstr "Diálogo Seleção de cores"
 
 #. Scale
 #: plug-ins/common/sphere-designer.c:2833 plug-ins/gimpressionist/paper.c:191
-#: plug-ins/ifs-compose/ifs-compose.c:709
+#: plug-ins/ifs-compose/ifs-compose.c:713
 msgid "Scale:"
 msgstr "Escala:"
 
@@ -5984,7 +5984,7 @@ msgstr "Pequenos mosaicos"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:498 plug-ins/ifs-compose/ifs-compose.c:765
+#: plug-ins/common/tile-small.c:498 plug-ins/ifs-compose/ifs-compose.c:769
 msgid "Flip"
 msgstr "Inverter"
 
@@ -6267,7 +6267,7 @@ msgstr "Tamanho do passo:"
 
 #: plug-ins/common/warp.c:543
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:762
-#: plug-ins/ifs-compose/ifs-compose.c:1285
+#: plug-ins/ifs-compose/ifs-compose.c:1289
 msgid "Iterations:"
 msgstr "Iterações:"
 
@@ -6341,7 +6341,7 @@ msgid "Vector mag:"
 msgstr "Magniture de vetor:"
 
 #. Angle
-#: plug-ins/common/warp.c:808 plug-ins/ifs-compose/ifs-compose.c:723
+#: plug-ins/common/warp.c:808 plug-ins/ifs-compose/ifs-compose.c:727
 msgid "Angle:"
 msgstr "Ângulo:"
 
@@ -7349,111 +7349,110 @@ msgstr "Use marcadores de re_inicialização"
 msgid "JPEG format does not support multiple layers."
 msgstr "O formato JPEG não suporta várias camadas."
 
-#: plug-ins/file-psd/psd-load.c:281 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:286 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Erro ao carregar o ficheiro PSD: %s"
 
-#: plug-ins/file-psd/psd-load.c:334
+#: plug-ins/file-psd/psd-load.c:339
 msgid "Not a valid Photoshop document file"
 msgstr "Não é um ficheiro de Photoshop válido"
 
-#: plug-ins/file-psd/psd-load.c:341
+#: plug-ins/file-psd/psd-load.c:346
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Versão do formato de ficheiro não suportada: %d"
 
-#: plug-ins/file-psd/psd-load.c:348
+#: plug-ins/file-psd/psd-load.c:353
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Demasiados canais no ficheiro: %d"
 
-#: plug-ins/file-psd/psd-load.c:372
+#: plug-ins/file-psd/psd-load.c:377
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Tamanho da imagem não suportado ou inválido: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:387 plug-ins/file-psd/psd-load.c:398
+#: plug-ins/file-psd/psd-load.c:392 plug-ins/file-psd/psd-load.c:403
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Modo de cor não suportado: %s"
 
-#: plug-ins/file-psd/psd-load.c:425
+#: plug-ins/file-psd/psd-load.c:430
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Profundidade de cor não suportada: %d"
 
-#: plug-ins/file-psd/psd-load.c:459 plug-ins/file-psd/psd-load.c:469
-#: plug-ins/file-psd/psd-load.c:682 plug-ins/file-psd/psd-load.c:1028
+#: plug-ins/file-psd/psd-load.c:464 plug-ins/file-psd/psd-load.c:474
+#: plug-ins/file-psd/psd-load.c:687 plug-ins/file-psd/psd-load.c:1033
 msgid "The file is corrupt!"
 msgstr "O ficheiro está corrompido!"
 
-#: plug-ins/file-psd/psd-load.c:633
+#: plug-ins/file-psd/psd-load.c:638
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Demasiados canais na camada: %d"
 
-#: plug-ins/file-psd/psd-load.c:717
+#: plug-ins/file-psd/psd-load.c:722
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Altura da camada não suportada ou inválida: %d"
 
-#: plug-ins/file-psd/psd-load.c:726
+#: plug-ins/file-psd/psd-load.c:731
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Largura da camada não suportada ou inválida: %d"
 
-#: plug-ins/file-psd/psd-load.c:736
+#: plug-ins/file-psd/psd-load.c:741
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Tamanho da camada não suportado ou inválido: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:756
+#: plug-ins/file-psd/psd-load.c:761
 msgid "Unsupported or invalid mask info size."
 msgstr "Tamanho da informação da camada não suportado ou inválido."
 
-#: plug-ins/file-psd/psd-load.c:933
+#: plug-ins/file-psd/psd-load.c:938
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Altura da máscara da camada não suportada ou inválida: %d"
 
-#: plug-ins/file-psd/psd-load.c:942
+#: plug-ins/file-psd/psd-load.c:947
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Largura da máscara da camada não suportada ou inválida: %d"
 
-#: plug-ins/file-psd/psd-load.c:952
+#: plug-ins/file-psd/psd-load.c:957
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Tamanho da máscara da camada não suportado ou inválido: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1834 plug-ins/file-psd/psd-load.c:2474
+#: plug-ins/file-psd/psd-load.c:1843 plug-ins/file-psd/psd-load.c:2483
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Método de compressão não suportado: %d"
 
-#: plug-ins/file-psd/psd-load.c:2667
+#: plug-ins/file-psd/psd-load.c:2676
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:2867
+#: plug-ins/file-psd/psd-load.c:2876
 msgid "Unsupported or invalid channel size"
 msgstr "Tamanho do canal não suportado ou inválido"
 
-#: plug-ins/file-psd/psd-load.c:2936
+#: plug-ins/file-psd/psd-load.c:2945
 msgid "Failed to decompress data"
 msgstr "Falha ao descomprimir os dados"
 
-#: plug-ins/file-psd/psd-load.c:3280
-msgid "PSD Compatibility Notice"
-msgstr "Aviso de compatibilidade PSD"
+#: plug-ins/file-psd/psd-load.c:3305
+msgid "Import PSD"
+msgstr "Importar PSD"
 
-#. Duotone import notification
-#: plug-ins/file-psd/psd-load.c:3295
+#: plug-ins/file-psd/psd-load.c:3324
 msgid "Duotone Import"
 msgstr "Importação de tom duplo"
 
-#: plug-ins/file-psd/psd-load.c:3296
+#: plug-ins/file-psd/psd-load.c:3325
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -7462,6 +7461,63 @@ msgstr ""
 "A imagem será importada como Escala de cinzentos.\n"
 "Os dados de espaço de cores tom duplo foram guardados\n"
 "e podem ser reaplicados ao exportar."
+
+#: plug-ins/file-psd/psd-load.c:3347
+msgid "Compatibility Notice"
+msgstr "Aviso de compatibilidade"
+
+#: plug-ins/file-psd/psd-load.c:3348
+msgid ""
+"This PSD file contains features that\n"
+"are not yet fully supported in GIMP:"
+msgstr ""
+"Este ficheiro PSD contém funcionalidades que\n"
+"ainda não são totalmente suportados no GIMP:"
+
+#: plug-ins/file-psd/psd-load.c:3362
+msgid "Adjustment layers are not yet supported and will be dropped."
+msgstr "As camadas de ajuste ainda não são suportadas e serão descartadas."
+
+#: plug-ins/file-psd/psd-load.c:3366
+msgid ""
+"Fill layers are partially supported and will be converted to raster layers."
+msgstr ""
+"As camadas de preenchimento são parcialmente suportadas e serão convertidas "
+"em camadas rasterizadas."
+
+#: plug-ins/file-psd/psd-load.c:3371
+msgid ""
+"Text layers are partially supported and will be converted to raster layers."
+msgstr ""
+"As camadas de texto são parcialmente suportadas e serão convertidas em "
+"camadas rasterizadas."
+
+#: plug-ins/file-psd/psd-load.c:3376
+msgid "Linked layers are not yet supported and will be dropped."
+msgstr "As camadas ligadas ainda não são suportadas e serão descartadas."
+
+#: plug-ins/file-psd/psd-load.c:3380
+msgid ""
+"Vector masks are partially supported and will be converted to raster layers."
+msgstr ""
+"As máscaras vetoriais são parcialmente suportadas e serão convertidas em "
+"camadas rasterizadas."
+
+#: plug-ins/file-psd/psd-load.c:3385
+msgid "Vector strokes are not yet supported and will be dropped."
+msgstr "Os traços vetoriais ainda não são suportados e serão descartados."
+
+#: plug-ins/file-psd/psd-load.c:3389
+msgid "Layer effects are not yet supported and will be dropped."
+msgstr "Os efeitos de camada ainda não são suportados e serão descartados."
+
+#: plug-ins/file-psd/psd-load.c:3393
+msgid "Smart objects are not yet supported and will be dropped."
+msgstr "Os objetos inteligentes ainda não são suportados e serão descartados."
+
+#: plug-ins/file-psd/psd-load.c:3397
+msgid "Layer comps are not yet supported and will be dropped."
+msgstr "As composições de camada ainda não são suportadas e serão descartadas."
 
 #: plug-ins/file-psd/psd-save.c:502
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
@@ -8343,7 +8399,7 @@ msgstr "Remoinho"
 msgid "Horseshoe"
 msgstr "Ferradura"
 
-#: plug-ins/flame/flame.c:815 plug-ins/gfig/gfig-dialog.c:1436
+#: plug-ins/flame/flame.c:815 plug-ins/gfig/gfig-dialog.c:1441
 msgid "Polar"
 msgstr "Polar"
 
@@ -8508,7 +8564,7 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:541
-#: plug-ins/gfig/gfig-dialog.c:333 plug-ins/gimpressionist/utils.c:139
+#: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:998
 #, c-format
 msgid ""
@@ -8898,286 +8954,286 @@ msgstr ""
 "Desenha linhas entre os pontos de controlo. Só durante a criação da curva"
 
 #. Start building the dialog up
-#: plug-ins/gfig/gfig-dialog.c:345
+#: plug-ins/gfig/gfig-dialog.c:350
 msgid "Gfig"
 msgstr "Gfig"
 
-#: plug-ins/gfig/gfig-dialog.c:380
+#: plug-ins/gfig/gfig-dialog.c:385
 msgid "Line"
 msgstr "Linha"
 
-#: plug-ins/gfig/gfig-dialog.c:380
+#: plug-ins/gfig/gfig-dialog.c:385
 msgid "Create line"
 msgstr "Criar linha"
 
-#: plug-ins/gfig/gfig-dialog.c:382 plug-ins/gfig/gfig-dialog.c:1435
+#: plug-ins/gfig/gfig-dialog.c:387 plug-ins/gfig/gfig-dialog.c:1440
 #: plug-ins/imagemap/imap_main.c:1940
 msgid "Rectangle"
 msgstr "Retângulo"
 
-#: plug-ins/gfig/gfig-dialog.c:382
+#: plug-ins/gfig/gfig-dialog.c:387
 msgid "Create rectangle"
 msgstr "Criar retângulo"
 
-#: plug-ins/gfig/gfig-dialog.c:384
+#: plug-ins/gfig/gfig-dialog.c:389
 #: plug-ins/gradient-flare/gradient-flare.c:4021
 #: plug-ins/imagemap/imap_main.c:1942
 msgid "Circle"
 msgstr "Círculo"
 
-#: plug-ins/gfig/gfig-dialog.c:384
+#: plug-ins/gfig/gfig-dialog.c:389
 msgid "Create circle"
 msgstr "Criar círculo"
 
-#: plug-ins/gfig/gfig-dialog.c:386
+#: plug-ins/gfig/gfig-dialog.c:391
 msgid "Ellipse"
 msgstr "Elipse"
 
-#: plug-ins/gfig/gfig-dialog.c:386
+#: plug-ins/gfig/gfig-dialog.c:391
 msgid "Create ellipse"
 msgstr "Criar elipse"
 
-#: plug-ins/gfig/gfig-dialog.c:388
+#: plug-ins/gfig/gfig-dialog.c:393
 msgid "Arc"
 msgstr "Arco"
 
-#: plug-ins/gfig/gfig-dialog.c:388
+#: plug-ins/gfig/gfig-dialog.c:393
 msgid "Create arc"
 msgstr "Criar arco"
 
-#: plug-ins/gfig/gfig-dialog.c:390
+#: plug-ins/gfig/gfig-dialog.c:395
 #: plug-ins/gradient-flare/gradient-flare.c:4038
 #: plug-ins/imagemap/imap_main.c:1944
 msgid "Polygon"
 msgstr "Polígono"
 
-#: plug-ins/gfig/gfig-dialog.c:390
+#: plug-ins/gfig/gfig-dialog.c:395
 msgid "Create reg polygon"
 msgstr "Cria polígono regular"
 
-#: plug-ins/gfig/gfig-dialog.c:392
+#: plug-ins/gfig/gfig-dialog.c:397
 msgid "Star"
 msgstr "Estrela"
 
-#: plug-ins/gfig/gfig-dialog.c:392
+#: plug-ins/gfig/gfig-dialog.c:397
 msgid "Create star"
 msgstr "Criar estrela"
 
-#: plug-ins/gfig/gfig-dialog.c:394
+#: plug-ins/gfig/gfig-dialog.c:399
 msgid "Create spiral"
 msgstr "Criar espiral"
 
-#: plug-ins/gfig/gfig-dialog.c:396
+#: plug-ins/gfig/gfig-dialog.c:401
 msgid "Bezier"
 msgstr "Bézier"
 
 # botão do rato?
-#: plug-ins/gfig/gfig-dialog.c:396
+#: plug-ins/gfig/gfig-dialog.c:401
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr ""
 "Criar curva de Bézier. [Shift] + [Botão do rato] finaliza a criação do "
 "objeto."
 
-#: plug-ins/gfig/gfig-dialog.c:399
+#: plug-ins/gfig/gfig-dialog.c:404
 msgid "Move Object"
 msgstr "Mover objeto"
 
-#: plug-ins/gfig/gfig-dialog.c:399
+#: plug-ins/gfig/gfig-dialog.c:404
 msgid "Move an object"
 msgstr "Mover um objeto"
 
-#: plug-ins/gfig/gfig-dialog.c:401
+#: plug-ins/gfig/gfig-dialog.c:406
 msgid "Move Point"
 msgstr "Mover ponto"
 
-#: plug-ins/gfig/gfig-dialog.c:401
+#: plug-ins/gfig/gfig-dialog.c:406
 msgid "Move a single point"
 msgstr "Mover um ponto único"
 
-#: plug-ins/gfig/gfig-dialog.c:403 plug-ins/gfig/gfig-dialog.c:1288
+#: plug-ins/gfig/gfig-dialog.c:408 plug-ins/gfig/gfig-dialog.c:1293
 #: plug-ins/imagemap/imap_cmd_copy.c:53
 #: plug-ins/imagemap/imap_cmd_copy_object.c:54
 #: plug-ins/imagemap/imap_main.c:1905
 msgid "Copy"
 msgstr "Copiar"
 
-#: plug-ins/gfig/gfig-dialog.c:403
+#: plug-ins/gfig/gfig-dialog.c:408
 msgid "Copy an object"
 msgstr "Copiar um objeto"
 
-#: plug-ins/gfig/gfig-dialog.c:405 plug-ins/ifs-compose/ifs-compose.c:1000
+#: plug-ins/gfig/gfig-dialog.c:410 plug-ins/ifs-compose/ifs-compose.c:1004
 #: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
 msgid "Delete"
 msgstr "Eliminar"
 
-#: plug-ins/gfig/gfig-dialog.c:405
+#: plug-ins/gfig/gfig-dialog.c:410
 msgid "Delete an object"
 msgstr "Eliminar um objeto"
 
-#: plug-ins/gfig/gfig-dialog.c:407 plug-ins/imagemap/imap_cmd_select.c:52
+#: plug-ins/gfig/gfig-dialog.c:412 plug-ins/imagemap/imap_cmd_select.c:52
 msgid "Select"
 msgstr "Seleção"
 
-#: plug-ins/gfig/gfig-dialog.c:407
+#: plug-ins/gfig/gfig-dialog.c:412
 msgid "Select an object"
 msgstr "Selecionar um objeto"
 
-#: plug-ins/gfig/gfig-dialog.c:410
+#: plug-ins/gfig/gfig-dialog.c:415
 msgid "Raise"
 msgstr "Elevar"
 
-#: plug-ins/gfig/gfig-dialog.c:410
+#: plug-ins/gfig/gfig-dialog.c:415
 msgid "Raise selected object"
 msgstr "Elevar objeto selecionado"
 
-#: plug-ins/gfig/gfig-dialog.c:412
+#: plug-ins/gfig/gfig-dialog.c:417
 msgid "Lower"
 msgstr "Baixar"
 
-#: plug-ins/gfig/gfig-dialog.c:412
+#: plug-ins/gfig/gfig-dialog.c:417
 msgid "Lower selected object"
 msgstr "Baixar objeto selecionado"
 
-#: plug-ins/gfig/gfig-dialog.c:414
+#: plug-ins/gfig/gfig-dialog.c:419
 msgid "To Top"
 msgstr "Para cima"
 
-#: plug-ins/gfig/gfig-dialog.c:414
+#: plug-ins/gfig/gfig-dialog.c:419
 msgid "Raise selected object to top"
 msgstr "Elevar objeto selecionado para o topo"
 
-#: plug-ins/gfig/gfig-dialog.c:416
+#: plug-ins/gfig/gfig-dialog.c:421
 msgid "To Bottom"
 msgstr "Para baixo"
 
-#: plug-ins/gfig/gfig-dialog.c:416
+#: plug-ins/gfig/gfig-dialog.c:421
 msgid "Lower selected object to bottom"
 msgstr "Baixar objeto selecionado para o fundo"
 
-#: plug-ins/gfig/gfig-dialog.c:419
+#: plug-ins/gfig/gfig-dialog.c:424
 msgid "Show Previous"
 msgstr "Mostrar o anterior"
 
-#: plug-ins/gfig/gfig-dialog.c:419
+#: plug-ins/gfig/gfig-dialog.c:424
 msgid "Show previous object"
 msgstr "Mostrar objeto anterior"
 
-#: plug-ins/gfig/gfig-dialog.c:421
+#: plug-ins/gfig/gfig-dialog.c:426
 msgid "Show Next"
 msgstr "Mostrar o seguinte"
 
-#: plug-ins/gfig/gfig-dialog.c:421
+#: plug-ins/gfig/gfig-dialog.c:426
 msgid "Show next object"
 msgstr "Mostrar objeto seguinte"
 
-#: plug-ins/gfig/gfig-dialog.c:423
+#: plug-ins/gfig/gfig-dialog.c:428
 msgid "Show All"
 msgstr "Mostrar tudo"
 
-#: plug-ins/gfig/gfig-dialog.c:423
+#: plug-ins/gfig/gfig-dialog.c:428
 msgid "Show all object"
 msgstr "Mostrar todo o objeto"
 
 #. Tool options notebook
-#: plug-ins/gfig/gfig-dialog.c:451
+#: plug-ins/gfig/gfig-dialog.c:456
 msgid "Tool Options"
 msgstr "Opções da ferramenta"
 
-#: plug-ins/gfig/gfig-dialog.c:468
+#: plug-ins/gfig/gfig-dialog.c:473
 msgid "_Stroke"
 msgstr "_Traço"
 
 #. Fill frame on right side
-#: plug-ins/gfig/gfig-dialog.c:514
+#: plug-ins/gfig/gfig-dialog.c:519
 msgid "Fill"
 msgstr "Preenchimento"
 
-#: plug-ins/gfig/gfig-dialog.c:528
+#: plug-ins/gfig/gfig-dialog.c:533
 msgid "No fill"
 msgstr "Sem preenchimento"
 
-#: plug-ins/gfig/gfig-dialog.c:529
+#: plug-ins/gfig/gfig-dialog.c:534
 msgid "Color fill"
 msgstr "Preenchimento com cor"
 
-#: plug-ins/gfig/gfig-dialog.c:530
+#: plug-ins/gfig/gfig-dialog.c:535
 msgid "Pattern fill"
 msgstr "Preenchimento com textura"
 
-#: plug-ins/gfig/gfig-dialog.c:531
+#: plug-ins/gfig/gfig-dialog.c:536
 msgid "Shape gradient"
 msgstr "Forma do gradiente"
 
-#: plug-ins/gfig/gfig-dialog.c:532
+#: plug-ins/gfig/gfig-dialog.c:537
 msgid "Vertical gradient"
 msgstr "Gradiente vertical"
 
-#: plug-ins/gfig/gfig-dialog.c:533
+#: plug-ins/gfig/gfig-dialog.c:538
 msgid "Horizontal gradient"
 msgstr "Gradiente horizontal"
 
 #. "show image" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:595
+#: plug-ins/gfig/gfig-dialog.c:600
 msgid "Show image"
 msgstr "Mostrar imagem"
 
 #. "snap to grid" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:608
+#: plug-ins/gfig/gfig-dialog.c:613
 msgctxt "checkbutton"
 msgid "Snap to grid"
 msgstr "Atrair à grelha"
 
 #. "show grid" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:617
+#: plug-ins/gfig/gfig-dialog.c:622
 msgid "Show grid"
 msgstr "Mostrar grelha"
 
-#: plug-ins/gfig/gfig-dialog.c:772
+#: plug-ins/gfig/gfig-dialog.c:777
 msgid "Load Gfig Object Collection"
 msgstr "Carregar coleção de objetos Gfig"
 
-#: plug-ins/gfig/gfig-dialog.c:822
+#: plug-ins/gfig/gfig-dialog.c:827
 msgid "Save Gfig Drawing"
 msgstr "Guardar desenho Gfig"
 
-#: plug-ins/gfig/gfig-dialog.c:997
+#: plug-ins/gfig/gfig-dialog.c:1002
 msgid "First Gfig"
 msgstr "Primeira Gfig"
 
-#: plug-ins/gfig/gfig-dialog.c:1016
+#: plug-ins/gfig/gfig-dialog.c:1021
 msgid "This tool has no options"
 msgstr "Esta ferramenta não tem opções"
 
 #. Put buttons in
-#: plug-ins/gfig/gfig-dialog.c:1232
+#: plug-ins/gfig/gfig-dialog.c:1237
 msgid "Show position"
 msgstr "Mostrar posição"
 
-#: plug-ins/gfig/gfig-dialog.c:1244
+#: plug-ins/gfig/gfig-dialog.c:1249
 msgid "Show control points"
 msgstr "Mostrar pontos de controlo"
 
-#: plug-ins/gfig/gfig-dialog.c:1260
+#: plug-ins/gfig/gfig-dialog.c:1265
 msgid "Antialiasing"
 msgstr "Suavização"
 
-#: plug-ins/gfig/gfig-dialog.c:1277
+#: plug-ins/gfig/gfig-dialog.c:1282
 msgid "Max undo:"
 msgstr "Desfazer máximo:"
 
-#: plug-ins/gfig/gfig-dialog.c:1284 plug-ins/gimpressionist/general.c:184
+#: plug-ins/gfig/gfig-dialog.c:1289 plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Transparente"
 
-#: plug-ins/gfig/gfig-dialog.c:1286
+#: plug-ins/gfig/gfig-dialog.c:1291
 msgid "Foreground"
 msgstr "1º plano"
 
-#: plug-ins/gfig/gfig-dialog.c:1287 plug-ins/gfig/gfig-dialog.c:1455
+#: plug-ins/gfig/gfig-dialog.c:1292 plug-ins/gfig/gfig-dialog.c:1460
 msgid "White"
 msgstr "Branco"
 
-#: plug-ins/gfig/gfig-dialog.c:1297
+#: plug-ins/gfig/gfig-dialog.c:1302
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -9185,77 +9241,77 @@ msgstr ""
 "Tipo de camada de fundo. A cópia faz com que a camada anterior seja copiada "
 "antes do desenho ser realizado."
 
-#: plug-ins/gfig/gfig-dialog.c:1303
+#: plug-ins/gfig/gfig-dialog.c:1308
 msgid "Background:"
 msgstr "Fundo:"
 
-#: plug-ins/gfig/gfig-dialog.c:1306
+#: plug-ins/gfig/gfig-dialog.c:1311
 msgid "Feather"
 msgstr "Desvanecer margens"
 
-#: plug-ins/gfig/gfig-dialog.c:1328
+#: plug-ins/gfig/gfig-dialog.c:1333
 msgid "Radius:"
 msgstr "Raio:"
 
-#: plug-ins/gfig/gfig-dialog.c:1386
+#: plug-ins/gfig/gfig-dialog.c:1391
 msgid "Grid spacing:"
 msgstr "Espaçamento da grelha:"
 
-#: plug-ins/gfig/gfig-dialog.c:1402
+#: plug-ins/gfig/gfig-dialog.c:1407
 msgid "Polar grid sectors desired:"
 msgstr "Setores da grelha polar desejados:"
 
-#: plug-ins/gfig/gfig-dialog.c:1419
+#: plug-ins/gfig/gfig-dialog.c:1424
 msgid "Polar grid radius interval:"
 msgstr "Intervalo do raio da grelha polar:"
 
-#: plug-ins/gfig/gfig-dialog.c:1437
+#: plug-ins/gfig/gfig-dialog.c:1442
 msgid "Isometric"
 msgstr "Isométrico"
 
-#: plug-ins/gfig/gfig-dialog.c:1446
+#: plug-ins/gfig/gfig-dialog.c:1451
 msgid "Grid type:"
 msgstr "Tipo de grelha:"
 
-#: plug-ins/gfig/gfig-dialog.c:1453
+#: plug-ins/gfig/gfig-dialog.c:1458
 #: plug-ins/gradient-flare/gradient-flare.c:749
 #: plug-ins/metadata/metadata-tags.c:238
 msgid "Normal"
 msgstr "Normal"
 
-#: plug-ins/gfig/gfig-dialog.c:1456
+#: plug-ins/gfig/gfig-dialog.c:1461
 msgid "Grey"
 msgstr "Cinzenta"
 
-#: plug-ins/gfig/gfig-dialog.c:1457
+#: plug-ins/gfig/gfig-dialog.c:1462
 msgid "Darker"
 msgstr "Mais escura"
 
-#: plug-ins/gfig/gfig-dialog.c:1458
+#: plug-ins/gfig/gfig-dialog.c:1463
 msgid "Lighter"
 msgstr "Mais clara"
 
-#: plug-ins/gfig/gfig-dialog.c:1459
+#: plug-ins/gfig/gfig-dialog.c:1464
 msgid "Very dark"
 msgstr "Muito escura"
 
-#: plug-ins/gfig/gfig-dialog.c:1468
+#: plug-ins/gfig/gfig-dialog.c:1473
 msgid "Grid color:"
 msgstr "Cor da grelha:"
 
-#: plug-ins/gfig/gfig-dialog.c:1693
+#: plug-ins/gfig/gfig-dialog.c:1698
 msgid "Sides:"
 msgstr "Lados:"
 
-#: plug-ins/gfig/gfig-dialog.c:1702
+#: plug-ins/gfig/gfig-dialog.c:1707
 msgid "Right"
 msgstr "Direita"
 
-#: plug-ins/gfig/gfig-dialog.c:1703
+#: plug-ins/gfig/gfig-dialog.c:1708
 msgid "Left"
 msgstr "Esquerda"
 
-#: plug-ins/gfig/gfig-dialog.c:1713 plug-ins/gimpressionist/orientation.c:140
+#: plug-ins/gfig/gfig-dialog.c:1718 plug-ins/gimpressionist/orientation.c:140
 msgid "Orientation:"
 msgstr "Orientação:"
 
@@ -10809,18 +10865,18 @@ msgstr ""
 "Erro de processamento em '%s':\n"
 "%s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:429
+#: plug-ins/ifs-compose/ifs-compose.c:433
 msgid "_IFS Fractal..."
 msgstr "Fractal _IFS..."
 
-#: plug-ins/ifs-compose/ifs-compose.c:435
+#: plug-ins/ifs-compose/ifs-compose.c:439
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr ""
 "Criar um fractal através do método \"Iterated Function System\" (IFS) "
 "(Sistema de Função Iterada)"
 
 #. X
-#: plug-ins/ifs-compose/ifs-compose.c:681 plug-ins/lighting/lighting-ui.c:546
+#: plug-ins/ifs-compose/ifs-compose.c:685 plug-ins/lighting/lighting-ui.c:546
 #: plug-ins/map-object/map-object-ui.c:663
 #: plug-ins/map-object/map-object-ui.c:717
 #: plug-ins/map-object/map-object-ui.c:977
@@ -10829,7 +10885,7 @@ msgid "X:"
 msgstr "X:"
 
 #. Y
-#: plug-ins/ifs-compose/ifs-compose.c:695 plug-ins/lighting/lighting-ui.c:561
+#: plug-ins/ifs-compose/ifs-compose.c:699 plug-ins/lighting/lighting-ui.c:561
 #: plug-ins/map-object/map-object-ui.c:677
 #: plug-ins/map-object/map-object-ui.c:730
 #: plug-ins/map-object/map-object-ui.c:989
@@ -10839,152 +10895,152 @@ msgid "Y:"
 msgstr "Y:"
 
 #. Asym
-#: plug-ins/ifs-compose/ifs-compose.c:737
+#: plug-ins/ifs-compose/ifs-compose.c:741
 msgid "Asymmetry:"
 msgstr "Assimetria:"
 
 #. Shear
-#: plug-ins/ifs-compose/ifs-compose.c:751
+#: plug-ins/ifs-compose/ifs-compose.c:755
 msgid "Shear:"
 msgstr "Inclinar:"
 
 #. Simple color control section
-#: plug-ins/ifs-compose/ifs-compose.c:796
+#: plug-ins/ifs-compose/ifs-compose.c:800
 msgid "Simple"
 msgstr "Simples"
 
-#: plug-ins/ifs-compose/ifs-compose.c:805
+#: plug-ins/ifs-compose/ifs-compose.c:809
 msgid "IFS Fractal: Target"
 msgstr "Fractal IFS: alvo"
 
-#: plug-ins/ifs-compose/ifs-compose.c:811
+#: plug-ins/ifs-compose/ifs-compose.c:815
 msgid "Scale hue by:"
 msgstr "Escalar matiz em:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:826
+#: plug-ins/ifs-compose/ifs-compose.c:830
 msgid "Scale value by:"
 msgstr "Escalar cor em:"
 
 #. Full color control section
-#: plug-ins/ifs-compose/ifs-compose.c:843
+#: plug-ins/ifs-compose/ifs-compose.c:847
 msgid "Full"
 msgstr "Total"
 
-#: plug-ins/ifs-compose/ifs-compose.c:851
+#: plug-ins/ifs-compose/ifs-compose.c:855
 msgid "IFS Fractal: Red"
 msgstr "Fractal IFS: vermelho"
 
-#: plug-ins/ifs-compose/ifs-compose.c:859
+#: plug-ins/ifs-compose/ifs-compose.c:863
 msgid "IFS Fractal: Green"
 msgstr "Fractal IFS: verde"
 
-#: plug-ins/ifs-compose/ifs-compose.c:867
+#: plug-ins/ifs-compose/ifs-compose.c:871
 msgid "IFS Fractal: Blue"
 msgstr "Fractal IFS: azul"
 
-#: plug-ins/ifs-compose/ifs-compose.c:875
+#: plug-ins/ifs-compose/ifs-compose.c:879
 msgid "IFS Fractal: Black"
 msgstr "Fractal IFS: preto"
 
-#: plug-ins/ifs-compose/ifs-compose.c:947
+#: plug-ins/ifs-compose/ifs-compose.c:951
 msgid "IFS Fractal"
 msgstr "Fractal IFS"
 
-#: plug-ins/ifs-compose/ifs-compose.c:991 plug-ins/imagemap/imap_cmd_move.c:85
+#: plug-ins/ifs-compose/ifs-compose.c:995 plug-ins/imagemap/imap_cmd_move.c:85
 #: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Mover"
 
-#: plug-ins/ifs-compose/ifs-compose.c:993
+#: plug-ins/ifs-compose/ifs-compose.c:997
 msgid "Rotate"
 msgstr "Rodar"
 
-#: plug-ins/ifs-compose/ifs-compose.c:995
+#: plug-ins/ifs-compose/ifs-compose.c:999
 msgid "Stretch"
 msgstr "Esticar"
 
-#: plug-ins/ifs-compose/ifs-compose.c:998
+#: plug-ins/ifs-compose/ifs-compose.c:1002
 msgid "New"
 msgstr "Novo"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1002 plug-ins/imagemap/imap_main.c:1898
+#: plug-ins/ifs-compose/ifs-compose.c:1006 plug-ins/imagemap/imap_main.c:1898
 msgid "Undo"
 msgstr "Desfazer"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1004 plug-ins/imagemap/imap_main.c:1900
+#: plug-ins/ifs-compose/ifs-compose.c:1008 plug-ins/imagemap/imap_main.c:1900
 msgid "Redo"
 msgstr "Refazer"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1006
+#: plug-ins/ifs-compose/ifs-compose.c:1010
 #: plug-ins/imagemap/imap_cmd_select_all.c:50
 msgid "Select All"
 msgstr "Selecionar tudo"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1008
+#: plug-ins/ifs-compose/ifs-compose.c:1012
 msgid "Recompute Center"
 msgstr "Recalcular centro"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1011
+#: plug-ins/ifs-compose/ifs-compose.c:1015
 msgid "Render Options"
 msgstr "Opções de renderização"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1070
+#: plug-ins/ifs-compose/ifs-compose.c:1074
 msgid "Spatial Transformation"
 msgstr "Transformação espacial"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1076
+#: plug-ins/ifs-compose/ifs-compose.c:1080
 msgid "Color Transformation"
 msgstr "Transformação de cor"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1086
+#: plug-ins/ifs-compose/ifs-compose.c:1090
 msgid "Relative probability:"
 msgstr "Probabilidade relativa:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1250
+#: plug-ins/ifs-compose/ifs-compose.c:1254
 msgid "IFS Fractal Render Options"
 msgstr "Opções de desenho de fractal IFS"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1272
+#: plug-ins/ifs-compose/ifs-compose.c:1276
 msgid "Max. memory:"
 msgstr "Memória máxima:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1300
+#: plug-ins/ifs-compose/ifs-compose.c:1304
 msgid "Subdivide:"
 msgstr "Subdividir:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1314
+#: plug-ins/ifs-compose/ifs-compose.c:1318
 msgid "Spot radius:"
 msgstr "Raio do ponto:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1387
+#: plug-ins/ifs-compose/ifs-compose.c:1391
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "A renderizar o fractal IFS (%d/%d)"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1539
+#: plug-ins/ifs-compose/ifs-compose.c:1543
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformação %s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2465
+#: plug-ins/ifs-compose/ifs-compose.c:2469
 msgid "Save failed"
 msgstr "Falha ao guardar"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2548
-#: plug-ins/ifs-compose/ifs-compose.c:2561
+#: plug-ins/ifs-compose/ifs-compose.c:2552
+#: plug-ins/ifs-compose/ifs-compose.c:2565
 msgid "Open failed"
 msgstr "Falha ao abrir"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2556
+#: plug-ins/ifs-compose/ifs-compose.c:2560
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "O ficheiro '%s' não parece ser um ficheiro de fractal IFS."
 
-#: plug-ins/ifs-compose/ifs-compose.c:2596
+#: plug-ins/ifs-compose/ifs-compose.c:2600
 msgid "Save as IFS Fractal file"
 msgstr "Guardar como ficheiro de fractal IFS"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2633
+#: plug-ins/ifs-compose/ifs-compose.c:2637
 msgid "Open IFS Fractal file"
 msgstr "Abrir ficheiro de fractal IFS"
 
