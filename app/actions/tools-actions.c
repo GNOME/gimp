@@ -797,4 +797,16 @@ void
 tools_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
+  GimpImage *image = action_data_get_image (data);
+
+#define SET_SENSITIVE(action,condition) \
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+
+  /* Since these are listed under the Image and Layer Menus,
+   * they are disabled without an image to keep consistency
+   */
+  SET_SENSITIVE ("tools-rotate-arbitrary", image);
+  SET_SENSITIVE ("tools-rotate-image-arbitrary", image);
+
+#undef SET_SENSITIVE
 }
