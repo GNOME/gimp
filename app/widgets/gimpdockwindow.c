@@ -41,6 +41,8 @@
 #include "core/gimplist.h"
 #include "core/gimpimage.h"
 
+#include "menus/menus.h"
+
 #include "gimpcontainercombobox.h"
 #include "gimpcontainerview.h"
 #include "gimpdialogfactory.h"
@@ -313,14 +315,13 @@ gimp_dock_window_constructed (GObject *object)
   /* Setup hints */
   gimp_window_set_hint (GTK_WINDOW (dock_window), config->dock_window_hint);
 
-  menu_factory =
-    gimp_dialog_factory_get_menu_factory (dock_window->p->dialog_factory);
+  menu_factory = menus_get_global_menu_factory (gimp);
 
   /* Make image window related keyboard shortcuts work also when a
    * dock window is the focused window
    */
   dock_window->p->ui_manager =
-    gimp_menu_factory_manager_new (menu_factory,
+    gimp_menu_factory_get_manager (menu_factory,
                                    dock_window->p->ui_manager_name,
                                    dock_window);
 
@@ -483,7 +484,6 @@ gimp_dock_window_dispose (GObject *object)
       dock_window->p->image_flush_handler_id = 0;
     }
 
-  g_clear_object (&dock_window->p->ui_manager);
   g_clear_object (&dock_window->p->dialog_factory);
   g_clear_object (&dock_window->p->context);
 

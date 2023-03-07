@@ -25,6 +25,8 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
+#include "menus/menus.h"
+
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpuimanager.h"
 
@@ -49,7 +51,7 @@ gimp_display_shell_set_action_sensitive (GimpDisplayShell *shell,
 
   if (window && gimp_image_window_get_active_shell (window) == shell)
     {
-      GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+      GimpUIManager   *manager = menus_get_image_manager_singleton (shell->display->gimp);
       GimpActionGroup *action_group;
 
       action_group = gimp_ui_manager_get_action_group (manager, "view");
@@ -87,7 +89,7 @@ gimp_display_shell_set_action_active (GimpDisplayShell *shell,
 
   if (window && gimp_image_window_get_active_shell (window) == shell)
     {
-      GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+      GimpUIManager   *manager = menus_get_image_manager_singleton (shell->display->gimp);
       GimpActionGroup *action_group;
 
       action_group = gimp_ui_manager_get_action_group (manager, "view");
@@ -125,7 +127,7 @@ gimp_display_shell_set_action_color (GimpDisplayShell *shell,
 
   if (window && gimp_image_window_get_active_shell (window) == shell)
     {
-      GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+      GimpUIManager   *manager = menus_get_image_manager_singleton (shell->display->gimp);
       GimpActionGroup *action_group;
 
       action_group = gimp_ui_manager_get_action_group (manager, "view");

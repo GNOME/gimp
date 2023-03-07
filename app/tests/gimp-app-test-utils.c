@@ -26,6 +26,8 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpimagewindow.h"
 
+#include "menus/menus.h"
+
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpdialogfactory.h"
 
@@ -316,26 +318,7 @@ else
 GimpUIManager *
 gimp_test_utils_get_ui_manager (Gimp *gimp)
 {
-  GimpDisplay       *display      = NULL;
-  GimpDisplayShell  *shell        = NULL;
-  GtkWidget         *toplevel     = NULL;
-  GimpImageWindow   *image_window = NULL;
-  GimpUIManager     *ui_manager   = NULL;
-
-  display = GIMP_DISPLAY (gimp_get_empty_display (gimp));
-
-  /* If there were not empty display, assume that there is at least
-   * one image display and use that
-   */
-  if (! display)
-    display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
-
-  shell            = gimp_display_get_shell (display);
-  toplevel         = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  image_window     = GIMP_IMAGE_WINDOW (toplevel);
-  ui_manager       = gimp_image_window_get_ui_manager (image_window);
-
-  return ui_manager;
+  return menus_get_image_manager_singleton (gimp);
 }
 
 /**

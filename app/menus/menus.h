@@ -19,20 +19,19 @@
 #define __MENUS_H__
 
 
-extern GimpMenuFactory *global_menu_factory;
+void              menus_init                        (Gimp      *gimp);
+void              menus_exit                        (Gimp      *gimp);
 
+void              menus_restore                     (Gimp      *gimp);
+void              menus_save                        (Gimp      *gimp,
+                                                     gboolean   always_save);
 
-void       menus_init    (Gimp               *gimp,
-                          GimpActionFactory  *action_factory);
-void       menus_exit    (Gimp               *gimp);
+gboolean          menus_clear                       (Gimp      *gimp,
+                                                     GError   **error);
+void              menus_remove                      (Gimp      *gimp);
 
-void       menus_restore (Gimp               *gimp);
-void       menus_save    (Gimp               *gimp,
-                          gboolean            always_save);
-
-gboolean   menus_clear   (Gimp               *gimp,
-                          GError            **error);
-void       menus_remove  (Gimp               *gimp);
+GimpMenuFactory * menus_get_global_menu_factory     (Gimp      *gimp);
+GimpUIManager   * menus_get_image_manager_singleton (Gimp      *gimp);
 
 
 #endif /* __MENUS_H__ */

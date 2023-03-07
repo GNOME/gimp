@@ -140,7 +140,7 @@ gimp_controllers_restore (Gimp          *gimp,
   g_return_if_fail (manager != NULL);
   g_return_if_fail (manager->ui_manager == NULL);
 
-  manager->ui_manager = g_object_ref (ui_manager);
+  manager->ui_manager = ui_manager;
 
   file = gimp_directory_file ("controllerrc", NULL);
 
@@ -297,7 +297,6 @@ gimp_controller_manager_free (GimpControllerManager *manager)
                                  manager->event_mapped_id);
 
   g_clear_object (&manager->controllers);
-  g_clear_object (&manager->ui_manager);
 
   g_slice_free (GimpControllerManager, manager);
 }

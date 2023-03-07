@@ -32,6 +32,10 @@
 
 #include "display-types.h"
 
+#include "core/gimpcontext.h"
+
+#include "menus/menus.h"
+
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
 #include "vectors/gimpvectors.h"
@@ -127,8 +131,6 @@ struct _GimpToolPathPrivate
 
   GimpCanvasItem       *path;
   GList                *items;
-
-  GimpUIManager        *ui_manager;
 };
 
 
@@ -314,12 +316,9 @@ gimp_tool_path_constructed (GObject *object)
 static void
 gimp_tool_path_dispose (GObject *object)
 {
-  GimpToolPath        *path    = GIMP_TOOL_PATH (object);
-  GimpToolPathPrivate *private = path->private;
+  GimpToolPath *path = GIMP_TOOL_PATH (object);
 
   gimp_tool_path_set_vectors (path, NULL);
-
-  g_clear_object (&private->ui_manager);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -1298,21 +1297,17 @@ gimp_tool_path_get_popup (GimpToolWidget    *widget,
 {
   GimpToolPath        *path    = GIMP_TOOL_PATH (widget);
   GimpToolPathPrivate *private = path->private;
+  GimpDisplayShell    *shell   = gimp_tool_widget_get_shell (widget);
+  GimpImageWindow     *image_window;
+  GimpDialogFactory   *dialog_factory;
+  GimpMenuFactory     *menu_factory;
+  GimpUIManager       *ui_manager;
 
-  if (!private->ui_manager)
-    {
-      GimpDisplayShell  *shell = gimp_tool_widget_get_shell (widget);
-      GimpImageWindow   *image_window;
-      GimpDialogFactory *dialog_factory;
+  image_window   = gimp_display_shell_get_window (shell);
+  dialog_factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (image_window));
 
-      image_window   = gimp_display_shell_get_window (shell);
-      dialog_factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (image_window));
-
-      private->ui_manager =
-        gimp_menu_factory_manager_new (gimp_dialog_factory_get_menu_factory (dialog_factory),
-                                       "<VectorToolPath>",
-                                       widget);
-    }
+  menu_factory   = menus_get_global_menu_factory (gimp_dialog_factory_get_context (dialog_factory)->gimp);
+  ui_manager     = gimp_menu_factory_get_manager (menu_factory, "<VectorToolPath>", widget);
 
   /* we're using a side effects of gimp_tool_path_get_function
    * that update the private->cur_* variables. */
@@ -1320,10 +1315,10 @@ gimp_tool_path_get_popup (GimpToolWidget    *widget,
 
   if (private->cur_stroke)
     {
-      gimp_ui_manager_update (private->ui_manager, widget);
+      gimp_ui_manager_update (ui_manager, widget);
 
       *ui_path = "/vector-toolpath-popup";
-      return private->ui_manager;
+      return ui_manager;
     }
 
   return NULL;

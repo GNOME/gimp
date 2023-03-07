@@ -34,6 +34,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
+#include "menus/menus.h"
+
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
@@ -123,7 +125,7 @@ gimp_display_shell_close (GimpDisplayShell *shell,
 
       if (window)
         {
-          GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
+          GimpUIManager *manager = menus_get_image_manager_singleton (shell->display->gimp);
 
           /* Activate the action instead of simply calling gimp_exit(), so
            * the quit action's sensitivity is taken into account.
@@ -381,7 +383,7 @@ gimp_display_shell_close_response (GtkWidget        *widget,
 
         if (window)
           {
-            GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
+            GimpUIManager *manager = menus_get_image_manager_singleton (shell->display->gimp);
 
             gimp_image_window_set_active_shell (window, shell);
 

@@ -62,6 +62,8 @@
 #include "widgets/gimpviewrenderer.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "menus/menus.h"
+
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
@@ -110,7 +112,6 @@ typedef struct _GimpImageWindowPrivate GimpImageWindowPrivate;
 struct _GimpImageWindowPrivate
 {
   Gimp              *gimp;
-  GimpUIManager     *menubar_manager;
   GimpDialogFactory *dialog_factory;
 
   GList             *shells;
@@ -346,7 +347,7 @@ gimp_image_window_constructed (GObject *object)
 {
   GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-  GimpMenuFactory        *menu_factory;
+  GimpUIManager          *menubar_manager;
   GimpGuiConfig          *config;
   GimpMenuModel          *model;
   gboolean                use_gtk_menubar = TRUE;
@@ -356,12 +357,6 @@ gimp_image_window_constructed (GObject *object)
   gimp_assert (GIMP_IS_GIMP (private->gimp));
   gimp_assert (GIMP_IS_DIALOG_FACTORY (private->dialog_factory));
 
-  menu_factory = gimp_dialog_factory_get_menu_factory (private->dialog_factory);
-
-  private->menubar_manager = gimp_menu_factory_manager_new (menu_factory,
-                                                            "<Image>",
-                                                            window);
-
   g_signal_connect_object (private->dialog_factory, "dock-window-added",
                            G_CALLBACK (gimp_image_window_update_ui_manager),
                            window, G_CONNECT_SWAPPED);
@@ -369,10 +364,11 @@ gimp_image_window_constructed (GObject *object)
                            G_CALLBACK (gimp_image_window_update_ui_manager),
                            window, G_CONNECT_SWAPPED);
 
-  g_signal_connect (private->menubar_manager, "show-tooltip",
+  menubar_manager = menus_get_image_manager_singleton (private->gimp);
+  g_signal_connect (menubar_manager, "show-tooltip",
                     G_CALLBACK (gimp_image_window_show_tooltip),
                     window);
-  g_signal_connect (private->menubar_manager, "hide-tooltip",
+  g_signal_connect (menubar_manager, "hide-tooltip",
                     G_CALLBACK (gimp_image_window_hide_tooltip),
                     window);
 
@@ -384,7 +380,7 @@ gimp_image_window_constructed (GObject *object)
   gtk_widget_show (private->main_vbox);
 
   /* Create the menubar */
-  model = gimp_ui_manager_get_model (private->menubar_manager, "/image-menubar");
+  model = gimp_ui_manager_get_model (menubar_manager, "/image-menubar");
 
 #ifndef GDK_WINDOWING_QUARTZ
   /* macOS has its native menubar system, which is implemented by
@@ -404,7 +400,7 @@ gimp_image_window_constructed (GObject *object)
     }
   else
     {
-      private->menubar = gimp_menu_bar_new (model, private->menubar_manager);
+      private->menubar = gimp_menu_bar_new (model, menubar_manager);
       g_object_unref (model);
 
       gtk_box_pack_start (GTK_BOX (private->main_vbox),
@@ -446,7 +442,7 @@ gimp_image_window_constructed (GObject *object)
   private->left_docks =
     gimp_dock_columns_new (gimp_get_user_context (private->gimp),
                            private->dialog_factory,
-                           private->menubar_manager);
+                           menubar_manager);
   gtk_paned_pack1 (GTK_PANED (private->left_hpane), private->left_docks,
                    FALSE, FALSE);
   gtk_widget_set_visible (private->left_docks, config->single_window_mode);
@@ -482,7 +478,7 @@ gimp_image_window_constructed (GObject *object)
   private->right_docks =
     gimp_dock_columns_new (gimp_get_user_context (private->gimp),
                            private->dialog_factory,
-                           private->menubar_manager);
+                           menubar_manager);
   gtk_paned_pack2 (GTK_PANED (private->right_hpane), private->right_docks,
                    FALSE, FALSE);
   gtk_widget_set_visible (private->right_docks, config->single_window_mode);
@@ -518,8 +514,6 @@ gimp_image_window_dispose (GObject *object)
                                             object);
       private->dialog_factory = NULL;
     }
-
-  g_clear_object (&private->menubar_manager);
 
   if (private->update_ui_manager_idle_id)
     {
@@ -608,7 +602,7 @@ gimp_image_window_delete_event (GtkWidget   *widget,
   GimpGuiConfig          *config  = GIMP_GUI_CONFIG (private->gimp->config);
 
   if (config->single_window_mode)
-    gimp_ui_manager_activate_action (gimp_image_window_get_ui_manager (window),
+    gimp_ui_manager_activate_action (menus_get_image_manager_singleton (private->gimp),
                                      "file", "file-quit");
   else if (shell)
     gimp_display_shell_close (shell, FALSE);
@@ -865,7 +859,7 @@ gimp_image_window_dock_container_get_ui_manager (GimpDockContainer *dock_contain
 {
   GimpImageWindow *window = GIMP_IMAGE_WINDOW (dock_container);
 
-  return gimp_image_window_get_ui_manager (window);
+  return menus_get_image_manager_singleton (GIMP_IMAGE_WINDOW_GET_PRIVATE (window)->gimp);
 }
 
 void
@@ -1182,18 +1176,6 @@ gimp_image_window_destroy (GimpImageWindow *window)
                                                 window);
 
   gtk_widget_destroy (GTK_WIDGET (window));
-}
-
-GimpUIManager *
-gimp_image_window_get_ui_manager (GimpImageWindow *window)
-{
-  GimpImageWindowPrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
-
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-
-  return private->menubar_manager;
 }
 
 GimpDockColumns  *
@@ -1895,7 +1877,7 @@ gimp_image_window_update_ui_manager_idle (GimpImageWindow *window)
 
   gimp_assert (private->active_shell != NULL);
 
-  gimp_ui_manager_update (private->menubar_manager,
+  gimp_ui_manager_update (menus_get_image_manager_singleton (private->active_shell->display->gimp),
                           private->active_shell->display);
 
   private->update_ui_manager_idle_id = 0;
@@ -2099,8 +2081,7 @@ gimp_image_window_disconnect_from_active_shell (GimpImageWindow *window)
                                         gimp_image_window_shell_title_notify,
                                         window);
 
-  if (private->menubar_manager)
-    gimp_image_window_hide_tooltip (private->menubar_manager, window);
+  gimp_image_window_hide_tooltip (menus_get_image_manager_singleton (private->gimp), window);
 
   if (private->update_ui_manager_idle_id)
     {

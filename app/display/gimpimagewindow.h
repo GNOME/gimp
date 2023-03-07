@@ -51,7 +51,6 @@ GimpImageWindow  * gimp_image_window_new                  (Gimp              *gi
                                                            GdkMonitor        *monitor);
 void               gimp_image_window_destroy              (GimpImageWindow   *window);
 
-GimpUIManager    * gimp_image_window_get_ui_manager       (GimpImageWindow  *window);
 GimpDockColumns  * gimp_image_window_get_left_docks       (GimpImageWindow  *window);
 GimpDockColumns  * gimp_image_window_get_right_docks      (GimpImageWindow  *window);
 

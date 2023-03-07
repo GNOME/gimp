@@ -45,6 +45,8 @@
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
 
+#include "menus/menus.h"
+
 #include "text/gimptext.h"
 #include "text/gimptext-vectors.h"
 #include "text/gimptextlayer.h"
@@ -312,7 +314,6 @@ gimp_text_tool_finalize (GObject *object)
 
   g_clear_object (&text_tool->proxy);
   g_clear_object (&text_tool->buffer);
-  g_clear_object (&text_tool->ui_manager);
 
   gimp_text_tool_editor_finalize (text_tool);
 
@@ -836,26 +837,17 @@ gimp_text_tool_get_popup (GimpTool         *tool,
                                               coords->x,
                                               coords->y))
     {
-      if (! text_tool->ui_manager)
-        {
-          GimpDisplayShell  *shell = gimp_display_get_shell (tool->display);
-          GimpImageWindow   *image_window;
-          GimpDialogFactory *dialog_factory;
+      GimpMenuFactory *menu_factory;
+      GimpUIManager   *ui_manager;
 
-          image_window   = gimp_display_shell_get_window (shell);
-          dialog_factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (image_window));
+      menu_factory = menus_get_global_menu_factory (tool->tool_info->gimp);
+      ui_manager   = gimp_menu_factory_get_manager (menu_factory, "<TextTool>", text_tool);
 
-          text_tool->ui_manager =
-            gimp_menu_factory_manager_new (gimp_dialog_factory_get_menu_factory (dialog_factory),
-                                           "<TextTool>",
-                                           text_tool);
-        }
-
-      gimp_ui_manager_update (text_tool->ui_manager, text_tool);
+      gimp_ui_manager_update (ui_manager, text_tool);
 
       *ui_path = "/text-tool-popup";
 
-      return text_tool->ui_manager;
+      return ui_manager;
     }
 
   return NULL;

@@ -30,6 +30,8 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
+#include "menus/menus.h"
+
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockable.h"
@@ -405,14 +407,16 @@ gimp_dock_columns_prepare_dockbook (GimpDockColumns  *dock_columns,
                                     gint              dock_index,
                                     GtkWidget       **dockbook_p)
 {
-  GimpMenuFactory *menu_factory;
-  GtkWidget       *dock;
-  GtkWidget       *dockbook;
+  GimpDialogFactory *dialog_factory;
+  GimpMenuFactory   *menu_factory;
+  GtkWidget         *dock;
+  GtkWidget         *dockbook;
 
   dock = gimp_menu_dock_new ();
   gimp_dock_columns_add_dock (dock_columns, GIMP_DOCK (dock), dock_index);
 
-  menu_factory = gimp_dialog_factory_get_menu_factory (dock_columns->p->dialog_factory);
+  dialog_factory = dock_columns->p->dialog_factory;
+  menu_factory   = menus_get_global_menu_factory (gimp_dialog_factory_get_context (dialog_factory)->gimp);
   dockbook = gimp_dockbook_new (menu_factory);
   gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), -1);
 

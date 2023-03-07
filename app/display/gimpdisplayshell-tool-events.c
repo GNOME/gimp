@@ -38,6 +38,8 @@
 #include "core/gimpimage-pick-item.h"
 #include "core/gimpitem.h"
 
+#include "menus/menus.h"
+
 #include "widgets/gimpaction.h"
 #include "widgets/gimpcontrollers.h"
 #include "widgets/gimpcontrollerkeyboard.h"
@@ -273,8 +275,7 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
         GdkEventButton  *bevent = (GdkEventButton *) event;
         if (bevent->button == 1)
           {
-            GimpImageWindow *window  = gimp_display_shell_get_window (shell);
-            GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+            GimpUIManager *manager = menus_get_image_manager_singleton (shell->display->gimp);
 
             gimp_ui_manager_activate_action (manager, "file", "file-open");
           }
@@ -2103,9 +2104,8 @@ static gboolean
 gimp_display_shell_tab_pressed (GimpDisplayShell  *shell,
                                 const GdkEventKey *kevent)
 {
-  GimpImageWindow *window  = gimp_display_shell_get_window (shell);
-  GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
-  GimpImage       *image   = gimp_display_get_image (shell->display);
+  GimpUIManager *manager = menus_get_image_manager_singleton (shell->display->gimp);
+  GimpImage     *image   = gimp_display_get_image (shell->display);
 
   if (kevent->state & GDK_CONTROL_MASK)
     {
@@ -2292,11 +2292,9 @@ gimp_display_shell_initialize_tool (GimpDisplayShell *shell,
                *  just calling gimp_context_tool_changed(). See
                *  GimpGeglProcedure and bug #776370.
                */
-              GimpImageWindow *window;
-              GimpUIManager   *manager;
+              GimpUIManager *manager;
 
-              window  = gimp_display_shell_get_window (shell);
-              manager = gimp_image_window_get_ui_manager (window);
+              manager = menus_get_image_manager_singleton (shell->display->gimp);
 
               gimp_filter_history_add (gimp, procedure);
               gimp_ui_manager_activate_action (manager, "filters",

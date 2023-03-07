@@ -71,6 +71,7 @@ gimp_action_factory_finalize (GObject *object)
       g_free (entry->identifier);
       g_free (entry->label);
       g_free (entry->icon_name);
+      g_clear_object (&entry->group);
 
       g_slice_free (GimpActionFactoryEntry, entry);
     }
@@ -124,7 +125,7 @@ gimp_action_factory_group_register (GimpActionFactory         *factory,
 }
 
 GimpActionGroup *
-gimp_action_factory_group_new (GimpActionFactory *factory,
+gimp_action_factory_get_group (GimpActionFactory *factory,
                                const gchar       *identifier,
                                gpointer           user_data)
 {
@@ -139,19 +140,24 @@ gimp_action_factory_group_new (GimpActionFactory *factory,
 
       if (! strcmp (entry->identifier, identifier))
         {
-          GimpActionGroup *group;
+          if (entry->group == NULL)
+            {
+              GimpActionGroup *group;
 
-          group = gimp_action_group_new (factory->gimp,
-                                         entry->identifier,
-                                         entry->label,
-                                         entry->icon_name,
-                                         user_data,
-                                         entry->update_func);
+              group = gimp_action_group_new (factory->gimp,
+                                             entry->identifier,
+                                             entry->label,
+                                             entry->icon_name,
+                                             user_data,
+                                             entry->update_func);
 
-          if (entry->setup_func)
-            entry->setup_func (group);
+              if (entry->setup_func)
+                entry->setup_func (group);
 
-          return group;
+              entry->group = group;
+            }
+
+          return entry->group;
         }
     }
 

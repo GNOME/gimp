@@ -112,8 +112,7 @@ struct _GimpDialogFactoryClass
 
 GType               gimp_dialog_factory_get_type             (void) G_GNUC_CONST;
 GimpDialogFactory * gimp_dialog_factory_new                  (const gchar             *name,
-                                                              GimpContext             *context,
-                                                              GimpMenuFactory         *menu_factory);
+                                                              GimpContext             *context);
 
 void                gimp_dialog_factory_register_entry       (GimpDialogFactory       *factory,
                                                               const gchar             *identifier,
@@ -149,7 +148,6 @@ GtkWidget *         gimp_dialog_factory_dialog_new           (GimpDialogFactory 
                                                               gboolean                 present);
 
 GimpContext *       gimp_dialog_factory_get_context          (GimpDialogFactory       *factory);
-GimpMenuFactory *   gimp_dialog_factory_get_menu_factory     (GimpDialogFactory       *factory);
 GList *             gimp_dialog_factory_get_open_dialogs     (GimpDialogFactory       *factory);
 
 GList *             gimp_dialog_factory_get_session_infos    (GimpDialogFactory       *factory);

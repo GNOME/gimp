@@ -23,8 +23,7 @@ extern GimpDialogFactory *global_dialog_factory;
 extern GimpContainer     *global_recent_docks;
 
 
-void        dialogs_init              (Gimp            *gimp,
-                                       GimpMenuFactory *menu_factory);
+void        dialogs_init              (Gimp            *gimp);
 void        dialogs_exit              (Gimp            *gimp);
 
 void        dialogs_load_recent_docks (Gimp            *gimp);

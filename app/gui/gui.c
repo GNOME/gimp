@@ -152,7 +152,6 @@ static void       gui_check_unique_accelerators (Gimp               *gimp);
 /*  private variables  */
 
 static Gimp             *the_gui_gimp     = NULL;
-static GimpUIManager    *image_ui_manager = NULL;
 static GimpUIConfigurer *ui_configurer    = NULL;
 static GdkMonitor       *initial_monitor  = NULL;
 
@@ -506,10 +505,10 @@ gui_restore_callback (Gimp               *gimp,
     }
 
   actions_init (gimp);
-  menus_init (gimp, global_action_factory);
+  menus_init (gimp);
   gimp_render_init (gimp);
 
-  dialogs_init (gimp, global_menu_factory);
+  dialogs_init (gimp);
 
   gimp_clipboard_init (gimp);
   if (gimp_get_clipboard_image (gimp))
@@ -537,6 +536,7 @@ gui_restore_after_callback (Gimp               *gimp,
                             GimpInitStatusFunc  status_callback)
 {
   GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (gimp->config);
+  GimpUIManager *image_ui_manager;
   GimpDisplay   *display;
 
   if (gimp->be_verbose)
@@ -568,9 +568,7 @@ gui_restore_after_callback (Gimp               *gimp,
                                 "gimp", gimp,
                                 NULL);
 
-  image_ui_manager = gimp_menu_factory_manager_new (global_menu_factory,
-                                                    "<Image>",
-                                                    gimp);
+  image_ui_manager = menus_get_image_manager_singleton (gimp);
   gimp_ui_manager_update (image_ui_manager, gimp);
 
   /* Check that every accelerator is unique. */
@@ -710,9 +708,6 @@ gui_exit_after_callback (Gimp     *gimp,
 
   gimp_action_history_exit (gimp);
 
-  g_object_unref (image_ui_manager);
-  image_ui_manager = NULL;
-
   g_object_unref (ui_configurer);
   ui_configurer = NULL;
 
@@ -844,7 +839,8 @@ gui_display_changed (GimpContext *context,
         }
     }
 
-  gimp_ui_manager_update (image_ui_manager, display);
+  gimp_ui_manager_update (menus_get_image_manager_singleton (gimp),
+                          display);
 }
 
 typedef struct

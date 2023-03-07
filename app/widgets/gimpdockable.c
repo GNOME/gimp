@@ -32,6 +32,8 @@
 
 #include "core/gimpcontext.h"
 
+#include "menus/menus.h"
+
 #include "gimpdialogfactory.h"
 #include "gimpdnd.h"
 #include "gimpdock.h"
@@ -543,7 +545,7 @@ gimp_dockable_detach (GimpDockable *dockable)
   src_dock_window = gimp_dock_window_from_dock (src_dock);
 
   dialog_factory = gimp_dock_get_dialog_factory (src_dock);
-  menu_factory   = gimp_dialog_factory_get_menu_factory (dialog_factory);
+  menu_factory   = menus_get_global_menu_factory (gimp_dialog_factory_get_context (dialog_factory)->gimp);
 
   dock = gimp_dock_with_window_new (dialog_factory,
                                     gimp_widget_get_monitor (GTK_WIDGET (dockable)),

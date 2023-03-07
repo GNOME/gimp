@@ -34,6 +34,8 @@
 #include "display/gimpdisplayshell-transform.h"
 #include "display/gimpimagewindow.h"
 
+#include "menus/menus.h"
+
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdockable.h"
@@ -111,8 +113,7 @@ tool_options_editor_updates (gconstpointer data)
   GimpDisplay           *display      = GIMP_DISPLAY (gimp_get_empty_display (gimp));
   GimpDisplayShell      *shell        = gimp_display_get_shell (display);
   GtkWidget             *toplevel     = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  GimpImageWindow       *image_window = GIMP_IMAGE_WINDOW (toplevel);
-  GimpUIManager         *ui_manager   = gimp_image_window_get_ui_manager (image_window);
+  GimpUIManager         *ui_manager   = menus_get_image_manager_singleton (gimp);
   GtkWidget             *dockable     = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                                                         gimp_widget_get_monitor (toplevel),
                                                                         NULL /*ui_manager*/,

@@ -71,8 +71,6 @@ void            gimp_dockbook_set_dock                (GimpDockbook             
                                                        GimpDock                 *dock);
 GimpDock      * gimp_dockbook_get_dock                (GimpDockbook             *dockbook);
 
-GimpUIManager * gimp_dockbook_get_ui_manager          (GimpDockbook             *dockbook);
-
 GtkWidget     * gimp_dockbook_add_from_dialog_factory (GimpDockbook             *dockbook,
                                                        const gchar              *identifiers);
 

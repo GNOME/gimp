@@ -36,6 +36,8 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
+#include "menus/menus.h"
+
 #include "gimpactiongroup.h"
 #include "gimpdialogfactory.h"
 #include "gimpdnd.h"
@@ -261,8 +263,6 @@ gimp_dockbook_finalize (GObject *object)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (object);
 
-  g_clear_object (&dockbook->p->ui_manager);
-
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -425,7 +425,7 @@ gimp_dockbook_create_window (GtkNotebook *notebook,
   src_dock_window = gimp_dock_window_from_dock (src_dock);
 
   dialog_factory = gimp_dock_get_dialog_factory (src_dock);
-  menu_factory   = gimp_dialog_factory_get_menu_factory (dialog_factory);
+  menu_factory   = menus_get_global_menu_factory (gimp_dialog_factory_get_context (dialog_factory)->gimp);
 
   new_dock = gimp_dock_with_window_new (dialog_factory,
                                         gimp_widget_get_monitor (page),
@@ -554,7 +554,7 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
   GimpDockable  *dockable;
   gint           page_num;
 
-  dockbook_ui_manager = gimp_dockbook_get_ui_manager (dockbook);
+  dockbook_ui_manager = dockbook->p->ui_manager;
 
   if (! dockbook_ui_manager)
     return FALSE;
@@ -612,7 +612,7 @@ gimp_dockbook_new (GimpMenuFactory *menu_factory)
 
   dockbook = g_object_new (GIMP_TYPE_DOCKBOOK, NULL);
 
-  dockbook->p->ui_manager = gimp_menu_factory_manager_new (menu_factory,
+  dockbook->p->ui_manager = gimp_menu_factory_get_manager (menu_factory,
                                                            "<Dockable>",
                                                            dockbook);
 
@@ -665,14 +665,6 @@ gimp_dockbook_set_dock (GimpDockbook *dockbook,
                                G_CALLBACK (gimp_dockbook_style_updated),
                                dockbook, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
     }
-}
-
-GimpUIManager *
-gimp_dockbook_get_ui_manager (GimpDockbook *dockbook)
-{
-  g_return_val_if_fail (GIMP_IS_DOCKBOOK (dockbook), NULL);
-
-  return dockbook->p->ui_manager;
 }
 
 /**

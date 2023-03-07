@@ -29,9 +29,11 @@ typedef struct _GimpMenuFactoryEntry GimpMenuFactoryEntry;
 
 struct _GimpMenuFactoryEntry
 {
-  gchar *identifier;
-  GList *action_groups;
-  GList *managed_uis;
+  gchar        *identifier;
+  GList        *action_groups;
+  GList        *managed_uis;
+
+  GimpUIManager *manager;
 };
 
 
@@ -67,9 +69,11 @@ void              gimp_menu_factory_manager_register     (GimpMenuFactory   *fac
                                                           const gchar       *first_group,
                                                           ...)  G_GNUC_NULL_TERMINATED;
 GList           * gimp_menu_factory_get_registered_menus (GimpMenuFactory   *factory);
-GimpUIManager   * gimp_menu_factory_manager_new          (GimpMenuFactory   *factory,
+GimpUIManager   * gimp_menu_factory_get_manager          (GimpMenuFactory   *factory,
                                                           const gchar       *identifier,
                                                           gpointer           callback_data);
+
+GimpUIManager   * gimp_menu_factory_get_image_manager    (GimpMenuFactory   *factory);
 
 
 #endif  /*  __GIMP_MENU_FACTORY_H__  */

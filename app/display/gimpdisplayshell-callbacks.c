@@ -29,6 +29,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-quick-mask.h"
 
+#include "menus/menus.h"
+
 #include "widgets/gimpcairo-wilber.h"
 #include "widgets/gimpuimanager.h"
 
@@ -349,7 +351,7 @@ gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
 
       if (window)
         {
-          GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
+          GimpUIManager *manager = menus_get_image_manager_singleton (shell->display->gimp);
 
           gimp_ui_manager_ui_popup_at_widget (manager,
                                               "/quick-mask-popup",
@@ -380,7 +382,7 @@ gimp_display_shell_quick_mask_toggled (GtkWidget        *widget,
 
       if (window)
         {
-          GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
+          GimpUIManager *manager = menus_get_image_manager_singleton (shell->display->gimp);
 
           gimp_ui_manager_toggle_action (manager,
                                          "quick-mask", "quick-mask-toggle",

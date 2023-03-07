@@ -56,7 +56,6 @@ struct _GimpTextTool
   GimpImage      *image;
 
   GtkWidget      *confirm_dialog;
-  GimpUIManager  *ui_manager;
 
   gboolean        handle_rectangle_change_complete;
   gboolean        text_box_fixed;

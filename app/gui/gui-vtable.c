@@ -683,7 +683,7 @@ gui_pdb_dialog_new (Gimp          *gimp,
                                           "select-type",    gimp_container_get_children_type (container),
                                           "initial-object", object,
                                           "callback-name",  callback_name,
-                                          "menu-factory",   global_menu_factory,
+                                          "menu-factory",   menus_get_global_menu_factory (gimp),
                                           NULL);
 
           names = gimp_properties_append_valist (dialog_type,

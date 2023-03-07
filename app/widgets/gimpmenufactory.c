@@ -95,6 +95,7 @@ gimp_menu_factory_finalize (GObject *object)
           g_slice_free (GimpUIManagerUIEntry, ui_entry);
         }
 
+      g_clear_object (&entry->manager);
       g_list_free (entry->managed_uis);
 
       g_slice_free (GimpMenuFactoryEntry, entry);
@@ -192,7 +193,7 @@ gimp_menu_factory_get_registered_menus (GimpMenuFactory *factory)
 }
 
 GimpUIManager *
-gimp_menu_factory_manager_new (GimpMenuFactory *factory,
+gimp_menu_factory_get_manager (GimpMenuFactory *factory,
                                const gchar     *identifier,
                                gpointer         callback_data)
 {
@@ -207,34 +208,37 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
 
       if (! strcmp (entry->identifier, identifier))
         {
-          GimpUIManager *manager;
-          GList         *list;
-
-          manager = gimp_ui_manager_new (factory->p->gimp, entry->identifier);
-
-          for (list = entry->action_groups; list; list = g_list_next (list))
+          if (entry->manager == NULL)
             {
-              GimpActionGroup *group;
+              GimpUIManager *manager;
+              GList         *list;
 
-              group = gimp_action_factory_group_new (factory->p->action_factory,
-                                                     (const gchar *) list->data,
-                                                     callback_data);
+              manager = gimp_ui_manager_new (factory->p->gimp, entry->identifier);
+              entry->manager = manager;
 
-              gimp_ui_manager_add_action_group (manager, group);
-              g_object_unref (group);
+              for (list = entry->action_groups; list; list = g_list_next (list))
+                {
+                  GimpActionGroup *group;
+
+                  group = gimp_action_factory_get_group (factory->p->action_factory,
+                                                         (const gchar *) list->data,
+                                                         callback_data);
+
+                  gimp_ui_manager_add_action_group (manager, group);
+                }
+
+              for (list = entry->managed_uis; list; list = g_list_next (list))
+                {
+                  GimpUIManagerUIEntry *ui_entry = list->data;
+
+                  gimp_ui_manager_ui_register (manager,
+                                               ui_entry->ui_path,
+                                               ui_entry->basename,
+                                               ui_entry->setup_func);
+                }
             }
 
-          for (list = entry->managed_uis; list; list = g_list_next (list))
-            {
-              GimpUIManagerUIEntry *ui_entry = list->data;
-
-              gimp_ui_manager_ui_register (manager,
-                                           ui_entry->ui_path,
-                                           ui_entry->basename,
-                                           ui_entry->setup_func);
-            }
-
-          return manager;
+          return entry->manager;
         }
     }
 

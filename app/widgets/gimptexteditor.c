@@ -118,7 +118,6 @@ gimp_text_editor_finalize (GObject *object)
   GimpTextEditor *editor = GIMP_TEXT_EDITOR (object);
 
   g_clear_pointer (&editor->font_name, g_free);
-  g_clear_object (&editor->ui_manager);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -175,7 +174,7 @@ gimp_text_editor_new (const gchar     *title,
                            G_CALLBACK (gimp_text_editor_text_changed),
                            editor, 0);
 
-  editor->ui_manager = gimp_menu_factory_manager_new (menu_factory,
+  editor->ui_manager = gimp_menu_factory_get_manager (menu_factory,
                                                       "<TextEditor>",
                                                       editor);
 

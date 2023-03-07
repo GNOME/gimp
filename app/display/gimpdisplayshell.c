@@ -51,6 +51,8 @@
 #include "core/gimpprojection.h"
 #include "core/gimptemplate.h"
 
+#include "menus/menus.h"
+
 #include "widgets/gimpdevices.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpuimanager.h"
@@ -1981,7 +1983,7 @@ gimp_display_shell_flush (GimpDisplayShell *shell)
 
   if (window && gimp_image_window_get_active_shell (window) == shell)
     {
-      GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
+      GimpUIManager *manager = menus_get_image_manager_singleton (shell->display->gimp);
 
       gimp_ui_manager_update (manager, shell->display);
     }

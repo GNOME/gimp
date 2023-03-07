@@ -30,6 +30,8 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
+#include "menus/menus.h"
+
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockable.h"
@@ -298,7 +300,7 @@ gimp_dock_dropped_cb (GtkWidget *notebook,
 
   /* Create a new dockbook */
   factory = gimp_dock_get_dialog_factory (dock);
-  new_dockbook = gimp_dockbook_new (gimp_dialog_factory_get_menu_factory (factory));
+  new_dockbook = gimp_dockbook_new (menus_get_global_menu_factory (gimp_dialog_factory_get_context (factory)->gimp));
   gimp_dock_add_book (dock, GIMP_DOCKBOOK (new_dockbook), insert_index);
 
   /* Add the dockable to new new dockbook */

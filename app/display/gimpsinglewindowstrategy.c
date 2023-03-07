@@ -29,6 +29,8 @@
 
 #include "core/gimp.h"
 
+#include "menus/menus.h"
+
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdockbook.h"
@@ -92,7 +94,7 @@ gimp_single_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
       if (! gimp_image_window_has_toolbox (window))
         {
           GimpDockColumns *columns;
-          GimpUIManager   *ui_manager = gimp_image_window_get_ui_manager (window);
+          GimpUIManager   *ui_manager = menus_get_image_manager_singleton (gimp);
 
           widget = gimp_dialog_factory_dialog_new (factory, monitor,
                                                    ui_manager,

@@ -36,6 +36,8 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
+#include "menus/menus.h"
+
 #include "gimpcursor.h"
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
@@ -61,7 +63,6 @@ enum
 struct _GimpDialogFactoryPrivate
 {
   GimpContext      *context;
-  GimpMenuFactory  *menu_factory;
 
   GList            *open_dialogs;
   GList            *session_infos;
@@ -223,17 +224,14 @@ gimp_dialog_factory_finalize (GObject *object)
 }
 
 GimpDialogFactory *
-gimp_dialog_factory_new (const gchar           *name,
-                         GimpContext           *context,
-                         GimpMenuFactory       *menu_factory)
+gimp_dialog_factory_new (const gchar *name,
+                         GimpContext *context)
 {
   GimpDialogFactory *factory;
   GimpGuiConfig     *config;
 
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (! menu_factory || GIMP_IS_MENU_FACTORY (menu_factory),
-                        NULL);
 
   factory = g_object_new (GIMP_TYPE_DIALOG_FACTORY, NULL);
 
@@ -242,7 +240,6 @@ gimp_dialog_factory_new (const gchar           *name,
   config = GIMP_GUI_CONFIG (context->gimp->config);
 
   factory->p->context      = context;
-  factory->p->menu_factory = menu_factory;
   factory->p->dialog_state = (config->hide_docks ?
                               GIMP_DIALOGS_HIDDEN_EXPLICITLY :
                               GIMP_DIALOGS_SHOWN);
@@ -494,7 +491,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                *  created in its dock's context.
                */
               dock = gimp_dock_with_window_new (factory, monitor, FALSE);
-              dockbook = gimp_dockbook_new (factory->p->menu_factory);
+              dockbook = gimp_dockbook_new (menus_get_global_menu_factory (factory->p->context->gimp));
 
               gimp_dock_add_book (GIMP_DOCK (dock),
                                   GIMP_DOCKBOOK (dockbook),
@@ -724,14 +721,6 @@ gimp_dialog_factory_get_context (GimpDialogFactory *factory)
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
 
   return factory->p->context;
-}
-
-GimpMenuFactory *
-gimp_dialog_factory_get_menu_factory (GimpDialogFactory *factory)
-{
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
-
-  return factory->p->menu_factory;
 }
 
 GList *

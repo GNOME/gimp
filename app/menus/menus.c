@@ -24,6 +24,8 @@
 
 #include "menus-types.h"
 
+#include "actions/actions.h"
+
 #include "config/gimpconfig-file.h"
 #include "config/gimpguiconfig.h"
 
@@ -51,11 +53,6 @@ static void   menus_remove_accels     (gpointer         data,
                                        gboolean         changed);
 
 
-/*  global variables  */
-
-GimpMenuFactory * global_menu_factory = NULL;
-
-
 /*  private variables  */
 
 static gboolean   menurc_deleted      = FALSE;
@@ -64,17 +61,16 @@ static gboolean   menurc_deleted      = FALSE;
 /*  public functions  */
 
 void
-menus_init (Gimp              *gimp,
-            GimpActionFactory *action_factory)
+menus_init (Gimp *gimp)
 {
+  GimpMenuFactory *global_menu_factory = NULL;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_ACTION_FACTORY (action_factory));
-  g_return_if_fail (global_menu_factory == NULL);
 
   /* We need to make sure the property is installed before using it */
   g_type_class_ref (GTK_TYPE_MENU);
 
-  global_menu_factory = gimp_menu_factory_new (gimp, action_factory);
+  global_menu_factory = menus_get_global_menu_factory (gimp);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Image>",
                                       "file",
@@ -401,10 +397,9 @@ void
 menus_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (global_menu_factory != NULL);
+  g_return_if_fail (menus_get_global_menu_factory (gimp) != NULL);
 
-  g_object_unref (global_menu_factory);
-  global_menu_factory = NULL;
+  g_object_unref (menus_get_global_menu_factory (gimp));
 }
 
 void
@@ -499,6 +494,29 @@ menus_remove (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gtk_accel_map_foreach (gimp, menus_remove_accels);
+}
+
+GimpMenuFactory *
+menus_get_global_menu_factory (Gimp *gimp)
+{
+  static GimpMenuFactory *global_menu_factory = NULL;
+
+  if (global_menu_factory == NULL)
+    global_menu_factory = gimp_menu_factory_new (gimp, global_action_factory);
+
+  return global_menu_factory;
+}
+
+GimpUIManager *
+menus_get_image_manager_singleton (Gimp *gimp)
+{
+  static GimpUIManager *image_ui_manager = NULL;
+
+  if (image_ui_manager == NULL)
+    image_ui_manager = gimp_menu_factory_get_manager (menus_get_global_menu_factory (gimp),
+                                                      "<Image>", gimp);
+
+  return image_ui_manager;
 }
 
 

@@ -59,6 +59,8 @@
 #include "dialogs/color-profile-dialog.h"
 #include "dialogs/dialogs.h"
 
+#include "menus/menus.h"
+
 #include "actions.h"
 #include "view-commands.h"
 
@@ -324,7 +326,7 @@ view_show_all_cmd_callback (GimpAction *action,
       gimp_display_shell_set_show_all (shell, active);
 
       if (window)
-        SET_ACTIVE (gimp_image_window_get_ui_manager (window),
+        SET_ACTIVE (menus_get_image_manager_singleton (display->gimp),
                     "view-show-all", shell->show_all);
 
       if (IS_ACTIVE_DISPLAY (display))
@@ -354,7 +356,7 @@ view_dot_for_dot_cmd_callback (GimpAction *action,
       gimp_display_shell_scale_set_dot_for_dot (shell, active);
 
       if (window)
-        SET_ACTIVE (gimp_image_window_get_ui_manager (window),
+        SET_ACTIVE (menus_get_image_manager_singleton (display->gimp),
                     "view-dot-for-dot", shell->dot_for_dot);
 
       if (IS_ACTIVE_DISPLAY (display))

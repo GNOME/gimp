@@ -523,18 +523,14 @@ dialogs_restore_window (GimpDialogFactory *factory,
 /*  public functions  */
 
 void
-dialogs_init (Gimp            *gimp,
-              GimpMenuFactory *menu_factory)
+dialogs_init (Gimp *gimp)
 {
   GimpDialogFactory *factory = NULL;
   gint               i       = 0;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
 
-  factory = gimp_dialog_factory_new ("toplevel",
-                                     gimp_get_user_context (gimp),
-                                     menu_factory);
+  factory = gimp_dialog_factory_new ("toplevel", gimp_get_user_context (gimp));
   gimp_dialog_factory_set_singleton (factory);
 
   for (i = 0; i < G_N_ELEMENTS (entries); i++)

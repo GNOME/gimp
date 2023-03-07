@@ -114,15 +114,14 @@ debug_dump_keyboard_shortcuts_cmd_callback (GimpAction *action,
                                             GVariant   *value,
                                             gpointer    data)
 {
-  GimpDisplay     *display;
-  GimpImageWindow *window;
-  GimpUIManager   *manager;
-  GList           *group_it;
-  GList           *strings = NULL;
+  GimpDisplay   *display;
+  GimpUIManager *manager;
+  GList         *group_it;
+  GList         *strings = NULL;
+
   return_if_no_display (display, data);
 
-  window  = gimp_display_shell_get_window (gimp_display_get_shell (display));
-  manager = gimp_image_window_get_ui_manager (window);
+  manager = menus_get_image_manager_singleton (display->gimp);
 
   /* Gather formatted strings of keyboard shortcuts */
   for (group_it = gimp_ui_manager_get_action_groups (manager);
