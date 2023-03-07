@@ -859,6 +859,11 @@ tools_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("tools-gegl", image);
+  /* Since these are listed under the Image and Layer menus,
+   * they are disabled without an image to keep consistency
+   */
+  SET_SENSITIVE ("tools-rotate-arbitrary", image);
+  SET_SENSITIVE ("tools-rotate-image-arbitrary", image);
 
 #undef SET_SENSITIVE
 }
