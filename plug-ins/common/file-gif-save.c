@@ -325,6 +325,20 @@ run (const gchar      *name,
               break;
             }
 
+          /* Load comment from parasite for non-interactive export */
+          if (run_mode != GIMP_RUN_INTERACTIVE)
+            {
+              GimpParasite  *parasite;
+
+              parasite = gimp_image_get_parasite (image_ID, "gimp-comment");
+              if (parasite)
+                {
+                  globalcomment = g_strndup (gimp_parasite_data (parasite),
+                                             gimp_parasite_data_size (parasite));
+                  gimp_parasite_free (parasite);
+                }
+            }
+
           /* Write the image to file */
           if (save_image (file,
                           image_ID, drawable_ID, orig_image_ID,
