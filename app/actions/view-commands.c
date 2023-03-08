@@ -995,6 +995,23 @@ view_snap_to_vectors_cmd_callback (GimpAction *action,
 }
 
 void
+view_snap_to_bbox_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
+{
+  GimpDisplayShell *shell;
+  gboolean          active;
+  return_if_no_shell (shell, data);
+
+  active = g_variant_get_boolean (value);
+
+  if (active != gimp_display_shell_get_snap_to_bbox (shell))
+    {
+      gimp_display_shell_set_snap_to_bbox (shell, active);
+    }
+}
+
+void
 view_padding_color_cmd_callback (GimpAction *action,
                                  GVariant   *value,
                                  gpointer    data)

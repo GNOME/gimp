@@ -277,6 +277,13 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     FALSE,
     GIMP_HELP_VIEW_SNAP_TO_VECTORS },
 
+  { "view-snap-to-bbox", NULL,
+    NC_("view-action", "Snap to _Bounding Boxes"), NULL, { NULL },
+    NC_("view-action", "Tool operations snap to the bounding boxes"),
+    view_snap_to_bbox_cmd_callback,
+    FALSE,
+    GIMP_HELP_VIEW_SNAP_TO_BBOX },
+
   { "view-show-menubar", NULL,
     NC_("view-action", "Show _Menubar"), NULL, { NULL },
     NC_("view-action", "Show this window's menubar"),
@@ -919,6 +926,8 @@ view_actions_update (GimpActionGroup *group,
   SET_ACTIVE    ("view-snap-to-canvas",       display && options->snap_to_canvas);
   SET_SENSITIVE ("view-snap-to-vectors",      image);
   SET_ACTIVE    ("view-snap-to-vectors",      display && options->snap_to_path);
+  SET_SENSITIVE ("view-snap-to-bbox",         image);
+  SET_ACTIVE    ("view-snap-to-bbox",         display && options->snap_to_bbox);
 
   SET_SENSITIVE ("view-padding-color-theme",       image);
   SET_SENSITIVE ("view-padding-color-light-check", image);

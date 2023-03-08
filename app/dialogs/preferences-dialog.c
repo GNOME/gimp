@@ -1140,6 +1140,9 @@ prefs_behavior_options_frame_add (Gimp         *gimp,
   prefs_check_button_add (object, "snap-to-path",
                           _("Snap to _Active Path"),
                           GTK_BOX (checks_vbox));
+  prefs_check_button_add (object, "snap-to-bbox",
+                          _("Snap to _Bounding Box"),
+                          GTK_BOX (checks_vbox));
 }
 
 static void

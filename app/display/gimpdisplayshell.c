@@ -1649,6 +1649,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
   gboolean   snap_to_grid    = FALSE;
   gboolean   snap_to_canvas  = FALSE;
   gboolean   snap_to_vectors = FALSE;
+  gboolean   snap_to_bbox    = FALSE;
   gboolean   snapped         = FALSE;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
@@ -1676,7 +1677,12 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
       snap_to_vectors = TRUE;
     }
 
-  if (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors)
+  if (gimp_display_shell_get_snap_to_bbox (shell))
+    {
+      snap_to_bbox = TRUE;
+    }
+
+  if (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors || snap_to_bbox)
     {
       gint    snap_distance;
       gdouble tx, ty;
@@ -1699,7 +1705,8 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                                snap_to_guides,
                                                snap_to_grid,
                                                snap_to_canvas,
-                                               snap_to_vectors);
+                                               snap_to_vectors,
+                                               snap_to_bbox);
         }
       else
         {
@@ -1714,6 +1721,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                            snap_to_grid,
                                            snap_to_canvas,
                                            snap_to_vectors,
+                                           snap_to_bbox,
                                            shell->show_all);
         }
 

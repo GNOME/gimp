@@ -466,6 +466,27 @@ gimp_display_shell_get_snap_to_vectors (GimpDisplayShell *shell)
 }
 
 void
+gimp_display_shell_set_snap_to_bbox (GimpDisplayShell *shell,
+                                     gboolean          snap)
+{
+  GimpDisplayOptions *options;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  options = appearance_get_options (shell);
+
+  g_object_set (options, "snap-to-bbox", snap, NULL);
+}
+
+gboolean
+gimp_display_shell_get_snap_to_bbox (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return appearance_get_options (shell)->snap_to_bbox;
+}
+
+void
 gimp_display_shell_set_padding (GimpDisplayShell      *shell,
                                 GimpCanvasPaddingMode  padding_mode,
                                 const GimpRGB         *padding_color)

@@ -264,6 +264,8 @@
         <item><attribute name="action">app.view-snap-to-grid</attribute></item>
         <item><attribute name="action">app.view-snap-to-canvas</attribute></item>
         <item><attribute name="action">app.view-snap-to-vectors</attribute></item>
+        <item><attribute name="action">app.view-snap-to-bbox</attribute></item>
+        <item><attribute name="action">app.view-snap-to-equidistance</attribute></item>
       </section>
       <section>
         <submenu>

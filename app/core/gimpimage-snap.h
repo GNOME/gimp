@@ -25,14 +25,16 @@ gboolean    gimp_image_snap_x         (GimpImage *image,
                                        gdouble    epsilon_x,
                                        gboolean   snap_to_guides,
                                        gboolean   snap_to_grid,
-                                       gboolean   snap_to_canvas);
+                                       gboolean   snap_to_canvas,
+                                       gboolean   snap_to_bbox);
 gboolean    gimp_image_snap_y         (GimpImage *image,
                                        gdouble    y,
                                        gdouble   *ty,
                                        gdouble    epsilon_y,
                                        gboolean   snap_to_guides,
                                        gboolean   snap_to_grid,
-                                       gboolean   snap_to_canvas);
+                                       gboolean   snap_to_canvas,
+                                       gboolean   snap_to_bbox);
 gboolean    gimp_image_snap_point     (GimpImage *image,
                                        gdouble    x,
                                        gdouble    y,
@@ -44,6 +46,7 @@ gboolean    gimp_image_snap_point     (GimpImage *image,
                                        gboolean   snap_to_grid,
                                        gboolean   snap_to_canvas,
                                        gboolean   snap_to_vectors,
+                                       gboolean   snap_to_bbox,
                                        gboolean   show_all);
 gboolean    gimp_image_snap_rectangle (GimpImage *image,
                                        gdouble    x1,
@@ -57,7 +60,8 @@ gboolean    gimp_image_snap_rectangle (GimpImage *image,
                                        gboolean   snap_to_guides,
                                        gboolean   snap_to_grid,
                                        gboolean   snap_to_canvas,
-                                       gboolean   snap_to_vectors);
+                                       gboolean   snap_to_vectors,
+                                       gboolean   snap_to_bbox);
 
 
 #endif /* __GIMP_IMAGE_SNAP_H__ */

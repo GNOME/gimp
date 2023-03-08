@@ -124,6 +124,9 @@ _("Snap to the canvas edges by default in new image windows.")
 #define SNAP_TO_PATH_BLURB \
 _("Snap to the active path by default in new image windows.")
 
+#define SNAP_TO_BBOX_BLURB \
+_("Snap to the layers bounding boxes by default in new image windows.")
+
 #define DEFAULT_THRESHOLD_BLURB \
 _("Tools such as fuzzy-select and bucket fill find regions based on a " \
   "seed-fill algorithm.  The seed fill starts at the initially selected " \

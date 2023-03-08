@@ -78,6 +78,10 @@ void       gimp_display_shell_set_snap_to_vectors     (GimpDisplayShell       *s
                                                        gboolean                snap);
 gboolean   gimp_display_shell_get_snap_to_vectors     (GimpDisplayShell       *shell);
 
+void       gimp_display_shell_set_snap_to_bbox        (GimpDisplayShell       *shell,
+                                                       gboolean                snap);
+gboolean   gimp_display_shell_get_snap_to_bbox        (GimpDisplayShell       *shell);
+
 void       gimp_display_shell_set_padding             (GimpDisplayShell       *shell,
                                                        GimpCanvasPaddingMode   mode,
                                                        const GimpRGB          *color);

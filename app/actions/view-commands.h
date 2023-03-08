@@ -161,6 +161,9 @@ void   view_snap_to_canvas_cmd_callback             (GimpAction *action,
 void   view_snap_to_vectors_cmd_callback            (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
+void   view_snap_to_bbox_cmd_callback               (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
 void   view_padding_color_cmd_callback              (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
