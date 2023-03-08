@@ -21,6 +21,7 @@
 #ifndef __GIMP_ACTION_GROUP_H__
 #define __GIMP_ACTION_GROUP_H__
 
+#include "core/gimpobject.h"
 
 #define GIMP_TYPE_ACTION_GROUP              (gimp_action_group_get_type ())
 #define GIMP_ACTION_GROUP(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ACTION_GROUP, GimpActionGroup))
@@ -34,7 +35,7 @@ typedef struct _GimpActionGroupClass GimpActionGroupClass;
 
 struct _GimpActionGroup
 {
-  GtkActionGroup             parent_instance;
+  GimpObject                 parent_instance;
 
   Gimp                      *gimp;
   gchar                     *label;
@@ -43,11 +44,13 @@ struct _GimpActionGroup
   gpointer                   user_data;
 
   GimpActionGroupUpdateFunc  update_func;
+
+  GList                     *actions;
 };
 
 struct _GimpActionGroupClass
 {
-  GtkActionGroupClass  parent_class;
+  GimpObjectClass      parent_class;
 
   GHashTable          *groups;
 

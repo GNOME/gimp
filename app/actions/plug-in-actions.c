@@ -51,25 +51,14 @@
 
 /*  local function prototypes  */
 
-static void     plug_in_actions_menu_branch_added    (GimpPlugInManager   *manager,
-                                                      GFile               *file,
-                                                      const gchar         *menu_path,
-                                                      const gchar         *menu_label,
-                                                      GimpActionGroup     *group);
 static void     plug_in_actions_register_procedure   (GimpPDB             *pdb,
                                                       GimpProcedure       *procedure,
                                                       GimpActionGroup     *group);
 static void     plug_in_actions_unregister_procedure (GimpPDB             *pdb,
                                                       GimpProcedure       *procedure,
                                                       GimpActionGroup     *group);
-static void     plug_in_actions_menu_path_added      (GimpPlugInProcedure *proc,
-                                                      const gchar         *menu_path,
-                                                      GimpActionGroup     *group);
 static void     plug_in_actions_add_proc             (GimpActionGroup     *group,
                                                       GimpPlugInProcedure *proc);
-
-static void     plug_in_actions_build_path           (GimpActionGroup     *group,
-                                                      const gchar         *translated);
 
 
 /*  private variables  */
@@ -95,24 +84,6 @@ plug_in_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group, "plug-in-action",
                                  plug_in_actions,
                                  G_N_ELEMENTS (plug_in_actions));
-
-  for (list = gimp_plug_in_manager_get_menu_branches (manager);
-       list;
-       list = g_slist_next (list))
-    {
-      GimpPlugInMenuBranch *branch = list->data;
-
-      plug_in_actions_menu_branch_added (manager,
-                                         branch->file,
-                                         branch->menu_path,
-                                         branch->menu_label,
-                                         group);
-    }
-
-  g_signal_connect_object (manager,
-                           "menu-branch-added",
-                           G_CALLBACK (plug_in_actions_menu_branch_added),
-                           group, 0);
 
   for (list = manager->plug_in_procedures;
        list;
@@ -176,21 +147,6 @@ plug_in_actions_update (GimpActionGroup *group,
 /*  private functions  */
 
 static void
-plug_in_actions_menu_branch_added (GimpPlugInManager *manager,
-                                   GFile             *file,
-                                   const gchar       *menu_path,
-                                   const gchar       *menu_label,
-                                   GimpActionGroup   *group)
-{
-  gchar *full;
-
-  full = g_strconcat (menu_path, "/", menu_label, NULL);
-  plug_in_actions_build_path (group, full);
-
-  g_free (full);
-}
-
-static void
 plug_in_actions_register_procedure (GimpPDB         *pdb,
                                     GimpProcedure   *procedure,
                                     GimpActionGroup *group)
@@ -198,10 +154,6 @@ plug_in_actions_register_procedure (GimpPDB         *pdb,
   if (GIMP_IS_PLUG_IN_PROCEDURE (procedure))
     {
       GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-
-      g_signal_connect_object (plug_in_proc, "menu-path-added",
-                               G_CALLBACK (plug_in_actions_menu_path_added),
-                               group, 0);
 
       if (plug_in_proc->menu_label &&
           ! plug_in_proc->file_proc)
@@ -225,10 +177,6 @@ plug_in_actions_unregister_procedure (GimpPDB         *pdb,
     {
       GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (procedure);
 
-      g_signal_handlers_disconnect_by_func (plug_in_proc,
-                                            plug_in_actions_menu_path_added,
-                                            group);
-
       if (plug_in_proc->menu_label &&
           ! plug_in_proc->file_proc)
         {
@@ -249,24 +197,10 @@ plug_in_actions_unregister_procedure (GimpPDB         *pdb,
 }
 
 static void
-plug_in_actions_menu_path_added (GimpPlugInProcedure *plug_in_proc,
-                                 const gchar         *menu_path,
-                                 GimpActionGroup     *group)
-{
-#if 0
-  g_print ("%s: %s (%s)\n", G_STRFUNC,
-           gimp_object_get_name (plug_in_proc), menu_path);
-#endif
-
-  plug_in_actions_build_path (group, menu_path);
-}
-
-static void
 plug_in_actions_add_proc (GimpActionGroup     *group,
                           GimpPlugInProcedure *proc)
 {
   GimpProcedureActionEntry  entry;
-  GList                    *list;
 
   entry.name        = gimp_object_get_name (proc);
   entry.icon_name   = gimp_viewable_get_icon_name (GIMP_VIEWABLE (proc));
@@ -278,13 +212,6 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
 
   gimp_action_group_add_procedure_actions (group, &entry, 1,
                                            plug_in_run_cmd_callback);
-
-  for (list = proc->menu_paths; list; list = g_list_next (list))
-    {
-      const gchar *original = list->data;
-
-      plug_in_actions_build_path (group, original);
-    }
 
   if (proc->image_types_val)
     {
@@ -308,56 +235,4 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
                                               gimp_object_get_name (proc),
                                               tooltip);
     }
-}
-
-static void
-plug_in_actions_build_path (GimpActionGroup *group,
-                            const gchar     *path_translated)
-{
-  GimpContext *context = gimp_get_user_context (group->gimp);
-  GHashTable  *path_table;
-  gchar       *copy_translated;
-  gchar       *p2;
-
-  path_table = g_object_get_data (G_OBJECT (group), "plug-in-path-table");
-
-  if (! path_table)
-    {
-      path_table = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                          g_free, NULL);
-
-      g_object_set_data_full (G_OBJECT (group), "plug-in-path-table",
-                              path_table,
-                              (GDestroyNotify) g_hash_table_destroy);
-    }
-
-  copy_translated = g_strdup (path_translated);
-
-  p2 = strrchr (copy_translated, '/');
-
-  if (p2 && ! g_hash_table_lookup (path_table, copy_translated))
-    {
-      GimpAction *action;
-      gchar      *label;
-
-      label = p2 + 1;
-
-#if 0
-      g_print ("adding plug-in submenu '%s' (%s)\n",
-               copy_translated, label);
-#endif
-
-      action = gimp_action_impl_new (copy_translated, label, NULL, NULL, NULL, context);
-      gimp_action_group_add_action (group, action);
-      g_object_unref (action);
-
-      g_hash_table_insert (path_table, g_strdup (copy_translated), action);
-
-      *p2 = '\0';
-
-      /* recursively call ourselves with the last part of the path removed */
-      plug_in_actions_build_path (group, copy_translated);
-    }
-
-  g_free (copy_translated);
 }

@@ -74,7 +74,7 @@ static void   gimp_action_group_get_property  (GObject      *object,
                                                GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpActionGroup, gimp_action_group, GTK_TYPE_ACTION_GROUP)
+G_DEFINE_TYPE (GimpActionGroup, gimp_action_group, GIMP_TYPE_OBJECT)
 
 static guint signals[LAST_SIGNAL] = { 0, };
 
@@ -128,6 +128,7 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
 static void
 gimp_action_group_init (GimpActionGroup *group)
 {
+  group->actions = NULL;
 }
 
 static void
@@ -310,19 +311,18 @@ gimp_action_group_new (Gimp                      *gimp,
 const gchar *
 gimp_action_group_get_name (GimpActionGroup *group)
 {
-  return gtk_action_group_get_name ((GtkActionGroup *) group);
+  return gimp_object_get_name (GIMP_OBJECT (group));
 }
 
 void
-gimp_action_group_add_action (GimpActionGroup *action_group,
+gimp_action_group_add_action (GimpActionGroup *group,
                               GimpAction      *action)
 {
-  gtk_action_group_add_action ((GtkActionGroup *) action_group,
-                               (GtkAction *) action);
+  gimp_action_group_add_action_with_accel (group, action, NULL);
 }
 
 void
-gimp_action_group_add_action_with_accel (GimpActionGroup *action_group,
+gimp_action_group_add_action_with_accel (GimpActionGroup *group,
                                          GimpAction      *action,
                                          const gchar     *accelerator)
 {
@@ -330,35 +330,51 @@ gimp_action_group_add_action_with_accel (GimpActionGroup *action_group,
   /* Making sure all our Gimp*Action classes are also GAction. */
   g_return_if_fail (G_IS_ACTION (action));
 
-  g_action_map_add_action (G_ACTION_MAP (action_group->gimp->app), G_ACTION (action));
-  if ((accelerator != NULL && g_strcmp0 (accelerator, "") != 0))
-    gimp_action_set_accels (action, (const char*[]) { accelerator, NULL });
+  if (! g_list_find (group->actions, action))
+    {
+      group->actions = g_list_prepend (group->actions, action);
 
-  /* TODO: remove the old logic with GtkAction. */
-  gtk_action_group_add_action_with_accel ((GtkActionGroup *) action_group,
-                                          (GtkAction *) action, NULL);
+      g_action_map_add_action (G_ACTION_MAP (group->gimp->app), G_ACTION (action));
+
+      if ((accelerator != NULL && g_strcmp0 (accelerator, "") != 0))
+        gimp_action_set_accels (action, (const char*[]) { accelerator, NULL });
+    }
 }
 
 void
-gimp_action_group_remove_action (GimpActionGroup *action_group,
+gimp_action_group_remove_action (GimpActionGroup *group,
                                  GimpAction      *action)
 {
-  gtk_action_group_remove_action ((GtkActionGroup *) action_group,
-                                  (GtkAction *) action);
+  group->actions = g_list_remove (group->actions, action);
+
+  /* TODO GAction: we should also check if the action is still present in
+   * another group (maybe if each action keeps track of its own groups, or with
+   * gimp_ui_manager_find_action(), or a "action-removed" signal tracked by the
+   * GimpUIManager which would verify other groups).
+   * If it's not in any group anymore, we should remove the action with
+   * g_action_map_remove_action().
+   */
 }
 
 GimpAction *
 gimp_action_group_get_action (GimpActionGroup *group,
                               const gchar     *action_name)
 {
-  return (GimpAction *) gtk_action_group_get_action ((GtkActionGroup *) group,
-                                                     action_name);
+  for (GList *iter = group->actions; iter; iter = iter->next)
+    {
+      GimpAction *action = iter->data;
+
+      if (g_strcmp0 (gimp_action_get_name (action), action_name) == 0)
+        return action;
+    }
+
+  return NULL;
 }
 
 GList *
 gimp_action_group_list_actions (GimpActionGroup *group)
 {
-  return gtk_action_group_list_actions ((GtkActionGroup *) group);
+  return g_list_copy (group->actions);
 }
 
 GList *
@@ -836,19 +852,8 @@ void
 gimp_action_group_remove_action_and_accel (GimpActionGroup *group,
                                            GimpAction      *action)
 {
-  const gchar *action_name;
-  const gchar *group_name;
-  gchar       *accel_path;
-
-  action_name = gimp_action_get_name (action);
-  group_name  = gimp_action_group_get_name (group);
-  accel_path = g_strconcat ("<Actions>/", group_name, "/",
-                            action_name, NULL);
-
-  gtk_accel_map_change_entry (accel_path, 0, 0, FALSE);
-
+  gimp_action_set_accels (action, (const char*[]) { NULL });
   gimp_action_group_remove_action (group, action);
-  g_free (accel_path);
 }
 
 void
@@ -1166,5 +1171,12 @@ gimp_action_group_set_action_always_show_image (GimpActionGroup *group,
       return;
     }
 
-  gtk_action_set_always_show_image ((GtkAction *) action, always_show_image);
+#if 0
+  /* TODO GAction: currently a no-op, though I think it was already a no-op to
+   * us, at least for proxy images. We could still use this for other menu items
+   * and button icons. Let's investigate further later to decide whether we
+   * should get rid of all related code or instead make it work as expected.
+   */
+  gtk_action_set_always_show_image ((GtkAction *) action, TRUE);
+#endif
 }
