@@ -67,10 +67,12 @@
 #define TOUINT16(d) ((guint16) (d * 65535 + 0.5))
 
 
-#define GIMP_COLOR_BUTTON_COLOR_FG    "color-button-use-foreground"
-#define GIMP_COLOR_BUTTON_COLOR_BG    "color-button-use-background"
-#define GIMP_COLOR_BUTTON_COLOR_BLACK "color-button-use-black"
-#define GIMP_COLOR_BUTTON_COLOR_WHITE "color-button-use-white"
+#define GIMP_COLOR_BUTTON_COLOR_FG     "use-foreground"
+#define GIMP_COLOR_BUTTON_COLOR_BG     "use-background"
+#define GIMP_COLOR_BUTTON_COLOR_BLACK  "use-black"
+#define GIMP_COLOR_BUTTON_COLOR_WHITE  "use-white"
+
+#define GIMP_COLOR_BUTTON_GROUP_PREFIX "gimp-color-button"
 
 
 enum
@@ -94,16 +96,17 @@ enum
 
 struct _GimpColorButtonPrivate
 {
-  gchar           *title;
-  gboolean         continuous_update;
+  gchar              *title;
+  gboolean            continuous_update;
 
-  GtkWidget       *color_area;
-  GtkWidget       *dialog;
-  GtkWidget       *selection;
+  GtkWidget          *color_area;
+  GtkWidget          *dialog;
+  GtkWidget          *selection;
 
-  GtkUIManager    *ui_manager;
+  GSimpleActionGroup *group;
+  GtkBuilder         *builder;
 
-  GimpColorConfig *config;
+  GimpColorConfig    *config;
 };
 
 #define GET_PRIVATE(obj) (((GimpColorButton *) (obj))->priv)
@@ -131,7 +134,8 @@ static GType    gimp_color_button_get_action_type     (GimpColorButton *button);
 static void     gimp_color_button_dialog_response     (GtkWidget       *dialog,
                                                        gint             response_id,
                                                        GimpColorButton *button);
-static void     gimp_color_button_use_color           (GtkAction       *action,
+static void     gimp_color_button_use_color           (GAction         *action,
+                                                       GVariant        *parameter,
                                                        GimpColorButton *button);
 static void     gimp_color_button_area_changed        (GtkWidget       *color_area,
                                                        GimpColorButton *button);
@@ -141,28 +145,33 @@ static void     gimp_color_button_help_func           (const gchar     *help_id,
                                                        gpointer         help_data);
 
 
-static const GtkActionEntry actions[] =
+typedef void (* GimpColorButtonActionCallback)        (GAction         *action,
+                                                       GVariant        *parameter,
+                                                       GimpColorButton *button);
+typedef struct _GimpColorButtonActionEntry
 {
-  { "color-button-popup", NULL,
-    "Color Button Menu", NULL, NULL,
-    NULL
-  },
+  const gchar                   *name;
+  GimpColorButtonActionCallback  callback;
+} GimpColorButtonActionEntry;
 
-  { GIMP_COLOR_BUTTON_COLOR_FG, NULL,
-    N_("_Foreground Color"), NULL, NULL,
-    G_CALLBACK (gimp_color_button_use_color)
+
+static const GimpColorButtonActionEntry actions[] =
+{
+  {
+    GIMP_COLOR_BUTTON_COLOR_FG,
+    gimp_color_button_use_color
   },
-  { GIMP_COLOR_BUTTON_COLOR_BG, NULL,
-    N_("_Background Color"), NULL, NULL,
-    G_CALLBACK (gimp_color_button_use_color)
+  {
+    GIMP_COLOR_BUTTON_COLOR_BG,
+    gimp_color_button_use_color
   },
-  { GIMP_COLOR_BUTTON_COLOR_BLACK, NULL,
-    N_("Blac_k"), NULL, NULL,
-    G_CALLBACK (gimp_color_button_use_color)
+  {
+    GIMP_COLOR_BUTTON_COLOR_BLACK,
+    gimp_color_button_use_color
   },
-  { GIMP_COLOR_BUTTON_COLOR_WHITE, NULL,
-    N_("_White"), NULL, NULL,
-    G_CALLBACK (gimp_color_button_use_color)
+  {
+    GIMP_COLOR_BUTTON_COLOR_WHITE,
+    gimp_color_button_use_color
   }
 };
 
@@ -335,55 +344,61 @@ gimp_color_button_constructed (GObject *object)
   GimpColorButton        *button = GIMP_COLOR_BUTTON (object);
   GimpColorButtonClass   *klass  = GIMP_COLOR_BUTTON_GET_CLASS (object);
   GimpColorButtonPrivate *priv   = GET_PRIVATE (object);
-  GtkActionGroup         *group;
   gint                    i;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  /* right-click opens a popup */
-  priv->ui_manager = gtk_ui_manager_new ();
-
-  group = gtk_action_group_new ("color-button");
+  priv->group = g_simple_action_group_new ();
 
   for (i = 0; i < G_N_ELEMENTS (actions); i++)
     {
-      const gchar *label   = gettext (actions[i].label);
-      const gchar *tooltip = gettext (actions[i].tooltip);
-      GtkAction   *action;
+      GAction *action;
 
       action = g_object_new (klass->get_action_type (button),
-                             "name",      actions[i].name,
-                             "label",     label,
-                             "tooltip",   tooltip,
-                             "icon-name", actions[i].stock_id,
+                             "name", actions[i].name,
                              NULL);
 
       if (actions[i].callback)
         g_signal_connect (action, "activate",
-                          actions[i].callback,
+                          G_CALLBACK (actions[i].callback),
                           button);
 
-      gtk_action_group_add_action_with_accel (group, action,
-                                              actions[i].accelerator);
+      g_action_map_add_action (G_ACTION_MAP (priv->group), action);
 
       g_object_unref (action);
     }
 
-  gtk_ui_manager_insert_action_group (priv->ui_manager, group, -1);
-  g_object_unref (group);
+  gtk_widget_insert_action_group (GTK_WIDGET (button),
+                                  GIMP_COLOR_BUTTON_GROUP_PREFIX,
+                                  G_ACTION_GROUP (priv->group));
 
-  gtk_ui_manager_add_ui_from_string
-    (priv->ui_manager,
-     "<ui>\n"
-     "  <popup action=\"color-button-popup\">\n"
-     "    <menuitem action=\"" GIMP_COLOR_BUTTON_COLOR_FG "\" />\n"
-     "    <menuitem action=\"" GIMP_COLOR_BUTTON_COLOR_BG "\" />\n"
-     "    <separator />\n"
-     "    <menuitem action=\"" GIMP_COLOR_BUTTON_COLOR_BLACK "\" />\n"
-     "    <menuitem action=\"" GIMP_COLOR_BUTTON_COLOR_WHITE "\" />\n"
-     "  </popup>\n"
-     "</ui>\n",
-     -1, NULL);
+  /* right-click opens a popup */
+  priv->builder = gtk_builder_new_from_string (
+    "<interface>"
+      "<menu id=\"color-button-popup\">"
+        "<section>"
+          "<item>"
+            "<attribute name=\"label\" translatable=\"yes\">_Foreground Color</attribute>"
+            "<attribute name=\"action\">" GIMP_COLOR_BUTTON_GROUP_PREFIX "." GIMP_COLOR_BUTTON_COLOR_FG "</attribute>"
+          "</item>"
+          "<item>"
+            "<attribute name=\"label\" translatable=\"yes\">_Background Color</attribute>"
+            "<attribute name=\"action\">" GIMP_COLOR_BUTTON_GROUP_PREFIX "." GIMP_COLOR_BUTTON_COLOR_BG "</attribute>"
+          "</item>"
+        "</section>"
+        "<section>"
+          "<item>"
+            "<attribute name=\"label\" translatable=\"yes\">Blac_k</attribute>"
+            "<attribute name=\"action\">" GIMP_COLOR_BUTTON_GROUP_PREFIX "." GIMP_COLOR_BUTTON_COLOR_BLACK "</attribute>"
+          "</item>"
+          "<item>"
+            "<attribute name=\"label\" translatable=\"yes\">_White</attribute>"
+            "<attribute name=\"action\">" GIMP_COLOR_BUTTON_GROUP_PREFIX "." GIMP_COLOR_BUTTON_COLOR_WHITE "</attribute>"
+          "</item>"
+        "</section>"
+      "</menu>"
+    "</interface>",
+    -1);
 }
 
 static void
@@ -392,6 +407,8 @@ gimp_color_button_finalize (GObject *object)
   GimpColorButtonPrivate *priv = GET_PRIVATE (object);
 
   g_clear_pointer (&priv->title, g_free);
+  g_clear_object (&priv->builder);
+  g_clear_object (&priv->group);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -406,8 +423,6 @@ gimp_color_button_dispose (GObject *object)
   priv->selection = NULL;
 
   g_clear_pointer (&priv->color_area, gtk_widget_destroy);
-
-  g_clear_object (&priv->ui_manager);
 
   gimp_color_button_set_color_config (button, NULL);
 
@@ -508,11 +523,14 @@ gimp_color_button_button_press (GtkWidget      *widget,
 
   if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
     {
-      GtkWidget *menu = gtk_ui_manager_get_widget (priv->ui_manager,
-                                                   "/color-button-popup");
+      GtkWidget  *menu;
+      GMenuModel *model;
 
-      gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
+      model = G_MENU_MODEL (gtk_builder_get_object (priv->builder, "color-button-popup"));
+      menu = gtk_menu_new_from_model (model);
 
+      /*gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));*/
+      gtk_menu_attach_to_widget (GTK_MENU (menu), widget, NULL);
       gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) bevent);
     }
 
@@ -605,7 +623,7 @@ gimp_color_button_clicked (GtkButton *button)
 static GType
 gimp_color_button_get_action_type (GimpColorButton *button)
 {
-  return GTK_TYPE_ACTION;
+  return G_TYPE_SIMPLE_ACTION;
 }
 
 
@@ -885,15 +903,15 @@ gimp_color_button_set_color_config (GimpColorButton *button,
 }
 
 /**
- * gimp_color_button_get_ui_manager:
+ * gimp_color_button_get_action_group:
  * @button: a #GimpColorButton.
  *
- * Returns: (transfer none): The @button's #GtkUIManager.
+ * Returns: (transfer none): The @button's #GSimpleActionGroup.
  *
- * Since: 2.10
+ * Since: 3.0
  **/
-GtkUIManager *
-gimp_color_button_get_ui_manager (GimpColorButton *button)
+GSimpleActionGroup *
+gimp_color_button_get_action_group (GimpColorButton *button)
 {
   GimpColorButtonPrivate *priv;
 
@@ -901,7 +919,7 @@ gimp_color_button_get_ui_manager (GimpColorButton *button)
 
   priv = GET_PRIVATE (button);
 
-  return priv->ui_manager;
+  return priv->group;
 }
 
 
@@ -946,13 +964,14 @@ gimp_color_button_dialog_response (GtkWidget       *dialog,
 }
 
 static void
-gimp_color_button_use_color (GtkAction       *action,
+gimp_color_button_use_color (GAction         *action,
+                             GVariant        *parameter,
                              GimpColorButton *button)
 {
   const gchar *name;
   GimpRGB      color;
 
-  name = gtk_action_get_name (action);
+  name = g_action_get_name (action);
   gimp_color_button_get_color (button, &color);
 
   if (! strcmp (name, GIMP_COLOR_BUTTON_COLOR_FG))

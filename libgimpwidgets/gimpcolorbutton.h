@@ -105,7 +105,7 @@ void           gimp_color_button_set_update       (GimpColorButton   *button,
 void           gimp_color_button_set_color_config (GimpColorButton   *button,
                                                    GimpColorConfig   *config);
 
-GtkUIManager * gimp_color_button_get_ui_manager   (GimpColorButton   *button);
+GSimpleActionGroup * gimp_color_button_get_action_group   (GimpColorButton   *button);
 
 
 G_END_DECLS

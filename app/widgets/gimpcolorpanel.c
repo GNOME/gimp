@@ -125,45 +125,39 @@ gimp_color_panel_button_press (GtkWidget      *widget,
 {
   if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
     {
-      GimpColorButton *color_button;
-      GimpColorPanel  *color_panel;
-      GtkUIManager    *ui_manager;
-      GimpActionGroup *group;
-      GimpAction      *action;
-      GimpRGB          color;
+      GimpColorButton    *color_button;
+      GimpColorPanel     *color_panel;
+      GSimpleActionGroup *group;
+      GimpAction         *action;
+      GimpRGB             color;
 
       color_button = GIMP_COLOR_BUTTON (widget);
       color_panel  = GIMP_COLOR_PANEL (widget);
-      ui_manager   = gimp_color_button_get_ui_manager (color_button);
 
-      group = gtk_ui_manager_get_action_groups (ui_manager)->data;
+      group = gimp_color_button_get_action_group (color_button);
 
-      action = gimp_action_group_get_action (group,
-                                             "color-button-use-foreground");
+      action = GIMP_ACTION (g_action_map_lookup_action (G_ACTION_MAP (group), "use-foreground"));
       gimp_action_set_visible (action, color_panel->context != NULL);
 
-      action = gimp_action_group_get_action (group,
-                                             "color-button-use-background");
+      action = GIMP_ACTION (g_action_map_lookup_action (G_ACTION_MAP (group), "use-background"));
       gimp_action_set_visible (action, color_panel->context != NULL);
 
       if (color_panel->context)
         {
-          action = gimp_action_group_get_action (group,
-                                                 "color-button-use-foreground");
+          action = GIMP_ACTION (g_action_map_lookup_action (G_ACTION_MAP (group), "use-foreground"));
           gimp_context_get_foreground (color_panel->context, &color);
           g_object_set (action, "color", &color, NULL);
 
-          action = gimp_action_group_get_action (group,
-                                                 "color-button-use-background");
+          action = GIMP_ACTION (g_action_map_lookup_action (G_ACTION_MAP (group), "use-background"));
           gimp_context_get_background (color_panel->context, &color);
           g_object_set (action, "color", &color, NULL);
         }
 
-      action = gimp_action_group_get_action (group, "color-button-use-black");
+      action = GIMP_ACTION (g_action_map_lookup_action (G_ACTION_MAP (group), "use-black"));
       gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
       g_object_set (action, "color", &color, NULL);
 
-      action = gimp_action_group_get_action (group, "color-button-use-white");
+      action = GIMP_ACTION (g_action_map_lookup_action (G_ACTION_MAP (group), "use-white"));
       gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
       g_object_set (action, "color", &color, NULL);
     }

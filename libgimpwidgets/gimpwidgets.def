@@ -41,10 +41,10 @@ EXPORTS
 	gimp_color_area_set_out_of_gamut
 	gimp_color_area_set_type
 	gimp_color_area_type_get_type
+	gimp_color_button_get_action_group
 	gimp_color_button_get_color
 	gimp_color_button_get_title
 	gimp_color_button_get_type
-	gimp_color_button_get_ui_manager
 	gimp_color_button_get_update
 	gimp_color_button_has_alpha
 	gimp_color_button_new
