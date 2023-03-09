@@ -21,6 +21,7 @@
 #ifndef __GIMP_ACTION_IMPL_H__
 #define __GIMP_ACTION_IMPL_H__
 
+#include "core/gimpobject.h"
 
 #define GIMP_TYPE_ACTION_IMPL            (gimp_action_impl_get_type ())
 #define GIMP_ACTION_IMPL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ACTION_IMPL, GimpActionImpl))
@@ -35,14 +36,14 @@ typedef struct _GimpActionImplPrivate GimpActionImplPrivate;
 
 struct _GimpActionImpl
 {
-  GtkAction              parent_instance;
+  GimpObject             parent_instance;
 
   GimpActionImplPrivate *priv;
 };
 
 struct _GimpActionImplClass
 {
-  GtkActionClass    parent_class;
+  GimpObjectClass   parent_class;
 
   /*  signals  */
   void           (* change_state) (GimpActionImpl *impl,

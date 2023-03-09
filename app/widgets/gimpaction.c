@@ -79,21 +79,23 @@ struct _GimpActionPrivate
 
 
 static GimpActionPrivate *
-              gimp_action_get_private          (GimpAction        *action);
-static void   gimp_action_private_finalize     (GimpActionPrivate *priv);
+              gimp_action_get_private           (GimpAction        *action);
+static void   gimp_action_private_finalize      (GimpActionPrivate *priv);
 
-static void   gimp_action_label_notify         (GimpAction        *action,
-                                                const GParamSpec  *pspec,
-                                                gpointer           data);
+static void   gimp_action_label_notify          (GimpAction        *action,
+                                                 const GParamSpec  *pspec,
+                                                 gpointer           data);
 
-static void   gimp_action_proxy_destroy        (GtkWidget         *proxy,
-                                                GimpAction        *action);
+static void   gimp_action_proxy_destroy         (GtkWidget         *proxy,
+                                                 GimpAction        *action);
+static void   gimp_action_proxy_button_activate (GtkButton         *button,
+                                                 GimpAction        *action);
 
-static void   gimp_action_update_proxy_tooltip (GimpAction     *action,
-                                                GtkWidget      *proxy);
+static void   gimp_action_update_proxy_tooltip  (GimpAction     *action,
+                                                 GtkWidget      *proxy);
 
 
-G_DEFINE_INTERFACE (GimpAction, gimp_action, GTK_TYPE_ACTION)
+G_DEFINE_INTERFACE (GimpAction, gimp_action, GIMP_TYPE_OBJECT)
 
 static guint action_signals[LAST_SIGNAL];
 
@@ -104,7 +106,7 @@ gimp_action_default_init (GimpActionInterface *iface)
   GimpRGB black;
 
   action_signals[ACTIVATE] =
-    g_signal_new ("gimp-activate",
+    g_signal_new ("activate",
                   G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpActionInterface, activate),
@@ -248,7 +250,7 @@ gimp_action_emit_change_state (GimpAction *action,
 const gchar *
 gimp_action_get_name (GimpAction *action)
 {
-  return gtk_action_get_name ((GtkAction *) action);
+  return gimp_object_get_name (GIMP_OBJECT (action));
 }
 
 void
@@ -844,93 +846,100 @@ gimp_action_set_proxy (GimpAction *action,
   GdkPixbuf         *pixbuf      = NULL;
   GtkWidget         *label;
 
-  if (! GTK_IS_MENU_ITEM (proxy) && ! GTK_IS_TOOL_BUTTON (proxy))
+  if (! GTK_IS_MENU_ITEM (proxy)   &&
+      ! GTK_IS_TOOL_BUTTON (proxy) &&
+      ! GTK_IS_BUTTON (proxy))
     return;
 
-  if (priv->color)
+  /* Current implementation accepts GtkButton as proxies but don't modify their
+   * render. TODO?
+   */
+  if (! GTK_IS_BUTTON (proxy))
     {
-      if (GTK_IS_MENU_ITEM (proxy))
-        proxy_image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
-      else
-        proxy_image = gtk_tool_button_get_label_widget (GTK_TOOL_BUTTON (proxy));
-
-      if (GIMP_IS_COLOR_AREA (proxy_image))
+      if (priv->color)
         {
-          gimp_color_area_set_color (GIMP_COLOR_AREA (proxy_image), priv->color);
-          proxy_image = NULL;
-        }
-      else
-        {
-          gint width, height;
+          if (GTK_IS_MENU_ITEM (proxy))
+            proxy_image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
+          else
+            proxy_image = gtk_tool_button_get_label_widget (GTK_TOOL_BUTTON (proxy));
 
-          proxy_image = gimp_color_area_new (priv->color,
-                                      GIMP_COLOR_AREA_SMALL_CHECKS, 0);
-          gimp_color_area_set_draw_border (GIMP_COLOR_AREA (proxy_image), TRUE);
-
-          if (priv->context)
-            gimp_color_area_set_color_config (GIMP_COLOR_AREA (proxy_image),
-                                              priv->context->gimp->config->color_management);
-
-          gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
-          gtk_widget_set_size_request (proxy_image, width, height);
-          gtk_widget_show (proxy_image);
-        }
-    }
-  else if (priv->viewable)
-    {
-      if (GTK_IS_MENU_ITEM (proxy))
-        proxy_image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
-      else
-        proxy_image = gtk_tool_button_get_label_widget (GTK_TOOL_BUTTON (proxy));
-
-      if (GIMP_IS_VIEW (proxy_image) &&
-          g_type_is_a (G_TYPE_FROM_INSTANCE (priv->viewable),
-                       GIMP_VIEW (proxy_image)->renderer->viewable_type))
-        {
-          gimp_view_set_viewable (GIMP_VIEW (proxy_image), priv->viewable);
-          proxy_image = NULL;
-        }
-      else
-        {
-          GtkIconSize size;
-          gint        width, height;
-          gint        border_width;
-
-          if (GIMP_IS_IMAGEFILE (priv->viewable))
+          if (GIMP_IS_COLOR_AREA (proxy_image))
             {
-              size         = GTK_ICON_SIZE_LARGE_TOOLBAR;
-              border_width = 0;
+              gimp_color_area_set_color (GIMP_COLOR_AREA (proxy_image), priv->color);
+              proxy_image = NULL;
             }
           else
             {
-              size         = GTK_ICON_SIZE_MENU;
-              border_width = 1;
+              gint width, height;
+
+              proxy_image = gimp_color_area_new (priv->color,
+                                                 GIMP_COLOR_AREA_SMALL_CHECKS, 0);
+              gimp_color_area_set_draw_border (GIMP_COLOR_AREA (proxy_image), TRUE);
+
+              if (priv->context)
+                gimp_color_area_set_color_config (GIMP_COLOR_AREA (proxy_image),
+                                                  priv->context->gimp->config->color_management);
+
+              gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
+              gtk_widget_set_size_request (proxy_image, width, height);
+              gtk_widget_show (proxy_image);
             }
-
-          gtk_icon_size_lookup (size, &width, &height);
-          proxy_image = gimp_view_new_full (priv->context, priv->viewable,
-                                            width, height, border_width,
-                                            FALSE, FALSE, FALSE);
-          gtk_widget_show (proxy_image);
         }
-    }
-  else
-    {
-      if (GIMP_IS_PROCEDURE_ACTION (action) &&
-          /* Some special cases GimpProcedureAction have no procedure attached
-           * (e.g. "filters-recent-*" actions.
-           */
-          G_IS_OBJECT (GIMP_PROCEDURE_ACTION (action)->procedure))
+      else if (priv->viewable)
         {
-          /* Special-casing procedure actions as plug-ins can create icons with
-           * gimp_procedure_set_icon_pixbuf().
-           */
-          g_object_get (GIMP_PROCEDURE_ACTION (action)->procedure,
-                        "icon-pixbuf", &pixbuf,
-                        NULL);
+          if (GTK_IS_MENU_ITEM (proxy))
+            proxy_image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
+          else
+            proxy_image = gtk_tool_button_get_label_widget (GTK_TOOL_BUTTON (proxy));
 
-          if (pixbuf != NULL)
+          if (GIMP_IS_VIEW (proxy_image) &&
+              g_type_is_a (G_TYPE_FROM_INSTANCE (priv->viewable),
+                           GIMP_VIEW (proxy_image)->renderer->viewable_type))
             {
+              gimp_view_set_viewable (GIMP_VIEW (proxy_image), priv->viewable);
+              proxy_image = NULL;
+            }
+          else
+            {
+              GtkIconSize size;
+              gint        width, height;
+              gint        border_width;
+
+              if (GIMP_IS_IMAGEFILE (priv->viewable))
+                {
+                  size         = GTK_ICON_SIZE_LARGE_TOOLBAR;
+                  border_width = 0;
+                }
+              else
+                {
+                  size         = GTK_ICON_SIZE_MENU;
+                  border_width = 1;
+                }
+
+              gtk_icon_size_lookup (size, &width, &height);
+              proxy_image = gimp_view_new_full (priv->context, priv->viewable,
+                                                width, height, border_width,
+                                                FALSE, FALSE, FALSE);
+              gtk_widget_show (proxy_image);
+            }
+        }
+      else
+        {
+          if (GIMP_IS_PROCEDURE_ACTION (action) &&
+              /* Some special cases GimpProcedureAction have no procedure attached
+               * (e.g. "filters-recent-*" actions.
+               */
+              G_IS_OBJECT (GIMP_PROCEDURE_ACTION (action)->procedure))
+              {
+              /* Special-casing procedure actions as plug-ins can create icons with
+               * gimp_procedure_set_icon_pixbuf().
+               */
+              g_object_get (GIMP_PROCEDURE_ACTION (action)->procedure,
+                            "icon-pixbuf", &pixbuf,
+                            NULL);
+
+              if (pixbuf != NULL)
+              {
               gint width;
               gint height;
 
@@ -948,27 +957,28 @@ gimp_action_set_proxy (GimpAction *action,
                 }
 
               proxy_image = gtk_image_new_from_pixbuf (pixbuf);
-            }
-        }
+              }
+              }
 
-      if (proxy_image == NULL)
-        {
-          if (GTK_IS_MENU_ITEM (proxy))
-            proxy_image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
-          else
-            proxy_image = gtk_tool_button_get_label_widget (GTK_TOOL_BUTTON (proxy));
-
-          if (GIMP_IS_VIEW (proxy_image) || GIMP_IS_COLOR_AREA (proxy_image))
+          if (proxy_image == NULL)
             {
               if (GTK_IS_MENU_ITEM (proxy))
-                gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL, action);
-              else if (proxy_image)
-                gtk_widget_destroy (proxy_image);
+                proxy_image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
+              else
+                proxy_image = gtk_tool_button_get_label_widget (GTK_TOOL_BUTTON (proxy));
 
-              g_object_notify (G_OBJECT (action), "icon-name");
+              if (GIMP_IS_VIEW (proxy_image) || GIMP_IS_COLOR_AREA (proxy_image))
+                {
+                  if (GTK_IS_MENU_ITEM (proxy))
+                    gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL, action);
+                  else if (proxy_image)
+                    gtk_widget_destroy (proxy_image);
+
+                  g_object_notify (G_OBJECT (action), "icon-name");
+                }
+
+              proxy_image = NULL;
             }
-
-          proxy_image = NULL;
         }
     }
 
@@ -1012,6 +1022,11 @@ gimp_action_set_proxy (GimpAction *action,
       g_signal_connect (proxy, "destroy",
                         (GCallback) gimp_action_proxy_destroy,
                         action);
+
+      if (GTK_IS_BUTTON (proxy))
+        g_signal_connect (proxy, "clicked",
+                          (GCallback) gimp_action_proxy_button_activate,
+                          action);
 
       gimp_action_update_proxy_tooltip (action, proxy);
     }
@@ -1060,13 +1075,18 @@ gimp_action_private_finalize (GimpActionPrivate *priv)
   g_clear_object (&priv->icon);
 
   for (GList *iter = priv->proxies; iter; iter = iter->next)
-    /* TODO GAction: if an action associated to a proxy menu item disappears,
-     * shouldn't we also destroy the item itself (not just disconnect it)? It
-     * would now point to a non-existing action.
-     */
-    g_signal_handlers_disconnect_by_func (iter->data,
-                                          gimp_action_proxy_destroy,
-                                          priv->action);
+    {
+      /* TODO GAction: if an action associated to a proxy menu item disappears,
+       * shouldn't we also destroy the item itself (not just disconnect it)? It
+       * would now point to a non-existing action.
+       */
+      g_signal_handlers_disconnect_by_func (iter->data,
+                                            gimp_action_proxy_destroy,
+                                            priv->action);
+      g_signal_handlers_disconnect_by_func (iter->data,
+                                            gimp_action_proxy_button_activate,
+                                            priv->action);
+    }
   g_list_free (priv->proxies);
   priv->proxies = NULL;
 
@@ -1114,6 +1134,13 @@ gimp_action_proxy_destroy (GtkWidget  *proxy,
   GimpActionPrivate *priv = GET_PRIVATE (action);
 
   priv->proxies = g_list_remove (priv->proxies, proxy);
+}
+
+static void
+gimp_action_proxy_button_activate (GtkButton  *button,
+                                   GimpAction *action)
+{
+  gimp_action_emit_activate (action, NULL);
 }
 
 static void

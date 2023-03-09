@@ -447,7 +447,7 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
                                      entries[i].help_id, context);
 
       if (entries[i].callback)
-        g_signal_connect (action, "gimp-activate",
+        g_signal_connect (action, "activate",
                           G_CALLBACK (entries[i].callback),
                           group->user_data);
 
@@ -634,7 +634,7 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
                                      context);
 
       if (callback)
-        g_signal_connect (action, "gimp-activate",
+        g_signal_connect (action, "activate",
                           G_CALLBACK (callback),
                           group->user_data);
 
@@ -694,16 +694,16 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
                                            entries[i].value, context);
           gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                    entries[i].accelerator);
+
+          if (callback)
+            g_signal_connect (action, "activate",
+                              G_CALLBACK (callback),
+                              group->user_data);
         }
       else
         {
           g_object_ref (action);
         }
-
-      if (callback)
-        g_signal_connect (action, "gimp-activate",
-                          G_CALLBACK (callback),
-                          group->user_data);
 
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
       g_object_unref (action);
@@ -755,7 +755,7 @@ gimp_action_group_add_double_actions (GimpActionGroup             *group,
                                        entries[i].value, context);
 
       if (callback)
-        g_signal_connect (action, "gimp-activate",
+        g_signal_connect (action, "activate",
                           G_CALLBACK (callback),
                           group->user_data);
 
@@ -810,7 +810,7 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
                                               context);
 
           if (callback)
-            g_signal_connect (action, "gimp-activate",
+            g_signal_connect (action, "activate",
                               G_CALLBACK (callback),
                               group->user_data);
 
@@ -1148,7 +1148,12 @@ gimp_action_group_set_action_hide_empty (GimpActionGroup *group,
       return;
     }
 
+#if 0
+  /* TODO GAction: currently a no-op. Did we actually ever use this property of
+   * GtkAction?
+   */
   g_object_set (action, "hide-if-empty", hide_empty ? TRUE : FALSE, NULL);
+#endif
 }
 
 void

@@ -88,7 +88,7 @@ static void   gimp_action_impl_set_state          (GimpAction          *gimp_act
                                                    GVariant            *value);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpActionImpl, gimp_action_impl, GTK_TYPE_ACTION,
+G_DEFINE_TYPE_WITH_CODE (GimpActionImpl, gimp_action_impl, GIMP_TYPE_OBJECT,
                          G_ADD_PRIVATE (GimpActionImpl)
                          G_IMPLEMENT_INTERFACE (G_TYPE_ACTION, gimp_action_g_action_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_ACTION, NULL))
