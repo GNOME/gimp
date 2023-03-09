@@ -165,6 +165,8 @@ static gboolean   gimp_channel_real_boundary (GimpChannel         *channel,
                                               gint                 x2,
                                               gint                 y2);
 static gboolean   gimp_channel_real_is_empty (GimpChannel         *channel);
+static gboolean   gimp_channel_real_is_full  (GimpChannel         *channel);
+
 static void       gimp_channel_real_feather  (GimpChannel         *channel,
                                               gdouble              radius_x,
                                               gdouble              radius_y,
@@ -277,6 +279,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   klass->boundary       = gimp_channel_real_boundary;
   klass->is_empty       = gimp_channel_real_is_empty;
+  klass->is_full        = gimp_channel_real_is_full;
   klass->feather        = gimp_channel_real_feather;
   klass->sharpen        = gimp_channel_real_sharpen;
   klass->clear          = gimp_channel_real_clear;
@@ -1116,6 +1119,16 @@ gimp_channel_real_is_empty (GimpChannel *channel)
   return TRUE;
 }
 
+static gboolean
+gimp_channel_real_is_full (GimpChannel *channel)
+{
+  return ! gimp_channel_is_empty (channel)                          &&
+         channel->x1 == 0                                           &&
+         channel->y1 == 0                                           &&
+         channel->x2 == gimp_item_get_width  (GIMP_ITEM (channel))  &&
+         channel->y2 == gimp_item_get_height (GIMP_ITEM (channel));
+}
+
 static void
 gimp_channel_real_feather (GimpChannel *channel,
                            gdouble      radius_x,
@@ -1830,6 +1843,14 @@ gimp_channel_is_empty (GimpChannel *channel)
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), TRUE);
 
   return GIMP_CHANNEL_GET_CLASS (channel)->is_empty (channel);
+}
+
+gboolean
+gimp_channel_is_full (GimpChannel *channel)
+{
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
+
+  return GIMP_CHANNEL_GET_CLASS (channel)->is_full (channel);
 }
 
 void

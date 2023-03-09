@@ -148,6 +148,7 @@ select_actions_update (GimpActionGroup *group,
   GimpImage    *image    = action_data_get_image (data);
   gboolean      fs       = FALSE;
   gboolean      sel      = FALSE;
+  gboolean      sel_all  = FALSE;
 
   GList        *drawables    = NULL;
   GList        *iter;
@@ -170,14 +171,15 @@ select_actions_update (GimpActionGroup *group,
             break;
         }
 
-      fs  = (gimp_image_get_floating_selection (image) != NULL);
-      sel = ! gimp_channel_is_empty (gimp_image_get_mask (image));
+      fs      = (gimp_image_get_floating_selection (image) != NULL);
+      sel     = ! gimp_channel_is_empty (gimp_image_get_mask (image));
+      sel_all = gimp_channel_is_full (gimp_image_get_mask (image));
     }
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
-  SET_SENSITIVE ("select-all",    image);
+  SET_SENSITIVE ("select-all",    image && ! sel_all);
   SET_SENSITIVE ("select-none",   image && sel);
   SET_SENSITIVE ("select-invert", image);
   SET_SENSITIVE ("select-float",  g_list_length (drawables) == 1 && sel                 &&
