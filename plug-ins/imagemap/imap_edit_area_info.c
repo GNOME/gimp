@@ -51,35 +51,39 @@ relative_filter(const char *name, gpointer data)
 }
 
 static void
-url_changed(GtkWidget *widget, gpointer data)
+url_changed (GtkWidget *widget,
+             gpointer   data)
 {
-   AreaInfoDialog_t *param = (AreaInfoDialog_t*) data;
-   const gchar *url = gtk_entry_get_text(GTK_ENTRY(param->url));
-   GtkWidget *button;
+  AreaInfoDialog_t *param = (AreaInfoDialog_t*) data;
+  const gchar      *url   = gtk_entry_get_text (GTK_ENTRY (param->url));
+  GtkWidget        *button;
 
-   if (!g_ascii_strncasecmp(url, "http://", sizeof("http://") - 1))
-      button = param->web_site;
-   else if (!g_ascii_strncasecmp(url, "ftp://", sizeof("ftp://") - 1))
-      button = param->ftp_site;
-   else if (!g_ascii_strncasecmp(url, "gopher://", sizeof("gopher://") - 1))
-      button = param->gopher;
-   else if (!g_ascii_strncasecmp(url, "file:/", sizeof("file:/") - 1))
-      button = param->file;
-   else if (!g_ascii_strncasecmp(url, "wais://", sizeof("wais://") - 1))
-      button = param->wais;
-   else if (!g_ascii_strncasecmp(url, "telnet://", sizeof("telnet://") - 1))
-      button = param->telnet;
-   else if (!g_ascii_strncasecmp(url, "mailto:", sizeof("mailto:") - 1))
-      button = param->email;
-   else
-      button = param->other;
+  if (! g_ascii_strncasecmp (url, "http://", sizeof ("http://") - 1)    ||
+      ! g_ascii_strncasecmp (url, "https://", sizeof ( "https://") - 1))
+    button = param->web_site;
+  else if (! g_ascii_strncasecmp (url, "ftp://", sizeof ("ftp://") - 1))
+    button = param->ftp_site;
+  else if (! g_ascii_strncasecmp (url, "gopher://", sizeof ("gopher://") - 1))
+    button = param->gopher;
+  else if (! g_ascii_strncasecmp (url, "file:/", sizeof ("file:/") - 1))
+    button = param->file;
+  else if (! g_ascii_strncasecmp (url, "wais://", sizeof ("wais://") - 1))
+    button = param->wais;
+  else if (! g_ascii_strncasecmp (url, "telnet://", sizeof ("telnet://") - 1))
+    button = param->telnet;
+  else if (! g_ascii_strncasecmp (url, "mailto:", sizeof ("mailto:") - 1))
+    button = param->email;
+  else
+    button = param->other;
 
-   callback_lock = TRUE;
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
+  callback_lock = TRUE;
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 }
 
 static void
-set_url(GtkWidget *widget, AreaInfoDialog_t *param, const gchar *prefix)
+set_url (GtkWidget        *widget,
+         AreaInfoDialog_t *param,
+         const gchar      *prefix)
 {
    if (callback_lock)
      {
@@ -87,19 +91,19 @@ set_url(GtkWidget *widget, AreaInfoDialog_t *param, const gchar *prefix)
      }
    else
      {
-       if (gtk_widget_get_state_flags (widget) & GTK_STATE_FLAG_SELECTED)
+       if (gtk_widget_get_state_flags (widget) & GTK_STATE_FLAG_ACTIVE)
          {
            char *p;
-           gchar *url = g_strdup(gtk_entry_get_text(GTK_ENTRY(param->url)));
+           gchar *url = g_strdup (gtk_entry_get_text (GTK_ENTRY(param->url)));
 
-           p = strstr(url, "//");    /* 'http://' */
+           p = strstr (url, "//");    /* 'https://' */
            if (p)
              {
                p += 2;
              }
            else
              {
-               p = strchr(url, ':');    /* 'mailto:' */
+               p = strchr (url, ':');    /* 'mailto:' */
                if (p)
                  {
                    p++;
@@ -111,61 +115,69 @@ set_url(GtkWidget *widget, AreaInfoDialog_t *param, const gchar *prefix)
                    p = url;
                  }
              }
-           p = g_strconcat(prefix, p, NULL);
-           gtk_entry_set_text(GTK_ENTRY(param->url), p);
-           g_free(p);
-           g_free(url);
+           p = g_strconcat (prefix, p, NULL);
+           gtk_entry_set_text (GTK_ENTRY(param->url), p);
+           g_free (p);
+           g_free (url);
          }
      }
    gtk_widget_grab_focus(param->url);
 }
 
 static void
-select_web_cb(GtkWidget *widget, AreaInfoDialog_t *param)
+select_web_cb (GtkWidget        *widget,
+               AreaInfoDialog_t *param)
 {
-   set_url(widget, param, "http://");
+  set_url (widget, param, "https://");
 }
 
 static void
-select_ftp_cb(GtkWidget *widget, AreaInfoDialog_t *param)
+select_ftp_cb (GtkWidget        *widget,
+               AreaInfoDialog_t *param)
 {
-   set_url(widget, param, "ftp://");
+  set_url(widget, param, "ftp://");
 }
 
 static void
-select_gopher_cb(GtkWidget *widget, AreaInfoDialog_t *param)
+select_gopher_cb (GtkWidget        *widget,
+                  AreaInfoDialog_t *param)
 {
-   set_url(widget, param, "gopher://");
+  set_url (widget, param, "gopher://");
 }
 
 static void
-select_other_cb(GtkWidget *widget, AreaInfoDialog_t *param)
+select_other_cb (GtkWidget        *widget,
+                 AreaInfoDialog_t *param)
 {
-   set_url(widget, param, "");
+  set_url (widget, param, "");
 }
 
 static void
-select_file_cb(GtkWidget *widget, AreaInfoDialog_t *param)
+select_file_cb (GtkWidget        *widget,
+                AreaInfoDialog_t *param)
 {
-   set_url(widget, param, "file:/");
+  set_url (widget, param, "file:/");
 }
 
 static void
-select_wais_cb(GtkWidget *widget, AreaInfoDialog_t *param)
+select_wais_cb (GtkWidget        *widget,
+               AreaInfoDialog_t *param)
 {
-   set_url(widget, param, "wais://");
+  set_url (widget, param, "wais://");
 }
 
 static void
-select_telnet_cb(GtkWidget *widget, AreaInfoDialog_t *param)
+select_telnet_cb (GtkWidget        *widget,
+                  AreaInfoDialog_t *param)
 {
-   set_url(widget, param, "telnet://");
+  set_url (widget, param, "telnet://");
 }
 
 static void
-select_email_cb(GtkWidget *widget, AreaInfoDialog_t *param)
+select_email_cb (GtkWidget        *widget,
+                 AreaInfoDialog_t *param)
 {
-   set_url(widget, param, "mailto:");
+  set_url (widget, param, "mailto:");
 }
 
 static void
