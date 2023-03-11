@@ -193,6 +193,9 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
   g_signal_connect (options, "notify::use-editor",
                     G_CALLBACK (gimp_text_tool_options_notify),
                     text_tool);
+  g_signal_connect (options, "notify::show-on-canvas",
+                    G_CALLBACK (gimp_text_tool_options_notify),
+                    text_tool);
 
   if (! text_tool->style_overlay)
     {
@@ -223,7 +226,9 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
                                                             xres, yres);
       gtk_container_add (GTK_CONTAINER (text_tool->style_overlay),
                          text_tool->style_editor);
-      gtk_widget_show (text_tool->style_editor);
+
+      if (options->show_on_canvas)
+        gtk_widget_show (text_tool->style_editor);
     }
 
   gimp_text_tool_editor_position (text_tool);
@@ -1327,6 +1332,11 @@ gimp_text_tool_options_notify (GimpTextOptions *options,
           if (text_tool->editor_dialog)
             gtk_widget_destroy (text_tool->editor_dialog);
         }
+    }
+  else if (! strcmp (param_name, "show-on-canvas"))
+    {
+      gtk_widget_set_visible (text_tool->style_editor,
+                              options->show_on_canvas);
     }
 }
 

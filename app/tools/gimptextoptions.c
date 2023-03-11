@@ -84,6 +84,7 @@ enum
   PROP_OUTLINE_DASH_OFFSET,
   PROP_OUTLINE_DASH_INFO,
   PROP_USE_EDITOR,
+  PROP_SHOW_ON_CANVAS_EDITOR,
 
   PROP_FONT_VIEW_TYPE,
   PROP_FONT_VIEW_SIZE
@@ -245,9 +246,16 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_EDITOR,
                             "use-editor",
-                            _("Use editor"),
+                            _("Use editor window"),
                             _("Use an external editor window for text entry"),
                             FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_ON_CANVAS_EDITOR,
+                            "show-on-canvas",
+                            _("Show on-canvas editor"),
+                            _("Show on-canvas text editor"),
+                            TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_FONT_VIEW_TYPE,
@@ -457,6 +465,9 @@ gimp_text_options_get_property (GObject    *object,
     case PROP_USE_EDITOR:
       g_value_set_boolean (value, options->use_editor);
       break;
+    case PROP_SHOW_ON_CANVAS_EDITOR:
+      g_value_set_boolean (value, options->show_on_canvas);
+      break;
 
     case PROP_FONT_VIEW_TYPE:
       g_value_set_enum (value, options->font_view_type);
@@ -571,6 +582,9 @@ gimp_text_options_set_property (GObject      *object,
     case PROP_USE_EDITOR:
       options->use_editor = g_value_get_boolean (value);
       break;
+    case PROP_SHOW_ON_CANVAS_EDITOR:
+      options->show_on_canvas = g_value_get_boolean (value);
+      break;
 
     case PROP_FONT_VIEW_TYPE:
       options->font_view_type = g_value_get_enum (value);
@@ -626,6 +640,7 @@ gimp_text_options_reset (GimpConfig *config)
   gimp_config_reset_property (object, "outline-dash-info");
 
   gimp_config_reset_property (object, "use-editor");
+  gimp_config_reset_property (object, "use-on-canvas");
 }
 
 static void
@@ -801,6 +816,9 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (vbox);
 
   button = gimp_prop_check_button_new (config, "use-editor", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+
+  button = gimp_prop_check_button_new (config, "show-on-canvas", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   button = gimp_prop_check_button_new (config, "antialias", NULL);

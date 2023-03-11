@@ -66,6 +66,7 @@ struct _GimpTextOptions
   GimpViewSize           font_view_size;
 
   gboolean               use_editor;
+  gboolean               show_on_canvas;
 
   /*  options gui  */
   GtkWidget             *size_entry;
