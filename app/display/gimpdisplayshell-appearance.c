@@ -487,6 +487,27 @@ gimp_display_shell_get_snap_to_bbox (GimpDisplayShell *shell)
 }
 
 void
+gimp_display_shell_set_snap_to_equidistance (GimpDisplayShell *shell,
+                                             gboolean          snap)
+{
+  GimpDisplayOptions *options;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  options = appearance_get_options (shell);
+
+  g_object_set (options, "snap-to-equidistance", snap, NULL);
+}
+
+gboolean
+gimp_display_shell_get_snap_to_equidistance (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return appearance_get_options (shell)->snap_to_equidistance;
+}
+
+void
 gimp_display_shell_set_padding (GimpDisplayShell      *shell,
                                 GimpCanvasPaddingMode  padding_mode,
                                 const GimpRGB         *padding_color)

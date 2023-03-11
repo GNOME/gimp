@@ -284,6 +284,13 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     FALSE,
     GIMP_HELP_VIEW_SNAP_TO_BBOX },
 
+  { "view-snap-to-equidistance", NULL,
+    NC_("view-action", "Snap to _Equidistance"), NULL, { NULL },
+    NC_("view-action", "Tool operations snap to the equidistance between three bounding boxes"),
+    view_snap_to_equidistance_cmd_callback,
+    FALSE,
+    GIMP_HELP_VIEW_SNAP_TO_EQUIDISTANCE },
+
   { "view-show-menubar", NULL,
     NC_("view-action", "Show _Menubar"), NULL, { NULL },
     NC_("view-action", "Show this window's menubar"),
@@ -928,6 +935,8 @@ view_actions_update (GimpActionGroup *group,
   SET_ACTIVE    ("view-snap-to-vectors",      display && options->snap_to_path);
   SET_SENSITIVE ("view-snap-to-bbox",         image);
   SET_ACTIVE    ("view-snap-to-bbox",         display && options->snap_to_bbox);
+  SET_SENSITIVE ("view-snap-to-equidistance", image);
+  SET_ACTIVE    ("view-snap-to-equidistance", display && options->snap_to_equidistance);
 
   SET_SENSITIVE ("view-padding-color-theme",       image);
   SET_SENSITIVE ("view-padding-color-light-check", image);

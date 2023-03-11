@@ -1129,19 +1129,22 @@ prefs_behavior_options_frame_add (Gimp         *gimp,
   prefs_check_button_add (object, "snap-to-grid",
                           _("S_nap to Grid"),
                           GTK_BOX (checks_vbox));
+  prefs_check_button_add (object, "snap-to-canvas",
+                          _("Snap to Canvas _Edges"),
+                          GTK_BOX (checks_vbox));
 
   checks_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
   gtk_widget_show (checks_vbox);
 
-  prefs_check_button_add (object, "snap-to-canvas",
-                          _("Snap to Canvas _Edges"),
-                          GTK_BOX (checks_vbox));
   prefs_check_button_add (object, "snap-to-path",
                           _("Snap to _Active Path"),
                           GTK_BOX (checks_vbox));
   prefs_check_button_add (object, "snap-to-bbox",
                           _("Snap to _Bounding Box"),
+                          GTK_BOX (checks_vbox));
+  prefs_check_button_add (object, "snap-to-equidistance",
+                          _("Snap to _Equidistance"),
                           GTK_BOX (checks_vbox));
 }
 

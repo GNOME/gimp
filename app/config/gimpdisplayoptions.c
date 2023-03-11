@@ -56,6 +56,7 @@ enum
   PROP_SNAP_TO_CANVAS,
   PROP_SNAP_TO_PATH,
   PROP_SNAP_TO_BBOX,
+  PROP_SNAP_TO_EQUIDISTANCE,
   PROP_PADDING_MODE,
   PROP_PADDING_COLOR,
   PROP_PADDING_IN_SHOW_ALL
@@ -214,6 +215,13 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_EQUIDISTANCE,
+                            "snap-to-equidistance",
+                            "Snap to Equidistance",
+                            SNAP_TO_EQUIDISTANCE_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_PADDING_MODE,
                          "padding-mode",
                          "Padding mode",
@@ -353,6 +361,13 @@ gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *k
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_EQUIDISTANCE,
+                            "snap-to-equidistance",
+                            "Snap to Equidistance",
+                            SNAP_TO_EQUIDISTANCE_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_PADDING_MODE,
                          "padding-mode",
                          "Padding mode",
@@ -447,13 +462,6 @@ gimp_display_options_no_image_class_init (GimpDisplayOptionsNoImageClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_BBOX,
-                            "snap-to-bbox",
-                            "Snap to bounding boxes",
-                            SNAP_TO_BBOX_BLURB,
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GRID,
                             "snap-to-grid",
                             "Snap to grid",
@@ -472,6 +480,20 @@ gimp_display_options_no_image_class_init (GimpDisplayOptionsNoImageClass *klass)
                             "snap-to-path",
                             "Snap tp path",
                             SNAP_TO_PATH_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_BBOX,
+                            "snap-to-bbox",
+                            "Snap to bounding boxes",
+                            SNAP_TO_BBOX_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_EQUIDISTANCE,
+                            "snap-to-equidistance",
+                            "Snap to Equidistance",
+                            SNAP_TO_EQUIDISTANCE_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 }
@@ -536,6 +558,9 @@ gimp_display_options_set_property (GObject      *object,
       break;
     case PROP_SNAP_TO_BBOX:
       options->snap_to_bbox = g_value_get_boolean (value);
+      break;
+    case PROP_SNAP_TO_EQUIDISTANCE:
+      options->snap_to_equidistance = g_value_get_boolean (value);
       break;
     case PROP_PADDING_MODE:
       options->padding_mode = g_value_get_enum (value);
@@ -607,6 +632,9 @@ gimp_display_options_get_property (GObject    *object,
       break;
     case PROP_SNAP_TO_BBOX:
       g_value_set_boolean (value, options->snap_to_bbox);
+      break;
+    case PROP_SNAP_TO_EQUIDISTANCE:
+      g_value_set_boolean (value, options->snap_to_equidistance);
       break;
     case PROP_PADDING_MODE:
       g_value_set_enum (value, options->padding_mode);

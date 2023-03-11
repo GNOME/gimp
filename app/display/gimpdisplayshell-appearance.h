@@ -19,78 +19,82 @@
 #define __GIMP_DISPLAY_SHELL_APPEARANCE_H__
 
 
-void       gimp_display_shell_appearance_update       (GimpDisplayShell       *shell);
+void       gimp_display_shell_appearance_update        (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_show_menubar        (GimpDisplayShell       *shell,
-                                                       gboolean                show);
-gboolean   gimp_display_shell_get_show_menubar        (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_show_menubar         (GimpDisplayShell       *shell,
+                                                        gboolean                show);
+gboolean   gimp_display_shell_get_show_menubar         (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_show_statusbar      (GimpDisplayShell       *shell,
-                                                       gboolean                show);
-gboolean   gimp_display_shell_get_show_statusbar      (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_show_statusbar       (GimpDisplayShell       *shell,
+                                                        gboolean                show);
+gboolean   gimp_display_shell_get_show_statusbar       (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_show_rulers         (GimpDisplayShell       *shell,
-                                                       gboolean                show);
-gboolean   gimp_display_shell_get_show_rulers         (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_show_rulers          (GimpDisplayShell       *shell,
+                                                        gboolean                show);
+gboolean   gimp_display_shell_get_show_rulers          (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_show_scrollbars     (GimpDisplayShell       *shell,
-                                                       gboolean                show);
-gboolean   gimp_display_shell_get_show_scrollbars     (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_show_scrollbars      (GimpDisplayShell       *shell,
+                                                        gboolean                show);
+gboolean   gimp_display_shell_get_show_scrollbars      (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_show_selection      (GimpDisplayShell       *shell,
-                                                       gboolean                show);
-gboolean   gimp_display_shell_get_show_selection      (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_show_selection       (GimpDisplayShell       *shell,
+                                                        gboolean                show);
+gboolean   gimp_display_shell_get_show_selection       (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_show_layer          (GimpDisplayShell       *shell,
-                                                       gboolean                show);
-gboolean   gimp_display_shell_get_show_layer          (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_show_layer           (GimpDisplayShell       *shell,
+                                                        gboolean                show);
+gboolean   gimp_display_shell_get_show_layer           (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_show_canvas         (GimpDisplayShell       *shell,
-                                                       gboolean                show);
-gboolean   gimp_display_shell_get_show_canvas         (GimpDisplayShell       *shell);
-void       gimp_display_shell_update_show_canvas      (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_show_canvas          (GimpDisplayShell       *shell,
+                                                        gboolean                show);
+gboolean   gimp_display_shell_get_show_canvas          (GimpDisplayShell       *shell);
+void       gimp_display_shell_update_show_canvas       (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_show_grid           (GimpDisplayShell       *shell,
-                                                       gboolean                show);
-gboolean   gimp_display_shell_get_show_grid           (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_show_grid            (GimpDisplayShell       *shell,
+                                                        gboolean                show);
+gboolean   gimp_display_shell_get_show_grid            (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_show_guides         (GimpDisplayShell       *shell,
-                                                       gboolean                show);
-gboolean   gimp_display_shell_get_show_guides         (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_show_guides          (GimpDisplayShell       *shell,
+                                                        gboolean                show);
+gboolean   gimp_display_shell_get_show_guides          (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_snap_to_grid        (GimpDisplayShell       *shell,
-                                                       gboolean                snap);
-gboolean   gimp_display_shell_get_snap_to_grid        (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_snap_to_grid         (GimpDisplayShell       *shell,
+                                                        gboolean                snap);
+gboolean   gimp_display_shell_get_snap_to_grid         (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_show_sample_points  (GimpDisplayShell       *shell,
-                                                       gboolean                show);
-gboolean   gimp_display_shell_get_show_sample_points  (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_show_sample_points   (GimpDisplayShell       *shell,
+                                                        gboolean                show);
+gboolean   gimp_display_shell_get_show_sample_points   (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_snap_to_guides      (GimpDisplayShell       *shell,
-                                                       gboolean                snap);
-gboolean   gimp_display_shell_get_snap_to_guides      (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_snap_to_guides       (GimpDisplayShell       *shell,
+                                                        gboolean                snap);
+gboolean   gimp_display_shell_get_snap_to_guides       (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_snap_to_canvas      (GimpDisplayShell       *shell,
-                                                       gboolean                snap);
-gboolean   gimp_display_shell_get_snap_to_canvas      (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_snap_to_canvas       (GimpDisplayShell       *shell,
+                                                        gboolean                snap);
+gboolean   gimp_display_shell_get_snap_to_canvas       (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_snap_to_vectors     (GimpDisplayShell       *shell,
-                                                       gboolean                snap);
-gboolean   gimp_display_shell_get_snap_to_vectors     (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_snap_to_vectors      (GimpDisplayShell       *shell,
+                                                        gboolean                snap);
+gboolean   gimp_display_shell_get_snap_to_vectors      (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_snap_to_bbox        (GimpDisplayShell       *shell,
-                                                       gboolean                snap);
-gboolean   gimp_display_shell_get_snap_to_bbox        (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_snap_to_bbox         (GimpDisplayShell       *shell,
+                                                        gboolean                snap);
+gboolean   gimp_display_shell_get_snap_to_bbox         (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_padding             (GimpDisplayShell       *shell,
-                                                       GimpCanvasPaddingMode   mode,
-                                                       const GimpRGB          *color);
-void       gimp_display_shell_get_padding             (GimpDisplayShell       *shell,
-                                                       GimpCanvasPaddingMode  *mode,
-                                                       GimpRGB                *color);
-void       gimp_display_shell_set_padding_in_show_all (GimpDisplayShell       *shell,
-                                                       gboolean                keep);
-gboolean   gimp_display_shell_get_padding_in_show_all (GimpDisplayShell       *shell);
+void       gimp_display_shell_set_snap_to_equidistance (GimpDisplayShell       *shell,
+                                                        gboolean                snap);
+gboolean   gimp_display_shell_get_snap_to_equidistance (GimpDisplayShell       *shell);
+
+void       gimp_display_shell_set_padding              (GimpDisplayShell       *shell,
+                                                        GimpCanvasPaddingMode   mode,
+                                                        const GimpRGB          *color);
+void       gimp_display_shell_get_padding              (GimpDisplayShell       *shell,
+                                                        GimpCanvasPaddingMode  *mode,
+                                                        GimpRGB                *color);
+void       gimp_display_shell_set_padding_in_show_all  (GimpDisplayShell       *shell,
+                                                        gboolean                keep);
+gboolean   gimp_display_shell_get_padding_in_show_all  (GimpDisplayShell       *shell);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_APPEARANCE_H__ */
