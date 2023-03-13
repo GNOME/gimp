@@ -980,15 +980,16 @@ save_resources (GOutputStream        *output,
   {
     GimpColorProfile *profile = NULL;
 
-    if (! options->duotone)
-      profile = gimp_image_get_effective_color_profile (image);
-
     if (options->cmyk)
       {
         profile = gimp_image_get_simulation_profile (image);
 
-        if (! gimp_color_profile_is_cmyk (profile))
-          g_object_unref (profile);
+        if (profile && ! gimp_color_profile_is_cmyk (profile))
+          g_clear_object (&profile);
+      }
+    else if (! options->duotone)
+      {
+        profile = gimp_image_get_effective_color_profile (image);
       }
 
     if (profile)
