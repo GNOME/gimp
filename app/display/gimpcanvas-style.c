@@ -98,6 +98,7 @@ static const GimpRGB tool_fg_highlight   = { 1.0, 0.8, 0.2, 0.8 };
 void
 gimp_canvas_set_guide_style (GtkWidget      *canvas,
                              cairo_t        *cr,
+                             GimpRGB        *color,
                              GimpGuideStyle  style,
                              gboolean        active,
                              gdouble         offset_x,
@@ -118,6 +119,8 @@ gimp_canvas_set_guide_style (GtkWidget      *canvas,
     case GIMP_GUIDE_STYLE_NORMAL:
       normal_fg  = guide_normal_fg;
       normal_bg  = guide_normal_bg;
+      if (color)
+        gimp_rgba_set (&normal_bg, color->r, color->g, color->b, 1.0);
       active_fg  = guide_active_fg;
       active_bg  = guide_active_bg;
       line_width = 1.0;

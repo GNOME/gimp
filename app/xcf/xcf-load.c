@@ -1146,7 +1146,7 @@ xcf_load_image_props (XcfInfo   *info,
                                     "Ignoring off-canvas horizontal guide (position %d) in XCF %d file",
                                     position, info->file_version);
                     else
-                      gimp_image_add_hguide (image, position, FALSE);
+                      gimp_image_add_hguide (image, position, NULL, FALSE);
                     break;
 
                   case XCF_ORIENTATION_VERTICAL:
@@ -1156,7 +1156,7 @@ xcf_load_image_props (XcfInfo   *info,
                                     "Ignoring off-canvas vertical guide (position %d) in XCF %d file",
                                     position, info->file_version);
                     else
-                      gimp_image_add_vguide (image, position, FALSE);
+                      gimp_image_add_vguide (image, position, NULL, FALSE);
                     break;
 
                   default:

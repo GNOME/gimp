@@ -37,6 +37,7 @@
 GimpGuide *
 gimp_image_add_hguide (GimpImage *image,
                        gint       position,
+                       GimpRGB   *color,
                        gboolean   push_undo)
 {
   GimpGuide *guide;
@@ -44,7 +45,8 @@ gimp_image_add_hguide (GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   guide = gimp_guide_new (GIMP_ORIENTATION_HORIZONTAL,
-                          image->gimp->next_guide_id++);
+                          image->gimp->next_guide_id++,
+                          color);
 
   if (push_undo)
     gimp_image_undo_push_guide (image,
@@ -59,6 +61,7 @@ gimp_image_add_hguide (GimpImage *image,
 GimpGuide *
 gimp_image_add_vguide (GimpImage *image,
                        gint       position,
+                       GimpRGB   *color,
                        gboolean   push_undo)
 {
   GimpGuide *guide;
@@ -66,7 +69,8 @@ gimp_image_add_vguide (GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   guide = gimp_guide_new (GIMP_ORIENTATION_VERTICAL,
-                          image->gimp->next_guide_id++);
+                          image->gimp->next_guide_id++,
+                          color);
 
   if (push_undo)
     gimp_image_undo_push_guide (image,

@@ -7,7 +7,8 @@
 (define (script-fu-guide-new image
                              drawable
                              direction
-                             position)
+                             position
+                             color)
   (let* (
         (width (car (gimp-image-get-width image)))
         (height (car (gimp-image-get-height image)))
@@ -15,8 +16,8 @@
 
     (if (= direction 0)
         ;; check position is inside the image boundaries
-        (if (<= position height) (gimp-image-add-hguide image position))
-        (if (<= position width) (gimp-image-add-vguide image position))
+        (if (<= position height) (gimp-image-add-hguide image position color))
+        (if (<= position width) (gimp-image-add-vguide image position color))
     )
 
     (gimp-displays-flush)
@@ -34,6 +35,7 @@
   SF-DRAWABLE   "Drawable"   0
   SF-OPTION     _"_Direction" '(_"Horizontal" _"Vertical")
   SF-ADJUSTMENT _"_Position"  (list 0 0 MAX-IMAGE-SIZE 1 10 0 1)
+  SF-COLOR      _"_Guide Color"'(0 204 255)
 )
 
 (script-fu-menu-register "script-fu-guide-new"

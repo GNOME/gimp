@@ -31,7 +31,9 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'yposition', type => '0 <= int32',
-	  desc => "The guide's y-offset from top of image" }
+	  desc => "The guide's y-offset from top of image" },
+    { name => 'color', type => 'color', has_alpha => 1,
+      desc => "The main guide color" }
     );
 
     @outargs = (
@@ -46,7 +48,7 @@ HELP
     {
       GimpGuide *g;
 
-      g = gimp_image_add_hguide (image, yposition, TRUE);
+      g = gimp_image_add_hguide (image, yposition, &color, TRUE);
       guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
     }
   else
@@ -71,7 +73,9 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'xposition', type => '0 <= int32',
-	  desc => "The guide's x-offset from left of image" }
+	  desc => "The guide's x-offset from left of image" },
+    { name => 'color', type => 'color', has_alpha => 1,
+      desc => "The main guide color" }
     );
 
     @outargs = (
@@ -86,7 +90,7 @@ HELP
     {
       GimpGuide *g;
 
-      g = gimp_image_add_vguide (image, xposition, TRUE);
+      g = gimp_image_add_vguide (image, xposition, &color, TRUE);
       guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
     }
   else

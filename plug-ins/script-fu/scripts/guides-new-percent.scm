@@ -2,7 +2,7 @@
 
 ;; Alan Horkan 2004.  No copyright.  Public Domain.
 
-(define (script-fu-guide-new-percent image drawable direction position)
+(define (script-fu-guide-new-percent image drawable direction position color)
   (let* (
         (width (car (gimp-image-get-width image)))
       	(height (car (gimp-image-get-height image)))
@@ -15,8 +15,8 @@
 
     (if (= direction 0)
 	      ;; convert position to pixel
-	      (if (<= position height) (gimp-image-add-hguide image position))
-	      (if (<= position width) (gimp-image-add-vguide image position))
+	      (if (<= position height) (gimp-image-add-hguide image position color))
+	      (if (<= position width) (gimp-image-add-vguide image position color))
     )
 
     (gimp-displays-flush)
@@ -35,6 +35,7 @@
   SF-OPTION     _"_Direction"       '(_"Horizontal"
                                      _"Vertical")
   SF-ADJUSTMENT _"_Position (in %)" '(50 0 100 1 10 2 1)
+  SF-COLOR      _"_Guide Color"     '(0 204 255)
 )
 
 (script-fu-menu-register "script-fu-guide-new-percent"

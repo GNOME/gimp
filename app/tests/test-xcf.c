@@ -437,15 +437,19 @@ gimp_create_mainimage (Gimp     *gimp,
   /* Guides, note we add them in reversed order */
   gimp_image_add_hguide (image,
                          GIMP_MAINIMAGE_HGUIDE2_POS,
+                         NULL,
                          FALSE /*push_undo*/);
   gimp_image_add_hguide (image,
                          GIMP_MAINIMAGE_HGUIDE1_POS,
+                         NULL,
                          FALSE /*push_undo*/);
   gimp_image_add_vguide (image,
                          GIMP_MAINIMAGE_VGUIDE2_POS,
+                         NULL,
                          FALSE /*push_undo*/);
   gimp_image_add_vguide (image,
                          GIMP_MAINIMAGE_VGUIDE1_POS,
+                         NULL,
                          FALSE /*push_undo*/);
 
 

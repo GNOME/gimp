@@ -20,10 +20,15 @@
 
 #include "config.h"
 
+#include <cairo.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gegl.h>
 #include <gio/gio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
 
@@ -35,6 +40,7 @@ enum
   PROP_0,
   PROP_ORIENTATION,
   PROP_POSITION,
+  PROP_COLOR,
   PROP_STYLE
 };
 
@@ -43,6 +49,7 @@ struct _GimpGuidePrivate
 {
   GimpOrientationType  orientation;
   gint                 position;
+  GimpRGB              color;
 
   GimpGuideStyle       style;
 };
@@ -65,9 +72,12 @@ static void
 gimp_guide_class_init (GimpGuideClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GimpRGB       default_color;
 
   object_class->get_property = gimp_guide_get_property;
   object_class->set_property = gimp_guide_set_property;
+
+  gimp_rgba_set (&default_color, 0.0, 0.8, 1.0, GIMP_OPACITY_OPAQUE);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_ORIENTATION,
                          "orientation",
@@ -90,6 +100,12 @@ gimp_guide_class_init (GimpGuideClass *klass)
                          GIMP_TYPE_GUIDE_STYLE,
                          GIMP_GUIDE_STYLE_NONE,
                          0);
+
+  GIMP_CONFIG_PROP_RGB (object_class, PROP_COLOR,
+                        "color",
+                        NULL, NULL,
+                        TRUE, &default_color,
+                        GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -113,6 +129,9 @@ gimp_guide_get_property (GObject    *object,
       break;
     case PROP_POSITION:
       g_value_set_int (value, guide->priv->position);
+      break;
+    case PROP_COLOR:
+      gimp_value_set_rgb (value, &guide->priv->color);
       break;
     case PROP_STYLE:
       g_value_set_enum (value, guide->priv->style);
@@ -139,6 +158,9 @@ gimp_guide_set_property (GObject      *object,
     case PROP_POSITION:
       guide->priv->position = g_value_get_int (value);
       break;
+    case PROP_COLOR:
+      gimp_value_get_rgb (value, &guide->priv->color);
+      break;
     case PROP_STYLE:
       guide->priv->style = g_value_get_enum (value);
       break;
@@ -150,11 +172,20 @@ gimp_guide_set_property (GObject      *object,
 
 GimpGuide *
 gimp_guide_new (GimpOrientationType  orientation,
-                guint32              guide_ID)
+                guint32              guide_ID,
+                GimpRGB             *color)
 {
+  GimpRGB guide_color;
+
+  if (! color)
+    gimp_rgba_set (&guide_color, 0.0, 0.8, 1.0, 1.0);
+  else
+    gimp_rgba_set (&guide_color, color->r, color->g, color->b, 1.0);
+
   return g_object_new (GIMP_TYPE_GUIDE,
                        "id",          guide_ID,
                        "orientation", orientation,
+                       "color",       &guide_color,
                        "style",       GIMP_GUIDE_STYLE_NORMAL,
                        NULL);
 }
@@ -223,6 +254,15 @@ gimp_guide_set_position (GimpGuide *guide,
   guide->priv->position = position;
 
   g_object_notify (G_OBJECT (guide), "position");
+}
+
+void
+gimp_guide_get_color (GimpGuide *guide,
+                      GimpRGB   *color)
+{
+  g_return_if_fail (GIMP_IS_GUIDE (guide));
+
+  *color = guide->priv->color;
 }
 
 GimpGuideStyle

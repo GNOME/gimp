@@ -2300,9 +2300,9 @@ read_tube_block (FILE      *f,
   selection_mode = GUINT32_FROM_LE (selection_mode);
 
   for (i = 1; i < params.cols; i++)
-    gimp_image_add_vguide (image, (ia->width * i)/params.cols);
+    gimp_image_add_vguide (image, (ia->width * i)/params.cols, NULL);
   for (i = 1; i < params.rows; i++)
-    gimp_image_add_hguide (image, (ia->height * i)/params.rows);
+    gimp_image_add_hguide (image, (ia->height * i)/params.rows, NULL);
 
   /* We use a parasite to pass in the tube (pipe) parameters in
    * case we will have any use of those, for instance in the gpb

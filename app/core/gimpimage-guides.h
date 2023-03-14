@@ -23,9 +23,11 @@
  */
 GimpGuide * gimp_image_add_hguide     (GimpImage *image,
                                        gint       position,
+                                       GimpRGB   *color,
                                        gboolean   push_undo);
 GimpGuide * gimp_image_add_vguide     (GimpImage *image,
                                        gint       position,
+                                       GimpRGB   *color,
                                        gboolean   push_undo);
 
 /*  internal guide adding API, does not check the guide's position and

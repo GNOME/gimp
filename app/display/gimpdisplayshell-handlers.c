@@ -722,11 +722,14 @@ gimp_display_shell_guide_add_handler (GimpImage        *image,
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->guides);
   GimpCanvasItem       *item;
   GimpGuideStyle        style;
+  GimpRGB               color;
 
+  gimp_guide_get_color (guide, &color);
   style = gimp_guide_get_style (guide);
   item = gimp_canvas_guide_new (shell,
                                 gimp_guide_get_orientation (guide),
                                 gimp_guide_get_position (guide),
+                                &color,
                                 style);
 
   gimp_canvas_proxy_group_add_item (group, guide, item);

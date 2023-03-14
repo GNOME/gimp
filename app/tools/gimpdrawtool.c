@@ -940,7 +940,7 @@ gimp_draw_tool_add_guide (GimpDrawTool        *draw_tool,
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_guide_new (gimp_display_get_shell (draw_tool->display),
-                                orientation, position,
+                                orientation, position, NULL,
                                 style);
 
   gimp_draw_tool_add_item (draw_tool, item);

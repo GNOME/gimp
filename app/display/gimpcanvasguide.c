@@ -20,11 +20,15 @@
 
 #include "config.h"
 
+#include <cairo.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "display-types.h"
 
@@ -38,6 +42,7 @@ enum
   PROP_0,
   PROP_ORIENTATION,
   PROP_POSITION,
+  PROP_COLOR,
   PROP_STYLE
 };
 
@@ -48,6 +53,7 @@ struct _GimpCanvasGuidePrivate
 {
   GimpOrientationType  orientation;
   gint                 position;
+  GimpRGB              color;
 
   GimpGuideStyle       style;
 };
@@ -84,6 +90,7 @@ gimp_canvas_guide_class_init (GimpCanvasGuideClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
   GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  GimpRGB              default_color;
 
   object_class->set_property = gimp_canvas_guide_set_property;
   object_class->get_property = gimp_canvas_guide_get_property;
@@ -91,6 +98,8 @@ gimp_canvas_guide_class_init (GimpCanvasGuideClass *klass)
   item_class->draw           = gimp_canvas_guide_draw;
   item_class->get_extents    = gimp_canvas_guide_get_extents;
   item_class->stroke         = gimp_canvas_guide_stroke;
+
+  gimp_rgba_set (&default_color, 0.0, 0.8, 1.0, GIMP_OPACITY_OPAQUE);
 
   g_object_class_install_property (object_class, PROP_ORIENTATION,
                                    g_param_spec_enum ("orientation", NULL, NULL,
@@ -103,6 +112,12 @@ gimp_canvas_guide_class_init (GimpCanvasGuideClass *klass)
                                                      -GIMP_MAX_IMAGE_SIZE,
                                                      GIMP_MAX_IMAGE_SIZE, 0,
                                                      GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_COLOR,
+                                   gimp_param_spec_rgb ("color", NULL, NULL,
+                                                        TRUE, &default_color,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_STYLE,
                                    g_param_spec_enum ("style", NULL, NULL,
@@ -132,6 +147,9 @@ gimp_canvas_guide_set_property (GObject      *object,
     case PROP_POSITION:
       private->position = g_value_get_int (value);
       break;
+    case PROP_COLOR:
+      gimp_value_get_rgb (value, &private->color);
+      break;
     case PROP_STYLE:
       private->style = g_value_get_enum (value);
       break;
@@ -157,6 +175,9 @@ gimp_canvas_guide_get_property (GObject    *object,
       break;
     case PROP_POSITION:
       g_value_set_int (value, private->position);
+      break;
+    case PROP_COLOR:
+      gimp_value_set_rgb (value, &private->color);
       break;
     case PROP_STYLE:
       g_value_set_enum (value, private->style);
@@ -247,10 +268,10 @@ gimp_canvas_guide_stroke (GimpCanvasItem *item,
 
   if (private->style != GIMP_GUIDE_STYLE_NONE)
     {
-      GimpDisplayShell *shell = gimp_canvas_item_get_shell (item);
+      GimpDisplayShell       *shell = gimp_canvas_item_get_shell (item);
 
       gimp_canvas_set_guide_style (gimp_canvas_item_get_canvas (item), cr,
-                                   private->style,
+                                   &private->color, private->style,
                                    gimp_canvas_item_get_highlight (item),
                                    shell->offset_x, shell->offset_y);
       cairo_stroke (cr);
@@ -265,6 +286,7 @@ GimpCanvasItem *
 gimp_canvas_guide_new (GimpDisplayShell    *shell,
                        GimpOrientationType  orientation,
                        gint                 position,
+                       GimpRGB             *color,
                        GimpGuideStyle       style)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
@@ -273,6 +295,7 @@ gimp_canvas_guide_new (GimpDisplayShell    *shell,
                        "shell",        shell,
                        "orientation",  orientation,
                        "position",     position,
+                       "color",        color,
                        "style",        style,
                        NULL);
 }

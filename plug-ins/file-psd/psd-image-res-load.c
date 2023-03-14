@@ -970,9 +970,9 @@ load_resource_1032 (const PSDimageres  *res_a,
                          guide.fDirection);
 
       if (guide.fDirection == PSD_VERTICAL)
-        gimp_image_add_vguide (image, guide.fLocation);
+        gimp_image_add_vguide (image, guide.fLocation, NULL);
       else
-        gimp_image_add_hguide (image, guide.fLocation);
+        gimp_image_add_hguide (image, guide.fLocation, NULL);
     }
 
   return 0;

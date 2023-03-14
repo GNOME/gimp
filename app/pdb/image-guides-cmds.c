@@ -21,9 +21,13 @@
 
 #include "stamp-pdbgen.h"
 
+#include <cairo.h>
+
 #include <gegl.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "libgimpbase/gimpbase.h"
 
@@ -57,10 +61,12 @@ image_add_hguide_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   gint yposition;
+  GimpRGB color;
   guint guide = 0;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   yposition = g_value_get_int (gimp_value_array_index (args, 1));
+  gimp_value_get_rgb (gimp_value_array_index (args, 2), &color);
 
   if (success)
     {
@@ -68,7 +74,7 @@ image_add_hguide_invoker (GimpProcedure         *procedure,
         {
           GimpGuide *g;
 
-          g = gimp_image_add_hguide (image, yposition, TRUE);
+          g = gimp_image_add_hguide (image, yposition, &color, TRUE);
           guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
         }
       else
@@ -96,10 +102,12 @@ image_add_vguide_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   gint xposition;
+  GimpRGB color;
   guint guide = 0;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   xposition = g_value_get_int (gimp_value_array_index (args, 1));
+  gimp_value_get_rgb (gimp_value_array_index (args, 2), &color);
 
   if (success)
     {
@@ -107,7 +115,7 @@ image_add_vguide_invoker (GimpProcedure         *procedure,
         {
           GimpGuide *g;
 
-          g = gimp_image_add_vguide (image, xposition, TRUE);
+          g = gimp_image_add_vguide (image, xposition, &color, TRUE);
           guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
         }
       else
@@ -296,6 +304,13 @@ register_image_guides_procs (GimpPDB *pdb)
                                                  "The guide's y-offset from top of image",
                                                  0, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_rgb ("color",
+                                                    "color",
+                                                    "The main guide color",
+                                                    TRUE,
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_uint ("guide",
                                                       "guide",
@@ -331,6 +346,13 @@ register_image_guides_procs (GimpPDB *pdb)
                                                  "The guide's x-offset from left of image",
                                                  0, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_rgb ("color",
+                                                    "color",
+                                                    "The main guide color",
+                                                    TRUE,
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_uint ("guide",
                                                       "guide",

@@ -216,12 +216,14 @@ gimp_guide_tool_button_release (GimpTool              *tool,
                     case GIMP_ORIENTATION_HORIZONTAL:
                       gimp_image_add_hguide (image,
                                              guide->position,
+                                             NULL,
                                              TRUE);
                       break;
 
                     case GIMP_ORIENTATION_VERTICAL:
                       gimp_image_add_vguide (image,
                                              guide->position,
+                                             NULL,
                                              TRUE);
                       break;
 

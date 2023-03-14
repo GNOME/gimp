@@ -452,10 +452,10 @@ gimp_measure_tool_compass_create_guides (GimpToolWidget  *widget,
                                      _("Add Guides"));
 
       if (horizontal)
-        gimp_image_add_hguide (image, y, TRUE);
+        gimp_image_add_hguide (image, y, NULL, TRUE);
 
       if (vertical)
-        gimp_image_add_vguide (image, x, TRUE);
+        gimp_image_add_vguide (image, x, NULL, TRUE);
 
       if (horizontal && vertical)
         gimp_image_undo_group_end (image);

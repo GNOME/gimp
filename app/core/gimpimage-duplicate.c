@@ -457,15 +457,18 @@ gimp_image_duplicate_guides (GimpImage *image,
     {
       GimpGuide *guide    = list->data;
       gint       position = gimp_guide_get_position (guide);
+      GimpRGB    color;
+
+      gimp_guide_get_color (guide, &color);
 
       switch (gimp_guide_get_orientation (guide))
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          gimp_image_add_hguide (new_image, position, FALSE);
+          gimp_image_add_hguide (new_image, position, &color, FALSE);
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
-          gimp_image_add_vguide (new_image, position, FALSE);
+          gimp_image_add_vguide (new_image, position, &color, FALSE);
           break;
 
         default:

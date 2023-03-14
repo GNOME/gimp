@@ -1,6 +1,6 @@
 ;; -*-scheme-*-
 
-(define (script-fu-guides-from-selection image drawable)
+(define (script-fu-guides-from-selection image drawable color)
   (let* (
         (boundaries (gimp-selection-bounds image))
         ;; non-empty INT32 TRUE if there is a selection
@@ -16,10 +16,10 @@
       (begin
         (gimp-image-undo-group-start image)
 
-        (gimp-image-add-vguide image x1)
-        (gimp-image-add-hguide image y1)
-        (gimp-image-add-vguide image x2)
-        (gimp-image-add-hguide image y2)
+        (gimp-image-add-vguide image x1 color)
+        (gimp-image-add-hguide image y1 color)
+        (gimp-image-add-vguide image x2 color)
+        (gimp-image-add-hguide image y2 color)
 
         (gimp-image-undo-group-end image)
         (gimp-displays-flush)
@@ -37,6 +37,7 @@
   "*"
   SF-IMAGE    "Image"    0
   SF-DRAWABLE "Drawable" 0
+  SF-COLOR   _"_Guide Color" '(0 204 255)
 )
 
 (script-fu-menu-register "script-fu-guides-from-selection"

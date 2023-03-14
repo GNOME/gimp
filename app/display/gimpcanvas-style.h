@@ -24,6 +24,7 @@
 
 void   gimp_canvas_set_guide_style         (GtkWidget     *canvas,
                                             cairo_t       *cr,
+                                            GimpRGB       *color,
                                             GimpGuideStyle style,
                                             gboolean       active,
                                             gdouble        offset_x,

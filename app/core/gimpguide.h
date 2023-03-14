@@ -55,7 +55,8 @@ struct _GimpGuideClass
 GType               gimp_guide_get_type         (void) G_GNUC_CONST;
 
 GimpGuide *         gimp_guide_new              (GimpOrientationType  orientation,
-                                                 guint32              guide_ID);
+                                                 guint32              guide_ID,
+                                                 GimpRGB             *color);
 GimpGuide *         gimp_guide_custom_new       (GimpOrientationType  orientation,
                                                  guint32              guide_ID,
                                                  GimpGuideStyle       guide_style);
@@ -67,6 +68,9 @@ void                gimp_guide_set_orientation  (GimpGuide           *guide,
 gint                gimp_guide_get_position     (GimpGuide           *guide);
 void                gimp_guide_set_position     (GimpGuide           *guide,
                                                  gint                 position);
+
+void                gimp_guide_get_color        (GimpGuide           *guide,
+                                                 GimpRGB             *color);
 
 GimpGuideStyle      gimp_guide_get_style        (GimpGuide           *guide);
 gboolean            gimp_guide_is_custom        (GimpGuide           *guide);
