@@ -13,6 +13,7 @@ $(isl_xml_files): $(isl_xml_in_files) $(wildcard $(top_srcdir)/po-windows-instal
 
 # Then, we generate the .isl file for each language using some xsltproc magic
 languages = \
+	bg:bg		\
 	ca:ca		\
 	cs:cs		\
 	da:da		\
