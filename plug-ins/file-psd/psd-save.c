@@ -2433,6 +2433,8 @@ save_dialog (GimpImage     *image,
 {
   GtkWidget        *dialog;
   GtkWidget        *duotone_notice;
+  GtkWidget        *label;
+  gchar            *text;
   GtkWidget        *profile_label;
   GimpColorProfile *cmyk_profile;
   GimpParasite     *parasite         = NULL;
@@ -2654,6 +2656,25 @@ save_dialog (GimpImage     *image,
     gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                                 "cmyk-frame",
                                 NULL);
+
+  /* Compatibility Notice */
+  text = g_strdup_printf ("\n<b>%s</b>: %s",
+                          _("Compatibility Notice"),
+                          _("Legacy layer modes have been reported "
+                            "to have better compatibility with Photoshop. "
+                            "If you encounter display issues, consider "
+                            "switching to those layer modes."));
+
+  label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "compat-notice", "Compatibility Notice");
+  gtk_label_set_markup (GTK_LABEL (label), text);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_max_width_chars (GTK_LABEL (label), 50);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "compat-notice", NULL);
+  g_free (text);
 
   gtk_widget_show (dialog);
 
