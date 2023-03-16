@@ -103,7 +103,8 @@ static GimpValueArray * align_layers_run                    (GimpProcedure      
 
 
 /* Main function */
-static GimpPDBStatusType align_layers                       (GimpImage            *image);
+static GimpPDBStatusType align_layers                       (GimpImage            *image,
+                                                             GObject              *config);
 
 /* Helpers and internal functions */
 static gint             align_layers_count_visibles_layers  (GList                *layers);
@@ -116,16 +117,18 @@ static GimpLayer     ** align_layers_spread_image           (GimpImage          
 static GimpLayer      * align_layers_find_background        (GimpImage            *image);
 static AlignData        align_layers_gather_data            (GimpLayer           **layers,
                                                              gint                  layer_num,
-                                                             GimpLayer            *background);
+                                                             GimpLayer            *background,
+                                                             GObject              *config);
 static void             align_layers_perform_alignment      (GimpLayer           **layers,
                                                              gint                  layer_num,
-                                                             AlignData             data);
+                                                             AlignData             data,
+                                                             GObject              *config);
 static void             align_layers_get_align_offsets      (GimpDrawable         *drawable,
                                                              gint                 *x,
-                                                             gint                 *y);
-static gint             align_layers_dialog                 (void);
-static void             align_layers_scale_entry_update_int (GimpLabelSpin        *entry,
-                                                             gint                 *value);
+                                                             gint                 *y,
+                                                             GObject              *config);
+static gint             align_layers_dialog                 (GimpProcedure        *procedure,
+                                                             GObject              *config);
 
 
 G_DEFINE_TYPE (AlignLayers, align_layers, GIMP_TYPE_PLUG_IN)
@@ -133,29 +136,6 @@ G_DEFINE_TYPE (AlignLayers, align_layers, GIMP_TYPE_PLUG_IN)
 GIMP_MAIN (ALIGN_LAYERS_TYPE)
 DEFINE_STD_SET_I18N
 
-
-/* dialog variables */
-typedef struct
-{
-  gint     h_style;
-  gint     h_base;
-  gint     v_style;
-  gint     v_base;
-  gboolean ignore_bottom;
-  gboolean base_is_bottom_layer;
-  gint     grid_size;
-} ValueType;
-
-static ValueType VALS =
-{
-  H_NONE,
-  H_BASE_LEFT,
-  V_NONE,
-  V_BASE_TOP,
-  TRUE,
-  FALSE,
-  10
-};
 
 static void
 align_layers_class_init (AlignLayersClass *klass)
@@ -208,6 +188,56 @@ align_layers_create_procedure (GimpPlugIn  *plug_in,
                                       "Shuji Narazaki",
                                       "1997");
 
+      GIMP_PROC_ARG_INT (procedure, "horizontal-style",
+                         _("_Horizontal style"),
+                         _("(None = 0, Collect = 1, "
+                           "Fill left to right = 2, Fill right to left = 3, "
+                           "Snap to grid = 4)"),
+                         H_NONE, SNAP2HGRID, H_NONE,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "horizontal-base",
+                         _("Hori_zontal base"),
+                         _("(Left edge = 0, Center = 1, "
+                           "Right edge = 2)"),
+                         H_BASE_LEFT, H_BASE_RIGHT, H_BASE_LEFT,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "vertical-style",
+                         _("_Vertical style"),
+                         _("(None = 0, Collect = 1, "
+                           "Fill left to right = 2, Fill right to left = 3, "
+                           "Snap to grid = 4)"),
+                         V_NONE, SNAP2VGRID, V_NONE,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "vertical-base",
+                         _("Ver_tical base"),
+                         _("(Left edge = 0, Center = 1, "
+                           "Right edge = 2)"),
+                         V_BASE_TOP, V_BASE_BOTTOM, V_BASE_TOP,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "grid-size",
+                         _("_Grid"),
+                         _("Grid"),
+                         1, 200, 10,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure,
+                             "ignore-bottom-layer",
+                             _("Ignore the _bottom layer even if visible"),
+                             _("Ignore the bottom layer even if visible"),
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure,
+                             "use-bottom-layer",
+                             _("_Use the (invisible) bottom layer as the base"),
+                             _("Use the (invisible) bottom layer as the base"),
+                             FALSE,
+                             G_PARAM_READWRITE);
+
       /* TODO: these 2 arguments existed in the original procedure but
        * were actually unused. If we want to keep them, let's at least
        * implement the documented behavior, or else let's just drop
@@ -239,11 +269,15 @@ align_layers_run (GimpProcedure        *procedure,
                   const GimpValueArray *args,
                   gpointer              run_data)
 {
-  GimpValueArray    *return_vals = NULL;
-  GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
-  GError            *error  = NULL;
-  GList             *layers;
-  gint               layer_num;
+  GimpProcedureConfig *config;
+  GimpValueArray      *return_vals = NULL;
+  GimpPDBStatusType    status      = GIMP_PDB_EXECUTION_ERROR;
+  GError              *error       = NULL;
+  GList               *layers;
+  gint                 layer_num;
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   switch ( run_mode )
     {
@@ -253,34 +287,33 @@ align_layers_run (GimpProcedure        *procedure,
       g_list_free (layers);
       if (layer_num < 2)
         {
-          error = g_error_new_literal (0, 0,
-                                       _("There are not enough layers to align."));
-          break;
+          g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                       _("There are not enough layers to align."));
+
+          return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
         }
-      gimp_get_data (PLUG_IN_PROC, &VALS);
-      VALS.grid_size = MAX (VALS.grid_size, 1);
-      if (! align_layers_dialog ())
+
+      if (! align_layers_dialog (procedure, G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      break;
-
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &VALS);
       break;
     }
 
   if (status != GIMP_PDB_CANCEL)
     {
-      status = align_layers (image);
+      status = align_layers (image, G_OBJECT (config));
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
-    gimp_set_data (PLUG_IN_PROC, &VALS, sizeof (ValueType));
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
 
   return_vals = gimp_procedure_new_return_values (procedure, status,
                                                   error);
@@ -292,12 +325,18 @@ align_layers_run (GimpProcedure        *procedure,
  * Main function
  */
 static GimpPDBStatusType
-align_layers (GimpImage *image)
+align_layers (GimpImage *image,
+              GObject   *config)
 {
-  gint       layer_num  = 0;
+  gint         layer_num  = 0;
   GimpLayer  **layers     = NULL;
   GimpLayer   *background = 0;
-  AlignData  data;
+  AlignData    data;
+  gboolean     ignore_bottom_layer;
+
+  g_object_get (config,
+                "ignore-bottom-layer", &ignore_bottom_layer,
+                NULL);
 
   layers = align_layers_spread_image (image, &layer_num);
   if (layer_num < 2)
@@ -309,20 +348,22 @@ align_layers (GimpImage *image)
   background = align_layers_find_background (image);
 
   /* If we want to ignore the bottom layer and if it's visible */
-  if (VALS.ignore_bottom && background == layers[layer_num - 1])
+  if (ignore_bottom_layer && background == layers[layer_num - 1])
     {
       layer_num--;
     }
 
   data = align_layers_gather_data (layers,
                                    layer_num,
-                                   background);
+                                   background,
+                                   config);
 
   gimp_image_undo_group_start (image);
 
   align_layers_perform_alignment (layers,
                                   layer_num,
-                                  data);
+                                  data,
+                                  config);
 
   gimp_image_undo_group_end (image);
 
@@ -477,18 +518,28 @@ align_layers_count_visibles_layers (GList *layers)
 static AlignData
 align_layers_gather_data (GimpLayer **layers,
                           gint        layer_num,
-                          GimpLayer  *background)
+                          GimpLayer  *background,
+                          GObject    *config)
 {
   AlignData data;
-  gint   min_x = G_MAXINT;
-  gint   min_y = G_MAXINT;
-  gint   max_x = G_MININT;
-  gint   max_y = G_MININT;
-  gint   index;
-  gint   orig_x   = 0;
-  gint   orig_y   = 0;
-  gint   offset_x = 0;
-  gint   offset_y = 0;
+  gint      min_x    = G_MAXINT;
+  gint      min_y    = G_MAXINT;
+  gint      max_x    = G_MININT;
+  gint      max_y    = G_MININT;
+  gint      index;
+  gint      orig_x   = 0;
+  gint      orig_y   = 0;
+  gint      offset_x = 0;
+  gint      offset_y = 0;
+  gint      horizontal_style;
+  gint      vertical_style;
+  gboolean  use_bottom_layer;
+
+  g_object_get (config,
+                "horizontal-style", &horizontal_style,
+                "vertical-style",   &vertical_style,
+                "use-bottom-layer", &use_bottom_layer,
+                NULL);
 
   data.step_x = 0;
   data.step_y = 0;
@@ -502,7 +553,8 @@ align_layers_gather_data (GimpLayer **layers,
 
       align_layers_get_align_offsets (GIMP_DRAWABLE (layers[index]),
                                       &offset_x,
-                                      &offset_y);
+                                      &offset_y,
+                                      config);
       orig_x += offset_x;
       orig_y += offset_y;
 
@@ -512,13 +564,14 @@ align_layers_gather_data (GimpLayer **layers,
       max_y = MAX (max_y, orig_y);
     }
 
-  if (VALS.base_is_bottom_layer)
+  if (use_bottom_layer)
     {
       gimp_drawable_get_offsets (GIMP_DRAWABLE (background), &orig_x, &orig_y);
 
       align_layers_get_align_offsets (GIMP_DRAWABLE (background),
                                       &offset_x,
-                                      &offset_y);
+                                      &offset_y,
+                                      config);
       orig_x += offset_x;
       orig_y += offset_y;
       data.base_x = min_x = orig_x;
@@ -531,10 +584,10 @@ align_layers_gather_data (GimpLayer **layers,
       data.step_y = (max_y - min_y) / (layer_num - 1);
     }
 
-  if ( (VALS.h_style == LEFT2RIGHT) || (VALS.h_style == RIGHT2LEFT))
+  if ((horizontal_style == LEFT2RIGHT) || (horizontal_style == RIGHT2LEFT))
     data.base_x = min_x;
 
-  if ( (VALS.v_style == TOP2BOTTOM) || (VALS.v_style == BOTTOM2TOP))
+  if ((vertical_style == TOP2BOTTOM) || (vertical_style == BOTTOM2TOP))
     data.base_y = min_y;
 
   return data;
@@ -547,9 +600,19 @@ align_layers_gather_data (GimpLayer **layers,
 static void
 align_layers_perform_alignment (GimpLayer **layers,
                                 gint        layer_num,
-                                AlignData   data)
+                                AlignData   data,
+                                GObject    *config)
 {
   gint index;
+  gint horizontal_style;
+  gint vertical_style;
+  gint grid_size;
+
+  g_object_get (config,
+                "horizontal-style", &horizontal_style,
+                "vertical-style",   &vertical_style,
+                "grid-size",        &grid_size,
+                NULL);
 
   for (index = 0; index < layer_num; index++)
     {
@@ -564,8 +627,9 @@ align_layers_perform_alignment (GimpLayer **layers,
 
       align_layers_get_align_offsets (GIMP_DRAWABLE (layers[index]),
                                       &offset_x,
-                                      &offset_y);
-      switch (VALS.h_style)
+                                      &offset_y,
+                                      config);
+      switch (horizontal_style)
         {
         case H_NONE:
           x = orig_x;
@@ -580,13 +644,13 @@ align_layers_perform_alignment (GimpLayer **layers,
           x = (data.base_x + (layer_num - index - 1) * data.step_x) - offset_x;
           break;
         case SNAP2HGRID:
-          x = VALS.grid_size
-            * (int) ((orig_x + offset_x + VALS.grid_size /2) / VALS.grid_size)
+          x = grid_size
+            * (int) ((orig_x + offset_x + grid_size /2) / grid_size)
             - offset_x;
           break;
         }
 
-      switch (VALS.v_style)
+      switch (vertical_style)
         {
         case V_NONE:
           y = orig_y;
@@ -601,8 +665,8 @@ align_layers_perform_alignment (GimpLayer **layers,
           y = (data.base_y + (layer_num - index - 1) * data.step_y) - offset_y;
           break;
         case SNAP2VGRID:
-          y = VALS.grid_size
-            * (int) ((orig_y + offset_y + VALS.grid_size / 2) / VALS.grid_size)
+          y = grid_size
+            * (int) ((orig_y + offset_y + grid_size / 2) / grid_size)
             - offset_y;
           break;
         }
@@ -614,12 +678,20 @@ align_layers_perform_alignment (GimpLayer **layers,
 static void
 align_layers_get_align_offsets (GimpDrawable *drawable,
                                 gint         *x,
-                                gint         *y)
+                                gint         *y,
+                                GObject      *config)
 {
   gint width  = gimp_drawable_get_width  (drawable);
   gint height = gimp_drawable_get_height (drawable);
+  gint horizontal_base;
+  gint vertical_base;
 
-  switch (VALS.h_base)
+  g_object_get (config,
+                "horizontal-base", &horizontal_base,
+                "vertical-base",   &vertical_base,
+                NULL);
+
+  switch (horizontal_base)
     {
     case H_BASE_LEFT:
       *x = 0;
@@ -635,7 +707,7 @@ align_layers_get_align_offsets (GimpDrawable *drawable,
       break;
     }
 
-  switch (VALS.v_base)
+  switch (vertical_base)
     {
     case V_BASE_TOP:
       *y = 0;
@@ -653,142 +725,73 @@ align_layers_get_align_offsets (GimpDrawable *drawable,
 }
 
 static int
-align_layers_dialog (void)
+align_layers_dialog (GimpProcedure *procedure,
+                     GObject       *config)
 {
-  GtkWidget *dialog;
-  GtkWidget *grid;
-  GtkWidget *combo;
-  GtkWidget *toggle;
-  GtkWidget *scale;
-  gboolean   run;
+  GtkWidget    *dialog;
+  GtkListStore *store;
+  gboolean      run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Align Visible Layers"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
-
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-
-                            NULL);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Align Visible Layers"));
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  store = gimp_int_store_new (_("None"),                 H_NONE,
+                              _("Collect"),              H_COLLECT,
+                              _("Fill (left to right)"), LEFT2RIGHT,
+                              _("Fill (right to left)"), RIGHT2LEFT,
+                              _("Snap to grid"),         SNAP2HGRID,
+                              NULL);
+  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "horizontal-style",
+                                       GIMP_INT_STORE (store));
 
-  combo = gimp_int_combo_box_new (C_("align-style", "None"), H_NONE,
-                                  _("Collect"),              H_COLLECT,
-                                  _("Fill (left to right)"), LEFT2RIGHT,
-                                  _("Fill (right to left)"), RIGHT2LEFT,
-                                  _("Snap to grid"),         SNAP2HGRID,
-                                  NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.h_style);
+  store = gimp_int_store_new (_("Left edge"),  H_BASE_LEFT,
+                              _("Center"),     H_BASE_CENTER,
+                              _("Right edge"), H_BASE_RIGHT,
+                              NULL);
+  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "horizontal-base",
+                                       GIMP_INT_STORE (store));
 
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
-                    &VALS.h_style);
+  store = gimp_int_store_new (_("None"),                 V_NONE,
+                              _("Collect"),              V_COLLECT,
+                              _("Fill (top to bottom)"), TOP2BOTTOM,
+                              _("Fill (bottom to top)"), BOTTOM2TOP,
+                              _("Snap to grid"),         SNAP2VGRID,
+                              NULL);
+  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "vertical-style",
+                                       GIMP_INT_STORE (store));
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("_Horizontal style:"), 0.0, 0.5,
-                            combo, 2);
+  store = gimp_int_store_new (_("Top edge"),    V_BASE_TOP,
+                              _("Center"),      V_BASE_CENTER,
+                              _("Bottom edge"), V_BASE_BOTTOM,
+                              NULL);
+  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "vertical-base",
+                                       GIMP_INT_STORE (store));
 
+  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "grid-size", 1.0);
 
-  combo = gimp_int_combo_box_new (_("Left edge"),  H_BASE_LEFT,
-                                  _("Center"),     H_BASE_CENTER,
-                                  _("Right edge"), H_BASE_RIGHT,
-                                  NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.h_base);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
-                    &VALS.h_base);
-
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("Ho_rizontal base:"), 0.0, 0.5,
-                            combo, 2);
-
-  combo = gimp_int_combo_box_new (C_("align-style", "None"), V_NONE,
-                                  _("Collect"),              V_COLLECT,
-                                  _("Fill (top to bottom)"), TOP2BOTTOM,
-                                  _("Fill (bottom to top)"), BOTTOM2TOP,
-                                  _("Snap to grid"),         SNAP2VGRID,
-                                  NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.v_style);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
-                    &VALS.v_style);
-
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
-                            _("_Vertical style:"), 0.0, 0.5,
-                            combo, 2);
-
-  combo = gimp_int_combo_box_new (_("Top edge"),    V_BASE_TOP,
-                                  _("Center"),      V_BASE_CENTER,
-                                  _("Bottom edge"), V_BASE_BOTTOM,
-                                  NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.v_base);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
-                    &VALS.v_base);
-
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
-                            _("Ver_tical base:"), 0.0, 0.5,
-                            combo, 2);
-
-  scale = gimp_scale_entry_new (_("_Grid size:"), VALS.grid_size, 1, 200, 0);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (align_layers_scale_entry_update_int),
-                    &VALS.grid_size);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 4, 3, 1);
-  gtk_widget_show (scale);
-
-  toggle = gtk_check_button_new_with_mnemonic
-    (_("_Ignore the bottom layer even if visible"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), VALS.ignore_bottom);
-  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 5, 3, 1);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &VALS.ignore_bottom);
-
-  toggle = gtk_check_button_new_with_mnemonic
-    (_("_Use the (invisible) bottom layer as the base"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                VALS.base_is_bottom_layer);
-  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 6, 3, 1);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &VALS.base_is_bottom_layer);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              NULL);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
   return run;
-}
-
-static void
-align_layers_scale_entry_update_int (GimpLabelSpin *entry,
-                                     gint          *value)
-{
-  *value = (gint) gimp_label_spin_get_value (entry);
 }
