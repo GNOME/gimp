@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-04 13:46+0000\n"
-"PO-Revision-Date: 2023-03-05 09:48+0200\n"
+"POT-Creation-Date: 2023-03-16 17:37+0000\n"
+"PO-Revision-Date: 2023-03-16 19:46+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -63,25 +63,25 @@ msgstr "Потренувати козу (Сі)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/align-layers.c:671 plug-ins/common/blinds.c:301
-#: plug-ins/common/border-average.c:432 plug-ins/common/busy-dialog.c:279
-#: plug-ins/common/checkerboard.c:495 plug-ins/common/cml-explorer.c:1348
-#: plug-ins/common/cml-explorer.c:2114 plug-ins/common/cml-explorer.c:2247
-#: plug-ins/common/colormap-remap.c:706 plug-ins/common/compose.c:1183
-#: plug-ins/common/contrast-retinex.c:351 plug-ins/common/curve-bend.c:1221
-#: plug-ins/common/curve-bend.c:1995 plug-ins/common/curve-bend.c:2030
-#: plug-ins/common/depth-merge.c:733 plug-ins/common/destripe.c:484
-#: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1160
-#: plug-ins/common/file-heif.c:2353 plug-ins/common/file-jp2-load.c:976
-#: plug-ins/common/file-pdf-load.c:655 plug-ins/common/file-pdf-load.c:1040
-#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
-#: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
-#: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
-#: plug-ins/common/hot.c:679 plug-ins/common/jigsaw.c:2498
-#: plug-ins/common/mail.c:568 plug-ins/common/nl-filter.c:1126
-#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
-#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
-#: plug-ins/common/sparkle.c:426 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/blinds.c:301 plug-ins/common/border-average.c:432
+#: plug-ins/common/busy-dialog.c:279 plug-ins/common/checkerboard.c:495
+#: plug-ins/common/cml-explorer.c:1348 plug-ins/common/cml-explorer.c:2114
+#: plug-ins/common/cml-explorer.c:2247 plug-ins/common/colormap-remap.c:706
+#: plug-ins/common/compose.c:1183 plug-ins/common/contrast-retinex.c:351
+#: plug-ins/common/curve-bend.c:1221 plug-ins/common/curve-bend.c:1995
+#: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
+#: plug-ins/common/destripe.c:484 plug-ins/common/file-cel.c:1001
+#: plug-ins/common/file-gif-save.c:1160 plug-ins/common/file-heif.c:2353
+#: plug-ins/common/file-jp2-load.c:976 plug-ins/common/file-pdf-load.c:655
+#: plug-ins/common/file-pdf-load.c:1040 plug-ins/common/file-pdf-save.c:1113
+#: plug-ins/common/file-ps.c:3572 plug-ins/common/file-svg.c:773
+#: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
+#: plug-ins/common/grid.c:761 plug-ins/common/hot.c:679
+#: plug-ins/common/jigsaw.c:2498 plug-ins/common/mail.c:568
+#: plug-ins/common/nl-filter.c:1126 plug-ins/common/qbist.c:848
+#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
+#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sparkle.c:426
+#: plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -165,23 +165,22 @@ msgstr "Потренувати козу (Javascript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/align-layers.c:672 plug-ins/common/blinds.c:302
-#: plug-ins/common/border-average.c:433 plug-ins/common/checkerboard.c:496
-#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:707
-#: plug-ins/common/compose.c:1184 plug-ins/common/contrast-retinex.c:352
-#: plug-ins/common/curve-bend.c:1222 plug-ins/common/depth-merge.c:734
-#: plug-ins/common/destripe.c:485 plug-ins/common/file-heif.c:2354
-#: plug-ins/common/file-pdf-load.c:656 plug-ins/common/file-svg.c:774
-#: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1325
-#: plug-ins/common/grid.c:762 plug-ins/common/hot.c:680
-#: plug-ins/common/jigsaw.c:2499 plug-ins/common/nl-filter.c:1127
-#: plug-ins/common/qbist.c:945 plug-ins/common/smooth-palette.c:512
-#: plug-ins/common/sparkle.c:427 plug-ins/common/sphere-designer.c:2633
-#: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
-#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
-#: plug-ins/common/warp.c:491 plug-ins/common/wavelet-decompose.c:410
-#: plug-ins/file-psd/psd-load.c:3308 plug-ins/flame/flame.c:717
-#: plug-ins/flame/flame.c:1034
+#: plug-ins/common/blinds.c:302 plug-ins/common/border-average.c:433
+#: plug-ins/common/checkerboard.c:496 plug-ins/common/cml-explorer.c:1349
+#: plug-ins/common/colormap-remap.c:707 plug-ins/common/compose.c:1184
+#: plug-ins/common/contrast-retinex.c:352 plug-ins/common/curve-bend.c:1222
+#: plug-ins/common/depth-merge.c:734 plug-ins/common/destripe.c:485
+#: plug-ins/common/file-heif.c:2354 plug-ins/common/file-pdf-load.c:656
+#: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:547
+#: plug-ins/common/film.c:1325 plug-ins/common/grid.c:762
+#: plug-ins/common/hot.c:680 plug-ins/common/jigsaw.c:2499
+#: plug-ins/common/nl-filter.c:1127 plug-ins/common/qbist.c:945
+#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sparkle.c:427
+#: plug-ins/common/sphere-designer.c:2633 plug-ins/common/tile.c:493
+#: plug-ins/common/tile-small.c:447 plug-ins/common/unit-editor.c:268
+#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
+#: plug-ins/common/wavelet-decompose.c:410 plug-ins/file-psd/psd-load.c:3308
+#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -281,99 +280,133 @@ msgstr ""
 "GTK із панеллю для показу власного коду (отже, демонструють спосіб пакування "
 "даних) та кнопкою, натискання якої викликає дію GEGL над активним шаром."
 
-#: plug-ins/common/align-layers.c:199
+#: plug-ins/common/align-layers.c:179
 msgid "Align Visi_ble Layers..."
 msgstr "Вирівняти _видимі шари..."
 
-#: plug-ins/common/align-layers.c:203
+#: plug-ins/common/align-layers.c:183
 msgid "Align all visible layers of the image"
 msgstr "Вирівнювання видимих шарів зображення"
 
-#: plug-ins/common/align-layers.c:257
+#: plug-ins/common/align-layers.c:192
+#| msgid "_Horizontal style:"
+msgid "_Horizontal style"
+msgstr "_Горизонтальний стиль"
+
+#: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:208
+msgid ""
+"(None = 0, Collect = 1, Fill left to right = 2, Fill right to left = 3, Snap "
+"to grid = 4)"
+msgstr ""
+"(Немає = 0, Зібрати = 1, Заповнити зліва праворуч = 2, Заповнити справа"
+" ліворуч = 3, Прилипання до ґратки = 4)"
+
+#: plug-ins/common/align-layers.c:200
+#| msgid "Ho_rizontal base:"
+msgid "Hori_zontal base"
+msgstr "Г_оризонтальна основа"
+
+#: plug-ins/common/align-layers.c:201 plug-ins/common/align-layers.c:216
+msgid "(Left edge = 0, Center = 1, Right edge = 2)"
+msgstr "(Лівий край = 0, Центр = 1, Правий край = 2)"
+
+#: plug-ins/common/align-layers.c:207
+#| msgid "_Vertical style:"
+msgid "_Vertical style"
+msgstr "_Вертикальний стиль"
+
+#: plug-ins/common/align-layers.c:215
+#| msgid "Ver_tical base:"
+msgid "Ver_tical base"
+msgstr "В_ертикальна основа"
+
+#: plug-ins/common/align-layers.c:222
+msgid "_Grid"
+msgstr "С_ітка"
+
+#: plug-ins/common/align-layers.c:223 plug-ins/common/grid.c:757
+#: plug-ins/gfig/gfig-dialog.c:1360 plug-ins/imagemap/imap_main.c:1923
+msgid "Grid"
+msgstr "Сітка"
+
+#: plug-ins/common/align-layers.c:229
+#| msgid "_Ignore the bottom layer even if visible"
+msgid "Ignore the _bottom layer even if visible"
+msgstr "_Ігнорувати нижній шар, навіть якщо він видимий"
+
+#: plug-ins/common/align-layers.c:230
+#| msgid "_Ignore the bottom layer even if visible"
+msgid "Ignore the bottom layer even if visible"
+msgstr "Ігнорувати нижній шар, навіть якщо він видимий"
+
+#: plug-ins/common/align-layers.c:236
+msgid "_Use the (invisible) bottom layer as the base"
+msgstr "_Використовувати (невидимий) нижній шар як основу"
+
+#: plug-ins/common/align-layers.c:237
+#| msgid "_Use the (invisible) bottom layer as the base"
+msgid "Use the (invisible) bottom layer as the base"
+msgstr "Використовувати (невидимий) нижній шар як основу"
+
+#: plug-ins/common/align-layers.c:291
 msgid "There are not enough layers to align."
 msgstr "Недостатньо шарів для вирівнювання."
 
-#: plug-ins/common/align-layers.c:667
+#: plug-ins/common/align-layers.c:739
 msgid "Align Visible Layers"
 msgstr "Вирівнювання видимих шарів"
 
-#: plug-ins/common/align-layers.c:691 plug-ins/common/align-layers.c:722
-msgctxt "align-style"
+#: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
+#: plug-ins/file-tiff/file-tiff-save.c:1322
+#: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
+#: plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Немає"
 
-#: plug-ins/common/align-layers.c:692 plug-ins/common/align-layers.c:723
+#: plug-ins/common/align-layers.c:749 plug-ins/common/align-layers.c:767
 msgid "Collect"
 msgstr "Зібрати"
 
-#: plug-ins/common/align-layers.c:693
+#: plug-ins/common/align-layers.c:750
 msgid "Fill (left to right)"
 msgstr "Заповнити (зліва направо)"
 
-#: plug-ins/common/align-layers.c:694
+#: plug-ins/common/align-layers.c:751
 msgid "Fill (right to left)"
 msgstr "Заповнити (справа наліво)"
 
-#: plug-ins/common/align-layers.c:695 plug-ins/common/align-layers.c:726
+#: plug-ins/common/align-layers.c:752 plug-ins/common/align-layers.c:770
 msgid "Snap to grid"
 msgstr "Прилипати до сітки"
 
-#: plug-ins/common/align-layers.c:704
-msgid "_Horizontal style:"
-msgstr "_Горизонтальний стиль:"
-
-#: plug-ins/common/align-layers.c:708
+#: plug-ins/common/align-layers.c:758
 msgid "Left edge"
 msgstr "Ліва межа"
 
-#: plug-ins/common/align-layers.c:709 plug-ins/common/align-layers.c:739
+#: plug-ins/common/align-layers.c:759 plug-ins/common/align-layers.c:777
 #: plug-ins/gradient-flare/gradient-flare.c:2878
 msgid "Center"
 msgstr "Центр"
 
-#: plug-ins/common/align-layers.c:710
+#: plug-ins/common/align-layers.c:760
 msgid "Right edge"
 msgstr "Права межа"
 
-#: plug-ins/common/align-layers.c:719
-msgid "Ho_rizontal base:"
-msgstr "Г_оризонтальна основа:"
-
-#: plug-ins/common/align-layers.c:724
+#: plug-ins/common/align-layers.c:768
 msgid "Fill (top to bottom)"
 msgstr "Заповнити (згори донизу)"
 
-#: plug-ins/common/align-layers.c:725
+#: plug-ins/common/align-layers.c:769
 msgid "Fill (bottom to top)"
 msgstr "Заповнити (знизу догори)"
 
-#: plug-ins/common/align-layers.c:735
-msgid "_Vertical style:"
-msgstr "_Вертикальний стиль:"
-
-#: plug-ins/common/align-layers.c:738
+#: plug-ins/common/align-layers.c:776
 msgid "Top edge"
 msgstr "Верхній край"
 
-#: plug-ins/common/align-layers.c:740
+#: plug-ins/common/align-layers.c:778
 msgid "Bottom edge"
 msgstr "Нижній край"
-
-#: plug-ins/common/align-layers.c:749
-msgid "Ver_tical base:"
-msgstr "В_ертикальна основа:"
-
-#: plug-ins/common/align-layers.c:752
-msgid "_Grid size:"
-msgstr "Розмір _сітки:"
-
-#: plug-ins/common/align-layers.c:760
-msgid "_Ignore the bottom layer even if visible"
-msgstr "_Ігнорувати нижній шар навіть якщо він видимий"
-
-#: plug-ins/common/align-layers.c:770
-msgid "_Use the (invisible) bottom layer as the base"
-msgstr "_Використовувати (невидимий) нижній шар як основу"
 
 #: plug-ins/common/animation-optimize.c:179
 msgid "Optimize (for _GIF)"
@@ -1017,7 +1050,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
 #: plug-ins/file-fli/fli-gimp.c:816 plug-ins/file-icns/file-icns-save.c:428
 #: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
-#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2213
+#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
@@ -1057,7 +1090,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:955
 #: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:554
 #: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-load.c:169
-#: plug-ins/file-psd/psd-save.c:2218 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1855
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:670
@@ -2034,7 +2067,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
 #: plug-ins/file-fli/fli-gimp.c:783 plug-ins/file-icns/file-icns-save.c:612
 #: plug-ins/file-ico/ico-save.c:1324 plug-ins/file-ico/ico-save.c:1533
-#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2159
+#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2160
 #: plug-ins/file-sgi/sgi.c:643 plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
@@ -2949,12 +2982,12 @@ msgid "CMYK profile required for export"
 msgstr "Для експортування потрібен профіль CMYK"
 
 #: plug-ins/common/file-jpegxl.c:2036 plug-ins/file-jpeg/jpeg-save.c:898
-#: plug-ins/file-psd/psd-save.c:2455 plug-ins/file-tiff/file-tiff-save.c:1369
+#: plug-ins/file-psd/psd-save.c:2456 plug-ins/file-tiff/file-tiff-save.c:1369
 msgid "Name of the color profile used for CMYK export."
 msgstr "Назва профілю кольорів, який використано для експортування CMYK."
 
 #: plug-ins/common/file-jpegxl.c:2055 plug-ins/file-jpeg/jpeg-save.c:909
-#: plug-ins/file-psd/psd-save.c:2466 plug-ins/file-tiff/file-tiff-save.c:1381
+#: plug-ins/file-psd/psd-save.c:2467 plug-ins/file-tiff/file-tiff-save.c:1381
 #, c-format
 msgid "Profile: %s"
 msgstr "Профіль: %s"
@@ -5113,11 +5146,6 @@ msgstr "Малює сітку на зображенні"
 msgid "Drawing grid"
 msgstr "Малювання сітки"
 
-#: plug-ins/common/grid.c:757 plug-ins/gfig/gfig-dialog.c:1360
-#: plug-ins/imagemap/imap_main.c:1923
-msgid "Grid"
-msgstr "Сітка"
-
 #. attach labels
 #: plug-ins/common/grid.c:837
 msgid ""
@@ -7269,7 +7297,7 @@ msgstr "Розмір файлу: невідомо"
 msgid "Enable preview to obtain the file size."
 msgstr "Увімкніть перегляд, щоб бачити розмір файлу."
 
-#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-psd/psd-save.c:2448
+#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-psd/psd-save.c:2449
 #: plug-ins/file-tiff/file-tiff-save.c:1362
 msgid "No soft-proofing profile"
 msgstr "Немає профілю для проби кольорів"
@@ -7456,9 +7484,6 @@ msgid "Compatibility Notice"
 msgstr "Зауваження щодо сумісності"
 
 #: plug-ins/file-psd/psd-load.c:3348
-#| msgid ""
-#| "This PSD file contains features that\n"
-#| " are not yet fully supported in GIMP:"
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -7485,7 +7510,6 @@ msgstr ""
 "растрові шари."
 
 #: plug-ins/file-psd/psd-load.c:3376
-#| msgid "Linked layers are  are not yet supported and will be dropped."
 msgid "Linked layers are not yet supported and will be dropped."
 msgstr "Підтримки пов'язаних шарів ще не реалізовано, їх буде відкинуто."
 
@@ -7518,7 +7542,7 @@ msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Помилка: Неможливо перетворити основний тип зображення GIMP на режим PSD"
 
-#: plug-ins/file-psd/psd-save.c:2152
+#: plug-ins/file-psd/psd-save.c:2153
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7527,7 +7551,7 @@ msgstr ""
 "Не вдається експортувати «%s».  Файл формату PSD не підтримує зображення "
 "шириною чи висотою більше ніж 30000 точок."
 
-#: plug-ins/file-psd/psd-save.c:2193
+#: plug-ins/file-psd/psd-save.c:2194
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7536,11 +7560,11 @@ msgstr ""
 "Не вдається експортувати «%s». Файл формату PSD не підтримує зображення з "
 "шарами, ширина чи висота яких більша ніж 30000 точок."
 
-#: plug-ins/file-psd/psd-save.c:2444
+#: plug-ins/file-psd/psd-save.c:2445
 msgid "Export Image as PSD"
 msgstr "Експортувати зображення як PSD"
 
-#: plug-ins/file-psd/psd-save.c:2490
+#: plug-ins/file-psd/psd-save.c:2491
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -7548,7 +7572,7 @@ msgstr ""
 "Буде використано дані двотонового простору кольорів з\n"
 "початкового імпортованого зображення."
 
-#: plug-ins/file-psd/psd-save.c:2558
+#: plug-ins/file-psd/psd-save.c:2559
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
@@ -8101,12 +8125,6 @@ msgid ""
 msgstr ""
 "Попередження: перевищено максимальний розмір файлів TIFF. Повторіть спробу у "
 "форматі BigTIFF, виберіть інший алгоритм стискання або скасуйте дію."
-
-#: plug-ins/file-tiff/file-tiff-save.c:1322
-#: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
-#: plug-ins/metadata/metadata-tags.c:238
-msgid "None"
-msgstr "Немає"
 
 #: plug-ins/file-tiff/file-tiff-save.c:1323
 msgid "LZW"
@@ -11251,83 +11269,83 @@ msgstr "Зняти вибір"
 msgid "Unselect All"
 msgstr "Зняти вибір з усього"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:204
+#: plug-ins/imagemap/imap_edit_area_info.c:216
 msgid "Link Type"
 msgstr "Тип посилання"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:213
+#: plug-ins/imagemap/imap_edit_area_info.c:225
 msgid "_Web Site"
 msgstr "_Веб-сторінка"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:219
+#: plug-ins/imagemap/imap_edit_area_info.c:231
 msgid "_Ftp Site"
 msgstr "_FTP-сайт"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:225
+#: plug-ins/imagemap/imap_edit_area_info.c:237
 msgid "_Gopher"
 msgstr "_Gopher"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:231
+#: plug-ins/imagemap/imap_edit_area_info.c:243
 msgid "Ot_her"
 msgstr "_Інше"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:237
+#: plug-ins/imagemap/imap_edit_area_info.c:249
 msgid "F_ile"
 msgstr "_Файл"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:243
+#: plug-ins/imagemap/imap_edit_area_info.c:255
 msgid "WAI_S"
 msgstr "WAI_S"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:249
+#: plug-ins/imagemap/imap_edit_area_info.c:261
 msgid "Tel_net"
 msgstr "Tel_net"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:255
+#: plug-ins/imagemap/imap_edit_area_info.c:267
 msgid "e-_mail"
 msgstr "_ел.адреса"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:261
+#: plug-ins/imagemap/imap_edit_area_info.c:273
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr "_URL, що активізується при клацанні на цій ділянці: (обов'язково)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:263
+#: plug-ins/imagemap/imap_edit_area_info.c:275
 msgid "Select HTML file"
 msgstr "Виберіть HTML-файл"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:272
+#: plug-ins/imagemap/imap_edit_area_info.c:284
 msgid "Relati_ve link"
 msgstr "Від_носне посилання"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:278
+#: plug-ins/imagemap/imap_edit_area_info.c:290
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr "Назва/Ід _цільового кадру: (необов'язково - лише для кадрів)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:281
+#: plug-ins/imagemap/imap_edit_area_info.c:293
 msgid "ALT te_xt: (optional)"
 msgstr "_Текст ALT: (необов'язково)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:284
+#: plug-ins/imagemap/imap_edit_area_info.c:296
 msgid "_Link"
 msgstr "По_силання"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:318
+#: plug-ins/imagemap/imap_edit_area_info.c:330
 msgid "Dimensions"
 msgstr "Розміри"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:322
+#: plug-ins/imagemap/imap_edit_area_info.c:334
 msgid "Pre_view"
 msgstr "_Перегляд"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:360
+#: plug-ins/imagemap/imap_edit_area_info.c:372
 msgid "_JavaScript"
 msgstr "_JavaScript"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:459
+#: plug-ins/imagemap/imap_edit_area_info.c:471
 msgid "Area Settings"
 msgstr "Параметри області"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:501
+#: plug-ins/imagemap/imap_edit_area_info.c:513
 #, c-format
 msgid "Area #%d Settings"
 msgstr "Параметри області #%d"
@@ -13091,6 +13109,13 @@ msgstr "_Сканер/Камера..."
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
 
+#~ msgctxt "align-style"
+#~ msgid "None"
+#~ msgstr "Немає"
+
+#~ msgid "_Grid size:"
+#~ msgstr "Розмір _сітки:"
+
 #, c-format
 #~ msgid "%s-%s"
 #~ msgstr "%s-%s"
@@ -13179,9 +13204,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Area List"
 #~ msgstr "Список областей"
-
-#~ msgid "_Grid"
-#~ msgstr "С_ітка"
 
 #~ msgid "_Clear"
 #~ msgstr "О_чистити"
