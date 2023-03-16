@@ -452,6 +452,11 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
     }
 
   g_object_unref (edit_select);
+
+  shell->equidistance_side_horizontal = GIMP_ARRANGE_HFILL;
+  shell->equidistance_side_vertical   = GIMP_ARRANGE_HFILL;
+  shell->snapped_side_horizontal      = GIMP_ARRANGE_HFILL;
+  shell->snapped_side_vertical        = GIMP_ARRANGE_HFILL;
 }
 
 static void
@@ -706,14 +711,140 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
     case GIMP_TRANSLATE_MODE_LAYER:
     case GIMP_TRANSLATE_MODE_VECTORS:
         {
-          GList *translate_items;
-          gint   x, y, w, h;
+          GList             *translate_items;
+          GimpAlignmentType  snapped_side_horizontal      = shell->snapped_side_horizontal;
+          GimpAlignmentType  snapped_side_vertical        = shell->snapped_side_vertical;
+          GimpAlignmentType  equidistance_side_horizontal = shell->equidistance_side_horizontal;
+          GimpAlignmentType  equidistance_side_vertical   = shell->equidistance_side_vertical;
+          gint               x, y, w, h;
 
           translate_items = gimp_image_item_list_filter (g_list_copy (selected_items));
           gimp_image_item_list_bounds (image, translate_items, &x, &y, &w, &h);
           g_list_free (translate_items);
 
           gimp_draw_tool_add_rectangle (draw_tool, FALSE, x, y, w, h);
+
+          if (snapped_side_horizontal != GIMP_ARRANGE_HFILL)
+            {
+              GimpLayer *snapped_layer_horizontal = shell->snapped_layer_horizontal;
+              gint       gx, gy, gw, gh;
+
+              gimp_item_bounds (GIMP_ITEM (snapped_layer_horizontal), &gx, &gy, &gw, &gh);
+              gimp_item_get_offset (GIMP_ITEM (snapped_layer_horizontal), &gx, &gy);
+
+              switch (snapped_side_horizontal)
+                {
+                case GIMP_ALIGN_LEFT:
+                  gimp_draw_tool_add_line (draw_tool, x, y+h/2, x, gy+gh/2);
+                  break;
+                case GIMP_ALIGN_RIGHT:
+                  gimp_draw_tool_add_line (draw_tool, x+w, y+h/2, x+w, gy+gh/2);
+                  break;
+                case GIMP_ALIGN_VCENTER:
+                  gimp_draw_tool_add_line (draw_tool, x+w/2, y+h/2, x+w/2, gy+gh/2);
+                  break;
+
+                default:
+                  break;
+                }
+            }
+
+          if (snapped_side_vertical != GIMP_ARRANGE_HFILL)
+            {
+              GimpLayer *snapped_layer_vertical = shell->snapped_layer_vertical;
+              gint       gx, gy, gw, gh;
+
+              gimp_item_bounds (GIMP_ITEM (snapped_layer_vertical), &gx, &gy, &gw, &gh);
+              gimp_item_get_offset (GIMP_ITEM (snapped_layer_vertical), &gx, &gy);
+
+              switch (snapped_side_vertical)
+                {
+                case GIMP_ALIGN_TOP:
+                  gimp_draw_tool_add_line (draw_tool, x+w/2, y, gx+gw/2, y);
+                  break;
+                case GIMP_ALIGN_BOTTOM:
+                  gimp_draw_tool_add_line (draw_tool, x+w/2, y+h, gx+gw/2, y+h);
+                  break;
+                case GIMP_ALIGN_HCENTER:
+                  gimp_draw_tool_add_line (draw_tool, x+w/2, y+h/2, gx+gw/2, y+h/2);
+                  break;
+
+                default:
+                  break;
+                }
+            }
+
+          if (equidistance_side_horizontal != GIMP_ARRANGE_HFILL)
+            {
+              GimpLayer *near_layer1 = gimp_image_get_near_layer_horizontal1 (image);
+              GimpLayer *near_layer2 = gimp_image_get_near_layer_horizontal2 (image);
+              gint       gx1 = 0;
+              gint       gy1 = 0;
+              gint       gw1 = 0;
+              gint       gh1 = 0;
+              gint       gx2 = 0;
+              gint       gy2 = 0;
+              gint       gw2 = 0;
+              gint       gh2 = 0;
+
+              gimp_item_bounds (GIMP_ITEM (near_layer1), &gx1, &gy1, &gw1, &gh1);
+              gimp_item_get_offset (GIMP_ITEM (near_layer1), &gx1, &gy1);
+
+              gimp_item_bounds (GIMP_ITEM (near_layer2), &gx2, &gy2, &gw2, &gh2);
+              gimp_item_get_offset (GIMP_ITEM (near_layer2), &gx2, &gy2);
+
+              switch (equidistance_side_horizontal)
+                {
+                case GIMP_ALIGN_LEFT:
+                  gimp_draw_tool_add_line (draw_tool, x, y+h/2, gx1+gw1, y+h/2);
+                  gimp_draw_tool_add_line (draw_tool, gx1, gy1+gh1/2, gx2+gw2, gy1+gh1/2);
+                  break;
+
+                case GIMP_ALIGN_RIGHT:
+                  gimp_draw_tool_add_line (draw_tool, x+w, y+h/2, gx1, y+h/2);
+                  gimp_draw_tool_add_line (draw_tool, gx1+gw1, gy1+gh1/2, gx2, gy1+gh1/2);
+                  break;
+
+                default:
+                  break;
+                }
+            }
+
+          if (equidistance_side_vertical != GIMP_ARRANGE_HFILL)
+            {
+              GimpLayer *near_layer1 = gimp_image_get_near_layer_vertical1 (image);
+              GimpLayer *near_layer2 = gimp_image_get_near_layer_vertical2 (image);
+              gint       gx1 = 0;
+              gint       gy1 = 0;
+              gint       gw1 = 0;
+              gint       gh1 = 0;
+              gint       gx2 = 0;
+              gint       gy2 = 0;
+              gint       gw2 = 0;
+              gint       gh2 = 0;
+
+              gimp_item_bounds (GIMP_ITEM (near_layer1), &gx1, &gy1, &gw1, &gh1);
+              gimp_item_get_offset (GIMP_ITEM (near_layer1), &gx1, &gy1);
+
+              gimp_item_bounds (GIMP_ITEM (near_layer2), &gx2, &gy2, &gw2, &gh2);
+              gimp_item_get_offset (GIMP_ITEM (near_layer2), &gx2, &gy2);
+
+              switch (equidistance_side_vertical)
+                {
+                case GIMP_ALIGN_TOP:
+                  gimp_draw_tool_add_line (draw_tool, x+w/2, y, x+w/2, gy1+gh1);
+                  gimp_draw_tool_add_line (draw_tool, gx1+gw1/2, gy1, gx1+gw1/2, gy2+gh2);
+                  break;
+
+                case GIMP_ALIGN_BOTTOM:
+                  gimp_draw_tool_add_line (draw_tool, x+w/2, y+h, x+w/2, gy1);
+                  gimp_draw_tool_add_line (draw_tool, gx1+gw1/2, gy1+gh1, gx1+gw1/2, gy2);
+                  break;
+
+                default:
+                  break;
+                }
+            }
         }
       break;
 

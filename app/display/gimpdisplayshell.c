@@ -353,6 +353,17 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->render_buf_width  = 256;
   shell->render_buf_height = 256;
 
+  shell->snapped_side_horizontal      = GIMP_ARRANGE_HFILL;
+  shell->snapped_layer_horizontal     = NULL;
+  shell->snapped_side_vertical        = GIMP_ARRANGE_HFILL;
+  shell->snapped_layer_vertical       = NULL;
+  shell->equidistance_side_horizontal = GIMP_ARRANGE_HFILL;
+  shell->near_layer_horizontal1       = NULL;
+  shell->near_layer_horizontal2       = NULL;
+  shell->equidistance_side_vertical   = GIMP_ARRANGE_HFILL;
+  shell->near_layer_vertical1         = NULL;
+  shell->near_layer_vertical2         = NULL;
+
   env = g_getenv ("GIMP_DISPLAY_RENDER_BUF_SIZE");
 
   if (env)
@@ -1644,6 +1655,19 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                 gint              snap_width,
                                 gint              snap_height)
 {
+  GimpSnappingData  snapping_data =
+    {
+      GIMP_ARRANGE_HFILL,
+      NULL,
+      GIMP_ARRANGE_HFILL,
+      NULL,
+      GIMP_ARRANGE_HFILL,
+      NULL,
+      NULL,
+      GIMP_ARRANGE_HFILL,
+      NULL,
+      NULL
+    };
   GimpImage *image;
   gboolean   snap_to_guides       = FALSE;
   gboolean   snap_to_grid         = FALSE;
@@ -1683,10 +1707,16 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
       snap_to_bbox = TRUE;
     }
 
+  shell->snapped_side_horizontal = GIMP_ARRANGE_HFILL;
+  shell->snapped_side_vertical = GIMP_ARRANGE_HFILL;
+
   if (gimp_display_shell_get_snap_to_equidistance (shell))
     {
       snap_to_equidistance = TRUE;
     }
+
+  shell->equidistance_side_horizontal = GIMP_ARRANGE_HFILL;
+  shell->equidistance_side_vertical = GIMP_ARRANGE_HFILL;
 
   if (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors || snap_to_bbox || snap_to_equidistance)
     {
@@ -1698,6 +1728,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
       if (snap_width > 0 && snap_height > 0)
         {
           snapped = gimp_image_snap_rectangle (image,
+                                               &snapping_data,
                                                coords->x + snap_offset_x,
                                                coords->y + snap_offset_y,
                                                coords->x + snap_offset_x +
@@ -1714,6 +1745,17 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                                snap_to_vectors,
                                                snap_to_bbox,
                                                snap_to_equidistance);
+
+          shell->snapped_side_horizontal = snapping_data.snapped_side_horizontal;
+          shell->snapped_layer_horizontal = snapping_data.snapped_layer_horizontal;
+          shell->snapped_side_vertical = snapping_data.snapped_side_vertical;
+          shell->snapped_layer_vertical = snapping_data.snapped_layer_vertical;
+          shell->equidistance_side_horizontal = snapping_data.equidistance_side_horizontal;
+          shell->equidistance_side_vertical = snapping_data.equidistance_side_vertical;
+          shell->near_layer_horizontal1 = snapping_data.near_layer_horizontal1;
+          shell->near_layer_horizontal2 = snapping_data.near_layer_horizontal2;
+          shell->near_layer_vertical1 = snapping_data.near_layer_vertical1;
+          shell->near_layer_vertical2 = snapping_data.near_layer_vertical2;
         }
       else
         {

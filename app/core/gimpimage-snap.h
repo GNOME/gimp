@@ -20,6 +20,7 @@
 
 
 gboolean    gimp_image_snap_x         (GimpImage        *image,
+                                       GimpSnappingData *snapping_data,
                                        gdouble           x,
                                        gdouble          *tx,
                                        gdouble           epsilon_x,
@@ -30,6 +31,7 @@ gboolean    gimp_image_snap_x         (GimpImage        *image,
                                        gboolean          snap_to_equidistance,
                                        GimpAlignmentType alignment_side);
 gboolean    gimp_image_snap_y         (GimpImage        *image,
+                                       GimpSnappingData *snapping_data,
                                        gdouble           y,
                                        gdouble          *ty,
                                        gdouble           epsilon_y,
@@ -52,21 +54,22 @@ gboolean    gimp_image_snap_point     (GimpImage *image,
                                        gboolean   snap_to_vectors,
                                        gboolean   snap_to_bbox,
                                        gboolean   show_all);
-gboolean    gimp_image_snap_rectangle (GimpImage *image,
-                                       gdouble    x1,
-                                       gdouble    y1,
-                                       gdouble    x2,
-                                       gdouble    y2,
-                                       gdouble   *tx1,
-                                       gdouble   *ty1,
-                                       gdouble    epsilon_x,
-                                       gdouble    epsilon_y,
-                                       gboolean   snap_to_guides,
-                                       gboolean   snap_to_grid,
-                                       gboolean   snap_to_canvas,
-                                       gboolean   snap_to_vectors,
-                                       gboolean   snap_to_bbox,
-                                       gboolean   snap_to_equidistance);
+gboolean   gimp_image_snap_rectangle  (GimpImage        *image,
+                                       GimpSnappingData *snapping_data,
+                                       gdouble           x1,
+                                       gdouble           y1,
+                                       gdouble           x2,
+                                       gdouble           y2,
+                                       gdouble          *tx1,
+                                       gdouble          *ty1,
+                                       gdouble           epsilon_x,
+                                       gdouble           epsilon_y,
+                                       gboolean          snap_to_guides,
+                                       gboolean          snap_to_grid,
+                                       gboolean          snap_to_canvas,
+                                       gboolean          snap_to_vectors,
+                                       gboolean          snap_to_bbox,
+                                       gboolean          snap_to_equidistance);
 
 
 #endif /* __GIMP_IMAGE_SNAP_H__ */

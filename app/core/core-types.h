@@ -95,6 +95,7 @@ typedef struct _GimpAuxItem                     GimpAuxItem;
 
 typedef struct _Gimp                            Gimp;
 typedef struct _GimpImage                       GimpImage;
+typedef struct _GimpSnappingData                GimpSnappingData;
 
 typedef struct _GimpDisplay                     GimpDisplay;
 

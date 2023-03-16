@@ -45,6 +45,24 @@ struct _GimpImage
   GimpImagePrivate *priv;
 };
 
+struct _GimpSnappingData
+{
+  GimpAlignmentType  snapped_side_horizontal; /* if GIMP_ARRANGE_HFILL then no snapping happen */
+  GimpLayer         *snapped_layer_horizontal;
+
+  GimpAlignmentType  snapped_side_vertical; /* if GIMP_ARRANGE_HFILL then no snapping happen */
+  GimpLayer         *snapped_layer_vertical;
+
+  GimpAlignmentType  equidistance_side_horizontal;
+  GimpLayer         *near_layer_horizontal1;
+  GimpLayer         *near_layer_horizontal2;
+
+  GimpAlignmentType  equidistance_side_vertical;
+  GimpLayer         *near_layer_vertical1;
+  GimpLayer         *near_layer_vertical2;
+};
+
+
 struct _GimpImageClass
 {
   GimpViewableClass  parent_class;
