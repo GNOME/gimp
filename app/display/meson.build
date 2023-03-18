@@ -47,6 +47,8 @@ libappdisplay_sources = [
   'gimpcanvastextcursor.c',
   'gimpcanvastransformguides.c',
   'gimpcanvastransformpreview.c',
+  'gimpcanvastext.c',
+  'gimpcanvastext.h',
   'gimpcursorview.c',
   'gimpdisplay-foreach.c',
   'gimpdisplay-handlers.c',

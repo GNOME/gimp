@@ -191,6 +191,12 @@ GimpCanvasItem * gimp_draw_tool_add_text_cursor      (GimpDrawTool     *draw_too
                                                       gboolean          overwrite,
                                                       GimpTextDirection direction);
 
+GimpCanvasItem * gimp_draw_tool_add_text             (GimpDrawTool     *draw_tool,
+                                                      gdouble           x,
+                                                      gdouble           y,
+                                                      gdouble           font_size,
+                                                      gchar            *text);
+
 gboolean         gimp_draw_tool_on_handle            (GimpDrawTool     *draw_tool,
                                                       GimpDisplay      *display,
                                                       gdouble           x,

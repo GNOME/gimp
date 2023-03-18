@@ -20,6 +20,9 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
+#include <glib.h>
+#include <glib/gprintf.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -631,13 +634,14 @@ gimp_edit_selection_tool_active_modifier_key (GimpTool        *tool,
 static void
 gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpEditSelectionTool *edit_select = GIMP_EDIT_SELECTION_TOOL (draw_tool);
-  GimpDisplay           *display     = GIMP_TOOL (draw_tool)->display;
-  GimpImage             *image       = gimp_display_get_image (display);
+  GimpEditSelectionTool *edit_select  = GIMP_EDIT_SELECTION_TOOL (draw_tool);
+  GimpDisplay           *display      = GIMP_TOOL (draw_tool)->display;
+  GimpImage             *image        = gimp_display_get_image (display);
+  GimpDisplayShell      *shell        = gimp_display_get_shell (display);
   GList                 *selected_items;
   GList                 *iter;
-  gint                   off_x       = G_MAXINT;
-  gint                   off_y       = G_MAXINT;
+  gint                   off_x        = G_MAXINT;
+  gint                   off_y        = G_MAXINT;
 
   selected_items = gimp_edit_selection_tool_get_selected_items (edit_select, image);
   g_return_if_fail (selected_items != NULL);
@@ -776,16 +780,23 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
           if (equidistance_side_horizontal != GIMP_ARRANGE_HFILL)
             {
-              GimpLayer *near_layer1 = gimp_image_get_near_layer_horizontal1 (image);
-              GimpLayer *near_layer2 = gimp_image_get_near_layer_horizontal2 (image);
-              gint       gx1 = 0;
-              gint       gy1 = 0;
-              gint       gw1 = 0;
-              gint       gh1 = 0;
-              gint       gx2 = 0;
-              gint       gy2 = 0;
-              gint       gw2 = 0;
-              gint       gh2 = 0;
+              GimpLayer       *near_layer1 = shell->near_layer_horizontal1;
+              GimpLayer       *near_layer2 = shell->near_layer_horizontal2;
+              GtkStyleContext *style       = gtk_widget_get_style_context (GTK_WIDGET (shell));
+              gdouble          font_size;
+              gint             gx1 = 0;
+              gint             gy1 = 0;
+              gint             gw1 = 0;
+              gint             gh1 = 0;
+              gint             gx2 = 0;
+              gint             gy2 = 0;
+              gint             gw2 = 0;
+              gint             gh2 = 0;
+              gint             distance;
+              gchar            distance_string[32];
+
+              gtk_style_context_get (style, gtk_style_context_get_state (style),
+                                     "font-size", &font_size, NULL);
 
               gimp_item_bounds (GIMP_ITEM (near_layer1), &gx1, &gy1, &gw1, &gh1);
               gimp_item_get_offset (GIMP_ITEM (near_layer1), &gx1, &gy1);
@@ -793,16 +804,33 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
               gimp_item_bounds (GIMP_ITEM (near_layer2), &gx2, &gy2, &gw2, &gh2);
               gimp_item_get_offset (GIMP_ITEM (near_layer2), &gx2, &gy2);
 
+              gimp_draw_tool_add_rectangle (draw_tool, FALSE, gx1, gy1, gw1, gh1);
+              gimp_draw_tool_add_rectangle (draw_tool, FALSE, gx2, gy2, gw2, gh2);
+
               switch (equidistance_side_horizontal)
                 {
                 case GIMP_ALIGN_LEFT:
+                  distance = x - (gx1+gw1);
+
                   gimp_draw_tool_add_line (draw_tool, x, y+h/2, gx1+gw1, y+h/2);
                   gimp_draw_tool_add_line (draw_tool, gx1, gy1+gh1/2, gx2+gw2, gy1+gh1/2);
+
+                  g_sprintf (distance_string, "%d px", distance);
+                  gimp_draw_tool_add_text (draw_tool, x - distance/2, y+h/2, font_size, distance_string);
+                  gimp_draw_tool_add_text (draw_tool, gx1 - distance/2, gy1+gh1/2, font_size, distance_string);
+
                   break;
 
                 case GIMP_ALIGN_RIGHT:
+                  distance = gx1 - (x+w);
+
                   gimp_draw_tool_add_line (draw_tool, x+w, y+h/2, gx1, y+h/2);
                   gimp_draw_tool_add_line (draw_tool, gx1+gw1, gy1+gh1/2, gx2, gy1+gh1/2);
+
+                  g_sprintf (distance_string, "%d px", distance);
+                  gimp_draw_tool_add_text (draw_tool, (x+w) + distance/2, y+h/2, font_size, distance_string);
+                  gimp_draw_tool_add_text (draw_tool, (gx1+gw1) + distance/2, gy1+gh1/2, font_size, distance_string);
+
                   break;
 
                 default:
@@ -812,16 +840,23 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
           if (equidistance_side_vertical != GIMP_ARRANGE_HFILL)
             {
-              GimpLayer *near_layer1 = gimp_image_get_near_layer_vertical1 (image);
-              GimpLayer *near_layer2 = gimp_image_get_near_layer_vertical2 (image);
-              gint       gx1 = 0;
-              gint       gy1 = 0;
-              gint       gw1 = 0;
-              gint       gh1 = 0;
-              gint       gx2 = 0;
-              gint       gy2 = 0;
-              gint       gw2 = 0;
-              gint       gh2 = 0;
+              GimpLayer       *near_layer1 = shell->near_layer_vertical1;
+              GimpLayer       *near_layer2 = shell->near_layer_vertical2;
+              GtkStyleContext *style       = gtk_widget_get_style_context (GTK_WIDGET (shell));
+              gdouble          font_size;
+              gint             gx1 = 0;
+              gint             gy1 = 0;
+              gint             gw1 = 0;
+              gint             gh1 = 0;
+              gint             gx2 = 0;
+              gint             gy2 = 0;
+              gint             gw2 = 0;
+              gint             gh2 = 0;
+              gint             distance;
+              gchar            distance_string[32];
+
+              gtk_style_context_get (style, gtk_style_context_get_state (style),
+                                     "font-size", &font_size, NULL);
 
               gimp_item_bounds (GIMP_ITEM (near_layer1), &gx1, &gy1, &gw1, &gh1);
               gimp_item_get_offset (GIMP_ITEM (near_layer1), &gx1, &gy1);
@@ -829,16 +864,33 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
               gimp_item_bounds (GIMP_ITEM (near_layer2), &gx2, &gy2, &gw2, &gh2);
               gimp_item_get_offset (GIMP_ITEM (near_layer2), &gx2, &gy2);
 
+              gimp_draw_tool_add_rectangle (draw_tool, FALSE, gx1, gy1, gw1, gh1);
+              gimp_draw_tool_add_rectangle (draw_tool, FALSE, gx2, gy2, gw2, gh2);
+
               switch (equidistance_side_vertical)
                 {
                 case GIMP_ALIGN_TOP:
+                  distance = y - (gy1+gh1);
+
                   gimp_draw_tool_add_line (draw_tool, x+w/2, y, x+w/2, gy1+gh1);
                   gimp_draw_tool_add_line (draw_tool, gx1+gw1/2, gy1, gx1+gw1/2, gy2+gh2);
+
+                  g_sprintf (distance_string, "%d px", distance);
+                  gimp_draw_tool_add_text (draw_tool, x+w/2, y - distance/2, font_size, distance_string);
+                  gimp_draw_tool_add_text (draw_tool, gx1+gw1/2, gy1 - distance/2, font_size, distance_string);
+
                   break;
 
                 case GIMP_ALIGN_BOTTOM:
+                  distance = gy1 - (y+h);
+
                   gimp_draw_tool_add_line (draw_tool, x+w/2, y+h, x+w/2, gy1);
                   gimp_draw_tool_add_line (draw_tool, gx1+gw1/2, gy1+gh1, gx1+gw1/2, gy2);
+
+                  g_sprintf (distance_string, "%d px", distance);
+                  gimp_draw_tool_add_text (draw_tool, x+w/2, (y+h) + distance/2, font_size, distance_string);
+                  gimp_draw_tool_add_text (draw_tool, gx1+gw1/2, (gy1+gh1) + distance/2, font_size, distance_string);
+
                   break;
 
                 default:

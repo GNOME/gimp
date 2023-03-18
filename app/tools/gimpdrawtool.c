@@ -43,6 +43,7 @@
 #include "display/gimpcanvassamplepoint.h"
 #include "display/gimpcanvastextcursor.h"
 #include "display/gimpcanvastransformpreview.h"
+#include "display/gimpcanvastext.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-items.h"
@@ -1238,6 +1239,26 @@ gimp_draw_tool_add_transform_preview (GimpDrawTool      *draw_tool,
                                             x1, y1, x2, y2);
 
   gimp_draw_tool_add_preview (draw_tool, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_draw_tool_add_text (GimpDrawTool *draw_tool,
+                         gdouble       x,
+                         gdouble       y,
+                         gdouble       font_size,
+                         gchar        *text)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
+
+  item = gimp_canvas_text_new (gimp_display_get_shell (draw_tool->display),
+                               x, y, font_size, text);
+
+  gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
 
   return item;
