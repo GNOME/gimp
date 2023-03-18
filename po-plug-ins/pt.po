@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-05 12:54+0000\n"
-"PO-Revision-Date: 2023-03-07 19:14+0000\n"
+"POT-Creation-Date: 2023-03-16 17:37+0000\n"
+"PO-Revision-Date: 2023-03-18 09:44+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -70,25 +70,25 @@ msgstr "Exercitar uma cabra (C)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/align-layers.c:671 plug-ins/common/blinds.c:301
-#: plug-ins/common/border-average.c:432 plug-ins/common/busy-dialog.c:279
-#: plug-ins/common/checkerboard.c:495 plug-ins/common/cml-explorer.c:1348
-#: plug-ins/common/cml-explorer.c:2114 plug-ins/common/cml-explorer.c:2247
-#: plug-ins/common/colormap-remap.c:706 plug-ins/common/compose.c:1183
-#: plug-ins/common/contrast-retinex.c:351 plug-ins/common/curve-bend.c:1221
-#: plug-ins/common/curve-bend.c:1995 plug-ins/common/curve-bend.c:2030
-#: plug-ins/common/depth-merge.c:733 plug-ins/common/destripe.c:484
-#: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1160
-#: plug-ins/common/file-heif.c:2353 plug-ins/common/file-jp2-load.c:976
-#: plug-ins/common/file-pdf-load.c:655 plug-ins/common/file-pdf-load.c:1040
-#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
-#: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
-#: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
-#: plug-ins/common/hot.c:679 plug-ins/common/jigsaw.c:2498
-#: plug-ins/common/mail.c:568 plug-ins/common/nl-filter.c:1126
-#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
-#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
-#: plug-ins/common/sparkle.c:426 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/blinds.c:301 plug-ins/common/border-average.c:432
+#: plug-ins/common/busy-dialog.c:279 plug-ins/common/checkerboard.c:495
+#: plug-ins/common/cml-explorer.c:1348 plug-ins/common/cml-explorer.c:2114
+#: plug-ins/common/cml-explorer.c:2247 plug-ins/common/colormap-remap.c:706
+#: plug-ins/common/compose.c:1183 plug-ins/common/contrast-retinex.c:351
+#: plug-ins/common/curve-bend.c:1221 plug-ins/common/curve-bend.c:1995
+#: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
+#: plug-ins/common/destripe.c:484 plug-ins/common/file-cel.c:1001
+#: plug-ins/common/file-gif-save.c:1160 plug-ins/common/file-heif.c:2353
+#: plug-ins/common/file-jp2-load.c:976 plug-ins/common/file-pdf-load.c:655
+#: plug-ins/common/file-pdf-load.c:1040 plug-ins/common/file-pdf-save.c:1113
+#: plug-ins/common/file-ps.c:3572 plug-ins/common/file-svg.c:773
+#: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
+#: plug-ins/common/grid.c:761 plug-ins/common/hot.c:679
+#: plug-ins/common/jigsaw.c:2498 plug-ins/common/mail.c:568
+#: plug-ins/common/nl-filter.c:1126 plug-ins/common/qbist.c:848
+#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
+#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sparkle.c:426
+#: plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -172,23 +172,22 @@ msgstr "Exercitar uma cabra (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/align-layers.c:672 plug-ins/common/blinds.c:302
-#: plug-ins/common/border-average.c:433 plug-ins/common/checkerboard.c:496
-#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:707
-#: plug-ins/common/compose.c:1184 plug-ins/common/contrast-retinex.c:352
-#: plug-ins/common/curve-bend.c:1222 plug-ins/common/depth-merge.c:734
-#: plug-ins/common/destripe.c:485 plug-ins/common/file-heif.c:2354
-#: plug-ins/common/file-pdf-load.c:656 plug-ins/common/file-svg.c:774
-#: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1325
-#: plug-ins/common/grid.c:762 plug-ins/common/hot.c:680
-#: plug-ins/common/jigsaw.c:2499 plug-ins/common/nl-filter.c:1127
-#: plug-ins/common/qbist.c:945 plug-ins/common/smooth-palette.c:512
-#: plug-ins/common/sparkle.c:427 plug-ins/common/sphere-designer.c:2633
-#: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
-#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
-#: plug-ins/common/warp.c:491 plug-ins/common/wavelet-decompose.c:410
-#: plug-ins/file-psd/psd-load.c:3308 plug-ins/flame/flame.c:717
-#: plug-ins/flame/flame.c:1034
+#: plug-ins/common/blinds.c:302 plug-ins/common/border-average.c:433
+#: plug-ins/common/checkerboard.c:496 plug-ins/common/cml-explorer.c:1349
+#: plug-ins/common/colormap-remap.c:707 plug-ins/common/compose.c:1184
+#: plug-ins/common/contrast-retinex.c:352 plug-ins/common/curve-bend.c:1222
+#: plug-ins/common/depth-merge.c:734 plug-ins/common/destripe.c:485
+#: plug-ins/common/file-heif.c:2354 plug-ins/common/file-pdf-load.c:656
+#: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:547
+#: plug-ins/common/film.c:1325 plug-ins/common/grid.c:762
+#: plug-ins/common/hot.c:680 plug-ins/common/jigsaw.c:2499
+#: plug-ins/common/nl-filter.c:1127 plug-ins/common/qbist.c:945
+#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sparkle.c:427
+#: plug-ins/common/sphere-designer.c:2633 plug-ins/common/tile.c:493
+#: plug-ins/common/tile-small.c:447 plug-ins/common/unit-editor.c:268
+#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
+#: plug-ins/common/wavelet-decompose.c:410 plug-ins/file-psd/psd-load.c:3308
+#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -289,99 +288,126 @@ msgstr ""
 "(demonstrando assim também como empacotar dados) e um botão que chama uma "
 "operação GEGL na camada ativa."
 
-#: plug-ins/common/align-layers.c:199
+#: plug-ins/common/align-layers.c:179
 msgid "Align Visi_ble Layers..."
 msgstr "A_linhar camadas visíveis..."
 
-#: plug-ins/common/align-layers.c:203
+#: plug-ins/common/align-layers.c:183
 msgid "Align all visible layers of the image"
 msgstr "Alinhar todas as camadas visíveis desta imagem"
 
-#: plug-ins/common/align-layers.c:257
+#: plug-ins/common/align-layers.c:192
+msgid "_Horizontal style"
+msgstr "Estilo _horizontal"
+
+#: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:208
+msgid ""
+"(None = 0, Collect = 1, Fill left to right = 2, Fill right to left = 3, Snap "
+"to grid = 4)"
+msgstr ""
+"(Nenhuma = 0, Recolher = 1, Preencher da esquerda para a direita = 2, "
+"Preencher da direita para a esquerda = 3, Atrair à grelha = 4)"
+
+#: plug-ins/common/align-layers.c:200
+msgid "Hori_zontal base"
+msgstr "Base ho_rizontal"
+
+#: plug-ins/common/align-layers.c:201 plug-ins/common/align-layers.c:216
+msgid "(Left edge = 0, Center = 1, Right edge = 2)"
+msgstr "(Margem esquerda = 0, Ao centro = 1, Margem direita = 2)"
+
+#: plug-ins/common/align-layers.c:207
+msgid "_Vertical style"
+msgstr "Estilo _vertical"
+
+#: plug-ins/common/align-layers.c:215
+msgid "Ver_tical base"
+msgstr "Base ver_tical"
+
+#: plug-ins/common/align-layers.c:222
+msgid "_Grid"
+msgstr "_Grelha"
+
+#: plug-ins/common/align-layers.c:223 plug-ins/common/grid.c:757
+#: plug-ins/gfig/gfig-dialog.c:1360 plug-ins/imagemap/imap_main.c:1923
+msgid "Grid"
+msgstr "Grelha"
+
+#: plug-ins/common/align-layers.c:229
+msgid "Ignore the _bottom layer even if visible"
+msgstr "Ignorar a camada do _fundo mesmo que esteja visível"
+
+#: plug-ins/common/align-layers.c:230
+msgid "Ignore the bottom layer even if visible"
+msgstr "Ignorar a camada do fundo mesmo que esteja visível"
+
+#: plug-ins/common/align-layers.c:236
+msgid "_Use the (invisible) bottom layer as the base"
+msgstr "_Usar a camada (invisível) do fundo como base"
+
+#: plug-ins/common/align-layers.c:237
+msgid "Use the (invisible) bottom layer as the base"
+msgstr "Usar a camada (invisível) do fundo como base"
+
+#: plug-ins/common/align-layers.c:291
 msgid "There are not enough layers to align."
 msgstr "Não existem camadas suficientes para serem alinhadas."
 
-#: plug-ins/common/align-layers.c:667
+#: plug-ins/common/align-layers.c:739
 msgid "Align Visible Layers"
 msgstr "Alinhar camadas visíveis"
 
-#: plug-ins/common/align-layers.c:691 plug-ins/common/align-layers.c:722
-msgctxt "align-style"
+#: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
+#: plug-ins/file-tiff/file-tiff-save.c:1322
+#: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
+#: plug-ins/metadata/metadata-tags.c:238
 msgid "None"
-msgstr "Nenhum"
+msgstr "Nenhuma"
 
-#: plug-ins/common/align-layers.c:692 plug-ins/common/align-layers.c:723
+#: plug-ins/common/align-layers.c:749 plug-ins/common/align-layers.c:767
 msgid "Collect"
-msgstr "Reunir"
+msgstr "Recolher"
 
-#: plug-ins/common/align-layers.c:693
+#: plug-ins/common/align-layers.c:750
 msgid "Fill (left to right)"
 msgstr "Preencher (da esquerda para a direita)"
 
-#: plug-ins/common/align-layers.c:694
+#: plug-ins/common/align-layers.c:751
 msgid "Fill (right to left)"
 msgstr "Preencher (da direita para a esquerda)"
 
-#: plug-ins/common/align-layers.c:695 plug-ins/common/align-layers.c:726
+#: plug-ins/common/align-layers.c:752 plug-ins/common/align-layers.c:770
 msgid "Snap to grid"
 msgstr "Atrair à grelha"
 
-#: plug-ins/common/align-layers.c:704
-msgid "_Horizontal style:"
-msgstr "Estilo _horizontal:"
-
-#: plug-ins/common/align-layers.c:708
+#: plug-ins/common/align-layers.c:758
 msgid "Left edge"
 msgstr "Margem esquerda"
 
-#: plug-ins/common/align-layers.c:709 plug-ins/common/align-layers.c:739
+#: plug-ins/common/align-layers.c:759 plug-ins/common/align-layers.c:777
 #: plug-ins/gradient-flare/gradient-flare.c:2878
 msgid "Center"
 msgstr "Ao centro"
 
-#: plug-ins/common/align-layers.c:710
+#: plug-ins/common/align-layers.c:760
 msgid "Right edge"
 msgstr "Margem direita"
 
-#: plug-ins/common/align-layers.c:719
-msgid "Ho_rizontal base:"
-msgstr "Base ho_rizontal:"
-
-#: plug-ins/common/align-layers.c:724
+#: plug-ins/common/align-layers.c:768
 msgid "Fill (top to bottom)"
 msgstr "Preencher (de cima para baixo)"
 
-#: plug-ins/common/align-layers.c:725
+#: plug-ins/common/align-layers.c:769
 msgid "Fill (bottom to top)"
 msgstr "Preencher (de baixo para cima)"
 
-#: plug-ins/common/align-layers.c:735
-msgid "_Vertical style:"
-msgstr "Estilo _vertical:"
-
-#: plug-ins/common/align-layers.c:738
+#: plug-ins/common/align-layers.c:776
 msgid "Top edge"
 msgstr "Margem superior"
 
-#: plug-ins/common/align-layers.c:740
+#: plug-ins/common/align-layers.c:778
 msgid "Bottom edge"
 msgstr "Margem inferior"
-
-#: plug-ins/common/align-layers.c:749
-msgid "Ver_tical base:"
-msgstr "Base ver_tical:"
-
-#: plug-ins/common/align-layers.c:752
-msgid "_Grid size:"
-msgstr "Tamanho _da grelha:"
-
-#: plug-ins/common/align-layers.c:760
-msgid "_Ignore the bottom layer even if visible"
-msgstr "_Ignorar a camada do fundo mesmo que esteja visível"
-
-#: plug-ins/common/align-layers.c:770
-msgid "_Use the (invisible) bottom layer as the base"
-msgstr "_Usar a camada (invisível) do fundo como base"
 
 #: plug-ins/common/animation-optimize.c:179
 msgid "Optimize (for _GIF)"
@@ -1021,7 +1047,7 @@ msgstr "Guardar parâmetros do explorador CML"
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
 #: plug-ins/file-fli/fli-gimp.c:816 plug-ins/file-icns/file-icns-save.c:428
 #: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
-#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2213
+#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
@@ -1061,7 +1087,7 @@ msgstr "Carregar parâmetros do explorador CML"
 #: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:955
 #: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:554
 #: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-load.c:169
-#: plug-ins/file-psd/psd-save.c:2218 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1855
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:670
@@ -2041,7 +2067,7 @@ msgstr "'%s': EOF ou erro ao ler dados da paleta"
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
 #: plug-ins/file-fli/fli-gimp.c:783 plug-ins/file-icns/file-icns-save.c:612
 #: plug-ins/file-ico/ico-save.c:1324 plug-ins/file-ico/ico-save.c:1533
-#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2159
+#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2160
 #: plug-ins/file-sgi/sgi.c:643 plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
@@ -2952,12 +2978,12 @@ msgid "CMYK profile required for export"
 msgstr "Perfil CMYK necessário para exportação"
 
 #: plug-ins/common/file-jpegxl.c:2036 plug-ins/file-jpeg/jpeg-save.c:898
-#: plug-ins/file-psd/psd-save.c:2455 plug-ins/file-tiff/file-tiff-save.c:1369
+#: plug-ins/file-psd/psd-save.c:2456 plug-ins/file-tiff/file-tiff-save.c:1369
 msgid "Name of the color profile used for CMYK export."
 msgstr "Nome do perfil de cor usado para exportação CMYK."
 
 #: plug-ins/common/file-jpegxl.c:2055 plug-ins/file-jpeg/jpeg-save.c:909
-#: plug-ins/file-psd/psd-save.c:2466 plug-ins/file-tiff/file-tiff-save.c:1381
+#: plug-ins/file-psd/psd-save.c:2467 plug-ins/file-tiff/file-tiff-save.c:1381
 #, c-format
 msgid "Profile: %s"
 msgstr "Perfil: %s"
@@ -5118,11 +5144,6 @@ msgstr "Desenhar uma grelha na imagem"
 msgid "Drawing grid"
 msgstr "A desenhar a grelha"
 
-#: plug-ins/common/grid.c:757 plug-ins/gfig/gfig-dialog.c:1360
-#: plug-ins/imagemap/imap_main.c:1923
-msgid "Grid"
-msgstr "Grelha"
-
 #. attach labels
 #: plug-ins/common/grid.c:837
 msgid ""
@@ -7280,7 +7301,7 @@ msgstr "Tamanho do ficheiro: desconhecido"
 msgid "Enable preview to obtain the file size."
 msgstr "Ativar a pré-visualização para obter o tamanho do ficheiro."
 
-#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-psd/psd-save.c:2448
+#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-psd/psd-save.c:2449
 #: plug-ins/file-tiff/file-tiff-save.c:1362
 msgid "No soft-proofing profile"
 msgstr "Sem perfil da prova de cor do ecrã"
@@ -7525,7 +7546,7 @@ msgstr ""
 "Erro: não foi possível converter o tipo de imagem base do GIMP para o modo "
 "PSD"
 
-#: plug-ins/file-psd/psd-save.c:2152
+#: plug-ins/file-psd/psd-save.c:2153
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7534,7 +7555,7 @@ msgstr ""
 "Não é possível exportar '%s'. O formato de ficheiro PSD não suporta imagens "
 "que tenham mais de 30.000 píxeis de largura ou de altura."
 
-#: plug-ins/file-psd/psd-save.c:2193
+#: plug-ins/file-psd/psd-save.c:2194
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7543,11 +7564,11 @@ msgstr ""
 "Não é possível exportar '%s'. O formato de ficheiro PSD não suporta imagens "
 "cujas camadas tenham mais de 30.000 píxeis de largura ou de altura."
 
-#: plug-ins/file-psd/psd-save.c:2444
+#: plug-ins/file-psd/psd-save.c:2445
 msgid "Export Image as PSD"
 msgstr "Exportar imagem como PSD"
 
-#: plug-ins/file-psd/psd-save.c:2490
+#: plug-ins/file-psd/psd-save.c:2491
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -7555,7 +7576,7 @@ msgstr ""
 "Informação de espaço da cor de tom duplo do original\n"
 "imagem importada será usada."
 
-#: plug-ins/file-psd/psd-save.c:2558
+#: plug-ins/file-psd/psd-save.c:2559
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
@@ -8093,12 +8114,6 @@ msgid ""
 msgstr ""
 "Aviso: o tamanho máximo do ficheiro TIFF foi excedido. Tente novamente como "
 "BigTIFF ou com um algoritmo de compressão diferente ou cancele."
-
-#: plug-ins/file-tiff/file-tiff-save.c:1322
-#: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
-#: plug-ins/metadata/metadata-tags.c:238
-msgid "None"
-msgstr "Nenhuma"
 
 #: plug-ins/file-tiff/file-tiff-save.c:1323
 msgid "LZW"
@@ -11258,83 +11273,83 @@ msgstr "Remover seleção"
 msgid "Unselect All"
 msgstr "Remover todas as seleções"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:204
+#: plug-ins/imagemap/imap_edit_area_info.c:216
 msgid "Link Type"
 msgstr "Tipo de hiperligação"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:213
+#: plug-ins/imagemap/imap_edit_area_info.c:225
 msgid "_Web Site"
 msgstr "Página _web"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:219
+#: plug-ins/imagemap/imap_edit_area_info.c:231
 msgid "_Ftp Site"
 msgstr "Servidor _ftp"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:225
+#: plug-ins/imagemap/imap_edit_area_info.c:237
 msgid "_Gopher"
 msgstr "_Gopher"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:231
+#: plug-ins/imagemap/imap_edit_area_info.c:243
 msgid "Ot_her"
 msgstr "O_utro"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:237
+#: plug-ins/imagemap/imap_edit_area_info.c:249
 msgid "F_ile"
 msgstr "F_icheiro"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:243
+#: plug-ins/imagemap/imap_edit_area_info.c:255
 msgid "WAI_S"
 msgstr "WAI_S"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:249
+#: plug-ins/imagemap/imap_edit_area_info.c:261
 msgid "Tel_net"
 msgstr "Tel_net"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:255
+#: plug-ins/imagemap/imap_edit_area_info.c:267
 msgid "e-_mail"
 msgstr "e_mail"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:261
+#: plug-ins/imagemap/imap_edit_area_info.c:273
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr "_URL a ativar quando esta área for clicada: (obrigatório)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:263
+#: plug-ins/imagemap/imap_edit_area_info.c:275
 msgid "Select HTML file"
 msgstr "Selecionar ficheiro HTML"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:272
+#: plug-ins/imagemap/imap_edit_area_info.c:284
 msgid "Relati_ve link"
 msgstr "Hiperligação relati_va"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:278
+#: plug-ins/imagemap/imap_edit_area_info.c:290
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr "_Nome/ID do fotograma alvo (opcional - só para FRAMES)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:281
+#: plug-ins/imagemap/imap_edit_area_info.c:293
 msgid "ALT te_xt: (optional)"
 msgstr "_Texto alternativo (ALT, opcional)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:284
+#: plug-ins/imagemap/imap_edit_area_info.c:296
 msgid "_Link"
 msgstr "_Hiperligação"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:318
+#: plug-ins/imagemap/imap_edit_area_info.c:330
 msgid "Dimensions"
 msgstr "Dimensões"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:322
+#: plug-ins/imagemap/imap_edit_area_info.c:334
 msgid "Pre_view"
 msgstr "Pré-_visualização"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:360
+#: plug-ins/imagemap/imap_edit_area_info.c:372
 msgid "_JavaScript"
 msgstr "_JavaScript"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:459
+#: plug-ins/imagemap/imap_edit_area_info.c:471
 msgid "Area Settings"
 msgstr "Configurações da área"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:501
+#: plug-ins/imagemap/imap_edit_area_info.c:513
 #, c-format
 msgid "Area #%d Settings"
 msgstr "Configurações da área nº %d"
@@ -13111,6 +13126,13 @@ msgstr "_Digitalizador/Câmara..."
 msgid "Transferring data from scanner/camera"
 msgstr "A transferir imagem do digitalizador/câmara"
 
+#~ msgctxt "align-style"
+#~ msgid "None"
+#~ msgstr "Nenhum"
+
+#~ msgid "_Grid size:"
+#~ msgstr "Tamanho _da grelha:"
+
 #, c-format
 #~ msgid "%s-%s"
 #~ msgstr "%s-%s"
@@ -13199,9 +13221,6 @@ msgstr "A transferir imagem do digitalizador/câmara"
 
 #~ msgid "Area List"
 #~ msgstr "Lista de áreas"
-
-#~ msgid "_Grid"
-#~ msgstr "_Grelha"
 
 #~ msgid "_Clear"
 #~ msgstr "_Limpar"
