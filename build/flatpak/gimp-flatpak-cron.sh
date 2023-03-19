@@ -46,10 +46,10 @@ if test "$?" -ne "0"; then
 fi
 
 LOGFILE="${LOGDIR}/gimp-flatpak-cron.log"
-echo "Flatpak cron for GIMP started at `date --rfc-2822`." > $LOGFILE
+echo "Flatpak cron for GIMP started at `date --rfc-2822`." | tee $LOGFILE
 
 print_log() {
-  echo "[GIMP-FLATPAK-CRON] (`date --rfc-2822`) $1" >> $LOGFILE
+  echo "[GIMP-FLATPAK-CRON] (`date --rfc-2822`) $1" | tee -a $LOGFILE
 }
 
 mkdir "$BUILDBASE"
@@ -82,7 +82,7 @@ flatpak_build_branch() {
   flatpak-builder $SKIP $BUILD_OPTIONS --arch="$ARCH" \
                   --state-dir="${STATEDIR}" \
                   "${INSTALLDIR}" org.gimp.GIMP-$BRANCH.json \
-                  > "${BUILDLOG}" 2>&1
+                  2>&1 | tee "${BUILDLOG}"
   ret="$?"
   print_log "Flatpak $BRANCH/$ARCH successfully built in ${INSTALLDIR}"
   if test $ret -eq 0; then
@@ -91,7 +91,7 @@ flatpak_build_branch() {
                     --state-dir="${STATEDIR}" \
                     --arch="$ARCH" "${INSTALLDIR}" \
                     org.gimp.GIMP-$BRANCH.json \
-                    >> "${BUILDLOG}" 2>&1
+                    2>&1 | tee -a "${BUILDLOG}"
     ret="$?"
     if test $ret -eq 0; then
       print_log "Flatpak $BRANCH/$ARCH successfully exported to ${REPO}"
