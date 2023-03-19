@@ -75,8 +75,13 @@ static GimpValueArray * pcx_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (GFile                *file,
+static GimpImage      * load_image           (GimpProcedure        *procedure,
+                                              GFile                *file,
+                                              GObject              *config,
+                                              gint                  run_mode,
                                               GError              **error);
+static gboolean         pcx_load_dialog      (GimpProcedure        *procedure,
+                                              GObject              *config);
 
 static void             load_1               (FILE                 *fp,
                                               gint                  width,
@@ -189,6 +194,13 @@ pcx_create_procedure (GimpPlugIn  *plug_in,
                                       "Nick Lamb <njl195@zepler.org.uk>",
                                       "January 1997");
 
+      GIMP_PROC_ARG_INT (procedure, "override-palette",
+                         _("Palette Options"),
+                         _("Use built-in palette (0) or override with "
+                           "black/white (1)"),
+                         0, 1, 0,
+                         G_PARAM_READWRITE);
+
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-pcx");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -231,18 +243,30 @@ pcx_load (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
-  GError         *error = NULL;
+  GimpProcedureConfig *config;
+  GimpValueArray      *return_vals;
+  GimpImage           *image;
+  GError              *error = NULL;
 
   gegl_init (NULL, NULL);
 
-  image = load_image (file, &error);
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
+
+  image = load_image (procedure, file, G_OBJECT (config), run_mode, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
-                                             error);
+    {
+      gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
+      g_object_unref (config);
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               error);
+    }
+
+  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
+  g_object_unref (config);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -265,7 +289,7 @@ pcx_save (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GError            *error = NULL;
+  GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -386,8 +410,11 @@ pcx_header_to_buffer (guint8 *buf)
 }
 
 static GimpImage *
-load_image (GFile   *file,
-            GError **error)
+load_image (GimpProcedure  *procedure,
+            GFile          *file,
+            GObject        *config,
+            gint            run_mode,
+            GError        **error)
 {
   FILE         *fd;
   GeglBuffer   *buffer;
@@ -398,6 +425,7 @@ load_image (GFile   *file,
   GimpLayer    *layer;
   guchar       *dest, cmap[768];
   guint8        header_buf[128];
+  gboolean      override_palette = FALSE;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
@@ -503,6 +531,16 @@ load_image (GFile   *file,
       const guint8 *colormap = pcx_header.colormap;
       dest = g_new (guchar, ((gsize) width) * height);
       load_1 (fd, width, height, dest, bytesperline);
+
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        {
+          if (pcx_load_dialog (procedure, config))
+            {
+              g_object_get (config,
+                            "override-palette", &override_palette,
+                            NULL);
+            }
+        }
       /* Monochrome does not mean necessarily B&W. Therefore we still
        * want to check the header palette, even for just 2 colors.
        * Hopefully the header palette will always be filled with
@@ -518,9 +556,10 @@ load_image (GFile   *file,
        * files *might* be in the wrong (who knows...) but the fact is that
        * other software, including older versions of GIMP, do display them
        * "correctly", so let's follow suit: if the two palette colors are
-       * equal, use a B&W palette instead.
+       * equal (or if the user chooses the option in the load dialog),
+       * use a B&W palette instead.
        */
-      if (! memcmp (colormap, colormap + 3, 3))
+      if (! memcmp (colormap, colormap + 3, 3) || override_palette)
         {
           static const guint8 bw_colormap[6] = {  0,   0,   0,
                                                 255, 255, 255};
@@ -588,6 +627,45 @@ load_image (GFile   *file,
   gimp_progress_update (1.0);
 
   return image;
+}
+
+static gboolean
+pcx_load_dialog (GimpProcedure *procedure,
+                 GObject       *config)
+{
+  GtkWidget    *dialog;
+  GtkListStore *store;
+  gboolean      run;
+
+  gimp_ui_init (PLUG_IN_BINARY);
+
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Import from PCX"));
+
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
+
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
+  store = gimp_int_store_new (_("Use PCX image's built-in palette"), 0,
+                              _("Use black and white palette"),      1,
+                              NULL);
+  gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "override-palette", GIMP_INT_STORE (store));
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              NULL);
+
+  gtk_widget_show (dialog);
+
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
+
+  return run;
 }
 
 static void
