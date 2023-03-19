@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-16 17:37+0000\n"
-"PO-Revision-Date: 2023-03-16 19:46+0200\n"
+"POT-Creation-Date: 2023-03-18 20:23+0000\n"
+"PO-Revision-Date: 2023-03-19 08:52+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -36,7 +36,7 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/common/curve-bend.c:678 plug-ins/common/decompose.c:376
 #: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:243
 #: plug-ins/common/destripe.c:183 plug-ins/common/gradient-map.c:216
-#: plug-ins/common/grid.c:283 plug-ins/common/hot.c:317
+#: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
 #: plug-ins/common/jigsaw.c:467 plug-ins/common/nl-filter.c:224
 #: plug-ins/common/qbist.c:253 plug-ins/common/sample-colorize.c:431
 #: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:328
@@ -76,12 +76,11 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/file-pdf-load.c:1040 plug-ins/common/file-pdf-save.c:1113
 #: plug-ins/common/file-ps.c:3572 plug-ins/common/file-svg.c:773
 #: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
-#: plug-ins/common/grid.c:761 plug-ins/common/hot.c:679
-#: plug-ins/common/jigsaw.c:2498 plug-ins/common/mail.c:568
-#: plug-ins/common/nl-filter.c:1126 plug-ins/common/qbist.c:848
-#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
-#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sparkle.c:426
-#: plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/grid.c:761 plug-ins/common/jigsaw.c:2498
+#: plug-ins/common/mail.c:568 plug-ins/common/nl-filter.c:1126
+#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
+#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
+#: plug-ins/common/sparkle.c:426 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -173,14 +172,14 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/file-heif.c:2354 plug-ins/common/file-pdf-load.c:656
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:547
 #: plug-ins/common/film.c:1325 plug-ins/common/grid.c:762
-#: plug-ins/common/hot.c:680 plug-ins/common/jigsaw.c:2499
-#: plug-ins/common/nl-filter.c:1127 plug-ins/common/qbist.c:945
-#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sparkle.c:427
-#: plug-ins/common/sphere-designer.c:2633 plug-ins/common/tile.c:493
-#: plug-ins/common/tile-small.c:447 plug-ins/common/unit-editor.c:268
-#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
-#: plug-ins/common/wavelet-decompose.c:410 plug-ins/file-psd/psd-load.c:3308
-#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
+#: plug-ins/common/jigsaw.c:2499 plug-ins/common/nl-filter.c:1127
+#: plug-ins/common/qbist.c:945 plug-ins/common/smooth-palette.c:512
+#: plug-ins/common/sparkle.c:427 plug-ins/common/sphere-designer.c:2633
+#: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
+#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
+#: plug-ins/common/warp.c:491 plug-ins/common/wavelet-decompose.c:410
+#: plug-ins/file-psd/psd-load.c:3308 plug-ins/flame/flame.c:717
+#: plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -289,7 +288,6 @@ msgid "Align all visible layers of the image"
 msgstr "Вирівнювання видимих шарів зображення"
 
 #: plug-ins/common/align-layers.c:192
-#| msgid "_Horizontal style:"
 msgid "_Horizontal style"
 msgstr "_Горизонтальний стиль"
 
@@ -298,11 +296,10 @@ msgid ""
 "(None = 0, Collect = 1, Fill left to right = 2, Fill right to left = 3, Snap "
 "to grid = 4)"
 msgstr ""
-"(Немає = 0, Зібрати = 1, Заповнити зліва праворуч = 2, Заповнити справа"
-" ліворуч = 3, Прилипання до ґратки = 4)"
+"(Немає = 0, Зібрати = 1, Заповнити зліва праворуч = 2, Заповнити справа "
+"ліворуч = 3, Прилипання до ґратки = 4)"
 
 #: plug-ins/common/align-layers.c:200
-#| msgid "Ho_rizontal base:"
 msgid "Hori_zontal base"
 msgstr "Г_оризонтальна основа"
 
@@ -311,12 +308,10 @@ msgid "(Left edge = 0, Center = 1, Right edge = 2)"
 msgstr "(Лівий край = 0, Центр = 1, Правий край = 2)"
 
 #: plug-ins/common/align-layers.c:207
-#| msgid "_Vertical style:"
 msgid "_Vertical style"
 msgstr "_Вертикальний стиль"
 
 #: plug-ins/common/align-layers.c:215
-#| msgid "Ver_tical base:"
 msgid "Ver_tical base"
 msgstr "В_ертикальна основа"
 
@@ -330,12 +325,10 @@ msgid "Grid"
 msgstr "Сітка"
 
 #: plug-ins/common/align-layers.c:229
-#| msgid "_Ignore the bottom layer even if visible"
 msgid "Ignore the _bottom layer even if visible"
 msgstr "_Ігнорувати нижній шар, навіть якщо він видимий"
 
 #: plug-ins/common/align-layers.c:230
-#| msgid "_Ignore the bottom layer even if visible"
 msgid "Ignore the bottom layer even if visible"
 msgstr "Ігнорувати нижній шар, навіть якщо він видимий"
 
@@ -344,7 +337,6 @@ msgid "_Use the (invisible) bottom layer as the base"
 msgstr "_Використовувати (невидимий) нижній шар як основу"
 
 #: plug-ins/common/align-layers.c:237
-#| msgid "_Use the (invisible) bottom layer as the base"
 msgid "Use the (invisible) bottom layer as the base"
 msgstr "Використовувати (невидимий) нижній шар як основу"
 
@@ -5206,39 +5198,47 @@ msgstr "Гільйотина"
 msgid "Untitled"
 msgstr "Без назви"
 
-#: plug-ins/common/hot.c:255
+#: plug-ins/common/hot.c:249
 msgid "_Hot..."
 msgstr "_Гарячі кольори..."
 
-#: plug-ins/common/hot.c:259
+#: plug-ins/common/hot.c:253
 msgid "Find and fix pixels that may be unsafely bright"
 msgstr "Знайти та змінити точки, які можуть бути надто яскравими"
 
-#: plug-ins/common/hot.c:470 plug-ins/common/hot.c:675
-msgid "Hot"
-msgstr "Гарячі кольори"
-
-#: plug-ins/common/hot.c:701
+#: plug-ins/common/hot.c:270
 msgid "Mode"
 msgstr "Режим"
 
-#: plug-ins/common/hot.c:713
-msgid "Create _new layer"
-msgstr "Створити _новий шар"
-
-#: plug-ins/common/hot.c:722
+#: plug-ins/common/hot.c:276
 msgid "Action"
 msgstr "Дія"
 
-#: plug-ins/common/hot.c:726
+#: plug-ins/common/hot.c:283
+msgid "Create _new layer"
+msgstr "Створити _новий шар"
+
+#: plug-ins/common/hot.c:474 plug-ins/common/hot.c:681
+msgid "Hot"
+msgstr "Гарячі кольори"
+
+#: plug-ins/common/hot.c:690
+msgid "N_TSC"
+msgstr "N_TSC"
+
+#: plug-ins/common/hot.c:691
+msgid "_PAL"
+msgstr "_PAL"
+
+#: plug-ins/common/hot.c:696
 msgid "Reduce _Luminance"
 msgstr "Зменшити _яскравість"
 
-#: plug-ins/common/hot.c:727
+#: plug-ins/common/hot.c:697
 msgid "Reduce _Saturation"
 msgstr "Зменшити _насиченість"
 
-#: plug-ins/common/hot.c:728
+#: plug-ins/common/hot.c:698
 msgid "_Blacken"
 msgstr "_Чорний"
 
