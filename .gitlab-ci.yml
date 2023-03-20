@@ -663,7 +663,7 @@ flatpak:
     # > Job execution will continue but no more output will be collected.
     # To make debugging actually possible, let's save logs as a file.
     - flatpak-builder --user --disable-rofiles-fuse flatpak_app --repo=repo ${BRANCH:+--default-branch=$BRANCH} ${MANIFEST_PATH}
-        > flatpak-builder.log 2>&1
+        2>&1 | tee flatpak-builder.log
     # Generate a Flatpak bundle
     - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
     - tar cf repo.tar repo/
