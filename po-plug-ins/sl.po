@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-18 20:23+0000\n"
-"PO-Revision-Date: 2023-03-18 23:48+0100\n"
+"POT-Creation-Date: 2023-03-20 12:29+0000\n"
+"PO-Revision-Date: 2023-03-20 22:59+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -45,7 +45,7 @@ msgstr "Povadi kozo v jeziku C"
 #: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:328
 #: plug-ins/common/sphere-designer.c:3179 plug-ins/common/tile.c:220
 #: plug-ins/common/tile-small.c:308 plug-ins/common/van-gogh-lic.c:913
-#: plug-ins/common/warp.c:375 plug-ins/common/wavelet-decompose.c:190
+#: plug-ins/common/warp.c:375 plug-ins/common/wavelet-decompose.c:182
 #: plug-ins/file-dds/dds.c:519 plug-ins/flame/flame.c:241
 #: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:178
@@ -87,9 +87,9 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
-#: plug-ins/common/wavelet-decompose.c:409 plug-ins/common/web-page.c:278
-#: plug-ins/file-tiff/file-tiff-load.c:2673 plug-ins/flame/flame.c:540
-#: plug-ins/flame/flame.c:716 plug-ins/flame/flame.c:1033
+#: plug-ins/common/web-page.c:278 plug-ins/file-tiff/file-tiff-load.c:2673
+#: plug-ins/flame/flame.c:540 plug-ins/flame/flame.c:716
+#: plug-ins/flame/flame.c:1033
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:561
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1631
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1669
@@ -180,9 +180,8 @@ msgstr "Povadi kozo (JavaScript)"
 #: plug-ins/common/sparkle.c:427 plug-ins/common/sphere-designer.c:2633
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
 #: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
-#: plug-ins/common/warp.c:491 plug-ins/common/wavelet-decompose.c:410
-#: plug-ins/file-psd/psd-load.c:3308 plug-ins/flame/flame.c:717
-#: plug-ins/flame/flame.c:1034
+#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3308
+#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -6353,46 +6352,47 @@ msgstr "Iskanje gradienta XY ..."
 msgid "Flow step %d"
 msgstr "Korak poteka %d ..."
 
-#: plug-ins/common/wavelet-decompose.c:131
+#: plug-ins/common/wavelet-decompose.c:118
 msgid "_Wavelet-decompose..."
 msgstr "_Razstavi valček …"
 
-#: plug-ins/common/wavelet-decompose.c:135
-#: plug-ins/common/wavelet-decompose.c:405
+#: plug-ins/common/wavelet-decompose.c:122
+#: plug-ins/common/wavelet-decompose.c:402
 msgid "Wavelet decompose"
 msgstr "Razstavi valček"
 
-#: plug-ins/common/wavelet-decompose.c:227
+#: plug-ins/common/wavelet-decompose.c:131
+msgid "Scal_es"
+msgstr "L_estvice"
+
+#: plug-ins/common/wavelet-decompose.c:132
+msgid "Number of scales"
+msgstr "Število lestvic"
+
+#: plug-ins/common/wavelet-decompose.c:137
+msgid "Create a layer group to store the _decomposition"
+msgstr "Ustvari skupino plasti za shranjevanje _razstavljanja"
+
+#: plug-ins/common/wavelet-decompose.c:145
+msgid "_Add a layer mask to each scales layer"
+msgstr "_Dodaj masko plasti vsaki plasti lestvice"
+
+#: plug-ins/common/wavelet-decompose.c:225
 msgid "Wavelet-Decompose"
 msgstr "Razstavljanje valčka"
 
-#: plug-ins/common/wavelet-decompose.c:237
+#: plug-ins/common/wavelet-decompose.c:235
 msgid "Decomposition"
 msgstr "Dekompozicija"
 
-#: plug-ins/common/wavelet-decompose.c:304
+#: plug-ins/common/wavelet-decompose.c:302
 #, c-format
 msgid "Scale %d"
 msgstr "Spremeni merilo %d"
 
-#: plug-ins/common/wavelet-decompose.c:328
+#: plug-ins/common/wavelet-decompose.c:326
 msgid "Residual"
 msgstr "Preostala stopnja"
-
-#. scales
-#: plug-ins/common/wavelet-decompose.c:429
-msgid "Scales:"
-msgstr "Merila:"
-
-#. create group layer
-#: plug-ins/common/wavelet-decompose.c:439
-msgid "Create a layer group to store the decomposition"
-msgstr "Ustvari skupino plasti za shranjevanje razstavljanja"
-
-#. create layer masks
-#: plug-ins/common/wavelet-decompose.c:451
-msgid "Add a layer mask to each scales layers"
-msgstr "Dodaj masko plasti vsaki plasti lestvice"
 
 #: plug-ins/common/web-browser.c:175
 msgid "The operating system is out of memory or resources."
