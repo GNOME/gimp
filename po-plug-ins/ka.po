@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-16 17:37+0000\n"
-"PO-Revision-Date: 2023-03-16 21:38+0100\n"
+"POT-Creation-Date: 2023-03-20 12:29+0000\n"
+"PO-Revision-Date: 2023-03-21 00:53+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -33,13 +33,13 @@ msgstr "ავარჯიშეთ თხა C-ში"
 #: plug-ins/common/curve-bend.c:678 plug-ins/common/decompose.c:376
 #: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:243
 #: plug-ins/common/destripe.c:183 plug-ins/common/gradient-map.c:216
-#: plug-ins/common/grid.c:283 plug-ins/common/hot.c:317
+#: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
 #: plug-ins/common/jigsaw.c:467 plug-ins/common/nl-filter.c:224
 #: plug-ins/common/qbist.c:253 plug-ins/common/sample-colorize.c:431
 #: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:328
 #: plug-ins/common/sphere-designer.c:3179 plug-ins/common/tile.c:220
 #: plug-ins/common/tile-small.c:308 plug-ins/common/van-gogh-lic.c:913
-#: plug-ins/common/warp.c:375 plug-ins/common/wavelet-decompose.c:190
+#: plug-ins/common/warp.c:375 plug-ins/common/wavelet-decompose.c:182
 #: plug-ins/file-dds/dds.c:519 plug-ins/flame/flame.c:241
 #: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:178
@@ -73,18 +73,17 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/common/file-pdf-load.c:1040 plug-ins/common/file-pdf-save.c:1113
 #: plug-ins/common/file-ps.c:3572 plug-ins/common/file-svg.c:773
 #: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
-#: plug-ins/common/grid.c:761 plug-ins/common/hot.c:679
-#: plug-ins/common/jigsaw.c:2498 plug-ins/common/mail.c:568
-#: plug-ins/common/nl-filter.c:1126 plug-ins/common/qbist.c:848
-#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
-#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sparkle.c:426
-#: plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/grid.c:761 plug-ins/common/jigsaw.c:2498
+#: plug-ins/common/mail.c:568 plug-ins/common/nl-filter.c:1126
+#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
+#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
+#: plug-ins/common/sparkle.c:426 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
-#: plug-ins/common/wavelet-decompose.c:409 plug-ins/common/web-page.c:278
-#: plug-ins/file-tiff/file-tiff-load.c:2673 plug-ins/flame/flame.c:540
-#: plug-ins/flame/flame.c:716 plug-ins/flame/flame.c:1033
+#: plug-ins/common/web-page.c:278 plug-ins/file-tiff/file-tiff-load.c:2673
+#: plug-ins/flame/flame.c:540 plug-ins/flame/flame.c:716
+#: plug-ins/flame/flame.c:1033
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:561
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1631
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1669
@@ -167,13 +166,12 @@ msgstr ""
 #: plug-ins/common/file-heif.c:2354 plug-ins/common/file-pdf-load.c:656
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:547
 #: plug-ins/common/film.c:1325 plug-ins/common/grid.c:762
-#: plug-ins/common/hot.c:680 plug-ins/common/jigsaw.c:2499
-#: plug-ins/common/nl-filter.c:1127 plug-ins/common/qbist.c:945
-#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sparkle.c:427
-#: plug-ins/common/sphere-designer.c:2633 plug-ins/common/tile.c:493
-#: plug-ins/common/tile-small.c:447 plug-ins/common/unit-editor.c:268
-#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
-#: plug-ins/common/wavelet-decompose.c:410 plug-ins/file-psd/psd-load.c:3308
+#: plug-ins/common/jigsaw.c:2499 plug-ins/common/nl-filter.c:1127
+#: plug-ins/common/qbist.c:945 plug-ins/common/smooth-palette.c:512
+#: plug-ins/common/sparkle.c:427 plug-ins/common/sphere-designer.c:2633
+#: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
+#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
+#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3308
 #: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
@@ -4998,39 +4996,47 @@ msgstr ""
 msgid "Untitled"
 msgstr "უსათაურო"
 
-#: plug-ins/common/hot.c:255
+#: plug-ins/common/hot.c:249
 msgid "_Hot..."
 msgstr ""
 
-#: plug-ins/common/hot.c:259
+#: plug-ins/common/hot.c:253
 msgid "Find and fix pixels that may be unsafely bright"
 msgstr ""
 
-#: plug-ins/common/hot.c:470 plug-ins/common/hot.c:675
-msgid "Hot"
-msgstr "ცხელი"
-
-#: plug-ins/common/hot.c:701
+#: plug-ins/common/hot.c:270
 msgid "Mode"
 msgstr "რეჟიმი"
 
-#: plug-ins/common/hot.c:713
-msgid "Create _new layer"
-msgstr ""
-
-#: plug-ins/common/hot.c:722
+#: plug-ins/common/hot.c:276
 msgid "Action"
 msgstr "ქმედება"
 
-#: plug-ins/common/hot.c:726
+#: plug-ins/common/hot.c:283
+msgid "Create _new layer"
+msgstr ""
+
+#: plug-ins/common/hot.c:474 plug-ins/common/hot.c:681
+msgid "Hot"
+msgstr "ცხელი"
+
+#: plug-ins/common/hot.c:690
+msgid "N_TSC"
+msgstr ""
+
+#: plug-ins/common/hot.c:691
+msgid "_PAL"
+msgstr ""
+
+#: plug-ins/common/hot.c:696
 msgid "Reduce _Luminance"
 msgstr ""
 
-#: plug-ins/common/hot.c:727
+#: plug-ins/common/hot.c:697
 msgid "Reduce _Saturation"
 msgstr ""
 
-#: plug-ins/common/hot.c:728
+#: plug-ins/common/hot.c:698
 msgid "_Blacken"
 msgstr ""
 
@@ -6166,45 +6172,47 @@ msgstr ""
 msgid "Flow step %d"
 msgstr ""
 
-#: plug-ins/common/wavelet-decompose.c:131
+#: plug-ins/common/wavelet-decompose.c:118
 msgid "_Wavelet-decompose..."
 msgstr ""
 
-#: plug-ins/common/wavelet-decompose.c:135
-#: plug-ins/common/wavelet-decompose.c:405
+#: plug-ins/common/wavelet-decompose.c:122
+#: plug-ins/common/wavelet-decompose.c:402
 msgid "Wavelet decompose"
 msgstr ""
 
-#: plug-ins/common/wavelet-decompose.c:227
+#: plug-ins/common/wavelet-decompose.c:131
+msgid "Scal_es"
+msgstr "გაფართოება"
+
+#: plug-ins/common/wavelet-decompose.c:132
+#| msgid "_Number of cells:"
+msgid "Number of scales"
+msgstr ""
+
+#: plug-ins/common/wavelet-decompose.c:137
+msgid "Create a layer group to store the _decomposition"
+msgstr ""
+
+#: plug-ins/common/wavelet-decompose.c:145
+msgid "_Add a layer mask to each scales layer"
+msgstr ""
+
+#: plug-ins/common/wavelet-decompose.c:225
 msgid "Wavelet-Decompose"
 msgstr ""
 
-#: plug-ins/common/wavelet-decompose.c:237
+#: plug-ins/common/wavelet-decompose.c:235
 msgid "Decomposition"
 msgstr ""
 
-#: plug-ins/common/wavelet-decompose.c:304
+#: plug-ins/common/wavelet-decompose.c:302
 #, c-format
 msgid "Scale %d"
 msgstr ""
 
-#: plug-ins/common/wavelet-decompose.c:328
+#: plug-ins/common/wavelet-decompose.c:326
 msgid "Residual"
-msgstr ""
-
-#. scales
-#: plug-ins/common/wavelet-decompose.c:429
-msgid "Scales:"
-msgstr ""
-
-#. create group layer
-#: plug-ins/common/wavelet-decompose.c:439
-msgid "Create a layer group to store the decomposition"
-msgstr ""
-
-#. create layer masks
-#: plug-ins/common/wavelet-decompose.c:451
-msgid "Add a layer mask to each scales layers"
 msgstr ""
 
 #: plug-ins/common/web-browser.c:175
