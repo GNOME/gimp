@@ -206,11 +206,11 @@ static gint             save_index              (FILE                *ofp,
                                                  GimpImage           *image,
                                                  GimpDrawable        *drawable,
                                                  gboolean             grey,
-                                                 gboolean             rle);
+                                                 gint                 rle);
 static gint             save_rgb                (FILE                *ofp,
                                                  GimpImage           *image,
                                                  GimpDrawable        *drawable,
-                                                 gboolean             rle);
+                                                 gint                 rle);
 
 static gboolean         save_dialog             (GimpProcedure       *procedure,
                                                  GObject             *config);
@@ -315,11 +315,11 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "im1,im8,im24,im32,rs,ras,sun");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "rle",
-                             "RLE",
-                             "Use RLE output",
-                             TRUE,
-                             G_PARAM_READWRITE);
+      GIMP_PROC_ARG_INT (procedure, "rle",
+                         _("Data Formatting"),
+                         _("Use standard (0) or Run-Length Encoded (1) output"),
+                         0, 1, 1,
+                         G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -594,7 +594,7 @@ save_image (GFile         *file,
 {
   FILE          *ofp;
   GimpImageType  drawable_type;
-  gboolean       rle;
+  gint           rle;
   gboolean       retval;
 
   drawable_type = gimp_drawable_type (drawable);
@@ -1479,7 +1479,7 @@ save_index (FILE         *ofp,
             GimpImage    *image,
             GimpDrawable *drawable,
             gboolean      grey,
-            gboolean      rle)
+            gint          rle)
 {
   int             height, width, linepad, i, j;
   int             ncols, bw, is_bw, is_wb, bpl;
@@ -1657,7 +1657,7 @@ static gboolean
 save_rgb (FILE         *ofp,
           GimpImage    *image,
           GimpDrawable *drawable,
-          gboolean      rle)
+          gint          rle)
 {
   int              height, width, tile_height, linepad;
   int              i, j, bpp;
@@ -1780,22 +1780,22 @@ static gboolean
 save_dialog (GimpProcedure *procedure,
              GObject       *config)
 {
-  GtkWidget *dialog;
-  GtkWidget *frame;
-  gboolean   run;
+  GtkWidget    *dialog;
+  GtkListStore *store;
+  gboolean      run;
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Export Image as SUNRAS"));
 
-  frame = gimp_prop_boolean_radio_frame_new (config, "rle",
-                                             _("Data Formatting"),
-                                             _("_RunLength Encoded"),
-                                             _("_Standard"));
+  store = gimp_int_store_new (_("S_tandard"),           FALSE,
+                              _("R_un-Length Encoded"), TRUE,
+                              NULL);
+  gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "rle", GIMP_INT_STORE (store));
 
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      frame, TRUE, TRUE, 0);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              NULL);
 
   gtk_widget_show (dialog);
 
