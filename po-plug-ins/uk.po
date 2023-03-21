@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-20 12:29+0000\n"
-"PO-Revision-Date: 2023-03-20 18:53+0200\n"
+"POT-Creation-Date: 2023-03-21 00:49+0000\n"
+"PO-Revision-Date: 2023-03-21 07:25+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -6395,22 +6395,18 @@ msgid "Wavelet decompose"
 msgstr "Вейвлет-розбір"
 
 #: plug-ins/common/wavelet-decompose.c:131
-#| msgid "Scales:"
 msgid "Scal_es"
 msgstr "_Рівні деталізації"
 
 #: plug-ins/common/wavelet-decompose.c:132
-#| msgid "Number of Tiles"
 msgid "Number of scales"
 msgstr "Кількість рівнів деталізації"
 
 #: plug-ins/common/wavelet-decompose.c:137
-#| msgid "Create a layer group to store the decomposition"
 msgid "Create a layer group to store the _decomposition"
 msgstr "Створити групу шарів для зберігання _розбиття"
 
 #: plug-ins/common/wavelet-decompose.c:145
-#| msgid "Add a layer mask to each scales layers"
 msgid "_Add a layer mask to each scales layer"
 msgstr "_Додати маску шару до кожного з шарів деталізації"
 
@@ -8275,6 +8271,35 @@ msgstr "(без ключових кадрів)"
 #: plug-ins/file-webp/file-webp-dialog.c:52
 msgid "(all frames are keyframes)"
 msgstr "(всі кадри і ключові кадри)"
+
+#. Create the combobox containing the presets
+#: plug-ins/file-webp/file-webp-dialog.c:80
+#: plug-ins/gradient-flare/gradient-flare.c:2623
+msgid "Default"
+msgstr "Типовий"
+
+#: plug-ins/file-webp/file-webp-dialog.c:81
+msgid "Picture"
+msgstr "Зображення"
+
+#: plug-ins/file-webp/file-webp-dialog.c:82
+msgid "Photo"
+msgstr "Фото"
+
+#: plug-ins/file-webp/file-webp-dialog.c:83
+#| msgid "Drawing grid"
+msgid "Drawing"
+msgstr "Рисунок"
+
+#: plug-ins/file-webp/file-webp-dialog.c:84
+#| msgid "Icon #%i"
+msgid "Icon"
+msgstr "Піктограма"
+
+#: plug-ins/file-webp/file-webp-dialog.c:85
+#| msgid "Texture"
+msgid "Text"
+msgstr "Текст"
 
 #: plug-ins/file-webp/file-webp-load.c:107
 #, c-format
@@ -10572,10 +10597,6 @@ msgstr "_Автоматичний перегляд"
 #: plug-ins/gradient-flare/gradient-flare.c:2622
 msgid "'Default' is created."
 msgstr "\"Типовий\" створено."
-
-#: plug-ins/gradient-flare/gradient-flare.c:2623
-msgid "Default"
-msgstr "Типовий"
 
 #.
 #. *  Scales
