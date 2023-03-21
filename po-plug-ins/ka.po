@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-20 12:29+0000\n"
-"PO-Revision-Date: 2023-03-21 00:53+0100\n"
+"POT-Creation-Date: 2023-03-21 00:49+0000\n"
+"PO-Revision-Date: 2023-03-21 07:02+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -6186,7 +6186,6 @@ msgid "Scal_es"
 msgstr "გაფართოება"
 
 #: plug-ins/common/wavelet-decompose.c:132
-#| msgid "_Number of cells:"
 msgid "Number of scales"
 msgstr ""
 
@@ -7939,6 +7938,32 @@ msgstr ""
 #: plug-ins/file-webp/file-webp-dialog.c:52
 msgid "(all frames are keyframes)"
 msgstr ""
+
+#. Create the combobox containing the presets
+#: plug-ins/file-webp/file-webp-dialog.c:80
+#: plug-ins/gradient-flare/gradient-flare.c:2623
+msgid "Default"
+msgstr ""
+
+#: plug-ins/file-webp/file-webp-dialog.c:81
+msgid "Picture"
+msgstr ""
+
+#: plug-ins/file-webp/file-webp-dialog.c:82
+msgid "Photo"
+msgstr ""
+
+#: plug-ins/file-webp/file-webp-dialog.c:83
+msgid "Drawing"
+msgstr ""
+
+#: plug-ins/file-webp/file-webp-dialog.c:84
+msgid "Icon"
+msgstr ""
+
+#: plug-ins/file-webp/file-webp-dialog.c:85
+msgid "Text"
+msgstr "ტექსტი"
 
 #: plug-ins/file-webp/file-webp-load.c:107
 #, c-format
@@ -10205,10 +10230,6 @@ msgstr ""
 
 #: plug-ins/gradient-flare/gradient-flare.c:2622
 msgid "'Default' is created."
-msgstr ""
-
-#: plug-ins/gradient-flare/gradient-flare.c:2623
-msgid "Default"
 msgstr ""
 
 #.
