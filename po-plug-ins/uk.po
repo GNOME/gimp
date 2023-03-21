@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-21 00:49+0000\n"
-"PO-Revision-Date: 2023-03-21 07:25+0200\n"
+"POT-Creation-Date: 2023-03-21 18:55+0000\n"
+"PO-Revision-Date: 2023-03-21 21:23+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -4248,6 +4248,14 @@ msgstr "_B, G, R, X (у стилі BMP)"
 msgid "SUN Rasterfile image"
 msgstr "Зображення SUN Rasterfile"
 
+#: plug-ins/common/file-sunras.c:319
+msgid "Data Formatting"
+msgstr "Форматування даних"
+
+#: plug-ins/common/file-sunras.c:320
+msgid "Use standard (0) or Run-Length Encoded (1) output"
+msgstr "Стандартне виведення (0) чи виведення у RLE-кодуванні (1)"
+
 #: plug-ins/common/file-sunras.c:404
 msgid "SUNRAS format does not support multiple layers."
 msgstr "Для формату SUNRAS не передбачено підтримку декількох шарів."
@@ -4340,17 +4348,15 @@ msgstr "Помилка при записі"
 msgid "Export Image as SUNRAS"
 msgstr "Експортувати зображення як SUNRAS"
 
+#: plug-ins/common/file-sunras.c:1791
+#| msgid "Standard"
+msgid "S_tandard"
+msgstr "Ст_андарт"
+
 #: plug-ins/common/file-sunras.c:1792
-msgid "Data Formatting"
-msgstr "Форматування даних"
-
-#: plug-ins/common/file-sunras.c:1793
-msgid "_RunLength Encoded"
-msgstr "_RLE-к_одування"
-
-#: plug-ins/common/file-sunras.c:1794
-msgid "_Standard"
-msgstr "С_тандарт"
+#| msgid "_Run-Length Encoded"
+msgid "R_un-Length Encoded"
+msgstr "_RLE-кодування"
 
 #: plug-ins/common/file-svg.c:163
 msgid "SVG image"
@@ -8287,17 +8293,14 @@ msgid "Photo"
 msgstr "Фото"
 
 #: plug-ins/file-webp/file-webp-dialog.c:83
-#| msgid "Drawing grid"
 msgid "Drawing"
 msgstr "Рисунок"
 
 #: plug-ins/file-webp/file-webp-dialog.c:84
-#| msgid "Icon #%i"
 msgid "Icon"
 msgstr "Піктограма"
 
 #: plug-ins/file-webp/file-webp-dialog.c:85
-#| msgid "Texture"
 msgid "Text"
 msgstr "Текст"
 
@@ -13133,6 +13136,12 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "_RunLength Encoded"
+#~ msgstr "_RLE-к_одування"
+
+#~ msgid "_Standard"
+#~ msgstr "С_тандарт"
 
 #~ msgctxt "align-style"
 #~ msgid "None"
