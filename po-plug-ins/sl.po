@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-20 12:29+0000\n"
-"PO-Revision-Date: 2023-03-20 22:59+0100\n"
+"POT-Creation-Date: 2023-03-21 00:49+0000\n"
+"PO-Revision-Date: 2023-03-21 08:25+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -8210,6 +8210,32 @@ msgstr "(brez ključnih sličic)"
 msgid "(all frames are keyframes)"
 msgstr "(vse sličice so ključne sličice)"
 
+#. Create the combobox containing the presets
+#: plug-ins/file-webp/file-webp-dialog.c:80
+#: plug-ins/gradient-flare/gradient-flare.c:2623
+msgid "Default"
+msgstr "privzeta"
+
+#: plug-ins/file-webp/file-webp-dialog.c:81
+msgid "Picture"
+msgstr "Slika"
+
+#: plug-ins/file-webp/file-webp-dialog.c:82
+msgid "Photo"
+msgstr "Fotografija"
+
+#: plug-ins/file-webp/file-webp-dialog.c:83
+msgid "Drawing"
+msgstr "Risba"
+
+#: plug-ins/file-webp/file-webp-dialog.c:84
+msgid "Icon"
+msgstr "Ikona"
+
+#: plug-ins/file-webp/file-webp-dialog.c:85
+msgid "Text"
+msgstr "Besedilo"
+
 #: plug-ins/file-webp/file-webp-load.c:107
 #, c-format
 msgid "Invalid WebP file '%s'"
@@ -10509,10 +10535,6 @@ msgstr "_Samodejno posodobi predogled"
 #: plug-ins/gradient-flare/gradient-flare.c:2622
 msgid "'Default' is created."
 msgstr "Ustvarjen je »privzeti«."
-
-#: plug-ins/gradient-flare/gradient-flare.c:2623
-msgid "Default"
-msgstr "privzeta"
 
 #.
 #. *  Scales
