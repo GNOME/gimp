@@ -77,12 +77,12 @@ save_dialog (GimpImage     *image,
                                            image);
 
   /* Create the combobox containing the presets */
-  store = gimp_int_store_new ("Default", WEBP_PRESET_DEFAULT,
-                              "Picture", WEBP_PRESET_PICTURE,
-                              "Photo",   WEBP_PRESET_PHOTO,
-                              "Drawing", WEBP_PRESET_DRAWING,
-                              "Icon",    WEBP_PRESET_ICON,
-                              "Text",    WEBP_PRESET_TEXT,
+  store = gimp_int_store_new (_("Default"), WEBP_PRESET_DEFAULT,
+                              _("Picture"), WEBP_PRESET_PICTURE,
+                              _("Photo"),   WEBP_PRESET_PHOTO,
+                              _("Drawing"), WEBP_PRESET_DRAWING,
+                              _("Icon"),    WEBP_PRESET_ICON,
+                              _("Text"),    WEBP_PRESET_TEXT,
                               NULL);
   gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
                                        "preset", GIMP_INT_STORE (store));
