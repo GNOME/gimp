@@ -152,8 +152,8 @@ bmp_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("Windows BMP image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads files of Windows BMP file format",
-                                        "Loads files of Windows BMP file format",
+                                        _("Loads files of Windows BMP file format"),
+                                        _("Loads files of Windows BMP file format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Alexander Schulz",
@@ -176,10 +176,12 @@ bmp_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB*");
 
       gimp_procedure_set_menu_label (procedure, _("Windows BMP image"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("BMP"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Saves files in Windows BMP file format",
-                                        "Saves files in Windows BMP file format",
+                                        _("Saves files in Windows BMP file format"),
+                                        _("Saves files in Windows BMP file format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Alexander Schulz",
@@ -192,24 +194,24 @@ bmp_create_procedure (GimpPlugIn  *plug_in,
                                           "bmp");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "use-rle",
-                             "Use RLE",
-                             "Use run-lengh-encoding compression "
-                             "(only valid for 4 and 8-bit indexed images)",
+                             _("Ru_n-Length Encoded"),
+                             _("Use run-length-encoding compression "
+                               "(only valid for 4 and 8-bit indexed images)"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "write-color-space",
-                             "Write color space information",
-                             "Whether or not to write BITMAPV5HEADER "
-                             "color space data",
+                             _("_Write color space information"),
+                             _("Whether or not to write BITMAPV5HEADER "
+                               "color space data"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "rgb-format",
-                         "RGB format",
-                         "Export format for RGB images "
-                         "(0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888,"
-                         " 4=RGBA_8888, 5=RGBX_8888)",
+                         _("R_GB format"),
+                         _("Export format for RGB images "
+                           "(0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, "
+                           "4=RGBA_8888, 5=RGBX_8888)"),
                          0, 5, 3,
                          G_PARAM_READWRITE);
     }
