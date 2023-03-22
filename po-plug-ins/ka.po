@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-21 00:49+0000\n"
-"PO-Revision-Date: 2023-03-21 07:02+0100\n"
+"POT-Creation-Date: 2023-03-21 18:55+0000\n"
+"PO-Revision-Date: 2023-03-22 03:24+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -721,15 +721,15 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:224
 msgid "All black"
-msgstr ""
+msgstr "ყველა შავი"
 
 #: plug-ins/common/cml-explorer.c:225
 msgid "All gray"
-msgstr ""
+msgstr "ყველა ნაცრისფერი"
 
 #: plug-ins/common/cml-explorer.c:226
 msgid "All white"
-msgstr ""
+msgstr "ყველა თეთრი"
 
 #: plug-ins/common/cml-explorer.c:227
 msgid "The first row of the image"
@@ -895,11 +895,11 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:1563
 msgid "O_thers"
-msgstr ""
+msgstr "_სხვები"
 
 #: plug-ins/common/cml-explorer.c:1578
 msgid "Copy Settings"
-msgstr ""
+msgstr "პარამეტრების კოპირება"
 
 #: plug-ins/common/cml-explorer.c:1597
 msgid "Source channel:"
@@ -911,7 +911,7 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:1616
 msgid "Copy Parameters"
-msgstr ""
+msgstr "პარამეტრების კოირება"
 
 #: plug-ins/common/cml-explorer.c:1624
 msgid "Selective Load Settings"
@@ -923,7 +923,7 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:1665
 msgid "_Misc"
-msgstr ""
+msgstr "_სხვ"
 
 #: plug-ins/common/cml-explorer.c:1724
 msgid "Function type:"
@@ -1098,7 +1098,7 @@ msgstr ""
 
 #: plug-ins/common/colormap-remap.c:226
 msgid "_Swap Colors"
-msgstr ""
+msgstr "ფერების _მიმოცვლა"
 
 #: plug-ins/common/colormap-remap.c:230
 msgid "Swap two colors in the colormap"
@@ -1872,7 +1872,7 @@ msgstr "სიგა_ნე:"
 
 #: plug-ins/common/destripe.c:520
 msgid "Create _histogram"
-msgstr ""
+msgstr "_ჰისტოგრამის შექმნა"
 
 #: plug-ins/common/file-aa.c:130
 msgid "ASCII art"
@@ -1892,11 +1892,11 @@ msgstr "_ფორმატი:"
 
 #: plug-ins/common/file-cel.c:140 plug-ins/common/file-cel.c:172
 msgid "KISS CEL"
-msgstr ""
+msgstr "KISS CEL"
 
 #: plug-ins/common/file-cel.c:245
 msgid "Load KISS Palette"
-msgstr ""
+msgstr "KISS პალიტრის ჩატვირთვა"
 
 #: plug-ins/common/file-cel.c:310
 msgid "CEL format does not support multiple layers."
@@ -1966,7 +1966,7 @@ msgstr ""
 
 #: plug-ins/common/file-cel.c:489
 msgid "Can't create a new image"
-msgstr ""
+msgstr "ახალი სურათის შექმნა შეუძლებელია"
 
 #: plug-ins/common/file-cel.c:526 plug-ins/common/file-cel.c:563
 #: plug-ins/common/file-cel.c:589
@@ -2022,7 +2022,7 @@ msgstr ""
 #: plug-ins/file-sgi/sgi.c:643 plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
-msgstr ""
+msgstr "'%s'-ის გატანა"
 
 #: plug-ins/common/file-csource.c:121
 msgid "C source code"
@@ -2171,7 +2171,7 @@ msgstr ""
 
 #: plug-ins/common/file-gegl.c:130 plug-ins/file-exr/file-exr.c:106
 msgid "OpenEXR image"
-msgstr ""
+msgstr "OpenEXR გამოსახულება"
 
 #: plug-ins/common/file-gegl.c:311
 msgid "GEGL export plug-in does not support multiple layers."
@@ -2285,7 +2285,7 @@ msgstr ""
 
 #: plug-ins/common/file-gif-save.c:1228
 msgid "Save c_omment"
-msgstr ""
+msgstr "_კომენტარის შენახვა"
 
 #: plug-ins/common/file-gif-save.c:1268
 msgid "As _animation"
@@ -2710,7 +2710,7 @@ msgstr "YCbCr"
 
 #: plug-ins/common/file-jp2-load.c:1003 plug-ins/common/file-jp2-load.c:1011
 msgid "xvYCC"
-msgstr ""
+msgstr "xvYCC"
 
 #: plug-ins/common/file-jp2-load.c:1018
 #, c-format
@@ -2795,7 +2795,7 @@ msgstr ""
 
 #: plug-ins/common/file-jpegxl.c:185 plug-ins/file-webp/file-webp.c:175
 msgid "L_ossless"
-msgstr ""
+msgstr "_კარგვის გარეშე"
 
 #: plug-ins/common/file-jpegxl.c:186
 msgid "Use lossless compression"
@@ -3078,12 +3078,12 @@ msgstr ""
 #: plug-ins/common/file-pcx.c:878
 #, c-format
 msgid "Invalid X offset: %d"
-msgstr ""
+msgstr "არასწორი X წანაცვლება: %d"
 
 #: plug-ins/common/file-pcx.c:884
 #, c-format
 msgid "Invalid Y offset: %d"
-msgstr ""
+msgstr "არასწორი Y წანაცვლება: %d"
 
 #: plug-ins/common/file-pcx.c:890
 #, c-format
@@ -3122,7 +3122,7 @@ msgstr ""
 
 #: plug-ins/common/file-pdf-load.c:652
 msgid "Encrypted PDF"
-msgstr ""
+msgstr "დაშიფრული PDF"
 
 #: plug-ins/common/file-pdf-load.c:679
 msgid "Wrong password! Please input the right one:"
@@ -3131,7 +3131,7 @@ msgstr ""
 #: plug-ins/common/file-pdf-load.c:697
 #, c-format
 msgid "Could not load '%s': %s"
-msgstr ""
+msgstr "'%s'-ის ჩატვირთვa შეუძლებელია: %s"
 
 #: plug-ins/common/file-pdf-load.c:1036
 msgid "Import from PDF"
@@ -3221,7 +3221,7 @@ msgstr "მოძებნა..."
 
 #: plug-ins/common/file-pdf-save.c:1109
 msgid "Multipage PDF export"
-msgstr ""
+msgstr "მულტიგვერდიან PDF-ში გატანა"
 
 #: plug-ins/common/file-pdf-save.c:1145
 msgid "Remove the selected pages"
@@ -3229,7 +3229,7 @@ msgstr ""
 
 #: plug-ins/common/file-pdf-save.c:1155
 msgid "Add this image"
-msgstr ""
+msgstr "ამ გამოსახულების დამატება"
 
 #: plug-ins/common/file-pdf-save.c:1160
 msgid "_Omit hidden layers and layers with zero opacity"
@@ -3595,7 +3595,7 @@ msgstr ""
 #: plug-ins/common/file-ps.c:1274
 #, c-format
 msgid "%s-pages"
-msgstr ""
+msgstr "%s-გვერდი"
 
 #: plug-ins/common/file-ps.c:1345
 msgid "PostScript export cannot handle images with alpha channels"
@@ -3743,7 +3743,7 @@ msgstr "გადახედვა"
 
 #: plug-ins/common/file-ps.c:3981
 msgid "Preview _size:"
-msgstr ""
+msgstr "მინიატურის _ზომა:"
 
 #: plug-ins/common/file-psp.c:663 plug-ins/common/file-psp.c:693
 msgid "Paint Shop Pro image"
@@ -4133,6 +4133,14 @@ msgstr ""
 msgid "SUN Rasterfile image"
 msgstr ""
 
+#: plug-ins/common/file-sunras.c:319
+msgid "Data Formatting"
+msgstr ""
+
+#: plug-ins/common/file-sunras.c:320
+msgid "Use standard (0) or Run-Length Encoded (1) output"
+msgstr ""
+
 #: plug-ins/common/file-sunras.c:404
 msgid "SUNRAS format does not support multiple layers."
 msgstr ""
@@ -4217,17 +4225,13 @@ msgstr ""
 msgid "Export Image as SUNRAS"
 msgstr ""
 
-#: plug-ins/common/file-sunras.c:1792
-msgid "Data Formatting"
-msgstr ""
-
-#: plug-ins/common/file-sunras.c:1793
-msgid "_RunLength Encoded"
-msgstr ""
-
-#: plug-ins/common/file-sunras.c:1794
-msgid "_Standard"
+#: plug-ins/common/file-sunras.c:1791
+msgid "S_tandard"
 msgstr "_სტანდარტული"
+
+#: plug-ins/common/file-sunras.c:1792
+msgid "R_un-Length Encoded"
+msgstr ""
 
 #: plug-ins/common/file-svg.c:163
 msgid "SVG image"
@@ -8394,7 +8398,7 @@ msgstr ""
 #. Fractal type toggle box
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:827
 msgid "Fractal Type"
-msgstr ""
+msgstr "ფრაქტალის ტიპი"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:840
 msgid "Mandelbrot"
@@ -8430,11 +8434,11 @@ msgstr ""
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:902
 msgid "Co_lors"
-msgstr ""
+msgstr "_ფერები"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:915
 msgid "Number of colors:"
-msgstr ""
+msgstr "_ფერების რაოდენობა:"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:917
 msgid "Change the number of colors in the mapping"
@@ -8451,7 +8455,7 @@ msgstr ""
 #. Color Density frame
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:937
 msgid "Color Density"
-msgstr ""
+msgstr "ფერის სიმკვრივე"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:946
 msgid "Red:"
@@ -8493,7 +8497,7 @@ msgstr "სინუსიოდი"
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1075
 msgctxt "color-function"
 msgid "None"
-msgstr ""
+msgstr "არაფერი"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:998
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1039
@@ -12702,6 +12706,9 @@ msgstr ""
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr ""
+
+#~ msgid "_Standard"
+#~ msgstr "_სტანდარტული"
 
 #~ msgctxt "align-style"
 #~ msgid "None"
