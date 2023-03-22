@@ -234,6 +234,8 @@ heif_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "RGB*");
 
       gimp_procedure_set_menu_label (procedure, _("HEIF/HEIC"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           "HEIF");
 
       gimp_procedure_set_documentation (procedure,
                                         _("Exports HEIF images"),
@@ -253,52 +255,52 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                                           "heif,heic");
 
       GIMP_PROC_ARG_INT (procedure, "quality",
-                         "Quality",
-                         "Quality factor (0 = worst, 100 = best)",
+                         _("_Quality"),
+                         _("Quality factor (0 = worst, 100 = best)"),
                          0, 100, 50,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "lossless",
-                             "Lossless",
-                             "Use lossless compression",
+                             _("L_ossless"),
+                             _("Use lossless compression"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
-                                 "Save color profile",
-                                 "Save the image's color profile",
+                                 _("Save color prof_ile"),
+                                 _("Save the image's color profile"),
                                  gimp_export_color_profile (),
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "save-bit-depth",
-                         "Bit depth",
-                         "Bit depth of exported image",
+                         _("_Bit depth"),
+                         _("Bit depth of exported image"),
                          8, 12, 8,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "pixel-format",
-                         "Pixel format",
-                         "Format of color sub-sampling",
+                         _("_Pixel format"),
+                         _("Format of color sub-sampling"),
                          HEIFPLUGIN_EXPORT_FORMAT_RGB, HEIFPLUGIN_EXPORT_FORMAT_YUV420,
                          HEIFPLUGIN_EXPORT_FORMAT_YUV420,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "encoder-speed",
-                         "Encoder speed",
-                         "Tradeoff between speed and compression",
+                         _("Enco_der speed"),
+                         _("Tradeoff between speed and compression"),
                          HEIFPLUGIN_ENCODER_SPEED_SLOW, HEIFPLUGIN_ENCODER_SPEED_FASTER,
                          HEIFPLUGIN_ENCODER_SPEED_BALANCED,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
-                             "Save Exif",
-                             "Toggle saving Exif data",
+                             _("Save Exi_f"),
+                             _("Toggle saving Exif data"),
                              gimp_export_exif (),
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-xmp",
-                             "Save XMP",
-                             "Toggle saving XMP data",
+                             _("Save _XMP"),
+                             _("Toggle saving XMP data"),
                              gimp_export_xmp (),
                              G_PARAM_READWRITE);
     }
@@ -341,6 +343,8 @@ heif_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "RGB*");
 
       gimp_procedure_set_menu_label (procedure, "HEIF/AVIF");
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           "AVIF");
 
       gimp_procedure_set_documentation (procedure,
                                         _("Exports AVIF images"),
@@ -361,52 +365,52 @@ heif_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_priority (GIMP_FILE_PROCEDURE (procedure), 100);
 
       GIMP_PROC_ARG_INT (procedure, "quality",
-                         "Quality",
-                         "Quality factor (0 = worst, 100 = best)",
+                         _("_Quality"),
+                         _("Quality factor (0 = worst, 100 = best)"),
                          0, 100, 50,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "lossless",
-                             "Lossless",
-                             "Use lossless compression",
+                             _("L_ossless"),
+                             _("Use lossless compression"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
-                                 "Save color profile",
-                                 "Save the image's color profile",
+                                 _("Save color prof_ile"),
+                                 _("Save the image's color profile"),
                                  gimp_export_color_profile (),
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "save-bit-depth",
-                         "Bit depth",
-                         "Bit depth of exported image",
+                         _("_Bit depth"),
+                         _("Bit depth of exported image"),
                          8, 12, 8,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "pixel-format",
-                         "Pixel format",
-                         "Format of color sub-sampling",
+                         _("_Pixel format"),
+                         _("Format of color sub-sampling"),
                          HEIFPLUGIN_EXPORT_FORMAT_RGB, HEIFPLUGIN_EXPORT_FORMAT_YUV420,
                          HEIFPLUGIN_EXPORT_FORMAT_YUV420,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "encoder-speed",
-                         "Encoder speed",
-                         "Tradeoff between speed and compression",
+                         _("Enco_der speed"),
+                         _("Tradeoff between speed and compression"),
                          HEIFPLUGIN_ENCODER_SPEED_SLOW, HEIFPLUGIN_ENCODER_SPEED_FASTER,
                          HEIFPLUGIN_ENCODER_SPEED_BALANCED,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
-                             "Save Exif",
-                             "Toggle saving Exif data",
+                             _("Save Exi_f"),
+                             _("Toggle saving Exif data"),
                              gimp_export_exif (),
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-xmp",
-                             "Save XMP",
-                             "Toggle saving XMP data",
+                             _("Save _XMP"),
+                             _("Toggle saving XMP data"),
                              gimp_export_xmp (),
                              G_PARAM_READWRITE);
     }
@@ -2489,118 +2493,72 @@ save_dialog (GimpProcedure *procedure,
              GimpImage     *image)
 {
   GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *grid;
-  GtkWidget *button;
-  GtkWidget *scale;
-  GtkWidget *frame;
-#if LIBHEIF_HAVE_VERSION(1,8,0)
-  GtkWidget *grid2;
-  GtkListStore  *store;
-  GtkWidget     *combo;
+  GtkWidget *quality_scale;
+#if LIBHEIF_HAVE_VERSION(1, 10, 0)
+  GtkListStore *store_pixelformats;
+#endif
+#if LIBHEIF_HAVE_VERSION(1, 8, 0)
+  GtkListStore *store_bitdepths;
+  GtkListStore *store_speeds;
 #endif
   gboolean   run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      g_strcmp0 (gimp_procedure_get_name (procedure), SAVE_PROC_AV1) == 0 ?
-                                      _("Export Image as AVIF") : _("Export Image as HEIF"));
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, FALSE, FALSE, 0);
-  gtk_widget_show (main_vbox);
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "lossless", GTK_TYPE_CHECK_BUTTON);
 
-  frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  quality_scale = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                    "quality",
+                                                    GIMP_TYPE_SCALE_ENTRY);
 
-  button = gimp_prop_check_button_new (config, "lossless",
-                                       _("_Lossless"));
-  gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
-
-  g_object_bind_property (config, "lossless",
-                          grid,   "sensitive",
+  g_object_bind_property (config,        "lossless",
+                          quality_scale, "sensitive",
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
 
-  scale = gimp_prop_scale_entry_new (config, "quality",
-                                     NULL, 1.0, FALSE, 0, 0);
-  gtk_widget_hide (gimp_labeled_get_label (GIMP_LABELED (scale)));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("_Quality"),
-                            0.0, 0.5, scale, 2);
+#if LIBHEIF_HAVE_VERSION(1, 10, 0)
+  store_pixelformats = gimp_int_store_new (_("RGB"), HEIFPLUGIN_EXPORT_FORMAT_RGB,
+                                           _("YUV444"), HEIFPLUGIN_EXPORT_FORMAT_YUV444,
+                                           _("YUV420"), HEIFPLUGIN_EXPORT_FORMAT_YUV420,
+                                           NULL);
 
-#if LIBHEIF_HAVE_VERSION(1,10,0)
-  store = gimp_int_store_new (_("RGB"), HEIFPLUGIN_EXPORT_FORMAT_RGB,
-                              _("YUV444"), HEIFPLUGIN_EXPORT_FORMAT_YUV444,
-                              _("YUV420"), HEIFPLUGIN_EXPORT_FORMAT_YUV420,
-                              NULL);
-
-  combo = gimp_prop_int_combo_box_new (config, "pixel-format",
-                                       GIMP_INT_STORE (store));
-  g_object_unref (store);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
-                            _("Pixel format:"), 0.0, 0.5,
-                            combo, 2);
+  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "pixel-format", GIMP_INT_STORE (store_pixelformats));
 #endif
 
-#if LIBHEIF_HAVE_VERSION(1,8,0)
-  grid2 = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid2), 6);
-  gtk_grid_set_row_spacing (GTK_GRID (grid2), 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), grid2, FALSE, FALSE, 0);
-  gtk_widget_show (grid2);
+#if LIBHEIF_HAVE_VERSION(1, 8, 0)
+  store_bitdepths = gimp_int_store_new (_("8 bit/channel"),   8,
+                                        _("10 bit/channel"), 10,
+                                        _("12 bit/channel"), 12,
+                                        NULL);
 
-  store = gimp_int_store_new (_("8 bit/channel"),   8,
-                              _("10 bit/channel"), 10,
-                              _("12 bit/channel"), 12,
-                              NULL);
+  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "save-bit-depth", GIMP_INT_STORE (store_bitdepths));
 
-  combo = gimp_prop_int_combo_box_new (config, "save-bit-depth",
-                                       GIMP_INT_STORE (store));
-  g_object_unref (store);
-  gimp_grid_attach_aligned (GTK_GRID (grid2), 0, 1,
-                            _("Bit depth:"), 0.0, 0.5,
-                            combo, 2);
+  store_speeds = gimp_int_store_new (_("Slow"), HEIFPLUGIN_ENCODER_SPEED_SLOW,
+                                     _("Balanced"), HEIFPLUGIN_ENCODER_SPEED_BALANCED,
+                                     _("Fast"), HEIFPLUGIN_ENCODER_SPEED_FASTER,
+                                     NULL);
 
-  store = gimp_int_store_new (_("Slow"), HEIFPLUGIN_ENCODER_SPEED_SLOW,
-                              _("Balanced"), HEIFPLUGIN_ENCODER_SPEED_BALANCED,
-                              _("Fast"), HEIFPLUGIN_ENCODER_SPEED_FASTER,
-                              NULL);
-
-  combo = gimp_prop_int_combo_box_new (config, "encoder-speed",
-                                       GIMP_INT_STORE (store));
-  g_object_unref (store);
-  gimp_grid_attach_aligned (GTK_GRID (grid2), 0, 2,
-                            _("Speed:"), 0.0, 0.5,
-                            combo, 2);
+  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "encoder-speed", GIMP_INT_STORE (store_speeds));
 #endif
 
-#if LIBHEIF_HAVE_VERSION(1,4,0)
-  button = gimp_prop_check_button_new (config, "save-color-profile",
-                                       _("Save color _profile"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "lossless", "quality",
+#if LIBHEIF_HAVE_VERSION(1, 10, 0)
+                              "pixel-format",
 #endif
-
-  /* Save EXIF data */
-  button = gimp_prop_check_button_new (config, "save-exif",
-                                       _("_Save Exif data"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
-
-  /* XMP metadata */
-  button = gimp_prop_check_button_new (config, "save-xmp",
-                                       _("Save _XMP data"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
-
-  gtk_widget_show (dialog);
+#if LIBHEIF_HAVE_VERSION(1, 8, 0)
+                              "save-bit-depth", "encoder-speed",
+#endif
+#if LIBHEIF_HAVE_VERSION(1, 4, 0)
+                              "save-color-profile",
+#endif
+                              "save-exif", "save-xmp", NULL);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
