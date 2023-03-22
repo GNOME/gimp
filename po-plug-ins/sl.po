@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-21 00:49+0000\n"
-"PO-Revision-Date: 2023-03-21 08:25+0100\n"
+"POT-Creation-Date: 2023-03-21 18:55+0000\n"
+"PO-Revision-Date: 2023-03-22 16:14+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -4224,6 +4224,14 @@ msgstr "_B, G, R, X (slog BMP)"
 msgid "SUN Rasterfile image"
 msgstr "Rastrska slika SUN"
 
+#: plug-ins/common/file-sunras.c:319
+msgid "Data Formatting"
+msgstr "Oblikovanje podatkov"
+
+#: plug-ins/common/file-sunras.c:320
+msgid "Use standard (0) or Run-Length Encoded (1) output"
+msgstr "Uporabi navadni izhod (0) ali izhod, kodiran s tekočo dolžino (1)"
+
 #: plug-ins/common/file-sunras.c:404
 msgid "SUNRAS format does not support multiple layers."
 msgstr "Zapis SUNRAS ne podpira več plasti."
@@ -4316,17 +4324,13 @@ msgstr "Prišlo je do napake pri pisanju"
 msgid "Export Image as SUNRAS"
 msgstr "Izvozi sliko kot SUNRAS"
 
-#: plug-ins/common/file-sunras.c:1792
-msgid "Data Formatting"
-msgstr "Oblikovanje podatkov"
-
-#: plug-ins/common/file-sunras.c:1793
-msgid "_RunLength Encoded"
-msgstr "_Kodirano s _tekočo dolžino (RLE)"
-
-#: plug-ins/common/file-sunras.c:1794
-msgid "_Standard"
+#: plug-ins/common/file-sunras.c:1791
+msgid "S_tandard"
 msgstr "_Navadno"
+
+#: plug-ins/common/file-sunras.c:1792
+msgid "R_un-Length Encoded"
+msgstr "_Kodirano s tekočo dolžino (RLE)"
 
 #: plug-ins/common/file-svg.c:163
 msgid "SVG image"
