@@ -299,14 +299,14 @@ tga_create_procedure (GimpPlugIn  *plug_in,
                                           "tga");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "rle",
-                             "RLE",
-                             "Use RLE compression",
+                             _("_Use RLE compression"),
+                             _("Use RLE compression"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "origin",
-                         "Origin",
-                         "Image origin (0 = top-left, 1 = bottom-left)",
+                         _("Ori_gin"),
+                         _("Image origin (0 = top-left, 1 = bottom-left)"),
                          0, 1, ORIGIN_BOTTOM_LEFT,
                          G_PARAM_READWRITE);
     }
@@ -1438,46 +1438,30 @@ save_dialog (GimpProcedure *procedure,
              GObject       *config)
 {
   GtkWidget    *dialog;
-  GtkWidget    *label;
-  GtkWidget    *toggle;
   GtkListStore *store;
-  GtkWidget    *combo;
   GtkWidget    *vbox;
-  GtkWidget    *hbox;
   gboolean      run;
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Export Image as TGA"));
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  /*  rle  */
-  toggle = gimp_prop_check_button_new (config, "rle",
-                                       _("_RLE compression"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  /*  origin  */
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new_with_mnemonic (_("Or_igin:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   store = gimp_int_store_new (_("Bottom left"), ORIGIN_BOTTOM_LEFT,
                               _("Top left"),    ORIGIN_TOP_LEFT,
                               NULL);
-  combo = gimp_prop_int_combo_box_new (config, "origin",
-                                       GIMP_INT_STORE (store));
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "origin", GIMP_INT_STORE (store));
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "tga-save-vbox",
+                                         "rle",
+                                         "origin",
+                                         NULL);
+  gtk_box_set_spacing (GTK_BOX (vbox), 12);
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "tga-save-vbox",
+                              NULL);
 
   gtk_widget_show (dialog);
 
