@@ -315,6 +315,7 @@ gif_load_thumb (GimpProcedure        *procedure,
 #define LOCALCOLORMAP      0x80
 #define BitSet(byte, bit)  (((byte) & (bit)) == (bit))
 
+#define gif_message(...) (g_message("%s. %s", __VA_ARGS__))
 #define ReadOK(file,buffer,len) (fread(buffer, len, 1, file) != 0)
 #define LM_to_uint(a,b)         (((b)<<8)|(a))
 
@@ -346,6 +347,9 @@ static struct
   gint disposal;
 } Gif89 = { -1, -1, -1, 0 };
 
+static void     read_error   (const gchar *error_type,
+                              GimpImage   *image,
+                              GError     **error);
 static gboolean ReadColorMap (FILE        *fd,
                               gint         number,
                               CMap         buffer,
@@ -373,8 +377,8 @@ static gboolean ReadImage    (FILE        *fd,
                               guint        toppos,
                               guint        screenwidth,
                               guint        screenheight,
-                              GimpImage  **image);
-
+                              GimpImage  **image,
+                              GError     **error);
 
 static GimpImage *
 load_image (GFile     *file,
@@ -407,29 +411,30 @@ load_image (GFile     *file,
 
   if (! ReadOK (fd, buf, 6))
     {
-      g_message ("Error reading magic number");
+      read_error (_("GIF magic code"), NULL, error);
       fclose (fd);
       return NULL;
     }
 
   if (strncmp ((gchar *) buf, "GIF", 3) != 0)
     {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   "%s", _("This is not a GIF file"));
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("This is not a GIF file: incorrect magic code"));
       fclose (fd);
       return NULL;
     }
 
   if ((strncmp ((gchar *) buf + 3, "87a", 3) != 0) && (strncmp ((gchar *) buf + 3, "89a", 3) != 0))
     {
-      g_message ("Bad version number, not '87a' or '89a'");
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Incorrect GIF version: not '87a' or '89a'"));
       fclose (fd);
       return NULL;
     }
 
   if (! ReadOK (fd, buf, 7))
     {
-      g_message ("Failed to read screen descriptor");
+      read_error (_("screen descriptor"), NULL, error);
       fclose (fd);
       return NULL;
     }
@@ -447,7 +452,7 @@ load_image (GFile     *file,
       if (! ReadColorMap (fd, GifScreen.BitPixel, GifScreen.ColorMap,
                           &GifScreen.GrayScale))
         {
-          g_message ("Error reading global colormap");
+          read_error (_("global colormap"), NULL, error);
           fclose (fd);
           return NULL;
         }
@@ -465,7 +470,7 @@ load_image (GFile     *file,
     {
       if (! ReadOK (fd, &c, 1))
         {
-          g_message ("EOF / read error on image data");
+          read_error (_("image data"), image, error);
           fclose (fd);
           return image; /* will be NULL if failed on first image! */
         }
@@ -482,7 +487,7 @@ load_image (GFile     *file,
           /* Extension */
           if (! ReadOK (fd, &c, 1))
             {
-              g_message ("EOF / read error on extension function code");
+              read_error (_("extension data"), image, error);
               fclose (fd);
               return image; /* will be NULL if failed on first image! */
             }
@@ -502,7 +507,7 @@ load_image (GFile     *file,
 
       if (! ReadOK (fd, buf, 9))
         {
-          g_message ("Couldn't read left/top/width/height");
+          read_error (_("frame info"), image, error);
           fclose (fd);
           return image; /* will be NULL if failed on first image! */
         }
@@ -515,7 +520,7 @@ load_image (GFile     *file,
         {
           if (! ReadColorMap (fd, bitPixel, localColorMap, &grayScale))
             {
-              g_message ("Error reading local colormap");
+              read_error (_("local colormap"), image, error);
               fclose (fd);
               return image; /* will be NULL if failed on first image! */
             }
@@ -529,7 +534,7 @@ load_image (GFile     *file,
                               (guint) LM_to_uint (buf[2], buf[3]),
                               GifScreen.Width,
                               GifScreen.Height,
-                              &image);
+                              &image, error);
         }
       else
         {
@@ -542,7 +547,7 @@ load_image (GFile     *file,
                               (guint) LM_to_uint (buf[2], buf[3]),
                               GifScreen.Width,
                               GifScreen.Height,
-                              &image);
+                              &image, error);
         }
 
       if (!status)
@@ -567,6 +572,22 @@ load_image (GFile     *file,
   fclose (fd);
 
   return image;
+}
+
+static void
+read_error (const gchar *error_type, GimpImage *image, GError **error)
+{
+  if (! image)
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Error reading %s. %s"),
+                   error_type, _("Image may be corrupt!"));
+    }
+  else
+    {
+      g_message (_("Error reading %s. %s"),
+                 error_type, _("Image may be corrupt!"));
+    }
 }
 
 static gboolean
@@ -712,7 +733,7 @@ GetDataBlock (FILE   *fd,
 
   if (! ReadOK (fd, &count, 1))
     {
-      g_message ("Error in getting DataBlock size");
+      gif_message (_("Error reading data size"), _("Image may be corrupt!"));
       return -1;
     }
 
@@ -720,7 +741,7 @@ GetDataBlock (FILE   *fd,
 
   if ((count != 0) && (! ReadOK (fd, buf, count)))
     {
-      g_message ("Error in reading DataBlock");
+      gif_message (_("Error reading data"), _("Image may be corrupt!"));
       return -1;
     }
 
@@ -750,9 +771,12 @@ GetCode (FILE     *fd,
       if (done)
         {
           if (curbit >= lastbit)
-            g_message ("Ran off the end of my bits");
+            {
+              gif_message (_("Not enough compressed data"), _("Image may be corrupt!"));
+              return -1;
+            }
 
-          return -1;
+          return -2;
         }
 
       buf[0] = buf[last_byte - 2];
@@ -802,7 +826,7 @@ LZWReadByte (FILE *fd,
     {
       if (input_code_size > MAX_LZW_BITS || input_code_size <= 1)
         {
-          g_message ("Value out of range for code size (corrupted file?)");
+          gif_message (_("Value out of range for code size"), _("Image may be corrupt!"));
           return -1;
         }
 
@@ -813,9 +837,9 @@ LZWReadByte (FILE *fd,
       max_code_size = 2 * clear_code;
       max_code      = clear_code + 2;
 
-      if (GetCode (fd, 0, TRUE) < 0)
+      if ((code = GetCode (fd, 0, TRUE)) < 0)
         {
-          return -1;
+          return code;
         }
 
       fresh = TRUE;
@@ -846,7 +870,7 @@ LZWReadByte (FILE *fd,
 
       if (firstcode < 0)
         {
-          return -1;
+          return firstcode;
         }
 
       return firstcode & 255;
@@ -878,26 +902,43 @@ LZWReadByte (FILE *fd,
 
           if (firstcode < 0)
             {
-              return -1;
+              return firstcode;
             }
 
           return firstcode & 255;
         }
       else if (code == end_code || code > max_code)
         {
-          gint   count;
-          guchar buf[260];
+          gint     count;
+          guchar   buf[260];
+          gboolean extra_data = FALSE;
 
+          if (code != end_code)
+            {
+              gif_message (_("Invalid code, expecting end of data marker"),
+                           _("Image may be corrupt!"));
+              code = -1;
+            }
+          else
+            {
+              code = -2;
+            }
           if (ZeroDataBlock)
-            return -2;
+            {
+              return code;
+            }
 
           while ((count = GetDataBlock (fd, buf)) > 0)
-            ;
+            {
+              extra_data = TRUE;
+            }
 
-          if (count != 0)
-            g_print ("GIF: missing EOD in data stream (common occurrence)");
+          if (count != 0 || extra_data)
+            {
+              gif_message (_("Unexpected extra data"), _("Image may be corrupt!"));
+            }
 
-          return -2;
+          return -1;
         }
 
       incode = code;
@@ -913,14 +954,14 @@ LZWReadByte (FILE *fd,
         {
           if (code >= (1 << MAX_LZW_BITS))
             {
-              g_message ("Invalid table entry.  Corrupt file.");
+              gif_message (_("Invalid table entry"), _("Image is corrupt!"));
               return -1;
             }
           *sp++ = table[1][code];
           if (code == table[0][code])
             {
-              g_message ("Circular table entry.  Corrupt file.");
-              gimp_quit ();
+              gif_message (_("Circular table entry"), _("Image is corrupt!"));
+              return -1;
             }
           code = table[0][code];
         }
@@ -949,7 +990,7 @@ LZWReadByte (FILE *fd,
 
   if (code < 0)
     {
-      return -1;
+      return code;
     }
 
   return code & 255;
@@ -969,7 +1010,8 @@ ReadImage (FILE        *fd,
            guint        toppos,
            guint        screenwidth,
            guint        screenheight,
-           GimpImage  **image)
+           GimpImage  **image,
+           GError     **error)
 {
   static gint   frame_number = 1;
 
@@ -989,8 +1031,16 @@ ReadImage (FILE        *fd,
   /* Guard against bogus frame size */
   if (len < 1 || height < 1)
     {
-      g_message ("Bogus frame dimensions");
-      *image = NULL;
+      if (frame_number == 1)
+        {
+          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                       _("%s. %s"),
+                       _("Invalid frame dimensions"), _("Image may be corrupt!"));
+        }
+      else
+        {
+          gif_message (_("Invalid frame dimensions"), _("Image may be corrupt!"));
+        }
       return FALSE;
     }
 
@@ -999,15 +1049,13 @@ ReadImage (FILE        *fd,
    */
   if (! ReadOK (fd, &c, 1))
     {
-      g_message ("EOF / read error on image data");
-      *image = NULL;
+      read_error (_("image data"), *image, error);
       return FALSE;
     }
 
   if (LZWReadByte (fd, TRUE, c) < 0)
     {
-      g_message ("Error while reading");
-      *image = NULL;
+      read_error (_("compressed image data"), *image, error);
       return FALSE;
     }
 
@@ -1015,10 +1063,16 @@ ReadImage (FILE        *fd,
     {
       /* Guard against bogus logical screen size values */
       if (screenwidth == 0)
-        screenwidth = len;
+        {
+          g_printerr ("Invalid zero screenwidth changed to %d", len);
+          screenwidth = len;
+        }
 
       if (screenheight == 0)
-        screenheight = height;
+        {
+          g_printerr ("Invalid zero screenheight changed to %d", height);
+          screenheight = height;
+        }
 
       *image = gimp_image_new (screenwidth, screenheight, GIMP_INDEXED);
 
@@ -1129,7 +1183,8 @@ ReadImage (FILE        *fd,
                      previous_disposal);
           break;
         default:
-          g_message ("Disposal word got corrupted.  Bug.");
+          g_message (_("Unknown composite type %d. %s"),
+                     previous_disposal, _("Image may be corrupt!"));
           break;
         }
       previous_disposal = Gif89.disposal;
@@ -1161,11 +1216,6 @@ ReadImage (FILE        *fd,
       return FALSE;
     }
 
-  if (alpha_frame)
-    dest = (guchar *) g_malloc ((gsize)len * (gsize)height * (promote_to_rgb ? 4 : 2));
-  else
-    dest = (guchar *) g_malloc ((gsize)len * (gsize)height);
-
 #ifdef GIFDEBUG
     g_print ("GIF: reading %d by %d%s GIF image, ncols=%d\n",
              len, height, interlace ? " interlaced" : "", ncols);
@@ -1175,11 +1225,19 @@ ReadImage (FILE        *fd,
     {
       /* I don't see how one would easily construct a GIF in which
          this could happen, but it's a mad mad world. */
-      g_message ("Ouch!  Can't handle non-alpha RGB frames.\n"
-                 "Please file a bug report at "
-                 "https://gitlab.gnome.org/GNOME/gimp/issues");
-      gimp_quit ();
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Can't handle non-alpha RGB frames.\n"
+                     "Please file a bug report at "
+                     "https://gitlab.gnome.org/GNOME/gimp/issues"));
+      gimp_image_delete (*image);
+      *image = NULL;
+      return FALSE;
     }
+
+  if (alpha_frame)
+    dest = (guchar *) g_malloc ((gsize)len * (gsize)height * (promote_to_rgb ? 4 : 2));
+  else
+    dest = (guchar *) g_malloc ((gsize)len * (gsize)height);
 
   while ((v = LZWReadByte (fd, FALSE, c)) >= 0)
     {
@@ -1269,10 +1327,10 @@ ReadImage (FILE        *fd,
         break;
     }
 
-  if (v < 0)
-    {
-      return FALSE;
-    }
+  /* v can be < 0 here, indicating an error or encountering an end_code (-2).
+   * At this point we have already safely handled any corruption, so we might
+   * as well load any partial data we can instead of returning false.
+   */
 
  fini:
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
@@ -1286,11 +1344,20 @@ ReadImage (FILE        *fd,
 
   gimp_progress_update (1.0);
 
-  if (LZWReadByte (fd, FALSE, c) >= 0)
-    {
-      g_print ("GIF: too much input data, ignoring extra...\n");
-      return FALSE;
-    }
+  {
+    gboolean first = TRUE;
+
+    /* Skip remaining compressed data if any. */
+
+    while (LZWReadByte (fd, FALSE, c) >= 0)
+      {
+        if (first)
+          {
+            g_message (_("Too much compressed data, ignoring extra..."));
+            first = FALSE;
+          }
+      }
+  }
 
   return TRUE;
 }
