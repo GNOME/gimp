@@ -183,8 +183,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://poppler.freedesktop.org/poppler-data-0.4.11.tar.gz",
-                            "sha256": "2cec05cd1bb03af98a8b06a1e22f6e6e1a65b1e2f3816cb3069bb0874825f08c",
+                            "url": "https://poppler.freedesktop.org/poppler-data-0.4.12.tar.gz",
+                            "sha256": "c835b640a40ce357e1b83666aabd95edffa24ddddd49b8daff63adb851cdab74",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 3687,
@@ -212,8 +212,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-22.09.0.tar.xz",
-                    "sha256": "d7a8f748211359cadb774ba3e18ecda6464b34027045c0648eb30d5852a41e2e",
+                    "url": "https://poppler.freedesktop.org/poppler-23.03.0.tar.xz",
+                    "sha256": "b04148bf849c1965ada7eff6be4685130e3a18a84e0cce73bf9bc472ec32f2b4",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -320,13 +320,14 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs1000/ghostscript-10.0.0.tar.gz",
-                    "sha512": "9aa5f310c250584312205b479ab9137d0fca56be214626782a1ba94b4b4ee15249b3eae703d08f48eb3cc06d71a2fae671d3570284b3fa9254ea3c1193ebc15b",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10010/ghostscript-10.01.0.tar.xz",
+                    "sha512": "b679b35bcdcf211d6aa41a571225a50449e7e36def75cf37fee8f06889df3a5a9726a7aef2fd5ae819c2071cb6fcf8712741cd2c131c9341b60936e684bd8d98",
                     "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 1157,
-                        "stable-only": true,
-                        "url-template": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs$major$minor$patch/ghostscript-$version.tar.gz"
+                        "//": "Bypass broken url-template with anitya checker - See https://github.com/flathub/flatpak-external-data-checker/issues/360",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/ArtifexSoftware/ghostpdl-downloads/releases/latest",
+                        "version-query": ".name | split(\" \") | .[1]",
+                        "url-query": ".assets[] | select(.name|test(\"^ghostscript-(.*).tar.gz$\")) | .browser_download_url"
                     }
                 },
                 {
@@ -445,6 +446,10 @@
                         "type": "anitya",
                         "project-id": 4908,
                         "stable-only": true,
+                        "//": "patches don't apply. Avoiding flathubbot to spam us with broken updates",
+                        "versions": {
+                            "<": "6.0.0"
+                        },
                         "url-template": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v$version.tar.gz"
                     }
                 },
@@ -615,8 +620,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/strukturag/libheif/releases/download/v1.14.2/libheif-1.14.2.tar.gz",
-                    "sha256": "d016905e247d6952cd7ee4f9b90957350b6a6caa466bc76fdfe6eb302b6d088c",
+                    "url": "https://github.com/strukturag/libheif/releases/download/v1.15.1/libheif-1.15.1.tar.gz",
+                    "sha256": "28d5a376fe7954d2d03453f983aaa0b7486f475c27c7806bda31df9102325556",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 64439,
@@ -732,17 +737,17 @@
         },
         {
             "name": "cairo",
-            "buildsystem": "autotools",
+            "buildsystem": "meson",
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.freedesktop.org/cairo/cairo/-/archive/1.17.6/cairo-1.17.6.tar.gz",
-                    "sha256": "a2227afc15e616657341c42af9830c937c3a6bfa63661074eabef13600e8936f",
+                    "url": "https://cairographics.org/snapshots/cairo-1.17.8.tar.xz",
+                    "sha256": "5b10c8892d1b58d70d3f0ba5b47863a061262fa56b9dc7944161f8c8b783bc64",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 247,
                         "stable-only": true,
-                        "url-template": "https://gitlab.freedesktop.org/cairo/cairo/-/archive/$version/cairo-$version.tar.gz"
+                        "url-template": "https://cairographics.org/snapshots/cairo-$version.tar.xz"
                     }
                 }
             ]
@@ -799,8 +804,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/3.0.0/graphviz-3.0.0.tar.gz",
-                            "sha256": "59931082a3638139e06c296b96e860a9d338432af06f7f57a6ad8da5cbf465c7",
+                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/7.1.0/graphviz-7.1.0.tar.gz",
+                            "sha256": "8b28a283644a8442e6925b15d95055228d25172c7c30681810625616cbb23913",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 1249,
@@ -832,7 +837,9 @@
         },
         {
             "name": "gimp",
+            "buildsystem": "meson",
             "config-opts": [
+                "-Dg-ir-doc=false",
                 "-Dgi-docgen=disabled",
                 "-Dicc-directory=/run/host/usr/share/color/icc/",
                 "-Dbuild-id=org.gimp.GIMP.flatpak.nightly",
@@ -842,7 +849,6 @@
                 "/bin/gimptool-2.99",
                 "/bin/gimp-console-2.99"
             ],
-            "buildsystem": "meson",
             "sources": [
                 {
                     "type": "git",
