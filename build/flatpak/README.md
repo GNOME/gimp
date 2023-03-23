@@ -1,8 +1,6 @@
-GIMP Flatpak HowTo
-==================
+# GIMP Flatpak HowTo
 
-Stable and Development releases
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Stable and Development releases
 
 The Flathub repository hosts our stable and development point releases:
 https://github.com/flathub/org.gimp.GIMP
@@ -10,10 +8,9 @@ https://github.com/flathub/org.gimp.GIMP
 We recommend to look at the `README.md` file in respectively the `master` or
 `beta` branches of this repository to know more about release procedures.
 
-Nightly builds
-~~~~~~~~~~~~~~
+## Nightly builds
 
-Flathub does not host nightly builds, therefore we publish them on the GNOME
+Flathub does not host nightly builds, therefore we publish them on GNOME's
 Nightly repository. Our "nightlies" are actually "weeklies" through a [Gitlab job
 schedule named "Flatpak
 nightly"](https://gitlab.gnome.org/GNOME/gimp/-/pipeline_schedules).
@@ -43,8 +40,7 @@ Base rule to update the nightly build manifest:
   exception in our repository, but only for the `master` branch), so we often
   need to publish to `master` after mostly a visual review.
 
-Custom Flatpak builds (for development)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Custom Flatpak builds (for development)
 
 Most contributors simply build GIMP the "old-school" way, nevertheless some
 projects are starting to use `flatpak` as a development environment. Here is how
@@ -69,71 +65,84 @@ Note 2
     separate steps while using the high level procedure.)
   - appstream-compose
 
-Note 1
-: there are packages of `flatpak` and `flatpak-builder` for [most
-distributions](http://flatpak.org/getting.html).
+  Note 1
+  : there are packages of `flatpak` and `flatpak-builder` for [most
+  distributions](http://flatpak.org/getting.html).
 
-Note 2
-: `appstream-compose` is used to parse the appdata file and generate the
-  appstream (metadata like comments, etc.).
-  On Fedora, this is provided by the package `libappstream-glib`, on Ubuntu by
-  `appstream-util`…
+  Note 2
+  : `appstream-compose` is used to parse the appdata file and generate the
+    appstream (metadata like comments, etc.).
+    On Fedora, this is provided by the package `libappstream-glib`, on Ubuntu by
+    `appstream-util`…
 
 * Install the runtimes and the corresponding SDKs if you haven't already:
 
-```sh
-flatpak remote-add --user --from gnome https://nightly.gnome.org/gnome-nightly.flatpakrepo
-flatpak install --user gnome org.gnome.Platform/x86_64/master org.gnome.Sdk/x86_64/master
-flatpak install --user gnome org.gnome.Platform/aarch64/master org.gnome.Sdk/aarch64/master
-```
+  ```sh
+  flatpak remote-add --user --from gnome https://nightly.gnome.org/gnome-nightly.flatpakrepo
+  flatpak install --user gnome org.gnome.Platform/x86_64/master org.gnome.Sdk/x86_64/master
+  flatpak install --user gnome org.gnome.Platform/aarch64/master org.gnome.Sdk/aarch64/master
+  ```
 
-Or simply update them if you have already installed them:
+  Or simply update them if you have already installed them:
 
-```sh
-flatpak update
-```
+  ```sh
+  flatpak update
+  ```
 
 * Setup some recommended build options:
 
-```sh
-export BUILD_OPTIONS="--ccache --keep-build-dirs --force-clean"
-```
+  ```sh
+  export BUILD_OPTIONS="--ccache --keep-build-dirs --force-clean"
+  ```
 
-We recommend using `ccache` to improve build speed, and to keep build dirs
-(these will be found in `.flatpak-builder/build/` relatively to the work
-directory; you may manually delete these once you are done to save space) for
-later debugging if ever any configuration or build issue arises.
+  We recommend using `ccache` to improve build speed, and to keep build dirs
+  (these will be found in `.flatpak-builder/build/` relatively to the work
+  directory; you may manually delete these once you are done to save space) for
+  later debugging if ever any configuration or build issue arises.
 
 * Choose what architecture to build and where you will "install" your flatpak:
 
-```sh
-# Architectures supported with GIMP flatpak are one of 'x86_64' or 'aarch64':
-export ARCH="x86_64"
-# Path where build files are stored
-export INSTALLDIR="`pwd`/${ARCH}"
-```
+  ```sh
+  # Architectures supported with GIMP flatpak are one of 'x86_64' or 'aarch64':
+  export ARCH="x86_64"
+  # Path where build files are stored
+  export INSTALLDIR="`pwd`/${ARCH}"
+  ```
 
-* Build the flatpak:
+* Build the flatpak up to GIMP itself (not included):
 
-```sh
-flatpak-builder $BUILD_OPTIONS --arch="$ARCH" \
-                "${INSTALLDIR}" org.gimp.GIMP-nightly.json 2>&1 \
-                | tee gimp-nightly-flatpak-`date --iso-8601=minute`.log
-```
+  ```sh
+  flatpak-builder $BUILD_OPTIONS --arch="$ARCH" --stop-at=gimp \
+                  "${INSTALLDIR}" org.gimp.GIMP-nightly.json 2>&1 \
+                  | tee gimp-nightly-flatpak.log
+  ```
 
-The build log will be outputted on `stdout` as well as being stored in a file
-`gimp-nightly-flatpak-$DATE.log` (where `$DATE` is replaced with the date in
-ISO-8601.
+  The build log will be outputted on `stdout` as well as being stored in a file
+  `gimp-nightly-flatpak.log`.
+
+* Now we'll want to build GIMP itself, yet not from a clean repository clone
+  (which is what the manifest provides) but from your local checkout, so that
+  you can include any custom code:
+
+  ```sh
+  flatpak build "${INSTALLDIR}" meson setup --prefix=/app/ --libdir=/app/lib/ _gimp ../../ 2>&1 | tee -a gimp-nightly-flatpak.log
+  flatpak build "${INSTALLDIR}" ninja -C _gimp 2>&1 | tee -a gimp-nightly-flatpak.log
+  flatpak build "${INSTALLDIR}" ninja -C _gimp install 2>&1 | tee -a gimp-nightly-flatpak.log
+  ```
+
+  This assumes you are currently within `build/flatpak/`, therefore the
+  repository source is 2 parent-folders away (`../../`). The build artifacts
+  will be inside the `_gimp/` subfolders, and finally it will be installed with
+  the rest of the flatpak inside `$INSTALLDIR`.
 
 * For development purpose, you don't need to export the flatpak to a repository
   or even install it. Just run it directly from your build directory:
 
-```sh
-flatpak-builder --run "${INSTALLDIR}" org.gimp.GIMP-nightly.json gimp-2.99
-```
+  ```sh
+  flatpak-builder --run "${INSTALLDIR}" org.gimp.GIMP-nightly.json gimp-2.99
+  ```
 
-Maintaining the manifests
-~~~~~~~~~~~~~~~~~~~~~~~~~
+## Maintaining the manifests
 
 * GIMP uses Flatpak's [GNOME runtime](http://flatpak.org/runtimes.html), which
   contains a base of libraries, some of which are dependencies of GIMP.
