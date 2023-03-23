@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-22 20:57+0000\n"
-"PO-Revision-Date: 2023-03-22 23:06+0100\n"
+"POT-Creation-Date: 2023-03-23 02:46+0000\n"
+"PO-Revision-Date: 2023-03-23 18:36+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -4452,6 +4452,22 @@ msgstr "Spoji uvožene poti"
 msgid "TarGA image"
 msgstr "Slika TarGA"
 
+#: plug-ins/common/file-tga.c:302
+msgid "_Use RLE compression"
+msgstr "_Uporabi stiskanje RLE"
+
+#: plug-ins/common/file-tga.c:303
+msgid "Use RLE compression"
+msgstr "Uporabi stiskanje RLE"
+
+#: plug-ins/common/file-tga.c:308
+msgid "Ori_gin"
+msgstr "I_zvor"
+
+#: plug-ins/common/file-tga.c:309
+msgid "Image origin (0 = top-left, 1 = bottom-left)"
+msgstr "Izvor slike (0 = levo zgoraj, 1 = desno spodaj)"
+
 #: plug-ins/common/file-tga.c:391 plug-ins/common/file-xwd.c:442
 msgid "TGA format does not support multiple layers."
 msgstr "Zapis TGA ne podpira več plasti."
@@ -4471,23 +4487,15 @@ msgstr "Iz »%s« ni mogoče prebrati razširitve"
 msgid "Cannot read header from '%s'"
 msgstr "Glave datoteke »%s« ni mogoče prebrati"
 
-#: plug-ins/common/file-tga.c:1451
+#: plug-ins/common/file-tga.c:1447
 msgid "Export Image as TGA"
 msgstr "Izvozi sliko kot TGA"
 
-#: plug-ins/common/file-tga.c:1461
-msgid "_RLE compression"
-msgstr "Stiskanje _RLE"
-
-#: plug-ins/common/file-tga.c:1469
-msgid "Or_igin:"
-msgstr "Izvi_rnik:"
-
-#: plug-ins/common/file-tga.c:1473
+#: plug-ins/common/file-tga.c:1449
 msgid "Bottom left"
 msgstr "Levo spodaj"
 
-#: plug-ins/common/file-tga.c:1474
+#: plug-ins/common/file-tga.c:1450
 msgid "Top left"
 msgstr "Levo zgoraj"
 
