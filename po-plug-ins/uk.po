@@ -10,15 +10,15 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-03-23 02:46+0000\n"
-"PO-Revision-Date: 2023-03-21 21:23+0200\n"
+"PO-Revision-Date: 2023-03-23 15:08+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
@@ -1472,7 +1472,8 @@ msgstr "Вигнути зображення, використовуючи дві
 
 #: plug-ins/common/curve-bend.c:697
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr ""
+"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:711
 msgid "Cannot operate on layers with masks."
@@ -2491,7 +2492,7 @@ msgstr "Я_кість"
 
 #: plug-ins/common/file-heif.c:259 plug-ins/common/file-heif.c:369
 msgid "Quality factor (0 = worst, 100 = best)"
-msgstr ""
+msgstr "Коефіцієнт якості (0 = найгірша, 100 = найкраща)"
 
 #: plug-ins/common/file-heif.c:264 plug-ins/common/file-heif.c:374
 #: plug-ins/common/file-jpegxl.c:185 plug-ins/file-webp/file-webp.c:175
@@ -2504,16 +2505,14 @@ msgid "Use lossless compression"
 msgstr "Стискання без втрати якості"
 
 #: plug-ins/common/file-heif.c:270 plug-ins/common/file-heif.c:380
-#, fuzzy
 #| msgid "Save color _profile"
 msgid "Save color prof_ile"
 msgstr "Зберегти _профіль кольорів"
 
 #: plug-ins/common/file-heif.c:271 plug-ins/common/file-heif.c:381
-#, fuzzy
 #| msgid "Save color _profile"
 msgid "Save the image's color profile"
-msgstr "Зберегти _профіль кольорів"
+msgstr "Зберегти колірний профіль зображення"
 
 #: plug-ins/common/file-heif.c:276 plug-ins/common/file-heif.c:386
 #: plug-ins/common/file-jpegxl.c:197
@@ -2532,15 +2531,15 @@ msgstr "_Формат пікселів"
 
 #: plug-ins/common/file-heif.c:283 plug-ins/common/file-heif.c:393
 msgid "Format of color sub-sampling"
-msgstr ""
+msgstr "Формат субдискретизації кольорів"
 
 #: plug-ins/common/file-heif.c:289 plug-ins/common/file-heif.c:399
 msgid "Enco_der speed"
-msgstr ""
+msgstr "Швидкість к_одувальника"
 
 #: plug-ins/common/file-heif.c:290 plug-ins/common/file-heif.c:400
 msgid "Tradeoff between speed and compression"
-msgstr ""
+msgstr "Компроміс між швидкістю і рівнем стискання"
 
 #: plug-ins/common/file-heif.c:296 plug-ins/common/file-heif.c:406
 #: plug-ins/common/file-jpegxl.c:222
@@ -3505,11 +3504,13 @@ msgstr ""
 #: plug-ins/common/file-png.c:1459
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr ""
+"Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: plug-ins/common/file-png.c:1468
 #, c-format
-msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgid ""
+"Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -4423,7 +4424,8 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:729
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr ""
+"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:736
 msgid "Retry without limits preventing to parse huge data?"
@@ -4478,24 +4480,22 @@ msgid "TarGA image"
 msgstr "Зображення TarGA"
 
 #: plug-ins/common/file-tga.c:302
-#, fuzzy
 #| msgid "_RLE compression"
 msgid "_Use RLE compression"
-msgstr "_RLE стиснення"
+msgstr "Ви_користати RLE-стиснення"
 
 #: plug-ins/common/file-tga.c:303
-#, fuzzy
 #| msgid "RLE compression"
 msgid "Use RLE compression"
-msgstr "RLE стиснення"
+msgstr "Використати RLE-стиснення"
 
 #: plug-ins/common/file-tga.c:308
 msgid "Ori_gin"
-msgstr ""
+msgstr "По_чаток координат"
 
 #: plug-ins/common/file-tga.c:309
 msgid "Image origin (0 = top-left, 1 = bottom-left)"
-msgstr ""
+msgstr "Початок координат зображення (0 = вгорі ліворуч, 1 = внизу ліворуч)"
 
 #: plug-ins/common/file-tga.c:391 plug-ins/common/file-xwd.c:442
 msgid "TGA format does not support multiple layers."
@@ -9665,7 +9665,8 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid "Let the direction from the center determine the direction of the stroke"
+msgid ""
+"Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -9776,7 +9777,8 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr ""
+"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -10683,7 +10685,8 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: plug-ins/gradient-flare/gradient-flare.c:3352
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr ""
+"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: plug-ins/gradient-flare/gradient-flare.c:3362
 msgid "Delete Gradient Flare"
@@ -12948,7 +12951,8 @@ msgstr "Альтернативне оточення фільтра:"
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:181
 msgid "A second number of adjacent points to consider when filtering."
-msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr ""
+"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:191
 msgid "Filter Epsilon:"
