@@ -775,10 +775,10 @@ ani_load_image (GFile   *file,
   guint32       size;
   guint8        padding;
   gint32        file_offset;
-  gint          frame = 1;
+  guint         frame = 1;
   AniFileHeader header;
-  gchar         inam[G_MAXSHORT] = {0};
-  gchar         iart[G_MAXSHORT] = {0};
+  gchar        *inam  = NULL;
+  gchar        *iart  = NULL;
   gchar        *str;
 
   gimp_progress_init_printf (_("Opening '%s'"),
@@ -821,9 +821,26 @@ ani_load_image (GFile   *file,
         }
       else if (memcmp (id, "INAM", 4) == 0)
         {
+          gint n_read = -1;
+
           fread (&size, sizeof (size), 1, fp);
-          fread (&inam, sizeof (char), size, fp);
-          inam[size] = '\0';
+          if (size > 0)
+            {
+              if (inam)
+                g_free (inam);
+
+              inam = g_new0 (gchar, size + 1);
+              n_read = fread (inam, sizeof (gchar), size, fp);
+              inam[size] = '\0';
+            }
+
+          if (n_read < 1 || (inam && ! g_utf8_validate (inam, -1, NULL)))
+            {
+              fclose (fp);
+              g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Invalid ANI metadata"));
+              return NULL;
+            }
 
           /* Metadata length must be even. If data itself is odd,
            * then an extra 0x00 is added for padding. We read in
@@ -835,9 +852,26 @@ ani_load_image (GFile   *file,
         }
       else if (memcmp (id, "IART", 4) == 0)
         {
+          gint n_read = -1;
+
           fread (&size, sizeof (size), 1, fp);
-          fread (&iart, sizeof (char), size, fp);
-          iart[size] = '\0';
+          if (size > 0)
+            {
+              if (iart)
+                g_free (iart);
+
+              iart = g_new0 (gchar, size + 1);
+              n_read = fread (iart, sizeof (gchar), size, fp);
+              iart[size] = '\0';
+            }
+
+          if (n_read < 1 || (iart && ! g_utf8_validate (iart, -1, NULL)))
+            {
+              fclose (fp);
+              g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Invalid ANI metadata"));
+              return NULL;
+            }
 
           if (size % 2 != 0)
             fread (&padding, sizeof (padding), 1, fp);
@@ -899,24 +933,26 @@ ani_load_image (GFile   *file,
   gimp_parasite_free (parasite);
 
   /* Saving INFO block */
-  if (strlen (inam) > 0)
+  if (inam && strlen (inam) > 0)
     {
       str = g_strdup_printf ("%s", inam);
       parasite = gimp_parasite_new ("ani-info-inam",
                                     GIMP_PARASITE_PERSISTENT,
                                     strlen (str) + 1, (gpointer) str);
       g_free (str);
+      g_free (inam);
       gimp_image_attach_parasite (image, parasite);
       gimp_parasite_free (parasite);
     }
 
-  if (strlen (iart) > 0)
+  if (iart && strlen (iart) > 0)
     {
       str = g_strdup_printf ("%s", iart);
       parasite = gimp_parasite_new ("ani-info-iart",
                                     GIMP_PARASITE_PERSISTENT,
                                     strlen (str) + 1, (gpointer) str);
       g_free (str);
+      g_free (iart);
       gimp_image_attach_parasite (image, parasite);
       gimp_parasite_free (parasite);
     }
