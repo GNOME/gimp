@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-16 17:37+0000\n"
-"PO-Revision-Date: 2023-03-18 09:44+0000\n"
+"POT-Creation-Date: 2023-03-24 19:21+0000\n"
+"PO-Revision-Date: 2023-03-24 22:58+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -43,13 +43,13 @@ msgstr "Exercitar uma cabra na linguagem C"
 #: plug-ins/common/curve-bend.c:678 plug-ins/common/decompose.c:376
 #: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:243
 #: plug-ins/common/destripe.c:183 plug-ins/common/gradient-map.c:216
-#: plug-ins/common/grid.c:283 plug-ins/common/hot.c:317
+#: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
 #: plug-ins/common/jigsaw.c:467 plug-ins/common/nl-filter.c:224
 #: plug-ins/common/qbist.c:253 plug-ins/common/sample-colorize.c:431
 #: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:328
 #: plug-ins/common/sphere-designer.c:3179 plug-ins/common/tile.c:220
 #: plug-ins/common/tile-small.c:308 plug-ins/common/van-gogh-lic.c:913
-#: plug-ins/common/warp.c:375 plug-ins/common/wavelet-decompose.c:190
+#: plug-ins/common/warp.c:375 plug-ins/common/wavelet-decompose.c:182
 #: plug-ins/file-dds/dds.c:519 plug-ins/flame/flame.c:241
 #: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:178
@@ -78,23 +78,22 @@ msgstr "Exercitar uma cabra (C)"
 #: plug-ins/common/curve-bend.c:1221 plug-ins/common/curve-bend.c:1995
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/destripe.c:484 plug-ins/common/file-cel.c:1001
-#: plug-ins/common/file-gif-save.c:1160 plug-ins/common/file-heif.c:2353
+#: plug-ins/common/file-gif-save.c:1160 plug-ins/common/file-heif.c:2357
 #: plug-ins/common/file-jp2-load.c:976 plug-ins/common/file-pdf-load.c:655
 #: plug-ins/common/file-pdf-load.c:1040 plug-ins/common/file-pdf-save.c:1113
 #: plug-ins/common/file-ps.c:3572 plug-ins/common/file-svg.c:773
 #: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
-#: plug-ins/common/grid.c:761 plug-ins/common/hot.c:679
-#: plug-ins/common/jigsaw.c:2498 plug-ins/common/mail.c:568
-#: plug-ins/common/nl-filter.c:1126 plug-ins/common/qbist.c:848
-#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
-#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sparkle.c:426
-#: plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/grid.c:761 plug-ins/common/jigsaw.c:2498
+#: plug-ins/common/mail.c:568 plug-ins/common/nl-filter.c:1126
+#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
+#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
+#: plug-ins/common/sparkle.c:426 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
-#: plug-ins/common/wavelet-decompose.c:409 plug-ins/common/web-page.c:278
-#: plug-ins/file-tiff/file-tiff-load.c:2673 plug-ins/flame/flame.c:540
-#: plug-ins/flame/flame.c:716 plug-ins/flame/flame.c:1033
+#: plug-ins/common/web-page.c:278 plug-ins/file-tiff/file-tiff-load.c:2673
+#: plug-ins/flame/flame.c:540 plug-ins/flame/flame.c:716
+#: plug-ins/flame/flame.c:1033
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:561
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1631
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1669
@@ -177,16 +176,15 @@ msgstr "Exercitar uma cabra (JavaScript)"
 #: plug-ins/common/colormap-remap.c:707 plug-ins/common/compose.c:1184
 #: plug-ins/common/contrast-retinex.c:352 plug-ins/common/curve-bend.c:1222
 #: plug-ins/common/depth-merge.c:734 plug-ins/common/destripe.c:485
-#: plug-ins/common/file-heif.c:2354 plug-ins/common/file-pdf-load.c:656
+#: plug-ins/common/file-heif.c:2358 plug-ins/common/file-pdf-load.c:656
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:547
 #: plug-ins/common/film.c:1325 plug-ins/common/grid.c:762
-#: plug-ins/common/hot.c:680 plug-ins/common/jigsaw.c:2499
-#: plug-ins/common/nl-filter.c:1127 plug-ins/common/qbist.c:945
-#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sparkle.c:427
-#: plug-ins/common/sphere-designer.c:2633 plug-ins/common/tile.c:493
-#: plug-ins/common/tile-small.c:447 plug-ins/common/unit-editor.c:268
-#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
-#: plug-ins/common/wavelet-decompose.c:410 plug-ins/file-psd/psd-load.c:3308
+#: plug-ins/common/jigsaw.c:2499 plug-ins/common/nl-filter.c:1127
+#: plug-ins/common/qbist.c:945 plug-ins/common/smooth-palette.c:512
+#: plug-ins/common/sparkle.c:427 plug-ins/common/sphere-designer.c:2633
+#: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
+#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
+#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3308
 #: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
@@ -1084,7 +1082,7 @@ msgstr "Carregar parâmetros do explorador CML"
 #: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
 #: plug-ins/file-icns/file-icns-load.c:515
 #: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
-#: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:955
+#: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
 #: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:554
 #: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-load.c:169
 #: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
@@ -1269,7 +1267,7 @@ msgid "_Redness cr709:"
 msgstr "A_vermelhado cr709:"
 
 #: plug-ins/common/compose.c:242 plug-ins/common/decompose.c:193
-#: plug-ins/common/file-heif.c:2542
+#: plug-ins/common/file-heif.c:2523
 msgid "RGB"
 msgstr "RGB"
 
@@ -1975,7 +1973,7 @@ msgstr "EOF ou erro ao ler o cabeçalho da imagem"
 #.
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:395
-#: plug-ins/common/file-heif.c:879 plug-ins/common/file-jp2-load.c:1085
+#: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1085
 #: plug-ins/common/file-pcx.c:402 plug-ins/common/file-pdf-load.c:816
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
 #: plug-ins/common/file-pnm.c:708 plug-ins/common/file-ps.c:1140
@@ -2483,150 +2481,183 @@ msgstr ""
 "Carregar imagem armazenada no formato HEIF (High Efficiency Image File "
 "Format). Os sufixos típicos para estes ficheiros são “.heif” e “.heic”."
 
-#: plug-ins/common/file-heif.c:239
+#: plug-ins/common/file-heif.c:241
 msgid "Exports HEIF images"
 msgstr "Exporta imagens HEIF"
 
-#: plug-ins/common/file-heif.c:240
+#: plug-ins/common/file-heif.c:242
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
 "Guardar imagem armazenada no formato HEIF (High Efficiency Image File "
 "Format)."
 
-#: plug-ins/common/file-heif.c:315
+#: plug-ins/common/file-heif.c:258 plug-ins/common/file-heif.c:368
+msgid "_Quality"
+msgstr "_Qualidade"
+
+#: plug-ins/common/file-heif.c:259 plug-ins/common/file-heif.c:369
+msgid "Quality factor (0 = worst, 100 = best)"
+msgstr "Fator de qualidade (0 = pior, 100 = melhor)"
+
+#: plug-ins/common/file-heif.c:264 plug-ins/common/file-heif.c:374
+#: plug-ins/common/file-jpegxl.c:185 plug-ins/file-webp/file-webp.c:175
+msgid "L_ossless"
+msgstr "_Sem perda"
+
+#: plug-ins/common/file-heif.c:265 plug-ins/common/file-heif.c:375
+#: plug-ins/common/file-jpegxl.c:186
+msgid "Use lossless compression"
+msgstr "Usar compressão sem perdas"
+
+#: plug-ins/common/file-heif.c:270 plug-ins/common/file-heif.c:380
+msgid "Save color prof_ile"
+msgstr "Guardar perfil de _cor"
+
+#: plug-ins/common/file-heif.c:271 plug-ins/common/file-heif.c:381
+msgid "Save the image's color profile"
+msgstr "Guardar o perfil de _cor das imagens"
+
+#: plug-ins/common/file-heif.c:276 plug-ins/common/file-heif.c:386
+#: plug-ins/common/file-jpegxl.c:197
+msgid "_Bit depth"
+msgstr "Profundidade de _bit"
+
+#: plug-ins/common/file-heif.c:277 plug-ins/common/file-heif.c:387
+#: plug-ins/common/file-jpegxl.c:198
+msgid "Bit depth of exported image"
+msgstr "Profundidade de bit da imagem exportada"
+
+#: plug-ins/common/file-heif.c:282 plug-ins/common/file-heif.c:392
+#: plug-ins/common/file-png.c:283
+msgid "_Pixel format"
+msgstr "Formato do _píxel"
+
+#: plug-ins/common/file-heif.c:283 plug-ins/common/file-heif.c:393
+msgid "Format of color sub-sampling"
+msgstr "Formato da subamostragem de cores"
+
+#: plug-ins/common/file-heif.c:289 plug-ins/common/file-heif.c:399
+msgid "Enco_der speed"
+msgstr "Velocidade de codificador"
+
+#: plug-ins/common/file-heif.c:290 plug-ins/common/file-heif.c:400
+msgid "Tradeoff between speed and compression"
+msgstr "Troca entre velocidade e compressão"
+
+#: plug-ins/common/file-heif.c:296 plug-ins/common/file-heif.c:406
+#: plug-ins/common/file-jpegxl.c:222
+msgid "Save Exi_f"
+msgstr "Guardar Exi_f"
+
+#: plug-ins/common/file-heif.c:297 plug-ins/common/file-heif.c:407
+#: plug-ins/common/file-jpegxl.c:223
+msgid "Toggle saving Exif data"
+msgstr "Alternar ao guardar dados Exif"
+
+#: plug-ins/common/file-heif.c:302 plug-ins/common/file-heif.c:412
+#: plug-ins/common/file-jpegxl.c:228
+msgid "Save _XMP"
+msgstr "Guardar _XMP"
+
+#: plug-ins/common/file-heif.c:303 plug-ins/common/file-heif.c:413
+#: plug-ins/common/file-jpegxl.c:229
+msgid "Toggle saving XMP data"
+msgstr "Alternar ao guardar dados XMP"
+
+#: plug-ins/common/file-heif.c:317
 msgid "Loads AVIF images"
 msgstr "Carrega imagens AVIF"
 
-#: plug-ins/common/file-heif.c:316
+#: plug-ins/common/file-heif.c:318
 msgid "Load image stored in AV1 Image File Format (AVIF)"
 msgstr "Carregar imagem armazenada no formato AV1 Image File Format (AVIF)"
 
-#: plug-ins/common/file-heif.c:346
+#: plug-ins/common/file-heif.c:350
 msgid "Exports AVIF images"
 msgstr "Exporta imagens AVIF"
 
-#: plug-ins/common/file-heif.c:347
+#: plug-ins/common/file-heif.c:351
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Guardar imagem armazenada no formato AV1 Image File Format (AVIF)"
 
-#: plug-ins/common/file-heif.c:503 plug-ins/common/file-heif.c:599
+#: plug-ins/common/file-heif.c:507 plug-ins/common/file-heif.c:603
 msgid "HEIF format does not support multiple layers."
 msgstr "O formato HEIF não suporta várias camadas."
 
-#: plug-ins/common/file-heif.c:919 plug-ins/common/file-heif.c:952
-#: plug-ins/common/file-heif.c:993 plug-ins/common/file-heif.c:1059
+#: plug-ins/common/file-heif.c:923 plug-ins/common/file-heif.c:956
+#: plug-ins/common/file-heif.c:997 plug-ins/common/file-heif.c:1063
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "O carregamento da imagem HEIF falhou: %s"
 
-#: plug-ins/common/file-heif.c:941
+#: plug-ins/common/file-heif.c:945
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "O carregamento da imagem HEIF falhou: o ficheiro de entrada não conte "
 "imagens legíveis"
 
-#: plug-ins/common/file-heif.c:1185
+#: plug-ins/common/file-heif.c:1189
 msgid "image content"
 msgstr "conteúdo da imagem"
 
-#: plug-ins/common/file-heif.c:1537
+#: plug-ins/common/file-heif.c:1541
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "A exportar '%s' usando o codificador %s"
 
-#: plug-ins/common/file-heif.c:1587 plug-ins/common/file-heif.c:1994
+#: plug-ins/common/file-heif.c:1591 plug-ins/common/file-heif.c:1998
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "A codificação da imagem HEIF falhou: %s"
 
-#: plug-ins/common/file-heif.c:2115
+#: plug-ins/common/file-heif.c:2119
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Falha ao escrever a imagem HEIF: %s"
 
-#: plug-ins/common/file-heif.c:2204
+#: plug-ins/common/file-heif.c:2208
 msgid "primary"
 msgstr "primário"
 
-#: plug-ins/common/file-heif.c:2349
+#: plug-ins/common/file-heif.c:2353
 msgid "Load HEIF Image"
 msgstr "Carregar imagem HEIF"
 
-#: plug-ins/common/file-heif.c:2363
+#: plug-ins/common/file-heif.c:2367
 msgid "Select Image"
 msgstr "Selecionar imagem"
 
-#: plug-ins/common/file-heif.c:2507
-msgid "Export Image as AVIF"
-msgstr "Exportar imagem como AVIF"
-
-#: plug-ins/common/file-heif.c:2507
-msgid "Export Image as HEIF"
-msgstr "Exportar imagem como HEIF"
-
-#: plug-ins/common/file-heif.c:2520
-msgid "_Lossless"
-msgstr "_Sem perda"
-
-#: plug-ins/common/file-heif.c:2538
-msgid "_Quality"
-msgstr "_Qualidade"
-
-#: plug-ins/common/file-heif.c:2543
+#: plug-ins/common/file-heif.c:2524
 msgid "YUV444"
 msgstr "YUV444"
 
-#: plug-ins/common/file-heif.c:2544
+#: plug-ins/common/file-heif.c:2525
 msgid "YUV420"
 msgstr "YUV420"
 
-#: plug-ins/common/file-heif.c:2551
-msgid "Pixel format:"
-msgstr "Formato do píxel:"
-
-#: plug-ins/common/file-heif.c:2562 plug-ins/common/file-jpegxl.c:2020
+#: plug-ins/common/file-heif.c:2533 plug-ins/common/file-jpegxl.c:2020
 msgid "8 bit/channel"
 msgstr "8 bits/canal"
 
-#: plug-ins/common/file-heif.c:2563
+#: plug-ins/common/file-heif.c:2534
 msgid "10 bit/channel"
 msgstr "10 bits/canal"
 
-#: plug-ins/common/file-heif.c:2564
+#: plug-ins/common/file-heif.c:2535
 msgid "12 bit/channel"
 msgstr "12 bits/canal"
 
-#: plug-ins/common/file-heif.c:2571
-msgid "Bit depth:"
-msgstr "Profundidade de bit:"
-
-#: plug-ins/common/file-heif.c:2574
+#: plug-ins/common/file-heif.c:2541
 msgid "Slow"
 msgstr "Lento"
 
-#: plug-ins/common/file-heif.c:2575
+#: plug-ins/common/file-heif.c:2542
 msgid "Balanced"
 msgstr "Equilibrado"
 
-#: plug-ins/common/file-heif.c:2576
+#: plug-ins/common/file-heif.c:2543
 msgid "Fast"
 msgstr "Rápido"
-
-#: plug-ins/common/file-heif.c:2583
-msgid "Speed:"
-msgstr "Velocidade:"
-
-#: plug-ins/common/file-heif.c:2589
-msgid "Save color _profile"
-msgstr "Guardar perfil de _cor"
-
-#: plug-ins/common/file-heif.c:2595
-msgid "_Save Exif data"
-msgstr "_Guardar dados Exif"
-
-#: plug-ins/common/file-heif.c:2600
-msgid "Save _XMP data"
-msgstr "Guardar dados _XMP"
 
 #: plug-ins/common/file-html-table.c:153
 msgid "HTML table"
@@ -2873,14 +2904,6 @@ msgstr "Carrega ficheiros no formato de ficheiro JPEG XL"
 msgid "Saves files in the JPEG XL file format"
 msgstr "Guarda ficheiros no formato de ficheiro JPEG XL"
 
-#: plug-ins/common/file-jpegxl.c:185 plug-ins/file-webp/file-webp.c:175
-msgid "L_ossless"
-msgstr "_Sem perda"
-
-#: plug-ins/common/file-jpegxl.c:186
-msgid "Use lossless compression"
-msgstr "Usar compressão sem perdas"
-
 #: plug-ins/common/file-jpegxl.c:191
 msgid "Co_mpression/maxError"
 msgstr "Co_mpressão/maxErro"
@@ -2892,14 +2915,6 @@ msgid ""
 msgstr ""
 "Distância max. butteraugli, menor = maior qualidade. Alcance: 0 .. 15. 1,0 = "
 "visualmente sem perdas."
-
-#: plug-ins/common/file-jpegxl.c:197
-msgid "_Bit depth"
-msgstr "Profundidade de _bit"
-
-#: plug-ins/common/file-jpegxl.c:198
-msgid "Bit depth of exported image"
-msgstr "Profundidade de bit da imagem exportada"
 
 #: plug-ins/common/file-jpegxl.c:203
 msgid "Effort/S_peed"
@@ -2916,22 +2931,6 @@ msgstr "Guardar perfil original"
 #: plug-ins/common/file-jpegxl.c:211
 msgid "Store ICC profile to exported JXL file"
 msgstr "Armazenar perfil ICC para ficheiro JXL exportado"
-
-#: plug-ins/common/file-jpegxl.c:222
-msgid "Save Exi_f"
-msgstr "Guardar Exi_f"
-
-#: plug-ins/common/file-jpegxl.c:223
-msgid "Toggle saving Exif data"
-msgstr "Alternar ao guardar dados Exif"
-
-#: plug-ins/common/file-jpegxl.c:228
-msgid "Save _XMP"
-msgstr "Guardar _XMP"
-
-#: plug-ins/common/file-jpegxl.c:229
-msgid "Toggle saving XMP data"
-msgstr "Alternar ao guardar dados XMP"
 
 #: plug-ins/common/file-jpegxl.c:2006
 msgid "lightning (fastest)"
@@ -3436,10 +3435,6 @@ msgid ""
 msgstr ""
 "Quando verificado, guardar como 1, 2, 4 ou 8 bits, dependendo do número de "
 "cores usadas. Quando não verificado, guardar sempre como 8 bits"
-
-#: plug-ins/common/file-png.c:283
-msgid "_Pixel format"
-msgstr "Formato do _píxel"
 
 #: plug-ins/common/file-png.c:284
 msgid "PNG export format"
@@ -4254,6 +4249,14 @@ msgstr "_B, G, R, X (estilo BMP)"
 msgid "SUN Rasterfile image"
 msgstr "Imagem SUN raster"
 
+#: plug-ins/common/file-sunras.c:319
+msgid "Data Formatting"
+msgstr "Formatar dados"
+
+#: plug-ins/common/file-sunras.c:320
+msgid "Use standard (0) or Run-Length Encoded (1) output"
+msgstr "Usar padrão (0) ou saída codificada em comprimento de execução (1)"
+
 #: plug-ins/common/file-sunras.c:404
 msgid "SUNRAS format does not support multiple layers."
 msgstr "O formato SUNRAS não suporta várias camadas."
@@ -4346,17 +4349,13 @@ msgstr "Ocorreu um erro de gravação"
 msgid "Export Image as SUNRAS"
 msgstr "Exportar imagem como SUNRAS"
 
+#: plug-ins/common/file-sunras.c:1791
+msgid "S_tandard"
+msgstr "Pa_drão"
+
 #: plug-ins/common/file-sunras.c:1792
-msgid "Data Formatting"
-msgstr "Formatar dados"
-
-#: plug-ins/common/file-sunras.c:1793
-msgid "_RunLength Encoded"
-msgstr "_Run-Length Encoded (RLE)"
-
-#: plug-ins/common/file-sunras.c:1794
-msgid "_Standard"
-msgstr "_Padrão"
+msgid "R_un-Length Encoded"
+msgstr "Codificada em comprimento de execução"
 
 #: plug-ins/common/file-svg.c:163
 msgid "SVG image"
@@ -4481,6 +4480,23 @@ msgstr "Unir caminhos importados"
 msgid "TarGA image"
 msgstr "Imagem TarGa"
 
+#: plug-ins/common/file-tga.c:302
+msgid "_Use RLE compression"
+msgstr "_Usar compressão RLE"
+
+#: plug-ins/common/file-tga.c:303
+msgid "Use RLE compression"
+msgstr "Usar compressão RLE"
+
+#: plug-ins/common/file-tga.c:308
+msgid "Ori_gin"
+msgstr "Ori_gem"
+
+#: plug-ins/common/file-tga.c:309
+msgid "Image origin (0 = top-left, 1 = bottom-left)"
+msgstr ""
+"Origem da imagem (0 = canto superior esquerdo, 1 = canto inferior esquerdo)"
+
 #: plug-ins/common/file-tga.c:391 plug-ins/common/file-xwd.c:442
 msgid "TGA format does not support multiple layers."
 msgstr "O formato TGA não suporta várias camadas."
@@ -4500,23 +4516,15 @@ msgstr "Não foi possível ler a extensão de '%s'"
 msgid "Cannot read header from '%s'"
 msgstr "Não foi possível ler o cabeçalho de '%s'"
 
-#: plug-ins/common/file-tga.c:1451
+#: plug-ins/common/file-tga.c:1447
 msgid "Export Image as TGA"
 msgstr "Exportar imagem como TGA"
 
-#: plug-ins/common/file-tga.c:1461
-msgid "_RLE compression"
-msgstr "Compressão _RLE"
-
-#: plug-ins/common/file-tga.c:1469
-msgid "Or_igin:"
-msgstr "Or_igem:"
-
-#: plug-ins/common/file-tga.c:1473
+#: plug-ins/common/file-tga.c:1449
 msgid "Bottom left"
 msgstr "Inferior esquerda"
 
-#: plug-ins/common/file-tga.c:1474
+#: plug-ins/common/file-tga.c:1450
 msgid "Top left"
 msgstr "Superior esquerda"
 
@@ -5206,39 +5214,47 @@ msgstr "Guilhotina"
 msgid "Untitled"
 msgstr "Sem título"
 
-#: plug-ins/common/hot.c:255
+#: plug-ins/common/hot.c:249
 msgid "_Hot..."
 msgstr "_Quente..."
 
-#: plug-ins/common/hot.c:259
+#: plug-ins/common/hot.c:253
 msgid "Find and fix pixels that may be unsafely bright"
 msgstr "Localizar e reparar píxeis que possam ser demasiado brilhantes"
 
-#: plug-ins/common/hot.c:470 plug-ins/common/hot.c:675
-msgid "Hot"
-msgstr "Quente"
-
-#: plug-ins/common/hot.c:701
+#: plug-ins/common/hot.c:270
 msgid "Mode"
 msgstr "Modo"
 
-#: plug-ins/common/hot.c:713
-msgid "Create _new layer"
-msgstr "Criar _nova camada"
-
-#: plug-ins/common/hot.c:722
+#: plug-ins/common/hot.c:276
 msgid "Action"
 msgstr "Ação"
 
-#: plug-ins/common/hot.c:726
+#: plug-ins/common/hot.c:283
+msgid "Create _new layer"
+msgstr "Criar _nova camada"
+
+#: plug-ins/common/hot.c:474 plug-ins/common/hot.c:681
+msgid "Hot"
+msgstr "Quente"
+
+#: plug-ins/common/hot.c:690
+msgid "N_TSC"
+msgstr "N_TSC"
+
+#: plug-ins/common/hot.c:691
+msgid "_PAL"
+msgstr "_PAL"
+
+#: plug-ins/common/hot.c:696
 msgid "Reduce _Luminance"
 msgstr "Reduzir _luminância"
 
-#: plug-ins/common/hot.c:727
+#: plug-ins/common/hot.c:697
 msgid "Reduce _Saturation"
 msgstr "Reduzir _saturação"
 
-#: plug-ins/common/hot.c:728
+#: plug-ins/common/hot.c:698
 msgid "_Blacken"
 msgstr "_Escurecido"
 
@@ -6389,46 +6405,47 @@ msgstr "A localizar gradiente XY"
 msgid "Flow step %d"
 msgstr "Passo de fluxo %d"
 
-#: plug-ins/common/wavelet-decompose.c:131
+#: plug-ins/common/wavelet-decompose.c:118
 msgid "_Wavelet-decompose..."
 msgstr "_Decomposição por ondas…"
 
-#: plug-ins/common/wavelet-decompose.c:135
-#: plug-ins/common/wavelet-decompose.c:405
+#: plug-ins/common/wavelet-decompose.c:122
+#: plug-ins/common/wavelet-decompose.c:402
 msgid "Wavelet decompose"
 msgstr "Decomposição por ondas"
 
-#: plug-ins/common/wavelet-decompose.c:227
+#: plug-ins/common/wavelet-decompose.c:131
+msgid "Scal_es"
+msgstr "Esca_las:"
+
+#: plug-ins/common/wavelet-decompose.c:132
+msgid "Number of scales"
+msgstr "Número de escalas"
+
+#: plug-ins/common/wavelet-decompose.c:137
+msgid "Create a layer group to store the _decomposition"
+msgstr "Criar um grupo de camadas para armazenar a _decomposição"
+
+#: plug-ins/common/wavelet-decompose.c:145
+msgid "_Add a layer mask to each scales layer"
+msgstr "_Adicionar uma máscara de camada para cada escala de camadas"
+
+#: plug-ins/common/wavelet-decompose.c:225
 msgid "Wavelet-Decompose"
 msgstr "Decomposição por ondas"
 
-#: plug-ins/common/wavelet-decompose.c:237
+#: plug-ins/common/wavelet-decompose.c:235
 msgid "Decomposition"
 msgstr "Decomposição"
 
-#: plug-ins/common/wavelet-decompose.c:304
+#: plug-ins/common/wavelet-decompose.c:302
 #, c-format
 msgid "Scale %d"
 msgstr "Escala %d"
 
-#: plug-ins/common/wavelet-decompose.c:328
+#: plug-ins/common/wavelet-decompose.c:326
 msgid "Residual"
 msgstr "Residual"
-
-#. scales
-#: plug-ins/common/wavelet-decompose.c:429
-msgid "Scales:"
-msgstr "Escalas:"
-
-#. create group layer
-#: plug-ins/common/wavelet-decompose.c:439
-msgid "Create a layer group to store the decomposition"
-msgstr "Criar um grupo de camadas para armazenar a decomposição"
-
-#. create layer masks
-#: plug-ins/common/wavelet-decompose.c:451
-msgid "Add a layer mask to each scales layers"
-msgstr "Adicionar uma máscara de camada para cada escala de camadas"
 
 #: plug-ins/common/web-browser.c:175
 msgid "The operating system is out of memory or resources."
@@ -7082,7 +7099,7 @@ msgstr ""
 "Erro ao tentar abrir o ficheiro %s temporário '%s' para carregar o icns: %s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:558 plug-ins/file-ico/ico-load.c:947
+#: plug-ins/file-icns/file-icns-load.c:558 plug-ins/file-ico/ico-load.c:983
 #: plug-ins/file-jpeg/jpeg-load.c:540 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-darktable.c:513
 #: plug-ins/file-raw/file-rawtherapee.c:455
@@ -7238,6 +7255,10 @@ msgstr "O ícone nº %d tem zero de largura ou altura"
 #, c-format
 msgid "Icon #%i"
 msgstr "Ícone nº %i"
+
+#: plug-ins/file-ico/ico-load.c:841 plug-ins/file-ico/ico-load.c:872
+msgid "Invalid ANI metadata"
+msgstr "Metadados ANI inválidos"
 
 #: plug-ins/file-ico/ico-save.c:213
 #, c-format
@@ -8261,6 +8282,32 @@ msgstr "(sem fotogramas-chave)"
 #: plug-ins/file-webp/file-webp-dialog.c:52
 msgid "(all frames are keyframes)"
 msgstr "(todos os fotogramas são fotogramas-chave)"
+
+#. Create the combobox containing the presets
+#: plug-ins/file-webp/file-webp-dialog.c:80
+#: plug-ins/gradient-flare/gradient-flare.c:2623
+msgid "Default"
+msgstr "Predefinido"
+
+#: plug-ins/file-webp/file-webp-dialog.c:81
+msgid "Picture"
+msgstr "Imagem"
+
+#: plug-ins/file-webp/file-webp-dialog.c:82
+msgid "Photo"
+msgstr "Foto"
+
+#: plug-ins/file-webp/file-webp-dialog.c:83
+msgid "Drawing"
+msgstr "Desenho"
+
+#: plug-ins/file-webp/file-webp-dialog.c:84
+msgid "Icon"
+msgstr "Ícone"
+
+#: plug-ins/file-webp/file-webp-dialog.c:85
+msgid "Text"
+msgstr "Texto"
 
 #: plug-ins/file-webp/file-webp-load.c:107
 #, c-format
@@ -10571,10 +10618,6 @@ msgstr "At_ualização automática da pré-visualização"
 #: plug-ins/gradient-flare/gradient-flare.c:2622
 msgid "'Default' is created."
 msgstr "Foi criado um \"predefinido\"."
-
-#: plug-ins/gradient-flare/gradient-flare.c:2623
-msgid "Default"
-msgstr "Predefinido"
 
 #.
 #. *  Scales
@@ -13126,6 +13169,39 @@ msgstr "_Digitalizador/Câmara..."
 msgid "Transferring data from scanner/camera"
 msgstr "A transferir imagem do digitalizador/câmara"
 
+#~ msgid "Export Image as AVIF"
+#~ msgstr "Exportar imagem como AVIF"
+
+#~ msgid "Export Image as HEIF"
+#~ msgstr "Exportar imagem como HEIF"
+
+#~ msgid "_Lossless"
+#~ msgstr "_Sem perda"
+
+#~ msgid "Pixel format:"
+#~ msgstr "Formato do píxel:"
+
+#~ msgid "Bit depth:"
+#~ msgstr "Profundidade de bit:"
+
+#~ msgid "Speed:"
+#~ msgstr "Velocidade:"
+
+#~ msgid "_Save Exif data"
+#~ msgstr "_Guardar dados Exif"
+
+#~ msgid "Save _XMP data"
+#~ msgstr "Guardar dados _XMP"
+
+#~ msgid "_RunLength Encoded"
+#~ msgstr "_Run-Length Encoded (RLE)"
+
+#~ msgid "_Standard"
+#~ msgstr "_Padrão"
+
+#~ msgid "Or_igin:"
+#~ msgstr "Or_igem:"
+
 #~ msgctxt "align-style"
 #~ msgid "None"
 #~ msgstr "Nenhum"
@@ -13663,9 +13739,6 @@ msgstr "A transferir imagem do digitalizador/câmara"
 #~ msgid "E_levation:"
 #~ msgstr "_Elevação:"
 
-#~ msgid "Text"
-#~ msgstr "Texto"
-
 #~ msgid "C-Source"
 #~ msgstr "Fonte C"
 
@@ -14128,9 +14201,6 @@ msgstr "A transferir imagem do digitalizador/câmara"
 
 #~ msgid "_Photocopy..."
 #~ msgstr "_Fotocópia..."
-
-#~ msgid "Photocopy"
-#~ msgstr "Fotocópia"
 
 #~ msgid "_Sharpness:"
 #~ msgstr "_Agudeza:"
