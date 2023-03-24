@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-21 18:55+0000\n"
-"PO-Revision-Date: 2023-03-22 03:24+0100\n"
+"POT-Creation-Date: 2023-03-23 02:46+0000\n"
+"PO-Revision-Date: 2023-03-24 06:20+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -68,7 +68,7 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/common/curve-bend.c:1221 plug-ins/common/curve-bend.c:1995
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/destripe.c:484 plug-ins/common/file-cel.c:1001
-#: plug-ins/common/file-gif-save.c:1160 plug-ins/common/file-heif.c:2353
+#: plug-ins/common/file-gif-save.c:1160 plug-ins/common/file-heif.c:2357
 #: plug-ins/common/file-jp2-load.c:976 plug-ins/common/file-pdf-load.c:655
 #: plug-ins/common/file-pdf-load.c:1040 plug-ins/common/file-pdf-save.c:1113
 #: plug-ins/common/file-ps.c:3572 plug-ins/common/file-svg.c:773
@@ -163,7 +163,7 @@ msgstr ""
 #: plug-ins/common/colormap-remap.c:707 plug-ins/common/compose.c:1184
 #: plug-ins/common/contrast-retinex.c:352 plug-ins/common/curve-bend.c:1222
 #: plug-ins/common/depth-merge.c:734 plug-ins/common/destripe.c:485
-#: plug-ins/common/file-heif.c:2354 plug-ins/common/file-pdf-load.c:656
+#: plug-ins/common/file-heif.c:2358 plug-ins/common/file-pdf-load.c:656
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:547
 #: plug-ins/common/film.c:1325 plug-ins/common/grid.c:762
 #: plug-ins/common/jigsaw.c:2499 plug-ins/common/nl-filter.c:1127
@@ -1237,7 +1237,7 @@ msgid "_Redness cr709:"
 msgstr ""
 
 #: plug-ins/common/compose.c:242 plug-ins/common/decompose.c:193
-#: plug-ins/common/file-heif.c:2542
+#: plug-ins/common/file-heif.c:2523
 msgid "RGB"
 msgstr "RGB"
 
@@ -1928,7 +1928,7 @@ msgstr ""
 #.
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:395
-#: plug-ins/common/file-heif.c:879 plug-ins/common/file-jp2-load.c:1085
+#: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1085
 #: plug-ins/common/file-pcx.c:402 plug-ins/common/file-pdf-load.c:816
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
 #: plug-ins/common/file-pnm.c:708 plug-ins/common/file-ps.c:1140
@@ -2418,148 +2418,181 @@ msgstr ""
 "გამოსახულების ფაილის ფორმატი). ტიპიურ სუფიქსებს HEIF ფაილებისთვის "
 "წარმოადგენენ .heif და .heic."
 
-#: plug-ins/common/file-heif.c:239
+#: plug-ins/common/file-heif.c:241
 msgid "Exports HEIF images"
 msgstr ""
 
-#: plug-ins/common/file-heif.c:240
+#: plug-ins/common/file-heif.c:242
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
 "გამოსახულების HEIF ფორმატში შენახვა (მაღალი ეფექტურობის გამოსახულების ფაილის "
 "ფორმატი)."
 
-#: plug-ins/common/file-heif.c:315
+#: plug-ins/common/file-heif.c:258 plug-ins/common/file-heif.c:368
+msgid "_Quality"
+msgstr "_ხარისხი"
+
+#: plug-ins/common/file-heif.c:259 plug-ins/common/file-heif.c:369
+msgid "Quality factor (0 = worst, 100 = best)"
+msgstr ""
+
+#: plug-ins/common/file-heif.c:264 plug-ins/common/file-heif.c:374
+#: plug-ins/common/file-jpegxl.c:185 plug-ins/file-webp/file-webp.c:175
+msgid "L_ossless"
+msgstr "_კარგვის გარეშე"
+
+#: plug-ins/common/file-heif.c:265 plug-ins/common/file-heif.c:375
+#: plug-ins/common/file-jpegxl.c:186
+msgid "Use lossless compression"
+msgstr ""
+
+#: plug-ins/common/file-heif.c:270 plug-ins/common/file-heif.c:380
+msgid "Save color prof_ile"
+msgstr "ფერის პროფილის _შენახვა"
+
+#: plug-ins/common/file-heif.c:271 plug-ins/common/file-heif.c:381
+msgid "Save the image's color profile"
+msgstr ""
+
+#: plug-ins/common/file-heif.c:276 plug-ins/common/file-heif.c:386
+#: plug-ins/common/file-jpegxl.c:197
+msgid "_Bit depth"
+msgstr ""
+
+#: plug-ins/common/file-heif.c:277 plug-ins/common/file-heif.c:387
+#: plug-ins/common/file-jpegxl.c:198
+msgid "Bit depth of exported image"
+msgstr ""
+
+#: plug-ins/common/file-heif.c:282 plug-ins/common/file-heif.c:392
+#: plug-ins/common/file-png.c:283
+msgid "_Pixel format"
+msgstr "_პიქსელის ფორმატი"
+
+#: plug-ins/common/file-heif.c:283 plug-ins/common/file-heif.c:393
+msgid "Format of color sub-sampling"
+msgstr ""
+
+#: plug-ins/common/file-heif.c:289 plug-ins/common/file-heif.c:399
+msgid "Enco_der speed"
+msgstr ""
+
+#: plug-ins/common/file-heif.c:290 plug-ins/common/file-heif.c:400
+msgid "Tradeoff between speed and compression"
+msgstr ""
+
+#: plug-ins/common/file-heif.c:296 plug-ins/common/file-heif.c:406
+#: plug-ins/common/file-jpegxl.c:222
+msgid "Save Exi_f"
+msgstr "Exi_f-ის შენახვა"
+
+#: plug-ins/common/file-heif.c:297 plug-ins/common/file-heif.c:407
+#: plug-ins/common/file-jpegxl.c:223
+msgid "Toggle saving Exif data"
+msgstr ""
+
+#: plug-ins/common/file-heif.c:302 plug-ins/common/file-heif.c:412
+#: plug-ins/common/file-jpegxl.c:228
+msgid "Save _XMP"
+msgstr "_XMP-ის შენახვა"
+
+#: plug-ins/common/file-heif.c:303 plug-ins/common/file-heif.c:413
+#: plug-ins/common/file-jpegxl.c:229
+msgid "Toggle saving XMP data"
+msgstr ""
+
+#: plug-ins/common/file-heif.c:317
 msgid "Loads AVIF images"
 msgstr ""
 
-#: plug-ins/common/file-heif.c:316
+#: plug-ins/common/file-heif.c:318
 msgid "Load image stored in AV1 Image File Format (AVIF)"
 msgstr ""
 
-#: plug-ins/common/file-heif.c:346
+#: plug-ins/common/file-heif.c:350
 msgid "Exports AVIF images"
 msgstr ""
 
-#: plug-ins/common/file-heif.c:347
+#: plug-ins/common/file-heif.c:351
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr ""
 
-#: plug-ins/common/file-heif.c:503 plug-ins/common/file-heif.c:599
+#: plug-ins/common/file-heif.c:507 plug-ins/common/file-heif.c:603
 msgid "HEIF format does not support multiple layers."
 msgstr ""
 
-#: plug-ins/common/file-heif.c:919 plug-ins/common/file-heif.c:952
-#: plug-ins/common/file-heif.c:993 plug-ins/common/file-heif.c:1059
+#: plug-ins/common/file-heif.c:923 plug-ins/common/file-heif.c:956
+#: plug-ins/common/file-heif.c:997 plug-ins/common/file-heif.c:1063
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr ""
 
-#: plug-ins/common/file-heif.c:941
+#: plug-ins/common/file-heif.c:945
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 
-#: plug-ins/common/file-heif.c:1185
+#: plug-ins/common/file-heif.c:1189
 msgid "image content"
 msgstr "გამოსახულების შემცველობა"
 
-#: plug-ins/common/file-heif.c:1537
+#: plug-ins/common/file-heif.c:1541
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr ""
 
-#: plug-ins/common/file-heif.c:1587 plug-ins/common/file-heif.c:1994
+#: plug-ins/common/file-heif.c:1591 plug-ins/common/file-heif.c:1998
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr ""
 
-#: plug-ins/common/file-heif.c:2115
+#: plug-ins/common/file-heif.c:2119
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr ""
 
-#: plug-ins/common/file-heif.c:2204
+#: plug-ins/common/file-heif.c:2208
 msgid "primary"
 msgstr "ძირითადი"
 
-#: plug-ins/common/file-heif.c:2349
+#: plug-ins/common/file-heif.c:2353
 msgid "Load HEIF Image"
 msgstr ""
 
-#: plug-ins/common/file-heif.c:2363
+#: plug-ins/common/file-heif.c:2367
 msgid "Select Image"
 msgstr "სურათის ამორჩევა"
 
-#: plug-ins/common/file-heif.c:2507
-msgid "Export Image as AVIF"
-msgstr ""
-
-#: plug-ins/common/file-heif.c:2507
-msgid "Export Image as HEIF"
-msgstr ""
-
-#: plug-ins/common/file-heif.c:2520
-msgid "_Lossless"
-msgstr ""
-
-#: plug-ins/common/file-heif.c:2538
-msgid "_Quality"
-msgstr "_ხარისხი"
-
-#: plug-ins/common/file-heif.c:2543
+#: plug-ins/common/file-heif.c:2524
 msgid "YUV444"
 msgstr "YUV444"
 
-#: plug-ins/common/file-heif.c:2544
+#: plug-ins/common/file-heif.c:2525
 msgid "YUV420"
 msgstr "YUV420"
 
-#: plug-ins/common/file-heif.c:2551
-msgid "Pixel format:"
-msgstr "პიქსელის ფორმატი:"
-
-#: plug-ins/common/file-heif.c:2562 plug-ins/common/file-jpegxl.c:2020
+#: plug-ins/common/file-heif.c:2533 plug-ins/common/file-jpegxl.c:2020
 msgid "8 bit/channel"
 msgstr ""
 
-#: plug-ins/common/file-heif.c:2563
+#: plug-ins/common/file-heif.c:2534
 msgid "10 bit/channel"
 msgstr ""
 
-#: plug-ins/common/file-heif.c:2564
+#: plug-ins/common/file-heif.c:2535
 msgid "12 bit/channel"
 msgstr ""
 
-#: plug-ins/common/file-heif.c:2571
-msgid "Bit depth:"
-msgstr "ბიტის სიღრმე:"
-
-#: plug-ins/common/file-heif.c:2574
+#: plug-ins/common/file-heif.c:2541
 msgid "Slow"
 msgstr "ნელი"
 
-#: plug-ins/common/file-heif.c:2575
+#: plug-ins/common/file-heif.c:2542
 msgid "Balanced"
 msgstr "საშუალო"
 
-#: plug-ins/common/file-heif.c:2576
+#: plug-ins/common/file-heif.c:2543
 msgid "Fast"
 msgstr "სწრაფი"
-
-#: plug-ins/common/file-heif.c:2583
-msgid "Speed:"
-msgstr "სიჩქარე:"
-
-#: plug-ins/common/file-heif.c:2589
-msgid "Save color _profile"
-msgstr ""
-
-#: plug-ins/common/file-heif.c:2595
-msgid "_Save Exif data"
-msgstr ""
-
-#: plug-ins/common/file-heif.c:2600
-msgid "Save _XMP data"
-msgstr ""
 
 #: plug-ins/common/file-html-table.c:153
 msgid "HTML table"
@@ -2793,14 +2826,6 @@ msgstr ""
 msgid "Saves files in the JPEG XL file format"
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:185 plug-ins/file-webp/file-webp.c:175
-msgid "L_ossless"
-msgstr "_კარგვის გარეშე"
-
-#: plug-ins/common/file-jpegxl.c:186
-msgid "Use lossless compression"
-msgstr ""
-
 #: plug-ins/common/file-jpegxl.c:191
 msgid "Co_mpression/maxError"
 msgstr ""
@@ -2809,14 +2834,6 @@ msgstr ""
 msgid ""
 "Max. butteraugli distance, lower = higher quality. Range: 0 .. 15. 1.0 = "
 "visually lossless."
-msgstr ""
-
-#: plug-ins/common/file-jpegxl.c:197
-msgid "_Bit depth"
-msgstr ""
-
-#: plug-ins/common/file-jpegxl.c:198
-msgid "Bit depth of exported image"
 msgstr ""
 
 #: plug-ins/common/file-jpegxl.c:203
@@ -2833,22 +2850,6 @@ msgstr ""
 
 #: plug-ins/common/file-jpegxl.c:211
 msgid "Store ICC profile to exported JXL file"
-msgstr ""
-
-#: plug-ins/common/file-jpegxl.c:222
-msgid "Save Exi_f"
-msgstr "Exi_f-ის შენახვა"
-
-#: plug-ins/common/file-jpegxl.c:223
-msgid "Toggle saving Exif data"
-msgstr ""
-
-#: plug-ins/common/file-jpegxl.c:228
-msgid "Save _XMP"
-msgstr "_XMP-ის შენახვა"
-
-#: plug-ins/common/file-jpegxl.c:229
-msgid "Toggle saving XMP data"
 msgstr ""
 
 #: plug-ins/common/file-jpegxl.c:2006
@@ -3331,10 +3332,6 @@ msgid ""
 "When checked, save as 1, 2, 4, or 8-bit depending on number of colors used. "
 "When unchecked, always save as 8-bit"
 msgstr ""
-
-#: plug-ins/common/file-png.c:283
-msgid "_Pixel format"
-msgstr "_პიქსელის ფორმატი"
 
 #: plug-ins/common/file-png.c:284
 msgid "PNG export format"
@@ -4347,6 +4344,22 @@ msgstr "შემოტანილი კონტურების შერ�
 msgid "TarGA image"
 msgstr ""
 
+#: plug-ins/common/file-tga.c:302
+msgid "_Use RLE compression"
+msgstr "RLE შეკუმშვის _გამოყენება"
+
+#: plug-ins/common/file-tga.c:303
+msgid "Use RLE compression"
+msgstr "RLE შეკუმშვის გამოყენება"
+
+#: plug-ins/common/file-tga.c:308
+msgid "Ori_gin"
+msgstr ""
+
+#: plug-ins/common/file-tga.c:309
+msgid "Image origin (0 = top-left, 1 = bottom-left)"
+msgstr ""
+
 #: plug-ins/common/file-tga.c:391 plug-ins/common/file-xwd.c:442
 msgid "TGA format does not support multiple layers."
 msgstr ""
@@ -4366,23 +4379,15 @@ msgstr ""
 msgid "Cannot read header from '%s'"
 msgstr ""
 
-#: plug-ins/common/file-tga.c:1451
+#: plug-ins/common/file-tga.c:1447
 msgid "Export Image as TGA"
 msgstr ""
 
-#: plug-ins/common/file-tga.c:1461
-msgid "_RLE compression"
-msgstr ""
-
-#: plug-ins/common/file-tga.c:1469
-msgid "Or_igin:"
-msgstr ""
-
-#: plug-ins/common/file-tga.c:1473
+#: plug-ins/common/file-tga.c:1449
 msgid "Bottom left"
 msgstr "ქვედა მარცხენა"
 
-#: plug-ins/common/file-tga.c:1474
+#: plug-ins/common/file-tga.c:1450
 msgid "Top left"
 msgstr "ზედა მარცხენა"
 
@@ -7951,19 +7956,19 @@ msgstr ""
 
 #: plug-ins/file-webp/file-webp-dialog.c:81
 msgid "Picture"
-msgstr ""
+msgstr "სურათი"
 
 #: plug-ins/file-webp/file-webp-dialog.c:82
 msgid "Photo"
-msgstr ""
+msgstr "ფოტო"
 
 #: plug-ins/file-webp/file-webp-dialog.c:83
 msgid "Drawing"
-msgstr ""
+msgstr "ნახატი"
 
 #: plug-ins/file-webp/file-webp-dialog.c:84
 msgid "Icon"
-msgstr ""
+msgstr "_ხატულა"
 
 #: plug-ins/file-webp/file-webp-dialog.c:85
 msgid "Text"
@@ -12316,7 +12321,7 @@ msgstr "_ცენტრი:"
 #: plug-ins/print/print-page-layout.c:496
 msgctxt "center-mode"
 msgid "None"
-msgstr ""
+msgstr "არაფერი"
 
 #: plug-ins/print/print-page-layout.c:497
 msgid "Horizontally"
@@ -12706,6 +12711,15 @@ msgstr ""
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr ""
+
+#~ msgid "Pixel format:"
+#~ msgstr "პიქსელის ფორმატი:"
+
+#~ msgid "Bit depth:"
+#~ msgstr "ბიტის სიღრმე:"
+
+#~ msgid "Speed:"
+#~ msgstr "სიჩქარე:"
 
 #~ msgid "_Standard"
 #~ msgstr "_სტანდარტული"
