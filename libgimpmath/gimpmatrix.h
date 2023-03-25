@@ -54,8 +54,8 @@ GParamSpec *  gimp_param_spec_matrix2      (const gchar        *name,
 
 
 void          gimp_matrix2_identity        (GimpMatrix2       *matrix);
-void          gimp_matrix2_mult            (const GimpMatrix2 *matrix1,
-                                            GimpMatrix2       *matrix2);
+void          gimp_matrix2_mult            (const GimpMatrix2 *left,
+                                            GimpMatrix2       *right);
 
 gdouble       gimp_matrix2_determinant     (const GimpMatrix2 *matrix);
 void          gimp_matrix2_invert          (GimpMatrix2       *matrix);
@@ -90,8 +90,8 @@ GParamSpec *  gimp_param_spec_matrix3      (const gchar        *name,
 
 
 void          gimp_matrix3_identity        (GimpMatrix3       *matrix);
-void          gimp_matrix3_mult            (const GimpMatrix3 *matrix1,
-                                            GimpMatrix3       *matrix2);
+void          gimp_matrix3_mult            (const GimpMatrix3 *left,
+                                            GimpMatrix3       *right);
 void          gimp_matrix3_translate       (GimpMatrix3       *matrix,
                                             gdouble            x,
                                             gdouble            y);
@@ -135,8 +135,8 @@ void          gimp_matrix3_transform_point (const GimpMatrix3 *matrix,
 /*****************/
 
 void          gimp_matrix4_identity        (GimpMatrix4       *matrix);
-void          gimp_matrix4_mult            (const GimpMatrix4 *matrix1,
-                                            GimpMatrix4       *matrix2);
+void          gimp_matrix4_mult            (const GimpMatrix4 *left,
+                                            GimpMatrix4       *right);
 
 void          gimp_matrix4_to_deg          (const GimpMatrix4 *matrix,
                                             gdouble           *a,
