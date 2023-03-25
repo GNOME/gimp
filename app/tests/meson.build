@@ -39,7 +39,7 @@ app_tests = [
   'session-2-8-compatibility-multi-window',
   'session-2-8-compatibility-single-window',
   'single-window-mode',
-  # 'tools',
+  'tools',
   'ui',
   'xcf',
 ]
@@ -49,6 +49,7 @@ if cmd.returncode() != 0
  error(cmd.stderr().strip())
 endif
 
+prio = 1000
 foreach test_name : app_tests
   test_exe = executable(test_name,
     'test-@0@.c'.format(test_name),
@@ -67,6 +68,10 @@ foreach test_name : app_tests
     ],
     suite: 'app',
     timeout: 60,
+    is_parallel : false,
+    priority: prio,
   )
+
+  prio = prio - 10
 
 endforeach
