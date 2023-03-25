@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-23 02:46+0000\n"
-"PO-Revision-Date: 2023-03-23 15:08+0200\n"
+"POT-Creation-Date: 2023-03-25 01:25+0000\n"
+"PO-Revision-Date: 2023-03-25 18:55+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -1078,7 +1078,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
 #: plug-ins/file-icns/file-icns-load.c:515
 #: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
-#: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:955
+#: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
 #: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:554
 #: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-load.c:169
 #: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
@@ -2505,12 +2505,10 @@ msgid "Use lossless compression"
 msgstr "Стискання без втрати якості"
 
 #: plug-ins/common/file-heif.c:270 plug-ins/common/file-heif.c:380
-#| msgid "Save color _profile"
 msgid "Save color prof_ile"
 msgstr "Зберегти _профіль кольорів"
 
 #: plug-ins/common/file-heif.c:271 plug-ins/common/file-heif.c:381
-#| msgid "Save color _profile"
 msgid "Save the image's color profile"
 msgstr "Зберегти колірний профіль зображення"
 
@@ -4480,12 +4478,10 @@ msgid "TarGA image"
 msgstr "Зображення TarGA"
 
 #: plug-ins/common/file-tga.c:302
-#| msgid "_RLE compression"
 msgid "_Use RLE compression"
 msgstr "Ви_користати RLE-стиснення"
 
 #: plug-ins/common/file-tga.c:303
-#| msgid "RLE compression"
 msgid "Use RLE compression"
 msgstr "Використати RLE-стиснення"
 
@@ -7091,7 +7087,7 @@ msgstr ""
 "Помилка при відкриванні тимчасового файла %s «%s» для завантаження icns: %s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:558 plug-ins/file-ico/ico-load.c:947
+#: plug-ins/file-icns/file-icns-load.c:558 plug-ins/file-ico/ico-load.c:983
 #: plug-ins/file-jpeg/jpeg-load.c:540 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-darktable.c:513
 #: plug-ins/file-raw/file-rawtherapee.c:455
@@ -7240,13 +7236,18 @@ msgstr "Не вдалось прочитати '%lu' байтів"
 #: plug-ins/file-ico/ico-load.c:252
 #, c-format
 msgid "Icon #%d has zero width or height"
-msgstr "Піктограма #%d має нульову ширину або висоту"
+msgstr "Піктограма %d має нульову ширину або висоту"
 
 #. read successfully. add to image
 #: plug-ins/file-ico/ico-load.c:639
 #, c-format
 msgid "Icon #%i"
-msgstr "Значок #%i"
+msgstr "Піктограма %i"
+
+#: plug-ins/file-ico/ico-load.c:841 plug-ins/file-ico/ico-load.c:872
+#| msgid "Invalid X offset: %d"
+msgid "Invalid ANI metadata"
+msgstr "Некоректні метадані ANI"
 
 #: plug-ins/file-ico/ico-save.c:213
 #, c-format
