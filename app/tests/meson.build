@@ -49,6 +49,10 @@ if cmd.returncode() != 0
  error(cmd.stderr().strip())
 endif
 
+# Prevent parallel builds for the tests
+# The tests must not be run in parallel or in a different order as specified
+
+prio = 1000
 foreach test_name : app_tests
   test_exe = executable(test_name,
     'test-@0@.c'.format(test_name),
@@ -67,6 +71,10 @@ foreach test_name : app_tests
     ],
     suite: 'app',
     timeout: 60,
+    is_parallel : false,
+    priority: prio,
   )
+
+  prio = prio - 10
 
 endforeach
