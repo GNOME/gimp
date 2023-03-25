@@ -1198,6 +1198,7 @@ native_rsvg = dependency('librsvg-2.0', version: '>='+rsvg_minver, native: true)
 xvfb_run = find_program('xvfb-run', required: get_option('headless-tests'))
 dbus_run_session = find_program('dbus-run-session', required: get_option('headless-tests'))
 if xvfb_run.found() and dbus_run_session.found()
+  conf.set('HAVE_XVFB_RUN', true)
   add_test_setup('headless',
     exe_wrapper: find_program('build' / 'meson' / 'run_test_env.sh'),
     is_default: true,
