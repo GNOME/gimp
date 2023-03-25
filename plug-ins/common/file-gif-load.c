@@ -304,6 +304,9 @@ gif_load_thumb (GimpProcedure        *procedure,
 
 
 #define MAXCOLORMAPSIZE  256
+/* Max size of data buffer. Count is one byte so maximum read is 255. In
+ * GetCode we use 2 extra bytes, so let's set it to 260 to be safe. */
+#define MAXDATABLOCKSIZE 260
 
 #define CM_RED           0
 #define CM_GREEN         1
@@ -623,7 +626,8 @@ static gint
 DoExtension (FILE *fd,
              gint  label)
 {
-  static guchar  buf[256];
+  static guchar  buf[MAXDATABLOCKSIZE];
+  gint           bufsize;
 #ifdef GIFDEBUG
   gchar         *str;
 #endif
@@ -671,9 +675,12 @@ DoExtension (FILE *fd,
 #ifdef GIFDEBUG
       str = "Comment Extension";
 #endif
-      while (GetDataBlock (fd, (guchar *) buf) > 0)
+      while ((bufsize = GetDataBlock (fd, (guchar *) buf)) > 0)
         {
           gchar *comment = (gchar *) buf;
+
+          /* Make sure we end with a NULL */
+          comment[bufsize] = '\0';
 
           if (! g_utf8_validate (comment, -1, NULL))
             continue;
@@ -753,7 +760,7 @@ GetCode (FILE     *fd,
          gint      code_size,
          gboolean  flag)
 {
-  static guchar buf[280];
+  static guchar buf[MAXDATABLOCKSIZE];
   static gint   curbit, lastbit, done, last_byte;
   gint          i, j, ret, count;
 
@@ -910,7 +917,7 @@ LZWReadByte (FILE *fd,
       else if (code == end_code || code > max_code)
         {
           gint     count;
-          guchar   buf[260];
+          guchar   buf[MAXDATABLOCKSIZE];
           gboolean extra_data = FALSE;
 
           if (code != end_code)
@@ -1029,7 +1036,8 @@ ReadImage (FILE        *fd,
   static gint   previous_disposal;
 
   /* Guard against bogus frame size */
-  if (len < 1 || height < 1)
+  if (len < 1 || height < 1 ||
+      leftpos + len > screenwidth || toppos + height > screenheight)
     {
       if (frame_number == 1)
         {
