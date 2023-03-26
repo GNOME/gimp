@@ -114,13 +114,6 @@
          transform="translate(-339.99998,238)"
          style="display:inline"
          id="emblem-web">
-        <rect
-           style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:1.78100002;marker:none;enable-background:new"
-           id="rect9174"
-           y="401"
-           x="501.00018"
-           height="16"
-           width="16" />
         <path
            id="path9278"
            d="m 509.0002,401 c -4.40471,0 -8,3.59527 -8,8 0,4.40472 3.59529,8 8,8 4.40472,0 8,-3.59528 8,-8 0,-4.40473 -3.59528,-8 -8,-8 z m 0,2.1875 c 3.22175,0 5.8125,2.59075 5.8125,5.8125 0,3.22176 -2.59075,5.8125 -5.8125,5.8125 -3.22175,0 -5.8125,-2.59074 -5.8125,-5.8125 0,-3.22175 2.59075,-5.8125 5.8125,-5.8125 z"
