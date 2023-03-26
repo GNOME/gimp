@@ -39,7 +39,7 @@ app_tests = [
   'session-2-8-compatibility-multi-window',
   'session-2-8-compatibility-single-window',
   'single-window-mode',
-  # 'tools',
+  'tools',
   'ui',
   'xcf',
 ]
