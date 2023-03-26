@@ -253,8 +253,8 @@ xpm_create_procedure (GimpPlugIn  *plug_in,
                                           "xpm");
 
       GIMP_PROC_ARG_INT (procedure, "threshold",
-                         "Threshold",
-                         "Alpha threshold",
+                         _("_Threshold"),
+                         _("Alpha threshold"),
                          0, 255, 127,
                          G_PARAM_READWRITE);
     }
@@ -874,17 +874,16 @@ save_dialog (GimpProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
-  GtkWidget *scale;
   gboolean   run;
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Export Image as XPM"));
 
-  scale = gimp_prop_scale_entry_new (config, "threshold", NULL, 1.0, FALSE, 0, 0);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      scale, TRUE, TRUE, 6);
-  gtk_widget_show (scale);
+  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "threshold", 1.0);
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
   gtk_widget_show (dialog);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
