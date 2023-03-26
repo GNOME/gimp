@@ -112,10 +112,10 @@ pat_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_PATTERN);
 
       gimp_procedure_set_documentation (procedure,
-                                        "Exports Gimp pattern file (.PAT)",
-                                        "New Gimp patterns can be created "
-                                        "by exporting them in the "
-                                        "appropriate place with this plug-in.",
+                                        _("Exports Gimp pattern file (.PAT)"),
+                                        _("New Gimp patterns can be created "
+                                          "by exporting them in the "
+                                          "appropriate place with this plug-in."),
                                         SAVE_PROC);
       gimp_procedure_set_attribution (procedure,
                                       "Tim Newsome",
@@ -130,9 +130,9 @@ pat_create_procedure (GimpPlugIn  *plug_in,
                                               TRUE);
 
       GIMP_PROC_ARG_STRING (procedure, "description",
-                            "Description",
-                            "Short description of the pattern",
-                            "GIMP Pattern",
+                            _("_Description"),
+                            _("Short description of the pattern"),
+                            _("GIMP Pattern"),
                             GIMP_PARAM_READWRITE);
     }
 
@@ -261,28 +261,22 @@ save_dialog (GimpProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
-  GtkWidget *grid;
   GtkWidget *entry;
+  GtkWidget *real_entry;
   gboolean   run;
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Export Image as Pattern"));
 
-  grid = gtk_grid_new ();
-  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      grid, TRUE, TRUE, 0);
-  gtk_widget_show (grid);
+  entry = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "description", GIMP_TYPE_LABEL_ENTRY);
+  real_entry = gimp_label_entry_get_entry (GIMP_LABEL_ENTRY (entry));
+  gtk_entry_set_max_length (GTK_ENTRY (real_entry), 256);
+  gtk_entry_set_width_chars (GTK_ENTRY (real_entry), 20);
+  gtk_entry_set_activates_default (GTK_ENTRY (real_entry), TRUE);
 
-  entry = gimp_prop_entry_new (config, "description", 256);
-  gtk_entry_set_width_chars (GTK_ENTRY (entry), 20);
-  gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
-
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("_Description:"), 1.0, 0.5,
-                            entry, 1);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
 
   gtk_widget_show (dialog);
 
