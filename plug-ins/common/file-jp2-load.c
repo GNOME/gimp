@@ -187,8 +187,8 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
                                         "The JPEG 2000 image loader.",
                                         name);
       gimp_procedure_set_attribution (procedure,
-                                      "Mukund Sivaraman",
-                                      "Mukund Sivaraman",
+                                      "Aurimas Juška",
+                                      "Aurimas Juška, Florian Traverse",
                                       "2009");
 
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
