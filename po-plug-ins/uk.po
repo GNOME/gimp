@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-25 01:25+0000\n"
-"PO-Revision-Date: 2023-03-25 18:55+0200\n"
+"POT-Creation-Date: 2023-03-26 02:20+0000\n"
+"PO-Revision-Date: 2023-03-26 09:53+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -485,7 +485,7 @@ msgstr "_Вертикально"
 #: plug-ins/common/blinds.c:353 plug-ins/common/compose.c:1129
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
-#: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1035
+#: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
 #: plug-ins/common/file-jp2-load.c:1311 plug-ins/common/file-pcx.c:480
 #: plug-ins/common/file-pcx.c:488 plug-ins/common/file-pix.c:422
 #: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:863
@@ -1063,7 +1063,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/cml-explorer.c:2339 plug-ins/common/curve-bend.c:890
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
-#: plug-ins/common/file-gif-load.c:403 plug-ins/common/file-mng.c:1405
+#: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-mng.c:1405
 #: plug-ins/common/file-pcx.c:410 plug-ins/common/file-png.c:673
 #: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
 #: plug-ins/common/file-psp.c:2382 plug-ins/common/file-psp.c:2432
@@ -1965,7 +1965,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #. * Open the file for reading...
 #.
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
-#: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:395
+#: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1085
 #: plug-ins/common/file-pcx.c:402 plug-ins/common/file-pdf-load.c:816
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
@@ -2199,7 +2199,7 @@ msgid "Export Image as Brush"
 msgstr "Експортувати зображення як пензель"
 
 #: plug-ins/common/file-gbr.c:317 plug-ins/common/file-gih.c:654
-#: plug-ins/common/file-pat.c:284 plug-ins/imagemap/imap_settings.c:105
+#: plug-ins/imagemap/imap_settings.c:105
 msgid "_Description:"
 msgstr "_Опис:"
 
@@ -2229,35 +2229,146 @@ msgstr "Не вдалось відкрити «%s»"
 msgid "GIF image"
 msgstr "Зображення GIF"
 
-#: plug-ins/common/file-gif-load.c:418
-msgid "This is not a GIF file"
-msgstr "Не є файлом GIF"
+#: plug-ins/common/file-gif-load.c:417
+#| msgid "GIF image"
+msgid "GIF magic code"
+msgstr "Контрольний код GIF"
+
+#: plug-ins/common/file-gif-load.c:425
+#| msgid "This is not a GIF file"
+msgid "This is not a GIF file: incorrect magic code"
+msgstr "Не є файлом GIF: помилковий контрольний код"
+
+#: plug-ins/common/file-gif-load.c:433
+msgid "Incorrect GIF version: not '87a' or '89a'"
+msgstr "Помилкова версія GIF: не є версією «87a» або «89a»"
+
+#: plug-ins/common/file-gif-load.c:440
+#| msgid "Series Description"
+msgid "screen descriptor"
+msgstr "дескриптор екрана"
 
 #: plug-ins/common/file-gif-load.c:458
+#| msgid "Bad colormap"
+msgid "global colormap"
+msgstr "загальна мапа кольорів"
+
+#: plug-ins/common/file-gif-load.c:466
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "Неквадратні точки. Зображення, ймовірно, пошкоджене."
 
-#: plug-ins/common/file-gif-load.c:1037
+#: plug-ins/common/file-gif-load.c:476 plug-ins/common/file-gif-load.c:1060
+#| msgid "Raw image data"
+msgid "image data"
+msgstr "дані зображення"
+
+#: plug-ins/common/file-gif-load.c:493
+msgid "extension data"
+msgstr "дані розширення"
+
+#: plug-ins/common/file-gif-load.c:513
+#| msgid "Frame (%i)"
+msgid "frame info"
+msgstr "відомості щодо кадру"
+
+#: plug-ins/common/file-gif-load.c:526
+#| msgid "Bad colormap"
+msgid "local colormap"
+msgstr "локальна мапа кольорів"
+
+#: plug-ins/common/file-gif-load.c:586 plug-ins/common/file-gif-load.c:591
+#, c-format
+#| msgid "Error while reading '%s': %s"
+msgid "Error reading %s. %s"
+msgstr "Помилка під час читання %s. %s"
+
+#: plug-ins/common/file-gif-load.c:587 plug-ins/common/file-gif-load.c:592
+#: plug-ins/common/file-gif-load.c:743 plug-ins/common/file-gif-load.c:751
+#: plug-ins/common/file-gif-load.c:782 plug-ins/common/file-gif-load.c:836
+#: plug-ins/common/file-gif-load.c:926 plug-ins/common/file-gif-load.c:945
+#: plug-ins/common/file-gif-load.c:1046 plug-ins/common/file-gif-load.c:1050
+#: plug-ins/common/file-gif-load.c:1195
+msgid "Image may be corrupt!"
+msgstr "Зображення може бути пошкоджено!"
+
+#: plug-ins/common/file-gif-load.c:743
+#| msgid "Error reading file"
+msgid "Error reading data size"
+msgstr "Помилка при читанні розміру даних"
+
+#: plug-ins/common/file-gif-load.c:751
+#| msgid "Error reading palette."
+msgid "Error reading data"
+msgstr "Помилка під час спроби читання даних"
+
+#: plug-ins/common/file-gif-load.c:782
+#| msgid "Error reading compressed data. "
+msgid "Not enough compressed data"
+msgstr "Недостатньо стиснених даних"
+
+#: plug-ins/common/file-gif-load.c:836
+msgid "Value out of range for code size"
+msgstr "Значення поза діапазоном розміру коду"
+
+#: plug-ins/common/file-gif-load.c:925
+msgid "Invalid code, expecting end of data marker"
+msgstr "Некоректний код, мала бути позначка кінця даних"
+
+#: plug-ins/common/file-gif-load.c:945
+#| msgid "Export metadata"
+msgid "Unexpected extra data"
+msgstr "Неочікувані зайві дані"
+
+#: plug-ins/common/file-gif-load.c:964
+#| msgid "Invalid block header"
+msgid "Invalid table entry"
+msgstr "Некоректний запис таблиці"
+
+#: plug-ins/common/file-gif-load.c:964 plug-ins/common/file-gif-load.c:970
+#| msgid "The file is corrupt!"
+msgid "Image is corrupt!"
+msgstr "Зображення пошкоджено!"
+
+#: plug-ins/common/file-gif-load.c:970
+msgid "Circular table entry"
+msgstr "Циклічний запис таблиці"
+
+#: plug-ins/common/file-gif-load.c:1045
+#, c-format
+msgid "%s. %s"
+msgstr "%s. %s"
+
+#: plug-ins/common/file-gif-load.c:1046 plug-ins/common/file-gif-load.c:1050
+#| msgid "Invalid layer dimensions: %dx%d"
+msgid "Invalid frame dimensions"
+msgstr "Некоректні розмірності кадру"
+
+#: plug-ins/common/file-gif-load.c:1066
+#| msgid "Raw image data"
+msgid "compressed image data"
+msgstr "стиснені дані зображення"
+
+#: plug-ins/common/file-gif-load.c:1099
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Тло (%d%s)"
 
-#: plug-ins/common/file-gif-load.c:1064
+#: plug-ins/common/file-gif-load.c:1126
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "Відкривається «%s» (кадр %d)"
 
-#: plug-ins/common/file-gif-load.c:1093
+#: plug-ins/common/file-gif-load.c:1155
 #, c-format
 msgid "Frame %d"
 msgstr "Кадр %d"
 
-#: plug-ins/common/file-gif-load.c:1095
+#: plug-ins/common/file-gif-load.c:1157
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Кадр %d (%d%s)"
 
-#: plug-ins/common/file-gif-load.c:1126
+#: plug-ins/common/file-gif-load.c:1188
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -2265,6 +2376,25 @@ msgid ""
 msgstr ""
 "GIF: Недокументований тип композиції %d. Можливо, анімація не буде "
 "відтворюватись чи не збережеться коректно."
+
+#: plug-ins/common/file-gif-load.c:1194
+#, c-format
+#| msgid "Unknown compression type %d"
+msgid "Unknown composite type %d. %s"
+msgstr "Невідомий тип композиції %d. %s"
+
+#: plug-ins/common/file-gif-load.c:1237
+msgid ""
+"Can't handle non-alpha RGB frames.\n"
+"Please file a bug report at https://gitlab.gnome.org/GNOME/gimp/issues"
+msgstr ""
+"Неможливо обробити кадри без прозорості RGB.\n"
+"Будь ласка, повідомте про цю ваду за допомогою сторінки"
+" https://gitlab.gnome.org/GNOME/gimp/issues"
+
+#: plug-ins/common/file-gif-load.c:1364
+msgid "Too much compressed data, ignoring extra..."
+msgstr "Забагато стиснених даних, ігноруємо зайві..."
 
 #: plug-ins/common/file-gif-save.c:234
 msgid "Save the image comment in the GIF file"
@@ -2974,12 +3104,12 @@ msgid "CMYK profile required for export"
 msgstr "Для експортування потрібен профіль CMYK"
 
 #: plug-ins/common/file-jpegxl.c:2036 plug-ins/file-jpeg/jpeg-save.c:898
-#: plug-ins/file-psd/psd-save.c:2456 plug-ins/file-tiff/file-tiff-save.c:1369
+#: plug-ins/file-psd/psd-save.c:2458 plug-ins/file-tiff/file-tiff-save.c:1369
 msgid "Name of the color profile used for CMYK export."
 msgstr "Назва профілю кольорів, який використано для експортування CMYK."
 
 #: plug-ins/common/file-jpegxl.c:2055 plug-ins/file-jpeg/jpeg-save.c:909
-#: plug-ins/file-psd/psd-save.c:2467 plug-ins/file-tiff/file-tiff-save.c:1381
+#: plug-ins/file-psd/psd-save.c:2469 plug-ins/file-tiff/file-tiff-save.c:1381
 #, c-format
 msgid "Profile: %s"
 msgstr "Профіль: %s"
@@ -3103,9 +3233,35 @@ msgstr ""
 msgid "GIMP pattern"
 msgstr "Текстура GIMP"
 
+#: plug-ins/common/file-pat.c:115
+msgid "Exports Gimp pattern file (.PAT)"
+msgstr "Експортує файл текстури Gimp (.PAT)"
+
+#: plug-ins/common/file-pat.c:116
+msgid ""
+"New Gimp patterns can be created by exporting them in the appropriate place "
+"with this plug-in."
+msgstr ""
+"Нові текстури Gimp може бути створено експортуванням їх до відповідного"
+" місця за допомогою цього додатка."
+
+#: plug-ins/common/file-pat.c:133
+#| msgid "_Description:"
+msgid "_Description"
+msgstr "_Опис"
+
+#: plug-ins/common/file-pat.c:134
+msgid "Short description of the pattern"
+msgstr "Короткий опис текстури"
+
+#: plug-ins/common/file-pat.c:135
+#| msgid "GIMP pattern"
+msgid "GIMP Pattern"
+msgstr "Текстура GIMP"
+
 #: plug-ins/common/file-pat.c:270
 msgid "Export Image as Pattern"
-msgstr "Експортувати зображення як візерунок"
+msgstr "Експортувати зображення як текстуру"
 
 #: plug-ins/common/file-pcx.c:181 plug-ins/common/file-pcx.c:207
 msgid "ZSoft PCX image"
@@ -4906,6 +5062,15 @@ msgstr ""
 msgid "X PixMap image"
 msgstr "Зображення X PixMap"
 
+#: plug-ins/common/file-xpm.c:256 plug-ins/gradient-flare/gradient-flare.c:3014
+msgid "_Threshold"
+msgstr "П_оріг"
+
+#: plug-ins/common/file-xpm.c:257
+#| msgid "_Alpha threshold:"
+msgid "Alpha threshold"
+msgstr "Поріг альфа-каналу"
+
 #: plug-ins/common/file-xpm.c:339
 msgid "XPM format does not support multiple layers."
 msgstr "Для формату XPM не передбачено підтримку декількох шарів."
@@ -4923,7 +5088,7 @@ msgstr "Неправильний файл XPM"
 msgid "Unsupported drawable type"
 msgstr "Непідтримуваний тип малюнка"
 
-#: plug-ins/common/file-xpm.c:882
+#: plug-ins/common/file-xpm.c:881
 msgid "Export Image as XPM"
 msgstr "Експортувати зображення як XPM"
 
@@ -5497,7 +5662,7 @@ msgstr "Створити різні абстрактні текстури"
 #: plug-ins/common/qbist.c:217
 msgid "Any file which will be used as source for pattern generation"
 msgstr ""
-"Будь-який файл, який буде використано як джерело для створення візерунка"
+"Будь-який файл, який буде використано як джерело для створення текстури"
 
 #: plug-ins/common/qbist.c:369
 msgid "Qbist"
@@ -7245,7 +7410,6 @@ msgid "Icon #%i"
 msgstr "Піктограма %i"
 
 #: plug-ins/file-ico/ico-load.c:841 plug-ins/file-ico/ico-load.c:872
-#| msgid "Invalid X offset: %d"
 msgid "Invalid ANI metadata"
 msgstr "Некоректні метадані ANI"
 
@@ -7311,7 +7475,7 @@ msgstr "Розмір файлу: невідомо"
 msgid "Enable preview to obtain the file size."
 msgstr "Увімкніть перегляд, щоб бачити розмір файлу."
 
-#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-psd/psd-save.c:2449
+#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-psd/psd-save.c:2451
 #: plug-ins/file-tiff/file-tiff-save.c:1362
 msgid "No soft-proofing profile"
 msgstr "Немає профілю для проби кольорів"
@@ -7493,7 +7657,7 @@ msgstr ""
 "Дані двотонового простору кольорів було збережено,\n"
 "їх можна повторно застосувати при експортуванні."
 
-#: plug-ins/file-psd/psd-load.c:3347
+#: plug-ins/file-psd/psd-load.c:3347 plug-ins/file-psd/psd-save.c:2662
 msgid "Compatibility Notice"
 msgstr "Зауваження щодо сумісності"
 
@@ -7574,11 +7738,11 @@ msgstr ""
 "Не вдається експортувати «%s». Файл формату PSD не підтримує зображення з "
 "шарами, ширина чи висота яких більша ніж 30000 точок."
 
-#: plug-ins/file-psd/psd-save.c:2445
+#: plug-ins/file-psd/psd-save.c:2447
 msgid "Export Image as PSD"
 msgstr "Експортувати зображення як PSD"
 
-#: plug-ins/file-psd/psd-save.c:2491
+#: plug-ins/file-psd/psd-save.c:2493
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -7586,13 +7750,23 @@ msgstr ""
 "Буде використано дані двотонового простору кольорів з\n"
 "початкового імпортованого зображення."
 
-#: plug-ins/file-psd/psd-save.c:2559
+#: plug-ins/file-psd/psd-save.c:2561
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
 msgstr ""
 "У файлах PSD можна зберігати до 998 контурів. \n"
 "Решту контурів буде відкинуто."
+
+#: plug-ins/file-psd/psd-save.c:2663
+msgid ""
+"Legacy layer modes have been reported to have better compatibility with "
+"Photoshop. If you encounter display issues, consider switching to those "
+"layer modes."
+msgstr ""
+"Повідомлялося, що застарілі режими шарів мають кращу сумісність із"
+" Photoshop. Якщо виникають проблеми з показом, вам варто перемкнутися на ці"
+" режими шарів."
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -10646,10 +10820,6 @@ msgstr "Адап_тивна інтерполяція"
 msgid "_Max depth:"
 msgstr "Максимальна г_либина:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3014
-msgid "_Threshold"
-msgstr "П_оріг"
-
 #: plug-ins/gradient-flare/gradient-flare.c:3023
 msgid "_Settings"
 msgstr "П_араметри"
@@ -13439,10 +13609,6 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "Palette Type"
 #~ msgstr "Тип палітри"
 
-#, c-format
-#~ msgid "Frame (%i)"
-#~ msgstr "Кадр (%i)"
-
 #~ msgid "Sorry, I can export only INDEXED and GRAY images."
 #~ msgstr "Можна експортувати лише індексовані та сірі зображення."
 
@@ -13568,9 +13734,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Save GeoTIFF data"
 #~ msgstr "Зберегти дані GeoTIFF"
-
-#~ msgid "_Alpha threshold:"
-#~ msgstr "Поріг _альфа-каналу:"
 
 #~ msgid "10 bit/channel (HDR)"
 #~ msgstr "10 біт/канал (HDR)"
