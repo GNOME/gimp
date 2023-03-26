@@ -365,7 +365,7 @@ restore_recently_closed_multi_column_dock (gconstpointer data)
 #ifdef __GNUC__
 #warning FIXME test disabled until we depend on GTK+ >= 2.24.11
 #endif
-#if 0
+#if 1
   /* Restore the (only available) closed dock and make sure the session
    * infos in the global dock factory are increased again
    */
@@ -618,7 +618,7 @@ repeatedly_switch_window_mode (gconstpointer data)
 #ifdef __GNUC__
 #warning FIXME: plesase fix repeatedly_switch_window_mode test
 #endif
-#if 0
+#if 1
   Gimp             *gimp     = GIMP (data);
   GimpDisplay      *display  = GIMP_DISPLAY (gimp_get_empty_display (gimp));
   GimpDisplayShell *shell    = gimp_display_get_shell (display);
@@ -885,7 +885,7 @@ int main(int argc, char **argv)
   ADD_TEST (tab_toggle_dont_change_dock_window_position);
   ADD_TEST (switch_to_single_window_mode);
 #warning FIXME: hide/show docks doesn't work when running make check
-#if 0
+#if 1
   ADD_TEST (hide_docks_in_single_window_mode);
   ADD_TEST (show_docks_in_single_window_mode);
 #endif
