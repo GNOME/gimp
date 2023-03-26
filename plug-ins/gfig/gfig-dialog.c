@@ -425,7 +425,7 @@ gfig_dialog (GimpGfig *gfig)
   add_tool_button (toolbar, "app.show-next", GIMP_ICON_GO_NEXT,
                    _("Show Next"), _("Show next object"));
   add_tool_button (toolbar, "app.show-all", GFIG_ICON_SHOW_ALL,
-                   _("Show All"), _("Show all object"));
+                   _("Show All"), _("Show all objects"));
 
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (gfig->top_level_dlg))),
                       toolbar, FALSE, FALSE, 0);

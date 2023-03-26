@@ -112,8 +112,8 @@ pat_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_PATTERN);
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Exports Gimp pattern file (.PAT)"),
-                                        _("New Gimp patterns can be created "
+                                        _("Exports GIMP pattern file (.PAT)"),
+                                        _("New GIMP patterns can be created "
                                           "by exporting them in the "
                                           "appropriate place with this plug-in."),
                                         SAVE_PROC);

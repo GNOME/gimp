@@ -584,7 +584,7 @@ icns_save_image (GFile      *file,
     {
       g_set_error (error, G_FILE_ERROR, 0,
                    _("No valid sized layers. Only valid layer sizes are "
-                     "16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,"
+                     "16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48, "
                      "64x64, 128x128, 256x256, 512x512, or 1024x1024."));
 
       return GIMP_PDB_EXECUTION_ERROR;
@@ -602,7 +602,7 @@ icns_save_image (GFile      *file,
         {
           g_set_error (error, G_FILE_ERROR, 0,
                        _("Invalid layer size(s). Only valid layer sizes are "
-                         "16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,"
+                         "16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48, "
                          "64x64, 128x128, 256x256, 512x512, or 1024x1024."));
 
           return GIMP_PDB_EXECUTION_ERROR;

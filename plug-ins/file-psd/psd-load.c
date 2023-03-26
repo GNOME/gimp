@@ -3394,6 +3394,7 @@ load_dialog (PSDSupport *unsupported_features)
                                      "supported and will be dropped."));
       if (unsupported_features->layer_comp)
         message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
+                                   /* Translators: short for layer compositions */
                                    _("Layer comps are not yet "
                                      "supported and will be dropped."));
 
