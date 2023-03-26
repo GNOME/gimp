@@ -123,14 +123,18 @@ static GimpValueArray * jp2_load             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (GFile                *file,
+static GimpImage      * load_image           (GimpProcedure        *procedure,
+                                              GObject              *config,
+                                              GFile                *file,
                                               OPJ_CODEC_FORMAT      format,
                                               OPJ_COLOR_SPACE       color_space,
                                               gboolean              interactive,
                                               gboolean             *profile_loaded,
                                               GError              **error);
 
-static OPJ_COLOR_SPACE  open_dialog          (GFile               *file,
+static OPJ_COLOR_SPACE  open_dialog          (GimpProcedure       *procedure,
+                                              GObject             *config,
+                                              GFile               *file,
                                               OPJ_CODEC_FORMAT     format,
                                               gint                 num_components,
                                               GError             **error);
@@ -181,6 +185,8 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
                                            jp2_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("JPEG 2000 image"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("JPEG 2000"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads JPEG 2000 images.",
@@ -213,17 +219,19 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
                                            jp2_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("JPEG 2000 codestream"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("JPEG 2000"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads JPEG 2000 codestream.",
-                                        "Loads JPEG 2000 codestream. "
-                                        "If the color space is set to "
-                                        "UNKNOWN (0), we will try to guess, "
-                                        "which is only possible for few "
-                                        "spaces (such as grayscale). Most "
-                                        "such calls will fail. You are rather "
-                                        "expected to know the color space of "
-                                        "your data.",
+                                        _("Loads JPEG 2000 codestream."),
+                                        _("Loads JPEG 2000 codestream. "
+                                          "If the color space is set to "
+                                          "UNKNOWN (0), we will try to guess, "
+                                          "which is only possible for few "
+                                          "spaces (such as grayscale). Most "
+                                          "such calls will fail. You are rather "
+                                          "expected to know the color space of "
+                                          "your data."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Jehan",
@@ -236,9 +244,9 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
                                           "j2k,j2c,jpc");
 
       GIMP_PROC_ARG_INT (procedure, "colorspace",
-                         "Color space",
-                         "Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), "
-                         "CMYK (3), YCbCr (4), xvYCC (5) }",
+                         _("Color s_pace"),
+                         _("Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), "
+                           "CMYK (3), YCbCr (4), xvYCC (5) }"),
                          0, 5, 0,
                          G_PARAM_READWRITE);
     }
@@ -253,20 +261,24 @@ jp2_load (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray  *return_vals;
-  GimpImage       *image;
-  OPJ_COLOR_SPACE  color_space    = OPJ_CLRSPC_UNKNOWN;
-  gboolean         interactive;
-  GimpMetadata    *metadata;
-  gboolean         profile_loaded = FALSE;
-  GError          *error          = NULL;
+  GimpProcedureConfig *config;
+  GimpValueArray      *return_vals;
+  GimpImage           *image          = NULL;
+  OPJ_COLOR_SPACE      color_space    = OPJ_CLRSPC_UNKNOWN;
+  gboolean             interactive;
+  GimpMetadata        *metadata;
+  gboolean             profile_loaded = FALSE;
+  GimpPDBStatusType    status         = GIMP_PDB_SUCCESS;
+  GError              *error          = NULL;
 
   gegl_init (NULL, NULL);
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
       interactive = TRUE;
       break;
@@ -305,23 +317,26 @@ jp2_load (GimpProcedure        *procedure,
 
   if (! strcmp (gimp_procedure_get_name (procedure), LOAD_JP2_PROC))
     {
-      image = load_image (file, OPJ_CODEC_JP2,
+      image = load_image (procedure, G_OBJECT (config), file, OPJ_CODEC_JP2,
                           color_space, interactive, &profile_loaded,
                           &error);
     }
   else
     {
-      image = load_image (file, OPJ_CODEC_J2K,
+      image = load_image (procedure, G_OBJECT (config), file, OPJ_CODEC_J2K,
                           color_space, interactive, &profile_loaded,
                           &error);
     }
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             error ?
-                                             GIMP_PDB_EXECUTION_ERROR :
-                                             GIMP_PDB_CANCEL,
-                                             error);
+    {
+      status = error ? GIMP_PDB_EXECUTION_ERROR : GIMP_PDB_CANCEL;
+
+      gimp_procedure_config_end_run (config, status);
+      g_object_unref (config);
+
+      return gimp_procedure_new_return_values (procedure, status, error);
+    }
 
   metadata = gimp_image_metadata_load_prepare (image, "image/jp2",
                                                file, NULL);
@@ -338,6 +353,9 @@ jp2_load (GimpProcedure        *procedure,
 
       g_object_unref (metadata);
     }
+
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -948,16 +966,17 @@ get_image_precision (gint     precision,
 }
 
 static OPJ_COLOR_SPACE
-open_dialog (GFile            *file,
+open_dialog (GimpProcedure    *procedure,
+             GObject          *config,
+             GFile            *file,
              OPJ_CODEC_FORMAT  format,
              gint              num_components,
              GError          **error)
 {
   const gchar     *title;
   GtkWidget       *dialog;
-  GtkWidget       *main_vbox;
-  GtkWidget       *grid;
-  GtkWidget       *combo       = NULL;
+  GtkListStore    *store = NULL;
+  gboolean         run;
   OPJ_COLOR_SPACE  color_space = OPJ_CLRSPC_SRGB;
 
   if (format == OPJ_CODEC_J2K)
@@ -969,48 +988,31 @@ open_dialog (GFile            *file,
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (title, PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func,
-                            (format == OPJ_CODEC_J2K) ?  LOAD_J2K_PROC : LOAD_JP2_PROC,
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_Open"),   GTK_RESPONSE_OK,
-
-                            NULL);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _(title));
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (main_vbox), grid);
-  gtk_widget_show (grid);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   if (num_components == 3)
     {
       /* Can be RGB, YUV and YCC. */
-      combo = gimp_int_combo_box_new (_("sRGB"),  OPJ_CLRSPC_SRGB,
-                                      _("YCbCr"), OPJ_CLRSPC_SYCC,
-                                      _("xvYCC"), OPJ_CLRSPC_EYCC,
-                                      NULL);
+      store = gimp_int_store_new (_("sRGB"),  OPJ_CLRSPC_SRGB,
+                                  _("YCbCr"), OPJ_CLRSPC_SYCC,
+                                  _("xvYCC"), OPJ_CLRSPC_EYCC,
+                                  NULL);
     }
   else if (num_components == 4)
     {
       /* Can be RGB, YUV and YCC with alpha or CMYK. */
-      combo = gimp_int_combo_box_new (_("sRGB"),  OPJ_CLRSPC_SRGB,
-                                      _("YCbCr"), OPJ_CLRSPC_SYCC,
-                                      _("xvYCC"), OPJ_CLRSPC_EYCC,
-                                      _("CMYK"),  OPJ_CLRSPC_CMYK,
-                                      NULL);
+      store = gimp_int_store_new (_("sRGB"),  OPJ_CLRSPC_SRGB,
+                                  _("YCbCr"), OPJ_CLRSPC_SYCC,
+                                  _("xvYCC"), OPJ_CLRSPC_EYCC,
+                                  _("CMYK"),  OPJ_CLRSPC_CMYK,
+                                  NULL);
     }
   else
     {
@@ -1021,28 +1023,30 @@ open_dialog (GFile            *file,
       color_space = OPJ_CLRSPC_UNKNOWN;
     }
 
-  if (combo)
+  if (store)
     {
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                                _("Color space:"), 0.0, 0.5,
-                                combo, 2);
-      gtk_widget_show (combo);
-
-      g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_int_combo_box_get_active),
-                        &color_space);
-
+      gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "colorspace", GIMP_INT_STORE (store));
       /* By default, RGB is active. */
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), OPJ_CLRSPC_SRGB);
+      g_object_set (config,
+                    "colorspace", color_space,
+                    NULL);
+
+      gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                  NULL);
 
       gtk_widget_show (dialog);
 
-      if (gimp_dialog_run (GIMP_DIALOG (dialog)) != GTK_RESPONSE_OK)
-        {
-          /* Do not set an error here. The import was simply canceled.
-           * No error occurred. */
-          color_space = OPJ_CLRSPC_UNKNOWN;
-        }
+      run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+
+      if (! run)
+        /* Do not set an error here. The import was simply canceled.
+         * No error occurred. */
+        color_space = OPJ_CLRSPC_UNKNOWN;
+      else
+        g_object_get (config,
+                      "colorspace", &color_space,
+                      NULL);
     }
 
   gtk_widget_destroy (dialog);
@@ -1051,36 +1055,38 @@ open_dialog (GFile            *file,
 }
 
 static GimpImage *
-load_image (GFile             *file,
+load_image (GimpProcedure     *procedure,
+            GObject           *config,
+            GFile             *file,
             OPJ_CODEC_FORMAT   format,
             OPJ_COLOR_SPACE    color_space,
             gboolean           interactive,
             gboolean          *profile_loaded,
             GError           **error)
 {
-  opj_stream_t      *stream     = NULL;
-  opj_codec_t       *codec      = NULL;
-  opj_dparameters_t  parameters;
-  opj_image_t       *image      = NULL;
-  GimpColorProfile  *profile    = NULL;
-  GimpImage         *gimp_image = NULL;
-  GimpLayer         *layer;
-  GimpImageType      image_type;
-  GimpImageBaseType  base_type;
-  gint               width;
-  gint               height;
-  gint               num_components;
-  GeglBuffer        *buffer;
-  gint               i, j, k, it;
-  guchar            *pixels;
-  const Babl        *file_format;
-  gint               bpp;
-  GimpPrecision      image_precision;
-  gint               precision_actual, precision_scaled;
-  gint               temp;
-  gboolean           linear = FALSE;
-  unsigned char     *c      = NULL;
-  gint               n_threads;
+  opj_stream_t        *stream     = NULL;
+  opj_codec_t         *codec      = NULL;
+  opj_dparameters_t    parameters;
+  opj_image_t         *image      = NULL;
+  GimpColorProfile    *profile    = NULL;
+  GimpImage           *gimp_image = NULL;
+  GimpLayer           *layer;
+  GimpImageType        image_type;
+  GimpImageBaseType    base_type;
+  gint                 width;
+  gint                 height;
+  gint                 num_components;
+  GeglBuffer          *buffer;
+  gint                 i, j, k, it;
+  guchar              *pixels;
+  const Babl          *file_format;
+  gint                 bpp;
+  GimpPrecision        image_precision;
+  gint                 precision_actual, precision_scaled;
+  gint                 temp;
+  gboolean             linear = FALSE;
+  unsigned char       *c      = NULL;
+  gint                 n_threads;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
@@ -1213,7 +1219,7 @@ load_image (GFile             *file,
         }
       else if (interactive)
         {
-          image->color_space = open_dialog (file, format,
+          image->color_space = open_dialog (procedure, config, file, format,
                                             num_components, error);
 
           if (image->color_space == OPJ_CLRSPC_UNKNOWN)
