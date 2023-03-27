@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-26 20:00+0000\n"
-"PO-Revision-Date: 2023-03-27 16:48+0100\n"
+"POT-Creation-Date: 2023-03-27 16:22+0000\n"
+"PO-Revision-Date: 2023-03-27 23:44+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -492,8 +492,8 @@ msgstr "_Vertical"
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
-#: plug-ins/common/file-jp2-load.c:1311 plug-ins/common/file-pcx.c:480
-#: plug-ins/common/file-pcx.c:488 plug-ins/common/file-pix.c:422
+#: plug-ins/common/file-jp2-load.c:1311 plug-ins/common/file-pcx.c:508
+#: plug-ins/common/file-pcx.c:516 plug-ins/common/file-pix.c:422
 #: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:863
 #: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1080
 #: plug-ins/common/file-tga.c:1114 plug-ins/common/file-wbmp.c:270
@@ -1037,7 +1037,7 @@ msgstr "Guardar parâmetros do explorador CML"
 
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
 #: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:874
-#: plug-ins/common/file-mng.c:1221 plug-ins/common/file-pcx.c:907
+#: plug-ins/common/file-mng.c:1221 plug-ins/common/file-pcx.c:985
 #: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
@@ -1068,7 +1068,7 @@ msgstr "Carregar parâmetros do explorador CML"
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
 #: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-mng.c:1405
-#: plug-ins/common/file-pcx.c:410 plug-ins/common/file-png.c:673
+#: plug-ins/common/file-pcx.c:438 plug-ins/common/file-png.c:673
 #: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
 #: plug-ins/common/file-psp.c:2382 plug-ins/common/file-psp.c:2432
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
@@ -1974,7 +1974,7 @@ msgstr "EOF ou erro ao ler o cabeçalho da imagem"
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1085
-#: plug-ins/common/file-pcx.c:402 plug-ins/common/file-pdf-load.c:816
+#: plug-ins/common/file-pcx.c:430 plug-ins/common/file-pdf-load.c:816
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
 #: plug-ins/common/file-pnm.c:708 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
@@ -2057,7 +2057,7 @@ msgstr "'%s': EOF ou erro ao ler dados da paleta"
 #.
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:913
 #: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:1374
-#: plug-ins/common/file-pcx.c:792 plug-ins/common/file-pix.c:560
+#: plug-ins/common/file-pcx.c:870 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1626
 #: plug-ins/common/file-ps.c:1363 plug-ins/common/file-sunras.c:626
 #: plug-ins/common/file-tga.c:1227 plug-ins/common/file-xbm.c:1048
@@ -3247,78 +3247,98 @@ msgstr "Padrão GIMP"
 msgid "Export Image as Pattern"
 msgstr "Exportar imagem como textura"
 
-#: plug-ins/common/file-pcx.c:181 plug-ins/common/file-pcx.c:207
+#: plug-ins/common/file-pcx.c:186 plug-ins/common/file-pcx.c:219
 msgid "ZSoft PCX image"
 msgstr "Imagem PCX da ZSoft"
 
-#: plug-ins/common/file-pcx.c:296
+#: plug-ins/common/file-pcx.c:198
+msgid "Palette Options"
+msgstr "Opções de paleta"
+
+#: plug-ins/common/file-pcx.c:199
+msgid "Use built-in palette (0) or override with black/white (1)"
+msgstr "Usar paleta incorporada (0) ou substituir com preto/branco (1)"
+
+#: plug-ins/common/file-pcx.c:320
 msgid "PCX format does not support multiple layers."
 msgstr "O formato PCX não suporta várias camadas."
 
-#: plug-ins/common/file-pcx.c:418
+#: plug-ins/common/file-pcx.c:446
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Não foi possível ler o cabeçalho de '%s'"
 
-#: plug-ins/common/file-pcx.c:429
+#: plug-ins/common/file-pcx.c:457
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "'%s' não é um ficheiro PCX"
 
-#: plug-ins/common/file-pcx.c:445 plug-ins/common/file-wbmp.c:259
+#: plug-ins/common/file-pcx.c:473 plug-ins/common/file-wbmp.c:259
 #: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:368
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Largura da imagem não suportada ou inválida: %d"
 
-#: plug-ins/common/file-pcx.c:451 plug-ins/common/file-wbmp.c:265
+#: plug-ins/common/file-pcx.c:479 plug-ins/common/file-wbmp.c:265
 #: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:360
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Altura da imagem não suportada ou inválida: %d"
 
-#: plug-ins/common/file-pcx.c:457
+#: plug-ins/common/file-pcx.c:485
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Cabeçalho PCX com número de bytes por linha inválido"
 
-#: plug-ins/common/file-pcx.c:464
+#: plug-ins/common/file-pcx.c:492
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "Resolução fora dos limites no cabeçalho XCX, a utilizar 72x72"
 
-#: plug-ins/common/file-pcx.c:472
+#: plug-ins/common/file-pcx.c:500
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Dimensões da imagem demasiado grandes: largura %d x altura %d"
 
-#: plug-ins/common/file-pcx.c:576
+#: plug-ins/common/file-pcx.c:615
 msgid "Unusual PCX flavour, giving up"
 msgstr "Formato PCX desconhecido, a desistir"
 
-#: plug-ins/common/file-pcx.c:858 plug-ins/common/file-pnm.c:1622
+#: plug-ins/common/file-pcx.c:644
+msgid "Import from PCX"
+msgstr "Importar de PCX"
+
+#: plug-ins/common/file-pcx.c:653
+msgid "Use PCX image's built-in palette"
+msgstr "Utilizar a paleta incorporada da imagem PCX"
+
+#: plug-ins/common/file-pcx.c:654
+msgid "Use black and white palette"
+msgstr "Utilizar paleta a preto e branco"
+
+#: plug-ins/common/file-pcx.c:936 plug-ins/common/file-pnm.c:1622
 msgid "Cannot export images with alpha channel."
 msgstr "Não foi possível exportar as imagens com canal alfa."
 
-#: plug-ins/common/file-pcx.c:878
+#: plug-ins/common/file-pcx.c:956
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Desvio X inválido: %d"
 
-#: plug-ins/common/file-pcx.c:884
+#: plug-ins/common/file-pcx.c:962
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Desvio Y inválido: %d"
 
-#: plug-ins/common/file-pcx.c:890
+#: plug-ins/common/file-pcx.c:968
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Contorno direito fora dos limites (tem de ser < %d): %d"
 
-#: plug-ins/common/file-pcx.c:897
+#: plug-ins/common/file-pcx.c:975
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Contorno inferior fora dos limites (tem de ser < %d): %d"
 
-#: plug-ins/common/file-pcx.c:973
+#: plug-ins/common/file-pcx.c:1051
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Ocorreu uma falha ao escrever no ficheiro '%s': %s"
