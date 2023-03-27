@@ -418,7 +418,8 @@ gimp_action_set_sensitive (GimpAction  *action,
 {
   GimpActionPrivate *priv = GET_PRIVATE (action);
 
-  if (priv->sensitive != sensitive || (! sensitive && reason))
+  if (priv->sensitive != sensitive ||
+      (! sensitive && g_strcmp0 (reason, priv->disable_reason) != 0))
     {
       priv->sensitive = sensitive;
 
@@ -429,8 +430,9 @@ gimp_action_set_sensitive (GimpAction  *action,
       g_object_notify (G_OBJECT (action), "sensitive");
 
       gimp_action_update_proxy_tooltip (action, NULL);
+
+      g_object_notify (G_OBJECT (action), "enabled");
     }
-  g_object_notify (G_OBJECT (action), "enabled");
 }
 
 gboolean
