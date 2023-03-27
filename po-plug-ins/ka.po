@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-26 02:20+0000\n"
-"PO-Revision-Date: 2023-03-26 07:10+0200\n"
+"POT-Creation-Date: 2023-03-26 20:00+0000\n"
+"PO-Revision-Date: 2023-03-27 06:22+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -556,7 +556,7 @@ msgstr ""
 
 #: plug-ins/common/checkerboard.c:366 plug-ins/common/checkerboard.c:491
 msgid "Checkerboard"
-msgstr ""
+msgstr "ჭადრაკის დაფა"
 
 #: plug-ins/common/checkerboard.c:556 plug-ins/gimpressionist/sizemap.c:508
 msgid "_Size:"
@@ -737,7 +737,7 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:228
 msgid "Continuous gradient"
-msgstr ""
+msgstr "უწყვეტი გრადიენტი"
 
 #: plug-ins/common/cml-explorer.c:229
 msgid "Continuous grad. w/o gap"
@@ -1452,7 +1452,7 @@ msgstr ""
 #: plug-ins/common/curve-bend.c:900
 #, c-format
 msgid "Error while reading '%s': %s"
-msgstr ""
+msgstr "\"%s\" წაკითხვის შეცდომა: %s"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
@@ -1514,7 +1514,7 @@ msgstr ""
 #: plug-ins/common/curve-bend.c:1396
 msgctxt "curve-border"
 msgid "_Upper"
-msgstr ""
+msgstr "_ზედა"
 
 #: plug-ins/common/curve-bend.c:1397
 msgctxt "curve-border"
@@ -1527,11 +1527,11 @@ msgstr "მრუდის ტიპი"
 
 #: plug-ins/common/curve-bend.c:1411
 msgid "Smoot_h"
-msgstr ""
+msgstr "_გლუვი"
 
 #: plug-ins/common/curve-bend.c:1412
 msgid "_Free"
-msgstr ""
+msgstr "_თავისუფალი"
 
 #. The Copy button
 #: plug-ins/common/curve-bend.c:1427
@@ -1546,7 +1546,7 @@ msgstr ""
 #. The CopyInv button
 #: plug-ins/common/curve-bend.c:1439
 msgid "_Mirror"
-msgstr ""
+msgstr "_სარკე"
 
 #: plug-ins/common/curve-bend.c:1444
 msgid "Mirror the active curve to the other border"
@@ -2279,15 +2279,15 @@ msgstr ""
 #: plug-ins/common/file-gif-load.c:1045
 #, c-format
 msgid "%s. %s"
-msgstr ""
+msgstr "%s. %s"
 
 #: plug-ins/common/file-gif-load.c:1046 plug-ins/common/file-gif-load.c:1050
 msgid "Invalid frame dimensions"
-msgstr ""
+msgstr "არასწორი კადრების ზომები"
 
 #: plug-ins/common/file-gif-load.c:1066
 msgid "compressed image data"
-msgstr ""
+msgstr "შეკუმშული სურათის მონაცემები"
 
 #: plug-ins/common/file-gif-load.c:1099
 #, c-format
@@ -3132,12 +3132,12 @@ msgid "GIMP pattern"
 msgstr "GIMP შაბლონი"
 
 #: plug-ins/common/file-pat.c:115
-msgid "Exports Gimp pattern file (.PAT)"
+msgid "Exports GIMP pattern file (.PAT)"
 msgstr ""
 
 #: plug-ins/common/file-pat.c:116
 msgid ""
-"New Gimp patterns can be created by exporting them in the appropriate place "
+"New GIMP patterns can be created by exporting them in the appropriate place "
 "with this plug-in."
 msgstr ""
 
@@ -7052,13 +7052,13 @@ msgstr "ხატულის ჩაწერის შეცდომა: %s"
 #: plug-ins/file-icns/file-icns-save.c:586
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
-"24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, or 1024x1024."
+"24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
 msgstr ""
 
 #: plug-ins/file-icns/file-icns-save.c:604
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
-"24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, or 1024x1024."
+"24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
 msgstr ""
 
 #: plug-ins/file-icns/file-icns.c:131
@@ -7434,7 +7434,8 @@ msgstr ""
 msgid "Smart objects are not yet supported and will be dropped."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3397
+#. Translators: short for layer compositions
+#: plug-ins/file-psd/psd-load.c:3398
 msgid "Layer comps are not yet supported and will be dropped."
 msgstr ""
 
@@ -8992,8 +8993,8 @@ msgid "Show All"
 msgstr "ყველას ჩვენება"
 
 #: plug-ins/gfig/gfig-dialog.c:428
-msgid "Show all object"
-msgstr "ობიექტის სრულად ჩვენება"
+msgid "Show all objects"
+msgstr "ყველა ობიექტის ჩვენება"
 
 #. Tool options notebook
 #: plug-ins/gfig/gfig-dialog.c:456
