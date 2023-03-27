@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-24 19:21+0000\n"
-"PO-Revision-Date: 2023-03-24 22:58+0000\n"
+"POT-Creation-Date: 2023-03-26 20:00+0000\n"
+"PO-Revision-Date: 2023-03-27 16:48+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -491,7 +491,7 @@ msgstr "_Vertical"
 #: plug-ins/common/blinds.c:353 plug-ins/common/compose.c:1129
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
-#: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1035
+#: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
 #: plug-ins/common/file-jp2-load.c:1311 plug-ins/common/file-pcx.c:480
 #: plug-ins/common/file-pcx.c:488 plug-ins/common/file-pix.c:422
 #: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:863
@@ -1067,7 +1067,7 @@ msgstr "Carregar parâmetros do explorador CML"
 #: plug-ins/common/cml-explorer.c:2339 plug-ins/common/curve-bend.c:890
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
-#: plug-ins/common/file-gif-load.c:403 plug-ins/common/file-mng.c:1405
+#: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-mng.c:1405
 #: plug-ins/common/file-pcx.c:410 plug-ins/common/file-png.c:673
 #: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
 #: plug-ins/common/file-psp.c:2382 plug-ins/common/file-psp.c:2432
@@ -1972,7 +1972,7 @@ msgstr "EOF ou erro ao ler o cabeçalho da imagem"
 #. * Open the file for reading...
 #.
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
-#: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:395
+#: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1085
 #: plug-ins/common/file-pcx.c:402 plug-ins/common/file-pdf-load.c:816
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
@@ -2205,7 +2205,7 @@ msgid "Export Image as Brush"
 msgstr "Exportar imagem como Pincel"
 
 #: plug-ins/common/file-gbr.c:317 plug-ins/common/file-gih.c:654
-#: plug-ins/common/file-pat.c:284 plug-ins/imagemap/imap_settings.c:105
+#: plug-ins/imagemap/imap_settings.c:105
 msgid "_Description:"
 msgstr "_Descrição:"
 
@@ -2234,35 +2234,130 @@ msgstr "Não é possível abrir '%s'"
 msgid "GIF image"
 msgstr "Imagem GIF"
 
-#: plug-ins/common/file-gif-load.c:418
-msgid "This is not a GIF file"
-msgstr "Isto não é um ficheiro GIF"
+#: plug-ins/common/file-gif-load.c:417
+msgid "GIF magic code"
+msgstr "Código mágico GIF"
+
+#: plug-ins/common/file-gif-load.c:425
+msgid "This is not a GIF file: incorrect magic code"
+msgstr "Isto não é um ficheiro GIF: código mágico incorreto"
+
+#: plug-ins/common/file-gif-load.c:433
+msgid "Incorrect GIF version: not '87a' or '89a'"
+msgstr "Versão GIF incorreta: não '87a' ou '89a'"
+
+#: plug-ins/common/file-gif-load.c:440
+msgid "screen descriptor"
+msgstr "descritor de ecrã"
 
 #: plug-ins/common/file-gif-load.c:458
+msgid "global colormap"
+msgstr "mapa de cores global"
+
+#: plug-ins/common/file-gif-load.c:466
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "Píxeis não-quadrados. A imagem poderá parecer deformada."
 
-#: plug-ins/common/file-gif-load.c:1037
+#: plug-ins/common/file-gif-load.c:476 plug-ins/common/file-gif-load.c:1060
+msgid "image data"
+msgstr "dados de imagem"
+
+#: plug-ins/common/file-gif-load.c:493
+msgid "extension data"
+msgstr "dados de extensão"
+
+#: plug-ins/common/file-gif-load.c:513
+msgid "frame info"
+msgstr "info do fotograma"
+
+#: plug-ins/common/file-gif-load.c:526
+msgid "local colormap"
+msgstr "mapa de cores local"
+
+#: plug-ins/common/file-gif-load.c:586 plug-ins/common/file-gif-load.c:591
+#, c-format
+msgid "Error reading %s. %s"
+msgstr "Erro ao ler %s. %s"
+
+#: plug-ins/common/file-gif-load.c:587 plug-ins/common/file-gif-load.c:592
+#: plug-ins/common/file-gif-load.c:743 plug-ins/common/file-gif-load.c:751
+#: plug-ins/common/file-gif-load.c:782 plug-ins/common/file-gif-load.c:836
+#: plug-ins/common/file-gif-load.c:926 plug-ins/common/file-gif-load.c:945
+#: plug-ins/common/file-gif-load.c:1046 plug-ins/common/file-gif-load.c:1050
+#: plug-ins/common/file-gif-load.c:1195
+msgid "Image may be corrupt!"
+msgstr "A imagem pode estar corrompida!"
+
+#: plug-ins/common/file-gif-load.c:743
+msgid "Error reading data size"
+msgstr "Erro ao ler o tamanho dos dados"
+
+#: plug-ins/common/file-gif-load.c:751
+msgid "Error reading data"
+msgstr "Erro ao ler dados"
+
+#: plug-ins/common/file-gif-load.c:782
+msgid "Not enough compressed data"
+msgstr "Dados comprimidos insuficientes"
+
+#: plug-ins/common/file-gif-load.c:836
+msgid "Value out of range for code size"
+msgstr "Valor fora do intervalo para o tamanho do código"
+
+#: plug-ins/common/file-gif-load.c:925
+msgid "Invalid code, expecting end of data marker"
+msgstr "Código inválido, esperando o fim do marcador de dados"
+
+#: plug-ins/common/file-gif-load.c:945
+msgid "Unexpected extra data"
+msgstr "Dados extra inesperados"
+
+#: plug-ins/common/file-gif-load.c:964
+msgid "Invalid table entry"
+msgstr "Entrada de tabela inválida"
+
+#: plug-ins/common/file-gif-load.c:964 plug-ins/common/file-gif-load.c:970
+msgid "Image is corrupt!"
+msgstr "A imagem está corrompida!"
+
+#: plug-ins/common/file-gif-load.c:970
+msgid "Circular table entry"
+msgstr "Entrada de tabela circular"
+
+#: plug-ins/common/file-gif-load.c:1045
+#, c-format
+msgid "%s. %s"
+msgstr "%s. %s"
+
+#: plug-ins/common/file-gif-load.c:1046 plug-ins/common/file-gif-load.c:1050
+msgid "Invalid frame dimensions"
+msgstr "Dimensões de fotogramas inválidas"
+
+#: plug-ins/common/file-gif-load.c:1066
+msgid "compressed image data"
+msgstr "dados de imagem comprimida"
+
+#: plug-ins/common/file-gif-load.c:1099
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Fundo (%d%s)"
 
-#: plug-ins/common/file-gif-load.c:1064
+#: plug-ins/common/file-gif-load.c:1126
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "A abrir '%s' (fotograma %d)"
 
-#: plug-ins/common/file-gif-load.c:1093
+#: plug-ins/common/file-gif-load.c:1155
 #, c-format
 msgid "Frame %d"
 msgstr "Fotograma %d"
 
-#: plug-ins/common/file-gif-load.c:1095
+#: plug-ins/common/file-gif-load.c:1157
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Fotograma %d (%d%s)"
 
-#: plug-ins/common/file-gif-load.c:1126
+#: plug-ins/common/file-gif-load.c:1188
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -2270,6 +2365,23 @@ msgid ""
 msgstr ""
 "GIF: não é possível gerir o tipo de GIF composto %d não documentado. A "
 "animação poderá não ser corretamente reproduzida ou guardada novamente."
+
+#: plug-ins/common/file-gif-load.c:1194
+#, c-format
+msgid "Unknown composite type %d. %s"
+msgstr "Tipo de composto desconhecido %d. %s"
+
+#: plug-ins/common/file-gif-load.c:1237
+msgid ""
+"Can't handle non-alpha RGB frames.\n"
+"Please file a bug report at https://gitlab.gnome.org/GNOME/gimp/issues"
+msgstr ""
+"Não é possível lidar com fotogramas RGB não-alfa.\n"
+"Preencha um relatório de erro em https://gitlab.gnome.org/GNOME/gimp/issues"
+
+#: plug-ins/common/file-gif-load.c:1364
+msgid "Too much compressed data, ignoring extra..."
+msgstr "Demasiados dados comprimidos, ignorando os extra..."
 
 #: plug-ins/common/file-gif-save.c:234
 msgid "Save the image comment in the GIF file"
@@ -2977,12 +3089,12 @@ msgid "CMYK profile required for export"
 msgstr "Perfil CMYK necessário para exportação"
 
 #: plug-ins/common/file-jpegxl.c:2036 plug-ins/file-jpeg/jpeg-save.c:898
-#: plug-ins/file-psd/psd-save.c:2456 plug-ins/file-tiff/file-tiff-save.c:1369
+#: plug-ins/file-psd/psd-save.c:2458 plug-ins/file-tiff/file-tiff-save.c:1369
 msgid "Name of the color profile used for CMYK export."
 msgstr "Nome do perfil de cor usado para exportação CMYK."
 
 #: plug-ins/common/file-jpegxl.c:2055 plug-ins/file-jpeg/jpeg-save.c:909
-#: plug-ins/file-psd/psd-save.c:2467 plug-ins/file-tiff/file-tiff-save.c:1381
+#: plug-ins/file-psd/psd-save.c:2469 plug-ins/file-tiff/file-tiff-save.c:1381
 #, c-format
 msgid "Profile: %s"
 msgstr "Perfil: %s"
@@ -3106,6 +3218,30 @@ msgstr ""
 #: plug-ins/common/file-pat.c:111
 msgid "GIMP pattern"
 msgstr "Textura GIMP"
+
+#: plug-ins/common/file-pat.c:115
+msgid "Exports GIMP pattern file (.PAT)"
+msgstr "Exporta o ficheiro de padrão GIMP (. PAT)"
+
+#: plug-ins/common/file-pat.c:116
+msgid ""
+"New GIMP patterns can be created by exporting them in the appropriate place "
+"with this plug-in."
+msgstr ""
+"Novos padrões GIMP podem ser criados exportando-os no local apropriado com "
+"este plug-in."
+
+#: plug-ins/common/file-pat.c:133
+msgid "_Description"
+msgstr "_Descrição"
+
+#: plug-ins/common/file-pat.c:134
+msgid "Short description of the pattern"
+msgstr "Breve descrição do padrão"
+
+#: plug-ins/common/file-pat.c:135
+msgid "GIMP Pattern"
+msgstr "Padrão GIMP"
 
 #: plug-ins/common/file-pat.c:270
 msgid "Export Image as Pattern"
@@ -4912,6 +5048,14 @@ msgstr ""
 msgid "X PixMap image"
 msgstr "Imagem PixMap X"
 
+#: plug-ins/common/file-xpm.c:256 plug-ins/gradient-flare/gradient-flare.c:3014
+msgid "_Threshold"
+msgstr "_Limite"
+
+#: plug-ins/common/file-xpm.c:257
+msgid "Alpha threshold"
+msgstr "Limite alfa"
+
 #: plug-ins/common/file-xpm.c:339
 msgid "XPM format does not support multiple layers."
 msgstr "O formato XPM não suporta várias camadas."
@@ -4929,7 +5073,7 @@ msgstr "Ficheiro XPM inválido"
 msgid "Unsupported drawable type"
 msgstr "Tipo de desenho não suportado"
 
-#: plug-ins/common/file-xpm.c:882
+#: plug-ins/common/file-xpm.c:881
 msgid "Export Image as XPM"
 msgstr "Exportar imagem como XPM"
 
@@ -6416,7 +6560,7 @@ msgstr "Decomposição por ondas"
 
 #: plug-ins/common/wavelet-decompose.c:131
 msgid "Scal_es"
-msgstr "Esca_las:"
+msgstr "Esca_las"
 
 #: plug-ins/common/wavelet-decompose.c:132
 msgid "Number of scales"
@@ -7152,20 +7296,20 @@ msgstr "Erro ao gravar icns: %s"
 #: plug-ins/file-icns/file-icns-save.c:586
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
-"24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, or 1024x1024."
+"24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
 msgstr ""
-"Sem camadas de tamanho válido. Apenas os tamanhos de camadas válidos são "
-"16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, "
+"Sem camadas de tamanho válido. Apenas são válidos os tamanhos de camadas "
+"16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, "
 "512x512, ou 1024x1024."
 
 #: plug-ins/file-icns/file-icns-save.c:604
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
-"24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, or 1024x1024."
+"24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
 msgstr ""
-"Tamanho(s) da(s) camada(s) inválida(s). Apenas os tamanhos de camada válidos "
-"são 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, "
-"512x512, ou 1024x1024."
+"Tamanho(s) da(s) camada(s) inválida(s). Apenas são válidos os tamanhos de "
+"camadas 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, "
+"256x256, 512x512, ou 1024x1024."
 
 #: plug-ins/file-icns/file-icns.c:131
 msgid "Icns"
@@ -7322,7 +7466,7 @@ msgstr "Tamanho do ficheiro: desconhecido"
 msgid "Enable preview to obtain the file size."
 msgstr "Ativar a pré-visualização para obter o tamanho do ficheiro."
 
-#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-psd/psd-save.c:2449
+#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-psd/psd-save.c:2451
 #: plug-ins/file-tiff/file-tiff-save.c:1362
 msgid "No soft-proofing profile"
 msgstr "Sem perfil da prova de cor do ecrã"
@@ -7504,7 +7648,7 @@ msgstr ""
 "Os dados de espaço de cores tom duplo foram guardados\n"
 "e podem ser reaplicados ao exportar."
 
-#: plug-ins/file-psd/psd-load.c:3347
+#: plug-ins/file-psd/psd-load.c:3347 plug-ins/file-psd/psd-save.c:2662
 msgid "Compatibility Notice"
 msgstr "Aviso de compatibilidade"
 
@@ -7557,7 +7701,8 @@ msgstr "Os efeitos de camada ainda não são suportados e serão descartados."
 msgid "Smart objects are not yet supported and will be dropped."
 msgstr "Os objetos inteligentes ainda não são suportados e serão descartados."
 
-#: plug-ins/file-psd/psd-load.c:3397
+#. Translators: short for layer compositions
+#: plug-ins/file-psd/psd-load.c:3398
 msgid "Layer comps are not yet supported and will be dropped."
 msgstr "As composições de camada ainda não são suportadas e serão descartadas."
 
@@ -7585,11 +7730,11 @@ msgstr ""
 "Não é possível exportar '%s'. O formato de ficheiro PSD não suporta imagens "
 "cujas camadas tenham mais de 30.000 píxeis de largura ou de altura."
 
-#: plug-ins/file-psd/psd-save.c:2445
+#: plug-ins/file-psd/psd-save.c:2447
 msgid "Export Image as PSD"
 msgstr "Exportar imagem como PSD"
 
-#: plug-ins/file-psd/psd-save.c:2491
+#: plug-ins/file-psd/psd-save.c:2493
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -7597,13 +7742,23 @@ msgstr ""
 "Informação de espaço da cor de tom duplo do original\n"
 "imagem importada será usada."
 
-#: plug-ins/file-psd/psd-save.c:2559
+#: plug-ins/file-psd/psd-save.c:2561
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
 msgstr ""
 "Os ficheiros PSD podem armazenar até 998 caminhos. \n"
 "O restante será descartado."
+
+#: plug-ins/file-psd/psd-save.c:2663
+msgid ""
+"Legacy layer modes have been reported to have better compatibility with "
+"Photoshop. If you encounter display issues, consider switching to those "
+"layer modes."
+msgstr ""
+"Os modos de camada antigos foram relatados para ter melhor compatibilidade "
+"com o Photoshop. Se encontrar problemas de exibição, considere alternar para "
+"esses modos de camada."
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -9193,8 +9348,8 @@ msgid "Show All"
 msgstr "Mostrar tudo"
 
 #: plug-ins/gfig/gfig-dialog.c:428
-msgid "Show all object"
-msgstr "Mostrar todo o objeto"
+msgid "Show all objects"
+msgstr "Mostrar todos os objetos"
 
 #. Tool options notebook
 #: plug-ins/gfig/gfig-dialog.c:456
@@ -10655,10 +10810,6 @@ msgstr "Superamostragem a_daptativa"
 #: plug-ins/gradient-flare/gradient-flare.c:3007
 msgid "_Max depth:"
 msgstr "_Profundidade máx.:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3014
-msgid "_Threshold"
-msgstr "_Limite"
 
 #: plug-ins/gradient-flare/gradient-flare.c:3023
 msgid "_Settings"
@@ -13467,10 +13618,6 @@ msgstr "A transferir imagem do digitalizador/câmara"
 
 #~ msgid "Palette Type"
 #~ msgstr "Tipo de paleta"
-
-#, c-format
-#~ msgid "Frame (%i)"
-#~ msgstr "Fotograma (%i)"
 
 #~ msgid "Sorry, I can export only INDEXED and GRAY images."
 #~ msgstr "Só podem ser guardadas imagens INDEXADAS e TONS DE CINZENTO."
