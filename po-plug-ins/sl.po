@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-26 02:20+0000\n"
-"PO-Revision-Date: 2023-03-26 10:52+0200\n"
+"POT-Creation-Date: 2023-03-27 16:22+0000\n"
+"PO-Revision-Date: 2023-03-28 10:06+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -488,8 +488,8 @@ msgstr "_Navpične"
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
-#: plug-ins/common/file-jp2-load.c:1311 plug-ins/common/file-pcx.c:480
-#: plug-ins/common/file-pcx.c:488 plug-ins/common/file-pix.c:422
+#: plug-ins/common/file-jp2-load.c:1311 plug-ins/common/file-pcx.c:508
+#: plug-ins/common/file-pcx.c:516 plug-ins/common/file-pix.c:422
 #: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:863
 #: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1080
 #: plug-ins/common/file-tga.c:1114 plug-ins/common/file-wbmp.c:270
@@ -1033,7 +1033,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
 #: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:874
-#: plug-ins/common/file-mng.c:1221 plug-ins/common/file-pcx.c:907
+#: plug-ins/common/file-mng.c:1221 plug-ins/common/file-pcx.c:985
 #: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
@@ -1064,7 +1064,7 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
 #: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-mng.c:1405
-#: plug-ins/common/file-pcx.c:410 plug-ins/common/file-png.c:673
+#: plug-ins/common/file-pcx.c:438 plug-ins/common/file-png.c:673
 #: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
 #: plug-ins/common/file-psp.c:2382 plug-ins/common/file-psp.c:2432
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
@@ -1963,7 +1963,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1085
-#: plug-ins/common/file-pcx.c:402 plug-ins/common/file-pdf-load.c:816
+#: plug-ins/common/file-pcx.c:430 plug-ins/common/file-pdf-load.c:816
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
 #: plug-ins/common/file-pnm.c:708 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
@@ -2046,7 +2046,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #.
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:913
 #: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:1374
-#: plug-ins/common/file-pcx.c:792 plug-ins/common/file-pix.c:560
+#: plug-ins/common/file-pcx.c:870 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1626
 #: plug-ins/common/file-ps.c:1363 plug-ins/common/file-sunras.c:626
 #: plug-ins/common/file-tga.c:1227 plug-ins/common/file-xbm.c:1048
@@ -3204,15 +3204,15 @@ msgid "GIMP pattern"
 msgstr "Vzorec GIMP"
 
 #: plug-ins/common/file-pat.c:115
-msgid "Exports Gimp pattern file (.PAT)"
-msgstr "Izvozi datoteko vzorca Gimp (.PAT)"
+msgid "Exports GIMP pattern file (.PAT)"
+msgstr "Izvozi datoteko vzorca GIMP (.PAT)"
 
 #: plug-ins/common/file-pat.c:116
 msgid ""
-"New Gimp patterns can be created by exporting them in the appropriate place "
+"New GIMP patterns can be created by exporting them in the appropriate place "
 "with this plug-in."
 msgstr ""
-"Nove vzorce Gimp lahko ustvarite tako, da jih izvozite na ustreznem mestu s "
+"Nove vzorce GIMP lahko ustvarite tako, da jih izvozite na ustreznem mestu s "
 "tem vstavkom."
 
 #: plug-ins/common/file-pat.c:133
@@ -3231,78 +3231,98 @@ msgstr "Vzorec GIMP"
 msgid "Export Image as Pattern"
 msgstr "Izvozi sliko kot vzorec"
 
-#: plug-ins/common/file-pcx.c:181 plug-ins/common/file-pcx.c:207
+#: plug-ins/common/file-pcx.c:186 plug-ins/common/file-pcx.c:219
 msgid "ZSoft PCX image"
 msgstr "Slika ZSoft PCX"
 
-#: plug-ins/common/file-pcx.c:296
+#: plug-ins/common/file-pcx.c:198
+msgid "Palette Options"
+msgstr "Možnosti palete"
+
+#: plug-ins/common/file-pcx.c:199
+msgid "Use built-in palette (0) or override with black/white (1)"
+msgstr "Uporabi vgrajeno paleto (0) ali preglasi s črno/belo (1)"
+
+#: plug-ins/common/file-pcx.c:320
 msgid "PCX format does not support multiple layers."
 msgstr "Zapis PCX ne podpira več plasti."
 
-#: plug-ins/common/file-pcx.c:418
+#: plug-ins/common/file-pcx.c:446
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Glave datoteke »%s« ni mogoče prebrati"
 
-#: plug-ins/common/file-pcx.c:429
+#: plug-ins/common/file-pcx.c:457
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "»%s« ni datoteka PCX"
 
-#: plug-ins/common/file-pcx.c:445 plug-ins/common/file-wbmp.c:259
+#: plug-ins/common/file-pcx.c:473 plug-ins/common/file-wbmp.c:259
 #: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:368
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Nepodprta ali neveljavna širina slike: %d"
 
-#: plug-ins/common/file-pcx.c:451 plug-ins/common/file-wbmp.c:265
+#: plug-ins/common/file-pcx.c:479 plug-ins/common/file-wbmp.c:265
 #: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:360
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Nepodprta ali neveljavna višina slike: %d"
 
-#: plug-ins/common/file-pcx.c:457
+#: plug-ins/common/file-pcx.c:485
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Neveljavno število bajtov na vrstico v glavi PCX"
 
-#: plug-ins/common/file-pcx.c:464
+#: plug-ins/common/file-pcx.c:492
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "Ločljivost prek meja v glavi XCX, uporabljeno bo 72x72"
 
-#: plug-ins/common/file-pcx.c:472
+#: plug-ins/common/file-pcx.c:500
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Dimenzije slike so prevelike: širina %d x višina %d"
 
-#: plug-ins/common/file-pcx.c:576
+#: plug-ins/common/file-pcx.c:615
 msgid "Unusual PCX flavour, giving up"
 msgstr "Nenavadna vrsta PCX, sledi prekinitev"
 
-#: plug-ins/common/file-pcx.c:858 plug-ins/common/file-pnm.c:1622
+#: plug-ins/common/file-pcx.c:644
+msgid "Import from PCX"
+msgstr "Uvozi iz PCX"
+
+#: plug-ins/common/file-pcx.c:653
+msgid "Use PCX image's built-in palette"
+msgstr "Uporabi vgrajeno paleto slike PCX"
+
+#: plug-ins/common/file-pcx.c:654
+msgid "Use black and white palette"
+msgstr "Uporabi črno-belo paleto"
+
+#: plug-ins/common/file-pcx.c:936 plug-ins/common/file-pnm.c:1622
 msgid "Cannot export images with alpha channel."
 msgstr "Slik ni mogoče izvoziti s kanalom alfa."
 
-#: plug-ins/common/file-pcx.c:878
+#: plug-ins/common/file-pcx.c:956
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Neveljaven zamik X: %d"
 
-#: plug-ins/common/file-pcx.c:884
+#: plug-ins/common/file-pcx.c:962
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Neveljavna zamik Y: %d"
 
-#: plug-ins/common/file-pcx.c:890
+#: plug-ins/common/file-pcx.c:968
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Desni rob je zunaj meja (mora biti < %d): %d"
 
-#: plug-ins/common/file-pcx.c:897
+#: plug-ins/common/file-pcx.c:975
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Spodnji rob je zunaj meja (mora biti < %d): %d"
 
-#: plug-ins/common/file-pcx.c:973
+#: plug-ins/common/file-pcx.c:1051
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Pisanje v datoteko »%s« ni uspelo: %s"
@@ -7251,19 +7271,19 @@ msgstr "Napaka pri zapisovanju icns: %s"
 #: plug-ins/file-icns/file-icns-save.c:586
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
-"24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, or 1024x1024."
+"24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
 msgstr ""
-"Ni veljavne velikosti plasti. Veljavne velikosti plasti so le 16x12, 16x16, "
-"18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512 in "
+"Ni plasti veljavne velikosti. Veljavne velikosti plasti so le 16x12, 16x16, "
+"18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512 in "
 "1024x1024."
 
 #: plug-ins/file-icns/file-icns-save.c:604
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
-"24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, or 1024x1024."
+"24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
 msgstr ""
 "Neveljavna velikost plasti. Veljavne velikosti plasti so le 16x12, 16x16, "
-"18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512 in "
+"18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512 in "
 "1024x1024."
 
 #: plug-ins/file-icns/file-icns.c:131
@@ -7651,7 +7671,8 @@ msgstr "Učinki plasti še niso podprti in bodo izpuščeni."
 msgid "Smart objects are not yet supported and will be dropped."
 msgstr "Pametni predmeti še niso podprti in bodo izpuščeni."
 
-#: plug-ins/file-psd/psd-load.c:3397
+#. Translators: short for layer compositions
+#: plug-ins/file-psd/psd-load.c:3398
 msgid "Layer comps are not yet supported and will be dropped."
 msgstr "Kompoziti plasti še niso podprti in bodo izpuščeni."
 
@@ -9286,7 +9307,7 @@ msgid "Show All"
 msgstr "Pokaži vse"
 
 #: plug-ins/gfig/gfig-dialog.c:428
-msgid "Show all object"
+msgid "Show all objects"
 msgstr "Pokaži vse predmete"
 
 #. Tool options notebook
