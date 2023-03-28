@@ -906,8 +906,6 @@ gimp_menu_model_ui_removed (GimpUIManager *manager,
 
       action = g_action_map_lookup_action (G_ACTION_MAP (app), action_name);
 
-      g_return_val_if_fail (action != NULL, FALSE);
-
       removed = TRUE;
 
       for (GList *iter = model->priv->items; iter; iter = iter->next)
@@ -938,12 +936,15 @@ gimp_menu_model_ui_removed (GimpUIManager *manager,
 
       if (item)
         {
-          g_signal_handlers_disconnect_by_func (action,
-                                                G_CALLBACK (gimp_menu_model_action_notify_visible),
-                                                model);
-          g_signal_handlers_disconnect_by_func (action,
-                                                G_CALLBACK (gimp_menu_model_action_notify_label),
-                                                item);
+          if (action != NULL)
+            {
+              g_signal_handlers_disconnect_by_func (action,
+                                                    G_CALLBACK (gimp_menu_model_action_notify_visible),
+                                                    model);
+              g_signal_handlers_disconnect_by_func (action,
+                                                    G_CALLBACK (gimp_menu_model_action_notify_label),
+                                                    item);
+            }
           g_object_unref (item);
         }
       else

@@ -49,6 +49,7 @@
 enum
 {
   ACTION_ADDED,
+  ACTION_REMOVED,
   LAST_SIGNAL
 };
 
@@ -120,6 +121,14 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
                   G_OBJECT_CLASS_TYPE (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpActionGroupClass, action_added),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_ACTION);
+  signals[ACTION_REMOVED] =
+    g_signal_new ("action-removed",
+                  G_OBJECT_CLASS_TYPE (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpActionGroupClass, action_removed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_ACTION);
@@ -347,13 +356,7 @@ gimp_action_group_remove_action (GimpActionGroup *group,
 {
   group->actions = g_list_remove (group->actions, action);
 
-  /* TODO GAction: we should also check if the action is still present in
-   * another group (maybe if each action keeps track of its own groups, or with
-   * gimp_ui_manager_find_action(), or a "action-removed" signal tracked by the
-   * GimpUIManager which would verify other groups).
-   * If it's not in any group anymore, we should remove the action with
-   * g_action_map_remove_action().
-   */
+  g_signal_emit (group, signals[ACTION_REMOVED], 0, action);
 }
 
 GimpAction *

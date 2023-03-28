@@ -31,11 +31,16 @@
 
 #include "core/gimp.h"
 
+#include "gimpaction.h"
 #include "gimpactionfactory.h"
 #include "gimpactiongroup.h"
 
 
-static void   gimp_action_factory_finalize (GObject *object);
+static void gimp_action_factory_finalize       (GObject           *object);
+
+static void gimp_action_factory_action_removed (GimpActionGroup   *group,
+                                                GimpAction        *action,
+                                                GimpActionFactory *factory);
 
 
 G_DEFINE_TYPE (GimpActionFactory, gimp_action_factory, GIMP_TYPE_OBJECT)
@@ -81,6 +86,40 @@ gimp_action_factory_finalize (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
+
+static void
+gimp_action_factory_action_removed (GimpActionGroup   *group,
+                                    GimpAction        *action,
+                                    GimpActionFactory *factory)
+{
+  GList *list;
+
+  for (list = factory->registered_groups; list; list = g_list_next (list))
+    {
+      GimpActionFactoryEntry *entry = list->data;
+
+      if (entry->group != NULL && entry->group != group)
+        {
+          GList *actions;
+
+          actions = gimp_action_group_list_actions (entry->group);
+
+          if (g_list_find (actions, action))
+            {
+              g_list_free (actions);
+              break;
+            }
+          g_list_free (actions);
+        }
+    }
+
+  if (list == NULL)
+    g_action_map_remove_action (G_ACTION_MAP (factory->gimp->app),
+                                gimp_action_get_name (action));
+}
+
+
+/* Public functions */
 
 GimpActionFactory *
 gimp_action_factory_new (Gimp *gimp)
@@ -155,6 +194,10 @@ gimp_action_factory_get_group (GimpActionFactory *factory,
                 entry->setup_func (group);
 
               entry->group = group;
+
+              g_signal_connect_object (group, "action-removed",
+                                       G_CALLBACK (gimp_action_factory_action_removed),
+                                       factory, 0);
             }
 
           return entry->group;

@@ -55,8 +55,10 @@ struct _GimpActionGroupClass
   GHashTable          *groups;
 
   /* signals */
-  void (* action_added) (GimpActionGroup *group,
-                         GimpAction      *action);
+  void (* action_added)   (GimpActionGroup *group,
+                           GimpAction      *action);
+  void (* action_removed) (GimpActionGroup *group,
+                           GimpAction      *action);
 };
 
 
