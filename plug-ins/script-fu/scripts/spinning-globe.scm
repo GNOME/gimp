@@ -108,4 +108,4 @@
 )
 
 (script-fu-menu-register "script-fu-spinning-globe"
-                         "<Image>/Filters/Animation/Animators")
+                         "<Image>/Filters/Animation/")

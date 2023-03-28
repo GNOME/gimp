@@ -107,4 +107,4 @@
 )
 
 (script-fu-menu-register "script-fu-waves-anim"
-                         "<Image>/Filters/Animation/Animators")
+                         "<Image>/Filters/Animation/")

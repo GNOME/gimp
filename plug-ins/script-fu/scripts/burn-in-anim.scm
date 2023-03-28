@@ -240,4 +240,4 @@
 )
 
 (script-fu-menu-register "script-fu-burn-in-anim"
-                         "<Image>/Filters/Animation/Animators")
+                         "<Image>/Filters/Animation/")

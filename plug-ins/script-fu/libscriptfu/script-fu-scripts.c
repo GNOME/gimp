@@ -493,7 +493,7 @@ script_fu_menu_map (const gchar *menu_path)
   } mapping[] = {
     { "<Image>/Script-Fu/Alchemy",       "<Image>/Filters/Artistic"            },
     { "<Image>/Script-Fu/Alpha to Logo", "<Image>/Filters/Alpha to Logo"       },
-    { "<Image>/Script-Fu/Animators",     "<Image>/Filters/Animation/Animators" },
+    { "<Image>/Script-Fu/Animators",     "<Image>/Filters/Animation" },
     { "<Image>/Script-Fu/Decor",         "<Image>/Filters/Decor"               },
     { "<Image>/Script-Fu/Render",        "<Image>/Filters/Render"              },
     { "<Image>/Script-Fu/Selection",     "<Image>/Select/Modify"               },

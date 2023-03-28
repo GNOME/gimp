@@ -80,4 +80,4 @@
   )
 
 (script-fu-menu-register "script-fu-ripply-anim"
-                         "<Image>/Filters/Animation/Animators")
+                         "<Image>/Filters/Animation/")
