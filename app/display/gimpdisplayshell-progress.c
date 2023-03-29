@@ -99,7 +99,7 @@ gimp_display_shell_progress_pulse (GimpProgress *progress)
   gimp_progress_pulse (GIMP_PROGRESS (statusbar));
 }
 
-static guint32
+static guint64
 gimp_display_shell_progress_get_window_id (GimpProgress *progress)
 {
   GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (progress));

@@ -74,7 +74,7 @@ static void     gimp_pdb_progress_progress_set_value     (GimpProgress *progress
                                                           gdouble       percentage);
 static gdouble  gimp_pdb_progress_progress_get_value     (GimpProgress *progress);
 static void     gimp_pdb_progress_progress_pulse         (GimpProgress *progress);
-static guint32  gimp_pdb_progress_progress_get_window_id (GimpProgress *progress);
+static guint64  gimp_pdb_progress_progress_get_window_id (GimpProgress *progress);
 
 
 static GObjectClass *parent_class = NULL;
@@ -376,12 +376,12 @@ gimp_pdb_progress_progress_pulse (GimpProgress *progress)
                                     NULL, 0.0);
 }
 
-static guint32
+static guint64
 gimp_pdb_progress_progress_get_window_id (GimpProgress *progress)
 {
   GimpPdbProgress *pdb_progress = GIMP_PDB_PROGRESS (progress);
 
-  return (guint32)
+  return (guint64)
     gimp_pdb_progress_run_callback (pdb_progress,
                                     GIMP_PROGRESS_COMMAND_GET_WINDOW,
                                     NULL, 0.0);

@@ -132,7 +132,7 @@ static GFile        * gui_get_theme_dir          (Gimp                *gimp);
 static GFile        * gui_get_icon_theme_dir     (Gimp                *gimp);
 static GimpObject   * gui_get_window_strategy    (Gimp                *gimp);
 static GimpDisplay  * gui_get_empty_display      (Gimp                *gimp);
-static guint32        gui_display_get_window_id  (GimpDisplay         *display);
+static guint64        gui_display_get_window_id  (GimpDisplay         *display);
 static GimpDisplay  * gui_display_create         (Gimp                *gimp,
                                                   GimpImage           *image,
                                                   GimpUnit             unit,
@@ -374,7 +374,7 @@ gui_get_empty_display (Gimp *gimp)
   return display;
 }
 
-static guint32
+static guint64
 gui_display_get_window_id (GimpDisplay *display)
 {
   GimpDisplay      *disp  = GIMP_DISPLAY (display);
@@ -704,7 +704,7 @@ gui_pdb_dialog_new (Gimp          *gimp,
 
           if (progress)
             {
-              guint32 window_id = gimp_progress_get_window_id (progress);
+              guint64 window_id = gimp_progress_get_window_id (progress);
 
               if (window_id)
                 gimp_window_set_transient_for (GTK_WINDOW (dialog), window_id);

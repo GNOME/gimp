@@ -106,7 +106,7 @@ static void     gimp_display_progress_set_value     (GimpProgress        *progre
                                                      gdouble              percentage);
 static gdouble  gimp_display_progress_get_value     (GimpProgress        *progress);
 static void     gimp_display_progress_pulse         (GimpProgress        *progress);
-static guint32  gimp_display_progress_get_window_id (GimpProgress        *progress);
+static guint64  gimp_display_progress_get_window_id (GimpProgress        *progress);
 static gboolean gimp_display_progress_message       (GimpProgress        *progress,
                                                      Gimp                *gimp,
                                                      GimpMessageSeverity  severity,
@@ -319,7 +319,7 @@ gimp_display_progress_pulse (GimpProgress *progress)
     gimp_progress_pulse (GIMP_PROGRESS (display->priv->shell));
 }
 
-static guint32
+static guint64
 gimp_display_progress_get_window_id (GimpProgress *progress)
 {
   GimpDisplayImpl *display = GIMP_DISPLAY_IMPL (progress);

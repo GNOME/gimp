@@ -175,7 +175,7 @@ gimp_ui_init (const gchar *prog_name)
 }
 
 static GdkWindow *
-gimp_ui_get_foreign_window (guint32 window)
+gimp_ui_get_foreign_window (guint64 window)
 {
 #ifdef GDK_WINDOWING_X11
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
@@ -211,7 +211,7 @@ gimp_ui_get_foreign_window (guint32 window)
 GdkWindow *
 gimp_ui_get_display_window (GimpDisplay *display)
 {
-  guint32 window;
+  guint64 window;
 
   g_return_val_if_fail (gimp_ui_initialized, NULL);
 
@@ -241,7 +241,7 @@ gimp_ui_get_display_window (GimpDisplay *display)
 GdkWindow *
 gimp_ui_get_progress_window (void)
 {
-  guint32  window;
+  guint64  window;
 
   g_return_val_if_fail (gimp_ui_initialized, NULL);
 

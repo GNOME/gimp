@@ -104,7 +104,7 @@ static void     gimp_file_dialog_progress_set_value      (GimpProgress        *p
                                                           gdouble              percentage);
 static gdouble  gimp_file_dialog_progress_get_value      (GimpProgress        *progress);
 static void     gimp_file_dialog_progress_pulse          (GimpProgress        *progress);
-static guint32  gimp_file_dialog_progress_get_window_id  (GimpProgress        *progress);
+static guint64  gimp_file_dialog_progress_get_window_id  (GimpProgress        *progress);
 
 static void     gimp_file_dialog_add_user_dir            (GimpFileDialog      *dialog,
                                                           GUserDirectory       directory);
@@ -575,7 +575,7 @@ gimp_file_dialog_progress_pulse (GimpProgress *progress)
     gimp_progress_pulse (GIMP_PROGRESS (dialog->progress));
 }
 
-static guint32
+static guint64
 gimp_file_dialog_progress_get_window_id (GimpProgress *progress)
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);

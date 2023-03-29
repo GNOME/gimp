@@ -915,7 +915,7 @@ gimp_window_set_hint (GtkWindow      *window,
  * Returns: a native window ID of the window's #GdkWindow or 0
  *               if the window isn't realized yet
  */
-guint32
+guint64
 gimp_window_get_native_id (GtkWindow *window)
 {
   GdkWindow *surface;
@@ -928,12 +928,12 @@ gimp_window_get_native_id (GtkWindow *window)
 
 #ifdef GDK_WINDOWING_WIN32
   if (GDK_IS_WIN32_WINDOW (surface))
-    return GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (window)));
+    return (guint64) GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
 #ifdef GDK_WINDOWING_X11
   if (GDK_IS_X11_WINDOW (surface))
-    return GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (window)));
+    return (guint64) GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
 #ifdef GDK_WINDOWING_WAYLAND
@@ -955,7 +955,7 @@ gimp_window_transient_realized (GtkWidget *window,
 
 /* similar to what we have in libgimp/gimpui.c */
 static GdkWindow *
-gimp_get_foreign_window (guint32 window)
+gimp_get_foreign_window (guint64 window)
 {
 #ifdef GDK_WINDOWING_X11
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
@@ -974,7 +974,7 @@ gimp_get_foreign_window (guint32 window)
 
 void
 gimp_window_set_transient_for (GtkWindow *window,
-                               guint32    parent_ID)
+                               guint64    parent_ID)
 {
   /* Cross-process transient-for is broken in gdk/win32 <= 2.10.6. It
    * causes hangs, at least when used as by the gimp and script-fu

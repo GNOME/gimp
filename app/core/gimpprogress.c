@@ -205,7 +205,7 @@ gimp_progress_pulse (GimpProgress *progress)
     progress_iface->pulse (progress);
 }
 
-guint32
+guint64
 gimp_progress_get_window_id (GimpProgress *progress)
 {
   GimpProgressInterface *progress_iface;

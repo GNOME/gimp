@@ -189,7 +189,7 @@ progress_get_window_handle_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint window = 0;
+  gint64 window = 0;
 
   GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
@@ -205,7 +205,7 @@ progress_get_window_handle_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (gimp_value_array_index (return_vals, 1), window);
+    g_value_set_int64 (gimp_value_array_index (return_vals, 1), window);
 
   return return_vals;
 }
@@ -422,11 +422,11 @@ register_progress_procs (GimpPDB *pdb)
                                          "Michael Natterer",
                                          "2004");
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("window",
-                                                     "window",
-                                                     "The progress bar's toplevel window",
-                                                     G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   g_param_spec_int64 ("window",
+                                                       "window",
+                                                       "The progress bar's toplevel window",
+                                                       G_MININT64, G_MAXINT64, 0,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

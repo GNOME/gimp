@@ -229,12 +229,12 @@ gimp_progress_end (void)
  *
  * Since: 2.2
  **/
-gint
+gint64
 gimp_progress_get_window_handle (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint window = 0;
+  gint64 window = 0;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
@@ -245,7 +245,7 @@ gimp_progress_get_window_handle (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    window = GIMP_VALUES_GET_INT (return_vals, 1);
+    window = GIMP_VALUES_GET_INT64 (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

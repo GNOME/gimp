@@ -193,12 +193,12 @@ gimp_window_get_native_id (GtkWindow *window)
 
 #ifdef GDK_WINDOWING_WIN32
   if (GDK_IS_WIN32_WINDOW (surface))
-    return GPOINTER_TO_INT (GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (window))));
+    return (guint64) GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
 #ifdef GDK_WINDOWING_X11
   if (GDK_IS_X11_WINDOW (surface))
-    return GPOINTER_TO_INT (GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (window))));
+    return (guint64) GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
 #ifdef GDK_WINDOWING_WAYLAND

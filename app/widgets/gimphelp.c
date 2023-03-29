@@ -448,7 +448,7 @@ gimp_help_browser_error (Gimp         *gimp,
 
   if (progress)
     {
-      guint32 window_id = gimp_progress_get_window_id (progress);
+      guint64 window_id = gimp_progress_get_window_id (progress);
 
       if (window_id)
         gimp_window_set_transient_for (GTK_WINDOW (dialog), window_id);
@@ -782,7 +782,7 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
 
   if (idle_help->progress)
     {
-      guint32 window_id = gimp_progress_get_window_id (idle_help->progress);
+      guint64 window_id = gimp_progress_get_window_id (idle_help->progress);
 
       if (window_id)
         gimp_window_set_transient_for (GTK_WINDOW (dialog), window_id);

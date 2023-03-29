@@ -321,7 +321,7 @@ gimp_get_empty_display (Gimp *gimp)
   return NULL;
 }
 
-guint32
+guint64
 gimp_get_display_window_id (Gimp        *gimp,
                             GimpDisplay *display)
 {

@@ -189,7 +189,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @outargs = (
-	{ name => 'window', type => 'int32',
+	{ name => 'window', type => 'int64',
 	  desc => 'The progress bar\'s toplevel window' }
     );
 
