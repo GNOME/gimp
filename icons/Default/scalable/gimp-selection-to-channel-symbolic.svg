@@ -14,8 +14,8 @@
    height="16.000959"
    width="16"
    version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-selection-to-channel.svg">
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
+   sodipodi:docname="gimp-selection-to-channel-symbolic.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -25,17 +25,18 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="640"
-     inkscape:window-height="480"
+     inkscape:window-width="1920"
+     inkscape:window-height="1051"
      id="namedview1522"
      showgrid="false"
      inkscape:zoom="14.749116"
-     inkscape:cx="-589.60064"
-     inkscape:cy="1004.9951"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="svg7384" />
+     inkscape:cx="8"
+     inkscape:cy="8.0004797"
+     inkscape:window-x="1600"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7384"
+     inkscape:document-rotation="0" />
   <metadata
      id="metadata90">
     <rdf:RDF>
@@ -277,13 +278,6 @@
          height="11"
          x="12"
          y="1039.3622" />
-      <rect
-         style="fill:none;stroke:none;stroke-width:0.99997187"
-         id="rect74851-6-35"
-         width="16"
-         height="16"
-         x="3.642578e-07"
-         y="1036.3632" />
       <rect
          style="fill:url(#linearGradient8175);fill-opacity:1;stroke:none;stroke-width:0.99997187"
          id="rect74853-6-5"
