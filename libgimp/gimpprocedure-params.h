@@ -94,6 +94,32 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_SET_INT(args, n, value) \
   g_value_set_int (gimp_value_array_index (args, n), value)
 
+/*  int64  */
+
+#define GIMP_PROC_ARG_INT64(procedure, name, nick, blurb, min, max, default, flags) \
+  gimp_procedure_add_argument (procedure,\
+                               g_param_spec_int64 (name, nick, blurb,\
+                               min, max, default,\
+                               flags))
+
+#define GIMP_PROC_AUX_ARG_INT64(procedure, name, nick, blurb, min, max, default, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   g_param_spec_int64 (name, nick, blurb,\
+                                   min, max, default,\
+                                   flags))
+
+#define GIMP_PROC_VAL_INT64(procedure, name, nick, blurb, min, max, default, flags) \
+  gimp_procedure_add_return_value (procedure,\
+                                   g_param_spec_int64 (name, nick, blurb,\
+                                   min, max, default,\
+                                   flags))
+
+#define GIMP_VALUES_GET_INT64(args, n) \
+  g_value_get_int64 (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_SET_INT64(args, n, value) \
+  g_value_set_int64 (gimp_value_array_index (args, n), value)
+
 
 /*  uint  */
 

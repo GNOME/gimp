@@ -97,6 +97,22 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
                                    flags);
       break;
 
+    case GP_PARAM_DEF_TYPE_INT64:
+      if (! strcmp (param_def->type_name, "GParamInt64"))
+        return g_param_spec_int (name, nick, blurb,
+                                 param_def->meta.m_int.min_val,
+                                 param_def->meta.m_int.max_val,
+                                 param_def->meta.m_int.default_val,
+                                 flags);
+
+      if (! strcmp (param_def->type_name, "GParamUInt64"))
+        return g_param_spec_uint (name, nick, blurb,
+                                  param_def->meta.m_int.min_val,
+                                  param_def->meta.m_int.max_val,
+                                  param_def->meta.m_int.default_val,
+                                  flags);
+      break;
+
     case GP_PARAM_DEF_TYPE_UNIT:
       if (! strcmp (param_def->type_name, "GimpParamUnit"))
         return gimp_param_spec_unit (name, nick, blurb,
@@ -258,6 +274,26 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       GParamSpecUInt *uspec = G_PARAM_SPEC_UINT (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_INT;
+
+      param_def->meta.m_int.min_val     = uspec->minimum;
+      param_def->meta.m_int.max_val     = uspec->maximum;
+      param_def->meta.m_int.default_val = uspec->default_value;
+    }
+  else if (pspec_type == G_TYPE_PARAM_INT64)
+    {
+      GParamSpecInt64 *ispec = G_PARAM_SPEC_INT64 (pspec);
+
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_INT64;
+
+      param_def->meta.m_int.min_val     = ispec->minimum;
+      param_def->meta.m_int.max_val     = ispec->maximum;
+      param_def->meta.m_int.default_val = ispec->default_value;
+    }
+  else if (pspec_type == G_TYPE_PARAM_UINT64)
+    {
+      GParamSpecUInt64 *uspec = G_PARAM_SPEC_UINT64 (pspec);
+
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_INT64;
 
       param_def->meta.m_int.min_val     = uspec->minimum;
       param_def->meta.m_int.max_val     = uspec->maximum;
@@ -624,6 +660,10 @@ gimp_gp_param_to_value (gpointer        gimp,
     {
       g_value_set_int (value, param->data.d_int);
     }
+  else if (type == G_TYPE_INT64)
+    {
+      g_value_set_int64 (value, param->data.d_int);
+    }
   else if (G_VALUE_HOLDS_UINT (value))
     {
       g_value_set_uint (value, param->data.d_int);
@@ -865,6 +905,12 @@ gimp_value_to_gp_param (const GValue *value,
       param->param_type = GP_PARAM_TYPE_INT;
 
       param->data.d_int = g_value_get_int (value);
+    }
+  else if (type == G_TYPE_INT64)
+    {
+      param->param_type = GP_PARAM_TYPE_INT64;
+
+      param->data.d_int = g_value_get_int64 (value);
     }
   else if (type == G_TYPE_UINT)
     {
@@ -1156,6 +1202,7 @@ _gimp_gp_params_free (GPParam  *params,
       switch (params[i].param_type)
         {
         case GP_PARAM_TYPE_INT:
+        case GP_PARAM_TYPE_INT64:
         case GP_PARAM_TYPE_FLOAT:
           break;
 

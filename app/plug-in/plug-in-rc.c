@@ -792,6 +792,7 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
+    case GP_PARAM_DEF_TYPE_INT64:
       if (! gimp_scanner_parse_int64 (scanner,
                                       &param_def.meta.m_int.min_val) ||
           ! gimp_scanner_parse_int64 (scanner,
@@ -924,6 +925,7 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
     {
     case GP_PARAM_DEF_TYPE_DEFAULT:
     case GP_PARAM_DEF_TYPE_INT:
+    case GP_PARAM_DEF_TYPE_INT64:
     case GP_PARAM_DEF_TYPE_UNIT:
     case GP_PARAM_DEF_TYPE_ENUM:
       break;
@@ -1013,6 +1015,7 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
+    case GP_PARAM_DEF_TYPE_INT64:
       gimp_config_writer_printf (writer,
                                  "%" G_GINT64_FORMAT
                                  " %" G_GINT64_FORMAT

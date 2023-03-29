@@ -1088,6 +1088,7 @@ _gp_param_def_read (GIOChannel *channel,
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
+    case GP_PARAM_DEF_TYPE_INT64:
       if (! _gimp_wire_read_int64 (channel,
                                    (guint64 *) &param_def->meta.m_int.min_val, 1,
                                    user_data) ||
@@ -1188,6 +1189,7 @@ _gp_param_def_destroy (GPParamDef *param_def)
     {
     case GP_PARAM_DEF_TYPE_DEFAULT:
     case GP_PARAM_DEF_TYPE_INT:
+    case GP_PARAM_DEF_TYPE_INT64:
     case GP_PARAM_DEF_TYPE_UNIT:
     case GP_PARAM_DEF_TYPE_ENUM:
       break;
@@ -1330,6 +1332,7 @@ _gp_param_def_write (GIOChannel *channel,
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
+    case GP_PARAM_DEF_TYPE_INT64:
       if (! _gimp_wire_write_int64 (channel,
                                     (guint64 *) &param_def->meta.m_int.min_val, 1,
                                     user_data) ||
@@ -1596,6 +1599,13 @@ _gp_params_read (GIOChannel  *channel,
             goto cleanup;
           break;
 
+        case GP_PARAM_TYPE_INT64:
+          if (! _gimp_wire_read_int64 (channel,
+                                       (guint64 *) &(*params)[i].data.d_int, 1,
+                                       user_data))
+            goto cleanup;
+          break;
+
         case GP_PARAM_TYPE_FLOAT:
           if (! _gimp_wire_read_double (channel,
                                         &(*params)[i].data.d_float, 1,
@@ -1790,6 +1800,13 @@ _gp_params_write (GIOChannel *channel,
             return;
           break;
 
+        case GP_PARAM_TYPE_INT64:
+          if (! _gimp_wire_write_int64 (channel,
+                                        (const guint64 *) &params[i].data.d_int, 1,
+                                        user_data))
+            return;
+          break;
+
         case GP_PARAM_TYPE_FLOAT:
           if (! _gimp_wire_write_double (channel,
                                          (const gdouble *) &params[i].data.d_float, 1,
@@ -1922,6 +1939,7 @@ _gp_params_destroy (GPParam *params,
       switch (params[i].param_type)
         {
         case GP_PARAM_TYPE_INT:
+        case GP_PARAM_TYPE_INT64:
         case GP_PARAM_TYPE_FLOAT:
           break;
 

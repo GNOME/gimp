@@ -71,6 +71,31 @@ gimp_param_spec_int_desc (GParamSpec *pspec)
 }
 
 static gchar *
+gimp_param_spec_int64_desc (GParamSpec *pspec)
+{
+  GParamSpecInt64 *ispec = G_PARAM_SPEC_INT64 (pspec);
+  const gchar     *blurb = gimp_param_spec_get_blurb (pspec);
+
+  if (ispec->minimum == G_MININT64 && ispec->maximum == G_MAXINT64)
+    return g_strdup (blurb);
+
+  if (ispec->minimum == G_MININT64)
+    return g_strdup_printf ("%s (%s <= %" G_GINT64_FORMAT ")", blurb,
+                            g_param_spec_get_name (pspec),
+                            ispec->maximum);
+
+  if (ispec->maximum == G_MAXINT64)
+    return g_strdup_printf ("%s (%s >= %" G_GINT64_FORMAT ")", blurb,
+                            g_param_spec_get_name (pspec),
+                            ispec->minimum);
+
+  return g_strdup_printf ("%s (%" G_GINT64_FORMAT " <= %s <= %" G_GINT64_FORMAT ")", blurb,
+                          ispec->minimum,
+                          g_param_spec_get_name (pspec),
+                          ispec->maximum);
+}
+
+static gchar *
 gimp_param_spec_double_desc (GParamSpec *pspec)
 {
   GParamSpecDouble *dspec = G_PARAM_SPEC_DOUBLE (pspec);
@@ -173,6 +198,10 @@ gimp_param_spec_get_desc (GParamSpec *pspec)
   else if (G_IS_PARAM_SPEC_INT (pspec))
     {
       return gimp_param_spec_int_desc (pspec);
+    }
+  else if (G_IS_PARAM_SPEC_INT64 (pspec))
+    {
+      return gimp_param_spec_int64_desc (pspec);
     }
   else
     {

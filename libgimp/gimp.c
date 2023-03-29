@@ -421,6 +421,7 @@ gimp_main (GType  plug_in_type,
     GType init_types[] =
     {
       G_TYPE_INT,              G_TYPE_PARAM_INT,
+      G_TYPE_INT64,            G_TYPE_PARAM_INT64,
       G_TYPE_UCHAR,            G_TYPE_PARAM_UCHAR,
 
       G_TYPE_STRING,           G_TYPE_PARAM_STRING,

@@ -17,6 +17,16 @@
 package Gimp::CodeGen::pdb;
 
 %arg_types = (
+    int64       => { name            => 'INT64',
+		     gtype           => 'G_TYPE_INT64',
+		     type            => 'gint64 ',
+		     const_type      => 'gint64 ',
+		     init_value      => '0',
+		     get_value_func  => '$var = g_value_get_int64 ($value)',
+		     dup_value_func  => '$var = GIMP_VALUES_GET_INT64 ($value)',
+		     set_value_func  => 'g_value_set_int64 ($value, $var)',
+		     take_value_func => 'g_value_set_int64 ($value, $var)' },
+
     int32       => { name            => 'INT32',
 		     gtype           => 'G_TYPE_INT',
 		     type            => 'gint ',
