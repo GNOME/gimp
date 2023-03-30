@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-30 02:05+0000\n"
-"PO-Revision-Date: 2023-03-30 06:48+0300\n"
+"POT-Creation-Date: 2023-03-30 04:07+0000\n"
+"PO-Revision-Date: 2023-03-30 17:15+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -2077,76 +2077,84 @@ msgstr ""
 msgid "CSource cannot be run non-interactively."
 msgstr "CSource не можна запускати у неінтерактивному режимі."
 
-#: plug-ins/common/file-csource.c:141 plug-ins/common/file-csource.c:142
-#| msgid "_Prefixed name:"
+#: plug-ins/common/file-csource.c:141
+#| msgid "Prefixed name"
+msgid "_Prefixed name"
+msgstr "Назва з пре_фіксом"
+
+#: plug-ins/common/file-csource.c:142
 msgid "Prefixed name"
 msgstr "Назва з префіксом"
 
-#: plug-ins/common/file-csource.c:147 plug-ins/common/file-csource.c:148
+#: plug-ins/common/file-csource.c:147
+#| msgid "Comment"
+msgid "Comme_nt"
+msgstr "Ко_ментар"
+
+#: plug-ins/common/file-csource.c:148
 msgid "Comment"
 msgstr "Коментар"
 
 #: plug-ins/common/file-csource.c:156
-#| msgid "_Save comment to file"
-msgid "Save comment to file"
-msgstr "Зберегти коментар у файлі"
+#| msgid "Save comment to file"
+msgid "Save comment to _file"
+msgstr "Зберегти коментар у фа_йлі"
 
 #: plug-ins/common/file-csource.c:157
-#| msgid "Save comme_nt"
 msgid "Save comment"
 msgstr "Зберегти коментар"
 
 #: plug-ins/common/file-csource.c:162
-#| msgid "_Use GLib types (guint8*)"
-msgid "Use GLib types (guint8*)"
-msgstr "Використовувати типи GLib (guint8*)"
+#| msgid "Use GLib types (guint8*)"
+msgid "Use GLib types (guint_8*)"
+msgstr "Використовувати типи GLib (guint_8*)"
 
 #: plug-ins/common/file-csource.c:163
-#| msgid "_Use GLib types (guint8*)"
 msgid "Use GLib types"
 msgstr "Використовувати типи GLib"
 
 #: plug-ins/common/file-csource.c:168
-#| msgid "Sa_ve alpha channel (RGBA/RGB)"
-msgid "Save alpha channel (RGBA/RGB)"
-msgstr "Зберегти альфа-канал (RGBA/RGB)"
+#| msgid "Save alpha channel (RGBA/RGB)"
+msgid "Save alpha channel (RG_BA/RGB)"
+msgstr "Зберегти а_льфа-канал (RGBA/RGB)"
 
 #: plug-ins/common/file-csource.c:169
-#| msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgid "Save the alpha channel"
 msgstr "Зберегти альфа-канал"
 
 #: plug-ins/common/file-csource.c:174
-#| msgid "Save as _RGB565 (16-bit)"
-msgid "Save as RGB565 (16-bit)"
-msgstr "Зберегти як RGB565 (16 біт)"
+#| msgid "Save as RGB565 (16-bit)"
+msgid "Save as RGB565 (1_6-bit)"
+msgstr "Зберегти як RGB565 (1_6 біт)"
 
 #: plug-ins/common/file-csource.c:175
-#| msgid "RGB Encoding"
 msgid "Use RGB565 encoding"
 msgstr "Використовувати кодування RGB565"
 
 #: plug-ins/common/file-csource.c:180
-#| msgid "Us_e macros instead of struct"
-msgid "Use macros instead of struct"
-msgstr "Використовувати макроси замість структур"
+#| msgid "Use macros instead of struct"
+msgid "_Use macros instead of struct"
+msgstr "Ви_користовувати макроси замість структур"
 
 #: plug-ins/common/file-csource.c:181
 msgid "Use C macros"
 msgstr "Використати макрос C"
 
 #: plug-ins/common/file-csource.c:186
-#| msgid "Use _1 byte Run-Length-Encoding"
-msgid "Use 1 bit Run-Length-Encoding"
-msgstr "Використовувати 1-бітове RLE"
+#| msgid "Use 1 bit Run-Length-Encoding"
+msgid "Use _1 bit Run-Length-Encoding"
+msgstr "Використовувати _1-бітове RLE"
 
 #: plug-ins/common/file-csource.c:187
-#| msgid "Use _1 byte Run-Length-Encoding"
 msgid "Use run-length-encoding"
 msgstr "Використовувати RLE"
 
-#: plug-ins/common/file-csource.c:192 plug-ins/common/file-csource.c:193
-#| msgid "Opacity:"
+#: plug-ins/common/file-csource.c:192
+#| msgid "Opacity"
+msgid "Opaci_ty"
+msgstr "Неп_розорість"
+
+#: plug-ins/common/file-csource.c:193
 msgid "Opacity"
 msgstr "Непрозорість"
 
