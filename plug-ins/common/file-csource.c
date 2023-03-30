@@ -138,13 +138,13 @@ csource_create_procedure (GimpPlugIn  *plug_in,
                                           "c");
 
       GIMP_PROC_AUX_ARG_STRING (procedure, "prefixed-name",
-                                _("Prefixed name"),
+                                _("_Prefixed name"),
                                 _("Prefixed name"),
                                 "gimp_image",
                                 GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_STRING (procedure, "gimp-comment",
-                                _("Comment"),
+                                _("Comme_nt"),
                                 _("Comment"),
                                 gimp_get_default_comment (),
                                 GIMP_PARAM_READWRITE);
@@ -153,43 +153,43 @@ csource_create_procedure (GimpPlugIn  *plug_in,
                                         GIMP_ARGUMENT_SYNC_PARASITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
-                                 _("Save comment to file"),
+                                 _("Save comment to _file"),
                                  _("Save comment"),
                                  gimp_export_comment (),
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "glib-types",
-                                 _("Use GLib types (guint8*)"),
+                                 _("Use GLib types (guint_8*)"),
                                  _("Use GLib types"),
                                  TRUE,
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-alpha",
-                                 _("Save alpha channel (RGBA/RGB)"),
+                                 _("Save alpha channel (RG_BA/RGB)"),
                                  _("Save the alpha channel"),
                                  FALSE,
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "rgb565",
-                                 _("Save as RGB565 (16-bit)"),
+                                 _("Save as RGB565 (1_6-bit)"),
                                  _("Use RGB565 encoding"),
                                  FALSE,
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-macros",
-                                 _("Use macros instead of struct"),
+                                 _("_Use macros instead of struct"),
                                  _("Use C macros"),
                                  FALSE,
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-rle",
-                                 _("Use 1 bit Run-Length-Encoding"),
+                                 _("Use _1 bit Run-Length-Encoding"),
                                  _("Use run-length-encoding"),
                                  FALSE,
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "opacity",
-                                _("Opacity"),
+                                _("Opaci_ty"),
                                 _("Opacity"),
                                 0.0, 100.0, 100.0,
                                 GIMP_PARAM_READWRITE);
