@@ -36,6 +36,7 @@
 #include "gimpmenushell.h"
 #include "gimpradioaction.h"
 #include "gimpuimanager.h"
+#include "gimpwidgets-utils.h"
 
 
 /**
@@ -169,7 +170,7 @@ gimp_menu_bar_append (GimpMenuShell *shell,
           gtk_widget_show (subcontainer);
 
           g_tree_insert (bar->priv->menus,
-                         gimp_menu_shell_make_canonical_path (label),
+                         gimp_utils_make_canonical_menu_label (label),
                          subcontainer);
         }
       else

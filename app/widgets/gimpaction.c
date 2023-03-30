@@ -139,7 +139,8 @@ gimp_action_default_init (GimpActionInterface *iface)
                                        g_param_spec_boolean ("visible",
                                                              NULL, NULL,
                                                              TRUE,
-                                                             GIMP_PARAM_READWRITE));
+                                                             GIMP_PARAM_READWRITE |
+                                                             G_PARAM_EXPLICIT_NOTIFY));
   g_object_interface_install_property (iface,
                                        g_param_spec_string ("label",
                                                             NULL, NULL,
@@ -793,7 +794,16 @@ gimp_action_set_property (GObject      *object,
                                  NULL);
       break;
     case GIMP_ACTION_PROP_VISIBLE:
-      priv->visible = g_value_get_boolean (value);
+      if (priv->visible != g_value_get_boolean (value))
+        {
+          priv->visible = g_value_get_boolean (value);
+          /* Only notify when the state actually changed. This is important for
+           * handlers such as visibility of menu items in GimpMenuModel which
+           * will assume that the action visibility changed. Otherwise we might
+           * remove items by mistake.
+           */
+          g_object_notify (object, "visible");
+        }
       break;
 
     case GIMP_ACTION_PROP_LABEL:

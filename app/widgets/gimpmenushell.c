@@ -33,6 +33,12 @@
 #include "gimpuimanager.h"
 
 
+enum
+{
+  MODEL_DELETED,
+  LAST_SIGNAL
+};
+
 #define GET_PRIVATE(obj) (gimp_menu_shell_get_private ((GimpMenuShell *) (obj)))
 
 typedef struct _GimpMenuShellPrivate GimpMenuShellPrivate;
@@ -60,20 +66,22 @@ static void     gimp_menu_shell_model_changed           (GMenuModel           *s
 static void     gimp_menu_shell_append_model_drop_top   (GimpMenuShell        *shell,
                                                          GimpMenuModel        *model);
 
-static gchar ** gimp_menu_shell_break_path              (GimpMenuShell         *shell,
-                                                         const gchar           *path);
-static gboolean gimp_menu_shell_is_subpath              (GimpMenuShell         *shell,
-                                                         const gchar           *path,
-                                                         gchar               ***paths,
-                                                         gint                  *index);
-
 
 G_DEFINE_INTERFACE (GimpMenuShell, gimp_menu_shell, G_TYPE_OBJECT)
 
+static guint signals[LAST_SIGNAL];
 
 static void
 gimp_menu_shell_default_init (GimpMenuShellInterface *iface)
 {
+  signals[MODEL_DELETED] =
+    g_signal_new ("model-deleted",
+                  G_TYPE_FROM_INTERFACE (iface),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpMenuShellInterface, model_deleted),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
+
   g_object_interface_install_property (iface,
                                        g_param_spec_object ("manager",
                                                             NULL, NULL,
@@ -121,9 +129,12 @@ gimp_menu_shell_append (GimpMenuShell *shell,
   priv->path_prefix = g_strdup (gimp_menu_model_get_path (GIMP_MENU_MODEL (model)));
 
   if (priv->model)
-    g_signal_handlers_disconnect_by_func (priv->model,
-                                          G_CALLBACK (gimp_menu_shell_model_changed),
-                                          shell);
+    {
+      g_signal_handlers_disconnect_by_func (priv->model,
+                                            G_CALLBACK (gimp_menu_shell_model_changed),
+                                            shell);
+      g_signal_emit (shell, signals[MODEL_DELETED], 0);
+    }
 
   if (priv->model != model)
     {
@@ -226,20 +237,6 @@ gimp_menu_shell_get_manager (GimpMenuShell *shell)
   return GET_PRIVATE (shell)->manager;
 }
 
-gchar *
-gimp_menu_shell_make_canonical_path (const gchar *path)
-{
-  gchar **split_path;
-  gchar  *canon_path;
-
-  /* The first underscore of each path item is a mnemonic. */
-  split_path = g_strsplit (path, "_", 2);
-  canon_path = g_strjoinv ("", split_path);
-  g_strfreev (split_path);
-
-  return canon_path;
-}
-
 
 /*  Private functions  */
 
@@ -327,80 +324,7 @@ gimp_menu_shell_append_model_drop_top (GimpMenuShell *shell,
       g_free (label);
     }
 
-  gimp_menu_shell_append (shell, submenu != NULL ? submenu : model);
+  gimp_menu_shell_append (shell, submenu != NULL ? GIMP_MENU_MODEL (submenu) : GIMP_MENU_MODEL (model));
 
   g_clear_object (&submenu);
-}
-
-static gchar **
-gimp_menu_shell_break_path (GimpMenuShell *shell,
-                            const gchar   *path)
-{
-  GimpMenuShellPrivate  *priv;
-  gchar                **paths;
-  gint                   start = 0;
-
-  g_return_val_if_fail (path != NULL, NULL);
-
-  priv = GET_PRIVATE (shell);
-
-  /* Get rid of leading slashes. */
-  while (path[start] == '/' && path[start] != '\0')
-    start++;
-
-  /* Get rid of empty last item because of trailing slashes. */
-  paths = g_regex_split (priv->path_regex, path + start, 0);
-  if (strlen (paths[g_strv_length (paths) - 1]) == 0)
-    {
-      g_free (paths[g_strv_length (paths) - 1]);
-      paths[g_strv_length (paths) - 1] = NULL;
-    }
-
-  for (int i = 0; paths[i]; i++)
-    {
-      gchar *canon_path;
-
-      canon_path = gimp_menu_shell_make_canonical_path (paths[i]);
-      g_free (paths[i]);
-      paths[i] = canon_path;
-    }
-
-  return paths;
-}
-
-static gboolean
-gimp_menu_shell_is_subpath (GimpMenuShell   *shell,
-                            const gchar     *path,
-                            gchar         ***paths,
-                            gint            *index)
-{
-  GimpMenuShellPrivate  *priv;
-  gboolean               is_subpath = TRUE;
-
-  *index = 0;
-  *paths = gimp_menu_shell_break_path (shell, path);
-  priv   = GET_PRIVATE (shell);
-
-  if (priv->path_prefix)
-    {
-      gchar **path_prefix;
-
-      path_prefix = gimp_menu_shell_break_path (shell, priv->path_prefix);
-      *index = g_strv_length (path_prefix);
-      is_subpath = FALSE;
-      if (*index <= g_strv_length (*paths))
-        {
-          gint i;
-
-          for (i = 0; i < *index; i ++)
-            if (g_strcmp0 (path_prefix[i], (*paths)[i]) != 0)
-              break;
-
-          is_subpath = (i == *index);
-        }
-
-      g_strfreev (path_prefix);
-    }
-
-  return is_subpath;
 }

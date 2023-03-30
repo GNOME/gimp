@@ -2406,3 +2406,91 @@ gimp_blink_free_script (GList *blink_scenario)
     }
   g_list_free (blink_scenario);
 }
+
+gchar *
+gimp_utils_make_canonical_menu_label (const gchar *path)
+{
+  gchar **split_path;
+  gchar  *canon_path;
+
+  /* The first underscore of each path item is a mnemonic. */
+  split_path = g_strsplit (path, "_", 2);
+  canon_path = g_strjoinv ("", split_path);
+  g_strfreev (split_path);
+
+  return canon_path;
+}
+
+gchar **
+gimp_utils_break_menu_path (const gchar *path)
+{
+  GRegex *path_regex;
+  gchar **paths;
+  gint    start = 0;
+
+  g_return_val_if_fail (path != NULL, NULL);
+
+  path_regex = g_regex_new ("/+", 0, 0, NULL);
+
+  /* Get rid of leading slashes. */
+  while (path[start] == '/' && path[start] != '\0')
+    start++;
+
+  /* Get rid of empty last item because of trailing slashes. */
+  paths = g_regex_split (path_regex, path + start, 0);
+  if (g_strv_length (paths) > 0 &&
+      strlen (paths[g_strv_length (paths) - 1]) == 0)
+    {
+      g_free (paths[g_strv_length (paths) - 1]);
+      paths[g_strv_length (paths) - 1] = NULL;
+    }
+
+  for (int i = 0; paths[i]; i++)
+    {
+      gchar *canon_path;
+
+      canon_path = gimp_utils_make_canonical_menu_label (paths[i]);
+      g_free (paths[i]);
+      paths[i] = canon_path;
+    }
+
+  g_regex_unref (path_regex);
+
+  return paths;
+}
+
+gboolean
+gimp_utils_are_menu_path_identical (const gchar *path1,
+                                    const gchar *path2)
+{
+  gchar    **paths1;
+  gchar    **paths2;
+  gboolean   identical = TRUE;
+
+  if (path1 == NULL)
+    path1 = "/";
+  if (path2 == NULL)
+    path2 = "/";
+
+  paths1 = gimp_utils_break_menu_path (path1);
+  paths2 = gimp_utils_break_menu_path (path2);
+  if (g_strv_length (paths1) != g_strv_length (paths2))
+    {
+      identical = FALSE;
+    }
+  else
+    {
+      for (int i = 0; paths1[i]; i++)
+        {
+          if (g_strcmp0 (paths1[i], paths2[i]) != 0)
+            {
+              identical = FALSE;
+              break;
+            }
+        }
+    }
+  g_strfreev (paths1);
+  g_strfreev (paths2);
+
+  return identical;
+}

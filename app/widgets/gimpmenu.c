@@ -38,6 +38,7 @@
 #include "gimpprocedureaction.h"
 #include "gimpradioaction.h"
 #include "gimpuimanager.h"
+#include "gimpwidgets-utils.h"
 
 #define GIMP_MENU_ACTION_KEY "gimp-menu-action"
 
@@ -60,8 +61,10 @@
 
 struct _GimpMenuPrivate
 {
-  GTree *submenus;
-  GTree *placeholders;
+  GTree      *submenus;
+  GTree      *placeholders;
+
+  GHashTable *sections;
 };
 
 
@@ -79,16 +82,26 @@ static void     gimp_menu_add_ui                  (GimpMenuShell           *shel
 static void     gimp_menu_remove_ui               (GimpMenuShell           *shell,
                                                    const gchar            **paths,
                                                    const gchar             *action_name);
+static void     gimp_menu_model_deleted           (GimpMenuShell           *shell);
 
 static void     gimp_menu_add_placeholder         (GimpMenu                *menu,
                                                    const gchar             *label);
 static void     gimp_menu_add_action              (GimpMenu                *menu,
                                                    const gchar             *action_name,
-                                                   const gchar             *placeholder_key,
+                                                   GtkWidget               *sibling,
                                                    gboolean                 top,
                                                    GtkRadioMenuItem       **group);
 static void     gimp_menu_remove_action           (GimpMenu                *menu,
                                                    const gchar             *action_name);
+static void     gimp_menu_append_section          (GimpMenu                *menu,
+                                                   GimpMenuModel           *model,
+                                                   GtkWidget               *start_separator);
+
+static void     gimp_menu_section_items_changed   (GMenuModel              *model,
+                                                   gint                     position,
+                                                   gint                     removed,
+                                                   gint                     added,
+                                                   GimpMenu                *menu);
 
 static void     gimp_menu_toggle_item_toggled     (GtkWidget               *item,
                                                    GAction                 *action);
@@ -143,6 +156,8 @@ gimp_menu_init (GimpMenu *menu)
                                               g_free, NULL);
   menu->priv->placeholders = g_tree_new_full ((GCompareDataFunc) g_strcmp0, NULL,
                                               g_free, NULL);
+  menu->priv->sections     = g_hash_table_new_full (g_direct_hash, g_direct_equal,
+                                                    g_object_unref, NULL);
 
   gimp_menu_shell_init (GIMP_MENU_SHELL (menu));
 
@@ -153,9 +168,10 @@ gimp_menu_init (GimpMenu *menu)
 static void
 gimp_menu_iface_init (GimpMenuShellInterface *iface)
 {
-  iface->append    = gimp_menu_append;
-  iface->add_ui    = gimp_menu_add_ui;
-  iface->remove_ui = gimp_menu_remove_ui;
+  iface->append        = gimp_menu_append;
+  iface->add_ui        = gimp_menu_add_ui;
+  iface->remove_ui     = gimp_menu_remove_ui;
+  iface->model_deleted = gimp_menu_model_deleted;
 }
 
 static void
@@ -165,6 +181,7 @@ gimp_menu_finalize (GObject *object)
 
   g_clear_pointer (&menu->priv->submenus, g_tree_unref);
   g_clear_pointer (&menu->priv->placeholders, g_tree_unref);
+  g_hash_table_unref (menu->priv->sections);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -203,7 +220,11 @@ gimp_menu_append (GimpMenuShell *shell,
           gtk_container_add (GTK_CONTAINER (shell), item);
           gtk_widget_show (item);
 
-          gimp_menu_append (shell, GIMP_MENU_MODEL (subsection));
+          /* Don't use gimp_menu_shell_append() here because we don't want to
+           * override the main model for this menu.
+           * Instead we keep track of each subsection model and their position.
+           */
+          gimp_menu_append_section (menu, GIMP_MENU_MODEL (subsection), item);
 
           item = gtk_separator_menu_item_new ();
           gtk_container_add (GTK_CONTAINER (shell), item);
@@ -241,11 +262,11 @@ gimp_menu_append (GimpMenuShell *shell,
 
           subcontainer = gimp_menu_new (manager);
           gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), subcontainer);
-          gimp_menu_append (GIMP_MENU_SHELL (subcontainer), GIMP_MENU_MODEL (submenu));
+          gimp_menu_shell_append (GIMP_MENU_SHELL (subcontainer), GIMP_MENU_MODEL (submenu));
           gtk_widget_show (subcontainer);
 
           g_tree_insert (menu->priv->submenus,
-                         gimp_menu_shell_make_canonical_path (group_label),
+                         gimp_utils_make_canonical_menu_label (group_label),
                          subcontainer);
         }
       else if (submenu != NULL)
@@ -264,11 +285,11 @@ gimp_menu_append (GimpMenuShell *shell,
 
           subcontainer = gimp_menu_new (manager);
           gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), subcontainer);
-          gimp_menu_append (GIMP_MENU_SHELL (subcontainer), GIMP_MENU_MODEL (submenu));
+          gimp_menu_shell_append (GIMP_MENU_SHELL (subcontainer), GIMP_MENU_MODEL (submenu));
           gtk_widget_show (subcontainer);
 
           g_tree_insert (menu->priv->submenus,
-                         gimp_menu_shell_make_canonical_path (label),
+                         gimp_utils_make_canonical_menu_label (label),
                          subcontainer);
         }
       else if (action_name == NULL)
@@ -309,11 +330,18 @@ gimp_menu_add_ui (GimpMenuShell  *shell,
 
   if (paths[0] == NULL)
     {
-      gimp_menu_add_action (menu, action_name, placeholder_key, top, NULL);
+      GtkWidget *placeholder;
+
+      placeholder = g_tree_lookup (menu->priv->placeholders, placeholder_key);
+
+      if (! placeholder)
+        g_warning ("%s: no placeholder item '%s'.", G_STRFUNC, placeholder_key);
+
+      gimp_menu_add_action (menu, action_name, placeholder, top, NULL);
     }
   else
     {
-      GtkWidget *submenu = NULL;
+      GtkWidget *submenu;
 
       submenu = g_tree_lookup (menu->priv->submenus, paths[0]);
 
@@ -359,6 +387,15 @@ gimp_menu_remove_ui (GimpMenuShell  *shell,
 
       gimp_menu_remove_ui (GIMP_MENU_SHELL (submenu), paths + 1, action_name);
     }
+}
+
+static void
+gimp_menu_model_deleted (GimpMenuShell *shell)
+{
+  /* This will unref the sub-models, hence will disconnect the "items-changed"
+   * signal handlers.
+   */
+  g_hash_table_remove_all (GIMP_MENU (shell)->priv->sections);
 }
 
 
@@ -424,7 +461,7 @@ gimp_menu_add_placeholder (GimpMenu    *menu,
 static void
 gimp_menu_add_action (GimpMenu          *menu,
                       const gchar       *action_name,
-                      const gchar       *placeholder_key,
+                      GtkWidget         *sibling,
                       gboolean           top,
                       GtkRadioMenuItem **group)
 {
@@ -433,7 +470,6 @@ gimp_menu_add_action (GimpMenu          *menu,
   GAction       *action;
   const gchar   *action_label;
   GtkWidget     *item;
-  GtkWidget     *sibling = NULL;
   gboolean       visible;
 
   g_return_if_fail (GIMP_IS_MENU (menu));
@@ -508,14 +544,6 @@ gimp_menu_add_action (GimpMenu          *menu,
                            G_CALLBACK (gimp_menu_action_notify_sensitive),
                            item, 0);
 
-  if (placeholder_key)
-    {
-      sibling = g_tree_lookup (menu->priv->placeholders, placeholder_key);
-
-      if (! sibling)
-        g_warning ("%s: no placeholder item '%s'.", G_STRFUNC, placeholder_key);
-    }
-
   if (sibling)
     {
       GList *children;
@@ -553,15 +581,25 @@ gimp_menu_add_action (GimpMenu          *menu,
   gtk_widget_set_visible (item, visible);
   if (visible && GTK_IS_MENU (menu))
     {
-      GtkWidget *parent = gtk_menu_get_attach_widget (GTK_MENU (menu));
+      GtkWidget *parent = GTK_WIDGET (menu);
 
-      /* Note that this is not the container we must show, but the menu item
-       * attached to the parent, in order not to leave empty submenus.
-       */
-      if (parent != NULL &&
-          G_TYPE_FROM_INSTANCE (parent) == GTK_TYPE_MENU_ITEM)
-        gtk_widget_show (parent);
+      while (parent != NULL && GIMP_IS_MENU (parent))
+        {
+          /* Note that this is not the container we must show, but the menu item
+           * attached to the parent, in order not to leave empty submenus.
+           */
+          GtkWidget *menu_item = gtk_menu_get_attach_widget (GTK_MENU (parent));
+
+          if (menu_item == NULL)
+            break;
+
+          if (G_TYPE_FROM_INSTANCE (menu_item) == GTK_TYPE_MENU_ITEM)
+            gtk_widget_show (menu_item);
+
+          parent = gtk_widget_get_parent (menu_item);
+        }
     }
+
   g_signal_connect_object (action, "notify::visible",
                            G_CALLBACK (gimp_menu_action_notify_visible),
                            item, 0);
@@ -603,6 +641,88 @@ gimp_menu_remove_action (GimpMenu    *menu,
         }
     }
 
+  g_list_free (children);
+}
+
+static void
+gimp_menu_append_section (GimpMenu      *menu,
+                          GimpMenuModel *model,
+                          GtkWidget     *start_separator)
+{
+  g_hash_table_insert (menu->priv->sections, g_object_ref (model), start_separator);
+  gimp_menu_append (GIMP_MENU_SHELL (menu), model);
+
+  g_signal_connect_object (model, "items-changed",
+                           G_CALLBACK (gimp_menu_section_items_changed),
+                           menu, 0);
+}
+
+static void
+gimp_menu_section_items_changed (GMenuModel *model,
+                                 gint        position,
+                                 gint        removed,
+                                 gint        added,
+                                 GimpMenu   *menu)
+{
+  GList     *children;
+  GList     *iter;
+  GtkWidget *separator;
+  gboolean   found = FALSE;
+  gint       count = position;
+  gint       real_pos = 0;
+
+  separator = g_hash_table_lookup (menu->priv->sections, model);
+  g_return_if_fail (separator != NULL);
+
+  children = gtk_container_get_children (GTK_CONTAINER (menu));
+  for (iter = children; iter; iter = iter->next)
+    {
+      real_pos++;
+
+      if (! found)
+        {
+          if (iter->data == separator)
+            found = TRUE;
+
+          continue;
+        }
+
+      if (count > 0)
+        {
+          /* Assume we don't have sections within a section, i.e. in particular
+           * we don't have more separators, which would mess the count!
+           */
+          count--;
+          continue;
+        }
+      else if (removed > 0)
+        {
+          gtk_widget_destroy (iter->data);
+          removed--;
+          continue;
+        }
+      else
+        {
+          break;
+        }
+    }
+
+  while (added > 0)
+    {
+      gchar *action_name = NULL;
+
+      g_menu_model_get_item_attribute (G_MENU_MODEL (model), position,
+                                       G_MENU_ATTRIBUTE_ACTION, "s", &action_name);
+
+      g_return_if_fail (action_name != NULL);
+      gimp_menu_add_action (menu, action_name,
+                            iter ? iter->data : NULL,
+                            iter ? TRUE : FALSE, NULL);
+      g_free (action_name);
+
+      added--;
+      position++;
+    }
   g_list_free (children);
 }
 

@@ -43,18 +43,22 @@ struct _GimpMenuShellInterface
 {
   GTypeInterface base_interface;
 
+  /* Signals */
+
+  void          (* model_deleted) (GimpMenuShell  *shell);
+
   /* Virtual functions. */
 
-  void          (* append)       (GimpMenuShell  *shell,
-                                  GimpMenuModel  *model);
-  void          (* add_ui)       (GimpMenuShell  *shell,
-                                  const gchar   **paths,
-                                  const gchar    *action_name,
-                                  const gchar    *placeholder_key,
-                                  gboolean        top);
-  void          (* remove_ui)    (GimpMenuShell  *shell,
-                                  const gchar   **paths,
-                                  const gchar    *action_name);
+  void          (* append)        (GimpMenuShell  *shell,
+                                   GimpMenuModel  *model);
+  void          (* add_ui)        (GimpMenuShell  *shell,
+                                   const gchar   **paths,
+                                   const gchar    *action_name,
+                                   const gchar    *placeholder_key,
+                                   gboolean        top);
+  void          (* remove_ui)     (GimpMenuShell  *shell,
+                                   const gchar   **paths,
+                                   const gchar    *action_name);
 };
 
 
@@ -82,7 +86,6 @@ void            gimp_menu_shell_set_property        (GObject       *object,
                                                      GParamSpec    *pspec);
 
 GimpUIManager * gimp_menu_shell_get_manager         (GimpMenuShell *shell);
-gchar         * gimp_menu_shell_make_canonical_path (const gchar   *path);
 
 
 #endif  /* __GIMP_MENU_SHELL_H__ */
