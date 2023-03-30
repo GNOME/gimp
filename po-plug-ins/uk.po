@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-27 16:22+0000\n"
-"PO-Revision-Date: 2023-03-27 21:59+0300\n"
+"POT-Creation-Date: 2023-03-30 02:05+0000\n"
+"PO-Revision-Date: 2023-03-30 06:48+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -2068,51 +2068,95 @@ msgstr "Експортування «%s»"
 msgid "C source code"
 msgstr "Програма на C"
 
+#: plug-ins/common/file-csource.c:124
+msgid "Dump image data in RGB(A) format for C source"
+msgstr ""
+"Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
+
+#: plug-ins/common/file-csource.c:126
+msgid "CSource cannot be run non-interactively."
+msgstr "CSource не можна запускати у неінтерактивному режимі."
+
+#: plug-ins/common/file-csource.c:141 plug-ins/common/file-csource.c:142
+#| msgid "_Prefixed name:"
+msgid "Prefixed name"
+msgstr "Назва з префіксом"
+
+#: plug-ins/common/file-csource.c:147 plug-ins/common/file-csource.c:148
+msgid "Comment"
+msgstr "Коментар"
+
+#: plug-ins/common/file-csource.c:156
+#| msgid "_Save comment to file"
+msgid "Save comment to file"
+msgstr "Зберегти коментар у файлі"
+
+#: plug-ins/common/file-csource.c:157
+#| msgid "Save comme_nt"
+msgid "Save comment"
+msgstr "Зберегти коментар"
+
+#: plug-ins/common/file-csource.c:162
+#| msgid "_Use GLib types (guint8*)"
+msgid "Use GLib types (guint8*)"
+msgstr "Використовувати типи GLib (guint8*)"
+
+#: plug-ins/common/file-csource.c:163
+#| msgid "_Use GLib types (guint8*)"
+msgid "Use GLib types"
+msgstr "Використовувати типи GLib"
+
+#: plug-ins/common/file-csource.c:168
+#| msgid "Sa_ve alpha channel (RGBA/RGB)"
+msgid "Save alpha channel (RGBA/RGB)"
+msgstr "Зберегти альфа-канал (RGBA/RGB)"
+
+#: plug-ins/common/file-csource.c:169
+#| msgid "Sa_ve alpha channel (RGBA/RGB)"
+msgid "Save the alpha channel"
+msgstr "Зберегти альфа-канал"
+
+#: plug-ins/common/file-csource.c:174
+#| msgid "Save as _RGB565 (16-bit)"
+msgid "Save as RGB565 (16-bit)"
+msgstr "Зберегти як RGB565 (16 біт)"
+
+#: plug-ins/common/file-csource.c:175
+#| msgid "RGB Encoding"
+msgid "Use RGB565 encoding"
+msgstr "Використовувати кодування RGB565"
+
+#: plug-ins/common/file-csource.c:180
+#| msgid "Us_e macros instead of struct"
+msgid "Use macros instead of struct"
+msgstr "Використовувати макроси замість структур"
+
+#: plug-ins/common/file-csource.c:181
+msgid "Use C macros"
+msgstr "Використати макрос C"
+
+#: plug-ins/common/file-csource.c:186
+#| msgid "Use _1 byte Run-Length-Encoding"
+msgid "Use 1 bit Run-Length-Encoding"
+msgstr "Використовувати 1-бітове RLE"
+
+#: plug-ins/common/file-csource.c:187
+#| msgid "Use _1 byte Run-Length-Encoding"
+msgid "Use run-length-encoding"
+msgstr "Використовувати RLE"
+
+#: plug-ins/common/file-csource.c:192 plug-ins/common/file-csource.c:193
+#| msgid "Opacity:"
+msgid "Opacity"
+msgstr "Непрозорість"
+
 #: plug-ins/common/file-csource.c:237
 msgid "C source does not support multiple layers."
 msgstr "Для коду C не передбачено підтримку декількох шарів."
 
-#: plug-ins/common/file-csource.c:968
+#: plug-ins/common/file-csource.c:964
 msgid "Export Image as C-Source"
 msgstr "Експортувати зображення як код мовою Сі"
-
-#: plug-ins/common/file-csource.c:986
-msgid "_Prefixed name:"
-msgstr "_Префікс назви:"
-
-#: plug-ins/common/file-csource.c:993
-msgid "Co_mment:"
-msgstr "_Коментар:"
-
-#: plug-ins/common/file-csource.c:999
-msgid "_Save comment to file"
-msgstr "З_берегти коментар у файлі"
-
-#: plug-ins/common/file-csource.c:1005
-msgid "_Use GLib types (guint8*)"
-msgstr "_Використовувати типи GLib (guint8*)"
-
-#: plug-ins/common/file-csource.c:1011
-msgid "Us_e macros instead of struct"
-msgstr "Використовувати _макроси замість структур"
-
-#: plug-ins/common/file-csource.c:1017
-msgid "Use _1 byte Run-Length-Encoding"
-msgstr "Використовувати _1-байтове RLE"
-
-#: plug-ins/common/file-csource.c:1023
-msgid "Sa_ve alpha channel (RGBA/RGB)"
-msgstr "Зберегти _альфа-канал (RGBA/RGB)"
-
-#: plug-ins/common/file-csource.c:1034
-msgid "Save as _RGB565 (16-bit)"
-msgstr "Зберегти як _RGB565 (16 біт)"
-
-#. Max Alpha Value
-#.
-#: plug-ins/common/file-csource.c:1039
-msgid "Op_acity:"
-msgstr "_Непрозорість:"
 
 #: plug-ins/common/file-compressor.c:213
 msgid "gzip archive"
@@ -3217,20 +3261,16 @@ msgid "GIMP pattern"
 msgstr "Текстура GIMP"
 
 #: plug-ins/common/file-pat.c:115
-#| msgid "Exports Gimp pattern file (.PAT)"
 msgid "Exports GIMP pattern file (.PAT)"
 msgstr "Експортує файл текстури GIMP (.PAT)"
 
 #: plug-ins/common/file-pat.c:116
-#| msgid ""
-#| "New Gimp patterns can be created by exporting them in the appropriate "
-#| "place with this plug-in."
 msgid ""
 "New GIMP patterns can be created by exporting them in the appropriate place "
 "with this plug-in."
 msgstr ""
-"Нові текстури GIMP може бути створено експортуванням їх до відповідного"
-" місця за допомогою цього додатка."
+"Нові текстури GIMP може бути створено експортуванням їх до відповідного "
+"місця за допомогою цього додатка."
 
 #: plug-ins/common/file-pat.c:133
 msgid "_Description"
@@ -3253,7 +3293,6 @@ msgid "ZSoft PCX image"
 msgstr "Зображення ZSoft PCX"
 
 #: plug-ins/common/file-pcx.c:198
-#| msgid "Table Options"
 msgid "Palette Options"
 msgstr "Параметри палітри"
 
@@ -3306,7 +3345,6 @@ msgid "Unusual PCX flavour, giving up"
 msgstr "Незвичайний вигляд файлу PCX. Вихід"
 
 #: plug-ins/common/file-pcx.c:644
-#| msgid "Import from PDF"
 msgid "Import from PCX"
 msgstr "Імпорт з PCX"
 
@@ -7310,9 +7348,6 @@ msgid "Error writing icns: %s"
 msgstr "Помилка під час запису даних icns: %s"
 
 #: plug-ins/file-icns/file-icns-save.c:586
-#| msgid ""
-#| "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
-#| "24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, or 1024x1024."
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
 "24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
@@ -7322,9 +7357,6 @@ msgstr ""
 "256x256, 512x512 і 1024x1024."
 
 #: plug-ins/file-icns/file-icns-save.c:604
-#| msgid ""
-#| "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
-#| "24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, or 1024x1024."
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
 "24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
@@ -9380,7 +9412,6 @@ msgid "Show All"
 msgstr "Показати всі"
 
 #: plug-ins/gfig/gfig-dialog.c:428
-#| msgid "Show all object"
 msgid "Show all objects"
 msgstr "Показати всі об'єкти"
 
@@ -13330,6 +13361,12 @@ msgstr "_Сканер/Камера..."
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
 
+#~ msgid "Co_mment:"
+#~ msgstr "_Коментар:"
+
+#~ msgid "Op_acity:"
+#~ msgstr "_Непрозорість:"
+
 #~ msgid "Export Image as AVIF"
 #~ msgstr "Експортувати зображення як AVIF"
 
@@ -13678,9 +13715,6 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "Save _resolution"
 #~ msgstr "Зберегти _роздільність"
 
-#~ msgid "Save comme_nt"
-#~ msgstr "З_берегти коментар"
-
 #~ msgid "Save E_xif data"
 #~ msgstr "Зберегти д_ані Exif"
 
@@ -13719,9 +13753,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Save _thumbnail"
 #~ msgstr "Зберегти _ескіз"
-
-#~ msgid "Comment"
-#~ msgstr "Коментар"
 
 #~ msgid "S_moothing:"
 #~ msgstr "З_гладжування:"
