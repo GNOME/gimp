@@ -710,6 +710,11 @@ if libxpm.found()
   MIMEtypes += 'image/x-xpixmap'
 endif
 
+have_qoi = cc.has_header('qoi.h')
+if have_qoi
+  MIMEtypes += 'image/qoi'
+endif
+
 openexr_minver = '1.6.1'
 openexr = dependency('OpenEXR', version: '>='+openexr_minver,
   required: get_option('openexr')
@@ -1956,6 +1961,7 @@ final_message = [
 '''  WMF:                 @0@'''.format(wmf.found()),
 '''  X11 Mouse Cursor:    @0@'''.format(xmc.found()),
 '''  XPM:                 @0@'''.format(libxpm.found()),
+'''  Quite-OK Image:      @0@'''.format(have_qoi),
 '''  Email:               @0@'''.format(email_message),
 '',
 '''Unmaintained Plug-Ins (discouraged except for developers):''',

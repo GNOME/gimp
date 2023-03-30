@@ -152,6 +152,13 @@ if libxpm.found()
   }
 endif
 
+if have_qoi
+  common_plugins_list += {
+    'name': 'file-qoi',
+    'deps': [ gtk3, gegl, qoi, ],
+  }
+endif
+
 if not platform_windows
   common_plugins_list += { 'name': 'mail', }
 endif
