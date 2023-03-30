@@ -121,9 +121,9 @@ csource_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("C source code"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Dump image data in RGB(A) format "
-                                        "for C source",
-                                        "CSource cannot be run non-interactively.",
+                                        _("Dump image data in RGB(A) format "
+                                          "for C source"),
+                                        _("CSource cannot be run non-interactively."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Tim Janik",
@@ -138,14 +138,14 @@ csource_create_procedure (GimpPlugIn  *plug_in,
                                           "c");
 
       GIMP_PROC_AUX_ARG_STRING (procedure, "prefixed-name",
-                                "Prefixed name",
-                                "Prefixed name",
+                                _("Prefixed name"),
+                                _("Prefixed name"),
                                 "gimp_image",
                                 GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_STRING (procedure, "gimp-comment",
-                                "Comment",
-                                "Comment",
+                                _("Comment"),
+                                _("Comment"),
                                 gimp_get_default_comment (),
                                 GIMP_PARAM_READWRITE);
 
@@ -153,44 +153,44 @@ csource_create_procedure (GimpPlugIn  *plug_in,
                                         GIMP_ARGUMENT_SYNC_PARASITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
-                                 "Save comment",
-                                 "Save comment",
+                                 _("Save comment to file"),
+                                 _("Save comment"),
                                  gimp_export_comment (),
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "glib-types",
-                                 "GLib types",
-                                 "Use GLib types",
+                                 _("Use GLib types (guint8*)"),
+                                 _("Use GLib types"),
                                  TRUE,
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-alpha",
-                                 "Save alpha",
-                                 "Save the alpha channel",
+                                 _("Save alpha channel (RGBA/RGB)"),
+                                 _("Save the alpha channel"),
                                  FALSE,
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "rgb565",
-                                 "RGB565",
-                                 "Use RGB565 encoding",
+                                 _("Save as RGB565 (16-bit)"),
+                                 _("Use RGB565 encoding"),
                                  FALSE,
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-macros",
-                                 "Use macros",
-                                 "Use C macros",
+                                 _("Use macros instead of struct"),
+                                 _("Use C macros"),
                                  FALSE,
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-rle",
-                                 "Use RLE",
-                                 "Use run-lenght-encoding",
+                                 _("Use 1 bit Run-Length-Encoding"),
+                                 _("Use run-length-encoding"),
                                  FALSE,
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_DOUBLE (procedure, "opacity",
-                                "Opacity",
-                                "Opacity",
+                                _("Opacity"),
+                                _("Opacity"),
                                 0.0, 100.0, 100.0,
                                 GIMP_PARAM_READWRITE);
     }
@@ -957,89 +957,32 @@ save_dialog (GimpProcedure *procedure,
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
-  GtkWidget *grid;
-  GtkWidget *entry;
-  GtkWidget *toggle;
-  GtkWidget *scale;
   gboolean   run;
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Export Image as C-Source"));
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "opacity", 1.0);
+
+  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "save-alpha", TRUE, config, "rgb565",
+                                       TRUE);
+
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "csource-box",
+                                         "prefixed-name", "gimp-comment",
+                                         "save-comment", "glib-types",
+                                         "use-macros", "use-rle", "save-alpha",
+                                         "rgb565", "opacity",
+                                         NULL);
+  gtk_box_set_spacing (GTK_BOX (vbox), 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
-  /* Prefixed Name
-   */
-  entry = gimp_prop_entry_new (config, "prefixed-name", -1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("_Prefixed name:"), 0.0, 0.5,
-                            entry, 1);
-
-  /* Comment Entry
-   */
-  entry = gimp_prop_entry_new (config, "gimp-comment", -1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("Co_mment:"), 0.0, 0.5,
-                            entry, 1);
-
-  /* Use Comment
-   */
-  toggle = gimp_prop_check_button_new (config, "save-comment",
-                                       _("_Save comment to file"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  /* GLib types
-   */
-  toggle = gimp_prop_check_button_new (config, "glib-types",
-                                       _("_Use GLib types (guint8*)"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  /* Use Macros
-   */
-  toggle = gimp_prop_check_button_new (config, "use-macros",
-                                       _("Us_e macros instead of struct"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  /* Use RLE
-   */
-  toggle = gimp_prop_check_button_new (config, "use-rle",
-                                       _("Use _1 byte Run-Length-Encoding"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  /* Alpha
-   */
-  toggle = gimp_prop_check_button_new (config, "save-alpha",
-                                       _("Sa_ve alpha channel (RGBA/RGB)"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  g_object_bind_property (config, "rgb565",
-                          toggle, "sensitive",
-                          G_BINDING_SYNC_CREATE |
-                          G_BINDING_INVERT_BOOLEAN);
-
-  /* RGB-565
-   */
-  toggle = gimp_prop_check_button_new (config, "rgb565",
-                                       _("Save as _RGB565 (16-bit)"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  /* Max Alpha Value
-   */
-  scale = gimp_prop_scale_entry_new (config, "opacity", _("Op_acity:"),
-                                     1.0, FALSE, 0, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 4);
-  gtk_widget_show (scale);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "csource-box",
+                              NULL);
   gtk_widget_show (dialog);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
