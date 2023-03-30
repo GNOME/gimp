@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-27 16:22+0000\n"
-"PO-Revision-Date: 2023-03-28 07:17+0200\n"
+"POT-Creation-Date: 2023-03-30 04:07+0000\n"
+"PO-Revision-Date: 2023-03-30 06:21+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -967,11 +967,11 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:1811
 msgid "Range low:"
-msgstr ""
+msgstr "დაბალი დიაპაზონი:"
 
 #: plug-ins/common/cml-explorer.c:1818
 msgid "Range high:"
-msgstr ""
+msgstr "მაღალი დიაპაზონი:"
 
 #: plug-ins/common/cml-explorer.c:1829
 msgid "Plot a Graph of the Settings"
@@ -1086,7 +1086,7 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:2435
 msgid "Error: failed to load parameters"
-msgstr ""
+msgstr "შეცდომა: პარამეტრების ჩატვირთვა შეუძლებელია"
 
 #: plug-ins/common/colormap-remap.c:186
 msgid "R_earrange Colormap..."
@@ -1780,7 +1780,7 @@ msgstr ""
 
 #: plug-ins/common/depth-merge.c:779
 msgid "Source 1:"
-msgstr ""
+msgstr "წყარო 1:"
 
 #: plug-ins/common/depth-merge.c:792 plug-ins/common/depth-merge.c:820
 msgid "Depth map:"
@@ -1788,7 +1788,7 @@ msgstr ""
 
 #: plug-ins/common/depth-merge.c:807
 msgid "Source 2:"
-msgstr ""
+msgstr "წყარო 2:"
 
 #. Numeric parameters
 #: plug-ins/common/depth-merge.c:836
@@ -2028,51 +2028,93 @@ msgstr "'%s'-ის გატანა"
 msgid "C source code"
 msgstr "C-ის საწყისი კოდი"
 
+#: plug-ins/common/file-csource.c:124
+msgid "Dump image data in RGB(A) format for C source"
+msgstr ""
+
+#: plug-ins/common/file-csource.c:126
+msgid "CSource cannot be run non-interactively."
+msgstr ""
+
+#: plug-ins/common/file-csource.c:141
+msgid "_Prefixed name"
+msgstr "_პრეფიქსიანი სახელი"
+
+#: plug-ins/common/file-csource.c:142
+msgid "Prefixed name"
+msgstr "პრეფიქსიანი სახელი"
+
+#: plug-ins/common/file-csource.c:147
+msgid "Comme_nt"
+msgstr "_კომენტარი"
+
+#: plug-ins/common/file-csource.c:148
+msgid "Comment"
+msgstr "კომენტარი"
+
+#: plug-ins/common/file-csource.c:156
+msgid "Save comment to _file"
+msgstr "_კომენტარის ფაილში შენახვა"
+
+#: plug-ins/common/file-csource.c:157
+msgid "Save comment"
+msgstr "კომენტარის შენახვა"
+
+#: plug-ins/common/file-csource.c:162
+msgid "Use GLib types (guint_8*)"
+msgstr "GLib-ის ტიპების გამოყენება (guint_8*)"
+
+#: plug-ins/common/file-csource.c:163
+msgid "Use GLib types"
+msgstr "GLib-ის ტიპების გამოყენება"
+
+#: plug-ins/common/file-csource.c:168
+msgid "Save alpha channel (RG_BA/RGB)"
+msgstr ""
+
+#: plug-ins/common/file-csource.c:169
+msgid "Save the alpha channel"
+msgstr "ალფა არხის შენახვა"
+
+#: plug-ins/common/file-csource.c:174
+msgid "Save as RGB565 (1_6-bit)"
+msgstr "შეინახე როგორც RGB565 (1_6 ბიტიანი)"
+
+#: plug-ins/common/file-csource.c:175
+msgid "Use RGB565 encoding"
+msgstr ""
+
+#: plug-ins/common/file-csource.c:180
+msgid "_Use macros instead of struct"
+msgstr ""
+
+#: plug-ins/common/file-csource.c:181
+msgid "Use C macros"
+msgstr "C-ის მაკროების გამოყენება"
+
+#: plug-ins/common/file-csource.c:186
+msgid "Use _1 bit Run-Length-Encoding"
+msgstr ""
+
+#: plug-ins/common/file-csource.c:187
+msgid "Use run-length-encoding"
+msgstr ""
+
+#: plug-ins/common/file-csource.c:192
+msgid "Opaci_ty"
+msgstr "_გაუმჭვირვალობა"
+
+#: plug-ins/common/file-csource.c:193
+msgid "Opacity"
+msgstr "გაუმჭვირვალობა"
+
 #: plug-ins/common/file-csource.c:237
 msgid "C source does not support multiple layers."
 msgstr ""
 
-#: plug-ins/common/file-csource.c:968
+#: plug-ins/common/file-csource.c:964
 msgid "Export Image as C-Source"
 msgstr ""
-
-#: plug-ins/common/file-csource.c:986
-msgid "_Prefixed name:"
-msgstr ""
-
-#: plug-ins/common/file-csource.c:993
-msgid "Co_mment:"
-msgstr "კომე_ნტარი:"
-
-#: plug-ins/common/file-csource.c:999
-msgid "_Save comment to file"
-msgstr ""
-
-#: plug-ins/common/file-csource.c:1005
-msgid "_Use GLib types (guint8*)"
-msgstr ""
-
-#: plug-ins/common/file-csource.c:1011
-msgid "Us_e macros instead of struct"
-msgstr ""
-
-#: plug-ins/common/file-csource.c:1017
-msgid "Use _1 byte Run-Length-Encoding"
-msgstr ""
-
-#: plug-ins/common/file-csource.c:1023
-msgid "Sa_ve alpha channel (RGBA/RGB)"
-msgstr ""
-
-#: plug-ins/common/file-csource.c:1034
-msgid "Save as _RGB565 (16-bit)"
-msgstr ""
-
-#. Max Alpha Value
-#.
-#: plug-ins/common/file-csource.c:1039
-msgid "Op_acity:"
-msgstr "_სიმღვრიე:"
 
 #: plug-ins/common/file-compressor.c:213
 msgid "gzip archive"
@@ -2613,7 +2655,7 @@ msgstr ""
 
 #: plug-ins/common/file-heif.c:317
 msgid "Loads AVIF images"
-msgstr ""
+msgstr "ტვირთავს AVIF გამოსახულებებეს"
 
 #: plug-ins/common/file-heif.c:318
 msgid "Load image stored in AV1 Image File Format (AVIF)"
@@ -2621,7 +2663,7 @@ msgstr ""
 
 #: plug-ins/common/file-heif.c:350
 msgid "Exports AVIF images"
-msgstr ""
+msgstr "AVIF გამოსახულებების გატანა"
 
 #: plug-ins/common/file-heif.c:351
 msgid "Save image in AV1 Image File Format (AVIF)"
@@ -2682,15 +2724,15 @@ msgstr "YUV420"
 
 #: plug-ins/common/file-heif.c:2533 plug-ins/common/file-jpegxl.c:2020
 msgid "8 bit/channel"
-msgstr ""
+msgstr "8 ბიტი/არხი"
 
 #: plug-ins/common/file-heif.c:2534
 msgid "10 bit/channel"
-msgstr ""
+msgstr "10 ბიტი/არხი"
 
 #: plug-ins/common/file-heif.c:2535
 msgid "12 bit/channel"
-msgstr ""
+msgstr "12 ბიტი/არხი"
 
 #: plug-ins/common/file-heif.c:2541
 msgid "Slow"
@@ -2780,7 +2822,7 @@ msgstr ""
 #. HTML Page Options
 #: plug-ins/common/file-html-table.c:643
 msgid "HTML Page Options"
-msgstr ""
+msgstr "HTML გვერდის პარამეტრები"
 
 #: plug-ins/common/file-html-table.c:652
 msgid "_Generate full HTML document"
@@ -2835,7 +2877,7 @@ msgstr ""
 
 #: plug-ins/common/file-jp2-load.c:183
 msgid "JPEG 2000 image"
-msgstr ""
+msgstr "JPEG 2000 გამოსახულება"
 
 #: plug-ins/common/file-jp2-load.c:215
 msgid "JPEG 2000 codestream"
@@ -2926,7 +2968,7 @@ msgstr ""
 
 #: plug-ins/common/file-jpegxl.c:139 plug-ins/common/file-jpegxl.c:166
 msgid "JPEG XL image"
-msgstr ""
+msgstr "JPEG-XL გამოსახულება"
 
 #: plug-ins/common/file-jpegxl.c:142 plug-ins/common/file-jpegxl.c:143
 msgid "Loads files in the JPEG XL file format"
@@ -3043,19 +3085,19 @@ msgstr ""
 
 #: plug-ins/common/file-mng.c:1613 plug-ins/common/file-png.c:245
 msgid "Save _background color"
-msgstr ""
+msgstr "_ფონის ფერის შენახვა"
 
 #: plug-ins/common/file-mng.c:1619
 msgid "Save _gamma"
-msgstr ""
+msgstr "_გამის შენახვა"
 
 #: plug-ins/common/file-mng.c:1623
 msgid "Save resolution"
-msgstr ""
+msgstr "გარჩევადობის სენახვა"
 
 #: plug-ins/common/file-mng.c:1629 plug-ins/common/file-png.c:263
 msgid "Save creation _time"
-msgstr ""
+msgstr "შექმნის _დროის შენახვა"
 
 #: plug-ins/common/file-mng.c:1641 plug-ins/common/file-png.c:226
 msgid "PNG"
@@ -3107,7 +3149,7 @@ msgstr ""
 
 #: plug-ins/common/file-mng.c:1697
 msgid "JPEG smoothing factor:"
-msgstr ""
+msgstr "JPEG-ის მოგლუვების ფაქტორი:"
 
 #: plug-ins/common/file-mng.c:1700
 msgid "Animated MNG Options"
@@ -3159,7 +3201,7 @@ msgstr ""
 
 #: plug-ins/common/file-pcx.c:186 plug-ins/common/file-pcx.c:219
 msgid "ZSoft PCX image"
-msgstr ""
+msgstr "ZSoft PCX გამოსახულება"
 
 #: plug-ins/common/file-pcx.c:198
 msgid "Palette Options"
@@ -12629,27 +12671,27 @@ msgstr ""
 
 #: plug-ins/screenshot/screenshot.c:827
 msgid "Convert image to sR_GB"
-msgstr ""
+msgstr "გამოსახულების _sRGB-ში გადაყვანა"
 
 #: plug-ins/screenshot/screenshot-win32.c:302
 msgid "No data captured"
-msgstr ""
+msgstr "ჩაჭერილი მონაცემების გარეშე"
 
 #: plug-ins/screenshot/screenshot-x11.c:95
 msgid "Error selecting the window"
-msgstr ""
+msgstr "ფანჯრის არჩევის შეცდომა"
 
 #: plug-ins/screenshot/screenshot-x11.c:415
 msgid "Importing screenshot"
-msgstr ""
+msgstr "ეკრანის ანაბეჭდის შემოტანა"
 
 #: plug-ins/screenshot/screenshot-x11.c:468
 msgid "Mouse Pointer"
-msgstr ""
+msgstr "თაგუნას კურსორი"
 
 #: plug-ins/screenshot/screenshot-x11.c:626
 msgid "Specified window not found"
-msgstr ""
+msgstr "მითითებული ფანჯარა ნაპოვნი არაა"
 
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: plug-ins/selection-to-path/pxl-outline.c:81
@@ -12879,6 +12921,12 @@ msgstr ""
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr ""
+
+#~ msgid "Co_mment:"
+#~ msgstr "კომე_ნტარი:"
+
+#~ msgid "Op_acity:"
+#~ msgstr "_სიმღვრიე:"
 
 #~ msgid "Pixel format:"
 #~ msgstr "პიქსელის ფორმატი:"
