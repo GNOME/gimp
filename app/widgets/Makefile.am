@@ -274,10 +274,16 @@ libappwidgets_a_sources = \
 	gimplayertreeview.h		\
 	gimpmenu.c			\
 	gimpmenu.h			\
+	gimpmenubar.c			\
+	gimpmenubar.h			\
+	gimpmenushell.c			\
+	gimpmenushell.h			\
 	gimpmenudock.c			\
 	gimpmenudock.h			\
 	gimpmenufactory.c		\
 	gimpmenufactory.h		\
+	gimpmenumodel.c			\
+	gimpmenumodel.h			\
 	gimpmessagebox.c		\
 	gimpmessagebox.h		\
 	gimpmessagedialog.c		\
@@ -403,6 +409,8 @@ libappwidgets_a_sources = \
 	gimpthumbbox.h			\
 	gimptoggleaction.c		\
 	gimptoggleaction.h		\
+	gimptoolbar.c			\
+	gimptoolbar.h			\
 	gimptoolbox.c			\
 	gimptoolbox.h			\
 	gimptoolbox-color-area.c	\
