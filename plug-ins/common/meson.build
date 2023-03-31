@@ -155,7 +155,7 @@ endif
 if have_qoi
   common_plugins_list += {
     'name': 'file-qoi',
-    'deps': [ gtk3, gegl, qoi, ],
+    'deps': [ gtk3, gegl, ],
   }
 endif
 
