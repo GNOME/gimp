@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-27 16:22+0000\n"
-"PO-Revision-Date: 2023-03-28 10:06+0200\n"
+"POT-Creation-Date: 2023-03-30 04:07+0000\n"
+"PO-Revision-Date: 2023-03-31 15:50+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2064,51 +2064,96 @@ msgstr "Izvažanje »%s« ..."
 msgid "C source code"
 msgstr "Izvorna koda C"
 
+#: plug-ins/common/file-csource.c:124
+#, fuzzy
+msgid "Dump image data in RGB(A) format for C source"
+msgstr "Snemi slikovne podatke v obliki RGB(A) za izvorno kodo C"
+
+#: plug-ins/common/file-csource.c:126
+msgid "CSource cannot be run non-interactively."
+msgstr "CSource ni mogoče izvajati ne-interaktivno."
+
+#: plug-ins/common/file-csource.c:141
+#, fuzzy
+msgid "_Prefixed name"
+msgstr "Ime s _predpono"
+
+#: plug-ins/common/file-csource.c:142
+#, fuzzy
+msgid "Prefixed name"
+msgstr "Ime s predpono"
+
+#: plug-ins/common/file-csource.c:147
+msgid "Comme_nt"
+msgstr "Kome_ntar"
+
+#: plug-ins/common/file-csource.c:148
+msgid "Comment"
+msgstr "Komentar"
+
+#: plug-ins/common/file-csource.c:156
+msgid "Save comment to _file"
+msgstr "Shrani komentar v _datoteko"
+
+#: plug-ins/common/file-csource.c:157
+msgid "Save comment"
+msgstr "Shrani komentar"
+
+#: plug-ins/common/file-csource.c:162
+msgid "Use GLib types (guint_8*)"
+msgstr "Uporabi vrste GLib (guint_8*)"
+
+#: plug-ins/common/file-csource.c:163
+msgid "Use GLib types"
+msgstr "Uporabi vrste GLib"
+
+#: plug-ins/common/file-csource.c:168
+msgid "Save alpha channel (RG_BA/RGB)"
+msgstr "Shrani kanal alfa (RG_BA/RGB)"
+
+#: plug-ins/common/file-csource.c:169
+msgid "Save the alpha channel"
+msgstr "Shrani kanal alfa"
+
+#: plug-ins/common/file-csource.c:174
+msgid "Save as RGB565 (1_6-bit)"
+msgstr "Shrani kot RGB565 (1_6-bitno)"
+
+#: plug-ins/common/file-csource.c:175
+msgid "Use RGB565 encoding"
+msgstr "Uporabi kodiranje RGB565"
+
+#: plug-ins/common/file-csource.c:180
+msgid "_Use macros instead of struct"
+msgstr "_Uporabi makre namesto struct"
+
+#: plug-ins/common/file-csource.c:181
+msgid "Use C macros"
+msgstr "Uporabi makre C"
+
+#: plug-ins/common/file-csource.c:186
+msgid "Use _1 bit Run-Length-Encoding"
+msgstr "Uporabi _1-bitno kodiranje tekoče dolžine (RLE)"
+
+#: plug-ins/common/file-csource.c:187
+msgid "Use run-length-encoding"
+msgstr "Uporabi kodiranje tekoče dolžine (RLE)"
+
+#: plug-ins/common/file-csource.c:192
+msgid "Opaci_ty"
+msgstr "Pre_krivnost"
+
+#: plug-ins/common/file-csource.c:193
+msgid "Opacity"
+msgstr "Prekrivnost"
+
 #: plug-ins/common/file-csource.c:237
 msgid "C source does not support multiple layers."
 msgstr "Izvorna koda C ne podpira več plasti."
 
-#: plug-ins/common/file-csource.c:968
+#: plug-ins/common/file-csource.c:964
 msgid "Export Image as C-Source"
 msgstr "Izvozi sliko kot izvorno kodo C"
-
-#: plug-ins/common/file-csource.c:986
-msgid "_Prefixed name:"
-msgstr "_Predpona imena:"
-
-#: plug-ins/common/file-csource.c:993
-msgid "Co_mment:"
-msgstr "Ko_mentar:"
-
-#: plug-ins/common/file-csource.c:999
-msgid "_Save comment to file"
-msgstr "_Shrani komentar v datoteko"
-
-#: plug-ins/common/file-csource.c:1005
-msgid "_Use GLib types (guint8*)"
-msgstr "_Uporabi vrste GLib (guint8*)"
-
-#: plug-ins/common/file-csource.c:1011
-msgid "Us_e macros instead of struct"
-msgstr "Up_orabi makre namesto struct"
-
-#: plug-ins/common/file-csource.c:1017
-msgid "Use _1 byte Run-Length-Encoding"
-msgstr "Uporabi _1-bajtno kodiranje tekoče dolžine (RLE)"
-
-#: plug-ins/common/file-csource.c:1023
-msgid "Sa_ve alpha channel (RGBA/RGB)"
-msgstr "Shra_ni kanal alfa (RGBA/RGB)"
-
-#: plug-ins/common/file-csource.c:1034
-msgid "Save as _RGB565 (16-bit)"
-msgstr "Shrani kot _RGB565 (16-bitno)"
-
-#. Max Alpha Value
-#.
-#: plug-ins/common/file-csource.c:1039
-msgid "Op_acity:"
-msgstr "Pre_krivnost:"
 
 #: plug-ins/common/file-compressor.c:213
 msgid "gzip archive"
