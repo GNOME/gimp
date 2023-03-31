@@ -1860,6 +1860,52 @@ gimp_procedure_dialog_fill_expander (GimpProcedureDialog *dialog,
 
 
 /**
+ * gimp_procedure_dialog_fill_scrolled_window:
+ * @dialog:         the #GimpProcedureDialog.
+ * @container_id:   a container identifier.
+ * @contents_id:    The identifier for the contents.
+ *
+ * Creates and populates a new #GtkScrolledWindow with a widget corresponding
+ * to the declared content id.
+ *
+ * The @container_id must be a unique ID which is neither the name of a
+ * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * the ID of any previously created container. This ID can later be used
+ * together with property names to be packed in other containers or
+ * inside @dialog itself.
+ *
+ * Returns: (transfer none): the #GtkScrolledWindow representing @contents_id.
+ *                           The object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_fill_scrolled_window (GimpProcedureDialog *dialog,
+                                            const gchar         *container_id,
+                                            const gchar         *contents_id)
+{
+  GtkWidget *scrolled_window;
+  GList     *single_list = NULL;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
+  g_return_val_if_fail (container_id != NULL, NULL);
+  /* GtkScrolledWindow can only have one child */
+  g_return_val_if_fail (contents_id != NULL, NULL);
+
+  single_list = g_list_prepend (single_list, (gpointer) contents_id);
+
+  scrolled_window =
+    gimp_procedure_dialog_fill_container_list (dialog, container_id,
+                                               GTK_CONTAINER (gtk_scrolled_window_new (NULL, NULL)),
+                                               single_list);
+
+  if (single_list)
+    g_list_free (single_list);
+
+  return scrolled_window;
+}
+
+
+/**
  * gimp_procedure_dialog_set_sensitive:
  * @dialog:          the #GimpProcedureDialog.
  * @property:        name of a property of the #GimpProcedure @dialog
