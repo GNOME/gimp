@@ -255,7 +255,6 @@ windows_menu_recent_add (GimpContainer   *container,
 
   action_name = g_strdup_printf ("windows-recent-%04d", info_id);
 
-  /* TODO GMenu: doesn't look like it's working, neither will old or new API. */
   gimp_ui_manager_add_ui (manager, "/Windows/Recently Closed Docks",
                           action_name, NULL, TRUE);
 

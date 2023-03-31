@@ -790,8 +790,8 @@
       <attribute name="label" translatable="yes" context="windows-action">_Windows</attribute>
       <section>
         <submenu>
-          <attribute name="label" translatable="yes" context="windows-action">_Recently Closed Dialogs</attribute>
-          <!-- TODO: fill recently closed dialogs -->
+          <attribute name="label" translatable="yes" context="windows-action">_Recently Closed Docks</attribute>
+          <!-- Recently closed docks will be filled here automatically -->
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="windows-action">_Dockable Dialogs</attribute>
