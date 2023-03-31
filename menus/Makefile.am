@@ -3,50 +3,50 @@
 menudatadir = $(gimpdatadir)/menus
 
 menudata_in_files = \
-	dockable-menu.xml.in	\
-	image-menu.xml.in
+	dockable-menu.ui.in	\
+	image-menu.ui.in
 
-menudata_built_files = $(menudata_in_files:.xml.in=.xml)
+menudata_built_files = $(menudata_in_files:.ui.in=.ui)
 
 menudata_DATA = \
 	$(menudata_built_files)		\
-	brush-editor-menu.xml		\
-	brushes-menu.xml		\
-	buffers-menu.xml		\
-	channels-menu.xml		\
-	colormap-menu.xml		\
-	cursor-info-menu.xml		\
-	dashboard-menu.xml		\
-	documents-menu.xml		\
-	dynamics-editor-menu.xml	\
-	dynamics-menu.xml		\
-	error-console-menu.xml		\
-	fonts-menu.xml			\
-	gradient-editor-menu.xml	\
-	gradients-menu.xml		\
-	images-menu.xml			\
-	layers-menu.xml			\
-	mypaint-brushes-menu.xml	\
-	palette-editor-menu.xml		\
-	palettes-menu.xml		\
-	patterns-menu.xml		\
-	tool-preset-editor-menu.xml	\
-	tool-presets-menu.xml		\
-	quick-mask-menu.xml		\
-	sample-points-menu.xml		\
-	selection-menu.xml		\
-	templates-menu.xml		\
-	text-editor-toolbar.xml		\
-	text-tool-menu.xml		\
-	tool-options-menu.xml		\
-	undo-menu.xml			\
-	vector-toolpath-menu.xml	\
-	vectors-menu.xml
+	brush-editor-menu.ui		\
+	brushes-menu.ui		\
+	buffers-menu.ui		\
+	channels-menu.ui		\
+	colormap-menu.ui		\
+	cursor-info-menu.ui		\
+	dashboard-menu.ui		\
+	documents-menu.ui		\
+	dynamics-editor-menu.ui	\
+	dynamics-menu.ui		\
+	error-console-menu.ui		\
+	fonts-menu.ui			\
+	gradient-editor-menu.ui	\
+	gradients-menu.ui		\
+	images-menu.ui			\
+	layers-menu.ui			\
+	mypaint-brushes-menu.ui	\
+	palette-editor-menu.ui		\
+	palettes-menu.ui		\
+	patterns-menu.ui		\
+	tool-preset-editor-menu.ui	\
+	tool-presets-menu.ui		\
+	quick-mask-menu.ui		\
+	sample-points-menu.ui		\
+	selection-menu.ui		\
+	templates-menu.ui		\
+	text-editor-toolbar.ui		\
+	text-tool-menu.ui		\
+	tool-options-menu.ui		\
+	undo-menu.ui			\
+	vector-toolpath-menu.ui	\
+	vectors-menu.ui
 
 EXTRA_DIST = \
 	$(menudata_DATA)		\
 	$(menudata_in_files)		\
-	dialogs-menuitems.xml		\
+	dialogs-menuitems.ui		\
 	gtkuimanager.dtd		\
 	menus.xsl
 
@@ -57,18 +57,20 @@ if GIMP_UNSTABLE
 UNSTABLE_MENU_PARAMS = --stringparam unstable-menus yes
 endif
 
-SUFFIXES = .xml.in .xml
+SUFFIXES = .ui.in .ui
 
-.xml.in.xml:
+# Adding a `realpath` because xsltproc adds an xml:base attribute when the path
+# is absolute. This breaks our parsing at runtime.
+.ui.in.ui:
 if HAVE_XSLTPROC
-	$(XSLTPROC) --xinclude $(UNSTABLE_MENU_PARAMS) $(srcdir)/menus.xsl $< > $(@) || rm -f $(@)
+	$(XSLTPROC) --xinclude $(UNSTABLE_MENU_PARAMS) $(srcdir)/menus.xsl "`realpath --relative-to=. $<`" > $(@) || rm -f $(@)
 else
 	@echo "*** xsltproc is required to build the menus XML files ***"; exit 1;
 endif
 
 # Specifying dependencies in the implicit rule above does not work, so
 # specify them here instead
-dockable-menu.xml image-menu.xml: $(top_srcdir)/configure.ac $(srcdir)/menus.xsl dialogs-menuitems.xml
+dockable-menu.ui image-menu.ui: $(top_srcdir)/configure.ac $(srcdir)/menus.xsl dialogs-menuitems.ui
 
 validate: $(menudata_DATA)
 if HAVE_XMLLINT
