@@ -1,7 +1,7 @@
 # translation of gimp.po to Dutch
 # Dutch translation of Gimp
 # Copyright (C) 2000, 2005 Free Software Foundation, Inc.
-# document history	- documentgeschiedenis/Overzicht 'ongedaan maken'
+# document history	- documentgeschiedenis/Overzicht ‘ongedaan maken’
 # font			- lettertype/font
 # paint tools		- schilder(gereedschap)
 # parse			- verwerken/ontleden
@@ -9,12 +9,11 @@
 # tool			- tool/werktuig/gereedschap
 # pixel			- beelpunt
 # --------------------------------------------------
-# Menu's             (broncodebestand)
+# Menu’s             (broncodebestand)
 # Beeld              view-actions
 # ==================================================
 # Todo:
-# alle ... vervangen door …
-# aanhalingstekens ' vervangen door ‘ en ’ of <quote> en </qoute> ?
+# vertaling samenhangender maken
 # Wing Tung Leung <tg@skynet.be>, 1998.
 # Gert Dewit <Gert.Dewit@sos.be>, 2000.
 # Branko Collin <collin@xs4all.nl>, 2001, 2002, 2003, 2004.
@@ -32,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-03-27 15:36+0000\n"
-"PO-Revision-Date: 2023-04-01 14:15+0200\n"
+"PO-Revision-Date: 2023-04-01 14:21+0200\n"
 "Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
 "Language-Team: Dutch <https://matrix.to/#/#nl:gnome.org>\n"
 "Language: nl\n"
@@ -1146,7 +1145,7 @@ msgstr "Uitvoeren zonder een gebruikersinterface"
 
 #: ../app/main.c:193
 msgid "Do not load brushes, gradients, patterns, ..."
-msgstr "Geen penselen, kleurverlopen, patronen laden..."
+msgstr "Geen penselen, kleurverlopen, patronen laden…"
 
 #: ../app/main.c:198
 msgid "Do not load any fonts"
@@ -1596,7 +1595,7 @@ msgstr "Penselen vernieuwen"
 #: ../app/actions/brushes-actions.c:92
 msgctxt "brushes-action"
 msgid "_Edit Brush..."
-msgstr "Penseel be_werken..."
+msgstr "Penseel be_werken…"
 
 #: ../app/actions/brushes-actions.c:93
 msgctxt "brushes-action"
@@ -1705,7 +1704,7 @@ msgstr "Kleurlabel"
 #: ../app/actions/channels-actions.c:53
 msgctxt "channels-action"
 msgid "_Edit Channel Attributes..."
-msgstr "Kanaalattributen b_ewerken..."
+msgstr "Kanaalattributen b_ewerken…"
 
 #: ../app/actions/channels-actions.c:54
 msgctxt "channels-action"
@@ -1715,7 +1714,7 @@ msgstr "Naam, kleur en dekking van het kanaal bewerken"
 #: ../app/actions/channels-actions.c:59
 msgctxt "channels-action"
 msgid "_New Channel..."
-msgstr "_Nieuw kanaal..."
+msgstr "_Nieuw kanaal…"
 
 #: ../app/actions/channels-actions.c:60
 msgctxt "channels-action"
@@ -2029,7 +2028,7 @@ msgstr "Menu Kleurenkaart"
 #: ../app/actions/colormap-actions.c:49
 msgctxt "colormap-action"
 msgid "_Edit Color..."
-msgstr "Kleur be_werken..."
+msgstr "Kleur be_werken…"
 
 #: ../app/actions/colormap-actions.c:50
 msgctxt "colormap-action"
@@ -3341,7 +3340,7 @@ msgstr "Duur gesc_hiedenis"
 #: ../app/actions/dashboard-actions.c:51
 msgctxt "dashboard-action"
 msgid "_Start/Stop Recording..."
-msgstr "Start/stop opname prestatielog..."
+msgstr "Start/stop opname prestatielog…"
 
 #: ../app/actions/dashboard-actions.c:52
 msgctxt "dashboard-action"
@@ -3351,7 +3350,7 @@ msgstr "Start/stop opname prestatielog"
 #: ../app/actions/dashboard-actions.c:56
 msgctxt "dashboard-action"
 msgid "_Add Marker..."
-msgstr "M_arkering toevoegen..."
+msgstr "M_arkering toevoegen…"
 
 #: ../app/actions/dashboard-actions.c:57
 msgctxt "dashboard-action"
@@ -4001,7 +4000,7 @@ msgstr "Dok sluiten"
 #: ../app/actions/dock-actions.c:55
 msgctxt "dock-action"
 msgid "_Open Display..."
-msgstr "Weergave _openen..."
+msgstr "Weergave _openen…"
 
 #: ../app/actions/dock-actions.c:56
 msgctxt "dock-action"
@@ -4452,7 +4451,7 @@ msgstr "Penseelgedrag vernieuwen"
 #: ../app/actions/dynamics-actions.c:86
 msgctxt "dynamics-action"
 msgid "_Edit Dynamics..."
-msgstr "P_enseelgedrag bewerken..."
+msgstr "P_enseelgedrag bewerken…"
 
 #: ../app/actions/dynamics-actions.c:87
 msgctxt "dynamics-action"
@@ -4592,7 +4591,7 @@ msgstr "_Nieuwe afbeelding"
 #: ../app/actions/edit-actions.c:135
 msgctxt "edit-action"
 msgid "Cu_t Named..."
-msgstr "Benoemde buffer _knippen..."
+msgstr "Benoemde buffer _knippen…"
 
 #: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
@@ -4602,7 +4601,7 @@ msgstr "Selectie naar een benoemde buffer verplaatsen"
 #: ../app/actions/edit-actions.c:141
 msgctxt "edit-action"
 msgid "_Copy Named..."
-msgstr "Benoemde buffer k_opiëren..."
+msgstr "Benoemde buffer k_opiëren…"
 
 #: ../app/actions/edit-actions.c:142
 msgctxt "edit-action"
@@ -4613,7 +4612,7 @@ msgstr "Selectie naar een benoemde buffer kopiëren"
 #: ../app/actions/edit-actions.c:147
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
-msgstr "Zicht_bare benoemd kopiëren..."
+msgstr "Zicht_bare benoemd kopiëren…"
 
 #: ../app/actions/edit-actions.c:149
 msgctxt "edit-action"
@@ -4623,7 +4622,7 @@ msgstr "Al wat zichtbaar is in het geselecteerde gebied kopiëren"
 #: ../app/actions/edit-actions.c:154
 msgctxt "edit-action"
 msgid "_Paste Named..."
-msgstr "Benoemd _plakken..."
+msgstr "Benoemd _plakken…"
 
 #: ../app/actions/edit-actions.c:155
 msgctxt "edit-action"
@@ -4867,7 +4866,7 @@ msgstr "Oplic_hten"
 #: ../app/actions/error-console-actions.c:63
 msgctxt "error-console-action"
 msgid "_Save Error Log to File..."
-msgstr "_Foutenlog in bestand opslaan..."
+msgstr "_Foutenlog in bestand opslaan…"
 
 #: ../app/actions/error-console-actions.c:64
 msgctxt "error-console-action"
@@ -4877,7 +4876,7 @@ msgstr "Alle foutmeldingen in een bestand opslaan"
 #: ../app/actions/error-console-actions.c:69
 msgctxt "error-console-action"
 msgid "Save S_election to File..."
-msgstr "S_electie opslaan in bestand..."
+msgstr "S_electie opslaan in bestand…"
 
 #: ../app/actions/error-console-actions.c:70
 msgctxt "error-console-action"
@@ -4960,7 +4959,7 @@ msgstr "Onlangs _geopend"
 #: ../app/actions/file-actions.c:77
 msgctxt "file-action"
 msgid "_Open..."
-msgstr "O_penen..."
+msgstr "O_penen…"
 
 #: ../app/actions/file-actions.c:78
 msgctxt "file-action"
@@ -4970,7 +4969,7 @@ msgstr "Een afbeelding openen"
 #: ../app/actions/file-actions.c:83
 msgctxt "file-action"
 msgid "Op_en as Layers..."
-msgstr "Op_enen als lagen..."
+msgstr "Op_enen als lagen…"
 
 #: ../app/actions/file-actions.c:84
 msgctxt "file-action"
@@ -4980,7 +4979,7 @@ msgstr "Een afbeelding openen als lagen"
 #: ../app/actions/file-actions.c:89
 msgctxt "file-action"
 msgid "Open _Location..."
-msgstr "_Locatie openen..."
+msgstr "_Locatie openen…"
 
 #: ../app/actions/file-actions.c:90
 msgctxt "file-action"
@@ -4990,7 +4989,7 @@ msgstr "Een afbeelding op een bepaalde locatie openen"
 #: ../app/actions/file-actions.c:95
 msgctxt "file-action"
 msgid "Create _Template..."
-msgstr "Nieuw _sjabloon aanmaken..."
+msgstr "Nieuw _sjabloon aanmaken…"
 
 #: ../app/actions/file-actions.c:96
 msgctxt "file-action"
@@ -5060,7 +5059,7 @@ msgstr "Opslaan als XCF-bestand"
 #: ../app/actions/file-actions.c:140
 msgctxt "file-action"
 msgid "Save _As..."
-msgstr "Opslaan _als..."
+msgstr "Opslaan _als…"
 
 #: ../app/actions/file-actions.c:141
 msgctxt "file-action"
@@ -5070,7 +5069,7 @@ msgstr "Opslaan als XCF-bestand onder een andere naam"
 #: ../app/actions/file-actions.c:146
 msgctxt "file-action"
 msgid "Save a Cop_y..."
-msgstr "_Kopie opslaan..."
+msgstr "_Kopie opslaan…"
 
 #: ../app/actions/file-actions.c:148
 msgctxt "file-action"
@@ -5082,7 +5081,7 @@ msgstr "Een kopie van deze afbeelding opslaan"
 #: ../app/actions/file-actions.c:154
 msgctxt "file-action"
 msgid "Save and Close..."
-msgstr "Opslaan en sluiten..."
+msgstr "Opslaan en sluiten…"
 
 #: ../app/actions/file-actions.c:155
 msgctxt "file-action"
@@ -5092,7 +5091,7 @@ msgstr "Deze afbeelding opslaan en het venster sluiten"
 #: ../app/actions/file-actions.c:160 ../app/actions/file-actions.c:334
 msgctxt "file-action"
 msgid "E_xport..."
-msgstr "E_xporteren (JPG/etc.)..."
+msgstr "E_xporteren (JPG/etc.)…"
 
 #: ../app/actions/file-actions.c:161
 msgctxt "file-action"
@@ -5112,7 +5111,7 @@ msgstr "De geïmporteerde afbeelding overschrijven"
 #: ../app/actions/file-actions.c:172
 msgctxt "file-action"
 msgid "E_xport As..."
-msgstr "E_xporteren als..."
+msgstr "E_xporteren als…"
 
 #: ../app/actions/file-actions.c:173
 msgctxt "file-action"
@@ -5122,7 +5121,7 @@ msgstr "Afbeelding naar andere formaten zoals PNG of JPG exporteren"
 #: ../app/actions/file-actions.c:315
 msgctxt "file-action"
 msgid "_Save..."
-msgstr "Op_slaan (XCF)..."
+msgstr "Op_slaan (XCF)…"
 
 #: ../app/actions/file-actions.c:320
 #, c-format
@@ -5368,152 +5367,152 @@ msgstr "Donkere delen van het beeld groter maken"
 #: ../app/actions/filters-actions.c:173
 msgctxt "filters-action"
 msgid "_Alien Map..."
-msgstr "Kleur_verschuivingen..."
+msgstr "Kleur_verschuivingen…"
 
 #: ../app/actions/filters-actions.c:178
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
-msgstr "C_anvas toepassen..."
+msgstr "C_anvas toepassen…"
 
 #: ../app/actions/filters-actions.c:183
 msgctxt "filters-action"
 msgid "Apply _Lens..."
-msgstr "Objectief _toepassen..."
+msgstr "Objectief _toepassen…"
 
 #: ../app/actions/filters-actions.c:188
 msgctxt "filters-action"
 msgid "_Bayer Matrix..."
-msgstr "_Bayermatrix..."
+msgstr "_Bayermatrix…"
 
 #: ../app/actions/filters-actions.c:193
 msgctxt "filters-action"
 msgid "_Bloom..."
-msgstr "_Bloeien..."
+msgstr "_Bloeien…"
 
 #: ../app/actions/filters-actions.c:198
 msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
-msgstr "Helde_rheid/contrast..."
+msgstr "Helde_rheid/contrast…"
 
 #: ../app/actions/filters-actions.c:203
 msgctxt "filters-action"
 msgid "_Bump Map..."
-msgstr "_Bumpprojectie..."
+msgstr "_Bumpprojectie…"
 
 #: ../app/actions/filters-actions.c:208
 msgctxt "filters-action"
 msgid "_Color to Gray..."
-msgstr "_Kleur naar grijswaarden..."
+msgstr "_Kleur naar grijswaarden…"
 
 #: ../app/actions/filters-actions.c:213
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
-msgstr "Ca_rtoon..."
+msgstr "Ca_rtoon…"
 
 #: ../app/actions/filters-actions.c:218
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
-msgstr "_Kanalenmixer..."
+msgstr "_Kanalenmixer…"
 
 #: ../app/actions/filters-actions.c:223
 msgctxt "filters-action"
 msgid "_Checkerboard..."
-msgstr "S_chaakbord..."
+msgstr "S_chaakbord…"
 
 #: ../app/actions/filters-actions.c:228
 msgctxt "filters-action"
 msgid "Color _Balance..."
-msgstr "_Kleurbalans..."
+msgstr "_Kleurbalans…"
 
 #: ../app/actions/filters-actions.c:233
 msgctxt "filters-action"
 msgid "_Color Exchange..."
-msgstr "_Kleuruitwisseling..."
+msgstr "_Kleuruitwisseling…"
 
 #: ../app/actions/filters-actions.c:238
 msgctxt "filters-action"
 msgid "Colori_ze..."
-msgstr "Verkleuring..."
+msgstr "Verkleuring…"
 
 #: ../app/actions/filters-actions.c:243
 msgctxt "filters-action"
 msgid "Dithe_r..."
-msgstr "Raste_r..."
+msgstr "Raste_r…"
 
 #: ../app/actions/filters-actions.c:248
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
-msgstr "Kleuren r_oteren..."
+msgstr "Kleuren r_oteren…"
 
 #: ../app/actions/filters-actions.c:253
 msgctxt "filters-action"
 msgid "Color T_emperature..."
-msgstr "Kleurt_emperatuur..."
+msgstr "Kleurt_emperatuur…"
 
 #: ../app/actions/filters-actions.c:258
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
-msgstr "Kleur naar _alfa..."
+msgstr "Kleur naar _alfa…"
 
 #: ../app/actions/filters-actions.c:263
 msgctxt "filters-action"
 msgid "_Extract Component..."
-msgstr "Kleurcomponent extraheren..."
+msgstr "Kleurcomponent extraheren…"
 
 #: ../app/actions/filters-actions.c:268
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
-msgstr "_Convolutiematrix..."
+msgstr "_Convolutiematrix…"
 
 #: ../app/actions/filters-actions.c:273
 msgctxt "filters-action"
 msgid "_Cubism..."
-msgstr "_Kubisme..."
+msgstr "_Kubisme…"
 
 #: ../app/actions/filters-actions.c:278
 msgctxt "filters-action"
 msgid "_Curves..."
-msgstr "_Curves..."
+msgstr "_Curves…"
 
 #: ../app/actions/filters-actions.c:283
 msgctxt "filters-action"
 msgid "_Deinterlace..."
-msgstr "_De-interlace..."
+msgstr "_De-interlace…"
 
 #: ../app/actions/filters-actions.c:288
 msgctxt "filters-action"
 msgid "_Desaturate..."
-msgstr "Grijswaar_den..."
+msgstr "Grijswaar_den…"
 
 #: ../app/actions/filters-actions.c:293
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
-msgstr "_Gaussiaanse verschillen..."
+msgstr "_Gaussiaanse verschillen…"
 
 #: ../app/actions/filters-actions.c:298
 msgctxt "filters-action"
 msgid "D_iffraction Patterns..."
-msgstr "D_iffractiepatronen..."
+msgstr "D_iffractiepatronen…"
 
 #: ../app/actions/filters-actions.c:303
 msgctxt "filters-action"
 msgid "_Displace..."
-msgstr "_Verplaatsen..."
+msgstr "_Verplaatsen…"
 
 #: ../app/actions/filters-actions.c:308
 msgctxt "filters-action"
 msgid "Distance _Map..."
-msgstr "Afstands_kaart..."
+msgstr "Afstands_kaart…"
 
 #: ../app/actions/filters-actions.c:313
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
-msgstr "_Slagschaduw..."
+msgstr "_Slagschaduw…"
 
 #: ../app/actions/filters-actions.c:318
 msgctxt "filters-action"
 msgid "_Edge..."
-msgstr "_Rand..."
+msgstr "_Rand…"
 
 #: ../app/actions/filters-actions.c:323
 msgctxt "filters-action"
@@ -5523,448 +5522,448 @@ msgstr "_Laplace"
 #: ../app/actions/filters-actions.c:328
 msgctxt "filters-action"
 msgid "_Neon..."
-msgstr "_Neon..."
+msgstr "_Neon…"
 
 #: ../app/actions/filters-actions.c:333
 msgctxt "filters-action"
 msgid "_Sobel..."
-msgstr "_Sobel..."
+msgstr "_Sobel…"
 
 #: ../app/actions/filters-actions.c:338
 msgctxt "filters-action"
 msgid "_Emboss..."
-msgstr "R_eliëf..."
+msgstr "R_eliëf…"
 
 #: ../app/actions/filters-actions.c:343
 msgctxt "filters-action"
 msgid "En_grave..."
-msgstr "_Graveren..."
+msgstr "_Graveren…"
 
 #: ../app/actions/filters-actions.c:348
 msgctxt "filters-action"
 msgid "E_xposure..."
-msgstr "_Belichting..."
+msgstr "_Belichting…"
 
 #: ../app/actions/filters-actions.c:353
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
-msgstr "_Fattal et al. 2002..."
+msgstr "_Fattal et al. 2002…"
 
 #: ../app/actions/filters-actions.c:358
 msgctxt "filters-action"
 msgid "_Focus Blur..."
-msgstr "_Vervaging..."
+msgstr "_Vervaging…"
 
 #: ../app/actions/filters-actions.c:363
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
-msgstr "F_ractalsporen..."
+msgstr "F_ractalsporen…"
 
 #: ../app/actions/filters-actions.c:368
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
-msgstr "_Gaussiaanse vervaging..."
+msgstr "_Gaussiaanse vervaging…"
 
 #: ../app/actions/filters-actions.c:373
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
-msgstr "_Selectieve gaussiaanse vervaging..."
+msgstr "_Selectieve gaussiaanse vervaging…"
 
 #: ../app/actions/filters-actions.c:378
 msgctxt "filters-action"
 msgid "_GEGL graph..."
-msgstr "_GEGL-grafiek..."
+msgstr "_GEGL-grafiek…"
 
 #: ../app/actions/filters-actions.c:383
 msgctxt "filters-action"
 msgid "_Grid..."
-msgstr "_Raster..."
+msgstr "_Raster…"
 
 #: ../app/actions/filters-actions.c:388
 msgctxt "filters-action"
 msgid "_High Pass..."
-msgstr "_Hoogdoorlaatfilter..."
+msgstr "_Hoogdoorlaatfilter…"
 
 #: ../app/actions/filters-actions.c:393
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
-msgstr "Tint/_chroma..."
+msgstr "Tint/_chroma…"
 
 #: ../app/actions/filters-actions.c:398
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
-msgstr "Tint/ver_zadiging..."
+msgstr "Tint/ver_zadiging…"
 
 #: ../app/actions/filters-actions.c:403
 msgctxt "filters-action"
 msgid "_Illusion..."
-msgstr "_Illusie..."
+msgstr "_Illusie…"
 
 #: ../app/actions/filters-actions.c:408
 msgctxt "filters-action"
 msgid "_Image Gradient..."
-msgstr "_Beeldovergang..."
+msgstr "_Beeldovergang…"
 
 #: ../app/actions/filters-actions.c:413
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
-msgstr "_Caleidoscoop..."
+msgstr "_Caleidoscoop…"
 
 #: ../app/actions/filters-actions.c:418
 msgctxt "filters-action"
 msgid "Le_ns Blur..."
-msgstr "Le_nsvervaging..."
+msgstr "Le_nsvervaging…"
 
 #: ../app/actions/filters-actions.c:423
 msgctxt "filters-action"
 msgid "Le_ns Distortion..."
-msgstr "Le_nsvervorming..."
+msgstr "Le_nsvervorming…"
 
 #: ../app/actions/filters-actions.c:428
 msgctxt "filters-action"
 msgid "Lens _Flare..."
-msgstr "_Lensschittering..."
+msgstr "_Lensschittering…"
 
 #: ../app/actions/filters-actions.c:433
 msgctxt "filters-action"
 msgid "_Levels..."
-msgstr "_Niveaus..."
+msgstr "_Niveaus…"
 
 #: ../app/actions/filters-actions.c:438
 msgctxt "filters-action"
 msgid "_Linear Sinusoid..."
-msgstr "_Lineaire sinusoïde..."
+msgstr "_Lineaire sinusoïde…"
 
 #: ../app/actions/filters-actions.c:443
 msgctxt "filters-action"
 msgid "_Little Planet..."
-msgstr "K_leine Planeet..."
+msgstr "K_leine Planeet…"
 
 #: ../app/actions/filters-actions.c:448
 msgctxt "filters-action"
 msgid "_Long Shadow..."
-msgstr "_Lange schaduw..."
+msgstr "_Lange schaduw…"
 
 #: ../app/actions/filters-actions.c:453
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
-msgstr "_Mantiuk 2006..."
+msgstr "_Mantiuk 2006…"
 
 #: ../app/actions/filters-actions.c:458
 msgctxt "filters-action"
 msgid "_Maze..."
-msgstr "_Doolhof..."
+msgstr "_Doolhof…"
 
 #: ../app/actions/filters-actions.c:463
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
-msgstr "_Mediaanvervaging..."
+msgstr "_Mediaanvervaging…"
 
 #: ../app/actions/filters-actions.c:468
 msgctxt "filters-action"
 msgid "_Median Blur..."
-msgstr "_Mediaanvervaging..."
+msgstr "_Mediaanvervaging…"
 
 #: ../app/actions/filters-actions.c:473
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
-msgstr "_Monochrome mixer..."
+msgstr "_Monochrome mixer…"
 
 #: ../app/actions/filters-actions.c:478
 msgctxt "filters-action"
 msgid "_Mosaic..."
-msgstr "_Mozaïek..."
+msgstr "_Mozaïek…"
 
 #: ../app/actions/filters-actions.c:483
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
-msgstr "_Circulaire bewegingsvervaging..."
+msgstr "_Circulaire bewegingsvervaging…"
 
 #: ../app/actions/filters-actions.c:488
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
-msgstr "_Lineaire bewegingsvervaging..."
+msgstr "_Lineaire bewegingsvervaging…"
 
 #: ../app/actions/filters-actions.c:493
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
-msgstr "_Zoomvervaging..."
+msgstr "_Zoomvervaging…"
 
 #: ../app/actions/filters-actions.c:498
 msgctxt "filters-action"
 msgid "_Cell Noise..."
-msgstr "_Celruis..."
+msgstr "_Celruis…"
 
 #: ../app/actions/filters-actions.c:503
 msgctxt "filters-action"
 msgid "_Newsprint..."
-msgstr "Kra_ntendruk..."
+msgstr "Kra_ntendruk…"
 
 #: ../app/actions/filters-actions.c:508
 msgctxt "filters-action"
 msgid "_CIE lch Noise..."
-msgstr "_CIE lch-ruis..."
+msgstr "_CIE lch-ruis…"
 
 #: ../app/actions/filters-actions.c:513
 msgctxt "filters-action"
 msgid "HS_V Noise..."
-msgstr "HS_V-ruis..."
+msgstr "HS_V-ruis…"
 
 #: ../app/actions/filters-actions.c:518
 msgctxt "filters-action"
 msgid "_Hurl..."
-msgstr "Goo_ien..."
+msgstr "Goo_ien…"
 
 #: ../app/actions/filters-actions.c:523
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
-msgstr "Perli_nruis..."
+msgstr "Perli_nruis…"
 
 #: ../app/actions/filters-actions.c:528
 msgctxt "filters-action"
 msgid "_Pick..."
-msgstr "_Kies..."
+msgstr "_Kies…"
 
 #: ../app/actions/filters-actions.c:533
 msgctxt "filters-action"
 msgid "_RGB Noise..."
-msgstr "_RGB-ruis..."
+msgstr "_RGB-ruis…"
 
 #: ../app/actions/filters-actions.c:538
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
-msgstr "Ruisv_ermindering..."
+msgstr "Ruisv_ermindering…"
 
 #: ../app/actions/filters-actions.c:543
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
-msgstr "_Simplex ruis..."
+msgstr "_Simplex ruis…"
 
 #: ../app/actions/filters-actions.c:548
 msgctxt "filters-action"
 msgid "_Slur..."
-msgstr "Bedoe_zelen..."
+msgstr "Bedoe_zelen…"
 
 #: ../app/actions/filters-actions.c:553
 msgctxt "filters-action"
 msgid "_Solid Noise..."
-msgstr "_Solide ruis..."
+msgstr "_Solide ruis…"
 
 #: ../app/actions/filters-actions.c:558
 msgctxt "filters-action"
 msgid "Sp_read..."
-msgstr "Sp_reiding..."
+msgstr "Sp_reiding…"
 
 # Weet hier even geen vertaling voor, pm
 #: ../app/actions/filters-actions.c:563
 msgctxt "filters-action"
 msgid "_Normal Map..."
-msgstr "_Normaliseer..."
+msgstr "_Normaliseer…"
 
 #: ../app/actions/filters-actions.c:568
 msgctxt "filters-action"
 msgid "_Offset..."
-msgstr "Ver_schuiving..."
+msgstr "Ver_schuiving…"
 
 #: ../app/actions/filters-actions.c:573
 msgctxt "filters-action"
 msgid "Oili_fy..."
-msgstr "Olie_verven..."
+msgstr "Olie_verven…"
 
 #: ../app/actions/filters-actions.c:578
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
-msgstr "_Panoramaprojectie..."
+msgstr "_Panoramaprojectie…"
 
 #: ../app/actions/filters-actions.c:583
 msgctxt "filters-action"
 msgid "_Photocopy..."
-msgstr "_Fotokopie..."
+msgstr "_Fotokopie…"
 
 #: ../app/actions/filters-actions.c:588
 msgctxt "filters-action"
 msgid "_Pixelize..."
-msgstr "_Beeldpunten vergroten..."
+msgstr "_Beeldpunten vergroten…"
 
 #: ../app/actions/filters-actions.c:593
 msgctxt "filters-action"
 msgid "_Plasma..."
-msgstr "_Plasma..."
+msgstr "_Plasma…"
 
 #: ../app/actions/filters-actions.c:598
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
-msgstr "P_oolcoördinaten..."
+msgstr "P_oolcoördinaten…"
 
 #: ../app/actions/filters-actions.c:603
 msgctxt "filters-action"
 msgid "_Posterize..."
-msgstr "_Posterkleuren..."
+msgstr "_Posterkleuren…"
 
 #: ../app/actions/filters-actions.c:608
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
-msgstr "Omgekee_rde transformatie..."
+msgstr "Omgekee_rde transformatie…"
 
 #: ../app/actions/filters-actions.c:613
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
-msgstr "_Rode ogen verwijderen..."
+msgstr "_Rode ogen verwijderen…"
 
 #: ../app/actions/filters-actions.c:618
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
-msgstr "_Reinhard 2005..."
+msgstr "_Reinhard 2005…"
 
 #: ../app/actions/filters-actions.c:623
 msgctxt "filters-action"
 msgid "RGB _Clip..."
-msgstr "RGB _knippen..."
+msgstr "RGB _knippen…"
 
 #: ../app/actions/filters-actions.c:628
 msgctxt "filters-action"
 msgid "_Ripple..."
-msgstr "_Rimpeling..."
+msgstr "_Rimpeling…"
 
 #: ../app/actions/filters-actions.c:633
 msgctxt "filters-action"
 msgid "Sat_uration..."
-msgstr "V_erzadiging..."
+msgstr "V_erzadiging…"
 
 #: ../app/actions/filters-actions.c:638
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
-msgstr "_Semi-vlak maken..."
+msgstr "_Semi-vlak maken…"
 
 #: ../app/actions/filters-actions.c:643
 msgctxt "filters-action"
 msgid "_Sepia..."
-msgstr "_Sepia..."
+msgstr "_Sepia…"
 
 #: ../app/actions/filters-actions.c:648
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
-msgstr "Sc_haduwen/hoge lichten..."
+msgstr "Sc_haduwen/hoge lichten…"
 
 #: ../app/actions/filters-actions.c:653
 msgctxt "filters-action"
 msgid "_Shift..."
-msgstr "Ver_schuiving..."
+msgstr "Ver_schuiving…"
 
 #: ../app/actions/filters-actions.c:658
 msgctxt "filters-action"
 msgid "_Sinus..."
-msgstr "_Sinusoïde..."
+msgstr "_Sinusoïde…"
 
 #: ../app/actions/filters-actions.c:663
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
-msgstr "_Simpele lineaire iteratieve clustering..."
+msgstr "_Simpele lineaire iteratieve clustering…"
 
 #: ../app/actions/filters-actions.c:668
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
-msgstr "_Symmetrisch naaste buur..."
+msgstr "_Symmetrisch naaste buur…"
 
 #: ../app/actions/filters-actions.c:673
 msgctxt "filters-action"
 msgid "_Softglow..."
-msgstr "_Zachte gloed..."
+msgstr "_Zachte gloed…"
 
 #: ../app/actions/filters-actions.c:678
 msgctxt "filters-action"
 msgid "Spheri_ze..."
-msgstr "_Bolprojectie..."
+msgstr "_Bolprojectie…"
 
 #: ../app/actions/filters-actions.c:683
 msgctxt "filters-action"
 msgid "S_piral..."
-msgstr "S_piraal..."
+msgstr "S_piraal…"
 
 #: ../app/actions/filters-actions.c:688
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
-msgstr "Contra_st uitrekken..."
+msgstr "Contra_st uitrekken…"
 
 #: ../app/actions/filters-actions.c:693
 msgctxt "filters-action"
 msgid "_Stress..."
-msgstr "_Stressen..."
+msgstr "_Stressen…"
 
 #: ../app/actions/filters-actions.c:698
 msgctxt "filters-action"
 msgid "Super_nova..."
-msgstr "Super_nova..."
+msgstr "Super_nova…"
 
 #: ../app/actions/filters-actions.c:703
 msgctxt "filters-action"
 msgid "_Threshold..."
-msgstr "Drempelwaarde..."
+msgstr "Drempelwaarde…"
 
 #: ../app/actions/filters-actions.c:708
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
-msgstr "_Drempelwaarde alfa..."
+msgstr "_Drempelwaarde alfa…"
 
 #: ../app/actions/filters-actions.c:713
 msgctxt "filters-action"
 msgid "_Glass Tile..."
-msgstr "_Glazen tegel..."
+msgstr "_Glazen tegel…"
 
 #: ../app/actions/filters-actions.c:718
 msgctxt "filters-action"
 msgid "_Paper Tile..."
-msgstr "_Papieren tegel..."
+msgstr "_Papieren tegel…"
 
 #: ../app/actions/filters-actions.c:723
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
-msgstr "_Naadloos tegelen..."
+msgstr "_Naadloos tegelen…"
 
 #: ../app/actions/filters-actions.c:728
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
-msgstr "Verscherpen (_onscherp masker)..."
+msgstr "Verscherpen (_onscherp masker)…"
 
 #: ../app/actions/filters-actions.c:733
 msgctxt "filters-action"
 msgid "_Value Propagate..."
-msgstr "Waarde_doorgifte..."
+msgstr "Waarde_doorgifte…"
 
 #: ../app/actions/filters-actions.c:738
 msgctxt "filters-action"
 msgid "_Variable Blur..."
-msgstr "_Variabele vervaging..."
+msgstr "_Variabele vervaging…"
 
 #: ../app/actions/filters-actions.c:743
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
-msgstr "Vi_deodegradatie..."
+msgstr "Vi_deodegradatie…"
 
 #: ../app/actions/filters-actions.c:748
 msgctxt "filters-action"
 msgid "_Vignette..."
-msgstr "_Vignettering..."
+msgstr "_Vignettering…"
 
 #: ../app/actions/filters-actions.c:753
 msgctxt "filters-action"
 msgid "_Waterpixels..."
-msgstr "_Waterpixels..."
+msgstr "_Waterpixels…"
 
 #: ../app/actions/filters-actions.c:758
 msgctxt "filters-action"
 msgid "_Waves..."
-msgstr "_Golven..."
+msgstr "_Golven…"
 
 #: ../app/actions/filters-actions.c:763
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
-msgstr "Golven en _indrukken..."
+msgstr "Golven en _indrukken…"
 
 #: ../app/actions/filters-actions.c:768
 msgctxt "filters-action"
 msgid "W_ind..."
-msgstr "W_ind..."
+msgstr "W_ind…"
 
 #: ../app/actions/filters-actions.c:776
 msgctxt "filters-action"
@@ -6064,12 +6063,12 @@ msgstr "Rechterkleur opsl_aan naar"
 #: ../app/actions/gradient-editor-actions.c:67
 msgctxt "gradient-editor-action"
 msgid "L_eft Endpoint's Color..."
-msgstr "_Kleur van linkereindpunt..."
+msgstr "_Kleur van linkereindpunt…"
 
 #: ../app/actions/gradient-editor-actions.c:72
 msgctxt "gradient-editor-action"
 msgid "R_ight Endpoint's Color..."
-msgstr "Kl_eur van rechtereindpunt..."
+msgstr "Kl_eur van rechtereindpunt…"
 
 #: ../app/actions/gradient-editor-actions.c:112
 msgctxt "gradient-editor-action"
@@ -6249,7 +6248,7 @@ msgstr "Segment s_piegelen"
 
 #: ../app/actions/gradient-editor-actions.c:791
 msgid "_Replicate Segment..."
-msgstr "Segme_nt kopiëren..."
+msgstr "Segme_nt kopiëren…"
 
 #: ../app/actions/gradient-editor-actions.c:793
 msgid "Split Segment at _Midpoint"
@@ -6257,7 +6256,7 @@ msgstr "Segment _op middelpunt splitsen"
 
 #: ../app/actions/gradient-editor-actions.c:795
 msgid "Split Segment _Uniformly..."
-msgstr "Segment _gelijkmatig splitsen..."
+msgstr "Segment _gelijkmatig splitsen…"
 
 #: ../app/actions/gradient-editor-actions.c:797
 msgid "_Delete Segment"
@@ -6285,7 +6284,7 @@ msgstr "_Selectie spiegelen"
 
 #: ../app/actions/gradient-editor-actions.c:813
 msgid "_Replicate Selection..."
-msgstr "Selectie _kopiëren..."
+msgstr "Selectie _kopiëren…"
 
 #: ../app/actions/gradient-editor-actions.c:815
 msgid "Split Segments at _Midpoints"
@@ -6293,7 +6292,7 @@ msgstr "Segmenten op m_iddelpunten splitsen"
 
 #: ../app/actions/gradient-editor-actions.c:817
 msgid "Split Segments _Uniformly..."
-msgstr "Segmenten _gelijkmatig splitsen..."
+msgstr "Segmenten _gelijkmatig splitsen…"
 
 #: ../app/actions/gradient-editor-actions.c:819
 msgid "_Delete Selection"
@@ -6428,7 +6427,7 @@ msgstr "Toon locatie van verloopbestand in bestandsbeheer"
 #: ../app/actions/gradients-actions.c:72
 msgctxt "gradients-action"
 msgid "Save as _POV-Ray..."
-msgstr "Als _POV-Ray opslaan..."
+msgstr "Als _POV-Ray opslaan…"
 
 #: ../app/actions/gradients-actions.c:73
 msgctxt "gradients-action"
@@ -6458,7 +6457,7 @@ msgstr "Kleurverlopen vernieuwen"
 #: ../app/actions/gradients-actions.c:93
 msgctxt "gradients-action"
 msgid "_Edit Gradient..."
-msgstr "Kleurverloop be_werken..."
+msgstr "Kleurverloop be_werken…"
 
 #: ../app/actions/gradients-actions.c:94
 msgctxt "gradients-action"
@@ -6574,7 +6573,7 @@ msgstr "Grijswaarden"
 #: ../app/actions/image-actions.c:79
 msgctxt "image-action"
 msgid "_New..."
-msgstr "_Nieuw..."
+msgstr "_Nieuw…"
 
 #: ../app/actions/image-actions.c:80
 msgctxt "image-action"
@@ -6594,7 +6593,7 @@ msgstr "Deze afbeelding dupliceren"
 #: ../app/actions/image-actions.c:91
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
-msgstr "Kleurprofiel toewijzen..."
+msgstr "Kleurprofiel toewijzen…"
 
 #: ../app/actions/image-actions.c:92
 msgctxt "image-action"
@@ -6604,7 +6603,7 @@ msgstr "Wijs kleurprofiel toe aan deze afbeelding"
 #: ../app/actions/image-actions.c:97
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
-msgstr "Naar kleurprofiel _converteren..."
+msgstr "Naar kleurprofiel _converteren…"
 
 #: ../app/actions/image-actions.c:98
 msgctxt "image-action"
@@ -6624,7 +6623,7 @@ msgstr "Verwijder kleurprofiel van deze afbeelding"
 #: ../app/actions/image-actions.c:109
 msgctxt "image-action"
 msgid "_Save Color Profile to File..."
-msgstr "_Sla kleurprofiel op in bestand..."
+msgstr "_Sla kleurprofiel op in bestand…"
 
 #: ../app/actions/image-actions.c:110
 msgctxt "image-action"
@@ -6634,7 +6633,7 @@ msgstr "Sla het kleurprofiel op in een ICC-bestand"
 #: ../app/actions/image-actions.c:115
 msgctxt "image-action"
 msgid "Can_vas Size..."
-msgstr "Can_vasgrootte..."
+msgstr "Can_vasgrootte…"
 
 #: ../app/actions/image-actions.c:116
 msgctxt "image-action"
@@ -6664,7 +6663,7 @@ msgstr "De afbeeldingsgrootte wijzigen tot de randen van de selectie"
 #: ../app/actions/image-actions.c:133
 msgctxt "image-action"
 msgid "_Print Size..."
-msgstr "Afdrukgrootte..."
+msgstr "Afdrukgrootte…"
 
 #: ../app/actions/image-actions.c:134
 msgctxt "image-action"
@@ -6674,7 +6673,7 @@ msgstr "De afdrukgrootte aanpassen"
 #: ../app/actions/image-actions.c:139
 msgctxt "image-action"
 msgid "_Scale Image..."
-msgstr "Afbeelding _schalen..."
+msgstr "Afbeelding _schalen…"
 
 #: ../app/actions/image-actions.c:140
 msgctxt "image-action"
@@ -6705,7 +6704,7 @@ msgstr "De afbeelding bijsnijden tot de beeldinhoud (verwijder lege gebieden)"
 #: ../app/actions/image-actions.c:157
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
-msgstr "_Zichtbare lagen samenvoegen..."
+msgstr "_Zichtbare lagen samenvoegen…"
 
 #: ../app/actions/image-actions.c:158
 msgctxt "image-action"
@@ -6725,7 +6724,7 @@ msgstr "Alle lagen samenvoegen tot één laag en transparantie verwijderen"
 #: ../app/actions/image-actions.c:169
 msgctxt "image-action"
 msgid "Configure G_rid..."
-msgstr "_Raster instellen..."
+msgstr "_Raster instellen…"
 
 #: ../app/actions/image-actions.c:170
 msgctxt "image-action"
@@ -6780,7 +6779,7 @@ msgstr "Afbeelding naar grijswaarden omzetten"
 #: ../app/actions/image-actions.c:206
 msgctxt "image-convert-action"
 msgid "_Indexed..."
-msgstr "Geï_ndexeerd..."
+msgstr "Geï_ndexeerd…"
 
 #: ../app/actions/image-actions.c:207
 msgctxt "image-convert-action"
@@ -6920,12 +6919,12 @@ msgstr "De afbeelding 90 graden naar links draaien"
 #: ../app/actions/image-actions.c:440
 msgctxt "image-convert-action"
 msgid "_RGB..."
-msgstr "_RGB..."
+msgstr "_RGB…"
 
 #: ../app/actions/image-actions.c:442
 msgctxt "image-convert-action"
 msgid "_Grayscale..."
-msgstr "_Grijswaarden..."
+msgstr "_Grijswaarden…"
 
 #: ../app/actions/image-commands.c:569
 #, c-format
@@ -7164,7 +7163,7 @@ msgstr "Deze tekstlaaginhoud op canvas bewerken"
 #: ../app/actions/layers-actions.c:101
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
-msgstr "Laagattributen be_werken..."
+msgstr "Laagattributen be_werken…"
 
 #: ../app/actions/layers-actions.c:102
 msgctxt "layers-action"
@@ -7174,7 +7173,7 @@ msgstr "De naam van de laag bewerken"
 #: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:929
 msgctxt "layers-action"
 msgid "_New Layer..."
-msgstr "_Nieuwe laag..."
+msgstr "_Nieuwe laag…"
 
 #: ../app/actions/layers-actions.c:108
 msgctxt "layers-action"
@@ -7305,7 +7304,7 @@ msgstr "Alle zichtbare lagen in de groep samenvoegen tot één normale laag"
 #: ../app/actions/layers-actions.c:196
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
-msgstr "_Zichtbare lagen samenvoegen..."
+msgstr "_Zichtbare lagen samenvoegen…"
 
 #: ../app/actions/layers-actions.c:197
 msgctxt "layers-action"
@@ -7366,7 +7365,7 @@ msgstr "De tekst van deze laag langs het huidige pad plaatsen"
 #: ../app/actions/layers-actions.c:232
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
-msgstr "Gr_ootte laagbegrenzing..."
+msgstr "Gr_ootte laagbegrenzing…"
 
 #: ../app/actions/layers-actions.c:233
 msgctxt "layers-action"
@@ -7386,7 +7385,7 @@ msgstr "De grootte van de laag hetzelfde maken als de grootte van de afbeelding"
 #: ../app/actions/layers-actions.c:244
 msgctxt "layers-action"
 msgid "_Scale Layer..."
-msgstr "Laag s_chalen..."
+msgstr "Laag s_chalen…"
 
 #: ../app/actions/layers-actions.c:245
 msgctxt "layers-action"
@@ -7417,7 +7416,7 @@ msgstr "Laag bijsnijden tot de beeldinhoud (verwijder lege delen van de laag)"
 #: ../app/actions/layers-actions.c:262 ../app/actions/layers-actions.c:272
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
-msgstr "Laagmasker _toevoegen..."
+msgstr "Laagmasker _toevoegen…"
 
 #: ../app/actions/layers-actions.c:264 ../app/actions/layers-actions.c:274
 msgctxt "layers-action"
@@ -8015,7 +8014,7 @@ msgstr "MyPaint-penselen vernieuwen"
 #: ../app/actions/mypaint-brushes-actions.c:86
 msgctxt "mypaint-brushes-action"
 msgid "_Edit MyPaint Brush..."
-msgstr "MyBrush-penseel be_werken..."
+msgstr "MyBrush-penseel be_werken…"
 
 #: ../app/actions/mypaint-brushes-actions.c:87
 msgctxt "mypaint-brushes-action"
@@ -8030,7 +8029,7 @@ msgstr "Menu editor Paletten"
 #: ../app/actions/palette-editor-actions.c:48
 msgctxt "palette-editor-action"
 msgid "_Edit Color..."
-msgstr "Kleur be_werken..."
+msgstr "Kleur be_werken…"
 
 #: ../app/actions/palette-editor-actions.c:49
 msgctxt "palette-editor-action"
@@ -8103,7 +8102,7 @@ msgstr "Nieuw palet aanmaken"
 #: ../app/actions/palettes-actions.c:54
 msgctxt "palettes-action"
 msgid "_Import Palette..."
-msgstr "Palet _importeren..."
+msgstr "Palet _importeren…"
 
 #: ../app/actions/palettes-actions.c:55
 msgctxt "palettes-action"
@@ -8123,7 +8122,7 @@ msgstr "Palet dupliceren"
 #: ../app/actions/palettes-actions.c:66
 msgctxt "palettes-action"
 msgid "_Merge Palettes..."
-msgstr "Paletten _samenvoegen..."
+msgstr "Paletten _samenvoegen…"
 
 #: ../app/actions/palettes-actions.c:67
 msgctxt "palettes-action"
@@ -8173,7 +8172,7 @@ msgstr "Paletten vernieuwen"
 #: ../app/actions/palettes-actions.c:99
 msgctxt "palettes-action"
 msgid "_Edit Palette..."
-msgstr "Palet be_werken..."
+msgstr "Palet be_werken…"
 
 #: ../app/actions/palettes-actions.c:100
 msgctxt "palettes-action"
@@ -8270,7 +8269,7 @@ msgstr "Patronen vernieuwen"
 #: ../app/actions/patterns-actions.c:92
 msgctxt "patterns-action"
 msgid "_Edit Pattern..."
-msgstr "Patroon be_werken..."
+msgstr "Patroon be_werken…"
 
 #: ../app/actions/patterns-actions.c:93
 msgctxt "patterns-action"
@@ -8314,7 +8313,7 @@ msgstr "Menu Snelmasker"
 #: ../app/actions/quick-mask-actions.c:47
 msgctxt "quick-mask-action"
 msgid "_Configure Color and Opacity..."
-msgstr "Kleur en dekking _configureren..."
+msgstr "Kleur en dekking _configureren…"
 
 #: ../app/actions/quick-mask-actions.c:55
 msgctxt "quick-mask-action"
@@ -8423,7 +8422,7 @@ msgstr "Een zwevende selectie aanmaken"
 #: ../app/actions/select-actions.c:74
 msgctxt "select-action"
 msgid "Fea_ther..."
-msgstr "Selectieranden _verzachten..."
+msgstr "Selectieranden _verzachten…"
 
 #: ../app/actions/select-actions.c:76
 msgctxt "select-action"
@@ -8443,7 +8442,7 @@ msgstr "Zachte randen van selectie verwijderen"
 #: ../app/actions/select-actions.c:87
 msgctxt "select-action"
 msgid "S_hrink..."
-msgstr "_Krimpen..."
+msgstr "_Krimpen…"
 
 #: ../app/actions/select-actions.c:88
 msgctxt "select-action"
@@ -8453,7 +8452,7 @@ msgstr "De selectie verkleinen"
 #: ../app/actions/select-actions.c:93
 msgctxt "select-action"
 msgid "_Grow..."
-msgstr "Ver_groten..."
+msgstr "Ver_groten…"
 
 #: ../app/actions/select-actions.c:94
 msgctxt "select-action"
@@ -8463,7 +8462,7 @@ msgstr "De selectie vergroten"
 #: ../app/actions/select-actions.c:99
 msgctxt "select-action"
 msgid "Bo_rder..."
-msgstr "_Rand..."
+msgstr "_Rand…"
 
 #: ../app/actions/select-actions.c:100
 msgctxt "select-action"
@@ -8493,7 +8492,7 @@ msgstr "De selectie opslaan in een kanaal"
 #: ../app/actions/select-actions.c:117
 msgctxt "select-action"
 msgid "_Fill Selection Outline..."
-msgstr "Selectieomlijning v_ullen..."
+msgstr "Selectieomlijning v_ullen…"
 
 # Bug? Deze opdracht vult de selectie met een kleur of patroon, niet de omtrek ervan
 # pm
@@ -8515,7 +8514,7 @@ msgstr "Selectie belijnen met laatst gebruikte waarden"
 #: ../app/actions/select-actions.c:129
 msgctxt "select-action"
 msgid "_Stroke Selection..."
-msgstr "Selectie be_lijnen..."
+msgstr "Selectie be_lijnen…"
 
 #: ../app/actions/select-actions.c:130
 msgctxt "select-action"
@@ -8618,7 +8617,7 @@ msgstr "Nieuwe afbeelding aanmaken op basis van de geselecteerde sjabloon"
 #: ../app/actions/templates-actions.c:52
 msgctxt "templates-action"
 msgid "_New Template..."
-msgstr "_Nieuwe sjabloon..."
+msgstr "_Nieuwe sjabloon…"
 
 #: ../app/actions/templates-actions.c:53
 msgctxt "templates-action"
@@ -8628,7 +8627,7 @@ msgstr "Nieuwe sjabloon aanmaken"
 #: ../app/actions/templates-actions.c:58
 msgctxt "templates-action"
 msgid "D_uplicate Template..."
-msgstr "Sjabloon d_upliceren..."
+msgstr "Sjabloon d_upliceren…"
 
 #: ../app/actions/templates-actions.c:59
 msgctxt "templates-action"
@@ -8638,7 +8637,7 @@ msgstr "Deze sjabloon dupliceren"
 #: ../app/actions/templates-actions.c:64
 msgctxt "templates-action"
 msgid "_Edit Template..."
-msgstr "Sjabloon be_werken..."
+msgstr "Sjabloon be_werken…"
 
 #: ../app/actions/templates-actions.c:65
 msgctxt "templates-action"
@@ -8817,7 +8816,7 @@ msgstr "_Verwijderen"
 #: ../app/actions/text-tool-actions.c:78
 msgctxt "text-tool-action"
 msgid "_Open text file..."
-msgstr "Tekstbestand _openen..."
+msgstr "Tekstbestand _openen…"
 
 # wissen
 #: ../app/actions/text-tool-actions.c:83
@@ -8908,7 +8907,7 @@ msgstr "Gereedschapsopties _verwijderen"
 #: ../app/actions/tool-options-actions.c:78
 msgctxt "tool-options-action"
 msgid "_New Tool Preset..."
-msgstr "_Nieuwe gereedschapsopties..."
+msgstr "_Nieuwe gereedschapsopties…"
 
 # opnieuw instellen/herstellen
 #: ../app/actions/tool-options-actions.c:83
@@ -9072,7 +9071,7 @@ msgstr "Gereedschapsvoorinstellingen vernieuwen"
 #: ../app/actions/tool-presets-actions.c:102
 msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
-msgstr "Gereedschapsvoorinstelling be_werken..."
+msgstr "Gereedschapsvoorinstelling be_werken…"
 
 #: ../app/actions/tool-presets-actions.c:103
 msgctxt "tool-presets-action"
@@ -9127,7 +9126,7 @@ msgstr "Gebieden met gelijkende kleuren selecteren"
 #: ../app/actions/tools-actions.c:63 ../app/actions/tools-actions.c:69
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
-msgstr "_Willekeurige draaiing..."
+msgstr "_Willekeurige draaiing…"
 
 #: ../app/actions/tools-actions.c:64
 msgctxt "tools-action"
@@ -9585,7 +9584,7 @@ msgstr "Actieve pad bewerken"
 #: ../app/actions/vectors-actions.c:60
 msgctxt "vectors-action"
 msgid "_Edit Path Attributes..."
-msgstr "Padattributen be_werken..."
+msgstr "Padattributen be_werken…"
 
 #: ../app/actions/vectors-actions.c:61
 msgctxt "vectors-action"
@@ -9595,12 +9594,12 @@ msgstr "Padattributen bewerken"
 #: ../app/actions/vectors-actions.c:66
 msgctxt "vectors-action"
 msgid "_New Path..."
-msgstr "_Nieuw pad..."
+msgstr "_Nieuw pad…"
 
 #: ../app/actions/vectors-actions.c:67
 msgctxt "vectors-action"
 msgid "Create a new path..."
-msgstr "Nieuw pad aanmaken..."
+msgstr "Nieuw pad aanmaken…"
 
 #: ../app/actions/vectors-actions.c:72
 msgctxt "vectors-action"
@@ -9682,7 +9681,7 @@ msgstr "Het pad onderaan zetten"
 #: ../app/actions/vectors-actions.c:119
 msgctxt "vectors-action"
 msgid "Fill Pat_h..."
-msgstr "Vul pa_d..."
+msgstr "Vul pa_d…"
 
 #: ../app/actions/vectors-actions.c:120
 msgctxt "vectors-action"
@@ -9702,7 +9701,7 @@ msgstr "Vul pad met laatstgebruikte waarden"
 #: ../app/actions/vectors-actions.c:131
 msgctxt "vectors-action"
 msgid "Stro_ke Path..."
-msgstr "Pad be_lijnen..."
+msgstr "Pad be_lijnen…"
 
 #: ../app/actions/vectors-actions.c:132
 msgctxt "vectors-action"
@@ -9732,12 +9731,12 @@ msgstr "Pa_d plakken"
 #: ../app/actions/vectors-actions.c:153
 msgctxt "vectors-action"
 msgid "E_xport Path..."
-msgstr "Pad e_xporteren..."
+msgstr "Pad e_xporteren…"
 
 #: ../app/actions/vectors-actions.c:158
 msgctxt "vectors-action"
 msgid "I_mport Path..."
-msgstr "Pad i_mporteren..."
+msgstr "Pad i_mporteren…"
 
 #: ../app/actions/vectors-actions.c:166
 msgctxt "vectors-action"
@@ -10116,7 +10115,7 @@ msgstr "Het vorige zoomniveau herstellen"
 #: ../app/actions/view-actions.c:131
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
-msgstr "Andere rotatiehoek..."
+msgstr "Andere rotatiehoek…"
 
 #: ../app/actions/view-actions.c:132
 msgctxt "view-action"
@@ -10136,7 +10135,7 @@ msgstr "Open het Navigatievenster voor deze afbeelding"
 #: ../app/actions/view-actions.c:143
 msgctxt "view-action"
 msgid "Display _Filters..."
-msgstr "_Weergavefilters..."
+msgstr "_Weergavefilters…"
 
 #: ../app/actions/view-actions.c:144
 msgctxt "view-action"
@@ -10159,7 +10158,7 @@ msgstr "Kleurbeheer terugzetten op wat in Voorkeuren staat ingesteld"
 #: ../app/actions/view-actions.c:156
 msgctxt "view-action"
 msgid "Soft-_Proofing Profile..."
-msgstr "Profiel afdrukvoorbeeld..."
+msgstr "Profiel afdrukvoorbeeld…"
 
 # Tooltip: sets how colors are converted from workspace to the print
 # simulation device.
@@ -10184,7 +10183,7 @@ msgstr "Het venster verkleinen tot de afmetingen van de afbeelding"
 #: ../app/actions/view-actions.c:168
 msgctxt "view-action"
 msgid "_Open Display..."
-msgstr "Scherm _openen..."
+msgstr "Scherm _openen…"
 
 #: ../app/actions/view-actions.c:169
 msgctxt "view-action"
@@ -10560,7 +10559,7 @@ msgstr "Zoom 1:16"
 #: ../app/actions/view-actions.c:472
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
-msgstr "Andere zoomfactor..."
+msgstr "Andere zoomfactor…"
 
 #: ../app/actions/view-actions.c:473
 msgctxt "view-zoom-action"
@@ -10771,7 +10770,7 @@ msgstr "Donkere vakjes gebruiken"
 #: ../app/actions/view-actions.c:618
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
-msgstr "Aangepaste kleur sele_cteren..."
+msgstr "Aangepaste kleur sele_cteren…"
 
 #: ../app/actions/view-actions.c:619
 msgctxt "view-padding-color"
@@ -10880,7 +10879,7 @@ msgstr "Terug naar vorig zoomniveau"
 #: ../app/actions/view-actions.c:1144
 #, c-format
 msgid "Othe_r (%s)..."
-msgstr "_Aangepast (%s)..."
+msgstr "_Aangepast (%s)…"
 
 #: ../app/actions/view-actions.c:1153
 #, c-format
@@ -13380,12 +13379,12 @@ msgstr ""
 #: ../app/core/gimp-user-install.c:419
 #, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr "Bestand ‘%s’ wordt gekopieerd uit ‘%s’..."
+msgstr "Bestand ‘%s’ wordt gekopieerd uit ‘%s’…"
 
 #: ../app/core/gimp-user-install.c:434 ../app/core/gimp-user-install.c:460
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr "Map ‘%s’ wordt aangemaakt..."
+msgstr "Map ‘%s’ wordt aangemaakt…"
 
 #: ../app/core/gimp-user-install.c:445 ../app/core/gimp-user-install.c:471
 #, c-format
@@ -13874,7 +13873,7 @@ msgstr "%s kopiëren"
 #: ../app/core/gimpdatafactory.c:587 ../app/tools/gimptextoptions.c:532
 #: ../app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
-msgstr "Laden lettertypes (kan even duren...)"
+msgstr "Laden lettertypes (kan even duren…)"
 
 #: ../app/core/gimpdatafactory.c:909
 #, c-format
@@ -14658,7 +14657,7 @@ msgstr "Klik om een voorbeeld aan te maken"
 
 #: ../app/core/gimpimagefile.c:792
 msgid "Loading preview..."
-msgstr "Voorbeeld wordt geladen..."
+msgstr "Voorbeeld wordt geladen…"
 
 #: ../app/core/gimpimagefile.c:798
 msgid "Preview is out of date"
@@ -17135,7 +17134,7 @@ msgstr "_Dynamische sneltoetsen gebruiken"
 
 #: ../app/dialogs/preferences-dialog.c:1878
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "Sneltoetsen _configureren..."
+msgstr "Sneltoetsen _configureren…"
 
 #: ../app/dialogs/preferences-dialog.c:1885
 msgid "_Save keyboard shortcuts on exit"
@@ -17634,7 +17633,7 @@ msgstr "Voer handmatig _in"
 
 #: ../app/dialogs/preferences-dialog.c:2787
 msgid "C_alibrate..."
-msgstr "_Kalibreren..."
+msgstr "_Kalibreren…"
 
 #: ../app/dialogs/preferences-dialog.c:2814 ../app/dialogs/preferences-dialog.c:2815
 msgid "Window Management"
@@ -17842,7 +17841,7 @@ msgstr "Gereedsc_happen en opties delen tussen invoerapparaten"
 
 #: ../app/dialogs/preferences-dialog.c:3154
 msgid "Configure E_xtended Input Devices..."
-msgstr "_Uitgebreide invoerapparaten configureren..."
+msgstr "_Uitgebreide invoerapparaten configureren…"
 
 #: ../app/dialogs/preferences-dialog.c:3161
 msgid "_Save input device settings on exit"
@@ -22381,7 +22380,7 @@ msgstr "Helderheid/contrast"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:99
 msgid "B_rightness-Contrast..."
-msgstr "_Helderheid/contrast..."
+msgstr "_Helderheid/contrast…"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:161
 msgid "Adjust Brightness and Contrast"
@@ -22489,7 +22488,7 @@ msgstr "Detecteer contouren"
 
 #: ../app/tools/gimpbucketfilloptions.c:495
 msgid "(computing...)"
-msgstr "(berekenen...)"
+msgstr "(berekenen…)"
 
 #: ../app/tools/gimpbucketfilltool.c:167
 msgid "Bucket Fill"
@@ -22802,7 +22801,7 @@ msgstr "Curves"
 
 #: ../app/tools/gimpcurvestool.c:156
 msgid "_Curves..."
-msgstr "_Curves..."
+msgstr "_Curves…"
 
 #: ../app/tools/gimpcurvestool.c:395
 msgid "Click to add a control point"
@@ -23278,7 +23277,7 @@ msgstr "GEGL-gereedschap: een willekeurige GEGL-bewerking uitvoeren"
 
 #: ../app/tools/gimpgegltool.c:80
 msgid "_GEGL Operation..."
-msgstr "_GEGL-bewerking..."
+msgstr "_GEGL-bewerking…"
 
 #. The options vbox
 #: ../app/tools/gimpgegltool.c:497
@@ -23625,7 +23624,7 @@ msgstr "Wijzig schaarcurve"
 
 #: ../app/tools/gimplevelstool.c:140
 msgid "_Levels..."
-msgstr "_Niveaus..."
+msgstr "_Niveaus…"
 
 #: ../app/tools/gimplevelstool.c:276
 msgid "Pick black point for all channels"
@@ -23700,7 +23699,7 @@ msgstr "Oude _bestandsformaat voor niveaus gebruiken"
 
 #: ../app/tools/gimplevelstool.c:1005 ../app/tools/gimpthresholdtool.c:412
 msgid "Calculating histogram..."
-msgstr "Histogram wordt berekend..."
+msgstr "Histogram wordt berekend…"
 
 #: ../app/tools/gimpmagnifyoptions.c:83
 msgid "Auto-resize window"
@@ -23932,7 +23931,7 @@ msgstr "_N-Point vervorming"
 
 #: ../app/tools/gimpoffsettool.c:131
 msgid "_Offset..."
-msgstr "Ver_schuiving..."
+msgstr "Ver_schuiving…"
 
 # verschuiven/verspringen
 #: ../app/tools/gimpoffsettool.c:198
@@ -24631,7 +24630,7 @@ msgstr "GIMP Editor Tekst"
 
 #: ../app/tools/gimpthresholdtool.c:95
 msgid "_Threshold..."
-msgstr "_Drempelwaarde..."
+msgstr "_Drempelwaarde…"
 
 #: ../app/tools/gimpthresholdtool.c:195
 msgid "Apply Threshold"
@@ -26676,7 +26675,7 @@ msgstr "Nvt"
 
 #: ../app/widgets/gimpdashboard.c:4793
 msgid "Resolving symbol information..."
-msgstr "Verwerken symboolinformatie..."
+msgstr "Verwerken symboolinformatie…"
 
 #: ../app/widgets/gimpdataeditor.c:413
 #, c-format
@@ -27101,7 +27100,7 @@ msgstr "_Lees geselecteerde taal"
 
 #: ../app/widgets/gimphelp.c:824
 msgid "Available manuals..."
-msgstr "Beschikbare handleidingen..."
+msgstr "Beschikbare handleidingen…"
 
 #: ../app/widgets/gimphelp.c:836
 msgid ""
@@ -27158,11 +27157,11 @@ msgstr "Toon waarden in perceptuele ruimte"
 
 #: ../app/widgets/gimpiconpicker.c:241
 msgid "From File..."
-msgstr "Vanuit bestand..."
+msgstr "Vanuit bestand…"
 
 #: ../app/widgets/gimpiconpicker.c:250
 msgid "From Named Icons..."
-msgstr "Van pictogramnamen..."
+msgstr "Van pictogramnamen…"
 
 #: ../app/widgets/gimpiconpicker.c:259
 msgid "Copy Icon to Clipboard"
@@ -27445,15 +27444,15 @@ msgstr "Beheer voorinstellingen"
 # lezen/laden
 #: ../app/widgets/gimpsettingsbox.c:356
 msgid "_Import Current Settings from File..."
-msgstr "_Instellingen importeren uit bestand..."
+msgstr "_Instellingen importeren uit bestand…"
 
 #: ../app/widgets/gimpsettingsbox.c:362
 msgid "_Export Current Settings to File..."
-msgstr "Huidig_e instellingen exporteren naar bestand..."
+msgstr "Huidig_e instellingen exporteren naar bestand…"
 
 #: ../app/widgets/gimpsettingsbox.c:369
 msgid "_Manage Saved Presets..."
-msgstr "_Opgeslagen voorinstellingen beheren..."
+msgstr "_Opgeslagen voorinstellingen beheren…"
 
 #: ../app/widgets/gimpsettingsbox.c:605
 msgid "Save Settings as Named Preset"
@@ -27692,7 +27691,7 @@ msgstr "Miniatuur %d van %d"
 
 #: ../app/widgets/gimpthumbbox.c:734 ../app/widgets/gimpthumbbox.c:744
 msgid "Creating preview..."
-msgstr "Voorbeeld wordt aangemaakt..."
+msgstr "Voorbeeld wordt aangemaakt…"
 
 #: ../app/widgets/gimptoolbox-color-area.c:220
 msgid "Change Foreground Color"
@@ -27790,15 +27789,15 @@ msgstr "Volgorde en zichtbaarheid van het gereedschap resetten"
 
 #: ../app/widgets/gimptooloptionseditor.c:200
 msgid "Save Tool Preset..."
-msgstr "Gereedschapsopties opslaan..."
+msgstr "Gereedschapsopties opslaan…"
 
 #: ../app/widgets/gimptooloptionseditor.c:209
 msgid "Restore Tool Preset..."
-msgstr "Voorinstelling herstellen..."
+msgstr "Voorinstelling herstellen…"
 
 #: ../app/widgets/gimptooloptionseditor.c:218
 msgid "Delete Tool Preset..."
-msgstr "Voorinstelling verwijderen..."
+msgstr "Voorinstelling verwijderen…"
 
 #: ../app/widgets/gimptoolpreseteditor.c:300
 #, c-format
