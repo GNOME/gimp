@@ -52,6 +52,7 @@ plug-ins/common/file-png.c
 plug-ins/common/file-pnm.c
 plug-ins/common/file-ps.c
 plug-ins/common/file-psp.c
+plug-ins/common/file-qoi.c
 plug-ins/common/file-raw-data.c
 plug-ins/common/file-sunras.c
 plug-ins/common/file-svg.c
