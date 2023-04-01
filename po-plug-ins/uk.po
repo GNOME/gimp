@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-30 04:07+0000\n"
-"PO-Revision-Date: 2023-03-30 17:15+0300\n"
+"POT-Creation-Date: 2023-04-01 13:53+0000\n"
+"PO-Revision-Date: 2023-04-01 20:47+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -72,15 +72,15 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/destripe.c:484 plug-ins/common/file-cel.c:1001
 #: plug-ins/common/file-gif-save.c:1160 plug-ins/common/file-heif.c:2357
-#: plug-ins/common/file-jp2-load.c:976 plug-ins/common/file-pdf-load.c:655
-#: plug-ins/common/file-pdf-load.c:1040 plug-ins/common/file-pdf-save.c:1113
-#: plug-ins/common/file-ps.c:3572 plug-ins/common/file-svg.c:773
-#: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
-#: plug-ins/common/grid.c:761 plug-ins/common/jigsaw.c:2498
-#: plug-ins/common/mail.c:568 plug-ins/common/nl-filter.c:1126
-#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
-#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
-#: plug-ins/common/sparkle.c:426 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/file-pdf-load.c:655 plug-ins/common/file-pdf-load.c:1040
+#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
+#: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
+#: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
+#: plug-ins/common/jigsaw.c:2498 plug-ins/common/mail.c:568
+#: plug-ins/common/nl-filter.c:1126 plug-ins/common/qbist.c:848
+#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
+#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sparkle.c:426
+#: plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -486,16 +486,16 @@ msgstr "_Вертикально"
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
-#: plug-ins/common/file-jp2-load.c:1311 plug-ins/common/file-pcx.c:508
+#: plug-ins/common/file-jp2-load.c:1317 plug-ins/common/file-pcx.c:508
 #: plug-ins/common/file-pcx.c:516 plug-ins/common/file-pix.c:422
 #: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:863
-#: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1080
-#: plug-ins/common/file-tga.c:1114 plug-ins/common/file-wbmp.c:270
-#: plug-ins/common/file-xbm.c:909 plug-ins/common/film.c:812
-#: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
-#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:271
-#: plug-ins/file-faxg3/faxg3.c:574 plug-ins/file-fits/fits.c:542
-#: plug-ins/file-jpeg/jpeg-load.c:225
+#: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
+#: plug-ins/common/file-sunras.c:1080 plug-ins/common/file-tga.c:1114
+#: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:909
+#: plug-ins/common/film.c:812 plug-ins/common/smooth-palette.c:332
+#: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
+#: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
+#: plug-ins/file-fits/fits.c:542 plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2510 plug-ins/file-sgi/sgi.c:472
 #: plug-ins/file-tiff/file-tiff-load.c:1538
@@ -828,9 +828,8 @@ msgstr "База випадковості"
 #. The Load button
 #: plug-ins/common/cml-explorer.c:1425 plug-ins/common/cml-explorer.c:2248
 #: plug-ins/common/curve-bend.c:1481 plug-ins/common/curve-bend.c:1996
-#: plug-ins/common/file-cel.c:1002 plug-ins/common/file-jp2-load.c:977
-#: plug-ins/common/qbist.c:849 plug-ins/common/qbist.c:1032
-#: plug-ins/common/sphere-designer.c:2290
+#: plug-ins/common/file-cel.c:1002 plug-ins/common/qbist.c:849
+#: plug-ins/common/qbist.c:1032 plug-ins/common/sphere-designer.c:2290
 #: plug-ins/common/sphere-designer.c:2681 plug-ins/flame/flame.c:542
 #: plug-ins/flame/flame.c:1104
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:801
@@ -1067,16 +1066,16 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/file-pcx.c:438 plug-ins/common/file-png.c:673
 #: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
 #: plug-ins/common/file-psp.c:2382 plug-ins/common/file-psp.c:2432
-#: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
-#: plug-ins/common/file-sunras.c:455 plug-ins/common/file-svg.c:365
-#: plug-ins/common/file-svg.c:759 plug-ins/common/file-tga.c:445
-#: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:747
-#: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:897
-#: plug-ins/common/file-xwd.c:481 plug-ins/common/sphere-designer.c:2090
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
-#: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
-#: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
-#: plug-ins/file-icns/file-icns-load.c:515
+#: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
+#: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
+#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:759
+#: plug-ins/common/file-tga.c:445 plug-ins/common/file-wbmp.c:184
+#: plug-ins/common/file-xbm.c:747 plug-ins/common/file-xmc.c:658
+#: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
+#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
+#: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
+#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:458
+#: plug-ins/file-fli/fli-gimp.c:509 plug-ins/file-icns/file-icns-load.c:515
 #: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
 #: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
 #: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:554
@@ -1280,7 +1279,7 @@ msgid "HSL"
 msgstr "HSL"
 
 #: plug-ins/common/compose.c:271 plug-ins/common/decompose.c:211
-#: plug-ins/common/file-jp2-load.c:1012
+#: plug-ins/common/file-jp2-load.c:1014
 msgid "CMYK"
 msgstr "CMYK"
 
@@ -1966,7 +1965,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #.
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
-#: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1085
+#: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1091
 #: plug-ins/common/file-pcx.c:430 plug-ins/common/file-pdf-load.c:816
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
 #: plug-ins/common/file-pnm.c:708 plug-ins/common/file-ps.c:1140
@@ -2052,14 +2051,15 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:1374
 #: plug-ins/common/file-pcx.c:870 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1626
-#: plug-ins/common/file-ps.c:1363 plug-ins/common/file-sunras.c:626
-#: plug-ins/common/file-tga.c:1227 plug-ins/common/file-xbm.c:1048
-#: plug-ins/common/file-xpm.c:699 plug-ins/common/file-xwd.c:675
-#: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
-#: plug-ins/file-fli/fli-gimp.c:783 plug-ins/file-icns/file-icns-save.c:612
-#: plug-ins/file-ico/ico-save.c:1324 plug-ins/file-ico/ico-save.c:1533
-#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2160
-#: plug-ins/file-sgi/sgi.c:643 plug-ins/file-tiff/file-tiff-save.c:1074
+#: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
+#: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
+#: plug-ins/common/file-xbm.c:1048 plug-ins/common/file-xpm.c:699
+#: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:332
+#: plug-ins/file-fits/fits.c:504 plug-ins/file-fli/fli-gimp.c:783
+#: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1324
+#: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
+#: plug-ins/file-psd/psd-save.c:2160 plug-ins/file-sgi/sgi.c:643
+#: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Експортування «%s»"
@@ -2078,7 +2078,6 @@ msgid "CSource cannot be run non-interactively."
 msgstr "CSource не можна запускати у неінтерактивному режимі."
 
 #: plug-ins/common/file-csource.c:141
-#| msgid "Prefixed name"
 msgid "_Prefixed name"
 msgstr "Назва з пре_фіксом"
 
@@ -2087,7 +2086,6 @@ msgid "Prefixed name"
 msgstr "Назва з префіксом"
 
 #: plug-ins/common/file-csource.c:147
-#| msgid "Comment"
 msgid "Comme_nt"
 msgstr "Ко_ментар"
 
@@ -2096,7 +2094,6 @@ msgid "Comment"
 msgstr "Коментар"
 
 #: plug-ins/common/file-csource.c:156
-#| msgid "Save comment to file"
 msgid "Save comment to _file"
 msgstr "Зберегти коментар у фа_йлі"
 
@@ -2105,7 +2102,6 @@ msgid "Save comment"
 msgstr "Зберегти коментар"
 
 #: plug-ins/common/file-csource.c:162
-#| msgid "Use GLib types (guint8*)"
 msgid "Use GLib types (guint_8*)"
 msgstr "Використовувати типи GLib (guint_8*)"
 
@@ -2114,7 +2110,6 @@ msgid "Use GLib types"
 msgstr "Використовувати типи GLib"
 
 #: plug-ins/common/file-csource.c:168
-#| msgid "Save alpha channel (RGBA/RGB)"
 msgid "Save alpha channel (RG_BA/RGB)"
 msgstr "Зберегти а_льфа-канал (RGBA/RGB)"
 
@@ -2123,7 +2118,6 @@ msgid "Save the alpha channel"
 msgstr "Зберегти альфа-канал"
 
 #: plug-ins/common/file-csource.c:174
-#| msgid "Save as RGB565 (16-bit)"
 msgid "Save as RGB565 (1_6-bit)"
 msgstr "Зберегти як RGB565 (1_6 біт)"
 
@@ -2132,7 +2126,6 @@ msgid "Use RGB565 encoding"
 msgstr "Використовувати кодування RGB565"
 
 #: plug-ins/common/file-csource.c:180
-#| msgid "Use macros instead of struct"
 msgid "_Use macros instead of struct"
 msgstr "Ви_користовувати макроси замість структур"
 
@@ -2141,7 +2134,6 @@ msgid "Use C macros"
 msgstr "Використати макрос C"
 
 #: plug-ins/common/file-csource.c:186
-#| msgid "Use 1 bit Run-Length-Encoding"
 msgid "Use _1 bit Run-Length-Encoding"
 msgstr "Використовувати _1-бітове RLE"
 
@@ -2150,7 +2142,6 @@ msgid "Use run-length-encoding"
 msgstr "Використовувати RLE"
 
 #: plug-ins/common/file-csource.c:192
-#| msgid "Opacity"
 msgid "Opaci_ty"
 msgstr "Неп_розорість"
 
@@ -2963,93 +2954,124 @@ msgstr ""
 "_Інтервал між комірками\n"
 "(cellspacing):"
 
-#: plug-ins/common/file-jp2-load.c:183
+#: plug-ins/common/file-jp2-load.c:187
 msgid "JPEG 2000 image"
 msgstr "Зображення JPEG 2000"
 
-#: plug-ins/common/file-jp2-load.c:215
+#: plug-ins/common/file-jp2-load.c:189 plug-ins/common/file-jp2-load.c:223
+#| msgid "JPEG 2000 image"
+msgid "JPEG 2000"
+msgstr "JPEG 2000"
+
+#: plug-ins/common/file-jp2-load.c:221
 msgid "JPEG 2000 codestream"
 msgstr "Кодовий потік JPEG 2000"
 
+#: plug-ins/common/file-jp2-load.c:226
+#| msgid "JPEG 2000 codestream"
+msgid "Loads JPEG 2000 codestream."
+msgstr "Завантажує потік даних JPEG 2000."
+
+#: plug-ins/common/file-jp2-load.c:227
+msgid ""
+"Loads JPEG 2000 codestream. If the color space is set to UNKNOWN (0), we "
+"will try to guess, which is only possible for few spaces (such as "
+"grayscale). Most such calls will fail. You are rather expected to know the "
+"color space of your data."
+msgstr ""
+"Завантажує потік даних JPEG 2000. Якщо для простору кольорів встановлено"
+" UNKNOWN (0), буде зроблено спробу вгадати. Така спроба буде вдалою лише для"
+" декількох просторів (зокрема простору відтінків сірого). Більшість таких"
+" вгадувань є невдалими. Ви б мали знати простір кольорів ваших даних."
+
+#: plug-ins/common/file-jp2-load.c:247
+#| msgid "Color space:"
+msgid "Color s_pace"
+msgstr "Колірний п_ростір"
+
+#: plug-ins/common/file-jp2-load.c:248
+msgid ""
+"Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), CMYK (3), YCbCr (4), "
+"xvYCC (5) }"
+msgstr ""
+"Простір кольорів { UNKNOWN (0), GRAYSCALE (1), RGB (2), CMYK (3), YCbCr (4), "
+"xvYCC (5) }"
+
 #. Can be RGB, YUV and YCC.
 #. Can be RGB, YUV and YCC with alpha or CMYK.
-#: plug-ins/common/file-jp2-load.c:1001 plug-ins/common/file-jp2-load.c:1009
+#: plug-ins/common/file-jp2-load.c:1003 plug-ins/common/file-jp2-load.c:1011
 msgid "sRGB"
 msgstr "sRGB"
 
-#: plug-ins/common/file-jp2-load.c:1002 plug-ins/common/file-jp2-load.c:1010
+#: plug-ins/common/file-jp2-load.c:1004 plug-ins/common/file-jp2-load.c:1012
 msgid "YCbCr"
 msgstr "YCbCr"
 
-#: plug-ins/common/file-jp2-load.c:1003 plug-ins/common/file-jp2-load.c:1011
+#: plug-ins/common/file-jp2-load.c:1005 plug-ins/common/file-jp2-load.c:1013
 msgid "xvYCC"
 msgstr "xvYCC"
 
-#: plug-ins/common/file-jp2-load.c:1018
+#: plug-ins/common/file-jp2-load.c:1020
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Непідтримуваний JPEG 2000%s «%s» з %d компонентами."
 
-#: plug-ins/common/file-jp2-load.c:1027
-msgid "Color space:"
-msgstr "Колірний простір:"
-
-#: plug-ins/common/file-jp2-load.c:1093 plug-ins/common/file-wmf.c:1007
+#: plug-ins/common/file-jp2-load.c:1099 plug-ins/common/file-wmf.c:1007
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Не вдається відкрити «%s» для читання."
 
-#: plug-ins/common/file-jp2-load.c:1102
+#: plug-ins/common/file-jp2-load.c:1108
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr "Не вдалося ініціалізувати декодер для «%s». Не вистачає пам'яті?"
 
-#: plug-ins/common/file-jp2-load.c:1118
+#: plug-ins/common/file-jp2-load.c:1124
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "Не вдається встановити параметри декодера для «%s»."
 
-#: plug-ins/common/file-jp2-load.c:1126
+#: plug-ins/common/file-jp2-load.c:1132
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "Не вдається зчитати заголовок JP2 з «%s»"
 
-#: plug-ins/common/file-jp2-load.c:1134
+#: plug-ins/common/file-jp2-load.c:1140
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "Не вдається декодувати зображення JP2 в «%s»"
 
-#: plug-ins/common/file-jp2-load.c:1142
+#: plug-ins/common/file-jp2-load.c:1148
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "Не вдається розпакувати зображення JP2 в «%s»"
 
-#: plug-ins/common/file-jp2-load.c:1173
+#: plug-ins/common/file-jp2-load.c:1179
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "Не вдається декодувати зображення CIELAB JP2 в «%s»."
 
-#: plug-ins/common/file-jp2-load.c:1230
+#: plug-ins/common/file-jp2-load.c:1236
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "Невідомий колірний простір у кодовому потоці JP2 «%s»."
 
-#: plug-ins/common/file-jp2-load.c:1241
+#: plug-ins/common/file-jp2-load.c:1247
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr "Неможливо перетворити зображення YCbCr JP2 «%s» в RGB."
 
-#: plug-ins/common/file-jp2-load.c:1251
+#: plug-ins/common/file-jp2-load.c:1257
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "Неможливо перетворити зображення CMYK JP2 в «%s» в RGB."
 
-#: plug-ins/common/file-jp2-load.c:1261
+#: plug-ins/common/file-jp2-load.c:1267
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr "Неможливо перетворити зображення xvYCC JP2 в «%s» в RGB."
 
-#: plug-ins/common/file-jp2-load.c:1288
+#: plug-ins/common/file-jp2-load.c:1294
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Невідомий колірний простір у зображенні JP2 «%s»."
@@ -3388,7 +3410,7 @@ msgstr "Права межа знаходиться за припустимими
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Нижня межа знаходиться за припустимими межами (має бути < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1051
+#: plug-ins/common/file-pcx.c:1051 plug-ins/common/file-qoi.c:394
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Помилка при записі до файлу «%s»: %s"
@@ -4221,6 +4243,39 @@ msgstr "Відсутній блок загальних атрибутів зоб
 #: plug-ins/common/file-psp.c:2587
 msgid "Exporting not implemented yet."
 msgstr "Експорт ще не реалізовано."
+
+#: plug-ins/common/file-qoi.c:137 plug-ins/common/file-qoi.c:164
+msgid "Quite OK Image"
+msgstr "Quite OK Image"
+
+#: plug-ins/common/file-qoi.c:140
+#| msgid "Loads files in the OpenEXR file format"
+msgid "Load file in the QOI file format"
+msgstr "Завантажити файл у форматі QOI"
+
+#: plug-ins/common/file-qoi.c:141
+#| msgid "Loads files in the OpenEXR file format"
+msgid "Load file in the QOI file format (Quite OK Image)"
+msgstr "Завантажити файл у форматі QOI (Quite OK Image)"
+
+#: plug-ins/common/file-qoi.c:167
+#| msgid "Loads files in the OpenEXR file format"
+msgid "Export image in the QOI file format"
+msgstr "Експортувати зображення у форматі QOI"
+
+#: plug-ins/common/file-qoi.c:168
+msgid "Export image in the QOI file format (Quite OK Image)"
+msgstr "Експортувати зображення у форматі QOI (Quite OK Image)"
+
+#: plug-ins/common/file-qoi.c:262
+#| msgid "SGI format does not support multiple layers."
+msgid "QOI format does not support multiple layers."
+msgstr "Для формату QOI не передбачено підтримки декількох шарів."
+
+#: plug-ins/common/file-qoi.c:312
+#| msgid "Couldn't read file:"
+msgid "Failed to read QOI file"
+msgstr "Не вдалося прочитати файл QOI"
 
 #: plug-ins/common/file-raw-data.c:333 plug-ins/common/file-raw-data.c:452
 msgid "Raw image data"
@@ -6900,17 +6955,54 @@ msgstr "Для формату BMP не передбачено підтримку
 msgid "DDS image"
 msgstr "Зображення DDS"
 
+#: plug-ins/file-dds/dds.c:149 plug-ins/file-dds/dds.c:150
+#| msgid "Loads files in the JPEG XL file format"
+msgid "Loads files in DDS image format"
+msgstr "Завантажує файли у форматі зображень DDS"
+
+#: plug-ins/file-dds/dds.c:165
+#| msgid "_Load mipmaps"
+msgid "Load _mipmaps"
+msgstr "З_авантажити MIP-текстури"
+
+#: plug-ins/file-dds/dds.c:166
+#| msgid "_Load mipmaps"
+msgid "Load mipmaps if present"
+msgstr "Завантажити MIP-текстури, якщо такі є"
+
+#: plug-ins/file-dds/dds.c:171
+#| msgid "_Automatically decode YCoCg/AExp images when detected"
+msgid "Automatically decode YCoCg/AE_xp images when detected"
+msgstr "Автоматично декодувати виявлені зображення YCoCg/AE_xp"
+
+#: plug-ins/file-dds/dds.c:172
+#| msgid "_Automatically decode YCoCg/AExp images when detected"
+msgid "Decode YCoCg/AExp images when detected"
+msgstr "Декодувати виявлені зображення YCoCg/AExp"
+
 #: plug-ins/file-dds/dds.c:323
 msgid "Decode YCoCg"
 msgstr "Декодувати YCoCg"
+
+#: plug-ins/file-dds/dds.c:327 plug-ins/file-dds/dds.c:328
+msgid "Converts YCoCg encoded pixels to RGB"
+msgstr "Перетворює кодовані у YCoCg пікселі до RGB"
 
 #: plug-ins/file-dds/dds.c:345
 msgid "Decode YCoCg (scaled)"
 msgstr "Декодувати YCoCg (масштабоване)"
 
+#: plug-ins/file-dds/dds.c:349 plug-ins/file-dds/dds.c:351
+msgid "Converts YCoCg (scaled) encoded pixels to RGB"
+msgstr "Перетворює кодовані у YCoCg (масштабованому) пікселі до RGB"
+
 #: plug-ins/file-dds/dds.c:369
 msgid "Decode Alpha exponent"
 msgstr "Декодувати Alpha exponent"
+
+#: plug-ins/file-dds/dds.c:375 plug-ins/file-dds/dds.c:373
+msgid "Converts alpha exponent encoded pixels to RGB"
+msgstr "Перетворює кодовані у альфа-степеневі пікселі до RGB"
 
 #: plug-ins/file-dds/ddsread.c:366
 msgid "Could not allocate a new image."
@@ -6947,17 +7039,9 @@ msgstr "Непідтримуваний формат DXGI (%d)"
 msgid "Unexpected EOF.\n"
 msgstr "Неочікуваний кінець файла.\n"
 
-#: plug-ins/file-dds/ddsread.c:1515
+#: plug-ins/file-dds/ddsread.c:1514
 msgid "Open DDS"
 msgstr "Відкрити DDS"
-
-#: plug-ins/file-dds/ddsread.c:1524
-msgid "_Load mipmaps"
-msgstr "_Завантажити MIP-текстури"
-
-#: plug-ins/file-dds/ddsread.c:1528
-msgid "_Automatically decode YCoCg/AExp images when detected"
-msgstr "_Автоматично декодувати виявлені зображення YCoCg/AExp"
 
 #: plug-ins/file-dds/ddswrite.c:1984
 msgid "Export Image as DDS"
