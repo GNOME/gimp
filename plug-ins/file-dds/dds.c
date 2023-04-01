@@ -146,8 +146,8 @@ dds_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("DDS image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads files in DDS image format",
-                                        "Loads files in DDS image format",
+                                        _("Loads files in DDS image format"),
+                                        _("Loads files in DDS image format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Shawn Kirst",
@@ -162,14 +162,14 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                                       "0,string,DDS");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "load-mipmaps",
-                             "Load mipmaps",
-                             "Load mipmaps if present",
+                             _("Load _mipmaps"),
+                             _("Load mipmaps if present"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "decode-images",
-                             "Decode images",
-                             "Decode YCoCg/AExp images when detected",
+                             _("Automatically decode YCoCg/AE_xp images when detected"),
+                             _("Decode YCoCg/AExp images when detected"),
                              TRUE,
                              G_PARAM_READWRITE);
     }
@@ -324,8 +324,8 @@ dds_create_procedure (GimpPlugIn  *plug_in,
       /* gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Colors"); */
 
       gimp_procedure_set_documentation (procedure,
-                                        "Converts YCoCg encoded pixels to RGB",
-                                        "Converts YCoCg encoded pixels to RGB",
+                                        _("Converts YCoCg encoded pixels to RGB"),
+                                        _("Converts YCoCg encoded pixels to RGB"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Shawn Kirst",
@@ -346,10 +346,10 @@ dds_create_procedure (GimpPlugIn  *plug_in,
       /* gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Colors"); */
 
       gimp_procedure_set_documentation (procedure,
-                                        "Converts YCoCg (scaled) encoded "
-                                        "pixels to RGB",
-                                        "Converts YCoCg (scaled) encoded "
-                                        "pixels to RGB",
+                                        _("Converts YCoCg (scaled) encoded "
+                                          "pixels to RGB"),
+                                        _("Converts YCoCg (scaled) encoded "
+                                          "pixels to RGB"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Shawn Kirst",
@@ -370,10 +370,10 @@ dds_create_procedure (GimpPlugIn  *plug_in,
       /* gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Colors"); */
 
       gimp_procedure_set_documentation (procedure,
-                                        "Converts alpha exponent encoded "
-                                        "pixels to RGB",
-                                        "Converts alpha exponent encoded "
-                                        "pixels to RGB",
+                                        _("Converts alpha exponent encoded "
+                                          "pixels to RGB",
+                                        _("Converts alpha exponent encoded "
+                                          "pixels to RGB"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Shawn Kirst",

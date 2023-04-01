@@ -1507,28 +1507,22 @@ load_dialog (GimpProcedure *procedure,
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
-  GtkWidget *check;
   gboolean   run;
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Open DDS"));
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "dds-read-box",
+                                         "load-mipmaps",
+                                         "decode-images",
+                                         NULL);
+  gtk_box_set_spacing (GTK_BOX (vbox), 8);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      vbox, 1, 1, 0);
-  gtk_widget_show (vbox);
 
-  check = gimp_prop_check_button_new (config, "load-mipmaps",
-                                      _("_Load mipmaps"));
-  gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
-
-  check = gimp_prop_check_button_new (config, "decode-images",
-                                      _("_Automatically decode YCoCg/AExp "
-                                        "images when detected"));
-  gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
-
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "dds-read-box", NULL);
   gtk_widget_show (dialog);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
