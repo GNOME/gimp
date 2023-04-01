@@ -92,7 +92,8 @@ static gint             save_image           (GFile                *file,
                                               GError              **error);
 
 static gboolean         save_dialog          (GimpProcedure        *procedure,
-                                              GObject              *config);
+                                              GObject              *config,
+                                              GimpImage            *image);
 
 
 G_DEFINE_TYPE (Sgi, sgi, GIMP_TYPE_PLUG_IN)
@@ -143,8 +144,8 @@ sgi_create_procedure (GimpPlugIn  *plug_in,
                                      N_("Silicon Graphics IRIS image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads files in SGI image file format",
-                                        "This plug-in loads SGI image files.",
+                                        _("Loads files in SGI image file format"),
+                                        _("This plug-in loads SGI image files."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Michael Sweet <mike@easysw.com>",
@@ -168,11 +169,13 @@ sgi_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_menu_label (procedure,
                                      N_("Silicon Graphics IRIS image"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           "SGI");
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_procedure_set_documentation (procedure,
-                                        "Exports files in SGI image file format",
-                                        "This plug-in exports SGI image files.",
+                                        _("Exports files in SGI image file format"),
+                                        _("This plug-in exports SGI image files."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Michael Sweet <mike@easysw.com>",
@@ -185,8 +188,8 @@ sgi_create_procedure (GimpPlugIn  *plug_in,
                                           "sgi,rgb,rgba,bw,icon");
 
       GIMP_PROC_ARG_INT (procedure, "compression",
-                         "Compression",
-                         "Compression level (0 = none, 1 = RLE, 2 = ARLE)",
+                         _("Compression _type"),
+                         _("Compression level (0 = none, 1 = RLE, 2 = ARLE)"),
                          0, 2, SGI_COMP_RLE,
                          GIMP_PARAM_READWRITE);
     }
@@ -277,7 +280,7 @@ sgi_save (GimpProcedure        *procedure,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! save_dialog (procedure, G_OBJECT (config)))
+      if (! save_dialog (procedure, G_OBJECT (config), image))
         status = GIMP_PDB_CANCEL;
     }
 
@@ -727,24 +730,17 @@ save_image (GFile        *file,
 
 static gboolean
 save_dialog (GimpProcedure *procedure,
-             GObject       *config)
+             GObject       *config,
+             GimpImage     *image)
 {
   GtkWidget    *dialog;
-  GtkWidget    *grid;
+  GtkWidget    *vbox;
   GtkListStore *store;
-  GtkWidget    *combo;
   gboolean      run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as SGI"));
-
-  grid = gtk_grid_new ();
-  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      grid, TRUE, TRUE, 0);
-  gtk_widget_show (grid);
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
   store = gimp_int_store_new (_("No compression"),
                               SGI_COMP_NONE,
@@ -753,17 +749,19 @@ save_dialog (GimpProcedure *procedure,
                               _("Aggressive RLE (not supported by SGI)"),
                               SGI_COMP_ARLE,
                               NULL);
-  combo = gimp_prop_int_combo_box_new (config, "compression",
-                                       GIMP_INT_STORE (store));
-  g_object_unref (store);
+  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "compression", GIMP_INT_STORE (store));
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("Compression _type:"), 1.0, 0.5,
-                            combo, 1);
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "sgi-vbox", "compression", NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "sgi-vbox", NULL);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
