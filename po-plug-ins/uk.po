@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-01 13:53+0000\n"
-"PO-Revision-Date: 2023-04-01 20:47+0300\n"
+"POT-Creation-Date: 2023-04-01 17:48+0000\n"
+"PO-Revision-Date: 2023-04-01 20:50+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -497,7 +497,7 @@ msgstr "_Вертикально"
 #: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
 #: plug-ins/file-fits/fits.c:542 plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2510 plug-ins/file-sgi/sgi.c:472
+#: plug-ins/file-psd/psd-load.c:2510 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1538
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gimpressionist/general.c:139
@@ -1979,7 +1979,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/file-ico/ico-load.c:674 plug-ins/file-ico/ico-load.c:784
 #: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:177
 #: plug-ins/file-raw/file-darktable.c:413
-#: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
+#: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:334
 #: plug-ins/file-tiff/file-tiff-load.c:289
 #, c-format
 msgid "Opening '%s'"
@@ -2058,7 +2058,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/file-fits/fits.c:504 plug-ins/file-fli/fli-gimp.c:783
 #: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1324
 #: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
-#: plug-ins/file-psd/psd-save.c:2160 plug-ins/file-sgi/sgi.c:643
+#: plug-ins/file-psd/psd-save.c:2160 plug-ins/file-sgi/sgi.c:646
 #: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
@@ -2959,7 +2959,6 @@ msgid "JPEG 2000 image"
 msgstr "Зображення JPEG 2000"
 
 #: plug-ins/common/file-jp2-load.c:189 plug-ins/common/file-jp2-load.c:223
-#| msgid "JPEG 2000 image"
 msgid "JPEG 2000"
 msgstr "JPEG 2000"
 
@@ -2968,7 +2967,6 @@ msgid "JPEG 2000 codestream"
 msgstr "Кодовий потік JPEG 2000"
 
 #: plug-ins/common/file-jp2-load.c:226
-#| msgid "JPEG 2000 codestream"
 msgid "Loads JPEG 2000 codestream."
 msgstr "Завантажує потік даних JPEG 2000."
 
@@ -2979,13 +2977,12 @@ msgid ""
 "grayscale). Most such calls will fail. You are rather expected to know the "
 "color space of your data."
 msgstr ""
-"Завантажує потік даних JPEG 2000. Якщо для простору кольорів встановлено"
-" UNKNOWN (0), буде зроблено спробу вгадати. Така спроба буде вдалою лише для"
-" декількох просторів (зокрема простору відтінків сірого). Більшість таких"
-" вгадувань є невдалими. Ви б мали знати простір кольорів ваших даних."
+"Завантажує потік даних JPEG 2000. Якщо для простору кольорів встановлено "
+"UNKNOWN (0), буде зроблено спробу вгадати. Така спроба буде вдалою лише для "
+"декількох просторів (зокрема простору відтінків сірого). Більшість таких "
+"вгадувань є невдалими. Ви б мали знати простір кольорів ваших даних."
 
 #: plug-ins/common/file-jp2-load.c:247
-#| msgid "Color space:"
 msgid "Color s_pace"
 msgstr "Колірний п_ростір"
 
@@ -4249,17 +4246,14 @@ msgid "Quite OK Image"
 msgstr "Quite OK Image"
 
 #: plug-ins/common/file-qoi.c:140
-#| msgid "Loads files in the OpenEXR file format"
 msgid "Load file in the QOI file format"
 msgstr "Завантажити файл у форматі QOI"
 
 #: plug-ins/common/file-qoi.c:141
-#| msgid "Loads files in the OpenEXR file format"
 msgid "Load file in the QOI file format (Quite OK Image)"
 msgstr "Завантажити файл у форматі QOI (Quite OK Image)"
 
 #: plug-ins/common/file-qoi.c:167
-#| msgid "Loads files in the OpenEXR file format"
 msgid "Export image in the QOI file format"
 msgstr "Експортувати зображення у форматі QOI"
 
@@ -4268,12 +4262,10 @@ msgid "Export image in the QOI file format (Quite OK Image)"
 msgstr "Експортувати зображення у форматі QOI (Quite OK Image)"
 
 #: plug-ins/common/file-qoi.c:262
-#| msgid "SGI format does not support multiple layers."
 msgid "QOI format does not support multiple layers."
 msgstr "Для формату QOI не передбачено підтримки декількох шарів."
 
 #: plug-ins/common/file-qoi.c:312
-#| msgid "Couldn't read file:"
 msgid "Failed to read QOI file"
 msgstr "Не вдалося прочитати файл QOI"
 
@@ -6956,27 +6948,22 @@ msgid "DDS image"
 msgstr "Зображення DDS"
 
 #: plug-ins/file-dds/dds.c:149 plug-ins/file-dds/dds.c:150
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Loads files in DDS image format"
 msgstr "Завантажує файли у форматі зображень DDS"
 
 #: plug-ins/file-dds/dds.c:165
-#| msgid "_Load mipmaps"
 msgid "Load _mipmaps"
 msgstr "З_авантажити MIP-текстури"
 
 #: plug-ins/file-dds/dds.c:166
-#| msgid "_Load mipmaps"
 msgid "Load mipmaps if present"
 msgstr "Завантажити MIP-текстури, якщо такі є"
 
 #: plug-ins/file-dds/dds.c:171
-#| msgid "_Automatically decode YCoCg/AExp images when detected"
 msgid "Automatically decode YCoCg/AE_xp images when detected"
 msgstr "Автоматично декодувати виявлені зображення YCoCg/AE_xp"
 
 #: plug-ins/file-dds/dds.c:172
-#| msgid "_Automatically decode YCoCg/AExp images when detected"
 msgid "Decode YCoCg/AExp images when detected"
 msgstr "Декодувати виявлені зображення YCoCg/AExp"
 
@@ -8097,58 +8084,79 @@ msgstr ""
 "\n"
 "Встановіть один з них для того, щоб відкривати файли RAW."
 
-#: plug-ins/file-sgi/sgi.c:143 plug-ins/file-sgi/sgi.c:170
+#: plug-ins/file-sgi/sgi.c:144 plug-ins/file-sgi/sgi.c:171
 msgid "Silicon Graphics IRIS image"
 msgstr "Зображення Silicon Graphics IRIS"
 
-#: plug-ins/file-sgi/sgi.c:271
+#: plug-ins/file-sgi/sgi.c:147
+#| msgid "Loads files in DDS image format"
+msgid "Loads files in SGI image file format"
+msgstr "Завантажує файли у форматі зображень SGI"
+
+#: plug-ins/file-sgi/sgi.c:148
+#| msgid "is not a CEL image file"
+msgid "This plug-in loads SGI image files."
+msgstr "Цей додаток завантажує файли зображень SGI."
+
+#: plug-ins/file-sgi/sgi.c:177
+#| msgid "Loads files in DDS image format"
+msgid "Exports files in SGI image file format"
+msgstr "Експортує файли у форматі зображень SGI"
+
+#: plug-ins/file-sgi/sgi.c:178
+#| msgid "is not a CEL image file"
+msgid "This plug-in exports SGI image files."
+msgstr "Цей додаток експортує файли зображень SGI."
+
+#: plug-ins/file-sgi/sgi.c:191
+#| msgid "Compression _type:"
+msgid "Compression _type"
+msgstr "_Тип стиснення"
+
+#: plug-ins/file-sgi/sgi.c:192
+msgid "Compression level (0 = none, 1 = RLE, 2 = ARLE)"
+msgstr "Рівень стискання (0 = none, 1 = RLE, 2 = ARLE)"
+
+#: plug-ins/file-sgi/sgi.c:274
 msgid "SGI format does not support multiple layers."
 msgstr "Для формату SGI не передбачено підтримку декількох шарів."
 
-#: plug-ins/file-sgi/sgi.c:339
+#: plug-ins/file-sgi/sgi.c:342
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "Не вдається відкрити «%s» для читання."
 
-#: plug-ins/file-sgi/sgi.c:355
+#: plug-ins/file-sgi/sgi.c:358
 #, c-format
 msgid "Invalid width: %hu"
 msgstr "Некоректна ширина: %hu"
 
-#: plug-ins/file-sgi/sgi.c:363
+#: plug-ins/file-sgi/sgi.c:366
 #, c-format
 msgid "Invalid height: %hu"
 msgstr "Некоректна висота: %hu"
 
-#: plug-ins/file-sgi/sgi.c:371
+#: plug-ins/file-sgi/sgi.c:374
 #, c-format
 msgid "Invalid number of channels: %hu"
 msgstr "Неправильна кількість каналів: %hu"
 
-#: plug-ins/file-sgi/sgi.c:652
+#: plug-ins/file-sgi/sgi.c:655
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Не вдається відкрити файл «%s» для запису"
 
-#: plug-ins/file-sgi/sgi.c:740
-msgid "Export Image as SGI"
-msgstr "Експортувати зображення як SGI"
-
-#: plug-ins/file-sgi/sgi.c:749
+#: plug-ins/file-sgi/sgi.c:745
 msgid "No compression"
 msgstr "Без стиснення"
 
-#: plug-ins/file-sgi/sgi.c:751
+#: plug-ins/file-sgi/sgi.c:747
 msgid "RLE compression"
 msgstr "RLE стиснення"
 
-#: plug-ins/file-sgi/sgi.c:753
+#: plug-ins/file-sgi/sgi.c:749
 msgid "Aggressive RLE (not supported by SGI)"
 msgstr "Агресивне RLE (не підтримується SGI)"
-
-#: plug-ins/file-sgi/sgi.c:761
-msgid "Compression _type:"
-msgstr "_Тип стиснення:"
 
 #: plug-ins/file-tiff/file-tiff.c:159 plug-ins/file-tiff/file-tiff.c:188
 msgid "TIFF or BigTIFF image"
@@ -13452,6 +13460,9 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Export Image as SGI"
+#~ msgstr "Експортувати зображення як SGI"
 
 #~ msgid "Co_mment:"
 #~ msgstr "_Коментар:"
