@@ -788,7 +788,7 @@ msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly the "
 "usual bug-fixing version after a major release, with a few dozen bugs fixed."
 msgstr ""
-"In deze tweede uitgave in de GIMP 2.10 serie, zo kort na 2.10.0, zijn "
+"In deze tweede uitgave in de GIMP 2.10-serie, zo kort na 2.10.0, zijn "
 "hoofdzakelijk enkele tientallen fouten verbeterd."
 
 # Foutje ontdekt:
@@ -1067,7 +1067,7 @@ msgid ""
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "Copyright © 1995-%s\n"
-"Spencer Kimball, Peter Mattis en het ontwikkelteam van de GIMP"
+"Spencer Kimball, Peter Mattis en het ontwikkelteam van GIMP"
 
 #. TRANSLATORS: do not end the license URL with a dot, because it would
 #. * be in the link. Because of technical limitations, make sure the URL
@@ -1190,12 +1190,12 @@ msgstr "Waarschuwingen in console tonen i.p.v. in een dialoogvenster"
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:249
 msgid "PDB compatibility mode (off|on|warn)"
-msgstr "PDB compatibiliteitsmodus (uit|aan|waarschuwen)"
+msgstr "PDB compatibiliteitsmodus (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
 #: ../app/main.c:255
 msgid "Debug in case of a crash (never|query|always)"
-msgstr "Debuggen bij een crash (nooit|vragen|altijd)"
+msgstr "Debuggen bij een crash (never|query|always)"
 
 #: ../app/main.c:260
 msgid "Enable non-fatal debugging signal handlers"
@@ -1240,7 +1240,7 @@ msgstr "Er is al een andere sessie van GIMP actief."
 
 #: ../app/main.c:726
 msgid "GIMP output. Type any character to close this window."
-msgstr "GIMP uitvoer. Druk op een willekeurige toets om dit venster te sluiten."
+msgstr "GIMP-uitvoer. Druk op een willekeurige toets om dit venster te sluiten."
 
 # elke willekeurige toets sluit dit venster
 #: ../app/main.c:727
@@ -1250,7 +1250,7 @@ msgstr "(Druk op een willekeurig toets om dit venster te sluiten)\n"
 
 #: ../app/main.c:744
 msgid "GIMP output. You can minimize this window, but don't close it."
-msgstr "GIMP uitvoer. U kunt dit venster minimaliseren, maar sluit het niet."
+msgstr "GIMP-uitvoer. U kunt dit venster minimaliseren, maar sluit het niet."
 
 #: ../app/sanity.c:546
 #, c-format
