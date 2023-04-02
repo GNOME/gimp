@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-02 02:56+0000\n"
-"PO-Revision-Date: 2023-04-02 09:10+0300\n"
+"POT-Creation-Date: 2023-04-02 12:44+0000\n"
+"PO-Revision-Date: 2023-04-02 20:44+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -347,8 +347,9 @@ msgstr "Недостатньо шарів для вирівнювання."
 msgid "Align Visible Layers"
 msgstr "Вирівнювання видимих шарів"
 
+#. file save type
 #: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
-#: plug-ins/file-tiff/file-tiff-save.c:1322
+#: plug-ins/common/file-psp.c:840 plug-ins/file-tiff/file-tiff-save.c:1322
 #: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
 #: plug-ins/metadata/metadata-tags.c:238
 msgid "None"
@@ -1065,7 +1066,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-mng.c:1405
 #: plug-ins/common/file-pcx.c:438 plug-ins/common/file-png.c:673
 #: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
-#: plug-ins/common/file-psp.c:2382 plug-ins/common/file-psp.c:2432
+#: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
 #: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
 #: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
 #: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:759
@@ -2229,26 +2230,47 @@ msgstr "Неможливо зберегти зображення з альфа-�
 msgid "Cannot operate on unknown image types."
 msgstr "Не вдається виконати дії із зображеннями невідомого типу."
 
-#: plug-ins/common/file-gbr.c:124
+#: plug-ins/common/file-gbr.c:125
 msgid "GIMP brush"
 msgstr "Пензель GIMP"
 
-#: plug-ins/common/file-gbr.c:228
+#: plug-ins/common/file-gbr.c:127
+#| msgid "_Brush"
+msgid "Brush"
+msgstr "Пензель"
+
+#: plug-ins/common/file-gbr.c:131 plug-ins/common/file-gbr.c:133
+#| msgid "Exports files in the PGM file format"
+msgid "Exports files in the GIMP brush file format"
+msgstr "Експортує файли у формат пензлів GIMP"
+
+#: plug-ins/common/file-gbr.c:151
+#| msgid "Spacing:"
+msgid "Sp_acing"
+msgstr "І_нтервал"
+
+#: plug-ins/common/file-gbr.c:152
+#| msgid "Specifies the aspect ratio of the brush"
+msgid "Spacing of the brush"
+msgstr "Інтервал пензля"
+
+#: plug-ins/common/file-gbr.c:157 plug-ins/common/file-pat.c:133
+msgid "_Description"
+msgstr "_Опис"
+
+#: plug-ins/common/file-gbr.c:158
+#| msgid "Short description of the pattern"
+msgid "Short description of the brush"
+msgstr "Короткий опис пензля"
+
+#: plug-ins/common/file-gbr.c:159
+#| msgid "GIMP brush"
+msgid "GIMP Brush"
+msgstr "Пензель GIMP"
+
+#: plug-ins/common/file-gbr.c:231
 msgid "GBR format does not support multiple layers."
 msgstr "Для формату GBR не передбачено підтримку декількох шарів."
-
-#: plug-ins/common/file-gbr.c:301
-msgid "Export Image as Brush"
-msgstr "Експортувати зображення як пензель"
-
-#: plug-ins/common/file-gbr.c:317 plug-ins/common/file-gih.c:654
-#: plug-ins/imagemap/imap_settings.c:105
-msgid "_Description:"
-msgstr "_Опис:"
-
-#: plug-ins/common/file-gbr.c:324
-msgid "_Spacing:"
-msgstr "_Інтервал:"
 
 #: plug-ins/common/file-gegl.c:114
 msgid "Radiance RGBE"
@@ -2564,6 +2586,10 @@ msgstr "Пензель GIMP(анімаційний)"
 #: plug-ins/common/file-gih.c:636
 msgid "Brush Pipe"
 msgstr "Анімаційний пензель"
+
+#: plug-ins/common/file-gih.c:654 plug-ins/imagemap/imap_settings.c:105
+msgid "_Description:"
+msgstr "_Опис:"
 
 #: plug-ins/common/file-gih.c:668
 msgid "_Spacing (percent):"
@@ -3299,10 +3325,6 @@ msgstr ""
 "Нові текстури GIMP може бути створено експортуванням їх до відповідного "
 "місця за допомогою цього додатка."
 
-#: plug-ins/common/file-pat.c:133
-msgid "_Description"
-msgstr "_Опис"
-
 #: plug-ins/common/file-pat.c:134
 msgid "Short description of the pattern"
 msgstr "Короткий опис текстури"
@@ -3788,27 +3810,24 @@ msgid "PNM Image"
 msgstr "Зображення PNM"
 
 #: plug-ins/common/file-pnm.c:318
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Loads files in the PNM file format"
 msgstr "Завантажує файли у форматі PNM"
 
 #: plug-ins/common/file-pnm.c:319
 msgid "This plug-in loads files in the various Netpbm portable file formats."
 msgstr ""
-"Цей додаток завантажує файли у різноманітних форматах портативних файлів"
-" Netpbm."
+"Цей додаток завантажує файли у різноманітних форматах портативних файлів "
+"Netpbm."
 
 #: plug-ins/common/file-pnm.c:348
 msgid "PNM image"
 msgstr "Зображення PNM"
 
 #: plug-ins/common/file-pnm.c:350
-#| msgid "PNG"
 msgid "PNM"
 msgstr "PNM"
 
 #: plug-ins/common/file-pnm.c:353
-#| msgid "Export image in the QOI file format"
 msgid "Exports files in the PNM file format"
 msgstr "Експортує файли у форматі PNM"
 
@@ -3835,35 +3854,32 @@ msgid "PBM image"
 msgstr "Зображення PBM"
 
 #: plug-ins/common/file-pnm.c:389
-#| msgid "Export image in the QOI file format"
 msgid "Exports files in the PBM file format"
 msgstr "Експортує файли у форматі PBM"
 
 #: plug-ins/common/file-pnm.c:390
 msgid "PBM exporting produces mono images without transparency."
 msgstr ""
-"Результатом експортування PBM будуть монохроматичні зображення без"
-" прозорості."
+"Результатом експортування PBM будуть монохроматичні зображення без "
+"прозорості."
 
 #: plug-ins/common/file-pnm.c:421
 msgid "PGM image"
 msgstr "Зображення PGM"
 
 #: plug-ins/common/file-pnm.c:423
-#| msgid "PNG"
 msgid "PGM"
 msgstr "PGM"
 
 #: plug-ins/common/file-pnm.c:425
-#| msgid "Export image in the QOI file format"
 msgid "Exports files in the PGM file format"
 msgstr "Експортує файли у форматі PGM"
 
 #: plug-ins/common/file-pnm.c:426
 msgid "PGM exporting produces grayscale images without transparency."
 msgstr ""
-"Результатом експортування PGM будуть зображення у відтінках сірого без"
-" прозорості."
+"Результатом експортування PGM будуть зображення у відтінках сірого без "
+"прозорості."
 
 #: plug-ins/common/file-pnm.c:457
 msgid "PPM image"
@@ -3874,12 +3890,10 @@ msgid "PPM"
 msgstr "PPM"
 
 #: plug-ins/common/file-pnm.c:461
-#| msgid "Export image in the QOI file format"
 msgid "Exports files in the PPM file format"
 msgstr "Експортує файли у форматі PPM"
 
 #: plug-ins/common/file-pnm.c:462
-#| msgid "Cannot export indexed image with transparency in BMP file format."
 msgid "PPM export handles RGB images without transparency."
 msgstr ""
 "Експортування PPM відбуватиметься у форматі зображень RGB без прозорості."
@@ -3889,27 +3903,24 @@ msgid "PAM image"
 msgstr "зображення PNM"
 
 #: plug-ins/common/file-pnm.c:496
-#| msgid "Export image in the QOI file format"
 msgid "Exports files in the PAM file format"
 msgstr "Експортує файли у форматі PAM"
 
 #: plug-ins/common/file-pnm.c:497
 msgid "PAM export handles RGB images with or without transparency."
 msgstr ""
-"Експортування PAM відбуватиметься у форматі зображень RGB з прозорістю або"
-" без неї."
+"Експортування PAM відбуватиметься у форматі зображень RGB з прозорістю або "
+"без неї."
 
 #: plug-ins/common/file-pnm.c:522
 msgid "PFM image"
 msgstr "Зображення PFM"
 
 #: plug-ins/common/file-pnm.c:525
-#| msgid "Export image in the QOI file format"
 msgid "Exports files in the PFM file format"
 msgstr "Експортувати зображення у форматі PFM"
 
 #: plug-ins/common/file-pnm.c:526
-#| msgid "FITS export cannot handle images with alpha channels"
 msgid "PFM export handles all images without transparency."
 msgstr "Експортування PFM відбуватиметься без прозорості."
 
@@ -4175,164 +4186,164 @@ msgstr "_Перегляд"
 msgid "Preview _size:"
 msgstr "_Розмір перегляду:"
 
-#: plug-ins/common/file-psp.c:663 plug-ins/common/file-psp.c:693
+#: plug-ins/common/file-psp.c:664 plug-ins/common/file-psp.c:694
 msgid "Paint Shop Pro image"
 msgstr "Зображення Paint Shop Pro"
 
-#: plug-ins/common/file-psp.c:834
-msgid "Export Image as PSP"
-msgstr "Експортувати зображення як PSP"
+#: plug-ins/common/file-psp.c:667
+#| msgid "Loads files in the PNM file format"
+msgid "Loads images from the Paint Shop Pro PSP file format"
+msgstr "Завантажує зображення з формату файлів PSP Paint Shop Pro"
 
-#. file save type
-#: plug-ins/common/file-psp.c:837
-msgctxt "compression"
-msgid "None"
-msgstr "Немає"
+#: plug-ins/common/file-psp.c:669
+msgid ""
+"This plug-in loads and exports images in Paint Shop Pro's native PSP format. "
+"Vector layers aren't handled. Exporting isn't yet implemented."
+msgstr ""
+"Цей додаток завантажує і експортує зображення у рідному форматі Paint Shop"
+" Pro, PSP. Обробку векторних шарів виконано не буде. Експортування ще не"
+" реалізовано."
 
-#: plug-ins/common/file-psp.c:838
+#: plug-ins/common/file-psp.c:841
 msgid "RLE"
 msgstr "RLE"
 
-#: plug-ins/common/file-psp.c:839
+#: plug-ins/common/file-psp.c:842
 msgid "LZ77"
 msgstr "LZ77"
 
-#: plug-ins/common/file-psp.c:842
-msgid "Data Compression"
-msgstr "Стиснення даних"
-
-#: plug-ins/common/file-psp.c:933
+#: plug-ins/common/file-psp.c:934
 msgid "Error reading block header"
 msgstr "Помилка при читанні заголовка блока"
 
-#: plug-ins/common/file-psp.c:940
+#: plug-ins/common/file-psp.c:941
 #, c-format
 msgid "Invalid block header at %ld"
 msgstr "Неправильний заголовок блока в %ld"
 
-#: plug-ins/common/file-psp.c:943
+#: plug-ins/common/file-psp.c:944
 msgid "Invalid block header"
 msgstr "Неправильний заголовок блока"
 
-#: plug-ins/common/file-psp.c:975
+#: plug-ins/common/file-psp.c:976
 #, c-format
 msgid "Seek error: %s"
 msgstr "Помилка пошуку: %s"
 
-#: plug-ins/common/file-psp.c:998
+#: plug-ins/common/file-psp.c:999
 msgid "Invalid general image attribute chunk size."
 msgstr "Некоректний розмір фрагмента загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:1020
+#: plug-ins/common/file-psp.c:1021
 msgid "Error reading general image attribute block."
 msgstr "Помилка під час читання блоку загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:1035
+#: plug-ins/common/file-psp.c:1036
 #, c-format
 msgid "Unknown compression type %d"
 msgstr "Невідомий тип стискання %d"
 
-#: plug-ins/common/file-psp.c:1071 plug-ins/common/file-psp.c:1078
+#: plug-ins/common/file-psp.c:1072 plug-ins/common/file-psp.c:1079
 #, c-format
 msgid "Unsupported bit depth %d"
 msgstr "Непідтримувана розрядність на канал: %d"
 
-#: plug-ins/common/file-psp.c:1125
+#: plug-ins/common/file-psp.c:1126
 msgid "Error reading creator keyword chunk"
 msgstr "Помилка зчитування сегменту ключового слова розробника"
 
-#: plug-ins/common/file-psp.c:1131
+#: plug-ins/common/file-psp.c:1132
 msgid "Invalid keyword chunk header"
 msgstr "Хибний заголовок сегменту ключового слова"
 
-#: plug-ins/common/file-psp.c:1146 plug-ins/common/file-psp.c:1173
+#: plug-ins/common/file-psp.c:1147 plug-ins/common/file-psp.c:1174
 msgid "Error reading creator keyword data"
 msgstr "Помилка зчитування даних ключового слова розробника"
 
-#: plug-ins/common/file-psp.c:1257 plug-ins/common/file-psp.c:1266
-#: plug-ins/common/file-psp.c:1275
+#: plug-ins/common/file-psp.c:1258 plug-ins/common/file-psp.c:1267
+#: plug-ins/common/file-psp.c:1276
 msgid "Error reading color block"
 msgstr "Помилка під час читання блоку кольорів"
 
-#: plug-ins/common/file-psp.c:1288
+#: plug-ins/common/file-psp.c:1289
 msgid "Error reading color palette"
 msgstr "Помилка під час читання палітри кольорів"
 
-#: plug-ins/common/file-psp.c:1714 plug-ins/common/file-psp.c:1728
+#: plug-ins/common/file-psp.c:1715 plug-ins/common/file-psp.c:1729
 msgid "zlib error"
 msgstr "Помилка zlib"
 
-#: plug-ins/common/file-psp.c:1791 plug-ins/common/file-psp.c:1825
-#: plug-ins/common/file-psp.c:1835
+#: plug-ins/common/file-psp.c:1792 plug-ins/common/file-psp.c:1826
+#: plug-ins/common/file-psp.c:1836
 msgid "Error reading layer extension information"
 msgstr "Помилка зчитування даних щодо розширення шару"
 
-#: plug-ins/common/file-psp.c:1812
+#: plug-ins/common/file-psp.c:1813
 msgid "Error reading block information"
 msgstr "Помилка зчитування блокових даних"
 
-#: plug-ins/common/file-psp.c:1892
+#: plug-ins/common/file-psp.c:1893
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Хибний підблок шару %s, має бути LAYER"
 
-#: plug-ins/common/file-psp.c:1923 plug-ins/common/file-psp.c:1980
+#: plug-ins/common/file-psp.c:1924 plug-ins/common/file-psp.c:1981
 msgid "Error reading layer information chunk"
 msgstr "Помилка зчитування інформаційного сегменту шару"
 
-#: plug-ins/common/file-psp.c:2022
+#: plug-ins/common/file-psp.c:2023
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Хибні розміри шару: %dx%d"
 
-#: plug-ins/common/file-psp.c:2083
+#: plug-ins/common/file-psp.c:2084
 msgid "Error creating layer"
 msgstr "Помилка при створенні шару"
 
-#: plug-ins/common/file-psp.c:2128
+#: plug-ins/common/file-psp.c:2129
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Хибний підблок %s шару, має бути CHANNEL"
 
-#: plug-ins/common/file-psp.c:2144
+#: plug-ins/common/file-psp.c:2145
 msgid "Error reading channel information chunk"
 msgstr "Помилка читання фрагменту інформації каналу"
 
-#: plug-ins/common/file-psp.c:2167
+#: plug-ins/common/file-psp.c:2168
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Хибний тип каналу %d у фрагменті інформації каналу"
 
-#: plug-ins/common/file-psp.c:2271 plug-ins/common/file-psp.c:2288
+#: plug-ins/common/file-psp.c:2272 plug-ins/common/file-psp.c:2289
 msgid "Error reading tube data chunk"
 msgstr "Помилка при фрагменту даних тюбика"
 
-#: plug-ins/common/file-psp.c:2393
+#: plug-ins/common/file-psp.c:2394
 msgid "Error reading file header."
 msgstr "Помилка при читанні заголовка файлу."
 
-#: plug-ins/common/file-psp.c:2400
+#: plug-ins/common/file-psp.c:2401
 msgid "Incorrect file signature."
 msgstr "Хибна сигнатура файлу."
 
-#: plug-ins/common/file-psp.c:2414
+#: plug-ins/common/file-psp.c:2415
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Непідтримувана версія формату файлу PSP %d.%d."
 
-#: plug-ins/common/file-psp.c:2434
+#: plug-ins/common/file-psp.c:2435
 msgid "invalid block size"
 msgstr "хибний розмір блока"
 
-#: plug-ins/common/file-psp.c:2443
+#: plug-ins/common/file-psp.c:2444
 msgid "Duplicate General Image Attributes block."
 msgstr "Повторний блок загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:2471
+#: plug-ins/common/file-psp.c:2472
 msgid "Missing General Image Attributes block."
 msgstr "Відсутній блок загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:2587
+#: plug-ins/common/file-psp.c:2588
 msgid "Exporting not implemented yet."
 msgstr "Експорт ще не реалізовано."
 
@@ -7437,7 +7448,6 @@ msgid "AutoDesk FLIC animation"
 msgstr "Анімація AutoDesk FLIC"
 
 #: plug-ins/file-fli/fli-gimp.c:184
-#| msgid "Load Flame"
 msgid "Load FLI-movies"
 msgstr "Завантажити відео FLI"
 
@@ -7446,7 +7456,6 @@ msgid "This is an experimental plug-in to handle FLI movies"
 msgstr "Це експериментальний додаток для обробки відео FLI"
 
 #: plug-ins/file-fli/fli-gimp.c:199
-#| msgid "From gradient"
 msgid "_From frame"
 msgstr "З _кадру"
 
@@ -7455,28 +7464,22 @@ msgid "Load beginning from this frame"
 msgstr "Завантажити, починаючи з цього кадру"
 
 #: plug-ins/file-fli/fli-gimp.c:205
-#| msgid "(no keyframes)"
 msgid "_To frame"
 msgstr "Д_о кадру"
 
 #: plug-ins/file-fli/fli-gimp.c:206
-#| msgid "Stop loading this page"
 msgid "End loading with this frame"
 msgstr "Завершити завантаження на цьому кадрі"
 
 #: plug-ins/file-fli/fli-gimp.c:220
-#| msgid "Open FLIC Animation"
 msgid "FLI Animation"
 msgstr "Анімація FLI"
 
 #: plug-ins/file-fli/fli-gimp.c:222
-#| msgid "Export Icons"
 msgid "Export FLI-movies"
 msgstr "Експорт відео FLI"
 
 #: plug-ins/file-fli/fli-gimp.c:237
-#| msgctxt "email-address"
-#| msgid "_From:"
 msgid "_From:"
 msgstr "_Від:"
 
@@ -7485,8 +7488,6 @@ msgid "Export beginning from this frame"
 msgstr "Експортувати, починаючи з цього кадру"
 
 #: plug-ins/file-fli/fli-gimp.c:243
-#| msgctxt "email-address"
-#| msgid "_To:"
 msgid "_To:"
 msgstr "_До:"
 
@@ -13595,6 +13596,22 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Export Image as Brush"
+#~ msgstr "Експортувати зображення як пензель"
+
+#~ msgid "_Spacing:"
+#~ msgstr "_Інтервал:"
+
+#~ msgid "Export Image as PSP"
+#~ msgstr "Експортувати зображення як PSP"
+
+#~ msgctxt "compression"
+#~ msgid "None"
+#~ msgstr "Немає"
+
+#~ msgid "Data Compression"
+#~ msgstr "Стиснення даних"
 
 #~ msgid "Export Image as PNM"
 #~ msgstr "Експортувати зображення як PNM"
