@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-01 02:04+0000\n"
-"PO-Revision-Date: 2023-04-01 06:36+0200\n"
+"POT-Creation-Date: 2023-04-02 02:56+0000\n"
+"PO-Revision-Date: 2023-04-02 05:08+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -473,16 +473,16 @@ msgstr "_ვერტიკალური"
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
 #: plug-ins/common/file-jp2-load.c:1317 plug-ins/common/file-pcx.c:508
 #: plug-ins/common/file-pcx.c:516 plug-ins/common/file-pix.c:422
-#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:863
-#: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1080
-#: plug-ins/common/file-tga.c:1114 plug-ins/common/file-wbmp.c:270
-#: plug-ins/common/file-xbm.c:909 plug-ins/common/film.c:812
-#: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
-#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:271
-#: plug-ins/file-faxg3/faxg3.c:574 plug-ins/file-fits/fits.c:542
-#: plug-ins/file-jpeg/jpeg-load.c:225
+#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:869
+#: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
+#: plug-ins/common/file-sunras.c:1080 plug-ins/common/file-tga.c:1114
+#: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:909
+#: plug-ins/common/film.c:812 plug-ins/common/smooth-palette.c:332
+#: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
+#: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
+#: plug-ins/file-fits/fits.c:542 plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2510 plug-ins/file-sgi/sgi.c:472
+#: plug-ins/file-psd/psd-load.c:2510 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1538
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gimpressionist/general.c:139
@@ -1017,7 +1017,7 @@ msgstr ""
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
 #: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:816 plug-ins/file-icns/file-icns-save.c:428
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:428
 #: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
 #: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
 #: plug-ins/file-tiff/file-tiff-save.c:1084
@@ -1045,16 +1045,16 @@ msgstr ""
 #: plug-ins/common/file-pcx.c:438 plug-ins/common/file-png.c:673
 #: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
 #: plug-ins/common/file-psp.c:2382 plug-ins/common/file-psp.c:2432
-#: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
-#: plug-ins/common/file-sunras.c:455 plug-ins/common/file-svg.c:365
-#: plug-ins/common/file-svg.c:759 plug-ins/common/file-tga.c:445
-#: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:747
-#: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:897
-#: plug-ins/common/file-xwd.c:481 plug-ins/common/sphere-designer.c:2090
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
-#: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
-#: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
-#: plug-ins/file-icns/file-icns-load.c:515
+#: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
+#: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
+#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:759
+#: plug-ins/common/file-tga.c:445 plug-ins/common/file-wbmp.c:184
+#: plug-ins/common/file-xbm.c:747 plug-ins/common/file-xmc.c:658
+#: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
+#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
+#: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
+#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:459
+#: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
 #: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
 #: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
 #: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:554
@@ -1930,18 +1930,18 @@ msgstr ""
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1091
 #: plug-ins/common/file-pcx.c:430 plug-ins/common/file-pdf-load.c:816
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
-#: plug-ins/common/file-pnm.c:708 plug-ins/common/file-ps.c:1140
+#: plug-ins/common/file-pnm.c:714 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
 #: plug-ins/common/file-tga.c:437 plug-ins/common/file-wbmp.c:176
 #: plug-ins/common/file-wmf.c:1026 plug-ins/common/file-xbm.c:739
 #: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
 #: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
-#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-icns/file-icns-load.c:507
+#: plug-ins/file-fli/fli-gimp.c:502 plug-ins/file-icns/file-icns-load.c:507
 #: plug-ins/file-ico/ico-load.c:674 plug-ins/file-ico/ico-load.c:784
 #: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:177
 #: plug-ins/file-raw/file-darktable.c:413
-#: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
+#: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:334
 #: plug-ins/file-tiff/file-tiff-load.c:289
 #, c-format
 msgid "Opening '%s'"
@@ -2010,15 +2010,16 @@ msgstr ""
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:913
 #: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:1374
 #: plug-ins/common/file-pcx.c:870 plug-ins/common/file-pix.c:560
-#: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1626
-#: plug-ins/common/file-ps.c:1363 plug-ins/common/file-sunras.c:626
-#: plug-ins/common/file-tga.c:1227 plug-ins/common/file-xbm.c:1048
-#: plug-ins/common/file-xpm.c:699 plug-ins/common/file-xwd.c:675
-#: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
-#: plug-ins/file-fli/fli-gimp.c:783 plug-ins/file-icns/file-icns-save.c:612
-#: plug-ins/file-ico/ico-save.c:1324 plug-ins/file-ico/ico-save.c:1533
-#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2160
-#: plug-ins/file-sgi/sgi.c:643 plug-ins/file-tiff/file-tiff-save.c:1074
+#: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
+#: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
+#: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
+#: plug-ins/common/file-xbm.c:1048 plug-ins/common/file-xpm.c:699
+#: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:332
+#: plug-ins/file-fits/fits.c:504 plug-ins/file-fli/fli-gimp.c:784
+#: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1324
+#: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
+#: plug-ins/file-psd/psd-save.c:2160 plug-ins/file-sgi/sgi.c:646
+#: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "'%s'-ის გატანა"
@@ -2879,7 +2880,6 @@ msgid "JPEG 2000 image"
 msgstr "JPEG 2000 გამოსახულება"
 
 #: plug-ins/common/file-jp2-load.c:189 plug-ins/common/file-jp2-load.c:223
-#| msgid "JPEG 2000 image"
 msgid "JPEG 2000"
 msgstr "JPEG 2000"
 
@@ -3288,7 +3288,7 @@ msgstr ""
 msgid "Use black and white palette"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:936 plug-ins/common/file-pnm.c:1622
+#: plug-ins/common/file-pcx.c:936 plug-ins/common/file-pnm.c:1631
 msgid "Cannot export images with alpha channel."
 msgstr ""
 
@@ -3312,7 +3312,7 @@ msgstr ""
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:1051
+#: plug-ins/common/file-pcx.c:1051 plug-ins/common/file-qoi.c:394
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr ""
@@ -3663,126 +3663,203 @@ msgstr "16 bpc RGBA"
 msgid "16 bpc GRAYA"
 msgstr "16 bpc GRAYA"
 
-#: plug-ins/common/file-pnm.c:314
+#: plug-ins/common/file-pnm.c:315
 msgid "PNM Image"
 msgstr "PNM გამოსახულება"
 
-#: plug-ins/common/file-pnm.c:347
+#: plug-ins/common/file-pnm.c:318
+msgid "Loads files in the PNM file format"
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:319
+msgid "This plug-in loads files in the various Netpbm portable file formats."
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:348
 msgid "PNM image"
 msgstr "PNM გამოსახულება"
 
-#: plug-ins/common/file-pnm.c:382
+#: plug-ins/common/file-pnm.c:350
+#| msgid "PNG"
+msgid "PNM"
+msgstr "PNM"
+
+#: plug-ins/common/file-pnm.c:353
+msgid "Exports files in the PNM file format"
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:354
+msgid "PNM export handles all image types without transparency."
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:370 plug-ins/common/file-pnm.c:406
+#: plug-ins/common/file-pnm.c:442
+msgid "Data formatting"
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:371 plug-ins/common/file-pnm.c:407
+#: plug-ins/common/file-pnm.c:443 plug-ins/common/file-pnm.c:479
+msgid "TRUE for raw output, FALSE for ascii output"
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:385
+msgid "PBM"
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:386
 msgid "PBM image"
 msgstr "PBM გამოსახულება"
 
-#: plug-ins/common/file-pnm.c:417
+#: plug-ins/common/file-pnm.c:389
+msgid "Exports files in the PBM file format"
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:390
+msgid "PBM exporting produces mono images without transparency."
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:421
 msgid "PGM image"
 msgstr "PGM გამოსახულება"
 
-#: plug-ins/common/file-pnm.c:452
+#: plug-ins/common/file-pnm.c:423
+#| msgid "PNG"
+msgid "PGM"
+msgstr "PGM"
+
+#: plug-ins/common/file-pnm.c:425
+msgid "Exports files in the PGM file format"
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:426
+msgid "PGM exporting produces grayscale images without transparency."
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:457
 msgid "PPM image"
 msgstr "PPM გამოსახულება"
 
-#: plug-ins/common/file-pnm.c:487
+#: plug-ins/common/file-pnm.c:459
+msgid "PPM"
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:461
+msgid "Exports files in the PPM file format"
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:462
+msgid "PPM export handles RGB images without transparency."
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:493
 msgid "PAM image"
 msgstr "PAM გამოსახულება"
 
-#: plug-ins/common/file-pnm.c:516
+#: plug-ins/common/file-pnm.c:496
+msgid "Exports files in the PAM file format"
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:497
+msgid "PAM export handles RGB images with or without transparency."
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:522
 msgid "PFM image"
 msgstr "PFM გამოსახულება"
 
-#: plug-ins/common/file-pnm.c:655
+#: plug-ins/common/file-pnm.c:525
+msgid "Exports files in the PFM file format"
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:526
+msgid "PFM export handles all images without transparency."
+msgstr ""
+
+#: plug-ins/common/file-pnm.c:661
 #, c-format
 msgid "%s format does not support multiple layers."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:741 plug-ins/common/file-pnm.c:773
-#: plug-ins/common/file-pnm.c:782 plug-ins/common/file-pnm.c:797
-#: plug-ins/common/file-pnm.c:812 plug-ins/common/file-pnm.c:1010
-#: plug-ins/common/file-pnm.c:1105 plug-ins/common/file-pnm.c:1190
-#: plug-ins/common/file-pnm.c:1251
+#: plug-ins/common/file-pnm.c:747 plug-ins/common/file-pnm.c:779
+#: plug-ins/common/file-pnm.c:788 plug-ins/common/file-pnm.c:803
+#: plug-ins/common/file-pnm.c:818 plug-ins/common/file-pnm.c:1016
+#: plug-ins/common/file-pnm.c:1111 plug-ins/common/file-pnm.c:1196
+#: plug-ins/common/file-pnm.c:1257
 msgid "Premature end of file."
 msgstr "ფაილის მოულოდნელი დასასრული."
 
-#: plug-ins/common/file-pnm.c:743
+#: plug-ins/common/file-pnm.c:749
 msgid "Invalid file."
 msgstr "არასწორი ფაილი."
 
-#: plug-ins/common/file-pnm.c:761
+#: plug-ins/common/file-pnm.c:767
 msgid "File not in a supported format."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:776
+#: plug-ins/common/file-pnm.c:782
 msgid "Invalid X resolution."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:778 plug-ins/common/file-pnm.c:944
+#: plug-ins/common/file-pnm.c:784 plug-ins/common/file-pnm.c:950
 msgid "Image width is larger than GIMP can handle."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:785
+#: plug-ins/common/file-pnm.c:791
 msgid "Invalid Y resolution."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:787
+#: plug-ins/common/file-pnm.c:793
 msgid "Image height is larger than GIMP can handle."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:801
+#: plug-ins/common/file-pnm.c:807
 msgid "Bogus scale factor."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:803
+#: plug-ins/common/file-pnm.c:809
 msgid "Unsupported scale factor."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:817
+#: plug-ins/common/file-pnm.c:823
 msgid "Unsupported maximum value."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:938
+#: plug-ins/common/file-pnm.c:944
 msgid "PAM: Unsupported inofficial PNM variant."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:942
+#: plug-ins/common/file-pnm.c:948
 msgid "PAM: Premature end of file."
 msgstr "PAM: ფაილის მოულოდნელი დასასრული."
 
-#: plug-ins/common/file-pnm.c:946
+#: plug-ins/common/file-pnm.c:952
 msgid "PAM: Invalid X resolution."
 msgstr "PAM: არასწორი X გარჩევადობა."
 
-#: plug-ins/common/file-pnm.c:948
+#: plug-ins/common/file-pnm.c:954
 msgid "PAM: Invalid Y resolution."
 msgstr "PAM: არასწორი Y გარჩევადობა."
 
-#: plug-ins/common/file-pnm.c:950
+#: plug-ins/common/file-pnm.c:956
 msgid "PAM: Invalid maximum value."
 msgstr "PAM: არასწორი მაქსიმალური მნიშვნელობა."
 
-#: plug-ins/common/file-pnm.c:952
+#: plug-ins/common/file-pnm.c:958
 msgid "PAM: Invalid depth."
 msgstr "PAM: არასწორი სიღრმე."
 
-#: plug-ins/common/file-pnm.c:954
+#: plug-ins/common/file-pnm.c:960
 msgid "PAM: Unsupported tupltype."
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:2015
-msgid "Export Image as PNM"
-msgstr ""
-
-#: plug-ins/common/file-pnm.c:2019
-msgid "Data formatting"
-msgstr ""
-
-#: plug-ins/common/file-pnm.c:2020
-msgid "_Raw"
-msgstr "_Raw"
-
-#: plug-ins/common/file-pnm.c:2021
+#. file save type
+#: plug-ins/common/file-pnm.c:2028
 msgid "_ASCII"
 msgstr "_ASCII"
+
+#: plug-ins/common/file-pnm.c:2029
+msgid "_Raw"
+msgstr "_Raw"
 
 #: plug-ins/common/file-ps.c:381 plug-ins/common/file-ps.c:494
 msgid "PostScript document"
@@ -4117,6 +4194,34 @@ msgstr ""
 
 #: plug-ins/common/file-psp.c:2587
 msgid "Exporting not implemented yet."
+msgstr ""
+
+#: plug-ins/common/file-qoi.c:137 plug-ins/common/file-qoi.c:164
+msgid "Quite OK Image"
+msgstr ""
+
+#: plug-ins/common/file-qoi.c:140
+msgid "Load file in the QOI file format"
+msgstr ""
+
+#: plug-ins/common/file-qoi.c:141
+msgid "Load file in the QOI file format (Quite OK Image)"
+msgstr ""
+
+#: plug-ins/common/file-qoi.c:167
+msgid "Export image in the QOI file format"
+msgstr ""
+
+#: plug-ins/common/file-qoi.c:168
+msgid "Export image in the QOI file format (Quite OK Image)"
+msgstr ""
+
+#: plug-ins/common/file-qoi.c:262
+msgid "QOI format does not support multiple layers."
+msgstr ""
+
+#: plug-ins/common/file-qoi.c:312
+msgid "Failed to read QOI file"
 msgstr ""
 
 #: plug-ins/common/file-raw-data.c:333 plug-ins/common/file-raw-data.c:452
@@ -5027,7 +5132,7 @@ msgstr ""
 
 #: plug-ins/common/film.c:938
 msgid "Available images:"
-msgstr ""
+msgstr "ხელმისაწვდომი გამოსახულებები:"
 
 #: plug-ins/common/film.c:939
 msgid "On film:"
@@ -5178,13 +5283,13 @@ msgstr ""
 msgid ""
 "Horizontal\n"
 "Lines"
-msgstr ""
+msgstr "ჰორიზონტალური ხაზები"
 
 #: plug-ins/common/grid.c:839
 msgid ""
 "Vertical\n"
 "Lines"
-msgstr ""
+msgstr "ვერტიკალური ხაზები"
 
 #: plug-ins/common/grid.c:841
 msgid "Intersection"
@@ -5203,11 +5308,11 @@ msgstr "წანაცვლება:"
 #. attach color selectors
 #: plug-ins/common/grid.c:1006
 msgid "Horizontal Color"
-msgstr ""
+msgstr "ჰორიზონტალური ფერი"
 
 #: plug-ins/common/grid.c:1028
 msgid "Vertical Color"
-msgstr ""
+msgstr "ვერტიკალური ფერი"
 
 #: plug-ins/common/grid.c:1049
 msgid "Intersection Color"
@@ -5247,7 +5352,7 @@ msgstr "ქმედება"
 
 #: plug-ins/common/hot.c:283
 msgid "Create _new layer"
-msgstr ""
+msgstr "_ახალი ფენის შექმნა"
 
 #: plug-ins/common/hot.c:474 plug-ins/common/hot.c:681
 msgid "Hot"
@@ -5255,11 +5360,11 @@ msgstr "ცხელი"
 
 #: plug-ins/common/hot.c:690
 msgid "N_TSC"
-msgstr ""
+msgstr "N_TSC"
 
 #: plug-ins/common/hot.c:691
 msgid "_PAL"
-msgstr ""
+msgstr "_PAL"
 
 #: plug-ins/common/hot.c:696
 msgid "Reduce _Luminance"
@@ -5327,7 +5432,7 @@ msgstr ""
 #. blending amount
 #: plug-ins/common/jigsaw.c:2592
 msgid "H_ighlight:"
-msgstr ""
+msgstr "_გამოკვეთა:"
 
 #: plug-ins/common/jigsaw.c:2593
 msgid "The amount of highlighting on the edges of each piece"
@@ -5589,30 +5694,30 @@ msgstr ""
 #. check button
 #: plug-ins/common/sample-colorize.c:1491
 msgid "Sho_w selection"
-msgstr ""
+msgstr "_მონიშნულის ჩვენება"
 
 #. check button
 #: plug-ins/common/sample-colorize.c:1502
 msgid "Show co_lor"
-msgstr ""
+msgstr "_ფერის ჩვენება"
 
 #. check button
 #: plug-ins/common/sample-colorize.c:1517
 msgid "Show selec_tion"
-msgstr ""
+msgstr "_მონიშნულის ჩვენება"
 
 #. check button
 #: plug-ins/common/sample-colorize.c:1528
 msgid "Show c_olor"
-msgstr ""
+msgstr "ფერის _ჩვენება"
 
 #: plug-ins/common/sample-colorize.c:1655
 msgid "Input levels:"
-msgstr ""
+msgstr "შეყვანის დონეები:"
 
 #: plug-ins/common/sample-colorize.c:1705
 msgid "Output levels:"
-msgstr ""
+msgstr "დონეები გამოსავალზე:"
 
 #. check button
 #: plug-ins/common/sample-colorize.c:1744
@@ -5772,7 +5877,7 @@ msgstr ""
 
 #: plug-ins/common/sparkle.c:597
 msgid "A_dd border"
-msgstr ""
+msgstr "კონტურის _დამატება"
 
 #: plug-ins/common/sparkle.c:603
 msgid "Draw a border of spikes around the image"
@@ -5792,15 +5897,15 @@ msgstr "_ფონის ფერი"
 
 #: plug-ins/common/sparkle.c:626
 msgid "Use the color of the image"
-msgstr ""
+msgstr "გამოსახულების ფერის გამოყენება"
 
 #: plug-ins/common/sparkle.c:627
 msgid "Use the foreground color"
-msgstr ""
+msgstr "წინა პლანის ფერის გამოყენება"
 
 #: plug-ins/common/sparkle.c:628
 msgid "Use the background color"
-msgstr ""
+msgstr "ფონის სურათის გამოყენებ"
 
 #: plug-ins/common/sphere-designer.c:336 plug-ins/gimpressionist/general.c:165
 msgid "Solid"
@@ -6656,27 +6761,27 @@ msgstr ""
 
 #: plug-ins/file-bmp/bmp-save.c:1032
 msgid "16 bit (R5 G6 B5)"
-msgstr ""
+msgstr "16 ბიტიანი (R5 G6 B5)"
 
 #: plug-ins/file-bmp/bmp-save.c:1033
 msgid "16 bit (A1 R5 G5 B5)"
-msgstr ""
+msgstr "16 ბიტიანი (A1 R5 G5 B5)"
 
 #: plug-ins/file-bmp/bmp-save.c:1034
 msgid "16 bit (X1 R5 G5 B5)"
-msgstr ""
+msgstr "16 ბიტიანი (X1 R5 G5 B5)"
 
 #: plug-ins/file-bmp/bmp-save.c:1035
 msgid "24 bit (R8 G8 B8)"
-msgstr ""
+msgstr "24 ბიტიანი (R8 G8 B8)"
 
 #: plug-ins/file-bmp/bmp-save.c:1036
 msgid "32 bit (A8 R8 G8 B8)"
-msgstr ""
+msgstr "32 ბიტიანი (A8 R8 G8 B8)"
 
 #: plug-ins/file-bmp/bmp-save.c:1037
 msgid "32 bit (X8 R8 G8 B8)"
-msgstr ""
+msgstr "32 ბიტიანი (X8 R8 G8 B8)"
 
 #: plug-ins/file-bmp/bmp.c:152 plug-ins/file-bmp/bmp.c:178
 msgid "Windows BMP image"
@@ -6688,7 +6793,7 @@ msgstr ""
 
 #: plug-ins/file-dds/dds.c:146 plug-ins/file-dds/dds.c:184
 msgid "DDS image"
-msgstr ""
+msgstr "DDS გამოსახულება"
 
 #: plug-ins/file-dds/dds.c:149 plug-ins/file-dds/dds.c:150
 msgid "Loads files in DDS image format"
@@ -6736,11 +6841,11 @@ msgstr ""
 
 #: plug-ins/file-dds/ddsread.c:366
 msgid "Could not allocate a new image."
-msgstr ""
+msgstr "ახალი გამოსახულების გამოყოფის შეცდომა."
 
 #: plug-ins/file-dds/ddsread.c:377
 msgid "Error reading palette."
-msgstr ""
+msgstr "პალიტრის კითხვის შეცდომა."
 
 #: plug-ins/file-dds/ddsread.c:660
 msgid "Invalid DDS format magic number."
@@ -6758,7 +6863,7 @@ msgstr ""
 
 #: plug-ins/file-dds/ddsread.c:801
 msgid "Invalid pixel format."
-msgstr ""
+msgstr "არასწორი პიქსელის ფორმატი."
 
 #: plug-ins/file-dds/ddsread.c:970
 #, c-format
@@ -6767,11 +6872,11 @@ msgstr ""
 
 #: plug-ins/file-dds/ddsread.c:1135 plug-ins/file-dds/ddsread.c:1174
 msgid "Unexpected EOF.\n"
-msgstr ""
+msgstr "მოულოდნელი EOF.\n"
 
 #: plug-ins/file-dds/ddsread.c:1514
 msgid "Open DDS"
-msgstr ""
+msgstr "DDS-ის გახსნა"
 
 #: plug-ins/file-dds/ddswrite.c:1984
 msgid "Export Image as DDS"
@@ -7005,7 +7110,7 @@ msgstr ""
 #: plug-ins/file-fli/fli.c:249 plug-ins/file-fli/fli.c:258
 #: plug-ins/file-fli/fli.c:269 plug-ins/file-fli/fli.c:276
 msgid "Error writing header. "
-msgstr ""
+msgstr "თავსართის ჩაწერის შეცდომა. "
 
 #: plug-ins/file-fli/fli.c:283
 msgid "Invalid header: unrecognized magic number!"
@@ -7013,7 +7118,7 @@ msgstr ""
 
 #: plug-ins/file-fli/fli.c:313 plug-ins/file-fli/fli.c:345
 msgid "Error reading frame. "
-msgstr ""
+msgstr "კადრის წაკითხვის შეცდომა. "
 
 #: plug-ins/file-fli/fli.c:323
 msgid "Invalid frame size points past end of file!"
@@ -7081,32 +7186,66 @@ msgstr ""
 msgid "AutoDesk FLIC animation"
 msgstr ""
 
-#: plug-ins/file-fli/fli-gimp.c:586
+#: plug-ins/file-fli/fli-gimp.c:184
+msgid "Load FLI-movies"
+msgstr ""
+
+#: plug-ins/file-fli/fli-gimp.c:185 plug-ins/file-fli/fli-gimp.c:223
+msgid "This is an experimental plug-in to handle FLI movies"
+msgstr ""
+
+#: plug-ins/file-fli/fli-gimp.c:199
+msgid "_From frame"
+msgstr "_ჩარჩოდან"
+
+#: plug-ins/file-fli/fli-gimp.c:200
+msgid "Load beginning from this frame"
+msgstr ""
+
+#: plug-ins/file-fli/fli-gimp.c:205
+msgid "_To frame"
+msgstr ""
+
+#: plug-ins/file-fli/fli-gimp.c:206
+msgid "End loading with this frame"
+msgstr ""
+
+#: plug-ins/file-fli/fli-gimp.c:220
+msgid "FLI Animation"
+msgstr "FLI ანიმაცია"
+
+#: plug-ins/file-fli/fli-gimp.c:222
+msgid "Export FLI-movies"
+msgstr "FLI-ფილმების გატანა"
+
+#: plug-ins/file-fli/fli-gimp.c:237
+msgid "_From:"
+msgstr "_გამგზავნი:"
+
+#: plug-ins/file-fli/fli-gimp.c:238
+msgid "Export beginning from this frame"
+msgstr ""
+
+#: plug-ins/file-fli/fli-gimp.c:243
+msgid "_To:"
+msgstr "_ვის:"
+
+#: plug-ins/file-fli/fli-gimp.c:244
+msgid "End exporting with this frame (or -1 for all frames)"
+msgstr ""
+
+#: plug-ins/file-fli/fli-gimp.c:587
 #, c-format
 msgid "Frame %d (%ums)"
 msgstr ""
 
-#: plug-ins/file-fli/fli-gimp.c:613
+#: plug-ins/file-fli/fli-gimp.c:614
 #, c-format
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr ""
 
 #: plug-ins/file-fli/fli-gimp.c:945
 msgid "Open FLIC Animation"
-msgstr ""
-
-#: plug-ins/file-fli/fli-gimp.c:963
-msgctxt "frame-range"
-msgid "_From:"
-msgstr "_გამგზავნი:"
-
-#: plug-ins/file-fli/fli-gimp.c:969
-msgctxt "frame-range"
-msgid "_To:"
-msgstr "_ვის:"
-
-#: plug-ins/file-fli/fli-gimp.c:999
-msgid "Export Image as FLI Animation"
 msgstr ""
 
 #: plug-ins/file-icns/file-icns-load.c:431
@@ -7179,11 +7318,11 @@ msgstr ""
 
 #: plug-ins/file-ico/ico-dialog.c:62
 msgid "Windows Cursor"
-msgstr ""
+msgstr "Windows-ის კურსორი"
 
 #: plug-ins/file-ico/ico-dialog.c:62
 msgid "Windows Icon"
-msgstr ""
+msgstr "Windows-ის ხატულა"
 
 #: plug-ins/file-ico/ico-dialog.c:97
 msgid "Animated Cursor Settings"
@@ -7191,11 +7330,11 @@ msgstr "ანიმირებული კურსორის მორგ�
 
 #: plug-ins/file-ico/ico-dialog.c:110
 msgid "_Cursor Name (Optional)"
-msgstr ""
+msgstr "კურსორის _სახელი (არასავალდებულო)"
 
 #: plug-ins/file-ico/ico-dialog.c:127
 msgid "_Author Name (Optional)"
-msgstr ""
+msgstr "ავტორის _სახელი (არასავალდებულო)"
 
 #: plug-ins/file-ico/ico-dialog.c:144
 msgid "_Delay between frames:"
@@ -7208,7 +7347,7 @@ msgstr ""
 #. Cursor
 #: plug-ins/file-ico/ico-dialog.c:164
 msgid "Icon Details"
-msgstr ""
+msgstr "ხატულების დეტალები"
 
 #: plug-ins/file-ico/ico-dialog.c:187
 msgid ""
@@ -7238,7 +7377,7 @@ msgstr ""
 
 #: plug-ins/file-ico/ico-dialog.c:274
 msgid "Compressed (PNG)"
-msgstr ""
+msgstr "შეკუმშული (PNG)"
 
 #: plug-ins/file-ico/ico-load.c:224
 #, c-format
@@ -7762,57 +7901,73 @@ msgid ""
 "Please install one of them in order to load RAW files."
 msgstr ""
 
-#: plug-ins/file-sgi/sgi.c:143 plug-ins/file-sgi/sgi.c:170
+#: plug-ins/file-sgi/sgi.c:144 plug-ins/file-sgi/sgi.c:171
 msgid "Silicon Graphics IRIS image"
 msgstr ""
 
-#: plug-ins/file-sgi/sgi.c:271
+#: plug-ins/file-sgi/sgi.c:147
+msgid "Loads files in SGI image file format"
+msgstr ""
+
+#: plug-ins/file-sgi/sgi.c:148
+msgid "This plug-in loads SGI image files."
+msgstr ""
+
+#: plug-ins/file-sgi/sgi.c:177
+msgid "Exports files in SGI image file format"
+msgstr ""
+
+#: plug-ins/file-sgi/sgi.c:178
+msgid "This plug-in exports SGI image files."
+msgstr ""
+
+#: plug-ins/file-sgi/sgi.c:191
+msgid "Compression _type"
+msgstr "_შეკუმშვის ტიპი"
+
+#: plug-ins/file-sgi/sgi.c:192
+msgid "Compression level (0 = none, 1 = RLE, 2 = ARLE)"
+msgstr ""
+
+#: plug-ins/file-sgi/sgi.c:274
 msgid "SGI format does not support multiple layers."
 msgstr ""
 
-#: plug-ins/file-sgi/sgi.c:339
+#: plug-ins/file-sgi/sgi.c:342
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr ""
 
-#: plug-ins/file-sgi/sgi.c:355
+#: plug-ins/file-sgi/sgi.c:358
 #, c-format
 msgid "Invalid width: %hu"
-msgstr ""
+msgstr "არასწორი სიგანე: %hu"
 
-#: plug-ins/file-sgi/sgi.c:363
+#: plug-ins/file-sgi/sgi.c:366
 #, c-format
 msgid "Invalid height: %hu"
-msgstr ""
+msgstr "არასწორი სიმაღლე: %hu"
 
-#: plug-ins/file-sgi/sgi.c:371
+#: plug-ins/file-sgi/sgi.c:374
 #, c-format
 msgid "Invalid number of channels: %hu"
 msgstr ""
 
-#: plug-ins/file-sgi/sgi.c:652
+#: plug-ins/file-sgi/sgi.c:655
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr ""
 
-#: plug-ins/file-sgi/sgi.c:740
-msgid "Export Image as SGI"
-msgstr ""
+#: plug-ins/file-sgi/sgi.c:745
+msgid "No compression"
+msgstr "შეკუმშვის გარეშე"
+
+#: plug-ins/file-sgi/sgi.c:747
+msgid "RLE compression"
+msgstr "RLE შეკუმშვა"
 
 #: plug-ins/file-sgi/sgi.c:749
-msgid "No compression"
-msgstr ""
-
-#: plug-ins/file-sgi/sgi.c:751
-msgid "RLE compression"
-msgstr ""
-
-#: plug-ins/file-sgi/sgi.c:753
 msgid "Aggressive RLE (not supported by SGI)"
-msgstr ""
-
-#: plug-ins/file-sgi/sgi.c:761
-msgid "Compression _type:"
 msgstr ""
 
 #: plug-ins/file-tiff/file-tiff.c:159 plug-ins/file-tiff/file-tiff.c:188
@@ -7982,7 +8137,7 @@ msgstr ""
 
 #: plug-ins/file-tiff/file-tiff-load.c:1577
 msgid "TIFF Channel"
-msgstr ""
+msgstr "TIFF არხი"
 
 #: plug-ins/file-tiff/file-tiff-load.c:1730
 #, c-format
@@ -8037,7 +8192,7 @@ msgstr ""
 
 #: plug-ins/file-tiff/file-tiff-load.c:2746
 msgid "Channe_l"
-msgstr ""
+msgstr "_არხი"
 
 #: plug-ins/file-tiff/file-tiff-save.c:648
 msgid ""
@@ -8189,7 +8344,7 @@ msgstr ""
 
 #: plug-ins/file-webp/file-webp.c:233
 msgid "Save a_nimation"
-msgstr ""
+msgstr "_ანიმაციის შენახვა"
 
 #: plug-ins/file-webp/file-webp.c:234
 msgid "Use layers for animation"
@@ -8212,7 +8367,7 @@ msgstr ""
 #: plug-ins/file-webp/file-webp-dialog.c:80
 #: plug-ins/gradient-flare/gradient-flare.c:2623
 msgid "Default"
-msgstr ""
+msgstr "ნაგულისხმები"
 
 #: plug-ins/file-webp/file-webp-dialog.c:81
 msgid "Picture"
@@ -8691,7 +8846,7 @@ msgstr ""
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:854
 msgid "Lambda"
-msgstr ""
+msgstr "ლამბდა"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:856
 msgid "Sierpinski"
@@ -8749,7 +8904,7 @@ msgstr ""
 #. Color Function frame
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:976
 msgid "Color Function"
-msgstr ""
+msgstr "ფერის ფუნქცია"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:989
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1030
@@ -11531,20 +11686,20 @@ msgstr "არჩეულია:"
 
 #: plug-ins/imagemap/imap_preferences.c:463
 msgid "Interaction:"
-msgstr ""
+msgstr "ურთიერთქმედება:"
 
 #: plug-ins/imagemap/imap_preferences.c:472
 msgid "Co_ntiguous Region"
-msgstr ""
+msgstr "_უწყვეტი რეგიონი"
 
 #: plug-ins/imagemap/imap_preferences.c:476
 #: plug-ins/map-object/map-object-ui.c:572
 msgid "_Threshold:"
-msgstr ""
+msgstr "_ზღვარი:"
 
 #: plug-ins/imagemap/imap_preferences.c:478
 msgid "_Automatically convert"
-msgstr ""
+msgstr "_ავტომატური გადაყვანა"
 
 #: plug-ins/imagemap/imap_preferences.c:489
 msgid "General Preferences"
@@ -11564,7 +11719,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_selection.c:349
 msgid "#"
-msgstr ""
+msgstr "#"
 
 #: plug-ins/imagemap/imap_selection.c:360
 msgid "URL"
@@ -11572,7 +11727,7 @@ msgstr "ვებ-მისამართი"
 
 #: plug-ins/imagemap/imap_selection.c:378
 msgid "ALT Text"
-msgstr ""
+msgstr "ალტ. ტექსტი"
 
 #: plug-ins/imagemap/imap_selection.c:388
 msgid "Target"
@@ -11694,7 +11849,7 @@ msgstr "ფერი:"
 #: plug-ins/lighting/lighting-ui.c:425
 msgctxt "light-source"
 msgid "None"
-msgstr ""
+msgstr "არც ერთი"
 
 #: plug-ins/lighting/lighting-ui.c:426
 msgid "Directional"
@@ -12968,6 +13123,14 @@ msgstr ""
 msgid "Transferring data from scanner/camera"
 msgstr ""
 
+#~ msgctxt "frame-range"
+#~ msgid "_From:"
+#~ msgstr "_გამგზავნი:"
+
+#~ msgctxt "frame-range"
+#~ msgid "_To:"
+#~ msgstr "_ვის:"
+
 #~ msgid "Co_mment:"
 #~ msgstr "კომე_ნტარი:"
 
@@ -12996,9 +13159,6 @@ msgstr ""
 #, c-format
 #~ msgid "%s-%s"
 #~ msgstr "%s-%s"
-
-#~ msgid "Export Preview"
-#~ msgstr "ატანის გადახედვა"
 
 #~ msgid "_Open..."
 #~ msgstr "_გახსნა…"
