@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-01 17:48+0000\n"
-"PO-Revision-Date: 2023-04-01 20:50+0300\n"
+"POT-Creation-Date: 2023-04-02 02:56+0000\n"
+"PO-Revision-Date: 2023-04-02 09:10+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -488,7 +488,7 @@ msgstr "_Вертикально"
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
 #: plug-ins/common/file-jp2-load.c:1317 plug-ins/common/file-pcx.c:508
 #: plug-ins/common/file-pcx.c:516 plug-ins/common/file-pix.c:422
-#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:863
+#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:869
 #: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
 #: plug-ins/common/file-sunras.c:1080 plug-ins/common/file-tga.c:1114
 #: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:909
@@ -1038,7 +1038,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
 #: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:816 plug-ins/file-icns/file-icns-save.c:428
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:428
 #: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
 #: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
 #: plug-ins/file-tiff/file-tiff-save.c:1084
@@ -1074,8 +1074,8 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
 #: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
 #: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
-#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:458
-#: plug-ins/file-fli/fli-gimp.c:509 plug-ins/file-icns/file-icns-load.c:515
+#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:459
+#: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
 #: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
 #: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
 #: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:554
@@ -1968,14 +1968,14 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1091
 #: plug-ins/common/file-pcx.c:430 plug-ins/common/file-pdf-load.c:816
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
-#: plug-ins/common/file-pnm.c:708 plug-ins/common/file-ps.c:1140
+#: plug-ins/common/file-pnm.c:714 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
 #: plug-ins/common/file-tga.c:437 plug-ins/common/file-wbmp.c:176
 #: plug-ins/common/file-wmf.c:1026 plug-ins/common/file-xbm.c:739
 #: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
 #: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
-#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-icns/file-icns-load.c:507
+#: plug-ins/file-fli/fli-gimp.c:502 plug-ins/file-icns/file-icns-load.c:507
 #: plug-ins/file-ico/ico-load.c:674 plug-ins/file-ico/ico-load.c:784
 #: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:177
 #: plug-ins/file-raw/file-darktable.c:413
@@ -2050,12 +2050,12 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:913
 #: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:1374
 #: plug-ins/common/file-pcx.c:870 plug-ins/common/file-pix.c:560
-#: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1626
+#: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
 #: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
 #: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
 #: plug-ins/common/file-xbm.c:1048 plug-ins/common/file-xpm.c:699
 #: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:332
-#: plug-ins/file-fits/fits.c:504 plug-ins/file-fli/fli-gimp.c:783
+#: plug-ins/file-fits/fits.c:504 plug-ins/file-fli/fli-gimp.c:784
 #: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1324
 #: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
 #: plug-ins/file-psd/psd-save.c:2160 plug-ins/file-sgi/sgi.c:646
@@ -3383,7 +3383,7 @@ msgstr "Скористатися вбудованою палітрою зобр�
 msgid "Use black and white palette"
 msgstr "Скористатися чорно-білою палітрою"
 
-#: plug-ins/common/file-pcx.c:936 plug-ins/common/file-pnm.c:1622
+#: plug-ins/common/file-pcx.c:936 plug-ins/common/file-pnm.c:1631
 msgid "Cannot export images with alpha channel."
 msgstr "Неможливо експортувати зображення з альфа-каналом."
 
@@ -3783,126 +3783,221 @@ msgstr "16 біт/кан RGBA"
 msgid "16 bpc GRAYA"
 msgstr "16 біт/кан GRAYA"
 
-#: plug-ins/common/file-pnm.c:314
+#: plug-ins/common/file-pnm.c:315
 msgid "PNM Image"
 msgstr "Зображення PNM"
 
-#: plug-ins/common/file-pnm.c:347
+#: plug-ins/common/file-pnm.c:318
+#| msgid "Loads files in the JPEG XL file format"
+msgid "Loads files in the PNM file format"
+msgstr "Завантажує файли у форматі PNM"
+
+#: plug-ins/common/file-pnm.c:319
+msgid "This plug-in loads files in the various Netpbm portable file formats."
+msgstr ""
+"Цей додаток завантажує файли у різноманітних форматах портативних файлів"
+" Netpbm."
+
+#: plug-ins/common/file-pnm.c:348
 msgid "PNM image"
 msgstr "Зображення PNM"
 
-#: plug-ins/common/file-pnm.c:382
+#: plug-ins/common/file-pnm.c:350
+#| msgid "PNG"
+msgid "PNM"
+msgstr "PNM"
+
+#: plug-ins/common/file-pnm.c:353
+#| msgid "Export image in the QOI file format"
+msgid "Exports files in the PNM file format"
+msgstr "Експортує файли у форматі PNM"
+
+#: plug-ins/common/file-pnm.c:354
+msgid "PNM export handles all image types without transparency."
+msgstr "Експортування PNM відбувається в усіх типах зображень без прозорості."
+
+#: plug-ins/common/file-pnm.c:370 plug-ins/common/file-pnm.c:406
+#: plug-ins/common/file-pnm.c:442
+msgid "Data formatting"
+msgstr "Форматування даних"
+
+#: plug-ins/common/file-pnm.c:371 plug-ins/common/file-pnm.c:407
+#: plug-ins/common/file-pnm.c:443 plug-ins/common/file-pnm.c:479
+msgid "TRUE for raw output, FALSE for ascii output"
+msgstr "TRUE для виведення даних без обробки, FALSE для виведення даних ASCII"
+
+#: plug-ins/common/file-pnm.c:385
+msgid "PBM"
+msgstr "PBM"
+
+#: plug-ins/common/file-pnm.c:386
 msgid "PBM image"
 msgstr "Зображення PBM"
 
-#: plug-ins/common/file-pnm.c:417
+#: plug-ins/common/file-pnm.c:389
+#| msgid "Export image in the QOI file format"
+msgid "Exports files in the PBM file format"
+msgstr "Експортує файли у форматі PBM"
+
+#: plug-ins/common/file-pnm.c:390
+msgid "PBM exporting produces mono images without transparency."
+msgstr ""
+"Результатом експортування PBM будуть монохроматичні зображення без"
+" прозорості."
+
+#: plug-ins/common/file-pnm.c:421
 msgid "PGM image"
 msgstr "Зображення PGM"
 
-#: plug-ins/common/file-pnm.c:452
+#: plug-ins/common/file-pnm.c:423
+#| msgid "PNG"
+msgid "PGM"
+msgstr "PGM"
+
+#: plug-ins/common/file-pnm.c:425
+#| msgid "Export image in the QOI file format"
+msgid "Exports files in the PGM file format"
+msgstr "Експортує файли у форматі PGM"
+
+#: plug-ins/common/file-pnm.c:426
+msgid "PGM exporting produces grayscale images without transparency."
+msgstr ""
+"Результатом експортування PGM будуть зображення у відтінках сірого без"
+" прозорості."
+
+#: plug-ins/common/file-pnm.c:457
 msgid "PPM image"
 msgstr "Зображення PPM"
 
-#: plug-ins/common/file-pnm.c:487
+#: plug-ins/common/file-pnm.c:459
+msgid "PPM"
+msgstr "PPM"
+
+#: plug-ins/common/file-pnm.c:461
+#| msgid "Export image in the QOI file format"
+msgid "Exports files in the PPM file format"
+msgstr "Експортує файли у форматі PPM"
+
+#: plug-ins/common/file-pnm.c:462
+#| msgid "Cannot export indexed image with transparency in BMP file format."
+msgid "PPM export handles RGB images without transparency."
+msgstr ""
+"Експортування PPM відбуватиметься у форматі зображень RGB без прозорості."
+
+#: plug-ins/common/file-pnm.c:493
 msgid "PAM image"
 msgstr "зображення PNM"
 
-#: plug-ins/common/file-pnm.c:516
+#: plug-ins/common/file-pnm.c:496
+#| msgid "Export image in the QOI file format"
+msgid "Exports files in the PAM file format"
+msgstr "Експортує файли у форматі PAM"
+
+#: plug-ins/common/file-pnm.c:497
+msgid "PAM export handles RGB images with or without transparency."
+msgstr ""
+"Експортування PAM відбуватиметься у форматі зображень RGB з прозорістю або"
+" без неї."
+
+#: plug-ins/common/file-pnm.c:522
 msgid "PFM image"
 msgstr "Зображення PFM"
 
-#: plug-ins/common/file-pnm.c:655
+#: plug-ins/common/file-pnm.c:525
+#| msgid "Export image in the QOI file format"
+msgid "Exports files in the PFM file format"
+msgstr "Експортувати зображення у форматі PFM"
+
+#: plug-ins/common/file-pnm.c:526
+#| msgid "FITS export cannot handle images with alpha channels"
+msgid "PFM export handles all images without transparency."
+msgstr "Експортування PFM відбуватиметься без прозорості."
+
+#: plug-ins/common/file-pnm.c:661
 #, c-format
 msgid "%s format does not support multiple layers."
 msgstr "Для формату %s не передбачено підтримку декількох шарів."
 
-#: plug-ins/common/file-pnm.c:741 plug-ins/common/file-pnm.c:773
-#: plug-ins/common/file-pnm.c:782 plug-ins/common/file-pnm.c:797
-#: plug-ins/common/file-pnm.c:812 plug-ins/common/file-pnm.c:1010
-#: plug-ins/common/file-pnm.c:1105 plug-ins/common/file-pnm.c:1190
-#: plug-ins/common/file-pnm.c:1251
+#: plug-ins/common/file-pnm.c:747 plug-ins/common/file-pnm.c:779
+#: plug-ins/common/file-pnm.c:788 plug-ins/common/file-pnm.c:803
+#: plug-ins/common/file-pnm.c:818 plug-ins/common/file-pnm.c:1016
+#: plug-ins/common/file-pnm.c:1111 plug-ins/common/file-pnm.c:1196
+#: plug-ins/common/file-pnm.c:1257
 msgid "Premature end of file."
 msgstr "Передчасне закінчення файлу."
 
-#: plug-ins/common/file-pnm.c:743
+#: plug-ins/common/file-pnm.c:749
 msgid "Invalid file."
 msgstr "Неправильний файл."
 
-#: plug-ins/common/file-pnm.c:761
+#: plug-ins/common/file-pnm.c:767
 msgid "File not in a supported format."
 msgstr "Файл має непідтримуваний формат."
 
-#: plug-ins/common/file-pnm.c:776
+#: plug-ins/common/file-pnm.c:782
 msgid "Invalid X resolution."
 msgstr "Неправильна роздільна здатність по X"
 
-#: plug-ins/common/file-pnm.c:778 plug-ins/common/file-pnm.c:944
+#: plug-ins/common/file-pnm.c:784 plug-ins/common/file-pnm.c:950
 msgid "Image width is larger than GIMP can handle."
 msgstr "GIMP не впорається із зображенням такої ширини"
 
-#: plug-ins/common/file-pnm.c:785
+#: plug-ins/common/file-pnm.c:791
 msgid "Invalid Y resolution."
 msgstr "Неправильна роздільна здатність вздовж Y"
 
-#: plug-ins/common/file-pnm.c:787
+#: plug-ins/common/file-pnm.c:793
 msgid "Image height is larger than GIMP can handle."
 msgstr "GIMP не впорається із зображенням такої висоти"
 
-#: plug-ins/common/file-pnm.c:801
+#: plug-ins/common/file-pnm.c:807
 msgid "Bogus scale factor."
 msgstr "Хибний масштаб."
 
-#: plug-ins/common/file-pnm.c:803
+#: plug-ins/common/file-pnm.c:809
 msgid "Unsupported scale factor."
 msgstr "Непідтримуваний коефіцієнт масштабування."
 
-#: plug-ins/common/file-pnm.c:817
+#: plug-ins/common/file-pnm.c:823
 msgid "Unsupported maximum value."
 msgstr "Не підтримується максимальне значення."
 
-#: plug-ins/common/file-pnm.c:938
+#: plug-ins/common/file-pnm.c:944
 msgid "PAM: Unsupported inofficial PNM variant."
 msgstr "PAM: непідтримуваний неофіційний варіант PNM."
 
-#: plug-ins/common/file-pnm.c:942
+#: plug-ins/common/file-pnm.c:948
 msgid "PAM: Premature end of file."
 msgstr "PAM: передчасне завершення файла."
 
-#: plug-ins/common/file-pnm.c:946
+#: plug-ins/common/file-pnm.c:952
 msgid "PAM: Invalid X resolution."
 msgstr "PAM: неправильна роздільна здатність по X."
 
-#: plug-ins/common/file-pnm.c:948
+#: plug-ins/common/file-pnm.c:954
 msgid "PAM: Invalid Y resolution."
 msgstr "PAM: неправильна роздільна здатність вздовж Y."
 
-#: plug-ins/common/file-pnm.c:950
+#: plug-ins/common/file-pnm.c:956
 msgid "PAM: Invalid maximum value."
 msgstr "PAM: некоректне максимальне значення."
 
-#: plug-ins/common/file-pnm.c:952
+#: plug-ins/common/file-pnm.c:958
 msgid "PAM: Invalid depth."
 msgstr "PAM: некоректна глибина."
 
-#: plug-ins/common/file-pnm.c:954
+#: plug-ins/common/file-pnm.c:960
 msgid "PAM: Unsupported tupltype."
 msgstr "PAM: непідтримуваний тип кортежу."
 
-#: plug-ins/common/file-pnm.c:2015
-msgid "Export Image as PNM"
-msgstr "Експортувати зображення як PNM"
-
-#: plug-ins/common/file-pnm.c:2019
-msgid "Data formatting"
-msgstr "Форматування даних"
-
-#: plug-ins/common/file-pnm.c:2020
-msgid "_Raw"
-msgstr "_Без обробки"
-
-#: plug-ins/common/file-pnm.c:2021
+#. file save type
+#: plug-ins/common/file-pnm.c:2028
 msgid "_ASCII"
 msgstr "_ASCII"
+
+#: plug-ins/common/file-pnm.c:2029
+msgid "_Raw"
+msgstr "_Без обробки"
 
 #: plug-ins/common/file-ps.c:381 plug-ins/common/file-ps.c:494
 msgid "PostScript document"
@@ -7341,12 +7436,71 @@ msgstr ""
 msgid "AutoDesk FLIC animation"
 msgstr "Анімація AutoDesk FLIC"
 
-#: plug-ins/file-fli/fli-gimp.c:586
+#: plug-ins/file-fli/fli-gimp.c:184
+#| msgid "Load Flame"
+msgid "Load FLI-movies"
+msgstr "Завантажити відео FLI"
+
+#: plug-ins/file-fli/fli-gimp.c:185 plug-ins/file-fli/fli-gimp.c:223
+msgid "This is an experimental plug-in to handle FLI movies"
+msgstr "Це експериментальний додаток для обробки відео FLI"
+
+#: plug-ins/file-fli/fli-gimp.c:199
+#| msgid "From gradient"
+msgid "_From frame"
+msgstr "З _кадру"
+
+#: plug-ins/file-fli/fli-gimp.c:200
+msgid "Load beginning from this frame"
+msgstr "Завантажити, починаючи з цього кадру"
+
+#: plug-ins/file-fli/fli-gimp.c:205
+#| msgid "(no keyframes)"
+msgid "_To frame"
+msgstr "Д_о кадру"
+
+#: plug-ins/file-fli/fli-gimp.c:206
+#| msgid "Stop loading this page"
+msgid "End loading with this frame"
+msgstr "Завершити завантаження на цьому кадрі"
+
+#: plug-ins/file-fli/fli-gimp.c:220
+#| msgid "Open FLIC Animation"
+msgid "FLI Animation"
+msgstr "Анімація FLI"
+
+#: plug-ins/file-fli/fli-gimp.c:222
+#| msgid "Export Icons"
+msgid "Export FLI-movies"
+msgstr "Експорт відео FLI"
+
+#: plug-ins/file-fli/fli-gimp.c:237
+#| msgctxt "email-address"
+#| msgid "_From:"
+msgid "_From:"
+msgstr "_Від:"
+
+#: plug-ins/file-fli/fli-gimp.c:238
+msgid "Export beginning from this frame"
+msgstr "Експортувати, починаючи з цього кадру"
+
+#: plug-ins/file-fli/fli-gimp.c:243
+#| msgctxt "email-address"
+#| msgid "_To:"
+msgid "_To:"
+msgstr "_До:"
+
+#: plug-ins/file-fli/fli-gimp.c:244
+msgid "End exporting with this frame (or -1 for all frames)"
+msgstr ""
+"Завершити експортування на цьому кадрі (або -1 для експортування усіх кадрів)"
+
+#: plug-ins/file-fli/fli-gimp.c:587
 #, c-format
 msgid "Frame %d (%ums)"
 msgstr "Кадр %d (%uмс)"
 
-#: plug-ins/file-fli/fli-gimp.c:613
+#: plug-ins/file-fli/fli-gimp.c:614
 #, c-format
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr "Не вдалося прочитати кадр %d. Ймовірно, анімацію пошкоджено.\n"
@@ -7354,20 +7508,6 @@ msgstr "Не вдалося прочитати кадр %d. Ймовірно, а
 #: plug-ins/file-fli/fli-gimp.c:945
 msgid "Open FLIC Animation"
 msgstr "Відкрити анімацію FLIC"
-
-#: plug-ins/file-fli/fli-gimp.c:963
-msgctxt "frame-range"
-msgid "_From:"
-msgstr "_Від:"
-
-#: plug-ins/file-fli/fli-gimp.c:969
-msgctxt "frame-range"
-msgid "_To:"
-msgstr "_Кому:"
-
-#: plug-ins/file-fli/fli-gimp.c:999
-msgid "Export Image as FLI Animation"
-msgstr "Експортувати зображення як анімацію FLI"
 
 #: plug-ins/file-icns/file-icns-load.c:431
 #, c-format
@@ -8089,27 +8229,22 @@ msgid "Silicon Graphics IRIS image"
 msgstr "Зображення Silicon Graphics IRIS"
 
 #: plug-ins/file-sgi/sgi.c:147
-#| msgid "Loads files in DDS image format"
 msgid "Loads files in SGI image file format"
 msgstr "Завантажує файли у форматі зображень SGI"
 
 #: plug-ins/file-sgi/sgi.c:148
-#| msgid "is not a CEL image file"
 msgid "This plug-in loads SGI image files."
 msgstr "Цей додаток завантажує файли зображень SGI."
 
 #: plug-ins/file-sgi/sgi.c:177
-#| msgid "Loads files in DDS image format"
 msgid "Exports files in SGI image file format"
 msgstr "Експортує файли у форматі зображень SGI"
 
 #: plug-ins/file-sgi/sgi.c:178
-#| msgid "is not a CEL image file"
 msgid "This plug-in exports SGI image files."
 msgstr "Цей додаток експортує файли зображень SGI."
 
 #: plug-ins/file-sgi/sgi.c:191
-#| msgid "Compression _type:"
 msgid "Compression _type"
 msgstr "_Тип стиснення"
 
@@ -13460,6 +13595,20 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Export Image as PNM"
+#~ msgstr "Експортувати зображення як PNM"
+
+#~ msgctxt "frame-range"
+#~ msgid "_From:"
+#~ msgstr "_Від:"
+
+#~ msgctxt "frame-range"
+#~ msgid "_To:"
+#~ msgstr "_Кому:"
+
+#~ msgid "Export Image as FLI Animation"
+#~ msgstr "Експортувати зображення як анімацію FLI"
 
 #~ msgid "Export Image as SGI"
 #~ msgstr "Експортувати зображення як SGI"
