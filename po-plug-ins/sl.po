@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-01 02:04+0000\n"
-"PO-Revision-Date: 2023-04-01 08:56+0200\n"
+"POT-Creation-Date: 2023-04-02 02:56+0000\n"
+"PO-Revision-Date: 2023-04-02 11:12+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -490,16 +490,16 @@ msgstr "_Navpične"
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
 #: plug-ins/common/file-jp2-load.c:1317 plug-ins/common/file-pcx.c:508
 #: plug-ins/common/file-pcx.c:516 plug-ins/common/file-pix.c:422
-#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:863
-#: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1080
-#: plug-ins/common/file-tga.c:1114 plug-ins/common/file-wbmp.c:270
-#: plug-ins/common/file-xbm.c:909 plug-ins/common/film.c:812
-#: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
-#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:271
-#: plug-ins/file-faxg3/faxg3.c:574 plug-ins/file-fits/fits.c:542
-#: plug-ins/file-jpeg/jpeg-load.c:225
+#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:869
+#: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
+#: plug-ins/common/file-sunras.c:1080 plug-ins/common/file-tga.c:1114
+#: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:909
+#: plug-ins/common/film.c:812 plug-ins/common/smooth-palette.c:332
+#: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
+#: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
+#: plug-ins/file-fits/fits.c:542 plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2510 plug-ins/file-sgi/sgi.c:472
+#: plug-ins/file-psd/psd-load.c:2510 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1538
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gimpressionist/general.c:139
@@ -1038,7 +1038,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
 #: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:816 plug-ins/file-icns/file-icns-save.c:428
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:428
 #: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
 #: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
 #: plug-ins/file-tiff/file-tiff-save.c:1084
@@ -1066,16 +1066,16 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: plug-ins/common/file-pcx.c:438 plug-ins/common/file-png.c:673
 #: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
 #: plug-ins/common/file-psp.c:2382 plug-ins/common/file-psp.c:2432
-#: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
-#: plug-ins/common/file-sunras.c:455 plug-ins/common/file-svg.c:365
-#: plug-ins/common/file-svg.c:759 plug-ins/common/file-tga.c:445
-#: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:747
-#: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:897
-#: plug-ins/common/file-xwd.c:481 plug-ins/common/sphere-designer.c:2090
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
-#: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
-#: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
-#: plug-ins/file-icns/file-icns-load.c:515
+#: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
+#: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
+#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:759
+#: plug-ins/common/file-tga.c:445 plug-ins/common/file-wbmp.c:184
+#: plug-ins/common/file-xbm.c:747 plug-ins/common/file-xmc.c:658
+#: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
+#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
+#: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
+#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:459
+#: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
 #: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
 #: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
 #: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:554
@@ -1964,18 +1964,18 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1091
 #: plug-ins/common/file-pcx.c:430 plug-ins/common/file-pdf-load.c:816
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
-#: plug-ins/common/file-pnm.c:708 plug-ins/common/file-ps.c:1140
+#: plug-ins/common/file-pnm.c:714 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
 #: plug-ins/common/file-tga.c:437 plug-ins/common/file-wbmp.c:176
 #: plug-ins/common/file-wmf.c:1026 plug-ins/common/file-xbm.c:739
 #: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
 #: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
-#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-icns/file-icns-load.c:507
+#: plug-ins/file-fli/fli-gimp.c:502 plug-ins/file-icns/file-icns-load.c:507
 #: plug-ins/file-ico/ico-load.c:674 plug-ins/file-ico/ico-load.c:784
 #: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:177
 #: plug-ins/file-raw/file-darktable.c:413
-#: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
+#: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:334
 #: plug-ins/file-tiff/file-tiff-load.c:289
 #, c-format
 msgid "Opening '%s'"
@@ -2046,15 +2046,16 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:913
 #: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:1374
 #: plug-ins/common/file-pcx.c:870 plug-ins/common/file-pix.c:560
-#: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1626
-#: plug-ins/common/file-ps.c:1363 plug-ins/common/file-sunras.c:626
-#: plug-ins/common/file-tga.c:1227 plug-ins/common/file-xbm.c:1048
-#: plug-ins/common/file-xpm.c:699 plug-ins/common/file-xwd.c:675
-#: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
-#: plug-ins/file-fli/fli-gimp.c:783 plug-ins/file-icns/file-icns-save.c:612
-#: plug-ins/file-ico/ico-save.c:1324 plug-ins/file-ico/ico-save.c:1533
-#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2160
-#: plug-ins/file-sgi/sgi.c:643 plug-ins/file-tiff/file-tiff-save.c:1074
+#: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
+#: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
+#: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
+#: plug-ins/common/file-xbm.c:1048 plug-ins/common/file-xpm.c:699
+#: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:332
+#: plug-ins/file-fits/fits.c:504 plug-ins/file-fli/fli-gimp.c:784
+#: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1324
+#: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
+#: plug-ins/file-psd/psd-save.c:2160 plug-ins/file-sgi/sgi.c:646
+#: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Izvažanje »%s« ..."
@@ -2073,12 +2074,10 @@ msgid "CSource cannot be run non-interactively."
 msgstr "CSource ni mogoče izvajati ne-interaktivno."
 
 #: plug-ins/common/file-csource.c:141
-#, fuzzy
 msgid "_Prefixed name"
 msgstr "Ime s _predpono"
 
 #: plug-ins/common/file-csource.c:142
-#, fuzzy
 msgid "Prefixed name"
 msgstr "Ime s predpono"
 
@@ -3370,7 +3369,7 @@ msgstr "Uporabi vgrajeno paleto slike PCX"
 msgid "Use black and white palette"
 msgstr "Uporabi črno-belo paleto"
 
-#: plug-ins/common/file-pcx.c:936 plug-ins/common/file-pnm.c:1622
+#: plug-ins/common/file-pcx.c:936 plug-ins/common/file-pnm.c:1631
 msgid "Cannot export images with alpha channel."
 msgstr "Slik ni mogoče izvoziti s kanalom alfa."
 
@@ -3394,7 +3393,7 @@ msgstr "Desni rob je zunaj meja (mora biti < %d): %d"
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Spodnji rob je zunaj meja (mora biti < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1051
+#: plug-ins/common/file-pcx.c:1051 plug-ins/common/file-qoi.c:394
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Pisanje v datoteko »%s« ni uspelo: %s"
@@ -3763,126 +3762,205 @@ msgstr "RGBA, 16 b/kanal"
 msgid "16 bpc GRAYA"
 msgstr "GRAYA, 16 b/kanal"
 
-#: plug-ins/common/file-pnm.c:314
+#: plug-ins/common/file-pnm.c:315
 msgid "PNM Image"
 msgstr "Slika PNM"
 
-#: plug-ins/common/file-pnm.c:347
+#: plug-ins/common/file-pnm.c:318
+msgid "Loads files in the PNM file format"
+msgstr "Naloži datoteke v zapisu PNM."
+
+#: plug-ins/common/file-pnm.c:319
+msgid "This plug-in loads files in the various Netpbm portable file formats."
+msgstr ""
+"Ta vstavek naloži datoteke v različnih prenosnih zapisih datotek Netpbm."
+
+#: plug-ins/common/file-pnm.c:348
 msgid "PNM image"
 msgstr "Slika PNM"
 
-#: plug-ins/common/file-pnm.c:382
+#: plug-ins/common/file-pnm.c:350
+#| msgid "PNG"
+msgid "PNM"
+msgstr "PNM"
+
+#: plug-ins/common/file-pnm.c:353
+msgid "Exports files in the PNM file format"
+msgstr "Izvozi datoteke v zapisu slikovnih datotek PNM."
+
+#: plug-ins/common/file-pnm.c:354
+msgid "PNM export handles all image types without transparency."
+msgstr "Izvoz PNM obravnava vse vrste slik brez prosojnosti."
+
+#: plug-ins/common/file-pnm.c:370 plug-ins/common/file-pnm.c:406
+#: plug-ins/common/file-pnm.c:442
+msgid "Data formatting"
+msgstr "Oblikovanje podatkov"
+
+#: plug-ins/common/file-pnm.c:371 plug-ins/common/file-pnm.c:407
+#: plug-ins/common/file-pnm.c:443 plug-ins/common/file-pnm.c:479
+#, fuzzy
+msgid "TRUE for raw output, FALSE for ascii output"
+msgstr "TRUE za neobdelan izhod, FALSE za izhod ascii"
+
+#: plug-ins/common/file-pnm.c:385
+msgid "PBM"
+msgstr "PBM"
+
+#: plug-ins/common/file-pnm.c:386
 msgid "PBM image"
 msgstr "Slika PBM"
 
-#: plug-ins/common/file-pnm.c:417
+#: plug-ins/common/file-pnm.c:389
+msgid "Exports files in the PBM file format"
+msgstr "Izvozi datoteke v zapisu slikovnih datotek PBM."
+
+#: plug-ins/common/file-pnm.c:390
+msgid "PBM exporting produces mono images without transparency."
+msgstr "Izvažanje PBM izdela monokromatske slike brez prosojnosti."
+
+#: plug-ins/common/file-pnm.c:421
 msgid "PGM image"
 msgstr "Slika PGM"
 
-#: plug-ins/common/file-pnm.c:452
+#: plug-ins/common/file-pnm.c:423
+#| msgid "PNG"
+msgid "PGM"
+msgstr "PGM"
+
+#: plug-ins/common/file-pnm.c:425
+msgid "Exports files in the PGM file format"
+msgstr "Izvozi datoteke v zapisu slikovnih datotek PGM."
+
+#: plug-ins/common/file-pnm.c:426
+msgid "PGM exporting produces grayscale images without transparency."
+msgstr "Izvažanje PGM izdela sivinske slike brez prosojnosti."
+
+#: plug-ins/common/file-pnm.c:457
 msgid "PPM image"
 msgstr "Slika PPM"
 
-#: plug-ins/common/file-pnm.c:487
+#: plug-ins/common/file-pnm.c:459
+msgid "PPM"
+msgstr "PPM"
+
+#: plug-ins/common/file-pnm.c:461
+msgid "Exports files in the PPM file format"
+msgstr "Izvozi datoteke v zapisu slikovnih datotek PPM."
+
+#: plug-ins/common/file-pnm.c:462
+msgid "PPM export handles RGB images without transparency."
+msgstr "Izvoz PPM obravnava slike RGB brez prosojnosti."
+
+#: plug-ins/common/file-pnm.c:493
 msgid "PAM image"
 msgstr "Slika PAM"
 
-#: plug-ins/common/file-pnm.c:516
+#: plug-ins/common/file-pnm.c:496
+msgid "Exports files in the PAM file format"
+msgstr "Izvozi datoteke v zapisu slikovnih datotek PAM."
+
+#: plug-ins/common/file-pnm.c:497
+msgid "PAM export handles RGB images with or without transparency."
+msgstr "Izvoz PAM obravnava slike RGB s prosojnostjo ali brez nje."
+
+#: plug-ins/common/file-pnm.c:522
 msgid "PFM image"
 msgstr "Slika PFM"
 
-#: plug-ins/common/file-pnm.c:655
+#: plug-ins/common/file-pnm.c:525
+msgid "Exports files in the PFM file format"
+msgstr "Izvozi datoteke v zapisu slikovnih datotek PFM."
+
+#: plug-ins/common/file-pnm.c:526
+msgid "PFM export handles all images without transparency."
+msgstr "Izvoz PFM obravnava vse slike brez prosojnosti."
+
+#: plug-ins/common/file-pnm.c:661
 #, c-format
 msgid "%s format does not support multiple layers."
 msgstr "Zapis %s ne podpira več plasti."
 
-#: plug-ins/common/file-pnm.c:741 plug-ins/common/file-pnm.c:773
-#: plug-ins/common/file-pnm.c:782 plug-ins/common/file-pnm.c:797
-#: plug-ins/common/file-pnm.c:812 plug-ins/common/file-pnm.c:1010
-#: plug-ins/common/file-pnm.c:1105 plug-ins/common/file-pnm.c:1190
-#: plug-ins/common/file-pnm.c:1251
+#: plug-ins/common/file-pnm.c:747 plug-ins/common/file-pnm.c:779
+#: plug-ins/common/file-pnm.c:788 plug-ins/common/file-pnm.c:803
+#: plug-ins/common/file-pnm.c:818 plug-ins/common/file-pnm.c:1016
+#: plug-ins/common/file-pnm.c:1111 plug-ins/common/file-pnm.c:1196
+#: plug-ins/common/file-pnm.c:1257
 msgid "Premature end of file."
 msgstr "Predčasen konec datoteke."
 
-#: plug-ins/common/file-pnm.c:743
+#: plug-ins/common/file-pnm.c:749
 msgid "Invalid file."
 msgstr "Neveljavna datoteka."
 
-#: plug-ins/common/file-pnm.c:761
+#: plug-ins/common/file-pnm.c:767
 msgid "File not in a supported format."
 msgstr "Datoteka ni v podprtem zapisu."
 
-#: plug-ins/common/file-pnm.c:776
+#: plug-ins/common/file-pnm.c:782
 msgid "Invalid X resolution."
 msgstr "Neveljavna ločljivost po osi X."
 
-#: plug-ins/common/file-pnm.c:778 plug-ins/common/file-pnm.c:944
+#: plug-ins/common/file-pnm.c:784 plug-ins/common/file-pnm.c:950
 msgid "Image width is larger than GIMP can handle."
 msgstr "Širina slike presega zmožnosti GIMP-a."
 
-#: plug-ins/common/file-pnm.c:785
+#: plug-ins/common/file-pnm.c:791
 msgid "Invalid Y resolution."
 msgstr "Neveljavna ločljivost po osi Y."
 
-#: plug-ins/common/file-pnm.c:787
+#: plug-ins/common/file-pnm.c:793
 msgid "Image height is larger than GIMP can handle."
 msgstr "Višina slike presega zmožnosti GIMP-a."
 
-#: plug-ins/common/file-pnm.c:801
+#: plug-ins/common/file-pnm.c:807
 msgid "Bogus scale factor."
 msgstr "Nepodprt faktor spremembe merila."
 
-#: plug-ins/common/file-pnm.c:803
+#: plug-ins/common/file-pnm.c:809
 msgid "Unsupported scale factor."
 msgstr "Nepodprt faktor spremembe merila."
 
-#: plug-ins/common/file-pnm.c:817
+#: plug-ins/common/file-pnm.c:823
 msgid "Unsupported maximum value."
 msgstr "Nepodprta največja vrednost."
 
-#: plug-ins/common/file-pnm.c:938
+#: plug-ins/common/file-pnm.c:944
 msgid "PAM: Unsupported inofficial PNM variant."
 msgstr "PAM: Nepodprta neuradna inačica PNM."
 
-#: plug-ins/common/file-pnm.c:942
+#: plug-ins/common/file-pnm.c:948
 msgid "PAM: Premature end of file."
 msgstr "PAM: Predčasen konec datoteke."
 
-#: plug-ins/common/file-pnm.c:946
+#: plug-ins/common/file-pnm.c:952
 msgid "PAM: Invalid X resolution."
 msgstr "PAM: Neveljavna ločljivost po osi X."
 
-#: plug-ins/common/file-pnm.c:948
+#: plug-ins/common/file-pnm.c:954
 msgid "PAM: Invalid Y resolution."
 msgstr "PAM: Neveljavna ločljivost po osi Y."
 
-#: plug-ins/common/file-pnm.c:950
+#: plug-ins/common/file-pnm.c:956
 msgid "PAM: Invalid maximum value."
 msgstr "PAM: Neveljavna največja vrednost."
 
-#: plug-ins/common/file-pnm.c:952
+#: plug-ins/common/file-pnm.c:958
 msgid "PAM: Invalid depth."
 msgstr "PAM: Neveljavna globina."
 
-#: plug-ins/common/file-pnm.c:954
+#: plug-ins/common/file-pnm.c:960
 msgid "PAM: Unsupported tupltype."
 msgstr "PAM: Nepodprta vrsta tupltype."
 
-#: plug-ins/common/file-pnm.c:2015
-msgid "Export Image as PNM"
-msgstr "Izvozi sliko kot PNM"
-
-#: plug-ins/common/file-pnm.c:2019
-msgid "Data formatting"
-msgstr "Oblikovanje podatkov"
-
-#: plug-ins/common/file-pnm.c:2020
-msgid "_Raw"
-msgstr "_surovo"
-
-#: plug-ins/common/file-pnm.c:2021
+#. file save type
+#: plug-ins/common/file-pnm.c:2028
 msgid "_ASCII"
 msgstr "_ASCII"
+
+#: plug-ins/common/file-pnm.c:2029
+msgid "_Raw"
+msgstr "_surovo"
 
 #: plug-ins/common/file-ps.c:381 plug-ins/common/file-ps.c:494
 msgid "PostScript document"
@@ -4220,6 +4298,34 @@ msgstr "Manjkajoči blok splošnih atributov slike."
 #: plug-ins/common/file-psp.c:2587
 msgid "Exporting not implemented yet."
 msgstr "Izvoz še ni implementiran."
+
+#: plug-ins/common/file-qoi.c:137 plug-ins/common/file-qoi.c:164
+msgid "Quite OK Image"
+msgstr "QOI (Quite OK Image)"
+
+#: plug-ins/common/file-qoi.c:140
+msgid "Load file in the QOI file format"
+msgstr "Naloži datoteko v zapisu QOI"
+
+#: plug-ins/common/file-qoi.c:141
+msgid "Load file in the QOI file format (Quite OK Image)"
+msgstr "Naloži datoteko v zapisu QOI (Quite OK Image),"
+
+#: plug-ins/common/file-qoi.c:167
+msgid "Export image in the QOI file format"
+msgstr "Izvozi sliko v zapisu datoteke QOI."
+
+#: plug-ins/common/file-qoi.c:168
+msgid "Export image in the QOI file format (Quite OK Image)"
+msgstr "Izvozi sliko v zapisu datotek QOI (Quite OK Image)"
+
+#: plug-ins/common/file-qoi.c:262
+msgid "QOI format does not support multiple layers."
+msgstr "Zapis QOI ne podpira več plasti."
+
+#: plug-ins/common/file-qoi.c:312
+msgid "Failed to read QOI file"
+msgstr "Branje datoteke QOI ni uspelo"
 
 #: plug-ins/common/file-raw-data.c:333 plug-ins/common/file-raw-data.c:452
 msgid "Raw image data"
@@ -5099,7 +5205,7 @@ msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
 "nominal sizes."
 msgstr ""
-"Žal ta vtičnik ne more ravnati s kazalcem, ki vsebuje več kot %i različnih "
+"Žal ta vstavek ne more ravnati s kazalcem, ki vsebuje več kot %i različnih "
 "nominalnih velikosti."
 
 #: plug-ins/common/file-xpm.c:195 plug-ins/common/file-xpm.c:230
@@ -6922,18 +7028,16 @@ msgid "Decode YCoCg (scaled)"
 msgstr "Dekodiraj YCoCg (prilagojeno)"
 
 #: plug-ins/file-dds/dds.c:349 plug-ins/file-dds/dds.c:351
-#, fuzzy
 msgid "Converts YCoCg (scaled) encoded pixels to RGB"
-msgstr "Pretvori kodirane slikovne točke YCoCg (v merilu) v RGB"
+msgstr "Pretvori kodirane slikovne točke YCoCg (v merilu) v RGB."
 
 #: plug-ins/file-dds/dds.c:369
 msgid "Decode Alpha exponent"
 msgstr "Dekodiraj eksponent alfa"
 
 #: plug-ins/file-dds/dds.c:375 plug-ins/file-dds/dds.c:373
-#, fuzzy
 msgid "Converts alpha exponent encoded pixels to RGB"
-msgstr "Pretvori kodirane slikovne točke z eksponentom alfe v RGB"
+msgstr "Pretvori kodirane slikovne točke z eksponentom alfe v RGB."
 
 #: plug-ins/file-dds/ddsread.c:366
 msgid "Could not allocate a new image."
@@ -7282,12 +7386,60 @@ msgstr "Prekoračitev pri branju stisnjenih podatkov. Morda okvarjena datoteka."
 msgid "AutoDesk FLIC animation"
 msgstr "Animacija AutoDesk FLIC"
 
-#: plug-ins/file-fli/fli-gimp.c:586
+#: plug-ins/file-fli/fli-gimp.c:184
+msgid "Load FLI-movies"
+msgstr "Naloži FLI-filme"
+
+#: plug-ins/file-fli/fli-gimp.c:185 plug-ins/file-fli/fli-gimp.c:223
+msgid "This is an experimental plug-in to handle FLI movies"
+msgstr "To je poskusni vstavek za obravnavo filmov FLI"
+
+#: plug-ins/file-fli/fli-gimp.c:199
+msgid "_From frame"
+msgstr "_Od sličice"
+
+#: plug-ins/file-fli/fli-gimp.c:200
+msgid "Load beginning from this frame"
+msgstr "Nalaganje se prične s to sličico"
+
+#: plug-ins/file-fli/fli-gimp.c:205
+msgid "_To frame"
+msgstr "_Do sličice"
+
+#: plug-ins/file-fli/fli-gimp.c:206
+msgid "End loading with this frame"
+msgstr "Nalaganje se konča s to sličico"
+
+#: plug-ins/file-fli/fli-gimp.c:220
+msgid "FLI Animation"
+msgstr "Animacija FLI"
+
+#: plug-ins/file-fli/fli-gimp.c:222
+msgid "Export FLI-movies"
+msgstr "Izvoz FLI-filme"
+
+#: plug-ins/file-fli/fli-gimp.c:237
+msgid "_From:"
+msgstr "_Od:"
+
+#: plug-ins/file-fli/fli-gimp.c:238
+msgid "Export beginning from this frame"
+msgstr "Izvoz se prične s to sličico"
+
+#: plug-ins/file-fli/fli-gimp.c:243
+msgid "_To:"
+msgstr "_Do:"
+
+#: plug-ins/file-fli/fli-gimp.c:244
+msgid "End exporting with this frame (or -1 for all frames)"
+msgstr "Izvoz se konča s to sličico (ali -1 za vse sličice)"
+
+#: plug-ins/file-fli/fli-gimp.c:587
 #, c-format
 msgid "Frame %d (%ums)"
 msgstr "Sličica %d (%u ms)"
 
-#: plug-ins/file-fli/fli-gimp.c:613
+#: plug-ins/file-fli/fli-gimp.c:614
 #, c-format
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr "Branja sličice %d je spodletelo. Morda okvarjena animacija.\n"
@@ -7295,20 +7447,6 @@ msgstr "Branja sličice %d je spodletelo. Morda okvarjena animacija.\n"
 #: plug-ins/file-fli/fli-gimp.c:945
 msgid "Open FLIC Animation"
 msgstr "Odpri animacijo FLIC"
-
-#: plug-ins/file-fli/fli-gimp.c:963
-msgctxt "frame-range"
-msgid "_From:"
-msgstr "_Od:"
-
-#: plug-ins/file-fli/fli-gimp.c:969
-msgctxt "frame-range"
-msgid "_To:"
-msgstr "_Do:"
-
-#: plug-ins/file-fli/fli-gimp.c:999
-msgid "Export Image as FLI Animation"
-msgstr "Izvozi sliko kot animacijo FLI"
 
 #: plug-ins/file-icns/file-icns-load.c:431
 #, c-format
@@ -8013,58 +8151,74 @@ msgstr ""
 "\n"
 "Namestite enega od njih, da boste lahko naložili datoteke RAW."
 
-#: plug-ins/file-sgi/sgi.c:143 plug-ins/file-sgi/sgi.c:170
+#: plug-ins/file-sgi/sgi.c:144 plug-ins/file-sgi/sgi.c:171
 msgid "Silicon Graphics IRIS image"
 msgstr "Slika IRIS Silicon Graphics"
 
-#: plug-ins/file-sgi/sgi.c:271
+#: plug-ins/file-sgi/sgi.c:147
+msgid "Loads files in SGI image file format"
+msgstr "Naloži datoteke v zapisu slikovnih datotek SGI."
+
+#: plug-ins/file-sgi/sgi.c:148
+msgid "This plug-in loads SGI image files."
+msgstr "Ta vstavek naloži slikovne datoteke SGI."
+
+#: plug-ins/file-sgi/sgi.c:177
+msgid "Exports files in SGI image file format"
+msgstr "Izvozi datoteke v zapisu slikovnih datotek SGI."
+
+#: plug-ins/file-sgi/sgi.c:178
+msgid "This plug-in exports SGI image files."
+msgstr "Ta vstavek izvozi slikovne datoteke SGI."
+
+#: plug-ins/file-sgi/sgi.c:191
+msgid "Compression _type"
+msgstr "Vrsta s_tiskanja"
+
+#: plug-ins/file-sgi/sgi.c:192
+msgid "Compression level (0 = none, 1 = RLE, 2 = ARLE)"
+msgstr "Stopnja stiskanja (0 = brez, 1 = RLE, 2 = ARLE)"
+
+#: plug-ins/file-sgi/sgi.c:274
 msgid "SGI format does not support multiple layers."
 msgstr "Zapis SGI ne podpira več plasti."
 
-#: plug-ins/file-sgi/sgi.c:339
+#: plug-ins/file-sgi/sgi.c:342
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "»%s« ni mogoče odpreti za branje."
 
-#: plug-ins/file-sgi/sgi.c:355
+#: plug-ins/file-sgi/sgi.c:358
 #, c-format
 msgid "Invalid width: %hu"
 msgstr "Neveljavna širina: %hu"
 
-#: plug-ins/file-sgi/sgi.c:363
+#: plug-ins/file-sgi/sgi.c:366
 #, c-format
 msgid "Invalid height: %hu"
 msgstr "Neveljavna višina: %hu"
 
-#: plug-ins/file-sgi/sgi.c:371
+#: plug-ins/file-sgi/sgi.c:374
 #, c-format
 msgid "Invalid number of channels: %hu"
 msgstr "Neveljavno število kanalov: %hu"
 
-#: plug-ins/file-sgi/sgi.c:652
+#: plug-ins/file-sgi/sgi.c:655
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Datoteke »%s« ni mogoče odpreti za pisanje."
 
-#: plug-ins/file-sgi/sgi.c:740
-msgid "Export Image as SGI"
-msgstr "Izvozi sliko kot SGI"
-
-#: plug-ins/file-sgi/sgi.c:749
+#: plug-ins/file-sgi/sgi.c:745
 msgid "No compression"
 msgstr "brez stiskanja"
 
-#: plug-ins/file-sgi/sgi.c:751
+#: plug-ins/file-sgi/sgi.c:747
 msgid "RLE compression"
 msgstr "stiskanje RLE"
 
-#: plug-ins/file-sgi/sgi.c:753
+#: plug-ins/file-sgi/sgi.c:749
 msgid "Aggressive RLE (not supported by SGI)"
 msgstr "agresivni RLE (ni podprt s strani SGI)"
-
-#: plug-ins/file-sgi/sgi.c:761
-msgid "Compression _type:"
-msgstr "Vrsta s_tiskanja:"
 
 #: plug-ins/file-tiff/file-tiff.c:159 plug-ins/file-tiff/file-tiff.c:188
 msgid "TIFF or BigTIFF image"
