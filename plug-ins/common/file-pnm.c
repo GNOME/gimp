@@ -168,7 +168,8 @@ static gint             save_image           (GFile                *file,
                                               GError              **error);
 
 static gboolean         save_dialog          (GimpProcedure        *procedure,
-                                              GObject              *config);
+                                              GObject              *config,
+                                              GimpImage            *image);
 
 static void             process_pam_header   (PNMScanner           *scan,
                                               PNMInfo              *info);
@@ -314,9 +315,9 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("PNM Image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads files in the PNM file format",
-                                        "This plug-in loads files in the "
-                                        "various Netpbm portable file formats.",
+                                        _("Loads files in the PNM file format"),
+                                        _("This plug-in loads files in the "
+                                          "various Netpbm portable file formats."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Erik Nygren",
@@ -345,11 +346,13 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
       gimp_procedure_set_menu_label (procedure, _("PNM image"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("PNM"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Exports files in the PNM file format",
-                                        "PNM export handles all image types "
-                                        "without transparency.",
+                                        _("Exports files in the PNM file format"),
+                                        _("PNM export handles all image types "
+                                          "without transparency."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Erik Nygren",
@@ -363,11 +366,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pnm");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "raw",
-                             "Raw",
-                             "TRUE for raw output, FALSE for ascii output",
-                             TRUE,
-                             G_PARAM_READWRITE);
+      GIMP_PROC_ARG_INT (procedure, "raw",
+                         _("Data formatting"),
+                         _("TRUE for raw output, FALSE for ascii output"),
+                         0, 1, 1,
+                         G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PBM_SAVE_PROC))
     {
@@ -378,13 +381,14 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
                                            NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
-
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("PBM"));
       gimp_procedure_set_menu_label (procedure, _("PBM image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Exports files in the PBM file format",
-                                        "PBM exporting produces mono images "
-                                        "without transparency.",
+                                        _("Exports files in the PBM file format"),
+                                        _("PBM exporting produces mono images "
+                                          "without transparency."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Erik Nygren",
@@ -398,11 +402,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pbm");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "raw",
-                             "Raw",
-                             "TRUE for raw output, FALSE for ascii output",
-                             TRUE,
-                             G_PARAM_READWRITE);
+      GIMP_PROC_ARG_INT (procedure, "raw",
+                         _("Data formatting"),
+                         _("TRUE for raw output, FALSE for ascii output"),
+                         0, 1, 1,
+                         G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PGM_SAVE_PROC))
     {
@@ -415,11 +419,12 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
       gimp_procedure_set_menu_label (procedure, _("PGM image"));
-
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("PGM"));
       gimp_procedure_set_documentation (procedure,
-                                        "Exports files in the PGM file format",
-                                        "PGM exporting produces grayscale "
-                                        "images without transparency.",
+                                        _("Exports files in the PGM file format"),
+                                        _("PGM exporting produces grayscale "
+                                          "images without transparency."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Erik Nygren",
@@ -433,11 +438,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pgm");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "raw",
-                             "Raw",
-                             "TRUE for raw output, FALSE for ascii output",
-                             TRUE,
-                             G_PARAM_READWRITE);
+      GIMP_PROC_ARG_INT (procedure, "raw",
+                         _("Data formatting"),
+                         _("TRUE for raw output, FALSE for ascii output"),
+                         0, 1, 1,
+                         G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PPM_SAVE_PROC))
     {
@@ -450,11 +455,12 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
       gimp_procedure_set_menu_label (procedure, _("PPM image"));
-
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("PPM"));
       gimp_procedure_set_documentation (procedure,
-                                        "Exports files in the PPM file format",
-                                        "PPM export handles RGB images "
-                                        "without transparency.",
+                                        _("Exports files in the PPM file format"),
+                                        _("PPM export handles RGB images "
+                                          "without transparency."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Erik Nygren",
@@ -468,11 +474,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "ppm");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "raw",
-                             "Raw",
-                             "TRUE for raw output, FALSE for ascii output",
-                             TRUE,
-                             G_PARAM_READWRITE);
+      GIMP_PROC_ARG_INT (procedure, "raw",
+                         "Data formatting",
+                         _("TRUE for raw output, FALSE for ascii output"),
+                         0, 1, 1,
+                         G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PAM_SAVE_PROC))
     {
@@ -487,9 +493,9 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("PAM image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Exports files in the PAM file format",
-                                        "PPM export handles RGB images "
-                                        "with or without transparency.",
+                                        _("Exports files in the PAM file format"),
+                                        _("PAM export handles RGB images "
+                                          "with or without transparency."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Jörg Walter",
@@ -516,9 +522,9 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("PFM image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Exports files in the PFM file format",
-                                        "PFM export handles all images "
-                                        "without transparency.",
+                                        _("Exports files in the PFM file format"),
+                                        _("PFM export handles all images "
+                                          "without transparency."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Mukund Sivaraman",
@@ -664,7 +670,7 @@ pnm_save (GimpProcedure        *procedure,
       file_type != FILE_TYPE_PAM &&
       run_mode  == GIMP_RUN_INTERACTIVE)
     {
-      if (! save_dialog (procedure, G_OBJECT (config)))
+      if (! save_dialog (procedure, G_OBJECT (config), image))
         status = GIMP_PDB_CANCEL;
     }
 
@@ -1316,8 +1322,8 @@ create_pam_header (const gchar   **header_string,
   gint   yres     = gegl_buffer_get_height (buffer);
   gchar *tupltype = NULL;
 
-  comment = g_strdup_printf("# Created by GIMP version %s PNM plug-in",
-                            GIMP_VERSION);
+  comment = g_strdup_printf ("# Created by GIMP version %s PNM plug-in",
+                             GIMP_VERSION);
   *saverow = pnmsaverow_raw;
 
   if (rowinfo->bpc == 2)
@@ -1403,6 +1409,9 @@ create_pam_header (const gchar   **header_string,
   *header_string = g_strdup_printf ("P7\n%s\nWIDTH %d\nHEIGHT %d\nDEPTH %d\n"
                                     "MAXVAL %d\nTUPLTYPE %s\nENDHDR\n",
                                     comment, xres, yres, *np, maxval, tupltype);
+
+  if (comment)
+    g_free (comment);
 }
 
 /* Writes out mono raw rows */
@@ -2004,26 +2013,26 @@ save_image (GFile         *file,
 
 static gboolean
 save_dialog (GimpProcedure *procedure,
-             GObject       *config)
+             GObject       *config,
+             GimpImage     *image)
 {
-  GtkWidget *dialog;
-  GtkWidget *frame;
-  gboolean   run;
+  GtkWidget    *dialog;
+  GtkWidget    *frame;
+  GtkListStore *store;
+  gboolean      run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as PNM"));
-
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
   /*  file save type  */
-  frame = gimp_prop_boolean_radio_frame_new (config, "raw",
-                                             _("Data formatting"),
-                                             _("_Raw"),
-                                             _("_ASCII"));
+  store = gimp_int_store_new (_("_ASCII"), 0,
+                              _("_Raw"),   1,
+                              NULL);
+  frame = gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
+                                               "raw", GIMP_INT_STORE (store));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
   gtk_widget_show (dialog);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
