@@ -77,7 +77,8 @@ static GimpValueArray * gbr_save             (GimpProcedure        *procedure,
                                               gpointer              run_data);
 
 static gboolean         save_dialog          (GimpProcedure        *procedure,
-                                              GObject              *config);
+                                              GObject              *config,
+                                              GimpImage            *image);
 
 
 G_DEFINE_TYPE (Gbr, gbr, GIMP_TYPE_PLUG_IN)
@@ -122,13 +123,15 @@ gbr_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "*");
 
       gimp_procedure_set_menu_label (procedure, _("GIMP brush"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("Brush"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_procedure_set_documentation (procedure,
-                                        "Exports files in the GIMP brush "
-                                        "file format",
-                                        "Exports files in the GIMP brush "
-                                        "file format",
+                                        _("Exports files in the GIMP brush "
+                                          "file format"),
+                                        _("Exports files in the GIMP brush "
+                                          "file format"),
                                         SAVE_PROC);
       gimp_procedure_set_attribution (procedure,
                                       "Tim Newsome, Jens Lautenbacher, "
@@ -145,15 +148,15 @@ gbr_create_procedure (GimpPlugIn  *plug_in,
                                               TRUE);
 
       GIMP_PROC_ARG_INT (procedure, "spacing",
-                         "Spacing",
-                         "Spacing of the brush",
+                         _("Sp_acing"),
+                         _("Spacing of the brush"),
                          1, 1000, 10,
                          GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_STRING (procedure, "description",
-                            "Description",
-                            "Short description of the brush",
-                            "GIMP Brush",
+                            _("_Description"),
+                            _("Short description of the brush"),
+                            _("GIMP Brush"),
                             GIMP_PARAM_READWRITE);
     }
 
@@ -234,7 +237,7 @@ gbr_save (GimpProcedure        *procedure,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! save_dialog (procedure, G_OBJECT (config)))
+      if (! save_dialog (procedure, G_OBJECT (config), image))
         status = GIMP_PDB_CANCEL;
     }
 
@@ -288,41 +291,36 @@ gbr_save (GimpProcedure        *procedure,
 
 static gboolean
 save_dialog (GimpProcedure *procedure,
-             GObject       *config)
+             GObject       *config,
+             GimpImage     *image)
 {
   GtkWidget *dialog;
-  GtkWidget *grid;
+  GtkWidget *vbox;
   GtkWidget *entry;
-  GtkWidget *scale;
+  GtkWidget *real_entry;
   gboolean   run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as Brush"));
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
-  /* The main grid */
-  grid = gtk_grid_new ();
-  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      grid, TRUE, TRUE, 0);
-  gtk_widget_show (grid);
+  entry = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "description", GIMP_TYPE_LABEL_ENTRY);
+  real_entry = gimp_label_entry_get_entry (GIMP_LABEL_ENTRY (entry));
+  gtk_entry_set_max_length (GTK_ENTRY (real_entry), 256);
+  gtk_entry_set_width_chars (GTK_ENTRY (real_entry), 20);
+  gtk_entry_set_activates_default (GTK_ENTRY (real_entry), TRUE);
 
-  entry = gimp_prop_entry_new (config, "description", 256);
-  gtk_entry_set_width_chars (GTK_ENTRY (entry), 20);
-  gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
+  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "spacing", 1.0);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("_Description:"), 1.0, 0.5,
-                            entry, 2);
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "gbr-vbox", "description", "spacing",
+                                         NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
-  scale = gimp_prop_scale_entry_new (config, "spacing",
-                                     NULL, 1.0, FALSE, 0, 0);
-  gtk_widget_hide (gimp_labeled_get_label (GIMP_LABELED (scale)));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("_Spacing:"), 0.0, 0.5, scale, 4);
-
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "gbr-vbox", NULL);
   gtk_widget_show (dialog);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));

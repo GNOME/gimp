@@ -607,7 +607,8 @@ static gboolean         save_image           (GFile                *file,
                                               GObject              *config,
                                               GError              **error);
 static gboolean         save_dialog          (GimpProcedure        *procedure,
-                                              GObject              *config);
+                                              GObject              *config,
+                                              GimpImage            *image);
 
 
 G_DEFINE_TYPE (Psp, psp, GIMP_TYPE_PLUG_IN)
@@ -663,12 +664,12 @@ psp_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("Paint Shop Pro image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads images from the Paint Shop "
-                                        "Pro PSP file format",
-                                        "This plug-in loads and exports images "
-                                        "in Paint Shop Pro's native PSP format. "
-                                        "Vector layers aren't handled. "
-                                        "Exporting isn't yet implemented.",
+                                        _("Loads images from the Paint Shop "
+                                          "Pro PSP file format"),
+                                        _("This plug-in loads and exports images "
+                                          "in Paint Shop Pro's native PSP format. "
+                                          "Vector layers aren't handled. "
+                                          "Exporting isn't yet implemented."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Tor Lillqvist",
@@ -691,7 +692,8 @@ psp_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "*");
 
       gimp_procedure_set_menu_label (procedure, _("Paint Shop Pro image"));
-
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           "PSP");
       gimp_procedure_set_documentation (procedure,
                                         "Exports images in the Paint Shop Pro "
                                         "PSP file format",
@@ -711,7 +713,7 @@ psp_create_procedure (GimpPlugIn  *plug_in,
                                           "psp,tub");
 
       GIMP_PROC_ARG_INT (procedure, "compression",
-                         "Compression",
+                         "_Data Compression",
                          "Specify 0 for no compression, "
                          "1 for RLE, and 2 for LZ77",
                          0, 2, PSP_COMP_LZ77,
@@ -795,7 +797,7 @@ psp_save (GimpProcedure        *procedure,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! save_dialog (procedure, G_OBJECT (config)))
+      if (! save_dialog (procedure, G_OBJECT (config), image))
         status = GIMP_PDB_CANCEL;
     }
 
@@ -822,29 +824,28 @@ psp_save (GimpProcedure        *procedure,
 
 static gboolean
 save_dialog (GimpProcedure *procedure,
-             GObject       *config)
+             GObject       *config,
+             GimpImage     *image)
 {
   GtkWidget    *dialog;
   GtkListStore *store;
   GtkWidget    *frame;
   gint          run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as PSP"));
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
   /*  file save type  */
-  store = gimp_int_store_new (C_("compression", "None"), PSP_COMP_NONE,
-                              _("RLE"),                  PSP_COMP_RLE,
-                              _("LZ77"),                 PSP_COMP_LZ77,
+  store = gimp_int_store_new (_("None"), PSP_COMP_NONE,
+                              _("RLE"),  PSP_COMP_RLE,
+                              _("LZ77"), PSP_COMP_LZ77,
                               NULL);
-  frame = gimp_prop_int_radio_frame_new (config, "compression",
-                                         _("Data Compression"),
-                                         GIMP_INT_STORE (store));
+  frame = gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
+                                               "compression", GIMP_INT_STORE (store));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      frame, FALSE, FALSE, 0);
 
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
   gtk_widget_show (dialog);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
