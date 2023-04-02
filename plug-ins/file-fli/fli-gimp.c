@@ -181,9 +181,9 @@ fli_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("AutoDesk FLIC animation"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Load FLI-movies",
-                                        "This is an experimental plug-in to "
-                                        "handle FLI movies",
+                                        _("Load FLI-movies"),
+                                        _("This is an experimental plug-in to "
+                                          "handle FLI movies"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Jens Ch. Restemeier",
@@ -196,14 +196,14 @@ fli_create_procedure (GimpPlugIn  *plug_in,
                                           "fli,flc");
 
       GIMP_PROC_ARG_INT (procedure, "from-frame",
-                         "From frame",
-                         "Load beginning from this frame",
+                         _("_From frame"),
+                         _("Load beginning from this frame"),
                          -1, G_MAXINT, -1,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "to-frame",
-                         "To frame",
-                         "End loading with this frame",
+                         _("_To frame"),
+                         _("End loading with this frame"),
                          -1, G_MAXINT, -1,
                          G_PARAM_READWRITE);
     }
@@ -216,11 +216,12 @@ fli_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "INDEXED, GRAY");
 
       gimp_procedure_set_menu_label (procedure, _("AutoDesk FLIC animation"));
-
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("FLI Animation"));
       gimp_procedure_set_documentation (procedure,
-                                        "Export FLI-movies",
-                                        "This is an experimental plug-in to "
-                                        "handle FLI movies",
+                                        _("Export FLI-movies"),
+                                        _("This is an experimental plug-in to "
+                                          "handle FLI movies"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Jens Ch. Restemeier",
@@ -233,15 +234,15 @@ fli_create_procedure (GimpPlugIn  *plug_in,
                                           "fli,flc");
 
       GIMP_PROC_ARG_INT (procedure, "from-frame",
-                         "_From:",
-                         "Export beginning from this frame",
+                         _("_From:"),
+                         _("Export beginning from this frame"),
                          -1, G_MAXINT, -1,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "to-frame",
-                         "_To:",
-                         "End exporting with this frame "
-                         "(or -1 for all frames)",
+                         _("_To:"),
+                         _("End exporting with this frame "
+                           "(or -1 for all frames)"),
                          -1, G_MAXINT, -1,
                          G_PARAM_READWRITE);
     }
@@ -926,8 +927,7 @@ load_dialog (GFile         *file,
              GObject       *config)
 {
   GtkWidget *dialog;
-  GtkWidget *grid;
-  GtkWidget *spinbutton;
+  GtkWidget *vbox;
   gint       width, height, n_frames;
   gboolean   run;
 
@@ -944,31 +944,13 @@ load_dialog (GFile         *file,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Open FLIC Animation"));
 
-  grid = gtk_grid_new ();
-  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "fli-vbox", "from-frame", "to-frame",
+                                         NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
-  /*
-   * Maybe I add on-the-fly RGB conversion, to keep palettechanges...
-   * But for now you can set a start- and a end-frame:
-   */
-
-  spinbutton = gimp_prop_spin_button_new (config, "from-frame",
-                                          1, 10, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            C_("frame-range", "_From:"), 0.0, 0.5,
-                            spinbutton, 1);
-
-  spinbutton = gimp_prop_spin_button_new (config, "to-frame",
-                                          1, 10, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            C_("frame-range", "_To:"), 0.0, 0.5,
-                            spinbutton, 1);
-
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "fli-vbox",
+                              NULL);
   gtk_widget_show (dialog);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
@@ -994,9 +976,9 @@ save_dialog (GimpImage     *image,
                 "to-frame",   n_frames,
                 NULL);
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as FLI Animation"));
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
   /*
    * Maybe I add on-the-fly RGB conversion, to keep palettechanges...
    * But for now you can set a start- and a end-frame:
