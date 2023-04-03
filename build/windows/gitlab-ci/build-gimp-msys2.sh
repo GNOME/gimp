@@ -66,6 +66,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-shared-mime-info \
     mingw-w64-$MSYS2_ARCH-suitesparse \
     mingw-w64-$MSYS2_ARCH-vala \
+    mingw-w64-$MSYS2_ARCH-qoi \
     mingw-w64-$MSYS2_ARCH-xpm-nox
 
 # XXX We've got a weird error when the prefix is in the current dir.

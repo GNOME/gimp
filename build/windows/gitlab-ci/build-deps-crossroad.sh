@@ -43,6 +43,7 @@ crossroad install appstream-glib              \
                   libwmf                      \
                   openexr                     \
                   poppler poppler-data        \
+                  qoi                         \
                   xpm-nox
 
 if [ $? -ne 0 ]; then
