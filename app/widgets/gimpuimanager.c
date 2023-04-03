@@ -72,33 +72,43 @@ typedef struct
 } GimpUIManagerMenuItem;
 
 
-static void       gimp_ui_manager_constructed         (GObject        *object);
-static void       gimp_ui_manager_dispose             (GObject        *object);
-static void       gimp_ui_manager_finalize            (GObject        *object);
-static void       gimp_ui_manager_set_property        (GObject        *object,
-                                                       guint           prop_id,
-                                                       const GValue   *value,
-                                                       GParamSpec     *pspec);
-static void       gimp_ui_manager_get_property        (GObject        *object,
-                                                       guint           prop_id,
-                                                       GValue         *value,
-                                                       GParamSpec     *pspec);
-static void       gimp_ui_manager_real_update         (GimpUIManager  *manager,
-                                                       gpointer        update_data);
+static void       gimp_ui_manager_constructed          (GObject        *object);
+static void       gimp_ui_manager_dispose              (GObject        *object);
+static void       gimp_ui_manager_finalize             (GObject        *object);
+static void       gimp_ui_manager_set_property         (GObject        *object,
+                                                        guint           prop_id,
+                                                        const GValue   *value,
+                                                        GParamSpec     *pspec);
+static void       gimp_ui_manager_get_property         (GObject        *object,
+                                                        guint           prop_id,
+                                                        GValue         *value,
+                                                        GParamSpec     *pspec);
+static void       gimp_ui_manager_real_update          (GimpUIManager  *manager,
+                                                        gpointer        update_data);
 static GimpUIManagerUIEntry *
-                  gimp_ui_manager_entry_get           (GimpUIManager  *manager,
-                                                       const gchar    *ui_path);
+                  gimp_ui_manager_entry_get            (GimpUIManager  *manager,
+                                                        const gchar    *ui_path);
 static GimpUIManagerUIEntry *
-                  gimp_ui_manager_entry_ensure        (GimpUIManager  *manager,
-                                                       const gchar    *path);
-static void       gimp_ui_manager_delete_popdown_data (GtkWidget      *widget,
-                                                       GimpUIManager  *manager);
+                  gimp_ui_manager_entry_ensure         (GimpUIManager  *manager,
+                                                        const gchar    *path);
+static void       gimp_ui_manager_delete_popdown_data  (GtkWidget      *widget,
+                                                        GimpUIManager  *manager);
 
-static void       gimp_ui_manager_menu_item_free      (GimpUIManagerMenuItem *item);
+static void       gimp_ui_manager_menu_item_free       (GimpUIManagerMenuItem *item);
 
-static void       gimp_ui_manager_popup_hidden        (GtkMenuShell          *popup,
-                                                       gpointer               user_data);
-static gboolean   gimp_ui_manager_popup_destroy       (GtkWidget             *popup);
+static void       gimp_ui_manager_popup_hidden         (GtkMenuShell          *popup,
+                                                        gpointer               user_data);
+static gboolean   gimp_ui_manager_popup_destroy        (GtkWidget             *popup);
+
+static void       gimp_ui_manager_image_action_added   (GimpActionGroup       *group,
+                                                        gchar                 *action_name,
+                                                        GimpUIManager         *manager);
+static void       gimp_ui_manager_image_action_removed (GimpActionGroup       *group,
+                                                        gchar                 *action_name,
+                                                        GimpUIManager         *manager);
+static void       gimp_ui_manager_image_accels_changed (GimpAction            *action,
+                                                        const gchar          **accels,
+                                                        GimpUIManager         *manager);
 
 
 G_DEFINE_TYPE (GimpUIManager, gimp_ui_manager, GIMP_TYPE_OBJECT)
@@ -393,6 +403,26 @@ gimp_ui_manager_add_action_group (GimpUIManager   *manager,
 {
   if (! g_list_find (manager->action_groups, group))
     manager->action_groups = g_list_prepend (manager->action_groups, g_object_ref (group));
+
+  /* Special-case the <Image> UI Manager which should be unique and represent
+   * global application actions.
+   */
+  if (g_strcmp0 (manager->name, "<Image>") == 0)
+    {
+      gchar **actions = g_action_group_list_actions (G_ACTION_GROUP (group));
+
+      for (int i = 0; i < g_strv_length (actions); i++)
+        gimp_ui_manager_image_action_added (group, actions[i], manager);
+
+      g_signal_connect_object (group, "action-added",
+                               G_CALLBACK (gimp_ui_manager_image_action_added),
+                               manager, 0);
+      g_signal_connect_object (group, "action-removed",
+                               G_CALLBACK (gimp_ui_manager_image_action_removed),
+                               manager, 0);
+
+      g_strfreev (actions);
+    }
 }
 
 GimpActionGroup *
@@ -930,4 +960,61 @@ gimp_ui_manager_popup_destroy (GtkWidget *popup)
   g_object_unref (popup);
 
   return G_SOURCE_REMOVE;
+}
+
+static void
+gimp_ui_manager_image_action_added (GimpActionGroup *group,
+                                    gchar           *action_name,
+                                    GimpUIManager   *manager)
+{
+  GimpAction   *action;
+  const gchar **accels;
+
+  g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
+  /* The action should not already exist in the application. */
+  g_return_if_fail (g_action_map_lookup_action (G_ACTION_MAP (manager->gimp->app), action_name) == NULL);
+
+  action = gimp_action_group_get_action (group, action_name);
+  g_return_if_fail (action != NULL);
+
+  g_action_map_add_action (G_ACTION_MAP (manager->gimp->app), G_ACTION (action));
+  g_signal_connect_object (action, "accels-changed",
+                           G_CALLBACK (gimp_ui_manager_image_accels_changed),
+                           manager, 0);
+
+  accels = gimp_action_get_accels (action);
+  if (accels && g_strv_length ((gchar **) accels) > 0)
+    gimp_ui_manager_image_accels_changed (action, gimp_action_get_accels (action), manager);
+}
+
+static void
+gimp_ui_manager_image_action_removed (GimpActionGroup *group,
+                                      gchar           *action_name,
+                                      GimpUIManager   *manager)
+{
+  GAction *action;
+
+  action = g_action_map_lookup_action (G_ACTION_MAP (manager->gimp->app), action_name);
+
+  if (action != NULL)
+    {
+      g_action_map_remove_action (G_ACTION_MAP (manager->gimp->app), action_name);
+      g_signal_handlers_disconnect_by_func (action,
+                                            G_CALLBACK (gimp_ui_manager_image_accels_changed),
+                                            manager);
+    }
+}
+
+static void
+gimp_ui_manager_image_accels_changed (GimpAction     *action,
+                                      const gchar   **accels,
+                                      GimpUIManager  *manager)
+{
+  gchar *detailed_action_name;
+
+  detailed_action_name = g_strdup_printf ("app.%s", g_action_get_name (G_ACTION (action)));
+  gtk_application_set_accels_for_action (GTK_APPLICATION (manager->gimp->app),
+                                         detailed_action_name,
+                                         accels);
+  g_free (detailed_action_name);
 }

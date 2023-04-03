@@ -69,6 +69,8 @@ struct _GimpActionPrivate
   gchar                 *icon_name;
   GIcon                 *icon;
 
+  gchar                **accels;
+
   GimpRGB               *color;
   GimpViewable          *viewable;
   PangoEllipsizeMode     ellipsize;
@@ -206,6 +208,7 @@ gimp_action_init (GimpAction *action)
   priv->tooltip         = NULL;
   priv->icon_name       = NULL;
   priv->icon            = NULL;
+  priv->accels          = NULL;
   priv->ellipsize       = PANGO_ELLIPSIZE_NONE;
   priv->max_width_chars = -1;
   priv->proxies         = NULL;
@@ -493,24 +496,16 @@ void
 gimp_action_set_accels (GimpAction   *action,
                         const gchar **accels)
 {
-  GimpContext *context;
-  gchar       *detailed_action_name;
+  GimpActionPrivate *priv = GET_PRIVATE (action);
 
   g_return_if_fail (GIMP_IS_ACTION (action));
 
-  context = GET_PRIVATE (action)->context;
-
-  if (context == NULL)
+  if (accels != NULL && priv->accels != NULL &&
+      g_strv_equal (accels, (const gchar **) priv->accels))
     return;
 
-  g_return_if_fail (GTK_IS_APPLICATION (context->gimp->app));
-
-  detailed_action_name = g_strdup_printf ("app.%s",
-                                          g_action_get_name (G_ACTION (action)));
-  gtk_application_set_accels_for_action (GTK_APPLICATION (context->gimp->app),
-                                         detailed_action_name,
-                                         accels);
-  g_free (detailed_action_name);
+  g_strfreev (priv->accels);
+  priv->accels = g_strdupv ((gchar **) accels);
 
   g_signal_emit (action, action_signals[ACCELS_CHANGED], 0, accels);
 }
@@ -525,29 +520,15 @@ gimp_action_set_accels (GimpAction   *action,
  * Returns: (transfer full): accelerators for @action, as a %NULL-terminated
  *          array. Free with g_strfreev() when no longer needed
  */
-gchar **
+const gchar **
 gimp_action_get_accels (GimpAction *action)
 {
-  gchar       **accels;
-  GimpContext  *context;
-  gchar        *detailed_action_name;
-
   g_return_val_if_fail (GIMP_IS_ACTION (action), NULL);
 
-  context = GET_PRIVATE (action)->context;
-
-  if (context == NULL)
-    return NULL;
-
-  g_return_val_if_fail (GTK_IS_APPLICATION (context->gimp->app), NULL);
-
-  detailed_action_name = g_strdup_printf ("app.%s",
-                                          g_action_get_name (G_ACTION (action)));
-  accels = gtk_application_get_accels_for_action (GTK_APPLICATION (context->gimp->app),
-                                                  detailed_action_name);
-  g_free (detailed_action_name);
-
-  return accels;
+  if (GET_PRIVATE (action)->accels != NULL)
+    return (const gchar **) GET_PRIVATE (action)->accels;
+  else
+    return (const gchar **) { NULL };
 }
 
 /**
@@ -568,9 +549,9 @@ gimp_action_get_display_accels (GimpAction *action)
 
   g_return_val_if_fail (GIMP_IS_ACTION (action), NULL);
 
-  accels = gimp_action_get_accels (action);
+  accels = g_strdupv (GET_PRIVATE (action)->accels);
 
-  for (i = 0; accels[i] != NULL; i++)
+  for (i = 0; accels != NULL && accels[i] != NULL; i++)
     {
       guint           accel_key = 0;
       GdkModifierType accel_mods = 0;
@@ -1085,6 +1066,8 @@ gimp_action_private_finalize (GimpActionPrivate *priv)
   g_free (priv->tooltip);
   g_free (priv->icon_name);
   g_clear_object (&priv->icon);
+
+  g_strfreev (priv->accels);
 
   for (GList *iter = priv->proxies; iter; iter = iter->next)
     {

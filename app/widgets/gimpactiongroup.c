@@ -197,6 +197,7 @@ gimp_action_group_finalize (GObject *object)
 
   g_clear_pointer (&group->label,     g_free);
   g_clear_pointer (&group->icon_name, g_free);
+  g_list_free_full (group->actions, g_object_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -377,15 +378,13 @@ gimp_action_group_add_action_with_accel (GimpActionGroup *group,
                                          GimpAction      *action,
                                          const gchar     *accelerator)
 {
-
-  /* Making sure all our Gimp*Action classes are also GAction. */
-  g_return_if_fail (G_IS_ACTION (action));
+  g_return_if_fail (GIMP_IS_ACTION (action));
 
   if (! g_list_find (group->actions, action))
     {
-      group->actions = g_list_prepend (group->actions, action);
+      group->actions = g_list_prepend (group->actions, g_object_ref (action));
 
-      g_action_map_add_action (G_ACTION_MAP (group->gimp->app), G_ACTION (action));
+      g_signal_emit_by_name (group, "action-added", gimp_action_get_name (action));
 
       if ((accelerator != NULL && g_strcmp0 (accelerator, "") != 0))
         gimp_action_set_accels (action, (const char*[]) { accelerator, NULL });
@@ -396,9 +395,12 @@ void
 gimp_action_group_remove_action (GimpActionGroup *group,
                                  GimpAction      *action)
 {
-  group->actions = g_list_remove (group->actions, action);
-
-  g_signal_emit_by_name (group, "action-removed", gimp_action_get_name (action));
+  if (g_list_find (group->actions, action))
+    {
+      group->actions = g_list_remove (group->actions, action);
+      g_signal_emit_by_name (group, "action-removed", gimp_action_get_name (action));
+      g_object_unref (action);
+    }
 }
 
 GimpAction *
@@ -498,7 +500,6 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
 
       gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                entries[i].accelerator);
-      g_signal_emit_by_name (group, "action-added", entries[i].name);
 
       g_object_unref (action);
     }
@@ -556,7 +557,6 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
 
       gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                entries[i].accelerator);
-      g_signal_emit_by_name (group, "action-added", entries[i].name);
 
       g_object_unref (action);
     }
@@ -619,7 +619,6 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
         gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action), TRUE);
 
       gimp_action_group_add_action_with_accel (group, action, entries[i].accelerator);
-      g_signal_emit_by_name (group, "action-added", entries[i].name);
 
       g_object_unref (action);
     }
@@ -685,7 +684,6 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
 
       gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                entries[i].accelerator);
-      g_signal_emit_by_name (group, "action-added", entries[i].name);
 
       g_object_unref (action);
     }
@@ -750,7 +748,6 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
           g_object_ref (action);
         }
 
-      g_signal_emit_by_name (group, "action-added", entries[i].name);
       g_object_unref (action);
     }
 }
@@ -806,7 +803,6 @@ gimp_action_group_add_double_actions (GimpActionGroup             *group,
 
       gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                entries[i].accelerator);
-      g_signal_emit_by_name (group, "action-added", entries[i].name);
 
       g_object_unref (action);
     }
@@ -861,7 +857,6 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
 
           gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                    entries[i].accelerator);
-          g_signal_emit_by_name (group, "action-added", entries[i].name);
 
           g_object_unref (action);
         }

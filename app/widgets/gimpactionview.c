@@ -204,15 +204,13 @@ gimp_action_view_new (Gimp        *gimp,
 
       if (show_shortcuts)
         {
-          gchar **accels = NULL;
+          const gchar **accels = NULL;
 
           accels = gimp_action_get_accels (GIMP_ACTION (action));
 
-          /* TODO: support multiple accelerators! */
+          /* TODO GAction: support multiple accelerators! */
           if (accels && accels[0])
             gtk_accelerator_parse (accels[0], &accel_key, &accel_mask);
-
-          g_strfreev (accels);
         }
 
       gtk_tree_store_append (store, &action_iter, &group_iter);
@@ -506,7 +504,7 @@ gimp_action_view_accels_changed (GimpAction      *action,
 
           if (it_action == action)
             {
-              gchar           **accels;
+              const gchar     **accels;
               guint             accel_key  = 0;
               GdkModifierType   accel_mask = 0;
 
