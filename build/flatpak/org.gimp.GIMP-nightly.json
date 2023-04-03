@@ -753,6 +753,21 @@
             ]
         },
         {
+            "name": "qoi",
+            "buildsystem": "simple",
+            "build-commands": [
+                "install -D qoi.h /app/include/qoi.h"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/phoboslab/qoi.git",
+                    "branch": "master",
+                    "commit": "f6dffaf1e8170cdd79945a4fb60f6403e447e020"
+                }
+            ]
+        },
+        {
             "name": "babl",
             "buildsystem": "meson",
             "config-opts": [
