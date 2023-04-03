@@ -638,11 +638,15 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
   GimpDisplay           *display      = GIMP_TOOL (draw_tool)->display;
   GimpImage             *image        = gimp_display_get_image (display);
   GimpDisplayShell      *shell        = gimp_display_get_shell (display);
+  GimpUnit               unit         = gimp_display_shell_get_unit (shell);
+  const gchar           *abbreviation = gimp_unit_get_abbreviation (unit);
   GList                 *selected_items;
   GList                 *iter;
+  gdouble                xresolution, yresolution;
   gint                   off_x        = G_MAXINT;
   gint                   off_y        = G_MAXINT;
 
+  gimp_image_get_resolution (image, &xresolution, &yresolution);
   selected_items = gimp_edit_selection_tool_get_selected_items (edit_select, image);
   g_return_if_fail (selected_items != NULL);
 
@@ -783,6 +787,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
               GimpLayer       *near_layer1 = shell->near_layer_horizontal1;
               GimpLayer       *near_layer2 = shell->near_layer_horizontal2;
               GtkStyleContext *style       = gtk_widget_get_style_context (GTK_WIDGET (shell));
+              gdouble          pixels_to_units;
               gdouble          font_size;
               gint             gx1 = 0;
               gint             gy1 = 0;
@@ -811,11 +816,12 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                 {
                 case GIMP_ALIGN_LEFT:
                   distance = x - (gx1+gw1);
+                  pixels_to_units = gimp_pixels_to_units ((gdouble) distance, unit, xresolution);
 
                   gimp_draw_tool_add_line (draw_tool, x, y+h/2, gx1+gw1, y+h/2);
                   gimp_draw_tool_add_line (draw_tool, gx1, gy1+gh1/2, gx2+gw2, gy1+gh1/2);
 
-                  g_sprintf (distance_string, "%d px", distance);
+                  g_sprintf (distance_string, "%g %s", pixels_to_units, abbreviation);
                   gimp_draw_tool_add_text (draw_tool, x - distance/2, y+h/2, font_size, distance_string);
                   gimp_draw_tool_add_text (draw_tool, gx1 - distance/2, gy1+gh1/2, font_size, distance_string);
 
@@ -823,11 +829,12 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
                 case GIMP_ALIGN_RIGHT:
                   distance = gx1 - (x+w);
+                  pixels_to_units = gimp_pixels_to_units ((gdouble) distance, unit, xresolution);
 
                   gimp_draw_tool_add_line (draw_tool, x+w, y+h/2, gx1, y+h/2);
                   gimp_draw_tool_add_line (draw_tool, gx1+gw1, gy1+gh1/2, gx2, gy1+gh1/2);
 
-                  g_sprintf (distance_string, "%d px", distance);
+                  g_sprintf (distance_string, "%g %s", pixels_to_units, abbreviation);
                   gimp_draw_tool_add_text (draw_tool, (x+w) + distance/2, y+h/2, font_size, distance_string);
                   gimp_draw_tool_add_text (draw_tool, (gx1+gw1) + distance/2, gy1+gh1/2, font_size, distance_string);
 
@@ -843,6 +850,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
               GimpLayer       *near_layer1 = shell->near_layer_vertical1;
               GimpLayer       *near_layer2 = shell->near_layer_vertical2;
               GtkStyleContext *style       = gtk_widget_get_style_context (GTK_WIDGET (shell));
+              gdouble          pixels_to_units;
               gdouble          font_size;
               gint             gx1 = 0;
               gint             gy1 = 0;
@@ -871,11 +879,12 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                 {
                 case GIMP_ALIGN_TOP:
                   distance = y - (gy1+gh1);
+                  pixels_to_units = gimp_pixels_to_units ((gdouble) distance, unit, yresolution);
 
                   gimp_draw_tool_add_line (draw_tool, x+w/2, y, x+w/2, gy1+gh1);
                   gimp_draw_tool_add_line (draw_tool, gx1+gw1/2, gy1, gx1+gw1/2, gy2+gh2);
 
-                  g_sprintf (distance_string, "%d px", distance);
+                  g_sprintf (distance_string, "%g %s", pixels_to_units, abbreviation);
                   gimp_draw_tool_add_text (draw_tool, x+w/2, y - distance/2, font_size, distance_string);
                   gimp_draw_tool_add_text (draw_tool, gx1+gw1/2, gy1 - distance/2, font_size, distance_string);
 
@@ -883,11 +892,12 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
                 case GIMP_ALIGN_BOTTOM:
                   distance = gy1 - (y+h);
+                  pixels_to_units = gimp_pixels_to_units ((gdouble) distance, unit, yresolution);
 
                   gimp_draw_tool_add_line (draw_tool, x+w/2, y+h, x+w/2, gy1);
                   gimp_draw_tool_add_line (draw_tool, gx1+gw1/2, gy1+gh1, gx1+gw1/2, gy2);
 
-                  g_sprintf (distance_string, "%d px", distance);
+                  g_sprintf (distance_string, "%g %s", pixels_to_units, abbreviation);
                   gimp_draw_tool_add_text (draw_tool, x+w/2, (y+h) + distance/2, font_size, distance_string);
                   gimp_draw_tool_add_text (draw_tool, gx1+gw1/2, (gy1+gh1) + distance/2, font_size, distance_string);
 
