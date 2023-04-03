@@ -7,17 +7,17 @@
       <attribute name="label" translatable="yes" context="gradients-action">Gradients Menu</attribute>
       <attribute name="icon">gimp-tool-gradient</attribute>
 
-      <item><attribute name="action">app.gradients-edit</attribute></item>
+      <item><attribute name="action">gradients.gradients-edit</attribute></item>
       <section>
-        <item><attribute name="action">app.gradients-new</attribute></item>
-        <item><attribute name="action">app.gradients-duplicate</attribute></item>
-        <item><attribute name="action">app.gradients-save-as-pov</attribute></item>
-        <item><attribute name="action">app.gradients-copy-location</attribute></item>
-        <item><attribute name="action">app.gradients-show-in-file-manager</attribute></item>
-        <item><attribute name="action">app.gradients-delete</attribute></item>
+        <item><attribute name="action">gradients.gradients-new</attribute></item>
+        <item><attribute name="action">gradients.gradients-duplicate</attribute></item>
+        <item><attribute name="action">gradients.gradients-save-as-pov</attribute></item>
+        <item><attribute name="action">gradients.gradients-copy-location</attribute></item>
+        <item><attribute name="action">gradients.gradients-show-in-file-manager</attribute></item>
+        <item><attribute name="action">gradients.gradients-delete</attribute></item>
       </section>
       <section>
-        <item><attribute name="action">app.gradients-refresh</attribute></item>
+        <item><attribute name="action">gradients.gradients-refresh</attribute></item>
       </section>
     </submenu>
   </menu>

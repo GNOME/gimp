@@ -232,18 +232,16 @@ gimp_menu_append (GimpMenuShell *shell,
         }
       else if (submenu != NULL && label == NULL)
         {
-          GApplication *app;
-          GAction      *action;
-          const gchar  *group_label;
-          GtkWidget    *subcontainer;
-          GtkWidget    *item;
+          GimpAction  *action;
+          const gchar *group_label;
+          GtkWidget   *subcontainer;
+          GtkWidget   *item;
 
           group = NULL;
 
           g_return_if_fail (action_name != NULL);
 
-          app    = manager->gimp->app;
-          action = g_action_map_lookup_action (G_ACTION_MAP (app), action_name + 4);
+          action = gimp_ui_manager_find_action (manager, NULL, action_name);
 
           /* As a special case, when a submenu has no label, we expect it to
            * have an action attribute, which must be for a radio action. In such
@@ -466,8 +464,7 @@ gimp_menu_add_action (GimpMenu          *menu,
                       GtkRadioMenuItem **group)
 {
   GimpUIManager *manager;
-  GApplication  *app;
-  GAction       *action;
+  GimpAction    *action;
   const gchar   *action_label;
   GtkWidget     *item;
   gboolean       visible;
@@ -475,16 +472,11 @@ gimp_menu_add_action (GimpMenu          *menu,
   g_return_if_fail (GIMP_IS_MENU (menu));
 
   manager = gimp_menu_shell_get_manager (GIMP_MENU_SHELL (menu));
-  app     = manager->gimp->app;
-
-  if (g_str_has_prefix (action_name, "app."))
-    action = g_action_map_lookup_action (G_ACTION_MAP (app), action_name + 4);
-  else
-    action = g_action_map_lookup_action (G_ACTION_MAP (app), action_name);
+  action  = gimp_ui_manager_find_action (manager, NULL, action_name);
 
   g_return_if_fail (GIMP_IS_ACTION (action));
 
-  action_label = gimp_action_get_label (GIMP_ACTION (action));
+  action_label = gimp_action_get_label (action);
   g_return_if_fail (action_label != NULL);
 
   if (GIMP_IS_TOGGLE_ACTION (action))
@@ -532,14 +524,16 @@ gimp_menu_add_action (GimpMenu          *menu,
       if (group)
         *group = NULL;
 
-      gtk_actionable_set_action_name (GTK_ACTIONABLE (item), action_name);
+      g_signal_connect_swapped (item, "activate",
+                                G_CALLBACK (gimp_action_activate),
+                                action);
     }
 
-  gimp_action_set_proxy (GIMP_ACTION (action), item);
+  gimp_action_set_proxy (action, item);
   g_object_set_data (G_OBJECT (item), GIMP_MENU_ACTION_KEY, action);
 
   gtk_widget_set_sensitive (GTK_WIDGET (item),
-                            gimp_action_is_sensitive (GIMP_ACTION (action), NULL));
+                            gimp_action_is_sensitive (action, NULL));
   g_signal_connect_object (action, "notify::sensitive",
                            G_CALLBACK (gimp_menu_action_notify_sensitive),
                            item, 0);
@@ -577,7 +571,7 @@ gimp_menu_add_action (GimpMenu          *menu,
         gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
     }
 
-  visible = gimp_action_is_visible (GIMP_ACTION (action));
+  visible = gimp_action_is_visible (action);
   gtk_widget_set_visible (item, visible);
   if (visible && GTK_IS_MENU (menu))
     {
@@ -610,19 +604,13 @@ gimp_menu_remove_action (GimpMenu    *menu,
                          const gchar *action_name)
 {
   GimpUIManager *manager;
-  GApplication  *app;
   GList         *children;
-  GAction       *action;
+  GimpAction    *action;
 
   g_return_if_fail (GIMP_IS_MENU (menu));
 
   manager = gimp_menu_shell_get_manager (GIMP_MENU_SHELL (menu));
-  app     = manager->gimp->app;
-
-  if (g_str_has_prefix (action_name, "app."))
-    action = g_action_map_lookup_action (G_ACTION_MAP (app), action_name + 4);
-  else
-    action = g_action_map_lookup_action (G_ACTION_MAP (app), action_name);
+  action  = gimp_ui_manager_find_action (manager, NULL, action_name);
 
   g_return_if_fail (GIMP_IS_ACTION (action));
 
@@ -630,8 +618,8 @@ gimp_menu_remove_action (GimpMenu    *menu,
 
   for (GList *iter = children; iter; iter = iter->next)
     {
-      GtkWidget *child = iter->data;
-      GAction   *item_action;
+      GtkWidget  *child = iter->data;
+      GimpAction *item_action;
 
       item_action = g_object_get_data (G_OBJECT (child), GIMP_MENU_ACTION_KEY);
       if (item_action == action)

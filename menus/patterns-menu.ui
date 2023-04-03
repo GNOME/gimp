@@ -2,21 +2,21 @@
 
 <interface>
   <menu id="/patterns-popup">
-    <item><attribute name="action">app.patterns-open-as-image</attribute></item>
+    <item><attribute name="action">patterns.patterns-open-as-image</attribute></item>
 
     <!-- disabled because they are useless now
-    <item><attribute name="action">app.patterns-edit</attribute></item>
+    <item><attribute name="action">patterns.patterns-edit</attribute></item>
     <section>
-      <item><attribute name="action">app.patterns-new</attribute></item>
-      <item><attribute name="action">app.patterns-duplicate</attribute></item>
+      <item><attribute name="action">patterns.patterns-new</attribute></item>
+      <item><attribute name="action">patterns.patterns-duplicate</attribute></item>
     </section>
     -->
 
-    <item><attribute name="action">app.patterns-copy-location</attribute></item>
-    <item><attribute name="action">app.patterns-show-in-file-manager</attribute></item>
-    <item><attribute name="action">app.patterns-delete</attribute></item>
+    <item><attribute name="action">patterns.patterns-copy-location</attribute></item>
+    <item><attribute name="action">patterns.patterns-show-in-file-manager</attribute></item>
+    <item><attribute name="action">patterns.patterns-delete</attribute></item>
     <section>
-      <item><attribute name="action">app.patterns-refresh</attribute></item>
+      <item><attribute name="action">patterns.patterns-refresh</attribute></item>
     </section>
   </menu>
 </interface>

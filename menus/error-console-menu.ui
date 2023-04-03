@@ -2,17 +2,17 @@
 
 <interface>
   <menu id="/error-console-popup">
-    <item><attribute name="action">app.error-console-clear</attribute></item>
-    <item><attribute name="action">app.error-console-select-all</attribute></item>
+    <item><attribute name="action">error-console.error-console-clear</attribute></item>
+    <item><attribute name="action">error-console.error-console-select-all</attribute></item>
     <section>
-      <item><attribute name="action">app.error-console-save-all</attribute></item>
-      <item><attribute name="action">app.error-console-save-selection</attribute></item>
+      <item><attribute name="action">error-console.error-console-save-all</attribute></item>
+      <item><attribute name="action">error-console.error-console-save-selection</attribute></item>
     </section>
     <submenu>
       <attribute name="label">_Highlight</attribute>
-      <item><attribute name="action">app.error-console-highlight-error</attribute></item>
-      <item><attribute name="action">app.error-console-highlight-warning</attribute></item>
-      <item><attribute name="action">app.error-console-highlight-info</attribute></item>
+      <item><attribute name="action">error-console.error-console-highlight-error</attribute></item>
+      <item><attribute name="action">error-console.error-console-highlight-warning</attribute></item>
+      <item><attribute name="action">error-console.error-console-highlight-info</attribute></item>
     </submenu>
   </menu>
 </interface>

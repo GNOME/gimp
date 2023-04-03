@@ -6,16 +6,16 @@
       <attribute name="label" translatable="yes" context="dynamics-action">Paint Dynamics Menu</attribute>
       <attribute name="icon">gimp-dynamics</attribute>
 
-      <item><attribute name="action">app.dynamics-edit</attribute></item>
+      <item><attribute name="action">dynamics.dynamics-edit</attribute></item>
       <section>
-        <item><attribute name="action">app.dynamics-new</attribute></item>
-        <item><attribute name="action">app.dynamics-duplicate</attribute></item>
-        <item><attribute name="action">app.dynamics-copy-location</attribute></item>
-        <item><attribute name="action">app.dynamics-show-in-file-manager</attribute></item>
-        <item><attribute name="action">app.dynamics-delete</attribute></item>
+        <item><attribute name="action">dynamics.dynamics-new</attribute></item>
+        <item><attribute name="action">dynamics.dynamics-duplicate</attribute></item>
+        <item><attribute name="action">dynamics.dynamics-copy-location</attribute></item>
+        <item><attribute name="action">dynamics.dynamics-show-in-file-manager</attribute></item>
+        <item><attribute name="action">dynamics.dynamics-delete</attribute></item>
       </section>
       <section>
-        <item><attribute name="action">app.dynamics-refresh</attribute></item>
+        <item><attribute name="action">dynamics.dynamics-refresh</attribute></item>
       </section>
     </submenu>
   </menu>

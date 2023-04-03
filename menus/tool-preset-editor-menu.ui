@@ -7,10 +7,10 @@
       <attribute name="icon">gimp-tool-preset</attribute>
 
       <section>
-        <item><attribute name="action">app.tool-preset-editor-save</attribute></item>
-        <item><attribute name="action">app.tool-preset-editor-restore</attribute></item>
+        <item><attribute name="action">tool-preset-editor.tool-preset-editor-save</attribute></item>
+        <item><attribute name="action">tool-preset-editor.tool-preset-editor-restore</attribute></item>
       </section>
-      <item><attribute name="action">app.tool-preset-editor-edit-active</attribute></item>
+      <item><attribute name="action">tool-preset-editor.tool-preset-editor-edit-active</attribute></item>
     </submenu>
   </menu>
 </interface>

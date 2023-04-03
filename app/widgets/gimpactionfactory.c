@@ -188,7 +188,7 @@ gimp_action_factory_get_group (GimpActionFactory *factory,
 
               g_signal_connect_object (group, "action-removed",
                                        G_CALLBACK (gimp_action_factory_action_removed),
-                                       factory, 0);
+                                       factory, G_CONNECT_AFTER);
             }
 
           return entry->group;

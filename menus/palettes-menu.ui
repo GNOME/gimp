@@ -6,18 +6,18 @@
       <attribute name="label" translatable="yes" context="palettes-action">Palettes Menu</attribute>
       <attribute name="icon">gtk-select-color</attribute>
 
-      <item><attribute name="action">app.palettes-edit</attribute></item>
+      <item><attribute name="action">palettes.palettes-edit</attribute></item>
       <section>
-        <item><attribute name="action">app.palettes-new</attribute></item>
-        <item><attribute name="action">app.palettes-import</attribute></item>
-        <item><attribute name="action">app.palettes-duplicate</attribute></item>
-        <item><attribute name="action">app.palettes-merge</attribute></item>
-        <item><attribute name="action">app.palettes-copy-location</attribute></item>
-        <item><attribute name="action">app.palettes-show-in-file-manager</attribute></item>
-        <item><attribute name="action">app.palettes-delete</attribute></item>
+        <item><attribute name="action">palettes.palettes-new</attribute></item>
+        <item><attribute name="action">palettes.palettes-import</attribute></item>
+        <item><attribute name="action">palettes.palettes-duplicate</attribute></item>
+        <item><attribute name="action">palettes.palettes-merge</attribute></item>
+        <item><attribute name="action">palettes.palettes-copy-location</attribute></item>
+        <item><attribute name="action">palettes.palettes-show-in-file-manager</attribute></item>
+        <item><attribute name="action">palettes.palettes-delete</attribute></item>
       </section>
       <section>
-        <item><attribute name="action">app.palettes-refresh</attribute></item>
+        <item><attribute name="action">palettes.palettes-refresh</attribute></item>
       </section>
     </submenu>
   </menu>

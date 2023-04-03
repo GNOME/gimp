@@ -6,18 +6,18 @@
       <attribute name="label" translatable="yes" context="tool-presets-action">Tool Presets Menu</attribute>
       <attribute name="icon">gimp-tool-preset</attribute>
 
-      <item><attribute name="action">app.tool-presets-edit</attribute></item>
+      <item><attribute name="action">tool-presets.tool-presets-edit</attribute></item>
       <section>
-        <item><attribute name="action">app.tool-presets-new</attribute></item>
-        <item><attribute name="action">app.tool-presets-duplicate</attribute></item>
-        <item><attribute name="action">app.tool-presets-copy-location</attribute></item>
-        <item><attribute name="action">app.tool-presets-show-in-file-manager</attribute></item>
-        <item><attribute name="action">app.tool-presets-save</attribute></item>
-        <item><attribute name="action">app.tool-presets-restore</attribute></item>
-        <item><attribute name="action">app.tool-presets-delete</attribute></item>
+        <item><attribute name="action">tool-presets.tool-presets-new</attribute></item>
+        <item><attribute name="action">tool-presets.tool-presets-duplicate</attribute></item>
+        <item><attribute name="action">tool-presets.tool-presets-copy-location</attribute></item>
+        <item><attribute name="action">tool-presets.tool-presets-show-in-file-manager</attribute></item>
+        <item><attribute name="action">tool-presets.tool-presets-save</attribute></item>
+        <item><attribute name="action">tool-presets.tool-presets-restore</attribute></item>
+        <item><attribute name="action">tool-presets.tool-presets-delete</attribute></item>
       </section>
       <section>
-        <item><attribute name="action">app.tool-presets-refresh</attribute></item>
+        <item><attribute name="action">tool-presets.tool-presets-refresh</attribute></item>
       </section>
     </submenu>
   </menu>

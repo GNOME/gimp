@@ -2,11 +2,11 @@
 
 <interface>
   <menu id="/mypaint-brushes-popup">
-    <item><attribute name="action">app.mypaint-brushes-copy-location</attribute></item>
-    <item><attribute name="action">app.mypaint-brushes-show-in-file-manager</attribute></item>
-    <item><attribute name="action">app.mypaint-brushes-delete</attribute></item>
+    <item><attribute name="action">mypaint-brushes.mypaint-brushes-copy-location</attribute></item>
+    <item><attribute name="action">mypaint-brushes.mypaint-brushes-show-in-file-manager</attribute></item>
+    <item><attribute name="action">mypaint-brushes.mypaint-brushes-delete</attribute></item>
     <section>
-      <item><attribute name="action">app.mypaint-brushes-refresh</attribute></item>
+      <item><attribute name="action">mypaint-brushes.mypaint-brushes-refresh</attribute></item>
     </section>
   </menu>
 </interface>

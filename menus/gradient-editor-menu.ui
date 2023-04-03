@@ -7,123 +7,123 @@
       <attribute name="icon">gimp-tool-gradient</attribute>
       <submenu>
         <attribute name="label" translatable="yes" context="gradient-editor-action">Left Color Type</attribute>
-        <item><attribute name="action">app.gradient-editor-left-color-fixed</attribute></item>
-        <item><attribute name="action">app.gradient-editor-left-color-foreground</attribute></item>
-        <item><attribute name="action">app.gradient-editor-left-color-foreground-transparent</attribute></item>
-        <item><attribute name="action">app.gradient-editor-left-color-background</attribute></item>
-        <item><attribute name="action">app.gradient-editor-left-color-background-transparent</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-left-color-fixed</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-left-color-foreground</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-left-color-foreground-transparent</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-left-color-background</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-left-color-background-transparent</attribute></item>
       </submenu>
-      <item><attribute name="action">app.gradient-editor-left-color</attribute></item>
+      <item><attribute name="action">gradient-editor.gradient-editor-left-color</attribute></item>
       <submenu>
         <attribute name="label" translatable="yes" context="gradient-editor-action">_Load Left Color From</attribute>
-        <item><attribute name="action">app.gradient-editor-load-left-left-neighbor</attribute></item>
-        <item><attribute name="action">app.gradient-editor-load-left-right-endpoint</attribute></item>
-        <item><attribute name="action">app.gradient-editor-load-left-fg</attribute></item>
-        <item><attribute name="action">app.gradient-editor-load-left-bg</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-load-left-left-neighbor</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-load-left-right-endpoint</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-load-left-fg</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-load-left-bg</attribute></item>
         <section>
-          <item><attribute name="action">app.gradient-editor-load-left-01</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-left-02</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-left-03</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-left-04</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-left-05</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-left-06</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-left-07</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-left-08</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-left-09</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-left-10</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-left-01</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-left-02</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-left-03</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-left-04</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-left-05</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-left-06</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-left-07</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-left-08</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-left-09</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-left-10</attribute></item>
         </section>
       </submenu>
       <submenu>
         <attribute name="label" translatable="yes" context="gradient-editor-action">_Save Left Color To</attribute>
-        <item><attribute name="action">app.gradient-editor-save-left-01</attribute></item>
-        <item><attribute name="action">app.gradient-editor-save-left-02</attribute></item>
-        <item><attribute name="action">app.gradient-editor-save-left-03</attribute></item>
-        <item><attribute name="action">app.gradient-editor-save-left-04</attribute></item>
-        <item><attribute name="action">app.gradient-editor-save-left-05</attribute></item>
-        <item><attribute name="action">app.gradient-editor-save-left-06</attribute></item>
-        <item><attribute name="action">app.gradient-editor-save-left-07</attribute></item>
-        <item><attribute name="action">app.gradient-editor-save-left-08</attribute></item>
-        <item><attribute name="action">app.gradient-editor-save-left-09</attribute></item>
-        <item><attribute name="action">app.gradient-editor-save-left-10</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-save-left-01</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-save-left-02</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-save-left-03</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-save-left-04</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-save-left-05</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-save-left-06</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-save-left-07</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-save-left-08</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-save-left-09</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-save-left-10</attribute></item>
       </submenu>
       <section>
         <submenu>
           <attribute name="label" translatable="yes" context="gradient-editor-action">Right Color Type</attribute>
-          <item><attribute name="action">app.gradient-editor-right-color-fixed</attribute></item>
-          <item><attribute name="action">app.gradient-editor-right-color-foreground</attribute></item>
-          <item><attribute name="action">app.gradient-editor-right-color-foreground-transparent</attribute></item>
-          <item><attribute name="action">app.gradient-editor-right-color-background</attribute></item>
-          <item><attribute name="action">app.gradient-editor-right-color-background-transparent</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-right-color-fixed</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-right-color-foreground</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-right-color-foreground-transparent</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-right-color-background</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-right-color-background-transparent</attribute></item>
         </submenu>
-        <item><attribute name="action">app.gradient-editor-right-color</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-right-color</attribute></item>
         <submenu>
           <attribute name="label" translatable="yes" context="gradient-editor-action">Load Right Color Fr_om</attribute>
-          <item><attribute name="action">app.gradient-editor-load-right-right-neighbor</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-right-left-endpoint</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-right-fg</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-right-bg</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-right-right-neighbor</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-right-left-endpoint</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-right-fg</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-right-bg</attribute></item>
           <section>
-          <item><attribute name="action">app.gradient-editor-load-right-01</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-right-02</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-right-03</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-right-04</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-right-05</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-right-06</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-right-07</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-right-08</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-right-09</attribute></item>
-          <item><attribute name="action">app.gradient-editor-load-right-10</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-right-01</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-right-02</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-right-03</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-right-04</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-right-05</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-right-06</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-right-07</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-right-08</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-right-09</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-load-right-10</attribute></item>
           </section>
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="gradient-editor-action">Sa_ve Right Color To</attribute>
-          <item><attribute name="action">app.gradient-editor-save-right-01</attribute></item>
-          <item><attribute name="action">app.gradient-editor-save-right-02</attribute></item>
-          <item><attribute name="action">app.gradient-editor-save-right-03</attribute></item>
-          <item><attribute name="action">app.gradient-editor-save-right-04</attribute></item>
-          <item><attribute name="action">app.gradient-editor-save-right-05</attribute></item>
-          <item><attribute name="action">app.gradient-editor-save-right-06</attribute></item>
-          <item><attribute name="action">app.gradient-editor-save-right-07</attribute></item>
-          <item><attribute name="action">app.gradient-editor-save-right-08</attribute></item>
-          <item><attribute name="action">app.gradient-editor-save-right-09</attribute></item>
-          <item><attribute name="action">app.gradient-editor-save-right-10</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-save-right-01</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-save-right-02</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-save-right-03</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-save-right-04</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-save-right-05</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-save-right-06</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-save-right-07</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-save-right-08</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-save-right-09</attribute></item>
+          <item><attribute name="action">gradient-editor.gradient-editor-save-right-10</attribute></item>
         </submenu>
       </section>
       <section>
       <submenu>
         <!-- Special trick: when a submenu has a radio action attribute, its label will be the group label. -->
-        <attribute name="action">app.gradient-editor-blending-linear</attribute>
-        <item><attribute name="action">app.gradient-editor-blending-linear</attribute></item>
-        <item><attribute name="action">app.gradient-editor-blending-curved</attribute></item>
-        <item><attribute name="action">app.gradient-editor-blending-sine</attribute></item>
-        <item><attribute name="action">app.gradient-editor-blending-sphere-increasing</attribute></item>
-        <item><attribute name="action">app.gradient-editor-blending-sphere-decreasing</attribute></item>
-        <item><attribute name="action">app.gradient-editor-blending-step</attribute></item>
-        <item><attribute name="action">app.gradient-editor-blending-varies</attribute></item>
+        <attribute name="action">gradient-editor.gradient-editor-blending-linear</attribute>
+        <item><attribute name="action">gradient-editor.gradient-editor-blending-linear</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-blending-curved</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-blending-sine</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-blending-sphere-increasing</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-blending-sphere-decreasing</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-blending-step</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-blending-varies</attribute></item>
       </submenu>
       <submenu>
         <!-- Special trick: when a submenu has a radio action attribute, its label will be the group label. -->
-        <attribute name="action">app.gradient-editor-coloring-rgb</attribute>
-        <item><attribute name="action">app.gradient-editor-coloring-rgb</attribute></item>
-        <item><attribute name="action">app.gradient-editor-coloring-hsv-ccw</attribute></item>
-        <item><attribute name="action">app.gradient-editor-coloring-hsv-cw</attribute></item>
-        <item><attribute name="action">app.gradient-editor-coloring-varies</attribute></item>
+        <attribute name="action">gradient-editor.gradient-editor-coloring-rgb</attribute>
+        <item><attribute name="action">gradient-editor.gradient-editor-coloring-rgb</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-coloring-hsv-ccw</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-coloring-hsv-cw</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-coloring-varies</attribute></item>
       </submenu>
       </section>
       <section>
-        <item><attribute name="action">app.gradient-editor-flip</attribute></item>
-        <item><attribute name="action">app.gradient-editor-replicate</attribute></item>
-        <item><attribute name="action">app.gradient-editor-split-midpoint</attribute></item>
-        <item><attribute name="action">app.gradient-editor-split-uniform</attribute></item>
-        <item><attribute name="action">app.gradient-editor-delete</attribute></item>
-        <item><attribute name="action">app.gradient-editor-recenter</attribute></item>
-        <item><attribute name="action">app.gradient-editor-redistribute</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-flip</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-replicate</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-split-midpoint</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-split-uniform</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-delete</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-recenter</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-redistribute</attribute></item>
       </section>
       <section>
-        <item><attribute name="action">app.gradient-editor-blend-color</attribute></item>
-        <item><attribute name="action">app.gradient-editor-blend-opacity</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-blend-color</attribute></item>
+        <item><attribute name="action">gradient-editor.gradient-editor-blend-opacity</attribute></item>
       </section>
-      <item><attribute name="action">app.gradient-editor-edit-active</attribute></item>
+      <item><attribute name="action">gradient-editor.gradient-editor-edit-active</attribute></item>
     </submenu>
   </menu>
 </interface>

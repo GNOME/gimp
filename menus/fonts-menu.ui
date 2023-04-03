@@ -3,7 +3,7 @@
 <interface>
   <menu id="/fonts-popup">
     <section>
-      <item><attribute name="action">app.fonts-refresh</attribute></item>
+      <item><attribute name="action">fonts.fonts-refresh</attribute></item>
     </section>
   </menu>
 </interface>

@@ -630,7 +630,13 @@ gimp_ui_manager_find_action (GimpUIManager *manager,
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager), NULL);
   g_return_val_if_fail (action_name != NULL, NULL);
 
-  if (group_name)
+  if (g_strcmp0 (group_name, "app") == 0)
+    {
+      GApplication *app = manager->gimp->app;
+
+      action = (GimpAction *) g_action_map_lookup_action (G_ACTION_MAP (app), action_name);
+    }
+  else if (group_name)
     {
       group = gimp_ui_manager_get_action_group (manager, group_name);
 
@@ -640,17 +646,33 @@ gimp_ui_manager_find_action (GimpUIManager *manager,
   else
     {
       GList *list;
+      gchar *dot;
 
-      for (list = gimp_ui_manager_get_action_groups (manager);
-           list;
-           list = g_list_next (list))
+      dot = strstr (action_name, ".");
+
+      if (dot == NULL)
         {
-          group = list->data;
+          /* No group specified. */
+          for (list = gimp_ui_manager_get_action_groups (manager);
+               list;
+               list = g_list_next (list))
+            {
+              group = list->data;
 
-          action = gimp_action_group_get_action (group, action_name);
+              action = gimp_action_group_get_action (group, action_name);
 
-          if (action)
-            break;
+              if (action)
+                break;
+            }
+        }
+      else
+        {
+          gchar *gname;
+
+          gname = g_strndup (action_name, dot - action_name);
+
+          action = gimp_ui_manager_find_action (manager, gname, dot + 1);
+          g_free (gname);
         }
     }
 

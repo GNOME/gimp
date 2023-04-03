@@ -31,6 +31,7 @@
 #include "core/gimp.h"
 
 #include "gimpaction.h"
+#include "gimpactiongroup.h"
 #include "gimpmenumodel.h"
 #include "gimpmenushell.h"
 #include "gimpuimanager.h"
@@ -358,9 +359,8 @@ gimp_menu_model_get_position (GimpMenuModel *model,
                               const gchar   *action_name,
                               gboolean      *visible)
 {
-  GApplication  *app = model->priv->manager->gimp->app;
-  GList         *iter;
-  gint           len = 0;
+  GList *iter;
+  gint   len = 0;
 
   for (iter = model->priv->items; iter; iter = iter->next)
     {
@@ -382,19 +382,37 @@ gimp_menu_model_get_position (GimpMenuModel *model,
                                           G_MENU_ATTRIBUTE_ACTION,
                                           "&s", &cur_action_name))
         {
-          GAction *cur_action;
+          GimpAction  *cur_action       = NULL;
+          const gchar *real_action_name = NULL;
 
-          cur_action = g_action_map_lookup_action (G_ACTION_MAP (app),
-                                                   cur_action_name + 4);
-          if (action_name != NULL &&
-              g_strcmp0 (action_name, cur_action_name + 4) == 0)
+          if (cur_action_name != NULL)
+            {
+              real_action_name = strstr (cur_action_name, ".");
+              if (real_action_name != NULL)
+                real_action_name++;
+              else
+                real_action_name = cur_action_name;
+
+              cur_action = gimp_ui_manager_find_action (model->priv->manager, NULL, cur_action_name);
+            }
+
+          if (cur_action_name != NULL &&
+              g_strcmp0 (action_name, real_action_name) == 0)
             {
               if (visible)
-                *visible = gimp_action_is_visible (GIMP_ACTION (cur_action));
+                {
+                  if (cur_action != NULL)
+                    *visible = gimp_action_is_visible (cur_action);
+                  else
+                    /* This may happen when editing a menu item for an action
+                     * which got removed.
+                     */
+                    *visible = FALSE;
+                }
 
               break;
             }
-          else if (gimp_action_is_visible (GIMP_ACTION (cur_action)))
+          else if (cur_action != NULL && gimp_action_is_visible (cur_action))
             {
               len++;
             }
@@ -537,8 +555,7 @@ static void
 gimp_menu_model_initialize (GimpMenuModel *model,
                             GMenuModel    *gmodel)
 {
-  GApplication *app = model->priv->manager->gimp->app;
-  gint          n_items;
+  gint n_items;
 
   g_return_if_fail (GIMP_IS_MENU_MODEL (model));
   g_return_if_fail (gmodel == NULL || G_IS_MENU_MODEL (gmodel));
@@ -593,16 +610,16 @@ gimp_menu_model_initialize (GimpMenuModel *model,
 
           if (action_name)
             {
-              GAction *action;
+              GimpAction *action;
 
-              action = g_action_map_lookup_action (G_ACTION_MAP (app),
-                                                   action_name + 4);
+              action = gimp_ui_manager_find_action (model->priv->manager, NULL, action_name);
+
               g_signal_connect_object (action,
                                        "notify::visible",
                                        G_CALLBACK (gimp_menu_model_action_notify_visible),
                                        model, 0);
 
-              g_menu_item_set_label (item, gimp_action_get_label (GIMP_ACTION (action)));
+              g_menu_item_set_label (item, gimp_action_get_label (action));
               g_signal_connect_object (action,
                                        "notify::label",
                                        G_CALLBACK (gimp_menu_model_action_notify_label),
@@ -690,7 +707,6 @@ gimp_menu_model_get_item (GimpMenuModel *model,
                           gint           idx)
 {
   GimpMenuModel *m   = GIMP_MENU_MODEL (model);
-  GApplication  *app = m->priv->manager->gimp->app;
   gint           cur = -1;
 
   for (GList *iter = m->priv->items; iter; iter = iter->next)
@@ -713,11 +729,10 @@ gimp_menu_model_get_item (GimpMenuModel *model,
                                           G_MENU_ATTRIBUTE_ACTION,
                                           "&s", &action_name))
         {
-          GAction *action;
+          GimpAction *action;
 
-          action = g_action_map_lookup_action (G_ACTION_MAP (app),
-                                               action_name + 4);
-          if (gimp_action_is_visible (GIMP_ACTION (action)))
+          action = gimp_ui_manager_find_action (model->priv->manager, NULL, action_name);
+          if (gimp_action_is_visible (action))
             cur++;
         }
 

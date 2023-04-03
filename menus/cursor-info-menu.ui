@@ -5,7 +5,7 @@
     <submenu>
       <attribute name="label" translatable="yes" context="cursor-info-action">Pointer Information Menu</attribute>
       <attribute name="icon">gimp-cursor</attribute>
-      <item><attribute name="action">app.cursor-info-sample-merged</attribute></item>
+      <item><attribute name="action">cursor-info.cursor-info-sample-merged</attribute></item>
     </submenu>
   </menu>
 </interface>

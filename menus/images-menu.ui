@@ -2,8 +2,8 @@
 
 <interface>
   <menu id="/images-popup">
-    <item><attribute name="action">app.images-raise-views</attribute></item>
-    <item><attribute name="action">app.images-new-view</attribute></item>
-    <item><attribute name="action">app.images-delete</attribute></item>
+    <item><attribute name="action">images.images-raise-views</attribute></item>
+    <item><attribute name="action">images.images-new-view</attribute></item>
+    <item><attribute name="action">images.images-delete</attribute></item>
   </menu>
 </interface>

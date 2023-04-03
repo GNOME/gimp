@@ -12,29 +12,29 @@
       </submenu>
       <submenu>
         <attribute name="label" translatable="yes" context="dashboard-action">_Update Interval</attribute>
-        <item><attribute name="action">app.dashboard-update-interval-0-25-sec</attribute></item>
-        <item><attribute name="action">app.dashboard-update-interval-0-5-sec</attribute></item>
-        <item><attribute name="action">app.dashboard-update-interval-1-sec</attribute></item>
-        <item><attribute name="action">app.dashboard-update-interval-2-sec</attribute></item>
-        <item><attribute name="action">app.dashboard-update-interval-4-sec</attribute></item>
+        <item><attribute name="action">dashboard.dashboard-update-interval-0-25-sec</attribute></item>
+        <item><attribute name="action">dashboard.dashboard-update-interval-0-5-sec</attribute></item>
+        <item><attribute name="action">dashboard.dashboard-update-interval-1-sec</attribute></item>
+        <item><attribute name="action">dashboard.dashboard-update-interval-2-sec</attribute></item>
+        <item><attribute name="action">dashboard.dashboard-update-interval-4-sec</attribute></item>
       </submenu>
       <submenu>
         <attribute name="label" translatable="yes" context="dashboard-action">_History Duration</attribute>
-        <item><attribute name="action">app.dashboard-history-duration-15-sec</attribute></item>
-        <item><attribute name="action">app.dashboard-history-duration-30-sec</attribute></item>
-        <item><attribute name="action">app.dashboard-history-duration-60-sec</attribute></item>
-        <item><attribute name="action">app.dashboard-history-duration-120-sec</attribute></item>
-        <item><attribute name="action">app.dashboard-history-duration-240-sec</attribute></item>
+        <item><attribute name="action">dashboard.dashboard-history-duration-15-sec</attribute></item>
+        <item><attribute name="action">dashboard.dashboard-history-duration-30-sec</attribute></item>
+        <item><attribute name="action">dashboard.dashboard-history-duration-60-sec</attribute></item>
+        <item><attribute name="action">dashboard.dashboard-history-duration-120-sec</attribute></item>
+        <item><attribute name="action">dashboard.dashboard-history-duration-240-sec</attribute></item>
       </submenu>
       <section>
-        <item><attribute name="action">app.dashboard-log-record</attribute></item>
-        <item><attribute name="action">app.dashboard-log-add-marker</attribute></item>
-        <item><attribute name="action">app.dashboard-log-add-empty-marker</attribute></item>
+        <item><attribute name="action">dashboard.dashboard-log-record</attribute></item>
+        <item><attribute name="action">dashboard.dashboard-log-add-marker</attribute></item>
+        <item><attribute name="action">dashboard.dashboard-log-add-empty-marker</attribute></item>
       </section>
       <section>
-        <item><attribute name="action">app.dashboard-reset</attribute></item>
+        <item><attribute name="action">dashboard.dashboard-reset</attribute></item>
       </section>
-      <item><attribute name="action">app.dashboard-low-swap-space-warning</attribute></item>
+      <item><attribute name="action">dashboard.dashboard-low-swap-space-warning</attribute></item>
     </submenu>
   </menu>
 </interface>

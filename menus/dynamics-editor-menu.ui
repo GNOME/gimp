@@ -5,7 +5,7 @@
     <submenu>
       <attribute name="label" translatable="yes" context="dynamics-editor-action">Paint Dynamics Editor Menu</attribute>
       <attribute name="icon">gimp-dynamics</attribute>
-      <item><attribute name="action">app.dynamics-editor-edit-active</attribute></item>
+      <item><attribute name="action">dynamics-editor.dynamics-editor-edit-active</attribute></item>
     </submenu>
   </menu>
 </interface>
