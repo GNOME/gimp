@@ -90,8 +90,7 @@ buffers_paste_cmd_callback (GimpAction *action,
         {
           GList *drawables = gimp_image_get_selected_drawables (image);
 
-          g_list_free (gimp_edit_paste (image,
-                                        g_list_length (drawables) == 1 ? drawables->data : NULL,
+          g_list_free (gimp_edit_paste (image, drawables,
                                         GIMP_OBJECT (buffer), paste_type,
                                         context, FALSE,
                                         x, y, width, height));
