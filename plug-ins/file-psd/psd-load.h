@@ -38,7 +38,8 @@ GimpImage * load_image_metadata
                          PSDSupport   *unsupported_features,
                          GError      **error);
 
-void        load_dialog (PSDSupport   *unsupported_features);
+void        load_dialog (const gchar  *title,
+                         PSDSupport   *unsupported_features);
 
 
 #endif /* __PSD_LOAD_H__ */

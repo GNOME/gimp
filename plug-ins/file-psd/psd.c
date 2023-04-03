@@ -358,7 +358,7 @@ psd_load (GimpProcedure        *procedure,
 
       if (unsupported_features.duotone_mode ||
           unsupported_features.show_gui)
-        load_dialog (&unsupported_features);
+        load_dialog (_("Import PSD"), &unsupported_features);
 
       if (parasite)
         gimp_parasite_free (parasite);
@@ -537,6 +537,34 @@ psd_load_metadata (GimpProcedure        *procedure,
 
   image = load_image_metadata (file, data_length, image, is_layer, is_cmyk,
                                &unsupported_features, &error);
+
+  /* Check for unsupported layers */
+
+  if (is_layer && unsupported_features.show_gui)
+    {
+      /* Metadata doesn't store rasterized versions of fill layers,
+       * (unlike PSDs) so we can't display them for now.
+       */
+      if (unsupported_features.fill_layer)
+        {
+          unsupported_features.psd_metadata = TRUE;
+          unsupported_features.fill_layer   = FALSE;
+        }
+
+      switch (run_mode)
+        {
+        case GIMP_RUN_INTERACTIVE:
+          gimp_ui_init (PLUG_IN_BINARY);
+          load_dialog (_("Import PSD metadata"), &unsupported_features);
+          break;
+        default:
+          g_printerr ("[%s] %s\n", "file-psd-load-metadata",
+                      _("Metadata fill layers are not supported "
+                        "and will be dropped."));
+          break;
+        }
+
+    }
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,

@@ -1811,7 +1811,7 @@ load_image (GFile        *file,
       return_vals =
         gimp_pdb_run_procedure (gimp_get_pdb (),
                                 "file-psd-load-metadata",
-                                GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
+                                GIMP_TYPE_RUN_MODE, run_mode,
                                 G_TYPE_FILE,        temp_file,
                                 G_TYPE_INT,         photoshop_len,
                                 GIMP_TYPE_IMAGE,   *image,

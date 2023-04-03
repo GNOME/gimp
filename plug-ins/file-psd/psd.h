@@ -595,6 +595,7 @@ typedef struct
   gboolean stroke;
   gboolean layer_effect;
   gboolean layer_comp;
+  gboolean psd_metadata;
 } PSDSupport;
 
 /* PSD Layer data structure */

@@ -3436,16 +3436,18 @@ initialize_unsupported (PSDSupport *unsupported_features)
   unsupported_features->stroke           = FALSE;
   unsupported_features->layer_effect     = FALSE;
   unsupported_features->layer_comp       = FALSE;
+  unsupported_features->psd_metadata     = FALSE;
 }
 
 void
-load_dialog (PSDSupport *unsupported_features)
+load_dialog (const gchar *title,
+             PSDSupport  *unsupported_features)
 {
   GtkWidget *dialog;
   GtkWidget *label;
   GtkWidget *vbox;
 
-  dialog = gimp_dialog_new (_("Import PSD"),
+  dialog = gimp_dialog_new (title,
                             "import-psd",
                             NULL, 0, NULL, NULL,
                             _("_OK"), GTK_RESPONSE_OK,
@@ -3503,6 +3505,10 @@ load_dialog (PSDSupport *unsupported_features)
       if (unsupported_features->adjustment_layer)
         message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
                                    _("Adjustment layers are not yet "
+                                     "supported and will be dropped."));
+      if (unsupported_features->psd_metadata)
+        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
+                                   _("Metadata fill layers are not "
                                      "supported and will be dropped."));
       if (unsupported_features->fill_layer)
         message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
