@@ -53,12 +53,6 @@ struct _GimpActionGroupClass
   GimpObjectClass      parent_class;
 
   GHashTable          *groups;
-
-  /* signals */
-  void (* action_added)   (GimpActionGroup *group,
-                           GimpAction      *action);
-  void (* action_removed) (GimpActionGroup *group,
-                           GimpAction      *action);
 };
 
 
@@ -219,8 +213,6 @@ void   gimp_action_group_add_procedure_actions(GimpActionGroup             *grou
 void   gimp_action_group_remove_action_and_accel (GimpActionGroup          *group,
                                                   GimpAction               *action);
 
-void          gimp_action_group_activate_action       (GimpActionGroup *group,
-                                                       const gchar     *action_name);
 void          gimp_action_group_set_action_visible    (GimpActionGroup *group,
                                                        const gchar     *action_name,
                                                        gboolean         visible);

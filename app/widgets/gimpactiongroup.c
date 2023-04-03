@@ -46,12 +46,6 @@
 
 #include "gimp-intl.h"
 
-enum
-{
-  ACTION_ADDED,
-  ACTION_REMOVED,
-  LAST_SIGNAL
-};
 
 enum
 {
@@ -62,22 +56,30 @@ enum
 };
 
 
-static void   gimp_action_group_constructed   (GObject      *object);
-static void   gimp_action_group_dispose       (GObject      *object);
-static void   gimp_action_group_finalize      (GObject      *object);
-static void   gimp_action_group_set_property  (GObject      *object,
-                                               guint         prop_id,
-                                               const GValue *value,
-                                               GParamSpec   *pspec);
-static void   gimp_action_group_get_property  (GObject      *object,
-                                               guint         prop_id,
-                                               GValue       *value,
-                                               GParamSpec   *pspec);
+static void        gimp_action_group_iface_init        (GActionGroupInterface *iface);
+
+static void        gimp_action_group_constructed       (GObject               *object);
+static void        gimp_action_group_dispose           (GObject               *object);
+static void        gimp_action_group_finalize          (GObject               *object);
+static void        gimp_action_group_set_property      (GObject               *object,
+                                                        guint                  prop_id,
+                                                        const GValue          *value,
+                                                        GParamSpec            *pspec);
+static void        gimp_action_group_get_property      (GObject               *object,
+                                                        guint                  prop_id,
+                                                        GValue                *value,
+                                                        GParamSpec            *pspec);
+
+static void        gimp_action_group_activate_action   (GActionGroup          *group,
+                                                        const gchar           *action_name,
+                                                        GVariant              *parameter G_GNUC_UNUSED);
+static gboolean    gimp_action_group_has_action        (GActionGroup          *group,
+                                                        const gchar           *action_name);
+static gchar    ** gimp_action_group_list_action_names (GActionGroup          *group);
 
 
-G_DEFINE_TYPE (GimpActionGroup, gimp_action_group, GIMP_TYPE_OBJECT)
-
-static guint signals[LAST_SIGNAL] = { 0, };
+G_DEFINE_TYPE_WITH_CODE (GimpActionGroup, gimp_action_group, GIMP_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (G_TYPE_ACTION_GROUP, gimp_action_group_iface_init))
 
 #define parent_class gimp_action_group_parent_class
 
@@ -115,29 +117,20 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   klass->groups = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
-
-  signals[ACTION_ADDED] =
-    g_signal_new ("action-added",
-                  G_OBJECT_CLASS_TYPE (klass),
-                  G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpActionGroupClass, action_added),
-                  NULL, NULL, NULL,
-                  G_TYPE_NONE, 1,
-                  GIMP_TYPE_ACTION);
-  signals[ACTION_REMOVED] =
-    g_signal_new ("action-removed",
-                  G_OBJECT_CLASS_TYPE (klass),
-                  G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpActionGroupClass, action_removed),
-                  NULL, NULL, NULL,
-                  G_TYPE_NONE, 1,
-                  GIMP_TYPE_ACTION);
 }
 
 static void
 gimp_action_group_init (GimpActionGroup *group)
 {
   group->actions = NULL;
+}
+
+static void
+gimp_action_group_iface_init (GActionGroupInterface *iface)
+{
+  iface->activate_action = gimp_action_group_activate_action;
+  iface->has_action      = gimp_action_group_has_action;
+  iface->list_actions    = gimp_action_group_list_action_names;
 }
 
 static void
@@ -260,6 +253,55 @@ gimp_action_group_get_property (GObject    *object,
     }
 }
 
+
+/* Virtual methods */
+
+static void
+gimp_action_group_activate_action (GActionGroup *group,
+                                   const gchar  *action_name,
+                                   GVariant     *parameter G_GNUC_UNUSED)
+{
+  GimpAction *action;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (action_name != NULL);
+
+  action = gimp_action_group_get_action (GIMP_ACTION_GROUP (group), action_name);
+
+  if (! action)
+    {
+      g_warning ("%s: Unable to activate action which doesn't exist: %s",
+                 G_STRFUNC, action_name);
+      return;
+    }
+
+  gimp_action_activate (action);
+}
+
+static gboolean
+gimp_action_group_has_action (GActionGroup *group,
+                              const gchar     *action_name)
+{
+  return (gimp_action_group_get_action (GIMP_ACTION_GROUP (group), action_name) != NULL);
+}
+
+static gchar **
+gimp_action_group_list_action_names (GActionGroup *group)
+{
+  GimpActionGroup  *action_group = GIMP_ACTION_GROUP (group);
+  gchar           **actions;
+  GList            *iter;
+  gint              i;
+
+  actions = g_new0 (gchar *, g_list_length (action_group->actions) + 1);
+  for (i = 0, iter = action_group->actions; iter; i++, iter = iter->next)
+    actions[i] = g_strdup (gimp_action_get_name (iter->data));
+
+  return actions;
+}
+
+/* Private functions */
+
 static gboolean
 gimp_action_group_check_unique_action (GimpActionGroup *group,
                                        const gchar     *action_name)
@@ -356,7 +398,7 @@ gimp_action_group_remove_action (GimpActionGroup *group,
 {
   group->actions = g_list_remove (group->actions, action);
 
-  g_signal_emit (group, signals[ACTION_REMOVED], 0, action);
+  g_signal_emit_by_name (group, "action-removed", gimp_action_get_name (action));
 }
 
 GimpAction *
@@ -456,7 +498,7 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
 
       gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                entries[i].accelerator);
-      g_signal_emit (group, signals[ACTION_ADDED], 0, action);
+      g_signal_emit_by_name (group, "action-added", entries[i].name);
 
       g_object_unref (action);
     }
@@ -514,7 +556,7 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
 
       gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                entries[i].accelerator);
-      g_signal_emit (group, signals[ACTION_ADDED], 0, action);
+      g_signal_emit_by_name (group, "action-added", entries[i].name);
 
       g_object_unref (action);
     }
@@ -577,7 +619,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
         gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action), TRUE);
 
       gimp_action_group_add_action_with_accel (group, action, entries[i].accelerator);
-      g_signal_emit (group, signals[ACTION_ADDED], 0, action);
+      g_signal_emit_by_name (group, "action-added", entries[i].name);
 
       g_object_unref (action);
     }
@@ -643,7 +685,7 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
 
       gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                entries[i].accelerator);
-      g_signal_emit (group, signals[ACTION_ADDED], 0, action);
+      g_signal_emit_by_name (group, "action-added", entries[i].name);
 
       g_object_unref (action);
     }
@@ -708,7 +750,7 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
           g_object_ref (action);
         }
 
-      g_signal_emit (group, signals[ACTION_ADDED], 0, action);
+      g_signal_emit_by_name (group, "action-added", entries[i].name);
       g_object_unref (action);
     }
 }
@@ -764,7 +806,7 @@ gimp_action_group_add_double_actions (GimpActionGroup             *group,
 
       gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                entries[i].accelerator);
-      g_signal_emit (group, signals[ACTION_ADDED], 0, action);
+      g_signal_emit_by_name (group, "action-added", entries[i].name);
 
       g_object_unref (action);
     }
@@ -819,7 +861,7 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
 
           gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                    entries[i].accelerator);
-          g_signal_emit (group, signals[ACTION_ADDED], 0, action);
+          g_signal_emit_by_name (group, "action-added", entries[i].name);
 
           g_object_unref (action);
         }
@@ -857,27 +899,6 @@ gimp_action_group_remove_action_and_accel (GimpActionGroup *group,
 {
   gimp_action_set_accels (action, (const char*[]) { NULL });
   gimp_action_group_remove_action (group, action);
-}
-
-void
-gimp_action_group_activate_action (GimpActionGroup *group,
-                                   const gchar     *action_name)
-{
-  GimpAction *action;
-
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
-  g_return_if_fail (action_name != NULL);
-
-  action = gimp_action_group_get_action (group, action_name);
-
-  if (! action)
-    {
-      g_warning ("%s: Unable to activate action which doesn't exist: %s",
-                 G_STRFUNC, action_name);
-      return;
-    }
-
-  gimp_action_activate (action);
 }
 
 void

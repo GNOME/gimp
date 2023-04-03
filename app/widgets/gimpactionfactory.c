@@ -39,7 +39,7 @@
 static void gimp_action_factory_finalize       (GObject           *object);
 
 static void gimp_action_factory_action_removed (GimpActionGroup   *group,
-                                                GimpAction        *action,
+                                                gchar             *action_name,
                                                 GimpActionFactory *factory);
 
 
@@ -89,7 +89,7 @@ gimp_action_factory_finalize (GObject *object)
 
 static void
 gimp_action_factory_action_removed (GimpActionGroup   *group,
-                                    GimpAction        *action,
+                                    gchar             *action_name,
                                     GimpActionFactory *factory)
 {
   GList *list;
@@ -100,22 +100,13 @@ gimp_action_factory_action_removed (GimpActionGroup   *group,
 
       if (entry->group != NULL && entry->group != group)
         {
-          GList *actions;
-
-          actions = gimp_action_group_list_actions (entry->group);
-
-          if (g_list_find (actions, action))
-            {
-              g_list_free (actions);
-              break;
-            }
-          g_list_free (actions);
+          if (g_action_group_has_action (G_ACTION_GROUP (group), action_name))
+            break;
         }
     }
 
   if (list == NULL)
-    g_action_map_remove_action (G_ACTION_MAP (factory->gimp->app),
-                                gimp_action_get_name (action));
+    g_action_map_remove_action (G_ACTION_MAP (factory->gimp->app), action_name);
 }
 
 
