@@ -4,7 +4,7 @@
   <menu id="/dockable-popup">
     <submenu>
       <attribute name="label" translatable="yes" context="file-action">_Add Tab</attribute>
-      <xi:include href="dialogs-menuitems.ui" />
+      <xi:include href="@GROUP@-dialogs-menuitems.ui" />
     </submenu>
     <item><attribute name="action">dockable.dockable-close-tab</attribute></item>
     <item><attribute name="action">dockable.dockable-detach-tab</attribute></item>

@@ -795,7 +795,7 @@
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="windows-action">_Dockable Dialogs</attribute>
-          <xi:include href="dialogs-menuitems.ui" />
+          <xi:include href="@GROUP@-dialogs-menuitems.ui" />
         </submenu>
         <item><attribute name="action">app.dialogs-toolbox</attribute></item>
       </section>

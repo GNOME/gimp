@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<section>
+  <item><attribute name="action">@GROUP@.dialogs-tool-options</attribute></item>
+  <item><attribute name="action">@GROUP@.dialogs-device-status</attribute></item>
+  <section>
+    <item><attribute name="action">@GROUP@.dialogs-layers</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-channels</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-vectors</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-indexed-palette</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-histogram</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-selection-editor</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-navigation</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-undo-history</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-cursor</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-sample-points</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-symmetry</attribute></item>
+  </section>
+  <section>
+    <item><attribute name="action">@GROUP@.dialogs-colors</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-brushes</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-dynamics</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-mypaint-brushes</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-patterns</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-gradients</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-palettes</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-fonts</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-tool-presets</attribute></item>
+    <item><attribute name="action">@GROUP@.dialogs-buffers</attribute></item>
+  </section>
+  <item><attribute name="action">@GROUP@.dialogs-images</attribute></item>
+  <item><attribute name="action">@GROUP@.dialogs-document-history</attribute></item>
+  <item><attribute name="action">@GROUP@.dialogs-templates</attribute></item>
+  <item><attribute name="action">@GROUP@.dialogs-error-console</attribute></item>
+  <item><attribute name="action">@GROUP@.dialogs-dashboard</attribute></item>
+</section>

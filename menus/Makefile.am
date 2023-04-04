@@ -3,10 +3,10 @@
 menudatadir = $(gimpdatadir)/menus
 
 menudata_in_files = \
-	dockable-menu.ui.in	\
-	image-menu.ui.in
+	dockable-menu.ui.in.in	\
+	image-menu.ui.in.in
 
-menudata_built_files = $(menudata_in_files:.ui.in=.ui)
+menudata_built_files = $(menudata_in_files:.ui.in.in=.ui)
 
 menudata_DATA = \
 	$(menudata_built_files)		\
@@ -46,7 +46,7 @@ menudata_DATA = \
 EXTRA_DIST = \
 	$(menudata_DATA)		\
 	$(menudata_in_files)		\
-	dialogs-menuitems.ui		\
+	dialogs-menuitems.ui.in		\
 	gtkuimanager.dtd		\
 	menus.xsl
 
@@ -57,20 +57,32 @@ if GIMP_UNSTABLE
 UNSTABLE_MENU_PARAMS = --stringparam unstable-menus yes
 endif
 
-SUFFIXES = .ui.in .ui
+SUFFIXES = .ui.in.in .ui
+
+%-dialogs-menuitems.ui: dialogs-menuitems.ui.in
+	sed 's/@GROUP@/$*/' $< > $@
+
+dockable-menu.ui.in: dockable-menu.ui.in.in
+	sed 's/@GROUP@/dockable/' $< > $@
+
+image-menu.ui.in: image-menu.ui.in.in
+	sed 's/@GROUP@/dialogs/' $< > $@
 
 # Adding a `realpath` because xsltproc adds an xml:base attribute when the path
 # is absolute. This breaks our parsing at runtime.
-.ui.in.ui:
+image-menu.ui: image-menu.ui.in dialogs-dialogs-menuitems.ui $(srcdir)/menus.xsl $(top_srcdir)/configure.ac
 if HAVE_XSLTPROC
 	$(XSLTPROC) --xinclude $(UNSTABLE_MENU_PARAMS) $(srcdir)/menus.xsl "`realpath --relative-to=. $<`" > $(@) || rm -f $(@)
 else
 	@echo "*** xsltproc is required to build the menus XML files ***"; exit 1;
 endif
 
-# Specifying dependencies in the implicit rule above does not work, so
-# specify them here instead
-dockable-menu.ui image-menu.ui: $(top_srcdir)/configure.ac $(srcdir)/menus.xsl dialogs-menuitems.ui
+dockable-menu.ui: dockable-menu.ui.in dockable-dialogs-menuitems.ui $(srcdir)/menus.xsl $(top_srcdir)/configure.ac
+if HAVE_XSLTPROC
+	$(XSLTPROC) --xinclude $(UNSTABLE_MENU_PARAMS) $(srcdir)/menus.xsl "`realpath --relative-to=. $<`" > $(@) || rm -f $(@)
+else
+	@echo "*** xsltproc is required to build the menus XML files ***"; exit 1;
+endif
 
 validate: $(menudata_DATA)
 if HAVE_XMLLINT

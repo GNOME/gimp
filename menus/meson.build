@@ -43,13 +43,42 @@ unstable_menus_args = stable ? [] : [ '--stringparam', 'unstable-menus', 'yes' ]
 
 menus_ui_built_files = []
 foreach menu_filegen : [ 'dockable-menu.ui', 'image-menu.ui', ]
+  # This does look a bit overly complicated, but I encountered 2 issues:
+  # 1. The simpler solution was to do first the custom_target() then a single
+  #    configure_file() per file. It didn't work out because of meson complex
+  #    dependency logic (see https://github.com/mesonbuild/meson/issues/8123).
+  # 2. So I inverted, but now xsltproc was the one acting up by adding the
+  #    'xml:base' attribute when the included and including XML files are in
+  #    different folders. This is why I added a second configure_file() to have
+  #    both XML files in the same folder.
+  conf = configuration_data()
+  if menu_filegen == 'dockable-menu.ui'
+    group = 'dockable'
+  else
+    group = 'dialogs'
+  endif
+  conf.set('GROUP', group)
+  included_file = configure_file(
+    input: 'dialogs-menuitems.ui.in',
+    output: group + '-dialogs-menuitems.ui',
+    configuration: conf,
+  )
+
+  pre_built_file = configure_file(
+    input: menu_filegen + '.in.in',
+    output: menu_filegen + '.in',
+    configuration: conf,
+  )
+
   menus_ui_built_files += custom_target(menu_filegen,
-    input : [ menu_filegen +'.in', 'menus.xsl', 'dialogs-menuitems.ui'],
+    input : [ pre_built_file, 'menus.xsl', included_file],
     output: [ menu_filegen ],
     command: [
       xsltproc,
       '--xinclude',
       unstable_menus_args,
+      '--path',
+      meson.current_build_dir(),
       '--output', '@OUTPUT@',
       '@INPUT1@',
       '@INPUT0@',
