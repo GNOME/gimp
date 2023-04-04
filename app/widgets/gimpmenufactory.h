@@ -33,7 +33,7 @@ struct _GimpMenuFactoryEntry
   GList        *action_groups;
   GList        *managed_uis;
 
-  GimpUIManager *manager;
+  GHashTable   *managers;
 };
 
 

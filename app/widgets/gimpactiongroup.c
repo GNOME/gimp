@@ -485,10 +485,6 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
             tooltip = gettext (entries[i].tooltip);
         }
 
-      /* The action should not already exist in the application. */
-      g_return_if_fail (g_action_map_lookup_action (G_ACTION_MAP (group->gimp->app),
-                                                    entries[i].name) == NULL);
-
       action = gimp_action_impl_new (entries[i].name, label, tooltip,
                                      entries[i].icon_name,
                                      entries[i].help_id, context);
@@ -538,10 +534,6 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
           if (entries[i].tooltip)
             tooltip = gettext (entries[i].tooltip);
         }
-
-      /* The action should not already exist in the application. */
-      g_return_if_fail (g_action_map_lookup_action (G_ACTION_MAP (group->gimp->app),
-                                                    entries[i].name) == NULL);
 
       action = gimp_toggle_action_new (entries[i].name, label, tooltip,
                                        entries[i].icon_name,
@@ -599,10 +591,6 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
           if (entries[i].tooltip)
             tooltip = gettext (entries[i].tooltip);
         }
-
-      /* The action should not already exist in the application. */
-      g_return_val_if_fail (g_action_map_lookup_action (G_ACTION_MAP (group->gimp->app),
-                                                        entries[i].name) == NULL, NULL);
 
       action = gimp_radio_action_new (entries[i].name, label, tooltip,
                                       entries[i].icon_name,
@@ -666,10 +654,6 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
             tooltip = gettext (entries[i].tooltip);
         }
 
-      /* The action should not already exist in the application. */
-      g_return_if_fail (g_action_map_lookup_action (G_ACTION_MAP (group->gimp->app),
-                                                    entries[i].name) == NULL);
-
       action = gimp_enum_action_new (entries[i].name, label, tooltip,
                                      entries[i].icon_name,
                                      entries[i].help_id,
@@ -724,29 +708,17 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
             tooltip = gettext (entries[i].tooltip);
         }
 
-      /* XXX: as a special exception, because the dialogs_dockable_actions are
-       * added both in the dockable and dialogs action groups.
-       */
-      action = GIMP_STRING_ACTION (g_action_map_lookup_action (G_ACTION_MAP (group->gimp->app),
-                                                               entries[i].name));
-      if (G_LIKELY (action == NULL))
-        {
-          action = gimp_string_action_new (entries[i].name, label, tooltip,
-                                           entries[i].icon_name,
-                                           entries[i].help_id,
-                                           entries[i].value, context);
-          gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
-                                                   entries[i].accelerator);
+      action = gimp_string_action_new (entries[i].name, label, tooltip,
+                                       entries[i].icon_name,
+                                       entries[i].help_id,
+                                       entries[i].value, context);
+      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
+                                               entries[i].accelerator);
 
-          if (callback)
-            g_signal_connect (action, "activate",
-                              G_CALLBACK (callback),
-                              group->user_data);
-        }
-      else
-        {
-          g_object_ref (action);
-        }
+      if (callback)
+        g_signal_connect (action, "activate",
+                          G_CALLBACK (callback),
+                          group->user_data);
 
       g_object_unref (action);
     }
@@ -786,10 +758,6 @@ gimp_action_group_add_double_actions (GimpActionGroup             *group,
           if (entries[i].tooltip)
             tooltip = gettext (entries[i].tooltip);
         }
-
-      /* The action should not already exist in the application. */
-      g_return_if_fail (g_action_map_lookup_action (G_ACTION_MAP (group->gimp->app),
-                                                    entries[i].name) == NULL);
 
       action = gimp_double_action_new (entries[i].name, label, tooltip,
                                        entries[i].icon_name,
@@ -832,49 +800,36 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
 
               file = gimp_plug_in_procedure_get_file (GIMP_PLUG_IN_PROCEDURE (entries[i].procedure));
 
-              g_printerr ("Discarded action '%s' was registered in plug-in: '%s'\n",
-                          entries[i].name, g_file_peek_path (file));
+              /* Unlike other existence checks, this is not a program error (hence
+               * no WARNINGs nor CRITICALs). It is more likely a third-party
+               * plug-in bug, in particular 2 plug-ins with procedure name
+               * clashing with each other.
+               * Let's warn to help plug-in developers to debug their issue.
+               */
+              gimp_message (group->gimp, NULL, GIMP_MESSAGE_WARNING,
+                            "Discarded action '%s' was registered in plug-in: '%s'\n",
+                            entries[i].name, g_file_peek_path (file));
             }
           continue;
         }
 
-      action = GIMP_PROCEDURE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (group->gimp->app),
-                                                                  entries[i].name));
-      if (G_LIKELY (action == NULL))
-        {
-          action = gimp_procedure_action_new (entries[i].name,
-                                              entries[i].label,
-                                              entries[i].tooltip,
-                                              entries[i].icon_name,
-                                              entries[i].help_id,
-                                              entries[i].procedure,
-                                              context);
+      action = gimp_procedure_action_new (entries[i].name,
+                                          entries[i].label,
+                                          entries[i].tooltip,
+                                          entries[i].icon_name,
+                                          entries[i].help_id,
+                                          entries[i].procedure,
+                                          context);
 
-          if (callback)
-            g_signal_connect (action, "activate",
-                              G_CALLBACK (callback),
-                              group->user_data);
+      if (callback)
+        g_signal_connect (action, "activate",
+                          G_CALLBACK (callback),
+                          group->user_data);
 
-          gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
-                                                   entries[i].accelerator);
+      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
+                                               entries[i].accelerator);
 
-          g_object_unref (action);
-        }
-      else
-        {
-          /* Unlike other existence checks, this is not a program error (hence
-           * no WARNINGs nor CRITICALs). It is more likely a third-party plug-in
-           * procedure name clashing with a core action (the previous test
-           * gimp_action_group_check_unique_action() will check for clashes
-           * between 2 plug-in procedure's names; this test will check in all
-           * other groups too).
-           * So we just warn for problem discovery.
-           */
-          gimp_message (group->gimp, NULL, GIMP_MESSAGE_WARNING,
-                        "%s: plug-in procedure '%s' could not be registered. "
-                        "A procedure with the same name already exists.",
-                        G_STRFUNC, entries[i].name);
-        }
+      g_object_unref (action);
     }
 }
 

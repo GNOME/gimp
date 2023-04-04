@@ -76,7 +76,7 @@ gimp_action_factory_finalize (GObject *object)
       g_free (entry->identifier);
       g_free (entry->label);
       g_free (entry->icon_name);
-      g_clear_object (&entry->group);
+      g_hash_table_unref (entry->groups);
 
       g_slice_free (GimpActionFactoryEntry, entry);
     }
@@ -97,12 +97,24 @@ gimp_action_factory_action_removed (GimpActionGroup   *group,
   for (list = factory->registered_groups; list; list = g_list_next (list))
     {
       GimpActionFactoryEntry *entry = list->data;
+      GList                  *groups;
+      GList                  *iter;
 
-      if (entry->group != NULL && entry->group != group)
+      groups = g_hash_table_get_values (entry->groups);
+
+      for (iter = groups; iter; iter = iter->next)
         {
-          if (g_action_group_has_action (G_ACTION_GROUP (group), action_name))
-            break;
+          if (group != iter->data)
+            {
+              if (g_action_group_has_action (G_ACTION_GROUP (iter->data), action_name))
+                break;
+            }
         }
+
+      g_list_free (groups);
+
+      if (iter != NULL)
+        break;
     }
 
   if (list == NULL)
@@ -149,6 +161,7 @@ gimp_action_factory_group_register (GimpActionFactory         *factory,
   entry->icon_name   = g_strdup (icon_name);
   entry->setup_func  = setup_func;
   entry->update_func = update_func;
+  entry->groups      = g_hash_table_new_full (g_direct_hash, g_direct_equal, NULL, g_object_unref);
 
   factory->registered_groups = g_list_prepend (factory->registered_groups,
                                                entry);
@@ -170,10 +183,10 @@ gimp_action_factory_get_group (GimpActionFactory *factory,
 
       if (! strcmp (entry->identifier, identifier))
         {
-          if (entry->group == NULL)
-            {
-              GimpActionGroup *group;
+          GimpActionGroup *group;
 
+          if ((group = g_hash_table_lookup (entry->groups, user_data)) == NULL)
+            {
               group = gimp_action_group_new (factory->gimp,
                                              entry->identifier,
                                              entry->label,
@@ -184,14 +197,14 @@ gimp_action_factory_get_group (GimpActionFactory *factory,
               if (entry->setup_func)
                 entry->setup_func (group);
 
-              entry->group = group;
+              g_hash_table_insert (entry->groups, user_data, group);
 
               g_signal_connect_object (group, "action-removed",
                                        G_CALLBACK (gimp_action_factory_action_removed),
                                        factory, G_CONNECT_AFTER);
             }
 
-          return entry->group;
+          return group;
         }
     }
 

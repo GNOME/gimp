@@ -35,7 +35,7 @@ struct _GimpActionFactoryEntry
   GimpActionGroupSetupFunc   setup_func;
   GimpActionGroupUpdateFunc  update_func;
 
-  GimpActionGroup           *group;
+  GHashTable                *groups;
 };
 
 

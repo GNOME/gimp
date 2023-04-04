@@ -95,7 +95,7 @@ gimp_menu_factory_finalize (GObject *object)
           g_slice_free (GimpUIManagerUIEntry, ui_entry);
         }
 
-      g_clear_object (&entry->manager);
+      g_hash_table_unref (entry->managers);
       g_list_free (entry->managed_uis);
 
       g_slice_free (GimpMenuFactoryEntry, entry);
@@ -181,6 +181,9 @@ gimp_menu_factory_manager_register (GimpMenuFactory *factory,
 
   entry->managed_uis = g_list_reverse (entry->managed_uis);
 
+  entry->managers = g_hash_table_new_full (g_direct_hash, g_direct_equal,
+                                           NULL, g_object_unref);
+
   va_end (args);
 }
 
@@ -208,13 +211,14 @@ gimp_menu_factory_get_manager (GimpMenuFactory *factory,
 
       if (! strcmp (entry->identifier, identifier))
         {
-          if (entry->manager == NULL)
+          GimpUIManager *manager;
+
+          if ((manager = g_hash_table_lookup (entry->managers, callback_data)) == NULL)
             {
-              GimpUIManager *manager;
-              GList         *list;
+              GList *list;
 
               manager = gimp_ui_manager_new (factory->p->gimp, entry->identifier);
-              entry->manager = manager;
+              g_hash_table_insert (entry->managers, callback_data, manager);
 
               for (list = entry->action_groups; list; list = g_list_next (list))
                 {
@@ -238,7 +242,7 @@ gimp_menu_factory_get_manager (GimpMenuFactory *factory,
                 }
             }
 
-          return entry->manager;
+          return manager;
         }
     }
 
