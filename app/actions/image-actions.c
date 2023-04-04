@@ -107,8 +107,8 @@ static const GimpActionEntry image_actions[] =
     GIMP_HELP_IMAGE_COLOR_PROFILE_DISCARD },
 
   { "image-softproof-profile", NULL,
-    NC_("image-action", "_Softproof Profile..."), NULL,
-    NC_("image-action", "Set the softproofing profile"),
+    NC_("image-action", "_Soft-proof Profile..."), NULL,
+    NC_("image-action", "Set the soft-proofing profile"),
     image_softproof_profile_cmd_callback,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
