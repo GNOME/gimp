@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-02 02:56+0000\n"
-"PO-Revision-Date: 2023-04-02 11:12+0200\n"
+"POT-Creation-Date: 2023-04-02 12:44+0000\n"
+"PO-Revision-Date: 2023-04-04 08:24+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -350,8 +350,9 @@ msgstr "Ni dovolj plasti, da bi jih bilo mogoče poravnati."
 msgid "Align Visible Layers"
 msgstr "Poravnaj vidne plasti"
 
+#. file save type
 #: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
-#: plug-ins/file-tiff/file-tiff-save.c:1322
+#: plug-ins/common/file-psp.c:840 plug-ins/file-tiff/file-tiff-save.c:1322
 #: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
 #: plug-ins/metadata/metadata-tags.c:238
 msgid "None"
@@ -1065,7 +1066,7 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-mng.c:1405
 #: plug-ins/common/file-pcx.c:438 plug-ins/common/file-png.c:673
 #: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
-#: plug-ins/common/file-psp.c:2382 plug-ins/common/file-psp.c:2432
+#: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
 #: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
 #: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
 #: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:759
@@ -2224,26 +2225,41 @@ msgstr "Slik ni mogoče shraniti s kanalom alfa."
 msgid "Cannot operate on unknown image types."
 msgstr "S slikami neznane vrste ni mogoče delovati."
 
-#: plug-ins/common/file-gbr.c:124
+#: plug-ins/common/file-gbr.c:125
 msgid "GIMP brush"
 msgstr "Čopič GIMP"
 
-#: plug-ins/common/file-gbr.c:228
+#: plug-ins/common/file-gbr.c:127
+msgid "Brush"
+msgstr "Čopič"
+
+#: plug-ins/common/file-gbr.c:131 plug-ins/common/file-gbr.c:133
+msgid "Exports files in the GIMP brush file format"
+msgstr "Izvozi datoteke v zapisu slikovnih datotek GIMP."
+
+#: plug-ins/common/file-gbr.c:151
+msgid "Sp_acing"
+msgstr "R_azmik"
+
+#: plug-ins/common/file-gbr.c:152
+msgid "Spacing of the brush"
+msgstr "Razmik čopiča"
+
+#: plug-ins/common/file-gbr.c:157 plug-ins/common/file-pat.c:133
+msgid "_Description"
+msgstr "_Opis"
+
+#: plug-ins/common/file-gbr.c:158
+msgid "Short description of the brush"
+msgstr "Kratek opis čopiča"
+
+#: plug-ins/common/file-gbr.c:159
+msgid "GIMP Brush"
+msgstr "Čopič GIMP"
+
+#: plug-ins/common/file-gbr.c:231
 msgid "GBR format does not support multiple layers."
 msgstr "Zapis GBR ne podpira več plasti."
-
-#: plug-ins/common/file-gbr.c:301
-msgid "Export Image as Brush"
-msgstr "Izvozi sliko kot čopič"
-
-#: plug-ins/common/file-gbr.c:317 plug-ins/common/file-gih.c:654
-#: plug-ins/imagemap/imap_settings.c:105
-msgid "_Description:"
-msgstr "_Opis:"
-
-#: plug-ins/common/file-gbr.c:324
-msgid "_Spacing:"
-msgstr "_Razmik:"
 
 #: plug-ins/common/file-gegl.c:114
 msgid "Radiance RGBE"
@@ -2559,6 +2575,10 @@ msgstr "Čopič GIMP (animiran)"
 #: plug-ins/common/file-gih.c:636
 msgid "Brush Pipe"
 msgstr "Cev čopičev"
+
+#: plug-ins/common/file-gih.c:654 plug-ins/imagemap/imap_settings.c:105
+msgid "_Description:"
+msgstr "_Opis:"
 
 #: plug-ins/common/file-gih.c:668
 msgid "_Spacing (percent):"
@@ -3286,10 +3306,6 @@ msgstr ""
 "Nove vzorce GIMP lahko ustvarite tako, da jih izvozite na ustreznem mestu s "
 "tem vstavkom."
 
-#: plug-ins/common/file-pat.c:133
-msgid "_Description"
-msgstr "_Opis"
-
 #: plug-ins/common/file-pat.c:134
 msgid "Short description of the pattern"
 msgstr "Kratek opis vzorca"
@@ -3780,7 +3796,6 @@ msgid "PNM image"
 msgstr "Slika PNM"
 
 #: plug-ins/common/file-pnm.c:350
-#| msgid "PNG"
 msgid "PNM"
 msgstr "PNM"
 
@@ -3824,7 +3839,6 @@ msgid "PGM image"
 msgstr "Slika PGM"
 
 #: plug-ins/common/file-pnm.c:423
-#| msgid "PNG"
 msgid "PGM"
 msgstr "PGM"
 
@@ -4138,164 +4152,162 @@ msgstr "P_redogled"
 msgid "Preview _size:"
 msgstr "_Velikost predogleda:"
 
-#: plug-ins/common/file-psp.c:663 plug-ins/common/file-psp.c:693
+#: plug-ins/common/file-psp.c:664 plug-ins/common/file-psp.c:694
 msgid "Paint Shop Pro image"
 msgstr "Slika Paint Shop Pro"
 
-#: plug-ins/common/file-psp.c:834
-msgid "Export Image as PSP"
-msgstr "Izvozi sliko kot PSP"
+#: plug-ins/common/file-psp.c:667
+msgid "Loads images from the Paint Shop Pro PSP file format"
+msgstr "Naloži datoteke v zapisu PSP programa Paint Shop Pro."
 
-#. file save type
-#: plug-ins/common/file-psp.c:837
-msgctxt "compression"
-msgid "None"
-msgstr "Brez"
+#: plug-ins/common/file-psp.c:669
+msgid ""
+"This plug-in loads and exports images in Paint Shop Pro's native PSP format. "
+"Vector layers aren't handled. Exporting isn't yet implemented."
+msgstr ""
+"Ta vstavek nalaga in izvaža slike v PSP, domorodnem zapisu programa Paint "
+"Shop Pro. Vektorske plasti niso obravnavane. Izvoz še ni implementiran."
 
-#: plug-ins/common/file-psp.c:838
+#: plug-ins/common/file-psp.c:841
 msgid "RLE"
 msgstr "RLE"
 
-#: plug-ins/common/file-psp.c:839
+#: plug-ins/common/file-psp.c:842
 msgid "LZ77"
 msgstr "LZ77"
 
-#: plug-ins/common/file-psp.c:842
-msgid "Data Compression"
-msgstr "Stiskanje podatkov"
-
-#: plug-ins/common/file-psp.c:933
+#: plug-ins/common/file-psp.c:934
 msgid "Error reading block header"
 msgstr "Napaka pri branju glave bloka"
 
-#: plug-ins/common/file-psp.c:940
+#: plug-ins/common/file-psp.c:941
 #, c-format
 msgid "Invalid block header at %ld"
 msgstr "Neveljavna glava bloka pri %ld"
 
-#: plug-ins/common/file-psp.c:943
+#: plug-ins/common/file-psp.c:944
 msgid "Invalid block header"
 msgstr "Neveljavna glava bloka"
 
-#: plug-ins/common/file-psp.c:975
+#: plug-ins/common/file-psp.c:976
 #, c-format
 msgid "Seek error: %s"
 msgstr "Napaka pri pozicioniranju: %s"
 
-#: plug-ins/common/file-psp.c:998
+#: plug-ins/common/file-psp.c:999
 msgid "Invalid general image attribute chunk size."
 msgstr "Neveljavna velikost bloka splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:1020
+#: plug-ins/common/file-psp.c:1021
 msgid "Error reading general image attribute block."
 msgstr "Napaka pri branju bloka splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:1035
+#: plug-ins/common/file-psp.c:1036
 #, c-format
 msgid "Unknown compression type %d"
 msgstr "Nepodprti način stiskanja %d"
 
-#: plug-ins/common/file-psp.c:1071 plug-ins/common/file-psp.c:1078
+#: plug-ins/common/file-psp.c:1072 plug-ins/common/file-psp.c:1079
 #, c-format
 msgid "Unsupported bit depth %d"
 msgstr "Nepodprta bitna globina %d"
 
-#: plug-ins/common/file-psp.c:1125
+#: plug-ins/common/file-psp.c:1126
 msgid "Error reading creator keyword chunk"
 msgstr "Napaka pri branju kosa podatkov ključnih besed ustvarjalca"
 
-#: plug-ins/common/file-psp.c:1131
+#: plug-ins/common/file-psp.c:1132
 msgid "Invalid keyword chunk header"
 msgstr "Neveljaven kos podatkov ključnih besed ustvarjalca"
 
-#: plug-ins/common/file-psp.c:1146 plug-ins/common/file-psp.c:1173
+#: plug-ins/common/file-psp.c:1147 plug-ins/common/file-psp.c:1174
 msgid "Error reading creator keyword data"
 msgstr "Napaka pri branju podatkov ključnih besed ustvarjalca"
 
-#: plug-ins/common/file-psp.c:1257 plug-ins/common/file-psp.c:1266
-#: plug-ins/common/file-psp.c:1275
+#: plug-ins/common/file-psp.c:1258 plug-ins/common/file-psp.c:1267
+#: plug-ins/common/file-psp.c:1276
 msgid "Error reading color block"
 msgstr "Napaka pri branju barvnega bloka"
 
-#: plug-ins/common/file-psp.c:1288
+#: plug-ins/common/file-psp.c:1289
 msgid "Error reading color palette"
 msgstr "Napaka pri branju barvne palete"
 
-#: plug-ins/common/file-psp.c:1714 plug-ins/common/file-psp.c:1728
+#: plug-ins/common/file-psp.c:1715 plug-ins/common/file-psp.c:1729
 msgid "zlib error"
 msgstr "Napaka zlib"
 
-#: plug-ins/common/file-psp.c:1791 plug-ins/common/file-psp.c:1825
-#: plug-ins/common/file-psp.c:1835
+#: plug-ins/common/file-psp.c:1792 plug-ins/common/file-psp.c:1826
+#: plug-ins/common/file-psp.c:1836
 msgid "Error reading layer extension information"
 msgstr "Napaka pri branju podatkov o razšrijenosti plasti."
 
-#: plug-ins/common/file-psp.c:1812
+#: plug-ins/common/file-psp.c:1813
 msgid "Error reading block information"
 msgstr "Napaka pri branju kosa podatkov."
 
-#: plug-ins/common/file-psp.c:1892
+#: plug-ins/common/file-psp.c:1893
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Neveljaven podblok plasti %s, mora biti LAYER"
 
-#: plug-ins/common/file-psp.c:1923 plug-ins/common/file-psp.c:1980
+#: plug-ins/common/file-psp.c:1924 plug-ins/common/file-psp.c:1981
 msgid "Error reading layer information chunk"
 msgstr "Napaka pri branju kosa podatkov o plasti"
 
-#: plug-ins/common/file-psp.c:2022
+#: plug-ins/common/file-psp.c:2023
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Neveljavne dimenzije plasti: %dx%d"
 
-#: plug-ins/common/file-psp.c:2083
+#: plug-ins/common/file-psp.c:2084
 msgid "Error creating layer"
 msgstr "Napaka pri ustvarjanju plasti"
 
-#: plug-ins/common/file-psp.c:2128
+#: plug-ins/common/file-psp.c:2129
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Neveljaven podblok plasti %s, mora biti CHANNEL"
 
-#: plug-ins/common/file-psp.c:2144
+#: plug-ins/common/file-psp.c:2145
 msgid "Error reading channel information chunk"
 msgstr "Napaka pri branju kosa podatkov o kanalu"
 
-#: plug-ins/common/file-psp.c:2167
+#: plug-ins/common/file-psp.c:2168
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Neveljavna vrsta kanala %d v informacijskem koščku kanala"
 
-#: plug-ins/common/file-psp.c:2271 plug-ins/common/file-psp.c:2288
+#: plug-ins/common/file-psp.c:2272 plug-ins/common/file-psp.c:2289
 msgid "Error reading tube data chunk"
 msgstr "Napaka pri branju kosa podatkov o cevi"
 
-#: plug-ins/common/file-psp.c:2393
+#: plug-ins/common/file-psp.c:2394
 msgid "Error reading file header."
 msgstr "Napaka pri branju glave datoteke."
 
-#: plug-ins/common/file-psp.c:2400
+#: plug-ins/common/file-psp.c:2401
 msgid "Incorrect file signature."
 msgstr "Neveljaven podpis datoteke."
 
-#: plug-ins/common/file-psp.c:2414
+#: plug-ins/common/file-psp.c:2415
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Nepodprta različica datoteke vrste PSP %d.%d."
 
-#: plug-ins/common/file-psp.c:2434
+#: plug-ins/common/file-psp.c:2435
 msgid "invalid block size"
 msgstr "neveljavna velikost bloka"
 
-#: plug-ins/common/file-psp.c:2443
+#: plug-ins/common/file-psp.c:2444
 msgid "Duplicate General Image Attributes block."
 msgstr "Podvojeni blok splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:2471
+#: plug-ins/common/file-psp.c:2472
 msgid "Missing General Image Attributes block."
 msgstr "Manjkajoči blok splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:2587
+#: plug-ins/common/file-psp.c:2588
 msgid "Exporting not implemented yet."
 msgstr "Izvoz še ni implementiran."
 
