@@ -44,7 +44,7 @@ unstable_menus_args = stable ? [] : [ '--stringparam', 'unstable-menus', 'yes' ]
 menus_ui_built_files = []
 foreach menu_filegen : [ 'dockable-menu.ui', 'image-menu.ui', ]
   menus_ui_built_files += custom_target(menu_filegen,
-    input : [ menu_filegen +'.in', 'menus.xsl', ],
+    input : [ menu_filegen +'.in', 'menus.xsl', 'dialogs-menuitems.ui'],
     output: [ menu_filegen ],
     command: [
       xsltproc,
