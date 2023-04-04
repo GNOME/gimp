@@ -131,6 +131,7 @@ gimp_app_new (Gimp        *gimp,
   GimpApp *app;
 
   app = g_object_new (GIMP_TYPE_APP,
+                      "application-id",    GIMP_APPLICATION_ID,
                       "gimp",              gimp,
                       "filenames",         filenames,
                       "as-new",            as_new,

@@ -20,6 +20,8 @@
 
 G_BEGIN_DECLS
 
+#define GIMP_APPLICATION_ID "org.gimp.GIMP"
+
 enum
 {
   GIMP_CORE_APP_PROP_0,

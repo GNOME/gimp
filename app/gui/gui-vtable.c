@@ -108,6 +108,8 @@
 #include "icon-themes.h"
 #include "themes.h"
 
+#include "gimp-intl.h"
+
 
 /*  local function prototypes  */
 
@@ -185,6 +187,10 @@ static GimpMetadataRotationPolicy
                                                   GimpImage           *image,
                                                   GimpContext         *context,
                                                   gboolean            *dont_ask);
+
+static void           gui_inhibit                (Gimp                *gimp);
+static void           gui_image_disconnect       (GimpImage           *image,
+                                                  Gimp                *gimp);
 
 
 /*  public functions  */
@@ -422,6 +428,25 @@ gui_display_create (Gimp      *gimp,
   else
     {
       gimp_context_set_display (context, display);
+    }
+
+  if (image)
+    {
+      g_signal_handlers_disconnect_by_func (image,
+                                            G_CALLBACK (gui_inhibit),
+                                            gimp);
+      g_signal_handlers_disconnect_by_func (image,
+                                            G_CALLBACK (gui_image_disconnect),
+                                            gimp);
+      g_signal_connect_swapped (image, "dirty",
+                                G_CALLBACK (gui_inhibit),
+                                gimp);
+      g_signal_connect_swapped (image, "clean",
+                                G_CALLBACK (gui_inhibit),
+                                gimp);
+      g_signal_connect_after (image, "disconnect",
+                              G_CALLBACK (gui_image_disconnect),
+                              gimp);
     }
 
   return display;
@@ -922,4 +947,80 @@ gui_query_rotation_policy (Gimp        *gimp,
 {
   return metadata_rotation_import_dialog_run (image, context,
                                               NULL, dont_ask);
+}
+
+static void
+gui_inhibit (Gimp *gimp)
+{
+  static gint     cookie = 0;
+  GtkApplication *app;
+
+  app = GTK_APPLICATION (g_application_get_default ());
+
+  if (gtk_application_is_inhibited (app, GTK_APPLICATION_INHIBIT_LOGOUT))
+    {
+      gtk_application_uninhibit (app, cookie);
+      cookie = 0;
+    }
+
+  if (gimp_displays_dirty (gimp))
+    {
+      GimpContainer *images;
+      gint           num_images;
+      gchar         *reason;
+      GimpImage     *image;
+      GList         *list;
+      GtkWindow     *window = NULL;
+
+      images     = gimp_displays_get_dirty_images (gimp);
+      num_images = gimp_container_get_n_children (images);
+      image      = (GimpImage *) gimp_container_get_first_child (images);
+      g_object_unref (images);
+
+      for (list = gimp_get_display_iter (gimp); list; list = list->next)
+        {
+          GimpDisplay *display = list->data;
+
+          if (gimp_display_get_image (display) == image)
+            {
+              GimpDisplayShell *shell;
+              GtkWidget        *toplevel;
+
+              shell    = gimp_display_get_shell (display);
+              toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
+              if (GTK_IS_WINDOW (toplevel))
+                {
+                  window = GTK_WINDOW (toplevel);
+                  break;
+                }
+            }
+        }
+
+      /* TRANSLATORS: unless your language msgstr[0] applies to 1 only (as in
+       * English), replace "one" with %d.
+       */
+      reason = g_strdup_printf (ngettext ("There is one image with unsaved changes!",
+                                          "There are %d images with unsaved changes!",
+                                          num_images),
+                                num_images);
+      cookie = gtk_application_inhibit (app, window,
+                                        GTK_APPLICATION_INHIBIT_LOGOUT,
+                                        reason);
+      g_free (reason);
+    }
+}
+
+static void
+gui_image_disconnect (GimpImage *image,
+                      Gimp      *gimp)
+{
+  gui_inhibit (gimp);
+
+  g_signal_handlers_disconnect_by_func (image,
+                                        G_CALLBACK (gui_inhibit),
+                                        gimp);
+  g_signal_handlers_disconnect_by_func (image,
+                                        G_CALLBACK (gui_image_disconnect),
+                                        gimp);
 }
