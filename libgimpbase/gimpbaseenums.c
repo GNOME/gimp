@@ -508,6 +508,7 @@ gimp_fill_type_get_type (void)
   {
     { GIMP_FILL_FOREGROUND, "GIMP_FILL_FOREGROUND", "foreground" },
     { GIMP_FILL_BACKGROUND, "GIMP_FILL_BACKGROUND", "background" },
+    { GIMP_FILL_CIELAB_MIDDLE_GRAY, "GIMP_FILL_CIELAB_MIDDLE_GRAY", "cielab-middle-gray" },
     { GIMP_FILL_WHITE, "GIMP_FILL_WHITE", "white" },
     { GIMP_FILL_TRANSPARENT, "GIMP_FILL_TRANSPARENT", "transparent" },
     { GIMP_FILL_PATTERN, "GIMP_FILL_PATTERN", "pattern" },
@@ -518,6 +519,7 @@ gimp_fill_type_get_type (void)
   {
     { GIMP_FILL_FOREGROUND, NC_("fill-type", "Foreground color"), NULL },
     { GIMP_FILL_BACKGROUND, NC_("fill-type", "Background color"), NULL },
+    { GIMP_FILL_CIELAB_MIDDLE_GRAY, NC_("fill-type", "Middle Gray (CIELAB)"), NULL },
     { GIMP_FILL_WHITE, NC_("fill-type", "White"), NULL },
     { GIMP_FILL_TRANSPARENT, NC_("fill-type", "Transparency"), NULL },
     { GIMP_FILL_PATTERN, NC_("fill-type", "Pattern"), NULL },

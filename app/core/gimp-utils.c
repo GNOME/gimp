@@ -56,6 +56,7 @@
 #include "gimpasync.h"
 #include "gimpcontext.h"
 #include "gimperror.h"
+#include "gimpimage.h"
 
 #include "gimp-intl.h"
 
@@ -548,6 +549,29 @@ gimp_get_fill_params (GimpContext   *context,
 
     case GIMP_FILL_BACKGROUND:
       gimp_context_get_background (context, color);
+      break;
+
+    case GIMP_FILL_CIELAB_MIDDLE_GRAY:
+      {
+        const float        cielab_pixel[3] = {50, 0, 0};
+        float              pixel[3]        = {0, 0, 0};
+        GimpImage         *image           = gimp_context_get_image (context);
+        GimpImageBaseType  base_type;
+        const Babl        *format;
+
+        base_type = gimp_image_get_base_type (image);
+        if (base_type == GIMP_INDEXED)
+          base_type = GIMP_RGB;
+
+        format = gimp_image_get_format (image, base_type,
+                                        GIMP_PRECISION_FLOAT_NON_LINEAR, FALSE,
+                                        gimp_image_get_layer_space (image));
+
+        babl_process (babl_fish (babl_format ("CIE Lab float"), format),
+                      cielab_pixel, pixel, 1);
+
+        gimp_rgba_set (color, pixel[0], pixel[1], pixel[2], GIMP_OPACITY_OPAQUE);
+      }
       break;
 
     case GIMP_FILL_WHITE:
