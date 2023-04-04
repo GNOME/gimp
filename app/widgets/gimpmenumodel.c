@@ -34,6 +34,7 @@
 #include "gimpactiongroup.h"
 #include "gimpmenumodel.h"
 #include "gimpmenushell.h"
+#include "gimpradioaction.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
@@ -111,6 +112,9 @@ static gboolean     gimp_menu_model_handles_subpath          (GimpMenuModel     
 static GMenuItem  * gimp_menu_model_get_item                 (GimpMenuModel       *model,
                                                               gint                 idx);
 
+static void         gimp_menu_model_notify_group_label       (GimpRadioAction     *action,
+                                                              const GParamSpec    *pspec,
+                                                              GMenuItem           *item);
 static void         gimp_menu_model_action_notify_visible    (GimpAction          *action,
                                                               GParamSpec          *pspec,
                                                               GimpMenuModel       *model);
@@ -585,6 +589,41 @@ gimp_menu_model_initialize (GimpMenuModel *model,
           item = g_menu_item_new_section (label, G_MENU_MODEL (submodel));
           g_object_unref (submodel);
         }
+      else if (submenu != NULL && label == NULL)
+        {
+          GimpMenuModel *submodel;
+          GimpAction    *action;
+          gchar         *canon_label;
+          const gchar   *group_label;
+          gchar         *path;
+
+          g_return_if_fail (action_name != NULL);
+
+          action = gimp_ui_manager_find_action (model->priv->manager, NULL, action_name);
+          /* As a special case, when a submenu has no label, we expect it to
+           * have an action attribute, which must be for a radio action. In such
+           * a case, we'll use the radio actions' group label as submenu title.
+           * See e.g.: menus/gradient-editor-menu.ui
+           */
+          g_return_if_fail (GIMP_IS_RADIO_ACTION (action));
+
+          group_label = gimp_radio_action_get_group_label (GIMP_RADIO_ACTION (action));
+          canon_label = gimp_utils_make_canonical_menu_label (group_label);
+
+          path = g_strdup_printf ("%s/%s",
+                                  model->priv->path ? model->priv->path : "",
+                                  canon_label);
+          g_free (canon_label);
+
+          submodel = gimp_menu_model_new_submenu (model->priv->manager, submenu, path);
+          item     = g_menu_item_new_submenu (group_label, G_MENU_MODEL (submodel));
+          g_signal_connect_object (action, "notify::group-label",
+                                   G_CALLBACK (gimp_menu_model_notify_group_label),
+                                   item, 0);
+
+          g_object_unref (submodel);
+          g_free (path);
+        }
       else if (submenu != NULL)
         {
           GimpMenuModel *submodel;
@@ -744,6 +783,14 @@ gimp_menu_model_get_item (GimpMenuModel *model,
     }
 
   return NULL;
+}
+
+static void
+gimp_menu_model_notify_group_label (GimpRadioAction  *action,
+                                    const GParamSpec *pspec,
+                                    GMenuItem        *item)
+{
+  g_menu_item_set_label (item, gimp_radio_action_get_group_label (action));
 }
 
 static void

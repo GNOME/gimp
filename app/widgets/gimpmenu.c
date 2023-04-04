@@ -106,9 +106,6 @@ static void     gimp_menu_section_items_changed   (GMenuModel              *mode
 static void     gimp_menu_toggle_item_toggled     (GtkWidget               *item,
                                                    GAction                 *action);
 
-static void     gimp_menu_notify_group_label      (GimpRadioAction         *action,
-                                                   const GParamSpec        *pspec,
-                                                   GtkMenuItem             *item);
 static void     gimp_menu_toggle_action_toggled   (GimpAction              *action,
                                                    GtkCheckMenuItem        *item);
 static void     gimp_menu_action_notify_sensitive (GimpAction              *action,
@@ -229,43 +226,6 @@ gimp_menu_append (GimpMenuShell *shell,
           item = gtk_separator_menu_item_new ();
           gtk_container_add (GTK_CONTAINER (shell), item);
           gtk_widget_show (item);
-        }
-      else if (submenu != NULL && label == NULL)
-        {
-          GimpAction  *action;
-          const gchar *group_label;
-          GtkWidget   *subcontainer;
-          GtkWidget   *item;
-
-          group = NULL;
-
-          g_return_if_fail (action_name != NULL);
-
-          action = gimp_ui_manager_find_action (manager, NULL, action_name);
-
-          /* As a special case, when a submenu has no label, we expect it to
-           * have an action attribute, which must be for a radio action. In such
-           * a case, we'll use the radio actions' group label as submenu title.
-           * See e.g.: menus/gradient-editor-menu.ui
-           */
-          g_return_if_fail (GIMP_IS_RADIO_ACTION (action));
-
-          group_label = gimp_radio_action_get_group_label (GIMP_RADIO_ACTION (action));
-
-          item = gtk_menu_item_new_with_mnemonic (group_label);
-          g_signal_connect_object (action, "notify::group-label",
-                                   G_CALLBACK (gimp_menu_notify_group_label),
-                                   item, 0);
-          gtk_container_add (GTK_CONTAINER (shell), item);
-
-          subcontainer = gimp_menu_new (manager);
-          gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), subcontainer);
-          gimp_menu_shell_append (GIMP_MENU_SHELL (subcontainer), GIMP_MENU_MODEL (submenu));
-          gtk_widget_show (subcontainer);
-
-          g_tree_insert (menu->priv->submenus,
-                         gimp_utils_make_canonical_menu_label (group_label),
-                         subcontainer);
         }
       else if (submenu != NULL)
         {
@@ -727,15 +687,6 @@ gimp_menu_toggle_item_toggled (GtkWidget *item,
   g_signal_handlers_unblock_by_func (action,
                                      G_CALLBACK (gimp_menu_toggle_action_toggled),
                                      item);
-}
-
-static void
-gimp_menu_notify_group_label (GimpRadioAction  *action,
-                              const GParamSpec *pspec,
-                              GtkMenuItem      *item)
-{
-  gtk_menu_item_set_use_underline (item, TRUE);
-  gtk_menu_item_set_label (item, gimp_radio_action_get_group_label (action));
 }
 
 static void
