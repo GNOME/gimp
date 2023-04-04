@@ -1135,7 +1135,8 @@ static void
 gimp_action_proxy_button_activate (GtkButton  *button,
                                    GimpAction *action)
 {
-  gimp_action_emit_activate (action, NULL);
+  /* Activate with the default parameter value. */
+  gimp_action_activate (action);
 }
 
 static void
