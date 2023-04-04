@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-02 12:44+0000\n"
-"PO-Revision-Date: 2023-04-03 06:46+0200\n"
+"POT-Creation-Date: 2023-04-03 04:49+0000\n"
+"PO-Revision-Date: 2023-04-04 02:13+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -541,7 +541,7 @@ msgstr "გთხოვთ, მოითმინოთ"
 #. the title label
 #: plug-ins/common/busy-dialog.c:299
 msgid "Please wait for the operation to complete"
-msgstr ""
+msgstr "დაელოდეთ ოპერაციის დასრულებას"
 
 #: plug-ins/common/busy-dialog.c:359
 msgid "Canceling..."
@@ -569,11 +569,11 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:130
 msgid "Keep image's values"
-msgstr ""
+msgstr "გამოსახულების მნიშვნელობების შენარჩუნება"
 
 #: plug-ins/common/cml-explorer.c:131
 msgid "Keep the first value"
-msgstr ""
+msgstr "პირველი მნიშვნელობის შენარჩუნება"
 
 #: plug-ins/common/cml-explorer.c:132
 msgid "Fill with parameter k"
@@ -686,7 +686,7 @@ msgstr "სტანდარტული"
 
 #: plug-ins/common/cml-explorer.c:202
 msgid "Use average value"
-msgstr ""
+msgstr "საშუალო მნიშვნელობის გამოყენება"
 
 #: plug-ins/common/cml-explorer.c:203
 msgid "Use reverse value"
@@ -1341,7 +1341,7 @@ msgstr ""
 
 #: plug-ins/common/compose.c:1041
 msgid "Error in getting layer IDs"
-msgstr ""
+msgstr "ფენების ID-ების მიღების შეცდომა"
 
 #: plug-ins/common/compose.c:1179
 msgid "Compose"
@@ -1354,7 +1354,7 @@ msgstr ""
 
 #: plug-ins/common/compose.c:1217 plug-ins/common/decompose.c:896
 msgid "Color _model:"
-msgstr ""
+msgstr "ფერის _მოდელი:"
 
 #. Channel representation grid
 #: plug-ins/common/compose.c:1249
@@ -3754,7 +3754,6 @@ msgid "PPM image"
 msgstr "PPM გამოსახულება"
 
 #: plug-ins/common/file-pnm.c:459
-#, fuzzy
 msgid "PPM"
 msgstr "PPM"
 
@@ -12631,11 +12630,11 @@ msgstr ""
 
 #: plug-ins/metadata/metadata-viewer.c:619
 msgid " meter"
-msgstr "მეტრი"
+msgstr " მეტრი"
 
 #: plug-ins/metadata/metadata-viewer.c:620
 msgid " feet"
-msgstr "ფუტი"
+msgstr " ფუტი"
 
 #: plug-ins/metadata/metadata-viewer.c:788
 #, c-format
