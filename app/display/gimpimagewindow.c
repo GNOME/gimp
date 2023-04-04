@@ -351,6 +351,7 @@ gimp_image_window_constructed (GObject *object)
   GimpGuiConfig          *config;
   GimpMenuModel          *model;
   gboolean                use_gtk_menubar = TRUE;
+  gboolean                use_app_menu    = TRUE;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -423,6 +424,25 @@ gimp_image_window_constructed (GObject *object)
       g_signal_connect (private->menubar, "key-press-event",
                         G_CALLBACK (gimp_image_window_shell_events),
                         window);
+    }
+
+#ifndef GDK_WINDOWING_QUARTZ
+  /* Docs says that macOS always returns FALSE but we actually want to create
+   * our custom macOS menu.
+   */
+  use_app_menu = gtk_application_prefers_app_menu (GTK_APPLICATION (private->gimp->app));
+#endif /* !GDK_WINDOWING_QUARTZ */
+
+  if (use_app_menu)
+    {
+      GimpUIManager *app_menu_manager;
+      GimpMenuModel *app_menu_model;
+
+      app_menu_manager = gimp_menu_factory_get_manager (menus_get_global_menu_factory (private->gimp),
+                                                        "<AppMenu>", private->gimp);
+      app_menu_model   = gimp_ui_manager_get_model (app_menu_manager, "/app-menu");
+      gtk_application_set_app_menu (GTK_APPLICATION (private->gimp->app),
+                                    G_MENU_MODEL (app_menu_model));
     }
 
   /* Create the hbox that contains docks and images */

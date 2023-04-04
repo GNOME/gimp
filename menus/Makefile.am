@@ -10,23 +10,24 @@ menudata_built_files = $(menudata_in_files:.ui.in.in=.ui)
 
 menudata_DATA = \
 	$(menudata_built_files)		\
+	app-menu.ui			\
 	brush-editor-menu.ui		\
-	brushes-menu.ui		\
-	buffers-menu.ui		\
+	brushes-menu.ui			\
+	buffers-menu.ui			\
 	channels-menu.ui		\
 	colormap-menu.ui		\
 	cursor-info-menu.ui		\
 	dashboard-menu.ui		\
 	documents-menu.ui		\
-	dynamics-editor-menu.ui	\
+	dynamics-editor-menu.ui		\
 	dynamics-menu.ui		\
 	error-console-menu.ui		\
 	fonts-menu.ui			\
-	gradient-editor-menu.ui	\
+	gradient-editor-menu.ui		\
 	gradients-menu.ui		\
 	images-menu.ui			\
 	layers-menu.ui			\
-	mypaint-brushes-menu.ui	\
+	mypaint-brushes-menu.ui		\
 	palette-editor-menu.ui		\
 	palettes-menu.ui		\
 	patterns-menu.ui		\
@@ -40,7 +41,7 @@ menudata_DATA = \
 	text-tool-menu.ui		\
 	tool-options-menu.ui		\
 	undo-menu.ui			\
-	vector-toolpath-menu.ui	\
+	vector-toolpath-menu.ui		\
 	vectors-menu.ui
 
 EXTRA_DIST = \

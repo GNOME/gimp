@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<interface>
+  <menu id="/app-menu">
+    <item><attribute name="action">app.dialogs-about</attribute></item>
+    <item><attribute name="action">app.dialogs-welcome</attribute></item>
+    <section>
+      <item><attribute name="action">app.dialogs-preferences</attribute></item>
+      <item><attribute name="action">app.dialogs-input-devices</attribute></item>
+      <item><attribute name="action">app.dialogs-keyboard-shortcuts</attribute></item>
+    </section>
+    <item><attribute name="action">app.file-quit</attribute></item>
+  </menu>
+</interface>

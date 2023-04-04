@@ -98,6 +98,14 @@ menus_init (Gimp *gimp)
                                       "quick-mask-menu", NULL,
                                       NULL);
 
+  gimp_menu_factory_manager_register (global_menu_factory, "<AppMenu>",
+                                      "file",
+                                      "dialogs",
+                                      NULL,
+                                      "/app-menu",
+                                      "app-menu", NULL,
+                                      NULL);
+
   gimp_menu_factory_manager_register (global_menu_factory, "<Toolbox>",
                                       "file",
                                       "context",
