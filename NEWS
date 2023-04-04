@@ -27,6 +27,8 @@ Core:
  - Copy|Cut-Paste code reworked further.
  - Action "Crop to Selection" renamed to "Resize Layers to Selection".
  - Action "Crop to Content" renamed to "Crop Layers to Content".
+ - If any opened image (with a display) is dirty, then GIMP will now inhibit the
+   log-out event on OSes which support it.
 
 Tools:
 
@@ -35,6 +37,20 @@ Tools:
     image or changing the active image.
   - Align tool: "use extents of layer contents" also applies to the alignment
     reference (not only the target objects).
+
+Graphical User Interface:
+
+  - Default, Compact and Gray themes now display a three-dot handle to paned
+    separators to improve accessibility and discoverability of the drag ability.
+  - The paned separator width is also increased a bit for accessibility (though
+    the Compact theme keeps a smaller separator width).
+  - Consistently use "Soft-proofing" wording instead of "Softproofing" or "Soft
+    proofing"
+
+Actions:
+
+  - "tools-rotate-arbitrary" and "tools-rotate-image-arbitrary" are now disabled
+    when no image is opened.
 
 Plug-ins:
 
@@ -49,16 +65,27 @@ Plug-ins:
       still retaining the utf8 char and string behavior.
   - PSD:
     * PSD clipping paths: import and export support.
+    * Unsupported features are now listed in a dialog on import.
+    * Add compatibility notice on export: some people have noted that legacy
+      layer modes have better compatibility when exporting PSDs and reopening
+      them in Photoshop.
   - DDS:
     * OpenMP support enabled when available on the build machine.
   - All Python 3 plug-ins whose Python 2 variants used to have a GUI now also
     have one.
   - Script "Predator" removed.
-  - Plug-ins ported to GAction: animation-play, colormap-remap, ifs-compose,
-    gfig.
   - PAM: import and export (formats: RAYSCALE, GRAYSCALE_ALPHA, RGB, RGB_ALPHA)
     support added. PAM files are essentially PPM files with a different header
     format and alpha/16 bit support.
+  - GIF: load error message handling improved.
+  - PCX: new radio option "override-palette" to override PCX 1 bit palette.
+  - QOI: new format support (import and export).
+  - Plug-ins ported to GAction: animation-play, colormap-remap, ifs-compose,
+    gfig, ImageMap.
+  - Plug-ins ported to GimpProcedureConfig and GimpProcedureDialog:
+    align-layers, hot, wavelet-decompose, file-sunras, file-heif, file-tga,
+    file-pat, file-xpm, file-csource, file-jp2-load, file-dds (import),
+    file-sgi, file-fli, file-pnm, file-gbr, file-psp.
 
 API:
 
@@ -75,8 +102,11 @@ API:
       + GimpGradient
       + GimpPalette
       + GimpPattern
+    * New functions:
+      + gimp_procedure_dialog_fill_scrolled_window()
     * Improved annotations or usage:
       + set_i18n() method of GimpPlugIn expects a UTF-8 catalog directory.
+      + clarify gimp_image_set_file() usage (only for XCF files).
   - Changes in libgimpbase:
     * New functions:
       + gimp_bind_text_domain()
@@ -91,6 +121,8 @@ Build:
   - Improved C99 compatibility of IPC_RMID check.
   - Windows: port fileicon.ico from gimp-2-10 with additional sizes for clearer
     icons on different resolutions and displays.
+  - Improve our build scripts to better handle sanitizer tools.
+  - Fix some broken unit tests in the meson build.
 
 Debugging:
 
@@ -101,6 +133,8 @@ Debugging:
 Documentation:
 
   - More developer docs is being moved to the new developer website.
+  - Better clarify licensing of files under data/.
+  - Improve flatpak maintainance doc (build/flatpak/README.md).
 
 
 Overview of Changes from GIMP 2.99.12 to GIMP 2.99.14
