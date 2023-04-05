@@ -81,7 +81,8 @@ static void             gimp2aa                (GimpDrawable         *drawable,
                                                 aa_context           *context);
 
 static gboolean         save_dialog            (GimpProcedure        *procedure,
-                                                GObject              *config);
+                                                GObject              *config,
+                                                GimpImage            *image);
 
 
 G_DEFINE_TYPE (Ascii, ascii, GIMP_TYPE_PLUG_IN)
@@ -128,13 +129,15 @@ ascii_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "*");
 
       gimp_procedure_set_menu_label (procedure, _("ASCII art"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("ASCII art"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Saves grayscale image in various "
-                                        "text formats",
-                                        "This plug-in uses aalib to save "
-                                        "grayscale image as ascii art into "
-                                        "a variety of text formats",
+                                        _("Saves grayscale image in various "
+                                          "text formats"),
+                                        _("This plug-in uses aalib to save "
+                                          "grayscale image as ascii art into "
+                                          "a variety of text formats"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Tim Newsome <nuisance@cmu.edu>",
@@ -149,8 +152,8 @@ ascii_create_procedure (GimpPlugIn  *plug_in,
       for (i = 0; aa_formats[i]; i++);
 
       GIMP_PROC_ARG_INT (procedure, "file-type",
-                         "File type",
-                         "File type to use",
+                         _("_Format"),
+                         _("File type to use"),
                          0, i, 0,
                          G_PARAM_READWRITE);
     }
@@ -212,7 +215,7 @@ ascii_save (GimpProcedure        *procedure,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! save_dialog (procedure, G_OBJECT (config)))
+      if (! save_dialog (procedure, G_OBJECT (config), image))
         status = GIMP_PDB_CANCEL;
     }
 
@@ -370,29 +373,18 @@ gimp2aa (GimpDrawable *drawable,
 
 static gboolean
 save_dialog (GimpProcedure *procedure,
-             GObject       *config)
+             GObject       *config,
+             GimpImage     *image)
 {
   GtkWidget    *dialog;
-  GtkWidget    *hbox;
-  GtkWidget    *label;
   GtkListStore *store;
   GtkWidget    *combo;
   gint          i;
   gboolean      run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as Text"));
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new_with_mnemonic (_("_Format:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
   store = g_object_new (GIMP_TYPE_INT_STORE, NULL);
 
@@ -402,10 +394,12 @@ save_dialog (GimpProcedure *procedure,
                                        GIMP_INT_STORE_LABEL, aa_formats[i]->formatname,
                                        -1);
 
-  combo = gimp_prop_int_combo_box_new (config, "file-type",
-                                       GIMP_INT_STORE (store));
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  combo = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                               "file-type",
+                                               GIMP_INT_STORE (store));
+  g_object_set (combo, "margin", 12, NULL);
 
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
   gtk_widget_show (dialog);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
