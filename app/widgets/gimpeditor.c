@@ -244,6 +244,8 @@ gimp_editor_constructed (GObject *object)
         gimp_menu_factory_get_manager (editor->priv->menu_factory,
                                        editor->priv->menu_identifier,
                                        editor->priv->popup_data);
+      g_object_add_weak_pointer (G_OBJECT (editor->priv->ui_manager),
+                                 (gpointer) &editor->priv->ui_manager);
 
       g_signal_connect_object (editor->priv->ui_manager->gimp->config,
                                "notify::theme",
@@ -446,6 +448,8 @@ gimp_editor_create_menu (GimpEditor      *editor,
   editor->priv->ui_manager = gimp_menu_factory_get_manager (menu_factory,
                                                             menu_identifier,
                                                             popup_data);
+  g_object_add_weak_pointer (G_OBJECT (editor->priv->ui_manager),
+                             (gpointer) &editor->priv->ui_manager);
   g_signal_connect_object (editor->priv->ui_manager->gimp->config,
                            "notify::theme",
                            G_CALLBACK (gimp_editor_style_updated),
