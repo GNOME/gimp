@@ -952,8 +952,17 @@ gui_query_rotation_policy (Gimp        *gimp,
 static void
 gui_inhibit (Gimp *gimp)
 {
-  static gint     cookie = 0;
-  GtkApplication *app;
+  static gint      cookie  = 0;
+  static gboolean  in_test = TRUE;
+  GtkApplication  *app;
+
+  if (in_test)
+    {
+      /* Do not call inhibit code while unit-testing the UI code. */
+      in_test = (g_getenv ("UI_TEST") != NULL);
+      if (in_test)
+        return;
+    }
 
   app = GTK_APPLICATION (g_application_get_default ());
 
