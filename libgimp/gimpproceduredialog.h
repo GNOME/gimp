@@ -131,7 +131,7 @@ GtkWidget * gimp_procedure_dialog_fill_expander     (GimpProcedureDialog *dialog
 GtkWidget * gimp_procedure_dialog_fill_scrolled_window
                                                    (GimpProcedureDialog  *dialog,
                                                     const gchar          *container_id,
-                                                    const gchar          *property);
+                                                    const gchar          *contents_id);
 
 void        gimp_procedure_dialog_fill              (GimpProcedureDialog *dialog,
                                                      ...) G_GNUC_NULL_TERMINATED;
