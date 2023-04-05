@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-02 12:44+0000\n"
-"PO-Revision-Date: 2023-04-04 08:24+0200\n"
+"POT-Creation-Date: 2023-04-05 02:06+0000\n"
+"PO-Revision-Date: 2023-04-05 11:30+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1908,21 +1908,33 @@ msgstr "_Širina:"
 msgid "Create _histogram"
 msgstr "Ustvari _histogram"
 
-#: plug-ins/common/file-aa.c:130
+#: plug-ins/common/file-aa.c:131 plug-ins/common/file-aa.c:133
 msgid "ASCII art"
 msgstr "ASCII art"
 
-#: plug-ins/common/file-aa.c:206
+#: plug-ins/common/file-aa.c:136
+msgid "Saves grayscale image in various text formats"
+msgstr "Shrani sivinsko sliko v različnih besedilnih oblikah"
+
+#: plug-ins/common/file-aa.c:138
+msgid ""
+"This plug-in uses aalib to save grayscale image as ascii art into a variety "
+"of text formats"
+msgstr ""
+"Ta vtičnik uporablja aalib za shranjevanje sivinske slike kot slike ascii v "
+"različnih oblikah besedila"
+
+#: plug-ins/common/file-aa.c:155
+msgid "_Format"
+msgstr "_Oblika"
+
+#: plug-ins/common/file-aa.c:156
+msgid "File type to use"
+msgstr "Vrsta datoteke, ki jo želite uporabiti"
+
+#: plug-ins/common/file-aa.c:209
 msgid "ASCII art does not support multiple layers."
 msgstr "Zapis ASCII slik ne podpira več plasti."
-
-#: plug-ins/common/file-aa.c:385
-msgid "Export Image as Text"
-msgstr "Izvozi sliko kot besedilo"
-
-#: plug-ins/common/file-aa.c:393 plug-ins/file-dds/ddswrite.c:2042
-msgid "_Format:"
-msgstr "_Oblika:"
 
 #: plug-ins/common/file-cel.c:140 plug-ins/common/file-cel.c:172
 msgid "KISS CEL"
@@ -3814,7 +3826,6 @@ msgstr "Oblikovanje podatkov"
 
 #: plug-ins/common/file-pnm.c:371 plug-ins/common/file-pnm.c:407
 #: plug-ins/common/file-pnm.c:443 plug-ins/common/file-pnm.c:479
-#, fuzzy
 msgid "TRUE for raw output, FALSE for ascii output"
 msgstr "TRUE za neobdelan izhod, FALSE za izhod ascii"
 
@@ -7101,6 +7112,10 @@ msgstr "_Stiskanje:"
 #: plug-ins/file-dds/ddswrite.c:2020
 msgid "Use _perceptual error metric"
 msgstr "Uporabi _metriko zaznavne napake"
+
+#: plug-ins/file-dds/ddswrite.c:2042
+msgid "_Format:"
+msgstr "_Oblika:"
 
 #: plug-ins/file-dds/ddswrite.c:2046
 msgid "Selected layer"
