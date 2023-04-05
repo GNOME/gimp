@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-02 12:44+0000\n"
-"PO-Revision-Date: 2023-04-02 20:44+0300\n"
+"POT-Creation-Date: 2023-04-05 02:06+0000\n"
+"PO-Revision-Date: 2023-04-05 20:12+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
@@ -1472,8 +1472,7 @@ msgstr "Вигнути зображення, використовуючи дві
 
 #: plug-ins/common/curve-bend.c:697
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr ""
-"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:711
 msgid "Cannot operate on layers with masks."
@@ -1911,22 +1910,35 @@ msgstr "_Ширина:"
 msgid "Create _histogram"
 msgstr "Створити г_істограму"
 
-#: plug-ins/common/file-aa.c:130
+#: plug-ins/common/file-aa.c:131 plug-ins/common/file-aa.c:133
 msgid "ASCII art"
 msgstr "Рисунки у ASCII"
 
-#: plug-ins/common/file-aa.c:206
+#: plug-ins/common/file-aa.c:136
+msgid "Saves grayscale image in various text formats"
+msgstr "Зберігає зображення у відтінках сірого у різних текстових форматах"
+
+#: plug-ins/common/file-aa.c:138
+msgid ""
+"This plug-in uses aalib to save grayscale image as ascii art into a variety "
+"of text formats"
+msgstr ""
+"Цей додаток використовує aalib для збереження зображення у відтінках сірого у"
+" формі ascii-арту у спектрі текстових форматів"
+
+#: plug-ins/common/file-aa.c:155
+#| msgid "_Format:"
+msgid "_Format"
+msgstr "_Формат"
+
+#: plug-ins/common/file-aa.c:156
+msgid "File type to use"
+msgstr "Тип файлів, яким слід скористатися"
+
+#: plug-ins/common/file-aa.c:209
 msgid "ASCII art does not support multiple layers."
 msgstr ""
 "Для малювання символами ASCII не передбачено підтримку декількох шарів."
-
-#: plug-ins/common/file-aa.c:385
-msgid "Export Image as Text"
-msgstr "Експортувати зображення як текст"
-
-#: plug-ins/common/file-aa.c:393 plug-ins/file-dds/ddswrite.c:2042
-msgid "_Format:"
-msgstr "_Формат:"
 
 #: plug-ins/common/file-cel.c:140 plug-ins/common/file-cel.c:172
 msgid "KISS CEL"
@@ -2071,8 +2083,7 @@ msgstr "Програма на C"
 
 #: plug-ins/common/file-csource.c:124
 msgid "Dump image data in RGB(A) format for C source"
-msgstr ""
-"Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
+msgstr "Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
 
 #: plug-ins/common/file-csource.c:126
 msgid "CSource cannot be run non-interactively."
@@ -2235,22 +2246,18 @@ msgid "GIMP brush"
 msgstr "Пензель GIMP"
 
 #: plug-ins/common/file-gbr.c:127
-#| msgid "_Brush"
 msgid "Brush"
 msgstr "Пензель"
 
 #: plug-ins/common/file-gbr.c:131 plug-ins/common/file-gbr.c:133
-#| msgid "Exports files in the PGM file format"
 msgid "Exports files in the GIMP brush file format"
 msgstr "Експортує файли у формат пензлів GIMP"
 
 #: plug-ins/common/file-gbr.c:151
-#| msgid "Spacing:"
 msgid "Sp_acing"
 msgstr "І_нтервал"
 
 #: plug-ins/common/file-gbr.c:152
-#| msgid "Specifies the aspect ratio of the brush"
 msgid "Spacing of the brush"
 msgstr "Інтервал пензля"
 
@@ -2259,12 +2266,10 @@ msgid "_Description"
 msgstr "_Опис"
 
 #: plug-ins/common/file-gbr.c:158
-#| msgid "Short description of the pattern"
 msgid "Short description of the brush"
 msgstr "Короткий опис пензля"
 
 #: plug-ins/common/file-gbr.c:159
-#| msgid "GIMP brush"
 msgid "GIMP Brush"
 msgstr "Пензель GIMP"
 
@@ -3753,13 +3758,11 @@ msgstr ""
 #: plug-ins/common/file-png.c:1459
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr ""
-"Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: plug-ins/common/file-png.c:1468
 #, c-format
-msgid ""
-"Error while exporting '%s'. Could not create PNG header info structure."
+msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -4191,7 +4194,6 @@ msgid "Paint Shop Pro image"
 msgstr "Зображення Paint Shop Pro"
 
 #: plug-ins/common/file-psp.c:667
-#| msgid "Loads files in the PNM file format"
 msgid "Loads images from the Paint Shop Pro PSP file format"
 msgstr "Завантажує зображення з формату файлів PSP Paint Shop Pro"
 
@@ -4200,9 +4202,9 @@ msgid ""
 "This plug-in loads and exports images in Paint Shop Pro's native PSP format. "
 "Vector layers aren't handled. Exporting isn't yet implemented."
 msgstr ""
-"Цей додаток завантажує і експортує зображення у рідному форматі Paint Shop"
-" Pro, PSP. Обробку векторних шарів виконано не буде. Експортування ще не"
-" реалізовано."
+"Цей додаток завантажує і експортує зображення у рідному форматі Paint Shop "
+"Pro, PSP. Обробку векторних шарів виконано не буде. Експортування ще не "
+"реалізовано."
 
 #: plug-ins/common/file-psp.c:841
 msgid "RLE"
@@ -4785,8 +4787,7 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:729
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr ""
-"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:736
 msgid "Retry without limits preventing to parse huge data?"
@@ -7147,6 +7148,10 @@ msgstr "С_тиснення:"
 #: plug-ins/file-dds/ddswrite.c:2020
 msgid "Use _perceptual error metric"
 msgstr "_Використати нелінійну метрику помилок"
+
+#: plug-ins/file-dds/ddswrite.c:2042
+msgid "_Format:"
+msgstr "_Формат:"
 
 #: plug-ins/file-dds/ddswrite.c:2046
 msgid "Selected layer"
@@ -10122,8 +10127,7 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid ""
-"Let the direction from the center determine the direction of the stroke"
+msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -10234,8 +10238,7 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr ""
-"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -11138,8 +11141,7 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: plug-ins/gradient-flare/gradient-flare.c:3352
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr ""
-"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: plug-ins/gradient-flare/gradient-flare.c:3362
 msgid "Delete Gradient Flare"
@@ -13404,8 +13406,7 @@ msgstr "Альтернативне оточення фільтра:"
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:181
 msgid "A second number of adjacent points to consider when filtering."
-msgstr ""
-"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:191
 msgid "Filter Epsilon:"
@@ -13596,6 +13597,9 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Export Image as Text"
+#~ msgstr "Експортувати зображення як текст"
 
 #~ msgid "Export Image as Brush"
 #~ msgstr "Експортувати зображення як пензель"
