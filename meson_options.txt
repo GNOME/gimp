@@ -59,8 +59,7 @@ option('g-ir-doc',          type: 'boolean', value: false,  description: 'Build 
 option('linux-input',       type: 'feature', value: 'auto', description: 'Linux input event controller module')
 option('vector-icons',      type: 'boolean', value: true,   description: 'Use vector icons rather than raster ones')
 
-option('vala-plugins',      type: 'feature', value: 'auto', description: 'Build VAPI and Vala plugins')
-
-option('javascript',        type: 'boolean', value: true,   description: 'Install Javascript plug-ins')
-option('lua',               type: 'boolean', value: true,   description: 'Install Lua plug-ins')
-option('python',            type: 'boolean', value: true,   description: 'Install Python 3 plug-ins')
+option('vala',              type: 'feature', value: 'auto', description: 'Build VAPI and Vala plugins')
+option('javascript',        type: 'feature', value: 'auto', description: 'Install Javascript plug-ins')
+option('lua',               type: 'feature', value: 'auto', description: 'Install Lua plug-ins')
+option('python',            type: 'feature', value: 'auto', description: 'Install Python 3 plug-ins')

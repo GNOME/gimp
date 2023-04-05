@@ -876,7 +876,7 @@ if have_heif
   endif
 endif
 
-have_vala = add_languages('vala', required: get_option('vala-plugins'), native: false)
+have_vala = add_languages('vala', required: get_option('vala'), native: false)
 if have_vala
   babl = declare_dependency(
     dependencies: [
@@ -1065,9 +1065,9 @@ python3_minver = '>=3.6'
 python = pythonmod.find_installation('python3')
 message('Found Python @0@'.format(python.language_version()))
 
-have_python = get_option('python')
+have_python = get_option('python').enabled()
 
-if have_python
+if get_option('python').allowed()
   python_found = (
     python.found() and
     python.language_version().version_compare(python3_minver)
@@ -1086,7 +1086,9 @@ if have_python
     python_found = python_found and pygobject_found
   endif
 
-  if not python_found
+  if python_found
+    have_python = true
+  elif have_python
     python_warning = '''
     Python @0@ or PyGObject was not found.
     Python plug-ins will be installed anyway but you should make sure that
@@ -1102,8 +1104,9 @@ endif
 
 ## Javascript
 
-have_javascript = get_option('javascript')
-if have_javascript
+gjs = find_program('gjs', required: get_option('javascript'))
+have_javascript = get_option('javascript').enabled() or (gjs.found() and get_option('javascript').auto())
+if not gjs.found() and have_javascript
   gjs = find_program('gjs', required: false)
   if not gjs.found()
     js_warning = '''
@@ -1119,19 +1122,17 @@ endif
 
 ## Lua
 
-have_lua = get_option('lua')
-if have_lua
-  lua = find_program('luajit', required: false)
-  if not lua.found()
-    lua_warning = '''
-    Luajit was not found.
-    Lua plug-ins will be installed anyway but you should make sure that
-    luajit and LGI are available at installation, otherwise
-    installed plug-ins won't be usable.
-    '''
-    warning(lua_warning)
-    warnings += lua_warning
-  endif
+lua = find_program('luajit', required: get_option('lua'))
+have_lua = get_option('lua').enabled() or (lua.found() and get_option('lua').auto())
+if not lua.found() and have_lua
+  lua_warning = '''
+  Luajit was not found.
+  Lua plug-ins will be installed anyway but you should make sure that
+  luajit and LGI are available at installation, otherwise
+  installed plug-ins won't be usable.
+  '''
+  warning(lua_warning)
+  warnings += lua_warning
 endif
 
 
