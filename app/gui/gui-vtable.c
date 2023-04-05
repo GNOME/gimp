@@ -959,7 +959,7 @@ gui_inhibit (Gimp *gimp)
   if (in_test)
     {
       /* Do not call inhibit code while unit-testing the UI code. */
-      in_test = (g_getenv ("UI_TEST") != NULL);
+      in_test = (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR") != NULL);
       if (in_test)
         return;
     }
