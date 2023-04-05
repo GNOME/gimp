@@ -5,12 +5,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ka\n"
+"Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-14 16:20+0000\n"
-"PO-Revision-Date: 2023-02-14 17:45+0100\n"
+"POT-Creation-Date: 2023-04-04 17:47+0000\n"
+"PO-Revision-Date: 2023-04-05 06:34+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
-"Language-Team: \n"
+"Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2587,7 +2587,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2416
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2431
 #: app/core/gimppalette.c:430 app/core/gimppalette-import.c:213
 #: app/core/gimppalette-load.c:194 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
@@ -3874,11 +3874,11 @@ msgstr ""
 
 #: app/actions/edit-commands.c:697
 msgid "Pasted as new layer because the target is a layer group."
-msgstr ""
+msgstr "ჩასმულია ახალი ფენის სახით, რადგან სამიზნე ფენების ჯგუფია."
 
 #: app/actions/edit-commands.c:704
 msgid "Pasted as new layer because the target's pixels are locked."
-msgstr ""
+msgstr "ჩასმულია ახალი ფენის სახით, რადგან სამიზნის პიქსელები დაბლოკილია."
 
 #: app/actions/edit-commands.c:749
 msgid "There are no selected layers or channels to cut from."
@@ -5665,12 +5665,12 @@ msgstr "გამოსახულებისთვის ფერის პ�
 
 #: app/actions/image-actions.c:110
 msgctxt "image-action"
-msgid "_Softproof Profile..."
+msgid "_Soft-proof Profile..."
 msgstr "_პროგრამულად დამოწმებული პროფილი..."
 
 #: app/actions/image-actions.c:111
 msgctxt "image-action"
-msgid "Set the softproofing profile"
+msgid "Set the soft-proofing profile"
 msgstr "პროგრამულად დამოწმებული პროფილის დაყენება"
 
 #: app/actions/image-actions.c:116
@@ -11498,7 +11498,7 @@ msgstr "არჩევა"
 #: app/core/core-enums.c:27
 msgctxt "align-reference-type"
 msgid "Picked reference object"
-msgstr ""
+msgstr "არჩეული მიმართვის ობიექტი"
 
 #: app/core/core-enums.c:63
 msgctxt "alignment-type"
@@ -11986,12 +11986,12 @@ msgstr "გვკითხეთ რჩევა"
 #: app/core/core-enums.c:923
 msgctxt "metadata-rotation-policy"
 msgid "Discard metadata without rotating"
-msgstr ""
+msgstr "მეტამონაცემების მოცილება შემობრუნების გარეშე"
 
 #: app/core/core-enums.c:924
 msgctxt "metadata-rotation-policy"
 msgid "Rotate the image then discard metadata"
-msgstr ""
+msgstr "გამოსახულების შემობრუნება და მეტამონაცემების მხოლოდ შემდეგ მოცილება"
 
 #: app/core/core-enums.c:997
 msgctxt "win32-pointer-input-api"
@@ -13593,164 +13593,164 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "ფენების ჯგუფის გარდაქმნა"
 
-#: app/core/gimpimage.c:706 app/widgets/gimpsymmetryeditor.c:182
+#: app/core/gimpimage.c:707 app/widgets/gimpsymmetryeditor.c:182
 msgid "Symmetry"
 msgstr "სიმეტრია"
 
-#: app/core/gimpimage.c:2661
+#: app/core/gimpimage.c:2676
 msgid " (exported)"
 msgstr " (გატანილია)"
 
-#: app/core/gimpimage.c:2665
+#: app/core/gimpimage.c:2680
 msgid " (overwritten)"
 msgstr " (გადაწერილია)"
 
-#: app/core/gimpimage.c:2674
+#: app/core/gimpimage.c:2689
 msgid " (imported)"
 msgstr " (შემოტანილია)"
 
-#: app/core/gimpimage.c:2847 app/core/gimpimage.c:2861
-#: app/core/gimpimage.c:2904
+#: app/core/gimpimage.c:2862 app/core/gimpimage.c:2876
+#: app/core/gimpimage.c:2919
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "ფენის რეჟიმი %s დაემატა %s-ს"
 
-#: app/core/gimpimage.c:2919
+#: app/core/gimpimage.c:2934
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "ფენების ჯგუფები დაემატა %s-ს"
 
-#: app/core/gimpimage.c:2926
+#: app/core/gimpimage.c:2941
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "ნიღბები ფენების ჯგუფზე დაემატა %s-ში"
 
-#: app/core/gimpimage.c:2933
+#: app/core/gimpimage.c:2948
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "მდებარეობის ბლოკები ფენების ჯგუფზე, რომლებიც %s-ში ჩაემატა"
 
-#: app/core/gimpimage.c:2940
+#: app/core/gimpimage.c:2955
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "ფენების ჯგუფებზე ალფა არხების დაბლოკვა დაემატა %s-ში"
 
-#: app/core/gimpimage.c:2948 app/core/gimpimage.c:2962
+#: app/core/gimpimage.c:2963 app/core/gimpimage.c:2977
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "%s-ში ჩაემატა ხილვადობის ჩაკეტვები"
 
-#: app/core/gimpimage.c:2971
+#: app/core/gimpimage.c:2986
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "ერთზე მეტი ბილიკის არჩევანი ჩაემატა %s-ს"
 
-#: app/core/gimpimage.c:2983
+#: app/core/gimpimage.c:2998
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "ბილიკში ფერადი ჭდეების შენახვა %s-ში დაემატა"
 
-#: app/core/gimpimage.c:2990
+#: app/core/gimpimage.c:3005
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "ბილიკებში ბლოკების დამახსოვრება %s-ში დაემატა"
 
-#: app/core/gimpimage.c:3004
+#: app/core/gimpimage.c:3019
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3012
+#: app/core/gimpimage.c:3027
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3020
+#: app/core/gimpimage.c:3035
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "%s-ს დაემატა შიდა შეკუმშვა zlib"
 
-#: app/core/gimpimage.c:3037
+#: app/core/gimpimage.c:3052
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "%s-ში დაემატა 4GB- ზე მეტი გამოსახულების ფაილების მხარდაჭერა"
 
-#: app/core/gimpimage.c:3044
+#: app/core/gimpimage.c:3059
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "ერთზე მეტი მონიშნული ფენა დაემატა %s-ს"
 
-#: app/core/gimpimage.c:3061
+#: app/core/gimpimage.c:3076
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3072
+#: app/core/gimpimage.c:3087
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3078
+#: app/core/gimpimage.c:3093
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3183
+#: app/core/gimpimage.c:3198
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "გამოსახულების გაფართოების შეცვლა"
 
-#: app/core/gimpimage.c:3235
+#: app/core/gimpimage.c:3250
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "გამოსახულების ერთეულის სეცვლა"
 
-#: app/core/gimpimage.c:4288
+#: app/core/gimpimage.c:4303
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 
-#: app/core/gimpimage.c:4350
+#: app/core/gimpimage.c:4365
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "გამოსახულებაზე პარაზიტის მიმაგრება"
 
-#: app/core/gimpimage.c:4395
+#: app/core/gimpimage.c:4410
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "გამოსახულებიდან პარაზიტის მოცილება"
 
-#: app/core/gimpimage.c:5230
+#: app/core/gimpimage.c:5245
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "ფენის დამატება"
 
-#: app/core/gimpimage.c:5274 app/core/gimpimage.c:5305
+#: app/core/gimpimage.c:5289 app/core/gimpimage.c:5320
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "ფენის ამოღება"
 
-#: app/core/gimpimage.c:5299
+#: app/core/gimpimage.c:5314
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "მცურავი მონიშვნის ამოღება"
 
-#: app/core/gimpimage.c:5823
+#: app/core/gimpimage.c:5838
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "არხის დამატება"
 
-#: app/core/gimpimage.c:5853 app/core/gimpimage.c:5878
+#: app/core/gimpimage.c:5868 app/core/gimpimage.c:5893
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "არხის ამოღება"
 
-#: app/core/gimpimage.c:5938
+#: app/core/gimpimage.c:5953
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "კონტურის დამატება"
 
-#: app/core/gimpimage.c:5973 app/core/gimpimage.c:5981
+#: app/core/gimpimage.c:5988 app/core/gimpimage.c:5996
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "კონტურის ამოღება"
@@ -13876,8 +13876,8 @@ msgid "Convert Image to %s"
 msgstr "გამოსახულების %s-ში გარდაქმნა"
 
 #. dithering
-#: app/core/gimpimage-convert-precision.c:245
-#: app/core/gimpimage-convert-precision.c:266
+#: app/core/gimpimage-convert-precision.c:249
+#: app/core/gimpimage-convert-precision.c:270
 #: app/dialogs/convert-indexed-dialog.c:240
 #: app/dialogs/convert-precision-dialog.c:212
 #: app/tools/gimpgradientoptions.c:129
@@ -14992,6 +14992,8 @@ msgid ""
 "This is an unstable development release\n"
 "commit %s"
 msgstr ""
+"ეს არასტაბილური სატესტო რელიზია\n"
+"კომიტი %s"
 
 #: app/dialogs/action-search-dialog.c:69
 msgid "Search Actions"
@@ -15160,6 +15162,7 @@ msgstr "_აღარ მკითხო"
 #: app/dialogs/color-profile-import-dialog.c:222
 msgid "Your choice can later be edited in Preferences > Color Management"
 msgstr ""
+"თქვენი არჩევანი მოგვიანებითაც შეგიძლიათ ჩაასწოროთ. მორგება > ფერის მართვა"
 
 #: app/dialogs/convert-indexed-dialog.c:134
 msgid "Indexed Color Conversion"
@@ -16107,12 +16110,16 @@ msgstr "გამართვის _წესები:"
 #: app/dialogs/preferences-dialog.c:1377
 msgid "This feature requires \"gdb\" or \"lldb\" installed on your system."
 msgstr ""
+"ეს თვისება თქვენს სისტემაში დაყენებულ \"gdb\" ან \"lldb\" პროგრამებს "
+"მოითხოვს."
 
 #: app/dialogs/preferences-dialog.c:1381
 msgid ""
 "This feature is more efficient with \"gdb\" or \"lldb\" installed on your "
 "system."
 msgstr ""
+"ეს ფუნქცია გაცილებთ ეფექტურია, თუ თქვენს სისტემაში \"gdb\" ან \"lldb\" "
+"პროგრამა აყენია."
 
 #: app/dialogs/preferences-dialog.c:1394 app/dialogs/preferences-dialog.c:1395
 msgid "Color Management"
@@ -17731,7 +17738,7 @@ msgstr ""
 
 #: app/dialogs/tips-dialog.c:100
 msgid "The GIMP tips file could not be parsed!"
-msgstr ""
+msgstr "GIMP-ის რჩევების ფაილის დამუშავება შეუძლებელია!"
 
 #: app/dialogs/tips-dialog.c:128
 msgid "GIMP Tip of the Day"
@@ -18037,12 +18044,12 @@ msgstr "მორგებული ქმედება"
 #: app/display/display-enums.c:624
 msgctxt "modifier-action"
 msgid "Change brush size in canvas pixels"
-msgstr ""
+msgstr "ტილოს პიქსელებში ფუნჯის ზომის შეცვლა"
 
 #: app/display/display-enums.c:625
 msgctxt "modifier-action"
 msgid "Change brush radius' size in canvas pixels"
-msgstr ""
+msgstr "ტილოს პიქსელებში ფუნჯის რადიუსის ზომის შეცვლა"
 
 #: app/display/display-enums.c:626
 msgctxt "modifier-action"
@@ -18116,7 +18123,7 @@ msgstr "გამოსახულების ჩვენებაზე გ�
 msgid "Drop image files here to open them"
 msgstr "გამოსახულების ფაილების გასახსნელად დაყარეთ ისინი აქ"
 
-#: app/display/gimpdisplayshell-callbacks.c:648
+#: app/display/gimpdisplayshell-callbacks.c:653
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -18145,7 +18152,7 @@ msgstr "ყველა ცვლილების უგულებელს�
 #: app/display/gimpdisplayshell-close.c:274
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr ""
+msgstr "შევინახო გამოსახულება (%s) დახურვამდე?"
 
 #: app/display/gimpdisplayshell-close.c:307
 #, c-format
@@ -19069,7 +19076,7 @@ msgstr "ეკრანი (l)"
 #: app/operations/operations-enums.c:171
 msgctxt "layer-mode"
 msgid "Old broken Overlay"
-msgstr ""
+msgstr "ძველი გაფუჭებული განლაგება"
 
 #. Translators: this is an abbreviated version of "Old broken Overlay".
 #. Keep it short.
@@ -20502,7 +20509,7 @@ msgstr "ელემენტ %s-ის (%d) უკვე დაემატა 
 #: app/pdb/gimppdb-utils.c:563
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
-msgstr ""
+msgstr "ელემენტის '%s' (%d) არასწორ გამოსახულებაზე დამატების მცდელობა"
 
 #: app/pdb/gimppdb-utils.c:590
 #, c-format
