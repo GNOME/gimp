@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-03 04:49+0000\n"
-"PO-Revision-Date: 2023-04-04 02:13+0200\n"
+"POT-Creation-Date: 2023-04-05 02:06+0000\n"
+"PO-Revision-Date: 2023-04-05 06:24+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -389,7 +389,7 @@ msgstr "ქვედა წიბო"
 
 #: plug-ins/common/animation-optimize.c:179
 msgid "Optimize (for _GIF)"
-msgstr ""
+msgstr "ოპტიმიზაცია (_GIF-სთვის)"
 
 #: plug-ins/common/animation-optimize.c:182
 msgid "Modify image to reduce size when saved as GIF animation"
@@ -397,7 +397,7 @@ msgstr ""
 
 #: plug-ins/common/animation-optimize.c:207
 msgid "_Optimize (Difference)"
-msgstr ""
+msgstr "_ოპტიმიზაცია (სხვაობა)"
 
 #: plug-ins/common/animation-optimize.c:210
 msgid "Reduce file size where combining layers is possible"
@@ -425,15 +425,15 @@ msgstr ""
 
 #: plug-ins/common/animation-optimize.c:526
 msgid "Removing animation background"
-msgstr ""
+msgstr "ანიმაციის ფონის წაშლა"
 
 #: plug-ins/common/animation-optimize.c:529
 msgid "Finding animation background"
-msgstr ""
+msgstr "ანიმაციის ფონის ძებნა"
 
 #: plug-ins/common/animation-optimize.c:533
 msgid "Optimizing animation"
-msgstr ""
+msgstr "ანიმაციის ოპტიმიზაცია"
 
 #: plug-ins/common/blinds.c:158
 msgid "_Blinds..."
@@ -1874,21 +1874,31 @@ msgstr "სიგა_ნე:"
 msgid "Create _histogram"
 msgstr "_ჰისტოგრამის შექმნა"
 
-#: plug-ins/common/file-aa.c:130
+#: plug-ins/common/file-aa.c:131 plug-ins/common/file-aa.c:133
 msgid "ASCII art"
 msgstr ""
 
-#: plug-ins/common/file-aa.c:206
+#: plug-ins/common/file-aa.c:136
+msgid "Saves grayscale image in various text formats"
+msgstr ""
+
+#: plug-ins/common/file-aa.c:138
+msgid ""
+"This plug-in uses aalib to save grayscale image as ascii art into a variety "
+"of text formats"
+msgstr ""
+
+#: plug-ins/common/file-aa.c:155
+msgid "_Format"
+msgstr "_ფორმატი"
+
+#: plug-ins/common/file-aa.c:156
+msgid "File type to use"
+msgstr ""
+
+#: plug-ins/common/file-aa.c:209
 msgid "ASCII art does not support multiple layers."
 msgstr ""
-
-#: plug-ins/common/file-aa.c:385
-msgid "Export Image as Text"
-msgstr ""
-
-#: plug-ins/common/file-aa.c:393 plug-ins/file-dds/ddswrite.c:2042
-msgid "_Format:"
-msgstr "_ფორმატი:"
 
 #: plug-ins/common/file-cel.c:140 plug-ins/common/file-cel.c:172
 msgid "KISS CEL"
@@ -6899,6 +6909,10 @@ msgstr "_შეკუმშვა:"
 #: plug-ins/file-dds/ddswrite.c:2020
 msgid "Use _perceptual error metric"
 msgstr ""
+
+#: plug-ins/file-dds/ddswrite.c:2042
+msgid "_Format:"
+msgstr "_ფორმატი:"
 
 #: plug-ins/file-dds/ddswrite.c:2046
 msgid "Selected layer"
