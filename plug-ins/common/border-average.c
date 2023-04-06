@@ -63,19 +63,19 @@ static GimpValueArray * border_average_run                    (GimpProcedure    
                                                                gpointer              run_data);
 
 
-static void      borderaverage        (GeglBuffer   *buffer,
+static void      borderaverage        (GObject      *config,
+                                       GeglBuffer   *buffer,
                                        GimpDrawable *drawable,
                                        GimpRGB      *result);
 
-static gboolean  borderaverage_dialog (GimpImage    *image,
-                                       GimpDrawable *drawable);
+static gboolean  borderaverage_dialog (GimpProcedure *procedure,
+                                       GObject       *config,
+                                       GimpImage     *image,
+                                       GimpDrawable  *drawable);
 
 static void      add_new_color        (const guchar *buffer,
                                        gint         *cube,
                                        gint          bucket_expo);
-
-static void      thickness_callback   (GtkWidget    *widget,
-                                       gpointer      data);
 
 
 G_DEFINE_TYPE (BorderAverage, border_average, GIMP_TYPE_PLUG_IN)
@@ -83,21 +83,6 @@ G_DEFINE_TYPE (BorderAverage, border_average, GIMP_TYPE_PLUG_IN)
 GIMP_MAIN (BORDER_AVERAGE_TYPE)
 DEFINE_STD_SET_I18N
 
-
-static gint  borderaverage_thickness       = 3;
-static gint  borderaverage_bucket_exponent = 4;
-
-struct borderaverage_data
-{
-  gint  thickness;
-  gint  bucket_exponent;
-}
-
-static borderaverage_data =
-{
-  3,
-  4
-};
 
 static void
 border_average_class_init (BorderAverageClass *klass)
@@ -149,19 +134,24 @@ border_average_create_procedure (GimpPlugIn  *plug_in,
                                       "1998");
 
       GIMP_PROC_ARG_INT (procedure, "thickness",
-                         "Border size to take in count",
-                         "Border size to take in count",
+                         _("_Thickness"),
+                         _("Border size to take in count"),
                          0, G_MAXINT, 3,
                          G_PARAM_READWRITE);
+      GIMP_PROC_AUX_ARG_UNIT (procedure, "thickness-unit",
+                              _("Thickness unit of measure"),
+                              _("Border size unit of measure"),
+                              TRUE, TRUE, GIMP_UNIT_PIXEL,
+                              GIMP_PARAM_READWRITE);
       GIMP_PROC_ARG_INT (procedure, "bucket-exponent",
-                         "Bits for bucket size (default=4: 16 Levels)",
-                         "Bits for bucket size (default=4: 16 Levels)",
+                         _("Bucket Si_ze"),
+                         _("Bits for bucket size (default=4: 16 Levels)"),
                          0, G_MAXINT, 4,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_VAL_RGB (procedure, "borderaverage",
-                         "The average color of the specified border.",
-                         "The average color of the specified border.",
+                         _("The average color of the specified border."),
+                         _("The average color of the specified border."),
                          TRUE, NULL,
                          G_PARAM_READWRITE);
     }
@@ -179,11 +169,12 @@ border_average_run (GimpProcedure        *procedure,
                     const GimpValueArray *args,
                     gpointer              run_data)
 {
-  GimpDrawable      *drawable;
-  GimpValueArray    *return_vals = NULL;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRGB            result_color = { 0.0, };
-  GeglBuffer        *buffer;
+  GimpProcedureConfig *config;
+  GimpDrawable        *drawable;
+  GimpValueArray      *return_vals = NULL;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpRGB              result_color = { 0.0, };
+  GeglBuffer          *buffer;
 
   gegl_init (NULL, NULL);
 
@@ -204,32 +195,22 @@ border_average_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
+
   buffer = gimp_drawable_get_buffer (drawable);
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &borderaverage_data);
-      borderaverage_thickness       = borderaverage_data.thickness;
-      borderaverage_bucket_exponent = borderaverage_data.bucket_exponent;
-      if (! borderaverage_dialog (image, drawable))
+      if (! borderaverage_dialog (procedure, G_OBJECT (config),
+                                  image, drawable))
         status = GIMP_PDB_EXECUTION_ERROR;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       if (gimp_value_array_length (args) != 2)
         status = GIMP_PDB_CALLING_ERROR;
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          borderaverage_thickness       = GIMP_VALUES_GET_INT (args, 0);
-          borderaverage_bucket_exponent = GIMP_VALUES_GET_INT (args, 1);
-        }
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &borderaverage_data);
-      borderaverage_thickness       = borderaverage_data.thickness;
-      borderaverage_bucket_exponent = borderaverage_data.bucket_exponent;
       break;
 
     default:
@@ -242,19 +223,10 @@ border_average_run (GimpProcedure        *procedure,
       if (gimp_drawable_is_rgb (drawable))
         {
           gimp_progress_init ( _("Border Average"));
-          borderaverage (buffer, drawable, &result_color);
+          borderaverage (G_OBJECT (config), buffer, drawable, &result_color);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
-            {
-              gimp_context_set_foreground (&result_color);
-            }
-          if (run_mode == GIMP_RUN_INTERACTIVE)
-            {
-              borderaverage_data.thickness       = borderaverage_thickness;
-              borderaverage_data.bucket_exponent = borderaverage_bucket_exponent;
-              gimp_set_data (PLUG_IN_PROC,
-                             &borderaverage_data, sizeof (borderaverage_data));
-            }
+            gimp_context_set_foreground (&result_color);
         }
       else
         {
@@ -266,6 +238,9 @@ border_average_run (GimpProcedure        *procedure,
 
   return_vals = gimp_procedure_new_return_values (procedure, status, NULL);
 
+  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
+  g_object_unref (config);
+
   if (status == GIMP_PDB_SUCCESS)
     GIMP_VALUES_SET_RGB (return_vals, 1, &result_color);
 
@@ -274,7 +249,8 @@ border_average_run (GimpProcedure        *procedure,
 
 
 static void
-borderaverage (GeglBuffer   *buffer,
+borderaverage (GObject      *config,
+               GeglBuffer   *buffer,
                GimpDrawable *drawable,
                GimpRGB      *result)
 {
@@ -285,6 +261,13 @@ borderaverage (GeglBuffer   *buffer,
   gint           *cube;
   gint            i, j, k;
   GeglRectangle   border[4];
+  gint            borderaverage_thickness;
+  gint            borderaverage_bucket_exponent;
+
+  g_object_get (config,
+                "thickness", &borderaverage_thickness,
+                "bucket-exponent", &borderaverage_bucket_exponent,
+                NULL);
 
   if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
@@ -404,35 +387,23 @@ add_new_color (const guchar *buffer,
 }
 
 static gboolean
-borderaverage_dialog (GimpImage    *image,
-                      GimpDrawable *drawable)
+borderaverage_dialog (GimpProcedure *procedure,
+                      GObject       *config,
+                      GimpImage     *image,
+                      GimpDrawable  *drawable)
 {
   GtkWidget    *dialog;
-  GtkWidget    *frame;
-  GtkWidget    *main_vbox;
-  GtkWidget    *hbox;
-  GtkWidget    *label;
+  GtkListStore *store;
   GtkWidget    *size_entry;
-  GimpUnit      unit;
-  GtkWidget    *combo;
-  GtkSizeGroup *group;
   gboolean      run;
   gdouble       xres, yres;
   GeglBuffer   *buffer = NULL;
 
-  const gchar *labels[] =
-    { "1", "2", "4", "8", "16", "32", "64", "128", "256" };
-
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Border Average"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
-
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-
-                            NULL);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Border Average"));
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -441,39 +412,17 @@ borderaverage_dialog (GimpImage    *image,
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "border-size-label",
+                                   _("Border Size"));
 
-  frame = gimp_frame_new (_("Border Size"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new_with_mnemonic (_("_Thickness:"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-  gtk_size_group_add_widget (group, label);
-  g_object_unref (group);
-
-  /*  Get the image resolution and unit  */
+  /*  Get the image resolution  */
   gimp_image_get_resolution (image, &xres, &yres);
-  unit = gimp_image_get_unit (image);
-
-  size_entry = gimp_size_entry_new (1, unit, "%a", TRUE, TRUE, FALSE, 4,
-                                    GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  gtk_box_pack_start (GTK_BOX (hbox), size_entry, FALSE, FALSE, 0);
-
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);
+  size_entry = gimp_procedure_dialog_get_size_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                     "thickness", TRUE,
+                                                     "thickness-unit", "%a",
+                                                     GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                                     xres);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
   buffer = gimp_drawable_get_buffer (drawable);
@@ -481,56 +430,38 @@ borderaverage_dialog (GimpImage    *image,
     gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0,
                               MIN (gegl_buffer_get_width (buffer),
                                    gegl_buffer_get_height (buffer)));
-
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0,
                                          1.0, 256.0);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_entry), 0,
-                              (gdouble) borderaverage_thickness);
-  g_signal_connect (size_entry, "value-changed",
-                    G_CALLBACK (thickness_callback),
-                    NULL);
-  gtk_widget_show (size_entry);
 
-  frame = gimp_frame_new (_("Number of Colors"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "border-size-frame", "border-size-label",
+                                    FALSE, "thickness");
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "bucket-size-label",
+                                   _("Number of Colors"));
 
-  label = gtk_label_new_with_mnemonic (_("_Bucket size:"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  store = gimp_int_store_new ("1",   0, "2",   1, "4",   2, "8",   3,
+                              "16",  4, "32",  5, "64",  6, "128", 7,
+                              "256", 8, NULL);
+  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "bucket-exponent",
+                                       GIMP_INT_STORE (store));
 
-  gtk_size_group_add_widget (group, label);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "bucket-size-frame", "bucket-size-label",
+                                    FALSE, "bucket-exponent");
 
-  combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (labels), labels);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                 borderaverage_bucket_exponent);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
-                    &borderaverage_bucket_exponent);
-
-  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "border-size-frame",
+                              "bucket-size-frame",
+                              NULL);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
   return run;
-}
-
-static void
-thickness_callback (GtkWidget *widget,
-                    gpointer   data)
-{
-  borderaverage_thickness =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
 }
