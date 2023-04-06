@@ -3236,6 +3236,7 @@ gimp_prop_size_entry_new (GObject                   *config,
   gdouble     lower;
   gdouble     upper;
   GimpUnit    unit_value;
+  gint        scaled_resolution;
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
@@ -3278,11 +3279,15 @@ gimp_prop_size_entry_new (GObject                   *config,
       show_percent    = FALSE;
     }
 
+  if (unit_value != GIMP_UNIT_PIXEL)
+    scaled_resolution = gimp_unit_get_scaled_digits (unit_value, resolution);
+  else
+    scaled_resolution = (gint) resolution;
+
   entry = gimp_size_entry_new (1, unit_value, unit_format,
                                show_pixels, show_percent, FALSE,
                                gimp_prop_size_entry_num_chars (lower, upper) + 1 +
-                               gimp_unit_get_scaled_digits (unit_value, resolution),
-                               update_policy);
+                               scaled_resolution, update_policy);
 
   set_param_spec (NULL,
                   gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (entry), 0),
