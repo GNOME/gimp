@@ -592,7 +592,7 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
   GtkWidget       *dialog;
   GimpMessageBox  *box;
 
-  g_object_get (action, "action-group", &group, NULL);
+  group = gimp_action_get_group (action);
 
   label = gimp_strip_uline (gimp_action_get_label (action));
 
@@ -617,9 +617,9 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
                              NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gimp_action_view_conflict_response),
@@ -638,8 +638,6 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
 
   g_free (label);
   g_free (accel_string);
-
-  g_object_unref (group);
 
   gtk_widget_show (dialog);
 }
@@ -769,17 +767,12 @@ gimp_action_view_accel_edited (GtkCellRendererAccel *accel,
             }
 
           if (conflict_action)
-            {
-              gimp_action_view_conflict_confirm (view, conflict_action, action,
-                                                 accel_key, accel_mask);
-              g_object_unref (conflict_action);
-            }
+            gimp_action_view_conflict_confirm (view, conflict_action, action,
+                                               accel_key, accel_mask);
           else
-            {
-              gimp_message_literal (view->gimp,
-                                    G_OBJECT (view), GIMP_MESSAGE_ERROR,
-                                    _("Changing shortcut failed."));
-            }
+            gimp_message_literal (view->gimp,
+                                  G_OBJECT (view), GIMP_MESSAGE_ERROR,
+                                  _("Changing shortcut failed."));
         }
       else
         {

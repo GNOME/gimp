@@ -58,6 +58,7 @@ struct _GimpActionPrivate
   GimpContext           *context;
   /* This recursive pointer is needed for the finalize(). */
   GimpAction            *action;
+  GimpActionGroup       *group;
 
   gboolean               sensitive;
   gchar                 *disable_reason;
@@ -202,6 +203,7 @@ gimp_action_init (GimpAction *action)
   priv = GET_PRIVATE (action);
 
   priv->action          = action;
+  priv->group           = NULL;
   priv->sensitive       = TRUE;
   priv->visible         = TRUE;
   priv->label           = NULL;
@@ -255,6 +257,12 @@ const gchar *
 gimp_action_get_name (GimpAction *action)
 {
   return gimp_object_get_name (GIMP_OBJECT (action));
+}
+
+GimpActionGroup *
+gimp_action_get_group (GimpAction *action)
+{
+  return GET_PRIVATE (action)->group;
 }
 
 void
@@ -1025,6 +1033,22 @@ gimp_action_set_proxy (GimpAction *action,
     }
 
   g_clear_object (&pixbuf);
+}
+
+
+/*  Friend functions  */
+
+/* This function is only meant to be run by the GimpActionGroup class. */
+void
+gimp_action_set_group (GimpAction      *action,
+                       GimpActionGroup *group)
+{
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
+  /* We can't change groups! */
+  g_return_if_fail (priv->group == NULL);
+
+  priv->group = group;
 }
 
 

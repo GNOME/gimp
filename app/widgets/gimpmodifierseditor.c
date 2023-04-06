@@ -753,11 +753,9 @@ gimp_modifiers_editor_search_response (GtkWidget           *dialog,
 
       if (action)
         {
-          GtkActionGroup *group;
+          GimpActionGroup *group;
 
-          g_object_get (action,
-                        "action-group", &group,
-                        NULL);
+          group = gimp_action_get_group (action);
 
           if (group)
             {
@@ -787,8 +785,6 @@ gimp_modifiers_editor_search_response (GtkWidget           *dialog,
               label = gtk_label_new (gimp_action_get_name (action));
               gtk_container_add (GTK_CONTAINER (action_button), label);
               gtk_widget_show (label);
-
-              g_object_unref (group);
             }
         }
 
