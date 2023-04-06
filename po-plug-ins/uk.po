@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-05 02:06+0000\n"
-"PO-Revision-Date: 2023-04-05 20:12+0300\n"
+"POT-Creation-Date: 2023-04-06 15:56+0000\n"
+"PO-Revision-Date: 2023-04-06 20:33+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
@@ -1038,7 +1038,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
 #: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
-#: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
+#: plug-ins/file-bmp/bmp-save.c:341 plug-ins/file-fits/fits.c:513
 #: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:428
 #: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
 #: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
@@ -1472,7 +1472,8 @@ msgstr "Вигнути зображення, використовуючи дві
 
 #: plug-ins/common/curve-bend.c:697
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr ""
+"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:711
 msgid "Cannot operate on layers with masks."
@@ -1923,11 +1924,10 @@ msgid ""
 "This plug-in uses aalib to save grayscale image as ascii art into a variety "
 "of text formats"
 msgstr ""
-"Цей додаток використовує aalib для збереження зображення у відтінках сірого у"
-" формі ascii-арту у спектрі текстових форматів"
+"Цей додаток використовує aalib для збереження зображення у відтінках сірого "
+"у формі ascii-арту у спектрі текстових форматів"
 
 #: plug-ins/common/file-aa.c:155
-#| msgid "_Format:"
 msgid "_Format"
 msgstr "_Формат"
 
@@ -2067,7 +2067,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
 #: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
 #: plug-ins/common/file-xbm.c:1048 plug-ins/common/file-xpm.c:699
-#: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:332
+#: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
 #: plug-ins/file-fits/fits.c:504 plug-ins/file-fli/fli-gimp.c:784
 #: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1324
 #: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
@@ -2083,7 +2083,8 @@ msgstr "Програма на C"
 
 #: plug-ins/common/file-csource.c:124
 msgid "Dump image data in RGB(A) format for C source"
-msgstr "Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
+msgstr ""
+"Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
 
 #: plug-ins/common/file-csource.c:126
 msgid "CSource cannot be run non-interactively."
@@ -3758,11 +3759,13 @@ msgstr ""
 #: plug-ins/common/file-png.c:1459
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr ""
+"Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: plug-ins/common/file-png.c:1468
 #, c-format
-msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgid ""
+"Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -4787,7 +4790,8 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:729
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr ""
+"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:736
 msgid "Retry without limits preventing to parse huge data?"
@@ -6977,33 +6981,20 @@ msgstr "Непідтримувана чи некоректна розрядні�
 msgid "The bitmap ends unexpectedly."
 msgstr "Дані зображення несподівано закінчились."
 
-#: plug-ins/file-bmp/bmp-save.c:198 plug-ins/file-bmp/bmp-save.c:231
+#: plug-ins/file-bmp/bmp-save.c:199 plug-ins/file-bmp/bmp-save.c:232
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
 "Неможливо зберегти індексоване зображення з прозорістю у файл формату BMP."
 
-#: plug-ins/file-bmp/bmp-save.c:200 plug-ins/file-bmp/bmp-save.c:233
+#: plug-ins/file-bmp/bmp-save.c:201 plug-ins/file-bmp/bmp-save.c:234
 msgid "Alpha channel will be ignored."
 msgstr "Альфа-канал буде проігнорований."
 
-#: plug-ins/file-bmp/bmp-save.c:990
-msgid "Export Image as BMP"
-msgstr "Експортувати зображення як BMP"
-
-#: plug-ins/file-bmp/bmp-save.c:1002
-msgid "_Run-Length Encoded"
-msgstr "_RLE-кодування"
-
-#. Compatibility Options
 #: plug-ins/file-bmp/bmp-save.c:1009
 msgid "Compatibility"
 msgstr "Сумісність"
 
 #: plug-ins/file-bmp/bmp-save.c:1014
-msgid "_Write color space information"
-msgstr "З_аписувати інформацію про простір кольору"
-
-#: plug-ins/file-bmp/bmp-save.c:1016
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Disabling this "
@@ -7013,32 +7004,28 @@ msgstr ""
 "про простір кольору. GIMP типово записує цю інформацію. Вимикання цього "
 "параметра змусить його не записувати цієї інформації у файл."
 
-#. RGB Encoding Pptions
+#. RGB Encoding Options
 #: plug-ins/file-bmp/bmp-save.c:1025
-msgid "RGB Encoding"
-msgstr "Кодування RGB"
-
-#: plug-ins/file-bmp/bmp-save.c:1032
 msgid "16 bit (R5 G6 B5)"
 msgstr "16-бітове (R5 G6 B5)"
 
-#: plug-ins/file-bmp/bmp-save.c:1033
+#: plug-ins/file-bmp/bmp-save.c:1026
 msgid "16 bit (A1 R5 G5 B5)"
 msgstr "16-бітове (A1 R5 G5 B5)"
 
-#: plug-ins/file-bmp/bmp-save.c:1034
+#: plug-ins/file-bmp/bmp-save.c:1027
 msgid "16 bit (X1 R5 G5 B5)"
 msgstr "16-бітове (X1 R5 G5 B5)"
 
-#: plug-ins/file-bmp/bmp-save.c:1035
+#: plug-ins/file-bmp/bmp-save.c:1028
 msgid "24 bit (R8 G8 B8)"
 msgstr "24-бітове (R8 G8 B8)"
 
-#: plug-ins/file-bmp/bmp-save.c:1036
+#: plug-ins/file-bmp/bmp-save.c:1029
 msgid "32 bit (A8 R8 G8 B8)"
 msgstr "32-бітове (A8 R8 G8 B8)"
 
-#: plug-ins/file-bmp/bmp-save.c:1037
+#: plug-ins/file-bmp/bmp-save.c:1030
 msgid "32 bit (X8 R8 G8 B8)"
 msgstr "32-бітове (X8 R8 G8 B8)"
 
@@ -7046,7 +7033,57 @@ msgstr "32-бітове (X8 R8 G8 B8)"
 msgid "Windows BMP image"
 msgstr "Зображення Windows BMP"
 
-#: plug-ins/file-bmp/bmp.c:294
+#: plug-ins/file-bmp/bmp.c:155 plug-ins/file-bmp/bmp.c:156
+#| msgid "Loads files of Windows ANI file format"
+msgid "Loads files of Windows BMP file format"
+msgstr "Завантажує файли у форматі BMP Windows"
+
+#: plug-ins/file-bmp/bmp.c:180
+#| msgid "PBM"
+msgid "BMP"
+msgstr "BMP"
+
+#: plug-ins/file-bmp/bmp.c:183 plug-ins/file-bmp/bmp.c:184
+#| msgid "Saves files in Windows ANI file format"
+msgid "Saves files in Windows BMP file format"
+msgstr "Зберігає файли у форматі BMP Windows"
+
+#: plug-ins/file-bmp/bmp.c:197
+#| msgid "R_un-Length Encoded"
+msgid "Ru_n-Length Encoded"
+msgstr "_RLE-кодування"
+
+#: plug-ins/file-bmp/bmp.c:198
+msgid ""
+"Use run-length-encoding compression (only valid for 4 and 8-bit indexed "
+"images)"
+msgstr ""
+"Використати стискання RLE (чинне лише для 4- або 8-бітових індексованих"
+" зображень)"
+
+#: plug-ins/file-bmp/bmp.c:204
+msgid "_Write color space information"
+msgstr "З_аписувати інформацію про простір кольору"
+
+#: plug-ins/file-bmp/bmp.c:205
+msgid "Whether or not to write BITMAPV5HEADER color space data"
+msgstr "Визначає, чи слід записувати дані простору кольорів BITMAPV5HEADER"
+
+#: plug-ins/file-bmp/bmp.c:211
+#| msgid "_Pixel format"
+msgid "R_GB format"
+msgstr "Формат R_GB"
+
+#: plug-ins/file-bmp/bmp.c:212
+msgid ""
+"Export format for RGB images (0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, "
+"4=RGBA_8888, 5=RGBX_8888)"
+msgstr ""
+"Формат експортування для зображень RGB (0=RGB_565, 1=RGBA_5551, 2=RGB_555,"
+" 3=RGB_888, "
+"4=RGBA_8888, 5=RGBX_8888)"
+
+#: plug-ins/file-bmp/bmp.c:296
 msgid "BMP format does not support multiple layers."
 msgstr "Для формату BMP не передбачено підтримку декількох шарів."
 
@@ -10127,7 +10164,8 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid "Let the direction from the center determine the direction of the stroke"
+msgid ""
+"Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -10238,7 +10276,8 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr ""
+"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -11141,7 +11180,8 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: plug-ins/gradient-flare/gradient-flare.c:3352
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr ""
+"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: plug-ins/gradient-flare/gradient-flare.c:3362
 msgid "Delete Gradient Flare"
@@ -13406,7 +13446,8 @@ msgstr "Альтернативне оточення фільтра:"
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:181
 msgid "A second number of adjacent points to consider when filtering."
-msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr ""
+"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:191
 msgid "Filter Epsilon:"
@@ -13597,6 +13638,15 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Export Image as BMP"
+#~ msgstr "Експортувати зображення як BMP"
+
+#~ msgid "_Run-Length Encoded"
+#~ msgstr "_RLE-кодування"
+
+#~ msgid "RGB Encoding"
+#~ msgstr "Кодування RGB"
 
 #~ msgid "Export Image as Text"
 #~ msgstr "Експортувати зображення як текст"
