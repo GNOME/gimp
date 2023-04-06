@@ -49,7 +49,9 @@ libgimpapptestutils_a_SOURCES = \
 	gimp-app-test-utils.c		\
 	gimp-app-test-utils.h		\
 	gimp-test-session-utils.c	\
-	gimp-test-session-utils.h
+	gimp-test-session-utils.h	\
+	tests.c				\
+	tests.h
 
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
@@ -117,11 +119,11 @@ LDADD = \
 	../paint/libapppaint.a						\
 	../config/libappconfig.a					\
 	../libapp.a							\
-	../gegl/libappgegl.a						\
 	../operations/libappoperations.a				\
 	../operations/layer-modes/libapplayermodes.a			\
 	../operations/layer-modes-legacy/libapplayermodeslegacy.a	\
 	libgimpapptestutils.a						\
+	../gegl/libappgegl.a						\
 	$(libgimpwidgets)						\
 	$(libgimpconfig)						\
 	$(libgimpmath)							\

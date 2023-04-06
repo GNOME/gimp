@@ -62,9 +62,10 @@
 #include "display/gimpdisplayshell-transform.h"
 #include "display/gimpimagewindow.h"
 
-#include "tests.h"
+#include "gimpcoreapp.h"
 
 #include "gimp-app-test-utils.h"
+#include "tests.h"
 
 
 #define ADD_TEST(function) \
@@ -362,8 +363,6 @@ main(int    argc,
   gimp_test_bail_if_no_display ();
   gtk_test_init (&argc, &argv, NULL);
 
-  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
-                                       "app/tests/gimpdir");
   gimp_test_utils_setup_menus_path ();
 
   /* Start up GIMP */
@@ -378,14 +377,11 @@ main(int    argc,
   ADD_TEST (clear_import_file_after_export);
 
   /* Run the tests and return status */
-  result = g_test_run ();
+  g_application_run (gimp->app, 0, NULL);
+  result = gimp_core_app_get_exit_status (GIMP_CORE_APP (gimp->app));
 
-  /* Don't write files to the source dir */
-  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
-                                       "app/tests/gimpdir-output");
-
-  /* Exit properly so we don't break script-fu plug-in wire */
-  gimp_exit (gimp, TRUE);
+  g_application_quit (G_APPLICATION (gimp->app));
+  g_clear_object (&gimp->app);
 
   return result;
 }

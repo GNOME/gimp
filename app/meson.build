@@ -41,7 +41,6 @@ libapp_sources = [
   'language.c',
   'sanity.c',
   'signals.c',
-  'tests.c',
   'unique.c',
   gitversion_h,
   gimpdbusservice_gen,

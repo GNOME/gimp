@@ -67,8 +67,6 @@ libapp_sources = \
 	sanity.h		\
 	signals.c		\
 	signals.h		\
-	tests.c			\
-	tests.h			\
 	unique.c		\
 	unique.h		\
 	gimp-debug.c		\

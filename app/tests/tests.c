@@ -40,6 +40,9 @@
 #include "gegl/gimp-gegl.h"
 
 #include "gimp-log.h"
+#include "gimpcoreapp.h"
+
+#include "gimp-app-test-utils.h"
 #include "tests.h"
 
 #ifdef GDK_WINDOWING_QUARTZ
@@ -105,11 +108,44 @@ gimp_osx_focus_window (gpointer user_data)
 }
 #endif
 
+static void
+gimp_test_app_activate_callback (GimpCoreApp *app,
+                                 gpointer     user_data)
+{
+  Gimp *gimp = NULL;
+
+  g_return_if_fail (GIMP_IS_CORE_APP (app));
+
+  gimp = gimp_core_app_get_gimp (app);
+
+  gimp_core_app_set_exit_status (app, EXIT_SUCCESS);
+
+  gui_init (gimp, TRUE, NULL, g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"));
+  gimp_init_icon_theme_for_testing ();
+  gimp_initialize (gimp, gimp_status_func_dummy);
+  gimp_restore (gimp, gimp_status_func_dummy, NULL);
+#ifdef GDK_WINDOWING_QUARTZ
+  g_idle_add (gimp_osx_focus_window, NULL);
+#endif
+  gimp->initialized = TRUE;
+  gimp_core_app_set_exit_status (app, g_test_run ());
+
+  /* Don't write files to the source dir */
+  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
+                                       "app/tests/gimpdir-output");
+
+  gimp_exit (gimp, TRUE);
+}
+
 static Gimp *
 gimp_init_for_gui_testing_internal (gboolean  show_gui,
                                     GFile    *gimprc)
 {
   Gimp *gimp;
+
+  /* Load configuration from the source dir */
+  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
+                                       "app/tests/gimpdir");
 
 #if defined (G_OS_WIN32)
   /* g_test_init() sets warnings always fatal, which is a usually a good
@@ -134,18 +170,15 @@ gimp_init_for_gui_testing_internal (gboolean  show_gui,
   gimp = gimp_new ("Unit Tested GIMP", NULL, NULL, FALSE, TRUE, TRUE, !show_gui,
                    FALSE, FALSE, TRUE, FALSE, FALSE,
                    GIMP_STACK_TRACE_QUERY, GIMP_PDB_COMPAT_OFF);
+  gimp->app = gimp_app_new (gimp, TRUE, FALSE, FALSE, NULL, NULL, NULL);
 
   gimp_set_show_gui (gimp, show_gui);
   gimp_load_config (gimp, gimprc, NULL);
   gimp_gegl_init (gimp);
-  gui_init (gimp, TRUE, NULL, g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"));
-  gimp_init_icon_theme_for_testing ();
-  gimp_initialize (gimp, gimp_status_func_dummy);
-  gimp_restore (gimp, gimp_status_func_dummy, NULL);
-#ifdef GDK_WINDOWING_QUARTZ
-  g_idle_add (gimp_osx_focus_window, NULL);
-#endif
 
+  g_signal_connect (gimp->app, "activate",
+                    G_CALLBACK (gimp_test_app_activate_callback),
+                    NULL);
   return gimp;
 }
 
