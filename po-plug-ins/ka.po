@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-05 02:06+0000\n"
-"PO-Revision-Date: 2023-04-05 06:24+0200\n"
-"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
+"POT-Creation-Date: 2023-04-05 19:06+0000\n"
+"PO-Revision-Date: 2023-04-06 05:33+0200\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>,\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
@@ -1017,7 +1017,7 @@ msgstr ""
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
 #: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
-#: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
+#: plug-ins/file-bmp/bmp-save.c:341 plug-ins/file-fits/fits.c:513
 #: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:428
 #: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
 #: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
@@ -2025,7 +2025,7 @@ msgstr ""
 #: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
 #: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
 #: plug-ins/common/file-xbm.c:1048 plug-ins/common/file-xpm.c:699
-#: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:332
+#: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
 #: plug-ins/file-fits/fits.c:504 plug-ins/file-fli/fli-gimp.c:784
 #: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1324
 #: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
@@ -6742,64 +6742,47 @@ msgstr ""
 msgid "The bitmap ends unexpectedly."
 msgstr ""
 
-#: plug-ins/file-bmp/bmp-save.c:198 plug-ins/file-bmp/bmp-save.c:231
+#: plug-ins/file-bmp/bmp-save.c:199 plug-ins/file-bmp/bmp-save.c:232
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
 
-#: plug-ins/file-bmp/bmp-save.c:200 plug-ins/file-bmp/bmp-save.c:233
+#: plug-ins/file-bmp/bmp-save.c:201 plug-ins/file-bmp/bmp-save.c:234
 msgid "Alpha channel will be ignored."
 msgstr ""
 
-#: plug-ins/file-bmp/bmp-save.c:990
-msgid "Export Image as BMP"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp-save.c:1002
-msgid "_Run-Length Encoded"
-msgstr ""
-
-#. Compatibility Options
 #: plug-ins/file-bmp/bmp-save.c:1009
 msgid "Compatibility"
 msgstr "თავსებადობა"
 
 #: plug-ins/file-bmp/bmp-save.c:1014
-msgid "_Write color space information"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp-save.c:1016
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Disabling this "
 "option will cause GIMP to not write color space information to the file."
 msgstr ""
 
-#. RGB Encoding Pptions
+#. RGB Encoding Options
 #: plug-ins/file-bmp/bmp-save.c:1025
-msgid "RGB Encoding"
-msgstr ""
-
-#: plug-ins/file-bmp/bmp-save.c:1032
 msgid "16 bit (R5 G6 B5)"
 msgstr "16 ბიტიანი (R5 G6 B5)"
 
-#: plug-ins/file-bmp/bmp-save.c:1033
+#: plug-ins/file-bmp/bmp-save.c:1026
 msgid "16 bit (A1 R5 G5 B5)"
 msgstr "16 ბიტიანი (A1 R5 G5 B5)"
 
-#: plug-ins/file-bmp/bmp-save.c:1034
+#: plug-ins/file-bmp/bmp-save.c:1027
 msgid "16 bit (X1 R5 G5 B5)"
 msgstr "16 ბიტიანი (X1 R5 G5 B5)"
 
-#: plug-ins/file-bmp/bmp-save.c:1035
+#: plug-ins/file-bmp/bmp-save.c:1028
 msgid "24 bit (R8 G8 B8)"
 msgstr "24 ბიტიანი (R8 G8 B8)"
 
-#: plug-ins/file-bmp/bmp-save.c:1036
+#: plug-ins/file-bmp/bmp-save.c:1029
 msgid "32 bit (A8 R8 G8 B8)"
 msgstr "32 ბიტიანი (A8 R8 G8 B8)"
 
-#: plug-ins/file-bmp/bmp-save.c:1037
+#: plug-ins/file-bmp/bmp-save.c:1030
 msgid "32 bit (X8 R8 G8 B8)"
 msgstr "32 ბიტიანი (X8 R8 G8 B8)"
 
@@ -6807,7 +6790,48 @@ msgstr "32 ბიტიანი (X8 R8 G8 B8)"
 msgid "Windows BMP image"
 msgstr ""
 
-#: plug-ins/file-bmp/bmp.c:294
+#: plug-ins/file-bmp/bmp.c:155 plug-ins/file-bmp/bmp.c:156
+msgid "Loads files of Windows BMP file format"
+msgstr ""
+
+#: plug-ins/file-bmp/bmp.c:180
+#| msgid "XMP"
+msgid "BMP"
+msgstr "BMP"
+
+#: plug-ins/file-bmp/bmp.c:183 plug-ins/file-bmp/bmp.c:184
+msgid "Saves files in Windows BMP file format"
+msgstr ""
+
+#: plug-ins/file-bmp/bmp.c:197
+msgid "Ru_n-Length Encoded"
+msgstr ""
+
+#: plug-ins/file-bmp/bmp.c:198
+msgid ""
+"Use run-length-encoding compression (only valid for 4 and 8-bit indexed "
+"images)"
+msgstr ""
+
+#: plug-ins/file-bmp/bmp.c:204
+msgid "_Write color space information"
+msgstr ""
+
+#: plug-ins/file-bmp/bmp.c:205
+msgid "Whether or not to write BITMAPV5HEADER color space data"
+msgstr ""
+
+#: plug-ins/file-bmp/bmp.c:211
+msgid "R_GB format"
+msgstr "R_GB ფორმატი"
+
+#: plug-ins/file-bmp/bmp.c:212
+msgid ""
+"Export format for RGB images (0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, "
+"4=RGBA_8888, 5=RGBX_8888)"
+msgstr ""
+
+#: plug-ins/file-bmp/bmp.c:296
 msgid "BMP format does not support multiple layers."
 msgstr ""
 
