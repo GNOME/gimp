@@ -1220,6 +1220,98 @@ gimp_procedure_dialog_get_scale_entry (GimpProcedureDialog *dialog,
 }
 
 /**
+ * gimp_procedure_dialog_get_size_entry:
+ * @dialog:            the associated #GimpProcedureDialog.
+ * @property:          name of the int property to build an entry for.
+ *                     It must be a property of the #GimpProcedure @dialog
+ *                     has been created for.
+ * @property_is_pixel: when %TRUE, the property value is in pixels,
+ *                     and in the selected unit otherwise.
+ * @unit_property:     name of unit property.
+ * @unit_format:       a printf-like unit-format string used for unit
+ *                     labels.
+ * @update_policy:     how the automatic pixel <-> real-world-unit
+ *                     calculations should be done.
+ * @resolution:        the resolution (in dpi) for the field.
+ *
+ * Creates a new #GimpSizeEntry for @property which must necessarily be
+ * an integer or double property. The associated @unit_property must be
+ * a GimpUnit or integer property.
+ *
+ * If a widget has already been created for this procedure, it will be
+ * returned instead (whatever its actual widget type).
+ *
+ * Returns: (transfer none): the #GtkWidget representing @property. The
+ *                           object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_get_size_entry (GimpProcedureDialog       *dialog,
+                                      const gchar               *property,
+                                      gboolean                   property_is_pixel,
+                                      const gchar               *unit_property,
+                                      const gchar               *unit_format,
+                                      GimpSizeEntryUpdatePolicy  update_policy,
+                                      gdouble                    resolution)
+{
+  GtkWidget    *widget = NULL;
+  GtkWidget    *label  = NULL;
+  GtkSizeGroup *group;
+  GParamSpec   *pspec;
+  GParamSpec   *pspec_unit;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
+  g_return_val_if_fail (property != NULL, NULL);
+  g_return_val_if_fail (unit_property != NULL, NULL);
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                        property);
+  pspec_unit = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                             unit_property);
+
+  if (! pspec)
+    {
+      g_warning ("%s: parameter %s does not exist.",
+                 G_STRFUNC, property);
+      return NULL;
+    }
+  if (! pspec_unit)
+    {
+      g_warning ("%s: unit parameter %s does not exist.",
+                 G_STRFUNC, unit_property);
+      return NULL;
+    }
+
+  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT ||
+                        G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_DOUBLE, NULL);
+  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec_unit) == GIMP_TYPE_PARAM_UNIT, NULL);
+
+  /* First check if it already exists. */
+  widget = g_hash_table_lookup (dialog->priv->widgets, property);
+
+  if (widget)
+    return widget;
+
+  widget = gimp_prop_size_entry_new (G_OBJECT (dialog->priv->config), property,
+                                     property_is_pixel, unit_property,
+                                     unit_format, update_policy, resolution);
+  /* Add label */
+  label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (widget),
+                                        g_param_spec_get_nick (pspec), 1, 0, 0.0);
+  gtk_widget_set_margin_end (label, 6);
+
+  group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  gtk_size_group_add_widget (group, label);
+  g_object_unref (group);
+
+  g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
+  if (g_object_is_floating (widget))
+    g_object_ref_sink (widget);
+
+  return widget;
+}
+
+/**
  * gimp_procedure_dialog_get_label:
  * @dialog:   the #GimpProcedureDialog.
  * @label_id: the label for the #GtkLabel.

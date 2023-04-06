@@ -94,6 +94,14 @@ GtkWidget * gimp_procedure_dialog_get_spin_scale    (GimpProcedureDialog *dialog
 GtkWidget * gimp_procedure_dialog_get_scale_entry   (GimpProcedureDialog *dialog,
                                                      const gchar         *property,
                                                      gdouble              factor);
+GtkWidget * gimp_procedure_dialog_get_size_entry    (GimpProcedureDialog *dialog,
+                                                     const gchar         *property,
+                                                     gboolean             property_is_pixel,
+                                                     const gchar         *unit_property,
+                                                     const gchar         *unit_format,
+                                                     GimpSizeEntryUpdatePolicy
+                                                                          update_policy,
+                                                     gdouble              resolution);
 GtkWidget * gimp_procedure_dialog_get_label         (GimpProcedureDialog *dialog,
                                                      const gchar         *label_id,
                                                      const gchar         *text);

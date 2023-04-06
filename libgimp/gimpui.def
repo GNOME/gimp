@@ -44,6 +44,7 @@ EXPORTS
 	gimp_procedure_dialog_get_int_radio
 	gimp_procedure_dialog_get_label
 	gimp_procedure_dialog_get_scale_entry
+	gimp_procedure_dialog_get_size_entry
 	gimp_procedure_dialog_get_spin_scale
 	gimp_procedure_dialog_get_type
 	gimp_procedure_dialog_get_widget
