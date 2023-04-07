@@ -69,6 +69,11 @@ struct _GimpUIManager
 
   GList        *ui_items;
   GList        *action_groups;
+
+  /* Special property which should be set to TRUE only for the singleton UI
+   * manager of the top menu bar.
+   */
+  gboolean      store_action_paths;
 };
 
 struct _GimpUIManagerClass

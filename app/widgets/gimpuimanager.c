@@ -199,9 +199,10 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
 static void
 gimp_ui_manager_init (GimpUIManager *manager)
 {
-  manager->name          = NULL;
-  manager->gimp          = NULL;
-  manager->action_groups = NULL;
+  manager->name               = NULL;
+  manager->gimp               = NULL;
+  manager->action_groups      = NULL;
+  manager->store_action_paths = FALSE;
 }
 
 static void

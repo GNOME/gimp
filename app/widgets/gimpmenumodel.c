@@ -653,6 +653,12 @@ gimp_menu_model_initialize (GimpMenuModel *model,
 
               action = gimp_ui_manager_find_action (model->priv->manager, NULL, action_name);
 
+              if (model->priv->manager->store_action_paths)
+                /* Special-case the main menu manager when constructing it as
+                 * this is the only one which should set the menu path.
+                 */
+                gimp_action_set_menu_path (action, gimp_menu_model_get_path (model));
+
               g_signal_connect_object (action,
                                        "notify::visible",
                                        G_CALLBACK (gimp_menu_model_action_notify_visible),
@@ -850,6 +856,9 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
       item = g_menu_item_new (gimp_action_get_label (GIMP_ACTION (action)), detailed_action_name);
       /* TODO: add also G_MENU_ATTRIBUTE_ICON attribute? */
       g_free (detailed_action_name);
+
+      if (model->priv->manager->store_action_paths)
+        gimp_action_set_menu_path (GIMP_ACTION (action), gimp_menu_model_get_path (model));
 
       if (placeholder_key)
         {

@@ -233,8 +233,9 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
   gchar         *label;
   gchar         *escaped_label    = NULL;
   const gchar   *icon_name;
-  gchar         *escaped_accel    = NULL;
-  gboolean       has_shortcut     = FALSE;
+  gchar         *shortcut_helper  = NULL;
+  const gchar   *menu_path;
+  gchar         *menu_path_helper = NULL;
   const gchar   *tooltip;
   gchar         *escaped_tooltip  = NULL;
   gboolean       has_tooltip      = FALSE;
@@ -267,10 +268,45 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
   accels = gimp_action_get_display_accels (action);
   if (accels && accels[0])
     {
-      escaped_accel = g_markup_escape_text (accels[0], -1);
-      has_shortcut = TRUE;
+      gchar *formatted_label;
+      gchar *formatted_value;
+
+      /* TRANSLATORS: a helper label indicating the shortcut for an action,
+       * it will be used within the generic "%s: %s" (also localized) string.
+       * e.g.: "shortcut: Ctrl+Alt+O"
+       */
+      formatted_label = g_markup_printf_escaped ("<u>%s</u>", _("shortcut"));
+      formatted_value = g_markup_escape_text (accels[0], -1);
+
+      /* TRANSLATORS: generic "title: value" label which will be used in various ways. */
+      shortcut_helper = g_strdup_printf (_("%s: %s"), formatted_label, formatted_value);
+
+      g_free (formatted_label);
+      g_free (formatted_value);
     }
   g_strfreev (accels);
+
+  if ((menu_path = gimp_action_get_menu_path (action)) != NULL)
+    {
+      if (strlen (menu_path) > 0)
+        {
+          gchar *formatted_label;
+          gchar *formatted_value;
+
+          /* TRANSLATORS: a helper label indicating the menu path for an action,
+           * it will be used within the generic "%s: %s" (also localized) string.
+           * e.g.: "Menu: Filters > Generic"
+           */
+          formatted_label = g_markup_printf_escaped ("<u>%s</u>", _("menu"));
+          formatted_value = g_markup_escape_text (menu_path, -1);
+
+          /* TRANSLATORS: generic "title: value" label which will be used in various ways. */
+          menu_path_helper = g_strdup_printf (_("%s: %s"), formatted_label, formatted_value);
+
+          g_free (formatted_label);
+          g_free (formatted_value);
+        }
+    }
 
   tooltip = gimp_action_get_tooltip (action);
   if (tooltip != NULL)
@@ -287,12 +323,18 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
 
   markup = g_strdup_printf ("%s"                                           /* Label           */
                             "<small>%s%s"                                  /* Shortcut        */
+                            "%s%s"                                         /* Menu path       */
                             "%s<span weight='light'>%s</span>"             /* Tooltip         */
                             "%s<i><span weight='ultralight'>%s</span></i>" /* Inactive reason */
                             "</small>",
                             escaped_label,
-                            has_shortcut ? " | " : "",
-                            has_shortcut ? escaped_accel : "",
+
+                            shortcut_helper ? " | " : "",
+                            shortcut_helper ? shortcut_helper : "",
+
+                            menu_path_helper ? " | " : "",
+                            menu_path_helper ? menu_path_helper : "",
+
                             has_tooltip ? "\n" : "",
                             has_tooltip ? escaped_tooltip : "",
                             escaped_reason ? "\n" : "",
@@ -339,10 +381,11 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
   g_free (markup);
   g_free (action_name);
   g_free (label);
-  g_free (escaped_accel);
   g_free (escaped_label);
   g_free (escaped_tooltip);
   g_free (escaped_reason);
+  g_free (menu_path_helper);
+  g_free (shortcut_helper);
 }
 
 /************ Private Functions ****************/

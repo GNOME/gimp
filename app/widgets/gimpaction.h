@@ -115,6 +115,8 @@ const gchar    ** gimp_action_get_accels          (GimpAction      *action);
 gchar **          gimp_action_get_display_accels  (GimpAction      *action);
 gboolean          gimp_action_use_default_accels  (GimpAction      *action);
 
+const gchar     * gimp_action_get_menu_path       (GimpAction      *action);
+
 void              gimp_action_activate            (GimpAction      *action);
 
 gint              gimp_action_name_compare        (GimpAction      *action1,
@@ -148,6 +150,8 @@ void              gimp_action_set_group           (GimpAction      *action,
                                                    GimpActionGroup *group);
 void              gimp_action_set_default_accels  (GimpAction      *action,
                                                    const gchar    **accels);
+void              gimp_action_set_menu_path       (GimpAction      *action,
+                                                   const gchar     *menu_path);
 
 
 #endif  /* __GIMP_ACTION_H__ */

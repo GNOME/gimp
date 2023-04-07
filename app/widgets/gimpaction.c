@@ -73,6 +73,8 @@ struct _GimpActionPrivate
   gchar                **accels;
   gchar                **default_accels;
 
+  gchar                 *menu_path;
+
   GimpRGB               *color;
   GimpViewable          *viewable;
   PangoEllipsizeMode     ellipsize;
@@ -213,6 +215,7 @@ gimp_action_init (GimpAction *action)
   priv->icon            = NULL;
   priv->accels          = NULL;
   priv->default_accels  = NULL;
+  priv->menu_path       = NULL;
   priv->ellipsize       = PANGO_ELLIPSIZE_NONE;
   priv->max_width_chars = -1;
   priv->proxies         = NULL;
@@ -642,6 +645,14 @@ gimp_action_use_default_accels (GimpAction *action)
     }
 
   return TRUE;
+}
+
+const gchar *
+gimp_action_get_menu_path (GimpAction *action)
+{
+  g_return_val_if_fail (GIMP_IS_ACTION (action), NULL);
+
+  return GET_PRIVATE (action)->menu_path;
 }
 
 void
@@ -1133,6 +1144,32 @@ gimp_action_set_default_accels (GimpAction   *action,
   g_signal_emit (action, action_signals[ACCELS_CHANGED], 0, accels);
 }
 
+/* This function is only meant to be run by the GimpMenuModel class. */
+void
+gimp_action_set_menu_path (GimpAction  *action,
+                           const gchar *menu_path)
+{
+  GimpActionPrivate  *priv = GET_PRIVATE (action);
+  gchar             **paths;
+
+  g_return_if_fail (GIMP_IS_ACTION (action));
+  if (priv->menu_path != NULL)
+    /* There are cases where we put some actions in 2 menu paths, for instance:
+     * - filters-color-to-alpha in both /Layer/Transparency and /Colors
+     * - dialogs-histogram in both /Colors/Info and /Windows/Dockable Dialogs
+     *
+     * Anyway this is not an error, it's just how it is. Let's simply skip such
+     * cases silently and keep the first path as reference to show in helper
+     * widgets.
+     */
+    return;
+
+  paths = gimp_utils_break_menu_path (menu_path);
+  /* The 4 raw bytes are the "rightwards triangle arrowhead" unicode character. */
+  priv->menu_path = g_strjoinv (" \xF0\x9F\xA2\x92 ", paths);
+  g_strfreev (paths);
+}
+
 
 /*  Private functions  */
 
@@ -1175,6 +1212,8 @@ gimp_action_private_finalize (GimpActionPrivate *priv)
 
   g_strfreev (priv->accels);
   g_strfreev (priv->default_accels);
+
+  g_free (priv->menu_path);
 
   for (GList *iter = priv->proxies; iter; iter = iter->next)
     {

@@ -34,6 +34,7 @@
 #include "widgets/gimpactionfactory.h"
 #include "widgets/gimpdashboard.h"
 #include "widgets/gimpmenufactory.h"
+#include "widgets/gimpuimanager.h"
 
 #include "dockable-menu.h"
 #include "image-menu.h"
@@ -523,8 +524,11 @@ menus_get_image_manager_singleton (Gimp *gimp)
   static GimpUIManager *image_ui_manager = NULL;
 
   if (image_ui_manager == NULL)
-    image_ui_manager = gimp_menu_factory_get_manager (menus_get_global_menu_factory (gimp),
-                                                      "<Image>", gimp);
+    {
+      image_ui_manager = gimp_menu_factory_get_manager (menus_get_global_menu_factory (gimp),
+                                                        "<Image>", gimp);
+      image_ui_manager->store_action_paths = TRUE;
+    }
 
   return image_ui_manager;
 }
