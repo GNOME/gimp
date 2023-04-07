@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-14 16:48+0000\n"
-"PO-Revision-Date: 2023-02-14 16:55+0000\n"
+"POT-Creation-Date: 2023-04-06 15:56+0000\n"
+"PO-Revision-Date: 2023-04-07 11:06+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -2648,7 +2648,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2416
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2431
 #: app/core/gimppalette.c:430 app/core/gimppalette-import.c:213
 #: app/core/gimppalette-load.c:194 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
@@ -5802,12 +5802,12 @@ msgstr "Remover o perfil de cor da imagem"
 
 #: app/actions/image-actions.c:110
 msgctxt "image-action"
-msgid "_Softproof Profile..."
+msgid "_Soft-proof Profile..."
 msgstr "Perfil da prova de _cor no monitor…"
 
 #: app/actions/image-actions.c:111
 msgctxt "image-action"
-msgid "Set the softproofing profile"
+msgid "Set the soft-proofing profile"
 msgstr "Definir o perfil da prova de cor no monitor (soft proofing)"
 
 #: app/actions/image-actions.c:116
@@ -14086,172 +14086,172 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transformar grupo de camadas"
 
-#: app/core/gimpimage.c:706 app/widgets/gimpsymmetryeditor.c:182
+#: app/core/gimpimage.c:707 app/widgets/gimpsymmetryeditor.c:182
 msgid "Symmetry"
 msgstr "Simetria"
 
-#: app/core/gimpimage.c:2661
+#: app/core/gimpimage.c:2676
 msgid " (exported)"
 msgstr " (exportada)"
 
-#: app/core/gimpimage.c:2665
+#: app/core/gimpimage.c:2680
 msgid " (overwritten)"
 msgstr " (substituída)"
 
-#: app/core/gimpimage.c:2674
+#: app/core/gimpimage.c:2689
 msgid " (imported)"
 msgstr " (importada)"
 
 # Exemplo: O modo de camada “Normal” foi introduzido no GIMP 2.10
-#: app/core/gimpimage.c:2847 app/core/gimpimage.c:2861
-#: app/core/gimpimage.c:2904
+#: app/core/gimpimage.c:2862 app/core/gimpimage.c:2876
+#: app/core/gimpimage.c:2919
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "O modo de camada “%s” foi introduzido no %s"
 
-#: app/core/gimpimage.c:2919
+#: app/core/gimpimage.c:2934
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Os grupos de camadas foram introduzidos no %s"
 
-#: app/core/gimpimage.c:2926
+#: app/core/gimpimage.c:2941
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "As máscaras nos grupos de camada foram introduzidos no %s"
 
-#: app/core/gimpimage.c:2933
+#: app/core/gimpimage.c:2948
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Os bloqueios de posição nos grupos de camada foram introduzidos no %s"
 
-#: app/core/gimpimage.c:2940
+#: app/core/gimpimage.c:2955
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr ""
 "Os bloqueios do canal alfa nos grupos de camada foram introduzidos no %s"
 
-#: app/core/gimpimage.c:2948 app/core/gimpimage.c:2962
+#: app/core/gimpimage.c:2963 app/core/gimpimage.c:2977
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Os bloqueios de visibilidade foram introduzidos no %s"
 
-#: app/core/gimpimage.c:2971
+#: app/core/gimpimage.c:2986
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "A seleção múltipla do caminho foi adicionada no %s"
 
-#: app/core/gimpimage.c:2983
+#: app/core/gimpimage.c:2998
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "O armazenamento de etiquetas de cor no caminho foi adicionado no %s"
 
-#: app/core/gimpimage.c:2990
+#: app/core/gimpimage.c:3005
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "O armazenamento de bloqueios no caminho foi adicionado no %s"
 
-#: app/core/gimpimage.c:3004
+#: app/core/gimpimage.c:3019
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "As imagens com alta profundidade de cor foram introduzidas no %s"
 
-#: app/core/gimpimage.c:3012
+#: app/core/gimpimage.c:3027
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr ""
 "A codificação das imagens com alta profundidade de cor foi corrigida no %s"
 
-#: app/core/gimpimage.c:3020
+#: app/core/gimpimage.c:3035
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "A compressão zlib interna foi introduzida no %s"
 
-#: app/core/gimpimage.c:3037
+#: app/core/gimpimage.c:3052
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "O suporte a imagens maiores que 4GB foi introduzido no %s"
 
-#: app/core/gimpimage.c:3044
+#: app/core/gimpimage.c:3059
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "A seleção múltipla de camadas foi introduzida no %s"
 
 # Determinar o que aparece em %s para ver se o texto está correto.
-#: app/core/gimpimage.c:3061
+#: app/core/gimpimage.c:3076
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "As guias fora da área de trabalho foram adicionadas em %s"
 
-#: app/core/gimpimage.c:3072
+#: app/core/gimpimage.c:3087
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 "A definição de itens e pesquisa de padrões no nome dos itens foram "
 "adicionados no %s"
 
-#: app/core/gimpimage.c:3078
+#: app/core/gimpimage.c:3093
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "A seleção múltipla de canais foi introduzida no %s"
 
-#: app/core/gimpimage.c:3183
+#: app/core/gimpimage.c:3198
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Alterar resolução da imagem"
 
-#: app/core/gimpimage.c:3235
+#: app/core/gimpimage.c:3250
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Alterar unidade da imagem"
 
-#: app/core/gimpimage.c:4288
+#: app/core/gimpimage.c:4303
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 "Não foi possível validar o parasita \"gimp-comment\" parasita: comentário "
 "contém caracteres UTF-8 inválidos"
 
-#: app/core/gimpimage.c:4350
+#: app/core/gimpimage.c:4365
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Anexar parasita à imagem"
 
-#: app/core/gimpimage.c:4395
+#: app/core/gimpimage.c:4410
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Remover parasita da imagem"
 
-#: app/core/gimpimage.c:5230
+#: app/core/gimpimage.c:5245
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Adicionar camada"
 
-#: app/core/gimpimage.c:5274 app/core/gimpimage.c:5305
+#: app/core/gimpimage.c:5289 app/core/gimpimage.c:5320
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Remover camada"
 
-#: app/core/gimpimage.c:5299
+#: app/core/gimpimage.c:5314
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Remover seleção flutuante"
 
-#: app/core/gimpimage.c:5823
+#: app/core/gimpimage.c:5838
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Adicionar canal"
 
-#: app/core/gimpimage.c:5853 app/core/gimpimage.c:5878
+#: app/core/gimpimage.c:5868 app/core/gimpimage.c:5893
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Remover canal"
 
-#: app/core/gimpimage.c:5938
+#: app/core/gimpimage.c:5953
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Adicionar caminho"
 
-#: app/core/gimpimage.c:5973 app/core/gimpimage.c:5981
+#: app/core/gimpimage.c:5988 app/core/gimpimage.c:5996
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Remover caminho"
@@ -14377,8 +14377,8 @@ msgid "Convert Image to %s"
 msgstr "Converter imagem para %s"
 
 #. dithering
-#: app/core/gimpimage-convert-precision.c:245
-#: app/core/gimpimage-convert-precision.c:266
+#: app/core/gimpimage-convert-precision.c:249
+#: app/core/gimpimage-convert-precision.c:270
 #: app/dialogs/convert-indexed-dialog.c:240
 #: app/dialogs/convert-precision-dialog.c:212
 #: app/tools/gimpgradientoptions.c:129
@@ -18754,7 +18754,7 @@ msgstr "Navegar pela visualização da imagem"
 msgid "Drop image files here to open them"
 msgstr "Largue aqui ficheiros para os abrir"
 
-#: app/display/gimpdisplayshell-callbacks.c:648
+#: app/display/gimpdisplayshell-callbacks.c:653
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
