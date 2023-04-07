@@ -535,10 +535,7 @@ gimp_action_get_accels (GimpAction *action)
 {
   g_return_val_if_fail (GIMP_IS_ACTION (action), NULL);
 
-  if (GET_PRIVATE (action)->accels != NULL)
-    return (const gchar **) GET_PRIVATE (action)->accels;
-  else
-    return (const gchar **) { NULL };
+  return (const gchar **) GET_PRIVATE (action)->accels;
 }
 
 /**
@@ -557,10 +554,7 @@ gimp_action_get_default_accels (GimpAction *action)
 {
   g_return_val_if_fail (GIMP_IS_ACTION (action), NULL);
 
-  if (GET_PRIVATE (action)->default_accels != NULL)
-    return (const gchar **) GET_PRIVATE (action)->default_accels;
-  else
-    return (const gchar **) { NULL };
+  return (const gchar **) GET_PRIVATE (action)->default_accels;
 }
 
 /**

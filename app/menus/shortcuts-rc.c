@@ -251,18 +251,57 @@ shortcuts_action_deserialize (GScanner       *scanner,
   builder = g_strv_builder_new ();
   while (gimp_scanner_parse_string (scanner, &accel))
     {
-      g_strv_builder_add (builder, accel);
+      gchar    **dup_actions;
+      gboolean   add_accel = TRUE;
+
+      dup_actions = gtk_application_get_actions_for_accel (application, accel);
+
+      for (gint i = 0; dup_actions[i] != NULL; i++)
+        {
+          GimpAction *conflict_action;
+
+          /* dup_actions[i] will be the detailed name prefixed with "app." */
+          if (g_strcmp0 (dup_actions[i] + 4, action_name) == 0)
+            continue;
+
+          conflict_action = (GimpAction *) g_action_map_lookup_action (G_ACTION_MAP (application),
+                                                                       dup_actions[i] + 4);
+          if (gimp_action_use_default_accels (conflict_action))
+            {
+              /* We might simply not have scanned this action's accelerators yet
+               * in the shortcutsrc file. Just delete its current accelerators
+               * without any message.
+               */
+              gimp_action_set_accels (conflict_action, NULL);
+            }
+          else
+            {
+              g_printerr ("INFO: duplicate accelerator '%s' on '%s' and '%s'.\n"
+                          "      Removing the accelerator from '%s'.\n",
+                          accel, action_name, dup_actions[i], action_name);
+              add_accel = FALSE;
+              break;
+            }
+        }
+      g_strfreev (dup_actions);
+
+      if (add_accel)
+        g_strv_builder_add (builder, accel);
+
       g_free (accel);
     }
   accels = g_strv_builder_end (builder);
 
   if (g_action_group_has_action (G_ACTION_GROUP (application), action_name))
     {
-      gchar *detailed_name;
+      GimpAction *action;
+      gchar      *detailed_name;
+
+      action = (GimpAction *) g_action_map_lookup_action (G_ACTION_MAP (application),
+                                                          action_name);
 
       detailed_name = g_strdup_printf ("app.%s", action_name);
-      gtk_application_set_accels_for_action (application, detailed_name,
-                                             (const gchar **) accels);
+      gimp_action_set_accels (action, (const gchar **) accels);
       g_free (detailed_name);
     }
   else

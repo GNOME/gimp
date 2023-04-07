@@ -1037,6 +1037,6 @@ gimp_ui_manager_image_accels_changed (GimpAction     *action,
   detailed_action_name = g_strdup_printf ("app.%s", g_action_get_name (G_ACTION (action)));
   gtk_application_set_accels_for_action (GTK_APPLICATION (manager->gimp->app),
                                          detailed_action_name,
-                                         accels);
+                                         accels ? accels : (const gchar *[]) { NULL });
   g_free (detailed_action_name);
 }
