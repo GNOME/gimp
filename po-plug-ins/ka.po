@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-05 19:06+0000\n"
-"PO-Revision-Date: 2023-04-06 05:33+0200\n"
-"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>,\n"
+"POT-Creation-Date: 2023-04-07 00:20+0000\n"
+"PO-Revision-Date: 2023-04-07 04:23+0200\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr "ავარჯიშეთ თხა C-ში"
 #: plug-ins/common/cml-explorer.c:558 plug-ins/common/compose.c:557
 #: plug-ins/common/contrast-retinex.c:262 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:678 plug-ins/common/decompose.c:376
-#: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:243
+#: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:232
 #: plug-ins/common/destripe.c:183 plug-ins/common/gradient-map.c:216
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
 #: plug-ins/common/jigsaw.c:467 plug-ins/common/nl-filter.c:224
@@ -1807,43 +1807,74 @@ msgstr ""
 msgid "Sca_le 2:"
 msgstr ""
 
-#: plug-ins/common/despeckle.c:180
+#: plug-ins/common/despeckle.c:169
 msgid "Des_peckle..."
 msgstr ""
 
-#: plug-ins/common/despeckle.c:184
+#: plug-ins/common/despeckle.c:173
 msgid "Remove speckle noise from the image"
 msgstr ""
 
-#: plug-ins/common/despeckle.c:419 plug-ins/common/despeckle.c:922
+#: plug-ins/common/despeckle.c:175
+msgid ""
+"This plug-in selectively performs a median or adaptive box filter on an "
+"image."
+msgstr ""
+
+#: plug-ins/common/despeckle.c:185
+msgid "R_adius"
+msgstr "_რადიუსი"
+
+#: plug-ins/common/despeckle.c:186
+msgid "Filter box radius"
+msgstr ""
+
+#: plug-ins/common/despeckle.c:191
+msgid "_Filter Type"
+msgstr "ფილტრის _ტიპი"
+
+#: plug-ins/common/despeckle.c:192
+msgid ""
+"Filter type { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
+"ADAPTIVE (3) }"
+msgstr ""
+
+#: plug-ins/common/despeckle.c:198
+msgid "_Black level"
+msgstr "_შავის დონე"
+
+#: plug-ins/common/despeckle.c:199
+msgid "Black level"
+msgstr "შავის დონე"
+
+#: plug-ins/common/despeckle.c:204
+msgid "_White level"
+msgstr "_თეთრის დონე"
+
+#: plug-ins/common/despeckle.c:205
+msgid "White level"
+msgstr "თეთრის დონე"
+
+#: plug-ins/common/despeckle.c:405 plug-ins/common/despeckle.c:779
 msgid "Despeckle"
 msgstr ""
 
-#: plug-ins/common/despeckle.c:437
+#: plug-ins/common/despeckle.c:407
 msgid "Median"
 msgstr "საშუალო"
 
-#: plug-ins/common/despeckle.c:447
-msgid "_Adaptive"
-msgstr ""
+#: plug-ins/common/despeckle.c:408 plug-ins/gimpressionist/orientation.c:176
+#: plug-ins/gimpressionist/size.c:183
+msgid "Adaptive"
+msgstr "შეგუებადი"
 
-#: plug-ins/common/despeckle.c:460
-msgid "R_ecursive"
-msgstr "რეკურსიული"
+#: plug-ins/common/despeckle.c:409
+msgid "Recursive-Median"
+msgstr "რეკურსიული-მედიანი"
 
-#: plug-ins/common/despeckle.c:484 plug-ins/common/nl-filter.c:1194
-#: plug-ins/gradient-flare/gradient-flare.c:2922
-#: plug-ins/imagemap/imap_circle.c:275
-msgid "_Radius:"
-msgstr "_რადიუსი:"
-
-#: plug-ins/common/despeckle.c:494
-msgid "_Black level:"
-msgstr "_შავის ძალის დონე:"
-
-#: plug-ins/common/despeckle.c:504
-msgid "_White level:"
-msgstr "_თეთრის დონე:"
+#: plug-ins/common/despeckle.c:410
+msgid "Recursive-Adaptive"
+msgstr "რეკურსიული-ადაპტიური"
 
 #: plug-ins/common/destripe.c:141
 msgid "Des_tripe..."
@@ -5554,6 +5585,12 @@ msgstr ""
 msgid "A_lpha:"
 msgstr "_ალფა:"
 
+#: plug-ins/common/nl-filter.c:1194
+#: plug-ins/gradient-flare/gradient-flare.c:2922
+#: plug-ins/imagemap/imap_circle.c:275
+msgid "_Radius:"
+msgstr "_რადიუსი:"
+
 #: plug-ins/common/plugin-browser.c:169
 msgid "_Plug-In Browser"
 msgstr ""
@@ -6795,7 +6832,6 @@ msgid "Loads files of Windows BMP file format"
 msgstr ""
 
 #: plug-ins/file-bmp/bmp.c:180
-#| msgid "XMP"
 msgid "BMP"
 msgstr "BMP"
 
@@ -9786,10 +9822,6 @@ msgstr ""
 #: plug-ins/gimpressionist/orientation.c:173
 msgid "The hue of the region determines the direction of the stroke"
 msgstr ""
-
-#: plug-ins/gimpressionist/orientation.c:176 plug-ins/gimpressionist/size.c:183
-msgid "Adaptive"
-msgstr "შეგუებადი"
 
 #: plug-ins/gimpressionist/orientation.c:177
 msgid "The direction that matches the original image the closest is selected"
