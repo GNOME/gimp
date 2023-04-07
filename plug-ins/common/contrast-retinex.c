@@ -33,14 +33,6 @@
 #define MAX_GAUSSIAN_SCALE  250
 
 
-typedef struct
-{
-  gint     scale;
-  gint     nscales;
-  gint     scales_mode;
-  gfloat   cvar;
-} RetinexParams;
-
 typedef enum
 {
   filter_uniform,
@@ -99,11 +91,14 @@ static GimpValueArray * retinex_run              (GimpProcedure        *procedur
                                                   const GimpValueArray *args,
                                                   gpointer              run_data);
 
-static gboolean retinex_dialog              (GimpDrawable *drawable);
-static void     retinex                     (GimpDrawable *drawable,
-                                             GimpPreview  *preview);
-static void     retinex_preview             (GimpDrawable *drawable,
-                                             GimpPreview  *preview);
+static gboolean retinex_dialog              (GimpProcedure *procedure,
+                                             GObject       *config,
+                                             GimpDrawable  *drawable);
+static void     retinex                     (GObject       *config,
+                                             GimpDrawable  *drawable,
+                                             GimpPreview   *preview);
+static void     retinex_preview             (GtkWidget     *widget,
+                                             GObject       *config);
 
 static void     retinex_scales_distribution (gfloat       *scales,
                                              gint          nscales,
@@ -125,15 +120,12 @@ static void     gausssmooth                 (gfloat       *in,
                                              gint          rowtride,
                                              gauss3_coefs *c);
 
-static void contrast_retinex_scale_entry_update_int   (GimpLabelSpin *entry,
-                                                       gint          *value);
-static void contrast_retinex_scale_entry_update_float (GimpLabelSpin *entry,
-                                                       gfloat        *value);
 
 /*
  * MSRCR = MultiScale Retinex with Color Restoration
  */
-static void     MSRCR                       (guchar       *src,
+static void     MSRCR                       (GObject      *config,
+                                             guchar       *src,
                                              gint          width,
                                              gint          height,
                                              gint          bytes,
@@ -144,15 +136,6 @@ G_DEFINE_TYPE (Retinex, retinex, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (RETINEX_TYPE)
 DEFINE_STD_SET_I18N
-
-
-static RetinexParams rvals =
-{
-  240,             /* Scale */
-  3,               /* Scales */
-  RETINEX_UNIFORM, /* Echelles reparties uniformement */
-  1.2              /* A voir */
-};
 
 
 static void
@@ -198,14 +181,14 @@ retinex_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Enhance contrast using the "
                                           "Retinex method"),
-                                        "The Retinex Image Enhancement "
-                                        "Algorithm is an automatic image "
-                                        "enhancement method that enhances "
-                                        "a digital image in terms of dynamic "
-                                        "range compression, color independence "
-                                        "from the spectral distribution of the "
-                                        "scene illuminant, and color/lightness "
-                                        "rendition.",
+                                        _("The Retinex Image Enhancement "
+                                          "Algorithm is an automatic image "
+                                          "enhancement method that enhances "
+                                          "a digital image in terms of dynamic "
+                                          "range compression, color independence "
+                                          "from the spectral distribution of the "
+                                          "scene illuminant, and color/lightness "
+                                          "rendition."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Fabien Pelisson",
@@ -213,26 +196,27 @@ retinex_create_procedure (GimpPlugIn  *plug_in,
                                       "2003");
 
       GIMP_PROC_ARG_INT (procedure, "scale",
-                         "Scale",
-                         "Biggest scale value",
+                         _("Scal_e"),
+                         _("Biggest scale value"),
                          MIN_GAUSSIAN_SCALE, MAX_GAUSSIAN_SCALE, 240,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "nscales",
-                         "N scales",
-                         "Number of scales",
+                         _("Scale _division"),
+                         _("Number of scales"),
                          0, MAX_RETINEX_SCALES, 3,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "scales-mode",
-                         "Scales mode",
-                         "Retinex distribution through scales",
+                         _("Le_vel"),
+                         _("Retinex distribution through scales "
+                           "{ Uniform (0), Low (1), High (2) }"),
                          RETINEX_UNIFORM, RETINEX_HIGH, RETINEX_UNIFORM,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "cvar",
-                            "Cvar",
-                            "Variance value",
+                            _("Dy_namic"),
+                            _("Variance value"),
                             0, 4, 1.2,
                             G_PARAM_READWRITE);
     }
@@ -249,14 +233,21 @@ retinex_run (GimpProcedure        *procedure,
              const GimpValueArray *args,
              gpointer              run_data)
 {
-  GimpDrawable *drawable;
-  gint          x, y, width, height;
+  GimpProcedureConfig *config;
+  GimpDrawable        *drawable;
+  gint                 x, y, width, height;
 
   gegl_init (NULL, NULL);
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   if (n_drawables != 1)
     {
       GError *error = NULL;
+
+      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
+      g_object_unref (config);
 
       g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
@@ -275,6 +266,9 @@ retinex_run (GimpProcedure        *procedure,
       width  < MIN_GAUSSIAN_SCALE ||
       height < MIN_GAUSSIAN_SCALE)
     {
+      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
+      g_object_unref (config);
+
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
                                                NULL);
@@ -283,25 +277,15 @@ retinex_run (GimpProcedure        *procedure,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &rvals);
-
-      if (! retinex_dialog (drawable))
+      if (! retinex_dialog (procedure, G_OBJECT (config), drawable))
         {
+          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
+          g_object_unref (config);
+
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_CANCEL,
                                                    NULL);
         }
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      rvals.scale        = GIMP_VALUES_GET_INT    (args, 0);
-      rvals.nscales      = GIMP_VALUES_GET_INT    (args, 1);
-      rvals.scales_mode  = GIMP_VALUES_GET_INT    (args, 2);
-      rvals.cvar         = GIMP_VALUES_GET_DOUBLE (args, 3);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &rvals);
       break;
 
     default:
@@ -312,127 +296,102 @@ retinex_run (GimpProcedure        *procedure,
     {
       gimp_progress_init (_("Retinex"));
 
-      retinex (drawable, NULL);
+      retinex (G_OBJECT (config), drawable, NULL);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
-
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &rvals, sizeof (RetinexParams));
     }
   else
     {
+      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
+      g_object_unref (config);
+
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
                                                NULL);
     }
+
+  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
+  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 
 static gboolean
-retinex_dialog (GimpDrawable *drawable)
+retinex_dialog (GimpProcedure *procedure,
+                GObject       *config,
+                GimpDrawable  *drawable)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *grid;
-  GtkWidget *combo;
-  GtkWidget *scale;
-  gboolean   run;
+  GtkWidget    *dialog;
+  GtkWidget    *vbox;
+  GtkWidget    *preview;
+  GtkWidget    *combo;
+  GtkWidget    *scale;
+  GtkListStore *store;
+  gboolean      run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Retinex Image Enhancement"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
-
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-
-                            NULL);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Retinex Image Enhancement"));
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  store = gimp_int_store_new (_("Uniform"), filter_uniform,
+                              _("Low"),     filter_low,
+                              _("High"),    filter_high,
+                              NULL);
+  combo = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                               "scales-mode",
+                                               GIMP_INT_STORE (store));
+  gtk_widget_set_margin_bottom (combo, 12);
+
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "scale", 1.0);
+  gtk_widget_set_margin_bottom (scale, 12);
+
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "nscales", 1.0);
+  gtk_widget_set_margin_bottom (scale, 12);
+
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "cvar", 1.0);
+  gtk_widget_set_margin_bottom (scale, 12);
+
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "retinex-vbox", "scales-mode",
+                                         "scale", "nscales", "cvar", NULL);
 
   preview = gimp_zoom_preview_new_from_drawable (drawable);
-  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), preview, TRUE, TRUE, 0);
+  gtk_box_reorder_child (GTK_BOX (vbox), preview, 0);
+  gtk_widget_set_margin_bottom (preview, 12);
   gtk_widget_show (preview);
 
-  g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (retinex_preview),
-                            drawable);
+  g_object_set_data (config, "drawable", drawable);
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  g_signal_connect (preview, "invalidated",
+                    G_CALLBACK (retinex_preview),
+                    config);
 
-  combo = gimp_int_combo_box_new (_("Uniform"), filter_uniform,
-                                  _("Low"),     filter_low,
-                                  _("High"),    filter_high,
-                                  NULL);
-
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), rvals.scales_mode,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &rvals.scales_mode, NULL);
-  g_signal_connect_swapped (combo, "changed",
+  g_signal_connect_swapped (config, "notify",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("_Level:"), 0.0, 0.5,
-                            combo, 2);
-  gtk_widget_show (combo);
-
-  scale = gimp_scale_entry_new (_("_Scale:"), rvals.scale, MIN_GAUSSIAN_SCALE, MAX_GAUSSIAN_SCALE, 0);
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (contrast_retinex_scale_entry_update_int),
-                    &rvals.scale);
-  g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
-  gtk_widget_show (scale);
-
-  scale = gimp_scale_entry_new (_("Scale _division:"), rvals.nscales, 0, MAX_RETINEX_SCALES, 0);
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (contrast_retinex_scale_entry_update_int),
-                    &rvals.nscales);
-  g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
-  gtk_widget_show (scale);
-
-  scale = gimp_scale_entry_new (_("Dy_namic:"), rvals.cvar, 0, 4, 1);
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (contrast_retinex_scale_entry_update_float),
-                    &rvals.cvar);
-  g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 3, 3, 1);
-  gtk_widget_show (scale);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "retinex-vbox",
+                              NULL);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -443,8 +402,9 @@ retinex_dialog (GimpDrawable *drawable)
  * Applies the algorithm
  */
 static void
-retinex (GimpDrawable *drawable,
-         GimpPreview *preview)
+retinex (GObject      *config,
+         GimpDrawable *drawable,
+         GimpPreview  *preview)
 {
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
@@ -499,7 +459,7 @@ retinex (GimpDrawable *drawable,
     Algorithm for Multi-scale Retinex with color Restoration (MSRCR).
    */
   psrc = src;
-  MSRCR (psrc, width, height, bytes, preview != NULL);
+  MSRCR (config, psrc, width, height, bytes, preview != NULL);
 
   if (preview)
     {
@@ -526,10 +486,13 @@ retinex (GimpDrawable *drawable,
 }
 
 static void
-retinex_preview (GimpDrawable *drawable,
-                 GimpPreview  *preview)
+retinex_preview (GtkWidget *widget,
+                 GObject   *config)
 {
-  retinex (drawable, preview);
+  GimpPreview  *preview  = GIMP_PREVIEW (widget);
+  GimpDrawable *drawable = g_object_get_data (config, "drawable");
+
+  retinex (config, drawable, preview);
 }
 
 /*
@@ -684,7 +647,12 @@ gausssmooth (gfloat *in, gfloat *out, gint size, gint rowstride, gauss3_coefs *c
  * (b)  Calculation of the final values.
  */
 static void
-MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
+MSRCR (GObject *config,
+       guchar  *src,
+       gint     width,
+       gint     height,
+       gint     bytes,
+       gboolean preview_mode)
 {
 
   gint          scale,row,col;
@@ -704,11 +672,22 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
   gfloat        gain;
   gfloat        offset;
   gdouble       max_preview = 0.0;
+  gint          scales_mode;
+  gint          config_scale;
+  gint          nscales;
+  gdouble       cvar;
+
+  g_object_get (config,
+                "scales-mode", &scales_mode,
+                "scale",       &config_scale,
+                "nscales",     &nscales,
+                "cvar",        &cvar,
+                NULL);
 
   if (!preview_mode)
     {
       gimp_progress_init (_("Retinex: filtering"));
-      max_preview = 3 * rvals.nscales;
+      max_preview = 3 * nscales;
     }
 
   /* Allocate all the memory needed for algorithm*/
@@ -746,14 +725,14 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
    */
 
   retinex_scales_distribution (RetinexScales,
-                               rvals.nscales, rvals.scales_mode, rvals.scale);
+                               nscales, scales_mode, config_scale);
 
   /*
       Filtering according to the various scales.
       Summerize the results of the various filters according to a
       specific weight(here equivalent for all).
   */
-  weight = 1./ (gfloat) rvals.nscales;
+  weight = 1./ (gfloat) nscales;
 
   /*
     The recursive filtering algorithm needs different coefficients according
@@ -768,7 +747,7 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
             /* 0-255 => 1-256 */
             in[i] = (gfloat)(src[pos] + 1.0);
          }
-      for (scale = 0; scale < rvals.nscales; scale++)
+      for (scale = 0; scale < nscales; scale++)
         {
           compute_coefs3 (&coef, RetinexScales[scale]);
           /*
@@ -806,7 +785,7 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
             }
 
            if (!preview_mode)
-             gimp_progress_update ((channel * rvals.nscales + scale) /
+             gimp_progress_update ((channel * nscales + scale) /
                                    max_preview);
         }
     }
@@ -838,8 +817,8 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
     }
 
 /*  if (!preview_mode)
-    gimp_progress_update ((2.0 + (rvals.nscales * 3)) /
-                          ((rvals.nscales * 3) + 3));*/
+    gimp_progress_update ((2.0 + (nscales * 3)) /
+                          ((nscales * 3) + 3));*/
 
   /*
       Adapt the dynamics of the colors according to the statistics of the first and second order.
@@ -848,8 +827,8 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
   pdst = dst;
 
   compute_mean_var (pdst, &mean, &var, size, bytes);
-  mini = mean - rvals.cvar*var;
-  maxi = mean + rvals.cvar*var;
+  mini = mean - cvar * var;
+  maxi = mean + cvar * var;
   range = maxi - mini;
 
   if (!range)
@@ -897,18 +876,4 @@ compute_mean_var (gfloat *src, gfloat *mean, gfloat *var, gint size, gint bytes)
   vsquared /= (gfloat) size; /* mean (x^2) */
   *var = ( vsquared - (*mean * *mean) );
   *var = sqrt(*var); /* var */
-}
-
-static void
-contrast_retinex_scale_entry_update_int (GimpLabelSpin *entry,
-                                         gint          *value)
-{
-  *value = (gint) gimp_label_spin_get_value (entry);
-}
-
-static void
-contrast_retinex_scale_entry_update_float (GimpLabelSpin *entry,
-                                           gfloat        *value)
-{
-  *value = (gfloat) gimp_label_spin_get_value (entry);
 }
