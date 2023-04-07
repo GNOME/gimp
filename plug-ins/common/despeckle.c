@@ -256,6 +256,9 @@ despeckle_run (GimpProcedure        *procedure,
     {
       if (! despeckle_dialog (procedure, G_OBJECT (config), drawable))
         {
+          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
+          g_object_unref (config);
+
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_CANCEL,
                                                    NULL);
