@@ -110,8 +110,10 @@ gboolean          gimp_action_is_sensitive        (GimpAction      *action,
 
 void              gimp_action_set_accels          (GimpAction      *action,
                                                    const gchar    **accels);
-const gchar     ** gimp_action_get_accels         (GimpAction      *action);
+const gchar    ** gimp_action_get_default_accels  (GimpAction      *action);
+const gchar    ** gimp_action_get_accels          (GimpAction      *action);
 gchar **          gimp_action_get_display_accels  (GimpAction      *action);
+gboolean          gimp_action_use_default_accels  (GimpAction      *action);
 
 void              gimp_action_activate            (GimpAction      *action);
 
@@ -140,10 +142,12 @@ void              gimp_action_set_proxy           (GimpAction      *action,
                                                    GtkWidget       *proxy);
 
 
-/* Protected functions. */
+/* Friend functions. */
 
 void              gimp_action_set_group           (GimpAction      *action,
                                                    GimpActionGroup *group);
+void              gimp_action_set_default_accels  (GimpAction      *action,
+                                                   const gchar    **accels);
 
 
 #endif  /* __GIMP_ACTION_H__ */

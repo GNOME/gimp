@@ -387,7 +387,7 @@ gimp_action_group_add_action_with_accel (GimpActionGroup *group,
       g_signal_emit_by_name (group, "action-added", gimp_action_get_name (action));
 
       if ((accelerator != NULL && g_strcmp0 (accelerator, "") != 0))
-        gimp_action_set_accels (action, (const char*[]) { accelerator, NULL });
+        gimp_action_set_default_accels (action, (const char*[]) { accelerator, NULL });
 
       gimp_action_set_group (action, group);
     }

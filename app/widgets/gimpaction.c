@@ -71,6 +71,7 @@ struct _GimpActionPrivate
   GIcon                 *icon;
 
   gchar                **accels;
+  gchar                **default_accels;
 
   GimpRGB               *color;
   GimpViewable          *viewable;
@@ -211,6 +212,7 @@ gimp_action_init (GimpAction *action)
   priv->icon_name       = NULL;
   priv->icon            = NULL;
   priv->accels          = NULL;
+  priv->default_accels  = NULL;
   priv->ellipsize       = PANGO_ELLIPSIZE_NONE;
   priv->max_width_chars = -1;
   priv->proxies         = NULL;
@@ -540,6 +542,28 @@ gimp_action_get_accels (GimpAction *action)
 }
 
 /**
+ * gimp_action_get_default_accels:
+ * @action: a #GimpAction
+ *
+ * Gets the accelerators that are associated with the given @action by default.
+ * These might be different from gimp_action_get_accels().
+ *
+ * Returns: (transfer full): default accelerators for @action, as a
+ *                           %NULL-terminated array. Free with g_strfreev() when
+ *                           no longer needed
+ */
+const gchar **
+gimp_action_get_default_accels (GimpAction *action)
+{
+  g_return_val_if_fail (GIMP_IS_ACTION (action), NULL);
+
+  if (GET_PRIVATE (action)->default_accels != NULL)
+    return (const gchar **) GET_PRIVATE (action)->default_accels;
+  else
+    return (const gchar **) { NULL };
+}
+
+/**
  * gimp_action_get_display_accels:
  * @action: a #GimpAction
  *
@@ -578,6 +602,52 @@ gimp_action_get_display_accels (GimpAction *action)
     }
 
   return accels;
+}
+
+/* This should return FALSE if the currently set accelerators are not the
+ * default accelerators or even if they are in different order (different
+ * primary accelerator in particular).
+ */
+gboolean
+gimp_action_use_default_accels (GimpAction *action)
+{
+  gchar **default_accels;
+  gchar **accels;
+
+  g_return_val_if_fail (GIMP_IS_ACTION (action), TRUE);
+
+  default_accels = GET_PRIVATE (action)->default_accels;
+  accels         = GET_PRIVATE (action)->accels;
+
+  if ((default_accels == NULL || g_strv_length (default_accels) == 0) &&
+      (accels == NULL || g_strv_length (accels) == 0))
+    return TRUE;
+
+  if (default_accels == NULL || accels == NULL ||
+      g_strv_length (default_accels) != g_strv_length (accels))
+    return FALSE;
+
+  /* An easy looking variant would be to simply compare with g_strv_equal() but
+   * this actually doesn't work because gtk_accelerator_parse() is liberal with
+   * the format (casing and abbreviations) and thus we need to have a canonical
+   * string version, or simply parse the accelerators down to get to the base
+   * key/modes, which is what I do here.
+   */
+  for (gint i = 0; accels[i] != NULL; i++)
+    {
+      guint           default_key;
+      GdkModifierType default_mods;
+      guint           accelerator_key;
+      GdkModifierType accelerator_mods;
+
+      gtk_accelerator_parse (default_accels[i], &default_key, &default_mods);
+      gtk_accelerator_parse (accels[i], &accelerator_key, &accelerator_mods);
+
+      if (default_key != accelerator_key || default_mods != accelerator_mods)
+        return FALSE;
+    }
+
+  return TRUE;
 }
 
 void
@@ -1051,6 +1121,24 @@ gimp_action_set_group (GimpAction      *action,
   priv->group = group;
 }
 
+/* This function is only meant to be run by the GimpActionGroup class. */
+void
+gimp_action_set_default_accels (GimpAction   *action,
+                                const gchar **accels)
+{
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
+  g_return_if_fail (GIMP_IS_ACTION (action));
+  /* This should be set only once and before any accelerator was set. */
+  g_return_if_fail (priv->accels == NULL);
+  g_return_if_fail (priv->default_accels == NULL);
+
+  priv->default_accels = g_strdupv ((gchar **) accels);
+  priv->accels         = g_strdupv ((gchar **) accels);
+
+  g_signal_emit (action, action_signals[ACCELS_CHANGED], 0, accels);
+}
+
 
 /*  Private functions  */
 
@@ -1092,6 +1180,7 @@ gimp_action_private_finalize (GimpActionPrivate *priv)
   g_clear_object (&priv->icon);
 
   g_strfreev (priv->accels);
+  g_strfreev (priv->default_accels);
 
   for (GList *iter = priv->proxies; iter; iter = iter->next)
     {

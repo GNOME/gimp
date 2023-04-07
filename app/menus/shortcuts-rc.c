@@ -29,6 +29,8 @@
 
 #include "menus-types.h"
 
+#include "widgets/gimpaction.h"
+
 #include "shortcuts-rc.h"
 
 #include "gimp-intl.h"
@@ -199,19 +201,28 @@ shortcuts_rc_write (GtkApplication  *application,
 
   for (gint i = 0; actions[i] != NULL; i++)
     {
-      gchar **accels;
-      gchar  *detailed_name;
+      GimpAction  *action;
+      gchar      **accels;
+      gchar       *detailed_name;
+      gboolean     commented = FALSE;
+
+      action = (GimpAction *) g_action_map_lookup_action (G_ACTION_MAP (application), actions[i]);
+
+      detailed_name  = g_strdup_printf ("app.%s", actions[i]);
+      accels         = gtk_application_get_accels_for_action (application, detailed_name);
+      if (gimp_action_use_default_accels (action))
+        commented = TRUE;
+
+      gimp_config_writer_comment_mode (writer, commented);
 
       gimp_config_writer_open (writer, "action");
       gimp_config_writer_string (writer, actions[i]);
-
-      detailed_name = g_strdup_printf ("app.%s", actions[i]);
-      accels = gtk_application_get_accels_for_action (application, detailed_name);
 
       for (gint j = 0; accels[j]; j++)
         gimp_config_writer_string (writer, accels[j]);
 
       gimp_config_writer_close (writer);
+      gimp_config_writer_comment_mode (writer, FALSE);
 
       g_strfreev (accels);
       g_free (detailed_name);
