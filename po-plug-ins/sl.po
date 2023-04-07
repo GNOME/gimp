@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-05 02:06+0000\n"
-"PO-Revision-Date: 2023-04-05 11:30+0200\n"
+"POT-Creation-Date: 2023-04-07 16:31+0000\n"
+"PO-Revision-Date: 2023-04-07 23:21+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -32,12 +32,12 @@ msgstr "Povadi v _C-minorju"
 msgid "Exercise a goat in the C language"
 msgstr "Povadi kozo v jeziku C"
 
-#: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:218
+#: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
 #: plug-ins/common/border-average.c:195 plug-ins/common/checkerboard.c:184
 #: plug-ins/common/cml-explorer.c:558 plug-ins/common/compose.c:557
-#: plug-ins/common/contrast-retinex.c:262 plug-ins/common/crop-zealous.c:151
+#: plug-ins/common/contrast-retinex.c:253 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:678 plug-ins/common/decompose.c:376
-#: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:243
+#: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:232
 #: plug-ins/common/destripe.c:183 plug-ins/common/gradient-map.c:216
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
 #: plug-ins/common/jigsaw.c:467 plug-ins/common/nl-filter.c:224
@@ -66,11 +66,10 @@ msgstr "Povadi kozo (C)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/blinds.c:301 plug-ins/common/border-average.c:432
-#: plug-ins/common/busy-dialog.c:279 plug-ins/common/checkerboard.c:495
-#: plug-ins/common/cml-explorer.c:1348 plug-ins/common/cml-explorer.c:2114
-#: plug-ins/common/cml-explorer.c:2247 plug-ins/common/colormap-remap.c:706
-#: plug-ins/common/compose.c:1183 plug-ins/common/contrast-retinex.c:351
+#: plug-ins/common/border-average.c:432 plug-ins/common/busy-dialog.c:279
+#: plug-ins/common/checkerboard.c:495 plug-ins/common/cml-explorer.c:1348
+#: plug-ins/common/cml-explorer.c:2114 plug-ins/common/cml-explorer.c:2247
+#: plug-ins/common/colormap-remap.c:706 plug-ins/common/compose.c:1183
 #: plug-ins/common/curve-bend.c:1221 plug-ins/common/curve-bend.c:1995
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/destripe.c:484 plug-ins/common/file-cel.c:1001
@@ -167,10 +166,9 @@ msgstr "Povadi kozo (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/blinds.c:302 plug-ins/common/border-average.c:433
-#: plug-ins/common/checkerboard.c:496 plug-ins/common/cml-explorer.c:1349
-#: plug-ins/common/colormap-remap.c:707 plug-ins/common/compose.c:1184
-#: plug-ins/common/contrast-retinex.c:352 plug-ins/common/curve-bend.c:1222
+#: plug-ins/common/border-average.c:433 plug-ins/common/checkerboard.c:496
+#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:707
+#: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1222
 #: plug-ins/common/depth-merge.c:734 plug-ins/common/destripe.c:485
 #: plug-ins/common/file-heif.c:2358 plug-ins/common/file-pdf-load.c:656
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:547
@@ -452,40 +450,67 @@ msgstr "Iskanje ozadja animacije ..."
 msgid "Optimizing animation"
 msgstr "Optimiziranje animacije ..."
 
-#: plug-ins/common/blinds.c:158
+#: plug-ins/common/blinds.c:140
 msgid "_Blinds..."
 msgstr "_Rolete ..."
 
-#: plug-ins/common/blinds.c:162
+#: plug-ins/common/blinds.c:144
 msgid "Simulate an image painted on window blinds"
 msgstr "Simuliraj sliko, narisano na okenskih roletah"
 
-#: plug-ins/common/blinds.c:259
-msgid "Adding blinds"
-msgstr "Dodajanje rolet ..."
+#: plug-ins/common/blinds.c:154
+msgid "_Displacement"
+msgstr "_Razmestitev"
 
-#: plug-ins/common/blinds.c:297
-msgid "Blinds"
-msgstr "Rolete"
+#: plug-ins/common/blinds.c:155
+msgid "Angle of Displacement"
+msgstr "Kot razmestitve"
 
-#: plug-ins/common/blinds.c:332
+#: plug-ins/common/blinds.c:160
+msgid "_Number of segments"
+msgstr "_Število odsekov"
+
+#: plug-ins/common/blinds.c:161
+#, fuzzy
+msgid "Number of segments in blinds"
+msgstr "Število odsekov v roletah"
+
+#: plug-ins/common/blinds.c:166
 msgid "Orientation"
 msgstr "Usmerjenost"
 
-#: plug-ins/common/blinds.c:336 plug-ins/common/tile-small.c:511
-#: plug-ins/pagecurl/pagecurl.c:586
-msgid "_Horizontal"
-msgstr "_Vodoravne"
+#: plug-ins/common/blinds.c:167
+msgid "The orientation"
+msgstr "Usmerjenost"
 
-#: plug-ins/common/blinds.c:339 plug-ins/common/tile-small.c:521
-#: plug-ins/pagecurl/pagecurl.c:585
-msgid "_Vertical"
-msgstr "_Navpične"
+#: plug-ins/common/blinds.c:174
+msgid "_Transparent"
+msgstr "_Prosojne"
+
+#: plug-ins/common/blinds.c:175
+msgid "Background transparent"
+msgstr "Prosojno ozadje"
+
+#: plug-ins/common/blinds.c:238
+msgid "Adding blinds"
+msgstr "Dodajanje rolet ..."
+
+#: plug-ins/common/blinds.c:279
+msgid "Blinds"
+msgstr "Rolete"
+
+#: plug-ins/common/blinds.c:288
+msgid "Horizontal"
+msgstr "Vodoravno"
+
+#: plug-ins/common/blinds.c:289
+msgid "Vertical"
+msgstr "Navpične"
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/common/blinds.c:353 plug-ins/common/compose.c:1129
+#: plug-ins/common/blinds.c:295 plug-ins/common/compose.c:1129
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
@@ -508,18 +533,6 @@ msgstr "_Navpične"
 #: plug-ins/screenshot/screenshot-win32.c:315 plug-ins/twain/twain.c:661
 msgid "Background"
 msgstr "Ozadje"
-
-#: plug-ins/common/blinds.c:357
-msgid "_Transparent"
-msgstr "_Prosojne"
-
-#: plug-ins/common/blinds.c:382
-msgid "_Displacement:"
-msgstr "_Razmestitev:"
-
-#: plug-ins/common/blinds.c:393
-msgid "_Number of segments:"
-msgstr "_Število odsekov:"
 
 #: plug-ins/common/border-average.c:139
 msgid "_Border Average..."
@@ -1038,7 +1051,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
 #: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
-#: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
+#: plug-ins/file-bmp/bmp-save.c:341 plug-ins/file-fits/fits.c:513
 #: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:428
 #: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
 #: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
@@ -1397,51 +1410,85 @@ msgstr "Predstavitve kanalov"
 msgid "Mask value"
 msgstr "Vrednost maske"
 
-#: plug-ins/common/contrast-retinex.c:195
+#: plug-ins/common/contrast-retinex.c:178
 msgid "Retine_x..."
 msgstr "Retine_x ..."
 
-#: plug-ins/common/contrast-retinex.c:199
+#: plug-ins/common/contrast-retinex.c:182
 msgid "Enhance contrast using the Retinex method"
 msgstr "Izboljša kontrast z uporabo metode Retinex"
 
-#: plug-ins/common/contrast-retinex.c:313
+#: plug-ins/common/contrast-retinex.c:184
+#, fuzzy
+msgid ""
+"The Retinex Image Enhancement Algorithm is an automatic image enhancement "
+"method that enhances a digital image in terms of dynamic range compression, "
+"color independence from the spectral distribution of the scene illuminant, "
+"and color/lightness rendition."
+msgstr ""
+"Algoritem izboljšave slike Retinex je samodejna metoda za izboljšanje slike, "
+"ki izboljša digitalno sliko v smislu dinamičnega stiskanja razpona, "
+"neodvisnosti barv od spektra porazdelitve osvetljenega prizora in upodobitve "
+"barve/svetlosti."
+
+#: plug-ins/common/contrast-retinex.c:199
+msgid "Scal_e"
+msgstr "M_erilo"
+
+#: plug-ins/common/contrast-retinex.c:200
+#, fuzzy
+msgid "Biggest scale value"
+msgstr "Največja vrednost merila"
+
+#: plug-ins/common/contrast-retinex.c:205
+msgid "Scale _division"
+msgstr "_Delitev merila"
+
+#: plug-ins/common/contrast-retinex.c:206
+#: plug-ins/common/wavelet-decompose.c:132
+msgid "Number of scales"
+msgstr "Število lestvic"
+
+#: plug-ins/common/contrast-retinex.c:211
+msgid "Le_vel"
+msgstr "Ra_ven"
+
+#: plug-ins/common/contrast-retinex.c:212
+#, fuzzy
+msgid "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
+msgstr ""
+"Porazdelitev Retinex po utežeh {enakomerno (0), nizko (1), visoko (2) }"
+
+#: plug-ins/common/contrast-retinex.c:218
+msgid "Dy_namic"
+msgstr "Di_namično"
+
+#: plug-ins/common/contrast-retinex.c:219
+#, fuzzy
+msgid "Variance value"
+msgstr "Vrednost variance"
+
+#: plug-ins/common/contrast-retinex.c:297
 msgid "Retinex"
 msgstr "Retinex"
 
-#: plug-ins/common/contrast-retinex.c:347
+#: plug-ins/common/contrast-retinex.c:338
 msgid "Retinex Image Enhancement"
 msgstr "Izboljšava slik Retinex"
 
-#: plug-ins/common/contrast-retinex.c:383
+#: plug-ins/common/contrast-retinex.c:347
 msgid "Uniform"
 msgstr "konstantno"
 
-#: plug-ins/common/contrast-retinex.c:384 plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/common/contrast-retinex.c:348 plug-ins/metadata/metadata-tags.c:238
 msgid "Low"
 msgstr "nizko"
 
-#: plug-ins/common/contrast-retinex.c:385 plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/common/contrast-retinex.c:349 plug-ins/metadata/metadata-tags.c:238
 msgid "High"
 msgstr "visoko"
 
-#: plug-ins/common/contrast-retinex.c:396
-msgid "_Level:"
-msgstr "_Raven:"
-
-#: plug-ins/common/contrast-retinex.c:400
-msgid "_Scale:"
-msgstr "_Merilo:"
-
-#: plug-ins/common/contrast-retinex.c:411
-msgid "Scale _division:"
-msgstr "_Delitev merila:"
-
-#: plug-ins/common/contrast-retinex.c:422
-msgid "Dy_namic:"
-msgstr "Di_namično:"
-
-#: plug-ins/common/contrast-retinex.c:710
+#: plug-ins/common/contrast-retinex.c:689
 msgid "Retinex: filtering"
 msgstr "Retinex: Filtriranje ..."
 
@@ -1841,43 +1888,82 @@ msgstr "Spremem_ba merila 1:"
 msgid "Sca_le 2:"
 msgstr "Sprememba mer_ila 2:"
 
-#: plug-ins/common/despeckle.c:180
+#: plug-ins/common/despeckle.c:169
 msgid "Des_peckle..."
 msgstr "Odstrani _pege ..."
 
-#: plug-ins/common/despeckle.c:184
+#: plug-ins/common/despeckle.c:173
 msgid "Remove speckle noise from the image"
 msgstr "Odstrani šum peg s slike"
 
-#: plug-ins/common/despeckle.c:419 plug-ins/common/despeckle.c:922
+#: plug-ins/common/despeckle.c:175
+#, fuzzy
+msgid ""
+"This plug-in selectively performs a median or adaptive box filter on an "
+"image."
+msgstr ""
+"Ta vstavek selektivno na sliki izvede filter srednje vrednosti ali "
+"prilagodljivega polja."
+
+#: plug-ins/common/despeckle.c:185
+msgid "R_adius"
+msgstr "P_olmer"
+
+#: plug-ins/common/despeckle.c:186
+#, fuzzy
+msgid "Filter box radius"
+msgstr "Polmer polja filtra"
+
+#: plug-ins/common/despeckle.c:191
+msgid "_Filter Type"
+msgstr "Vrsta _filtra"
+
+#: plug-ins/common/despeckle.c:192
+msgid ""
+"Filter type { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
+"ADAPTIVE (3) }"
+msgstr ""
+"Vrsta filtra { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
+"ADAPTIVE (3) }"
+
+#: plug-ins/common/despeckle.c:198
+msgid "_Black level"
+msgstr "Raven _črnine"
+
+#: plug-ins/common/despeckle.c:199
+msgid "Black level"
+msgstr "Raven črnine"
+
+#: plug-ins/common/despeckle.c:204
+msgid "_White level"
+msgstr "Raven _beline"
+
+#: plug-ins/common/despeckle.c:205
+msgid "White level"
+msgstr "Raven beline"
+
+#: plug-ins/common/despeckle.c:408 plug-ins/common/despeckle.c:782
 msgid "Despeckle"
 msgstr "Odstrani pege"
 
-#: plug-ins/common/despeckle.c:437
+#: plug-ins/common/despeckle.c:410
 msgid "Median"
 msgstr "Sredninsko"
 
-#: plug-ins/common/despeckle.c:447
-msgid "_Adaptive"
-msgstr "_Prilagodljivo"
+#: plug-ins/common/despeckle.c:411 plug-ins/gimpressionist/orientation.c:176
+#: plug-ins/gimpressionist/size.c:183
+msgid "Adaptive"
+msgstr "Prilagodljivo"
 
-#: plug-ins/common/despeckle.c:460
-msgid "R_ecursive"
-msgstr "_Rekurzivno"
+#: plug-ins/common/despeckle.c:412
+#, fuzzy
+msgid "Recursive-Median"
+msgstr "Rekurzivno: srednja vrednost"
 
-#: plug-ins/common/despeckle.c:484 plug-ins/common/nl-filter.c:1194
-#: plug-ins/gradient-flare/gradient-flare.c:2922
-#: plug-ins/imagemap/imap_circle.c:275
-msgid "_Radius:"
-msgstr "_Radij:"
-
-#: plug-ins/common/despeckle.c:494
-msgid "_Black level:"
-msgstr "Raven _črnine:"
-
-#: plug-ins/common/despeckle.c:504
-msgid "_White level:"
-msgstr "Raven _beline:"
+#: plug-ins/common/despeckle.c:413
+#, fuzzy
+msgid "Recursive-Adaptive"
+msgstr "Rekurzivno: adaptivno"
 
 #: plug-ins/common/destripe.c:141
 msgid "Des_tripe..."
@@ -2063,7 +2149,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
 #: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
 #: plug-ins/common/file-xbm.c:1048 plug-ins/common/file-xpm.c:699
-#: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:332
+#: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
 #: plug-ins/file-fits/fits.c:504 plug-ins/file-fli/fli-gimp.c:784
 #: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1324
 #: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
@@ -2393,7 +2479,7 @@ msgstr "%s. %s"
 #: plug-ins/common/file-gif-load.c:1046 plug-ins/common/file-gif-load.c:1050
 #, fuzzy
 msgid "Invalid frame dimensions"
-msgstr "Neveljavne dimenzije okvira/sličice"
+msgstr "Neveljavne mere okvira/sličice"
 
 #: plug-ins/common/file-gif-load.c:1066
 msgid "compressed image data"
@@ -5743,6 +5829,12 @@ msgstr "_Izboljšava robov"
 msgid "A_lpha:"
 msgstr "A_lfa:"
 
+#: plug-ins/common/nl-filter.c:1194
+#: plug-ins/gradient-flare/gradient-flare.c:2922
+#: plug-ins/imagemap/imap_circle.c:275
+msgid "_Radius:"
+msgstr "_Radij:"
+
 #: plug-ins/common/plugin-browser.c:169
 msgid "_Plug-In Browser"
 msgstr "Brskalnik _vstavkov"
@@ -6354,6 +6446,14 @@ msgstr "Majhni tlakovci"
 msgid "Flip"
 msgstr "Prezrcali"
 
+#: plug-ins/common/tile-small.c:511 plug-ins/pagecurl/pagecurl.c:586
+msgid "_Horizontal"
+msgstr "_Vodoravne"
+
+#: plug-ins/common/tile-small.c:521 plug-ins/pagecurl/pagecurl.c:585
+msgid "_Vertical"
+msgstr "_Navpične"
+
 #: plug-ins/common/tile-small.c:547
 msgid "A_ll tiles"
 msgstr "_Vsi tlakovci"
@@ -6743,10 +6843,6 @@ msgstr "Razstavi valček"
 msgid "Scal_es"
 msgstr "L_estvice"
 
-#: plug-ins/common/wavelet-decompose.c:132
-msgid "Number of scales"
-msgstr "Število lestvic"
-
 #: plug-ins/common/wavelet-decompose.c:137
 msgid "Create a layer group to store the _decomposition"
 msgstr "Ustvari skupino plasti za shranjevanje _razstavljanja"
@@ -6942,32 +7038,19 @@ msgstr "Nepodprta vrsta datoteke ali neveljavna bitna globina."
 msgid "The bitmap ends unexpectedly."
 msgstr "Bitna slika se nepričakovano zaključi."
 
-#: plug-ins/file-bmp/bmp-save.c:198 plug-ins/file-bmp/bmp-save.c:231
+#: plug-ins/file-bmp/bmp-save.c:199 plug-ins/file-bmp/bmp-save.c:232
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr "Indeksirane slike s prosojnostjo ni mogoče shraniti v zapisu BMP."
 
-#: plug-ins/file-bmp/bmp-save.c:200 plug-ins/file-bmp/bmp-save.c:233
+#: plug-ins/file-bmp/bmp-save.c:201 plug-ins/file-bmp/bmp-save.c:234
 msgid "Alpha channel will be ignored."
 msgstr "Kanal alfa ne bo upoštevan."
 
-#: plug-ins/file-bmp/bmp-save.c:990
-msgid "Export Image as BMP"
-msgstr "Izvozi sliko kot BMP"
-
-#: plug-ins/file-bmp/bmp-save.c:1002
-msgid "_Run-Length Encoded"
-msgstr "_Kodirano s tekočo dolžino (RLE)"
-
-#. Compatibility Options
 #: plug-ins/file-bmp/bmp-save.c:1009
 msgid "Compatibility"
 msgstr "Združljivost"
 
 #: plug-ins/file-bmp/bmp-save.c:1014
-msgid "_Write color space information"
-msgstr "_ Zapiši informacije o barvnem prostoru"
-
-#: plug-ins/file-bmp/bmp-save.c:1016
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Disabling this "
@@ -6977,32 +7060,28 @@ msgstr ""
 "prostoru. GIMP privzeto zapiše podatke o barvnem prostoru. S to možnostjo "
 "GIMP v datoteko ne bo zapisal podatkov o barvnem prostoru."
 
-#. RGB Encoding Pptions
+#. RGB Encoding Options
 #: plug-ins/file-bmp/bmp-save.c:1025
-msgid "RGB Encoding"
-msgstr "Kodiranje RGB"
-
-#: plug-ins/file-bmp/bmp-save.c:1032
 msgid "16 bit (R5 G6 B5)"
 msgstr "16-bitno (R5 G6 B5)"
 
-#: plug-ins/file-bmp/bmp-save.c:1033
+#: plug-ins/file-bmp/bmp-save.c:1026
 msgid "16 bit (A1 R5 G5 B5)"
 msgstr "16-bitno (a1 R5 G5 B5)"
 
-#: plug-ins/file-bmp/bmp-save.c:1034
+#: plug-ins/file-bmp/bmp-save.c:1027
 msgid "16 bit (X1 R5 G5 B5)"
 msgstr "16-bitno (X1 R5 G5 B5)"
 
-#: plug-ins/file-bmp/bmp-save.c:1035
+#: plug-ins/file-bmp/bmp-save.c:1028
 msgid "24 bit (R8 G8 B8)"
 msgstr "24-bitno (R8 G8 B8)"
 
-#: plug-ins/file-bmp/bmp-save.c:1036
+#: plug-ins/file-bmp/bmp-save.c:1029
 msgid "32 bit (A8 R8 G8 B8)"
 msgstr "32-bitno (A8 R8 G8 B8)"
 
-#: plug-ins/file-bmp/bmp-save.c:1037
+#: plug-ins/file-bmp/bmp-save.c:1030
 msgid "32 bit (X8 R8 G8 B8)"
 msgstr "32-bitno (X8 R8 G8 B8)"
 
@@ -7010,7 +7089,54 @@ msgstr "32-bitno (X8 R8 G8 B8)"
 msgid "Windows BMP image"
 msgstr "Slika Windows BMP"
 
-#: plug-ins/file-bmp/bmp.c:294
+#: plug-ins/file-bmp/bmp.c:155 plug-ins/file-bmp/bmp.c:156
+msgid "Loads files of Windows BMP file format"
+msgstr "Naloži datoteke v zapisu Windows BMP"
+
+#: plug-ins/file-bmp/bmp.c:180
+msgid "BMP"
+msgstr "BMP"
+
+#: plug-ins/file-bmp/bmp.c:183 plug-ins/file-bmp/bmp.c:184
+msgid "Saves files in Windows BMP file format"
+msgstr "Shrani datoteke v zapisu Windows BMP"
+
+#: plug-ins/file-bmp/bmp.c:197
+#, fuzzy
+#| msgid "R_un-Length Encoded"
+msgid "Ru_n-Length Encoded"
+msgstr "_Kodirano s tekočo dolžino (RLE)"
+
+#: plug-ins/file-bmp/bmp.c:198
+#, fuzzy
+msgid ""
+"Use run-length-encoding compression (only valid for 4 and 8-bit indexed "
+"images)"
+msgstr ""
+"Uporabite stiskanje kodiranja s tekočo dolžino (velja samo za 4- in 8-bitne "
+"indeksirane slike)"
+
+#: plug-ins/file-bmp/bmp.c:204
+msgid "_Write color space information"
+msgstr "_ Zapiši informacije o barvnem prostoru"
+
+#: plug-ins/file-bmp/bmp.c:205
+msgid "Whether or not to write BITMAPV5HEADER color space data"
+msgstr "Ali želite zapisati podatke o barvnem prostoru BITMAPV5HEADER ali ne"
+
+#: plug-ins/file-bmp/bmp.c:211
+msgid "R_GB format"
+msgstr "Oblika R_GB"
+
+#: plug-ins/file-bmp/bmp.c:212
+msgid ""
+"Export format for RGB images (0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, "
+"4=RGBA_8888, 5=RGBX_8888)"
+msgstr ""
+"Oblika izvoza za slike RGB (0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, "
+"4=RGBA_8888, 5=RGBX_8888)"
+
+#: plug-ins/file-bmp/bmp.c:296
 msgid "BMP format does not support multiple layers."
 msgstr "Zapis BMP ne podpira več plasti."
 
@@ -10075,10 +10201,6 @@ msgstr "Poteze sledijo »tekočemu« vzorcu"
 #: plug-ins/gimpressionist/orientation.c:173
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Obarvanost področja določa smer poteze"
-
-#: plug-ins/gimpressionist/orientation.c:176 plug-ins/gimpressionist/size.c:183
-msgid "Adaptive"
-msgstr "Prilagodljivo"
 
 #: plug-ins/gimpressionist/orientation.c:177
 msgid "The direction that matches the original image the closest is selected"
