@@ -561,15 +561,15 @@ gui_restore_after_callback (Gimp               *gimp,
                     NULL);
     }
 
-  if (gui_config->restore_accels)
-    menus_restore (gimp);
-
   ui_configurer = g_object_new (GIMP_TYPE_UI_CONFIGURER,
                                 "gimp", gimp,
                                 NULL);
 
   image_ui_manager = menus_get_image_manager_singleton (gimp);
   gimp_ui_manager_update (image_ui_manager, gimp);
+
+  if (gui_config->restore_accels)
+    menus_restore (gimp);
 
   /* Check that every accelerator is unique. */
   gui_check_unique_accelerators (gimp);

@@ -26,6 +26,8 @@ libappmenus_a_SOURCES = \
 	image-menu.h		\
 	plug-in-menus.c		\
 	plug-in-menus.h		\
+	shortcuts-rc.c		\
+	shortcuts-rc.h		\
 	tool-options-menu.c	\
 	tool-options-menu.h	\
 	window-menu.c		\

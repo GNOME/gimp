@@ -5,6 +5,7 @@ libappmenus_sources = [
   'image-menu.c',
   'menus.c',
   'plug-in-menus.c',
+  'shortcuts-rc.c',
   'tool-options-menu.c',
   'window-menu.c',
   'windows-menu.c',

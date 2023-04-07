@@ -39,6 +39,7 @@
 #include "image-menu.h"
 #include "menus.h"
 #include "plug-in-menus.h"
+#include "shortcuts-rc.h"
 #include "tool-options-menu.h"
 
 #include "gimp-intl.h"
@@ -413,19 +414,19 @@ menus_exit (Gimp *gimp)
 void
 menus_restore (Gimp *gimp)
 {
-  GFile *file;
-  gchar *filename;
+  GFile  *file;
+  GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  file = gimp_directory_file ("menurc", NULL);
+  file = gimp_directory_file ("shortcutsrc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  gtk_accel_map_load (filename);
-  g_free (filename);
+  if (! shortcuts_rc_parse (GTK_APPLICATION (gimp->app), file, &error))
+    g_printerr ("Failed reading '%s': %s\n",
+                g_file_peek_path (file), error->message);
 
   g_object_unref (file);
 }
@@ -434,24 +435,25 @@ void
 menus_save (Gimp     *gimp,
             gboolean  always_save)
 {
-  GFile *file;
-  gchar *filename;
+  GFile  *file;
+  GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (menurc_deleted && ! always_save)
     return;
 
-  file = gimp_directory_file ("menurc", NULL);
+  file = gimp_directory_file ("shortcutsrc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  filename = g_file_get_path (file);
-  gtk_accel_map_save (filename);
-  g_free (filename);
+  if (! shortcuts_rc_write (GTK_APPLICATION (gimp->app), file, &error))
+    g_printerr ("Failed writing to '%s': %s\n",
+                g_file_peek_path (file), error->message);
 
   g_object_unref (file);
+  g_clear_error (&error);
 
   menurc_deleted = FALSE;
 }
