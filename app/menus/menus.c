@@ -425,7 +425,8 @@ menus_restore (Gimp *gimp)
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! shortcuts_rc_parse (GTK_APPLICATION (gimp->app), file, &error))
+  if (g_file_query_exists (file, NULL) &&
+      ! shortcuts_rc_parse (GTK_APPLICATION (gimp->app), file, &error))
     g_printerr ("Failed reading '%s': %s\n",
                 g_file_peek_path (file), error->message);
 
