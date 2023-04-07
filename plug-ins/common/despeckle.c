@@ -111,17 +111,6 @@ static gboolean         despeckle_dialog           (GimpProcedure        *proced
                                                     GObject              *config,
                                                     GimpDrawable         *drawable);
 
-static void             dialog_adaptive_callback   (GtkWidget            *button,
-                                                    GObject              *config);
-static void             dialog_adaptive_notify     (GObject              *config,
-                                                    const GParamSpec     *pspec,
-                                                    GtkWidget            *button);
-static void             dialog_recursive_callback  (GtkWidget            *button,
-                                                    GObject              *config);
-static void             dialog_recursive_notify    (GObject              *config,
-                                                    const GParamSpec     *pspec,
-                                                    GtkWidget            *button);
-
 static void             preview_update             (GtkWidget            *preview,
                                                     GObject              *config);
 
@@ -183,9 +172,9 @@ despeckle_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Remove speckle noise from the "
                                           "image"),
-                                        "This plug-in selectively performs "
-                                        "a median or adaptive box filter on "
-                                        "an image.",
+                                        _("This plug-in selectively performs "
+                                          "a median or adaptive box filter on "
+                                          "an image."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Michael Sweet <mike@easysw.com>",
@@ -193,27 +182,27 @@ despeckle_create_procedure (GimpPlugIn  *plug_in,
                                       PLUG_IN_VERSION);
 
       GIMP_PROC_ARG_INT (procedure, "radius",
-                         "Radius",
-                         "Filter box radius",
+                         _("R_adius"),
+                         _("Filter box radius"),
                          1, MAX_RADIUS, 3,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "type",
-                         "Type",
-                         "Filter type { MEDIAN (0), ADAPTIVE (1), "
-                         "RECURSIVE-MEDIAN (2), RECURSIVE-ADAPTIVE (3) }",
+                         _("_Filter Type"),
+                         _("Filter type { MEDIAN (0), ADAPTIVE (1), "
+                         "RECURSIVE-MEDIAN (2), RECURSIVE-ADAPTIVE (3) }"),
                          0, 3, FILTER_ADAPTIVE,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "black",
-                         "Black",
-                         "Black level",
+                         _("_Black level"),
+                         _("Black level"),
                          -1, 255, 7,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "white",
-                         "White",
-                         "White level",
+                         _("_White level"),
+                         _("White level"),
                          0, 256, 248,
                          G_PARAM_READWRITE);
     }
@@ -401,16 +390,13 @@ despeckle_dialog (GimpProcedure *procedure,
                   GObject       *config,
                   GimpDrawable  *drawable)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *vbox;
-  GtkWidget *grid;
-  GtkWidget *frame;
-  GtkWidget *button;
-  GtkWidget *scale;
-  gint       filter_type;
-  gboolean   run;
+  GtkWidget    *dialog;
+  GtkWidget    *preview;
+  GtkWidget    *vbox;
+  GtkWidget    *scale;
+  GtkWidget    *combo;
+  GtkListStore *store;
+  gboolean      run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -418,14 +404,44 @@ despeckle_dialog (GimpProcedure *procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Despeckle"));
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  store = gimp_int_store_new (_("Median"),             0,
+                              _("Adaptive"),           FILTER_ADAPTIVE,
+                              _("Recursive-Median"),   FILTER_RECURSIVE,
+                              _("Recursive-Adaptive"), 3,
+                              NULL);
+  combo = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                               "type",
+                                               GIMP_INT_STORE (store));
+  gtk_widget_set_margin_bottom (combo, 12);
+
+  /*
+   * Box size (diameter) control...
+   */
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "radius", 1.0);
+  gtk_widget_set_margin_bottom (scale, 12);
+  /*
+   * Black level control...
+   */
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "black", 1.0);
+  gtk_widget_set_margin_bottom (scale, 12);
+  /*
+   * White level control...
+   */
+  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "white", 1.0);
+
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "despeckle-vbox",
+                                         "type", "radius", "black", "white",
+                                         NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   preview = gimp_drawable_preview_new_from_drawable (drawable);
-  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), preview, TRUE, TRUE, 0);
+  gtk_box_reorder_child (GTK_BOX (vbox), preview, 0);
+  gtk_widget_set_margin_bottom (preview, 12);
   gtk_widget_show (preview);
 
   g_object_set_data (config, "drawable", drawable);
@@ -434,82 +450,13 @@ despeckle_dialog (GimpProcedure *procedure,
                     G_CALLBACK (preview_update),
                     config);
 
-  frame = gimp_frame_new (_("Median"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  g_object_get (config, "type", &filter_type, NULL);
-
-  button = gtk_check_button_new_with_mnemonic (_("_Adaptive"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                filter_type & FILTER_ADAPTIVE);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (dialog_adaptive_callback),
-                    config);
-  g_signal_connect (config, "notify::type",
-                    G_CALLBACK (dialog_adaptive_notify),
-                    button);
-
-  button = gtk_check_button_new_with_mnemonic (_("R_ecursive"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                filter_type & FILTER_RECURSIVE);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (dialog_recursive_callback),
-                    config);
-  g_signal_connect (config, "notify::type",
-                    G_CALLBACK (dialog_recursive_notify),
-                    button);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
-  /*
-   * Box size (diameter) control...
-   */
-
-  scale = gimp_prop_scale_entry_new (config, "radius",
-                                     _("_Radius:"),
-                                     1.0, FALSE, 0, 0);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 1, 1);
-  gtk_widget_show (scale);
-
-  /*
-   * Black level control...
-   */
-
-  scale = gimp_prop_scale_entry_new (config, "black",
-                                     _("_Black level:"),
-                                     1.0, FALSE, 0, 0);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 1, 1);
-  gtk_widget_show (scale);
-
-  /*
-   * White level control...
-   */
-
-  scale = gimp_prop_scale_entry_new (config, "white",
-                                     _("_White level:"),
-                                     1.0, FALSE, 0, 0);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 1, 1);
-  gtk_widget_show (scale);
-
   g_signal_connect_swapped (config, "notify",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "despeckle-vbox",
+                              NULL);
   gtk_widget_show (dialog);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
@@ -557,96 +504,6 @@ preview_update (GtkWidget *widget,
 
   g_free (src);
   g_free (dst);
-}
-
-static void
-dialog_adaptive_callback (GtkWidget *button,
-                          GObject   *config)
-{
-  gint filter_type;
-
-  g_object_get (config, "type", &filter_type, NULL);
-
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
-    filter_type |= FILTER_ADAPTIVE;
-  else
-    filter_type &= ~FILTER_ADAPTIVE;
-
-  g_signal_handlers_block_by_func (config,
-                                   dialog_adaptive_notify,
-                                   button);
-
-  g_object_set (config, "type", filter_type, NULL);
-
-  g_signal_handlers_unblock_by_func (config,
-                                     dialog_adaptive_notify,
-                                     button);
-}
-
-static void
-dialog_adaptive_notify (GObject          *config,
-                        const GParamSpec *pspec,
-                        GtkWidget        *button)
-{
-  gint filter_type;
-
-  g_object_get (config, "type", &filter_type, NULL);
-
-  g_signal_handlers_block_by_func (button,
-                                   dialog_adaptive_callback,
-                                   config);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                (filter_type & FILTER_ADAPTIVE) != 0);
-
-  g_signal_handlers_unblock_by_func (button,
-                                     dialog_adaptive_callback,
-                                     config);
-}
-
-static void
-dialog_recursive_callback (GtkWidget *button,
-                           GObject   *config)
-{
-  gint filter_type;
-
-  g_object_get (config, "type", &filter_type, NULL);
-
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
-    filter_type |= FILTER_RECURSIVE;
-  else
-    filter_type &= ~FILTER_RECURSIVE;
-
-  g_signal_handlers_block_by_func (config,
-                                   dialog_recursive_notify,
-                                   button);
-
-  g_object_set (config, "type", filter_type, NULL);
-
-  g_signal_handlers_unblock_by_func (config,
-                                     dialog_recursive_notify,
-                                     button);
-}
-
-static void
-dialog_recursive_notify (GObject          *config,
-                         const GParamSpec *pspec,
-                         GtkWidget        *button)
-{
-  gint filter_type;
-
-  g_object_get (config, "type", &filter_type, NULL);
-
-  g_signal_handlers_block_by_func (button,
-                                   dialog_recursive_callback,
-                                   config);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                (filter_type & FILTER_RECURSIVE) != 0);
-
-  g_signal_handlers_unblock_by_func (button,
-                                     dialog_recursive_callback,
-                                     config);
 }
 
 static inline void
