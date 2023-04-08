@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-07 16:31+0000\n"
-"PO-Revision-Date: 2023-04-08 05:57+0200\n"
+"POT-Creation-Date: 2023-04-08 15:35+0000\n"
+"PO-Revision-Date: 2023-04-08 22:00+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -34,7 +34,7 @@ msgstr "ავარჯიშეთ თხა C-ში"
 #: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:232
 #: plug-ins/common/destripe.c:183 plug-ins/common/gradient-map.c:216
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
-#: plug-ins/common/jigsaw.c:467 plug-ins/common/nl-filter.c:224
+#: plug-ins/common/jigsaw.c:473 plug-ins/common/nl-filter.c:224
 #: plug-ins/common/qbist.c:253 plug-ins/common/sample-colorize.c:431
 #: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:328
 #: plug-ins/common/sphere-designer.c:3179 plug-ins/common/tile.c:220
@@ -72,11 +72,10 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
 #: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
 #: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
-#: plug-ins/common/jigsaw.c:2498 plug-ins/common/mail.c:568
-#: plug-ins/common/nl-filter.c:1126 plug-ins/common/qbist.c:848
-#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
-#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sparkle.c:426
-#: plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/mail.c:568 plug-ins/common/nl-filter.c:1126
+#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
+#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
+#: plug-ins/common/sparkle.c:426 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -164,13 +163,13 @@ msgstr ""
 #: plug-ins/common/file-heif.c:2358 plug-ins/common/file-pdf-load.c:656
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:547
 #: plug-ins/common/film.c:1325 plug-ins/common/grid.c:762
-#: plug-ins/common/jigsaw.c:2499 plug-ins/common/nl-filter.c:1127
-#: plug-ins/common/qbist.c:945 plug-ins/common/smooth-palette.c:512
-#: plug-ins/common/sparkle.c:427 plug-ins/common/sphere-designer.c:2633
-#: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
-#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
-#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3308
-#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
+#: plug-ins/common/nl-filter.c:1127 plug-ins/common/qbist.c:945
+#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sparkle.c:427
+#: plug-ins/common/sphere-designer.c:2633 plug-ins/common/tile.c:493
+#: plug-ins/common/tile-small.c:447 plug-ins/common/unit-editor.c:268
+#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
+#: plug-ins/file-psd/psd-load.c:3308 plug-ins/flame/flame.c:717
+#: plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -454,7 +453,6 @@ msgid "_Number of segments"
 msgstr "_სეგმენტების რაოდენობა"
 
 #: plug-ins/common/blinds.c:161
-#| msgid "_Number of segments:"
 msgid "Number of segments in blinds"
 msgstr ""
 
@@ -3991,7 +3989,7 @@ msgstr "PostScript-დან შემოტანა"
 #. Rendering
 #: plug-ins/common/file-ps.c:3612
 msgid "Rendering"
-msgstr "რენდერი "
+msgstr "რენდერი"
 
 #. Resolution
 #: plug-ins/common/file-ps.c:3631 plug-ins/common/file-svg.c:945
@@ -5467,86 +5465,88 @@ msgstr ""
 msgid "_Blacken"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:401
+#: plug-ins/common/jigsaw.c:398
 msgid "_Jigsaw..."
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:406
+#: plug-ins/common/jigsaw.c:403
 msgid "Add a jigsaw-puzzle pattern to the image"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:505
-msgid "Assembling jigsaw"
+#: plug-ins/common/jigsaw.c:405
+msgid "Jigsaw puzzle look"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2494
-msgid "Jigsaw"
-msgstr "მოზაიკა"
+#: plug-ins/common/jigsaw.c:413 plug-ins/common/tile-small.c:511
+#: plug-ins/pagecurl/pagecurl.c:586
+msgid "_Horizontal"
+msgstr "_ჰორიზონტალური"
 
-#: plug-ins/common/jigsaw.c:2524
-msgid "Number of Tiles"
-msgstr ""
-
-#. xtiles
-#: plug-ins/common/jigsaw.c:2535
-msgid "_Horizontal:"
-msgstr "_ჰორიზონტალირი:"
-
-#: plug-ins/common/jigsaw.c:2536
+#: plug-ins/common/jigsaw.c:414
 msgid "Number of pieces going across"
 msgstr ""
 
-#. ytiles
-#: plug-ins/common/jigsaw.c:2551
-msgid "_Vertical:"
-msgstr "_ვერტიკალური:"
+#: plug-ins/common/jigsaw.c:419 plug-ins/common/tile-small.c:521
+#: plug-ins/pagecurl/pagecurl.c:585
+msgid "_Vertical"
+msgstr "_ვერტიკალური"
 
-#: plug-ins/common/jigsaw.c:2552
+#: plug-ins/common/jigsaw.c:420
 msgid "Number of pieces going down"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2568
-msgid "Bevel Edges"
-msgstr ""
-
-#. number of blending lines
-#: plug-ins/common/jigsaw.c:2577
-msgid "_Bevel width:"
-msgstr ""
-
-#: plug-ins/common/jigsaw.c:2578
-msgid "Degree of slope of each piece's edge"
-msgstr ""
-
-#. blending amount
-#: plug-ins/common/jigsaw.c:2592
-msgid "H_ighlight:"
-msgstr "_გამოკვეთა:"
-
-#: plug-ins/common/jigsaw.c:2593
-msgid "The amount of highlighting on the edges of each piece"
-msgstr ""
-
-#. frame for primitive radio buttons
-#: plug-ins/common/jigsaw.c:2611
+#: plug-ins/common/jigsaw.c:425
 msgid "Jigsaw Style"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2615
-msgid "_Square"
+#: plug-ins/common/jigsaw.c:426
+msgid "The style/shape of the jigsaw puzzle { Square (0), Curved (1) }"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2616
-msgid "C_urved"
+#: plug-ins/common/jigsaw.c:432
+msgid "_Blend width"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2620
-msgid "Each piece has straight sides"
+#: plug-ins/common/jigsaw.c:433
+msgid "Degree of slope of each piece's edge"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2621
-msgid "Each piece has curved sides"
+#: plug-ins/common/jigsaw.c:438
+msgid "Hi_ghlight"
+msgstr "_გამოკვეთა"
+
+#: plug-ins/common/jigsaw.c:439
+msgid "The amount of highlighting on the edges of each piece"
 msgstr ""
+
+#: plug-ins/common/jigsaw.c:503
+msgid "Assembling jigsaw"
+msgstr ""
+
+#: plug-ins/common/jigsaw.c:727
+msgid "draw_jigsaw: bad style\n"
+msgstr ""
+
+#: plug-ins/common/jigsaw.c:2491
+msgid "Jigsaw"
+msgstr "მოზაიკა"
+
+#: plug-ins/common/jigsaw.c:2510
+msgid "Number of Tiles"
+msgstr ""
+
+#: plug-ins/common/jigsaw.c:2527
+msgid "Bevel Edges"
+msgstr ""
+
+#. frame for primitive radio buttons
+#: plug-ins/common/jigsaw.c:2536
+msgid "Square"
+msgstr ""
+
+#: plug-ins/common/jigsaw.c:2537
+msgid "Curved"
+msgstr "მრუდი"
 
 #: plug-ins/common/mail.c:204
 msgid "Send by E_mail..."
@@ -6235,14 +6235,6 @@ msgstr ""
 #: plug-ins/common/tile-small.c:498 plug-ins/ifs-compose/ifs-compose.c:769
 msgid "Flip"
 msgstr "გადაბრუნება"
-
-#: plug-ins/common/tile-small.c:511 plug-ins/pagecurl/pagecurl.c:586
-msgid "_Horizontal"
-msgstr "_ჰორიზონტალური"
-
-#: plug-ins/common/tile-small.c:521 plug-ins/pagecurl/pagecurl.c:585
-msgid "_Vertical"
-msgstr "_ვერტიკალური"
 
 #: plug-ins/common/tile-small.c:547
 msgid "A_ll tiles"
@@ -13244,6 +13236,15 @@ msgstr ""
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr ""
+
+#~ msgid "_Horizontal:"
+#~ msgstr "_ჰორიზონტალირი:"
+
+#~ msgid "_Vertical:"
+#~ msgstr "_ვერტიკალური:"
+
+#~ msgid "H_ighlight:"
+#~ msgstr "_გამოკვეთა:"
 
 #~ msgid "_Level:"
 #~ msgstr "_დონე:"
