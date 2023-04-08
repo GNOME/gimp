@@ -151,17 +151,6 @@ typedef enum
   while (0)
 
 
-typedef struct config_tag config_t;
-
-struct config_tag
-{
-  gint     x;
-  gint     y;
-  style_t  style;
-  gint     blend_lines;
-  gdouble  blend_amount;
-};
-
 typedef struct globals_tag globals_t;
 
 struct globals_tag
@@ -215,18 +204,18 @@ static GimpValueArray * jigsaw_run              (GimpProcedure        *procedure
                                                  const GimpValueArray *args,
                                                  gpointer              run_data);
 
-static void     jigsaw             (GimpDrawable *drawable,
-                                    GimpPreview  *preview);
-static void     jigsaw_preview     (GimpDrawable *drawable,
-                                    GimpPreview  *preview);
+static void     jigsaw                          (GObject              *config,
+                                                 GimpDrawable         *drawable,
+                                                 GimpPreview          *preview);
+static void     jigsaw_preview                  (GtkWidget            *widget,
+                                                 GObject              *config);
 
-static gboolean jigsaw_dialog                    (GimpDrawable        *drawable);
-static void     jigsaw_scale_entry_update_double (GimpLabelSpin       *entry,
-                                                  gdouble             *value);
-static void     jigsaw_scale_entry_update_int    (GimpLabelSpin       *entry,
-                                                  gint                *value);
+static gboolean jigsaw_dialog                    (GimpProcedure       *procedure,
+                                                  GObject             *config,
+                                                  GimpDrawable        *drawable);
 
-static void     draw_jigsaw        (guchar    *buffer,
+static void     draw_jigsaw        (GObject   *config,
+                                    guchar    *buffer,
                                     gint       bufsize,
                                     gint       width,
                                     gint       height,
@@ -311,12 +300,30 @@ static void generate_grid          (gint width, gint height, gint xtiles, gint y
                                     gint *x, gint *y);
 static void generate_bezier        (gint px[4], gint py[4], gint steps,
                                     gint *cachex, gint *cachey);
-static void malloc_cache           (void);
-static void free_cache             (void);
-static void init_right_bump        (gint width, gint height);
-static void init_left_bump         (gint width, gint height);
-static void init_up_bump           (gint width, gint height);
-static void init_down_bump         (gint width, gint height);
+
+static void malloc_cache           (gint blend_lines);
+static void free_cache             (gint blend_lines);
+
+static void init_right_bump        (gint x,
+                                    gint y,
+                                    gint blend_lines,
+                                    gint width,
+                                    gint height);
+static void init_left_bump         (gint x,
+                                    gint y,
+                                    gint blend_lines,
+                                    gint width,
+                                    gint height);
+static void init_up_bump           (gint x,
+                                    gint y,
+                                    gint blend_lines,
+                                    gint width,
+                                    gint height);
+static void init_down_bump         (gint x,
+                                    gint y,
+                                    gint blend_lines,
+                                    gint width,
+                                    gint height);
 static void draw_bezier_line       (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
                                     gint steps, gint *cx, gint *cy);
@@ -340,7 +347,6 @@ static void draw_bezier_horizontal_border (guchar *buffer, gint bufsize,
                                            gint x_offset, gint xtiles,
                                            gint ytiles, gint blend_lines,
                                            gdouble blend_amount, gint steps);
-static void check_config           (gint width, gint height);
 
 
 G_DEFINE_TYPE (Jigsaw, jigsaw, GIMP_TYPE_PLUG_IN)
@@ -348,15 +354,6 @@ G_DEFINE_TYPE (Jigsaw, jigsaw, GIMP_TYPE_PLUG_IN)
 GIMP_MAIN (JIGSAW_TYPE)
 DEFINE_STD_SET_I18N
 
-
-static config_t config =
-{
-  5,
-  5,
-  BEZIER_1,
-  3,
-  0.5
-};
 
 static globals_t globals;
 
@@ -405,7 +402,7 @@ jigsaw_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Add a jigsaw-puzzle pattern "
                                           "to the image"),
-                                        "Jigsaw puzzle look",
+                                        _("Jigsaw puzzle look"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Nigel Wetten",
@@ -413,33 +410,35 @@ jigsaw_create_procedure (GimpPlugIn  *plug_in,
                                       "May 2000");
 
       GIMP_PROC_ARG_INT (procedure, "x",
-                         "X",
-                         "Number of tiles across",
-                         1, GIMP_MAX_IMAGE_SIZE, 5,
+                         _("_Horizontal"),
+                         _("Number of pieces going across"),
+                         MIN_XTILES, MAX_XTILES, 5,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "y",
-                         "Y",
-                         "Number of tiles down",
-                         1, GIMP_MAX_IMAGE_SIZE, 5,
+                         _("_Vertical"),
+                         _("Number of pieces going down"),
+                         MIN_YTILES, MAX_YTILES, 5,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "style",
-                         "Style",
-                         "The style/shape of the jigsaw puzzle { 0, 1 }",
+                         _("Jigsaw Style"),
+                         _("The style/shape of the jigsaw puzzle "
+                           "{ Square (0), Curved (1) }"),
                          0, 1, BEZIER_1,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "blend-lines",
-                         "Blend lines",
-                         "Number of lines for shading bevels",
-                         1, GIMP_MAX_IMAGE_SIZE, 3,
+                         _("_Blend width"),
+                         _("Degree of slope of each piece's edge"),
+                         MIN_BLEND_LINES, MAX_BLEND_LINES, 3,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "blend-amount",
-                            "Blend amount",
-                            "The power of the light highlights",
-                            0, 5, 0.5,
+                            _("Hi_ghlight"),
+                            _("The amount of highlighting on the edges "
+                              "of each piece"),
+                            MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 0.5,
                             G_PARAM_READWRITE);
     }
 
@@ -455,13 +454,20 @@ jigsaw_run (GimpProcedure        *procedure,
             const GimpValueArray *args,
             gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  GimpProcedureConfig *config;
+  GimpDrawable        *drawable;
 
   gegl_init (NULL, NULL);
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   if (n_drawables != 1)
     {
       GError *error = NULL;
+
+      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
+      g_object_unref (config);
 
       g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
@@ -479,44 +485,37 @@ jigsaw_run (GimpProcedure        *procedure,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &config);
-
-      if (! jigsaw_dialog (drawable))
+      if (! jigsaw_dialog (procedure, G_OBJECT (config), drawable))
         {
+          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
+          g_object_unref (config);
+
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_CANCEL,
                                                    NULL);
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      config.x            = GIMP_VALUES_GET_INT    (args, 0);
-      config.y            = GIMP_VALUES_GET_INT    (args, 1);
-      config.style        = GIMP_VALUES_GET_INT    (args, 2);
-      config.blend_lines  = GIMP_VALUES_GET_INT    (args, 3);
-      config.blend_amount = GIMP_VALUES_GET_DOUBLE (args, 4);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS :
-      gimp_get_data (PLUG_IN_PROC, &config);
+    default:
       break;
     };
 
   gimp_progress_init (_("Assembling jigsaw"));
 
-  jigsaw (drawable, NULL);
+  jigsaw (G_OBJECT (config), drawable, NULL);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data (PLUG_IN_PROC, &config, sizeof (config));
+  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
+  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static void
-jigsaw (GimpDrawable *drawable,
+jigsaw (GObject      *config,
+        GimpDrawable *drawable,
         GimpPreview  *preview)
 {
   GeglBuffer *gegl_buffer = NULL;
@@ -526,6 +525,15 @@ jigsaw (GimpDrawable *drawable,
   gint        height;
   gint        bytes;
   gint        buffer_size;
+  gint        x;
+  gint        y;
+  gint        blend_lines;
+
+  g_object_get (config,
+                "x",           &x,
+                "y",           &y,
+                "blend-lines", &blend_lines,
+                NULL);
 
   if (preview)
     {
@@ -558,14 +566,14 @@ jigsaw (GimpDrawable *drawable,
       g_object_unref (gegl_buffer);
     }
 
-  check_config (width, height);
   globals.steps[LEFT] = globals.steps[RIGHT] = globals.steps[UP]
-    = globals.steps[DOWN] = (config.x < config.y) ?
-    (width / config.x * 2) : (height / config.y * 2);
+    = globals.steps[DOWN] = (x < y) ?
+    (width / x * 2) : (height / y * 2);
 
-  malloc_cache ();
-  draw_jigsaw (buffer, buffer_size, width, height, bytes, preview != NULL);
-  free_cache ();
+  malloc_cache (blend_lines);
+  draw_jigsaw (config, buffer, buffer_size, width, height, bytes,
+               preview != NULL);
+  free_cache (blend_lines);
 
   /* cleanup */
   if (preview)
@@ -589,10 +597,13 @@ jigsaw (GimpDrawable *drawable,
 }
 
 static void
-jigsaw_preview (GimpDrawable *drawable,
-                GimpPreview  *preview)
+jigsaw_preview (GtkWidget *widget,
+                GObject   *config)
 {
-  jigsaw (drawable, preview);
+  GimpPreview  *preview  = GIMP_PREVIEW (widget);
+  GimpDrawable *drawable = g_object_get_data (config, "drawable");
+
+  jigsaw (config, drawable, preview);
 }
 
 static void
@@ -628,7 +639,8 @@ generate_bezier (gint  px[4],
 }
 
 static void
-draw_jigsaw (guchar   *buffer,
+draw_jigsaw (GObject  *config,
+             guchar   *buffer,
              gint      bufsize,
              gint      width,
              gint      height,
@@ -637,17 +649,29 @@ draw_jigsaw (guchar   *buffer,
 {
   gint i;
   gint *x, *y;
-  gint xtiles = config.x;
-  gint ytiles = config.y;
-  gint xlines = xtiles - 1;
-  gint ylines = ytiles - 1;
-  gint blend_lines = config.blend_lines;
-  gdouble blend_amount = config.blend_amount;
+  gint xtiles = 5;
+  gint ytiles = 5;
+  gint xlines = 4;
+  gint ylines = 4;
+  gint blend_lines = 3;
+  gdouble blend_amount = 0.5;
   gint steps = globals.steps[RIGHT];
-  style_t style = config.style;
+  style_t style = BEZIER_1;
   gint progress_total = xlines + ylines - 1;
 
   g_return_if_fail (buffer != NULL);
+
+  g_object_get (config,
+                "x",            &xtiles,
+                "y",            &ytiles,
+                "blend-lines",  &blend_lines,
+                "blend-amount", &blend_amount,
+                "style",        &style,
+                NULL);
+
+  xlines = xtiles - 1;
+  ylines = ytiles - 1;
+  progress_total = xlines + ylines - 1;
 
   globals.gridx = g_new (gint, xtiles);
   globals.gridy = g_new (gint, ytiles);
@@ -656,10 +680,10 @@ draw_jigsaw (guchar   *buffer,
 
   generate_grid (width, height, xtiles, ytiles, globals.gridx, globals.gridy);
 
-  init_right_bump (width, height);
-  init_left_bump  (width, height);
-  init_up_bump    (width, height);
-  init_down_bump  (width, height);
+  init_right_bump (xtiles, ytiles, blend_lines, width, height);
+  init_left_bump  (xtiles, ytiles, blend_lines, width, height);
+  init_up_bump    (xtiles, ytiles, blend_lines, width, height);
+  init_down_bump  (xtiles, ytiles, blend_lines, width, height);
 
   if (style == BEZIER_1)
     {
@@ -700,7 +724,7 @@ draw_jigsaw (guchar   *buffer,
     }
   else
     {
-      g_printerr ("draw_jigsaw: bad style\n");
+      g_printerr (_("draw_jigsaw: bad style\n"));
       gimp_quit ();
     }
   gimp_progress_update (1.0);
@@ -1104,10 +1128,9 @@ draw_down_bump (guchar   *buffer,
 }
 
 static void
-malloc_cache (void)
+malloc_cache (gint blend_lines)
 {
   gint i, j;
-  gint blend_lines = config.blend_lines;
 
   for (i = 0; i < 4; i++)
     {
@@ -1140,10 +1163,9 @@ malloc_cache (void)
 }
 
 static void
-free_cache (void)
+free_cache (gint blend_lines)
 {
   gint i, j;
-  gint blend_lines = config.blend_lines;
 
   for (i = 0; i < 4; i ++)
     {
@@ -1174,12 +1196,15 @@ free_cache (void)
 }
 
 static void
-init_right_bump (gint width,
+init_right_bump (gint x,
+                 gint y,
+                 gint blend_lines,
+                 gint width,
                  gint height)
 {
   gint i;
-  gint xtiles = config.x;
-  gint ytiles = config.y;
+  gint xtiles = x;
+  gint ytiles = y;
   gint steps = globals.steps[RIGHT];
   gint px[4], py[4];
   gint x_offset = 0;
@@ -1188,7 +1213,6 @@ init_right_bump (gint width,
   gint tile_height_eighth = tile_height / 8;
   gint curve_start_offset = 0;
   gint curve_end_offset = curve_start_offset + 2 * tile_height_eighth;
-  gint blend_lines = config.blend_lines;
 
   px[0] = x_offset;
   px[1] = x_offset + XFACTOR2 * tile_width;
@@ -1251,12 +1275,15 @@ init_right_bump (gint width,
 }
 
 static void
-init_left_bump (gint width,
+init_left_bump (gint x,
+                gint y,
+                gint blend_lines,
+                gint width,
                 gint height)
 {
   gint i;
-  gint xtiles = config.x;
-  gint ytiles = config.y;
+  gint xtiles = x;
+  gint ytiles = y;
   gint steps = globals.steps[LEFT];
   gint px[4], py[4];
   gint x_offset = 0;
@@ -1265,7 +1292,6 @@ init_left_bump (gint width,
   gint tile_height_eighth = tile_height / 8;
   gint curve_start_offset = 0;
   gint curve_end_offset = curve_start_offset + 2 * tile_height_eighth;
-  gint blend_lines = config.blend_lines;
 
   px[0] = x_offset;
   px[1] = x_offset - XFACTOR2 * tile_width;
@@ -1328,12 +1354,15 @@ init_left_bump (gint width,
 }
 
 static void
-init_up_bump (gint width,
+init_up_bump (gint x,
+              gint y,
+              gint blend_lines,
+              gint width,
               gint height)
 {
   gint i;
-  gint xtiles = config.x;
-  gint ytiles = config.y;
+  gint xtiles = x;
+  gint ytiles = y;
   gint steps = globals.steps[UP];
   gint px[4], py[4];
   gint y_offset = 0;
@@ -1342,7 +1371,6 @@ init_up_bump (gint width,
   gint tile_width_eighth = tile_width / 8;
   gint curve_start_offset = 0;
   gint curve_end_offset = curve_start_offset + 2 * tile_width_eighth;
-  gint blend_lines = config.blend_lines;
 
   px[0] = curve_start_offset;
   px[1] = curve_start_offset + YFACTOR2 * tile_width;
@@ -1405,12 +1433,15 @@ init_up_bump (gint width,
 }
 
 static void
-init_down_bump (gint width,
+init_down_bump (gint x,
+                gint y,
+                gint blend_lines,
+                gint width,
                 gint height)
 {
   gint i;
-  gint xtiles = config.x;
-  gint ytiles = config.y;
+  gint xtiles = x;
+  gint ytiles = y;
   gint steps = globals.steps[DOWN];
   gint px[4], py[4];
   gint y_offset = 0;
@@ -1419,7 +1450,6 @@ init_down_bump (gint width,
   gint tile_width_eighth = tile_width / 8;
   gint curve_start_offset = 0;
   gint curve_end_offset = curve_start_offset + 2 * tile_width_eighth;
-  gint blend_lines = config.blend_lines;
 
   px[0] = curve_start_offset;
   px[1] = curve_start_offset + YFACTOR2 * tile_width;
@@ -2437,68 +2467,28 @@ draw_bezier_horizontal_border (guchar   *buffer,
   g_free(cachey);
 }
 
-static void
-check_config (gint width,
-              gint height)
-{
-  gint tile_width, tile_height;
-  gint tile_width_limit, tile_height_limit;
-
-  if (config.x < 1)
-    {
-      config.x = 1;
-    }
-  if (config.y < 1)
-    {
-      config.y = 1;
-    }
-  if (config.blend_amount < 0)
-    {
-      config.blend_amount = 0;
-    }
-  if (config.blend_amount > 5)
-    {
-      config.blend_amount = 5;
-    }
-  tile_width = width / config.x;
-  tile_height = height / config.y;
-  tile_width_limit = 0.4 * tile_width;
-  tile_height_limit = 0.4 * tile_height;
-  if ((config.blend_lines > tile_width_limit)
-      || (config.blend_lines > tile_height_limit))
-    {
-      config.blend_lines = MIN(tile_width_limit, tile_height_limit);
-    }
-}
-
 /********************************************************
   GUI
 ********************************************************/
 
 static gboolean
-jigsaw_dialog (GimpDrawable *drawable)
+jigsaw_dialog (GimpProcedure *procedure,
+               GObject       *config,
+               GimpDrawable  *drawable)
 {
   GtkWidget     *dialog;
-  GtkWidget     *main_vbox;
+  GtkWidget     *vbox;
   GtkWidget     *preview;
-  GtkSizeGroup  *group;
   GtkWidget     *frame;
-  GtkWidget     *rbutton1;
-  GtkWidget     *rbutton2;
-  GtkWidget     *grid;
   GtkWidget     *scale;
+  GtkListStore  *store;
   gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Jigsaw"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
-
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-
-                            NULL);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Jigsaw"));
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -2507,147 +2497,77 @@ jigsaw_dialog (GimpDrawable *drawable)
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
-
-  preview = gimp_aspect_preview_new_from_drawable (drawable);
-  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
-  gtk_widget_show (preview);
-
-  g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (jigsaw_preview),
-                            drawable);
-
-  frame = gimp_frame_new (_("Number of Tiles"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-
-  group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-
   /* xtiles */
-  scale = gimp_scale_entry_new (_("_Horizontal:"), config.x, MIN_XTILES, MAX_XTILES, 0);
-  gimp_help_set_help_data (scale, _("Number of pieces going across"), NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
-  gtk_widget_show (scale);
-
-  gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
-  g_object_unref (group);
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (jigsaw_scale_entry_update_int),
-                    &config.x);
-  g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "x", 1.0);
 
   /* ytiles */
-  scale = gimp_scale_entry_new (_("_Vertical:"), config.y, MIN_YTILES, MAX_YTILES, 0);
-  gimp_help_set_help_data (scale, _("Number of pieces going down"), NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
-  gtk_widget_show (scale);
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "y", 1.0);
+  gtk_widget_set_margin_bottom (scale, 12);
 
-  gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (jigsaw_scale_entry_update_int),
-                    &config.y);
-  g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  gtk_widget_show (grid);
-  gtk_widget_show (frame);
-
-  frame = gimp_frame_new (_("Bevel Edges"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "num-tiles-label", _("Number of Tiles"));
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "num-tiles-vbox", "x", "y", NULL);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "num-tiles-frame", "num-tiles-label",
+                                    FALSE, "num-tiles-vbox");
 
   /* number of blending lines */
-  scale = gimp_scale_entry_new (_("_Bevel width:"), config.blend_lines, MIN_BLEND_LINES, MAX_BLEND_LINES, 0);
-  gimp_help_set_help_data (scale, _("Degree of slope of each piece's edge"), NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
-  gtk_widget_show (scale);
-
-  gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (jigsaw_scale_entry_update_int),
-                    &config.blend_lines);
-  g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "blend-lines", 1.0);
 
   /* blending amount */
-  scale = gimp_scale_entry_new (_("H_ighlight:"), config.blend_amount, MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 2);
-  gimp_help_set_help_data (scale, _("The amount of highlighting on the edges of each piece"), NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
-  gtk_widget_show (scale);
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "blend-amount", 1.0);
+  gtk_widget_set_margin_bottom (scale, 12);
 
-  gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (jigsaw_scale_entry_update_double),
-                    &config.blend_amount);
-  g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  gtk_widget_show (grid);
-  gtk_widget_show (frame);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "bevel-label", _("Bevel Edges"));
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "bevel-vbox", "blend-lines", "blend-amount",
+                                  NULL);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "bevel-frame", "bevel-label", FALSE,
+                                    "bevel-vbox");
 
   /* frame for primitive radio buttons */
+  store = gimp_int_store_new (_("Square"), BEZIER_1,
+                              _("Curved"), BEZIER_2,
+                              NULL);
+  frame = gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
+                                               "style", GIMP_INT_STORE (store));
+  gtk_widget_set_margin_bottom (frame, 12);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Jigsaw Style"),
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &config.style, NULL, config.style,
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "jigsaw-vbox", "num-tiles-frame",
+                                         "bevel-frame", "style", NULL);
 
-                                    _("_Square"), BEZIER_1, &rbutton1,
-                                    _("C_urved"), BEZIER_2, &rbutton2,
+  preview = gimp_aspect_preview_new_from_drawable (drawable);
+  gtk_box_pack_start (GTK_BOX (vbox), preview, TRUE, TRUE, 0);
+  gtk_box_reorder_child (GTK_BOX (vbox), preview, 0);
+  gtk_widget_set_margin_bottom (preview, 12);
+  gtk_widget_show (preview);
 
-                                    NULL);
+  g_object_set_data (config, "drawable", drawable);
 
-  gimp_help_set_help_data (rbutton1, _("Each piece has straight sides"), NULL);
-  gimp_help_set_help_data (rbutton2, _("Each piece has curved sides"),   NULL);
-  g_signal_connect_swapped (rbutton1, "toggled",
+  g_signal_connect (preview, "invalidated",
+                    G_CALLBACK (jigsaw_preview),
+                    config);
+
+  g_signal_connect_swapped (config, "notify",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
-  g_signal_connect_swapped (rbutton2, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
 
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "jigsaw-vbox", NULL);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
   return run;
-}
-
-static void
-jigsaw_scale_entry_update_double (GimpLabelSpin *entry,
-                                  gdouble       *value)
-{
-  *value = gimp_label_spin_get_value (entry);
-}
-
-static void
-jigsaw_scale_entry_update_int (GimpLabelSpin *entry,
-                               gint          *value)
-{
-  *value = (gint) gimp_label_spin_get_value (entry);
 }
