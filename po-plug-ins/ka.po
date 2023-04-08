@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-07 00:20+0000\n"
-"PO-Revision-Date: 2023-04-07 04:23+0200\n"
+"POT-Creation-Date: 2023-04-07 16:31+0000\n"
+"PO-Revision-Date: 2023-04-08 05:57+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -26,10 +26,10 @@ msgstr "C მინორში ვარჯიში"
 msgid "Exercise a goat in the C language"
 msgstr "ავარჯიშეთ თხა C-ში"
 
-#: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:218
+#: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
 #: plug-ins/common/border-average.c:195 plug-ins/common/checkerboard.c:184
 #: plug-ins/common/cml-explorer.c:558 plug-ins/common/compose.c:557
-#: plug-ins/common/contrast-retinex.c:262 plug-ins/common/crop-zealous.c:151
+#: plug-ins/common/contrast-retinex.c:253 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:678 plug-ins/common/decompose.c:376
 #: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:232
 #: plug-ins/common/destripe.c:183 plug-ins/common/gradient-map.c:216
@@ -60,11 +60,10 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/blinds.c:301 plug-ins/common/border-average.c:432
-#: plug-ins/common/busy-dialog.c:279 plug-ins/common/checkerboard.c:495
-#: plug-ins/common/cml-explorer.c:1348 plug-ins/common/cml-explorer.c:2114
-#: plug-ins/common/cml-explorer.c:2247 plug-ins/common/colormap-remap.c:706
-#: plug-ins/common/compose.c:1183 plug-ins/common/contrast-retinex.c:351
+#: plug-ins/common/border-average.c:432 plug-ins/common/busy-dialog.c:279
+#: plug-ins/common/checkerboard.c:495 plug-ins/common/cml-explorer.c:1348
+#: plug-ins/common/cml-explorer.c:2114 plug-ins/common/cml-explorer.c:2247
+#: plug-ins/common/colormap-remap.c:706 plug-ins/common/compose.c:1183
 #: plug-ins/common/curve-bend.c:1221 plug-ins/common/curve-bend.c:1995
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/destripe.c:484 plug-ins/common/file-cel.c:1001
@@ -158,10 +157,9 @@ msgstr ""
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/blinds.c:302 plug-ins/common/border-average.c:433
-#: plug-ins/common/checkerboard.c:496 plug-ins/common/cml-explorer.c:1349
-#: plug-ins/common/colormap-remap.c:707 plug-ins/common/compose.c:1184
-#: plug-ins/common/contrast-retinex.c:352 plug-ins/common/curve-bend.c:1222
+#: plug-ins/common/border-average.c:433 plug-ins/common/checkerboard.c:496
+#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:707
+#: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1222
 #: plug-ins/common/depth-merge.c:734 plug-ins/common/destripe.c:485
 #: plug-ins/common/file-heif.c:2358 plug-ins/common/file-pdf-load.c:656
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:547
@@ -435,40 +433,67 @@ msgstr "ანიმაციის ფონის ძებნა"
 msgid "Optimizing animation"
 msgstr "ანიმაციის ოპტიმიზაცია"
 
-#: plug-ins/common/blinds.c:158
+#: plug-ins/common/blinds.c:140
 msgid "_Blinds..."
 msgstr ""
 
-#: plug-ins/common/blinds.c:162
+#: plug-ins/common/blinds.c:144
 msgid "Simulate an image painted on window blinds"
 msgstr ""
 
-#: plug-ins/common/blinds.c:259
-msgid "Adding blinds"
+#: plug-ins/common/blinds.c:154
+msgid "_Displacement"
+msgstr "_ჩანაცვლება"
+
+#: plug-ins/common/blinds.c:155
+msgid "Angle of Displacement"
+msgstr "გადაადგილების კუთხე"
+
+#: plug-ins/common/blinds.c:160
+msgid "_Number of segments"
+msgstr "_სეგმენტების რაოდენობა"
+
+#: plug-ins/common/blinds.c:161
+#| msgid "_Number of segments:"
+msgid "Number of segments in blinds"
 msgstr ""
 
-#: plug-ins/common/blinds.c:297
-msgid "Blinds"
-msgstr ""
-
-#: plug-ins/common/blinds.c:332
+#: plug-ins/common/blinds.c:166
 msgid "Orientation"
 msgstr "ორიენტაცია"
 
-#: plug-ins/common/blinds.c:336 plug-ins/common/tile-small.c:511
-#: plug-ins/pagecurl/pagecurl.c:586
-msgid "_Horizontal"
-msgstr "_ჰორიზონტალური"
+#: plug-ins/common/blinds.c:167
+msgid "The orientation"
+msgstr "ორიენტაცია"
 
-#: plug-ins/common/blinds.c:339 plug-ins/common/tile-small.c:521
-#: plug-ins/pagecurl/pagecurl.c:585
-msgid "_Vertical"
-msgstr "_ვერტიკალური"
+#: plug-ins/common/blinds.c:174
+msgid "_Transparent"
+msgstr "_გამჭვირვალე"
+
+#: plug-ins/common/blinds.c:175
+msgid "Background transparent"
+msgstr "გამჭვირვალე ფონი"
+
+#: plug-ins/common/blinds.c:238
+msgid "Adding blinds"
+msgstr ""
+
+#: plug-ins/common/blinds.c:279
+msgid "Blinds"
+msgstr ""
+
+#: plug-ins/common/blinds.c:288
+msgid "Horizontal"
+msgstr "ჰორიზონტალური"
+
+#: plug-ins/common/blinds.c:289
+msgid "Vertical"
+msgstr "ვერტიკალური"
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/common/blinds.c:353 plug-ins/common/compose.c:1129
+#: plug-ins/common/blinds.c:295 plug-ins/common/compose.c:1129
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
@@ -491,18 +516,6 @@ msgstr "_ვერტიკალური"
 #: plug-ins/screenshot/screenshot-win32.c:315 plug-ins/twain/twain.c:661
 msgid "Background"
 msgstr "ფონი"
-
-#: plug-ins/common/blinds.c:357
-msgid "_Transparent"
-msgstr "_გამჭვირვალე"
-
-#: plug-ins/common/blinds.c:382
-msgid "_Displacement:"
-msgstr ""
-
-#: plug-ins/common/blinds.c:393
-msgid "_Number of segments:"
-msgstr "_სეგმენტების რაოდენობა:"
 
 #: plug-ins/common/border-average.c:139
 msgid "_Border Average..."
@@ -1365,51 +1378,76 @@ msgstr ""
 msgid "Mask value"
 msgstr ""
 
-#: plug-ins/common/contrast-retinex.c:195
+#: plug-ins/common/contrast-retinex.c:178
 msgid "Retine_x..."
 msgstr ""
 
-#: plug-ins/common/contrast-retinex.c:199
+#: plug-ins/common/contrast-retinex.c:182
 msgid "Enhance contrast using the Retinex method"
 msgstr ""
 
-#: plug-ins/common/contrast-retinex.c:313
+#: plug-ins/common/contrast-retinex.c:184
+msgid ""
+"The Retinex Image Enhancement Algorithm is an automatic image enhancement "
+"method that enhances a digital image in terms of dynamic range compression, "
+"color independence from the spectral distribution of the scene illuminant, "
+"and color/lightness rendition."
+msgstr ""
+
+#: plug-ins/common/contrast-retinex.c:199
+msgid "Scal_e"
+msgstr "_მასშტაბი"
+
+#: plug-ins/common/contrast-retinex.c:200
+msgid "Biggest scale value"
+msgstr "მასშტაბის უდიდესი მნიშვნელობა"
+
+#: plug-ins/common/contrast-retinex.c:205
+msgid "Scale _division"
+msgstr "მასშტაბის _გაყოფა"
+
+#: plug-ins/common/contrast-retinex.c:206
+#: plug-ins/common/wavelet-decompose.c:132
+msgid "Number of scales"
+msgstr ""
+
+#: plug-ins/common/contrast-retinex.c:211
+msgid "Le_vel"
+msgstr "_დონე"
+
+#: plug-ins/common/contrast-retinex.c:212
+msgid "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
+msgstr ""
+
+#: plug-ins/common/contrast-retinex.c:218
+msgid "Dy_namic"
+msgstr "_დინამიკური"
+
+#: plug-ins/common/contrast-retinex.c:219
+msgid "Variance value"
+msgstr "ვარიაციის მნიშვნელობა"
+
+#: plug-ins/common/contrast-retinex.c:297
 msgid "Retinex"
 msgstr ""
 
-#: plug-ins/common/contrast-retinex.c:347
+#: plug-ins/common/contrast-retinex.c:338
 msgid "Retinex Image Enhancement"
 msgstr ""
 
-#: plug-ins/common/contrast-retinex.c:383
+#: plug-ins/common/contrast-retinex.c:347
 msgid "Uniform"
 msgstr "ერთგვაროვანი"
 
-#: plug-ins/common/contrast-retinex.c:384 plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/common/contrast-retinex.c:348 plug-ins/metadata/metadata-tags.c:238
 msgid "Low"
 msgstr "დაბალი"
 
-#: plug-ins/common/contrast-retinex.c:385 plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/common/contrast-retinex.c:349 plug-ins/metadata/metadata-tags.c:238
 msgid "High"
 msgstr "მაღალი"
 
-#: plug-ins/common/contrast-retinex.c:396
-msgid "_Level:"
-msgstr "_დონე:"
-
-#: plug-ins/common/contrast-retinex.c:400
-msgid "_Scale:"
-msgstr "გადიდ_ება:"
-
-#: plug-ins/common/contrast-retinex.c:411
-msgid "Scale _division:"
-msgstr "გადიდების _მასშტაბი:"
-
-#: plug-ins/common/contrast-retinex.c:422
-msgid "Dy_namic:"
-msgstr "_დინამიკური:"
-
-#: plug-ins/common/contrast-retinex.c:710
+#: plug-ins/common/contrast-retinex.c:689
 msgid "Retinex: filtering"
 msgstr ""
 
@@ -1855,24 +1893,24 @@ msgstr "_თეთრის დონე"
 msgid "White level"
 msgstr "თეთრის დონე"
 
-#: plug-ins/common/despeckle.c:405 plug-ins/common/despeckle.c:779
+#: plug-ins/common/despeckle.c:408 plug-ins/common/despeckle.c:782
 msgid "Despeckle"
 msgstr ""
 
-#: plug-ins/common/despeckle.c:407
+#: plug-ins/common/despeckle.c:410
 msgid "Median"
 msgstr "საშუალო"
 
-#: plug-ins/common/despeckle.c:408 plug-ins/gimpressionist/orientation.c:176
+#: plug-ins/common/despeckle.c:411 plug-ins/gimpressionist/orientation.c:176
 #: plug-ins/gimpressionist/size.c:183
 msgid "Adaptive"
 msgstr "შეგუებადი"
 
-#: plug-ins/common/despeckle.c:409
+#: plug-ins/common/despeckle.c:412
 msgid "Recursive-Median"
 msgstr "რეკურსიული-მედიანი"
 
-#: plug-ins/common/despeckle.c:410
+#: plug-ins/common/despeckle.c:413
 msgid "Recursive-Adaptive"
 msgstr "რეკურსიული-ადაპტიური"
 
@@ -2190,7 +2228,7 @@ msgstr ""
 #: plug-ins/common/file-desktop-link.c:198
 #, c-format
 msgid "Error loading desktop file '%s': %s"
-msgstr ""
+msgstr "შეცდომა სამუშაო მაგიდის ფაილის '%s' ჩატვირთვისას: %s"
 
 #: plug-ins/common/file-dicom.c:173
 msgid "DICOM image"
@@ -2207,7 +2245,7 @@ msgstr ""
 #: plug-ins/common/file-dicom.c:403
 #, c-format
 msgid "'%s' is not a DICOM file."
-msgstr ""
+msgstr "'%s' DICOM ფაილი არაა."
 
 #: plug-ins/common/file-dicom.c:576
 #, c-format
@@ -2279,7 +2317,7 @@ msgstr ""
 #: plug-ins/common/file-gegl.c:376
 #, c-format
 msgid "Could not open '%s'"
-msgstr ""
+msgstr "'%s'-ის გახსნის შეცდომა"
 
 #: plug-ins/common/file-gif-load.c:176 plug-ins/common/file-gif-save.c:149
 msgid "GIF image"
@@ -2299,11 +2337,11 @@ msgstr ""
 
 #: plug-ins/common/file-gif-load.c:440
 msgid "screen descriptor"
-msgstr ""
+msgstr "ეკრანის დესკრიპტორი"
 
 #: plug-ins/common/file-gif-load.c:458
 msgid "global colormap"
-msgstr ""
+msgstr "გლობალური ფერების რუკა"
 
 #: plug-ins/common/file-gif-load.c:466
 msgid "Non-square pixels.  Image might look squashed."
@@ -2315,15 +2353,15 @@ msgstr "გამოსახულების მონაცემები"
 
 #: plug-ins/common/file-gif-load.c:493
 msgid "extension data"
-msgstr ""
+msgstr "გაფართოების მონაცემები"
 
 #: plug-ins/common/file-gif-load.c:513
 msgid "frame info"
-msgstr ""
+msgstr "კადრის ინფორმაცია"
 
 #: plug-ins/common/file-gif-load.c:526
 msgid "local colormap"
-msgstr ""
+msgstr "ლოკალური ფერების რუკა"
 
 #: plug-ins/common/file-gif-load.c:586 plug-ins/common/file-gif-load.c:591
 #, c-format
@@ -2337,7 +2375,7 @@ msgstr "შეცდომა '%s'-ის კითხვისას. %s"
 #: plug-ins/common/file-gif-load.c:1046 plug-ins/common/file-gif-load.c:1050
 #: plug-ins/common/file-gif-load.c:1195
 msgid "Image may be corrupt!"
-msgstr ""
+msgstr "გამოსახულება შეიძლება დაზიანებულია!"
 
 #: plug-ins/common/file-gif-load.c:743
 msgid "Error reading data size"
@@ -2349,7 +2387,7 @@ msgstr "მონაცემების წაკითხვის შეც�
 
 #: plug-ins/common/file-gif-load.c:782
 msgid "Not enough compressed data"
-msgstr ""
+msgstr "არასაკმარისი შეკუმშული მონაცემები"
 
 #: plug-ins/common/file-gif-load.c:836
 msgid "Value out of range for code size"
@@ -2361,7 +2399,7 @@ msgstr ""
 
 #: plug-ins/common/file-gif-load.c:945
 msgid "Unexpected extra data"
-msgstr ""
+msgstr "მოულოდნელი დამატებითი მონაცემები"
 
 #: plug-ins/common/file-gif-load.c:964
 msgid "Invalid table entry"
@@ -2396,7 +2434,7 @@ msgstr "ფონი (%d%s)"
 #: plug-ins/common/file-gif-load.c:1126
 #, c-format
 msgid "Opening '%s' (frame %d)"
-msgstr ""
+msgstr "'%s'-ის გახსნა (კადრი %d)"
 
 #: plug-ins/common/file-gif-load.c:1155
 #, c-format
@@ -2486,7 +2524,7 @@ msgstr ""
 
 #: plug-ins/common/file-gif-save.c:1209
 msgid "Export Image as GIF"
-msgstr ""
+msgstr "გამოსახულების GIF-ად გატანა"
 
 #: plug-ins/common/file-gif-save.c:1219 plug-ins/common/file-mng.c:1609
 msgid "_Interlace"
@@ -2502,7 +2540,7 @@ msgstr ""
 
 #: plug-ins/common/file-gif-save.c:1287
 msgid "_Number of repeats:"
-msgstr ""
+msgstr "_გამეორებების რაოდენობა:"
 
 #: plug-ins/common/file-gif-save.c:1293
 msgid "_Forever"
@@ -3164,7 +3202,7 @@ msgstr ""
 
 #: plug-ins/common/file-mng.c:1600
 msgid "MNG Options"
-msgstr ""
+msgstr "MNG პარამეტრები"
 
 #: plug-ins/common/file-mng.c:1613 plug-ins/common/file-png.c:245
 msgid "Save _background color"
@@ -3240,11 +3278,11 @@ msgstr ""
 
 #: plug-ins/common/file-mng.c:1709
 msgid "_Loop"
-msgstr ""
+msgstr "_მარყუჟი"
 
 #: plug-ins/common/file-mng.c:1716
 msgid "Default frame delay:"
-msgstr ""
+msgstr "ნაგულისხმები კადრის დაყოვნბა:"
 
 #: plug-ins/common/file-mng.c:1732
 msgid ""
@@ -3302,7 +3340,7 @@ msgstr ""
 #: plug-ins/common/file-pcx.c:457
 #, c-format
 msgid "'%s' is not a PCX file"
-msgstr ""
+msgstr "'%s' PCX ფაილი არაა"
 
 #: plug-ins/common/file-pcx.c:473 plug-ins/common/file-wbmp.c:259
 #: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:368
@@ -3612,12 +3650,12 @@ msgstr ""
 
 #: plug-ins/common/file-png.c:423
 msgid "PNG format does not support multiple layers."
-msgstr ""
+msgstr "PNG ფორმატს ერთზე მეტი ფენის მხარდაჭერა არ გააჩნია."
 
 #: plug-ins/common/file-png.c:499
 #, c-format
 msgid "Error loading PNG file: %s\n"
-msgstr ""
+msgstr "PNG ფაილის ჩატვირთვის შეცდომა: %s\n"
 
 #: plug-ins/common/file-png.c:630
 #, c-format
@@ -3751,7 +3789,7 @@ msgstr ""
 #: plug-ins/common/file-pnm.c:370 plug-ins/common/file-pnm.c:406
 #: plug-ins/common/file-pnm.c:442
 msgid "Data formatting"
-msgstr ""
+msgstr "მონაცემების ფორმატი"
 
 #: plug-ins/common/file-pnm.c:371 plug-ins/common/file-pnm.c:407
 #: plug-ins/common/file-pnm.c:443 plug-ins/common/file-pnm.c:479
@@ -3760,7 +3798,7 @@ msgstr ""
 
 #: plug-ins/common/file-pnm.c:385
 msgid "PBM"
-msgstr ""
+msgstr "PBM"
 
 #: plug-ins/common/file-pnm.c:386
 msgid "PBM image"
@@ -3833,7 +3871,7 @@ msgstr ""
 #: plug-ins/common/file-pnm.c:661
 #, c-format
 msgid "%s format does not support multiple layers."
-msgstr ""
+msgstr "%s ფორმატს ერთზე მეტი ფენის მხარდაჭერა არ გააჩნია."
 
 #: plug-ins/common/file-pnm.c:747 plug-ins/common/file-pnm.c:779
 #: plug-ins/common/file-pnm.c:788 plug-ins/common/file-pnm.c:803
@@ -3849,11 +3887,11 @@ msgstr "არასწორი ფაილი."
 
 #: plug-ins/common/file-pnm.c:767
 msgid "File not in a supported format."
-msgstr ""
+msgstr "ფაილის ფორმატი მხარდაუჭერელია."
 
 #: plug-ins/common/file-pnm.c:782
 msgid "Invalid X resolution."
-msgstr ""
+msgstr "არასწორი X გარჩევადობა."
 
 #: plug-ins/common/file-pnm.c:784 plug-ins/common/file-pnm.c:950
 msgid "Image width is larger than GIMP can handle."
@@ -3861,7 +3899,7 @@ msgstr ""
 
 #: plug-ins/common/file-pnm.c:791
 msgid "Invalid Y resolution."
-msgstr ""
+msgstr "არასწორი Y გარჩევადობა."
 
 #: plug-ins/common/file-pnm.c:793
 msgid "Image height is larger than GIMP can handle."
@@ -3948,12 +3986,12 @@ msgstr ""
 
 #: plug-ins/common/file-ps.c:3568
 msgid "Import from PostScript"
-msgstr ""
+msgstr "PostScript-დან შემოტანა"
 
 #. Rendering
 #: plug-ins/common/file-ps.c:3612
 msgid "Rendering"
-msgstr ""
+msgstr "რენდერი "
 
 #. Resolution
 #: plug-ins/common/file-ps.c:3631 plug-ins/common/file-svg.c:945
@@ -4119,11 +4157,11 @@ msgstr ""
 #: plug-ins/common/file-psp.c:941
 #, c-format
 msgid "Invalid block header at %ld"
-msgstr ""
+msgstr "არასწორი ბლოკის თავსართი მისამართზე %ld"
 
 #: plug-ins/common/file-psp.c:944
 msgid "Invalid block header"
-msgstr ""
+msgstr "არასწორი ბლოკის თავსართი"
 
 #: plug-ins/common/file-psp.c:976
 #, c-format
@@ -4198,7 +4236,7 @@ msgstr ""
 
 #: plug-ins/common/file-psp.c:2084
 msgid "Error creating layer"
-msgstr ""
+msgstr "ფენის შექმნის სეცდომა"
 
 #: plug-ins/common/file-psp.c:2129
 #, c-format
@@ -4220,11 +4258,11 @@ msgstr ""
 
 #: plug-ins/common/file-psp.c:2394
 msgid "Error reading file header."
-msgstr ""
+msgstr "ფაილის თავსართის წაკითხვის შეცდომა."
 
 #: plug-ins/common/file-psp.c:2401
 msgid "Incorrect file signature."
-msgstr ""
+msgstr "არასწორი ფაილის ხელმოწერა."
 
 #: plug-ins/common/file-psp.c:2415
 #, c-format
@@ -4588,7 +4626,7 @@ msgstr ""
 #: plug-ins/common/file-sunras.c:1648 plug-ins/common/file-sunras.c:1769
 #: plug-ins/file-fits/fits.c:1148
 msgid "Write error occurred"
-msgstr ""
+msgstr "ჩაწერის შეცდომა"
 
 #: plug-ins/common/file-sunras.c:1789
 msgid "Export Image as SUNRAS"
@@ -6088,7 +6126,7 @@ msgstr ""
 #: plug-ins/common/sphere-designer.c:2833 plug-ins/gimpressionist/paper.c:191
 #: plug-ins/ifs-compose/ifs-compose.c:713
 msgid "Scale:"
-msgstr "გაფართოება:"
+msgstr "მასშტაბი:"
 
 #: plug-ins/common/sphere-designer.c:2841
 msgid "Turbulence:"
@@ -6197,6 +6235,14 @@ msgstr ""
 #: plug-ins/common/tile-small.c:498 plug-ins/ifs-compose/ifs-compose.c:769
 msgid "Flip"
 msgstr "გადაბრუნება"
+
+#: plug-ins/common/tile-small.c:511 plug-ins/pagecurl/pagecurl.c:586
+msgid "_Horizontal"
+msgstr "_ჰორიზონტალური"
+
+#: plug-ins/common/tile-small.c:521 plug-ins/pagecurl/pagecurl.c:585
+msgid "_Vertical"
+msgstr "_ვერტიკალური"
 
 #: plug-ins/common/tile-small.c:547
 msgid "A_ll tiles"
@@ -6579,10 +6625,6 @@ msgstr ""
 #: plug-ins/common/wavelet-decompose.c:131
 msgid "Scal_es"
 msgstr "გაფართოება"
-
-#: plug-ins/common/wavelet-decompose.c:132
-msgid "Number of scales"
-msgstr ""
 
 #: plug-ins/common/wavelet-decompose.c:137
 msgid "Create a layer group to store the _decomposition"
@@ -10172,7 +10214,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/sizemap.c:518
 msgid "S_trength:"
-msgstr ""
+msgstr "_სიძლიერე:"
 
 #: plug-ins/gimpressionist/sizemap.c:521
 msgid "Change the strength of the selected smvector"
@@ -10198,7 +10240,7 @@ msgstr "ავტორი"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:184
 msgid "Author Title"
-msgstr ""
+msgstr "ავტორის სათაური"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:200
 #: plug-ins/ui/plug-in-metadata-editor.ui:505
@@ -10207,7 +10249,7 @@ msgstr "აღწერა"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:217
 msgid "Description Writer\t"
-msgstr ""
+msgstr "მწერალის აღწერა\t"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:308
 msgid "Rating"
@@ -10219,7 +10261,7 @@ msgstr "საკვანძო სიტყვები"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:397
 msgid "Copyright Status"
-msgstr ""
+msgstr "საავტორო უფლებების სტატუსი"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:413
 #: plug-ins/ui/plug-in-metadata-editor.ui:2364
@@ -10243,13 +10285,13 @@ msgstr "ქალაქი"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:579
 msgid "Postal Code\t"
-msgstr ""
+msgstr "საფოსტო კოდი\t"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:609
 #: plug-ins/ui/plug-in-metadata-editor.ui:1096
 #: plug-ins/ui/plug-in-metadata-editor.ui:1580
 msgid "State / Province"
-msgstr ""
+msgstr "რეგიონი/მხარე"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:625
 #: plug-ins/ui/plug-in-metadata-editor.ui:1157
@@ -10259,15 +10301,15 @@ msgstr "ქვეყანა"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:729
 msgid "Phone(s)"
-msgstr ""
+msgstr "ტელეფონი"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:746
 msgid "Email(s)"
-msgstr ""
+msgstr "ელფოსტა"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:763
 msgid "Website(s)"
-msgstr ""
+msgstr "ვებგვერდი"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:863
 msgid "Creation Date"
@@ -10275,19 +10317,19 @@ msgstr "შეცვლის თარიღის მიხედვით"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:879
 msgid "Intellectual Genre"
-msgstr ""
+msgstr "ინტელექტუალური ჟანრი"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:895
 msgid "IPTC Scene Code"
-msgstr ""
+msgstr "IPTC სცენის კოდი"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:1021
 msgid "Sublocation\t"
-msgstr ""
+msgstr "ქვემდებარეობა\t"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:1112
 msgid "ISO Country Code"
-msgstr ""
+msgstr "ISO ქვეყნის კოდი"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:1200
 msgid "IPTC Subject Code"
@@ -10351,7 +10393,7 @@ msgstr ""
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:1768
 msgid "Location Shown"
-msgstr ""
+msgstr "მდებარეობა ნაჩვენებია"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:1785
 msgid "Featured Organization"
@@ -10378,7 +10420,7 @@ msgstr "მოვლენა"
 #: plug-ins/ui/plug-in-metadata-editor.ui:3693
 #: plug-ins/ui/plug-in-metadata-editor.ui:3698
 msgid "Add an entry"
-msgstr ""
+msgstr "ელემენტის დამატება"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:1891
 #: plug-ins/ui/plug-in-metadata-editor.ui:1973
@@ -10433,7 +10475,7 @@ msgstr ""
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:2487
 msgid "Model Age"
-msgstr ""
+msgstr "მოდელის ასაკი"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:2503
 msgid "Minor Model Age Disclosure"
@@ -13202,6 +13244,12 @@ msgstr ""
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr ""
+
+#~ msgid "_Level:"
+#~ msgstr "_დონე:"
+
+#~ msgid "_Scale:"
+#~ msgstr "გადიდ_ება:"
 
 #~ msgctxt "compression"
 #~ msgid "None"
