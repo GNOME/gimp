@@ -38,14 +38,6 @@
 #define MAX_AVG         100
 
 
-typedef struct
-{
-  gboolean histogram;
-  gint     avg_width;
-  gboolean preview;
-} DestripeValues;
-
-
 typedef struct _Destripe      Destripe;
 typedef struct _DestripeClass DestripeClass;
 
@@ -77,28 +69,21 @@ static GimpValueArray * destripe_run              (GimpProcedure        *procedu
                                                    const GimpValueArray *args,
                                                    gpointer              run_data);
 
-static void             destripe                  (GimpDrawable         *drawable,
+static void             destripe                  (GObject              *config,
+                                                   GimpDrawable         *drawable,
                                                    GimpPreview          *preview);
-static void             destripe_preview          (GimpDrawable         *drawable,
-                                                   GimpPreview          *preview);
+static void             destripe_preview          (GtkWidget            *widget,
+                                                   GObject              *config);
 
-static gboolean         destripe_dialog           (GimpDrawable         *drawable);
-static void       destripe_scale_entry_update_int (GimpLabelSpin        *entry,
-                                                   gint                 *value);
+static gboolean         destripe_dialog           (GimpProcedure        *procedure,
+                                                   GObject              *config,
+                                                   GimpDrawable         *drawable);
 
 
 G_DEFINE_TYPE (Destripe, destripe, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (DESTRIPE_TYPE)
 DEFINE_STD_SET_I18N
-
-
-static DestripeValues vals =
-{
-  FALSE, /* histogram     */
-  36,    /* average width */
-  TRUE   /* preview */
-};
 
 
 static void
@@ -144,8 +129,8 @@ destripe_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Remove vertical stripe artifacts "
                                           "from the image"),
-                                        "This plug-in tries to remove vertical "
-                                        "stripes from an image.",
+                                        _("This plug-in tries to remove vertical "
+                                          "stripes from an image."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Marc Lehmann <pcg@goof.com>",
@@ -153,10 +138,17 @@ destripe_create_procedure (GimpPlugIn  *plug_in,
                                       PLUG_IN_VERSION);
 
       GIMP_PROC_ARG_INT (procedure, "avg-width",
-                         "Avg width",
-                         "Averaging filter width",
+                         _("_Width"),
+                         _("Averaging filter width"),
                          2, MAX_AVG, 36,
                          G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure,
+                             "create-histogram",
+                             _("Create _histogram"),
+                             _("Output a histogram"),
+                             FALSE,
+                             G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -171,13 +163,20 @@ destripe_run (GimpProcedure        *procedure,
               const GimpValueArray *args,
               gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  GimpProcedureConfig *config;
+  GimpDrawable        *drawable;
 
   gegl_init (NULL, NULL);
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   if (n_drawables != 1)
     {
       GError *error = NULL;
+
+      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
+      g_object_unref (config);
 
       g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
@@ -195,49 +194,49 @@ destripe_run (GimpProcedure        *procedure,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &vals);
-
-      if (! destripe_dialog (drawable))
+      if (! destripe_dialog (procedure, G_OBJECT (config), drawable))
         {
+          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
+          g_object_unref (config);
+
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_CANCEL,
                                                    NULL);
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      vals.avg_width = GIMP_VALUES_GET_INT (args, 0);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS :
-      gimp_get_data (PLUG_IN_PROC, &vals);
+    default:
       break;
     };
 
   if (gimp_drawable_is_rgb  (drawable) ||
       gimp_drawable_is_gray (drawable))
     {
-      destripe (drawable, NULL);
+      destripe (G_OBJECT (config), drawable, NULL);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
-
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &vals, sizeof (vals));
     }
   else
     {
+      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
+      g_object_unref (config);
+
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
+  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
+  g_object_unref (config);
+
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static void
-destripe (GimpDrawable *drawable,
-          GimpPreview *preview)
+destripe (GObject      *config,
+          GimpDrawable *drawable,
+          GimpPreview  *preview)
 {
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
@@ -250,6 +249,13 @@ destripe (GimpDrawable *drawable,
   glong      *hist, *corr;        /* "histogram" data */
   gint        tile_width = gimp_tile_width ();
   gint        i, x, y, ox, cols;
+  gint        avg_width;
+  gboolean    histogram;
+
+  g_object_get (config,
+                "avg-width",        &avg_width,
+                "create-histogram", &histogram,
+                NULL);
 
   progress     = 0.0;
   progress_inc = 0.0;
@@ -339,7 +345,7 @@ destripe (GimpDrawable *drawable,
    */
 
   {
-    gint extend = (vals.avg_width / 2) * bpp;
+    gint extend = (avg_width / 2) * bpp;
 
     for (i = 0; i < MIN (3, bpp); i++)
       {
@@ -398,7 +404,7 @@ destripe (GimpDrawable *drawable,
           long   *c = corr + (ox - x1) * bpp;
           guchar *row_end = rows + cols * bpp;
 
-          if (vals.histogram)
+          if (histogram)
             {
               while (rows < row_end)
                 {
@@ -458,18 +464,22 @@ destripe (GimpDrawable *drawable,
 }
 
 static void
-destripe_preview (GimpDrawable *drawable,
-                  GimpPreview *preview)
+destripe_preview (GtkWidget *widget,
+                  GObject   *config)
 {
-  destripe (drawable, preview);
+  GimpPreview  *preview  = GIMP_PREVIEW (widget);
+  GimpDrawable *drawable = g_object_get_data (config, "drawable");
+
+  destripe (config, drawable, preview);
 }
 
 
 static gboolean
-destripe_dialog (GimpDrawable *drawable)
+destripe_dialog (GimpProcedure *procedure,
+                 GObject       *config,
+                 GimpDrawable  *drawable)
 {
   GtkWidget     *dialog;
-  GtkWidget     *main_vbox;
   GtkWidget     *preview;
   GtkWidget     *scale;
   GtkWidget     *button;
@@ -477,14 +487,9 @@ destripe_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Destripe"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
-
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-
-                            NULL);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Destripe"));
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -493,54 +498,32 @@ destripe_dialog (GimpDrawable *drawable)
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
-
   preview = gimp_drawable_preview_new_from_drawable (drawable);
-  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (destripe_preview),
                             drawable);
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "avg-width", 1.0);
+  gtk_widget_set_margin_bottom (scale, 12);
 
-  scale = gimp_scale_entry_new (_("_Width:"), vals.avg_width, 2, MAX_AVG, 0);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (destripe_scale_entry_update_int),
-                    &vals.avg_width);
-  g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-  gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 6);
-  gtk_widget_show (scale);
+  button = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                             "create-histogram",
+                                             GTK_TYPE_CHECK_BUTTON);
+  gtk_widget_set_margin_bottom (button, 12);
 
-  button = gtk_check_button_new_with_mnemonic (_("Create _histogram"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), vals.histogram);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &vals.histogram);
-  g_signal_connect_swapped (button, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "avg-width", "create-histogram",
+                              NULL);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
   return run;
-}
-
-static void
-destripe_scale_entry_update_int (GimpLabelSpin *entry,
-                                 gint          *value)
-{
-  *value = (gint) gimp_label_spin_get_value (entry);
 }
