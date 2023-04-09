@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-08 15:35+0000\n"
-"PO-Revision-Date: 2023-04-08 22:00+0200\n"
+"POT-Creation-Date: 2023-04-09 02:15+0000\n"
+"PO-Revision-Date: 2023-04-09 04:25+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -72,10 +72,10 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
 #: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
 #: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
-#: plug-ins/common/mail.c:568 plug-ins/common/nl-filter.c:1126
-#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
-#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
-#: plug-ins/common/sparkle.c:426 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/mail.c:568 plug-ins/common/qbist.c:848
+#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
+#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sparkle.c:426
+#: plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -163,13 +163,12 @@ msgstr ""
 #: plug-ins/common/file-heif.c:2358 plug-ins/common/file-pdf-load.c:656
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:547
 #: plug-ins/common/film.c:1325 plug-ins/common/grid.c:762
-#: plug-ins/common/nl-filter.c:1127 plug-ins/common/qbist.c:945
-#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sparkle.c:427
-#: plug-ins/common/sphere-designer.c:2633 plug-ins/common/tile.c:493
-#: plug-ins/common/tile-small.c:447 plug-ins/common/unit-editor.c:268
-#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
-#: plug-ins/file-psd/psd-load.c:3308 plug-ins/flame/flame.c:717
-#: plug-ins/flame/flame.c:1034
+#: plug-ins/common/qbist.c:945 plug-ins/common/smooth-palette.c:512
+#: plug-ins/common/sparkle.c:427 plug-ins/common/sphere-designer.c:2633
+#: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
+#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
+#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3308
+#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -5542,7 +5541,7 @@ msgstr ""
 #. frame for primitive radio buttons
 #: plug-ins/common/jigsaw.c:2536
 msgid "Square"
-msgstr ""
+msgstr "კვადრატი"
 
 #: plug-ins/common/jigsaw.c:2537
 msgid "Curved"
@@ -5591,43 +5590,61 @@ msgstr ""
 msgid "Could not start sendmail (%s)"
 msgstr ""
 
-#: plug-ins/common/nl-filter.c:166
+#: plug-ins/common/nl-filter.c:158
 msgid "_NL Filter..."
 msgstr ""
 
-#: plug-ins/common/nl-filter.c:170
+#: plug-ins/common/nl-filter.c:162
 msgid "Nonlinear swiss army knife filter"
 msgstr ""
 
-#: plug-ins/common/nl-filter.c:1027 plug-ins/common/nl-filter.c:1122
-msgid "NL Filter"
+#: plug-ins/common/nl-filter.c:163
+msgid ""
+"This is the pnmnlfilt, in GIMP's clothing. See the pnmnlfilt manpage for "
+"details."
 msgstr ""
 
-#: plug-ins/common/nl-filter.c:1152
+#: plug-ins/common/nl-filter.c:174
+msgid "_Alpha"
+msgstr "_ალფა"
+
+#: plug-ins/common/nl-filter.c:175
+msgid "The amount of the filter to apply"
+msgstr ""
+
+#: plug-ins/common/nl-filter.c:180
+msgid "Ra_dius"
+msgstr "რადიუსი"
+
+#: plug-ins/common/nl-filter.c:181
+msgid "The filter radius"
+msgstr ""
+
+#: plug-ins/common/nl-filter.c:186
 msgid "Filter"
 msgstr "ფილტრი"
 
-#: plug-ins/common/nl-filter.c:1156
-msgid "_Alpha trimmed mean"
+#: plug-ins/common/nl-filter.c:187
+msgid ""
+"The Filter to Run, 0 - alpha trimmed mean; 1 - optimal estimation (alpha "
+"controls noise variance); 2 - edge enhancement"
 msgstr ""
 
-#: plug-ins/common/nl-filter.c:1158
-msgid "Op_timal estimation"
+#: plug-ins/common/nl-filter.c:1031 plug-ins/common/nl-filter.c:1130
+msgid "NL Filter"
 msgstr ""
 
-#: plug-ins/common/nl-filter.c:1160
-msgid "_Edge enhancement"
+#: plug-ins/common/nl-filter.c:1139
+msgid "Alpha trimmed mean"
 msgstr ""
 
-#: plug-ins/common/nl-filter.c:1184
-msgid "A_lpha:"
-msgstr "_ალფა:"
+#: plug-ins/common/nl-filter.c:1140
+msgid "Optimal estimation"
+msgstr "ოპტიმალური შეფასება"
 
-#: plug-ins/common/nl-filter.c:1194
-#: plug-ins/gradient-flare/gradient-flare.c:2922
-#: plug-ins/imagemap/imap_circle.c:275
-msgid "_Radius:"
-msgstr "_რადიუსი:"
+#: plug-ins/common/nl-filter.c:1141
+msgid "Edge enhancement"
+msgstr ""
 
 #: plug-ins/common/plugin-browser.c:169
 msgid "_Plug-In Browser"
@@ -10783,6 +10800,11 @@ msgstr ""
 msgid "Parameters"
 msgstr "პარამეტრები"
 
+#: plug-ins/gradient-flare/gradient-flare.c:2922
+#: plug-ins/imagemap/imap_circle.c:275
+msgid "_Radius:"
+msgstr "_რადიუსი:"
+
 #: plug-ins/gradient-flare/gradient-flare.c:2933
 msgid "Ro_tation:"
 msgstr "_ბრუნვა:"
@@ -11057,7 +11079,7 @@ msgstr ""
 #: plug-ins/help/gimphelplocale.c:239
 #, c-format
 msgid "Could not load data from '%s': %s"
-msgstr ""
+msgstr "'%s'-დან მონაცემების ჩატვირთვის შეცდომა: %s"
 
 #: plug-ins/help/gimphelplocale.c:311
 #, c-format
@@ -11065,10 +11087,12 @@ msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr ""
+"'%s'-ის დამუშავების შეცდომა:\n"
+"%s"
 
 #: plug-ins/ifs-compose/ifs-compose.c:433
 msgid "_IFS Fractal..."
-msgstr ""
+msgstr "_IFS ფრაქტალი..."
 
 #: plug-ins/ifs-compose/ifs-compose.c:439
 msgid "Create an Iterated Function System (IFS) fractal"
@@ -11091,12 +11115,12 @@ msgstr "X:"
 #: plug-ins/map-object/map-object-ui.c:1034
 #: plug-ins/map-object/map-object-ui.c:1133
 msgid "Y:"
-msgstr ""
+msgstr "Y:"
 
 #. Asym
 #: plug-ins/ifs-compose/ifs-compose.c:741
 msgid "Asymmetry:"
-msgstr ""
+msgstr "ასიმეტრია:"
 
 #. Shear
 #: plug-ins/ifs-compose/ifs-compose.c:755
@@ -11110,7 +11134,7 @@ msgstr "მარტივი"
 
 #: plug-ins/ifs-compose/ifs-compose.c:809
 msgid "IFS Fractal: Target"
-msgstr ""
+msgstr "IFS ფრაქტალი: სამიზნე"
 
 #: plug-ins/ifs-compose/ifs-compose.c:815
 msgid "Scale hue by:"
@@ -11127,23 +11151,23 @@ msgstr "მთლიანი"
 
 #: plug-ins/ifs-compose/ifs-compose.c:855
 msgid "IFS Fractal: Red"
-msgstr ""
+msgstr "IFS ფრაქტალი: წითელი"
 
 #: plug-ins/ifs-compose/ifs-compose.c:863
 msgid "IFS Fractal: Green"
-msgstr ""
+msgstr "IFS ფრაქტალი: მწვანე"
 
 #: plug-ins/ifs-compose/ifs-compose.c:871
 msgid "IFS Fractal: Blue"
-msgstr ""
+msgstr "IFS ფრაქტალი: ლურჯი"
 
 #: plug-ins/ifs-compose/ifs-compose.c:879
 msgid "IFS Fractal: Black"
-msgstr ""
+msgstr "IFS ფრაქტალი: შავი"
 
 #: plug-ins/ifs-compose/ifs-compose.c:951
 msgid "IFS Fractal"
-msgstr ""
+msgstr "IFS ფრაქტალი"
 
 #: plug-ins/ifs-compose/ifs-compose.c:995 plug-ins/imagemap/imap_cmd_move.c:85
 #: plug-ins/imagemap/imap_cmd_object_move.c:56
@@ -11197,15 +11221,15 @@ msgstr ""
 
 #: plug-ins/ifs-compose/ifs-compose.c:1254
 msgid "IFS Fractal Render Options"
-msgstr ""
+msgstr "IFS ფრაქტალის რენდერის პარამეტრები"
 
 #: plug-ins/ifs-compose/ifs-compose.c:1276
 msgid "Max. memory:"
-msgstr ""
+msgstr "მაქს მეხსიერება:"
 
 #: plug-ins/ifs-compose/ifs-compose.c:1304
 msgid "Subdivide:"
-msgstr ""
+msgstr "ქვეგაყოფა:"
 
 #: plug-ins/ifs-compose/ifs-compose.c:1318
 msgid "Spot radius:"
@@ -13236,6 +13260,9 @@ msgstr ""
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr ""
+
+#~ msgid "A_lpha:"
+#~ msgstr "_ალფა:"
 
 #~ msgid "_Horizontal:"
 #~ msgstr "_ჰორიზონტალირი:"
