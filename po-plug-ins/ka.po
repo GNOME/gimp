@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-09 02:15+0000\n"
-"PO-Revision-Date: 2023-04-09 04:25+0200\n"
+"POT-Creation-Date: 2023-04-09 11:50+0000\n"
+"PO-Revision-Date: 2023-04-09 19:54+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -32,7 +32,7 @@ msgstr "ავარჯიშეთ თხა C-ში"
 #: plug-ins/common/contrast-retinex.c:253 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:678 plug-ins/common/decompose.c:376
 #: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:232
-#: plug-ins/common/destripe.c:183 plug-ins/common/gradient-map.c:216
+#: plug-ins/common/destripe.c:182 plug-ins/common/gradient-map.c:216
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
 #: plug-ins/common/jigsaw.c:473 plug-ins/common/nl-filter.c:224
 #: plug-ins/common/qbist.c:253 plug-ins/common/sample-colorize.c:431
@@ -66,16 +66,15 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/common/colormap-remap.c:706 plug-ins/common/compose.c:1183
 #: plug-ins/common/curve-bend.c:1221 plug-ins/common/curve-bend.c:1995
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
-#: plug-ins/common/destripe.c:484 plug-ins/common/file-cel.c:1001
-#: plug-ins/common/file-gif-save.c:1160 plug-ins/common/file-heif.c:2357
-#: plug-ins/common/file-pdf-load.c:655 plug-ins/common/file-pdf-load.c:1040
-#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
-#: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
-#: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
-#: plug-ins/common/mail.c:568 plug-ins/common/qbist.c:848
-#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
-#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sparkle.c:426
-#: plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1160
+#: plug-ins/common/file-heif.c:2357 plug-ins/common/file-pdf-load.c:655
+#: plug-ins/common/file-pdf-load.c:1040 plug-ins/common/file-pdf-save.c:1113
+#: plug-ins/common/file-ps.c:3572 plug-ins/common/file-svg.c:773
+#: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
+#: plug-ins/common/grid.c:761 plug-ins/common/mail.c:568
+#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
+#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
+#: plug-ins/common/sparkle.c:426 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -159,16 +158,16 @@ msgstr ""
 #: plug-ins/common/border-average.c:433 plug-ins/common/checkerboard.c:496
 #: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:707
 #: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1222
-#: plug-ins/common/depth-merge.c:734 plug-ins/common/destripe.c:485
-#: plug-ins/common/file-heif.c:2358 plug-ins/common/file-pdf-load.c:656
-#: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:547
-#: plug-ins/common/film.c:1325 plug-ins/common/grid.c:762
-#: plug-ins/common/qbist.c:945 plug-ins/common/smooth-palette.c:512
-#: plug-ins/common/sparkle.c:427 plug-ins/common/sphere-designer.c:2633
-#: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
-#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
-#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3308
-#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
+#: plug-ins/common/depth-merge.c:734 plug-ins/common/file-heif.c:2358
+#: plug-ins/common/file-pdf-load.c:656 plug-ins/common/file-svg.c:774
+#: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1325
+#: plug-ins/common/grid.c:762 plug-ins/common/qbist.c:945
+#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sparkle.c:427
+#: plug-ins/common/sphere-designer.c:2633 plug-ins/common/tile.c:493
+#: plug-ins/common/tile-small.c:447 plug-ins/common/unit-editor.c:268
+#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
+#: plug-ins/file-psd/psd-load.c:3308 plug-ins/flame/flame.c:717
+#: plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -1732,11 +1731,11 @@ msgstr "ალფა"
 
 #: plug-ins/common/decompose.c:207
 msgid "Hue (HSL)"
-msgstr ""
+msgstr "ტონი (HSL)"
 
 #: plug-ins/common/decompose.c:208
 msgid "Saturation (HSL)"
-msgstr ""
+msgstr "გაჯერებულობა (HSL)"
 
 #: plug-ins/common/decompose.c:209
 msgid "Lightness"
@@ -1832,7 +1831,7 @@ msgstr ""
 
 #: plug-ins/common/depth-merge.c:845
 msgid "O_ffset:"
-msgstr ""
+msgstr "_წანაცვლება:"
 
 #: plug-ins/common/depth-merge.c:854
 msgid "Sc_ale 1:"
@@ -1911,34 +1910,41 @@ msgstr "რეკურსიული-მედიანი"
 msgid "Recursive-Adaptive"
 msgstr "რეკურსიული-ადაპტიური"
 
-#: plug-ins/common/destripe.c:141
+#: plug-ins/common/destripe.c:126
 msgid "Des_tripe..."
 msgstr ""
 
-#: plug-ins/common/destripe.c:145
+#: plug-ins/common/destripe.c:130
 msgid "Remove vertical stripe artifacts from the image"
 msgstr ""
 
-#: plug-ins/common/destripe.c:264
+#: plug-ins/common/destripe.c:132
+msgid "This plug-in tries to remove vertical stripes from an image."
+msgstr ""
+
+#: plug-ins/common/destripe.c:141 plug-ins/imagemap/imap_grid.c:255
+msgid "_Width"
+msgstr "_სიგანე"
+
+#: plug-ins/common/destripe.c:142
+msgid "Averaging filter width"
+msgstr ""
+
+#: plug-ins/common/destripe.c:148
+msgid "Create _histogram"
+msgstr "_ჰისტოგრამის შექმნა"
+
+#: plug-ins/common/destripe.c:149
+msgid "Output a histogram"
+msgstr "_ჰისტოგრამის გამოტანა"
+
+#: plug-ins/common/destripe.c:270
 msgid "Destriping"
 msgstr ""
 
-#: plug-ins/common/destripe.c:480
+#: plug-ins/common/destripe.c:492
 msgid "Destripe"
 msgstr ""
-
-#: plug-ins/common/destripe.c:510 plug-ins/common/file-html-table.c:712
-#: plug-ins/common/file-ps.c:3647 plug-ins/common/file-ps.c:3847
-#: plug-ins/common/smooth-palette.c:531 plug-ins/common/tile.c:519
-#: plug-ins/imagemap/imap_cmd_guides.c:163
-#: plug-ins/imagemap/imap_rectangle.c:398
-#: plug-ins/print/print-page-layout.c:286
-msgid "_Width:"
-msgstr "სიგა_ნე:"
-
-#: plug-ins/common/destripe.c:520
-msgid "Create _histogram"
-msgstr "_ჰისტოგრამის შექმნა"
 
 #: plug-ins/common/file-aa.c:131 plug-ins/common/file-aa.c:133
 msgid "ASCII art"
@@ -2804,7 +2810,7 @@ msgstr "ძირითადი"
 
 #: plug-ins/common/file-heif.c:2353
 msgid "Load HEIF Image"
-msgstr ""
+msgstr "HEIF გამოსახულების ჩატვირთვა"
 
 #: plug-ins/common/file-heif.c:2367
 msgid "Select Image"
@@ -2852,11 +2858,11 @@ msgstr ""
 
 #: plug-ins/common/file-html-table.c:181
 msgid "The text for the table caption."
-msgstr ""
+msgstr "ტექსტი ცხრილის სათაურისთვის."
 
 #: plug-ins/common/file-html-table.c:187
 msgid "The text to go into each cell."
-msgstr ""
+msgstr "ტექსტი თითოეული უჯრედისთვის."
 
 #: plug-ins/common/file-html-table.c:193
 msgid "The width for each table cell. Can be a number or a percent."
@@ -2927,7 +2933,7 @@ msgstr ""
 #. HTML Table Creation Options
 #: plug-ins/common/file-html-table.c:656
 msgid "Table Creation Options"
-msgstr ""
+msgstr "ცხრილის შექმნის პარამეტრები"
 
 #: plug-ins/common/file-html-table.c:667
 msgid "_Use cellspan"
@@ -2953,6 +2959,14 @@ msgstr "ცხრილის პარამეტრები"
 #: plug-ins/common/file-html-table.c:706
 msgid "_Border:"
 msgstr "_საზღვარი:"
+
+#: plug-ins/common/file-html-table.c:712 plug-ins/common/file-ps.c:3647
+#: plug-ins/common/file-ps.c:3847 plug-ins/common/smooth-palette.c:531
+#: plug-ins/common/tile.c:519 plug-ins/imagemap/imap_cmd_guides.c:163
+#: plug-ins/imagemap/imap_rectangle.c:398
+#: plug-ins/print/print-page-layout.c:286
+msgid "_Width:"
+msgstr "სიგა_ნე:"
 
 #: plug-ins/common/file-html-table.c:718 plug-ins/common/file-ps.c:3660
 #: plug-ins/common/file-ps.c:3858 plug-ins/common/film.c:1067
@@ -11597,10 +11611,6 @@ msgstr ""
 #: plug-ins/imagemap/imap_grid.c:248
 msgid "Grid Granularity"
 msgstr ""
-
-#: plug-ins/imagemap/imap_grid.c:255
-msgid "_Width"
-msgstr "_სიგანე"
 
 #: plug-ins/imagemap/imap_grid.c:261
 msgid "_Height"
