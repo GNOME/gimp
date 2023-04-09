@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-06 15:56+0000\n"
-"PO-Revision-Date: 2023-04-06 20:33+0300\n"
+"POT-Creation-Date: 2023-04-09 02:15+0000\n"
+"PO-Revision-Date: 2023-04-09 09:23+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -29,15 +29,15 @@ msgstr "Вправа у С_і-мінор"
 msgid "Exercise a goat in the C language"
 msgstr "Потренувати козу у мові Сі"
 
-#: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:218
+#: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
 #: plug-ins/common/border-average.c:195 plug-ins/common/checkerboard.c:184
 #: plug-ins/common/cml-explorer.c:558 plug-ins/common/compose.c:557
-#: plug-ins/common/contrast-retinex.c:262 plug-ins/common/crop-zealous.c:151
+#: plug-ins/common/contrast-retinex.c:253 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:678 plug-ins/common/decompose.c:376
-#: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:243
+#: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:232
 #: plug-ins/common/destripe.c:183 plug-ins/common/gradient-map.c:216
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
-#: plug-ins/common/jigsaw.c:467 plug-ins/common/nl-filter.c:224
+#: plug-ins/common/jigsaw.c:473 plug-ins/common/nl-filter.c:224
 #: plug-ins/common/qbist.c:253 plug-ins/common/sample-colorize.c:431
 #: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:328
 #: plug-ins/common/sphere-designer.c:3179 plug-ins/common/tile.c:220
@@ -63,11 +63,10 @@ msgstr "Потренувати козу (Сі)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/blinds.c:301 plug-ins/common/border-average.c:432
-#: plug-ins/common/busy-dialog.c:279 plug-ins/common/checkerboard.c:495
-#: plug-ins/common/cml-explorer.c:1348 plug-ins/common/cml-explorer.c:2114
-#: plug-ins/common/cml-explorer.c:2247 plug-ins/common/colormap-remap.c:706
-#: plug-ins/common/compose.c:1183 plug-ins/common/contrast-retinex.c:351
+#: plug-ins/common/border-average.c:432 plug-ins/common/busy-dialog.c:279
+#: plug-ins/common/checkerboard.c:495 plug-ins/common/cml-explorer.c:1348
+#: plug-ins/common/cml-explorer.c:2114 plug-ins/common/cml-explorer.c:2247
+#: plug-ins/common/colormap-remap.c:706 plug-ins/common/compose.c:1183
 #: plug-ins/common/curve-bend.c:1221 plug-ins/common/curve-bend.c:1995
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/destripe.c:484 plug-ins/common/file-cel.c:1001
@@ -76,8 +75,7 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
 #: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
 #: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
-#: plug-ins/common/jigsaw.c:2498 plug-ins/common/mail.c:568
-#: plug-ins/common/nl-filter.c:1126 plug-ins/common/qbist.c:848
+#: plug-ins/common/mail.c:568 plug-ins/common/qbist.c:848
 #: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
 #: plug-ins/common/smooth-palette.c:511 plug-ins/common/sparkle.c:426
 #: plug-ins/common/sphere-designer.c:2287
@@ -164,15 +162,13 @@ msgstr "Потренувати козу (Javascript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/blinds.c:302 plug-ins/common/border-average.c:433
-#: plug-ins/common/checkerboard.c:496 plug-ins/common/cml-explorer.c:1349
-#: plug-ins/common/colormap-remap.c:707 plug-ins/common/compose.c:1184
-#: plug-ins/common/contrast-retinex.c:352 plug-ins/common/curve-bend.c:1222
+#: plug-ins/common/border-average.c:433 plug-ins/common/checkerboard.c:496
+#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:707
+#: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1222
 #: plug-ins/common/depth-merge.c:734 plug-ins/common/destripe.c:485
 #: plug-ins/common/file-heif.c:2358 plug-ins/common/file-pdf-load.c:656
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:547
 #: plug-ins/common/film.c:1325 plug-ins/common/grid.c:762
-#: plug-ins/common/jigsaw.c:2499 plug-ins/common/nl-filter.c:1127
 #: plug-ins/common/qbist.c:945 plug-ins/common/smooth-palette.c:512
 #: plug-ins/common/sparkle.c:427 plug-ins/common/sphere-designer.c:2633
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
@@ -450,40 +446,74 @@ msgstr "Пошук тла анімації"
 msgid "Optimizing animation"
 msgstr "Оптимізація"
 
-#: plug-ins/common/blinds.c:158
+#: plug-ins/common/blinds.c:140
 msgid "_Blinds..."
 msgstr "_Жалюзі..."
 
-#: plug-ins/common/blinds.c:162
+#: plug-ins/common/blinds.c:144
 msgid "Simulate an image painted on window blinds"
 msgstr "Створити ефект малюнка на жалюзі"
 
-#: plug-ins/common/blinds.c:259
-msgid "Adding blinds"
-msgstr "Додавання жалюзі"
+#: plug-ins/common/blinds.c:154
+#| msgid "_Displacement:"
+msgid "_Displacement"
+msgstr "_Зміщення"
 
-#: plug-ins/common/blinds.c:297
-msgid "Blinds"
-msgstr "Жалюзі"
+#: plug-ins/common/blinds.c:155
+#| msgid "_Displacement:"
+msgid "Angle of Displacement"
+msgstr "Кут зміщення"
 
-#: plug-ins/common/blinds.c:332
+#: plug-ins/common/blinds.c:160
+#| msgid "_Number of segments:"
+msgid "_Number of segments"
+msgstr "_Кількість сегментів"
+
+#: plug-ins/common/blinds.c:161
+#| msgid "_Number of segments:"
+msgid "Number of segments in blinds"
+msgstr "Кількість сегментів у жалюзі"
+
+#: plug-ins/common/blinds.c:166
 msgid "Orientation"
 msgstr "Орієнтація"
 
-#: plug-ins/common/blinds.c:336 plug-ins/common/tile-small.c:511
-#: plug-ins/pagecurl/pagecurl.c:586
-msgid "_Horizontal"
-msgstr "Г_оризонтально"
+#: plug-ins/common/blinds.c:167
+#| msgid "Orientation"
+msgid "The orientation"
+msgstr "Орієнтація"
 
-#: plug-ins/common/blinds.c:339 plug-ins/common/tile-small.c:521
-#: plug-ins/pagecurl/pagecurl.c:585
-msgid "_Vertical"
-msgstr "_Вертикально"
+#: plug-ins/common/blinds.c:174
+msgid "_Transparent"
+msgstr "_Прозоре"
+
+#: plug-ins/common/blinds.c:175
+#| msgid "Background"
+msgid "Background transparent"
+msgstr "Прозоре тло"
+
+#: plug-ins/common/blinds.c:238
+msgid "Adding blinds"
+msgstr "Додавання жалюзі"
+
+#: plug-ins/common/blinds.c:279
+msgid "Blinds"
+msgstr "Жалюзі"
+
+#: plug-ins/common/blinds.c:288
+#| msgid "_Horizontal"
+msgid "Horizontal"
+msgstr "Горизонтально"
+
+#: plug-ins/common/blinds.c:289
+#| msgid "_Vertical"
+msgid "Vertical"
+msgstr "Вертикально"
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/common/blinds.c:353 plug-ins/common/compose.c:1129
+#: plug-ins/common/blinds.c:295 plug-ins/common/compose.c:1129
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
@@ -506,18 +536,6 @@ msgstr "_Вертикально"
 #: plug-ins/screenshot/screenshot-win32.c:315 plug-ins/twain/twain.c:661
 msgid "Background"
 msgstr "Тло"
-
-#: plug-ins/common/blinds.c:357
-msgid "_Transparent"
-msgstr "_Прозоре"
-
-#: plug-ins/common/blinds.c:382
-msgid "_Displacement:"
-msgstr "_Переміщення:"
-
-#: plug-ins/common/blinds.c:393
-msgid "_Number of segments:"
-msgstr "_Кількість сегментів:"
 
 #: plug-ins/common/border-average.c:139
 msgid "_Border Average..."
@@ -1398,51 +1416,86 @@ msgstr "Представлення каналу"
 msgid "Mask value"
 msgstr "Значення маски"
 
-#: plug-ins/common/contrast-retinex.c:195
+#: plug-ins/common/contrast-retinex.c:178
 msgid "Retine_x..."
 msgstr "Ретіне_кс..."
 
-#: plug-ins/common/contrast-retinex.c:199
+#: plug-ins/common/contrast-retinex.c:182
 msgid "Enhance contrast using the Retinex method"
 msgstr "Збільшити контраст, використовуючи алгоритм Retinex"
 
-#: plug-ins/common/contrast-retinex.c:313
+#: plug-ins/common/contrast-retinex.c:184
+msgid ""
+"The Retinex Image Enhancement Algorithm is an automatic image enhancement "
+"method that enhances a digital image in terms of dynamic range compression, "
+"color independence from the spectral distribution of the scene illuminant, "
+"and color/lightness rendition."
+msgstr ""
+"Ретінекс-алгоритм удосконалення зображення є способом автоматичного"
+" удосконалення зображення, який робить цифрове зображення кращим у плані"
+" стискання динамічного діапазону, незалежності кольорів від спектрального"
+" розподілу освітлювача сцени та обробки кольорів та освітленості."
+
+#: plug-ins/common/contrast-retinex.c:199
+#| msgid "Scal_es"
+msgid "Scal_e"
+msgstr "_Шкала"
+
+#: plug-ins/common/contrast-retinex.c:200
+#| msgid "Initial value:"
+msgid "Biggest scale value"
+msgstr "Найбільше значення шкали"
+
+#: plug-ins/common/contrast-retinex.c:205
+#| msgid "Scale _division:"
+msgid "Scale _division"
+msgstr "Ділення _шкали"
+
+#: plug-ins/common/contrast-retinex.c:206
+#: plug-ins/common/wavelet-decompose.c:132
+msgid "Number of scales"
+msgstr "Кількість рівнів деталізації"
+
+#: plug-ins/common/contrast-retinex.c:211
+msgid "Le_vel"
+msgstr "_Рівень"
+
+#: plug-ins/common/contrast-retinex.c:212
+msgid "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
+msgstr ""
+"Ретінекс-розподіл шкалами { Однорідний (0), Низький (1), Високий (2) }"
+
+#: plug-ins/common/contrast-retinex.c:218
+#| msgid "Dy_namic:"
+msgid "Dy_namic"
+msgstr "_Динамічно"
+
+#: plug-ins/common/contrast-retinex.c:219
+#| msgid "Use average value"
+msgid "Variance value"
+msgstr "Значення дисперсії"
+
+#: plug-ins/common/contrast-retinex.c:297
 msgid "Retinex"
 msgstr "Ретінекс"
 
-#: plug-ins/common/contrast-retinex.c:347
+#: plug-ins/common/contrast-retinex.c:338
 msgid "Retinex Image Enhancement"
 msgstr "Покращення зображення за допомогою ретінексу"
 
-#: plug-ins/common/contrast-retinex.c:383
+#: plug-ins/common/contrast-retinex.c:347
 msgid "Uniform"
 msgstr "Рівномірний"
 
-#: plug-ins/common/contrast-retinex.c:384 plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/common/contrast-retinex.c:348 plug-ins/metadata/metadata-tags.c:238
 msgid "Low"
 msgstr "Низький"
 
-#: plug-ins/common/contrast-retinex.c:385 plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/common/contrast-retinex.c:349 plug-ins/metadata/metadata-tags.c:238
 msgid "High"
 msgstr "Високий"
 
-#: plug-ins/common/contrast-retinex.c:396
-msgid "_Level:"
-msgstr "_Рівень:"
-
-#: plug-ins/common/contrast-retinex.c:400
-msgid "_Scale:"
-msgstr "_Масштаб:"
-
-#: plug-ins/common/contrast-retinex.c:411
-msgid "Scale _division:"
-msgstr "Ділення _шкали:"
-
-#: plug-ins/common/contrast-retinex.c:422
-msgid "Dy_namic:"
-msgstr "_Динамічно:"
-
-#: plug-ins/common/contrast-retinex.c:710
+#: plug-ins/common/contrast-retinex.c:689
 msgid "Retinex: filtering"
 msgstr "Retinex: фільтрування"
 
@@ -1844,43 +1897,87 @@ msgstr "_Масштаб 1:"
 msgid "Sca_le 2:"
 msgstr "Мас_штаб 2:"
 
-#: plug-ins/common/despeckle.c:180
+#: plug-ins/common/despeckle.c:169
 msgid "Des_peckle..."
 msgstr "Прибирання _плям..."
 
-#: plug-ins/common/despeckle.c:184
+#: plug-ins/common/despeckle.c:173
 msgid "Remove speckle noise from the image"
 msgstr "Видалити із зображення шум, що створюється плямами"
 
-#: plug-ins/common/despeckle.c:419 plug-ins/common/despeckle.c:922
+#: plug-ins/common/despeckle.c:175
+msgid ""
+"This plug-in selectively performs a median or adaptive box filter on an "
+"image."
+msgstr ""
+"Цей додаток вибірково застосовує медіанний або адаптивний коробковий фільтр"
+" до зображення."
+
+#: plug-ins/common/despeckle.c:185
+#| msgid "R_adius:"
+msgid "R_adius"
+msgstr "Р_адіус"
+
+#: plug-ins/common/despeckle.c:186
+#| msgid "Cylinder radius"
+msgid "Filter box radius"
+msgstr "Радіус коробки фільтра"
+
+#: plug-ins/common/despeckle.c:191
+#| msgid "_Palette Type:"
+msgid "_Filter Type"
+msgstr "Т_ип фільтра"
+
+#: plug-ins/common/despeckle.c:192
+msgid ""
+"Filter type { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
+"ADAPTIVE (3) }"
+msgstr ""
+"Тип фільтра { МЕДІАННИЙ (0), АДАПТИВНИЙ (1), РЕКУРСИВНО-МЕДІАННИЙ (2),"
+" РЕКУРСИВНО-АДАПТИВНИЙ (3) }"
+
+#: plug-ins/common/despeckle.c:198
+#| msgid "_Black level:"
+msgid "_Black level"
+msgstr "Рівень _чорного"
+
+#: plug-ins/common/despeckle.c:199
+#| msgid "_Black level:"
+msgid "Black level"
+msgstr "Рівень чорного"
+
+#: plug-ins/common/despeckle.c:204
+#| msgid "_White level:"
+msgid "_White level"
+msgstr "Рівень _білого"
+
+#: plug-ins/common/despeckle.c:205
+#| msgid "_White level:"
+msgid "White level"
+msgstr "Рівень білого"
+
+#: plug-ins/common/despeckle.c:408 plug-ins/common/despeckle.c:782
 msgid "Despeckle"
 msgstr "Прибирання плям"
 
-#: plug-ins/common/despeckle.c:437
+#: plug-ins/common/despeckle.c:410
 msgid "Median"
 msgstr "Середнє"
 
-#: plug-ins/common/despeckle.c:447
-msgid "_Adaptive"
-msgstr "_Адаптивне"
+#: plug-ins/common/despeckle.c:411 plug-ins/gimpressionist/orientation.c:176
+#: plug-ins/gimpressionist/size.c:183
+msgid "Adaptive"
+msgstr "Адаптивний"
 
-#: plug-ins/common/despeckle.c:460
-msgid "R_ecursive"
-msgstr "Р_екурсивне"
+#: plug-ins/common/despeckle.c:412
+#| msgid "R_ecursive"
+msgid "Recursive-Median"
+msgstr "Рекурсивно-медіанний"
 
-#: plug-ins/common/despeckle.c:484 plug-ins/common/nl-filter.c:1194
-#: plug-ins/gradient-flare/gradient-flare.c:2922
-#: plug-ins/imagemap/imap_circle.c:275
-msgid "_Radius:"
-msgstr "_Радіус:"
-
-#: plug-ins/common/despeckle.c:494
-msgid "_Black level:"
-msgstr "Рівень _чорного:"
-
-#: plug-ins/common/despeckle.c:504
-msgid "_White level:"
-msgstr "Рівень _білого:"
+#: plug-ins/common/despeckle.c:413
+#| msgid "R_ecursive"
+msgid "Recursive-Adaptive"
+msgstr "Рекурсивно-адаптивний"
 
 #: plug-ins/common/destripe.c:141
 msgid "Des_tripe..."
@@ -5626,86 +5723,93 @@ msgstr "Зменшити _насиченість"
 msgid "_Blacken"
 msgstr "_Чорний"
 
-#: plug-ins/common/jigsaw.c:401
+#: plug-ins/common/jigsaw.c:398
 msgid "_Jigsaw..."
 msgstr "_Головоломка..."
 
-#: plug-ins/common/jigsaw.c:406
+#: plug-ins/common/jigsaw.c:403
 msgid "Add a jigsaw-puzzle pattern to the image"
 msgstr "Надати зображенню вигляд головоломки-пазла"
 
-#: plug-ins/common/jigsaw.c:505
-msgid "Assembling jigsaw"
-msgstr "Складання головоломки"
+#: plug-ins/common/jigsaw.c:405
+#| msgid "Jigsaw Style"
+msgid "Jigsaw puzzle look"
+msgstr "Вигляд складанки"
 
-#: plug-ins/common/jigsaw.c:2494
-msgid "Jigsaw"
-msgstr "Головоломка"
+#: plug-ins/common/jigsaw.c:413 plug-ins/common/tile-small.c:511
+#: plug-ins/pagecurl/pagecurl.c:586
+msgid "_Horizontal"
+msgstr "Г_оризонтально"
 
-#: plug-ins/common/jigsaw.c:2524
-msgid "Number of Tiles"
-msgstr "Кількість частин головоломки"
-
-#. xtiles
-#: plug-ins/common/jigsaw.c:2535
-msgid "_Horizontal:"
-msgstr "Г_оризонтально:"
-
-#: plug-ins/common/jigsaw.c:2536
+#: plug-ins/common/jigsaw.c:414
 msgid "Number of pieces going across"
 msgstr "Кількість частин вздовж горизонталі"
 
-#. ytiles
-#: plug-ins/common/jigsaw.c:2551
-msgid "_Vertical:"
-msgstr "_Вертикально:"
+#: plug-ins/common/jigsaw.c:419 plug-ins/common/tile-small.c:521
+#: plug-ins/pagecurl/pagecurl.c:585
+msgid "_Vertical"
+msgstr "_Вертикально"
 
-#: plug-ins/common/jigsaw.c:2552
+#: plug-ins/common/jigsaw.c:420
 msgid "Number of pieces going down"
 msgstr "Кількість частин вздовж вертикалі"
 
-#: plug-ins/common/jigsaw.c:2568
-msgid "Bevel Edges"
-msgstr "Фаска меж"
-
-#. number of blending lines
-#: plug-ins/common/jigsaw.c:2577
-msgid "_Bevel width:"
-msgstr "_Рельєф меж:"
-
-#: plug-ins/common/jigsaw.c:2578
-msgid "Degree of slope of each piece's edge"
-msgstr "Ступінь нахилу кромки"
-
-#. blending amount
-#: plug-ins/common/jigsaw.c:2592
-msgid "H_ighlight:"
-msgstr "В_ідблиски:"
-
-#: plug-ins/common/jigsaw.c:2593
-msgid "The amount of highlighting on the edges of each piece"
-msgstr "Розмір відблиску на межах кожного елементу"
-
-#. frame for primitive radio buttons
-#: plug-ins/common/jigsaw.c:2611
+#: plug-ins/common/jigsaw.c:425
 msgid "Jigsaw Style"
 msgstr "Стиль елементів головоломки"
 
-#: plug-ins/common/jigsaw.c:2615
-msgid "_Square"
-msgstr "_Квадратні"
+#: plug-ins/common/jigsaw.c:426
+msgid "The style/shape of the jigsaw puzzle { Square (0), Curved (1) }"
+msgstr "Стиль-форма складанки { Квадратна (0), Криволінійна (1) }"
 
-#: plug-ins/common/jigsaw.c:2616
-msgid "C_urved"
-msgstr "_Викривлені"
+#: plug-ins/common/jigsaw.c:432
+#| msgid "Ho_le width:"
+msgid "_Blend width"
+msgstr "_Ширина злиття"
 
-#: plug-ins/common/jigsaw.c:2620
-msgid "Each piece has straight sides"
-msgstr "Кожен елемент має прямі сторони"
+#: plug-ins/common/jigsaw.c:433
+msgid "Degree of slope of each piece's edge"
+msgstr "Ступінь нахилу кромки"
 
-#: plug-ins/common/jigsaw.c:2621
-msgid "Each piece has curved sides"
-msgstr "Кожен елемент має викривлені сторони"
+#: plug-ins/common/jigsaw.c:438
+#| msgid "Highlight:"
+msgid "Hi_ghlight"
+msgstr "П_ідсвічування"
+
+#: plug-ins/common/jigsaw.c:439
+msgid "The amount of highlighting on the edges of each piece"
+msgstr "Розмір відблиску на межах кожного елементу"
+
+#: plug-ins/common/jigsaw.c:503
+msgid "Assembling jigsaw"
+msgstr "Складання головоломки"
+
+#: plug-ins/common/jigsaw.c:727
+msgid "draw_jigsaw: bad style\n"
+msgstr "draw_jigsaw: помилковий стиль\n"
+
+#: plug-ins/common/jigsaw.c:2491
+msgid "Jigsaw"
+msgstr "Головоломка"
+
+#: plug-ins/common/jigsaw.c:2510
+msgid "Number of Tiles"
+msgstr "Кількість частин головоломки"
+
+#: plug-ins/common/jigsaw.c:2527
+msgid "Bevel Edges"
+msgstr "Фаска меж"
+
+#. frame for primitive radio buttons
+#: plug-ins/common/jigsaw.c:2536
+#| msgid "_Square"
+msgid "Square"
+msgstr "Квадратна"
+
+#: plug-ins/common/jigsaw.c:2537
+#| msgid "C_urved"
+msgid "Curved"
+msgstr "Криволінійна"
 
 #: plug-ins/common/mail.c:204
 msgid "Send by E_mail..."
@@ -5750,37 +5854,72 @@ msgstr "певна помилка у розширенні файлу"
 msgid "Could not start sendmail (%s)"
 msgstr "Не вдається запустити sendmail (%s)"
 
-#: plug-ins/common/nl-filter.c:166
+#: plug-ins/common/nl-filter.c:158
 msgid "_NL Filter..."
 msgstr "Не_лінійний фільтр..."
 
-#: plug-ins/common/nl-filter.c:170
+#: plug-ins/common/nl-filter.c:162
 msgid "Nonlinear swiss army knife filter"
 msgstr "Багатофункціональний нелінійний фільтр"
 
-#: plug-ins/common/nl-filter.c:1027 plug-ins/common/nl-filter.c:1122
-msgid "NL Filter"
-msgstr "Нелінійний фільтр"
+#: plug-ins/common/nl-filter.c:163
+msgid ""
+"This is the pnmnlfilt, in GIMP's clothing. See the pnmnlfilt manpage for "
+"details."
+msgstr ""
+"Це pnmnlfilt, у лаштунках GIMP. Докладний опис наведено на сторінці"
+" підручника (man) з pnmnlfilt."
 
-#: plug-ins/common/nl-filter.c:1152
+#: plug-ins/common/nl-filter.c:174
+#| msgid "_Alpha:"
+msgid "_Alpha"
+msgstr "_Альфа"
+
+#: plug-ins/common/nl-filter.c:175
+#| msgid "The angle span of the first brush to create"
+msgid "The amount of the filter to apply"
+msgstr "Рівень застосування фільтра"
+
+#: plug-ins/common/nl-filter.c:180
+#| msgid "Radius"
+msgid "Ra_dius"
+msgstr "Р_адіус"
+
+#: plug-ins/common/nl-filter.c:181
+#| msgid "Spatial _filter radius:"
+msgid "The filter radius"
+msgstr "Радіус фільтра"
+
+#: plug-ins/common/nl-filter.c:186
 msgid "Filter"
 msgstr "Фільтр"
 
-#: plug-ins/common/nl-filter.c:1156
-msgid "_Alpha trimmed mean"
-msgstr "_Альфа-усікання середнє"
+#: plug-ins/common/nl-filter.c:187
+msgid ""
+"The Filter to Run, 0 - alpha trimmed mean; 1 - optimal estimation (alpha "
+"controls noise variance); 2 - edge enhancement"
+msgstr ""
+"Фільтр, який слід запустити, 0 - альфа-обрізане середнє; 1 - оптимальна"
+" оцінка (альфа керує дисперсією шуму); 2 - удосконалення країв"
 
-#: plug-ins/common/nl-filter.c:1158
-msgid "Op_timal estimation"
-msgstr "_Оптимальний розрахунок"
+#: plug-ins/common/nl-filter.c:1031 plug-ins/common/nl-filter.c:1130
+msgid "NL Filter"
+msgstr "Нелінійний фільтр"
 
-#: plug-ins/common/nl-filter.c:1160
-msgid "_Edge enhancement"
-msgstr "П_ідсилення грані"
+#: plug-ins/common/nl-filter.c:1139
+#| msgid "_Alpha trimmed mean"
+msgid "Alpha trimmed mean"
+msgstr "Альфа-обрізане середнє"
 
-#: plug-ins/common/nl-filter.c:1184
-msgid "A_lpha:"
-msgstr "А_льфа:"
+#: plug-ins/common/nl-filter.c:1140
+#| msgid "Op_timal estimation"
+msgid "Optimal estimation"
+msgstr "Оптимальна оцінка"
+
+#: plug-ins/common/nl-filter.c:1141
+#| msgid "_Edge enhancement"
+msgid "Edge enhancement"
+msgstr "_Удосконалення країв"
 
 #: plug-ins/common/plugin-browser.c:169
 msgid "_Plug-In Browser"
@@ -6783,10 +6922,6 @@ msgstr "Вейвлет-розбір"
 msgid "Scal_es"
 msgstr "_Рівні деталізації"
 
-#: plug-ins/common/wavelet-decompose.c:132
-msgid "Number of scales"
-msgstr "Кількість рівнів деталізації"
-
 #: plug-ins/common/wavelet-decompose.c:137
 msgid "Create a layer group to store the _decomposition"
 msgstr "Створити групу шарів для зберігання _розбиття"
@@ -7034,22 +7169,18 @@ msgid "Windows BMP image"
 msgstr "Зображення Windows BMP"
 
 #: plug-ins/file-bmp/bmp.c:155 plug-ins/file-bmp/bmp.c:156
-#| msgid "Loads files of Windows ANI file format"
 msgid "Loads files of Windows BMP file format"
 msgstr "Завантажує файли у форматі BMP Windows"
 
 #: plug-ins/file-bmp/bmp.c:180
-#| msgid "PBM"
 msgid "BMP"
 msgstr "BMP"
 
 #: plug-ins/file-bmp/bmp.c:183 plug-ins/file-bmp/bmp.c:184
-#| msgid "Saves files in Windows ANI file format"
 msgid "Saves files in Windows BMP file format"
 msgstr "Зберігає файли у форматі BMP Windows"
 
 #: plug-ins/file-bmp/bmp.c:197
-#| msgid "R_un-Length Encoded"
 msgid "Ru_n-Length Encoded"
 msgstr "_RLE-кодування"
 
@@ -7058,8 +7189,8 @@ msgid ""
 "Use run-length-encoding compression (only valid for 4 and 8-bit indexed "
 "images)"
 msgstr ""
-"Використати стискання RLE (чинне лише для 4- або 8-бітових індексованих"
-" зображень)"
+"Використати стискання RLE (чинне лише для 4- або 8-бітових індексованих "
+"зображень)"
 
 #: plug-ins/file-bmp/bmp.c:204
 msgid "_Write color space information"
@@ -7070,7 +7201,6 @@ msgid "Whether or not to write BITMAPV5HEADER color space data"
 msgstr "Визначає, чи слід записувати дані простору кольорів BITMAPV5HEADER"
 
 #: plug-ins/file-bmp/bmp.c:211
-#| msgid "_Pixel format"
 msgid "R_GB format"
 msgstr "Формат R_GB"
 
@@ -7079,9 +7209,8 @@ msgid ""
 "Export format for RGB images (0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, "
 "4=RGBA_8888, 5=RGBX_8888)"
 msgstr ""
-"Формат експортування для зображень RGB (0=RGB_565, 1=RGBA_5551, 2=RGB_555,"
-" 3=RGB_888, "
-"4=RGBA_8888, 5=RGBX_8888)"
+"Формат експортування для зображень RGB (0=RGB_565, 1=RGBA_5551, 2=RGB_555, "
+"3=RGB_888, 4=RGBA_8888, 5=RGBX_8888)"
 
 #: plug-ins/file-bmp/bmp.c:296
 msgid "BMP format does not support multiple layers."
@@ -10180,10 +10309,6 @@ msgstr "Мазки відповідні до \"плаваючої\" тексту
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Відтінок ділянки визначає напрямок мазка"
 
-#: plug-ins/gimpressionist/orientation.c:176 plug-ins/gimpressionist/size.c:183
-msgid "Adaptive"
-msgstr "Адаптивний"
-
 #: plug-ins/gimpressionist/orientation.c:177
 msgid "The direction that matches the original image the closest is selected"
 msgstr "Вибирається напрямок, найбільш відповідає оригінальному зображенню"
@@ -11119,6 +11244,11 @@ msgstr "\"Типовий\" створено."
 #: plug-ins/gradient-flare/gradient-flare.c:3963
 msgid "Parameters"
 msgstr "Параметри"
+
+#: plug-ins/gradient-flare/gradient-flare.c:2922
+#: plug-ins/imagemap/imap_circle.c:275
+msgid "_Radius:"
+msgstr "_Радіус:"
 
 #: plug-ins/gradient-flare/gradient-flare.c:2933
 msgid "Ro_tation:"
@@ -13639,6 +13769,36 @@ msgstr "_Сканер/Камера..."
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
 
+#~ msgid "_Level:"
+#~ msgstr "_Рівень:"
+
+#~ msgid "_Scale:"
+#~ msgstr "_Масштаб:"
+
+#~ msgid "_Adaptive"
+#~ msgstr "_Адаптивне"
+
+#~ msgid "_Horizontal:"
+#~ msgstr "Г_оризонтально:"
+
+#~ msgid "_Vertical:"
+#~ msgstr "_Вертикально:"
+
+#~ msgid "_Bevel width:"
+#~ msgstr "_Рельєф меж:"
+
+#~ msgid "H_ighlight:"
+#~ msgstr "В_ідблиски:"
+
+#~ msgid "Each piece has straight sides"
+#~ msgstr "Кожен елемент має прямі сторони"
+
+#~ msgid "Each piece has curved sides"
+#~ msgstr "Кожен елемент має викривлені сторони"
+
+#~ msgid "A_lpha:"
+#~ msgstr "А_льфа:"
+
 #~ msgid "Export Image as BMP"
 #~ msgstr "Експортувати зображення як BMP"
 
@@ -13956,9 +14116,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Image _Type:"
 #~ msgstr "_Тип зображення:"
-
-#~ msgid "_Palette Type:"
-#~ msgstr "Тип _палітри:"
 
 #~ msgid "Off_set:"
 #~ msgstr "_Зсув:"
