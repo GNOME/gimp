@@ -370,7 +370,7 @@
 #define GIMP_HELP_FILTER_DISPLACE                 "gimp-filter-displace"
 #define GIMP_HELP_FILTER_DISTANCE_MAP             "gimp-filter-distance-map"
 #define GIMP_HELP_FILTER_DITHER                   "gimp-filter-dither"
-#define GIMP_HELP_FILTER_DROPSHADOW               "gimp-filter-dropshadow"
+#define GIMP_HELP_FILTER_DROPSHADOW               "gimp-filter-drop-shadow"
 #define GIMP_HELP_FILTER_EDGE                     "gimp-filter-edge"
 #define GIMP_HELP_FILTER_EDGE_LAPLACE             "gimp-filter-edge-laplace"
 #define GIMP_HELP_FILTER_EDGE_NEON                "gimp-filter-edge-neon"
