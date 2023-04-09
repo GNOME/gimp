@@ -407,6 +407,14 @@ despeckle_dialog (GimpProcedure *procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Despeckle"));
 
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
+  preview = gimp_drawable_preview_new_from_drawable (drawable);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      preview, TRUE, TRUE, 0);
+  gtk_widget_set_margin_bottom (preview, 12);
+  gtk_widget_show (preview);
+
   store = gimp_int_store_new (_("Median"),             0,
                               _("Adaptive"),           FILTER_ADAPTIVE,
                               _("Recursive-Median"),   FILTER_RECURSIVE,
@@ -440,12 +448,6 @@ despeckle_dialog (GimpProcedure *procedure,
                                          "type", "radius", "black", "white",
                                          NULL);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-
-  preview = gimp_drawable_preview_new_from_drawable (drawable);
-  gtk_box_pack_start (GTK_BOX (vbox), preview, TRUE, TRUE, 0);
-  gtk_box_reorder_child (GTK_BOX (vbox), preview, 0);
-  gtk_widget_set_margin_bottom (preview, 12);
-  gtk_widget_show (preview);
 
   g_object_set_data (config, "drawable", drawable);
 

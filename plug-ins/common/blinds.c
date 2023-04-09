@@ -285,6 +285,12 @@ blinds_dialog (GimpProcedure *procedure,
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
+  preview = gimp_drawable_preview_new_from_drawable (drawable);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      preview, TRUE, TRUE, 0);
+  gtk_widget_set_margin_bottom (preview, 12);
+  gtk_widget_show (preview);
+
   store = gimp_int_store_new (_("Horizontal"), GIMP_ORIENTATION_HORIZONTAL,
                               _("Vertical"),   GIMP_ORIENTATION_VERTICAL,
                               NULL);
@@ -323,12 +329,6 @@ blinds_dialog (GimpProcedure *procedure,
                                          NULL);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_widget_set_size_request (vbox, 320, -1);
-
-  preview = gimp_aspect_preview_new_from_drawable (drawable);
-  gtk_box_pack_start (GTK_BOX (vbox), preview, TRUE, TRUE, 0);
-  gtk_box_reorder_child (GTK_BOX (vbox), preview, 0);
-  gtk_widget_set_margin_bottom (preview, 12);
-  gtk_widget_show (preview);
 
   g_object_set_data (config, "drawable", drawable);
 

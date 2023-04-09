@@ -324,7 +324,6 @@ retinex_dialog (GimpProcedure *procedure,
                 GimpDrawable  *drawable)
 {
   GtkWidget    *dialog;
-  GtkWidget    *vbox;
   GtkWidget    *preview;
   GtkWidget    *combo;
   GtkWidget    *scale;
@@ -343,6 +342,12 @@ retinex_dialog (GimpProcedure *procedure,
                                            -1);
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
+
+  preview = gimp_zoom_preview_new_from_drawable (drawable);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      preview, TRUE, TRUE, 0);
+  gtk_widget_set_margin_bottom (preview, 12);
+  gtk_widget_show (preview);
 
   store = gimp_int_store_new (_("Uniform"), filter_uniform,
                               _("Low"),     filter_low,
@@ -365,15 +370,9 @@ retinex_dialog (GimpProcedure *procedure,
                                                  "cvar", 1.0);
   gtk_widget_set_margin_bottom (scale, 12);
 
-  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                         "retinex-vbox", "scales-mode",
-                                         "scale", "nscales", "cvar", NULL);
-
-  preview = gimp_zoom_preview_new_from_drawable (drawable);
-  gtk_box_pack_start (GTK_BOX (vbox), preview, TRUE, TRUE, 0);
-  gtk_box_reorder_child (GTK_BOX (vbox), preview, 0);
-  gtk_widget_set_margin_bottom (preview, 12);
-  gtk_widget_show (preview);
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "retinex-vbox", "scales-mode",
+                                  "scale", "nscales", "cvar", NULL);
 
   g_object_set_data (config, "drawable", drawable);
 

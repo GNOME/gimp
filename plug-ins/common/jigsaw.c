@@ -2477,7 +2477,6 @@ jigsaw_dialog (GimpProcedure *procedure,
                GimpDrawable  *drawable)
 {
   GtkWidget     *dialog;
-  GtkWidget     *vbox;
   GtkWidget     *preview;
   GtkWidget     *frame;
   GtkWidget     *scale;
@@ -2491,11 +2490,17 @@ jigsaw_dialog (GimpProcedure *procedure,
                                       _("Jigsaw"));
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
+
+  preview = gimp_drawable_preview_new_from_drawable (drawable);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      preview, TRUE, TRUE, 0);
+  gtk_widget_set_margin_bottom (preview, 12);
+  gtk_widget_show (preview);
 
   /* xtiles */
   scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
@@ -2540,15 +2545,9 @@ jigsaw_dialog (GimpProcedure *procedure,
                                                "style", GIMP_INT_STORE (store));
   gtk_widget_set_margin_bottom (frame, 12);
 
-  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                         "jigsaw-vbox", "num-tiles-frame",
-                                         "bevel-frame", "style", NULL);
-
-  preview = gimp_aspect_preview_new_from_drawable (drawable);
-  gtk_box_pack_start (GTK_BOX (vbox), preview, TRUE, TRUE, 0);
-  gtk_box_reorder_child (GTK_BOX (vbox), preview, 0);
-  gtk_widget_set_margin_bottom (preview, 12);
-  gtk_widget_show (preview);
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "jigsaw-vbox", "num-tiles-frame",
+                                  "bevel-frame", "style", NULL);
 
   g_object_set_data (config, "drawable", drawable);
 
