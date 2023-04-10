@@ -31,9 +31,9 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'position_x', type => '0 <= int32',
-	  desc => "The guide'sample points x-offset from left of image" },
+	  desc => "The sample point's x-offset from left of image" },
 	{ name => 'position_y', type => '0 <= int32',
-	  desc => "The guide'sample points y-offset from top of image" }
+	  desc => "The sample point's y-offset from top of image" }
     );
 
     @outargs = (
@@ -159,10 +159,10 @@ HELP
     @outargs = (
 	{ name => 'position_x', type => 'int32',
           libdef => 'G_MININT',
-	  desc => "The sample points's position relative to top of image" },
+	  desc => "The sample point's x-offset relative to left of image" },
 	{ name => 'position_y', type => 'int32',
           libdef => 'G_MININT',
-	  desc => "The sample points's position relative to top of image" }
+	  desc => "The sample point's y-offset relative to top of image" }
     );
 
     %invoke = (

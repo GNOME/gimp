@@ -227,13 +227,13 @@ register_image_sample_points_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("position-x",
                                                  "position x",
-                                                 "The guide'sample points x-offset from left of image",
+                                                 "The sample point's x-offset from left of image",
                                                  0, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("position-y",
                                                  "position y",
-                                                 "The guide'sample points y-offset from top of image",
+                                                 "The sample point's y-offset from top of image",
                                                  0, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -338,13 +338,13 @@ register_image_sample_points_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("position-x",
                                                      "position x",
-                                                     "The sample points's position relative to top of image",
+                                                     "The sample point's x-offset relative to left of image",
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("position-y",
                                                      "position y",
-                                                     "The sample points's position relative to top of image",
+                                                     "The sample point's y-offset relative to top of image",
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

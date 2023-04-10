@@ -39,8 +39,8 @@
 /**
  * gimp_image_add_sample_point:
  * @image: The image.
- * @position_x: The guide'sample points x-offset from left of image.
- * @position_y: The guide'sample points y-offset from top of image.
+ * @position_x: The sample point's x-offset from left of image.
+ * @position_y: The sample point's y-offset from top of image.
  *
  * Add a sample point to an image.
  *
@@ -167,7 +167,7 @@ gimp_image_find_next_sample_point (GimpImage *image,
  * gimp_image_get_sample_point_position:
  * @image: The image.
  * @sample_point: The guide.
- * @position_y: (out): The sample points's position relative to top of image.
+ * @position_y: (out): The sample point's y-offset relative to top of image.
  *
  * Get position of a sample point on an image.
  *
@@ -175,7 +175,7 @@ gimp_image_find_next_sample_point (GimpImage *image,
  * returns the position of the sample point relative to the top and
  * left of the image.
  *
- * Returns: The sample points's position relative to top of image.
+ * Returns: The sample point's x-offset relative to left of image.
  *
  * Since: 2.10
  **/
