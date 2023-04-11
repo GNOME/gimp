@@ -234,13 +234,13 @@ fli_create_procedure (GimpPlugIn  *plug_in,
                                           "fli,flc");
 
       GIMP_PROC_ARG_INT (procedure, "from-frame",
-                         _("_From:"),
+                         _("_From frame"),
                          _("Export beginning from this frame"),
                          -1, G_MAXINT, -1,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "to-frame",
-                         _("_To:"),
+                         _("_To frame"),
                          _("End exporting with this frame "
                            "(or -1 for all frames)"),
                          -1, G_MAXINT, -1,
