@@ -6,7 +6,7 @@ if [[ "$MSYSTEM" == "MINGW32" ]]; then
     export ARTIFACTS_SUFFIX="-w32"
     export MSYS2_ARCH="i686"
     export MSYS2_PREFIX="/c/msys64/mingw32"
-    export GIMP_OPTIONS="-Dvala-plugins=disabled"
+    export GIMP_OPTIONS="-Dvala=disabled"
 else
     export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
@@ -103,7 +103,7 @@ cd "_build${ARTIFACTS_SUFFIX}"
 # TODO: re-enable javascript plug-ins when we can figure this out.
 meson .. -Dprefix="${GIMP_PREFIX}"           \
          -Ddirectx-sdk-dir="${MSYS2_PREFIX}" \
-         -Djavascript=false                  \
+         -Djavascript=disabled               \
          -Dbuild-id=org.gimp.GIMP_official   \
          -Dgi-docgen=disabled                \
          ${GIMP_OPTIONS}
