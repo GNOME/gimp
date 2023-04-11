@@ -72,8 +72,9 @@ GList           * gimp_menu_factory_get_registered_menus (GimpMenuFactory   *fac
 GimpUIManager   * gimp_menu_factory_get_manager          (GimpMenuFactory   *factory,
                                                           const gchar       *identifier,
                                                           gpointer           callback_data);
-
-GimpUIManager   * gimp_menu_factory_get_image_manager    (GimpMenuFactory   *factory);
+void              gimp_menu_factory_delete_manager       (GimpMenuFactory   *factory,
+                                                          const gchar       *identifier,
+                                                          gpointer           callback_data);
 
 
 #endif  /*  __GIMP_MENU_FACTORY_H__  */

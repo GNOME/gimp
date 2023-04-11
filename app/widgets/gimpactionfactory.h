@@ -77,6 +77,9 @@ void                gimp_action_factory_group_register (GimpActionFactory       
 GimpActionGroup *   gimp_action_factory_get_group      (GimpActionFactory         *factory,
                                                         const gchar               *identifier,
                                                         gpointer                   user_data);
+void                gimp_action_factory_delete_group   (GimpActionFactory         *factory,
+                                                        const gchar               *identifier,
+                                                        gpointer                   user_data);
 
 
 #endif  /*  __GIMP_ACTION_FACTORY_H__  */

@@ -120,6 +120,8 @@ gimp_menu_factory_new (Gimp              *gimp,
 
   factory->p->gimp           = gimp;
   factory->p->action_factory = action_factory;
+  g_object_add_weak_pointer (G_OBJECT (action_factory),
+                             (gpointer *) &factory->p->action_factory);
 
   return factory;
 }
@@ -250,4 +252,38 @@ gimp_menu_factory_get_manager (GimpMenuFactory *factory,
              G_STRFUNC, identifier);
 
   return NULL;
+}
+
+void
+gimp_menu_factory_delete_manager (GimpMenuFactory *factory,
+                                  const gchar     *identifier,
+                                  gpointer         callback_data)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_MENU_FACTORY (factory));
+  g_return_if_fail (identifier != NULL);
+
+  for (list = factory->p->registered_menus; list; list = g_list_next (list))
+    {
+      GimpMenuFactoryEntry *entry = list->data;
+
+      if (g_strcmp0 (entry->identifier, identifier) == 0)
+        {
+          if (factory->p->action_factory != NULL)
+            for (GList *list2 = entry->action_groups; list2; list2 = g_list_next (list2))
+              gimp_action_factory_delete_group (factory->p->action_factory,
+                                                (const gchar *) list2->data,
+                                                callback_data);
+
+          if (! g_hash_table_remove (entry->managers, callback_data))
+            g_warning ("%s: no GimpUIManager for (id \"%s\", data %p)",
+                       G_STRFUNC, identifier, callback_data);
+
+          return;
+        }
+    }
+
+  g_warning ("%s: no entry registered for \"%s\"",
+             G_STRFUNC, identifier);
 }

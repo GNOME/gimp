@@ -485,7 +485,6 @@ gimp_dock_window_dispose (GObject *object)
     }
 
   g_clear_object (&dock_window->p->dialog_factory);
-  g_clear_object (&dock_window->p->context);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -493,9 +492,22 @@ gimp_dock_window_dispose (GObject *object)
 static void
 gimp_dock_window_finalize (GObject *object)
 {
-  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
+  GimpDockWindow  *dock_window = GIMP_DOCK_WINDOW (object);
+  GimpMenuFactory *menu_factory;
+  Gimp            *gimp;
 
+  gimp         = GIMP (dock_window->p->context->gimp);
+  menu_factory = menus_get_global_menu_factory (gimp);
+
+  /* If the whole GUI is in destruction, global menu factory might already not
+   * exist anymore.
+   */
+  if (menu_factory != NULL)
+    gimp_menu_factory_delete_manager (menu_factory,
+                                      dock_window->p->ui_manager_name,
+                                      dock_window);
   g_clear_pointer (&dock_window->p->ui_manager_name, g_free);
+  g_clear_object (&dock_window->p->context);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

@@ -512,9 +512,15 @@ GimpMenuFactory *
 menus_get_global_menu_factory (Gimp *gimp)
 {
   static GimpMenuFactory *global_menu_factory = NULL;
+  static gboolean         created             = FALSE;
 
-  if (global_menu_factory == NULL)
-    global_menu_factory = gimp_menu_factory_new (gimp, global_action_factory);
+  if (global_menu_factory == NULL && ! created)
+    {
+      global_menu_factory = gimp_menu_factory_new (gimp, global_action_factory);
+      g_object_add_weak_pointer (G_OBJECT (global_menu_factory),
+                                 (gpointer *) &global_menu_factory);
+      created = TRUE;
+    }
 
   return global_menu_factory;
 }

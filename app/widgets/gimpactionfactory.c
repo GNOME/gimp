@@ -213,3 +213,31 @@ gimp_action_factory_get_group (GimpActionFactory *factory,
 
   return NULL;
 }
+
+void
+gimp_action_factory_delete_group (GimpActionFactory *factory,
+                                  const gchar       *identifier,
+                                  gpointer           user_data)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_ACTION_FACTORY (factory));
+  g_return_if_fail (identifier != NULL);
+
+  for (list = factory->registered_groups; list; list = g_list_next (list))
+    {
+      GimpActionFactoryEntry *entry = list->data;
+
+      if (g_strcmp0 (entry->identifier, identifier) == 0)
+        {
+          if (! g_hash_table_remove (entry->groups, user_data))
+            g_warning ("%s: no GimpActionGroup for (id \"%s\", data %p)",
+                       G_STRFUNC, identifier, user_data);
+
+          return;
+        }
+    }
+
+  g_warning ("%s: no entry registered for \"%s\"",
+             G_STRFUNC, identifier);
+}
