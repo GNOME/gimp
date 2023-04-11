@@ -629,9 +629,13 @@ gimp_menu_model_initialize (GimpMenuModel *model,
           GimpMenuModel *submodel;
           gchar         *canon_label;
           gchar         *path;
+          const gchar   *en_label;
 
           g_return_if_fail (label != NULL);
-          canon_label = gimp_utils_make_canonical_menu_label (label);
+          en_label = g_object_get_data (G_OBJECT (submenu),
+                                        "gimp-ui-manager-menu-model-en-label");
+          g_return_if_fail (en_label != NULL);
+          canon_label = gimp_utils_make_canonical_menu_label (en_label);
           path = g_strdup_printf ("%s/%s",
                                   model->priv->path ? model->priv->path : "",
                                   canon_label);

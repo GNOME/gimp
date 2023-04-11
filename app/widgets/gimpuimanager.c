@@ -31,6 +31,8 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpxmlparser.h"
+
 #include "core/gimp.h"
 
 #include "gimpaction.h"
@@ -91,6 +93,27 @@ static GimpUIManagerUIEntry *
 static GimpUIManagerUIEntry *
                   gimp_ui_manager_entry_ensure         (GimpUIManager  *manager,
                                                         const gchar    *path);
+
+static void       gimp_ui_manager_store_builder_path   (GMenuModel           *model,
+                                                        GMenuModel           *original);
+static GtkBuilder * gimp_ui_manager_load_builder       (const gchar          *filename,
+                                                        const gchar          *root);
+static void       gimp_ui_manager_parse_start_element  (GMarkupParseContext  *context,
+                                                        const gchar          *element_name,
+                                                        const gchar         **attribute_names,
+                                                        const gchar         **attribute_values,
+                                                        gpointer              user_data,
+                                                        GError              **error);
+static void       gimp_ui_manager_parse_end_element    (GMarkupParseContext  *context,
+                                                        const gchar          *element_name,
+                                                        gpointer              user_data,
+                                                        GError              **error);
+static void       gimp_ui_manager_parse_ui_text        (GMarkupParseContext  *context,
+                                                        const gchar          *text,
+                                                        gsize                 text_len,
+                                                        gpointer              user_data,
+                                                        GError              **error);
+
 static void       gimp_ui_manager_delete_popdown_data  (GtkWidget      *widget,
                                                         GimpUIManager  *manager);
 
@@ -519,7 +542,7 @@ gimp_ui_manager_get_model (GimpUIManager *manager,
                  gimp_filename_to_utf8 (filename), entry->ui_path);
 
       /* The model is owned by the builder which I have to keep around. */
-      entry->builder = gtk_builder_new_from_file (filename);
+      entry->builder = gimp_ui_manager_load_builder (filename, root);
 
       g_free (filename);
       g_free (full_basename);
@@ -533,6 +556,7 @@ gimp_ui_manager_get_model (GimpUIManager *manager,
 
   submodel = gimp_menu_model_get_submodel (model, submenus);
 
+  g_object_unref (model);
   g_free (root);
 
   return submodel;
@@ -944,6 +968,166 @@ gimp_ui_manager_entry_ensure (GimpUIManager *manager,
     }
 
   return entry;
+}
+
+static void
+gimp_ui_manager_store_builder_path (GMenuModel *model,
+                                    GMenuModel *original)
+{
+  gint n_items = 0;
+
+  g_return_if_fail (g_menu_model_get_n_items (model) == g_menu_model_get_n_items (original));
+
+  n_items = (model != NULL ? g_menu_model_get_n_items (model) : 0);
+  for (gint i = 0; i < n_items; i++)
+    {
+      GMenuModel *subsection;
+      GMenuModel *submenu;
+      GMenuModel *en_submodel = NULL;
+
+      subsection = g_menu_model_get_item_link (G_MENU_MODEL (model), i, G_MENU_LINK_SECTION);
+      submenu    = g_menu_model_get_item_link (G_MENU_MODEL (model), i, G_MENU_LINK_SUBMENU);
+      if (subsection != NULL)
+        {
+          en_submodel = g_menu_model_get_item_link (G_MENU_MODEL (original), i, G_MENU_LINK_SECTION);
+
+          gimp_ui_manager_store_builder_path (subsection, en_submodel);
+        }
+      else if (submenu != NULL)
+        {
+          gchar *label = NULL;
+
+          en_submodel = g_menu_model_get_item_link (G_MENU_MODEL (original),
+                                                    i, G_MENU_LINK_SUBMENU);
+          gimp_ui_manager_store_builder_path (submenu, en_submodel);
+
+          g_menu_model_get_item_attribute (G_MENU_MODEL (model), i,
+                                           G_MENU_ATTRIBUTE_LABEL, "s", &label);
+          if (label != NULL)
+            {
+              gchar *en_label = NULL;
+
+              g_menu_model_get_item_attribute (G_MENU_MODEL (original), i,
+                                               G_MENU_ATTRIBUTE_LABEL, "s", &en_label);
+
+              g_object_set_data_full (G_OBJECT (submenu), "gimp-ui-manager-menu-model-en-label",
+                                      en_label, (GDestroyNotify) g_free);
+            }
+
+          g_free (label);
+        }
+
+      g_clear_object (&submenu);
+      g_clear_object (&subsection);
+      g_clear_object (&en_submodel);
+    }
+}
+
+static GtkBuilder *
+gimp_ui_manager_load_builder (const gchar *filename,
+                              const gchar *root)
+{
+  const GMarkupParser markup_parser =
+    {
+      gimp_ui_manager_parse_start_element,
+      gimp_ui_manager_parse_end_element,
+      gimp_ui_manager_parse_ui_text,
+      NULL,  /*  passthrough  */
+      NULL   /*  error        */
+    };
+
+  GtkBuilder    *builder;
+  GtkBuilder    *en_builder;
+  gchar         *contents;
+  GimpXmlParser *xml_parser;
+  GString       *new_xml;
+  GMenuModel    *model;
+  GMenuModel    *en_model;
+  GError        *error = NULL;
+
+  /* First load the localized version. */
+  if (! g_file_get_contents (filename, &contents, NULL, &error))
+    {
+      g_warning ("%s: failed to read \"%s\"", G_STRFUNC, filename);
+      g_clear_error (&error);
+      return NULL;
+    }
+  builder = gtk_builder_new_from_string (contents, -1);
+
+  /* Now transform the source XML as non-translatable and load it again. */
+  new_xml = g_string_new (NULL);
+  xml_parser = gimp_xml_parser_new (&markup_parser, new_xml);
+  gimp_xml_parser_parse_buffer (xml_parser, contents, -1, &error);
+  gimp_xml_parser_free (xml_parser);
+
+  g_free (contents);
+  contents = g_string_free (new_xml, FALSE);
+
+  if (error != NULL)
+    {
+      g_warning ("%s: error parsing XML file \"%s\"", G_STRFUNC, filename);
+      g_clear_error (&error);
+      g_free (contents);
+      return builder;
+    }
+  en_builder = gtk_builder_new_from_string (contents, -1);
+  g_free (contents);
+
+  model    = G_MENU_MODEL (gtk_builder_get_object (builder, root));
+  en_model = G_MENU_MODEL (gtk_builder_get_object (en_builder, root));
+  gimp_ui_manager_store_builder_path (model, en_model);
+
+  g_clear_object (&en_builder);
+
+  return builder;
+}
+
+static void
+gimp_ui_manager_parse_start_element (GMarkupParseContext *context,
+                                     const gchar         *element_name,
+                                     const gchar        **attribute_names,
+                                     const gchar        **attribute_values,
+                                     gpointer             user_data,
+                                     GError             **error)
+{
+  GString *new_xml = user_data;
+
+  g_string_append_printf (new_xml, "<%s", element_name);
+  for (gint i = 0; attribute_names[i] != NULL; i++)
+    {
+      if (g_strcmp0 (attribute_names[i], "translatable") == 0 ||
+          g_strcmp0 (attribute_names[i], "context") == 0)
+        continue;
+
+      g_string_append_printf (new_xml, " %s=\"%s\"",
+                              attribute_names[i], attribute_values[i]);
+    }
+  g_string_append_printf (new_xml, ">");
+}
+
+static void
+gimp_ui_manager_parse_end_element (GMarkupParseContext *context,
+                                   const gchar         *element_name,
+                                   gpointer             user_data,
+                                   GError             **error)
+{
+  GString *new_xml = user_data;
+
+  g_string_append_printf (new_xml, "</%s>", element_name);
+}
+
+static void
+gimp_ui_manager_parse_ui_text (GMarkupParseContext *context,
+                               const gchar         *text,
+                               gsize                text_len,
+                               gpointer             user_data,
+                               GError             **error)
+{
+  GString *new_xml   = user_data;
+  gchar   *unchanged = g_markup_escape_text (text, text_len);
+
+  g_string_append (new_xml, unchanged);
+  g_free (unchanged);
 }
 
 static void
