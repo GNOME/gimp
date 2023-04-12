@@ -31,6 +31,7 @@
 
 #include "core/gimp.h"
 
+#include "widgets/gimpaction.h"
 #include "widgets/gimpactionfactory.h"
 #include "widgets/gimpdashboard.h"
 #include "widgets/gimpmenufactory.h"
@@ -47,12 +48,6 @@
 
 
 /*  local function prototypes  */
-
-static void   menus_remove_accels     (gpointer         data,
-                                       const gchar     *accel_path,
-                                       guint            accel_key,
-                                       GdkModifierType  accel_mods,
-                                       gboolean         changed);
 
 
 /*  private variables  */
@@ -465,23 +460,16 @@ menus_clear (Gimp    *gimp,
              GError **error)
 {
   GFile    *file;
-  GFile    *source;
   gboolean  success  = TRUE;
   GError   *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  file   = gimp_directory_file ("menurc", NULL);
-  source = gimp_sysconf_directory_file ("menurc", NULL);
+  file = gimp_directory_file ("shortcutsrc", NULL);
 
-  if (g_file_copy (source, file, G_FILE_COPY_OVERWRITE,
-                   NULL, NULL, NULL, NULL))
-    {
-      menurc_deleted = TRUE;
-    }
-  else if (! g_file_delete (file, NULL, &my_error) &&
-           my_error->code != G_IO_ERROR_NOT_FOUND)
+  if (! g_file_delete (file, NULL, &my_error) &&
+      my_error->code != G_IO_ERROR_NOT_FOUND)
     {
       g_set_error (error, my_error->domain, my_error->code,
                    _("Deleting \"%s\" failed: %s"),
@@ -494,7 +482,6 @@ menus_clear (Gimp    *gimp,
     }
 
   g_clear_error (&my_error);
-  g_object_unref (source);
   g_object_unref (file);
 
   return success;
@@ -503,9 +490,20 @@ menus_clear (Gimp    *gimp,
 void
 menus_remove (Gimp *gimp)
 {
+  gchar **actions;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gtk_accel_map_foreach (gimp, menus_remove_accels);
+  actions = g_action_group_list_actions (G_ACTION_GROUP (gimp->app));
+  for (gint i = 0; actions[i] != NULL; i++)
+    {
+      GimpAction *action;
+
+      action = (GimpAction *) g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
+                                                          actions[i]);
+      gimp_action_set_accels (action, (const gchar *[]) { NULL });
+    }
+  g_strfreev (actions);
 }
 
 GimpMenuFactory *
@@ -538,17 +536,4 @@ menus_get_image_manager_singleton (Gimp *gimp)
     }
 
   return image_ui_manager;
-}
-
-
-/*  private functions  */
-
-static void
-menus_remove_accels (gpointer        data,
-                     const gchar    *accel_path,
-                     guint           accel_key,
-                     GdkModifierType accel_mods,
-                     gboolean        changed)
-{
-  gtk_accel_map_change_entry (accel_path, 0, 0, TRUE);
 }
