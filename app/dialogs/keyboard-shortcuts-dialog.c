@@ -36,9 +36,6 @@
 #include "gimp-intl.h"
 
 
-#define RESPONSE_SAVE 1
-
-
 /*  local function prototypes  */
 
 static void   keyboard_shortcuts_dialog_response (GtkWidget *dialog,
@@ -65,8 +62,7 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
                             gimp_standard_help_func,
                             GIMP_HELP_KEYBOARD_SHORTCUTS,
 
-                            _("_Save"),  RESPONSE_SAVE,
-                            _("_Close"), GTK_RESPONSE_CLOSE,
+                            _("_OK"), GTK_RESPONSE_OK,
 
                             NULL);
 
@@ -108,10 +104,6 @@ keyboard_shortcuts_dialog_response (GtkWidget *dialog,
 {
   switch (response)
     {
-    case RESPONSE_SAVE:
-      menus_save (gimp, TRUE);
-      break;
-
     default:
       gtk_widget_destroy (dialog);
       break;
