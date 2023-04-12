@@ -713,7 +713,7 @@ load_image (GimpProcedure  *procedure,
       fclose (fd);
       return NULL;
     }
-  if (bytesperline < ((width * pcx_header.bpp + 7) / 8))
+  if ((bytesperline + 1) < ((width * pcx_header.bpp + 7) / 8))
     {
       g_message (_("Invalid number of bytes per line in PCX header"));
       fclose (fd);
