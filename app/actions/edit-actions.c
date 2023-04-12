@@ -102,25 +102,25 @@ static const GimpActionEntry edit_actions[] =
     GIMP_HELP_EDIT_UNDO_CLEAR },
 
   { "edit-cut", GIMP_ICON_EDIT_CUT,
-    NC_("edit-action", "Cu_t"), { "<primary>X", NULL },
+    NC_("edit-action", "Cu_t"), { "<primary>X", "Cut", NULL },
     NC_("edit-action", "Move the selected pixels to the clipboard"),
     edit_cut_cmd_callback,
     GIMP_HELP_EDIT_CUT },
 
   { "edit-copy", GIMP_ICON_EDIT_COPY,
-    NC_("edit-action", "_Copy"), { "<primary>C", NULL },
+    NC_("edit-action", "_Copy"), { "<primary>C", "Copy", NULL },
     NC_("edit-action", "Copy the selected pixels to the clipboard"),
     edit_copy_cmd_callback,
     GIMP_HELP_EDIT_COPY },
 
   { "edit-copy-visible", NULL, /* GIMP_ICON_COPY_VISIBLE, */
-    NC_("edit-action", "Copy _Visible"), { "<primary><shift>C", NULL },
+    NC_("edit-action", "Copy _Visible"), { "<primary><shift>C", "<shift>Copy", NULL },
     NC_("edit-action", "Copy what is visible in the selected region"),
     edit_copy_visible_cmd_callback,
     GIMP_HELP_EDIT_COPY_VISIBLE },
 
   { "edit-paste-as-new-image", GIMP_ICON_EDIT_PASTE_AS_NEW,
-    NC_("edit-action", "From _Clipboard"), { "<primary><shift>V", NULL },
+    NC_("edit-action", "From _Clipboard"), { "<primary><shift>V", "<shift>Paste", NULL },
     NC_("edit-action", "Create a new image from the content of the clipboard"),
     edit_paste_as_new_image_cmd_callback,
     GIMP_HELP_EDIT_PASTE_AS_NEW_IMAGE },
@@ -166,13 +166,13 @@ static const GimpActionEntry edit_actions[] =
 static const GimpEnumActionEntry edit_paste_actions[] =
 {
   { "edit-paste", GIMP_ICON_EDIT_PASTE,
-    NC_("edit-action", "_Paste"), { "<primary>V", NULL },
+    NC_("edit-action", "_Paste"), { "<primary>V", "Paste", NULL },
     NC_("edit-action", "Paste the content of the clipboard"),
     GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING, FALSE,
     GIMP_HELP_EDIT_PASTE },
 
   { "edit-paste-in-place", GIMP_ICON_EDIT_PASTE,
-    NC_("edit-action", "Paste In P_lace"), { "<primary><alt>V", NULL },
+    NC_("edit-action", "Paste In P_lace"), { "<primary><alt>V", "<alt>Paste", NULL },
     NC_("edit-action",
         "Paste the content of the clipboard at its original position"),
     GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE, FALSE,
