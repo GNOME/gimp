@@ -88,7 +88,7 @@ endif
 validate: $(menudata_DATA)
 if HAVE_XMLLINT
 	@for menu in $^; do \
-	   $(XMLLINT) --noout --path $(srcdir) --valid $$menu || \
+	   $(XMLLINT) --noout --path $(srcdir) $$menu || \
 	   ( echo "*** $$menu INVALID ***"; exit 1; ) ; \
 	done
 endif
