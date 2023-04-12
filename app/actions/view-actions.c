@@ -345,13 +345,13 @@ static const GimpEnumActionEntry view_zoom_actions[] =
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-out", GIMP_ICON_ZOOM_OUT,
-    NC_("view-zoom-action", "Zoom _Out"), { "minus", "KP_Subtract", NULL },
+    NC_("view-zoom-action", "Zoom _Out"), { "minus", "KP_Subtract", "ZoomOut", NULL },
     NC_("view-zoom-action", "Zoom out"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-in", GIMP_ICON_ZOOM_IN,
-    NC_("view-zoom-action", "Zoom _In"), { "plus", "KP_Add", NULL },
+    NC_("view-zoom-action", "Zoom _In"), { "plus", "KP_Add", "ZoomIn", NULL },
     NC_("view-zoom-action", "Zoom in"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
