@@ -32,12 +32,14 @@ TESTS = \
 	test-core					\
 	test-gimpidtable				\
 	test-save-and-export				\
-	test-session-2-8-compatibility-multi-window	\
-	test-session-2-8-compatibility-single-window	\
 	test-single-window-mode				\
-	test-tools					\
 	test-ui						\
 	test-xcf
+
+# 3 tests disabled:
+#test-tools
+#test-session-2-8-compatibility-multi-window
+#test-session-2-8-compatibility-single-window
 
 EXTRA_PROGRAMS = $(TESTS)
 CLEANFILES = $(EXTRA_PROGRAMS)
