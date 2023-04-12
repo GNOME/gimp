@@ -6,6 +6,7 @@ menudata_in_files = \
 	dockable-menu.ui.in.in	\
 	image-menu.ui.in.in
 
+menudata_intermediate_files = $(menudata_in_files:.ui.in.in=.ui.in)
 menudata_built_files = $(menudata_in_files:.ui.in.in=.ui)
 
 menudata_DATA = \
@@ -51,7 +52,10 @@ EXTRA_DIST = \
 	gtkuimanager.dtd		\
 	menus.xsl
 
-MAINTAINERCLEANFILES = $(menudata_built_files)
+CLEANFILES = $(menudata_built_files)		\
+	     $(menudata_intermediate_files)	\
+	     dialogs-dialogs-menuitems.ui 	\
+	     dockable-dialogs-menuitems.ui
 
 
 if GIMP_UNSTABLE
