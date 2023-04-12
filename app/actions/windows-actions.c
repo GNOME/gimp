@@ -106,13 +106,13 @@ static const GimpActionEntry windows_actions[] =
                                       "_Dockable Dialogs")      },
 
   { "windows-show-display-next", NULL,
-    NC_("windows-action", "Next Image"), { "<alt>Tab", NULL },
+    NC_("windows-action", "Next Image"), { "<alt>Tab", "Forward", NULL },
     NC_("windows-action", "Switch to the next image"),
     windows_show_display_next_cmd_callback,
     NULL },
 
   { "windows-show-display-previous", NULL,
-    NC_("windows-action", "Previous Image"), { "<alt><shift>Tab", NULL },
+    NC_("windows-action", "Previous Image"), { "<alt><shift>Tab", "Back", NULL },
     NC_("windows-action", "Switch to the previous image"),
     windows_show_display_previous_cmd_callback,
     NULL },
