@@ -3,7 +3,6 @@
 gimpsysconf = \
 	controllerrc	\
 	gimp.css	\
-	menurc		\
 	sessionrc	\
 	templaterc	\
 	toolrc		\

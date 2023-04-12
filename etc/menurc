@@ -1,3 +1,0 @@
-; gimp GtkAccelMap rc-file         -*- scheme -*-
-;
-(gtk_accel_path "<Actions>/plug-in/file-print-gtk" "<Primary>p")

@@ -91,7 +91,7 @@ Additionally, GIMP reads `${XDG_CONFIG_HOME}/GIMP/2.99/gimp.css` so you
 can have settings that only apply to GIMP.
 
 You can also manually change the keybindings to any of your choice by
-editing: `${XDG_CONFIG_HOME}/GIMP/2.99/menurc`.
+editing: `${XDG_CONFIG_HOME}/GIMP/2.99/shortcutsrc`.
 
 
 Have fun,

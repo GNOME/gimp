@@ -90,7 +90,6 @@ static const struct
 }
 gimp_user_install_items[] =
 {
-  { "menurc",          USER_INSTALL_COPY  },
   { "brushes",         USER_INSTALL_MKDIR },
   { "dynamics",        USER_INSTALL_MKDIR },
   { "fonts",           USER_INSTALL_MKDIR },
@@ -489,16 +488,8 @@ user_install_mkdir_with_parents (GimpUserInstall *install,
  * the next release
  */
 #define MENURC_OVER20_UPDATE_PATTERN \
-  "\"<Actions>/buffers/buffers-paste-as-new\""  "|" \
-  "\"<Actions>/edit/edit-paste-as-new\""        "|" \
-  "\"<Actions>/file/file-export\""              "|" \
-  "\"<Actions>/file/file-export-to\""           "|" \
-  "\"<Actions>/layers/layers-text-tool\""       "|" \
-  "\"<Actions>/plug-in/plug-in-gauss\""         "|" \
-  "\"<Actions>/tools/tools-value-[1-4]-.*\""    "|" \
-  "\"<Actions>/vectors/vectors-path-tool\""     "|" \
-  "\"<Actions>/tools/tools-blend\""             "|" \
-  "\"<Actions>/view/view-rotate-reset\""
+  "(;)? *\\(gtk_accel_path \"<Actions>/[a-zA-Z0-9-]*/([a-zA-Z0-9-]*)\" *\"([a-zA-Z0-9<>_]*)\"\\)" "|" \
+  "(;.*)"
 
 /**
  * callback to use for updating a menurc from GIMP over 2.0.
@@ -510,103 +501,79 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
                            GString          *new_value,
                            gpointer          data)
 {
-  GimpUserInstall *install = (GimpUserInstall *) data;
-  gchar           *match   = g_match_info_fetch (matched_value, 0);
+  GimpUserInstall *install         = (GimpUserInstall *) data;
+  gchar           *comment_match   = g_match_info_fetch (matched_value, 1);
+  gchar           *action_match    = g_match_info_fetch (matched_value, 2);
+  gchar           *accel_match     = g_match_info_fetch (matched_value, 3);
+  gchar           *ignore_match    = g_match_info_fetch (matched_value, 4);
+  gchar           *new_action_name = NULL;
 
-  /* "*-paste-as-new" renamed to "*-paste-as-new-image"
-   */
-  if (g_strcmp0 (match, "\"<Actions>/buffers/buffers-paste-as-new\"") == 0)
+  if (strlen (ignore_match) == 0)
     {
-      g_string_append (new_value, "\"<Actions>/buffers/buffers-paste-as-new-image\"");
-    }
-  else if (g_strcmp0 (match, "\"<Actions>/edit/edit-paste-as-new\"") == 0)
-    {
-      g_string_append (new_value, "\"<Actions>/edit/edit-paste-as-new-image\"");
-    }
-  /* file-export-* changes to follow file-save-* patterns.  Actions
-   * available since GIMP 2.8, changed for 2.10 in commit 4b14ed2.
-   */
-  else if (g_strcmp0 (match, "\"<Actions>/file/file-export\"") == 0)
-    {
-      if (install->old_major == 2 && install->old_minor <= 8)
-        g_string_append (new_value, "\"<Actions>/file/file-export-as\"");
-      else
-        /* Don't change from a 2.10 config. */
-        g_string_append (new_value, match);
-    }
-  else if (g_strcmp0 (match, "\"<Actions>/file/file-export-to\"") == 0)
-    {
-      if (install->old_major == 2 && install->old_minor <= 8)
-        g_string_append (new_value, "\"<Actions>/file/file-export\"");
-      else
-        /* Don't change from a 2.10 config. */
-        g_string_append (new_value, match);
-    }
-  else if (g_strcmp0 (match, "\"<Actions>/layers/layers-text-tool\"") == 0)
-    {
-      g_string_append (new_value, "\"<Actions>/layers/layers-edit\"");
-    }
-  /* plug-in-gauss doesn't exist anymore since commit ff59aebbe88.
-   * The expected replacement would be filters-gaussian-blur which is
-   * gegl:gaussian-blur operation. See also bug 775931.
-   */
-  else if (g_strcmp0 (match, "\"<Actions>/plug-in/plug-in-gauss\"") == 0)
-    {
-      g_string_append (new_value, "\"<Actions>/filters/filters-gaussian-blur\"");
-    }
-  /* Tools settings renamed more user-friendly.  Actions available
-   * since GIMP 2.4, changed for 2.10 in commit 0bdb747.
-   */
-  else if (g_str_has_prefix (match, "\"<Actions>/tools/tools-value-1-"))
-    {
-      g_string_append (new_value, "\"<Actions>/tools/tools-opacity-");
-      g_string_append (new_value, match + 31);
-    }
-  else if (g_str_has_prefix (match, "\"<Actions>/tools/tools-value-2-"))
-    {
-      g_string_append (new_value, "\"<Actions>/tools/tools-size-");
-      g_string_append (new_value, match + 31);
-    }
-  else if (g_str_has_prefix (match, "\"<Actions>/tools/tools-value-3-"))
-    {
-      g_string_append (new_value, "\"<Actions>/tools/tools-aspect-");
-      g_string_append (new_value, match + 31);
-    }
-  else if (g_str_has_prefix (match, "\"<Actions>/tools/tools-value-4-"))
-    {
-      g_string_append (new_value, "\"<Actions>/tools/tools-angle-");
-      g_string_append (new_value, match + 31);
-    }
-  else if (g_strcmp0 (match, "\"<Actions>/vectors/vectors-path-tool\"") == 0)
-    {
-      g_string_append (new_value, "\"<Actions>/vectors/vectors-edit\"");
-    }
-  else if (g_strcmp0 (match, "\"<Actions>/tools/tools-blend\"") == 0)
-    {
-      g_string_append (new_value, "\"<Actions>/tools/tools-gradient\"");
-    }
-  else if (g_strcmp0 (match, "\"<Actions>/view/view-rotate-reset\"") == 0)
-    {
-      /* view-rotate-reset became view-reset and new view-rotate-reset
-       * and view-flip-reset actions were created.
-       * See commit 15fb4a7be0.
+      /* "*-paste-as-new" renamed to "*-paste-as-new-image" */
+      if (g_strcmp0 (action_match, "buffers-paste-as-new") == 0)
+        new_action_name = g_strdup ("buffers-paste-as-new-image");
+      else if (g_strcmp0 (action_match, "edit-paste-as-new") == 0)
+        new_action_name = g_strdup ("edit-paste-as-new-image");
+      /* file-export-* changes to follow file-save-* patterns.  Actions
+       * available since GIMP 2.8, changed for 2.10 in commit 4b14ed2.
        */
-      if (install->old_major == 2)
-        g_string_append (new_value, "\"<Actions>/view/view-reset\"");
-      else
-        /* In advance for a migration from a 3.0 config to higher ones. */
-        g_string_append (new_value, match);
-    }
-  else
-    {
-      /* Should not happen. Just in case we match something unexpected by
-       * mistake.
+      else if (g_strcmp0 (action_match, "file-export") == 0 &&
+               install->old_major == 2 && install->old_minor <= 8)
+        new_action_name = g_strdup ("file-export-as");
+      else if (g_strcmp0 (action_match, "file-export-to") == 0 &&
+               install->old_major == 2 && install->old_minor <= 8)
+        new_action_name = g_strdup ("file-export");
+      else if (g_strcmp0 (action_match, "layers-text-tool") == 0)
+        new_action_name = g_strdup ("layers-edit");
+      /* plug-in-gauss doesn't exist anymore since commit ff59aebbe88.
+       * The expected replacement would be filters-gaussian-blur which is
+       * gegl:gaussian-blur operation. See also bug 775931.
        */
-      g_message ("(WARNING) %s: invalid match \"%s\"", G_STRFUNC, match);
-      g_string_append (new_value, match);
+      else if (g_strcmp0 (action_match, "plug-in-gauss") == 0)
+        new_action_name = g_strdup ("filters-gaussian-blur");
+      /* Tools settings renamed more user-friendly.  Actions available
+       * since GIMP 2.4, changed for 2.10 in commit 0bdb747.
+       */
+      else if (g_str_has_prefix (action_match, "tools-value-1-"))
+        new_action_name = g_strdup ("tools-opacity-");
+      else if (g_str_has_prefix (action_match, "tools-value-2-"))
+        new_action_name = g_strdup_printf ("tools-size-%s", action_match + 14);
+      else if (g_str_has_prefix (action_match, "tools-value-3-"))
+        new_action_name = g_strdup_printf ("tools-aspect-%s", action_match + 14);
+      else if (g_str_has_prefix (action_match, "tools-value-4-"))
+        new_action_name = g_strdup_printf ("tools-angle-%s", action_match + 14);
+      else if (g_strcmp0 (action_match, "vectors-path-tool") == 0)
+        new_action_name = g_strdup ("vectors-edit");
+      else if (g_strcmp0 (action_match, "tools-blend") == 0)
+        new_action_name = g_strdup ("tools-gradient");
+      /* view-rotate-reset became view-reset and new view-rotate-reset and
+       * view-flip-reset actions were created.  See commit 15fb4a7be0.
+       */
+      else if (g_strcmp0 (action_match, "view-rotate-reset") == 0 &&
+               install->old_major == 2)
+        new_action_name = g_strdup ("view-reset");
+
+      if (new_action_name == NULL)
+        new_action_name = g_strdup (action_match);
+
+      if (g_strcmp0 (comment_match, ";") == 0)
+        g_string_append (new_value, "# ");
+
+      if (strlen (accel_match) > 0)
+        g_string_append_printf (new_value, "(action \"%s\" \"%s\")",
+                                new_action_name, accel_match);
+      else
+        g_string_append_printf (new_value, "(action \"%s\")",
+                                new_action_name);
     }
 
-  g_free (match);
+  g_free (comment_match);
+  g_free (action_match);
+  g_free (accel_match);
+  g_free (ignore_match);
+  g_free (new_action_name);
+
   return FALSE;
 }
 
@@ -1004,7 +971,8 @@ user_install_migrate_files (GimpUserInstall *install)
 
   while ((basename = g_dir_read_name (dir)) != NULL)
     {
-      gchar *source = g_build_filename (install->old_dir, basename, NULL);
+      gchar       *source   = g_build_filename (install->old_dir, basename, NULL);
+      const gchar *new_dest = NULL;
 
       if (g_file_test (source, G_FILE_TEST_IS_REGULAR))
         {
@@ -1041,6 +1009,8 @@ user_install_migrate_files (GimpUserInstall *install)
                 default:
                   update_pattern  = MENURC_OVER20_UPDATE_PATTERN;
                   update_callback = user_update_menurc_over20;
+                  /* menurc becomes shortcutsrc in 3.0. */
+                  new_dest        = "shortcutsrc";
                   break;
                 }
             }
@@ -1062,7 +1032,8 @@ user_install_migrate_files (GimpUserInstall *install)
             }
 
           g_snprintf (dest, sizeof (dest), "%s%c%s",
-                      gimp_directory (), G_DIR_SEPARATOR, basename);
+                      gimp_directory (), G_DIR_SEPARATOR,
+                      new_dest ? new_dest : basename);
 
           user_install_file_copy (install, source, dest,
                                   update_pattern, update_callback);

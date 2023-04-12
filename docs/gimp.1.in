@@ -210,7 +210,7 @@ here.
 @gimpsysconfdir@/gtkrc - system wide default set of GIMP-specific GTK
 config settings.
 
-@manpage_gimpdir@/menurc - user's set of keybindings.
+@manpage_gimpdir@/shortcutsrc - user's set of keybindings.
 
 @manpage_gimpdir@/parasiterc - Stores all persistent GIMP
 parasites. This file will be rewritten every time you quit GIMP.

@@ -11,7 +11,6 @@ install_data(
       configuration: etcconf,
     ),
     'gimp.css',
-    'menurc',
     'sessionrc',
     'templaterc',
     'toolrc',
