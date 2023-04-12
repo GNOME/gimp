@@ -65,7 +65,7 @@ struct _GimpActionEntry
   const gchar        *name;
   const gchar        *icon_name;
   const gchar        *label;
-  const gchar        *accelerator;
+  const gchar        *accelerator[4];
   const gchar        *tooltip;
   GimpActionCallback  callback;
 
@@ -77,12 +77,12 @@ struct _GimpToggleActionEntry
   const gchar        *name;
   const gchar        *icon_name;
   const gchar        *label;
-  const gchar        *accelerator;
+  const gchar        *accelerator[4];
   const gchar        *tooltip;
   GimpActionCallback  callback;
   gboolean            is_active;
 
-  const gchar *help_id;
+  const gchar        *help_id;
 };
 
 struct _GimpRadioActionEntry
@@ -90,7 +90,7 @@ struct _GimpRadioActionEntry
   const gchar *name;
   const gchar *icon_name;
   const gchar *label;
-  const gchar *accelerator;
+  const gchar *accelerator[4];
   const gchar *tooltip;
   gint         value;
 
@@ -102,7 +102,7 @@ struct _GimpEnumActionEntry
   const gchar *name;
   const gchar *icon_name;
   const gchar *label;
-  const gchar *accelerator;
+  const gchar *accelerator[4];
   const gchar *tooltip;
   gint         value;
   gboolean     value_variable;
@@ -115,7 +115,7 @@ struct _GimpStringActionEntry
   const gchar *name;
   const gchar *icon_name;
   const gchar *label;
-  const gchar *accelerator;
+  const gchar *accelerator[4];
   const gchar *tooltip;
   const gchar *value;
 
@@ -127,7 +127,7 @@ struct _GimpDoubleActionEntry
   const gchar   *name;
   const gchar   *icon_name;
   const gchar   *label;
-  const gchar   *accelerator;
+  const gchar   *accelerator[4];
   const gchar   *tooltip;
   const gdouble  value;
 
@@ -164,7 +164,7 @@ void  gimp_action_group_add_action            (GimpActionGroup *action_group,
                                                GimpAction      *action);
 void  gimp_action_group_add_action_with_accel (GimpActionGroup *action_group,
                                                GimpAction      *action,
-                                               const gchar     *accelerator);
+                                               const gchar * const*accelerators);
 void  gimp_action_group_remove_action         (GimpActionGroup *action_group,
                                                GimpAction      *action);
 

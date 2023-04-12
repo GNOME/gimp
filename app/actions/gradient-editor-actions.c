@@ -44,7 +44,7 @@
 static const GimpActionEntry gradient_editor_actions[] =
 {
   { "gradient-editor-popup", GIMP_ICON_GRADIENT,
-    NC_("gradient-editor-action", "Gradient Editor Menu"), NULL, NULL, NULL,
+    NC_("gradient-editor-action", "Gradient Editor Menu"), { NULL }, NULL, NULL,
     GIMP_HELP_GRADIENT_EDITOR_DIALOG },
 
   { "gradient-editor-left-color-type", NULL,
@@ -68,57 +68,57 @@ static const GimpActionEntry gradient_editor_actions[] =
   { "gradient-editor-coloring-type", NULL, "coloring-type"     },
 
   { "gradient-editor-left-color", NULL,
-    NC_("gradient-editor-action", "L_eft Endpoint's Color..."), NULL, NULL,
+    NC_("gradient-editor-action", "L_eft Endpoint's Color..."), { NULL }, NULL,
     gradient_editor_left_color_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
   { "gradient-editor-right-color", NULL,
-    NC_("gradient-editor-action", "R_ight Endpoint's Color..."), NULL, NULL,
+    NC_("gradient-editor-action", "R_ight Endpoint's Color..."), { NULL }, NULL,
     gradient_editor_right_color_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
   { "gradient-editor-flip", GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
-    "flip", NULL, NULL,
+    "flip", { NULL }, NULL,
     gradient_editor_flip_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_FLIP },
 
   { "gradient-editor-replicate", GIMP_ICON_OBJECT_DUPLICATE,
-    "replicate", NULL, NULL,
+    "replicate", { NULL }, NULL,
     gradient_editor_replicate_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_FLIP },
 
   { "gradient-editor-split-midpoint", NULL,
-    "splitmidpoint", NULL, NULL,
+    "splitmidpoint", { NULL }, NULL,
     gradient_editor_split_midpoint_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_SPLIT_MIDPOINT },
 
   { "gradient-editor-split-uniform", NULL,
-    "splituniform", NULL, NULL,
+    "splituniform", { NULL }, NULL,
     gradient_editor_split_uniformly_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_SPLIT_UNIFORM },
 
   { "gradient-editor-delete", GIMP_ICON_EDIT_DELETE,
-    "delete", "", NULL,
+    "delete", { NULL }, NULL,
     gradient_editor_delete_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_DELETE },
 
   { "gradient-editor-recenter", NULL,
-    "recenter", NULL, NULL,
+    "recenter", { NULL }, NULL,
     gradient_editor_recenter_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_RECENTER },
 
   { "gradient-editor-redistribute", NULL,
-    "redistribute", NULL, NULL,
+    "redistribute", { NULL }, NULL,
     gradient_editor_redistribute_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_REDISTRIBUTE },
 
   { "gradient-editor-blend-color", NULL,
-    NC_("gradient-editor-action", "Ble_nd Endpoints' Colors"), NULL, NULL,
+    NC_("gradient-editor-action", "Ble_nd Endpoints' Colors"), { NULL }, NULL,
     gradient_editor_blend_color_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_BLEND_COLOR },
 
   { "gradient-editor-blend-opacity", NULL,
-    NC_("gradient-editor-action", "Blend Endpoints' Opacit_y"), NULL, NULL,
+    NC_("gradient-editor-action", "Blend Endpoints' Opacit_y"), { NULL }, NULL,
     gradient_editor_blend_opacity_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_BLEND_OPACITY }
 };
@@ -126,7 +126,7 @@ static const GimpActionEntry gradient_editor_actions[] =
 static const GimpToggleActionEntry gradient_editor_toggle_actions[] =
 {
   { "gradient-editor-edit-active", GIMP_ICON_LINKED,
-    NC_("gradient-editor-action", "Edit Active Gradient"), NULL, NULL,
+    NC_("gradient-editor-action", "Edit Active Gradient"), { NULL }, NULL,
     data_editor_edit_active_cmd_callback,
     FALSE,
     GIMP_HELP_GRADIENT_EDITOR_EDIT_ACTIVE }
@@ -135,44 +135,44 @@ static const GimpToggleActionEntry gradient_editor_toggle_actions[] =
 
 #define LOAD_LEFT_FROM(num,magic) \
   { "gradient-editor-load-left-" num, NULL, \
-    num, NULL, NULL, \
+    num, { NULL }, NULL, \
     (magic), FALSE, \
     GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD }
 #define SAVE_LEFT_TO(num,magic) \
   { "gradient-editor-save-left-" num, NULL, \
-    num, NULL, NULL, \
+    num, { NULL }, NULL, \
     (magic), FALSE, \
     GIMP_HELP_GRADIENT_EDITOR_LEFT_SAVE }
 #define LOAD_RIGHT_FROM(num,magic) \
   { "gradient-editor-load-right-" num, NULL, \
-    num, NULL, NULL, \
+    num, { NULL }, NULL, \
     (magic), FALSE, \
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD }
 #define SAVE_RIGHT_TO(num,magic) \
   { "gradient-editor-save-right-" num, NULL, \
-    num, NULL, NULL, \
+    num, { NULL }, NULL, \
     (magic), FALSE, \
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_SAVE }
 
 static const GimpEnumActionEntry gradient_editor_load_left_actions[] =
 {
   { "gradient-editor-load-left-left-neighbor", NULL,
-    NC_("gradient-editor-action", "_Left Neighbor's Right Endpoint"), NULL, NULL,
+    NC_("gradient-editor-action", "_Left Neighbor's Right Endpoint"), { NULL }, NULL,
     GRADIENT_EDITOR_COLOR_NEIGHBOR_ENDPOINT, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
   { "gradient-editor-load-left-right-endpoint", NULL,
-    NC_("gradient-editor-action", "_Right Endpoint"), NULL, NULL,
+    NC_("gradient-editor-action", "_Right Endpoint"), { NULL }, NULL,
     GRADIENT_EDITOR_COLOR_OTHER_ENDPOINT, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
   { "gradient-editor-load-left-fg", NULL,
-    NC_("gradient-editor-action", "_Foreground Color"), NULL, NULL,
+    NC_("gradient-editor-action", "_Foreground Color"), { NULL }, NULL,
     GRADIENT_EDITOR_COLOR_FOREGROUND, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
   { "gradient-editor-load-left-bg", NULL,
-    NC_("gradient-editor-action", "_Background Color"), NULL, NULL,
+    NC_("gradient-editor-action", "_Background Color"), { NULL }, NULL,
     GRADIENT_EDITOR_COLOR_BACKGROUND, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
@@ -205,22 +205,22 @@ static const GimpEnumActionEntry gradient_editor_save_left_actions[] =
 static const GimpEnumActionEntry gradient_editor_load_right_actions[] =
 {
   { "gradient-editor-load-right-right-neighbor", NULL,
-    NC_("gradient-editor-action", "_Right Neighbor's Left Endpoint"), NULL, NULL,
+    NC_("gradient-editor-action", "_Right Neighbor's Left Endpoint"), { NULL }, NULL,
     GRADIENT_EDITOR_COLOR_NEIGHBOR_ENDPOINT, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
   { "gradient-editor-load-right-left-endpoint", NULL,
-    NC_("gradient-editor-action", "_Left Endpoint"), NULL, NULL,
+    NC_("gradient-editor-action", "_Left Endpoint"), { NULL }, NULL,
     GRADIENT_EDITOR_COLOR_OTHER_ENDPOINT, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
   { "gradient-editor-load-right-fg", NULL,
-    NC_("gradient-editor-action", "_Foreground Color"), NULL, NULL,
+    NC_("gradient-editor-action", "_Foreground Color"), { NULL }, NULL,
     GRADIENT_EDITOR_COLOR_FOREGROUND, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
   { "gradient-editor-load-right-bg", NULL,
-    NC_("gradient-editor-action", "_Background Color"), NULL, NULL,
+    NC_("gradient-editor-action", "_Background Color"), { NULL }, NULL,
     GRADIENT_EDITOR_COLOR_BACKGROUND, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
@@ -259,29 +259,29 @@ static const GimpEnumActionEntry gradient_editor_save_right_actions[] =
 static const GimpRadioActionEntry gradient_editor_left_color_type_actions[] =
 {
   { "gradient-editor-left-color-fixed", NULL,
-    NC_("gradient-editor-color-type", "_Fixed"), NULL, NULL,
+    NC_("gradient-editor-color-type", "_Fixed"), { NULL }, NULL,
     GIMP_GRADIENT_COLOR_FIXED,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
   { "gradient-editor-left-color-foreground", NULL,
-    NC_("gradient-editor-color-type", "F_oreground Color"), NULL, NULL,
+    NC_("gradient-editor-color-type", "F_oreground Color"), { NULL }, NULL,
     GIMP_GRADIENT_COLOR_FOREGROUND,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
   { "gradient-editor-left-color-foreground-transparent", NULL,
     NC_("gradient-editor-color-type",
-        "Fo_reground Color (Transparent)"), NULL, NULL,
+        "Fo_reground Color (Transparent)"), { NULL }, NULL,
     GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
   { "gradient-editor-left-color-background", NULL,
-    NC_("gradient-editor-color-type", "_Background Color"), NULL, NULL,
+    NC_("gradient-editor-color-type", "_Background Color"), { NULL }, NULL,
     GIMP_GRADIENT_COLOR_BACKGROUND,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
   { "gradient-editor-left-color-background-transparent", NULL,
     NC_("gradient-editor-color-type",
-        "B_ackground Color (Transparent)"), NULL, NULL,
+        "B_ackground Color (Transparent)"), { NULL }, NULL,
     GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR }
 };
@@ -289,29 +289,29 @@ static const GimpRadioActionEntry gradient_editor_left_color_type_actions[] =
 static const GimpRadioActionEntry gradient_editor_right_color_type_actions[] =
 {
   { "gradient-editor-right-color-fixed", NULL,
-    NC_("gradient-editor-color-type", "_Fixed"), NULL, NULL,
+    NC_("gradient-editor-color-type", "_Fixed"), { NULL }, NULL,
     GIMP_GRADIENT_COLOR_FIXED,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
   { "gradient-editor-right-color-foreground", NULL,
-    NC_("gradient-editor-color-type", "F_oreground Color"), NULL, NULL,
+    NC_("gradient-editor-color-type", "F_oreground Color"), { NULL }, NULL,
     GIMP_GRADIENT_COLOR_FOREGROUND,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
   { "gradient-editor-right-color-foreground-transparent", NULL,
     NC_("gradient-editor-color-type",
-        "Fo_reground Color (Transparent)"), NULL, NULL,
+        "Fo_reground Color (Transparent)"), { NULL }, NULL,
     GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
   { "gradient-editor-right-color-background", NULL,
-    NC_("gradient-editor-color-type", "_Background Color"), NULL, NULL,
+    NC_("gradient-editor-color-type", "_Background Color"), { NULL }, NULL,
     GIMP_GRADIENT_COLOR_BACKGROUND,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
   { "gradient-editor-right-color-background-transparent", NULL,
     NC_("gradient-editor-color-type",
-        "B_ackground Color (Transparent)"), NULL, NULL,
+        "B_ackground Color (Transparent)"), { NULL }, NULL,
     GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR }
 };
@@ -319,37 +319,37 @@ static const GimpRadioActionEntry gradient_editor_right_color_type_actions[] =
 static const GimpRadioActionEntry gradient_editor_blending_actions[] =
 {
   { "gradient-editor-blending-linear", NULL,
-    NC_("gradient-editor-blending", "_Linear"), NULL, NULL,
+    NC_("gradient-editor-blending", "_Linear"), { NULL }, NULL,
     GIMP_GRADIENT_SEGMENT_LINEAR,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-curved", NULL,
-    NC_("gradient-editor-blending", "_Curved"), NULL, NULL,
+    NC_("gradient-editor-blending", "_Curved"), { NULL }, NULL,
     GIMP_GRADIENT_SEGMENT_CURVED,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-sine", NULL,
-    NC_("gradient-editor-blending", "_Sinusoidal"), NULL, NULL,
+    NC_("gradient-editor-blending", "_Sinusoidal"), { NULL }, NULL,
     GIMP_GRADIENT_SEGMENT_SINE,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-sphere-increasing", NULL,
-    NC_("gradient-editor-blending", "Spherical (i_ncreasing)"), NULL, NULL,
+    NC_("gradient-editor-blending", "Spherical (i_ncreasing)"), { NULL }, NULL,
     GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-sphere-decreasing", NULL,
-    NC_("gradient-editor-blending", "Spherical (_decreasing)"), NULL, NULL,
+    NC_("gradient-editor-blending", "Spherical (_decreasing)"), { NULL }, NULL,
     GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-step", NULL,
-    NC_("gradient-editor-blending", "S_tep"), NULL, NULL,
+    NC_("gradient-editor-blending", "S_tep"), { NULL }, NULL,
     GIMP_GRADIENT_SEGMENT_STEP,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-varies", NULL,
-    NC_("gradient-editor-blending", "(Varies)"), NULL, NULL,
+    NC_("gradient-editor-blending", "(Varies)"), { NULL }, NULL,
     -1,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING }
 };
@@ -357,22 +357,22 @@ static const GimpRadioActionEntry gradient_editor_blending_actions[] =
 static const GimpRadioActionEntry gradient_editor_coloring_actions[] =
 {
   { "gradient-editor-coloring-rgb", NULL,
-    NC_("gradient-editor-coloring", "_RGB"), NULL, NULL,
+    NC_("gradient-editor-coloring", "_RGB"), { NULL }, NULL,
     GIMP_GRADIENT_SEGMENT_RGB,
     GIMP_HELP_GRADIENT_EDITOR_COLORING },
 
   { "gradient-editor-coloring-hsv-ccw", NULL,
-    NC_("gradient-editor-coloring", "HSV (_counter-clockwise hue)"), NULL, NULL,
+    NC_("gradient-editor-coloring", "HSV (_counter-clockwise hue)"), { NULL }, NULL,
     GIMP_GRADIENT_SEGMENT_HSV_CCW,
     GIMP_HELP_GRADIENT_EDITOR_COLORING },
 
   { "gradient-editor-coloring-hsv-cw", NULL,
-    NC_("gradient-editor-coloring", "HSV (clockwise _hue)"), NULL, NULL,
+    NC_("gradient-editor-coloring", "HSV (clockwise _hue)"), { NULL }, NULL,
     GIMP_GRADIENT_SEGMENT_HSV_CW,
     GIMP_HELP_GRADIENT_EDITOR_COLORING },
 
   { "gradient-editor-coloring-varies", NULL,
-    NC_("gradient-editor-coloring", "(Varies)"), NULL, NULL,
+    NC_("gradient-editor-coloring", "(Varies)"), { NULL }, NULL,
     -1,
     GIMP_HELP_GRADIENT_EDITOR_COLORING }
 };
@@ -380,19 +380,19 @@ static const GimpRadioActionEntry gradient_editor_coloring_actions[] =
 static const GimpEnumActionEntry gradient_editor_zoom_actions[] =
 {
   { "gradient-editor-zoom-in", GIMP_ICON_ZOOM_IN,
-    N_("Zoom In"), NULL,
+    N_("Zoom In"), { NULL },
     N_("Zoom in"),
     GIMP_ZOOM_IN, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_ZOOM_IN },
 
   { "gradient-editor-zoom-out", GIMP_ICON_ZOOM_OUT,
-    N_("Zoom Out"), NULL,
+    N_("Zoom Out"), { NULL },
     N_("Zoom out"),
     GIMP_ZOOM_OUT, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_ZOOM_OUT },
 
   { "gradient-editor-zoom-all", GIMP_ICON_ZOOM_FIT_BEST,
-    N_("Zoom All"), NULL,
+    N_("Zoom All"), { NULL },
     N_("Zoom all"),
     GIMP_ZOOM_OUT_MAX, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_ZOOM_ALL }

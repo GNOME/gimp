@@ -37,7 +37,7 @@
 static const GimpActionEntry dashboard_actions[] =
 {
   { "dashboard-popup", GIMP_ICON_DIALOG_DASHBOARD,
-    NC_("dashboard-action", "Dashboard Menu"), NULL, NULL, NULL,
+    NC_("dashboard-action", "Dashboard Menu"), { NULL }, NULL, NULL,
     GIMP_HELP_DASHBOARD_DIALOG },
 
   { "dashboard-groups", NULL,
@@ -48,25 +48,25 @@ static const GimpActionEntry dashboard_actions[] =
     NC_("dashboard-action", "_History Duration") },
 
   { "dashboard-log-record", GIMP_ICON_RECORD,
-    NC_("dashboard-action", "_Start/Stop Recording..."), NULL,
+    NC_("dashboard-action", "_Start/Stop Recording..."), { NULL },
     NC_("dashboard-action", "Start/stop recording performance log"),
     dashboard_log_record_cmd_callback,
     GIMP_HELP_DASHBOARD_LOG_RECORD },
   { "dashboard-log-add-marker", GIMP_ICON_MARKER,
-    NC_("dashboard-action", "_Add Marker..."), NULL,
+    NC_("dashboard-action", "_Add Marker..."), { NULL },
     NC_("dashboard-action", "Add an event marker "
                             "to the performance log"),
     dashboard_log_add_marker_cmd_callback,
     GIMP_HELP_DASHBOARD_LOG_ADD_MARKER },
   { "dashboard-log-add-empty-marker", GIMP_ICON_MARKER,
-    NC_("dashboard-action", "Add _Empty Marker"), NULL,
+    NC_("dashboard-action", "Add _Empty Marker"), { NULL },
     NC_("dashboard-action", "Add an empty event marker "
                             "to the performance log"),
     dashboard_log_add_empty_marker_cmd_callback,
     GIMP_HELP_DASHBOARD_LOG_ADD_EMPTY_MARKER },
 
   { "dashboard-reset", GIMP_ICON_RESET,
-    NC_("dashboard-action", "_Reset"), NULL,
+    NC_("dashboard-action", "_Reset"), { NULL },
     NC_("dashboard-action", "Reset cumulative data"),
     dashboard_reset_cmd_callback,
     GIMP_HELP_DASHBOARD_RESET },
@@ -75,7 +75,7 @@ static const GimpActionEntry dashboard_actions[] =
 static const GimpToggleActionEntry dashboard_toggle_actions[] =
 {
   { "dashboard-low-swap-space-warning", NULL,
-    NC_("dashboard-action", "_Low Swap Space Warning"), NULL,
+    NC_("dashboard-action", "_Low Swap Space Warning"), { NULL },
     NC_("dashboard-action", "Raise the dashboard when "
                             "the swap size approaches its limit"),
     dashboard_low_swap_space_warning_cmd_callback,
@@ -86,27 +86,27 @@ static const GimpToggleActionEntry dashboard_toggle_actions[] =
 static const GimpRadioActionEntry dashboard_update_interval_actions[] =
 {
   { "dashboard-update-interval-0-25-sec", NULL,
-    NC_("dashboard-update-interval", "0.25 Seconds"), NULL, NULL,
+    NC_("dashboard-update-interval", "0.25 Seconds"), { NULL }, NULL,
     GIMP_DASHBOARD_UPDATE_INTERVAL_0_25_SEC,
     GIMP_HELP_DASHBOARD_UPDATE_INTERVAL },
 
   { "dashboard-update-interval-0-5-sec", NULL,
-    NC_("dashboard-update-interval", "0.5 Seconds"), NULL, NULL,
+    NC_("dashboard-update-interval", "0.5 Seconds"), { NULL }, NULL,
     GIMP_DASHBOARD_UPDATE_INTERVAL_0_5_SEC,
     GIMP_HELP_DASHBOARD_UPDATE_INTERVAL },
 
   { "dashboard-update-interval-1-sec", NULL,
-    NC_("dashboard-update-interval", "1 Second"), NULL, NULL,
+    NC_("dashboard-update-interval", "1 Second"), { NULL }, NULL,
     GIMP_DASHBOARD_UPDATE_INTERVAL_1_SEC,
     GIMP_HELP_DASHBOARD_UPDATE_INTERVAL },
 
   { "dashboard-update-interval-2-sec", NULL,
-    NC_("dashboard-update-interval", "2 Seconds"), NULL, NULL,
+    NC_("dashboard-update-interval", "2 Seconds"), { NULL }, NULL,
     GIMP_DASHBOARD_UPDATE_INTERVAL_2_SEC,
     GIMP_HELP_DASHBOARD_UPDATE_INTERVAL },
 
   { "dashboard-update-interval-4-sec", NULL,
-    NC_("dashboard-update-interval", "4 Seconds"), NULL, NULL,
+    NC_("dashboard-update-interval", "4 Seconds"), { NULL }, NULL,
     GIMP_DASHBOARD_UPDATE_INTERVAL_4_SEC,
     GIMP_HELP_DASHBOARD_UPDATE_INTERVAL }
 };
@@ -114,27 +114,27 @@ static const GimpRadioActionEntry dashboard_update_interval_actions[] =
 static const GimpRadioActionEntry dashboard_history_duration_actions[] =
 {
   { "dashboard-history-duration-15-sec", NULL,
-    NC_("dashboard-history-duration", "15 Seconds"), NULL, NULL,
+    NC_("dashboard-history-duration", "15 Seconds"), { NULL }, NULL,
     GIMP_DASHBOARD_HISTORY_DURATION_15_SEC,
     GIMP_HELP_DASHBOARD_HISTORY_DURATION },
 
   { "dashboard-history-duration-30-sec", NULL,
-    NC_("dashboard-history-duration", "30 Seconds"), NULL, NULL,
+    NC_("dashboard-history-duration", "30 Seconds"), { NULL }, NULL,
     GIMP_DASHBOARD_HISTORY_DURATION_30_SEC,
     GIMP_HELP_DASHBOARD_HISTORY_DURATION },
 
   { "dashboard-history-duration-60-sec", NULL,
-    NC_("dashboard-history-duration", "60 Seconds"), NULL, NULL,
+    NC_("dashboard-history-duration", "60 Seconds"), { NULL }, NULL,
     GIMP_DASHBOARD_HISTORY_DURATION_60_SEC,
     GIMP_HELP_DASHBOARD_HISTORY_DURATION },
 
   { "dashboard-history-duration-120-sec", NULL,
-    NC_("dashboard-history-duration", "120 Seconds"), NULL, NULL,
+    NC_("dashboard-history-duration", "120 Seconds"), { NULL }, NULL,
     GIMP_DASHBOARD_HISTORY_DURATION_120_SEC,
     GIMP_HELP_DASHBOARD_HISTORY_DURATION },
 
   { "dashboard-history-duration-240-sec", NULL,
-    NC_("dashboard-history-duration", "240 Seconds"), NULL, NULL,
+    NC_("dashboard-history-duration", "240 Seconds"), { NULL }, NULL,
     GIMP_DASHBOARD_HISTORY_DURATION_240_SEC,
     GIMP_HELP_DASHBOARD_HISTORY_DURATION }
 };

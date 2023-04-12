@@ -374,9 +374,9 @@ gimp_action_group_add_action (GimpActionGroup *group,
 }
 
 void
-gimp_action_group_add_action_with_accel (GimpActionGroup *group,
-                                         GimpAction      *action,
-                                         const gchar     *accelerator)
+gimp_action_group_add_action_with_accel (GimpActionGroup    *group,
+                                         GimpAction         *action,
+                                         const gchar * const*accelerators)
 {
   g_return_if_fail (GIMP_IS_ACTION (action));
 
@@ -386,8 +386,9 @@ gimp_action_group_add_action_with_accel (GimpActionGroup *group,
 
       g_signal_emit_by_name (group, "action-added", gimp_action_get_name (action));
 
-      if ((accelerator != NULL && g_strcmp0 (accelerator, "") != 0))
-        gimp_action_set_default_accels (action, (const char*[]) { accelerator, NULL });
+      if ((accelerators != NULL && accelerators[0] != NULL &&
+           g_strcmp0 (accelerators[0], "") != 0))
+        gimp_action_set_default_accels (action, (const gchar **) accelerators);
 
       gimp_action_set_group (action, group);
     }
@@ -829,7 +830,7 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
                           group->user_data);
 
       gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
-                                               entries[i].accelerator);
+                                               (const gchar *[]) { entries[i].accelerator, NULL });
 
       g_object_unref (action);
     }

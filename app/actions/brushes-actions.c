@@ -40,47 +40,47 @@
 static const GimpActionEntry brushes_actions[] =
 {
   { "brushes-popup", GIMP_ICON_BRUSH,
-    NC_("brushes-action", "Brushes Menu"), NULL, NULL, NULL,
+    NC_("brushes-action", "Brushes Menu"), { NULL }, NULL, NULL,
     GIMP_HELP_BRUSH_DIALOG },
 
   { "brushes-open-as-image", GIMP_ICON_DOCUMENT_OPEN,
-    NC_("brushes-action", "_Open Brush as Image"), NULL,
+    NC_("brushes-action", "_Open Brush as Image"), { NULL },
     NC_("brushes-action", "Open brush as image"),
     data_open_as_image_cmd_callback,
     GIMP_HELP_BRUSH_OPEN_AS_IMAGE },
 
   { "brushes-new", GIMP_ICON_DOCUMENT_NEW,
-    NC_("brushes-action", "_New Brush"), NULL,
+    NC_("brushes-action", "_New Brush"), { NULL },
     NC_("brushes-action", "Create a new brush"),
     data_new_cmd_callback,
     GIMP_HELP_BRUSH_NEW },
 
   { "brushes-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
-    NC_("brushes-action", "D_uplicate Brush"), NULL,
+    NC_("brushes-action", "D_uplicate Brush"), { NULL },
     NC_("brushes-action", "Duplicate this brush"),
     data_duplicate_cmd_callback,
     GIMP_HELP_BRUSH_DUPLICATE },
 
   { "brushes-copy-location", GIMP_ICON_EDIT_COPY,
-    NC_("brushes-action", "Copy Brush _Location"), NULL,
+    NC_("brushes-action", "Copy Brush _Location"), { NULL },
     NC_("brushes-action", "Copy brush file location to clipboard"),
     data_copy_location_cmd_callback,
     GIMP_HELP_BRUSH_COPY_LOCATION },
 
   { "brushes-show-in-file-manager", GIMP_ICON_FILE_MANAGER,
-    NC_("brushes-action", "Show in _File Manager"), NULL,
+    NC_("brushes-action", "Show in _File Manager"), { NULL },
     NC_("brushes-action", "Show brush file location in the file manager"),
     data_show_in_file_manager_cmd_callback,
     GIMP_HELP_BRUSH_SHOW_IN_FILE_MANAGER },
 
   { "brushes-delete", GIMP_ICON_EDIT_DELETE,
-    NC_("brushes-action", "_Delete Brush"), NULL,
+    NC_("brushes-action", "_Delete Brush"), { NULL },
     NC_("brushes-action", "Delete this brush"),
     data_delete_cmd_callback,
     GIMP_HELP_BRUSH_DELETE },
 
   { "brushes-refresh", GIMP_ICON_VIEW_REFRESH,
-    NC_("brushes-action", "_Refresh Brushes"), NULL,
+    NC_("brushes-action", "_Refresh Brushes"), { NULL },
     NC_("brushes-action", "Refresh brushes"),
     data_refresh_cmd_callback,
     GIMP_HELP_BRUSH_REFRESH }
@@ -89,7 +89,7 @@ static const GimpActionEntry brushes_actions[] =
 static const GimpStringActionEntry brushes_edit_actions[] =
 {
   { "brushes-edit", GIMP_ICON_EDIT,
-    NC_("brushes-action", "_Edit Brush..."), NULL,
+    NC_("brushes-action", "_Edit Brush..."), { NULL },
     NC_("brushes-action", "Edit this brush"),
     "gimp-brush-editor",
     GIMP_HELP_BRUSH_EDIT }

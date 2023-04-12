@@ -40,14 +40,14 @@
 static const GimpActionEntry brush_editor_actions[] =
 {
   { "brush-editor-popup", GIMP_ICON_BRUSH,
-    NC_("brush-editor-action", "Brush Editor Menu"), NULL, NULL, NULL,
+    NC_("brush-editor-action", "Brush Editor Menu"), { NULL }, NULL, NULL,
     GIMP_HELP_BRUSH_EDITOR_DIALOG }
 };
 
 static const GimpToggleActionEntry brush_editor_toggle_actions[] =
 {
   { "brush-editor-edit-active", GIMP_ICON_LINKED,
-    NC_("brush-editor-action", "Edit Active Brush"), NULL, NULL,
+    NC_("brush-editor-action", "Edit Active Brush"), { NULL }, NULL,
     data_editor_edit_active_cmd_callback,
     FALSE,
     GIMP_HELP_BRUSH_EDITOR_EDIT_ACTIVE }

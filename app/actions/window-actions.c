@@ -172,16 +172,16 @@ window_actions_display_opened (GdkDisplayManager *manager,
   group_name = gimp_action_group_get_name (group);
   screen     = gdk_display_get_default_screen (display);
 
-  entry.name        = g_strdup_printf ("%s-move-to-screen-%s",
+  entry.name           = g_strdup_printf ("%s-move-to-screen-%s",
                                        group_name, display_name);
   gimp_make_valid_action_name ((gchar *) entry.name);
-  entry.icon_name   = GIMP_ICON_WINDOW_MOVE_TO_SCREEN;
-  entry.label       = g_strdup_printf (_("Screen %s"), display_name);
-  entry.accelerator = NULL;
-  entry.tooltip     = g_strdup_printf (_("Move this window to "
+  entry.icon_name      = GIMP_ICON_WINDOW_MOVE_TO_SCREEN;
+  entry.label          = g_strdup_printf (_("Screen %s"), display_name);
+  entry.accelerator[0] = NULL;
+  entry.tooltip        = g_strdup_printf (_("Move this window to "
                                          "screen %s"), display_name);
-  entry.value       = g_quark_from_string (display_name);
-  entry.help_id     = help_id;
+  entry.value          = g_quark_from_string (display_name);
+  entry.help_id        = help_id;
 
   radio_group = g_object_get_data (G_OBJECT (group),
                                    "change-to-screen-radio-group");

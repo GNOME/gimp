@@ -46,7 +46,7 @@
 static const GimpActionEntry dockable_actions[] =
 {
   { "dockable-popup", NULL,
-    NC_("dockable-action", "Dialogs Menu"), NULL, NULL, NULL,
+    NC_("dockable-action", "Dialogs Menu"), { NULL }, NULL, NULL,
     GIMP_HELP_DOCK },
 
   { "dockable-menu",              "image-missing", ""           },
@@ -58,24 +58,24 @@ static const GimpActionEntry dockable_actions[] =
                                             "_Tab Style")      },
 
   { "dockable-close-tab", "window-close",
-    NC_("dockable-action", "_Close Tab"), "", NULL,
+    NC_("dockable-action", "_Close Tab"), { NULL }, NULL,
     dockable_close_tab_cmd_callback,
     GIMP_HELP_DOCK_TAB_CLOSE },
 
   { "dockable-detach-tab", GIMP_ICON_DETACH,
-    NC_("dockable-action", "_Detach Tab"), "", NULL,
+    NC_("dockable-action", "_Detach Tab"), { NULL }, NULL,
     dockable_detach_tab_cmd_callback,
     GIMP_HELP_DOCK_TAB_DETACH }
 };
 
 #define VIEW_SIZE(action,label,size) \
   { "dockable-preview-size-" action, NULL, \
-    (label), NULL, NULL, \
+    (label), { NULL }, NULL, \
     (size), \
     GIMP_HELP_DOCK_PREVIEW_SIZE }
 #define TAB_STYLE(action,label,style) \
   { "dockable-tab-style-" action, NULL, \
-    (label), NULL, NULL, \
+    (label), { NULL }, NULL, \
     (style), \
     GIMP_HELP_DOCK_TAB_STYLE }
 
@@ -122,7 +122,7 @@ static const GimpRadioActionEntry dockable_tab_style_actions[] =
 static const GimpToggleActionEntry dockable_toggle_actions[] =
 {
   { "dockable-lock-tab", NULL,
-    NC_("dockable-action", "Loc_k Tab to Dock"), NULL,
+    NC_("dockable-action", "Loc_k Tab to Dock"), { NULL },
     NC_("dockable-action",
         "Protect this tab from being dragged with the mouse pointer"),
     dockable_lock_tab_cmd_callback,
@@ -130,7 +130,7 @@ static const GimpToggleActionEntry dockable_toggle_actions[] =
     GIMP_HELP_DOCK_TAB_LOCK },
 
   { "dockable-show-button-bar", NULL,
-    NC_("dockable-action", "Show _Button Bar"), NULL, NULL,
+    NC_("dockable-action", "Show _Button Bar"), { NULL }, NULL,
     dockable_show_button_bar_cmd_callback,
     TRUE,
     GIMP_HELP_DOCK_SHOW_BUTTON_BAR }
@@ -139,12 +139,12 @@ static const GimpToggleActionEntry dockable_toggle_actions[] =
 static const GimpRadioActionEntry dockable_view_type_actions[] =
 {
   { "dockable-view-type-list", NULL,
-    NC_("dockable-action", "View as _List"), NULL, NULL,
+    NC_("dockable-action", "View as _List"), { NULL }, NULL,
     GIMP_VIEW_TYPE_LIST,
     GIMP_HELP_DOCK_VIEW_AS_LIST },
 
   { "dockable-view-type-grid", NULL,
-    NC_("dockable-action", "View as _Grid"), NULL, NULL,
+    NC_("dockable-action", "View as _Grid"), { NULL }, NULL,
     GIMP_VIEW_TYPE_GRID,
     GIMP_HELP_DOCK_VIEW_AS_GRID }
 };

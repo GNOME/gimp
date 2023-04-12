@@ -106,13 +106,13 @@ static const GimpActionEntry windows_actions[] =
                                       "_Dockable Dialogs")      },
 
   { "windows-show-display-next", NULL,
-    NC_("windows-action", "Next Image"), "<alt>Tab",
+    NC_("windows-action", "Next Image"), { "<alt>Tab", NULL },
     NC_("windows-action", "Switch to the next image"),
     windows_show_display_next_cmd_callback,
     NULL },
 
   { "windows-show-display-previous", NULL,
-    NC_("windows-action", "Previous Image"), "<alt><shift>Tab",
+    NC_("windows-action", "Previous Image"), { "<alt><shift>Tab", NULL },
     NC_("windows-action", "Switch to the previous image"),
     windows_show_display_previous_cmd_callback,
     NULL },
@@ -124,21 +124,21 @@ static const GimpActionEntry windows_actions[] =
 static const GimpToggleActionEntry windows_toggle_actions[] =
 {
   { "windows-hide-docks", NULL,
-    NC_("windows-action", "_Hide Docks"), "Tab",
+    NC_("windows-action", "_Hide Docks"), { "Tab", NULL },
     NC_("windows-action", "When enabled, docks and other dialogs are hidden, leaving only image windows."),
     windows_hide_docks_cmd_callback,
     FALSE,
     GIMP_HELP_WINDOWS_HIDE_DOCKS },
 
   { "windows-show-tabs", NULL,
-    NC_("windows-action", "_Show Tabs"), NULL,
+    NC_("windows-action", "_Show Tabs"), { NULL },
     NC_("windows-action", "When enabled, the image tabs bar is shown."),
     windows_show_tabs_cmd_callback,
     TRUE,
     GIMP_HELP_WINDOWS_SHOW_TABS },
 
   { "windows-use-single-window-mode", NULL,
-    NC_("windows-action", "Single-Window _Mode"), NULL,
+    NC_("windows-action", "Single-Window _Mode"), { NULL },
     NC_("windows-action", "When enabled, GIMP is in a single-window mode."),
     windows_use_single_window_mode_cmd_callback,
     TRUE,
@@ -148,22 +148,22 @@ static const GimpToggleActionEntry windows_toggle_actions[] =
 static const GimpRadioActionEntry windows_tabs_position_actions[] =
 {
   { "windows-tabs-position-top", GIMP_ICON_GO_TOP,
-    NC_("windows-tabs-position-action", "_Top"), NULL,
+    NC_("windows-tabs-position-action", "_Top"), { NULL },
     NC_("windows-tabs-position-action", "Position the tabs on the top"),
     GIMP_POSITION_TOP, GIMP_HELP_WINDOWS_TABS_POSITION },
 
   { "windows-tabs-position-bottom", GIMP_ICON_GO_BOTTOM,
-    NC_("windows-tabs-position-action", "_Bottom"), NULL,
+    NC_("windows-tabs-position-action", "_Bottom"), { NULL },
     NC_("windows-tabs-position-action", "Position the tabs on the bottom"),
     GIMP_POSITION_BOTTOM, GIMP_HELP_WINDOWS_TABS_POSITION },
 
   { "windows-tabs-position-left", GIMP_ICON_GO_FIRST,
-    NC_("windows-tabs-position-action", "_Left"), NULL,
+    NC_("windows-tabs-position-action", "_Left"), { NULL },
     NC_("windows-tabs-position-action", "Position the tabs on the left"),
     GIMP_POSITION_LEFT, GIMP_HELP_WINDOWS_TABS_POSITION },
 
   { "windows-tabs-position-right", GIMP_ICON_GO_LAST,
-    NC_("windows-tabs-position-action", "_Right"), NULL,
+    NC_("windows-tabs-position-action", "_Right"), { NULL },
     NC_("windows-tabs-position-action", "Position the tabs on the right"),
     GIMP_POSITION_RIGHT, GIMP_HELP_WINDOWS_TABS_POSITION },
 };
@@ -366,12 +366,11 @@ windows_actions_image_notify (GimpDisplay      *display,
 
   if (! action)
     {
-      GimpActionEntry entry;
+      GimpActionEntry entry = { 0 };
 
       entry.name        = action_name;
       entry.icon_name   = GIMP_ICON_IMAGE;
       entry.label       = "";
-      entry.accelerator = NULL;
       entry.tooltip     = NULL;
       entry.callback    = windows_show_display_cmd_callback;
       entry.help_id     = NULL;
@@ -474,13 +473,12 @@ windows_actions_dock_window_added (GimpDialogFactory *factory,
                                    GimpActionGroup   *group)
 {
   GimpAction      *action;
-  GimpActionEntry  entry;
+  GimpActionEntry  entry       = { 0 };
   gchar           *action_name = windows_actions_dock_window_to_action_name (dock_window);
 
   entry.name        = action_name;
   entry.icon_name   = NULL;
   entry.label       = "";
-  entry.accelerator = NULL;
   entry.tooltip     = NULL;
   entry.callback    = windows_show_dock_cmd_callback;
   entry.help_id     = GIMP_HELP_WINDOWS_SHOW_DOCK;
@@ -546,7 +544,7 @@ windows_actions_recent_add (GimpContainer   *container,
                             GimpActionGroup *group)
 {
   GimpAction      *action;
-  GimpActionEntry  entry;
+  GimpActionEntry  entry = { 0 };
   gint             info_id;
   static gint      info_id_counter = 1;
   gchar           *action_name;
@@ -567,7 +565,6 @@ windows_actions_recent_add (GimpContainer   *container,
   entry.name        = action_name;
   entry.icon_name   = NULL;
   entry.label       = gimp_object_get_name (info);
-  entry.accelerator = NULL;
   entry.tooltip     = gimp_object_get_name (info);
   entry.callback    = windows_open_recent_cmd_callback;
   entry.help_id     = GIMP_HELP_WINDOWS_OPEN_RECENT_DOCK;

@@ -322,7 +322,6 @@ gimp_action_history_is_blacklisted_action (const gchar *action_name)
     return TRUE;
 
   return (g_str_has_suffix (action_name, "-set")            ||
-          g_str_has_suffix (action_name, "-accel")          ||
           g_str_has_prefix (action_name, "context-")        ||
           g_str_has_prefix (action_name, "filters-recent-") ||
           g_strcmp0 (action_name, "dialogs-action-search") == 0);
