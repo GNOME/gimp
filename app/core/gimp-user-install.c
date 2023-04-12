@@ -723,7 +723,7 @@ user_update_sessionrc (const GMatchInfo *matched_value,
 
 #define GIMPRC_UPDATE_PATTERN \
   "\\(theme [^)]*\\)"    "|" \
-  "\\(.*-path [^)]*\\)"
+  "^ *\\(.*-path \".*\"\\) *$"
 
 static gboolean
 user_update_gimprc (const GMatchInfo *matched_value,
