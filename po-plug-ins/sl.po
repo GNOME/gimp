@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-12 18:20+0000\n"
-"PO-Revision-Date: 2023-04-12 21:54+0200\n"
+"POT-Creation-Date: 2023-04-12 19:56+0000\n"
+"PO-Revision-Date: 2023-04-13 12:03+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2412,9 +2412,8 @@ msgid "extension data"
 msgstr "podatki o končnici"
 
 #: plug-ins/common/file-gif-load.c:513
-#, fuzzy
 msgid "frame info"
-msgstr "podatki o okviru/sličici"
+msgstr "podatki o sličici"
 
 #: plug-ins/common/file-gif-load.c:526
 msgid "local colormap"
@@ -2476,9 +2475,8 @@ msgid "%s. %s"
 msgstr "%s. %s"
 
 #: plug-ins/common/file-gif-load.c:1046 plug-ins/common/file-gif-load.c:1050
-#, fuzzy
 msgid "Invalid frame dimensions"
-msgstr "Neveljavne mere okvira/sličice"
+msgstr "Neveljavne mere sličice"
 
 #: plug-ins/common/file-gif-load.c:1066
 msgid "compressed image data"
@@ -2519,12 +2517,11 @@ msgid "Unknown composite type %d. %s"
 msgstr "Neznana vrsta sestavka %d. %s"
 
 #: plug-ins/common/file-gif-load.c:1237
-#, fuzzy
 msgid ""
 "Can't handle non-alpha RGB frames.\n"
 "Please file a bug report at https://gitlab.gnome.org/GNOME/gimp/issues"
 msgstr ""
-"Ni mogoče obravnavati okvirjev/sličic RGB, ki niso alfa.\n"
+"Ni mogoče obravnavati sličic RGB, ki nimajo alfe.\n"
 "Prosimo, vnesite poročilo o napakah na https://gitlab.gnome.org/GNOME/gimp/"
 "issues"
 
