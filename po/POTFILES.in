@@ -321,6 +321,7 @@ app/gui/splash.c
 app/gui/themes.c
 
 app/menus/menus.c
+app/menus/shortcuts-rc.c
 
 app/paint/gimpairbrush.c
 app/paint/gimpairbrushoptions.c
@@ -650,3 +651,24 @@ app/xcf/xcf-write.c
 app-tools/gimp-debug-tool.c
 
 data/tags/gimp-tags-default.xml.in
+
+menus/brush-editor-menu.ui
+menus/brushes-menu.ui
+menus/channels-menu.ui
+menus/cursor-info-menu.ui
+menus/dashboard-menu.ui
+menus/dynamics-editor-menu.ui
+menus/dynamics-menu.ui
+menus/gradient-editor-menu.ui
+menus/gradients-menu.ui
+menus/layers-menu.ui
+menus/palette-editor-menu.ui
+menus/palettes-menu.ui
+menus/sample-points-menu.ui
+menus/selection-menu.ui
+menus/text-tool-menu.ui
+menus/tool-options-menu.ui
+menus/tool-preset-editor-menu.ui
+menus/tool-presets-menu.ui
+menus/undo-menu.ui
+menus/vectors-menu.ui
