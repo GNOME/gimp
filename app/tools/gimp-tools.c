@@ -748,7 +748,10 @@ gimp_tools_register (GType                   tool_type,
   gimp_tool_item_set_visible (GIMP_TOOL_ITEM (tool_info), visible);
 
   /* hack to hide the operation tool entirely */
-  if (tool_type == GIMP_TYPE_OPERATION_TOOL)
+  if (tool_type == GIMP_TYPE_OPERATION_TOOL ||
+      /* Don't show the generated GEGL tools either. */
+      (tool_type == GIMP_TYPE_GEGL_TOOL &&
+       g_strcmp0 (identifier, "gimp-gegl-tool") != 0))
     tool_info->hidden = TRUE;
 
   /* hack to not require experimental tools to be present in toolrc */
