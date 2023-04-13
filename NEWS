@@ -29,6 +29,16 @@ Core:
  - Action "Crop to Content" renamed to "Crop Layers to Content".
  - If any opened image (with a display) is dirty, then GIMP will now inhibit the
    log-out event on OSes which support it.
+ - Port from GtkAction/GtkUIManager to GAction/GMenu finished.
+ - The action search now shows the top menu path for actions when available.
+ - Actions can now be attributed multiple shortcuts. The duplicate actions
+   ending in `-accel` were removed in favor of multiple shortcuts and a few
+   secondary (semantic) shortcuts were added such as `Copy`/`Cut`/`Paste`
+   buttons for relevant actions, or `ZoomIn`/`ZoomOut` for canvas zoom,
+   `Forward`/`Back` to navigate through image tabs, but also some numpad
+   shortcuts like the `/` divide from the numpad for the action search
+   (additionally to the base keyboard `/` key).
+   It is not possible to attribute several shortcuts from GUI yet.
 
 Tools:
 
@@ -85,7 +95,8 @@ Plug-ins:
   - Plug-ins ported to GimpProcedureConfig and GimpProcedureDialog:
     align-layers, hot, wavelet-decompose, file-sunras, file-heif, file-tga,
     file-pat, file-xpm, file-csource, file-jp2-load, file-dds (import),
-    file-sgi, file-fli, file-pnm, file-gbr, file-psp.
+    file-sgi, file-fli, file-pnm, file-gbr, file-psp, file-aa, bmp-save,
+    despeckle, blinds, contrast-retinex, jigsaw, nl-filter, destripe.
 
 API:
 
@@ -107,6 +118,8 @@ API:
     * Improved annotations or usage:
       + set_i18n() method of GimpPlugIn expects a UTF-8 catalog directory.
       + clarify gimp_image_set_file() usage (only for XCF files).
+      + gimp_image_add_sample_point()
+      + gimp_image_get_sample_point_position()
   - Changes in libgimpbase:
     * New functions:
       + gimp_bind_text_domain()
@@ -123,6 +136,10 @@ Build:
     icons on different resolutions and displays.
   - Improve our build scripts to better handle sanitizer tools.
   - Fix some broken unit tests in the meson build.
+  - Meson build options 'lua', 'javascript' and 'python' are now features, and
+    not boolean. I.e. use option values 'enabled'/'disabled' (defaulting to
+    'auto') instead of true/false.
+  - Meson build 'vala-plugins' option was renamed to simply 'vala'.
 
 Debugging:
 
