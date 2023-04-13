@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
- * gimp-filter-history.c
+ * gimp-filter.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
-#include "gimp-filter-history.h"
+#include "gimp-filter.h"
 
 #include "pdb/gimpprocedure.h"
 
@@ -141,6 +141,40 @@ gimp_filter_history_clear (Gimp *gimp)
 
       gimp_filter_history_changed (gimp);
     }
+}
+
+void
+gimp_filter_gegl_ops_add (Gimp        *gimp,
+                          const gchar *action_name,
+                          const gchar *op_name)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (action_name != NULL);
+  g_return_if_fail (op_name != NULL);
+
+  g_hash_table_replace (gimp->filter_gegl_ops, g_strdup (action_name), g_strdup (op_name));
+}
+
+const gchar *
+gimp_filter_gegl_ops_get (Gimp        *gimp,
+                          const gchar *action_name)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (action_name != NULL, NULL);
+
+  return g_hash_table_lookup (gimp->filter_gegl_ops, action_name);
+}
+
+GList *
+gimp_filter_gegl_ops_list (Gimp *gimp)
+{
+  GList *actions;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  actions = g_hash_table_get_keys (gimp->filter_gegl_ops);
+
+  return g_list_sort (actions, (GCompareFunc) g_strcmp0);
 }
 
 

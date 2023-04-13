@@ -26,7 +26,7 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
-#include "core/gimp-filter-history.h"
+#include "core/gimp-filter.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"

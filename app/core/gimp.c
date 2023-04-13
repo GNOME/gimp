@@ -47,7 +47,7 @@
 #include "gimp.h"
 #include "gimp-contexts.h"
 #include "gimp-data-factories.h"
-#include "gimp-filter-history.h"
+#include "gimp-filter.h"
 #include "gimp-memsize.h"
 #include "gimp-modules.h"
 #include "gimp-parasites.h"
@@ -303,6 +303,8 @@ gimp_constructed (GObject *object)
   gimp->plug_in_manager   = gimp_plug_in_manager_new (gimp);
   gimp->pdb               = gimp_pdb_new (gimp);
 
+  gimp->filter_gegl_ops   = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
+
   xcf_init (gimp);
   file_data_init (gimp);
 
@@ -434,6 +436,8 @@ gimp_finalize (GObject *object)
   if (gimp->module_db)
     gimp_modules_exit (gimp);
 
+  g_hash_table_unref (gimp->filter_gegl_ops);
+
   gimp_paint_exit (gimp);
 
   g_clear_object (&gimp->parasites);
@@ -486,6 +490,7 @@ gimp_get_memsize (GimpObject *object,
                                               (GimpMemsizeFunc)
                                               gimp_object_get_memsize,
                                               gui_size);
+  /* TODO: get memsize of gimp->filter_gegl_ops */
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->image_table), 0);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->item_table),  0);

@@ -30,6 +30,7 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-filter.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -57,7 +58,7 @@ static void    gimp_gegl_tool_control           (GimpTool       *tool,
                                                  GimpToolAction  action,
                                                  GimpDisplay    *display);
 
-static GList * gimp_get_geglopclasses          (void);
+static GList * gimp_get_geglopclasses           (void);
 
 static void    gimp_gegl_tool_dialog            (GimpFilterTool *filter_tool);
 
@@ -76,12 +77,9 @@ void
 gimp_gegl_tool_register (GimpToolRegisterCallback  callback,
                          gpointer                  data)
 {
-  GimpGeglToolClass *klass;
-  Gimp              *gimp = GIMP (data);
-  GList             *opclasses;
-  GList             *iter;
-
-  klass = g_type_class_ref (GIMP_TYPE_GEGL_TOOL);
+  Gimp  *gimp = GIMP (data);
+  GList *opclasses;
+  GList *iter;
 
   (* callback) (GIMP_TYPE_GEGL_TOOL,
                 GIMP_TYPE_FILTER_OPTIONS,
@@ -131,7 +129,8 @@ gimp_gegl_tool_register (GimpToolRegisterCallback  callback,
        * and ending with "-tool".
        */
       identifier = g_strdup_printf ("gimp-%s-tool", action_name + strlen ("tools-"));
-      g_hash_table_replace (klass->generated_ops, action_name, g_strdup (op_name));
+      gimp_filter_gegl_ops_add (gimp, action_name, op_name);
+      g_free (action_name);
 
       if (g_str_has_prefix (op_name, "gegl:"))
         icon_name = GIMP_ICON_GEGL;
@@ -163,7 +162,6 @@ gimp_gegl_tool_register (GimpToolRegisterCallback  callback,
     }
 
   g_list_free (opclasses);
-  g_type_class_unref (klass);
 }
 
 static void
@@ -175,12 +173,6 @@ gimp_gegl_tool_class_init (GimpGeglToolClass *klass)
   tool_class->control       = gimp_gegl_tool_control;
 
   filter_tool_class->dialog = gimp_gegl_tool_dialog;
-
-  /* Store the mapping from tool identifier to operation name.
-   * This data is leaking, otherwise we'd have to register a dynamic type with a
-   * class_finalize() class method.
-   **/
-  klass->generated_ops = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 }
 
 static void
@@ -502,12 +494,10 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
   GList             *opclasses;
   GList             *iter;
   gchar             *action_name;
-  gchar             *show_op_name = NULL;
-  GimpGeglToolClass *klass;
+  const gchar       *show_op_name;
 
-  klass        = GIMP_GEGL_TOOL_GET_CLASS (tool);
   action_name  = gimp_tool_info_get_action_name (tool_info);
-  show_op_name = g_hash_table_lookup (klass->generated_ops, action_name);
+  show_op_name = gimp_filter_gegl_ops_get (tool_info->gimp, action_name);
   g_free (action_name);
 
   GIMP_FILTER_TOOL_CLASS (parent_class)->dialog (filter_tool);

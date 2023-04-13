@@ -32,7 +32,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimp-filter-history.h"
+#include "core/gimp-filter.h"
 #include "core/gimp-memsize.h"
 #include "core/gimpmarshal.h"
 

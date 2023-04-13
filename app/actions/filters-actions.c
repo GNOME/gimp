@@ -24,7 +24,7 @@
 
 #include "actions-types.h"
 
-#include "core/gimp-filter-history.h"
+#include "core/gimp-filter.h"
 #include "core/gimpimage.h"
 #include "core/gimplayermask.h"
 
