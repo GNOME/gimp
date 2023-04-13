@@ -130,6 +130,9 @@
 # refernce object еталон (обект към който се подравнява)
 # tone тон, тониране
 # hue нюанс
+# chroma цветност
+# lightness осветеност
+# luma яркост
 # blur замъгляване
 # noise шум
 # distorts разкривяване
@@ -236,7 +239,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-04-12 21:19+0000\n"
-"PO-Revision-Date: 2023-04-13 13:02+0300\n"
+"PO-Revision-Date: 2023-04-13 19:07+0300\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -4932,12 +4935,12 @@ msgstr "_Високочестотен…"
 #: app/actions/filters-actions.c:397
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
-msgstr "_Нюанси-хрома…"
+msgstr "_Нюанс-цветност…"
 
 #: app/actions/filters-actions.c:402
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
-msgstr "Нюанси-_насищане…"
+msgstr "Нюанс-_насищане…"
 
 #: app/actions/filters-actions.c:407
 msgctxt "filters-action"
