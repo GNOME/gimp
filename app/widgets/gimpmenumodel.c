@@ -668,9 +668,9 @@ gimp_menu_model_initialize (GimpMenuModel *model,
                                        G_CALLBACK (gimp_menu_model_action_notify_visible),
                                        model, 0);
 
-              g_menu_item_set_label (item, gimp_action_get_label (action));
+              g_menu_item_set_label (item, gimp_action_get_short_label (action));
               g_signal_connect_object (action,
-                                       "notify::label",
+                                       "notify::short-label",
                                        G_CALLBACK (gimp_menu_model_action_notify_label),
                                        item, 0);
             }
@@ -827,7 +827,7 @@ gimp_menu_model_action_notify_label (GimpAction *action,
   g_return_if_fail (GIMP_IS_ACTION (action));
   g_return_if_fail (G_IS_MENU_ITEM (item));
 
-  g_menu_item_set_label (item, gimp_action_get_label (action));
+  g_menu_item_set_label (item, gimp_action_get_short_label (action));
 }
 
 static gboolean
@@ -857,7 +857,7 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
                                             G_CALLBACK (gimp_menu_model_action_notify_visible),
                                             model);
       detailed_action_name = g_strdup_printf ("app.%s", g_action_get_name (action));
-      item = g_menu_item_new (gimp_action_get_label (GIMP_ACTION (action)), detailed_action_name);
+      item = g_menu_item_new (gimp_action_get_short_label (GIMP_ACTION (action)), detailed_action_name);
       /* TODO: add also G_MENU_ATTRIBUTE_ICON attribute? */
       g_free (detailed_action_name);
 
@@ -932,7 +932,7 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
                                    G_CALLBACK (gimp_menu_model_action_notify_visible),
                                    model, 0);
           g_signal_connect_object (action,
-                                   "notify::label",
+                                   "notify::short-label",
                                    G_CALLBACK (gimp_menu_model_action_notify_label),
                                    item, 0);
           g_menu_model_items_changed (G_MENU_MODEL (model), position, 0, 1);

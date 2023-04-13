@@ -66,6 +66,7 @@ struct _GimpActionPrivate
   gboolean               visible;
 
   gchar                 *label;
+  gchar                 *short_label;
   gchar                 *tooltip;
   gchar                 *icon_name;
   GIcon                 *icon;
@@ -154,6 +155,12 @@ gimp_action_default_init (GimpActionInterface *iface)
                                                             GIMP_PARAM_READWRITE |
                                                             G_PARAM_EXPLICIT_NOTIFY));
   g_object_interface_install_property (iface,
+                                       g_param_spec_string ("short-label",
+                                                            NULL, NULL,
+                                                            NULL,
+                                                            GIMP_PARAM_READWRITE |
+                                                            G_PARAM_EXPLICIT_NOTIFY));
+  g_object_interface_install_property (iface,
                                        g_param_spec_string ("tooltip",
                                                             NULL, NULL,
                                                             NULL,
@@ -210,6 +217,7 @@ gimp_action_init (GimpAction *action)
   priv->sensitive       = TRUE;
   priv->visible         = TRUE;
   priv->label           = NULL;
+  priv->short_label     = NULL;
   priv->tooltip         = NULL;
   priv->icon_name       = NULL;
   priv->icon            = NULL;
@@ -221,6 +229,9 @@ gimp_action_init (GimpAction *action)
   priv->proxies         = NULL;
 
   g_signal_connect (action, "notify::label",
+                    G_CALLBACK (gimp_action_label_notify),
+                    NULL);
+  g_signal_connect (action, "notify::short-label",
                     G_CALLBACK (gimp_action_label_notify),
                     NULL);
 }
@@ -286,6 +297,8 @@ gimp_action_set_label (GimpAction  *action,
         gimp_action_set_proxy (action, list->data);
 
       g_object_notify (G_OBJECT (action), "label");
+      if (priv->short_label == NULL)
+        g_object_notify (G_OBJECT (action), "short-label");
     }
 }
 
@@ -295,6 +308,33 @@ gimp_action_get_label (GimpAction *action)
   GimpActionPrivate *priv = GET_PRIVATE (action);
 
   return priv->label;
+}
+
+void
+gimp_action_set_short_label (GimpAction  *action,
+                             const gchar *label)
+{
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
+  if (g_strcmp0 (priv->short_label, label) != 0)
+    {
+      g_free (priv->short_label);
+      priv->short_label = g_strdup (label);
+
+      /* Set or update the proxy rendering. */
+      for (GList *list = priv->proxies; list; list = list->next)
+        gimp_action_set_proxy (action, list->data);
+
+      g_object_notify (G_OBJECT (action), "short-label");
+    }
+}
+
+const gchar *
+gimp_action_get_short_label (GimpAction *action)
+{
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
+  return priv->short_label ? priv->short_label : priv->label;
 }
 
 void
@@ -772,6 +812,7 @@ gimp_action_install_properties (GObjectClass *klass)
   g_object_class_override_property (klass, GIMP_ACTION_PROP_VISIBLE,         "visible");
 
   g_object_class_override_property (klass, GIMP_ACTION_PROP_LABEL,           "label");
+  g_object_class_override_property (klass, GIMP_ACTION_PROP_SHORT_LABEL,     "short-label");
   g_object_class_override_property (klass, GIMP_ACTION_PROP_TOOLTIP,         "tooltip");
   g_object_class_override_property (klass, GIMP_ACTION_PROP_ICON_NAME,       "icon-name");
   g_object_class_override_property (klass, GIMP_ACTION_PROP_ICON,            "icon");
@@ -807,6 +848,9 @@ gimp_action_get_property (GObject    *object,
 
     case GIMP_ACTION_PROP_LABEL:
       g_value_set_string (value, priv->label);
+      break;
+    case GIMP_ACTION_PROP_SHORT_LABEL:
+      g_value_set_string (value, priv->short_label ? priv->short_label : priv->label);
       break;
     case GIMP_ACTION_PROP_TOOLTIP:
       g_value_set_string (value, priv->tooltip);
@@ -872,6 +916,9 @@ gimp_action_set_property (GObject      *object,
 
     case GIMP_ACTION_PROP_LABEL:
       gimp_action_set_label (GIMP_ACTION (object), g_value_get_string (value));
+      break;
+    case GIMP_ACTION_PROP_SHORT_LABEL:
+      gimp_action_set_short_label (GIMP_ACTION (object), g_value_get_string (value));
       break;
     case GIMP_ACTION_PROP_TOOLTIP:
       gimp_action_set_tooltip (GIMP_ACTION (object), g_value_get_string (value));
@@ -1206,6 +1253,7 @@ gimp_action_private_finalize (GimpActionPrivate *priv)
   g_clear_object  (&priv->viewable);
 
   g_free (priv->label);
+  g_free (priv->short_label);
   g_free (priv->tooltip);
   g_free (priv->icon_name);
   g_clear_object (&priv->icon);
@@ -1240,7 +1288,13 @@ gimp_action_set_proxy_label (GimpAction *action,
 {
   if (GTK_IS_MENU_ITEM (proxy))
     {
-      GtkWidget *child = gtk_bin_get_child (GTK_BIN (proxy));
+      GtkWidget   *child = gtk_bin_get_child (GTK_BIN (proxy));
+      const gchar *label;
+
+      /* For menus, we assume that their position ensure some context, hence the
+       * short label is chosen in priority.
+       */
+      label = gimp_action_get_short_label (action);
 
       if (GTK_IS_BOX (child))
         {
@@ -1248,13 +1302,11 @@ gimp_action_set_proxy_label (GimpAction *action,
                                      "gimp-menu-item-label");
 
           if (GTK_IS_LABEL (child))
-            gtk_label_set_text_with_mnemonic (GTK_LABEL (child),
-                                              gimp_action_get_label (action));
+            gtk_label_set_text_with_mnemonic (GTK_LABEL (child), label);
         }
       else if (GTK_IS_LABEL (child))
         {
-          gtk_menu_item_set_label (GTK_MENU_ITEM (proxy),
-                                   gimp_action_get_label (action));
+          gtk_menu_item_set_label (GTK_MENU_ITEM (proxy), label);
         }
     }
 }

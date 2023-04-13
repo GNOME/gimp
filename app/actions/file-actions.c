@@ -383,16 +383,17 @@ file_actions_last_opened_update (GimpContainer   *container,
                * recently opened image.
                */
               label   = g_strdup_printf (_("Open \"%s\""), escaped);
-              g_free (escaped);
 
               g_object_set (action,
-                            "label",    label,
-                            "tooltip",  name,
-                            "visible",  TRUE,
-                            "viewable", imagefile,
+                            "label",       label,
+                            "short-label", escaped,
+                            "tooltip",     name,
+                            "visible",     TRUE,
+                            "viewable",    imagefile,
                             NULL);
 
-               g_free (label);
+              g_free (label);
+              g_free (escaped);
             }
         }
       else

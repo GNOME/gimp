@@ -35,6 +35,7 @@ enum
   GIMP_ACTION_PROP_SENSITIVE,
   GIMP_ACTION_PROP_VISIBLE,
   GIMP_ACTION_PROP_LABEL,
+  GIMP_ACTION_PROP_SHORT_LABEL,
   GIMP_ACTION_PROP_TOOLTIP,
   GIMP_ACTION_PROP_ICON_NAME,
   GIMP_ACTION_PROP_ICON,
@@ -78,6 +79,10 @@ GimpActionGroup * gimp_action_get_group           (GimpAction      *action);
 void              gimp_action_set_label           (GimpAction      *action,
                                                    const gchar     *label);
 const gchar     * gimp_action_get_label           (GimpAction      *action);
+
+void              gimp_action_set_short_label     (GimpAction      *action,
+                                                   const gchar     *label);
+const gchar     * gimp_action_get_short_label     (GimpAction      *action);
 
 void              gimp_action_set_tooltip         (GimpAction      *action,
                                                    const gchar     *tooltip);

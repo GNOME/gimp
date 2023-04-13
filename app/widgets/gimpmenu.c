@@ -436,7 +436,7 @@ gimp_menu_add_action (GimpMenu          *menu,
 
   g_return_if_fail (GIMP_IS_ACTION (action));
 
-  action_label = gimp_action_get_label (action);
+  action_label = gimp_action_get_short_label (action);
   g_return_if_fail (action_label != NULL);
 
   if (GIMP_IS_TOGGLE_ACTION (action))

@@ -242,7 +242,7 @@ gimp_toolbar_add_action (GimpToolbar *toolbar,
 
   g_return_if_fail (GIMP_IS_ACTION (action));
 
-  action_label = gimp_action_get_label (GIMP_ACTION (action));
+  action_label = gimp_action_get_short_label (GIMP_ACTION (action));
   g_return_if_fail (action_label != NULL);
 
   if (GIMP_IS_TOGGLE_ACTION (action))
