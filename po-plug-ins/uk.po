@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-09 11:50+0000\n"
-"PO-Revision-Date: 2023-04-09 20:19+0300\n"
+"POT-Creation-Date: 2023-04-14 13:39+0000\n"
+"PO-Revision-Date: 2023-04-14 22:52+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
@@ -39,7 +39,7 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
 #: plug-ins/common/jigsaw.c:473 plug-ins/common/nl-filter.c:224
 #: plug-ins/common/qbist.c:253 plug-ins/common/sample-colorize.c:431
-#: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:328
+#: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:307
 #: plug-ins/common/sphere-designer.c:3179 plug-ins/common/tile.c:220
 #: plug-ins/common/tile-small.c:308 plug-ins/common/van-gogh-lic.c:913
 #: plug-ins/common/warp.c:375 plug-ins/common/wavelet-decompose.c:182
@@ -77,7 +77,7 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/grid.c:761 plug-ins/common/mail.c:568
 #: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
 #: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
-#: plug-ins/common/sparkle.c:426 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -168,12 +168,11 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/file-pdf-load.c:656 plug-ins/common/file-svg.c:774
 #: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1325
 #: plug-ins/common/grid.c:762 plug-ins/common/qbist.c:945
-#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sparkle.c:427
-#: plug-ins/common/sphere-designer.c:2633 plug-ins/common/tile.c:493
-#: plug-ins/common/tile-small.c:447 plug-ins/common/unit-editor.c:268
-#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
-#: plug-ins/file-psd/psd-load.c:3308 plug-ins/flame/flame.c:717
-#: plug-ins/flame/flame.c:1034
+#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
+#: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
+#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
+#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3308
+#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -493,18 +492,18 @@ msgstr "Додавання жалюзі"
 msgid "Blinds"
 msgstr "Жалюзі"
 
-#: plug-ins/common/blinds.c:288
+#: plug-ins/common/blinds.c:294
 msgid "Horizontal"
 msgstr "Горизонтально"
 
-#: plug-ins/common/blinds.c:289
+#: plug-ins/common/blinds.c:295
 msgid "Vertical"
 msgstr "Вертикально"
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/common/blinds.c:295 plug-ins/common/compose.c:1129
+#: plug-ins/common/blinds.c:301 plug-ins/common/compose.c:1129
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
@@ -1450,7 +1449,8 @@ msgstr "_Рівень"
 
 #: plug-ins/common/contrast-retinex.c:212
 msgid "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
-msgstr "Ретінекс-розподіл шкалами { Однорідний (0), Низький (1), Високий (2) }"
+msgstr ""
+"Ретінекс-розподіл шкалами { Однорідний (0), Низький (1), Високий (2) }"
 
 #: plug-ins/common/contrast-retinex.c:218
 msgid "Dy_namic"
@@ -1464,23 +1464,23 @@ msgstr "Значення дисперсії"
 msgid "Retinex"
 msgstr "Ретінекс"
 
-#: plug-ins/common/contrast-retinex.c:338
+#: plug-ins/common/contrast-retinex.c:337
 msgid "Retinex Image Enhancement"
 msgstr "Покращення зображення за допомогою ретінексу"
 
-#: plug-ins/common/contrast-retinex.c:347
+#: plug-ins/common/contrast-retinex.c:352
 msgid "Uniform"
 msgstr "Рівномірний"
 
-#: plug-ins/common/contrast-retinex.c:348 plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/common/contrast-retinex.c:353 plug-ins/metadata/metadata-tags.c:238
 msgid "Low"
 msgstr "Низький"
 
-#: plug-ins/common/contrast-retinex.c:349 plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/common/contrast-retinex.c:354 plug-ins/metadata/metadata-tags.c:238
 msgid "High"
 msgstr "Високий"
 
-#: plug-ins/common/contrast-retinex.c:689
+#: plug-ins/common/contrast-retinex.c:688
 msgid "Retinex: filtering"
 msgstr "Retinex: фільтрування"
 
@@ -1510,7 +1510,8 @@ msgstr "Вигнути зображення, використовуючи дві
 
 #: plug-ins/common/curve-bend.c:697
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr ""
+"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:711
 msgid "Cannot operate on layers with masks."
@@ -1933,24 +1934,24 @@ msgstr "Рівень _білого"
 msgid "White level"
 msgstr "Рівень білого"
 
-#: plug-ins/common/despeckle.c:408 plug-ins/common/despeckle.c:782
+#: plug-ins/common/despeckle.c:408 plug-ins/common/despeckle.c:784
 msgid "Despeckle"
 msgstr "Прибирання плям"
 
-#: plug-ins/common/despeckle.c:410
+#: plug-ins/common/despeckle.c:418
 msgid "Median"
 msgstr "Середнє"
 
-#: plug-ins/common/despeckle.c:411 plug-ins/gimpressionist/orientation.c:176
+#: plug-ins/common/despeckle.c:419 plug-ins/gimpressionist/orientation.c:176
 #: plug-ins/gimpressionist/size.c:183
 msgid "Adaptive"
 msgstr "Адаптивний"
 
-#: plug-ins/common/despeckle.c:412
+#: plug-ins/common/despeckle.c:420
 msgid "Recursive-Median"
 msgstr "Рекурсивно-медіанний"
 
-#: plug-ins/common/despeckle.c:413
+#: plug-ins/common/despeckle.c:421
 msgid "Recursive-Adaptive"
 msgstr "Рекурсивно-адаптивний"
 
@@ -1963,7 +1964,6 @@ msgid "Remove vertical stripe artifacts from the image"
 msgstr "Видалити вертикальні смуги із зображення"
 
 #: plug-ins/common/destripe.c:132
-#| msgid "Remove vertical stripe artifacts from the image"
 msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Цей додаток намагається вилучити вертикальні смуги з зображення."
 
@@ -1980,7 +1980,6 @@ msgid "Create _histogram"
 msgstr "Створити г_істограму"
 
 #: plug-ins/common/destripe.c:149
-#| msgid "Create _histogram"
 msgid "Output a histogram"
 msgstr "Вивести гістограму"
 
@@ -2164,7 +2163,8 @@ msgstr "Програма на C"
 
 #: plug-ins/common/file-csource.c:124
 msgid "Dump image data in RGB(A) format for C source"
-msgstr "Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
+msgstr ""
+"Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
 
 #: plug-ins/common/file-csource.c:126
 msgid "CSource cannot be run non-interactively."
@@ -3847,11 +3847,13 @@ msgstr ""
 #: plug-ins/common/file-png.c:1459
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr ""
+"Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: plug-ins/common/file-png.c:1468
 #, c-format
-msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgid ""
+"Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -4876,7 +4878,8 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:729
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr ""
+"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:736
 msgid "Retry without limits preventing to parse huge data?"
@@ -5773,24 +5776,24 @@ msgstr "Складання головоломки"
 msgid "draw_jigsaw: bad style\n"
 msgstr "draw_jigsaw: помилковий стиль\n"
 
-#: plug-ins/common/jigsaw.c:2491
+#: plug-ins/common/jigsaw.c:2490
 msgid "Jigsaw"
 msgstr "Головоломка"
 
-#: plug-ins/common/jigsaw.c:2510
+#: plug-ins/common/jigsaw.c:2515
 msgid "Number of Tiles"
 msgstr "Кількість частин головоломки"
 
-#: plug-ins/common/jigsaw.c:2527
+#: plug-ins/common/jigsaw.c:2532
 msgid "Bevel Edges"
 msgstr "Фаска меж"
 
 #. frame for primitive radio buttons
-#: plug-ins/common/jigsaw.c:2536
+#: plug-ins/common/jigsaw.c:2541
 msgid "Square"
 msgstr "Квадратна"
 
-#: plug-ins/common/jigsaw.c:2537
+#: plug-ins/common/jigsaw.c:2542
 msgid "Curved"
 msgstr "Криволінійна"
 
@@ -5881,19 +5884,19 @@ msgstr ""
 "Фільтр, який слід запустити, 0 - альфа-обрізане середнє; 1 - оптимальна "
 "оцінка (альфа керує дисперсією шуму); 2 - удосконалення країв"
 
-#: plug-ins/common/nl-filter.c:1031 plug-ins/common/nl-filter.c:1130
+#: plug-ins/common/nl-filter.c:1031 plug-ins/common/nl-filter.c:1129
 msgid "NL Filter"
 msgstr "Нелінійний фільтр"
 
-#: plug-ins/common/nl-filter.c:1139
+#: plug-ins/common/nl-filter.c:1144
 msgid "Alpha trimmed mean"
 msgstr "Альфа-обрізане середнє"
 
-#: plug-ins/common/nl-filter.c:1140
+#: plug-ins/common/nl-filter.c:1145
 msgid "Optimal estimation"
 msgstr "Оптимальна оцінка"
 
-#: plug-ins/common/nl-filter.c:1141
+#: plug-ins/common/nl-filter.c:1146
 msgid "Edge enhancement"
 msgstr "_Удосконалення країв"
 
@@ -6133,145 +6136,170 @@ msgstr "Гладка палітра"
 msgid "_Search depth:"
 msgstr "_Глибина пошуку:"
 
-#: plug-ins/common/sparkle.c:208
+#: plug-ins/common/sparkle.c:177
 msgid "_Sparkle..."
 msgstr "_Іскри..."
 
-#: plug-ins/common/sparkle.c:213
+#: plug-ins/common/sparkle.c:182
 msgid "Turn bright spots into starry sparkles"
 msgstr "Перетворити найбільш світлі точки на іскри"
 
-#: plug-ins/common/sparkle.c:342
-msgid "Region selected for filter is empty"
-msgstr "Вибрана для фільтра область порожня"
+#: plug-ins/common/sparkle.c:184
+msgid ""
+"Uses a percentage based luminosity threshold to find candidate pixels for "
+"adding some sparkles (spikes)."
+msgstr ""
+"Використовує порогове значення світності на основі відсотків для пошуку"
+" пікселів-кандидатів на додавання блискіток (променів)."
 
-#: plug-ins/common/sparkle.c:386
-msgid "Sparkling"
-msgstr "Створення іскор"
+#: plug-ins/common/sparkle.c:196
+#| msgid "Luminosity _threshold:"
+msgid "Lu_minosity threshold"
+msgstr "Поріг сві_тності"
 
-#: plug-ins/common/sparkle.c:422
-msgid "Sparkle"
-msgstr "Іскри"
-
-#: plug-ins/common/sparkle.c:457
-msgid "Luminosity _threshold:"
-msgstr "Поріг _яскравості:"
-
-#: plug-ins/common/sparkle.c:458
+#: plug-ins/common/sparkle.c:197
 msgid "Adjust the luminosity threshold"
 msgstr "Підбирання порогу яскравості"
 
-#: plug-ins/common/sparkle.c:468
-msgid "F_lare intensity:"
-msgstr "Інтенсивність _спалаху:"
+#: plug-ins/common/sparkle.c:202
+#| msgid "F_lare intensity:"
+msgid "_Flare intensity"
+msgstr "Інтенсивність _спалаху"
 
-#: plug-ins/common/sparkle.c:469
+#: plug-ins/common/sparkle.c:203
 msgid "Adjust the flare intensity"
 msgstr "Підбирання інтенсивності спалаху"
 
-#: plug-ins/common/sparkle.c:479
-msgid "_Spike length:"
-msgstr "Дов_жина променів:"
+#: plug-ins/common/sparkle.c:208
+#| msgid "_Spike length:"
+msgid "Spi_ke length"
+msgstr "Дов_жина променів"
 
-#: plug-ins/common/sparkle.c:480
-msgid "Adjust the spike length"
-msgstr "Підбирання довжини променів"
+#: plug-ins/common/sparkle.c:209
+#| msgid "Adjust the spike length"
+msgid "Adjust the spike length (in pixels)"
+msgstr "Підбирання довжини променів (у пікселях)"
 
-#: plug-ins/common/sparkle.c:490
-msgid "Sp_ike points:"
+#: plug-ins/common/sparkle.c:214
+#| msgid "Sp_ike points:"
+msgid "Spike _points"
 msgstr "_Кількість променів:"
 
-#: plug-ins/common/sparkle.c:491
+#: plug-ins/common/sparkle.c:215
 msgid "Adjust the number of spikes"
 msgstr "Підбирання кількості променів"
 
-#: plug-ins/common/sparkle.c:501
-msgid "Spi_ke angle (-1: random):"
+#: plug-ins/common/sparkle.c:220
+#| msgid "Spi_ke angle (-1: random):"
+msgid "Spike angle (-_1: random)"
 msgstr "К_ут променя (-1: - випадковий):"
 
-#: plug-ins/common/sparkle.c:502
+#: plug-ins/common/sparkle.c:221
 msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
 msgstr "Підбирання кута променя (-1 означає вибір випадкового кута)"
 
-#: plug-ins/common/sparkle.c:514
-msgid "Spik_e density:"
-msgstr "_Щільність променя:"
+#: plug-ins/common/sparkle.c:227
+#| msgid "Spik_e density:"
+msgid "Spike _density"
+msgstr "_Щільність променя"
 
-#: plug-ins/common/sparkle.c:515
+#: plug-ins/common/sparkle.c:228
 msgid "Adjust the spike density"
 msgstr "Підбання щільності променя"
 
-#: plug-ins/common/sparkle.c:525
-msgid "Tr_ansparency:"
+#: plug-ins/common/sparkle.c:233
+#| msgid "Tr_ansparency:"
+msgid "_Transparency"
 msgstr "Проз_орість"
 
-#: plug-ins/common/sparkle.c:526
+#: plug-ins/common/sparkle.c:234
 msgid "Adjust the opacity of the spikes"
 msgstr "Підбирання непрозорості променя"
 
-#: plug-ins/common/sparkle.c:536
-msgid "_Random hue:"
-msgstr "_Випадковий відтінок:"
+#: plug-ins/common/sparkle.c:239
+#| msgid "_Random hue:"
+msgid "Random _hue"
+msgstr "_Випадковий відтінок"
 
-#: plug-ins/common/sparkle.c:537
+#: plug-ins/common/sparkle.c:240
 msgid "Adjust how much the hue should be changed randomly"
 msgstr "Підбирання ступені випадкової зміни тону"
 
-#: plug-ins/common/sparkle.c:547
-msgid "Rando_m saturation:"
-msgstr "В_ипадкова насиченість:"
+#: plug-ins/common/sparkle.c:246
+#| msgid "Rando_m saturation:"
+msgid "R_andom saturation"
+msgstr "В_ипадкова насиченість"
 
-#: plug-ins/common/sparkle.c:548
+#: plug-ins/common/sparkle.c:247
 msgid "Adjust how much the saturation should be changed randomly"
 msgstr "Підбирання ступені випадкової зміни насиченості"
 
-#: plug-ins/common/sparkle.c:566
-msgid "_Preserve luminosity"
-msgstr "З_берігати яскравість"
+#: plug-ins/common/sparkle.c:253
+#| msgid "_Preserve luminosity"
+msgid "Preserve l_uminosity"
+msgstr "З_берігати освітленість"
 
-#: plug-ins/common/sparkle.c:573
+#: plug-ins/common/sparkle.c:254
 msgid "Should the luminosity be preserved?"
 msgstr "Чи потрібно зберігати яскравість?"
 
-#: plug-ins/common/sparkle.c:582
+#: plug-ins/common/sparkle.c:259
 msgid "In_verse"
 msgstr "_Інверсія"
 
-#: plug-ins/common/sparkle.c:588
+#: plug-ins/common/sparkle.c:260
 msgid "Should the effect be inversed?"
 msgstr "Чи потрібно інвертувати ефект?"
 
-#: plug-ins/common/sparkle.c:597
-msgid "A_dd border"
+#: plug-ins/common/sparkle.c:265
+#| msgid "A_dd border"
+msgid "Add _border"
 msgstr "_Додати рамку"
 
-#: plug-ins/common/sparkle.c:603
+#: plug-ins/common/sparkle.c:266
 msgid "Draw a border of spikes around the image"
 msgstr "Намалювати рамку з променів навколо зображення"
 
-#: plug-ins/common/sparkle.c:617
-msgid "_Natural color"
-msgstr "П_риродній колір"
+#: plug-ins/common/sparkle.c:271
+#| msgid "Color s_pace"
+msgid "Color type"
+msgstr "Тип кольору"
 
-#: plug-ins/common/sparkle.c:618
-msgid "_Foreground color"
-msgstr "Колір п_ереднього плану"
+#: plug-ins/common/sparkle.c:272
+msgid "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }"
+msgstr "Колір променів: { ПРИРОДНИЙ (0), ПЕРЕДНІЙ ПЛАН (1), ТЛО (2) }"
 
-#: plug-ins/common/sparkle.c:619
-msgid "_Background color"
-msgstr "Колір _тла"
+#: plug-ins/common/sparkle.c:321
+msgid "Region selected for filter is empty"
+msgstr "Вибрана для фільтра область порожня"
 
-#: plug-ins/common/sparkle.c:626
-msgid "Use the color of the image"
-msgstr "Використовувати колір зображення"
+#: plug-ins/common/sparkle.c:353
+msgid "Sparkling"
+msgstr "Створення іскор"
 
-#: plug-ins/common/sparkle.c:627
-msgid "Use the foreground color"
-msgstr "Використовувати колір переднього плану"
+#: plug-ins/common/sparkle.c:392
+msgid "Sparkle"
+msgstr "Іскри"
 
-#: plug-ins/common/sparkle.c:628
-msgid "Use the background color"
-msgstr "Використовувати колір тла"
+#: plug-ins/common/sparkle.c:447
+#| msgid "Additional Model Info"
+msgid "Additional Options"
+msgstr "Додаткові параметри"
+
+#. colortype
+#: plug-ins/common/sparkle.c:453
+#| msgid "_Natural color"
+msgid "Natural color"
+msgstr "Природний колір"
+
+#: plug-ins/common/sparkle.c:454 plug-ins/common/warp.c:632
+msgid "Foreground color"
+msgstr "Колір переднього плану"
+
+#: plug-ins/common/sparkle.c:455
+#| msgid "_Background color"
+msgid "Background color"
+msgstr "Колір тла"
 
 #: plug-ins/common/sphere-designer.c:336 plug-ins/gimpressionist/general.c:165
 msgid "Solid"
@@ -6806,10 +6834,6 @@ msgstr "Завертати"
 #: plug-ins/common/warp.c:602
 msgid "Smear"
 msgstr "Пляма"
-
-#: plug-ins/common/warp.c:632
-msgid "Foreground color"
-msgstr "Колір переднього плану"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary grid          --------------------------
@@ -7602,7 +7626,7 @@ msgstr "Завантажити відео FLI"
 msgid "This is an experimental plug-in to handle FLI movies"
 msgstr "Це експериментальний додаток для обробки відео FLI"
 
-#: plug-ins/file-fli/fli-gimp.c:199
+#: plug-ins/file-fli/fli-gimp.c:199 plug-ins/file-fli/fli-gimp.c:237
 msgid "_From frame"
 msgstr "З _кадру"
 
@@ -7610,7 +7634,7 @@ msgstr "З _кадру"
 msgid "Load beginning from this frame"
 msgstr "Завантажити, починаючи з цього кадру"
 
-#: plug-ins/file-fli/fli-gimp.c:205
+#: plug-ins/file-fli/fli-gimp.c:205 plug-ins/file-fli/fli-gimp.c:243
 msgid "_To frame"
 msgstr "Д_о кадру"
 
@@ -7626,17 +7650,9 @@ msgstr "Анімація FLI"
 msgid "Export FLI-movies"
 msgstr "Експорт відео FLI"
 
-#: plug-ins/file-fli/fli-gimp.c:237
-msgid "_From:"
-msgstr "_Від:"
-
 #: plug-ins/file-fli/fli-gimp.c:238
 msgid "Export beginning from this frame"
 msgstr "Експортувати, починаючи з цього кадру"
-
-#: plug-ins/file-fli/fli-gimp.c:243
-msgid "_To:"
-msgstr "_До:"
 
 #: plug-ins/file-fli/fli-gimp.c:244
 msgid "End exporting with this frame (or -1 for all frames)"
@@ -10269,7 +10285,8 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid "Let the direction from the center determine the direction of the stroke"
+msgid ""
+"Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -10376,7 +10393,8 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr ""
+"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -11284,7 +11302,8 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: plug-ins/gradient-flare/gradient-flare.c:3352
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr ""
+"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: plug-ins/gradient-flare/gradient-flare.c:3362
 msgid "Delete Gradient Flare"
@@ -13545,7 +13564,8 @@ msgstr "Альтернативне оточення фільтра:"
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:181
 msgid "A second number of adjacent points to consider when filtering."
-msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr ""
+"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:191
 msgid "Filter Epsilon:"
@@ -13736,6 +13756,24 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "_Foreground color"
+#~ msgstr "Колір п_ереднього плану"
+
+#~ msgid "Use the color of the image"
+#~ msgstr "Використовувати колір зображення"
+
+#~ msgid "Use the foreground color"
+#~ msgstr "Використовувати колір переднього плану"
+
+#~ msgid "Use the background color"
+#~ msgstr "Використовувати колір тла"
+
+#~ msgid "_From:"
+#~ msgstr "_Від:"
+
+#~ msgid "_To:"
+#~ msgstr "_До:"
 
 #~ msgid "_Level:"
 #~ msgstr "_Рівень:"
