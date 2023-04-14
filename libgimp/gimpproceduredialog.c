@@ -1072,6 +1072,7 @@ gimp_procedure_dialog_get_int_radio (GimpProcedureDialog *dialog,
  *            #GimpSpinScale for. It must be a property of the
  *            #GimpProcedure @dialog has been created for.
  * @factor:   a display factor for the range shown by the widget.
+ *            It must be set to 1.0 for integer properties.
  *
  * Creates a new #GimpSpinScale for @property which must necessarily be
  * an integer or double property.
@@ -1112,8 +1113,9 @@ gimp_procedure_dialog_get_spin_scale (GimpProcedureDialog *dialog,
       return NULL;
     }
 
-  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT ||
-                        G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_DOUBLE, NULL);
+  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_DOUBLE ||
+                        (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT   &&
+                         factor == 1.0), NULL);
 
   /* First check if it already exists. */
   widget = g_hash_table_lookup (dialog->priv->widgets, property);
@@ -1139,7 +1141,8 @@ gimp_procedure_dialog_get_spin_scale (GimpProcedureDialog *dialog,
 
   widget = gimp_prop_spin_scale_new (G_OBJECT (dialog->priv->config),
                                      property, step, page, digits);
-  gimp_prop_widget_set_factor (widget, factor, step, page, digits);
+  if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_DOUBLE)
+    gimp_prop_widget_set_factor (widget, factor, step, page, digits);
 
   gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
@@ -1857,7 +1860,6 @@ gimp_procedure_dialog_fill_expander (GimpProcedureDialog *dialog,
 
   return expander;
 }
-
 
 /**
  * gimp_procedure_dialog_fill_scrolled_window:
