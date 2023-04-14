@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-13 23:55+0000\n"
-"PO-Revision-Date: 2023-04-14 06:16+0200\n"
+"POT-Creation-Date: 2023-04-14 17:33+0000\n"
+"PO-Revision-Date: 2023-04-14 20:07+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -2607,432 +2607,577 @@ msgstr "ინსტრუმენტები"
 
 #: app/actions/dialogs-actions.c:53
 msgctxt "dialogs-action"
+msgid "Tool _Options Dialog"
+msgstr "ინსტრუმენტის _გამართვის ფანჯარა"
+
+#: app/actions/dialogs-actions.c:54
+msgctxt "dialogs-action"
 msgid "Tool _Options"
 msgstr "ინსტრუმენტის _გამართვა"
 
-#: app/actions/dialogs-actions.c:54
+#: app/actions/dialogs-actions.c:56
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
 msgstr "ინსტრუმენტების გამართვის ფანჯარა"
 
-#: app/actions/dialogs-actions.c:59
+#: app/actions/dialogs-actions.c:61
+msgctxt "dialogs-action"
+msgid "_Device Status Dialog"
+msgstr "_მოწყობილობის სტატუსის ფანჯარა"
+
+#: app/actions/dialogs-actions.c:62
 msgctxt "dialogs-action"
 msgid "_Device Status"
 msgstr "_მოწყობილობის სტატუსი"
 
-#: app/actions/dialogs-actions.c:60
+#: app/actions/dialogs-actions.c:64
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
 msgstr "მოწყობილობების სტატუსის ფანჯარა"
 
-#: app/actions/dialogs-actions.c:65
+#: app/actions/dialogs-actions.c:69
+msgctxt "dialogs-action"
+msgid "_Symmetry Painting Dialog"
+msgstr "_სიმეტრიული ხატვის ფანჯარა"
+
+#: app/actions/dialogs-actions.c:70
 msgctxt "dialogs-action"
 msgid "_Symmetry Painting"
 msgstr "_სიმეტრიული ხატვა"
 
-#: app/actions/dialogs-actions.c:66
+#: app/actions/dialogs-actions.c:72
 msgctxt "dialogs-action"
 msgid "Open the symmetry dialog"
 msgstr "სიმეტრიის ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:71
+#: app/actions/dialogs-actions.c:77
+msgctxt "dialogs-action"
+msgid "_Layers Dialog"
+msgstr "_ფენების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:78
 msgctxt "dialogs-action"
 msgid "_Layers"
 msgstr "_ფენები"
 
-#: app/actions/dialogs-actions.c:72
+#: app/actions/dialogs-actions.c:80
 msgctxt "dialogs-action"
 msgid "Open the layers dialog"
 msgstr "ფენების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:77
+#: app/actions/dialogs-actions.c:85
+msgctxt "dialogs-action"
+msgid "_Channels Dialog"
+msgstr "_არხების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:86
 msgctxt "dialogs-action"
 msgid "_Channels"
 msgstr "_არხები"
 
-#: app/actions/dialogs-actions.c:78
+#: app/actions/dialogs-actions.c:88
 msgctxt "dialogs-action"
 msgid "Open the channels dialog"
 msgstr "არხების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:83
+#: app/actions/dialogs-actions.c:93
+msgctxt "dialogs-action"
+msgid "_Paths Dialog"
+msgstr "_კონტურების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:94
 msgctxt "dialogs-action"
 msgid "_Paths"
 msgstr "_კონტურები"
 
-#: app/actions/dialogs-actions.c:84
+#: app/actions/dialogs-actions.c:96
 msgctxt "dialogs-action"
 msgid "Open the paths dialog"
 msgstr "კონტურების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:89
+#: app/actions/dialogs-actions.c:101
+msgctxt "dialogs-action"
+msgid "Color_map Dialog"
+msgstr "ფერების რუ_კის ფანჯარა"
+
+#: app/actions/dialogs-actions.c:102
 msgctxt "dialogs-action"
 msgid "Color_map"
 msgstr "ფერების რუ_კა"
 
-#: app/actions/dialogs-actions.c:90
+#: app/actions/dialogs-actions.c:104
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
 msgstr "ფერის რუკის ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:95
+#: app/actions/dialogs-actions.c:109
+msgctxt "dialogs-action"
+msgid "Histogra_m Dialog"
+msgstr "_ჰისტოგრამის ფანჯარა"
+
+#: app/actions/dialogs-actions.c:110
 msgctxt "dialogs-action"
 msgid "Histogra_m"
 msgstr "ჰისტოგრა_მა"
 
-#: app/actions/dialogs-actions.c:96
+#: app/actions/dialogs-actions.c:112
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
 msgstr "ჰისტოგრამის ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:101
+#: app/actions/dialogs-actions.c:117
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
 msgstr "მონიშნულის ჩასწორება"
 
-#: app/actions/dialogs-actions.c:102
+#: app/actions/dialogs-actions.c:119
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
 msgstr "მონიშნულის ჩასწორების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:107
+#: app/actions/dialogs-actions.c:124
+msgctxt "dialogs-action"
+msgid "Na_vigation Dialog"
+msgstr "ნა_ვიგაციის ფანჯარა"
+
+#: app/actions/dialogs-actions.c:125
 msgctxt "dialogs-action"
 msgid "Na_vigation"
 msgstr "ნა_ვიგაცია"
 
-#: app/actions/dialogs-actions.c:108
+#: app/actions/dialogs-actions.c:127
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
 msgstr "ნავიგაციის ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:113
+#: app/actions/dialogs-actions.c:132
+msgctxt "dialogs-action"
+msgid "Undo _History Dialog"
+msgstr "დაბრუნების ისტორიის _ფანჯარა"
+
+#: app/actions/dialogs-actions.c:133
 msgctxt "dialogs-action"
 msgid "Undo _History"
 msgstr "დაბრუნების ისტორიის გაწმენდა"
 
-#: app/actions/dialogs-actions.c:114
+#: app/actions/dialogs-actions.c:135
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
 msgstr "დაბრუნების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:119
+#: app/actions/dialogs-actions.c:140
+msgctxt "dialogs-action"
+msgid "_Pointer Dialog"
+msgstr "_კურსორის ფანჯარა"
+
+#: app/actions/dialogs-actions.c:141
 msgctxt "dialogs-action"
 msgid "_Pointer"
 msgstr "კურსო_რი"
 
-#: app/actions/dialogs-actions.c:120
+#: app/actions/dialogs-actions.c:143
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
 msgstr "კურსორის ინფორმაციის ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:125
+#: app/actions/dialogs-actions.c:148
+msgctxt "dialogs-action"
+msgid "_Sample Points Dialog"
+msgstr "სემპლების წერტილების _ფანჯარა"
+
+#: app/actions/dialogs-actions.c:149
 msgctxt "dialogs-action"
 msgid "_Sample Points"
 msgstr "სემპლების წერტილები"
 
-#: app/actions/dialogs-actions.c:126
+#: app/actions/dialogs-actions.c:151
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
 msgstr "სემპლების წერტილების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:131
+#: app/actions/dialogs-actions.c:156
+msgctxt "dialogs-action"
+msgid "Colo_rs Dialog"
+msgstr "_ფერების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:157
 msgctxt "dialogs-action"
 msgid "Colo_rs"
 msgstr "ფერე_ბი"
 
-#: app/actions/dialogs-actions.c:132
+#: app/actions/dialogs-actions.c:159
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
 msgstr "წ.პ/ფ ფერების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:137
+#: app/actions/dialogs-actions.c:164
+msgctxt "dialogs-action"
+msgid "_Brushes Dialog"
+msgstr "_ფუნჯების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:165
 msgctxt "dialogs-action"
 msgid "_Brushes"
 msgstr "_ფუნჯები"
 
-#: app/actions/dialogs-actions.c:138
+#: app/actions/dialogs-actions.c:167
 msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
 msgstr "ფუნჯების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:143
+#: app/actions/dialogs-actions.c:172
 msgctxt "dialogs-action"
 msgid "Brush Editor"
 msgstr "ფუნჯის მორგება"
 
-#: app/actions/dialogs-actions.c:144
+#: app/actions/dialogs-actions.c:174
 msgctxt "dialogs-action"
 msgid "Open the brush editor"
 msgstr "ფუნჯების მორგების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:149
+#: app/actions/dialogs-actions.c:179
+msgctxt "dialogs-action"
+msgid "Paint D_ynamics Dialog"
+msgstr "ხატვის _დინამიკის ფანჯარა"
+
+#: app/actions/dialogs-actions.c:180
 msgctxt "dialogs-action"
 msgid "Paint D_ynamics"
 msgstr "ხატვის _დინამიკა"
 
-#: app/actions/dialogs-actions.c:150
+#: app/actions/dialogs-actions.c:182
 msgctxt "dialogs-action"
 msgid "Open paint dynamics dialog"
 msgstr "ხატვის დინამიკის ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:155
+#: app/actions/dialogs-actions.c:187
 msgctxt "dialogs-action"
 msgid "Paint Dynamics Editor"
 msgstr "ხატვის დინამიკის ჩასწორება"
 
-#: app/actions/dialogs-actions.c:156
+#: app/actions/dialogs-actions.c:189
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
 msgstr "ხატვის დინამიკის ჩასწორების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:161
+#: app/actions/dialogs-actions.c:194
+msgctxt "dialogs-action"
+msgid "_MyPaint Brushes Dialog"
+msgstr "_MyPaint-ის ფუნჯების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:195
 msgctxt "dialogs-action"
 msgid "_MyPaint Brushes"
 msgstr "_MyPaint-ის ფუნჯები"
 
-#: app/actions/dialogs-actions.c:162
+#: app/actions/dialogs-actions.c:197
 msgctxt "dialogs-action"
 msgid "Open the mypaint brushes dialog"
 msgstr "MyPaint-ის ფუნჯების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:167
+#: app/actions/dialogs-actions.c:202
+msgctxt "dialogs-action"
+msgid "P_atterns Dialog"
+msgstr "შ_აბლონების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:203
 msgctxt "dialogs-action"
 msgid "P_atterns"
 msgstr "შ_აბლონები"
 
-#: app/actions/dialogs-actions.c:168
+#: app/actions/dialogs-actions.c:205
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
 msgstr "შაბლონების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:173
+#: app/actions/dialogs-actions.c:210
+msgctxt "dialogs-action"
+msgid "_Gradients Dialog"
+msgstr "_გრადაციების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:211
 msgctxt "dialogs-action"
 msgid "_Gradients"
 msgstr "_გრადაციები"
 
-#: app/actions/dialogs-actions.c:174
+#: app/actions/dialogs-actions.c:213
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
 msgstr "გრადაციების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:179
+#: app/actions/dialogs-actions.c:218
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
 msgstr "გრადაციების ჩასწორება"
 
-#: app/actions/dialogs-actions.c:180
+#: app/actions/dialogs-actions.c:220
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
 msgstr "გრადაციების ჩასწორების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:185
+#: app/actions/dialogs-actions.c:225
+msgctxt "dialogs-action"
+msgid "Pal_ettes Dialog"
+msgstr "პალიტრ_ების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:226
 msgctxt "dialogs-action"
 msgid "Pal_ettes"
 msgstr "პალიტრ_ები"
 
-#: app/actions/dialogs-actions.c:186
+#: app/actions/dialogs-actions.c:228
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
 msgstr "პალიტრების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:191
+#: app/actions/dialogs-actions.c:233 app/actions/dialogs-actions.c:234
 msgctxt "dialogs-action"
 msgid "Palette _Editor"
 msgstr "პალიტრების _ჩასწორება"
 
-#: app/actions/dialogs-actions.c:192
+#: app/actions/dialogs-actions.c:236
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
 msgstr "პალიტრების ჩასწორების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:197
+#: app/actions/dialogs-actions.c:241
+msgctxt "dialogs-action"
+msgid "Tool Pre_sets Dialog"
+msgstr "ხელსაწყოების პრე_სეტების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:242
 msgctxt "dialogs-action"
 msgid "Tool Pre_sets"
 msgstr "ხელსაწყოების პრე_სეტები"
 
-#: app/actions/dialogs-actions.c:198
+#: app/actions/dialogs-actions.c:244
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
 msgstr "ხელსაწყოების პრესეტების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:203
+#: app/actions/dialogs-actions.c:249
+msgctxt "dialogs-action"
+msgid "_Fonts Dialog"
+msgstr "_ფონტების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:250
 msgctxt "dialogs-action"
 msgid "_Fonts"
 msgstr "_ფონტები"
 
-#: app/actions/dialogs-actions.c:204
+#: app/actions/dialogs-actions.c:252
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
 msgstr "ფონტების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:209
+#: app/actions/dialogs-actions.c:257
+msgctxt "dialogs-action"
+msgid "B_uffers Dialog"
+msgstr "ბ_აფერების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:258
 msgctxt "dialogs-action"
 msgid "B_uffers"
 msgstr "ბ_აფერები"
 
-#: app/actions/dialogs-actions.c:210
+#: app/actions/dialogs-actions.c:260
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
 msgstr "სახელობითი ბაფერების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:215
+#: app/actions/dialogs-actions.c:265
+msgctxt "dialogs-action"
+msgid "_Images Dialog"
+msgstr "_გამოსახულებების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:266
 msgctxt "dialogs-action"
 msgid "_Images"
 msgstr "_გამოსახულებები"
 
-#: app/actions/dialogs-actions.c:216
+#: app/actions/dialogs-actions.c:268
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
 msgstr "გამოსახულებების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:221
+#: app/actions/dialogs-actions.c:273
+msgctxt "dialogs-action"
+msgid "Document Histor_y Dialog"
+msgstr "დოკუმენტების ისტორი_ის ფანჯარა"
+
+#: app/actions/dialogs-actions.c:274
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
 msgstr "დოკუმენტების ისტორია"
 
-#: app/actions/dialogs-actions.c:222
+#: app/actions/dialogs-actions.c:276
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
 msgstr "დოკუმენტების ისტორიის ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:227
+#: app/actions/dialogs-actions.c:281
+msgctxt "dialogs-action"
+msgid "_Templates Dialog"
+msgstr "_ნიმუშების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:282
 msgctxt "dialogs-action"
 msgid "_Templates"
 msgstr "_ნიმუშები"
 
-#: app/actions/dialogs-actions.c:228
+#: app/actions/dialogs-actions.c:284
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
 msgstr "ნიმუშების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:233
+#: app/actions/dialogs-actions.c:289 app/actions/dialogs-actions.c:290
 msgctxt "dialogs-action"
 msgid "Error Co_nsole"
 msgstr "შეცდომების კონსოლი"
 
-#: app/actions/dialogs-actions.c:234
+#: app/actions/dialogs-actions.c:292
 msgctxt "dialogs-action"
 msgid "Open the error console"
 msgstr "შეცდომების კონსოლის  ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:239
+#: app/actions/dialogs-actions.c:297 app/actions/dialogs-actions.c:298
 msgctxt "dialogs-action"
 msgid "_Dashboard"
 msgstr "სამუშაო მაგიდა"
 
-#: app/actions/dialogs-actions.c:240
+#: app/actions/dialogs-actions.c:300
 msgctxt "dialogs-action"
 msgid "Open the dashboard"
 msgstr "სამუშაო მაგიდის ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:250
+#: app/actions/dialogs-actions.c:310
+msgctxt "dialogs-action"
+msgid "_Preferences Dialog"
+msgstr "გამართვის _ფანჯარა"
+
+#: app/actions/dialogs-actions.c:311
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "გამართვა"
 
-#: app/actions/dialogs-actions.c:251
+#: app/actions/dialogs-actions.c:313
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "გამართვის ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:256
+#: app/actions/dialogs-actions.c:318
+msgctxt "dialogs-action"
+msgid "_Input Devices Editor"
+msgstr "შემომტანი მოწყობილობები_ს რედაქტორი"
+
+#: app/actions/dialogs-actions.c:319
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "შემომტანი მოწყობილობები"
 
-#: app/actions/dialogs-actions.c:257
+#: app/actions/dialogs-actions.c:321
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "შემომტანი მოწყობილობების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:262
+#: app/actions/dialogs-actions.c:326
+msgctxt "dialogs-action"
+msgid "_Keyboard Shortcuts Editor"
+msgstr "კლავიატურის მალსახმობების _რედაქტორი"
+
+#: app/actions/dialogs-actions.c:327
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "კლავიატურის მალსახმობები"
 
-#: app/actions/dialogs-actions.c:263
+#: app/actions/dialogs-actions.c:329
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "კლავიატურის მალსახმობების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:268
+#: app/actions/dialogs-actions.c:334
+msgctxt "dialogs-action"
+msgid "_Modules Dialog"
+msgstr "_მოდულების ფანჯარა"
+
+#: app/actions/dialogs-actions.c:335
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "_მოდულები"
 
-#: app/actions/dialogs-actions.c:269
+#: app/actions/dialogs-actions.c:337
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "მოდულების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:274
+#: app/actions/dialogs-actions.c:342
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "დღის მინიშნება"
 
-#: app/actions/dialogs-actions.c:275
+#: app/actions/dialogs-actions.c:344
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "რამდენიმე გამოსადეგი რჩევა GIMP-ის მოხმარების შესახებ"
 
-#: app/actions/dialogs-actions.c:280
+#: app/actions/dialogs-actions.c:349
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
 msgstr "პირველი ფანჯარა"
 
-#: app/actions/dialogs-actions.c:281
+#: app/actions/dialogs-actions.c:351
 msgctxt "dialogs-action"
 msgid "Show information on running GIMP release"
 msgstr "GIMP-ის გაშვებული რელიზის შესახებ ინფორმაციის ჩვენება"
 
-#: app/actions/dialogs-actions.c:287 app/actions/dialogs-actions.c:294
+#: app/actions/dialogs-actions.c:357 app/actions/dialogs-actions.c:364
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "GIMP-ის შესახებ"
 
-#: app/actions/dialogs-actions.c:289
+#: app/actions/dialogs-actions.c:359
 msgctxt "dialogs-action"
 msgid "About"
 msgstr "შესახებ"
 
-#: app/actions/dialogs-actions.c:291
+#: app/actions/dialogs-actions.c:361
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_შესახებ"
 
-#: app/actions/dialogs-actions.c:299
+#: app/actions/dialogs-actions.c:369
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "მოძებნა და ბრძანების _გაშვება"
 
-#: app/actions/dialogs-actions.c:300
+#: app/actions/dialogs-actions.c:371
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "ბრძანებების პირობით ძებნა და მათი გაშვება"
 
-#: app/actions/dialogs-actions.c:305
+#: app/actions/dialogs-actions.c:376
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
 msgstr "გაფართოებების მართვა"
 
-#: app/actions/dialogs-actions.c:306
+#: app/actions/dialogs-actions.c:378
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
 msgstr "გაფართოებების მართვა: მოძებნეთ, დააყენეთ, წაშალეთ, განაახლეთ."
 
-#: app/actions/dialogs-actions.c:369
+#: app/actions/dialogs-actions.c:441
 msgid "Tool_box"
 msgstr "ხელს_აწყოები"
 
-#: app/actions/dialogs-actions.c:370
+#: app/actions/dialogs-actions.c:442
 msgid "Raise the toolbox"
 msgstr "ხელსაწყოების აწევა"
 
-#: app/actions/dialogs-actions.c:374
+#: app/actions/dialogs-actions.c:446
 msgid "New Tool_box"
 msgstr "ხელსაწყოების ა_ხალი პანელი"
 
-#: app/actions/dialogs-actions.c:375
+#: app/actions/dialogs-actions.c:447
 msgid "Create a new toolbox"
 msgstr "ხელსაწყოების ახალი პანელის შექმნა"
 
@@ -3630,178 +3775,178 @@ msgstr "მონიშნული რეგიონიდან ხილუ�
 
 #: app/actions/edit-actions.c:123
 msgctxt "edit-action"
+msgid "Paste as _New Image"
+msgstr "ბაფერის,როგორც ახალი ს_ურათის ჩასმა"
+
+#: app/actions/edit-actions.c:124
+msgctxt "edit-action"
 msgid "From _Clipboard"
 msgstr "გაცვლის ბუფერიდან"
 
-#: app/actions/edit-actions.c:124 app/actions/edit-actions.c:130
+#: app/actions/edit-actions.c:126
 msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
 msgstr "გაცვლის ბაფერის შემცველობით ახალი გამოსახულების შექმნა"
 
-#: app/actions/edit-actions.c:129
-msgctxt "edit-action"
-msgid "Paste as _New Image"
-msgstr "ბაფერის,როგორც ახალი ს_ურათის ჩასმა"
-
-#: app/actions/edit-actions.c:135
+#: app/actions/edit-actions.c:131
 msgctxt "edit-action"
 msgid "Cu_t Named..."
 msgstr "_ამოჭრა სახელით..."
 
-#: app/actions/edit-actions.c:136
+#: app/actions/edit-actions.c:132
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
 msgstr "მონიშნული პიქსელების ბაფერში სახელით ამოჭრა"
 
-#: app/actions/edit-actions.c:141
+#: app/actions/edit-actions.c:137
 msgctxt "edit-action"
 msgid "_Copy Named..."
 msgstr "_კოპირება სახელით..."
 
-#: app/actions/edit-actions.c:142
+#: app/actions/edit-actions.c:138
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
 msgstr "მონიშნული პიქსელების ბაფერში სახელით ამოჭრა"
 
 #. GIMP_ICON_COPY_VISIBLE,
-#: app/actions/edit-actions.c:147
+#: app/actions/edit-actions.c:143
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
 msgstr "ხილულის კოპირება სახელით..."
 
-#: app/actions/edit-actions.c:149
+#: app/actions/edit-actions.c:145
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
 msgstr "მონიშნულ რეგიონში ხილული პიქსელების ბაფერში სახელით კოპირება"
 
-#: app/actions/edit-actions.c:154
+#: app/actions/edit-actions.c:150
 msgctxt "edit-action"
 msgid "_Paste Named..."
 msgstr "ჩას_მა სახელით..."
 
-#: app/actions/edit-actions.c:155
+#: app/actions/edit-actions.c:151
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
 msgstr "სახელიანი ბუფერის შიგთავსის ჩასმა"
 
-#: app/actions/edit-actions.c:160
+#: app/actions/edit-actions.c:156
 msgctxt "edit-action"
 msgid "Cl_ear"
 msgstr "_გასუფთავება"
 
-#: app/actions/edit-actions.c:161
+#: app/actions/edit-actions.c:157
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
 msgstr "მონიშნული პიქსელების გასუფტავება"
 
-#: app/actions/edit-actions.c:169
+#: app/actions/edit-actions.c:165
 msgctxt "edit-action"
 msgid "_Paste"
 msgstr "_ჩასმა"
 
-#: app/actions/edit-actions.c:170
+#: app/actions/edit-actions.c:166
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard"
 msgstr "გაცვლის ბაფერიდან ჩასმა"
 
-#: app/actions/edit-actions.c:175
+#: app/actions/edit-actions.c:171
 msgctxt "edit-action"
 msgid "Paste In P_lace"
 msgstr "ადგილ_ზე ჩასმა"
 
-#: app/actions/edit-actions.c:177
+#: app/actions/edit-actions.c:173
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard at its original position"
 msgstr "გაცვლის ბაფერის თავდაპირველ პოზიციაზე ჩასმა"
 
-#: app/actions/edit-actions.c:182
+#: app/actions/edit-actions.c:178
 msgctxt "edit-action"
 msgid "_Paste as Single Layer"
 msgstr "ერთ ფენად _ჩასმა"
 
-#: app/actions/edit-actions.c:183
+#: app/actions/edit-actions.c:179
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard as a single layer"
 msgstr "გაცვლის ბუფერის შემცველობის ერთ ფენად ჩასმა"
 
-#: app/actions/edit-actions.c:188
+#: app/actions/edit-actions.c:184
 msgctxt "edit-action"
 msgid "Paste as Single Layer In P_lace"
 msgstr "ბაფერის როგორც ერთი ფენის &ადგილზე, ჩასმა"
 
-#: app/actions/edit-actions.c:190
+#: app/actions/edit-actions.c:186
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard at its original position as a single layer"
 msgstr "გაცვლის ბაფერის თავდაპირველ პოზიციაზე, ერთ ფენად ჩასმა"
 
-#: app/actions/edit-actions.c:195
+#: app/actions/edit-actions.c:191
 msgctxt "edit-action"
 msgid "Paste _Into Selection"
 msgstr "მონიშნულში ჩას_მა"
 
-#: app/actions/edit-actions.c:197
+#: app/actions/edit-actions.c:193
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
 msgstr "გაცვლის ბაფერის მიმდინარე პოზიციაზე ჩასმა"
 
-#: app/actions/edit-actions.c:202
+#: app/actions/edit-actions.c:198
 msgctxt "edit-action"
 msgid "Paste Int_o Selection In Place"
 msgstr "გაცვლის ბაფერის მიმდინარეში ჩასმა"
 
-#: app/actions/edit-actions.c:204
+#: app/actions/edit-actions.c:200
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard into the current selection at its "
 "original position"
 msgstr "გაცვლის ბაფერის მონიშნულში თავდაპირველ პოზიციაზე ჩასმა"
 
-#: app/actions/edit-actions.c:213
+#: app/actions/edit-actions.c:209
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "წინა ფერით შევ_სება"
 
-#: app/actions/edit-actions.c:214
+#: app/actions/edit-actions.c:210
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "მონიშნულის წინა პლანის ფერით შევსება"
 
-#: app/actions/edit-actions.c:219
+#: app/actions/edit-actions.c:215
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "ფონი_ს ფერით შევსება"
 
-#: app/actions/edit-actions.c:220
+#: app/actions/edit-actions.c:216
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "მონიშნულის  ფონის ფერით შევსება"
 
-#: app/actions/edit-actions.c:225
+#: app/actions/edit-actions.c:221
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "ტექსტურით შევსებ_ა"
 
-#: app/actions/edit-actions.c:226
+#: app/actions/edit-actions.c:222
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "მონიშნულის აქტიური ტექსტურით შევსება"
 
-#: app/actions/edit-actions.c:323 app/actions/edit-actions.c:325
+#: app/actions/edit-actions.c:319 app/actions/edit-actions.c:321
 #, c-format
 msgid "_Undo %s"
 msgstr "%s-ის _დაბრუნება"
 
-#: app/actions/edit-actions.c:329 app/actions/edit-actions.c:331
+#: app/actions/edit-actions.c:325 app/actions/edit-actions.c:327
 #, c-format
 msgid "_Redo %s"
 msgstr "%s-ის გამეორება"
 
-#: app/actions/edit-actions.c:342
+#: app/actions/edit-actions.c:338
 msgid "_Undo"
 msgstr "_დაბრუნება"
 
-#: app/actions/edit-actions.c:343
+#: app/actions/edit-actions.c:339
 msgid "_Redo"
 msgstr "_გამეორება"
 
@@ -5131,6 +5276,41 @@ msgctxt "gradient-editor-action"
 msgid "R_ight Endpoint's Color..."
 msgstr "მარჯ_ვენა უკიდურესი წერტილის ფერი..."
 
+#: app/actions/gradient-editor-actions.c:81
+msgctxt "gradient-editor-action"
+msgid "Flip"
+msgstr "გადაბრუნება"
+
+#: app/actions/gradient-editor-actions.c:86
+msgctxt "gradient-editor-action"
+msgid "Replicate"
+msgstr "რეპლიკაცია"
+
+#: app/actions/gradient-editor-actions.c:91
+msgctxt "gradient-editor-action"
+msgid "Split Midpoint"
+msgstr "შუაწერტილზე გაყოფა"
+
+#: app/actions/gradient-editor-actions.c:96
+msgctxt "gradient-editor-action"
+msgid "Split Uniformly"
+msgstr "თანაბრად გაყოფა"
+
+#: app/actions/gradient-editor-actions.c:101
+msgctxt "gradient-editor-action"
+msgid "Delete"
+msgstr "წაშლა"
+
+#: app/actions/gradient-editor-actions.c:106
+msgctxt "gradient-editor-action"
+msgid "Recenter"
+msgstr "თავიდან დაცენტრება"
+
+#: app/actions/gradient-editor-actions.c:111
+msgctxt "gradient-editor-action"
+msgid "Redistribute"
+msgstr "გადანაწილება"
+
 #: app/actions/gradient-editor-actions.c:116
 msgctxt "gradient-editor-action"
 msgid "Ble_nd Endpoints' Colors"
@@ -5179,186 +5359,186 @@ msgid "_Left Endpoint"
 msgstr "_მარცხენა უკიდურესი წერტილი"
 
 #: app/actions/gradient-editor-actions.c:262
-#: app/actions/gradient-editor-actions.c:292
+#: app/actions/gradient-editor-actions.c:290
 msgctxt "gradient-editor-color-type"
 msgid "_Fixed"
 msgstr "ფიქსირებული"
 
 #: app/actions/gradient-editor-actions.c:267
-#: app/actions/gradient-editor-actions.c:297
+#: app/actions/gradient-editor-actions.c:295
 msgctxt "gradient-editor-color-type"
 msgid "F_oreground Color"
 msgstr "_წინა პლანის ფერი"
 
-#: app/actions/gradient-editor-actions.c:273
-#: app/actions/gradient-editor-actions.c:303
+#: app/actions/gradient-editor-actions.c:272
+#: app/actions/gradient-editor-actions.c:300
 msgctxt "gradient-editor-color-type"
 msgid "Fo_reground Color (Transparent)"
 msgstr "_წინა პლანის ფერი (გამჭვირვალე)"
 
-#: app/actions/gradient-editor-actions.c:278
-#: app/actions/gradient-editor-actions.c:308
+#: app/actions/gradient-editor-actions.c:277
+#: app/actions/gradient-editor-actions.c:305
 msgctxt "gradient-editor-color-type"
 msgid "_Background Color"
 msgstr "_ფონის ფერი"
 
-#: app/actions/gradient-editor-actions.c:284
-#: app/actions/gradient-editor-actions.c:314
+#: app/actions/gradient-editor-actions.c:282
+#: app/actions/gradient-editor-actions.c:310
 msgctxt "gradient-editor-color-type"
 msgid "B_ackground Color (Transparent)"
 msgstr "ფო_ნის ფერი (გამჭვირვალე)"
 
-#: app/actions/gradient-editor-actions.c:322
+#: app/actions/gradient-editor-actions.c:318
 msgctxt "gradient-editor-blending"
 msgid "_Linear"
 msgstr "_წრფივი"
 
-#: app/actions/gradient-editor-actions.c:327
+#: app/actions/gradient-editor-actions.c:323
 msgctxt "gradient-editor-blending"
 msgid "_Curved"
 msgstr "_მრუდი"
 
-#: app/actions/gradient-editor-actions.c:332
+#: app/actions/gradient-editor-actions.c:328
 msgctxt "gradient-editor-blending"
 msgid "_Sinusoidal"
 msgstr "_სინუსოიდალური"
 
-#: app/actions/gradient-editor-actions.c:337
+#: app/actions/gradient-editor-actions.c:333
 msgctxt "gradient-editor-blending"
 msgid "Spherical (i_ncreasing)"
 msgstr "სფერული(ზრდადი)"
 
-#: app/actions/gradient-editor-actions.c:342
+#: app/actions/gradient-editor-actions.c:338
 msgctxt "gradient-editor-blending"
 msgid "Spherical (_decreasing)"
 msgstr "სფერული(კლებადი)"
 
-#: app/actions/gradient-editor-actions.c:347
+#: app/actions/gradient-editor-actions.c:343
 msgctxt "gradient-editor-blending"
 msgid "S_tep"
 msgstr "ნა_ბიჯი"
 
-#: app/actions/gradient-editor-actions.c:352
+#: app/actions/gradient-editor-actions.c:348
 msgctxt "gradient-editor-blending"
 msgid "(Varies)"
 msgstr "(ცვალებადი)"
 
-#: app/actions/gradient-editor-actions.c:360
+#: app/actions/gradient-editor-actions.c:356
 msgctxt "gradient-editor-coloring"
 msgid "_RGB"
 msgstr "_RGB"
 
-#: app/actions/gradient-editor-actions.c:365
+#: app/actions/gradient-editor-actions.c:361
 msgctxt "gradient-editor-coloring"
 msgid "HSV (_counter-clockwise hue)"
 msgstr "HSV(საათის საპირისპირო ტონი)"
 
-#: app/actions/gradient-editor-actions.c:370
+#: app/actions/gradient-editor-actions.c:366
 msgctxt "gradient-editor-coloring"
 msgid "HSV (clockwise _hue)"
 msgstr "HSV(საათის მიმართულებით ტონი)"
 
-#: app/actions/gradient-editor-actions.c:375
+#: app/actions/gradient-editor-actions.c:371
 msgctxt "gradient-editor-coloring"
 msgid "(Varies)"
 msgstr "(ცვალებადი)"
 
-#: app/actions/gradient-editor-actions.c:383
+#: app/actions/gradient-editor-actions.c:379
 msgid "Zoom In"
 msgstr "გა_დიდება"
 
-#: app/actions/gradient-editor-actions.c:384
+#: app/actions/gradient-editor-actions.c:380
 #: app/actions/palette-editor-actions.c:90
 msgid "Zoom in"
 msgstr "გა_დიდება"
 
-#: app/actions/gradient-editor-actions.c:389
+#: app/actions/gradient-editor-actions.c:385
 msgid "Zoom Out"
 msgstr "და_პატარავება"
 
-#: app/actions/gradient-editor-actions.c:390
+#: app/actions/gradient-editor-actions.c:386
 #: app/actions/palette-editor-actions.c:96
 msgid "Zoom out"
 msgstr "და_პატარავება"
 
-#: app/actions/gradient-editor-actions.c:395
+#: app/actions/gradient-editor-actions.c:391
 msgid "Zoom All"
 msgstr "ყველას გადიდება"
 
-#: app/actions/gradient-editor-actions.c:396
+#: app/actions/gradient-editor-actions.c:392
 #: app/actions/palette-editor-actions.c:102
 msgid "Zoom all"
 msgstr "ყველას გადიდება"
 
-#: app/actions/gradient-editor-actions.c:791
+#: app/actions/gradient-editor-actions.c:787
 msgid "_Blending Function for Segment"
 msgstr "სეგმენტისთვის შერევის ფუნქცია"
 
-#: app/actions/gradient-editor-actions.c:793
+#: app/actions/gradient-editor-actions.c:789
 msgid "Coloring _Type for Segment"
 msgstr "სეგმენტ_ის გაფერადების ტიპი"
 
-#: app/actions/gradient-editor-actions.c:796
+#: app/actions/gradient-editor-actions.c:792
 msgid "_Flip Segment"
 msgstr "სეგმენტის _გადაბრუნება"
 
-#: app/actions/gradient-editor-actions.c:798
+#: app/actions/gradient-editor-actions.c:794
 msgid "_Replicate Segment..."
 msgstr "სეგმენტის ასლი..."
 
-#: app/actions/gradient-editor-actions.c:800
+#: app/actions/gradient-editor-actions.c:796
 msgid "Split Segment at _Midpoint"
 msgstr "სეგ_მენტის შუაწერტილზე გაყოფა"
 
-#: app/actions/gradient-editor-actions.c:802
+#: app/actions/gradient-editor-actions.c:798
 msgid "Split Segment _Uniformly..."
 msgstr "სეგმენტის თანაბრად დაყ_ოფა..."
 
-#: app/actions/gradient-editor-actions.c:804
+#: app/actions/gradient-editor-actions.c:800
 msgid "_Delete Segment"
 msgstr "სეგმენტის _წაშლა"
 
-#: app/actions/gradient-editor-actions.c:806
+#: app/actions/gradient-editor-actions.c:802
 msgid "Re-_center Segment's Midpoint"
 msgstr "სეგმენტის შუაგულის თ_ავიდან გაყოფა"
 
-#: app/actions/gradient-editor-actions.c:808
+#: app/actions/gradient-editor-actions.c:804
 msgid "Re-distribute _Handles in Segment"
 msgstr ""
 
-#: app/actions/gradient-editor-actions.c:813
+#: app/actions/gradient-editor-actions.c:809
 msgid "_Blending Function for Selection"
 msgstr "მონიშნულისთვის შერევის ფუნქცია"
 
-#: app/actions/gradient-editor-actions.c:815
+#: app/actions/gradient-editor-actions.c:811
 msgid "Coloring _Type for Selection"
 msgstr "მონიშნუ_ლის გაფერადების ტიპი"
 
-#: app/actions/gradient-editor-actions.c:818
+#: app/actions/gradient-editor-actions.c:814
 msgid "_Flip Selection"
 msgstr "მონიშნულის _გადაბრუნება"
 
-#: app/actions/gradient-editor-actions.c:820
+#: app/actions/gradient-editor-actions.c:816
 msgid "_Replicate Selection..."
 msgstr "მონიშნულის ასლი..."
 
-#: app/actions/gradient-editor-actions.c:822
+#: app/actions/gradient-editor-actions.c:818
 msgid "Split Segments at _Midpoints"
 msgstr "სეგ_მენტის შუაწერტილზე გაყოფა"
 
-#: app/actions/gradient-editor-actions.c:824
+#: app/actions/gradient-editor-actions.c:820
 msgid "Split Segments _Uniformly..."
 msgstr "სეგმენტების _თანაბრად დაყოფა..."
 
-#: app/actions/gradient-editor-actions.c:826
+#: app/actions/gradient-editor-actions.c:822
 msgid "_Delete Selection"
 msgstr "მონიშნულის _წაშლა"
 
-#: app/actions/gradient-editor-actions.c:828
+#: app/actions/gradient-editor-actions.c:824
 msgid "Re-_center Midpoints in Selection"
 msgstr ""
 
-#: app/actions/gradient-editor-actions.c:830
+#: app/actions/gradient-editor-actions.c:826
 msgid "Re-distribute _Handles in Selection"
 msgstr ""
 
@@ -7960,82 +8140,87 @@ msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "ნამდვილად გსურთ '%s'-ის მეხსიერებიდან და დისკიდან წაშლა?"
 
-#: app/actions/text-editor-actions.c:44
+#: app/actions/text-editor-actions.c:40
+msgctxt "text-editor-action"
+msgid "Text Editor Toolbar"
+msgstr "ტექსტური რედაქტორის პანელი"
+
+#: app/actions/text-editor-actions.c:45
 msgctxt "text-editor-action"
 msgid "Open"
 msgstr "გახსნა"
 
-#: app/actions/text-editor-actions.c:45
+#: app/actions/text-editor-actions.c:46
 msgctxt "text-editor-action"
 msgid "Load text from file"
 msgstr "ტექსტის ფაილიდან ჩატვირთვა"
 
-#: app/actions/text-editor-actions.c:50
+#: app/actions/text-editor-actions.c:51
 msgctxt "text-editor-action"
 msgid "Clear"
 msgstr "გაწმენდა"
 
-#: app/actions/text-editor-actions.c:51
+#: app/actions/text-editor-actions.c:52
 msgctxt "text-editor-action"
 msgid "Clear all text"
 msgstr "მთელი ტექსტის გაწმენდა"
 
-#: app/actions/text-editor-actions.c:59
+#: app/actions/text-editor-actions.c:60
 msgctxt "text-editor-action"
 msgid "LTR"
 msgstr "მარცხნიდან მარჯვნივ"
 
-#: app/actions/text-editor-actions.c:60
+#: app/actions/text-editor-actions.c:61
 msgctxt "text-editor-action"
 msgid "From left to right"
 msgstr "მარცხნიდან მარჯვნივ"
 
-#: app/actions/text-editor-actions.c:65
+#: app/actions/text-editor-actions.c:66
 msgctxt "text-editor-action"
 msgid "RTL"
 msgstr "მარჯვნიდან მარცხნივ"
 
-#: app/actions/text-editor-actions.c:66
+#: app/actions/text-editor-actions.c:67
 msgctxt "text-editor-action"
 msgid "From right to left"
 msgstr "მარჯვნიდან მარცხნივ"
 
-#: app/actions/text-editor-actions.c:71
+#: app/actions/text-editor-actions.c:72
 msgctxt "text-editor-action"
 msgid "TTB-RTL"
 msgstr "TTB-RTL"
 
-#: app/actions/text-editor-actions.c:72
+#: app/actions/text-editor-actions.c:73
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "ვერტიკალურად, მარჯვნიდან მარცხნივ (შერეული მიმართულებით)"
 
-#: app/actions/text-editor-actions.c:77
+#: app/actions/text-editor-actions.c:78
 msgctxt "text-editor-action"
 msgid "TTB-RTL-UPRIGHT"
 msgstr "TTB-RTL-UPRIGHT"
 
-#: app/actions/text-editor-actions.c:78
+#: app/actions/text-editor-actions.c:79
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "ვერტიკალური, მარჯვნიდან მარცხნივ (ზემოდან ქვემოთ მიმართულებით)"
 
-#: app/actions/text-editor-actions.c:83
+#: app/actions/text-editor-actions.c:84
 msgctxt "text-editor-action"
 msgid "TTB-LTR"
 msgstr "TTB-LTR"
 
-#: app/actions/text-editor-actions.c:84
+#: app/actions/text-editor-actions.c:85
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "ვერტიკალური, მარცხნიდან მარჯვნივ (შერეული მიმართულებით)"
 
-#: app/actions/text-editor-actions.c:89
+#: app/actions/text-editor-actions.c:90
 msgctxt "text-editor-action"
 msgid "TTB-LTR-UPRIGHT"
 msgstr "TTB-LTR-UPRIGHT"
 
-#: app/actions/text-editor-actions.c:90
+#: app/actions/text-editor-actions.c:91
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "ვერტიკალური, მარცხნიდან მარჯვნივ (ზემოდან ქვემოთ მიმართულებით)"
@@ -8817,6 +9002,11 @@ msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
 msgstr "ხელსაწყოს ძალა: გაზრდა რამესთან შედარებით"
 
+#: app/actions/tools-actions.c:830
+#, c-format
+msgid "Activate tool \"%s\""
+msgstr "ხელსაწყოს აქტივაცია:\"%s\""
+
 #: app/actions/vector-toolpath-actions.c:45
 msgctxt "vector-toolpath-action"
 msgid "Vector Toolpath Menu"
@@ -9182,62 +9372,62 @@ msgctxt "vectors-action"
 msgid "Selecti_on to Path"
 msgstr "მონი_შნულის კონტურამდე"
 
-#: app/actions/vectors-actions.c:278 app/actions/vectors-actions.c:284
-msgctxt "vectors-action"
-msgid "Selection to path"
-msgstr "მონიშნულის კონტურამდე"
-
-#: app/actions/vectors-actions.c:283
+#: app/actions/vectors-actions.c:278
 msgctxt "vectors-action"
 msgid "To _Path"
 msgstr "კონტურამდე"
 
-#: app/actions/vectors-actions.c:289
+#: app/actions/vectors-actions.c:279
+msgctxt "vectors-action"
+msgid "Selection to path"
+msgstr "მონიშნულის კონტურამდე"
+
+#: app/actions/vectors-actions.c:284
 msgctxt "vectors-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "მონიშნულის კონტურამდე(_მეტი)"
 
-#: app/actions/vectors-actions.c:290
+#: app/actions/vectors-actions.c:285
 msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "დამატებითი პარამეტრები"
 
-#: app/actions/vectors-actions.c:298
+#: app/actions/vectors-actions.c:293
 msgctxt "vectors-action"
 msgid "Select _Top Path"
 msgstr "ზედ_ა კონტურის არჩევა"
 
-#: app/actions/vectors-actions.c:299
+#: app/actions/vectors-actions.c:294
 msgctxt "vectors-action"
 msgid "Select the topmost path"
 msgstr "ყველაზე ზედა კონტურის არჩევა"
 
-#: app/actions/vectors-actions.c:304
+#: app/actions/vectors-actions.c:299
 msgctxt "vectors-action"
 msgid "Select _Bottom Path"
 msgstr "ქვედა კონტურის არჩევა"
 
-#: app/actions/vectors-actions.c:305
+#: app/actions/vectors-actions.c:300
 msgctxt "vectors-action"
 msgid "Select the bottommost path"
 msgstr "ყველაზე ქვედა კონტურის არჩევა"
 
-#: app/actions/vectors-actions.c:310
+#: app/actions/vectors-actions.c:305
 msgctxt "vectors-action"
 msgid "Select _Previous Path"
 msgstr "წინა კო_ნტურის არჩევა"
 
-#: app/actions/vectors-actions.c:311
+#: app/actions/vectors-actions.c:306
 msgctxt "vectors-action"
 msgid "Select the path above the current path"
 msgstr "მიმდინარე კონტურის ზემო კონტურის არჩევა"
 
-#: app/actions/vectors-actions.c:316
+#: app/actions/vectors-actions.c:311
 msgctxt "vectors-action"
 msgid "Select _Next Path"
 msgstr "შემდეგი კონ_ტურის არჩევა"
 
-#: app/actions/vectors-actions.c:317
+#: app/actions/vectors-actions.c:312
 msgctxt "vectors-action"
 msgid "Select the vector below the current path"
 msgstr "მიმდინარე კონტურის ქვეშ მდებარე ვექტორის არჩევა"
@@ -9864,274 +10054,279 @@ msgctxt "view-action"
 msgid "Flip the view vertically"
 msgstr "ხედის ვერტიკალურად გადაბრუნება"
 
-#: app/actions/view-actions.c:458
+#: app/actions/view-actions.c:453
+msgctxt "view-action"
+msgid "Display Rotation Absolute Angle Set"
+msgstr "მობრუნების აბსოლუტური კუთხის დაყენების ჩვენება"
+
+#: app/actions/view-actions.c:459
 msgctxt "view-action"
 msgid "_Reset Rotate"
 msgstr "_შემობრუნების საწყის მდგომარეობაში დაბრუნება"
 
-#: app/actions/view-actions.c:460
+#: app/actions/view-actions.c:461
 msgctxt "view-action"
 msgid "Reset the angle of rotation to 0°"
 msgstr "შემობრუნების კუთხის საწყის 0°-ზე დაბრუნება"
 
-#: app/actions/view-actions.c:468
+#: app/actions/view-actions.c:469
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "საათის ისრის მიმართულებით 15°-ით შემობრუნება"
 
-#: app/actions/view-actions.c:469
+#: app/actions/view-actions.c:470
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the right"
 msgstr "ხედის საათის ისრის მიმართულებით 15°-ით შემობრუნება"
 
-#: app/actions/view-actions.c:474
+#: app/actions/view-actions.c:475
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "_90°-ით საათის მიმართულებით შემობრუნება"
 
-#: app/actions/view-actions.c:475
+#: app/actions/view-actions.c:476
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the right"
 msgstr "ხედის 90°-ით მარჯვნივ შებრუნება"
 
-#: app/actions/view-actions.c:480
+#: app/actions/view-actions.c:481
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "_180°-ით შემობრუნება"
 
-#: app/actions/view-actions.c:481
+#: app/actions/view-actions.c:482
 msgctxt "view-action"
 msgid "Turn the view upside-down"
 msgstr "ხედის თავდაყირა დაყენება"
 
-#: app/actions/view-actions.c:486
+#: app/actions/view-actions.c:487
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "_90°-ით საათის საწ. მიმართულებით შებრუნება"
 
-#: app/actions/view-actions.c:487
+#: app/actions/view-actions.c:488
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the left"
 msgstr "ხედის 90°-ით მარცხნივ შებრუნება"
 
-#: app/actions/view-actions.c:492
+#: app/actions/view-actions.c:493
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "საათის ისრის საწ. მიმართულებით 15°-ით შემობრუნება"
 
-#: app/actions/view-actions.c:493
+#: app/actions/view-actions.c:494
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the left"
 msgstr "ხედის 15°-ით მარცხნივ შებრუნება"
 
-#: app/actions/view-actions.c:501
+#: app/actions/view-actions.c:502
 msgctxt "view-action"
 msgid "_Perceptual"
 msgstr "_აღქმადი"
 
-#: app/actions/view-actions.c:502
+#: app/actions/view-actions.c:503
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
 msgstr ""
 
-#: app/actions/view-actions.c:507
+#: app/actions/view-actions.c:508
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
 msgstr "_შეფარდებით კოლორიმეტრული"
 
-#: app/actions/view-actions.c:508
+#: app/actions/view-actions.c:509
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
 msgstr ""
 
-#: app/actions/view-actions.c:513
+#: app/actions/view-actions.c:514
 msgctxt "view-action"
 msgid "_Saturation"
 msgstr "_გაჯერებულობა"
 
-#: app/actions/view-actions.c:514
+#: app/actions/view-actions.c:515
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
 msgstr ""
 
-#: app/actions/view-actions.c:519
+#: app/actions/view-actions.c:520
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
 msgstr "აბსოლუტური კოლორიმეტრული"
 
-#: app/actions/view-actions.c:520
+#: app/actions/view-actions.c:521
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
 msgstr "ეკრანზე რენდერის დანიშნულება აბსოლუტურად კოლორიმეტრულია"
 
-#: app/actions/view-actions.c:528
+#: app/actions/view-actions.c:529
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "_თემიდან"
 
-#: app/actions/view-actions.c:529
+#: app/actions/view-actions.c:530
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "ფონის ფერის თემიდან აღება"
 
-#: app/actions/view-actions.c:534
+#: app/actions/view-actions.c:535
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "_ღია"
 
-#: app/actions/view-actions.c:535
+#: app/actions/view-actions.c:536
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "ღია ფერის გამოყენება"
 
-#: app/actions/view-actions.c:540
+#: app/actions/view-actions.c:541
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "_მუქი"
 
-#: app/actions/view-actions.c:541
+#: app/actions/view-actions.c:542
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "მუქი ფერის გამოყენება"
 
-#: app/actions/view-actions.c:546
+#: app/actions/view-actions.c:547
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "_ფერის არჩევა..."
 
-#: app/actions/view-actions.c:547
+#: app/actions/view-actions.c:548
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "ნებისმიერი ფერის გამოყენება"
 
-#: app/actions/view-actions.c:552
+#: app/actions/view-actions.c:553
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "როგორც _პარამეტრებში"
 
-#: app/actions/view-actions.c:554
+#: app/actions/view-actions.c:555
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr ""
 
-#: app/actions/view-actions.c:562
+#: app/actions/view-actions.c:563
 msgctxt "view-padding-color"
 msgid "Keep Padding in \"Show _All\" Mode"
 msgstr ""
 
-#: app/actions/view-actions.c:564
+#: app/actions/view-actions.c:565
 msgctxt "view-padding-color"
 msgid "Keep canvas padding when \"View -> Show All\" is enabled"
 msgstr ""
 
-#: app/actions/view-actions.c:573
+#: app/actions/view-actions.c:574
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
 msgstr "დააყენეთ ჰორიზონტალური ცოციის გადაწევა"
 
-#: app/actions/view-actions.c:578
+#: app/actions/view-actions.c:579
 msgctxt "view-action"
 msgid "Scroll to left border"
 msgstr "მარცხენა საზღვრამდე გაწევა"
 
-#: app/actions/view-actions.c:583
+#: app/actions/view-actions.c:584
 msgctxt "view-action"
 msgid "Scroll to right border"
 msgstr "მარჯვენა საზღვრამდე გაწევა"
 
-#: app/actions/view-actions.c:588
+#: app/actions/view-actions.c:589
 msgctxt "view-action"
 msgid "Scroll left"
 msgstr "მარცხნივ გაწევა"
 
-#: app/actions/view-actions.c:593
+#: app/actions/view-actions.c:594
 msgctxt "view-action"
 msgid "Scroll right"
 msgstr "მარჯვნივ გაწევა"
 
-#: app/actions/view-actions.c:598
+#: app/actions/view-actions.c:599
 msgctxt "view-action"
 msgid "Scroll page left"
 msgstr "გვერდის მარცხნივ გაწევა"
 
-#: app/actions/view-actions.c:603
+#: app/actions/view-actions.c:604
 msgctxt "view-action"
 msgid "Scroll page right"
 msgstr "გვერდის მარჯვნივ გაწევა"
 
-#: app/actions/view-actions.c:611
+#: app/actions/view-actions.c:612
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
 msgstr "დააყენეთ ვერტიკალური ცოციის გადაწევა"
 
-#: app/actions/view-actions.c:616
+#: app/actions/view-actions.c:617
 msgctxt "view-action"
 msgid "Scroll to top border"
 msgstr "ზედა საზღვრამდე აქაჩვა"
 
-#: app/actions/view-actions.c:621
+#: app/actions/view-actions.c:622
 msgctxt "view-action"
 msgid "Scroll to bottom border"
 msgstr "ქვედა საზღვრამდე ჩამოქაჩვა"
 
-#: app/actions/view-actions.c:626
+#: app/actions/view-actions.c:627
 msgctxt "view-action"
 msgid "Scroll up"
 msgstr "მაღლა აწევა"
 
-#: app/actions/view-actions.c:631
+#: app/actions/view-actions.c:632
 msgctxt "view-action"
 msgid "Scroll down"
 msgstr "დაბლა ჩამოქაჩვა"
 
-#: app/actions/view-actions.c:636
+#: app/actions/view-actions.c:637
 msgctxt "view-action"
 msgid "Scroll page up"
 msgstr "გვერდით მაღლა აწევა"
 
-#: app/actions/view-actions.c:641
+#: app/actions/view-actions.c:642
 msgctxt "view-action"
 msgid "Scroll page down"
 msgstr "გვერდით დაბლა ჩამოწევა"
 
-#: app/actions/view-actions.c:842
+#: app/actions/view-actions.c:843
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "გადიდების აღდგენა(%d%%)"
 
-#: app/actions/view-actions.c:850
+#: app/actions/view-actions.c:851
 msgid "Re_vert Zoom"
 msgstr "გადიდების აღდგენა"
 
-#: app/actions/view-actions.c:1018
+#: app/actions/view-actions.c:1019
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "ს_ხვა (%s) ..."
 
-#: app/actions/view-actions.c:1027
+#: app/actions/view-actions.c:1028
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_გადიდება (%s)"
 
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
-#: app/actions/view-actions.c:1049
+#: app/actions/view-actions.c:1050
 msgid "(H+V) "
 msgstr "(H+V) "
 
 #. please preserve the trailing space
 #. H: Horizontal
-#: app/actions/view-actions.c:1055
+#: app/actions/view-actions.c:1056
 msgid "(H) "
 msgstr "(H) "
 
 #. please preserve the trailing space
 #. V: Vertical
-#: app/actions/view-actions.c:1061
+#: app/actions/view-actions.c:1062
 msgid "(V) "
 msgstr "(V) "
 
-#: app/actions/view-actions.c:1068
+#: app/actions/view-actions.c:1069
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "გადაბრუნება %s და შებრუნება (%d°)"
@@ -10294,6 +10489,11 @@ msgstr "ერთფანჯრიანი რეჟიმი გამორ�
 #, c-format
 msgid "Show \"%s-%d.%d\""
 msgstr "Show \"%s-%d.%d\""
+
+#: app/actions/windows-actions.c:471
+msgid "Switch to the first image view: %2$s"
+msgid_plural "Switch to image view %d: %s"
+msgstr[0] "%d გამოსახულების ხედზე გადართვა: %s"
 
 #: app/actions/windows-commands.c:208
 msgid ""
@@ -18302,7 +18502,7 @@ msgid "(clean)"
 msgstr "(სუფთა)"
 
 #: app/display/gimpdisplayshell-title.c:374
-#: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1062
+#: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1116
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
 #: app/widgets/gimpdeviceinfo.c:1077 app/widgets/gimpdeviceinfo.c:1102
 msgid "(none)"
@@ -25308,7 +25508,7 @@ msgstr "%s-დან კონტურების შემოტანის 
 msgid "_Search:"
 msgstr "_ძებნა:"
 
-#: app/widgets/gimpactiongroup.c:1059
+#: app/widgets/gimpactiongroup.c:1113
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -26571,7 +26771,7 @@ msgctxt "dock"
 msgid " | "
 msgstr " | "
 
-#: app/widgets/gimpdockbook.c:253
+#: app/widgets/gimpdockbook.c:248
 msgid "Configure this tab"
 msgstr "ამ ჩანართის გამართვა"
 
