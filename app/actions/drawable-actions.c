@@ -42,13 +42,13 @@
 static const GimpActionEntry drawable_actions[] =
 {
   { "drawable-equalize", NULL,
-    NC_("drawable-action", "_Equalize"), { NULL },
+    NC_("drawable-action", "_Equalize"), NULL, { NULL },
     NC_("drawable-action", "Automatic contrast enhancement"),
     drawable_equalize_cmd_callback,
     GIMP_HELP_LAYER_EQUALIZE },
 
   { "drawable-levels-stretch", NULL,
-    NC_("drawable-action", "_White Balance"), { NULL },
+    NC_("drawable-action", "_White Balance"), NULL, { NULL },
     NC_("drawable-action", "Automatic white balance correction"),
     drawable_levels_stretch_cmd_callback,
     GIMP_HELP_LAYER_WHITE_BALANCE }
@@ -57,13 +57,13 @@ static const GimpActionEntry drawable_actions[] =
 static const GimpToggleActionEntry drawable_toggle_actions[] =
 {
   { "drawable-visible", GIMP_ICON_VISIBLE,
-    NC_("drawable-action", "Toggle Drawables _Visibility"), { NULL }, NULL,
+    NC_("drawable-action", "Toggle Drawables _Visibility"), NULL, { NULL }, NULL,
     drawable_visible_cmd_callback,
     FALSE,
     GIMP_HELP_LAYER_VISIBLE },
 
   { "drawable-lock-content", GIMP_ICON_LOCK_CONTENT,
-    NC_("drawable-action", "L_ock Pixels of Drawables"), { NULL },
+    NC_("drawable-action", "L_ock Pixels of Drawables"), NULL, { NULL },
     NC_("drawable-action",
         "Keep the pixels on selected drawables from being modified"),
     drawable_lock_content_cmd_callback,
@@ -71,7 +71,7 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
     GIMP_HELP_LAYER_LOCK_PIXELS },
 
   { "drawable-lock-position", GIMP_ICON_LOCK_POSITION,
-    NC_("drawable-action", "L_ock Position of Drawables"), { NULL },
+    NC_("drawable-action", "L_ock Position of Drawables"), NULL, { NULL },
     NC_("drawable-action",
         "Keep the position on selected drawables from being modified"),
     drawable_lock_position_cmd_callback,
@@ -82,13 +82,13 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
 static const GimpEnumActionEntry drawable_flip_actions[] =
 {
   { "drawable-flip-horizontal", GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
-    NC_("drawable-action", "Flip _Horizontally"), { NULL },
+    NC_("drawable-action", "Flip _Horizontally"), NULL, { NULL },
     NC_("drawable-action", "Flip drawable horizontally"),
     GIMP_ORIENTATION_HORIZONTAL, FALSE,
     GIMP_HELP_LAYER_FLIP_HORIZONTAL },
 
   { "drawable-flip-vertical", GIMP_ICON_OBJECT_FLIP_VERTICAL,
-    NC_("drawable-action", "Flip _Vertically"), { NULL },
+    NC_("drawable-action", "Flip _Vertically"), NULL, { NULL },
     NC_("drawable-action", "Flip drawable vertically"),
     GIMP_ORIENTATION_VERTICAL, FALSE,
     GIMP_HELP_LAYER_FLIP_VERTICAL }
@@ -97,19 +97,19 @@ static const GimpEnumActionEntry drawable_flip_actions[] =
 static const GimpEnumActionEntry drawable_rotate_actions[] =
 {
   { "drawable-rotate-90", GIMP_ICON_OBJECT_ROTATE_90,
-    NC_("drawable-action", "Rotate 90° _clockwise"), { NULL },
+    NC_("drawable-action", "Rotate 90° _clockwise"), NULL, { NULL },
     NC_("drawable-action", "Rotate drawable 90 degrees to the right"),
     GIMP_ROTATE_90, FALSE,
     GIMP_HELP_LAYER_ROTATE_90 },
 
   { "drawable-rotate-180", GIMP_ICON_OBJECT_ROTATE_180,
-    NC_("drawable-action", "Rotate _180°"), { NULL },
+    NC_("drawable-action", "Rotate _180°"), NULL, { NULL },
     NC_("drawable-action", "Turn drawable upside-down"),
     GIMP_ROTATE_180, FALSE,
     GIMP_HELP_LAYER_ROTATE_180 },
 
   { "drawable-rotate-270", GIMP_ICON_OBJECT_ROTATE_270,
-    NC_("drawable-action", "Rotate 90° counter-clock_wise"), { NULL },
+    NC_("drawable-action", "Rotate 90° counter-clock_wise"), NULL, { NULL },
     NC_("drawable-action", "Rotate drawable 90 degrees to the left"),
     GIMP_ROTATE_270, FALSE,
     GIMP_HELP_LAYER_ROTATE_270 }

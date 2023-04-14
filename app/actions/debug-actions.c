@@ -37,17 +37,17 @@ static const GimpActionEntry debug_actions[] =
   { "debug-menu", NULL, "_Debug" },
 
   { "debug-gtk-inspector", NULL,
-    "Start _GtkInspector", { NULL }, NULL,
+    "Start _GtkInspector", NULL, { NULL }, NULL,
     debug_gtk_inspector_cmd_callback,
     NULL },
 
   { "debug-mem-profile", NULL,
-    "_Memory Profile", { NULL }, NULL,
+    "_Memory Profile", NULL, { NULL }, NULL,
     debug_mem_profile_cmd_callback,
     NULL },
 
   { "debug-benchmark-projection", NULL,
-    "Benchmark _Projection", { NULL },
+    "Benchmark _Projection", NULL, { NULL },
     "Invalidates the entire projection, measures the time it takes to "
     "validate (render) the part that is visible in the active display, "
     "and print the result to stdout.",
@@ -55,18 +55,18 @@ static const GimpActionEntry debug_actions[] =
     NULL },
 
   { "debug-show-image-graph", NULL,
-    "Show Image _Graph", { NULL },
+    "Show Image _Graph", NULL, { NULL },
     "Creates a new image showing the GEGL graph of this image",
     debug_show_image_graph_cmd_callback,
     NULL },
 
   { "debug-dump-keyboard-shortcuts", NULL,
-    "Dump _Keyboard Shortcuts", { NULL }, NULL,
+    "Dump _Keyboard Shortcuts", NULL, { NULL }, NULL,
     debug_dump_keyboard_shortcuts_cmd_callback,
     NULL },
 
   { "debug-dump-attached-data", NULL,
-    "Dump Attached Data", { NULL }, NULL,
+    "Dump Attached Data", NULL, { NULL }, NULL,
     debug_dump_attached_data_cmd_callback,
     NULL }
 };

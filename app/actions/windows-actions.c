@@ -106,13 +106,13 @@ static const GimpActionEntry windows_actions[] =
                                       "_Dockable Dialogs")      },
 
   { "windows-show-display-next", NULL,
-    NC_("windows-action", "Next Image"), { "<alt>Tab", "Forward", NULL },
+    NC_("windows-action", "Next Image"), NULL, { "<alt>Tab", "Forward", NULL },
     NC_("windows-action", "Switch to the next image"),
     windows_show_display_next_cmd_callback,
     NULL },
 
   { "windows-show-display-previous", NULL,
-    NC_("windows-action", "Previous Image"), { "<alt><shift>Tab", "Back", NULL },
+    NC_("windows-action", "Previous Image"), NULL, { "<alt><shift>Tab", "Back", NULL },
     NC_("windows-action", "Switch to the previous image"),
     windows_show_display_previous_cmd_callback,
     NULL },
@@ -124,21 +124,21 @@ static const GimpActionEntry windows_actions[] =
 static const GimpToggleActionEntry windows_toggle_actions[] =
 {
   { "windows-hide-docks", NULL,
-    NC_("windows-action", "_Hide Docks"), { "Tab", NULL },
+    NC_("windows-action", "_Hide Docks"), NULL, { "Tab", NULL },
     NC_("windows-action", "When enabled, docks and other dialogs are hidden, leaving only image windows."),
     windows_hide_docks_cmd_callback,
     FALSE,
     GIMP_HELP_WINDOWS_HIDE_DOCKS },
 
   { "windows-show-tabs", NULL,
-    NC_("windows-action", "_Show Tabs"), { NULL },
+    NC_("windows-action", "_Show Tabs"), NULL, { NULL },
     NC_("windows-action", "When enabled, the image tabs bar is shown."),
     windows_show_tabs_cmd_callback,
     TRUE,
     GIMP_HELP_WINDOWS_SHOW_TABS },
 
   { "windows-use-single-window-mode", NULL,
-    NC_("windows-action", "Single-Window _Mode"), { NULL },
+    NC_("windows-action", "Single-Window _Mode"), NULL, { NULL },
     NC_("windows-action", "When enabled, GIMP is in a single-window mode."),
     windows_use_single_window_mode_cmd_callback,
     TRUE,
@@ -148,22 +148,22 @@ static const GimpToggleActionEntry windows_toggle_actions[] =
 static const GimpRadioActionEntry windows_tabs_position_actions[] =
 {
   { "windows-tabs-position-top", GIMP_ICON_GO_TOP,
-    NC_("windows-tabs-position-action", "_Top"), { NULL },
+    NC_("windows-tabs-position-action", "_Top"), NULL, { NULL },
     NC_("windows-tabs-position-action", "Position the tabs on the top"),
     GIMP_POSITION_TOP, GIMP_HELP_WINDOWS_TABS_POSITION },
 
   { "windows-tabs-position-bottom", GIMP_ICON_GO_BOTTOM,
-    NC_("windows-tabs-position-action", "_Bottom"), { NULL },
+    NC_("windows-tabs-position-action", "_Bottom"), NULL, { NULL },
     NC_("windows-tabs-position-action", "Position the tabs on the bottom"),
     GIMP_POSITION_BOTTOM, GIMP_HELP_WINDOWS_TABS_POSITION },
 
   { "windows-tabs-position-left", GIMP_ICON_GO_FIRST,
-    NC_("windows-tabs-position-action", "_Left"), { NULL },
+    NC_("windows-tabs-position-action", "_Left"), NULL, { NULL },
     NC_("windows-tabs-position-action", "Position the tabs on the left"),
     GIMP_POSITION_LEFT, GIMP_HELP_WINDOWS_TABS_POSITION },
 
   { "windows-tabs-position-right", GIMP_ICON_GO_LAST,
-    NC_("windows-tabs-position-action", "_Right"), { NULL },
+    NC_("windows-tabs-position-action", "_Right"), NULL, { NULL },
     NC_("windows-tabs-position-action", "Position the tabs on the right"),
     GIMP_POSITION_RIGHT, GIMP_HELP_WINDOWS_TABS_POSITION },
 };

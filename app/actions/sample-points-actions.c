@@ -37,14 +37,14 @@
 static const GimpActionEntry sample_points_actions[] =
 {
   { "sample-points-popup", GIMP_ICON_SAMPLE_POINT,
-    NC_("sample-points-action", "Sample Point Menu"), { NULL }, NULL, NULL,
+    NC_("sample-points-action", "Sample Point Menu"), NULL, { NULL }, NULL, NULL,
     GIMP_HELP_SAMPLE_POINT_DIALOG }
 };
 
 static const GimpToggleActionEntry sample_points_toggle_actions[] =
 {
   { "sample-points-sample-merged", NULL,
-    NC_("sample-points-action", "_Sample Merged"), { NULL },
+    NC_("sample-points-action", "_Sample Merged"), NULL, { NULL },
     NC_("sample-points-action",
         "Use the composite color of all visible layers"),
     sample_points_sample_merged_cmd_callback,

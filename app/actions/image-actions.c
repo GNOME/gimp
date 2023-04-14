@@ -52,11 +52,11 @@
 static const GimpActionEntry image_actions[] =
 {
   { "image-menubar", NULL,
-    NC_("image-action", "Image Menu"), { NULL }, NULL, NULL,
+    NC_("image-action", "Image Menu"), NULL, { NULL }, NULL, NULL,
     GIMP_HELP_IMAGE_WINDOW },
 
   { "image-popup", NULL,
-    NC_("image-action", "Image Menu"), { NULL }, NULL, NULL,
+    NC_("image-action", "Image Menu"), NULL, { NULL }, NULL, NULL,
     GIMP_HELP_IMAGE_WINDOW },
 
   { "image-menu",                  NULL, NC_("image-action", "_Image")     },
@@ -77,43 +77,43 @@ static const GimpActionEntry image_actions[] =
   { "colors-desaturate-menu",   NULL, NC_("image-action", "D_esaturate")   },
 
   { "image-new", GIMP_ICON_DOCUMENT_NEW,
-    NC_("image-action", "_New..."), { "<primary>N", NULL },
+    NC_("image-action", "_New..."), NULL, { "<primary>N", NULL },
     NC_("image-action", "Create a new image"),
     image_new_cmd_callback,
     GIMP_HELP_FILE_NEW },
 
   { "image-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
-    NC_("image-action", "_Duplicate"), { "<primary>D", NULL },
+    NC_("image-action", "_Duplicate"), NULL, { "<primary>D", NULL },
     NC_("image-action", "Create a duplicate of this image"),
     image_duplicate_cmd_callback,
     GIMP_HELP_IMAGE_DUPLICATE },
 
   { "image-color-profile-assign", NULL,
-    NC_("image-action", "_Assign Color Profile..."), { NULL },
+    NC_("image-action", "_Assign Color Profile..."), NULL, { NULL },
     NC_("image-action", "Set a color profile on the image"),
     image_color_profile_assign_cmd_callback,
     GIMP_HELP_IMAGE_COLOR_PROFILE_ASSIGN },
 
   { "image-color-profile-convert", NULL,
-    NC_("image-action", "_Convert to Color Profile..."), { NULL },
+    NC_("image-action", "_Convert to Color Profile..."), NULL, { NULL },
     NC_("image-action", "Apply a color profile to the image"),
     image_color_profile_convert_cmd_callback,
     GIMP_HELP_IMAGE_COLOR_PROFILE_CONVERT },
 
   { "image-color-profile-discard", NULL,
-    NC_("image-action", "_Discard Color Profile"), { NULL },
+    NC_("image-action", "_Discard Color Profile"), NULL, { NULL },
     NC_("image-action", "Remove the image's color profile"),
     image_color_profile_discard_cmd_callback,
     GIMP_HELP_IMAGE_COLOR_PROFILE_DISCARD },
 
   { "image-softproof-profile", NULL,
-    NC_("image-action", "_Soft-proof Profile..."), { NULL },
+    NC_("image-action", "_Soft-proof Profile..."), NULL, { NULL },
     NC_("image-action", "Set the soft-proofing profile"),
     image_softproof_profile_cmd_callback,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "image-color-profile-save", NULL,
-    NC_("image-action", "_Save Color Profile to File..."), { NULL },
+    NC_("image-action", "_Save Color Profile to File..."), NULL, { NULL },
     NC_("image-action", "Save the image's color profile to an ICC file"),
     image_color_profile_save_cmd_callback,
     GIMP_HELP_IMAGE_COLOR_PROFILE_SAVE },
@@ -122,67 +122,67 @@ static const GimpActionEntry image_actions[] =
     NC_("image-action", "Soft-Proofing Re_ndering Intent") },
 
   { "image-resize", GIMP_ICON_OBJECT_RESIZE,
-    NC_("image-action", "Can_vas Size..."), { NULL },
+    NC_("image-action", "Can_vas Size..."), NULL, { NULL },
     NC_("image-action", "Adjust the image dimensions"),
     image_resize_cmd_callback,
     GIMP_HELP_IMAGE_RESIZE },
 
   { "image-resize-to-layers", NULL,
-    NC_("image-action", "Fit Canvas to L_ayers"), { NULL },
+    NC_("image-action", "Fit Canvas to L_ayers"), NULL, { NULL },
     NC_("image-action", "Resize the image to enclose all layers"),
     image_resize_to_layers_cmd_callback,
     GIMP_HELP_IMAGE_RESIZE_TO_LAYERS },
 
   { "image-resize-to-selection", NULL,
-    NC_("image-action", "F_it Canvas to Selection"), { NULL },
+    NC_("image-action", "F_it Canvas to Selection"), NULL, { NULL },
     NC_("image-action", "Resize the image to the extents of the selection"),
     image_resize_to_selection_cmd_callback,
     GIMP_HELP_IMAGE_RESIZE_TO_SELECTION },
 
   { "image-print-size", GIMP_ICON_DOCUMENT_PRINT_RESOLUTION,
-    NC_("image-action", "_Print Size..."), { NULL },
+    NC_("image-action", "_Print Size..."), NULL, { NULL },
     NC_("image-action", "Adjust the print resolution"),
     image_print_size_cmd_callback,
     GIMP_HELP_IMAGE_PRINT_SIZE },
 
   { "image-scale", GIMP_ICON_OBJECT_SCALE,
-    NC_("image-action", "_Scale Image..."), { NULL },
+    NC_("image-action", "_Scale Image..."), NULL, { NULL },
     NC_("image-action", "Change the size of the image content"),
     image_scale_cmd_callback,
     GIMP_HELP_IMAGE_SCALE },
 
   { "image-crop-to-selection", GIMP_ICON_TOOL_CROP,
-    NC_("image-action", "_Crop to Selection"), { NULL },
+    NC_("image-action", "_Crop to Selection"), NULL, { NULL },
     NC_("image-action", "Crop the image to the extents of the selection"),
     image_crop_to_selection_cmd_callback,
     GIMP_HELP_IMAGE_CROP },
 
   { "image-crop-to-content", GIMP_ICON_TOOL_CROP,
-    NC_("image-action", "Crop to C_ontent"), { NULL },
+    NC_("image-action", "Crop to C_ontent"), NULL, { NULL },
     NC_("image-action", "Crop the image to the extents of its content (remove empty borders from the image)"),
     image_crop_to_content_cmd_callback,
     GIMP_HELP_IMAGE_CROP },
 
   { "image-merge-layers", NULL,
-    NC_("image-action", "Merge Visible _Layers..."), { "<primary>M", NULL },
+    NC_("image-action", "Merge Visible _Layers..."), NULL, { "<primary>M", NULL },
     NC_("image-action", "Merge all visible layers into one layer"),
     image_merge_layers_cmd_callback,
     GIMP_HELP_IMAGE_MERGE_LAYERS },
 
   { "image-flatten", NULL,
-    NC_("image-action", "_Flatten Image"), { NULL },
+    NC_("image-action", "_Flatten Image"), NULL, { NULL },
     NC_("image-action", "Merge all layers into one and remove transparency"),
     image_flatten_image_cmd_callback,
     GIMP_HELP_IMAGE_FLATTEN },
 
   { "image-configure-grid", GIMP_ICON_GRID,
-    NC_("image-action", "Configure G_rid..."), { NULL },
+    NC_("image-action", "Configure G_rid..."), NULL, { NULL },
     NC_("image-action", "Configure the grid for this image"),
     image_configure_grid_cmd_callback,
     GIMP_HELP_IMAGE_GRID },
 
   { "image-properties", "dialog-information",
-    NC_("image-action", "Image Pr_operties"), { "<alt>Return", NULL },
+    NC_("image-action", "Image Pr_operties"), NULL, { "<alt>Return", NULL },
     NC_("image-action", "Display information about this image"),
     image_properties_cmd_callback,
     GIMP_HELP_IMAGE_PROPERTIES }
@@ -191,7 +191,7 @@ static const GimpActionEntry image_actions[] =
 static const GimpToggleActionEntry image_toggle_actions[] =
 {
   { "image-color-profile-use-srgb", NULL,
-    NC_("image-action", "Use _sRGB Profile"), { NULL },
+    NC_("image-action", "Use _sRGB Profile"), NULL, { NULL },
     NC_("image-action", "Temporarily use an sRGB profile for the image. "
         "This is the same as discarding the image's color profile, but "
         "allows to easily restore the profile."),
@@ -200,7 +200,7 @@ static const GimpToggleActionEntry image_toggle_actions[] =
     GIMP_HELP_IMAGE_COLOR_PROFILE_USE_SRGB },
 
   { "image-softproof-black-point-compensation", NULL,
-    NC_("image-action", "_Black Point Compensation"), { NULL },
+    NC_("image-action", "_Black Point Compensation"), NULL, { NULL },
     NC_("image-action", "Use black point compensation for soft-proofing"),
     image_softproof_bpc_cmd_callback,
     TRUE,
@@ -210,17 +210,17 @@ static const GimpToggleActionEntry image_toggle_actions[] =
 static const GimpRadioActionEntry image_convert_base_type_actions[] =
 {
   { "image-convert-rgb", GIMP_ICON_CONVERT_RGB,
-    NC_("image-convert-action", "_RGB"), { NULL },
+    NC_("image-convert-action", "_RGB"), NULL, { NULL },
     NC_("image-convert-action", "Convert the image to the RGB colorspace"),
     GIMP_RGB, GIMP_HELP_IMAGE_CONVERT_RGB },
 
   { "image-convert-grayscale", GIMP_ICON_CONVERT_GRAYSCALE,
-    NC_("image-convert-action", "_Grayscale"), { NULL },
+    NC_("image-convert-action", "_Grayscale"), NULL, { NULL },
     NC_("image-convert-action", "Convert the image to grayscale"),
     GIMP_GRAY, GIMP_HELP_IMAGE_CONVERT_GRAYSCALE },
 
   { "image-convert-indexed", GIMP_ICON_CONVERT_INDEXED,
-    NC_("image-convert-action", "_Indexed..."), { NULL },
+    NC_("image-convert-action", "_Indexed..."), NULL, { NULL },
     NC_("image-convert-action", "Convert the image to indexed colors"),
     GIMP_INDEXED, GIMP_HELP_IMAGE_CONVERT_INDEXED }
 };
@@ -228,37 +228,37 @@ static const GimpRadioActionEntry image_convert_base_type_actions[] =
 static const GimpRadioActionEntry image_convert_precision_actions[] =
 {
   { "image-convert-u8", NULL,
-    NC_("image-convert-action", "8 bit integer"), { NULL },
+    NC_("image-convert-action", "8 bit integer"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to 8 bit integer"),
     GIMP_COMPONENT_TYPE_U8, GIMP_HELP_IMAGE_CONVERT_U8 },
 
   { "image-convert-u16", NULL,
-    NC_("image-convert-action", "16 bit integer"), { NULL },
+    NC_("image-convert-action", "16 bit integer"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to 16 bit integer"),
     GIMP_COMPONENT_TYPE_U16, GIMP_HELP_IMAGE_CONVERT_U16 },
 
   { "image-convert-u32", NULL,
-    NC_("image-convert-action", "32 bit integer"), { NULL },
+    NC_("image-convert-action", "32 bit integer"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to 32 bit integer"),
     GIMP_COMPONENT_TYPE_U32, GIMP_HELP_IMAGE_CONVERT_U32 },
 
   { "image-convert-half", NULL,
-    NC_("image-convert-action", "16 bit floating point"), { NULL },
+    NC_("image-convert-action", "16 bit floating point"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to 16 bit floating point"),
     GIMP_COMPONENT_TYPE_HALF, GIMP_HELP_IMAGE_CONVERT_HALF },
 
   { "image-convert-float", NULL,
-    NC_("image-convert-action", "32 bit floating point"), { NULL },
+    NC_("image-convert-action", "32 bit floating point"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to 32 bit floating point"),
     GIMP_COMPONENT_TYPE_FLOAT, GIMP_HELP_IMAGE_CONVERT_FLOAT },
 
   { "image-convert-double", NULL,
-    NC_("image-convert-action", "64 bit floating point"), { NULL },
+    NC_("image-convert-action", "64 bit floating point"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to 64 bit floating point"),
     GIMP_COMPONENT_TYPE_DOUBLE, GIMP_HELP_IMAGE_CONVERT_DOUBLE }
@@ -267,19 +267,19 @@ static const GimpRadioActionEntry image_convert_precision_actions[] =
 static const GimpRadioActionEntry image_convert_trc_actions[] =
 {
   { "image-convert-linear", NULL,
-    NC_("image-convert-action", "Linear light"), { NULL },
+    NC_("image-convert-action", "Linear light"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to linear light"),
     GIMP_TRC_LINEAR, GIMP_HELP_IMAGE_CONVERT_GAMMA },
 
   { "image-convert-non-linear", NULL,
-    NC_("image-convert-action", "Non-Linear"), { NULL },
+    NC_("image-convert-action", "Non-Linear"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to non-linear gamma from the color profile"),
     GIMP_TRC_NON_LINEAR, GIMP_HELP_IMAGE_CONVERT_GAMMA },
 
   { "image-convert-perceptual", NULL,
-    NC_("image-convert-action", "Perceptual (sRGB)"), { NULL },
+    NC_("image-convert-action", "Perceptual (sRGB)"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to perceptual (sRGB) gamma"),
     GIMP_TRC_PERCEPTUAL, GIMP_HELP_IMAGE_CONVERT_GAMMA }
@@ -288,13 +288,13 @@ static const GimpRadioActionEntry image_convert_trc_actions[] =
 static const GimpEnumActionEntry image_flip_actions[] =
 {
   { "image-flip-horizontal", GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
-    NC_("image-action", "Flip _Horizontally"), { NULL },
+    NC_("image-action", "Flip _Horizontally"), NULL, { NULL },
     NC_("image-action", "Flip image horizontally"),
     GIMP_ORIENTATION_HORIZONTAL, FALSE,
     GIMP_HELP_IMAGE_FLIP_HORIZONTAL },
 
   { "image-flip-vertical", GIMP_ICON_OBJECT_FLIP_VERTICAL,
-    NC_("image-action", "Flip _Vertically"), { NULL },
+    NC_("image-action", "Flip _Vertically"), NULL, { NULL },
     NC_("image-action", "Flip image vertically"),
     GIMP_ORIENTATION_VERTICAL, FALSE,
     GIMP_HELP_IMAGE_FLIP_VERTICAL }
@@ -303,19 +303,19 @@ static const GimpEnumActionEntry image_flip_actions[] =
 static const GimpEnumActionEntry image_rotate_actions[] =
 {
   { "image-rotate-90", GIMP_ICON_OBJECT_ROTATE_90,
-    NC_("image-action", "Rotate 90° _clockwise"), { NULL },
+    NC_("image-action", "Rotate 90° _clockwise"), NULL, { NULL },
     NC_("image-action", "Rotate the image 90 degrees to the right"),
     GIMP_ROTATE_90, FALSE,
     GIMP_HELP_IMAGE_ROTATE_90 },
 
   { "image-rotate-180", GIMP_ICON_OBJECT_ROTATE_180,
-    NC_("image-action", "Rotate _180°"), { NULL },
+    NC_("image-action", "Rotate _180°"), NULL, { NULL },
     NC_("image-action", "Turn the image upside-down"),
     GIMP_ROTATE_180, FALSE,
     GIMP_HELP_IMAGE_ROTATE_180 },
 
   { "image-rotate-270", GIMP_ICON_OBJECT_ROTATE_270,
-    NC_("image-action", "Rotate 90° counter-clock_wise"), { NULL },
+    NC_("image-action", "Rotate 90° counter-clock_wise"), NULL, { NULL },
     NC_("image-action", "Rotate the image 90 degrees to the left"),
     GIMP_ROTATE_270, FALSE,
     GIMP_HELP_IMAGE_ROTATE_270 }
@@ -324,25 +324,25 @@ static const GimpEnumActionEntry image_rotate_actions[] =
 static const GimpRadioActionEntry image_softproof_intent_actions[] =
 {
   { "image-softproof-intent-perceptual", NULL,
-    NC_("image-action", "_Perceptual"), { NULL },
+    NC_("image-action", "_Perceptual"), NULL, { NULL },
     NC_("image-action", "Soft-proofing rendering intent is perceptual"),
     GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "image-softproof-intent-relative-colorimetric", NULL,
-    NC_("image-action", "_Relative Colorimetric"), { NULL },
+    NC_("image-action", "_Relative Colorimetric"), NULL, { NULL },
     NC_("image-action", "Soft-proofing rendering intent is relative colorimetric"),
     GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "image-softproof-intent-saturation", NULL,
-    NC_("image-action", "_Saturation"), { NULL },
+    NC_("image-action", "_Saturation"), NULL, { NULL },
     NC_("image-action", "Soft-proofing rendering intent is saturation"),
     GIMP_COLOR_RENDERING_INTENT_SATURATION,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "image-softproof-intent-absolute-colorimetric", NULL,
-    NC_("image-action", "_Absolute Colorimetric"), { NULL },
+    NC_("image-action", "_Absolute Colorimetric"), NULL, { NULL },
     NC_("image-action", "Soft-proofing rendering intent is absolute colorimetric"),
     GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT }

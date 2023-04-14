@@ -74,55 +74,55 @@ static const GimpActionEntry file_actions[] =
   { "file-open-recent-menu", NULL, NC_("file-action", "Open _Recent") },
 
   { "file-open", GIMP_ICON_IMAGE_OPEN,
-    NC_("file-action", "_Open..."), { "<primary>O", NULL },
+    NC_("file-action", "_Open..."), NULL, { "<primary>O", NULL },
     NC_("file-action", "Open an image file"),
     file_open_cmd_callback,
     GIMP_HELP_FILE_OPEN },
 
   { "file-open-as-layers", GIMP_ICON_LAYER,
-    NC_("file-action", "Op_en as Layers..."), { "<primary><alt>O", NULL },
+    NC_("file-action", "Op_en as Layers..."), NULL, { "<primary><alt>O", NULL },
     NC_("file-action", "Open an image file as layers"),
     file_open_as_layers_cmd_callback,
     GIMP_HELP_FILE_OPEN_AS_LAYER },
 
   { "file-open-location", GIMP_ICON_WEB,
-    NC_("file-action", "Open _Location..."), { NULL },
+    NC_("file-action", "Open _Location..."), NULL, { NULL },
     NC_("file-action", "Open an image file from a specified location"),
     file_open_location_cmd_callback,
     GIMP_HELP_FILE_OPEN_LOCATION },
 
   { "file-create-template", NULL,
-    NC_("file-action", "Create _Template..."), { NULL },
+    NC_("file-action", "Create _Template..."), NULL, { NULL },
     NC_("file-action", "Create a new template from this image"),
     file_create_template_cmd_callback,
     GIMP_HELP_FILE_CREATE_TEMPLATE },
 
   { "file-revert", GIMP_ICON_IMAGE_RELOAD,
-    NC_("file-action", "Re_vert"), { NULL },
+    NC_("file-action", "Re_vert"), NULL, { NULL },
     NC_("file-action", "Reload the image file from disk"),
     file_revert_cmd_callback,
     GIMP_HELP_FILE_REVERT },
 
   { "file-close-all", GIMP_ICON_CLOSE_ALL,
-    NC_("file-action", "C_lose All"), { "<primary><shift>W", NULL },
+    NC_("file-action", "C_lose All"), NULL, { "<primary><shift>W", NULL },
     NC_("file-action", "Close all opened images"),
     file_close_all_cmd_callback,
     GIMP_HELP_FILE_CLOSE_ALL },
 
   { "file-copy-location", GIMP_ICON_EDIT_COPY,
-    NC_("file-action", "Copy _Image Location"), { NULL },
+    NC_("file-action", "Copy _Image Location"), NULL, { NULL },
     NC_("file-action", "Copy image file location to clipboard"),
     file_copy_location_cmd_callback,
     GIMP_HELP_FILE_COPY_LOCATION },
 
   { "file-show-in-file-manager", GIMP_ICON_FILE_MANAGER,
-    NC_("file-action", "Show in _File Manager"), { "<primary><alt>F", NULL },
+    NC_("file-action", "Show in _File Manager"), NULL, { "<primary><alt>F", NULL },
     NC_("file-action", "Show image file location in the file manager"),
     file_show_in_file_manager_cmd_callback,
     GIMP_HELP_FILE_SHOW_IN_FILE_MANAGER },
 
   { "file-quit", GIMP_ICON_APPLICATION_EXIT,
-    NC_("file-action", "_Quit"), { "<primary>Q", NULL },
+    NC_("file-action", "_Quit"), NULL, { "<primary>Q", NULL },
     NC_("file-action", "Quit the GNU Image Manipulation Program"),
     file_quit_cmd_callback,
     GIMP_HELP_FILE_QUIT }
@@ -131,19 +131,19 @@ static const GimpActionEntry file_actions[] =
 static const GimpEnumActionEntry file_save_actions[] =
 {
   { "file-save", GIMP_ICON_DOCUMENT_SAVE,
-    NC_("file-action", "_Save"), { "<primary>S", NULL },
+    NC_("file-action", "_Save"), NULL, { "<primary>S", NULL },
     NC_("file-action", "Save this image"),
     GIMP_SAVE_MODE_SAVE, FALSE,
     GIMP_HELP_FILE_SAVE },
 
   { "file-save-as", GIMP_ICON_DOCUMENT_SAVE_AS,
-    NC_("file-action", "Save _As..."), { "<primary><shift>S", NULL },
+    NC_("file-action", "Save _As..."), NULL, { "<primary><shift>S", NULL },
     NC_("file-action", "Save this image with a different name"),
     GIMP_SAVE_MODE_SAVE_AS, FALSE,
     GIMP_HELP_FILE_SAVE_AS },
 
   { "file-save-a-copy", NULL,
-    NC_("file-action", "Save a Cop_y..."), { NULL },
+    NC_("file-action", "Save a Cop_y..."), NULL, { NULL },
     NC_("file-action",
         "Save a copy of this image, without affecting the source file "
         "(if any) or the current state of the image"),
@@ -151,25 +151,25 @@ static const GimpEnumActionEntry file_save_actions[] =
     GIMP_HELP_FILE_SAVE_A_COPY },
 
   { "file-save-and-close", NULL,
-    NC_("file-action", "Save and Close..."), { NULL },
+    NC_("file-action", "Save and Close..."), NULL, { NULL },
     NC_("file-action", "Save this image and close its window"),
     GIMP_SAVE_MODE_SAVE_AND_CLOSE, FALSE,
     GIMP_HELP_FILE_SAVE },
 
   { "file-export", NULL,
-    NC_("file-action", "E_xport..."), { "<primary>E", NULL },
+    NC_("file-action", "E_xport..."), NULL, { "<primary>E", NULL },
     NC_("file-action", "Export the image"),
     GIMP_SAVE_MODE_EXPORT, FALSE,
     GIMP_HELP_FILE_EXPORT },
 
   { "file-overwrite", NULL,
-    NC_("file-action", "Over_write"), { NULL },
+    NC_("file-action", "Over_write"), NULL, { NULL },
     NC_("file-action", "Export the image back to the imported file in the import format"),
     GIMP_SAVE_MODE_OVERWRITE, FALSE,
     GIMP_HELP_FILE_OVERWRITE },
 
   { "file-export-as", NULL,
-    NC_("file-action", "E_xport As..."), { "<primary><shift>E", NULL },
+    NC_("file-action", "E_xport As..."), NULL, { "<primary><shift>E", NULL },
     NC_("file-action", "Export the image to various file formats such as PNG or JPEG"),
     GIMP_SAVE_MODE_EXPORT_AS, FALSE,
     GIMP_HELP_FILE_EXPORT_AS }

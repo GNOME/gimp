@@ -65,6 +65,7 @@ struct _GimpActionEntry
   const gchar        *name;
   const gchar        *icon_name;
   const gchar        *label;
+  const gchar        *short_label;
   const gchar        *accelerator[4];
   const gchar        *tooltip;
   GimpActionCallback  callback;
@@ -77,6 +78,7 @@ struct _GimpToggleActionEntry
   const gchar        *name;
   const gchar        *icon_name;
   const gchar        *label;
+  const gchar        *short_label;
   const gchar        *accelerator[4];
   const gchar        *tooltip;
   GimpActionCallback  callback;
@@ -90,6 +92,7 @@ struct _GimpRadioActionEntry
   const gchar *name;
   const gchar *icon_name;
   const gchar *label;
+  const gchar *short_label;
   const gchar *accelerator[4];
   const gchar *tooltip;
   gint         value;
@@ -102,6 +105,7 @@ struct _GimpEnumActionEntry
   const gchar *name;
   const gchar *icon_name;
   const gchar *label;
+  const gchar *short_label;
   const gchar *accelerator[4];
   const gchar *tooltip;
   gint         value;
@@ -115,6 +119,7 @@ struct _GimpStringActionEntry
   const gchar *name;
   const gchar *icon_name;
   const gchar *label;
+  const gchar *short_label;
   const gchar *accelerator[4];
   const gchar *tooltip;
   const gchar *value;
@@ -127,6 +132,7 @@ struct _GimpDoubleActionEntry
   const gchar   *name;
   const gchar   *icon_name;
   const gchar   *label;
+  const gchar   *short_label;
   const gchar   *accelerator[4];
   const gchar   *tooltip;
   const gdouble  value;

@@ -127,6 +127,7 @@ gimp_double_action_set_property (GObject      *object,
 GimpDoubleAction *
 gimp_double_action_new (const gchar *name,
                         const gchar *label,
+                        const gchar *short_label,
                         const gchar *tooltip,
                         const gchar *icon_name,
                         const gchar *help_id,
@@ -136,12 +137,13 @@ gimp_double_action_new (const gchar *name,
   GimpDoubleAction *action;
 
   action = g_object_new (GIMP_TYPE_DOUBLE_ACTION,
-                         "name",      name,
-                         "label",     label,
-                         "tooltip",   tooltip,
-                         "icon-name", icon_name,
-                         "value",     value,
-                         "context",   context,
+                         "name",        name,
+                         "label",       label,
+                         "short-label", short_label,
+                         "tooltip",     tooltip,
+                         "icon-name",   icon_name,
+                         "value",       value,
+                         "context",     context,
                          NULL);
 
   gimp_action_set_help_id (GIMP_ACTION (action), help_id);

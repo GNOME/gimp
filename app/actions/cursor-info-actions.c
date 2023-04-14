@@ -38,14 +38,14 @@
 static const GimpActionEntry cursor_info_actions[] =
 {
   { "cursor-info-popup", GIMP_ICON_CURSOR,
-    NC_("cursor-info-action", "Pointer Information Menu"), { NULL }, NULL, NULL,
+    NC_("cursor-info-action", "Pointer Information Menu"), NULL, { NULL }, NULL, NULL,
     GIMP_HELP_POINTER_INFO_DIALOG }
 };
 
 static const GimpToggleActionEntry cursor_info_toggle_actions[] =
 {
   { "cursor-info-sample-merged", NULL,
-    NC_("cursor-info-action", "_Sample Merged"), { NULL },
+    NC_("cursor-info-action", "_Sample Merged"), NULL, { NULL },
     NC_("cursor-info-action", "Use the composite color of all visible layers"),
     cursor_info_sample_merged_cmd_callback,
     TRUE,

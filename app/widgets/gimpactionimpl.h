@@ -54,6 +54,7 @@ GType         gimp_action_impl_get_type       (void) G_GNUC_CONST;
 
 GimpAction  * gimp_action_impl_new            (const gchar   *name,
                                                const gchar   *label,
+                                               const gchar   *short_label,
                                                const gchar   *tooltip,
                                                const gchar   *icon_name,
                                                const gchar   *help_id,

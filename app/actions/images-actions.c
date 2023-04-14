@@ -40,23 +40,23 @@
 static const GimpActionEntry images_actions[] =
 {
   { "images-popup", GIMP_ICON_DIALOG_IMAGES,
-    NC_("images-action", "Images Menu"), { NULL }, NULL, NULL,
+    NC_("images-action", "Images Menu"), NULL, { NULL }, NULL, NULL,
     GIMP_HELP_IMAGE_DIALOG },
 
   { "images-raise-views", GIMP_ICON_GO_TOP,
-    NC_("images-action", "_Raise Views"), { NULL },
+    NC_("images-action", "_Raise Views"), NULL, { NULL },
     NC_("images-action", "Raise this image's displays"),
     images_raise_views_cmd_callback,
     NULL },
 
   { "images-new-view", GIMP_ICON_DOCUMENT_NEW,
-    NC_("images-action", "_New View"), { NULL },
+    NC_("images-action", "_New View"), NULL, { NULL },
     NC_("images-action", "Create a new display for this image"),
     images_new_view_cmd_callback,
     NULL },
 
   { "images-delete", GIMP_ICON_EDIT_DELETE,
-    NC_("images-action", "_Delete Image"), { NULL },
+    NC_("images-action", "_Delete Image"), NULL, { NULL },
     NC_("images-action", "Delete this image"),
     images_delete_image_cmd_callback,
     NULL }

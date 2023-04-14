@@ -40,11 +40,11 @@
 static const GimpActionEntry quick_mask_actions[] =
 {
   { "quick-mask-popup", NULL,
-    NC_("quick-mask-action", "Quick Mask Menu"), { NULL }, NULL, NULL,
+    NC_("quick-mask-action", "Quick Mask Menu"), NULL, { NULL }, NULL, NULL,
     GIMP_HELP_QUICK_MASK },
 
   { "quick-mask-configure", NULL,
-    NC_("quick-mask-action", "_Configure Color and Opacity..."), { NULL }, NULL,
+    NC_("quick-mask-action", "_Configure Color and Opacity..."), NULL, { NULL }, NULL,
     quick_mask_configure_cmd_callback,
     GIMP_HELP_QUICK_MASK_EDIT }
 };
@@ -52,7 +52,7 @@ static const GimpActionEntry quick_mask_actions[] =
 static const GimpToggleActionEntry quick_mask_toggle_actions[] =
 {
   { "quick-mask-toggle", GIMP_ICON_QUICK_MASK_ON,
-    NC_("quick-mask-action", "Toggle _Quick Mask"), { "<shift>Q", NULL },
+    NC_("quick-mask-action", "Toggle _Quick Mask"), NULL, { "<shift>Q", NULL },
     NC_("quick-mask-action", "Toggle Quick Mask on/off"),
     quick_mask_toggle_cmd_callback,
     FALSE,
@@ -62,12 +62,12 @@ static const GimpToggleActionEntry quick_mask_toggle_actions[] =
 static const GimpRadioActionEntry quick_mask_invert_actions[] =
 {
   { "quick-mask-invert-on", NULL,
-    NC_("quick-mask-action", "Mask _Selected Areas"), { NULL }, NULL,
+    NC_("quick-mask-action", "Mask _Selected Areas"), NULL, { NULL }, NULL,
     TRUE,
     GIMP_HELP_QUICK_MASK_INVERT },
 
   { "quick-mask-invert-off", NULL,
-    NC_("quick-mask-action", "Mask _Unselected Areas"), { NULL }, NULL,
+    NC_("quick-mask-action", "Mask _Unselected Areas"), NULL, { NULL }, NULL,
     FALSE,
     GIMP_HELP_QUICK_MASK_INVERT }
 };

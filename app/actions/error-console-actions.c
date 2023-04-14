@@ -37,36 +37,36 @@
 static const GimpActionEntry error_console_actions[] =
 {
   { "error-console-popup", GIMP_ICON_DIALOG_WARNING,
-    NC_("error-console-action", "Error Console Menu"), { NULL }, NULL, NULL,
+    NC_("error-console-action", "Error Console Menu"), NULL, { NULL }, NULL, NULL,
     GIMP_HELP_ERRORS_DIALOG },
 
   { "error-console-clear", GIMP_ICON_EDIT_CLEAR,
-    NC_("error-console-action", "_Clear"), { NULL },
+    NC_("error-console-action", "_Clear"), NULL, { NULL },
     NC_("error-console-action", "Clear error console"),
     error_console_clear_cmd_callback,
     GIMP_HELP_ERRORS_CLEAR },
 
   { "error-console-select-all", NULL,
-    NC_("error-console-action", "Select _All"), { NULL },
+    NC_("error-console-action", "Select _All"), NULL, { NULL },
     NC_("error-console-action", "Select all error messages"),
     error_console_select_all_cmd_callback,
     GIMP_HELP_ERRORS_SELECT_ALL },
 
   { "error-console-highlight", NULL,
-    NC_("error-console-action", "_Highlight"), { NULL }, NULL, NULL,
+    NC_("error-console-action", "_Highlight"), NULL, { NULL }, NULL, NULL,
     GIMP_HELP_ERRORS_HIGHLIGHT }
 };
 
 static const GimpEnumActionEntry error_console_save_actions[] =
 {
   { "error-console-save-all", GIMP_ICON_DOCUMENT_SAVE_AS,
-    NC_("error-console-action", "_Save Error Log to File..."), { NULL },
+    NC_("error-console-action", "_Save Error Log to File..."), NULL, { NULL },
     NC_("error-console-action", "Write all error messages to a file"),
     FALSE, FALSE,
     GIMP_HELP_ERRORS_SAVE },
 
   { "error-console-save-selection", GIMP_ICON_DOCUMENT_SAVE_AS,
-    NC_("error-console-action", "Save S_election to File..."), { NULL },
+    NC_("error-console-action", "Save S_election to File..."), NULL, { NULL },
     NC_("error-console-action", "Write the selected error messages to a file"),
     TRUE, FALSE,
     GIMP_HELP_ERRORS_SAVE }
@@ -75,21 +75,21 @@ static const GimpEnumActionEntry error_console_save_actions[] =
 static const GimpToggleActionEntry error_console_highlight_actions[] =
 {
   { "error-console-highlight-error", NULL,
-    NC_("error-console-action", "_Errors"), { NULL },
+    NC_("error-console-action", "_Errors"), NULL, { NULL },
     NC_("error-console-action", "Highlight error console on errors"),
     error_console_highlight_error_cmd_callback,
     FALSE,
     GIMP_HELP_ERRORS_HIGHLIGHT },
 
   { "error-console-highlight-warning", NULL,
-    NC_("error-console-action", "_Warnings"), { NULL },
+    NC_("error-console-action", "_Warnings"), NULL, { NULL },
     NC_("error-console-action", "Highlight error console on warnings"),
     error_console_highlight_warning_cmd_callback,
     FALSE,
     GIMP_HELP_ERRORS_HIGHLIGHT },
 
   { "error-console-highlight-info", NULL,
-    NC_("error-console-action", "_Messages"), { NULL },
+    NC_("error-console-action", "_Messages"), NULL, { NULL },
     NC_("error-console-action", "Highlight error console on messages"),
     error_console_highlight_info_cmd_callback,
     FALSE,

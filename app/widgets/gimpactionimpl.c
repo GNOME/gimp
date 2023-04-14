@@ -358,6 +358,7 @@ gimp_action_impl_get_state_hint (GAction *action)
 GimpAction *
 gimp_action_impl_new (const gchar *name,
                       const gchar *label,
+                      const gchar *short_label,
                       const gchar *tooltip,
                       const gchar *icon_name,
                       const gchar *help_id,
@@ -366,11 +367,12 @@ gimp_action_impl_new (const gchar *name,
   GimpAction *action;
 
   action = g_object_new (GIMP_TYPE_ACTION_IMPL,
-                         "name",      name,
-                         "label",     label,
-                         "tooltip",   tooltip,
-                         "icon-name", icon_name,
-                         "context",   context,
+                         "name",        name,
+                         "label",       label,
+                         "short-label", short_label,
+                         "tooltip",     tooltip,
+                         "icon-name",   icon_name,
+                         "context",     context,
                          NULL);
 
   gimp_action_set_help_id (action, help_id);

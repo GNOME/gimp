@@ -53,6 +53,7 @@ GType            gimp_enum_action_get_type (void) G_GNUC_CONST;
 
 GimpEnumAction * gimp_enum_action_new      (const gchar *name,
                                             const gchar *label,
+                                            const gchar *short_label,
                                             const gchar *tooltip,
                                             const gchar *icon_name,
                                             const gchar *help_id,

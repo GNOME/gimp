@@ -1314,7 +1314,7 @@ gimp_dashboard_constructed (GObject *object)
     {
       const GroupInfo       *group_info = &groups[group];
       GroupData             *group_data = &priv->groups[group];
-      GimpToggleActionEntry  entry      = {};
+      GimpToggleActionEntry  entry      = { 0 };
 
       entry.name      = g_strdup_printf ("dashboard-group-%s", group_info->name);
       entry.label     = g_dpgettext2 (NULL, "dashboard-group", group_info->title);

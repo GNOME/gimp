@@ -469,7 +469,8 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
     {
       GimpAction  *action;
       const gchar *label;
-      const gchar *tooltip = NULL;
+      const gchar *short_label = NULL;
+      const gchar *tooltip     = NULL;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
         continue;
@@ -478,17 +479,25 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
         {
           label = g_dpgettext2 (NULL, msg_context, entries[i].label);
 
+          if (entries[i].short_label)
+            short_label = g_dpgettext2 (NULL, msg_context, entries[i].short_label);
+
           if (entries[i].tooltip)
             tooltip = g_dpgettext2 (NULL, msg_context, entries[i].tooltip);
         }
       else
         {
-          label   = gettext (entries[i].label);
+          label = gettext (entries[i].label);
+
+          if (entries[i].short_label)
+            short_label = gettext (entries[i].short_label);
+
           if (entries[i].tooltip)
             tooltip = gettext (entries[i].tooltip);
         }
 
-      action = gimp_action_impl_new (entries[i].name, label, tooltip,
+      action = gimp_action_impl_new (entries[i].name,
+                                     label, short_label, tooltip,
                                      entries[i].icon_name,
                                      entries[i].help_id, context);
 
@@ -519,7 +528,8 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
     {
       GimpAction  *action;
       const gchar *label;
-      const gchar *tooltip = NULL;
+      const gchar *short_label = NULL;
+      const gchar *tooltip     = NULL;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
         continue;
@@ -528,17 +538,25 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
         {
           label = g_dpgettext2 (NULL, msg_context, entries[i].label);
 
+          if (entries[i].short_label)
+            short_label = g_dpgettext2 (NULL, msg_context, entries[i].short_label);
+
           if (entries[i].tooltip)
             tooltip = g_dpgettext2 (NULL, msg_context, entries[i].tooltip);
         }
       else
         {
-          label   = gettext (entries[i].label);
+          label = gettext (entries[i].label);
+
+          if (entries[i].short_label)
+            short_label = gettext (entries[i].short_label);
+
           if (entries[i].tooltip)
             tooltip = gettext (entries[i].tooltip);
         }
 
-      action = gimp_toggle_action_new (entries[i].name, label, tooltip,
+      action = gimp_toggle_action_new (entries[i].name,
+                                       label, short_label, tooltip,
                                        entries[i].icon_name,
                                        entries[i].help_id, context);
 
@@ -576,7 +594,8 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
     {
       GimpAction  *action;
       const gchar *label;
-      const gchar *tooltip = NULL;
+      const gchar *short_label = NULL;
+      const gchar *tooltip     = NULL;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
         continue;
@@ -585,17 +604,25 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
         {
           label = g_dpgettext2 (NULL, msg_context, entries[i].label);
 
+          if (entries[i].short_label)
+            short_label = g_dpgettext2 (NULL, msg_context, entries[i].short_label);
+
           if (entries[i].tooltip)
             tooltip = g_dpgettext2 (NULL, msg_context, entries[i].tooltip);
         }
       else
         {
-          label   = gettext (entries[i].label);
+          label = gettext (entries[i].label);
+
+          if (entries[i].short_label)
+            short_label = gettext (entries[i].short_label);
+
           if (entries[i].tooltip)
             tooltip = gettext (entries[i].tooltip);
         }
 
-      action = gimp_radio_action_new (entries[i].name, label, tooltip,
+      action = gimp_radio_action_new (entries[i].name,
+                                      label, short_label, tooltip,
                                       entries[i].icon_name,
                                       entries[i].help_id,
                                       entries[i].value, context);
@@ -638,7 +665,8 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
     {
       GimpEnumAction *action;
       const gchar    *label;
-      const gchar    *tooltip = NULL;
+      const gchar    *short_label = NULL;
+      const gchar    *tooltip     = NULL;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
         continue;
@@ -647,17 +675,25 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
         {
           label = g_dpgettext2 (NULL, msg_context, entries[i].label);
 
+          if (entries[i].short_label)
+            short_label = g_dpgettext2 (NULL, msg_context, entries[i].short_label);
+
           if (entries[i].tooltip)
             tooltip = g_dpgettext2 (NULL, msg_context, entries[i].tooltip);
         }
       else
         {
-          label   = gettext (entries[i].label);
+          label = gettext (entries[i].label);
+
+          if (entries[i].short_label)
+            short_label = gettext (entries[i].short_label);
+
           if (entries[i].tooltip)
             tooltip = gettext (entries[i].tooltip);
         }
 
-      action = gimp_enum_action_new (entries[i].name, label, tooltip,
+      action = gimp_enum_action_new (entries[i].name,
+                                     label, short_label, tooltip,
                                      entries[i].icon_name,
                                      entries[i].help_id,
                                      entries[i].value,
@@ -743,7 +779,8 @@ gimp_action_group_add_double_actions (GimpActionGroup             *group,
     {
       GimpDoubleAction *action;
       const gchar      *label;
-      const gchar      *tooltip = NULL;
+      const gchar      *short_label = NULL;
+      const gchar      *tooltip     = NULL;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
         continue;
@@ -752,17 +789,25 @@ gimp_action_group_add_double_actions (GimpActionGroup             *group,
         {
           label = g_dpgettext2 (NULL, msg_context, entries[i].label);
 
+          if (entries[i].short_label)
+            short_label = g_dpgettext2 (NULL, msg_context, entries[i].short_label);
+
           if (entries[i].tooltip)
             tooltip = g_dpgettext2 (NULL, msg_context, entries[i].tooltip);
         }
       else
         {
           label = gettext (entries[i].label);
+
+          if (entries[i].short_label)
+            short_label = gettext (entries[i].short_label);
+
           if (entries[i].tooltip)
             tooltip = gettext (entries[i].tooltip);
         }
 
-      action = gimp_double_action_new (entries[i].name, label, tooltip,
+      action = gimp_double_action_new (entries[i].name,
+                                       label, short_label, tooltip,
                                        entries[i].icon_name,
                                        entries[i].help_id,
                                        entries[i].value, context);
