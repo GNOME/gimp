@@ -181,8 +181,8 @@ sparkle_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Turn bright spots into "
                                           "starry sparkles"),
-                                        _("Uses a percentage based luminoisty "
-                                          "threhsold to find candidate pixels "
+                                        _("Uses a percentage based luminosity "
+                                          "threshold to find candidate pixels "
                                           "for adding some sparkles (spikes)."),
                                         name);
       gimp_procedure_set_attribution (procedure,
