@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-12 21:19+0000\n"
-"PO-Revision-Date: 2023-04-13 19:18+0300\n"
+"POT-Creation-Date: 2023-04-14 17:33+0000\n"
+"PO-Revision-Date: 2023-04-14 23:00+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -492,7 +492,7 @@ msgid "Select"
 msgstr "Позначити"
 
 #. initialize the template list
-#: app/actions/actions.c:223 app/core/gimp.c:852 app/dialogs/dialogs.c:370
+#: app/actions/actions.c:223 app/core/gimp.c:857 app/dialogs/dialogs.c:370
 msgid "Templates"
 msgstr "Шаблони"
 
@@ -541,7 +541,7 @@ msgstr "%s: %.2f"
 msgid "%s: %d"
 msgstr "%s: %d"
 
-#: app/actions/brush-editor-actions.c:43
+#: app/actions/brush-editor-actions.c:43 menus/brush-editor-menu.ui:6
 msgctxt "brush-editor-action"
 msgid "Brush Editor Menu"
 msgstr "Меню редактора пензлів"
@@ -551,7 +551,7 @@ msgctxt "brush-editor-action"
 msgid "Edit Active Brush"
 msgstr "Змінити активний пензель"
 
-#: app/actions/brushes-actions.c:43
+#: app/actions/brushes-actions.c:43 menus/brushes-menu.ui:6
 msgctxt "brushes-action"
 msgid "Brushes Menu"
 msgstr "Меню пензлів"
@@ -728,7 +728,7 @@ msgstr "Вставити позначений буфер як новий шар 
 msgid "No selected buffer"
 msgstr "Немає позначеного буфера"
 
-#: app/actions/channels-actions.c:45
+#: app/actions/channels-actions.c:45 menus/channels-menu.ui:6
 msgctxt "channels-action"
 msgid "Channels Menu"
 msgstr "Меню каналів"
@@ -2387,7 +2387,7 @@ msgstr "Динаміку вимкнено"
 msgid "Dynamics enabled"
 msgstr "Динаміку увімкнено"
 
-#: app/actions/cursor-info-actions.c:41
+#: app/actions/cursor-info-actions.c:41 menus/cursor-info-menu.ui:6
 msgctxt "cursor-info-action"
 msgid "Pointer Information Menu"
 msgstr "Меню «Інформація про курсор миші»"
@@ -2402,7 +2402,7 @@ msgctxt "cursor-info-action"
 msgid "Use the composite color of all visible layers"
 msgstr "Використовувати суміш кольорів усіх видимих шарів"
 
-#: app/actions/dashboard-actions.c:40
+#: app/actions/dashboard-actions.c:40 menus/dashboard-menu.ui:6
 msgctxt "dashboard-action"
 msgid "Dashboard Menu"
 msgstr "Меню панелі приладів"
@@ -2412,12 +2412,12 @@ msgctxt "dashboard-action"
 msgid "_Groups"
 msgstr "_Групи"
 
-#: app/actions/dashboard-actions.c:46
+#: app/actions/dashboard-actions.c:46 menus/dashboard-menu.ui:14
 msgctxt "dashboard-action"
 msgid "_Update Interval"
 msgstr "Інтервал _оновлення"
 
-#: app/actions/dashboard-actions.c:48
+#: app/actions/dashboard-actions.c:48 menus/dashboard-menu.ui:22
 msgctxt "dashboard-action"
 msgid "_History Duration"
 msgstr "_Тривалість ведення журналу"
@@ -2659,433 +2659,629 @@ msgid "Tool_box"
 msgstr "Панель _інструментів"
 
 #: app/actions/dialogs-actions.c:53
+#| msgctxt "dialogs-action"
+#| msgid "Tool _Options"
+msgctxt "dialogs-action"
+msgid "Tool _Options Dialog"
+msgstr "Вікно п_араметрів інструмента"
+
+#: app/actions/dialogs-actions.c:54
 msgctxt "dialogs-action"
 msgid "Tool _Options"
 msgstr "П_араметри інструментів"
 
-#: app/actions/dialogs-actions.c:54
+#: app/actions/dialogs-actions.c:56
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
 msgstr "Відкрити діалог параметрів інструменту"
 
-#: app/actions/dialogs-actions.c:59
+#: app/actions/dialogs-actions.c:61
+#| msgctxt "dialogs-action"
+#| msgid "_Device Status"
+msgctxt "dialogs-action"
+msgid "_Device Status Dialog"
+msgstr "Вікно _стану пристрою"
+
+#: app/actions/dialogs-actions.c:62
 msgctxt "dialogs-action"
 msgid "_Device Status"
 msgstr "_Стан пристрою"
 
-#: app/actions/dialogs-actions.c:60
+#: app/actions/dialogs-actions.c:64
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
 msgstr "Відкрити діалог статусу пристрою вводу"
 
-#: app/actions/dialogs-actions.c:65
+#: app/actions/dialogs-actions.c:69
+#| msgctxt "dialogs-action"
+#| msgid "_Symmetry Painting"
+msgctxt "dialogs-action"
+msgid "_Symmetry Painting Dialog"
+msgstr "Вікно _симетричного малювання"
+
+#: app/actions/dialogs-actions.c:70
 msgctxt "dialogs-action"
 msgid "_Symmetry Painting"
 msgstr "_Симетричне малювання"
 
-#: app/actions/dialogs-actions.c:66
+#: app/actions/dialogs-actions.c:72
 msgctxt "dialogs-action"
 msgid "Open the symmetry dialog"
 msgstr "Відкрити діалог симетрії"
 
-#: app/actions/dialogs-actions.c:71
+#: app/actions/dialogs-actions.c:77
+#| msgid "New Layer Dialog"
+msgctxt "dialogs-action"
+msgid "_Layers Dialog"
+msgstr "Вікно _шарів"
+
+#: app/actions/dialogs-actions.c:78
 msgctxt "dialogs-action"
 msgid "_Layers"
 msgstr "_Шари"
 
-#: app/actions/dialogs-actions.c:72
+#: app/actions/dialogs-actions.c:80
 msgctxt "dialogs-action"
 msgid "Open the layers dialog"
 msgstr "Відкрити діалог шарів"
 
-#: app/actions/dialogs-actions.c:77
+#: app/actions/dialogs-actions.c:85
+#| msgid "New Channel Dialog"
+msgctxt "dialogs-action"
+msgid "_Channels Dialog"
+msgstr "Вікно _каналів"
+
+#: app/actions/dialogs-actions.c:86
 msgctxt "dialogs-action"
 msgid "_Channels"
 msgstr "_Канали"
 
-#: app/actions/dialogs-actions.c:78
+#: app/actions/dialogs-actions.c:88
 msgctxt "dialogs-action"
 msgid "Open the channels dialog"
 msgstr "Відкрити діалог каналів"
 
-#: app/actions/dialogs-actions.c:83
+#: app/actions/dialogs-actions.c:93
+#| msgid "New Path Dialog"
+msgctxt "dialogs-action"
+msgid "_Paths Dialog"
+msgstr "Вікно _контурів"
+
+#: app/actions/dialogs-actions.c:94
 msgctxt "dialogs-action"
 msgid "_Paths"
 msgstr "К_онтури"
 
-#: app/actions/dialogs-actions.c:84
+#: app/actions/dialogs-actions.c:96
 msgctxt "dialogs-action"
 msgid "Open the paths dialog"
 msgstr "Відкрити діалог контурів"
 
-#: app/actions/dialogs-actions.c:89
+#: app/actions/dialogs-actions.c:101
+#| msgctxt "dialogs-action"
+#| msgid "Color_map"
+msgctxt "dialogs-action"
+msgid "Color_map Dialog"
+msgstr "Вікно _мапи кольорів"
+
+#: app/actions/dialogs-actions.c:102
 msgctxt "dialogs-action"
 msgid "Color_map"
 msgstr "_Мапа кольорів"
 
-#: app/actions/dialogs-actions.c:90
+#: app/actions/dialogs-actions.c:104
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
 msgstr "Відкрити діалог мапи кольорів"
 
-#: app/actions/dialogs-actions.c:95
+#: app/actions/dialogs-actions.c:109
+#| msgid "Histogram Scale"
+msgctxt "dialogs-action"
+msgid "Histogra_m Dialog"
+msgstr "Вікно _гістограми"
+
+#: app/actions/dialogs-actions.c:110
 msgctxt "dialogs-action"
 msgid "Histogra_m"
 msgstr "_Гістограма"
 
-#: app/actions/dialogs-actions.c:96
+#: app/actions/dialogs-actions.c:112
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
 msgstr "Відкрити діалог гістограми"
 
-#: app/actions/dialogs-actions.c:101
+#: app/actions/dialogs-actions.c:117
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
 msgstr "Редактор позначеної діл_янки"
 
-#: app/actions/dialogs-actions.c:102
+#: app/actions/dialogs-actions.c:119
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
 msgstr "Відкрити редактор позначеної ділянки"
 
-#: app/actions/dialogs-actions.c:107
+#: app/actions/dialogs-actions.c:124
+#| msgctxt "view-action"
+#| msgid "Na_vigation Window"
+msgctxt "dialogs-action"
+msgid "Na_vigation Dialog"
+msgstr "Вікно наві_гації"
+
+#: app/actions/dialogs-actions.c:125
 msgctxt "dialogs-action"
 msgid "Na_vigation"
 msgstr "_Навігація"
 
-#: app/actions/dialogs-actions.c:108
+#: app/actions/dialogs-actions.c:127
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
 msgstr "Відкрити діалог навігації у документі"
 
-#: app/actions/dialogs-actions.c:113
+#: app/actions/dialogs-actions.c:132
+#| msgctxt "dialogs-action"
+#| msgid "Undo _History"
+msgctxt "dialogs-action"
+msgid "Undo _History Dialog"
+msgstr "Вікно _журналу скасувань"
+
+#: app/actions/dialogs-actions.c:133
 msgctxt "dialogs-action"
 msgid "Undo _History"
 msgstr "_Журнал скасувань"
 
-#: app/actions/dialogs-actions.c:114
+#: app/actions/dialogs-actions.c:135
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
 msgstr "Відкрити вікно журналу дій"
 
-#: app/actions/dialogs-actions.c:119
+#: app/actions/dialogs-actions.c:140
+#| msgid "Filter Dialogs"
+msgctxt "dialogs-action"
+msgid "_Pointer Dialog"
+msgstr "Вікно в_казівника"
+
+#: app/actions/dialogs-actions.c:141
 msgctxt "dialogs-action"
 msgid "_Pointer"
 msgstr "В_казівник"
 
-#: app/actions/dialogs-actions.c:120
+#: app/actions/dialogs-actions.c:143
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
 msgstr "Відкрити діалог інформації про вказівник"
 
-#: app/actions/dialogs-actions.c:125
+#: app/actions/dialogs-actions.c:148
+#| msgctxt "dialogs-action"
+#| msgid "_Sample Points"
+msgctxt "dialogs-action"
+msgid "_Sample Points Dialog"
+msgstr "Вікно _зразкових точок"
+
+#: app/actions/dialogs-actions.c:149
 msgctxt "dialogs-action"
 msgid "_Sample Points"
 msgstr "_Зразкові точки"
 
-#: app/actions/dialogs-actions.c:126
+#: app/actions/dialogs-actions.c:151
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
 msgstr "Відкрити діалог зі зразковими точками"
 
-#: app/actions/dialogs-actions.c:131
+#: app/actions/dialogs-actions.c:156
+#| msgctxt "channels-action"
+#| msgid "Color Tag"
+msgctxt "dialogs-action"
+msgid "Colo_rs Dialog"
+msgstr "Вікно к_ольорів"
+
+#: app/actions/dialogs-actions.c:157
 msgctxt "dialogs-action"
 msgid "Colo_rs"
 msgstr "Кол_ьори"
 
-#: app/actions/dialogs-actions.c:132
+#: app/actions/dialogs-actions.c:159
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
 msgstr "Відкрити діалог кольору тла/переднього плану"
 
-#: app/actions/dialogs-actions.c:137
+#: app/actions/dialogs-actions.c:164
+#| msgctxt "dialogs-action"
+#| msgid "_Brushes"
+msgctxt "dialogs-action"
+msgid "_Brushes Dialog"
+msgstr "Вікно _пензлів"
+
+#: app/actions/dialogs-actions.c:165
 msgctxt "dialogs-action"
 msgid "_Brushes"
 msgstr "_Пензлі"
 
-#: app/actions/dialogs-actions.c:138
+#: app/actions/dialogs-actions.c:167
 msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
 msgstr "Відкрити діалог пензлів"
 
-#: app/actions/dialogs-actions.c:143
+#: app/actions/dialogs-actions.c:172
 msgctxt "dialogs-action"
 msgid "Brush Editor"
 msgstr "Редактор пензлів"
 
-#: app/actions/dialogs-actions.c:144
+#: app/actions/dialogs-actions.c:174
 msgctxt "dialogs-action"
 msgid "Open the brush editor"
 msgstr "Відкрити редактор пензлів"
 
-#: app/actions/dialogs-actions.c:149
+#: app/actions/dialogs-actions.c:179
+#| msgctxt "dialogs-action"
+#| msgid "Paint D_ynamics"
+msgctxt "dialogs-action"
+msgid "Paint D_ynamics Dialog"
+msgstr "Вікно _динаміки пензля"
+
+#: app/actions/dialogs-actions.c:180
 msgctxt "dialogs-action"
 msgid "Paint D_ynamics"
 msgstr "_Динаміка пензля"
 
-#: app/actions/dialogs-actions.c:150
+#: app/actions/dialogs-actions.c:182
 msgctxt "dialogs-action"
 msgid "Open paint dynamics dialog"
 msgstr "Відкрити діалог динаміки малювання"
 
-#: app/actions/dialogs-actions.c:155
+#: app/actions/dialogs-actions.c:187
 msgctxt "dialogs-action"
 msgid "Paint Dynamics Editor"
 msgstr "Редактор динаміки малювання"
 
-#: app/actions/dialogs-actions.c:156
+#: app/actions/dialogs-actions.c:189
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
 msgstr "Відкрити редактор динаміки малювання"
 
-#: app/actions/dialogs-actions.c:161
+#: app/actions/dialogs-actions.c:194
+#| msgctxt "dialogs-action"
+#| msgid "_MyPaint Brushes"
+msgctxt "dialogs-action"
+msgid "_MyPaint Brushes Dialog"
+msgstr "Вікно _пензлів MyPaint"
+
+#: app/actions/dialogs-actions.c:195
 msgctxt "dialogs-action"
 msgid "_MyPaint Brushes"
 msgstr "_Пензлі MyPaint"
 
-#: app/actions/dialogs-actions.c:162
+#: app/actions/dialogs-actions.c:197
 msgctxt "dialogs-action"
 msgid "Open the mypaint brushes dialog"
 msgstr "Відкрити діалог пензлів MyPaint"
 
-#: app/actions/dialogs-actions.c:167
+#: app/actions/dialogs-actions.c:202
+#| msgctxt "dialogs-action"
+#| msgid "P_atterns"
+msgctxt "dialogs-action"
+msgid "P_atterns Dialog"
+msgstr "Вікно _текстур"
+
+#: app/actions/dialogs-actions.c:203
 msgctxt "dialogs-action"
 msgid "P_atterns"
 msgstr "_Текстури"
 
-#: app/actions/dialogs-actions.c:168
+#: app/actions/dialogs-actions.c:205
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
 msgstr "Відкрити діалог текстур"
 
-#: app/actions/dialogs-actions.c:173
+#: app/actions/dialogs-actions.c:210
+#| msgctxt "dialogs-action"
+#| msgid "_Gradients"
+msgctxt "dialogs-action"
+msgid "_Gradients Dialog"
+msgstr "Вікно _градієнтів"
+
+#: app/actions/dialogs-actions.c:211
 msgctxt "dialogs-action"
 msgid "_Gradients"
 msgstr "Гра_дієнти"
 
-#: app/actions/dialogs-actions.c:174
+#: app/actions/dialogs-actions.c:213
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
 msgstr "Відкрити діалог градієнтів"
 
-#: app/actions/dialogs-actions.c:179
+#: app/actions/dialogs-actions.c:218
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
 msgstr "Редактор градієнтів"
 
-#: app/actions/dialogs-actions.c:180
+#: app/actions/dialogs-actions.c:220
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
 msgstr "Відкрити редактор градієнтів"
 
-#: app/actions/dialogs-actions.c:185
+#: app/actions/dialogs-actions.c:225
+#| msgctxt "dialogs-action"
+#| msgid "Pal_ettes"
+msgctxt "dialogs-action"
+msgid "Pal_ettes Dialog"
+msgstr "Вікно па_літр"
+
+#: app/actions/dialogs-actions.c:226
 msgctxt "dialogs-action"
 msgid "Pal_ettes"
 msgstr "Па_літри"
 
-#: app/actions/dialogs-actions.c:186
+#: app/actions/dialogs-actions.c:228
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
 msgstr "Відкрити діалог кольорових разків"
 
-#: app/actions/dialogs-actions.c:191
+#: app/actions/dialogs-actions.c:233 app/actions/dialogs-actions.c:234
 msgctxt "dialogs-action"
 msgid "Palette _Editor"
 msgstr "_Редактор палітри"
 
-#: app/actions/dialogs-actions.c:192
+#: app/actions/dialogs-actions.c:236
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
 msgstr "Відкрити редактор кольорових разків"
 
-#: app/actions/dialogs-actions.c:197
+#: app/actions/dialogs-actions.c:241
+#| msgctxt "dialogs-action"
+#| msgid "Tool Pre_sets"
+msgctxt "dialogs-action"
+msgid "Tool Pre_sets Dialog"
+msgstr "Вікно ш_аблонів інструментів"
+
+#: app/actions/dialogs-actions.c:242
 msgctxt "dialogs-action"
 msgid "Tool Pre_sets"
 msgstr "_Шаблони інструментів"
 
-#: app/actions/dialogs-actions.c:198
+#: app/actions/dialogs-actions.c:244
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
 msgstr "Відкрити вікно шаблонів інструментів"
 
-#: app/actions/dialogs-actions.c:203
+#: app/actions/dialogs-actions.c:249
+#| msgid "Filter Dialogs"
+msgctxt "dialogs-action"
+msgid "_Fonts Dialog"
+msgstr "Вікно _шрифтів"
+
+#: app/actions/dialogs-actions.c:250
 msgctxt "dialogs-action"
 msgid "_Fonts"
 msgstr "Ш_рифти"
 
-#: app/actions/dialogs-actions.c:204
+#: app/actions/dialogs-actions.c:252
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
 msgstr "Відкрити діалог шрифтів"
 
-#: app/actions/dialogs-actions.c:209
+#: app/actions/dialogs-actions.c:257
+#| msgctxt "dialogs-action"
+#| msgid "B_uffers"
+msgctxt "dialogs-action"
+msgid "B_uffers Dialog"
+msgstr "Вікно бу_ферів"
+
+#: app/actions/dialogs-actions.c:258
 msgctxt "dialogs-action"
 msgid "B_uffers"
 msgstr "Бу_фери"
 
-#: app/actions/dialogs-actions.c:210
+#: app/actions/dialogs-actions.c:260
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
 msgstr "Відкрити діалог іменованих буферів обміну"
 
-#: app/actions/dialogs-actions.c:215
+#: app/actions/dialogs-actions.c:265
+#| msgid "Import Paths Dialog"
+msgctxt "dialogs-action"
+msgid "_Images Dialog"
+msgstr "Вікно _зображень"
+
+#: app/actions/dialogs-actions.c:266
 msgctxt "dialogs-action"
 msgid "_Images"
 msgstr "_Зображення"
 
-#: app/actions/dialogs-actions.c:216
+#: app/actions/dialogs-actions.c:268
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
 msgstr "Відкрити діалог зображень"
 
-#: app/actions/dialogs-actions.c:221
+#: app/actions/dialogs-actions.c:273
+#| msgctxt "dialogs-action"
+#| msgid "Document Histor_y"
+msgctxt "dialogs-action"
+msgid "Document Histor_y Dialog"
+msgstr "Вікно _журналу документа"
+
+#: app/actions/dialogs-actions.c:274
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
 msgstr "Н_едавні зображення"
 
-#: app/actions/dialogs-actions.c:222
+#: app/actions/dialogs-actions.c:276
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
 msgstr "Відкрити діалог зі списком відкритих раніше зображень"
 
-#: app/actions/dialogs-actions.c:227
+#: app/actions/dialogs-actions.c:281
+#| msgctxt "dialogs-action"
+#| msgid "_Templates"
+msgctxt "dialogs-action"
+msgid "_Templates Dialog"
+msgstr "Вікно ша_блонів"
+
+#: app/actions/dialogs-actions.c:282
 msgctxt "dialogs-action"
 msgid "_Templates"
 msgstr "Ша_блони"
 
-#: app/actions/dialogs-actions.c:228
+#: app/actions/dialogs-actions.c:284
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
 msgstr "Відкрити діалог з шаблонами документів"
 
-#: app/actions/dialogs-actions.c:233
+#: app/actions/dialogs-actions.c:289 app/actions/dialogs-actions.c:290
 msgctxt "dialogs-action"
 msgid "Error Co_nsole"
 msgstr "Консоль пом_илок"
 
-#: app/actions/dialogs-actions.c:234
+#: app/actions/dialogs-actions.c:292
 msgctxt "dialogs-action"
 msgid "Open the error console"
 msgstr "Відкрити консоль помилок"
 
-#: app/actions/dialogs-actions.c:239
+#: app/actions/dialogs-actions.c:297 app/actions/dialogs-actions.c:298
 msgctxt "dialogs-action"
 msgid "_Dashboard"
 msgstr "_Панель приладів"
 
-#: app/actions/dialogs-actions.c:240
+#: app/actions/dialogs-actions.c:300
 msgctxt "dialogs-action"
 msgid "Open the dashboard"
 msgstr "Відкрити панель приладів"
 
-#: app/actions/dialogs-actions.c:250
+#: app/actions/dialogs-actions.c:310
+#| msgctxt "dialogs-action"
+#| msgid "_Preferences"
+msgctxt "dialogs-action"
+msgid "_Preferences Dialog"
+msgstr "Вікно _налаштувань"
+
+#: app/actions/dialogs-actions.c:311
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "_Параметри"
 
-#: app/actions/dialogs-actions.c:251
+#: app/actions/dialogs-actions.c:313
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "Відкрити діалог параметрів програми"
 
-#: app/actions/dialogs-actions.c:256
+#: app/actions/dialogs-actions.c:318
+#| msgctxt "dialogs-action"
+#| msgid "_Input Devices"
+msgctxt "dialogs-action"
+msgid "_Input Devices Editor"
+msgstr "Редактор пристроїв _введення"
+
+#: app/actions/dialogs-actions.c:319
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "Пристрої _вводу"
 
-#: app/actions/dialogs-actions.c:257
+#: app/actions/dialogs-actions.c:321
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "Відкрити редактор пристроїв вводу"
 
-#: app/actions/dialogs-actions.c:262
+#: app/actions/dialogs-actions.c:326
+#| msgctxt "dialogs-action"
+#| msgid "_Keyboard Shortcuts"
+msgctxt "dialogs-action"
+msgid "_Keyboard Shortcuts Editor"
+msgstr "Редактор _комбінацій клавіш"
+
+#: app/actions/dialogs-actions.c:327
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "_Комбінації клавіш"
 
-#: app/actions/dialogs-actions.c:263
+#: app/actions/dialogs-actions.c:329
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "Відкрити діалог налаштування комбінацій клавіш"
 
-#: app/actions/dialogs-actions.c:268
+#: app/actions/dialogs-actions.c:334
+#| msgctxt "dialogs-action"
+#| msgid "_Modules"
+msgctxt "dialogs-action"
+msgid "_Modules Dialog"
+msgstr "Вікно _модулів"
+
+#: app/actions/dialogs-actions.c:335
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "_Модулі"
 
-#: app/actions/dialogs-actions.c:269
+#: app/actions/dialogs-actions.c:337
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "Відкрити діалог керування модулями"
 
-#: app/actions/dialogs-actions.c:274
+#: app/actions/dialogs-actions.c:342
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "По_рада дня"
 
-#: app/actions/dialogs-actions.c:275
+#: app/actions/dialogs-actions.c:344
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Показати збірку корисних порід з використання GIMP"
 
-#: app/actions/dialogs-actions.c:280
+#: app/actions/dialogs-actions.c:349
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
 msgstr "Вікно вітання"
 
-#: app/actions/dialogs-actions.c:281
+#: app/actions/dialogs-actions.c:351
 msgctxt "dialogs-action"
 msgid "Show information on running GIMP release"
 msgstr "Показати відомості щодо запущеного випуску GIMP"
 
-#: app/actions/dialogs-actions.c:287 app/actions/dialogs-actions.c:294
+#: app/actions/dialogs-actions.c:357 app/actions/dialogs-actions.c:364
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "Про програму GIMP"
 
-#: app/actions/dialogs-actions.c:289
+#: app/actions/dialogs-actions.c:359
 msgctxt "dialogs-action"
 msgid "About"
 msgstr "Про програму"
 
-#: app/actions/dialogs-actions.c:291
+#: app/actions/dialogs-actions.c:361
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_Про програму"
 
-#: app/actions/dialogs-actions.c:299
+#: app/actions/dialogs-actions.c:369
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "_Пошук і запуск команди"
 
-#: app/actions/dialogs-actions.c:300
+#: app/actions/dialogs-actions.c:371
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "Пошук команд за ключовим словом та їх запуск"
 
-#: app/actions/dialogs-actions.c:305
+#: app/actions/dialogs-actions.c:376
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
 msgstr "Керування _розширеннями"
 
-#: app/actions/dialogs-actions.c:306
+#: app/actions/dialogs-actions.c:378
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
 msgstr "Керування розширеннями: пошук, встановлення, вилучення, оновлення."
 
-#: app/actions/dialogs-actions.c:369
+#: app/actions/dialogs-actions.c:441
 msgid "Tool_box"
 msgstr "Панель _інструментів"
 
-#: app/actions/dialogs-actions.c:370
+#: app/actions/dialogs-actions.c:442
 msgid "Raise the toolbox"
 msgstr "Підняти вгору панель інструментів"
 
-#: app/actions/dialogs-actions.c:374
+#: app/actions/dialogs-actions.c:446
 msgid "New Tool_box"
 msgstr "Додати п_анель інструментів"
 
-#: app/actions/dialogs-actions.c:375
+#: app/actions/dialogs-actions.c:447
 msgid "Create a new toolbox"
 msgstr "Створити нову панель інструментів"
 
@@ -3495,7 +3691,7 @@ msgstr "Віддзеркалити намальоване"
 msgid "Rotate Drawables"
 msgstr "Обертати намальоване"
 
-#: app/actions/dynamics-actions.c:43
+#: app/actions/dynamics-actions.c:43 menus/dynamics-menu.ui:6
 msgctxt "dynamics-action"
 msgid "Paint Dynamics Menu"
 msgstr "Меню динаміки малювання"
@@ -3570,7 +3766,7 @@ msgctxt "dynamics-action"
 msgid "Edit this dynamics"
 msgstr "Змінити цю динаміку"
 
-#: app/actions/dynamics-editor-actions.c:43
+#: app/actions/dynamics-editor-actions.c:43 menus/dynamics-editor-menu.ui:6
 msgctxt "dynamics-editor-action"
 msgid "Paint Dynamics Editor Menu"
 msgstr "Меню редактора динаміки малювання"
@@ -3595,7 +3791,7 @@ msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_Буфер"
 
-#: app/actions/edit-actions.c:70
+#: app/actions/edit-actions.c:70 menus/undo-menu.ui:6
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Меню журналу скасувань"
@@ -3685,127 +3881,127 @@ msgstr "Скопіювати все, що є видимим у позначен�
 
 #: app/actions/edit-actions.c:123
 msgctxt "edit-action"
+msgid "Paste as _New Image"
+msgstr "Вставити як _нове зображення"
+
+#: app/actions/edit-actions.c:124
+msgctxt "edit-action"
 msgid "From _Clipboard"
 msgstr "З _буфера обміну"
 
-#: app/actions/edit-actions.c:124 app/actions/edit-actions.c:130
+#: app/actions/edit-actions.c:126
 msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
 msgstr "Створити нове зображення із вмісту буфера обміну"
 
-#: app/actions/edit-actions.c:129
-msgctxt "edit-action"
-msgid "Paste as _New Image"
-msgstr "Вставити як _нове зображення"
-
-#: app/actions/edit-actions.c:135
+#: app/actions/edit-actions.c:131
 msgctxt "edit-action"
 msgid "Cu_t Named..."
 msgstr "_Вирізати у буфер з назвою..."
 
-#: app/actions/edit-actions.c:136
+#: app/actions/edit-actions.c:132
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
 msgstr "Перемістити позначені точки у названий буфер обміну"
 
-#: app/actions/edit-actions.c:141
+#: app/actions/edit-actions.c:137
 msgctxt "edit-action"
 msgid "_Copy Named..."
 msgstr "_Копіювати до буфера з назвою…"
 
-#: app/actions/edit-actions.c:142
+#: app/actions/edit-actions.c:138
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
 msgstr "Копіювати позначені точки у названий буфер обміну"
 
 #. GIMP_ICON_COPY_VISIBLE,
-#: app/actions/edit-actions.c:147
+#: app/actions/edit-actions.c:143
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
 msgstr "Копіювати ви_диме з назвою…"
 
-#: app/actions/edit-actions.c:149
+#: app/actions/edit-actions.c:145
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
 msgstr "Скопіювати все, що є видимим у позначеній ділянці"
 
-#: app/actions/edit-actions.c:154
+#: app/actions/edit-actions.c:150
 msgctxt "edit-action"
 msgid "_Paste Named..."
 msgstr "Вст_авити з буфера з назвою…"
 
-#: app/actions/edit-actions.c:155
+#: app/actions/edit-actions.c:151
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
 msgstr "Вставити вміст іменованого буфера обміну"
 
-#: app/actions/edit-actions.c:160
+#: app/actions/edit-actions.c:156
 msgctxt "edit-action"
 msgid "Cl_ear"
 msgstr "О_чистити"
 
-#: app/actions/edit-actions.c:161
+#: app/actions/edit-actions.c:157
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
 msgstr "Вилучити позначені точки"
 
-#: app/actions/edit-actions.c:169
+#: app/actions/edit-actions.c:165
 msgctxt "edit-action"
 msgid "_Paste"
 msgstr "Вст_авити"
 
-#: app/actions/edit-actions.c:170
+#: app/actions/edit-actions.c:166
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard"
 msgstr "Вставити вміст буфера обміну"
 
-#: app/actions/edit-actions.c:175
+#: app/actions/edit-actions.c:171
 msgctxt "edit-action"
 msgid "Paste In P_lace"
 msgstr "Вставити на _місце"
 
-#: app/actions/edit-actions.c:177
+#: app/actions/edit-actions.c:173
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard at its original position"
 msgstr "Вставити вміст буфера обміну на його початкове місце"
 
-#: app/actions/edit-actions.c:182
+#: app/actions/edit-actions.c:178
 msgctxt "edit-action"
 msgid "_Paste as Single Layer"
 msgstr "Вставити як окремий шар"
 
-#: app/actions/edit-actions.c:183
+#: app/actions/edit-actions.c:179
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard as a single layer"
 msgstr "Вставити вміст буфера обміну даними як окремий шар"
 
-#: app/actions/edit-actions.c:188
+#: app/actions/edit-actions.c:184
 msgctxt "edit-action"
 msgid "Paste as Single Layer In P_lace"
 msgstr "Вставити як окремий на міс_це"
 
-#: app/actions/edit-actions.c:190
+#: app/actions/edit-actions.c:186
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard at its original position as a single layer"
 msgstr "Вставити вміст буфера обміну на його початкове місце як окремий шар"
 
-#: app/actions/edit-actions.c:195
+#: app/actions/edit-actions.c:191
 msgctxt "edit-action"
 msgid "Paste _Into Selection"
 msgstr "Вставити _до позначеного"
 
-#: app/actions/edit-actions.c:197
+#: app/actions/edit-actions.c:193
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
 msgstr "Вставити вміст буфера обміну у позначену ділянку"
 
-#: app/actions/edit-actions.c:202
+#: app/actions/edit-actions.c:198
 msgctxt "edit-action"
 msgid "Paste Int_o Selection In Place"
 msgstr "Вставити д_о позначеного на місце"
 
-#: app/actions/edit-actions.c:204
+#: app/actions/edit-actions.c:200
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard into the current selection at its "
@@ -3813,51 +4009,51 @@ msgid ""
 msgstr ""
 "Вставити вміст буфера обміну у позначену ділянку на його початковому місці"
 
-#: app/actions/edit-actions.c:213
+#: app/actions/edit-actions.c:209
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "Заповнення кольором _переднього плану"
 
-#: app/actions/edit-actions.c:214
+#: app/actions/edit-actions.c:210
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "Заповнити позначену ділянку кольором переднього плану"
 
-#: app/actions/edit-actions.c:219
+#: app/actions/edit-actions.c:215
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "Заповнення кольором _тла"
 
-#: app/actions/edit-actions.c:220
+#: app/actions/edit-actions.c:216
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "Заповнити позначену ділянку кольором тла"
 
-#: app/actions/edit-actions.c:225
+#: app/actions/edit-actions.c:221
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "Заповнення _текстурою"
 
-#: app/actions/edit-actions.c:226
+#: app/actions/edit-actions.c:222
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Заповнити позначену ділянку активною текстурою"
 
-#: app/actions/edit-actions.c:323 app/actions/edit-actions.c:325
+#: app/actions/edit-actions.c:319 app/actions/edit-actions.c:321
 #, c-format
 msgid "_Undo %s"
 msgstr "_Скасувати «%s»"
 
-#: app/actions/edit-actions.c:329 app/actions/edit-actions.c:331
+#: app/actions/edit-actions.c:325 app/actions/edit-actions.c:327
 #, c-format
 msgid "_Redo %s"
 msgstr "Пове_рнути «%s»"
 
-#: app/actions/edit-actions.c:342
+#: app/actions/edit-actions.c:338
 msgid "_Undo"
 msgstr "_Скасувати"
 
-#: app/actions/edit-actions.c:343
+#: app/actions/edit-actions.c:339
 msgid "_Redo"
 msgstr "Пове_рнути"
 
@@ -4255,7 +4451,6 @@ msgstr "_Перезаписати %s"
 #.
 #: app/actions/file-actions.c:385
 #, c-format
-#| msgid "Re_peat \"%s\""
 msgid "Open \"%s\""
 msgstr "Відкрити «%s»"
 
@@ -5152,37 +5347,37 @@ msgid ""
 msgstr ""
 "Немає останніх параметрів «%s». Показуємо діалогове вікно фільтрування."
 
-#: app/actions/gradient-editor-actions.c:47
+#: app/actions/gradient-editor-actions.c:47 menus/gradient-editor-menu.ui:6
 msgctxt "gradient-editor-action"
 msgid "Gradient Editor Menu"
 msgstr "Меню редактора градієнтів"
 
-#: app/actions/gradient-editor-actions.c:51
+#: app/actions/gradient-editor-actions.c:51 menus/gradient-editor-menu.ui:9
 msgctxt "gradient-editor-action"
 msgid "Left Color Type"
 msgstr "Тип кольору ліворуч"
 
-#: app/actions/gradient-editor-actions.c:53
+#: app/actions/gradient-editor-actions.c:53 menus/gradient-editor-menu.ui:18
 msgctxt "gradient-editor-action"
 msgid "_Load Left Color From"
 msgstr "_Завантажити колір лівої точки з"
 
-#: app/actions/gradient-editor-actions.c:55
+#: app/actions/gradient-editor-actions.c:55 menus/gradient-editor-menu.ui:37
 msgctxt "gradient-editor-action"
 msgid "_Save Left Color To"
 msgstr "З_берегти колір лівої точки у"
 
-#: app/actions/gradient-editor-actions.c:58
+#: app/actions/gradient-editor-actions.c:58 menus/gradient-editor-menu.ui:51
 msgctxt "gradient-editor-action"
 msgid "Right Color Type"
 msgstr "Тип кольору праворуч"
 
-#: app/actions/gradient-editor-actions.c:60
+#: app/actions/gradient-editor-actions.c:60 menus/gradient-editor-menu.ui:60
 msgctxt "gradient-editor-action"
 msgid "Load Right Color Fr_om"
 msgstr "Завантажити колір правої точки _з"
 
-#: app/actions/gradient-editor-actions.c:62
+#: app/actions/gradient-editor-actions.c:62 menus/gradient-editor-menu.ui:79
 msgctxt "gradient-editor-action"
 msgid "Sa_ve Right Color To"
 msgstr "Зб_ерегти колір правої точки у"
@@ -5196,6 +5391,48 @@ msgstr "Колір крайньої _лівої точки…"
 msgctxt "gradient-editor-action"
 msgid "R_ight Endpoint's Color..."
 msgstr "Колір крайньої _правої точки…"
+
+#: app/actions/gradient-editor-actions.c:81
+#| msgid "Flip"
+msgctxt "gradient-editor-action"
+msgid "Flip"
+msgstr "Віддзеркалити"
+
+#: app/actions/gradient-editor-actions.c:86
+#| msgid "_Replicate"
+msgctxt "gradient-editor-action"
+msgid "Replicate"
+msgstr "Створити копію"
+
+#: app/actions/gradient-editor-actions.c:91
+#| msgid "Split Segment at _Midpoint"
+msgctxt "gradient-editor-action"
+msgid "Split Midpoint"
+msgstr "Розділити за центром"
+
+#: app/actions/gradient-editor-actions.c:96
+#| msgid "Split Segment Uniformly"
+msgctxt "gradient-editor-action"
+msgid "Split Uniformly"
+msgstr "Рівномірно розподілити"
+
+#: app/actions/gradient-editor-actions.c:101
+#| msgid "_Delete"
+msgctxt "gradient-editor-action"
+msgid "Delete"
+msgstr "Вилучити"
+
+#: app/actions/gradient-editor-actions.c:106
+#| msgid "C_enter"
+msgctxt "gradient-editor-action"
+msgid "Recenter"
+msgstr "Переобчислити центр"
+
+#: app/actions/gradient-editor-actions.c:111
+#| msgid "Distribute"
+msgctxt "gradient-editor-action"
+msgid "Redistribute"
+msgstr "Перекомпонувати"
 
 #: app/actions/gradient-editor-actions.c:116
 msgctxt "gradient-editor-action"
@@ -5245,186 +5482,186 @@ msgid "_Left Endpoint"
 msgstr "Колір крайньої _лівої точки"
 
 #: app/actions/gradient-editor-actions.c:262
-#: app/actions/gradient-editor-actions.c:292
+#: app/actions/gradient-editor-actions.c:290
 msgctxt "gradient-editor-color-type"
 msgid "_Fixed"
 msgstr "_Фіксований"
 
 #: app/actions/gradient-editor-actions.c:267
-#: app/actions/gradient-editor-actions.c:297
+#: app/actions/gradient-editor-actions.c:295
 msgctxt "gradient-editor-color-type"
 msgid "F_oreground Color"
 msgstr "Колір _переднього плану"
 
-#: app/actions/gradient-editor-actions.c:273
-#: app/actions/gradient-editor-actions.c:303
+#: app/actions/gradient-editor-actions.c:272
+#: app/actions/gradient-editor-actions.c:300
 msgctxt "gradient-editor-color-type"
 msgid "Fo_reground Color (Transparent)"
 msgstr "Колір п_ереднього плану (напівпрозорий)"
 
-#: app/actions/gradient-editor-actions.c:278
-#: app/actions/gradient-editor-actions.c:308
+#: app/actions/gradient-editor-actions.c:277
+#: app/actions/gradient-editor-actions.c:305
 msgctxt "gradient-editor-color-type"
 msgid "_Background Color"
 msgstr "Колір _тла"
 
-#: app/actions/gradient-editor-actions.c:284
-#: app/actions/gradient-editor-actions.c:314
+#: app/actions/gradient-editor-actions.c:282
+#: app/actions/gradient-editor-actions.c:310
 msgctxt "gradient-editor-color-type"
 msgid "B_ackground Color (Transparent)"
 msgstr "Колір т_ла (напівпрозорий)"
 
-#: app/actions/gradient-editor-actions.c:322
+#: app/actions/gradient-editor-actions.c:318
 msgctxt "gradient-editor-blending"
 msgid "_Linear"
 msgstr "_Лінійна"
 
-#: app/actions/gradient-editor-actions.c:327
+#: app/actions/gradient-editor-actions.c:323
 msgctxt "gradient-editor-blending"
 msgid "_Curved"
 msgstr "_Криві"
 
-#: app/actions/gradient-editor-actions.c:332
+#: app/actions/gradient-editor-actions.c:328
 msgctxt "gradient-editor-blending"
 msgid "_Sinusoidal"
 msgstr "_Синусоїда"
 
-#: app/actions/gradient-editor-actions.c:337
+#: app/actions/gradient-editor-actions.c:333
 msgctxt "gradient-editor-blending"
 msgid "Spherical (i_ncreasing)"
 msgstr "Сферична (що з_більшується)"
 
-#: app/actions/gradient-editor-actions.c:342
+#: app/actions/gradient-editor-actions.c:338
 msgctxt "gradient-editor-blending"
 msgid "Spherical (_decreasing)"
 msgstr "Сферична (що з_меншується)"
 
-#: app/actions/gradient-editor-actions.c:347
+#: app/actions/gradient-editor-actions.c:343
 msgctxt "gradient-editor-blending"
 msgid "S_tep"
 msgstr "_Крок"
 
-#: app/actions/gradient-editor-actions.c:352
+#: app/actions/gradient-editor-actions.c:348
 msgctxt "gradient-editor-blending"
 msgid "(Varies)"
 msgstr "(Міняється)"
 
-#: app/actions/gradient-editor-actions.c:360
+#: app/actions/gradient-editor-actions.c:356
 msgctxt "gradient-editor-coloring"
 msgid "_RGB"
 msgstr "_RGB"
 
-#: app/actions/gradient-editor-actions.c:365
+#: app/actions/gradient-editor-actions.c:361
 msgctxt "gradient-editor-coloring"
 msgid "HSV (_counter-clockwise hue)"
 msgstr "HSV (відтінок _проти годинникової)"
 
-#: app/actions/gradient-editor-actions.c:370
+#: app/actions/gradient-editor-actions.c:366
 msgctxt "gradient-editor-coloring"
 msgid "HSV (clockwise _hue)"
 msgstr "HSV (відтінок _за годинниковою)"
 
-#: app/actions/gradient-editor-actions.c:375
+#: app/actions/gradient-editor-actions.c:371
 msgctxt "gradient-editor-coloring"
 msgid "(Varies)"
 msgstr "(Міняється)"
 
-#: app/actions/gradient-editor-actions.c:383
+#: app/actions/gradient-editor-actions.c:379
 msgid "Zoom In"
 msgstr "Збільшити"
 
-#: app/actions/gradient-editor-actions.c:384
+#: app/actions/gradient-editor-actions.c:380
 #: app/actions/palette-editor-actions.c:90
 msgid "Zoom in"
 msgstr "Збільшити"
 
-#: app/actions/gradient-editor-actions.c:389
+#: app/actions/gradient-editor-actions.c:385
 msgid "Zoom Out"
 msgstr "Зменшити"
 
-#: app/actions/gradient-editor-actions.c:390
+#: app/actions/gradient-editor-actions.c:386
 #: app/actions/palette-editor-actions.c:96
 msgid "Zoom out"
 msgstr "Зменшити"
 
-#: app/actions/gradient-editor-actions.c:395
+#: app/actions/gradient-editor-actions.c:391
 msgid "Zoom All"
 msgstr "Масштабувати до розміру вінка"
 
-#: app/actions/gradient-editor-actions.c:396
+#: app/actions/gradient-editor-actions.c:392
 #: app/actions/palette-editor-actions.c:102
 msgid "Zoom all"
 msgstr "Масштабувати до розміру вінка"
 
-#: app/actions/gradient-editor-actions.c:791
+#: app/actions/gradient-editor-actions.c:787
 msgid "_Blending Function for Segment"
 msgstr "Функція _змішування для сегмента"
 
-#: app/actions/gradient-editor-actions.c:793
+#: app/actions/gradient-editor-actions.c:789
 msgid "Coloring _Type for Segment"
 msgstr "_Тип фарбування для сегмента"
 
-#: app/actions/gradient-editor-actions.c:796
+#: app/actions/gradient-editor-actions.c:792
 msgid "_Flip Segment"
 msgstr "_Віддзеркалити сегмент"
 
-#: app/actions/gradient-editor-actions.c:798
+#: app/actions/gradient-editor-actions.c:794
 msgid "_Replicate Segment..."
 msgstr "_Розмножити сегмент…"
 
-#: app/actions/gradient-editor-actions.c:800
+#: app/actions/gradient-editor-actions.c:796
 msgid "Split Segment at _Midpoint"
 msgstr "Розділити сегмент по _центру"
 
-#: app/actions/gradient-editor-actions.c:802
+#: app/actions/gradient-editor-actions.c:798
 msgid "Split Segment _Uniformly..."
 msgstr "Розділити сегмент на _рівні частини…"
 
-#: app/actions/gradient-editor-actions.c:804
+#: app/actions/gradient-editor-actions.c:800
 msgid "_Delete Segment"
 msgstr "В_илучити сегмент"
 
-#: app/actions/gradient-editor-actions.c:806
+#: app/actions/gradient-editor-actions.c:802
 msgid "Re-_center Segment's Midpoint"
 msgstr "Від_центрувати середню точку сегмента"
 
-#: app/actions/gradient-editor-actions.c:808
+#: app/actions/gradient-editor-actions.c:804
 msgid "Re-distribute _Handles in Segment"
 msgstr "Перерозподілити _напрямні в сегменті"
 
-#: app/actions/gradient-editor-actions.c:813
+#: app/actions/gradient-editor-actions.c:809
 msgid "_Blending Function for Selection"
 msgstr "Функція _змішування для позначеної ділянки"
 
-#: app/actions/gradient-editor-actions.c:815
+#: app/actions/gradient-editor-actions.c:811
 msgid "Coloring _Type for Selection"
 msgstr "_Тип фарбування позначеної ділянки"
 
-#: app/actions/gradient-editor-actions.c:818
+#: app/actions/gradient-editor-actions.c:814
 msgid "_Flip Selection"
 msgstr "_Віддзеркалити позначене"
 
-#: app/actions/gradient-editor-actions.c:820
+#: app/actions/gradient-editor-actions.c:816
 msgid "_Replicate Selection..."
 msgstr "_Розмножити позначене…"
 
-#: app/actions/gradient-editor-actions.c:822
+#: app/actions/gradient-editor-actions.c:818
 msgid "Split Segments at _Midpoints"
 msgstr "Розділити сегменти по _центрах"
 
-#: app/actions/gradient-editor-actions.c:824
+#: app/actions/gradient-editor-actions.c:820
 msgid "Split Segments _Uniformly..."
 msgstr "Розділити сегменти на _рівні частини…"
 
-#: app/actions/gradient-editor-actions.c:826
+#: app/actions/gradient-editor-actions.c:822
 msgid "_Delete Selection"
 msgstr "В_илучити позначене"
 
-#: app/actions/gradient-editor-actions.c:828
+#: app/actions/gradient-editor-actions.c:824
 msgid "Re-_center Midpoints in Selection"
 msgstr "Від_центрувати середні точки позначеного"
 
-#: app/actions/gradient-editor-actions.c:830
+#: app/actions/gradient-editor-actions.c:826
 msgid "Re-distribute _Handles in Selection"
 msgstr "Перерозподілити _напрямні у позначене"
 
@@ -5500,7 +5737,7 @@ msgstr ""
 "Виберіть кількість частин\n"
 "на яку слід розділити сегменти"
 
-#: app/actions/gradients-actions.c:44
+#: app/actions/gradients-actions.c:44 menus/gradients-menu.ui:7
 msgctxt "gradients-action"
 msgid "Gradients Menu"
 msgstr "Меню градієнтів"
@@ -6273,7 +6510,7 @@ msgstr "Немає позначених шарів або каналів для 
 msgid "There are no selected layers or channels to stroke to."
 msgstr "Немає позначених шарів або каналів для обведення."
 
-#: app/actions/layers-actions.c:52
+#: app/actions/layers-actions.c:52 menus/layers-menu.ui:6
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "Меню шарів"
@@ -6625,7 +6862,6 @@ msgstr ""
 "неруйнівне редагування прозорості"
 
 #: app/actions/layers-actions.c:279
-#| msgid "Add Layer Mask Dialog"
 msgctxt "layers-action"
 msgid "Add La_yer Masks with Last Values"
 msgstr "Додати маски ша_рів із останніми значеннями"
@@ -7414,7 +7650,7 @@ msgctxt "mypaint-brushes-action"
 msgid "Edit MyPaint brush"
 msgstr "Змінити цей пензель MyPaint"
 
-#: app/actions/palette-editor-actions.c:44
+#: app/actions/palette-editor-actions.c:44 menus/palette-editor-menu.ui:6
 msgctxt "palette-editor-action"
 msgid "Palette Editor Menu"
 msgstr "Меню редактора палітри"
@@ -7476,7 +7712,7 @@ msgstr "З_меншити"
 msgid "Zoom _All"
 msgstr "Збільшити до _розміру вінка"
 
-#: app/actions/palettes-actions.c:44
+#: app/actions/palettes-actions.c:44 menus/palettes-menu.ui:6
 msgctxt "palettes-action"
 msgid "Palettes Menu"
 msgstr "Меню палітр"
@@ -7744,7 +7980,7 @@ msgstr "Зміна кольору швидкої маски"
 msgid "_Mask opacity:"
 msgstr "Непрозорість _маски:"
 
-#: app/actions/sample-points-actions.c:40
+#: app/actions/sample-points-actions.c:40 menus/sample-points-menu.ui:6
 msgctxt "sample-points-action"
 msgid "Sample Point Menu"
 msgstr "Меню «Зразкова точка»"
@@ -7759,7 +7995,7 @@ msgctxt "sample-points-action"
 msgid "Use the composite color of all visible layers"
 msgstr "Використовувати колір суміші всіх видимих шарів"
 
-#: app/actions/select-actions.c:44
+#: app/actions/select-actions.c:44 menus/selection-menu.ui:6
 msgctxt "select-action"
 msgid "Selection Editor Menu"
 msgstr "Меню редактора позначеного"
@@ -8070,82 +8306,88 @@ msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "Вилучити шаблон «%s» зі списку та з диска?"
 
-#: app/actions/text-editor-actions.c:44
+#: app/actions/text-editor-actions.c:40
+#| msgid "Text Editor"
+msgctxt "text-editor-action"
+msgid "Text Editor Toolbar"
+msgstr "Панель інструментів текстового редактора"
+
+#: app/actions/text-editor-actions.c:45
 msgctxt "text-editor-action"
 msgid "Open"
 msgstr "Відкрити"
 
-#: app/actions/text-editor-actions.c:45
+#: app/actions/text-editor-actions.c:46
 msgctxt "text-editor-action"
 msgid "Load text from file"
 msgstr "Завантажити текст з файла"
 
-#: app/actions/text-editor-actions.c:50
+#: app/actions/text-editor-actions.c:51
 msgctxt "text-editor-action"
 msgid "Clear"
 msgstr "Очистити"
 
-#: app/actions/text-editor-actions.c:51
+#: app/actions/text-editor-actions.c:52
 msgctxt "text-editor-action"
 msgid "Clear all text"
 msgstr "Очистити увесь текст"
 
-#: app/actions/text-editor-actions.c:59
+#: app/actions/text-editor-actions.c:60
 msgctxt "text-editor-action"
 msgid "LTR"
 msgstr "LTR"
 
-#: app/actions/text-editor-actions.c:60
+#: app/actions/text-editor-actions.c:61
 msgctxt "text-editor-action"
 msgid "From left to right"
 msgstr "Зліва направо"
 
-#: app/actions/text-editor-actions.c:65
+#: app/actions/text-editor-actions.c:66
 msgctxt "text-editor-action"
 msgid "RTL"
 msgstr "RTL"
 
-#: app/actions/text-editor-actions.c:66
+#: app/actions/text-editor-actions.c:67
 msgctxt "text-editor-action"
 msgid "From right to left"
 msgstr "Справа наліво"
 
-#: app/actions/text-editor-actions.c:71
+#: app/actions/text-editor-actions.c:72
 msgctxt "text-editor-action"
 msgid "TTB-RTL"
 msgstr "TTB-RTL"
 
-#: app/actions/text-editor-actions.c:72
+#: app/actions/text-editor-actions.c:73
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Вертикальна, справа ліворуч (мішана орієнтація)"
 
-#: app/actions/text-editor-actions.c:77
+#: app/actions/text-editor-actions.c:78
 msgctxt "text-editor-action"
 msgid "TTB-RTL-UPRIGHT"
 msgstr "TTB-RTL-ВГОРУ"
 
-#: app/actions/text-editor-actions.c:78
+#: app/actions/text-editor-actions.c:79
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Вертикальна, справа ліворуч (орієнтація вгору)"
 
-#: app/actions/text-editor-actions.c:83
+#: app/actions/text-editor-actions.c:84
 msgctxt "text-editor-action"
 msgid "TTB-LTR"
 msgstr "TTB-LTR"
 
-#: app/actions/text-editor-actions.c:84
+#: app/actions/text-editor-actions.c:85
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Вертикальна, зліва праворуч (мішана орієнтація)"
 
-#: app/actions/text-editor-actions.c:89
+#: app/actions/text-editor-actions.c:90
 msgctxt "text-editor-action"
 msgid "TTB-LTR-UPRIGHT"
 msgstr "TTB-LTR-ВГОРУ"
 
-#: app/actions/text-editor-actions.c:90
+#: app/actions/text-editor-actions.c:91
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Вертикальна, зліва праворуч (орієнтація вгору)"
@@ -8169,7 +8411,7 @@ msgstr "Від_крити"
 msgid "Could not open '%s' for reading: %s"
 msgstr "Не вдалось відкрити «%s» для зчитування: %s"
 
-#: app/actions/text-tool-actions.c:50
+#: app/actions/text-tool-actions.c:50 menus/text-tool-menu.ui:6
 msgctxt "text-tool-action"
 msgid "Text Tool Menu"
 msgstr "Меню інструменту «Текст»"
@@ -8264,27 +8506,27 @@ msgstr "Вертикальна, зліва праворуч (орієнтаці�
 msgid "Text along path failed: %s"
 msgstr "Помилка під час спроби розмістити текст уздовж контура: %s"
 
-#: app/actions/tool-options-actions.c:58
+#: app/actions/tool-options-actions.c:58 menus/tool-options-menu.ui:6
 msgctxt "tool-options-action"
 msgid "Tool Options Menu"
 msgstr "Меню параметрів інструментів"
 
-#: app/actions/tool-options-actions.c:62
+#: app/actions/tool-options-actions.c:62 menus/tool-options-menu.ui:9
 msgctxt "tool-options-action"
 msgid "_Save Tool Preset"
 msgstr "_Зберегти шаблон інструментів"
 
-#: app/actions/tool-options-actions.c:66
+#: app/actions/tool-options-actions.c:66 menus/tool-options-menu.ui:16
 msgctxt "tool-options-action"
 msgid "_Restore Tool Preset"
 msgstr "_Відновити шаблон інструментів"
 
-#: app/actions/tool-options-actions.c:70
+#: app/actions/tool-options-actions.c:70 menus/tool-options-menu.ui:20
 msgctxt "tool-options-action"
 msgid "E_dit Tool Preset"
 msgstr "_Редагувати шаблон інструментів"
 
-#: app/actions/tool-options-actions.c:74
+#: app/actions/tool-options-actions.c:74 menus/tool-options-menu.ui:24
 msgctxt "tool-options-action"
 msgid "_Delete Tool Preset"
 msgstr "В_илучити шаблон інструментів"
@@ -8323,6 +8565,7 @@ msgid "Do you really want to reset all tool options to default values?"
 msgstr "Ви дійсно бажаєте повернутись до початкових параметрів?"
 
 #: app/actions/tool-preset-editor-actions.c:44
+#: menus/tool-preset-editor-menu.ui:6
 msgctxt "tool-preset-editor-action"
 msgid "Tool Preset Editor Menu"
 msgstr "Меню редактора шаблону інструментів"
@@ -8360,7 +8603,7 @@ msgid "Can't save '%s' tool options to an existing '%s' tool preset."
 msgstr ""
 "Не вдалося зберегти параметри «%s» до наявного шаблону інструментів «%s»."
 
-#: app/actions/tool-presets-actions.c:46
+#: app/actions/tool-presets-actions.c:46 menus/tool-presets-menu.ui:6
 msgctxt "tool-presets-action"
 msgid "Tool Presets Menu"
 msgstr "Меню шаблону інструментів"
@@ -8927,6 +9170,12 @@ msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
 msgstr "Потужність інструменту: збільшити відносно"
 
+#: app/actions/tools-actions.c:830
+#, c-format
+#| msgid "Activate the \"%s\" tool"
+msgid "Activate tool \"%s\""
+msgstr "Активувати інструмент «%s»"
+
 #: app/actions/vector-toolpath-actions.c:45
 msgctxt "vector-toolpath-action"
 msgid "Vector Toolpath Menu"
@@ -8957,7 +9206,7 @@ msgctxt "vector-toolpath-action"
 msgid "_Reverse Stroke"
 msgstr "_Розвернути штрих"
 
-#: app/actions/vectors-actions.c:46
+#: app/actions/vectors-actions.c:46 menus/vectors-menu.ui:6
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Меню контурів"
@@ -9292,62 +9541,62 @@ msgctxt "vectors-action"
 msgid "Selecti_on to Path"
 msgstr "Позначене → Кон_тур"
 
-#: app/actions/vectors-actions.c:278 app/actions/vectors-actions.c:284
-msgctxt "vectors-action"
-msgid "Selection to path"
-msgstr "Перетворити позначену ділянку на контур"
-
-#: app/actions/vectors-actions.c:283
+#: app/actions/vectors-actions.c:278
 msgctxt "vectors-action"
 msgid "To _Path"
 msgstr "У _контур"
 
-#: app/actions/vectors-actions.c:289
+#: app/actions/vectors-actions.c:279
+msgctxt "vectors-action"
+msgid "Selection to path"
+msgstr "Перетворити позначену ділянку на контур"
+
+#: app/actions/vectors-actions.c:284
 msgctxt "vectors-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Позначене до контуру (_розширені параметри)"
 
-#: app/actions/vectors-actions.c:290
+#: app/actions/vectors-actions.c:285
 msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "Розширені параметри"
 
-#: app/actions/vectors-actions.c:298
+#: app/actions/vectors-actions.c:293
 msgctxt "vectors-action"
 msgid "Select _Top Path"
 msgstr "Вибрати _верхній контур"
 
-#: app/actions/vectors-actions.c:299
+#: app/actions/vectors-actions.c:294
 msgctxt "vectors-action"
 msgid "Select the topmost path"
 msgstr "Вибрати найвищий контур"
 
-#: app/actions/vectors-actions.c:304
+#: app/actions/vectors-actions.c:299
 msgctxt "vectors-action"
 msgid "Select _Bottom Path"
 msgstr "Вибрати _нижній контур"
 
-#: app/actions/vectors-actions.c:305
+#: app/actions/vectors-actions.c:300
 msgctxt "vectors-action"
 msgid "Select the bottommost path"
 msgstr "Вибрати найнижчий контур"
 
-#: app/actions/vectors-actions.c:310
+#: app/actions/vectors-actions.c:305
 msgctxt "vectors-action"
 msgid "Select _Previous Path"
 msgstr "Вибрати _попередній контур"
 
-#: app/actions/vectors-actions.c:311
+#: app/actions/vectors-actions.c:306
 msgctxt "vectors-action"
 msgid "Select the path above the current path"
 msgstr "Вибрати контур над поточним контуром"
 
-#: app/actions/vectors-actions.c:316
+#: app/actions/vectors-actions.c:311
 msgctxt "vectors-action"
 msgid "Select _Next Path"
 msgstr "Вибрати _наступний контур"
 
-#: app/actions/vectors-actions.c:317
+#: app/actions/vectors-actions.c:312
 msgctxt "vectors-action"
 msgid "Select the vector below the current path"
 msgstr "Вибрати векторний контур під поточним контуром"
@@ -9988,276 +10237,283 @@ msgctxt "view-action"
 msgid "Flip the view vertically"
 msgstr "Віддзеркалення зображення вертикально"
 
-#: app/actions/view-actions.c:458
+#: app/actions/view-actions.c:453
+#| msgctxt "image-action"
+#| msgid "Display information about this image"
+msgctxt "view-action"
+msgid "Display Rotation Absolute Angle Set"
+msgstr "Показати встановлений абсолютний кут обертання"
+
+#: app/actions/view-actions.c:459
 msgctxt "view-action"
 msgid "_Reset Rotate"
 msgstr "С_кинути обертання"
 
-#: app/actions/view-actions.c:460
+#: app/actions/view-actions.c:461
 msgctxt "view-action"
 msgid "Reset the angle of rotation to 0°"
 msgstr "Встановити кут обертання 0°"
 
-#: app/actions/view-actions.c:468
+#: app/actions/view-actions.c:469
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "Обернути на 15° за _годинниковою стрілкою"
 
-#: app/actions/view-actions.c:469
+#: app/actions/view-actions.c:470
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the right"
 msgstr "Обертання зображення на 15 градусів праворуч"
 
-#: app/actions/view-actions.c:474
+#: app/actions/view-actions.c:475
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Обернути на 90° за _годинниковою стрілкою"
 
-#: app/actions/view-actions.c:475
+#: app/actions/view-actions.c:476
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the right"
 msgstr "Обертання зображення на 90 градусів праворуч"
 
-#: app/actions/view-actions.c:480
+#: app/actions/view-actions.c:481
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Обернути на _180°"
 
-#: app/actions/view-actions.c:481
+#: app/actions/view-actions.c:482
 msgctxt "view-action"
 msgid "Turn the view upside-down"
 msgstr "Обертання зображення догори ногами"
 
-#: app/actions/view-actions.c:486
+#: app/actions/view-actions.c:487
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Обернути на 90° _проти годинникової стрілки"
 
-#: app/actions/view-actions.c:487
+#: app/actions/view-actions.c:488
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the left"
 msgstr "Обернути зображення на 90 градусів ліворуч"
 
-#: app/actions/view-actions.c:492
+#: app/actions/view-actions.c:493
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "Обернути на 15° _проти годинникової стрілки"
 
-#: app/actions/view-actions.c:493
+#: app/actions/view-actions.c:494
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the left"
 msgstr "Обернути зображення на 15 градусів ліворуч"
 
-#: app/actions/view-actions.c:501
+#: app/actions/view-actions.c:502
 msgctxt "view-action"
 msgid "_Perceptual"
 msgstr "П_ридатне до сприйняття"
 
-#: app/actions/view-actions.c:502
+#: app/actions/view-actions.c:503
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
 msgstr "Відтворення кольорів на дисплеї є придатним до сприйняття"
 
-#: app/actions/view-actions.c:507
+#: app/actions/view-actions.c:508
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
 msgstr "_Відносне колориметричне"
 
-#: app/actions/view-actions.c:508
+#: app/actions/view-actions.c:509
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
 msgstr "Відтворення кольорів на дисплеї є відносним колориметричним"
 
-#: app/actions/view-actions.c:513
+#: app/actions/view-actions.c:514
 msgctxt "view-action"
 msgid "_Saturation"
 msgstr "_Насиченість"
 
-#: app/actions/view-actions.c:514
+#: app/actions/view-actions.c:515
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
 msgstr "Відтворення кольорів на дисплеї є спрямованим на насиченість"
 
-#: app/actions/view-actions.c:519
+#: app/actions/view-actions.c:520
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
 msgstr "_Абсолютне колориметричне"
 
-#: app/actions/view-actions.c:520
+#: app/actions/view-actions.c:521
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
 msgstr "Відтворення кольорів на дисплеї є абсолютним колориметричним"
 
-#: app/actions/view-actions.c:528
+#: app/actions/view-actions.c:529
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "З т_еми"
 
-#: app/actions/view-actions.c:529
+#: app/actions/view-actions.c:530
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Встановити колір тла поточної теми оформлення"
 
-#: app/actions/view-actions.c:534
+#: app/actions/view-actions.c:535
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "_Світлий"
 
-#: app/actions/view-actions.c:535
+#: app/actions/view-actions.c:536
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Використовувати світлий колір тла"
 
-#: app/actions/view-actions.c:540
+#: app/actions/view-actions.c:541
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "_Темний"
 
-#: app/actions/view-actions.c:541
+#: app/actions/view-actions.c:542
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Використовувати темний колір тла"
 
-#: app/actions/view-actions.c:546
+#: app/actions/view-actions.c:547
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "Інший _колір…"
 
-#: app/actions/view-actions.c:547
+#: app/actions/view-actions.c:548
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Використовувати довільний колір тла"
 
-#: app/actions/view-actions.c:552
+#: app/actions/view-actions.c:553
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Як у п_араметрах"
 
-#: app/actions/view-actions.c:554
+#: app/actions/view-actions.c:555
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "Скинути колір тла до вказаного у параметрах програми"
 
-#: app/actions/view-actions.c:562
+#: app/actions/view-actions.c:563
 msgctxt "view-padding-color"
 msgid "Keep Padding in \"Show _All\" Mode"
 msgstr "Зберігати підкладку у режимі «Показати _усе»"
 
-#: app/actions/view-actions.c:564
+#: app/actions/view-actions.c:565
 msgctxt "view-padding-color"
 msgid "Keep canvas padding when \"View -> Show All\" is enabled"
 msgstr ""
 "Зберігати підкладку полотна, якщо позначено пункт меню «Перегляд → Показати "
 "усе»"
 
-#: app/actions/view-actions.c:573
+#: app/actions/view-actions.c:574
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
 msgstr "Встановити горизонтальне зміщення гортання"
 
-#: app/actions/view-actions.c:578
+#: app/actions/view-actions.c:579
 msgctxt "view-action"
 msgid "Scroll to left border"
 msgstr "Гортати до лівої межі"
 
-#: app/actions/view-actions.c:583
+#: app/actions/view-actions.c:584
 msgctxt "view-action"
 msgid "Scroll to right border"
 msgstr "Гортати до правої межі"
 
-#: app/actions/view-actions.c:588
+#: app/actions/view-actions.c:589
 msgctxt "view-action"
 msgid "Scroll left"
 msgstr "Гортати ліворуч"
 
-#: app/actions/view-actions.c:593
+#: app/actions/view-actions.c:594
 msgctxt "view-action"
 msgid "Scroll right"
 msgstr "Гортати праворуч"
 
-#: app/actions/view-actions.c:598
+#: app/actions/view-actions.c:599
 msgctxt "view-action"
 msgid "Scroll page left"
 msgstr "Гортати на сторінку ліворуч"
 
-#: app/actions/view-actions.c:603
+#: app/actions/view-actions.c:604
 msgctxt "view-action"
 msgid "Scroll page right"
 msgstr "Гортати на сторінку праворуч"
 
-#: app/actions/view-actions.c:611
+#: app/actions/view-actions.c:612
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
 msgstr "Встановити вертикальне зміщення гортання"
 
-#: app/actions/view-actions.c:616
+#: app/actions/view-actions.c:617
 msgctxt "view-action"
 msgid "Scroll to top border"
 msgstr "Гортати до верхньої межі"
 
-#: app/actions/view-actions.c:621
+#: app/actions/view-actions.c:622
 msgctxt "view-action"
 msgid "Scroll to bottom border"
 msgstr "Гортати до нижньої межі"
 
-#: app/actions/view-actions.c:626
+#: app/actions/view-actions.c:627
 msgctxt "view-action"
 msgid "Scroll up"
 msgstr "Гортати вгору"
 
-#: app/actions/view-actions.c:631
+#: app/actions/view-actions.c:632
 msgctxt "view-action"
 msgid "Scroll down"
 msgstr "Гортати вниз"
 
-#: app/actions/view-actions.c:636
+#: app/actions/view-actions.c:637
 msgctxt "view-action"
 msgid "Scroll page up"
 msgstr "Гортати на сторінку вгору"
 
-#: app/actions/view-actions.c:641
+#: app/actions/view-actions.c:642
 msgctxt "view-action"
 msgid "Scroll page down"
 msgstr "Гортати на сторінку вниз"
 
-#: app/actions/view-actions.c:842
+#: app/actions/view-actions.c:843
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "Повернути _масштаб (%d%%)"
 
-#: app/actions/view-actions.c:850
+#: app/actions/view-actions.c:851
 msgid "Re_vert Zoom"
 msgstr "_Вернути масштаб"
 
-#: app/actions/view-actions.c:1018
+#: app/actions/view-actions.c:1019
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "_Інший (%s) …"
 
-#: app/actions/view-actions.c:1027
+#: app/actions/view-actions.c:1028
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "Мас_штаб (%s)"
 
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
-#: app/actions/view-actions.c:1049
+#: app/actions/view-actions.c:1050
 msgid "(H+V) "
 msgstr "(H+V) "
 
 #. please preserve the trailing space
 #. H: Horizontal
-#: app/actions/view-actions.c:1055
+#: app/actions/view-actions.c:1056
 msgid "(H) "
 msgstr "(H) "
 
 #. please preserve the trailing space
 #. V: Vertical
-#: app/actions/view-actions.c:1061
+#: app/actions/view-actions.c:1062
 msgid "(V) "
 msgstr "(V) "
 
-#: app/actions/view-actions.c:1068
+#: app/actions/view-actions.c:1069
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "_Віддзеркалити %s і обернути (%d°)"
@@ -10420,9 +10676,18 @@ msgstr "Одновіконний режим вимкнено"
 #.
 #: app/actions/windows-actions.c:400
 #, c-format
-#| msgid "R_e-Show \"%s\""
 msgid "Show \"%s-%d.%d\""
 msgstr "Показати «%s-%d.%d»"
+
+#: app/actions/windows-actions.c:471
+#| msgctxt "windows-action"
+#| msgid "Switch to the next image"
+msgid "Switch to the first image view: %2$s"
+msgid_plural "Switch to image view %d: %s"
+msgstr[0] "Перемкнутися на перегляд зображення %d: %s"
+msgstr[1] "Перемкнутися на перегляд зображення %d: %s"
+msgstr[2] "Перемкнутися на перегляд зображення %d: %s"
+msgstr[3] "Перемкнутися на перегляд першого зображення: %s"
 
 #: app/actions/windows-commands.c:208
 msgid ""
@@ -11739,8 +12004,8 @@ msgid "The maximum number of actions saved in history."
 msgstr "Максимальна кількість записів дій, які зберігатимуться у журналі."
 
 #: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130
-#: app/core/gimp-units.c:278 app/gui/session.c:309 app/plug-in/plug-in-rc.c:249
-#: app/tools/gimp-tools.c:504
+#: app/core/gimp-units.c:278 app/gui/session.c:309 app/menus/shortcuts-rc.c:158
+#: app/plug-in/plug-in-rc.c:249 app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "критична помилка лексичного аналізу"
 
@@ -12801,26 +13066,26 @@ msgid "Selection by glob pattern search"
 msgstr "Позначення за пошуком за взірцем із замінниками"
 
 #. initialize babl fishes
-#: app/core/gimp.c:535 app/core/gimp.c:565
+#: app/core/gimp.c:540 app/core/gimp.c:570
 msgid "Initialization"
 msgstr "Запуск"
 
 #. register all internal procedures
-#: app/core/gimp.c:545
+#: app/core/gimp.c:550
 msgid "Internal Procedures"
 msgstr "Внутрішні процедури"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:845
+#: app/core/gimp.c:850
 msgid "Looking for data files"
 msgstr "Пошук файлів даних"
 
-#: app/core/gimp.c:845
+#: app/core/gimp.c:850
 msgid "Parasites"
 msgstr "Шуми"
 
 #. initialize the module list
-#: app/core/gimp.c:856 app/dialogs/preferences-dialog.c:3561
+#: app/core/gimp.c:861 app/dialogs/preferences-dialog.c:3561
 msgid "Modules"
 msgstr "Модулі"
 
@@ -18706,7 +18971,7 @@ msgid "(clean)"
 msgstr "(не змінено)"
 
 #: app/display/gimpdisplayshell-title.c:374
-#: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1062
+#: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1116
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
 #: app/widgets/gimpdeviceinfo.c:1077 app/widgets/gimpdeviceinfo.c:1102
 msgid "(none)"
@@ -20249,6 +20514,17 @@ msgstr "Документи"
 msgid "GIMP Startup"
 msgstr "Запуск GIMP"
 
+#: app/menus/shortcuts-rc.c:144 app/plug-in/plug-in-rc.c:235
+#, c-format
+msgid "Skipping '%s': wrong GIMP protocol version."
+msgstr "Пропускається \"%s\": неправильна версія протоколу GIMP."
+
+#: app/menus/shortcuts-rc.c:151
+#, c-format
+#| msgid "Skipping '%s': wrong pluginrc file format version."
+msgid "Skipping '%s': wrong shortcutsrc file format version."
+msgstr "Пропускається \"%s\": неправильна версія файлу формату shortcutsrc."
+
 #: app/paint/gimpairbrush.c:80 app/tools/gimpairbrushtool.c:67
 msgid "Airbrush"
 msgstr "Аерограф"
@@ -21777,11 +22053,6 @@ msgid ""
 msgstr ""
 "Помилка виконання «%s»:\n"
 "%s"
-
-#: app/plug-in/plug-in-rc.c:235
-#, c-format
-msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr "Пропускається \"%s\": неправильна версія протоколу GIMP."
 
 #: app/plug-in/plug-in-rc.c:242
 #, c-format
@@ -23530,21 +23801,21 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Вибір зв'язаної ділянки"
 
-#: app/tools/gimpgegltool.c:78 app/tools/gimpgegltool.c:555
-#: app/tools/gimpgegltool.c:556 app/tools/gimpoperationtool.c:131
+#: app/tools/gimpgegltool.c:89 app/tools/gimpgegltool.c:664
+#: app/tools/gimpgegltool.c:665 app/tools/gimpoperationtool.c:131
 msgid "GEGL Operation"
 msgstr "Операція GEGL"
 
-#: app/tools/gimpgegltool.c:79
+#: app/tools/gimpgegltool.c:90
 msgid "Run an arbitrary GEGL operation"
 msgstr "Виконання довільної операції GEGL"
 
-#: app/tools/gimpgegltool.c:80
+#: app/tools/gimpgegltool.c:91
 msgid "_GEGL Operation..."
 msgstr "Опера_ція GEGL…"
 
 #. The options vbox
-#: app/tools/gimpgegltool.c:497
+#: app/tools/gimpgegltool.c:606
 msgid "Select an operation from the list above"
 msgstr "Виберіть операцію зі списку згори"
 
@@ -25849,7 +26120,7 @@ msgstr "Не вдалось імпортувати з «%s»: %s"
 msgid "_Search:"
 msgstr "З_найти:"
 
-#: app/widgets/gimpactiongroup.c:1059
+#: app/widgets/gimpactiongroup.c:1113
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -27138,7 +27409,7 @@ msgctxt "dock"
 msgid " | "
 msgstr " | "
 
-#: app/widgets/gimpdockbook.c:253
+#: app/widgets/gimpdockbook.c:248
 msgid "Configure this tab"
 msgstr "Налаштовувати цю вкладку"
 
@@ -27839,14 +28110,12 @@ msgstr "Метадані не будуть видимі у GIMP версій с�
 #. * e.g.: "shortcut: Ctrl+Alt+O"
 #.
 #: app/widgets/gimpsearchpopup.c:278
-#| msgid "Shortcut"
 msgid "shortcut"
 msgstr "скорочення"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
 #: app/widgets/gimpsearchpopup.c:282 app/widgets/gimpsearchpopup.c:304
 #, c-format
-#| msgid "%s: %d"
 msgid "%s: %s"
 msgstr "%s: %s"
 
@@ -28617,6 +28886,13 @@ msgstr ""
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Діагностика аварій GIMP"
+
+#: menus/dashboard-menu.ui:9
+#| msgctxt "dashboard-action"
+#| msgid "_Groups"
+msgctxt "dashboard-action"
+msgid "Groups"
+msgstr "Групи"
 
 #~ msgctxt "layers-action"
 #~ msgid "Add La_yer Masks"
