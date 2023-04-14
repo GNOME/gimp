@@ -654,6 +654,7 @@ gimp_menu_model_initialize (GimpMenuModel *model,
           if (action_name)
             {
               GimpAction *action;
+              gchar      *label_variant = NULL;
 
               action = gimp_ui_manager_find_action (model->priv->manager, NULL, action_name);
 
@@ -668,11 +669,21 @@ gimp_menu_model_initialize (GimpMenuModel *model,
                                        G_CALLBACK (gimp_menu_model_action_notify_visible),
                                        model, 0);
 
-              g_menu_item_set_label (item, gimp_action_get_short_label (action));
+              g_menu_item_get_attribute (item, "label-variant", "s", &label_variant);
+              if (g_strcmp0 (label_variant, "long") == 0)
+                g_menu_item_set_label (item, gimp_action_get_label (action));
+              else
+                g_menu_item_set_label (item, gimp_action_get_short_label (action));
+
               g_signal_connect_object (action,
                                        "notify::short-label",
                                        G_CALLBACK (gimp_menu_model_action_notify_label),
                                        item, 0);
+              g_signal_connect_object (action,
+                                       "notify::label",
+                                       G_CALLBACK (gimp_menu_model_action_notify_label),
+                                       item, 0);
+              g_free (label_variant);
             }
             /* else we instal a placeholder (no-action and always invisible) item. */
         }
@@ -824,10 +835,17 @@ gimp_menu_model_action_notify_label (GimpAction *action,
                                      GParamSpec *pspec,
                                      GMenuItem  *item)
 {
+  gchar *label_variant = NULL;
+
   g_return_if_fail (GIMP_IS_ACTION (action));
   g_return_if_fail (G_IS_MENU_ITEM (item));
 
-  g_menu_item_set_label (item, gimp_action_get_short_label (action));
+  g_menu_item_get_attribute (item, "label-variant", "s", &label_variant);
+  if (g_strcmp0 (label_variant, "long") == 0)
+    g_menu_item_set_label (item, gimp_action_get_label (action));
+  else
+    g_menu_item_set_label (item, gimp_action_get_short_label (action));
+  g_free (label_variant);
 }
 
 static gboolean
@@ -933,6 +951,10 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
                                    model, 0);
           g_signal_connect_object (action,
                                    "notify::short-label",
+                                   G_CALLBACK (gimp_menu_model_action_notify_label),
+                                   item, 0);
+          g_signal_connect_object (action,
+                                   "notify::label",
                                    G_CALLBACK (gimp_menu_model_action_notify_label),
                                    item, 0);
           g_menu_model_items_changed (G_MENU_MODEL (model), position, 0, 1);

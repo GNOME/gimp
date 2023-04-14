@@ -88,6 +88,7 @@ static void     gimp_menu_add_placeholder         (GimpMenu                *menu
                                                    const gchar             *label);
 static void     gimp_menu_add_action              (GimpMenu                *menu,
                                                    const gchar             *action_name,
+                                                   gboolean                 long_label,
                                                    GtkWidget               *sibling,
                                                    gboolean                 top,
                                                    GtkRadioMenuItem       **group);
@@ -264,7 +265,17 @@ gimp_menu_append (GimpMenuShell *shell,
         }
       else
         {
-          gimp_menu_add_action (menu, action_name, NULL, FALSE, &group);
+          gchar *label_variant = NULL;
+
+          g_menu_model_get_item_attribute (G_MENU_MODEL (model), i, "label-variant", "s", &label_variant);
+          gimp_menu_add_action (menu, action_name,
+                                /* By default, we use the short label in menus,
+                                 * unless "label-variant" attribute is set to
+                                 * "long".
+                                 */
+                                g_strcmp0 (label_variant, "long") == 0,
+                                NULL, FALSE, &group);
+          g_free (label_variant);
         }
 
       g_free (label);
@@ -295,7 +306,7 @@ gimp_menu_add_ui (GimpMenuShell  *shell,
       if (! placeholder)
         g_warning ("%s: no placeholder item '%s'.", G_STRFUNC, placeholder_key);
 
-      gimp_menu_add_action (menu, action_name, placeholder, top, NULL);
+      gimp_menu_add_action (menu, action_name, FALSE, placeholder, top, NULL);
     }
   else
     {
@@ -419,6 +430,7 @@ gimp_menu_add_placeholder (GimpMenu    *menu,
 static void
 gimp_menu_add_action (GimpMenu          *menu,
                       const gchar       *action_name,
+                      gboolean           long_label,
                       GtkWidget         *sibling,
                       gboolean           top,
                       GtkRadioMenuItem **group)
@@ -436,7 +448,10 @@ gimp_menu_add_action (GimpMenu          *menu,
 
   g_return_if_fail (GIMP_IS_ACTION (action));
 
-  action_label = gimp_action_get_short_label (action);
+  if (long_label)
+    action_label = gimp_action_get_label (action);
+  else
+    action_label = gimp_action_get_short_label (action);
   g_return_if_fail (action_label != NULL);
 
   if (GIMP_IS_TOGGLE_ACTION (action))
@@ -657,16 +672,21 @@ gimp_menu_section_items_changed (GMenuModel *model,
 
   while (added > 0)
     {
-      gchar *action_name = NULL;
+      gchar *action_name   = NULL;
+      gchar *label_variant = NULL;
 
       g_menu_model_get_item_attribute (G_MENU_MODEL (model), position,
                                        G_MENU_ATTRIBUTE_ACTION, "s", &action_name);
+      g_menu_model_get_item_attribute (G_MENU_MODEL (model), position,
+                                       "label-variant", "s", &label_variant);
 
       g_return_if_fail (action_name != NULL);
       gimp_menu_add_action (menu, action_name,
+                            g_strcmp0 (label_variant, "long") == 0,
                             iter ? iter->data : NULL,
                             iter ? TRUE : FALSE, NULL);
       g_free (action_name);
+      g_free (label_variant);
 
       added--;
       position++;

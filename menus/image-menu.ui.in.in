@@ -85,7 +85,7 @@
           <item><attribute name="action">app.edit-paste-merged-in-place</attribute></item>
           <item><attribute name="action">app.edit-paste-into</attribute></item>
           <item><attribute name="action">app.edit-paste-into-in-place</attribute></item>
-          <item><attribute name="action">app.edit-paste-as-new-image-short</attribute></item>
+          <item><attribute name="action">app.edit-paste-as-new-image</attribute><attribute name="label-variant">long</attribute></item>
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="edit-action">_Buffer</attribute>
@@ -138,7 +138,7 @@
       <section>
         <item><attribute name="action">app.quick-mask-toggle</attribute></item>
         <item><attribute name="action">app.select-save</attribute></item>
-        <item><attribute name="action">app.vectors-selection-to-vectors-short</attribute></item>
+        <item><attribute name="action">app.vectors-selection-to-vectors</attribute></item>
       </section>
     </submenu>
 

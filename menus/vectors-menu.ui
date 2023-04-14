@@ -33,7 +33,7 @@
         <item><attribute name="action">app.vectors-selection-add</attribute></item>
         <item><attribute name="action">app.vectors-selection-subtract</attribute></item>
         <item><attribute name="action">app.vectors-selection-intersect</attribute></item>
-        <item><attribute name="action">app.vectors-selection-to-vectors</attribute></item>
+        <item><attribute name="action">app.vectors-selection-to-vectors</attribute><attribute name="label-variant">long</attribute></item>
       </section>
       <section>
         <item><attribute name="action">app.vectors-fill</attribute></item>

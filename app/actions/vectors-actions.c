@@ -274,13 +274,8 @@ static const GimpEnumActionEntry vectors_to_selection_actions[] =
 static const GimpEnumActionEntry vectors_selection_to_vectors_actions[] =
 {
   { "vectors-selection-to-vectors", GIMP_ICON_SELECTION_TO_PATH,
-    NC_("vectors-action", "Selecti_on to Path"), NULL, { NULL },
-    NC_("vectors-action", "Selection to path"),
-    FALSE, FALSE,
-    GIMP_HELP_SELECTION_TO_PATH },
-
-  { "vectors-selection-to-vectors-short", GIMP_ICON_SELECTION_TO_PATH,
-    NC_("vectors-action", "To _Path"), NULL, { NULL },
+    NC_("vectors-action", "Selecti_on to Path"),
+    NC_("vectors-action", "To _Path"), { NULL },
     NC_("vectors-action", "Selection to path"),
     FALSE, FALSE,
     GIMP_HELP_SELECTION_TO_PATH },
@@ -439,7 +434,6 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-import", image);
 
   SET_SENSITIVE ("vectors-selection-to-vectors",          image && !mask_empty);
-  SET_SENSITIVE ("vectors-selection-to-vectors-short",    image && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-advanced", image && !mask_empty);
   SET_SENSITIVE ("vectors-fill",                          n_selected_vectors > 0 &&
                                                           dr_writable &&

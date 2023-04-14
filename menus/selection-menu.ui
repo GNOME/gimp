@@ -21,7 +21,7 @@
       </section>
       <section>
         <item><attribute name="action">app.select-save</attribute></item>
-        <item><attribute name="action">app.vectors-selection-to-vectors-short</attribute></item>
+        <item><attribute name="action">app.vectors-selection-to-vectors</attribute></item>
       </section>
       <item><attribute name="action">app.select-fill</attribute></item>
       <item><attribute name="action">app.select-stroke</attribute></item>
