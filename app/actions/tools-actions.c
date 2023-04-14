@@ -820,16 +820,19 @@ tools_actions_setup (GimpActionGroup *group)
         {
           GimpStringActionEntry  entry = { 0 };
           gchar                 *name;
+          gchar                 *long_label;
           const gchar           *icon_name;
           const gchar           *identifier;
 
           name       = gimp_tool_info_get_action_name (tool_info);
           icon_name  = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
           identifier = gimp_object_get_name (tool_info);
+          long_label = g_strdup_printf (_("Activate tool \"%s\""), tool_info->label);
 
           entry.name           = name;
           entry.icon_name      = icon_name;
-          entry.label          = tool_info->menu_label;
+          entry.label          = long_label;
+          entry.short_label    = tool_info->menu_label;
           entry.accelerator[0] = tool_info->menu_accel;
           entry.tooltip        = tool_info->tooltip;
           entry.help_id        = tool_info->help_id;
