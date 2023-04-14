@@ -492,8 +492,8 @@ destripe_dialog (GimpProcedure *procedure,
                                       _("Destripe"));
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
@@ -503,9 +503,6 @@ destripe_dialog (GimpProcedure *procedure,
                       preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
-  g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (destripe_preview),
-                            drawable);
   scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
                                                  "avg-width", 1.0);
   gtk_widget_set_margin_bottom (scale, 12);
@@ -514,6 +511,16 @@ destripe_dialog (GimpProcedure *procedure,
                                              "create-histogram",
                                              GTK_TYPE_CHECK_BUTTON);
   gtk_widget_set_margin_bottom (button, 12);
+
+  g_object_set_data (config, "drawable", drawable);
+
+  g_signal_connect (preview, "invalidated",
+                    G_CALLBACK (destripe_preview),
+                    config);
+
+  g_signal_connect_swapped (config, "notify",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "avg-width", "create-histogram",
