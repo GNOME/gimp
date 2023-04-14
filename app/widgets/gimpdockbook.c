@@ -95,8 +95,6 @@ struct _GimpDockbookPrivate
 };
 
 
-static void         gimp_dockbook_finalize          (GObject        *object);
-
 static void         gimp_dockbook_style_updated     (GtkWidget       *widget);
 static void         gimp_dockbook_drag_begin        (GtkWidget      *widget,
                                                      GdkDragContext *context);
@@ -155,7 +153,6 @@ static GList *drag_callbacks = NULL;
 static void
 gimp_dockbook_class_init (GimpDockbookClass *klass)
 {
-  GObjectClass     *object_class   = G_OBJECT_CLASS (klass);
   GtkWidgetClass   *widget_class   = GTK_WIDGET_CLASS (klass);
   GtkNotebookClass *notebook_class = GTK_NOTEBOOK_CLASS (klass);
 
@@ -185,8 +182,6 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCKABLE);
-
-  object_class->finalize         = gimp_dockbook_finalize;
 
   widget_class->style_updated    = gimp_dockbook_style_updated;
   widget_class->drag_begin       = gimp_dockbook_drag_begin;
@@ -256,14 +251,6 @@ gimp_dockbook_init (GimpDockbook *dockbook)
   g_signal_connect_swapped (dockbook->p->menu_button, "button-press-event",
                             G_CALLBACK (gimp_dockbook_menu_button_press),
                             dockbook);
-}
-
-static void
-gimp_dockbook_finalize (GObject *object)
-{
-  GimpDockbook *dockbook = GIMP_DOCKBOOK (object);
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
