@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-09 11:50+0000\n"
-"PO-Revision-Date: 2023-04-09 19:54+0200\n"
+"POT-Creation-Date: 2023-04-14 13:39+0000\n"
+"PO-Revision-Date: 2023-04-14 19:44+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -36,7 +36,7 @@ msgstr "ავარჯიშეთ თხა C-ში"
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
 #: plug-ins/common/jigsaw.c:473 plug-ins/common/nl-filter.c:224
 #: plug-ins/common/qbist.c:253 plug-ins/common/sample-colorize.c:431
-#: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:328
+#: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:307
 #: plug-ins/common/sphere-designer.c:3179 plug-ins/common/tile.c:220
 #: plug-ins/common/tile-small.c:308 plug-ins/common/van-gogh-lic.c:913
 #: plug-ins/common/warp.c:375 plug-ins/common/wavelet-decompose.c:182
@@ -74,7 +74,7 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/common/grid.c:761 plug-ins/common/mail.c:568
 #: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
 #: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
-#: plug-ins/common/sparkle.c:426 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -162,12 +162,11 @@ msgstr ""
 #: plug-ins/common/file-pdf-load.c:656 plug-ins/common/file-svg.c:774
 #: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1325
 #: plug-ins/common/grid.c:762 plug-ins/common/qbist.c:945
-#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sparkle.c:427
-#: plug-ins/common/sphere-designer.c:2633 plug-ins/common/tile.c:493
-#: plug-ins/common/tile-small.c:447 plug-ins/common/unit-editor.c:268
-#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
-#: plug-ins/file-psd/psd-load.c:3308 plug-ins/flame/flame.c:717
-#: plug-ins/flame/flame.c:1034
+#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
+#: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
+#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
+#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3308
+#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -478,18 +477,18 @@ msgstr ""
 msgid "Blinds"
 msgstr ""
 
-#: plug-ins/common/blinds.c:288
+#: plug-ins/common/blinds.c:294
 msgid "Horizontal"
 msgstr "ჰორიზონტალური"
 
-#: plug-ins/common/blinds.c:289
+#: plug-ins/common/blinds.c:295
 msgid "Vertical"
 msgstr "ვერტიკალური"
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/common/blinds.c:295 plug-ins/common/compose.c:1129
+#: plug-ins/common/blinds.c:301 plug-ins/common/compose.c:1129
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
@@ -1427,23 +1426,23 @@ msgstr "ვარიაციის მნიშვნელობა"
 msgid "Retinex"
 msgstr ""
 
-#: plug-ins/common/contrast-retinex.c:338
+#: plug-ins/common/contrast-retinex.c:337
 msgid "Retinex Image Enhancement"
 msgstr ""
 
-#: plug-ins/common/contrast-retinex.c:347
+#: plug-ins/common/contrast-retinex.c:352
 msgid "Uniform"
 msgstr "ერთგვაროვანი"
 
-#: plug-ins/common/contrast-retinex.c:348 plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/common/contrast-retinex.c:353 plug-ins/metadata/metadata-tags.c:238
 msgid "Low"
 msgstr "დაბალი"
 
-#: plug-ins/common/contrast-retinex.c:349 plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/common/contrast-retinex.c:354 plug-ins/metadata/metadata-tags.c:238
 msgid "High"
 msgstr "მაღალი"
 
-#: plug-ins/common/contrast-retinex.c:689
+#: plug-ins/common/contrast-retinex.c:688
 msgid "Retinex: filtering"
 msgstr ""
 
@@ -1889,24 +1888,24 @@ msgstr "_თეთრის დონე"
 msgid "White level"
 msgstr "თეთრის დონე"
 
-#: plug-ins/common/despeckle.c:408 plug-ins/common/despeckle.c:782
+#: plug-ins/common/despeckle.c:408 plug-ins/common/despeckle.c:784
 msgid "Despeckle"
 msgstr ""
 
-#: plug-ins/common/despeckle.c:410
+#: plug-ins/common/despeckle.c:418
 msgid "Median"
 msgstr "საშუალო"
 
-#: plug-ins/common/despeckle.c:411 plug-ins/gimpressionist/orientation.c:176
+#: plug-ins/common/despeckle.c:419 plug-ins/gimpressionist/orientation.c:176
 #: plug-ins/gimpressionist/size.c:183
 msgid "Adaptive"
 msgstr "შეგუებადი"
 
-#: plug-ins/common/despeckle.c:412
+#: plug-ins/common/despeckle.c:420
 msgid "Recursive-Median"
 msgstr "რეკურსიული-მედიანი"
 
-#: plug-ins/common/despeckle.c:413
+#: plug-ins/common/despeckle.c:421
 msgid "Recursive-Adaptive"
 msgstr "რეკურსიული-ადაპტიური"
 
@@ -5540,24 +5539,24 @@ msgstr ""
 msgid "draw_jigsaw: bad style\n"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2491
+#: plug-ins/common/jigsaw.c:2490
 msgid "Jigsaw"
 msgstr "მოზაიკა"
 
-#: plug-ins/common/jigsaw.c:2510
+#: plug-ins/common/jigsaw.c:2515
 msgid "Number of Tiles"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2527
+#: plug-ins/common/jigsaw.c:2532
 msgid "Bevel Edges"
 msgstr ""
 
 #. frame for primitive radio buttons
-#: plug-ins/common/jigsaw.c:2536
+#: plug-ins/common/jigsaw.c:2541
 msgid "Square"
 msgstr "კვადრატი"
 
-#: plug-ins/common/jigsaw.c:2537
+#: plug-ins/common/jigsaw.c:2542
 msgid "Curved"
 msgstr "მრუდი"
 
@@ -5644,19 +5643,19 @@ msgid ""
 "controls noise variance); 2 - edge enhancement"
 msgstr ""
 
-#: plug-ins/common/nl-filter.c:1031 plug-ins/common/nl-filter.c:1130
+#: plug-ins/common/nl-filter.c:1031 plug-ins/common/nl-filter.c:1129
 msgid "NL Filter"
 msgstr ""
 
-#: plug-ins/common/nl-filter.c:1139
+#: plug-ins/common/nl-filter.c:1144
 msgid "Alpha trimmed mean"
 msgstr ""
 
-#: plug-ins/common/nl-filter.c:1140
+#: plug-ins/common/nl-filter.c:1145
 msgid "Optimal estimation"
 msgstr "ოპტიმალური შეფასება"
 
-#: plug-ins/common/nl-filter.c:1141
+#: plug-ins/common/nl-filter.c:1146
 msgid "Edge enhancement"
 msgstr ""
 
@@ -5893,145 +5892,153 @@ msgstr ""
 msgid "_Search depth:"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:208
+#: plug-ins/common/sparkle.c:177
 msgid "_Sparkle..."
 msgstr ""
 
-#: plug-ins/common/sparkle.c:213
+#: plug-ins/common/sparkle.c:182
 msgid "Turn bright spots into starry sparkles"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:342
-msgid "Region selected for filter is empty"
+#: plug-ins/common/sparkle.c:184
+msgid ""
+"Uses a percentage based luminosity threshold to find candidate pixels for "
+"adding some sparkles (spikes)."
 msgstr ""
 
-#: plug-ins/common/sparkle.c:386
-msgid "Sparkling"
+#: plug-ins/common/sparkle.c:196
+msgid "Lu_minosity threshold"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:422
-msgid "Sparkle"
-msgstr ""
-
-#: plug-ins/common/sparkle.c:457
-msgid "Luminosity _threshold:"
-msgstr ""
-
-#: plug-ins/common/sparkle.c:458
+#: plug-ins/common/sparkle.c:197
 msgid "Adjust the luminosity threshold"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:468
-msgid "F_lare intensity:"
-msgstr ""
+#: plug-ins/common/sparkle.c:202
+msgid "_Flare intensity"
+msgstr "_ანარეკლის ინტენსივობა"
 
-#: plug-ins/common/sparkle.c:469
+#: plug-ins/common/sparkle.c:203
 msgid "Adjust the flare intensity"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:479
-msgid "_Spike length:"
+#: plug-ins/common/sparkle.c:208
+#| msgid "S_trength:"
+msgid "Spi_ke length"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:480
-msgid "Adjust the spike length"
+#: plug-ins/common/sparkle.c:209
+msgid "Adjust the spike length (in pixels)"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:490
-msgid "Sp_ike points:"
+#: plug-ins/common/sparkle.c:214
+msgid "Spike _points"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:491
+#: plug-ins/common/sparkle.c:215
 msgid "Adjust the number of spikes"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:501
-msgid "Spi_ke angle (-1: random):"
+#: plug-ins/common/sparkle.c:220
+msgid "Spike angle (-_1: random)"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:502
+#: plug-ins/common/sparkle.c:221
 msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:514
-msgid "Spik_e density:"
+#: plug-ins/common/sparkle.c:227
+msgid "Spike _density"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:515
+#: plug-ins/common/sparkle.c:228
 msgid "Adjust the spike density"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:525
-msgid "Tr_ansparency:"
-msgstr ""
+#: plug-ins/common/sparkle.c:233
+msgid "_Transparency"
+msgstr "_გამჭვირვალობა"
 
-#: plug-ins/common/sparkle.c:526
+#: plug-ins/common/sparkle.c:234
 msgid "Adjust the opacity of the spikes"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:536
-msgid "_Random hue:"
-msgstr ""
+#: plug-ins/common/sparkle.c:239
+msgid "Random _hue"
+msgstr "შემთხვევითი _ტონი"
 
-#: plug-ins/common/sparkle.c:537
+#: plug-ins/common/sparkle.c:240
 msgid "Adjust how much the hue should be changed randomly"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:547
-msgid "Rando_m saturation:"
-msgstr ""
+#: plug-ins/common/sparkle.c:246
+msgid "R_andom saturation"
+msgstr "_შემთხვევითი გაჯერებულობა"
 
-#: plug-ins/common/sparkle.c:548
+#: plug-ins/common/sparkle.c:247
 msgid "Adjust how much the saturation should be changed randomly"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:566
-msgid "_Preserve luminosity"
+#: plug-ins/common/sparkle.c:253
+msgid "Preserve l_uminosity"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:573
+#: plug-ins/common/sparkle.c:254
 msgid "Should the luminosity be preserved?"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:582
+#: plug-ins/common/sparkle.c:259
 msgid "In_verse"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:588
+#: plug-ins/common/sparkle.c:260
 msgid "Should the effect be inversed?"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:597
-msgid "A_dd border"
-msgstr "კონტურის _დამატება"
+#: plug-ins/common/sparkle.c:265
+msgid "Add _border"
+msgstr "_საზღვრის დამატება"
 
-#: plug-ins/common/sparkle.c:603
+#: plug-ins/common/sparkle.c:266
 msgid "Draw a border of spikes around the image"
 msgstr ""
 
-#: plug-ins/common/sparkle.c:617
-msgid "_Natural color"
-msgstr "_ბუნებრივი ფერი"
+#: plug-ins/common/sparkle.c:271
+msgid "Color type"
+msgstr "ფერის ტიპი"
 
-#: plug-ins/common/sparkle.c:618
-msgid "_Foreground color"
-msgstr "_წინა პლანის ფერი"
+#: plug-ins/common/sparkle.c:272
+msgid "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }"
+msgstr ""
 
-#: plug-ins/common/sparkle.c:619
-msgid "_Background color"
-msgstr "_ფონის ფერი"
+#: plug-ins/common/sparkle.c:321
+msgid "Region selected for filter is empty"
+msgstr ""
 
-#: plug-ins/common/sparkle.c:626
-msgid "Use the color of the image"
-msgstr "გამოსახულების ფერის გამოყენება"
+#: plug-ins/common/sparkle.c:353
+msgid "Sparkling"
+msgstr ""
 
-#: plug-ins/common/sparkle.c:627
-msgid "Use the foreground color"
-msgstr "წინა პლანის ფერის გამოყენება"
+#: plug-ins/common/sparkle.c:392
+msgid "Sparkle"
+msgstr ""
 
-#: plug-ins/common/sparkle.c:628
-msgid "Use the background color"
-msgstr "ფონის სურათის გამოყენებ"
+#: plug-ins/common/sparkle.c:447
+msgid "Additional Options"
+msgstr "დამატებითი პარამეტრები"
+
+#. colortype
+#: plug-ins/common/sparkle.c:453
+msgid "Natural color"
+msgstr "ბუნებრივი ფერი"
+
+#: plug-ins/common/sparkle.c:454 plug-ins/common/warp.c:632
+msgid "Foreground color"
+msgstr "წინა პლანის ფერი"
+
+#: plug-ins/common/sparkle.c:455
+msgid "Background color"
+msgstr "ფონის ფერი"
 
 #: plug-ins/common/sphere-designer.c:336 plug-ins/gimpressionist/general.c:165
 msgid "Solid"
@@ -6557,10 +6564,6 @@ msgstr "შემოხვევა"
 #: plug-ins/common/warp.c:602
 msgid "Smear"
 msgstr ""
-
-#: plug-ins/common/warp.c:632
-msgid "Foreground color"
-msgstr "წინა პლანის ფერი"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary grid          --------------------------
@@ -7343,7 +7346,7 @@ msgstr ""
 msgid "This is an experimental plug-in to handle FLI movies"
 msgstr ""
 
-#: plug-ins/file-fli/fli-gimp.c:199
+#: plug-ins/file-fli/fli-gimp.c:199 plug-ins/file-fli/fli-gimp.c:237
 msgid "_From frame"
 msgstr "_ჩარჩოდან"
 
@@ -7351,7 +7354,7 @@ msgstr "_ჩარჩოდან"
 msgid "Load beginning from this frame"
 msgstr ""
 
-#: plug-ins/file-fli/fli-gimp.c:205
+#: plug-ins/file-fli/fli-gimp.c:205 plug-ins/file-fli/fli-gimp.c:243
 msgid "_To frame"
 msgstr ""
 
@@ -7367,17 +7370,9 @@ msgstr "FLI ანიმაცია"
 msgid "Export FLI-movies"
 msgstr "FLI-ფილმების გატანა"
 
-#: plug-ins/file-fli/fli-gimp.c:237
-msgid "_From:"
-msgstr "_გამგზავნი:"
-
 #: plug-ins/file-fli/fli-gimp.c:238
 msgid "Export beginning from this frame"
 msgstr ""
-
-#: plug-ins/file-fli/fli-gimp.c:243
-msgid "_To:"
-msgstr "_ვის:"
 
 #: plug-ins/file-fli/fli-gimp.c:244
 msgid "End exporting with this frame (or -1 for all frames)"
@@ -12500,7 +12495,7 @@ msgstr ""
 
 #: plug-ins/metadata/metadata-editor.c:625
 msgid "Export metadata"
-msgstr ""
+msgstr "მეტამონაცემების გატანა"
 
 #: plug-ins/metadata/metadata-editor.c:929
 #, c-format
@@ -13270,6 +13265,24 @@ msgstr ""
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr ""
+
+#~ msgid "_Foreground color"
+#~ msgstr "_წინა პლანის ფერი"
+
+#~ msgid "Use the color of the image"
+#~ msgstr "გამოსახულების ფერის გამოყენება"
+
+#~ msgid "Use the foreground color"
+#~ msgstr "წინა პლანის ფერის გამოყენება"
+
+#~ msgid "Use the background color"
+#~ msgstr "ფონის სურათის გამოყენებ"
+
+#~ msgid "_From:"
+#~ msgstr "_გამგზავნი:"
+
+#~ msgid "_To:"
+#~ msgstr "_ვის:"
 
 #~ msgid "A_lpha:"
 #~ msgstr "_ალფა:"
