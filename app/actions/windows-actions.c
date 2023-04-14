@@ -400,16 +400,17 @@ windows_actions_image_notify (GimpDisplay      *display,
       title = g_strdup_printf (_("Show \"%s-%d.%d\""), escaped,
                                gimp_image_get_id (image),
                                gimp_display_get_instance (display));
-      g_free (escaped);
 
       g_object_set (action,
-                    "visible",  TRUE,
-                    "label",    title,
-                    "tooltip",  gimp_image_get_display_path (image),
-                    "viewable", image,
+                    "visible",     TRUE,
+                    "label",       title,
+                    "short-label", escaped,
+                    "tooltip",     gimp_image_get_display_path (image),
+                    "viewable",    image,
                     NULL);
 
       g_free (title);
+      g_free (escaped);
 
       windows_actions_update_display_accels (group);
     }
@@ -441,10 +442,11 @@ windows_actions_update_display_accels (GimpActionGroup *group)
        list = g_list_next (list), i++)
     {
       GimpDisplay *display = list->data;
+      GimpImage   *image   = gimp_display_get_image (display);
       GimpAction  *action;
       gchar       *action_name;
 
-      if (! gimp_display_get_image (display))
+      if (image == NULL)
         break;
 
       action_name = gimp_display_get_action_name (display);
@@ -454,7 +456,9 @@ windows_actions_update_display_accels (GimpActionGroup *group)
 
       if (action)
         {
-          gchar *accel;
+          const gchar *ntooltip;
+          gchar       *tooltip;
+          gchar       *accel;
 
           if (i < 9)
             accel = gtk_accelerator_name (GDK_KEY_1 + i, GDK_MOD1_MASK);
@@ -463,6 +467,13 @@ windows_actions_update_display_accels (GimpActionGroup *group)
 
           gimp_action_set_accels (action, (const gchar*[]) { accel, NULL });
           g_free (accel);
+
+          ntooltip = ngettext ("Switch to the first image view: %2$s",
+                               "Switch to image view %d: %s",
+                               i + 1);
+          tooltip = g_strdup_printf (ntooltip, i + 1, gimp_image_get_display_path (image));
+          gimp_action_set_tooltip (action, tooltip);
+          g_free (tooltip);
         }
     }
 }
