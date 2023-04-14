@@ -1053,7 +1053,7 @@ gimp_action_set_proxy (GimpAction *action,
                * (e.g. "filters-recent-*" actions.
                */
               G_IS_OBJECT (GIMP_PROCEDURE_ACTION (action)->procedure))
-              {
+            {
               /* Special-casing procedure actions as plug-ins can create icons with
                * gimp_procedure_set_icon_pixbuf().
                */
@@ -1062,26 +1062,26 @@ gimp_action_set_proxy (GimpAction *action,
                             NULL);
 
               if (pixbuf != NULL)
-              {
-              gint width;
-              gint height;
-
-              gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
-
-              if (width  != gdk_pixbuf_get_width  (pixbuf) ||
-                  height != gdk_pixbuf_get_height (pixbuf))
                 {
-                  GdkPixbuf *copy;
+                  gint width;
+                  gint height;
 
-                  copy = gdk_pixbuf_scale_simple (pixbuf, width, height,
-                                                  GDK_INTERP_BILINEAR);
-                  g_object_unref (pixbuf);
-                  pixbuf = copy;
+                  gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
+
+                  if (width  != gdk_pixbuf_get_width  (pixbuf) ||
+                      height != gdk_pixbuf_get_height (pixbuf))
+                    {
+                      GdkPixbuf *copy;
+
+                      copy = gdk_pixbuf_scale_simple (pixbuf, width, height,
+                                                      GDK_INTERP_BILINEAR);
+                      g_object_unref (pixbuf);
+                      pixbuf = copy;
+                    }
+
+                  proxy_image = gtk_image_new_from_pixbuf (pixbuf);
                 }
-
-              proxy_image = gtk_image_new_from_pixbuf (pixbuf);
-              }
-              }
+            }
 
           if (proxy_image == NULL)
             {
