@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-12 21:19+0000\n"
-"PO-Revision-Date: 2023-04-13 12:00+0200\n"
+"POT-Creation-Date: 2023-04-13 23:55+0000\n"
+"PO-Revision-Date: 2023-04-14 12:41+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -493,7 +493,7 @@ msgid "Select"
 msgstr "Izberi"
 
 #. initialize the template list
-#: app/actions/actions.c:223 app/core/gimp.c:852 app/dialogs/dialogs.c:370
+#: app/actions/actions.c:223 app/core/gimp.c:857 app/dialogs/dialogs.c:370
 msgid "Templates"
 msgstr "Predloge"
 
@@ -542,7 +542,7 @@ msgstr "%s: %.2f"
 msgid "%s: %d"
 msgstr "%s: %d"
 
-#: app/actions/brush-editor-actions.c:43
+#: app/actions/brush-editor-actions.c:43 menus/brush-editor-menu.ui:6
 msgctxt "brush-editor-action"
 msgid "Brush Editor Menu"
 msgstr "Meni urejevalnika čopiča"
@@ -552,7 +552,7 @@ msgctxt "brush-editor-action"
 msgid "Edit Active Brush"
 msgstr "Uredi aktivni čopič"
 
-#: app/actions/brushes-actions.c:43
+#: app/actions/brushes-actions.c:43 menus/brushes-menu.ui:6
 msgctxt "brushes-action"
 msgid "Brushes Menu"
 msgstr "Meni čopičev"
@@ -729,7 +729,7 @@ msgstr "Prilepi izbrani medpomnilnik kot novo plast na njegovo izvorno mesto"
 msgid "No selected buffer"
 msgstr "Ni izbranega medpomnilnika"
 
-#: app/actions/channels-actions.c:45
+#: app/actions/channels-actions.c:45 menus/channels-menu.ui:6
 msgctxt "channels-action"
 msgid "Channels Menu"
 msgstr "Meni kanalov"
@@ -2388,7 +2388,7 @@ msgstr "Dinamika onemogočena"
 msgid "Dynamics enabled"
 msgstr "Dinamika omogočena"
 
-#: app/actions/cursor-info-actions.c:41
+#: app/actions/cursor-info-actions.c:41 menus/cursor-info-menu.ui:6
 msgctxt "cursor-info-action"
 msgid "Pointer Information Menu"
 msgstr "Meni s podatki o kazalcu"
@@ -2403,7 +2403,7 @@ msgctxt "cursor-info-action"
 msgid "Use the composite color of all visible layers"
 msgstr "Uporabi sestavljeno barvo vseh vidnih plasti"
 
-#: app/actions/dashboard-actions.c:40
+#: app/actions/dashboard-actions.c:40 menus/dashboard-menu.ui:6
 msgctxt "dashboard-action"
 msgid "Dashboard Menu"
 msgstr "Nadzorna plošča"
@@ -2413,12 +2413,12 @@ msgctxt "dashboard-action"
 msgid "_Groups"
 msgstr "_Skupine"
 
-#: app/actions/dashboard-actions.c:46
+#: app/actions/dashboard-actions.c:46 menus/dashboard-menu.ui:14
 msgctxt "dashboard-action"
 msgid "_Update Interval"
 msgstr "_Interval osveževanja"
 
-#: app/actions/dashboard-actions.c:48
+#: app/actions/dashboard-actions.c:48 menus/dashboard-menu.ui:22
 msgctxt "dashboard-action"
 msgid "_History Duration"
 msgstr "_Trajanje zgodovine"
@@ -3494,7 +3494,7 @@ msgstr "Obrni risani predmet"
 msgid "Rotate Drawables"
 msgstr "Zasukaj risani predmet"
 
-#: app/actions/dynamics-actions.c:43
+#: app/actions/dynamics-actions.c:43 menus/dynamics-menu.ui:6
 msgctxt "dynamics-action"
 msgid "Paint Dynamics Menu"
 msgstr "Meni dinamike slikanja"
@@ -3569,7 +3569,7 @@ msgctxt "dynamics-action"
 msgid "Edit this dynamics"
 msgstr "Uredi to dinamiko"
 
-#: app/actions/dynamics-editor-actions.c:43
+#: app/actions/dynamics-editor-actions.c:43 menus/dynamics-editor-menu.ui:6
 msgctxt "dynamics-editor-action"
 msgid "Paint Dynamics Editor Menu"
 msgstr "Meni urejevalnika dinamike slikanja"
@@ -3594,7 +3594,7 @@ msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_Medpomnilnik"
 
-#: app/actions/edit-actions.c:70
+#: app/actions/edit-actions.c:70 menus/undo-menu.ui:6
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Meni zgodovine razveljavitev"
@@ -5149,37 +5149,37 @@ msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
 "Ni zadnjih nastavitev za »%s«, namesto tega se odpre pogovorno okno filtra."
 
-#: app/actions/gradient-editor-actions.c:47
+#: app/actions/gradient-editor-actions.c:47 menus/gradient-editor-menu.ui:6
 msgctxt "gradient-editor-action"
 msgid "Gradient Editor Menu"
 msgstr "Meni urejevalnika preliva"
 
-#: app/actions/gradient-editor-actions.c:51
+#: app/actions/gradient-editor-actions.c:51 menus/gradient-editor-menu.ui:9
 msgctxt "gradient-editor-action"
 msgid "Left Color Type"
 msgstr "Vrsta leve barve"
 
-#: app/actions/gradient-editor-actions.c:53
+#: app/actions/gradient-editor-actions.c:53 menus/gradient-editor-menu.ui:18
 msgctxt "gradient-editor-action"
 msgid "_Load Left Color From"
 msgstr "_Naloži levo barvo iz"
 
-#: app/actions/gradient-editor-actions.c:55
+#: app/actions/gradient-editor-actions.c:55 menus/gradient-editor-menu.ui:37
 msgctxt "gradient-editor-action"
 msgid "_Save Left Color To"
 msgstr "_Shrani levo barvo v"
 
-#: app/actions/gradient-editor-actions.c:58
+#: app/actions/gradient-editor-actions.c:58 menus/gradient-editor-menu.ui:51
 msgctxt "gradient-editor-action"
 msgid "Right Color Type"
 msgstr "Vrsta desne barve"
 
-#: app/actions/gradient-editor-actions.c:60
+#: app/actions/gradient-editor-actions.c:60 menus/gradient-editor-menu.ui:60
 msgctxt "gradient-editor-action"
 msgid "Load Right Color Fr_om"
 msgstr "Naloži _desno barvo iz"
 
-#: app/actions/gradient-editor-actions.c:62
+#: app/actions/gradient-editor-actions.c:62 menus/gradient-editor-menu.ui:79
 msgctxt "gradient-editor-action"
 msgid "Sa_ve Right Color To"
 msgstr "Shrani desno _barvo v"
@@ -5497,7 +5497,7 @@ msgstr ""
 "Izberite število enotnih delov,\n"
 "na katere bo razdeljen izbrani odsek."
 
-#: app/actions/gradients-actions.c:44
+#: app/actions/gradients-actions.c:44 menus/gradients-menu.ui:7
 msgctxt "gradients-action"
 msgid "Gradients Menu"
 msgstr "Meni prelivov"
@@ -6266,7 +6266,7 @@ msgstr "Ni itvrane plasti ali kanala, da bi ga zapolnili."
 msgid "There are no selected layers or channels to stroke to."
 msgstr "Ni izbrane plasti ali kanala, da nanje risali s potezami."
 
-#: app/actions/layers-actions.c:52
+#: app/actions/layers-actions.c:52 menus/layers-menu.ui:6
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "Meni plasti"
@@ -7405,7 +7405,7 @@ msgctxt "mypaint-brushes-action"
 msgid "Edit MyPaint brush"
 msgstr "Uredi čopič MyPaint"
 
-#: app/actions/palette-editor-actions.c:44
+#: app/actions/palette-editor-actions.c:44 menus/palette-editor-menu.ui:6
 msgctxt "palette-editor-action"
 msgid "Palette Editor Menu"
 msgstr "Meni urejevalnika palete"
@@ -7467,7 +7467,7 @@ msgstr "_Oddalji"
 msgid "Zoom _All"
 msgstr "_Celoten pogled"
 
-#: app/actions/palettes-actions.c:44
+#: app/actions/palettes-actions.c:44 menus/palettes-menu.ui:6
 msgctxt "palettes-action"
 msgid "Palettes Menu"
 msgstr "Meni palet"
@@ -7735,7 +7735,7 @@ msgstr "Uredi barvo za hitro maskiranje"
 msgid "_Mask opacity:"
 msgstr "Prekrivnost _maske:"
 
-#: app/actions/sample-points-actions.c:40
+#: app/actions/sample-points-actions.c:40 menus/sample-points-menu.ui:6
 msgctxt "sample-points-action"
 msgid "Sample Point Menu"
 msgstr "Meni vzorčne točke"
@@ -7750,7 +7750,7 @@ msgctxt "sample-points-action"
 msgid "Use the composite color of all visible layers"
 msgstr "Uporabi sestavljeno barvo vseh vidnih plasti"
 
-#: app/actions/select-actions.c:44
+#: app/actions/select-actions.c:44 menus/selection-menu.ui:6
 msgctxt "select-action"
 msgid "Selection Editor Menu"
 msgstr "Meni urejevalnika izbora"
@@ -8156,7 +8156,7 @@ msgstr "_Odpri"
 msgid "Could not open '%s' for reading: %s"
 msgstr "»%s« ni mogoče odpreti za branje: %s"
 
-#: app/actions/text-tool-actions.c:50
+#: app/actions/text-tool-actions.c:50 menus/text-tool-menu.ui:6
 msgctxt "text-tool-action"
 msgid "Text Tool Menu"
 msgstr "Orodje za _besedilo"
@@ -8251,27 +8251,27 @@ msgstr "Navpična, od leve proti desni (pokončna usmerjenost)"
 msgid "Text along path failed: %s"
 msgstr "Besedilo vzdolž poti je spodletelo: %s"
 
-#: app/actions/tool-options-actions.c:58
+#: app/actions/tool-options-actions.c:58 menus/tool-options-menu.ui:6
 msgctxt "tool-options-action"
 msgid "Tool Options Menu"
 msgstr "Meni možnosti orodja"
 
-#: app/actions/tool-options-actions.c:62
+#: app/actions/tool-options-actions.c:62 menus/tool-options-menu.ui:9
 msgctxt "tool-options-action"
 msgid "_Save Tool Preset"
 msgstr "_Shrani prednastavitev orodja"
 
-#: app/actions/tool-options-actions.c:66
+#: app/actions/tool-options-actions.c:66 menus/tool-options-menu.ui:16
 msgctxt "tool-options-action"
 msgid "_Restore Tool Preset"
 msgstr "_Obnovi prednastavitev orodja"
 
-#: app/actions/tool-options-actions.c:70
+#: app/actions/tool-options-actions.c:70 menus/tool-options-menu.ui:20
 msgctxt "tool-options-action"
 msgid "E_dit Tool Preset"
 msgstr "_Uredi prednastavitev orodja"
 
-#: app/actions/tool-options-actions.c:74
+#: app/actions/tool-options-actions.c:74 menus/tool-options-menu.ui:24
 msgctxt "tool-options-action"
 msgid "_Delete Tool Preset"
 msgstr "I_zbriši prednastavitev orodja"
@@ -8310,6 +8310,7 @@ msgid "Do you really want to reset all tool options to default values?"
 msgstr "Resnično želite ponastaviti vse možnosti orodja na privzete vrednosti?"
 
 #: app/actions/tool-preset-editor-actions.c:44
+#: menus/tool-preset-editor-menu.ui:6
 msgctxt "tool-preset-editor-action"
 msgid "Tool Preset Editor Menu"
 msgstr "Meni urejevalnika prednastavitev orodja"
@@ -8347,7 +8348,7 @@ msgstr ""
 "Možnosti orodja »%s« ni mogoče shraniti v obstoječe prednastavitve orodja "
 "»%s«."
 
-#: app/actions/tool-presets-actions.c:46
+#: app/actions/tool-presets-actions.c:46 menus/tool-presets-menu.ui:6
 msgctxt "tool-presets-action"
 msgid "Tool Presets Menu"
 msgstr "Meni prednastavitev orodja"
@@ -8942,7 +8943,7 @@ msgctxt "vector-toolpath-action"
 msgid "_Reverse Stroke"
 msgstr "_Obratna poteza"
 
-#: app/actions/vectors-actions.c:46
+#: app/actions/vectors-actions.c:46 menus/vectors-menu.ui:6
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Meni poti"
@@ -11702,8 +11703,8 @@ msgid "The maximum number of actions saved in history."
 msgstr "Največje število dejanj, shranjenih v zgodovini."
 
 #: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130
-#: app/core/gimp-units.c:278 app/gui/session.c:309 app/plug-in/plug-in-rc.c:249
-#: app/tools/gimp-tools.c:504
+#: app/core/gimp-units.c:278 app/gui/session.c:309 app/menus/shortcuts-rc.c:158
+#: app/plug-in/plug-in-rc.c:249 app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "usodna razčlenitvena napaka"
 
@@ -12762,26 +12763,26 @@ msgid "Selection by glob pattern search"
 msgstr "Izbira po iskanju vzorcev glob"
 
 #. initialize babl fishes
-#: app/core/gimp.c:535 app/core/gimp.c:565
+#: app/core/gimp.c:540 app/core/gimp.c:570
 msgid "Initialization"
 msgstr "Inicializacija"
 
 #. register all internal procedures
-#: app/core/gimp.c:545
+#: app/core/gimp.c:550
 msgid "Internal Procedures"
 msgstr "Notranje procedure"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:845
+#: app/core/gimp.c:850
 msgid "Looking for data files"
 msgstr "Iskanje podatkovnih datotek"
 
-#: app/core/gimp.c:845
+#: app/core/gimp.c:850
 msgid "Parasites"
 msgstr "Zajedalci"
 
 #. initialize the module list
-#: app/core/gimp.c:856 app/dialogs/preferences-dialog.c:3561
+#: app/core/gimp.c:861 app/dialogs/preferences-dialog.c:3561
 msgid "Modules"
 msgstr "Gradniki"
 
@@ -20180,6 +20181,16 @@ msgstr "Dokumenti"
 msgid "GIMP Startup"
 msgstr "Zagon GIMP-a"
 
+#: app/menus/shortcuts-rc.c:144 app/plug-in/plug-in-rc.c:235
+#, c-format
+msgid "Skipping '%s': wrong GIMP protocol version."
+msgstr "Preskakovanje »%s«: napačna različica protokola GIMP."
+
+#: app/menus/shortcuts-rc.c:151
+#, c-format
+msgid "Skipping '%s': wrong shortcutsrc file format version."
+msgstr "Preskakovanje »%s«: napačna različica zapisa datoteke shortcutsrc."
+
 #: app/paint/gimpairbrush.c:80 app/tools/gimpairbrushtool.c:67
 msgid "Airbrush"
 msgstr "Barvna pršilka"
@@ -21700,11 +21711,6 @@ msgid ""
 msgstr ""
 "Napaka pri izvajanju »%s«:\n"
 "%s"
-
-#: app/plug-in/plug-in-rc.c:235
-#, c-format
-msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr "Preskakovanje »%s«: napačna različica protokola GIMP."
 
 #: app/plug-in/plug-in-rc.c:242
 #, c-format
@@ -23448,21 +23454,21 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Mehki izbor"
 
-#: app/tools/gimpgegltool.c:78 app/tools/gimpgegltool.c:555
-#: app/tools/gimpgegltool.c:556 app/tools/gimpoperationtool.c:131
+#: app/tools/gimpgegltool.c:89 app/tools/gimpgegltool.c:664
+#: app/tools/gimpgegltool.c:665 app/tools/gimpoperationtool.c:131
 msgid "GEGL Operation"
 msgstr "Operacija GEGL"
 
-#: app/tools/gimpgegltool.c:79
+#: app/tools/gimpgegltool.c:90
 msgid "Run an arbitrary GEGL operation"
 msgstr "Uporabite poljubno operacijo GEGL"
 
-#: app/tools/gimpgegltool.c:80
+#: app/tools/gimpgegltool.c:91
 msgid "_GEGL Operation..."
 msgstr "Operacija _GEGL ..."
 
 #. The options vbox
-#: app/tools/gimpgegltool.c:497
+#: app/tools/gimpgegltool.c:606
 msgid "Select an operation from the list above"
 msgstr "Izberite dejanje z zgornjega seznama"
 
@@ -28519,3 +28525,8 @@ msgstr "Napaka pri zapisovanju XCF: nepodprt BPC pri pisanju slikovnih pik: %d"
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Razhroščevanje sesutja GIMP"
+
+#: menus/dashboard-menu.ui:9
+msgctxt "dashboard-action"
+msgid "Groups"
+msgstr "Skupine"
