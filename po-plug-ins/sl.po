@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-12 19:56+0000\n"
-"PO-Revision-Date: 2023-04-13 12:03+0200\n"
+"POT-Creation-Date: 2023-04-14 04:23+0000\n"
+"PO-Revision-Date: 2023-04-14 12:49+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -42,7 +42,7 @@ msgstr "Povadi kozo v jeziku C"
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
 #: plug-ins/common/jigsaw.c:473 plug-ins/common/nl-filter.c:224
 #: plug-ins/common/qbist.c:253 plug-ins/common/sample-colorize.c:431
-#: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:328
+#: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:307
 #: plug-ins/common/sphere-designer.c:3179 plug-ins/common/tile.c:220
 #: plug-ins/common/tile-small.c:308 plug-ins/common/van-gogh-lic.c:913
 #: plug-ins/common/warp.c:375 plug-ins/common/wavelet-decompose.c:182
@@ -80,7 +80,7 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/common/grid.c:761 plug-ins/common/mail.c:568
 #: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
 #: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
-#: plug-ins/common/sparkle.c:426 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -171,12 +171,11 @@ msgstr "Povadi kozo (JavaScript)"
 #: plug-ins/common/file-pdf-load.c:656 plug-ins/common/file-svg.c:774
 #: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1325
 #: plug-ins/common/grid.c:762 plug-ins/common/qbist.c:945
-#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sparkle.c:427
-#: plug-ins/common/sphere-designer.c:2633 plug-ins/common/tile.c:493
-#: plug-ins/common/tile-small.c:447 plug-ins/common/unit-editor.c:268
-#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
-#: plug-ins/file-psd/psd-load.c:3308 plug-ins/flame/flame.c:717
-#: plug-ins/flame/flame.c:1034
+#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
+#: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
+#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
+#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3308
+#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -5854,10 +5853,8 @@ msgid "NL Filter"
 msgstr "Filter NL"
 
 #: plug-ins/common/nl-filter.c:1144
-#, fuzzy
-#| msgid "_Alpha trimmed mean"
 msgid "Alpha trimmed mean"
-msgstr "_Alfa umerjene srednje vrednosti"
+msgstr "Alfa umerjene srednje vrednosti"
 
 #: plug-ins/common/nl-filter.c:1145
 msgid "Optimal estimation"
@@ -6104,145 +6101,156 @@ msgstr "Zgladi paleto"
 msgid "_Search depth:"
 msgstr "Globina _iskanja:"
 
-#: plug-ins/common/sparkle.c:208
+#: plug-ins/common/sparkle.c:177
 msgid "_Sparkle..."
 msgstr "_Zablešči ..."
 
-#: plug-ins/common/sparkle.c:213
+#: plug-ins/common/sparkle.c:182
 msgid "Turn bright spots into starry sparkles"
 msgstr "Pretvori svetle madeže v zvezdne odbleske"
 
-#: plug-ins/common/sparkle.c:342
-msgid "Region selected for filter is empty"
-msgstr "Izbrano področje za filtriranje je prazno"
+#: plug-ins/common/sparkle.c:184
+#, fuzzy
+msgid ""
+"Uses a percentage based luminoisty threhsold to find candidate pixels for "
+"adding some sparkles (spikes)."
+msgstr ""
+"Uporablja odstotkovni prag svetlosti za iskanje kandidatov slikovnih točk za "
+"dodajanje nekaj bleščic (žarkov)."
 
-#: plug-ins/common/sparkle.c:386
-msgid "Sparkling"
-msgstr "Svetlikanje ..."
+#: plug-ins/common/sparkle.c:196
+msgid "Lu_minosity threshold"
+msgstr "Prag sve_tlosti"
 
-#: plug-ins/common/sparkle.c:422
-msgid "Sparkle"
-msgstr "Zablešči"
-
-#: plug-ins/common/sparkle.c:457
-msgid "Luminosity _threshold:"
-msgstr "Prag sve_tlosti:"
-
-#: plug-ins/common/sparkle.c:458
+#: plug-ins/common/sparkle.c:197
 msgid "Adjust the luminosity threshold"
 msgstr "Prilagodite prag svetlosti"
 
-#: plug-ins/common/sparkle.c:468
-msgid "F_lare intensity:"
-msgstr "_Jakost žarenja:"
+#: plug-ins/common/sparkle.c:202
+msgid "_Flare intensity"
+msgstr "_Jakost žarenja"
 
-#: plug-ins/common/sparkle.c:469
+#: plug-ins/common/sparkle.c:203
 msgid "Adjust the flare intensity"
 msgstr "Prilagodi intenzivnost odbleska"
 
-#: plug-ins/common/sparkle.c:479
-msgid "_Spike length:"
-msgstr "_Dolžina žarka:"
+#: plug-ins/common/sparkle.c:208
+msgid "Spi_ke length"
+msgstr "_Dolžina žarka"
 
-#: plug-ins/common/sparkle.c:480
-msgid "Adjust the spike length"
-msgstr "Prilagodite dolžino žarkov"
+#: plug-ins/common/sparkle.c:209
+msgid "Adjust the spike length (in pixels)"
+msgstr "Prilagodite dolžino žarkov (v slik. točkah)"
 
-#: plug-ins/common/sparkle.c:490
-msgid "Sp_ike points:"
-msgstr "_Točke žarka:"
+#: plug-ins/common/sparkle.c:214
+msgid "Spike _points"
+msgstr "Točke _žarka"
 
-#: plug-ins/common/sparkle.c:491
+#: plug-ins/common/sparkle.c:215
 msgid "Adjust the number of spikes"
 msgstr "Prilagodite število žarkov"
 
-#: plug-ins/common/sparkle.c:501
-msgid "Spi_ke angle (-1: random):"
-msgstr "_Kot žarka (-1: naključen):"
+#: plug-ins/common/sparkle.c:220
+msgid "Spike angle (-_1: random)"
+msgstr "Kot žarka (-_1: naključen)"
 
-#: plug-ins/common/sparkle.c:502
+#: plug-ins/common/sparkle.c:221
 msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
 msgstr "Prilagodite kot žarka (-1 pomeni izbor naključnega kota)"
 
-#: plug-ins/common/sparkle.c:514
-msgid "Spik_e density:"
-msgstr "_Gostota žarkov:"
+#: plug-ins/common/sparkle.c:227
+msgid "Spike _density"
+msgstr "_Gostota žarkov"
 
-#: plug-ins/common/sparkle.c:515
+#: plug-ins/common/sparkle.c:228
 msgid "Adjust the spike density"
 msgstr "Prilagodite gostoto žarkov"
 
-#: plug-ins/common/sparkle.c:525
-msgid "Tr_ansparency:"
-msgstr "Pr_osojnost:"
+#: plug-ins/common/sparkle.c:233
+msgid "_Transparency"
+msgstr "Pr_osojnost"
 
-#: plug-ins/common/sparkle.c:526
+#: plug-ins/common/sparkle.c:234
 msgid "Adjust the opacity of the spikes"
 msgstr "Prilagodite prekrivnost žarkov"
 
-#: plug-ins/common/sparkle.c:536
-msgid "_Random hue:"
-msgstr "Naključna _obarvanost:"
+#: plug-ins/common/sparkle.c:239
+msgid "Random _hue"
+msgstr "Naključna _obarvanost"
 
-#: plug-ins/common/sparkle.c:537
+#: plug-ins/common/sparkle.c:240
 msgid "Adjust how much the hue should be changed randomly"
 msgstr "Nastavitev obsega naključnega spreminjanja obarvanosti"
 
-#: plug-ins/common/sparkle.c:547
-msgid "Rando_m saturation:"
-msgstr "Naključna _nasičenost:"
+#: plug-ins/common/sparkle.c:246
+msgid "R_andom saturation"
+msgstr "Naključna _nasičenost"
 
-#: plug-ins/common/sparkle.c:548
+#: plug-ins/common/sparkle.c:247
 msgid "Adjust how much the saturation should be changed randomly"
 msgstr "Nastavitev obsega naključnega spreminjanja nasičenosti"
 
-#: plug-ins/common/sparkle.c:566
-msgid "_Preserve luminosity"
-msgstr "_Ohrani svetlost"
+#: plug-ins/common/sparkle.c:253
+msgid "Preserve l_uminosity"
+msgstr "Ohrani svet_lost"
 
-#: plug-ins/common/sparkle.c:573
+#: plug-ins/common/sparkle.c:254
 msgid "Should the luminosity be preserved?"
 msgstr "Ali želite ohraniti svetlost?"
 
-#: plug-ins/common/sparkle.c:582
+#: plug-ins/common/sparkle.c:259
 msgid "In_verse"
 msgstr "O_bratno"
 
-#: plug-ins/common/sparkle.c:588
+#: plug-ins/common/sparkle.c:260
 msgid "Should the effect be inversed?"
 msgstr "Ali želite uporabiti obratni učinek?"
 
-#: plug-ins/common/sparkle.c:597
-msgid "A_dd border"
-msgstr "_Dodaj obrobo"
+#: plug-ins/common/sparkle.c:265
+msgid "Add _border"
+msgstr "Dodaj o_brobo"
 
-#: plug-ins/common/sparkle.c:603
+#: plug-ins/common/sparkle.c:266
 msgid "Draw a border of spikes around the image"
 msgstr "Nariši rob iz žarkov okoli slike"
 
-#: plug-ins/common/sparkle.c:617
-msgid "_Natural color"
-msgstr "_Naravna barva"
+#: plug-ins/common/sparkle.c:271
+msgid "Color type"
+msgstr "Vrsta barve"
 
-#: plug-ins/common/sparkle.c:618
-msgid "_Foreground color"
-msgstr "Barva o_spredja"
+#: plug-ins/common/sparkle.c:272
+#, fuzzy
+msgid "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }"
+msgstr "Barva bleščic: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }"
 
-#: plug-ins/common/sparkle.c:619
-msgid "_Background color"
-msgstr "Barva o_zadja"
+#: plug-ins/common/sparkle.c:321
+msgid "Region selected for filter is empty"
+msgstr "Izbrano področje za filtriranje je prazno"
 
-#: plug-ins/common/sparkle.c:626
-msgid "Use the color of the image"
-msgstr "Uporabi barvo slike"
+#: plug-ins/common/sparkle.c:353
+msgid "Sparkling"
+msgstr "Svetlikanje ..."
 
-#: plug-ins/common/sparkle.c:627
-msgid "Use the foreground color"
-msgstr "Uporabi barvo ospredja"
+#: plug-ins/common/sparkle.c:392
+msgid "Sparkle"
+msgstr "Zablešči"
 
-#: plug-ins/common/sparkle.c:628
-msgid "Use the background color"
-msgstr "Uporabi barvo ozadja"
+#: plug-ins/common/sparkle.c:447
+msgid "Additional Options"
+msgstr "Dodatne možnosti"
+
+#. colortype
+#: plug-ins/common/sparkle.c:453
+msgid "Natural color"
+msgstr "Naravna barva"
+
+#: plug-ins/common/sparkle.c:454 plug-ins/common/warp.c:632
+msgid "Foreground color"
+msgstr "Barva ospredja"
+
+#: plug-ins/common/sparkle.c:455
+msgid "Background color"
+msgstr "Barva ozadja"
 
 #: plug-ins/common/sphere-designer.c:336 plug-ins/gimpressionist/general.c:165
 msgid "Solid"
@@ -6775,10 +6783,6 @@ msgstr "Ovij"
 #: plug-ins/common/warp.c:602
 msgid "Smear"
 msgstr "Razmaži"
-
-#: plug-ins/common/warp.c:632
-msgid "Foreground color"
-msgstr "Barva ospredja"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary grid          --------------------------
