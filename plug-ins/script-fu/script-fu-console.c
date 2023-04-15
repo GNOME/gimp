@@ -117,6 +117,8 @@ script_fu_console_run (GimpProcedure        *procedure,
                                     _("_Close"), GTK_RESPONSE_CLOSE,
 
                                     NULL);
+  gtk_window_set_default_size (GTK_WINDOW (console.dialog), TEXT_WIDTH,
+                               TEXT_HEIGHT);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (console.dialog),
                                            GTK_RESPONSE_CLOSE,

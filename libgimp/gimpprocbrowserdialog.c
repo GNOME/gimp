@@ -154,6 +154,8 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
   GtkWidget                    *parent;
 
   dialog->priv = gimp_proc_browser_dialog_get_instance_private (dialog);
+  gtk_window_set_default_size (GTK_WINDOW (dialog), DBL_WIDTH,
+                               DBL_WIDTH - DBL_LIST_WIDTH);
 
   priv = GET_PRIVATE (dialog);
 

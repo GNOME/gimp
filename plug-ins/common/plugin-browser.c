@@ -172,14 +172,14 @@ browser_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Display information about plug-ins"),
-                                        "Allows one to browse the plug-in "
-                                        "menus system. You can search for "
-                                        "plug-in names, sort by name or menu "
-                                        "location and you can view a tree "
-                                        "representation of the plug-in menus. "
-                                        "Can also be of help to find where "
-                                        "new plug-ins have installed "
-                                        "themselves in the menus.",
+                                        _("Allows one to browse the plug-in "
+                                          "menus system. You can search for "
+                                          "plug-in names, sort by name or menu "
+                                          "location and you can view a tree "
+                                          "representation of the plug-in menus. "
+                                          "Can also be of help to find where "
+                                          "new plug-ins have installed "
+                                          "themselves in the menus."),
                                         PLUG_IN_PROC);
       gimp_procedure_set_attribution (procedure,
                                       "Andy Thomas",
@@ -560,6 +560,8 @@ browser_dialog_new (void)
                                      _("_Close"), GTK_RESPONSE_CLOSE,
 
                                      NULL);
+  gtk_window_set_default_size (GTK_WINDOW (browser->dialog), DBL_WIDTH,
+                               DBL_WIDTH - DBL_LIST_WIDTH);
 
   g_signal_connect (browser->dialog, "response",
                     G_CALLBACK (browser_dialog_response),
