@@ -715,6 +715,11 @@ if have_qoi
   MIMEtypes += 'image/qoi'
 endif
 
+have_ilbm = cc.has_header('libilbm/ilbm.h')
+if have_ilbm
+  MIMEtypes += 'image/x-ilbm'
+endif
+
 openexr_minver = '1.6.1'
 openexr = dependency('OpenEXR', version: '>='+openexr_minver,
   required: get_option('openexr')
@@ -1963,6 +1968,7 @@ final_message = [
 '''  X11 Mouse Cursor:    @0@'''.format(xmc.found()),
 '''  XPM:                 @0@'''.format(libxpm.found()),
 '''  Quite-OK Image:      @0@'''.format(have_qoi),
+'''  Amiga IFF/ILBM:      @0@'''.format(have_ilbm),
 '''  Email:               @0@'''.format(email_message),
 '',
 '''Unmaintained Plug-Ins (discouraged except for developers):''',

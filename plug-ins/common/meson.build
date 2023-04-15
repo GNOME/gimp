@@ -159,6 +159,13 @@ if have_qoi
   }
 endif
 
+if have_ilbm
+  common_plugins_list += {
+    'name': 'file-iff',
+    'deps': [ gtk3, gegl, ],
+  }
+endif
+
 if not platform_windows
   common_plugins_list += { 'name': 'mail', }
 endif
