@@ -252,14 +252,16 @@ mng_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "*");
 
       gimp_procedure_set_menu_label (procedure, _("MNG animation"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("MNG"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Saves images in the MNG file format",
-                                        "This plug-in saves images in the "
-                                        "Multiple-image Network Graphics (MNG) "
-                                        "format which can be used as a "
-                                        "replacement for animated GIFs, and "
-                                        "more.",
+                                        _("Saves images in the MNG file format"),
+                                        _("This plug-in saves images in the "
+                                          "Multiple-image Network Graphics (MNG) "
+                                          "format which can be used as a "
+                                          "replacement for animated GIFs, and "
+                                          "more."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Mukund Sivaraman <muks@mukund.org>",
@@ -272,79 +274,79 @@ mng_create_procedure (GimpPlugIn  *plug_in,
                                           "mng");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "interlaced",
-                             "Interlaced",
-                             "Use interlacing",
+                             _("_Interlace"),
+                             _("Use interlacing"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "png-compression",
-                         "PNG Compression",
+                         _("_PNG compression level"),
                          _("PNG compression level, choose a high compression "
                            "level for small file size"),
                          0, 9, 9,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "jpeg-quality",
-                            "JPEG Quality",
-                            "JPEG quality factor",
+                            _("JPEG compression _quality"),
+                            _("JPEG quality factor"),
                             0, 1, 0.75,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "jpeg-smoothing",
-                            "JPEG Smoothing",
-                            "JPEG smoothing factor",
+                            _("_JPEG smoothing factor"),
+                            _("JPEG smoothing factor"),
                             0, 1, 0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "loop",
-                             "Loop",
-                             "(ANIMATED MNG) Loop infinitely",
+                             _("L_oop"),
+                             _("(ANIMATED MNG) Loop infinitely"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "default-delay",
-                         "Default delay",
-                         "(ANIMATED MNG) Default delay between frames in "
-                         "milliseconds",
+                         _("Default fra_me delay"),
+                         _("(ANIMATED MNG) Default delay between frames in "
+                           "milliseconds"),
                          1, G_MAXINT, 100,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "default-chunks",
-                         "Default chunks",
-                         "(ANIMATED MNG) Default chunks type "
-                         "(0 = PNG + Delta PNG; 1 = JNG + Delta PNG; "
-                         "2 = All PNG; 3 = All JNG)",
+                         _("Default chunks t_ype"),
+                         _("(ANIMATED MNG) Default chunks type "
+                           "(0 = PNG + Delta PNG; 1 = JNG + Delta PNG; "
+                           "2 = All PNG; 3 = All JNG)"),
                          0, 3, CHUNKS_PNG_D,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "default-dispose",
-                         "Default dispose",
-                         "(ANIMATED MNG) Default dispose type "
-                         "(0 = combine; 1 = replace)",
+                         _("De_fault frame disposal"),
+                         _("(ANIMATED MNG) Default dispose type "
+                           "(0 = combine; 1 = replace)"),
                          0, 1, DISPOSE_COMBINE,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "bkgd",
-                             "bKGD",
-                             "Write bKGd (background color) chunk",
+                             _("Save _background color"),
+                             _("Write bKGd (background color) chunk"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "gama",
-                             "gAMA",
-                             "Write gAMA (gamma) chunk",
+                             _("Save _gamma"),
+                             _("Write gAMA (gamma) chunk"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "phys",
-                             "pHYs",
-                             "Write pHYs (image resolution) chunk",
+                             _("Sa_ve resolution"),
+                             _("Write pHYs (image resolution) chunk"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "time",
-                             "tIME",
-                             "Write tIME (creation time) chunk",
+                             _("Save creation _time"),
+                             _("Write tIME (creation time) chunk"),
                              TRUE,
                              G_PARAM_READWRITE);
     }
@@ -1573,67 +1575,28 @@ mng_save_dialog (GimpImage     *image,
                  GObject       *config)
 {
   GtkWidget    *dialog;
-  GtkWidget    *main_vbox;
   GtkWidget    *frame;
-  GtkWidget    *vbox;
-  GtkWidget    *grid;
-  GtkWidget    *toggle;
   GtkWidget    *hbox;
   GtkListStore *store;
   GtkWidget    *combo;
   GtkWidget    *label;
   GtkWidget    *scale;
-  GtkWidget    *spinbutton;
   gint          num_layers;
   gboolean      run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as MNG"));
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
-
-  frame = gimp_frame_new (_("MNG Options"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  toggle = gimp_prop_check_button_new (config, "interlaced",
-                                       _("_Interlace"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  toggle = gimp_prop_check_button_new (config, "bkgd",
-                                       _("Save _background color"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  gtk_widget_set_sensitive (toggle, FALSE);
-
-  toggle = gimp_prop_check_button_new (config, "gama",
-                                       _("Save _gamma"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  toggle = gimp_prop_check_button_new (config, "phys",
-                                       _("Save resolution"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  gtk_widget_set_sensitive (toggle, FALSE);
-
-  toggle = gimp_prop_check_button_new (config, "time",
-                                       _("Save creation _time"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "options-vbox", "interlaced",
+                                  "bkgd", "gama", "phys", "time",
+                                  NULL);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "options-label", _("MNG Options"));
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "options-frame", "options-label",
+                                    FALSE, "options-vbox");
 
   g_free (gimp_image_get_layers (image, &num_layers));
 
@@ -1648,82 +1611,52 @@ mng_save_dialog (GimpImage     *image,
                                 _("All JNG"),         CHUNKS_JNG,
                                 NULL);
 
-  combo = gimp_prop_int_combo_box_new (config, "default-chunks",
-                                       GIMP_INT_STORE (store));
-  g_object_unref (store);
-
-  gtk_widget_set_sensitive (combo, FALSE);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("Default chunks type:"), 0.0, 0.5,
-                            combo, 1);
+  combo = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                               "default-chunks",
+                                               GIMP_INT_STORE (store));
+  gtk_widget_set_margin_bottom (combo, 6);
 
   store = gimp_int_store_new (_("Combine"), DISPOSE_COMBINE,
                               _("Replace"), DISPOSE_REPLACE,
                               NULL);
-  combo = gimp_prop_int_combo_box_new (config, "default-dispose",
-                                       GIMP_INT_STORE (store));
-  g_object_unref (store);
+  combo = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                               "default-dispose",
+                                               GIMP_INT_STORE (store));
+  gtk_widget_set_margin_bottom (combo, 6);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("Default _frame disposal:"), 0.0, 0.5,
-                            combo, 1);
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "png-compression", 1.0);
+  gtk_widget_set_margin_bottom (scale, 6);
 
-  scale = gimp_prop_hscale_new (config, "png-compression",
-                                1.0, 1.0, 0);
-  gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "jpeg-quality", 1.0);
+  gtk_widget_set_margin_bottom (scale, 6);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
-                            _("_PNG compression level:"), 0.0, 0.9,
-                            scale, 1);
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "jpeg-smoothing", 1.0);
+  gtk_widget_set_margin_bottom (scale, 6);
 
-  scale = gimp_prop_hscale_new (config, "jpeg-quality",
-                                0.01, 0.01, 2);
-  gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_widget_set_sensitive (scale, FALSE);
+  /* MNG Animation Options */
+  label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "milliseconds-label",
+                                           _("milliseconds"));
+  gtk_widget_set_margin_start (label, 6);
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "animation-box", "default-delay",
+                                         "milliseconds-label", NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
-                            _("JPEG compression quality:"), 0.0, 0.9,
-                            scale, 1);
-
-  scale = gimp_prop_hscale_new (config, "jpeg-smoothing",
-                                0.01, 0.01, 2);
-  gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_widget_set_sensitive (scale, FALSE);
-
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
-                            _("JPEG smoothing factor:"), 0.0, 0.9,
-                            scale, 1);
-
-  frame = gimp_frame_new (_("Animated MNG Options"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  toggle = gimp_prop_check_button_new (config, "loop",
-                                       _("_Loop"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Default frame delay:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  spinbutton = gimp_prop_spin_button_new (config, "default-delay",
-                                          10, 100, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-
-  label = gtk_label_new (_("milliseconds"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "mng-animation-box", "loop",
+                                  "animation-box", NULL);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "mng-animation-label",
+                                   _("Animated MNG Options"));
+  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "mng-animation-frame",
+                                            "mng-animation-label", FALSE,
+                                            "mng-animation-box");
 
   if (num_layers <= 1)
     {
@@ -1735,6 +1668,12 @@ mng_save_dialog (GimpImage     *image,
                                  "one layer."),
                                NULL);
     }
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "options-frame", "default-chunks",
+                              "default-dispose", "png-compression",
+                              "jpeg-quality", "jpeg-smoothing",
+                              "mng-animation-frame", NULL);
 
   gtk_widget_show (dialog);
 
