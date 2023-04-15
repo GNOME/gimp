@@ -13,6 +13,7 @@ libgimpmath
 libgimpmodule
 libgimpthumb
 libgimpwidgets
+menus
 modules
 plug-ins/common
 plug-ins/file-bmp
