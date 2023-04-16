@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-13 23:55+0000\n"
-"PO-Revision-Date: 2023-04-14 12:41+0200\n"
+"POT-Creation-Date: 2023-04-14 17:33+0000\n"
+"PO-Revision-Date: 2023-04-16 14:00+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2660,432 +2660,577 @@ msgstr "O_rodjarna"
 
 #: app/actions/dialogs-actions.c:53
 msgctxt "dialogs-action"
+msgid "Tool _Options Dialog"
+msgstr "Možnosti _orodja (okno)"
+
+#: app/actions/dialogs-actions.c:54
+msgctxt "dialogs-action"
 msgid "Tool _Options"
 msgstr "Možnosti _orodja"
 
-#: app/actions/dialogs-actions.c:54
+#: app/actions/dialogs-actions.c:56
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
 msgstr "Odpre pogovorno okno možnosti orodja"
 
-#: app/actions/dialogs-actions.c:59
+#: app/actions/dialogs-actions.c:61
+msgctxt "dialogs-action"
+msgid "_Device Status Dialog"
+msgstr "_Stanje naprave (okno)"
+
+#: app/actions/dialogs-actions.c:62
 msgctxt "dialogs-action"
 msgid "_Device Status"
 msgstr "_Stanje naprave"
 
-#: app/actions/dialogs-actions.c:60
+#: app/actions/dialogs-actions.c:64
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
 msgstr "Odpre pogovorno okno stanja naprave"
 
-#: app/actions/dialogs-actions.c:65
+#: app/actions/dialogs-actions.c:69
+msgctxt "dialogs-action"
+msgid "_Symmetry Painting Dialog"
+msgstr "_Simetrično slikanje (okno)"
+
+#: app/actions/dialogs-actions.c:70
 msgctxt "dialogs-action"
 msgid "_Symmetry Painting"
 msgstr "_Simetrično slikanje"
 
-#: app/actions/dialogs-actions.c:66
+#: app/actions/dialogs-actions.c:72
 msgctxt "dialogs-action"
 msgid "Open the symmetry dialog"
 msgstr "Odpre pogovorno okno simetrije"
 
-#: app/actions/dialogs-actions.c:71
+#: app/actions/dialogs-actions.c:77
+msgctxt "dialogs-action"
+msgid "_Layers Dialog"
+msgstr "P_lasti (okno)"
+
+#: app/actions/dialogs-actions.c:78
 msgctxt "dialogs-action"
 msgid "_Layers"
 msgstr "P_lasti"
 
-#: app/actions/dialogs-actions.c:72
+#: app/actions/dialogs-actions.c:80
 msgctxt "dialogs-action"
 msgid "Open the layers dialog"
 msgstr "Odpre pogovorno okno plasti"
 
-#: app/actions/dialogs-actions.c:77
+#: app/actions/dialogs-actions.c:85
+msgctxt "dialogs-action"
+msgid "_Channels Dialog"
+msgstr "_Kanali (okno)"
+
+#: app/actions/dialogs-actions.c:86
 msgctxt "dialogs-action"
 msgid "_Channels"
 msgstr "_Kanali"
 
-#: app/actions/dialogs-actions.c:78
+#: app/actions/dialogs-actions.c:88
 msgctxt "dialogs-action"
 msgid "Open the channels dialog"
 msgstr "Odpre pogovorno okno kanalov"
 
-#: app/actions/dialogs-actions.c:83
+#: app/actions/dialogs-actions.c:93
+msgctxt "dialogs-action"
+msgid "_Paths Dialog"
+msgstr "_Poti (okno)"
+
+#: app/actions/dialogs-actions.c:94
 msgctxt "dialogs-action"
 msgid "_Paths"
 msgstr "_Poti"
 
-#: app/actions/dialogs-actions.c:84
+#: app/actions/dialogs-actions.c:96
 msgctxt "dialogs-action"
 msgid "Open the paths dialog"
 msgstr "Odpre pogovorno okno poti"
 
-#: app/actions/dialogs-actions.c:89
+#: app/actions/dialogs-actions.c:101
+msgctxt "dialogs-action"
+msgid "Color_map Dialog"
+msgstr "Katalog _barv (okno)"
+
+#: app/actions/dialogs-actions.c:102
 msgctxt "dialogs-action"
 msgid "Color_map"
 msgstr "Katalog _barv"
 
-#: app/actions/dialogs-actions.c:90
+#: app/actions/dialogs-actions.c:104
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
 msgstr "Odpri pogovorno okno kataloga barv"
 
-#: app/actions/dialogs-actions.c:95
+#: app/actions/dialogs-actions.c:109
+msgctxt "dialogs-action"
+msgid "Histogra_m Dialog"
+msgstr "_Histogram (okno)"
+
+#: app/actions/dialogs-actions.c:110
 msgctxt "dialogs-action"
 msgid "Histogra_m"
 msgstr "Histogra_m"
 
-#: app/actions/dialogs-actions.c:96
+#: app/actions/dialogs-actions.c:112
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
 msgstr "Odpre pogovorno okno histograma"
 
-#: app/actions/dialogs-actions.c:101
+#: app/actions/dialogs-actions.c:117
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
 msgstr "_Urejevalnik izbora"
 
-#: app/actions/dialogs-actions.c:102
+#: app/actions/dialogs-actions.c:119
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
 msgstr "Odpre urejevalnik izbora"
 
-#: app/actions/dialogs-actions.c:107
+#: app/actions/dialogs-actions.c:124
+msgctxt "dialogs-action"
+msgid "Na_vigation Dialog"
+msgstr "_Krmarjenje (okno)"
+
+#: app/actions/dialogs-actions.c:125
 msgctxt "dialogs-action"
 msgid "Na_vigation"
 msgstr "Kr_marjenje"
 
-#: app/actions/dialogs-actions.c:108
+#: app/actions/dialogs-actions.c:127
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
 msgstr "Odpri pogovorno okno krmarja"
 
-#: app/actions/dialogs-actions.c:113
+#: app/actions/dialogs-actions.c:132
+msgctxt "dialogs-action"
+msgid "Undo _History Dialog"
+msgstr "_Zgodovina razveljavitev (okno)"
+
+#: app/actions/dialogs-actions.c:133
 msgctxt "dialogs-action"
 msgid "Undo _History"
 msgstr "_Zgodovina razveljavitev"
 
-#: app/actions/dialogs-actions.c:114
+#: app/actions/dialogs-actions.c:135
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
 msgstr "Odpri pogovorno okno zgodovine razveljavitev"
 
-#: app/actions/dialogs-actions.c:119
+#: app/actions/dialogs-actions.c:140
+msgctxt "dialogs-action"
+msgid "_Pointer Dialog"
+msgstr "_Kazalec (okno)"
+
+#: app/actions/dialogs-actions.c:141
 msgctxt "dialogs-action"
 msgid "_Pointer"
 msgstr "_Kazalec"
 
-#: app/actions/dialogs-actions.c:120
+#: app/actions/dialogs-actions.c:143
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
 msgstr "Odpri pogovorno okno podatkov o kazalcu"
 
-#: app/actions/dialogs-actions.c:125
+#: app/actions/dialogs-actions.c:148
+msgctxt "dialogs-action"
+msgid "_Sample Points Dialog"
+msgstr "_Vzorčne točke (okno)"
+
+#: app/actions/dialogs-actions.c:149
 msgctxt "dialogs-action"
 msgid "_Sample Points"
 msgstr "_Vzorčne točke"
 
-#: app/actions/dialogs-actions.c:126
+#: app/actions/dialogs-actions.c:151
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
 msgstr "Odpri pogovorno okno vzorčnih točk"
 
-#: app/actions/dialogs-actions.c:131
+#: app/actions/dialogs-actions.c:156
+msgctxt "dialogs-action"
+msgid "Colo_rs Dialog"
+msgstr "_Barve (okno)"
+
+#: app/actions/dialogs-actions.c:157
 msgctxt "dialogs-action"
 msgid "Colo_rs"
 msgstr "Ba_rve"
 
-#: app/actions/dialogs-actions.c:132
+#: app/actions/dialogs-actions.c:159
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
 msgstr "Odpre pogovorno okno barve ospredja/ozadja"
 
-#: app/actions/dialogs-actions.c:137
+#: app/actions/dialogs-actions.c:164
+msgctxt "dialogs-action"
+msgid "_Brushes Dialog"
+msgstr "_Čopiči (okno)"
+
+#: app/actions/dialogs-actions.c:165
 msgctxt "dialogs-action"
 msgid "_Brushes"
 msgstr "_Čopiči"
 
-#: app/actions/dialogs-actions.c:138
+#: app/actions/dialogs-actions.c:167
 msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
 msgstr "Odpre pogovorno okno čopičev"
 
-#: app/actions/dialogs-actions.c:143
+#: app/actions/dialogs-actions.c:172
 msgctxt "dialogs-action"
 msgid "Brush Editor"
 msgstr "Urejevalnik čopičev"
 
-#: app/actions/dialogs-actions.c:144
+#: app/actions/dialogs-actions.c:174
 msgctxt "dialogs-action"
 msgid "Open the brush editor"
 msgstr "Odpri urejevalnik čopičev"
 
-#: app/actions/dialogs-actions.c:149
+#: app/actions/dialogs-actions.c:179
+msgctxt "dialogs-action"
+msgid "Paint D_ynamics Dialog"
+msgstr "_Dinamika slikanja (okno)"
+
+#: app/actions/dialogs-actions.c:180
 msgctxt "dialogs-action"
 msgid "Paint D_ynamics"
 msgstr "_Dinamika slikanja"
 
-#: app/actions/dialogs-actions.c:150
+#: app/actions/dialogs-actions.c:182
 msgctxt "dialogs-action"
 msgid "Open paint dynamics dialog"
 msgstr "Odpre pogovorno okno dinamike slikanja"
 
-#: app/actions/dialogs-actions.c:155
+#: app/actions/dialogs-actions.c:187
 msgctxt "dialogs-action"
 msgid "Paint Dynamics Editor"
 msgstr "Urejevalnik dinamike slikanja"
 
-#: app/actions/dialogs-actions.c:156
+#: app/actions/dialogs-actions.c:189
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
 msgstr "Odpri urejevalnik dinamike slikanja"
 
-#: app/actions/dialogs-actions.c:161
+#: app/actions/dialogs-actions.c:194
+msgctxt "dialogs-action"
+msgid "_MyPaint Brushes Dialog"
+msgstr "_Čopiči MyPaint (okno)"
+
+#: app/actions/dialogs-actions.c:195
 msgctxt "dialogs-action"
 msgid "_MyPaint Brushes"
 msgstr "_Čopiči MyPaint"
 
-#: app/actions/dialogs-actions.c:162
+#: app/actions/dialogs-actions.c:197
 msgctxt "dialogs-action"
 msgid "Open the mypaint brushes dialog"
 msgstr "Odpri pogovorno okno čopičev MyPaint"
 
-#: app/actions/dialogs-actions.c:167
+#: app/actions/dialogs-actions.c:202
+msgctxt "dialogs-action"
+msgid "P_atterns Dialog"
+msgstr "Vzor_ci (okno)"
+
+#: app/actions/dialogs-actions.c:203
 msgctxt "dialogs-action"
 msgid "P_atterns"
 msgstr "Vzor_ci"
 
-#: app/actions/dialogs-actions.c:168
+#: app/actions/dialogs-actions.c:205
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
 msgstr "Odpre pogovorno okno vzorcev"
 
-#: app/actions/dialogs-actions.c:173
+#: app/actions/dialogs-actions.c:210
+msgctxt "dialogs-action"
+msgid "_Gradients Dialog"
+msgstr "_Prelivi (okno)"
+
+#: app/actions/dialogs-actions.c:211
 msgctxt "dialogs-action"
 msgid "_Gradients"
 msgstr "_Prelivi"
 
-#: app/actions/dialogs-actions.c:174
+#: app/actions/dialogs-actions.c:213
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
 msgstr "Odpre pogovorno okno prelivov"
 
-#: app/actions/dialogs-actions.c:179
+#: app/actions/dialogs-actions.c:218
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
 msgstr "Urejevalnik prelivov"
 
-#: app/actions/dialogs-actions.c:180
+#: app/actions/dialogs-actions.c:220
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
 msgstr "Odpri urejevalnik prelivov"
 
-#: app/actions/dialogs-actions.c:185
+#: app/actions/dialogs-actions.c:225
+msgctxt "dialogs-action"
+msgid "Pal_ettes Dialog"
+msgstr "Pal_ete (okno)"
+
+#: app/actions/dialogs-actions.c:226
 msgctxt "dialogs-action"
 msgid "Pal_ettes"
 msgstr "Pal_ete"
 
-#: app/actions/dialogs-actions.c:186
+#: app/actions/dialogs-actions.c:228
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
 msgstr "Odpre pogovorno okno palet"
 
-#: app/actions/dialogs-actions.c:191
+#: app/actions/dialogs-actions.c:233 app/actions/dialogs-actions.c:234
 msgctxt "dialogs-action"
 msgid "Palette _Editor"
 msgstr "_Urejevalnik palet"
 
-#: app/actions/dialogs-actions.c:192
+#: app/actions/dialogs-actions.c:236
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
 msgstr "Odpre urejevalnik palet"
 
-#: app/actions/dialogs-actions.c:197
+#: app/actions/dialogs-actions.c:241
+msgctxt "dialogs-action"
+msgid "Tool Pre_sets Dialog"
+msgstr "Pre_dnastavitve orodja (okno)"
+
+#: app/actions/dialogs-actions.c:242
 msgctxt "dialogs-action"
 msgid "Tool Pre_sets"
 msgstr "Pre_dnastavitve orodja"
 
-#: app/actions/dialogs-actions.c:198
+#: app/actions/dialogs-actions.c:244
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
 msgstr "Odpre pogovorno okno prednastavitev orodja"
 
-#: app/actions/dialogs-actions.c:203
+#: app/actions/dialogs-actions.c:249
+msgctxt "dialogs-action"
+msgid "_Fonts Dialog"
+msgstr "P_isave (okno)"
+
+#: app/actions/dialogs-actions.c:250
 msgctxt "dialogs-action"
 msgid "_Fonts"
 msgstr "_Pisave"
 
-#: app/actions/dialogs-actions.c:204
+#: app/actions/dialogs-actions.c:252
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
 msgstr "Odpre pogovorno okno pisav"
 
-#: app/actions/dialogs-actions.c:209
+#: app/actions/dialogs-actions.c:257
+msgctxt "dialogs-action"
+msgid "B_uffers Dialog"
+msgstr "Me_dpomnilniki (okno)"
+
+#: app/actions/dialogs-actions.c:258
 msgctxt "dialogs-action"
 msgid "B_uffers"
 msgstr "Me_dpomnilniki"
 
-#: app/actions/dialogs-actions.c:210
+#: app/actions/dialogs-actions.c:260
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
 msgstr "Odpri pogovorno okno imenovanih medpomnilnikov"
 
-#: app/actions/dialogs-actions.c:215
+#: app/actions/dialogs-actions.c:265
+msgctxt "dialogs-action"
+msgid "_Images Dialog"
+msgstr "_Slike (okno)"
+
+#: app/actions/dialogs-actions.c:266
 msgctxt "dialogs-action"
 msgid "_Images"
 msgstr "_Slike"
 
-#: app/actions/dialogs-actions.c:216
+#: app/actions/dialogs-actions.c:268
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
 msgstr "Odpre pogovorno okno slike"
 
-#: app/actions/dialogs-actions.c:221
+#: app/actions/dialogs-actions.c:273
+msgctxt "dialogs-action"
+msgid "Document Histor_y Dialog"
+msgstr "_Zgodovina dokumenta (okno)"
+
+#: app/actions/dialogs-actions.c:274
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
 msgstr "_Zgodovina dokumenta"
 
-#: app/actions/dialogs-actions.c:222
+#: app/actions/dialogs-actions.c:276
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
 msgstr "Odpre pogovorno okno zgodovine dokumenta"
 
-#: app/actions/dialogs-actions.c:227
+#: app/actions/dialogs-actions.c:281
+msgctxt "dialogs-action"
+msgid "_Templates Dialog"
+msgstr "_Predloge (okno)"
+
+#: app/actions/dialogs-actions.c:282
 msgctxt "dialogs-action"
 msgid "_Templates"
 msgstr "_Predloge"
 
-#: app/actions/dialogs-actions.c:228
+#: app/actions/dialogs-actions.c:284
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
 msgstr "Odpri pogovorno okno slikovnih predlog"
 
-#: app/actions/dialogs-actions.c:233
+#: app/actions/dialogs-actions.c:289 app/actions/dialogs-actions.c:290
 msgctxt "dialogs-action"
 msgid "Error Co_nsole"
 msgstr "_Konzola napak"
 
-#: app/actions/dialogs-actions.c:234
+#: app/actions/dialogs-actions.c:292
 msgctxt "dialogs-action"
 msgid "Open the error console"
 msgstr "Odpre konzolo napak"
 
-#: app/actions/dialogs-actions.c:239
+#: app/actions/dialogs-actions.c:297 app/actions/dialogs-actions.c:298
 msgctxt "dialogs-action"
 msgid "_Dashboard"
 msgstr "Na_dzorna plošča"
 
-#: app/actions/dialogs-actions.c:240
+#: app/actions/dialogs-actions.c:300
 msgctxt "dialogs-action"
 msgid "Open the dashboard"
 msgstr "Odpri nadzorno ploščo"
 
-#: app/actions/dialogs-actions.c:250
+#: app/actions/dialogs-actions.c:310
+msgctxt "dialogs-action"
+msgid "_Preferences Dialog"
+msgstr "_Nastavitve (okno)"
+
+#: app/actions/dialogs-actions.c:311
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "_Nastavitve"
 
-#: app/actions/dialogs-actions.c:251
+#: app/actions/dialogs-actions.c:313
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "Odpre pogovorno okno nastavitev"
 
-#: app/actions/dialogs-actions.c:256
+#: app/actions/dialogs-actions.c:318
+msgctxt "dialogs-action"
+msgid "_Input Devices Editor"
+msgstr "V_hodne naprave (okno)"
+
+#: app/actions/dialogs-actions.c:319
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "V_hodne naprave"
 
-#: app/actions/dialogs-actions.c:257
+#: app/actions/dialogs-actions.c:321
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "Odpre urejevalnik vhodnih naprav"
 
-#: app/actions/dialogs-actions.c:262
+#: app/actions/dialogs-actions.c:326
+msgctxt "dialogs-action"
+msgid "_Keyboard Shortcuts Editor"
+msgstr "_Tipke za bližnjico (okno)"
+
+#: app/actions/dialogs-actions.c:327
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "_Tipke za bližnjico"
 
-#: app/actions/dialogs-actions.c:263
+#: app/actions/dialogs-actions.c:329
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "Odpre urejevalnik tipk za bližnjice"
 
-#: app/actions/dialogs-actions.c:268
+#: app/actions/dialogs-actions.c:334
+msgctxt "dialogs-action"
+msgid "_Modules Dialog"
+msgstr "_Gradniki (okno)"
+
+#: app/actions/dialogs-actions.c:335
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "_Gradniki"
 
-#: app/actions/dialogs-actions.c:269
+#: app/actions/dialogs-actions.c:337
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "Odpri pogovorno okno upravitelja gradnikov"
 
-#: app/actions/dialogs-actions.c:274
+#: app/actions/dialogs-actions.c:342
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "_Nasvet dneva"
 
-#: app/actions/dialogs-actions.c:275
+#: app/actions/dialogs-actions.c:344
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Pokaže priročne namige pri delu s programom GIMP"
 
-#: app/actions/dialogs-actions.c:280
+#: app/actions/dialogs-actions.c:349
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
 msgstr "Pogovorno okno dobrodošlice"
 
-#: app/actions/dialogs-actions.c:281
+#: app/actions/dialogs-actions.c:351
 msgctxt "dialogs-action"
 msgid "Show information on running GIMP release"
 msgstr "Pokaži informacije o zagonu izdaje GIMP"
 
-#: app/actions/dialogs-actions.c:287 app/actions/dialogs-actions.c:294
+#: app/actions/dialogs-actions.c:357 app/actions/dialogs-actions.c:364
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "O programu GIMP"
 
-#: app/actions/dialogs-actions.c:289
+#: app/actions/dialogs-actions.c:359
 msgctxt "dialogs-action"
 msgid "About"
 msgstr "O programu"
 
-#: app/actions/dialogs-actions.c:291
+#: app/actions/dialogs-actions.c:361
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_O programu"
 
-#: app/actions/dialogs-actions.c:299
+#: app/actions/dialogs-actions.c:369
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "_Najdi in zaženi ukaz"
 
-#: app/actions/dialogs-actions.c:300
+#: app/actions/dialogs-actions.c:371
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "Poiščite ukaze po ključnih besedah in jih zaženite"
 
-#: app/actions/dialogs-actions.c:305
+#: app/actions/dialogs-actions.c:376
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
 msgstr "Upravljaj _razširitve"
 
-#: app/actions/dialogs-actions.c:306
+#: app/actions/dialogs-actions.c:378
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
 msgstr "Upravljanje razširitev: iskanje, namestitev, odstranitev, posodobitev."
 
-#: app/actions/dialogs-actions.c:369
+#: app/actions/dialogs-actions.c:441
 msgid "Tool_box"
 msgstr "O_rodjarna"
 
-#: app/actions/dialogs-actions.c:370
+#: app/actions/dialogs-actions.c:442
 msgid "Raise the toolbox"
 msgstr "Privzdigni orodjarno"
 
-#: app/actions/dialogs-actions.c:374
+#: app/actions/dialogs-actions.c:446
 msgid "New Tool_box"
 msgstr "Nova o_rodjarna"
 
-#: app/actions/dialogs-actions.c:375
+#: app/actions/dialogs-actions.c:447
 msgid "Create a new toolbox"
 msgstr "Ustvari novo orodjarno"
 
@@ -3684,178 +3829,178 @@ msgstr "Kopiraj vidno v izbranem območju"
 
 #: app/actions/edit-actions.c:123
 msgctxt "edit-action"
+msgid "Paste as _New Image"
+msgstr "Prilepi kot _novo sliko"
+
+#: app/actions/edit-actions.c:124
+msgctxt "edit-action"
 msgid "From _Clipboard"
 msgstr "Z _odložišča"
 
-#: app/actions/edit-actions.c:124 app/actions/edit-actions.c:130
+#: app/actions/edit-actions.c:126
 msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
 msgstr "Ustvari novo sliko iz vsebine odložišča"
 
-#: app/actions/edit-actions.c:129
-msgctxt "edit-action"
-msgid "Paste as _New Image"
-msgstr "Prilepi kot _novo sliko"
-
-#: app/actions/edit-actions.c:135
+#: app/actions/edit-actions.c:131
 msgctxt "edit-action"
 msgid "Cu_t Named..."
 msgstr "Izre_ži imenovano ..."
 
-#: app/actions/edit-actions.c:136
+#: app/actions/edit-actions.c:132
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
 msgstr "Premakni izbrane slikovne točke v imenovan medpomnilnik"
 
-#: app/actions/edit-actions.c:141
+#: app/actions/edit-actions.c:137
 msgctxt "edit-action"
 msgid "_Copy Named..."
 msgstr "_Kopiraj imenovano ..."
 
-#: app/actions/edit-actions.c:142
+#: app/actions/edit-actions.c:138
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
 msgstr "Kopiraj izbrane slikovne točke v imenovan medpomnilnik"
 
 #. GIMP_ICON_COPY_VISIBLE,
-#: app/actions/edit-actions.c:147
+#: app/actions/edit-actions.c:143
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
 msgstr "Kopiraj _vidno v imenovano ..."
 
-#: app/actions/edit-actions.c:149
+#: app/actions/edit-actions.c:145
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
 msgstr "Kopiraj vidno v izbranem območju v imenovan medpomnilnik"
 
-#: app/actions/edit-actions.c:154
+#: app/actions/edit-actions.c:150
 msgctxt "edit-action"
 msgid "_Paste Named..."
 msgstr "_Prilepi imenovano ..."
 
-#: app/actions/edit-actions.c:155
+#: app/actions/edit-actions.c:151
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
 msgstr "Prilepi vsebino imenovanega medpomnilnika"
 
-#: app/actions/edit-actions.c:160
+#: app/actions/edit-actions.c:156
 msgctxt "edit-action"
 msgid "Cl_ear"
 msgstr "Po_čisti"
 
-#: app/actions/edit-actions.c:161
+#: app/actions/edit-actions.c:157
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
 msgstr "Počisti izbrane slikovne točke"
 
-#: app/actions/edit-actions.c:169
+#: app/actions/edit-actions.c:165
 msgctxt "edit-action"
 msgid "_Paste"
 msgstr "_Prilepi"
 
-#: app/actions/edit-actions.c:170
+#: app/actions/edit-actions.c:166
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard"
 msgstr "Prilepi vsebino odložišča"
 
-#: app/actions/edit-actions.c:175
+#: app/actions/edit-actions.c:171
 msgctxt "edit-action"
 msgid "Paste In P_lace"
 msgstr "Prilepi na _mesto"
 
-#: app/actions/edit-actions.c:177
+#: app/actions/edit-actions.c:173
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard at its original position"
 msgstr "Prilepi vsebino odložišča na izvorni položaj"
 
-#: app/actions/edit-actions.c:182
+#: app/actions/edit-actions.c:178
 msgctxt "edit-action"
 msgid "_Paste as Single Layer"
 msgstr "_Prilepi kot posamično plast"
 
-#: app/actions/edit-actions.c:183
+#: app/actions/edit-actions.c:179
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard as a single layer"
 msgstr "Prilepi vsebino odložišča kot posamično plast"
 
-#: app/actions/edit-actions.c:188
+#: app/actions/edit-actions.c:184
 msgctxt "edit-action"
 msgid "Paste as Single Layer In P_lace"
 msgstr "Prilepi kot posamično plast na _mesto"
 
-#: app/actions/edit-actions.c:190
+#: app/actions/edit-actions.c:186
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard at its original position as a single layer"
 msgstr "Prilepi vsebino odložišča na izvorni položaj kot posamično plast"
 
-#: app/actions/edit-actions.c:195
+#: app/actions/edit-actions.c:191
 msgctxt "edit-action"
 msgid "Paste _Into Selection"
 msgstr "Prilepi v _izbor"
 
-#: app/actions/edit-actions.c:197
+#: app/actions/edit-actions.c:193
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
 msgstr "Prilepi vsebino odložišča v trenutni izbor"
 
-#: app/actions/edit-actions.c:202
+#: app/actions/edit-actions.c:198
 msgctxt "edit-action"
 msgid "Paste Int_o Selection In Place"
 msgstr "Prilepi v iz_bor na mestu"
 
-#: app/actions/edit-actions.c:204
+#: app/actions/edit-actions.c:200
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard into the current selection at its "
 "original position"
 msgstr "Prilepite vsebino odložišča v trenutni izbor na izvorni položaj"
 
-#: app/actions/edit-actions.c:213
+#: app/actions/edit-actions.c:209
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "Napolni z barvo _ospredja"
 
-#: app/actions/edit-actions.c:214
+#: app/actions/edit-actions.c:210
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "Zapolni izbor z uporabo barve ospredja"
 
-#: app/actions/edit-actions.c:219
+#: app/actions/edit-actions.c:215
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "Napolni z barvo o_zadja"
 
-#: app/actions/edit-actions.c:220
+#: app/actions/edit-actions.c:216
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "Zapolni izbor z uporabo barve ozadja"
 
-#: app/actions/edit-actions.c:225
+#: app/actions/edit-actions.c:221
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "Zapolni z _vzorcem"
 
-#: app/actions/edit-actions.c:226
+#: app/actions/edit-actions.c:222
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Zapolni izbor z uporabo aktivnega vzorca"
 
-#: app/actions/edit-actions.c:323 app/actions/edit-actions.c:325
+#: app/actions/edit-actions.c:319 app/actions/edit-actions.c:321
 #, c-format
 msgid "_Undo %s"
 msgstr "_Razveljavi %s"
 
-#: app/actions/edit-actions.c:329 app/actions/edit-actions.c:331
+#: app/actions/edit-actions.c:325 app/actions/edit-actions.c:327
 #, c-format
 msgid "_Redo %s"
 msgstr "_Ponovi %s"
 
-#: app/actions/edit-actions.c:342
+#: app/actions/edit-actions.c:338
 msgid "_Undo"
 msgstr "_Razveljavi"
 
-#: app/actions/edit-actions.c:343
+#: app/actions/edit-actions.c:339
 msgid "_Redo"
 msgstr "_Ponovi"
 
@@ -5194,6 +5339,41 @@ msgctxt "gradient-editor-action"
 msgid "R_ight Endpoint's Color..."
 msgstr "Barva _desnega konca ..."
 
+#: app/actions/gradient-editor-actions.c:81
+msgctxt "gradient-editor-action"
+msgid "Flip"
+msgstr "Prezrcali"
+
+#: app/actions/gradient-editor-actions.c:86
+msgctxt "gradient-editor-action"
+msgid "Replicate"
+msgstr "Razmnoži"
+
+#: app/actions/gradient-editor-actions.c:91
+msgctxt "gradient-editor-action"
+msgid "Split Midpoint"
+msgstr "Razdeli na sredi"
+
+#: app/actions/gradient-editor-actions.c:96
+msgctxt "gradient-editor-action"
+msgid "Split Uniformly"
+msgstr "Razdeli enakomerno"
+
+#: app/actions/gradient-editor-actions.c:101
+msgctxt "gradient-editor-action"
+msgid "Delete"
+msgstr "Izbriši"
+
+#: app/actions/gradient-editor-actions.c:106
+msgctxt "gradient-editor-action"
+msgid "Recenter"
+msgstr "Ponovno sredini"
+
+#: app/actions/gradient-editor-actions.c:111
+msgctxt "gradient-editor-action"
+msgid "Redistribute"
+msgstr "Prerazpodeli"
+
 #: app/actions/gradient-editor-actions.c:116
 msgctxt "gradient-editor-action"
 msgid "Ble_nd Endpoints' Colors"
@@ -5242,186 +5422,186 @@ msgid "_Left Endpoint"
 msgstr "_Levi konec"
 
 #: app/actions/gradient-editor-actions.c:262
-#: app/actions/gradient-editor-actions.c:292
+#: app/actions/gradient-editor-actions.c:290
 msgctxt "gradient-editor-color-type"
 msgid "_Fixed"
 msgstr "_Nespremenljiva"
 
 #: app/actions/gradient-editor-actions.c:267
-#: app/actions/gradient-editor-actions.c:297
+#: app/actions/gradient-editor-actions.c:295
 msgctxt "gradient-editor-color-type"
 msgid "F_oreground Color"
 msgstr "Barva o_spredja"
 
-#: app/actions/gradient-editor-actions.c:273
-#: app/actions/gradient-editor-actions.c:303
+#: app/actions/gradient-editor-actions.c:272
+#: app/actions/gradient-editor-actions.c:300
 msgctxt "gradient-editor-color-type"
 msgid "Fo_reground Color (Transparent)"
 msgstr "Barva os_predja (prosojna)"
 
-#: app/actions/gradient-editor-actions.c:278
-#: app/actions/gradient-editor-actions.c:308
+#: app/actions/gradient-editor-actions.c:277
+#: app/actions/gradient-editor-actions.c:305
 msgctxt "gradient-editor-color-type"
 msgid "_Background Color"
 msgstr "Barva o_zadja"
 
-#: app/actions/gradient-editor-actions.c:284
-#: app/actions/gradient-editor-actions.c:314
+#: app/actions/gradient-editor-actions.c:282
+#: app/actions/gradient-editor-actions.c:310
 msgctxt "gradient-editor-color-type"
 msgid "B_ackground Color (Transparent)"
 msgstr "Barva o_zadja (prosojna)"
 
-#: app/actions/gradient-editor-actions.c:322
+#: app/actions/gradient-editor-actions.c:318
 msgctxt "gradient-editor-blending"
 msgid "_Linear"
 msgstr "_linearna"
 
-#: app/actions/gradient-editor-actions.c:327
+#: app/actions/gradient-editor-actions.c:323
 msgctxt "gradient-editor-blending"
 msgid "_Curved"
 msgstr "_ukrivljena"
 
-#: app/actions/gradient-editor-actions.c:332
+#: app/actions/gradient-editor-actions.c:328
 msgctxt "gradient-editor-blending"
 msgid "_Sinusoidal"
 msgstr "_sinusna"
 
-#: app/actions/gradient-editor-actions.c:337
+#: app/actions/gradient-editor-actions.c:333
 msgctxt "gradient-editor-blending"
 msgid "Spherical (i_ncreasing)"
 msgstr "sferična (_naraščajoča)"
 
-#: app/actions/gradient-editor-actions.c:342
+#: app/actions/gradient-editor-actions.c:338
 msgctxt "gradient-editor-blending"
 msgid "Spherical (_decreasing)"
 msgstr "sferična (pa_dajoča)"
 
-#: app/actions/gradient-editor-actions.c:347
+#: app/actions/gradient-editor-actions.c:343
 msgctxt "gradient-editor-blending"
 msgid "S_tep"
 msgstr "_Korak"
 
-#: app/actions/gradient-editor-actions.c:352
+#: app/actions/gradient-editor-actions.c:348
 msgctxt "gradient-editor-blending"
 msgid "(Varies)"
 msgstr "(spremenljiva)"
 
-#: app/actions/gradient-editor-actions.c:360
+#: app/actions/gradient-editor-actions.c:356
 msgctxt "gradient-editor-coloring"
 msgid "_RGB"
 msgstr "_RGB"
 
-#: app/actions/gradient-editor-actions.c:365
+#: app/actions/gradient-editor-actions.c:361
 msgctxt "gradient-editor-coloring"
 msgid "HSV (_counter-clockwise hue)"
 msgstr "HSV (obarvanost v _nasprotni SUK)"
 
-#: app/actions/gradient-editor-actions.c:370
+#: app/actions/gradient-editor-actions.c:366
 msgctxt "gradient-editor-coloring"
 msgid "HSV (clockwise _hue)"
 msgstr "HSV (obarvanost v S_UK)"
 
-#: app/actions/gradient-editor-actions.c:375
+#: app/actions/gradient-editor-actions.c:371
 msgctxt "gradient-editor-coloring"
 msgid "(Varies)"
 msgstr "(spremenljiva)"
 
-#: app/actions/gradient-editor-actions.c:383
+#: app/actions/gradient-editor-actions.c:379
 msgid "Zoom In"
 msgstr "Povečaj"
 
-#: app/actions/gradient-editor-actions.c:384
+#: app/actions/gradient-editor-actions.c:380
 #: app/actions/palette-editor-actions.c:90
 msgid "Zoom in"
 msgstr "Povečaj"
 
-#: app/actions/gradient-editor-actions.c:389
+#: app/actions/gradient-editor-actions.c:385
 msgid "Zoom Out"
 msgstr "Pomanjšaj"
 
-#: app/actions/gradient-editor-actions.c:390
+#: app/actions/gradient-editor-actions.c:386
 #: app/actions/palette-editor-actions.c:96
 msgid "Zoom out"
 msgstr "Pomanjšaj"
 
-#: app/actions/gradient-editor-actions.c:395
+#: app/actions/gradient-editor-actions.c:391
 msgid "Zoom All"
 msgstr "Pokaži vse"
 
-#: app/actions/gradient-editor-actions.c:396
+#: app/actions/gradient-editor-actions.c:392
 #: app/actions/palette-editor-actions.c:102
 msgid "Zoom all"
 msgstr "Pokaži vse"
 
-#: app/actions/gradient-editor-actions.c:791
+#: app/actions/gradient-editor-actions.c:787
 msgid "_Blending Function for Segment"
 msgstr "Funkcija _zlivanja za odsek"
 
-#: app/actions/gradient-editor-actions.c:793
+#: app/actions/gradient-editor-actions.c:789
 msgid "Coloring _Type for Segment"
 msgstr "Vrs_ta barvanja za odsek"
 
-#: app/actions/gradient-editor-actions.c:796
+#: app/actions/gradient-editor-actions.c:792
 msgid "_Flip Segment"
 msgstr "_Prezrcali odsek"
 
-#: app/actions/gradient-editor-actions.c:798
+#: app/actions/gradient-editor-actions.c:794
 msgid "_Replicate Segment..."
 msgstr "_Podvoji odsek ..."
 
-#: app/actions/gradient-editor-actions.c:800
+#: app/actions/gradient-editor-actions.c:796
 msgid "Split Segment at _Midpoint"
 msgstr "Razdeli _odsek na sredi"
 
-#: app/actions/gradient-editor-actions.c:802
+#: app/actions/gradient-editor-actions.c:798
 msgid "Split Segment _Uniformly..."
 msgstr "Razdeli segment _enakomerno ..."
 
-#: app/actions/gradient-editor-actions.c:804
+#: app/actions/gradient-editor-actions.c:800
 msgid "_Delete Segment"
 msgstr "_Izbriši odsek"
 
-#: app/actions/gradient-editor-actions.c:806
+#: app/actions/gradient-editor-actions.c:802
 msgid "Re-_center Segment's Midpoint"
 msgstr "Pre_središči sredinsko točko odseka"
 
-#: app/actions/gradient-editor-actions.c:808
+#: app/actions/gradient-editor-actions.c:804
 msgid "Re-distribute _Handles in Segment"
 msgstr "_Prerazdeli ročice odseka"
 
-#: app/actions/gradient-editor-actions.c:813
+#: app/actions/gradient-editor-actions.c:809
 msgid "_Blending Function for Selection"
 msgstr "Funkcija _zlivanja za izbor"
 
-#: app/actions/gradient-editor-actions.c:815
+#: app/actions/gradient-editor-actions.c:811
 msgid "Coloring _Type for Selection"
 msgstr "_Vrsta barvanja izbora"
 
-#: app/actions/gradient-editor-actions.c:818
+#: app/actions/gradient-editor-actions.c:814
 msgid "_Flip Selection"
 msgstr "_Prezrcali izbor"
 
-#: app/actions/gradient-editor-actions.c:820
+#: app/actions/gradient-editor-actions.c:816
 msgid "_Replicate Selection..."
 msgstr "_Razmnoži izbor ..."
 
-#: app/actions/gradient-editor-actions.c:822
+#: app/actions/gradient-editor-actions.c:818
 msgid "Split Segments at _Midpoints"
 msgstr "Razdeli odseke na _sredini"
 
-#: app/actions/gradient-editor-actions.c:824
+#: app/actions/gradient-editor-actions.c:820
 msgid "Split Segments _Uniformly..."
 msgstr "Razdeli segmente _enakomerno ..."
 
-#: app/actions/gradient-editor-actions.c:826
+#: app/actions/gradient-editor-actions.c:822
 msgid "_Delete Selection"
 msgstr "I_zbriši izbor"
 
-#: app/actions/gradient-editor-actions.c:828
+#: app/actions/gradient-editor-actions.c:824
 msgid "Re-_center Midpoints in Selection"
 msgstr "Pre_središči sredinske točke v izboru"
 
-#: app/actions/gradient-editor-actions.c:830
+#: app/actions/gradient-editor-actions.c:826
 msgid "Re-distribute _Handles in Selection"
 msgstr "_Prerazdeli ročice v izboru"
 
@@ -8057,82 +8237,87 @@ msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "Ste prepričani, da želite zbrisati predlogo »%s« s seznama in z diska?"
 
-#: app/actions/text-editor-actions.c:44
+#: app/actions/text-editor-actions.c:40
+msgctxt "text-editor-action"
+msgid "Text Editor Toolbar"
+msgstr "Orodna vrstica Urejevalnik besedila"
+
+#: app/actions/text-editor-actions.c:45
 msgctxt "text-editor-action"
 msgid "Open"
 msgstr "Odpri"
 
-#: app/actions/text-editor-actions.c:45
+#: app/actions/text-editor-actions.c:46
 msgctxt "text-editor-action"
 msgid "Load text from file"
 msgstr "Naloži besedilo iz datoteke"
 
-#: app/actions/text-editor-actions.c:50
+#: app/actions/text-editor-actions.c:51
 msgctxt "text-editor-action"
 msgid "Clear"
 msgstr "Počisti"
 
-#: app/actions/text-editor-actions.c:51
+#: app/actions/text-editor-actions.c:52
 msgctxt "text-editor-action"
 msgid "Clear all text"
 msgstr "Počisti vse besedilo"
 
-#: app/actions/text-editor-actions.c:59
+#: app/actions/text-editor-actions.c:60
 msgctxt "text-editor-action"
 msgid "LTR"
 msgstr "L->D"
 
-#: app/actions/text-editor-actions.c:60
+#: app/actions/text-editor-actions.c:61
 msgctxt "text-editor-action"
 msgid "From left to right"
 msgstr "Od leve proti desni"
 
-#: app/actions/text-editor-actions.c:65
+#: app/actions/text-editor-actions.c:66
 msgctxt "text-editor-action"
 msgid "RTL"
 msgstr "D->L"
 
-#: app/actions/text-editor-actions.c:66
+#: app/actions/text-editor-actions.c:67
 msgctxt "text-editor-action"
 msgid "From right to left"
 msgstr "Od desne proti levi"
 
-#: app/actions/text-editor-actions.c:71
+#: app/actions/text-editor-actions.c:72
 msgctxt "text-editor-action"
 msgid "TTB-RTL"
 msgstr "TTB+D->L"
 
-#: app/actions/text-editor-actions.c:72
+#: app/actions/text-editor-actions.c:73
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Navpična, desna proti levi (mešana usmerjenost)"
 
-#: app/actions/text-editor-actions.c:77
+#: app/actions/text-editor-actions.c:78
 msgctxt "text-editor-action"
 msgid "TTB-RTL-UPRIGHT"
 msgstr "TTB+D->L+NAVPIČNO"
 
-#: app/actions/text-editor-actions.c:78
+#: app/actions/text-editor-actions.c:79
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Navpična, desna proti levi (pokončna usmerjenost)"
 
-#: app/actions/text-editor-actions.c:83
+#: app/actions/text-editor-actions.c:84
 msgctxt "text-editor-action"
 msgid "TTB-LTR"
 msgstr "TTB+L->D"
 
-#: app/actions/text-editor-actions.c:84
+#: app/actions/text-editor-actions.c:85
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Navpična, od leve proti desni (mešana usmerjenost)"
 
-#: app/actions/text-editor-actions.c:89
+#: app/actions/text-editor-actions.c:90
 msgctxt "text-editor-action"
 msgid "TTB-LTR-UPRIGHT"
 msgstr "TTB+L->D+NAVPIČNO"
 
-#: app/actions/text-editor-actions.c:90
+#: app/actions/text-editor-actions.c:91
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Navpična, od leve proti desni (pokončna usmerjenost)"
@@ -8913,6 +9098,11 @@ msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
 msgstr "Sila orodja: povečaj relativno"
 
+#: app/actions/tools-actions.c:830
+#, c-format
+msgid "Activate tool \"%s\""
+msgstr "Aktiviraj orodje »%s«"
+
 #: app/actions/vector-toolpath-actions.c:45
 msgctxt "vector-toolpath-action"
 msgid "Vector Toolpath Menu"
@@ -9278,62 +9468,62 @@ msgctxt "vectors-action"
 msgid "Selecti_on to Path"
 msgstr "Izbo_r v pot"
 
-#: app/actions/vectors-actions.c:278 app/actions/vectors-actions.c:284
-msgctxt "vectors-action"
-msgid "Selection to path"
-msgstr "Izbor v pot"
-
-#: app/actions/vectors-actions.c:283
+#: app/actions/vectors-actions.c:278
 msgctxt "vectors-action"
 msgid "To _Path"
 msgstr "V _pot"
 
-#: app/actions/vectors-actions.c:289
+#: app/actions/vectors-actions.c:279
+msgctxt "vectors-action"
+msgid "Selection to path"
+msgstr "Izbor v pot"
+
+#: app/actions/vectors-actions.c:284
 msgctxt "vectors-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Izbor v pot (_napredno)"
 
-#: app/actions/vectors-actions.c:290
+#: app/actions/vectors-actions.c:285
 msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "Napredne možnosti"
 
-#: app/actions/vectors-actions.c:298
+#: app/actions/vectors-actions.c:293
 msgctxt "vectors-action"
 msgid "Select _Top Path"
 msgstr "Izberi _vrhnjo pot"
 
-#: app/actions/vectors-actions.c:299
+#: app/actions/vectors-actions.c:294
 msgctxt "vectors-action"
 msgid "Select the topmost path"
 msgstr "Izberi pot na vrhu"
 
-#: app/actions/vectors-actions.c:304
+#: app/actions/vectors-actions.c:299
 msgctxt "vectors-action"
 msgid "Select _Bottom Path"
 msgstr "Izberi _spodnjo pot"
 
-#: app/actions/vectors-actions.c:305
+#: app/actions/vectors-actions.c:300
 msgctxt "vectors-action"
 msgid "Select the bottommost path"
 msgstr "Izberi pot na dnu"
 
-#: app/actions/vectors-actions.c:310
+#: app/actions/vectors-actions.c:305
 msgctxt "vectors-action"
 msgid "Select _Previous Path"
 msgstr "Izberi _prejšnjo pot"
 
-#: app/actions/vectors-actions.c:311
+#: app/actions/vectors-actions.c:306
 msgctxt "vectors-action"
 msgid "Select the path above the current path"
 msgstr "Izberi pot nad trenutno potjo"
 
-#: app/actions/vectors-actions.c:316
+#: app/actions/vectors-actions.c:311
 msgctxt "vectors-action"
 msgid "Select _Next Path"
 msgstr "Izberi _naslednjo pot"
 
-#: app/actions/vectors-actions.c:317
+#: app/actions/vectors-actions.c:312
 msgctxt "vectors-action"
 msgid "Select the vector below the current path"
 msgstr "Izberite vektor pod trenutno plastjo"
@@ -9972,275 +10162,280 @@ msgctxt "view-action"
 msgid "Flip the view vertically"
 msgstr "Prevrni pogled navpično"
 
-#: app/actions/view-actions.c:458
+#: app/actions/view-actions.c:453
+msgctxt "view-action"
+msgid "Display Rotation Absolute Angle Set"
+msgstr "Pokaži absolutni kot vrstenja, ki je natavljen"
+
+#: app/actions/view-actions.c:459
 msgctxt "view-action"
 msgid "_Reset Rotate"
 msgstr "_Ponastavi sukanje"
 
-#: app/actions/view-actions.c:460
+#: app/actions/view-actions.c:461
 msgctxt "view-action"
 msgid "Reset the angle of rotation to 0°"
 msgstr "Ponastavi kot sukanja na 0°."
 
-#: app/actions/view-actions.c:468
+#: app/actions/view-actions.c:469
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "Zasukaj za 15° v _SUK"
 
-#: app/actions/view-actions.c:469
+#: app/actions/view-actions.c:470
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the right"
 msgstr "Zasukaj pogled za 15 stopinj v desno"
 
-#: app/actions/view-actions.c:474
+#: app/actions/view-actions.c:475
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Zasukaj za 90° v _SUK"
 
-#: app/actions/view-actions.c:475
+#: app/actions/view-actions.c:476
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the right"
 msgstr "Zasukaj pogled za 90 stopinj v desno"
 
-#: app/actions/view-actions.c:480
+#: app/actions/view-actions.c:481
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Zasukaj za _180°"
 
-#: app/actions/view-actions.c:481
+#: app/actions/view-actions.c:482
 msgctxt "view-action"
 msgid "Turn the view upside-down"
 msgstr "Postavi pogled na glavo"
 
-#: app/actions/view-actions.c:486
+#: app/actions/view-actions.c:487
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Zasukaj za 90° v _NSUK"
 
-#: app/actions/view-actions.c:487
+#: app/actions/view-actions.c:488
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the left"
 msgstr "Zasukaj pogled za 90 stopinj v levo"
 
-#: app/actions/view-actions.c:492
+#: app/actions/view-actions.c:493
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "Zasukaj za 15° v _NSUK"
 
-#: app/actions/view-actions.c:493
+#: app/actions/view-actions.c:494
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the left"
 msgstr "Zasukaj pogled za 15 stopinj v levo"
 
-#: app/actions/view-actions.c:501
+#: app/actions/view-actions.c:502
 msgctxt "view-action"
 msgid "_Perceptual"
 msgstr "_Zaznavno"
 
-#: app/actions/view-actions.c:502
+#: app/actions/view-actions.c:503
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
 msgstr "Namen upodabljanja prikaza je zaznaven"
 
-#: app/actions/view-actions.c:507
+#: app/actions/view-actions.c:508
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
 msgstr "_Relativno kolorimetrično"
 
-#: app/actions/view-actions.c:508
+#: app/actions/view-actions.c:509
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
 msgstr "Namen upodabljanja prikaza je relativno kolorimetrični"
 
-#: app/actions/view-actions.c:513
+#: app/actions/view-actions.c:514
 msgctxt "view-action"
 msgid "_Saturation"
 msgstr "_Nasičenost"
 
-#: app/actions/view-actions.c:514
+#: app/actions/view-actions.c:515
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
 msgstr "Namen upodabljanja prikaza je nasičenost"
 
-#: app/actions/view-actions.c:519
+#: app/actions/view-actions.c:520
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
 msgstr "_Absolutno kolorimetrično"
 
-#: app/actions/view-actions.c:520
+#: app/actions/view-actions.c:521
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
 msgstr "Namen upodabljanja prikaza je absolutno kolorimetričen"
 
-#: app/actions/view-actions.c:528
+#: app/actions/view-actions.c:529
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "Iz _teme"
 
-#: app/actions/view-actions.c:529
+#: app/actions/view-actions.c:530
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Uporabi barvo ozadja trenutne teme"
 
-#: app/actions/view-actions.c:534
+#: app/actions/view-actions.c:535
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "Barva _svetlih polj vzorca"
 
-#: app/actions/view-actions.c:535
+#: app/actions/view-actions.c:536
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Uporabi svetlo sivo barvo"
 
-#: app/actions/view-actions.c:540
+#: app/actions/view-actions.c:541
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "Barva _temnih polj vzorca"
 
-#: app/actions/view-actions.c:541
+#: app/actions/view-actions.c:542
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Uporabi temno sivo barvo"
 
-#: app/actions/view-actions.c:546
+#: app/actions/view-actions.c:547
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "Barva po _meri ..."
 
-#: app/actions/view-actions.c:547
+#: app/actions/view-actions.c:548
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Uporabi naključno barvo"
 
-#: app/actions/view-actions.c:552
+#: app/actions/view-actions.c:553
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Kot v _nastavitvah"
 
-#: app/actions/view-actions.c:554
+#: app/actions/view-actions.c:555
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "Ponastavi barvo zapolnjevanja platna na barvo iz nastavitev"
 
-#: app/actions/view-actions.c:562
+#: app/actions/view-actions.c:563
 msgctxt "view-padding-color"
 msgid "Keep Padding in \"Show _All\" Mode"
 msgstr "Ohrani način zapolnjevanja platna v načinu »Pokaži vse«"
 
-#: app/actions/view-actions.c:564
+#: app/actions/view-actions.c:565
 msgctxt "view-padding-color"
 msgid "Keep canvas padding when \"View -> Show All\" is enabled"
 msgstr ""
 "Ohrani oblazinjenje platna, ko je omogočena možnost »Pogled-> Pokaži vse«"
 
-#: app/actions/view-actions.c:573
+#: app/actions/view-actions.c:574
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
 msgstr "Določi vodoravni odmik drsenja"
 
-#: app/actions/view-actions.c:578
+#: app/actions/view-actions.c:579
 msgctxt "view-action"
 msgid "Scroll to left border"
 msgstr "Drsenje na levi rob"
 
-#: app/actions/view-actions.c:583
+#: app/actions/view-actions.c:584
 msgctxt "view-action"
 msgid "Scroll to right border"
 msgstr "Drsenje na desni rob"
 
-#: app/actions/view-actions.c:588
+#: app/actions/view-actions.c:589
 msgctxt "view-action"
 msgid "Scroll left"
 msgstr "Drsenje v levo"
 
-#: app/actions/view-actions.c:593
+#: app/actions/view-actions.c:594
 msgctxt "view-action"
 msgid "Scroll right"
 msgstr "Drsenje v desno"
 
-#: app/actions/view-actions.c:598
+#: app/actions/view-actions.c:599
 msgctxt "view-action"
 msgid "Scroll page left"
 msgstr "Drsenje strani v levo"
 
-#: app/actions/view-actions.c:603
+#: app/actions/view-actions.c:604
 msgctxt "view-action"
 msgid "Scroll page right"
 msgstr "Drsenje strani v desno"
 
-#: app/actions/view-actions.c:611
+#: app/actions/view-actions.c:612
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
 msgstr "Določi navpični odmik drsenja"
 
-#: app/actions/view-actions.c:616
+#: app/actions/view-actions.c:617
 msgctxt "view-action"
 msgid "Scroll to top border"
 msgstr "Drsenje na vrhnji rob"
 
-#: app/actions/view-actions.c:621
+#: app/actions/view-actions.c:622
 msgctxt "view-action"
 msgid "Scroll to bottom border"
 msgstr "Drsenje na spodnji rob"
 
-#: app/actions/view-actions.c:626
+#: app/actions/view-actions.c:627
 msgctxt "view-action"
 msgid "Scroll up"
 msgstr "Premakni se višje"
 
-#: app/actions/view-actions.c:631
+#: app/actions/view-actions.c:632
 msgctxt "view-action"
 msgid "Scroll down"
 msgstr "Premakni se nižje"
 
-#: app/actions/view-actions.c:636
+#: app/actions/view-actions.c:637
 msgctxt "view-action"
 msgid "Scroll page up"
 msgstr "Eno stran višje"
 
-#: app/actions/view-actions.c:641
+#: app/actions/view-actions.c:642
 msgctxt "view-action"
 msgid "Scroll page down"
 msgstr "Eno stran nižje"
 
-#: app/actions/view-actions.c:842
+#: app/actions/view-actions.c:843
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "Po_vrni povečavo (%d%%)"
 
-#: app/actions/view-actions.c:850
+#: app/actions/view-actions.c:851
 msgid "Re_vert Zoom"
 msgstr "Po_vrni povečavo"
 
-#: app/actions/view-actions.c:1018
+#: app/actions/view-actions.c:1019
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "D_rugo (%s) ..."
 
-#: app/actions/view-actions.c:1027
+#: app/actions/view-actions.c:1028
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Povečava (%s)"
 
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
-#: app/actions/view-actions.c:1049
+#: app/actions/view-actions.c:1050
 msgid "(H+V) "
 msgstr "(V+N) "
 
 #. please preserve the trailing space
 #. H: Horizontal
-#: app/actions/view-actions.c:1055
+#: app/actions/view-actions.c:1056
 msgid "(H) "
 msgstr "(V) "
 
 #. please preserve the trailing space
 #. V: Vertical
-#: app/actions/view-actions.c:1061
+#: app/actions/view-actions.c:1062
 msgid "(V) "
 msgstr "(N) "
 
-#: app/actions/view-actions.c:1068
+#: app/actions/view-actions.c:1069
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "_Prezrcali %s in zasukaj (%d°)"
@@ -10405,6 +10600,14 @@ msgstr "Enookenski način je onemogočen"
 #, c-format
 msgid "Show \"%s-%d.%d\""
 msgstr "Pokaži »%s-%d.%d«"
+
+#: app/actions/windows-actions.c:471
+msgid "Switch to the first image view: %2$s"
+msgid_plural "Switch to image view %d: %s"
+msgstr[0] "Preklopi na pogled slike %d: %s"
+msgstr[1] "Preklopi na pogled slike %d: %s"
+msgstr[2] "Preklopi na pogled slike %d: %s"
+msgstr[3] "Preklopi na pogled slike %d: %s"
 
 #: app/actions/windows-commands.c:208
 msgid ""
@@ -18641,7 +18844,7 @@ msgid "(clean)"
 msgstr "(čisto)"
 
 #: app/display/gimpdisplayshell-title.c:374
-#: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1062
+#: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1116
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
 #: app/widgets/gimpdeviceinfo.c:1077 app/widgets/gimpdeviceinfo.c:1102
 msgid "(none)"
@@ -25757,7 +25960,7 @@ msgstr "Poti ni mogoče uvoziti iz »%s«: %s"
 msgid "_Search:"
 msgstr "_Išči:"
 
-#: app/widgets/gimpactiongroup.c:1059
+#: app/widgets/gimpactiongroup.c:1113
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -27047,7 +27250,7 @@ msgctxt "dock"
 msgid " | "
 msgstr " | "
 
-#: app/widgets/gimpdockbook.c:253
+#: app/widgets/gimpdockbook.c:248
 msgid "Configure this tab"
 msgstr "Prilagodi ta zavihek"
 
