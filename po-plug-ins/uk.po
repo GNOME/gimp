@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-15 23:14+0000\n"
-"PO-Revision-Date: 2023-04-16 11:38+0300\n"
+"POT-Creation-Date: 2023-04-16 16:39+0000\n"
+"PO-Revision-Date: 2023-04-16 20:20+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -1967,7 +1967,8 @@ msgstr "Видалити вертикальні смуги із зображен
 msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Цей додаток намагається вилучити вертикальні смуги з зображення."
 
-#: plug-ins/common/destripe.c:141 plug-ins/imagemap/imap_grid.c:255
+#: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:194
+#: plug-ins/imagemap/imap_grid.c:255
 msgid "_Width"
 msgstr "_Ширина"
 
@@ -2141,7 +2142,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:913
-#: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:1374
+#: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1374
 #: plug-ins/common/file-pcx.c:870 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
 #: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
@@ -2927,27 +2928,64 @@ msgstr "Швидко"
 msgid "HTML table"
 msgstr "Таблиця HTML"
 
-#: plug-ins/common/file-html-table.c:174
+#: plug-ins/common/file-html-table.c:155
+#| msgid "HTML table"
+msgid "HTML Table"
+msgstr "Таблиця HTML"
+
+#: plug-ins/common/file-html-table.c:158
+msgid "GIMP Table Magic"
+msgstr "Магічна таблиця GIMP"
+
+#: plug-ins/common/file-html-table.c:159
+msgid "Allows you to draw an HTML table in GIMP. See help for more info."
+msgstr ""
+"Надає вам змогу малювати HTML-таблицю у GIMP. Щоб дізнатися більше,"
+" ознайомтеся зі довідкою."
+
+#: plug-ins/common/file-html-table.c:175
+#| msgid "C_aption"
+msgid "Use c_aption"
+msgstr "Використовувати _заголовок"
+
+#: plug-ins/common/file-html-table.c:176
 msgid "Enable if you would like to have the table captioned."
 msgstr "Позначите, якщо ви хочете, щоб у таблиці був заголовок."
 
-#: plug-ins/common/file-html-table.c:181
+#: plug-ins/common/file-html-table.c:182
+msgid "Capt_ion"
+msgstr "За_головок"
+
+#: plug-ins/common/file-html-table.c:183
 msgid "The text for the table caption."
 msgstr "Текст заголовку таблиці."
 
-#: plug-ins/common/file-html-table.c:187
+#: plug-ins/common/file-html-table.c:188
+#| msgid "C_ell content:"
+msgid "Cell con_tent"
+msgstr "В_міст комірки"
+
+#: plug-ins/common/file-html-table.c:189
 msgid "The text to go into each cell."
 msgstr "Текст, що пишеться у кожній комірці."
 
-#: plug-ins/common/file-html-table.c:193
+#: plug-ins/common/file-html-table.c:195
 msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Ширина кожної комірки. Може бути числом чи відсотком."
 
-#: plug-ins/common/file-html-table.c:200
+#: plug-ins/common/file-html-table.c:201 plug-ins/imagemap/imap_grid.c:261
+msgid "_Height"
+msgstr "_Висота"
+
+#: plug-ins/common/file-html-table.c:202
 msgid "The height for each table cell. Can be a number or a percent."
 msgstr "Висота кожної комірки. Може бути числом чи відсотком."
 
-#: plug-ins/common/file-html-table.c:207
+#: plug-ins/common/file-html-table.c:208
+msgid "_Generate full HTML document"
+msgstr "Створити _повний документ HTML"
+
+#: plug-ins/common/file-html-table.c:209
 msgid ""
 "If enabled GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
@@ -2955,11 +2993,20 @@ msgstr ""
 "Якщо позначено, додати у документ теги <HTML>, <BODY> та інші, а не лише ті, "
 "що стосуються таблиці."
 
-#: plug-ins/common/file-html-table.c:215
+#: plug-ins/common/file-html-table.c:216
+#| msgid "_Border:"
+msgid "_Border"
+msgstr "_Рамка"
+
+#: plug-ins/common/file-html-table.c:217
 msgid "The number of pixels in the table border."
 msgstr "Кількість точок в рамці таблиці."
 
-#: plug-ins/common/file-html-table.c:221
+#: plug-ins/common/file-html-table.c:222
+msgid "_Use cellspan"
+msgstr "Використовувати _об'єднання комірок"
+
+#: plug-ins/common/file-html-table.c:223
 msgid ""
 "If enabled GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
@@ -2967,7 +3014,11 @@ msgstr ""
 "Якщо позначено, заміняти будь-які прямокутні секції однакового кольору на "
 "одну більшу комірку із значеннями ROWSPAN і COLSPAN."
 
-#: plug-ins/common/file-html-table.c:230
+#: plug-ins/common/file-html-table.c:231
+msgid "Co_mpress TD tags"
+msgstr "С_тискати теги TD"
+
+#: plug-ins/common/file-html-table.c:232
 msgid ""
 "Enabling this will cause GTM to leave no whitespace between the TD tags and "
 "the cell content. This is only necessary for pixel level positioning control."
@@ -2976,27 +3027,29 @@ msgstr ""
 "тегами <TD> та вмістом комірки. Це необхідно лише для регулювання положення "
 "на рівні точок растру."
 
-#: plug-ins/common/file-html-table.c:240
+#: plug-ins/common/file-html-table.c:241
+#| msgid "Cell-_padding:"
+msgid "Cell-pa_dding"
+msgstr "_Фаска комірки"
+
+#: plug-ins/common/file-html-table.c:242
 msgid "The amount of cell padding."
 msgstr "Об'єм заповнення комірок."
 
-#: plug-ins/common/file-html-table.c:246
+#: plug-ins/common/file-html-table.c:247
+#| msgid "Cell-_spacing:"
+msgid "Cell spaci_ng"
+msgstr "_Інтервал між комірками"
+
+#: plug-ins/common/file-html-table.c:248
 msgid "The amount of cell spacing."
 msgstr "Об'єм інтервалу між комірками."
 
-#: plug-ins/common/file-html-table.c:287
+#: plug-ins/common/file-html-table.c:289
 msgid "HTML table plug-in does not support multiple layers."
 msgstr "У додатку таблиць HTML не передбачено підтримки декількох шарів."
 
-#: plug-ins/common/file-html-table.c:609
-msgid "Export Image as HTML Table"
-msgstr "Експортувати зображення як таблицю HTML"
-
-#: plug-ins/common/file-html-table.c:623
-msgid "Warning"
-msgstr "Попередження"
-
-#: plug-ins/common/file-html-table.c:634
+#: plug-ins/common/file-html-table.c:614
 msgid ""
 "You are about to create a huge\n"
 "HTML file which will most likely\n"
@@ -3006,73 +3059,21 @@ msgstr ""
 "HTML-файл, який майже напевне\n"
 "призведе до збою вашого переглядача."
 
-#. HTML Page Options
-#: plug-ins/common/file-html-table.c:643
+#: plug-ins/common/file-html-table.c:631
+msgid "Warning"
+msgstr "Попередження"
+
+#: plug-ins/common/file-html-table.c:644
 msgid "HTML Page Options"
 msgstr "Параметри HTML-сторінки"
 
-#: plug-ins/common/file-html-table.c:652
-msgid "_Generate full HTML document"
-msgstr "Створити _повний документ HTML"
-
-#. HTML Table Creation Options
-#: plug-ins/common/file-html-table.c:656
+#: plug-ins/common/file-html-table.c:654
 msgid "Table Creation Options"
 msgstr "Параметри створення таблиці"
 
-#: plug-ins/common/file-html-table.c:667
-msgid "_Use cellspan"
-msgstr "Використовувати _об'єднання комірок"
-
-#: plug-ins/common/file-html-table.c:671
-msgid "Co_mpress TD tags"
-msgstr "С_тискати теги TD"
-
-#: plug-ins/common/file-html-table.c:675
-msgid "C_aption"
-msgstr "_Заголовок"
-
-#: plug-ins/common/file-html-table.c:689
-msgid "C_ell content:"
-msgstr "В_міст комірки:"
-
-#. HTML Table Options
-#: plug-ins/common/file-html-table.c:693
+#: plug-ins/common/file-html-table.c:673
 msgid "Table Options"
 msgstr "Параметри таблиці"
-
-#: plug-ins/common/file-html-table.c:706
-msgid "_Border:"
-msgstr "_Рамка:"
-
-#: plug-ins/common/file-html-table.c:712 plug-ins/common/file-ps.c:3647
-#: plug-ins/common/file-ps.c:3847 plug-ins/common/smooth-palette.c:531
-#: plug-ins/common/tile.c:519 plug-ins/imagemap/imap_cmd_guides.c:163
-#: plug-ins/imagemap/imap_rectangle.c:398
-#: plug-ins/print/print-page-layout.c:286
-msgid "_Width:"
-msgstr "_Ширина:"
-
-#: plug-ins/common/file-html-table.c:718 plug-ins/common/file-ps.c:3660
-#: plug-ins/common/file-ps.c:3858 plug-ins/common/film.c:1067
-#: plug-ins/common/smooth-palette.c:536 plug-ins/common/tile.c:523
-#: plug-ins/imagemap/imap_cmd_guides.c:173
-#: plug-ins/imagemap/imap_rectangle.c:405
-#: plug-ins/print/print-page-layout.c:288
-msgid "_Height:"
-msgstr "_Висота:"
-
-#: plug-ins/common/file-html-table.c:724
-msgid "Cell-_padding:"
-msgstr ""
-"_Заповнення комірки\n"
-"(cellpadding):"
-
-#: plug-ins/common/file-html-table.c:730
-msgid "Cell-_spacing:"
-msgstr ""
-"_Інтервал між комірками\n"
-"(cellspacing):"
 
 #: plug-ins/common/file-jp2-load.c:187
 msgid "JPEG 2000 image"
@@ -3293,12 +3294,10 @@ msgid "MNG animation"
 msgstr "Анімація MNG"
 
 #: plug-ins/common/file-mng.c:256
-#| msgid "PNG"
 msgid "MNG"
 msgstr "MNG"
 
 #: plug-ins/common/file-mng.c:259
-#| msgid "Saves files in the JPEG XL file format"
 msgid "Saves images in the MNG file format"
 msgstr "Зберігає зображення у форматі файлів MNG"
 
@@ -3307,17 +3306,15 @@ msgid ""
 "This plug-in saves images in the Multiple-image Network Graphics (MNG) "
 "format which can be used as a replacement for animated GIFs, and more."
 msgstr ""
-"Цей додаток зберігає зображення у форматі мережевої графіки для декількох"
-" зображень (Multiple-image Network Graphics або MNG), яким можна"
-" скористатися як замінником анімованих GIF та інших форматів."
+"Цей додаток зберігає зображення у форматі мережевої графіки для декількох "
+"зображень (Multiple-image Network Graphics або MNG), яким можна скористатися "
+"як замінником анімованих GIF та інших форматів."
 
 #: plug-ins/common/file-mng.c:278
-#| msgid "Use Adam7 interlacing"
 msgid "Use interlacing"
 msgstr "Згладжування"
 
 #: plug-ins/common/file-mng.c:283
-#| msgid "_PNG compression level:"
 msgid "_PNG compression level"
 msgstr "_Рівень стиснення PNG"
 
@@ -3329,22 +3326,18 @@ msgstr ""
 "файлів меншого розміру"
 
 #: plug-ins/common/file-mng.c:290
-#| msgid "JPEG compression quality:"
 msgid "JPEG compression _quality"
 msgstr "Якість с_тиснення JPEG"
 
 #: plug-ins/common/file-mng.c:291
-#| msgid "JPEG quality parameter"
 msgid "JPEG quality factor"
 msgstr "Параметр якості JPEG"
 
 #: plug-ins/common/file-mng.c:296
-#| msgid "JPEG smoothing factor:"
 msgid "_JPEG smoothing factor"
 msgstr "П_араметр згладжування JPEG"
 
 #: plug-ins/common/file-mng.c:297
-#| msgid "JPEG smoothing factor:"
 msgid "JPEG smoothing factor"
 msgstr "Параметр згладжування JPEG"
 
@@ -3357,17 +3350,14 @@ msgid "(ANIMATED MNG) Loop infinitely"
 msgstr "(АНІМОВАНИЙ MNG) Нескінченний цикл"
 
 #: plug-ins/common/file-mng.c:308
-#| msgid "Default frame delay:"
 msgid "Default fra_me delay"
 msgstr "Типова з_атримка кадру"
 
 #: plug-ins/common/file-mng.c:309
-#| msgid "_Default delay between frames"
 msgid "(ANIMATED MNG) Default delay between frames in milliseconds"
 msgstr "(АНІМОВАНИЙ MNG) Стандартна затримка між кадрами у мілісекундах"
 
 #: plug-ins/common/file-mng.c:315
-#| msgid "Default chunks type:"
 msgid "Default chunks t_ype"
 msgstr "Типовий тип _фрагментів"
 
@@ -3376,12 +3366,10 @@ msgid ""
 "(ANIMATED MNG) Default chunks type (0 = PNG + Delta PNG; 1 = JNG + Delta "
 "PNG; 2 = All PNG; 3 = All JNG)"
 msgstr ""
-"(АНІМОВАНИЙ MNG) Стандартний тип фрагментів (0 = PNG + дельта PNG; 1 = JNG +"
-" дельта "
-"PNG; 2 = усі PNG; 3 = усі JNG)"
+"(АНІМОВАНИЙ MNG) Стандартний тип фрагментів (0 = PNG + дельта PNG; 1 = JNG + "
+"дельта PNG; 2 = усі PNG; 3 = усі JNG)"
 
 #: plug-ins/common/file-mng.c:323
-#| msgid "Default _frame disposal:"
 msgid "De_fault frame disposal"
 msgstr "_Типове усунення кадрів"
 
@@ -3395,7 +3383,6 @@ msgid "Save _background color"
 msgstr "Зберегти колір _тла"
 
 #: plug-ins/common/file-mng.c:331
-#| msgid "Use the background color"
 msgid "Write bKGd (background color) chunk"
 msgstr "Записати фрагмент bKGd (колір тла)"
 
@@ -3408,7 +3395,6 @@ msgid "Write gAMA (gamma) chunk"
 msgstr "Записати фрагмент gAMA (гаму)"
 
 #: plug-ins/common/file-mng.c:342
-#| msgid "Save resolution"
 msgid "Sa_ve resolution"
 msgstr "З_берегти роздільну здатність"
 
@@ -4225,6 +4211,22 @@ msgstr "Візуалізація"
 #: plug-ins/common/file-wmf.c:717
 msgid "Resolution:"
 msgstr "Роздільна здатність:"
+
+#: plug-ins/common/file-ps.c:3647 plug-ins/common/file-ps.c:3847
+#: plug-ins/common/smooth-palette.c:531 plug-ins/common/tile.c:519
+#: plug-ins/imagemap/imap_cmd_guides.c:163
+#: plug-ins/imagemap/imap_rectangle.c:398
+#: plug-ins/print/print-page-layout.c:286
+msgid "_Width:"
+msgstr "_Ширина:"
+
+#: plug-ins/common/file-ps.c:3660 plug-ins/common/file-ps.c:3858
+#: plug-ins/common/film.c:1067 plug-ins/common/smooth-palette.c:536
+#: plug-ins/common/tile.c:523 plug-ins/imagemap/imap_cmd_guides.c:173
+#: plug-ins/imagemap/imap_rectangle.c:405
+#: plug-ins/print/print-page-layout.c:288
+msgid "_Height:"
+msgstr "_Висота:"
 
 #: plug-ins/common/file-ps.c:3673
 msgid "Pages:"
@@ -12103,10 +12105,6 @@ msgstr "Пере_тин"
 msgid "Grid Granularity"
 msgstr "Зернистість сітки"
 
-#: plug-ins/imagemap/imap_grid.c:261
-msgid "_Height"
-msgstr "_Висота"
-
 #: plug-ins/imagemap/imap_grid.c:275
 msgid "Grid Offset"
 msgstr "Зсув ліній сітки"
@@ -13817,6 +13815,9 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Export Image as HTML Table"
+#~ msgstr "Експортувати зображення як таблицю HTML"
 
 #~ msgid "Export Image as MNG"
 #~ msgstr "Експортувати зображення як PNG"
