@@ -151,11 +151,13 @@ html_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "*");
 
       gimp_procedure_set_menu_label (procedure, _("HTML table"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("HTML Table"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "GIMP Table Magic",
-                                        "Allows you to draw an HTML table "
-                                        "in GIMP. See help for more info.",
+                                        _("GIMP Table Magic"),
+                                        _("Allows you to draw an HTML table "
+                                          "in GIMP. See help for more info."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Daniel Dunbar",
@@ -170,40 +172,40 @@ html_create_procedure (GimpPlugIn  *plug_in,
                                           "html,htm");
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-caption",
-                                 "Use caption",
+                                 _("Use c_aption"),
                                  _("Enable if you would like to have the table "
                                    "captioned."),
                                  FALSE,
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_STRING (procedure, "caption-text",
-                                "Caption text",
+                                _("Capt_ion"),
                                 _("The text for the table caption."),
                                 "Made with GIMP Table Magic",
                                 GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_STRING (procedure, "cell-content",
-                                "Cell content",
+                                _("Cell con_tent"),
                                 _("The text to go into each cell."),
                                 "&nbsp;",
                                 GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_STRING (procedure, "cell-width",
-                                "Cell width",
+                                _("_Width"),
                                 _("The width for each table cell. "
                                   "Can be a number or a percent."),
                                 "",
                                 GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_STRING (procedure, "cell-height",
-                                "Cell height",
+                                _("_Height"),
                                 _("The height for each table cell. "
                                   "Can be a number or a percent."),
                                 "",
                                 GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "full-document",
-                                 "Full document",
+                                 _("_Generate full HTML document"),
                                  _("If enabled GTM will output a full HTML "
                                    "document with <HTML>, <BODY>, etc. tags "
                                    "instead of just the table html."),
@@ -211,13 +213,13 @@ html_create_procedure (GimpPlugIn  *plug_in,
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_INT (procedure, "border",
-                             "Border",
+                             _("_Border"),
                              _("The number of pixels in the table border."),
                              0, 1000, 2,
                              GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "span-tags",
-                                 "Span tags",
+                                 _("_Use cellspan"),
                                  _("If enabled GTM will replace any "
                                    "rectangular sections of identically "
                                    "colored blocks with one large cell with "
@@ -226,7 +228,7 @@ html_create_procedure (GimpPlugIn  *plug_in,
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "compress-td-tags",
-                                 "Compress td tags",
+                                 _("Co_mpress TD tags"),
                                  _("Enabling this will cause GTM to "
                                    "leave no whitespace between the TD "
                                    "tags and the cell content. This is only "
@@ -236,13 +238,13 @@ html_create_procedure (GimpPlugIn  *plug_in,
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_INT (procedure, "cell-padding",
-                             "Cell padding",
+                             _("Cell-pa_dding"),
                              _("The amount of cell padding."),
                              0, 1000, 4,
                              GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_INT (procedure, "cell-spacing",
-                             "Cell spacing",
+                             _("Cell spaci_ng"),
                              _("The amount of cell spacing."),
                              0, 1000, 0,
                              GIMP_PARAM_READWRITE);
@@ -593,142 +595,96 @@ save_dialog (GimpImage     *image,
              GObject       *config)
 {
   GtkWidget *dialog;
-  GtkWidget *main_vbox;
   GtkWidget *frame;
-  GtkWidget *vbox;
-  GtkWidget *grid;
-  GtkWidget *spinbutton;
-  GtkWidget *entry;
-  GtkWidget *toggle;
   gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as HTML Table"));
-
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
   if (gimp_image_get_width (image) * gimp_image_get_height (image) > 4096)
     {
       GtkWidget *eek;
-      GtkWidget *label;
       GtkWidget *hbox;
 
-      frame = gimp_frame_new (_("Warning"));
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-      gtk_container_add (GTK_CONTAINER (frame), hbox);
+      gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "warning-label",
+                                       _("You are about to create a huge\n"
+                                        "HTML file which will most likely\n"
+                                        "crash your browser."));
+      hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                             "warning-hbox", "warning-label",
+                                             NULL);
+      gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
 
       eek = gtk_image_new_from_icon_name (GIMP_ICON_WILBER_EEK,
                                           GTK_ICON_SIZE_DIALOG);
       gtk_box_pack_start (GTK_BOX (hbox), eek, FALSE, FALSE, 0);
+      gtk_widget_show (eek);
+      gtk_box_reorder_child (GTK_BOX (hbox), eek, 0);
+      gtk_widget_set_margin_end (eek, 24);
 
-      label = gtk_label_new (_("You are about to create a huge\n"
-                               "HTML file which will most likely\n"
-                               "crash your browser."));
-      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+      gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "warning-frame-label", _("Warning"));
+      frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "warning-frame",
+                                                "warning-frame-label",
+                                                FALSE, "warning-hbox");
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
 
-      gtk_widget_show_all (frame);
+      gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "warning-frame", NULL);
     }
 
   /* HTML Page Options */
-  frame = gimp_frame_new (_("HTML Page Options"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  toggle = gimp_prop_check_button_new (config, "full-document",
-                                       _("_Generate full HTML document"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "page-label", _("HTML Page Options"));
+  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "page-frame",
+                                            "page-label",
+                                            FALSE, "full-document");
+  gtk_widget_set_margin_bottom (frame, 8);
 
   /* HTML Table Creation Options */
-  frame = gimp_frame_new (_("Table Creation Options"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "creation-label",
+                                   _("Table Creation Options"));
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "creation-vbox", "span-tags",
+                                  "compress-td-tags", "use-caption",
+                                  "caption-text", "cell-content", NULL);
 
-  toggle = gimp_prop_check_button_new (config, "span-tags",
-                                       _("_Use cellspan"));
-  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 0, 2, 1);
+  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "caption-text", TRUE,
+                                       config, "use-caption",
+                                       FALSE);
 
-  toggle = gimp_prop_check_button_new (config, "compress-td-tags",
-                                       _("Co_mpress TD tags"));
-  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 1, 2, 1);
-
-  toggle = gimp_prop_check_button_new (config, "use-caption",
-                                       _("C_aption"));
-  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 2, 1, 1);
-
-  entry = gimp_prop_entry_new (config, "caption-text", -1);
-  gtk_widget_set_size_request (entry, 200, -1);
-  gtk_grid_attach (GTK_GRID (grid), entry, 1, 2, 1, 1);
-
-  g_object_bind_property (config, "use-caption",
-                          entry,  "sensitive",
-                          G_BINDING_SYNC_CREATE);
-
-  entry = gimp_prop_entry_new (config, "cell-content", -1);
-  gtk_widget_set_size_request (entry, 200, -1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
-                            _("C_ell content:"), 0.0, 0.5,
-                            entry, 1);
-
+  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "creation-frame",
+                                            "creation-label",
+                                            FALSE, "creation-vbox");
+  gtk_widget_set_margin_bottom (frame, 8);
   /* HTML Table Options */
-  frame = gimp_frame_new (_("Table Options"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "table-label", _("Table Options"));
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "table-vbox", "border", "cell-width",
+                                  "cell-height", "cell-padding",
+                                  "cell-spacing", NULL);
 
-  spinbutton = gimp_prop_spin_button_new (config, "border",
-                                          1, 10, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("_Border:"), 0.0, 0.5,
-                            spinbutton, 1);
+  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "table-frame", "table-label",
+                                            FALSE, "table-vbox");
+  gtk_widget_set_margin_bottom (frame, 8);
 
-  entry = gimp_prop_entry_new (config, "cell-width", -1);
-  gtk_widget_set_size_request (entry, 60, -1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("_Width:"), 0.0, 0.5,
-                            entry, 1);
-
-  entry = gimp_prop_entry_new (config, "cell-height", -1);
-  gtk_widget_set_size_request (entry, 60, -1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
-                            _("_Height:"), 0.0, 0.5,
-                            entry, 1);
-
-  spinbutton = gimp_prop_spin_button_new (config, "cell-padding",
-                                          1, 10, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
-                            _("Cell-_padding:"), 0.0, 0.5,
-                            spinbutton, 1);
-
-  spinbutton = gimp_prop_spin_button_new (config, "cell-spacing",
-                                          1, 10, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
-                            _("Cell-_spacing:"), 0.0, 0.5,
-                            spinbutton, 1);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "page-frame", "creation-frame",
+                              "table-frame", NULL);
 
   gtk_widget_show (dialog);
 
