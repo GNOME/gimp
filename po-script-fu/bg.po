@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-04-13 04:32+0000\n"
-"PO-Revision-Date: 2023-04-13 10:56+0300\n"
+"PO-Revision-Date: 2023-04-16 16:50+0300\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@ludost.org>\n"
 "Language: bg\n"
@@ -87,10 +87,7 @@ msgstr "Препрочитане на всички достъпни Script-Fu с
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
-msgstr ""
-"Не можете да използвате „Обновяване на скриптовете“ докато прозорчето на "
-"Script-Fu е отворено. Затворете всички прозорци на Script-Fu и опитайте "
-"отново."
+msgstr "Не може да използвате „Обновяване на скриптовете“ докато прозорчето на Script-Fu е отворено. Затворете всички прозорци на Script-Fu и опитайте отново."
 
 #: plug-ins/script-fu/script-fu-console.c:110
 #: plug-ins/script-fu/script-fu-console.c:177
@@ -131,7 +128,7 @@ msgstr "Запазване на изхода от Script-Fu"
 #: plug-ins/script-fu/server/script-fu-server.c:884
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:218
 msgid "_Cancel"
-msgstr "_Отмяна"
+msgstr "_Отказ"
 
 #: plug-ins/script-fu/script-fu-console.c:325
 #, c-format
@@ -1185,7 +1182,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:58
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
 msgid "There is no image data in the clipboard to paste."
-msgstr "Няма данни за изображение в буфера за вмъкване."
+msgstr "В буфера за обмен няма данни за изображение за поставяне."
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:64
 msgid "Paste as New _Brush..."
@@ -1437,9 +1434,7 @@ msgstr "_Повтарящо се замъгляване…"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:73
 msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr ""
-"Замъгляване краищата на изображение, така че резултатът да е като плочник "
-"без фуги"
+msgstr "Замъгляване на краищата на изображение, така че резултатът да е като плочник без фуги"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:80
 msgid "Radius"
@@ -1565,7 +1560,7 @@ msgstr "Светъл цвят"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:132
 msgid "Highlight opacity"
-msgstr "Плътност на светлата част"
+msgstr "Плътност на осветяване"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Drop shadow color"
