@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-14 13:39+0000\n"
-"PO-Revision-Date: 2023-04-14 22:52+0300\n"
+"POT-Creation-Date: 2023-04-15 23:14+0000\n"
+"PO-Revision-Date: 2023-04-16 11:38+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -1040,8 +1040,8 @@ msgid "Save CML Explorer Parameters"
 msgstr "Збереження параметрів CML Explorer"
 
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
-#: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:874
-#: plug-ins/common/file-mng.c:1221 plug-ins/common/file-pcx.c:985
+#: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:876
+#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:985
 #: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
@@ -1071,7 +1071,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/cml-explorer.c:2339 plug-ins/common/curve-bend.c:890
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
-#: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-mng.c:1405
+#: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-mng.c:1407
 #: plug-ins/common/file-pcx.c:438 plug-ins/common/file-png.c:673
 #: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
 #: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
@@ -2600,7 +2600,7 @@ msgstr ""
 msgid "Export Image as GIF"
 msgstr "Експортувати зображення як GIF"
 
-#: plug-ins/common/file-gif-save.c:1219 plug-ins/common/file-mng.c:1609
+#: plug-ins/common/file-gif-save.c:1219 plug-ins/common/file-mng.c:277
 msgid "_Interlace"
 msgstr "_Черезрядковість"
 
@@ -2624,7 +2624,7 @@ msgstr "_Без обмежень"
 msgid "_Delay between frames where unspecified:"
 msgstr "_Затримка між кадрами, де не зазначено:"
 
-#: plug-ins/common/file-gif-save.c:1313 plug-ins/common/file-mng.c:1724
+#: plug-ins/common/file-gif-save.c:1313 plug-ins/common/file-mng.c:1642
 msgid "milliseconds"
 msgstr "мілісекунд"
 
@@ -3292,110 +3292,187 @@ msgstr "Профіль: %s"
 msgid "MNG animation"
 msgstr "Анімація MNG"
 
-#: plug-ins/common/file-mng.c:282
+#: plug-ins/common/file-mng.c:256
+#| msgid "PNG"
+msgid "MNG"
+msgstr "MNG"
+
+#: plug-ins/common/file-mng.c:259
+#| msgid "Saves files in the JPEG XL file format"
+msgid "Saves images in the MNG file format"
+msgstr "Зберігає зображення у форматі файлів MNG"
+
+#: plug-ins/common/file-mng.c:260
+msgid ""
+"This plug-in saves images in the Multiple-image Network Graphics (MNG) "
+"format which can be used as a replacement for animated GIFs, and more."
+msgstr ""
+"Цей додаток зберігає зображення у форматі мережевої графіки для декількох"
+" зображень (Multiple-image Network Graphics або MNG), яким можна"
+" скористатися як замінником анімованих GIF та інших форматів."
+
+#: plug-ins/common/file-mng.c:278
+#| msgid "Use Adam7 interlacing"
+msgid "Use interlacing"
+msgstr "Згладжування"
+
+#: plug-ins/common/file-mng.c:283
+#| msgid "_PNG compression level:"
+msgid "_PNG compression level"
+msgstr "_Рівень стиснення PNG"
+
+#: plug-ins/common/file-mng.c:284
 msgid ""
 "PNG compression level, choose a high compression level for small file size"
 msgstr ""
 "Ступінь стискання PNG. Виберіть більший ступінь стиснення для отримання "
 "файлів меншого розміру"
 
+#: plug-ins/common/file-mng.c:290
+#| msgid "JPEG compression quality:"
+msgid "JPEG compression _quality"
+msgstr "Якість с_тиснення JPEG"
+
+#: plug-ins/common/file-mng.c:291
+#| msgid "JPEG quality parameter"
+msgid "JPEG quality factor"
+msgstr "Параметр якості JPEG"
+
+#: plug-ins/common/file-mng.c:296
+#| msgid "JPEG smoothing factor:"
+msgid "_JPEG smoothing factor"
+msgstr "П_араметр згладжування JPEG"
+
+#: plug-ins/common/file-mng.c:297
+#| msgid "JPEG smoothing factor:"
+msgid "JPEG smoothing factor"
+msgstr "Параметр згладжування JPEG"
+
+#: plug-ins/common/file-mng.c:302
+msgid "L_oop"
+msgstr "_Цикл"
+
+#: plug-ins/common/file-mng.c:303
+msgid "(ANIMATED MNG) Loop infinitely"
+msgstr "(АНІМОВАНИЙ MNG) Нескінченний цикл"
+
+#: plug-ins/common/file-mng.c:308
+#| msgid "Default frame delay:"
+msgid "Default fra_me delay"
+msgstr "Типова з_атримка кадру"
+
+#: plug-ins/common/file-mng.c:309
+#| msgid "_Default delay between frames"
+msgid "(ANIMATED MNG) Default delay between frames in milliseconds"
+msgstr "(АНІМОВАНИЙ MNG) Стандартна затримка між кадрами у мілісекундах"
+
+#: plug-ins/common/file-mng.c:315
+#| msgid "Default chunks type:"
+msgid "Default chunks t_ype"
+msgstr "Типовий тип _фрагментів"
+
+#: plug-ins/common/file-mng.c:316
+msgid ""
+"(ANIMATED MNG) Default chunks type (0 = PNG + Delta PNG; 1 = JNG + Delta "
+"PNG; 2 = All PNG; 3 = All JNG)"
+msgstr ""
+"(АНІМОВАНИЙ MNG) Стандартний тип фрагментів (0 = PNG + дельта PNG; 1 = JNG +"
+" дельта "
+"PNG; 2 = усі PNG; 3 = усі JNG)"
+
+#: plug-ins/common/file-mng.c:323
+#| msgid "Default _frame disposal:"
+msgid "De_fault frame disposal"
+msgstr "_Типове усунення кадрів"
+
+#: plug-ins/common/file-mng.c:324
+msgid "(ANIMATED MNG) Default dispose type (0 = combine; 1 = replace)"
+msgstr ""
+"(АНІМОВАНИЙ MNG) Стандартний тип відкидання (0 = поєднання; 1 = заміна)"
+
+#: plug-ins/common/file-mng.c:330 plug-ins/common/file-png.c:245
+msgid "Save _background color"
+msgstr "Зберегти колір _тла"
+
+#: plug-ins/common/file-mng.c:331
+#| msgid "Use the background color"
+msgid "Write bKGd (background color) chunk"
+msgstr "Записати фрагмент bKGd (колір тла)"
+
+#: plug-ins/common/file-mng.c:336
+msgid "Save _gamma"
+msgstr "З_берегти гаму"
+
+#: plug-ins/common/file-mng.c:337
+msgid "Write gAMA (gamma) chunk"
+msgstr "Записати фрагмент gAMA (гаму)"
+
+#: plug-ins/common/file-mng.c:342
+#| msgid "Save resolution"
+msgid "Sa_ve resolution"
+msgstr "З_берегти роздільну здатність"
+
+#: plug-ins/common/file-mng.c:343
+msgid "Write pHYs (image resolution) chunk"
+msgstr "Записати фрагмент pHYs (роздільна здатність зображення)"
+
+#: plug-ins/common/file-mng.c:348 plug-ins/common/file-png.c:263
+msgid "Save creation _time"
+msgstr "Зберегти час _створення"
+
+#: plug-ins/common/file-mng.c:349
+msgid "Write tIME (creation time) chunk"
+msgstr "Записати фрагмент tIME (час створення)"
+
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:727 plug-ins/common/file-png.c:2253
+#: plug-ins/common/file-mng.c:729 plug-ins/common/file-png.c:2253
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Не вдається зберегти прозорість, натомість зберігатиметься непрозорість."
 
-#: plug-ins/common/file-mng.c:1592
-msgid "Export Image as MNG"
-msgstr "Експортувати зображення як PNG"
-
-#: plug-ins/common/file-mng.c:1600
+#: plug-ins/common/file-mng.c:1596
 msgid "MNG Options"
 msgstr "Параметри MNG"
 
-#: plug-ins/common/file-mng.c:1613 plug-ins/common/file-png.c:245
-msgid "Save _background color"
-msgstr "Зберегти колір _тла"
-
-#: plug-ins/common/file-mng.c:1619
-msgid "Save _gamma"
-msgstr "З_берегти гаму"
-
-#: plug-ins/common/file-mng.c:1623
-msgid "Save resolution"
-msgstr "Зберегти роздільну здатність"
-
-#: plug-ins/common/file-mng.c:1629 plug-ins/common/file-png.c:263
-msgid "Save creation _time"
-msgstr "Зберегти час _створення"
-
-#: plug-ins/common/file-mng.c:1641 plug-ins/common/file-png.c:226
+#: plug-ins/common/file-mng.c:1604 plug-ins/common/file-png.c:226
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/file-mng.c:1642
+#: plug-ins/common/file-mng.c:1605
 msgid "JNG"
 msgstr "JNG"
 
-#: plug-ins/common/file-mng.c:1645
+#: plug-ins/common/file-mng.c:1608
 msgid "PNG + delta PNG"
 msgstr "PNG + delta PNG"
 
-#: plug-ins/common/file-mng.c:1646
+#: plug-ins/common/file-mng.c:1609
 msgid "JNG + delta PNG"
 msgstr "JNG + delta PNG"
 
-#: plug-ins/common/file-mng.c:1647
+#: plug-ins/common/file-mng.c:1610
 msgid "All PNG"
 msgstr "Усі PNG"
 
-#: plug-ins/common/file-mng.c:1648
+#: plug-ins/common/file-mng.c:1611
 msgid "All JNG"
 msgstr "Усі JNG"
 
-#: plug-ins/common/file-mng.c:1657
-msgid "Default chunks type:"
-msgstr "Типовий тип сегментів:"
-
-#: plug-ins/common/file-mng.c:1660
+#: plug-ins/common/file-mng.c:1619
 msgid "Combine"
 msgstr "Об'єднати"
 
-#: plug-ins/common/file-mng.c:1661
+#: plug-ins/common/file-mng.c:1620
 msgid "Replace"
 msgstr "Замістити"
 
-#: plug-ins/common/file-mng.c:1668
-msgid "Default _frame disposal:"
-msgstr "_Типове усунення кадрів:"
-
-#: plug-ins/common/file-mng.c:1677
-msgid "_PNG compression level:"
-msgstr "_Рівень стиснення PNG:"
-
-#: plug-ins/common/file-mng.c:1687
-msgid "JPEG compression quality:"
-msgstr "Якість стиснення JPEG:"
-
-#: plug-ins/common/file-mng.c:1697
-msgid "JPEG smoothing factor:"
-msgstr "Параметр згладжування JPEG:"
-
-#: plug-ins/common/file-mng.c:1700
+#: plug-ins/common/file-mng.c:1655
 msgid "Animated MNG Options"
 msgstr "Параметри анімаційного MNG"
 
-#: plug-ins/common/file-mng.c:1709
-msgid "_Loop"
-msgstr "_Цикл"
-
-#: plug-ins/common/file-mng.c:1716
-msgid "Default frame delay:"
-msgstr "Типова затримка кадру:"
-
-#: plug-ins/common/file-mng.c:1732
+#: plug-ins/common/file-mng.c:1665
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
@@ -6149,11 +6226,10 @@ msgid ""
 "Uses a percentage based luminosity threshold to find candidate pixels for "
 "adding some sparkles (spikes)."
 msgstr ""
-"Використовує порогове значення світності на основі відсотків для пошуку"
-" пікселів-кандидатів на додавання блискіток (променів)."
+"Використовує порогове значення світності на основі відсотків для пошуку "
+"пікселів-кандидатів на додавання блискіток (променів)."
 
 #: plug-ins/common/sparkle.c:196
-#| msgid "Luminosity _threshold:"
 msgid "Lu_minosity threshold"
 msgstr "Поріг сві_тності"
 
@@ -6162,7 +6238,6 @@ msgid "Adjust the luminosity threshold"
 msgstr "Підбирання порогу яскравості"
 
 #: plug-ins/common/sparkle.c:202
-#| msgid "F_lare intensity:"
 msgid "_Flare intensity"
 msgstr "Інтенсивність _спалаху"
 
@@ -6171,17 +6246,14 @@ msgid "Adjust the flare intensity"
 msgstr "Підбирання інтенсивності спалаху"
 
 #: plug-ins/common/sparkle.c:208
-#| msgid "_Spike length:"
 msgid "Spi_ke length"
 msgstr "Дов_жина променів"
 
 #: plug-ins/common/sparkle.c:209
-#| msgid "Adjust the spike length"
 msgid "Adjust the spike length (in pixels)"
 msgstr "Підбирання довжини променів (у пікселях)"
 
 #: plug-ins/common/sparkle.c:214
-#| msgid "Sp_ike points:"
 msgid "Spike _points"
 msgstr "_Кількість променів:"
 
@@ -6190,7 +6262,6 @@ msgid "Adjust the number of spikes"
 msgstr "Підбирання кількості променів"
 
 #: plug-ins/common/sparkle.c:220
-#| msgid "Spi_ke angle (-1: random):"
 msgid "Spike angle (-_1: random)"
 msgstr "К_ут променя (-1: - випадковий):"
 
@@ -6199,7 +6270,6 @@ msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
 msgstr "Підбирання кута променя (-1 означає вибір випадкового кута)"
 
 #: plug-ins/common/sparkle.c:227
-#| msgid "Spik_e density:"
 msgid "Spike _density"
 msgstr "_Щільність променя"
 
@@ -6208,7 +6278,6 @@ msgid "Adjust the spike density"
 msgstr "Підбання щільності променя"
 
 #: plug-ins/common/sparkle.c:233
-#| msgid "Tr_ansparency:"
 msgid "_Transparency"
 msgstr "Проз_орість"
 
@@ -6217,7 +6286,6 @@ msgid "Adjust the opacity of the spikes"
 msgstr "Підбирання непрозорості променя"
 
 #: plug-ins/common/sparkle.c:239
-#| msgid "_Random hue:"
 msgid "Random _hue"
 msgstr "_Випадковий відтінок"
 
@@ -6226,7 +6294,6 @@ msgid "Adjust how much the hue should be changed randomly"
 msgstr "Підбирання ступені випадкової зміни тону"
 
 #: plug-ins/common/sparkle.c:246
-#| msgid "Rando_m saturation:"
 msgid "R_andom saturation"
 msgstr "В_ипадкова насиченість"
 
@@ -6235,7 +6302,6 @@ msgid "Adjust how much the saturation should be changed randomly"
 msgstr "Підбирання ступені випадкової зміни насиченості"
 
 #: plug-ins/common/sparkle.c:253
-#| msgid "_Preserve luminosity"
 msgid "Preserve l_uminosity"
 msgstr "З_берігати освітленість"
 
@@ -6252,7 +6318,6 @@ msgid "Should the effect be inversed?"
 msgstr "Чи потрібно інвертувати ефект?"
 
 #: plug-ins/common/sparkle.c:265
-#| msgid "A_dd border"
 msgid "Add _border"
 msgstr "_Додати рамку"
 
@@ -6261,7 +6326,6 @@ msgid "Draw a border of spikes around the image"
 msgstr "Намалювати рамку з променів навколо зображення"
 
 #: plug-ins/common/sparkle.c:271
-#| msgid "Color s_pace"
 msgid "Color type"
 msgstr "Тип кольору"
 
@@ -6282,13 +6346,11 @@ msgid "Sparkle"
 msgstr "Іскри"
 
 #: plug-ins/common/sparkle.c:447
-#| msgid "Additional Model Info"
 msgid "Additional Options"
 msgstr "Додаткові параметри"
 
 #. colortype
 #: plug-ins/common/sparkle.c:453
-#| msgid "_Natural color"
 msgid "Natural color"
 msgstr "Природний колір"
 
@@ -6297,7 +6359,6 @@ msgid "Foreground color"
 msgstr "Колір переднього плану"
 
 #: plug-ins/common/sparkle.c:455
-#| msgid "_Background color"
 msgid "Background color"
 msgstr "Колір тла"
 
@@ -13757,6 +13818,12 @@ msgstr "_Сканер/Камера..."
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
 
+#~ msgid "Export Image as MNG"
+#~ msgstr "Експортувати зображення як PNG"
+
+#~ msgid "_Loop"
+#~ msgstr "_Цикл"
+
 #~ msgid "_Foreground color"
 #~ msgstr "Колір п_ереднього плану"
 
@@ -13765,9 +13832,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Use the foreground color"
 #~ msgstr "Використовувати колір переднього плану"
-
-#~ msgid "Use the background color"
-#~ msgstr "Використовувати колір тла"
 
 #~ msgid "_From:"
 #~ msgstr "_Від:"
@@ -14212,9 +14276,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "_Quality:"
 #~ msgstr "_Якість:"
-
-#~ msgid "JPEG quality parameter"
-#~ msgstr "Параметр якості JPEG"
 
 #~ msgid "_Use quality settings from original image"
 #~ msgstr "Використовувати характеристики _якості початкового зображення"
