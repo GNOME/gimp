@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-14 04:23+0000\n"
-"PO-Revision-Date: 2023-04-14 12:49+0200\n"
+"POT-Creation-Date: 2023-04-15 23:14+0000\n"
+"PO-Revision-Date: 2023-04-16 14:06+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1040,8 +1040,8 @@ msgid "Save CML Explorer Parameters"
 msgstr "Shrani parametre raziskovalca MZP"
 
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
-#: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:874
-#: plug-ins/common/file-mng.c:1221 plug-ins/common/file-pcx.c:985
+#: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:876
+#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:985
 #: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
@@ -1071,7 +1071,7 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: plug-ins/common/cml-explorer.c:2339 plug-ins/common/curve-bend.c:890
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
-#: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-mng.c:1405
+#: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-mng.c:1407
 #: plug-ins/common/file-pcx.c:438 plug-ins/common/file-png.c:673
 #: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
 #: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
@@ -2597,7 +2597,7 @@ msgstr ""
 msgid "Export Image as GIF"
 msgstr "Izvozi sliko kot GIF"
 
-#: plug-ins/common/file-gif-save.c:1219 plug-ins/common/file-mng.c:1609
+#: plug-ins/common/file-gif-save.c:1219 plug-ins/common/file-mng.c:277
 msgid "_Interlace"
 msgstr "Preplet_i"
 
@@ -2621,7 +2621,7 @@ msgstr "_Neskončno"
 msgid "_Delay between frames where unspecified:"
 msgstr "_Zakasnitev med sličicami, kjer ni določena:"
 
-#: plug-ins/common/file-gif-save.c:1313 plug-ins/common/file-mng.c:1724
+#: plug-ins/common/file-gif-save.c:1313 plug-ins/common/file-mng.c:1642
 msgid "milliseconds"
 msgstr "milisekund"
 
@@ -3281,109 +3281,175 @@ msgstr "Profil: %s"
 msgid "MNG animation"
 msgstr "Animacija MNG"
 
-#: plug-ins/common/file-mng.c:282
+#: plug-ins/common/file-mng.c:256
+msgid "MNG"
+msgstr "MNG"
+
+#: plug-ins/common/file-mng.c:259
+msgid "Saves images in the MNG file format"
+msgstr "Shrani datoteke v zapisu MNG"
+
+#: plug-ins/common/file-mng.c:260
+msgid ""
+"This plug-in saves images in the Multiple-image Network Graphics (MNG) "
+"format which can be used as a replacement for animated GIFs, and more."
+msgstr ""
+"Ta vstavek shrani slike v zapisu MNG (multi-image Network Graphics), ki se "
+"lahko uporablja kot zamenjava za animirane GIF-e in druge sorodne zapise."
+
+#: plug-ins/common/file-mng.c:278
+msgid "Use interlacing"
+msgstr "Uporabi prepletanje"
+
+#: plug-ins/common/file-mng.c:283
+msgid "_PNG compression level"
+msgstr "Raven stiskanja _PNG"
+
+#: plug-ins/common/file-mng.c:284
 msgid ""
 "PNG compression level, choose a high compression level for small file size"
 msgstr ""
 "Raven stiskanja PNG; izberite visoko raven stiskanja za manjše datoteke"
 
+#: plug-ins/common/file-mng.c:290
+msgid "JPEG compression _quality"
+msgstr "_Kakovost stiskanja JPEG"
+
+#: plug-ins/common/file-mng.c:291
+msgid "JPEG quality factor"
+msgstr "Faktor kakovosti JPEG"
+
+#: plug-ins/common/file-mng.c:296
+msgid "_JPEG smoothing factor"
+msgstr "Faktor glajenja _JPEG"
+
+#: plug-ins/common/file-mng.c:297
+msgid "JPEG smoothing factor"
+msgstr "Faktor glajenja JPEG"
+
+#: plug-ins/common/file-mng.c:302
+msgid "L_oop"
+msgstr "_Zankaj"
+
+#: plug-ins/common/file-mng.c:303
+msgid "(ANIMATED MNG) Loop infinitely"
+msgstr "(ANIMIRANI MNG) Zankaj neskončno"
+
+#: plug-ins/common/file-mng.c:308
+msgid "Default fra_me delay"
+msgstr "Privzeta zakasnitev sli_čic"
+
+#: plug-ins/common/file-mng.c:309
+msgid "(ANIMATED MNG) Default delay between frames in milliseconds"
+msgstr "(ANIMIRANI MNG) Privzeta zakasnitev med sličicami v ms"
+
+#: plug-ins/common/file-mng.c:315
+msgid "Default chunks t_ype"
+msgstr "Privzeta vrsta ko_ščkov"
+
+#: plug-ins/common/file-mng.c:316
+#, fuzzy
+msgid ""
+"(ANIMATED MNG) Default chunks type (0 = PNG + Delta PNG; 1 = JNG + Delta "
+"PNG; 2 = All PNG; 3 = All JNG)"
+msgstr ""
+"(ANIMIRANI MNG) Privzeta vrsta koščkov (0 = PNG + delta PNG; 1 = JNG + delta "
+"PNG; 2 = cel PNG; 3 = cel JNG)"
+
+#: plug-ins/common/file-mng.c:323
+msgid "De_fault frame disposal"
+msgstr "Privzeta _opustitev sličic"
+
+#: plug-ins/common/file-mng.c:324
+#, fuzzy
+msgid "(ANIMATED MNG) Default dispose type (0 = combine; 1 = replace)"
+msgstr "(ANIMIRANI MNG) Privzeta vrsta odlaganja (0 = združi; 1 = zamenjaj)"
+
+#: plug-ins/common/file-mng.c:330 plug-ins/common/file-png.c:245
+msgid "Save _background color"
+msgstr "Shrani _barvo ozadja"
+
+#: plug-ins/common/file-mng.c:331
+#, fuzzy
+msgid "Write bKGd (background color) chunk"
+msgstr "Zapiši košček bKGd (barva ozadja)"
+
+#: plug-ins/common/file-mng.c:336
+msgid "Save _gamma"
+msgstr "Shrani _gamo"
+
+#: plug-ins/common/file-mng.c:337
+#, fuzzy
+msgid "Write gAMA (gamma) chunk"
+msgstr "Zapiši košček gAMA (gama)"
+
+#: plug-ins/common/file-mng.c:342
+msgid "Sa_ve resolution"
+msgstr "S_hrani ločljivost"
+
+#: plug-ins/common/file-mng.c:343
+#, fuzzy
+msgid "Write pHYs (image resolution) chunk"
+msgstr "Zapiši košček pHYs (ločljivost slike)"
+
+#: plug-ins/common/file-mng.c:348 plug-ins/common/file-png.c:263
+msgid "Save creation _time"
+msgstr "Shrani _čas nastanka"
+
+#: plug-ins/common/file-mng.c:349
+#, fuzzy
+msgid "Write tIME (creation time) chunk"
+msgstr "Zapiši košček tIME (čas nastanka)"
+
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:727 plug-ins/common/file-png.c:2253
+#: plug-ins/common/file-mng.c:729 plug-ins/common/file-png.c:2253
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Prosojnosti ni mogoče shraniti brez izgub, zato bo shranjena prekrivnost."
 
-#: plug-ins/common/file-mng.c:1592
-msgid "Export Image as MNG"
-msgstr "Izvozi sliko kot MNG"
-
-#: plug-ins/common/file-mng.c:1600
+#: plug-ins/common/file-mng.c:1596
 msgid "MNG Options"
 msgstr "Možnosti MNG"
 
-#: plug-ins/common/file-mng.c:1613 plug-ins/common/file-png.c:245
-msgid "Save _background color"
-msgstr "Shrani _barvo ozadja"
-
-#: plug-ins/common/file-mng.c:1619
-msgid "Save _gamma"
-msgstr "Shrani _gamo"
-
-#: plug-ins/common/file-mng.c:1623
-msgid "Save resolution"
-msgstr "Shrani ločljivost"
-
-#: plug-ins/common/file-mng.c:1629 plug-ins/common/file-png.c:263
-msgid "Save creation _time"
-msgstr "Shrani _čas nastanka"
-
-#: plug-ins/common/file-mng.c:1641 plug-ins/common/file-png.c:226
+#: plug-ins/common/file-mng.c:1604 plug-ins/common/file-png.c:226
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/file-mng.c:1642
+#: plug-ins/common/file-mng.c:1605
 msgid "JNG"
 msgstr "JNG"
 
-#: plug-ins/common/file-mng.c:1645
+#: plug-ins/common/file-mng.c:1608
 msgid "PNG + delta PNG"
 msgstr "PNG + delta PNG"
 
-#: plug-ins/common/file-mng.c:1646
+#: plug-ins/common/file-mng.c:1609
 msgid "JNG + delta PNG"
 msgstr "JNG + delta PNG"
 
-#: plug-ins/common/file-mng.c:1647
+#: plug-ins/common/file-mng.c:1610
 msgid "All PNG"
 msgstr "Vse PNG"
 
-#: plug-ins/common/file-mng.c:1648
+#: plug-ins/common/file-mng.c:1611
 msgid "All JNG"
 msgstr "Vse JNG"
 
-#: plug-ins/common/file-mng.c:1657
-msgid "Default chunks type:"
-msgstr "Privzeta vrsta koščkov:"
-
-#: plug-ins/common/file-mng.c:1660
+#: plug-ins/common/file-mng.c:1619
 msgid "Combine"
 msgstr "Združi"
 
-#: plug-ins/common/file-mng.c:1661
+#: plug-ins/common/file-mng.c:1620
 msgid "Replace"
 msgstr "Zamenjaj"
 
-#: plug-ins/common/file-mng.c:1668
-msgid "Default _frame disposal:"
-msgstr "Privzeta _opustitev sličic:"
-
-#: plug-ins/common/file-mng.c:1677
-msgid "_PNG compression level:"
-msgstr "Raven stiskanja _PNG:"
-
-#: plug-ins/common/file-mng.c:1687
-msgid "JPEG compression quality:"
-msgstr "Kvaliteta stiskanja JPEG:"
-
-#: plug-ins/common/file-mng.c:1697
-msgid "JPEG smoothing factor:"
-msgstr "Faktor glajenja JPEG:"
-
-#: plug-ins/common/file-mng.c:1700
+#: plug-ins/common/file-mng.c:1655
 msgid "Animated MNG Options"
 msgstr "Možnosti za animirani MNG ..."
 
-#: plug-ins/common/file-mng.c:1709
-msgid "_Loop"
-msgstr "_Zankaj"
-
-#: plug-ins/common/file-mng.c:1716
-msgid "Default frame delay:"
-msgstr "Privzeta zakasnitev slik:"
-
-#: plug-ins/common/file-mng.c:1732
+#: plug-ins/common/file-mng.c:1665
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
@@ -6112,7 +6178,7 @@ msgstr "Pretvori svetle madeže v zvezdne odbleske"
 #: plug-ins/common/sparkle.c:184
 #, fuzzy
 msgid ""
-"Uses a percentage based luminoisty threhsold to find candidate pixels for "
+"Uses a percentage based luminosity threshold to find candidate pixels for "
 "adding some sparkles (spikes)."
 msgstr ""
 "Uporablja odstotkovni prag svetlosti za iskanje kandidatov slikovnih točk za "
