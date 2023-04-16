@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-02-22 13:05+0000\n"
-"PO-Revision-Date: 2023-04-13 22:17+0300\n"
+"PO-Revision-Date: 2023-04-16 16:52+0300\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -469,7 +469,7 @@ msgstr "Конзола на Python"
 
 #: plug-ins/python/python-console/python-console.py:81
 msgid "_Browse..."
-msgstr "_Търсене…"
+msgstr "_Отваряне…"
 
 #: plug-ins/python/python-console/python-console.py:257
 msgid "Python Procedure Browser"
@@ -478,7 +478,7 @@ msgstr "Разглеждане на процедури на Python"
 #: plug-ins/python/python-console/python-console.py:285
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "„%s“ не може да бъде отворен за запис: %s"
+msgstr "„%s“ не може да се отвори за запис: %s"
 
 #: plug-ins/python/python-console/python-console.py:300
 #, python-format
@@ -833,7 +833,7 @@ msgstr ""
 
 #: plug-ins/python/spyro-plus.py:1732
 msgid "_Reset"
-msgstr "_Изчистване"
+msgstr "_Зануляване"
 
 #: plug-ins/python/spyro-plus.py:1740
 msgid "Save"
