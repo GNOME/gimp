@@ -117,6 +117,8 @@ struct _GimpImageWindowPrivate
   GList             *shells;
   GimpDisplayShell  *active_shell;
 
+  GimpMenuModel     *menubar_model;
+
   GtkWidget         *main_vbox;
   GtkWidget         *menubar;
   GtkWidget         *hbox;
@@ -349,7 +351,6 @@ gimp_image_window_constructed (GObject *object)
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   GimpUIManager          *menubar_manager;
   GimpGuiConfig          *config;
-  GimpMenuModel          *model;
   gboolean                use_gtk_menubar = TRUE;
   gboolean                use_app_menu    = TRUE;
 
@@ -381,7 +382,8 @@ gimp_image_window_constructed (GObject *object)
   gtk_widget_show (private->main_vbox);
 
   /* Create the menubar */
-  model = gimp_ui_manager_get_model (menubar_manager, "/image-menubar");
+  private->menubar_model = gimp_ui_manager_get_model (menubar_manager,
+                                                      "/image-menubar");
 
 #ifndef GDK_WINDOWING_QUARTZ
   /* macOS has its native menubar system, which is implemented by
@@ -397,12 +399,11 @@ gimp_image_window_constructed (GObject *object)
   if (use_gtk_menubar)
     {
       gtk_application_set_menubar (GTK_APPLICATION (private->gimp->app),
-                                   G_MENU_MODEL (model));
+                                   G_MENU_MODEL (private->menubar_model));
     }
   else
     {
-      private->menubar = gimp_menu_bar_new (model, menubar_manager);
-      g_object_unref (model);
+      private->menubar = gimp_menu_bar_new (private->menubar_model, menubar_manager);
 
       gtk_box_pack_start (GTK_BOX (private->main_vbox),
                           private->menubar, FALSE, FALSE, 0);
@@ -540,6 +541,8 @@ gimp_image_window_dispose (GObject *object)
       g_source_remove (private->update_ui_manager_idle_id);
       private->update_ui_manager_idle_id = 0;
     }
+
+  g_clear_object (&private->menubar_model);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -1325,6 +1328,18 @@ gimp_image_window_get_active_shell (GimpImageWindow *window)
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
   return private->active_shell;
+}
+
+GimpMenuModel *
+gimp_image_window_get_menubar_model (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), NULL);
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return private->menubar_model;
 }
 
 void

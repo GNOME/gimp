@@ -61,6 +61,7 @@ enum
   PROP_MODEL,
   PROP_PATH,
   PROP_IS_SECTION,
+  PROP_TITLE,
 };
 
 struct _GimpMenuModelPrivate
@@ -70,6 +71,10 @@ struct _GimpMenuModelPrivate
 
   gchar         *path;
   gboolean       is_section;
+  /* If this GimpMenuModel represents a submenu for a bigger menu, this object
+   * will not be NULL.
+   */
+  GMenuItem     *submenu_item;
 
   GList         *items;
 };
@@ -111,6 +116,11 @@ static gboolean     gimp_menu_model_handles_subpath          (GimpMenuModel     
 
 static GMenuItem  * gimp_menu_model_get_item                 (GimpMenuModel       *model,
                                                               gint                 idx);
+
+static gboolean     gimp_menu_model_set_title_rec            (GimpMenuModel       *model,
+                                                              const gchar         *path,
+                                                              const gchar         *title,
+                                                              GMenuItem           *item);
 
 static void         gimp_menu_model_notify_group_label       (GimpRadioAction     *action,
                                                               const GParamSpec    *pspec,
@@ -179,6 +189,12 @@ gimp_menu_model_class_init (GimpMenuModelClass *klass)
                                                         NULL, NULL, FALSE,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+  /* Titles are only relevant if the model is that of a submenu. */
+  g_object_class_install_property (object_class, PROP_TITLE,
+                                   g_param_spec_string ("title",
+                                                        NULL, NULL, NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_EXPLICIT_NOTIFY));
 }
 
 static void
@@ -189,6 +205,7 @@ gimp_menu_model_init (GimpMenuModel *model)
   model->priv->items         = NULL;
   model->priv->path          = 0;
   model->priv->is_section    = FALSE;
+  model->priv->submenu_item  = NULL;
 }
 
 static void
@@ -219,6 +236,15 @@ gimp_menu_model_get_property (GObject    *object,
     case PROP_MODEL:
       g_value_set_object (value, model->priv->model);
       break;
+    case PROP_TITLE:
+        {
+          gchar *title;
+
+          g_menu_item_get_attribute (model->priv->submenu_item, G_MENU_ATTRIBUTE_LABEL, "s", &title);
+          g_value_set_string (value, title);
+          g_free (title);
+        }
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -248,6 +274,10 @@ gimp_menu_model_set_property (GObject      *object,
       break;
     case PROP_IS_SECTION:
       model->priv->is_section = g_value_get_boolean (value);
+      break;
+    case PROP_TITLE:
+      gimp_menu_model_set_title (model, model->priv->path,
+                                 g_value_get_string (value));
       break;
 
     default:
@@ -523,6 +553,14 @@ gimp_menu_model_get_path (GimpMenuModel *model)
   return model->priv->path;
 }
 
+void
+gimp_menu_model_set_title (GimpMenuModel *model,
+                           const gchar   *path,
+                           const gchar   *title)
+{
+  gimp_menu_model_set_title_rec (model, path, title, NULL);
+}
+
 
 /* Private functions. */
 
@@ -643,6 +681,7 @@ gimp_menu_model_initialize (GimpMenuModel *model,
 
           submodel = gimp_menu_model_new_submenu (model->priv->manager, submenu, path);
           item     = g_menu_item_new_submenu (label, G_MENU_MODEL (submodel));
+          submodel->priv->submenu_item = item;
 
           g_object_unref (submodel);
           g_free (path);
@@ -722,10 +761,9 @@ gimp_menu_model_handles_subpath (GimpMenuModel *model,
     {
       GMenuModel  *submenu    = NULL;
       GMenuModel  *subsection = NULL;
-      const gchar *label = NULL;
-      GMenuItem   *item = iter->data;
+      const gchar *label      = NULL;
+      GMenuItem   *item       = iter->data;
 
-      submenu    = g_menu_item_get_link (item, G_MENU_LINK_SUBMENU);
       subsection = g_menu_item_get_link (item, G_MENU_LINK_SECTION);
       g_menu_item_get_attribute (item, G_MENU_ATTRIBUTE_LABEL, "s", &label);
 
@@ -736,9 +774,12 @@ gimp_menu_model_handles_subpath (GimpMenuModel *model,
            * we found a submenu model which will handle this path instead).
            */
           if (! gimp_menu_model_handles_subpath (GIMP_MENU_MODEL (subsection), path))
-            return FALSE;
+            {
+              g_clear_object (&subsection);
+              return FALSE;
+            }
         }
-      else if (submenu != NULL)
+      else if ((submenu = g_menu_item_get_link (item, G_MENU_LINK_SUBMENU)) != NULL)
         {
           gchar *subpath;
 
@@ -749,12 +790,14 @@ gimp_menu_model_handles_subpath (GimpMenuModel *model,
             {
               /* A submodel will handle the new path. */
               g_free (subpath);
+              g_clear_object (&subsection);
               g_clear_object (&submenu);
 
               return FALSE;
             }
           g_free (subpath);
         }
+      g_clear_object (&subsection);
       g_clear_object (&submenu);
     }
 
@@ -804,6 +847,58 @@ gimp_menu_model_get_item (GimpMenuModel *model,
     }
 
   return NULL;
+}
+
+static gboolean
+gimp_menu_model_set_title_rec (GimpMenuModel *model,
+                               const gchar   *path,
+                               const gchar   *title,
+                               GMenuItem     *item)
+{
+  g_return_val_if_fail (item == model->priv->submenu_item, FALSE);
+
+  if (gimp_utils_are_menu_path_identical (path, model->priv->path))
+    {
+      if (item != NULL)
+        g_menu_item_set_label (item, title);
+      g_object_notify (G_OBJECT (model), "title");
+
+      return TRUE;
+    }
+  else
+    {
+      GList    *iter;
+      gboolean  found = FALSE;
+
+      for (iter = model->priv->items; iter; iter = iter->next)
+        {
+          GMenuItem  *item    = iter->data;
+          GMenuModel *submenu = NULL;
+
+          submenu = g_menu_item_get_link (item, G_MENU_LINK_SUBMENU);
+
+          if (submenu != NULL)
+            {
+              gchar *subpath;
+
+              subpath = g_strdup_printf ("%s/", GIMP_MENU_MODEL (submenu)->priv->path);
+
+              if (g_strcmp0 (path, GIMP_MENU_MODEL (submenu)->priv->path) == 0 ||
+                  g_str_has_prefix (path, subpath))
+                {
+                  found = gimp_menu_model_set_title_rec (GIMP_MENU_MODEL (submenu), path, title, item);
+
+                  if (found)
+                    break;
+                }
+
+              g_free (subpath);
+            }
+          g_clear_object (&submenu);
+        }
+
+      return found;
+    }
 }
 
 static void

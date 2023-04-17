@@ -36,6 +36,7 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimprender.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpmenumodel.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
@@ -987,10 +988,12 @@ static void
 view_actions_set_zoom (GimpActionGroup  *group,
                        GimpDisplayShell *shell)
 {
-  const gchar *action = NULL;
-  gchar       *str;
-  gchar       *label;
-  guint        scale;
+  const gchar     *action = NULL;
+  GimpImageWindow *window;
+  GimpMenuModel   *model;
+  gchar           *str;
+  gchar           *label;
+  guint            scale;
 
   g_object_get (shell->zoom,
                 "percentage", &str,
@@ -1025,8 +1028,10 @@ view_actions_set_zoom (GimpActionGroup  *group,
 
   gimp_action_group_set_action_active (group, action, TRUE);
 
-  label = g_strdup_printf (_("_Zoom (%s)"), str);
-  gimp_action_group_set_action_label (group, "view-zoom-menu", label);
+  window = gimp_display_shell_get_window (shell);
+  model  = gimp_image_window_get_menubar_model (window);
+  label  = g_strdup_printf (_("_Zoom (%s)"), str);
+  gimp_menu_model_set_title (model, "/View/Zoom", label);
   g_free (label);
 
   /* flag as dirty */
@@ -1039,8 +1044,10 @@ static void
 view_actions_set_rotate (GimpActionGroup  *group,
                          GimpDisplayShell *shell)
 {
-  const gchar *flip;
-  gchar       *label;
+  const gchar     *flip;
+  GimpImageWindow *window;
+  GimpMenuModel   *model;
+  gchar           *label;
 
   if (shell->flip_horizontally &&
       shell->flip_vertically)
@@ -1066,9 +1073,11 @@ view_actions_set_rotate (GimpActionGroup  *group,
       flip = "";
     }
 
+  window = gimp_display_shell_get_window (shell);
+  model  = gimp_image_window_get_menubar_model (window);
   label = g_strdup_printf (_("_Flip %s& Rotate (%d°)"),
                            flip, (gint) shell->rotate_angle);
-  gimp_action_group_set_action_label (group, "view-rotate-menu", label);
+  gimp_menu_model_set_title (model, "/View/Flip & Rotate", label);
   g_free (label);
 }
 

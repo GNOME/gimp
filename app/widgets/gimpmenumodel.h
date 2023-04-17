@@ -56,5 +56,9 @@ GimpMenuModel  * gimp_menu_model_get_submodel (GimpMenuModel *model,
 
 const gchar    * gimp_menu_model_get_path     (GimpMenuModel *model);
 
+void             gimp_menu_model_set_title    (GimpMenuModel *model,
+                                               const gchar   *path,
+                                               const gchar   *title);
+
 
 #endif /* __GIMP_MENU_MODEL_H__ */

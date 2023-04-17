@@ -67,6 +67,8 @@ void               gimp_image_window_set_active_shell     (GimpImageWindow  *win
                                                            GimpDisplayShell *shell);
 GimpDisplayShell * gimp_image_window_get_active_shell     (GimpImageWindow  *window);
 
+GimpMenuModel    * gimp_image_window_get_menubar_model    (GimpImageWindow  *window);
+
 void               gimp_image_window_set_fullscreen       (GimpImageWindow  *window,
                                                            gboolean          fullscreen);
 gboolean           gimp_image_window_get_fullscreen       (GimpImageWindow  *window);

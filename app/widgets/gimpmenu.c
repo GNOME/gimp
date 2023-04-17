@@ -104,6 +104,10 @@ static void     gimp_menu_section_items_changed   (GMenuModel              *mode
                                                    gint                     added,
                                                    GimpMenu                *menu);
 
+static void     gimp_menu_submenu_notify_title    (GimpMenuModel           *model,
+                                                   const GParamSpec        *pspec,
+                                                   GtkMenuItem             *item);
+
 static void     gimp_menu_toggle_item_toggled     (GtkWidget               *item,
                                                    GAction                 *action);
 
@@ -250,6 +254,9 @@ gimp_menu_append (GimpMenuShell *shell,
           g_tree_insert (menu->priv->submenus,
                          gimp_utils_make_canonical_menu_label (label),
                          subcontainer);
+          g_signal_connect (submenu, "notify::title",
+                            G_CALLBACK (gimp_menu_submenu_notify_title),
+                            item);
         }
       else if (action_name == NULL)
         {
@@ -692,6 +699,20 @@ gimp_menu_section_items_changed (GMenuModel *model,
       position++;
     }
   g_list_free (children);
+}
+
+static void
+gimp_menu_submenu_notify_title (GimpMenuModel    *model,
+                                const GParamSpec *pspec,
+                                GtkMenuItem      *item)
+{
+  gchar *title;
+
+  g_object_get (model,
+                "title", &title,
+                NULL);
+  gtk_menu_item_set_label (item, title);
+  g_free (title);
 }
 
 static void
