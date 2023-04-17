@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-15 23:14+0000\n"
-"PO-Revision-Date: 2023-04-16 03:41+0200\n"
+"POT-Creation-Date: 2023-04-16 16:39+0000\n"
+"PO-Revision-Date: 2023-04-17 06:00+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -1921,7 +1921,8 @@ msgstr ""
 msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr ""
 
-#: plug-ins/common/destripe.c:141 plug-ins/imagemap/imap_grid.c:255
+#: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:194
+#: plug-ins/imagemap/imap_grid.c:255
 msgid "_Width"
 msgstr "_სიგანე"
 
@@ -2090,7 +2091,7 @@ msgstr ""
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:913
-#: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:1374
+#: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1374
 #: plug-ins/common/file-pcx.c:870 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
 #: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
@@ -2851,138 +2852,134 @@ msgstr "სწრაფი"
 msgid "HTML table"
 msgstr "HTML ცხრილი"
 
-#: plug-ins/common/file-html-table.c:174
+#: plug-ins/common/file-html-table.c:155
+msgid "HTML Table"
+msgstr "HTML ცხრილი"
+
+#: plug-ins/common/file-html-table.c:158
+msgid "GIMP Table Magic"
+msgstr ""
+
+#: plug-ins/common/file-html-table.c:159
+msgid "Allows you to draw an HTML table in GIMP. See help for more info."
+msgstr ""
+
+#: plug-ins/common/file-html-table.c:175
+msgid "Use c_aption"
+msgstr "_წარწერის გამოყენება"
+
+#: plug-ins/common/file-html-table.c:176
 msgid "Enable if you would like to have the table captioned."
 msgstr ""
 
-#: plug-ins/common/file-html-table.c:181
+#: plug-ins/common/file-html-table.c:182
+msgid "Capt_ion"
+msgstr ""
+
+#: plug-ins/common/file-html-table.c:183
 msgid "The text for the table caption."
 msgstr "ტექსტი ცხრილის სათაურისთვის."
 
-#: plug-ins/common/file-html-table.c:187
+#: plug-ins/common/file-html-table.c:188
+msgid "Cell con_tent"
+msgstr "_უჯრედის შემცველობა"
+
+#: plug-ins/common/file-html-table.c:189
 msgid "The text to go into each cell."
 msgstr "ტექსტი თითოეული უჯრედისთვის."
 
-#: plug-ins/common/file-html-table.c:193
+#: plug-ins/common/file-html-table.c:195
 msgid "The width for each table cell. Can be a number or a percent."
 msgstr ""
 
-#: plug-ins/common/file-html-table.c:200
+#: plug-ins/common/file-html-table.c:201 plug-ins/imagemap/imap_grid.c:261
+msgid "_Height"
+msgstr "_სიმაღლე"
+
+#: plug-ins/common/file-html-table.c:202
 msgid "The height for each table cell. Can be a number or a percent."
 msgstr ""
 
-#: plug-ins/common/file-html-table.c:207
+#: plug-ins/common/file-html-table.c:208
+msgid "_Generate full HTML document"
+msgstr ""
+
+#: plug-ins/common/file-html-table.c:209
 msgid ""
 "If enabled GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
 msgstr ""
 
-#: plug-ins/common/file-html-table.c:215
+#: plug-ins/common/file-html-table.c:216
+msgid "_Border"
+msgstr "_საზღვარი"
+
+#: plug-ins/common/file-html-table.c:217
 msgid "The number of pixels in the table border."
 msgstr ""
 
-#: plug-ins/common/file-html-table.c:221
+#: plug-ins/common/file-html-table.c:222
+msgid "_Use cellspan"
+msgstr ""
+
+#: plug-ins/common/file-html-table.c:223
 msgid ""
 "If enabled GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
 
-#: plug-ins/common/file-html-table.c:230
+#: plug-ins/common/file-html-table.c:231
+msgid "Co_mpress TD tags"
+msgstr ""
+
+#: plug-ins/common/file-html-table.c:232
 msgid ""
 "Enabling this will cause GTM to leave no whitespace between the TD tags and "
 "the cell content. This is only necessary for pixel level positioning control."
 msgstr ""
 
-#: plug-ins/common/file-html-table.c:240
+#: plug-ins/common/file-html-table.c:241
+msgid "Cell-pa_dding"
+msgstr ""
+
+#: plug-ins/common/file-html-table.c:242
 msgid "The amount of cell padding."
 msgstr ""
 
-#: plug-ins/common/file-html-table.c:246
+#: plug-ins/common/file-html-table.c:247
+msgid "Cell spaci_ng"
+msgstr "ბადის _დაშორება"
+
+#: plug-ins/common/file-html-table.c:248
 msgid "The amount of cell spacing."
 msgstr ""
 
-#: plug-ins/common/file-html-table.c:287
+#: plug-ins/common/file-html-table.c:289
 msgid "HTML table plug-in does not support multiple layers."
 msgstr ""
 
-#: plug-ins/common/file-html-table.c:609
-msgid "Export Image as HTML Table"
-msgstr ""
-
-#: plug-ins/common/file-html-table.c:623
-msgid "Warning"
-msgstr "შეტყობინება"
-
-#: plug-ins/common/file-html-table.c:634
+#: plug-ins/common/file-html-table.c:614
 msgid ""
 "You are about to create a huge\n"
 "HTML file which will most likely\n"
 "crash your browser."
 msgstr ""
 
-#. HTML Page Options
-#: plug-ins/common/file-html-table.c:643
+#: plug-ins/common/file-html-table.c:631
+msgid "Warning"
+msgstr "შეტყობინება"
+
+#: plug-ins/common/file-html-table.c:644
 msgid "HTML Page Options"
 msgstr "HTML გვერდის პარამეტრები"
 
-#: plug-ins/common/file-html-table.c:652
-msgid "_Generate full HTML document"
-msgstr ""
-
-#. HTML Table Creation Options
-#: plug-ins/common/file-html-table.c:656
+#: plug-ins/common/file-html-table.c:654
 msgid "Table Creation Options"
 msgstr "ცხრილის შექმნის პარამეტრები"
 
-#: plug-ins/common/file-html-table.c:667
-msgid "_Use cellspan"
-msgstr ""
-
-#: plug-ins/common/file-html-table.c:671
-msgid "Co_mpress TD tags"
-msgstr ""
-
-#: plug-ins/common/file-html-table.c:675
-msgid "C_aption"
-msgstr "_წარწერა"
-
-#: plug-ins/common/file-html-table.c:689
-msgid "C_ell content:"
-msgstr "_უჯრედის შემცველობა:"
-
-#. HTML Table Options
-#: plug-ins/common/file-html-table.c:693
+#: plug-ins/common/file-html-table.c:673
 msgid "Table Options"
 msgstr "ცხრილის პარამეტრები"
-
-#: plug-ins/common/file-html-table.c:706
-msgid "_Border:"
-msgstr "_საზღვარი:"
-
-#: plug-ins/common/file-html-table.c:712 plug-ins/common/file-ps.c:3647
-#: plug-ins/common/file-ps.c:3847 plug-ins/common/smooth-palette.c:531
-#: plug-ins/common/tile.c:519 plug-ins/imagemap/imap_cmd_guides.c:163
-#: plug-ins/imagemap/imap_rectangle.c:398
-#: plug-ins/print/print-page-layout.c:286
-msgid "_Width:"
-msgstr "სიგა_ნე:"
-
-#: plug-ins/common/file-html-table.c:718 plug-ins/common/file-ps.c:3660
-#: plug-ins/common/file-ps.c:3858 plug-ins/common/film.c:1067
-#: plug-ins/common/smooth-palette.c:536 plug-ins/common/tile.c:523
-#: plug-ins/imagemap/imap_cmd_guides.c:173
-#: plug-ins/imagemap/imap_rectangle.c:405
-#: plug-ins/print/print-page-layout.c:288
-msgid "_Height:"
-msgstr "_სიმაღლე:"
-
-#: plug-ins/common/file-html-table.c:724
-msgid "Cell-_padding:"
-msgstr ""
-
-#: plug-ins/common/file-html-table.c:730
-msgid "Cell-_spacing:"
-msgstr ""
 
 #: plug-ins/common/file-jp2-load.c:187
 msgid "JPEG 2000 image"
@@ -3195,7 +3192,6 @@ msgid "MNG animation"
 msgstr ""
 
 #: plug-ins/common/file-mng.c:256
-#| msgid "PNG"
 msgid "MNG"
 msgstr "MNG"
 
@@ -3210,7 +3206,6 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/file-mng.c:278
-#| msgid "Use _Anti-aliasing"
 msgid "Use interlacing"
 msgstr ""
 
@@ -3266,7 +3261,6 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/file-mng.c:323
-#| msgid "Default frame delay:"
 msgid "De_fault frame disposal"
 msgstr "_ნაგულისხმები კადრის წაშლა"
 
@@ -4067,6 +4061,22 @@ msgstr "რენდერი"
 #: plug-ins/common/file-wmf.c:717
 msgid "Resolution:"
 msgstr "გარჩევადობა:"
+
+#: plug-ins/common/file-ps.c:3647 plug-ins/common/file-ps.c:3847
+#: plug-ins/common/smooth-palette.c:531 plug-ins/common/tile.c:519
+#: plug-ins/imagemap/imap_cmd_guides.c:163
+#: plug-ins/imagemap/imap_rectangle.c:398
+#: plug-ins/print/print-page-layout.c:286
+msgid "_Width:"
+msgstr "სიგა_ნე:"
+
+#: plug-ins/common/file-ps.c:3660 plug-ins/common/file-ps.c:3858
+#: plug-ins/common/film.c:1067 plug-ins/common/smooth-palette.c:536
+#: plug-ins/common/tile.c:523 plug-ins/imagemap/imap_cmd_guides.c:173
+#: plug-ins/imagemap/imap_rectangle.c:405
+#: plug-ins/print/print-page-layout.c:288
+msgid "_Height:"
+msgstr "_სიმაღლე:"
 
 #: plug-ins/common/file-ps.c:3673
 msgid "Pages:"
@@ -11664,10 +11674,6 @@ msgstr ""
 #: plug-ins/imagemap/imap_grid.c:248
 msgid "Grid Granularity"
 msgstr ""
-
-#: plug-ins/imagemap/imap_grid.c:261
-msgid "_Height"
-msgstr "_სიმაღლე"
 
 #: plug-ins/imagemap/imap_grid.c:275
 msgid "Grid Offset"
