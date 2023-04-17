@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-14 20:37+0000\n"
-"PO-Revision-Date: 2023-02-14 04:15+0300\n"
+"POT-Creation-Date: 2023-03-07 16:24+0000\n"
+"PO-Revision-Date: 2023-03-08 00:34+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -56,10 +56,10 @@ msgstr "Görünür Katmanları Hizala"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1908
+#: ../plug-ins/common/file-gif-save.c:1127 ../plug-ins/common/file-heif.c:1908
 #: ../plug-ins/common/file-jp2-load.c:961
-#: ../plug-ins/common/file-pdf-load.c:702
-#: ../plug-ins/common/file-pdf-load.c:1278
+#: ../plug-ins/common/file-pdf-load.c:708
+#: ../plug-ins/common/file-pdf-load.c:1338
 #: ../plug-ins/common/file-pdf-save.c:1020 ../plug-ins/common/file-ps.c:3447
 #: ../plug-ins/common/file-raw-data.c:1816 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
@@ -122,7 +122,7 @@ msgstr "_İptal"
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1909
-#: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
+#: ../plug-ins/common/file-pdf-load.c:709 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
 #: ../plug-ins/common/grid.c:678 ../plug-ins/common/hot.c:615
@@ -385,12 +385,12 @@ msgstr "Oynatma hızı"
 
 #. 2 styles of default frame disposals: cumulative layers and one frame per layer.
 #: ../plug-ins/common/animation-play.c:931
-#: ../plug-ins/common/file-gif-save.c:1321
+#: ../plug-ins/common/file-gif-save.c:1336
 msgid "Cumulative layers (combine)"
 msgstr "Birikimli katmanlar (birleştir)"
 
 #: ../plug-ins/common/animation-play.c:935
-#: ../plug-ins/common/file-gif-save.c:1323
+#: ../plug-ins/common/file-gif-save.c:1338
 msgid "One frame per layer (replace)"
 msgstr "Katman başına bir kare (değiştir)"
 
@@ -1906,8 +1906,7 @@ msgstr ""
 
 #: ../plug-ins/common/depth-merge.c:176
 msgid "Combine two images using depth maps (z-buffers)"
-msgstr ""
-"Derinlik eşlemleri kullanarak iki görüntüyü birleştir (z-arabellekleri)"
+msgstr "Derinlik eşlemleri kullanarak iki görüntüyü birleştir (z-tamponları)"
 
 #: ../plug-ins/common/depth-merge.c:185
 msgid "_Depth Merge..."
@@ -2153,7 +2152,7 @@ msgstr "EOF (dosya sonu) ya da görüntü başlığı okunurken hata"
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:338
 #: ../plug-ins/common/file-gegl.c:322 ../plug-ins/common/file-gif-load.c:353
 #: ../plug-ins/common/file-heif.c:703 ../plug-ins/common/file-jp2-load.c:1077
-#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1044
+#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1059
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1067
 #: ../plug-ins/common/file-raw-data.c:1277 ../plug-ins/common/file-sunras.c:429
@@ -2240,7 +2239,7 @@ msgstr "'%s': dosya sonu ya da palet verisi okunurken hata"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:880
+#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:895
 #: ../plug-ins/common/file-html-table.c:238
 #: ../plug-ins/common/file-jpegxl.c:778 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
@@ -2447,11 +2446,11 @@ msgstr ""
 "GIF: Belgelenmemiş GIF %d düzenleme biçimi kullanılamadı. Animasyon düzgün "
 "oynatılamayabilir veya kaydedilemeyebilir."
 
-#: ../plug-ins/common/file-gif-save.c:541
+#: ../plug-ins/common/file-gif-save.c:556
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "Renkleri daha fazla düşürülemiyor. Opak olarak dışa aktarılıyor."
 
-#: ../plug-ins/common/file-gif-save.c:660
+#: ../plug-ins/common/file-gif-save.c:675
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -2460,7 +2459,7 @@ msgstr ""
 "'%s' dışa aktarılamadı. GIF dosya biçimi, %d pikselden daha geniş ya da uzun "
 "görüntüleri desteklemiyor."
 
-#: ../plug-ins/common/file-gif-save.c:773
+#: ../plug-ins/common/file-gif-save.c:788
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -2468,18 +2467,18 @@ msgstr ""
 "GIF dosya biçimi yorumları yalnızca 7bit ASCII kodlamasında destekler. "
 "Hiçbir yorum kaydedilmedi."
 
-#: ../plug-ins/common/file-gif-save.c:853
+#: ../plug-ins/common/file-gif-save.c:868
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "RGB renkli görüntüler dışarı aktarılamıyor. Önce indeksli renge veya gri "
 "tonlamaya dönüştür."
 
-#: ../plug-ins/common/file-gif-save.c:1058
+#: ../plug-ins/common/file-gif-save.c:1073
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Aşırı işlemci yüklemesini önlemek için ekli olanı geciktir."
 
-#: ../plug-ins/common/file-gif-save.c:1107
+#: ../plug-ins/common/file-gif-save.c:1122
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2487,11 +2486,11 @@ msgstr ""
 "GIF olarak dışa aktarmaya çalıştığınız görüntü, görüntünün gerçek "
 "sınırlarını aşan katmanlar içeriyor."
 
-#: ../plug-ins/common/file-gif-save.c:1113
+#: ../plug-ins/common/file-gif-save.c:1128
 msgid "Cr_op"
 msgstr "Kır_p"
 
-#: ../plug-ins/common/file-gif-save.c:1124
+#: ../plug-ins/common/file-gif-save.c:1139
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2499,11 +2498,11 @@ msgstr ""
 "GIF dosya biçimi buna izin vermemektedir. Bütün katmanları görüntü "
 "sınırlarına kırpabilir ya da dışa aktarma işleminden vazgeçebilirsiniz."
 
-#: ../plug-ins/common/file-gif-save.c:1258
+#: ../plug-ins/common/file-gif-save.c:1273
 msgid "GIF"
 msgstr "GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1266
+#: ../plug-ins/common/file-gif-save.c:1281
 #, c-format
 msgid ""
 "Error loading UI file '%s':\n"
@@ -2512,11 +2511,11 @@ msgstr ""
 "'%s' UI dosyası yüklenirken hata:\n"
 "%s"
 
-#: ../plug-ins/common/file-gif-save.c:1319
+#: ../plug-ins/common/file-gif-save.c:1334
 msgid "I don't care"
 msgstr "Umurumda değil"
 
-#: ../plug-ins/common/file-gif-save.c:1340
+#: ../plug-ins/common/file-gif-save.c:1355
 msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
@@ -2526,7 +2525,7 @@ msgstr ""
 "deniyorsunuz."
 
 #. translators: the %d is *always* 240 here
-#: ../plug-ins/common/file-gif-save.c:2556
+#: ../plug-ins/common/file-gif-save.c:2571
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Varsayılan yorum %d karakterle sınırlıdır."
@@ -2711,7 +2710,7 @@ msgid ""
 msgstr ""
 "Tarayıcınızın çökmesine neden\n"
 "olacak büyük bir HTML dosyası\n"
-"yaratmak üzeresiniz."
+"oluşturmak üzeresiniz."
 
 #. HTML Page Options
 #: ../plug-ins/common/file-html-table.c:505
@@ -3127,8 +3126,8 @@ msgstr "Alt kenarlık sınırlamaların dışında (olmalı < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "'%s' dosyasına yazılamadı: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:324
-#: ../plug-ins/common/file-pdf-load.c:343
+#: ../plug-ins/common/file-pdf-load.c:329
+#: ../plug-ins/common/file-pdf-load.c:348
 #: ../plug-ins/common/file-pdf-save.c:383
 #: ../plug-ins/common/file-pdf-save.c:400
 #: ../plug-ins/common/file-pdf-save.c:418
@@ -3139,77 +3138,82 @@ msgstr "Taşınabilir Belge Biçimi"
 #. * second is out-of-range page number, third is
 #. * number of pages. Specify order as in English if needed.
 #.
-#: ../plug-ins/common/file-pdf-load.c:507
+#: ../plug-ins/common/file-pdf-load.c:512
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
 msgstr[0] "'%1$s' PDF belgesi %3$d sayfadır. %2$d. sayfa erim dışı."
 
-#: ../plug-ins/common/file-pdf-load.c:689
+#: ../plug-ins/common/file-pdf-load.c:695
 msgid "PDF is password protected, please input the password:"
 msgstr "PDF parola korumalı, lütfen parolayı giriniz:"
 
-#: ../plug-ins/common/file-pdf-load.c:699
+#: ../plug-ins/common/file-pdf-load.c:705
 msgid "Encrypted PDF"
 msgstr "Şifrelenmiş PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:726
+#: ../plug-ins/common/file-pdf-load.c:732
 msgid "Wrong password! Please input the right one:"
 msgstr "Hatalı parola! Lütfen doğru parolayı giriniz:"
 
-#: ../plug-ins/common/file-pdf-load.c:744
+#: ../plug-ins/common/file-pdf-load.c:750
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "'%s' yüklenemedi: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:1081
+#: ../plug-ins/common/file-pdf-load.c:1096
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1083 ../plug-ins/common/file-ps.c:1197
+#: ../plug-ins/common/file-pdf-load.c:1098 ../plug-ins/common/file-ps.c:1197
 #, c-format
 msgid "%s-pages"
 msgstr "%s-sayfa"
 
-#: ../plug-ins/common/file-pdf-load.c:1274
+#: ../plug-ins/common/file-pdf-load.c:1334
 msgid "Import from PDF"
 msgstr "PDF dosyasından içe aktar"
 
-#: ../plug-ins/common/file-pdf-load.c:1279 ../plug-ins/common/file-ps.c:3448
+#: ../plug-ins/common/file-pdf-load.c:1339 ../plug-ins/common/file-ps.c:3448
 #: ../plug-ins/file-tiff/file-tiff-load.c:2665
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "İçe _Aktar"
 
-#: ../plug-ins/common/file-pdf-load.c:1312
+#: ../plug-ins/common/file-pdf-load.c:1372
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Verilen PDF dosyasından sayfa sayısı alınırken hata."
 
 #. "Load in reverse order" toggle button
-#: ../plug-ins/common/file-pdf-load.c:1353
+#: ../plug-ins/common/file-pdf-load.c:1416
 msgid "Load in reverse order"
 msgstr "Ters düzende yükle"
 
-#: ../plug-ins/common/file-pdf-load.c:1371
+#: ../plug-ins/common/file-pdf-load.c:1434
 msgid "_Width (pixels):"
 msgstr "_Genişlik (piksel):"
 
-#: ../plug-ins/common/file-pdf-load.c:1372
+#: ../plug-ins/common/file-pdf-load.c:1435
 msgid "_Height (pixels):"
 msgstr "_Yükseklik (piksel):"
 
-#: ../plug-ins/common/file-pdf-load.c:1374
+#: ../plug-ins/common/file-pdf-load.c:1437
 msgid "_Resolution:"
 msgstr "_Çözünürlük:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1385
+#: ../plug-ins/common/file-pdf-load.c:1448
 msgid "Use _Anti-aliasing"
 msgstr "_Kenar Yumuşatma Kullan"
 
-#: ../plug-ins/common/file-pdf-load.c:1663
-#: ../plug-ins/common/file-pdf-load.c:1664 ../plug-ins/common/file-svg.c:852
+#. White Background
+#: ../plug-ins/common/file-pdf-load.c:1457
+msgid "_Fill transparent areas with white"
+msgstr "Saydam alanları beyazla _doldur"
+
+#: ../plug-ins/common/file-pdf-load.c:1743
+#: ../plug-ins/common/file-pdf-load.c:1744 ../plug-ins/common/file-svg.c:852
 #: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
@@ -6826,7 +6830,7 @@ msgstr "G3 faks görüntüsü"
 #: ../plug-ins/file-faxg3/faxg3.c:275 ../plug-ins/file-faxg3/faxg3.c:574
 #, c-format
 msgid "Could not create buffer to process image data."
-msgstr "Görüntü verisini işlemek için arabellek oluşturulamadı."
+msgstr "Görüntü verisini işlemek için tampon oluşturulamadı."
 
 #: ../plug-ins/file-faxg3/faxg3.c:540
 #, c-format
@@ -10279,7 +10283,7 @@ msgstr "Önizlemeyi _kendiliğinden güncelle"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2533
 msgid "'Default' is created."
-msgstr "'Öntanımlı' yaratıldı."
+msgstr "'Öntanımlı' oluşturuldu."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2534
 msgid "Default"
