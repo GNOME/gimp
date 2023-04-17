@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-14 00:18+0000\n"
-"PO-Revision-Date: 2023-02-14 04:32+0300\n"
+"POT-Creation-Date: 2023-03-05 12:52+0000\n"
+"PO-Revision-Date: 2023-03-06 16:44+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -1509,7 +1509,7 @@ msgstr "XMP veri ayrıştırma işlemi başarısız oldu."
 
 #: ../libgimpbase/gimputils.c:219 ../libgimpbase/gimputils.c:224
 msgid "(invalid UTF-8 string)"
-msgstr "(geçersiz UTF-8 satırı)"
+msgstr "(geçersiz UTF-8 dizgesi)"
 
 #: ../libgimpbase/gimputils.c:394
 msgid "File path is NULL"
@@ -1821,29 +1821,29 @@ msgstr "'%s' renk profili CMYK renk uzayı için değildir."
 #: ../libgimpconfig/gimpconfig-deserialize.c:113
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr "%s için alınan değer geçerli bir UTF-8 dizgisi değil"
+msgstr "%s için alınan jeton geçerli bir UTF-8 dizgesi değil"
 
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpconfig-deserialize.c:473
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
-"%s boolean anahtarı için beklenen değer 'yes' ya da 'no', alınan değer '%s'"
+"%s boolean jetonu için beklenen değer 'yes' ya da 'no', alınan değer '%s'"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:588
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "geçersiz değer '%s' (anahtar %s)"
+msgstr "geçersiz değer '%s' (jeton %s)"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:603
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "geçersiz değer '%ld' (anahtar %s)"
+msgstr "geçersiz değer '%ld' (jeton %s)"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:672
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr "'%s' belirteci ayrıştırılırken: '%s"
+msgstr "'%s' jetonu ayrıştırılırken: '%s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:682
 #: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:756
@@ -1885,13 +1885,13 @@ msgstr "'%s' üzerine yazarken hata: %s"
 #: ../libgimpconfig/gimpscanner.c:409
 #, c-format
 msgid "invalid UTF-8 string"
-msgstr "geçersiz UTF-8 dizgisi"
+msgstr "geçersiz UTF-8 dizgesi"
 
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpscanner.c:631
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
-msgstr "beklenen değer 'yes' ya da 'no', alınan değer '%s'"
+msgstr "boolean jeton için beklenen değer 'yes' ya da 'no', alınan değer '%s'"
 
 #: ../libgimpconfig/gimpscanner.c:865
 #, c-format
@@ -2029,23 +2029,23 @@ msgstr "Üretici: "
 msgid "Copyright: "
 msgstr "Telif Hakkı: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:206
+#: ../libgimpwidgets/gimpcolorscales.c:208
 msgid "Scales"
 msgstr "Ölçekler"
 
-#: ../libgimpwidgets/gimpcolorscales.c:445
+#: ../libgimpwidgets/gimpcolorscales.c:450
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:447
+#: ../libgimpwidgets/gimpcolorscales.c:452
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:468
+#: ../libgimpwidgets/gimpcolorscales.c:473
 msgid "LCh"
 msgstr "LCh"
 
-#: ../libgimpwidgets/gimpcolorscales.c:470
+#: ../libgimpwidgets/gimpcolorscales.c:475
 msgid "HSV"
 msgstr "HSV"
 
