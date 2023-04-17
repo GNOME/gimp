@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-14 00:17+0000\n"
-"PO-Revision-Date: 2023-02-14 04:26+0300\n"
+"POT-Creation-Date: 2023-02-25 21:07+0000\n"
+"PO-Revision-Date: 2023-03-08 00:47+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -139,12 +139,12 @@ msgid "Paths are now exported to PSD"
 msgstr "Yollar artık PSDʼye aktarılıyor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
-msgid "JPEG-XL export added"
-msgstr "JPEG-XL dışa aktarma eklendi"
+msgid "JPEG XL export added"
+msgstr "JPEG XL dışa aktarma eklendi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
-msgid "Metadata in JPEG-XL import and export"
-msgstr "JPEG-XL içe ve dışa aktarmada üst veriler"
+msgid "Metadata in JPEG XL import"
+msgstr "JPEG XL içe aktarmada üst veriler"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "New option \"Show reduced images\" when loading TIFF images"
@@ -1330,7 +1330,7 @@ msgstr "Fırçalar"
 
 #: ../app/actions/actions.c:117 ../app/dialogs/dialogs.c:358
 msgid "Buffers"
-msgstr "Arabellekler"
+msgstr "Tamponlar"
 
 #: ../app/actions/actions.c:120 ../app/dialogs/dialogs.c:376
 #: ../app/propgui/gimppropgui-newsprint.c:160
@@ -1638,7 +1638,7 @@ msgstr "Bu fırçayı düzenle"
 #: ../app/actions/buffers-actions.c:42
 msgctxt "buffers-action"
 msgid "Buffers Menu"
-msgstr "Arabellekler Menüsü"
+msgstr "Tamponlar Menüsü"
 
 #: ../app/actions/buffers-actions.c:46
 msgctxt "buffers-action"
@@ -3588,7 +3588,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:116 ../app/actions/tool-options-commands.c:75
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2180
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2195
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -3869,12 +3869,12 @@ msgstr "Yazı tipleri iletişim kutusunu aç"
 #: ../app/actions/dialogs-actions.c:209
 msgctxt "dialogs-action"
 msgid "B_uffers"
-msgstr "A_rabellekler"
+msgstr "_Tamponlar"
 
 #: ../app/actions/dialogs-actions.c:210
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
-msgstr "Adlandırılan arabellekler iletişim kutusunu aç"
+msgstr "Adlandırılan tamponlar iletişim kutusunu aç"
 
 #: ../app/actions/dialogs-actions.c:215
 msgctxt "dialogs-action"
@@ -4506,7 +4506,7 @@ msgstr "Farklı Y_apıştır"
 #: ../app/actions/edit-actions.c:67
 msgctxt "edit-action"
 msgid "_Buffer"
-msgstr "_Arabellek"
+msgstr "_Tampon"
 
 #: ../app/actions/edit-actions.c:70
 msgctxt "edit-action"
@@ -4813,7 +4813,7 @@ msgstr "Adlandırıp Kes"
 #: ../app/actions/edit-commands.c:405 ../app/actions/edit-commands.c:426
 #: ../app/actions/edit-commands.c:447
 msgid "Enter a name for this buffer"
-msgstr "Bu arabellek için bir ad girin"
+msgstr "Bu tampon için bir ad girin"
 
 #: ../app/actions/edit-commands.c:423
 msgid "Copy Named"
@@ -4842,7 +4842,7 @@ msgstr "Kesilecek etkin katman veya kanal yok."
 #: ../app/actions/edit-commands.c:651 ../app/actions/edit-commands.c:683
 #: ../app/actions/edit-commands.c:707
 msgid "(Unnamed Buffer)"
-msgstr "(Adsız Arabellek)"
+msgstr "(Adsız Tampon)"
 
 #: ../app/actions/edit-commands.c:678
 msgid "There is no active layer or channel to copy from."
@@ -13231,7 +13231,7 @@ msgstr "Yapıştırılan Katman"
 
 #: ../app/core/gimp-edit.c:750
 msgid "Global Buffer"
-msgstr "Evrensel Arabellek"
+msgstr "Evrensel Tampon"
 
 #: ../app/core/gimp-gradients.c:64
 msgid "Custom"
@@ -14173,64 +14173,64 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Katman Kümesini Dönüştür"
 
-#: ../app/core/gimpimage.c:691 ../app/widgets/gimpsymmetryeditor.c:181
+#: ../app/core/gimpimage.c:692 ../app/widgets/gimpsymmetryeditor.c:181
 msgid "Symmetry"
 msgstr "Simetri"
 
-#: ../app/core/gimpimage.c:2425
+#: ../app/core/gimpimage.c:2440
 msgid " (exported)"
 msgstr " (dışa aktarılmış)"
 
-#: ../app/core/gimpimage.c:2429
+#: ../app/core/gimpimage.c:2444
 msgid " (overwritten)"
 msgstr " (üstüne yazılmış)"
 
-#: ../app/core/gimpimage.c:2438
+#: ../app/core/gimpimage.c:2453
 msgid " (imported)"
 msgstr " (içe aktarılmış)"
 
-#: ../app/core/gimpimage.c:2612 ../app/core/gimpimage.c:2626
-#: ../app/core/gimpimage.c:2669
+#: ../app/core/gimpimage.c:2627 ../app/core/gimpimage.c:2641
+#: ../app/core/gimpimage.c:2684
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "'%s' katman kipi %s ile eklendi"
 
-#: ../app/core/gimpimage.c:2684
+#: ../app/core/gimpimage.c:2699
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Katman kümeleri %s ile eklendi"
 
-#: ../app/core/gimpimage.c:2691
+#: ../app/core/gimpimage.c:2706
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Katman kümelerindeki maskeler %s ile eklendi"
 
-#: ../app/core/gimpimage.c:2707
+#: ../app/core/gimpimage.c:2722
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Yüksek bit derinlikli görüntüler %s ile eklendi"
 
-#: ../app/core/gimpimage.c:2719
+#: ../app/core/gimpimage.c:2734
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Dahili zlib sıkıştırması %s ile eklendi"
 
-#: ../app/core/gimpimage.c:2736
+#: ../app/core/gimpimage.c:2751
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr " 4 GB’dan büyük görüntü dosyaları desteği %s ile eklendi"
 
-#: ../app/core/gimpimage.c:2832
+#: ../app/core/gimpimage.c:2847
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Görüntü Çözünürlüğünü Değiştir"
 
-#: ../app/core/gimpimage.c:2884
+#: ../app/core/gimpimage.c:2899
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Görüntü Birimini Değiştir"
 
-#: ../app/core/gimpimage.c:3835
+#: ../app/core/gimpimage.c:3850
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14238,47 +14238,47 @@ msgstr ""
 "'gimp-comment' parasit doğrulaması başarısız oldu: yorum geçersiz UTF-8 "
 "içeriyor"
 
-#: ../app/core/gimpimage.c:3894
+#: ../app/core/gimpimage.c:3909
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Görüntüye Parazit İliştir"
 
-#: ../app/core/gimpimage.c:3936
+#: ../app/core/gimpimage.c:3951
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Görüntüden Paraziti Kaldır"
 
-#: ../app/core/gimpimage.c:4667
+#: ../app/core/gimpimage.c:4682
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Katman Ekle"
 
-#: ../app/core/gimpimage.c:4709 ../app/core/gimpimage.c:4740
+#: ../app/core/gimpimage.c:4724 ../app/core/gimpimage.c:4755
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Katmanı Kaldır"
 
-#: ../app/core/gimpimage.c:4734
+#: ../app/core/gimpimage.c:4749
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Yüzen Seçimi Kaldır"
 
-#: ../app/core/gimpimage.c:4901
+#: ../app/core/gimpimage.c:4916
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Kanal Ekle"
 
-#: ../app/core/gimpimage.c:4929 ../app/core/gimpimage.c:4953
+#: ../app/core/gimpimage.c:4944 ../app/core/gimpimage.c:4968
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Kanalı Kaldır"
 
-#: ../app/core/gimpimage.c:5009
+#: ../app/core/gimpimage.c:5024
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Yol Ekle"
 
-#: ../app/core/gimpimage.c:5039 ../app/core/gimpimage.c:5046
+#: ../app/core/gimpimage.c:5054 ../app/core/gimpimage.c:5061
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Yolu Kaldır"
@@ -14430,8 +14430,8 @@ msgid "Convert Image to 64 bit gamma floating point"
 msgstr "Görüntüyü 64 bit gama kayan noktalı sayı değerine dönüştür"
 
 #. dithering
-#: ../app/core/gimpimage-convert-precision.c:268
-#: ../app/core/gimpimage-convert-precision.c:289
+#: ../app/core/gimpimage-convert-precision.c:272
+#: ../app/core/gimpimage-convert-precision.c:293
 #: ../app/dialogs/convert-indexed-dialog.c:241
 #: ../app/dialogs/convert-precision-dialog.c:224
 #: ../app/tools/gimpgradientoptions.c:128
@@ -18504,7 +18504,7 @@ msgid "Drop image files here to open them"
 msgstr "Görüntü dosyalarını açmak için buraya bırakın"
 
 # master terimi çevrilemeyen bir dalın özel adı
-#: ../app/display/gimpdisplayshell-callbacks.c:621
+#: ../app/display/gimpdisplayshell-callbacks.c:625
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -18629,7 +18629,7 @@ msgstr "Katmanları Düşür"
 #: ../app/display/gimpdisplayshell-dnd.c:750
 #: ../app/widgets/gimplayertreeview.c:854 ../app/widgets/gimptoolbox-dnd.c:272
 msgid "Dropped Buffer"
-msgstr "Düşürülmüş Arabellek"
+msgstr "Düşürülmüş Tampon"
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:79
 msgid "Color Display Filters"
@@ -20588,18 +20588,18 @@ msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Parlaklık-Karşıtlık"
 
-#: ../app/pdb/color-cmds.c:148 ../app/pdb/drawable-color-cmds.c:610
+#: ../app/pdb/color-cmds.c:148 ../app/pdb/drawable-color-cmds.c:657
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Düzeyler"
 
-#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:738
+#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:785
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Posterleştir"
 
 #: ../app/pdb/color-cmds.c:286 ../app/pdb/color-cmds.c:327
-#: ../app/pdb/drawable-color-cmds.c:325
+#: ../app/pdb/drawable-color-cmds.c:372
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Solgunlaştır"
@@ -20628,7 +20628,7 @@ msgstr "Renklendir"
 msgid "Hue-Saturation"
 msgstr "Renk Tonu Doygunluğu"
 
-#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:784
+#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:831
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Eşik"
@@ -20642,17 +20642,22 @@ msgctxt "command"
 msgid "Foreground Select"
 msgstr "Önalanı Seç"
 
-#: ../app/pdb/drawable-color-cmds.c:507
+#: ../app/pdb/drawable-color-cmds.c:331
+msgctxt "undo-type"
+msgid "Extract Component"
+msgstr "Bileşen Çıkar"
+
+#: ../app/pdb/drawable-color-cmds.c:554
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Renk Tonu-Doygunluk"
 
-#: ../app/pdb/drawable-color-cmds.c:542
+#: ../app/pdb/drawable-color-cmds.c:589
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Tersine Çevir"
 
-#: ../app/pdb/drawable-color-cmds.c:698
+#: ../app/pdb/drawable-color-cmds.c:745
 msgctxt "undo-type"
 msgid "Shadows-Highlights"
 msgstr "Gölgeleler-Vurgular"
@@ -20831,12 +20836,12 @@ msgstr "'%s' yazı tipi bulunamadı"
 
 #: ../app/pdb/gimppdb-utils.c:382
 msgid "Invalid empty buffer name"
-msgstr "Geçersiz boş arabellek adı"
+msgstr "Geçersiz boş tampon adı"
 
 #: ../app/pdb/gimppdb-utils.c:392
 #, c-format
 msgid "Named buffer '%s' not found"
-msgstr "'%s' adlandırılmış arabellek bulunanamadı"
+msgstr "'%s' adlandırılmış tampon bulunanamadı"
 
 #: ../app/pdb/gimppdb-utils.c:411
 msgid "Invalid empty paint method name"
@@ -25394,7 +25399,7 @@ msgstr "%s içinde yol bulunamadı"
 
 #: ../app/vectors/gimpvectors-import.c:390
 msgid "No paths found in the buffer"
-msgstr "Arabellekte yol bulunamadı"
+msgstr "Tamponda yol bulunamadı"
 
 #: ../app/vectors/gimpvectors-import.c:400
 #, c-format
@@ -26500,7 +26505,7 @@ msgstr "TempBuf"
 
 #: ../app/widgets/gimpdashboard.c:770
 msgid "Total size of temporary buffers"
-msgstr "Toplam geçici arabellek boyutu"
+msgstr "Toplam geçici tampon boyutu"
 
 #: ../app/widgets/gimpdashboard.c:782
 msgctxt "dashboard-group"
