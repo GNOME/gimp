@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-15 23:14+0000\n"
-"PO-Revision-Date: 2023-04-16 14:06+0200\n"
+"POT-Creation-Date: 2023-04-17 04:04+0000\n"
+"PO-Revision-Date: 2023-04-17 15:38+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1447,7 +1447,6 @@ msgid "Le_vel"
 msgstr "Ra_ven"
 
 #: plug-ins/common/contrast-retinex.c:212
-#, fuzzy
 msgid "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
 msgstr ""
 "Porazdelitev Retinex po utežeh {enakomerno (0), nizko (1), visoko (2) }"
@@ -1967,7 +1966,8 @@ msgstr "Iz slike odstrani navpične artefakte v obliki trakov"
 msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Iz slike odstrani navpične artefakte v obliki trakov."
 
-#: plug-ins/common/destripe.c:141 plug-ins/imagemap/imap_grid.c:255
+#: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:194
+#: plug-ins/imagemap/imap_grid.c:255
 msgid "_Width"
 msgstr "_Širina"
 
@@ -2141,7 +2141,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:913
-#: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:1374
+#: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1374
 #: plug-ins/common/file-pcx.c:870 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
 #: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
@@ -2162,7 +2162,6 @@ msgid "C source code"
 msgstr "Izvorna koda C"
 
 #: plug-ins/common/file-csource.c:124
-#, fuzzy
 msgid "Dump image data in RGB(A) format for C source"
 msgstr "Odvrzi slikovne podatke v obliki RGB(A) za izvorno kodo C"
 
@@ -2920,27 +2919,62 @@ msgstr "Hitro"
 msgid "HTML table"
 msgstr "Tabela HTML"
 
-#: plug-ins/common/file-html-table.c:174
+#: plug-ins/common/file-html-table.c:155
+msgid "HTML Table"
+msgstr "Tabela HTML"
+
+#: plug-ins/common/file-html-table.c:158
+#, fuzzy
+msgid "GIMP Table Magic"
+msgstr "Čarobna tabela GIMP"
+
+#: plug-ins/common/file-html-table.c:159
+msgid "Allows you to draw an HTML table in GIMP. See help for more info."
+msgstr ""
+"Omogoča, da narišete tabelo HTML s programom GIMP. Če želite več informacij, "
+"si oglejte pomoč."
+
+#: plug-ins/common/file-html-table.c:175
+msgid "Use c_aption"
+msgstr "Uporabi n_apis"
+
+#: plug-ins/common/file-html-table.c:176
 msgid "Enable if you would like to have the table captioned."
 msgstr "Izberite, če želite tabeli dati napis."
 
-#: plug-ins/common/file-html-table.c:181
+#: plug-ins/common/file-html-table.c:182
+msgid "Capt_ion"
+msgstr "Nap_is"
+
+#: plug-ins/common/file-html-table.c:183
 msgid "The text for the table caption."
 msgstr "Besedilo za napis v celici."
 
-#: plug-ins/common/file-html-table.c:187
+#: plug-ins/common/file-html-table.c:188
+msgid "Cell con_tent"
+msgstr "Vsebina _celice"
+
+#: plug-ins/common/file-html-table.c:189
 msgid "The text to go into each cell."
 msgstr "Besedilo za vse celice."
 
-#: plug-ins/common/file-html-table.c:193
+#: plug-ins/common/file-html-table.c:195
 msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Širina posamezne celice v tabeli. Možen je vpis števila ali odstotka."
 
-#: plug-ins/common/file-html-table.c:200
+#: plug-ins/common/file-html-table.c:201 plug-ins/imagemap/imap_grid.c:261
+msgid "_Height"
+msgstr "_Višina"
+
+#: plug-ins/common/file-html-table.c:202
 msgid "The height for each table cell. Can be a number or a percent."
 msgstr "Višina posamezne celice v tabeli. Možen je vpis števila ali odstotka."
 
-#: plug-ins/common/file-html-table.c:207
+#: plug-ins/common/file-html-table.c:208
+msgid "_Generate full HTML document"
+msgstr "_Ustvari cel dokument HTML"
+
+#: plug-ins/common/file-html-table.c:209
 msgid ""
 "If enabled GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
@@ -2948,11 +2982,19 @@ msgstr ""
 "Če je vključeno, bo izhod GTM popoln dokument HTML z značkami <HTML>, "
 "<BODY>, itn., ne pa zgolj koda html za tabelo."
 
-#: plug-ins/common/file-html-table.c:215
+#: plug-ins/common/file-html-table.c:216
+msgid "_Border"
+msgstr "Ro_b"
+
+#: plug-ins/common/file-html-table.c:217
 msgid "The number of pixels in the table border."
 msgstr "Širina roba tabele v slikovnih točkah."
 
-#: plug-ins/common/file-html-table.c:221
+#: plug-ins/common/file-html-table.c:222
+msgid "_Use cellspan"
+msgstr "_Uporabi razpete celice (cellspan)"
+
+#: plug-ins/common/file-html-table.c:223
 msgid ""
 "If enabled GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
@@ -2960,7 +3002,11 @@ msgstr ""
 "Če je vključeno, bo GTML zamenjal vse pravokotne odseke enako obarvanih "
 "blokov z eno veliko celico z vrednostma ROWSPAN in COLSPAN."
 
-#: plug-ins/common/file-html-table.c:230
+#: plug-ins/common/file-html-table.c:231
+msgid "Co_mpress TD tags"
+msgstr "Stisni _značke TD"
+
+#: plug-ins/common/file-html-table.c:232
 msgid ""
 "Enabling this will cause GTM to leave no whitespace between the TD tags and "
 "the cell content. This is only necessary for pixel level positioning control."
@@ -2969,27 +3015,27 @@ msgstr ""
 "značkami TD in vsebino celic. To je nujno le za nadzor položaja na ravni "
 "slikovnih točk."
 
-#: plug-ins/common/file-html-table.c:240
+#: plug-ins/common/file-html-table.c:241
+msgid "Cell-pa_dding"
+msgstr "_Blazinjenje celic (do roba)"
+
+#: plug-ins/common/file-html-table.c:242
 msgid "The amount of cell padding."
 msgstr "Količina blazinjenja celic."
 
-#: plug-ins/common/file-html-table.c:246
+#: plug-ins/common/file-html-table.c:247
+msgid "Cell spaci_ng"
+msgstr "Razmik _celic"
+
+#: plug-ins/common/file-html-table.c:248
 msgid "The amount of cell spacing."
 msgstr "Količina razmika celic."
 
-#: plug-ins/common/file-html-table.c:287
+#: plug-ins/common/file-html-table.c:289
 msgid "HTML table plug-in does not support multiple layers."
 msgstr "Vstavek za tabele HTML ne podpira več kot ene plasti."
 
-#: plug-ins/common/file-html-table.c:609
-msgid "Export Image as HTML Table"
-msgstr "Izvozi sliko kot tabelo HTML"
-
-#: plug-ins/common/file-html-table.c:623
-msgid "Warning"
-msgstr "Opozorilo"
-
-#: plug-ins/common/file-html-table.c:634
+#: plug-ins/common/file-html-table.c:614
 msgid ""
 "You are about to create a huge\n"
 "HTML file which will most likely\n"
@@ -2999,69 +3045,21 @@ msgstr ""
 "datoteko HTML, ki bo najverjetneje\n"
 "sesula vaš brskalnik."
 
-#. HTML Page Options
-#: plug-ins/common/file-html-table.c:643
+#: plug-ins/common/file-html-table.c:631
+msgid "Warning"
+msgstr "Opozorilo"
+
+#: plug-ins/common/file-html-table.c:644
 msgid "HTML Page Options"
 msgstr "Možnosti strani HTML"
 
-#: plug-ins/common/file-html-table.c:652
-msgid "_Generate full HTML document"
-msgstr "_Ustvari cel dokument HTML"
-
-#. HTML Table Creation Options
-#: plug-ins/common/file-html-table.c:656
+#: plug-ins/common/file-html-table.c:654
 msgid "Table Creation Options"
 msgstr "Možnosti ustvarjanja tabele"
 
-#: plug-ins/common/file-html-table.c:667
-msgid "_Use cellspan"
-msgstr "_Uporabi razpete celice (cellspan)"
-
-#: plug-ins/common/file-html-table.c:671
-msgid "Co_mpress TD tags"
-msgstr "Stisni _značke TD"
-
-#: plug-ins/common/file-html-table.c:675
-msgid "C_aption"
-msgstr "N_apis"
-
-#: plug-ins/common/file-html-table.c:689
-msgid "C_ell content:"
-msgstr "Vsebina _celice:"
-
-#. HTML Table Options
-#: plug-ins/common/file-html-table.c:693
+#: plug-ins/common/file-html-table.c:673
 msgid "Table Options"
 msgstr "Možnosti tabele"
-
-#: plug-ins/common/file-html-table.c:706
-msgid "_Border:"
-msgstr "Ro_b:"
-
-#: plug-ins/common/file-html-table.c:712 plug-ins/common/file-ps.c:3647
-#: plug-ins/common/file-ps.c:3847 plug-ins/common/smooth-palette.c:531
-#: plug-ins/common/tile.c:519 plug-ins/imagemap/imap_cmd_guides.c:163
-#: plug-ins/imagemap/imap_rectangle.c:398
-#: plug-ins/print/print-page-layout.c:286
-msgid "_Width:"
-msgstr "_Širina:"
-
-#: plug-ins/common/file-html-table.c:718 plug-ins/common/file-ps.c:3660
-#: plug-ins/common/file-ps.c:3858 plug-ins/common/film.c:1067
-#: plug-ins/common/smooth-palette.c:536 plug-ins/common/tile.c:523
-#: plug-ins/imagemap/imap_cmd_guides.c:173
-#: plug-ins/imagemap/imap_rectangle.c:405
-#: plug-ins/print/print-page-layout.c:288
-msgid "_Height:"
-msgstr "_Višina:"
-
-#: plug-ins/common/file-html-table.c:724
-msgid "Cell-_padding:"
-msgstr "_Blazinjenje celic (do roba):"
-
-#: plug-ins/common/file-html-table.c:730
-msgid "Cell-_spacing:"
-msgstr "Razmik _celic:"
 
 #: plug-ins/common/file-jp2-load.c:187
 msgid "JPEG 2000 image"
@@ -3370,7 +3368,6 @@ msgid "Save _background color"
 msgstr "Shrani _barvo ozadja"
 
 #: plug-ins/common/file-mng.c:331
-#, fuzzy
 msgid "Write bKGd (background color) chunk"
 msgstr "Zapiši košček bKGd (barva ozadja)"
 
@@ -3379,7 +3376,6 @@ msgid "Save _gamma"
 msgstr "Shrani _gamo"
 
 #: plug-ins/common/file-mng.c:337
-#, fuzzy
 msgid "Write gAMA (gamma) chunk"
 msgstr "Zapiši košček gAMA (gama)"
 
@@ -3388,7 +3384,6 @@ msgid "Sa_ve resolution"
 msgstr "S_hrani ločljivost"
 
 #: plug-ins/common/file-mng.c:343
-#, fuzzy
 msgid "Write pHYs (image resolution) chunk"
 msgstr "Zapiši košček pHYs (ločljivost slike)"
 
@@ -3397,7 +3392,6 @@ msgid "Save creation _time"
 msgstr "Shrani _čas nastanka"
 
 #: plug-ins/common/file-mng.c:349
-#, fuzzy
 msgid "Write tIME (creation time) chunk"
 msgstr "Zapiši košček tIME (čas nastanka)"
 
@@ -4186,6 +4180,22 @@ msgstr "Upodabljanje"
 #: plug-ins/common/file-wmf.c:717
 msgid "Resolution:"
 msgstr "Ločljivost:"
+
+#: plug-ins/common/file-ps.c:3647 plug-ins/common/file-ps.c:3847
+#: plug-ins/common/smooth-palette.c:531 plug-ins/common/tile.c:519
+#: plug-ins/imagemap/imap_cmd_guides.c:163
+#: plug-ins/imagemap/imap_rectangle.c:398
+#: plug-ins/print/print-page-layout.c:286
+msgid "_Width:"
+msgstr "_Širina:"
+
+#: plug-ins/common/file-ps.c:3660 plug-ins/common/file-ps.c:3858
+#: plug-ins/common/film.c:1067 plug-ins/common/smooth-palette.c:536
+#: plug-ins/common/tile.c:523 plug-ins/imagemap/imap_cmd_guides.c:173
+#: plug-ins/imagemap/imap_rectangle.c:405
+#: plug-ins/print/print-page-layout.c:288
+msgid "_Height:"
+msgstr "_Višina:"
 
 #: plug-ins/common/file-ps.c:3673
 msgid "Pages:"
@@ -12032,10 +12042,6 @@ msgstr "_Križci"
 #: plug-ins/imagemap/imap_grid.c:248
 msgid "Grid Granularity"
 msgstr "Zrnatost mreže"
-
-#: plug-ins/imagemap/imap_grid.c:261
-msgid "_Height"
-msgstr "_Višina"
 
 #: plug-ins/imagemap/imap_grid.c:275
 msgid "Grid Offset"
