@@ -53,7 +53,7 @@ enum
 
 /*  local function prototypes  */
 
-static void     gimp_rectangle_options_fixed_rule_changed     (GtkWidget                   *combo_box,
+static void     gimp_rectangle_options_fixed_rule_changed     (GtkWidget                   *widget,
                                                                GimpRectangleOptionsPrivate *private);
 
 static void     gimp_rectangle_options_string_current_updates (GimpNumberPairEntry         *entry,
@@ -674,15 +674,20 @@ gimp_rectangle_options_get_size_entry (GimpRectangleOptions *rectangle_options)
 
 /**
  * gimp_rectangle_options_fixed_rule_changed:
- * @combo_box:
+ * @widget:
  * @private:
  *
  * Updates tool options widgets depending on current fixed rule state.
  */
 static void
-gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *combo_box,
+gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *widget,
                                            GimpRectangleOptionsPrivate *private)
 {
+  /* Update fixed_rule_active if checkbox was changed */
+  if (GTK_IS_TOGGLE_BUTTON (widget))
+    private->fixed_rule_active =
+      gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+
   /* Setup sensitivity for Width and Height entries */
 
   gtk_widget_set_sensitive (gimp_size_entry_get_help_widget (
