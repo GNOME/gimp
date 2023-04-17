@@ -131,12 +131,15 @@ gimp_menu_item_set_image (GtkMenuItem *item,
       gtk_container_add (GTK_CONTAINER (hbox), label);
       g_object_unref (label);
 
-      accel_label = gimp_accel_label_new (action);
-      g_object_set_data (G_OBJECT (item), "gimp-menu-item-accel", accel_label);
-      gtk_container_add (GTK_CONTAINER (hbox), accel_label);
-      gtk_widget_set_hexpand (GTK_WIDGET (accel_label), TRUE);
-      gtk_label_set_xalign (GTK_LABEL (accel_label), 1.0);
-      gtk_widget_show (accel_label);
+      if (action)
+        {
+          accel_label = gimp_accel_label_new (action);
+          g_object_set_data (G_OBJECT (item), "gimp-menu-item-accel", accel_label);
+          gtk_container_add (GTK_CONTAINER (hbox), accel_label);
+          gtk_widget_set_hexpand (GTK_WIDGET (accel_label), TRUE);
+          gtk_label_set_xalign (GTK_LABEL (accel_label), 1.0);
+          gtk_widget_show (accel_label);
+        }
 
       gtk_container_add (GTK_CONTAINER (item), hbox);
       gtk_widget_show (hbox);

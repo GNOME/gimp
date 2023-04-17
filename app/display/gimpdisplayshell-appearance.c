@@ -27,6 +27,7 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpdockcolumns.h"
+#include "widgets/gimpmenumodel.h"
 #include "widgets/gimprender.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -469,6 +470,8 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
                                 GimpCanvasPaddingMode  padding_mode,
                                 const GimpRGB         *padding_color)
 {
+  GimpImageWindow    *window;
+  GimpMenuModel      *model;
   GimpDisplayOptions *options;
   GimpRGB             color;
 
@@ -504,12 +507,14 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
   gimp_canvas_set_padding (GIMP_CANVAS (shell->canvas),
                            padding_mode, &color);
 
+  window = gimp_display_shell_get_window (shell);
+  model  = gimp_image_window_get_menubar_model (window);
   if (padding_mode != GIMP_CANVAS_PADDING_MODE_DEFAULT)
-    gimp_display_shell_set_action_color (shell, "view-padding-color-menu",
-                                         &options->padding_color);
+    gimp_menu_model_set_color (model, "/View/Padding color",
+                               &options->padding_color);
   else
-    gimp_display_shell_set_action_color (shell, "view-padding-color-menu",
-                                         NULL);
+    gimp_menu_model_set_color (model, "/View/Padding color",
+                               NULL);
 }
 
 void

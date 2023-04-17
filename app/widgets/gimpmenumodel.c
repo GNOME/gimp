@@ -26,6 +26,7 @@
 #include "widgets-types.h"
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "core/gimp.h"
@@ -62,6 +63,7 @@ enum
   PROP_PATH,
   PROP_IS_SECTION,
   PROP_TITLE,
+  PROP_COLOR,
 };
 
 struct _GimpMenuModelPrivate
@@ -75,6 +77,7 @@ struct _GimpMenuModelPrivate
    * will not be NULL.
    */
   GMenuItem     *submenu_item;
+  GimpRGB       *submenu_color;
 
   GList         *items;
 };
@@ -116,10 +119,9 @@ static gboolean     gimp_menu_model_handles_subpath          (GimpMenuModel     
 
 static GMenuItem  * gimp_menu_model_get_item                 (GimpMenuModel       *model,
                                                               gint                 idx);
-
-static gboolean     gimp_menu_model_set_title_rec            (GimpMenuModel       *model,
+static GMenuItem *  gimp_menu_model_get_menu_item_rec        (GimpMenuModel       *model,
                                                               const gchar         *path,
-                                                              const gchar         *title,
+                                                              GimpMenuModel      **menu,
                                                               GMenuItem           *item);
 
 static void         gimp_menu_model_notify_group_label       (GimpRadioAction     *action,
@@ -195,6 +197,12 @@ gimp_menu_model_class_init (GimpMenuModelClass *klass)
                                                         NULL, NULL, NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_EXPLICIT_NOTIFY));
+  g_object_class_install_property (object_class, PROP_COLOR,
+                                   gimp_param_spec_rgb ("color",
+                                                        NULL, NULL,
+                                                        TRUE, &(GimpRGB) {},
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_EXPLICIT_NOTIFY));
 }
 
 static void
@@ -203,9 +211,10 @@ gimp_menu_model_init (GimpMenuModel *model)
   model->priv = gimp_menu_model_get_instance_private (model);
 
   model->priv->items         = NULL;
-  model->priv->path          = 0;
+  model->priv->path          = NULL;
   model->priv->is_section    = FALSE;
   model->priv->submenu_item  = NULL;
+  model->priv->submenu_color = NULL;
 }
 
 static void
@@ -216,6 +225,7 @@ gimp_menu_model_finalize (GObject *object)
   g_clear_object (&model->priv->model);
   g_list_free_full (model->priv->items, g_object_unref);
   g_free (model->priv->path);
+  g_free (model->priv->submenu_color);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -244,6 +254,9 @@ gimp_menu_model_get_property (GObject    *object,
           g_value_set_string (value, title);
           g_free (title);
         }
+      break;
+    case PROP_COLOR:
+      g_value_set_boxed (value, model->priv->submenu_color);
       break;
 
     default:
@@ -278,6 +291,10 @@ gimp_menu_model_set_property (GObject      *object,
     case PROP_TITLE:
       gimp_menu_model_set_title (model, model->priv->path,
                                  g_value_get_string (value));
+      break;
+    case PROP_COLOR:
+      gimp_menu_model_set_color (model, model->priv->path,
+                                 g_value_get_boxed (value));
       break;
 
     default:
@@ -558,7 +575,40 @@ gimp_menu_model_set_title (GimpMenuModel *model,
                            const gchar   *path,
                            const gchar   *title)
 {
-  gimp_menu_model_set_title_rec (model, path, title, NULL);
+  GMenuItem     *item;
+  GimpMenuModel *submenu = NULL;
+
+  item = gimp_menu_model_get_menu_item_rec (model, path, &submenu, NULL);
+
+  if (item != NULL)
+    {
+      g_menu_item_set_label (item, title);
+      g_object_notify (G_OBJECT (submenu), "title");
+    }
+}
+
+void
+gimp_menu_model_set_color (GimpMenuModel *model,
+                           const gchar   *path,
+                           const GimpRGB *color)
+{
+  GMenuItem     *item;
+  GimpMenuModel *submenu = NULL;
+
+  item = gimp_menu_model_get_menu_item_rec (model, path, &submenu, NULL);
+
+  if (item != NULL)
+    {
+      if (color == NULL)
+        g_clear_pointer (&submenu->priv->submenu_color, g_free);
+      else if (submenu->priv->submenu_color == NULL)
+        submenu->priv->submenu_color = g_new (GimpRGB, 1);
+
+      if (color != NULL)
+        *submenu->priv->submenu_color = *color;
+
+      g_object_notify (G_OBJECT (submenu), "color");
+    }
 }
 
 
@@ -849,35 +899,39 @@ gimp_menu_model_get_item (GimpMenuModel *model,
   return NULL;
 }
 
-static gboolean
-gimp_menu_model_set_title_rec (GimpMenuModel *model,
-                               const gchar   *path,
-                               const gchar   *title,
-                               GMenuItem     *item)
+static GMenuItem *
+gimp_menu_model_get_menu_item_rec (GimpMenuModel  *model,
+                                   const gchar    *path,
+                                   GimpMenuModel **menu,
+                                   GMenuItem      *item)
 {
-  g_return_val_if_fail (item == model->priv->submenu_item, FALSE);
+  g_return_val_if_fail (item == model->priv->submenu_item, NULL);
+  g_return_val_if_fail (menu != NULL && *menu == NULL, NULL);
 
   if (gimp_utils_are_menu_path_identical (path, model->priv->path))
     {
-      if (item != NULL)
-        g_menu_item_set_label (item, title);
-      g_object_notify (G_OBJECT (model), "title");
-
-      return TRUE;
+      *menu = model;
+      return item;
     }
   else
     {
-      GList    *iter;
-      gboolean  found = FALSE;
+      GList     *iter;
+      GMenuItem *found = NULL;
 
       for (iter = model->priv->items; iter; iter = iter->next)
         {
-          GMenuItem  *item    = iter->data;
+          GMenuItem  *subitem = iter->data;
           GMenuModel *submenu = NULL;
+          GMenuModel *section = NULL;
 
-          submenu = g_menu_item_get_link (item, G_MENU_LINK_SUBMENU);
+          submenu = g_menu_item_get_link (subitem, G_MENU_LINK_SUBMENU);
+          section = g_menu_item_get_link (subitem, G_MENU_LINK_SECTION);
 
-          if (submenu != NULL)
+          if (section != NULL)
+            {
+              found = gimp_menu_model_get_menu_item_rec (GIMP_MENU_MODEL (section), path, menu, NULL);
+            }
+          else if (submenu != NULL)
             {
               gchar *subpath;
 
@@ -886,15 +940,17 @@ gimp_menu_model_set_title_rec (GimpMenuModel *model,
               if (g_strcmp0 (path, GIMP_MENU_MODEL (submenu)->priv->path) == 0 ||
                   g_str_has_prefix (path, subpath))
                 {
-                  found = gimp_menu_model_set_title_rec (GIMP_MENU_MODEL (submenu), path, title, item);
-
-                  if (found)
-                    break;
+                  found = gimp_menu_model_get_menu_item_rec (GIMP_MENU_MODEL (submenu), path, menu, subitem);
                 }
 
               g_free (subpath);
             }
+
           g_clear_object (&submenu);
+          g_clear_object (&section);
+
+          if (found != NULL)
+            break;
         }
 
       return found;

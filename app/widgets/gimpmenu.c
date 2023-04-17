@@ -107,6 +107,9 @@ static void     gimp_menu_section_items_changed   (GMenuModel              *mode
 static void     gimp_menu_submenu_notify_title    (GimpMenuModel           *model,
                                                    const GParamSpec        *pspec,
                                                    GtkMenuItem             *item);
+static void     gimp_menu_submenu_notify_color    (GimpMenuModel           *model,
+                                                   const GParamSpec        *pspec,
+                                                   GtkMenuItem             *item);
 
 static void     gimp_menu_toggle_item_toggled     (GtkWidget               *item,
                                                    GAction                 *action);
@@ -256,6 +259,9 @@ gimp_menu_append (GimpMenuShell *shell,
                          subcontainer);
           g_signal_connect (submenu, "notify::title",
                             G_CALLBACK (gimp_menu_submenu_notify_title),
+                            item);
+          g_signal_connect (submenu, "notify::color",
+                            G_CALLBACK (gimp_menu_submenu_notify_color),
                             item);
         }
       else if (action_name == NULL)
@@ -713,6 +719,37 @@ gimp_menu_submenu_notify_title (GimpMenuModel    *model,
                 NULL);
   gtk_menu_item_set_label (item, title);
   g_free (title);
+}
+
+static void
+gimp_menu_submenu_notify_color (GimpMenuModel    *model,
+                                const GParamSpec *pspec,
+                                GtkMenuItem      *item)
+{
+  GimpRGB   *color = NULL;
+  GtkWidget *image = NULL;
+  gint       width, height;
+
+  g_object_get (model,
+                "color", &color,
+                NULL);
+
+  if (color)
+    {
+      image = gimp_color_area_new (color, GIMP_COLOR_AREA_SMALL_CHECKS, 0);
+      gimp_color_area_set_draw_border (GIMP_COLOR_AREA (image), TRUE);
+
+      /* TODO: the color area should be color-managed. */
+      /*gimp_color_area_set_color_config (GIMP_COLOR_AREA (image),*/
+      /*gimp->config->color_management);*/
+
+      gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
+      gtk_widget_set_size_request (image, width, height);
+      gtk_widget_show (image);
+    }
+
+  gimp_menu_item_set_image (item, image, NULL);
+  g_free (color);
 }
 
 static void
