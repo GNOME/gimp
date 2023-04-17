@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-13 22:04+0000\n"
-"PO-Revision-Date: 2023-02-14 04:22+0300\n"
+"POT-Creation-Date: 2023-03-05 12:53+0000\n"
+"PO-Revision-Date: 2023-03-08 00:49+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnometurk@gnome.org>\n"
 "Language: tr\n"
@@ -360,7 +360,7 @@ msgstr "Fırçalar"
 
 #: app/actions/actions.c:118 app/dialogs/dialogs.c:361
 msgid "Buffers"
-msgstr "Arabellekler"
+msgstr "Tamponlar"
 
 #: app/actions/actions.c:121 app/dialogs/dialogs.c:379
 #: app/propgui/gimppropgui-newsprint.c:160 app/widgets/gimppickablepopup.c:247
@@ -670,7 +670,7 @@ msgstr "Bu fırçayı düzenle"
 #: app/actions/buffers-actions.c:42
 msgctxt "buffers-action"
 msgid "Buffers Menu"
-msgstr "Arabellekler Menüsü"
+msgstr "Tamponlar Menüsü"
 
 #: app/actions/buffers-actions.c:46
 msgctxt "buffers-action"
@@ -757,7 +757,7 @@ msgstr "Seçili arabelleği yeni katman olarak özgün konumuna yapıştır"
 #: app/actions/buffers-actions.c:130 app/actions/buffers-actions.c:131
 #: app/actions/buffers-actions.c:132 app/actions/buffers-actions.c:133
 msgid "No selected buffer"
-msgstr "Seçili arabellek yok"
+msgstr "Seçili tampon yok"
 
 #: app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -2657,7 +2657,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2416
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2431
 #: app/core/gimppalette.c:430 app/core/gimppalette-import.c:213
 #: app/core/gimppalette-load.c:194 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
@@ -2938,12 +2938,12 @@ msgstr "Yazı tipleri iletişim kutusunu aç"
 #: app/actions/dialogs-actions.c:209
 msgctxt "dialogs-action"
 msgid "B_uffers"
-msgstr "A_rabellekler"
+msgstr "_Tamponlar"
 
 #: app/actions/dialogs-actions.c:210
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
-msgstr "Adlandırılan arabellekler iletişim kutusunu aç"
+msgstr "Adlandırılan tamponlar iletişim kutusunu aç"
 
 #: app/actions/dialogs-actions.c:215
 msgctxt "dialogs-action"
@@ -3609,7 +3609,7 @@ msgstr "Farklı Y_apıştır"
 #: app/actions/edit-actions.c:67
 msgctxt "edit-action"
 msgid "_Buffer"
-msgstr "_Arabellek"
+msgstr "_Tampon"
 
 #: app/actions/edit-actions.c:70
 msgctxt "edit-action"
@@ -3917,7 +3917,7 @@ msgstr "Adlandırıp Kes"
 #: app/actions/edit-commands.c:462 app/actions/edit-commands.c:484
 #: app/actions/edit-commands.c:506
 msgid "Enter a name for this buffer"
-msgstr "Bu arabellek için bir ad girin"
+msgstr "Bu tampon için bir ad girin"
 
 #: app/actions/edit-commands.c:481
 msgid "Copy Named"
@@ -3957,7 +3957,7 @@ msgstr "Kesilecek seçili katman veya kanal yok."
 #: app/actions/edit-commands.c:754 app/actions/edit-commands.c:787
 #: app/actions/edit-commands.c:812
 msgid "(Unnamed Buffer)"
-msgstr "(Adsız Arabellek)"
+msgstr "(Adsız Tampon)"
 
 #: app/actions/edit-commands.c:782
 msgid "There are no selected layers or channels to copy from."
@@ -4297,8 +4297,7 @@ msgstr "Bu şablon için bir ad girin"
 
 #: app/actions/file-commands.c:432
 msgid "Revert failed. No file name associated with this image."
-msgstr ""
-"Geri dönme başarısız. Bu görüntü ile ilişkilendirilmiş bir dosya adı yok."
+msgstr "Geri dönülemedi. Bu görüntü ile ilişkilendirilmiş bir dosya adı yok."
 
 #: app/actions/file-commands.c:444
 msgid "Revert Image"
@@ -6133,7 +6132,7 @@ msgstr "_Gri Tonlama..."
 #: app/actions/image-commands.c:576
 #, c-format
 msgid "Saving color profile failed: %s"
-msgstr "Renk profilini kaydetme başarısız oldu: %s"
+msgstr "Renk profili kaydedilemedi: %s"
 
 #: app/actions/image-commands.c:616
 msgid "Save Color Profile"
@@ -6975,7 +6974,7 @@ msgstr "Katmanın alfa kanalını geçerli seçime ekle"
 #: app/actions/layers-actions.c:538
 msgctxt "layers-action"
 msgid "_Subtract Alpha from Selection"
-msgstr "Alfa'yı _Seçimden Çıkar"
+msgstr "Alfayı _Seçimden Çıkar"
 
 #: app/actions/layers-actions.c:540
 msgctxt "layers-action"
@@ -6985,7 +6984,7 @@ msgstr "Katmanın alfa kanalını geçerli seçimden çıkar"
 #: app/actions/layers-actions.c:545
 msgctxt "layers-action"
 msgid "_Intersect Alpha with Selection"
-msgstr "Alfayla Seçimle _Kesiştir"
+msgstr "Alfayı Seçimle _Kesiştir"
 
 #: app/actions/layers-actions.c:547
 msgctxt "layers-action"
@@ -11709,7 +11708,7 @@ msgstr "ölümcül ayrıştırma hatası"
 #: app/config/gimprc-deserialize.c:164
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr "%s için alınan değer geçerli bir UTF-8 dizgisi değil"
+msgstr "%s için alınan jeton geçerli bir UTF-8 dizgesi değil"
 
 #: app/core/core-enums.c:25
 msgctxt "align-reference-type"
@@ -12835,7 +12834,7 @@ msgstr "Toplu yorumlayıcı '%s' yok. Toplu kip devre dışı bırakıldı."
 #: app/menus/menus.c:492 app/widgets/gimpdevices.c:225
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
-msgstr "\"%s\" silme başarısız oldu: %s"
+msgstr "\"%s\" silinemedi: %s"
 
 #. initialize the list of gimp dynamics
 #: app/core/gimp-data-factories.c:361 app/core/gimpcontext.c:707
@@ -12865,7 +12864,7 @@ msgstr "Yapıştırılan Katman"
 
 #: app/core/gimp-edit.c:1133
 msgid "Global Buffer"
-msgstr "Evrensel Arabellek"
+msgstr "Evrensel Tampon"
 
 # addon burada uygulamadan dönen bir değer gibi olması sebebiyle çevirilmedi
 #: app/core/gimpextension.c:365
@@ -12982,7 +12981,7 @@ msgstr "'%s' kaydedilirken hata"
 #: app/core/gimp-spawn.c:186
 #, c-format
 msgid "Failed to fork (%s)"
-msgstr "Çatallama başarısız oldu (%s)"
+msgstr "Çatallanamadı (%s)"
 
 #: app/core/gimp-spawn.c:223
 #, c-format
@@ -13096,7 +13095,7 @@ msgstr "'%s' içinde geçersiz başlık verisi: Fırça adı çok uzun: %lu"
 #: app/core/gimpbrushpipe-load.c:70
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "'%s' fırça dosyası içinde geçersiz UTF-8 dizgisi."
+msgstr "'%s' fırça dosyası içinde geçersiz UTF-8 dizgesi."
 
 #: app/core/gimpbrush-load.c:279 app/core/gimppattern-load.c:142
 #: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:618
@@ -13498,7 +13497,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Veri kaydetme başarısız:\n"
+"Veri kaydedilemedi:\n"
 "\n"
 "%s"
 
@@ -13567,7 +13566,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Veri yükleme başarısız:\n"
+"Veri yüklenemedi:\n"
 "\n"
 "%s"
 
@@ -13720,7 +13719,7 @@ msgstr "Bir GIMP renk geçişi dosyası değildir."
 #: app/core/gimpgradient-load.c:96
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr "'%s' renk geçişi dosyasında geçersiz UTF-8 dizgisi."
+msgstr "'%s' renk geçişi dosyasında geçersiz UTF-8 dizgesi."
 
 #: app/core/gimpgradient-load.c:122
 msgid "File is corrupt."
@@ -13850,183 +13849,181 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Katman Kümesini Dönüştür"
 
-#: app/core/gimpimage.c:706 app/widgets/gimpsymmetryeditor.c:182
+#: app/core/gimpimage.c:707 app/widgets/gimpsymmetryeditor.c:182
 msgid "Symmetry"
 msgstr "Simetri"
 
-#: app/core/gimpimage.c:2661
+#: app/core/gimpimage.c:2676
 msgid " (exported)"
 msgstr " (dışa aktarılmış)"
 
-#: app/core/gimpimage.c:2665
+#: app/core/gimpimage.c:2680
 msgid " (overwritten)"
 msgstr " (üstüne yazılmış)"
 
-#: app/core/gimpimage.c:2674
+#: app/core/gimpimage.c:2689
 msgid " (imported)"
 msgstr " (içe aktarılmış)"
 
 # Hata mesajı: İkinci S Gimp ve sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2847 app/core/gimpimage.c:2861
-#: app/core/gimpimage.c:2904
+#: app/core/gimpimage.c:2862 app/core/gimpimage.c:2876
+#: app/core/gimpimage.c:2919
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "'%s' katman kipi %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2919
+#: app/core/gimpimage.c:2934
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Katman kümeleri %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2926
+#: app/core/gimpimage.c:2941
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Katman kümelerindeki maskeler %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2933
+#: app/core/gimpimage.c:2948
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Katman kümelerindeki konum kilitleri %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2940
+#: app/core/gimpimage.c:2955
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Katman kümelerindeki alfa kanalı kilitleri %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2948 app/core/gimpimage.c:2962
+#: app/core/gimpimage.c:2963 app/core/gimpimage.c:2977
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Görünürlük kilitleri %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2971
+#: app/core/gimpimage.c:2986
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Çoklu yol seçimi %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2983
+#: app/core/gimpimage.c:2998
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Renk etiketlerinin yola kaydedilmesi %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2990
+#: app/core/gimpimage.c:3005
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Kilitlerin yola kaydedilmesi %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3004
+#: app/core/gimpimage.c:3019
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Yüksek bit derinlikli görüntüler %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3012
+#: app/core/gimpimage.c:3027
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Yüksek bit derinlikli görüntülerin kodlaması %s ile düzeltildi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3020
+#: app/core/gimpimage.c:3035
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Dahili zlib sıkıştırması %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3037
+#: app/core/gimpimage.c:3052
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr " 4 GB’dan büyük görüntü dosyaları desteği %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3044
+#: app/core/gimpimage.c:3059
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Çoklu katman seçimi %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3061
+#: app/core/gimpimage.c:3076
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Tuval dışı kılavuzlar %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3072
+#: app/core/gimpimage.c:3087
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Öge seti ve öge adlarında desen araması %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3078
+#: app/core/gimpimage.c:3093
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Çoklu kanal seçimi %s ile eklendi"
 
-#: app/core/gimpimage.c:3183
+#: app/core/gimpimage.c:3198
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Görüntü Çözünürlüğünü Değiştir"
 
-#: app/core/gimpimage.c:3235
+#: app/core/gimpimage.c:3250
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Görüntü Birimini Değiştir"
 
-#: app/core/gimpimage.c:4288
+#: app/core/gimpimage.c:4303
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
-msgstr ""
-"'gimp-comment' parasit doğrulaması başarısız oldu: yorum geçersiz UTF-8 "
-"içeriyor"
+msgstr "'gimp-comment' parasit doğrulanamadı: yorum geçersiz UTF-8 içeriyor"
 
-#: app/core/gimpimage.c:4350
+#: app/core/gimpimage.c:4365
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Görüntüye Parazit İliştir"
 
-#: app/core/gimpimage.c:4395
+#: app/core/gimpimage.c:4410
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Görüntüden Paraziti Kaldır"
 
-#: app/core/gimpimage.c:5230
+#: app/core/gimpimage.c:5245
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Katman Ekle"
 
-#: app/core/gimpimage.c:5274 app/core/gimpimage.c:5305
+#: app/core/gimpimage.c:5289 app/core/gimpimage.c:5320
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Katmanı Kaldır"
 
-#: app/core/gimpimage.c:5299
+#: app/core/gimpimage.c:5314
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Yüzen Seçimi Kaldır"
 
-#: app/core/gimpimage.c:5823
+#: app/core/gimpimage.c:5838
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Kanal Ekle"
 
-#: app/core/gimpimage.c:5853 app/core/gimpimage.c:5878
+#: app/core/gimpimage.c:5868 app/core/gimpimage.c:5893
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Kanalı Kaldır"
 
-#: app/core/gimpimage.c:5938
+#: app/core/gimpimage.c:5953
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Yol Ekle"
 
-#: app/core/gimpimage.c:5973 app/core/gimpimage.c:5981
+#: app/core/gimpimage.c:5988 app/core/gimpimage.c:5996
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Yolu Kaldır"
@@ -14047,36 +14044,33 @@ msgstr "'sRGB Profili Kullan'ı pasifleştir"
 #: app/core/gimpimage-color-profile.c:201
 #, c-format
 msgid "ICC profile validation failed: Parasite's name is not '%s'"
-msgstr "ICC profil doğrulaması başarısız oldu: Parazitin adı '%s' değil"
+msgstr "ICC profili doğrulanamadı: Parazitin adı '%s' değil"
 
 #: app/core/gimpimage-color-profile.c:216
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
 msgstr ""
-"ICC profil doğrulaması başarısız oldu: Parasiz bayrakları (PERSISTENT/KALICI "
-"| UNDOABLE/GERİ ALINAMAZ) değil"
+"ICC profili doğrulanamadı: Parasiz bayrakları (PERSISTENT/KALICI | UNDOABLE/"
+"GERİ ALINAMAZ) değil"
 
 #: app/core/gimpimage-color-profile.c:275
 msgid "ICC profile validation failed: "
-msgstr "ICC profil doğrulaması başarısız oldu: "
+msgstr "ICC profili doğrulanamadı: "
 
 #: app/core/gimpimage-color-profile.c:277
 msgid "Simulation ICC profile validation failed: "
-msgstr "ICC profil doğrulama benzetimi başarısız oldu: "
+msgstr "ICC profili doğrulama benzetimi başarısız oldu: "
 
 #: app/core/gimpimage-color-profile.c:547
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr ""
-"ICC profil doğrulaması başarısız oldu: Renk profili, gri tonlamalı renk "
-"uzayı için değil"
+"ICC profili doğrulanamadı: Renk profili, gri tonlamalı renk uzayı için değil"
 
 #: app/core/gimpimage-color-profile.c:557
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
-msgstr ""
-"ICC profil doğrulaması başarısız oldu: Renk profili, RGB renk uzayı için "
-"değil"
+msgstr "ICC profili doğrulanamadı: Renk profili, RGB renk uzayı için değil"
 
 #: app/core/gimpimage-color-profile.c:616
 msgid "Assigning color profile"
@@ -14152,8 +14146,8 @@ msgid "Convert Image to %s"
 msgstr "Görüntüyü %s'ye dönüştür"
 
 #. dithering
-#: app/core/gimpimage-convert-precision.c:245
-#: app/core/gimpimage-convert-precision.c:266
+#: app/core/gimpimage-convert-precision.c:249
+#: app/core/gimpimage-convert-precision.c:270
 #: app/dialogs/convert-indexed-dialog.c:240
 #: app/dialogs/convert-precision-dialog.c:212
 #: app/tools/gimpgradientoptions.c:129
@@ -14646,7 +14640,7 @@ msgstr "Eksik sihirli başlık."
 #: app/core/gimppalette-load.c:94
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr "'%s' palet dosyası içinde geçersiz UTF-8 dizgisi"
+msgstr "'%s' palet dosyası içinde geçersiz UTF-8 dizgesi"
 
 #: app/core/gimppalette-load.c:114
 msgid "Invalid column count."
@@ -14743,7 +14737,7 @@ msgstr "Dosya bozulmuş görünüyor."
 #: app/core/gimppattern-load.c:135
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "'%s' desen dosyası içinde geçersiz UTF-8 dizgisi."
+msgstr "'%s' desen dosyası içinde geçersiz UTF-8 dizgesi."
 
 #: app/core/gimppattern-load.c:178
 msgid "Fatal parse error in pattern file: "
@@ -15742,7 +15736,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"%s dosyasını kaydetme başarısız oldu.\n"
+"%s dosyası kaydedilemedi.\n"
 "\n"
 "%s"
 
@@ -18471,7 +18465,7 @@ msgid "Drop image files here to open them"
 msgstr "Görüntü dosyalarını açmak için buraya bırakın"
 
 # master terimi çevrilemeyen bir dalın özel adı
-#: app/display/gimpdisplayshell-callbacks.c:648
+#: app/display/gimpdisplayshell-callbacks.c:653
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -18588,7 +18582,7 @@ msgstr "Katmanları Düşür"
 #: app/display/gimpdisplayshell-dnd.c:736 app/widgets/gimplayertreeview.c:1077
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
-msgstr "Düşürülmüş Arabellek"
+msgstr "Düşürülmüş Tampon"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:79
 msgid "Color Display Filters"
@@ -19133,7 +19127,7 @@ msgstr "Görüntü hiçbir katman içermiyor"
 #: app/file/file-open.c:696
 #, c-format
 msgid "Opening '%s' failed: %s"
-msgstr "%s dosyasını açma başarısız oldu: %s"
+msgstr "%s dosyası açılamadı: %s"
 
 #: app/file/file-remote.c:113
 msgid "Mounting remote volume"
@@ -20673,37 +20667,42 @@ msgctxt "undo-type"
 msgid "Curves"
 msgstr "Eğriler"
 
-#: app/pdb/drawable-color-cmds.c:325
+#: app/pdb/drawable-color-cmds.c:331
+msgctxt "undo-type"
+msgid "Extract Component"
+msgstr "Bileşen Çıkar"
+
+#: app/pdb/drawable-color-cmds.c:372
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Solgunlaştır"
 
-#: app/pdb/drawable-color-cmds.c:499
+#: app/pdb/drawable-color-cmds.c:546
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Renk Tonu-Doygunluk"
 
-#: app/pdb/drawable-color-cmds.c:534 app/pdb/plug-in-compat-cmds.c:1585
+#: app/pdb/drawable-color-cmds.c:581 app/pdb/plug-in-compat-cmds.c:1585
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Tersine Çevir"
 
-#: app/pdb/drawable-color-cmds.c:602
+#: app/pdb/drawable-color-cmds.c:649
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Düzeyler"
 
-#: app/pdb/drawable-color-cmds.c:690
+#: app/pdb/drawable-color-cmds.c:737
 msgctxt "undo-type"
 msgid "Shadows-Highlights"
 msgstr "Gölgeleler-Vurgular"
 
-#: app/pdb/drawable-color-cmds.c:730
+#: app/pdb/drawable-color-cmds.c:777
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Posterleştir"
 
-#: app/pdb/drawable-color-cmds.c:776
+#: app/pdb/drawable-color-cmds.c:823
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Eşik"
@@ -20852,12 +20851,12 @@ msgstr "'%s' yazı tipi bulunamadı"
 
 #: app/pdb/gimppdb-utils.c:384
 msgid "Invalid empty buffer name"
-msgstr "Geçersiz boş arabellek adı"
+msgstr "Geçersiz boş tampon adı"
 
 #: app/pdb/gimppdb-utils.c:394
 #, c-format
 msgid "Named buffer '%s' not found"
-msgstr "'%s' adlandırılmış arabellek bulunanamadı"
+msgstr "'%s' adlandırılmış tampon bulunanamadı"
 
 #: app/pdb/gimppdb-utils.c:413
 msgid "Invalid empty paint method name"
@@ -21135,7 +21134,7 @@ msgstr ""
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
-"'%s' yordamı, '%s' bağımsız değişkeni için geçersiz UTF-8 dizgisi döndürdü."
+"'%s' yordamı, '%s' bağımsız değişkeni için geçersiz UTF-8 dizgesi döndürdü."
 
 #: app/pdb/gimpprocedure.c:1035
 #, c-format
@@ -21143,7 +21142,7 @@ msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr ""
-"'%s' yordamı, '%s' bağımsız değişkeni için geçersiz UTF-8 dizgisiyle "
+"'%s' yordamı, '%s' bağımsız değişkeni için geçersiz UTF-8 dizgesiyle "
 "çağrıldı."
 
 #: app/pdb/image-cmds.c:2476
@@ -21542,7 +21541,7 @@ msgstr "Rüzgar"
 
 #: app/pdb/text-layer-cmds.c:97
 msgid "Failed to create text layer"
-msgstr "Metin katmanı oluşturma başarısız"
+msgstr "Metin katmanı oluşturulamadı"
 
 #: app/pdb/text-layer-cmds.c:161 app/pdb/text-layer-cmds.c:295
 #: app/pdb/text-layer-cmds.c:360 app/pdb/text-layer-cmds.c:419
@@ -21614,7 +21613,7 @@ msgstr "%s yorumlayıcı dosyası içinde kötü yorumlayıcı başvurusu: %s"
 #: app/plug-in/gimpinterpreterdb.c:372
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
-msgstr "%s yorumlayıcı dosyası içinde kötü ikili biçimi dizgisi"
+msgstr "%s yorumlayıcı dosyası içinde kötü ikili biçimi dizgesi"
 
 #: app/plug-in/gimpplugin.c:235
 #, c-format
@@ -21666,7 +21665,7 @@ msgstr "Eklenti Ortamı"
 #: app/plug-in/gimppluginmanager-call.c:347
 #, c-format
 msgid "Failed to run plug-in \"%s\""
-msgstr "\"%s\" eklentisini çalıştırma başarısız oldu"
+msgstr "\"%s\" eklentisi çalıştırılamadı"
 
 #: app/plug-in/gimppluginmanager-file.c:417
 msgid "Unknown file type"
@@ -22164,7 +22163,7 @@ msgid ""
 "Some fonts failed to load:\n"
 "%s"
 msgstr ""
-"Kimi yazı tipleri yükleme başarısız:\n"
+"Kimi yazı tipleri yüklenemedi:\n"
 "%s"
 
 #: app/text/gimptext-compat.c:110 app/tools/gimptexttool.c:1631
@@ -25800,12 +25799,12 @@ msgstr "%s içinde yol bulunamadı"
 
 #: app/vectors/gimpvectors-import.c:390
 msgid "No paths found in the buffer"
-msgstr "Arabellekte yol bulunamadı"
+msgstr "Tamponda yol bulunamadı"
 
 #: app/vectors/gimpvectors-import.c:400
 #, c-format
 msgid "Failed to import paths from '%s': %s"
-msgstr "'%s' dosyasından yolları içe aktarma başarısız oldu: %s"
+msgstr "'%s' dosyasından yollar içe aktarılamadı: %s"
 
 #: app/widgets/gimpactioneditor.c:70
 msgid "_Search:"
@@ -25830,7 +25829,7 @@ msgstr "Ad"
 
 #: app/widgets/gimpactionview.c:580 app/widgets/gimpactionview.c:821
 msgid "Changing shortcut failed."
-msgstr "Kısayol değişimi başarısız oldu."
+msgstr "Kısayol değiştirilemedi."
 
 #: app/widgets/gimpactionview.c:617
 msgid "Conflicting Shortcuts"
@@ -25866,7 +25865,7 @@ msgstr "Alt+%d %d ekranına geçiş için kullanıldı ve yeniden yönlendirilem
 
 #: app/widgets/gimpactionview.c:857
 msgid "Removing shortcut failed."
-msgstr "Kısayolu kaldırma başarısız oldu."
+msgstr "Kısayol kaldırılamadı."
 
 #: app/widgets/gimpbrusheditor.c:139
 msgid "Shape:"
@@ -26822,7 +26821,7 @@ msgstr "TempBuf"
 
 #: app/widgets/gimpdashboard.c:763
 msgid "Total size of temporary buffers"
-msgstr "Toplam geçici arabellek boyutu"
+msgstr "Toplam geçici tampon boyutu"
 
 #: app/widgets/gimpdashboard.c:775
 msgctxt "dashboard-group"
@@ -28548,7 +28547,7 @@ msgstr ""
 
 #: app/xcf/xcf-read.c:195
 msgid "Invalid UTF-8 string in XCF file"
-msgstr "XCF dosyasında geçersiz UTF-8 dizgisi"
+msgstr "XCF dosyasında geçersiz UTF-8 dizgesi"
 
 #: app/xcf/xcf-seek.c:45
 msgid "Could not seek in XCF file: "
