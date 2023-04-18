@@ -164,7 +164,8 @@ gimp_action_group_constructed (GObject *object)
 static void
 gimp_action_group_dispose (GObject *object)
 {
-  const gchar *name = gimp_action_group_get_name (GIMP_ACTION_GROUP (object));
+  GimpActionGroup *group = GIMP_ACTION_GROUP (object);
+  const gchar     *name  = gimp_action_group_get_name (group);
 
   if (name)
     {
@@ -187,6 +188,8 @@ gimp_action_group_dispose (GObject *object)
         }
     }
 
+  g_list_free_full (g_steal_pointer (&group->actions), g_object_unref);
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -197,7 +200,6 @@ gimp_action_group_finalize (GObject *object)
 
   g_clear_pointer (&group->label,     g_free);
   g_clear_pointer (&group->icon_name, g_free);
-  g_list_free_full (group->actions, g_object_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
