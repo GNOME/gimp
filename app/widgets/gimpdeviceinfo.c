@@ -384,7 +384,8 @@ gimp_device_info_set_property (GObject      *object,
 
             info->priv->n_keys = n_device_values;
             info->priv->keys   = g_renew (GimpDeviceKey, info->priv->keys, info->priv->n_keys);
-            memset (info->priv->keys, 0, info->priv->n_keys * sizeof (GimpDeviceKey));
+            if (info->priv->n_keys > 0)
+              memset (info->priv->keys, 0, info->priv->n_keys * sizeof (GimpDeviceKey));
 
             for (i = 0; i < n_device_values; i++)
               {
