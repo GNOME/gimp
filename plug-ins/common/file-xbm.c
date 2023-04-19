@@ -101,7 +101,8 @@ static gboolean         save_image           (GFile                *file,
                                               GimpDrawable         *drawable,
                                               GObject              *config,
                                               GError              **error);
-static gboolean         save_dialog          (GimpDrawable         *drawable,
+static gboolean         save_dialog          (GimpImage            *image,
+                                              GimpDrawable         *drawable,
                                               GimpProcedure        *procedure,
                                               GObject              *config);
 
@@ -158,12 +159,12 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("X BitMap image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Load a file in X10 or X11 bitmap "
-                                        "(XBM) file format",
-                                        "Load a file in X10 or X11 bitmap "
-                                        "(XBM) file format. XBM is a lossless "
-                                        "format for flat black-and-white "
-                                        "(two color indexed) images.",
+                                        _("Load a file in X10 or X11 bitmap "
+                                          "(XBM) file format"),
+                                        _("Load a file in X10 or X11 bitmap "
+                                          "(XBM) file format. XBM is a lossless "
+                                          "format for flat black-and-white "
+                                          "(two color indexed) images."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Gordon Matzigkeit",
@@ -186,18 +187,20 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("X BitMap image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Export a file in X10 or X11 bitmap "
-                                        "(XBM) file format",
-                                        "Export a file in X10 or X11 bitmap "
-                                        "(XBM) file format. XBM is a lossless "
-                                        "format for flat black-and-white "
-                                        "(two color indexed) images.",
+                                        _("Export a file in X10 or X11 bitmap "
+                                          "(XBM) file format"),
+                                        _("X10 or X11 bitmap "
+                                          "(XBM) file format. XBM is a lossless "
+                                          "format for flat black-and-white "
+                                          "(two color indexed) images."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Gordon Matzigkeit",
                                       "Gordon Matzigkeit",
                                       "1998");
 
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("XBM"));
       gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
                                               TRUE);
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
@@ -206,14 +209,14 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
                                           "xbm,icon,bitmap");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-comment",
-                             "Save comment",
+                             _("_Write comment"),
                              _("Write a comment at the beginning of the file."),
                              FALSE, /* *NOT* gimp_export_comment() */
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_STRING (procedure, "gimp-comment",
-                            "Comment",
-                            "Image description (maximum 72 bytes)",
+                            _("Co_mment"),
+                            _("Image description (maximum 72 bytes)"),
                             gimp_get_default_comment (),
                             G_PARAM_READWRITE);
 
@@ -221,44 +224,44 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
                                         GIMP_ARGUMENT_SYNC_PARASITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "x10-format",
-                             "X10 format",
-                             "Export in X10 format",
+                             _("_X10 format bitmap"),
+                             _("Export in X10 format"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "use-hot-spot",
-                             "Use hot spot",
-                             "Write hotspot information",
+                             _("Write hot spot _values"),
+                             _("Write hotspot information"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "hot-spot-x",
-                         "Hot spot X",
-                         "X coordinate of hotspot",
+                         _("Hot s_pot X"),
+                         _("X coordinate of hotspot"),
                          0, GIMP_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "hot-spot-y",
-                         "Hot spot Y",
-                         "Y coordinate of hotspot",
+                         _("Hot spot _Y"),
+                         _("Y coordinate of hotspot"),
                          0, GIMP_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_STRING (procedure, "prefix",
-                            "Prefix",
-                            "Identifier prefix [determined from filename]",
+                            _("I_dentifier prefix"),
+                            _("Identifier prefix [determined from filename]"),
                             "bitmap",
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "write-mask",
-                             "Write mask",
-                             "Write extra mask file",
+                             _("Write extra mask _file"),
+                             _("Write extra mask file"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_STRING (procedure, "mask-suffix",
-                            "Mask suffix",
-                            "Suffix of the mask file",
+                            _("Mas_k file extensions"),
+                            _("Suffix of the mask file"),
                             "-mask",
                             G_PARAM_READWRITE);
     }
@@ -412,7 +415,7 @@ xbm_save (GimpProcedure        *procedure,
           g_free (parasite_data);
         }
 
-      if (! save_dialog (drawables[0], procedure, G_OBJECT (config)))
+      if (! save_dialog (image, drawables[0], procedure, G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
     }
 
@@ -1233,61 +1236,23 @@ save_image (GFile         *file,
 }
 
 static gboolean
-save_dialog (GimpDrawable  *drawable,
+save_dialog (GimpImage     *image,
+             GimpDrawable  *drawable,
              GimpProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *frame;
-  GtkWidget *grid;
-  GtkWidget *toggle;
   GtkWidget *hint;
-  GtkWidget *entry;
-  GtkWidget *spinbutton;
   gboolean   run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as XBM"));
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  /*  X10 format  */
-  toggle = gimp_prop_check_button_new (config, "x10-format",
-                                       _("_X10 format bitmap"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
-  /* prefix */
-  entry = gimp_prop_entry_new (config, "prefix", MAX_PREFIX);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("_Identifier prefix:"), 0.0, 0.5,
-                            entry, 1);
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
   /* comment string. */
-  frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
-  toggle = gimp_prop_check_button_new (config, "save-comment",
-                                       _("_Write comment"));
-  gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
 
   hint = g_object_new (GIMP_TYPE_HINT_BOX,
                        "icon-name", GIMP_ICON_DIALOG_WARNING,
@@ -1296,79 +1261,37 @@ save_dialog (GimpDrawable  *drawable,
                                       "The comment will not affect embedding "
                                       "the XBM in C source code."),
                        NULL);
-  gtk_grid_attach (GTK_GRID (grid), hint, 0, 0, 2, 1);
-  gtk_widget_show (hint);
 
-  g_object_bind_property (config, "save-comment",
-                          grid,   "sensitive",
-                          G_BINDING_SYNC_CREATE);
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "comment-vbox", "gimp-comment", NULL);
 
-  entry = gimp_prop_entry_new (config, "gimp-comment", MAX_COMMENT);
-  gtk_widget_set_size_request (entry, 240, -1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("Comment:"), 0.0, 0.5,
-                            entry, 1);
+  gtk_box_pack_start (GTK_BOX (vbox), hint, FALSE, FALSE, 0);
+  gtk_widget_set_visible (hint, TRUE);
+  gtk_box_reorder_child (GTK_BOX (vbox), hint, 0);
+  gtk_widget_set_margin_end (hint, 24);
+
+  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "comment-frame", "save-comment",
+                                            FALSE, "comment-vbox");
 
   /* hotspot toggle */
-  frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "hot-spot-vbox", "hot-spot-x", "hot-spot-y",
+                                  NULL);
 
-  toggle = gimp_prop_check_button_new (config, "use-hot-spot",
-                                       _("_Write hot spot values"));
-  gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
-
-  g_object_bind_property (config, "use-hot-spot",
-                          grid,   "sensitive",
-                          G_BINDING_SYNC_CREATE);
-
-  spinbutton = gimp_prop_spin_button_new (config, "hot-spot-x",
-                                          1, 10, 0);
-  gtk_spin_button_set_range (GTK_SPIN_BUTTON (spinbutton),
-                             0, gimp_drawable_get_width (drawable) - 1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("Hot spot _X:"), 0.0, 0.5,
-                            spinbutton, 1);
-
-  spinbutton = gimp_prop_spin_button_new (config, "hot-spot-y",
-                                          1, 10, 0);
-  gtk_spin_button_set_range (GTK_SPIN_BUTTON (spinbutton),
-                             0, gimp_drawable_get_width (drawable) - 1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("Hot spot _Y:"), 0.0, 0.5,
-                            spinbutton, 1);
+  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "hot-spot-frame", "use-hot-spot",
+                                            FALSE, "hot-spot-vbox");
 
   /* mask file */
-  frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
+  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "mask-frame", "write-mask",
+                                            FALSE, "mask-suffix");
   gtk_widget_set_sensitive (frame, gimp_drawable_has_alpha (drawable));
 
-  toggle = gimp_prop_check_button_new (config, "write-mask",
-                                       _("W_rite extra mask file"));
-  gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
-
-  g_object_bind_property (config, "write-mask",
-                          grid,   "sensitive",
-                          G_BINDING_SYNC_CREATE);
-
-  entry = gimp_prop_entry_new (config, "mask-suffix", MAX_MASK_EXT);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("_Mask file extension:"), 0.0, 0.5,
-                            entry, 1);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "x10-format", "prefix", "comment-frame",
+                              "hot-spot-frame", "mask-frame", NULL);
 
   gtk_widget_show (dialog);
 
