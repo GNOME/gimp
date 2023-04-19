@@ -468,10 +468,13 @@ windows_actions_update_display_accels (GimpActionGroup *group)
           gimp_action_set_accels (action, (const gchar*[]) { accel, NULL });
           g_free (accel);
 
-          ntooltip = ngettext ("Switch to the first image view: %2$s",
-                               "Switch to image view %d: %s",
+          /* TRANSLATORS: the first argument (%1$s) is the image name, the
+           * second (%2$d) is its tab order in the graphical interface.
+           */
+          ntooltip = ngettext ("Switch to the first image view: %1$s",
+                               "Switch to image view %2$d: %1$s",
                                i + 1);
-          tooltip = g_strdup_printf (ntooltip, i + 1, gimp_image_get_display_path (image));
+          tooltip = g_strdup_printf (ntooltip, gimp_image_get_display_path (image), i + 1);
           gimp_action_set_tooltip (action, tooltip);
           g_free (tooltip);
         }
