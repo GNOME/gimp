@@ -50,13 +50,6 @@
  * This is why we need to implement our own GimpMenuBar subclass.
  */
 
-enum
-{
-  PROP_0 = GIMP_MENU_SHELL_PROP_LAST,
-  PROP_MODEL
-};
-
-
 struct _GimpMenuBarPrivate
 {
   GTree *menus;

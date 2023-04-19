@@ -46,7 +46,7 @@
 
 enum
 {
-  PROP_0 = GIMP_ACTION_PROP_LAST,
+  PROP_0,
   PROP_VALUE,
   PROP_GROUP,
   PROP_GROUP_LABEL,
@@ -86,11 +86,9 @@ static void      gimp_radio_action_activate            (GAction          *action
 static gboolean  gimp_radio_action_toggle              (GimpToggleAction *action);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpRadioAction, gimp_radio_action,
-                         GIMP_TYPE_TOGGLE_ACTION,
+G_DEFINE_TYPE_WITH_CODE (GimpRadioAction, gimp_radio_action, GIMP_TYPE_TOGGLE_ACTION,
                          G_ADD_PRIVATE (GimpRadioAction)
-                         G_IMPLEMENT_INTERFACE (G_TYPE_ACTION, gimp_radio_action_g_action_iface_init)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_ACTION, NULL))
+                         G_IMPLEMENT_INTERFACE (G_TYPE_ACTION, gimp_radio_action_g_action_iface_init))
 
 #define parent_class gimp_radio_action_parent_class
 
@@ -106,8 +104,6 @@ gimp_radio_action_class_init (GimpRadioActionClass *klass)
   object_class->set_property = gimp_radio_action_set_property;
 
   toggle_class->toggle       = gimp_radio_action_toggle;
-
-  gimp_action_install_properties (object_class);
 
   /**
    * GimpRadioAction:value:
@@ -185,8 +181,6 @@ gimp_radio_action_init (GimpRadioAction *action)
 
   action->priv->group       = NULL;
   action->priv->group_label = NULL;
-
-  gimp_action_init (GIMP_ACTION (action));
 }
 
 static void
@@ -222,7 +216,7 @@ gimp_radio_action_get_property (GObject    *object,
       break;
 
     default:
-      gimp_action_get_property (object, prop_id, value, pspec);
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
     }
 }
@@ -263,7 +257,7 @@ gimp_radio_action_set_property (GObject      *object,
       break;
 
     default:
-      gimp_action_set_property (object, prop_id, value, pspec);
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
     }
 }

@@ -30,11 +30,10 @@
 #define GIMP_TOGGLE_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOGGLE_ACTION, GimpToggleAction))
 #define GIMP_TOGGLE_ACTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOGGLE_ACTION, GimpToggleActionClass))
 #define GIMP_IS_TOGGLE_ACTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOGGLE_ACTION))
-#define GIMP_IS_TOGGLE_ACTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), GIMP_TYPE_ACTION))
+#define GIMP_IS_TOGGLE_ACTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), GIMP_TYPE_TOGGLE_ACTION))
 #define GIMP_TOGGLE_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GIMP_TYPE_TOGGLE_ACTION, GimpToggleActionClass))
 
 
-typedef struct _GimpToggleAction        GimpToggleAction;
 typedef struct _GimpToggleActionClass   GimpToggleActionClass;
 typedef struct _GimpToggleActionPrivate GimpToggleActionPrivate;
 

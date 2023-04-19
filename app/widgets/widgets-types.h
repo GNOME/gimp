@@ -125,13 +125,16 @@ typedef struct _GimpToolPresetFactoryView    GimpToolPresetFactoryView;
 /*  menus  */
 
 typedef struct _GimpAction                   GimpAction;
+typedef struct _GimpActionImpl               GimpActionImpl;
 typedef struct _GimpActionFactory            GimpActionFactory;
 typedef struct _GimpActionGroup              GimpActionGroup;
 typedef struct _GimpDoubleAction             GimpDoubleAction;
 typedef struct _GimpEnumAction               GimpEnumAction;
 typedef struct _GimpMenuFactory              GimpMenuFactory;
 typedef struct _GimpProcedureAction          GimpProcedureAction;
+typedef struct _GimpRadioAction              GimpRadioAction;
 typedef struct _GimpStringAction             GimpStringAction;
+typedef struct _GimpToggleAction             GimpToggleAction;
 typedef struct _GimpUIManager                GimpUIManager;
 
 

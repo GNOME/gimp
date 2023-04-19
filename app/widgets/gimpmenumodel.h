@@ -25,7 +25,7 @@
 #define GIMP_TYPE_MENU_MODEL            (gimp_menu_model_get_type ())
 #define GIMP_MENU_MODEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MENU_MODEL, GimpMenuModel))
 #define GIMP_MENU_MODEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MENU_MODEL, GimpMenuModelClass))
-#define GIMP_IS_MENU_MODEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_MENU_MODEL))
+#define GIMP_IS_MENU_MODEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MENU_MODEL))
 #define GIMP_IS_MENU_MODEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MENU_MODEL))
 #define GIMP_MENU_MODEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MENU_MODEL, GimpMenuModelClass))
 

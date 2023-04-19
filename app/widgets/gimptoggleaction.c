@@ -37,7 +37,7 @@
 
 enum
 {
-  PROP_0 = GIMP_ACTION_PROP_LAST,
+  PROP_0,
   PROP_ACTIVE,
 };
 
@@ -80,8 +80,7 @@ static void     gimp_toggle_action_toggle              (GimpToggleAction *action
 G_DEFINE_TYPE_WITH_CODE (GimpToggleAction, gimp_toggle_action,
                          GIMP_TYPE_ACTION_IMPL,
                          G_ADD_PRIVATE (GimpToggleAction)
-                         G_IMPLEMENT_INTERFACE (G_TYPE_ACTION, gimp_toggle_action_g_action_iface_init)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_ACTION, NULL))
+                         G_IMPLEMENT_INTERFACE (G_TYPE_ACTION, gimp_toggle_action_g_action_iface_init))
 
 #define parent_class gimp_toggle_action_parent_class
 
@@ -105,8 +104,6 @@ gimp_toggle_action_class_init (GimpToggleActionClass *klass)
   object_class->set_property  = gimp_toggle_action_set_property;
 
   toggle_class->toggle        = gimp_toggle_action_real_toggle;
-
-  gimp_action_install_properties (object_class);
 
   /**
    * GimpToggleAction:enabled:
@@ -138,8 +135,6 @@ static void
 gimp_toggle_action_init (GimpToggleAction *action)
 {
   action->priv = gimp_toggle_action_get_instance_private (action);
-
-  gimp_action_init (GIMP_ACTION (action));
 }
 
 static void
@@ -157,7 +152,7 @@ gimp_toggle_action_get_property (GObject    *object,
       break;
 
     default:
-      gimp_action_get_property (object, prop_id, value, pspec);
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
     }
 }
@@ -177,7 +172,7 @@ gimp_toggle_action_set_property (GObject      *object,
       break;
 
     default:
-      gimp_action_set_property (object, prop_id, value, pspec);
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
     }
 }

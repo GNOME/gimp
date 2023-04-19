@@ -67,7 +67,7 @@ static void     gimp_menu_shell_append_model_drop_top   (GimpMenuShell        *s
                                                          GimpMenuModel        *model);
 
 
-G_DEFINE_INTERFACE (GimpMenuShell, gimp_menu_shell, G_TYPE_OBJECT)
+G_DEFINE_INTERFACE (GimpMenuShell, gimp_menu_shell, GTK_TYPE_CONTAINER)
 
 static guint signals[LAST_SIGNAL];
 

@@ -42,7 +42,7 @@ struct _GimpMenu
 
 struct _GimpMenuClass
 {
-  GtkMenuBarClass  parent_class;
+  GtkMenuClass  parent_class;
 };
 
 

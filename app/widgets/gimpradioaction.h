@@ -29,11 +29,10 @@
 #define GIMP_RADIO_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RADIO_ACTION, GimpRadioAction))
 #define GIMP_RADIO_ACTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_RADIO_ACTION, GimpRadioActionClass))
 #define GIMP_IS_RADIO_ACTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_RADIO_ACTION))
-#define GIMP_IS_RADIO_ACTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), GIMP_TYPE_ACTION))
+#define GIMP_IS_RADIO_ACTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), GIMP_TYPE_RADIO_ACTION))
 #define GIMP_RADIO_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GIMP_TYPE_RADIO_ACTION, GimpRadioActionClass))
 
 
-typedef struct _GimpRadioAction        GimpRadioAction;
 typedef struct _GimpRadioActionClass   GimpRadioActionClass;
 typedef struct _GimpRadioActionPrivate GimpRadioActionPrivate;
 
