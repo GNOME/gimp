@@ -229,7 +229,6 @@ gimp_source_tool_motion (GimpTool         *tool,
                          GimpDisplay      *display)
 {
   GimpSourceTool    *source_tool = GIMP_SOURCE_TOOL (tool);
-  GimpPaintTool     *paint_tool  = GIMP_PAINT_TOOL (tool);
   GimpSourceOptions *options     = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
