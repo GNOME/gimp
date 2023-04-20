@@ -629,8 +629,7 @@ gimp_item_list_get_items_by_glob (GimpItemList  *set,
   spec = g_pattern_spec_new (pattern);
   for (iter = items; iter; iter = iter->next)
     {
-      if (g_pattern_match_string (spec,
-                                  gimp_object_get_name (iter->data)))
+      if (g_pattern_spec_match_string (spec, gimp_object_get_name (iter->data)))
         match = g_list_prepend (match, iter->data);
     }
   g_pattern_spec_free (spec);
