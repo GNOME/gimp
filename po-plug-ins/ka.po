@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-16 16:39+0000\n"
-"PO-Revision-Date: 2023-04-17 06:00+0200\n"
+"POT-Creation-Date: 2023-04-19 12:33+0000\n"
+"PO-Revision-Date: 2023-04-20 07:27+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -285,7 +285,7 @@ msgstr "ჰორიზონტალური _ბაზა"
 
 #: plug-ins/common/align-layers.c:201 plug-ins/common/align-layers.c:216
 msgid "(Left edge = 0, Center = 1, Right edge = 2)"
-msgstr ""
+msgstr "(მარცხენა კიდე = 0, ცენტრი = 1, მარჯვენა კიდე = 2)"
 
 #: plug-ins/common/align-layers.c:207
 msgid "_Vertical style"
@@ -497,7 +497,7 @@ msgstr "ვერტიკალური"
 #: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:869
 #: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
 #: plug-ins/common/file-sunras.c:1080 plug-ins/common/file-tga.c:1114
-#: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:909
+#: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:912
 #: plug-ins/common/film.c:812 plug-ins/common/smooth-palette.c:332
 #: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
 #: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
@@ -1058,7 +1058,7 @@ msgstr ""
 #: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
 #: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:759
 #: plug-ins/common/file-tga.c:445 plug-ins/common/file-wbmp.c:184
-#: plug-ins/common/file-xbm.c:747 plug-ins/common/file-xmc.c:658
+#: plug-ins/common/file-xbm.c:750 plug-ins/common/file-xmc.c:658
 #: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
 #: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
 #: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
@@ -2016,7 +2016,7 @@ msgstr ""
 #: plug-ins/common/file-pnm.c:714 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
 #: plug-ins/common/file-tga.c:437 plug-ins/common/file-wbmp.c:176
-#: plug-ins/common/file-wmf.c:1026 plug-ins/common/file-xbm.c:739
+#: plug-ins/common/file-wmf.c:1026 plug-ins/common/file-xbm.c:742
 #: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
 #: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
@@ -2096,7 +2096,7 @@ msgstr ""
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
 #: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
 #: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
-#: plug-ins/common/file-xbm.c:1048 plug-ins/common/file-xpm.c:699
+#: plug-ins/common/file-xbm.c:1051 plug-ins/common/file-xpm.c:699
 #: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
 #: plug-ins/file-fits/fits.c:504 plug-ins/file-fli/fli-gimp.c:784
 #: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1324
@@ -4649,7 +4649,7 @@ msgstr ""
 msgid "Type of colormap not supported"
 msgstr ""
 
-#: plug-ins/common/file-sunras.c:521 plug-ins/common/file-xbm.c:835
+#: plug-ins/common/file-sunras.c:521 plug-ins/common/file-xbm.c:838
 #: plug-ins/common/file-xwd.c:551
 #, c-format
 msgid ""
@@ -4657,7 +4657,7 @@ msgid ""
 "No image width specified"
 msgstr ""
 
-#: plug-ins/common/file-sunras.c:529 plug-ins/common/file-xbm.c:843
+#: plug-ins/common/file-sunras.c:529 plug-ins/common/file-xbm.c:846
 #: plug-ins/common/file-xwd.c:559
 #, c-format
 msgid ""
@@ -4665,7 +4665,7 @@ msgid ""
 "Image width is larger than GIMP can handle"
 msgstr ""
 
-#: plug-ins/common/file-sunras.c:537 plug-ins/common/file-xbm.c:851
+#: plug-ins/common/file-sunras.c:537 plug-ins/common/file-xbm.c:854
 #: plug-ins/common/file-xwd.c:566
 #, c-format
 msgid ""
@@ -4673,7 +4673,7 @@ msgid ""
 "No image height specified"
 msgstr ""
 
-#: plug-ins/common/file-sunras.c:545 plug-ins/common/file-xbm.c:859
+#: plug-ins/common/file-sunras.c:545 plug-ins/common/file-xbm.c:862
 #: plug-ins/common/file-xwd.c:573
 #, c-format
 msgid ""
@@ -4921,26 +4921,119 @@ msgstr ""
 msgid "Rendered WMF"
 msgstr ""
 
-#: plug-ins/common/file-xbm.c:158 plug-ins/common/file-xbm.c:186
+#: plug-ins/common/file-xbm.c:159 plug-ins/common/file-xbm.c:187
 msgid "X BitMap image"
 msgstr ""
 
-#: plug-ins/common/file-xbm.c:210
+#: plug-ins/common/file-xbm.c:162
+msgid "Load a file in X10 or X11 bitmap (XBM) file format"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:164
+msgid ""
+"Load a file in X10 or X11 bitmap (XBM) file format. XBM is a lossless format "
+"for flat black-and-white (two color indexed) images."
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:190
+msgid "Export a file in X10 or X11 bitmap (XBM) file format"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:192
+msgid ""
+"X10 or X11 bitmap (XBM) file format. XBM is a lossless format for flat black-"
+"and-white (two color indexed) images."
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:203
+#| msgid "PBM"
+msgid "XBM"
+msgstr "XBM"
+
+#: plug-ins/common/file-xbm.c:212
+msgid "_Write comment"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:213
 msgid "Write a comment at the beginning of the file."
 msgstr ""
 
-#: plug-ins/common/file-xbm.c:373
+#: plug-ins/common/file-xbm.c:218
+msgid "Co_mment"
+msgstr "კომე_ნტარი"
+
+#: plug-ins/common/file-xbm.c:219
+msgid "Image description (maximum 72 bytes)"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:227
+msgid "_X10 format bitmap"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:228
+msgid "Export in X10 format"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:233
+msgid "Write hot spot _values"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:234
+msgid "Write hotspot information"
+msgstr "შეიყვანეთ ჰოტსპოტის ინფორმაცია"
+
+#: plug-ins/common/file-xbm.c:239
+msgid "Hot s_pot X"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:240
+msgid "X coordinate of hotspot"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:245
+msgid "Hot spot _Y"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:246
+msgid "Y coordinate of hotspot"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:251
+msgid "I_dentifier prefix"
+msgstr "_იდენტიფიკატორის პრეფიქსი"
+
+#: plug-ins/common/file-xbm.c:252
+msgid "Identifier prefix [determined from filename]"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:257
+msgid "Write extra mask _file"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:258
+msgid "Write extra mask file"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:263
+msgid "Mas_k file extensions"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:264
+msgid "Suffix of the mask file"
+msgstr ""
+
+#: plug-ins/common/file-xbm.c:376
 msgid "XBM format does not support multiple layers."
 msgstr ""
 
-#: plug-ins/common/file-xbm.c:827
+#: plug-ins/common/file-xbm.c:830
 #, c-format
 msgid ""
 "'%s':\n"
 "Could not read header (ftell == %ld)"
 msgstr ""
 
-#: plug-ins/common/file-xbm.c:867
+#: plug-ins/common/file-xbm.c:870
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4948,7 +5041,7 @@ msgid ""
 msgstr ""
 
 #. The image is not black-and-white.
-#: plug-ins/common/file-xbm.c:1012
+#: plug-ins/common/file-xbm.c:1015
 msgid ""
 "The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
@@ -4956,58 +5049,16 @@ msgid ""
 "Please convert it to a black and white (1-bit) indexed image and try again."
 msgstr ""
 
-#: plug-ins/common/file-xbm.c:1024
+#: plug-ins/common/file-xbm.c:1027
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
 msgstr ""
 
-#: plug-ins/common/file-xbm.c:1252
-msgid "Export Image as XBM"
-msgstr ""
-
-#: plug-ins/common/file-xbm.c:1262
-msgid "_X10 format bitmap"
-msgstr ""
-
-#: plug-ins/common/file-xbm.c:1274
-msgid "_Identifier prefix:"
-msgstr ""
-
-#: plug-ins/common/file-xbm.c:1283
-msgid "_Write comment"
-msgstr ""
-
-#: plug-ins/common/file-xbm.c:1294
+#: plug-ins/common/file-xbm.c:1259
 msgid ""
 "Writing a comment will make the XBM file unreadable by some applications.\n"
 "The comment will not affect embedding the XBM in C source code."
-msgstr ""
-
-#: plug-ins/common/file-xbm.c:1309
-msgid "Comment:"
-msgstr "კომენტარი:"
-
-#: plug-ins/common/file-xbm.c:1318
-msgid "_Write hot spot values"
-msgstr ""
-
-#: plug-ins/common/file-xbm.c:1336 plug-ins/common/file-xmc.c:1130
-#: plug-ins/file-ico/ico-dialog.c:571
-msgid "Hot spot _X:"
-msgstr ""
-
-#: plug-ins/common/file-xbm.c:1344 plug-ins/common/file-xmc.c:1144
-#: plug-ins/file-ico/ico-dialog.c:584
-msgid "Hot spot _Y:"
-msgstr ""
-
-#: plug-ins/common/file-xbm.c:1355
-msgid "W_rite extra mask file"
-msgstr ""
-
-#: plug-ins/common/file-xbm.c:1370
-msgid "_Mask file extension:"
 msgstr ""
 
 #: plug-ins/common/file-xmc.c:299 plug-ins/common/file-xmc.c:348
@@ -5058,8 +5109,16 @@ msgstr "წაკითხვის შეცდომა."
 msgid "Export Image as X11 Mouse Cursor"
 msgstr ""
 
+#: plug-ins/common/file-xmc.c:1130 plug-ins/file-ico/ico-dialog.c:571
+msgid "Hot spot _X:"
+msgstr ""
+
 #: plug-ins/common/file-xmc.c:1134
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
+msgstr ""
+
+#: plug-ins/common/file-xmc.c:1144 plug-ins/file-ico/ico-dialog.c:584
+msgid "Hot spot _Y:"
 msgstr ""
 
 #: plug-ins/common/file-xmc.c:1148
@@ -13330,6 +13389,9 @@ msgstr ""
 msgid "Transferring data from scanner/camera"
 msgstr ""
 
+#~ msgid "Comment:"
+#~ msgstr "კომენტარი:"
+
 #~ msgid "_Loop"
 #~ msgstr "_მარყუჟი"
 
@@ -13380,9 +13442,6 @@ msgstr ""
 #~ msgctxt "frame-range"
 #~ msgid "_To:"
 #~ msgstr "_ვის:"
-
-#~ msgid "Co_mment:"
-#~ msgstr "კომე_ნტარი:"
 
 #~ msgid "Op_acity:"
 #~ msgstr "_სიმღვრიე:"
