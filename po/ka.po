@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-14 17:33+0000\n"
-"PO-Revision-Date: 2023-04-14 20:07+0200\n"
+"POT-Creation-Date: 2023-04-19 12:31+0000\n"
+"PO-Revision-Date: 2023-04-20 07:16+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -10490,10 +10490,14 @@ msgstr "ერთფანჯრიანი რეჟიმი გამორ�
 msgid "Show \"%s-%d.%d\""
 msgstr "Show \"%s-%d.%d\""
 
-#: app/actions/windows-actions.c:471
-msgid "Switch to the first image view: %2$s"
-msgid_plural "Switch to image view %d: %s"
-msgstr[0] "%d გამოსახულების ხედზე გადართვა: %s"
+#. TRANSLATORS: the first argument (%1$s) is the image name, the
+#. * second (%2$d) is its tab order in the graphical interface.
+#.
+#: app/actions/windows-actions.c:474
+#, c-format
+msgid "Switch to the first image view: %1$s"
+msgid_plural "Switch to image view %2$d: %1$s"
+msgstr[0] "%2$d გამოსახულების ხედზე გადართვა: %1$s"
 
 #: app/actions/windows-commands.c:208
 msgid ""
@@ -23353,7 +23357,7 @@ msgstr "ბოლო წერტილის ფერის შეცვლა
 #. the position label
 #: app/tools/gimpgradienttool-editor.c:1382
 #: app/tools/gimpgradienttool-editor.c:1481
-#: app/tools/gimprectangleoptions.c:1000
+#: app/tools/gimprectangleoptions.c:1005
 msgid "Position:"
 msgstr "მდებარეობა:"
 
@@ -24180,20 +24184,20 @@ msgid "Expand selection from center outwards"
 msgstr "მონიშნულის ცენტრიდანული მიმართულებით გაფართოება"
 
 #. Current, as in what is currently in use.
-#: app/tools/gimprectangleoptions.c:746
+#: app/tools/gimprectangleoptions.c:751
 msgid "Current"
 msgstr "მიმდინარე"
 
-#: app/tools/gimprectangleoptions.c:862
+#: app/tools/gimprectangleoptions.c:867
 msgid "Fixed"
 msgstr "ფიქსირებული"
 
-#: app/tools/gimprectangleoptions.c:1010 app/tools/gimptextoptions.c:794
+#: app/tools/gimprectangleoptions.c:1015 app/tools/gimptextoptions.c:794
 msgid "Size:"
 msgstr "ზომა:"
 
 #. Auto Shrink
-#: app/tools/gimprectangleoptions.c:1038
+#: app/tools/gimprectangleoptions.c:1043
 msgid "Auto Shrink"
 msgstr "თვითშემცირება"
 
