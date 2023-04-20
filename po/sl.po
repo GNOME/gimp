@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-14 17:33+0000\n"
-"PO-Revision-Date: 2023-04-16 14:00+0200\n"
+"POT-Creation-Date: 2023-04-19 12:31+0000\n"
+"PO-Revision-Date: 2023-04-20 12:28+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -10601,13 +10601,17 @@ msgstr "Enookenski način je onemogočen"
 msgid "Show \"%s-%d.%d\""
 msgstr "Pokaži »%s-%d.%d«"
 
-#: app/actions/windows-actions.c:471
-msgid "Switch to the first image view: %2$s"
-msgid_plural "Switch to image view %d: %s"
-msgstr[0] "Preklopi na pogled slike %d: %s"
-msgstr[1] "Preklopi na pogled slike %d: %s"
-msgstr[2] "Preklopi na pogled slike %d: %s"
-msgstr[3] "Preklopi na pogled slike %d: %s"
+#. TRANSLATORS: the first argument (%1$s) is the image name, the
+#. * second (%2$d) is its tab order in the graphical interface.
+#.
+#: app/actions/windows-actions.c:474
+#, c-format
+msgid "Switch to the first image view: %1$s"
+msgid_plural "Switch to image view %2$d: %1$s"
+msgstr[0] "Preklopi na pogled slike %2$d: %1$s"
+msgstr[1] "Preklopi na pogled slike %2$d: %1$s"
+msgstr[2] "Preklopi na pogled slike %2$d: %1$s"
+msgstr[3] "Preklopi na pogled slike %2$d: %1$s"
 
 #: app/actions/windows-commands.c:208
 msgid ""
@@ -23787,7 +23791,7 @@ msgstr "Spremeni barvo končne točke"
 #. the position label
 #: app/tools/gimpgradienttool-editor.c:1382
 #: app/tools/gimpgradienttool-editor.c:1481
-#: app/tools/gimprectangleoptions.c:1000
+#: app/tools/gimprectangleoptions.c:1005
 msgid "Position:"
 msgstr "Položaj:"
 
@@ -24617,20 +24621,20 @@ msgid "Expand selection from center outwards"
 msgstr "Razširi izbor iz središča navzven"
 
 #. Current, as in what is currently in use.
-#: app/tools/gimprectangleoptions.c:746
+#: app/tools/gimprectangleoptions.c:751
 msgid "Current"
 msgstr "Trenutna"
 
-#: app/tools/gimprectangleoptions.c:862
+#: app/tools/gimprectangleoptions.c:867
 msgid "Fixed"
 msgstr "Nespremenljivo"
 
-#: app/tools/gimprectangleoptions.c:1010 app/tools/gimptextoptions.c:794
+#: app/tools/gimprectangleoptions.c:1015 app/tools/gimptextoptions.c:794
 msgid "Size:"
 msgstr "Velikost:"
 
 #. Auto Shrink
-#: app/tools/gimprectangleoptions.c:1038
+#: app/tools/gimprectangleoptions.c:1043
 msgid "Auto Shrink"
 msgstr "Samodejno pomanjšaj"
 
