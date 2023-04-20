@@ -40,10 +40,6 @@
 
 static const GimpActionEntry tool_preset_editor_actions[] =
 {
-  { "tool-preset-editor-popup", GIMP_ICON_TOOL_PRESET,
-    NC_("tool-preset-editor-action", "Tool Preset Editor Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_TOOL_PRESET_EDITOR_DIALOG },
-
   { "tool-preset-editor-save", GIMP_ICON_DOCUMENT_SAVE,
     NC_("tool-preset-editor-action", "_Save Tool Options to Preset"), NULL, { NULL },
     NC_("tool-preset-editor-action", "Save the active tool options to this "

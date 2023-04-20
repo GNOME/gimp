@@ -37,13 +37,6 @@
 #include "gimp-intl.h"
 
 
-static const GimpActionEntry brush_editor_actions[] =
-{
-  { "brush-editor-popup", GIMP_ICON_BRUSH,
-    NC_("brush-editor-action", "Brush Editor Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_BRUSH_EDITOR_DIALOG }
-};
-
 static const GimpToggleActionEntry brush_editor_toggle_actions[] =
 {
   { "brush-editor-edit-active", GIMP_ICON_LINKED,
@@ -57,10 +50,6 @@ static const GimpToggleActionEntry brush_editor_toggle_actions[] =
 void
 brush_editor_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "brush-editor-action",
-                                 brush_editor_actions,
-                                 G_N_ELEMENTS (brush_editor_actions));
-
   gimp_action_group_add_toggle_actions (group, "brush-editor-action",
                                         brush_editor_toggle_actions,
                                         G_N_ELEMENTS (brush_editor_toggle_actions));

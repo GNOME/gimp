@@ -37,14 +37,6 @@
 #include "gimp-intl.h"
 
 
-static const GimpActionEntry dynamics_editor_actions[] =
-{
-  { "dynamics-editor-popup", GIMP_ICON_DYNAMICS,
-    NC_("dynamics-editor-action", "Paint Dynamics Editor Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_BRUSH_EDITOR_DIALOG }
-};
-
-
 static const GimpToggleActionEntry dynamics_editor_toggle_actions[] =
 {
   { "dynamics-editor-edit-active", GIMP_ICON_LINKED,
@@ -58,10 +50,6 @@ static const GimpToggleActionEntry dynamics_editor_toggle_actions[] =
 void
 dynamics_editor_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "dynamics-editor-action",
-                                 dynamics_editor_actions,
-                                 G_N_ELEMENTS (dynamics_editor_actions));
-
   gimp_action_group_add_toggle_actions (group, "dynamics-editor-action",
                                         dynamics_editor_toggle_actions,
                                         G_N_ELEMENTS (dynamics_editor_toggle_actions));

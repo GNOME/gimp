@@ -39,10 +39,6 @@
 
 static const GimpActionEntry mypaint_brushes_actions[] =
 {
-  { "mypaint-brushes-popup", GIMP_ICON_MYPAINT_BRUSH,
-    NC_("mypaint-brushes-action", "MyPaint Brushes Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_MYPAINT_BRUSH_DIALOG },
-
   { "mypaint-brushes-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("mypaint-brushes-action", "_New MyPaint Brush"), NULL, { NULL },
     NC_("mypaint-brushes-action", "Create a new MyPaint brush"),

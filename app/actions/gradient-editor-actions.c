@@ -43,10 +43,6 @@
 
 static const GimpActionEntry gradient_editor_actions[] =
 {
-  { "gradient-editor-popup", GIMP_ICON_GRADIENT,
-    NC_("gradient-editor-action", "Gradient Editor Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_GRADIENT_EDITOR_DIALOG },
-
   { "gradient-editor-left-color-type", NULL,
     NC_("gradient-editor-action", "Left Color Type") },
   { "gradient-editor-load-left-color", GIMP_ICON_DOCUMENT_REVERT,

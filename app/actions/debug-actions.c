@@ -34,8 +34,6 @@
 
 static const GimpActionEntry debug_actions[] =
 {
-  { "debug-menu", NULL, "_Debug" },
-
   { "debug-gtk-inspector", NULL,
     "Start _GtkInspector", NULL, { NULL }, NULL,
     debug_gtk_inspector_cmd_callback,

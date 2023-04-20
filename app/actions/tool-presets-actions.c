@@ -42,10 +42,6 @@
 
 static const GimpActionEntry tool_presets_actions[] =
 {
-  { "tool-presets-popup", GIMP_ICON_TOOL_PRESET,
-    NC_("tool-presets-action", "Tool Presets Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_TOOL_PRESET_DIALOG },
-
   { "tool-presets-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("tool-presets-action", "_New Tool Preset"), NULL, { NULL },
     NC_("tool-presets-action", "Create a new tool preset"),

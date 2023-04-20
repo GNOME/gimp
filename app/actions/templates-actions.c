@@ -38,10 +38,6 @@
 
 static const GimpActionEntry templates_actions[] =
 {
-  { "templates-popup", GIMP_ICON_TEMPLATE,
-    NC_("templates-action", "Templates Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_TEMPLATE_DIALOG },
-
   { "templates-create-image", GIMP_ICON_IMAGE,
     NC_("templates-action", "_Create Image from Template"), NULL, { NULL },
     NC_("templates-action", "Create a new image from the selected template"),

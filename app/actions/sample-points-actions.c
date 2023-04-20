@@ -34,13 +34,6 @@
 #include "gimp-intl.h"
 
 
-static const GimpActionEntry sample_points_actions[] =
-{
-  { "sample-points-popup", GIMP_ICON_SAMPLE_POINT,
-    NC_("sample-points-action", "Sample Point Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_SAMPLE_POINT_DIALOG }
-};
-
 static const GimpToggleActionEntry sample_points_toggle_actions[] =
 {
   { "sample-points-sample-merged", NULL,
@@ -56,10 +49,6 @@ static const GimpToggleActionEntry sample_points_toggle_actions[] =
 void
 sample_points_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "sample-points-action",
-                                 sample_points_actions,
-                                 G_N_ELEMENTS (sample_points_actions));
-
   gimp_action_group_add_toggle_actions (group, "sample-points-action",
                                         sample_points_toggle_actions,
                                         G_N_ELEMENTS (sample_points_toggle_actions));

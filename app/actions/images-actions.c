@@ -39,10 +39,6 @@
 
 static const GimpActionEntry images_actions[] =
 {
-  { "images-popup", GIMP_ICON_DIALOG_IMAGES,
-    NC_("images-action", "Images Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_IMAGE_DIALOG },
-
   { "images-raise-views", GIMP_ICON_GO_TOP,
     NC_("images-action", "_Raise Views"), NULL, { NULL },
     NC_("images-action", "Raise this image's displays"),

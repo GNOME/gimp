@@ -69,10 +69,6 @@ static gchar * file_actions_create_label        (const gchar     *format,
 
 static const GimpActionEntry file_actions[] =
 {
-  { "file-menu",             NULL, NC_("file-action", "_File")        },
-  { "file-create-menu",      NULL, NC_("file-action", "Crea_te")      },
-  { "file-open-recent-menu", NULL, NC_("file-action", "Open _Recent") },
-
   { "file-open", GIMP_ICON_IMAGE_OPEN,
     NC_("file-action", "_Open..."), NULL, { "<primary>O", NULL },
     NC_("file-action", "Open an image file"),

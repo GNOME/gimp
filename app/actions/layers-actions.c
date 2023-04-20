@@ -48,43 +48,6 @@
 
 static const GimpActionEntry layers_actions[] =
 {
-  { "layers-popup", GIMP_ICON_DIALOG_LAYERS,
-    NC_("layers-action", "Layers Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_LAYER_DIALOG },
-
-  { "layers-blend-space-menu", NULL,
-    NC_("layers-action", "Blend Space"), NULL, { NULL }, NULL, NULL,
-    NULL },
-
-  { "layers-composite-space-menu", NULL,
-    NC_("layers-action", "Composite Space"), NULL, { NULL }, NULL, NULL,
-    NULL },
-
-  { "layers-composite-mode-menu", NULL,
-    NC_("layers-action", "Composite Mode"), NULL, { NULL }, NULL, NULL,
-    NULL },
-
-  { "layers-color-tag-menu", NULL,
-    NC_("layers-action", "Color Tag"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_LAYER_COLOR_TAG },
-
-  { "layers-menu",                   NULL,
-    NC_("layers-action", "_Layer")        },
-  { "layers-stack-menu",             NULL,
-    NC_("layers-action", "Stac_k")        },
-  { "layers-mask-menu",              NULL,
-    NC_("layers-action", "_Mask")         },
-  { "layers-transparency-menu",      NULL,
-    NC_("layers-action", "Tr_ansparency") },
-  { "layers-transform-menu",         NULL,
-    NC_("layers-action", "_Transform")    },
-  { "layers-properties-menu",        GIMP_ICON_DOCUMENT_PROPERTIES,
-    NC_("layers-action", "_Properties")   },
-  { "layers-opacity-menu",           GIMP_ICON_TRANSPARENCY,
-    NC_("layers-action", "_Opacity")      },
-  { "layers-mode-menu",              GIMP_ICON_TOOL_PENCIL,
-    NC_("layers-action", "Layer _Mode")   },
-
   { "layers-edit", GIMP_ICON_EDIT,
     NC_("layers-action", "Default Edit Action"), NULL, { NULL },
     NC_("layers-action", "Activate the default edit action for this type of layer"),

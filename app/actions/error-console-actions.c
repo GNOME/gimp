@@ -36,10 +36,6 @@
 
 static const GimpActionEntry error_console_actions[] =
 {
-  { "error-console-popup", GIMP_ICON_DIALOG_WARNING,
-    NC_("error-console-action", "Error Console Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_ERRORS_DIALOG },
-
   { "error-console-clear", GIMP_ICON_EDIT_CLEAR,
     NC_("error-console-action", "_Clear"), NULL, { NULL },
     NC_("error-console-action", "Clear error console"),

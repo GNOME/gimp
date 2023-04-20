@@ -45,18 +45,6 @@
 
 static const GimpActionEntry dockable_actions[] =
 {
-  { "dockable-popup", NULL,
-    NC_("dockable-action", "Dialogs Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_DOCK },
-
-  { "dockable-menu",              "image-missing", ""           },
-  { "dockable-add-tab-menu",      NULL, NC_("dockable-action",
-                                            "_Add Tab")        },
-  { "dockable-preview-size-menu", NULL, NC_("dockable-action",
-                                            "_Preview Size")   },
-  { "dockable-tab-style-menu",    NULL, NC_("dockable-action",
-                                            "_Tab Style")      },
-
   { "dockable-close-tab", "window-close",
     NC_("dockable-action", "_Close Tab"), NULL, { NULL }, NULL,
     dockable_close_tab_cmd_callback,
@@ -287,8 +275,6 @@ dockable_actions_update (GimpActionGroup *group,
                                          (n_pages > 1 || n_books > 1)));
 
   SET_ACTIVE ("dockable-lock-tab", locked);
-
-  SET_VISIBLE ("dockable-preview-size-menu", view_size != -1);
 
   if (view_size != -1)
     {

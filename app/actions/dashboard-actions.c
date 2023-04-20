@@ -36,10 +36,6 @@
 
 static const GimpActionEntry dashboard_actions[] =
 {
-  { "dashboard-popup", GIMP_ICON_DIALOG_DASHBOARD,
-    NC_("dashboard-action", "Dashboard Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_DASHBOARD_DIALOG },
-
   { "dashboard-groups", NULL,
     NC_("dashboard-action", "_Groups") },
   { "dashboard-update-interval", NULL,

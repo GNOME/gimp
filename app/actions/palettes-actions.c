@@ -40,10 +40,6 @@
 
 static const GimpActionEntry palettes_actions[] =
 {
-  { "palettes-popup", GIMP_ICON_PALETTE,
-    NC_("palettes-action", "Palettes Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_PALETTE_DIALOG },
-
   { "palettes-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("palettes-action", "_New Palette"), NULL, { NULL },
     NC_("palettes-action", "Create a new palette"),

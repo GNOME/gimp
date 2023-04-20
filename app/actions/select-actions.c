@@ -40,12 +40,6 @@
 
 static const GimpActionEntry select_actions[] =
 {
-  { "selection-popup", GIMP_ICON_SELECTION,
-    NC_("select-action", "Selection Editor Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_SELECTION_DIALOG },
-
-  { "select-menu", NULL, NC_("select-action", "_Select") },
-
   { "select-all", GIMP_ICON_SELECTION_ALL,
     NC_("select-action", "_All"), NULL, { "<primary>A", NULL },
     NC_("select-action", "Select everything"),

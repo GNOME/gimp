@@ -42,15 +42,6 @@
 #include "gimp-intl.h"
 
 
-static const GimpActionEntry tools_actions[] =
-{
-  { "tools-menu",           NULL, NC_("tools-action", "_Tools")           },
-  { "tools-select-menu",    NULL, NC_("tools-action", "_Selection Tools") },
-  { "tools-paint-menu",     NULL, NC_("tools-action", "_Paint Tools")     },
-  { "tools-transform-menu", NULL, NC_("tools-action", "_Transform Tools") },
-  { "tools-color-menu",     NULL, NC_("tools-action", "_Color Tools")     },
-};
-
 static const GimpStringActionEntry tools_alternative_actions[] =
 {
   { "tools-by-color-select-short", GIMP_ICON_TOOL_BY_COLOR_SELECT,
@@ -661,10 +652,6 @@ void
 tools_actions_setup (GimpActionGroup *group)
 {
   GList *list;
-
-  gimp_action_group_add_actions (group, "tools-action",
-                                 tools_actions,
-                                 G_N_ELEMENTS (tools_actions));
 
   gimp_action_group_add_string_actions (group, "tools-action",
                                         tools_alternative_actions,

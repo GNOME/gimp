@@ -62,14 +62,6 @@ static void   edit_actions_pattern_changed    (GimpContext     *context,
 
 static const GimpActionEntry edit_actions[] =
 {
-  { "edit-menu",          NULL, NC_("edit-action", "_Edit")     },
-  { "edit-paste-as-menu", NULL, NC_("edit-action", "Paste _as") },
-  { "edit-buffer-menu",   NULL, NC_("edit-action", "_Buffer")   },
-
-  { "undo-popup",
-    "edit-undo", NC_("edit-action", "Undo History Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_UNDO_DIALOG },
-
   { "edit-undo", GIMP_ICON_EDIT_UNDO,
     NC_("edit-action", "_Undo"), NULL, { "<primary>Z", NULL },
     NC_("edit-action", "Undo the last operation"),

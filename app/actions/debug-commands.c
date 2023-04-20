@@ -141,10 +141,8 @@ debug_dump_keyboard_shortcuts_cmd_callback (GimpAction *action,
           GimpAction   *action = action_it->data;
           const gchar  *name   = gimp_action_get_name (action);
 
-          if (strstr (name, "-menu")  ||
-              strstr (name, "-popup") ||
-              name[0] == '<')
-              continue;
+          if (name[0] == '<')
+            continue;
 
           accels = gimp_action_get_display_accels (action);
 

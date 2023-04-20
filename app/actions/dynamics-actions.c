@@ -39,10 +39,6 @@
 
 static const GimpActionEntry dynamics_actions[] =
 {
-  { "dynamics-popup", GIMP_ICON_DYNAMICS,
-    NC_("dynamics-action", "Paint Dynamics Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_DYNAMICS_DIALOG },
-
   { "dynamics-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("dynamics-action", "_New Dynamics"), NULL, { NULL },
     NC_("dynamics-action", "Create a new dynamics"),

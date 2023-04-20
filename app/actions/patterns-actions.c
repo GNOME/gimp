@@ -39,10 +39,6 @@
 
 static const GimpActionEntry patterns_actions[] =
 {
-  { "patterns-popup", GIMP_ICON_PATTERN,
-    NC_("patterns-action", "Patterns Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_PATTERN_DIALOG },
-
   { "patterns-open-as-image", GIMP_ICON_DOCUMENT_OPEN,
     NC_("patterns-action", "_Open Pattern as Image"), NULL, { NULL },
     NC_("patterns-action", "Open this pattern as an image"),

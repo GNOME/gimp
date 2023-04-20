@@ -40,10 +40,6 @@
 
 static const GimpActionEntry gradients_actions[] =
 {
-  { "gradients-popup", GIMP_ICON_GRADIENT,
-    NC_("gradients-action", "Gradients Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_GRADIENT_DIALOG },
-
   { "gradients-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("gradients-action", "_New Gradient"), NULL, { NULL },
     NC_("gradients-action", "Create a new gradient"),

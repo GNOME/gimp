@@ -41,14 +41,6 @@
 
 static const GimpActionEntry channels_actions[] =
 {
-  { "channels-popup", GIMP_ICON_DIALOG_CHANNELS,
-    NC_("channels-action", "Channels Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_CHANNEL_DIALOG },
-
-  { "channels-color-tag-menu", NULL,
-    NC_("channels-action", "Color Tag"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_CHANNEL_COLOR_TAG },
-
   { "channels-edit-attributes", GIMP_ICON_EDIT,
     NC_("channels-action", "_Edit Channel Attributes..."), NULL, { NULL },
     NC_("channels-action", "Edit the channel's name, color and opacity"),

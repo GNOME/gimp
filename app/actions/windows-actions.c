@@ -98,13 +98,6 @@ static void  windows_actions_single_window_mode_notify (GimpDisplayConfig *confi
 
 static const GimpActionEntry windows_actions[] =
 {
-  { "windows-menu",         NULL, NC_("windows-action",
-                                      "_Windows")               },
-  { "windows-docks-menu",   NULL, NC_("windows-action",
-                                      "_Recently Closed Docks") },
-  { "windows-dialogs-menu", NULL, NC_("windows-action",
-                                      "_Dockable Dialogs")      },
-
   { "windows-show-display-next", NULL,
     NC_("windows-action", "Next Image"), NULL, { "<alt>Tab", "Forward", NULL },
     NC_("windows-action", "Switch to the next image"),
@@ -186,8 +179,6 @@ windows_actions_setup (GimpActionGroup *group)
                                        G_N_ELEMENTS (windows_tabs_position_actions),
                                        NULL, 0,
                                        windows_set_tabs_position_cmd_callback);
-
-  gimp_action_group_set_action_hide_empty (group, "windows-docks-menu", FALSE);
 
   g_signal_connect_object (group->gimp->displays, "add",
                            G_CALLBACK (windows_actions_display_add),

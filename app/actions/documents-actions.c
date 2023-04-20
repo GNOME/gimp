@@ -38,10 +38,6 @@
 
 static const GimpActionEntry documents_actions[] =
 {
-  { "documents-popup", GIMP_ICON_DOCUMENT_OPEN_RECENT,
-    NC_("documents-action", "Documents Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_DOCUMENT_DIALOG },
-
   { "documents-open", GIMP_ICON_DOCUMENT_OPEN,
     NC_("documents-action", "_Open Image"), NULL, { NULL },
     NC_("documents-action", "Open the selected entry"),

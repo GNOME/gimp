@@ -714,12 +714,6 @@ gimp_action_name_compare (GimpAction  *action1,
 gboolean
 gimp_action_is_gui_blacklisted (const gchar *action_name)
 {
-  static const gchar *suffixes[] =
-    {
-      "-menu",
-      "-popup"
-    };
-
   static const gchar *prefixes[] =
     {
       "<",
@@ -755,12 +749,6 @@ gimp_action_is_gui_blacklisted (const gchar *action_name)
 
   if (! (action_name && *action_name))
     return TRUE;
-
-  for (i = 0; i < G_N_ELEMENTS (suffixes); i++)
-    {
-      if (g_str_has_suffix (action_name, suffixes[i]))
-        return TRUE;
-    }
 
   for (i = 0; i < G_N_ELEMENTS (prefixes); i++)
     {

@@ -54,26 +54,6 @@ static void tool_options_actions_update_presets (GimpActionGroup    *group,
 
 static const GimpActionEntry tool_options_actions[] =
 {
-  { "tool-options-popup", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    NC_("tool-options-action", "Tool Options Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_TOOL_OPTIONS_DIALOG },
-
-  { "tool-options-save-preset-menu", GIMP_ICON_DOCUMENT_SAVE,
-    NC_("tool-options-action", "_Save Tool Preset"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_TOOL_OPTIONS_SAVE },
-
-  { "tool-options-restore-preset-menu", GIMP_ICON_DOCUMENT_REVERT,
-    NC_("tool-options-action", "_Restore Tool Preset"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_TOOL_OPTIONS_RESTORE },
-
-  { "tool-options-edit-preset-menu", GIMP_ICON_EDIT,
-    NC_("tool-options-action", "E_dit Tool Preset"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_TOOL_OPTIONS_EDIT },
-
-  { "tool-options-delete-preset-menu", GIMP_ICON_EDIT_DELETE,
-    NC_("tool-options-action", "_Delete Tool Preset"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_TOOL_OPTIONS_DELETE },
-
   { "tool-options-save-new-preset", GIMP_ICON_DOCUMENT_NEW,
     NC_("tool-options-action", "_New Tool Preset..."), NULL, { NULL }, NULL,
     tool_options_save_new_preset_cmd_callback,
@@ -108,10 +88,6 @@ tool_options_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group, "tool-options-action",
                                  tool_options_actions,
                                  G_N_ELEMENTS (tool_options_actions));
-
-  SET_HIDE_EMPTY ("tool-options-restore-preset-menu", FALSE);
-  SET_HIDE_EMPTY ("tool-options-edit-preset-menu",    FALSE);
-  SET_HIDE_EMPTY ("tool-options-delete-preset-menu",  FALSE);
 }
 
 void
@@ -120,11 +96,6 @@ tool_options_actions_update (GimpActionGroup *group,
 {
   GimpContext  *context   = gimp_get_user_context (group->gimp);
   GimpToolInfo *tool_info = gimp_context_get_tool (context);
-
-  SET_VISIBLE ("tool-options-save-preset-menu",    tool_info->presets);
-  SET_VISIBLE ("tool-options-restore-preset-menu", tool_info->presets);
-  SET_VISIBLE ("tool-options-edit-preset-menu",    tool_info->presets);
-  SET_VISIBLE ("tool-options-delete-preset-menu",  tool_info->presets);
 
   tool_options_actions_update_presets (group, "tool-options-save-preset",
                                        tool_options_save_preset_cmd_callback,

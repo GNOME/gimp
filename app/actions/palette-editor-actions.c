@@ -40,10 +40,6 @@
 
 static const GimpActionEntry palette_editor_actions[] =
 {
-  { "palette-editor-popup", GIMP_ICON_PALETTE,
-    NC_("palette-editor-action", "Palette Editor Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_PALETTE_EDITOR_DIALOG },
-
   { "palette-editor-edit-color", GIMP_ICON_EDIT,
     NC_("palette-editor-action", "_Edit Color..."), NULL, { NULL },
     NC_("palette-editor-action", "Edit this entry"),

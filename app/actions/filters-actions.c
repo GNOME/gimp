@@ -53,56 +53,6 @@ static void   filters_actions_history_changed (Gimp                        *gimp
 
 /*  private variables  */
 
-static const GimpActionEntry filters_menu_actions[] =
-{
-  { "filters-menu",                 NULL, NC_("filters-action",
-                                              "Filte_rs")          },
-  { "filters-recent-menu",          NULL, NC_("filters-action",
-                                              "Recently _Used")     },
-  { "filters-blur-menu",            NULL, NC_("filters-action",
-                                              "_Blur")             },
-  { "filters-noise-menu",           NULL, NC_("filters-action",
-                                              "_Noise")            },
-  { "filters-edge-detect-menu",     NULL, NC_("filters-action",
-                                              "Edge-De_tect")      },
-  { "filters-enhance-menu",         NULL, NC_("filters-action",
-                                              "En_hance")          },
-  { "filters-combine-menu",         NULL, NC_("filters-action",
-                                              "C_ombine")          },
-  { "filters-generic-menu",         NULL, NC_("filters-action",
-                                              "_Generic")          },
-  { "filters-light-shadow-menu",    NULL, NC_("filters-action",
-                                              "_Light and Shadow") },
-  { "filters-distorts-menu",        NULL, NC_("filters-action",
-                                              "_Distorts")         },
-  { "filters-artistic-menu",        NULL, NC_("filters-action",
-                                              "_Artistic")         },
-  { "filters-decor-menu",           NULL, NC_("filters-action",
-                                              "_Decor")            },
-  { "filters-map-menu",             NULL, NC_("filters-action",
-                                              /* TRANSLATORS: menu group
-                                               * containing mapping
-                                               * filters.
-                                               */
-                                              "_Map")              },
-  { "filters-render-menu",          NULL, NC_("filters-action",
-                                              "_Render")           },
-  { "filters-render-clouds-menu",   NULL, NC_("filters-action",
-                                              "_Clouds")           },
-  { "filters-render-fractals-menu", NULL, NC_("filters-action",
-                                              "_Fractals")         },
-  { "filters-render-nature-menu",   NULL, NC_("filters-action",
-                                              "_Nature")           },
-  { "filters-render-noise-menu",    NULL, NC_("filters-action",
-                                              "N_oise")            },
-  { "filters-render-pattern-menu",  NULL, NC_("filters-action",
-                                              "_Pattern")          },
-  { "filters-web-menu",             NULL, NC_("filters-action",
-                                              "_Web")              },
-  { "filters-animation-menu",       NULL, NC_("filters-action",
-                                              "An_imation")        }
-};
-
 static const GimpStringActionEntry filters_actions[] =
 {
   { "filters-antialias", GIMP_ICON_GEGL,
@@ -797,10 +747,6 @@ filters_actions_setup (GimpActionGroup *group)
   GimpProcedureActionEntry *entries;
   gint                      n_entries;
   gint                      i;
-
-  gimp_action_group_add_actions (group, "filters-action",
-                                 filters_menu_actions,
-                                 G_N_ELEMENTS (filters_menu_actions));
 
   gimp_action_group_add_string_actions (group, "filters-action",
                                         filters_actions,

@@ -39,10 +39,6 @@
 
 static const GimpActionEntry brushes_actions[] =
 {
-  { "brushes-popup", GIMP_ICON_BRUSH,
-    NC_("brushes-action", "Brushes Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_BRUSH_DIALOG },
-
   { "brushes-open-as-image", GIMP_ICON_DOCUMENT_OPEN,
     NC_("brushes-action", "_Open Brush as Image"), NULL, { NULL },
     NC_("brushes-action", "Open brush as image"),

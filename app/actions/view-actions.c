@@ -67,21 +67,6 @@ static void   view_actions_check_type_notify (GimpDisplayConfig *config,
 
 static const GimpActionEntry view_actions[] =
 {
-  { "view-menu",                NULL, NC_("view-action", "_View")          },
-  { "view-zoom-menu",           NULL, NC_("view-action", "_Zoom")          },
-  { "view-rotate-menu",         NULL, NC_("view-action", "_Flip & Rotate") },
-  { "view-padding-color-menu",  NULL, NC_("view-action", "_Padding Color") },
-
-  { "view-color-management-menu", NULL,
-    NC_("view-action", "_Color Management") },
-
-  { "view-display-intent-menu", NULL,
-    NC_("view-action", "Display _Rendering Intent") },
-
-  { "view-move-to-screen-menu", GIMP_ICON_WINDOW_MOVE_TO_SCREEN,
-    NC_("view-action", "Move to Screen"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_VIEW_CHANGE_SCREEN },
-
   { "view-new", GIMP_ICON_WINDOW_NEW,
     NC_("view-action", "_New View"), NULL, { NULL },
     NC_("view-action", "Create another view on this image"),
@@ -824,8 +809,6 @@ view_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
-#define SET_COLOR(action,color) \
-        gimp_action_group_set_action_color (group, action, color, FALSE)
 
   SET_SENSITIVE ("view-new",   image);
   SET_SENSITIVE ("view-close", image);
@@ -937,11 +920,6 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-snap-to-vectors",      image);
   SET_ACTIVE    ("view-snap-to-vectors",      display && options->snap_to_path);
 
-  if (display && options->padding_mode != GIMP_CANVAS_PADDING_MODE_DEFAULT)
-    SET_COLOR ("view-padding-color-menu", &options->padding_color);
-  else
-    SET_COLOR ("view-padding-color-menu", NULL);
-
   SET_SENSITIVE ("view-padding-color-theme",       image);
   SET_SENSITIVE ("view-padding-color-light-check", image);
   SET_SENSITIVE ("view-padding-color-dark-check",  image);
@@ -978,7 +956,6 @@ view_actions_update (GimpActionGroup *group,
 
 #undef SET_ACTIVE
 #undef SET_SENSITIVE
-#undef SET_COLOR
 }
 
 

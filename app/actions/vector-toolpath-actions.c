@@ -41,10 +41,6 @@
 
 static const GimpActionEntry vector_toolpath_actions[] =
 {
-  { "vector-toolpath-popup", NULL,
-    NC_("vector-toolpath-action", "Vector Toolpath Menu"), NULL, { NULL }, NULL, NULL,
-    NULL },
-
   { "vector-toolpath-delete-anchor", GIMP_ICON_PATH,
     NC_("vector-toolpath-action", "_Delete Anchor"), NULL, { NULL }, NULL,
     vector_toolpath_delete_anchor_cmd_callback,

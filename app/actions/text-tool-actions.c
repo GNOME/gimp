@@ -46,10 +46,6 @@
 
 static const GimpActionEntry text_tool_actions[] =
 {
-  { "text-tool-popup", NULL,
-    NC_("text-tool-action", "Text Tool Menu"), NULL, { NULL }, NULL, NULL,
-    NULL },
-
   { "text-tool-cut", GIMP_ICON_EDIT_CUT,
     NC_("text-tool-action", "Cu_t"), NULL, { "<primary>X", NULL }, NULL,
     text_tool_cut_cmd_callback,

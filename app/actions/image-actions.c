@@ -51,31 +51,6 @@
 
 static const GimpActionEntry image_actions[] =
 {
-  { "image-menubar", NULL,
-    NC_("image-action", "Image Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_IMAGE_WINDOW },
-
-  { "image-popup", NULL,
-    NC_("image-action", "Image Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_IMAGE_WINDOW },
-
-  { "image-menu",                  NULL, NC_("image-action", "_Image")     },
-  { "image-mode-menu",             NULL, NC_("image-action", "_Mode")      },
-  { "image-precision-menu",        NULL, NC_("image-action", "_Encoding")  },
-  { "image-color-management-menu", NULL, NC_("image-action",
-                                             "Color Ma_nagement")          },
-  { "image-transform-menu",        NULL, NC_("image-action", "_Transform") },
-  { "image-guides-menu",           NULL, NC_("image-action", "_Guides")    },
-  { "image-metadata-menu",         NULL, NC_("image-action", "Meta_data")  },
-
-  { "colors-menu",              NULL, NC_("image-action", "_Colors")       },
-  { "colors-info-menu",         NULL, NC_("image-action", "I_nfo")         },
-  { "colors-auto-menu",         NULL, NC_("image-action", "_Auto")         },
-  { "colors-map-menu",          NULL, NC_("image-action", "_Map")          },
-  { "colors-tone-mapping-menu", NULL, NC_("image-action", "_Tone Mapping") },
-  { "colors-components-menu",   NULL, NC_("image-action", "C_omponents")   },
-  { "colors-desaturate-menu",   NULL, NC_("image-action", "D_esaturate")   },
-
   { "image-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("image-action", "_New..."), NULL, { "<primary>N", NULL },
     NC_("image-action", "Create a new image"),
@@ -117,9 +92,6 @@ static const GimpActionEntry image_actions[] =
     NC_("image-action", "Save the image's color profile to an ICC file"),
     image_color_profile_save_cmd_callback,
     GIMP_HELP_IMAGE_COLOR_PROFILE_SAVE },
-
-  { "image-softproof-intent-menu", NULL,
-    NC_("image-action", "Soft-Proofing Re_ndering Intent") },
 
   { "image-resize", GIMP_ICON_OBJECT_RESIZE,
     NC_("image-action", "Can_vas Size..."), NULL, { NULL },

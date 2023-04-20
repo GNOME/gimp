@@ -35,8 +35,6 @@
 
 static const GimpActionEntry help_actions[] =
 {
-  { "help-menu", NULL, NC_("help-action", "_Help") },
-
   { "help-help", "gimp-prefs-help-system",
     NC_("help-action", "_Help"), NULL, { "F1", NULL },
     NC_("help-action", "Open the GIMP user manual"),

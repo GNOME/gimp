@@ -38,10 +38,6 @@
 
 static const GimpActionEntry buffers_actions[] =
 {
-  { "buffers-popup", GIMP_ICON_BUFFER,
-    NC_("buffers-action", "Buffers Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_BUFFER_DIALOG },
-
   { "buffers-paste-as-new-image", GIMP_ICON_EDIT_PASTE_AS_NEW,
     NC_("buffers-action", "Paste Buffer as _New Image"), NULL, { NULL },
     NC_("buffers-action", "Paste the selected buffer as a new image"),

@@ -39,10 +39,6 @@
 
 static const GimpActionEntry quick_mask_actions[] =
 {
-  { "quick-mask-popup", NULL,
-    NC_("quick-mask-action", "Quick Mask Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_QUICK_MASK },
-
   { "quick-mask-configure", NULL,
     NC_("quick-mask-action", "_Configure Color and Opacity..."), NULL, { NULL }, NULL,
     quick_mask_configure_cmd_callback,

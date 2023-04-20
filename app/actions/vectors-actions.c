@@ -42,14 +42,6 @@
 
 static const GimpActionEntry vectors_actions[] =
 {
-  { "vectors-popup", GIMP_ICON_DIALOG_PATHS,
-    NC_("vectors-action", "Paths Menu"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_PATH_DIALOG },
-
-  { "vectors-color-tag-menu", NULL,
-    NC_("vectors-action", "Color Tag"), NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_PATH_COLOR_TAG },
-
   { "vectors-edit", GIMP_ICON_TOOL_PATH,
     NC_("vectors-action", "Edit Pa_th"), NULL, { NULL },
     NC_("vectors-action", "Edit the active path"),

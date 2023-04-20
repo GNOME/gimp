@@ -127,10 +127,6 @@ window_actions_update (GimpActionGroup *group,
       g_free (name);
     }
 
-  name = g_strdup_printf ("%s-move-to-screen-menu", group_name);
-  SET_VISIBLE (name, show_menu);
-  g_free (name);
-
 #undef SET_ACTIVE
 #undef SET_VISIBLE
 }
