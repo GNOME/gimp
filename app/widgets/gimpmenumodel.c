@@ -1014,9 +1014,22 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
       GApplication *app = model->priv->manager->gimp->app;
       GAction      *action;
       gchar        *detailed_action_name;
+      const gchar  *action_prefix = "app";
       GMenuItem    *item;
 
       action = g_action_map_lookup_action (G_ACTION_MAP (app), action_name);
+      if (action == NULL)
+        {
+          action = (GAction *) gimp_ui_manager_find_action (manager, NULL, action_name);
+          if (action != NULL)
+            {
+              GimpActionGroup *group;
+
+              group = gimp_action_get_group (GIMP_ACTION (action));
+              if (group != NULL)
+                action_prefix = gimp_action_group_get_name (group);
+            }
+        }
 
       g_return_val_if_fail (action != NULL, FALSE);
 
@@ -1025,7 +1038,7 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
       g_signal_handlers_disconnect_by_func (action,
                                             G_CALLBACK (gimp_menu_model_action_notify_visible),
                                             model);
-      detailed_action_name = g_strdup_printf ("app.%s", g_action_get_name (action));
+      detailed_action_name = g_strdup_printf ("%s.%s", action_prefix, g_action_get_name (action));
       item = g_menu_item_new (gimp_action_get_short_label (GIMP_ACTION (action)), detailed_action_name);
       /* TODO: add also G_MENU_ATTRIBUTE_ICON attribute? */
       g_free (detailed_action_name);
