@@ -191,25 +191,6 @@ gimp_plugin_pdf_load_error_quark (void)
   return g_quark_from_static_string ("gimp-plugin-pdf-load-error-quark");
 }
 
-/* Structs for the load dialog */
-typedef struct
-{
-  GimpPageSelectorTarget  target;
-  gdouble                 resolution;
-  gboolean                antialias;
-  gboolean                reverse_order;
-  gchar                  *PDF_password;
-} PdfLoadVals;
-
-static PdfLoadVals loadvals =
-{
-  GIMP_PAGE_SELECTOR_TARGET_LAYERS,
-  100.00,  /* resolution in dpi   */
-  TRUE,    /* antialias */
-  FALSE,   /* reverse_order */
-  NULL     /* pdf_password */
-};
-
 typedef struct
 {
   gint  n_pages;
@@ -257,11 +238,14 @@ static GimpImage       * load_image          (PopplerDocument      *doc,
                                               GimpPageSelectorTarget target,
                                               gdouble               resolution,
                                               gboolean              antialias,
+                                              gboolean              white_background,
                                               gboolean              reverse_order,
                                               PdfSelectedPages     *pages);
 
 static GimpPDBStatusType load_dialog         (PopplerDocument      *doc,
-                                              PdfSelectedPages     *pages);
+                                              PdfSelectedPages     *pages,
+                                              GimpProcedure        *procedure,
+                                              GimpProcedureConfig  *config);
 
 static PopplerDocument * open_document       (GFile                *file,
                                               const gchar          *PDF_password,
@@ -270,11 +254,13 @@ static PopplerDocument * open_document       (GFile                *file,
 
 static cairo_surface_t * get_thumb_surface   (PopplerDocument      *doc,
                                               gint                  page,
-                                              gint                  preferred_size);
+                                              gint                  preferred_size,
+                                              gboolean              white_background);
 
 static GdkPixbuf       * get_thumb_pixbuf    (PopplerDocument      *doc,
                                               gint                  page,
-                                              gint                  preferred_size);
+                                              gint                  preferred_size,
+                                              gboolean              white_background);
 
 static GimpLayer       * layer_from_surface  (GimpImage            *image,
                                               const gchar          *layer_name,
@@ -353,16 +339,35 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
       gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
 
-      GIMP_PROC_ARG_STRING (procedure, "pdf-password",
+      GIMP_PROC_ARG_STRING (procedure, "password",
                             "PDF password",
                             "The password to decrypt the encrypted PDF file",
                             NULL,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "reverse-order",
-                             "Load in reverse order",
+                             "Load in re_verse order",
                              "Load PDF pages in reverse order",
                              FALSE,
+                             G_PARAM_READWRITE);
+
+      /* FIXME: this should be a GIMP_PROC_ARG_ENUM of type
+       * GIMP_TYPE_PAGE_SELECTOR_TARGET but it won't work right now (see FIXME
+       * comment in libgimp/gimpgpparams-body.c:116).
+
+      GIMP_PROC_ARG_ENUM (procedure, "target",
+                          _("Open pages as"),
+                          _("Number of pages to load (0 for all)"),
+                          GIMP_TYPE_PAGE_SELECTOR_TARGET,
+                          GIMP_PAGE_SELECTOR_TARGET_LAYERS,
+                          G_PARAM_READWRITE);
+
+       */
+      GIMP_PROC_AUX_ARG_INT (procedure, "target",
+                             _("Open pages as"),
+                             _("Number of pages to load (0 for all)"),
+                             GIMP_PAGE_SELECTOR_TARGET_LAYERS, GIMP_PAGE_SELECTOR_TARGET_IMAGES,
+                             GIMP_PAGE_SELECTOR_TARGET_LAYERS,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "n-pages",
@@ -371,10 +376,38 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                          0, G_MAXINT, 0,
                          G_PARAM_READWRITE);
 
+      /* FIXME: shouldn't the whole selector be considered as one argument
+       * containing properties "target", "n-pages" and "pages" as a single
+       * object?
+       * Or actually should we store pages at all? While it makes sense to store
+       * some settings generally, not sure that the list of page makes sense
+       * from one PDF document loaded to another (different) one.
+       */
       GIMP_PROC_ARG_INT32_ARRAY (procedure, "pages",
                                  "Pages",
                                  "The pages to load in the expected order",
                                  G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "antialias",
+                             _("Use _Anti-aliasing"),
+                             _("Render texts with anti-aliasing"),
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "white-background",
+                             _("_Fill transparent areas with white"),
+                             _("Render all pages as opaque by filling the background in white"),
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      /* FIXME: we will have to think a bit about the most reasonable API. In any
+       * case, just "resolution" makes no sense without width/height.
+       */
+      GIMP_PROC_AUX_ARG_DOUBLE (procedure, "resolution",
+                                _("Resolution"),
+                                _("Resolution"),
+                                1.0, 5000.0, 300.0,
+                                G_PARAM_READWRITE);
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
@@ -404,34 +437,42 @@ pdf_load (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray    *return_vals;
-  GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
-  GimpImage         *image    = NULL;
-  PopplerDocument   *doc      = NULL;
-  PdfSelectedPages   pages    = { 0, NULL };
-  GError            *error    = NULL;
+  GimpValueArray      *return_vals;
+  GimpPDBStatusType    status   = GIMP_PDB_SUCCESS;
+  GimpProcedureConfig *config;
+  GimpImage           *image    = NULL;
+  PopplerDocument     *doc      = NULL;
+  PdfSelectedPages     pages    = { 0, NULL };
+  GError              *error    = NULL;
 
   gegl_init (NULL, NULL);
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (LOAD_PROC, &loadvals);
-      gimp_ui_init (PLUG_IN_BINARY);
-      doc = open_document (file,
-                           loadvals.PDF_password,
-                           run_mode, &error);
-
-      if (! doc)
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
-          break;
-        }
+          gchar *password;
 
-      status = load_dialog (doc, &pages);
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          gimp_set_data (LOAD_PROC, &loadvals, sizeof(loadvals));
+          gimp_ui_init (PLUG_IN_BINARY);
+
+          g_object_get (config,
+                        "password", &password,
+                        NULL);
+          doc = open_document (file,
+                               password,
+                               run_mode, &error);
+          g_free (password);
+
+          if (! doc)
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+              break;
+            }
+
+          status = load_dialog (doc, &pages, procedure, config);
         }
       break;
 
@@ -444,8 +485,6 @@ pdf_load (GimpProcedure        *procedure,
       doc = open_document (file,
                            GIMP_VALUES_GET_STRING (args, 0),
                            run_mode, &error);
-
-      loadvals.reverse_order = GIMP_VALUES_GET_BOOLEAN (args, 1);
 
       if (doc)
         {
@@ -517,29 +556,43 @@ pdf_load (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
+      GimpPageSelectorTarget target;
+      gboolean               reverse_order;
+      gdouble                resolution;
+      gboolean               antialias;
+      gboolean               white_background;
+
+      g_object_get (config,
+                    "target",           &target,
+                    "reverse-order",    &reverse_order,
+                    "resolution",       &resolution,
+                    "antialias",        &antialias,
+                    "white-background", &white_background,
+                    NULL);
       image = load_image (doc,
                           file,
                           run_mode,
-                          loadvals.target,
-                          loadvals.resolution,
-                          loadvals.antialias,
-                          loadvals.reverse_order,
+                          target,
+                          resolution,
+                          antialias,
+                          white_background,
+                          reverse_order,
                           &pages);
+
+      if (image == NULL)
+        status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   if (doc)
     g_object_unref (doc);
 
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
   g_free (pages.pages);
 
-  if (! image)
-    return gimp_procedure_new_return_values (procedure, status, error);
-
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
-                                                  NULL);
-
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  return_vals = gimp_procedure_new_return_values (procedure, status, error);
+  if (status == GIMP_PDB_SUCCESS)
+    GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
@@ -581,7 +634,7 @@ pdf_load_thumb (GimpProcedure        *procedure,
 
       num_pages = poppler_document_get_n_pages (doc);
 
-      surface = get_thumb_surface (doc, 0, size);
+      surface = get_thumb_surface (doc, 0, size, TRUE);
 
       g_object_unref (doc);
     }
@@ -601,7 +654,8 @@ pdf_load_thumb (GimpProcedure        *procedure,
       gimp_image_clean_all (image);
     }
 
-  scale = loadvals.resolution / gimp_unit_get_factor (GIMP_UNIT_POINT);
+  /* Thumbnail resolution: 100.0. */
+  scale = 100.0 / gimp_unit_get_factor (GIMP_UNIT_POINT);
 
   width  *= scale;
   height *= scale;
@@ -727,7 +781,8 @@ render_page_to_surface (PopplerPage *page,
                         int          width,
                         int          height,
                         double       scale,
-                        gboolean     antialias)
+                        gboolean     antialias,
+                        gboolean     white_background)
 {
   cairo_surface_t *surface;
   cairo_t *cr;
@@ -755,6 +810,13 @@ render_page_to_surface (PopplerPage *page,
 
   poppler_page_render (page, cr);
   cairo_restore (cr);
+
+  if (white_background)
+    {
+      cairo_set_operator (cr, CAIRO_OPERATOR_DEST_OVER);
+      cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+      cairo_paint (cr);
+    }
 
   cairo_destroy (cr);
 
@@ -793,6 +855,7 @@ load_image (PopplerDocument        *doc,
             GimpPageSelectorTarget  target,
             gdouble                 resolution,
             gboolean                antialias,
+            gboolean                white_background,
             gboolean                reverse_order,
             PdfSelectedPages       *pages)
 {
@@ -850,7 +913,8 @@ load_image (PopplerDocument        *doc,
           gimp_image_set_resolution (image, resolution, resolution);
         }
 
-      surface = render_page_to_surface (page, width, height, scale, antialias);
+      surface = render_page_to_surface (page, width, height, scale,
+                                        antialias, white_background);
 
       layer_from_surface (image, page_label, 0, surface,
                           doc_progress, 1.0 / pages->n_pages);
@@ -901,9 +965,10 @@ load_image (PopplerDocument        *doc,
 static cairo_surface_t *
 get_thumb_surface (PopplerDocument *doc,
                    gint             page_num,
-                   gint             preferred_size)
+                   gint             preferred_size,
+                   gboolean         white_background)
 {
-  PopplerPage *page;
+  PopplerPage     *page;
   cairo_surface_t *surface;
 
   page = poppler_document_get_page (doc, page_num);
@@ -926,7 +991,7 @@ get_thumb_surface (PopplerDocument *doc,
       width  *= scale;
       height *= scale;
 
-      surface = render_page_to_surface (page, width, height, scale, TRUE);
+      surface = render_page_to_surface (page, width, height, scale, TRUE, white_background);
     }
 
   g_object_unref (page);
@@ -937,15 +1002,16 @@ get_thumb_surface (PopplerDocument *doc,
 static GdkPixbuf *
 get_thumb_pixbuf (PopplerDocument *doc,
                   gint             page_num,
-                  gint             preferred_size)
+                  gint             preferred_size,
+                  gboolean         white_background)
 {
   cairo_surface_t *surface;
-  GdkPixbuf *pixbuf;
+  GdkPixbuf       *pixbuf;
 
-  surface = get_thumb_surface (doc, page_num, preferred_size);
-  pixbuf = gdk_pixbuf_get_from_surface (surface, 0, 0,
-                                        cairo_image_surface_get_width (surface),
-                                        cairo_image_surface_get_height (surface));
+  surface = get_thumb_surface (doc, page_num, preferred_size, white_background);
+  pixbuf  = gdk_pixbuf_get_from_surface (surface, 0, 0,
+                                         cairo_image_surface_get_width (surface),
+                                         cairo_image_surface_get_height (surface));
   cairo_surface_destroy (surface);
 
   return pixbuf;
@@ -956,6 +1022,10 @@ typedef struct
   PopplerDocument  *document;
   GimpPageSelector *selector;
   gboolean          stop_thumbnailing;
+  gboolean          white_background;
+
+  GMutex            mutex;
+  GCond             render_thumb;
 } ThreadData;
 
 typedef struct
@@ -982,45 +1052,81 @@ idle_set_thumbnail (gpointer data)
 static gpointer
 thumbnail_thread (gpointer data)
 {
-  ThreadData  *thread_data = data;
-  gint         n_pages;
-  gint         i;
+  ThreadData *thread_data = data;
+  gboolean    first_loop  = TRUE;
+  gint        n_pages;
+  gint        i;
 
   n_pages = poppler_document_get_n_pages (thread_data->document);
 
-  for (i = 0; i < n_pages; i++)
+  while (TRUE)
     {
-      IdleData *idle_data = g_new0 (IdleData, 1);
+      gboolean white_background;
+      gboolean stop_thumbnailing;
 
-      idle_data->selector = thread_data->selector;
-      idle_data->page_no  = i;
+      g_mutex_lock (&thread_data->mutex);
+      if (! first_loop)
+        g_cond_wait (&thread_data->render_thumb, &thread_data->mutex);
+      white_background  = thread_data->white_background;
+      stop_thumbnailing = thread_data->stop_thumbnailing;
+      g_mutex_unlock (&thread_data->mutex);
 
-      /* FIXME get preferred size from somewhere? */
-      idle_data->pixbuf = get_thumb_pixbuf (thread_data->document, i,
-                                            THUMBNAIL_SIZE);
+      if (stop_thumbnailing)
+        break;
 
-      g_idle_add (idle_set_thumbnail, idle_data);
+      for (i = 0; i < n_pages; i++)
+        {
+          IdleData *idle_data = g_new0 (IdleData, 1);
+          gboolean  white_background2;
 
-      if (thread_data->stop_thumbnailing)
+          idle_data->selector = thread_data->selector;
+          idle_data->page_no  = i;
+
+          /* FIXME get preferred size from somewhere? */
+          idle_data->pixbuf = get_thumb_pixbuf (thread_data->document, i,
+                                                THUMBNAIL_SIZE,
+                                                white_background);
+
+          g_idle_add (idle_set_thumbnail, idle_data);
+
+          g_mutex_lock (&thread_data->mutex);
+          white_background2 = thread_data->white_background;
+          stop_thumbnailing = thread_data->stop_thumbnailing;
+          g_mutex_unlock (&thread_data->mutex);
+
+          if (stop_thumbnailing || white_background2 != white_background)
+            break;
+        }
+
+      if (stop_thumbnailing)
         break;
     }
 
   return NULL;
 }
 
+static void
+white_background_toggled (GtkToggleButton *widget,
+                          ThreadData      *thread_data)
+{
+  g_mutex_lock (&thread_data->mutex);
+  thread_data->white_background = gtk_toggle_button_get_active (widget);
+  g_cond_signal (&thread_data->render_thumb);
+  g_mutex_unlock (&thread_data->mutex);
+}
+
 static GimpPDBStatusType
-load_dialog (PopplerDocument  *doc,
-             PdfSelectedPages *pages)
+load_dialog (PopplerDocument     *doc,
+             PdfSelectedPages    *pages,
+             GimpProcedure       *procedure,
+             GimpProcedureConfig *config)
 {
   GtkWidget  *dialog;
   GtkWidget  *vbox;
   GtkWidget  *title;
   GtkWidget  *selector;
-  GtkWidget  *resolution;
-  GtkWidget  *antialias;
-  GtkWidget  *hbox;
-  GtkWidget  *reverse_order;
-  GtkWidget  *separator;
+  GtkWidget  *res_entry;
+  GtkWidget  *white_bg;
 
   ThreadData  thread_data;
   GThread    *thread;
@@ -1033,21 +1139,19 @@ load_dialog (PopplerDocument  *doc,
 
   gboolean    run;
 
-  dialog = gimp_dialog_new (_("Import from PDF"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, LOAD_PROC,
+  GimpPageSelectorTarget  target;
+  gdouble                 resolution;
+  gboolean                white_background;
 
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_Import"), GTK_RESPONSE_OK,
+  dialog = gimp_procedure_dialog_new (GIMP_PROCEDURE (procedure),
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Import from PDF"));
 
-                            NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  g_object_get (config,
+                "target",           &target,
+                "resolution",       &resolution,
+                "white-background", &white_background,
+                NULL);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -1076,12 +1180,12 @@ load_dialog (PopplerDocument  *doc,
 
   gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector), n_pages);
   gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector),
-                                 loadvals.target);
+                                 target);
 
   for (i = 0; i < n_pages; i++)
     {
-      PopplerPage     *page;
-      gchar           *label;
+      PopplerPage *page;
+      gchar       *label;
 
       page = poppler_document_get_page (doc, i);
       g_object_get (G_OBJECT (page), "label", &label, NULL);
@@ -1107,58 +1211,47 @@ load_dialog (PopplerDocument  *doc,
   thread_data.document          = doc;
   thread_data.selector          = GIMP_PAGE_SELECTOR (selector);
   thread_data.stop_thumbnailing = FALSE;
+  thread_data.white_background  = white_background;
+  g_mutex_init (&thread_data.mutex);
+  g_cond_init (&thread_data.render_thumb);
 
   thread = g_thread_new ("thumbnailer", thumbnail_thread, &thread_data);
 
-  /* "Load in reverse order" toggle button */
-  reverse_order = gtk_check_button_new_with_mnemonic (_("Load in reverse order"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (reverse_order), loadvals.reverse_order);
-  gtk_box_pack_start (GTK_BOX (vbox), reverse_order, FALSE, FALSE, 0);
-
-  g_signal_connect (reverse_order, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update), &loadvals.reverse_order);
-  gtk_widget_show (reverse_order);
-
-  /* Separator */
-  separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
-  gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
-  gtk_widget_show (separator);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "reverse-order",
+                              NULL);
 
   /* Resolution */
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  res_entry = gimp_resolution_entry_new (_("_Width (pixels):"), width,
+                                         _("_Height (pixels):"), height,
+                                         GIMP_UNIT_POINT,
+                                         _("_Resolution:"),
+                                         resolution, GIMP_UNIT_INCH);
 
-  resolution = gimp_resolution_entry_new (_("_Width (pixels):"), width,
-                                          _("_Height (pixels):"), height,
-                                          GIMP_UNIT_POINT,
-                                          _("_Resolution:"),
-                                          loadvals.resolution, GIMP_UNIT_INCH);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      res_entry, FALSE, FALSE, 0);
+  gtk_widget_show (res_entry);
 
-  gtk_box_pack_start (GTK_BOX (hbox), resolution, FALSE, FALSE, 0);
-  gtk_widget_show (resolution);
-
-  g_signal_connect (resolution, "x-changed",
+  g_signal_connect (res_entry, "x-changed",
                     G_CALLBACK (gimp_resolution_entry_update_x_in_dpi),
-                    &loadvals.resolution);
+                    &resolution);
 
-  /* Antialiasing*/
-  antialias = gtk_check_button_new_with_mnemonic (_("Use _Anti-aliasing"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (antialias), loadvals.antialias);
-  gtk_box_pack_start (GTK_BOX (vbox), antialias, FALSE, FALSE, 0);
+  white_bg = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                               "white-background", G_TYPE_NONE);
+  g_signal_connect (white_bg, "toggled",
+                    G_CALLBACK (white_background_toggled), &thread_data);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "antialias",
+                              "white-background",
+                              NULL);
 
-  g_signal_connect (antialias, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update), &loadvals.antialias);
-  gtk_widget_show (antialias);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
-  /* Setup done; display the dialog */
-  gtk_widget_show (dialog);
-
-  /* run the dialog */
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
-
-  loadvals.target =
-    gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
+  target = gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
+  g_object_set (config,
+                "target",     target,
+                "resolution", resolution,
+                NULL);
 
   pages->pages =
     gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
@@ -1175,8 +1268,20 @@ load_dialog (PopplerDocument  *doc,
     }
 
   /* cleanup */
+  g_mutex_lock (&thread_data.mutex);
   thread_data.stop_thumbnailing = TRUE;
+  g_cond_signal (&thread_data.render_thumb);
+  g_mutex_unlock (&thread_data.mutex);
   g_thread_join (thread);
+
+  g_mutex_clear (&thread_data.mutex);
+  g_cond_clear (&thread_data.render_thumb);
+
+  /* XXX Unsure why, I get some CRITICALs when destroying the dialog, unless I
+   * unselect all first.
+   */
+  gimp_page_selector_unselect_all (GIMP_PAGE_SELECTOR (selector));
+  gtk_widget_destroy (dialog);
 
   return run ? GIMP_PDB_SUCCESS : GIMP_PDB_CANCEL;
 }
