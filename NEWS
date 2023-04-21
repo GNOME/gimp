@@ -39,6 +39,16 @@ Core:
    shortcuts like the `/` divide from the numpad for the action search
    (additionally to the base keyboard `/` key).
    It is not possible to attribute several shortcuts from GUI yet.
+ - An action is automatically generated for all GEGL operations which would
+   normally appear in the GEGL Operation tool. This includes in particular
+   third-party GEGL operations which might be user-installed. It makes these
+   filters also searchable in the action search, usable in menus and shortcuts
+   can be assigned as well.
+ - GimpAction now have a concept of short vs. long labels, which can be used in
+   different places. In particular, in action search, we usually want the long
+   label, whereas in menus, we usually want the short label as we have context
+   (though the latter can be tweaked by a custom "label-variant" attribute in
+   .ui files).
 
 Tools:
 
@@ -56,6 +66,12 @@ Graphical User Interface:
     the Compact theme keeps a smaller separator width).
   - Consistently use "Soft-proofing" wording instead of "Softproofing" or "Soft
     proofing"
+  - The "GEGL Operation…" item was moved out of the "Filters > Generic" menu and
+    into the "Tools" menu.
+  - New "Filters > Generic > GEGL Operations" menu:
+    * "GEGL Graph" was moved into this submenu;
+    * It is followed by one item per generated action from GEGL Operations which
+      would also be listed in the "GEGL Operation" tool.
 
 Actions:
 
@@ -96,7 +112,8 @@ Plug-ins:
     align-layers, hot, wavelet-decompose, file-sunras, file-heif, file-tga,
     file-pat, file-xpm, file-csource, file-jp2-load, file-dds (import),
     file-sgi, file-fli, file-pnm, file-gbr, file-psp, file-aa, bmp-save,
-    despeckle, blinds, contrast-retinex, jigsaw, nl-filter, destripe.
+    despeckle, blinds, contrast-retinex, jigsaw, nl-filter, destripe, file-mng,
+    file-html-table, file-xbm, file-pdf-load.
 
 API:
 
@@ -105,6 +122,9 @@ API:
       + gimp_int_store_new_array(): variant of gimp_int_store_new() which will
         work in bindings.
       + gimp_spin_scale_get_mnemonic_keyval()
+    * Improved annotations or usage:
+      + gimp_procedure_dialog_get_spin_scale(): factor must be 1.0 for integer
+        properties.
   - Changes in libgimp:
     * New classes:
       + GimpResource
