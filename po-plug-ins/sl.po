@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-20 10:30+0000\n"
-"PO-Revision-Date: 2023-04-20 12:42+0200\n"
+"POT-Creation-Date: 2023-04-21 23:59+0000\n"
+"PO-Revision-Date: 2023-04-22 11:06+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -73,14 +73,13 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/common/curve-bend.c:1221 plug-ins/common/curve-bend.c:1995
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1160
-#: plug-ins/common/file-heif.c:2357 plug-ins/common/file-pdf-load.c:655
-#: plug-ins/common/file-pdf-load.c:1040 plug-ins/common/file-pdf-save.c:1113
-#: plug-ins/common/file-ps.c:3572 plug-ins/common/file-svg.c:773
-#: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
-#: plug-ins/common/grid.c:761 plug-ins/common/mail.c:568
-#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
-#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
-#: plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/file-heif.c:2357 plug-ins/common/file-pdf-load.c:709
+#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
+#: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
+#: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
+#: plug-ins/common/mail.c:568 plug-ins/common/qbist.c:848
+#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
+#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -168,7 +167,7 @@ msgstr "Povadi kozo (JavaScript)"
 #: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:707
 #: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1222
 #: plug-ins/common/depth-merge.c:734 plug-ins/common/file-heif.c:2358
-#: plug-ins/common/file-pdf-load.c:656 plug-ins/common/file-svg.c:774
+#: plug-ins/common/file-pdf-load.c:710 plug-ins/common/file-svg.c:774
 #: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1325
 #: plug-ins/common/grid.c:762 plug-ins/common/qbist.c:945
 #: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
@@ -1888,7 +1887,6 @@ msgid "Remove speckle noise from the image"
 msgstr "Odstrani šum peg s slike"
 
 #: plug-ins/common/despeckle.c:175
-#, fuzzy
 msgid ""
 "This plug-in selectively performs a median or adaptive box filter on an "
 "image."
@@ -2059,7 +2057,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1091
-#: plug-ins/common/file-pcx.c:430 plug-ins/common/file-pdf-load.c:816
+#: plug-ins/common/file-pcx.c:430 plug-ins/common/file-pdf-load.c:879
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
 #: plug-ins/common/file-pnm.c:714 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
@@ -3346,7 +3344,6 @@ msgid "Default chunks t_ype"
 msgstr "Privzeta vrsta ko_ščkov"
 
 #: plug-ins/common/file-mng.c:316
-#, fuzzy
 msgid ""
 "(ANIMATED MNG) Default chunks type (0 = PNG + Delta PNG; 1 = JNG + Delta "
 "PNG; 2 = All PNG; 3 = All JNG)"
@@ -3575,16 +3572,44 @@ msgstr "Spodnji rob je zunaj meja (mora biti < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Pisanje v datoteko »%s« ni uspelo: %s"
 
-#: plug-ins/common/file-pdf-load.c:331 plug-ins/common/file-pdf-save.c:314
+#: plug-ins/common/file-pdf-load.c:317 plug-ins/common/file-pdf-save.c:314
 msgid "Portable Document Format"
 msgstr "PDF (Portable Document Format)"
+
+#: plug-ins/common/file-pdf-load.c:367
+msgid "Open pages as"
+msgstr "Odpri strani kot"
+
+#: plug-ins/common/file-pdf-load.c:368
+msgid "Number of pages to load (0 for all)"
+msgstr "Število strani za nalaganje (0 za vse)"
+
+#: plug-ins/common/file-pdf-load.c:392
+msgid "Use _Anti-aliasing"
+msgstr "Uporabi _glajenje robov"
+
+#: plug-ins/common/file-pdf-load.c:393
+msgid "Render texts with anti-aliasing"
+msgstr "Upodobi besedila z glajenjem robov"
+
+#: plug-ins/common/file-pdf-load.c:398
+msgid "_Fill transparent areas with white"
+msgstr "_Zapolni prosojna področja z belo barvo"
+
+#: plug-ins/common/file-pdf-load.c:399
+msgid "Render all pages as opaque by filling the background in white"
+msgstr "Upodobi vse strani kot prekrivne z zapolnjevanjem ozadja z belo barvo"
+
+#: plug-ins/common/file-pdf-load.c:407 plug-ins/common/file-pdf-load.c:408
+msgid "Resolution"
+msgstr "Ločljivost"
 
 #. TRANSLATORS: first argument is file name,
 #. * second is out-of-range page number,
 #. * third is number of pages.
 #. * Specify order as in English if needed.
 #.
-#: plug-ins/common/file-pdf-load.c:492
+#: plug-ins/common/file-pdf-load.c:531
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
@@ -3593,60 +3618,45 @@ msgstr[1] "Dokument PDF »%1$s« ima %3$d stran. Stran %2$d je izven dosega."
 msgstr[2] "Dokument PDF »%1$s« ima %3$d strani. Stran %2$d je izven dosega."
 msgstr[3] "Dokument PDF »%1$s« ima %3$d strani. Stran %2$d je izven dosega."
 
-#: plug-ins/common/file-pdf-load.c:642
+#: plug-ins/common/file-pdf-load.c:696
 msgid "PDF is password protected, please input the password:"
 msgstr "PDF je zaščiten z geslom, vnesite geslo:"
 
-#: plug-ins/common/file-pdf-load.c:652
+#: plug-ins/common/file-pdf-load.c:706
 msgid "Encrypted PDF"
 msgstr "Šifrirani PDF"
 
-#: plug-ins/common/file-pdf-load.c:679
+#: plug-ins/common/file-pdf-load.c:733
 msgid "Wrong password! Please input the right one:"
 msgstr "Napačno geslo! Poskusite znova:"
 
-#: plug-ins/common/file-pdf-load.c:697
+#: plug-ins/common/file-pdf-load.c:751
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "»%s« ni mogoče naložiti: %s"
 
-#: plug-ins/common/file-pdf-load.c:1036
+#: plug-ins/common/file-pdf-load.c:1166
 msgid "Import from PDF"
 msgstr "Uvozi iz PDF"
 
-#: plug-ins/common/file-pdf-load.c:1041 plug-ins/common/file-ps.c:3573
-#: plug-ins/file-tiff/file-tiff-load.c:2674
-#: plug-ins/metadata/metadata-editor.c:4635
-msgid "_Import"
-msgstr "_Uvozi"
-
-#: plug-ins/common/file-pdf-load.c:1073
+#: plug-ins/common/file-pdf-load.c:1195
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Napaka pri pridobivanju števila strani iz dane datoteke PDF."
 
-#. "Load in reverse order" toggle button
-#: plug-ins/common/file-pdf-load.c:1114
-msgid "Load in reverse order"
-msgstr "Naloži v obratnem vrstnem redu"
-
-#: plug-ins/common/file-pdf-load.c:1132
+#. Resolution
+#: plug-ins/common/file-pdf-load.c:1244
 msgid "_Width (pixels):"
 msgstr "_Širina (slik. točke):"
 
-#: plug-ins/common/file-pdf-load.c:1133
+#: plug-ins/common/file-pdf-load.c:1245
 msgid "_Height (pixels):"
 msgstr "_Višina (slik. točke):"
 
-#: plug-ins/common/file-pdf-load.c:1135
+#: plug-ins/common/file-pdf-load.c:1247
 msgid "_Resolution:"
 msgstr "_Ločljivost:"
 
-#. Antialiasing
-#: plug-ins/common/file-pdf-load.c:1146
-msgid "Use _Anti-aliasing"
-msgstr "Uporabi _glajenje robov"
-
-#: plug-ins/common/file-pdf-load.c:1414 plug-ins/common/file-pdf-load.c:1415
+#: plug-ins/common/file-pdf-load.c:1538 plug-ins/common/file-pdf-load.c:1539
 #: plug-ins/common/file-svg.c:951 plug-ins/common/file-wmf.c:722
 #: plug-ins/print/print-page-layout.c:307
 #, c-format
@@ -4169,6 +4179,11 @@ msgstr "Izvoz v PostScript ne podpira slik s kanali alfa."
 #: plug-ins/common/file-ps.c:3568
 msgid "Import from PostScript"
 msgstr "Uvozi iz PostScripta"
+
+#: plug-ins/common/file-ps.c:3573 plug-ins/file-tiff/file-tiff-load.c:2674
+#: plug-ins/metadata/metadata-editor.c:4635
+msgid "_Import"
+msgstr "_Uvozi"
 
 #. Rendering
 #: plug-ins/common/file-ps.c:3612
@@ -5169,10 +5184,8 @@ msgid "Mas_k file extensions"
 msgstr "_Končnice datotek maske"
 
 #: plug-ins/common/file-xbm.c:264
-#, fuzzy
-#| msgid "Quality of the image"
 msgid "Suffix of the mask file"
-msgstr "Kakovost slike"
+msgstr "Pripona oz. končnica datoteke maske"
 
 #: plug-ins/common/file-xbm.c:376
 msgid "XBM format does not support multiple layers."
@@ -5855,7 +5868,6 @@ msgid "The style/shape of the jigsaw puzzle { Square (0), Curved (1) }"
 msgstr "Slog/oblika sestavljanke { pravokotno (0), ukrivljeno (1) }"
 
 #: plug-ins/common/jigsaw.c:432
-#, fuzzy
 msgid "_Blend width"
 msgstr "Širina _zlivanja"
 
