@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-19 12:33+0000\n"
-"PO-Revision-Date: 2023-04-20 07:27+0200\n"
+"POT-Creation-Date: 2023-04-21 23:59+0000\n"
+"PO-Revision-Date: 2023-04-22 07:27+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -67,14 +67,13 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/common/curve-bend.c:1221 plug-ins/common/curve-bend.c:1995
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1160
-#: plug-ins/common/file-heif.c:2357 plug-ins/common/file-pdf-load.c:655
-#: plug-ins/common/file-pdf-load.c:1040 plug-ins/common/file-pdf-save.c:1113
-#: plug-ins/common/file-ps.c:3572 plug-ins/common/file-svg.c:773
-#: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
-#: plug-ins/common/grid.c:761 plug-ins/common/mail.c:568
-#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
-#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
-#: plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/file-heif.c:2357 plug-ins/common/file-pdf-load.c:709
+#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
+#: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
+#: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
+#: plug-ins/common/mail.c:568 plug-ins/common/qbist.c:848
+#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
+#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -159,7 +158,7 @@ msgstr ""
 #: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:707
 #: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1222
 #: plug-ins/common/depth-merge.c:734 plug-ins/common/file-heif.c:2358
-#: plug-ins/common/file-pdf-load.c:656 plug-ins/common/file-svg.c:774
+#: plug-ins/common/file-pdf-load.c:710 plug-ins/common/file-svg.c:774
 #: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1325
 #: plug-ins/common/grid.c:762 plug-ins/common/qbist.c:945
 #: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
@@ -1424,7 +1423,7 @@ msgstr "ვარიაციის მნიშვნელობა"
 
 #: plug-ins/common/contrast-retinex.c:297
 msgid "Retinex"
-msgstr ""
+msgstr "რეტინექსი"
 
 #: plug-ins/common/contrast-retinex.c:337
 msgid "Retinex Image Enhancement"
@@ -1444,7 +1443,7 @@ msgstr "მაღალი"
 
 #: plug-ins/common/contrast-retinex.c:688
 msgid "Retinex: filtering"
-msgstr ""
+msgstr "რეტინექსი: გაფილტვრა"
 
 #: plug-ins/common/crop-zealous.c:114
 msgid "_Zealous Crop"
@@ -1588,11 +1587,11 @@ msgstr ""
 #. The Swap button
 #: plug-ins/common/curve-bend.c:1452
 msgid "S_wap"
-msgstr ""
+msgstr "მიმოცვლა"
 
 #: plug-ins/common/curve-bend.c:1457
 msgid "Swap the two curves"
-msgstr ""
+msgstr "ორი მრუდის მიმოცვლა"
 
 #: plug-ins/common/curve-bend.c:1469
 msgid "Reset the active curve"
@@ -1684,27 +1683,27 @@ msgstr "სიმ"
 
 #: plug-ins/common/decompose.c:182
 msgid "luma-y470"
-msgstr ""
+msgstr "luma-y470"
 
 #: plug-ins/common/decompose.c:183
 msgid "blueness-cb470"
-msgstr ""
+msgstr "blueness-cb470"
 
 #: plug-ins/common/decompose.c:184
 msgid "redness-cr470"
-msgstr ""
+msgstr "redness-cr470"
 
 #: plug-ins/common/decompose.c:186
 msgid "luma-y709"
-msgstr ""
+msgstr "luma-y709"
 
 #: plug-ins/common/decompose.c:187
 msgid "blueness-cb709"
-msgstr ""
+msgstr "blueness-cb709"
 
 #: plug-ins/common/decompose.c:188
 msgid "redness-cr709"
-msgstr ""
+msgstr "redness-cr709"
 
 #. Redmode radio frame
 #: plug-ins/common/decompose.c:196
@@ -2011,7 +2010,7 @@ msgstr ""
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1091
-#: plug-ins/common/file-pcx.c:430 plug-ins/common/file-pdf-load.c:816
+#: plug-ins/common/file-pcx.c:430 plug-ins/common/file-pdf-load.c:879
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
 #: plug-ins/common/file-pnm.c:714 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
@@ -2583,7 +2582,7 @@ msgstr ""
 
 #: plug-ins/common/file-gif-save.c:1348
 msgid "Animated GIF"
-msgstr ""
+msgstr "ანიმირებული GIF"
 
 #: plug-ins/common/file-gif-save.c:1352
 msgid ""
@@ -3475,76 +3474,89 @@ msgstr ""
 msgid "Writing to file '%s' failed: %s"
 msgstr ""
 
-#: plug-ins/common/file-pdf-load.c:331 plug-ins/common/file-pdf-save.c:314
+#: plug-ins/common/file-pdf-load.c:317 plug-ins/common/file-pdf-save.c:314
 msgid "Portable Document Format"
 msgstr "PDF"
+
+#: plug-ins/common/file-pdf-load.c:367
+msgid "Open pages as"
+msgstr "გვერდის გახსნა, როგორც"
+
+#: plug-ins/common/file-pdf-load.c:368
+msgid "Number of pages to load (0 for all)"
+msgstr ""
+
+#: plug-ins/common/file-pdf-load.c:392
+msgid "Use _Anti-aliasing"
+msgstr "მომრგვალება"
+
+#: plug-ins/common/file-pdf-load.c:393
+msgid "Render texts with anti-aliasing"
+msgstr "ფონტების რენდერი მომრგვალებით"
+
+#: plug-ins/common/file-pdf-load.c:398
+msgid "_Fill transparent areas with white"
+msgstr "გამჭვირვალე ადგილების თეთრით _შევსება"
+
+#: plug-ins/common/file-pdf-load.c:399
+msgid "Render all pages as opaque by filling the background in white"
+msgstr ""
+
+#: plug-ins/common/file-pdf-load.c:407 plug-ins/common/file-pdf-load.c:408
+msgid "Resolution"
+msgstr "გაფართოება"
 
 #. TRANSLATORS: first argument is file name,
 #. * second is out-of-range page number,
 #. * third is number of pages.
 #. * Specify order as in English if needed.
 #.
-#: plug-ins/common/file-pdf-load.c:492
+#: plug-ins/common/file-pdf-load.c:531
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
 msgstr[0] ""
 msgstr[1] ""
 
-#: plug-ins/common/file-pdf-load.c:642
+#: plug-ins/common/file-pdf-load.c:696
 msgid "PDF is password protected, please input the password:"
 msgstr ""
 
-#: plug-ins/common/file-pdf-load.c:652
+#: plug-ins/common/file-pdf-load.c:706
 msgid "Encrypted PDF"
 msgstr "დაშიფრული PDF"
 
-#: plug-ins/common/file-pdf-load.c:679
+#: plug-ins/common/file-pdf-load.c:733
 msgid "Wrong password! Please input the right one:"
 msgstr ""
 
-#: plug-ins/common/file-pdf-load.c:697
+#: plug-ins/common/file-pdf-load.c:751
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "'%s'-ის ჩატვირთვa შეუძლებელია: %s"
 
-#: plug-ins/common/file-pdf-load.c:1036
+#: plug-ins/common/file-pdf-load.c:1166
 msgid "Import from PDF"
 msgstr "PDF-დან შემოტანა"
 
-#: plug-ins/common/file-pdf-load.c:1041 plug-ins/common/file-ps.c:3573
-#: plug-ins/file-tiff/file-tiff-load.c:2674
-#: plug-ins/metadata/metadata-editor.c:4635
-msgid "_Import"
-msgstr "_იმპორტირება"
-
-#: plug-ins/common/file-pdf-load.c:1073
+#: plug-ins/common/file-pdf-load.c:1195
 msgid "Error getting number of pages from the given PDF file."
 msgstr ""
 
-#. "Load in reverse order" toggle button
-#: plug-ins/common/file-pdf-load.c:1114
-msgid "Load in reverse order"
-msgstr ""
-
-#: plug-ins/common/file-pdf-load.c:1132
+#. Resolution
+#: plug-ins/common/file-pdf-load.c:1244
 msgid "_Width (pixels):"
 msgstr "_სიგანე (პიქსელებში)"
 
-#: plug-ins/common/file-pdf-load.c:1133
+#: plug-ins/common/file-pdf-load.c:1245
 msgid "_Height (pixels):"
 msgstr "ს_იმაღლე (პიქსელებში)"
 
-#: plug-ins/common/file-pdf-load.c:1135
+#: plug-ins/common/file-pdf-load.c:1247
 msgid "_Resolution:"
 msgstr "_გარჩევადობა:"
 
-#. Antialiasing
-#: plug-ins/common/file-pdf-load.c:1146
-msgid "Use _Anti-aliasing"
-msgstr "მომრგვალება"
-
-#: plug-ins/common/file-pdf-load.c:1414 plug-ins/common/file-pdf-load.c:1415
+#: plug-ins/common/file-pdf-load.c:1538 plug-ins/common/file-pdf-load.c:1539
 #: plug-ins/common/file-svg.c:951 plug-ins/common/file-wmf.c:722
 #: plug-ins/print/print-page-layout.c:307
 #, c-format
@@ -4050,6 +4062,11 @@ msgstr ""
 #: plug-ins/common/file-ps.c:3568
 msgid "Import from PostScript"
 msgstr "PostScript-დან შემოტანა"
+
+#: plug-ins/common/file-ps.c:3573 plug-ins/file-tiff/file-tiff-load.c:2674
+#: plug-ins/metadata/metadata-editor.c:4635
+msgid "_Import"
+msgstr "_იმპორტირება"
 
 #. Rendering
 #: plug-ins/common/file-ps.c:3612
@@ -4946,7 +4963,6 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/file-xbm.c:203
-#| msgid "PBM"
 msgid "XBM"
 msgstr "XBM"
 
@@ -11140,7 +11156,7 @@ msgstr "თავიდან ჩატვირთვა"
 
 #: plug-ins/help-browser/dialog.c:275
 msgid "Reload current page"
-msgstr ""
+msgstr "მიმდინარე გვერდის თავიდან ჩატვირთვა"
 
 #: plug-ins/help-browser/dialog.c:276
 msgid "_Stop"
