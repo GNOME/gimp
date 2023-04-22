@@ -17,7 +17,6 @@ SUBDIRS = \
 	po-script-fu		\
 	po-tips			\
 	data			\
-	desktop			\
 	menus			\
 	libgimpbase		\
 	tools			\
@@ -34,8 +33,7 @@ SUBDIRS = \
 	app-tools		\
 	$(GIMP_MODULES)		\
 	$(GIMP_PLUGINS)		\
-	$(GIMP_EXTENSIONS)	\
-	etc
+	$(GIMP_EXTENSIONS)
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = \

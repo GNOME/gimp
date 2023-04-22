@@ -8,6 +8,14 @@ sizes = [
   '256',
 ]
 
+# XXX: the old autotools build used to `touch` the (datadir) /icons/hicolor
+# folder at install time in order to comply with the "Icon Theme Specification"
+# (see the "Implementation Notes" section about changing the mtime of the
+# toplevel icon directory after installing/updating icon themes).
+# This part was not reimplemented in our meson build. Unsure if this is still
+# needed or even if this is the role of the application build to take care of
+# this.
+
 foreach size : sizes
   sizedir = size+'x'+size
   install_data(sizedir / 'gimp.png',
@@ -65,6 +73,8 @@ if desktop_validate.found()
 endif
 
 if appstreamcli.found()
+   # TODO: should we use validate-strict when the last errors for a strict
+   # validation are fixed?
   test('appdata_file',
     appstreamcli,
     args: [ 'validate', appdatafile ],

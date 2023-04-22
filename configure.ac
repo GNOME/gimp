@@ -3162,12 +3162,6 @@ data/tool-presets/FX/Makefile
 data/tool-presets/Paint/Makefile
 data/tool-presets/Selection/Makefile
 data/tool-presets/Sketch/Makefile
-desktop/Makefile
-desktop/gimp.desktop.in
-desktop/org.gimp.GIMP.appdata.xml.in
-desktop/test-appdata.sh
-etc/Makefile
-etc/gimprc
 m4macros/Makefile
 po/Makefile.in
 po-libgimp/Makefile.in
@@ -3180,9 +3174,6 @@ Makefile
 
 # Files with versions in their names
 AC_CONFIG_FILES(
-docs/gimp-gimp_app_version.1:docs/gimp.1.in
-docs/gimprc-gimp_app_version.5:docs/gimprc.5.in
-docs/gimptool-gimp_tool_version.1:docs/gimptool.1.in
 gimp-gimp_pkgconfig_version.pc:gimp.pc.in
 gimpthumb-gimp_pkgconfig_version.pc:gimpthumb.pc.in
 gimpui-gimp_pkgconfig_version.pc:gimpui.pc.in
