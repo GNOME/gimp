@@ -64,10 +64,12 @@ struct _StrokeDialog
 
 /*  local function prototypes  */
 
-static void  stroke_dialog_free     (StrokeDialog *private);
-static void  stroke_dialog_response (GtkWidget    *dialog,
-                                     gint          response_id,
-                                     StrokeDialog *private);
+static void  stroke_dialog_free        (StrokeDialog *private);
+static void  stroke_dialog_response    (GtkWidget    *dialog,
+                                        gint          response_id,
+                                        StrokeDialog *private);
+static void  stroke_dialog_expand_tabs (GtkWidget    *widget,
+                                        gpointer      data);
 
 
 /*  public function  */
@@ -88,10 +90,8 @@ stroke_dialog_new (GList              *items,
   GimpImage    *image;
   GtkWidget    *dialog;
   GtkWidget    *main_vbox;
-  GtkWidget    *radio_box;
-  GtkWidget    *cairo_radio;
-  GtkWidget    *paint_radio;
-  GSList       *group;
+  GtkWidget    *switcher;
+  GtkWidget    *stack;
   GtkWidget    *frame;
 
   g_return_val_if_fail (items, NULL);
@@ -151,36 +151,27 @@ stroke_dialog_new (GList              *items,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  radio_box = gimp_prop_enum_radio_box_new (G_OBJECT (private->options),
-                                            "method", -1, -1);
 
-  group = gtk_radio_button_get_group (g_object_get_data (G_OBJECT (radio_box),
-                                                         "radio-button"));
+  /* switcher */
 
-  cairo_radio = g_object_ref (group->next->data);
-  gtk_container_remove (GTK_CONTAINER (radio_box), cairo_radio);
+  switcher = gtk_stack_switcher_new ();
+  gtk_box_pack_start (GTK_BOX (main_vbox), switcher, TRUE, TRUE, 0);
+  gtk_widget_show (switcher);
 
-  paint_radio = g_object_ref (group->data);
-  gtk_container_remove (GTK_CONTAINER (radio_box), paint_radio);
-
-  g_object_ref_sink (radio_box);
-  g_object_unref (radio_box);
-
-  gimp_label_set_attributes (GTK_LABEL (gtk_bin_get_child (GTK_BIN (cairo_radio))),
-                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                             -1);
-  gimp_label_set_attributes (GTK_LABEL (gtk_bin_get_child (GTK_BIN (paint_radio))),
-                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                             -1);
+  stack = gtk_stack_new ();
+  gtk_stack_switcher_set_stack (GTK_STACK_SWITCHER (switcher),
+                                GTK_STACK (stack));
+  gtk_box_pack_start (GTK_BOX (main_vbox), stack, TRUE, TRUE, 0);
+  gtk_widget_show (stack);
 
   /*  the stroke frame  */
 
   frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_stack_add_titled (GTK_STACK (stack),
+                        frame,
+                        "stroke-tool",
+                        "Line");
   gtk_widget_show (frame);
-
-  gtk_frame_set_label_widget (GTK_FRAME (frame), cairo_radio);
-  g_object_unref (cairo_radio);
 
   {
     GtkWidget *stroke_editor;
@@ -193,20 +184,17 @@ stroke_dialog_new (GList              *items,
     gtk_container_add (GTK_CONTAINER (frame), stroke_editor);
     gtk_widget_show (stroke_editor);
 
-    g_object_bind_property (cairo_radio,   "active",
-                            stroke_editor, "sensitive",
-                            G_BINDING_SYNC_CREATE);
   }
 
 
   /*  the paint tool frame  */
 
   frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_stack_add_titled (GTK_STACK (stack),
+                        frame,
+                        "paint-tool",
+                        "Paint tool");
   gtk_widget_show (frame);
-
-  gtk_frame_set_label_widget (GTK_FRAME (frame), paint_radio);
-  g_object_unref (paint_radio);
 
   {
     GtkWidget *vbox;
@@ -218,10 +206,6 @@ stroke_dialog_new (GList              *items,
     vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add (GTK_CONTAINER (frame), vbox);
     gtk_widget_show (vbox);
-
-    g_object_bind_property (paint_radio, "active",
-                            vbox,        "sensitive",
-                            G_BINDING_SYNC_CREATE);
 
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -244,6 +228,11 @@ stroke_dialog_new (GList              *items,
                                          _("_Emulate brush dynamics"));
     gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   }
+
+  /* Setting hexpand property of all tabs to true */
+  gtk_container_foreach (GTK_CONTAINER (switcher),
+                         stroke_dialog_expand_tabs,
+                         NULL);
 
   return dialog;
 }
@@ -293,4 +282,10 @@ stroke_dialog_response (GtkWidget    *dialog,
       gtk_widget_destroy (dialog);
       break;
     }
+}
+
+static void
+stroke_dialog_expand_tabs (GtkWidget *widget, gpointer data)
+{
+  gtk_widget_set_hexpand (widget, TRUE);
 }

@@ -112,7 +112,6 @@ gimp_stroke_editor_constructed (GObject *object)
   GtkWidget         *label;
   GtkWidget         *frame;
   GtkWidget         *grid;
-  GtkWidget         *expander;
   GtkWidget         *dash_editor;
   GtkWidget         *button;
   GtkCellRenderer   *cell;
@@ -139,18 +138,10 @@ gimp_stroke_editor_constructed (GObject *object)
   gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (size), 1);
   gtk_box_pack_start (GTK_BOX (box), size, FALSE, FALSE, 0);
 
-  expander = gtk_expander_new_with_mnemonic (_("_Line Style"));
-  gtk_box_pack_start (GTK_BOX (editor), expander, FALSE, FALSE, 0);
-  gtk_widget_show (expander);
-
-  frame = gimp_frame_new ("<expander>");
-  gtk_container_add (GTK_CONTAINER (expander), frame);
-  gtk_widget_show (frame);
-
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 3);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_container_add (GTK_CONTAINER (editor), grid);
   gtk_widget_show (grid);
 
   box = gimp_prop_enum_icon_box_new (G_OBJECT (options), "cap-style",
