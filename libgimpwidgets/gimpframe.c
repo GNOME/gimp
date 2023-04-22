@@ -218,7 +218,7 @@ gimp_frame_get_label_spacing (GimpFrame *frame)
       (g_object_get_data (G_OBJECT (frame), GIMP_FRAME_IN_EXPANDER_KEY)))
     {
       gtk_widget_style_get (GTK_WIDGET (frame),
-                            "label_spacing", &spacing,
+                            "label-spacing", &spacing,
                             NULL);
     }
 
