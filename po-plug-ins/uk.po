@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-19 12:33+0000\n"
-"PO-Revision-Date: 2023-04-19 19:35+0300\n"
+"POT-Creation-Date: 2023-04-21 23:59+0000\n"
+"PO-Revision-Date: 2023-04-22 21:24+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -70,14 +70,13 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/curve-bend.c:1221 plug-ins/common/curve-bend.c:1995
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1160
-#: plug-ins/common/file-heif.c:2357 plug-ins/common/file-pdf-load.c:655
-#: plug-ins/common/file-pdf-load.c:1040 plug-ins/common/file-pdf-save.c:1113
-#: plug-ins/common/file-ps.c:3572 plug-ins/common/file-svg.c:773
-#: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
-#: plug-ins/common/grid.c:761 plug-ins/common/mail.c:568
-#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
-#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
-#: plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/file-heif.c:2357 plug-ins/common/file-pdf-load.c:709
+#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
+#: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
+#: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
+#: plug-ins/common/mail.c:568 plug-ins/common/qbist.c:848
+#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
+#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -165,7 +164,7 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:707
 #: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1222
 #: plug-ins/common/depth-merge.c:734 plug-ins/common/file-heif.c:2358
-#: plug-ins/common/file-pdf-load.c:656 plug-ins/common/file-svg.c:774
+#: plug-ins/common/file-pdf-load.c:710 plug-ins/common/file-svg.c:774
 #: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1325
 #: plug-ins/common/grid.c:762 plug-ins/common/qbist.c:945
 #: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
@@ -2060,7 +2059,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1091
-#: plug-ins/common/file-pcx.c:430 plug-ins/common/file-pdf-load.c:816
+#: plug-ins/common/file-pcx.c:430 plug-ins/common/file-pdf-load.c:879
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
 #: plug-ins/common/file-pnm.c:714 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
@@ -3585,16 +3584,48 @@ msgstr "Нижня межа знаходиться за припустимими
 msgid "Writing to file '%s' failed: %s"
 msgstr "Помилка при записі до файлу «%s»: %s"
 
-#: plug-ins/common/file-pdf-load.c:331 plug-ins/common/file-pdf-save.c:314
+#: plug-ins/common/file-pdf-load.c:317 plug-ins/common/file-pdf-save.c:314
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
+
+#: plug-ins/common/file-pdf-load.c:367
+#| msgid "Open as"
+msgid "Open pages as"
+msgstr "Відкрити сторінки як"
+
+#: plug-ins/common/file-pdf-load.c:368
+msgid "Number of pages to load (0 for all)"
+msgstr "Кількість сторінок, які слід завантажити (0 — усі)"
+
+#: plug-ins/common/file-pdf-load.c:392
+msgid "Use _Anti-aliasing"
+msgstr "_Застосувати згладжування"
+
+#: plug-ins/common/file-pdf-load.c:393
+#| msgid "Text antialiasing"
+msgid "Render texts with anti-aliasing"
+msgstr "Показувати текст зі згладжуванням символів"
+
+#: plug-ins/common/file-pdf-load.c:398
+#| msgid "_Fill transparent areas with background color"
+msgid "_Fill transparent areas with white"
+msgstr "Запов_нити прозорі області білим кольором"
+
+#: plug-ins/common/file-pdf-load.c:399
+msgid "Render all pages as opaque by filling the background in white"
+msgstr "Показати усі сторінки непрозорими, заповнивши тло білим"
+
+#: plug-ins/common/file-pdf-load.c:407 plug-ins/common/file-pdf-load.c:408
+#| msgid "Resolution:"
+msgid "Resolution"
+msgstr "Роздільна здатність"
 
 #. TRANSLATORS: first argument is file name,
 #. * second is out-of-range page number,
 #. * third is number of pages.
 #. * Specify order as in English if needed.
 #.
-#: plug-ins/common/file-pdf-load.c:492
+#: plug-ins/common/file-pdf-load.c:531
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
@@ -3605,60 +3636,45 @@ msgstr[1] ""
 msgstr[2] ""
 "Документ PDF «%1$s» має %3$d сторінок. Сторінка %2$d за межами діапазону."
 
-#: plug-ins/common/file-pdf-load.c:642
+#: plug-ins/common/file-pdf-load.c:696
 msgid "PDF is password protected, please input the password:"
 msgstr "PDF захищено паролем; введіть пароль:"
 
-#: plug-ins/common/file-pdf-load.c:652
+#: plug-ins/common/file-pdf-load.c:706
 msgid "Encrypted PDF"
 msgstr "Шифрований PDF"
 
-#: plug-ins/common/file-pdf-load.c:679
+#: plug-ins/common/file-pdf-load.c:733
 msgid "Wrong password! Please input the right one:"
 msgstr "Хибний пароль! Введіть правильний:"
 
-#: plug-ins/common/file-pdf-load.c:697
+#: plug-ins/common/file-pdf-load.c:751
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Не вдалось завантажити «%s»: %s"
 
-#: plug-ins/common/file-pdf-load.c:1036
+#: plug-ins/common/file-pdf-load.c:1166
 msgid "Import from PDF"
 msgstr "Імпорт з PDF"
 
-#: plug-ins/common/file-pdf-load.c:1041 plug-ins/common/file-ps.c:3573
-#: plug-ins/file-tiff/file-tiff-load.c:2674
-#: plug-ins/metadata/metadata-editor.c:4635
-msgid "_Import"
-msgstr "_Імпортувати"
-
-#: plug-ins/common/file-pdf-load.c:1073
+#: plug-ins/common/file-pdf-load.c:1195
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Помилка при отриманні числа сторінок з даного PDF-файлу."
 
-#. "Load in reverse order" toggle button
-#: plug-ins/common/file-pdf-load.c:1114
-msgid "Load in reverse order"
-msgstr "Завантажити у зворотному порядку"
-
-#: plug-ins/common/file-pdf-load.c:1132
+#. Resolution
+#: plug-ins/common/file-pdf-load.c:1244
 msgid "_Width (pixels):"
 msgstr "_Ширина (у точках):"
 
-#: plug-ins/common/file-pdf-load.c:1133
+#: plug-ins/common/file-pdf-load.c:1245
 msgid "_Height (pixels):"
 msgstr "_Висота (у точках):"
 
-#: plug-ins/common/file-pdf-load.c:1135
+#: plug-ins/common/file-pdf-load.c:1247
 msgid "_Resolution:"
 msgstr "_Роздільна здатність:"
 
-#. Antialiasing
-#: plug-ins/common/file-pdf-load.c:1146
-msgid "Use _Anti-aliasing"
-msgstr "_Застосувати згладжування"
-
-#: plug-ins/common/file-pdf-load.c:1414 plug-ins/common/file-pdf-load.c:1415
+#: plug-ins/common/file-pdf-load.c:1538 plug-ins/common/file-pdf-load.c:1539
 #: plug-ins/common/file-svg.c:951 plug-ins/common/file-wmf.c:722
 #: plug-ins/print/print-page-layout.c:307
 #, c-format
@@ -4194,6 +4210,11 @@ msgstr "Зображення з альфа-каналами не можна ек
 #: plug-ins/common/file-ps.c:3568
 msgid "Import from PostScript"
 msgstr "Завантажити з PostScript"
+
+#: plug-ins/common/file-ps.c:3573 plug-ins/file-tiff/file-tiff-load.c:2674
+#: plug-ins/metadata/metadata-editor.c:4635
+msgid "_Import"
+msgstr "_Імпортувати"
 
 #. Rendering
 #: plug-ins/common/file-ps.c:3612
@@ -5101,7 +5122,6 @@ msgid "X BitMap image"
 msgstr "Зображення X BitMap"
 
 #: plug-ins/common/file-xbm.c:162
-#| msgid "Loads files in SGI image file format"
 msgid "Load a file in X10 or X11 bitmap (XBM) file format"
 msgstr ""
 "Завантажити файл у форматі файлів растрового зображення X10 або X11 (XBM)"
@@ -5111,12 +5131,11 @@ msgid ""
 "Load a file in X10 or X11 bitmap (XBM) file format. XBM is a lossless format "
 "for flat black-and-white (two color indexed) images."
 msgstr ""
-"Завантажити файл у форматі файлів растрового зображення X10 або X11 (XBM)."
-" XBM — формат зберігання даних без втрат для чорно-білих зображень (два"
-" індексованих кольори)."
+"Завантажити файл у форматі файлів растрового зображення X10 або X11 (XBM). "
+"XBM — формат зберігання даних без втрат для чорно-білих зображень (два "
+"індексованих кольори)."
 
 #: plug-ins/common/file-xbm.c:190
-#| msgid "Exports files in the PBM file format"
 msgid "Export a file in X10 or X11 bitmap (XBM) file format"
 msgstr ""
 "Експортувати файл у форматі файлів растрового зображення X10 або X11 (XBM)"
@@ -5126,12 +5145,11 @@ msgid ""
 "X10 or X11 bitmap (XBM) file format. XBM is a lossless format for flat black-"
 "and-white (two color indexed) images."
 msgstr ""
-"Формат файлів растрового зображення X10 або X11 (XBM). XBM — формат"
-" зберігання даних без втрат для чорно-білих зображень (два індексованих"
-" кольори)."
+"Формат файлів растрового зображення X10 або X11 (XBM). XBM — формат "
+"зберігання даних без втрат для чорно-білих зображень (два індексованих "
+"кольори)."
 
 #: plug-ins/common/file-xbm.c:203
-#| msgid "PBM"
 msgid "XBM"
 msgstr "XBM"
 
@@ -5144,7 +5162,6 @@ msgid "Write a comment at the beginning of the file."
 msgstr "Записати коментар на початку файла."
 
 #: plug-ins/common/file-xbm.c:218
-#| msgid "Co_mment:"
 msgid "Co_mment"
 msgstr "_Коментар"
 
@@ -5157,22 +5174,18 @@ msgid "_X10 format bitmap"
 msgstr "Бітова карта формату _X10"
 
 #: plug-ins/common/file-xbm.c:228
-#| msgid "PNG export format"
 msgid "Export in X10 format"
 msgstr "Експортувати у форматі X10"
 
 #: plug-ins/common/file-xbm.c:233
-#| msgid "_Write hot spot values"
 msgid "Write hot spot _values"
 msgstr "Записати зна_чення «гарячих точок»"
 
 #: plug-ins/common/file-xbm.c:234
-#| msgid "_Write color space information"
 msgid "Write hotspot information"
 msgstr "Записувати інформацію про «гарячу точку»"
 
 #: plug-ins/common/file-xbm.c:239
-#| msgid "Hot spot _X:"
 msgid "Hot s_pot X"
 msgstr "_X «гарячої точки»"
 
@@ -5181,7 +5194,6 @@ msgid "X coordinate of hotspot"
 msgstr "Координата X «гарячої точки»"
 
 #: plug-ins/common/file-xbm.c:245
-#| msgid "Hot spot _Y:"
 msgid "Hot spot _Y"
 msgstr "_Y «гарячої точки»"
 
@@ -5190,7 +5202,6 @@ msgid "Y coordinate of hotspot"
 msgstr "Координата Y «гарячої точки»"
 
 #: plug-ins/common/file-xbm.c:251
-#| msgid "_Identifier prefix:"
 msgid "I_dentifier prefix"
 msgstr "Префікс _ідентифікатора"
 
@@ -5199,22 +5210,18 @@ msgid "Identifier prefix [determined from filename]"
 msgstr "Префікс ідентифікатора [визначено з назви файла]"
 
 #: plug-ins/common/file-xbm.c:257
-#| msgid "W_rite extra mask file"
 msgid "Write extra mask _file"
 msgstr "З_аписати додатковий файл маски"
 
 #: plug-ins/common/file-xbm.c:258
-#| msgid "W_rite extra mask file"
 msgid "Write extra mask file"
 msgstr "Записати додатковий файл маски"
 
 #: plug-ins/common/file-xbm.c:263
-#| msgid "_Mask file extension:"
 msgid "Mas_k file extensions"
 msgstr "Суфікси файла _маски"
 
 #: plug-ins/common/file-xbm.c:264
-#| msgid "Quality of the image"
 msgid "Suffix of the mask file"
 msgstr "Суфікс назви файла маски"
 
@@ -13889,6 +13896,9 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Load in reverse order"
+#~ msgstr "Завантажити у зворотному порядку"
 
 #~ msgid "Export Image as XBM"
 #~ msgstr "Експортувати зображення як XBM"
