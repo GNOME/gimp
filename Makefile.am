@@ -37,8 +37,6 @@ SUBDIRS = \
 	$(GIMP_PLUGINS)		\
 	$(GIMP_EXTENSIONS)	\
 	etc			\
-	devel-docs		\
-	docs			\
 	build
 
 pkgconfigdir = $(libdir)/pkgconfig

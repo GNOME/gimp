@@ -2796,45 +2796,6 @@ if test "x$platform_osx" = "xno" &&
   AC_MSG_RESULT([$with_icc_directory])
 fi
 
-########################################
-# Check for gi-docgen
-########################################
-
-AC_ARG_ENABLE(gi-docgen, [  --enable-gi-docgen       build gi-docgen documentation (default=auto)], , enable_gi_docgen=auto)
-
-if test "x$enable_gi_docgen" != xno; then
-  AC_PATH_PROG(GI_DOCGEN, gi-docgen, no)
-  if test "x$GI_DOCGEN" = xno; then
-    if test "x$enable_gi_docgen" = xyes; then
-      add_deps_error([gi-docgen], [Could not find gi-docgen in your PATH.])
-    else
-      enable_gi_docgen="no (gi-docgen missing)"
-    fi
-  else
-    enable_gi_docgen="yes"
-  fi
-else
-  enable_gi_docgen="no"
-fi
-
-AM_CONDITIONAL(ENABLE_GI_DOCGEN, test "x$enable_gi_docgen" = xyes)
-
-########################################
-# Checks for gir-doc-tool and yelp-build
-########################################
-
-AC_ARG_ENABLE(g-ir-doc, [  --enable-g-ir-doc       build GObject Introspection documentation (default=no)], , enable_g_ir_doc=no)
-
-if test "x$enable_g_ir_doc" = xyes; then
-  AC_CHECK_PROGS(GIR_DOC_TOOL, g-ir-doc-tool, no)
-  AC_CHECK_PROGS(YELP_BUILD, yelp-build, no)
-  if test "x$GIR_DOC_TOOL" = "xno" || test "x$YELP_BUILD" = "xno"; then
-    add_deps_error([g-ir-doc], [Could not find g-ir-doc-tool or yelp-build in your PATH.])
-    enable_g_ir_doc="no (g-ir-doc-tool or yelp-build missing)"
-  fi
-fi
-
-AM_CONDITIONAL(ENABLE_G_IR_DOC, test "x$enable_g_ir_doc" = xyes)
 
 #############################
 # Check for Windows installer
@@ -3159,12 +3120,6 @@ plug-ins/selection-to-path/Makefile
 plug-ins/twain/Makefile
 plug-ins/common/Makefile
 modules/Makefile
-devel-docs/Makefile
-devel-docs/g-ir-docs/Makefile
-devel-docs/reference/Makefile
-devel-docs/reference/gimp-ui/Makefile
-devel-docs/reference/gimp/Makefile
-docs/Makefile
 menus/Makefile
 cursors/Makefile
 icons/Makefile
@@ -3292,10 +3247,6 @@ Tests:
   Use xvfb-run               $have_xvfb_run
   Test appdata               $have_appstreamcli
   Test desktop file          $have_desktop_file_validate
-
-Documentation:
-  libgimp API Reference:     $enable_gi_docgen
-  GObject Introspection:     $enable_g_ir_doc
 
 Bug report URL: $with_bug_report_url
 $override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$warning_gcc$warning_python$warning_javascript$warning_lua$warning_libheif$warning_libmypaint$warning_gir"
