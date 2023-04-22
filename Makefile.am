@@ -16,7 +16,6 @@ SUBDIRS = \
 	po-python		\
 	po-script-fu		\
 	po-tips			\
-	po-windows-installer	\
 	data			\
 	desktop			\
 	menus			\
@@ -36,8 +35,7 @@ SUBDIRS = \
 	$(GIMP_MODULES)		\
 	$(GIMP_PLUGINS)		\
 	$(GIMP_EXTENSIONS)	\
-	etc			\
-	build
+	etc
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = \

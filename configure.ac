@@ -3057,12 +3057,6 @@ app/tests/gimpdir/brushes/Makefile
 app/tests/gimpdir/gradients/Makefile
 app/tests/gimpdir/patterns/Makefile
 app-tools/Makefile
-build/Makefile
-build/windows/Makefile
-build/windows/gimp.rc
-build/windows/gimp-plug-ins.rc
-build/windows/installer/Makefile
-build/windows/installer/lang/Makefile
 extensions/Makefile
 extensions/goat-exercises/Makefile
 extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in
@@ -3181,7 +3175,6 @@ po-plug-ins/Makefile.in
 po-python/Makefile.in
 po-script-fu/Makefile.in
 po-tips/Makefile.in
-po-windows-installer/Makefile.in
 Makefile
 ])
 
