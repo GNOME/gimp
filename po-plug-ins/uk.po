@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-21 23:59+0000\n"
-"PO-Revision-Date: 2023-04-22 21:24+0300\n"
+"POT-Creation-Date: 2023-04-23 02:03+0000\n"
+"PO-Revision-Date: 2023-04-23 16:52+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -506,16 +506,17 @@ msgstr "Вертикально"
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
-#: plug-ins/common/file-jp2-load.c:1317 plug-ins/common/file-pcx.c:508
-#: plug-ins/common/file-pcx.c:516 plug-ins/common/file-pix.c:422
-#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:869
-#: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
-#: plug-ins/common/file-sunras.c:1080 plug-ins/common/file-tga.c:1114
-#: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:912
-#: plug-ins/common/film.c:812 plug-ins/common/smooth-palette.c:332
-#: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
-#: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
-#: plug-ins/file-fits/fits.c:542 plug-ins/file-jpeg/jpeg-load.c:225
+#: plug-ins/common/file-iff.c:331 plug-ins/common/file-jp2-load.c:1317
+#: plug-ins/common/file-pcx.c:508 plug-ins/common/file-pcx.c:516
+#: plug-ins/common/file-pix.c:422 plug-ins/common/file-png.c:950
+#: plug-ins/common/file-pnm.c:869 plug-ins/common/file-qoi.c:321
+#: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1080
+#: plug-ins/common/file-tga.c:1114 plug-ins/common/file-wbmp.c:270
+#: plug-ins/common/file-xbm.c:912 plug-ins/common/film.c:812
+#: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
+#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:271
+#: plug-ins/file-faxg3/faxg3.c:574 plug-ins/file-fits/fits.c:542
+#: plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2510 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1538
@@ -1070,20 +1071,21 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/cml-explorer.c:2339 plug-ins/common/curve-bend.c:890
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
-#: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-mng.c:1407
-#: plug-ins/common/file-pcx.c:438 plug-ins/common/file-png.c:673
-#: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
-#: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
-#: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
-#: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
-#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:759
-#: plug-ins/common/file-tga.c:445 plug-ins/common/file-wbmp.c:184
-#: plug-ins/common/file-xbm.c:750 plug-ins/common/file-xmc.c:658
-#: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
-#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
-#: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
-#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:459
-#: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
+#: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-iff.c:222
+#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:438
+#: plug-ins/common/file-png.c:673 plug-ins/common/file-ps.c:1150
+#: plug-ins/common/file-ps.c:3522 plug-ins/common/file-psp.c:2383
+#: plug-ins/common/file-psp.c:2433 plug-ins/common/file-qoi.c:300
+#: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
+#: plug-ins/common/file-sunras.c:455 plug-ins/common/file-svg.c:365
+#: plug-ins/common/file-svg.c:759 plug-ins/common/file-tga.c:445
+#: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:750
+#: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:897
+#: plug-ins/common/file-xwd.c:481 plug-ins/common/sphere-designer.c:2090
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
+#: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
+#: plug-ins/file-fli/fli-gimp.c:459 plug-ins/file-fli/fli-gimp.c:510
+#: plug-ins/file-icns/file-icns-load.c:515
 #: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
 #: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
 #: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:554
@@ -3068,6 +3070,23 @@ msgstr "Параметри створення таблиці"
 msgid "Table Options"
 msgstr "Параметри таблиці"
 
+#: plug-ins/common/file-iff.c:140
+msgid "Amiga IFF"
+msgstr "Amiga IFF"
+
+#: plug-ins/common/file-iff.c:143 plug-ins/common/file-iff.c:144
+#| msgid "Load file in the QOI file format"
+msgid "Load file in the IFF file format"
+msgstr "Завантажити файл у форматі IFF"
+
+#: plug-ins/common/file-iff.c:254
+msgid "Invalid or missing ILBM image"
+msgstr "Некоректне або пропущене зображення ILBM"
+
+#: plug-ins/common/file-iff.c:259
+msgid "ILBM contains no image data - likely a palette file"
+msgstr "В ILBM не міститься даних зображення — ймовірно, це файл палітри"
+
 #: plug-ins/common/file-jp2-load.c:187
 msgid "JPEG 2000 image"
 msgstr "Зображення JPEG 2000"
@@ -3589,7 +3608,6 @@ msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
 #: plug-ins/common/file-pdf-load.c:367
-#| msgid "Open as"
 msgid "Open pages as"
 msgstr "Відкрити сторінки як"
 
@@ -3602,12 +3620,10 @@ msgid "Use _Anti-aliasing"
 msgstr "_Застосувати згладжування"
 
 #: plug-ins/common/file-pdf-load.c:393
-#| msgid "Text antialiasing"
 msgid "Render texts with anti-aliasing"
 msgstr "Показувати текст зі згладжуванням символів"
 
 #: plug-ins/common/file-pdf-load.c:398
-#| msgid "_Fill transparent areas with background color"
 msgid "_Fill transparent areas with white"
 msgstr "Запов_нити прозорі області білим кольором"
 
@@ -3616,7 +3632,6 @@ msgid "Render all pages as opaque by filling the background in white"
 msgstr "Показати усі сторінки непрозорими, заповнивши тло білим"
 
 #: plug-ins/common/file-pdf-load.c:407 plug-ins/common/file-pdf-load.c:408
-#| msgid "Resolution:"
 msgid "Resolution"
 msgstr "Роздільна здатність"
 
