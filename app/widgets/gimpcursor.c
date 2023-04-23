@@ -476,9 +476,6 @@ gimp_cursor_new (GdkWindow          *window,
        * https://gitlab.gnome.org/GNOME/gimp/-/merge_requests/545#note_1388777
        */
       if (FALSE                            ||
-#ifdef GDK_WINDOWING_WAYLAND
-          GDK_IS_WAYLAND_DISPLAY (display) ||
-#endif
 #ifdef GDK_WINDOWING_QUARTZ
           GDK_IS_QUARTZ_DISPLAY (display)  ||
 #endif
