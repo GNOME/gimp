@@ -147,20 +147,22 @@ gif_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "INDEXED*, GRAY*");
 
       gimp_procedure_set_menu_label (procedure, _("GIF image"));
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("GIF"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "exports files in Compuserve GIF "
-                                        "file format",
-                                        "Export a file in Compuserve GIF "
-                                        "format, with possible animation, "
-                                        "transparency, and comment. To export "
-                                        "an animation, operate on a multi-layer "
-                                        "file and give the 'as-animation' "
-                                        "parameter as TRUE. The plug-in will "
-                                        "interpret <50% alpha as transparent. "
-                                        "When run non-interactively, the value "
-                                        "for the comment is taken from the "
-                                        "'gimp-comment' parasite.  ",
+                                        _("exports files in Compuserve GIF "
+                                          "file format"),
+                                        _("Export a file in Compuserve GIF "
+                                          "format, with possible animation, "
+                                          "transparency, and comment. To export "
+                                          "an animation, operate on a multi-layer "
+                                          "file and give the 'as-animation' "
+                                          "parameter as TRUE. The plug-in will "
+                                          "interpret <50% alpha as transparent. "
+                                          "When run non-interactively, the value "
+                                          "for the comment is taken from the "
+                                          "'gimp-comment' parasite.  "),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Spencer Kimball, Peter Mattis, "
@@ -177,69 +179,70 @@ gif_create_procedure (GimpPlugIn  *plug_in,
                                           "gif");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "interlace",
-                             "Interlace",
-                             "Try to export as interlaced",
+                             _("_Interlace"),
+                             _("Try to export as interlaced"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "loop",
-                             "Loop",
-                             "(animated gif) Loop infinitely",
+                             _("Loop _Forever"),
+                             _("(animated gif) Loop infinitely"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "number-of-repeats",
-                         "Number of repeats",
-                         "(animated gif) Number of repeats "
-                         "(Ignored if 'loop' is TRUE)",
+                         _("_Number of repeats"),
+                         _("(animated gif) Number of repeats "
+                           "(Ignored if 'loop' is TRUE)"),
                          0, G_MAXSHORT - 1, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "default-delay",
-                         "Default delay",
-                         "(animated gif) Default delay between frames "
-                         "in milliseconds",
+                         _("_Delay between frames when unspecified"),
+                         _("(animated gif) Default delay between frames "
+                           "in milliseconds"),
                          0, G_MAXINT, 100,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "default-dispose",
-                         "Default dispose",
-                         "(animated gif) Default disposal type "
-                         "(0=`don't care`, "
-                         "1=combine, "
-                         "2=replace)",
+                         _("Frame disposal _when unspecified"),
+                         _("(animated gif) Default disposal type "
+                           "(0=`don't care`, "
+                           "1=combine, "
+                           "2=replace)"),
                          0, 2, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "as-animation",
-                             "As animation",
-                             "Export GIF as animation?",
+                             _("_As animation"),
+                             _("Export GIF as animation?"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "force-delay",
-                             "Force delay",
-                             "(animated gif) Use specified delay for all frames",
+                             _("_Use delay entered above for all frames"),
+                             _("(animated gif) Use specified delay for all frames"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "force-dispose",
-                             "Force dispose",
-                             "(animated gif) Use specified disposal for all frames",
+                             _("Use dis_posal entered above "
+                               "for all frames"),
+                             _("(animated gif) Use specified disposal for all frames"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
-                                 "Save comment",
+                                 _("Sa_ve comment"),
                                  _("Save the image comment in the GIF file"),
                                  gimp_export_comment (),
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_STRING (procedure, "gimp-comment",
-                                "Comment",
+                                _("Commen_t"),
                                 _("Image comment"),
-                                 gimp_get_default_comment (),
-                                 G_PARAM_READWRITE);
+                                gimp_get_default_comment (),
+                                G_PARAM_READWRITE);
 
       gimp_procedure_set_argument_sync (procedure, "gimp-comment",
                                         GIMP_ARGUMENT_SYNC_PARASITE);
@@ -1190,12 +1193,9 @@ save_dialog (GimpImage     *image,
              GObject       *config)
 {
   GtkWidget     *dialog;
-  GtkWidget     *main_vbox;
-  GtkWidget     *scrolled_win;
+  GtkWidget     *vbox;
   GtkWidget     *text_view;
   GtkTextBuffer *text_buffer;
-  GtkWidget     *toggle;
-  GtkWidget     *frame;
   gint32         n_layers;
   gboolean       animation_supported;
   gboolean       run;
@@ -1204,115 +1204,68 @@ save_dialog (GimpImage     *image,
 
   animation_supported = n_layers > 1;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as GIF"));
-
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
-
-  /* Interlace toggle */
-  toggle = gimp_prop_check_button_new (config, "interlace",
-                                       _("_Interlace"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
-
-  /* Comment toggle and frame */
-  frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  toggle = gimp_prop_check_button_new (config, "save-comment",
-                                       _("Save c_omment"));
-  gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
-
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
-                                       GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (frame), scrolled_win);
-  gtk_widget_show (scrolled_win);
-
-  text_view = gtk_text_view_new ();
-  gtk_container_add (GTK_CONTAINER (scrolled_win), text_view);
-  gtk_widget_show (text_view);
-
-  g_object_bind_property (config,    "save-comment",
-                          text_view, "sensitive",
-                          G_BINDING_SYNC_CREATE);
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
 #define MAX_COMMENT 240
 
-  text_buffer = gimp_prop_text_buffer_new (config, "gimp-comment",
-                                           MAX_COMMENT);
-  gtk_text_view_set_buffer (GTK_TEXT_VIEW (text_view), text_buffer);
-  g_object_unref (text_buffer);
+  text_view = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "gimp-comment",
+                                                GTK_TYPE_TEXT_VIEW);
+  text_buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
+  g_object_set_data (G_OBJECT (text_buffer), "max-len",
+                     GINT_TO_POINTER (MAX_COMMENT));
+
+  gimp_procedure_dialog_fill_scrolled_window (GIMP_PROCEDURE_DIALOG (dialog),
+                                              "comment-scrolled",
+                                              "gimp-comment");
+
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "comment-frame", "save-comment", FALSE,
+                                    "comment-scrolled");
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "interlace", "comment-frame", NULL);
 
   if (animation_supported)
     {
       GtkWidget    *grid;
-      GtkWidget    *hbox;
-      GtkWidget    *spin;
-      GtkWidget    *label;
+      GtkWidget    *widget;
       GtkListStore *store;
-      GtkWidget    *combo;
-      gboolean      toggle_state;
-
-      /* Animation toggle and frame */
-      frame = gimp_frame_new (NULL);
-      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-
-      toggle = gimp_prop_check_button_new (config, "as-animation",
-                                           _("As _animation"));
-      gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
 
       grid = gtk_grid_new ();
-      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 1);
       gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-      gtk_container_add (GTK_CONTAINER (frame), grid);
       gtk_widget_show (grid);
 
-      g_object_bind_property (config, "as-animation",
-                              grid,   "sensitive",
-                              G_BINDING_SYNC_CREATE);
+      widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "number-of-repeats",
+                                                 GIMP_TYPE_LABEL_SPIN);
+      gtk_grid_attach (GTK_GRID (grid), widget, 0, 0, 1, 1);
+      gtk_widget_set_visible (widget, TRUE);
 
-      /* Number of repeats spin */
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-      spin = gimp_prop_spin_button_new (config, "number-of-repeats",
-                                        1, 1, 1);
-      gtk_box_pack_start (GTK_BOX (hbox), spin, FALSE, FALSE, 0);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                                _("_Number of repeats:"),
-                                0.0, 0.5,
-                                hbox, 1);
+      widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "loop", GTK_TYPE_CHECK_BUTTON);
+      gtk_grid_attach (GTK_GRID (grid), widget, 1, 0, 1, 1);
 
-      /* Loop Forever toggle */
-      toggle = gimp_prop_check_button_new (config, "loop",
-                                           _("_Forever"));
-      gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "number-of-repeats", TRUE,
+                                           config, "loop",
+                                           TRUE);
 
-      toggle_state = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
-      gtk_widget_set_sensitive (spin, ! toggle_state);
-      g_object_bind_property (config, "loop",
-                              spin, "sensitive",
-                              G_BINDING_INVERT_BOOLEAN);
+      widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "default-delay",
+                                                 GIMP_TYPE_LABEL_SPIN);
+      gtk_grid_attach (GTK_GRID (grid), widget, 0, 1, 1, 1);
+      gtk_widget_set_visible (widget, TRUE);
 
-      /* Default delay spin */
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                                _("_Delay between frames where unspecified:"),
-                                0.0, 0.5,
-                                hbox, 1);
-
-      spin = gimp_prop_spin_button_new (config, "default-delay",
-                                        1, 10, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), spin, FALSE, FALSE, 0);
-
-      label = gtk_label_new (_("milliseconds"));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+      widget = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "milliseconds",
+                                                _("milliseconds"));
+      gtk_label_set_xalign (GTK_LABEL (widget), 0.1);
+      gtk_grid_attach (GTK_GRID (grid), widget, 1, 1, 1, 1);
+      gtk_widget_set_visible (widget, TRUE);
 
       store = gimp_int_store_new (_("I don't care"),
                                   DISPOSE_UNSPECIFIED,
@@ -1321,40 +1274,55 @@ save_dialog (GimpImage     *image,
                                   _("One frame per layer (replace)"),
                                   DISPOSE_REPLACE,
                                   NULL);
-      combo = gimp_prop_int_combo_box_new (config, "default-dispose",
-                                           GIMP_INT_STORE (store));
-      g_object_unref (store);
+      widget = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                                    "default-dispose",
+                                                    GIMP_INT_STORE (store));
+      gtk_grid_attach (GTK_GRID (grid), widget, 0, 2, 2, 1);
+      gtk_widget_set_visible (widget, TRUE);
 
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
-                                _("_Frame disposal where unspecified"),
-                                0.0, 0.5,
-                                combo, 1);
+      vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                             "animation-vbox", "force-delay",
+                                             "force-dispose", NULL);
 
-      /* The "Always use default values" toggles */
-      toggle = gimp_prop_check_button_new (config, "force-delay",
-                                           _("_Use delay entered above "
-                                             "for all frames"));
-      gtk_grid_attach (GTK_GRID (grid), toggle, 0, 3, 2, 1);
+      gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+      gtk_box_reorder_child (GTK_BOX (vbox), grid, 0);
 
-      toggle = gimp_prop_check_button_new (config, "force-dispose",
-                                           _("U_se disposal entered above "
-                                             "for all frames"));
-      gtk_grid_attach (GTK_GRID (grid), toggle, 0, 4, 2, 1);
+      gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "ani-frame", "as-animation", FALSE,
+                                        "animation-vbox");
+
+      gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "ani-frame", NULL);
     }
   else
     {
       GtkWidget *hint;
 
-      frame = gimp_frame_new (_("Animated GIF"));
-      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
+      /* Used to create vbox to store hintbox in */
+      gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "spacer", " ");
+      gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "no-ani-title", _("Animated GIF"));
+
+      vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                             "no-animation-vbox", "spacer",
+                                             NULL);
 
       hint = gimp_hint_box_new (_("You can only export as animation when the "
                                   "image has more than one layer.\n"
                                   "The image you are trying to export only "
                                   "has one layer."));
-      gtk_container_add (GTK_CONTAINER (frame), hint);
+      gtk_box_pack_start (GTK_BOX (vbox), hint, FALSE, FALSE, 0);
+      gtk_widget_set_margin_bottom (vbox, 12);
       gtk_widget_show (hint);
+      gtk_box_reorder_child (GTK_BOX (vbox), hint, 0);
+
+      gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "no-ani-frame", "no-ani-title", FALSE,
+                                        "no-animation-vbox");
+
+      gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "no-ani-frame", NULL);
     }
 
   gtk_widget_show (dialog);
