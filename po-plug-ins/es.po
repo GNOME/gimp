@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-04 03:39+0000\n"
-"PO-Revision-Date: 2023-02-04 04:40+0100\n"
+"POT-Creation-Date: 2023-04-21 23:42+0000\n"
+"PO-Revision-Date: 2023-04-24 12:10+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -62,11 +62,11 @@ msgstr "Alinear capas visibles"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1908
+#: ../plug-ins/common/file-gif-save.c:1127 ../plug-ins/common/file-heif.c:1908
 #: ../plug-ins/common/file-jp2-load.c:961
-#: ../plug-ins/common/file-pdf-load.c:702
-#: ../plug-ins/common/file-pdf-load.c:1282
-#: ../plug-ins/common/file-pdf-save.c:936 ../plug-ins/common/file-ps.c:3447
+#: ../plug-ins/common/file-pdf-load.c:708
+#: ../plug-ins/common/file-pdf-load.c:1356
+#: ../plug-ins/common/file-pdf-save.c:1020 ../plug-ins/common/file-ps.c:3447
 #: ../plug-ins/common/file-raw-data.c:1816 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
 #: ../plug-ins/common/filter-pack.c:1264 ../plug-ins/common/fractal-trace.c:711
@@ -128,7 +128,7 @@ msgstr "_Cancelar"
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1909
-#: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
+#: ../plug-ins/common/file-pdf-load.c:709 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
 #: ../plug-ins/common/grid.c:678 ../plug-ins/common/hot.c:615
@@ -393,12 +393,12 @@ msgstr "Velocidad de la reproducción"
 
 #. 2 styles of default frame disposals: cumulative layers and one frame per layer.
 #: ../plug-ins/common/animation-play.c:931
-#: ../plug-ins/common/file-gif-save.c:1321
+#: ../plug-ins/common/file-gif-save.c:1336
 msgid "Cumulative layers (combine)"
 msgstr "Capas acumulativas (combinar)"
 
 #: ../plug-ins/common/animation-play.c:935
-#: ../plug-ins/common/file-gif-save.c:1323
+#: ../plug-ins/common/file-gif-save.c:1338
 msgid "One frame per layer (replace)"
 msgstr "Un cuadro por capa (reemplazar)"
 
@@ -460,14 +460,14 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1375
-#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1111
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1116
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
 #: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:2067 ../plug-ins/file-sgi/sgi.c:416
+#: ../plug-ins/file-psd/psd-load.c:2153 ../plug-ins/file-sgi/sgi.c:416
 #: ../plug-ins/file-tiff/file-tiff-load.c:1544
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -864,7 +864,7 @@ msgstr "_Abrir"
 #. The Save button
 #: ../plug-ins/common/cml-explorer.c:1317
 #: ../plug-ins/common/cml-explorer.c:2027 ../plug-ins/common/curve-bend.c:1567
-#: ../plug-ins/common/curve-bend.c:2173 ../plug-ins/common/file-pdf-save.c:935
+#: ../plug-ins/common/curve-bend.c:2173 ../plug-ins/common/file-pdf-save.c:1019
 #: ../plug-ins/common/qbist.c:763 ../plug-ins/common/qbist.c:893
 #: ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2618 ../plug-ins/flame/flame.c:483
@@ -1065,14 +1065,14 @@ msgstr "Guardar los parámetros del Examinador EMA"
 #: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-dicom.c:1524 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
-#: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
+#: ../plug-ins/common/file-pdf-save.c:550 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1173
 #: ../plug-ins/common/file-raw-data.c:1202 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1222 ../plug-ins/common/file-xmc.c:1504
+#: ../plug-ins/common/file-tga.c:1227 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
-#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1725
+#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1897
 #: ../plug-ins/file-tiff/file-tiff-save.c:970
 #: ../plug-ins/file-tiff/file-tiff-save.c:1072 ../plug-ins/flame/flame.c:450
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
@@ -1108,7 +1108,7 @@ msgstr "Cargar los parámetros del Examinador EMA"
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
 #: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:96
-#: ../plug-ins/file-jpeg/jpeg-load.c:543 ../plug-ins/file-psd/psd-load.c:143
+#: ../plug-ins/file-jpeg/jpeg-load.c:543 ../plug-ins/file-psd/psd-load.c:146
 #: ../plug-ins/file-psd/psd-thumb-load.c:82 ../plug-ins/flame/flame.c:419
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:913
@@ -2172,7 +2172,7 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:338
 #: ../plug-ins/common/file-gegl.c:322 ../plug-ins/common/file-gif-load.c:353
 #: ../plug-ins/common/file-heif.c:703 ../plug-ins/common/file-jp2-load.c:1077
-#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1048
+#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1059
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1067
 #: ../plug-ins/common/file-raw-data.c:1277 ../plug-ins/common/file-sunras.c:429
@@ -2182,7 +2182,7 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:183
 #: ../plug-ins/file-faxg3/faxg3.c:220 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
-#: ../plug-ins/file-psd/psd-load.c:135
+#: ../plug-ins/file-psd/psd-load.c:138
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:299
@@ -2259,17 +2259,17 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:880
+#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:895
 #: ../plug-ins/common/file-html-table.c:238
 #: ../plug-ins/common/file-jpegxl.c:778 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1278
-#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1216
+#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1221
 #: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:319
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
 #: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:290
-#: ../plug-ins/file-psd/psd-save.c:1696 ../plug-ins/file-sgi/sgi.c:584
+#: ../plug-ins/file-psd/psd-save.c:1868 ../plug-ins/file-sgi/sgi.c:584
 #: ../plug-ins/file-tiff/file-tiff-save.c:956
 #, c-format
 msgid "Exporting '%s'"
@@ -2467,12 +2467,12 @@ msgstr ""
 "GIF: el tipo de mezcla no documentada de GIF %d no puede manejarse. La "
 "animación podría no reproducirse o volverse a guardar perfectamente."
 
-#: ../plug-ins/common/file-gif-save.c:541
+#: ../plug-ins/common/file-gif-save.c:556
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr ""
 "Simplemente no se ha podido reducir más los colores. Exportando como opaco."
 
-#: ../plug-ins/common/file-gif-save.c:660
+#: ../plug-ins/common/file-gif-save.c:675
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -2481,7 +2481,7 @@ msgstr ""
 "Imposible exportar «%s». El formato de archivo GIF no soporta imágenes que\n"
 "tengan más de %d píxeles de ancho o alto."
 
-#: ../plug-ins/common/file-gif-save.c:773
+#: ../plug-ins/common/file-gif-save.c:788
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -2489,18 +2489,18 @@ msgstr ""
 "El formato GIF sólo soporta comentarios en codificación ASCII de 7 bits. No "
 "se guardará ningún comentario."
 
-#: ../plug-ins/common/file-gif-save.c:853
+#: ../plug-ins/common/file-gif-save.c:868
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "No se puede guardar imágenes en color RGB. Convertir a color indexado o\n"
 "escala en gris primero."
 
-#: ../plug-ins/common/file-gif-save.c:1058
+#: ../plug-ins/common/file-gif-save.c:1073
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Retardo insertado para evitar la maldita animación chupadora de CPU."
 
-#: ../plug-ins/common/file-gif-save.c:1107
+#: ../plug-ins/common/file-gif-save.c:1122
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2509,11 +2509,11 @@ msgstr ""
 "extiende\n"
 "más allá de los bordes reales de la imagen."
 
-#: ../plug-ins/common/file-gif-save.c:1113
+#: ../plug-ins/common/file-gif-save.c:1128
 msgid "Cr_op"
 msgstr "_Recortar"
 
-#: ../plug-ins/common/file-gif-save.c:1124
+#: ../plug-ins/common/file-gif-save.c:1139
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2521,11 +2521,11 @@ msgstr ""
 "El formato de archivo GIF no permite esto. Puede elegir si quiere recortar\n"
 "todas las capas de los bordes de la imagen, o cancelar la exportación."
 
-#: ../plug-ins/common/file-gif-save.c:1258
+#: ../plug-ins/common/file-gif-save.c:1273
 msgid "GIF"
 msgstr "GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1266
+#: ../plug-ins/common/file-gif-save.c:1281
 #, c-format
 msgid ""
 "Error loading UI file '%s':\n"
@@ -2534,11 +2534,11 @@ msgstr ""
 "Ocurrió un error al cargar el archivo de IU «%s»:\n"
 "%s"
 
-#: ../plug-ins/common/file-gif-save.c:1319
+#: ../plug-ins/common/file-gif-save.c:1334
 msgid "I don't care"
 msgstr "No me importa"
 
-#: ../plug-ins/common/file-gif-save.c:1340
+#: ../plug-ins/common/file-gif-save.c:1355
 msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
@@ -2547,7 +2547,7 @@ msgstr ""
 "La imagen que está tratando de exportar tiene una sola capa."
 
 #. translators: the %d is *always* 240 here
-#: ../plug-ins/common/file-gif-save.c:2556
+#: ../plug-ins/common/file-gif-save.c:2571
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "El comentario predeterminado está limitado a %d caracteres."
@@ -3095,13 +3095,13 @@ msgid "'%s' is not a PCX file"
 msgstr "«%s» no es un archivo PCX"
 
 #: ../plug-ins/common/file-pcx.c:413 ../plug-ins/file-bmp/bmp-load.c:726
-#: ../plug-ins/file-psd/psd-load.c:315
+#: ../plug-ins/file-psd/psd-load.c:318
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Anchura de imagen no soportada o no válida: %d"
 
 #: ../plug-ins/common/file-pcx.c:419 ../plug-ins/file-bmp/bmp-load.c:732
-#: ../plug-ins/file-psd/psd-load.c:307
+#: ../plug-ins/file-psd/psd-load.c:310
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Altura de imagen no soportada o no válida: %d"
@@ -3153,10 +3153,11 @@ msgstr "Borde inferior fuera de los límites (debe ser < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Ocurrió un error al escribir en el archivo «%s»: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:324
-#: ../plug-ins/common/file-pdf-load.c:343
-#: ../plug-ins/common/file-pdf-save.c:350
-#: ../plug-ins/common/file-pdf-save.c:367
+#: ../plug-ins/common/file-pdf-load.c:329
+#: ../plug-ins/common/file-pdf-load.c:348
+#: ../plug-ins/common/file-pdf-save.c:383
+#: ../plug-ins/common/file-pdf-save.c:400
+#: ../plug-ins/common/file-pdf-save.c:418
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
@@ -3164,7 +3165,7 @@ msgstr "Portable Document Format"
 #. * second is out-of-range page number, third is
 #. * number of pages. Specify order as in English if needed.
 #.
-#: ../plug-ins/common/file-pdf-load.c:507
+#: ../plug-ins/common/file-pdf-load.c:512
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
@@ -3174,85 +3175,91 @@ msgstr[1] ""
 "El archivo PDF «%1$s» tiene %3$d páginas. La página %2$d está fuera del "
 "rango."
 
-#: ../plug-ins/common/file-pdf-load.c:689
+#: ../plug-ins/common/file-pdf-load.c:695
 msgid "PDF is password protected, please input the password:"
 msgstr "El PDF está protegido con contraseña, introdúzcala:"
 
-#: ../plug-ins/common/file-pdf-load.c:699
+#: ../plug-ins/common/file-pdf-load.c:705
 msgid "Encrypted PDF"
 msgstr "PDF cifrado"
 
-#: ../plug-ins/common/file-pdf-load.c:726
+#: ../plug-ins/common/file-pdf-load.c:732
 msgid "Wrong password! Please input the right one:"
 msgstr "Contraseña incorrecta. Introduzca una válida:"
 
-#: ../plug-ins/common/file-pdf-load.c:744
+#: ../plug-ins/common/file-pdf-load.c:750
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "No se pudo cargar «%s»: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:1085
+#: ../plug-ins/common/file-pdf-load.c:1096
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1087 ../plug-ins/common/file-ps.c:1197
+#: ../plug-ins/common/file-pdf-load.c:1098 ../plug-ins/common/file-ps.c:1197
 #, c-format
 msgid "%s-pages"
 msgstr "%s-páginas"
 
-#: ../plug-ins/common/file-pdf-load.c:1278
+#: ../plug-ins/common/file-pdf-load.c:1352
 msgid "Import from PDF"
 msgstr "Importar desde PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3448
+#: ../plug-ins/common/file-pdf-load.c:1357 ../plug-ins/common/file-ps.c:3448
 #: ../plug-ins/file-tiff/file-tiff-load.c:2665
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "_Importar"
 
-#: ../plug-ins/common/file-pdf-load.c:1316
+#: ../plug-ins/common/file-pdf-load.c:1390
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Error al obtener el número de páginas del archivo PDF dado."
 
 #. "Load in reverse order" toggle button
-#: ../plug-ins/common/file-pdf-load.c:1357
+#: ../plug-ins/common/file-pdf-load.c:1435
 msgid "Load in reverse order"
 msgstr "Cargar en orden inverso"
 
-#: ../plug-ins/common/file-pdf-load.c:1375
+#: ../plug-ins/common/file-pdf-load.c:1453
 msgid "_Width (pixels):"
 msgstr "_Anchura (píxeles):"
 
-#: ../plug-ins/common/file-pdf-load.c:1376
+#: ../plug-ins/common/file-pdf-load.c:1454
 msgid "_Height (pixels):"
 msgstr "_Altura (píxeles):"
 
-#: ../plug-ins/common/file-pdf-load.c:1378
+#: ../plug-ins/common/file-pdf-load.c:1456
 msgid "_Resolution:"
 msgstr "_Resolución:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1389
+#: ../plug-ins/common/file-pdf-load.c:1467
 msgid "Use _Anti-aliasing"
 msgstr "Usar _Antialias"
 
-#: ../plug-ins/common/file-pdf-load.c:1667
-#: ../plug-ins/common/file-pdf-load.c:1668 ../plug-ins/common/file-svg.c:852
+#. White Background
+#: ../plug-ins/common/file-pdf-load.c:1476
+msgid "_Fill transparent areas with white"
+msgstr "_Rellenar de blanco las zonas transparentes"
+
+#: ../plug-ins/common/file-pdf-load.c:1762
+#: ../plug-ins/common/file-pdf-load.c:1763 ../plug-ins/common/file-svg.c:852
 #: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
 msgstr "píxeles/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:382
+#: ../plug-ins/common/file-pdf-save.c:433
+#: ../plug-ins/common/file-pdf-save.c:451
 msgid "_Create multipage PDF..."
 msgstr "_Crear PDF de varias páginas…"
 
-#: ../plug-ins/common/file-pdf-save.c:465
+#: ../plug-ins/common/file-pdf-save.c:535
 msgid "You must select a file to save!"
 msgstr "Debe seleccionar un archivo que guardar."
 
-#: ../plug-ins/common/file-pdf-save.c:491
+#: ../plug-ins/common/file-pdf-save.c:561
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -3265,86 +3272,91 @@ msgstr ""
 "Asegúrese de que ha introducido un nombre de archivo válido y que la carpeta "
 "de destino no es de solo lectura."
 
-#: ../plug-ins/common/file-pdf-save.c:823
-#: ../plug-ins/common/file-pdf-save.c:983
+#: ../plug-ins/common/file-pdf-save.c:899
+#: ../plug-ins/common/file-pdf-save.c:1067
+msgid "_Fill transparent areas with background color"
+msgstr "_Rellenar las zonas transparentes con el color de fondo"
+
+#: ../plug-ins/common/file-pdf-save.c:904
+#: ../plug-ins/common/file-pdf-save.c:1072
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr "_Omitir las capas ocultas y las que tienen opacidad cero"
 
-#: ../plug-ins/common/file-pdf-save.c:828
-#: ../plug-ins/common/file-pdf-save.c:988
+#: ../plug-ins/common/file-pdf-save.c:909
+#: ../plug-ins/common/file-pdf-save.c:1077
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "Convertir los mapas de _bit a gráficos vectoriales cuando sea posible"
 
-#: ../plug-ins/common/file-pdf-save.c:833
-#: ../plug-ins/common/file-pdf-save.c:993
+#: ../plug-ins/common/file-pdf-save.c:914
+#: ../plug-ins/common/file-pdf-save.c:1082
 msgid "_Apply layer masks before saving"
 msgstr "_Aplicar máscaras de capa antes de guardar"
 
-#: ../plug-ins/common/file-pdf-save.c:837
-#: ../plug-ins/common/file-pdf-save.c:997
+#: ../plug-ins/common/file-pdf-save.c:918
+#: ../plug-ins/common/file-pdf-save.c:1086
 msgid "Keeping the masks will not change the output"
 msgstr "Mantener las máscaras no cambiará la salida"
 
-#: ../plug-ins/common/file-pdf-save.c:843
+#: ../plug-ins/common/file-pdf-save.c:924
 #, c-format
 msgid "_Layers as pages (%s)"
 msgstr "_Capas como páginas (%s)"
 
-#: ../plug-ins/common/file-pdf-save.c:845
-#: ../plug-ins/common/file-pdf-save.c:1044
+#: ../plug-ins/common/file-pdf-save.c:926
+#: ../plug-ins/common/file-pdf-save.c:1135
 msgid "top layers first"
 msgstr "capas superiores primero"
 
-#: ../plug-ins/common/file-pdf-save.c:845
-#: ../plug-ins/common/file-pdf-save.c:1044
+#: ../plug-ins/common/file-pdf-save.c:926
+#: ../plug-ins/common/file-pdf-save.c:1135
 msgid "bottom layers first"
 msgstr "capas inferiores primero"
 
-#: ../plug-ins/common/file-pdf-save.c:853
+#: ../plug-ins/common/file-pdf-save.c:934
 msgid "_Reverse the pages order"
 msgstr "Inve_rtir el orden de las páginas"
 
-#: ../plug-ins/common/file-pdf-save.c:927
+#: ../plug-ins/common/file-pdf-save.c:1011
 msgid "Save to:"
 msgstr "Guardar en:"
 
-#: ../plug-ins/common/file-pdf-save.c:931
+#: ../plug-ins/common/file-pdf-save.c:1015
 msgid "Browse..."
 msgstr "Explorar…"
 
-#: ../plug-ins/common/file-pdf-save.c:932
+#: ../plug-ins/common/file-pdf-save.c:1016
 msgid "Multipage PDF export"
 msgstr "Exportación de PDF de varias páginas"
 
-#: ../plug-ins/common/file-pdf-save.c:968
+#: ../plug-ins/common/file-pdf-save.c:1052
 msgid "Remove the selected pages"
 msgstr "Eliminar las páginas seleccionadas"
 
 # Pendiente hasa que sepa lo que significa. FVD
 # Puede ser una imagen pix de Alias WaveFront
 # Gracias ¿Quién lo dice? pon tus iniciales. FVD
-#: ../plug-ins/common/file-pdf-save.c:978
+#: ../plug-ins/common/file-pdf-save.c:1062
 msgid "Add this image"
 msgstr "Añadir esta imagen"
 
-#: ../plug-ins/common/file-pdf-save.c:1042
+#: ../plug-ins/common/file-pdf-save.c:1133
 #, c-format
 msgid "Layers as pages (%s)"
 msgstr "Capas como páginas (%s)"
 
-#: ../plug-ins/common/file-pdf-save.c:1099
-#: ../plug-ins/common/file-pdf-save.c:1167
-#: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1941
+#: ../plug-ins/common/file-pdf-save.c:1190
+#: ../plug-ins/common/file-pdf-save.c:1258
+#: ../plug-ins/common/file-pdf-save.c:1356 ../plug-ins/common/file-ps.c:1941
 #: ../plug-ins/file-tiff/file-tiff-load.c:1546
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
 
-#: ../plug-ins/common/file-pdf-save.c:1136
+#: ../plug-ins/common/file-pdf-save.c:1227
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Error: para guardar el archivo, debe añadirse al menos una imagen."
 
-#: ../plug-ins/common/file-pdf-save.c:1312
+#: ../plug-ins/common/file-pdf-save.c:1403
 #: ../plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
@@ -4267,24 +4279,24 @@ msgstr "No se puede leer la extensión de «%s»"
 msgid "Cannot read header from '%s'"
 msgstr "No se pudo leer la cabecera de «%s»"
 
-#: ../plug-ins/common/file-tga.c:1434
+#: ../plug-ins/common/file-tga.c:1439
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1443 ../plug-ins/file-sgi/sgi.c:683
+#: ../plug-ins/common/file-tga.c:1448 ../plug-ins/file-sgi/sgi.c:683
 msgid "_RLE compression"
 msgstr "Compresión _RLE"
 
-#: ../plug-ins/common/file-tga.c:1457
+#: ../plug-ins/common/file-tga.c:1462
 msgid "Or_igin:"
 msgstr "Or_iginal:"
 
-#: ../plug-ins/common/file-tga.c:1461
+#: ../plug-ins/common/file-tga.c:1466
 msgid "Bottom left"
 msgstr "Inferior izquierdo"
 
-#: ../plug-ins/common/file-tga.c:1462
+#: ../plug-ins/common/file-tga.c:1467
 msgid "Top left"
 msgstr "Arriba a la izquierda"
 
@@ -7038,7 +7050,7 @@ msgstr "Icono #%i"
 msgid "Opening thumbnail for '%s'"
 msgstr "Abriendo miniatura de «%s»"
 
-#: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:136
+#: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:137
 msgid "Microsoft Windows icon"
 msgstr "Icono de Microsoft Windows"
 
@@ -7205,113 +7217,113 @@ msgstr "Imagen JPEG"
 msgid "Export Preview"
 msgstr "Vista previa de la exportación"
 
-#: ../plug-ins/file-psd/psd-load.c:228
+#: ../plug-ins/file-psd/psd-load.c:231
 #: ../plug-ins/file-psd/psd-thumb-load.c:130
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Ocurrió un error al cargar el archivo PSD: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:283
+#: ../plug-ins/file-psd/psd-load.c:286
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Este archivo no es un documento de Photoshop válido"
 
-#: ../plug-ins/file-psd/psd-load.c:290
+#: ../plug-ins/file-psd/psd-load.c:293
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Versión del formato de archivo no soportada: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:297
+#: ../plug-ins/file-psd/psd-load.c:300
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Demasiados canales en el archivo: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:324
+#: ../plug-ins/file-psd/psd-load.c:327
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Tamaño de imagen no soportado o no válido: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:338 ../plug-ins/file-psd/psd-load.c:348
+#: ../plug-ins/file-psd/psd-load.c:341 ../plug-ins/file-psd/psd-load.c:351
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Modo de color no soportado: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:375
+#: ../plug-ins/file-psd/psd-load.c:378
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Profundidad de bits no soportada: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:409 ../plug-ins/file-psd/psd-load.c:419
-#: ../plug-ins/file-psd/psd-load.c:630 ../plug-ins/file-psd/psd-load.c:912
+#: ../plug-ins/file-psd/psd-load.c:412 ../plug-ins/file-psd/psd-load.c:422
+#: ../plug-ins/file-psd/psd-load.c:633 ../plug-ins/file-psd/psd-load.c:915
 #, c-format
 msgid "The file is corrupt!"
 msgstr "El archivo está dañado."
 
-#: ../plug-ins/file-psd/psd-load.c:558
+#: ../plug-ins/file-psd/psd-load.c:561
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Demasiados canales en la capa: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:566
+#: ../plug-ins/file-psd/psd-load.c:569
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Altura de la capa no soportada o no válida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:574
+#: ../plug-ins/file-psd/psd-load.c:577
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Anchura de la capa no soportada o no válida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:583
+#: ../plug-ins/file-psd/psd-load.c:586
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Tamaño de la capa no soportado o no válido: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:668
+#: ../plug-ins/file-psd/psd-load.c:671
 #, c-format
 msgid "Unsupported or invalid mask info size: %d"
 msgstr "Tamaño de info. de máscara no soportado o no válido: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:837
+#: ../plug-ins/file-psd/psd-load.c:840
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Altura de la máscara de capa no soportada o no válida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:845
+#: ../plug-ins/file-psd/psd-load.c:848
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Anchura de la máscara de capa no soportada o no válida: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:854
+#: ../plug-ins/file-psd/psd-load.c:857
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Tamaño de la máscara de capa no soportado o no válido: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1477 ../plug-ins/file-psd/psd-load.c:2040
+#: ../plug-ins/file-psd/psd-load.c:1540 ../plug-ins/file-psd/psd-load.c:2126
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Modo de compresión no soportado: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2187
+#: ../plug-ins/file-psd/psd-load.c:2273
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2365
+#: ../plug-ins/file-psd/psd-load.c:2473
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Tamaño del canal no soportado o no válido"
 
-#: ../plug-ins/file-psd/psd-load.c:2431
+#: ../plug-ins/file-psd/psd-load.c:2539
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Error al descomprimir los datos"
 
-#: ../plug-ins/file-psd/psd-save.c:463
+#: ../plug-ins/file-psd/psd-save.c:469
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Error: no se puede convertir el tipo de imagen básico de GIMP al modo PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1689
+#: ../plug-ins/file-psd/psd-save.c:1861
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7320,7 +7332,7 @@ msgstr ""
 "Imposible exportar «%s». El formato de archivo PSD no soporta imágenes que "
 "tengan más de 30.000 píxeles de anchura o altura."
 
-#: ../plug-ins/file-psd/psd-save.c:1710
+#: ../plug-ins/file-psd/psd-save.c:1882
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -15518,9 +15530,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 #~ msgstr ""
 #~ "Si no se activa la imagen será mapeada circularmente en un rectángulo. Si "
 #~ "se activa la imagen será proyectada en un círculo."
-
-#~ msgid "Replace partial transparency with the current background color"
-#~ msgstr "Sustituir la transparencia parcial con el color de fondo actual"
 
 #~ msgid "_Semi-Flatten"
 #~ msgstr "_Semiaplanar"
