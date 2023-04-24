@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-21 08:09+0000\n"
-"PO-Revision-Date: 2023-01-22 18:27+0100\n"
+"POT-Creation-Date: 2023-04-24 17:11+0000\n"
+"PO-Revision-Date: 2023-04-24 22:14+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3\n"
 
 #: libgimp/gimpbrushselectbutton.c:325 libgimp/gimppatternselectbutton.c:335
 msgid "_Browse..."
@@ -162,7 +162,7 @@ msgid "Confirm Save"
 msgstr "Potrditev shranjevanja"
 
 #: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:303 libgimpwidgets/gimpcolorbutton.c:553
+#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:571
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -184,7 +184,7 @@ msgid "_Ignore"
 msgstr "_Prezri"
 
 #: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
-#: libgimp/gimpproceduredialog.c:275
+#: libgimp/gimpproceduredialog.c:277
 msgid "_Export"
 msgstr "_Izvozi"
 
@@ -402,63 +402,63 @@ msgid ""
 msgstr ""
 "Procedura »%s« je bila klicana z neveljavnim nizom UTF-8 za argument »%s«."
 
-#: libgimp/gimpproceduredialog.c:273
+#: libgimp/gimpproceduredialog.c:275
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Odpri"
 
-#: libgimp/gimpproceduredialog.c:277 libgimpwidgets/gimpcolorbutton.c:554
+#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:572
 #: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
 #: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
 #: libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "V _redu"
 
-#: libgimp/gimpproceduredialog.c:285 libgimpwidgets/gimpcolorbutton.c:552
+#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:570
 msgid "_Reset"
 msgstr "_Ponastavi"
 
-#: libgimp/gimpproceduredialog.c:337
+#: libgimp/gimpproceduredialog.c:339
 msgid "_Load Saved Settings"
 msgstr "_Naloži shranjene nastavitve"
 
-#: libgimp/gimpproceduredialog.c:338
+#: libgimp/gimpproceduredialog.c:340
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Naloži nastavitve, shranjene s funkcijo Shrani nastavitve"
 
-#: libgimp/gimpproceduredialog.c:350
+#: libgimp/gimpproceduredialog.c:352
 msgid "_Save Settings"
 msgstr "_Shrani nastavitve"
 
-#: libgimp/gimpproceduredialog.c:351
+#: libgimp/gimpproceduredialog.c:353
 msgid "Store current settings for later reuse"
 msgstr "Shrani trenutne nastavitve za kasnejšo rabo"
 
-#: libgimp/gimpproceduredialog.c:732
+#: libgimp/gimpproceduredialog.c:734
 msgid "Brush Chooser"
 msgstr "Izbirnik čopičev"
 
-#: libgimp/gimpproceduredialog.c:736
+#: libgimp/gimpproceduredialog.c:738
 msgid "Font Chooser"
 msgstr "Izbirnik pisav"
 
-#: libgimp/gimpproceduredialog.c:740
+#: libgimp/gimpproceduredialog.c:742
 msgid "Gradient Chooser"
 msgstr "Izbirnik prelivov"
 
-#: libgimp/gimpproceduredialog.c:744
+#: libgimp/gimpproceduredialog.c:746
 msgid "Palette Chooser"
 msgstr "Izbirnik palet"
 
-#: libgimp/gimpproceduredialog.c:748
+#: libgimp/gimpproceduredialog.c:750
 msgid "Pattern Chooser"
 msgstr "Izbirnik vzorcev"
 
-#: libgimp/gimpproceduredialog.c:1986
+#: libgimp/gimpproceduredialog.c:2036
 msgid "Reset to _Initial Values"
 msgstr "Ponastavi na _začetne vrednosti"
 
-#: libgimp/gimpproceduredialog.c:1995
+#: libgimp/gimpproceduredialog.c:2045
 msgid "Reset to _Factory Defaults"
 msgstr "Ponastavi na _tovarniške vrednosti"
 
@@ -829,718 +829,723 @@ msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "vžgano"
 
-#: libgimpbase/gimpbaseenums.c:519
+#: libgimpbase/gimpbaseenums.c:520
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "Barva ospredja"
 
-#: libgimpbase/gimpbaseenums.c:520
+#: libgimpbase/gimpbaseenums.c:521
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "Barva ozadja"
 
-#: libgimpbase/gimpbaseenums.c:521
+#: libgimpbase/gimpbaseenums.c:522
+msgctxt "fill-type"
+msgid "Middle Gray (CIELAB)"
+msgstr "Srednje siva (CIELAB)"
+
+#: libgimpbase/gimpbaseenums.c:523
 msgctxt "fill-type"
 msgid "White"
 msgstr "Bela"
 
-#: libgimpbase/gimpbaseenums.c:522
+#: libgimpbase/gimpbaseenums.c:524
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "Prosojnost"
 
-#: libgimpbase/gimpbaseenums.c:523
+#: libgimpbase/gimpbaseenums.c:525
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Vzorec"
 
-#: libgimpbase/gimpbaseenums.c:581
+#: libgimpbase/gimpbaseenums.c:583
 msgctxt "gradient-blend-color-space"
 msgid "Perceptual RGB"
 msgstr "Zaznavni RGB"
 
-#: libgimpbase/gimpbaseenums.c:582
+#: libgimpbase/gimpbaseenums.c:584
 msgctxt "gradient-blend-color-space"
 msgid "Linear RGB"
 msgstr "Linearni RGB"
 
-#: libgimpbase/gimpbaseenums.c:583
+#: libgimpbase/gimpbaseenums.c:585
 msgctxt "gradient-blend-color-space"
 msgid "CIE Lab"
 msgstr "Lab. CIE"
 
-#: libgimpbase/gimpbaseenums.c:613
+#: libgimpbase/gimpbaseenums.c:615
 msgctxt "gradient-segment-color"
 msgid "RGB"
 msgstr "RGB"
 
-#: libgimpbase/gimpbaseenums.c:614
+#: libgimpbase/gimpbaseenums.c:616
 msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (obarvanost v nasprotni SUK)"
 
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:617
+#: libgimpbase/gimpbaseenums.c:619
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
 msgstr "HSV (v nasprotni SUK)"
 
-#: libgimpbase/gimpbaseenums.c:618
+#: libgimpbase/gimpbaseenums.c:620
 msgctxt "gradient-segment-color"
 msgid "HSV (clockwise hue)"
 msgstr "HSV (obarvanost v SUK)"
 
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:621
+#: libgimpbase/gimpbaseenums.c:623
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
 msgstr "HSV (v SUK)"
 
-#: libgimpbase/gimpbaseenums.c:654
+#: libgimpbase/gimpbaseenums.c:656
 msgctxt "gradient-segment-type"
 msgid "Linear"
 msgstr "linearna"
 
-#: libgimpbase/gimpbaseenums.c:655
+#: libgimpbase/gimpbaseenums.c:657
 msgctxt "gradient-segment-type"
 msgid "Curved"
 msgstr "ukrivljena"
 
-#: libgimpbase/gimpbaseenums.c:656
+#: libgimpbase/gimpbaseenums.c:658
 msgctxt "gradient-segment-type"
 msgid "Sinusoidal"
 msgstr "sinusoidna"
 
-#: libgimpbase/gimpbaseenums.c:657
+#: libgimpbase/gimpbaseenums.c:659
 msgctxt "gradient-segment-type"
 msgid "Spherical (increasing)"
 msgstr "sferična (naraščajoča)"
 
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:660
+#: libgimpbase/gimpbaseenums.c:662
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
 msgstr "sferična (nar.)"
 
-#: libgimpbase/gimpbaseenums.c:661
+#: libgimpbase/gimpbaseenums.c:663
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
 msgstr "sferična (padajoča)"
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:664
+#: libgimpbase/gimpbaseenums.c:666
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
 msgstr "sferična (pad.)"
 
-#: libgimpbase/gimpbaseenums.c:665
+#: libgimpbase/gimpbaseenums.c:667
 msgctxt "gradient-segment-type"
 msgid "Step"
 msgstr "Korak"
 
-#: libgimpbase/gimpbaseenums.c:703
+#: libgimpbase/gimpbaseenums.c:705
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "linearno"
 
-#: libgimpbase/gimpbaseenums.c:704
+#: libgimpbase/gimpbaseenums.c:706
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "bi-linearno"
 
-#: libgimpbase/gimpbaseenums.c:705
+#: libgimpbase/gimpbaseenums.c:707
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "krožno"
 
-#: libgimpbase/gimpbaseenums.c:706
+#: libgimpbase/gimpbaseenums.c:708
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "kvadratno"
 
-#: libgimpbase/gimpbaseenums.c:707
+#: libgimpbase/gimpbaseenums.c:709
 msgctxt "gradient-type"
 msgid "Conical (symmetric)"
 msgstr "stožčasto (simetrično)"
 
 #. Translators: this is an abbreviated version of "Conical (symmetric)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:710
+#: libgimpbase/gimpbaseenums.c:712
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "stožčasto (simetrično)"
 
-#: libgimpbase/gimpbaseenums.c:711
+#: libgimpbase/gimpbaseenums.c:713
 msgctxt "gradient-type"
 msgid "Conical (asymmetric)"
 msgstr "stožčasto (asimetrično)"
 
 #. Translators: this is an abbreviated version of "Conical (asymmetric)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:714
+#: libgimpbase/gimpbaseenums.c:716
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "stožčasto (asimetrično)"
 
-#: libgimpbase/gimpbaseenums.c:715
+#: libgimpbase/gimpbaseenums.c:717
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "oblikovano (kotno)"
 
-#: libgimpbase/gimpbaseenums.c:716
+#: libgimpbase/gimpbaseenums.c:718
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "oblikovano (kroglasto)"
 
-#: libgimpbase/gimpbaseenums.c:717
+#: libgimpbase/gimpbaseenums.c:719
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "oblikovano (vdrto)"
 
-#: libgimpbase/gimpbaseenums.c:718
+#: libgimpbase/gimpbaseenums.c:720
 msgctxt "gradient-type"
 msgid "Spiral (clockwise)"
 msgstr "spiralno (v SUK)"
 
 #. Translators: this is an abbreviated version of "Spiral (clockwise)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:721
+#: libgimpbase/gimpbaseenums.c:723
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "spiralno (v SUK)"
 
-#: libgimpbase/gimpbaseenums.c:722
+#: libgimpbase/gimpbaseenums.c:724
 msgctxt "gradient-type"
 msgid "Spiral (counter-clockwise)"
 msgstr "spiralno (v nasprotni SUK)"
 
 #. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
 #. Keep it short.
-#: libgimpbase/gimpbaseenums.c:725
+#: libgimpbase/gimpbaseenums.c:727
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "spiralno (v nasp. SUK)"
 
-#: libgimpbase/gimpbaseenums.c:757
+#: libgimpbase/gimpbaseenums.c:759
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Točke preseka (pike)"
 
-#: libgimpbase/gimpbaseenums.c:758
+#: libgimpbase/gimpbaseenums.c:760
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Točke preseka (križci)"
 
-#: libgimpbase/gimpbaseenums.c:759
+#: libgimpbase/gimpbaseenums.c:761
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "črtkano"
 
-#: libgimpbase/gimpbaseenums.c:760
+#: libgimpbase/gimpbaseenums.c:762
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "dvojno črtkano"
 
-#: libgimpbase/gimpbaseenums.c:761
+#: libgimpbase/gimpbaseenums.c:763
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "zapolnjeno"
 
-#: libgimpbase/gimpbaseenums.c:831
+#: libgimpbase/gimpbaseenums.c:833
 msgctxt "icon-type"
 msgid "Icon name"
 msgstr "Ime ikone"
 
-#: libgimpbase/gimpbaseenums.c:832
+#: libgimpbase/gimpbaseenums.c:834
 msgctxt "icon-type"
 msgid "Pixbuf"
 msgstr "Medpomnilnik sličic"
 
-#: libgimpbase/gimpbaseenums.c:833
+#: libgimpbase/gimpbaseenums.c:835
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Slikovna datoteka"
 
-#: libgimpbase/gimpbaseenums.c:863
+#: libgimpbase/gimpbaseenums.c:865
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "barva RGB"
 
-#: libgimpbase/gimpbaseenums.c:864
+#: libgimpbase/gimpbaseenums.c:866
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "sivinsko"
 
-#: libgimpbase/gimpbaseenums.c:865
+#: libgimpbase/gimpbaseenums.c:867
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "indeksirana barva"
 
-#: libgimpbase/gimpbaseenums.c:898
+#: libgimpbase/gimpbaseenums.c:900
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: libgimpbase/gimpbaseenums.c:899
+#: libgimpbase/gimpbaseenums.c:901
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: libgimpbase/gimpbaseenums.c:900
+#: libgimpbase/gimpbaseenums.c:902
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "sivinsko"
 
-#: libgimpbase/gimpbaseenums.c:901
+#: libgimpbase/gimpbaseenums.c:903
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "sivinsko-alfa"
 
-#: libgimpbase/gimpbaseenums.c:902
+#: libgimpbase/gimpbaseenums.c:904
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "indeksirano"
 
-#: libgimpbase/gimpbaseenums.c:903
+#: libgimpbase/gimpbaseenums.c:905
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "indeksirano-alfa"
 
-#: libgimpbase/gimpbaseenums.c:933
+#: libgimpbase/gimpbaseenums.c:935
 msgctxt "ink-blob-type"
 msgid "Circle"
 msgstr "Krog"
 
-#: libgimpbase/gimpbaseenums.c:934
+#: libgimpbase/gimpbaseenums.c:936
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "Kvadrat"
 
-#: libgimpbase/gimpbaseenums.c:935
+#: libgimpbase/gimpbaseenums.c:937
 msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr "Karo"
 
-#: libgimpbase/gimpbaseenums.c:967
+#: libgimpbase/gimpbaseenums.c:969
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "brez"
 
-#: libgimpbase/gimpbaseenums.c:968
+#: libgimpbase/gimpbaseenums.c:970
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "linearna"
 
-#: libgimpbase/gimpbaseenums.c:969
+#: libgimpbase/gimpbaseenums.c:971
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "kubična"
 
-#: libgimpbase/gimpbaseenums.c:970
+#: libgimpbase/gimpbaseenums.c:972
 msgctxt "interpolation-type"
 msgid "NoHalo"
 msgstr "brezodsevna"
 
-#: libgimpbase/gimpbaseenums.c:971
+#: libgimpbase/gimpbaseenums.c:973
 msgctxt "interpolation-type"
 msgid "LoHalo"
 msgstr "nizkoodsevna"
 
-#: libgimpbase/gimpbaseenums.c:1001
+#: libgimpbase/gimpbaseenums.c:1003
 msgctxt "join-style"
 msgid "Miter"
 msgstr "Sredica"
 
-#: libgimpbase/gimpbaseenums.c:1002
+#: libgimpbase/gimpbaseenums.c:1004
 msgctxt "join-style"
 msgid "Round"
 msgstr "Zaobljeno"
 
-#: libgimpbase/gimpbaseenums.c:1003
+#: libgimpbase/gimpbaseenums.c:1005
 msgctxt "join-style"
 msgid "Bevel"
 msgstr "Izbočeno"
 
-#: libgimpbase/gimpbaseenums.c:1064
+#: libgimpbase/gimpbaseenums.c:1066
 msgctxt "merge-type"
 msgid "Expanded as necessary"
 msgstr "Razširjeno po potrebi"
 
-#: libgimpbase/gimpbaseenums.c:1065
+#: libgimpbase/gimpbaseenums.c:1067
 msgctxt "merge-type"
 msgid "Clipped to image"
 msgstr "Prirezano po sliki"
 
-#: libgimpbase/gimpbaseenums.c:1066
+#: libgimpbase/gimpbaseenums.c:1068
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
 msgstr "Prirezano po spodnji plasti"
 
-#: libgimpbase/gimpbaseenums.c:1067
+#: libgimpbase/gimpbaseenums.c:1069
 msgctxt "merge-type"
 msgid "Flatten"
 msgstr "Splošči"
 
-#: libgimpbase/gimpbaseenums.c:1161
+#: libgimpbase/gimpbaseenums.c:1163
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "Vodoravno"
 
-#: libgimpbase/gimpbaseenums.c:1162
+#: libgimpbase/gimpbaseenums.c:1164
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "Navpično"
 
-#: libgimpbase/gimpbaseenums.c:1163
+#: libgimpbase/gimpbaseenums.c:1165
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Neznano"
 
-#: libgimpbase/gimpbaseenums.c:1192
+#: libgimpbase/gimpbaseenums.c:1194
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "konstantna"
 
-#: libgimpbase/gimpbaseenums.c:1193
+#: libgimpbase/gimpbaseenums.c:1195
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "naraščajoča"
 
-#: libgimpbase/gimpbaseenums.c:1254
+#: libgimpbase/gimpbaseenums.c:1256
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Notranja procedura GIMP"
 
-#: libgimpbase/gimpbaseenums.c:1255
+#: libgimpbase/gimpbaseenums.c:1257
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
 msgstr "Vtičnik GIMP"
 
-#: libgimpbase/gimpbaseenums.c:1256
+#: libgimpbase/gimpbaseenums.c:1258
 msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
 msgstr "Razširitev GIMP"
 
-#: libgimpbase/gimpbaseenums.c:1257
+#: libgimpbase/gimpbaseenums.c:1259
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Začasna procedura"
 
-#: libgimpbase/gimpbaseenums.c:1344
+#: libgimpbase/gimpbaseenums.c:1346
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "8-bitna celoštevilska (linearna)"
 
-#: libgimpbase/gimpbaseenums.c:1345
+#: libgimpbase/gimpbaseenums.c:1347
 msgctxt "precision"
 msgid "8-bit non-linear integer"
 msgstr "8-bitna nelinearna celoštevilska"
 
-#: libgimpbase/gimpbaseenums.c:1346
+#: libgimpbase/gimpbaseenums.c:1348
 msgctxt "precision"
 msgid "8-bit perceptual integer"
 msgstr "8-bitna zaznavna celoštevilska"
 
-#: libgimpbase/gimpbaseenums.c:1347
+#: libgimpbase/gimpbaseenums.c:1349
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "16-bitna celoštevilska (linearna)"
 
-#: libgimpbase/gimpbaseenums.c:1348
+#: libgimpbase/gimpbaseenums.c:1350
 msgctxt "precision"
 msgid "16-bit non-linear integer"
 msgstr "16-bitna nelinearna celoštevilska"
 
-#: libgimpbase/gimpbaseenums.c:1349
+#: libgimpbase/gimpbaseenums.c:1351
 msgctxt "precision"
 msgid "16-bit perceptual integer"
 msgstr "16-bitna zaznavna celoštevilska"
 
-#: libgimpbase/gimpbaseenums.c:1350
+#: libgimpbase/gimpbaseenums.c:1352
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "32-bitna celoštevilska (linearna)"
 
-#: libgimpbase/gimpbaseenums.c:1351
+#: libgimpbase/gimpbaseenums.c:1353
 msgctxt "precision"
 msgid "32-bit non-linear integer"
 msgstr "32-bitna nelinearna celoštevilska"
 
-#: libgimpbase/gimpbaseenums.c:1352
+#: libgimpbase/gimpbaseenums.c:1354
 msgctxt "precision"
 msgid "32-bit perceptual integer"
 msgstr "32-bitna zaznavna celoštevilska"
 
-#: libgimpbase/gimpbaseenums.c:1353
+#: libgimpbase/gimpbaseenums.c:1355
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr "16-bitna s plavajočo vejico (linearna)"
 
-#: libgimpbase/gimpbaseenums.c:1354
+#: libgimpbase/gimpbaseenums.c:1356
 msgctxt "precision"
 msgid "16-bit non-linear floating point"
 msgstr "16-bitna nelinearna s plavajočo vejico"
 
-#: libgimpbase/gimpbaseenums.c:1355
+#: libgimpbase/gimpbaseenums.c:1357
 msgctxt "precision"
 msgid "16-bit perceptual floating point"
 msgstr "16-bitna zaznavna s plavajočo vejico"
 
-#: libgimpbase/gimpbaseenums.c:1356
+#: libgimpbase/gimpbaseenums.c:1358
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr "32-bitna s plavajočo vejico (linearna)"
 
-#: libgimpbase/gimpbaseenums.c:1357
+#: libgimpbase/gimpbaseenums.c:1359
 msgctxt "precision"
 msgid "32-bit non-linear floating point"
 msgstr "32-bitna nelinearna s plavajočo vejico"
 
-#: libgimpbase/gimpbaseenums.c:1358
+#: libgimpbase/gimpbaseenums.c:1360
 msgctxt "precision"
 msgid "32-bit perceptual floating point"
 msgstr "32-bitna zaznavna s plavajočo vejico"
 
-#: libgimpbase/gimpbaseenums.c:1359
+#: libgimpbase/gimpbaseenums.c:1361
 msgctxt "precision"
 msgid "64-bit linear floating point"
 msgstr "64-bitna s plavajočo vejico (linearna)"
 
-#: libgimpbase/gimpbaseenums.c:1360
+#: libgimpbase/gimpbaseenums.c:1362
 msgctxt "precision"
 msgid "64-bit non-linear floating point"
 msgstr "64-bitna nelinearna s plavajočo točko"
 
-#: libgimpbase/gimpbaseenums.c:1361
+#: libgimpbase/gimpbaseenums.c:1363
 msgctxt "precision"
 msgid "64-bit perceptual floating point"
 msgstr "64-bitna zaznavna s plavajočo vejico"
 
-#: libgimpbase/gimpbaseenums.c:1472
+#: libgimpbase/gimpbaseenums.c:1474
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Brez (razširi)"
 
-#: libgimpbase/gimpbaseenums.c:1473
+#: libgimpbase/gimpbaseenums.c:1475
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Žagasti val"
 
-#: libgimpbase/gimpbaseenums.c:1474
+#: libgimpbase/gimpbaseenums.c:1476
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Trikotni val"
 
-#: libgimpbase/gimpbaseenums.c:1475
+#: libgimpbase/gimpbaseenums.c:1477
 msgctxt "repeat-mode"
 msgid "Truncate"
 msgstr "Poreži"
 
-#: libgimpbase/gimpbaseenums.c:1537
+#: libgimpbase/gimpbaseenums.c:1539
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Zaženi interaktivno"
 
-#: libgimpbase/gimpbaseenums.c:1538
+#: libgimpbase/gimpbaseenums.c:1540
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Zaženi neinteraktivno"
 
-#: libgimpbase/gimpbaseenums.c:1539
+#: libgimpbase/gimpbaseenums.c:1541
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Zaženi z nazadnje uporabljenimi vrednostmi"
 
-#: libgimpbase/gimpbaseenums.c:1577
+#: libgimpbase/gimpbaseenums.c:1579
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Kompozitno"
 
-#: libgimpbase/gimpbaseenums.c:1578
+#: libgimpbase/gimpbaseenums.c:1580
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Rdeča"
 
-#: libgimpbase/gimpbaseenums.c:1579
+#: libgimpbase/gimpbaseenums.c:1581
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Zelena"
 
-#: libgimpbase/gimpbaseenums.c:1580
+#: libgimpbase/gimpbaseenums.c:1582
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Modra"
 
-#: libgimpbase/gimpbaseenums.c:1581
+#: libgimpbase/gimpbaseenums.c:1583
 msgctxt "select-criterion"
 msgid "HSV Hue"
 msgstr "Obarvanost HSV"
 
-#: libgimpbase/gimpbaseenums.c:1582
+#: libgimpbase/gimpbaseenums.c:1584
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "Nasičenost HSV"
 
-#: libgimpbase/gimpbaseenums.c:1583
+#: libgimpbase/gimpbaseenums.c:1585
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "Vrednost HSV"
 
-#: libgimpbase/gimpbaseenums.c:1584
+#: libgimpbase/gimpbaseenums.c:1586
 msgctxt "select-criterion"
 msgid "LCh Lightness"
 msgstr "Svetlost LCh"
 
-#: libgimpbase/gimpbaseenums.c:1585
+#: libgimpbase/gimpbaseenums.c:1587
 msgctxt "select-criterion"
 msgid "LCh Chroma"
 msgstr "Kroma LCh"
 
-#: libgimpbase/gimpbaseenums.c:1586
+#: libgimpbase/gimpbaseenums.c:1588
 msgctxt "select-criterion"
 msgid "LCh Hue"
 msgstr "Obarvanost LCh"
 
-#: libgimpbase/gimpbaseenums.c:1587
+#: libgimpbase/gimpbaseenums.c:1589
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: libgimpbase/gimpbaseenums.c:1616
+#: libgimpbase/gimpbaseenums.c:1618
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Slikovne točke"
 
-#: libgimpbase/gimpbaseenums.c:1617
+#: libgimpbase/gimpbaseenums.c:1619
 msgctxt "size-type"
 msgid "Points"
 msgstr "Točke"
 
-#: libgimpbase/gimpbaseenums.c:1678
+#: libgimpbase/gimpbaseenums.c:1680
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Črta poteze"
 
-#: libgimpbase/gimpbaseenums.c:1679
+#: libgimpbase/gimpbaseenums.c:1681
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Vlečenje potez z orodjem za risanje"
 
-#: libgimpbase/gimpbaseenums.c:1712
+#: libgimpbase/gimpbaseenums.c:1714
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Od leve proti desni"
 
-#: libgimpbase/gimpbaseenums.c:1713
+#: libgimpbase/gimpbaseenums.c:1715
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Od desne proti levi"
 
-#: libgimpbase/gimpbaseenums.c:1714
+#: libgimpbase/gimpbaseenums.c:1716
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Navpična, desna proti levi (mešana usmerjenost)"
 
-#: libgimpbase/gimpbaseenums.c:1715
+#: libgimpbase/gimpbaseenums.c:1717
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Navpično, desna proti levi (pokončna usmerjenost)"
 
-#: libgimpbase/gimpbaseenums.c:1716
+#: libgimpbase/gimpbaseenums.c:1718
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Navpično, od leve proti desni (mešana usmerjenost)"
 
-#: libgimpbase/gimpbaseenums.c:1717
+#: libgimpbase/gimpbaseenums.c:1719
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Navpično, od leve proti desni (pokončna usmerjenost)"
 
-#: libgimpbase/gimpbaseenums.c:1748
+#: libgimpbase/gimpbaseenums.c:1750
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "brez"
 
-#: libgimpbase/gimpbaseenums.c:1749
+#: libgimpbase/gimpbaseenums.c:1751
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Rahlo"
 
-#: libgimpbase/gimpbaseenums.c:1750
+#: libgimpbase/gimpbaseenums.c:1752
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Srednje"
 
-#: libgimpbase/gimpbaseenums.c:1751
+#: libgimpbase/gimpbaseenums.c:1753
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Polno"
 
-#: libgimpbase/gimpbaseenums.c:1782
+#: libgimpbase/gimpbaseenums.c:1784
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Levo poravnano"
 
-#: libgimpbase/gimpbaseenums.c:1783
+#: libgimpbase/gimpbaseenums.c:1785
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Desno poravnano"
 
-#: libgimpbase/gimpbaseenums.c:1784
+#: libgimpbase/gimpbaseenums.c:1786
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Sredinsko"
 
-#: libgimpbase/gimpbaseenums.c:1785
+#: libgimpbase/gimpbaseenums.c:1787
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Zapolnjeno"
 
-#: libgimpbase/gimpbaseenums.c:1815
+#: libgimpbase/gimpbaseenums.c:1817
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Sence"
 
-#: libgimpbase/gimpbaseenums.c:1816
+#: libgimpbase/gimpbaseenums.c:1818
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Srednji toni"
 
-#: libgimpbase/gimpbaseenums.c:1817
+#: libgimpbase/gimpbaseenums.c:1819
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Svetli toni"
 
-#: libgimpbase/gimpbaseenums.c:1846
+#: libgimpbase/gimpbaseenums.c:1848
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Navadno (naprej)"
 
-#: libgimpbase/gimpbaseenums.c:1847
+#: libgimpbase/gimpbaseenums.c:1849
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Popravljalno (nazaj)"
 
-#: libgimpbase/gimpbaseenums.c:1878
+#: libgimpbase/gimpbaseenums.c:1880
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Prilagodi"
 
-#: libgimpbase/gimpbaseenums.c:1879
+#: libgimpbase/gimpbaseenums.c:1881
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Poreži"
 
-#: libgimpbase/gimpbaseenums.c:1880
+#: libgimpbase/gimpbaseenums.c:1882
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Obreži do rezultata"
 
-#: libgimpbase/gimpbaseenums.c:1881
+#: libgimpbase/gimpbaseenums.c:1883
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Obreži v razmerju stranic"
@@ -1577,24 +1582,24 @@ msgstr "(neveljaven niz UTF-8)"
 msgid "File path is NULL"
 msgstr "Pot datoteke je ničelna (NULL)"
 
-#: libgimpbase/gimputils.c:403 libgimpbase/gimputils.c:414
+#: libgimpbase/gimputils.c:402
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Napaka pri pretvorbi imena datoteke UTF-8 v široke znake"
 
-#: libgimpbase/gimputils.c:422
+#: libgimpbase/gimputils.c:410
 msgid "ILCreateFromPath() failed"
 msgstr "Ukaz ILCreateFromPath() je spodletel"
 
-#: libgimpbase/gimputils.c:459
+#: libgimpbase/gimputils.c:449
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "»%s« ni mogoče pretvoriti v veljaven NSURL."
 
-#: libgimpbase/gimputils.c:487
+#: libgimpbase/gimputils.c:477
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Povezovanje z org.freedesktop.FileManager1 je spodletelo: "
 
-#: libgimpbase/gimputils.c:511
+#: libgimpbase/gimputils.c:501
 msgid "Calling ShowItems failed: "
 msgstr "Klic ShowItems je spodletel: "
 
@@ -2007,22 +2012,6 @@ msgstr "Sličice za predogled %s ni bilo mogoče ustvariti: %s"
 msgid "_Search:"
 msgstr "Na_jdi:"
 
-#: libgimpwidgets/gimpcolorbutton.c:152
-msgid "_Foreground Color"
-msgstr "Barva o_spredja"
-
-#: libgimpwidgets/gimpcolorbutton.c:156
-msgid "_Background Color"
-msgstr "Barva o_zadja"
-
-#: libgimpwidgets/gimpcolorbutton.c:160
-msgid "Blac_k"
-msgstr "_Črna"
-
-#: libgimpwidgets/gimpcolorbutton.c:164
-msgid "_White"
-msgstr "_Bela"
-
 #: libgimpwidgets/gimpcolorhexentry.c:134
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
@@ -2069,23 +2058,23 @@ msgstr "Izdelovalec: "
 msgid "Copyright: "
 msgstr "Avtorske pravice: "
 
-#: libgimpwidgets/gimpcolorscales.c:210
+#: libgimpwidgets/gimpcolorscales.c:212
 msgid "Scales"
 msgstr "Lestvice"
 
-#: libgimpwidgets/gimpcolorscales.c:441
+#: libgimpwidgets/gimpcolorscales.c:446
 msgid "0..100"
 msgstr "0..100"
 
-#: libgimpwidgets/gimpcolorscales.c:443
+#: libgimpwidgets/gimpcolorscales.c:448
 msgid "0..255"
 msgstr "0..255"
 
-#: libgimpwidgets/gimpcolorscales.c:464
+#: libgimpwidgets/gimpcolorscales.c:469
 msgid "LCh"
 msgstr "LCh"
 
-#: libgimpwidgets/gimpcolorscales.c:466
+#: libgimpwidgets/gimpcolorscales.c:471
 msgid "HSV"
 msgstr "HSV"
 
@@ -2134,7 +2123,7 @@ msgstr "Izberite mapo"
 msgid "Select File"
 msgstr "Izberite datoteko"
 
-#: libgimpwidgets/gimphelpui.c:384
+#: libgimpwidgets/gimphelpui.c:379
 msgid "Press F1 for more help"
 msgstr "Pritisnite F1 za dodatno pomoč"
 
