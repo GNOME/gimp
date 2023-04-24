@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-23 02:03+0000\n"
-"PO-Revision-Date: 2023-04-23 16:52+0300\n"
+"POT-Creation-Date: 2023-04-24 11:01+0000\n"
+"PO-Revision-Date: 2023-04-24 20:07+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -69,7 +69,7 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/colormap-remap.c:706 plug-ins/common/compose.c:1183
 #: plug-ins/common/curve-bend.c:1221 plug-ins/common/curve-bend.c:1995
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
-#: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1160
+#: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1163
 #: plug-ins/common/file-heif.c:2357 plug-ins/common/file-pdf-load.c:709
 #: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
 #: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
@@ -507,7 +507,7 @@ msgstr "Вертикально"
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
 #: plug-ins/common/file-iff.c:331 plug-ins/common/file-jp2-load.c:1317
-#: plug-ins/common/file-pcx.c:508 plug-ins/common/file-pcx.c:516
+#: plug-ins/common/file-pcx.c:741 plug-ins/common/file-pcx.c:749
 #: plug-ins/common/file-pix.c:422 plug-ins/common/file-png.c:950
 #: plug-ins/common/file-pnm.c:869 plug-ins/common/file-qoi.c:321
 #: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1080
@@ -1041,7 +1041,7 @@ msgstr "Збереження параметрів CML Explorer"
 
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
 #: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:876
-#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:985
+#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1219
 #: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
@@ -1072,20 +1072,20 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
 #: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-iff.c:222
-#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:438
-#: plug-ins/common/file-png.c:673 plug-ins/common/file-ps.c:1150
-#: plug-ins/common/file-ps.c:3522 plug-ins/common/file-psp.c:2383
-#: plug-ins/common/file-psp.c:2433 plug-ins/common/file-qoi.c:300
-#: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
-#: plug-ins/common/file-sunras.c:455 plug-ins/common/file-svg.c:365
-#: plug-ins/common/file-svg.c:759 plug-ins/common/file-tga.c:445
-#: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:750
-#: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:897
-#: plug-ins/common/file-xwd.c:481 plug-ins/common/sphere-designer.c:2090
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
-#: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
-#: plug-ins/file-fli/fli-gimp.c:459 plug-ins/file-fli/fli-gimp.c:510
-#: plug-ins/file-icns/file-icns-load.c:515
+#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:522
+#: plug-ins/common/file-pcx.c:565 plug-ins/common/file-png.c:673
+#: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
+#: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
+#: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
+#: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
+#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:759
+#: plug-ins/common/file-tga.c:445 plug-ins/common/file-wbmp.c:184
+#: plug-ins/common/file-xbm.c:750 plug-ins/common/file-xmc.c:658
+#: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
+#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
+#: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
+#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:459
+#: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
 #: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
 #: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
 #: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:554
@@ -2061,19 +2061,19 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1091
-#: plug-ins/common/file-pcx.c:430 plug-ins/common/file-pdf-load.c:879
-#: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
-#: plug-ins/common/file-pnm.c:714 plug-ins/common/file-ps.c:1140
-#: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
-#: plug-ins/common/file-tga.c:437 plug-ins/common/file-wbmp.c:176
-#: plug-ins/common/file-wmf.c:1026 plug-ins/common/file-xbm.c:742
-#: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
-#: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
-#: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
-#: plug-ins/file-fli/fli-gimp.c:502 plug-ins/file-icns/file-icns-load.c:507
-#: plug-ins/file-ico/ico-load.c:674 plug-ins/file-ico/ico-load.c:784
-#: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:177
-#: plug-ins/file-raw/file-darktable.c:413
+#: plug-ins/common/file-pcx.c:514 plug-ins/common/file-pcx.c:557
+#: plug-ins/common/file-pdf-load.c:879 plug-ins/common/file-pix.c:381
+#: plug-ins/common/file-png.c:665 plug-ins/common/file-pnm.c:714
+#: plug-ins/common/file-ps.c:1140 plug-ins/common/file-raw-data.c:1665
+#: plug-ins/common/file-sunras.c:447 plug-ins/common/file-tga.c:437
+#: plug-ins/common/file-wbmp.c:176 plug-ins/common/file-wmf.c:1026
+#: plug-ins/common/file-xbm.c:742 plug-ins/common/file-xmc.c:648
+#: plug-ins/common/file-xpm.c:382 plug-ins/common/file-xwd.c:473
+#: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:188
+#: plug-ins/file-faxg3/faxg3.c:240 plug-ins/file-fli/fli-gimp.c:502
+#: plug-ins/file-icns/file-icns-load.c:507 plug-ins/file-ico/ico-load.c:674
+#: plug-ins/file-ico/ico-load.c:784 plug-ins/file-jpeg/jpeg-load.c:87
+#: plug-ins/file-psd/psd-load.c:177 plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:334
 #: plug-ins/file-tiff/file-tiff-load.c:289
 #, c-format
@@ -2142,9 +2142,9 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #.
 #. * Open the file for writing...
 #.
-#: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:913
+#: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:916
 #: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1374
-#: plug-ins/common/file-pcx.c:870 plug-ins/common/file-pix.c:560
+#: plug-ins/common/file-pcx.c:1104 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
 #: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
 #: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
@@ -2532,23 +2532,136 @@ msgstr ""
 msgid "Too much compressed data, ignoring extra..."
 msgstr "Забагато стиснених даних, ігноруємо зайві..."
 
-#: plug-ins/common/file-gif-save.c:234
+#: plug-ins/common/file-gif-save.c:151
+msgid "GIF"
+msgstr "GIF"
+
+#: plug-ins/common/file-gif-save.c:154
+#| msgid "Exports files in the PGM file format"
+msgid "exports files in Compuserve GIF file format"
+msgstr "експортує файли у форматі файлів GIF Compuserve"
+
+#: plug-ins/common/file-gif-save.c:156
+#, c-format
+msgid ""
+"Export a file in Compuserve GIF format, with possible animation, "
+"transparency, and comment. To export an animation, operate on a multi-layer "
+"file and give the 'as-animation' parameter as TRUE. The plug-in will "
+"interpret <50% alpha as transparent. When run non-interactively, the value "
+"for the comment is taken from the 'gimp-comment' parasite.  "
+msgstr ""
+"Експортувати файл у форматі GIF Compuserve із можливою анімацією, прозорістю"
+" та коментарями. Для експортування анімації працюйте з багатошаровим файлом"
+" і вкажіть для параметра «as-animation» значення TRUE. Додаток вважатиме"
+" значення альфи <50%a прозорістю. Якщо запущено у неінтерактивному режимі,"
+" значення для коментаря буде взято з додатка «gimp-comment».  "
+
+#: plug-ins/common/file-gif-save.c:182 plug-ins/common/file-mng.c:277
+msgid "_Interlace"
+msgstr "_Черезрядковість"
+
+#: plug-ins/common/file-gif-save.c:183
+msgid "Try to export as interlaced"
+msgstr "Спробувати експортування як черезрядкове"
+
+#: plug-ins/common/file-gif-save.c:188
+#| msgid "Loop _forever"
+msgid "Loop _Forever"
+msgstr "_Нескінченний цикл"
+
+#: plug-ins/common/file-gif-save.c:189
+#| msgid "Loop animation infinitely"
+msgid "(animated gif) Loop infinitely"
+msgstr "(анімований gif) Нескінченне циклічне повторення"
+
+#: plug-ins/common/file-gif-save.c:194
+#| msgid "_Number of repeats:"
+msgid "_Number of repeats"
+msgstr "_Кількість повторень"
+
+#: plug-ins/common/file-gif-save.c:195
+msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
+msgstr ""
+"(анімований gif) Кількість повторень (буде проігноровано, якщо «loop» має"
+" значення TRUE)"
+
+#: plug-ins/common/file-gif-save.c:201
+#| msgid "_Delay between frames where unspecified:"
+msgid "_Delay between frames when unspecified"
+msgstr "_Затримка між кадрами, якщо не зазначено"
+
+#: plug-ins/common/file-gif-save.c:202
+#| msgid "(ANIMATED MNG) Default delay between frames in milliseconds"
+msgid "(animated gif) Default delay between frames in milliseconds"
+msgstr "(анімований gif) Стандартна затримка між кадрами у мілісекундах"
+
+#: plug-ins/common/file-gif-save.c:208
+#| msgid "_Frame disposal where unspecified"
+msgid "Frame disposal _when unspecified"
+msgstr "_Усунення кадру, якщо не зазначено"
+
+#: plug-ins/common/file-gif-save.c:209
+#| msgid "(ANIMATED MNG) Default dispose type (0 = combine; 1 = replace)"
+msgid ""
+"(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)"
+msgstr ""
+"(анімований gif) Стандартний тип відкидання (0 = поєднання; 1 = заміна)"
+
+#: plug-ins/common/file-gif-save.c:217
+#| msgid "As _animation"
+msgid "_As animation"
+msgstr "Як _анімацію"
+
+#: plug-ins/common/file-gif-save.c:218
+#| msgid "Export Image as FLI Animation"
+msgid "Export GIF as animation?"
+msgstr "Експортувати GIf як анімацію?"
+
+#: plug-ins/common/file-gif-save.c:223
+msgid "_Use delay entered above for all frames"
+msgstr "_Використати введену вище затримку для всіх кадрів"
+
+#: plug-ins/common/file-gif-save.c:224
+#| msgid "Use default dela_y for all frames"
+msgid "(animated gif) Use specified delay for all frames"
+msgstr "(анімований gif) Використати вказану затримку для усіх кадрів"
+
+#: plug-ins/common/file-gif-save.c:229
+#| msgid "U_se disposal entered above for all frames"
+msgid "Use dis_posal entered above for all frames"
+msgstr "_Використати введений вище режим усування для всіх кадрів"
+
+#: plug-ins/common/file-gif-save.c:231
+msgid "(animated gif) Use specified disposal for all frames"
+msgstr "(анімований gif) Використати вказаний режим усування для усіх кадрів"
+
+#: plug-ins/common/file-gif-save.c:236
+#| msgid "Save comment"
+msgid "Sa_ve comment"
+msgstr "З_берегти коментар"
+
+#: plug-ins/common/file-gif-save.c:237
 msgid "Save the image comment in the GIF file"
 msgstr "Зберегти коментар до зображення у файлі GIF"
 
-#: plug-ins/common/file-gif-save.c:240
+#: plug-ins/common/file-gif-save.c:242
+#| msgid "Comment"
+msgid "Commen_t"
+msgstr "_Коментар"
+
+#: plug-ins/common/file-gif-save.c:243
 msgid "Image comment"
 msgstr "Коментар до зображення"
 
-#: plug-ins/common/file-gif-save.c:346
+#: plug-ins/common/file-gif-save.c:349
 msgid "GIF format does not support multiple layers."
 msgstr "Для формату GIF не передбачено підтримку декількох шарів."
 
-#: plug-ins/common/file-gif-save.c:554
+#: plug-ins/common/file-gif-save.c:557
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "Неможливе подальше зменшення кольорів. Експортується як непрозоре."
 
-#: plug-ins/common/file-gif-save.c:673
+#: plug-ins/common/file-gif-save.c:676
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -2557,7 +2670,7 @@ msgstr ""
 "Не вдається експортувати «%s».  Файл формату GIF не підтримує зображень "
 "шириною чи висотою більше ніж %d точок."
 
-#: plug-ins/common/file-gif-save.c:799
+#: plug-ins/common/file-gif-save.c:802
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -2565,20 +2678,20 @@ msgstr ""
 "Формат GIF підтримує коментарі лише у 7-розрядному ASCII. Коментар не "
 "збережений."
 
-#: plug-ins/common/file-gif-save.c:886
+#: plug-ins/common/file-gif-save.c:889
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Не вдається експортувати зображення у формат RGB. Спершу перетворіть його на "
 "індексоване чи у градації сірого."
 
-#: plug-ins/common/file-gif-save.c:1106
+#: plug-ins/common/file-gif-save.c:1109
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 "Затримка передбачена для запобігання перевантаження процесора складною "
 "анімацією."
 
-#: plug-ins/common/file-gif-save.c:1155
+#: plug-ins/common/file-gif-save.c:1158
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2586,11 +2699,11 @@ msgstr ""
 "Зображення, яке ви намагаєтесь експортувати як GIF містить шари, що виходять "
 "за дійсні межі зображення."
 
-#: plug-ins/common/file-gif-save.c:1161
+#: plug-ins/common/file-gif-save.c:1164
 msgid "Cr_op"
 msgstr "_Обрізати"
 
-#: plug-ins/common/file-gif-save.c:1172
+#: plug-ins/common/file-gif-save.c:1175
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2598,67 +2711,27 @@ msgstr ""
 "Це неприпустимо у форматі GIF. Можна або обрізати всі шари по межі "
 "зображення, або скасувати це експортування."
 
-#: plug-ins/common/file-gif-save.c:1209
-msgid "Export Image as GIF"
-msgstr "Експортувати зображення як GIF"
-
-#: plug-ins/common/file-gif-save.c:1219 plug-ins/common/file-mng.c:277
-msgid "_Interlace"
-msgstr "_Черезрядковість"
-
-#: plug-ins/common/file-gif-save.c:1228
-msgid "Save c_omment"
-msgstr "З_берегти коментар"
-
-#: plug-ins/common/file-gif-save.c:1268
-msgid "As _animation"
-msgstr "Як _анімація"
-
-#: plug-ins/common/file-gif-save.c:1287
-msgid "_Number of repeats:"
-msgstr "_Кількість повторень:"
-
-#: plug-ins/common/file-gif-save.c:1293
-msgid "_Forever"
-msgstr "_Без обмежень"
-
-#: plug-ins/common/file-gif-save.c:1305
-msgid "_Delay between frames where unspecified:"
-msgstr "_Затримка між кадрами, де не зазначено:"
-
-#: plug-ins/common/file-gif-save.c:1313 plug-ins/common/file-mng.c:1642
+#: plug-ins/common/file-gif-save.c:1265 plug-ins/common/file-mng.c:1642
 msgid "milliseconds"
 msgstr "мілісекунд"
 
-#: plug-ins/common/file-gif-save.c:1317
+#: plug-ins/common/file-gif-save.c:1270
 msgid "I don't care"
 msgstr "Неважливо"
 
-#: plug-ins/common/file-gif-save.c:1319
+#: plug-ins/common/file-gif-save.c:1272
 msgid "Cumulative layers (combine)"
 msgstr "Накладання шарів (об'єднання)"
 
-#: plug-ins/common/file-gif-save.c:1321
+#: plug-ins/common/file-gif-save.c:1274
 msgid "One frame per layer (replace)"
 msgstr "Один кадр на шар (заміна)"
 
-#: plug-ins/common/file-gif-save.c:1329
-msgid "_Frame disposal where unspecified"
-msgstr "_Усунення кадру, якщо не зазначено"
-
-#: plug-ins/common/file-gif-save.c:1335
-msgid "_Use delay entered above for all frames"
-msgstr "_Використати введену вище затримку для всіх кадрів"
-
-#: plug-ins/common/file-gif-save.c:1340
-msgid "U_se disposal entered above for all frames"
-msgstr "В_икористати введене вище усунення для всіх кадрів"
-
-#: plug-ins/common/file-gif-save.c:1348
+#: plug-ins/common/file-gif-save.c:1305
 msgid "Animated GIF"
 msgstr "Анімаційний GIF"
 
-#: plug-ins/common/file-gif-save.c:1352
+#: plug-ins/common/file-gif-save.c:1311
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -3075,7 +3148,6 @@ msgid "Amiga IFF"
 msgstr "Amiga IFF"
 
 #: plug-ins/common/file-iff.c:143 plug-ins/common/file-iff.c:144
-#| msgid "Load file in the QOI file format"
 msgid "Load file in the IFF file format"
 msgstr "Завантажити файл у форматі IFF"
 
@@ -3506,99 +3578,143 @@ msgstr "Текстура GIMP"
 msgid "Export Image as Pattern"
 msgstr "Експортувати зображення як текстуру"
 
-#: plug-ins/common/file-pcx.c:186 plug-ins/common/file-pcx.c:219
+#: plug-ins/common/file-pcx.c:206 plug-ins/common/file-pcx.c:270
 msgid "ZSoft PCX image"
 msgstr "Зображення ZSoft PCX"
 
-#: plug-ins/common/file-pcx.c:198
+#: plug-ins/common/file-pcx.c:209
+#| msgid "Loads files in the PNM file format"
+msgid "Loads files in Zsoft PCX file format"
+msgstr "Завантажує файли у форматі файлів PCX Zsoft"
+
+#: plug-ins/common/file-pcx.c:218 plug-ins/common/file-pcx.c:249
 msgid "Palette Options"
 msgstr "Параметри палітри"
 
-#: plug-ins/common/file-pcx.c:199
+#: plug-ins/common/file-pcx.c:219 plug-ins/common/file-pcx.c:250
 msgid "Use built-in palette (0) or override with black/white (1)"
 msgstr ""
 "Скористатися вбудованою палітрою (0) або перевизначити як чорно-біле (1)"
 
-#: plug-ins/common/file-pcx.c:320
+#: plug-ins/common/file-pcx.c:237
+#| msgid "ZSoft PCX image"
+msgid "ZSoft DCX image"
+msgstr "Зображення DCX ZSoft"
+
+#: plug-ins/common/file-pcx.c:240
+#| msgid "Loads files in the PNM file format"
+msgid "Loads files in Zsoft DCX file format"
+msgstr "Завантажує файли у форматі DCX Zsoft"
+
+#: plug-ins/common/file-pcx.c:412
 msgid "PCX format does not support multiple layers."
 msgstr "Для формату PCX не передбачено підтримку декількох шарів."
 
-#: plug-ins/common/file-pcx.c:446
+#: plug-ins/common/file-pcx.c:534
+#| msgid "Could not allocate a new image."
+msgid "Could not load PCX image"
+msgstr "Не вдалося завантажити зображення PCX"
+
+#: plug-ins/common/file-pcx.c:581
+msgid "DCX image offset exceeds the file size"
+msgstr "Відступ зображення DCX перевищує розмір файла"
+
+#: plug-ins/common/file-pcx.c:592
+#| msgid "Could not allocate a new image."
+msgid "Could not load DCX image"
+msgstr "Не вдалося завантажити зображення DCX"
+
+#: plug-ins/common/file-pcx.c:615
+#, c-format
+msgid "%s: DCX image offset exceeds the file size: %s\n"
+msgstr "%s: відступ зображення DCX перевищує розмір файла: %s\n"
+
+#: plug-ins/common/file-pcx.c:632
+msgid "Mixed-mode DCX image not loaded"
+msgstr "Зображення DCX у змішаному режимі не завантажено"
+
+#: plug-ins/common/file-pcx.c:639
+#, c-format
+#| msgid "Could not create a new image: %s"
+msgid "%s: Could not load all DCX images: %s\n"
+msgstr "%s: не вдалося завантажити усі зображення DCX: %s\n"
+
+#: plug-ins/common/file-pcx.c:679
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Не вдається зчитати заголовок з «%s»"
 
-#: plug-ins/common/file-pcx.c:457
+#: plug-ins/common/file-pcx.c:690
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "«%s»: не є файлом PCX"
 
-#: plug-ins/common/file-pcx.c:473 plug-ins/common/file-wbmp.c:259
+#: plug-ins/common/file-pcx.c:706 plug-ins/common/file-wbmp.c:259
 #: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:368
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Непідтримувана ширина зображення: %d"
 
-#: plug-ins/common/file-pcx.c:479 plug-ins/common/file-wbmp.c:265
+#: plug-ins/common/file-pcx.c:712 plug-ins/common/file-wbmp.c:265
 #: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:360
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Непідтримувана висота зображення: %d"
 
-#: plug-ins/common/file-pcx.c:485
+#: plug-ins/common/file-pcx.c:718
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Некоректна кількість байтів на рядок у заголовку PCX"
 
-#: plug-ins/common/file-pcx.c:492
+#: plug-ins/common/file-pcx.c:725
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "Роздільність виходить за межі заголовка XCX, використовуємо 72x72"
 
-#: plug-ins/common/file-pcx.c:500
+#: plug-ins/common/file-pcx.c:733
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Розміри зображення великі: ширина %d x висота %d"
 
-#: plug-ins/common/file-pcx.c:615
+#: plug-ins/common/file-pcx.c:852
 msgid "Unusual PCX flavour, giving up"
 msgstr "Незвичайний вигляд файлу PCX. Вихід"
 
-#: plug-ins/common/file-pcx.c:644
+#: plug-ins/common/file-pcx.c:878
 msgid "Import from PCX"
 msgstr "Імпорт з PCX"
 
-#: plug-ins/common/file-pcx.c:653
+#: plug-ins/common/file-pcx.c:887
 msgid "Use PCX image's built-in palette"
 msgstr "Скористатися вбудованою палітрою зображення PCX"
 
-#: plug-ins/common/file-pcx.c:654
+#: plug-ins/common/file-pcx.c:888
 msgid "Use black and white palette"
 msgstr "Скористатися чорно-білою палітрою"
 
-#: plug-ins/common/file-pcx.c:936 plug-ins/common/file-pnm.c:1631
+#: plug-ins/common/file-pcx.c:1170 plug-ins/common/file-pnm.c:1631
 msgid "Cannot export images with alpha channel."
 msgstr "Неможливо експортувати зображення з альфа-каналом."
 
-#: plug-ins/common/file-pcx.c:956
+#: plug-ins/common/file-pcx.c:1190
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Некоректний зсув вздовж X: %d"
 
-#: plug-ins/common/file-pcx.c:962
+#: plug-ins/common/file-pcx.c:1196
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Некоректний зсув вздовж Y: %d"
 
-#: plug-ins/common/file-pcx.c:968
+#: plug-ins/common/file-pcx.c:1202
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Права межа знаходиться за припустимими межами (має бути < %d): %d"
 
-#: plug-ins/common/file-pcx.c:975
+#: plug-ins/common/file-pcx.c:1209
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Нижня межа знаходиться за припустимими межами (має бути < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1051 plug-ins/common/file-qoi.c:394
+#: plug-ins/common/file-pcx.c:1285 plug-ins/common/file-qoi.c:394
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Помилка при записі до файлу «%s»: %s"
@@ -13912,6 +14028,15 @@ msgstr "_Сканер/Камера..."
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
 
+#~ msgid "Export Image as GIF"
+#~ msgstr "Експортувати зображення як GIF"
+
+#~ msgid "Save c_omment"
+#~ msgstr "З_берегти коментар"
+
+#~ msgid "_Forever"
+#~ msgstr "_Без обмежень"
+
 #~ msgid "Load in reverse order"
 #~ msgstr "Завантажити у зворотному порядку"
 
@@ -14013,9 +14138,6 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgctxt "frame-range"
 #~ msgid "_To:"
 #~ msgstr "_Кому:"
-
-#~ msgid "Export Image as FLI Animation"
-#~ msgstr "Експортувати зображення як анімацію FLI"
 
 #~ msgid "Export Image as SGI"
 #~ msgstr "Експортувати зображення як SGI"
