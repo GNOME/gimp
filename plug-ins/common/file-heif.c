@@ -110,6 +110,10 @@ init (void)
     { GIMP_PDB_INT32,    "lossless", "Use lossless compression (0 = lossy, 1 = lossless)" }
   };
 
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+  heif_init (NULL);
+#endif
+
   if (heif_have_decoder_for_format (heif_compression_HEVC)
 #if LIBHEIF_HAVE_VERSION(1,8,0)
       || heif_have_decoder_for_format (heif_compression_AV1)
@@ -207,6 +211,10 @@ init (void)
       gimp_register_file_handler_uri (SAVE_PROC_AV1);
     }
 #endif
+
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+  heif_deinit ();
+#endif
 }
 
 #define LOAD_HEIF_CANCEL -2
@@ -252,7 +260,15 @@ run (const gchar      *name,
         {
           gint32 image_ID;
 
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+          heif_init (NULL);
+#endif
+
           image_ID = load_image (file, interactive, &error);
+
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+          heif_deinit ();
+#endif
 
           if (image_ID >= 0)
             {
@@ -341,6 +357,10 @@ run (const gchar      *name,
         {
           GFile *file = g_file_new_for_uri (param[3].data.d_string);
 
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+          heif_init (NULL);
+#endif
+
           if (save_image (file, image_ID, drawable_ID,
                           &params,
                           &error,
@@ -359,6 +379,11 @@ run (const gchar      *name,
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
+
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+          heif_deinit ();
+#endif
+
           g_object_unref (file);
         }
 
@@ -437,6 +462,10 @@ run (const gchar      *name,
         {
           GFile *file = g_file_new_for_uri (param[3].data.d_string);
 
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+          heif_init (NULL);
+#endif
+
           if (save_image (file, image_ID, drawable_ID,
                           &params,
                           &error,
@@ -448,6 +477,11 @@ run (const gchar      *name,
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
+
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+          heif_deinit ();
+#endif
+
           g_object_unref (file);
         }
 
