@@ -168,6 +168,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
                                            GIMP_COLOR_PICK_MODE_PIXEL,
                                            GIMP_COLOR_PICK_MODE_RGB_PERCENT,
                                            GIMP_COLOR_PICK_MODE_RGB_U8,
+                                           GIMP_COLOR_PICK_MODE_GRAYSCALE,
                                            GIMP_COLOR_PICK_MODE_HSV,
                                            GIMP_COLOR_PICK_MODE_LCH,
                                            GIMP_COLOR_PICK_MODE_LAB,
@@ -924,6 +925,40 @@ gimp_color_frame_update (GimpColorFrame *frame)
             }
 
           values[4] = g_strdup_printf ("%.2x%.2x%.2x", r, g, b);
+        }
+      break;
+
+    case GIMP_COLOR_PICK_MODE_GRAYSCALE:
+      /* TRANSLATORS: V for Value (grayscale) */
+      names[0] = C_("Grayscale", "V:");
+
+      if (has_alpha)
+        /* TRANSLATORS: A for Alpha (color transparency) */
+        names[1] = C_("Alpha channel", "A:");
+
+      if (frame->sample_valid)
+        {
+          static const Babl *fish = NULL;
+          gfloat             grayscale[2];
+          GimpRGB            grayscale_color;
+
+          if (G_UNLIKELY (! fish))
+            fish = babl_fish (babl_format ("R'G'B'A double"),
+                              babl_format ("Y'A float"));
+
+          babl_process (fish, &frame->color, grayscale, 1);
+
+          /* Change color area color to grayscale if image is not
+           * in Grayscale Mode */
+          gimp_rgba_set (&grayscale_color, grayscale[0], grayscale[0],
+                         grayscale[0], GIMP_OPACITY_OPAQUE);
+          gimp_color_area_set_color (GIMP_COLOR_AREA (frame->color_area),
+                                     &grayscale_color);
+
+          values = g_new0 (gchar *, 5);
+
+          values[0] = g_strdup_printf ("%.01f %%", grayscale[0] * 100.0);
+          values[1] = g_strdup_printf ("%.01f %%", grayscale[1] * 100.0);
         }
       break;
 

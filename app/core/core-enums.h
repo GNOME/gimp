@@ -112,6 +112,7 @@ typedef enum  /*< pdb-skip >*/
   GIMP_COLOR_PICK_MODE_PIXEL,       /*< desc="Pixel"        >*/
   GIMP_COLOR_PICK_MODE_RGB_PERCENT, /*< desc="RGB (%)"      >*/
   GIMP_COLOR_PICK_MODE_RGB_U8,      /*< desc="RGB (0..255)" >*/
+  GIMP_COLOR_PICK_MODE_GRAYSCALE,   /*< desc="Grayscale (%)">*/
   GIMP_COLOR_PICK_MODE_HSV,         /*< desc="HSV"          >*/
   GIMP_COLOR_PICK_MODE_LCH,         /*< desc="CIE LCh"      >*/
   GIMP_COLOR_PICK_MODE_LAB,         /*< desc="CIE LAB"      >*/
