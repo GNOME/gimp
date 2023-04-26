@@ -155,6 +155,10 @@ static const gchar *unsupported_tags[] =
   "Exif.Photo.MakerNote",
   "Exif.MakerNote.ByteOrder",
   "Exif.MakerNote.Offset",
+  /* Photoshop resources can contain sensitive data. We should not save the
+   * unedited original state. */
+  "Exif.Image.ImageResources",
+  "Exif.Image.0x935c",
 };
 
 static const guint8 minimal_exif[] =
