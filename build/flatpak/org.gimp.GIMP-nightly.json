@@ -46,6 +46,29 @@
     ],
     "modules": [
         {
+            "name": "appstream-glib",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dstemmer=false",
+                "-Drpm=false",
+                "-Dfonts=false",
+                "-Ddep11=false"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://people.freedesktop.org/~hughsient/appstream-glib/releases/appstream-glib-0.8.2.tar.xz",
+                    "sha256": "71256500add5048d6f08878904708b3d0c3875f402e0adcd358e91d47dcd8b96",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 14018,
+                        "stable-only": true,
+                        "url-template": "https://people.freedesktop.org/~hughsient/appstream-glib/releases/appstream-glib-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
             "name": "gexiv2",
             "modules": [
                 {
