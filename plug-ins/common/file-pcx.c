@@ -128,7 +128,8 @@ static void             load_24              (FILE                 *fp,
                                               gint                  width,
                                               gint                  height,
                                               guchar               *buf,
-                                              guint16               bytes);
+                                              guint16               bytes,
+                                              guint8                planes);
 static void             readline             (FILE                 *fp,
                                               guchar               *buf,
                                               gint                  bytes);
@@ -743,6 +744,14 @@ load_image (GimpProcedure  *procedure,
                               100,
                               gimp_image_get_default_new_layer_mode (image));
     }
+  else if (pcx_header.planes == 4 && pcx_header.bpp == 8)
+    {
+      image = gimp_image_new (width, height, GIMP_RGB);
+      layer = gimp_layer_new (image, _("Background"), width, height,
+                              GIMP_RGBA_IMAGE,
+                              100,
+                              gimp_image_get_default_new_layer_mode (image));
+    }
   else
     {
       image = gimp_image_new (width, height, GIMP_INDEXED);
@@ -842,10 +851,10 @@ load_image (GimpProcedure  *procedure,
       fread (cmap, 768, 1, fd);
       gimp_image_set_colormap (image, cmap, 256);
     }
-  else if (pcx_header.bpp == 8 && pcx_header.planes == 3)
+  else if (pcx_header.bpp == 8 && (pcx_header.planes == 3 || pcx_header.planes == 4))
     {
-      dest = g_new (guchar, ((gsize) width) * height * 3);
-      load_24 (fd, width, height, dest, bytesperline);
+      dest = g_new (guchar, ((gsize) width) * height * pcx_header.planes);
+      load_24 (fd, width, height, dest, bytesperline, pcx_header.planes);
     }
   else
     {
@@ -927,19 +936,20 @@ load_24 (FILE    *fp,
          gint     width,
          gint     height,
          guchar  *buf,
-         guint16  bytes)
+         guint16  bytes,
+         guint8   planes)
 {
   gint    x, y, c;
   guchar *line = g_new (guchar, bytes);
 
-  for (y = 0; y < height; buf += width * 3, ++y)
+  for (y = 0; y < height; buf += width * planes, ++y)
     {
-      for (c = 0; c < 3; ++c)
+      for (c = 0; c < planes; ++c)
         {
           readline (fp, line, bytes);
           for (x = 0; x < width; ++x)
             {
-              buf[x * 3 + c] = line[x];
+              buf[x * planes + c] = line[x];
             }
         }
       gimp_progress_update ((double) y / (double) height);
