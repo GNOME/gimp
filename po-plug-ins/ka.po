@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-23 18:25+0000\n"
-"PO-Revision-Date: 2023-04-24 05:32+0200\n"
+"POT-Creation-Date: 2023-04-26 13:01+0000\n"
+"PO-Revision-Date: 2023-04-27 05:43+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -77,7 +77,7 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
-#: plug-ins/common/web-page.c:278 plug-ins/file-tiff/file-tiff-load.c:2673
+#: plug-ins/common/web-page.c:278 plug-ins/file-tiff/file-tiff-load.c:2553
 #: plug-ins/flame/flame.c:540 plug-ins/flame/flame.c:716
 #: plug-ins/flame/flame.c:1033
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:561
@@ -164,7 +164,7 @@ msgstr ""
 #: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
 #: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
-#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3308
+#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3453
 #: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
@@ -501,10 +501,10 @@ msgstr "ვერტიკალური"
 #: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
 #: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:271
 #: plug-ins/file-faxg3/faxg3.c:574 plug-ins/file-fits/fits.c:542
-#: plug-ins/file-jpeg/jpeg-load.c:225
+#: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2510 plug-ins/file-sgi/sgi.c:475
-#: plug-ins/file-tiff/file-tiff-load.c:1538
+#: plug-ins/file-psd/psd-load.c:2653 plug-ins/file-sgi/sgi.c:475
+#: plug-ins/file-tiff/file-tiff-load.c:1534
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
@@ -1067,8 +1067,8 @@ msgstr ""
 #: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
 #: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
 #: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
-#: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:554
-#: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-load.c:169
+#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:614
+#: plug-ins/file-psd/psd-load.c:168 plug-ins/file-psd/psd-load.c:173
 #: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1855
@@ -2023,10 +2023,10 @@ msgstr ""
 #: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:188
 #: plug-ins/file-faxg3/faxg3.c:240 plug-ins/file-fli/fli-gimp.c:502
 #: plug-ins/file-icns/file-icns-load.c:507 plug-ins/file-ico/ico-load.c:674
-#: plug-ins/file-ico/ico-load.c:784 plug-ins/file-jpeg/jpeg-load.c:87
-#: plug-ins/file-psd/psd-load.c:177 plug-ins/file-raw/file-darktable.c:413
+#: plug-ins/file-ico/ico-load.c:784 plug-ins/file-jpeg/jpeg-load.c:90
+#: plug-ins/file-psd/psd-load.c:181 plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:334
-#: plug-ins/file-tiff/file-tiff-load.c:289
+#: plug-ins/file-tiff/file-tiff-load.c:290
 #, c-format
 msgid "Opening '%s'"
 msgstr "'%s'-ის გახსნა"
@@ -3498,7 +3498,6 @@ msgstr ""
 
 #: plug-ins/common/file-pcx.c:639
 #, c-format
-#| msgid "Could not load '%s': %s"
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s: ყველა DCX გამოსახულების ჩატვირთვა შეუძლებელია: %s\n"
 
@@ -3513,13 +3512,13 @@ msgid "'%s' is not a PCX file"
 msgstr "'%s' PCX ფაილი არაა"
 
 #: plug-ins/common/file-pcx.c:706 plug-ins/common/file-wbmp.c:259
-#: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:368
+#: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:504
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr ""
 
 #: plug-ins/common/file-pcx.c:712 plug-ins/common/file-wbmp.c:265
-#: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:360
+#: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:496
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr ""
@@ -3744,7 +3743,7 @@ msgstr ""
 
 #: plug-ins/common/file-pdf-save.c:1268 plug-ins/common/file-pdf-save.c:1341
 #: plug-ins/common/file-pdf-save.c:1439 plug-ins/common/file-ps.c:2064
-#: plug-ins/file-tiff/file-tiff-load.c:1540
+#: plug-ins/file-tiff/file-tiff-load.c:1536
 #, c-format
 msgid "Page %d"
 msgstr "%d გვერდი"
@@ -4171,7 +4170,7 @@ msgstr ""
 msgid "Import from PostScript"
 msgstr "PostScript-დან შემოტანა"
 
-#: plug-ins/common/file-ps.c:3573 plug-ins/file-tiff/file-tiff-load.c:2674
+#: plug-ins/common/file-ps.c:3573 plug-ins/file-tiff/file-tiff-load.c:2554
 #: plug-ins/metadata/metadata-editor.c:4635
 msgid "_Import"
 msgstr "_იმპორტირება"
@@ -7650,7 +7649,7 @@ msgstr ""
 
 #. ----- Open PSD file -----
 #: plug-ins/file-icns/file-icns-load.c:558 plug-ins/file-ico/ico-load.c:983
-#: plug-ins/file-jpeg/jpeg-load.c:540 plug-ins/file-psd/psd-thumb-load.c:72
+#: plug-ins/file-jpeg/jpeg-load.c:600 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-darktable.c:513
 #: plug-ins/file-raw/file-rawtherapee.c:455
 #, c-format
@@ -7833,9 +7832,15 @@ msgstr ""
 msgid "Cursor Author (Optional)"
 msgstr ""
 
-#: plug-ins/file-jpeg/jpeg-load.c:215
+#: plug-ins/file-jpeg/jpeg-load.c:221
 msgid "JPEG preview"
 msgstr "JPEG მინიატურა"
+
+#: plug-ins/file-jpeg/jpeg-load.c:485
+#, c-format
+msgid ""
+"Error trying to open temporary %s file '%s' for jpeg metadata loading: %s"
+msgstr ""
 
 #: plug-ins/file-jpeg/jpeg-save.c:139 plug-ins/file-jpeg/jpeg-save.c:146
 #, c-format
@@ -7917,167 +7922,167 @@ msgstr ""
 msgid "Use restart mar_kers"
 msgstr ""
 
-#: plug-ins/file-jpeg/jpeg.c:489
+#: plug-ins/file-jpeg/jpeg.c:490
 msgid "JPEG format does not support multiple layers."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:286 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:291 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:339
+#: plug-ins/file-psd/psd-load.c:475
 msgid "Not a valid Photoshop document file"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:346
+#: plug-ins/file-psd/psd-load.c:482
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:353
+#: plug-ins/file-psd/psd-load.c:489
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:377
+#: plug-ins/file-psd/psd-load.c:513
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:392 plug-ins/file-psd/psd-load.c:403
+#: plug-ins/file-psd/psd-load.c:528 plug-ins/file-psd/psd-load.c:539
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:430
+#: plug-ins/file-psd/psd-load.c:566
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:464 plug-ins/file-psd/psd-load.c:474
-#: plug-ins/file-psd/psd-load.c:687 plug-ins/file-psd/psd-load.c:1033
+#: plug-ins/file-psd/psd-load.c:600 plug-ins/file-psd/psd-load.c:610
+#: plug-ins/file-psd/psd-load.c:823 plug-ins/file-psd/psd-load.c:1169
 msgid "The file is corrupt!"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:638
+#: plug-ins/file-psd/psd-load.c:774
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:722
+#: plug-ins/file-psd/psd-load.c:858
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:731
+#: plug-ins/file-psd/psd-load.c:867
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:741
+#: plug-ins/file-psd/psd-load.c:877
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:761
+#: plug-ins/file-psd/psd-load.c:897
 msgid "Unsupported or invalid mask info size."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:938
+#: plug-ins/file-psd/psd-load.c:1074
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:947
+#: plug-ins/file-psd/psd-load.c:1083
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:957
+#: plug-ins/file-psd/psd-load.c:1093
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:1843 plug-ins/file-psd/psd-load.c:2483
+#: plug-ins/file-psd/psd-load.c:1986 plug-ins/file-psd/psd-load.c:2626
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:2676
+#: plug-ins/file-psd/psd-load.c:2819
 msgid "Extra"
 msgstr "დამატებით"
 
-#: plug-ins/file-psd/psd-load.c:2876
+#: plug-ins/file-psd/psd-load.c:3019
 msgid "Unsupported or invalid channel size"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:2945
+#: plug-ins/file-psd/psd-load.c:3088
 msgid "Failed to decompress data"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3305
-msgid "Import PSD"
-msgstr "PSD-ის შემოტანა"
-
-#: plug-ins/file-psd/psd-load.c:3324
+#: plug-ins/file-psd/psd-load.c:3469
 msgid "Duotone Import"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3325
+#: plug-ins/file-psd/psd-load.c:3470
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
 "and can be reapplied on export."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3347 plug-ins/file-psd/psd-save.c:2662
+#: plug-ins/file-psd/psd-load.c:3492 plug-ins/file-psd/psd-save.c:2662
 msgid "Compatibility Notice"
 msgstr "თავსებადობის შენიშვნა"
 
-#: plug-ins/file-psd/psd-load.c:3348
+#: plug-ins/file-psd/psd-load.c:3493
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3362
+#: plug-ins/file-psd/psd-load.c:3507
 msgid "Adjustment layers are not yet supported and will be dropped."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3366
+#: plug-ins/file-psd/psd-load.c:3511 plug-ins/file-psd/psd.c:562
+msgid "Metadata fill layers are not supported and will be dropped."
+msgstr ""
+
+#: plug-ins/file-psd/psd-load.c:3515
 msgid ""
 "Fill layers are partially supported and will be converted to raster layers."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3371
+#: plug-ins/file-psd/psd-load.c:3520
 msgid ""
 "Text layers are partially supported and will be converted to raster layers."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3376
+#: plug-ins/file-psd/psd-load.c:3525
 msgid "Linked layers are not yet supported and will be dropped."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3380
+#: plug-ins/file-psd/psd-load.c:3529
 msgid ""
 "Vector masks are partially supported and will be converted to raster layers."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3385
+#: plug-ins/file-psd/psd-load.c:3534
 msgid "Vector strokes are not yet supported and will be dropped."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3389
+#: plug-ins/file-psd/psd-load.c:3538
 msgid "Layer effects are not yet supported and will be dropped."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3393
+#: plug-ins/file-psd/psd-load.c:3542
 msgid "Smart objects are not yet supported and will be dropped."
 msgstr ""
 
 #. Translators: short for layer compositions
-#: plug-ins/file-psd/psd-load.c:3398
+#: plug-ins/file-psd/psd-load.c:3547
 msgid "Layer comps are not yet supported and will be dropped."
 msgstr ""
 
@@ -8130,59 +8135,67 @@ msgstr ""
 msgid "Unexpected end of file"
 msgstr ""
 
-#: plug-ins/file-psd/psd.c:125 plug-ins/file-psd/psd.c:205
+#: plug-ins/file-psd/psd.c:131 plug-ins/file-psd/psd.c:211
 msgid "Photoshop image"
 msgstr "Photoshop-ის გამოსახულება"
 
-#: plug-ins/file-psd/psd.c:154
+#: plug-ins/file-psd/psd.c:160
 msgid "Photoshop image (merged)"
 msgstr "Photoshop-ის გამოსახულება (შერწყმული)"
 
-#: plug-ins/file-psd/psd.c:228
+#: plug-ins/file-psd/psd.c:234
 msgid "Assign a Clipping _Path"
 msgstr ""
 
-#: plug-ins/file-psd/psd.c:229
+#: plug-ins/file-psd/psd.c:235
 msgid "Select a path to be the clipping path"
 msgstr ""
 
-#: plug-ins/file-psd/psd.c:235
+#: plug-ins/file-psd/psd.c:241
 msgid "Clipping Path _Name"
 msgstr ""
 
-#: plug-ins/file-psd/psd.c:236
+#: plug-ins/file-psd/psd.c:242
 msgid ""
 "Clipping path name\n"
 "(ignored if no clipping path)"
 msgstr ""
 
-#: plug-ins/file-psd/psd.c:242
+#: plug-ins/file-psd/psd.c:248
 msgid "Path _Flatness"
 msgstr ""
 
-#: plug-ins/file-psd/psd.c:243
+#: plug-ins/file-psd/psd.c:249
 msgid ""
 "Clipping path flatness in device pixels\n"
 "(ignored if no clipping path)"
 msgstr ""
 
-#: plug-ins/file-psd/psd.c:249
+#: plug-ins/file-psd/psd.c:255
 msgid "Export as _CMYK"
 msgstr ""
 
-#: plug-ins/file-psd/psd.c:250
+#: plug-ins/file-psd/psd.c:256
 msgid "Export a CMYK PSD image using the soft-proofing color profile"
 msgstr ""
 
-#: plug-ins/file-psd/psd.c:255
+#: plug-ins/file-psd/psd.c:261
 msgid "Export as _Duotone"
 msgstr ""
 
-#: plug-ins/file-psd/psd.c:256
+#: plug-ins/file-psd/psd.c:262
 msgid ""
 "Export as a Duotone PSD file if Duotone color space information was attached "
 "to the image when originally imported."
 msgstr ""
+
+#: plug-ins/file-psd/psd.c:361
+msgid "Import PSD"
+msgstr "PSD-ის შემოტანა"
+
+#: plug-ins/file-psd/psd.c:558
+msgid "Import PSD metadata"
+msgstr "PSD-ის მეტამონაცემების შემოტანა"
 
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
@@ -8373,20 +8386,20 @@ msgstr ""
 msgid "TIFF"
 msgstr "TIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:457
+#: plug-ins/file-tiff/file-tiff.c:459
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:297
+#: plug-ins/file-tiff/file-tiff-load.c:298
 msgid "Not a TIFF image or image is corrupt."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:328
+#: plug-ins/file-tiff/file-tiff-load.c:329
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:335
+#: plug-ins/file-tiff/file-tiff-load.c:336
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -8397,7 +8410,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:466
+#: plug-ins/file-tiff/file-tiff-load.c:467
 msgid "Extra channels with unspecified data."
 msgstr ""
 
@@ -8408,62 +8421,62 @@ msgstr ""
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:478
+#: plug-ins/file-tiff/file-tiff-load.c:479
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:572
+#: plug-ins/file-tiff/file-tiff-load.c:573
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:601
+#: plug-ins/file-tiff/file-tiff-load.c:602
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
 "The layers below layer # %d will be interpreted as non linear."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:609
+#: plug-ins/file-tiff/file-tiff-load.c:610
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
 "separate image."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:621
+#: plug-ins/file-tiff/file-tiff-load.c:622
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:695
+#: plug-ins/file-tiff/file-tiff-load.c:696
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:710
+#: plug-ins/file-tiff/file-tiff-load.c:711
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:718
+#: plug-ins/file-tiff/file-tiff-load.c:719
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:726
+#: plug-ins/file-tiff/file-tiff-load.c:727
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:747
+#: plug-ins/file-tiff/file-tiff-load.c:748
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
 "is-white"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:754
+#: plug-ins/file-tiff/file-tiff-load.c:755
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -8471,13 +8484,13 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:786
+#: plug-ins/file-tiff/file-tiff-load.c:787
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:811
+#: plug-ins/file-tiff/file-tiff-load.c:812
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -8485,37 +8498,37 @@ msgid ""
 "is non-premultiplied alpha."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1099
+#: plug-ins/file-tiff/file-tiff-load.c:1101
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1157
+#: plug-ins/file-tiff/file-tiff-load.c:1159
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1327
+#: plug-ins/file-tiff/file-tiff-load.c:1329
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr ""
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1337
+#: plug-ins/file-tiff/file-tiff-load.c:1339
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1345
+#: plug-ins/file-tiff/file-tiff-load.c:1347
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1362
+#: plug-ins/file-tiff/file-tiff-load.c:1364
 msgid "Invalid image resolution info, using default"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1421
+#: plug-ins/file-tiff/file-tiff-load.c:1423
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr ""
@@ -8525,43 +8538,50 @@ msgstr ""
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1515
+#: plug-ins/file-tiff/file-tiff-load.c:1511
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1577
+#: plug-ins/file-tiff/file-tiff-load.c:1573
 msgid "TIFF Channel"
 msgstr "TIFF არხი"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1730
+#: plug-ins/file-tiff/file-tiff-load.c:1726
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1801
+#: plug-ins/file-tiff/file-tiff-load.c:1760
+#: plug-ins/file-tiff/file-tiff-load.c:1802
+#, c-format
+msgid ""
+"Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
+msgstr ""
+
+#: plug-ins/file-tiff/file-tiff-load.c:1878
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2113
-#: plug-ins/file-tiff/file-tiff-load.c:2310
+#: plug-ins/file-tiff/file-tiff-load.c:1993
+#: plug-ins/file-tiff/file-tiff-load.c:2190
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2122
-#: plug-ins/file-tiff/file-tiff-load.c:2319
+#: plug-ins/file-tiff/file-tiff-load.c:2002
+#: plug-ins/file-tiff/file-tiff-load.c:2199
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2669
+#: plug-ins/file-tiff/file-tiff-load.c:2549
 msgid "Import from TIFF"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2690
+#: plug-ins/file-tiff/file-tiff-load.c:2570
 msgid "_Show reduced images"
 msgstr "შემცირებული გამოსახულებების _ჩვენება"
 
@@ -8569,23 +8589,23 @@ msgstr "შემცირებული გამოსახულებე�
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: plug-ins/file-tiff/file-tiff-load.c:2724
+#: plug-ins/file-tiff/file-tiff-load.c:2604
 msgid "_Keep empty space around imported layers"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2741
+#: plug-ins/file-tiff/file-tiff-load.c:2621
 msgid "Process extra channel as:"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2744
+#: plug-ins/file-tiff/file-tiff-load.c:2624
 msgid "_Non-premultiplied alpha"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2745
+#: plug-ins/file-tiff/file-tiff-load.c:2625
 msgid "Pre_multiplied alpha"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2746
+#: plug-ins/file-tiff/file-tiff-load.c:2626
 msgid "Channe_l"
 msgstr "_არხი"
 
