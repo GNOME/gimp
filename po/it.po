@@ -40,7 +40,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-25 00:11+0100\n"
-"PO-Revision-Date: 2023-03-25 00:12+0100\n"
+"PO-Revision-Date: 2023-04-28 01:48+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -17748,7 +17748,7 @@ msgstr "Barra spazio"
 
 #: ../app/dialogs/preferences-dialog.c:2921
 msgid "_While space bar is pressed:"
-msgstr "_Mentre la barra spazio è premuta:"
+msgstr "_Quando si preme la barra spazio:"
 
 #. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:2925
