@@ -59,6 +59,8 @@
 
   <category rdf:resource="http://api.gnome.org/doap-extensions#apps" />
 
+  <support-forum rdf:resource="https://discourse.gnome.org/tag/gimp" />
+
   <download-page rdf:resource="https:///www.gimp.org/downloads/" />
 
   <bug-database
