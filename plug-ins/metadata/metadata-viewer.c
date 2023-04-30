@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <gegl.h>
-#include <gtk/gtk.h>
 #include <gexiv2/gexiv2.h>
 
 #include <libgimp/gimp.h>
@@ -102,7 +100,9 @@ static gboolean  metadata_viewer_dialog           (GimpImage            *image,
                                                    GimpMetadata         *g_metadata,
                                                    GError              **error);
 static void      metadata_dialog_set_metadata     (GExiv2Metadata       *metadata,
-                                                   GtkBuilder           *builder);
+                                                   GtkListStore         *exif_store,
+                                                   GtkListStore         *xmp_store,
+                                                   GtkListStore         *iptc_store);
 static void metadata_dialog_add_multiple_values   (GExiv2Metadata       *metadata,
                                                    const gchar          *tag,
                                                    GtkListStore         *store,
@@ -245,36 +245,21 @@ metadata_viewer_dialog (GimpImage     *image,
                         GimpMetadata  *g_metadata,
                         GError       **error)
 {
-  GtkBuilder     *builder;
-  GtkWidget      *dialog;
-  GtkWidget      *metadata_vbox;
-  GtkWidget      *content_area;
-  gchar          *ui_file;
-  gchar          *title;
-  gchar          *name;
-  GError         *local_error = NULL;
-  GExiv2Metadata *metadata;
+  gchar             *title;
+  gchar             *name;
+  GtkWidget         *dialog;
+  GtkWidget         *content_area;
+  GtkWidget         *metadata_vbox;
+  GtkWidget         *notebook;
+  GtkWidget         *scrolled_win;
+  GtkWidget         *list_view;
+  GtkWidget         *label;
+  GtkListStore      *exif_store, *xmp_store, *iptc_store;
+  GtkCellRenderer   *rend;
+  GtkTreeViewColumn *col;
+  GExiv2Metadata    *metadata;
 
   metadata = GEXIV2_METADATA(g_metadata);
-
-  builder = gtk_builder_new ();
-
-  ui_file = g_build_filename (gimp_data_directory (),
-                              "ui", "plug-ins", "plug-in-metadata-viewer.ui", NULL);
-
-  if (! gtk_builder_add_from_file (builder, ui_file, &local_error))
-    {
-      if (! local_error)
-        local_error = g_error_new_literal (G_FILE_ERROR, 0,
-                                           _("Error loading metadata-viewer dialog."));
-      g_propagate_error (error, local_error);
-
-      g_free (ui_file);
-      g_object_unref (builder);
-      return FALSE;
-    }
-
-  g_free (ui_file);
 
   name = gimp_image_get_name (image);
   title = g_strdup_printf (_("Metadata Viewer: %s"), name);
@@ -297,12 +282,138 @@ metadata_viewer_dialog (GimpImage     *image,
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 
-  metadata_vbox = GTK_WIDGET (gtk_builder_get_object (builder,
-                                                      "metadata-vbox"));
-  gtk_container_set_border_width (GTK_CONTAINER (metadata_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (content_area), metadata_vbox, TRUE, TRUE, 0);
+  /* Top-level Box */
 
-  metadata_dialog_set_metadata (metadata, builder);
+  metadata_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_container_add (GTK_CONTAINER (content_area), metadata_vbox);
+  gtk_container_set_border_width (GTK_CONTAINER (metadata_vbox), 12);
+  gtk_widget_show (metadata_vbox);
+
+  notebook = gtk_notebook_new ();
+  gtk_box_pack_start (GTK_BOX (metadata_vbox), notebook, TRUE, TRUE, 0);
+
+  /* EXIF tab */
+
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 6);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win), GTK_SHADOW_IN);
+
+  exif_store = gtk_list_store_new (NUM_EXIF_COLS,
+                                   G_TYPE_STRING,    /* column-name c_exif_tag   */
+                                   G_TYPE_STRING);   /* column-name c_exif_value */
+  list_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (exif_store));
+  gtk_widget_set_vexpand (list_view, TRUE);
+
+  rend = gtk_cell_renderer_text_new ();
+  col = gtk_tree_view_column_new_with_attributes (_("Exif Tag"),
+                                                  rend,
+                                                  "text", C_EXIF_TAG,
+                                                  NULL);
+  gtk_tree_view_column_set_resizable (col, TRUE);
+  gtk_tree_view_column_set_spacing (col, 3);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
+
+  rend = gtk_cell_renderer_text_new ();
+  col = gtk_tree_view_column_new_with_attributes (_("Value"),
+                                                  rend,
+                                                  "text", C_EXIF_VALUE,
+                                                  NULL);
+  gtk_tree_view_column_set_resizable (col, TRUE);
+  gtk_tree_view_column_set_spacing (col, 3);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
+
+  label = gtk_label_new (_("Exif"));
+  gtk_widget_show (label);
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), scrolled_win, label);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), list_view);
+  gtk_widget_show (list_view);
+  gtk_widget_show (scrolled_win);
+
+  /* XMP tab */
+
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 6);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win), GTK_SHADOW_IN);
+
+  xmp_store = gtk_list_store_new (NUM_XMP_COLS,
+                                  G_TYPE_STRING,    /* column-name c_xmp_tag   */
+                                  G_TYPE_STRING);   /* column-name c_xmp_value */
+  list_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (xmp_store));
+  gtk_widget_set_vexpand (list_view, TRUE);
+
+  rend = gtk_cell_renderer_text_new ();
+  col = gtk_tree_view_column_new_with_attributes (_("XMP Tag"),
+                                                  rend,
+                                                  "text", C_XMP_TAG,
+                                                  NULL);
+  gtk_tree_view_column_set_resizable (col, TRUE);
+  gtk_tree_view_column_set_spacing (col, 3);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
+
+  rend = gtk_cell_renderer_text_new ();
+  col = gtk_tree_view_column_new_with_attributes (_("Value"),
+                                                  rend,
+                                                  "text", C_XMP_VALUE,
+                                                  NULL);
+  gtk_tree_view_column_set_resizable (col, TRUE);
+  gtk_tree_view_column_set_spacing (col, 3);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
+
+  label = gtk_label_new (_("XMP"));
+  gtk_widget_show (label);
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), scrolled_win, label);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), list_view);
+  gtk_widget_show (list_view);
+  gtk_widget_show (scrolled_win);
+
+  /* IPTC tab */
+
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 6);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win), GTK_SHADOW_IN);
+
+  iptc_store = gtk_list_store_new (NUM_IPTC_COLS,
+                                   G_TYPE_STRING,    /* column-name c_iptc_tag   */
+                                   G_TYPE_STRING);   /* column-name c_iptc_value */
+  list_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (iptc_store));
+  gtk_widget_set_vexpand (list_view, TRUE);
+
+  rend = gtk_cell_renderer_text_new ();
+  col = gtk_tree_view_column_new_with_attributes (_("IPTC Tag"),
+                                                  rend,
+                                                  "text", C_IPTC_TAG,
+                                                  NULL);
+  gtk_tree_view_column_set_resizable (col, TRUE);
+  gtk_tree_view_column_set_spacing (col, 3);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
+
+  rend = gtk_cell_renderer_text_new ();
+  col = gtk_tree_view_column_new_with_attributes (_("Value"),
+                                                  rend,
+                                                  "text", C_IPTC_VALUE,
+                                                  NULL);
+  gtk_tree_view_column_set_resizable (col, TRUE);
+  gtk_tree_view_column_set_spacing (col, 3);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), col);
+
+  label = gtk_label_new (_("IPTC"));
+  gtk_widget_show (label);
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), scrolled_win, label);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), list_view);
+  gtk_widget_show (list_view);
+  gtk_widget_show (scrolled_win);
+
+  gtk_widget_show (notebook);
+
+  /* Add the metadata to the tree views */
+
+  metadata_dialog_set_metadata (metadata, exif_store, xmp_store, iptc_store);
+  g_object_unref (exif_store);
+  g_object_unref (xmp_store);
+  g_object_unref (iptc_store);
 
   gtk_dialog_run (GTK_DIALOG (dialog));
 
@@ -314,32 +425,30 @@ metadata_viewer_dialog (GimpImage     *image,
 
 static void
 metadata_dialog_set_metadata (GExiv2Metadata *metadata,
-                              GtkBuilder     *builder)
+                              GtkListStore   *exif_store,
+                              GtkListStore   *xmp_store,
+                              GtkListStore   *iptc_store)
 {
   gchar        **tags;
-  GtkListStore  *store;
 
   /* load exif tags */
   tags  = gexiv2_metadata_get_exif_tags (metadata);
-  store = GTK_LIST_STORE (gtk_builder_get_object (builder, "exif-liststore"));
 
-  metadata_dialog_append_tags (metadata, tags, store, C_EXIF_TAG, C_EXIF_VALUE, FALSE);
+  metadata_dialog_append_tags (metadata, tags, exif_store, C_EXIF_TAG, C_EXIF_VALUE, FALSE);
 
   g_strfreev (tags);
 
   /* load xmp tags */
   tags  = gexiv2_metadata_get_xmp_tags (metadata);
-  store = GTK_LIST_STORE (gtk_builder_get_object (builder, "xmp-liststore"));
 
-  metadata_dialog_append_tags (metadata, tags, store, C_XMP_TAG, C_XMP_VALUE, FALSE);
+  metadata_dialog_append_tags (metadata, tags, xmp_store, C_XMP_TAG, C_XMP_VALUE, FALSE);
 
   g_strfreev (tags);
 
   /* load iptc tags */
   tags  = gexiv2_metadata_get_iptc_tags (metadata);
-  store = GTK_LIST_STORE (gtk_builder_get_object (builder, "iptc-liststore"));
 
-  metadata_dialog_append_tags (metadata, tags, store, C_IPTC_TAG, C_IPTC_VALUE, TRUE);
+  metadata_dialog_append_tags (metadata, tags, iptc_store, C_IPTC_TAG, C_IPTC_VALUE, TRUE);
 
   g_strfreev (tags);
 }
