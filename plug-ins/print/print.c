@@ -518,7 +518,8 @@ print_temp_proc_run (GimpProcedure        *procedure,
 static gchar *
 print_temp_proc_name (GimpImage *image)
 {
-  return g_strdup_printf (PRINT_TEMP_PROC_NAME "-%d", image);
+  return g_strdup_printf (PRINT_TEMP_PROC_NAME "-%d",
+                          gimp_image_get_id (image));
 }
 
 static gchar *
