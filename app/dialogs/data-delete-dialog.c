@@ -79,7 +79,8 @@ data_delete_dialog_new (GimpDataFactory *factory,
   private->context = context;
   private->parent  = parent;
 
-  dialog = gimp_message_dialog_new (_("Delete Object"), "edit-delete",
+  dialog = gimp_message_dialog_new (_("Delete Object"),
+                                    GIMP_ICON_EDIT_DELETE,
                                     gtk_widget_get_toplevel (parent), 0,
                                     gimp_standard_help_func, NULL,
 

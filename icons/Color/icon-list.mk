@@ -11,7 +11,6 @@ scalable_images = \
 	scalable/dialog-information.svg				\
 	scalable/dialog-question.svg				\
 	scalable/dialog-warning.svg				\
-	scalable/document-new.svg				\
 	scalable/document-open.svg				\
 	scalable/document-open-recent.svg			\
 	scalable/document-print.svg				\
@@ -21,12 +20,10 @@ scalable_images = \
 	scalable/edit-clear.svg					\
 	scalable/edit-copy.svg					\
 	scalable/edit-cut.svg					\
-	scalable/edit-delete.svg				\
 	scalable/edit-paste.svg					\
 	scalable/edit-redo.svg					\
 	scalable/edit-undo.svg					\
 	scalable/folder.svg					\
-	scalable/folder-new.svg					\
 	scalable/format-indent-more.svg				\
 	scalable/format-justify-center.svg			\
 	scalable/format-justify-fill.svg			\
@@ -35,14 +32,12 @@ scalable_images = \
 	scalable/format-text-direction-ltr.svg			\
 	scalable/format-text-direction-rtl.svg			\
 	scalable/go-bottom.svg					\
-	scalable/go-down.svg					\
 	scalable/go-first.svg					\
 	scalable/go-home.svg					\
 	scalable/go-last.svg					\
 	scalable/go-next.svg					\
 	scalable/go-previous.svg				\
 	scalable/go-top.svg					\
-	scalable/go-up.svg					\
 	scalable/help-about.svg					\
 	scalable/list-add.svg					\
 	scalable/list-remove.svg				\
@@ -113,13 +108,18 @@ scalable_images = \
 	scalable/gimp-default-colors.svg			\
 	scalable/gimp-detach.svg				\
 	scalable/gimp-device-status.svg				\
+	scalable/gimp-document-new.svg				\
 	scalable/gimp-duplicate.svg				\
 	scalable/gimp-dynamics.svg				\
+	scalable/gimp-edit-delete.svg				\
 	scalable/gimp-even-horizontal-gap.svg			\
 	scalable/gimp-even-vertical-gap.svg			\
 	scalable/gimp-file-manager.svg				\
 	scalable/gimp-floating-selection.svg			\
+	scalable/gimp-folder-new.svg				\
 	scalable/gimp-gegl.svg					\
+	scalable/gimp-go-down.svg				\
+	scalable/gimp-go-up.svg					\
 	scalable/gimp-gradient-bilinear.svg			\
 	scalable/gimp-gradient-conical-asymmetric.svg		\
 	scalable/gimp-gradient-conical-symmetric.svg		\
@@ -398,7 +398,6 @@ icons16_images = \
 	16/dialog-information.png				\
 	16/dialog-question.png					\
 	16/dialog-warning.png					\
-	16/document-new.png					\
 	16/document-open.png					\
 	16/document-open-recent.png				\
 	16/document-print.png					\
@@ -408,21 +407,17 @@ icons16_images = \
 	16/edit-clear.png					\
 	16/edit-copy.png					\
 	16/edit-cut.png						\
-	16/edit-delete.png					\
 	16/edit-paste.png					\
 	16/edit-redo.png					\
 	16/edit-undo.png					\
 	16/folder.png						\
-	16/folder-new.png					\
 	16/go-bottom.png					\
-	16/go-down.png						\
 	16/go-first.png						\
 	16/go-home.png						\
 	16/go-last.png						\
 	16/go-next.png						\
 	16/go-previous.png					\
 	16/go-top.png						\
-	16/go-up.png						\
 	16/help-about.png					\
 	16/list-add.png						\
 	16/list-remove.png					\
@@ -489,11 +484,16 @@ icons16_images = \
 	16/gimp-device-status.png				\
 	\
 	16/gimp-display-filter.png				\
+	16/gimp-document-new.png				\
 	16/gimp-duplicate.png					\
 	16/gimp-dynamics.png					\
+	16/gimp-edit-delete.png					\
 	16/gimp-file-manager.png				\
 	16/gimp-floating-selection.png				\
+	16/gimp-folder-new.png					\
 	16/gimp-gegl.png					\
+	16/gimp-go-down.png					\
+	16/gimp-go-up.png					\
 	16/gimp-gradient-bilinear.png				\
 	16/gimp-gradient-conical-asymmetric.png			\
 	16/gimp-gradient-conical-symmetric.png			\

@@ -395,7 +395,7 @@ quit_close_all_dialog_container_changed (GimpContainer *images,
 
       gtk_widget_show (private->lost_label);
 
-      icon = gtk_image_new_from_icon_name ("edit-delete",
+      icon = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_DELETE,
                                            GTK_ICON_SIZE_BUTTON);
       g_object_set (private->ok_button,
                     "label",     _("_Discard Changes"),
