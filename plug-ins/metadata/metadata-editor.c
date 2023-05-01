@@ -906,38 +906,13 @@ on_date_button_clicked (GtkButton *widget,
                         GtkWidget *entry_widget,
                         gchar     *tag)
 {
-  GtkBuilder     *builder;
   GtkWidget      *calendar_dialog;
   GtkWidget      *calendar_content_area;
   GtkWidget      *calendar_vbox;
   GtkWidget      *calendar;
   const gchar    *date_text;
-  gchar          *ui_file;
-  GError         *error = NULL;
   GDateTime      *current_datetime;
   guint           year, month, day;
-
-  builder = gtk_builder_new ();
-
-  ui_file = g_build_filename (gimp_data_directory (),
-                              "ui", "plug-ins",
-                              "plug-in-metadata-editor-calendar.ui", NULL);
-
-  if (! gtk_builder_add_from_file (builder, ui_file, &error))
-    {
-      g_log ("", G_LOG_LEVEL_MESSAGE,
-             _("Error loading calendar. %s"),
-             error ? error->message : "");
-      g_clear_error (&error);
-
-      if (ui_file)
-        g_free (ui_file);
-      g_object_unref (builder);
-      return;
-    }
-
-  if (ui_file)
-    g_free (ui_file);
 
   date_text = gtk_entry_get_text (GTK_ENTRY (entry_widget));
   if (date_text && date_text[0] != '\0')
@@ -954,7 +929,7 @@ on_date_button_clicked (GtkButton *widget,
     }
 
   calendar_dialog =
-    gtk_dialog_new_with_buttons (_("Calendar Date:"),
+    gtk_dialog_new_with_buttons (_("Choose Date"),
                                  NULL,
                                  GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
                                  _("_Cancel"),  GTK_RESPONSE_CANCEL,
@@ -970,20 +945,20 @@ on_date_button_clicked (GtkButton *widget,
 
   gimp_window_set_transient (GTK_WINDOW (calendar_dialog));
 
-  calendar_content_area = gtk_dialog_get_content_area (GTK_DIALOG (
-                            calendar_dialog));
+  calendar_content_area = gtk_dialog_get_content_area (GTK_DIALOG (calendar_dialog));
 
-  calendar_vbox = builder_get_widget (builder, "calendar-vbox");
+  calendar_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (calendar_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (calendar_content_area), calendar_vbox, TRUE, TRUE, 0);
 
-  gtk_container_set_border_width (GTK_CONTAINER (calendar_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (calendar_content_area), calendar_vbox, TRUE, TRUE,
-                      0);
-
-  calendar = builder_get_widget (builder, "calendar");
-
+  calendar = gtk_calendar_new ();
   gtk_calendar_select_month (GTK_CALENDAR (calendar), month, year);
   gtk_calendar_select_day (GTK_CALENDAR (calendar), day);
   gtk_calendar_mark_day (GTK_CALENDAR (calendar), day);
+  gtk_widget_show (calendar);
+
+  gtk_container_add (GTK_CONTAINER (calendar_vbox), calendar);
+  gtk_widget_show (calendar_vbox);
 
   if (gtk_dialog_run (GTK_DIALOG (calendar_dialog)) == GTK_RESPONSE_OK)
     {
