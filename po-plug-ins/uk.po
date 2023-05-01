@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-26 13:01+0000\n"
-"PO-Revision-Date: 2023-04-26 21:15+0300\n"
+"POT-Creation-Date: 2023-05-01 13:33+0000\n"
+"PO-Revision-Date: 2023-05-01 20:02+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -71,12 +71,12 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1163
 #: plug-ins/common/file-heif.c:2357 plug-ins/common/file-pdf-load.c:709
-#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
-#: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
-#: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
-#: plug-ins/common/mail.c:568 plug-ins/common/qbist.c:848
-#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
-#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-svg.c:773
+#: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
+#: plug-ins/common/grid.c:761 plug-ins/common/mail.c:568
+#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
+#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
+#: plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -340,8 +340,11 @@ msgstr "Недостатньо шарів для вирівнювання."
 msgid "Align Visible Layers"
 msgstr "Вирівнювання видимих шарів"
 
+#. Text antialiasing
+#. Graphics antialiasing
 #. file save type
 #: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
+#: plug-ins/common/file-ps.c:3744 plug-ins/common/file-ps.c:3752
 #: plug-ins/common/file-psp.c:840 plug-ins/file-tiff/file-tiff-save.c:1322
 #: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
 #: plug-ins/metadata/metadata-tags.c:238
@@ -507,16 +510,16 @@ msgstr "Вертикально"
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
 #: plug-ins/common/file-iff.c:331 plug-ins/common/file-jp2-load.c:1317
-#: plug-ins/common/file-pcx.c:741 plug-ins/common/file-pcx.c:749
-#: plug-ins/common/file-pix.c:422 plug-ins/common/file-png.c:950
-#: plug-ins/common/file-pnm.c:869 plug-ins/common/file-qoi.c:321
-#: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1080
-#: plug-ins/common/file-tga.c:1114 plug-ins/common/file-wbmp.c:270
-#: plug-ins/common/file-xbm.c:912 plug-ins/common/film.c:812
-#: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
-#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:271
-#: plug-ins/file-faxg3/faxg3.c:574 plug-ins/file-fits/fits.c:542
-#: plug-ins/file-jpeg/jpeg-load.c:231
+#: plug-ins/common/file-pcx.c:742 plug-ins/common/file-pcx.c:750
+#: plug-ins/common/file-pcx.c:758 plug-ins/common/file-pix.c:422
+#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:869
+#: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
+#: plug-ins/common/file-sunras.c:1080 plug-ins/common/file-tga.c:1114
+#: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:912
+#: plug-ins/common/film.c:812 plug-ins/common/smooth-palette.c:332
+#: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
+#: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
+#: plug-ins/file-fits/fits.c:542 plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2653 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1534
@@ -798,7 +801,9 @@ msgstr "Насиченість"
 
 #: plug-ins/common/cml-explorer.c:303 plug-ins/common/cml-explorer.c:311
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
-#: plug-ins/gimpressionist/size.c:155
+#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:317
+#: plug-ins/metadata/metadata-viewer.c:355
+#: plug-ins/metadata/metadata-viewer.c:393
 msgid "Value"
 msgstr "Яскравість"
 
@@ -1027,7 +1032,7 @@ msgstr "Графік поточних параметрів"
 #: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
 #: plug-ins/ifs-compose/ifs-compose.c:1258
-#: plug-ins/metadata/metadata-viewer.c:287
+#: plug-ins/metadata/metadata-viewer.c:272
 msgid "_Close"
 msgstr "З_акрити"
 
@@ -1041,7 +1046,7 @@ msgstr "Збереження параметрів CML Explorer"
 
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
 #: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:876
-#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1219
+#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1229
 #: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
@@ -1072,9 +1077,9 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
 #: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-iff.c:222
-#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:522
-#: plug-ins/common/file-pcx.c:565 plug-ins/common/file-png.c:673
-#: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
+#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:523
+#: plug-ins/common/file-pcx.c:566 plug-ins/common/file-png.c:673
+#: plug-ins/common/file-ps.c:1126 plug-ins/common/file-ps.c:3635
 #: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
 #: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
 #: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
@@ -1969,6 +1974,7 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Цей додаток намагається вилучити вертикальні смуги з зображення."
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:194
+#: plug-ins/common/file-ps.c:383 plug-ins/common/file-ps.c:497
 #: plug-ins/imagemap/imap_grid.c:255
 msgid "_Width"
 msgstr "_Ширина"
@@ -2061,10 +2067,10 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1091
-#: plug-ins/common/file-pcx.c:514 plug-ins/common/file-pcx.c:557
+#: plug-ins/common/file-pcx.c:515 plug-ins/common/file-pcx.c:558
 #: plug-ins/common/file-pdf-load.c:879 plug-ins/common/file-pix.c:381
 #: plug-ins/common/file-png.c:665 plug-ins/common/file-pnm.c:714
-#: plug-ins/common/file-ps.c:1140 plug-ins/common/file-raw-data.c:1665
+#: plug-ins/common/file-ps.c:1116 plug-ins/common/file-raw-data.c:1665
 #: plug-ins/common/file-sunras.c:447 plug-ins/common/file-tga.c:437
 #: plug-ins/common/file-wbmp.c:176 plug-ins/common/file-wmf.c:1026
 #: plug-ins/common/file-xbm.c:742 plug-ins/common/file-xmc.c:648
@@ -2144,9 +2150,9 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #.
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:916
 #: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1374
-#: plug-ins/common/file-pcx.c:1104 plug-ins/common/file-pix.c:560
+#: plug-ins/common/file-pcx.c:1114 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
-#: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
+#: plug-ins/common/file-ps.c:1338 plug-ins/common/file-qoi.c:375
 #: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
 #: plug-ins/common/file-xbm.c:1051 plug-ins/common/file-xpm.c:699
 #: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
@@ -2319,7 +2325,7 @@ msgstr ""
 msgid "Cannot save images with alpha channel."
 msgstr "Неможливо зберегти зображення з альфа-каналом."
 
-#: plug-ins/common/file-dicom.c:1542 plug-ins/common/file-ps.c:1358
+#: plug-ins/common/file-dicom.c:1542 plug-ins/common/file-ps.c:1333
 #: plug-ins/common/file-xwd.c:670 plug-ins/file-fits/fits.c:499
 msgid "Cannot operate on unknown image types."
 msgstr "Не вдається виконати дії із зображеннями невідомого типу."
@@ -3030,7 +3036,8 @@ msgstr "Текст, що пишеться у кожній комірці."
 msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Ширина кожної комірки. Може бути числом чи відсотком."
 
-#: plug-ins/common/file-html-table.c:201 plug-ins/imagemap/imap_grid.c:261
+#: plug-ins/common/file-html-table.c:201 plug-ins/common/file-ps.c:389
+#: plug-ins/common/file-ps.c:504 plug-ins/imagemap/imap_grid.c:261
 msgid "_Height"
 msgstr "_Висота"
 
@@ -3564,137 +3571,137 @@ msgstr "Текстура GIMP"
 msgid "Export Image as Pattern"
 msgstr "Експортувати зображення як текстуру"
 
-#: plug-ins/common/file-pcx.c:206 plug-ins/common/file-pcx.c:270
+#: plug-ins/common/file-pcx.c:207 plug-ins/common/file-pcx.c:271
 msgid "ZSoft PCX image"
 msgstr "Зображення ZSoft PCX"
 
-#: plug-ins/common/file-pcx.c:209
+#: plug-ins/common/file-pcx.c:210
 msgid "Loads files in Zsoft PCX file format"
 msgstr "Завантажує файли у форматі файлів PCX Zsoft"
 
-#: plug-ins/common/file-pcx.c:218 plug-ins/common/file-pcx.c:249
+#: plug-ins/common/file-pcx.c:219 plug-ins/common/file-pcx.c:250
 msgid "Palette Options"
 msgstr "Параметри палітри"
 
-#: plug-ins/common/file-pcx.c:219 plug-ins/common/file-pcx.c:250
+#: plug-ins/common/file-pcx.c:220 plug-ins/common/file-pcx.c:251
 msgid "Use built-in palette (0) or override with black/white (1)"
 msgstr ""
 "Скористатися вбудованою палітрою (0) або перевизначити як чорно-біле (1)"
 
-#: plug-ins/common/file-pcx.c:237
+#: plug-ins/common/file-pcx.c:238
 msgid "ZSoft DCX image"
 msgstr "Зображення DCX ZSoft"
 
-#: plug-ins/common/file-pcx.c:240
+#: plug-ins/common/file-pcx.c:241
 msgid "Loads files in Zsoft DCX file format"
 msgstr "Завантажує файли у форматі DCX Zsoft"
 
-#: plug-ins/common/file-pcx.c:412
+#: plug-ins/common/file-pcx.c:413
 msgid "PCX format does not support multiple layers."
 msgstr "Для формату PCX не передбачено підтримку декількох шарів."
 
-#: plug-ins/common/file-pcx.c:534
+#: plug-ins/common/file-pcx.c:535
 msgid "Could not load PCX image"
 msgstr "Не вдалося завантажити зображення PCX"
 
-#: plug-ins/common/file-pcx.c:581
+#: plug-ins/common/file-pcx.c:582
 msgid "DCX image offset exceeds the file size"
 msgstr "Відступ зображення DCX перевищує розмір файла"
 
-#: plug-ins/common/file-pcx.c:592
+#: plug-ins/common/file-pcx.c:593
 msgid "Could not load DCX image"
 msgstr "Не вдалося завантажити зображення DCX"
 
-#: plug-ins/common/file-pcx.c:615
+#: plug-ins/common/file-pcx.c:616
 #, c-format
 msgid "%s: DCX image offset exceeds the file size: %s\n"
 msgstr "%s: відступ зображення DCX перевищує розмір файла: %s\n"
 
-#: plug-ins/common/file-pcx.c:632
+#: plug-ins/common/file-pcx.c:633
 msgid "Mixed-mode DCX image not loaded"
 msgstr "Зображення DCX у змішаному режимі не завантажено"
 
-#: plug-ins/common/file-pcx.c:639
+#: plug-ins/common/file-pcx.c:640
 #, c-format
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s: не вдалося завантажити усі зображення DCX: %s\n"
 
-#: plug-ins/common/file-pcx.c:679
+#: plug-ins/common/file-pcx.c:680
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Не вдається зчитати заголовок з «%s»"
 
-#: plug-ins/common/file-pcx.c:690
+#: plug-ins/common/file-pcx.c:691
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "«%s»: не є файлом PCX"
 
-#: plug-ins/common/file-pcx.c:706 plug-ins/common/file-wbmp.c:259
+#: plug-ins/common/file-pcx.c:707 plug-ins/common/file-wbmp.c:259
 #: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:504
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Непідтримувана ширина зображення: %d"
 
-#: plug-ins/common/file-pcx.c:712 plug-ins/common/file-wbmp.c:265
+#: plug-ins/common/file-pcx.c:713 plug-ins/common/file-wbmp.c:265
 #: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:496
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Непідтримувана висота зображення: %d"
 
-#: plug-ins/common/file-pcx.c:718
+#: plug-ins/common/file-pcx.c:719
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Некоректна кількість байтів на рядок у заголовку PCX"
 
-#: plug-ins/common/file-pcx.c:725
+#: plug-ins/common/file-pcx.c:726
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "Роздільність виходить за межі заголовка XCX, використовуємо 72x72"
 
-#: plug-ins/common/file-pcx.c:733
+#: plug-ins/common/file-pcx.c:734
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Розміри зображення великі: ширина %d x висота %d"
 
-#: plug-ins/common/file-pcx.c:852
+#: plug-ins/common/file-pcx.c:861
 msgid "Unusual PCX flavour, giving up"
 msgstr "Незвичайний вигляд файлу PCX. Вихід"
 
-#: plug-ins/common/file-pcx.c:878
+#: plug-ins/common/file-pcx.c:887
 msgid "Import from PCX"
 msgstr "Імпорт з PCX"
 
-#: plug-ins/common/file-pcx.c:887
+#: plug-ins/common/file-pcx.c:896
 msgid "Use PCX image's built-in palette"
 msgstr "Скористатися вбудованою палітрою зображення PCX"
 
-#: plug-ins/common/file-pcx.c:888
+#: plug-ins/common/file-pcx.c:897
 msgid "Use black and white palette"
 msgstr "Скористатися чорно-білою палітрою"
 
-#: plug-ins/common/file-pcx.c:1170 plug-ins/common/file-pnm.c:1631
+#: plug-ins/common/file-pcx.c:1180 plug-ins/common/file-pnm.c:1631
 msgid "Cannot export images with alpha channel."
 msgstr "Неможливо експортувати зображення з альфа-каналом."
 
-#: plug-ins/common/file-pcx.c:1190
+#: plug-ins/common/file-pcx.c:1200
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Некоректний зсув вздовж X: %d"
 
-#: plug-ins/common/file-pcx.c:1196
+#: plug-ins/common/file-pcx.c:1206
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Некоректний зсув вздовж Y: %d"
 
-#: plug-ins/common/file-pcx.c:1202
+#: plug-ins/common/file-pcx.c:1212
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Права межа знаходиться за припустимими межами (має бути < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1209
+#: plug-ins/common/file-pcx.c:1219
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Нижня межа знаходиться за припустимими межами (має бути < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1285 plug-ins/common/file-qoi.c:394
+#: plug-ins/common/file-pcx.c:1295 plug-ins/common/file-qoi.c:394
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Помилка при записі до файлу «%s»: %s"
@@ -3872,7 +3879,7 @@ msgid "Keeping the masks will not change the output"
 msgstr "Утримання маски не вплине на результат"
 
 #: plug-ins/common/file-pdf-save.c:1268 plug-ins/common/file-pdf-save.c:1341
-#: plug-ins/common/file-pdf-save.c:1439 plug-ins/common/file-ps.c:2064
+#: plug-ins/common/file-pdf-save.c:1439 plug-ins/common/file-ps.c:2115
 #: plug-ins/file-tiff/file-tiff-load.c:1536
 #, c-format
 msgid "Page %d"
@@ -4047,7 +4054,7 @@ msgstr ""
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
 
-#: plug-ins/common/file-png.c:2295 plug-ins/common/file-ps.c:3715
+#: plug-ins/common/file-png.c:2295 plug-ins/common/file-ps.c:3738
 msgid "Automatic"
 msgstr "Автоматично"
 
@@ -4288,157 +4295,153 @@ msgstr "_ASCII"
 msgid "_Raw"
 msgstr "_Без обробки"
 
-#: plug-ins/common/file-ps.c:381 plug-ins/common/file-ps.c:494
+#: plug-ins/common/file-ps.c:336 plug-ins/common/file-ps.c:449
 msgid "PostScript document"
 msgstr "Документ PostScript"
 
-#: plug-ins/common/file-ps.c:398 plug-ins/common/file-ps.c:511
+#: plug-ins/common/file-ps.c:353
 msgid "Encapsulated PostScript image"
 msgstr "Encapsulated PostScript"
 
-#: plug-ins/common/file-ps.c:762
+#: plug-ins/common/file-ps.c:377
+#| msgid "Resolution"
+msgid "Resol_ution"
+msgstr "Розд_ільність"
+
+#: plug-ins/common/file-ps.c:395
+#| msgid "Try Bounding Box"
+msgid "Try _Bounding Box"
+msgstr "Спробувати _обмежувальну рамку"
+
+#: plug-ins/common/file-ps.c:401
+#| msgid "Pages:"
+msgid "_Pages"
+msgstr "С_торінки"
+
+#: plug-ins/common/file-ps.c:407
+msgid "Coloring"
+msgstr "Фарбування"
+
+#: plug-ins/common/file-ps.c:413
+msgid "Text antialiasing"
+msgstr "Згладжування тексту"
+
+#: plug-ins/common/file-ps.c:419
+msgid "Graphic antialiasing"
+msgstr "Згладжування графіки"
+
+#: plug-ins/common/file-ps.c:459
+#| msgid "GPS"
+msgid "PS"
+msgstr "PS"
+
+#: plug-ins/common/file-ps.c:468
+#| msgid "_Encapsulated PostScript"
+msgid "Encapsulated PostScript"
+msgstr "_Інкапсульований PostScript"
+
+#: plug-ins/common/file-ps.c:479
+#| msgid "GPS"
+msgid "EPS"
+msgstr "EPS"
+
+#: plug-ins/common/file-ps.c:511
+#| msgid "_X offset:"
+msgid "_X offset"
+msgstr "Зсув вздовж _X"
+
+#: plug-ins/common/file-ps.c:517
+#| msgid "_Y offset:"
+msgid "Y o_ffset"
+msgstr "Зсув вздовж _Y"
+
+#: plug-ins/common/file-ps.c:523
+msgid "Unit"
+msgstr "Одиниця"
+
+#: plug-ins/common/file-ps.c:530
+msgid "_Keep aspect ratio"
+msgstr "З_берігати пропорції"
+
+#: plug-ins/common/file-ps.c:536 plug-ins/map-object/map-object-ui.c:1013
+msgid "Rotation"
+msgstr "Обертання"
+
+#: plug-ins/common/file-ps.c:542
+#| msgid "_PostScript level 2"
+msgid "PostScript Level _2"
+msgstr "PostScript, рівень _2"
+
+#: plug-ins/common/file-ps.c:554 plug-ins/imagemap/imap_grid.c:298
+msgid "_Preview"
+msgstr "_Попередній перегляд"
+
+#: plug-ins/common/file-ps.c:560
+#| msgid "Preview _size:"
+msgid "Preview Si_ze"
+msgstr "_Розмір перегляду"
+
+#: plug-ins/common/file-ps.c:722
 msgid "PostScript plug-in does not support multiple layers."
 msgstr "У додатку PostScript не передбачено підтримки декількох шарів."
 
-#: plug-ins/common/file-ps.c:1160
+#: plug-ins/common/file-ps.c:1136
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "Не вдається інтерпретувати файл PostScript «%s»"
 
-#: plug-ins/common/file-ps.c:1246
+#: plug-ins/common/file-ps.c:1220
 msgid "Rendered EPS"
 msgstr "Оброблений EPS"
 
-#: plug-ins/common/file-ps.c:1274
+#: plug-ins/common/file-ps.c:1248
 #, c-format
 msgid "%s-pages"
 msgstr "%s-сторінок"
 
-#: plug-ins/common/file-ps.c:1345
+#: plug-ins/common/file-ps.c:1320
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Зображення з альфа-каналами не можна експортувати як PostScript"
 
-#: plug-ins/common/file-ps.c:3568
-msgid "Import from PostScript"
-msgstr "Завантажити з PostScript"
-
-#: plug-ins/common/file-ps.c:3573 plug-ins/file-tiff/file-tiff-load.c:2554
-#: plug-ins/metadata/metadata-editor.c:4635
-msgid "_Import"
-msgstr "_Імпортувати"
-
-#. Rendering
-#: plug-ins/common/file-ps.c:3612
+#: plug-ins/common/file-ps.c:3728
 msgid "Rendering"
 msgstr "Візуалізація"
 
-#. Resolution
-#: plug-ins/common/file-ps.c:3631 plug-ins/common/file-svg.c:945
-#: plug-ins/common/file-wmf.c:717
-msgid "Resolution:"
-msgstr "Роздільна здатність:"
-
-#: plug-ins/common/file-ps.c:3647 plug-ins/common/file-ps.c:3847
-#: plug-ins/common/smooth-palette.c:531 plug-ins/common/tile.c:519
-#: plug-ins/imagemap/imap_cmd_guides.c:163
-#: plug-ins/imagemap/imap_rectangle.c:398
-#: plug-ins/print/print-page-layout.c:286
-msgid "_Width:"
-msgstr "_Ширина:"
-
-#: plug-ins/common/file-ps.c:3660 plug-ins/common/file-ps.c:3858
-#: plug-ins/common/film.c:1067 plug-ins/common/smooth-palette.c:536
-#: plug-ins/common/tile.c:523 plug-ins/imagemap/imap_cmd_guides.c:173
-#: plug-ins/imagemap/imap_rectangle.c:405
-#: plug-ins/print/print-page-layout.c:288
-msgid "_Height:"
-msgstr "_Висота:"
-
-#: plug-ins/common/file-ps.c:3673
-msgid "Pages:"
-msgstr "Сторінки:"
-
-#: plug-ins/common/file-ps.c:3680
-msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr "Сторінок для завантаження(наприклад: 1-4 чи 1,3,5-7)"
-
-#: plug-ins/common/file-ps.c:3685 plug-ins/common/sphere-designer.c:2728
-msgid "Layers"
-msgstr "Шари"
-
-#: plug-ins/common/file-ps.c:3688
-msgid "Images"
-msgstr "Зображення"
-
-#: plug-ins/common/file-ps.c:3691
-msgid "Open as"
-msgstr "Відкрити як"
-
-#: plug-ins/common/file-ps.c:3695
-msgid "Try Bounding Box"
-msgstr "Обмежувати розмір"
-
 #. Coloring
-#: plug-ins/common/file-ps.c:3708
-msgid "Coloring"
-msgstr "Фарбування"
-
-#: plug-ins/common/file-ps.c:3712
+#: plug-ins/common/file-ps.c:3735
 msgid "B/W"
 msgstr "Ч/Б"
 
-#: plug-ins/common/file-ps.c:3713
+#: plug-ins/common/file-ps.c:3736
 msgid "Gray"
 msgstr "Сірий"
 
-#: plug-ins/common/file-ps.c:3714 plug-ins/common/file-xpm.c:505
+#: plug-ins/common/file-ps.c:3737 plug-ins/common/file-xpm.c:505
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:169
 msgid "Color"
 msgstr "Колір"
 
-#: plug-ins/common/file-ps.c:3726
-msgid "Text antialiasing"
-msgstr "Згладжування тексту"
-
-#: plug-ins/common/file-ps.c:3730 plug-ins/common/file-ps.c:3742
-msgctxt "antialiasing"
-msgid "None"
-msgstr "Немає"
-
-#: plug-ins/common/file-ps.c:3731 plug-ins/common/file-ps.c:3743
+#: plug-ins/common/file-ps.c:3745 plug-ins/common/file-ps.c:3753
 msgid "Weak"
 msgstr "Слабке"
 
-#: plug-ins/common/file-ps.c:3732 plug-ins/common/file-ps.c:3744
+#: plug-ins/common/file-ps.c:3746 plug-ins/common/file-ps.c:3754
 msgid "Strong"
 msgstr "Сильне"
 
-#: plug-ins/common/file-ps.c:3738
-msgid "Graphic antialiasing"
-msgstr "Згладжування графіки"
+#: plug-ins/common/file-ps.c:3780
+msgid "Pages:"
+msgstr "Сторінки:"
 
-#: plug-ins/common/file-ps.c:3812
-msgid "PostScript"
-msgstr "PostScript"
+#: plug-ins/common/file-ps.c:3784
+msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
+msgstr "Сторінок для завантаження(наприклад: 1-4 чи 1,3,5-7)"
 
-#. Image Size
-#: plug-ins/common/file-ps.c:3829
-msgid "Image Size"
-msgstr "Розмір зображення"
+#: plug-ins/common/file-ps.c:3790
+msgid "Open as"
+msgstr "Відкрити як"
 
-#: plug-ins/common/file-ps.c:3869
-msgid "_X offset:"
-msgstr "Зсув вздовж _X:"
-
-#: plug-ins/common/file-ps.c:3880
-msgid "_Y offset:"
-msgstr "Зсув вздовж _Y:"
-
-#: plug-ins/common/file-ps.c:3886
-msgid "_Keep aspect ratio"
-msgstr "З_берігати пропорції"
-
-#: plug-ins/common/file-ps.c:3892
+#: plug-ins/common/file-ps.c:3883
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -4446,44 +4449,39 @@ msgstr ""
 "Якщо вибрано, вихідне зображення буде масштабуватись до заповнення вказаного "
 "розміру без зміни пропорцій."
 
-#. Unit
-#: plug-ins/common/file-ps.c:3902
-msgid "Unit"
-msgstr "Одиниця"
+#: plug-ins/common/file-ps.c:3889
+msgid "Image Size"
+msgstr "Розмір зображення"
 
-#: plug-ins/common/file-ps.c:3906
+#. Unit
+#: plug-ins/common/file-ps.c:3900
 msgid "_Inch"
 msgstr "_Дюйм"
 
-#: plug-ins/common/file-ps.c:3907
+#: plug-ins/common/file-ps.c:3901
 msgid "_Millimeter"
 msgstr "_Міліметр"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3918 plug-ins/map-object/map-object-ui.c:1013
-msgid "Rotation"
-msgstr "Обертання"
+#: plug-ins/common/file-ps.c:3914
+msgid "_0"
+msgstr "_0"
 
-#. Format
-#: plug-ins/common/file-ps.c:3933
+#: plug-ins/common/file-ps.c:3915
+msgid "_90"
+msgstr "_90"
+
+#: plug-ins/common/file-ps.c:3916
+msgid "_180"
+msgstr "_180"
+
+#: plug-ins/common/file-ps.c:3917
+msgid "_270"
+msgstr "_270"
+
+#: plug-ins/common/file-ps.c:3924
 msgid "Output"
 msgstr "Вивід"
-
-#: plug-ins/common/file-ps.c:3939
-msgid "_PostScript level 2"
-msgstr "_PostScript level 2"
-
-#: plug-ins/common/file-ps.c:3948
-msgid "_Encapsulated PostScript"
-msgstr "_Encapsulated PostScript"
-
-#: plug-ins/common/file-ps.c:3957
-msgid "P_review"
-msgstr "_Перегляд"
-
-#: plug-ins/common/file-ps.c:3981
-msgid "Preview _size:"
-msgstr "_Розмір перегляду:"
 
 #: plug-ins/common/file-psp.c:664 plug-ins/common/file-psp.c:694
 msgid "Paint Shop Pro image"
@@ -5117,6 +5115,11 @@ msgstr "Коефіцієнт по _Y:"
 #: plug-ins/common/file-svg.c:940 plug-ins/common/file-wmf.c:712
 msgid "Constrain aspect ratio"
 msgstr "Пропорції"
+
+#. Resolution
+#: plug-ins/common/file-svg.c:945 plug-ins/common/file-wmf.c:717
+msgid "Resolution:"
+msgstr "Роздільна здатність:"
 
 #. Path Import
 #: plug-ins/common/file-svg.c:971
@@ -5765,6 +5768,13 @@ msgstr "Фотоплівка"
 msgid "_Fit height to images"
 msgstr "_Розтягувати до висоти зображення"
 
+#: plug-ins/common/film.c:1067 plug-ins/common/smooth-palette.c:536
+#: plug-ins/common/tile.c:523 plug-ins/imagemap/imap_cmd_guides.c:173
+#: plug-ins/imagemap/imap_rectangle.c:405
+#: plug-ins/print/print-page-layout.c:288
+msgid "_Height:"
+msgstr "_Висота:"
+
 #. Film color
 #: plug-ins/common/film.c:1088
 msgid "Select Film Color"
@@ -6403,6 +6413,13 @@ msgstr "Отримання гладкої палітри"
 msgid "Smooth Palette"
 msgstr "Гладка палітра"
 
+#: plug-ins/common/smooth-palette.c:531 plug-ins/common/tile.c:519
+#: plug-ins/imagemap/imap_cmd_guides.c:163
+#: plug-ins/imagemap/imap_rectangle.c:398
+#: plug-ins/print/print-page-layout.c:286
+msgid "_Width:"
+msgstr "_Ширина:"
+
 #: plug-ins/common/smooth-palette.c:550
 msgid "_Search depth:"
 msgstr "_Глибина пошуку:"
@@ -6631,6 +6648,10 @@ msgstr "Збереження файлу"
 #: plug-ins/common/sphere-designer.c:2627
 msgid "Sphere Designer"
 msgstr "Створення сфери"
+
+#: plug-ins/common/sphere-designer.c:2728
+msgid "Layers"
+msgstr "Шари"
 
 #: plug-ins/common/sphere-designer.c:2739
 #: plug-ins/gradient-flare/gradient-flare.c:3081
@@ -8143,12 +8164,11 @@ msgstr "Перегляд JPEG"
 
 #: plug-ins/file-jpeg/jpeg-load.c:485
 #, c-format
-#| msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgid ""
 "Error trying to open temporary %s file '%s' for jpeg metadata loading: %s"
 msgstr ""
-"Помилка при відкриванні тимчасового файла %s, «%s», для завантаження"
-" метаданих jpeg: %s"
+"Помилка при відкриванні тимчасового файла %s, «%s», для завантаження "
+"метаданих jpeg: %s"
 
 #: plug-ins/file-jpeg/jpeg-save.c:139 plug-ins/file-jpeg/jpeg-save.c:146
 #, c-format
@@ -8362,7 +8382,6 @@ msgid "Adjustment layers are not yet supported and will be dropped."
 msgstr "Підтримки шарів коригування ще не реалізовано, їх буде відкинуто."
 
 #: plug-ins/file-psd/psd-load.c:3511 plug-ins/file-psd/psd.c:562
-#| msgid "Linked layers are not yet supported and will be dropped."
 msgid "Metadata fill layers are not supported and will be dropped."
 msgstr ""
 "Підтримки шарів заповнення метаданих ще не реалізовано, їх буде відкинуто."
@@ -8540,7 +8559,6 @@ msgid "Import PSD"
 msgstr "Імпорт PSD"
 
 #: plug-ins/file-psd/psd.c:558
-#| msgid "Import metadata"
 msgid "Import PSD metadata"
 msgstr "Імпорт метаданих PSD"
 
@@ -8945,12 +8963,11 @@ msgstr ""
 #: plug-ins/file-tiff/file-tiff-load.c:1760
 #: plug-ins/file-tiff/file-tiff-load.c:1802
 #, c-format
-#| msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
 msgstr ""
-"Помилка при відкриванні тимчасового файла %s, «%s», для завантаження"
-" метаданих tiff: %s"
+"Помилка при відкриванні тимчасового файла %s, «%s», для завантаження "
+"метаданих tiff: %s"
 
 #: plug-ins/file-tiff/file-tiff-load.c:1878
 #, c-format
@@ -8978,6 +8995,11 @@ msgstr ""
 #: plug-ins/file-tiff/file-tiff-load.c:2549
 msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
+
+#: plug-ins/file-tiff/file-tiff-load.c:2554
+#: plug-ins/metadata/metadata-editor.c:4635
+msgid "_Import"
+msgstr "_Імпортувати"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2570
 msgid "_Show reduced images"
@@ -11093,7 +11115,7 @@ msgid "Usage Terms"
 msgstr "Умови використання"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:1507
-#: plug-ins/ui/plug-in-metadata-viewer.ui:211
+#: plug-ins/metadata/metadata-viewer.c:401
 msgid "IPTC"
 msgstr "IPTC"
 
@@ -11410,33 +11432,6 @@ msgstr "Виробник обладнання"
 #: plug-ins/ui/plug-in-metadata-editor.ui:4831
 msgid "DICOM"
 msgstr "DICOM"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:55
-msgid "Exif Tag"
-msgstr "Мітка Exif"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:68
-#: plug-ins/ui/plug-in-metadata-viewer.ui:127
-#: plug-ins/ui/plug-in-metadata-viewer.ui:189
-msgctxt "A tag value"
-msgid "Value"
-msgstr "Значення"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:87
-msgid "Exif"
-msgstr "Exif"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:114
-msgid "XMP Tag"
-msgstr "Мітка XMP"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:149
-msgid "XMP"
-msgstr "XMP"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:176
-msgid "IPTC Tag"
-msgstr "Мітка IPTC"
 
 #: plug-ins/gradient-flare/gradient-flare.c:750
 msgid "Addition"
@@ -12338,10 +12333,6 @@ msgstr "точок з_ліва"
 #: plug-ins/imagemap/imap_grid.c:287
 msgid "pixels from _top"
 msgstr "точок з_верху"
-
-#: plug-ins/imagemap/imap_grid.c:298
-msgid "_Preview"
-msgstr "_Попередній перегляд"
 
 #: plug-ins/imagemap/imap_main.c:220
 msgid "_Image Map..."
@@ -13478,29 +13469,45 @@ msgstr "По_казати метадані"
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Показати метадані (Exif, IPTC, XMP)"
 
-#: plug-ins/metadata/metadata-viewer.c:269
-msgid "Error loading metadata-viewer dialog."
-msgstr "Помилка під час завантаження вікна переглядача метаданих."
-
-#: plug-ins/metadata/metadata-viewer.c:280
+#: plug-ins/metadata/metadata-viewer.c:265
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Оглядач метаданих: %s"
 
-#: plug-ins/metadata/metadata-viewer.c:372
+#: plug-ins/metadata/metadata-viewer.c:308
+msgid "Exif Tag"
+msgstr "Мітка Exif"
+
+#: plug-ins/metadata/metadata-viewer.c:325
+msgid "Exif"
+msgstr "Exif"
+
+#: plug-ins/metadata/metadata-viewer.c:346
+msgid "XMP Tag"
+msgstr "Мітка XMP"
+
+#: plug-ins/metadata/metadata-viewer.c:363
+msgid "XMP"
+msgstr "XMP"
+
+#: plug-ins/metadata/metadata-viewer.c:384
+msgid "IPTC Tag"
+msgstr "Мітка IPTC"
+
+#: plug-ins/metadata/metadata-viewer.c:481
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(%lu більше символів)"
 
-#: plug-ins/metadata/metadata-viewer.c:619
+#: plug-ins/metadata/metadata-viewer.c:728
 msgid " meter"
 msgstr " метр"
 
-#: plug-ins/metadata/metadata-viewer.c:620
+#: plug-ins/metadata/metadata-viewer.c:729
 msgid " feet"
 msgstr " футів"
 
-#: plug-ins/metadata/metadata-viewer.c:788
+#: plug-ins/metadata/metadata-viewer.c:897
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu більше байт)"
@@ -14037,6 +14044,29 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Import from PostScript"
+#~ msgstr "Завантажити з PostScript"
+
+#~ msgid "Images"
+#~ msgstr "Зображення"
+
+#~ msgctxt "antialiasing"
+#~ msgid "None"
+#~ msgstr "Немає"
+
+#~ msgid "PostScript"
+#~ msgstr "PostScript"
+
+#~ msgid "P_review"
+#~ msgstr "_Перегляд"
+
+#~ msgctxt "A tag value"
+#~ msgid "Value"
+#~ msgstr "Значення"
+
+#~ msgid "Error loading metadata-viewer dialog."
+#~ msgstr "Помилка під час завантаження вікна переглядача метаданих."
 
 #~ msgid "Export Image as GIF"
 #~ msgstr "Експортувати зображення як GIF"
