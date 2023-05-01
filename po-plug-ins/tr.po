@@ -13,10 +13,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-23 18:25+0000\n"
-"PO-Revision-Date: 2023-04-22 09:02+0300\n"
+"POT-Creation-Date: 2023-04-24 20:16+0000\n"
+"PO-Revision-Date: 2023-04-25 02:02+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
-"Language-Team: Turkish <gnome-turk@gnome.org>\n"
+"Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2536,13 +2536,11 @@ msgstr "Çok fazla sıkıştırılmış veri, ek yok sayılıyor..."
 
 #: plug-ins/common/file-gif-save.c:151
 msgid "GIF"
-msgstr ""
+msgstr "GIF"
 
 #: plug-ins/common/file-gif-save.c:154
-#, fuzzy
-#| msgid "Exports files in the PGM file format"
 msgid "exports files in Compuserve GIF file format"
-msgstr "Dosyaları PGM dosyası biçiminde dışa aktarır"
+msgstr "Dosyaları Compuserve GIF dosyası biçiminde dışa aktarır"
 
 #: plug-ins/common/file-gif-save.c:156
 #, c-format
@@ -2560,103 +2558,80 @@ msgstr "B_irleştir"
 
 #: plug-ins/common/file-gif-save.c:183
 msgid "Try to export as interlaced"
-msgstr ""
+msgstr "Ayrıştırılmış (interlaced) olarak dışa aktarmayı dene"
 
 #: plug-ins/common/file-gif-save.c:188
-#, fuzzy
-#| msgid "Loop _forever"
 msgid "Loop _Forever"
-msgstr "Sonsuz _döngü"
+msgstr "Sonsuz _Döngü"
 
 #: plug-ins/common/file-gif-save.c:189
-#, fuzzy
-#| msgid "Loop animation infinitely"
 msgid "(animated gif) Loop infinitely"
-msgstr "Canlandırmayı sonsuz döngüye al"
+msgstr "(canlandırmalı gif) Sonsuz döngü"
 
 #: plug-ins/common/file-gif-save.c:194
-#, fuzzy
-#| msgid "_Number of repeats:"
 msgid "_Number of repeats"
-msgstr "_Yineleme sayısı:"
+msgstr "_Yineleme sayısı"
 
 #: plug-ins/common/file-gif-save.c:195
 msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
 msgstr ""
+"(canlandırmalı gif) Yineleme sayısı ('loop' TRUE ise görmezden gelinir)"
 
 #: plug-ins/common/file-gif-save.c:201
-#, fuzzy
-#| msgid "_Delay between frames where unspecified:"
 msgid "_Delay between frames when unspecified"
-msgstr "_Belirtilmemiş kareler arasında gecikme uygula:"
+msgstr "_Belirtilmemiş kareler arasında gecikme uygula"
 
 #: plug-ins/common/file-gif-save.c:202
-#, fuzzy
-#| msgid "(ANIMATED MNG) Default delay between frames in milliseconds"
 msgid "(animated gif) Default delay between frames in milliseconds"
 msgstr ""
-"(ANİMASYONLU MNG) Milisaniye türünden kareler arasındaki öntanımlı gecikme"
+"(canlandırmalı gif) Milisaniye türünden kareler arasındaki öntanımlı gecikme"
 
 #: plug-ins/common/file-gif-save.c:208
-#, fuzzy
-#| msgid "_Frame disposal where unspecified"
 msgid "Frame disposal _when unspecified"
-msgstr "_Belirtilmemiş kareleri çıkar"
+msgstr "_Belirtilmediğinde kare imhası"
 
 #: plug-ins/common/file-gif-save.c:209
-#, fuzzy
-#| msgid "(ANIMATED MNG) Default dispose type (0 = combine; 1 = replace)"
 msgid ""
 "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)"
-msgstr "(CANLANDIRMALI MNG) Öntanımlı imha türü (0 = birleştir; 1 = değiştir)"
+msgstr ""
+"(canlandırmalı gif) Öntanımlı imha türü (0=`umursama`, 1=birleştir, 2=yer "
+"değiştir)"
 
 #: plug-ins/common/file-gif-save.c:217
-#, fuzzy
-#| msgid "As _animation"
 msgid "_As animation"
 msgstr "_Animasyon olarak"
 
 #: plug-ins/common/file-gif-save.c:218
-#, fuzzy
-#| msgid "Export Image as Pattern"
 msgid "Export GIF as animation?"
-msgstr "Görüntüyü Desen Olarak Dışa Aktar"
+msgstr "GIF animasyon olarak dışa aktarılsın mı?"
 
 #: plug-ins/common/file-gif-save.c:223
 msgid "_Use delay entered above for all frames"
 msgstr "_Yukarıda girilen gecikmeyi tüm karelere uygula"
 
 #: plug-ins/common/file-gif-save.c:224
-#, fuzzy
-#| msgid "Use default dela_y for all frames"
 msgid "(animated gif) Use specified delay for all frames"
-msgstr "Tüm kareler için öntanımlı _gecikmeyi kullan"
+msgstr "(canlandırmalı gif) Tüm kareler için belirtilen gecikmeyi kullan"
 
 #: plug-ins/common/file-gif-save.c:229
-#, fuzzy
-#| msgid "U_se disposal entered above for all frames"
 msgid "Use dis_posal entered above for all frames"
-msgstr "Yukarıda girilen düzeni tüm karelere _uygula"
+msgstr "Tüm kareler için yukarıda girilen i_mhayı kullan"
 
 #: plug-ins/common/file-gif-save.c:231
 msgid "(animated gif) Use specified disposal for all frames"
-msgstr ""
+msgstr "(canlandırmalı gif) Tüm kareler için belirtilen imhayı kullan"
 
 #: plug-ins/common/file-gif-save.c:236
-#, fuzzy
-#| msgid "Save comment"
 msgid "Sa_ve comment"
-msgstr "Yorumu kaydet"
+msgstr "Yorumu ka_ydet"
 
 #: plug-ins/common/file-gif-save.c:237
 msgid "Save the image comment in the GIF file"
 msgstr "Görüntü yorumunu GIF dosyasında kaydet"
 
 #: plug-ins/common/file-gif-save.c:242
-#, fuzzy
-#| msgid "Comment"
 msgid "Commen_t"
-msgstr "Yorum"
+msgstr "_Yorum"
 
 #: plug-ins/common/file-gif-save.c:243
 msgid "Image comment"
@@ -2817,7 +2792,7 @@ msgstr "HEIF/HEIC"
 
 #: plug-ins/common/file-heif.c:199
 msgid "Loads HEIF images"
-msgstr "HEIF görüntülerini yükler"
+msgstr "HEIF görüntüleri yükler"
 
 #: plug-ins/common/file-heif.c:200
 msgid ""
@@ -3150,21 +3125,19 @@ msgstr "Tablo Seçenekleri"
 
 #: plug-ins/common/file-iff.c:140
 msgid "Amiga IFF"
-msgstr ""
+msgstr "Amiga IFF"
 
 #: plug-ins/common/file-iff.c:143 plug-ins/common/file-iff.c:144
-#, fuzzy
-#| msgid "Load file in the QOI file format"
 msgid "Load file in the IFF file format"
-msgstr "Dosyaları QOI dosya biçiminde yükle"
+msgstr "Dosyayı IFF dosya biçiminde yükle"
 
 #: plug-ins/common/file-iff.c:254
 msgid "Invalid or missing ILBM image"
-msgstr ""
+msgstr "Geçersiz ya da eksik ILBM görüntüsü"
 
 #: plug-ins/common/file-iff.c:259
 msgid "ILBM contains no image data - likely a palette file"
-msgstr ""
+msgstr "ILBM görüntü verisi içermiyor - muhtemelen bir palet dosyası"
 
 #: plug-ins/common/file-jp2-load.c:187
 msgid "JPEG 2000 image"
@@ -3490,7 +3463,7 @@ msgstr "Çözünürlüğü k_aydet"
 
 #: plug-ins/common/file-mng.c:343
 msgid "Write pHYs (image resolution) chunk"
-msgstr ""
+msgstr "pHYs (görüntü çözünürlüğü) öbeğini yaz"
 
 #: plug-ins/common/file-mng.c:348 plug-ins/common/file-png.c:263
 msgid "Save creation _time"
@@ -3498,7 +3471,7 @@ msgstr "Oluşturma _zamanını kaydet"
 
 #: plug-ins/common/file-mng.c:349
 msgid "Write tIME (creation time) chunk"
-msgstr ""
+msgstr "tIME (oluşturulma tarihi) öbeğini yaz"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -3590,10 +3563,8 @@ msgid "ZSoft PCX image"
 msgstr "ZSoft PCX görüntüsü"
 
 #: plug-ins/common/file-pcx.c:209
-#, fuzzy
-#| msgid "Loads files in the PNM file format"
 msgid "Loads files in Zsoft PCX file format"
-msgstr "PNM dosya biçimindeki dosyaları yükler"
+msgstr "Zsoft PCX dosya biçimindeki dosyaları yükler"
 
 #: plug-ins/common/file-pcx.c:218 plug-ins/common/file-pcx.c:249
 msgid "Palette Options"
@@ -3601,54 +3572,46 @@ msgstr "Palet Seçenekleri"
 
 #: plug-ins/common/file-pcx.c:219 plug-ins/common/file-pcx.c:250
 msgid "Use built-in palette (0) or override with black/white (1)"
-msgstr ""
+msgstr "Yerleşik paleti (0) kullan ya da siyah/beyaz (1) ile üzerine yaz"
 
 #: plug-ins/common/file-pcx.c:237
-#, fuzzy
-#| msgid "ZSoft PCX image"
 msgid "ZSoft DCX image"
-msgstr "ZSoft PCX görüntüsü"
+msgstr "ZSoft DCX görüntüsü"
 
 #: plug-ins/common/file-pcx.c:240
-#, fuzzy
-#| msgid "Loads files in the PNM file format"
 msgid "Loads files in Zsoft DCX file format"
-msgstr "PNM dosya biçimindeki dosyaları yükler"
+msgstr "Zsoft DCX dosya biçimindeki dosyaları yükler"
 
 #: plug-ins/common/file-pcx.c:412
 msgid "PCX format does not support multiple layers."
 msgstr "PCX biçimi çoklu katmanları desteklemiyor."
 
 #: plug-ins/common/file-pcx.c:534
-#, fuzzy
-#| msgid "Could not allocate a new image."
 msgid "Could not load PCX image"
-msgstr "Yeni resim ayrılamadı."
+msgstr "PCX görüntü yüklenemedi"
 
 #: plug-ins/common/file-pcx.c:581
 msgid "DCX image offset exceeds the file size"
-msgstr ""
+msgstr "DCX görüntü konumu dosya boyutunu aşıyor"
 
 #: plug-ins/common/file-pcx.c:592
-#, fuzzy
-#| msgid "Could not allocate a new image."
 msgid "Could not load DCX image"
-msgstr "Yeni resim ayrılamadı."
+msgstr "DCX görüntü yüklenemedi"
 
 #: plug-ins/common/file-pcx.c:615
 #, c-format
 msgid "%s: DCX image offset exceeds the file size: %s\n"
-msgstr ""
+msgstr "%s: DCX görüntü konumu dosya boyutunu aşıyor: %s\n"
 
 #: plug-ins/common/file-pcx.c:632
 msgid "Mixed-mode DCX image not loaded"
-msgstr ""
+msgstr "Karma kip DCX görüntüsü yüklenmemiş"
 
 #: plug-ins/common/file-pcx.c:639
-#, fuzzy, c-format
+#, c-format
 #| msgid "Could not create a new image: %s"
 msgid "%s: Could not load all DCX images: %s\n"
-msgstr "Yeni görüntü oluşturulamadı: %s"
+msgstr "%s: Tüm DCX görüntüler yüklenemedi: %s\n"
 
 #: plug-ins/common/file-pcx.c:679
 #, c-format
@@ -3742,7 +3705,7 @@ msgstr "Sayfaları farklı aç"
 
 #: plug-ins/common/file-pdf-load.c:368
 msgid "Number of pages to load (0 for all)"
-msgstr ""
+msgstr "Yüklenecek sayfa sayısı (Tümü için 0)"
 
 #: plug-ins/common/file-pdf-load.c:392
 msgid "Use _Anti-aliasing"
@@ -3758,7 +3721,7 @@ msgstr "Saydam alanları beyaz renkle _doldur"
 
 #: plug-ins/common/file-pdf-load.c:399
 msgid "Render all pages as opaque by filling the background in white"
-msgstr ""
+msgstr "Artalanı beyazla doldurarak tüm sayfaları mat hale getir"
 
 #: plug-ins/common/file-pdf-load.c:407 plug-ins/common/file-pdf-load.c:408
 msgid "Resolution"
@@ -4120,6 +4083,7 @@ msgstr "PNM dosya biçimindeki dosyaları yükler"
 #: plug-ins/common/file-pnm.c:319
 msgid "This plug-in loads files in the various Netpbm portable file formats."
 msgstr ""
+"Bu eklenti, çeşitli Netpbm taşınabilir dosya biçimlerindeki dosyaları yükler."
 
 #: plug-ins/common/file-pnm.c:348
 msgid "PNM image"
@@ -4135,7 +4099,7 @@ msgstr "Dosyaları PNM dosyası biçiminde dışa aktarır"
 
 #: plug-ins/common/file-pnm.c:354
 msgid "PNM export handles all image types without transparency."
-msgstr ""
+msgstr "PNM dışa aktarma, saydamlık olmadan tüm görüntü türlerini işler."
 
 #: plug-ins/common/file-pnm.c:370 plug-ins/common/file-pnm.c:406
 #: plug-ins/common/file-pnm.c:442
@@ -4145,7 +4109,7 @@ msgstr "Veri biçimlendirmesi"
 #: plug-ins/common/file-pnm.c:371 plug-ins/common/file-pnm.c:407
 #: plug-ins/common/file-pnm.c:443 plug-ins/common/file-pnm.c:479
 msgid "TRUE for raw output, FALSE for ascii output"
-msgstr ""
+msgstr "Ham çıktı için TRUE, ascii çıktı için FALSE"
 
 #: plug-ins/common/file-pnm.c:385
 msgid "PBM"
@@ -4161,7 +4125,7 @@ msgstr "Dosyaları PBM dosyası biçiminde dışa aktarır"
 
 #: plug-ins/common/file-pnm.c:390
 msgid "PBM exporting produces mono images without transparency."
-msgstr ""
+msgstr "PBM dışa aktarma, saydamlık olmadan mono görüntüler üretir."
 
 #: plug-ins/common/file-pnm.c:421
 msgid "PGM image"
@@ -4177,7 +4141,7 @@ msgstr "Dosyaları PGM dosyası biçiminde dışa aktarır"
 
 #: plug-ins/common/file-pnm.c:426
 msgid "PGM exporting produces grayscale images without transparency."
-msgstr ""
+msgstr "PGM dışa aktarma, saydamlık olmadan gri tonlamalı görüntüler üretir."
 
 #: plug-ins/common/file-pnm.c:457
 msgid "PPM image"
@@ -4206,6 +4170,7 @@ msgstr "Dosyaları PAM dosyası biçiminde dışa aktarır"
 #: plug-ins/common/file-pnm.c:497
 msgid "PAM export handles RGB images with or without transparency."
 msgstr ""
+"PAM dışa aktarma, saydamlık olsun ya da olmasın RGB görüntüleri yönetir."
 
 #: plug-ins/common/file-pnm.c:522
 msgid "PFM image"
@@ -4515,6 +4480,8 @@ msgid ""
 "This plug-in loads and exports images in Paint Shop Pro's native PSP format. "
 "Vector layers aren't handled. Exporting isn't yet implemented."
 msgstr ""
+"Bu eklenti, Paint Shop Proʼnun yerel PSP biçimindeki görüntüleri yükler ve "
+"dışa aktarır. Vektör katmanları işlenmez. Dışa aktarma henüz uygulanmadı."
 
 #: plug-ins/common/file-psp.c:841
 msgid "RLE"
@@ -4667,11 +4634,11 @@ msgstr "Quite OK Görüntüsü"
 
 #: plug-ins/common/file-qoi.c:140
 msgid "Load file in the QOI file format"
-msgstr "Dosyaları QOI dosya biçiminde yükle"
+msgstr "Dosyayı QOI dosya biçiminde yükle"
 
 #: plug-ins/common/file-qoi.c:141
 msgid "Load file in the QOI file format (Quite OK Image)"
-msgstr "Dosyaları QOI dosya biçiminde yükle (Quite OK Görüntüsü)"
+msgstr "Dosyayı QOI dosya biçiminde yükle (Quite OK Görüntüsü)"
 
 #: plug-ins/common/file-qoi.c:167
 msgid "Export image in the QOI file format"
@@ -4930,7 +4897,7 @@ msgstr "Veri Biçimledirme"
 
 #: plug-ins/common/file-sunras.c:320
 msgid "Use standard (0) or Run-Length Encoded (1) output"
-msgstr ""
+msgstr "Standart (0) ya da Çalışma Uzunluğu Kodlamalı (1) çıktı kullan"
 
 #: plug-ins/common/file-sunras.c:404
 msgid "SUNRAS format does not support multiple layers."
@@ -5257,6 +5224,8 @@ msgid ""
 "Load a file in X10 or X11 bitmap (XBM) file format. XBM is a lossless format "
 "for flat black-and-white (two color indexed) images."
 msgstr ""
+"Dosyayı X10 ya da X11 bit eşlem (XBM) dosya biçiminde yükle. XBM, düz siyah "
+"beyaz (iki renk indeksli) görüntüler için kayıpsız bir biçimdir."
 
 #: plug-ins/common/file-xbm.c:190
 msgid "Export a file in X10 or X11 bitmap (XBM) file format"
@@ -5267,6 +5236,8 @@ msgid ""
 "X10 or X11 bitmap (XBM) file format. XBM is a lossless format for flat black-"
 "and-white (two color indexed) images."
 msgstr ""
+"X10 ya da X11 bit eşlem (XBM) dosya biçimi. XBM, düz siyah beyaz (çift renk "
+"indeksli) görüntüler için kayıpsız bir biçimdir."
 
 #: plug-ins/common/file-xbm.c:203
 msgid "XBM"
@@ -5286,7 +5257,7 @@ msgstr "Yoru_m"
 
 #: plug-ins/common/file-xbm.c:219
 msgid "Image description (maximum 72 bytes)"
-msgstr ""
+msgstr "Görüntü açıklaması (azami 72 bayt)"
 
 #: plug-ins/common/file-xbm.c:227
 msgid "_X10 format bitmap"
@@ -5310,7 +5281,7 @@ msgstr "Etkin nokta _X"
 
 #: plug-ins/common/file-xbm.c:240
 msgid "X coordinate of hotspot"
-msgstr ""
+msgstr "Etkin noktanın X koordinatı"
 
 #: plug-ins/common/file-xbm.c:245
 msgid "Hot spot _Y"
@@ -5318,7 +5289,7 @@ msgstr "Etkin nokta _Y"
 
 #: plug-ins/common/file-xbm.c:246
 msgid "Y coordinate of hotspot"
-msgstr ""
+msgstr "Etkin noktanın Y koordinatı"
 
 #: plug-ins/common/file-xbm.c:251
 msgid "I_dentifier prefix"
@@ -5326,7 +5297,7 @@ msgstr "_Tanıtıcı önek"
 
 #: plug-ins/common/file-xbm.c:252
 msgid "Identifier prefix [determined from filename]"
-msgstr ""
+msgstr "Tanımlayıcı öneki [dosya adından belirlenir]"
 
 #: plug-ins/common/file-xbm.c:257
 msgid "Write extra mask _file"
@@ -6023,7 +5994,7 @@ msgstr "Yapboz Tarzı"
 
 #: plug-ins/common/jigsaw.c:426
 msgid "The style/shape of the jigsaw puzzle { Square (0), Curved (1) }"
-msgstr ""
+msgstr "Yapbozun biçemi/şekli { Kare (0), Eğri (1) }"
 
 #: plug-ins/common/jigsaw.c:432
 msgid "_Blend width"
@@ -6047,7 +6018,7 @@ msgstr "Yapboz birleştiriliyor"
 
 #: plug-ins/common/jigsaw.c:727
 msgid "draw_jigsaw: bad style\n"
-msgstr ""
+msgstr "draw_jigsaw: kötü biçem\n"
 
 #: plug-ins/common/jigsaw.c:2490
 msgid "Jigsaw"
@@ -6152,6 +6123,8 @@ msgid ""
 "The Filter to Run, 0 - alpha trimmed mean; 1 - optimal estimation (alpha "
 "controls noise variance); 2 - edge enhancement"
 msgstr ""
+"Çalıştırılacak Süzgeç, 0 - alfa kırpılmış ortalama; 1 - en iyilenmiş tahmin "
+"(alfa gürültü çeşitliliğini denetler); 2 - kenar iyileştirme"
 
 #: plug-ins/common/nl-filter.c:1031 plug-ins/common/nl-filter.c:1129
 msgid "NL Filter"
@@ -6413,6 +6386,8 @@ msgid ""
 "Uses a percentage based luminosity threshold to find candidate pixels for "
 "adding some sparkles (spikes)."
 msgstr ""
+"Bazı parıltılar (çiviler) eklemek için aday pikselleri bulmak üzere yüzdeye "
+"dayalı renk parlaklığı eşiği kullanır."
 
 #: plug-ins/common/sparkle.c:196
 msgid "Lu_minosity threshold"
@@ -6516,7 +6491,7 @@ msgstr "Renk türü"
 
 #: plug-ins/common/sparkle.c:272
 msgid "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }"
-msgstr ""
+msgstr "Parıltı rengi: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }"
 
 #: plug-ins/common/sparkle.c:321
 msgid "Region selected for filter is empty"
@@ -7436,6 +7411,8 @@ msgid ""
 "Use run-length-encoding compression (only valid for 4 and 8-bit indexed "
 "images)"
 msgstr ""
+"Çalışma uzunluğu kodlama sıkıştırması kullan (yalnızca 4 ve 8 bitlik "
+"indeksli görüntüler için geçerlidir)"
 
 #: plug-ins/file-bmp/bmp.c:204
 msgid "_Write color space information"
@@ -7443,7 +7420,7 @@ msgstr "Renk alanı bilgilerini _yaz"
 
 #: plug-ins/file-bmp/bmp.c:205
 msgid "Whether or not to write BITMAPV5HEADER color space data"
-msgstr ""
+msgstr "BITMAPV5HEADER renk uzayı verilerinin yazılma durumu"
 
 #: plug-ins/file-bmp/bmp.c:211
 msgid "R_GB format"
@@ -7454,6 +7431,8 @@ msgid ""
 "Export format for RGB images (0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, "
 "4=RGBA_8888, 5=RGBX_8888)"
 msgstr ""
+"RGB görüntüler için dışa aktarma biçimi (0=RGB_565, 1=RGBA_5551, 2=RGB_555, "
+"3=RGB_888, 4=RGBA_8888, 5=RGBX_8888)"
 
 #: plug-ins/file-bmp/bmp.c:296
 msgid "BMP format does not support multiple layers."
@@ -7489,7 +7468,7 @@ msgstr "YCoCg Çözümle"
 
 #: plug-ins/file-dds/dds.c:327 plug-ins/file-dds/dds.c:328
 msgid "Converts YCoCg encoded pixels to RGB"
-msgstr ""
+msgstr "YCoCg kodlanmış pikselleri RGBʼye dönüştürür"
 
 #: plug-ins/file-dds/dds.c:345
 msgid "Decode YCoCg (scaled)"
@@ -7497,7 +7476,7 @@ msgstr "YCoCg Çözümle (ölçeklenmiş)"
 
 #: plug-ins/file-dds/dds.c:349 plug-ins/file-dds/dds.c:351
 msgid "Converts YCoCg (scaled) encoded pixels to RGB"
-msgstr ""
+msgstr "YCoCg (ölçekli) kodlanmış pikselleri RGBʼye dönüştürür"
 
 #: plug-ins/file-dds/dds.c:369
 msgid "Decode Alpha exponent"
@@ -7505,7 +7484,7 @@ msgstr "Alfa katsayılarını çözümle"
 
 #: plug-ins/file-dds/dds.c:375 plug-ins/file-dds/dds.c:373
 msgid "Converts alpha exponent encoded pixels to RGB"
-msgstr ""
+msgstr "Alfa üssü kodlu pikselleri RGBʼye dönüştürür"
 
 #: plug-ins/file-dds/ddsread.c:366
 msgid "Could not allocate a new image."
@@ -7864,7 +7843,7 @@ msgstr "FLI Filmleri Yükle"
 
 #: plug-ins/file-fli/fli-gimp.c:185 plug-ins/file-fli/fli-gimp.c:223
 msgid "This is an experimental plug-in to handle FLI movies"
-msgstr ""
+msgstr "Bu, FLI filmleri işlemek için deneysel bir eklentidir"
 
 #: plug-ins/file-fli/fli-gimp.c:199 plug-ins/file-fli/fli-gimp.c:237
 msgid "_From frame"
@@ -7872,7 +7851,7 @@ msgstr "_Kareden"
 
 #: plug-ins/file-fli/fli-gimp.c:200
 msgid "Load beginning from this frame"
-msgstr ""
+msgstr "Bu kareden başlayarak yükle"
 
 #: plug-ins/file-fli/fli-gimp.c:205 plug-ins/file-fli/fli-gimp.c:243
 msgid "_To frame"
@@ -7892,11 +7871,11 @@ msgstr "FLI Filmleri Dışa Aktar"
 
 #: plug-ins/file-fli/fli-gimp.c:238
 msgid "Export beginning from this frame"
-msgstr ""
+msgstr "Bu kareden başlayarak dışa aktar"
 
 #: plug-ins/file-fli/fli-gimp.c:244
 msgid "End exporting with this frame (or -1 for all frames)"
-msgstr ""
+msgstr "Bu kare ile dışa aktarmayı sonlandır (ya da tüm kareler için -1)"
 
 #: plug-ins/file-fli/fli-gimp.c:587
 #, c-format
@@ -8432,6 +8411,9 @@ msgid ""
 "Photoshop. If you encounter display issues, consider switching to those "
 "layer modes."
 msgstr ""
+"Eski katman kiplerinin Photoshop ile daha uyumlu olduğu bildirilmiştir. "
+"Görüntü sorunlarıyla karşılaşırsanız, bu katman kiplerine geçmeyi "
+"düşünebilirsiniz."
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -8647,7 +8629,7 @@ msgstr "Sıkıştırma _türü"
 
 #: plug-ins/file-sgi/sgi.c:192
 msgid "Compression level (0 = none, 1 = RLE, 2 = ARLE)"
-msgstr ""
+msgstr "Sıkıştırma düzeyi (0 = yok, 1 = RLE, 2 = ARLE)"
 
 #: plug-ins/file-sgi/sgi.c:274
 msgid "SGI format does not support multiple layers."
@@ -13983,21 +13965,3 @@ msgstr "_Tarayıcı/Kamera..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
-
-#~ msgid "Export Image as GIF"
-#~ msgstr "Görüntüyü GIF Olarak Dışa Aktar"
-
-#~ msgid "Save c_omment"
-#~ msgstr "_Yorumu kaydet"
-
-#~ msgid "_Forever"
-#~ msgstr "_Sürekli"
-
-#~ msgid "Load in reverse order"
-#~ msgstr "Ters düzende yükle"
-
-#~ msgid "Export Image as XBM"
-#~ msgstr "Görüntüyü XBM Olarak Dışa Aktar"
-
-#~ msgid "Comment:"
-#~ msgstr "Yorum:"
