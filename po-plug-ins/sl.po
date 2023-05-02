@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-28 02:43+0000\n"
-"PO-Revision-Date: 2023-04-28 22:44+0200\n"
+"POT-Creation-Date: 2023-05-01 23:02+0000\n"
+"PO-Revision-Date: 2023-05-02 11:17+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -74,12 +74,12 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1163
 #: plug-ins/common/file-heif.c:2357 plug-ins/common/file-pdf-load.c:709
-#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
-#: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
-#: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
-#: plug-ins/common/mail.c:568 plug-ins/common/qbist.c:848
-#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
-#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-svg.c:773
+#: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
+#: plug-ins/common/grid.c:761 plug-ins/common/mail.c:568
+#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
+#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
+#: plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -107,9 +107,9 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
 #: plug-ins/map-object/map-object-ui.c:1317
 #: plug-ins/metadata/metadata-editor.c:598
-#: plug-ins/metadata/metadata-editor.c:960
-#: plug-ins/metadata/metadata-editor.c:4634
-#: plug-ins/metadata/metadata-editor.c:4669 plug-ins/pagecurl/pagecurl.c:496
+#: plug-ins/metadata/metadata-editor.c:936
+#: plug-ins/metadata/metadata-editor.c:4748
+#: plug-ins/metadata/metadata-editor.c:4783 plug-ins/pagecurl/pagecurl.c:496
 #: plug-ins/screenshot/screenshot.c:516
 #: plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_Cancel"
@@ -343,8 +343,11 @@ msgstr "Ni dovolj plasti, da bi jih bilo mogoče poravnati."
 msgid "Align Visible Layers"
 msgstr "Poravnaj vidne plasti"
 
+#. Text antialiasing
+#. Graphics antialiasing
 #. file save type
 #: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
+#: plug-ins/common/file-ps.c:3744 plug-ins/common/file-ps.c:3752
 #: plug-ins/common/file-psp.c:840 plug-ins/file-tiff/file-tiff-save.c:1322
 #: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
 #: plug-ins/metadata/metadata-tags.c:238
@@ -798,7 +801,9 @@ msgstr "Nasičenost"
 
 #: plug-ins/common/cml-explorer.c:303 plug-ins/common/cml-explorer.c:311
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
-#: plug-ins/gimpressionist/size.c:155
+#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:317
+#: plug-ins/metadata/metadata-viewer.c:355
+#: plug-ins/metadata/metadata-viewer.c:393
 msgid "Value"
 msgstr "Vrednost"
 
@@ -1027,7 +1032,7 @@ msgstr "Graf trenutnih nastavitev"
 #: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
 #: plug-ins/ifs-compose/ifs-compose.c:1258
-#: plug-ins/metadata/metadata-viewer.c:287
+#: plug-ins/metadata/metadata-viewer.c:272
 msgid "_Close"
 msgstr "Z_apri"
 
@@ -1074,7 +1079,7 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-iff.c:222
 #: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:523
 #: plug-ins/common/file-pcx.c:566 plug-ins/common/file-png.c:673
-#: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
+#: plug-ins/common/file-ps.c:1126 plug-ins/common/file-ps.c:3635
 #: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
 #: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
 #: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
@@ -1966,6 +1971,7 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Iz slike odstrani navpične artefakte v obliki trakov."
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:194
+#: plug-ins/common/file-ps.c:383 plug-ins/common/file-ps.c:497
 #: plug-ins/imagemap/imap_grid.c:255
 msgid "_Width"
 msgstr "_Širina"
@@ -2060,7 +2066,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-pcx.c:515 plug-ins/common/file-pcx.c:558
 #: plug-ins/common/file-pdf-load.c:879 plug-ins/common/file-pix.c:381
 #: plug-ins/common/file-png.c:665 plug-ins/common/file-pnm.c:714
-#: plug-ins/common/file-ps.c:1140 plug-ins/common/file-raw-data.c:1665
+#: plug-ins/common/file-ps.c:1116 plug-ins/common/file-raw-data.c:1665
 #: plug-ins/common/file-sunras.c:447 plug-ins/common/file-tga.c:437
 #: plug-ins/common/file-wbmp.c:176 plug-ins/common/file-wmf.c:1026
 #: plug-ins/common/file-xbm.c:742 plug-ins/common/file-xmc.c:648
@@ -2142,7 +2148,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1374
 #: plug-ins/common/file-pcx.c:1114 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
-#: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
+#: plug-ins/common/file-ps.c:1338 plug-ins/common/file-qoi.c:375
 #: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
 #: plug-ins/common/file-xbm.c:1051 plug-ins/common/file-xpm.c:699
 #: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
@@ -2313,7 +2319,7 @@ msgstr "GIMP ne podpira %s v kombinaciji z vzorci na slikovno točko: %d"
 msgid "Cannot save images with alpha channel."
 msgstr "Slik ni mogoče shraniti s kanalom alfa."
 
-#: plug-ins/common/file-dicom.c:1542 plug-ins/common/file-ps.c:1358
+#: plug-ins/common/file-dicom.c:1542 plug-ins/common/file-ps.c:1333
 #: plug-ins/common/file-xwd.c:670 plug-ins/file-fits/fits.c:499
 msgid "Cannot operate on unknown image types."
 msgstr "S slikami neznane vrste ni mogoče delovati."
@@ -3017,7 +3023,8 @@ msgstr "Besedilo za vse celice."
 msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Širina posamezne celice v tabeli. Možen je vpis števila ali odstotka."
 
-#: plug-ins/common/file-html-table.c:201 plug-ins/imagemap/imap_grid.c:261
+#: plug-ins/common/file-html-table.c:201 plug-ins/common/file-ps.c:389
+#: plug-ins/common/file-ps.c:504 plug-ins/imagemap/imap_grid.c:261
 msgid "_Height"
 msgstr "_Višina"
 
@@ -3853,7 +3860,7 @@ msgid "Keeping the masks will not change the output"
 msgstr "Ohranjanje mask ne bo spremenilo izhoda"
 
 #: plug-ins/common/file-pdf-save.c:1268 plug-ins/common/file-pdf-save.c:1341
-#: plug-ins/common/file-pdf-save.c:1439 plug-ins/common/file-ps.c:2064
+#: plug-ins/common/file-pdf-save.c:1439 plug-ins/common/file-ps.c:2115
 #: plug-ins/file-tiff/file-tiff-load.c:1536
 #, c-format
 msgid "Page %d"
@@ -4024,7 +4031,7 @@ msgstr ""
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Napaka pri izvažanju »%s«. Slike ni mogoče izvoziti."
 
-#: plug-ins/common/file-png.c:2295 plug-ins/common/file-ps.c:3715
+#: plug-ins/common/file-png.c:2295 plug-ins/common/file-ps.c:3738
 msgid "Automatic"
 msgstr "Samodejno"
 
@@ -4257,157 +4264,143 @@ msgstr "_ASCII"
 msgid "_Raw"
 msgstr "_surovo"
 
-#: plug-ins/common/file-ps.c:381 plug-ins/common/file-ps.c:494
+#: plug-ins/common/file-ps.c:336 plug-ins/common/file-ps.c:449
 msgid "PostScript document"
 msgstr "Dokument PostScript"
 
-#: plug-ins/common/file-ps.c:398 plug-ins/common/file-ps.c:511
+#: plug-ins/common/file-ps.c:353
 msgid "Encapsulated PostScript image"
 msgstr "Slika EPS (Encapsulated PostScript)"
 
-#: plug-ins/common/file-ps.c:762
+#: plug-ins/common/file-ps.c:377
+msgid "Resol_ution"
+msgstr "Lo_čljivost"
+
+#: plug-ins/common/file-ps.c:395
+msgid "Try _Bounding Box"
+msgstr "Pos_kusni obsegajoči okvir"
+
+#: plug-ins/common/file-ps.c:401
+msgid "_Pages"
+msgstr "_Strani"
+
+#: plug-ins/common/file-ps.c:407
+msgid "Coloring"
+msgstr "Obarvanje"
+
+#: plug-ins/common/file-ps.c:413
+msgid "Text antialiasing"
+msgstr "Glajenje robov besedila"
+
+#: plug-ins/common/file-ps.c:419
+msgid "Graphic antialiasing"
+msgstr "Glajenje robov slik"
+
+#: plug-ins/common/file-ps.c:459
+msgid "PS"
+msgstr "PS"
+
+#: plug-ins/common/file-ps.c:468
+msgid "Encapsulated PostScript"
+msgstr "Oviti PostScript (EPS)"
+
+#: plug-ins/common/file-ps.c:479
+msgid "EPS"
+msgstr "EPS"
+
+#: plug-ins/common/file-ps.c:511
+msgid "_X offset"
+msgstr "Odmik _X"
+
+#: plug-ins/common/file-ps.c:517
+msgid "Y o_ffset"
+msgstr "Odmik _Y"
+
+#: plug-ins/common/file-ps.c:523
+msgid "Unit"
+msgstr "Enota"
+
+#: plug-ins/common/file-ps.c:530
+msgid "_Keep aspect ratio"
+msgstr "_Ohrani razmerje stranic"
+
+#: plug-ins/common/file-ps.c:536 plug-ins/map-object/map-object-ui.c:1013
+msgid "Rotation"
+msgstr "Sukanje"
+
+#: plug-ins/common/file-ps.c:542
+msgid "PostScript Level _2"
+msgstr "PostScript ravni _2"
+
+#: plug-ins/common/file-ps.c:554 plug-ins/imagemap/imap_grid.c:298
+msgid "_Preview"
+msgstr "_Predogled"
+
+#: plug-ins/common/file-ps.c:560
+msgid "Preview Si_ze"
+msgstr "_Velikost predogleda"
+
+#: plug-ins/common/file-ps.c:722
 msgid "PostScript plug-in does not support multiple layers."
 msgstr "Vstavek PostScript ne podpira več plasti."
 
-#: plug-ins/common/file-ps.c:1160
+#: plug-ins/common/file-ps.c:1136
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "Datoteke PostScript »%s« ni mogoče interpretirati."
 
-#: plug-ins/common/file-ps.c:1246
+#: plug-ins/common/file-ps.c:1220
 msgid "Rendered EPS"
 msgstr "Upodobljeni EPS"
 
-#: plug-ins/common/file-ps.c:1274
+#: plug-ins/common/file-ps.c:1248
 #, c-format
 msgid "%s-pages"
 msgstr "%s-strani"
 
-#: plug-ins/common/file-ps.c:1345
+#: plug-ins/common/file-ps.c:1320
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Izvoz v PostScript ne podpira slik s kanali alfa."
 
-#: plug-ins/common/file-ps.c:3568
-msgid "Import from PostScript"
-msgstr "Uvozi iz PostScripta"
-
-#: plug-ins/common/file-ps.c:3573 plug-ins/file-tiff/file-tiff-load.c:2554
-#: plug-ins/metadata/metadata-editor.c:4635
-msgid "_Import"
-msgstr "_Uvozi"
-
-#. Rendering
-#: plug-ins/common/file-ps.c:3612
+#: plug-ins/common/file-ps.c:3728
 msgid "Rendering"
 msgstr "Upodabljanje"
 
-#. Resolution
-#: plug-ins/common/file-ps.c:3631 plug-ins/common/file-svg.c:945
-#: plug-ins/common/file-wmf.c:717
-msgid "Resolution:"
-msgstr "Ločljivost:"
-
-#: plug-ins/common/file-ps.c:3647 plug-ins/common/file-ps.c:3847
-#: plug-ins/common/smooth-palette.c:531 plug-ins/common/tile.c:519
-#: plug-ins/imagemap/imap_cmd_guides.c:163
-#: plug-ins/imagemap/imap_rectangle.c:398
-#: plug-ins/print/print-page-layout.c:286
-msgid "_Width:"
-msgstr "_Širina:"
-
-#: plug-ins/common/file-ps.c:3660 plug-ins/common/file-ps.c:3858
-#: plug-ins/common/film.c:1067 plug-ins/common/smooth-palette.c:536
-#: plug-ins/common/tile.c:523 plug-ins/imagemap/imap_cmd_guides.c:173
-#: plug-ins/imagemap/imap_rectangle.c:405
-#: plug-ins/print/print-page-layout.c:288
-msgid "_Height:"
-msgstr "_Višina:"
-
-#: plug-ins/common/file-ps.c:3673
-msgid "Pages:"
-msgstr "Strani:"
-
-#: plug-ins/common/file-ps.c:3680
-msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr "Strani za nalaganje (npr.: 1-4 ali 1,3,5-7)"
-
-#: plug-ins/common/file-ps.c:3685 plug-ins/common/sphere-designer.c:2728
-msgid "Layers"
-msgstr "Plasti"
-
-#: plug-ins/common/file-ps.c:3688
-msgid "Images"
-msgstr "Slike"
-
-#: plug-ins/common/file-ps.c:3691
-msgid "Open as"
-msgstr "Odpri kot"
-
-#: plug-ins/common/file-ps.c:3695
-msgid "Try Bounding Box"
-msgstr "Poskusni obsegajoči okvir"
-
 #. Coloring
-#: plug-ins/common/file-ps.c:3708
-msgid "Coloring"
-msgstr "Obarvanje"
-
-#: plug-ins/common/file-ps.c:3712
+#: plug-ins/common/file-ps.c:3735
 msgid "B/W"
 msgstr "črno belo"
 
-#: plug-ins/common/file-ps.c:3713
+#: plug-ins/common/file-ps.c:3736
 msgid "Gray"
 msgstr "sivinsko"
 
-#: plug-ins/common/file-ps.c:3714 plug-ins/common/file-xpm.c:505
+#: plug-ins/common/file-ps.c:3737 plug-ins/common/file-xpm.c:505
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:169
 msgid "Color"
 msgstr "barvno"
 
-#: plug-ins/common/file-ps.c:3726
-msgid "Text antialiasing"
-msgstr "Glajenje robov besedila"
-
-#: plug-ins/common/file-ps.c:3730 plug-ins/common/file-ps.c:3742
-msgctxt "antialiasing"
-msgid "None"
-msgstr "Brez"
-
-#: plug-ins/common/file-ps.c:3731 plug-ins/common/file-ps.c:3743
+#: plug-ins/common/file-ps.c:3745 plug-ins/common/file-ps.c:3753
 msgid "Weak"
 msgstr "Šibko"
 
-#: plug-ins/common/file-ps.c:3732 plug-ins/common/file-ps.c:3744
+#: plug-ins/common/file-ps.c:3746 plug-ins/common/file-ps.c:3754
 msgid "Strong"
 msgstr "Močno"
 
-#: plug-ins/common/file-ps.c:3738
-msgid "Graphic antialiasing"
-msgstr "Glajenje robov slik"
+#: plug-ins/common/file-ps.c:3780
+msgid "Pages:"
+msgstr "Strani:"
 
-#: plug-ins/common/file-ps.c:3812
-msgid "PostScript"
-msgstr "PostScript"
+#: plug-ins/common/file-ps.c:3784
+msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
+msgstr "Strani za nalaganje (npr.: 1-4 ali 1,3,5-7)"
 
-#. Image Size
-#: plug-ins/common/file-ps.c:3829
-msgid "Image Size"
-msgstr "Velikost slike"
+#: plug-ins/common/file-ps.c:3790
+msgid "Open as"
+msgstr "Odpri kot"
 
-#: plug-ins/common/file-ps.c:3869
-msgid "_X offset:"
-msgstr "Odmik _X:"
-
-#: plug-ins/common/file-ps.c:3880
-msgid "_Y offset:"
-msgstr "Odmik _Y:"
-
-#: plug-ins/common/file-ps.c:3886
-msgid "_Keep aspect ratio"
-msgstr "_Ohrani razmerje stranic"
-
-#: plug-ins/common/file-ps.c:3892
+#: plug-ins/common/file-ps.c:3883
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -4415,44 +4408,39 @@ msgstr ""
 "Ko je vključeno, bo končna slika umerjena na podano velikost brez spremembe "
 "razmerja stranic."
 
-#. Unit
-#: plug-ins/common/file-ps.c:3902
-msgid "Unit"
-msgstr "Enota"
+#: plug-ins/common/file-ps.c:3889
+msgid "Image Size"
+msgstr "Velikost slike"
 
-#: plug-ins/common/file-ps.c:3906
+#. Unit
+#: plug-ins/common/file-ps.c:3900
 msgid "_Inch"
 msgstr "_palec"
 
-#: plug-ins/common/file-ps.c:3907
+#: plug-ins/common/file-ps.c:3901
 msgid "_Millimeter"
 msgstr "_milimeter"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3918 plug-ins/map-object/map-object-ui.c:1013
-msgid "Rotation"
-msgstr "Sukanje"
+#: plug-ins/common/file-ps.c:3914
+msgid "_0"
+msgstr "_0"
 
-#. Format
-#: plug-ins/common/file-ps.c:3933
+#: plug-ins/common/file-ps.c:3915
+msgid "_90"
+msgstr "_90"
+
+#: plug-ins/common/file-ps.c:3916
+msgid "_180"
+msgstr "_180"
+
+#: plug-ins/common/file-ps.c:3917
+msgid "_270"
+msgstr "_270"
+
+#: plug-ins/common/file-ps.c:3924
 msgid "Output"
 msgstr "Izhod"
-
-#: plug-ins/common/file-ps.c:3939
-msgid "_PostScript level 2"
-msgstr "_PostScript ravni 2"
-
-#: plug-ins/common/file-ps.c:3948
-msgid "_Encapsulated PostScript"
-msgstr "_Oviti PostScript"
-
-#: plug-ins/common/file-ps.c:3957
-msgid "P_review"
-msgstr "P_redogled"
-
-#: plug-ins/common/file-ps.c:3981
-msgid "Preview _size:"
-msgstr "_Velikost predogleda:"
 
 #: plug-ins/common/file-psp.c:664 plug-ins/common/file-psp.c:694
 msgid "Paint Shop Pro image"
@@ -5083,6 +5071,11 @@ msgstr "Razmerje _Y:"
 #: plug-ins/common/file-svg.c:940 plug-ins/common/file-wmf.c:712
 msgid "Constrain aspect ratio"
 msgstr "Ohrani razmerje stranic"
+
+#. Resolution
+#: plug-ins/common/file-svg.c:945 plug-ins/common/file-wmf.c:717
+msgid "Resolution:"
+msgstr "Ločljivost:"
 
 #. Path Import
 #: plug-ins/common/file-svg.c:971
@@ -5719,6 +5712,13 @@ msgstr "Filmski trak"
 #: plug-ins/common/film.c:1046
 msgid "_Fit height to images"
 msgstr "_Prilagodi višino slikam"
+
+#: plug-ins/common/film.c:1067 plug-ins/common/smooth-palette.c:536
+#: plug-ins/common/tile.c:523 plug-ins/imagemap/imap_cmd_guides.c:173
+#: plug-ins/imagemap/imap_rectangle.c:405
+#: plug-ins/print/print-page-layout.c:288
+msgid "_Height:"
+msgstr "_Višina:"
 
 #. Film color
 #: plug-ins/common/film.c:1088
@@ -6358,6 +6358,13 @@ msgstr "Ustvarjanje zglajene palete ..."
 msgid "Smooth Palette"
 msgstr "Zgladi paleto"
 
+#: plug-ins/common/smooth-palette.c:531 plug-ins/common/tile.c:519
+#: plug-ins/imagemap/imap_cmd_guides.c:163
+#: plug-ins/imagemap/imap_rectangle.c:398
+#: plug-ins/print/print-page-layout.c:286
+msgid "_Width:"
+msgstr "_Širina:"
+
 #: plug-ins/common/smooth-palette.c:550
 msgid "_Search depth:"
 msgstr "Globina _iskanja:"
@@ -6586,6 +6593,10 @@ msgstr "Shrani datoteko"
 #: plug-ins/common/sphere-designer.c:2627
 msgid "Sphere Designer"
 msgstr "Oblikovalec krogle"
+
+#: plug-ins/common/sphere-designer.c:2728
+msgid "Layers"
+msgstr "Plasti"
 
 #: plug-ins/common/sphere-designer.c:2739
 #: plug-ins/gradient-flare/gradient-flare.c:3081
@@ -8899,6 +8910,11 @@ msgstr "Branje vrstice je spodletelo. Slika je morda okvarjena pri vrstici %d."
 msgid "Import from TIFF"
 msgstr "Uvozi iz TIFF"
 
+#: plug-ins/file-tiff/file-tiff-load.c:2554
+#: plug-ins/metadata/metadata-editor.c:4749
+msgid "_Import"
+msgstr "_Uvozi"
+
 #: plug-ins/file-tiff/file-tiff-load.c:2570
 msgid "_Show reduced images"
 msgstr "_Pokaži pomanjšane slike"
@@ -11010,7 +11026,7 @@ msgid "Usage Terms"
 msgstr "Pogoji uporabe"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:1507
-#: plug-ins/ui/plug-in-metadata-viewer.ui:211
+#: plug-ins/metadata/metadata-viewer.c:401
 msgid "IPTC"
 msgstr "IPTC"
 
@@ -11329,33 +11345,6 @@ msgstr "Izdelovalec opreme"
 #: plug-ins/ui/plug-in-metadata-editor.ui:4831
 msgid "DICOM"
 msgstr "DICOM"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:55
-msgid "Exif Tag"
-msgstr "Značka Exif"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:68
-#: plug-ins/ui/plug-in-metadata-viewer.ui:127
-#: plug-ins/ui/plug-in-metadata-viewer.ui:189
-msgctxt "A tag value"
-msgid "Value"
-msgstr "Vrednost"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:87
-msgid "Exif"
-msgstr "Exif"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:114
-msgid "XMP Tag"
-msgstr "Značka XMP"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:149
-msgid "XMP"
-msgstr "XMP"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:176
-msgid "IPTC Tag"
-msgstr "Značka IPTC"
 
 #: plug-ins/gradient-flare/gradient-flare.c:750
 msgid "Addition"
@@ -12260,10 +12249,6 @@ msgstr "slikovnih točk z l_eve"
 msgid "pixels from _top"
 msgstr "slikovnih točk od _vrha"
 
-#: plug-ins/imagemap/imap_grid.c:298
-msgid "_Preview"
-msgstr "_Predogled"
-
 #: plug-ins/imagemap/imap_main.c:220
 msgid "_Image Map..."
 msgstr "_Aktivna slika ..."
@@ -13137,20 +13122,15 @@ msgstr "Uvozi metapodatke"
 msgid "Export metadata"
 msgstr "Izvozi metapodatke"
 
-#: plug-ins/metadata/metadata-editor.c:929
-#, c-format
-msgid "Error loading calendar. %s"
-msgstr "Napaka pri nalaganju koledarja. %s"
+#: plug-ins/metadata/metadata-editor.c:933
+msgid "Choose Date"
+msgstr "Izberite datum"
 
-#: plug-ins/metadata/metadata-editor.c:957
-msgid "Calendar Date:"
-msgstr "Koledarski datum:"
-
-#: plug-ins/metadata/metadata-editor.c:961
+#: plug-ins/metadata/metadata-editor.c:937
 msgid "Set Date"
 msgstr "Določi datum"
 
-#: plug-ins/metadata/metadata-editor.c:1695
+#: plug-ins/metadata/metadata-editor.c:1671
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -13166,7 +13146,7 @@ msgstr ""
 "ali 10.45\n"
 "Izbrišite celotno besedilo, da odstranite trenutno vrednost."
 
-#: plug-ins/metadata/metadata-editor.c:1701
+#: plug-ins/metadata/metadata-editor.c:1677
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -13182,24 +13162,24 @@ msgstr ""
 "(ft).\n"
 "Izbrišite celotno besedilo, da odstranite trenutno vrednost."
 
-#: plug-ins/metadata/metadata-editor.c:1837
+#: plug-ins/metadata/metadata-editor.c:1813
 msgid "Unrated"
 msgstr "Neocenjeno"
 
-#: plug-ins/metadata/metadata-editor.c:3790
+#: plug-ins/metadata/metadata-editor.c:3773
 #, c-format
-msgid "Failed to set metadata tag %s"
-msgstr "Značke metapodatkov %s ni mogoče določiti"
+msgid "Failed to set metadata tag %s: %s"
+msgstr "Značke metapodatkov %s ni mogoče določiti: %s"
 
-#: plug-ins/metadata/metadata-editor.c:4631
+#: plug-ins/metadata/metadata-editor.c:4745
 msgid "Import Metadata File"
 msgstr "Uvoz datoteko metapodatkov"
 
-#: plug-ins/metadata/metadata-editor.c:4666
+#: plug-ins/metadata/metadata-editor.c:4780
 msgid "Export Metadata File"
 msgstr "Izvozi datoteko metapodatkov"
 
-#: plug-ins/metadata/metadata-editor.c:4670
+#: plug-ins/metadata/metadata-editor.c:4784
 msgid "_Export"
 msgstr "I_zvozi"
 
@@ -13399,29 +13379,45 @@ msgstr "Po_kaži metapodatke"
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Preglejte metapodatke (Exif, IPTC, XMP)"
 
-#: plug-ins/metadata/metadata-viewer.c:269
-msgid "Error loading metadata-viewer dialog."
-msgstr "Napaka pri nalaganju pogovornega okna ogledovalnika metapodatkov."
-
-#: plug-ins/metadata/metadata-viewer.c:280
+#: plug-ins/metadata/metadata-viewer.c:265
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Pregledovalnik metapodatkov: %s"
 
-#: plug-ins/metadata/metadata-viewer.c:372
+#: plug-ins/metadata/metadata-viewer.c:308
+msgid "Exif Tag"
+msgstr "Značka Exif"
+
+#: plug-ins/metadata/metadata-viewer.c:325
+msgid "Exif"
+msgstr "Exif"
+
+#: plug-ins/metadata/metadata-viewer.c:346
+msgid "XMP Tag"
+msgstr "Značka XMP"
+
+#: plug-ins/metadata/metadata-viewer.c:363
+msgid "XMP"
+msgstr "XMP"
+
+#: plug-ins/metadata/metadata-viewer.c:384
+msgid "IPTC Tag"
+msgstr "Značka IPTC"
+
+#: plug-ins/metadata/metadata-viewer.c:481
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(%lu več znakov)"
 
-#: plug-ins/metadata/metadata-viewer.c:619
+#: plug-ins/metadata/metadata-viewer.c:728
 msgid " meter"
 msgstr "m"
 
-#: plug-ins/metadata/metadata-viewer.c:620
+#: plug-ins/metadata/metadata-viewer.c:729
 msgid " feet"
 msgstr "čevlji"
 
-#: plug-ins/metadata/metadata-viewer.c:788
+#: plug-ins/metadata/metadata-viewer.c:897
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu več bajtov)"
