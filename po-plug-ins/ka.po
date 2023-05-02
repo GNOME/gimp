@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-26 13:01+0000\n"
-"PO-Revision-Date: 2023-04-27 05:43+0200\n"
+"POT-Creation-Date: 2023-05-01 23:02+0000\n"
+"PO-Revision-Date: 2023-05-02 06:54+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -68,12 +68,12 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1163
 #: plug-ins/common/file-heif.c:2357 plug-ins/common/file-pdf-load.c:709
-#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
-#: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
-#: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
-#: plug-ins/common/mail.c:568 plug-ins/common/qbist.c:848
-#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
-#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-svg.c:773
+#: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
+#: plug-ins/common/grid.c:761 plug-ins/common/mail.c:568
+#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
+#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
+#: plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -101,9 +101,9 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
 #: plug-ins/map-object/map-object-ui.c:1317
 #: plug-ins/metadata/metadata-editor.c:598
-#: plug-ins/metadata/metadata-editor.c:960
-#: plug-ins/metadata/metadata-editor.c:4634
-#: plug-ins/metadata/metadata-editor.c:4669 plug-ins/pagecurl/pagecurl.c:496
+#: plug-ins/metadata/metadata-editor.c:936
+#: plug-ins/metadata/metadata-editor.c:4748
+#: plug-ins/metadata/metadata-editor.c:4783 plug-ins/pagecurl/pagecurl.c:496
 #: plug-ins/screenshot/screenshot.c:516
 #: plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_Cancel"
@@ -327,8 +327,11 @@ msgstr ""
 msgid "Align Visible Layers"
 msgstr "ხილული ფენების სწორება"
 
+#. Text antialiasing
+#. Graphics antialiasing
 #. file save type
 #: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
+#: plug-ins/common/file-ps.c:3744 plug-ins/common/file-ps.c:3752
 #: plug-ins/common/file-psp.c:840 plug-ins/file-tiff/file-tiff-save.c:1322
 #: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
 #: plug-ins/metadata/metadata-tags.c:238
@@ -492,16 +495,16 @@ msgstr "ვერტიკალური"
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
 #: plug-ins/common/file-iff.c:331 plug-ins/common/file-jp2-load.c:1317
-#: plug-ins/common/file-pcx.c:741 plug-ins/common/file-pcx.c:749
-#: plug-ins/common/file-pix.c:422 plug-ins/common/file-png.c:950
-#: plug-ins/common/file-pnm.c:869 plug-ins/common/file-qoi.c:321
-#: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1080
-#: plug-ins/common/file-tga.c:1114 plug-ins/common/file-wbmp.c:270
-#: plug-ins/common/file-xbm.c:912 plug-ins/common/film.c:812
-#: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
-#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:271
-#: plug-ins/file-faxg3/faxg3.c:574 plug-ins/file-fits/fits.c:542
-#: plug-ins/file-jpeg/jpeg-load.c:231
+#: plug-ins/common/file-pcx.c:742 plug-ins/common/file-pcx.c:750
+#: plug-ins/common/file-pcx.c:758 plug-ins/common/file-pix.c:422
+#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:869
+#: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
+#: plug-ins/common/file-sunras.c:1080 plug-ins/common/file-tga.c:1114
+#: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:912
+#: plug-ins/common/film.c:812 plug-ins/common/smooth-palette.c:332
+#: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
+#: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
+#: plug-ins/file-fits/fits.c:542 plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2653 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1534
@@ -781,7 +784,9 @@ msgstr "გაჯერებულობა"
 
 #: plug-ins/common/cml-explorer.c:303 plug-ins/common/cml-explorer.c:311
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
-#: plug-ins/gimpressionist/size.c:155
+#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:317
+#: plug-ins/metadata/metadata-viewer.c:355
+#: plug-ins/metadata/metadata-viewer.c:393
 msgid "Value"
 msgstr "მნიშვნელობა"
 
@@ -1006,7 +1011,7 @@ msgstr ""
 #: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
 #: plug-ins/ifs-compose/ifs-compose.c:1258
-#: plug-ins/metadata/metadata-viewer.c:287
+#: plug-ins/metadata/metadata-viewer.c:272
 msgid "_Close"
 msgstr "_დახურვა"
 
@@ -1020,7 +1025,7 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
 #: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:876
-#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1219
+#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1229
 #: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
@@ -1051,9 +1056,9 @@ msgstr ""
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
 #: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-iff.c:222
-#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:522
-#: plug-ins/common/file-pcx.c:565 plug-ins/common/file-png.c:673
-#: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
+#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:523
+#: plug-ins/common/file-pcx.c:566 plug-ins/common/file-png.c:673
+#: plug-ins/common/file-ps.c:1126 plug-ins/common/file-ps.c:3635
 #: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
 #: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
 #: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
@@ -1923,6 +1928,7 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr ""
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:194
+#: plug-ins/common/file-ps.c:383 plug-ins/common/file-ps.c:497
 #: plug-ins/imagemap/imap_grid.c:255
 msgid "_Width"
 msgstr "_სიგანე"
@@ -2012,10 +2018,10 @@ msgstr ""
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1091
-#: plug-ins/common/file-pcx.c:514 plug-ins/common/file-pcx.c:557
+#: plug-ins/common/file-pcx.c:515 plug-ins/common/file-pcx.c:558
 #: plug-ins/common/file-pdf-load.c:879 plug-ins/common/file-pix.c:381
 #: plug-ins/common/file-png.c:665 plug-ins/common/file-pnm.c:714
-#: plug-ins/common/file-ps.c:1140 plug-ins/common/file-raw-data.c:1665
+#: plug-ins/common/file-ps.c:1116 plug-ins/common/file-raw-data.c:1665
 #: plug-ins/common/file-sunras.c:447 plug-ins/common/file-tga.c:437
 #: plug-ins/common/file-wbmp.c:176 plug-ins/common/file-wmf.c:1026
 #: plug-ins/common/file-xbm.c:742 plug-ins/common/file-xmc.c:648
@@ -2093,9 +2099,9 @@ msgstr ""
 #.
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:916
 #: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1374
-#: plug-ins/common/file-pcx.c:1104 plug-ins/common/file-pix.c:560
+#: plug-ins/common/file-pcx.c:1114 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
-#: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
+#: plug-ins/common/file-ps.c:1338 plug-ins/common/file-qoi.c:375
 #: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
 #: plug-ins/common/file-xbm.c:1051 plug-ins/common/file-xpm.c:699
 #: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
@@ -2265,7 +2271,7 @@ msgstr ""
 msgid "Cannot save images with alpha channel."
 msgstr ""
 
-#: plug-ins/common/file-dicom.c:1542 plug-ins/common/file-ps.c:1358
+#: plug-ins/common/file-dicom.c:1542 plug-ins/common/file-ps.c:1333
 #: plug-ins/common/file-xwd.c:670 plug-ins/file-fits/fits.c:499
 msgid "Cannot operate on unknown image types."
 msgstr ""
@@ -2944,7 +2950,8 @@ msgstr "ტექსტი თითოეული უჯრედისთვ�
 msgid "The width for each table cell. Can be a number or a percent."
 msgstr ""
 
-#: plug-ins/common/file-html-table.c:201 plug-ins/imagemap/imap_grid.c:261
+#: plug-ins/common/file-html-table.c:201 plug-ins/common/file-ps.c:389
+#: plug-ins/common/file-ps.c:504 plug-ins/imagemap/imap_grid.c:261
 msgid "_Height"
 msgstr "_სიმაღლე"
 
@@ -3447,136 +3454,136 @@ msgstr "GIMP-ის შაბლონი"
 msgid "Export Image as Pattern"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:206 plug-ins/common/file-pcx.c:270
+#: plug-ins/common/file-pcx.c:207 plug-ins/common/file-pcx.c:271
 msgid "ZSoft PCX image"
 msgstr "ZSoft PCX გამოსახულება"
 
-#: plug-ins/common/file-pcx.c:209
+#: plug-ins/common/file-pcx.c:210
 msgid "Loads files in Zsoft PCX file format"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:218 plug-ins/common/file-pcx.c:249
+#: plug-ins/common/file-pcx.c:219 plug-ins/common/file-pcx.c:250
 msgid "Palette Options"
 msgstr "პალიტრის პარამეტრები"
 
-#: plug-ins/common/file-pcx.c:219 plug-ins/common/file-pcx.c:250
+#: plug-ins/common/file-pcx.c:220 plug-ins/common/file-pcx.c:251
 msgid "Use built-in palette (0) or override with black/white (1)"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:237
+#: plug-ins/common/file-pcx.c:238
 msgid "ZSoft DCX image"
 msgstr "ZSoft DCX გამოსახულება"
 
-#: plug-ins/common/file-pcx.c:240
+#: plug-ins/common/file-pcx.c:241
 msgid "Loads files in Zsoft DCX file format"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:412
+#: plug-ins/common/file-pcx.c:413
 msgid "PCX format does not support multiple layers."
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:534
+#: plug-ins/common/file-pcx.c:535
 msgid "Could not load PCX image"
 msgstr "PCX გამოსახულების ჩატვირთვის შეცდომა"
 
-#: plug-ins/common/file-pcx.c:581
+#: plug-ins/common/file-pcx.c:582
 msgid "DCX image offset exceeds the file size"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:592
+#: plug-ins/common/file-pcx.c:593
 msgid "Could not load DCX image"
 msgstr "DCX გამოსახულების ჩატვირთვის შეცდომა"
 
-#: plug-ins/common/file-pcx.c:615
+#: plug-ins/common/file-pcx.c:616
 #, c-format
 msgid "%s: DCX image offset exceeds the file size: %s\n"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:632
+#: plug-ins/common/file-pcx.c:633
 msgid "Mixed-mode DCX image not loaded"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:639
+#: plug-ins/common/file-pcx.c:640
 #, c-format
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s: ყველა DCX გამოსახულების ჩატვირთვა შეუძლებელია: %s\n"
 
-#: plug-ins/common/file-pcx.c:679
+#: plug-ins/common/file-pcx.c:680
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:690
+#: plug-ins/common/file-pcx.c:691
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "'%s' PCX ფაილი არაა"
 
-#: plug-ins/common/file-pcx.c:706 plug-ins/common/file-wbmp.c:259
+#: plug-ins/common/file-pcx.c:707 plug-ins/common/file-wbmp.c:259
 #: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:504
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:712 plug-ins/common/file-wbmp.c:265
+#: plug-ins/common/file-pcx.c:713 plug-ins/common/file-wbmp.c:265
 #: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:496
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:718
+#: plug-ins/common/file-pcx.c:719
 msgid "Invalid number of bytes per line in PCX header"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:725
+#: plug-ins/common/file-pcx.c:726
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:733
+#: plug-ins/common/file-pcx.c:734
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:852
+#: plug-ins/common/file-pcx.c:861
 msgid "Unusual PCX flavour, giving up"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:878
+#: plug-ins/common/file-pcx.c:887
 msgid "Import from PCX"
 msgstr "PCX-დან შემოტანა"
 
-#: plug-ins/common/file-pcx.c:887
+#: plug-ins/common/file-pcx.c:896
 msgid "Use PCX image's built-in palette"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:888
+#: plug-ins/common/file-pcx.c:897
 msgid "Use black and white palette"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:1170 plug-ins/common/file-pnm.c:1631
+#: plug-ins/common/file-pcx.c:1180 plug-ins/common/file-pnm.c:1631
 msgid "Cannot export images with alpha channel."
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:1190
+#: plug-ins/common/file-pcx.c:1200
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "არასწორი X წანაცვლება: %d"
 
-#: plug-ins/common/file-pcx.c:1196
+#: plug-ins/common/file-pcx.c:1206
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "არასწორი Y წანაცვლება: %d"
 
-#: plug-ins/common/file-pcx.c:1202
+#: plug-ins/common/file-pcx.c:1212
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:1209
+#: plug-ins/common/file-pcx.c:1219
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr ""
 
-#: plug-ins/common/file-pcx.c:1285 plug-ins/common/file-qoi.c:394
+#: plug-ins/common/file-pcx.c:1295 plug-ins/common/file-qoi.c:394
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr ""
@@ -3742,7 +3749,7 @@ msgid "Keeping the masks will not change the output"
 msgstr ""
 
 #: plug-ins/common/file-pdf-save.c:1268 plug-ins/common/file-pdf-save.c:1341
-#: plug-ins/common/file-pdf-save.c:1439 plug-ins/common/file-ps.c:2064
+#: plug-ins/common/file-pdf-save.c:1439 plug-ins/common/file-ps.c:2115
 #: plug-ins/file-tiff/file-tiff-load.c:1536
 #, c-format
 msgid "Page %d"
@@ -3904,7 +3911,7 @@ msgstr ""
 msgid "Error while exporting '%s'. Could not export image."
 msgstr ""
 
-#: plug-ins/common/file-png.c:2295 plug-ins/common/file-ps.c:3715
+#: plug-ins/common/file-png.c:2295 plug-ins/common/file-ps.c:3738
 msgid "Automatic"
 msgstr "ავტომატური"
 
@@ -4136,200 +4143,184 @@ msgstr "_ASCII"
 msgid "_Raw"
 msgstr "_Raw"
 
-#: plug-ins/common/file-ps.c:381 plug-ins/common/file-ps.c:494
+#: plug-ins/common/file-ps.c:336 plug-ins/common/file-ps.c:449
 msgid "PostScript document"
 msgstr "PostScript-ის დოკუმენტი"
 
-#: plug-ins/common/file-ps.c:398 plug-ins/common/file-ps.c:511
+#: plug-ins/common/file-ps.c:353
 msgid "Encapsulated PostScript image"
 msgstr ""
 
-#: plug-ins/common/file-ps.c:762
+#: plug-ins/common/file-ps.c:377
+msgid "Resol_ution"
+msgstr "_გაფართოება"
+
+#: plug-ins/common/file-ps.c:395
+msgid "Try _Bounding Box"
+msgstr ""
+
+#: plug-ins/common/file-ps.c:401
+msgid "_Pages"
+msgstr "_გვერდები"
+
+#: plug-ins/common/file-ps.c:407
+msgid "Coloring"
+msgstr "გაფერადება"
+
+#: plug-ins/common/file-ps.c:413
+msgid "Text antialiasing"
+msgstr "ტექსტის მომრგვალება"
+
+#: plug-ins/common/file-ps.c:419
+msgid "Graphic antialiasing"
+msgstr "გრაფიკის მომრგვალება"
+
+#: plug-ins/common/file-ps.c:459
+#| msgid "GPS"
+msgid "PS"
+msgstr "PS"
+
+#: plug-ins/common/file-ps.c:468
+msgid "Encapsulated PostScript"
+msgstr "ჩასმული PostScript"
+
+#: plug-ins/common/file-ps.c:479
+#| msgid "GPS"
+msgid "EPS"
+msgstr "EPS"
+
+#: plug-ins/common/file-ps.c:511
+msgid "_X offset"
+msgstr "_X წანაცვლება"
+
+#: plug-ins/common/file-ps.c:517
+msgid "Y o_ffset"
+msgstr "_Y წანაცვლება"
+
+#: plug-ins/common/file-ps.c:523
+msgid "Unit"
+msgstr "საზომი ერთეულები"
+
+#: plug-ins/common/file-ps.c:530
+msgid "_Keep aspect ratio"
+msgstr "_საწყისი თანაფარდობის შენარჩუნება"
+
+#: plug-ins/common/file-ps.c:536 plug-ins/map-object/map-object-ui.c:1013
+msgid "Rotation"
+msgstr "შემობრუნება"
+
+#: plug-ins/common/file-ps.c:542
+#| msgid "PostScript"
+msgid "PostScript Level _2"
+msgstr "PostScript Level _2"
+
+#: plug-ins/common/file-ps.c:554 plug-ins/imagemap/imap_grid.c:298
+msgid "_Preview"
+msgstr "_მინიატურა"
+
+#: plug-ins/common/file-ps.c:560
+msgid "Preview Si_ze"
+msgstr "მინიატურის _ზომა"
+
+#: plug-ins/common/file-ps.c:722
 msgid "PostScript plug-in does not support multiple layers."
 msgstr ""
 
-#: plug-ins/common/file-ps.c:1160
+#: plug-ins/common/file-ps.c:1136
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr ""
 
-#: plug-ins/common/file-ps.c:1246
+#: plug-ins/common/file-ps.c:1220
 msgid "Rendered EPS"
 msgstr ""
 
-#: plug-ins/common/file-ps.c:1274
+#: plug-ins/common/file-ps.c:1248
 #, c-format
 msgid "%s-pages"
 msgstr "%s-გვერდი"
 
-#: plug-ins/common/file-ps.c:1345
+#: plug-ins/common/file-ps.c:1320
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr ""
 
-#: plug-ins/common/file-ps.c:3568
-msgid "Import from PostScript"
-msgstr "PostScript-დან შემოტანა"
-
-#: plug-ins/common/file-ps.c:3573 plug-ins/file-tiff/file-tiff-load.c:2554
-#: plug-ins/metadata/metadata-editor.c:4635
-msgid "_Import"
-msgstr "_იმპორტირება"
-
-#. Rendering
-#: plug-ins/common/file-ps.c:3612
+#: plug-ins/common/file-ps.c:3728
 msgid "Rendering"
 msgstr "რენდერი"
 
-#. Resolution
-#: plug-ins/common/file-ps.c:3631 plug-ins/common/file-svg.c:945
-#: plug-ins/common/file-wmf.c:717
-msgid "Resolution:"
-msgstr "გარჩევადობა:"
-
-#: plug-ins/common/file-ps.c:3647 plug-ins/common/file-ps.c:3847
-#: plug-ins/common/smooth-palette.c:531 plug-ins/common/tile.c:519
-#: plug-ins/imagemap/imap_cmd_guides.c:163
-#: plug-ins/imagemap/imap_rectangle.c:398
-#: plug-ins/print/print-page-layout.c:286
-msgid "_Width:"
-msgstr "სიგა_ნე:"
-
-#: plug-ins/common/file-ps.c:3660 plug-ins/common/file-ps.c:3858
-#: plug-ins/common/film.c:1067 plug-ins/common/smooth-palette.c:536
-#: plug-ins/common/tile.c:523 plug-ins/imagemap/imap_cmd_guides.c:173
-#: plug-ins/imagemap/imap_rectangle.c:405
-#: plug-ins/print/print-page-layout.c:288
-msgid "_Height:"
-msgstr "_სიმაღლე:"
-
-#: plug-ins/common/file-ps.c:3673
-msgid "Pages:"
-msgstr "გვერდები:"
-
-#: plug-ins/common/file-ps.c:3680
-msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr ""
-
-#: plug-ins/common/file-ps.c:3685 plug-ins/common/sphere-designer.c:2728
-msgid "Layers"
-msgstr "ფენები"
-
-#: plug-ins/common/file-ps.c:3688
-msgid "Images"
-msgstr "გამოსახულებები"
-
-#: plug-ins/common/file-ps.c:3691
-msgid "Open as"
-msgstr "გახსნა, როგორც"
-
-#: plug-ins/common/file-ps.c:3695
-msgid "Try Bounding Box"
-msgstr ""
-
 #. Coloring
-#: plug-ins/common/file-ps.c:3708
-msgid "Coloring"
-msgstr "გაფერადება"
-
-#: plug-ins/common/file-ps.c:3712
+#: plug-ins/common/file-ps.c:3735
 msgid "B/W"
 msgstr "შ/თ"
 
-#: plug-ins/common/file-ps.c:3713
+#: plug-ins/common/file-ps.c:3736
 msgid "Gray"
 msgstr "ნაცრისფერი"
 
-#: plug-ins/common/file-ps.c:3714 plug-ins/common/file-xpm.c:505
+#: plug-ins/common/file-ps.c:3737 plug-ins/common/file-xpm.c:505
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:169
 msgid "Color"
 msgstr "ფერი"
 
-#: plug-ins/common/file-ps.c:3726
-msgid "Text antialiasing"
-msgstr "ტექსტის მომრგვალება"
-
-#: plug-ins/common/file-ps.c:3730 plug-ins/common/file-ps.c:3742
-msgctxt "antialiasing"
-msgid "None"
-msgstr "არაფერი"
-
-#: plug-ins/common/file-ps.c:3731 plug-ins/common/file-ps.c:3743
+#: plug-ins/common/file-ps.c:3745 plug-ins/common/file-ps.c:3753
 msgid "Weak"
 msgstr "სუსტი"
 
-#: plug-ins/common/file-ps.c:3732 plug-ins/common/file-ps.c:3744
+#: plug-ins/common/file-ps.c:3746 plug-ins/common/file-ps.c:3754
 msgid "Strong"
 msgstr "ძლიერი"
 
-#: plug-ins/common/file-ps.c:3738
-msgid "Graphic antialiasing"
-msgstr "გრაფიკის მომრგვალება"
+#: plug-ins/common/file-ps.c:3780
+msgid "Pages:"
+msgstr "გვერდები:"
 
-#: plug-ins/common/file-ps.c:3812
-msgid "PostScript"
-msgstr "PostScript"
+#: plug-ins/common/file-ps.c:3784
+msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
+msgstr ""
 
-#. Image Size
-#: plug-ins/common/file-ps.c:3829
-msgid "Image Size"
-msgstr "გამოსახულების ზომა"
+#: plug-ins/common/file-ps.c:3790
+msgid "Open as"
+msgstr "გახსნა, როგორც"
 
-#: plug-ins/common/file-ps.c:3869
-msgid "_X offset:"
-msgstr "_X წანაცვლება:"
-
-#: plug-ins/common/file-ps.c:3880
-msgid "_Y offset:"
-msgstr "_Y წანაცვლება:"
-
-#: plug-ins/common/file-ps.c:3886
-msgid "_Keep aspect ratio"
-msgstr "_საწყისი თანაფარდობის შენარჩუნება"
-
-#: plug-ins/common/file-ps.c:3892
+#: plug-ins/common/file-ps.c:3883
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
 
-#. Unit
-#: plug-ins/common/file-ps.c:3902
-msgid "Unit"
-msgstr "საზომი ერთეულები"
+#: plug-ins/common/file-ps.c:3889
+msgid "Image Size"
+msgstr "გამოსახულების ზომა"
 
-#: plug-ins/common/file-ps.c:3906
+#. Unit
+#: plug-ins/common/file-ps.c:3900
 msgid "_Inch"
 msgstr "_დუიმი"
 
-#: plug-ins/common/file-ps.c:3907
+#: plug-ins/common/file-ps.c:3901
 msgid "_Millimeter"
 msgstr "_მილიმეტრი"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3918 plug-ins/map-object/map-object-ui.c:1013
-msgid "Rotation"
-msgstr "შემობრუნება"
+#: plug-ins/common/file-ps.c:3914
+msgid "_0"
+msgstr "_0"
 
-#. Format
-#: plug-ins/common/file-ps.c:3933
+#: plug-ins/common/file-ps.c:3915
+msgid "_90"
+msgstr ""
+
+#: plug-ins/common/file-ps.c:3916
+msgid "_180"
+msgstr ""
+
+#: plug-ins/common/file-ps.c:3917
+msgid "_270"
+msgstr ""
+
+#: plug-ins/common/file-ps.c:3924
 msgid "Output"
 msgstr "გამოტანა"
-
-#: plug-ins/common/file-ps.c:3939
-msgid "_PostScript level 2"
-msgstr ""
-
-#: plug-ins/common/file-ps.c:3948
-msgid "_Encapsulated PostScript"
-msgstr ""
-
-#: plug-ins/common/file-ps.c:3957
-msgid "P_review"
-msgstr "გადახედვა"
-
-#: plug-ins/common/file-ps.c:3981
-msgid "Preview _size:"
-msgstr "მინიატურის _ზომა:"
 
 #: plug-ins/common/file-psp.c:664 plug-ins/common/file-psp.c:694
 msgid "Paint Shop Pro image"
@@ -4939,6 +4930,11 @@ msgstr "_Y პროპორცია:"
 msgid "Constrain aspect ratio"
 msgstr ""
 
+#. Resolution
+#: plug-ins/common/file-svg.c:945 plug-ins/common/file-wmf.c:717
+msgid "Resolution:"
+msgstr "გარჩევადობა:"
+
 #. Path Import
 #: plug-ins/common/file-svg.c:971
 msgid "Import _paths"
@@ -5511,6 +5507,13 @@ msgstr ""
 #: plug-ins/common/film.c:1046
 msgid "_Fit height to images"
 msgstr ""
+
+#: plug-ins/common/film.c:1067 plug-ins/common/smooth-palette.c:536
+#: plug-ins/common/tile.c:523 plug-ins/imagemap/imap_cmd_guides.c:173
+#: plug-ins/imagemap/imap_rectangle.c:405
+#: plug-ins/print/print-page-layout.c:288
+msgid "_Height:"
+msgstr "_სიმაღლე:"
 
 #. Film color
 #: plug-ins/common/film.c:1088
@@ -6139,6 +6142,13 @@ msgstr ""
 msgid "Smooth Palette"
 msgstr ""
 
+#: plug-ins/common/smooth-palette.c:531 plug-ins/common/tile.c:519
+#: plug-ins/imagemap/imap_cmd_guides.c:163
+#: plug-ins/imagemap/imap_rectangle.c:398
+#: plug-ins/print/print-page-layout.c:286
+msgid "_Width:"
+msgstr "სიგა_ნე:"
+
 #: plug-ins/common/smooth-palette.c:550
 msgid "_Search depth:"
 msgstr ""
@@ -6365,6 +6375,10 @@ msgstr "ფაილის შენახვა"
 #: plug-ins/common/sphere-designer.c:2627
 msgid "Sphere Designer"
 msgstr ""
+
+#: plug-ins/common/sphere-designer.c:2728
+msgid "Layers"
+msgstr "ფენები"
 
 #: plug-ins/common/sphere-designer.c:2739
 #: plug-ins/gradient-flare/gradient-flare.c:3081
@@ -8581,6 +8595,11 @@ msgstr ""
 msgid "Import from TIFF"
 msgstr ""
 
+#: plug-ins/file-tiff/file-tiff-load.c:2554
+#: plug-ins/metadata/metadata-editor.c:4749
+msgid "_Import"
+msgstr "_იმპორტირება"
+
 #: plug-ins/file-tiff/file-tiff-load.c:2570
 msgid "_Show reduced images"
 msgstr "შემცირებული გამოსახულებების _ჩვენება"
@@ -10654,7 +10673,7 @@ msgid "Usage Terms"
 msgstr "გამოყენების პირობები"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:1507
-#: plug-ins/ui/plug-in-metadata-viewer.ui:211
+#: plug-ins/metadata/metadata-viewer.c:401
 msgid "IPTC"
 msgstr "IPTC"
 
@@ -10970,33 +10989,6 @@ msgstr ""
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:4831
 msgid "DICOM"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:55
-msgid "Exif Tag"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:68
-#: plug-ins/ui/plug-in-metadata-viewer.ui:127
-#: plug-ins/ui/plug-in-metadata-viewer.ui:189
-msgctxt "A tag value"
-msgid "Value"
-msgstr "მნიშვნელობა"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:87
-msgid "Exif"
-msgstr "Exif"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:114
-msgid "XMP Tag"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:149
-msgid "XMP"
-msgstr "XMP"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:176
-msgid "IPTC Tag"
 msgstr ""
 
 #: plug-ins/gradient-flare/gradient-flare.c:750
@@ -11890,10 +11882,6 @@ msgstr ""
 msgid "pixels from _top"
 msgstr ""
 
-#: plug-ins/imagemap/imap_grid.c:298
-msgid "_Preview"
-msgstr "_მინიატურა"
-
 #: plug-ins/imagemap/imap_main.c:220
 msgid "_Image Map..."
 msgstr ""
@@ -12764,20 +12752,15 @@ msgstr ""
 msgid "Export metadata"
 msgstr "მეტამონაცემების გატანა"
 
-#: plug-ins/metadata/metadata-editor.c:929
-#, c-format
-msgid "Error loading calendar. %s"
+#: plug-ins/metadata/metadata-editor.c:933
+msgid "Choose Date"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:957
-msgid "Calendar Date:"
-msgstr ""
-
-#: plug-ins/metadata/metadata-editor.c:961
+#: plug-ins/metadata/metadata-editor.c:937
 msgid "Set Date"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:1695
+#: plug-ins/metadata/metadata-editor.c:1671
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -12787,7 +12770,7 @@ msgid ""
 "Delete all text to remove the current value."
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:1701
+#: plug-ins/metadata/metadata-editor.c:1677
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -12797,24 +12780,24 @@ msgid ""
 "Delete all text to remove the current value."
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:1837
+#: plug-ins/metadata/metadata-editor.c:1813
 msgid "Unrated"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:3790
+#: plug-ins/metadata/metadata-editor.c:3773
 #, c-format
-msgid "Failed to set metadata tag %s"
-msgstr ""
+msgid "Failed to set metadata tag %s: %s"
+msgstr "მეტამონაცემების ჭდის %s დაყენების შეცდომა: %s"
 
-#: plug-ins/metadata/metadata-editor.c:4631
+#: plug-ins/metadata/metadata-editor.c:4745
 msgid "Import Metadata File"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:4666
+#: plug-ins/metadata/metadata-editor.c:4780
 msgid "Export Metadata File"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:4670
+#: plug-ins/metadata/metadata-editor.c:4784
 msgid "_Export"
 msgstr "გატანა"
 
@@ -13014,29 +12997,45 @@ msgstr "მეტამონაცემების _ნახვა"
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr ""
 
-#: plug-ins/metadata/metadata-viewer.c:269
-msgid "Error loading metadata-viewer dialog."
-msgstr ""
-
-#: plug-ins/metadata/metadata-viewer.c:280
+#: plug-ins/metadata/metadata-viewer.c:265
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr ""
 
-#: plug-ins/metadata/metadata-viewer.c:372
+#: plug-ins/metadata/metadata-viewer.c:308
+msgid "Exif Tag"
+msgstr ""
+
+#: plug-ins/metadata/metadata-viewer.c:325
+msgid "Exif"
+msgstr "Exif"
+
+#: plug-ins/metadata/metadata-viewer.c:346
+msgid "XMP Tag"
+msgstr ""
+
+#: plug-ins/metadata/metadata-viewer.c:363
+msgid "XMP"
+msgstr "XMP"
+
+#: plug-ins/metadata/metadata-viewer.c:384
+msgid "IPTC Tag"
+msgstr ""
+
+#: plug-ins/metadata/metadata-viewer.c:481
 #, c-format
 msgid "(%lu more character(s))"
 msgstr ""
 
-#: plug-ins/metadata/metadata-viewer.c:619
+#: plug-ins/metadata/metadata-viewer.c:728
 msgid " meter"
 msgstr " მეტრი"
 
-#: plug-ins/metadata/metadata-viewer.c:620
+#: plug-ins/metadata/metadata-viewer.c:729
 msgid " feet"
 msgstr " ფუტი"
 
-#: plug-ins/metadata/metadata-viewer.c:788
+#: plug-ins/metadata/metadata-viewer.c:897
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(კიდევ %llu ბაიტი)"
@@ -13532,6 +13531,23 @@ msgstr ""
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr ""
+
+#~ msgid "Import from PostScript"
+#~ msgstr "PostScript-დან შემოტანა"
+
+#~ msgid "Images"
+#~ msgstr "გამოსახულებები"
+
+#~ msgctxt "antialiasing"
+#~ msgid "None"
+#~ msgstr "არაფერი"
+
+#~ msgid "P_review"
+#~ msgstr "გადახედვა"
+
+#~ msgctxt "A tag value"
+#~ msgid "Value"
+#~ msgstr "მნიშვნელობა"
 
 #~ msgid "Export Image as GIF"
 #~ msgstr "გამოსახულების GIF-ად გატანა"
