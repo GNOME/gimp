@@ -102,7 +102,8 @@ static void     add_to_store                    (gchar                *value,
 
 static void     set_tag_string                  (GimpMetadata         *metadata,
                                                  const gchar          *name,
-                                                 const gchar          *value);
+                                                 const gchar          *value,
+                                                 gboolean              clear_tag);
 
 static gchar *  get_phonetype                   (gchar                *cur_value);
 
@@ -3776,16 +3777,17 @@ set_tag_failed (const gchar *tag, gchar *error_message)
 static void
 set_tag_string (GimpMetadata *metadata,
                 const gchar  *name,
-                const gchar  *value)
+                const gchar  *value,
+                gboolean      clear_tag)
 {
   GError *error = NULL;
 
-  if (metadata == NULL) return;
-  if (name == NULL) return;
+  if (! metadata || ! name) return;
 
-  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (metadata), name, NULL);
+  if (clear_tag)
+    gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (metadata), name, NULL);
 
-  if (value == NULL) return;
+  if (! value) return;
 
   if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
                                             name, value, &error))
@@ -3864,7 +3866,7 @@ write_metadata_tag (GtkBuilder *builder, GimpMetadata *metadata, gchar * tag, gi
          "write_metadata_tag tag: %s, value: %s",
          tag, data->str);
 
-  set_tag_string (metadata, tag, data->str);
+  set_tag_string (metadata, tag, data->str, TRUE);
   g_string_free (data, TRUE);
 }
 
@@ -3942,7 +3944,7 @@ write_metadata_tag_multiple (GtkBuilder *builder, GimpMetadata *metadata,
                      "write_metadata_tag_multiple tag: %s, value: %s, col: %d",
                      temp_tag, tag_data, col);
 
-              set_tag_string (metadata, temp_tag, tag_data);
+              set_tag_string (metadata, temp_tag, tag_data, TRUE);
               g_free (tag_data);
             }
           counter++;
@@ -4010,19 +4012,13 @@ set_gps_longitude_latitude (GimpMetadata *metadata,
 
   if (!remove_val)
     {
-      GError *error = NULL;
       g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Converted values: %d - %d - %f", degrees, minutes, seconds);
       g_snprintf (lng_lat, sizeof (lng_lat),
                   "%d/1 %d/1 %d/1000",
                   abs (degrees), abs (minutes), abs ((gint) (seconds * 1000.f)));
       g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Tag: %s, output string: %s", tag, lng_lat);
 
-      if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
-                                                tag, lng_lat, &error))
-        {
-          set_tag_failed (tag, error->message);
-          g_clear_error (&error);
-        }
+      set_tag_string (metadata, tag, lng_lat, FALSE);
     }
   else
     {
@@ -4089,16 +4085,9 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
   if (hasCreatorTagData (builder))
     {
-      GError *error = NULL;
 
-      if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                creatorContactInfoHeader.header,
-                                                "type=\"Struct\"",
-                                                &error))
-        {
-          set_tag_failed (creatorContactInfoTags[i].tag, error->message);
-          g_clear_error (&error);
-        }
+      set_tag_string (g_metadata, creatorContactInfoHeader.header,
+                      "type=\"Struct\"", FALSE);
 
       for (i = 0; i < creatorContactInfoHeader.size; i++)
         {
@@ -4109,14 +4098,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
             {
               GtkEntry *entry = GTK_ENTRY (object);
 
-              if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                        creatorContactInfoTags[i].tag,
-                                                        gtk_entry_get_text (entry),
-                                                        &error))
-                {
-                  set_tag_failed (creatorContactInfoTags[i].tag, error->message);
-                  g_clear_error (&error);
-                }
+              set_tag_string (g_metadata, creatorContactInfoTags[i].tag,
+                              gtk_entry_get_text (entry), FALSE);
             }
           else if (! strcmp ("multi", creatorContactInfoTags[i].mode))
             {
@@ -4132,13 +4115,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
               text = gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
 
-              if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                        creatorContactInfoTags[i].tag,
-                                                        text, &error))
-                {
-                  set_tag_failed (creatorContactInfoTags[i].tag, error->message);
-                  g_clear_error (&error);
-                }
+              set_tag_string (g_metadata, creatorContactInfoTags[i].tag,
+                              text, FALSE);
 
               g_free (text);
             }
@@ -4174,7 +4152,6 @@ metadata_editor_write_callback (GtkWidget  *dialog,
         {
           GtkEntry *entry       = GTK_ENTRY (object);
           gchar    *value_entry = g_strdup (gtk_entry_get_text (entry));
-          GError   *error = NULL;
 
           if (! strcmp ("Exif.GPSInfo.GPSLongitude",
                         default_metadata_tags[i].tag) ||
@@ -4205,14 +4182,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
               g_snprintf (alt_str, sizeof (alt_str), "%d/100", (gint) alt_d);
 
-              if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                        default_metadata_tags[i].tag,
-                                                        alt_str,
-                                                        &error))
-                {
-                  set_tag_failed (default_metadata_tags[i].tag, error->message);
-                  g_clear_error (&error);
-                }
+              set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                              alt_str, FALSE);
             }
           else
             {
@@ -4229,28 +4200,16 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                           default_metadata_tags[i].tag,
                                                           GEXIV2_STRUCTURE_XA_NONE,
                                                           NULL);
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            text_value,
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  text_value, FALSE);
                 }
               else
                 {
                   gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
                                                  default_metadata_tags[i].tag,
                                                  NULL);
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            text_value,
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  text_value, FALSE);
                 }
 
               index = default_metadata_tags[i].other_tag_index;
@@ -4259,15 +4218,9 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                   gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
                                                  equivalent_metadata_tags[index].tag,
                                                  NULL);
-                  if (*text_value &&
-                      ! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            equivalent_metadata_tags[index].tag,
-                                                            text_value,
-                                                            &error))
-                    {
-                      set_tag_failed (equivalent_metadata_tags[index].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  if (*text_value)
+                    set_tag_string (g_metadata, equivalent_metadata_tags[index].tag,
+                                    text_value, FALSE);
                 }
             }
         }
@@ -4303,14 +4256,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                                                           default_metadata_tags[i].tag,
                                                           GEXIV2_STRUCTURE_XA_NONE,
                                                           NULL);
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            text,
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  text, FALSE);
                 }
               else
                 {
@@ -4364,14 +4311,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                     else if (! strcmp ("single", equivalent_metadata_tags[index].mode))
                       {
                         /* Convert from multiline to single line: keep the \n and just add the whole text. */
-                        if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                                  equivalent_metadata_tags[index].tag,
-                                                                  text,
-                                                                  &error))
-                          {
-                            set_tag_failed (equivalent_metadata_tags[index].tag, error->message);
-                            g_clear_error (&error);
-                          }
+                        set_tag_string (g_metadata, equivalent_metadata_tags[index].tag,
+                                        text, FALSE);
                       }
                     else
                       {
@@ -4397,7 +4338,6 @@ metadata_editor_write_callback (GtkWidget  *dialog,
         {
           GtkComboBoxText *combo;
           gint32           value;
-          GError          *error = NULL;
 
           combo = GTK_COMBO_BOX_TEXT (object);
           value = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
@@ -4420,22 +4360,10 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
                   save = g_strdup_printf ("%d", value);
 
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            save,
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            "Iptc.Application2.Urgency",
-                                                            save,
-                                                            &error))
-                    {
-                      set_tag_failed ("Iptc.Application2.Urgency", error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  save, FALSE);
+                  set_tag_string (g_metadata, "Iptc.Application2.Urgency",
+                                  save, FALSE);
                   g_free (save);
                 }
             }
@@ -4458,14 +4386,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                   else /* (value == 2) */
                     save_value = g_strdup_printf ("%s", "False");
 
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            save_value,
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  save_value, FALSE);
                   g_free (save_value);
                 }
             }
@@ -4483,14 +4405,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
                   save = g_strdup_printf ("%d", value);
 
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            save,
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  save, FALSE);
                   g_free (save);
                 }
             }
@@ -4506,37 +4422,19 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                   break;
 
                 case 1:
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            "male",
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  "male", FALSE);
                   break;
 
                 case 2:
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            "female",
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  "female", FALSE);
                   break;
 
                 case 3:
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            "other",
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
-                  break;
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  "other", FALSE);
+                   break;
                 }
             }
           else if (! strcmp ("Exif.GPSInfo.GPSLongitudeRef",
@@ -4551,25 +4449,13 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                   break;
 
                 case 1:
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            "E",
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  "E", FALSE);
                   break;
 
                 case 2:
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            "W",
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  "W", FALSE);
                   break;
                 }
             }
@@ -4585,25 +4471,13 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                   break;
 
                 case 1:
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            "N",
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  "N", FALSE);
                   break;
 
                 case 2:
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            "S",
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  "S", FALSE);
                   break;
                 }
             }
@@ -4619,25 +4493,13 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                   break;
 
                 case 1:
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            "0",
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  "0", FALSE);
                   break;
 
                 case 2:
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            "1",
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  "1", FALSE);
                   break;
                 }
             }
@@ -4652,14 +4514,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                 }
               else
                 {
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            modelreleasestatus[value].data,
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  modelreleasestatus[value].data, FALSE);
                 }
             }
           else if (! strcmp ("Xmp.plus.PropertyReleaseStatus",
@@ -4673,14 +4529,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                 }
               else
                 {
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            propertyreleasestatus[value].data,
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  propertyreleasestatus[value].data, FALSE);
                 }
             }
           else if (! strcmp ("Xmp.plus.MinorModelAgeDisclosure",
@@ -4694,14 +4544,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                 }
               else
                 {
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            minormodelagedisclosure[value].data,
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  minormodelagedisclosure[value].data, FALSE);
                 }
             }
           else if (! strcmp ("Xmp.iptcExt.DigitalSourceType",
@@ -4715,14 +4559,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                 }
               else
                 {
-                  if (! gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                            default_metadata_tags[i].tag,
-                                                            digitalsourcetype[value].data,
-                                                            &error))
-                    {
-                      set_tag_failed (default_metadata_tags[i].tag, error->message);
-                      g_clear_error (&error);
-                    }
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  digitalsourcetype[value].data, FALSE);
                 }
             }
         }
