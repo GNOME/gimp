@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-05-01 13:33+0000\n"
-"PO-Revision-Date: 2023-05-01 20:02+0300\n"
+"POT-Creation-Date: 2023-05-01 23:02+0000\n"
+"PO-Revision-Date: 2023-05-02 09:53+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -104,9 +104,9 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
 #: plug-ins/map-object/map-object-ui.c:1317
 #: plug-ins/metadata/metadata-editor.c:598
-#: plug-ins/metadata/metadata-editor.c:960
-#: plug-ins/metadata/metadata-editor.c:4634
-#: plug-ins/metadata/metadata-editor.c:4669 plug-ins/pagecurl/pagecurl.c:496
+#: plug-ins/metadata/metadata-editor.c:936
+#: plug-ins/metadata/metadata-editor.c:4748
+#: plug-ins/metadata/metadata-editor.c:4783 plug-ins/pagecurl/pagecurl.c:496
 #: plug-ins/screenshot/screenshot.c:516
 #: plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_Cancel"
@@ -4304,17 +4304,14 @@ msgid "Encapsulated PostScript image"
 msgstr "Encapsulated PostScript"
 
 #: plug-ins/common/file-ps.c:377
-#| msgid "Resolution"
 msgid "Resol_ution"
 msgstr "Розд_ільність"
 
 #: plug-ins/common/file-ps.c:395
-#| msgid "Try Bounding Box"
 msgid "Try _Bounding Box"
 msgstr "Спробувати _обмежувальну рамку"
 
 #: plug-ins/common/file-ps.c:401
-#| msgid "Pages:"
 msgid "_Pages"
 msgstr "С_торінки"
 
@@ -4331,27 +4328,22 @@ msgid "Graphic antialiasing"
 msgstr "Згладжування графіки"
 
 #: plug-ins/common/file-ps.c:459
-#| msgid "GPS"
 msgid "PS"
 msgstr "PS"
 
 #: plug-ins/common/file-ps.c:468
-#| msgid "_Encapsulated PostScript"
 msgid "Encapsulated PostScript"
 msgstr "_Інкапсульований PostScript"
 
 #: plug-ins/common/file-ps.c:479
-#| msgid "GPS"
 msgid "EPS"
 msgstr "EPS"
 
 #: plug-ins/common/file-ps.c:511
-#| msgid "_X offset:"
 msgid "_X offset"
 msgstr "Зсув вздовж _X"
 
 #: plug-ins/common/file-ps.c:517
-#| msgid "_Y offset:"
 msgid "Y o_ffset"
 msgstr "Зсув вздовж _Y"
 
@@ -4368,7 +4360,6 @@ msgid "Rotation"
 msgstr "Обертання"
 
 #: plug-ins/common/file-ps.c:542
-#| msgid "_PostScript level 2"
 msgid "PostScript Level _2"
 msgstr "PostScript, рівень _2"
 
@@ -4377,7 +4368,6 @@ msgid "_Preview"
 msgstr "_Попередній перегляд"
 
 #: plug-ins/common/file-ps.c:560
-#| msgid "Preview _size:"
 msgid "Preview Si_ze"
 msgstr "_Розмір перегляду"
 
@@ -8997,7 +8987,7 @@ msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2554
-#: plug-ins/metadata/metadata-editor.c:4635
+#: plug-ins/metadata/metadata-editor.c:4749
 msgid "_Import"
 msgstr "_Імпортувати"
 
@@ -13207,20 +13197,16 @@ msgstr "Імпорт метаданих"
 msgid "Export metadata"
 msgstr "Експортувати метадані"
 
-#: plug-ins/metadata/metadata-editor.c:929
-#, c-format
-msgid "Error loading calendar. %s"
-msgstr "Помилка під час завантаження календаря. %s"
+#: plug-ins/metadata/metadata-editor.c:933
+#| msgid "Set Date"
+msgid "Choose Date"
+msgstr "Виберіть дату"
 
-#: plug-ins/metadata/metadata-editor.c:957
-msgid "Calendar Date:"
-msgstr "Календарна дата:"
-
-#: plug-ins/metadata/metadata-editor.c:961
+#: plug-ins/metadata/metadata-editor.c:937
 msgid "Set Date"
 msgstr "Задайте дату"
 
-#: plug-ins/metadata/metadata-editor.c:1695
+#: plug-ins/metadata/metadata-editor.c:1671
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -13236,7 +13222,7 @@ msgstr ""
 "15.30, або 10.45\n"
 "Вилучіть увесь текст, щоб вилучити поточне значення."
 
-#: plug-ins/metadata/metadata-editor.c:1701
+#: plug-ins/metadata/metadata-editor.c:1677
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -13252,24 +13238,25 @@ msgstr ""
 "або футах (фут)\n"
 "Щоб вилучити поточне значення, витріть увесь текст."
 
-#: plug-ins/metadata/metadata-editor.c:1837
+#: plug-ins/metadata/metadata-editor.c:1813
 msgid "Unrated"
 msgstr "Без рейтингу"
 
-#: plug-ins/metadata/metadata-editor.c:3790
+#: plug-ins/metadata/metadata-editor.c:3773
 #, c-format
-msgid "Failed to set metadata tag %s"
-msgstr "Не вдалося встановити мітку метаданих %s"
+#| msgid "Failed to set metadata tag %s"
+msgid "Failed to set metadata tag %s: %s"
+msgstr "Не вдалося встановити мітку метаданих %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:4631
+#: plug-ins/metadata/metadata-editor.c:4745
 msgid "Import Metadata File"
 msgstr "Імпорт файлу метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:4666
+#: plug-ins/metadata/metadata-editor.c:4780
 msgid "Export Metadata File"
 msgstr "Експорт файлу метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:4670
+#: plug-ins/metadata/metadata-editor.c:4784
 msgid "_Export"
 msgstr "_Експорт"
 
@@ -14044,6 +14031,13 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#, c-format
+#~ msgid "Error loading calendar. %s"
+#~ msgstr "Помилка під час завантаження календаря. %s"
+
+#~ msgid "Calendar Date:"
+#~ msgstr "Календарна дата:"
 
 #~ msgid "Import from PostScript"
 #~ msgstr "Завантажити з PostScript"
