@@ -39,8 +39,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-25 00:11+0100\n"
-"PO-Revision-Date: 2023-04-28 01:48+0200\n"
+"POT-Creation-Date: 2023-05-02 23:03+0200\n"
+"PO-Revision-Date: 2023-05-02 23:03+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -22771,7 +22771,7 @@ msgstr "Ritaglia solo il livello attualmente selezionato"
 
 #: ../app/tools/gimpcropoptions.c:101
 msgid "Delete cropped pixels"
-msgstr "Cancella i pixel ritagliati"
+msgstr "Elimina pixel ritagliati"
 
 #: ../app/tools/gimpcropoptions.c:102
 msgid "Discard non-locked layer data that falls out of the crop region"
