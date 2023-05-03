@@ -40,7 +40,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-02 23:03+0200\n"
-"PO-Revision-Date: 2023-05-02 23:03+0200\n"
+"PO-Revision-Date: 2023-05-03 16:14+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -16309,7 +16309,7 @@ msgstr "_Modalità:"
 
 #: ../app/dialogs/layer-options-dialog.c:203
 msgid "_Blend space:"
-msgstr "Spazio mescolatura (_b):"
+msgstr "Spazio _fuso:"
 
 #: ../app/dialogs/layer-options-dialog.c:213
 msgid "Compos_ite space:"
