@@ -1005,8 +1005,8 @@ save_metadata (GFile        *file,
 
   for (int k = 0; k < n_keys; k++)
     {
-      gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata),
-                                 exif_tags_to_remove[k]);
+      gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (metadata),
+                                     exif_tags_to_remove[k], NULL);
     }
 
   /* get rid of all the EXIF tags for anything but the first sub image. */
@@ -1018,13 +1018,13 @@ save_metadata (GFile        *file,
       if (g_str_has_prefix (*tag, "Exif.Image")
           && (*tag)[strlen ("Exif.Image")] >= '0'
           && (*tag)[strlen ("Exif.Image")] <= '9')
-        gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata), *tag);
+        gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (metadata), *tag, NULL);
       if (g_str_has_prefix (*tag, "Exif.SubImage")
           && (*tag)[strlen ("Exif.SubImage")] >= '0'
           && (*tag)[strlen ("Exif.SubImage")] <= '9')
-        gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata), *tag);
+        gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (metadata), *tag, NULL);
       if (g_str_has_prefix (*tag, "Exif.Thumbnail"))
-        gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata), *tag);
+        gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (metadata), *tag, NULL);
     }
 
   gimp_metadata_set_bits_per_sample (metadata, saved_bpp);
