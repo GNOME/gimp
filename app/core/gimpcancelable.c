@@ -50,7 +50,7 @@ gimp_cancelable_default_init (GimpCancelableInterface *iface)
 {
   cancelable_signals[CANCEL] =
     g_signal_new ("cancel",
-                  G_TYPE_FROM_CLASS (iface),
+                  G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpCancelableInterface, cancel),
                   NULL, NULL, NULL,

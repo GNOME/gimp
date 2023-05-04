@@ -54,7 +54,7 @@ gimp_projectable_default_init (GimpProjectableInterface *iface)
 {
   projectable_signals[INVALIDATE] =
     g_signal_new ("invalidate",
-                  G_TYPE_FROM_CLASS (iface),
+                  G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpProjectableInterface, invalidate),
                   NULL, NULL,
@@ -67,7 +67,7 @@ gimp_projectable_default_init (GimpProjectableInterface *iface)
 
   projectable_signals[FLUSH] =
     g_signal_new ("flush",
-                  G_TYPE_FROM_CLASS (iface),
+                  G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpProjectableInterface, flush),
                   NULL, NULL, NULL,
@@ -76,7 +76,7 @@ gimp_projectable_default_init (GimpProjectableInterface *iface)
 
   projectable_signals[STRUCTURE_CHANGED] =
     g_signal_new ("structure-changed",
-                  G_TYPE_FROM_CLASS (iface),
+                  G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpProjectableInterface, structure_changed),
                   NULL, NULL, NULL,
@@ -84,7 +84,7 @@ gimp_projectable_default_init (GimpProjectableInterface *iface)
 
   projectable_signals[BOUNDS_CHANGED] =
     g_signal_new ("bounds-changed",
-                  G_TYPE_FROM_CLASS (iface),
+                  G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpProjectableInterface, bounds_changed),
                   NULL, NULL,
