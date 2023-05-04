@@ -667,6 +667,7 @@ typedef struct
   gchar         key[4];                 /* Layer resource key */
   guint64       data_start;             /* Layer resource data start */
   guint64       data_len;               /* Layer resource data length */
+  gboolean      ibm_pc_format;          /* If layers are saved in little endian format */
 } PSDlayerres;
 
 /* PSD File data structures */
@@ -709,6 +710,7 @@ typedef struct
   gpointer              cmyk_transform;
   gpointer              cmyk_transform_alpha;
 
+  gboolean              ibm_pc_format;          /* If layers are saved in little endian format */
   PSDSupport           *unsupported_features;
 } PSDimage;
 

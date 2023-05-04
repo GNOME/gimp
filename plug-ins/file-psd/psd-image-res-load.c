@@ -1230,7 +1230,8 @@ load_resource_1045 (const PSDimageres  *res_a,
   block_rem = res_a->data_len;
   while (block_rem > 1)
     {
-      str = fread_unicode_string (&read_len, &write_len, 1, input, error);
+      str = fread_unicode_string (&read_len, &write_len, 1, FALSE, input,
+                                  error);
       if (*error)
         return -1;
 

@@ -545,10 +545,12 @@ psd_load_metadata (GimpProcedure        *procedure,
       /* Metadata doesn't store rasterized versions of fill layers,
        * (unlike PSDs) so we can't display them for now.
        */
-      if (unsupported_features.fill_layer)
+      if (unsupported_features.fill_layer ||
+          unsupported_features.text_layer)
         {
           unsupported_features.psd_metadata = TRUE;
           unsupported_features.fill_layer   = FALSE;
+          unsupported_features.text_layer   = FALSE;
         }
 
       switch (run_mode)

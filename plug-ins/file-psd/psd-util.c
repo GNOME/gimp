@@ -390,6 +390,7 @@ gchar *
 fread_unicode_string (gint32        *bytes_read,
                       gint32        *bytes_written,
                       guint16        mod_len,
+                      gboolean       ibm_pc_format,
                       GInputStream  *input,
                       GError       **error)
 {
@@ -414,7 +415,12 @@ fread_unicode_string (gint32        *bytes_read,
       return NULL;
     }
   *bytes_read += 4;
-  len = GINT32_FROM_BE (len);
+
+  if (! ibm_pc_format)
+    len = GINT32_FROM_BE (len);
+  else
+    len = GINT32_FROM_LE (len);
+
   IFDBG(3) g_debug ("Unicode string length %d", len);
 
   if (len == 0)
@@ -439,7 +445,10 @@ fread_unicode_string (gint32        *bytes_read,
           return NULL;
         }
       *bytes_read += 2;
-      utf16_str[i] = GINT16_FROM_BE (utf16_str[i]);
+      if (! ibm_pc_format)
+        utf16_str[i] = GINT16_FROM_BE (utf16_str[i]);
+      else
+        utf16_str[i] = GINT16_FROM_LE (utf16_str[i]);
     }
 
   if (mod_len > 0)

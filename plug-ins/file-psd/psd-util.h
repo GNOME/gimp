@@ -69,6 +69,7 @@ gint32                  fwrite_pascal_string   (const gchar         *src,
 gchar                 * fread_unicode_string   (gint32              *bytes_read,
                                                 gint32              *bytes_written,
                                                 guint16              mod_len,
+                                                gboolean             ibm_pc_format,
                                                 GInputStream        *input,
                                                 GError             **error);
 

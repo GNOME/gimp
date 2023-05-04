@@ -207,7 +207,9 @@ get_layer_resource_header (PSDlayerres   *res_a,
                            GInputStream  *input,
                            GError       **error)
 {
-  gint  block_len_size = 4;
+  gint block_len_size = 4;
+
+  res_a->ibm_pc_format = FALSE;
 
   if (psd_read (input, res_a->sig, 4, error) < 4 ||
       psd_read (input, res_a->key, 4, error) < 4)
@@ -216,9 +218,29 @@ get_layer_resource_header (PSDlayerres   *res_a,
       return -1;
     }
   else if (memcmp (res_a->sig, "8BIM", 4) != 0 &&
+           memcmp (res_a->sig, "MIB8", 4) != 0 &&
            memcmp (res_a->sig, "8B64", 4) != 0)
     {
       IFDBG(1) g_debug ("Unknown layer resource signature %.4s", res_a->sig);
+    }
+
+  if (memcmp (res_a->sig, "MIB8", 4) == 0)
+    {
+      gchar ibm_sig[4];
+      gchar ibm_key[4];
+
+      res_a->ibm_pc_format = TRUE;
+
+      for (gint i = 0; i < 4; i++)
+        {
+          ibm_sig[i] = res_a->sig[3 - i];
+          ibm_key[i] = res_a->key[3 - i];
+        }
+      for (gint i = 0; i < 4; i++)
+        {
+          res_a->sig[i] = ibm_sig[i];
+          res_a->key[i] = ibm_key[i];
+        }
     }
 
   if (psd_version == 1)
@@ -259,10 +281,21 @@ get_layer_resource_header (PSDlayerres   *res_a,
       return -1;
     }
 
-  if (block_len_size == 4)
-    res_a->data_len = GUINT32_FROM_BE (res_a->data_len);
+  if (! res_a->ibm_pc_format)
+    {
+      if (block_len_size == 4)
+        res_a->data_len = GUINT32_FROM_BE (res_a->data_len);
+      else
+        res_a->data_len = GUINT64_FROM_BE (res_a->data_len);
+    }
   else
-    res_a->data_len = GUINT64_FROM_BE (res_a->data_len);
+    {
+      if (block_len_size == 4)
+        res_a->data_len = GUINT32_FROM_LE (res_a->data_len);
+      else
+        res_a->data_len = GUINT64_FROM_LE (res_a->data_len);
+    }
+
   res_a->data_start = PSD_TELL (input);
 
   IFDBG(2) g_debug ("Sig: %.4s, key: %.4s, start: %" G_GOFFSET_FORMAT ", len: %" G_GOFFSET_FORMAT,
@@ -604,7 +637,8 @@ load_resource_ltyp (const PSDlayerres  *res_a,
                         lyr_a->text.xx, lyr_a->text.xy, lyr_a->text.yx,
                         lyr_a->text.yy, lyr_a->text.tx, lyr_a->text.ty);
 
-      classID = fread_unicode_string (&read_len, &write_len, 4, input, error);
+      classID = fread_unicode_string (&read_len, &write_len, 4,
+                                      res_a->ibm_pc_format, input, error);
       IFDBG(2) g_debug ("Unicode name: %s", classID);
     }
 
@@ -625,7 +659,9 @@ load_resource_luni (const PSDlayerres  *res_a,
   if (lyr_a->name)
     g_free (lyr_a->name);
 
-  lyr_a->name = fread_unicode_string (&read_len, &write_len, 4, input, error);
+  lyr_a->name = fread_unicode_string (&read_len, &write_len, 4,
+                                      res_a->ibm_pc_format, input, error);
+
   if (*error)
     return -1;
   IFDBG(3) g_debug ("Unicode name: %s", lyr_a->name);
