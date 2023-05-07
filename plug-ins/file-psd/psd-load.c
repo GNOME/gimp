@@ -1624,26 +1624,7 @@ psd_convert_lab_to_srgb (PSDimage *img_a,
   const Babl *fish;
 
   if (alpha)
-    {
-      /* FIXME remove this check after babl code is ready and dependency is bumped */
-      if (! babl_format_exists("CIE Lab alpha u8"))
-        {
-          babl_format_new (
-            "name", "CIE Lab alpha u8",
-            babl_model ("CIE Lab alpha"),
-
-            babl_type ("CIE u8 L"),
-            babl_component ("CIE L"),
-            babl_type ("CIE u8 ab"),
-            babl_component ("CIE a"),
-            babl_type ("CIE u8 ab"),
-            babl_component ("CIE b"),
-            babl_type ("u8"),
-            babl_component ("A"),
-            NULL);
-        }
-      fish = babl_fish ("CIE Lab alpha u8", "R'G'B'A float");
-    }
+    fish = babl_fish ("CIE Lab alpha u8", "R'G'B'A float");
   else
     fish = babl_fish ("CIE Lab u8", "R'G'B' float");
 
