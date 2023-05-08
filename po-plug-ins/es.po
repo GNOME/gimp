@@ -2,8 +2,6 @@
 # Copyright © 1998-2000,2003, 2006, 2007, 2008, 2009, 2011, 2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
-#
-#
 # Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
@@ -12,18 +10,16 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2009, 2011.
 # Benjamín Valero Espinosa <benjavalero@gmail.com>, 2011.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2008, 2009, 2011, 2012.
-#
 # Monica Canizo <kamitdevica@gmail.com>, 2016.
-# Rodrigo <rodhos92@gmail.com>, 2000-2019.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2020.
-# Rodrigo Lledó <rodhos92@gmail.com>, 2019-2020.
+# Rodrigo Lledó <rodhos92@gmail.com>, 2019-2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-23 18:25+0000\n"
-"PO-Revision-Date: 2023-04-24 16:22+0200\n"
+"POT-Creation-Date: 2023-05-03 19:35+0000\n"
+"PO-Revision-Date: 2023-05-08 14:54+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -83,16 +79,16 @@ msgstr "Ejercitar una cabra (C)"
 #: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1163
 #: plug-ins/common/file-heif.c:2357 plug-ins/common/file-pdf-load.c:709
-#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-ps.c:3572
-#: plug-ins/common/file-svg.c:773 plug-ins/common/file-wmf.c:546
-#: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
-#: plug-ins/common/mail.c:568 plug-ins/common/qbist.c:848
-#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
-#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-svg.c:773
+#: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
+#: plug-ins/common/grid.c:761 plug-ins/common/mail.c:568
+#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
+#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
+#: plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
-#: plug-ins/common/web-page.c:278 plug-ins/file-tiff/file-tiff-load.c:2673
+#: plug-ins/common/web-page.c:278 plug-ins/file-tiff/file-tiff-load.c:2553
 #: plug-ins/flame/flame.c:540 plug-ins/flame/flame.c:716
 #: plug-ins/flame/flame.c:1033
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:561
@@ -116,9 +112,9 @@ msgstr "Ejercitar una cabra (C)"
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
 #: plug-ins/map-object/map-object-ui.c:1317
 #: plug-ins/metadata/metadata-editor.c:598
-#: plug-ins/metadata/metadata-editor.c:960
-#: plug-ins/metadata/metadata-editor.c:4634
-#: plug-ins/metadata/metadata-editor.c:4669 plug-ins/pagecurl/pagecurl.c:496
+#: plug-ins/metadata/metadata-editor.c:936
+#: plug-ins/metadata/metadata-editor.c:4748
+#: plug-ins/metadata/metadata-editor.c:4783 plug-ins/pagecurl/pagecurl.c:496
 #: plug-ins/screenshot/screenshot.c:516
 #: plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_Cancel"
@@ -183,7 +179,7 @@ msgstr "Ejercitar una cabra (JavaScript)"
 #: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
 #: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
-#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3308
+#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3453
 #: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
@@ -354,8 +350,11 @@ msgstr "No hay suficientes capas para alinear."
 msgid "Align Visible Layers"
 msgstr "Alinear capas visibles"
 
+#. Text antialiasing
+#. Graphics antialiasing
 #. file save type
 #: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
+#: plug-ins/common/file-ps.c:3744 plug-ins/common/file-ps.c:3752
 #: plug-ins/common/file-psp.c:840 plug-ins/file-tiff/file-tiff-save.c:1322
 #: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
 #: plug-ins/metadata/metadata-tags.c:238
@@ -520,19 +519,19 @@ msgstr "Vertical"
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
 #: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
 #: plug-ins/common/file-iff.c:331 plug-ins/common/file-jp2-load.c:1317
-#: plug-ins/common/file-pcx.c:741 plug-ins/common/file-pcx.c:749
-#: plug-ins/common/file-pix.c:422 plug-ins/common/file-png.c:950
-#: plug-ins/common/file-pnm.c:869 plug-ins/common/file-qoi.c:321
-#: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1080
-#: plug-ins/common/file-tga.c:1114 plug-ins/common/file-wbmp.c:270
-#: plug-ins/common/file-xbm.c:912 plug-ins/common/film.c:812
-#: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
-#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:271
-#: plug-ins/file-faxg3/faxg3.c:574 plug-ins/file-fits/fits.c:542
-#: plug-ins/file-jpeg/jpeg-load.c:225
+#: plug-ins/common/file-pcx.c:742 plug-ins/common/file-pcx.c:750
+#: plug-ins/common/file-pcx.c:758 plug-ins/common/file-pix.c:422
+#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:869
+#: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
+#: plug-ins/common/file-sunras.c:1080 plug-ins/common/file-tga.c:1114
+#: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:912
+#: plug-ins/common/film.c:812 plug-ins/common/smooth-palette.c:332
+#: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
+#: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
+#: plug-ins/file-fits/fits.c:542 plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2510 plug-ins/file-sgi/sgi.c:475
-#: plug-ins/file-tiff/file-tiff-load.c:1538
+#: plug-ins/file-psd/psd-load.c:2653 plug-ins/file-sgi/sgi.c:475
+#: plug-ins/file-tiff/file-tiff-load.c:1534
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
@@ -812,7 +811,9 @@ msgstr "Saturación"
 
 #: plug-ins/common/cml-explorer.c:303 plug-ins/common/cml-explorer.c:311
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
-#: plug-ins/gimpressionist/size.c:155
+#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:317
+#: plug-ins/metadata/metadata-viewer.c:355
+#: plug-ins/metadata/metadata-viewer.c:393
 msgid "Value"
 msgstr "Valor"
 
@@ -1046,7 +1047,7 @@ msgstr "Gráfica de los ajustes actuales"
 #: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
 #: plug-ins/ifs-compose/ifs-compose.c:1258
-#: plug-ins/metadata/metadata-viewer.c:287
+#: plug-ins/metadata/metadata-viewer.c:272
 msgid "_Close"
 msgstr "_Cerrar"
 
@@ -1060,7 +1061,7 @@ msgstr "Guardar los parámetros del Examinador CML"
 
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
 #: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:876
-#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1219
+#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1229
 #: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
@@ -1091,9 +1092,9 @@ msgstr "Cargar los parámetros del Examinador CML"
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
 #: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-iff.c:222
-#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:522
-#: plug-ins/common/file-pcx.c:565 plug-ins/common/file-png.c:673
-#: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3522
+#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:523
+#: plug-ins/common/file-pcx.c:566 plug-ins/common/file-png.c:673
+#: plug-ins/common/file-ps.c:1126 plug-ins/common/file-ps.c:3635
 #: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
 #: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
 #: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
@@ -1107,8 +1108,8 @@ msgstr "Cargar los parámetros del Examinador CML"
 #: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
 #: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
 #: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
-#: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:554
-#: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-load.c:169
+#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:614
+#: plug-ins/file-psd/psd-load.c:168 plug-ins/file-psd/psd-load.c:173
 #: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1855
@@ -1993,6 +1994,7 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Este complemento intenta eliminar las rayas verticales de una imagen."
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:194
+#: plug-ins/common/file-ps.c:383 plug-ins/common/file-ps.c:497
 #: plug-ins/imagemap/imap_grid.c:255
 msgid "_Width"
 msgstr "A_nchura"
@@ -2084,10 +2086,10 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1091
-#: plug-ins/common/file-pcx.c:514 plug-ins/common/file-pcx.c:557
+#: plug-ins/common/file-pcx.c:515 plug-ins/common/file-pcx.c:558
 #: plug-ins/common/file-pdf-load.c:879 plug-ins/common/file-pix.c:381
 #: plug-ins/common/file-png.c:665 plug-ins/common/file-pnm.c:714
-#: plug-ins/common/file-ps.c:1140 plug-ins/common/file-raw-data.c:1665
+#: plug-ins/common/file-ps.c:1116 plug-ins/common/file-raw-data.c:1665
 #: plug-ins/common/file-sunras.c:447 plug-ins/common/file-tga.c:437
 #: plug-ins/common/file-wbmp.c:176 plug-ins/common/file-wmf.c:1026
 #: plug-ins/common/file-xbm.c:742 plug-ins/common/file-xmc.c:648
@@ -2095,10 +2097,10 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:188
 #: plug-ins/file-faxg3/faxg3.c:240 plug-ins/file-fli/fli-gimp.c:502
 #: plug-ins/file-icns/file-icns-load.c:507 plug-ins/file-ico/ico-load.c:674
-#: plug-ins/file-ico/ico-load.c:784 plug-ins/file-jpeg/jpeg-load.c:87
-#: plug-ins/file-psd/psd-load.c:177 plug-ins/file-raw/file-darktable.c:413
+#: plug-ins/file-ico/ico-load.c:784 plug-ins/file-jpeg/jpeg-load.c:90
+#: plug-ins/file-psd/psd-load.c:181 plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:334
-#: plug-ins/file-tiff/file-tiff-load.c:289
+#: plug-ins/file-tiff/file-tiff-load.c:290
 #, c-format
 msgid "Opening '%s'"
 msgstr "Abriendo «%s»"
@@ -2167,9 +2169,9 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #.
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:916
 #: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1374
-#: plug-ins/common/file-pcx.c:1104 plug-ins/common/file-pix.c:560
+#: plug-ins/common/file-pcx.c:1114 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
-#: plug-ins/common/file-ps.c:1363 plug-ins/common/file-qoi.c:375
+#: plug-ins/common/file-ps.c:1338 plug-ins/common/file-qoi.c:375
 #: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
 #: plug-ins/common/file-xbm.c:1051 plug-ins/common/file-xpm.c:699
 #: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
@@ -2341,7 +2343,7 @@ msgstr "%s no es compatible con GIMP en combinación con muestras por píxel: %d
 msgid "Cannot save images with alpha channel."
 msgstr "No se pueden guardar imágenes con canales alfa."
 
-#: plug-ins/common/file-dicom.c:1542 plug-ins/common/file-ps.c:1358
+#: plug-ins/common/file-dicom.c:1542 plug-ins/common/file-ps.c:1333
 #: plug-ins/common/file-xwd.c:670 plug-ins/file-fits/fits.c:499
 msgid "Cannot operate on unknown image types."
 msgstr "No puede operar sobre tipos de imagen desconocidos."
@@ -3055,7 +3057,8 @@ msgid "The width for each table cell. Can be a number or a percent."
 msgstr ""
 "La anchura de cada celda de tabla. Puede ser un número o un porcentaje."
 
-#: plug-ins/common/file-html-table.c:201 plug-ins/imagemap/imap_grid.c:261
+#: plug-ins/common/file-html-table.c:201 plug-ins/common/file-ps.c:389
+#: plug-ins/common/file-ps.c:504 plug-ins/imagemap/imap_grid.c:261
 msgid "_Height"
 msgstr "Al_tura"
 
@@ -3593,138 +3596,138 @@ msgstr "Patrón de GIMP"
 msgid "Export Image as Pattern"
 msgstr "Exportar imagen como un patrón"
 
-#: plug-ins/common/file-pcx.c:206 plug-ins/common/file-pcx.c:270
+#: plug-ins/common/file-pcx.c:207 plug-ins/common/file-pcx.c:271
 msgid "ZSoft PCX image"
 msgstr "Imagen ZSoft PCX"
 
-#: plug-ins/common/file-pcx.c:209
+#: plug-ins/common/file-pcx.c:210
 msgid "Loads files in Zsoft PCX file format"
 msgstr "Carga archivos en el formato de archivo Zsoft PCX"
 
-#: plug-ins/common/file-pcx.c:218 plug-ins/common/file-pcx.c:249
+#: plug-ins/common/file-pcx.c:219 plug-ins/common/file-pcx.c:250
 msgid "Palette Options"
 msgstr "Opciones de paleta"
 
-#: plug-ins/common/file-pcx.c:219 plug-ins/common/file-pcx.c:250
+#: plug-ins/common/file-pcx.c:220 plug-ins/common/file-pcx.c:251
 msgid "Use built-in palette (0) or override with black/white (1)"
 msgstr "Usar la paleta integrada (0) o anular con blanco y negro (1)"
 
-#: plug-ins/common/file-pcx.c:237
+#: plug-ins/common/file-pcx.c:238
 msgid "ZSoft DCX image"
 msgstr "Imagen ZSoft DCX"
 
-#: plug-ins/common/file-pcx.c:240
+#: plug-ins/common/file-pcx.c:241
 msgid "Loads files in Zsoft DCX file format"
 msgstr "Carga archivos en el formato de archivo Zsoft DCX"
 
-#: plug-ins/common/file-pcx.c:412
+#: plug-ins/common/file-pcx.c:413
 msgid "PCX format does not support multiple layers."
 msgstr "El formato PCX no soporta múltiples capas."
 
-#: plug-ins/common/file-pcx.c:534
+#: plug-ins/common/file-pcx.c:535
 msgid "Could not load PCX image"
 msgstr "No se pudo cargar la imagen PCX"
 
-#: plug-ins/common/file-pcx.c:581
+#: plug-ins/common/file-pcx.c:582
 msgid "DCX image offset exceeds the file size"
 msgstr "El desplazamiento de la imagen DCX excede el tamaño del archivo"
 
-#: plug-ins/common/file-pcx.c:592
+#: plug-ins/common/file-pcx.c:593
 msgid "Could not load DCX image"
 msgstr "No se pudo cargar la imagen DCX"
 
-#: plug-ins/common/file-pcx.c:615
+#: plug-ins/common/file-pcx.c:616
 #, c-format
 msgid "%s: DCX image offset exceeds the file size: %s\n"
 msgstr ""
 "%s: El desplazamiento de la imagen DCX excede el tamaño del archivo: %s\n"
 
-#: plug-ins/common/file-pcx.c:632
+#: plug-ins/common/file-pcx.c:633
 msgid "Mixed-mode DCX image not loaded"
 msgstr "Imagen DCX de modo mixto no cargada"
 
-#: plug-ins/common/file-pcx.c:639
+#: plug-ins/common/file-pcx.c:640
 #, c-format
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s: No se pudieron cargar todas las imágenes DCX: %s\n"
 
-#: plug-ins/common/file-pcx.c:679
+#: plug-ins/common/file-pcx.c:680
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "No se pudo leer la cabecera de «%s»"
 
-#: plug-ins/common/file-pcx.c:690
+#: plug-ins/common/file-pcx.c:691
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "«%s» no es un archivo PCX"
 
-#: plug-ins/common/file-pcx.c:706 plug-ins/common/file-wbmp.c:259
-#: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:368
+#: plug-ins/common/file-pcx.c:707 plug-ins/common/file-wbmp.c:259
+#: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:504
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Anchura de imagen no soportada o no válida: %d"
 
-#: plug-ins/common/file-pcx.c:712 plug-ins/common/file-wbmp.c:265
-#: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:360
+#: plug-ins/common/file-pcx.c:713 plug-ins/common/file-wbmp.c:265
+#: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:496
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Altura de imagen no soportada o no válida: %d"
 
-#: plug-ins/common/file-pcx.c:718
+#: plug-ins/common/file-pcx.c:719
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Número de bytes por línea inválido en la cabecera PCX"
 
-#: plug-ins/common/file-pcx.c:725
+#: plug-ins/common/file-pcx.c:726
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "Resolución fuera de los límites de la cabecera XCX, usando 72x72"
 
-#: plug-ins/common/file-pcx.c:733
+#: plug-ins/common/file-pcx.c:734
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr ""
 "Las dimensiones de la imagen son demasiado grandes: anchura %d x altura %d"
 
-#: plug-ins/common/file-pcx.c:852
+#: plug-ins/common/file-pcx.c:861
 msgid "Unusual PCX flavour, giving up"
 msgstr "Versión de PCX inusual, terminando"
 
-#: plug-ins/common/file-pcx.c:878
+#: plug-ins/common/file-pcx.c:887
 msgid "Import from PCX"
 msgstr "Importar desde PCX"
 
-#: plug-ins/common/file-pcx.c:887
+#: plug-ins/common/file-pcx.c:896
 msgid "Use PCX image's built-in palette"
 msgstr "Use la paleta integrada de la imagen PCX"
 
-#: plug-ins/common/file-pcx.c:888
+#: plug-ins/common/file-pcx.c:897
 msgid "Use black and white palette"
 msgstr "Usar paleta de blanco y negro"
 
-#: plug-ins/common/file-pcx.c:1170 plug-ins/common/file-pnm.c:1631
+#: plug-ins/common/file-pcx.c:1180 plug-ins/common/file-pnm.c:1631
 msgid "Cannot export images with alpha channel."
 msgstr "No se pueden exportar imágenes con canales alfa."
 
-#: plug-ins/common/file-pcx.c:1190
+#: plug-ins/common/file-pcx.c:1200
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Desplazamiento X no válido: %d"
 
-#: plug-ins/common/file-pcx.c:1196
+#: plug-ins/common/file-pcx.c:1206
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Desplazamiento Y no válido: %d"
 
-#: plug-ins/common/file-pcx.c:1202
+#: plug-ins/common/file-pcx.c:1212
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Borde derecho fuera de los límites (debe ser < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1209
+#: plug-ins/common/file-pcx.c:1219
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Borde inferior fuera de los límites (debe ser < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1285 plug-ins/common/file-qoi.c:394
+#: plug-ins/common/file-pcx.c:1295 plug-ins/common/file-qoi.c:394
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Ocurrió un error al escribir en el archivo «%s»: %s"
@@ -3906,8 +3909,8 @@ msgid "Keeping the masks will not change the output"
 msgstr "Mantener las máscaras no cambiará la salida"
 
 #: plug-ins/common/file-pdf-save.c:1268 plug-ins/common/file-pdf-save.c:1341
-#: plug-ins/common/file-pdf-save.c:1439 plug-ins/common/file-ps.c:2064
-#: plug-ins/file-tiff/file-tiff-load.c:1540
+#: plug-ins/common/file-pdf-save.c:1439 plug-ins/common/file-ps.c:2115
+#: plug-ins/file-tiff/file-tiff-load.c:1536
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
@@ -4080,7 +4083,7 @@ msgstr ""
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Error al exportar «%s». No se pudo exportar la imagen."
 
-#: plug-ins/common/file-png.c:2295 plug-ins/common/file-ps.c:3715
+#: plug-ins/common/file-png.c:2295 plug-ins/common/file-ps.c:3738
 msgid "Automatic"
 msgstr "Automático"
 
@@ -4159,7 +4162,6 @@ msgid "TRUE for raw output, FALSE for ascii output"
 msgstr "VERDADERO para salida sin procesar, FALSO para salida ascii"
 
 #: plug-ins/common/file-pnm.c:385
-#| msgid "PNM"
 msgid "PBM"
 msgstr "PBM"
 
@@ -4197,7 +4199,6 @@ msgid "PPM image"
 msgstr "Imagen PPM"
 
 #: plug-ins/common/file-pnm.c:459
-#| msgid "PNM"
 msgid "PPM"
 msgstr "PPM"
 
@@ -4321,159 +4322,147 @@ msgstr "_ASCII"
 msgid "_Raw"
 msgstr "_Bruto"
 
-#: plug-ins/common/file-ps.c:381 plug-ins/common/file-ps.c:494
+#: plug-ins/common/file-ps.c:336 plug-ins/common/file-ps.c:449
 msgid "PostScript document"
 msgstr "Documento PostScript"
 
-#: plug-ins/common/file-ps.c:398 plug-ins/common/file-ps.c:511
+#: plug-ins/common/file-ps.c:353
 msgid "Encapsulated PostScript image"
 msgstr "Imagen de PostScript encapsulado"
 
-#: plug-ins/common/file-ps.c:762
+#: plug-ins/common/file-ps.c:377
+msgid "Resol_ution"
+msgstr "Resol_ución"
+
+# //R ¿Está bien traducido?
+#: plug-ins/common/file-ps.c:395
+msgid "Try _Bounding Box"
+msgstr "Intentar con cajas de _contorno"
+
+#: plug-ins/common/file-ps.c:401
+msgid "_Pages"
+msgstr "_Páginas"
+
+#: plug-ins/common/file-ps.c:407
+msgid "Coloring"
+msgstr "Coloreado"
+
+#: plug-ins/common/file-ps.c:413
+msgid "Text antialiasing"
+msgstr "Suavizado de texto"
+
+#: plug-ins/common/file-ps.c:419
+msgid "Graphic antialiasing"
+msgstr "Suavizado de gráficos"
+
+#: plug-ins/common/file-ps.c:459
+#| msgid "GPS"
+msgid "PS"
+msgstr "PS"
+
+#: plug-ins/common/file-ps.c:468
+msgid "Encapsulated PostScript"
+msgstr "PostScript encapsulado"
+
+#: plug-ins/common/file-ps.c:479
+#| msgid "GPS"
+msgid "EPS"
+msgstr "EPS"
+
+#: plug-ins/common/file-ps.c:511
+msgid "_X offset"
+msgstr "Desplazamiento _X"
+
+#: plug-ins/common/file-ps.c:517
+msgid "Y o_ffset"
+msgstr "Des_plazamiento Y"
+
+#: plug-ins/common/file-ps.c:523
+msgid "Unit"
+msgstr "Unidad"
+
+#: plug-ins/common/file-ps.c:530
+msgid "_Keep aspect ratio"
+msgstr "_Mantener proporción"
+
+#: plug-ins/common/file-ps.c:536 plug-ins/map-object/map-object-ui.c:1013
+msgid "Rotation"
+msgstr "Rotación"
+
+#: plug-ins/common/file-ps.c:542
+msgid "PostScript Level _2"
+msgstr "PostScript nivel _2"
+
+#: plug-ins/common/file-ps.c:554 plug-ins/imagemap/imap_grid.c:298
+msgid "_Preview"
+msgstr "Vista _previa"
+
+#: plug-ins/common/file-ps.c:560
+msgid "Preview Si_ze"
+msgstr "Ta_maño de vista previa"
+
+#: plug-ins/common/file-ps.c:722
 msgid "PostScript plug-in does not support multiple layers."
 msgstr "El complemento PostScript no soporta múltiples capas."
 
-#: plug-ins/common/file-ps.c:1160
+#: plug-ins/common/file-ps.c:1136
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "No se puede interpretar el archivo PostScript «%s»"
 
-#: plug-ins/common/file-ps.c:1246
+#: plug-ins/common/file-ps.c:1220
 msgid "Rendered EPS"
 msgstr "EPS renderizado"
 
-#: plug-ins/common/file-ps.c:1274
+#: plug-ins/common/file-ps.c:1248
 #, c-format
 msgid "%s-pages"
 msgstr "%s-páginas"
 
-#: plug-ins/common/file-ps.c:1345
+#: plug-ins/common/file-ps.c:1320
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr ""
 "PostScript no puede manejar la exportación de imágenes con canales alfa"
 
-#: plug-ins/common/file-ps.c:3568
-msgid "Import from PostScript"
-msgstr "Importar PostScript de"
-
-#: plug-ins/common/file-ps.c:3573 plug-ins/file-tiff/file-tiff-load.c:2674
-#: plug-ins/metadata/metadata-editor.c:4635
-msgid "_Import"
-msgstr "_Importar"
-
-#. Rendering
-#: plug-ins/common/file-ps.c:3612
+#: plug-ins/common/file-ps.c:3728
 msgid "Rendering"
 msgstr "Renderizado"
 
-#. Resolution
-#: plug-ins/common/file-ps.c:3631 plug-ins/common/file-svg.c:945
-#: plug-ins/common/file-wmf.c:717
-msgid "Resolution:"
-msgstr "Resolución:"
-
-#: plug-ins/common/file-ps.c:3647 plug-ins/common/file-ps.c:3847
-#: plug-ins/common/smooth-palette.c:531 plug-ins/common/tile.c:519
-#: plug-ins/imagemap/imap_cmd_guides.c:163
-#: plug-ins/imagemap/imap_rectangle.c:398
-#: plug-ins/print/print-page-layout.c:286
-msgid "_Width:"
-msgstr "A_nchura:"
-
-#: plug-ins/common/file-ps.c:3660 plug-ins/common/file-ps.c:3858
-#: plug-ins/common/film.c:1067 plug-ins/common/smooth-palette.c:536
-#: plug-ins/common/tile.c:523 plug-ins/imagemap/imap_cmd_guides.c:173
-#: plug-ins/imagemap/imap_rectangle.c:405
-#: plug-ins/print/print-page-layout.c:288
-msgid "_Height:"
-msgstr "A_ltura:"
-
-#: plug-ins/common/file-ps.c:3673
-msgid "Pages:"
-msgstr "Páginas:"
-
-#: plug-ins/common/file-ps.c:3680
-msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr "Páginas a cargar (ej: 1-4 o 1,3,5-7)"
-
-#: plug-ins/common/file-ps.c:3685 plug-ins/common/sphere-designer.c:2728
-msgid "Layers"
-msgstr "Capas"
-
-#: plug-ins/common/file-ps.c:3688
-msgid "Images"
-msgstr "Imágenes"
-
-#: plug-ins/common/file-ps.c:3691
-msgid "Open as"
-msgstr "Abrir como"
-
-# //R ¿Está bien traducido?
-#: plug-ins/common/file-ps.c:3695
-msgid "Try Bounding Box"
-msgstr "Intentar con cajas de contorno"
-
 #. Coloring
-#: plug-ins/common/file-ps.c:3708
-msgid "Coloring"
-msgstr "Coloreado"
-
-#: plug-ins/common/file-ps.c:3712
+#: plug-ins/common/file-ps.c:3735
 msgid "B/W"
 msgstr "B/N"
 
-#: plug-ins/common/file-ps.c:3713
+#: plug-ins/common/file-ps.c:3736
 msgid "Gray"
 msgstr "Gris"
 
-#: plug-ins/common/file-ps.c:3714 plug-ins/common/file-xpm.c:505
+#: plug-ins/common/file-ps.c:3737 plug-ins/common/file-xpm.c:505
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:169
 msgid "Color"
 msgstr "Color"
 
-#: plug-ins/common/file-ps.c:3726
-msgid "Text antialiasing"
-msgstr "Suavizado de texto"
-
-#: plug-ins/common/file-ps.c:3730 plug-ins/common/file-ps.c:3742
-msgctxt "antialiasing"
-msgid "None"
-msgstr "Ninguno"
-
-#: plug-ins/common/file-ps.c:3731 plug-ins/common/file-ps.c:3743
+#: plug-ins/common/file-ps.c:3745 plug-ins/common/file-ps.c:3753
 msgid "Weak"
 msgstr "Débil"
 
-#: plug-ins/common/file-ps.c:3732 plug-ins/common/file-ps.c:3744
+#: plug-ins/common/file-ps.c:3746 plug-ins/common/file-ps.c:3754
 msgid "Strong"
 msgstr "Fuerte"
 
-#: plug-ins/common/file-ps.c:3738
-msgid "Graphic antialiasing"
-msgstr "Suavizado de gráficos"
+#: plug-ins/common/file-ps.c:3780
+msgid "Pages:"
+msgstr "Páginas:"
 
-#: plug-ins/common/file-ps.c:3812
-msgid "PostScript"
-msgstr "PostScript"
+#: plug-ins/common/file-ps.c:3784
+msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
+msgstr "Páginas a cargar (ej: 1-4 o 1,3,5-7)"
 
-#. Image Size
-#: plug-ins/common/file-ps.c:3829
-msgid "Image Size"
-msgstr "Tamaño de imagen"
+#: plug-ins/common/file-ps.c:3790
+msgid "Open as"
+msgstr "Abrir como"
 
-#: plug-ins/common/file-ps.c:3869
-msgid "_X offset:"
-msgstr "Desplazamiento _X:"
-
-#: plug-ins/common/file-ps.c:3880
-msgid "_Y offset:"
-msgstr "Desplazamiento _Y:"
-
-#: plug-ins/common/file-ps.c:3886
-msgid "_Keep aspect ratio"
-msgstr "_Mantener proporción"
-
-#: plug-ins/common/file-ps.c:3892
+#: plug-ins/common/file-ps.c:3883
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -4481,44 +4470,39 @@ msgstr ""
 "Si se activa la imagen resultante será redimensionada de manera que quepa en "
 "el tamaño dado sin cambiar la proporción."
 
-#. Unit
-#: plug-ins/common/file-ps.c:3902
-msgid "Unit"
-msgstr "Unidad"
+#: plug-ins/common/file-ps.c:3889
+msgid "Image Size"
+msgstr "Tamaño de imagen"
 
-#: plug-ins/common/file-ps.c:3906
+#. Unit
+#: plug-ins/common/file-ps.c:3900
 msgid "_Inch"
 msgstr "P_ulgada"
 
-#: plug-ins/common/file-ps.c:3907
+#: plug-ins/common/file-ps.c:3901
 msgid "_Millimeter"
 msgstr "_Milímetro"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3918 plug-ins/map-object/map-object-ui.c:1013
-msgid "Rotation"
-msgstr "Rotación"
+#: plug-ins/common/file-ps.c:3914
+msgid "_0"
+msgstr "_0"
 
-#. Format
-#: plug-ins/common/file-ps.c:3933
+#: plug-ins/common/file-ps.c:3915
+msgid "_90"
+msgstr "_90"
+
+#: plug-ins/common/file-ps.c:3916
+msgid "_180"
+msgstr "_180"
+
+#: plug-ins/common/file-ps.c:3917
+msgid "_270"
+msgstr "_270"
+
+#: plug-ins/common/file-ps.c:3924
 msgid "Output"
 msgstr "Salida"
-
-#: plug-ins/common/file-ps.c:3939
-msgid "_PostScript level 2"
-msgstr "_PostScript nivel 2"
-
-#: plug-ins/common/file-ps.c:3948
-msgid "_Encapsulated PostScript"
-msgstr "PostScript _encapsulado"
-
-#: plug-ins/common/file-ps.c:3957
-msgid "P_review"
-msgstr "Vista p_revia"
-
-#: plug-ins/common/file-ps.c:3981
-msgid "Preview _size:"
-msgstr "Tamaño de la vi_sta previa:"
 
 #: plug-ins/common/file-psp.c:664 plug-ins/common/file-psp.c:694
 msgid "Paint Shop Pro image"
@@ -5152,6 +5136,11 @@ msgstr "Proporción _Y:"
 #: plug-ins/common/file-svg.c:940 plug-ins/common/file-wmf.c:712
 msgid "Constrain aspect ratio"
 msgstr "Restringir la proporción"
+
+#. Resolution
+#: plug-ins/common/file-svg.c:945 plug-ins/common/file-wmf.c:717
+msgid "Resolution:"
+msgstr "Resolución:"
 
 #. Path Import
 #: plug-ins/common/file-svg.c:971
@@ -5801,6 +5790,13 @@ msgstr "Película"
 msgid "_Fit height to images"
 msgstr "A_justar altura a las imágenes"
 
+#: plug-ins/common/film.c:1067 plug-ins/common/smooth-palette.c:536
+#: plug-ins/common/tile.c:523 plug-ins/imagemap/imap_cmd_guides.c:173
+#: plug-ins/imagemap/imap_rectangle.c:405
+#: plug-ins/print/print-page-layout.c:288
+msgid "_Height:"
+msgstr "A_ltura:"
+
 #. Film color
 #: plug-ins/common/film.c:1088
 msgid "Select Film Color"
@@ -6442,6 +6438,13 @@ msgstr "Derivando paleta suavizada"
 msgid "Smooth Palette"
 msgstr "Suavizar paleta"
 
+#: plug-ins/common/smooth-palette.c:531 plug-ins/common/tile.c:519
+#: plug-ins/imagemap/imap_cmd_guides.c:163
+#: plug-ins/imagemap/imap_rectangle.c:398
+#: plug-ins/print/print-page-layout.c:286
+msgid "_Width:"
+msgstr "A_nchura:"
+
 #: plug-ins/common/smooth-palette.c:550
 msgid "_Search depth:"
 msgstr "Profundidad de la bú_squeda:"
@@ -6674,6 +6677,10 @@ msgstr "Guardar archivo"
 #: plug-ins/common/sphere-designer.c:2627
 msgid "Sphere Designer"
 msgstr "Diseñador de esferas"
+
+#: plug-ins/common/sphere-designer.c:2728
+msgid "Layers"
+msgstr "Capas"
 
 #: plug-ins/common/sphere-designer.c:2739
 #: plug-ins/gradient-flare/gradient-flare.c:3081
@@ -7477,7 +7484,6 @@ msgid "Loads files of Windows BMP file format"
 msgstr "Carga archivos con formato BMP de Windows"
 
 #: plug-ins/file-bmp/bmp.c:180
-#| msgid "XMP"
 msgid "BMP"
 msgstr "BMP"
 
@@ -7990,7 +7996,7 @@ msgstr ""
 
 #. ----- Open PSD file -----
 #: plug-ins/file-icns/file-icns-load.c:558 plug-ins/file-ico/ico-load.c:983
-#: plug-ins/file-jpeg/jpeg-load.c:540 plug-ins/file-psd/psd-thumb-load.c:72
+#: plug-ins/file-jpeg/jpeg-load.c:600 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-darktable.c:513
 #: plug-ins/file-raw/file-rawtherapee.c:455
 #, c-format
@@ -8192,9 +8198,17 @@ msgstr "Nombre del cursor (opcional)"
 msgid "Cursor Author (Optional)"
 msgstr "Autor del cursor (opcional)"
 
-#: plug-ins/file-jpeg/jpeg-load.c:215
+#: plug-ins/file-jpeg/jpeg-load.c:221
 msgid "JPEG preview"
 msgstr "Vista previa JPEG"
+
+#: plug-ins/file-jpeg/jpeg-load.c:485
+#, c-format
+msgid ""
+"Error trying to open temporary %s file '%s' for jpeg metadata loading: %s"
+msgstr ""
+"Error al intentar abrir el archivo %s temporal «%s» para la carga de "
+"metadatos jpeg: %s"
 
 #: plug-ins/file-jpeg/jpeg-save.c:139 plug-ins/file-jpeg/jpeg-save.c:146
 #, c-format
@@ -8278,114 +8292,110 @@ msgstr ""
 msgid "Use restart mar_kers"
 msgstr "Usar mar_cadores de reinicio"
 
-#: plug-ins/file-jpeg/jpeg.c:489
+#: plug-ins/file-jpeg/jpeg.c:490
 msgid "JPEG format does not support multiple layers."
 msgstr "El formato JPEG no soporta múltiples capas."
 
-#: plug-ins/file-psd/psd-load.c:286 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:291 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Ocurrió un error al cargar el archivo PSD: %s"
 
-#: plug-ins/file-psd/psd-load.c:339
+#: plug-ins/file-psd/psd-load.c:475
 msgid "Not a valid Photoshop document file"
 msgstr "Este archivo no es un documento de Photoshop válido"
 
-#: plug-ins/file-psd/psd-load.c:346
+#: plug-ins/file-psd/psd-load.c:482
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Versión del formato de archivo no soportada: %d"
 
-#: plug-ins/file-psd/psd-load.c:353
+#: plug-ins/file-psd/psd-load.c:489
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Demasiados canales en el archivo: %d"
 
-#: plug-ins/file-psd/psd-load.c:377
+#: plug-ins/file-psd/psd-load.c:513
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Tamaño de imagen no soportado o no válido: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:392 plug-ins/file-psd/psd-load.c:403
+#: plug-ins/file-psd/psd-load.c:528 plug-ins/file-psd/psd-load.c:539
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Modo de color no soportado: %s"
 
-#: plug-ins/file-psd/psd-load.c:430
+#: plug-ins/file-psd/psd-load.c:566
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Profundidad de bits no soportada: %d"
 
-#: plug-ins/file-psd/psd-load.c:464 plug-ins/file-psd/psd-load.c:474
-#: plug-ins/file-psd/psd-load.c:687 plug-ins/file-psd/psd-load.c:1033
+#: plug-ins/file-psd/psd-load.c:600 plug-ins/file-psd/psd-load.c:610
+#: plug-ins/file-psd/psd-load.c:823 plug-ins/file-psd/psd-load.c:1169
 msgid "The file is corrupt!"
 msgstr "El archivo está corrupto."
 
-#: plug-ins/file-psd/psd-load.c:638
+#: plug-ins/file-psd/psd-load.c:774
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Demasiados canales en la capa: %d"
 
-#: plug-ins/file-psd/psd-load.c:722
+#: plug-ins/file-psd/psd-load.c:858
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Altura de la capa no soportada o no válida: %d"
 
-#: plug-ins/file-psd/psd-load.c:731
+#: plug-ins/file-psd/psd-load.c:867
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Anchura de la capa no soportada o no válida: %d"
 
-#: plug-ins/file-psd/psd-load.c:741
+#: plug-ins/file-psd/psd-load.c:877
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Tamaño de la capa no soportado o no válido: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:761
+#: plug-ins/file-psd/psd-load.c:897
 msgid "Unsupported or invalid mask info size."
 msgstr "Tamaño de info. de máscara no soportado o no válido."
 
-#: plug-ins/file-psd/psd-load.c:938
+#: plug-ins/file-psd/psd-load.c:1074
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Altura de la máscara de capa no soportada o no válida: %d"
 
-#: plug-ins/file-psd/psd-load.c:947
+#: plug-ins/file-psd/psd-load.c:1083
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Anchura de la máscara de capa no soportada o no válida: %d"
 
-#: plug-ins/file-psd/psd-load.c:957
+#: plug-ins/file-psd/psd-load.c:1093
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Tamaño de la máscara de capa no soportado o no válido: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1843 plug-ins/file-psd/psd-load.c:2483
+#: plug-ins/file-psd/psd-load.c:1986 plug-ins/file-psd/psd-load.c:2626
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Modo de compresión no soportado: %d"
 
-#: plug-ins/file-psd/psd-load.c:2676
+#: plug-ins/file-psd/psd-load.c:2819
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:2876
+#: plug-ins/file-psd/psd-load.c:3019
 msgid "Unsupported or invalid channel size"
 msgstr "Tamaño del canal no soportado o no válido"
 
-#: plug-ins/file-psd/psd-load.c:2945
+#: plug-ins/file-psd/psd-load.c:3088
 msgid "Failed to decompress data"
 msgstr "Error al descomprimir los datos"
 
-#: plug-ins/file-psd/psd-load.c:3305
-msgid "Import PSD"
-msgstr "Importar PSD"
-
-#: plug-ins/file-psd/psd-load.c:3324
+#: plug-ins/file-psd/psd-load.c:3469
 msgid "Duotone Import"
 msgstr "Importación Bitonal"
 
-#: plug-ins/file-psd/psd-load.c:3325
+#: plug-ins/file-psd/psd-load.c:3470
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -8395,11 +8405,11 @@ msgstr ""
 "Se han guardado los datos del espacio de color Bitonal\n"
 "y se pueden reaplicar en la exportación."
 
-#: plug-ins/file-psd/psd-load.c:3347 plug-ins/file-psd/psd-save.c:2662
+#: plug-ins/file-psd/psd-load.c:3492 plug-ins/file-psd/psd-save.c:2662
 msgid "Compatibility Notice"
 msgstr "Aviso de compatibilidad"
 
-#: plug-ins/file-psd/psd-load.c:3348
+#: plug-ins/file-psd/psd-load.c:3493
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -8407,49 +8417,53 @@ msgstr ""
 "Este archivo PSD contiene características que\n"
 "aún no son totalmente compatibles con GIMP:"
 
-#: plug-ins/file-psd/psd-load.c:3362
+#: plug-ins/file-psd/psd-load.c:3507
 msgid "Adjustment layers are not yet supported and will be dropped."
 msgstr "Las capas de ajuste aún no son compatibles y se eliminarán."
 
-#: plug-ins/file-psd/psd-load.c:3366
+#: plug-ins/file-psd/psd-load.c:3511 plug-ins/file-psd/psd.c:562
+msgid "Metadata fill layers are not supported and will be dropped."
+msgstr "Las capas de relleno de metadatos no son compatibles y se eliminarán."
+
+#: plug-ins/file-psd/psd-load.c:3515
 msgid ""
 "Fill layers are partially supported and will be converted to raster layers."
 msgstr ""
 "Las capas de relleno se admiten parcialmente y se convertirán en capas "
 "ráster."
 
-#: plug-ins/file-psd/psd-load.c:3371
+#: plug-ins/file-psd/psd-load.c:3520
 msgid ""
 "Text layers are partially supported and will be converted to raster layers."
 msgstr ""
 "Las capas de texto son parcialmente compatibles y se convertirán en capas "
 "ráster."
 
-#: plug-ins/file-psd/psd-load.c:3376
+#: plug-ins/file-psd/psd-load.c:3525
 msgid "Linked layers are not yet supported and will be dropped."
 msgstr "Las capas vinculadas aún no son compatibles y se eliminarán."
 
-#: plug-ins/file-psd/psd-load.c:3380
+#: plug-ins/file-psd/psd-load.c:3529
 msgid ""
 "Vector masks are partially supported and will be converted to raster layers."
 msgstr ""
 "Las máscaras vectoriales son parcialmente compatibles y se convertirán en "
 "capas ráster."
 
-#: plug-ins/file-psd/psd-load.c:3385
+#: plug-ins/file-psd/psd-load.c:3534
 msgid "Vector strokes are not yet supported and will be dropped."
 msgstr "Los trazos vectoriales aún no son compatibles y se eliminarán."
 
-#: plug-ins/file-psd/psd-load.c:3389
+#: plug-ins/file-psd/psd-load.c:3538
 msgid "Layer effects are not yet supported and will be dropped."
 msgstr "Los efectos de capa aún no son compatibles y se eliminarán."
 
-#: plug-ins/file-psd/psd-load.c:3393
+#: plug-ins/file-psd/psd-load.c:3542
 msgid "Smart objects are not yet supported and will be dropped."
 msgstr "Los objetos inteligentes aún no son compatibles y se eliminarán."
 
 #. Translators: short for layer compositions
-#: plug-ins/file-psd/psd-load.c:3398
+#: plug-ins/file-psd/psd-load.c:3547
 msgid "Layer comps are not yet supported and will be dropped."
 msgstr "Las composiciones de capas aún no son compatibles y se eliminarán."
 
@@ -8516,27 +8530,27 @@ msgstr ""
 msgid "Unexpected end of file"
 msgstr "Final prematuro del archivo"
 
-#: plug-ins/file-psd/psd.c:125 plug-ins/file-psd/psd.c:205
+#: plug-ins/file-psd/psd.c:131 plug-ins/file-psd/psd.c:211
 msgid "Photoshop image"
 msgstr "Imagen de Photoshop"
 
-#: plug-ins/file-psd/psd.c:154
+#: plug-ins/file-psd/psd.c:160
 msgid "Photoshop image (merged)"
 msgstr "Imagen de Photoshop (combinada)"
 
-#: plug-ins/file-psd/psd.c:228
+#: plug-ins/file-psd/psd.c:234
 msgid "Assign a Clipping _Path"
 msgstr "Asignar una _ruta de recorte"
 
-#: plug-ins/file-psd/psd.c:229
+#: plug-ins/file-psd/psd.c:235
 msgid "Select a path to be the clipping path"
 msgstr "Seleccione una ruta para que sea la ruta de recorte"
 
-#: plug-ins/file-psd/psd.c:235
+#: plug-ins/file-psd/psd.c:241
 msgid "Clipping Path _Name"
 msgstr "_Nombre de la ruta de recorte"
 
-#: plug-ins/file-psd/psd.c:236
+#: plug-ins/file-psd/psd.c:242
 msgid ""
 "Clipping path name\n"
 "(ignored if no clipping path)"
@@ -8544,11 +8558,11 @@ msgstr ""
 "Nombre de la ruta de recorte\n"
 "(ignorado si no hay ruta de recorte)"
 
-#: plug-ins/file-psd/psd.c:242
+#: plug-ins/file-psd/psd.c:248
 msgid "Path _Flatness"
 msgstr "_Planitud de la ruta"
 
-#: plug-ins/file-psd/psd.c:243
+#: plug-ins/file-psd/psd.c:249
 msgid ""
 "Clipping path flatness in device pixels\n"
 "(ignored if no clipping path)"
@@ -8556,25 +8570,33 @@ msgstr ""
 "Planitud de la ruta de recorte en píxeles del dispositivo\n"
 "(se ignora si no hay ruta de recorte)"
 
-#: plug-ins/file-psd/psd.c:249
+#: plug-ins/file-psd/psd.c:255
 msgid "Export as _CMYK"
 msgstr "Exportar como _CMYK"
 
-#: plug-ins/file-psd/psd.c:250
+#: plug-ins/file-psd/psd.c:256
 msgid "Export a CMYK PSD image using the soft-proofing color profile"
 msgstr "Exportar una imagen PSD CMYK utilizando el perfil de color de prueba"
 
-#: plug-ins/file-psd/psd.c:255
+#: plug-ins/file-psd/psd.c:261
 msgid "Export as _Duotone"
 msgstr "Exportar como _Bitonal"
 
-#: plug-ins/file-psd/psd.c:256
+#: plug-ins/file-psd/psd.c:262
 msgid ""
 "Export as a Duotone PSD file if Duotone color space information was attached "
 "to the image when originally imported."
 msgstr ""
 "Exportar como un archivo PSD Bitonal si la información del espacio de color "
 "Bitonal estaba incluida en la imagen cuando se importó originalmente."
+
+#: plug-ins/file-psd/psd.c:361
+msgid "Import PSD"
+msgstr "Importar PSD"
+
+#: plug-ins/file-psd/psd.c:558
+msgid "Import PSD metadata"
+msgstr "Importar metadatos PSD"
 
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
@@ -8772,22 +8794,22 @@ msgstr "Imagen TIFF o BigTIFF"
 msgid "TIFF"
 msgstr "TIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:457
+#: plug-ins/file-tiff/file-tiff.c:459
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
 "La opción «Guardar capas» no está activada al intentar exportar múltiples "
 "capas."
 
-#: plug-ins/file-tiff/file-tiff-load.c:297
+#: plug-ins/file-tiff/file-tiff-load.c:298
 msgid "Not a TIFF image or image is corrupt."
 msgstr "No es una imagen TIFF o la imagen está corrupta."
 
-#: plug-ins/file-tiff/file-tiff-load.c:328
+#: plug-ins/file-tiff/file-tiff-load.c:329
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "El TIFF «%s» no contiene ninguna carpeta"
 
-#: plug-ins/file-tiff/file-tiff-load.c:335
+#: plug-ins/file-tiff/file-tiff-load.c:336
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -8802,7 +8824,7 @@ msgstr[1] ""
 "La cuenta de la carpeta del TIFF «%s»  del encabezado falló aunque parece "
 "haber %d páginas. Se intentará cargar el archivo suponiendo esto."
 
-#: plug-ins/file-tiff/file-tiff-load.c:466
+#: plug-ins/file-tiff/file-tiff-load.c:467
 msgid "Extra channels with unspecified data."
 msgstr "Canales adicionales con datos sin especificar."
 
@@ -8813,17 +8835,17 @@ msgstr "Canales adicionales con datos sin especificar."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:478
+#: plug-ins/file-tiff/file-tiff-load.c:479
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "TIFF no conforme: canales adicionales sin el campo «ExtraSamples»."
 
-#: plug-ins/file-tiff/file-tiff-load.c:572
+#: plug-ins/file-tiff/file-tiff-load.c:573
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 "No se pudo leer la página %d de %d. Puede que la imagen esté corrupta.\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:601
+#: plug-ins/file-tiff/file-tiff-load.c:602
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -8833,7 +8855,7 @@ msgstr ""
 "primera capa. Las capas debajo de la capa n.º %d se interpretarán como no "
 "lineal."
 
-#: plug-ins/file-tiff/file-tiff-load.c:609
+#: plug-ins/file-tiff/file-tiff-load.c:610
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -8843,36 +8865,36 @@ msgstr ""
 "llevara a resultados incorrectos debería considerar cargar cada capa como "
 "una imagen separada."
 
-#: plug-ins/file-tiff/file-tiff-load.c:621
+#: plug-ins/file-tiff/file-tiff-load.c:622
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 "Profundidad de bits sospechosa: %d en la página %d. Puede que la imagen esté "
 "dañada."
 
-#: plug-ins/file-tiff/file-tiff-load.c:695
+#: plug-ins/file-tiff/file-tiff-load.c:696
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Profundidad de bits no soportada: %d en la página %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:710
+#: plug-ins/file-tiff/file-tiff-load.c:711
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "No se pudo obtener la anchura de la imagen de «%s»"
 
-#: plug-ins/file-tiff/file-tiff-load.c:718
+#: plug-ins/file-tiff/file-tiff-load.c:719
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "No se pudo obtener la longitud de la imagen de «%s»"
 
-#: plug-ins/file-tiff/file-tiff-load.c:726
+#: plug-ins/file-tiff/file-tiff-load.c:727
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 "Dimensiones (%u x %u) de la imagen no válidas en la página %d. Puede que la "
 "imagen esté dañada."
 
-#: plug-ins/file-tiff/file-tiff-load.c:747
+#: plug-ins/file-tiff/file-tiff-load.c:748
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -8881,7 +8903,7 @@ msgstr ""
 "No se pudo obtener la fotometría de «%s». La imagen está comprimida en CCIT. "
 "Se supondrá que el mínimo es blanco"
 
-#: plug-ins/file-tiff/file-tiff-load.c:754
+#: plug-ins/file-tiff/file-tiff-load.c:755
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -8890,7 +8912,7 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:786
+#: plug-ins/file-tiff/file-tiff-load.c:787
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -8898,7 +8920,7 @@ msgstr ""
 "El tipo de canal alfa no está definido para %s. Se supondrá que alfa no está "
 "premultiplicado"
 
-#: plug-ins/file-tiff/file-tiff-load.c:811
+#: plug-ins/file-tiff/file-tiff-load.c:812
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -8909,44 +8931,44 @@ msgstr ""
 "ExtraSamples no está definido, sin embargo hay canales adicionales. Se "
 "supondrá que el primer canal adicional es alfa sin premultiplicar."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1099
+#: plug-ins/file-tiff/file-tiff-load.c:1101
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr ""
 "Compresión %u no válida o desconocida. Estableciendo la compresión a ninguna."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1157
+#: plug-ins/file-tiff/file-tiff-load.c:1159
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "No se pudo crear una imagen nueva: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1327
+#: plug-ins/file-tiff/file-tiff-load.c:1329
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Tipo de unidad de resolución %d desconocido, se supondrá dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1337
+#: plug-ins/file-tiff/file-tiff-load.c:1339
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 "Advertencia: se especificó la resolución sin un tipo de unidad, se supondrá "
 "dpi"
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1345
+#: plug-ins/file-tiff/file-tiff-load.c:1347
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 "Advertencia: no hay información sobre la resolución de «y», se supondrá la "
 "misma que «x»"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1362
+#: plug-ins/file-tiff/file-tiff-load.c:1364
 msgid "Invalid image resolution info, using default"
 msgstr ""
 "Información sobre la resolución de la imagen no válida, utilizando el valor "
 "predeterminado"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1421
+#: plug-ins/file-tiff/file-tiff-load.c:1423
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "No se pudieron obtener los mapas de color de «%s»"
@@ -8956,49 +8978,63 @@ msgstr "No se pudieron obtener los mapas de color de «%s»"
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1515
+#: plug-ins/file-tiff/file-tiff-load.c:1511
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "Número sospechoso de canales extra: %d. Imagen posiblemente corrupta."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1577
+#: plug-ins/file-tiff/file-tiff-load.c:1573
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1730
+#: plug-ins/file-tiff/file-tiff-load.c:1726
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "No se pudo leer ningún dato del TIFF «%s». Es probable que el archivo esté "
 "dañado."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1801
+#: plug-ins/file-tiff/file-tiff-load.c:1760
+#: plug-ins/file-tiff/file-tiff-load.c:1802
+#, c-format
+msgid ""
+"Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
+msgstr ""
+"Error al intentar abrir el archivo %s temporal «%s» para la carga de "
+"metadatos tiff: %s"
+
+#: plug-ins/file-tiff/file-tiff-load.c:1878
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 "%s: formato de imagen no admitido, no hay un cargador de RGBA disponible"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2113
-#: plug-ins/file-tiff/file-tiff-load.c:2310
+#: plug-ins/file-tiff/file-tiff-load.c:1993
+#: plug-ins/file-tiff/file-tiff-load.c:2190
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
 "Falló al leer la tesela. Puede que la imagen esté corrupta en la línea %d."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2122
-#: plug-ins/file-tiff/file-tiff-load.c:2319
+#: plug-ins/file-tiff/file-tiff-load.c:2002
+#: plug-ins/file-tiff/file-tiff-load.c:2199
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Falló al leer la línea de exploración. Puede que la imagen esté corrupta en "
 "la línea %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2669
+#: plug-ins/file-tiff/file-tiff-load.c:2549
 msgid "Import from TIFF"
 msgstr "Importar desde TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2690
+#: plug-ins/file-tiff/file-tiff-load.c:2554
+#: plug-ins/metadata/metadata-editor.c:4749
+msgid "_Import"
+msgstr "_Importar"
+
+#: plug-ins/file-tiff/file-tiff-load.c:2570
 msgid "_Show reduced images"
 msgstr "_Mostrar imágenes reducidas"
 
@@ -9006,23 +9042,23 @@ msgstr "_Mostrar imágenes reducidas"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: plug-ins/file-tiff/file-tiff-load.c:2724
+#: plug-ins/file-tiff/file-tiff-load.c:2604
 msgid "_Keep empty space around imported layers"
 msgstr "_Mantener espacio vacío alrededor de capas importadas"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2741
+#: plug-ins/file-tiff/file-tiff-load.c:2621
 msgid "Process extra channel as:"
 msgstr "Procesar canal adicional como:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2744
+#: plug-ins/file-tiff/file-tiff-load.c:2624
 msgid "_Non-premultiplied alpha"
 msgstr "Alfa _no premultiplicado"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2745
+#: plug-ins/file-tiff/file-tiff-load.c:2625
 msgid "Pre_multiplied alpha"
 msgstr "Alfa pre_multiplicado"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2746
+#: plug-ins/file-tiff/file-tiff-load.c:2626
 msgid "Channe_l"
 msgstr "Cana_l"
 
@@ -11141,7 +11177,7 @@ msgid "Usage Terms"
 msgstr "Términos de uso"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:1507
-#: plug-ins/ui/plug-in-metadata-viewer.ui:211
+#: plug-ins/metadata/metadata-viewer.c:401
 msgid "IPTC"
 msgstr "IPTC"
 
@@ -11458,33 +11494,6 @@ msgstr "Fabricante del equipo"
 #: plug-ins/ui/plug-in-metadata-editor.ui:4831
 msgid "DICOM"
 msgstr "DICOM"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:55
-msgid "Exif Tag"
-msgstr "Etiqueta Exif"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:68
-#: plug-ins/ui/plug-in-metadata-viewer.ui:127
-#: plug-ins/ui/plug-in-metadata-viewer.ui:189
-msgctxt "A tag value"
-msgid "Value"
-msgstr "Valor"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:87
-msgid "Exif"
-msgstr "Exif"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:114
-msgid "XMP Tag"
-msgstr "Etiqueta XMP"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:149
-msgid "XMP"
-msgstr "XMP"
-
-#: plug-ins/ui/plug-in-metadata-viewer.ui:176
-msgid "IPTC Tag"
-msgstr "Etiqueta IPTC"
 
 #: plug-ins/gradient-flare/gradient-flare.c:750
 msgid "Addition"
@@ -12390,10 +12399,6 @@ msgstr "píx_eles desde la izquierda"
 msgid "pixels from _top"
 msgstr "píxeles desde _arriba"
 
-#: plug-ins/imagemap/imap_grid.c:298
-msgid "_Preview"
-msgstr "Vista _previa"
-
 #: plug-ins/imagemap/imap_main.c:220
 msgid "_Image Map..."
 msgstr "_Mapa de imagen…"
@@ -13272,20 +13277,15 @@ msgstr "Importar metadatos"
 msgid "Export metadata"
 msgstr "Exportar metadatos"
 
-#: plug-ins/metadata/metadata-editor.c:929
-#, c-format
-msgid "Error loading calendar. %s"
-msgstr "Error al cargar el calendario. %s"
+#: plug-ins/metadata/metadata-editor.c:933
+msgid "Choose Date"
+msgstr "Elegir fecha"
 
-#: plug-ins/metadata/metadata-editor.c:957
-msgid "Calendar Date:"
-msgstr "Fecha del calendario:"
-
-#: plug-ins/metadata/metadata-editor.c:961
+#: plug-ins/metadata/metadata-editor.c:937
 msgid "Set Date"
 msgstr "Establecer fecha"
 
-#: plug-ins/metadata/metadata-editor.c:1695
+#: plug-ins/metadata/metadata-editor.c:1671
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -13300,7 +13300,7 @@ msgstr ""
 "10deg 15' 20\" o 10° 15' 20\" o 10:15:20.45 o 10 15 20 o 10 15.30 o 10.45\n"
 "Borre todo el texto para quitar el valor actual."
 
-#: plug-ins/metadata/metadata-editor.c:1701
+#: plug-ins/metadata/metadata-editor.c:1677
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -13316,24 +13316,24 @@ msgstr ""
 "metros (m) o pies (ft)\n"
 "Borre todo el texto para quitar el valor actual."
 
-#: plug-ins/metadata/metadata-editor.c:1837
+#: plug-ins/metadata/metadata-editor.c:1813
 msgid "Unrated"
 msgstr "Sin puntuar"
 
-#: plug-ins/metadata/metadata-editor.c:3790
+#: plug-ins/metadata/metadata-editor.c:3773
 #, c-format
-msgid "Failed to set metadata tag %s"
-msgstr "No se pudo establecer la etiqueta de metadatos %s"
+msgid "Failed to set metadata tag %s: %s"
+msgstr "No se pudo establecer la etiqueta de metadatos %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:4631
+#: plug-ins/metadata/metadata-editor.c:4745
 msgid "Import Metadata File"
 msgstr "Importar archivo de metadatos"
 
-#: plug-ins/metadata/metadata-editor.c:4666
+#: plug-ins/metadata/metadata-editor.c:4780
 msgid "Export Metadata File"
 msgstr "Exportar archivo de metadatos"
 
-#: plug-ins/metadata/metadata-editor.c:4670
+#: plug-ins/metadata/metadata-editor.c:4784
 msgid "_Export"
 msgstr "_Exportar"
 
@@ -13533,29 +13533,45 @@ msgstr "_Ver los metadatos"
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Ver los metadatos (Exif, IPTC, XMP)"
 
-#: plug-ins/metadata/metadata-viewer.c:269
-msgid "Error loading metadata-viewer dialog."
-msgstr "Error al cargar el diálogo del visor de metadatos."
-
-#: plug-ins/metadata/metadata-viewer.c:280
+#: plug-ins/metadata/metadata-viewer.c:265
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Visor de metadatos: %s"
 
-#: plug-ins/metadata/metadata-viewer.c:372
+#: plug-ins/metadata/metadata-viewer.c:308
+msgid "Exif Tag"
+msgstr "Etiqueta Exif"
+
+#: plug-ins/metadata/metadata-viewer.c:325
+msgid "Exif"
+msgstr "Exif"
+
+#: plug-ins/metadata/metadata-viewer.c:346
+msgid "XMP Tag"
+msgstr "Etiqueta XMP"
+
+#: plug-ins/metadata/metadata-viewer.c:363
+msgid "XMP"
+msgstr "XMP"
+
+#: plug-ins/metadata/metadata-viewer.c:384
+msgid "IPTC Tag"
+msgstr "Etiqueta IPTC"
+
+#: plug-ins/metadata/metadata-viewer.c:481
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(%lu caracteres más)"
 
-#: plug-ins/metadata/metadata-viewer.c:619
+#: plug-ins/metadata/metadata-viewer.c:728
 msgid " meter"
 msgstr " medidor"
 
-#: plug-ins/metadata/metadata-viewer.c:620
+#: plug-ins/metadata/metadata-viewer.c:729
 msgid " feet"
 msgstr " pies"
 
-#: plug-ins/metadata/metadata-viewer.c:788
+#: plug-ins/metadata/metadata-viewer.c:897
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu bytes más)"
@@ -14100,6 +14116,38 @@ msgstr "_Escáner/Cámara…"
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Transfiriendo datos desde el escáner/cámara"
+
+#~ msgid "Import from PostScript"
+#~ msgstr "Importar PostScript de"
+
+#~ msgid "Images"
+#~ msgstr "Imágenes"
+
+#~ msgctxt "antialiasing"
+#~ msgid "None"
+#~ msgstr "Ninguno"
+
+#~ msgid "PostScript"
+#~ msgstr "PostScript"
+
+#~ msgid "P_review"
+#~ msgstr "Vista p_revia"
+
+#~ msgid "Preview _size:"
+#~ msgstr "Tamaño de la vi_sta previa:"
+
+#~ msgctxt "A tag value"
+#~ msgid "Value"
+#~ msgstr "Valor"
+
+#~ msgid "Error loading calendar. %s"
+#~ msgstr "Error al cargar el calendario. %s"
+
+#~ msgid "Calendar Date:"
+#~ msgstr "Fecha del calendario:"
+
+#~ msgid "Error loading metadata-viewer dialog."
+#~ msgstr "Error al cargar el diálogo del visor de metadatos."
 
 #~ msgctxt "align-style"
 #~ msgid "None"
@@ -15026,9 +15074,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 
 #~ msgid "Advanced Filter Pack Options"
 #~ msgstr "Opciones avanzadas del paquete de filtros"
-
-#~ msgid "Preview Size"
-#~ msgstr "Tamaño de vista previa"
 
 #~ msgid "Transform image with the Mandelbrot Fractal"
 #~ msgstr "Transformar la imagen con el fractal de Mandelbrot"
@@ -16707,9 +16752,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 
 #~ msgid "_Foreground & background"
 #~ msgstr "_Frente y fondo"
-
-#~ msgid "C_hoose here:"
-#~ msgstr "E_lija aquí:"
 
 #~ msgid "First color"
 #~ msgstr "Primer color"
