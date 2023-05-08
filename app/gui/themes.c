@@ -85,8 +85,6 @@ themes_init (Gimp *gimp)
                                              themes_style_provider,
                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION + 1);
 
-  g_object_unref (themes_style_provider);
-
   g_signal_connect (config, "notify::theme",
                     G_CALLBACK (themes_theme_change_notify),
                     gimp);
