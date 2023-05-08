@@ -70,5 +70,6 @@ gint          gimp_object_name_collate    (GimpObject       *object1,
 gint64        gimp_object_get_memsize     (GimpObject       *object,
                                            gint64           *gui_size);
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpObject, g_object_unref);
 
 #endif  /* __GIMP_OBJECT_H__ */

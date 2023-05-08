@@ -21,12 +21,12 @@
 #ifndef __GIMP_ACTION_H__
 #define __GIMP_ACTION_H__
 
+G_BEGIN_DECLS
 
-#define GIMP_TYPE_ACTION               (gimp_action_get_type ())
-#define GIMP_ACTION(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ACTION, GimpAction))
-#define GIMP_IS_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ACTION))
-#define GIMP_ACTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE((obj), GIMP_TYPE_ACTION, GimpActionInterface))
+#include "core/gimpobject.h"
 
+#define GIMP_TYPE_ACTION (gimp_action_get_type ())
+G_DECLARE_INTERFACE (GimpAction, gimp_action, GIMP, ACTION, GimpObject)
 
 enum
 {
@@ -48,8 +48,6 @@ enum
   GIMP_ACTION_PROP_LAST = GIMP_ACTION_PROP_MAX_WIDTH_CHARS,
 };
 
-typedef struct _GimpActionInterface GimpActionInterface;
-
 struct _GimpActionInterface
 {
   GTypeInterface base_interface;
@@ -63,8 +61,6 @@ struct _GimpActionInterface
                                         const gchar **accels);
 };
 
-
-GType            gimp_action_get_type            (void) G_GNUC_CONST;
 
 void             gimp_action_init                (GimpAction       *action);
 
@@ -158,5 +154,6 @@ void              gimp_action_set_default_accels  (GimpAction      *action,
 void              gimp_action_set_menu_path       (GimpAction      *action,
                                                    const gchar     *menu_path);
 
+G_END_DECLS
 
 #endif  /* __GIMP_ACTION_H__ */
