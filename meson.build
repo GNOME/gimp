@@ -1986,7 +1986,7 @@ final_message = [
 '''  Test appdata         @0@'''.format(appstreamcli.found()),
 '',
 '''Documentation:''',
-'''  libgimp API Reference: @0@'''.format(gi_docgen.found()),
+'''  libgimp API Reference: @0@'''.format(gi_docgen.found() and have_gobject_introspection),
 '''  GObject Introspection: @0@'''.format(get_option('g-ir-doc')),
 '',
 '''Bug report URL: @0@'''.format(bug_report_url),

@@ -8,7 +8,7 @@ mkdb_args_common = [
   '--name-space=gimp',
 ]
 
-if gi_docgen.found()
+if gi_docgen.found() and have_gobject_introspection
   subdir('reference')
 endif
 
