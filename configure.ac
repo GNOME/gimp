@@ -3126,7 +3126,6 @@ plug-ins/fractal-explorer/examples/Makefile
 plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile
 plug-ins/gfig/images/Makefile
-plug-ins/ui/Makefile
 plug-ins/gimpressionist/Brushes/Makefile
 plug-ins/gimpressionist/Makefile
 plug-ins/gimpressionist/Paper/Makefile
