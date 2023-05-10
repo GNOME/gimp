@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-05-01 23:02+0000\n"
-"PO-Revision-Date: 2023-05-02 09:53+0300\n"
+"POT-Creation-Date: 2023-05-10 17:27+0000\n"
+"PO-Revision-Date: 2023-05-10 22:27+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -103,10 +103,10 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:1038
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
 #: plug-ins/map-object/map-object-ui.c:1317
-#: plug-ins/metadata/metadata-editor.c:598
-#: plug-ins/metadata/metadata-editor.c:936
-#: plug-ins/metadata/metadata-editor.c:4748
-#: plug-ins/metadata/metadata-editor.c:4783 plug-ins/pagecurl/pagecurl.c:496
+#: plug-ins/metadata/metadata-editor.c:1174
+#: plug-ins/metadata/metadata-editor.c:1670
+#: plug-ins/metadata/metadata-editor.c:5299
+#: plug-ins/metadata/metadata-editor.c:5334 plug-ins/pagecurl/pagecurl.c:496
 #: plug-ins/screenshot/screenshot.c:516
 #: plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_Cancel"
@@ -170,7 +170,7 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
 #: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
-#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3453
+#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3434
 #: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
@@ -521,7 +521,7 @@ msgstr "Вертикально"
 #: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
 #: plug-ins/file-fits/fits.c:542 plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2653 plug-ins/file-sgi/sgi.c:475
+#: plug-ins/file-psd/psd-load.c:2634 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1534
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gimpressionist/general.c:139
@@ -6211,11 +6211,10 @@ msgstr "Немає відповідностей"
 msgid "Plug-in Browser"
 msgstr "Огляд доповнень"
 
-#: plug-ins/common/plugin-browser.c:599
-#: plug-ins/ui/plug-in-metadata-editor.ui:1836
-#: plug-ins/ui/plug-in-metadata-editor.ui:3192
-#: plug-ins/ui/plug-in-metadata-editor.ui:3312
-#: plug-ins/ui/plug-in-metadata-editor.ui:3434
+#: plug-ins/common/plugin-browser.c:599 plug-ins/metadata/metadata-editor.c:605
+#: plug-ins/metadata/metadata-editor.c:641
+#: plug-ins/metadata/metadata-editor.c:648
+#: plug-ins/metadata/metadata-editor.c:655
 msgid "Name"
 msgstr "Назва"
 
@@ -8324,28 +8323,28 @@ msgstr "Непідтримувана чи хибна ширина маски: %d
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір маски: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1986 plug-ins/file-psd/psd-load.c:2626
+#: plug-ins/file-psd/psd-load.c:1967 plug-ins/file-psd/psd-load.c:2607
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Непідтримуваний метод стиснення: %d"
 
-#: plug-ins/file-psd/psd-load.c:2819
+#: plug-ins/file-psd/psd-load.c:2800
 msgid "Extra"
 msgstr "Додатково"
 
-#: plug-ins/file-psd/psd-load.c:3019
+#: plug-ins/file-psd/psd-load.c:3000
 msgid "Unsupported or invalid channel size"
 msgstr "Непідтримуваний чи некоректний розмір каналу"
 
-#: plug-ins/file-psd/psd-load.c:3088
+#: plug-ins/file-psd/psd-load.c:3069
 msgid "Failed to decompress data"
 msgstr "Не вдається розпакувати дані"
 
-#: plug-ins/file-psd/psd-load.c:3469
+#: plug-ins/file-psd/psd-load.c:3450
 msgid "Duotone Import"
 msgstr "Двотонове імпортування"
 
-#: plug-ins/file-psd/psd-load.c:3470
+#: plug-ins/file-psd/psd-load.c:3451
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -8355,11 +8354,11 @@ msgstr ""
 "Дані двотонового простору кольорів було збережено,\n"
 "їх можна повторно застосувати при експортуванні."
 
-#: plug-ins/file-psd/psd-load.c:3492 plug-ins/file-psd/psd-save.c:2662
+#: plug-ins/file-psd/psd-load.c:3473 plug-ins/file-psd/psd-save.c:2662
 msgid "Compatibility Notice"
 msgstr "Зауваження щодо сумісності"
 
-#: plug-ins/file-psd/psd-load.c:3493
+#: plug-ins/file-psd/psd-load.c:3474
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -8367,54 +8366,54 @@ msgstr ""
 "У цьому файлі PSD містяться можливості, підтримку\n"
 "яких ще не повністю реалізовано у GIMP:"
 
-#: plug-ins/file-psd/psd-load.c:3507
+#: plug-ins/file-psd/psd-load.c:3488
 msgid "Adjustment layers are not yet supported and will be dropped."
 msgstr "Підтримки шарів коригування ще не реалізовано, їх буде відкинуто."
 
-#: plug-ins/file-psd/psd-load.c:3511 plug-ins/file-psd/psd.c:562
+#: plug-ins/file-psd/psd-load.c:3492 plug-ins/file-psd/psd.c:562
 msgid "Metadata fill layers are not supported and will be dropped."
 msgstr ""
 "Підтримки шарів заповнення метаданих ще не реалізовано, їх буде відкинуто."
 
-#: plug-ins/file-psd/psd-load.c:3515
+#: plug-ins/file-psd/psd-load.c:3496
 msgid ""
 "Fill layers are partially supported and will be converted to raster layers."
 msgstr ""
 "Підтримку шарів заповнення реалізовано лише частково, їх буде перетворено на "
 "растрові шари."
 
-#: plug-ins/file-psd/psd-load.c:3520
+#: plug-ins/file-psd/psd-load.c:3501
 msgid ""
 "Text layers are partially supported and will be converted to raster layers."
 msgstr ""
 "Підтримку текстових шарів реалізовано лише частково, їх буде перетворено на "
 "растрові шари."
 
-#: plug-ins/file-psd/psd-load.c:3525
+#: plug-ins/file-psd/psd-load.c:3506
 msgid "Linked layers are not yet supported and will be dropped."
 msgstr "Підтримки пов'язаних шарів ще не реалізовано, їх буде відкинуто."
 
-#: plug-ins/file-psd/psd-load.c:3529
+#: plug-ins/file-psd/psd-load.c:3510
 msgid ""
 "Vector masks are partially supported and will be converted to raster layers."
 msgstr ""
 "Підтримку векторних масок реалізовано лише частково, їх буде перетворено на "
 "растрові шари."
 
-#: plug-ins/file-psd/psd-load.c:3534
+#: plug-ins/file-psd/psd-load.c:3515
 msgid "Vector strokes are not yet supported and will be dropped."
 msgstr "Підтримки векторних мазків ще не реалізовано, їх буде відкинуто."
 
-#: plug-ins/file-psd/psd-load.c:3538
+#: plug-ins/file-psd/psd-load.c:3519
 msgid "Layer effects are not yet supported and will be dropped."
 msgstr "Підтримки ефектів шарів ще не реалізовано, їх буде відкинуто."
 
-#: plug-ins/file-psd/psd-load.c:3542
+#: plug-ins/file-psd/psd-load.c:3523
 msgid "Smart objects are not yet supported and will be dropped."
 msgstr "Підтримки кмітливих об'єктів ще не реалізовано, їх буде відкинуто."
 
 #. Translators: short for layer compositions
-#: plug-ins/file-psd/psd-load.c:3547
+#: plug-ins/file-psd/psd-load.c:3528
 msgid "Layer comps are not yet supported and will be dropped."
 msgstr ""
 "Підтримки обробки обчислення шарів ще не реалізовано, їх буде відкинуто."
@@ -8987,7 +8986,7 @@ msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2554
-#: plug-ins/metadata/metadata-editor.c:4749
+#: plug-ins/metadata/metadata-editor.c:5300
 msgid "_Import"
 msgstr "_Імпортувати"
 
@@ -10366,7 +10365,7 @@ msgstr "Гама:"
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Змінити гаму (яскравість) вибраного пензля"
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:621
+#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1360
 msgid "Select:"
 msgstr "Вибір:"
 
@@ -10969,459 +10968,6 @@ msgid ""
 "influence"
 msgstr ""
 "В режимі \"Вороний\" лише найближчий до заданої точки sm-вектор має вплив"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:151
-msgid "Document Title"
-msgstr "Назва документа"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:168
-msgid "Author"
-msgstr "Автор"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:184
-msgid "Author Title"
-msgstr "Авторська назва"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:200
-#: plug-ins/ui/plug-in-metadata-editor.ui:505
-msgid "Description"
-msgstr "Опис"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:217
-msgid "Description Writer\t"
-msgstr "Автор опису\t"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:308
-msgid "Rating"
-msgstr "Рейтинг"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:343
-msgid "Keywords"
-msgstr "Ключові слова"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:397
-msgid "Copyright Status"
-msgstr "Авторські права"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:413
-#: plug-ins/ui/plug-in-metadata-editor.ui:2364
-msgid "Copyright Notice"
-msgstr "Зауваження щодо авторських прав"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:429
-msgid "Copyright URL"
-msgstr "URL авторських прав"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:546
-msgid "Address"
-msgstr "Адреса"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:563
-#: plug-ins/ui/plug-in-metadata-editor.ui:1038
-#: plug-ins/ui/plug-in-metadata-editor.ui:1564
-#: plug-ins/ui/plug-in-metadata-editor.ui:2069
-msgid "City"
-msgstr "Місто"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:579
-msgid "Postal Code\t"
-msgstr "Поштовий індекс\t"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:609
-#: plug-ins/ui/plug-in-metadata-editor.ui:1096
-#: plug-ins/ui/plug-in-metadata-editor.ui:1580
-msgid "State / Province"
-msgstr "Штат / провінція"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:625
-#: plug-ins/ui/plug-in-metadata-editor.ui:1157
-#: plug-ins/ui/plug-in-metadata-editor.ui:2099
-msgid "Country"
-msgstr "Країна"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:729
-msgid "Phone(s)"
-msgstr "Телефон(и)"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:746
-msgid "Email(s)"
-msgstr "Ел. адреса(и)"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:763
-msgid "Website(s)"
-msgstr "Сайт(и)"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:863
-msgid "Creation Date"
-msgstr "Дата створення"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:879
-msgid "Intellectual Genre"
-msgstr "Інтелектуальний жанр"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:895
-msgid "IPTC Scene Code"
-msgstr "Код сцени IPTC"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1021
-msgid "Sublocation\t"
-msgstr "Підрозділ\t"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1112
-msgid "ISO Country Code"
-msgstr "ISO-код країни"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1200
-msgid "IPTC Subject Code"
-msgstr "IPTC-код теми"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1217
-msgid "Headline"
-msgstr "Заголовок"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1272
-msgid "Urgency"
-msgstr "Терміновість"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1326
-msgid "Job Identifier\t"
-msgstr "Ідентифікатор роботи\t"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1342
-msgid "Instructions"
-msgstr "Інструкції"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1359
-msgid "Credit Line"
-msgstr "Рядок подяк"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1376
-#: plug-ins/ui/plug-in-metadata-editor.ui:2335
-msgid "Source"
-msgstr "Джерело"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1452
-msgid "Usage Terms"
-msgstr "Умови використання"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1507
-#: plug-ins/metadata/metadata-viewer.c:401
-msgid "IPTC"
-msgstr "IPTC"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1548
-#: plug-ins/ui/plug-in-metadata-editor.ui:2054
-msgid "Sublocation"
-msgstr "Підрозділ"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1597
-msgid "Person Shown"
-msgstr "Хто зображений"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1614
-msgid "Country Name"
-msgstr "Назва країни"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1673
-msgid "Country ISO-Code"
-msgstr "ISO-код країни"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1690
-#: plug-ins/ui/plug-in-metadata-editor.ui:2129
-msgid "World Region"
-msgstr "Частина світу"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1768
-msgid "Location Shown"
-msgstr "Зображене місце"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1785
-msgid "Featured Organization"
-msgstr "Рекомендована організація"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1802
-msgid "Event"
-msgstr "Подія"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1866
-#: plug-ins/ui/plug-in-metadata-editor.ui:1996
-#: plug-ins/ui/plug-in-metadata-editor.ui:2419
-#: plug-ins/ui/plug-in-metadata-editor.ui:2426
-#: plug-ins/ui/plug-in-metadata-editor.ui:2662
-#: plug-ins/ui/plug-in-metadata-editor.ui:2667
-#: plug-ins/ui/plug-in-metadata-editor.ui:3020
-#: plug-ins/ui/plug-in-metadata-editor.ui:3025
-#: plug-ins/ui/plug-in-metadata-editor.ui:3236
-#: plug-ins/ui/plug-in-metadata-editor.ui:3241
-#: plug-ins/ui/plug-in-metadata-editor.ui:3357
-#: plug-ins/ui/plug-in-metadata-editor.ui:3362
-#: plug-ins/ui/plug-in-metadata-editor.ui:3563
-#: plug-ins/ui/plug-in-metadata-editor.ui:3568
-#: plug-ins/ui/plug-in-metadata-editor.ui:3693
-#: plug-ins/ui/plug-in-metadata-editor.ui:3698
-msgid "Add an entry"
-msgstr "Додати елемент"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1891
-#: plug-ins/ui/plug-in-metadata-editor.ui:1973
-#: plug-ins/ui/plug-in-metadata-editor.ui:2395
-#: plug-ins/ui/plug-in-metadata-editor.ui:2400
-#: plug-ins/ui/plug-in-metadata-editor.ui:2688
-#: plug-ins/ui/plug-in-metadata-editor.ui:2693
-#: plug-ins/ui/plug-in-metadata-editor.ui:3046
-#: plug-ins/ui/plug-in-metadata-editor.ui:3051
-#: plug-ins/ui/plug-in-metadata-editor.ui:3262
-#: plug-ins/ui/plug-in-metadata-editor.ui:3267
-#: plug-ins/ui/plug-in-metadata-editor.ui:3383
-#: plug-ins/ui/plug-in-metadata-editor.ui:3388
-#: plug-ins/ui/plug-in-metadata-editor.ui:3589
-#: plug-ins/ui/plug-in-metadata-editor.ui:3594
-#: plug-ins/ui/plug-in-metadata-editor.ui:3719
-#: plug-ins/ui/plug-in-metadata-editor.ui:3724
-msgid "Remove an entry"
-msgstr "Видалити елемент"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1941
-msgid "Code"
-msgstr "Код"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2084
-msgid "Province / State"
-msgstr "Провінція / штат"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2114
-msgid "Country ISO Code"
-msgstr "ISO-код країни"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2261
-msgid "Artwork or Object"
-msgstr "Твір мистецтва або об'єкт"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2290
-msgid "Title"
-msgstr "Назва"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2305
-msgid "Date Created"
-msgstr "Дата створення"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2320
-msgid "Creator"
-msgstr "Розробник"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2349
-msgid "Source Inventory ID"
-msgstr "Ідентифікатор опису джерела"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2487
-msgid "Model Age"
-msgstr "Вік моделі"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2503
-msgid "Minor Model Age Disclosure"
-msgstr "Найменший вік моделі"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2519
-msgid "Model Release Status"
-msgstr "Статус релізу моделі"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2536
-msgid "Additional Model Info"
-msgstr "Додаткові дані про модель"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2633
-msgid "Model Release Identifier"
-msgstr "Ідентифікатор релізу моделі"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2760
-msgid "Image Supplier ID"
-msgstr "Ідентифікатор постачальника зображення"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2776
-msgid "Supplier's Image ID"
-msgstr "Ідентифікатор зображення від постачальника"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2792
-msgid "Registry Entry"
-msgstr "Запис в реєстрі"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2809
-msgid "Image Supplier Name"
-msgstr "Ім'я постачальника зображення"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2826
-msgid "Max. Available Width"
-msgstr "Найбільша доступна ширина"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2871
-msgid "Max. Available Height"
-msgstr "Найбільша доступна висота"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2888
-msgid "Digital Source Type"
-msgstr "Тип цифрового джерела"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2975
-msgid "Organization Identifier"
-msgstr "Ідентифікатор організації"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2990
-msgid "Item Identifier"
-msgstr "Ідентифікатор елемента"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3111
-msgid "Copyright Owner"
-msgstr "Правовласник"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3128
-msgid "Licensor"
-msgstr "Ліцензіар"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3145
-msgid "Property Release Status"
-msgstr "Статус релізу власника"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3162
-msgid "Image Creator"
-msgstr "Розробник зображення"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3206
-#: plug-ins/ui/plug-in-metadata-editor.ui:3327
-#: plug-ins/ui/plug-in-metadata-editor.ui:3449
-msgid "Identifier"
-msgstr "Ідентифікатор"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3464
-msgid "Phone Number 1"
-msgstr "Номер телефону 1"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3479
-msgid "Phone Type 1"
-msgstr "Тип телефону 1"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3492
-msgid "Phone Number 2"
-msgstr "Номер телефону 2"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3506
-msgid "Phone Type 2"
-msgstr "Тип телефону 2"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3519
-msgid "Email Address"
-msgstr "Електронна адреса"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3533
-msgid "Web Address"
-msgstr "Адреса сайту"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3664
-msgid "Property Release Identifier"
-msgstr "Ідентифікатор релізу власника"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3784
-msgid "IPTC Extension"
-msgstr "Розширення IPTC"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3826
-msgid "Supplemental Category"
-msgstr "Додаткова категорія"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3843
-msgid "Category"
-msgstr "Категорія"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3917
-msgid "Categories"
-msgstr "Категорії"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3959
-msgid "Longitude Reference"
-msgstr "Відлік довготи"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3975
-msgid "Longitude"
-msgstr "Довгота"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4006
-msgid "Altitude"
-msgstr "Висота"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4022
-msgid "Latitude"
-msgstr "Широта"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4052
-msgid "Latitude Reference"
-msgstr "Відлік широти"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4068
-msgid "Altitude Reference"
-msgstr "Відлік висоти"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4175
-msgid "GPS"
-msgstr "GPS"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4217
-msgid "Patient"
-msgstr "Пацієнт"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4234
-msgid "Patient ID"
-msgstr "Ідентифікатор пацієнта"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4250
-msgid "Date of Birth"
-msgstr "Дата народження"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4266
-msgid "Patient Sex"
-msgstr "Стать пацієнта"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4397
-msgid "Study ID"
-msgstr "Ідентифікатор дослідження"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4414
-msgid "Referring Physician"
-msgstr "Звернення до лікаря"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4430
-msgid "Study Date"
-msgstr "Дата дослідження"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4474
-msgid "Study Description"
-msgstr "Опис дослідження"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4510
-msgid "Series Number"
-msgstr "Число в серії"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4527
-msgid "Modality"
-msgstr "Модальність"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4544
-msgid "Series Date"
-msgstr "Дата серії"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4561
-msgid "Series Description"
-msgstr "Опис серії"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4751
-msgid "Equipment Institution"
-msgstr "Розташування обладнання"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4768
-msgid "Equipment Manufacturer"
-msgstr "Виробник обладнання"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4831
-msgid "DICOM"
-msgstr "DICOM"
 
 #: plug-ins/gradient-flare/gradient-flare.c:750
 msgid "Addition"
@@ -13168,45 +12714,463 @@ msgstr "Показати _каркас"
 msgid "Update preview _live"
 msgstr "Оновити перегляд _живих"
 
-#: plug-ins/metadata/metadata-editor.c:465
+#: plug-ins/metadata/metadata-editor.c:484
+msgid "Document Title"
+msgstr "Назва документа"
+
+#: plug-ins/metadata/metadata-editor.c:485
+msgid "Author"
+msgstr "Автор"
+
+#: plug-ins/metadata/metadata-editor.c:486
+msgid "Author Title"
+msgstr "Авторська назва"
+
+#. Description tab
+#: plug-ins/metadata/metadata-editor.c:487
+#: plug-ins/metadata/metadata-editor.c:1205
+msgid "Description"
+msgstr "Опис"
+
+#: plug-ins/metadata/metadata-editor.c:488
+#| msgid "Description Writer\t"
+msgid "Description Writer"
+msgstr "Автор опису"
+
+#: plug-ins/metadata/metadata-editor.c:489
+msgid "Rating"
+msgstr "Рейтинг"
+
+#: plug-ins/metadata/metadata-editor.c:490
+msgid "Keywords"
+msgstr "Ключові слова"
+
+#: plug-ins/metadata/metadata-editor.c:492
+msgid "Copyright Status"
+msgstr "Авторські права"
+
+#: plug-ins/metadata/metadata-editor.c:493
+#: plug-ins/metadata/metadata-editor.c:622
+msgid "Copyright Notice"
+msgstr "Зауваження щодо авторських прав"
+
+#: plug-ins/metadata/metadata-editor.c:494
+msgid "Copyright URL"
+msgstr "URL авторських прав"
+
+#: plug-ins/metadata/metadata-editor.c:500
+msgid "Address"
+msgstr "Адреса"
+
+#: plug-ins/metadata/metadata-editor.c:501
+#: plug-ins/metadata/metadata-editor.c:516
+#: plug-ins/metadata/metadata-editor.c:537
+#: plug-ins/metadata/metadata-editor.c:595
+msgid "City"
+msgstr "Місто"
+
+#: plug-ins/metadata/metadata-editor.c:502
+#: plug-ins/metadata/metadata-editor.c:517
+#: plug-ins/metadata/metadata-editor.c:538
+msgid "State / Province"
+msgstr "Штат / провінція"
+
+#: plug-ins/metadata/metadata-editor.c:503
+#| msgid "Postal Code\t"
+msgid "Postal Code"
+msgstr "Поштовий індекс"
+
+#: plug-ins/metadata/metadata-editor.c:504
+#: plug-ins/metadata/metadata-editor.c:518
+#: plug-ins/metadata/metadata-editor.c:539
+#: plug-ins/metadata/metadata-editor.c:597
+msgid "Country"
+msgstr "Країна"
+
+#: plug-ins/metadata/metadata-editor.c:506
+msgid "Phone(s)"
+msgstr "Телефон(и)"
+
+#: plug-ins/metadata/metadata-editor.c:507
+#| msgid "Email(s)"
+msgid "E-mail(s)"
+msgstr "Ел. адреса(и)"
+
+#: plug-ins/metadata/metadata-editor.c:508
+msgid "Website(s)"
+msgstr "Сайт(и)"
+
+#: plug-ins/metadata/metadata-editor.c:510
+msgid "Creation Date"
+msgstr "Дата створення"
+
+#: plug-ins/metadata/metadata-editor.c:512
+msgid "Intellectual Genre"
+msgstr "Інтелектуальний жанр"
+
+#: plug-ins/metadata/metadata-editor.c:513
+msgid "IPTC Scene Code"
+msgstr "Код сцени IPTC"
+
+#: plug-ins/metadata/metadata-editor.c:515
+#: plug-ins/metadata/metadata-editor.c:536
+#: plug-ins/metadata/metadata-editor.c:594
+msgid "Sublocation"
+msgstr "Підрозділ"
+
+#: plug-ins/metadata/metadata-editor.c:519
+#: plug-ins/metadata/metadata-editor.c:540
+msgid "Country ISO-Code"
+msgstr "ISO-код країни"
+
+#: plug-ins/metadata/metadata-editor.c:521
+msgid "Urgency"
+msgstr "Терміновість"
+
+#: plug-ins/metadata/metadata-editor.c:522
+msgid "Headline"
+msgstr "Заголовок"
+
+#: plug-ins/metadata/metadata-editor.c:523
+msgid "IPTC Subject Code"
+msgstr "IPTC-код теми"
+
+#: plug-ins/metadata/metadata-editor.c:525
+#| msgid "Job Identifier\t"
+msgid "Job Identifier"
+msgstr "Ідентифікатор роботи"
+
+#: plug-ins/metadata/metadata-editor.c:526
+msgid "Instructions"
+msgstr "Інструкції"
+
+#: plug-ins/metadata/metadata-editor.c:527
+msgid "Credit Line"
+msgstr "Рядок подяк"
+
+#: plug-ins/metadata/metadata-editor.c:528
+#: plug-ins/metadata/metadata-editor.c:620
+msgid "Source"
+msgstr "Джерело"
+
+#: plug-ins/metadata/metadata-editor.c:529
+msgid "Usage Terms"
+msgstr "Умови використання"
+
+#: plug-ins/metadata/metadata-editor.c:535
+msgid "Person Shown"
+msgstr "Хто зображений"
+
+#: plug-ins/metadata/metadata-editor.c:541
+#: plug-ins/metadata/metadata-editor.c:599
+msgid "World Region"
+msgstr "Частина світу"
+
+#: plug-ins/metadata/metadata-editor.c:542
+msgid "Location Shown"
+msgstr "Зображене місце"
+
+#: plug-ins/metadata/metadata-editor.c:544
+msgid "Featured Organization"
+msgstr "Рекомендована організація"
+
+#: plug-ins/metadata/metadata-editor.c:546
+#| msgid "Organization Identifier"
+msgid "Organization Code"
+msgstr "Код організації"
+
+#: plug-ins/metadata/metadata-editor.c:548
+msgid "Event"
+msgstr "Подія"
+
+#: plug-ins/metadata/metadata-editor.c:549
+msgid "Artwork or Object"
+msgstr "Твір мистецтва або об'єкт"
+
+#: plug-ins/metadata/metadata-editor.c:552
+msgid "Additional Model Info"
+msgstr "Додаткові дані про модель"
+
+#: plug-ins/metadata/metadata-editor.c:553
+msgid "Model Age"
+msgstr "Вік моделі"
+
+#: plug-ins/metadata/metadata-editor.c:554
+msgid "Minor Model Age Disclosure"
+msgstr "Найменший вік моделі"
+
+#: plug-ins/metadata/metadata-editor.c:555
+msgid "Model Release Status"
+msgstr "Статус релізу моделі"
+
+#: plug-ins/metadata/metadata-editor.c:556
+#: plug-ins/metadata/metadata-editor.c:628
+msgid "Model Release Identifier"
+msgstr "Ідентифікатор релізу моделі"
+
+#: plug-ins/metadata/metadata-editor.c:559
+msgid "Image Supplier Name"
+msgstr "Ім'я постачальника зображення"
+
+#: plug-ins/metadata/metadata-editor.c:560
+msgid "Image Supplier ID"
+msgstr "Ідентифікатор постачальника зображення"
+
+#: plug-ins/metadata/metadata-editor.c:561
+msgid "Supplier's Image ID"
+msgstr "Ідентифікатор зображення від постачальника"
+
+#: plug-ins/metadata/metadata-editor.c:562
+msgid "Registry Entry"
+msgstr "Запис в реєстрі"
+
+#: plug-ins/metadata/metadata-editor.c:564
+msgid "Max. Available Width"
+msgstr "Найбільша доступна ширина"
+
+#: plug-ins/metadata/metadata-editor.c:565
+msgid "Max. Available Height"
+msgstr "Найбільша доступна висота"
+
+#: plug-ins/metadata/metadata-editor.c:566
+msgid "Digital Source Type"
+msgstr "Тип цифрового джерела"
+
+#: plug-ins/metadata/metadata-editor.c:568
+msgid "Image Creator"
+msgstr "Розробник зображення"
+
+#: plug-ins/metadata/metadata-editor.c:570
+msgid "Copyright Owner"
+msgstr "Правовласник"
+
+#: plug-ins/metadata/metadata-editor.c:572
+msgid "Licensor"
+msgstr "Ліцензіар"
+
+#: plug-ins/metadata/metadata-editor.c:574
+msgid "Property Release Status"
+msgstr "Статус релізу власника"
+
+#: plug-ins/metadata/metadata-editor.c:575
+msgid "Property Release Identifier"
+msgstr "Ідентифікатор релізу власника"
+
+#: plug-ins/metadata/metadata-editor.c:596
+msgid "Province / State"
+msgstr "Провінція / штат"
+
+#: plug-ins/metadata/metadata-editor.c:598
+msgid "Country ISO Code"
+msgstr "ISO-код країни"
+
+#: plug-ins/metadata/metadata-editor.c:611
+msgid "Code"
+msgstr "Код"
+
+#: plug-ins/metadata/metadata-editor.c:617
+msgid "Title"
+msgstr "Назва"
+
+#: plug-ins/metadata/metadata-editor.c:618
+msgid "Date Created"
+msgstr "Дата створення"
+
+#: plug-ins/metadata/metadata-editor.c:619
+msgid "Creator"
+msgstr "Розробник"
+
+#: plug-ins/metadata/metadata-editor.c:621
+msgid "Source Inventory ID"
+msgstr "Ідентифікатор опису джерела"
+
+#: plug-ins/metadata/metadata-editor.c:634
+msgid "Organization Identifier"
+msgstr "Ідентифікатор організації"
+
+#: plug-ins/metadata/metadata-editor.c:635
+msgid "Item Identifier"
+msgstr "Ідентифікатор елемента"
+
+#: plug-ins/metadata/metadata-editor.c:642
+#: plug-ins/metadata/metadata-editor.c:649
+#: plug-ins/metadata/metadata-editor.c:656
+#: plug-ins/metadata/metadata-editor.c:668
+msgid "Identifier"
+msgstr "Ідентифікатор"
+
+#: plug-ins/metadata/metadata-editor.c:657
+msgid "Phone Number 1"
+msgstr "Номер телефону 1"
+
+#: plug-ins/metadata/metadata-editor.c:658
+msgid "Phone Type 1"
+msgstr "Тип телефону 1"
+
+#: plug-ins/metadata/metadata-editor.c:659
+msgid "Phone Number 2"
+msgstr "Номер телефону 2"
+
+#: plug-ins/metadata/metadata-editor.c:660
+msgid "Phone Type 2"
+msgstr "Тип телефону 2"
+
+#: plug-ins/metadata/metadata-editor.c:661
+msgid "Email Address"
+msgstr "Електронна адреса"
+
+#: plug-ins/metadata/metadata-editor.c:662
+msgid "Web Address"
+msgstr "Адреса сайту"
+
+#: plug-ins/metadata/metadata-editor.c:675
+msgid "Category"
+msgstr "Категорія"
+
+#: plug-ins/metadata/metadata-editor.c:676
+msgid "Supplemental Category"
+msgstr "Додаткова категорія"
+
+#: plug-ins/metadata/metadata-editor.c:682
+msgid "Longitude"
+msgstr "Довгота"
+
+#: plug-ins/metadata/metadata-editor.c:683
+msgid "Longitude Reference"
+msgstr "Відлік довготи"
+
+#: plug-ins/metadata/metadata-editor.c:684
+msgid "Latitude"
+msgstr "Широта"
+
+#: plug-ins/metadata/metadata-editor.c:685
+msgid "Latitude Reference"
+msgstr "Відлік широти"
+
+#: plug-ins/metadata/metadata-editor.c:686
+msgid "Altitude"
+msgstr "Висота"
+
+#: plug-ins/metadata/metadata-editor.c:688
+msgid "Altitude Reference"
+msgstr "Відлік висоти"
+
+#: plug-ins/metadata/metadata-editor.c:694
+msgid "Patient"
+msgstr "Пацієнт"
+
+#: plug-ins/metadata/metadata-editor.c:695
+msgid "Patient ID"
+msgstr "Ідентифікатор пацієнта"
+
+#: plug-ins/metadata/metadata-editor.c:696
+msgid "Date of Birth"
+msgstr "Дата народження"
+
+#: plug-ins/metadata/metadata-editor.c:698
+msgid "Patient Sex"
+msgstr "Стать пацієнта"
+
+#: plug-ins/metadata/metadata-editor.c:700
+msgid "Study ID"
+msgstr "Ідентифікатор дослідження"
+
+#: plug-ins/metadata/metadata-editor.c:701
+msgid "Referring Physician"
+msgstr "Звернення до лікаря"
+
+#: plug-ins/metadata/metadata-editor.c:702
+msgid "Study Date"
+msgstr "Дата дослідження"
+
+#: plug-ins/metadata/metadata-editor.c:704
+msgid "Study Description"
+msgstr "Опис дослідження"
+
+#: plug-ins/metadata/metadata-editor.c:705
+msgid "Series Number"
+msgstr "Число в серії"
+
+#: plug-ins/metadata/metadata-editor.c:706
+msgid "Modality"
+msgstr "Модальність"
+
+#: plug-ins/metadata/metadata-editor.c:707
+msgid "Series Date"
+msgstr "Дата серії"
+
+#: plug-ins/metadata/metadata-editor.c:709
+msgid "Series Description"
+msgstr "Опис серії"
+
+#: plug-ins/metadata/metadata-editor.c:711
+msgid "Equipment Institution"
+msgstr "Розташування обладнання"
+
+#: plug-ins/metadata/metadata-editor.c:712
+msgid "Equipment Manufacturer"
+msgstr "Виробник обладнання"
+
+#: plug-ins/metadata/metadata-editor.c:752
 msgid "_Edit Metadata"
 msgstr "З_мінити метадані"
 
-#: plug-ins/metadata/metadata-editor.c:469
+#: plug-ins/metadata/metadata-editor.c:756
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Редагування метаданих (IPTC, EXIF, XMP)"
 
-#: plug-ins/metadata/metadata-editor.c:579
-msgid "Error loading metadata-editor dialog."
-msgstr "Помилка під час завантаження вікна редактора метаданих."
-
-#: plug-ins/metadata/metadata-editor.c:590
+#: plug-ins/metadata/metadata-editor.c:1167
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Редактор метаданих: %s"
 
-#: plug-ins/metadata/metadata-editor.c:599
+#: plug-ins/metadata/metadata-editor.c:1175
 msgid "_Write Metadata"
 msgstr "За_писати метадані"
 
-#: plug-ins/metadata/metadata-editor.c:623
+#. IPTC tab
+#: plug-ins/metadata/metadata-editor.c:1211
+#: plug-ins/metadata/metadata-viewer.c:401
+msgid "IPTC"
+msgstr "IPTC"
+
+#. IPTC Extension tab
+#: plug-ins/metadata/metadata-editor.c:1217
+msgid "IPTC Extension"
+msgstr "Розширення IPTC"
+
+#. Categories tab
+#: plug-ins/metadata/metadata-editor.c:1323
+msgid "Categories"
+msgstr "Категорії"
+
+#. GPS tab
+#: plug-ins/metadata/metadata-editor.c:1329
+msgid "GPS"
+msgstr "GPS"
+
+#. DICOM tab
+#: plug-ins/metadata/metadata-editor.c:1340
+msgid "DICOM"
+msgstr "DICOM"
+
+#: plug-ins/metadata/metadata-editor.c:1362
 msgid "Import metadata"
 msgstr "Імпорт метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:625
+#: plug-ins/metadata/metadata-editor.c:1364
 msgid "Export metadata"
 msgstr "Експортувати метадані"
 
-#: plug-ins/metadata/metadata-editor.c:933
-#| msgid "Set Date"
+#: plug-ins/metadata/metadata-editor.c:1667
 msgid "Choose Date"
 msgstr "Виберіть дату"
 
-#: plug-ins/metadata/metadata-editor.c:937
+#: plug-ins/metadata/metadata-editor.c:1671
 msgid "Set Date"
 msgstr "Задайте дату"
 
-#: plug-ins/metadata/metadata-editor.c:1671
+#: plug-ins/metadata/metadata-editor.c:2405
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -13222,7 +13186,7 @@ msgstr ""
 "15.30, або 10.45\n"
 "Вилучіть увесь текст, щоб вилучити поточне значення."
 
-#: plug-ins/metadata/metadata-editor.c:1677
+#: plug-ins/metadata/metadata-editor.c:2411
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -13238,25 +13202,24 @@ msgstr ""
 "або футах (фут)\n"
 "Щоб вилучити поточне значення, витріть увесь текст."
 
-#: plug-ins/metadata/metadata-editor.c:1813
+#: plug-ins/metadata/metadata-editor.c:2545
 msgid "Unrated"
 msgstr "Без рейтингу"
 
-#: plug-ins/metadata/metadata-editor.c:3773
+#: plug-ins/metadata/metadata-editor.c:4484
 #, c-format
-#| msgid "Failed to set metadata tag %s"
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Не вдалося встановити мітку метаданих %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:4745
+#: plug-ins/metadata/metadata-editor.c:5296
 msgid "Import Metadata File"
 msgstr "Імпорт файлу метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:4780
+#: plug-ins/metadata/metadata-editor.c:5331
 msgid "Export Metadata File"
 msgstr "Експорт файлу метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:4784
+#: plug-ins/metadata/metadata-editor.c:5335
 msgid "_Export"
 msgstr "_Експорт"
 
@@ -14031,6 +13994,24 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Sublocation\t"
+#~ msgstr "Підрозділ\t"
+
+#~ msgid "ISO Country Code"
+#~ msgstr "ISO-код країни"
+
+#~ msgid "Country Name"
+#~ msgstr "Назва країни"
+
+#~ msgid "Add an entry"
+#~ msgstr "Додати елемент"
+
+#~ msgid "Remove an entry"
+#~ msgstr "Видалити елемент"
+
+#~ msgid "Error loading metadata-editor dialog."
+#~ msgstr "Помилка під час завантаження вікна редактора метаданих."
 
 #, c-format
 #~ msgid "Error loading calendar. %s"
