@@ -39,6 +39,7 @@
 #include "metadata-xml.h"
 #include "metadata-impexp.h"
 #include "metadata-misc.h"
+#include "metadata-editor.h"
 
 #define PLUG_IN_PROC            "plug-in-metadata-editor"
 #define PLUG_IN_BINARY          "metadata-editor"
@@ -74,16 +75,64 @@ static GimpValueArray * metadata_run              (GimpProcedure        *procedu
                                                    const GimpValueArray *args,
                                                    gpointer              run_data);
 
+
+enum
+{
+  ME_WIDGET_ENTRY,
+  ME_WIDGET_TEXT,
+  ME_WIDGET_COMBO,
+  ME_WIDGET_DATE_BOX,   /* Entry + date select button in a box */
+  ME_WIDGET_EC_BOX,     /* Entry + combo in a box */
+  ME_WIDGET_TREE_GRID,  /* Treeview + add/remove row buttons in a box */
+  ME_WIDGET_SEPARATOR,
+  ME_WIDGET_OTHER,
+};
+
+enum
+{
+  ME_RENDER_TEXT,
+  ME_RENDER_COMBO,
+  ME_RENDER_OTHER,
+};
+
+typedef struct
+{
+  guint     index;
+  gchar    *label;
+  gint      widget_type;
+  gchar    *id;
+  gchar    *extra_id1;   /* date_box: button id; tree view: add button id */
+  gchar    *extra_id2;   /* date_box: icon name for button; tree view: remove button id */
+} me_widget_info;
+
+typedef struct
+{
+  gchar    *label;
+  gint      renderer_type;
+} me_column_info;
+
+static GtkWidget * metadata_editor_create_page_grid (GtkWidget         *notebook,
+                                                     const gchar       *tab_name);
+
+static void     metadata_editor_create_widgets   (const me_widget_info *widget_info,
+                                                  gint                  n_items,
+                                                  GtkWidget            *grid,
+                                                  metadata_editor      *meta_info);
+
+static void     metadata_editor_create_tree_grid (const me_column_info *tree_info,
+                                                  gint                  n_items,
+                                                  gint                  grid_row,
+                                                  const me_widget_info *widget_info,
+                                                  GtkWidget            *grid,
+                                                  GtkListStore         *store,
+                                                  metadata_editor      *meta_info);
+
 static gboolean metadata_editor_dialog           (GimpImage           *image,
                                                   GimpMetadata        *metadata,
                                                   GError             **error);
 
 static void metadata_dialog_editor_set_metadata  (GExiv2Metadata      *metadata,
-                                                  GtkBuilder          *builder);
-
-void metadata_editor_write_callback              (GtkWidget           *dialog,
-                                                  GtkBuilder          *builder,
-                                                  GimpImage           *image);
+                                                  metadata_editor     *meta_info);
 
 static void impex_combo_callback                (GtkComboBoxText      *combo,
                                                  gpointer              data);
@@ -107,12 +156,12 @@ static void     set_tag_string                  (GimpMetadata         *metadata,
 
 static gchar *  get_phonetype                   (gchar                *cur_value);
 
-static void     write_metadata_tag              (GtkBuilder           *builder,
+static void     write_metadata_tag              (metadata_editor      *meta_info,
                                                  GimpMetadata         *metadata,
                                                  gchar                *tag,
                                                  gint                  data_column);
 
-static void     write_metadata_tag_multiple     (GtkBuilder           *builder,
+static void     write_metadata_tag_multiple     (metadata_editor      *meta_info,
                                                  GimpMetadata         *metadata,
                                                  GExiv2StructureType   type,
                                                  const gchar          *header_tag,
@@ -120,9 +169,9 @@ static void     write_metadata_tag_multiple     (GtkBuilder           *builder,
                                                  const gchar         **column_tags,
                                                  const gint            special_handling[]);
 
-gboolean hasCreatorTagData                      (GtkBuilder           *builder);
-gboolean hasLocationCreationTagData             (GtkBuilder           *builder);
-gboolean hasImageSupplierTagData                (GtkBuilder           *builder);
+gboolean hasCreatorTagData                      (metadata_editor      *meta_info);
+gboolean hasLocationCreationTagData             (metadata_editor      *meta_info);
+gboolean hasImageSupplierTagData                (metadata_editor      *meta_info);
 
 void on_date_button_clicked                     (GtkButton            *widget,
                                                  GtkWidget            *entry_widget,
@@ -232,10 +281,10 @@ free_tagdata                                    (gchar               **tagdata,
                                                  gint                  cols);
 
 gboolean
-hasModelReleaseTagData                          (GtkBuilder           *builder);
+hasModelReleaseTagData                          (metadata_editor      *meta_info);
 
 gboolean
-hasPropertyReleaseTagData                       (GtkBuilder           *builder);
+hasPropertyReleaseTagData                       (metadata_editor      *meta_info);
 
 static void
 organisation_image_code_cell_edited_callback    (GtkCellRendererText  *cell,
@@ -428,6 +477,243 @@ metadata_editor meta_args;
 #define ME_LOG_DOMAIN "metadata-editor"
 
 
+/* Widget creation data */
+
+static const me_widget_info description_tab_data[] =
+{
+  { 0, N_("Document Title"),          ME_WIDGET_ENTRY,      "Xmp.dc.title" },
+  { 1, N_("Author"),                  ME_WIDGET_TEXT,       "Xmp.dc.creator" },
+  { 2, N_("Author Title"),            ME_WIDGET_ENTRY,      "Xmp.photoshop.AuthorsPosition" },
+  { 3, N_("Description"),             ME_WIDGET_TEXT,       "Xmp.dc.description" },
+  { 4, N_("Description Writer"),      ME_WIDGET_ENTRY,      "Xmp.photoshop.CaptionWriter" },
+  { 5, N_("Rating"),                  ME_WIDGET_COMBO,      "Xmp.xmp.Rating" },
+  { 6, N_("Keywords"),                ME_WIDGET_TEXT,       "Xmp.dc.subject" },
+  { 7, "",                            ME_WIDGET_SEPARATOR,  "" },
+  { 8, N_("Copyright Status"),        ME_WIDGET_COMBO,      "Xmp.xmpRights.Marked" },
+  { 9, N_("Copyright Notice"),        ME_WIDGET_ENTRY,      "Xmp.dc.rights" },
+  { 10, N_("Copyright URL"),          ME_WIDGET_ENTRY,      "Xmp.xmpRights.WebStatement" },
+};
+static const gint n_description_tab_data = G_N_ELEMENTS (description_tab_data);
+
+static const me_widget_info iptc_tab_data[] =
+{
+  { 0, N_("Address"),                 ME_WIDGET_TEXT,       "Xmp.iptc.CiAdrExtadr" },
+  { 1, N_("City"),                    ME_WIDGET_ENTRY,      "Xmp.iptc.CiAdrCity" },
+  { 2, N_("State / Province"),        ME_WIDGET_ENTRY,      "Xmp.iptc.CiAdrRegion" },
+  { 3, N_("Postal Code"),             ME_WIDGET_ENTRY,      "Xmp.iptc.CiAdrPcode" },
+  { 4, N_("Country"),                 ME_WIDGET_ENTRY,      "Xmp.iptc.CiAdrCtry" },
+  { 5, "",                            ME_WIDGET_SEPARATOR,  "" },
+  { 6, N_("Phone(s)"),                ME_WIDGET_TEXT,       "Xmp.iptc.CiTelWork" },
+  { 7, N_("E-mail(s)"),               ME_WIDGET_TEXT,       "Xmp.iptc.CiEmailWork" },
+  { 8, N_("Website(s)"),              ME_WIDGET_TEXT,       "Xmp.iptc.CiUrlWork" },
+  { 9, "",                            ME_WIDGET_SEPARATOR,  "" },
+  { 10, N_("Creation Date"),          ME_WIDGET_DATE_BOX,   "Xmp.photoshop.DateCreated",
+        "create_date_button",         "gimp-grid" },
+  { 11, N_("Intellectual Genre"),     ME_WIDGET_ENTRY,      "Xmp.iptc.IntellectualGenre" },
+  { 12, N_("IPTC Scene Code"),        ME_WIDGET_TEXT,       "Xmp.iptc.Scene" },
+  { 13, "",                           ME_WIDGET_SEPARATOR,  "" },
+  { 14, N_("Sublocation"),            ME_WIDGET_ENTRY,      "Xmp.iptc.Location" },
+  { 15, N_("City"),                   ME_WIDGET_ENTRY,      "Xmp.photoshop.City" },
+  { 16, N_("State / Province"),       ME_WIDGET_ENTRY,      "Xmp.photoshop.State" },
+  { 17, N_("Country"),                ME_WIDGET_ENTRY,      "Xmp.photoshop.Country" },
+  { 18, N_("Country ISO-Code"),       ME_WIDGET_ENTRY,      "Xmp.iptc.CountryCode" },
+  { 19, "",                           ME_WIDGET_SEPARATOR,  "" },
+  { 20, N_("Urgency"),                ME_WIDGET_COMBO,      "Xmp.photoshop.Urgency" },
+  { 21, N_("Headline"),               ME_WIDGET_TEXT,       "Xmp.photoshop.Headline" },
+  { 22, N_("IPTC Subject Code"),      ME_WIDGET_TEXT,       "Xmp.iptc.SubjectCode" },
+  { 23, "",                           ME_WIDGET_SEPARATOR,  "" },
+  { 24, N_("Job Identifier"),         ME_WIDGET_ENTRY,      "Xmp.photoshop.TransmissionReference" },
+  { 25, N_("Instructions"),           ME_WIDGET_TEXT,       "Xmp.photoshop.Instructions" },
+  { 26, N_("Credit Line"),            ME_WIDGET_ENTRY,      "Xmp.photoshop.Credit" },
+  { 27, N_("Source"),                 ME_WIDGET_ENTRY,      "Xmp.photoshop.Source" },
+  { 28, N_("Usage Terms"),            ME_WIDGET_TEXT,       "Xmp.xmpRights.UsageTerms" },
+};
+static const gint n_iptc_tab_data = G_N_ELEMENTS (iptc_tab_data);
+
+static const me_widget_info iptc_extension_tab_data[] =
+{
+  { 0, N_("Person Shown"),            ME_WIDGET_TEXT,       "Xmp.iptcExt.PersonInImage" },
+  { 1, N_("Sublocation"),             ME_WIDGET_ENTRY,      "Xmp.iptcExt.Sublocation" },
+  { 2, N_("City"),                    ME_WIDGET_ENTRY,      "Xmp.iptcExt.City" },
+  { 3, N_("State / Province"),        ME_WIDGET_ENTRY,      "Xmp.iptcExt.ProvinceState" },
+  { 4, N_("Country"),                 ME_WIDGET_ENTRY,      "Xmp.iptcExt.CountryName" },
+  { 5, N_("Country ISO-Code"),        ME_WIDGET_ENTRY,      "Xmp.iptcExt.CountryCode" },
+  { 6, N_("World Region"),            ME_WIDGET_ENTRY,      "Xmp.iptcExt.WorldRegion" },
+  { 7, N_("Location Shown"),          ME_WIDGET_TREE_GRID,  "Xmp.iptcExt.LocationShown",
+       "add_shown_location_button",   "rem_shown_location_button" },
+  { 8, N_("Featured Organization"),   ME_WIDGET_TREE_GRID,  "Xmp.iptcExt.OrganisationInImageName",
+       "add_feat_org_name_button",    "rem_feat_org_name_button" },
+  { 9, N_("Organization Code"),       ME_WIDGET_TREE_GRID,  "Xmp.iptcExt.OrganisationInImageCode",
+       "add_feat_org_code_button",    "rem_feat_org_code_button" },
+  { 10, N_("Event"),                  ME_WIDGET_ENTRY,      "Xmp.iptcExt.Event" },
+  { 11, N_("Artwork or Object"),      ME_WIDGET_TREE_GRID,  "Xmp.iptcExt.ArtworkOrObject",
+        "add_artwork_object_button",  "rem_artwork_object_button" },
+  { 12, "",                           ME_WIDGET_SEPARATOR,  "" },
+  { 13, N_("Additional Model Info"),  ME_WIDGET_TEXT,       "Xmp.iptcExt.AddlModelInfo" },
+  { 14, N_("Model Age"),              ME_WIDGET_TEXT,       "Xmp.iptcExt.ModelAge" },
+  { 15, N_("Minor Model Age Disclosure"), ME_WIDGET_COMBO,     "Xmp.plus.MinorModelAgeDisclosure" },
+  { 16, N_("Model Release Status"),       ME_WIDGET_COMBO,     "Xmp.plus.ModelReleaseStatus" },
+  { 17, N_("Model Release Identifier"),   ME_WIDGET_TREE_GRID, "Xmp.plus.ModelReleaseID",
+        "add_model_rel_id_button",    "rem_model_rel_id_button" },
+  { 18, "",                           ME_WIDGET_SEPARATOR,  "" },
+  { 19, N_("Image Supplier Name"),    ME_WIDGET_TEXT,       "Xmp.plus.ImageSupplierName" },
+  { 20, N_("Image Supplier ID"),      ME_WIDGET_ENTRY,      "Xmp.plus.ImageSupplierID" },
+  { 21, N_("Supplier's Image ID"),    ME_WIDGET_ENTRY,      "Xmp.plus.ImageSupplierImageID" },
+  { 22, N_("Registry Entry"),         ME_WIDGET_TREE_GRID,  "Xmp.iptcExt.RegistryId",
+        "add_reg_entry_button",       "rem_reg_entry_button" },
+  { 23, N_("Max. Available Width"),   ME_WIDGET_ENTRY,      "Xmp.iptcExt.MaxAvailWidth" },
+  { 24, N_("Max. Available Height"),  ME_WIDGET_ENTRY,      "Xmp.iptcExt.MaxAvailHeight" },
+  { 25, N_("Digital Source Type"),    ME_WIDGET_COMBO,      "Xmp.iptcExt.DigitalSourceType" },
+  { 26, "",                           ME_WIDGET_SEPARATOR,  "" },
+  { 27, N_("Image Creator"),          ME_WIDGET_TREE_GRID,  "Xmp.plus.ImageCreator",
+        "add_image_creator_button",   "rem_image_creator_button" },
+  { 28, N_("Copyright Owner"),        ME_WIDGET_TREE_GRID,  "Xmp.plus.CopyrightOwner",
+        "add_copyright_own_button",   "rem_copyright_own_button" },
+  { 29, N_("Licensor"),               ME_WIDGET_TREE_GRID,  "Xmp.plus.Licensor",
+        "add_licensor_button",        "rem_licensor_button" },
+  { 30, N_("Property Release Status"), ME_WIDGET_COMBO,     "Xmp.plus.PropertyReleaseStatus" },
+  { 31, N_("Property Release Identifier"), ME_WIDGET_TREE_GRID, "Xmp.plus.PropertyReleaseID",
+        "add_prop_rel_id_button",     "rem_prop_rel_id_button" },
+};
+static const gint n_iptc_extension_tab_data = G_N_ELEMENTS (iptc_extension_tab_data);
+
+/* ME_WIDGET_TREE_GRID indexes */
+#define C_LOCATION_SHOWN       7
+#define C_FEATURED_ORG         8
+#define C_FEATURED_ORG_CODE    9
+#define C_ART_OBJECT          11
+#define C_MODEL_RELEASE_ID    17
+#define C_REGISTRY_ENTRY      22
+#define C_IMAGE_CREATOR       27
+#define C_COPYRIGHT_OWNER     28
+#define C_LICENSOR            29
+#define C_PROPERTY_RELEASE_ID 31
+
+static const me_column_info location_shown_info[] =
+{
+  { N_("Sublocation"),                ME_RENDER_TEXT },
+  { N_("City"),                       ME_RENDER_TEXT },
+  { N_("Province / State"),           ME_RENDER_TEXT },
+  { N_("Country"),                    ME_RENDER_TEXT },
+  { N_("Country ISO Code"),           ME_RENDER_TEXT },
+  { N_("World Region"),               ME_RENDER_TEXT },
+};
+static const gint n_location_shown_info = G_N_ELEMENTS (location_shown_info);
+
+static const me_column_info featured_organization_info[] =
+{
+  { N_("Name"),                       ME_RENDER_TEXT },
+};
+static const gint n_featured_organization_info = G_N_ELEMENTS (featured_organization_info);
+
+static const me_column_info featured_organization_code_info[] =
+{
+  { N_("Code"),                       ME_RENDER_TEXT },
+};
+static const gint n_featured_organization_code_info = G_N_ELEMENTS (featured_organization_code_info);
+
+static const me_column_info artwork_object_info[] =
+{
+  { N_("Title"),                      ME_RENDER_TEXT },
+  { N_("Date Created"),               ME_RENDER_TEXT },
+  { N_("Creator"),                    ME_RENDER_TEXT },
+  { N_("Source"),                     ME_RENDER_TEXT },
+  { N_("Source Inventory ID"),        ME_RENDER_TEXT },
+  { N_("Copyright Notice"),           ME_RENDER_TEXT },
+};
+static const gint n_artwork_object_info = G_N_ELEMENTS (artwork_object_info);
+
+static const me_column_info model_release_id_info[] =
+{
+  { N_("Model Release Identifier"),   ME_RENDER_TEXT },
+};
+static const gint n_model_release_id_info = G_N_ELEMENTS (model_release_id_info);
+
+static const me_column_info registry_entry_info[] =
+{
+  { N_("Organization Identifier"),    ME_RENDER_TEXT },
+  { N_("Item Identifier"),            ME_RENDER_TEXT },
+};
+static const gint n_registry_entry_info = G_N_ELEMENTS (registry_entry_info);
+
+static const me_column_info image_creator_info[] =
+{
+  { N_("Name"),                       ME_RENDER_TEXT },
+  { N_("Identifier"),                 ME_RENDER_TEXT },
+};
+static const gint n_image_creator_info = G_N_ELEMENTS (image_creator_info);
+
+static const me_column_info copyright_owner_info[] =
+{
+  { N_("Name"),                       ME_RENDER_TEXT },
+  { N_("Identifier"),                 ME_RENDER_TEXT },
+};
+static const gint n_copyright_owner_info = G_N_ELEMENTS (copyright_owner_info);
+
+static const me_column_info licensor_info[] =
+{
+  { N_("Name"),                       ME_RENDER_TEXT },
+  { N_("Identifier"),                 ME_RENDER_TEXT },
+  { N_("Phone Number 1"),             ME_RENDER_TEXT },
+  { N_("Phone Type 1"),               ME_RENDER_COMBO },
+  { N_("Phone Number 2"),             ME_RENDER_TEXT },
+  { N_("Phone Type 2"),               ME_RENDER_COMBO },
+  { N_("Email Address"),              ME_RENDER_TEXT },
+  { N_("Web Address"),                ME_RENDER_TEXT },
+};
+static const gint n_licensor_info = G_N_ELEMENTS (licensor_info);
+
+static const me_column_info property_release_id_info[] =
+{
+  { N_("Identifier"),                 ME_RENDER_TEXT },
+};
+static const gint n_property_release_id_info = G_N_ELEMENTS (property_release_id_info);
+
+
+static const me_widget_info categories_labels[] =
+{
+  { 0, N_("Category"),                ME_WIDGET_ENTRY,      "Xmp.photoshop.Category" },
+  { 1, N_("Supplemental Category"),   ME_WIDGET_TEXT,       "Xmp.photoshop.SupplementalCategories" },
+};
+static const gint n_categories_labels = G_N_ELEMENTS (categories_labels);
+
+static const me_widget_info gps_labels[] =
+{
+  { 0, N_("Longitude"),               ME_WIDGET_ENTRY,      "Exif.GPSInfo.GPSLongitude" },
+  { 1, N_("Longitude Reference"),     ME_WIDGET_COMBO,      "Exif.GPSInfo.GPSLongitudeRef" },
+  { 2, N_("Latitude"),                ME_WIDGET_ENTRY,      "Exif.GPSInfo.GPSLatitude" },
+  { 3, N_("Latitude Reference"),      ME_WIDGET_COMBO,      "Exif.GPSInfo.GPSLatitudeRef" },
+  { 4, N_("Altitude"),                ME_WIDGET_EC_BOX,     "Exif.GPSInfo.GPSAltitude",
+       "GPSAltitudeSystem" },
+  { 5, N_("Altitude Reference"),      ME_WIDGET_COMBO,      "Exif.GPSInfo.GPSAltitudeRef" },
+};
+static const gint n_gps_labels = G_N_ELEMENTS (gps_labels);
+
+static const me_widget_info dicom_info_labels[] =
+{
+  { 0, N_("Patient"),                 ME_WIDGET_ENTRY,      "Xmp.DICOM.PatientName" },
+  { 1, N_("Patient ID"),              ME_WIDGET_ENTRY,      "Xmp.DICOM.PatientID" },
+  { 2, N_("Date of Birth"),           ME_WIDGET_DATE_BOX,   "Xmp.DICOM.PatientDOB",
+      "dob_date_button",              "gimp-grid" },
+  { 3, N_("Patient Sex"),             ME_WIDGET_COMBO,      "Xmp.DICOM.PatientSex" },
+  { 4, "",                            ME_WIDGET_SEPARATOR,  "" },
+  { 5, N_("Study ID"),                ME_WIDGET_ENTRY,      "Xmp.DICOM.StudyID" },
+  { 6, N_("Referring Physician"),     ME_WIDGET_ENTRY,      "Xmp.DICOM.StudyPhysician" },
+  { 7, N_("Study Date"),              ME_WIDGET_DATE_BOX,   "Xmp.DICOM.StudyDateTime",
+      "study_date_button",            "gimp-grid" },
+  { 8, N_("Study Description"),       ME_WIDGET_TEXT ,      "Xmp.DICOM.StudyDescription" },
+  { 9, N_("Series Number"),           ME_WIDGET_ENTRY,      "Xmp.DICOM.SeriesNumber" },
+  { 10, N_("Modality"),               ME_WIDGET_ENTRY,      "Xmp.DICOM.SeriesModality" },
+  { 11, N_("Series Date"),            ME_WIDGET_DATE_BOX,   "Xmp.DICOM.SeriesDateTime",
+      "series_date_button",           "gimp-grid" },
+  { 12, N_("Series Description"),     ME_WIDGET_TEXT ,      "Xmp.DICOM.SeriesDescription" },
+  { 13, "",                           ME_WIDGET_SEPARATOR,  "" },
+  { 14, N_("Equipment Institution"),  ME_WIDGET_ENTRY,      "Xmp.DICOM.EquipmentInstitution" },
+  { 15, N_("Equipment Manufacturer"), ME_WIDGET_ENTRY,      "Xmp.DICOM.EquipmentManufacturer" },
+};
+static const gint n_dicom_info_labels = G_N_ELEMENTS (dicom_info_labels);
+
+
 static void
 metadata_class_init (MetadataClass *klass)
 {
@@ -534,13 +820,320 @@ metadata_run (GimpProcedure        *procedure,
  * ============================================================================
  */
 
-static GtkWidget *
-builder_get_widget (GtkBuilder  *builder,
-                    const gchar *name)
+GtkWidget *
+metadata_editor_get_widget (metadata_editor *meta_info,
+                            const gchar     *name)
 {
-  GObject *object = gtk_builder_get_object (builder, name);
+  return GTK_WIDGET (g_hash_table_lookup (meta_info->widgets, name));
+}
 
-  return GTK_WIDGET (object);
+static GtkWidget *
+metadata_editor_create_page_grid (GtkWidget   *notebook,
+                                  const gchar *tab_name)
+{
+  GtkWidget *scrolled_win;
+  GtkWidget *viewport;
+  GtkWidget *box;
+  GtkWidget *label;
+  GtkWidget *grid;
+
+  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_widget_show (box);
+
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 6);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+  gtk_box_pack_start (GTK_BOX (box), scrolled_win, TRUE, TRUE, 0);
+  gtk_widget_show (scrolled_win);
+
+  label = gtk_label_new (tab_name);
+  gtk_widget_set_margin_start (label, 2);
+  gtk_widget_set_margin_top (label, 2);
+  gtk_widget_set_margin_end (label, 2);
+  gtk_widget_set_margin_bottom (label, 2);
+  gtk_widget_set_can_focus (label, FALSE);
+  gtk_widget_show (label);
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), box, label);
+
+  viewport = gtk_viewport_new (NULL, NULL);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), viewport);
+  gtk_widget_show (viewport);
+
+  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_container_add (GTK_CONTAINER (viewport), box);
+  gtk_widget_show (box);
+
+  grid = gtk_grid_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 3);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 30);
+  gtk_box_pack_start (GTK_BOX (box), grid, FALSE, TRUE, 0);
+  gtk_widget_show (grid);
+
+  return grid;
+}
+
+static void
+metadata_editor_create_widgets (const me_widget_info *widget_info,
+                                gint                  n_items,
+                                GtkWidget            *grid,
+                                metadata_editor      *meta_info)
+{
+  GtkWidget *label;
+
+  /* Labels on the left, data entry widgets on the right */
+  for (int i = 0; i < n_items; i++)
+    {
+      if (widget_info[i].widget_type != ME_WIDGET_SEPARATOR)
+        {
+          label = gtk_label_new (_(widget_info[i].label));
+          gtk_widget_set_margin_start (label, 3);
+          gtk_widget_set_margin_top (label, 3);
+          gtk_widget_set_margin_end (label, 3);
+          gtk_widget_set_margin_bottom (label, 3);
+          gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+          if (widget_info[i].widget_type == ME_WIDGET_TEXT ||
+              widget_info[i].widget_type == ME_WIDGET_TREE_GRID)
+            gtk_label_set_yalign (GTK_LABEL (label), 0.0);
+          gtk_grid_attach (GTK_GRID (grid), label,
+                           0, widget_info[i].index,
+                           1, 1);
+          gtk_widget_show (label);
+        }
+
+      switch (widget_info[i].widget_type)
+        {
+        case ME_WIDGET_ENTRY:
+          GtkWidget *entry;
+
+          entry = gtk_entry_new ();
+          gtk_widget_set_hexpand(GTK_WIDGET (entry), TRUE);
+          gtk_widget_set_margin_end (entry, 5);
+          gtk_grid_attach (GTK_GRID (grid), entry,
+                           1, widget_info[i].index,
+                           1, 1);
+          gtk_widget_show (entry);
+          g_hash_table_insert (meta_info->widgets, widget_info[i].id,
+                               (gpointer) entry);
+
+          break;
+
+        case ME_WIDGET_TEXT:
+          GtkWidget *textview;
+          GtkWidget *scrolled_window;
+
+          scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+          gtk_widget_set_hexpand(GTK_WIDGET (scrolled_window), TRUE);
+          gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                          GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+          gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+                                               GTK_SHADOW_IN);
+          gtk_widget_set_margin_end (scrolled_window, 5);
+          gtk_widget_show (scrolled_window);
+
+          textview = gtk_text_view_new();
+          gtk_container_add (GTK_CONTAINER (scrolled_window), textview);
+          gtk_widget_show (textview);
+          gtk_grid_attach (GTK_GRID (grid), scrolled_window,
+                           1, widget_info[i].index,
+                           1, 1);
+          g_hash_table_insert (meta_info->widgets, widget_info[i].id,
+                               (gpointer) textview);
+
+          break;
+
+        case ME_WIDGET_COMBO:
+          GtkWidget *combo;
+
+          combo = gtk_combo_box_text_new ();
+          gtk_widget_set_hexpand(GTK_WIDGET (combo), TRUE);
+          gtk_widget_set_margin_end (combo, 5);
+          gtk_widget_set_can_focus (combo, FALSE);
+          gtk_grid_attach (GTK_GRID (grid), combo,
+                           1, widget_info[i].index,
+                           1, 1);
+          gtk_widget_show (combo);
+          g_hash_table_insert (meta_info->widgets, widget_info[i].id,
+                               (gpointer) combo);
+
+          break;
+
+        case ME_WIDGET_DATE_BOX:
+          GtkWidget *date_box, *date_entry, *button;
+
+          /* A date_entry and a button in one grid cell using a box as parent */
+
+          date_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+          gtk_widget_set_hexpand(GTK_WIDGET (date_box), TRUE);
+          gtk_grid_attach (GTK_GRID (grid), date_box,
+                           1, widget_info[i].index,
+                           1, 1);
+          gtk_widget_show (date_box);
+
+          date_entry = gtk_entry_new ();
+          gtk_widget_set_hexpand(GTK_WIDGET (date_entry), TRUE);
+          gtk_box_pack_start (GTK_BOX (date_box), date_entry, TRUE, TRUE, 0);
+          gtk_widget_show (date_entry);
+          g_hash_table_insert (meta_info->widgets, widget_info[i].id,
+                               (gpointer) date_entry);
+
+          button = gtk_button_new_from_icon_name (widget_info[i].extra_id2,
+                                                  GTK_ICON_SIZE_BUTTON);
+          gtk_widget_set_size_request (button, 24, 24);
+          gtk_widget_set_margin_start (button, 5);
+          gtk_widget_set_margin_end (button, 5);
+          gtk_widget_set_margin_bottom (button, 1);
+          gtk_container_add (GTK_CONTAINER (date_box), button);
+          gtk_widget_show (button);
+          g_hash_table_insert (meta_args.widgets, widget_info[i].extra_id1,
+                               (gpointer) button);
+
+          break;
+
+        case ME_WIDGET_EC_BOX:
+          GtkWidget *ec_box, *ec_entry, *ec_combo;
+
+          /* A box containing an Entry widget and a Combo widget,
+           * where the combo widget is limited in size (100).
+           * If needed, you can change size manually after creation. */
+
+          ec_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+          gtk_widget_set_hexpand(GTK_WIDGET (ec_box), TRUE);
+          gtk_widget_set_margin_end (ec_box, 5);
+          gtk_grid_attach (GTK_GRID (grid), ec_box,
+                           1, widget_info[i].index,
+                           1, 1);
+          gtk_widget_show (ec_box);
+
+          ec_entry = gtk_entry_new ();
+          gtk_widget_set_hexpand(GTK_WIDGET (ec_entry), TRUE);
+          gtk_box_pack_start (GTK_BOX (ec_box), ec_entry, TRUE, TRUE, 0);
+          gtk_widget_show (ec_entry);
+          g_hash_table_insert (meta_info->widgets, widget_info[i].id,
+                               (gpointer) ec_entry);
+
+          ec_combo = gtk_combo_box_text_new ();
+          gtk_widget_set_margin_start (ec_combo, 5);
+          gtk_widget_set_can_focus (ec_combo, FALSE);
+          g_object_set (G_OBJECT (ec_combo), "width_request", 100, NULL);
+          gtk_box_pack_start (GTK_BOX (ec_box), ec_combo, FALSE, FALSE, 0);
+          gtk_widget_show (ec_combo);
+          g_hash_table_insert (meta_info->widgets, widget_info[i].extra_id1,
+                               (gpointer) ec_combo);
+
+          break;
+
+        case ME_WIDGET_TREE_GRID:
+          /* Needs to be handled separately. */
+          break;
+
+        case ME_WIDGET_SEPARATOR:
+          GtkWidget *separator;
+
+          separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
+          g_object_set (G_OBJECT (separator), "margin", 8, NULL);
+          gtk_widget_show (separator);
+          gtk_grid_attach (GTK_GRID (grid), separator,
+                           0, widget_info[i].index,
+                           2, 1);
+          break;
+
+        default:
+          g_assert_not_reached ();
+
+          break;
+        }
+    }
+}
+
+static void
+metadata_editor_create_tree_grid (const me_column_info *tree_info,
+                                  gint                  n_items,
+                                  gint                  grid_row,
+                                  const me_widget_info *widget_info,
+                                  GtkWidget            *grid,
+                                  GtkListStore         *store,
+                                  metadata_editor      *meta_info)
+{
+  /* Creates a GtkBox containing a GtkTreeView and a GtkBox which holds the
+     add/remove buttons. */
+
+  GtkWidget *tree_box, *tree;
+  GtkWidget *button_box, *button;
+
+  tree_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_widget_set_hexpand(GTK_WIDGET (tree_box), TRUE);
+  gtk_widget_set_margin_end (tree_box, 5);
+  gtk_widget_show (tree_box);
+  gtk_grid_attach (GTK_GRID (grid), tree_box,
+                   1, grid_row,
+                   1, 1);
+
+  tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
+  gtk_tree_view_set_headers_clickable (GTK_TREE_VIEW (tree), FALSE);
+  gtk_tree_view_set_grid_lines (GTK_TREE_VIEW (tree), GTK_TREE_VIEW_GRID_LINES_BOTH);
+  gtk_box_pack_start (GTK_BOX (tree_box), tree, TRUE, TRUE, 0);
+  gtk_widget_show (tree);
+
+  g_hash_table_insert (meta_info->widgets, widget_info[grid_row].id, (gpointer) tree);
+
+  for (int i = 0; i < n_items; i++)
+    {
+      GtkTreeViewColumn *column;
+      GtkCellRenderer   *render;
+
+      switch (tree_info[i].renderer_type)
+        {
+        case ME_RENDER_TEXT:
+          render = gtk_cell_renderer_text_new ();
+          column = gtk_tree_view_column_new_with_attributes (_(tree_info[i].label),
+                                                             render,
+                                                             "text", i,
+                                                             NULL);
+
+          break;
+
+        case ME_RENDER_COMBO:
+          render = gtk_cell_renderer_combo_new ();
+          column = gtk_tree_view_column_new_with_attributes (_(tree_info[i].label),
+                                                             render,
+                                                             "text", i,
+                                                             NULL);
+
+          break;
+
+        default:
+          g_assert_not_reached ();
+
+          break;
+        }
+
+      gtk_tree_view_column_set_resizable (column, TRUE);
+      gtk_tree_view_column_set_spacing (column, 3);
+      gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
+    }
+
+  button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_widget_set_margin_top (button_box, 5);
+  gtk_widget_set_margin_bottom (button_box, 5);
+  gtk_box_pack_start (GTK_BOX (tree_box), button_box, FALSE, FALSE, 0);
+  gtk_widget_show (button_box);
+
+  button = gtk_button_new_from_icon_name ("list-add", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_size_request (button, 24, 24);
+  gtk_widget_set_margin_end (button, 5);
+  gtk_container_add (GTK_CONTAINER (button_box), button);
+  gtk_widget_show (button);
+  g_hash_table_insert (meta_args.widgets, widget_info[grid_row].extra_id1, (gpointer) button);
+
+  button = gtk_button_new_from_icon_name ("list-remove", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_set_size_request (button, 24, 24);
+  gtk_widget_set_margin_start (button, 5);
+  gtk_container_add (GTK_CONTAINER (button_box), button);
+  gtk_widget_show (button);
+  g_hash_table_insert (meta_args.widgets, widget_info[grid_row].extra_id2, (gpointer) button);
 }
 
 static gboolean
@@ -548,49 +1141,31 @@ metadata_editor_dialog (GimpImage     *image,
                         GimpMetadata  *g_metadata,
                         GError       **error)
 {
-  GtkBuilder     *builder;
+  GExiv2Metadata *metadata;
   GtkWidget      *dialog;
+  GtkWidget      *content_area;
   GtkWidget      *metadata_vbox;
   GtkWidget      *impex_combo;
-  GtkWidget      *content_area;
-  GExiv2Metadata *metadata;
-  gchar          *ui_file;
+  GtkWidget      *notebook;
+  GtkWidget      *box;
+  GtkWidget      *grid;
+  GtkWidget      *widget;
+  GtkListStore   *store;
   gchar          *title;
   gchar          *name;
-  GError         *local_error = NULL;
-  gboolean        run;
 
   metadata = GEXIV2_METADATA (g_metadata);
 
-  builder = gtk_builder_new ();
-
   meta_args.image    = image;
-  meta_args.builder  = builder;
-  meta_args.metadata = metadata;
+  /* Default filename used for import/export */
   meta_args.filename = g_strconcat (g_get_home_dir (), "/", DEFAULT_TEMPLATE_FILE,
                                     NULL);
-
-  ui_file = g_build_filename (gimp_data_directory (),
-                              "ui", "plug-ins", "plug-in-metadata-editor.ui", NULL);
-
-  if (! gtk_builder_add_from_file (builder, ui_file, &local_error))
-    {
-      if (! local_error)
-        local_error = g_error_new_literal (G_FILE_ERROR, 0,
-                                           _("Error loading metadata-editor dialog."));
-      g_propagate_error (error, local_error);
-
-      g_free (ui_file);
-      g_object_unref (builder);
-      return FALSE;
-    }
-
-  g_free (ui_file);
+  meta_args.widgets  = g_hash_table_new (g_str_hash, g_str_equal);
+  meta_args.metadata = metadata;
 
   name = gimp_image_get_name (image);
   title = g_strdup_printf (_("Metadata Editor: %s"), name);
-  if (name)
-    g_free (name);
+  g_free (name);
 
   dialog = gimp_dialog_new (title,
                             "gimp-metadata-editor-dialog",
@@ -599,6 +1174,9 @@ metadata_editor_dialog (GimpImage     *image,
                             _("_Cancel"),         GTK_RESPONSE_CANCEL,
                             _("_Write Metadata"), GTK_RESPONSE_OK,
                             NULL);
+  g_free (title);
+
+  gtk_widget_set_size_request(dialog, 650, 500);
 
   meta_args.dialog = dialog;
 
@@ -610,13 +1188,173 @@ metadata_editor_dialog (GimpImage     *image,
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  if (title)
-    g_free (title);
-
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 
-  metadata_vbox = builder_get_widget (builder, "metadata-vbox");
-  impex_combo   = builder_get_widget (builder, "impex_combo");
+  metadata_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_box_pack_start (GTK_BOX (content_area), metadata_vbox, TRUE, TRUE, 0);
+
+  gtk_container_set_border_width (GTK_CONTAINER (metadata_vbox), 12);
+  gtk_box_set_spacing (GTK_BOX (metadata_vbox), 6);
+  gtk_widget_show (metadata_vbox);
+
+  notebook = gtk_notebook_new ();
+  gtk_box_pack_start (GTK_BOX (metadata_vbox), notebook, TRUE, TRUE, 0);
+
+  /* Description tab */
+
+  grid = metadata_editor_create_page_grid (notebook, _("Description"));
+
+  metadata_editor_create_widgets (description_tab_data, n_description_tab_data, grid, &meta_args);
+
+  /* IPTC tab */
+
+  grid = metadata_editor_create_page_grid (notebook, _("IPTC"));
+
+  metadata_editor_create_widgets (iptc_tab_data, n_iptc_tab_data, grid, &meta_args);
+
+  /* IPTC Extension tab */
+
+  grid = metadata_editor_create_page_grid (notebook, _("IPTC Extension"));
+
+  metadata_editor_create_widgets (iptc_extension_tab_data, n_iptc_extension_tab_data, grid, &meta_args);
+
+  store = gtk_list_store_new (n_location_shown_info,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING);
+
+  g_assert_cmpstr (iptc_extension_tab_data[C_LOCATION_SHOWN].id, ==, "Xmp.iptcExt.LocationShown");
+  metadata_editor_create_tree_grid (location_shown_info, n_location_shown_info,
+                                    C_LOCATION_SHOWN, iptc_extension_tab_data,
+                                    grid, store, &meta_args);
+
+  store = gtk_list_store_new (n_featured_organization_info,
+                              G_TYPE_STRING);
+
+  g_assert_cmpstr (iptc_extension_tab_data[C_FEATURED_ORG].id, ==, "Xmp.iptcExt.OrganisationInImageName");
+  metadata_editor_create_tree_grid (featured_organization_info, n_featured_organization_info,
+                                    C_FEATURED_ORG, iptc_extension_tab_data,
+                                    grid, store, &meta_args);
+
+  store = gtk_list_store_new (n_featured_organization_code_info,
+                              G_TYPE_STRING);
+
+  g_assert_cmpstr (iptc_extension_tab_data[C_FEATURED_ORG_CODE].id, ==, "Xmp.iptcExt.OrganisationInImageCode");
+  metadata_editor_create_tree_grid (featured_organization_code_info, n_featured_organization_code_info,
+                                    C_FEATURED_ORG_CODE, iptc_extension_tab_data,
+                                    grid, store, &meta_args);
+
+  store = gtk_list_store_new (n_artwork_object_info,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING);
+
+  g_assert_cmpstr (iptc_extension_tab_data[C_ART_OBJECT].id, ==, "Xmp.iptcExt.ArtworkOrObject");
+  metadata_editor_create_tree_grid (artwork_object_info, n_artwork_object_info,
+                                    C_ART_OBJECT, iptc_extension_tab_data,
+                                    grid, store, &meta_args);
+
+  store = gtk_list_store_new (n_model_release_id_info,
+                              G_TYPE_STRING);
+
+  g_assert_cmpstr (iptc_extension_tab_data[C_MODEL_RELEASE_ID].id, ==, "Xmp.plus.ModelReleaseID");
+  metadata_editor_create_tree_grid (model_release_id_info, n_model_release_id_info,
+                                    C_MODEL_RELEASE_ID, iptc_extension_tab_data,
+                                    grid, store, &meta_args);
+
+  store = gtk_list_store_new (n_registry_entry_info,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING);
+
+  g_assert_cmpstr (iptc_extension_tab_data[C_REGISTRY_ENTRY].id, ==, "Xmp.iptcExt.RegistryId");
+  metadata_editor_create_tree_grid (registry_entry_info, n_registry_entry_info,
+                                    C_REGISTRY_ENTRY, iptc_extension_tab_data,
+                                    grid, store, &meta_args);
+
+  store = gtk_list_store_new (n_image_creator_info,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING);
+
+  g_assert_cmpstr (iptc_extension_tab_data[C_IMAGE_CREATOR].id, ==, "Xmp.plus.ImageCreator");
+  metadata_editor_create_tree_grid (image_creator_info, n_image_creator_info,
+                                    C_IMAGE_CREATOR, iptc_extension_tab_data,
+                                    grid, store, &meta_args);
+
+  store = gtk_list_store_new (n_copyright_owner_info,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING);
+
+  g_assert_cmpstr (iptc_extension_tab_data[C_COPYRIGHT_OWNER].id, ==, "Xmp.plus.CopyrightOwner");
+  metadata_editor_create_tree_grid (copyright_owner_info, n_copyright_owner_info,
+                                    C_COPYRIGHT_OWNER, iptc_extension_tab_data,
+                                    grid, store, &meta_args);
+
+  store = gtk_list_store_new (n_licensor_info,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING);
+
+  g_assert_cmpstr (iptc_extension_tab_data[C_LICENSOR].id, ==, "Xmp.plus.Licensor");
+  metadata_editor_create_tree_grid (licensor_info, n_licensor_info,
+                                    C_LICENSOR, iptc_extension_tab_data,
+                                    grid, store, &meta_args);
+
+  store = gtk_list_store_new (n_property_release_id_info,
+                              G_TYPE_STRING);
+
+  g_assert_cmpstr (iptc_extension_tab_data[C_PROPERTY_RELEASE_ID].id, ==, "Xmp.plus.PropertyReleaseID");
+  metadata_editor_create_tree_grid (property_release_id_info, n_property_release_id_info,
+                                    C_PROPERTY_RELEASE_ID, iptc_extension_tab_data,
+                                    grid, store, &meta_args);
+
+  /* Categories tab */
+
+  grid = metadata_editor_create_page_grid (notebook, _("Categories"));
+
+  metadata_editor_create_widgets (categories_labels, n_categories_labels, grid, &meta_args);
+
+  /* GPS tab */
+
+  grid = metadata_editor_create_page_grid (notebook, _("GPS"));
+
+  metadata_editor_create_widgets (gps_labels, n_gps_labels, grid, &meta_args);
+
+  /* Update GPSAltitudeSystem combo width */
+
+  widget = metadata_editor_get_widget (&meta_args, "GPSAltitudeSystem");
+  g_object_set (G_OBJECT (widget), "width_request", 60, NULL);
+
+  /* DICOM tab */
+
+  grid = metadata_editor_create_page_grid (notebook, _("DICOM"));
+
+  metadata_editor_create_widgets (dicom_info_labels, n_dicom_info_labels, grid, &meta_args);
+
+  /* Show notebook */
+
+  gtk_widget_show (notebook);
+
+  /* Import / Export options box */
+
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_box_pack_start (GTK_BOX (metadata_vbox), box, FALSE, TRUE, 0);
+  gtk_widget_show (box);
+
+  impex_combo = gtk_combo_box_text_new ();
+  g_object_set (G_OBJECT (impex_combo), "width_request", 160, NULL);
+  gtk_box_pack_start (GTK_BOX (box), impex_combo, FALSE, FALSE, 6);
+  gtk_widget_show (impex_combo);
 
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (impex_combo),
                                   _("Select:"));
@@ -629,21 +1367,16 @@ metadata_editor_dialog (GimpImage     *image,
   g_signal_connect (G_OBJECT (impex_combo),
                     "changed", G_CALLBACK (impex_combo_callback), &meta_args);
 
-  gtk_container_set_border_width (GTK_CONTAINER (metadata_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (content_area), metadata_vbox, TRUE, TRUE, 0);
+  /* Add signals, combobox choices, and actual metadata */
 
-  metadata_dialog_editor_set_metadata (metadata, builder);
+  metadata_dialog_editor_set_metadata (metadata, &meta_args);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
-  if (run)
+  if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
-      metadata_editor_write_callback (dialog, builder, image);
+      metadata_editor_write_callback (dialog, &meta_args, image);
     }
 
-  if (meta_args.filename)
-    {
-      g_free (meta_args.filename);
-    }
+  g_free (meta_args.filename);
 
   return TRUE;
 }
@@ -979,16 +1712,16 @@ on_date_button_clicked (GtkButton *widget,
  */
 
 gboolean
-hasImageSupplierTagData (GtkBuilder *builder)
+hasImageSupplierTagData (metadata_editor *meta_info)
 {
   gint loop;
 
   for (loop = 0; loop < imageSupplierInfoHeader.size; loop++)
     {
-      GObject     *object;
+      GtkWidget   *object;
       const gchar *text;
 
-      object = gtk_builder_get_object (builder, imageSupplierInfoTags[loop].id);
+      object = metadata_editor_get_widget (meta_info, imageSupplierInfoTags[loop].id);
 
       if (! strcmp (imageSupplierInfoTags[loop].mode, "single"))
         {
@@ -1010,20 +1743,20 @@ hasImageSupplierTagData (GtkBuilder *builder)
 }
 
 gboolean
-hasLocationCreationTagData (GtkBuilder *builder)
+hasLocationCreationTagData (metadata_editor *meta_info)
 {
   gint loop;
 
   for (loop = 0; loop < locationCreationInfoHeader.size; loop++)
     {
-      GObject     *object;
+      GtkWidget   *widget;
       const gchar *text;
 
-      object = gtk_builder_get_object (builder, locationCreationInfoTags[loop].id);
+      widget = metadata_editor_get_widget (meta_info, locationCreationInfoTags[loop].id);
 
       if (! strcmp (locationCreationInfoTags[loop].mode, "single"))
         {
-          text = gtk_entry_get_text (GTK_ENTRY (object));
+          text = gtk_entry_get_text (GTK_ENTRY (widget));
 
           if (text && *text)
             return TRUE;
@@ -1034,40 +1767,40 @@ hasLocationCreationTagData (GtkBuilder *builder)
 }
 
 gboolean
-hasModelReleaseTagData (GtkBuilder *builder)
+hasModelReleaseTagData (metadata_editor *meta_info)
 {
   return FALSE;
 }
 
 gboolean
-hasPropertyReleaseTagData (GtkBuilder *builder)
+hasPropertyReleaseTagData (metadata_editor *meta_info)
 {
   return FALSE;
 }
 
 
 gboolean
-hasCreatorTagData (GtkBuilder *builder)
+hasCreatorTagData (metadata_editor *meta_info)
 {
   gboolean has_data = FALSE;
   gint     loop;
 
   for (loop = 0; loop < creatorContactInfoHeader.size; loop++)
     {
-      GObject *object;
+      GtkWidget *widget;
 
-      object = gtk_builder_get_object (builder, creatorContactInfoTags[loop].id);
+      widget = metadata_editor_get_widget (meta_info, creatorContactInfoTags[loop].id);
 
-      if (GTK_IS_ENTRY (object))
+      if (GTK_IS_ENTRY (widget))
         {
-          const gchar *text = gtk_entry_get_text (GTK_ENTRY (object));
+          const gchar *text = gtk_entry_get_text (GTK_ENTRY (widget));
 
           if (text && *text)
             has_data = TRUE;
         }
-      else if (GTK_IS_TEXT_VIEW (object))
+      else if (GTK_IS_TEXT_VIEW (widget))
         {
-          GtkTextView   *text_view = GTK_TEXT_VIEW (object);
+          GtkTextView   *text_view = GTK_TEXT_VIEW (widget);
           GtkTextBuffer *buffer    = gtk_text_view_get_buffer (text_view);
           GtkTextIter    start;
           GtkTextIter    end;
@@ -1475,7 +2208,7 @@ list_row_remove_callback (GtkWidget *widget,
                           gpointer   data,
                           gchar     *tag)
 {
-  GtkBuilder       *builder = data;
+  metadata_editor  *meta_info = data;
   GtkWidget        *list_widget;
   GtkListStore     *liststore;
   GtkTreeIter       iter;
@@ -1483,7 +2216,7 @@ list_row_remove_callback (GtkWidget *widget,
   GtkTreeSelection *selection;
   GtkTreePath      *path;
 
-  list_widget = builder_get_widget (builder, tag);
+  list_widget = metadata_editor_get_widget (meta_info, tag);
 
   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
   liststore = GTK_LIST_STORE (treemodel);
@@ -1585,12 +2318,12 @@ list_row_add_callback (GtkWidget *widget,
                        gpointer   data,
                        gchar     *tag)
 {
-  GtkBuilder    *builder = data;
-  GtkWidget     *list_widget;
-  GtkListStore  *liststore;
-  GtkTreeIter    iter;
+  metadata_editor  *meta_info = data;
+  GtkWidget        *list_widget;
+  GtkListStore     *liststore;
+  GtkTreeIter       iter;
 
-  list_widget = builder_get_widget (builder, tag);
+  list_widget = metadata_editor_get_widget (meta_info, tag);
 
   liststore = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget)));
 
@@ -1693,12 +2426,11 @@ enum
 /* Set dialog display settings and data */
 
 static void
-metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
-                                     GtkBuilder     *builder)
+metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
+                                     metadata_editor *meta_info)
 {
   GtkWidget *combo_widget;
   GtkWidget *entry_widget;
-  GtkWidget *text_widget;
   GtkWidget *button_widget;
   gint       width, height;
   gchar     *value;
@@ -1707,109 +2439,108 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   gint32 numele = n_default_metadata_tags;
 
   /* Setup Buttons */
-  button_widget = builder_get_widget (builder, "add_licensor_button");
+  button_widget = metadata_editor_get_widget (meta_info, "add_licensor_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (licensor_add_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "rem_licensor_button");
+  button_widget = metadata_editor_get_widget (meta_info, "rem_licensor_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (licensor_remove_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "add_copyright_own_button");
+  button_widget = metadata_editor_get_widget (meta_info, "add_copyright_own_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (copyright_own_add_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "rem_copyright_own_button");
+  button_widget = metadata_editor_get_widget (meta_info, "rem_copyright_own_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (copyright_own_remove_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "add_image_creator_button");
+  button_widget = metadata_editor_get_widget (meta_info, "add_image_creator_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (image_creator_add_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "rem_image_creator_button");
+  button_widget = metadata_editor_get_widget (meta_info, "rem_image_creator_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (image_creator_remove_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "add_reg_entry_button");
+  button_widget = metadata_editor_get_widget (meta_info, "add_reg_entry_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (reg_entry_add_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "rem_reg_entry_button");
+  button_widget = metadata_editor_get_widget (meta_info, "rem_reg_entry_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (reg_entry_remove_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "add_artwork_object_button");
+  button_widget = metadata_editor_get_widget (meta_info, "add_artwork_object_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (artwork_object_add_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "rem_artwork_object_button");
+  button_widget = metadata_editor_get_widget (meta_info, "rem_artwork_object_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (artwork_object_remove_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "add_feat_org_code_button");
+  button_widget = metadata_editor_get_widget (meta_info, "add_feat_org_code_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (feat_org_code_add_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "rem_feat_org_code_button");
+  button_widget = metadata_editor_get_widget (meta_info, "rem_feat_org_code_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (feat_org_code_remove_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "add_feat_org_name_button");
+  button_widget = metadata_editor_get_widget (meta_info, "add_feat_org_name_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (feat_org_name_add_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "rem_feat_org_name_button");
+  button_widget = metadata_editor_get_widget (meta_info, "rem_feat_org_name_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (feat_org_name_remove_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "add_shown_location_button");
+  button_widget = metadata_editor_get_widget (meta_info, "add_shown_location_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (shown_location_add_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "rem_shown_location_button");
+  button_widget = metadata_editor_get_widget (meta_info, "rem_shown_location_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (shown_location_remove_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "add_model_rel_id_button");
+  button_widget = metadata_editor_get_widget (meta_info, "add_model_rel_id_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (model_release_id_add_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "rem_model_rel_id_button");
+  button_widget = metadata_editor_get_widget (meta_info, "rem_model_rel_id_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (model_release_id_remove_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "add_prop_rel_id_button");
+  button_widget = metadata_editor_get_widget (meta_info, "add_prop_rel_id_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (property_release_id_add_callback),
-                    builder);
+                    meta_info);
 
-  button_widget = builder_get_widget (builder, "rem_prop_rel_id_button");
+  button_widget = metadata_editor_get_widget (meta_info, "rem_prop_rel_id_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (property_release_id_remove_callback),
-                    builder);
-
+                    meta_info);
 
   /* Setup Comboboxes */
-  combo_widget = builder_get_widget (builder, "Xmp.xmp.Rating");
+  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.xmp.Rating");
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
                                   _("Unrated"));
   for (i = 1; i < 6; i++)
@@ -1822,7 +2553,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
-  combo_widget = builder_get_widget (builder, "Xmp.xmpRights.Marked");
+  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.xmpRights.Marked");
   for (i = 0; i < 3; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
@@ -1830,7 +2561,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
-  combo_widget = builder_get_widget (builder, "Xmp.photoshop.Urgency");
+  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.photoshop.Urgency");
   for (i = 0; i < 9; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
@@ -1838,7 +2569,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
-  combo_widget = builder_get_widget (builder, "Xmp.plus.MinorModelAgeDisclosure");
+  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.plus.MinorModelAgeDisclosure");
   for (i = 0; i < 13; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
@@ -1846,7 +2577,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
-  combo_widget = builder_get_widget (builder, "Xmp.plus.ModelReleaseStatus");
+  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.plus.ModelReleaseStatus");
   for (i = 0; i < n_modelreleasestatus; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
@@ -1856,7 +2587,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   gtk_widget_get_size_request (combo_widget, &width, &height);
   gtk_widget_set_size_request (combo_widget, 180, height);
 
-  combo_widget = builder_get_widget (builder, "Xmp.iptcExt.DigitalSourceType");
+  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.iptcExt.DigitalSourceType");
   for (i = 0; i < n_digitalsourcetype; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
@@ -1864,7 +2595,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
-  combo_widget = builder_get_widget (builder, "Xmp.plus.PropertyReleaseStatus");
+  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.plus.PropertyReleaseStatus");
   for (i = 0; i < 4; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
@@ -1874,7 +2605,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   gtk_widget_get_size_request (combo_widget, &width, &height);
   gtk_widget_set_size_request (combo_widget, 180, height);
 
-  combo_widget = builder_get_widget (builder, "Xmp.DICOM.PatientSex");
+  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.DICOM.PatientSex");
   for (i = 0; i < 4; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
@@ -1882,7 +2613,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
-  combo_widget = builder_get_widget (builder, "Exif.GPSInfo.GPSLatitudeRef");
+  combo_widget = metadata_editor_get_widget (meta_info, "Exif.GPSInfo.GPSLatitudeRef");
   for (i = 0; i < 3; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
@@ -1890,7 +2621,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
-  combo_widget = builder_get_widget (builder, "Exif.GPSInfo.GPSLongitudeRef");
+  combo_widget = metadata_editor_get_widget (meta_info, "Exif.GPSInfo.GPSLongitudeRef");
   for (i = 0; i < 3; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
@@ -1898,7 +2629,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
-  combo_widget = builder_get_widget (builder, "Exif.GPSInfo.GPSAltitudeRef");
+  combo_widget = metadata_editor_get_widget (meta_info, "Exif.GPSInfo.GPSAltitudeRef");
   for (i = 0; i < 3; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
@@ -1906,7 +2637,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
-  combo_widget = builder_get_widget (builder, "GPSAltitudeSystem");
+  combo_widget = metadata_editor_get_widget (meta_info, "GPSAltitudeSystem");
   for (i = 0; i < 2; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
@@ -1917,38 +2648,17 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
   g_signal_connect (G_OBJECT (combo_widget), "changed",
                     G_CALLBACK (gpsaltsys_combo_callback),
-                    builder);
+                    meta_info);
 
   /* Set up text view heights */
-  for (i = 0; i < numele; i++)
-    {
-      if (! strcmp ("multi", default_metadata_tags[i].mode))
-        {
-          text_widget = builder_get_widget (builder,
-                                            default_metadata_tags[i].tag);
-          gtk_widget_get_size_request (text_widget, &width, &height);
-          gtk_widget_set_size_request (text_widget, width, height + 60);
-        }
-    }
-
-  for (i = 0; i < creatorContactInfoHeader.size; i++)
-    {
-      if (! strcmp ("multi", creatorContactInfoTags[i].mode))
-        {
-          text_widget = builder_get_widget (builder,
-                                            creatorContactInfoTags[i].id);
-          gtk_widget_get_size_request (text_widget, &width, &height);
-          gtk_widget_set_size_request (text_widget, width, height + 60);
-        }
-    }
 
   /* Set up lists */
   for (i = 0; i < imageSupplierInfoHeader.size; i++)
     {
       GtkWidget *widget;
 
-      widget = builder_get_widget (builder,
-                                   imageSupplierInfoTags[i].id);
+      widget = metadata_editor_get_widget (meta_info,
+                                           imageSupplierInfoTags[i].id);
 
       value = gexiv2_metadata_try_get_tag_interpreted_string (metadata,
                                                               imageSupplierInfoTags[i].tag,
@@ -1980,8 +2690,8 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
     {
       GtkWidget *widget;
 
-      widget = builder_get_widget (builder,
-                                   locationCreationInfoTags[i].id);
+      widget = metadata_editor_get_widget (meta_info,
+                                           locationCreationInfoTags[i].id);
 
       value = gexiv2_metadata_try_get_tag_interpreted_string (metadata,
                                                               locationCreationInfoTags[i].tag,
@@ -2009,7 +2719,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
       GtkWidget *widget;
       gint       index;
 
-      widget = builder_get_widget (builder, default_metadata_tags[i].tag);
+      widget = metadata_editor_get_widget (meta_info, default_metadata_tags[i].tag);
 
       if (! strcmp ("Exif.GPSInfo.GPSLongitude",
                     default_metadata_tags[i].tag))
@@ -3705,7 +4415,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
     {
       GtkWidget *widget;
 
-      widget = builder_get_widget (builder, creatorContactInfoTags[i].id);
+      widget = metadata_editor_get_widget (meta_info, creatorContactInfoTags[i].id);
 
       value = gexiv2_metadata_try_get_tag_interpreted_string (metadata,
                                                               creatorContactInfoTags[i].tag,
@@ -3733,32 +4443,32 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
     }
 
   /* Set creation date */
-  entry_widget = builder_get_widget (builder, "create_date_button");
+  entry_widget = metadata_editor_get_widget (meta_info, "create_date_button");
   g_signal_connect (entry_widget, "clicked",
                     G_CALLBACK (on_create_date_button_clicked),
-                    builder_get_widget (builder,
-                                        "Xmp.photoshop.DateCreated"));
+                    metadata_editor_get_widget (meta_info,
+                                                "Xmp.photoshop.DateCreated"));
 
   /* Set patient dob date */
-  entry_widget = builder_get_widget (builder, "dob_date_button");
+  entry_widget = metadata_editor_get_widget (meta_info, "dob_date_button");
   g_signal_connect (entry_widget, "clicked",
                     G_CALLBACK (on_patient_dob_date_button_clicked),
-                    builder_get_widget (builder,
-                                        "Xmp.DICOM.PatientDOB"));
+                    metadata_editor_get_widget (meta_info,
+                                                "Xmp.DICOM.PatientDOB"));
 
   /* Set study date */
-  entry_widget = builder_get_widget (builder, "study_date_button");
+  entry_widget = metadata_editor_get_widget (meta_info, "study_date_button");
   g_signal_connect (entry_widget, "clicked",
                     G_CALLBACK (on_study_date_button_clicked),
-                    builder_get_widget (builder,
-                                        "Xmp.DICOM.StudyDateTime"));
+                    metadata_editor_get_widget (meta_info,
+                                                "Xmp.DICOM.StudyDateTime"));
 
   /* Set series date */
-  entry_widget = builder_get_widget (builder, "series_date_button");
+  entry_widget = metadata_editor_get_widget (meta_info, "series_date_button");
   g_signal_connect (entry_widget, "clicked",
                     G_CALLBACK (on_series_date_button_clicked),
-                    builder_get_widget (builder,
-                                        "Xmp.DICOM.SeriesDateTime"));
+                    metadata_editor_get_widget (meta_info,
+                                                "Xmp.DICOM.SeriesDateTime"));
 }
 
 
@@ -3823,7 +4533,10 @@ get_phonetype (gchar *cur_value)
 }
 
 static void
-write_metadata_tag (GtkBuilder *builder, GimpMetadata *metadata, gchar * tag, gint data_column)
+write_metadata_tag (metadata_editor *meta_info,
+                    GimpMetadata    *metadata,
+                    gchar           *tag,
+                    gint             data_column)
 {
   GtkWidget     *list_widget;
   GtkTreeModel  *treemodel;
@@ -3832,7 +4545,7 @@ write_metadata_tag (GtkBuilder *builder, GimpMetadata *metadata, gchar * tag, gi
   gchar         *rc_data;
   GString       *data;
 
-  list_widget = builder_get_widget (builder, tag);
+  list_widget = metadata_editor_get_widget (meta_info, tag);
   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
 
   number_of_rows = gtk_tree_model_iter_n_children (treemodel, NULL);
@@ -3871,7 +4584,7 @@ write_metadata_tag (GtkBuilder *builder, GimpMetadata *metadata, gchar * tag, gi
 }
 
 static void
-write_metadata_tag_multiple (GtkBuilder *builder, GimpMetadata *metadata,
+write_metadata_tag_multiple (metadata_editor *meta_info, GimpMetadata *metadata,
                              GExiv2StructureType type, const gchar * header_tag,
                              gint n_columns, const gchar **column_tags,
                              const gint special_handling[])
@@ -3898,7 +4611,7 @@ write_metadata_tag_multiple (GtkBuilder *builder, GimpMetadata *metadata,
         }
     }
 
-  list_widget = builder_get_widget (builder, header_tag);
+  list_widget = metadata_editor_get_widget (meta_info, header_tag);
   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (list_widget));
 
   number_of_rows = gtk_tree_model_iter_n_children (treemodel, NULL);
@@ -4028,9 +4741,9 @@ set_gps_longitude_latitude (GimpMetadata *metadata,
 }
 
 void
-metadata_editor_write_callback (GtkWidget  *dialog,
-                                GtkBuilder *builder,
-                                GimpImage  *image)
+metadata_editor_write_callback (GtkWidget       *dialog,
+                                metadata_editor *meta_info,
+                                GimpImage       *image)
 {
   GimpMetadata  *g_metadata;
   gint           max_elements;
@@ -4040,50 +4753,50 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
   gimp_metadata_add_xmp_history (g_metadata, "metadata");
 
-  write_metadata_tag (builder, g_metadata,
+  write_metadata_tag (meta_info, g_metadata,
                       "Xmp.iptcExt.OrganisationInImageName",
                       COL_ORG_IMG_NAME);
 
-  write_metadata_tag (builder, g_metadata,
+  write_metadata_tag (meta_info, g_metadata,
                       "Xmp.iptcExt.OrganisationInImageCode",
                       COL_ORG_IMG_CODE);
 
-  write_metadata_tag (builder, g_metadata,
+  write_metadata_tag (meta_info, g_metadata,
                       "Xmp.plus.ModelReleaseID",
                       COL_MOD_REL_ID);
 
-  write_metadata_tag (builder, g_metadata,
+  write_metadata_tag (meta_info, g_metadata,
                       "Xmp.plus.PropertyReleaseID",
                       COL_PROP_REL_ID);
 
-  write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
+  write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
                                "Xmp.iptcExt.LocationShown",
                                n_locationshown, locationshown_alternative, NULL);
 
-  write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
+  write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
                                "Xmp.iptcExt.ArtworkOrObject",
                                n_artworkorobject, artworkorobject_alternative, NULL);
 
-  write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
+  write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
                                "Xmp.iptcExt.RegistryId",
                                n_registryid, registryid_alternative, NULL);
 
-  write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
+  write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
                                "Xmp.plus.ImageCreator",
                                n_imagecreator, imagecreator, NULL);
 
-  write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
+  write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
                                "Xmp.plus.CopyrightOwner",
                                n_copyrightowner, copyrightowner, NULL);
 
-  write_metadata_tag_multiple (builder, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
+  write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
                                "Xmp.plus.Licensor",
                                n_licensor, licensor,
                                licensor_special_handling);
 
   /* DO CREATOR TAGS */
 
-  if (hasCreatorTagData (builder))
+  if (hasCreatorTagData (meta_info))
     {
 
       set_tag_string (g_metadata, creatorContactInfoHeader.header,
@@ -4091,19 +4804,19 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
       for (i = 0; i < creatorContactInfoHeader.size; i++)
         {
-          GObject *object = gtk_builder_get_object (builder,
-                                                    creatorContactInfoTags[i].id);
+          GtkWidget *widget = metadata_editor_get_widget (meta_info,
+                                                          creatorContactInfoTags[i].id);
 
           if (! strcmp ("single", creatorContactInfoTags[i].mode))
             {
-              GtkEntry *entry = GTK_ENTRY (object);
+              GtkEntry *entry = GTK_ENTRY (widget);
 
               set_tag_string (g_metadata, creatorContactInfoTags[i].tag,
                               gtk_entry_get_text (entry), FALSE);
             }
           else if (! strcmp ("multi", creatorContactInfoTags[i].mode))
             {
-              GtkTextView   *text_view = GTK_TEXT_VIEW (object);
+              GtkTextView   *text_view = GTK_TEXT_VIEW (widget);
               GtkTextBuffer *buffer;
               GtkTextIter    start;
               GtkTextIter    end;
@@ -4143,14 +4856,14 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
   for (i = 0; i < max_elements; i++)
     {
-      GObject *object = gtk_builder_get_object (builder,
-                                                default_metadata_tags[i].tag);
+      GtkWidget *widget = metadata_editor_get_widget (meta_info,
+                                                      default_metadata_tags[i].tag);
 
       /* SINGLE TAGS */
 
       if (! strcmp ("single", default_metadata_tags[i].mode))
         {
-          GtkEntry *entry       = GTK_ENTRY (object);
+          GtkEntry *entry       = GTK_ENTRY (widget);
           gchar    *value_entry = g_strdup (gtk_entry_get_text (entry));
 
           if (! strcmp ("Exif.GPSInfo.GPSLongitude",
@@ -4170,8 +4883,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
               gdouble    alt_d;
               gint       msr;
 
-              combo_widget = builder_get_widget (builder,
-                                                 "GPSAltitudeSystem");
+              combo_widget = metadata_editor_get_widget (meta_info,
+                                                         "GPSAltitudeSystem");
               msr = gtk_combo_box_get_active (GTK_COMBO_BOX (combo_widget));
 
               alt_d = atof (gtk_entry_get_text (entry));
@@ -4229,7 +4942,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
       else if (! strcmp ("multi", default_metadata_tags[i].mode))
         {
-          GtkTextView   *text_view = GTK_TEXT_VIEW (object);
+          GtkTextView   *text_view = GTK_TEXT_VIEW (widget);
           GtkTextBuffer *buffer;
           GtkTextIter    start;
           GtkTextIter    end;
@@ -4339,7 +5052,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           GtkComboBoxText *combo;
           gint32           value;
 
-          combo = GTK_COMBO_BOX_TEXT (object);
+          combo = GTK_COMBO_BOX_TEXT (widget);
           value = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
 
           if (! strcmp ("Xmp.photoshop.Urgency", default_metadata_tags[i].tag))
@@ -4675,16 +5388,15 @@ static void
 gpsaltsys_combo_callback (GtkComboBoxText *combo,
                           gpointer         data)
 {
-  GtkWidget  *entry;
-  GtkBuilder *builder;
-  gint32      selection;
-  gchar       alt_str[256];
-  double      alt_d;
+  metadata_editor *meta_info = data;
+  GtkWidget       *entry;
+  gint32           selection;
+  gchar            alt_str[256];
+  double           alt_d;
 
-  builder = data;
   selection = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
 
-  entry = builder_get_widget (builder, "Exif.GPSInfo.GPSAltitude");
+  entry = metadata_editor_get_widget (meta_info, "Exif.GPSInfo.GPSAltitude");
 
   switch (selection)
     {

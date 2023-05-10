@@ -59,5 +59,4 @@ SUBDIRS = \
 	screenshot		\
 	selection-to-path	\
 	$(twain)		\
-	ui			\
 	common

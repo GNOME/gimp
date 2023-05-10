@@ -20,8 +20,11 @@
 #ifndef __METADATA_EDITOR_H__
 #define __METADATA_EDITOR_H__
 
-extern void metadata_editor_write_callback       (GtkWidget           *dialog,
-                                                  GtkBuilder          *builder,
-                                                  GimpImage           *image);
+void        metadata_editor_write_callback      (GtkWidget           *dialog,
+                                                 metadata_editor     *meta_info,
+                                                 GimpImage           *image);
+
+GtkWidget * metadata_editor_get_widget          (metadata_editor     *meta_info,
+                                                 const gchar         *name);
 
 #endif /* __METADATA_EDITOR_H__ */

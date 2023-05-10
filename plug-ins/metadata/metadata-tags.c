@@ -38,7 +38,7 @@ const metadata_tag default_metadata_tags[] =
 {
   /* Description */
   { "Xmp.dc.title",                              "single", 16,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  0
-  { "Xmp.dc.creator",                            "single", 13,  TAG_TYPE_XMP, GIMP_XMP_SEQ   }, //  1
+  { "Xmp.dc.creator",                            "multi",  13,  TAG_TYPE_XMP, GIMP_XMP_SEQ   }, //  1
   { "Xmp.dc.description",                        "multi",  14,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  2
   { "Xmp.dc.subject",                            "multi",  15,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, //  3
   { "Xmp.dc.rights",                             "single", 17,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  4
@@ -84,7 +84,7 @@ const metadata_tag default_metadata_tags[] =
   { "Xmp.iptcExt.RegistryId",                    "list",   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 38
   { "Xmp.iptcExt.ArtworkOrObject",               "list",   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 39
   { "Xmp.iptcExt.AddlModelInfo",                 "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 40
-  { "Xmp.iptcExt.ModelAge",                      "single", -1,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, // 41
+  { "Xmp.iptcExt.ModelAge",                      "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, // 41
   { "Xmp.iptcExt.MaxAvailWidth",                 "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 42
   { "Xmp.iptcExt.MaxAvailHeight",                "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 43
   { "Xmp.iptcExt.DigitalSourceType",             "combo",  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 44

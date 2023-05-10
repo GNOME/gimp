@@ -23,7 +23,7 @@
 typedef struct
 {
   GtkWidget      *dialog;
-  GtkBuilder     *builder;
+  GHashTable     *widgets;
   GExiv2Metadata *metadata;
   GimpImage      *image;
   gchar          *filename;

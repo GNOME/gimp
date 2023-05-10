@@ -30,6 +30,7 @@
 #include "metadata-misc.h"
 #include "metadata-xml.h"
 #include "metadata-tags.h"
+#include "metadata-editor.h"
 
 extern gboolean gimpmetadata;
 extern gboolean force_write;
@@ -164,9 +165,9 @@ set_tag_ui (metadata_editor *args,
             gchar           *value,
             gchar*           mode)
 {
-  GtkWidget *widget;
+  GtkWidget *widget = NULL;
 
-  widget = GTK_WIDGET (gtk_builder_get_object (args->builder, str_tag_name));
+  widget = GTK_WIDGET (metadata_editor_get_widget (args, str_tag_name));
 
   if (!strcmp ("single", mode))
     {
@@ -552,18 +553,18 @@ get_tag_ui_text (metadata_editor *args,
                  gchar           *name,
                  gchar           *mode)
 {
-  GObject *object;
+  GtkWidget *widget = NULL;
 
-  object = gtk_builder_get_object (args->builder, name);
+  widget = metadata_editor_get_widget (args, name);
 
   if (! strcmp ("single", mode))
     {
-      GtkEntry *entry = GTK_ENTRY (object);
+      GtkEntry *entry = GTK_ENTRY (widget);
       return gtk_entry_get_text (entry);
     }
   else if (!strcmp ("multi", mode))
     {
-      GtkTextView   *text_view = GTK_TEXT_VIEW (object);
+      GtkTextView   *text_view = GTK_TEXT_VIEW (widget);
       GtkTextBuffer *buffer;
       GtkTextIter    start;
       GtkTextIter    end;
@@ -602,8 +603,7 @@ get_list_elements (GString *xmldata, int element_count, gchar **rowtagdata)
 gchar *
 get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
 {
-  GObject       *object;
-  GtkWidget     *widget;
+  GtkWidget     *widget = NULL;
   GtkTreeModel  *treemodel;
   GtkListStore  *liststore;
   GtkTreeIter    iter;
@@ -616,8 +616,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
   has_data = FALSE;
   xmldata = g_string_new ("");
 
-  object = gtk_builder_get_object (args->builder, name);
-  widget = GTK_WIDGET(object);
+  widget = metadata_editor_get_widget (args, name);
 
   liststore = GTK_LIST_STORE(gtk_tree_view_get_model((GtkTreeView *)widget));
   treemodel = GTK_TREE_MODEL (liststore);
@@ -826,16 +825,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
 gint
 get_tag_ui_combo (metadata_editor *args, gchar *name, gchar *mode)
 {
-  GObject *object;
-  GtkComboBoxText *combo;
-  gint value;
-
-  object = gtk_builder_get_object (args->builder, name);
-
-  combo = GTK_COMBO_BOX_TEXT (object);
-  value = gtk_combo_box_get_active (GTK_COMBO_BOX(combo));
-
-  return value;
+  return gtk_combo_box_get_active (GTK_COMBO_BOX(metadata_editor_get_widget (args, name)));
 }
 
 void
