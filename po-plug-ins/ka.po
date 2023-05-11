@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-05-01 23:02+0000\n"
-"PO-Revision-Date: 2023-05-02 06:54+0200\n"
+"POT-Creation-Date: 2023-05-10 17:27+0000\n"
+"PO-Revision-Date: 2023-05-11 05:31+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -100,10 +100,10 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:1038
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
 #: plug-ins/map-object/map-object-ui.c:1317
-#: plug-ins/metadata/metadata-editor.c:598
-#: plug-ins/metadata/metadata-editor.c:936
-#: plug-ins/metadata/metadata-editor.c:4748
-#: plug-ins/metadata/metadata-editor.c:4783 plug-ins/pagecurl/pagecurl.c:496
+#: plug-ins/metadata/metadata-editor.c:1174
+#: plug-ins/metadata/metadata-editor.c:1670
+#: plug-ins/metadata/metadata-editor.c:5299
+#: plug-ins/metadata/metadata-editor.c:5334 plug-ins/pagecurl/pagecurl.c:496
 #: plug-ins/screenshot/screenshot.c:516
 #: plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_Cancel"
@@ -164,7 +164,7 @@ msgstr ""
 #: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
 #: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
-#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3453
+#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3434
 #: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
@@ -506,7 +506,7 @@ msgstr "ვერტიკალური"
 #: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
 #: plug-ins/file-fits/fits.c:542 plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2653 plug-ins/file-sgi/sgi.c:475
+#: plug-ins/file-psd/psd-load.c:2634 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1534
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gimpressionist/general.c:139
@@ -4176,7 +4176,6 @@ msgid "Graphic antialiasing"
 msgstr "გრაფიკის მომრგვალება"
 
 #: plug-ins/common/file-ps.c:459
-#| msgid "GPS"
 msgid "PS"
 msgstr "PS"
 
@@ -4185,7 +4184,6 @@ msgid "Encapsulated PostScript"
 msgstr "ჩასმული PostScript"
 
 #: plug-ins/common/file-ps.c:479
-#| msgid "GPS"
 msgid "EPS"
 msgstr "EPS"
 
@@ -4210,7 +4208,6 @@ msgid "Rotation"
 msgstr "შემობრუნება"
 
 #: plug-ins/common/file-ps.c:542
-#| msgid "PostScript"
 msgid "PostScript Level _2"
 msgstr "PostScript Level _2"
 
@@ -5384,11 +5381,11 @@ msgstr ""
 
 #: plug-ins/common/file-xpm.c:256 plug-ins/gradient-flare/gradient-flare.c:3014
 msgid "_Threshold"
-msgstr ""
+msgstr "_ზღვარი"
 
 #: plug-ins/common/file-xpm.c:257
 msgid "Alpha threshold"
-msgstr ""
+msgstr "ალფას ზღვარი"
 
 #: plug-ins/common/file-xpm.c:339
 msgid "XPM format does not support multiple layers."
@@ -5397,7 +5394,7 @@ msgstr ""
 #: plug-ins/common/file-xpm.c:393 plug-ins/common/file-xpm.c:848
 #, c-format
 msgid "Error opening file '%s'"
-msgstr ""
+msgstr "ფაილის გახსნის შეცდომა: %s"
 
 #: plug-ins/common/file-xpm.c:399 plug-ins/common/file-xpm.c:854
 msgid "XPM file invalid"
@@ -5409,11 +5406,11 @@ msgstr ""
 
 #: plug-ins/common/file-xpm.c:881
 msgid "Export Image as XPM"
-msgstr ""
+msgstr "XPM გამოსახულების სახით გატანა"
 
 #: plug-ins/common/file-xwd.c:319 plug-ins/common/file-xwd.c:349
 msgid "X window dump"
-msgstr ""
+msgstr "X-ის ფანჯრის დამპი"
 
 #: plug-ins/common/file-xwd.c:490
 #, c-format
@@ -5436,7 +5433,7 @@ msgstr ""
 
 #: plug-ins/common/file-xwd.c:544
 msgid "Can't read color entries"
-msgstr ""
+msgstr "ფერის ჩანაწერების წაკითხვა შეუძლებელია"
 
 #: plug-ins/common/file-xwd.c:628
 #, c-format
@@ -5457,12 +5454,12 @@ msgstr ""
 #: plug-ins/common/file-xwd.c:709
 #, c-format
 msgid "Error exporting '%s': "
-msgstr ""
+msgstr "'%s'-ის გატანის შეცდომა: "
 
 #: plug-ins/common/file-xwd.c:1788 plug-ins/common/file-xwd.c:2188
 #, c-format
 msgid "XWD-file %s is corrupt."
-msgstr ""
+msgstr "XWD-ფაილი %s დაზიანებულია."
 
 #: plug-ins/common/film.c:241
 msgid "_Filmstrip..."
@@ -5565,31 +5562,31 @@ msgstr "დამატებითი"
 
 #: plug-ins/common/film.c:1229
 msgid "Image _height:"
-msgstr ""
+msgstr "გამოსახულების _სიმაღლე"
 
 #: plug-ins/common/film.c:1238
 msgid "Image spac_ing:"
-msgstr ""
+msgstr "გამოსახულებების _დაშორება:"
 
 #: plug-ins/common/film.c:1250
 msgid "_Hole offset:"
-msgstr ""
+msgstr "ნახვრეტის _წანაცვლება:"
 
 #: plug-ins/common/film.c:1259
 msgid "Ho_le width:"
-msgstr ""
+msgstr "ნახვრეტის _სიგანე:"
 
 #: plug-ins/common/film.c:1268
 msgid "Hol_e height:"
-msgstr ""
+msgstr "_ნახვრეტის სიმაღლე:"
 
 #: plug-ins/common/film.c:1277
 msgid "Hole sp_acing:"
-msgstr ""
+msgstr "_ნახვრეტების დაშორება:"
 
 #: plug-ins/common/film.c:1289
 msgid "_Number height:"
-msgstr ""
+msgstr "_რიცხვის სიმაღლე:"
 
 #: plug-ins/common/film.c:1301
 msgid "Re_set"
@@ -5597,7 +5594,7 @@ msgstr "საწყის მნიშვ_ნელობაზე დაბრ
 
 #: plug-ins/common/gradient-map.c:132
 msgid "_Gradient Map"
-msgstr ""
+msgstr "გრადიენტის _რუკა"
 
 #: plug-ins/common/gradient-map.c:136
 msgid "Recolor the image using colors from the active gradient"
@@ -5605,7 +5602,7 @@ msgstr ""
 
 #: plug-ins/common/gradient-map.c:168
 msgid "_Palette Map"
-msgstr ""
+msgstr "_პალიტრის რუკა"
 
 #: plug-ins/common/gradient-map.c:172
 msgid "Recolor the image using colors from the active palette"
@@ -5613,23 +5610,23 @@ msgstr ""
 
 #: plug-ins/common/gradient-map.c:237
 msgid "Gradient Map"
-msgstr ""
+msgstr "გრადიენტის რუკა"
 
 #: plug-ins/common/gradient-map.c:241
 msgid "Palette Map"
-msgstr ""
+msgstr "პალიტრის რუკა"
 
 #: plug-ins/common/grid.c:173
 msgid "_Grid (legacy)..."
-msgstr ""
+msgstr "_ბადე (მოძველებული)..."
 
 #: plug-ins/common/grid.c:178
 msgid "Draw a grid on the image"
-msgstr ""
+msgstr "გამოსახულებაზე ბადის დახატვა"
 
 #: plug-ins/common/grid.c:330
 msgid "Drawing grid"
-msgstr ""
+msgstr "ბადის დახატვა"
 
 #. attach labels
 #: plug-ins/common/grid.c:837
@@ -5669,7 +5666,7 @@ msgstr "ვერტიკალური ფერი"
 
 #: plug-ins/common/grid.c:1049
 msgid "Intersection Color"
-msgstr ""
+msgstr "კვეთების ფერი"
 
 #: plug-ins/common/guillotine.c:112
 msgid "Slice Using G_uides"
@@ -5681,7 +5678,7 @@ msgstr ""
 
 #: plug-ins/common/guillotine.c:166
 msgid "Guillotine"
-msgstr ""
+msgstr "გილიოტიკა"
 
 #: plug-ins/common/guillotine.c:266 plug-ins/help-browser/dialog.c:892
 msgid "Untitled"
@@ -5951,11 +5948,10 @@ msgstr "დათხვევა არ არსებობს"
 msgid "Plug-in Browser"
 msgstr ""
 
-#: plug-ins/common/plugin-browser.c:599
-#: plug-ins/ui/plug-in-metadata-editor.ui:1836
-#: plug-ins/ui/plug-in-metadata-editor.ui:3192
-#: plug-ins/ui/plug-in-metadata-editor.ui:3312
-#: plug-ins/ui/plug-in-metadata-editor.ui:3434
+#: plug-ins/common/plugin-browser.c:599 plug-ins/metadata/metadata-editor.c:605
+#: plug-ins/metadata/metadata-editor.c:641
+#: plug-ins/metadata/metadata-editor.c:648
+#: plug-ins/metadata/metadata-editor.c:655
 msgid "Name"
 msgstr "სახელი"
 
@@ -8018,85 +8014,85 @@ msgstr ""
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:1986 plug-ins/file-psd/psd-load.c:2626
+#: plug-ins/file-psd/psd-load.c:1967 plug-ins/file-psd/psd-load.c:2607
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:2819
+#: plug-ins/file-psd/psd-load.c:2800
 msgid "Extra"
 msgstr "დამატებით"
 
-#: plug-ins/file-psd/psd-load.c:3019
+#: plug-ins/file-psd/psd-load.c:3000
 msgid "Unsupported or invalid channel size"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3088
+#: plug-ins/file-psd/psd-load.c:3069
 msgid "Failed to decompress data"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3469
+#: plug-ins/file-psd/psd-load.c:3450
 msgid "Duotone Import"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3470
+#: plug-ins/file-psd/psd-load.c:3451
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
 "and can be reapplied on export."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3492 plug-ins/file-psd/psd-save.c:2662
+#: plug-ins/file-psd/psd-load.c:3473 plug-ins/file-psd/psd-save.c:2662
 msgid "Compatibility Notice"
 msgstr "თავსებადობის შენიშვნა"
 
-#: plug-ins/file-psd/psd-load.c:3493
+#: plug-ins/file-psd/psd-load.c:3474
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3507
+#: plug-ins/file-psd/psd-load.c:3488
 msgid "Adjustment layers are not yet supported and will be dropped."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3511 plug-ins/file-psd/psd.c:562
+#: plug-ins/file-psd/psd-load.c:3492 plug-ins/file-psd/psd.c:562
 msgid "Metadata fill layers are not supported and will be dropped."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3515
+#: plug-ins/file-psd/psd-load.c:3496
 msgid ""
 "Fill layers are partially supported and will be converted to raster layers."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3520
+#: plug-ins/file-psd/psd-load.c:3501
 msgid ""
 "Text layers are partially supported and will be converted to raster layers."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3525
+#: plug-ins/file-psd/psd-load.c:3506
 msgid "Linked layers are not yet supported and will be dropped."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3529
+#: plug-ins/file-psd/psd-load.c:3510
 msgid ""
 "Vector masks are partially supported and will be converted to raster layers."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3534
+#: plug-ins/file-psd/psd-load.c:3515
 msgid "Vector strokes are not yet supported and will be dropped."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3538
+#: plug-ins/file-psd/psd-load.c:3519
 msgid "Layer effects are not yet supported and will be dropped."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3542
+#: plug-ins/file-psd/psd-load.c:3523
 msgid "Smart objects are not yet supported and will be dropped."
 msgstr ""
 
 #. Translators: short for layer compositions
-#: plug-ins/file-psd/psd-load.c:3547
+#: plug-ins/file-psd/psd-load.c:3528
 msgid "Layer comps are not yet supported and will be dropped."
 msgstr ""
 
@@ -8596,7 +8592,7 @@ msgid "Import from TIFF"
 msgstr ""
 
 #: plug-ins/file-tiff/file-tiff-load.c:2554
-#: plug-ins/metadata/metadata-editor.c:4749
+#: plug-ins/metadata/metadata-editor.c:5300
 msgid "_Import"
 msgstr "_იმპორტირება"
 
@@ -9943,7 +9939,7 @@ msgstr "გამა:"
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:621
+#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1360
 msgid "Select:"
 msgstr "აირჩიეთ:"
 
@@ -10536,459 +10532,6 @@ msgstr ""
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:151
-msgid "Document Title"
-msgstr "დოკუმენტის სათაური"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:168
-msgid "Author"
-msgstr "ავტორი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:184
-msgid "Author Title"
-msgstr "ავტორის სათაური"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:200
-#: plug-ins/ui/plug-in-metadata-editor.ui:505
-msgid "Description"
-msgstr "აღწერა"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:217
-msgid "Description Writer\t"
-msgstr "მწერალის აღწერა\t"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:308
-msgid "Rating"
-msgstr "შეფასება"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:343
-msgid "Keywords"
-msgstr "საკვანძო სიტყვები"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:397
-msgid "Copyright Status"
-msgstr "საავტორო უფლებების სტატუსი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:413
-#: plug-ins/ui/plug-in-metadata-editor.ui:2364
-msgid "Copyright Notice"
-msgstr "მონაცემების საავტორო უფლებები"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:429
-msgid "Copyright URL"
-msgstr "ლიცენზიის URL"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:546
-msgid "Address"
-msgstr "მისამართი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:563
-#: plug-ins/ui/plug-in-metadata-editor.ui:1038
-#: plug-ins/ui/plug-in-metadata-editor.ui:1564
-#: plug-ins/ui/plug-in-metadata-editor.ui:2069
-msgid "City"
-msgstr "ქალაქი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:579
-msgid "Postal Code\t"
-msgstr "საფოსტო კოდი\t"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:609
-#: plug-ins/ui/plug-in-metadata-editor.ui:1096
-#: plug-ins/ui/plug-in-metadata-editor.ui:1580
-msgid "State / Province"
-msgstr "რეგიონი/მხარე"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:625
-#: plug-ins/ui/plug-in-metadata-editor.ui:1157
-#: plug-ins/ui/plug-in-metadata-editor.ui:2099
-msgid "Country"
-msgstr "ქვეყანა"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:729
-msgid "Phone(s)"
-msgstr "ტელეფონი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:746
-msgid "Email(s)"
-msgstr "ელფოსტა"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:763
-msgid "Website(s)"
-msgstr "ვებგვერდი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:863
-msgid "Creation Date"
-msgstr "შეცვლის თარიღის მიხედვით"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:879
-msgid "Intellectual Genre"
-msgstr "ინტელექტუალური ჟანრი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:895
-msgid "IPTC Scene Code"
-msgstr "IPTC სცენის კოდი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1021
-msgid "Sublocation\t"
-msgstr "ქვემდებარეობა\t"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1112
-msgid "ISO Country Code"
-msgstr "ISO ქვეყნის კოდი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1200
-msgid "IPTC Subject Code"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1217
-msgid "Headline"
-msgstr "სათაური"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1272
-msgid "Urgency"
-msgstr "სასწრაფოობა"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1326
-msgid "Job Identifier\t"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1342
-msgid "Instructions"
-msgstr "ინსტრუქციები"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1359
-msgid "Credit Line"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1376
-#: plug-ins/ui/plug-in-metadata-editor.ui:2335
-msgid "Source"
-msgstr "წყარო"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1452
-msgid "Usage Terms"
-msgstr "გამოყენების პირობები"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1507
-#: plug-ins/metadata/metadata-viewer.c:401
-msgid "IPTC"
-msgstr "IPTC"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1548
-#: plug-ins/ui/plug-in-metadata-editor.ui:2054
-msgid "Sublocation"
-msgstr "ქვემდებარეობა"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1597
-msgid "Person Shown"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1614
-msgid "Country Name"
-msgstr "ქვეყნის სახელი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1673
-msgid "Country ISO-Code"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1690
-#: plug-ins/ui/plug-in-metadata-editor.ui:2129
-msgid "World Region"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1768
-msgid "Location Shown"
-msgstr "მდებარეობა ნაჩვენებია"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1785
-msgid "Featured Organization"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1802
-msgid "Event"
-msgstr "მოვლენა"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1866
-#: plug-ins/ui/plug-in-metadata-editor.ui:1996
-#: plug-ins/ui/plug-in-metadata-editor.ui:2419
-#: plug-ins/ui/plug-in-metadata-editor.ui:2426
-#: plug-ins/ui/plug-in-metadata-editor.ui:2662
-#: plug-ins/ui/plug-in-metadata-editor.ui:2667
-#: plug-ins/ui/plug-in-metadata-editor.ui:3020
-#: plug-ins/ui/plug-in-metadata-editor.ui:3025
-#: plug-ins/ui/plug-in-metadata-editor.ui:3236
-#: plug-ins/ui/plug-in-metadata-editor.ui:3241
-#: plug-ins/ui/plug-in-metadata-editor.ui:3357
-#: plug-ins/ui/plug-in-metadata-editor.ui:3362
-#: plug-ins/ui/plug-in-metadata-editor.ui:3563
-#: plug-ins/ui/plug-in-metadata-editor.ui:3568
-#: plug-ins/ui/plug-in-metadata-editor.ui:3693
-#: plug-ins/ui/plug-in-metadata-editor.ui:3698
-msgid "Add an entry"
-msgstr "ელემენტის დამატება"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1891
-#: plug-ins/ui/plug-in-metadata-editor.ui:1973
-#: plug-ins/ui/plug-in-metadata-editor.ui:2395
-#: plug-ins/ui/plug-in-metadata-editor.ui:2400
-#: plug-ins/ui/plug-in-metadata-editor.ui:2688
-#: plug-ins/ui/plug-in-metadata-editor.ui:2693
-#: plug-ins/ui/plug-in-metadata-editor.ui:3046
-#: plug-ins/ui/plug-in-metadata-editor.ui:3051
-#: plug-ins/ui/plug-in-metadata-editor.ui:3262
-#: plug-ins/ui/plug-in-metadata-editor.ui:3267
-#: plug-ins/ui/plug-in-metadata-editor.ui:3383
-#: plug-ins/ui/plug-in-metadata-editor.ui:3388
-#: plug-ins/ui/plug-in-metadata-editor.ui:3589
-#: plug-ins/ui/plug-in-metadata-editor.ui:3594
-#: plug-ins/ui/plug-in-metadata-editor.ui:3719
-#: plug-ins/ui/plug-in-metadata-editor.ui:3724
-msgid "Remove an entry"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1941
-msgid "Code"
-msgstr "კოდი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2084
-msgid "Province / State"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2114
-msgid "Country ISO Code"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2261
-msgid "Artwork or Object"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2290
-msgid "Title"
-msgstr "სათაური"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2305
-msgid "Date Created"
-msgstr "შექმნის თარიღი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2320
-msgid "Creator"
-msgstr "შემქმნელი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2349
-msgid "Source Inventory ID"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2487
-msgid "Model Age"
-msgstr "მოდელის ასაკი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2503
-msgid "Minor Model Age Disclosure"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2519
-msgid "Model Release Status"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2536
-msgid "Additional Model Info"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2633
-msgid "Model Release Identifier"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2760
-msgid "Image Supplier ID"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2776
-msgid "Supplier's Image ID"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2792
-msgid "Registry Entry"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2809
-msgid "Image Supplier Name"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2826
-msgid "Max. Available Width"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2871
-msgid "Max. Available Height"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2888
-msgid "Digital Source Type"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2975
-msgid "Organization Identifier"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2990
-msgid "Item Identifier"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3111
-msgid "Copyright Owner"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3128
-msgid "Licensor"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3145
-msgid "Property Release Status"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3162
-msgid "Image Creator"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3206
-#: plug-ins/ui/plug-in-metadata-editor.ui:3327
-#: plug-ins/ui/plug-in-metadata-editor.ui:3449
-msgid "Identifier"
-msgstr "იდენტიფიკატორი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3464
-msgid "Phone Number 1"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3479
-msgid "Phone Type 1"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3492
-msgid "Phone Number 2"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3506
-msgid "Phone Type 2"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3519
-msgid "Email Address"
-msgstr "ელ-ფოსტის მისამართი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3533
-msgid "Web Address"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3664
-msgid "Property Release Identifier"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3784
-msgid "IPTC Extension"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3826
-msgid "Supplemental Category"
-msgstr "დამატებითი კატეგორია"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3843
-msgid "Category"
-msgstr "კატეგორია"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3917
-msgid "Categories"
-msgstr "კატეგორიები"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3959
-msgid "Longitude Reference"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3975
-msgid "Longitude"
-msgstr "გრძედი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4006
-msgid "Altitude"
-msgstr "სიმაღლე"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4022
-msgid "Latitude"
-msgstr "განედი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4052
-msgid "Latitude Reference"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4068
-msgid "Altitude Reference"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4175
-msgid "GPS"
-msgstr "GPS"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4217
-msgid "Patient"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4234
-msgid "Patient ID"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4250
-msgid "Date of Birth"
-msgstr "დაბადების თარიღი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4266
-msgid "Patient Sex"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4397
-msgid "Study ID"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4414
-msgid "Referring Physician"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4430
-msgid "Study Date"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4474
-msgid "Study Description"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4510
-msgid "Series Number"
-msgstr "სერიის ნომერი"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4527
-msgid "Modality"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4544
-msgid "Series Date"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4561
-msgid "Series Description"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4751
-msgid "Equipment Institution"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4768
-msgid "Equipment Manufacturer"
-msgstr ""
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4831
-msgid "DICOM"
 msgstr ""
 
 #: plug-ins/gradient-flare/gradient-flare.c:750
@@ -12723,44 +12266,458 @@ msgstr ""
 msgid "Update preview _live"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:465
+#: plug-ins/metadata/metadata-editor.c:484
+msgid "Document Title"
+msgstr "დოკუმენტის სათაური"
+
+#: plug-ins/metadata/metadata-editor.c:485
+msgid "Author"
+msgstr "ავტორი"
+
+#: plug-ins/metadata/metadata-editor.c:486
+msgid "Author Title"
+msgstr "ავტორის სათაური"
+
+#. Description tab
+#: plug-ins/metadata/metadata-editor.c:487
+#: plug-ins/metadata/metadata-editor.c:1205
+msgid "Description"
+msgstr "აღწერა"
+
+#: plug-ins/metadata/metadata-editor.c:488
+msgid "Description Writer"
+msgstr "აღწერის ჩამწერი"
+
+#: plug-ins/metadata/metadata-editor.c:489
+msgid "Rating"
+msgstr "შეფასება"
+
+#: plug-ins/metadata/metadata-editor.c:490
+msgid "Keywords"
+msgstr "საკვანძო სიტყვები"
+
+#: plug-ins/metadata/metadata-editor.c:492
+msgid "Copyright Status"
+msgstr "საავტორო უფლებების სტატუსი"
+
+#: plug-ins/metadata/metadata-editor.c:493
+#: plug-ins/metadata/metadata-editor.c:622
+msgid "Copyright Notice"
+msgstr "მონაცემების საავტორო უფლებები"
+
+#: plug-ins/metadata/metadata-editor.c:494
+msgid "Copyright URL"
+msgstr "ლიცენზიის URL"
+
+#: plug-ins/metadata/metadata-editor.c:500
+msgid "Address"
+msgstr "მისამართი"
+
+#: plug-ins/metadata/metadata-editor.c:501
+#: plug-ins/metadata/metadata-editor.c:516
+#: plug-ins/metadata/metadata-editor.c:537
+#: plug-ins/metadata/metadata-editor.c:595
+msgid "City"
+msgstr "ქალაქი"
+
+#: plug-ins/metadata/metadata-editor.c:502
+#: plug-ins/metadata/metadata-editor.c:517
+#: plug-ins/metadata/metadata-editor.c:538
+msgid "State / Province"
+msgstr "რეგიონი/მხარე"
+
+#: plug-ins/metadata/metadata-editor.c:503
+msgid "Postal Code"
+msgstr "საფოსტო კოდი"
+
+#: plug-ins/metadata/metadata-editor.c:504
+#: plug-ins/metadata/metadata-editor.c:518
+#: plug-ins/metadata/metadata-editor.c:539
+#: plug-ins/metadata/metadata-editor.c:597
+msgid "Country"
+msgstr "ქვეყანა"
+
+#: plug-ins/metadata/metadata-editor.c:506
+msgid "Phone(s)"
+msgstr "ტელეფონი"
+
+#: plug-ins/metadata/metadata-editor.c:507
+msgid "E-mail(s)"
+msgstr "ელფოსტა"
+
+#: plug-ins/metadata/metadata-editor.c:508
+msgid "Website(s)"
+msgstr "ვებგვერდი"
+
+#: plug-ins/metadata/metadata-editor.c:510
+msgid "Creation Date"
+msgstr "შეცვლის თარიღის მიხედვით"
+
+#: plug-ins/metadata/metadata-editor.c:512
+msgid "Intellectual Genre"
+msgstr "ინტელექტუალური ჟანრი"
+
+#: plug-ins/metadata/metadata-editor.c:513
+msgid "IPTC Scene Code"
+msgstr "IPTC სცენის კოდი"
+
+#: plug-ins/metadata/metadata-editor.c:515
+#: plug-ins/metadata/metadata-editor.c:536
+#: plug-ins/metadata/metadata-editor.c:594
+msgid "Sublocation"
+msgstr "ქვემდებარეობა"
+
+#: plug-ins/metadata/metadata-editor.c:519
+#: plug-ins/metadata/metadata-editor.c:540
+msgid "Country ISO-Code"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:521
+msgid "Urgency"
+msgstr "სასწრაფოობა"
+
+#: plug-ins/metadata/metadata-editor.c:522
+msgid "Headline"
+msgstr "სათაური"
+
+#: plug-ins/metadata/metadata-editor.c:523
+msgid "IPTC Subject Code"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:525
+msgid "Job Identifier"
+msgstr "დავალების იდენტიფიკატორი"
+
+#: plug-ins/metadata/metadata-editor.c:526
+msgid "Instructions"
+msgstr "ინსტრუქციები"
+
+#: plug-ins/metadata/metadata-editor.c:527
+msgid "Credit Line"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:528
+#: plug-ins/metadata/metadata-editor.c:620
+msgid "Source"
+msgstr "წყარო"
+
+#: plug-ins/metadata/metadata-editor.c:529
+msgid "Usage Terms"
+msgstr "გამოყენების პირობები"
+
+#: plug-ins/metadata/metadata-editor.c:535
+msgid "Person Shown"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:541
+#: plug-ins/metadata/metadata-editor.c:599
+msgid "World Region"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:542
+msgid "Location Shown"
+msgstr "მდებარეობა ნაჩვენებია"
+
+#: plug-ins/metadata/metadata-editor.c:544
+msgid "Featured Organization"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:546
+msgid "Organization Code"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:548
+msgid "Event"
+msgstr "მოვლენა"
+
+#: plug-ins/metadata/metadata-editor.c:549
+msgid "Artwork or Object"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:552
+msgid "Additional Model Info"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:553
+msgid "Model Age"
+msgstr "მოდელის ასაკი"
+
+#: plug-ins/metadata/metadata-editor.c:554
+msgid "Minor Model Age Disclosure"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:555
+msgid "Model Release Status"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:556
+#: plug-ins/metadata/metadata-editor.c:628
+msgid "Model Release Identifier"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:559
+msgid "Image Supplier Name"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:560
+msgid "Image Supplier ID"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:561
+msgid "Supplier's Image ID"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:562
+msgid "Registry Entry"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:564
+msgid "Max. Available Width"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:565
+msgid "Max. Available Height"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:566
+msgid "Digital Source Type"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:568
+msgid "Image Creator"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:570
+msgid "Copyright Owner"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:572
+msgid "Licensor"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:574
+msgid "Property Release Status"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:575
+msgid "Property Release Identifier"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:596
+msgid "Province / State"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:598
+msgid "Country ISO Code"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:611
+msgid "Code"
+msgstr "კოდი"
+
+#: plug-ins/metadata/metadata-editor.c:617
+msgid "Title"
+msgstr "სათაური"
+
+#: plug-ins/metadata/metadata-editor.c:618
+msgid "Date Created"
+msgstr "შექმნის თარიღი"
+
+#: plug-ins/metadata/metadata-editor.c:619
+msgid "Creator"
+msgstr "შემქმნელი"
+
+#: plug-ins/metadata/metadata-editor.c:621
+msgid "Source Inventory ID"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:634
+msgid "Organization Identifier"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:635
+msgid "Item Identifier"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:642
+#: plug-ins/metadata/metadata-editor.c:649
+#: plug-ins/metadata/metadata-editor.c:656
+#: plug-ins/metadata/metadata-editor.c:668
+msgid "Identifier"
+msgstr "იდენტიფიკატორი"
+
+#: plug-ins/metadata/metadata-editor.c:657
+msgid "Phone Number 1"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:658
+msgid "Phone Type 1"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:659
+msgid "Phone Number 2"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:660
+msgid "Phone Type 2"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:661
+msgid "Email Address"
+msgstr "ელ-ფოსტის მისამართი"
+
+#: plug-ins/metadata/metadata-editor.c:662
+msgid "Web Address"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:675
+msgid "Category"
+msgstr "კატეგორია"
+
+#: plug-ins/metadata/metadata-editor.c:676
+msgid "Supplemental Category"
+msgstr "დამატებითი კატეგორია"
+
+#: plug-ins/metadata/metadata-editor.c:682
+msgid "Longitude"
+msgstr "გრძედი"
+
+#: plug-ins/metadata/metadata-editor.c:683
+msgid "Longitude Reference"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:684
+msgid "Latitude"
+msgstr "განედი"
+
+#: plug-ins/metadata/metadata-editor.c:685
+msgid "Latitude Reference"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:686
+msgid "Altitude"
+msgstr "სიმაღლე"
+
+#: plug-ins/metadata/metadata-editor.c:688
+msgid "Altitude Reference"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:694
+msgid "Patient"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:695
+msgid "Patient ID"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:696
+msgid "Date of Birth"
+msgstr "დაბადების თარიღი"
+
+#: plug-ins/metadata/metadata-editor.c:698
+msgid "Patient Sex"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:700
+msgid "Study ID"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:701
+msgid "Referring Physician"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:702
+msgid "Study Date"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:704
+msgid "Study Description"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:705
+msgid "Series Number"
+msgstr "სერიის ნომერი"
+
+#: plug-ins/metadata/metadata-editor.c:706
+msgid "Modality"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:707
+msgid "Series Date"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:709
+msgid "Series Description"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:711
+msgid "Equipment Institution"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:712
+msgid "Equipment Manufacturer"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:752
 msgid "_Edit Metadata"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:469
+#: plug-ins/metadata/metadata-editor.c:756
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:579
-msgid "Error loading metadata-editor dialog."
-msgstr ""
-
-#: plug-ins/metadata/metadata-editor.c:590
+#: plug-ins/metadata/metadata-editor.c:1167
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:599
+#: plug-ins/metadata/metadata-editor.c:1175
 msgid "_Write Metadata"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:623
+#. IPTC tab
+#: plug-ins/metadata/metadata-editor.c:1211
+#: plug-ins/metadata/metadata-viewer.c:401
+msgid "IPTC"
+msgstr "IPTC"
+
+#. IPTC Extension tab
+#: plug-ins/metadata/metadata-editor.c:1217
+msgid "IPTC Extension"
+msgstr ""
+
+#. Categories tab
+#: plug-ins/metadata/metadata-editor.c:1323
+msgid "Categories"
+msgstr "კატეგორიები"
+
+#. GPS tab
+#: plug-ins/metadata/metadata-editor.c:1329
+msgid "GPS"
+msgstr "GPS"
+
+#. DICOM tab
+#: plug-ins/metadata/metadata-editor.c:1340
+msgid "DICOM"
+msgstr ""
+
+#: plug-ins/metadata/metadata-editor.c:1362
 msgid "Import metadata"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:625
+#: plug-ins/metadata/metadata-editor.c:1364
 msgid "Export metadata"
 msgstr "მეტამონაცემების გატანა"
 
-#: plug-ins/metadata/metadata-editor.c:933
+#: plug-ins/metadata/metadata-editor.c:1667
 msgid "Choose Date"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:937
+#: plug-ins/metadata/metadata-editor.c:1671
 msgid "Set Date"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:1671
+#: plug-ins/metadata/metadata-editor.c:2405
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -12770,7 +12727,7 @@ msgid ""
 "Delete all text to remove the current value."
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:1677
+#: plug-ins/metadata/metadata-editor.c:2411
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -12780,24 +12737,24 @@ msgid ""
 "Delete all text to remove the current value."
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:1813
+#: plug-ins/metadata/metadata-editor.c:2545
 msgid "Unrated"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:3773
+#: plug-ins/metadata/metadata-editor.c:4484
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "მეტამონაცემების ჭდის %s დაყენების შეცდომა: %s"
 
-#: plug-ins/metadata/metadata-editor.c:4745
+#: plug-ins/metadata/metadata-editor.c:5296
 msgid "Import Metadata File"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:4780
+#: plug-ins/metadata/metadata-editor.c:5331
 msgid "Export Metadata File"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:4784
+#: plug-ins/metadata/metadata-editor.c:5335
 msgid "_Export"
 msgstr "გატანა"
 
@@ -13531,6 +13488,18 @@ msgstr ""
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr ""
+
+#~ msgid "Sublocation\t"
+#~ msgstr "ქვემდებარეობა\t"
+
+#~ msgid "ISO Country Code"
+#~ msgstr "ISO ქვეყნის კოდი"
+
+#~ msgid "Country Name"
+#~ msgstr "ქვეყნის სახელი"
+
+#~ msgid "Add an entry"
+#~ msgstr "ელემენტის დამატება"
 
 #~ msgid "Import from PostScript"
 #~ msgstr "PostScript-დან შემოტანა"
