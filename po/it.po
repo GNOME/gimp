@@ -40,7 +40,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-02 23:03+0200\n"
-"PO-Revision-Date: 2023-05-03 16:14+0200\n"
+"PO-Revision-Date: 2023-05-11 12:50+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -11917,14 +11917,7 @@ msgid ""
 "is used with large images. Also, things can get horribly slow if the swap "
 "file is created on a folder that is mounted over NFS.  For these reasons, it "
 "may be desirable to put your swap file in \"/tmp\"."
-msgstr ""
-"Imposta la posizione del file di scambio. GIMP usa uno schema di allocazione "
-"\"tile based\". Il file di scambio viene usato per spostare facilmente e "
-"velocemente le 'tile' da e verso il disco. Attenzione al fatto che il file "
-"di scambio di GIMP può allargarsi molto se si elaborano immagini molto "
-"grandi. Inoltre le elaborazioni possono diventare terribilmente lente se il "
-"file di scambio viene creato in una cartella montata su NFS. Per queste "
-"ragioni è preferibile mettere il file di scambio in \"/tmp\"."
+msgstr "Imposta la posizione del file di scambio. GIMP usa uno schema di allocazione basata su \"tile\". Il file di scambio viene usato per spostare facilmente e velocemente le 'tile' da e verso il disco. Attenzione al fatto che il file di scambio di GIMP può allargarsi molto se si elaborano immagini molto grandi. Inoltre le elaborazioni possono diventare terribilmente lente se il file di scambio viene creato in una cartella montata su NFS. Per queste ragioni è preferibile mettere il file di scambio in \"/tmp\"."
 
 #: ../app/config/gimprc-blurbs.h:494
 msgid "When enabled, menus can be torn off."
@@ -26425,7 +26418,7 @@ msgstr "Massima"
 
 #: ../app/widgets/gimpdashboard.c:491
 msgid "Maximal tile cache occupied size"
-msgstr "Dimensione massima cache riquadri occupata"
+msgstr "Dimensione massima cache tile occupata"
 
 #: ../app/widgets/gimpdashboard.c:500 ../app/widgets/gimpdashboard.c:552
 msgctxt "dashboard-variable"
@@ -26630,7 +26623,7 @@ msgstr "Riquadri"
 
 #: ../app/widgets/gimpdashboard.c:748
 msgid "Total size of tile memory"
-msgstr "Dimensione totale memoria riquadri"
+msgstr "Dimensione totale memoria tile"
 
 #: ../app/widgets/gimpdashboard.c:757
 msgctxt "dashboard-variable"
@@ -26660,7 +26653,7 @@ msgstr "Cache"
 
 #: ../app/widgets/gimpdashboard.c:783
 msgid "In-memory tile cache"
-msgstr "Cache riquadri in memoria"
+msgstr "Cache tile in memoria"
 
 #: ../app/widgets/gimpdashboard.c:819
 msgctxt "dashboard-group"
@@ -26669,7 +26662,7 @@ msgstr "Scambio"
 
 #: ../app/widgets/gimpdashboard.c:820
 msgid "On-disk tile swap"
-msgstr "Scambio riquadri su disco"
+msgstr "Scambio tile su disco"
 
 #: ../app/widgets/gimpdashboard.c:884
 msgctxt "dashboard-group"
