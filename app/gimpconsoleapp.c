@@ -33,8 +33,7 @@ struct _GimpConsoleApp
 };
 
 G_DEFINE_TYPE_WITH_CODE (GimpConsoleApp, gimp_console_app, G_TYPE_APPLICATION,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CORE_APP,
-                                                gimp_console_app_class_init))
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CORE_APP, NULL))
 
 
 static void
