@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-05-01 23:02+0000\n"
-"PO-Revision-Date: 2023-05-02 11:17+0200\n"
+"POT-Creation-Date: 2023-05-10 17:27+0000\n"
+"PO-Revision-Date: 2023-05-11 09:55+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -106,10 +106,10 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:1038
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
 #: plug-ins/map-object/map-object-ui.c:1317
-#: plug-ins/metadata/metadata-editor.c:598
-#: plug-ins/metadata/metadata-editor.c:936
-#: plug-ins/metadata/metadata-editor.c:4748
-#: plug-ins/metadata/metadata-editor.c:4783 plug-ins/pagecurl/pagecurl.c:496
+#: plug-ins/metadata/metadata-editor.c:1174
+#: plug-ins/metadata/metadata-editor.c:1670
+#: plug-ins/metadata/metadata-editor.c:5299
+#: plug-ins/metadata/metadata-editor.c:5334 plug-ins/pagecurl/pagecurl.c:496
 #: plug-ins/screenshot/screenshot.c:516
 #: plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_Cancel"
@@ -173,7 +173,7 @@ msgstr "Povadi kozo (JavaScript)"
 #: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
 #: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
-#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3453
+#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3434
 #: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
@@ -523,7 +523,7 @@ msgstr "Navpične"
 #: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
 #: plug-ins/file-fits/fits.c:542 plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2653 plug-ins/file-sgi/sgi.c:475
+#: plug-ins/file-psd/psd-load.c:2634 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1534
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gimpressionist/general.c:139
@@ -6167,11 +6167,10 @@ msgstr "Ni zadetkov"
 msgid "Plug-in Browser"
 msgstr "Brskalnik vstavkov"
 
-#: plug-ins/common/plugin-browser.c:599
-#: plug-ins/ui/plug-in-metadata-editor.ui:1836
-#: plug-ins/ui/plug-in-metadata-editor.ui:3192
-#: plug-ins/ui/plug-in-metadata-editor.ui:3312
-#: plug-ins/ui/plug-in-metadata-editor.ui:3434
+#: plug-ins/common/plugin-browser.c:599 plug-ins/metadata/metadata-editor.c:605
+#: plug-ins/metadata/metadata-editor.c:641
+#: plug-ins/metadata/metadata-editor.c:648
+#: plug-ins/metadata/metadata-editor.c:655
 msgid "Name"
 msgstr "Ime"
 
@@ -8271,28 +8270,28 @@ msgstr "Nepodprta ali neveljavna širina plasti maske: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost plasti maske: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1986 plug-ins/file-psd/psd-load.c:2626
+#: plug-ins/file-psd/psd-load.c:1967 plug-ins/file-psd/psd-load.c:2607
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nepodprti način stiskanja: %d"
 
-#: plug-ins/file-psd/psd-load.c:2819
+#: plug-ins/file-psd/psd-load.c:2800
 msgid "Extra"
 msgstr "Dodatno"
 
-#: plug-ins/file-psd/psd-load.c:3019
+#: plug-ins/file-psd/psd-load.c:3000
 msgid "Unsupported or invalid channel size"
 msgstr "Nepodprta ali neveljavna velikost kanala"
 
-#: plug-ins/file-psd/psd-load.c:3088
+#: plug-ins/file-psd/psd-load.c:3069
 msgid "Failed to decompress data"
 msgstr "Podatkov ni mogoče razpakirati"
 
-#: plug-ins/file-psd/psd-load.c:3469
+#: plug-ins/file-psd/psd-load.c:3450
 msgid "Duotone Import"
 msgstr "Uvoz duotone"
 
-#: plug-ins/file-psd/psd-load.c:3470
+#: plug-ins/file-psd/psd-load.c:3451
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -8302,11 +8301,11 @@ msgstr ""
 "Podatki o barvnem prostoru duotone so shranjeni\n"
 "in se lahko ponovno uporabijo pri izvozu."
 
-#: plug-ins/file-psd/psd-load.c:3492 plug-ins/file-psd/psd-save.c:2662
+#: plug-ins/file-psd/psd-load.c:3473 plug-ins/file-psd/psd-save.c:2662
 msgid "Compatibility Notice"
 msgstr "Obvestilo o združljivosti"
 
-#: plug-ins/file-psd/psd-load.c:3493
+#: plug-ins/file-psd/psd-load.c:3474
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -8314,49 +8313,49 @@ msgstr ""
 "Ta datoteka PSD vsebuje lastnosti, ki\n"
 " še niso v celoti podprte v GIMP-u:"
 
-#: plug-ins/file-psd/psd-load.c:3507
+#: plug-ins/file-psd/psd-load.c:3488
 msgid "Adjustment layers are not yet supported and will be dropped."
 msgstr "Plasti prilagoditev še niso podprte in bodo izpuščene."
 
-#: plug-ins/file-psd/psd-load.c:3511 plug-ins/file-psd/psd.c:562
+#: plug-ins/file-psd/psd-load.c:3492 plug-ins/file-psd/psd.c:562
 msgid "Metadata fill layers are not supported and will be dropped."
 msgstr "Plasti za polnjenje metapodatkov niso podprte in bodo izpuščene."
 
-#: plug-ins/file-psd/psd-load.c:3515
+#: plug-ins/file-psd/psd-load.c:3496
 msgid ""
 "Fill layers are partially supported and will be converted to raster layers."
 msgstr "Plasti polnila so delno podprte in bodo pretvorjene v rastrske plasti."
 
-#: plug-ins/file-psd/psd-load.c:3520
+#: plug-ins/file-psd/psd-load.c:3501
 msgid ""
 "Text layers are partially supported and will be converted to raster layers."
 msgstr ""
 "Besedilne plasti so delno podprte in bodo pretvorjene v rastrske plasti."
 
-#: plug-ins/file-psd/psd-load.c:3525
+#: plug-ins/file-psd/psd-load.c:3506
 msgid "Linked layers are not yet supported and will be dropped."
 msgstr "Povezane plasti še niso podprte in bodo izpuščene."
 
-#: plug-ins/file-psd/psd-load.c:3529
+#: plug-ins/file-psd/psd-load.c:3510
 msgid ""
 "Vector masks are partially supported and will be converted to raster layers."
 msgstr ""
 "Vektorske maske so delno podprte in bodo pretvorjene v rastrske plasti."
 
-#: plug-ins/file-psd/psd-load.c:3534
+#: plug-ins/file-psd/psd-load.c:3515
 msgid "Vector strokes are not yet supported and will be dropped."
 msgstr "Vektorske poteze še niso podprte in bodo izpuščene."
 
-#: plug-ins/file-psd/psd-load.c:3538
+#: plug-ins/file-psd/psd-load.c:3519
 msgid "Layer effects are not yet supported and will be dropped."
 msgstr "Učinki plasti še niso podprti in bodo izpuščeni."
 
-#: plug-ins/file-psd/psd-load.c:3542
+#: plug-ins/file-psd/psd-load.c:3523
 msgid "Smart objects are not yet supported and will be dropped."
 msgstr "Pametni predmeti še niso podprti in bodo izpuščeni."
 
 #. Translators: short for layer compositions
-#: plug-ins/file-psd/psd-load.c:3547
+#: plug-ins/file-psd/psd-load.c:3528
 msgid "Layer comps are not yet supported and will be dropped."
 msgstr "Kompoziti plasti še niso podprti in bodo izpuščeni."
 
@@ -8911,7 +8910,7 @@ msgid "Import from TIFF"
 msgstr "Uvozi iz TIFF"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2554
-#: plug-ins/metadata/metadata-editor.c:4749
+#: plug-ins/metadata/metadata-editor.c:5300
 msgid "_Import"
 msgstr "_Uvozi"
 
@@ -10287,7 +10286,7 @@ msgstr "Gama:"
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Spremeni gamo (svetlost) izbranega čopiča"
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:621
+#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1360
 msgid "Select:"
 msgstr "Izberite:"
 
@@ -10890,461 +10889,6 @@ msgid ""
 msgstr ""
 "Način Voronoi dovoli vplivati le vektorju smvector, ki je dani točki "
 "najbližji"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:151
-msgid "Document Title"
-msgstr "Naslov dokumenta"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:168
-msgid "Author"
-msgstr "Avtor"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:184
-msgid "Author Title"
-msgstr "Naziv avtorja"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:200
-#: plug-ins/ui/plug-in-metadata-editor.ui:505
-msgid "Description"
-msgstr "Opis"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:217
-msgid "Description Writer\t"
-msgstr "Pisec opisa\t"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:308
-msgid "Rating"
-msgstr "Ocena"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:343
-msgid "Keywords"
-msgstr "Ključne besede"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:397
-msgid "Copyright Status"
-msgstr "Stanje avtorske pravice"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:413
-#: plug-ins/ui/plug-in-metadata-editor.ui:2364
-msgid "Copyright Notice"
-msgstr "Opozorilo avtorske pravice"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:429
-msgid "Copyright URL"
-msgstr "URL avtorske pravice"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:546
-msgid "Address"
-msgstr "Naslov"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:563
-#: plug-ins/ui/plug-in-metadata-editor.ui:1038
-#: plug-ins/ui/plug-in-metadata-editor.ui:1564
-#: plug-ins/ui/plug-in-metadata-editor.ui:2069
-msgid "City"
-msgstr "Mesto"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:579
-msgid "Postal Code\t"
-msgstr "Poštna številka\t"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:609
-#: plug-ins/ui/plug-in-metadata-editor.ui:1096
-#: plug-ins/ui/plug-in-metadata-editor.ui:1580
-msgid "State / Province"
-msgstr "Država  / regija"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:625
-#: plug-ins/ui/plug-in-metadata-editor.ui:1157
-#: plug-ins/ui/plug-in-metadata-editor.ui:2099
-msgid "Country"
-msgstr "Država"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:729
-msgid "Phone(s)"
-msgstr "Telefon"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:746
-msgid "Email(s)"
-msgstr "E-naslov(i)"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:763
-msgid "Website(s)"
-msgstr "Spletišče"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:863
-msgid "Creation Date"
-msgstr "Dan kreiranja"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:879
-msgid "Intellectual Genre"
-msgstr "Intelektualni žanr"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:895
-msgid "IPTC Scene Code"
-msgstr "Koda prizora IPTC"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1021
-msgid "Sublocation\t"
-msgstr "Podpoložaj\t"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1112
-msgid "ISO Country Code"
-msgstr "ISO oznaka države"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1200
-msgid "IPTC Subject Code"
-msgstr "Koda zadeve IPTC"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1217
-msgid "Headline"
-msgstr "Napis"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1272
-msgid "Urgency"
-msgstr "Nujnost"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1326
-msgid "Job Identifier\t"
-msgstr "Identifikator posla\t"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1342
-msgid "Instructions"
-msgstr "Navodila"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1359
-msgid "Credit Line"
-msgstr "Vrstica z zaslugami"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1376
-#: plug-ins/ui/plug-in-metadata-editor.ui:2335
-msgid "Source"
-msgstr "Vir"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1452
-msgid "Usage Terms"
-msgstr "Pogoji uporabe"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1507
-#: plug-ins/metadata/metadata-viewer.c:401
-msgid "IPTC"
-msgstr "IPTC"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1548
-#: plug-ins/ui/plug-in-metadata-editor.ui:2054
-msgid "Sublocation"
-msgstr "Podpoložaj"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1597
-msgid "Person Shown"
-msgstr "Oseba na sliki"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1614
-msgid "Country Name"
-msgstr "Ime države"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1673
-msgid "Country ISO-Code"
-msgstr "ISO-koda države"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1690
-#: plug-ins/ui/plug-in-metadata-editor.ui:2129
-msgid "World Region"
-msgstr "Svetovna regija"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1768
-msgid "Location Shown"
-msgstr "Lokacija na sliki"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1785
-msgid "Featured Organization"
-msgstr "Izpostavljena organizacija"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1802
-msgid "Event"
-msgstr "Dogodek"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1866
-#: plug-ins/ui/plug-in-metadata-editor.ui:1996
-#: plug-ins/ui/plug-in-metadata-editor.ui:2419
-#: plug-ins/ui/plug-in-metadata-editor.ui:2426
-#: plug-ins/ui/plug-in-metadata-editor.ui:2662
-#: plug-ins/ui/plug-in-metadata-editor.ui:2667
-#: plug-ins/ui/plug-in-metadata-editor.ui:3020
-#: plug-ins/ui/plug-in-metadata-editor.ui:3025
-#: plug-ins/ui/plug-in-metadata-editor.ui:3236
-#: plug-ins/ui/plug-in-metadata-editor.ui:3241
-#: plug-ins/ui/plug-in-metadata-editor.ui:3357
-#: plug-ins/ui/plug-in-metadata-editor.ui:3362
-#: plug-ins/ui/plug-in-metadata-editor.ui:3563
-#: plug-ins/ui/plug-in-metadata-editor.ui:3568
-#: plug-ins/ui/plug-in-metadata-editor.ui:3693
-#: plug-ins/ui/plug-in-metadata-editor.ui:3698
-msgid "Add an entry"
-msgstr "Dodaj vnos"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1891
-#: plug-ins/ui/plug-in-metadata-editor.ui:1973
-#: plug-ins/ui/plug-in-metadata-editor.ui:2395
-#: plug-ins/ui/plug-in-metadata-editor.ui:2400
-#: plug-ins/ui/plug-in-metadata-editor.ui:2688
-#: plug-ins/ui/plug-in-metadata-editor.ui:2693
-#: plug-ins/ui/plug-in-metadata-editor.ui:3046
-#: plug-ins/ui/plug-in-metadata-editor.ui:3051
-#: plug-ins/ui/plug-in-metadata-editor.ui:3262
-#: plug-ins/ui/plug-in-metadata-editor.ui:3267
-#: plug-ins/ui/plug-in-metadata-editor.ui:3383
-#: plug-ins/ui/plug-in-metadata-editor.ui:3388
-#: plug-ins/ui/plug-in-metadata-editor.ui:3589
-#: plug-ins/ui/plug-in-metadata-editor.ui:3594
-#: plug-ins/ui/plug-in-metadata-editor.ui:3719
-#: plug-ins/ui/plug-in-metadata-editor.ui:3724
-msgid "Remove an entry"
-msgstr "Odstrani vnos"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:1941
-msgid "Code"
-msgstr "Koda"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2084
-msgid "Province / State"
-msgstr "Pokrajina/zv. država"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2114
-msgid "Country ISO Code"
-msgstr "Koda ISO države"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2261
-msgid "Artwork or Object"
-msgstr "Likovno delo ali predmet"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2290
-msgid "Title"
-msgstr "Naslov"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2305
-msgid "Date Created"
-msgstr "Datum nastanka"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2320
-msgid "Creator"
-msgstr "Avtor"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2349
-msgid "Source Inventory ID"
-msgstr "Inventarna koda vira"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2487
-msgid "Model Age"
-msgstr "Starost osebe/modela"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2503
-msgid "Minor Model Age Disclosure"
-msgstr "Razkritje starosti mladoletnega modela"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2519
-msgid "Model Release Status"
-msgstr "Stanje izdaje modela"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2536
-msgid "Additional Model Info"
-msgstr "Dodatne informacije modela"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2633
-msgid "Model Release Identifier"
-msgstr "Identifikator izdaje modela"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2760
-msgid "Image Supplier ID"
-msgstr "ID dobavitelja slike"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2776
-msgid "Supplier's Image ID"
-msgstr "ID fotografije dobavitelja"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2792
-msgid "Registry Entry"
-msgstr "Vnos registra"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2809
-msgid "Image Supplier Name"
-msgstr "Ime dobavitelja slike"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2826
-msgid "Max. Available Width"
-msgstr "Največja dovoljena širina"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2871
-msgid "Max. Available Height"
-msgstr "Največja dovoljena višina"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2888
-msgid "Digital Source Type"
-msgstr "Vrsta digitalnega vira"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2975
-msgid "Organization Identifier"
-msgstr "Identifikator organizacije"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:2990
-msgid "Item Identifier"
-msgstr "Identifikator artikla"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3111
-msgid "Copyright Owner"
-msgstr "Imetnik avtorskih pravic"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3128
-msgid "Licensor"
-msgstr "Podeljevalec licence"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3145
-msgid "Property Release Status"
-msgstr "Stanje izdaje lastnosti"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3162
-msgid "Image Creator"
-msgstr "Ustvarjalec slike"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3206
-#: plug-ins/ui/plug-in-metadata-editor.ui:3327
-#: plug-ins/ui/plug-in-metadata-editor.ui:3449
-msgid "Identifier"
-msgstr "Identifikator"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3464
-msgid "Phone Number 1"
-msgstr "Telefonska številka 1"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3479
-msgid "Phone Type 1"
-msgstr "Vrsta tel. številke 1"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3492
-msgid "Phone Number 2"
-msgstr "Telefonska številka 2"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3506
-msgid "Phone Type 2"
-msgstr "Vrsta tel. številke 2"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3519
-msgid "Email Address"
-msgstr "E-poštni naslov"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3533
-msgid "Web Address"
-msgstr "Spletni naslov"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3664
-msgid "Property Release Identifier"
-msgstr "Identifikator izdaje lastnosti"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3784
-msgid "IPTC Extension"
-msgstr "Razširjeni IPTC"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3826
-msgid "Supplemental Category"
-msgstr ""
-"Dopolnilna\n"
-"kategorija"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3843
-msgid "Category"
-msgstr "Kategorija"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3917
-msgid "Categories"
-msgstr "Kategorije"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3959
-msgid "Longitude Reference"
-msgstr "Referenčna zemljepisna dolžina"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:3975
-msgid "Longitude"
-msgstr "Zemljepisna dolžina"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4006
-msgid "Altitude"
-msgstr "Višina"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4022
-msgid "Latitude"
-msgstr "Zemljepisna širina"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4052
-msgid "Latitude Reference"
-msgstr "Referenca zemljepisne širine"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4068
-msgid "Altitude Reference"
-msgstr "Referenca zemljepisne višine"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4175
-msgid "GPS"
-msgstr "GPS"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4217
-msgid "Patient"
-msgstr "Pacient"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4234
-msgid "Patient ID"
-msgstr "ID pacienta"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4250
-msgid "Date of Birth"
-msgstr "Datum rojstva"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4266
-msgid "Patient Sex"
-msgstr "Spol pacient"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4397
-msgid "Study ID"
-msgstr "ID študije"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4414
-msgid "Referring Physician"
-msgstr "Napotni zdravnik"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4430
-msgid "Study Date"
-msgstr "Datum študije"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4474
-msgid "Study Description"
-msgstr "Opis študije"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4510
-msgid "Series Number"
-msgstr "Serijska številka"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4527
-msgid "Modality"
-msgstr "Modaliteta"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4544
-msgid "Series Date"
-msgstr "Datum serije"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4561
-msgid "Series Description"
-msgstr "Opis serije"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4751
-msgid "Equipment Institution"
-msgstr "Oprema ustanove"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4768
-msgid "Equipment Manufacturer"
-msgstr "Izdelovalec opreme"
-
-#: plug-ins/ui/plug-in-metadata-editor.ui:4831
-msgid "DICOM"
-msgstr "DICOM"
 
 #: plug-ins/gradient-flare/gradient-flare.c:750
 msgid "Addition"
@@ -13093,44 +12637,460 @@ msgstr "Pokaži _žični model"
 msgid "Update preview _live"
 msgstr "Posodo_bi predogled sproti"
 
-#: plug-ins/metadata/metadata-editor.c:465
+#: plug-ins/metadata/metadata-editor.c:484
+msgid "Document Title"
+msgstr "Naslov dokumenta"
+
+#: plug-ins/metadata/metadata-editor.c:485
+msgid "Author"
+msgstr "Avtor"
+
+#: plug-ins/metadata/metadata-editor.c:486
+msgid "Author Title"
+msgstr "Naziv avtorja"
+
+#. Description tab
+#: plug-ins/metadata/metadata-editor.c:487
+#: plug-ins/metadata/metadata-editor.c:1205
+msgid "Description"
+msgstr "Opis"
+
+#: plug-ins/metadata/metadata-editor.c:488
+msgid "Description Writer"
+msgstr "Pisec opisa"
+
+#: plug-ins/metadata/metadata-editor.c:489
+msgid "Rating"
+msgstr "Ocena"
+
+#: plug-ins/metadata/metadata-editor.c:490
+msgid "Keywords"
+msgstr "Ključne besede"
+
+#: plug-ins/metadata/metadata-editor.c:492
+msgid "Copyright Status"
+msgstr "Stanje avtorske pravice"
+
+#: plug-ins/metadata/metadata-editor.c:493
+#: plug-ins/metadata/metadata-editor.c:622
+msgid "Copyright Notice"
+msgstr "Opozorilo avtorske pravice"
+
+#: plug-ins/metadata/metadata-editor.c:494
+msgid "Copyright URL"
+msgstr "URL avtorske pravice"
+
+#: plug-ins/metadata/metadata-editor.c:500
+msgid "Address"
+msgstr "Naslov"
+
+#: plug-ins/metadata/metadata-editor.c:501
+#: plug-ins/metadata/metadata-editor.c:516
+#: plug-ins/metadata/metadata-editor.c:537
+#: plug-ins/metadata/metadata-editor.c:595
+msgid "City"
+msgstr "Mesto"
+
+#: plug-ins/metadata/metadata-editor.c:502
+#: plug-ins/metadata/metadata-editor.c:517
+#: plug-ins/metadata/metadata-editor.c:538
+msgid "State / Province"
+msgstr "Država  / regija"
+
+#: plug-ins/metadata/metadata-editor.c:503
+msgid "Postal Code"
+msgstr "Poštna številka"
+
+#: plug-ins/metadata/metadata-editor.c:504
+#: plug-ins/metadata/metadata-editor.c:518
+#: plug-ins/metadata/metadata-editor.c:539
+#: plug-ins/metadata/metadata-editor.c:597
+msgid "Country"
+msgstr "Država"
+
+#: plug-ins/metadata/metadata-editor.c:506
+msgid "Phone(s)"
+msgstr "Telefon"
+
+#: plug-ins/metadata/metadata-editor.c:507
+msgid "E-mail(s)"
+msgstr "E-naslov(i)"
+
+#: plug-ins/metadata/metadata-editor.c:508
+msgid "Website(s)"
+msgstr "Spletišče"
+
+#: plug-ins/metadata/metadata-editor.c:510
+msgid "Creation Date"
+msgstr "Dan kreiranja"
+
+#: plug-ins/metadata/metadata-editor.c:512
+msgid "Intellectual Genre"
+msgstr "Intelektualni žanr"
+
+#: plug-ins/metadata/metadata-editor.c:513
+msgid "IPTC Scene Code"
+msgstr "Koda prizora IPTC"
+
+#: plug-ins/metadata/metadata-editor.c:515
+#: plug-ins/metadata/metadata-editor.c:536
+#: plug-ins/metadata/metadata-editor.c:594
+msgid "Sublocation"
+msgstr "Podpoložaj"
+
+#: plug-ins/metadata/metadata-editor.c:519
+#: plug-ins/metadata/metadata-editor.c:540
+msgid "Country ISO-Code"
+msgstr "ISO-koda države"
+
+#: plug-ins/metadata/metadata-editor.c:521
+msgid "Urgency"
+msgstr "Nujnost"
+
+#: plug-ins/metadata/metadata-editor.c:522
+msgid "Headline"
+msgstr "Napis"
+
+#: plug-ins/metadata/metadata-editor.c:523
+msgid "IPTC Subject Code"
+msgstr "Koda zadeve IPTC"
+
+#: plug-ins/metadata/metadata-editor.c:525
+msgid "Job Identifier"
+msgstr "Identifikator posla"
+
+#: plug-ins/metadata/metadata-editor.c:526
+msgid "Instructions"
+msgstr "Navodila"
+
+#: plug-ins/metadata/metadata-editor.c:527
+msgid "Credit Line"
+msgstr "Vrstica z zaslugami"
+
+#: plug-ins/metadata/metadata-editor.c:528
+#: plug-ins/metadata/metadata-editor.c:620
+msgid "Source"
+msgstr "Vir"
+
+#: plug-ins/metadata/metadata-editor.c:529
+msgid "Usage Terms"
+msgstr "Pogoji uporabe"
+
+#: plug-ins/metadata/metadata-editor.c:535
+msgid "Person Shown"
+msgstr "Oseba na sliki"
+
+#: plug-ins/metadata/metadata-editor.c:541
+#: plug-ins/metadata/metadata-editor.c:599
+msgid "World Region"
+msgstr "Svetovna regija"
+
+#: plug-ins/metadata/metadata-editor.c:542
+msgid "Location Shown"
+msgstr "Lokacija na sliki"
+
+#: plug-ins/metadata/metadata-editor.c:544
+msgid "Featured Organization"
+msgstr "Izpostavljena organizacija"
+
+#: plug-ins/metadata/metadata-editor.c:546
+msgid "Organization Code"
+msgstr "Identifikator organizacije"
+
+#: plug-ins/metadata/metadata-editor.c:548
+msgid "Event"
+msgstr "Dogodek"
+
+#: plug-ins/metadata/metadata-editor.c:549
+msgid "Artwork or Object"
+msgstr "Likovno delo ali predmet"
+
+#: plug-ins/metadata/metadata-editor.c:552
+msgid "Additional Model Info"
+msgstr "Dodatne informacije modela"
+
+#: plug-ins/metadata/metadata-editor.c:553
+msgid "Model Age"
+msgstr "Starost osebe/modela"
+
+#: plug-ins/metadata/metadata-editor.c:554
+msgid "Minor Model Age Disclosure"
+msgstr "Razkritje starosti mladoletnega modela"
+
+#: plug-ins/metadata/metadata-editor.c:555
+msgid "Model Release Status"
+msgstr "Stanje izdaje modela"
+
+#: plug-ins/metadata/metadata-editor.c:556
+#: plug-ins/metadata/metadata-editor.c:628
+msgid "Model Release Identifier"
+msgstr "Identifikator izdaje modela"
+
+#: plug-ins/metadata/metadata-editor.c:559
+msgid "Image Supplier Name"
+msgstr "Ime dobavitelja slike"
+
+#: plug-ins/metadata/metadata-editor.c:560
+msgid "Image Supplier ID"
+msgstr "ID dobavitelja slike"
+
+#: plug-ins/metadata/metadata-editor.c:561
+msgid "Supplier's Image ID"
+msgstr "ID fotografije dobavitelja"
+
+#: plug-ins/metadata/metadata-editor.c:562
+msgid "Registry Entry"
+msgstr "Vnos registra"
+
+#: plug-ins/metadata/metadata-editor.c:564
+msgid "Max. Available Width"
+msgstr "Največja dovoljena širina"
+
+#: plug-ins/metadata/metadata-editor.c:565
+msgid "Max. Available Height"
+msgstr "Največja dovoljena višina"
+
+#: plug-ins/metadata/metadata-editor.c:566
+msgid "Digital Source Type"
+msgstr "Vrsta digitalnega vira"
+
+#: plug-ins/metadata/metadata-editor.c:568
+msgid "Image Creator"
+msgstr "Ustvarjalec slike"
+
+#: plug-ins/metadata/metadata-editor.c:570
+msgid "Copyright Owner"
+msgstr "Imetnik avtorskih pravic"
+
+#: plug-ins/metadata/metadata-editor.c:572
+msgid "Licensor"
+msgstr "Podeljevalec licence"
+
+#: plug-ins/metadata/metadata-editor.c:574
+msgid "Property Release Status"
+msgstr "Stanje izdaje lastnosti"
+
+#: plug-ins/metadata/metadata-editor.c:575
+msgid "Property Release Identifier"
+msgstr "Identifikator izdaje lastnosti"
+
+#: plug-ins/metadata/metadata-editor.c:596
+msgid "Province / State"
+msgstr "Pokrajina/zv. država"
+
+#: plug-ins/metadata/metadata-editor.c:598
+msgid "Country ISO Code"
+msgstr "Koda ISO države"
+
+#: plug-ins/metadata/metadata-editor.c:611
+msgid "Code"
+msgstr "Koda"
+
+#: plug-ins/metadata/metadata-editor.c:617
+msgid "Title"
+msgstr "Naslov"
+
+#: plug-ins/metadata/metadata-editor.c:618
+msgid "Date Created"
+msgstr "Datum nastanka"
+
+#: plug-ins/metadata/metadata-editor.c:619
+msgid "Creator"
+msgstr "Avtor"
+
+#: plug-ins/metadata/metadata-editor.c:621
+msgid "Source Inventory ID"
+msgstr "Inventarna koda vira"
+
+#: plug-ins/metadata/metadata-editor.c:634
+msgid "Organization Identifier"
+msgstr "Identifikator organizacije"
+
+#: plug-ins/metadata/metadata-editor.c:635
+msgid "Item Identifier"
+msgstr "Identifikator artikla"
+
+#: plug-ins/metadata/metadata-editor.c:642
+#: plug-ins/metadata/metadata-editor.c:649
+#: plug-ins/metadata/metadata-editor.c:656
+#: plug-ins/metadata/metadata-editor.c:668
+msgid "Identifier"
+msgstr "Identifikator"
+
+#: plug-ins/metadata/metadata-editor.c:657
+msgid "Phone Number 1"
+msgstr "Telefonska številka 1"
+
+#: plug-ins/metadata/metadata-editor.c:658
+msgid "Phone Type 1"
+msgstr "Vrsta tel. številke 1"
+
+#: plug-ins/metadata/metadata-editor.c:659
+msgid "Phone Number 2"
+msgstr "Telefonska številka 2"
+
+#: plug-ins/metadata/metadata-editor.c:660
+msgid "Phone Type 2"
+msgstr "Vrsta tel. številke 2"
+
+#: plug-ins/metadata/metadata-editor.c:661
+msgid "Email Address"
+msgstr "E-poštni naslov"
+
+#: plug-ins/metadata/metadata-editor.c:662
+msgid "Web Address"
+msgstr "Spletni naslov"
+
+#: plug-ins/metadata/metadata-editor.c:675
+msgid "Category"
+msgstr "Kategorija"
+
+#: plug-ins/metadata/metadata-editor.c:676
+msgid "Supplemental Category"
+msgstr ""
+"Dopolnilna\n"
+"kategorija"
+
+#: plug-ins/metadata/metadata-editor.c:682
+msgid "Longitude"
+msgstr "Zemljepisna dolžina"
+
+#: plug-ins/metadata/metadata-editor.c:683
+msgid "Longitude Reference"
+msgstr "Referenčna zemljepisna dolžina"
+
+#: plug-ins/metadata/metadata-editor.c:684
+msgid "Latitude"
+msgstr "Zemljepisna širina"
+
+#: plug-ins/metadata/metadata-editor.c:685
+msgid "Latitude Reference"
+msgstr "Referenca zemljepisne širine"
+
+#: plug-ins/metadata/metadata-editor.c:686
+msgid "Altitude"
+msgstr "Višina"
+
+#: plug-ins/metadata/metadata-editor.c:688
+msgid "Altitude Reference"
+msgstr "Referenca zemljepisne višine"
+
+#: plug-ins/metadata/metadata-editor.c:694
+msgid "Patient"
+msgstr "Pacient"
+
+#: plug-ins/metadata/metadata-editor.c:695
+msgid "Patient ID"
+msgstr "ID pacienta"
+
+#: plug-ins/metadata/metadata-editor.c:696
+msgid "Date of Birth"
+msgstr "Datum rojstva"
+
+#: plug-ins/metadata/metadata-editor.c:698
+msgid "Patient Sex"
+msgstr "Spol pacient"
+
+#: plug-ins/metadata/metadata-editor.c:700
+msgid "Study ID"
+msgstr "ID študije"
+
+#: plug-ins/metadata/metadata-editor.c:701
+msgid "Referring Physician"
+msgstr "Napotni zdravnik"
+
+#: plug-ins/metadata/metadata-editor.c:702
+msgid "Study Date"
+msgstr "Datum študije"
+
+#: plug-ins/metadata/metadata-editor.c:704
+msgid "Study Description"
+msgstr "Opis študije"
+
+#: plug-ins/metadata/metadata-editor.c:705
+msgid "Series Number"
+msgstr "Serijska številka"
+
+#: plug-ins/metadata/metadata-editor.c:706
+msgid "Modality"
+msgstr "Modaliteta"
+
+#: plug-ins/metadata/metadata-editor.c:707
+msgid "Series Date"
+msgstr "Datum serije"
+
+#: plug-ins/metadata/metadata-editor.c:709
+msgid "Series Description"
+msgstr "Opis serije"
+
+#: plug-ins/metadata/metadata-editor.c:711
+msgid "Equipment Institution"
+msgstr "Oprema ustanove"
+
+#: plug-ins/metadata/metadata-editor.c:712
+msgid "Equipment Manufacturer"
+msgstr "Izdelovalec opreme"
+
+#: plug-ins/metadata/metadata-editor.c:752
 msgid "_Edit Metadata"
 msgstr "Ur_edi metapodatke"
 
-#: plug-ins/metadata/metadata-editor.c:469
+#: plug-ins/metadata/metadata-editor.c:756
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Urejajte metapodatke (IPTC, EXIF, XMP)"
 
-#: plug-ins/metadata/metadata-editor.c:579
-msgid "Error loading metadata-editor dialog."
-msgstr "Napaka pri nalaganju pogovornega okna urejevalnika metapodatkov."
-
-#: plug-ins/metadata/metadata-editor.c:590
+#: plug-ins/metadata/metadata-editor.c:1167
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Urejevalnik metapodatkov: %s"
 
-#: plug-ins/metadata/metadata-editor.c:599
+#: plug-ins/metadata/metadata-editor.c:1175
 msgid "_Write Metadata"
 msgstr "Zapi_ši metapodatke"
 
-#: plug-ins/metadata/metadata-editor.c:623
+#. IPTC tab
+#: plug-ins/metadata/metadata-editor.c:1211
+#: plug-ins/metadata/metadata-viewer.c:401
+msgid "IPTC"
+msgstr "IPTC"
+
+#. IPTC Extension tab
+#: plug-ins/metadata/metadata-editor.c:1217
+msgid "IPTC Extension"
+msgstr "Razširjeni IPTC"
+
+#. Categories tab
+#: plug-ins/metadata/metadata-editor.c:1323
+msgid "Categories"
+msgstr "Kategorije"
+
+#. GPS tab
+#: plug-ins/metadata/metadata-editor.c:1329
+msgid "GPS"
+msgstr "GPS"
+
+#. DICOM tab
+#: plug-ins/metadata/metadata-editor.c:1340
+msgid "DICOM"
+msgstr "DICOM"
+
+#: plug-ins/metadata/metadata-editor.c:1362
 msgid "Import metadata"
 msgstr "Uvozi metapodatke"
 
-#: plug-ins/metadata/metadata-editor.c:625
+#: plug-ins/metadata/metadata-editor.c:1364
 msgid "Export metadata"
 msgstr "Izvozi metapodatke"
 
-#: plug-ins/metadata/metadata-editor.c:933
+#: plug-ins/metadata/metadata-editor.c:1667
 msgid "Choose Date"
 msgstr "Izberite datum"
 
-#: plug-ins/metadata/metadata-editor.c:937
+#: plug-ins/metadata/metadata-editor.c:1671
 msgid "Set Date"
 msgstr "Določi datum"
 
-#: plug-ins/metadata/metadata-editor.c:1671
+#: plug-ins/metadata/metadata-editor.c:2405
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -13146,7 +13106,7 @@ msgstr ""
 "ali 10.45\n"
 "Izbrišite celotno besedilo, da odstranite trenutno vrednost."
 
-#: plug-ins/metadata/metadata-editor.c:1677
+#: plug-ins/metadata/metadata-editor.c:2411
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -13162,24 +13122,24 @@ msgstr ""
 "(ft).\n"
 "Izbrišite celotno besedilo, da odstranite trenutno vrednost."
 
-#: plug-ins/metadata/metadata-editor.c:1813
+#: plug-ins/metadata/metadata-editor.c:2545
 msgid "Unrated"
 msgstr "Neocenjeno"
 
-#: plug-ins/metadata/metadata-editor.c:3773
+#: plug-ins/metadata/metadata-editor.c:4484
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Značke metapodatkov %s ni mogoče določiti: %s"
 
-#: plug-ins/metadata/metadata-editor.c:4745
+#: plug-ins/metadata/metadata-editor.c:5296
 msgid "Import Metadata File"
 msgstr "Uvoz datoteko metapodatkov"
 
-#: plug-ins/metadata/metadata-editor.c:4780
+#: plug-ins/metadata/metadata-editor.c:5331
 msgid "Export Metadata File"
 msgstr "Izvozi datoteko metapodatkov"
 
-#: plug-ins/metadata/metadata-editor.c:4784
+#: plug-ins/metadata/metadata-editor.c:5335
 msgid "_Export"
 msgstr "I_zvozi"
 
