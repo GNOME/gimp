@@ -2017,6 +2017,7 @@ gimp_dashboard_sample_function (GimpDashboard *dashboard,
 
     case VARIABLE_TYPE_INTEGER:
       variable_data->value.integer = CALL_FUNC (gint);
+      break;
 
     case VARIABLE_TYPE_SIZE:
       variable_data->value.size = CALL_FUNC (guint64);
