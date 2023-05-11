@@ -53,7 +53,7 @@
 # preset запомнени настройки
 # pivot point точка на завъртане, опорна точка
 # layer opacity плътност на слоя
-# luminance интензитет
+# luminance яркост
 # pattern шаблон (за текст), шарка (за графика)
 # miter скосяване
 # perceptual перцептуално
@@ -238,8 +238,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-21 23:58+0000\n"
-"PO-Revision-Date: 2023-04-16 16:51+0300\n"
+"POT-Creation-Date: 2023-05-11 13:26+0000\n"
+"PO-Revision-Date: 2023-05-11 16:34+0300\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -2639,7 +2639,7 @@ msgstr "240 секунди"
 #: app/dialogs/color-profile-dialog.c:208
 #: app/dialogs/convert-indexed-dialog.c:142
 #: app/dialogs/convert-precision-dialog.c:146
-#: app/dialogs/data-delete-dialog.c:86
+#: app/dialogs/data-delete-dialog.c:87
 #: app/dialogs/file-open-location-dialog.c:80
 #: app/dialogs/file-save-dialog.c:758 app/dialogs/fill-dialog.c:115
 #: app/dialogs/grid-dialog.c:102 app/dialogs/image-merge-layers-dialog.c:100
@@ -2865,6 +2865,7 @@ msgid "Open the colormap dialog"
 msgstr "Отваряне на прозорчето за таблицата на цветовете"
 
 #: app/actions/dialogs-actions.c:109
+msgctxt "dialogs-action"
 msgid "Histogra_m Dialog"
 msgstr "Прозорче за _хистограми"
 
@@ -3109,6 +3110,7 @@ msgid "Open tool presets dialog"
 msgstr "Отваряне на прозорчето за запомнените настройки на инструмент"
 
 #: app/actions/dialogs-actions.c:249
+msgctxt "dialogs-action"
 msgid "_Fonts Dialog"
 msgstr "Прозорче за _шрифтове"
 
@@ -5260,6 +5262,7 @@ msgid "Split Midpoint"
 msgstr "Разделяне през средната точка"
 
 #: app/actions/gradient-editor-actions.c:92
+msgctxt "gradient-editor-action"
 msgid "Split Uniformly"
 msgstr "Разделяне на равни части"
 
@@ -7924,7 +7927,7 @@ msgstr "Редактиране на шаблон"
 msgid "Delete Template"
 msgstr "Изтриване на шаблон"
 
-#: app/actions/templates-commands.c:249 app/dialogs/data-delete-dialog.c:87
+#: app/actions/templates-commands.c:249 app/dialogs/data-delete-dialog.c:88
 #: app/widgets/gimpdeviceeditor.c:544
 msgid "_Delete"
 msgstr "_Изтриване"
@@ -8735,6 +8738,7 @@ msgid "Tool's Force: Increase Relative"
 msgstr "Сила на инструмента: относително увеличаване"
 
 #: app/actions/tools-actions.c:817
+#, c-format
 msgid "Activate tool \"%s\""
 msgstr "Задействане на инструмента „%s“"
 
@@ -10169,6 +10173,7 @@ msgstr "Показване „%s-%d.%d“"
 #. * second (%2$d) is its tab order in the graphical interface.
 #.
 #: app/actions/windows-actions.c:465
+#, c-format
 msgid "Switch to the first image view: %1$s"
 msgid_plural "Switch to image view %2$d: %1$s"
 msgstr[0] "Към първото изображение: %1$s"
@@ -10388,7 +10393,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Грешка при анализа на „%%s“: ред по-дълъг от %s знака."
 
 #: app/config/gimpconfig-file.c:153 app/config/gimpconfig-file.c:197
-#: app/core/gimp-tags.c:145 app/gui/themes.c:391
+#: app/core/gimp-tags.c:145 app/gui/themes.c:389
 #: app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -12807,7 +12812,7 @@ msgstr "Неуспешно изпълнение на дъщерен процес
 msgid "tags-locale:C"
 msgstr "tags-locale:bg"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:403
+#: app/core/gimp-tags.c:156 app/gui/themes.c:401
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Грешка при затваряне на „%s“: %s"
@@ -12845,19 +12850,19 @@ msgstr "Създаване на папката „%s“…"
 msgid "Cannot create folder '%s': %s"
 msgstr "Грешка при създаване на папката „%s“: %s"
 
-#: app/core/gimp-utils.c:567 app/core/gimpfilloptions.c:383
+#: app/core/gimp-utils.c:591 app/core/gimpfilloptions.c:408
 msgid "No patterns available for this operation."
 msgstr "Няма възможни шарки за това действие."
 
-#: app/core/gimp-utils.c:1439
+#: app/core/gimp-utils.c:1463
 msgid "This parser does not support imbricated lists."
 msgstr "Този анализатор не поддържа застъпващи се списъци."
 
-#: app/core/gimp-utils.c:1462
+#: app/core/gimp-utils.c:1486
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "Етикетът „<li>“ трябва да е или в „<ol>“, или в „<ul>“."
 
-#: app/core/gimp-utils.c:1467
+#: app/core/gimp-utils.c:1491
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Непознат етикет „<%s>“."
@@ -13458,63 +13463,68 @@ msgstr "Трансформиране"
 msgid "Output type"
 msgstr "Вид на изхода"
 
-#: app/core/gimpfilloptions.c:109
+#: app/core/gimpfilloptions.c:110
 msgid "Style"
 msgstr "Стил"
 
-#: app/core/gimpfilloptions.c:117 app/pdb/gimppdbcontext.c:101
+#: app/core/gimpfilloptions.c:118 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:81
 #: app/tools/gimptextoptions.c:175
 msgid "Antialiasing"
 msgstr "Заглаждане"
 
-#: app/core/gimpfilloptions.c:124 app/tools/gimpbucketfilloptions.c:196
+#: app/core/gimpfilloptions.c:125 app/tools/gimpbucketfilloptions.c:196
 #: app/tools/gimpselectionoptions.c:88
 msgid "Feather edges"
 msgstr "Смекчаване на границите"
 
-#: app/core/gimpfilloptions.c:125 app/tools/gimpbucketfilloptions.c:197
+#: app/core/gimpfilloptions.c:126 app/tools/gimpbucketfilloptions.c:197
 msgid "Enable feathering of fill edges"
 msgstr "Смекчаване на границите при запълване"
 
-#: app/core/gimpfilloptions.c:131 app/paint/gimpmybrushoptions.c:87
+#: app/core/gimpfilloptions.c:132 app/paint/gimpmybrushoptions.c:87
 #: app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
 #: app/tools/gimpselectionoptions.c:95 app/widgets/gimpbrusheditor.c:154
 msgid "Radius"
 msgstr "Радиус"
 
-#: app/core/gimpfilloptions.c:132 app/tools/gimpbucketfilloptions.c:204
+#: app/core/gimpfilloptions.c:133 app/tools/gimpbucketfilloptions.c:204
 #: app/tools/gimpselectionoptions.c:96
 msgid "Radius of feathering"
 msgstr "Радиус на ръбовете"
 
-#: app/core/gimpfilloptions.c:356
+#: app/core/gimpfilloptions.c:357
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Запълване с цвят за рисуване"
 
-#: app/core/gimpfilloptions.c:361
+#: app/core/gimpfilloptions.c:362
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Запълване с фонов цвят"
 
-#: app/core/gimpfilloptions.c:366
+#: app/core/gimpfilloptions.c:385
+msgctxt "undo-type"
+msgid "Fill with Middle Gray (CIELAB) Color"
+msgstr "Запълване със средно сив цвят (по CIELAB)"
+
+#: app/core/gimpfilloptions.c:391
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Запълване с бяло"
 
-#: app/core/gimpfilloptions.c:373
+#: app/core/gimpfilloptions.c:398
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Запълване с прозрачност"
 
-#: app/core/gimpfilloptions.c:389 app/core/gimpfilloptions.c:457
+#: app/core/gimpfilloptions.c:414 app/core/gimpfilloptions.c:482
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Запълване с шарка"
 
-#: app/core/gimpfilloptions.c:454
+#: app/core/gimpfilloptions.c:479
 msgctxt "undo-type"
 msgid "Fill with Solid Color"
 msgstr "Запълване с плътен цвят"
@@ -15356,12 +15366,12 @@ msgstr "_Канали и маски:"
 msgid "Delete Object"
 msgstr "Изтриване на обект"
 
-#: app/dialogs/data-delete-dialog.c:105
+#: app/dialogs/data-delete-dialog.c:106
 #, c-format
 msgid "Delete '%s'?"
 msgstr "Изтриване на „%s“?"
 
-#: app/dialogs/data-delete-dialog.c:108
+#: app/dialogs/data-delete-dialog.c:109
 #, c-format
 msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
@@ -17861,11 +17871,11 @@ msgstr "Избор на вида на щриха"
 msgid "_Stroke"
 msgstr "_Щрихи"
 
-#: app/dialogs/stroke-dialog.c:230
+#: app/dialogs/stroke-dialog.c:214
 msgid "P_aint tool:"
 msgstr "_Четка:"
 
-#: app/dialogs/stroke-dialog.c:244
+#: app/dialogs/stroke-dialog.c:228
 msgid "_Emulate brush dynamics"
 msgstr "_Емулиране на динамика на четка"
 
@@ -20021,9 +20031,11 @@ msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Пропускане на „%s“: несъответствие на версията на протокола на GIMP."
 
 #: app/menus/shortcuts-rc.c:151
+#, c-format
 msgid "Skipping '%s': wrong shortcutsrc file format version."
 msgstr ""
-"Пропускане на „%s“: несъответствие на версията на файла „shortcutsrc“ на GIMP."
+"Пропускане на „%s“: несъответствие на версията на файла „shortcutsrc“ на "
+"GIMP."
 
 #: app/paint/gimpairbrush.c:80 app/tools/gimpairbrushtool.c:67
 msgid "Airbrush"
@@ -26673,17 +26685,17 @@ msgid "Select fields"
 msgstr "Избиране на полета"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: app/widgets/gimpdashboard.c:3305
+#: app/widgets/gimpdashboard.c:3306
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Няма"
 
-#: app/widgets/gimpdashboard.c:3314 app/widgets/gimpdashboard.c:4322
+#: app/widgets/gimpdashboard.c:3315 app/widgets/gimpdashboard.c:4323
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Да"
 
-#: app/widgets/gimpdashboard.c:3315 app/widgets/gimpdashboard.c:4323
+#: app/widgets/gimpdashboard.c:3316 app/widgets/gimpdashboard.c:4324
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Не"
@@ -26692,7 +26704,7 @@ msgstr "Не"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: app/widgets/gimpdashboard.c:3399
+#: app/widgets/gimpdashboard.c:3400
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -26703,16 +26715,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: app/widgets/gimpdashboard.c:4312
+#: app/widgets/gimpdashboard.c:4313
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: app/widgets/gimpdashboard.c:4390
+#: app/widgets/gimpdashboard.c:4391
 msgid "N/A"
 msgstr "Няма"
 
-#: app/widgets/gimpdashboard.c:4768
+#: app/widgets/gimpdashboard.c:4769
 msgid "Resolving symbol information..."
 msgstr "Откриване на информацията за символите…"
 
@@ -27066,7 +27078,7 @@ msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 #: app/widgets/gimpgradienteditor.c:1309
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr "Интензитет: %0.1f  Плътност: %0.1f"
+msgstr "Яркост: %0.1f  Плътност: %0.1f"
 
 #: app/widgets/gimpgradienteditor.c:1341
 #, c-format
@@ -27706,31 +27718,27 @@ msgstr "%d × %d ppi"
 msgid "%d ppi"
 msgstr "%d ppi"
 
-#: app/widgets/gimpstrokeeditor.c:131
+#: app/widgets/gimpstrokeeditor.c:130
 msgid "Line width:"
 msgstr "Широчина на линията:"
 
-#: app/widgets/gimpstrokeeditor.c:142
-msgid "_Line Style"
-msgstr "Стил на _линията:"
-
-#: app/widgets/gimpstrokeeditor.c:159
+#: app/widgets/gimpstrokeeditor.c:150
 msgid "_Cap style:"
 msgstr "Стил на _края:"
 
-#: app/widgets/gimpstrokeeditor.c:165
+#: app/widgets/gimpstrokeeditor.c:156
 msgid "_Join style:"
 msgstr "Стил на _свързването:"
 
-#: app/widgets/gimpstrokeeditor.c:172
+#: app/widgets/gimpstrokeeditor.c:163
 msgid "_Miter limit:"
 msgstr "_Ограничение на скосяването:"
 
-#: app/widgets/gimpstrokeeditor.c:178
+#: app/widgets/gimpstrokeeditor.c:169
 msgid "Dash pattern:"
 msgstr "Шарка на тиретата:"
 
-#: app/widgets/gimpstrokeeditor.c:245
+#: app/widgets/gimpstrokeeditor.c:236
 msgid "Dash _preset:"
 msgstr "_Готов вид на тирета:"
 
@@ -28500,6 +28508,9 @@ msgstr "Меню за историята на действията"
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Меню за пътеки"
+
+#~ msgid "_Line Style"
+#~ msgstr "Стил на _линията:"
 
 #~ msgctxt "buffers-action"
 #~ msgid "Buffers Menu"
