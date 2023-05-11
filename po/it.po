@@ -40,7 +40,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-02 23:03+0200\n"
-"PO-Revision-Date: 2023-05-11 12:50+0200\n"
+"PO-Revision-Date: 2023-05-11 12:58+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -12261,12 +12261,7 @@ msgid ""
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
 "images that wouldn't fit into memory otherwise.  If you have a lot of RAM, "
 "you may want to set this to a higher value."
-msgstr ""
-"Quando l'ammontare dei dati pixel eccede questo limite, GIMP comincerà a "
-"trasferire riquadri su disco. Ciò rallenta molto le operazioni ma permette "
-"di lavorare su immagini che altrimenti non sarebbero mantenute in memoria. "
-"Se si possiede molta  memoria RAM può essere desiderabile impostare la voce "
-"ad un valore maggiore."
+msgstr "Quando l'ammontare dei dati pixel eccede questo limite, GIMP comincerà a trasferire tile su disco. Ciò rallenta molto le operazioni ma permette di lavorare su immagini che altrimenti non sarebbero mantenute in memoria. Se si possiede molta  memoria RAM può essere desiderabile impostare la voce ad un valore maggiore."
 
 #: ../app/config/gimprc-blurbs.h:680
 msgid "Show the current foreground and background colors in the toolbox."
@@ -16682,7 +16677,7 @@ msgstr "_Memoria massima annullamenti:"
 
 #: ../app/dialogs/preferences-dialog.c:1190
 msgid "Tile cache _size:"
-msgstr "Dimen_sione cache riquadri:"
+msgstr "Dimen_sione cache tile:"
 
 #: ../app/dialogs/preferences-dialog.c:1193
 msgid "Maximum _new image size:"
@@ -22776,9 +22771,7 @@ msgstr "Permetti la crescita"
 
 #: ../app/tools/gimpcropoptions.c:109
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
-msgstr ""
-"Permetti la ridimensione del disegnabile trascinando il riquadro di ritaglio "
-"oltre i limiti dell'immagine"
+msgstr "Permetti la ridimensione dell'area disegnabile trascinando il bordo di ritaglio oltre i limiti dell'immagine"
 
 #: ../app/tools/gimpcropoptions.c:116 ../app/tools/gimpcropoptions.c:226
 msgid "Fill with"
@@ -26409,7 +26402,7 @@ msgstr "Occupata"
 
 #: ../app/widgets/gimpdashboard.c:481
 msgid "Tile cache occupied size"
-msgstr "Dimensione cache riquadri occupata"
+msgstr "Dimensione cache tile occupata"
 
 #: ../app/widgets/gimpdashboard.c:490
 msgctxt "dashboard-variable"
@@ -26427,7 +26420,7 @@ msgstr "Limite"
 
 #: ../app/widgets/gimpdashboard.c:501
 msgid "Tile cache size limit"
-msgstr "Limite dimensione cache riquadri"
+msgstr "Limite dimensione cache tile"
 
 #: ../app/widgets/gimpdashboard.c:509 ../app/widgets/gimpdashboard.c:635
 msgctxt "dashboard-variable"
@@ -26436,7 +26429,7 @@ msgstr "Compressione"
 
 #: ../app/widgets/gimpdashboard.c:510
 msgid "Tile cache compression ratio"
-msgstr "Rapporto di compressione cache riquadri"
+msgstr "Rapporto di compressione cache tile"
 
 #: ../app/widgets/gimpdashboard.c:519
 msgctxt "dashboard-variable"
@@ -26445,7 +26438,7 @@ msgstr "Hit/Miss"
 
 #: ../app/widgets/gimpdashboard.c:520
 msgid "Tile cache hit/miss ratio"
-msgstr "Rapporto hit/miss cache riquadri"
+msgstr "Rapporto hit/miss cache tile"
 
 #: ../app/widgets/gimpdashboard.c:533
 msgid "Swap file occupied size"
@@ -26619,7 +26612,7 @@ msgstr "Numero di operazioni asincrone in corso"
 #: ../app/widgets/gimpdashboard.c:747
 msgctxt "dashboard-variable"
 msgid "Tile"
-msgstr "Riquadri"
+msgstr "Tile"
 
 #: ../app/widgets/gimpdashboard.c:748
 msgid "Total size of tile memory"
