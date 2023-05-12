@@ -502,7 +502,7 @@ app_exit_after_callback (Gimp       *gimp,
    *  to catch possible problems in our finalizers.
    */
 
-#ifdef GIMP_UNSTABLE
+#ifndef GIMP_RELEASE
 
   if (g_main_loop_is_running (*loop))
     g_main_loop_quit (*loop);
