@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-08 17:29+0000\n"
-"PO-Revision-Date: 2022-11-12 18:52+0100\n"
+"POT-Creation-Date: 2023-05-12 12:42+0000\n"
+"PO-Revision-Date: 2023-05-12 18:52+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -81,6 +81,74 @@ msgid "Photo editing in GIMP"
 msgstr "Editeu fotografies amb el GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
+msgid "A new stable releases with a lot of bug fixes and a few enhancements:"
+msgstr ""
+"Una nova versió estable amb moltes correccions d'errors i algunes "
+"millores:"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+msgid "New template selector in \"Canvas Size\" dialog"
+msgstr "Selector de plantilla nou al diàleg «Mida del llenç»"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+msgid ""
+"\"Change Color\" dialogs: color scale (0..255/0..100) and models (LCh/HSV) "
+"settings remembered across sessions"
+msgstr ""
+"Diàlegs «Canvia el color»: l'escala de color (0..255/0..100) i els models "
+"(LCh/HSV) recordats entre sessions"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+msgid "New header with \"visible\" and \"link\" icons in item dockables"
+msgstr ""
+"Nova capçalera amb les icones «visible» i «link» als elements acoblables"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+msgid "Clipping layers better supported when importing PSD files"
+msgstr "Millor suport per a capes retallades en importar fitxers PSD"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+msgid "Paths are now exported to PSD"
+msgstr "Els camins ara s'exporten a PSD"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#
+msgid "JPEG XL export added"
+msgstr "S'ha afegit l'exportació JPEG XL"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+msgid "Metadata in JPEG XL import"
+msgstr "Metadades en la importació JPEG XL"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+msgid "New option \"Show reduced images\" when loading TIFF images"
+msgstr "Nova opció «Mostra les imatges reduïdes» en carregar imatges TIFF"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+msgid "16-bit per channel export for raw image data"
+msgstr "Exportació de 16 bits per canal per a dades d'imatge RAW"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+msgid ""
+"More plug-ins got bug-fixes: DDS, WebP, Flame, Animation Playback, HEIF, "
+"Dicom and Help"
+msgstr ""
+"Més connectors tenen correccions d'errors: DDS, WebP, Flama, Reproducció "
+"d'animació, HEIF, Dicom i Ajuda"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+msgid ""
+"Color picking on X11 will ignore the Wayland portal; new implementation for "
+"color picking on Windows"
+msgstr ""
+"La selecció de color a l'X11 ignorarà el portal Wayland; la nova "
+"implementació per a la selecció de color al Windows"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+msgid "Check for updates fixed on macOS"
+msgstr "Comprova si hi ha actualitzacions amb solucions a macOS"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
 "GIMP continues strengthening its bases with this new version 2.10.32 fixing "
 "many bugs and improving format support. Notable changes:"
@@ -88,19 +156,19 @@ msgstr ""
 "El GIMP continua reforçant les seves bases amb aquesta nova versió 2.10.32 "
 "esmenant molts errors i millorant el suport de formats. Canvis notables:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "8 and 16-bit CMYK(A) TIFF files import is now supported"
 msgstr "Ara s'admet la importació de fitxers TIFF de 8 i 16 bits CMYK(A)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "BIGTIFF import and export are now supported"
 msgstr "Ara s'admet la importació i exportació BIGTIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "JPEG XL files import is now supported"
 msgstr "Ara s'admet la importació de fitxers JPEG XL"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
 "DDS export has new \"Flip\" (useful for some game engine) and \"Visible "
 "layers\" options"
@@ -108,22 +176,22 @@ msgstr ""
 "L'exportació DDS té noves opcions «Flip» (útil per a alguns motors de joc) i"
 " «Capes visibles»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "Other improved format supports: BMP, DICOM, EPS, RAW, TGA, WebP"
 msgstr "Altres suports de format millorats: BMP, DICOM, EPS, RAW, TGA, WebP"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "The screenshot plug-in on Windows has now an option to capture the cursor"
 msgstr ""
 "El connector de captura de pantalla al Windows ara té una opció per capturar"
 " el cursor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "Several usability improvements in official themes and icons"
 msgstr "Diverses millores d'usabilitat en temes i icones oficials"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
 "New support for localized glyphs ('locl') in Text tool depending on the "
 "value of the \"Language\" tool option"
@@ -131,15 +199,15 @@ msgstr ""
 "Suport nou per a glifs localitzats ('locl') en l'eina Text depenent del "
 "valor de l'opció «Idioma»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "More robust XCF import"
 msgstr "Importació XCF més robusta"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "Several metadata handling improvements"
 msgstr "Diverses millores en la gestió de metadades"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid ""
 "GIMP 2.10.30 fixes many bugs, updates backend implementations to follow OS "
 "evolutions, improves metadata support as well as support of several formats,"
@@ -149,7 +217,7 @@ msgstr ""
 "dorsal per seguir les evolucions del SO, millora el suport de metadades així"
 " com el suport de diversos formats, com a PSD i AVIF."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
@@ -157,7 +225,7 @@ msgstr ""
 "GIMP 2.10.28 corregeix un problema de construcció del GIMP 2.10.26, on "
 "algunes dades del tema no s'instal·laven correctament."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core,"
 " scripts and plug-in code."
@@ -165,17 +233,17 @@ msgstr ""
 "El GIMP 2.10.26 és una versió de correcció d'errors, que conté dotzenes de "
 "correccions, en el nucli, els scripts i al codi de connectors."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr ""
 "GIMP 2.10.24 és una versió que principalment corregeix errors. Canvis "
 "importants:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "GeoTIFF metadata support added"
 msgstr "S'ha afegit compatibilitat amb les metadades de GeoTIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid ""
 "PDF import now proposes an option to load layers in reverse orders and "
 "allows fractional pixel density"
@@ -183,39 +251,39 @@ msgstr ""
 "La importació de PDF ara proposa una opció per carregar capes en ordre "
 "invers i permet la densitat de píxels fraccionaris"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "Raw image import updated to handle API changes in darktable 3.6 and over"
 msgstr ""
 "S'ha actualitzat la importació d'imatges RAW per gestionar els canvis de "
 "l'API a darktable 3.6 i superior"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
 "Compatibilitat de format de fitxer millorada: HEIF, PSP, TIFF, JPEG, PNG, "
 "PDF, DDS, BMP, PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "Many fixes and improvements to the metadata viewer and editor"
 msgstr "Moltes correccions i millores al visor i editor de metadades"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "New Kabyle translation"
 msgstr "Traducció nova al cabilenc"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
 msgstr "Ara és possible l'ajust fora del llenç (a la graella, guies, camins)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
 msgstr ""
 "GIMP 2.10.22 és una versió que principalment corregeix errors. Canvis "
 "importants:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
@@ -223,23 +291,23 @@ msgstr ""
 "Millores en la compatibilitat amb HEIF: exportació opcional amb profunditat "
 "de bits alta, importació i exportació de AVIF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Multiple improvements in Corel PaintShop Pro support"
 msgstr "Millores múltiples en el suport Corel PaintShop Pro"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
 "«Fusionat d'exemples» ara està disponible a les opcions de l'eina d'operació"
 " GEGL"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "\"Sample merged\" is now enabled by default for color picking"
 msgstr ""
 "«Fusionat d'exemples» ara està habilitat per defecte per a la selecció de "
 "color"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
@@ -247,7 +315,7 @@ msgstr ""
 "L'opció que permet la compatibilitat amb OpenCL s'ha mogut a la pestanya "
 "Camp de joc a Preferències"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
@@ -255,21 +323,21 @@ msgstr ""
 "Matting Levin és ara el motor per defecte de l'eina de selecció de primer "
 "pla ja que ho fa molt millor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "New progressive performance logs and dashboard updates"
 msgstr "Nous registres de rendiment progressiu i actualitzacions del tauler"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr ""
 "La depuració detallada ara mostra la informació del Flatpak quan sigui "
 "rellevant"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "Various bug fixes"
 msgstr "Diverses correccions d'errors"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
@@ -277,13 +345,13 @@ msgstr ""
 "GIMP 2.10.20 inclou la correcció de moltes errades així com també noves "
 "funcionalitats. Les més notables són:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
 "Els grups d'eines ara per defecte s'expandeixen en passar per sobre en "
 "comptes de fer clic"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
@@ -291,7 +359,7 @@ msgstr ""
 "Escapçat no destructiu ara disponible escapçant el llenç en lloc de píxels "
 "reals"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing"
 " channels in the right order"
@@ -299,21 +367,21 @@ msgstr ""
 "Millor suport PSD per exportar fitxers de 16 bits, així com, llegir/escriure"
 " canals en l'ordre correcte"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "On-canvas controls for the Vignette filter"
 msgstr "Controls al llenç per al filtre Vinyeta"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr ""
 "Filtres nous: Floriment, Difuminat centrat, Difuminat amb lent, Difuminat "
 "variable"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid "Over 30 bugfixes"
 msgstr "Hi ha més de 30 esmenes d'errors"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD"
 " files, and adds a higher-contrast variation of the symbolic icon theme."
@@ -322,7 +390,7 @@ msgstr ""
 " als fitxers PSD CMYK i afegeix una variació de contrast més elevat sobre el"
 " tema de la icona simbòlica."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid ""
 "GIMP 2.10.16 delivers several major usability improvements, a new tool for "
 "transformations in 3D space, new release checker, and the usual amount of "
@@ -332,46 +400,46 @@ msgstr ""
 " per a les transformacions a l’espai 3D, la nova versió del verificador i la"
 " quantitat habitual de correccions d’errors. Millores notables:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid "Tools are now grouped in the toolbox by default"
 msgstr "Les eines ara s’agrupen per defecte a la caixa d’eines"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid "Sliders now use a compact style with improved user interaction"
 msgstr ""
 "Els lliscadors ara utilitzen un estil compacte amb una millorada interacció "
 "amb l'usuari"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid "Vastly improved user experience for the transformation preview"
 msgstr ""
 "Gran millora en l'experiència de l'usuari per a la previsualització de la "
 "transformació"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr ""
 "Les àrees acoblables ara es ressalten quan s'arrossega un diàleg acoblable"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid "New 3D Transform tool to rotate and pan items"
 msgstr "Una nova eina de transformació 3D per girar i desplaçar elements"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid "Much smoother brush outline motion on the canvas"
 msgstr "Moviment molt més suau del traç del pinzell en el llenç"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr "Interfície d'usuari consolidada per tal de fusionar i ancorar capes"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid "Update check to notify users that a new release/installer is available"
 msgstr ""
 "Actualitza la comprovació per notificar als usuaris que hi ha disponible una"
 " nova versió/instal·lador"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 msgid ""
 "GIMP 2.10.14 is again mostly a bug fix release, making GIMP rock-solid. "
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
@@ -382,7 +450,7 @@ msgstr ""
 "antics van ser finalment portats al GEGL. Per descomptat, també té algunes "
 "millores en consideració:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
@@ -390,53 +458,53 @@ msgstr ""
 "Menú Visualitza: nova opció «Mostra-ho tot» per revelar píxels fora del "
 "límit del llenç"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
 msgstr ""
 "Filtres: nova opció «Retalla» per permetre el redimensionament de la capa "
 "quan sigui rellevant"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
 msgstr ""
 "Eina selecció del primer pla: nou mode de previsualització a «escala de "
 "grisos»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr ""
 "Eina selecció del primer pla: selector de color/opacitat per a la "
 "previsualització del «Color»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid "Free Select tool: improved copy-paste interaction"
 msgstr "Eina selecció lliure: millora la interacció copia-enganxa"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid "Transform tools: new Image transform type to transform the whole image"
 msgstr ""
 "Eines de transformació: nou tipus de transformació d’imatge per transformar "
 "tota la imatge"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
 msgstr "Preferències: nou paràmetre «Permet l'edició en capes no visibles»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid "HEIF import/export: color profile support"
 msgstr "Importació/exportació HEIF: suport del perfil de color"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid "PDF export: text layers in layer groups now exported as texts"
 msgstr ""
 "Exportació PDF: capes de text en grups de capes ara exportades com a textos"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid "TIFF import: now asks how to process unspecified TIFF channels"
 msgstr ""
 "Importació TIFF: ara es pregunta com processar canals TIFF no especificats"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid ""
 "GIMP 2.10.12 is a significant bug fix release, which is to be expected after"
 " a 2.10.10 with so many changes! Still, very cool improvements are also "
@@ -447,33 +515,33 @@ msgstr ""
 "disponibles millores molt interessants, especialment per a l’edició de "
 "corbes:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid "Improved curves interaction overall"
 msgstr "Interacció de corbes millorada en general"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid "A few enhancements specific to the Curves tool"
 msgstr "Algunes millores específiques de l’eina Corbes"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid "Layer support in TIFF"
 msgstr "Suport de la capa en TIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "Discovery of user-installed fonts in Windows"
 msgstr ""
 "Descobriment de lletres tipogràfiques instal·lades per l'usuari en el "
 "Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "Incremental mode in the Dodge/Burn tool"
 msgstr "Mode incremental en l'eina Ferro roent"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid "Free Select tool creates preliminary selection"
 msgstr "L’eina Selecció gratuïta crea una selecció preliminar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
 msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
@@ -481,7 +549,7 @@ msgstr ""
 "GIMP 2.10.10 és una gran actualització amb moltes característiques noves i "
 "solucions d'errors. Les millores inclouen:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
@@ -489,12 +557,12 @@ msgstr ""
 "Eina pot de pintura: nou \"Emplenament per detecció de línia artística\" per"
 " a zones artístiques no perfectament tancades"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr ""
 "L'eina pot de pintura pot ara ràpidament seleccionar amb el color Ctrl+click"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
@@ -502,13 +570,13 @@ msgstr ""
 "L'eina pot de pintura permet mantenir el ratolí quan s'omplin «colors "
 "similars» i «detecció de línies artístiques»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
 msgid "Scale tool scales around center even when using numeric input"
 msgstr ""
 "L'eina escalímetre permet ajustar la mida al voltant del centre fins i tot "
 "quan s'usa una entrada numèrica"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
@@ -516,7 +584,7 @@ msgstr ""
 "L’eina Biaix en conjunt conserva per defecte la relació d’aspecte quan "
 "s'augmenta proporcionalment o es redueix"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
@@ -524,20 +592,20 @@ msgstr ""
 "Afegeix les opcions «Restriccions als tiradors» i «Al voltant del centre» a "
 "la interfície gràfica de l’eina de transformació de perspectiva"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr "Modificador genèric de llenç nou «Alt + botó del mig» per triar capes"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
 msgid "Parametric brushes now 32-bit float to avoid posterization"
 msgstr ""
 "Els pinzells paramètrics de 32-bit ara suren per evitar la posterització"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid "Clipboard brushes and pattern can now be duplicated"
 msgstr "Els pinzells del porta-retalls i els patrons ara es poden duplicar"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
@@ -545,27 +613,27 @@ msgstr ""
 "L'errada en intentar editar les capes bloquejades parpellejarà per mostrar  "
 "la causa de l'error"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
 msgstr ""
 "Nova interfície gràfica del llenç (línies senzilles) per al moviment "
 "circular, lineal i ampliació/reducció del difuminat"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid "Several optimizations including faster layer group rendering"
 msgstr ""
 "Diverses optimitzacions inclouen la renderització de grups de capes més "
 "ràpides"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr ""
 "Els fitxers d'intercanvi i la memòria cau ja no es guarden més al directori "
 "de configuració"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
@@ -573,17 +641,17 @@ msgstr ""
 "Alguns fitxers de desat/exportació són més robustos a l'error ja que no es "
 "desen de forma parcial"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid "HiDPI support improvements"
 msgstr "Millores en el suport de HiDPI"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid "New preference to choose the default export file type"
 msgstr ""
 "Paràmetre nou en preferències per triar el tipus de fitxer d'exportació per "
 "defecte"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
@@ -591,11 +659,11 @@ msgstr ""
 "Opció nova per exportar PNG, JPEG i TIFF amb un perfil de color; sempre "
 "s'exporta PSD amb el perfil de color"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
 msgid "New DDS format loading/exporting plug-in"
 msgstr "Format DDS nou de connector d'exportació/carrega"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
@@ -603,7 +671,7 @@ msgstr ""
 "Reescriptura completa del connector Spyrogimp amb més opcions i millor "
 "iteració"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
@@ -611,7 +679,7 @@ msgstr ""
 "GIMP 2.10.8 he resolt sobretot els d'errors i s'ha optimitzat. En "
 "particular, inclou:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
@@ -619,11 +687,11 @@ msgstr ""
 "Mida adaptativa quan es renderitzen  projeccions, millorant de forma "
 "dinàmica la capacitat de resposta"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr "Detecció de RawTherapee (versió 5.5 i superior) millorada en Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
@@ -631,7 +699,7 @@ msgstr ""
 "Informació de compatibilitat XCF al diàleg de desat més comprensible i "
 "accessible"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
@@ -639,7 +707,7 @@ msgstr ""
 "S'han afegit diverses eines de registre de rendiment i registre de dades "
 "disponibles a l'acoblador del tauler"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
@@ -647,7 +715,7 @@ msgstr ""
 "GIMP 2.10.6 ve amb un munt d'errors solucionats, optimitzacions i "
 "característiques. Els canvis més destacats són:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
@@ -655,21 +723,21 @@ msgstr ""
 "Les capes de text ara poden representar textos verticals (amb vàries "
 "orientacions de caràcters i direccions de línia)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr "Filtre nou «Planeta petit» (gegl:stereographic-projection)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
 msgid "New \"Long Shadow\" filter"
 msgstr "Filtre nou «Ombra llarga»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
 msgstr "L’opció \"Redreçar\" de l’eina compàs permet ara el redreçat vertical"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
@@ -678,7 +746,7 @@ msgstr ""
 " les visualitzacions prèvies de grups de capes es poden desactivar a les "
 "preferències"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
@@ -686,17 +754,17 @@ msgstr ""
 "El nou camp «async» al grup «misc» del tauler, que mostra el nombre "
 "d’operacions asíncrones que s'executen actualment"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 "El filtratge de format de fitxer és menys confús als diàlegs "
 "Obre/Desa/Exporta"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr "Idioma nou (estant el GIMP traduït a més de 81 idiomes): Marathi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
@@ -704,7 +772,7 @@ msgstr ""
 "GIMP 2.10.4 inclou la correcció de moltes errades així com també vàries "
 "optimitzacions. Les més notables són:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
@@ -712,11 +780,11 @@ msgstr ""
 "Redreçament en l'eina de mesura: les capes es poden girar utilitzant la "
 "línia de mesura com a horitzó"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr "Inici ràpid: la càrrega de tipus de lletra ja no bloqueja l'inici"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
@@ -724,13 +792,13 @@ msgstr ""
 "L'etiquetatge de tipus de lletra utilitza la mateixa interfície d'usuari que"
 " els pinzells, patrons i degradats"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
 "Compatibilitat amb PSD: es poden importar imatges precompostes d'una imatge "
 "PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
@@ -738,7 +806,7 @@ msgstr ""
 "Actualització del tauler de control: grup «Memòria» nou i grup «Swap» "
 "millorat mostrant diverses mètriques"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly"
 " the usual bug-fixing version after a major release, with a few dozen bugs "
@@ -748,7 +816,7 @@ msgstr ""
 "2.10.0, és principalment la versió habitual de correcció d'errors després "
 "d'una versió principal, amb algunes dotzenes d'errors corregits."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -760,7 +828,7 @@ msgstr ""
 "«Transformació recursiva». Aquests són bonics exemples de la nostra política"
 " de funcionalitat relaxada en micro alliberaments."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
@@ -769,13 +837,13 @@ msgstr ""
 " a una nova versió del motor de processament d'imatges GEGL. Els canvis més "
 "destacats són:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr ""
 "Processament de color de profunditat de bit alta (16/32-bit per canal de "
 "color)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
@@ -783,37 +851,37 @@ msgstr ""
 "La gestió de color és una funció principal ara, la majora dels ginys i àrees"
 " de previsualització usen la gestió de color"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 "Previsualització de l'efecte al llenç, amb vista dividida abans i després "
 "del processament dels píxels"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr ""
 "Renderització accelerada per maquinari i múltiples fils, processament i "
 "pintura"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
 msgid "Most tools improved, several new transformation tools"
 msgstr ""
 "La majoria d'eines inclouen millores, diverses eines noves de transformació"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
 "Millora en la compatibilitat de molts formats d'imatges, en particular "
 "millor importació PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "Compatibilitat amb nous formats d'imatge: OpenEXR, RGBE, WebP, HGT…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
@@ -821,25 +889,25 @@ msgstr ""
 "Millora en la pintura digital: rotació i capgirament del llenç, pintura en "
 "simetria, pinzells MyPaint…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr "Visualització i edició de metadades per Exif, XMP, IPTC, i DICOM"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 "Compatibilitat bàsica amb HiDPI: mida de la icona automàtica o seleccionada "
 "per l'usuari"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "Nous temes pel GIMP: llum, gris, fosc i sistema"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
 msgid "And much, much more…"
 msgstr "I molt, molt més…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
@@ -850,7 +918,7 @@ msgstr ""
 "velocitat i l’optimització per tal d’oferir una experiència de pintura més "
 "suau. Els canvis més grans són:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
@@ -858,13 +926,13 @@ msgstr ""
 "Optimitzacions importants pel traçat i la visualització, incloent-hi "
 "l'execució en paral·lel del codi de traçat"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr ""
 "Les simetries es preserven ara en fitxers XCF (desats com a paràsits "
 "d'imatge)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
@@ -872,7 +940,7 @@ msgstr ""
 "El temes «clar» i «fosc» s'han escrit des de zero per solucionar diversos "
 "problemes d'usabilitat. El temes «més clar» i «més fosc» s'han eliminat."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation"
@@ -882,7 +950,7 @@ msgstr ""
 "filtre Projecció panoràmica. El giny proporciona en el llenç interacció per "
 "a la rotació 3D (orientació, inclinació, balanceig)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with "
 "--stack-trace-mode command line option not only on receiving signals but "
@@ -894,7 +962,7 @@ msgstr ""
 "només per rebre senyals, sinó també per avisos i errors crítics quan es "
 "configura la clau de depuració «fatal-warning»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -904,12 +972,12 @@ msgstr ""
 " GIMP 2.10.0, que es centra en la depuració i l'estabilitat. A part de les "
 "moltes solucions d'errors, les millores més notables són:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
 "Nou tauler de control acoblable per fer un seguiment de l'ús dels recursos"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to"
 " report bugs"
@@ -917,34 +985,34 @@ msgstr ""
 "Nou diàleg de depuració que produeix traces i altres dades depuració, "
 "encoratjant a què s'enviïn informes d'error"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
 msgid "Unsaved images can now be recovered after a crash"
 msgstr "Les imatges sense desar es poden recuperar en cas de fallada"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
 msgid "Layer masks on layer groups"
 msgstr "Màscares de capa en grups de capes"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "La compatibilitat amb JPEG 2000 ha millorat per alta profunditat de bits i "
 "diversos espais de colors"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 "Captura de pantalla i la tria de colors ha millorat en diferents plataformes"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
 msgid "Metadata defaults preferences now available"
 msgstr "Preferències per defecte de les metadades ara ja estan disponibles"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
 msgid "Various GUI polishing"
 msgstr "Diverses millores de la interfície d'usuari"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -952,49 +1020,49 @@ msgstr ""
 "GIMP 2.9.8 introdueix l'edició de degradats al llenç i diverses millores "
 "mentre es centra en la definició d'errors i l'estabilitat."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
 msgid "On-canvas gradient editing"
 msgstr "Edició de degradats al llenç"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
 msgid "Notification when an image is over/underexposed"
 msgstr "Notificació quan la imatge està sobreexposada o subexposada"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
 msgid "Better and faster color management"
 msgstr "Millor gestió del color i més ràpida"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
 "Compatibilitat per la tria de colors i captures de pantalla a Wayland amb "
 "KDE Plasma"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
 msgid "Paste in place feature"
 msgstr "Funcionalitat enganxa al lloc"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
 msgid "Many usability improvements"
 msgstr "Moltes millores d'usabilitat"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "El manual es pot mostrar en la llengua preferida de l'usuari"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Millores en el filtre descomposició de l'ondeta"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Millora de compatibilitat amb els fitxers .psd de Photoshop"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
 msgid "New support for password-protected PDF"
 msgstr "Compatibilitat amb els PDF protegits amb contrasenya"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Suport nou per al format HGT (dades del model d’elevació digital)"
 
@@ -1048,7 +1116,7 @@ msgstr ""
 "\n"
 "Heu d'haver rebut una còpia de la llicència GNU General Public License juntament amb el GIMP; si no és així, consulteu: https://www.gnu.org/licenses/"
 
-#: ../app/gimp-update.c:385
+#: ../app/gimp-update.c:415
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -1360,7 +1428,7 @@ msgid "Images"
 msgstr "Imatges"
 
 #: ../app/actions/actions.c:195 ../app/dialogs/dialogs.c:372
-#: ../app/dialogs/resize-dialog.c:144 ../app/widgets/gimppickablepopup.c:227
+#: ../app/dialogs/resize-dialog.c:172 ../app/widgets/gimppickablepopup.c:227
 msgid "Layers"
 msgstr "Capes"
 
@@ -3414,7 +3482,7 @@ msgstr "240 segons"
 #: ../app/dialogs/preferences-dialog.c:667
 #: ../app/dialogs/preferences-dialog.c:1135
 #: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
-#: ../app/dialogs/resize-dialog.c:186
+#: ../app/dialogs/resize-dialog.c:226
 #: ../app/dialogs/resolution-calibrate-dialog.c:75
 #: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
 #: ../app/dialogs/template-options-dialog.c:118
@@ -3511,7 +3579,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:116
 #: ../app/actions/tool-options-commands.c:75
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2180
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2195
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -4526,8 +4594,8 @@ msgctxt "edit-action"
 msgid "Copy the selected pixels to the clipboard"
 msgstr "Copia els píxels seleccionats al porta-retalls"
 
-#. GIMP_ICON_COPY_VISIBLE,
 #  GIMP_STOCK_COPY_VISIBLE,
+#. GIMP_ICON_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:117
 msgctxt "edit-action"
 msgid "Copy _Visible"
@@ -4574,8 +4642,8 @@ msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
 msgstr "Copia els píxels seleccionats a una memòria intermèdia amb nom"
 
-#. GIMP_ICON_COPY_VISIBLE,
 #  GIMP_STOCK_COPY_VISIBLE,
+#. GIMP_ICON_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:147
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
@@ -6899,37 +6967,37 @@ msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "_Escala de grisos..."
 
-#: ../app/actions/image-commands.c:566
+#: ../app/actions/image-commands.c:569
 #, c-format
 msgid "Saving color profile failed: %s"
 msgstr "S'ha produït un error en desar el perfil de color: %s"
 
-#: ../app/actions/image-commands.c:606
+#: ../app/actions/image-commands.c:609
 msgid "Save Color Profile"
 msgstr "Desa el perfil de color"
 
-#: ../app/actions/image-commands.c:655
+#: ../app/actions/image-commands.c:658
 msgid "Set Image Canvas Size"
 msgstr "Defineix la mida del llenç de la imatge"
 
 # És substantiu, no verb
-#: ../app/actions/image-commands.c:686 ../app/actions/image-commands.c:711
-#: ../app/actions/image-commands.c:1410
+#: ../app/actions/image-commands.c:689 ../app/actions/image-commands.c:714
+#: ../app/actions/image-commands.c:1420
 msgid "Resizing"
 msgstr "Canvi de mida"
 
-#: ../app/actions/image-commands.c:745
+#: ../app/actions/image-commands.c:748
 msgid "Set Image Print Resolution"
 msgstr "Defineix la resolució d'impressió de la imatge"
 
-#: ../app/actions/image-commands.c:815
+#: ../app/actions/image-commands.c:818
 #: ../app/pdb/drawable-transform-cmds.c:174
 #: ../app/pdb/drawable-transform-cmds.c:269
 #: ../app/pdb/item-transform-cmds.c:228 ../app/tools/gimpfliptool.c:136
 msgid "Flipping"
 msgstr "S'està capgirant"
 
-#: ../app/actions/image-commands.c:842
+#: ../app/actions/image-commands.c:845
 #: ../app/pdb/drawable-transform-cmds.c:650
 #: ../app/pdb/drawable-transform-cmds.c:749
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:536
@@ -6937,57 +7005,61 @@ msgstr "S'està capgirant"
 msgid "Rotating"
 msgstr "S'està girant"
 
-#: ../app/actions/image-commands.c:870 ../app/actions/layers-commands.c:859
+#: ../app/actions/image-commands.c:873 ../app/actions/layers-commands.c:862
 msgid "Cannot crop because the current selection is empty."
 msgstr "No s'ha pogut escapçar perquè l'àrea seleccionada està buida."
 
-#: ../app/actions/image-commands.c:909
+#: ../app/actions/image-commands.c:912
 msgid "Cannot crop because the image has no content."
 msgstr "No s'ha pogut escapçar perquè la imatge no té contingut."
 
-#: ../app/actions/image-commands.c:915
+#: ../app/actions/image-commands.c:918
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr ""
 "No s'ha pogut escapçar perquè la imatge ja està escapçada al seu contingut."
 
-#: ../app/actions/image-commands.c:1081
+#: ../app/actions/image-commands.c:1084
 #, c-format
 msgid "Converting to RGB (%s)"
 msgstr "S'està convertint a RGB (%s)"
 
-#: ../app/actions/image-commands.c:1119
+#: ../app/actions/image-commands.c:1122
 #, c-format
 msgid "Converting to grayscale (%s)"
 msgstr "S'està convertint a escala de grisos (%s)"
 
-#: ../app/actions/image-commands.c:1181
+#: ../app/actions/image-commands.c:1184
 msgid "Converting to indexed colors"
 msgstr "S'estan indexant els colors"
 
-#: ../app/actions/image-commands.c:1269
+#: ../app/actions/image-commands.c:1272
 #, c-format
 msgid "Converting image to %s"
 msgstr "Convertint la imatge a %s"
 
-#: ../app/actions/image-commands.c:1300
+#: ../app/actions/image-commands.c:1303
 msgid "Assign color profile"
 msgstr "Assigna perfil de color"
 
-#: ../app/actions/image-commands.c:1346
+#: ../app/actions/image-commands.c:1349
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Convertint a '%s'"
 
-#: ../app/actions/image-commands.c:1452
+#: ../app/actions/image-commands.c:1433
+msgid "Change Canvas Size"
+msgstr "Canvia la mida del llenç de la imatge"
+
+#: ../app/actions/image-commands.c:1481
 msgid "Change Print Size"
 msgstr "Canvia la mida d'impressió"
 
-#: ../app/actions/image-commands.c:1496
+#: ../app/actions/image-commands.c:1525
 msgid "Scale Image"
 msgstr "Ajusta la mida de la imatge"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1505 ../app/actions/layers-commands.c:1668
+#: ../app/actions/image-commands.c:1534 ../app/actions/layers-commands.c:1671
 #: ../app/dialogs/preferences-dialog.c:1705
 #: ../app/pdb/drawable-transform-cmds.c:843
 #: ../app/pdb/drawable-transform-cmds.c:939
@@ -7869,49 +7941,49 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "A la capa _nova"
 
-#: ../app/actions/layers-commands.c:265 ../app/actions/layers-commands.c:1517
+#: ../app/actions/layers-commands.c:268 ../app/actions/layers-commands.c:1520
 msgid "Layer Attributes"
 msgstr "Atributs de la capa"
 
-#: ../app/actions/layers-commands.c:268
+#: ../app/actions/layers-commands.c:271
 msgid "Edit Layer Attributes"
 msgstr "Edita els atributs de la capa"
 
-#: ../app/actions/layers-commands.c:342
+#: ../app/actions/layers-commands.c:345
 #: ../app/widgets/gimpdrawabletreeview.c:343
 #: ../app/widgets/gimplayertreeview.c:905
 msgid "New Layer"
 msgstr "Capa nova"
 
-#: ../app/actions/layers-commands.c:345
+#: ../app/actions/layers-commands.c:348
 msgid "Create a New Layer"
 msgstr "Crea una capa nova"
 
-#: ../app/actions/layers-commands.c:447
+#: ../app/actions/layers-commands.c:450
 msgid "Visible"
 msgstr "Visible"
 
-#: ../app/actions/layers-commands.c:762
+#: ../app/actions/layers-commands.c:765
 msgid "Set Layer Boundary Size"
 msgstr "Defineix mida del marc de la capa"
 
-#: ../app/actions/layers-commands.c:826
+#: ../app/actions/layers-commands.c:829
 msgid "Scale Layer"
 msgstr "Ajusta la mida de la capa"
 
-#: ../app/actions/layers-commands.c:869
+#: ../app/actions/layers-commands.c:872
 msgid "Crop Layer to Selection"
 msgstr "Escapça la capa a la selecció"
 
-#: ../app/actions/layers-commands.c:900
+#: ../app/actions/layers-commands.c:903
 msgid "Crop Layer to Content"
 msgstr "Escapça la capa al contingut"
 
-#: ../app/actions/layers-commands.c:913
+#: ../app/actions/layers-commands.c:916
 msgid "Cannot crop because the active layer has no content."
 msgstr "No s'ha pogut escapçar perquè la capa seleccionada està buida."
 
-#: ../app/actions/layers-commands.c:920
+#: ../app/actions/layers-commands.c:923
 msgid ""
 "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
@@ -11247,12 +11319,12 @@ msgstr "Canal"
 msgid "Path"
 msgstr "Camí"
 
-#. Not all strings defined here are used in the user interface
-#. *  (the preferences dialog mainly) and only those that are should
-#. *  be marked for translation.
 #  Not all strings defined here are used in the user interface
 #  *  (the preferences dialog mainly) and only those that are should
 #  *  be marked for translation.
+#. Not all strings defined here are used in the user interface
+#. *  (the preferences dialog mainly) and only those that are should
+#. *  be marked for translation.
 #: ../app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
@@ -13246,8 +13318,8 @@ msgstr "No s'ha pogut suprimir «%s»: %s"
 msgid "Dynamics"
 msgstr "Dinàmica"
 
-#. initialize the color history
 # Quim: buida la llista de fitxers recents
+#. initialize the color history
 #: ../app/core/gimp-data-factories.c:379 ../app/core/gimp-palettes.c:60
 msgid "Color History"
 msgstr "Historial de color"
@@ -13835,7 +13907,7 @@ msgid "Gradient"
 msgstr "Degradat"
 
 #: ../app/core/gimpcontext.c:750 ../app/core/gimpcontext.c:751
-#: ../app/widgets/gimpcolorselectorpalette.c:59
+#: ../app/widgets/gimpcolorselectorpalette.c:60
 msgid "Palette"
 msgstr "Paleta"
 
@@ -14227,64 +14299,64 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transforma el grup de capes"
 
-#: ../app/core/gimpimage.c:691 ../app/widgets/gimpsymmetryeditor.c:175
+#: ../app/core/gimpimage.c:692 ../app/widgets/gimpsymmetryeditor.c:181
 msgid "Symmetry"
 msgstr "Simetria"
 
-#: ../app/core/gimpimage.c:2425
+#: ../app/core/gimpimage.c:2440
 msgid " (exported)"
 msgstr " (exportat)"
 
-#: ../app/core/gimpimage.c:2429
+#: ../app/core/gimpimage.c:2444
 msgid " (overwritten)"
 msgstr " (sobreescrit)"
 
-#: ../app/core/gimpimage.c:2438
+#: ../app/core/gimpimage.c:2453
 msgid " (imported)"
 msgstr " (importat)"
 
-#: ../app/core/gimpimage.c:2612 ../app/core/gimpimage.c:2626
-#: ../app/core/gimpimage.c:2669
+#: ../app/core/gimpimage.c:2627 ../app/core/gimpimage.c:2641
+#: ../app/core/gimpimage.c:2684
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "El mode de capa «%s» s'ha afegit a %s"
 
-#: ../app/core/gimpimage.c:2684
+#: ../app/core/gimpimage.c:2699
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Els grups de capes s'han afegit a %s"
 
-#: ../app/core/gimpimage.c:2691
+#: ../app/core/gimpimage.c:2706
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "S'han afegit màscares als grups de capes a %s"
 
-#: ../app/core/gimpimage.c:2707
+#: ../app/core/gimpimage.c:2722
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "S'han afegit imatges d'alta profunditat de bits a %s"
 
-#: ../app/core/gimpimage.c:2719
+#: ../app/core/gimpimage.c:2734
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "La compressió zlib interna s'ha afegit a %s"
 
-#: ../app/core/gimpimage.c:2736
+#: ../app/core/gimpimage.c:2751
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "El suport per imatges més grans de 4GB s'ha afegit a %s"
 
-#: ../app/core/gimpimage.c:2832
+#: ../app/core/gimpimage.c:2847
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Canvia la resolució de la imatge"
 
-#: ../app/core/gimpimage.c:2884
+#: ../app/core/gimpimage.c:2899
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Canvia les unitats de la imatge"
 
-#: ../app/core/gimpimage.c:3835
+#: ../app/core/gimpimage.c:3850
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14292,47 +14364,47 @@ msgstr ""
 "Error en la validació del paràsit 'gimp-comment': el comentari conté "
 "caràcters UTF-8 invàlids"
 
-#: ../app/core/gimpimage.c:3894
+#: ../app/core/gimpimage.c:3909
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Adjunta un paràsit a la imatge"
 
-#: ../app/core/gimpimage.c:3936
+#: ../app/core/gimpimage.c:3951
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Suprimeix el paràsit de la imatge"
 
-#: ../app/core/gimpimage.c:4667
+#: ../app/core/gimpimage.c:4682
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Afegeix una capa"
 
-#: ../app/core/gimpimage.c:4709 ../app/core/gimpimage.c:4740
+#: ../app/core/gimpimage.c:4724 ../app/core/gimpimage.c:4755
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Suprimeix la capa"
 
-#: ../app/core/gimpimage.c:4734
+#: ../app/core/gimpimage.c:4749
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Suprimeix la selecció flotant"
 
-#: ../app/core/gimpimage.c:4901
+#: ../app/core/gimpimage.c:4916
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Afegeix un canal"
 
-#: ../app/core/gimpimage.c:4929 ../app/core/gimpimage.c:4953
+#: ../app/core/gimpimage.c:4944 ../app/core/gimpimage.c:4968
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Suprimeix el canal"
 
-#: ../app/core/gimpimage.c:5009
+#: ../app/core/gimpimage.c:5024
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Afegeix un camí"
 
-#: ../app/core/gimpimage.c:5039 ../app/core/gimpimage.c:5046
+#: ../app/core/gimpimage.c:5054 ../app/core/gimpimage.c:5061
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Suprimeix el camí"
@@ -14487,8 +14559,8 @@ msgid "Convert Image to 64 bit gamma floating point"
 msgstr "Converteix la imatge a gamma de 64 bits de punt flotant"
 
 #. dithering
-#: ../app/core/gimpimage-convert-precision.c:268
-#: ../app/core/gimpimage-convert-precision.c:289
+#: ../app/core/gimpimage-convert-precision.c:272
+#: ../app/core/gimpimage-convert-precision.c:293
 #: ../app/dialogs/convert-indexed-dialog.c:241
 #: ../app/dialogs/convert-precision-dialog.c:224
 #: ../app/tools/gimpgradientoptions.c:128
@@ -15236,6 +15308,7 @@ msgstr "Emula la dinàmica del pinzell"
 #. no undo (or redo) steps available
 #: ../app/core/gimpsymmetry.c:137 ../app/widgets/gimpimagepropview.c:410
 #: ../app/widgets/gimpsymmetryeditor.c:165
+#: ../app/widgets/gimpsymmetryeditor.c:175
 msgid "None"
 msgstr "Cap"
 
@@ -16101,7 +16174,7 @@ msgid "Create a New Image"
 msgstr "Crea una imatge nova"
 
 #: ../app/dialogs/image-new-dialog.c:138
-#: ../app/dialogs/preferences-dialog.c:1767
+#: ../app/dialogs/preferences-dialog.c:1767 ../app/dialogs/resize-dialog.c:257
 msgid "_Template:"
 msgstr "Plan_tilla:"
 
@@ -16300,7 +16373,7 @@ msgid "Offset Y:"
 msgstr "Desplaçament de Y:"
 
 #: ../app/dialogs/layer-options-dialog.c:396
-#: ../app/dialogs/resize-dialog.c:369 ../app/widgets/gimptemplateeditor.c:466
+#: ../app/dialogs/resize-dialog.c:516 ../app/widgets/gimptemplateeditor.c:466
 msgid "_Fill with:"
 msgstr "_Omple amb:"
 
@@ -16446,8 +16519,8 @@ msgstr "Només els píxels _seleccionats"
 msgid "Palette _file"
 msgstr "_Fitxer de paleta"
 
-#. Palette file name entry
 # Quim: títol de la finestra per seleccionar el fitxer de la paleta
+#. Palette file name entry
 #: ../app/dialogs/palette-import-dialog.c:290
 msgid "Select Palette File"
 msgstr "Selecciona el fitxer de la paleta"
@@ -17443,8 +17516,8 @@ msgstr "Fusiona els camins importats"
 msgid "Scale imported paths"
 msgstr "Ajusta la mida dels camins importats"
 
-#. Feather Selection Dialog
 # Quim: títol del diàleg  menú selecciona / difumina la vora...
+#. Feather Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2458
 msgid "Feather Selection Dialog"
 msgstr "Diàleg Difumina la vora de la selecció"
@@ -17572,8 +17645,8 @@ msgstr "Neteja l'historial d'accions"
 msgid "Display"
 msgstr "Visualització"
 
-#. Transparency
 # Quim: llista d'opcions per definir com ha de ser el fons de la nova capa
+#. Transparency
 #: ../app/dialogs/preferences-dialog.c:2699
 msgid "Transparency"
 msgstr "Transparència"
@@ -17592,8 +17665,8 @@ msgstr "Revis_a la mida:"
 msgid "Monitor Resolution"
 msgstr "Resolució del monitor"
 
-#. Pixels
 # Quim: pixels surt a preferencies-graella i hauria de ser en minúscoles
+#. Pixels
 #: ../app/dialogs/preferences-dialog.c:2713
 #: ../app/display/gimpcursorview.c:212 ../app/widgets/gimpgrideditor.c:199
 #: ../app/widgets/gimpgrideditor.c:234
@@ -18182,63 +18255,87 @@ msgstr "Desa aquesta imatge"
 msgid "Save as"
 msgstr "Anomena i desa"
 
-#: ../app/dialogs/resize-dialog.c:143
+#: ../app/dialogs/resize-dialog.c:171
 msgid "Canvas Size"
 msgstr "Mida del llenç"
 
-#: ../app/dialogs/resize-dialog.c:155 ../app/dialogs/scale-dialog.c:114
+#: ../app/dialogs/resize-dialog.c:183 ../app/dialogs/scale-dialog.c:114
 msgid "Layer Size"
 msgstr "Mida de la capa"
 
-#: ../app/dialogs/resize-dialog.c:156
+#: ../app/dialogs/resize-dialog.c:184
 msgid "Fill With"
 msgstr "Omple amb"
 
-#: ../app/dialogs/resize-dialog.c:185
+#: ../app/dialogs/resize-dialog.c:225
 msgid "Re_set"
 msgstr "_Restableix"
 
 # És substantiu, no verb
-#: ../app/dialogs/resize-dialog.c:187
+#: ../app/dialogs/resize-dialog.c:227
 msgid "_Resize"
 msgstr "_Canvi de mida"
 
+#: ../app/dialogs/resize-dialog.c:294
+msgid "Reset the template selection"
+msgstr "Reinicia la selecció de la plantilla"
+
+#: ../app/dialogs/resize-dialog.c:301
+msgid ""
+"Template and image print resolution don't match.\n"
+"Choose how to scale the canvas:"
+msgstr ""
+"La resolució d'impressió de plantilles i imatges no coincideix.\n"
+"Trieu com escalar el llenç:"
+
+#. offset frame
 #. The offset frame
 #. offset frame
-#: ../app/dialogs/resize-dialog.c:230 ../app/tools/gimpalignoptions.c:100
+#: ../app/dialogs/resize-dialog.c:380 ../app/tools/gimpalignoptions.c:100
 #: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpgradientoptions.c:88
 #: ../app/tools/gimpoffsettool.c:129 ../app/tools/gimpoffsettool.c:459
 #: ../app/tools/gimptransform3dtool.c:343 ../app/widgets/gimpgrideditor.c:209
 msgid "Offset"
 msgstr "Desplaçament"
 
-#: ../app/dialogs/resize-dialog.c:259 ../app/tools/gimpoffsettool.c:488
+#: ../app/dialogs/resize-dialog.c:409 ../app/tools/gimpoffsettool.c:488
 #: ../app/tools/gimptransform3dtool.c:271
 #: ../app/tools/gimptransform3dtool.c:383
 msgid "_X:"
 msgstr "_X:"
 
-#: ../app/dialogs/resize-dialog.c:260 ../app/tools/gimpoffsettool.c:490
+#: ../app/dialogs/resize-dialog.c:410 ../app/tools/gimpoffsettool.c:490
 #: ../app/tools/gimptransform3dtool.c:272
 #: ../app/tools/gimptransform3dtool.c:389
 msgid "_Y:"
 msgstr "_Y:"
 
-#: ../app/dialogs/resize-dialog.c:277
+#. Button to center the image on canvas just below the preview.
+#: ../app/dialogs/resize-dialog.c:452
 msgid "C_enter"
 msgstr "Centre"
 
-#: ../app/dialogs/resize-dialog.c:331
+#: ../app/dialogs/resize-dialog.c:478
 msgid "Resize _layers:"
 msgstr "Redimensiona _les capes:"
 
-#: ../app/dialogs/resize-dialog.c:379
+#: ../app/dialogs/resize-dialog.c:526
 msgid "Resize _text layers"
 msgstr "Redimensiona les capes de _text"
 
-#: ../app/dialogs/resize-dialog.c:390
+#: ../app/dialogs/resize-dialog.c:537
 msgid "Resizing text layers will make them uneditable"
 msgstr "Canviar la mida de les capes de text farà que no es puguin editar"
+
+#: ../app/dialogs/resize-dialog.c:759
+#, c-format
+msgid "Scale template to %.2f ppi"
+msgstr "Escala la plantilla a %.2f ppi"
+
+#: ../app/dialogs/resize-dialog.c:764
+#, c-format
+msgid "Set image to %.2f ppi"
+msgstr "Estableix la imatge a %.2f ppi"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:69
 msgid "Calibrate Monitor Resolution"
@@ -18321,14 +18418,14 @@ msgstr "_Següent"
 msgid "Learn more"
 msgstr "Més informació"
 
-#. This is a special string to specify the language identifier to
-#. look for in the gimp-tips.xml file. Please translate the C in it
-#. according to the name of the po file used for gimp-tips.xml.
-#. E.g. for the german translation, that would be "tips-locale:de".
 #  This is a special string to specify the language identifier to
 #  look for in the gimp-tips.xml file. Please translate the C in it
 #  according to the name of the po file used for gimp-tips.xml.
 #  E.g. for the german translation, that would be "tips-locale:de".
+#. This is a special string to specify the language identifier to
+#. look for in the gimp-tips.xml file. Please translate the C in it
+#. according to the name of the po file used for gimp-tips.xml.
+#. E.g. for the german translation, that would be "tips-locale:de".
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
 msgstr "tips-locale:ca"
@@ -18567,7 +18664,7 @@ msgstr "Navega per la visualització de la imatge"
 msgid "Drop image files here to open them"
 msgstr "Arrossega-hi fitxers d'imatge per a obrir-los"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:621
+#: ../app/display/gimpdisplayshell-callbacks.c:625
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -18782,7 +18879,7 @@ msgstr "Capa triada:  «%s»"
 msgid "pixels"
 msgstr "píxels"
 
-#: ../app/display/gimpstatusbar.c:472
+#: ../app/display/gimpstatusbar.c:475
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Cancel·la <i>%s</i>"
@@ -18879,33 +18976,33 @@ msgstr "%s per a eixos restringits"
 msgid "%s to zoom"
 msgstr "%s per ampliar"
 
-#: ../app/display/gimptoolhandlegrid.c:865
+#: ../app/display/gimptoolhandlegrid.c:896
 #: ../app/display/gimptooltransformgrid.c:1832
 msgid "Click-Drag to move"
 msgstr "Feu clic-i-arrossega per moure"
 
-#: ../app/display/gimptoolhandlegrid.c:868
+#: ../app/display/gimptoolhandlegrid.c:899
 msgid "Click-Drag to rotate and scale"
 msgstr "Feu clic-i-arrossega per girar i ajustar la mida"
 
-#: ../app/display/gimptoolhandlegrid.c:871
+#: ../app/display/gimptoolhandlegrid.c:902
 msgid "Click-Drag to shear and scale"
 msgstr "Feu clic-i-arrossega per inclinar i ajustar la mida"
 
-#: ../app/display/gimptoolhandlegrid.c:874
+#: ../app/display/gimptoolhandlegrid.c:905
 #: ../app/display/gimptooltransformgrid.c:1820
 msgid "Click-Drag to change perspective"
 msgstr "Feu clic-i-arrossega per canviar la perspectiva"
 
-#: ../app/display/gimptoolhandlegrid.c:885
+#: ../app/display/gimptoolhandlegrid.c:916
 msgid "Click to add a handle"
 msgstr "Feu clic per afegir una nansa"
 
-#: ../app/display/gimptoolhandlegrid.c:891
+#: ../app/display/gimptoolhandlegrid.c:922
 msgid "Click-Drag to move this handle"
 msgstr "Feu clic-i-arrossega per moure aquesta nansa"
 
-#: ../app/display/gimptoolhandlegrid.c:896
+#: ../app/display/gimptoolhandlegrid.c:927
 msgid "Click-Drag to remove this handle"
 msgstr "Feu clic-i-arrossega per eliminar aquesta nansa"
 
@@ -20653,19 +20750,19 @@ msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Brillantor-contrast"
 
-#: ../app/pdb/color-cmds.c:148 ../app/pdb/drawable-color-cmds.c:610
+#: ../app/pdb/color-cmds.c:148 ../app/pdb/drawable-color-cmds.c:657
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Nivells"
 
 # Quim: posterize = reduir el num colors
-#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:680
+#: ../app/pdb/color-cmds.c:247 ../app/pdb/drawable-color-cmds.c:785
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Redueix el nombre de colors"
 
 #: ../app/pdb/color-cmds.c:286 ../app/pdb/color-cmds.c:327
-#: ../app/pdb/drawable-color-cmds.c:325
+#: ../app/pdb/drawable-color-cmds.c:372
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Dessatura"
@@ -20694,7 +20791,7 @@ msgstr "Acoloreix"
 msgid "Hue-Saturation"
 msgstr "To-Saturació"
 
-#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:726
+#: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:831
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Llindar"
@@ -20708,15 +20805,25 @@ msgctxt "command"
 msgid "Foreground Select"
 msgstr "Selecció del primer pla"
 
-#: ../app/pdb/drawable-color-cmds.c:507
+#: ../app/pdb/drawable-color-cmds.c:331
+msgctxt "undo-type"
+msgid "Extract Component"
+msgstr "Extreu component"
+
+#: ../app/pdb/drawable-color-cmds.c:554
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "To-Saturació"
 
-#: ../app/pdb/drawable-color-cmds.c:542
+#: ../app/pdb/drawable-color-cmds.c:589
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Inverteix"
+
+#: ../app/pdb/drawable-color-cmds.c:745
+msgctxt "undo-type"
+msgid "Shadows-Highlights"
+msgstr "Ressaltat d'ombres"
 
 #: ../app/pdb/drawable-transform-cmds.c:373
 #: ../app/pdb/drawable-transform-cmds.c:478
@@ -22106,12 +22213,12 @@ msgstr "Tria el color des de la imatge"
 msgid "This operation has no editable properties"
 msgstr "Aquesta operació no té propietats editables"
 
-#. This is a so-called pangram; it's supposed to
-#. contain all characters found in the alphabet.
 # This is a so-called pangram; it's supposed to
 # contain all characters found in the alphabet.
 #  ALBERT: S'ha canviat el pangram anglès per un pangrama català (curiosament
 # els dos van sobre licors)
+#. This is a so-called pangram; it's supposed to
+#. contain all characters found in the alphabet.
 #: ../app/text/gimpfont.c:50
 msgid ""
 "Pack my box with\n"
@@ -25580,7 +25687,7 @@ msgid "Percentage of width of brush"
 msgstr "Percentatge de l'amplada del pinzell"
 
 #: ../app/widgets/gimpbufferview.c:189 ../app/widgets/gimpbufferview.c:290
-#: ../app/widgets/gimpeditor.c:758
+#: ../app/widgets/gimpeditor.c:773
 msgid "(None)"
 msgstr "(Cap)"
 
@@ -27324,7 +27431,7 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "colors"
 
-#: ../app/widgets/gimpitemtreeview.c:753
+#: ../app/widgets/gimpitemtreeview.c:763
 msgid "Lock:"
 msgstr "Bloqueja:"
 
@@ -27854,8 +27961,8 @@ msgid "[ Base Image ]"
 msgstr "[ Imatge base ]"
 
 #: ../app/widgets/gimpvectorstreeview.c:111
-msgid "Lock path strokes"
-msgstr "Bloqueja els punts del camí"
+msgid "Lock path"
+msgstr "Bloqueja el camí"
 
 #: ../app/widgets/gimpvectorstreeview.c:114
 msgid "Lock path position"
@@ -28158,3 +28265,6 @@ msgstr "arrodonit"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "difús"
+
+#~ msgid "Lock path strokes"
+#~ msgstr "Bloqueja els punts del camí"
