@@ -551,18 +551,36 @@ app_exit_after_callback (Gimp         *gimp,
    *  to catch possible problems in our finalizers.
    */
 
-#ifdef GIMP_UNSTABLE
-
-  g_application_quit (G_APPLICATION (app));
-
-#else
-
+#ifdef GIMP_RELEASE
   gimp_gegl_exit (gimp);
 
   gegl_exit ();
 
   exit (gimp_core_app_get_exit_status (GIMP_CORE_APP (app)));
+#else
+  if (g_getenv ("GIMP_DIRTY_EXIT"))
+    {
+      gimp_gegl_exit (gimp);
 
+      gegl_exit ();
+
+      exit (gimp_core_app_get_exit_status (GIMP_CORE_APP (app)));
+    }
+  else
+    {
+      /* Since GLib recent changes removing glice implementation and also in
+       * GType code, we experience crashes during exit. There is a clear memory
+       * corruption going on, but it's extremely hard to diagnose.
+       * We don't want to hide these on development builds, so by default, we
+       * will exit cleanly (with crashes), leaving contributors a chance to look
+       * at it.
+       * With the GIMP_DIRTY_EXIT environment variable, people will be able to
+       * more quickly exit the process, bypassing memory cleanup issues, without
+       * having to rebuild. This way, it's also good to work on other code and
+       * not be bothered by the crashes-on-exit until we find the reasons.
+       */
+      g_application_quit (G_APPLICATION (app));
+    }
 #endif
 
   return FALSE;
