@@ -310,10 +310,10 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
   gchar     *tmp;
   char       timestr[256];
   char       tzstr[7];
-  gchar      iid_data[256];
   gchar      strdata[1024];
   gchar      tagstr[1024];
   gchar     *uuid;
+  gchar     *str;
   gchar     *did;
   gchar     *odid;
   GError    *error = NULL;
@@ -345,28 +345,27 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
   /* Update new Instance ID */
   uuid = gimp_metadata_get_guid ();
 
-  strcpy (iid_data, "xmp.iid:");
-  strcat (iid_data, uuid);
+  str = g_strconcat ("xmp.iid:", uuid, NULL);
 
   gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
-                                      tags[0], iid_data, NULL);
+                                      tags[0], str, NULL);
   g_free (uuid);
+  g_free (str);
 
   /* Update new Document ID if none found */
   did = gexiv2_metadata_try_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
                                                         tags[1], NULL);
   if (! did || ! strlen (did))
     {
-      gchar did_data[256];
+      gchar *did_data;
+      gchar *uuid = gimp_metadata_get_guid ();
 
-      uuid = gimp_metadata_get_guid ();
-
-      strcpy (did_data, "gimp:docid:gimp:");
-      strcat (did_data, uuid);
+      did_data = g_strconcat ("gimp:docid:gimp:", uuid, NULL);
 
       gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
                                           tags[1], did_data, NULL);
       g_free (uuid);
+      g_free (did_data);
     }
 
   /* Update new Original Document ID if none found */
@@ -374,15 +373,15 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
                                                          tags[2], NULL);
   if (! odid || ! strlen (odid))
     {
-      gchar  did_data[256];
+      gchar *did_data;
       gchar *uuid = gimp_metadata_get_guid ();
 
-      strcpy (did_data, "xmp.did:");
-      strcat (did_data, uuid);
+      did_data = g_strconcat ("xmp.did:", uuid, NULL);
 
       gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
                                           tags[2], did_data, NULL);
       g_free (uuid);
+      g_free (did_data);
     }
 
   /* Handle Xmp.xmpMM.History */
@@ -418,7 +417,6 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
   id_count = found + 1;
 
   memset (tagstr, 0, sizeof (tagstr));
-  memset (strdata, 0, sizeof (strdata));
 
   g_snprintf (tagstr, sizeof (tagstr), "%s[%d]%s",
               tags[3], id_count, history_tags[0]);
@@ -453,7 +451,6 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
   g_free(uuid);
 
   memset (tagstr, 0, sizeof (tagstr));
-  memset (strdata, 0, sizeof (strdata));
 
   g_snprintf (tagstr, sizeof (tagstr), "%s[%d]%s",
               tags[3], id_count, history_tags[2]);
@@ -483,7 +480,6 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
   g_free (tmp);
 
   memset (tagstr, 0, sizeof (tagstr));
-  memset (strdata, 0, sizeof (strdata));
 
   g_snprintf (tagstr, sizeof (tagstr), "%s[%d]%s",
               tags[3], id_count, history_tags[3]);
@@ -511,16 +507,15 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
     }
 
   memset (tagstr, 0, sizeof (tagstr));
-  memset (strdata, 0, sizeof (strdata));
 
   g_snprintf (tagstr, sizeof (tagstr), "%s[%d]%s",
               tags[3], id_count, history_tags[4]);
 
-  strcpy (strdata, "/");
-  strcat (strdata, state_status);
+  str = g_strconcat ("/", state_status, NULL);
 
   gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
-                                      tagstr, strdata, &error);
+                                      tagstr, str, &error);
+  g_free (str);
   if (error)
     {
       g_printerr ("%s: failed to set metadata '%s': %s\n",
