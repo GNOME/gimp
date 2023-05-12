@@ -49,6 +49,15 @@ Core:
    label, whereas in menus, we usually want the short label as we have context
    (though the latter can be tweaked by a custom "label-variant" attribute in
    .ui files).
+ - New "Middle Gray (CIELAB)" fill option (new image or new layer).
+ - Stroke Selection: "Line" and "Paint tool" styles are now in a a stack
+   switcher instead of radio buttons. More advanced options are not "hidden"
+   anymore in a foldable widget.
+ - The quick/dirty exit() now happens on all release code (even micro version)
+   instead of stable code (even minor version). Also in non-release builds, the
+   GIMP_DIRTY_EXIT environment variable can be set in order to force the quick
+   exit() anyway. This became necessary because of recent memory issues we
+   experienced ever since GLib's GSlice implementation changed (GLib 2.75.3).
 
 Tools:
 
@@ -57,6 +66,7 @@ Tools:
     image or changing the active image.
   - Align tool: "use extents of layer contents" also applies to the alignment
     reference (not only the target objects).
+  - Color picker: pick in the image's RGB space.
 
 Graphical User Interface:
 
@@ -95,6 +105,16 @@ Plug-ins:
     * Add compatibility notice on export: some people have noted that legacy
       layer modes have better compatibility when exporting PSDs and reopening
       them in Photoshop.
+    * New "file-psd-load-metadata" procedure to be used by other plug-ins in
+      order to load Photoshop-format metadata. Some formats in particular allow
+      PSD style metadata (e.g. see TIFF and JPEG).
+  - TIFF:
+    * PSD metadata (both in image or layer level) can now be loaded by calling
+      the new "file-psd-load-metadata" PDB procedure.
+  - JPEG:
+    * PSD metadata (image level only, e.g. paths) can now be loaded by calling
+      the new "file-psd-load-metadata" PDB procedure.
+    * Clipping path import added.
   - DDS:
     * OpenMP support enabled when available on the build machine.
   - All Python 3 plug-ins whose Python 2 variants used to have a GUI now also
@@ -104,8 +124,15 @@ Plug-ins:
     support added. PAM files are essentially PPM files with a different header
     format and alpha/16 bit support.
   - GIF: load error message handling improved.
-  - PCX: new radio option "override-palette" to override PCX 1 bit palette.
+  - PCX:
+    * new radio option "override-palette" to override PCX 1 bit palette.
+    * 8bpp with 4 planes in PCX/DC import support added (we were only supporting
+      3 planes).
   - QOI: new format support (import and export).
+  - Amiga IFF/ILBM: initial support for importing indexed ILBM, Amiga PBM, and
+    ACBM images.
+  - DCX: new import support (DCX files are containers that store up to 1023 PCX
+    files).
   - Plug-ins ported to GAction: animation-play, colormap-remap, ifs-compose,
     gfig, ImageMap.
   - Plug-ins ported to GimpProcedureConfig and GimpProcedureDialog:
@@ -113,7 +140,11 @@ Plug-ins:
     file-pat, file-xpm, file-csource, file-jp2-load, file-dds (import),
     file-sgi, file-fli, file-pnm, file-gbr, file-psp, file-aa, bmp-save,
     despeckle, blinds, contrast-retinex, jigsaw, nl-filter, destripe, file-mng,
-    file-html-table, file-xbm, file-pdf-load.
+    file-html-table, file-xbm, file-pdf-load, file-gif-save, file-ps.
+  - metadata-viewer and metadata-editor: graphical interfaces are not built from
+    GtkBuilder .ui files anymore. These were the last instances of using this
+    format (except for our new menus!) for creating full GUIs as we don't want
+    to go this way anymore!
 
 API:
 
@@ -146,6 +177,9 @@ API:
     * Improved annotations or usage:
       + gimp_locale_directory() returns a string in the OS encoding for all but
         Windows (UTF-8), i.e. GLib "filename" encoding.
+      + Metadata "Exif.Image.ImageResources" and "Exif.Image.0x935c" are not
+        exported anymore. These are specific to Photoshop, and while we cannot
+        modify them, they can contain sensitive information (e.g. a thumbnail).
 
 Build:
 
