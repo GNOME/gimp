@@ -1015,12 +1015,9 @@ win32-nightly:
 flatpak-nightly:
   extends: '.publish_nightly'
   stage: distribution
-  only:
-    variables:
-      # Custom builds though web GUI, API or schedules.
-      # I don't use 'rules:' because .publish_nightly template uses an
-      # 'only:' already which clashes with 'rules:'.
-      - $GIMP_CI_FLATPAK != null
+  rules:
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_FLATPAK != null'
   needs: ["flatpak"]
   dependencies:
     - 'flatpak'
