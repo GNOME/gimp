@@ -11,6 +11,7 @@ subdir('libscriptfu')
 subdir('scripts')
 subdir('server')
 subdir('interpreter')
+subdir('console')
 
 
 executable_name = 'script-fu'
@@ -20,7 +21,6 @@ executable_name = 'script-fu'
 # script-fu.c also implements PDB procedure of type EXTENSION "extension-script-fu"
 
 plugin_sources = [
-  'script-fu-console.c',
   'script-fu-eval.c',
   'script-fu-text-console.c',
 
@@ -58,7 +58,7 @@ executable(executable_name,
   include_directories: [
     libscriptfuInclude,
   ],
-  link_with : libscriptfu,
+  link_with : [libscriptfuconsole, libscriptfu ],
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / executable_name,
 )

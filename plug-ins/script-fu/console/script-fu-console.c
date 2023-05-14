@@ -28,6 +28,9 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "script-fu-console.h"
+#include "script-fu-console-editor.h"
+#include "script-fu-console-history.h"
+#include "script-fu-console-total.h"
 
 #include "script-fu-lib.h"
 #include "script-fu-intl.h"
@@ -41,16 +44,13 @@
 typedef struct
 {
   GtkWidget     *dialog;
-  GtkTextBuffer *console;
-  GtkWidget     *cc;
-  GtkWidget     *text_view;
+  GtkTextBuffer *total_history;
+  GtkWidget     *editor;
+  GtkWidget     *history_view;
   GtkWidget     *proc_browser;
   GtkWidget     *save_dialog;
 
-  GList         *history;
-  gint           history_len;
-  gint           history_cur;
-  gint           history_max;
+  CommandHistory history;
 } ConsoleInterface;
 
 enum
@@ -77,8 +77,7 @@ static void      script_fu_browse_response       (GtkWidget        *widget,
                                                   ConsoleInterface *console);
 static void      script_fu_browse_row_activated  (GtkDialog        *dialog);
 
-static gboolean  script_fu_cc_is_empty           (ConsoleInterface *console);
-static gboolean  script_fu_cc_key_function       (GtkWidget        *widget,
+static gboolean  script_fu_editor_key_function   (GtkWidget        *widget,
                                                   GdkEventKey      *event,
                                                   ConsoleInterface *console);
 
@@ -104,8 +103,6 @@ script_fu_console_run (GimpProcedure        *procedure,
   script_fu_set_print_flag (1);
 
   gimp_ui_init ("script-fu");
-
-  console.history_max = 50;
 
   console.dialog = gimp_dialog_new (_("Script-Fu Console"),
                                     "gimp-script-fu-console",
@@ -140,7 +137,7 @@ script_fu_console_run (GimpProcedure        *procedure,
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  /*  The output text widget  */
+  /*  A view of the total history.  */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
@@ -148,70 +145,35 @@ script_fu_console_run (GimpProcedure        *procedure,
   gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
-  console.console = gtk_text_buffer_new (NULL);
-  console.text_view = gtk_text_view_new_with_buffer (console.console);
-  g_object_unref (console.console);
+  console.total_history = console_total_history_new ();
 
-  gtk_text_view_set_editable (GTK_TEXT_VIEW (console.text_view), FALSE);
-  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (console.text_view),
+  console.history_view = gtk_text_view_new_with_buffer (console.total_history);
+  /* View keeps reference.  Unref our ref so buffer is destroyed with view. */
+  g_object_unref (console.total_history);
+
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (console.history_view), FALSE);
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (console.history_view),
                                GTK_WRAP_WORD);
-  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (console.text_view), 6);
-  gtk_text_view_set_right_margin (GTK_TEXT_VIEW (console.text_view), 6);
-  gtk_widget_set_size_request (console.text_view, TEXT_WIDTH, TEXT_HEIGHT);
-  gtk_container_add (GTK_CONTAINER (scrolled_window), console.text_view);
-  gtk_widget_show (console.text_view);
+  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (console.history_view), 6);
+  gtk_text_view_set_right_margin (GTK_TEXT_VIEW (console.history_view), 6);
+  gtk_widget_set_size_request (console.history_view, TEXT_WIDTH, TEXT_HEIGHT);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), console.history_view);
+  gtk_widget_show (console.history_view);
 
-  gtk_text_buffer_create_tag (console.console, "strong",
-                              "weight", PANGO_WEIGHT_BOLD,
-                              "scale",  PANGO_SCALE_LARGE,
-                              NULL);
-  gtk_text_buffer_create_tag (console.console, "emphasis",
-                              "style",  PANGO_STYLE_OBLIQUE,
-                              NULL);
+  console_total_append_welcome (console.total_history);
 
-  {
-    const gchar * const greetings[] =
-    {
-      "strong",   N_("Welcome to TinyScheme"),
-      NULL,       "\n",
-      NULL,       "Copyright (c) Dimitrios Souflis",
-      NULL,       "\n",
-      "strong",   N_("Script-Fu Console"),
-      NULL,       " - ",
-      "emphasis", N_("Interactive Scheme Development"),
-      NULL,       "\n"
-    };
-
-    GtkTextIter cursor;
-    gint        i;
-
-    gtk_text_buffer_get_end_iter (console.console, &cursor);
-
-    for (i = 0; i < G_N_ELEMENTS (greetings); i += 2)
-      {
-        if (greetings[i])
-          gtk_text_buffer_insert_with_tags_by_name (console.console, &cursor,
-                                                    gettext (greetings[i + 1]),
-                                                    -1, greetings[i],
-                                                    NULL);
-        else
-          gtk_text_buffer_insert (console.console, &cursor,
-                                  gettext (greetings[i + 1]), -1);
-      }
-  }
-
-  /*  The current command  */
+  /*  An editor of a command to be executed. */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  console.cc = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), console.cc, TRUE, TRUE, 0);
-  gtk_widget_grab_focus (console.cc);
-  gtk_widget_show (console.cc);
+  console.editor = console_editor_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), console.editor, TRUE, TRUE, 0);
+  gtk_widget_grab_focus (console.editor);
+  gtk_widget_show (console.editor);
 
-  g_signal_connect (console.cc, "key-press-event",
-                    G_CALLBACK (script_fu_cc_key_function),
+  g_signal_connect (console.editor, "key-press-event",
+                    G_CALLBACK (script_fu_editor_key_function),
                     &console);
 
   button = gtk_button_new_with_mnemonic (_("_Browse..."));
@@ -226,9 +188,7 @@ script_fu_console_run (GimpProcedure        *procedure,
                     G_CALLBACK (script_fu_browse_callback),
                     &console);
 
-  /*  Initialize the history  */
-  console.history     = g_list_append (console.history, NULL);
-  console.history_len = 1;
+  console_history_init (&console.history, console.total_history);
 
   gtk_widget_show (console.dialog);
 
@@ -248,14 +208,10 @@ script_fu_console_response (GtkWidget        *widget,
                             gint              response_id,
                             ConsoleInterface *console)
 {
-  GtkTextIter start, end;
-
   switch (response_id)
     {
     case RESPONSE_CLEAR:
-      gtk_text_buffer_get_start_iter (console->console, &start);
-      gtk_text_buffer_get_end_iter (console->console, &end);
-      gtk_text_buffer_delete (console->console, &start, &end);
+      console_total_history_clear (console->total_history);
       break;
 
     case RESPONSE_SAVE:
@@ -310,8 +266,6 @@ script_fu_console_save_response (GtkWidget        *dialog,
                                  gint              response_id,
                                  ConsoleInterface *console)
 {
-  GtkTextIter start, end;
-
   if (response_id == GTK_RESPONSE_OK)
     {
       gchar *filename;
@@ -332,10 +286,7 @@ script_fu_console_save_response (GtkWidget        *dialog,
           return;
         }
 
-      gtk_text_buffer_get_start_iter (console->console, &start);
-      gtk_text_buffer_get_end_iter (console->console, &end);
-
-      str = gtk_text_buffer_get_text (console->console, &start, &end, FALSE);
+      str = console_total_history_get_text (console->total_history);
 
       fputs (str, fh);
       fclose (fh);
@@ -422,13 +373,13 @@ script_fu_browse_response (GtkWidget        *widget,
 
   text = g_string_append_c (text, ')');
 
-  gtk_window_set_focus (GTK_WINDOW (console->dialog), console->cc);
+  gtk_window_set_focus (GTK_WINDOW (console->dialog), console->editor);
 
-  gtk_entry_set_text (GTK_ENTRY (console->cc), text->str);
-  gtk_editable_set_position (GTK_EDITABLE (console->cc),
-                             g_utf8_pointer_to_offset (text->str,
-                                                       text->str +
-                                                       strlen (proc_name) + 2));
+  console_editor_set_text_and_position (console->editor,
+                                        text->str,
+                                        g_utf8_pointer_to_offset (
+                                          text->str,
+                                          text->str + strlen (proc_name) + 2));
 
   g_string_free (text, TRUE);
 
@@ -474,6 +425,9 @@ script_fu_console_scroll_end (GtkWidget *view)
   g_idle_add ((GSourceFunc) script_fu_console_idle_scroll_end, view);
 }
 
+/* Write results of execution to the console view.
+ * But not put results in the history model.
+ */
 static void
 script_fu_output_to_console (gboolean      is_error_msg,
                              const gchar  *text,
@@ -482,91 +436,52 @@ script_fu_output_to_console (gboolean      is_error_msg,
 {
   ConsoleInterface *console = user_data;
 
-  if (console && console->text_view)
+  if (console && console->history_view)
     {
-      GtkTextBuffer *buffer;
-      GtkTextIter    cursor;
-
-      buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (console->text_view));
-
-      gtk_text_buffer_get_end_iter (buffer, &cursor);
-
       if (! is_error_msg)
-        {
-          gtk_text_buffer_insert (buffer, &cursor, text, len);
-        }
+        console_total_append_text_normal (console->total_history, text, len);
       else
-        {
-          gtk_text_buffer_insert_with_tags_by_name (console->console, &cursor,
-                                                    text, len, "emphasis",
-                                                    NULL);
-        }
+        console_total_append_text_emphasize (console->total_history, text, len);
 
-      script_fu_console_scroll_end (console->text_view);
+      script_fu_console_scroll_end (console->history_view);
     }
 }
 
-static gboolean
-script_fu_cc_is_empty (ConsoleInterface *console)
-{
-  const gchar *str;
 
-  if ((str = gtk_entry_get_text (GTK_ENTRY (console->cc))) == NULL)
-    return TRUE;
-
-  while (*str)
-    {
-      if (*str != ' ' && *str != '\t' && *str != '\n')
-        return FALSE;
-
-      str ++;
-    }
-
-  return TRUE;
-}
 
 static gboolean
-script_fu_cc_key_function (GtkWidget        *widget,
-                           GdkEventKey      *event,
-                           ConsoleInterface *console)
+script_fu_editor_key_function (GtkWidget        *widget,
+                               GdkEventKey      *event,
+                               ConsoleInterface *console)
 {
-  GList       *list;
   gint         direction = 0;
-  GtkTextIter  cursor;
   GString     *output;
   gboolean     is_error;
+  const gchar *command;
 
   switch (event->keyval)
     {
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
-      if (script_fu_cc_is_empty (console))
+      if (console_editor_is_empty (console->editor))
         return TRUE;
 
-      list = g_list_nth (console->history,
-                         (g_list_length (console->history) - 1));
+      command = g_strdup (console_editor_get_text (console->editor));
+      /* Put to history model.
+       *
+       * We own the command.
+       * This transfers ownership to history model.
+       * We retain a reference, used below, but soon out of scope.
+       */
+      console_history_set_tail (&console->history, command);
 
-      if (list->data)
-        g_free (list->data);
+      /* Put decorated command to total_history, distinct from history model. */
+      console_total_append_command (console->total_history, command);
 
-      list->data = g_strdup (gtk_entry_get_text (GTK_ENTRY (console->cc)));
+      script_fu_console_scroll_end (console->history_view);
 
-      gtk_text_buffer_get_end_iter (console->console, &cursor);
-
-      gtk_text_buffer_insert (console->console, &cursor, "\n", 1);
-      gtk_text_buffer_insert_with_tags_by_name (console->console, &cursor,
-                                                "> ", 2,
-                                                "strong",
-                                                NULL);
-
-      gtk_text_buffer_insert (console->console, &cursor,
-                              gtk_entry_get_text (GTK_ENTRY (console->cc)), -1);
-      gtk_text_buffer_insert (console->console, &cursor, "\n", 1);
-
-      script_fu_console_scroll_end (console->text_view);
-
-      gtk_entry_set_text (GTK_ENTRY (console->cc), "");
+      console_editor_clear (console->editor);
 
       output = g_string_new (NULL);
       script_fu_redirect_output_to_gstr (output);
@@ -574,7 +489,7 @@ script_fu_cc_key_function (GtkWidget        *widget,
       gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
                                           GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
-      is_error = script_fu_interpret_string (list->data);
+      is_error = script_fu_interpret_string (command);
 
       script_fu_output_to_console (is_error,
                                    output->str,
@@ -588,21 +503,7 @@ script_fu_cc_key_function (GtkWidget        *widget,
 
       gimp_displays_flush ();
 
-      console->history = g_list_append (console->history, NULL);
-
-      if (console->history_len == console->history_max)
-        {
-          console->history = g_list_remove (console->history,
-                                            console->history->data);
-          if (console->history->data)
-            g_free (console->history->data);
-        }
-      else
-        {
-          console->history_len++;
-        }
-
-      console->history_cur = g_list_length (console->history) - 1;
+      console_history_new_tail (&console->history);
 
       return TRUE;
       break;
@@ -635,28 +536,20 @@ script_fu_cc_key_function (GtkWidget        *widget,
 
   if (direction)
     {
-      /*  Make sure we keep track of the current one  */
-      if (console->history_cur == g_list_length (console->history) - 1)
-        {
-          list = g_list_nth (console->history, console->history_cur);
+      /* Tail was preallocated and usually empty.
+       * Keep the editor contents in the tail as cursor is moved away from tail.
+       * So any edited text is not lost if user moves cursor back to tail.
+       */
+      command = console_editor_get_text (console->editor);
+      if (console_history_is_cursor_at_tail (&console->history))
+        console_history_set_tail (&console->history, g_strdup (command));
 
-          g_free (list->data);
-          list->data = g_strdup (gtk_entry_get_text (GTK_ENTRY (console->cc)));
-        }
-
-      console->history_cur += direction;
-
-      if (console->history_cur < 0)
-        console->history_cur = 0;
-
-      if (console->history_cur >= console->history_len)
-        console->history_cur = console->history_len - 1;
-
-      gtk_entry_set_text (GTK_ENTRY (console->cc),
-                          (gchar *) (g_list_nth (console->history,
-                                                 console->history_cur))->data);
-
-      gtk_editable_set_position (GTK_EDITABLE (console->cc), -1);
+      /* Now move cursor and replace editor contents. */
+      console_history_move_cursor (&console->history, direction);
+      command = console_history_get_at_cursor (&console->history);
+      console_editor_set_text_and_position (console->editor,
+                                            command,
+                                            -1);
 
       return TRUE;
     }

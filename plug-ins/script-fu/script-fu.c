@@ -21,7 +21,7 @@
 
 #include <libgimp/gimp.h>
 
-#include "script-fu-console.h"
+#include "console/script-fu-console.h"
 #include "script-fu-eval.h"
 #include "script-fu-text-console.h"
 
