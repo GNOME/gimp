@@ -1416,13 +1416,13 @@ class SampleGraphList (Gtk.Box):
         buttons.add (button)
         button.show ()
 
-        button = Gtk.Button.new_from_icon_name ("gimp-go-up-symbolic",
+        button = Gtk.Button.new_from_icon_name ("go-up-symbolic",
                                                 Gtk.IconSize.BUTTON)
         move_up_button = button
         buttons.add (button)
         button.show ()
 
-        button = Gtk.Button.new_from_icon_name ("gimp-go-down-symbolic",
+        button = Gtk.Button.new_from_icon_name ("go-down-symbolic",
                                                 Gtk.IconSize.BUTTON)
         move_down_button = button
         buttons.add (button)
@@ -3092,7 +3092,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
             box.get_style_context ().add_class ("raised")
             box.show ()
 
-            button = Gtk.Button.new_from_icon_name ("gimp-go-up-symbolic",
+            button = Gtk.Button.new_from_icon_name ("go-up-symbolic",
                                                     Gtk.IconSize.BUTTON)
             self.prev_button = button
             box.pack_start (button, False, True, 0)
@@ -3100,7 +3100,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
 
             button.connect ("clicked", lambda *args: self.move (-1))
 
-            button = Gtk.Button.new_from_icon_name ("gimp-go-down-symbolic",
+            button = Gtk.Button.new_from_icon_name ("go-down-symbolic",
                                                     Gtk.IconSize.BUTTON)
             self.next_button = button
             box.pack_end (button, False, True, 0)

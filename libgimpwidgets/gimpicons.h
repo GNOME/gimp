@@ -187,7 +187,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_LOCK_VISIBILITY           "gimp-lock-visibility"
 #define GIMP_ICON_LOCK_MULTI                "gimp-lock-multi"
 
-#define GIMP_ICON_DOCUMENT_NEW              "gimp-document-new"
+#define GIMP_ICON_DOCUMENT_NEW              "document-new"
 #define GIMP_ICON_DOCUMENT_OPEN             "document-open"
 #define GIMP_ICON_DOCUMENT_OPEN_RECENT      "document-open-recent"
 #define GIMP_ICON_DOCUMENT_PAGE_SETUP       "document-page-setup"
@@ -202,7 +202,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_EDIT_CLEAR                "edit-clear"
 #define GIMP_ICON_EDIT_COPY                 "edit-copy"
 #define GIMP_ICON_EDIT_CUT                  "edit-cut"
-#define GIMP_ICON_EDIT_DELETE               "gimp-edit-delete"
+#define GIMP_ICON_EDIT_DELETE               "edit-delete"
 #define GIMP_ICON_EDIT_FIND                 "edit-find"
 #define GIMP_ICON_EDIT_PASTE                "edit-paste"
 #define GIMP_ICON_EDIT_PASTE_AS_NEW         "gimp-paste-as-new"
@@ -216,7 +216,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_FILL_HORIZONTAL           "gimp-hfill"
 #define GIMP_ICON_FILL_VERTICAL             "gimp-vfill"
 
-#define GIMP_ICON_FOLDER_NEW                "gimp-folder-new"
+#define GIMP_ICON_FOLDER_NEW                "folder-new"
 
 #define GIMP_ICON_FORMAT_INDENT_MORE         "format-indent-more"
 #define GIMP_ICON_FORMAT_INDENT_LESS         "format-indent-less"
@@ -259,12 +259,12 @@ G_BEGIN_DECLS
 #define GIMP_ICON_GRAVITY_WEST              "gimp-gravity-west"
 
 #define GIMP_ICON_GO_BOTTOM                 "go-bottom"
-#define GIMP_ICON_GO_DOWN                   "gimp-go-down"
+#define GIMP_ICON_GO_DOWN                   "go-down"
 #define GIMP_ICON_GO_FIRST                  "go-first"
 #define GIMP_ICON_GO_HOME                   "go-home"
 #define GIMP_ICON_GO_LAST                   "go-last"
 #define GIMP_ICON_GO_TOP                    "go-top"
-#define GIMP_ICON_GO_UP                     "gimp-go-up"
+#define GIMP_ICON_GO_UP                     "go-up"
 #define GIMP_ICON_GO_PREVIOUS               "go-previous"
 #define GIMP_ICON_GO_NEXT                   "go-next"
 

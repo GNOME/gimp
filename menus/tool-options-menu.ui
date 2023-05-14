@@ -22,7 +22,7 @@
       </submenu>
       <submenu>
         <attribute name="label" translatable="yes" context="tool-options-action">_Delete Tool Preset</attribute>
-        <attribute name="icon">gimp-edit-delete</attribute>
+        <attribute name="icon">edit-delete</attribute>
       </submenu>
       <section>
         <item><attribute name="action">tool-options.tool-options-reset</attribute></item>

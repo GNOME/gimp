@@ -11,6 +11,7 @@ scalable_images = \
 	scalable/dialog-information-symbolic.svg				\
 	scalable/dialog-question-symbolic.svg					\
 	scalable/dialog-warning-symbolic.svg					\
+	scalable/document-new-symbolic.svg					\
 	scalable/document-open-symbolic.svg					\
 	scalable/document-open-recent-symbolic.svg				\
 	scalable/document-print-symbolic.svg					\
@@ -20,10 +21,12 @@ scalable_images = \
 	scalable/edit-clear-symbolic.svg					\
 	scalable/edit-copy-symbolic.svg						\
 	scalable/edit-cut-symbolic.svg						\
+	scalable/edit-delete-symbolic.svg					\
 	scalable/edit-paste-symbolic.svg					\
 	scalable/edit-redo-symbolic.svg						\
 	scalable/edit-undo-symbolic.svg						\
 	scalable/folder-symbolic.svg						\
+	scalable/folder-new-symbolic.svg					\
 	scalable/format-indent-more-symbolic.svg				\
 	scalable/format-justify-center-symbolic.svg				\
 	scalable/format-justify-fill-symbolic.svg				\
@@ -32,12 +35,14 @@ scalable_images = \
 	scalable/format-text-direction-ltr-symbolic.svg				\
 	scalable/format-text-direction-rtl-symbolic.svg				\
 	scalable/go-bottom-symbolic.svg						\
+	scalable/go-down-symbolic.svg						\
 	scalable/go-first-symbolic.svg						\
 	scalable/go-home-symbolic.svg						\
 	scalable/go-last-symbolic.svg						\
 	scalable/go-next-symbolic.svg						\
 	scalable/go-previous-symbolic.svg					\
 	scalable/go-top-symbolic.svg						\
+	scalable/go-up-symbolic.svg						\
 	scalable/help-about-symbolic.svg					\
 	scalable/list-add-symbolic.svg						\
 	scalable/list-remove-symbolic.svg					\
@@ -108,18 +113,13 @@ scalable_images = \
 	scalable/gimp-default-colors-symbolic.svg				\
 	scalable/gimp-detach-symbolic.svg					\
 	scalable/gimp-device-status-symbolic.svg				\
-	scalable/gimp-document-new-symbolic.svg					\
 	scalable/gimp-duplicate-symbolic.svg					\
 	scalable/gimp-dynamics-symbolic.svg					\
-	scalable/gimp-edit-delete-symbolic.svg					\
 	scalable/gimp-even-horizontal-gap-symbolic.svg				\
 	scalable/gimp-even-vertical-gap-symbolic.svg				\
 	scalable/gimp-file-manager-symbolic.svg					\
 	scalable/gimp-floating-selection-symbolic.svg				\
-	scalable/gimp-folder-new-symbolic.svg					\
 	scalable/gimp-gegl-symbolic.svg						\
-	scalable/gimp-go-down-symbolic.svg					\
-	scalable/gimp-go-up-symbolic.svg					\
 	scalable/gimp-gradient-bilinear-symbolic.svg				\
 	scalable/gimp-gradient-conical-asymmetric-symbolic.svg			\
 	scalable/gimp-gradient-conical-symmetric-symbolic.svg			\
@@ -398,6 +398,7 @@ icons16_images = \
 	16/dialog-information-symbolic.symbolic.png				\
 	16/dialog-question-symbolic.symbolic.png				\
 	16/dialog-warning-symbolic.symbolic.png					\
+	16/document-new-symbolic.symbolic.png					\
 	16/document-open-symbolic.symbolic.png					\
 	16/document-open-recent-symbolic.symbolic.png				\
 	16/document-print-symbolic.symbolic.png					\
@@ -407,17 +408,21 @@ icons16_images = \
 	16/edit-clear-symbolic.symbolic.png					\
 	16/edit-copy-symbolic.symbolic.png					\
 	16/edit-cut-symbolic.symbolic.png					\
+	16/edit-delete-symbolic.symbolic.png					\
 	16/edit-paste-symbolic.symbolic.png					\
 	16/edit-redo-symbolic.symbolic.png					\
 	16/edit-undo-symbolic.symbolic.png					\
 	16/folder-symbolic.symbolic.png						\
+	16/folder-new-symbolic.symbolic.png					\
 	16/go-bottom-symbolic.symbolic.png					\
+	16/go-down-symbolic.symbolic.png					\
 	16/go-first-symbolic.symbolic.png					\
 	16/go-home-symbolic.symbolic.png					\
 	16/go-last-symbolic.symbolic.png					\
 	16/go-next-symbolic.symbolic.png					\
 	16/go-previous-symbolic.symbolic.png					\
 	16/go-top-symbolic.symbolic.png						\
+	16/go-up-symbolic.symbolic.png						\
 	16/help-about-symbolic.symbolic.png					\
 	16/list-add-symbolic.symbolic.png					\
 	16/list-remove-symbolic.symbolic.png					\
@@ -484,16 +489,11 @@ icons16_images = \
 	16/gimp-device-status-symbolic.symbolic.png				\
 	\
 	16/gimp-display-filter-symbolic.symbolic.png				\
-	16/gimp-document-new-symbolic.symbolic.png				\
 	16/gimp-duplicate-symbolic.symbolic.png					\
 	16/gimp-dynamics-symbolic.symbolic.png					\
-	16/gimp-edit-delete-symbolic.symbolic.png				\
 	16/gimp-file-manager-symbolic.symbolic.png				\
 	16/gimp-floating-selection-symbolic.symbolic.png			\
-	16/gimp-folder-new-symbolic.symbolic.png				\
 	16/gimp-gegl-symbolic.symbolic.png					\
-	16/gimp-go-down-symbolic.symbolic.png					\
-	16/gimp-go-up-symbolic.symbolic.png					\
 	16/gimp-gradient-bilinear-symbolic.symbolic.png				\
 	16/gimp-gradient-conical-asymmetric-symbolic.symbolic.png		\
 	16/gimp-gradient-conical-symmetric-symbolic.symbolic.png		\
