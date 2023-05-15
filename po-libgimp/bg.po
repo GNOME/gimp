@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-05-11 13:26+0000\n"
-"PO-Revision-Date: 2023-05-11 16:36+0300\n"
+"POT-Creation-Date: 2023-05-15 07:54+0000\n"
+"PO-Revision-Date: 2023-05-14 08:03+0300\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -27,7 +27,7 @@ msgstr "_Разглеждане…"
 #: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
 #, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "Приставката %s не поддържа слоеве"
+msgstr "Приставката „%s“ не поддържа слоеве"
 
 #: libgimp/gimpexport.c:333 libgimp/gimpexport.c:342 libgimp/gimpexport.c:351
 #: libgimp/gimpexport.c:369
@@ -38,12 +38,12 @@ msgstr "Сливане на видимите слоеве"
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
-"Приставката %s не поддържа отмествания, размери или прозрачност на слоеве"
+"Приставката „%s“ не поддържа отмествания, размери или прозрачност на слоеве"
 
 #: libgimp/gimpexport.c:350 libgimp/gimpexport.c:359
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "Приставката %s поддържа слоеве само като кадри от анимация"
+msgstr "Приставката „%s“ поддържа слоеве само като кадри от анимация"
 
 #: libgimp/gimpexport.c:351 libgimp/gimpexport.c:360
 msgid "Save as Animation"
@@ -57,17 +57,17 @@ msgstr "Сплескване на изображение"
 #: libgimp/gimpexport.c:377
 #, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr "Приставката %s не поддържа прозрачност"
+msgstr "Приставката „%s“ не поддържа прозрачност"
 
 #: libgimp/gimpexport.c:386
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
-msgstr "Приставката %s не поддържа прозрачни слоеве"
+msgstr "Приставката „%s“ не поддържа прозрачни слоеве"
 
 #: libgimp/gimpexport.c:395
 #, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr "Приставката %s не поддържа слоеви маски"
+msgstr "Приставката „%s“ не поддържа слоеви маски"
 
 #: libgimp/gimpexport.c:396
 msgid "Apply Layer Masks"
@@ -76,7 +76,7 @@ msgstr "Прилагане на слоеви маски"
 #: libgimp/gimpexport.c:404
 #, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "Приставката %s поддържа само изображения в RGB"
+msgstr "Приставката „%s“ поддържа само изображения в RGB"
 
 #: libgimp/gimpexport.c:405 libgimp/gimpexport.c:443 libgimp/gimpexport.c:452
 msgid "Convert to RGB"
@@ -85,7 +85,7 @@ msgstr "Преобразуване в RGB"
 #: libgimp/gimpexport.c:413
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "Приставката %s поддържа само изображения в степени на сивото"
+msgstr "Приставката „%s“ поддържа само изображения в степени на сивото"
 
 #: libgimp/gimpexport.c:414 libgimp/gimpexport.c:443 libgimp/gimpexport.c:464
 msgid "Convert to Grayscale"
@@ -94,7 +94,7 @@ msgstr "Преобразуване в степени на сивото"
 #: libgimp/gimpexport.c:422
 #, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "Приставката %s поддържа само изображения с индексирани цветове"
+msgstr "Приставката „%s“ поддържа само изображения с индексирани цветове"
 
 #: libgimp/gimpexport.c:423 libgimp/gimpexport.c:452 libgimp/gimpexport.c:462
 msgid ""
@@ -103,13 +103,13 @@ msgid ""
 msgstr ""
 "Преобразуване в изображение с индексирани цветове с използване на "
 "стандартните настройките\n"
-"(Използва се ръчното за настройка на резултата)"
+"(За настройка на резултата използвайте ръчното преобразуване)"
 
 #: libgimp/gimpexport.c:432
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
-"Приставката %s поддържа само черно-бели (двуцветни) изображения с "
+"Приставката „%s“ поддържа само черно-бели (двуцветни) изображения с "
 "индексирани цветове"
 
 #: libgimp/gimpexport.c:433
@@ -119,30 +119,32 @@ msgid ""
 msgstr ""
 "Преобразуване в изображение с индексирани цветове с използване на "
 "стандартните настройки за черно-бяло\n"
-"(Използва се ръчното за настройка на резултата)"
+"(За настройка на резултата използвайте ръчното преобразуване)"
 
 #: libgimp/gimpexport.c:442
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr ""
-"Приставката %s поддържа само изображения с цветност RGB или степени на сивото"
+"Приставката „%s“ поддържа само изображения с цветност RGB или степени на "
+"сивото"
 
 #: libgimp/gimpexport.c:451
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
-msgstr "Приставката %s поддържа само изображения в RGB или индексирани цветове"
+msgstr ""
+"Приставката „%s“ поддържа само изображения в RGB или индексирани цветове"
 
 #: libgimp/gimpexport.c:461
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
-"Приставката %s поддържа само изображения в степени на сивото или с "
+"Приставката „%s“ поддържа само изображения в степени на сивото или с "
 "индексирани цветове"
 
 #: libgimp/gimpexport.c:472
 #, c-format
 msgid "%s plug-in needs an alpha channel"
-msgstr "Приставката %s се нуждае от канал за прозрачност"
+msgstr "Приставката „%s“ се нуждае от канал за прозрачност"
 
 #: libgimp/gimpexport.c:473
 msgid "Add Alpha Channel"
@@ -151,7 +153,8 @@ msgstr "Добавяне на канал за прозрачност"
 #: libgimp/gimpexport.c:481
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
-msgstr "Приставката %s трябва да отреже слоевете до границите на изображението"
+msgstr ""
+"Приставката „%s“ трябва да отреже слоевете до границите на изображението"
 
 #: libgimp/gimpexport.c:482
 msgid "Crop Layers"
@@ -286,7 +289,7 @@ msgstr "по дата"
 
 #: libgimp/gimpprocbrowserdialog.c:168
 msgid "by type"
-msgstr "по тип"
+msgstr "по вид"
 
 #. count label
 #: libgimp/gimpprocbrowserdialog.c:369 libgimp/gimpprocbrowserdialog.c:527
@@ -1584,7 +1587,7 @@ msgstr "Неправилен път към файл (NULL)"
 
 #: libgimpbase/gimputils.c:402
 msgid "Error converting UTF-8 filename to wide char"
-msgstr "Неуспешно преобразуване на име на файл в UTFF-8 към широки знаци"
+msgstr "Неуспешно преобразуване на име на файл в UTF-8 към широки знаци"
 
 #: libgimpbase/gimputils.c:410
 msgid "ILCreateFromPath() failed"
@@ -1692,7 +1695,7 @@ msgid ""
 "fallback."
 msgstr ""
 "Когато е включено, GIMP ще се опита да използва цветовия профил на монитора "
-"от графичната система. Настроеният профил на монитор тогава ще се с използва "
+"от графичната система. Настроеният профил на монитор тогава ще се използва "
 "само в случай на проблем."
 
 #: libgimpconfig/gimpcolorconfig.c:63
@@ -1714,7 +1717,7 @@ msgstr ""
 
 #: libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr "CMYK цветови профил за конвертиране между RGB и CMYK."
+msgstr "Цветови профил в CMYK за конвертиране между RGB и CMYK."
 
 #: libgimpconfig/gimpcolorconfig.c:74
 msgid ""
@@ -1743,7 +1746,7 @@ msgstr ""
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
 msgstr ""
-"Ползване на компенсиране на черната точка (освен, ако сте сигурни, че имате "
+"Ползване на компенсиране на черната точка (освен ако сте сигурни, че имате "
 "причина да не правите това)."
 
 #: libgimpconfig/gimpcolorconfig.c:90
@@ -1999,7 +2002,7 @@ msgstr "Грешка при създаване на папка за умален
 
 #: libgimpthumb/gimpthumbnail.c:481
 msgid "Thumbnail contains no Thumb::URI tag"
-msgstr "Умаленото изображение не съдържа етикет Thumb::URI"
+msgstr "Миниатюрата изображение не съдържа етикет „Thumb::URI“"
 
 #: libgimpthumb/gimpthumbnail.c:878
 #, c-format
@@ -2058,7 +2061,7 @@ msgstr "Авторски права: "
 
 #: libgimpwidgets/gimpcolorscales.c:212
 msgid "Scales"
-msgstr "Мащабирания"
+msgstr "Диапазони"
 
 #: libgimpwidgets/gimpcolorscales.c:446
 msgid "0..100"
@@ -2155,7 +2158,7 @@ msgstr "Избор на _всички"
 
 #: libgimpwidgets/gimppageselector.c:321
 msgid "Select _range:"
-msgstr "Избор на _периметър:"
+msgstr "Избор на _диапазон:"
 
 #: libgimpwidgets/gimppageselector.c:333
 msgid "Open _pages as"
@@ -2734,11 +2737,11 @@ msgstr "Завъртане на шайбата надясно"
 
 #: modules/controller-linux-input.c:108
 msgid "Wheel Turn Left"
-msgstr "Завъртане колелцето наляво"
+msgstr "Завъртане на колелцето наляво"
 
 #: modules/controller-linux-input.c:109
 msgid "Wheel Turn Right"
-msgstr "Завъртане колелцето надясно"
+msgstr "Завъртане на колелцето надясно"
 
 #: modules/controller-linux-input.c:178
 msgid "Linux input event controller"
