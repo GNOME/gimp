@@ -1000,7 +1000,7 @@ if directx_sdk_path != '' and platform_windows
 endif
 conf.set('HAVE_DX_DINPUT', directx.found())
 
-cfitsio_dep = dependency('cfitsio', required: true)
+cfitsio_dep = dependency('cfitsio', required: false)
 if cfitsio_dep.found()
   MIMEtypes += 'image/fits'
 endif
@@ -1975,6 +1975,7 @@ final_message = [
 '''  Quite-OK Image:      @0@'''.format(have_qoi),
 '''  Amiga IFF/ILBM:      @0@'''.format(have_ilbm),
 '''  Email:               @0@'''.format(email_message),
+'''  FITS:                @0@'''.format(cfitsio_dep.found()),
 '',
 '''Unmaintained Plug-Ins (discouraged except for developers):''',
 '''  Help Browser:        @0@'''.format(get_option('webkit-unmaintained')),
