@@ -1,15 +1,19 @@
 xcf
+ani
 avif
 bmp
 dds
 g3
 cel
+cur
 dcm
+dcx
 dicom
 exr
 gif
 heif
 heic
+icns
 jp2
 j2k
 j2c
@@ -24,6 +28,7 @@ ppm
 pgm
 pbm
 pfm
+pam
 ps
 eps
 psp
@@ -68,3 +73,8 @@ als
 xbm
 ora
 qoi
+wbmp
+acbm
+iff
+ilbm
+lbm
