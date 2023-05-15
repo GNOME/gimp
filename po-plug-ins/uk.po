@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-05-10 17:27+0000\n"
-"PO-Revision-Date: 2023-05-10 22:27+0300\n"
+"POT-Creation-Date: 2023-05-14 15:33+0000\n"
+"PO-Revision-Date: 2023-05-15 20:51+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -103,10 +103,10 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:1038
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
 #: plug-ins/map-object/map-object-ui.c:1317
-#: plug-ins/metadata/metadata-editor.c:1174
-#: plug-ins/metadata/metadata-editor.c:1670
-#: plug-ins/metadata/metadata-editor.c:5299
-#: plug-ins/metadata/metadata-editor.c:5334 plug-ins/pagecurl/pagecurl.c:496
+#: plug-ins/metadata/metadata-editor.c:1181
+#: plug-ins/metadata/metadata-editor.c:1677
+#: plug-ins/metadata/metadata-editor.c:5306
+#: plug-ins/metadata/metadata-editor.c:5341 plug-ins/pagecurl/pagecurl.c:496
 #: plug-ins/screenshot/screenshot.c:516
 #: plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_Cancel"
@@ -519,7 +519,7 @@ msgstr "Вертикально"
 #: plug-ins/common/film.c:812 plug-ins/common/smooth-palette.c:332
 #: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
 #: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
-#: plug-ins/file-fits/fits.c:542 plug-ins/file-jpeg/jpeg-load.c:231
+#: plug-ins/file-fits/fits.c:667 plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2634 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1534
@@ -1051,11 +1051,10 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
 #: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
-#: plug-ins/file-bmp/bmp-save.c:341 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:428
-#: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
-#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
-#: plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-bmp/bmp-save.c:341 plug-ins/file-fli/fli-gimp.c:817
+#: plug-ins/file-icns/file-icns-save.c:428 plug-ins/file-ico/ico-save.c:1332
+#: plug-ins/file-ico/ico-save.c:1549 plug-ins/file-jpeg/jpeg-save.c:317
+#: plug-ins/file-psd/psd-save.c:2214 plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
 #: plug-ins/gfig/gfig.c:1040 plug-ins/ifs-compose/ifs-compose.c:2464
@@ -1089,7 +1088,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
 #: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
 #: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
-#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:459
+#: plug-ins/file-fits/fits.c:396 plug-ins/file-fli/fli-gimp.c:459
 #: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
 #: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
 #: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
@@ -1798,7 +1797,8 @@ msgid "Yellow"
 msgstr "Жовтий"
 
 #: plug-ins/common/decompose.c:215 plug-ins/common/warp.c:617
-#: plug-ins/flame/flame.c:1223 plug-ins/gfig/gfig-dialog.c:1459
+#: plug-ins/file-fits/fits.c:994 plug-ins/flame/flame.c:1223
+#: plug-ins/gfig/gfig-dialog.c:1459
 msgid "Black"
 msgstr "Чорний"
 
@@ -2156,7 +2156,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
 #: plug-ins/common/file-xbm.c:1051 plug-ins/common/file-xpm.c:699
 #: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
-#: plug-ins/file-fits/fits.c:504 plug-ins/file-fli/fli-gimp.c:784
+#: plug-ins/file-fits/fits.c:640 plug-ins/file-fli/fli-gimp.c:784
 #: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1324
 #: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
 #: plug-ins/file-psd/psd-save.c:2160 plug-ins/file-sgi/sgi.c:646
@@ -2326,7 +2326,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "Неможливо зберегти зображення з альфа-каналом."
 
 #: plug-ins/common/file-dicom.c:1542 plug-ins/common/file-ps.c:1333
-#: plug-ins/common/file-xwd.c:670 plug-ins/file-fits/fits.c:499
+#: plug-ins/common/file-xwd.c:670 plug-ins/file-fits/fits.c:635
 msgid "Cannot operate on unknown image types."
 msgstr "Не вдається виконати дії із зображеннями невідомого типу."
 
@@ -4055,6 +4055,7 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
 
 #: plug-ins/common/file-png.c:2295 plug-ins/common/file-ps.c:3738
+#: plug-ins/file-fits/fits.c:1002
 msgid "Automatic"
 msgstr "Автоматично"
 
@@ -4981,12 +4982,10 @@ msgstr "Не можна виконувати дії із зображенням�
 #: plug-ins/common/file-xwd.c:1452 plug-ins/common/file-xwd.c:1556
 #: plug-ins/common/file-xwd.c:1716 plug-ins/common/file-xwd.c:1932
 #: plug-ins/common/file-xwd.c:2091 plug-ins/common/file-xwd.c:2355
-#: plug-ins/file-fits/fits.c:826
 msgid "EOF encountered on reading"
 msgstr "Неочікуваний кінець файлу на зчитуванні"
 
 #: plug-ins/common/file-sunras.c:1648 plug-ins/common/file-sunras.c:1769
-#: plug-ins/file-fits/fits.c:1148
 msgid "Write error occurred"
 msgstr "Помилка при записі"
 
@@ -7711,62 +7710,79 @@ msgstr ""
 msgid "Could not create image."
 msgstr "Не вдалося створити зображення."
 
-#: plug-ins/file-fits/fits.c:180 plug-ins/file-fits/fits.c:226
+#: plug-ins/file-fits/fits.c:177 plug-ins/file-fits/fits.c:218
 msgid "Flexible Image Transport System"
 msgstr "Гнучка система передавання зображень (FITS)"
 
-#: plug-ins/file-fits/fits.c:334
-msgid "FITS format does not support multiple layers."
-msgstr "Для формату FITS не передбачено підтримку декількох шарів."
+#: plug-ins/file-fits/fits.c:180
+#| msgid "Load file in the IFF file format"
+msgid "Load file of the FITS file format"
+msgstr "Завантажити файл у форматі FITS"
 
-#: plug-ins/file-fits/fits.c:393
-msgid "Error during open of FITS file"
-msgstr "Помилка при відкриванні файлу FITS"
+#: plug-ins/file-fits/fits.c:181
+#| msgid "Load file in the QOI file format (Quite OK Image)"
+msgid "Load file of the FITS file format (Flexible Image Transport System)"
+msgstr "Завантажити файл у форматі FITS (Flexible Image Transport System)"
 
-#: plug-ins/file-fits/fits.c:400
-msgid "FITS file keeps no displayable images"
-msgstr "Файл FITS не містить зображень, які можна показати"
-
-#: plug-ins/file-fits/fits.c:488
-msgid "FITS export cannot handle images with alpha channels"
-msgstr "Зображення з альфа-каналами не можна експортувати як FITS"
-
-#: plug-ins/file-fits/fits.c:1172
-msgid "Open FITS File"
-msgstr "Відкриття файла FITS"
-
-#: plug-ins/file-fits/fits.c:1180
-msgid "_Black"
-msgstr "_Чорний"
-
-#: plug-ins/file-fits/fits.c:1181
-msgid "_White"
-msgstr "_Білий"
-
-#: plug-ins/file-fits/fits.c:1184
+#: plug-ins/file-fits/fits.c:198 plug-ins/file-fits/fits.c:199
 msgid "Replacement for undefined pixels"
 msgstr "Заміщення для невизначених точок"
 
-#: plug-ins/file-fits/fits.c:1189
+#: plug-ins/file-fits/fits.c:204
 msgid "Pixel value scaling"
 msgstr "Масштабування значень точок"
 
-#: plug-ins/file-fits/fits.c:1190
-msgid "By _DATAMIN/DATAMAX"
-msgstr "за _DATAMIN/DATAMAX"
+#: plug-ins/file-fits/fits.c:205
+msgid "Use DATAMIN/DATAMAX-scaling if possible"
+msgstr "Скористатися DATAMIN/DATAMAX-масштабуванням, якщо можна"
 
-#: plug-ins/file-fits/fits.c:1191
-msgid "_Automatic"
-msgstr "_Автоматично"
+#: plug-ins/file-fits/fits.c:221
+#| msgid "Exports files in the PFM file format"
+msgid "Export file in the FITS file format"
+msgstr "Експортувати файл у форматі FITS"
 
-#: plug-ins/file-fits/fits.c:1195
-msgid "Image Composing"
-msgstr "Складання зображення"
+#: plug-ins/file-fits/fits.c:222
+#| msgid "FITS export cannot handle images with alpha channels"
+msgid ""
+"FITS exporting handles all image types except those with alpha channels."
+msgstr ""
+"Засіб експортування FITS обробляє усі типи зображень, окрім зображень із"
+" каналами прозорості."
 
-#: plug-ins/file-fits/fits.c:1197
-msgctxt "composing"
-msgid "_None"
-msgstr "_Немає"
+#: plug-ins/file-fits/fits.c:326
+msgid "FITS format does not support multiple layers."
+msgstr "Для формату FITS не передбачено підтримку декількох шарів."
+
+#: plug-ins/file-fits/fits.c:409
+#| msgid "Error during open of FITS file"
+msgid "Error during opening of FITS file"
+msgstr "Помилка при відкриванні файлу FITS"
+
+#: plug-ins/file-fits/fits.c:422 plug-ins/file-fits/fits.c:600
+msgid "FITS file keeps no displayable images"
+msgstr "Файл FITS не містить зображень, які можна показати"
+
+#: plug-ins/file-fits/fits.c:516
+msgid "FITS HDU"
+msgstr "FITS HDU"
+
+#: plug-ins/file-fits/fits.c:624
+msgid "FITS export cannot handle images with alpha channels"
+msgstr "Зображення з альфа-каналами не можна експортувати як FITS"
+
+#: plug-ins/file-fits/fits.c:990
+msgid "Open FITS File"
+msgstr "Відкриття файла FITS"
+
+#: plug-ins/file-fits/fits.c:995 plug-ins/gfig/gfig-dialog.c:1292
+#: plug-ins/gfig/gfig-dialog.c:1460
+msgid "White"
+msgstr "Білий"
+
+#: plug-ins/file-fits/fits.c:1003
+#| msgid "By _DATAMIN/DATAMAX"
+msgid "By DATAMIN/DATAMAX"
+msgstr "За DATAMIN/DATAMAX"
 
 #: plug-ins/file-fli/fli.c:45 plug-ins/file-fli/fli.c:59
 #: plug-ins/file-fli/fli.c:75 plug-ins/file-fli/fli.c:924
@@ -8986,7 +9002,7 @@ msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2554
-#: plug-ins/metadata/metadata-editor.c:5300
+#: plug-ins/metadata/metadata-editor.c:5307
 msgid "_Import"
 msgstr "_Імпортувати"
 
@@ -10205,10 +10221,6 @@ msgstr "Прозорий"
 msgid "Foreground"
 msgstr "Передній план"
 
-#: plug-ins/gfig/gfig-dialog.c:1292 plug-ins/gfig/gfig-dialog.c:1460
-msgid "White"
-msgstr "Білий"
-
 #: plug-ins/gfig/gfig-dialog.c:1302
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
@@ -10365,7 +10377,7 @@ msgstr "Гама:"
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Змінити гаму (яскравість) вибраного пензля"
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1360
+#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1367
 msgid "Select:"
 msgstr "Вибір:"
 
@@ -12728,12 +12740,11 @@ msgstr "Авторська назва"
 
 #. Description tab
 #: plug-ins/metadata/metadata-editor.c:487
-#: plug-ins/metadata/metadata-editor.c:1205
+#: plug-ins/metadata/metadata-editor.c:1212
 msgid "Description"
 msgstr "Опис"
 
 #: plug-ins/metadata/metadata-editor.c:488
-#| msgid "Description Writer\t"
 msgid "Description Writer"
 msgstr "Автор опису"
 
@@ -12776,7 +12787,6 @@ msgid "State / Province"
 msgstr "Штат / провінція"
 
 #: plug-ins/metadata/metadata-editor.c:503
-#| msgid "Postal Code\t"
 msgid "Postal Code"
 msgstr "Поштовий індекс"
 
@@ -12792,7 +12802,6 @@ msgid "Phone(s)"
 msgstr "Телефон(и)"
 
 #: plug-ins/metadata/metadata-editor.c:507
-#| msgid "Email(s)"
 msgid "E-mail(s)"
 msgstr "Ел. адреса(и)"
 
@@ -12836,7 +12845,6 @@ msgid "IPTC Subject Code"
 msgstr "IPTC-код теми"
 
 #: plug-ins/metadata/metadata-editor.c:525
-#| msgid "Job Identifier\t"
 msgid "Job Identifier"
 msgstr "Ідентифікатор роботи"
 
@@ -12875,7 +12883,6 @@ msgid "Featured Organization"
 msgstr "Рекомендована організація"
 
 #: plug-ins/metadata/metadata-editor.c:546
-#| msgid "Organization Identifier"
 msgid "Organization Code"
 msgstr "Код організації"
 
@@ -13119,58 +13126,58 @@ msgstr "З_мінити метадані"
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Редагування метаданих (IPTC, EXIF, XMP)"
 
-#: plug-ins/metadata/metadata-editor.c:1167
+#: plug-ins/metadata/metadata-editor.c:1174
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Редактор метаданих: %s"
 
-#: plug-ins/metadata/metadata-editor.c:1175
+#: plug-ins/metadata/metadata-editor.c:1182
 msgid "_Write Metadata"
 msgstr "За_писати метадані"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1211
+#: plug-ins/metadata/metadata-editor.c:1218
 #: plug-ins/metadata/metadata-viewer.c:401
 msgid "IPTC"
 msgstr "IPTC"
 
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1217
+#: plug-ins/metadata/metadata-editor.c:1224
 msgid "IPTC Extension"
 msgstr "Розширення IPTC"
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1323
+#: plug-ins/metadata/metadata-editor.c:1330
 msgid "Categories"
 msgstr "Категорії"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1329
+#: plug-ins/metadata/metadata-editor.c:1336
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1340
+#: plug-ins/metadata/metadata-editor.c:1347
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1362
+#: plug-ins/metadata/metadata-editor.c:1369
 msgid "Import metadata"
 msgstr "Імпорт метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:1364
+#: plug-ins/metadata/metadata-editor.c:1371
 msgid "Export metadata"
 msgstr "Експортувати метадані"
 
-#: plug-ins/metadata/metadata-editor.c:1667
+#: plug-ins/metadata/metadata-editor.c:1674
 msgid "Choose Date"
 msgstr "Виберіть дату"
 
-#: plug-ins/metadata/metadata-editor.c:1671
+#: plug-ins/metadata/metadata-editor.c:1678
 msgid "Set Date"
 msgstr "Задайте дату"
 
-#: plug-ins/metadata/metadata-editor.c:2405
+#: plug-ins/metadata/metadata-editor.c:2412
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -13186,7 +13193,7 @@ msgstr ""
 "15.30, або 10.45\n"
 "Вилучіть увесь текст, щоб вилучити поточне значення."
 
-#: plug-ins/metadata/metadata-editor.c:2411
+#: plug-ins/metadata/metadata-editor.c:2418
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -13202,24 +13209,24 @@ msgstr ""
 "або футах (фут)\n"
 "Щоб вилучити поточне значення, витріть увесь текст."
 
-#: plug-ins/metadata/metadata-editor.c:2545
+#: plug-ins/metadata/metadata-editor.c:2552
 msgid "Unrated"
 msgstr "Без рейтингу"
 
-#: plug-ins/metadata/metadata-editor.c:4484
+#: plug-ins/metadata/metadata-editor.c:4491
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Не вдалося встановити мітку метаданих %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5296
+#: plug-ins/metadata/metadata-editor.c:5303
 msgid "Import Metadata File"
 msgstr "Імпорт файлу метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:5331
+#: plug-ins/metadata/metadata-editor.c:5338
 msgid "Export Metadata File"
 msgstr "Експорт файлу метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:5335
+#: plug-ins/metadata/metadata-editor.c:5342
 msgid "_Export"
 msgstr "_Експорт"
 
@@ -13994,6 +14001,22 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "_Black"
+#~ msgstr "_Чорний"
+
+#~ msgid "_White"
+#~ msgstr "_Білий"
+
+#~ msgid "_Automatic"
+#~ msgstr "_Автоматично"
+
+#~ msgid "Image Composing"
+#~ msgstr "Складання зображення"
+
+#~ msgctxt "composing"
+#~ msgid "_None"
+#~ msgstr "_Немає"
 
 #~ msgid "Sublocation\t"
 #~ msgstr "Підрозділ\t"
