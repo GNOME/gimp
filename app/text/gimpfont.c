@@ -71,6 +71,7 @@ struct _GimpFont
   PangoLayout  *popup_layout;
   gint          popup_width;
   gint          popup_height;
+  gchar        *lookup_name;
 };
 
 struct _GimpFontClass
@@ -111,6 +112,25 @@ G_DEFINE_TYPE (GimpFont, gimp_font, GIMP_TYPE_DATA)
 
 #define parent_class gimp_font_parent_class
 
+void
+gimp_font_set_lookup_name (GimpFont    *font,
+                           gchar       *name)
+{
+  font->lookup_name = name;
+}
+
+gboolean
+gimp_font_match_by_lookup_name (GimpFont    *font,
+                                const gchar *name)
+{
+  return !g_strcmp0 (gimp_font_get_lookup_name (font), name);
+}
+
+const gchar*
+gimp_font_get_lookup_name (GimpFont *font)
+{
+  return font->lookup_name;
+}
 
 static void
 gimp_font_class_init (GimpFontClass *klass)
@@ -156,6 +176,7 @@ gimp_font_finalize (GObject *object)
 
   g_clear_object (&font->pango_context);
   g_clear_object (&font->popup_layout);
+  g_free (font->lookup_name);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -211,7 +232,7 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   if (! font->pango_context)
     return FALSE;
 
-  name = gimp_object_get_name (font);
+  name = gimp_font_get_lookup_name (font);
 
   font_desc = pango_font_description_from_string (name);
   g_return_val_if_fail (font_desc != NULL, FALSE);
@@ -266,7 +287,7 @@ gimp_font_get_new_preview (GimpViewable *viewable,
       PangoFontDescription *font_desc;
       const gchar          *name;
 
-      name = gimp_object_get_name (font);
+      name = gimp_font_get_lookup_name (font);
 
       DEBUGPRINT (("%s: ", name));
 

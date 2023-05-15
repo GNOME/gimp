@@ -516,14 +516,16 @@ gimp_font_factory_recursive_add_fontdir (FcConfig  *config,
 static void
 gimp_font_factory_add_font (GimpContainer        *container,
                             PangoContext         *context,
-                            PangoFontDescription *desc)
+                            PangoFontDescription *desc,
+                            gchar                *full_name)
 {
-  gchar *name;
+  gchar *name = full_name;
 
-  if (! desc)
+  if (! desc && ! full_name)
     return;
 
-  name = pango_font_description_to_string (desc);
+  if (! full_name)
+    name = pango_font_description_to_string (desc);
 
   /* It doesn't look like pango_font_description_to_string() could ever
    * return NULL. But just to be double sure and avoid a segfault, I
@@ -538,12 +540,13 @@ gimp_font_factory_add_font (GimpContainer        *container,
                            "name",          name,
                            "pango-context", context,
                            NULL);
-
+      gimp_font_set_lookup_name (font, pango_font_description_to_string (desc));
       gimp_container_add (container, GIMP_OBJECT (font));
       g_object_unref (font);
     }
 
-  g_free (name);
+  if (!full_name)
+    g_free (name);
 }
 
 #ifdef USE_FONTCONFIG_DIRECTLY
@@ -571,7 +574,7 @@ gimp_font_factory_make_alias (GimpContainer *container,
                                      PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL);
   pango_font_description_set_stretch (desc, PANGO_STRETCH_NORMAL);
 
-  gimp_font_factory_add_font (container, context, desc);
+  gimp_font_factory_add_font (container, context, desc, NULL);
 
   pango_font_description_free (desc);
 }
@@ -606,8 +609,17 @@ gimp_font_factory_load_names (GimpContainer *container,
   FcFontSet   *fontset;
   gint         i;
 
-  os = FcObjectSetBuild (FC_FAMILY, FC_STYLE,
-                         FC_SLANT, FC_WEIGHT, FC_WIDTH,
+  os = FcObjectSetBuild (FC_FAMILY,
+                         FC_STYLE,
+                         FC_POSTSCRIPT_NAME,
+                         FC_FULLNAME,
+                         FC_FILE,
+                         FC_WEIGHT,
+                         FC_SLANT,
+                         FC_WIDTH,
+                         FC_INDEX,
+                         FC_FONTVERSION,
+                         FC_FONTFORMAT,
                          NULL);
   g_return_if_fail (os);
 
@@ -628,11 +640,173 @@ gimp_font_factory_load_names (GimpContainer *container,
 
   for (i = 0; i < fontset->nfont; i++)
     {
-      PangoFontDescription *desc;
+      PangoFcFont          *font;
+      PangoFontDescription *pfd;
+      GString              *xml;
+      gchar                *fontformat;
+      gchar                *family;
+      gchar                *style;
+      gchar                *psname;
+      gchar                *newname;
+      gchar                *escaped_fullname;
+      gchar                *fullname;
+      gchar                *fullname2;
+      gchar                *desc_fullname;
+      gchar                *desc_file;
+      gchar                *file;
+      gint                  index;
+      gint                  weight;
+      gint                  width;
+      gint                  slant;
+      gint                  fontversion;
 
-      desc = pango_fc_font_description_from_pattern (fontset->fonts[i], FALSE);
-      gimp_font_factory_add_font (container, context, desc);
-      pango_font_description_free (desc);
+      FcPatternGetString (fontset->fonts[i], FC_FILE, 0, (FcChar8 **) &file);
+
+      /*
+       * woff and woff2 cause problems with pango (probably with harfbuzz).
+       * pcf,pcf.gz are bitmap font formats, not supported by pango (because of harfbuzz).
+       * afm, pfm, pfb are type1 font formats, not supported by pango (because of harfbuzz).
+       */
+      if (g_str_has_suffix (file, ".woff")   ||
+          g_str_has_suffix (file, ".woff2")  ||
+          g_str_has_suffix (file, ".pcf")    ||
+          g_str_has_suffix (file, ".pcf.gz") ||
+          g_str_has_suffix (file, ".afm")    ||
+          g_str_has_suffix (file, ".pfm")    ||
+          g_str_has_suffix (file, ".pfb"))
+        {
+          g_printerr("Font file: %s is not supported by Pango, it can not be loaded.\n",
+                     file);
+          continue;
+        }
+
+      /* Pango doesn't support non SFNT fonts because harfbuzz doesn't  support them. */
+      if (FcPatternGetString (fontset->fonts[i], FC_FONTFORMAT, 0, (FcChar8 **) &fontformat) != FcResultMatch ||
+          (g_ascii_strcasecmp (fontformat, "TrueType") != 0 &&
+           g_ascii_strcasecmp (fontformat, "CFF")      != 0))
+        continue;
+
+      /* Some variable fonts have only a family name and a font version. */
+      if (FcPatternGetString (fontset->fonts[i], FC_FULLNAME, 0, (FcChar8 **) &fullname) != FcResultMatch)
+        continue;
+
+      /* Sometimes a font has more than one fullname,
+       * sometimes the second is more appropriate for display,
+       * in such cases we use it instead of the first.
+       */
+      if (FcPatternGetString (fontset->fonts[i], FC_FULLNAME, 1, (FcChar8 **) &fullname2) != FcResultMatch)
+        fullname2 = NULL;
+
+      /*
+       * In case the pango font description constructed from the fc pattern is correct,
+       * we use it instead of renaming the font in fontconfig.
+       */
+      pfd = pango_fc_font_description_from_pattern (fontset->fonts[i], FALSE);
+
+      font = PANGO_FC_FONT (pango_context_load_font (context, pfd));
+
+      FcPatternGetString (pango_fc_font_get_pattern (font), FC_FULLNAME, 0, (FcChar8 **) &desc_fullname);
+      FcPatternGetString (pango_fc_font_get_pattern (font), FC_FILE,     0, (FcChar8 **) &desc_file);
+
+      g_object_unref (font);
+
+      if (!g_strcmp0 (desc_fullname, fullname) && !g_strcmp0 (desc_file, file))
+        {
+          if (fullname2 != NULL && g_str_is_ascii (fullname2))
+            fullname = fullname2;
+
+          gimp_font_factory_add_font (container, context, pfd, fullname);
+          pango_font_description_free (pfd);
+          continue;
+        }
+
+      pango_font_description_free (pfd);
+
+      newname = g_strdup_printf ("gimpfont%i", i);
+
+      xml = g_string_new ("<?xml version=\"1.0\"?>\n<match>");
+
+      g_string_append_printf (xml,
+                              "<test name=\"family\"><string>%s</string></test>",
+                              newname);
+
+      escaped_fullname = g_markup_escape_text (fullname, -1);
+      g_string_append_printf (xml,
+                              "<edit name=\"fullname\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
+                              escaped_fullname);
+      g_free (escaped_fullname);
+
+      FcPatternGetString (fontset->fonts[i], FC_FAMILY, 0, (FcChar8 **) &family);
+
+      family = g_markup_escape_text (family, -1);
+      g_string_append_printf (xml,
+                              "<edit name=\"family\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
+                              family);
+      g_free (family);
+
+      file = g_markup_escape_text (file, -1);
+      g_string_append_printf (xml,
+                              "<edit name=\"file\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
+                              file);
+      g_free (file);
+
+      if (FcPatternGetString (fontset->fonts[i], FC_POSTSCRIPT_NAME, 0, (FcChar8 **) &psname) == FcResultMatch)
+        {
+          psname = g_markup_escape_text (psname, -1);
+          g_string_append_printf (xml,
+                                  "<edit name=\"postscriptname\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
+                                  psname);
+          g_free (psname);
+        }
+
+      if (FcPatternGetString (fontset->fonts[i], FC_STYLE, 0, (FcChar8 **) &style) == FcResultMatch)
+        {
+          style = g_markup_escape_text (style, -1);
+          g_string_append_printf (xml,
+                                  "<edit name=\"style\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
+                                  style);
+          g_free (style);
+        }
+
+      if (FcPatternGetInteger (fontset->fonts[i], FC_WEIGHT, 0, &weight) == FcResultMatch)
+        g_string_append_printf (xml,
+                                "<edit name=\"weight\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
+                                weight);
+
+      if (FcPatternGetInteger (fontset->fonts[i], FC_WIDTH, 0, &width) == FcResultMatch)
+        g_string_append_printf (xml,
+                                "<edit name=\"width\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
+                                width);
+
+      if (FcPatternGetInteger (fontset->fonts[i], FC_SLANT, 0, &slant) == FcResultMatch)
+        g_string_append_printf (xml,
+                                "<edit name=\"slant\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
+                                slant);
+
+      if (FcPatternGetInteger (fontset->fonts[i], FC_FONTVERSION, 0, &fontversion) == FcResultMatch)
+        g_string_append_printf (xml,
+                                "<edit name=\"fontversion\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
+                                fontversion);
+
+      if (FcPatternGetInteger (fontset->fonts[i], FC_INDEX, 0, &index) == FcResultMatch)
+        g_string_append_printf (xml,
+                                "<edit name=\"index\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
+                                index);
+
+      g_string_append (xml, "</match>\n");
+
+      FcConfigParseAndLoadFromMemory (FcConfigGetCurrent (), (const FcChar8 *) xml->str, FcTrue);
+
+      pfd = pango_font_description_from_string (newname);
+
+      if (fullname2 != NULL && g_str_is_ascii (fullname2))
+        fullname = fullname2;
+
+      gimp_font_factory_add_font (container, context, pfd, fullname);
+
+      pango_font_description_free (pfd);
+      g_free (newname);
+      g_string_free (xml, TRUE);
     }
 
   /*  only create aliases if there is at least one font available  */
@@ -666,7 +840,7 @@ gimp_font_factory_load_names (GimpContainer *container,
           PangoFontDescription *desc;
 
           desc = pango_font_face_describe (faces[j]);
-          gimp_font_factory_add_font (container, context, desc);
+          gimp_font_factory_add_font (container, context, desc, NULL);
           pango_font_description_free (desc);
         }
     }

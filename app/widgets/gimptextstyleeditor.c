@@ -34,6 +34,7 @@
 #include "core/gimpcontext.h"
 
 #include "text/gimptext.h"
+#include "text/gimpfont.h"
 
 #include "gimpcolorpanel.h"
 #include "gimpcontainerentry.h"
@@ -1308,7 +1309,7 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
 
   if (editor->context->font_name &&
       g_strcmp0 (editor->context->font_name,
-                 gimp_object_get_name (gimp_context_get_font (editor->context))))
+                 gimp_font_get_lookup_name (gimp_context_get_font (editor->context))))
     {
       /* A font is set, but is unavailable; change the help text. */
       gchar *help_text;

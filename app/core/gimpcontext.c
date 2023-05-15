@@ -3224,7 +3224,9 @@ gimp_context_set_font_name (GimpContext *context,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   container = gimp_data_factory_get_container (context->gimp->font_factory);
-  font      = gimp_container_get_child_by_name (container, name);
+  font      = gimp_container_search (container,
+                                     (GimpContainerSearchFunc) gimp_font_match_by_lookup_name,
+                                     (gpointer) name);
 
   if (font)
     {
@@ -3324,7 +3326,7 @@ gimp_context_real_set_font (GimpContext *context,
                                0);
 
       if (font != GIMP_FONT (gimp_font_get_standard ()))
-        context->font_name = g_strdup (gimp_object_get_name (font));
+        context->font_name = g_strdup (gimp_font_get_lookup_name (font));
     }
 
   g_object_notify (G_OBJECT (context), "font");
