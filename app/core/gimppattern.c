@@ -146,26 +146,58 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
   GimpPattern *pattern = GIMP_PATTERN (viewable);
   GimpTempBuf *temp_buf;
   GeglBuffer  *src_buffer;
-  GeglBuffer  *dest_buffer;
+  gint         true_width;
+  gint         true_height;
   gint         copy_width;
   gint         copy_height;
 
-  copy_width  = MIN (width,  gimp_temp_buf_get_width  (pattern->mask));
-  copy_height = MIN (height, gimp_temp_buf_get_height (pattern->mask));
+  true_width  = gimp_temp_buf_get_width (pattern->mask);
+  true_height = gimp_temp_buf_get_height (pattern->mask);
+  copy_width  = MIN (width, true_width);
+  copy_height = MIN (height, true_height);
 
-  temp_buf = gimp_temp_buf_new (copy_width, copy_height,
-                                gimp_temp_buf_get_format (pattern->mask));
+  src_buffer = gimp_temp_buf_create_buffer (pattern->mask);
 
-  src_buffer  = gimp_temp_buf_create_buffer (pattern->mask);
-  dest_buffer = gimp_temp_buf_create_buffer (temp_buf);
+  if (true_width > width || true_height > height)
+    {
+      gdouble ratio_x = (gdouble) width / (gdouble) true_width;
+      gdouble ratio_y = (gdouble) height / (gdouble) true_height;
+      gdouble scale   = MIN (ratio_x, ratio_y);
+      gdouble aspect  = (gdouble) true_width / (gdouble) true_height;
 
-  gimp_gegl_buffer_copy (src_buffer,
-                         GEGL_RECTANGLE (0, 0, copy_width, copy_height),
-                         GEGL_ABYSS_NONE,
-                         dest_buffer, GEGL_RECTANGLE (0, 0, 0, 0));
+      /* Adjusting dimensions for non-square patterns */
+      if (true_width > true_height)
+        copy_height = copy_width / aspect;
+      else if (true_width < true_height)
+        copy_width = copy_height * aspect;
+
+      temp_buf = gimp_temp_buf_new (copy_width, copy_height,
+                                    gimp_temp_buf_get_format (pattern->mask));
+
+      gegl_buffer_get (src_buffer,
+                       GEGL_RECTANGLE (0, 0, copy_width, copy_height),
+                       scale, gimp_temp_buf_get_format (temp_buf),
+                       gimp_temp_buf_get_data (temp_buf),
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
+    }
+  else
+    {
+      GeglBuffer *dest_buffer;
+
+      temp_buf = gimp_temp_buf_new (copy_width, copy_height,
+                                    gimp_temp_buf_get_format (pattern->mask));
+
+      dest_buffer = gimp_temp_buf_create_buffer (temp_buf);
+
+      gimp_gegl_buffer_copy (src_buffer,
+                             GEGL_RECTANGLE (0, 0, copy_width, copy_height),
+                             GEGL_ABYSS_NONE, dest_buffer,
+                             GEGL_RECTANGLE (0, 0, 0, 0));
+
+      g_object_unref (dest_buffer);
+    }
 
   g_object_unref (src_buffer);
-  g_object_unref (dest_buffer);
 
   return temp_buf;
 }
