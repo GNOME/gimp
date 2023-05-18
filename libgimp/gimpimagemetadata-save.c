@@ -611,7 +611,7 @@ gimp_image_metadata_save_filter (GimpImage            *image,
 
       for (i = 0; exif_data[i] != NULL; i++)
         {
-          if (! gexiv2_metadata_has_tag (new_g2metadata, exif_data[i]) &&
+          if (! gexiv2_metadata_try_has_tag (new_g2metadata, exif_data[i], NULL) &&
               gimp_metadata_is_tag_supported (exif_data[i], mime_type))
             {
               gimp_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
@@ -708,7 +708,7 @@ gimp_image_metadata_save_filter (GimpImage            *image,
 
       for (list = xmp_list; list != NULL; list = list->next)
         {
-          if (! gexiv2_metadata_has_tag (new_g2metadata, (gchar *) list->data) &&
+          if (! gexiv2_metadata_try_has_tag (new_g2metadata, (gchar *) list->data, NULL) &&
               gimp_metadata_is_tag_supported ((gchar *) list->data, mime_type))
             {
               gimp_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
@@ -729,7 +729,7 @@ gimp_image_metadata_save_filter (GimpImage            *image,
 
       for (i = 0; iptc_data[i] != NULL; i++)
         {
-          if (! gexiv2_metadata_has_tag (new_g2metadata, iptc_data[i]) &&
+          if (! gexiv2_metadata_try_has_tag (new_g2metadata, iptc_data[i], NULL) &&
               gimp_metadata_is_tag_supported (iptc_data[i], mime_type))
             {
               gimp_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
@@ -777,9 +777,15 @@ gimp_image_metadata_save_filter (GimpImage            *image,
         {
           gchar buffer[32];
 
-          gexiv2_metadata_set_exif_thumbnail_from_buffer (new_g2metadata,
-                                                          (guchar *) thumb_buffer,
-                                                          count);
+          gexiv2_metadata_try_set_exif_thumbnail_from_buffer (new_g2metadata,
+                                                              (guchar *) thumb_buffer,
+                                                              count, &code_error);
+          if (code_error)
+            {
+              g_warning ("%s: failed to set Exif thumbnail: %s\n",
+                         G_STRFUNC, code_error->message);
+              g_clear_error (&code_error);
+            }
 
           g_snprintf (buffer, sizeof (buffer), "%d", thumbw);
           gexiv2_metadata_try_set_tag_string (new_g2metadata,
