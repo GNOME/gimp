@@ -64,4 +64,4 @@
 )
 
 (script-fu-menu-register "script-fu-helloworld"
-                         "<Image>/Filters/Development/Script-Fu/Test")
+                         "<Image>/Filters/Development/Script-Fu/Test Helloworld")

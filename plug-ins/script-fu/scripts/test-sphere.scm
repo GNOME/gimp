@@ -304,4 +304,4 @@
 )
 
 (script-fu-menu-register "script-fu-test-sphere"
-                         "<Image>/Filters/Development/Script-Fu/Test")
+                         "<Image>/Filters/Development/Script-Fu/Test Sphere")
