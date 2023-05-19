@@ -210,8 +210,9 @@ gimp_image_metadata_load_finish (GimpImage             *image,
 
   if (! (flags & GIMP_METADATA_LOAD_ORIENTATION))
     {
-      gexiv2_metadata_set_orientation (GEXIV2_METADATA (metadata),
-                                       GEXIV2_ORIENTATION_UNSPECIFIED);
+      gexiv2_metadata_try_set_orientation (GEXIV2_METADATA (metadata),
+                                           GEXIV2_ORIENTATION_NORMAL,
+                                           NULL);
     }
 
   if (flags & GIMP_METADATA_LOAD_COLORSPACE)
@@ -313,7 +314,7 @@ gimp_image_metadata_load_thumbnail (GFile   *file,
       gimp_image_insert_layer (image, layer, NULL, 0);
 
       gimp_image_metadata_rotate (image,
-                                  gexiv2_metadata_get_orientation (GEXIV2_METADATA (metadata)));
+                                  gexiv2_metadata_try_get_orientation (GEXIV2_METADATA (metadata), NULL));
     }
 
   g_object_unref (metadata);

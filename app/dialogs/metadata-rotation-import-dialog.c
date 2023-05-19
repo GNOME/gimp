@@ -64,7 +64,7 @@ metadata_rotation_import_dialog_run (GimpImage   *image,
   GExiv2Orientation  orientation;
 
   metadata    = gimp_image_get_metadata (image);
-  orientation = gexiv2_metadata_get_orientation (GEXIV2_METADATA (metadata));
+  orientation = gexiv2_metadata_try_get_orientation (GEXIV2_METADATA (metadata), NULL);
 
   if (orientation <= GEXIV2_ORIENTATION_NORMAL ||
       orientation >  GEXIV2_ORIENTATION_MAX)

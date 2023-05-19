@@ -269,11 +269,12 @@ gimp_image_import_rotation_metadata (GimpImage    *image,
 
       if (policy == GIMP_METADATA_ROTATION_POLICY_ROTATE)
         gimp_image_metadata_rotate (image, context,
-                                    gexiv2_metadata_get_orientation (GEXIV2_METADATA (metadata)),
+                                    gexiv2_metadata_try_get_orientation (GEXIV2_METADATA (metadata), NULL),
                                     progress);
 
-      gexiv2_metadata_set_orientation (GEXIV2_METADATA (metadata),
-                                       GEXIV2_ORIENTATION_NORMAL);
+      gexiv2_metadata_try_set_orientation (GEXIV2_METADATA (metadata),
+                                           GEXIV2_ORIENTATION_NORMAL,
+                                           NULL);
     }
 }
 
