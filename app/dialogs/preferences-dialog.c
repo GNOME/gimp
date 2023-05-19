@@ -985,20 +985,16 @@ prefs_format_string_select_callback (GtkListBox    *listbox,
 }
 
 static void
-prefs_theme_select_callback (GtkTreeSelection *sel,
-                             Gimp             *gimp)
+prefs_theme_select_callback (GtkListBox    *listbox,
+                             GtkListBoxRow *row,
+                             Gimp          *gimp)
 {
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
+  const char *theme;
 
-  if (gtk_tree_selection_get_selected (sel, &model, &iter))
-    {
-      GValue val = G_VALUE_INIT;
+  g_return_if_fail (row != NULL);
 
-      gtk_tree_model_get_value (model, &iter, 0, &val);
-      g_object_set_property (G_OBJECT (gimp->config), "theme", &val);
-      g_value_unset (&val);
-    }
+  theme = g_object_get_data (G_OBJECT (row), "theme");
+  g_object_set (gimp->config, "theme", theme, NULL);
 }
 
 static void
@@ -2008,10 +2004,8 @@ prefs_dialog_new (Gimp       *gimp,
 
   {
     GtkWidget         *scrolled_win;
-    GtkListStore      *list_store;
-    GtkWidget         *view;
+    GtkWidget         *listbox;
     GtkWidget         *scale;
-    GtkTreeSelection  *sel;
     gchar            **themes;
     gint               n_themes;
     gint               i;
@@ -2026,58 +2020,55 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_box_pack_start (GTK_BOX (vbox2), scrolled_win, TRUE, TRUE, 0);
     gtk_widget_show (scrolled_win);
 
-    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
-
-    view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
-    gtk_container_add (GTK_CONTAINER (scrolled_win), view);
-    gtk_widget_show (view);
-
-    g_object_unref (list_store);
-
-    gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 0,
-                                                 _("Theme"),
-                                                 gtk_cell_renderer_text_new (),
-                                                 "text", 0,
-                                                 NULL);
-    gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 1,
-                                                 _("Folder"),
-                                                 gtk_cell_renderer_text_new (),
-                                                 "text", 1,
-                                                 NULL);
-
-    sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+    listbox = gtk_list_box_new ();
+    gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
+                                     GTK_SELECTION_BROWSE);
+    gtk_container_add (GTK_CONTAINER (scrolled_win), listbox);
+    gtk_widget_show (listbox);
 
     themes = themes_list_themes (gimp, &n_themes);
 
     for (i = 0; i < n_themes; i++)
       {
-        GtkTreeIter  iter;
-        GFile       *theme_dir = themes_get_theme_dir (gimp, themes[i]);
+        GtkWidget *row;
+        GtkWidget *grid;
+        GtkWidget *name_label, *folder_label;
+        GFile     *theme_dir = themes_get_theme_dir (gimp, themes[i]);
 
-        gtk_list_store_append (list_store, &iter);
-        gtk_list_store_set (list_store, &iter,
-                            0, themes[i],
-                            1, gimp_file_get_utf8_name (theme_dir),
-                            -1);
+        row = gtk_list_box_row_new ();
+        g_object_set_data_full (G_OBJECT (row),
+                                "theme",
+                                g_strdup (themes[i]),
+                                g_free);
+
+        grid = gtk_grid_new ();
+        gtk_grid_set_column_spacing (GTK_GRID (grid), 12);
+        gtk_container_add (GTK_CONTAINER (row), grid);
+
+        name_label = gtk_label_new (themes[i]);
+        g_object_set (name_label, "xalign", 0.0, NULL);
+        gtk_grid_attach (GTK_GRID (grid), name_label, 1, 0, 1, 1);
+
+        folder_label = gtk_label_new (gimp_file_get_utf8_name (theme_dir));
+        g_object_set (folder_label, "xalign", 0.0, NULL);
+        gtk_style_context_add_class (gtk_widget_get_style_context (folder_label),
+                                     "dim-label");
+        gtk_grid_attach (GTK_GRID (grid), folder_label, 1, 1, 1, 1);
+
+        gtk_widget_show_all (row);
+        gtk_list_box_insert (GTK_LIST_BOX (listbox), row, -1);
 
         if (GIMP_GUI_CONFIG (object)->theme &&
             ! strcmp (GIMP_GUI_CONFIG (object)->theme, themes[i]))
           {
-            GtkTreePath *path;
-
-            path = gtk_tree_model_get_path (GTK_TREE_MODEL (list_store), &iter);
-
-            gtk_tree_view_set_cursor (GTK_TREE_VIEW (view), path, NULL, FALSE);
-            gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (view), path,
-                                          NULL, FALSE, 0.0, 0.0);
-
-            gtk_tree_path_free (path);
+            gtk_list_box_select_row (GTK_LIST_BOX (listbox),
+                                     GTK_LIST_BOX_ROW (row));
           }
       }
 
     g_strfreev (themes);
 
-    g_signal_connect (sel, "changed",
+    g_signal_connect (listbox, "row-selected",
                       G_CALLBACK (prefs_theme_select_callback),
                       gimp);
 
