@@ -884,12 +884,12 @@ int main(int argc, char **argv)
   ADD_TEST (restore_recently_closed_multi_column_dock);
   ADD_TEST (tab_toggle_dont_change_dock_window_position);
   ADD_TEST (switch_to_single_window_mode);
-#warning FIXME: hide/show docks doesn't work when running make check
+#warning "FIXME: hide/show docks doesn't work when running make check"
 #if 0
   ADD_TEST (hide_docks_in_single_window_mode);
   ADD_TEST (show_docks_in_single_window_mode);
 #endif
-#warning FIXME: maximize_state_in_aux_data doesn't work without WM
+#warning "FIXME: maximize_state_in_aux_data doesn't work without WM"
 #if 0
   ADD_TEST (maximize_state_in_aux_data);
 #endif
