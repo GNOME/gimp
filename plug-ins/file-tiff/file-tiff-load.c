@@ -1297,8 +1297,8 @@ load_image (GFile        *file,
 
       /* any resolution info in the file? */
       {
-        gfloat   xres = 72.0;
-        gfloat   yres = 72.0;
+        gdouble   xres = 72.0;
+        gdouble   yres = 72.0;
         gushort  read_unit;
         GimpUnit unit = GIMP_UNIT_PIXEL; /* invalid unit */
 
