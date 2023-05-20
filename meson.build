@@ -364,6 +364,8 @@ gdk_pixbuf_minver = '2.30.8'
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>='+gdk_pixbuf_minver)
 gegl_minver       = '0.4.40'
 gegl              = dependency('gegl-0.4',           version: '>='+gegl_minver)
+exiv2_minver      = '0.27.4'
+exiv2             = dependency('exiv2',              version: '>='+exiv2_minver)
 gexiv2_minver     = '0.14.0'
 gexiv2            = dependency('gexiv2',             version: '>='+gexiv2_minver)
 
@@ -1678,6 +1680,7 @@ install_conf.set('FONTCONFIG_REQUIRED_VERSION',   fontconfig_minver)
 install_conf.set('FREETYPE2_REQUIRED_VERSION',    freetype2_minver)
 install_conf.set('GDK_PIXBUF_REQUIRED_VERSION',   gdk_pixbuf_minver)
 install_conf.set('GEGL_REQUIRED_VERSION',         gegl_minver)
+install_conf.set('EXIV2_REQUIRED_VERSION',        exiv2_minver)
 install_conf.set('GEXIV2_REQUIRED_VERSION',       gexiv2_minver)
 install_conf.set('GLIB_REQUIRED_VERSION',         glib_minver)
 install_conf.set('GTK_REQUIRED_VERSION',          gtk3_minver)
