@@ -31,6 +31,26 @@
 #include "libgimp-intl.h"
 
 
+static const gchar *  gimp_fix_xmp_tag                      (const gchar          *tag);
+
+static void       gimp_image_metadata_copy_tag              (GExiv2Metadata       *src,
+                                                             GExiv2Metadata       *dest,
+                                                             const gchar          *tag);
+
+static gint       gimp_natural_sort_compare                 (gconstpointer         left,
+                                                             gconstpointer         right);
+
+static GList*     gimp_image_metadata_convert_tags_to_list  (gchar               **xmp_tags);
+
+static gboolean   gimp_image_metadata_get_xmp_struct_type   (const gchar          *tag,
+                                                             GExiv2StructureType  *struct_type);
+
+static gboolean   gimp_image_metadata_exclude_metadata      (GList                *exclude_list,
+                                                             gchar                *tag);
+
+static GList*     gimp_image_metadata_set_xmp_structs       (GList                *xmp_list,
+                                                             GExiv2Metadata       *metadata);
+
 /*  public functions  */
 
 /**
@@ -430,8 +450,9 @@ gimp_image_metadata_convert_tags_to_list (gchar **xmp_tags)
   return list;
 }
 
-static GExiv2StructureType
-gimp_image_metadata_get_xmp_struct_type (const gchar *tag)
+static gboolean
+gimp_image_metadata_get_xmp_struct_type (const gchar         *tag,
+                                         GExiv2StructureType *struct_type)
 {
   GError *error = NULL;
 
@@ -439,24 +460,45 @@ gimp_image_metadata_get_xmp_struct_type (const gchar *tag)
 
   if (! g_strcmp0 (gexiv2_metadata_try_get_tag_type (tag, &error), "XmpSeq"))
     {
-      return GEXIV2_STRUCTURE_XA_SEQ;
+      *struct_type = GEXIV2_STRUCTURE_XA_SEQ;
+      return TRUE;
     }
 
   if (error)
     {
-      g_printerr ("%s: failed to get type of tag '%s': %s\n",
-                  G_STRFUNC, tag, error->message);
+      g_debug ("%s: failed to get type of tag '%s': %s\n",
+               G_STRFUNC, tag, error->message);
       g_clear_error (&error);
+      *struct_type = GEXIV2_STRUCTURE_XA_NONE;
+      return FALSE;
     }
 
-  return GEXIV2_STRUCTURE_XA_BAG;
+  *struct_type = GEXIV2_STRUCTURE_XA_BAG;
+  return TRUE;
 }
 
-static void
+static gboolean
+gimp_image_metadata_exclude_metadata (GList *exclude_list,
+                                      gchar *tag)
+{
+  GList *list;
+
+  for (list = exclude_list; list != NULL; list = list->next)
+    {
+      if (strstr (tag, (gchar *) list->data))
+        {
+          return TRUE;
+        }
+    }
+  return FALSE;
+}
+
+static GList*
 gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
                                      GExiv2Metadata *metadata)
 {
   GList *list;
+  GList *exclude  = NULL;
   gchar *prev_one = NULL;
   gchar *prev_two = NULL;
 
@@ -472,26 +514,83 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
        * Xmp.crs.GradientBasedCorrections[1]/crs:CorrectionMasks[1]...
        */
       tag_split = g_strsplit ((gchar *) list->data, "[1]", 3);
-      /* Check if there are at least two parts but don't catch xxx[2]/yyy[1]/zzz */
-      if (tag_split && tag_split[1] && ! strstr (tag_split[0], "["))
+      /* Check if there are at least two parts */
+      if (tag_split && tag_split[1])
         {
           GError *error = NULL;
 
-          if (! prev_one || strcmp (tag_split[0], prev_one) != 0)
+          if (strstr (tag_split[0], "["))
+            {
+              gchar **splits    = NULL;
+              gint    last_part = -1;
+
+              /* Handle things like:
+               * Xmp.iptcExt.ImageRegion[3]/Iptc4xmpExt:RegionBoundary/Iptc4xmpExt:rbVertices[1]/Iptc4xmpExt:rbX,
+               * where rbVertices only appears in ImageRegion[3].
+               * We only want the part starting with the last '/'.
+               */
+              splits = g_strsplit (tag_split[0], "/", 0);
+              if (splits)
+                {
+                  GExiv2StructureType  type;
+                  gchar               *tag_inner = NULL;
+
+                  for (int i = 0; splits[i] != NULL; i++)
+                    {
+                      last_part = i;
+                    }
+                  tag_inner = g_strconcat ("/", splits[last_part], NULL);
+
+                  if (gimp_image_metadata_get_xmp_struct_type (gimp_fix_xmp_tag (tag_inner), &type))
+                    {
+                      gexiv2_metadata_try_set_xmp_tag_struct (GEXIV2_METADATA (metadata),
+                                                              tag_inner, type, &error);
+                      if (error)
+                        {
+                          g_printerr ("%s: failed to set XMP struct '%s': %s\n",
+                                      G_STRFUNC, tag_inner, error->message);
+                          g_clear_error (&error);
+                        }
+                    }
+                  else
+                    {
+                      /* Add to exclude list */
+                      if (! g_list_find_custom (exclude, tag_inner, (GCompareFunc) g_strcmp0))
+                        {
+                          g_debug ("Adding unsupported tag to exclude list: %s", tag_inner);
+                          exclude = g_list_prepend (exclude, g_strdup (tag_inner));
+                        }
+                    }
+                  g_free (tag_inner);
+                }
+              g_strfreev (splits);
+            }
+          else if (! prev_one || strcmp (tag_split[0], prev_one) != 0)
             {
               GExiv2StructureType  type;
 
               g_free (prev_one);
               prev_one = g_strdup (tag_split[0]);
 
-              type = gimp_image_metadata_get_xmp_struct_type (gimp_fix_xmp_tag (tag_split[0]));
-              gexiv2_metadata_try_set_xmp_tag_struct (GEXIV2_METADATA (metadata),
-                                                      prev_one, type, &error);
-              if (error)
+              if (gimp_image_metadata_get_xmp_struct_type (gimp_fix_xmp_tag (tag_split[0]), &type))
                 {
-                  g_printerr ("%s: failed to set XMP struct '%s': %s\n",
-                              G_STRFUNC, prev_one, error->message);
-                  g_clear_error (&error);
+                  gexiv2_metadata_try_set_xmp_tag_struct (GEXIV2_METADATA (metadata),
+                                                          prev_one, type, &error);
+                  if (error)
+                    {
+                      g_printerr ("%s: failed to set XMP struct '%s': %s\n",
+                                  G_STRFUNC, prev_one, error->message);
+                      g_clear_error (&error);
+                    }
+                }
+              else
+                {
+                  /* Add to exclude list */
+                  if (! g_list_find_custom (exclude, tag_split[0], (GCompareFunc) g_strcmp0))
+                    {
+                      g_debug ("Adding unsupported tag to exclude list: %s", tag_split[0]);
+                      exclude = g_list_prepend (exclude, g_strdup (tag_split[0]));
+                    }
                 }
             }
           if (tag_split[2] && (!prev_two || strcmp (tag_split[1], prev_two) != 0))
@@ -503,16 +602,27 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
               prev_two = g_strdup (tag_split[1]);
               second_struct = g_strdup_printf ("%s[1]%s", prev_one, gimp_fix_xmp_tag(prev_two));
 
-              type = gimp_image_metadata_get_xmp_struct_type (gimp_fix_xmp_tag (tag_split[1]));
-              gexiv2_metadata_try_set_xmp_tag_struct (GEXIV2_METADATA (metadata),
-                                                      second_struct, type, &error);
-              if (error)
+              if (gimp_image_metadata_get_xmp_struct_type (gimp_fix_xmp_tag (tag_split[1]), &type))
                 {
-                  g_printerr ("%s: failed to set XMP struct '%s': %s\n",
-                              G_STRFUNC, second_struct, error->message);
-                  g_clear_error (&error);
+                  gexiv2_metadata_try_set_xmp_tag_struct (GEXIV2_METADATA (metadata),
+                                                          second_struct, type, &error);
+                  if (error)
+                    {
+                      g_printerr ("%s: failed to set XMP struct '%s': %s\n",
+                                   G_STRFUNC, second_struct, error->message);
+                      g_clear_error (&error);
+                    }
+                  g_free (second_struct);
                 }
-              g_free (second_struct);
+              else
+                {
+                  /* Add to exclude list */
+                  if (! g_list_find_custom (exclude, tag_split[1], (GCompareFunc) g_strcmp0))
+                    {
+                      g_debug ("Adding unsupported tag to exclude list: %s", tag_split[1]);
+                      exclude = g_list_prepend (exclude, g_strdup (tag_split[1]));
+                    }
+                }
             }
         }
 
@@ -520,6 +630,8 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
     }
   g_free (prev_one);
   g_free (prev_two);
+
+  return exclude;
 }
 
 /**
@@ -623,6 +735,7 @@ gimp_image_metadata_save_filter (GimpImage            *image,
       gint64          timestamp_usec;
       gchar           ts[128];
       GList          *xmp_list = NULL;
+      GList          *exclude_list = NULL;
       GList          *list;
 
       gettimeofday (&timer_usec, NULL);
@@ -697,11 +810,23 @@ gimp_image_metadata_save_filter (GimpImage            *image,
 
       xmp_list = gimp_image_metadata_convert_tags_to_list (xmp_data);
       xmp_list = g_list_sort (xmp_list, (GCompareFunc) gimp_natural_sort_compare);
-      gimp_image_metadata_set_xmp_structs (xmp_list, new_g2metadata);
+      exclude_list = gimp_image_metadata_set_xmp_structs (xmp_list, new_g2metadata);
 
       for (list = xmp_list; list != NULL; list = list->next)
         {
-          if (! gexiv2_metadata_try_has_tag (new_g2metadata, (gchar *) list->data, NULL) &&
+          gchar *fixed = NULL;
+
+          /* Certain XMP metadata tags currently can't be saved by us until
+           * we get support in gexiv2 for adding new structs.
+           * We remove these from the exported metadata because the XMPSDK
+           * in exiv2 would otherwise fail to write all XMP metadata. */
+
+          fixed = (gchar *) gimp_fix_xmp_tag (g_strdup ((gchar *) list->data));
+          if (gimp_image_metadata_exclude_metadata (exclude_list, (gchar *) fixed))
+            {
+              g_warning ("Unsupported XMP metadata tag (not saved): %s", fixed);
+            }
+          else if (! gexiv2_metadata_try_has_tag (new_g2metadata, (gchar *) list->data, NULL) &&
               gimp_metadata_is_tag_supported ((gchar *) list->data, mime_type))
             {
               gimp_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
@@ -710,8 +835,10 @@ gimp_image_metadata_save_filter (GimpImage            *image,
             }
           else
             g_debug ("Ignored tag: %s", (gchar *) list->data);
+          g_free (fixed);
         }
 
+      g_list_free_full (exclude_list, g_free);
       g_list_free (xmp_list);
       g_strfreev (xmp_data);
     }
