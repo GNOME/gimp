@@ -48,7 +48,7 @@
 
 #if DEBUG_CONFIG_PROPERTIES
 static void
-dump_properties (GimpProcedureConfig  *config)
+dump_properties (GimpProcedureConfig *config)
 {
   GParamSpec **pspecs;
   guint        n_pspecs;
@@ -61,13 +61,14 @@ dump_properties (GimpProcedureConfig  *config)
 }
 
 static gint
-get_length (GimpProcedureConfig  *config)
+get_length (GimpProcedureConfig *config)
 {
   GParamSpec **pspecs;
   guint        n_pspecs;
 
   pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
                                            &n_pspecs);
+  g_free (pspecs);
   g_debug ("length config: %d", n_pspecs);
   g_free (pspecs);
   return n_pspecs;
@@ -77,7 +78,8 @@ get_length (GimpProcedureConfig  *config)
  from the config.
  */
 static void
-fill_gva_from (GimpProcedureConfig  *config, GimpValueArray * gva)
+fill_gva_from (GimpProcedureConfig *config,
+               GimpValueArray      *gva)
 {
   GParamSpec **pspecs;
   guint        n_pspecs;
@@ -220,21 +222,16 @@ script_fu_dialog_run (GimpProcedure        *procedure,
 
   if (not_canceled)
     {
-      /* initial_args is declared const.
-       * To avoid compiler warning "discarding const"
-       * copy initial_args to a writeable copy.
-       */
-      GimpValueArray *final_args = (GimpValueArray*) g_value_array_copy ((GValueArray*) initial_args);
-      /* FIXME the above is deprecated.
-       * Non-deprecated, but doesn't work:
-       * GimpValueArray *final_args = (GimpValueArray*) g_array_copy ((GArray*) initial_args);
-       * Maybe we need a gimp_value_array_copy method?
-       */
+      GimpValueArray *final_args = gimp_value_array_copy (initial_args);
 
       /* Store config's values into final_args. */
       gimp_procedure_config_get_values (config, final_args);
 
-      result = script_fu_interpret_image_proc (procedure, script, image, n_drawables, drawables, final_args);
+      result = script_fu_interpret_image_proc (procedure, script,
+                                               image, n_drawables, drawables,
+                                               final_args);
+
+      gimp_value_array_unref (final_args);
     }
   else
     {
