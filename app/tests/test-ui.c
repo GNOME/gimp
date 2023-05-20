@@ -364,10 +364,6 @@ restore_recently_closed_multi_column_dock (gconstpointer data)
                    >,
                    n_session_infos_after_close);
 
-#ifdef __GNUC__
-#warning FIXME test disabled until we depend on GTK+ >= 2.24.11
-#endif
-#if 0
   /* Restore the (only available) closed dock and make sure the session
    * infos in the global dock factory are increased again
    */
@@ -381,7 +377,6 @@ restore_recently_closed_multi_column_dock (gconstpointer data)
   g_assert_cmpint (n_session_infos_after_close,
                    <,
                    n_session_infos_after_restore);
-#endif
 }
 
 /**
