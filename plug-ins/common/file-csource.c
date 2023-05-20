@@ -73,7 +73,8 @@ static gboolean         save_image               (GFile                *file,
                                                   GimpDrawable         *drawable,
                                                   GObject              *config,
                                                   GError              **error);
-static gboolean         save_dialog              (GimpProcedure        *procedure,
+static gboolean         save_dialog              (GimpImage            *image,
+                                                  GimpProcedure        *procedure,
                                                   GObject              *config);
 
 
@@ -130,6 +131,8 @@ csource_create_procedure (GimpPlugIn  *plug_in,
                                       "Tim Janik",
                                       "1999");
 
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("C-Source"));
       gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
                                               TRUE);
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
@@ -250,7 +253,7 @@ csource_save (GimpProcedure        *procedure,
                                              GIMP_PDB_CANCEL,
                                              NULL);
 
-  if (! save_dialog (procedure, G_OBJECT (config)))
+  if (! save_dialog (image, procedure, G_OBJECT (config)))
     status = GIMP_PDB_CANCEL;
 
   g_object_get (config,
@@ -952,16 +955,17 @@ save_image (GFile         *file,
 }
 
 static gboolean
-save_dialog (GimpProcedure *procedure,
+save_dialog (GimpImage     *image,
+             GimpProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
   gboolean   run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as C-Source"));
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
   gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
                                          "opacity", 1.0);

@@ -63,7 +63,8 @@ static GimpValueArray * pat_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static gboolean         save_dialog          (GimpProcedure        *procedure,
+static gboolean         save_dialog          (GimpImage            *image,
+                                              GimpProcedure        *procedure,
                                               GObject              *config);
 
 
@@ -122,6 +123,8 @@ pat_create_procedure (GimpPlugIn  *plug_in,
                                       "Tim Newsome",
                                       "1997");
 
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("Pattern"));
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-gimp-pat");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -202,7 +205,7 @@ pat_save (GimpProcedure        *procedure,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! save_dialog (procedure, G_OBJECT (config)))
+      if (! save_dialog (image, procedure, G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
     }
 
@@ -257,7 +260,8 @@ pat_save (GimpProcedure        *procedure,
 }
 
 static gboolean
-save_dialog (GimpProcedure *procedure,
+save_dialog (GimpImage     *image,
+             GimpProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
@@ -265,9 +269,9 @@ save_dialog (GimpProcedure *procedure,
   GtkWidget *real_entry;
   gboolean   run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as Pattern"));
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
   entry = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                             "description", GIMP_TYPE_LABEL_ENTRY);

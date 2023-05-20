@@ -212,7 +212,8 @@ static gint             save_rgb                (FILE                *ofp,
                                                  GimpDrawable        *drawable,
                                                  gint                 rle);
 
-static gboolean         save_dialog             (GimpProcedure       *procedure,
+static gboolean         save_dialog             (GimpImage           *image,
+                                                 GimpProcedure       *procedure,
                                                  GObject             *config);
 
 /* Portability kludge */
@@ -310,6 +311,8 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
                                       "Peter Kirchgessner",
                                       "1996");
 
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("SUNRAS"));
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-sun-raster");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -410,7 +413,7 @@ sunras_save (GimpProcedure        *procedure,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! save_dialog (procedure, G_OBJECT (config)))
+      if (! save_dialog (image, procedure, G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
     }
 
@@ -1777,16 +1780,17 @@ save_rgb (FILE         *ofp,
 /*  Save interface functions  */
 
 static gboolean
-save_dialog (GimpProcedure *procedure,
+save_dialog (GimpImage     *image,
+             GimpProcedure *procedure,
              GObject       *config)
 {
   GtkWidget    *dialog;
   GtkListStore *store;
   gboolean      run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as SUNRAS"));
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
   store = gimp_int_store_new (_("S_tandard"),           FALSE,
                               _("R_un-Length Encoded"), TRUE,
