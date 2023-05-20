@@ -62,8 +62,8 @@ struct _GimpTagPopup
   gboolean           arrows_visible;
   gboolean           upper_arrow_prelight;
   gboolean           lower_arrow_prelight;
-  GtkStateType       upper_arrow_state;
-  GtkStateType       lower_arrow_state;
+  GtkStateFlags      upper_arrow_state;
+  GtkStateFlags      lower_arrow_state;
 
   gboolean           smooth_scrolling;
 };

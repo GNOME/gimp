@@ -160,8 +160,8 @@ gimp_tag_popup_init (GimpTagPopup *popup)
 {
   GtkWidget *widget = GTK_WIDGET (popup);
 
-  popup->upper_arrow_state = GTK_STATE_NORMAL;
-  popup->lower_arrow_state = GTK_STATE_NORMAL;
+  popup->upper_arrow_state = GTK_STATE_FLAG_NORMAL;
+  popup->lower_arrow_state = GTK_STATE_FLAG_NORMAL;
 
   gtk_widget_add_events (widget,
                          GDK_BUTTON_PRESS_MASK   |
@@ -359,7 +359,7 @@ gimp_tag_popup_constructed (GObject *object)
   if (popup_height < height)
     {
       popup->arrows_visible    = TRUE;
-      popup->upper_arrow_state = GTK_STATE_INSENSITIVE;
+      popup->upper_arrow_state = GTK_STATE_FLAG_INSENSITIVE;
 
       gtk_widget_set_margin_top    (popup->tag_area,
                                     popup->scroll_arrow_height + 2);
@@ -1194,8 +1194,8 @@ gimp_tag_popup_scroll_by (GimpTagPopup   *popup,
                           gint            step,
                           const GdkEvent *event)
 {
-  GtkStateType arrow_state;
-  gint         new_scroll_y = popup->scroll_y;
+  GtkStateFlags arrow_state;
+  gint          new_scroll_y = popup->scroll_y;
 
   /* If event is set, we override the step value. */
   if (event)
@@ -1256,15 +1256,15 @@ gimp_tag_popup_scroll_by (GimpTagPopup   *popup,
     {
       new_scroll_y = 0;
 
-      if (arrow_state != GTK_STATE_INSENSITIVE)
+      if (arrow_state != GTK_STATE_FLAG_INSENSITIVE)
         gimp_tag_popup_stop_scrolling (popup);
 
-      arrow_state = GTK_STATE_INSENSITIVE;
+      arrow_state = GTK_STATE_FLAG_INSENSITIVE;
     }
   else
     {
       arrow_state = (popup->upper_arrow_prelight ?
-                     GTK_STATE_PRELIGHT : GTK_STATE_NORMAL);
+                     GTK_STATE_FLAG_PRELIGHT : GTK_STATE_FLAG_NORMAL);
     }
 
   if (arrow_state != popup->upper_arrow_state)
@@ -1279,15 +1279,15 @@ gimp_tag_popup_scroll_by (GimpTagPopup   *popup,
     {
       new_scroll_y = popup->scroll_height - 1;
 
-      if (arrow_state != GTK_STATE_INSENSITIVE)
+      if (arrow_state != GTK_STATE_FLAG_INSENSITIVE)
         gimp_tag_popup_stop_scrolling (popup);
 
-      arrow_state = GTK_STATE_INSENSITIVE;
+      arrow_state = GTK_STATE_FLAG_INSENSITIVE;
     }
   else
     {
       arrow_state = (popup->lower_arrow_prelight ?
-                     GTK_STATE_PRELIGHT : GTK_STATE_NORMAL);
+                     GTK_STATE_FLAG_PRELIGHT : GTK_STATE_FLAG_NORMAL);
     }
 
   if (arrow_state != popup->lower_arrow_state)
@@ -1337,7 +1337,7 @@ gimp_tag_popup_handle_scrolling (GimpTagPopup *popup,
   if (touchscreen_mode)
     popup->upper_arrow_prelight = in_arrow;
 
-  if (popup->upper_arrow_state != GTK_STATE_INSENSITIVE)
+  if (popup->upper_arrow_state != GTK_STATE_FLAG_INSENSITIVE)
     {
       gboolean arrow_pressed = FALSE;
 
@@ -1402,14 +1402,14 @@ gimp_tag_popup_handle_scrolling (GimpTagPopup *popup,
        *  tag_popup, so check if the button isn't insensitive before
        *  changing it to something else.
        */
-      if (popup->upper_arrow_state != GTK_STATE_INSENSITIVE)
+      if (popup->upper_arrow_state != GTK_STATE_FLAG_INSENSITIVE)
         {
-          GtkStateType arrow_state = GTK_STATE_NORMAL;
+          GtkStateFlags arrow_state = GTK_STATE_FLAG_NORMAL;
 
           if (arrow_pressed)
-            arrow_state = GTK_STATE_ACTIVE;
+            arrow_state = GTK_STATE_FLAG_ACTIVE;
           else if (popup->upper_arrow_prelight)
-            arrow_state = GTK_STATE_PRELIGHT;
+            arrow_state = GTK_STATE_FLAG_PRELIGHT;
 
           if (arrow_state != popup->upper_arrow_state)
             {
@@ -1438,7 +1438,7 @@ gimp_tag_popup_handle_scrolling (GimpTagPopup *popup,
   if (touchscreen_mode)
     popup->lower_arrow_prelight = in_arrow;
 
-  if (popup->lower_arrow_state != GTK_STATE_INSENSITIVE)
+  if (popup->lower_arrow_state != GTK_STATE_FLAG_INSENSITIVE)
     {
       gboolean arrow_pressed = FALSE;
 
@@ -1503,14 +1503,14 @@ gimp_tag_popup_handle_scrolling (GimpTagPopup *popup,
        *  popup, so check if the button isn't insensitive before
        *  changing it to something else.
        */
-      if (popup->lower_arrow_state != GTK_STATE_INSENSITIVE)
+      if (popup->lower_arrow_state != GTK_STATE_FLAG_INSENSITIVE)
         {
-          GtkStateType arrow_state = GTK_STATE_NORMAL;
+          GtkStateFlags arrow_state = GTK_STATE_FLAG_NORMAL;
 
           if (arrow_pressed)
-            arrow_state = GTK_STATE_ACTIVE;
+            arrow_state = GTK_STATE_FLAG_ACTIVE;
           else if (popup->lower_arrow_prelight)
-            arrow_state = GTK_STATE_PRELIGHT;
+            arrow_state = GTK_STATE_FLAG_PRELIGHT;
 
           if (arrow_state != popup->lower_arrow_state)
             {
