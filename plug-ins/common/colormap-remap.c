@@ -269,7 +269,11 @@ remap_run (GimpProcedure        *procedure,
   GimpRemap *remap = GIMP_REMAP (run_data);
 
   remap = GIMP_REMAP (gimp_procedure_get_plug_in (procedure));
+#if GLIB_CHECK_VERSION(2,74,0)
+  remap->app = gtk_application_new (NULL, G_APPLICATION_DEFAULT_FLAGS);
+#else
   remap->app = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
+#endif
   remap->image = image;
 
   remap->builder = gtk_builder_new_from_string (

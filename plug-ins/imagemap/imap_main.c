@@ -247,7 +247,11 @@ imap_run (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   imap            = GIMP_IMAP (gimp_procedure_get_plug_in (procedure));
+#if GLIB_CHECK_VERSION(2,74,0)
+  imap->app       = gtk_application_new (NULL, G_APPLICATION_DEFAULT_FLAGS);
+#else
   imap->app       = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
+#endif
   imap->success   = FALSE;
 
   imap->builder = gtk_builder_new_from_string (

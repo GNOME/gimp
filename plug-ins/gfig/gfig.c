@@ -225,7 +225,11 @@ gfig_run (GimpProcedure        *procedure,
     }
 
   gfig          = GIMP_GFIG (gimp_procedure_get_plug_in (procedure));
+#if GLIB_CHECK_VERSION(2,74,0)
+  gfig->app     = gtk_application_new (NULL, G_APPLICATION_DEFAULT_FLAGS);
+#else
   gfig->app     = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
+#endif
   gfig->success = FALSE;
 
   gfig->builder = gtk_builder_new_from_string (

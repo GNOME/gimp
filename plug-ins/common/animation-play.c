@@ -358,7 +358,11 @@ play_run (GimpProcedure        *procedure,
   GimpPlay *play;
 
   play = GIMP_PLAY (gimp_procedure_get_plug_in (procedure));
+#if GLIB_CHECK_VERSION(2,74,0)
+  play->app = gtk_application_new (NULL, G_APPLICATION_DEFAULT_FLAGS);
+#else
   play->app = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
+#endif
 
   play->builder = gtk_builder_new_from_string (
       "<interface>"

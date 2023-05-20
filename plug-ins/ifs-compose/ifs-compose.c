@@ -469,7 +469,11 @@ ifs_run (GimpProcedure        *procedure,
   gboolean      found_parasite = FALSE;
 
   ifs = GIMP_IFS (gimp_procedure_get_plug_in (procedure));
+#if GLIB_CHECK_VERSION(2,74,0)
+  ifs->app = gtk_application_new (NULL, G_APPLICATION_DEFAULT_FLAGS);
+#else
   ifs->app = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
+#endif
 
   ifs->builder = gtk_builder_new_from_string (
       "<interface>"

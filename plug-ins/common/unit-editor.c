@@ -399,7 +399,11 @@ editor_run (GimpProcedure        *procedure,
 
   gimp_ui_init (PLUG_IN_BINARY);
 
+#if GLIB_CHECK_VERSION(2,74,0)
+  editor->app = gtk_application_new (NULL, G_APPLICATION_DEFAULT_FLAGS);
+#else
   editor->app = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
+#endif
   g_signal_connect (editor->app, "activate", G_CALLBACK (on_app_activate), editor);
 
   g_application_run (G_APPLICATION (editor->app), 0, NULL);
