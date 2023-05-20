@@ -349,9 +349,7 @@ edit_paste_cmd_callback (GimpAction *action,
   GList         *drawables;
   gboolean       merged     = FALSE;
 
-  return_if_no_image (image, data);
-
-  if (paste_type == GIMP_PASTE_TYPE_FLOATING)
+  if (paste_type == GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING)
     {
       if (! display || ! gimp_display_get_image (display))
         {
@@ -359,6 +357,8 @@ edit_paste_cmd_callback (GimpAction *action,
           return;
         }
     }
+
+  return_if_no_image (image, data);
 
   if (! display)
     return;
