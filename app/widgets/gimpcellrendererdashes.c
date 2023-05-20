@@ -197,7 +197,7 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
 {
   GimpCellRendererDashes *dashes = GIMP_CELL_RENDERER_DASHES (cell);
   GtkStyleContext        *style  = gtk_widget_get_style_context (widget);
-  GtkStateType            state;
+  GtkStateFlags           state;
   GdkRGBA                 color;
   gint                    xpad, ypad;
   gint                    width;
