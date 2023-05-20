@@ -25,7 +25,7 @@ main (int argc, char **argv)
   RsvgHandle        *handle;
   cairo_surface_t   *surface;
   cairo_t           *cr;
-  RsvgDimensionData  original_dim;
+  RsvgRectangle      target_rect;
 
   gchar             *input;
   gchar             *output;
@@ -59,12 +59,11 @@ main (int argc, char **argv)
 
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, dim, dim);
   cr = cairo_create (surface);
-  rsvg_handle_get_dimensions (handle, &original_dim);
-  cairo_scale (cr,
-               (gdouble) dim / (gdouble) original_dim.width,
-               (gdouble) dim / (gdouble) original_dim.height);
 
-  if (! rsvg_handle_render_cairo (handle, cr))
+  target_rect.x = target_rect.y = 0;
+  target_rect.width = target_rect.height = dim;
+
+  if (! rsvg_handle_render_document (handle, cr, &target_rect, NULL))
     {
       g_fprintf (stderr,
                  "Error: failed to render '%s'\n",
