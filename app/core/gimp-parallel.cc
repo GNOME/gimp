@@ -227,8 +227,7 @@ gimp_parallel_run_async_independent_full (gint             priority,
 #elif defined (HAVE_UNISTD_H) && defined (__gnu_linux__)
       if (task->priority)
         {
-          (nice (task->priority) != -1);
-                              /* ^-- avoid "unused result" warning */
+          nice (task->priority);
         }
 #endif
 
