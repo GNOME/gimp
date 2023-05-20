@@ -251,6 +251,25 @@ gimp_value_array_new_from_types_valist (gchar   **error_msg,
 }
 
 /**
+ * gimp_value_array_copy:
+ * @value_array: #GimpValueArray to copy
+ *
+ * Return an exact copy of a #GimpValueArray by duplicating all its values.
+ *
+ * Returns: a newly allocated #GimpValueArray.
+ *
+ * Since: 3.0
+ */
+GimpValueArray *
+gimp_value_array_copy (const GimpValueArray *value_array)
+{
+  g_return_val_if_fail (value_array != NULL, NULL);
+
+  return gimp_value_array_new_from_values (value_array->values,
+                                           value_array->n_values);
+}
+
+/**
  * gimp_value_array_new_from_values:
  * @values: (array length=n_values): The #GValue elements
  * @n_values: the number of value elements

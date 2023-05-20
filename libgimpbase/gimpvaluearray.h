@@ -53,6 +53,8 @@ GimpValueArray * gimp_value_array_new_from_values
                                            (const GValue *values,
                                             gint          n_values);
 
+GimpValueArray * gimp_value_array_copy     (const GimpValueArray *value_array);
+
 GimpValueArray * gimp_value_array_ref      (GimpValueArray       *value_array);
 void             gimp_value_array_unref    (GimpValueArray       *value_array);
 
