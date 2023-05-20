@@ -142,7 +142,7 @@ gimp_ui_init (const gchar *prog_name)
   css_monitor = g_file_monitor (file, G_FILE_MONITOR_NONE, NULL, NULL);
   g_object_unref (file);
 
-  gimp_ui_theme_changed (css_monitor, NULL, NULL, G_FILE_MONITOR_NONE,
+  gimp_ui_theme_changed (css_monitor, NULL, NULL, G_FILE_MONITOR_EVENT_CHANGED,
                          css_provider);
 
   g_signal_connect (css_monitor, "changed",
