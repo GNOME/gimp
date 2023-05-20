@@ -2846,7 +2846,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                             }
                           else
                             {
-                              if (! g_strv_contains (values, equiv_values[evi]))
+                              if (! g_strv_contains ((const gchar * const *) values, equiv_values[evi]))
                                 {
                                   gchar *tmpvalue;
 
