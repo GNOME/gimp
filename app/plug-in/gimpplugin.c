@@ -376,7 +376,7 @@ gimp_plug_in_close_waitpid (GPid        pid,
   GError *error = NULL;
 
   if (plug_in->manager->gimp->be_verbose &&
-      ! g_spawn_check_exit_status (status, &error))
+      ! g_spawn_check_wait_status (status, &error))
     {
       g_printerr ("Process for plug-in '%s' terminated with error: %s\n",
                   gimp_object_get_name (plug_in),
