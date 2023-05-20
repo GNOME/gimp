@@ -97,9 +97,9 @@ static gboolean gimp_prop_widget_double_from_factor (GBinding     *binding,
 
 /**
  * gimp_prop_check_button_new:
- * @config:        Object to which property is attached.
- * @property_name: Name of boolean property controlled by checkbutton.
- * @label:         Label to give checkbutton (including mnemonic).
+ * @config:            Object to which property is attached.
+ * @property_name:     Name of boolean property controlled by checkbutton.
+ * @label: (nullable): Label to give checkbutton (including mnemonic).
  *
  * Creates a #GtkCheckButton that displays and sets the specified
  * boolean property.
@@ -1727,7 +1727,7 @@ gimp_prop_hscale_new (GObject     *config,
  * gimp_prop_scale_entry_new:
  * @config:         Object to which property is attached.
  * @label: (nullable): The text for the #GtkLabel which will appear left of
- *                     the #GtkHScale.
+ *                     the #GtkScale.
  * @property_name:  Name of integer or double property controlled by the scale.
  * @factor:         Optional multiplier to convert @property_name's
  *                  range into the #GimpScaleEntry's range. The common
@@ -1735,7 +1735,7 @@ gimp_prop_hscale_new (GObject     *config,
  *                  For non-double properties, no other values than 1.0
  *                  are acceptable.
  * @limit_scale:    %FALSE if the range of possible values of the
- *                  GtkHScale should be the same as of the GtkSpinButton.
+ *                  GtkScale should be the same as of the GtkSpinButton.
  * @lower_limit:    The scale's lower boundary if @scale_limits is %TRUE.
  * @upper_limit:    The scale's upper boundary if @scale_limits is %TRUE.
  *
