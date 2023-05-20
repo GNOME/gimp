@@ -90,24 +90,7 @@ gimp_image_metadata_interpret_comment (gchar *comment)
           comment = real_comment;
         }
 
-#warning TODO: remove second "binary comment" condition when Exiv2 minimum requirement >= 0.27.4
-
-      if (comment[0] == '\0' ||
-          /* TODO: this second test is ugly as hell and should be
-           * removed once our Exiv2 dependency is bumped to 0.27.4.
-           *
-           * Basically Exiv2 used to return "binary comment" for some
-           * comments, even just a comment filled of 0s (instead of
-           * returning the empty string). This has recently be reverted.
-           * For now, let's ignore such "comment", though this is weak
-           * too. What if the comment actually contained the "binary
-           * comment" text? (which would be weird anyway and possibly a
-           * result of the previously bugged implementation, so let's
-           * accept the weakness as we can't do anything to distinguish
-           * the 2 cases)
-           * See commit 9b510858 in Exiv2 repository.
-           */
-          ! g_strcmp0 (comment, "binary comment"))
+      if (comment[0] == '\0')
         {
           /* Removing an empty comment.*/
           g_free (comment);
