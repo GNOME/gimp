@@ -2573,7 +2573,7 @@ msgstr ""
 
 #: plug-ins/common/file-gif-save.c:194
 msgid "_Number of repeats"
-msgstr "_Nombre de repeticions:"
+msgstr "_Nombre de repeticions"
 
 #: plug-ins/common/file-gif-save.c:195
 msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
@@ -3293,7 +3293,7 @@ msgstr "D_esa el perfil original"
 
 #: plug-ins/common/file-jpegxl.c:211
 msgid "Store ICC profile to exported JXL file"
-msgstr "Desa el perfil ICC per exportar el fitxer JXL"
+msgstr "Desa el perfil ICC per a exportar el fitxer JXL"
 
 #: plug-ins/common/file-jpegxl.c:2006
 msgid "lightning (fastest)"
@@ -3951,7 +3951,7 @@ msgstr ""
 
 #: plug-ins/common/file-png.c:284
 msgid "PNG export format"
-msgstr "Format de exportació PNG"
+msgstr "Format d'exportació PNG"
 
 #: plug-ins/common/file-png.c:423
 msgid "PNG format does not support multiple layers."
@@ -7999,7 +7999,7 @@ msgstr ""
 
 #: plug-ins/file-fli/fli-gimp.c:206
 msgid "End loading with this frame"
-msgstr "Atura la càrrega amb aquesta fotograma"
+msgstr "Atura la càrrega amb aquest fotograma"
 
 #: plug-ins/file-fli/fli-gimp.c:220
 #, fuzzy
@@ -10589,7 +10589,7 @@ msgstr "Conserva l'original"
 
 #: plug-ins/gimpressionist/general.c:150
 msgid "Preserve the original image as a background"
-msgstr "Preserva la imatge original com a fons"
+msgstr "Conserva la imatge original com a fons"
 
 #: plug-ins/gimpressionist/general.c:155
 msgid "From paper"
