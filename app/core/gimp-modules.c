@@ -150,25 +150,6 @@ gimp_modules_load (Gimp *gimp)
   gimp_module_db_load (gimp->module_db, gimp->config->module_path);
 }
 
-static void
-add_to_inhibit_string (gpointer data,
-                       gpointer user_data)
-{
-  GimpModule *module = data;
-  GString    *str    = user_data;
-
-  if (! gimp_module_get_auto_load (module))
-    {
-      GFile *file = gimp_module_get_file (module);
-      gchar *path = g_file_get_path (file);
-
-      g_string_append_c (str, G_SEARCHPATH_SEPARATOR);
-      g_string_append (str, path);
-
-      g_free (path);
-    }
-}
-
 void
 gimp_modules_unload (Gimp *gimp)
 {
@@ -178,13 +159,31 @@ gimp_modules_unload (Gimp *gimp)
     {
       GimpConfigWriter *writer;
       GString          *str;
+      GListModel       *modules = G_LIST_MODEL (gimp->module_db);
+      guint             i;
       const gchar      *p;
       GFile            *file;
       GError           *error = NULL;
 
       str = g_string_new (NULL);
-      g_list_foreach (gimp_module_db_get_modules (gimp->module_db),
-                      add_to_inhibit_string, str);
+      for (i = 0; i < g_list_model_get_n_items (modules); i++)
+        {
+          GimpModule *module;
+
+          module = g_list_model_get_item (modules, i);
+          if (! gimp_module_get_auto_load (module))
+            {
+              GFile *file = gimp_module_get_file (module);
+              gchar *path = g_file_get_path (file);
+
+              g_string_append_c (str, G_SEARCHPATH_SEPARATOR);
+              g_string_append (str, path);
+
+              g_free (path);
+            }
+
+          g_clear_object (&module);
+        }
       if (str->len > 0)
         p = str->str + 1;
       else

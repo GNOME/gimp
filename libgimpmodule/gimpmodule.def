@@ -1,6 +1,5 @@
 EXPORTS
 	gimp_module_db_get_load_inhibit
-	gimp_module_db_get_modules
 	gimp_module_db_get_type
 	gimp_module_db_get_verbose
 	gimp_module_db_load

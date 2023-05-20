@@ -44,14 +44,6 @@
 
 enum
 {
-  COLUMN_NAME,
-  COLUMN_ENABLED,
-  COLUMN_MODULE,
-  N_COLUMNS
-};
-
-enum
-{
   INFO_AUTHOR,
   INFO_VERSION,
   INFO_DATE,
@@ -68,6 +60,7 @@ struct _ModuleDialog
 
   GimpModule   *selected;
   GtkListStore *list;
+  GtkWidget    *listbox;
 
   GtkWidget    *hint;
   GtkWidget    *grid;
@@ -79,29 +72,20 @@ struct _ModuleDialog
 
 /*  local function prototypes  */
 
-static void   dialog_response         (GtkWidget             *widget,
-                                       gint                   response_id,
-                                       ModuleDialog          *private);
-static void   dialog_destroy_callback (GtkWidget             *widget,
-                                       ModuleDialog          *private);
-static void   dialog_select_callback  (GtkTreeSelection      *sel,
-                                       ModuleDialog          *private);
-static void   dialog_enabled_toggled  (GtkCellRendererToggle *celltoggle,
-                                       const gchar           *path_string,
-                                       ModuleDialog          *private);
-static void   make_list_item          (gpointer               data,
-                                       gpointer               user_data);
-static void   dialog_info_add         (GimpModuleDB          *db,
-                                       GimpModule            *module,
-                                       ModuleDialog          *private);
-static void   dialog_info_remove      (GimpModuleDB          *db,
-                                       GimpModule            *module,
-                                       ModuleDialog          *private);
-static void   dialog_info_update      (GimpModuleDB          *db,
-                                       GimpModule            *module,
-                                       ModuleDialog          *private);
-static void   dialog_info_init        (ModuleDialog          *private,
-                                       GtkWidget             *grid);
+static GtkWidget *   create_widget_for_module   (gpointer          item,
+                                                 gpointer          user_data);
+static void          dialog_response            (GtkWidget        *widget,
+                                                 gint              response_id,
+                                                 ModuleDialog     *private);
+static void          dialog_destroy_callback    (GtkWidget        *widget,
+                                                 ModuleDialog     *private);
+static void          dialog_select_callback     (GtkListBox       *listbox,
+                                                 GtkListBoxRow    *row,
+                                                 ModuleDialog     *private);
+static void          dialog_enabled_toggled     (GtkToggleButton  *checkbox,
+                                                 ModuleDialog     *private);
+static void          dialog_info_init            (ModuleDialog     *private,
+                                                 GtkWidget         *grid);
 
 
 /*  public functions  */
@@ -113,12 +97,7 @@ module_dialog_new (Gimp *gimp)
   GtkWidget         *dialog;
   GtkWidget         *vbox;
   GtkWidget         *sw;
-  GtkWidget         *view;
   GtkWidget         *image;
-  GtkTreeSelection  *sel;
-  GtkTreeIter        iter;
-  GtkTreeViewColumn *col;
-  GtkCellRenderer   *rend;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -167,38 +146,20 @@ module_dialog_new (Gimp *gimp)
   gtk_widget_set_size_request (sw, 124, 100);
   gtk_widget_show (sw);
 
-  private->list = gtk_list_store_new (N_COLUMNS,
-                                      G_TYPE_STRING,
-                                      G_TYPE_BOOLEAN,
-                                      GIMP_TYPE_MODULE);
-  view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (private->list));
-  g_object_unref (private->list);
-
-  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
-
-  g_list_foreach (gimp_module_db_get_modules (gimp->module_db),
-                  make_list_item, private);
-
-  rend = gtk_cell_renderer_toggle_new ();
-
-  g_signal_connect (rend, "toggled",
-                    G_CALLBACK (dialog_enabled_toggled),
+  private->listbox = gtk_list_box_new ();
+  gtk_list_box_set_selection_mode (GTK_LIST_BOX (private->listbox),
+                                   GTK_SELECTION_BROWSE);
+  gtk_list_box_bind_model (GTK_LIST_BOX (private->listbox),
+                           G_LIST_MODEL (gimp->module_db),
+                           create_widget_for_module,
+                           private,
+                           NULL);
+  g_signal_connect (private->listbox, "row-selected",
+                    G_CALLBACK (dialog_select_callback),
                     private);
 
-  col = gtk_tree_view_column_new ();
-  gtk_tree_view_column_pack_start (col, rend, FALSE);
-  gtk_tree_view_column_add_attribute (col, rend, "active", COLUMN_ENABLED);
-
-  gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
-
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 1,
-                                               _("Module"),
-                                               gtk_cell_renderer_text_new (),
-                                               "text", COLUMN_NAME,
-                                               NULL);
-
-  gtk_container_add (GTK_CONTAINER (sw), view);
-  gtk_widget_show (view);
+  gtk_container_add (GTK_CONTAINER (sw), private->listbox);
+  gtk_widget_show (private->listbox);
 
   private->grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (private->grid), 6);
@@ -221,30 +182,6 @@ module_dialog_new (Gimp *gimp)
 
   dialog_info_init (private, private->grid);
 
-  dialog_info_update (gimp->module_db, private->selected, private);
-
-  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
-
-  g_signal_connect (sel, "changed",
-                    G_CALLBACK (dialog_select_callback),
-                    private);
-
-  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (private->list), &iter))
-    gtk_tree_selection_select_iter (sel, &iter);
-
-  /* hook the GimpModuleDB signals so we can refresh the display
-   * appropriately.
-   */
-  g_signal_connect (gimp->module_db, "add",
-                    G_CALLBACK (dialog_info_add),
-                    private);
-  g_signal_connect (gimp->module_db, "remove",
-                    G_CALLBACK (dialog_info_remove),
-                    private);
-  g_signal_connect (gimp->module_db, "module-modified",
-                    G_CALLBACK (dialog_info_update),
-                    private);
-
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (dialog_destroy_callback),
                     private);
@@ -254,6 +191,46 @@ module_dialog_new (Gimp *gimp)
 
 
 /*  private functions  */
+
+static GtkWidget *
+create_widget_for_module (gpointer item,
+                          gpointer user_data)
+{
+  GimpModule           *module  = GIMP_MODULE (item);
+  ModuleDialog         *private = user_data;
+  const GimpModuleInfo *info    = gimp_module_get_info (module);
+  GFile                *file    = gimp_module_get_file (module);
+  GtkWidget            *row;
+  GtkWidget            *grid;
+  GtkWidget            *label;
+  GtkWidget            *checkbox;
+
+  row = gtk_list_box_row_new ();
+  g_object_set_data (G_OBJECT (row), "module", module);
+  gtk_widget_show (row);
+
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  g_object_set (grid, "margin", 3, NULL);
+  gtk_container_add (GTK_CONTAINER (row), grid);
+  gtk_widget_show (grid);
+
+  checkbox = gtk_check_button_new ();
+  g_object_bind_property (module, "auto-load", checkbox, "active",
+                          G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+  g_signal_connect (checkbox, "toggled",
+                    G_CALLBACK (dialog_enabled_toggled),
+                    private);
+  gtk_widget_show (checkbox);
+  gtk_grid_attach (GTK_GRID (grid), checkbox, 0, 0, 1, 1);
+
+  label = gtk_label_new (info ? gettext (info->purpose) :
+                                gimp_file_get_utf8_name (file));
+  gtk_widget_show (label);
+  gtk_grid_attach (GTK_GRID (grid), label, 1, 0, 1, 1);
+
+  return row;
+}
 
 static void
 dialog_response (GtkWidget    *widget,
@@ -270,200 +247,35 @@ static void
 dialog_destroy_callback (GtkWidget    *widget,
                          ModuleDialog *private)
 {
-  g_signal_handlers_disconnect_by_func (private->gimp->module_db,
-                                        dialog_info_add,
-                                        private);
-  g_signal_handlers_disconnect_by_func (private->gimp->module_db,
-                                        dialog_info_remove,
-                                        private);
-  g_signal_handlers_disconnect_by_func (private->gimp->module_db,
-                                        dialog_info_update,
-                                        private);
-
   g_slice_free (ModuleDialog, private);
 }
 
 static void
-dialog_select_callback (GtkTreeSelection *sel,
-                        ModuleDialog     *private)
+dialog_select_callback (GtkListBox    *listbox,
+                        GtkListBoxRow *row,
+                        ModuleDialog  *private)
 {
-  GtkTreeIter iter;
-
-  if (gtk_tree_selection_get_selected (sel, NULL, &iter))
-    {
-      GimpModule *module;
-
-      gtk_tree_model_get (GTK_TREE_MODEL (private->list), &iter,
-                          COLUMN_MODULE, &module, -1);
-
-      if (module)
-        g_object_unref (module);
-
-      if (private->selected == module)
-        return;
-
-      private->selected = module;
-
-      dialog_info_update (private->gimp->module_db, private->selected, private);
-    }
-}
-
-static void
-dialog_enabled_toggled (GtkCellRendererToggle *celltoggle,
-                        const gchar           *path_string,
-                        ModuleDialog          *private)
-{
-  GtkTreePath *path;
-  GtkTreeIter  iter;
-  GimpModule  *module = NULL;
-
-  path = gtk_tree_path_new_from_string (path_string);
-
-  if (! gtk_tree_model_get_iter (GTK_TREE_MODEL (private->list), &iter, path))
-    {
-      g_warning ("%s: bad tree path?", G_STRFUNC);
-      return;
-    }
-
-  gtk_tree_path_free (path);
-
-  gtk_tree_model_get (GTK_TREE_MODEL (private->list), &iter,
-                      COLUMN_MODULE, &module,
-                      -1);
-
-  if (module)
-    {
-      gimp_module_set_auto_load (module, ! gimp_module_get_auto_load (module));
-      g_object_unref (module);
-
-      private->gimp->write_modulerc = TRUE;
-      gtk_widget_show (private->hint);
-   }
-}
-
-static void
-dialog_list_item_update (ModuleDialog *private,
-                         GtkTreeIter  *iter,
-                         GimpModule   *module)
-{
-  const GimpModuleInfo *info = gimp_module_get_info (module);
-  GFile                *file = gimp_module_get_file (module);
-
-  gtk_list_store_set (private->list, iter,
-                      COLUMN_NAME,   (info ?
-                                      gettext (info->purpose) :
-                                      gimp_file_get_utf8_name (file)),
-                      COLUMN_ENABLED, gimp_module_get_auto_load (module),
-                      COLUMN_MODULE,  module,
-                      -1);
-}
-
-static void
-make_list_item (gpointer data,
-                gpointer user_data)
-{
-  GimpModule   *module = data;
-  ModuleDialog *private = user_data;
-  GtkTreeIter   iter;
-
-  if (! private->selected)
-    private->selected = module;
-
-  gtk_list_store_append (private->list, &iter);
-
-  dialog_list_item_update (private, &iter, module);
-}
-
-static void
-dialog_info_add (GimpModuleDB *db,
-                 GimpModule   *module,
-                 ModuleDialog *private)
-{
-  make_list_item (module, private);
-}
-
-static void
-dialog_info_remove (GimpModuleDB *db,
-                    GimpModule   *module,
-                    ModuleDialog *private)
-{
-  GtkTreeIter  iter;
-
-  /* FIXME: Use gtk_list_store_foreach_remove when it becomes available */
-
-  if (! gtk_tree_model_get_iter_first (GTK_TREE_MODEL (private->list), &iter))
-    return;
-
-  do
-    {
-      GimpModule  *this;
-
-      gtk_tree_model_get (GTK_TREE_MODEL (private->list), &iter,
-                          COLUMN_MODULE, &this,
-                          -1);
-
-      if (this)
-        g_object_unref (this);
-
-      if (this == module)
-        {
-          gtk_list_store_remove (private->list, &iter);
-          return;
-        }
-    }
-  while (gtk_tree_model_iter_next (GTK_TREE_MODEL (private->list), &iter));
-
-  g_warning ("%s: Tried to remove a module not in the dialog's list.",
-             G_STRFUNC);
-}
-
-static void
-dialog_info_update (GimpModuleDB *db,
-                    GimpModule   *module,
-                    ModuleDialog *private)
-{
-  GtkTreeModel         *model = GTK_TREE_MODEL (private->list);
+  guint                 i;
+  GimpModule           *module;
+  const gchar          *location;
   const GimpModuleInfo *info;
-  GtkTreeIter           iter;
   const gchar          *text[N_INFOS] = { NULL, };
-  const gchar          *location      = NULL;
-  gboolean              iter_valid;
-  gint                  i;
   gboolean              show_error;
 
-  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (model, &iter))
-    {
-      GimpModule *this;
-
-      gtk_tree_model_get (model, &iter,
-                          COLUMN_MODULE, &this,
-                          -1);
-      if (this)
-        g_object_unref (this);
-
-      if (this == module)
-        break;
-    }
-
-  if (iter_valid)
-    dialog_list_item_update (private, &iter, module);
-
-  /* only update the info if we're actually showing it */
-  if (module != private->selected)
-    return;
-
-  if (! module)
+  if (row == NULL)
     {
       for (i = 0; i < N_INFOS; i++)
         gtk_label_set_text (GTK_LABEL (private->label[i]), NULL);
-
       gtk_label_set_text (GTK_LABEL (private->error_label), NULL);
       gtk_widget_hide (private->error_box);
-
       return;
     }
+
+  module = g_object_get_data (G_OBJECT (row), "module");
+  if (private->selected == module)
+    return;
+
+  private->selected = module;
 
   if (gimp_module_is_on_disk (module))
     location = gimp_file_get_utf8_name (gimp_module_get_file (module));
@@ -495,6 +307,14 @@ dialog_info_update (GimpModuleDB *db,
   gtk_label_set_text (GTK_LABEL (private->error_label),
                       show_error ? gimp_module_get_last_error (module) : NULL);
   gtk_widget_set_visible (private->error_box, show_error);
+}
+
+static void
+dialog_enabled_toggled (GtkToggleButton *checkbox,
+                        ModuleDialog    *private)
+{
+  private->gimp->write_modulerc = TRUE;
+  gtk_widget_show (private->hint);
 }
 
 static void

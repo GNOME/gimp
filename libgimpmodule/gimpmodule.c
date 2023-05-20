@@ -49,10 +49,12 @@
 
 enum
 {
-  MODIFIED,
-  LAST_SIGNAL
+  PROP_0,
+  PROP_AUTO_LOAD,
+  PROP_ON_DISK,
+  N_PROPS
 };
-
+static GParamSpec *obj_props[N_PROPS] = { NULL, };
 
 struct _GimpModulePrivate
 {
@@ -73,16 +75,23 @@ struct _GimpModulePrivate
 };
 
 
-static void       gimp_module_finalize       (GObject     *object);
+static void       gimp_module_get_property   (GObject      *object,
+                                              guint         property_id,
+                                              GValue       *value,
+                                              GParamSpec   *pspec);
+static void       gimp_module_set_property   (GObject      *object,
+                                              guint         property_id,
+                                              const GValue *value,
+                                              GParamSpec   *pspec);
+static void       gimp_module_finalize       (GObject      *object);
 
-static gboolean   gimp_module_load           (GTypeModule *module);
-static void       gimp_module_unload         (GTypeModule *module);
+static gboolean   gimp_module_load           (GTypeModule  *module);
+static void       gimp_module_unload         (GTypeModule  *module);
 
-static gboolean   gimp_module_open           (GimpModule  *module);
-static gboolean   gimp_module_close          (GimpModule  *module);
-static void       gimp_module_set_last_error (GimpModule  *module,
-                                              const gchar *error_str);
-static void       gimp_module_modified       (GimpModule  *module);
+static gboolean   gimp_module_open           (GimpModule   *module);
+static gboolean   gimp_module_close          (GimpModule   *module);
+static void       gimp_module_set_last_error (GimpModule   *module,
+                                              const gchar  *error_str);
 
 static GimpModuleInfo * gimp_module_info_new  (guint32               abi_version,
                                                const gchar          *purpose,
@@ -98,8 +107,6 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpModule, gimp_module, G_TYPE_TYPE_MODULE)
 
 #define parent_class gimp_module_parent_class
 
-static guint module_signals[LAST_SIGNAL];
-
 
 static void
 gimp_module_class_init (GimpModuleClass *klass)
@@ -107,20 +114,18 @@ gimp_module_class_init (GimpModuleClass *klass)
   GObjectClass     *object_class = G_OBJECT_CLASS (klass);
   GTypeModuleClass *module_class = G_TYPE_MODULE_CLASS (klass);
 
-  module_signals[MODIFIED] =
-    g_signal_new ("modified",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpModuleClass, modified),
-                  NULL, NULL, NULL,
-                  G_TYPE_NONE, 0);
-
+  object_class->set_property = gimp_module_set_property;
+  object_class->get_property = gimp_module_get_property;
   object_class->finalize = gimp_module_finalize;
+
+  obj_props[PROP_AUTO_LOAD] = g_param_spec_boolean ("auto-load", "auto-load", "auto-load",
+                                                    FALSE, GIMP_PARAM_READWRITE);
+  obj_props[PROP_ON_DISK] = g_param_spec_boolean ("on-disk", "on-disk", "on-disk",
+                                                   FALSE, GIMP_PARAM_READABLE);
+  g_object_class_install_properties (object_class, N_PROPS, obj_props);
 
   module_class->load     = gimp_module_load;
   module_class->unload   = gimp_module_unload;
-
-  klass->modified        = NULL;
 }
 
 static void
@@ -129,6 +134,50 @@ gimp_module_init (GimpModule *module)
   module->priv = gimp_module_get_instance_private (module);
 
   module->priv->state = GIMP_MODULE_STATE_ERROR;
+}
+
+static void
+gimp_module_set_property (GObject      *object,
+                          guint         property_id,
+                          const GValue *value,
+                          GParamSpec   *pspec)
+{
+  GimpModule *module = GIMP_MODULE (object);
+
+  switch (property_id)
+    {
+    case PROP_AUTO_LOAD:
+      gimp_module_set_auto_load (module, g_value_get_boolean (value));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_module_get_property (GObject    *object,
+                          guint       property_id,
+                          GValue     *value,
+                          GParamSpec *pspec)
+{
+  GimpModule *module = GIMP_MODULE (object);
+
+  switch (property_id)
+    {
+    case PROP_AUTO_LOAD:
+      g_value_set_boolean (value, gimp_module_get_auto_load (module));
+      break;
+
+    case PROP_ON_DISK:
+      g_value_set_boolean (value, gimp_module_is_on_disk (module));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -286,7 +335,7 @@ gimp_module_get_file (GimpModule *module)
  * @module:    A #GimpModule
  * @auto_load: Pass %FALSE to exclude this module from auto-loading
  *
- * Sets the @auto_load property if the module. Emits "modified".
+ * Sets the @auto_load property of the module
  *
  * Since: 3.0
  **/
@@ -298,9 +347,9 @@ gimp_module_set_auto_load (GimpModule *module,
 
   if (auto_load != module->priv->auto_load)
     {
-      module->priv->auto_load = auto_load ? TRUE : FALSE;
+      module->priv->auto_load = auto_load;
 
-      gimp_module_modified (module);
+      g_object_notify_by_pspec (G_OBJECT (module), obj_props[PROP_AUTO_LOAD]);
     }
 }
 
@@ -345,7 +394,7 @@ gimp_module_is_on_disk (GimpModule *module)
      G_FILE_TYPE_REGULAR);
 
   if (module->priv->on_disk != old_on_disk)
-    gimp_module_modified (module);
+    g_object_notify_by_pspec (G_OBJECT (module), obj_props[PROP_ON_DISK]);
 
   return module->priv->on_disk;
 }
@@ -552,14 +601,6 @@ gimp_module_set_last_error (GimpModule  *module,
     g_free (module->priv->last_error);
 
   module->priv->last_error = g_strdup (error_str);
-}
-
-static void
-gimp_module_modified (GimpModule *module)
-{
-  g_return_if_fail (GIMP_IS_MODULE (module));
-
-  g_signal_emit (module, module_signals[MODIFIED], 0);
 }
 
 
