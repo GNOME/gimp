@@ -21,35 +21,9 @@
 #include "gimpobject.h"
 
 
-#define GIMP_TYPE_PARASITE_LIST            (gimp_parasite_list_get_type ())
-#define GIMP_PARASITE_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PARASITE_LIST, GimpParasiteList))
-#define GIMP_PARASITE_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PARASITE_LIST, GimpParasiteListClass))
-#define GIMP_IS_PARASITE_LIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PARASITE_LIST))
-#define GIMP_IS_PARASITE_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PARASITE_LIST))
-#define GIMP_PARASITE_LIST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PARASITE_LIST, GimpParasiteListClass))
-
-
-typedef struct _GimpParasiteListClass GimpParasiteListClass;
-
-struct _GimpParasiteList
-{
-  GimpObject  object;
-
-  GHashTable *table;
-};
-
-struct _GimpParasiteListClass
-{
-  GimpObjectClass parent_class;
-
-  void (* add)    (GimpParasiteList *list,
-                   GimpParasite     *parasite);
-  void (* remove) (GimpParasiteList *list,
-                   GimpParasite     *parasite);
-};
-
-
-GType                gimp_parasite_list_get_type (void) G_GNUC_CONST;
+#define GIMP_TYPE_PARASITE_LIST (gimp_parasite_list_get_type ())
+G_DECLARE_FINAL_TYPE (GimpParasiteList, gimp_parasite_list,
+                      GIMP, PARASITE_LIST, GimpObject)
 
 GimpParasiteList   * gimp_parasite_list_new      (void);
 GimpParasiteList   * gimp_parasite_list_copy     (GimpParasiteList       *list);
@@ -57,13 +31,12 @@ void                 gimp_parasite_list_add      (GimpParasiteList       *list,
                                                   const GimpParasite     *parasite);
 void                 gimp_parasite_list_remove   (GimpParasiteList       *list,
                                                   const gchar            *name);
-gint                 gimp_parasite_list_length   (GimpParasiteList       *list);
-gint                 gimp_parasite_list_persistent_length (GimpParasiteList *list);
-void                 gimp_parasite_list_foreach  (GimpParasiteList       *list,
-                                                  GHFunc                  function,
-                                                  gpointer                user_data);
+guint                gimp_parasite_list_persistent_length (GimpParasiteList *list);
 const GimpParasite * gimp_parasite_list_find     (GimpParasiteList       *list,
                                                   const gchar            *name);
-
+const GimpParasite * gimp_parasite_list_find_full  (GimpParasiteList     *list,
+                                                    const gchar          *name,
+                                                    guint                *index);
+gchar **             gimp_parasite_list_list_names (GimpParasiteList     *list);
 
 #endif  /*  __GIMP_PARASITE_LIST_H__  */

@@ -4235,32 +4235,15 @@ gimp_image_parasite_find (GimpImage   *image,
                                   name);
 }
 
-static void
-list_func (gchar          *key,
-           GimpParasite   *p,
-           gchar        ***cur)
-{
-  *(*cur)++ = (gchar *) g_strdup (key);
-}
-
 gchar **
 gimp_image_parasite_list (GimpImage *image)
 {
   GimpImagePrivate  *private;
-  gint               count;
-  gchar            **list;
-  gchar            **cur;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  count = gimp_parasite_list_length (private->parasites);
-  cur = list = g_new0 (gchar *, count + 1);
-
-  gimp_parasite_list_foreach (private->parasites, (GHFunc) list_func, &cur);
-
-  return list;
+  return gimp_parasite_list_list_names (private->parasites);
 }
 
 gboolean
