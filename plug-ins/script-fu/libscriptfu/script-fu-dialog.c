@@ -69,6 +69,7 @@ get_length (GimpProcedureConfig  *config)
   pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
                                            &n_pspecs);
   g_debug ("length config: %d", n_pspecs);
+  g_free (pspecs);
   return n_pspecs;
 }
 
