@@ -216,7 +216,7 @@ splash_create (Gimp         *gimp,
   else if (splash->width > 2 * ink.width)
     gimp_pango_layout_set_scale (splash->upper, PANGO_SCALE_MEDIUM);
   else
-    gimp_pango_layout_set_scale (splash->upper, PANGO_SCALE_MEDIUM);
+    gimp_pango_layout_set_scale (splash->upper, PANGO_SCALE_SMALL);
 
   splash->lower = gtk_widget_create_pango_layout (splash->area,
                                                   MEASURE_LOWER);
