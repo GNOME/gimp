@@ -427,7 +427,7 @@ gimp_guide_tool_push_status (GimpGuideTool *guide_tool,
     }
   else
     {
-      GimpGuideToolGuide *guides[2];
+      GimpGuideToolGuide *guides[2] = { 0, };
       gint                n_guides = 0;
       gint                i;
 
