@@ -31,13 +31,6 @@
 #include "libgimp-intl.h"
 
 
-typedef struct
-{
-  gchar *tag;
-  gint  type;
-} XmpStructs;
-
-
 /*  public functions  */
 
 /**

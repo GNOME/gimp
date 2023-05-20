@@ -31,12 +31,6 @@
 #include "libgimp-intl.h"
 
 
-typedef struct
-{
-  gchar *tag;
-  gint  type;
-} XmpStructs;
-
 static gchar *     gimp_image_metadata_interpret_comment    (gchar *comment);
 
 static void        gimp_image_metadata_rotate               (GimpImage         *image,

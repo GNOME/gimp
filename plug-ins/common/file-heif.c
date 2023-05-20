@@ -35,12 +35,6 @@
 #define SAVE_PROC_AV1  "file-heif-av1-save"
 #define PLUG_IN_BINARY "file-heif"
 
-typedef struct
-{
-  gchar *tag;
-  gint  type;
-} XmpStructs;
-
 typedef enum _HeifpluginEncoderSpeed
 {
   HEIFPLUGIN_ENCODER_SPEED_SLOW = 0,
