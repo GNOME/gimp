@@ -446,11 +446,11 @@ parse_colors (XpmImage *xpm_image)
   for (i = 0, j = 0; i < xpm_image->ncolors; i++)
     {
       gchar     *colorspec = "None";
-      XpmColor *xpm_color;
+      XpmColor  *xpm_color;
 #ifndef XPM_NO_X
-      XColor    xcolor;
+      XColor     xcolor;
 #else
-      GdkColor  xcolor;
+      GdkRGBA    xcolor;
 #endif
 
       xpm_color = &(xpm_image->colorTable[i]);
@@ -470,12 +470,15 @@ parse_colors (XpmImage *xpm_image)
         {
 #ifndef XPM_NO_X
           XParseColor (display, colormap, colorspec, &xcolor);
-#else
-          gdk_color_parse (colorspec, &xcolor);
-#endif
           cmap[j++] = xcolor.red >> 8;
           cmap[j++] = xcolor.green >> 8;
           cmap[j++] = xcolor.blue >> 8;
+#else
+          gdk_rgba_parse (&xcolor, colorspec);
+          cmap[j++] = CLAMP (xcolor.red * G_MAXUINT8, 0, G_MAXUINT8);
+          cmap[j++] = CLAMP (xcolor.green * G_MAXUINT8, 0, G_MAXUINT8);
+          cmap[j++] = CLAMP (xcolor.blue * G_MAXUINT8, 0, G_MAXUINT8);
+#endif
           cmap[j++] = ~0;
         }
       else
