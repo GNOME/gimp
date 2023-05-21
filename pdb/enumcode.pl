@@ -241,7 +241,7 @@ gimp_enums_init (void)
  * This function gives access to the list of enums registered by libgimp.
  * The returned array is static and must not be modified.
  *
- * Returns: (transfer none): an array with type names
+ * Returns: (array length=n_type_names) (transfer none): an array with type names
  *
  * Since: 2.2
  **/
