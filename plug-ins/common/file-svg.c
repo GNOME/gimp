@@ -483,8 +483,8 @@ load_rsvg_size (GFile            *file,
                 GError          **error)
 {
   RsvgHandle        *handle;
-  RsvgDimensionData  dim;
   gboolean           has_size;
+  gdouble            width, height;
 
   handle = rsvg_handle_new_from_gfile_sync (file, rsvg_flags, NULL, error);
 
@@ -493,12 +493,10 @@ load_rsvg_size (GFile            *file,
 
   rsvg_handle_set_dpi (handle, vals->resolution);
 
-  rsvg_handle_get_dimensions (handle, &dim);
-
-  if (dim.width > 0 && dim.height > 0)
+  if (rsvg_handle_get_intrinsic_size_in_pixels (handle, &width, &height))
     {
-      vals->width  = dim.width;
-      vals->height = dim.height;
+      vals->width  = ceil (width);
+      vals->height = ceil (height);
       has_size = TRUE;
     }
   else
@@ -508,21 +506,21 @@ load_rsvg_size (GFile            *file,
       has_size = FALSE;
     }
 
-    if (size_label)
-      {
-        if (has_size)
-          {
-            gchar *text = g_strdup_printf (_("%d × %d"),
-                                           vals->width, vals->height);
-            gtk_label_set_text (GTK_LABEL (size_label), text);
-            g_free (text);
-          }
-        else
-          {
-            gtk_label_set_text (GTK_LABEL (size_label),
-                                _("SVG file does not\nspecify a size!"));
-          }
-      }
+  if (size_label)
+    {
+      if (has_size)
+        {
+          gchar *text = g_strdup_printf (_("%d × %d"),
+                                         vals->width, vals->height);
+          gtk_label_set_text (GTK_LABEL (size_label), text);
+          g_free (text);
+        }
+      else
+        {
+          gtk_label_set_text (GTK_LABEL (size_label),
+                              _("SVG file does not\nspecify a size!"));
+        }
+    }
 
   g_object_unref (handle);
 
