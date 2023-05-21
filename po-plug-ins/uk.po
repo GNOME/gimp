@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-05-14 15:33+0000\n"
-"PO-Revision-Date: 2023-05-15 20:51+0300\n"
+"POT-Creation-Date: 2023-05-20 16:26+0000\n"
+"PO-Revision-Date: 2023-05-21 09:15+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -514,7 +514,7 @@ msgstr "Вертикально"
 #: plug-ins/common/file-pcx.c:758 plug-ins/common/file-pix.c:422
 #: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:869
 #: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
-#: plug-ins/common/file-sunras.c:1080 plug-ins/common/file-tga.c:1114
+#: plug-ins/common/file-sunras.c:1083 plug-ins/common/file-tga.c:1117
 #: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:912
 #: plug-ins/common/film.c:812 plug-ins/common/smooth-palette.c:332
 #: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
@@ -1049,7 +1049,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1229
 #: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
-#: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
+#: plug-ins/common/file-sunras.c:638 plug-ins/common/file-tga.c:1238
 #: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:341 plug-ins/file-fli/fli-gimp.c:817
 #: plug-ins/file-icns/file-icns-save.c:428 plug-ins/file-ico/ico-save.c:1332
@@ -1081,9 +1081,9 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/file-ps.c:1126 plug-ins/common/file-ps.c:3635
 #: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
 #: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
-#: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
+#: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:458
 #: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:759
-#: plug-ins/common/file-tga.c:445 plug-ins/common/file-wbmp.c:184
+#: plug-ins/common/file-tga.c:448 plug-ins/common/file-wbmp.c:184
 #: plug-ins/common/file-xbm.c:750 plug-ins/common/file-xmc.c:658
 #: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
 #: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
@@ -2071,10 +2071,10 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-pdf-load.c:879 plug-ins/common/file-pix.c:381
 #: plug-ins/common/file-png.c:665 plug-ins/common/file-pnm.c:714
 #: plug-ins/common/file-ps.c:1116 plug-ins/common/file-raw-data.c:1665
-#: plug-ins/common/file-sunras.c:447 plug-ins/common/file-tga.c:437
+#: plug-ins/common/file-sunras.c:450 plug-ins/common/file-tga.c:440
 #: plug-ins/common/file-wbmp.c:176 plug-ins/common/file-wmf.c:1026
 #: plug-ins/common/file-xbm.c:742 plug-ins/common/file-xmc.c:648
-#: plug-ins/common/file-xpm.c:382 plug-ins/common/file-xwd.c:473
+#: plug-ins/common/file-xpm.c:385 plug-ins/common/file-xwd.c:473
 #: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:188
 #: plug-ins/file-faxg3/faxg3.c:240 plug-ins/file-fli/fli-gimp.c:502
 #: plug-ins/file-icns/file-icns-load.c:507 plug-ins/file-ico/ico-load.c:674
@@ -2153,8 +2153,8 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-pcx.c:1114 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
 #: plug-ins/common/file-ps.c:1338 plug-ins/common/file-qoi.c:375
-#: plug-ins/common/file-sunras.c:626 plug-ins/common/file-tga.c:1227
-#: plug-ins/common/file-xbm.c:1051 plug-ins/common/file-xpm.c:699
+#: plug-ins/common/file-sunras.c:629 plug-ins/common/file-tga.c:1230
+#: plug-ins/common/file-xbm.c:1051 plug-ins/common/file-xpm.c:705
 #: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
 #: plug-ins/file-fits/fits.c:640 plug-ins/file-fli/fli-gimp.c:784
 #: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1324
@@ -2165,98 +2165,99 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 msgid "Exporting '%s'"
 msgstr "Експортування «%s»"
 
-#: plug-ins/common/file-csource.c:121
+#: plug-ins/common/file-csource.c:122
 msgid "C source code"
 msgstr "Програма на C"
 
-#: plug-ins/common/file-csource.c:124
+#: plug-ins/common/file-csource.c:125
 msgid "Dump image data in RGB(A) format for C source"
 msgstr ""
 "Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
 
-#: plug-ins/common/file-csource.c:126
+#: plug-ins/common/file-csource.c:127
 msgid "CSource cannot be run non-interactively."
 msgstr "CSource не можна запускати у неінтерактивному режимі."
 
-#: plug-ins/common/file-csource.c:141
+#: plug-ins/common/file-csource.c:135
+#| msgid "Source"
+msgid "C-Source"
+msgstr "Початковий код C"
+
+#: plug-ins/common/file-csource.c:144
 msgid "_Prefixed name"
 msgstr "Назва з пре_фіксом"
 
-#: plug-ins/common/file-csource.c:142
+#: plug-ins/common/file-csource.c:145
 msgid "Prefixed name"
 msgstr "Назва з префіксом"
 
-#: plug-ins/common/file-csource.c:147
+#: plug-ins/common/file-csource.c:150
 msgid "Comme_nt"
 msgstr "Ко_ментар"
 
-#: plug-ins/common/file-csource.c:148
+#: plug-ins/common/file-csource.c:151
 msgid "Comment"
 msgstr "Коментар"
 
-#: plug-ins/common/file-csource.c:156
+#: plug-ins/common/file-csource.c:159
 msgid "Save comment to _file"
 msgstr "Зберегти коментар у фа_йлі"
 
-#: plug-ins/common/file-csource.c:157
+#: plug-ins/common/file-csource.c:160
 msgid "Save comment"
 msgstr "Зберегти коментар"
 
-#: plug-ins/common/file-csource.c:162
+#: plug-ins/common/file-csource.c:165
 msgid "Use GLib types (guint_8*)"
 msgstr "Використовувати типи GLib (guint_8*)"
 
-#: plug-ins/common/file-csource.c:163
+#: plug-ins/common/file-csource.c:166
 msgid "Use GLib types"
 msgstr "Використовувати типи GLib"
 
-#: plug-ins/common/file-csource.c:168
+#: plug-ins/common/file-csource.c:171
 msgid "Save alpha channel (RG_BA/RGB)"
 msgstr "Зберегти а_льфа-канал (RGBA/RGB)"
 
-#: plug-ins/common/file-csource.c:169
+#: plug-ins/common/file-csource.c:172
 msgid "Save the alpha channel"
 msgstr "Зберегти альфа-канал"
 
-#: plug-ins/common/file-csource.c:174
+#: plug-ins/common/file-csource.c:177
 msgid "Save as RGB565 (1_6-bit)"
 msgstr "Зберегти як RGB565 (1_6 біт)"
 
-#: plug-ins/common/file-csource.c:175
+#: plug-ins/common/file-csource.c:178
 msgid "Use RGB565 encoding"
 msgstr "Використовувати кодування RGB565"
 
-#: plug-ins/common/file-csource.c:180
+#: plug-ins/common/file-csource.c:183
 msgid "_Use macros instead of struct"
 msgstr "Ви_користовувати макроси замість структур"
 
-#: plug-ins/common/file-csource.c:181
+#: plug-ins/common/file-csource.c:184
 msgid "Use C macros"
 msgstr "Використати макрос C"
 
-#: plug-ins/common/file-csource.c:186
+#: plug-ins/common/file-csource.c:189
 msgid "Use _1 bit Run-Length-Encoding"
 msgstr "Використовувати _1-бітове RLE"
 
-#: plug-ins/common/file-csource.c:187
+#: plug-ins/common/file-csource.c:190
 msgid "Use run-length-encoding"
 msgstr "Використовувати RLE"
 
-#: plug-ins/common/file-csource.c:192
+#: plug-ins/common/file-csource.c:195
 msgid "Opaci_ty"
 msgstr "Неп_розорість"
 
-#: plug-ins/common/file-csource.c:193
+#: plug-ins/common/file-csource.c:196
 msgid "Opacity"
 msgstr "Непрозорість"
 
-#: plug-ins/common/file-csource.c:237
+#: plug-ins/common/file-csource.c:240
 msgid "C source does not support multiple layers."
 msgstr "Для коду C не передбачено підтримку декількох шарів."
-
-#: plug-ins/common/file-csource.c:964
-msgid "Export Image as C-Source"
-msgstr "Експортувати зображення як код мовою Сі"
 
 #: plug-ins/common/file-compressor.c:213
 msgid "gzip archive"
@@ -2350,7 +2351,7 @@ msgstr "І_нтервал"
 msgid "Spacing of the brush"
 msgstr "Інтервал пензля"
 
-#: plug-ins/common/file-gbr.c:157 plug-ins/common/file-pat.c:133
+#: plug-ins/common/file-gbr.c:157 plug-ins/common/file-pat.c:136
 msgid "_Description"
 msgstr "_Опис"
 
@@ -3543,15 +3544,15 @@ msgstr ""
 "Ці параметри доступні лише при експорті зображення, яке містить більш ніж "
 "один шар. Ви ж експортуєте зображення з одним шаром."
 
-#: plug-ins/common/file-pat.c:111
+#: plug-ins/common/file-pat.c:112
 msgid "GIMP pattern"
 msgstr "Текстура GIMP"
 
-#: plug-ins/common/file-pat.c:115
+#: plug-ins/common/file-pat.c:116
 msgid "Exports GIMP pattern file (.PAT)"
 msgstr "Експортує файл текстури GIMP (.PAT)"
 
-#: plug-ins/common/file-pat.c:116
+#: plug-ins/common/file-pat.c:117
 msgid ""
 "New GIMP patterns can be created by exporting them in the appropriate place "
 "with this plug-in."
@@ -3559,17 +3560,17 @@ msgstr ""
 "Нові текстури GIMP може бути створено експортуванням їх до відповідного "
 "місця за допомогою цього додатка."
 
-#: plug-ins/common/file-pat.c:134
+#: plug-ins/common/file-pat.c:127 plug-ins/common/qbist.c:980
+msgid "Pattern"
+msgstr "Текстура"
+
+#: plug-ins/common/file-pat.c:137
 msgid "Short description of the pattern"
 msgstr "Короткий опис текстури"
 
-#: plug-ins/common/file-pat.c:135
+#: plug-ins/common/file-pat.c:138
 msgid "GIMP Pattern"
 msgstr "Текстура GIMP"
-
-#: plug-ins/common/file-pat.c:270
-msgid "Export Image as Pattern"
-msgstr "Експортувати зображення як текстуру"
 
 #: plug-ins/common/file-pcx.c:207 plug-ins/common/file-pcx.c:271
 msgid "ZSoft PCX image"
@@ -4407,7 +4408,7 @@ msgstr "Ч/Б"
 msgid "Gray"
 msgstr "Сірий"
 
-#: plug-ins/common/file-ps.c:3737 plug-ins/common/file-xpm.c:505
+#: plug-ins/common/file-ps.c:3737 plug-ins/common/file-xpm.c:511
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:169
 msgid "Color"
 msgstr "Колір"
@@ -4891,41 +4892,45 @@ msgstr "_R, G, B (звичайний)"
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (у стилі BMP)"
 
-#: plug-ins/common/file-sunras.c:273 plug-ins/common/file-sunras.c:299
+#: plug-ins/common/file-sunras.c:274 plug-ins/common/file-sunras.c:300
 msgid "SUN Rasterfile image"
 msgstr "Зображення SUN Rasterfile"
 
-#: plug-ins/common/file-sunras.c:319
+#: plug-ins/common/file-sunras.c:315
+msgid "SUNRAS"
+msgstr "SUNRAS"
+
+#: plug-ins/common/file-sunras.c:322
 msgid "Data Formatting"
 msgstr "Форматування даних"
 
-#: plug-ins/common/file-sunras.c:320
+#: plug-ins/common/file-sunras.c:323
 msgid "Use standard (0) or Run-Length Encoded (1) output"
 msgstr "Стандартне виведення (0) чи виведення у RLE-кодуванні (1)"
 
-#: plug-ins/common/file-sunras.c:404
+#: plug-ins/common/file-sunras.c:407
 msgid "SUNRAS format does not support multiple layers."
 msgstr "Для формату SUNRAS не передбачено підтримку декількох шарів."
 
-#: plug-ins/common/file-sunras.c:466
+#: plug-ins/common/file-sunras.c:469
 #, c-format
 msgid "Could not open '%s' as SUN-raster-file"
 msgstr "Не вдається відкрити «%s» як файл SUN-raster"
 
-#: plug-ins/common/file-sunras.c:476
+#: plug-ins/common/file-sunras.c:479
 msgid "The type of this SUN-rasterfile is not supported"
 msgstr "Такий тип файлів SUN-raster не підтримується"
 
-#: plug-ins/common/file-sunras.c:505
+#: plug-ins/common/file-sunras.c:508
 #, c-format
 msgid "Could not read color entries from '%s'"
 msgstr "Не вдається зчитати записи кольорів з «%s»"
 
-#: plug-ins/common/file-sunras.c:514
+#: plug-ins/common/file-sunras.c:517
 msgid "Type of colormap not supported"
 msgstr "Не підтримується тип мапи кольорів"
 
-#: plug-ins/common/file-sunras.c:521 plug-ins/common/file-xbm.c:838
+#: plug-ins/common/file-sunras.c:524 plug-ins/common/file-xbm.c:838
 #: plug-ins/common/file-xwd.c:551
 #, c-format
 msgid ""
@@ -4935,7 +4940,7 @@ msgstr ""
 "«%s»:\n"
 "Не вказана ширина зображення"
 
-#: plug-ins/common/file-sunras.c:529 plug-ins/common/file-xbm.c:846
+#: plug-ins/common/file-sunras.c:532 plug-ins/common/file-xbm.c:846
 #: plug-ins/common/file-xwd.c:559
 #, c-format
 msgid ""
@@ -4945,7 +4950,7 @@ msgstr ""
 "«%s»:\n"
 "GIMP не впорається із зображенням такої ширини"
 
-#: plug-ins/common/file-sunras.c:537 plug-ins/common/file-xbm.c:854
+#: plug-ins/common/file-sunras.c:540 plug-ins/common/file-xbm.c:854
 #: plug-ins/common/file-xwd.c:566
 #, c-format
 msgid ""
@@ -4955,7 +4960,7 @@ msgstr ""
 "«%s»:\n"
 "Не вказана висота зображення"
 
-#: plug-ins/common/file-sunras.c:545 plug-ins/common/file-xbm.c:862
+#: plug-ins/common/file-sunras.c:548 plug-ins/common/file-xbm.c:862
 #: plug-ins/common/file-xwd.c:573
 #, c-format
 msgid ""
@@ -4965,39 +4970,35 @@ msgstr ""
 "«%s»:\n"
 "GIMP не впорається із зображенням такої висоти"
 
-#: plug-ins/common/file-sunras.c:581
+#: plug-ins/common/file-sunras.c:584
 msgid "This image depth is not supported"
 msgstr "Глибина цього зображення не підтримується"
 
-#: plug-ins/common/file-sunras.c:610
+#: plug-ins/common/file-sunras.c:613
 msgid "SUNRAS export cannot handle images with alpha channels"
 msgstr "Зображення з альфа-каналами не можна експортувати як SUNRAS"
 
-#: plug-ins/common/file-sunras.c:621
+#: plug-ins/common/file-sunras.c:624
 msgid "Can't operate on unknown image types"
 msgstr "Не можна виконувати дії із зображеннями невідомого типу"
 
-#: plug-ins/common/file-sunras.c:1190 plug-ins/common/file-sunras.c:1285
-#: plug-ins/common/file-sunras.c:1369 plug-ins/common/file-sunras.c:1469
+#: plug-ins/common/file-sunras.c:1193 plug-ins/common/file-sunras.c:1288
+#: plug-ins/common/file-sunras.c:1372 plug-ins/common/file-sunras.c:1472
 #: plug-ins/common/file-xwd.c:1452 plug-ins/common/file-xwd.c:1556
 #: plug-ins/common/file-xwd.c:1716 plug-ins/common/file-xwd.c:1932
 #: plug-ins/common/file-xwd.c:2091 plug-ins/common/file-xwd.c:2355
 msgid "EOF encountered on reading"
 msgstr "Неочікуваний кінець файлу на зчитуванні"
 
-#: plug-ins/common/file-sunras.c:1648 plug-ins/common/file-sunras.c:1769
+#: plug-ins/common/file-sunras.c:1651 plug-ins/common/file-sunras.c:1772
 msgid "Write error occurred"
 msgstr "Помилка при записі"
 
-#: plug-ins/common/file-sunras.c:1789
-msgid "Export Image as SUNRAS"
-msgstr "Експортувати зображення як SUNRAS"
-
-#: plug-ins/common/file-sunras.c:1791
+#: plug-ins/common/file-sunras.c:1795
 msgid "S_tandard"
 msgstr "Ст_андарт"
 
-#: plug-ins/common/file-sunras.c:1792
+#: plug-ins/common/file-sunras.c:1796
 msgid "R_un-Length Encoded"
 msgstr "_RLE-кодування"
 
@@ -5126,54 +5127,54 @@ msgstr ""
 msgid "Merge imported paths"
 msgstr "Об'єднати імпортовані контури"
 
-#: plug-ins/common/file-tga.c:259 plug-ins/common/file-tga.c:285
+#: plug-ins/common/file-tga.c:260 plug-ins/common/file-tga.c:286
 msgid "TarGA image"
 msgstr "Зображення TarGA"
 
-#: plug-ins/common/file-tga.c:302
+#: plug-ins/common/file-tga.c:298
+msgid "TGA"
+msgstr "TGA"
+
+#: plug-ins/common/file-tga.c:305
 msgid "_Use RLE compression"
 msgstr "Ви_користати RLE-стиснення"
 
-#: plug-ins/common/file-tga.c:303
+#: plug-ins/common/file-tga.c:306
 msgid "Use RLE compression"
 msgstr "Використати RLE-стиснення"
 
-#: plug-ins/common/file-tga.c:308
+#: plug-ins/common/file-tga.c:311
 msgid "Ori_gin"
 msgstr "По_чаток координат"
 
-#: plug-ins/common/file-tga.c:309
+#: plug-ins/common/file-tga.c:312
 msgid "Image origin (0 = top-left, 1 = bottom-left)"
 msgstr "Початок координат зображення (0 = вгорі ліворуч, 1 = внизу ліворуч)"
 
-#: plug-ins/common/file-tga.c:391 plug-ins/common/file-xwd.c:442
+#: plug-ins/common/file-tga.c:394 plug-ins/common/file-xwd.c:442
 msgid "TGA format does not support multiple layers."
 msgstr "Для формату TGA не передбачено підтримку декількох шарів."
 
-#: plug-ins/common/file-tga.c:455
+#: plug-ins/common/file-tga.c:458
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "Не вдається прочитати нижній колонтитул з «%s»"
 
-#: plug-ins/common/file-tga.c:474
+#: plug-ins/common/file-tga.c:477
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Не вдається прочитати розширення з «%s»"
 
-#: plug-ins/common/file-tga.c:487
+#: plug-ins/common/file-tga.c:490
 #, c-format
 msgid "Cannot read header from '%s'"
 msgstr "Не вдається зчитати заголовок з «%s»"
 
-#: plug-ins/common/file-tga.c:1447
-msgid "Export Image as TGA"
-msgstr "Експортувати зображення як TGA"
-
-#: plug-ins/common/file-tga.c:1449
+#: plug-ins/common/file-tga.c:1453
 msgid "Bottom left"
 msgstr "Знизу ліворуч"
 
-#: plug-ins/common/file-tga.c:1450
+#: plug-ins/common/file-tga.c:1454
 msgid "Top left"
 msgstr "Згори ліворуч"
 
@@ -5621,38 +5622,39 @@ msgstr ""
 "Це розширення не може обробляти курсори, що мають більше %i різних "
 "номінальних розмірів."
 
-#: plug-ins/common/file-xpm.c:195 plug-ins/common/file-xpm.c:230
+#: plug-ins/common/file-xpm.c:196 plug-ins/common/file-xpm.c:231
 msgid "X PixMap image"
 msgstr "Зображення X PixMap"
 
-#: plug-ins/common/file-xpm.c:256 plug-ins/gradient-flare/gradient-flare.c:3014
+#: plug-ins/common/file-xpm.c:252
+#| msgid "PNM"
+msgid "XPM"
+msgstr "XPM"
+
+#: plug-ins/common/file-xpm.c:259 plug-ins/gradient-flare/gradient-flare.c:3014
 msgid "_Threshold"
 msgstr "П_оріг"
 
-#: plug-ins/common/file-xpm.c:257
+#: plug-ins/common/file-xpm.c:260
 msgid "Alpha threshold"
 msgstr "Поріг альфа-каналу"
 
-#: plug-ins/common/file-xpm.c:339
+#: plug-ins/common/file-xpm.c:342
 msgid "XPM format does not support multiple layers."
 msgstr "Для формату XPM не передбачено підтримку декількох шарів."
 
-#: plug-ins/common/file-xpm.c:393 plug-ins/common/file-xpm.c:848
+#: plug-ins/common/file-xpm.c:396 plug-ins/common/file-xpm.c:854
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Помилка відкривання файлу «%s»"
 
-#: plug-ins/common/file-xpm.c:399 plug-ins/common/file-xpm.c:854
+#: plug-ins/common/file-xpm.c:402 plug-ins/common/file-xpm.c:860
 msgid "XPM file invalid"
 msgstr "Неправильний файл XPM"
 
-#: plug-ins/common/file-xpm.c:689
+#: plug-ins/common/file-xpm.c:695
 msgid "Unsupported drawable type"
 msgstr "Непідтримуваний тип малюнка"
-
-#: plug-ins/common/file-xpm.c:881
-msgid "Export Image as XPM"
-msgstr "Експортувати зображення як XPM"
 
 #: plug-ins/common/file-xwd.c:319 plug-ins/common/file-xwd.c:349
 msgid "X window dump"
@@ -6277,10 +6279,6 @@ msgstr "Збереження файлу QBE"
 #: plug-ins/common/qbist.c:940
 msgid "G-Qbist"
 msgstr "G-Q-біст"
-
-#: plug-ins/common/qbist.c:980
-msgid "Pattern"
-msgstr "Текстура"
 
 #: plug-ins/common/qbist.c:1024
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:683
@@ -7715,12 +7713,10 @@ msgid "Flexible Image Transport System"
 msgstr "Гнучка система передавання зображень (FITS)"
 
 #: plug-ins/file-fits/fits.c:180
-#| msgid "Load file in the IFF file format"
 msgid "Load file of the FITS file format"
 msgstr "Завантажити файл у форматі FITS"
 
 #: plug-ins/file-fits/fits.c:181
-#| msgid "Load file in the QOI file format (Quite OK Image)"
 msgid "Load file of the FITS file format (Flexible Image Transport System)"
 msgstr "Завантажити файл у форматі FITS (Flexible Image Transport System)"
 
@@ -7737,24 +7733,21 @@ msgid "Use DATAMIN/DATAMAX-scaling if possible"
 msgstr "Скористатися DATAMIN/DATAMAX-масштабуванням, якщо можна"
 
 #: plug-ins/file-fits/fits.c:221
-#| msgid "Exports files in the PFM file format"
 msgid "Export file in the FITS file format"
 msgstr "Експортувати файл у форматі FITS"
 
 #: plug-ins/file-fits/fits.c:222
-#| msgid "FITS export cannot handle images with alpha channels"
 msgid ""
 "FITS exporting handles all image types except those with alpha channels."
 msgstr ""
-"Засіб експортування FITS обробляє усі типи зображень, окрім зображень із"
-" каналами прозорості."
+"Засіб експортування FITS обробляє усі типи зображень, окрім зображень із "
+"каналами прозорості."
 
 #: plug-ins/file-fits/fits.c:326
 msgid "FITS format does not support multiple layers."
 msgstr "Для формату FITS не передбачено підтримку декількох шарів."
 
 #: plug-ins/file-fits/fits.c:409
-#| msgid "Error during open of FITS file"
 msgid "Error during opening of FITS file"
 msgstr "Помилка при відкриванні файлу FITS"
 
@@ -7780,7 +7773,6 @@ msgid "White"
 msgstr "Білий"
 
 #: plug-ins/file-fits/fits.c:1003
-#| msgid "By _DATAMIN/DATAMAX"
 msgid "By DATAMIN/DATAMAX"
 msgstr "За DATAMIN/DATAMAX"
 
@@ -14001,6 +13993,21 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Export Image as C-Source"
+#~ msgstr "Експортувати зображення як код мовою Сі"
+
+#~ msgid "Export Image as Pattern"
+#~ msgstr "Експортувати зображення як текстуру"
+
+#~ msgid "Export Image as SUNRAS"
+#~ msgstr "Експортувати зображення як SUNRAS"
+
+#~ msgid "Export Image as TGA"
+#~ msgstr "Експортувати зображення як TGA"
+
+#~ msgid "Export Image as XPM"
+#~ msgstr "Експортувати зображення як XPM"
 
 #~ msgid "_Black"
 #~ msgstr "_Чорний"
