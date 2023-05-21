@@ -175,8 +175,6 @@ tips_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
-  gtk_container_set_focus_chain (GTK_CONTAINER (hbox), NULL);
-
   tip_label = gtk_label_new (NULL);
   gtk_label_set_selectable (GTK_LABEL (tip_label), TRUE);
   gtk_label_set_justify (GTK_LABEL (tip_label), GTK_JUSTIFY_LEFT);

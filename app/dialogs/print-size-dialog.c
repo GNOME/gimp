@@ -100,7 +100,6 @@ print_size_dialog_new (GimpImage              *image,
   GtkWidget       *hbox;
   GtkWidget       *chain;
   GtkAdjustment   *adj;
-  GList           *focus_chain = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -276,14 +275,6 @@ print_size_dialog_new (GimpImage              *image,
   gtk_widget_show (chain);
 
   private->chain = GIMP_CHAIN_BUTTON (chain);
-
-  focus_chain = g_list_prepend (focus_chain, gimp_size_entry_get_unit_combo (GIMP_SIZE_ENTRY (entry)));
-  focus_chain = g_list_prepend (focus_chain, chain);
-  focus_chain = g_list_prepend (focus_chain, height);
-  focus_chain = g_list_prepend (focus_chain, width);
-
-  gtk_container_set_focus_chain (GTK_CONTAINER (entry), focus_chain);
-  g_list_free (focus_chain);
 
   g_signal_connect (private->size_entry, "value-changed",
                     G_CALLBACK (print_size_dialog_size_changed),

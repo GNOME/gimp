@@ -136,12 +136,6 @@ gimp_message_box_init (GimpMessageBox *box)
   gtk_box_set_spacing (GTK_BOX (box), 12);
   gtk_container_set_border_width (GTK_CONTAINER (box), 12);
 
-  /*  Unset the focus chain to keep the labels from being in the focus
-   *  chain.  Users of GimpMessageBox that add focusable widgets should
-   *  either unset the focus chain or (better) explicitly set one.
-   */
-  gtk_container_set_focus_chain (GTK_CONTAINER (box), NULL);
-
   for (i = 0; i < 2; i++)
     {
       GtkWidget *label = g_object_new (GTK_TYPE_LABEL,
