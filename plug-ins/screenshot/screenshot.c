@@ -28,7 +28,6 @@
 
 #include "screenshot.h"
 #include "screenshot-freedesktop.h"
-#include "screenshot-icon.h"
 #include "screenshot-osx.h"
 #include "screenshot-x11.h"
 #include "screenshot-win32.h"
@@ -166,10 +165,8 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
                                       "1998 - 2008",
                                       "v1.1 (2008/04)");
 
-
       gimp_procedure_set_icon_pixbuf (procedure,
-                                      gdk_pixbuf_new_from_inline (-1, screenshot_icon,
-                                                                  FALSE, NULL));
+                                      gdk_pixbuf_new_from_resource ("/org/gimp/screenshot-icons/screenshot-icon.png", NULL));
 
       GIMP_PROC_ARG_ENUM (procedure, "run-mode",
                           "Run mode",
