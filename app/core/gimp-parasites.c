@@ -70,12 +70,30 @@ gimp_parasite_find (Gimp        *gimp,
   return gimp_parasite_list_find (gimp->parasites, name);
 }
 
+static void
+list_func (const gchar    *key,
+           GimpParasite   *parasite,
+           gchar        ***current)
+{
+  *(*current)++ = g_strdup (key);
+}
+
 gchar **
 gimp_parasite_list (Gimp *gimp)
 {
+  gint    count;
+  gchar **list;
+  gchar **current;
+
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  return gimp_parasite_list_list_names (gimp->parasites);
+  count = gimp_parasite_list_length (gimp->parasites);
+
+  list = current = g_new0 (gchar *, count + 1);
+
+  gimp_parasite_list_foreach (gimp->parasites, (GHFunc) list_func, &current);
+
+  return list;
 }
 
 

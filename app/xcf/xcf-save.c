@@ -565,7 +565,7 @@ xcf_save_image_props (XcfInfo    *info,
         }
     }
 
-  if (g_list_model_get_n_items (G_LIST_MODEL (private->parasites)) > 0)
+  if (gimp_parasite_list_length (private->parasites) > 0)
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
                                       private->parasites), ;);
@@ -723,7 +723,7 @@ xcf_save_layer_props (XcfInfo    *info,
 
   parasites = gimp_item_get_parasites (GIMP_ITEM (layer));
 
-  if (g_list_model_get_n_items (G_LIST_MODEL (parasites)) > 0)
+  if (gimp_parasite_list_length (parasites) > 0)
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
                                       parasites), ;);
@@ -790,7 +790,7 @@ xcf_save_channel_props (XcfInfo      *info,
 
   parasites = gimp_item_get_parasites (GIMP_ITEM (channel));
 
-  if (g_list_model_get_n_items (G_LIST_MODEL (parasites)) > 0)
+  if (gimp_parasite_list_length (parasites) > 0)
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
                                       parasites), ;);
@@ -842,7 +842,7 @@ xcf_save_path_props (XcfInfo      *info,
 
   parasites = gimp_item_get_parasites (GIMP_ITEM (vectors));
 
-  if (g_list_model_get_n_items (G_LIST_MODEL (parasites)) > 0)
+  if (gimp_parasite_list_length (parasites) > 0)
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
                                       parasites), ;);
@@ -2438,27 +2438,36 @@ xcf_save_parasite (XcfInfo       *info,
   return TRUE;
 }
 
+typedef struct
+{
+  XcfInfo *info;
+  GError  *error;
+} XcfParasiteData;
+
+static void
+xcf_save_parasite_func (gchar           *key,
+                        GimpParasite    *parasite,
+                        XcfParasiteData *data)
+{
+  if (! data->error)
+    xcf_save_parasite (data->info, parasite, &data->error);
+}
+
 static gboolean
 xcf_save_parasite_list (XcfInfo           *info,
                         GimpParasiteList  *list,
                         GError           **error)
 {
-  GError *err = NULL;
+  XcfParasiteData data;
 
-  for (guint i = 0; i < g_list_model_get_n_items (G_LIST_MODEL (list)); i++)
+  data.info  = info;
+  data.error = NULL;
+
+  gimp_parasite_list_foreach (list, (GHFunc) xcf_save_parasite_func, &data);
+
+  if (data.error)
     {
-      GimpParasite *parasite;
-
-      parasite = g_list_model_get_item (G_LIST_MODEL (list), i);
-      if (err == NULL)
-        xcf_save_parasite (info, parasite, &err);
-
-      g_clear_object (&parasite);
-    }
-
-  if (err != NULL)
-    {
-      g_propagate_error (error, err);
+      g_propagate_error (error, data.error);
       return FALSE;
     }
 

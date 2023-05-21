@@ -2286,15 +2286,35 @@ gimp_item_parasite_find (GimpItem    *item,
   return gimp_parasite_list_find (GET_PRIVATE (item)->parasites, name);
 }
 
+static void
+gimp_item_parasite_list_foreach_func (gchar          *name,
+                                      GimpParasite   *parasite,
+                                      gchar        ***cur)
+{
+  *(*cur)++ = (gchar *) g_strdup (name);
+}
+
 gchar **
 gimp_item_parasite_list (GimpItem *item)
 {
   GimpItemPrivate  *private;
+  gint              count;
+  gchar           **list;
+  gchar           **cur;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
   private = GET_PRIVATE (item);
-  return gimp_parasite_list_list_names (private->parasites);
+
+  count = gimp_parasite_list_length (private->parasites);
+
+  cur = list = g_new0 (gchar *, count + 1);
+
+  gimp_parasite_list_foreach (private->parasites,
+                              (GHFunc) gimp_item_parasite_list_foreach_func,
+                              &cur);
+
+  return list;
 }
 
 gboolean
