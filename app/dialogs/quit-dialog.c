@@ -302,8 +302,6 @@ quit_close_all_dialog_response (GtkWidget  *dialog,
   gboolean  do_quit = private->do_quit;
 
   gtk_widget_destroy (dialog);
-  private->box = NULL;
-  private->dialog = NULL;
 
   if (response_id == GTK_RESPONSE_OK)
     {
