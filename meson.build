@@ -351,7 +351,7 @@ if not babl.found()
   # because it would be a newer version.
   babl            = dependency('babl',               version: '>='+babl_minver)
 endif
-cairo_minver      = '1.12.2'
+cairo_minver      = '1.14.0'
 cairo             = dependency('cairo',              version: '>='+cairo_minver)
 
 # fontconfig_name   = platform_windows ? 'fontconfig_win32' : 'fontconfig'
@@ -381,7 +381,7 @@ conf.set('G_DISABLE_DEPRECATED', glib.version().version_compare('>=2.57'))
 gobject           = dependency('gobject-2.0',        version: '>='+glib_minver)
 gmodule           = dependency('gmodule-no-export-2.0')
 
-gtk3_minver       = '3.16.10'
+gtk3_minver       = '3.24.0'
 gtk3              = dependency('gtk+-3.0',           version: '>='+gtk3_minver)
 harfbuzz_minver   = '1.0.5'
 harfbuzz          = dependency('harfbuzz',           version: '>='+harfbuzz_minver)

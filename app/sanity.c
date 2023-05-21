@@ -171,8 +171,8 @@ static gchar *
 sanity_check_glib (void)
 {
 #define GLIB_REQUIRED_MAJOR 2
-#define GLIB_REQUIRED_MINOR 56
-#define GLIB_REQUIRED_MICRO 2
+#define GLIB_REQUIRED_MINOR 70
+#define GLIB_REQUIRED_MICRO 0
 
   const gchar *mismatch = glib_check_version (GLIB_REQUIRED_MAJOR,
                                               GLIB_REQUIRED_MINOR,
@@ -234,7 +234,7 @@ static gchar *
 sanity_check_pango (void)
 {
 #define PANGO_REQUIRED_MAJOR 1
-#define PANGO_REQUIRED_MINOR 42
+#define PANGO_REQUIRED_MINOR 44
 #define PANGO_REQUIRED_MICRO 0
 
   const gchar *mismatch = pango_version_check (PANGO_REQUIRED_MAJOR,
@@ -273,8 +273,8 @@ sanity_check_fontconfig (void)
   const gint fc_version = FcGetVersion ();
 
 #define FC_REQUIRED_MAJOR 2
-#define FC_REQUIRED_MINOR 2
-#define FC_REQUIRED_MICRO 0
+#define FC_REQUIRED_MINOR 12
+#define FC_REQUIRED_MICRO 4
 
   if (fc_version < ((FC_REQUIRED_MAJOR * 10000) +
                     (FC_REQUIRED_MINOR *   100) +
@@ -421,8 +421,8 @@ sanity_check_gexiv2 (void)
 #ifdef GEXIV2_MAJOR_VERSION
 
 #define GEXIV2_REQUIRED_MAJOR 0
-#define GEXIV2_REQUIRED_MINOR 10
-#define GEXIV2_REQUIRED_MICRO 6
+#define GEXIV2_REQUIRED_MINOR 14
+#define GEXIV2_REQUIRED_MICRO 0
 
   gint gexiv2_version = gexiv2_get_version ();
 
