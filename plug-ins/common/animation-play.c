@@ -735,7 +735,6 @@ build_dialog (GimpPlay *play,
   GtkWidget *main_vbox;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *abox;
   GdkVisual *rgba;
   GAction   *action;
   gint       index;
@@ -788,13 +787,10 @@ build_dialog (GimpPlay *play,
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  /* Alignment for the scrolling window, which can be resized by the user. */
-  abox = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, TRUE, TRUE, 0);
-  gtk_widget_show (abox);
-
   frame = gtk_scrolled_window_new (NULL, NULL);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_widget_set_hexpand (frame, TRUE);
+  gtk_widget_set_vexpand (frame, TRUE);
+  gtk_container_add (GTK_CONTAINER (vbox), frame);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (frame),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_widget_show (frame);
@@ -803,15 +799,10 @@ build_dialog (GimpPlay *play,
   gtk_container_add (GTK_CONTAINER (frame), viewport);
   gtk_widget_show (viewport);
 
-  /* I add the drawing area inside an alignment box to prevent it from being resized. */
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_add (GTK_CONTAINER (viewport), abox);
-  gtk_widget_show (abox);
-
   /* Build a drawing area, with a default size same as the image */
   drawing_area = gtk_drawing_area_new ();
   gtk_widget_add_events (drawing_area, GDK_BUTTON_PRESS_MASK);
-  gtk_container_add (GTK_CONTAINER (abox), drawing_area);
+  gtk_container_add (GTK_CONTAINER (viewport), drawing_area);
   gtk_widget_show (drawing_area);
 
   g_signal_connect (drawing_area, "size-allocate",
