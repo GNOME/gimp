@@ -392,54 +392,6 @@ load_image (GFile            *file,
   return image;
 }
 
-/*  This is the callback used from load_rsvg_pixbuf().  */
-static void
-load_set_size_callback (gint     *width,
-                        gint     *height,
-                        gpointer  data)
-{
-  SvgLoadVals *vals = data;
-
-  if (*width < 1 || *height < 1)
-    {
-      *width  = SVG_DEFAULT_SIZE;
-      *height = SVG_DEFAULT_SIZE;
-    }
-
-  if (!vals->width || !vals->height)
-    return;
-
-  /*  either both arguments negative or none  */
-  if ((vals->width * vals->height) < 0)
-    return;
-
-  if (vals->width > 0)
-    {
-      *width  = vals->width;
-      *height = vals->height;
-    }
-  else
-    {
-      gdouble w      = *width;
-      gdouble h      = *height;
-      gdouble aspect = (gdouble) vals->width / (gdouble) vals->height;
-
-      if (aspect > (w / h))
-        {
-          *height = abs (vals->height);
-          *width  = (gdouble) abs (vals->width) * (w / h) + 0.5;
-        }
-      else
-        {
-          *width  = abs (vals->width);
-          *height = (gdouble) abs (vals->height) / (w / h) + 0.5;
-        }
-
-      vals->width  = *width;
-      vals->height = *height;
-    }
-}
-
 /*  This function renders a pixbuf from an SVG file according to vals.  */
 static GdkPixbuf *
 load_rsvg_pixbuf (GFile            *file,
@@ -449,7 +401,12 @@ load_rsvg_pixbuf (GFile            *file,
                   GError          **error)
 {
   GdkPixbuf  *pixbuf  = NULL;
+  cairo_surface_t *surf = NULL;
+  cairo_t *cr = NULL;
   RsvgHandle *handle;
+  RsvgRectangle viewport = { 0, };
+  guchar *src;
+  gint y;
 
   handle = rsvg_handle_new_from_gfile_sync (file, rsvg_flags, NULL, error);
 
@@ -464,11 +421,40 @@ load_rsvg_pixbuf (GFile            *file,
     }
 
   rsvg_handle_set_dpi (handle, vals->resolution);
-  rsvg_handle_set_size_callback (handle, load_set_size_callback, vals, NULL);
+  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
+                           vals->width, vals->height);
+  surf = cairo_image_surface_create_for_data (gdk_pixbuf_get_pixels (pixbuf),
+                                              CAIRO_FORMAT_ARGB32,
+                                              gdk_pixbuf_get_width (pixbuf),
+                                              gdk_pixbuf_get_height (pixbuf),
+                                              gdk_pixbuf_get_rowstride (pixbuf));
+  cr = cairo_create (surf);
 
-  pixbuf = rsvg_handle_get_pixbuf (handle);
+  viewport.width = vals->width;
+  viewport.height = vals->height;
 
+  rsvg_handle_render_document (handle, cr, &viewport, NULL);
+
+  cairo_destroy (cr);
+  cairo_surface_destroy (surf);
   g_object_unref (handle);
+
+  /* un-premultiply the data */
+  src = gdk_pixbuf_get_pixels (pixbuf);
+
+  for (y = 0; y < vals->height; y++)
+    {
+      guchar *s = src;
+      gint w = vals->width;
+
+      while (w--)
+        {
+          GIMP_CAIRO_ARGB32_GET_PIXEL (s, s[0], s[1], s[2], s[3]);
+          s += 4;
+        }
+
+      src += gdk_pixbuf_get_rowstride (pixbuf);
+    }
 
   return pixbuf;
 }
@@ -667,8 +653,8 @@ load_dialog (GFile            *file,
   SvgLoadVals    vals  =
   {
     SVG_DEFAULT_RESOLUTION,
-    - SVG_PREVIEW_SIZE,
-    - SVG_PREVIEW_SIZE
+    SVG_PREVIEW_SIZE,
+    SVG_PREVIEW_SIZE,
   };
 
   preview = load_rsvg_pixbuf (file, &vals, *rsvg_flags, &allow_retry, &error);
