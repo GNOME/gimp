@@ -144,10 +144,8 @@ gimp_paintbrush_paint (GimpPaintCore    *paint_core,
       {
         if (paintbrush->paint_buffer)
           {
-            g_object_remove_weak_pointer (
-              G_OBJECT (paintbrush->paint_buffer),
-              (gpointer) &paintbrush->paint_buffer);
-
+            g_object_remove_weak_pointer (G_OBJECT (paintbrush->paint_buffer),
+                                          (gpointer) &paintbrush->paint_buffer);
             paintbrush->paint_buffer = NULL;
           }
 
@@ -344,16 +342,14 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
             {
               if (paintbrush->paint_buffer)
                 {
-                  g_object_remove_weak_pointer (
-                    G_OBJECT (paintbrush->paint_buffer),
-                    (gpointer) &paintbrush->paint_buffer);
+                  g_object_remove_weak_pointer (G_OBJECT (paintbrush->paint_buffer),
+                                                (gpointer) &paintbrush->paint_buffer);
                 }
 
               paintbrush->paint_buffer = paint_buffer;
 
-              g_object_add_weak_pointer (
-                G_OBJECT (paintbrush->paint_buffer),
-                (gpointer) &paintbrush->paint_buffer);
+              g_object_add_weak_pointer (G_OBJECT (paintbrush->paint_buffer),
+                                         (gpointer) &paintbrush->paint_buffer);
             }
 
           if (paint_pixmap != paintbrush->paint_pixmap)
