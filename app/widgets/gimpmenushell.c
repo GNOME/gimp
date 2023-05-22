@@ -267,6 +267,7 @@ gimp_menu_shell_get_private (GimpMenuShell *menu_shell)
 static void
 gimp_menu_shell_private_finalize (GimpMenuShellPrivate *priv)
 {
+  g_clear_weak_pointer (&priv->manager);
   g_free (priv->path_prefix);
   g_clear_pointer (&priv->path_regex, g_regex_unref);
   g_clear_object (&priv->model);

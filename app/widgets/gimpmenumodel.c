@@ -146,7 +146,8 @@ static gboolean     gimp_menu_model_ui_removed               (GimpUIManager     
                                                               GimpMenuModel       *model);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpMenuModel, gimp_menu_model, G_TYPE_MENU_MODEL, G_ADD_PRIVATE (GimpMenuModel))
+G_DEFINE_TYPE_WITH_CODE (GimpMenuModel, gimp_menu_model, G_TYPE_MENU_MODEL,
+                         G_ADD_PRIVATE (GimpMenuModel))
 
 #define parent_class gimp_menu_model_parent_class
 
@@ -222,6 +223,7 @@ gimp_menu_model_finalize (GObject *object)
 {
   GimpMenuModel *model = GIMP_MENU_MODEL (object);
 
+  g_clear_weak_pointer (&model->priv->manager);
   g_clear_object (&model->priv->model);
   g_list_free_full (model->priv->items, g_object_unref);
   g_free (model->priv->path);
