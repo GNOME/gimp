@@ -191,10 +191,7 @@ preferences_dialog_create (Gimp *gimp)
                            G_CALLBACK (prefs_config_copy_notify),
                            config, 0);
 
-  prefs_dialog = prefs_dialog_new (gimp, config_copy);
-
-  g_object_add_weak_pointer (G_OBJECT (prefs_dialog),
-                             (gpointer) &prefs_dialog);
+  g_set_weak_pointer (&prefs_dialog, prefs_dialog_new (gimp, config_copy));
 
   g_object_set_data (G_OBJECT (prefs_dialog), "gimp", gimp);
 

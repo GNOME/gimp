@@ -240,12 +240,11 @@ gimp_editor_constructed (GObject *object)
 
   if (editor->priv->menu_factory && editor->priv->menu_identifier)
     {
-      editor->priv->ui_manager =
-        gimp_menu_factory_get_manager (editor->priv->menu_factory,
-                                       editor->priv->menu_identifier,
-                                       editor->priv->popup_data);
-      g_object_add_weak_pointer (G_OBJECT (editor->priv->ui_manager),
-                                 (gpointer) &editor->priv->ui_manager);
+      g_set_weak_pointer
+        (&editor->priv->ui_manager,
+         gimp_menu_factory_get_manager (editor->priv->menu_factory,
+                                        editor->priv->menu_identifier,
+                                        editor->priv->popup_data));
 
       g_signal_connect_object (editor->priv->ui_manager->gimp->config,
                                "notify::theme",
@@ -268,17 +267,9 @@ gimp_editor_dispose (GObject *object)
   GimpEditor *editor = GIMP_EDITOR (object);
 
   g_clear_object (&editor->priv->menu_factory);
-
   g_clear_pointer (&editor->priv->menu_identifier, g_free);
-
   g_clear_pointer (&editor->priv->ui_path, g_free);
-
-  if (editor->priv->ui_manager)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (editor->priv->ui_manager),
-                                    (gpointer) &editor->priv->ui_manager);
-      editor->priv->ui_manager = NULL;
-    }
+  g_clear_weak_pointer (&editor->priv->ui_manager);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -448,19 +439,14 @@ gimp_editor_create_menu (GimpEditor      *editor,
   editor->priv->menu_factory = g_object_ref (menu_factory);
 
   if (editor->priv->ui_manager)
-    {
-      g_signal_handlers_disconnect_by_func (editor->priv->ui_manager->gimp->config,
-                                            G_CALLBACK (gimp_editor_style_updated),
-                                            editor);
-      g_object_remove_weak_pointer (G_OBJECT (editor->priv->ui_manager),
-                                    (gpointer) &editor->priv->ui_manager);
-    }
+    g_signal_handlers_disconnect_by_func (editor->priv->ui_manager->gimp->config,
+                                          G_CALLBACK (gimp_editor_style_updated),
+                                          editor);
 
-  editor->priv->ui_manager = gimp_menu_factory_get_manager (menu_factory,
-                                                            menu_identifier,
-                                                            popup_data);
-  g_object_add_weak_pointer (G_OBJECT (editor->priv->ui_manager),
-                             (gpointer) &editor->priv->ui_manager);
+  g_set_weak_pointer (&editor->priv->ui_manager,
+                      gimp_menu_factory_get_manager (menu_factory,
+                                                     menu_identifier,
+                                                     popup_data));
 
   g_signal_connect_object (editor->priv->ui_manager->gimp->config,
                            "notify::theme",

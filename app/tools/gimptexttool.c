@@ -1848,21 +1848,15 @@ gimp_text_tool_set_image (GimpTextTool *text_tool,
       g_signal_handlers_disconnect_by_func (text_tool->image,
                                             gimp_text_tool_layer_changed,
                                             text_tool);
-
-      g_object_remove_weak_pointer (G_OBJECT (text_tool->image),
-                                    (gpointer) &text_tool->image);
     }
 
-  text_tool->image = image;
+  g_set_weak_pointer (&text_tool->image, image);
 
   if (image)
     {
       GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
       gdouble          xres;
       gdouble          yres;
-
-      g_object_add_weak_pointer (G_OBJECT (text_tool->image),
-                                 (gpointer) &text_tool->image);
 
       g_signal_connect_object (text_tool->image, "selected-layers-changed",
                                G_CALLBACK (gimp_text_tool_layer_changed),

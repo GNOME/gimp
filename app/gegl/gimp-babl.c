@@ -377,9 +377,8 @@ gimp_babl_get_builtin_color_profile (GimpImageBaseType base_type,
         {
           if (! linear_gray_profile)
             {
-              linear_gray_profile = gimp_color_profile_new_d65_gray_linear ();
-              g_object_add_weak_pointer (G_OBJECT (linear_gray_profile),
-                                         (gpointer) &linear_gray_profile);
+              g_set_weak_pointer (&linear_gray_profile,
+                                  gimp_color_profile_new_d65_gray_linear ());
             }
 
           return linear_gray_profile;
@@ -388,9 +387,8 @@ gimp_babl_get_builtin_color_profile (GimpImageBaseType base_type,
         {
           if (! gray_profile)
             {
-              gray_profile = gimp_color_profile_new_d65_gray_srgb_trc ();
-              g_object_add_weak_pointer (G_OBJECT (gray_profile),
-                                         (gpointer) &gray_profile);
+              g_set_weak_pointer (&gray_profile,
+                                  gimp_color_profile_new_d65_gray_srgb_trc ());
             }
 
           return gray_profile;
@@ -402,9 +400,8 @@ gimp_babl_get_builtin_color_profile (GimpImageBaseType base_type,
         {
           if (! linear_rgb_profile)
             {
-              linear_rgb_profile = gimp_color_profile_new_rgb_srgb_linear ();
-              g_object_add_weak_pointer (G_OBJECT (linear_rgb_profile),
-                                         (gpointer) &linear_rgb_profile);
+              g_set_weak_pointer (&linear_rgb_profile,
+                                  gimp_color_profile_new_rgb_srgb_linear ());
             }
 
           return linear_rgb_profile;
@@ -413,9 +410,8 @@ gimp_babl_get_builtin_color_profile (GimpImageBaseType base_type,
         {
           if (! srgb_profile)
             {
-              srgb_profile = gimp_color_profile_new_rgb_srgb ();
-              g_object_add_weak_pointer (G_OBJECT (srgb_profile),
-                                         (gpointer) &srgb_profile);
+              g_set_weak_pointer (&srgb_profile,
+                                  gimp_color_profile_new_rgb_srgb ());
             }
 
           return srgb_profile;

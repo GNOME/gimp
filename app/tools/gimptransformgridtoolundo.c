@@ -105,9 +105,6 @@ gimp_transform_grid_tool_undo_constructed (GObject *object)
   if (tg_tool->original)
     tg_tool_undo->original = tile_manager_ref (tg_tool->original);
 #endif
-
-  g_object_add_weak_pointer (G_OBJECT (tg_tool_undo->tg_tool),
-                             (gpointer) &tg_tool_undo->tg_tool);
 }
 
 static void
@@ -121,7 +118,8 @@ gimp_transform_grid_tool_undo_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_TRANSFORM_TOOL:
-      tg_tool_undo->tg_tool = g_value_get_object (value);
+      g_set_weak_pointer (&tg_tool_undo->tg_tool,
+                          g_value_get_object (value));
       break;
 
     default:
@@ -203,12 +201,7 @@ gimp_transform_grid_tool_undo_free (GimpUndo     *undo,
 {
   GimpTransformGridToolUndo *tg_tool_undo = GIMP_TRANSFORM_GRID_TOOL_UNDO (undo);
 
-  if (tg_tool_undo->tg_tool)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (tg_tool_undo->tg_tool),
-                                    (gpointer) &tg_tool_undo->tg_tool);
-      tg_tool_undo->tg_tool = NULL;
-    }
+  g_clear_weak_pointer (&tg_tool_undo->tg_tool);
 
 #if 0
   if (tg_tool_undo->original)

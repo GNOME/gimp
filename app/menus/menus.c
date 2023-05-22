@@ -514,9 +514,9 @@ menus_get_global_menu_factory (Gimp *gimp)
 
   if (global_menu_factory == NULL && ! created)
     {
-      global_menu_factory = gimp_menu_factory_new (gimp, global_action_factory);
-      g_object_add_weak_pointer (G_OBJECT (global_menu_factory),
-                                 (gpointer *) &global_menu_factory);
+      g_set_weak_pointer (&global_menu_factory,
+                          gimp_menu_factory_new (gimp, global_action_factory));
+
       created = TRUE;
     }
 

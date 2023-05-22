@@ -490,13 +490,11 @@ gimp_dynamics_get_standard (GimpContext *context)
 
   if (! standard_dynamics)
     {
-      standard_dynamics = gimp_dynamics_new (context, "Standard dynamics");
+      g_set_weak_pointer (&standard_dynamics,
+                          gimp_dynamics_new (context, "Standard dynamics"));
 
       gimp_data_clean (standard_dynamics);
       gimp_data_make_internal (standard_dynamics, "gimp-dynamics-standard");
-
-      g_object_add_weak_pointer (G_OBJECT (standard_dynamics),
-                                 (gpointer *) &standard_dynamics);
     }
 
   return standard_dynamics;

@@ -76,12 +76,7 @@ gimp_tool_dialog_dispose (GObject *object)
 {
   GimpToolDialogPrivate *private = GET_PRIVATE (object);
 
-  if (private->shell)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (private->shell),
-                                    (gpointer) &private->shell);
-      private->shell = NULL;
-    }
+  g_clear_weak_pointer (&private->shell);
 
   G_OBJECT_CLASS (gimp_tool_dialog_parent_class)->dispose (object);
 }
@@ -179,8 +174,6 @@ gimp_tool_dialog_set_shell (GimpToolDialog   *tool_dialog,
 
   if (private->shell)
     {
-      g_object_remove_weak_pointer (G_OBJECT (private->shell),
-                                    (gpointer) &private->shell);
       g_signal_handlers_disconnect_by_func (private->shell,
                                             gimp_tool_dialog_shell_unmap,
                                             tool_dialog);
@@ -188,7 +181,7 @@ gimp_tool_dialog_set_shell (GimpToolDialog   *tool_dialog,
       gtk_window_set_transient_for (GTK_WINDOW (tool_dialog), NULL);
     }
 
-  private->shell = shell;
+  g_set_weak_pointer (&private->shell, shell);
 
   if (private->shell)
     {
@@ -200,8 +193,6 @@ gimp_tool_dialog_set_shell (GimpToolDialog   *tool_dialog,
       g_signal_connect_object (private->shell, "unmap",
                                G_CALLBACK (gimp_tool_dialog_shell_unmap),
                                tool_dialog, 0);
-      g_object_add_weak_pointer (G_OBJECT (private->shell),
-                                 (gpointer) &private->shell);
     }
 }
 

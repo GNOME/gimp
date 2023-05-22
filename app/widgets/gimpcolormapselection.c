@@ -721,8 +721,6 @@ gimp_colormap_selection_image_changed (GimpColormapSelection *selection,
 {
   if (selection->active_image)
     {
-      g_object_remove_weak_pointer (G_OBJECT (selection->active_image),
-                                    (gpointer) &selection->active_image);
       g_signal_handlers_disconnect_by_func (selection->active_image,
                                             G_CALLBACK (gtk_widget_queue_draw),
                                             selection);
@@ -758,11 +756,11 @@ gimp_colormap_selection_image_changed (GimpColormapSelection *selection,
             }
         }
     }
-  selection->active_image = image;
+
+  g_set_weak_pointer (&selection->active_image, image);
+
   if (image)
     {
-      g_object_add_weak_pointer (G_OBJECT (selection->active_image),
-                                 (gpointer) &selection->active_image);
       g_signal_connect_swapped (image, "colormap-changed",
                                 G_CALLBACK (gtk_widget_queue_draw),
                                 selection);
@@ -770,6 +768,7 @@ gimp_colormap_selection_image_changed (GimpColormapSelection *selection,
                                 G_CALLBACK (gimp_colormap_selection_set_palette),
                                 selection);
     }
+
   gimp_colormap_selection_set_palette (selection);
   gtk_widget_queue_draw (GTK_WIDGET (selection));
 }
@@ -786,25 +785,22 @@ gimp_colormap_selection_set_palette (GimpColormapSelection *selection)
     {
       if (selection->active_palette)
         {
-          g_object_remove_weak_pointer (G_OBJECT (selection->active_palette),
-                                        (gpointer) &selection->active_palette);
           g_signal_handlers_disconnect_by_func (selection->active_palette,
                                                 G_CALLBACK (gtk_widget_queue_draw),
                                                 selection);
           gimp_view_set_viewable (GIMP_VIEW (selection->view), NULL);
           gtk_adjustment_set_upper (selection->index_adjustment, 0);
         }
-      selection->active_palette = palette;
+
+      g_set_weak_pointer (&selection->active_palette, palette);
+
       if (palette)
         {
-          g_object_add_weak_pointer (G_OBJECT (selection->active_palette),
-                                     (gpointer) &selection->active_palette);
           g_signal_connect_swapped (palette, "dirty",
                                     G_CALLBACK (gtk_widget_queue_draw),
                                     selection);
           gimp_view_set_viewable (GIMP_VIEW (selection->view),
                                   GIMP_VIEWABLE (palette));
-
           gtk_adjustment_set_upper (selection->index_adjustment,
                                     gimp_image_get_colormap_size (selection->active_image) - 1);
         }

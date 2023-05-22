@@ -238,7 +238,7 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  list->add_button = gtk_button_new ();
+  g_set_weak_pointer (&list->add_button, gtk_button_new ());
   gtk_box_pack_start (GTK_BOX (vbox), list->add_button, TRUE, FALSE, 0);
   gtk_widget_set_sensitive (list->add_button, FALSE);
   gtk_widget_show (list->add_button);
@@ -252,10 +252,7 @@ gimp_controller_list_init (GimpControllerList *list)
                     G_CALLBACK (gimp_controller_list_add_clicked),
                     list);
 
-  g_object_add_weak_pointer (G_OBJECT (list->add_button),
-                             (gpointer) &list->add_button);
-
-  list->remove_button = gtk_button_new ();
+  g_set_weak_pointer (&list->remove_button, gtk_button_new ());
   gtk_box_pack_start (GTK_BOX (vbox), list->remove_button, TRUE, FALSE, 0);
   gtk_widget_set_sensitive (list->remove_button, FALSE);
   gtk_widget_show (list->remove_button);
@@ -268,9 +265,6 @@ gimp_controller_list_init (GimpControllerList *list)
   g_signal_connect (list->remove_button, "clicked",
                     G_CALLBACK (gimp_controller_list_remove_clicked),
                     list);
-
-  g_object_add_weak_pointer (G_OBJECT (list->remove_button),
-                             (gpointer) &list->remove_button);
 
   gtk_icon_size_lookup (icon_size, &icon_width, &icon_height);
   list->dest = gimp_container_tree_view_new (NULL, NULL, icon_height, 0);

@@ -265,9 +265,8 @@ gimp_measure_tool_button_press (GimpTool            *tool,
       if (options->use_info_window ||
           ! gimp_display_shell_get_show_statusbar (shell))
         {
-          measure->gui = gimp_measure_tool_dialog_new (measure);
-          g_object_add_weak_pointer (G_OBJECT (measure->gui),
-                                     (gpointer) &measure->gui);
+          g_set_weak_pointer (&measure->gui,
+                              gimp_measure_tool_dialog_new (measure));
         }
     }
 

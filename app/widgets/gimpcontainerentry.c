@@ -224,12 +224,7 @@ gimp_container_entry_finalize (GObject *object)
 {
   GimpContainerEntry *entry = GIMP_CONTAINER_ENTRY (object);
 
-  if (entry->viewable)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (entry->viewable),
-                                    (gpointer) &entry->viewable);
-      entry->viewable = NULL;
-    }
+  g_clear_weak_pointer (&entry->viewable);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -331,19 +326,10 @@ gimp_container_entry_select_items (GimpContainerView   *view,
                                    gimp_container_entry_changed,
                                    view);
 
-  if (container_entry->viewable)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (container_entry->viewable),
-                                    (gpointer) &container_entry->viewable);
-      container_entry->viewable = NULL;
-    }
+  g_set_weak_pointer (&container_entry->viewable, viewable);
 
   if (viewable)
     {
-      container_entry->viewable = viewable;
-      g_object_add_weak_pointer (G_OBJECT (container_entry->viewable),
-                                 (gpointer) &container_entry->viewable);
-
       gtk_entry_set_icon_from_icon_name (entry,
                                          GTK_ENTRY_ICON_SECONDARY,
                                          NULL);
@@ -415,24 +401,14 @@ gimp_container_entry_changed (GtkEntry          *entry,
   if (! container)
     return;
 
-  if (container_entry->viewable)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (container_entry->viewable),
-                                    (gpointer) &container_entry->viewable);
-      container_entry->viewable = NULL;
-    }
-
   text = gtk_entry_get_text (entry);
-
   object = gimp_container_get_child_by_name (container, text);
 
-  if (object)
-    {
-      container_entry->viewable = GIMP_VIEWABLE (object);
-      g_object_add_weak_pointer (G_OBJECT (container_entry->viewable),
-                                 (gpointer) &container_entry->viewable);
+  g_set_weak_pointer (&container_entry->viewable, GIMP_VIEWABLE (object));
 
-      gimp_container_view_item_selected (view, GIMP_VIEWABLE (object));
+  if (container_entry->viewable)
+    {
+      gimp_container_view_item_selected (view, container_entry->viewable);
 
       gtk_entry_set_icon_from_icon_name (entry,
                                          GTK_ENTRY_ICON_SECONDARY,

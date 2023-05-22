@@ -109,20 +109,21 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                               "value", fabs (shell->other_scale),
                               NULL);
 
-  shell->scale_dialog =
-    gimp_viewable_dialog_new (g_list_prepend (NULL, image),
-                              gimp_get_user_context (shell->display->gimp),
-                              _("Zoom Ratio"), "display_scale",
-                              "zoom-original",
-                              _("Select Zoom Ratio"),
-                              GTK_WIDGET (shell),
-                              gimp_standard_help_func,
-                              GIMP_HELP_VIEW_ZOOM_OTHER,
+  g_set_weak_pointer
+    (&shell->scale_dialog,
+     gimp_viewable_dialog_new (g_list_prepend (NULL, image),
+                               gimp_get_user_context (shell->display->gimp),
+                               _("Zoom Ratio"), "display_scale",
+                               "zoom-original",
+                               _("Select Zoom Ratio"),
+                               GTK_WIDGET (shell),
+                               gimp_standard_help_func,
+                               GIMP_HELP_VIEW_ZOOM_OTHER,
 
-                              _("_Cancel"), GTK_RESPONSE_CANCEL,
-                              _("_OK"),     GTK_RESPONSE_OK,
+                               _("_Cancel"), GTK_RESPONSE_CANCEL,
+                               _("_OK"),     GTK_RESPONSE_OK,
 
-                              NULL);
+                               NULL));
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (shell->scale_dialog),
                                            GTK_RESPONSE_OK,
@@ -133,9 +134,6 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                      (GWeakNotify) gimp_display_shell_scale_dialog_free, data);
   g_object_weak_ref (G_OBJECT (shell->scale_dialog),
                      (GWeakNotify) g_object_unref, data->model);
-
-  g_object_add_weak_pointer (G_OBJECT (shell->scale_dialog),
-                             (gpointer) &shell->scale_dialog);
 
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
 

@@ -107,9 +107,7 @@ gimp_canvas_canvas_boundary_finalize (GObject *object)
 {
   GimpCanvasCanvasBoundaryPrivate *private = GET_PRIVATE (object);
 
-  if (private->image)
-    g_object_remove_weak_pointer (G_OBJECT (private->image),
-                                  (gpointer) &private->image);
+  g_clear_weak_pointer (&private->image);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -125,13 +123,7 @@ gimp_canvas_canvas_boundary_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_IMAGE:
-      if (private->image)
-        g_object_remove_weak_pointer (G_OBJECT (private->image),
-                                      (gpointer) &private->image);
-      private->image = g_value_get_object (value); /* don't ref */
-      if (private->image)
-        g_object_add_weak_pointer (G_OBJECT (private->image),
-                                   (gpointer) &private->image);
+      g_set_weak_pointer (&private->image, g_value_get_object (value));
       break;
 
     default:

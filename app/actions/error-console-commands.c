@@ -110,8 +110,7 @@ error_console_save_cmd_callback (GimpAction *action,
 
       console->save_selection = selection;
 
-      g_object_add_weak_pointer (G_OBJECT (dialog),
-                                 (gpointer) &console->file_dialog);
+      g_set_weak_pointer (&console->file_dialog, dialog);
 
       gtk_window_set_screen (GTK_WINDOW (dialog),
                              gtk_widget_get_screen (GTK_WIDGET (console)));

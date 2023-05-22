@@ -258,13 +258,11 @@ gimp_pattern_get_standard (GimpContext *context)
 
   if (! standard_pattern)
     {
-      standard_pattern = gimp_pattern_new (context, "Standard");
+      g_set_weak_pointer (&standard_pattern,
+                          gimp_pattern_new (context, "Standard"));
 
       gimp_data_clean (standard_pattern);
       gimp_data_make_internal (standard_pattern, "gimp-pattern-standard");
-
-      g_object_add_weak_pointer (G_OBJECT (standard_pattern),
-                                 (gpointer *) &standard_pattern);
     }
 
   return standard_pattern;

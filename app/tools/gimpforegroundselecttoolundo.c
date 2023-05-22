@@ -94,9 +94,6 @@ gimp_foreground_select_tool_undo_constructed (GObject *object)
   fg_select_tool_undo = GIMP_FOREGROUND_SELECT_TOOL_UNDO (object);
 
   gimp_assert (GIMP_IS_FOREGROUND_SELECT_TOOL (fg_select_tool_undo->foreground_select_tool));
-
-  g_object_add_weak_pointer (G_OBJECT (fg_select_tool_undo->foreground_select_tool),
-                             (gpointer) &fg_select_tool_undo->foreground_select_tool);
 }
 
 static void
@@ -111,7 +108,8 @@ gimp_foreground_select_tool_undo_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_FOREGROUND_SELECT_TOOL:
-      fg_select_tool_undo->foreground_select_tool = g_value_get_object (value);
+      g_set_weak_pointer (&fg_select_tool_undo->foreground_select_tool,
+                          g_value_get_object (value));
       break;
 
     default:
@@ -155,12 +153,7 @@ gimp_foreground_select_tool_undo_free (GimpUndo     *undo,
 {
   GimpForegroundSelectToolUndo *fg_select_tool_undo = GIMP_FOREGROUND_SELECT_TOOL_UNDO (undo);
 
-  if (fg_select_tool_undo->foreground_select_tool)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (fg_select_tool_undo->foreground_select_tool),
-                                    (gpointer) &fg_select_tool_undo->foreground_select_tool);
-      fg_select_tool_undo->foreground_select_tool = NULL;
-    }
+  g_clear_weak_pointer (&fg_select_tool_undo->foreground_select_tool);
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

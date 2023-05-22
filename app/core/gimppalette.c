@@ -294,13 +294,11 @@ gimp_palette_get_standard (GimpContext *context)
 
   if (! standard_palette)
     {
-      standard_palette = gimp_palette_new (context, "Standard");
+      g_set_weak_pointer (&standard_palette,
+                          gimp_palette_new (context, "Standard"));
 
       gimp_data_clean (standard_palette);
       gimp_data_make_internal (standard_palette, "gimp-palette-standard");
-
-      g_object_add_weak_pointer (G_OBJECT (standard_palette),
-                                 (gpointer *) &standard_palette);
     }
 
   return standard_palette;

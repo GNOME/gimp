@@ -387,8 +387,7 @@ gimp_filter_tool_controller_free (Controller *controller)
     {
       g_signal_handlers_disconnect_by_data (controller->widget, controller);
 
-      g_object_remove_weak_pointer (G_OBJECT (controller->widget),
-                                    (gpointer) &controller->widget);
+      g_clear_weak_pointer (&controller->widget);
     }
 
   g_slice_free (Controller, controller);

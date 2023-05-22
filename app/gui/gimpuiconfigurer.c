@@ -223,6 +223,7 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer *ui_configurer,
         dock_columns = gimp_image_window_get_right_docks (uber_image_window);
 
       dock_container = GIMP_DOCK_CONTAINER (dock_window);
+
       g_object_add_weak_pointer (G_OBJECT (dock_window),
                                  (gpointer) &dock_window);
 

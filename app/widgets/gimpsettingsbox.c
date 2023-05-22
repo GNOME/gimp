@@ -633,17 +633,16 @@ gimp_settings_box_manage_activate (GtkWidget       *widget,
 
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
 
-  private->editor_dialog = gimp_dialog_new (_("Manage Saved Presets"),
-                                            "gimp-settings-editor-dialog",
-                                            toplevel, 0,
-                                            NULL, NULL,
+  g_set_weak_pointer (&private->editor_dialog,
+                      gimp_dialog_new (_("Manage Saved Presets"),
+                                       "gimp-settings-editor-dialog",
+                                       toplevel, 0,
+                                       NULL, NULL,
 
-                                            _("_Close"), GTK_RESPONSE_CLOSE,
+                                       _("_Close"), GTK_RESPONSE_CLOSE,
 
-                                            NULL);
+                                       NULL));
 
-  g_object_add_weak_pointer (G_OBJECT (private->editor_dialog),
-                             (gpointer) &private->editor_dialog);
   g_signal_connect_object (toplevel, "unmap",
                            G_CALLBACK (gimp_settings_box_toplevel_unmap),
                            private->editor_dialog, 0);
@@ -703,7 +702,7 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
 
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
 
-  private->file_dialog = dialog =
+  dialog =
     gtk_file_chooser_dialog_new (title, GTK_WINDOW (toplevel),
                                  save ?
                                  GTK_FILE_CHOOSER_ACTION_SAVE :
@@ -714,6 +713,8 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
                                  _("_Save") : _("_Open"), GTK_RESPONSE_OK,
 
                                  NULL);
+
+  g_set_weak_pointer (&private->file_dialog, dialog);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
@@ -727,8 +728,6 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
   gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
 
-  g_object_add_weak_pointer (G_OBJECT (dialog),
-                             (gpointer) &private->file_dialog);
   g_signal_connect_object (toplevel, "unmap",
                            G_CALLBACK (gimp_settings_box_toplevel_unmap),
                            dialog, 0);

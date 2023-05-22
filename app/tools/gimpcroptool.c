@@ -648,18 +648,12 @@ gimp_crop_tool_image_changed (GimpCropTool *crop_tool,
       g_signal_handlers_disconnect_by_func (crop_tool->current_image,
                                             gimp_crop_tool_image_selected_layers_changed,
                                             NULL);
-
-      g_object_remove_weak_pointer (G_OBJECT (crop_tool->current_image),
-                                    (gpointer) &crop_tool->current_image);
     }
 
-  crop_tool->current_image = image;
+  g_set_weak_pointer (&crop_tool->current_image, image);
 
   if (crop_tool->current_image)
     {
-      g_object_add_weak_pointer (G_OBJECT (crop_tool->current_image),
-                                 (gpointer) &crop_tool->current_image);
-
       g_signal_connect_object (crop_tool->current_image, "size-changed",
                                G_CALLBACK (gimp_crop_tool_image_size_changed),
                                crop_tool,
@@ -699,8 +693,7 @@ gimp_crop_tool_image_selected_layers_changed (GimpCropTool *crop_tool)
                                                     gimp_crop_tool_layer_size_changed,
                                                     NULL);
 
-              g_object_remove_weak_pointer (G_OBJECT (iter->data),
-                                            (gpointer) &iter->data);
+              g_clear_weak_pointer (&iter->data);
             }
         }
       g_list_free (crop_tool->current_layers);
@@ -721,6 +714,7 @@ gimp_crop_tool_image_selected_layers_changed (GimpCropTool *crop_tool)
     {
       for (iter = crop_tool->current_layers; iter; iter = iter->next)
         {
+          /* NOT g_set_weak_pointer() because the pointer is already set */
           g_object_add_weak_pointer (G_OBJECT (iter->data),
                                      (gpointer) &iter->data);
 

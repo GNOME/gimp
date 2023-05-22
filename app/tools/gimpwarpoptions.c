@@ -382,14 +382,12 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 3.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
 
-  options->animate_button = gtk_button_new_with_label (_("Create Animation"));
+  g_set_weak_pointer (&options->animate_button,
+                      gtk_button_new_with_label (_("Create Animation")));
   gtk_widget_set_sensitive (options->animate_button, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox2), options->animate_button,
                       FALSE, FALSE, 0);
   gtk_widget_show (options->animate_button);
-
-  g_object_add_weak_pointer (G_OBJECT (options->animate_button),
-                             (gpointer) &options->animate_button);
 
   return vbox;
 }

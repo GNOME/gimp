@@ -479,9 +479,7 @@ gimp_paint_options_dispose (GObject *object)
       g_signal_handlers_disconnect_by_func (options->brush,
                                             gimp_paint_options_brush_notify,
                                             options);
-      g_object_remove_weak_pointer (G_OBJECT (options->brush),
-                                    (gpointer) &options->brush);
-      options->brush = NULL;
+      g_clear_weak_pointer (&options->brush);
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -807,16 +805,12 @@ gimp_paint_options_brush_changed (GimpContext *context,
           g_signal_handlers_disconnect_by_func (options->brush,
                                                 gimp_paint_options_brush_notify,
                                                 options);
-          g_object_remove_weak_pointer (G_OBJECT (options->brush),
-                                        (gpointer) &options->brush);
         }
 
-      options->brush = brush;
+      g_set_weak_pointer (&options->brush, brush);
 
       if (options->brush)
         {
-          g_object_add_weak_pointer (G_OBJECT (options->brush),
-                                     (gpointer) &options->brush);
           g_signal_connect_object (options->brush, "notify",
                                    G_CALLBACK (gimp_paint_options_brush_notify),
                                    options, 0);

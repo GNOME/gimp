@@ -377,24 +377,16 @@ gimp_tool_gui_set_shell (GimpToolGui      *gui,
     return;
 
   if (private->shell)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (private->shell),
-                                    (gpointer) &private->shell);
-      g_signal_handlers_disconnect_by_func (private->shell->canvas,
-                                            gimp_tool_gui_canvas_resized,
-                                            gui);
-    }
+    g_signal_handlers_disconnect_by_func (private->shell->canvas,
+                                          gimp_tool_gui_canvas_resized,
+                                          gui);
 
-  private->shell = shell;
+  g_set_weak_pointer (&private->shell, shell);
 
   if (private->shell)
-    {
-      g_signal_connect (private->shell->canvas, "size-allocate",
-                        G_CALLBACK (gimp_tool_gui_canvas_resized),
-                        gui);
-      g_object_add_weak_pointer (G_OBJECT (private->shell),
-                                 (gpointer) &private->shell);
-    }
+    g_signal_connect (private->shell->canvas, "size-allocate",
+                      G_CALLBACK (gimp_tool_gui_canvas_resized),
+                      gui);
 
   gimp_tool_gui_update_shell (gui);
 }
@@ -428,11 +420,7 @@ gimp_tool_gui_set_viewables (GimpToolGui *gui,
   if (private->viewables)
     {
       for (iter = private->viewables; iter; iter = iter->next)
-        {
-          if (iter->data)
-            g_object_remove_weak_pointer (G_OBJECT (iter->data),
-                                          (gpointer) &iter->data);
-        }
+        g_clear_weak_pointer (&iter->data);
 
       g_list_free (private->viewables);
     }
@@ -442,6 +430,7 @@ gimp_tool_gui_set_viewables (GimpToolGui *gui,
   if (private->viewables)
     {
       for (iter = private->viewables; iter; iter = iter->next)
+        /* NOT g_set_weak_pointer() because the pointer is alrerady set */
         g_object_add_weak_pointer (G_OBJECT (iter->data),
                                    (gpointer) &iter->data);
     }

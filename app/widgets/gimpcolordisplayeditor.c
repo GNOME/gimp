@@ -349,12 +349,7 @@ gimp_color_display_editor_dispose (GObject *object)
 {
   GimpColorDisplayEditor *editor = GIMP_COLOR_DISPLAY_EDITOR (object);
 
-  if (editor->selected)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (editor->selected),
-                                    (gpointer) &editor->selected);
-      editor->selected = NULL;
-    }
+  g_clear_weak_pointer (&editor->selected);
 
   g_clear_object (&editor->stack);
   g_clear_object (&editor->config);
@@ -547,12 +542,7 @@ gimp_color_display_editor_dest_changed (GtkTreeSelection       *sel,
   GimpColorDisplay *display = NULL;
   gchar            *tip     = NULL;
 
-  if (editor->selected)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (editor->selected),
-                                    (gpointer) &editor->selected);
-      editor->selected = NULL;
-    }
+  g_clear_weak_pointer (&editor->selected);
 
   if (gtk_tree_selection_get_selected (sel, &model, &iter))
     {
@@ -580,10 +570,7 @@ gimp_color_display_editor_dest_changed (GtkTreeSelection       *sel,
 
   if (display)
     {
-      editor->selected = display;
-
-      g_object_add_weak_pointer (G_OBJECT (display),
-                                 (gpointer) &editor->selected);
+      g_set_weak_pointer (&editor->selected, display);
 
       editor->config_widget = gimp_color_display_configure (display);
 

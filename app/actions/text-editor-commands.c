@@ -77,8 +77,7 @@ text_editor_load_cmd_callback (GimpAction *action,
       gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
       gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
 
-      g_object_add_weak_pointer (G_OBJECT (dialog),
-                                 (gpointer) &editor->file_dialog);
+      g_set_weak_pointer (&editor->file_dialog, dialog);
 
       g_signal_connect (dialog, "response",
                         G_CALLBACK (text_editor_load_response),

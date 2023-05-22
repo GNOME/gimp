@@ -713,10 +713,8 @@ gimp_modifiers_editor_search_clicked (GtkWidget           *button,
                                G_CALLBACK (gimp_controller_modifiers_action_activated),
                                edit_dialog, 0);
 
-      editor->priv->action_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (GIMP_ACTION_EDITOR (view)->view));
-
-      g_object_add_weak_pointer (G_OBJECT (editor->priv->action_selection),
-                                 (gpointer) &editor->priv->action_selection);
+      g_set_weak_pointer (&editor->priv->action_selection,
+                          gtk_tree_view_get_selection (GTK_TREE_VIEW (GIMP_ACTION_EDITOR (view)->view)));
 
       gtk_widget_show (edit_dialog);
 

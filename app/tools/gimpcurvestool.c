@@ -493,12 +493,9 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   store = gimp_enum_store_new_with_range (GIMP_TYPE_HISTOGRAM_CHANNEL,
                                           GIMP_HISTOGRAM_VALUE,
                                           GIMP_HISTOGRAM_ALPHA);
-  tool->channel_menu =
-    gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
+  g_set_weak_pointer (&tool->channel_menu,
+                      gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store)));
   g_object_unref (store);
-
-  g_object_add_weak_pointer (G_OBJECT (tool->channel_menu),
-                             (gpointer) &tool->channel_menu);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->channel_menu),
                                  config->channel);
@@ -568,10 +565,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_grid_attach (GTK_GRID (grid), frame, 1, 0, 1, 1);
   gtk_widget_show (frame);
 
-  tool->graph = gimp_curve_view_new ();
-
-  g_object_add_weak_pointer (G_OBJECT (tool->graph),
-                             (gpointer) &tool->graph);
+  g_set_weak_pointer (&tool->graph, gimp_curve_view_new ());
 
   gimp_curve_view_set_range_x (GIMP_CURVE_VIEW (tool->graph), 0, 255);
   gimp_curve_view_set_range_y (GIMP_CURVE_VIEW (tool->graph), 0, 255);

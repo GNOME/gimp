@@ -92,9 +92,6 @@ gimp_paint_core_undo_constructed (GObject *object)
   gimp_assert (GIMP_IS_PAINT_CORE (paint_core_undo->paint_core));
 
   paint_core_undo->last_coords = paint_core_undo->paint_core->start_coords;
-
-  g_object_add_weak_pointer (G_OBJECT (paint_core_undo->paint_core),
-                             (gpointer) &paint_core_undo->paint_core);
 }
 
 static void
@@ -108,7 +105,8 @@ gimp_paint_core_undo_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_PAINT_CORE:
-      paint_core_undo->paint_core = g_value_get_object (value);
+      g_set_weak_pointer (&paint_core_undo->paint_core,
+                          g_value_get_object (value));
       break;
 
     default:
@@ -163,12 +161,7 @@ gimp_paint_core_undo_free (GimpUndo     *undo,
 {
   GimpPaintCoreUndo *paint_core_undo = GIMP_PAINT_CORE_UNDO (undo);
 
-  if (paint_core_undo->paint_core)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (paint_core_undo->paint_core),
-                                    (gpointer) &paint_core_undo->paint_core);
-      paint_core_undo->paint_core = NULL;
-    }
+  g_clear_weak_pointer (&paint_core_undo->paint_core);
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

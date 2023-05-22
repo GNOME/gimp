@@ -1177,15 +1177,7 @@ image_convert_indexed_callback (GtkWidget              *dialog,
                 "image-convert-indexed-dither-text-layers", dither_text_layers,
                 NULL);
 
-  if (image_convert_indexed_custom_palette)
-    g_object_remove_weak_pointer (G_OBJECT (image_convert_indexed_custom_palette),
-                                  (gpointer) &image_convert_indexed_custom_palette);
-
-  image_convert_indexed_custom_palette = custom_palette;
-
-  if (image_convert_indexed_custom_palette)
-    g_object_add_weak_pointer (G_OBJECT (image_convert_indexed_custom_palette),
-                               (gpointer) &image_convert_indexed_custom_palette);
+  g_set_weak_pointer (&image_convert_indexed_custom_palette, custom_palette);
 
   progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
                                   _("Converting to indexed colors"));

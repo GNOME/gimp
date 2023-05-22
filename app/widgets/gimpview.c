@@ -585,9 +585,6 @@ gimp_view_real_set_viewable (GimpView     *view,
 
   if (view->viewable)
     {
-      g_object_remove_weak_pointer (G_OBJECT (view->viewable),
-                                    (gpointer) &view->viewable);
-
       if (! viewable && ! view->renderer->is_popup)
         {
           if (gimp_dnd_viewable_source_remove (GTK_WIDGET (view),
@@ -620,13 +617,8 @@ gimp_view_real_set_viewable (GimpView     *view,
     }
 
   gimp_view_renderer_set_viewable (view->renderer, viewable);
-  view->viewable = viewable;
 
-  if (view->viewable)
-    {
-      g_object_add_weak_pointer (G_OBJECT (view->viewable),
-                                 (gpointer) &view->viewable);
-    }
+  g_set_weak_pointer (&view->viewable, viewable);
 }
 
 /*  public functions  */

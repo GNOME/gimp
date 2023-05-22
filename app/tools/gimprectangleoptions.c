@@ -881,15 +881,13 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     size_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
 
     /* Fixed aspect entry/buttons */
-    private->fixed_aspect_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+    g_set_weak_pointer (&private->fixed_aspect_hbox,
+                        gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2));
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_aspect_hbox,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_aspect_hbox);
     g_object_unref (size_group);
     /* don't show */
-
-    g_object_add_weak_pointer (G_OBJECT (private->fixed_aspect_hbox),
-                               (gpointer) &private->fixed_aspect_hbox);
 
     entry = gimp_prop_number_pair_entry_new (config,
                                              "aspect-numerator",
@@ -915,14 +913,11 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                                    entry,
                                                    private->aspect_history);
 
-    private->aspect_button_box =
-      gimp_prop_enum_icon_box_new (G_OBJECT (entry),
-                                   "aspect", "gimp", -1, -1);
+    g_set_weak_pointer (&private->aspect_button_box,
+                        gimp_prop_enum_icon_box_new (G_OBJECT (entry),
+                                                     "aspect", "gimp", -1, -1));
     gtk_box_pack_start (GTK_BOX (private->fixed_aspect_hbox),
                         private->aspect_button_box, FALSE, FALSE, 0);
-
-    g_object_add_weak_pointer (G_OBJECT (private->aspect_button_box),
-                               (gpointer) &private->aspect_button_box);
 
     /* hide "square" */
     children =
@@ -931,40 +926,36 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     g_list_free (children);
 
     /* Fixed width entry */
-    private->fixed_width_entry =
-      gimp_prop_size_entry_new (config,
-                                "desired-fixed-width", TRUE, "fixed-unit", "%a",
-                                GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
+    g_set_weak_pointer (&private->fixed_width_entry,
+                        gimp_prop_size_entry_new (config,
+                                                  "desired-fixed-width",
+                                                  TRUE, "fixed-unit", "%a",
+                                                  GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                                  300));
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_width_entry,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_width_entry);
     gtk_widget_hide (private->fixed_width_entry);
 
-    g_object_add_weak_pointer (G_OBJECT (private->fixed_width_entry),
-                               (gpointer) &private->fixed_width_entry);
-
     /* Fixed height entry */
-    private->fixed_height_entry =
-      gimp_prop_size_entry_new (config,
-                                "desired-fixed-height", TRUE, "fixed-unit", "%a",
-                                GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
+    g_set_weak_pointer (&private->fixed_height_entry,
+                        gimp_prop_size_entry_new (config,
+                                                  "desired-fixed-height",
+                                                  TRUE, "fixed-unit", "%a",
+                                                  GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                                  300));
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_height_entry,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_height_entry);
     gtk_widget_hide (private->fixed_height_entry);
 
-    g_object_add_weak_pointer (G_OBJECT (private->fixed_height_entry),
-                               (gpointer) &private->fixed_height_entry);
-
     /* Fixed size entry */
-    private->fixed_size_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+    g_set_weak_pointer (&private->fixed_size_hbox,
+                        gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2));
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_size_hbox,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_size_hbox);
     gtk_widget_hide (private->fixed_size_hbox);
-
-    g_object_add_weak_pointer (G_OBJECT (private->fixed_size_hbox),
-                               (gpointer) &private->fixed_size_hbox);
 
     entry = gimp_prop_number_pair_entry_new (config,
                                              "desired-fixed-size-width",
@@ -1040,14 +1031,12 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
 
   /*  Auto Shrink  */
-  private->auto_shrink_button = gtk_button_new_with_label (_("Auto Shrink"));
+  g_set_weak_pointer (&private->auto_shrink_button,
+                      gtk_button_new_with_label (_("Auto Shrink")));
   gtk_box_pack_start (GTK_BOX (vbox), private->auto_shrink_button,
                       FALSE, FALSE, 0);
   gtk_widget_set_sensitive (private->auto_shrink_button, FALSE);
   gtk_widget_show (private->auto_shrink_button);
-
-  g_object_add_weak_pointer (G_OBJECT (private->auto_shrink_button),
-                             (gpointer) &private->auto_shrink_button);
 
   button = gimp_prop_check_button_new (config, "shrink-merged", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);

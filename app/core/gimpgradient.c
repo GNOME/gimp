@@ -411,13 +411,11 @@ gimp_gradient_get_standard (GimpContext *context)
 
   if (! standard_gradient)
     {
-      standard_gradient = gimp_gradient_new (context, "Standard");
+      g_set_weak_pointer (&standard_gradient,
+                          gimp_gradient_new (context, "Standard"));
 
       gimp_data_clean (standard_gradient);
       gimp_data_make_internal (standard_gradient, "gimp-gradient-standard");
-
-      g_object_add_weak_pointer (G_OBJECT (standard_gradient),
-                                 (gpointer *) &standard_gradient);
     }
 
   return standard_gradient;

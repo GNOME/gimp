@@ -155,9 +155,7 @@ about_dialog_create (GimpCoreConfig *config)
       g_free (copyright);
       g_free (version);
 
-      dialog.dialog = widget;
-
-      g_object_add_weak_pointer (G_OBJECT (widget), (gpointer) &dialog.dialog);
+      g_set_weak_pointer (&dialog.dialog, widget);
 
       g_signal_connect (widget, "response",
                         G_CALLBACK (gtk_widget_destroy),
@@ -467,8 +465,7 @@ about_dialog_add_update (GimpAboutDialog *dialog,
   gtk_widget_show (box);
   gtk_widget_show (frame);
 
-  dialog->update_frame = frame;
-  g_object_add_weak_pointer (G_OBJECT (frame), (gpointer) &dialog->update_frame);
+  g_set_weak_pointer (&dialog->update_frame, frame);
 
   /* Reconstruct the dialog when release info changes. */
   g_signal_connect (config, "notify::last-known-release",

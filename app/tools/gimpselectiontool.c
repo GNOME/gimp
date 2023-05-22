@@ -78,9 +78,6 @@ static gboolean   gimp_selection_tool_check               (GimpSelectionTool  *s
 static gboolean   gimp_selection_tool_have_selection      (GimpSelectionTool  *sel_tool,
                                                            GimpDisplay        *display);
 
-static void       gimp_selection_tool_set_undo_ptr        (GimpUndo          **undo_ptr,
-                                                           GimpUndo           *undo);
-
 
 G_DEFINE_TYPE (GimpSelectionTool, gimp_selection_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -477,7 +474,7 @@ static void
 gimp_selection_tool_commit (GimpSelectionTool *sel_tool)
 {
   /* make sure gimp_selection_tool_halt() doesn't undo the change, if any */
-  gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+  g_clear_weak_pointer (&sel_tool->undo);
 }
 
 static void
@@ -509,8 +506,8 @@ gimp_selection_tool_halt (GimpSelectionTool *sel_tool,
         }
 
       /* reset the automatic undo/redo mechanism */
-      gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
-      gimp_selection_tool_set_undo_ptr (&sel_tool->redo, NULL);
+      g_clear_weak_pointer (&sel_tool->undo);
+      g_clear_weak_pointer (&sel_tool->redo);
     }
 }
 
@@ -602,25 +599,6 @@ gimp_selection_tool_have_selection (GimpSelectionTool *sel_tool,
 {
   return GIMP_SELECTION_TOOL_GET_CLASS (sel_tool)->have_selection (sel_tool,
                                                                    display);
-}
-
-static void
-gimp_selection_tool_set_undo_ptr (GimpUndo **undo_ptr,
-                                  GimpUndo  *undo)
-{
-  if (*undo_ptr)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (*undo_ptr),
-                                    (gpointer *) undo_ptr);
-    }
-
-  *undo_ptr = undo;
-
-  if (*undo_ptr)
-    {
-      g_object_add_weak_pointer (G_OBJECT (*undo_ptr),
-                                 (gpointer *) undo_ptr);
-    }
 }
 
 
@@ -730,7 +708,7 @@ gimp_selection_tool_start_change (GimpSelectionTool *sel_tool,
 
   if (create)
     {
-      gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+      g_clear_weak_pointer (&sel_tool->undo);
     }
   else
     {
@@ -748,12 +726,11 @@ gimp_selection_tool_start_change (GimpSelectionTool *sel_tool,
 
           gimp_tool_control_pop_preserve (tool->control);
 
-          gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+          g_clear_weak_pointer (&sel_tool->undo);
 
           /* we will need to redo if the user cancels or executes */
-          gimp_selection_tool_set_undo_ptr (
-            &sel_tool->redo,
-            gimp_undo_stack_peek (redo_stack));
+          g_set_weak_pointer (&sel_tool->redo,
+                              gimp_undo_stack_peek (redo_stack));
         }
 
       /* if the operation is "Replace", turn off the marching ants,
@@ -772,9 +749,8 @@ gimp_selection_tool_start_change (GimpSelectionTool *sel_tool,
         }
     }
 
-  gimp_selection_tool_set_undo_ptr (
-    &sel_tool->undo,
-    gimp_undo_stack_peek (undo_stack));
+  g_set_weak_pointer (&sel_tool->undo,
+                      gimp_undo_stack_peek (undo_stack));
 }
 
 void
@@ -814,13 +790,12 @@ gimp_selection_tool_end_change (GimpSelectionTool *sel_tool,
 
           gimp_tool_control_pop_preserve (tool->control);
 
-          gimp_selection_tool_set_undo_ptr (
-            &sel_tool->undo,
-            gimp_undo_stack_peek (undo_stack));
+          g_set_weak_pointer (&sel_tool->undo,
+                              gimp_undo_stack_peek (undo_stack));
         }
       else
         {
-          gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+          g_clear_weak_pointer (&sel_tool->undo);
         }
     }
   else
@@ -831,12 +806,12 @@ gimp_selection_tool_end_change (GimpSelectionTool *sel_tool,
        * we actually selected something
        */
       if (undo && undo != sel_tool->undo)
-        gimp_selection_tool_set_undo_ptr (&sel_tool->undo, undo);
+        g_set_weak_pointer (&sel_tool->undo, undo);
       else
-        gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+        g_clear_weak_pointer (&sel_tool->undo);
     }
 
-  gimp_selection_tool_set_undo_ptr (&sel_tool->redo, NULL);
+  g_clear_weak_pointer (&sel_tool->redo);
 
   if (sel_tool->idle_id)
     {

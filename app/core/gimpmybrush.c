@@ -220,13 +220,11 @@ gimp_mybrush_get_standard (GimpContext *context)
 
   if (! standard_mybrush)
     {
-      standard_mybrush = gimp_mybrush_new (context, "Standard");
+      g_set_weak_pointer (&standard_mybrush,
+                          gimp_mybrush_new (context, "Standard"));
 
       gimp_data_clean (standard_mybrush);
       gimp_data_make_internal (standard_mybrush, "gimp-mybrush-standard");
-
-      g_object_add_weak_pointer (G_OBJECT (standard_mybrush),
-                                 (gpointer *) &standard_mybrush);
     }
 
   return standard_mybrush;

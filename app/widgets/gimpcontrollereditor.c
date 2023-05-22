@@ -648,20 +648,21 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
       title = g_strdup_printf (_("Select Action for Event '%s'"),
                                event_blurb);
 
-      editor->edit_dialog =
-        gimp_viewable_dialog_new (g_list_prepend (NULL, editor->info), editor->context,
-                                  _("Select Controller Event Action"),
-                                  "gimp-controller-action-dialog",
-                                  GIMP_ICON_EDIT,
-                                  title,
-                                  gtk_widget_get_toplevel (GTK_WIDGET (editor)),
-                                  gimp_standard_help_func,
-                                  GIMP_HELP_PREFS_INPUT_CONTROLLERS,
+      g_set_weak_pointer
+        (&editor->edit_dialog,
+         gimp_viewable_dialog_new (g_list_prepend (NULL, editor->info), editor->context,
+                                   _("Select Controller Event Action"),
+                                   "gimp-controller-action-dialog",
+                                   GIMP_ICON_EDIT,
+                                   title,
+                                   gtk_widget_get_toplevel (GTK_WIDGET (editor)),
+                                   gimp_standard_help_func,
+                                   GIMP_HELP_PREFS_INPUT_CONTROLLERS,
 
-                                  _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                  _("_OK"),     GTK_RESPONSE_OK,
+                                   _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                   _("_OK"),     GTK_RESPONSE_OK,
 
-                                  NULL);
+                                   NULL));
 
       g_free (title);
 
@@ -669,9 +670,6 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
-
-      g_object_add_weak_pointer (G_OBJECT (editor->edit_dialog),
-                                 (gpointer) &editor->edit_dialog);
 
       gimp_dialog_factory_add_foreign (gimp_dialog_factory_get_singleton (),
                                        "gimp-controller-action-dialog",
@@ -693,10 +691,9 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
                         G_CALLBACK (gimp_controller_editor_edit_activated),
                         editor);
 
-      editor->edit_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (GIMP_ACTION_EDITOR (view)->view));
-
-      g_object_add_weak_pointer (G_OBJECT (editor->edit_sel),
-                                 (gpointer) &editor->edit_sel);
+      g_set_weak_pointer
+        (&editor->edit_sel,
+         gtk_tree_view_get_selection (GTK_TREE_VIEW (GIMP_ACTION_EDITOR (view)->view)));
 
       gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
       gtk_widget_show (editor->edit_dialog);

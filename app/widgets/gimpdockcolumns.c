@@ -187,26 +187,9 @@ gimp_dock_columns_dispose (GObject *object)
       g_object_unref (dock);
     }
 
-  if (dock_columns->p->context)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (dock_columns->p->context),
-                                    (gpointer) &dock_columns->p->context);
-      dock_columns->p->context = NULL;
-    }
-
-  if (dock_columns->p->dialog_factory)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (dock_columns->p->dialog_factory),
-                                    (gpointer) &dock_columns->p->dialog_factory);
-      dock_columns->p->dialog_factory = NULL;
-    }
-
-  if (dock_columns->p->ui_manager)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (dock_columns->p->ui_manager),
-                                    (gpointer)&dock_columns->p->ui_manager);
-      dock_columns->p->ui_manager = NULL;
-    }
+  g_clear_weak_pointer (&dock_columns->p->context);
+  g_clear_weak_pointer (&dock_columns->p->dialog_factory);
+  g_clear_weak_pointer (&dock_columns->p->ui_manager);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -222,33 +205,18 @@ gimp_dock_columns_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CONTEXT:
-      if (dock_columns->p->context)
-        g_object_remove_weak_pointer (G_OBJECT (dock_columns->p->context),
-                                      (gpointer) &dock_columns->p->context);
-      dock_columns->p->context = g_value_get_object (value);
-      if (dock_columns->p->context)
-        g_object_add_weak_pointer (G_OBJECT (dock_columns->p->context),
-                                   (gpointer) &dock_columns->p->context);
+      g_set_weak_pointer (&dock_columns->p->context,
+                          g_value_get_object (value));
       break;
 
     case PROP_DIALOG_FACTORY:
-      if (dock_columns->p->dialog_factory)
-        g_object_remove_weak_pointer (G_OBJECT (dock_columns->p->dialog_factory),
-                                      (gpointer) &dock_columns->p->dialog_factory);
-      dock_columns->p->dialog_factory = g_value_get_object (value);
-      if (dock_columns->p->dialog_factory)
-        g_object_add_weak_pointer (G_OBJECT (dock_columns->p->dialog_factory),
-                                   (gpointer) &dock_columns->p->dialog_factory);
+      g_set_weak_pointer (&dock_columns->p->dialog_factory,
+                          g_value_get_object (value));
       break;
 
     case PROP_UI_MANAGER:
-      if (dock_columns->p->ui_manager)
-        g_object_remove_weak_pointer (G_OBJECT (dock_columns->p->ui_manager),
-                                      (gpointer) &dock_columns->p->ui_manager);
-      dock_columns->p->ui_manager = g_value_get_object (value);
-      if (dock_columns->p->ui_manager)
-        g_object_add_weak_pointer (G_OBJECT (dock_columns->p->ui_manager),
-                                   (gpointer) &dock_columns->p->ui_manager);
+      g_set_weak_pointer (&dock_columns->p->ui_manager,
+                          g_value_get_object (value));
       break;
 
     default:

@@ -141,16 +141,8 @@ gimp_paintbrush_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_FINISH:
-      {
-        if (paintbrush->paint_buffer)
-          {
-            g_object_remove_weak_pointer (G_OBJECT (paintbrush->paint_buffer),
-                                          (gpointer) &paintbrush->paint_buffer);
-            paintbrush->paint_buffer = NULL;
-          }
-
-        g_clear_pointer (&paintbrush->paint_pixmap, gimp_temp_buf_unref);
-      }
+      g_clear_weak_pointer (&paintbrush->paint_buffer);
+      g_clear_pointer (&paintbrush->paint_pixmap, gimp_temp_buf_unref);
       break;
     }
 }
@@ -338,19 +330,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
           (! paint_pixmap && (gimp_rgba_distance (&paint_color,
                                                   &paintbrush->paint_color))))
         {
-          if (paint_buffer != paintbrush->paint_buffer)
-            {
-              if (paintbrush->paint_buffer)
-                {
-                  g_object_remove_weak_pointer (G_OBJECT (paintbrush->paint_buffer),
-                                                (gpointer) &paintbrush->paint_buffer);
-                }
-
-              paintbrush->paint_buffer = paint_buffer;
-
-              g_object_add_weak_pointer (G_OBJECT (paintbrush->paint_buffer),
-                                         (gpointer) &paintbrush->paint_buffer);
-            }
+          g_set_weak_pointer (&paintbrush->paint_buffer, paint_buffer);
 
           if (paint_pixmap != paintbrush->paint_pixmap)
             {

@@ -108,18 +108,7 @@ gimp_open_dialog_set_image (GimpOpenDialog *dialog,
 
   file_dialog = GIMP_FILE_DIALOG (dialog);
 
-  if (file_dialog->image)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (file_dialog->image),
-                                    (gpointer *) &file_dialog->image);
-    }
+  g_set_weak_pointer (&file_dialog->image, image);
 
-  file_dialog->image     = image;
   dialog->open_as_layers = open_as_layers;
-
-  if (file_dialog->image)
-    {
-      g_object_add_weak_pointer (G_OBJECT (file_dialog->image),
-                                 (gpointer *) &file_dialog->image);
-    }
 }

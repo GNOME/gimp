@@ -335,15 +335,13 @@ gimp_font_get_standard (void)
 
   if (! standard_font)
     {
-      standard_font = g_object_new (GIMP_TYPE_FONT,
-                                    "name", "Standard",
-                                    NULL);
+      g_set_weak_pointer (&standard_font,
+                          g_object_new (GIMP_TYPE_FONT,
+                                        "name", "Standard",
+                                        NULL));;
 
       gimp_data_clean (standard_font);
       gimp_data_make_internal (standard_font, "gimp-font-standard");
-
-      g_object_add_weak_pointer (G_OBJECT (standard_font),
-                                 (gpointer *) &standard_font);
     }
 
   return standard_font;

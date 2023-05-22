@@ -1354,15 +1354,13 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
   if (text_tool->image)
     gimp_image_get_resolution (text_tool->image, &xres, &yres);
 
-  text_tool->editor_dialog =
-    gimp_text_options_editor_new (parent, tool->tool_info->gimp, options,
-                                  menus_get_global_menu_factory (tool->tool_info->gimp),
-                                  _("GIMP Text Editor"),
-                                  text_tool->proxy, text_tool->buffer,
-                                  xres, yres);
-
-  g_object_add_weak_pointer (G_OBJECT (text_tool->editor_dialog),
-                             (gpointer) &text_tool->editor_dialog);
+  g_set_weak_pointer
+    (&text_tool->editor_dialog,
+     gimp_text_options_editor_new (parent, tool->tool_info->gimp, options,
+                                   menus_get_global_menu_factory (tool->tool_info->gimp),
+                                   _("GIMP Text Editor"),
+                                   text_tool->proxy, text_tool->buffer,
+                                   xres, yres));
 
   gimp_dialog_factory_add_foreign (dialog_factory,
                                    "gimp-text-tool-dialog",

@@ -334,12 +334,10 @@ gimp_viewable_dialog_set_viewables (GimpViewableDialog *dialog,
 
       box = gtk_widget_get_parent (dialog->icon);
 
-      dialog->view = gimp_view_new (context, viewable, 32, 1, TRUE);
+      g_set_weak_pointer (&dialog->view,
+                          gimp_view_new (context, viewable, 32, 1, TRUE));
       gtk_box_pack_end (GTK_BOX (box), dialog->view, FALSE, FALSE, 2);
       gtk_widget_show (dialog->view);
-
-      g_object_add_weak_pointer (G_OBJECT (dialog->view),
-                                 (gpointer) &dialog->view);
 
       gimp_viewable_dialog_name_changed (GIMP_OBJECT (viewable), dialog);
 

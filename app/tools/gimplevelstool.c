@@ -374,12 +374,9 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   store = gimp_enum_store_new_with_range (GIMP_TYPE_HISTOGRAM_CHANNEL,
                                           GIMP_HISTOGRAM_VALUE,
                                           GIMP_HISTOGRAM_ALPHA);
-  tool->channel_menu =
-    gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
+  g_set_weak_pointer (&tool->channel_menu,
+                      gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store)));
   g_object_unref (store);
-
-  g_object_add_weak_pointer (G_OBJECT (tool->channel_menu),
-                             (gpointer) &tool->channel_menu);
 
   gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (tool->channel_menu),
                                        "gimp-channel");
@@ -436,10 +433,8 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
-  tool->histogram_view = gimp_histogram_view_new (FALSE);
-
-  g_object_add_weak_pointer (G_OBJECT (tool->histogram_view),
-                             (gpointer) &tool->histogram_view);
+  g_set_weak_pointer (&tool->histogram_view,
+                      gimp_histogram_view_new (FALSE));
 
   gtk_box_pack_start (GTK_BOX (vbox2), tool->histogram_view, TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (tool->histogram_view));

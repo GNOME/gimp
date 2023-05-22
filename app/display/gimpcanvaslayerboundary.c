@@ -120,9 +120,7 @@ gimp_canvas_layer_boundary_finalize (GObject *object)
       GList *iter;
 
       for (iter = private->layers; iter; iter = iter->next)
-        if (iter->data)
-          g_object_remove_weak_pointer (G_OBJECT (iter->data),
-                                        (gpointer) &iter->data);
+        g_clear_weak_pointer (&iter->data);
 
       g_list_free (private->layers);
     }
@@ -144,23 +142,26 @@ gimp_canvas_layer_boundary_set_property (GObject      *object,
       if (private->layers)
         {
           GList *iter;
+
           for (iter = private->layers; iter; iter = iter->next)
-            {
-              if (iter->data)
-                g_object_remove_weak_pointer (G_OBJECT (iter->data),
-                                              (gpointer) &iter->data);
-            }
+            g_clear_weak_pointer (&iter->data);
+
           g_list_free (private->layers);
         }
+
       private->layers = g_list_copy (g_value_get_pointer (value));
+
       if (private->layers)
         {
           GList *iter;
+
           for (iter = private->layers; iter; iter = iter->next)
+            /* NOT g_set_weak_pointer() because the pointer is already set */
             g_object_add_weak_pointer (G_OBJECT (iter->data),
                                        (gpointer) &iter->data);
         }
       break;
+
     case PROP_EDIT_MASK:
       private->edit_mask = g_value_get_boolean (value);
       break;

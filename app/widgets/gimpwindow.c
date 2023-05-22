@@ -273,15 +273,7 @@ gimp_window_set_primary_focus_widget (GimpWindow *window,
 
   private = window->private;
 
-  if (private->primary_focus_widget)
-    g_object_remove_weak_pointer (G_OBJECT (private->primary_focus_widget),
-                                  (gpointer) &private->primary_focus_widget);
-
-  private->primary_focus_widget = primary_focus;
-
-  if (private->primary_focus_widget)
-    g_object_add_weak_pointer (G_OBJECT (private->primary_focus_widget),
-                               (gpointer) &private->primary_focus_widget);
+  g_set_weak_pointer (&private->primary_focus_widget, primary_focus);
 }
 
 GtkWidget *

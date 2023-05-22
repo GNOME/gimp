@@ -780,6 +780,8 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
                                                           tr_tool->x2,
                                                           tr_tool->y2);
           tg_tool->previews = g_list_prepend (tg_tool->previews, preview);
+
+          /* NOT g_set_weak_pointr() because the pointer is already set */
           g_object_add_weak_pointer (G_OBJECT (tg_tool->previews->data),
                                      (gpointer) &tg_tool->previews->data);
         }
@@ -800,13 +802,12 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
 
       if (segs_in)
         {
-          tg_tool->boundary_in =
-            gimp_draw_tool_add_boundary (draw_tool,
-                                         segs_in, n_segs_in,
-                                         &matrix,
-                                         0, 0);
-          g_object_add_weak_pointer (G_OBJECT (tg_tool->boundary_in),
-                                     (gpointer) &tg_tool->boundary_in);
+          g_set_weak_pointer
+            (&tg_tool->boundary_in,
+             gimp_draw_tool_add_boundary (draw_tool,
+                                          segs_in, n_segs_in,
+                                          &matrix,
+                                          0, 0));
 
           gimp_canvas_item_set_visible (tg_tool->boundary_in,
                                         tr_tool->transform_valid);
@@ -814,13 +815,12 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
 
       if (segs_out)
         {
-          tg_tool->boundary_out =
-            gimp_draw_tool_add_boundary (draw_tool,
-                                         segs_out, n_segs_out,
-                                         &matrix,
-                                         0, 0);
-          g_object_add_weak_pointer (G_OBJECT (tg_tool->boundary_out),
-                                     (gpointer) &tg_tool->boundary_out);
+          g_set_weak_pointer
+            (&tg_tool->boundary_out,
+             gimp_draw_tool_add_boundary (draw_tool,
+                                          segs_out, n_segs_out,
+                                          &matrix,
+                                          0, 0));
 
           gimp_canvas_item_set_visible (tg_tool->boundary_out,
                                         tr_tool->transform_valid);

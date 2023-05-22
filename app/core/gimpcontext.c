@@ -1532,18 +1532,12 @@ gimp_context_set_parent (GimpContext *context,
       g_signal_handlers_disconnect_by_func (context->parent,
                                             gimp_context_parent_notify,
                                             context);
-
-      g_object_remove_weak_pointer (G_OBJECT (context->parent),
-                                    (gpointer) &context->parent);
     }
 
-  context->parent = parent;
+  g_set_weak_pointer (&context->parent, parent);
 
   if (parent)
     {
-      g_object_add_weak_pointer (G_OBJECT (context->parent),
-                                 (gpointer) &context->parent);
-
       /*  copy all undefined properties from the new parent  */
       gimp_context_copy_properties (parent, context,
                                     ~context->defined_props &
