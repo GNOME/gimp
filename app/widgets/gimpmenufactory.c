@@ -215,7 +215,9 @@ gimp_menu_factory_get_manager (GimpMenuFactory *factory,
         {
           GimpUIManager *manager;
 
-          if ((manager = g_hash_table_lookup (entry->managers, callback_data)) == NULL)
+          manager = g_hash_table_lookup (entry->managers, callback_data);
+
+          if (manager == NULL)
             {
               GList *list;
 
