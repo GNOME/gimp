@@ -474,6 +474,16 @@ gimp_paint_options_dispose (GObject *object)
 
   g_clear_object (&options->paint_info);
 
+  if (options->brush)
+    {
+      g_signal_handlers_disconnect_by_func (options->brush,
+                                            gimp_paint_options_brush_notify,
+                                            options);
+      g_object_remove_weak_pointer (G_OBJECT (options->brush),
+                                    (gpointer) &options->brush);
+      options->brush = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
