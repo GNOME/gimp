@@ -299,7 +299,7 @@ gimp_ui_manager_finalize (GObject *object)
 
   g_clear_pointer (&manager->registered_uis, g_list_free);
   g_clear_pointer (&manager->name,           g_free);
-  g_list_free_full (manager->action_groups, g_object_unref);
+  g_list_free_full (manager->action_groups,  g_object_unref);
 
   g_list_free_full (manager->ui_items,
                     (GDestroyNotify) gimp_ui_manager_menu_item_free);
@@ -578,7 +578,7 @@ gimp_ui_manager_remove_ui (GimpUIManager *manager,
         {
           g_signal_emit (manager, manager_signals[UI_REMOVED], 0,
                          item->path, item->action_name);
-          manager->ui_items = g_list_remove_link (manager->ui_items, iter);
+          manager->ui_items = g_list_delete_link (manager->ui_items, iter);
           gimp_ui_manager_menu_item_free (item);
           break;
         }
@@ -604,7 +604,7 @@ gimp_ui_manager_remove_uis (GimpUIManager *manager,
         {
           g_signal_emit (manager, manager_signals[UI_REMOVED], 0,
                          item->path, item->action_name);
-          manager->ui_items = g_list_remove_link (manager->ui_items,
+          manager->ui_items = g_list_delete_link (manager->ui_items,
                                                   current_iter);
           gimp_ui_manager_menu_item_free (item);
         }
