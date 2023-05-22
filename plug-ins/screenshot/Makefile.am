@@ -48,7 +48,6 @@ screenshot_SOURCES = \
 	screenshot.h				\
 	screenshot-freedesktop.c		\
 	screenshot-freedesktop.h		\
-	screenshot-icon.h			\
 	screenshot-osx.c			\
 	screenshot-osx.h			\
 	screenshot-x11.c			\
