@@ -120,8 +120,6 @@ gimp_menu_factory_new (Gimp              *gimp,
 
   factory->p->gimp           = gimp;
   factory->p->action_factory = action_factory;
-  g_object_add_weak_pointer (G_OBJECT (action_factory),
-                             (gpointer *) &factory->p->action_factory);
 
   return factory;
 }
