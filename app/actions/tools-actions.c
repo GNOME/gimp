@@ -830,6 +830,7 @@ tools_actions_setup (GimpActionGroup *group)
                                                 tools_select_cmd_callback);
 
           g_free (name);
+          g_free (long_label);
         }
     }
 }

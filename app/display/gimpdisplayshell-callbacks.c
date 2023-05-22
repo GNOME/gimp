@@ -243,8 +243,6 @@ gimp_display_shell_canvas_tick (GtkWidget     *widget,
   /* undo size request from gimp_display_shell_constructed() */
   gtk_widget_set_size_request (widget, -1, -1);
 
-  g_free (tick);
-
   return G_SOURCE_REMOVE;
 }
 
@@ -277,7 +275,7 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
 
   gtk_widget_add_tick_callback (widget,
                                 (GtkTickCallback) gimp_display_shell_canvas_tick,
-                                tick, NULL);
+                                tick, (GDestroyNotify) g_free);
 }
 
 gboolean

@@ -635,6 +635,8 @@ gimp_statusbar_finalize (GObject *object)
 
   g_clear_object (&statusbar->icon);
   g_clear_pointer (&statusbar->icon_hash, g_hash_table_unref);
+  g_clear_pointer (&statusbar->cursor_string_last,   g_free);
+  g_clear_pointer (&statusbar->cursor_string_todraw, g_free);
 
   g_slist_free_full (statusbar->messages,
                      (GDestroyNotify) gimp_statusbar_msg_free);

@@ -860,6 +860,7 @@ gimp_core_config_finalize (GObject *object)
   GimpCoreConfig *core_config = GIMP_CORE_CONFIG (object);
 
   g_free (core_config->language);
+  g_free (core_config->prev_language);
   g_free (core_config->plug_in_path);
   g_free (core_config->module_path);
   g_free (core_config->interpreter_path);

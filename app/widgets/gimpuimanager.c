@@ -576,7 +576,8 @@ gimp_ui_manager_remove_ui (GimpUIManager *manager,
 
       if (g_strcmp0 (item->action_name, action_name) == 0)
         {
-          g_signal_emit (manager, manager_signals[UI_REMOVED], 0, item->path, item->action_name);
+          g_signal_emit (manager, manager_signals[UI_REMOVED], 0,
+                         item->path, item->action_name);
           manager->ui_items = g_list_remove_link (manager->ui_items, iter);
           gimp_ui_manager_menu_item_free (item);
           break;
@@ -601,8 +602,10 @@ gimp_ui_manager_remove_uis (GimpUIManager *manager,
       if (action_name_prefix == NULL ||
           g_str_has_prefix (item->action_name, action_name_prefix))
         {
-          g_signal_emit (manager, manager_signals[UI_REMOVED], 0, item->path, item->action_name);
-          manager->ui_items = g_list_remove_link (manager->ui_items, current_iter);
+          g_signal_emit (manager, manager_signals[UI_REMOVED], 0,
+                         item->path, item->action_name);
+          manager->ui_items = g_list_remove_link (manager->ui_items,
+                                                  current_iter);
           gimp_ui_manager_menu_item_free (item);
         }
     }
@@ -624,11 +627,13 @@ gimp_ui_manager_add_ui (GimpUIManager *manager,
   item = g_slice_new0 (GimpUIManagerMenuItem);
   item->path        = g_strdup (path);
   item->action_name = g_strdup (action_name);
-  item->placeholder = placeholder ? g_strdup (placeholder) : NULL;
+  item->placeholder = g_strdup (placeholder);
   item->top         = top;
+
   manager->ui_items = g_list_prepend (manager->ui_items, item);
 
-  g_signal_emit (manager, manager_signals[UI_ADDED], 0, path, action_name, placeholder, top);
+  g_signal_emit (manager, manager_signals[UI_ADDED], 0,
+                 path, action_name, placeholder, top);
 }
 
 void
@@ -640,7 +645,8 @@ gimp_ui_manager_foreach_ui (GimpUIManager      *manager,
     {
       GimpUIManagerMenuItem *item = iter->data;
 
-      callback (manager, item->path, item->action_name, item->placeholder, item->top, user_data);
+      callback (manager, item->path, item->action_name, item->placeholder,
+                item->top, user_data);
     }
 }
 
@@ -1145,6 +1151,7 @@ gimp_ui_manager_menu_item_free (GimpUIManagerMenuItem *item)
 {
   g_free (item->path);
   g_free (item->action_name);
+  g_free (item->placeholder);
 
   g_slice_free (GimpUIManagerMenuItem, item);
 }

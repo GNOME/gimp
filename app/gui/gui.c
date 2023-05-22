@@ -864,9 +864,10 @@ gui_check_unique_accelerators (Gimp *gimp)
       gchar  *detailed_name;
 
       detailed_name = g_strdup_printf ("app.%s", actions[i]);
-
       accels = gtk_application_get_accels_for_action (GTK_APPLICATION (gimp->app),
                                                       detailed_name);
+      g_free (detailed_name);
+
       for (gint j = 0; accels[j] != NULL; j++)
         {
           for (gint k = i + 1; actions[k] != NULL; k++)
@@ -877,6 +878,8 @@ gui_check_unique_accelerators (Gimp *gimp)
               detailed_name2 = g_strdup_printf ("app.%s", actions[k]);
               accels2 = gtk_application_get_accels_for_action (GTK_APPLICATION (gimp->app),
                                                                detailed_name2);
+              g_free (detailed_name2);
+
               for (gint l = 0; accels2[l] != NULL; l++)
                 {
                   if (g_strcmp0 (accels[j], accels2[l]) == 0)
@@ -920,10 +923,13 @@ gui_check_unique_accelerators (Gimp *gimp)
                                               (const gchar **) disabled_accels);
                     }
                 }
+
               g_strfreev (accels2);
             }
         }
+
       g_strfreev (accels);
     }
+
   g_strfreev (actions);
 }

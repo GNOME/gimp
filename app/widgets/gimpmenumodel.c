@@ -417,9 +417,9 @@ gimp_menu_model_get_position (GimpMenuModel *model,
 
   for (iter = model->priv->items; iter; iter = iter->next)
     {
-      const gchar *cur_action_name = NULL;
       GMenuModel  *subsection;
       GMenuModel  *submenu;
+      const gchar *cur_action_name = NULL;
 
       subsection = g_menu_item_get_link (iter->data, G_MENU_LINK_SECTION);
       submenu    = g_menu_item_get_link (iter->data, G_MENU_LINK_SUBMENU);
@@ -446,7 +446,8 @@ gimp_menu_model_get_position (GimpMenuModel *model,
               else
                 real_action_name = cur_action_name;
 
-              cur_action = gimp_ui_manager_find_action (model->priv->manager, NULL, cur_action_name);
+              cur_action = gimp_ui_manager_find_action (model->priv->manager,
+                                                        NULL, cur_action_name);
             }
 
           if (cur_action_name != NULL &&
@@ -470,6 +471,7 @@ gimp_menu_model_get_position (GimpMenuModel *model,
               len++;
             }
         }
+
       g_clear_object (&subsection);
       g_clear_object (&submenu);
     }
@@ -760,7 +762,8 @@ gimp_menu_model_initialize (GimpMenuModel *model,
                                        G_CALLBACK (gimp_menu_model_action_notify_visible),
                                        model, 0);
 
-              g_menu_item_get_attribute (item, "label-variant", "s", &label_variant);
+              g_menu_item_get_attribute (item, "label-variant", "s",
+                                         &label_variant);
               if (g_strcmp0 (label_variant, "long") == 0)
                 g_menu_item_set_label (item, gimp_action_get_label (action));
               else
@@ -774,9 +777,11 @@ gimp_menu_model_initialize (GimpMenuModel *model,
                                        "notify::label",
                                        G_CALLBACK (gimp_menu_model_action_notify_label),
                                        item, 0);
+
               g_free (label_variant);
             }
-            /* else we instal a placeholder (no-action and always invisible) item. */
+
+          /* else we instal a placeholder (no-action and always invisible) item. */
         }
 
       if (item)
@@ -813,7 +818,7 @@ gimp_menu_model_handles_subpath (GimpMenuModel *model,
     {
       GMenuModel  *submenu    = NULL;
       GMenuModel  *subsection = NULL;
-      const gchar *label      = NULL;
+      gchar       *label      = NULL;
       GMenuItem   *item       = iter->data;
 
       subsection = g_menu_item_get_link (item, G_MENU_LINK_SECTION);
@@ -827,6 +832,7 @@ gimp_menu_model_handles_subpath (GimpMenuModel *model,
            */
           if (! gimp_menu_model_handles_subpath (GIMP_MENU_MODEL (subsection), path))
             {
+              g_free (label);
               g_clear_object (&subsection);
               return FALSE;
             }
@@ -837,18 +843,23 @@ gimp_menu_model_handles_subpath (GimpMenuModel *model,
 
           g_return_val_if_fail (label != NULL, FALSE);
           subpath = g_strdup_printf ("%s/", GIMP_MENU_MODEL (submenu)->priv->path);
+
           if (g_strcmp0 (path, GIMP_MENU_MODEL (submenu)->priv->path) == 0 ||
               g_str_has_prefix (path, subpath))
             {
               /* A submodel will handle the new path. */
               g_free (subpath);
+              g_free (label);
               g_clear_object (&subsection);
               g_clear_object (&submenu);
 
               return FALSE;
             }
+
           g_free (subpath);
         }
+
+      g_free (label);
       g_clear_object (&subsection);
       g_clear_object (&submenu);
     }
@@ -866,9 +877,9 @@ gimp_menu_model_get_item (GimpMenuModel *model,
 
   for (GList *iter = m->priv->items; iter; iter = iter->next)
     {
-      const gchar *action_name = NULL;
       GMenuModel  *subsection;
       GMenuModel  *submenu;
+      const gchar *action_name = NULL;
 
       subsection = g_menu_item_get_link (iter->data, G_MENU_LINK_SECTION);
       submenu    = g_menu_item_get_link (iter->data, G_MENU_LINK_SUBMENU);
@@ -886,7 +897,9 @@ gimp_menu_model_get_item (GimpMenuModel *model,
         {
           GimpAction *action;
 
-          action = gimp_ui_manager_find_action (model->priv->manager, NULL, action_name);
+          action = gimp_ui_manager_find_action (model->priv->manager, NULL,
+                                                action_name);
+
           if (gimp_action_is_visible (action))
             cur++;
         }
@@ -975,7 +988,8 @@ gimp_menu_model_action_notify_visible (GimpAction    *action,
   gint     pos;
   gboolean visible;
 
-  pos = gimp_menu_model_get_position (model, gimp_action_get_name (action), &visible);
+  pos = gimp_menu_model_get_position (model, gimp_action_get_name (action),
+                                      &visible);
 
   if (visible)
     g_menu_model_items_changed (G_MENU_MODEL (model), pos, 0, 1);

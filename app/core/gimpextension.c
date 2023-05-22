@@ -348,6 +348,7 @@ gimp_extension_load (GimpExtension  *extension,
   appdata_name = g_strdup_printf ("%s.metainfo.xml",
                                   gimp_object_get_name (GIMP_OBJECT (extension)));
   path = g_build_filename (extension->p->path, appdata_name, NULL);
+  g_free (appdata_name);
 
   app = as_app_new ();
   success = as_app_parse_file (app, path,
