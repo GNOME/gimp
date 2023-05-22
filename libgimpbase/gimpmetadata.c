@@ -82,15 +82,21 @@ struct _GimpMetadataClass
 
 #define GIMP_METADATA_ERROR gimp_metadata_error_quark ()
 
-static GQuark   gimp_metadata_error_quark (void);
-static void     gimp_metadata_copy_tag    (GExiv2Metadata  *src,
-                                           GExiv2Metadata  *dest,
-                                           const gchar     *tag);
-static void     gimp_metadata_copy_tags   (GExiv2Metadata  *src,
-                                           GExiv2Metadata  *dest,
-                                           const gchar    **tags);
-static void     gimp_metadata_add         (GimpMetadata    *src,
-                                           GimpMetadata    *dest);
+static GQuark   gimp_metadata_error_quark     (void);
+static void     gimp_metadata_copy_tag        (GExiv2Metadata  *src,
+                                               GExiv2Metadata  *dest,
+                                               const gchar     *tag);
+static void     gimp_metadata_copy_tags       (GExiv2Metadata  *src,
+                                               GExiv2Metadata  *dest,
+                                               const gchar    **tags);
+static void     gimp_metadata_add             (GimpMetadata    *src,
+                                               GimpMetadata    *dest);
+static void     gimp_metadata_add_namespace   (GHashTable      *namespaces,
+                                               GString         *xml,
+                                               gchar           *prefix);
+static void gimp_metadata_add_xmp_namespaces  (GHashTable      *namespaces,
+                                               GString         *xml,
+                                               const gchar     *tag);
 
 
 static const gchar *tiff_tags[] =
@@ -588,6 +594,7 @@ gimp_metadata_duplicate (GimpMetadata *metadata)
 typedef struct
 {
   gchar         name[1024];
+  gchar         prefix[256];
   gboolean      base64;
   gboolean      excessive_message_shown;
   GimpMetadata *metadata;
@@ -644,6 +651,33 @@ gimp_metadata_deserialize_start_element (GMarkupParseContext *context,
       g_strlcpy (parse_data->name, name, sizeof (parse_data->name));
 
       parse_data->base64 = (encoding && ! strcmp (encoding, "base64"));
+    }
+  else if (! strcmp (element_name, "namespace"))
+    {
+      const gchar *url;
+      const gchar *prefix;
+
+      prefix = gimp_metadata_attribute_name_to_value (attribute_names,
+                                                      attribute_values,
+                                                      "prefix");
+      url = gimp_metadata_attribute_name_to_value (attribute_names,
+                                                   attribute_values,
+                                                   "url");
+      if (! prefix)
+        {
+          g_set_error (error, GIMP_METADATA_ERROR, 1002,
+                       "Element 'namespace' does not contain required attribute 'prefix'.");
+          return;
+        }
+      if (! url)
+        {
+          g_set_error (error, GIMP_METADATA_ERROR, 1003,
+                       "Element 'namespace' does not contain required attribute 'url'.");
+          return;
+        }
+
+      g_strlcpy (parse_data->prefix, prefix, sizeof (parse_data->prefix));
+      g_strlcpy (parse_data->name, url, sizeof (parse_data->name));
     }
 }
 
@@ -760,6 +794,20 @@ gimp_metadata_deserialize_text (GMarkupParseContext  *context,
           g_free (value);
         }
     }
+  else if (! g_strcmp0 (current_element, "namespace"))
+    {
+      GError *error = NULL;
+
+      gexiv2_metadata_try_register_xmp_namespace (parse_data->name,
+                                                  parse_data->prefix,
+                                                  &error);
+      if (error) {
+          g_warning ("%s: failed to register namespace %s (url: '%s'): %s\n",
+                     G_STRFUNC, parse_data->prefix, parse_data->name,
+                     error->message);
+          g_clear_error(&error);
+      }
+    }
 }
 
 static  void
@@ -860,6 +908,97 @@ gimp_metadata_append_tag (GString     *string,
     }
 }
 
+static void
+gimp_metadata_add_namespace (GHashTable  *namespaces,
+                             GString     *xml,
+                             gchar       *prefix)
+{
+  if (! g_hash_table_lookup (namespaces, prefix))
+    {
+      gchar *namespace_url;
+
+      namespace_url = gexiv2_metadata_try_get_xmp_namespace_for_tag (prefix, NULL);
+
+      if (namespace_url)
+        {
+          g_debug ("Adding namespace %s, url: %s", prefix, namespace_url);
+
+          if (! g_hash_table_insert (namespaces, prefix, namespace_url))
+            g_warning ("Namespace already present: %s!", prefix);
+
+          g_string_append_printf (xml,
+                                  "  <namespace prefix=\"%s\" url=\"%s\"></namespace>\n",
+                                  prefix, namespace_url);
+
+          /* namespace_url and prefix are added to hashtable, so we don't free here */
+        }
+      else
+        {
+          g_free (prefix);
+        }
+    }
+  else
+    {
+      g_free (prefix);
+    }
+}
+
+/* Register a namespace in our xml metadata for each XMP namespace.
+ * We use the following XML format:
+ * <namespace prefix="namespace-prefix" url="namespace-url"></namespace>
+ *
+ * There are two types of namespace prefixes:
+ * - Xmp.prefix.whatever, and
+ * - /prefix:something, which is prefixed by the above
+ *
+ * We use a hashtable to keep track of which namespaces we have already
+ * seen in the current run.
+ */
+
+static void
+gimp_metadata_add_xmp_namespaces (GHashTable  *namespaces,
+                                  GString     *xml,
+                                  const gchar *tag)
+{
+  gchar  *tag_ptr = (gchar *) tag;
+  gchar  *prefix;
+  gchar **substrings;
+
+  /* Find word between the first and second '.' */
+  substrings = g_strsplit ((gchar *) tag_ptr, ".", 3);
+  if (substrings && substrings[1])
+    {
+      prefix = g_strdup (substrings[1]);
+
+      gimp_metadata_add_namespace (namespaces, xml, prefix);
+    }
+  g_strfreev (substrings);
+
+  /* Multiple namespaces in the form /prefix:value are possible in one tag. */
+  while (tag_ptr)
+    {
+      gchar *tag_next = NULL;
+
+      tag_ptr = strstr (tag_ptr, "/");
+      if (! tag_ptr || strlen (tag_ptr) <= 1)
+        break;
+      tag_ptr++;
+      tag_next = strstr (tag_ptr, ":");
+
+      if (tag_next)
+        {
+          gsize prefix_len = (gsize) tag_next - (gsize) tag_ptr + 1;
+
+          prefix = g_new (gchar, prefix_len);
+          g_strlcpy (prefix, tag_ptr, prefix_len);
+
+          gimp_metadata_add_namespace (namespaces, xml, prefix);
+
+          tag_ptr = tag_next;
+        }
+    }
+}
+
 /**
  * gimp_metadata_serialize:
  * @metadata: A #GimpMetadata instance.
@@ -921,8 +1060,12 @@ gimp_metadata_serialize (GimpMetadata *metadata)
 
   if (xmp_data)
     {
+      GHashTable *namespaces = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
+
       for (i = 0; xmp_data[i] != NULL; i++)
         {
+          gimp_metadata_add_xmp_namespaces (namespaces, string, xmp_data[i]);
+
           /* XmpText is always a single value, but structures like
            * XmpBag and XmpSeq can have multiple values that need to be
            * treated separately or else saving will do things wrong. */
@@ -990,6 +1133,7 @@ gimp_metadata_serialize (GimpMetadata *metadata)
             }
         }
       g_strfreev (xmp_data);
+      g_hash_table_destroy (namespaces);
     }
 
   iptc_data = gexiv2_metadata_get_iptc_tags (GEXIV2_METADATA (metadata));
