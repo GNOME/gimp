@@ -62,7 +62,7 @@ struct _ColorselCmykClass
 };
 
 
-static GType  colorsel_cmyk_get_type       (void);
+GType         colorsel_cmyk_get_type       (void);
 
 static void   colorsel_cmyk_dispose        (GObject           *object);
 

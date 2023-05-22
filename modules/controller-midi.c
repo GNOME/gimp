@@ -104,7 +104,7 @@ struct _ControllerMidiClass
 };
 
 
-static GType         controller_midi_get_type (void);
+GType                controller_midi_get_type (void);
 
 static void          midi_dispose             (GObject        *object);
 static void          midi_set_property        (GObject        *object,

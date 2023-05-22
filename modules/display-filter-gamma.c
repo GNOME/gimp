@@ -62,7 +62,7 @@ enum
 };
 
 
-static GType       cdisplay_gamma_get_type        (void);
+GType              cdisplay_gamma_get_type        (void);
 
 static void        cdisplay_gamma_set_property    (GObject            *object,
                                                    guint               property_id,

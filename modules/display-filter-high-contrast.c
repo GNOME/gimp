@@ -62,7 +62,7 @@ enum
 };
 
 
-static GType       cdisplay_contrast_get_type        (void);
+GType              cdisplay_contrast_get_type        (void);
 
 static void        cdisplay_contrast_set_property    (GObject          *object,
                                                       guint             property_id,

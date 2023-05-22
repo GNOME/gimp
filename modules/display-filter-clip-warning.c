@@ -92,7 +92,7 @@ enum
 };
 
 
-static GType   cdisplay_clip_warning_get_type       (void);
+GType          cdisplay_clip_warning_get_type       (void);
 
 static void    cdisplay_clip_warning_set_property   (GObject             *object,
                                                      guint                property_id,

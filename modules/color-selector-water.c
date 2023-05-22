@@ -64,7 +64,7 @@ struct _ColorselWaterClass
 };
 
 
-static GType      colorsel_water_get_type          (void);
+GType             colorsel_water_get_type          (void);
 
 static void       colorsel_water_dispose           (GObject           *object);
 
@@ -147,8 +147,6 @@ colorsel_water_init (ColorselWater *water)
   GtkWidget     *frame;
   GtkAdjustment *adj;
   GtkWidget     *scale;
-
-  colorsel_water_get_type (); /* useless function call to silence compiler */
 
   water->pressure_adjust = 1.0;
 

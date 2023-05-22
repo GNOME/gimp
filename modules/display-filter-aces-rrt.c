@@ -60,7 +60,7 @@ enum
 };
 
 
-static GType       cdisplay_aces_rrt_get_type        (void);
+GType              cdisplay_aces_rrt_get_type        (void);
 
 static void        cdisplay_aces_rrt_set_property    (GObject            *object,
                                                       guint               property_id,
