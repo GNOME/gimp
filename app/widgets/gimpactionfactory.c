@@ -185,7 +185,9 @@ gimp_action_factory_get_group (GimpActionFactory *factory,
         {
           GimpActionGroup *group;
 
-          if ((group = g_hash_table_lookup (entry->groups, user_data)) == NULL)
+          group = g_hash_table_lookup (entry->groups, user_data);
+
+          if (group == NULL)
             {
               group = gimp_action_group_new (factory->gimp,
                                              entry->identifier,
