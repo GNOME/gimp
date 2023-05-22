@@ -1300,7 +1300,11 @@ gimp_create_image_from_buffer (Gimp        *gimp,
 
   /* unref the image unconditionally, even when no display was created */
   g_object_add_weak_pointer (G_OBJECT (image), (gpointer) &image);
+
   g_object_unref (image);
+
+  if (image)
+    g_object_remove_weak_pointer (G_OBJECT (image), (gpointer) &image);
 
   return image;
 }
