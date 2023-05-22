@@ -288,10 +288,14 @@ gimp_action_impl_activate (GAction  *action,
   gimp_action_emit_activate (GIMP_ACTION (action), parameter);
 
   if (action != NULL)
-    /* Some actions are self-destructive, such as the "windows-recent-*"
-     * actions which don't exist after being run. Don't log these.
-     */
-    gimp_action_history_action_activated (GIMP_ACTION (action));
+    {
+      /* Some actions are self-destructive, such as the "windows-recent-*"
+       * actions which don't exist after being run. Don't log these.
+       */
+      g_object_remove_weak_pointer (G_OBJECT (action), (gpointer) &action);
+
+      gimp_action_history_action_activated (GIMP_ACTION (action));
+    }
 }
 
 static void
