@@ -63,6 +63,7 @@ struct _GimpRadioActionPrivate
 
 static void      gimp_radio_action_g_action_iface_init (GActionInterface *iface);
 
+static void      gimp_radio_action_dispose             (GObject          *object);
 static void      gimp_radio_action_finalize            (GObject          *object);
 static void      gimp_radio_action_get_property        (GObject          *object,
                                                         guint             prop_id,
@@ -99,6 +100,7 @@ gimp_radio_action_class_init (GimpRadioActionClass *klass)
   GObjectClass          *object_class = G_OBJECT_CLASS (klass);
   GimpToggleActionClass *toggle_class = GIMP_TOGGLE_ACTION_CLASS (klass);
 
+  object_class->dispose      = gimp_radio_action_dispose;
   object_class->finalize     = gimp_radio_action_finalize;
   object_class->get_property = gimp_radio_action_get_property;
   object_class->set_property = gimp_radio_action_set_property;
@@ -184,11 +186,36 @@ gimp_radio_action_init (GimpRadioAction *action)
 }
 
 static void
+gimp_radio_action_dispose (GObject *object)
+{
+  GimpRadioAction *action = GIMP_RADIO_ACTION (object);
+
+  if (action->priv->group)
+    {
+      GSList *group;
+      GSList *slist;
+
+      group = g_slist_remove (action->priv->group, action);
+
+      for (slist = group; slist; slist = slist->next)
+        {
+          GimpRadioAction *tmp_action = slist->data;
+
+          tmp_action->priv->group = group;
+        }
+
+      action->priv->group = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_radio_action_finalize (GObject *object)
 {
-  GimpRadioAction *radio = GIMP_RADIO_ACTION (object);
+  GimpRadioAction *action = GIMP_RADIO_ACTION (object);
 
-  g_free (radio->priv->group_label);
+  g_clear_pointer (&action->priv->group_label, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
