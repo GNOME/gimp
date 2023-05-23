@@ -468,7 +468,7 @@ gimp_cursor_new (GdkWindow          *window,
         gdk_cairo_surface_create_from_pixbuf (pixbuf, scale_factor, NULL);
 
       /*
-       * MacOS and Wayland need the hotspot in surface coordinates
+       * MacOS needs the hotspot in surface coordinates
        * X11 needs the hotspot in pixel coordinates (not scaled)
        * Windows doesn't handle scaled cursors at all
        * Broadway does not appear to support surface cursors at all,
