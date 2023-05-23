@@ -1289,7 +1289,14 @@ conf.set_quoted('COLOR_PROFILE_DIRECTORY', icc_directory)
 
 # endif
 
-enable_default_bin = get_option('enable-default-bin')
+if get_option('enable-default-bin').auto()
+  enable_default_bin = stable
+elif get_option('enable-default-bin').enabled()
+  enable_default_bin = true
+else
+  enable_default_bin = false
+endif
+
 enable_console_bin = get_option('enable-console-bin')
 
 if enable_default_bin and meson.version().version_compare('<0.61.0')
