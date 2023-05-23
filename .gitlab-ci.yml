@@ -253,6 +253,14 @@ gimp-meson-debian:
       fi
     - ninja -C _build dist
     - ninja -C _build install
+  artifacts:
+    name: "gimp-meson-debian-name-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    when: always
+    reports:
+      junit: "_build/meson-logs/testlog.junit.xml"
+    paths:
+      - "_build/config.h"
+      - "_build/meson-logs"
 
 gimp-clang-debian:
   rules:
