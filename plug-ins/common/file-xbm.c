@@ -1007,7 +1007,7 @@ save_image (GFile         *file,
     g_printerr ("%s: save_image '%s'\n", G_STRFUNC, prefix);
 #endif
 
-  cmap = gimp_image_get_colormap (image, &colors);
+  cmap = gimp_image_get_colormap (image, NULL, &colors);
 
   if (! gimp_drawable_is_indexed (drawable) || colors > 2)
     {

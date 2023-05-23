@@ -633,7 +633,7 @@ save_color_mode_data (GOutputStream  *output,
     case GIMP_INDEXED:
       IFDBG(1) g_debug ("\tImage type: INDEXED");
 
-      cmap = gimp_image_get_colormap (image, &nColors);
+      cmap = gimp_image_get_colormap (image, NULL, &nColors);
       IFDBG(1) g_debug ("\t\tLength of colormap returned by gimp_image_get_colormap: %d", nColors);
 
       if (nColors == 0)

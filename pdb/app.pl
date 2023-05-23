@@ -606,20 +606,21 @@ gimp_param_spec_int32_array ("$name",
                              $flags)
 CODE
     }
-    elsif ($pdbtype eq 'int8array') {
-	$pspec = <<CODE;
-gimp_param_spec_uint8_array ("$name",
-                             "$nick",
-                             "$blurb",
-                             $flags)
-CODE
-    }
     elsif ($pdbtype eq 'floatarray') {
 	$pspec = <<CODE;
 gimp_param_spec_float_array ("$name",
                              "$nick",
                              "$blurb",
                              $flags)
+CODE
+    }
+    elsif ($pdbtype eq 'bytes') {
+	$pspec = <<CODE;
+g_param_spec_boxed ("$name",
+                    "$nick",
+                    "$blurb",
+                    G_TYPE_BYTES,
+                    $flags)
 CODE
     }
     elsif ($pdbtype eq 'strv') {

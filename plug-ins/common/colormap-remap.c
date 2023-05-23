@@ -200,16 +200,10 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                                       "Mukund Sivaraman <muks@mukund.org>",
                                       "June 2006");
 
-      GIMP_PROC_ARG_INT (procedure, "num-colors",
-                         "Num colors",
-                         "Length of 'map' argument",
-                         1, 256, 1,
-                         G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_UINT8_ARRAY (procedure, "map",
-                                 "Map",
-                                 "Remap array for the colormap",
-                                 G_PARAM_READWRITE);
+      GIMP_PROC_ARG_BYTES (procedure, "map",
+                           "Map",
+                           "Remap array for the colormap",
+                           G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PLUG_IN_PROC_SWAP))
     {
@@ -321,13 +315,13 @@ remap_run (GimpProcedure        *procedure,
   if (strcmp (gimp_procedure_get_name (procedure),
               PLUG_IN_PROC_REMAP) == 0)
     {
-      gint          n_col_args;
+      GBytes       *col_args_bytes;
       const guchar *col_args;
 
-      g_free (gimp_image_get_colormap (image, &remap->n_cols));
+      g_free (gimp_image_get_colormap (image, NULL, &remap->n_cols));
 
-      n_col_args = GIMP_VALUES_GET_INT        (args, 0);
-      col_args   = GIMP_VALUES_GET_UINT8_ARRAY (args, 1);
+      col_args_bytes = GIMP_VALUES_GET_BYTES (args, 0);
+      col_args       = g_bytes_get_data (col_args_bytes, NULL);
 
       switch (run_mode)
         {
@@ -343,7 +337,7 @@ remap_run (GimpProcedure        *procedure,
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
-          if (remap->n_cols != n_col_args)
+          if (remap->n_cols != g_bytes_get_size (col_args_bytes))
             return gimp_procedure_new_return_values (procedure,
                                                      GIMP_PDB_CALLING_ERROR,
                                                      NULL);
@@ -381,7 +375,7 @@ remap_run (GimpProcedure        *procedure,
                                                  GIMP_PDB_CALLING_ERROR,
                                                  NULL);
 
-      g_free (gimp_image_get_colormap (image, &n_cols));
+      g_free (gimp_image_get_colormap (image, NULL, &n_cols));
 
       if (index1 >= n_cols || index2 >= n_cols)
         return gimp_procedure_new_return_values (procedure,
@@ -419,7 +413,7 @@ real_remap (GimpImage *image,
   gboolean  valid[256];
   gint      i;
 
-  cmap = gimp_image_get_colormap (image, &ncols);
+  cmap = gimp_image_get_colormap (image, NULL, &ncols);
 
   g_return_val_if_fail (cmap != NULL, FALSE);
   g_return_val_if_fail (ncols > 0, FALSE);
@@ -725,7 +719,7 @@ remap_dialog (GimpImage *image,
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
 
-  cmap = gimp_image_get_colormap (image, &ncols);
+  cmap = gimp_image_get_colormap (image, NULL, &ncols);
 
   g_return_val_if_fail ((ncols > 0) && (ncols <= 256), FALSE);
 

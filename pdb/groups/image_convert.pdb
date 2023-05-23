@@ -192,19 +192,17 @@ HELP
 	  desc => 'Width of the matrix (0 to reset to default matrix)' },
 	{ name => 'height', type => 'int32',
 	  desc => 'Height of the matrix (0 to reset to default matrix)' },
-	{ name => 'matrix', type => 'int8array',
-	  desc => 'The matrix -- all values must be >= 1',
-	  array => { name => 'matrix_length', type => '1 <= int32 <= 1024',
-                     desc => "The length of 'matrix'" }
-	  },
+	{ name => 'matrix', type => 'bytes',
+	  desc => 'The matrix -- all values must be >= 1' },
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (width == 0 || height == 0 || matrix_length == width * height)
+  if (width == 0 || height == 0 || g_bytes_get_size (matrix) == width * height)
     {
-      gimp_image_convert_indexed_set_dither_matrix (matrix, width, height);
+      gimp_image_convert_indexed_set_dither_matrix (g_bytes_get_data (matrix, NULL),
+                                                    width, height);
     }
   else
     {

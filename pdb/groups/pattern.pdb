@@ -87,9 +87,8 @@ HELP
         desc => "The pattern height" },
       { name => 'bpp', type => 'int32',
         desc => "The pattern bpp" },
-      { name => 'color_bytes', type => 'int8array',
-        desc => 'The pattern data.',
-        array => { desc => 'Number of pattern bytes' } }
+      { name => 'color_bytes', type => 'bytes',
+        desc => 'The pattern data.' }
     );
 
     %invoke = (
@@ -106,8 +105,7 @@ HELP
   width           = gimp_temp_buf_get_width  (pattern->mask);
   height          = gimp_temp_buf_get_height (pattern->mask);
   bpp             = babl_format_get_bytes_per_pixel (format);
-  num_color_bytes = gimp_temp_buf_get_data_size (pattern->mask);
-  color_bytes     = g_memdup2 (data, num_color_bytes);
+  color_bytes     = g_bytes_new (data, gimp_temp_buf_get_data_size (pattern->mask));
 
   gimp_temp_buf_unlock (pattern->mask, data);
 }

@@ -718,107 +718,6 @@ gimp_drawable_update (GimpDrawable *drawable,
 }
 
 /**
- * gimp_drawable_get_pixel:
- * @drawable: The drawable.
- * @x_coord: The x coordinate.
- * @y_coord: The y coordinate.
- * @num_channels: (out): The number of channels for the pixel.
- *
- * Gets the value of the pixel at the specified coordinates.
- *
- * This procedure gets the pixel value at the specified coordinates.
- * The 'num_channels' argument must always be equal to the
- * bytes-per-pixel value for the specified drawable.
- *
- * Returns: (array length=num_channels) (element-type guint8) (transfer full):
- *          The pixel value.
- *          The returned value must be freed with g_free().
- **/
-guint8 *
-gimp_drawable_get_pixel (GimpDrawable *drawable,
-                         gint          x_coord,
-                         gint          y_coord,
-                         gint         *num_channels)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  guint8 *pixel = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          G_TYPE_INT, x_coord,
-                                          G_TYPE_INT, y_coord,
-                                          G_TYPE_NONE);
-
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-get-pixel",
-                                              args);
-  gimp_value_array_unref (args);
-
-  *num_channels = 0;
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_channels = GIMP_VALUES_GET_INT (return_vals, 1);
-      pixel = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return pixel;
-}
-
-/**
- * gimp_drawable_set_pixel:
- * @drawable: The drawable.
- * @x_coord: The x coordinate.
- * @y_coord: The y coordinate.
- * @num_channels: The number of channels for the pixel.
- * @pixel: (array length=num_channels) (element-type guint8): The pixel value.
- *
- * Sets the value of the pixel at the specified coordinates.
- *
- * This procedure sets the pixel value at the specified coordinates.
- * The 'num_channels' argument must always be equal to the
- * bytes-per-pixel value for the specified drawable. Note that this
- * function is not undoable, you should use it only on drawables you
- * just created yourself.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_drawable_set_pixel (GimpDrawable *drawable,
-                         gint          x_coord,
-                         gint          y_coord,
-                         gint          num_channels,
-                         const guint8 *pixel)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          G_TYPE_INT, x_coord,
-                                          G_TYPE_INT, y_coord,
-                                          G_TYPE_INT, num_channels,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
-                                          G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 4), pixel, num_channels);
-
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-set-pixel",
-                                              args);
-  gimp_value_array_unref (args);
-
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_drawable_fill:
  * @drawable: The drawable.
  * @fill_type: The type of fill.
@@ -923,8 +822,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
  * @actual_width: (out): The previews width.
  * @actual_height: (out): The previews height.
  * @bpp: (out): The previews bpp.
- * @thumbnail_data_count: (out): The number of bytes in thumbnail data.
- * @thumbnail_data: (out) (array length=thumbnail_data_count) (element-type guint8) (transfer full): The thumbnail data.
+ * @thumbnail_data: (out) (transfer full): The thumbnail data.
  *
  * Get a thumbnail of a drawable.
  *
@@ -942,8 +840,7 @@ _gimp_drawable_thumbnail (GimpDrawable  *drawable,
                           gint          *actual_width,
                           gint          *actual_height,
                           gint          *bpp,
-                          gint          *thumbnail_data_count,
-                          guint8       **thumbnail_data)
+                          GBytes       **thumbnail_data)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -963,7 +860,6 @@ _gimp_drawable_thumbnail (GimpDrawable  *drawable,
   *actual_width = 0;
   *actual_height = 0;
   *bpp = 0;
-  *thumbnail_data_count = 0;
   *thumbnail_data = NULL;
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
@@ -973,8 +869,7 @@ _gimp_drawable_thumbnail (GimpDrawable  *drawable,
       *actual_width = GIMP_VALUES_GET_INT (return_vals, 1);
       *actual_height = GIMP_VALUES_GET_INT (return_vals, 2);
       *bpp = GIMP_VALUES_GET_INT (return_vals, 3);
-      *thumbnail_data_count = GIMP_VALUES_GET_INT (return_vals, 4);
-      *thumbnail_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
+      *thumbnail_data = GIMP_VALUES_DUP_BYTES (return_vals, 4);
     }
 
   gimp_value_array_unref (return_vals);
@@ -994,8 +889,7 @@ _gimp_drawable_thumbnail (GimpDrawable  *drawable,
  * @width: (out): The previews width.
  * @height: (out): The previews height.
  * @bpp: (out): The previews bpp.
- * @thumbnail_data_count: (out): The number of bytes in thumbnail data.
- * @thumbnail_data: (out) (array length=thumbnail_data_count) (element-type guint8) (transfer full): The thumbnail data.
+ * @thumbnail_data: (out) (transfer full): The thumbnail data.
  *
  * Get a thumbnail of a sub-area of a drawable drawable.
  *
@@ -1019,8 +913,7 @@ _gimp_drawable_sub_thumbnail (GimpDrawable  *drawable,
                               gint          *width,
                               gint          *height,
                               gint          *bpp,
-                              gint          *thumbnail_data_count,
-                              guint8       **thumbnail_data)
+                              GBytes       **thumbnail_data)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1044,7 +937,6 @@ _gimp_drawable_sub_thumbnail (GimpDrawable  *drawable,
   *width = 0;
   *height = 0;
   *bpp = 0;
-  *thumbnail_data_count = 0;
   *thumbnail_data = NULL;
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
@@ -1054,8 +946,7 @@ _gimp_drawable_sub_thumbnail (GimpDrawable  *drawable,
       *width = GIMP_VALUES_GET_INT (return_vals, 1);
       *height = GIMP_VALUES_GET_INT (return_vals, 2);
       *bpp = GIMP_VALUES_GET_INT (return_vals, 3);
-      *thumbnail_data_count = GIMP_VALUES_GET_INT (return_vals, 4);
-      *thumbnail_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
+      *thumbnail_data = GIMP_VALUES_DUP_BYTES (return_vals, 4);
     }
 
   gimp_value_array_unref (return_vals);

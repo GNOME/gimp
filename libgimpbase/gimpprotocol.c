@@ -1638,6 +1638,26 @@ _gp_params_read (GIOChannel  *channel,
             }
           break;
 
+        case GP_PARAM_TYPE_BYTES:
+          {
+            guint32 data_len;
+            guint8* data;
+
+            if (! _gimp_wire_read_int32 (channel, &data_len, 1, user_data))
+              goto cleanup;
+
+            data = g_new0 (guint8, data_len);
+
+            if (! _gimp_wire_read_int8 (channel, data, data_len, user_data))
+              {
+                g_free (data);
+                goto cleanup;
+              }
+
+            (*params)[i].data.d_bytes = g_bytes_new_take (data, data_len);
+          }
+          break;
+
         case GP_PARAM_TYPE_STRV:
           {
             guint32 size;
@@ -1803,6 +1823,22 @@ _gp_params_write (GIOChannel *channel,
             return;
           break;
 
+        case GP_PARAM_TYPE_BYTES:
+          {
+            const guint8 *bytes = NULL;
+            guint32       size  = 0;
+
+            if (params[i].data.d_bytes)
+              {
+                bytes = g_bytes_get_data (params[i].data.d_bytes, (gsize *) &size);
+              }
+
+            if (! _gimp_wire_write_int32 (channel, &size, 1, user_data) ||
+                ! _gimp_wire_write_int8 (channel, bytes, size, user_data))
+              return;
+          }
+          break;
+
         case GP_PARAM_TYPE_STRV:
           {
             gint size;
@@ -1899,6 +1935,10 @@ _gp_params_destroy (GPParam *params,
 
         case GP_PARAM_TYPE_ARRAY:
           g_free (params[i].data.d_array.data);
+          break;
+
+        case GP_PARAM_TYPE_BYTES:
+          g_bytes_unref (params[i].data.d_bytes);
           break;
 
         case GP_PARAM_TYPE_STRV:

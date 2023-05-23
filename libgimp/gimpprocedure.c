@@ -314,6 +314,7 @@ gimp_procedure_install_icon (GimpProcedure *procedure)
   GimpIconType  icon_type;
   guint8       *icon_data        = NULL;
   gsize         icon_data_length = 0;
+  GBytes       *icon_bytes       = NULL;
 
   icon_type = gimp_procedure_get_icon_type (procedure);
 
@@ -323,7 +324,8 @@ gimp_procedure_install_icon (GimpProcedure *procedure)
       {
         icon_data = (guint8 *) gimp_procedure_get_icon_name (procedure);
         if (icon_data)
-          icon_data_length = strlen ((gchar *) icon_data) + 1;
+          icon_bytes = g_bytes_new_static (icon_data,
+                                           strlen ((gchar *) icon_data) + 1);
       }
       break;
 
@@ -332,9 +334,12 @@ gimp_procedure_install_icon (GimpProcedure *procedure)
         GdkPixbuf *pixbuf = gimp_procedure_get_icon_pixbuf (procedure);
 
         if (pixbuf)
-          gdk_pixbuf_save_to_buffer (pixbuf,
-                                     (gchar **) &icon_data, &icon_data_length,
-                                     "png", NULL, NULL);
+          {
+            gdk_pixbuf_save_to_buffer (pixbuf,
+                                       (gchar **) &icon_data, &icon_data_length,
+                                       "png", NULL, NULL);
+            icon_bytes = g_bytes_new_take (icon_data, icon_data_length);
+          }
       }
       break;
 
@@ -346,6 +351,7 @@ gimp_procedure_install_icon (GimpProcedure *procedure)
           {
             icon_data        = (guchar *) g_file_get_uri (file);
             icon_data_length = strlen ((gchar *) icon_data) + 1;
+            icon_bytes       = g_bytes_new_take (icon_data, icon_data_length);
           }
       }
       break;
@@ -353,18 +359,7 @@ gimp_procedure_install_icon (GimpProcedure *procedure)
 
   if (icon_data)
     _gimp_pdb_set_proc_icon (gimp_procedure_get_name (procedure),
-                             icon_type, icon_data_length, icon_data);
-
-  switch (icon_type)
-    {
-    case GIMP_ICON_TYPE_ICON_NAME:
-      break;
-
-    case GIMP_ICON_TYPE_PIXBUF:
-    case GIMP_ICON_TYPE_IMAGE_FILE:
-      g_free (icon_data);
-      break;
-    }
+                             icon_type, icon_bytes);
 }
 
 static void

@@ -340,7 +340,7 @@ save_image (GFile         *file,
         }
 
       /* save colormap */
-      cmap = gimp_image_get_colormap (image, &colors);
+      cmap = gimp_image_get_colormap (image, NULL, &colors);
 
       if (! print (output, error,
                    "static unsigned char header_data_cmap[256][3] = {") ||

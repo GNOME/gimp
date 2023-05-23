@@ -173,8 +173,7 @@ gimp_image_convert_indexed (GimpImage              *image,
  * gimp_image_convert_set_dither_matrix:
  * @width: Width of the matrix (0 to reset to default matrix).
  * @height: Height of the matrix (0 to reset to default matrix).
- * @matrix_length: The length of 'matrix'.
- * @matrix: (array length=matrix_length) (element-type guint8): The matrix -- all values must be >= 1.
+ * @matrix: The matrix -- all values must be >= 1.
  *
  * Set dither matrix for conversion to indexed
  *
@@ -186,10 +185,9 @@ gimp_image_convert_indexed (GimpImage              *image,
  * Since: 2.4
  **/
 gboolean
-gimp_image_convert_set_dither_matrix (gint          width,
-                                      gint          height,
-                                      gint          matrix_length,
-                                      const guint8 *matrix)
+gimp_image_convert_set_dither_matrix (gint    width,
+                                      gint    height,
+                                      GBytes *matrix)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -198,10 +196,8 @@ gimp_image_convert_set_dither_matrix (gint          width,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
-                                          G_TYPE_INT, matrix_length,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
+                                          G_TYPE_BYTES, matrix,
                                           G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 3), matrix, matrix_length);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                               "gimp-image-convert-set-dither-matrix",

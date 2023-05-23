@@ -561,7 +561,7 @@ do_optimizations (GimpRunMode  run_mode,
 
   if (imagetype == GIMP_INDEXED)
     {
-      palette = gimp_image_get_colormap (image, &ncolors);
+      palette = gimp_image_get_colormap (image, NULL, &ncolors);
       gimp_image_set_colormap (new_image, palette, ncolors);
     }
 

@@ -75,7 +75,7 @@ GParamSpec * gimp_param_spec_parasite      (const gchar  *name,
  * @name:  the parasite name, USE A UNIQUE PREFIX
  * @flags: the parasite flags, like save in XCF etc.
  * @size:  the parasite size in bytes
- * @data:  the parasite data, the owner os the parasite is responsible
+ * @data: (array length=size): the parasite data, the owner os the parasite is responsible
  *   for tracking byte order and internal structure
  **/
 struct _GimpParasite

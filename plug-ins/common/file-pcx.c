@@ -1121,7 +1121,8 @@ save_image (GFile         *file,
   switch (drawable_type)
     {
     case GIMP_INDEXED_IMAGE:
-      cmap                          = gimp_image_get_colormap (image, &colors);
+      cmap = gimp_image_get_colormap (image, NULL, &colors);
+
       if (colors > 16)
         {
           pcx_header.bpp            = 8;

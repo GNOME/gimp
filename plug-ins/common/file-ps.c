@@ -2719,6 +2719,7 @@ save_ps_preview (GOutputStream  *output,
 
     case GIMP_INDEXED_IMAGE:
       cmap = gimp_image_get_colormap (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                      NULL,
                                       &ncols);
       format = gimp_drawable_get_format (drawable);
       break;
@@ -3032,7 +3033,7 @@ save_bw (GOutputStream  *output,
                 "level", &level2,
                 NULL);
 
-  cmap = gimp_image_get_colormap (image, &ncols);
+  cmap = gimp_image_get_colormap (image, NULL, &ncols);
 
   buffer = gimp_drawable_get_buffer (drawable);
   format = gimp_drawable_get_format (drawable);
@@ -3221,7 +3222,7 @@ save_index (GOutputStream  *output,
                 "level", &level2,
                 NULL);
 
-  cmap = cmap_start = gimp_image_get_colormap (image, &ncols);
+  cmap = cmap_start = gimp_image_get_colormap (image, NULL, &ncols);
 
   ct = coltab;
   bw = 1;

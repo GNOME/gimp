@@ -262,17 +262,16 @@ gimp_brush_select_run_callback (GimpPdbDialog  *dialog,
   GimpTempBuf    *mask  = gimp_brush_get_mask (brush);
   const Babl     *format;
   gpointer        data;
-  GimpArray      *array;
+  GBytes         *bytes;
   GimpValueArray *return_vals;
 
   format = gimp_babl_compat_u8_mask_format (gimp_temp_buf_get_format (mask));
   data   = gimp_temp_buf_lock (mask, format, GEGL_ACCESS_READ);
 
-  array = gimp_array_new (data,
-                          gimp_temp_buf_get_width         (mask) *
-                          gimp_temp_buf_get_height        (mask) *
-                          babl_format_get_bytes_per_pixel (format),
-                          TRUE);
+  bytes = g_bytes_new_static (data,
+                              gimp_temp_buf_get_width         (mask) *
+                              gimp_temp_buf_get_height        (mask) *
+                              babl_format_get_bytes_per_pixel (format));
 
   return_vals =
     gimp_pdb_execute_procedure_by_name (dialog->pdb,
@@ -285,12 +284,11 @@ gimp_brush_select_run_callback (GimpPdbDialog  *dialog,
                                         GIMP_TYPE_LAYER_MODE,  gimp_context_get_paint_mode (dialog->context),
                                         G_TYPE_INT,            gimp_brush_get_width  (brush),
                                         G_TYPE_INT,            gimp_brush_get_height (brush),
-                                        G_TYPE_INT,            array->length,
-                                        GIMP_TYPE_UINT8_ARRAY, array->data,
+                                        G_TYPE_BYTES,          bytes,
                                         G_TYPE_BOOLEAN,        closing,
                                         G_TYPE_NONE);
 
-  gimp_array_free (array);
+  g_bytes_unref (bytes);
 
   gimp_temp_buf_unlock (mask, data);
 

@@ -405,10 +405,9 @@ gimp_brush_select_button_get_brush_bitmap (GimpBrushSelectButton *self)
 {
   GimpBrush                    *brush;
   gint                          mask_bpp;
-  gint                          mask_data_size;
+  GBytes                       *mask_data;
   gint                          color_bpp;
-  gint                          color_data_size;
-  guint8                       *color_data;
+  GBytes                       *color_data;
   _PreviewBitmap                result;
 
   g_debug ("%s", G_STRFUNC);
@@ -419,15 +418,13 @@ gimp_brush_select_button_get_brush_bitmap (GimpBrushSelectButton *self)
                          &result.width,
                          &result.height,
                          &mask_bpp,
-                         &mask_data_size,
-                         &result.mask_data,
+                         &mask_data,
                          &color_bpp,
-                         &color_data_size,
                          &color_data);
 
+  result.mask_data = g_bytes_unref_to_data (mask_data, NULL);
   /* Discard any color data, bitmap is B&W i.e. i.e. depth one i.e. a mask */
-  if (color_data)
-    g_free (color_data);
+  g_bytes_unref (color_data);
 
   return result;
 }

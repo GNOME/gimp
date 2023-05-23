@@ -368,8 +368,7 @@ static void             p_copy_points                 (BenderDialog  *cd,
                                                        const gdouble *floatarray);
 static void             p_copy_yval                   (BenderDialog  *cd,
                                                        int            outline,
-                                                       int            argc,
-                                                       const guint8  *int8array);
+                                                       GBytes        *bytes);
 static int              p_save_pointfile              (BenderDialog  *cd,
                                                        const gchar   *filename);
 
@@ -537,29 +536,17 @@ bender_create_procedure (GimpPlugIn  *plug_in,
                                  "{ 0.0 <= y <= 1.0 or -1 for unused point }",
                                  G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "argc-upper-val-y",
-                         "Argc upper val Y",
-                         "Argc upper val Y",
-                         256, 256, 256,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_BYTES (procedure, "upper-val-y",
+                           "Upper val Y",
+                           "Array of 256 y freehand coords "
+                           "{ 0 <= y <= 255 }",
+                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_UINT8_ARRAY (procedure, "upper-val-y",
-                                 "Upper val Y",
-                                 "Array of 256 y freehand coords "
-                                 "{ 0 <= y <= 255 }",
-                                 G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "argc-lower-val-y",
-                         "Argc lower val Y",
-                         "Argc lower val Y",
-                         256, 256, 256,
-                         G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_UINT8_ARRAY (procedure, "lower-val-y",
-                                 "Lower val Y",
-                                 "Array of 256 y freehand coords "
-                                 "{ 0 <= y <= 255 }",
-                                 G_PARAM_READWRITE);
+      GIMP_PROC_ARG_BYTES (procedure, "lower-val-y",
+                           "Lower val Y",
+                           "Array of 256 y freehand coords "
+                           "{ 0 <= y <= 255 }",
+                           G_PARAM_READWRITE);
 
       GIMP_PROC_VAL_LAYER (procedure, "bent-layer",
                            "Bent layer",
@@ -767,11 +754,9 @@ bender_run (GimpProcedure        *procedure,
                      GIMP_VALUES_GET_FLOAT_ARRAY (args, 12));
 
       p_copy_yval (cd, OUTLINE_UPPER,
-                   GIMP_VALUES_GET_INT         (args, 13),
-                   GIMP_VALUES_GET_UINT8_ARRAY (args, 14));
+                   GIMP_VALUES_GET_BYTES (args, 13));
       p_copy_yval (cd, OUTLINE_LOWER,
-                   GIMP_VALUES_GET_INT         (args, 15),
-                   GIMP_VALUES_GET_UINT8_ARRAY (args, 16));
+                   GIMP_VALUES_GET_BYTES (args, 14));
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -1094,25 +1079,22 @@ p_copy_points (BenderDialog  *cd,
 static void
 p_copy_yval (BenderDialog *cd,
              int           outline,
-             int           argc,
-             const guint8 *int8array)
+             GBytes       *bytes)
 {
-   int j;
-   guchar fill;
+  const guint8 *array = g_bytes_get_data (bytes, NULL);
+  guchar fill = MIDDLE;
 
-   fill = MIDDLE;
-
-   for (j = 0; j < 256; j++)
-     {
-       if (j < argc)
-         {
-           fill = cd->curve[outline][j] = int8array[j];
-         }
-       else
-         {
-           cd->curve[outline][j] = fill;
-         }
-     }
+  for (int j = 0; j < 256; j++)
+    {
+      if (j < g_bytes_get_size (bytes))
+        {
+          fill = cd->curve[outline][j] = array[j];
+        }
+      else
+        {
+          cd->curve[outline][j] = fill;
+        }
+    }
 }
 
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */

@@ -1529,7 +1529,7 @@ save_index (FILE         *ofp,
     }
   else
     {
-      cmap = gimp_image_get_colormap (image, &ncols);
+      cmap = gimp_image_get_colormap (image, NULL, &ncols);
 
       for (j = 0; j < ncols; j++)
         {

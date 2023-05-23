@@ -747,7 +747,7 @@ save_image (GFile      *file,
     case GIMP_INDEXED:
       max = MAXDIFF;
       bg = 0;
-      cmap = gimp_image_get_colormap (image, &colors);
+      cmap = gimp_image_get_colormap (image, NULL, &colors);
       for (i = 0; i < MIN (colors, 256); i++)
         {
           cm[i*3+0] = cmap[i*3+0];

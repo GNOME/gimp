@@ -308,12 +308,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
     }
   else if (GIMP_IS_PARAM_SPEC_ARRAY (pspec))
     {
-      if (GIMP_IS_PARAM_SPEC_UINT8_ARRAY (pspec))
-        {
-          copy = gimp_param_spec_uint8_array (name, nick, blurb,
-                                              flags);
-        }
-      else if (GIMP_IS_PARAM_SPEC_INT32_ARRAY (pspec))
+      if (GIMP_IS_PARAM_SPEC_INT32_ARRAY (pspec))
         {
           copy = gimp_param_spec_int32_array (name, nick, blurb,
                                               flags);
@@ -367,11 +362,10 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
     {
       GType value_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
 
-      if (value_type == G_TYPE_STRV)
+      if (value_type == G_TYPE_BYTES ||
+          value_type == G_TYPE_STRV)
         {
-          copy = g_param_spec_boxed (name, nick, blurb,
-                                     value_type,
-                                     flags);
+          copy = g_param_spec_boxed (name, nick, blurb, value_type, flags);
         }
     }
 

@@ -34,10 +34,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'profile_data', type => 'int8array',
-          desc => "The image's serialized color profile.",
-          array => { name => 'num_bytes',
-                     desc => 'Number of bytes in the color_profile array' } }
+        { name => 'profile_data', type => 'bytes',
+          desc => "The image's serialized color profile." }
     );
 
     %invoke = (
@@ -54,8 +52,7 @@ HELP
 
       data = gimp_color_profile_get_icc_profile (profile, &length);
 
-      profile_data = g_memdup2 (data, length);
-      num_bytes = length;
+      profile_data = g_bytes_new (data, length);
     }
 }
 CODE
@@ -82,10 +79,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'profile_data', type => 'int8array',
-          desc => "The image's serialized color profile.",
-          array => { name => 'num_bytes',
-                     desc => 'Number of bytes in the color_profile array' } }
+        { name => 'profile_data', type => 'bytes',
+          desc => "The image's serialized color profile." }
     );
 
     %invoke = (
@@ -102,8 +97,7 @@ HELP
 
       data = gimp_color_profile_get_icc_profile (profile, &length);
 
-      profile_data = g_memdup2 (data, length);
-      num_bytes = length;
+      profile_data = g_bytes_new (data, length);
     }
 }
 CODE
@@ -128,10 +122,8 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'color_profile', type => 'int8array',
-          desc => 'The new serialized color profile',
-          array => { name => 'num_bytes',
-                     desc => 'Number of bytes in the color_profile array' } }
+        { name => 'color_profile', type => 'bytes',
+          desc => 'The new serialized color profile' }
     );
 
     %invoke = (
@@ -141,8 +133,8 @@ HELP
     {
       GimpColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_icc_profile (color_profile,
-                                                         num_bytes,
+      profile = gimp_color_profile_new_from_icc_profile (g_bytes_get_data (color_profile, NULL),
+                                                         g_bytes_get_size (color_profile),
                                                          error);
 
       if (profile)
@@ -231,10 +223,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'profile_data', type => 'int8array',
-          desc => "The image's serialized simulation color profile.",
-          array => { name => 'num_bytes',
-                     desc => 'Number of bytes in the color_profile array' } }
+        { name => 'profile_data', type => 'bytes',
+          desc => "The image's serialized simulation color profile." }
     );
 
     %invoke = (
@@ -251,8 +241,7 @@ HELP
 
       data = gimp_color_profile_get_icc_profile (profile, &length);
 
-      profile_data = g_memdup2 (data, length);
-      num_bytes = length;
+      profile_data = g_bytes_new (data, length);
     }
 }
 CODE
@@ -274,10 +263,8 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'color_profile', type => 'int8array',
-          desc => 'The new serialized simulation color profile',
-          array => { name => 'num_bytes',
-                     desc => 'Number of bytes in the color_profile array' } }
+        { name => 'color_profile', type => 'bytes',
+          desc => 'The new serialized simulation color profile'}
     );
 
     %invoke = (
@@ -287,8 +274,8 @@ HELP
     {
       GimpColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_icc_profile (color_profile,
-                                                         num_bytes,
+      profile = gimp_color_profile_new_from_icc_profile (g_bytes_get_data (color_profile, NULL),
+                                                         g_bytes_get_size (color_profile),
                                                          error);
 
       if (profile)
@@ -479,10 +466,8 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'color_profile', type => 'int8array',
-          desc => 'The serialized color profile',
-          array => { name => 'num_bytes',
-                     desc => 'Number of bytes in the color_profile array' } },
+        { name => 'color_profile', type => 'bytes',
+          desc => 'The serialized color profile' },
         { name => 'intent', type => 'enum GimpColorRenderingIntent',
           desc => 'Rendering intent' },
         { name => 'bpc', type => 'boolean',
@@ -496,8 +481,8 @@ HELP
     {
       GimpColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_icc_profile (color_profile,
-                                                         num_bytes,
+      profile = gimp_color_profile_new_from_icc_profile (g_bytes_get_data (color_profile, NULL),
+                                                         g_bytes_get_size (color_profile),
                                                          error);
 
       if (profile)

@@ -32,20 +32,15 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-G_GNUC_INTERNAL guint8*  _gimp_image_get_color_profile               (GimpImage                *image,
-                                                                      gint                     *num_bytes);
-G_GNUC_INTERNAL guint8*  _gimp_image_get_effective_color_profile     (GimpImage                *image,
-                                                                      gint                     *num_bytes);
+G_GNUC_INTERNAL GBytes*  _gimp_image_get_color_profile               (GimpImage                *image);
+G_GNUC_INTERNAL GBytes*  _gimp_image_get_effective_color_profile     (GimpImage                *image);
 G_GNUC_INTERNAL gboolean _gimp_image_set_color_profile               (GimpImage                *image,
-                                                                      gint                      num_bytes,
-                                                                      const guint8             *color_profile);
+                                                                      GBytes                   *color_profile);
 gboolean                 gimp_image_set_color_profile_from_file      (GimpImage                *image,
                                                                       GFile                    *file);
-G_GNUC_INTERNAL guint8*  _gimp_image_get_simulation_profile          (GimpImage                *image,
-                                                                      gint                     *num_bytes);
+G_GNUC_INTERNAL GBytes*  _gimp_image_get_simulation_profile          (GimpImage                *image);
 G_GNUC_INTERNAL gboolean _gimp_image_set_simulation_profile          (GimpImage                *image,
-                                                                      gint                      num_bytes,
-                                                                      const guint8             *color_profile);
+                                                                      GBytes                   *color_profile);
 gboolean                 gimp_image_set_simulation_profile_from_file (GimpImage                *image,
                                                                       GFile                    *file);
 GimpColorRenderingIntent gimp_image_get_simulation_intent            (GimpImage                *image);
@@ -55,8 +50,7 @@ gboolean                 gimp_image_get_simulation_bpc               (GimpImage 
 gboolean                 gimp_image_set_simulation_bpc               (GimpImage                *image,
                                                                       gboolean                  bpc);
 G_GNUC_INTERNAL gboolean _gimp_image_convert_color_profile           (GimpImage                *image,
-                                                                      gint                      num_bytes,
-                                                                      const guint8             *color_profile,
+                                                                      GBytes                   *color_profile,
                                                                       GimpColorRenderingIntent  intent,
                                                                       gboolean                  bpc);
 gboolean                 gimp_image_convert_color_profile_from_file  (GimpImage                *image,

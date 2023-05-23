@@ -1820,7 +1820,7 @@ save_image (GFile         *file,
       guchar *cmap;
       gint    num_colors;
 
-      cmap = gimp_image_get_colormap (image, &num_colors);
+      cmap = gimp_image_get_colormap (image, NULL, &num_colors);
 
       if (file_type == FILE_TYPE_PBM)
         {

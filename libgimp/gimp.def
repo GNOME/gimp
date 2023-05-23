@@ -221,7 +221,6 @@ EXPORTS
 	gimp_drawable_get_format
 	gimp_drawable_get_height
 	gimp_drawable_get_offsets
-	gimp_drawable_get_pixel
 	gimp_drawable_get_shadow_buffer
 	gimp_drawable_get_sub_thumbnail
 	gimp_drawable_get_sub_thumbnail_data
@@ -244,7 +243,6 @@ EXPORTS
 	gimp_drawable_merge_shadow
 	gimp_drawable_offset
 	gimp_drawable_posterize
-	gimp_drawable_set_pixel
 	gimp_drawable_shadows_highlights
 	gimp_drawable_threshold
 	gimp_drawable_type

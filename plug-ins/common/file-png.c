@@ -1606,6 +1606,7 @@ save_image (GFile        *file,
         file_format = gimp_drawable_get_format (drawable);
         pngg.has_plte = TRUE;
         pngg.palette = (png_colorp) gimp_image_get_colormap (image,
+                                                             NULL,
                                                              &pngg.num_palette);
         if (optimize_palette)
           bit_depth = get_bit_depth_for_palette (pngg.num_palette);
@@ -2185,7 +2186,7 @@ respin_cmap (png_structp   pp,
   gint          colors;
   guchar       *before;
 
-  before = gimp_image_get_colormap (image, &colors);
+  before = gimp_image_get_colormap (image, NULL, &colors);
   buffer = gimp_drawable_get_buffer (drawable);
 
   /* Make sure there is something in the colormap.

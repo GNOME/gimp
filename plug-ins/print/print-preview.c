@@ -816,7 +816,7 @@ print_preview_get_thumbnail (GimpDrawable *drawable,
 {
   cairo_surface_t *surface;
   cairo_format_t   format;
-  guchar          *data;
+  GBytes          *data;
   guchar          *dest;
   const guchar    *src;
   gint             src_stride;
@@ -828,6 +828,7 @@ print_preview_get_thumbnail (GimpDrawable *drawable,
   g_return_val_if_fail (height > 0 && height <= 1024, NULL);
 
   data = gimp_drawable_get_thumbnail_data (drawable,
+                                           width, height,
                                            &width, &height, &bpp);
 
   switch (bpp)
@@ -849,7 +850,7 @@ print_preview_get_thumbnail (GimpDrawable *drawable,
 
   surface = cairo_image_surface_create (format, width, height);
 
-  src         = data;
+  src         = g_bytes_get_data (data, NULL);
   src_stride  = width * bpp;
 
   dest        = cairo_image_surface_get_data (surface);
@@ -904,7 +905,7 @@ print_preview_get_thumbnail (GimpDrawable *drawable,
       dest += dest_stride;
     }
 
-  g_free (data);
+  g_bytes_unref (data);
 
   cairo_surface_mark_dirty (surface);
 

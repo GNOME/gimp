@@ -656,11 +656,9 @@ HELP
 	  desc => 'The procedure for which to install the icon' },
         { name => 'icon_type', type => 'enum GimpIconType',
           desc => 'The type of the icon' },
-	{ name => 'icon_data', type => 'int8array',
+	{ name => 'icon_data', type => 'bytes',
 	  desc => "The procedure's icon. The format depends on the
-                   'icon_type' parameter",
-	  array => { name => 'icon_data_length', type => '1 <= int32',
-                     desc => "The length of 'icon-data'" } }
+                   'icon_type' parameter", }
     );
 
     %invoke = (
@@ -673,7 +671,8 @@ HELP
     {
       success = gimp_plug_in_set_proc_icon (plug_in, procedure_name,
                                             icon_type,
-                                            icon_data, icon_data_length,
+                                            g_bytes_get_data (icon_data, NULL),
+                                            g_bytes_get_size (icon_data),
                                             error);
     }
   else
@@ -1215,10 +1214,8 @@ HELP
     );
 
     @outargs = (
-	{ name  => 'data', type  => 'int8array', void_ret => 1,
-	  desc  => 'A byte array containing data',
-	  array => { name => 'bytes', type => '1 <= int32',
-		     desc => 'The number of bytes in the data' } }
+	{ name  => 'data', type  => 'bytes', void_ret => 1,
+	  desc  => 'A byte array containing data' }
     );
 
     %invoke = (
@@ -1227,12 +1224,13 @@ HELP
   if (gimp_is_canonical_identifier (identifier))
     {
       const guint8 *orig_data;
+      gint          bytes;
 
       orig_data = gimp_plug_in_manager_get_data (gimp->plug_in_manager,
                                                  identifier, &bytes);
 
       if (orig_data)
-        data = g_memdup2 (orig_data, bytes);
+        data = g_bytes_new (orig_data, bytes);
       else
         success = FALSE;
     }
@@ -1308,10 +1306,8 @@ HELP
     @inargs = (
 	{ name => 'identifier', type => 'string', non_empty => 1,
 	  desc => 'The identifier associated with data' },
-	{ name  => 'data', type  => 'int8array',
-	  desc  => 'A byte array containing data',
-	  array => { name => 'bytes', type => '1 <= int32',
-		     desc => 'The number of bytes in the data' } }
+	{ name  => 'data', type  => 'bytes',
+	  desc  => 'A byte array containing data' }
     );
 
     %invoke = (
@@ -1320,7 +1316,9 @@ HELP
   if (gimp_is_canonical_identifier (identifier))
     {
       gimp_plug_in_manager_set_data (gimp->plug_in_manager,
-                                     identifier, bytes, data);
+                                     identifier,
+                                     g_bytes_get_size (data),
+                                     g_bytes_get_data (data, NULL));
     }
   else
     {

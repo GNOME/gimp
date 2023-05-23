@@ -325,10 +325,8 @@ HELP
           desc => 'The width of the thumbnail' },
         { name => 'height', type => 'int32',
           desc => 'The height of the thumbnail' },
-        { name => 'thumb_data', type => 'int8array',
-          desc => 'The thumbnail data',
-          array =>  { name => 'thumb_data_count',
-                      desc => 'The number of bytes in thumbnail data' } }
+        { name => 'thumb_data', type => 'bytes',
+          desc => 'The thumbnail data' }
     );
 
     %invoke = (
@@ -340,9 +338,8 @@ HELP
     {
       width            = gdk_pixbuf_get_width (pixbuf);
       height           = gdk_pixbuf_get_height (pixbuf);
-      thumb_data_count = 3 * width * height;
-      thumb_data       = g_memdup2 (gdk_pixbuf_get_pixels (pixbuf),
-                                    thumb_data_count);
+      thumb_data       = g_bytes_new (gdk_pixbuf_get_pixels (pixbuf),
+                                      3 * width * height);
 
       g_object_unref (pixbuf);
     }

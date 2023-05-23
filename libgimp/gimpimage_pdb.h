@@ -115,11 +115,9 @@ GimpLayer*               gimp_image_merge_down                 (GimpImage       
                                                                 GimpMergeType        merge_type);
 GimpLayer*               gimp_image_merge_layer_group          (GimpImage           *image,
                                                                 GimpLayer           *layer_group);
-G_GNUC_INTERNAL guint8*  _gimp_image_get_colormap              (GimpImage           *image,
-                                                                gint                *num_bytes);
+G_GNUC_INTERNAL GBytes*  _gimp_image_get_colormap              (GimpImage           *image);
 G_GNUC_INTERNAL gboolean _gimp_image_set_colormap              (GimpImage           *image,
-                                                                gint                 num_bytes,
-                                                                const guint8        *colormap);
+                                                                GBytes              *colormap);
 G_GNUC_INTERNAL gchar*   _gimp_image_get_metadata              (GimpImage           *image);
 G_GNUC_INTERNAL gboolean _gimp_image_set_metadata              (GimpImage           *image,
                                                                 const gchar         *metadata_string);
@@ -131,8 +129,7 @@ G_GNUC_INTERNAL gboolean _gimp_image_thumbnail                 (GimpImage       
                                                                 gint                *actual_width,
                                                                 gint                *actual_height,
                                                                 gint                *bpp,
-                                                                gint                *thumbnail_data_count,
-                                                                guint8             **thumbnail_data);
+                                                                GBytes             **thumbnail_data);
 GimpLayer**              gimp_image_get_selected_layers        (GimpImage           *image,
                                                                 gint                *num_layers);
 gboolean                 gimp_image_set_selected_layers        (GimpImage           *image,

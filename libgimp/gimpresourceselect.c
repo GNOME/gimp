@@ -193,16 +193,10 @@ create_callback_PDB_procedure_params (GimpProcedure *procedure,
                          0, 10000, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "mask-len",
-                         "Mask length",
-                         "Length of brush mask data",
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_UINT8_ARRAY (procedure, "mask-data",
-                                 "Mask data",
-                                 "The brush mask data",
-                                 G_PARAM_READWRITE);
+      GIMP_PROC_ARG_BYTES (procedure, "mask-data",
+                           "Mask data",
+                           "The brush mask data",
+                           G_PARAM_READWRITE);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
     {
@@ -232,16 +226,10 @@ create_callback_PDB_procedure_params (GimpProcedure *procedure,
                          0, 10000, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "mask-len",
-                         "Mask length",
-                         "Length of pattern mask data",
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_UINT8_ARRAY (procedure, "mask-data",
-                                 "Mask data",
-                                 "The pattern mask data",
-                                 G_PARAM_READWRITE);
+      GIMP_PROC_ARG_BYTES (procedure, "mask-data",
+                           "Mask data",
+                           "The pattern mask data",
+                           G_PARAM_READWRITE);
     }
   else
     {

@@ -266,8 +266,9 @@ static void
 gimp_drawable_preview_draw_original (GimpPreview *preview)
 {
   GimpDrawablePreviewPrivate *priv = GET_PRIVATE (preview);
-  guchar                     *buffer;
+  GBytes                     *buffer;
   gint                        width, height;
+  gint                        tn_width, tn_height;
   gint                        xoff, yoff;
   gint                        xmin, ymin;
   gint                        xmax, ymax;
@@ -290,7 +291,8 @@ gimp_drawable_preview_draw_original (GimpPreview *preview)
                                                  xoff + xmin,
                                                  yoff + ymin,
                                                  width, height,
-                                                 &width, &height, &bpp);
+                                                 width, height,
+                                                 &tn_width, &tn_height, &bpp);
 
   switch (bpp)
     {
@@ -299,13 +301,14 @@ gimp_drawable_preview_draw_original (GimpPreview *preview)
     case 3: type = GIMP_RGB_IMAGE; break;
     case 4: type = GIMP_RGBA_IMAGE; break;
     default:
-      g_free (buffer);
+      g_bytes_unref (buffer);
       return;
     }
 
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (gimp_preview_get_area (preview)),
-                          0, 0, width, height, type, buffer, width * bpp);
-  g_free (buffer);
+                          0, 0, tn_width, tn_height, type,
+                          g_bytes_get_data (buffer, NULL), width * bpp);
+  g_bytes_unref (buffer);
 }
 
 static void
@@ -327,11 +330,12 @@ _gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
                                         gint             width,
                                         gint             height)
 {
-  guchar *buffer;
+  GBytes *buffer;
   gint    x1, y1, x2, y2;
   gint    bpp;
   gint    size = 100;
   gint    nav_width, nav_height;
+  gint    tn_width, tn_height;
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
   g_return_if_fail (gimp_item_is_valid (GIMP_ITEM (drawable)));
@@ -363,13 +367,15 @@ _gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
     {
       buffer = gimp_drawable_get_sub_thumbnail_data (drawable,
                                                      x1, y1, x2 - x1, y2 - y1,
-                                                     &nav_width, &nav_height,
+                                                     nav_width, nav_height,
+                                                     &tn_width, &tn_height,
                                                      &bpp);
     }
   else
     {
       buffer = gimp_drawable_get_thumbnail_data (drawable,
-                                                 &nav_width, &nav_height,
+                                                 nav_width, nav_height,
+                                                 &tn_width, &tn_height,
                                                  &bpp);
     }
 
@@ -377,7 +383,7 @@ _gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
     {
       GimpImageType type;
 
-      gtk_widget_set_size_request (GTK_WIDGET (area), nav_width, nav_height);
+      gtk_widget_set_size_request (GTK_WIDGET (area), tn_width, tn_height);
       gtk_widget_show (GTK_WIDGET (area));
       gtk_widget_realize (GTK_WIDGET (area));
 
@@ -388,14 +394,15 @@ _gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
         case 3:  type = GIMP_RGB_IMAGE;    break;
         case 4:  type = GIMP_RGBA_IMAGE;   break;
         default:
-          g_free (buffer);
+          g_bytes_unref (buffer);
           return;
         }
 
       gimp_preview_area_draw (area,
-                              0, 0, nav_width, nav_height,
-                              type, buffer, bpp * nav_width);
-      g_free (buffer);
+                              0, 0, tn_width, tn_height,
+                              type,
+                              g_bytes_get_data (buffer, NULL), bpp * tn_width);
+      g_bytes_unref (buffer);
     }
 }
 
@@ -451,21 +458,16 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
         {
           GimpImageType   type;
           GimpSelection  *selection;
-          guchar         *src;
-          guchar         *sel;
+          GBytes         *src;
+          GBytes         *sel;
           gint            d_w, d_h, d_bpp;
           gint            s_w, s_h, s_bpp;
-
-          d_w = draw_width;
-          d_h = draw_height;
-
-          s_w = draw_width;
-          s_h = draw_height;
 
           selection = gimp_image_get_selection (image);
 
           src = gimp_drawable_get_sub_thumbnail_data (priv->drawable,
                                                       draw_x, draw_y,
+                                                      draw_width, draw_height,
                                                       draw_width, draw_height,
                                                       &d_w, &d_h,
                                                       &d_bpp);
@@ -473,6 +475,7 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
           sel = gimp_drawable_get_sub_thumbnail_data (GIMP_DRAWABLE (selection),
                                                       draw_x + offset_x,
                                                       draw_y + offset_y,
+                                                      draw_width, draw_height,
                                                       draw_width, draw_height,
                                                       &s_w, &s_h,
                                                       &s_bpp);
@@ -484,8 +487,8 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
             case 3:  type = GIMP_RGB_IMAGE;    break;
             case 4:  type = GIMP_RGBA_IMAGE;   break;
             default:
-              g_free (sel);
-              g_free (src);
+              g_bytes_unref (sel);
+              g_bytes_unref (src);
               return;
             }
 
@@ -495,15 +498,15 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
                                   draw_width,
                                   draw_height,
                                   type,
-                                  src, draw_width * d_bpp,
+                                  g_bytes_get_data (src, NULL), draw_width * d_bpp,
                                   (buf +
                                    (draw_x - x) * d_bpp +
                                    (draw_y - y) * d_w * d_bpp),
                                   rowstride,
-                                  sel, s_w);
+                                  g_bytes_get_data (sel, NULL), s_w);
 
-          g_free (sel);
-          g_free (src);
+          g_bytes_unref (sel);
+          g_bytes_unref (src);
         }
     }
 }
@@ -548,7 +551,7 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
       guchar    *cmap;
       gint       num_colors;
 
-      cmap = gimp_image_get_colormap (image, &num_colors);
+      cmap = gimp_image_get_colormap (image, NULL, &num_colors);
       gimp_preview_area_set_colormap (GIMP_PREVIEW_AREA (area),
                                       cmap, num_colors);
       g_free (cmap);

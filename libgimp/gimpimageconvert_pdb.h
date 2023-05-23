@@ -43,8 +43,7 @@ gboolean gimp_image_convert_indexed           (GimpImage              *image,
                                                const gchar            *palette);
 gboolean gimp_image_convert_set_dither_matrix (gint                    width,
                                                gint                    height,
-                                               gint                    matrix_length,
-                                               const guint8           *matrix);
+                                               GBytes                 *matrix);
 gboolean gimp_image_convert_precision         (GimpImage              *image,
                                                GimpPrecision           precision);
 

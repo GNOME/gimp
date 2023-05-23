@@ -1101,7 +1101,7 @@ gimp_export_image (GimpImage               **image,
             {
               gint n_colors;
 
-              g_free (gimp_image_get_colormap (*image, &n_colors));
+              g_free (gimp_image_get_colormap (*image, NULL, &n_colors));
 
               if (n_colors > 2)
                 actions = g_slist_prepend (actions,

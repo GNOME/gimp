@@ -117,7 +117,7 @@ gboolean   gimp_pdb_get_data      (const gchar      *identifier,
 gint       gimp_pdb_get_data_size (const gchar      *identifier);
 gboolean   gimp_pdb_set_data      (const gchar      *identifier,
                                    gconstpointer     data,
-                                   guint32           bytes);
+                                   guint32           data_len);
 
 
 G_END_DECLS

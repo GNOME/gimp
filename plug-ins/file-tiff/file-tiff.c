@@ -501,7 +501,7 @@ image_is_monochrome (GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  colors = gimp_image_get_colormap (image, &num_colors);
+  colors = gimp_image_get_colormap (image, NULL, &num_colors);
 
   if (colors)
     {

@@ -865,7 +865,7 @@ save_image (GFile         *file,
   /* Work out whether to save as 8bit or 4bit */
   if (bpp < 32)
     {
-      g_free (gimp_image_get_colormap (image, &colors));
+      g_free (gimp_image_get_colormap (image, NULL, &colors));
 
       if (colors > 15)
         {

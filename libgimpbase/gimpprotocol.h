@@ -66,6 +66,7 @@ typedef enum
   GP_PARAM_TYPE_FLOAT,
   GP_PARAM_TYPE_STRING,
   GP_PARAM_TYPE_STRV,
+  GP_PARAM_TYPE_BYTES,
   GP_PARAM_TYPE_FILE,
   GP_PARAM_TYPE_COLOR,
   GP_PARAM_TYPE_PARASITE,
@@ -250,6 +251,7 @@ struct _GPParam
     gdouble             d_float;
     gchar              *d_string;
     gchar             **d_strv;
+    GBytes             *d_bytes;
     GimpRGB             d_color;
     GimpParasite        d_parasite;
     GPParamArray        d_array;

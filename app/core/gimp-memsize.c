@@ -220,7 +220,6 @@ gimp_g_value_get_memsize (GValue *value)
                                                 NULL);
         }
       else if (GIMP_VALUE_HOLDS_ARRAY (value)       ||
-               GIMP_VALUE_HOLDS_UINT8_ARRAY (value) ||
                GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
                GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
         {
@@ -229,6 +228,15 @@ gimp_g_value_get_memsize (GValue *value)
           if (array)
             memsize += sizeof (GimpArray) +
                        (array->static_data ? 0 : array->length);
+        }
+      else if (G_VALUE_HOLDS (value, G_TYPE_BYTES))
+        {
+          GBytes *bytes = g_value_get_boxed (value);
+
+          if (bytes)
+            {
+              memsize += g_bytes_get_size (bytes);
+            }
         }
       else if (G_VALUE_HOLDS (value, G_TYPE_STRV))
         {

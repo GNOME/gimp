@@ -1746,7 +1746,6 @@ gimp_image_merge_layer_group (GimpImage *image,
 /**
  * _gimp_image_get_colormap:
  * @image: The image.
- * @num_bytes: (out): Number of bytes in the colormap array.
  *
  * Returns the image's colormap
  *
@@ -1756,17 +1755,14 @@ gimp_image_merge_layer_group (GimpImage *image,
  * 3. If the image is not in Indexed color mode, no colormap is
  * returned.
  *
- * Returns: (array length=num_bytes) (element-type guint8) (transfer full):
- *          The image's colormap.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The image's colormap.
  **/
-guint8 *
-_gimp_image_get_colormap (GimpImage *image,
-                          gint      *num_bytes)
+GBytes *
+_gimp_image_get_colormap (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  guint8 *colormap = NULL;
+  GBytes *colormap = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -1777,13 +1773,8 @@ _gimp_image_get_colormap (GimpImage *image,
                                               args);
   gimp_value_array_unref (args);
 
-  *num_bytes = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_bytes = GIMP_VALUES_GET_INT (return_vals, 1);
-      colormap = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
-    }
+    colormap = GIMP_VALUES_DUP_BYTES (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1793,8 +1784,7 @@ _gimp_image_get_colormap (GimpImage *image,
 /**
  * _gimp_image_set_colormap:
  * @image: The image.
- * @num_bytes: Number of bytes in the colormap array.
- * @colormap: (array length=num_bytes) (element-type guint8): The new colormap values.
+ * @colormap: The new colormap values.
  *
  * Sets the entries in the image's colormap.
  *
@@ -1807,9 +1797,8 @@ _gimp_image_get_colormap (GimpImage *image,
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_image_set_colormap (GimpImage    *image,
-                          gint          num_bytes,
-                          const guint8 *colormap)
+_gimp_image_set_colormap (GimpImage *image,
+                          GBytes    *colormap)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1817,10 +1806,8 @@ _gimp_image_set_colormap (GimpImage    *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_INT, num_bytes,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
+                                          G_TYPE_BYTES, colormap,
                                           G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 2), colormap, num_bytes);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                               "gimp-image-set-colormap",
@@ -1988,8 +1975,7 @@ gimp_image_is_dirty (GimpImage *image)
  * @actual_width: (out): The previews width.
  * @actual_height: (out): The previews height.
  * @bpp: (out): The previews bpp.
- * @thumbnail_data_count: (out): The number of bytes in thumbnail data.
- * @thumbnail_data: (out) (array length=thumbnail_data_count) (element-type guint8) (transfer full): The thumbnail data.
+ * @thumbnail_data: (out) (transfer full): The thumbnail data.
  *
  * Get a thumbnail of an image.
  *
@@ -2007,8 +1993,7 @@ _gimp_image_thumbnail (GimpImage  *image,
                        gint       *actual_width,
                        gint       *actual_height,
                        gint       *bpp,
-                       gint       *thumbnail_data_count,
-                       guint8    **thumbnail_data)
+                       GBytes    **thumbnail_data)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -2028,7 +2013,6 @@ _gimp_image_thumbnail (GimpImage  *image,
   *actual_width = 0;
   *actual_height = 0;
   *bpp = 0;
-  *thumbnail_data_count = 0;
   *thumbnail_data = NULL;
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
@@ -2038,8 +2022,7 @@ _gimp_image_thumbnail (GimpImage  *image,
       *actual_width = GIMP_VALUES_GET_INT (return_vals, 1);
       *actual_height = GIMP_VALUES_GET_INT (return_vals, 2);
       *bpp = GIMP_VALUES_GET_INT (return_vals, 3);
-      *thumbnail_data_count = GIMP_VALUES_GET_INT (return_vals, 4);
-      *thumbnail_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
+      *thumbnail_data = GIMP_VALUES_DUP_BYTES (return_vals, 4);
     }
 
   gimp_value_array_unref (return_vals);

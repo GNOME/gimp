@@ -790,7 +790,7 @@ save_image (GFile         *file,
 
   if (indexed)
     {
-      guchar *cmap = gimp_image_get_colormap (image, &ncolors);
+      guchar *cmap = gimp_image_get_colormap (image, NULL, &ncolors);
       guchar *c;
 
       c = cmap;

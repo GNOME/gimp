@@ -49,11 +49,9 @@ gboolean   gimp_brush_get_pixels       (GimpBrush                *brush,
                                         gint                     *width,
                                         gint                     *height,
                                         gint                     *mask_bpp,
-                                        gint                     *num_mask_bytes,
-                                        guint8                  **mask_bytes,
+                                        GBytes                  **mask_bytes,
                                         gint                     *color_bpp,
-                                        gint                     *num_color_bytes,
-                                        guint8                  **color_bytes);
+                                        GBytes                  **color_bytes);
 gint       gimp_brush_get_spacing      (GimpBrush                *brush);
 gboolean   gimp_brush_set_spacing      (GimpBrush                *brush,
                                         gint                      spacing);

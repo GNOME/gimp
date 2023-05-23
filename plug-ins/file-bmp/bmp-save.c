@@ -238,7 +238,7 @@ save_image (GFile         *file,
 
     case GIMP_INDEXED_IMAGE:
       format   = gimp_drawable_get_format (drawable);
-      cmap     = gimp_image_get_colormap (image, &colors);
+      cmap     = gimp_image_get_colormap (image, NULL, &colors);
       MapSize  = 4 * colors;
 
       if (drawable_type == GIMP_INDEXEDA_IMAGE)

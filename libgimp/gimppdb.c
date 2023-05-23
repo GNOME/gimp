@@ -606,15 +606,14 @@ gboolean
 gimp_pdb_get_data (const gchar *identifier,
                    gpointer     data)
 {
-  gint      size;
-  guint8   *hack;
+  GBytes   *hack = NULL;
   gboolean  success;
 
-  success = _gimp_pdb_get_data (identifier, &size, &hack);
+  success = _gimp_pdb_get_data (identifier, &hack);
 
   if (hack)
     {
-      memcpy (data, (gconstpointer) hack, size * sizeof (guint8));
+      memcpy (data, g_bytes_get_data (hack, NULL), g_bytes_get_size (hack));
       g_free (hack);
     }
 
@@ -642,8 +641,8 @@ gimp_pdb_get_data_size (const gchar *identifier)
 /**
  * gimp_pdb_set_data:
  * @identifier: The identifier associated with data.
- * @data: A byte array containing data.
- * @bytes: The number of bytes in the data
+ * @data: (array length=data_len): A byte array containing data.
+ * @data_len: The number of bytes in the data
  *
  * Associates the specified identifier with the supplied data.
  *
@@ -656,9 +655,16 @@ gimp_pdb_get_data_size (const gchar *identifier)
 gboolean
 gimp_pdb_set_data (const gchar   *identifier,
                    gconstpointer  data,
-                   guint32        bytes)
+                   guint32        data_len)
 {
-  return _gimp_pdb_set_data (identifier, bytes, data);
+  GBytes   *bytes;
+  gboolean  ret;
+
+  bytes = g_bytes_new_static (data, data_len);
+  ret = _gimp_pdb_set_data (identifier, bytes);
+  g_bytes_unref (bytes);
+
+  return ret;
 }
 
 

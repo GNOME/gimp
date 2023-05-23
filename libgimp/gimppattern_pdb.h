@@ -40,8 +40,7 @@ gboolean gimp_pattern_get_pixels  (GimpPattern  *pattern,
                                    gint         *width,
                                    gint         *height,
                                    gint         *bpp,
-                                   gint         *num_color_bytes,
-                                   guint8      **color_bytes);
+                                   GBytes      **color_bytes);
 gboolean gimp_pattern_id_is_valid (const gchar  *id);
 
 

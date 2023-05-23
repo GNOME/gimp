@@ -524,7 +524,7 @@ jigsaw (GObject      *config,
   gint        width;
   gint        height;
   gint        bytes;
-  gint        buffer_size;
+  gsize       buffer_size;
   gint        x;
   gint        y;
   gint        blend_lines;
@@ -537,10 +537,13 @@ jigsaw (GObject      *config,
 
   if (preview)
     {
+      GBytes *buffer_bytes;
+
       gimp_preview_get_size (preview, &width, &height);
-      buffer = gimp_drawable_get_thumbnail_data (drawable,
-                                                 &width, &height, &bytes);
-      buffer_size = bytes * width * height;
+      buffer_bytes = gimp_drawable_get_thumbnail_data (drawable,
+                                                       width, height,
+                                                       &width, &height, &bytes);
+      buffer = g_bytes_unref_to_data (buffer_bytes, &buffer_size);
     }
   else
     {

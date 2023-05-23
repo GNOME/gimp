@@ -292,8 +292,7 @@ file_load_thumbnail_invoker (GimpProcedure         *procedure,
   GFile *file;
   gint width = 0;
   gint height = 0;
-  gint thumb_data_count = 0;
-  guint8 *thumb_data = NULL;
+  GBytes *thumb_data = NULL;
 
   file = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -305,9 +304,8 @@ file_load_thumbnail_invoker (GimpProcedure         *procedure,
         {
           width            = gdk_pixbuf_get_width (pixbuf);
           height           = gdk_pixbuf_get_height (pixbuf);
-          thumb_data_count = 3 * width * height;
-          thumb_data       = g_memdup2 (gdk_pixbuf_get_pixels (pixbuf),
-                                        thumb_data_count);
+          thumb_data       = g_bytes_new (gdk_pixbuf_get_pixels (pixbuf),
+                                          3 * width * height);
 
           g_object_unref (pixbuf);
         }
@@ -322,8 +320,7 @@ file_load_thumbnail_invoker (GimpProcedure         *procedure,
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), width);
       g_value_set_int (gimp_value_array_index (return_vals, 2), height);
-      g_value_set_int (gimp_value_array_index (return_vals, 3), thumb_data_count);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 4), thumb_data, thumb_data_count);
+      g_value_take_boxed (gimp_value_array_index (return_vals, 3), thumb_data);
     }
 
   return return_vals;
@@ -571,16 +568,11 @@ register_file_procs (GimpPDB *pdb)
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("thumb-data-count",
-                                                     "thumb data count",
-                                                     "The number of bytes in thumbnail data",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("thumb-data",
-                                                                "thumb data",
-                                                                "The thumbnail data",
-                                                                GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("thumb-data",
+                                                       "thumb data",
+                                                       "The thumbnail data",
+                                                       G_TYPE_BYTES,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

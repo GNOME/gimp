@@ -354,14 +354,14 @@ blinds_dialog (GimpProcedure *procedure,
 }
 
 static void
-blindsapply (GObject *config,
-             guchar  *srow,
-             guchar  *drow,
-             gint     width,
-             gint     bpp,
-             guchar  *bg)
+blindsapply (GObject       *config,
+             const guchar  *srow,
+             guchar        *drow,
+             gint           width,
+             gint           bpp,
+             guchar        *bg)
 {
-  guchar  *src;
+  const guchar  *src;
   guchar  *dst;
   gint     i,j,k;
   gdouble  ang;
@@ -473,9 +473,10 @@ dialog_update_preview (GtkWidget *widget,
   GimpPreview        *preview  = GIMP_PREVIEW (widget);
   GimpDrawable       *drawable = g_object_get_data (config, "drawable");
   gint                y;
-  guchar             *p;
+  const guchar       *p;
   guchar             *buffer;
-  guchar             *cache;
+  GBytes             *cache;
+  const guchar       *cache_start;
   GimpRGB             background;
   guchar              bg[4];
   gint                width;
@@ -491,8 +492,9 @@ dialog_update_preview (GtkWidget *widget,
 
   gimp_preview_get_size (preview, &width, &height);
   cache = gimp_drawable_get_thumbnail_data (drawable,
+                                            width, height,
                                             &width, &height, &bpp);
-  p = cache;
+  p = cache_start = g_bytes_get_data (cache, NULL);
 
   gimp_context_get_background (&background);
 
@@ -569,7 +571,7 @@ dialog_update_preview (GtkWidget *widget,
           else
             {
               /* Draw line from src */
-              p = cache +
+              p = cache_start +
                 (width * bpp * (dr[y] - 1));
             }
           memcpy (buffer + y * width * bpp,
@@ -583,7 +585,7 @@ dialog_update_preview (GtkWidget *widget,
   gimp_preview_draw_buffer (preview, buffer, width * bpp);
 
   g_free (buffer);
-  g_free (cache);
+  g_bytes_unref (cache);
 }
 
 /* STEP tells us how many rows/columns to gulp down in one go... */

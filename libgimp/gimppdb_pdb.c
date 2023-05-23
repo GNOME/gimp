@@ -613,8 +613,7 @@ _gimp_pdb_get_proc_menu_paths (const gchar *procedure_name)
  * _gimp_pdb_set_proc_icon:
  * @procedure_name: The procedure for which to install the icon.
  * @icon_type: The type of the icon.
- * @icon_data_length: The length of 'icon-data'.
- * @icon_data: (array length=icon_data_length) (element-type guint8): The procedure's icon. The format depends on the 'icon_type' parameter.
+ * @icon_data: The procedure's icon. The format depends on the 'icon_type' parameter.
  *
  * Register an icon for a plug-in procedure.
  *
@@ -627,8 +626,7 @@ _gimp_pdb_get_proc_menu_paths (const gchar *procedure_name)
 gboolean
 _gimp_pdb_set_proc_icon (const gchar  *procedure_name,
                          GimpIconType  icon_type,
-                         gint          icon_data_length,
-                         const guint8 *icon_data)
+                         GBytes       *icon_data)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -637,10 +635,8 @@ _gimp_pdb_set_proc_icon (const gchar  *procedure_name,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, procedure_name,
                                           GIMP_TYPE_ICON_TYPE, icon_type,
-                                          G_TYPE_INT, icon_data_length,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
+                                          G_TYPE_BYTES, icon_data,
                                           G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 3), icon_data, icon_data_length);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                               "gimp-pdb-set-proc-icon",
@@ -1179,8 +1175,7 @@ _gimp_pdb_set_batch_interpreter (const gchar *procedure_name,
 /**
  * _gimp_pdb_get_data:
  * @identifier: The identifier associated with data.
- * @bytes: (out): The number of bytes in the data.
- * @data: (out) (array length=bytes) (element-type guint8) (transfer full): A byte array containing data.
+ * @data: (out) (transfer full): A byte array containing data.
  *
  * Returns data associated with the specified identifier.
  *
@@ -1193,8 +1188,7 @@ _gimp_pdb_set_batch_interpreter (const gchar *procedure_name,
  **/
 gboolean
 _gimp_pdb_get_data (const gchar  *identifier,
-                    gint         *bytes,
-                    guint8      **data)
+                    GBytes      **data)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1209,16 +1203,12 @@ _gimp_pdb_get_data (const gchar  *identifier,
                                               args);
   gimp_value_array_unref (args);
 
-  *bytes = 0;
   *data = NULL;
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    {
-      *bytes = GIMP_VALUES_GET_INT (return_vals, 1);
-      *data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
-    }
+    *data = GIMP_VALUES_DUP_BYTES (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1264,8 +1254,7 @@ _gimp_pdb_get_data_size (const gchar *identifier)
 /**
  * _gimp_pdb_set_data:
  * @identifier: The identifier associated with data.
- * @bytes: The number of bytes in the data.
- * @data: (array length=bytes) (element-type guint8): A byte array containing data.
+ * @data: A byte array containing data.
  *
  * Associates the specified identifier with the supplied data.
  *
@@ -1276,9 +1265,8 @@ _gimp_pdb_get_data_size (const gchar *identifier)
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_pdb_set_data (const gchar  *identifier,
-                    gint          bytes,
-                    const guint8 *data)
+_gimp_pdb_set_data (const gchar *identifier,
+                    GBytes      *data)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1286,10 +1274,8 @@ _gimp_pdb_set_data (const gchar  *identifier,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, identifier,
-                                          G_TYPE_INT, bytes,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
+                                          G_TYPE_BYTES, data,
                                           G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 2), data, bytes);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                               "gimp-pdb-set-data",

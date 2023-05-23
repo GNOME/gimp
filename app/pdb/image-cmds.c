@@ -1522,25 +1522,24 @@ image_get_colormap_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint num_bytes = 0;
-  guint8 *colormap = NULL;
+  GBytes *colormap = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      num_bytes = 3 * gimp_image_get_colormap_size (image);
-      colormap = gimp_image_get_colormap (image);
+      guchar *colormap_data;
+
+      colormap_data = gimp_image_get_colormap (image);
+      colormap = g_bytes_new_take (colormap_data,
+                                   gimp_image_get_colormap_size (image));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_bytes);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 2), colormap, num_bytes);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), colormap);
 
   return return_vals;
 }
@@ -1555,16 +1554,17 @@ image_set_colormap_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint num_bytes;
-  const guint8 *colormap;
+  GBytes *colormap;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  num_bytes = g_value_get_int (gimp_value_array_index (args, 1));
-  colormap = gimp_value_get_uint8_array (gimp_value_array_index (args, 2));
+  colormap = g_value_get_boxed (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      gimp_image_set_colormap (image, colormap, num_bytes / 3, TRUE);
+      gimp_image_set_colormap (image,
+                               g_bytes_get_data (colormap, NULL),
+                               g_bytes_get_size (colormap) / 3,
+                               TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1699,8 +1699,7 @@ image_thumbnail_invoker (GimpProcedure         *procedure,
   gint actual_width = 0;
   gint actual_height = 0;
   gint bpp = 0;
-  gint thumbnail_data_count = 0;
-  guint8 *thumbnail_data = NULL;
+  GBytes *thumbnail_data = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   width = g_value_get_int (gimp_value_array_index (args, 1));
@@ -1732,9 +1731,8 @@ image_thumbnail_invoker (GimpProcedure         *procedure,
           actual_width         = gimp_temp_buf_get_width  (buf);
           actual_height        = gimp_temp_buf_get_height (buf);
           bpp                  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (buf));
-          thumbnail_data_count = gimp_temp_buf_get_data_size (buf);
-          thumbnail_data       = g_memdup2 (gimp_temp_buf_get_data (buf),
-                                            thumbnail_data_count);
+          thumbnail_data       = g_bytes_new (gimp_temp_buf_get_data (buf),
+                                              gimp_temp_buf_get_data_size (buf));
 
           gimp_temp_buf_unref (buf);
         }
@@ -1750,8 +1748,7 @@ image_thumbnail_invoker (GimpProcedure         *procedure,
       g_value_set_int (gimp_value_array_index (return_vals, 1), actual_width);
       g_value_set_int (gimp_value_array_index (return_vals, 2), actual_height);
       g_value_set_int (gimp_value_array_index (return_vals, 3), bpp);
-      g_value_set_int (gimp_value_array_index (return_vals, 4), thumbnail_data_count);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
+      g_value_take_boxed (gimp_value_array_index (return_vals, 4), thumbnail_data);
     }
 
   return return_vals;
@@ -4318,16 +4315,11 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-bytes",
-                                                     "num bytes",
-                                                     "Number of bytes in the colormap array",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("colormap",
-                                                                "colormap",
-                                                                "The image's colormap.",
-                                                                GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("colormap",
+                                                       "colormap",
+                                                       "The image's colormap.",
+                                                       G_TYPE_BYTES,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4352,16 +4344,11 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-bytes",
-                                                 "num bytes",
-                                                 "Number of bytes in the colormap array",
-                                                 0, 768, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_uint8_array ("colormap",
-                                                            "colormap",
-                                                            "The new colormap values",
-                                                            GIMP_PARAM_READWRITE));
+                               g_param_spec_boxed ("colormap",
+                                                   "colormap",
+                                                   "The new colormap values",
+                                                   G_TYPE_BYTES,
+                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4528,16 +4515,11 @@ register_image_procs (GimpPDB *pdb)
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("thumbnail-data-count",
-                                                     "thumbnail data count",
-                                                     "The number of bytes in thumbnail data",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("thumbnail-data",
-                                                                "thumbnail data",
-                                                                "The thumbnail data",
-                                                                GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("thumbnail-data",
+                                                       "thumbnail data",
+                                                       "The thumbnail data",
+                                                       G_TYPE_BYTES,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

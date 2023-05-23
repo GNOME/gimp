@@ -595,100 +595,6 @@ drawable_update_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-drawable_get_pixel_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
-                            GError               **error)
-{
-  gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
-  gint x_coord;
-  gint y_coord;
-  gint num_channels = 0;
-  guint8 *pixel = NULL;
-
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  x_coord = g_value_get_int (gimp_value_array_index (args, 1));
-  y_coord = g_value_get_int (gimp_value_array_index (args, 2));
-
-  if (success)
-    {
-      const Babl *format = gimp_drawable_get_format (drawable);
-
-      if (x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
-          y_coord < gimp_item_get_height (GIMP_ITEM (drawable)))
-        {
-          num_channels = babl_format_get_bytes_per_pixel (format);
-          pixel = g_new0 (guint8, num_channels);
-
-          gegl_buffer_sample (gimp_drawable_get_buffer (drawable),
-                              x_coord, y_coord, NULL, pixel, format,
-                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-        }
-      else
-        success = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-
-  if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_channels);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 2), pixel, num_channels);
-    }
-
-  return return_vals;
-}
-
-static GimpValueArray *
-drawable_set_pixel_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
-                            GError               **error)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-  gint x_coord;
-  gint y_coord;
-  gint num_channels;
-  const guint8 *pixel;
-
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  x_coord = g_value_get_int (gimp_value_array_index (args, 1));
-  y_coord = g_value_get_int (gimp_value_array_index (args, 2));
-  num_channels = g_value_get_int (gimp_value_array_index (args, 3));
-  pixel = gimp_value_get_uint8_array (gimp_value_array_index (args, 4));
-
-  if (success)
-    {
-      const Babl *format = gimp_drawable_get_format (drawable);
-
-      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (drawable),
-                                       GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-          x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
-          y_coord < gimp_item_get_height (GIMP_ITEM (drawable)) &&
-          num_channels == babl_format_get_bytes_per_pixel (format))
-        {
-          gegl_buffer_set (gimp_drawable_get_buffer (drawable),
-                           GEGL_RECTANGLE (x_coord, y_coord, 1, 1),
-                           0, format, pixel, GEGL_AUTO_ROWSTRIDE);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 drawable_fill_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
@@ -771,8 +677,7 @@ drawable_thumbnail_invoker (GimpProcedure         *procedure,
   gint actual_width = 0;
   gint actual_height = 0;
   gint bpp = 0;
-  gint thumbnail_data_count = 0;
-  guint8 *thumbnail_data = NULL;
+  GBytes *thumbnail_data = NULL;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
   width = g_value_get_int (gimp_value_array_index (args, 1));
@@ -808,9 +713,8 @@ drawable_thumbnail_invoker (GimpProcedure         *procedure,
           actual_width         = gimp_temp_buf_get_width  (buf);
           actual_height        = gimp_temp_buf_get_height (buf);
           bpp                  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (buf));
-          thumbnail_data_count = gimp_temp_buf_get_data_size (buf);
-          thumbnail_data       = g_memdup2 (gimp_temp_buf_get_data (buf),
-                                            thumbnail_data_count);
+          thumbnail_data       = g_bytes_new (gimp_temp_buf_get_data (buf),
+                                              gimp_temp_buf_get_data_size (buf));
 
           gimp_temp_buf_unref (buf);
         }
@@ -826,8 +730,7 @@ drawable_thumbnail_invoker (GimpProcedure         *procedure,
       g_value_set_int (gimp_value_array_index (return_vals, 1), actual_width);
       g_value_set_int (gimp_value_array_index (return_vals, 2), actual_height);
       g_value_set_int (gimp_value_array_index (return_vals, 3), bpp);
-      g_value_set_int (gimp_value_array_index (return_vals, 4), thumbnail_data_count);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
+      g_value_take_boxed (gimp_value_array_index (return_vals, 4), thumbnail_data);
     }
 
   return return_vals;
@@ -853,8 +756,7 @@ drawable_sub_thumbnail_invoker (GimpProcedure         *procedure,
   gint width = 0;
   gint height = 0;
   gint bpp = 0;
-  gint thumbnail_data_count = 0;
-  guint8 *thumbnail_data = NULL;
+  GBytes *thumbnail_data = NULL;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
   src_x = g_value_get_int (gimp_value_array_index (args, 1));
@@ -887,9 +789,8 @@ drawable_sub_thumbnail_invoker (GimpProcedure         *procedure,
               width                = gimp_temp_buf_get_width  (buf);
               height               = gimp_temp_buf_get_height (buf);
               bpp                  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (buf));
-              thumbnail_data_count = gimp_temp_buf_get_data_size (buf);
-              thumbnail_data       = g_memdup2 (gimp_temp_buf_get_data (buf),
-                                                thumbnail_data_count);
+              thumbnail_data       = g_bytes_new (gimp_temp_buf_get_data (buf),
+                                                  gimp_temp_buf_get_data_size (buf));
 
               gimp_temp_buf_unref (buf);
             }
@@ -908,8 +809,7 @@ drawable_sub_thumbnail_invoker (GimpProcedure         *procedure,
       g_value_set_int (gimp_value_array_index (return_vals, 1), width);
       g_value_set_int (gimp_value_array_index (return_vals, 2), height);
       g_value_set_int (gimp_value_array_index (return_vals, 3), bpp);
-      g_value_set_int (gimp_value_array_index (return_vals, 4), thumbnail_data_count);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
+      g_value_take_boxed (gimp_value_array_index (return_vals, 4), thumbnail_data);
     }
 
   return return_vals;
@@ -1548,98 +1448,6 @@ register_drawable_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-get-pixel
-   */
-  procedure = gimp_procedure_new (drawable_get_pixel_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-get-pixel");
-  gimp_procedure_set_static_help (procedure,
-                                  "Gets the value of the pixel at the specified coordinates.",
-                                  "This procedure gets the pixel value at the specified coordinates. The 'num_channels' argument must always be equal to the bytes-per-pixel value for the specified drawable.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Spencer Kimball & Peter Mattis",
-                                         "Spencer Kimball & Peter Mattis",
-                                         "1997");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "The drawable",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("x-coord",
-                                                 "x coord",
-                                                 "The x coordinate",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("y-coord",
-                                                 "y coord",
-                                                 "The y coordinate",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-channels",
-                                                     "num channels",
-                                                     "The number of channels for the pixel",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("pixel",
-                                                                "pixel",
-                                                                "The pixel value",
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-drawable-set-pixel
-   */
-  procedure = gimp_procedure_new (drawable_set_pixel_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-set-pixel");
-  gimp_procedure_set_static_help (procedure,
-                                  "Sets the value of the pixel at the specified coordinates.",
-                                  "This procedure sets the pixel value at the specified coordinates. The 'num_channels' argument must always be equal to the bytes-per-pixel value for the specified drawable. Note that this function is not undoable, you should use it only on drawables you just created yourself.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Spencer Kimball & Peter Mattis",
-                                         "Spencer Kimball & Peter Mattis",
-                                         "1997");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "The drawable",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("x-coord",
-                                                 "x coord",
-                                                 "The x coordinate",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("y-coord",
-                                                 "y coord",
-                                                 "The y coordinate",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-channels",
-                                                 "num channels",
-                                                 "The number of channels for the pixel",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_uint8_array ("pixel",
-                                                            "pixel",
-                                                            "The pixel value",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-drawable-fill
    */
   procedure = gimp_procedure_new (drawable_fill_invoker);
@@ -1769,16 +1577,11 @@ register_drawable_procs (GimpPDB *pdb)
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("thumbnail-data-count",
-                                                     "thumbnail data count",
-                                                     "The number of bytes in thumbnail data",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("thumbnail-data",
-                                                                "thumbnail data",
-                                                                "The thumbnail data",
-                                                                GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("thumbnail-data",
+                                                       "thumbnail data",
+                                                       "The thumbnail data",
+                                                       G_TYPE_BYTES,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1857,16 +1660,11 @@ register_drawable_procs (GimpPDB *pdb)
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("thumbnail-data-count",
-                                                     "thumbnail data count",
-                                                     "The number of bytes in thumbnail data",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("thumbnail-data",
-                                                                "thumbnail data",
-                                                                "The thumbnail data",
-                                                                GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("thumbnail-data",
+                                                       "thumbnail data",
+                                                       "The thumbnail data",
+                                                       G_TYPE_BYTES,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

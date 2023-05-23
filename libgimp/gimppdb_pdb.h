@@ -64,8 +64,7 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_add_proc_menu_path             (const gcha
 G_GNUC_INTERNAL gchar**     _gimp_pdb_get_proc_menu_paths            (const gchar       *procedure_name);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_proc_icon                  (const gchar       *procedure_name,
                                                                       GimpIconType       icon_type,
-                                                                      gint               icon_data_length,
-                                                                      const guint8      *icon_data);
+                                                                      GBytes            *icon_data);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_proc_documentation         (const gchar       *procedure_name,
                                                                       const gchar       *blurb,
                                                                       const gchar       *help,
@@ -100,12 +99,10 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_set_file_proc_thumbnail_loader (const gcha
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_batch_interpreter          (const gchar       *procedure_name,
                                                                       const gchar       *interpreter_name);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_get_data                       (const gchar       *identifier,
-                                                                      gint              *bytes,
-                                                                      guint8           **data);
+                                                                      GBytes           **data);
 G_GNUC_INTERNAL gint        _gimp_pdb_get_data_size                  (const gchar       *identifier);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_data                       (const gchar       *identifier,
-                                                                      gint               bytes,
-                                                                      const guint8      *data);
+                                                                      GBytes            *data);
 
 
 G_END_DECLS

@@ -39,26 +39,22 @@
 /**
  * _gimp_image_get_color_profile:
  * @image: The image.
- * @num_bytes: (out): Number of bytes in the color_profile array.
  *
  * Returns the image's color profile
  *
  * This procedure returns the image's color profile, or NULL if the
  * image has no color profile assigned.
  *
- * Returns: (array length=num_bytes) (element-type guint8) (transfer full):
- *          The image's serialized color profile.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The image's serialized color profile.
  *
  * Since: 2.10
  **/
-guint8 *
-_gimp_image_get_color_profile (GimpImage *image,
-                               gint      *num_bytes)
+GBytes *
+_gimp_image_get_color_profile (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  guint8 *profile_data = NULL;
+  GBytes *profile_data = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -69,13 +65,8 @@ _gimp_image_get_color_profile (GimpImage *image,
                                               args);
   gimp_value_array_unref (args);
 
-  *num_bytes = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_bytes = GIMP_VALUES_GET_INT (return_vals, 1);
-      profile_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
-    }
+    profile_data = GIMP_VALUES_DUP_BYTES (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -85,7 +76,6 @@ _gimp_image_get_color_profile (GimpImage *image,
 /**
  * _gimp_image_get_effective_color_profile:
  * @image: The image.
- * @num_bytes: (out): Number of bytes in the color_profile array.
  *
  * Returns the color profile that is used for the image
  *
@@ -95,19 +85,16 @@ _gimp_image_get_color_profile (GimpImage *image,
  * or a generated default RGB or grayscale profile, according to the
  * image's type.
  *
- * Returns: (array length=num_bytes) (element-type guint8) (transfer full):
- *          The image's serialized color profile.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The image's serialized color profile.
  *
  * Since: 2.10
  **/
-guint8 *
-_gimp_image_get_effective_color_profile (GimpImage *image,
-                                         gint      *num_bytes)
+GBytes *
+_gimp_image_get_effective_color_profile (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  guint8 *profile_data = NULL;
+  GBytes *profile_data = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -118,13 +105,8 @@ _gimp_image_get_effective_color_profile (GimpImage *image,
                                               args);
   gimp_value_array_unref (args);
 
-  *num_bytes = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_bytes = GIMP_VALUES_GET_INT (return_vals, 1);
-      profile_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
-    }
+    profile_data = GIMP_VALUES_DUP_BYTES (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -134,8 +116,7 @@ _gimp_image_get_effective_color_profile (GimpImage *image,
 /**
  * _gimp_image_set_color_profile:
  * @image: The image.
- * @num_bytes: Number of bytes in the color_profile array.
- * @color_profile: (array length=num_bytes) (element-type guint8): The new serialized color profile.
+ * @color_profile: The new serialized color profile.
  *
  * Sets the image's color profile
  *
@@ -150,9 +131,8 @@ _gimp_image_get_effective_color_profile (GimpImage *image,
  * Since: 2.10
  **/
 gboolean
-_gimp_image_set_color_profile (GimpImage    *image,
-                               gint          num_bytes,
-                               const guint8 *color_profile)
+_gimp_image_set_color_profile (GimpImage *image,
+                               GBytes    *color_profile)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -160,10 +140,8 @@ _gimp_image_set_color_profile (GimpImage    *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_INT, num_bytes,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
+                                          G_TYPE_BYTES, color_profile,
                                           G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                               "gimp-image-set-color-profile",
@@ -223,26 +201,22 @@ gimp_image_set_color_profile_from_file (GimpImage *image,
 /**
  * _gimp_image_get_simulation_profile:
  * @image: The image.
- * @num_bytes: (out): Number of bytes in the color_profile array.
  *
  * Returns the image's simulation color profile
  *
  * This procedure returns the image's simulation color profile, or NULL
  * if the image has no simulation color profile assigned.
  *
- * Returns: (array length=num_bytes) (element-type guint8) (transfer full):
- *          The image's serialized simulation color profile.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The image's serialized simulation color profile.
  *
  * Since: 3.0
  **/
-guint8 *
-_gimp_image_get_simulation_profile (GimpImage *image,
-                                    gint      *num_bytes)
+GBytes *
+_gimp_image_get_simulation_profile (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  guint8 *profile_data = NULL;
+  GBytes *profile_data = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -253,13 +227,8 @@ _gimp_image_get_simulation_profile (GimpImage *image,
                                               args);
   gimp_value_array_unref (args);
 
-  *num_bytes = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_bytes = GIMP_VALUES_GET_INT (return_vals, 1);
-      profile_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
-    }
+    profile_data = GIMP_VALUES_DUP_BYTES (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -269,8 +238,7 @@ _gimp_image_get_simulation_profile (GimpImage *image,
 /**
  * _gimp_image_set_simulation_profile:
  * @image: The image.
- * @num_bytes: Number of bytes in the color_profile array.
- * @color_profile: (array length=num_bytes) (element-type guint8): The new serialized simulation color profile.
+ * @color_profile: The new serialized simulation color profile.
  *
  * Sets the image's simulation color profile
  *
@@ -283,9 +251,8 @@ _gimp_image_get_simulation_profile (GimpImage *image,
  * Since: 3.0
  **/
 gboolean
-_gimp_image_set_simulation_profile (GimpImage    *image,
-                                    gint          num_bytes,
-                                    const guint8 *color_profile)
+_gimp_image_set_simulation_profile (GimpImage *image,
+                                    GBytes    *color_profile)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -293,10 +260,8 @@ _gimp_image_set_simulation_profile (GimpImage    *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_INT, num_bytes,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
+                                          G_TYPE_BYTES, color_profile,
                                           G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                               "gimp-image-set-simulation-profile",
@@ -505,8 +470,7 @@ gimp_image_set_simulation_bpc (GimpImage *image,
 /**
  * _gimp_image_convert_color_profile:
  * @image: The image.
- * @num_bytes: Number of bytes in the color_profile array.
- * @color_profile: (array length=num_bytes) (element-type guint8): The serialized color profile.
+ * @color_profile: The serialized color profile.
  * @intent: Rendering intent.
  * @bpc: Black point compensation.
  *
@@ -523,8 +487,7 @@ gimp_image_set_simulation_bpc (GimpImage *image,
  **/
 gboolean
 _gimp_image_convert_color_profile (GimpImage                *image,
-                                   gint                      num_bytes,
-                                   const guint8             *color_profile,
+                                   GBytes                   *color_profile,
                                    GimpColorRenderingIntent  intent,
                                    gboolean                  bpc)
 {
@@ -534,12 +497,10 @@ _gimp_image_convert_color_profile (GimpImage                *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_INT, num_bytes,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
+                                          G_TYPE_BYTES, color_profile,
                                           GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
                                           G_TYPE_BOOLEAN, bpc,
                                           G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                               "gimp-image-convert-color-profile",

@@ -388,7 +388,8 @@ static _PreviewImage
 gimp_pattern_select_button_get_pattern_image (GimpPatternSelectButton *self)
 {
   GimpPattern    *pattern;
-  gint            pixelels_size;
+  gsize           pixelels_size;
+  GBytes         *color_bytes;
   _PreviewImage   result;
 
   g_debug ("%s", G_STRFUNC);
@@ -399,8 +400,8 @@ gimp_pattern_select_button_get_pattern_image (GimpPatternSelectButton *self)
                            &result.width,
                            &result.height,
                            &result.bpp,
-                           &pixelels_size, /* discarded. */
-                           &result.pixelels);
+                           &color_bytes);
+  result.pixelels = g_bytes_unref_to_data (color_bytes, &pixelels_size);
 
   return result;
 }

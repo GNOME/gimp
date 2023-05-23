@@ -95,8 +95,7 @@ gimp_pattern_get_info (GimpPattern *pattern,
  * @width: (out): The pattern width.
  * @height: (out): The pattern height.
  * @bpp: (out): The pattern bpp.
- * @num_color_bytes: (out): Number of pattern bytes.
- * @color_bytes: (out) (array length=num_color_bytes) (element-type guint8) (transfer full): The pattern data.
+ * @color_bytes: (out) (transfer full): The pattern data.
  *
  * Gets information about the pattern (including pixels).
  *
@@ -113,8 +112,7 @@ gimp_pattern_get_pixels (GimpPattern  *pattern,
                          gint         *width,
                          gint         *height,
                          gint         *bpp,
-                         gint         *num_color_bytes,
-                         guint8      **color_bytes)
+                         GBytes      **color_bytes)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -132,7 +130,6 @@ gimp_pattern_get_pixels (GimpPattern  *pattern,
   *width = 0;
   *height = 0;
   *bpp = 0;
-  *num_color_bytes = 0;
   *color_bytes = NULL;
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
@@ -142,8 +139,7 @@ gimp_pattern_get_pixels (GimpPattern  *pattern,
       *width = GIMP_VALUES_GET_INT (return_vals, 1);
       *height = GIMP_VALUES_GET_INT (return_vals, 2);
       *bpp = GIMP_VALUES_GET_INT (return_vals, 3);
-      *num_color_bytes = GIMP_VALUES_GET_INT (return_vals, 4);
-      *color_bytes = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
+      *color_bytes = GIMP_VALUES_DUP_BYTES (return_vals, 4);
     }
 
   gimp_value_array_unref (return_vals);

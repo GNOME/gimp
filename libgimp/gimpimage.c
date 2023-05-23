@@ -566,7 +566,8 @@ gimp_image_list_selected_drawables (GimpImage *image)
 /**
  * gimp_image_get_colormap:
  * @image:      The image.
- * @num_colors: (out): Returns the number of colors in the colormap array.
+ * @colormap_len: (out) (optional): The size (in bytes) of the returned colormap
+ * @num_colors: (out) (optional): Returns the number of colors in the colormap array.
  *
  * Returns the image's colormap
  *
@@ -574,17 +575,22 @@ gimp_image_list_selected_drawables (GimpImage *image)
  * well as the number of colors contained in the colormap. If the image
  * is not of base type INDEXED, this pointer will be NULL.
  *
- * Returns: (array): The image's colormap.
+ * Returns: (array length=colormap_len): The image's colormap.
  */
 guchar *
 gimp_image_get_colormap (GimpImage *image,
+                         gint      *colormap_len,
                          gint      *num_colors)
 {
-  gint    num_bytes;
+  GBytes *bytes;
+  gsize   num_bytes;
   guchar *cmap;
 
-  cmap = _gimp_image_get_colormap (image, &num_bytes);
+  bytes = _gimp_image_get_colormap (image);
+  cmap = g_bytes_unref_to_data (bytes, &num_bytes);
 
+  if (colormap_len)
+    *colormap_len = num_bytes;
   if (num_colors)
     *num_colors = num_bytes / 3;
 
@@ -611,7 +617,14 @@ gimp_image_set_colormap (GimpImage    *image,
                          const guchar *colormap,
                          gint          num_colors)
 {
-  return _gimp_image_set_colormap (image, num_colors * 3, colormap);
+  GBytes *bytes;
+  gboolean ret;
+
+  bytes = g_bytes_new_static (colormap, num_colors * 3);
+  ret = _gimp_image_set_colormap (image, bytes);
+  g_bytes_unref (bytes);
+
+  return ret;
 }
 
 /**
@@ -638,8 +651,9 @@ gimp_image_get_thumbnail_data (GimpImage *image,
 {
   gint    ret_width;
   gint    ret_height;
+  GBytes *image_bytes;
   guchar *image_data;
-  gint    data_size;
+  gsize   data_size;
 
   _gimp_image_thumbnail (image,
                          *width,
@@ -647,8 +661,8 @@ gimp_image_get_thumbnail_data (GimpImage *image,
                          &ret_width,
                          &ret_height,
                          bpp,
-                         &data_size,
-                         &image_data);
+                         &image_bytes);
+  image_data = g_bytes_unref_to_data (image_bytes, &data_size);
 
   *width  = ret_width;
   *height = ret_height;

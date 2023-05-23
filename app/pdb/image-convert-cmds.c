@@ -198,19 +198,18 @@ image_convert_set_dither_matrix_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   gint width;
   gint height;
-  gint matrix_length;
-  const guint8 *matrix;
+  GBytes *matrix;
 
   width = g_value_get_int (gimp_value_array_index (args, 0));
   height = g_value_get_int (gimp_value_array_index (args, 1));
-  matrix_length = g_value_get_int (gimp_value_array_index (args, 2));
-  matrix = gimp_value_get_uint8_array (gimp_value_array_index (args, 3));
+  matrix = g_value_get_boxed (gimp_value_array_index (args, 2));
 
   if (success)
     {
-      if (width == 0 || height == 0 || matrix_length == width * height)
+      if (width == 0 || height == 0 || g_bytes_get_size (matrix) == width * height)
         {
-          gimp_image_convert_indexed_set_dither_matrix (matrix, width, height);
+          gimp_image_convert_indexed_set_dither_matrix (g_bytes_get_data (matrix, NULL),
+                                                        width, height);
         }
       else
         {
@@ -402,16 +401,11 @@ register_image_convert_procs (GimpPDB *pdb)
                                                  G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("matrix-length",
-                                                 "matrix length",
-                                                 "The length of 'matrix'",
-                                                 1, 1024, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_uint8_array ("matrix",
-                                                            "matrix",
-                                                            "The matrix -- all values must be >= 1",
-                                                            GIMP_PARAM_READWRITE));
+                               g_param_spec_boxed ("matrix",
+                                                   "matrix",
+                                                   "The matrix -- all values must be >= 1",
+                                                   G_TYPE_BYTES,
+                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

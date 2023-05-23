@@ -41,9 +41,6 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       if (! strcmp (param_def->type_name, "GimpParamInt32Array"))
         return gimp_param_spec_int32_array (name, nick, blurb, flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamUInt8Array"))
-        return gimp_param_spec_uint8_array (name, nick, blurb, flags);
-
       if (! strcmp (param_def->type_name, "GimpParamFloatArray"))
         return gimp_param_spec_float_array (name, nick, blurb, flags);
 
@@ -70,6 +67,10 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       if (! strcmp (param_def->type_name, "GParamBoxed") &&
           ! strcmp (param_def->value_type_name, "GStrv"))
         return g_param_spec_boxed (name, nick, blurb, G_TYPE_STRV, flags);
+
+      if (! strcmp (param_def->type_name, "GParamBoxed") &&
+          ! strcmp (param_def->value_type_name, "GBytes"))
+        return g_param_spec_boxed (name, nick, blurb, G_TYPE_BYTES, flags);
 
       break;
 
@@ -647,6 +648,10 @@ gimp_gp_param_to_value (gpointer        gimp,
     {
       g_value_set_boxed (value, param->data.d_strv);
     }
+  else if (G_VALUE_HOLDS (value, G_TYPE_BYTES))
+    {
+      g_value_set_boxed (value, param->data.d_bytes);
+    }
   else if (G_VALUE_TYPE (value) == G_TYPE_FILE)
     {
       g_value_take_object (value, (param->data.d_string ?
@@ -667,13 +672,6 @@ gimp_gp_param_to_value (gpointer        gimp,
                                   (gint32 *) param->data.d_array.data,
                                   param->data.d_array.size /
                                   sizeof (gint32));
-    }
-  else if (GIMP_VALUE_HOLDS_UINT8_ARRAY (value))
-    {
-      gimp_value_set_uint8_array (value,
-                                  param->data.d_array.data,
-                                  param->data.d_array.size /
-                                  sizeof (guint8));
     }
   else if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
     {
@@ -955,7 +953,6 @@ gimp_value_to_gp_param (const GValue *value,
         }
     }
   else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
-           GIMP_VALUE_HOLDS_UINT8_ARRAY (value) ||
            GIMP_VALUE_HOLDS_FLOAT_ARRAY (value) ||
            GIMP_VALUE_HOLDS_RGB_ARRAY (value))
     {
@@ -977,6 +974,22 @@ gimp_value_to_gp_param (const GValue *value,
         {
           param->data.d_array.size = 0;
           param->data.d_array.data = NULL;
+        }
+    }
+  else if (G_VALUE_HOLDS (value, G_TYPE_BYTES))
+    {
+      GBytes *bytes = g_value_get_boxed (value);
+
+      param->param_type = GP_PARAM_TYPE_BYTES;
+
+      if (bytes != NULL)
+        {
+          if (full_copy)
+            param->data.d_bytes = g_bytes_new (g_bytes_get_data (bytes, NULL),
+                                               g_bytes_get_size (bytes));
+          else
+            param->data.d_bytes = g_bytes_new_static (g_bytes_get_data (bytes, NULL),
+                                                      g_bytes_get_size (bytes));
         }
     }
   else if (G_VALUE_HOLDS (value, G_TYPE_STRV))
@@ -1167,6 +1180,10 @@ _gimp_gp_params_free (GPParam  *params,
         case GP_PARAM_TYPE_STRV:
           if (full_copy)
             g_strfreev (params[i].data.d_strv);
+          break;
+
+        case GP_PARAM_TYPE_BYTES:
+          g_bytes_unref (params[i].data.d_bytes);
           break;
 
         case GP_PARAM_TYPE_ID_ARRAY:

@@ -857,7 +857,7 @@ save_image (GFile         *file,
     case GIMP_INDEXEDA_IMAGE:
       is_gif89 = TRUE;
     case GIMP_INDEXED_IMAGE:
-      cmap = gimp_image_get_colormap (image, &colors);
+      cmap = gimp_image_get_colormap (image, NULL, &colors);
 
       gimp_context_get_background (&background);
       gimp_rgb_get_uchar (&background, &bgred, &bggreen, &bgblue);

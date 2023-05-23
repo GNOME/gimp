@@ -397,7 +397,7 @@ tile (GimpImage     *image,
           guchar *cmap;
           gint    ncols;
 
-          cmap = gimp_image_get_colormap (image, &ncols);
+          cmap = gimp_image_get_colormap (image, NULL, &ncols);
           gimp_image_set_colormap (*new_image, cmap, ncols);
           g_free (cmap);
         }

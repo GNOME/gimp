@@ -1324,7 +1324,7 @@ save_image (GFile                *file,
   g_return_val_if_fail (bpc * n_components == bpp, FALSE);
 
   if (gimp_drawable_is_indexed (drawable))
-    cmap = gimp_image_get_colormap (image, &palsize);
+    cmap = gimp_image_get_colormap (image, NULL, &palsize);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);

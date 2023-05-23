@@ -1244,7 +1244,7 @@ save_image (GFile         *file,
 
   if (dtype == GIMP_INDEXED_IMAGE)
     {
-      gimp_cmap = gimp_image_get_colormap (image, &num_colors);
+      gimp_cmap = gimp_image_get_colormap (image, NULL, &num_colors);
 
       header[1] = 1; /* cmap type */
       header[2] = rle ? 9 : 1;
@@ -1255,7 +1255,7 @@ save_image (GFile         *file,
     }
   else if (dtype == GIMP_INDEXEDA_IMAGE)
     {
-      gimp_cmap = gimp_image_get_colormap (image, &num_colors);
+      gimp_cmap = gimp_image_get_colormap (image, NULL, &num_colors);
 
       header[1] = 1; /* cmap type */
       header[2] = rle ? 9 : 1;

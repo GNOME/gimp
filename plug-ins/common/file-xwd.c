@@ -2422,7 +2422,7 @@ save_index (GOutputStream  *output,
   else
     {
       vclass = 3;
-      cmap = gimp_image_get_colormap (image, &ncolors);
+      cmap = gimp_image_get_colormap (image, NULL, &ncolors);
 
       for (j = 0; j < ncolors; j++)
         {

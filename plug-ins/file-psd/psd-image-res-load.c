@@ -1270,7 +1270,7 @@ load_resource_1046 (const PSDimageres  *res_a,
   /* FIXME - check that we have indexed image */
   if (index_count && index_count < 256)
     {
-      cmap = gimp_image_get_colormap (image, &cmap_count);
+      cmap = gimp_image_get_colormap (image, NULL, &cmap_count);
       if (cmap && index_count < cmap_count)
         gimp_image_set_colormap (image, cmap, index_count);
       g_free (cmap);

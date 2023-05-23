@@ -40,17 +40,17 @@
 GimpColorProfile *
 gimp_image_get_color_profile (GimpImage *image)
 {
-  guint8 *data;
-  gint    length;
+  GBytes *data;
 
-  data = _gimp_image_get_color_profile (image, &length);
-
+  data = _gimp_image_get_color_profile (image);
   if (data)
     {
       GimpColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_icc_profile (data, length, NULL);
-      g_free (data);
+      profile = gimp_color_profile_new_from_icc_profile (g_bytes_get_data (data, NULL),
+                                                         g_bytes_get_size (data),
+                                                         NULL);
+      g_bytes_unref (data);
 
       return profile;
     }
@@ -61,7 +61,7 @@ gimp_image_get_color_profile (GimpImage *image)
 /**
  * gimp_image_set_color_profile:
  * @image:   The image.
- * @profile: A #GimpColorProfile, or %NULL.
+ * @profile: (nullable): A #GimpColorProfile, or %NULL.
  *
  * Sets the image's color profile
  *
@@ -76,7 +76,8 @@ gimp_image_set_color_profile (GimpImage        *image,
                               GimpColorProfile *profile)
 {
   const guint8 *data   = NULL;
-  gint          length = 0;
+  GBytes       *bytes  = NULL;
+  gboolean      ret;
 
   g_return_val_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile),
                         FALSE);
@@ -86,10 +87,13 @@ gimp_image_set_color_profile (GimpImage        *image,
       gsize l;
 
       data = gimp_color_profile_get_icc_profile (profile, &l);
-      length = l;
+      bytes = g_bytes_new_static (data, l);
     }
 
-  return _gimp_image_set_color_profile (image, length, data);
+  ret = _gimp_image_set_color_profile (image, bytes);
+
+  g_bytes_unref (bytes);
+  return ret;
 }
 
 /**
@@ -109,17 +113,17 @@ gimp_image_set_color_profile (GimpImage        *image,
 GimpColorProfile *
 gimp_image_get_simulation_profile (GimpImage *image)
 {
-  guint8 *data;
-  gint    length;
+  GBytes *data;
 
-  data = _gimp_image_get_simulation_profile (image, &length);
-
+  data = _gimp_image_get_simulation_profile (image);
   if (data)
     {
       GimpColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_icc_profile (data, length, NULL);
-      g_free (data);
+      profile = gimp_color_profile_new_from_icc_profile (g_bytes_get_data (data, NULL),
+                                                         g_bytes_get_size (data),
+                                                         NULL);
+      g_bytes_unref (data);
 
       return profile;
     }
@@ -145,7 +149,8 @@ gimp_image_set_simulation_profile (GimpImage        *image,
                                    GimpColorProfile *profile)
 {
   const guint8 *data   = NULL;
-  gint          length = 0;
+  GBytes       *bytes  = NULL;
+  gboolean      ret;
 
   g_return_val_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile),
                         FALSE);
@@ -155,10 +160,12 @@ gimp_image_set_simulation_profile (GimpImage        *image,
       gsize l;
 
       data = gimp_color_profile_get_icc_profile (profile, &l);
-      length = l;
+      bytes = g_bytes_new_static (data, l);
     }
 
-  return _gimp_image_set_simulation_profile (image, length, data);
+  ret = _gimp_image_set_simulation_profile (image, bytes);
+  g_bytes_unref (bytes);
+  return ret;
 }
 
 /**
@@ -182,17 +189,18 @@ gimp_image_set_simulation_profile (GimpImage        *image,
 GimpColorProfile *
 gimp_image_get_effective_color_profile (GimpImage *image)
 {
-  guint8 *data;
-  gint    length;
+  GBytes *data;
 
-  data = _gimp_image_get_effective_color_profile (image, &length);
+  data = _gimp_image_get_effective_color_profile (image);
 
   if (data)
     {
       GimpColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_icc_profile (data, length, NULL);
-      g_free (data);
+      profile = gimp_color_profile_new_from_icc_profile (g_bytes_get_data (data, NULL),
+                                                         g_bytes_get_size (data),
+                                                         NULL);
+      g_bytes_unref (data);
 
       return profile;
     }
@@ -224,7 +232,8 @@ gimp_image_convert_color_profile (GimpImage                 *image,
                                   gboolean                   bpc)
 {
   const guint8 *data   = NULL;
-  gint          length = 0;
+  GBytes       *bytes  = NULL;
+  gboolean      ret;
 
   g_return_val_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile),
                         FALSE);
@@ -234,9 +243,10 @@ gimp_image_convert_color_profile (GimpImage                 *image,
       gsize l;
 
       data = gimp_color_profile_get_icc_profile (profile, &l);
-      length = l;
+      bytes = g_bytes_new_static (data, l);
     }
 
-  return _gimp_image_convert_color_profile (image, length, data,
-                                            intent, bpc);
+  ret = _gimp_image_convert_color_profile (image, bytes, intent, bpc);
+  g_bytes_unref (bytes);
+  return ret;
 }

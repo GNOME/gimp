@@ -238,16 +238,10 @@ gih_create_procedure (GimpPlugIn  *plug_in,
                          1, 1000, 1,
                          GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "dimension",
-                         "Dimension",
-                         "Dimension of the brush pipe",
-                         1, 4, 1,
-                         GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_UINT8_ARRAY (procedure, "rank",
-                                 "Rank",
-                                 "Ranks of the dimensions",
-                                 GIMP_PARAM_READWRITE);
+      GIMP_PROC_ARG_BYTES (procedure, "rank",
+                           "Rank",
+                           "Ranks of the dimensions",
+                           GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "dimension-2",
                          "Dimension 2",
@@ -280,6 +274,7 @@ gih_save (GimpProcedure        *procedure,
   GimpImage         *orig_image;
   GError            *error  = NULL;
   gint               i;
+  GBytes            *rank_bytes;
 
   orig_image = image;
 
@@ -402,17 +397,18 @@ gih_save (GimpProcedure        *procedure,
       gihparams.cellheight = GIMP_VALUES_GET_INT (args, 3);
       gihparams.cols       = GIMP_VALUES_GET_INT (args, 4);
       gihparams.rows       = GIMP_VALUES_GET_INT (args, 5);
-      gihparams.dim        = GIMP_VALUES_GET_INT (args, 6);
+      rank_bytes           = GIMP_VALUES_GET_BYTES (args, 6);
+      gihparams.dim        = g_bytes_get_size (rank_bytes);
       gihparams.ncells     = 1;
 
-      if (GIMP_VALUES_GET_INT (args, 8) != gihparams.dim)
+      if (GIMP_VALUES_GET_INT (args, 7) != gihparams.dim)
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
       else
         {
-          const guint8  *rank = GIMP_VALUES_GET_UINT8_ARRAY  (args, 7);
-          const gchar  **sel  = GIMP_VALUES_GET_STRV (args, 9);
+          const guint8  *rank = g_bytes_get_data (rank_bytes, NULL);
+          const gchar  **sel  = GIMP_VALUES_GET_STRV (args, 8);
 
           for (i = 0; i < gihparams.dim; i++)
             {

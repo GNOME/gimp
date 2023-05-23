@@ -635,13 +635,11 @@ pdb_set_proc_icon_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   const gchar *procedure_name;
   gint icon_type;
-  gint icon_data_length;
-  const guint8 *icon_data;
+  GBytes *icon_data;
 
   procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
   icon_type = g_value_get_enum (gimp_value_array_index (args, 1));
-  icon_data_length = g_value_get_int (gimp_value_array_index (args, 2));
-  icon_data = gimp_value_get_uint8_array (gimp_value_array_index (args, 3));
+  icon_data = g_value_get_boxed (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -652,7 +650,8 @@ pdb_set_proc_icon_invoker (GimpProcedure         *procedure,
         {
           success = gimp_plug_in_set_proc_icon (plug_in, procedure_name,
                                                 icon_type,
-                                                icon_data, icon_data_length,
+                                                g_bytes_get_data (icon_data, NULL),
+                                                g_bytes_get_size (icon_data),
                                                 error);
         }
       else
@@ -1127,8 +1126,7 @@ pdb_get_data_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *identifier;
-  gint bytes = 0;
-  guint8 *data = NULL;
+  GBytes *data = NULL;
 
   identifier = g_value_get_string (gimp_value_array_index (args, 0));
 
@@ -1137,12 +1135,13 @@ pdb_get_data_invoker (GimpProcedure         *procedure,
       if (gimp_is_canonical_identifier (identifier))
         {
           const guint8 *orig_data;
+          gint          bytes;
 
           orig_data = gimp_plug_in_manager_get_data (gimp->plug_in_manager,
                                                      identifier, &bytes);
 
           if (orig_data)
-            data = g_memdup2 (orig_data, bytes);
+            data = g_bytes_new (orig_data, bytes);
           else
             success = FALSE;
         }
@@ -1159,10 +1158,7 @@ pdb_get_data_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), bytes);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 2), data, bytes);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), data);
 
   return return_vals;
 }
@@ -1218,19 +1214,19 @@ pdb_set_data_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   const gchar *identifier;
-  gint bytes;
-  const guint8 *data;
+  GBytes *data;
 
   identifier = g_value_get_string (gimp_value_array_index (args, 0));
-  bytes = g_value_get_int (gimp_value_array_index (args, 1));
-  data = gimp_value_get_uint8_array (gimp_value_array_index (args, 2));
+  data = g_value_get_boxed (gimp_value_array_index (args, 1));
 
   if (success)
     {
       if (gimp_is_canonical_identifier (identifier))
         {
           gimp_plug_in_manager_set_data (gimp->plug_in_manager,
-                                         identifier, bytes, data);
+                                         identifier,
+                                         g_bytes_get_size (data),
+                                         g_bytes_get_data (data, NULL));
         }
       else
         {
@@ -1758,16 +1754,11 @@ register_pdb_procs (GimpPDB *pdb)
                                                   GIMP_ICON_TYPE_ICON_NAME,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("icon-data-length",
-                                                 "icon data length",
-                                                 "The length of 'icon-data'",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_uint8_array ("icon-data",
-                                                            "icon data",
-                                                            "The procedure's icon. The format depends on the 'icon_type' parameter",
-                                                            GIMP_PARAM_READWRITE));
+                               g_param_spec_boxed ("icon-data",
+                                                   "icon data",
+                                                   "The procedure's icon. The format depends on the 'icon_type' parameter",
+                                                   G_TYPE_BYTES,
+                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -2227,16 +2218,11 @@ register_pdb_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("bytes",
-                                                     "bytes",
-                                                     "The number of bytes in the data",
-                                                     1, G_MAXINT32, 1,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("data",
-                                                                "data",
-                                                                "A byte array containing data",
-                                                                GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("data",
+                                                       "data",
+                                                       "A byte array containing data",
+                                                       G_TYPE_BYTES,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -2292,16 +2278,11 @@ register_pdb_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("bytes",
-                                                 "bytes",
-                                                 "The number of bytes in the data",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_uint8_array ("data",
-                                                            "data",
-                                                            "A byte array containing data",
-                                                            GIMP_PARAM_READWRITE));
+                               g_param_spec_boxed ("data",
+                                                   "data",
+                                                   "A byte array containing data",
+                                                   G_TYPE_BYTES,
+                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

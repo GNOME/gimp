@@ -563,7 +563,7 @@ save_layer (TIFF        *tif,
 
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
-      cmap = gimp_image_get_colormap (image, &num_colors);
+      cmap = gimp_image_get_colormap (image, NULL, &num_colors);
 
       if (num_colors == 2 || num_colors == 1)
         {

@@ -344,34 +344,34 @@ G_BEGIN_DECLS
   g_value_take_param (gimp_value_array_index (args, n), value)
 
 
-/*  uint8 array  */
+/*  bytes  */
 
-#define GIMP_PROC_ARG_UINT8_ARRAY(procedure, name, nick, blurb, flags) \
+#define GIMP_PROC_ARG_BYTES(procedure, name, nick, blurb, flags) \
   gimp_procedure_add_argument (procedure,\
-                               gimp_param_spec_uint8_array (name, nick, blurb,\
-                               flags))
+                               g_param_spec_boxed (name, nick, blurb,\
+                               G_TYPE_BYTES, flags))
 
-#define GIMP_PROC_AUX_ARG_UINT8_ARRAY(procedure, name, nick, blurb, flags) \
+#define GIMP_PROC_AUX_ARG_BYTES(procedure, name, nick, blurb, flags) \
   gimp_procedure_add_aux_argument (procedure,\
-                                   gimp_param_spec_uint8_array (name, nick, blurb,\
-                                   flags))
+                                   g_param_spec_boxed (name, nick, blurb,\
+                                   G_TYPE_BYTES, flags))
 
-#define GIMP_PROC_VAL_UINT8_ARRAY(procedure, name, nick, blurb, flags) \
+#define GIMP_PROC_VAL_BYTES(procedure, name, nick, blurb, flags) \
   gimp_procedure_add_return_value (procedure,\
-                                   gimp_param_spec_uint8_array (name, nick, blurb,\
-                                   flags))
+                                   g_param_spec_boxed (name, nick, blurb,\
+                                   G_TYPE_BYTES, flags))
 
-#define GIMP_VALUES_GET_UINT8_ARRAY(args, n) \
-  gimp_value_get_uint8_array (gimp_value_array_index (args, n))
+#define GIMP_VALUES_GET_BYTES(args, n) \
+  g_value_get_boxed (gimp_value_array_index (args, n))
 
-#define GIMP_VALUES_DUP_UINT8_ARRAY(args, n) \
-  gimp_value_dup_uint8_array (gimp_value_array_index (args, n))
+#define GIMP_VALUES_DUP_BYTES(args, n) \
+  g_value_dup_boxed (gimp_value_array_index (args, n))
 
-#define GIMP_VALUES_SET_UINT8_ARRAY(args, n, value, length) \
-  gimp_value_set_uint8_array (gimp_value_array_index (args, n), value, length)
+#define GIMP_VALUES_SET_BYTES(args, n, value, length) \
+  g_value_set_boxed (gimp_value_array_index (args, n), value)
 
-#define GIMP_VALUES_TAKE_UINT8_ARRAY(args, n, value, length) \
-  gimp_value_take_uint8_array (gimp_value_array_index (args, n), value, length)
+#define GIMP_VALUES_TAKE_BYTES(args, n, value, length) \
+  g_value_take_boxed (gimp_value_array_index (args, n), value)
 
 
 /*  int32 array  */

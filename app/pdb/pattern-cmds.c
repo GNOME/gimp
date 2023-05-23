@@ -100,8 +100,7 @@ pattern_get_pixels_invoker (GimpProcedure         *procedure,
   gint width = 0;
   gint height = 0;
   gint bpp = 0;
-  gint num_color_bytes = 0;
-  guint8 *color_bytes = NULL;
+  GBytes *color_bytes = NULL;
 
   pattern = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -118,8 +117,7 @@ pattern_get_pixels_invoker (GimpProcedure         *procedure,
       width           = gimp_temp_buf_get_width  (pattern->mask);
       height          = gimp_temp_buf_get_height (pattern->mask);
       bpp             = babl_format_get_bytes_per_pixel (format);
-      num_color_bytes = gimp_temp_buf_get_data_size (pattern->mask);
-      color_bytes     = g_memdup2 (data, num_color_bytes);
+      color_bytes     = g_bytes_new (data, gimp_temp_buf_get_data_size (pattern->mask));
 
       gimp_temp_buf_unlock (pattern->mask, data);
     }
@@ -132,8 +130,7 @@ pattern_get_pixels_invoker (GimpProcedure         *procedure,
       g_value_set_int (gimp_value_array_index (return_vals, 1), width);
       g_value_set_int (gimp_value_array_index (return_vals, 2), height);
       g_value_set_int (gimp_value_array_index (return_vals, 3), bpp);
-      g_value_set_int (gimp_value_array_index (return_vals, 4), num_color_bytes);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 5), color_bytes, num_color_bytes);
+      g_value_take_boxed (gimp_value_array_index (return_vals, 4), color_bytes);
     }
 
   return return_vals;
@@ -252,16 +249,11 @@ register_pattern_procs (GimpPDB *pdb)
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-color-bytes",
-                                                     "num color bytes",
-                                                     "Number of pattern bytes",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("color-bytes",
-                                                                "color bytes",
-                                                                "The pattern data.",
-                                                                GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("color-bytes",
+                                                       "color bytes",
+                                                       "The pattern data.",
+                                                       G_TYPE_BYTES,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

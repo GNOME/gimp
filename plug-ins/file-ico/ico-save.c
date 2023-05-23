@@ -737,7 +737,7 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
           guchar *cmap;
           gint    num_colors;
 
-          cmap = gimp_image_get_colormap (image, &num_colors);
+          cmap = gimp_image_get_colormap (image, NULL, &num_colors);
           gimp_image_set_colormap (tmp_image, cmap, num_colors);
           g_free (cmap);
         }
@@ -768,7 +768,7 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
                                       GIMP_CONVERT_PALETTE_GENERATE,
                                       1 << bpp, TRUE, FALSE, "dummy");
 
-          cmap = gimp_image_get_colormap (tmp_image, num_colors);
+          cmap = gimp_image_get_colormap (tmp_image, NULL, num_colors);
 
           if (*num_colors == (1 << bpp) &&
               ! ico_cmap_contains_black (cmap, *num_colors))
@@ -780,7 +780,7 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
               if (gimp_drawable_is_indexed (layer))
                 {
                   g_free (cmap);
-                  cmap = gimp_image_get_colormap (image, num_colors);
+                  cmap = gimp_image_get_colormap (image, NULL, num_colors);
                   gimp_image_set_colormap (tmp_image, cmap, *num_colors);
                 }
               else if (gimp_drawable_is_gray (layer))
@@ -807,7 +807,7 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
                                           GIMP_CONVERT_PALETTE_GENERATE,
                                           (1<<bpp) - 1, TRUE, FALSE, "dummy");
               g_free (cmap);
-              cmap = gimp_image_get_colormap (tmp_image, num_colors);
+              cmap = gimp_image_get_colormap (tmp_image, NULL, num_colors);
             }
 
           gimp_image_convert_rgb (tmp_image);

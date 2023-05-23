@@ -129,51 +129,6 @@ GParamSpec * gimp_param_spec_array     (const gchar  *name,
 
 
 /*
- * GIMP_TYPE_UINT8_ARRAY
- */
-
-#define GIMP_TYPE_UINT8_ARRAY               (gimp_uint8_array_get_type ())
-#define GIMP_VALUE_HOLDS_UINT8_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_UINT8_ARRAY))
-
-GType   gimp_uint8_array_get_type           (void) G_GNUC_CONST;
-
-
-/*
- * GIMP_TYPE_PARAM_UINT8_ARRAY
- */
-
-#define GIMP_TYPE_PARAM_UINT8_ARRAY           (gimp_param_uint8_array_get_type ())
-#define GIMP_PARAM_SPEC_UINT8_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_UINT8_ARRAY, GimpParamSpecUInt8Array))
-#define GIMP_IS_PARAM_SPEC_UINT8_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_UINT8_ARRAY))
-
-typedef struct _GimpParamSpecUInt8Array GimpParamSpecUInt8Array;
-
-struct _GimpParamSpecUInt8Array
-{
-  GimpParamSpecArray parent_instance;
-};
-
-GType          gimp_param_uint8_array_get_type   (void) G_GNUC_CONST;
-
-GParamSpec   * gimp_param_spec_uint8_array       (const gchar  *name,
-                                                  const gchar  *nick,
-                                                  const gchar  *blurb,
-                                                  GParamFlags   flags);
-
-const guint8 * gimp_value_get_uint8_array        (const GValue *value);
-guint8       * gimp_value_dup_uint8_array        (const GValue *value);
-void           gimp_value_set_uint8_array        (GValue       *value,
-                                                  const guint8 *data,
-                                                  gsize         length);
-void           gimp_value_set_static_uint8_array (GValue       *value,
-                                                  const guint8 *data,
-                                                  gsize         length);
-void           gimp_value_take_uint8_array       (GValue       *value,
-                                                  guint8       *data,
-                                                  gsize         length);
-
-
-/*
  * GIMP_TYPE_INT32_ARRAY
  */
 

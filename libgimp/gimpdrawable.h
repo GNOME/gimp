@@ -62,22 +62,26 @@ GeglBuffer   * gimp_drawable_get_shadow_buffer      (GimpDrawable  *drawable);
 const Babl   * gimp_drawable_get_format             (GimpDrawable  *drawable);
 const Babl   * gimp_drawable_get_thumbnail_format   (GimpDrawable  *drawable);
 
-guchar       * gimp_drawable_get_thumbnail_data     (GimpDrawable  *drawable,
-                                                     gint          *width,
-                                                     gint          *height,
+GBytes       * gimp_drawable_get_thumbnail_data     (GimpDrawable  *drawable,
+                                                     gint           width,
+                                                     gint           height,
+                                                     gint          *actual_width,
+                                                     gint          *actual_height,
                                                      gint          *bpp);
 GdkPixbuf    * gimp_drawable_get_thumbnail          (GimpDrawable  *drawable,
                                                      gint           width,
                                                      gint           height,
                                                      GimpPixbufTransparency alpha);
 
-guchar       * gimp_drawable_get_sub_thumbnail_data (GimpDrawable  *drawable,
+GBytes       * gimp_drawable_get_sub_thumbnail_data (GimpDrawable  *drawable,
                                                      gint           src_x,
                                                      gint           src_y,
                                                      gint           src_width,
                                                      gint           src_height,
-                                                     gint          *dest_width,
-                                                     gint          *dest_height,
+                                                     gint           dest_width,
+                                                     gint           dest_height,
+                                                     gint          *actual_width,
+                                                     gint          *actual_height,
                                                      gint          *bpp);
 GdkPixbuf    * gimp_drawable_get_sub_thumbnail      (GimpDrawable  *drawable,
                                                      gint           src_x,

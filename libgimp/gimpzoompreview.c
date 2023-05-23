@@ -519,8 +519,8 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
     }
   else
     {
-      guchar        *sel;
-      guchar        *src;
+      GBytes        *sel;
+      GBytes        *src;
       GimpSelection *selection;
       gint           w, h;
       gint           bpp;
@@ -533,9 +533,6 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
 
       selection = gimp_image_get_selection (image);
 
-      w = width;
-      h = height;
-
       gimp_zoom_preview_get_source_area (preview,
                                          &src_x, &src_y,
                                          &src_width, &src_height);
@@ -543,22 +540,24 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
       src = gimp_drawable_get_sub_thumbnail_data (priv->drawable,
                                                   src_x, src_y,
                                                   src_width, src_height,
+                                                  width, height,
                                                   &w, &h, &bpp);
       gimp_drawable_get_offsets (priv->drawable, &offsx, &offsy);
       sel = gimp_drawable_get_sub_thumbnail_data (GIMP_DRAWABLE (selection),
                                                   src_x + offsx, src_y + offsy,
                                                   src_width, src_height,
-                                                  &width, &height, &bpp);
+                                                  width, height,
+                                                  &w, &h, &bpp);
 
       gimp_preview_area_mask (GIMP_PREVIEW_AREA (area),
                               0, 0, width, height,
                               gimp_drawable_type (priv->drawable),
-                              src, width * gimp_drawable_get_bpp (priv->drawable),
+                              g_bytes_get_data (src, NULL), width * gimp_drawable_get_bpp (priv->drawable),
                               buffer, rowstride,
-                              sel, width);
+                              g_bytes_get_data (sel, NULL), width);
 
-      g_free (sel);
-      g_free (src);
+      g_bytes_unref (sel);
+      g_bytes_unref (src);
     }
 }
 
@@ -911,6 +910,8 @@ gimp_zoom_preview_get_source (GimpZoomPreview *preview,
       gint         src_y;
       gint         src_width;
       gint         src_height;
+      GBytes      *src_bytes;
+      gsize        src_bytes_size;
 
       gimp_preview_get_size (gimp_preview, width, height);
 
@@ -918,10 +919,12 @@ gimp_zoom_preview_get_source (GimpZoomPreview *preview,
                                          &src_x, &src_y,
                                          &src_width, &src_height);
 
-      return gimp_drawable_get_sub_thumbnail_data (drawable,
-                                                   src_x, src_y,
-                                                   src_width, src_height,
-                                                   width, height, bpp);
+      src_bytes =  gimp_drawable_get_sub_thumbnail_data (drawable,
+                                                         src_x, src_y,
+                                                         src_width, src_height,
+                                                         *width, *height,
+                                                         width, height, bpp);
+      return g_bytes_unref_to_data (src_bytes, &src_bytes_size);
     }
   else
     {

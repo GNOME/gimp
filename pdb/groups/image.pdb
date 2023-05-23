@@ -1511,18 +1511,19 @@ HELP
     );
 
     @outargs = (
-        { name => 'colormap', type => 'int8array',
-          desc => "The image's colormap.",
-          array => { name => 'num_bytes',
-                     desc => 'Number of bytes in the colormap array' } }
+        { name => 'colormap', type => 'bytes',
+          desc => "The image's colormap." }
     );
 
     %invoke = (
         headers => [ qw("core/gimpimage-colormap.h") ],
         code => <<'CODE'
 {
-  num_bytes = 3 * gimp_image_get_colormap_size (image);
-  colormap = gimp_image_get_colormap (image);
+  guchar *colormap_data;
+
+  colormap_data = gimp_image_get_colormap (image);
+  colormap = g_bytes_new_take (colormap_data,
+                               gimp_image_get_colormap_size (image));
 }
 CODE
     );
@@ -1545,17 +1546,18 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'colormap', type => 'int8array',
-          desc => 'The new colormap values',
-          array => { name => 'num_bytes', type => '0 <= int32 <= 768',
-                     desc => 'Number of bytes in the colormap array' } }
+        { name => 'colormap', type => 'bytes',
+          desc => 'The new colormap values' }
     );
 
     %invoke = (
         headers => [ qw("core/gimpimage-colormap.h") ],
         code => <<'CODE'
 {
-  gimp_image_set_colormap (image, colormap, num_bytes / 3, TRUE);
+  gimp_image_set_colormap (image,
+                           g_bytes_get_data (colormap, NULL),
+                           g_bytes_get_size (colormap) / 3,
+                           TRUE);
 }
 CODE
     );
@@ -3035,10 +3037,8 @@ HELP
           desc => 'The previews height' },
         { name => 'bpp', type => 'int32',
           desc => 'The previews bpp' },
-        { name => 'thumbnail_data', type => 'int8array',
-          desc => 'The thumbnail data',
-          array => { name => 'thumbnail_data_count',
-                     desc => 'The number of bytes in thumbnail data' } }
+        { name => 'thumbnail_data', type => 'bytes',
+          desc => 'The thumbnail data' }
     );
 
     %invoke = (
@@ -3068,9 +3068,8 @@ HELP
       actual_width         = gimp_temp_buf_get_width  (buf);
       actual_height        = gimp_temp_buf_get_height (buf);
       bpp                  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (buf));
-      thumbnail_data_count = gimp_temp_buf_get_data_size (buf);
-      thumbnail_data       = g_memdup2 (gimp_temp_buf_get_data (buf),
-                                        thumbnail_data_count);
+      thumbnail_data       = g_bytes_new (gimp_temp_buf_get_data (buf),
+                                          gimp_temp_buf_get_data_size (buf));
 
       gimp_temp_buf_unref (buf);
     }

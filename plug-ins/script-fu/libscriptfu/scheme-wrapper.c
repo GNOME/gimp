@@ -971,7 +971,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
               debug_vector (sc, vector, "%ld");
             }
         }
-      else if (GIMP_VALUE_HOLDS_UINT8_ARRAY (&value))
+      else if (G_VALUE_HOLDS (&value, G_TYPE_BYTES))
         {
           vector = sc->vptr->pair_car (a);
           if (! sc->vptr->is_vector (vector))
@@ -980,10 +980,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               guint8 *array;
 
-              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
-
-              if (n_elements > sc->vptr->vector_length (vector))
-                return script_length_error_in_vector (sc, i, proc_name, n_elements, vector);
+              n_elements = sc->vptr->vector_length (vector);
 
               array = g_new0 (guint8, n_elements);
 
@@ -1000,7 +997,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
                   array[j] = (guint8) sc->vptr->ivalue (v_element);
                 }
 
-              gimp_value_take_uint8_array (&value, array, n_elements);
+              g_value_take_boxed (&value, g_bytes_new_take (array, n_elements));
 
               debug_vector (sc, vector, "%ld");
             }
@@ -1466,11 +1463,12 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
               return_val = sc->vptr->cons (sc, vector, return_val);
             }
-          else if (GIMP_VALUE_HOLDS_UINT8_ARRAY (value))
+          else if (G_VALUE_HOLDS (value, G_TYPE_BYTES))
             {
-              gint32        n      = GIMP_VALUES_GET_INT (values, i);
-              const guint8 *v      = gimp_value_get_uint8_array (value);
-              pointer       vector = sc->vptr->mk_vector (sc, n);
+              GBytes       *v_bytes  = g_value_get_boxed (value);
+              const guint8 *v        = g_bytes_get_data (v_bytes, NULL);
+              gsize         n        = g_bytes_get_size (v_bytes);
+              pointer       vector   = sc->vptr->mk_vector (sc, n);
 
               for (j = 0; j < n; j++)
                 {

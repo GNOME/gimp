@@ -361,11 +361,9 @@ gimp_brush_get_info (GimpBrush *brush,
  * @width: (out): The brush width.
  * @height: (out): The brush height.
  * @mask_bpp: (out): The brush mask bpp.
- * @num_mask_bytes: (out): Length of brush mask data.
- * @mask_bytes: (out) (array length=num_mask_bytes) (element-type guint8) (transfer full): The brush mask data.
+ * @mask_bytes: (out) (transfer full): The brush mask data.
  * @color_bpp: (out): The brush color bpp.
- * @num_color_bytes: (out): Length of brush color data.
- * @color_bytes: (out) (array length=num_color_bytes) (element-type guint8) (transfer full): The brush color data.
+ * @color_bytes: (out) (transfer full): The brush color data.
  *
  * Gets information about the brush.
  *
@@ -382,11 +380,9 @@ gimp_brush_get_pixels (GimpBrush  *brush,
                        gint       *width,
                        gint       *height,
                        gint       *mask_bpp,
-                       gint       *num_mask_bytes,
-                       guint8    **mask_bytes,
+                       GBytes    **mask_bytes,
                        gint       *color_bpp,
-                       gint       *num_color_bytes,
-                       guint8    **color_bytes)
+                       GBytes    **color_bytes)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -404,10 +400,8 @@ gimp_brush_get_pixels (GimpBrush  *brush,
   *width = 0;
   *height = 0;
   *mask_bpp = 0;
-  *num_mask_bytes = 0;
   *mask_bytes = NULL;
   *color_bpp = 0;
-  *num_color_bytes = 0;
   *color_bytes = NULL;
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
@@ -417,11 +411,9 @@ gimp_brush_get_pixels (GimpBrush  *brush,
       *width = GIMP_VALUES_GET_INT (return_vals, 1);
       *height = GIMP_VALUES_GET_INT (return_vals, 2);
       *mask_bpp = GIMP_VALUES_GET_INT (return_vals, 3);
-      *num_mask_bytes = GIMP_VALUES_GET_INT (return_vals, 4);
-      *mask_bytes = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
-      *color_bpp = GIMP_VALUES_GET_INT (return_vals, 6);
-      *num_color_bytes = GIMP_VALUES_GET_INT (return_vals, 7);
-      *color_bytes = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 8);
+      *mask_bytes = GIMP_VALUES_DUP_BYTES (return_vals, 4);
+      *color_bpp = GIMP_VALUES_GET_INT (return_vals, 5);
+      *color_bytes = GIMP_VALUES_DUP_BYTES (return_vals, 6);
     }
 
   gimp_value_array_unref (return_vals);

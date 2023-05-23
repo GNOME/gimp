@@ -314,31 +314,31 @@ gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
     }
   else
     {
-      guchar        *sel;
-      guchar        *src;
+      GBytes        *sel;
+      GBytes        *src;
       GimpSelection *selection;
       gint           w, h;
       gint           bpp;
 
       selection = gimp_image_get_selection (image);
 
-      w = width;
-      h = height;
-
       src = gimp_drawable_get_thumbnail_data (priv->drawable,
+                                              width, height,
                                               &w, &h, &bpp);
       sel = gimp_drawable_get_thumbnail_data (GIMP_DRAWABLE (selection),
+                                              width, height,
                                               &w, &h, &bpp);
 
       gimp_preview_area_mask (GIMP_PREVIEW_AREA (area),
                               0, 0, width, height,
                               gimp_drawable_type (priv->drawable),
-                              src, width * gimp_drawable_get_bpp (priv->drawable),
+                              g_bytes_get_data (src, NULL),
+                              width * gimp_drawable_get_bpp (priv->drawable),
                               buffer, rowstride,
-                              sel, width);
+                              g_bytes_get_data (sel, NULL), width);
 
-      g_free (sel);
-      g_free (src);
+      g_bytes_unref (sel);
+      g_bytes_unref (src);
     }
 }
 

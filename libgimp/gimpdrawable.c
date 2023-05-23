@@ -73,38 +73,39 @@ gimp_drawable_get_by_id (gint32 drawable_id)
 /**
  * gimp_drawable_get_thumbnail_data:
  * @drawable: the drawable
- * @width:    (inout): the requested thumbnail width  (<= 1024 pixels)
- * @height:   (inout): the requested thumbnail height (<= 1024 pixels)
- * @bpp:      (out):   the bytes per pixel of the returned thubmnail data
+ * @width:    the requested thumbnail width  (<= 1024 pixels)
+ * @height:   the requested thumbnail height (<= 1024 pixels)
+ * @actual_width: (out): the resulting thumbnail's actual width
+ * @actual_height: (out): the resulting thumbnail's actual height
+ * @bpp: (out): the bytes per pixel of the returned thubmnail data
  *
  * Retrieves thumbnail data for the drawable identified by @drawable.
  * The thumbnail will be not larger than the requested size.
  *
- * Returns: (transfer full) (array) (nullable): thumbnail data or %NULL if
+ * Returns: (transfer full) (nullable): thumbnail data or %NULL if
  *          @drawable is invalid.
  **/
-guchar *
+GBytes *
 gimp_drawable_get_thumbnail_data (GimpDrawable *drawable,
-                                  gint         *width,
-                                  gint         *height,
+                                  gint          width,
+                                  gint          height,
+                                  gint         *actual_width,
+                                  gint         *actual_height,
                                   gint         *bpp)
 {
-  gint    ret_width;
-  gint    ret_height;
-  guchar *image_data;
-  gint    data_size;
+  GBytes *image_data;
+
+  g_return_val_if_fail (actual_width != NULL, NULL);
+  g_return_val_if_fail (actual_height != NULL, NULL);
+  g_return_val_if_fail (bpp != NULL, NULL);
 
   _gimp_drawable_thumbnail (drawable,
-                            *width,
-                            *height,
-                            &ret_width,
-                            &ret_height,
+                            width,
+                            height,
+                            actual_width,
+                            actual_height,
                             bpp,
-                            &data_size,
                             &image_data);
-
-  *width  = ret_width;
-  *height = ret_height;
 
   return image_data;
 }
@@ -130,25 +131,27 @@ gimp_drawable_get_thumbnail (GimpDrawable           *drawable,
                              gint                    height,
                              GimpPixbufTransparency  alpha)
 {
-  gint    thumb_width  = width;
-  gint    thumb_height = height;
-  gint    thumb_bpp;
-  guchar *data;
+  gint       thumb_width, thumb_height, thumb_bpp;
+  GBytes    *data;
+  GdkPixbuf *pixbuf = NULL;
 
   g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
   g_return_val_if_fail (height > 0 && height <= 1024, NULL);
 
   data = gimp_drawable_get_thumbnail_data (drawable,
+                                           width,
+                                           height,
                                            &thumb_width,
                                            &thumb_height,
                                            &thumb_bpp);
 
   if (data)
-    return _gimp_pixbuf_from_data (data,
-                                   thumb_width, thumb_height, thumb_bpp,
-                                   alpha);
+    pixbuf = _gimp_pixbuf_from_data (g_bytes_unref_to_data (data, NULL),
+                                     thumb_width, thumb_height, thumb_bpp,
+                                     alpha);
 
-  return NULL;
+  g_bytes_unref (data);
+  return pixbuf;
 }
 
 /**
@@ -158,46 +161,48 @@ gimp_drawable_get_thumbnail (GimpDrawable           *drawable,
  * @src_y:                the y coordinate of the area
  * @src_width:            the width of the area
  * @src_height:           the height of the area
- * @dest_width: (inout):  the requested thumbnail width  (<= 1024 pixels)
- * @dest_height: (inout): the requested thumbnail height (<= 1024 pixels)
+ * @dest_width:           the requested thumbnail width  (<= 1024 pixels)
+ * @dest_height:          the requested thumbnail height (<= 1024 pixels)
+ * @actual_width: (out):  the width of the returned thumbnail
+ * @actual_height: (out): the height of the returned thumbnail
  * @bpp: (out):           the bytes per pixel of the returned thumbnail data
  *
  * Retrieves thumbnail data for the drawable identified by @drawable.
  * The thumbnail will be not larger than the requested size.
  *
- * Returns: (transfer full) (array) (nullable): thumbnail data or %NULL if
+ * Returns: (transfer full): thumbnail data or %NULL if
  *          @drawable is invalid.
  **/
-guchar *
+GBytes *
 gimp_drawable_get_sub_thumbnail_data (GimpDrawable *drawable,
                                       gint          src_x,
                                       gint          src_y,
                                       gint          src_width,
                                       gint          src_height,
-                                      gint         *dest_width,
-                                      gint         *dest_height,
+                                      gint          dest_width,
+                                      gint          dest_height,
+                                      gint         *actual_width,
+                                      gint         *actual_height,
                                       gint         *bpp)
 {
-  gint    ret_width;
-  gint    ret_height;
-  guchar *image_data;
-  gint    data_size;
+  gint    ret_width, ret_height;
+  GBytes *image_bytes;
+  gsize   data_size;
 
   _gimp_drawable_sub_thumbnail (drawable,
                                 src_x, src_y,
                                 src_width, src_height,
-                                *dest_width,
-                                *dest_height,
+                                 dest_width,
+                                 dest_height,
                                 &ret_width,
                                 &ret_height,
                                 bpp,
-                                &data_size,
-                                &image_data);
+                                &image_bytes);
 
-  *dest_width  = ret_width;
-  *dest_height = ret_height;
+  *actual_width  = ret_width;
+  *actual_height = ret_height;
 
-  return image_data;
+  return g_bytes_unref_to_data (image_bytes, &data_size);
 }
 
 /**
@@ -229,10 +234,11 @@ gimp_drawable_get_sub_thumbnail (GimpDrawable           *drawable,
                                  gint                    dest_height,
                                  GimpPixbufTransparency  alpha)
 {
-  gint    thumb_width  = dest_width;
-  gint    thumb_height = dest_height;
-  gint    thumb_bpp;
-  guchar *data;
+  gint       thumb_width  = dest_width;
+  gint       thumb_height = dest_height;
+  gint       thumb_bpp;
+  GBytes    *data;
+  GdkPixbuf *pixbuf = NULL;
 
   g_return_val_if_fail (src_x >= 0, NULL);
   g_return_val_if_fail (src_y >= 0, NULL);
@@ -244,16 +250,18 @@ gimp_drawable_get_sub_thumbnail (GimpDrawable           *drawable,
   data = gimp_drawable_get_sub_thumbnail_data (drawable,
                                                src_x, src_y,
                                                src_width, src_height,
+                                               dest_width, dest_height,
                                                &thumb_width,
                                                &thumb_height,
                                                &thumb_bpp);
 
   if (data)
-    return _gimp_pixbuf_from_data (data,
-                                   thumb_width, thumb_height, thumb_bpp,
-                                   alpha);
+    pixbuf = _gimp_pixbuf_from_data (g_bytes_unref_to_data (data, NULL),
+                                     thumb_width, thumb_height, thumb_bpp,
+                                     alpha);
+  g_bytes_unref (data);
 
-  return NULL;
+  return pixbuf;
 }
 
 /**
@@ -375,7 +383,7 @@ gimp_drawable_get_format (GimpDrawable *drawable)
           const Babl *palette;
           const Babl *palette_alpha;
           guchar     *colormap;
-          gint        n_colors;
+          gint        colormap_len, n_colors;
 
           babl_new_palette_with_space (format_str, space,
                                        &palette, &palette_alpha);
@@ -385,7 +393,7 @@ gimp_drawable_get_format (GimpDrawable *drawable)
           else
             format = palette;
 
-          colormap = gimp_image_get_colormap (image, &n_colors);
+          colormap = gimp_image_get_colormap (image, &colormap_len, &n_colors);
 
           if (colormap)
             {
