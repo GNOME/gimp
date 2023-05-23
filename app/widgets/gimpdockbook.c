@@ -565,6 +565,11 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
                           g_object_ref (dockbook),
                           g_object_unref);
 
+  if (dialog_ui_manager)
+    gimp_ui_manager_update (dialog_ui_manager, dialog_popup_data);
+
+  gimp_ui_manager_update (dockbook_ui_manager, dockable);
+
   gimp_ui_manager_ui_popup_at_widget (dockbook_ui_manager,
                                       "/dockable-popup",
                                       dialog_ui_manager,
