@@ -420,6 +420,27 @@ gimp_extension_manager_finalize (GObject *object)
     }
   g_list_free_full (manager->p->uninstalled_extensions, g_object_unref);
 
+  g_list_free_full (manager->p->brush_paths, g_object_unref);
+  manager->p->brush_paths = NULL;
+  g_list_free_full (manager->p->dynamics_paths, g_object_unref);
+  manager->p->dynamics_paths = NULL;
+  g_list_free_full (manager->p->mypaint_brush_paths, g_object_unref);
+  manager->p->brush_paths = NULL;
+  g_list_free_full (manager->p->pattern_paths, g_object_unref);
+  manager->p->pattern_paths = NULL;
+  g_list_free_full (manager->p->gradient_paths, g_object_unref);
+  manager->p->gradient_paths = NULL;
+  g_list_free_full (manager->p->palette_paths, g_object_unref);
+  manager->p->palette_paths = NULL;
+  g_list_free_full (manager->p->tool_preset_paths, g_object_unref);
+  manager->p->tool_preset_paths = NULL;
+  g_list_free_full (manager->p->plug_in_paths, g_object_unref);
+  manager->p->plug_in_paths = NULL;
+  g_list_free_full (manager->p->splash_paths, g_object_unref);
+  manager->p->splash_paths = NULL;
+  g_list_free_full (manager->p->theme_paths, g_object_unref);
+  manager->p->theme_paths = NULL;
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -437,33 +458,43 @@ gimp_extension_manager_set_property (GObject      *object,
       manager->p->gimp = g_value_get_object (value);
       break;
     case PROP_BRUSH_PATHS:
+      g_list_free_full (manager->p->brush_paths, g_object_unref);
       manager->p->brush_paths = g_value_get_pointer (value);
       break;
     case PROP_DYNAMICS_PATHS:
+      g_list_free_full (manager->p->dynamics_paths, g_object_unref);
       manager->p->dynamics_paths = g_value_get_pointer (value);
       break;
     case PROP_MYPAINT_BRUSH_PATHS:
+      g_list_free_full (manager->p->mypaint_brush_paths, g_object_unref);
       manager->p->mypaint_brush_paths = g_value_get_pointer (value);
       break;
     case PROP_PATTERN_PATHS:
+      g_list_free_full (manager->p->pattern_paths, g_object_unref);
       manager->p->pattern_paths = g_value_get_pointer (value);
       break;
     case PROP_GRADIENT_PATHS:
+      g_list_free_full (manager->p->gradient_paths, g_object_unref);
       manager->p->gradient_paths = g_value_get_pointer (value);
       break;
     case PROP_PALETTE_PATHS:
+      g_list_free_full (manager->p->palette_paths, g_object_unref);
       manager->p->palette_paths = g_value_get_pointer (value);
       break;
     case PROP_TOOL_PRESET_PATHS:
+      g_list_free_full (manager->p->tool_preset_paths, g_object_unref);
       manager->p->tool_preset_paths = g_value_get_pointer (value);
       break;
     case PROP_SPLASH_PATHS:
+      g_list_free_full (manager->p->splash_paths, g_object_unref);
       manager->p->splash_paths = g_value_get_pointer (value);
       break;
     case PROP_THEME_PATHS:
+      g_list_free_full (manager->p->theme_paths, g_object_unref);
       manager->p->theme_paths = g_value_get_pointer (value);
       break;
     case PROP_PLUG_IN_PATHS:
+      g_list_free_full (manager->p->plug_in_paths, g_object_unref);
       manager->p->plug_in_paths = g_value_get_pointer (value);
       break;
 
