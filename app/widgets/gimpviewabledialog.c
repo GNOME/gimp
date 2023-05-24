@@ -118,7 +118,7 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
   gtk_widget_show (hbox);
 
   dialog->icon = gtk_image_new ();
-  gtk_widget_set_valign (dialog->icon, GTK_ALIGN_START);
+  gtk_widget_set_valign (dialog->icon, GTK_ALIGN_CENTER);
   gtk_box_pack_start (GTK_BOX (hbox), dialog->icon, FALSE, FALSE, 0);
   gtk_widget_show (dialog->icon);
 
@@ -137,7 +137,6 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
 
   dialog->viewable_label = g_object_new (GTK_TYPE_LABEL,
                                          "xalign",    0.0,
-                                         "yalign",    0.5,
                                          "ellipsize", PANGO_ELLIPSIZE_END,
                                          NULL);
   gimp_label_set_attributes (GTK_LABEL (dialog->viewable_label),
