@@ -106,7 +106,7 @@ gimp_toggle_action_class_init (GimpToggleActionClass *klass)
   toggle_class->toggle        = gimp_toggle_action_real_toggle;
 
   /**
-   * GimpToggleAction:enabled:
+   * GimpToggleAction:active:
    *
    * If @action state is currently active.
    *
@@ -211,9 +211,9 @@ gimp_toggle_action_real_toggle (GimpToggleAction *action)
 {
   gboolean value = gimp_toggle_action_get_active (action);
 
+  action->priv->active = ! value;
   gimp_action_emit_change_state (GIMP_ACTION (action),
                                  g_variant_new_boolean (! value));
-  action->priv->active = ! value;
 
   /* Toggling always works for the base class. */
   return TRUE;
@@ -227,6 +227,7 @@ gimp_toggle_action_toggle (GimpToggleAction *action)
     {
       g_signal_emit (action, gimp_toggle_action_signals[TOGGLED], 0);
       g_object_notify (G_OBJECT (action), "state");
+      g_object_notify (G_OBJECT (action), "active");
 
       gimp_action_history_action_activated (GIMP_ACTION (action));
     }
