@@ -88,7 +88,7 @@ brush_box_new (GimpContainer *container,
     container = gimp_data_factory_get_container (context->gimp->brush_factory);
 
   return gimp_viewable_box_new (container, context, label, spacing,
-                                view_type, GIMP_VIEW_SIZE_SMALL, view_size,
+                                view_type, GIMP_VIEW_SIZE_MEDIUM, view_size,
                                 "gimp-brush-grid|gimp-brush-list",
                                 GIMP_ICON_BRUSH,
                                 _("Open the brush selection dialog"),
@@ -106,7 +106,7 @@ gimp_brush_box_new (GimpContainer *container,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return brush_box_new (container, context, label, spacing,
-                        GIMP_VIEW_TYPE_GRID, GIMP_VIEW_SIZE_SMALL,
+                        GIMP_VIEW_TYPE_GRID, GIMP_VIEW_SIZE_MEDIUM,
                         NULL, NULL);
 }
 
@@ -156,7 +156,7 @@ dynamics_box_new (GimpContainer *container,
     container = gimp_data_factory_get_container (context->gimp->dynamics_factory);
 
   return gimp_viewable_box_new (container, context, label, spacing,
-                                view_type, GIMP_VIEW_SIZE_SMALL, view_size,
+                                view_type, GIMP_VIEW_SIZE_MEDIUM, view_size,
                                 "gimp-dynamics-list|gimp-dynamics-grid",
                                 GIMP_ICON_DYNAMICS,
                                 _("Open the dynamics selection dialog"),
@@ -174,7 +174,7 @@ gimp_dynamics_box_new (GimpContainer *container,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return dynamics_box_new (container, context, label, spacing,
-                           GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_SMALL,
+                           GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_MEDIUM,
                            NULL, NULL);
 }
 
@@ -286,7 +286,7 @@ pattern_box_new (GimpContainer *container,
     container = gimp_data_factory_get_container (context->gimp->pattern_factory);
 
   return gimp_viewable_box_new (container, context, label, spacing,
-                                view_type, GIMP_VIEW_SIZE_SMALL, view_size,
+                                view_type, GIMP_VIEW_SIZE_MEDIUM, view_size,
                                 "gimp-pattern-grid|gimp-pattern-list",
                                 GIMP_ICON_PATTERN,
                                 _("Open the pattern selection dialog"),
@@ -304,7 +304,7 @@ gimp_pattern_box_new (GimpContainer *container,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return pattern_box_new (container, context, label, spacing,
-                          GIMP_VIEW_TYPE_GRID, GIMP_VIEW_SIZE_SMALL);
+                          GIMP_VIEW_TYPE_GRID, GIMP_VIEW_SIZE_MEDIUM);
 }
 
 GtkWidget *
@@ -356,7 +356,7 @@ gradient_box_new (GimpContainer *container,
     container = gimp_data_factory_get_container (context->gimp->gradient_factory);
 
   hbox = gimp_viewable_box_new (container, context, label, spacing,
-                                view_type, GIMP_VIEW_SIZE_SMALL, view_size,
+                                view_type, GIMP_VIEW_SIZE_MEDIUM, view_size,
                                 "gimp-gradient-list|gimp-gradient-grid",
                                 GIMP_ICON_GRADIENT,
                                 _("Open the gradient selection dialog"),
@@ -366,7 +366,7 @@ gradient_box_new (GimpContainer *container,
   button = children->data;
   g_list_free (children);
 
-  GIMP_VIEWABLE_BUTTON (button)->button_view_size = GIMP_VIEW_SIZE_SMALL;
+  GIMP_VIEWABLE_BUTTON (button)->button_view_size = GIMP_VIEW_SIZE_MEDIUM;
 
   if (reverse_prop)
     {
@@ -561,7 +561,7 @@ font_box_new (GimpContainer *container,
     container = gimp_data_factory_get_container (context->gimp->font_factory);
 
   return gimp_viewable_box_new (container, context, label, spacing,
-                                view_type, GIMP_VIEW_SIZE_SMALL, view_size,
+                                view_type, GIMP_VIEW_SIZE_MEDIUM, view_size,
                                 "gimp-font-list|gimp-font-grid",
                                 GIMP_ICON_FONT,
                                 _("Open the font selection dialog"),
@@ -579,7 +579,7 @@ gimp_font_box_new (GimpContainer *container,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return font_box_new (container, context, label, spacing,
-                       GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_SMALL);
+                       GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_MEDIUM);
 }
 
 GtkWidget *
