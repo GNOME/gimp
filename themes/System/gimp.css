@@ -29,6 +29,7 @@ GimpColorNotebook tab {
     padding: 0 0 0 0;
 }
 
+GimpDock entry,
 GimpDock GimpColorNotebook spinbutton,
 GimpDock GimpColorNotebook spinbutton entry,
 GimpDock GimpColorScales spinbutton,
