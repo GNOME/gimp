@@ -1685,10 +1685,6 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
         mod_action = GIMP_MODIFIER_ACTION_ZOOMING;
     }
 
-  gimp_display_shell_pointer_grab (shell, event,
-                                   GDK_POINTER_MOTION_MASK |
-                                   GDK_BUTTON_RELEASE_MASK);
-
   shell->scroll_start_x    = x;
   shell->scroll_start_y    = y;
   shell->scroll_last_x     = x;
@@ -1799,12 +1795,6 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
   shell->scroll_last_x     = 0;
   shell->scroll_last_y     = 0;
   shell->rotate_drag_angle = 0.0;
-
-  /* We may have ungrabbed the pointer when space was released while
-   * mouse was down, to be able to catch a GDK_BUTTON_RELEASE event.
-   */
-  if (shell->grab_pointer)
-    gimp_display_shell_pointer_ungrab (shell, event);
 }
 
 static void
