@@ -70,7 +70,7 @@ get_length (GimpProcedureConfig *config)
                                            &n_pspecs);
   g_free (pspecs);
   g_debug ("length config: %d", n_pspecs);
-  g_free (pspecs);
+
   return n_pspecs;
 }
 
