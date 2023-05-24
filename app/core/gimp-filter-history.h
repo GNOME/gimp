@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-filter.h
+ * gimp-filter-history.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP__FILTER_H__
-#define __GIMP__FILTER_H__
+#ifndef __GIMP_FILTER_HISTORY_H__
+#define __GIMP_FILTER_HISTORY_H__
 
 
 gint            gimp_filter_history_size   (Gimp          *gimp);
@@ -31,12 +31,5 @@ void            gimp_filter_history_remove (Gimp          *gimp,
                                             GimpProcedure *procedure);
 void            gimp_filter_history_clear  (Gimp          *gimp);
 
-void            gimp_filter_gegl_ops_add   (Gimp          *gimp,
-                                            const gchar   *action_name,
-                                            const gchar   *op_name);
-const gchar   * gimp_filter_gegl_ops_get   (Gimp          *gimp,
-                                            const gchar   *action_name);
-GList         * gimp_filter_gegl_ops_list  (Gimp *gimp);
 
-
-#endif /* __GIMP__FILTER_H__ */
+#endif /* __GIMP_FILTER_HISTORY_H__ */

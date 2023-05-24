@@ -83,7 +83,6 @@ struct _Gimp
   GimpPlugInManager      *plug_in_manager;
 
   GList                  *filter_history;
-  GHashTable             *filter_gegl_ops; /* Map generated action names to GEGL operation names. */
 
   GimpContainer          *images;
   guint32                 next_guide_id;

@@ -30,7 +30,7 @@ libappcore_sources = [
   'gimp-contexts.c',
   'gimp-data-factories.c',
   'gimp-edit.c',
-  'gimp-filter.c',
+  'gimp-filter-history.c',
   'gimp-gradients.c',
   'gimp-gui.c',
   'gimp-internal-data.c',

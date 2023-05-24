@@ -97,6 +97,12 @@ gimp_gegl_tool_class_init (GimpGeglToolClass *klass)
   tool_class->control       = gimp_gegl_tool_control;
 
   filter_tool_class->dialog = gimp_gegl_tool_dialog;
+
+  /* Store the mapping from tool identifier to operation name.
+   * This data is leaking, otherwise we'd have to register a dynamic type with a
+   * class_finalize() class method.
+   **/
+  klass->generated_ops = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 }
 
 static void

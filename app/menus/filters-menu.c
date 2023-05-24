@@ -23,7 +23,7 @@
 #include "menus-types.h"
 
 #include "core/gimp.h"
-#include "core/gimp-filter.h"
+#include "core/gimp-filter-history.h"
 
 #include "widgets/gimpuimanager.h"
 
@@ -36,8 +36,7 @@ void
 filters_menu_setup (GimpUIManager *manager,
                     const gchar   *ui_path)
 {
-  GList *actions;
-  gint   i;
+  gint i;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
@@ -53,10 +52,4 @@ filters_menu_setup (GimpUIManager *manager,
 
       g_free (action_name);
     }
-
-  actions = gimp_filter_gegl_ops_list (manager->gimp);
-  for (GList *iter = actions; iter; iter = iter->next)
-    gimp_ui_manager_add_ui (manager, "/Filters/Generic/GEGL Operations",
-                            iter->data, NULL, FALSE);
-  g_list_free (actions);
 }

@@ -45,6 +45,8 @@ struct _GimpGeglTool
 struct _GimpGeglToolClass
 {
   GimpOperationToolClass  parent_class;
+
+  GHashTable             *generated_ops;
 };
 
 

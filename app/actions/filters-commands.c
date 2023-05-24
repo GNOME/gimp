@@ -32,7 +32,7 @@
 #include "operations/gimpoperationsettings.h"
 
 #include "core/gimp.h"
-#include "core/gimp-filter.h"
+#include "core/gimp-filter-history.h"
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 

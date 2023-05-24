@@ -32,7 +32,7 @@
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimp-filter.h"
+#include "core/gimp-filter-history.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-item.h"

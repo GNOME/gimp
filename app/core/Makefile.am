@@ -54,8 +54,8 @@ libappcore_a_sources = \
 	gimp-data-factories.h			\
 	gimp-edit.c				\
 	gimp-edit.h				\
-	gimp-filter.c				\
-	gimp-filter.h				\
+	gimp-filter-history.c			\
+	gimp-filter-history.h			\
 	gimp-gradients.c			\
 	gimp-gradients.h			\
 	gimp-gui.c				\
