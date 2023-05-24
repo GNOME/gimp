@@ -1184,10 +1184,13 @@ void
 gimp_action_set_menu_path (GimpAction  *action,
                            const gchar *menu_path)
 {
-  GimpActionPrivate  *priv = GET_PRIVATE (action);
+  GimpActionPrivate  *priv;
   gchar             **paths;
 
   g_return_if_fail (GIMP_IS_ACTION (action));
+
+  priv = GET_PRIVATE (action);
+
   if (priv->menu_path != NULL)
     /* There are cases where we put some actions in 2 menu paths, for instance:
      * - filters-color-to-alpha in both /Layer/Transparency and /Colors
@@ -1199,10 +1202,13 @@ gimp_action_set_menu_path (GimpAction  *action,
      */
     return;
 
-  paths = gimp_utils_break_menu_path (menu_path);
-  /* The 4 raw bytes are the "rightwards triangle arrowhead" unicode character. */
-  priv->menu_path = g_strjoinv (" \xF0\x9F\xA2\x92 ", paths);
-  g_strfreev (paths);
+  if (menu_path)
+    {
+      paths = gimp_utils_break_menu_path (menu_path);
+      /* The 4 raw bytes are the "rightwards triangle arrowhead" unicode character. */
+      priv->menu_path = g_strjoinv (" \xF0\x9F\xA2\x92 ", paths);
+      g_strfreev (paths);
+    }
 }
 
 
