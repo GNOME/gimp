@@ -22,6 +22,8 @@
 #define __GIMP_GEGL_UTILS_H__
 
 
+GList       * gimp_gegl_get_op_classes                (void);
+
 GType         gimp_gegl_get_op_enum_type              (const gchar         *operation,
                                                        const gchar         *property);
 
