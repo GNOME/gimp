@@ -133,6 +133,7 @@ gimp_drawable_get_thumbnail (GimpDrawable           *drawable,
 {
   gint       thumb_width, thumb_height, thumb_bpp;
   GBytes    *data;
+  gsize      data_size;
   GdkPixbuf *pixbuf = NULL;
 
   g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
@@ -146,7 +147,7 @@ gimp_drawable_get_thumbnail (GimpDrawable           *drawable,
                                            &thumb_bpp);
 
   if (data)
-    pixbuf = _gimp_pixbuf_from_data (g_bytes_unref_to_data (data, NULL),
+    pixbuf = _gimp_pixbuf_from_data (g_bytes_unref_to_data (data, &data_size),
                                      thumb_width, thumb_height, thumb_bpp,
                                      alpha);
 
@@ -238,6 +239,7 @@ gimp_drawable_get_sub_thumbnail (GimpDrawable           *drawable,
   gint       thumb_height = dest_height;
   gint       thumb_bpp;
   GBytes    *data;
+  gsize      data_size;
   GdkPixbuf *pixbuf = NULL;
 
   g_return_val_if_fail (src_x >= 0, NULL);
@@ -256,7 +258,7 @@ gimp_drawable_get_sub_thumbnail (GimpDrawable           *drawable,
                                                &thumb_bpp);
 
   if (data)
-    pixbuf = _gimp_pixbuf_from_data (g_bytes_unref_to_data (data, NULL),
+    pixbuf = _gimp_pixbuf_from_data (g_bytes_unref_to_data (data, &data_size),
                                      thumb_width, thumb_height, thumb_bpp,
                                      alpha);
   g_bytes_unref (data);
