@@ -1230,7 +1230,7 @@ read_creator_block (FILE      *f,
       gimp_parasite_free (comment_parasite);
     }
 
-  g_string_free (comment, FALSE);
+  g_string_free (comment, TRUE);
 
   return 0;
 }
