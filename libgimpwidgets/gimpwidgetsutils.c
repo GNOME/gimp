@@ -158,15 +158,15 @@ gimp_event_triggers_context_menu (const GdkEvent *event,
 
 /**
  * gimp_grid_attach_aligned:
- * @grid:       The #GtkGrid the widgets will be attached to.
- * @left:       The column to start with.
- * @top:        The row to attach the widgets.
- * @label_text: The text for the #GtkLabel which will be attached left of
- *              the widget.
- * @xalign:     The horizontal alignment of the #GtkLabel.
- * @yalign:     The vertical alignment of the #GtkLabel.
- * @widget:     The #GtkWidget to attach right of the label.
- * @columns:    The number of columns the widget will use.
+ * @grid:           The #GtkGrid the widgets will be attached to.
+ * @left:           The column to start with.
+ * @top:            The row to attach the widgets.
+ * @label_text:     The text for the #GtkLabel which will be attached left of
+ *                  the widget.
+ * @label_xalign:   The horizontal alignment of the #GtkLabel.
+ * @label_yalign:   The vertical alignment of the #GtkLabel.
+ * @widget:         The #GtkWidget to attach right of the label.
+ * @widget_columns: The number of columns the widget will use.
  *
  * Note that the @label_text can be %NULL and that the widget will be
  * attached starting at (@column + 1) in this case, too.
@@ -178,10 +178,10 @@ gimp_grid_attach_aligned (GtkGrid     *grid,
                           gint         left,
                           gint         top,
                           const gchar *label_text,
-                          gfloat       xalign,
-                          gfloat       yalign,
+                          gfloat       label_xalign,
+                          gfloat       label_yalign,
                           GtkWidget   *widget,
-                          gint         columns)
+                          gint         widget_columns)
 {
   GtkWidget *label = NULL;
 
@@ -190,8 +190,8 @@ gimp_grid_attach_aligned (GtkGrid     *grid,
       GtkWidget *mnemonic_widget;
 
       label = gtk_label_new_with_mnemonic (label_text);
-      gtk_label_set_xalign (GTK_LABEL (label), xalign);
-      gtk_label_set_yalign (GTK_LABEL (label), yalign);
+      gtk_label_set_xalign (GTK_LABEL (label), label_xalign);
+      gtk_label_set_yalign (GTK_LABEL (label), label_yalign);
       gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
       gtk_grid_attach (grid, label, left, top, 1, 1);
       gtk_widget_show (label);
@@ -203,7 +203,7 @@ gimp_grid_attach_aligned (GtkGrid     *grid,
     }
 
   gtk_widget_set_hexpand (widget, TRUE);
-  gtk_grid_attach (grid, widget, left + 1, top, columns, 1);
+  gtk_grid_attach (grid, widget, left + 1, top, widget_columns, 1);
   gtk_widget_show (widget);
 
   return label;
