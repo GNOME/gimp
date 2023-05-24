@@ -66,7 +66,6 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-autoscroll.h"
 #include "gimpdisplayshell-cursor.h"
-#include "gimpdisplayshell-grab.h"
 #include "gimpdisplayshell-layer-select.h"
 #include "gimpdisplayshell-rotate.h"
 #include "gimpdisplayshell-scale.h"
@@ -399,10 +398,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
 
-        /*  ignore enter notify while we have a grab  */
-        if (shell->grab_pointer)
-          return TRUE;
-
         gimp_display_shell_proximity_in (shell);
         update_sw_cursor = TRUE;
 
@@ -418,10 +413,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkEventCrossing *cevent = (GdkEventCrossing *) event;
 
         if (cevent->mode != GDK_CROSSING_NORMAL)
-          return TRUE;
-
-        /*  ignore leave notify while we have a grab  */
-        if (shell->grab_pointer)
           return TRUE;
 
         gimp_display_shell_proximity_out (shell);
@@ -460,10 +451,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             if (G_UNLIKELY (! gtk_widget_has_focus (canvas)))
               g_warning ("%s: FOCUS_IN but canvas has no focus", G_STRFUNC);
 
-            /*  ignore focus changes while we have a grab  */
-            if (shell->grab_pointer)
-              return TRUE;
-
             /*   press modifier keys when the canvas gets the focus  */
             gimp_display_shell_update_focus (shell, TRUE,
                                              &image_coords, state);
@@ -472,10 +459,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           {
             if (G_UNLIKELY (gtk_widget_has_focus (canvas)))
               g_warning ("%s: FOCUS_OUT but canvas has focus", G_STRFUNC);
-
-            /*  ignore focus changes while we have a grab  */
-            if (shell->grab_pointer)
-              return TRUE;
 
             /*  release modifier keys when the canvas loses the focus  */
             gimp_display_shell_update_focus (shell, FALSE,
@@ -492,7 +475,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         /*  ignore new mouse events  */
         if (gimp->busy                                     ||
             shell->mod_action != GIMP_MODIFIER_ACTION_NONE ||
-            shell->grab_pointer                            ||
             shell->button1_release_pending)
           return TRUE;
 
@@ -531,11 +513,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         if (bevent->button == 1)
           {
-            if (! gimp_display_shell_pointer_grab (shell, event,
-                                                   GDK_POINTER_MOTION_MASK |
-                                                   GDK_BUTTON_RELEASE_MASK))
-              return TRUE;
-
             if (gimp_display_shell_initialize_tool (shell,
                                                     &image_coords, state))
               {
@@ -689,13 +666,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         if (bevent->button == 1)
           {
-            /*  If we don't have a grab, this is a release paired with
-             *  a button press we intentionally ignored because we had
-             *  a grab on another device at the time of the press
-             */
-            if (! shell->grab_pointer || shell->mod_action != GIMP_MODIFIER_ACTION_NONE)
-              return TRUE;
-
             if (active_tool &&
                 (! gimp_image_is_empty (image) ||
                  gimp_tool_control_get_handle_empty_image (active_tool->control)))
@@ -723,8 +693,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             else
               gimp_display_shell_update_focus (shell, FALSE,
                                                &image_coords, 0);
-
-            gimp_display_shell_pointer_ungrab (shell, event);
           }
         else
           {
@@ -1202,11 +1170,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   {
                     shell->button1_release_pending = TRUE;
                     shell->space_release_pending   = FALSE;
-                    /* We need to ungrab the pointer in order to catch
-                     * button release events.
-                     */
-                    if (shell->grab_pointer)
-                      gimp_display_shell_pointer_ungrab (shell, event);
                   }
                 else
                   {
@@ -1491,22 +1454,17 @@ gimp_display_shell_ruler_button_press (GtkWidget           *widget,
           gimp_display_shell_update_focus (shell, TRUE,
                                            NULL, event->state);
 
-          if (gimp_display_shell_pointer_grab (shell, (GdkEvent *) event,
-                                               GDK_POINTER_MOTION_MASK |
-                                               GDK_BUTTON_RELEASE_MASK))
+          if (event->state & gimp_get_toggle_behavior_mask ())
             {
-              if (event->state & gimp_get_toggle_behavior_mask ())
-                {
-                  gimp_sample_point_tool_start_new (active_tool, display);
-                }
-              else
-                {
-                  gimp_guide_tool_start_new (active_tool, display,
-                                             orientation);
-                }
-
-              return TRUE;
+              gimp_sample_point_tool_start_new (active_tool, display);
             }
+          else
+            {
+              gimp_guide_tool_start_new (active_tool, display,
+                                         orientation);
+            }
+
+          return TRUE;
         }
     }
 
@@ -1613,24 +1571,6 @@ gimp_display_shell_check_device (GimpDisplayShell *shell,
 
   if (device)
     {
-      /*  While we have a grab, ignore all events from all other devices
-       *  of the same type
-       */
-      if (event->type != GDK_KEY_PRESS   &&
-          event->type != GDK_KEY_RELEASE &&
-          event->type != GDK_FOCUS_CHANGE)
-        {
-          if ((shell->grab_pointer && (shell->grab_pointer != grab_device)) ||
-              (shell->grab_pointer_source && (shell->grab_pointer_source != device)))
-            {
-              GIMP_LOG (TOOL_EVENTS,
-                        "ignoring pointer event from '%s' while waiting for event from '%s'\n",
-                        gdk_device_get_name (device),
-                        gdk_device_get_name (shell->grab_pointer_source));
-              return TRUE;
-            }
-        }
-
       if (! gimp->busy && gimp_devices_check_change (gimp, device))
         {
           gimp_display_shell_check_device_cursor (shell);
