@@ -142,13 +142,7 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
   va_end (args);
 
-  /* We don't register a foreign dialog for every generated GEGL op tool. Simply
-   * use the base GimpGeglTool dialog for them all.
-   */
-  if (g_str_has_prefix (gimp_object_get_name (tool_info), "gimp-gegl-op-"))
-    identifier = g_strdup ("gimp-gegl-tool-dialog");
-  else
-    identifier = g_strconcat (gimp_object_get_name (tool_info), "-dialog", NULL);
+  identifier = g_strconcat (gimp_object_get_name (tool_info), "-dialog", NULL);
 
   gimp_dialog_factory_add_foreign (gimp_dialog_factory_get_singleton (),
                                    identifier,
