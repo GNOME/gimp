@@ -403,6 +403,7 @@ gimp_context_help_idle_start (gpointer widget)
 {
   if (! gtk_grab_get_current ())
     {
+      GdkDisplay    *display;
       GtkWidget     *invisible;
       GdkCursor     *cursor;
       GdkGrabStatus  status;
@@ -410,30 +411,20 @@ gimp_context_help_idle_start (gpointer widget)
       invisible = gtk_invisible_new_for_screen (gtk_widget_get_screen (widget));
       gtk_widget_show (invisible);
 
-      cursor = gdk_cursor_new_for_display (gtk_widget_get_display (invisible),
-                                           GDK_QUESTION_ARROW);
+      display = gtk_widget_get_display (invisible);
 
-      status = gdk_pointer_grab (gtk_widget_get_window (invisible), TRUE,
-                                 GDK_BUTTON_PRESS_MASK   |
-                                 GDK_BUTTON_RELEASE_MASK |
-                                 GDK_ENTER_NOTIFY_MASK   |
-                                 GDK_LEAVE_NOTIFY_MASK,
-                                 NULL, cursor,
-                                 GDK_CURRENT_TIME);
+      cursor = gdk_cursor_new_for_display (display, GDK_QUESTION_ARROW);
+
+      status = gdk_seat_grab (gdk_display_get_default_seat (display),
+                              gtk_widget_get_window (invisible),
+                              GDK_SEAT_CAPABILITY_ALL, TRUE,
+                              cursor,
+                              NULL, NULL, NULL);
 
       g_object_unref (cursor);
 
       if (status != GDK_GRAB_SUCCESS)
         {
-          gtk_widget_destroy (invisible);
-          return FALSE;
-        }
-
-      if (gdk_keyboard_grab (gtk_widget_get_window (invisible), TRUE,
-                             GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS)
-        {
-          gdk_display_pointer_ungrab (gtk_widget_get_display (invisible),
-                                      GDK_CURRENT_TIME);
           gtk_widget_destroy (invisible);
           return FALSE;
         }
@@ -451,20 +442,172 @@ gimp_context_help_idle_start (gpointer widget)
   return FALSE;
 }
 
+/* find widget code shamelessly stolen from gtkinspector */
+
+typedef struct
+{
+  gint x;
+  gint y;
+  gboolean found;
+  gboolean first;
+  GtkWidget *res_widget;
+} FindWidgetData;
+
+static void
+find_widget (GtkWidget      *widget,
+             FindWidgetData *data)
+{
+  GtkAllocation new_allocation;
+  gint x_offset = 0;
+  gint y_offset = 0;
+
+  gtk_widget_get_allocation (widget, &new_allocation);
+
+  if (data->found || !gtk_widget_get_mapped (widget))
+    return;
+
+  /* Note that in the following code, we only count the
+   * position as being inside a WINDOW widget if it is inside
+   * widget->window; points that are outside of widget->window
+   * but within the allocation are not counted. This is consistent
+   * with the way we highlight drag targets.
+   */
+  if (gtk_widget_get_has_window (widget))
+    {
+      new_allocation.x = 0;
+      new_allocation.y = 0;
+    }
+
+  if (gtk_widget_get_parent (widget) && !data->first)
+    {
+      GdkWindow *window;
+
+      window = gtk_widget_get_window (widget);
+      while (window != gtk_widget_get_window (gtk_widget_get_parent (widget)))
+        {
+          gint tx, ty, twidth, theight;
+
+          if (window == NULL)
+            return;
+
+          twidth = gdk_window_get_width (window);
+          theight = gdk_window_get_height (window);
+
+          if (new_allocation.x < 0)
+            {
+              new_allocation.width += new_allocation.x;
+              new_allocation.x = 0;
+            }
+          if (new_allocation.y < 0)
+            {
+              new_allocation.height += new_allocation.y;
+              new_allocation.y = 0;
+            }
+
+          if (new_allocation.x + new_allocation.width > twidth)
+            new_allocation.width = twidth - new_allocation.x;
+          if (new_allocation.y + new_allocation.height > theight)
+            new_allocation.height = theight - new_allocation.y;
+
+          gdk_window_get_position (window, &tx, &ty);
+          new_allocation.x += tx;
+          x_offset += tx;
+          new_allocation.y += ty;
+          y_offset += ty;
+
+          window = gdk_window_get_parent (window);
+        }
+    }
+
+  if ((data->x >= new_allocation.x) && (data->y >= new_allocation.y) &&
+      (data->x < new_allocation.x + new_allocation.width) &&
+      (data->y < new_allocation.y + new_allocation.height))
+    {
+      /* First, check if the drag is in a valid drop site in
+       * one of our children
+       */
+      if (GTK_IS_CONTAINER (widget))
+        {
+          FindWidgetData new_data = *data;
+
+          new_data.x -= x_offset;
+          new_data.y -= y_offset;
+          new_data.found = FALSE;
+          new_data.first = FALSE;
+
+          gtk_container_forall (GTK_CONTAINER (widget),
+                                (GtkCallback)find_widget,
+                                &new_data);
+
+          data->found = new_data.found;
+          if (data->found)
+            data->res_widget = new_data.res_widget;
+        }
+
+      /* If not, and this widget is registered as a drop site, check to
+       * emit "drag_motion" to check if we are actually in
+       * a drop site.
+       */
+      if (!data->found)
+        {
+          data->found = TRUE;
+          data->res_widget = widget;
+        }
+    }
+}
+
+static GtkWidget *
+find_widget_at_pointer (GdkDevice *device)
+{
+  GtkWidget *widget = NULL;
+  GdkWindow *pointer_window;
+  gint x, y;
+  FindWidgetData data;
+
+  pointer_window = gdk_device_get_window_at_position (device, NULL, NULL);
+
+  if (pointer_window)
+    {
+      gpointer widget_ptr;
+
+      gdk_window_get_user_data (pointer_window, &widget_ptr);
+      widget = widget_ptr;
+    }
+
+  if (widget)
+    {
+      gdk_window_get_device_position (gtk_widget_get_window (widget),
+                                      device, &x, &y, NULL);
+
+      data.x = x;
+      data.y = y;
+      data.found = FALSE;
+      data.first = TRUE;
+
+      find_widget (widget, &data);
+      if (data.found)
+        return data.res_widget;
+
+      return widget;
+    }
+
+  return NULL;
+}
+
 static gboolean
 gimp_context_help_button_press (GtkWidget      *widget,
                                 GdkEventButton *bevent,
                                 gpointer        data)
 {
-  GtkWidget *event_widget = gtk_get_event_widget ((GdkEvent *) bevent);
+  GdkDisplay *display      = gtk_widget_get_display (widget);
+  GdkSeat    *seat         = gdk_display_get_default_seat (display);
+  GdkDevice  *device       = gdk_seat_get_pointer (seat);
+  GtkWidget  *event_widget = find_widget_at_pointer (device);
 
   if (event_widget && bevent->button == 1 && bevent->type == GDK_BUTTON_PRESS)
     {
-      GdkDisplay *display = gtk_widget_get_display (widget);
-
       gtk_grab_remove (widget);
-      gdk_display_keyboard_ungrab (display, bevent->time);
-      gdk_display_pointer_ungrab (display, bevent->time);
+      gdk_seat_ungrab (seat);
       gtk_widget_destroy (widget);
 
       if (event_widget != widget)
@@ -484,8 +627,7 @@ gimp_context_help_key_press (GtkWidget   *widget,
       GdkDisplay *display = gtk_widget_get_display (widget);
 
       gtk_grab_remove (widget);
-      gdk_display_keyboard_ungrab (display, kevent->time);
-      gdk_display_pointer_ungrab (display, kevent->time);
+      gdk_seat_ungrab (gdk_display_get_default_seat (display));
       gtk_widget_destroy (widget);
     }
 
