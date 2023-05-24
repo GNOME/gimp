@@ -811,7 +811,7 @@ static gboolean
 gimp_menu_model_handles_subpath (GimpMenuModel *model,
                                  const gchar   *path)
 {
-  if (model->priv->path != NULL && ! g_str_has_prefix (path, model->priv->path))
+  if (model->priv->path == NULL || ! g_str_has_prefix (path, model->priv->path))
     return FALSE;
 
   for (GList *iter = model->priv->items; iter; iter = iter->next)
