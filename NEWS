@@ -58,6 +58,7 @@ Core:
    GIMP_DIRTY_EXIT environment variable can be set in order to force the quick
    exit() anyway. This became necessary because of recent memory issues we
    experienced ever since GLib's GSlice implementation changed (GLib 2.75.3).
+ - New grayscale color picking mode.
 
 Tools:
 
@@ -82,6 +83,8 @@ Graphical User Interface:
     * "GEGL Graph" was moved into this submenu;
     * It is followed by one item per generated action from GEGL Operations which
       would also be listed in the "GEGL Operation" tool.
+  - Default theme is less dark and the previous Default theme is renamed
+    "Darker".
 
 Actions:
 
@@ -111,6 +114,7 @@ Plug-ins:
   - TIFF:
     * PSD metadata (both in image or layer level) can now be loaded by calling
       the new "file-psd-load-metadata" PDB procedure.
+    * IBM PC Formatted TIFF layers are now supported on import.
   - JPEG:
     * PSD metadata (image level only, e.g. paths) can now be loaded by calling
       the new "file-psd-load-metadata" PDB procedure.
@@ -145,6 +149,15 @@ Plug-ins:
     GtkBuilder .ui files anymore. These were the last instances of using this
     format (except for our new menus!) for creating full GUIs as we don't want
     to go this way anymore!
+  - FITS:
+    * Ported to cfitsio library for loading/exporting. This allows us to
+      import compressed FITS files (GZIP, HCOMP, PLIO, RICE) in 8/16/32
+      bit and float/double precision.
+    * As a result of the port, this plug-in is now optional.
+  - ILBM: "Hold and Modify" (HAM) mode use control bits to increase the
+    palette beyond what's stored in the CMAP chunk. We now check if HAM
+    mode is set and then interprets the plane bits accordingly.
+  - Script-fu: enum values are now generated from GIR.
 
 API:
 
@@ -174,12 +187,15 @@ API:
   - Changes in libgimpbase:
     * New functions:
       + gimp_bind_text_domain()
+      + gimp_value_array_copy()
     * Improved annotations or usage:
       + gimp_locale_directory() returns a string in the OS encoding for all but
         Windows (UTF-8), i.e. GLib "filename" encoding.
       + Metadata "Exif.Image.ImageResources" and "Exif.Image.0x935c" are not
         exported anymore. These are specific to Photoshop, and while we cannot
         modify them, they can contain sensitive information (e.g. a thumbnail).
+   - PDB:
+     * Remove GimpUint8Array in favor of GBytes.
 
 Build:
 
@@ -194,6 +210,8 @@ Build:
     not boolean. I.e. use option values 'enabled'/'disabled' (defaulting to
     'auto') instead of true/false.
   - Meson build 'vala-plugins' option was renamed to simply 'vala'.
+  - Added dependency to Exiv2 0.27.4.
+  - JUnit reports from Meson for the CI build.
 
 Debugging:
 
