@@ -220,11 +220,14 @@ file_open_image (Gimp                *gimp,
   if (*status == GIMP_PDB_SUCCESS && ! file_proc->generic_file_proc)
     image = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
+  /*  set the file on all images, plug-ins are not required to do it
+   *  any longer
+   */
+  if (image)
+    gimp_image_set_file (image, orig_file);
+
   if (local_file)
     {
-      if (image)
-        gimp_image_set_file (image, orig_file);
-
       g_file_delete (local_file, NULL, NULL);
       g_object_unref (local_file);
     }
