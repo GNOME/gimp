@@ -944,6 +944,8 @@ palette_editor_resize (GimpPaletteEditor *editor,
   if (! palette)
     return;
 
+  width = MIN (width, GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
+
   editor->zoom_factor = zoom_factor;
   editor->last_width  = width;
   editor->col_width   = width / (editor->columns + 1) - SPACING;
