@@ -2183,6 +2183,11 @@ gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
       GimpViewRenderer *renderer;
+      GimpUIManager    *ui_manager;
+      GimpActionGroup  *group;
+
+      ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view));
+      group      = gimp_ui_manager_get_action_group (ui_manager, "layers");
 
       gtk_tree_model_get (tree_view->model, &iter,
                           GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
@@ -2202,31 +2207,25 @@ gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
               if ((state & modifiers) == GDK_MOD1_MASK)
                 {
                   /* Alt-click shows/hides a layer mask */
-                  gimp_layer_set_show_mask (layer, ! gimp_layer_get_show_mask (layer), TRUE);
+                  gimp_layer_set_show_mask (layer,
+                                            ! gimp_layer_get_show_mask (layer),
+                                            TRUE);
                   gimp_image_flush (image);
                 }
-              if ((state & modifiers) == (GDK_MOD1_MASK | GDK_CONTROL_MASK))
+              else if ((state & modifiers) == (GDK_MOD1_MASK | GDK_CONTROL_MASK))
                 {
                   /* Alt-Control-click enables/disables a layer mask */
-                  gimp_layer_set_apply_mask (layer, ! gimp_layer_get_apply_mask (layer), TRUE);
+                  gimp_layer_set_apply_mask (layer,
+                                             ! gimp_layer_get_apply_mask (layer),
+                                             TRUE);
                   gimp_image_flush (image);
                 }
             }
           else if (! gimp_layer_get_edit_mask (layer))
             {
-              GimpContext *context;
-              Gimp        *gimp;
-              GAction     *action;
-
-              context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (layer_view));
-              gimp    = context->gimp;
-              action  = g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
-                                                    "layers-mask-edit");
-              g_return_if_fail (GIMP_IS_TOGGLE_ACTION (action));
-
               /* Simple click selects the mask for edition. */
-              gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
-                                             TRUE);
+              gimp_action_group_set_action_active (group, "layers-mask-edit",
+                                                   TRUE);
             }
 
           g_object_unref (renderer);
