@@ -1830,7 +1830,8 @@ _gp_params_write (GIOChannel *channel,
 
             if (params[i].data.d_bytes)
               {
-                bytes = g_bytes_get_data (params[i].data.d_bytes, (gsize *) &size);
+                bytes = g_bytes_get_data (params[i].data.d_bytes, NULL);
+                size = g_bytes_get_size (params[i].data.d_bytes);
               }
 
             if (! _gimp_wire_write_int32 (channel, &size, 1, user_data) ||
