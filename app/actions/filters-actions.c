@@ -18,11 +18,14 @@
 #include "config.h"
 
 #include <gegl.h>
+#include <gegl-plugin.h>
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
+
+#include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp-filter-history.h"
 #include "core/gimpimage.h"
@@ -34,6 +37,7 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "actions.h"
 #include "filters-actions.h"
@@ -747,6 +751,8 @@ filters_actions_setup (GimpActionGroup *group)
   GimpProcedureActionEntry *entries;
   gint                      n_entries;
   gint                      i;
+  GList                    *op_classes;
+  GList                    *iter;
 
   gimp_action_group_add_string_actions (group, "filters-action",
                                         filters_actions,
@@ -768,6 +774,51 @@ filters_actions_setup (GimpActionGroup *group)
                                         filters_apply_interactive_cmd_callback);
   filters_actions_set_tooltips (group, filters_interactive_actions,
                                 G_N_ELEMENTS (filters_interactive_actions));
+
+  op_classes = gimp_gegl_get_op_classes ();
+
+  for (iter = op_classes; iter; iter = iter->next)
+    {
+      GeglOperationClass    *op_class = GEGL_OPERATION_CLASS (iter->data);
+      GimpStringActionEntry  entry   = { 0, };
+      gchar                 *formatted_op_name;
+      gchar                 *action_name;
+      const gchar           *title;
+      const gchar           *op_name;
+      gchar                 *label;
+
+      formatted_op_name = g_strdup (op_class->name);
+      gimp_make_valid_action_name (formatted_op_name);
+      action_name = g_strdup_printf ("filters-%s", formatted_op_name);
+      g_free (formatted_op_name);
+
+      title   = gegl_operation_class_get_key (op_class, "title");
+      op_name = op_class->name;
+
+      if (g_str_has_prefix (op_name, "gegl:"))
+        op_name += strlen ("gegl:");
+
+      if (title)
+        label = g_strdup_printf ("%s (%s)", title, op_name);
+      else
+        label = g_strdup (op_name);
+
+      entry.name      = action_name;
+      entry.icon_name = GIMP_ICON_GEGL;
+      entry.label     = label;
+      entry.tooltip   = gegl_operation_class_get_key (op_class, "description");
+      entry.value     = op_class->name;
+      entry.help_id   = GIMP_HELP_TOOL_GEGL;
+
+      gimp_action_group_add_string_actions (group, "filters-action",
+                                            &entry, 1,
+                                            filters_apply_interactive_cmd_callback);
+
+      g_free (label);
+      g_free (action_name);
+    }
+
+  g_list_free (op_classes);
 
   gimp_action_group_add_enum_actions (group, "filters-action",
                                       filters_repeat_actions,

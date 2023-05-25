@@ -18,14 +18,18 @@
 #include "config.h"
 
 #include <gegl.h>
+#include <gegl-plugin.h>
 #include <gtk/gtk.h>
 
 #include "menus-types.h"
+
+#include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimp-filter-history.h"
 
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "filters-menu.h"
 
@@ -36,7 +40,9 @@ void
 filters_menu_setup (GimpUIManager *manager,
                     const gchar   *ui_path)
 {
-  gint i;
+  GList *op_classes;
+  GList *iter;
+  gint   i;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
@@ -52,4 +58,25 @@ filters_menu_setup (GimpUIManager *manager,
 
       g_free (action_name);
     }
+
+  op_classes = gimp_gegl_get_op_classes ();
+
+  for (iter = op_classes; iter; iter = iter->next)
+    {
+      GeglOperationClass *opclass = GEGL_OPERATION_CLASS (iter->data);
+      gchar              *formatted_op_name;
+      gchar              *action_name;
+
+      formatted_op_name = g_strdup (opclass->name);
+      gimp_make_valid_action_name (formatted_op_name);
+      action_name = g_strdup_printf ("filters-%s", formatted_op_name);
+      g_free (formatted_op_name);
+
+      gimp_ui_manager_add_ui (manager, "/Filters/GEGL Operations",
+                              action_name, NULL, FALSE);
+
+      g_free (action_name);
+    }
+
+  g_list_free (op_classes);
 }

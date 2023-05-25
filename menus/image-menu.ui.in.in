@@ -606,6 +606,9 @@
         <item><attribute name="action">app.tools-zoom</attribute></item>
       </section>
       <section>
+        <item><attribute name="action">app.tools-gegl</attribute></item>
+      </section>
+      <section>
         <item><attribute name="action">app.dialogs-toolbox</attribute></item>
         <item><attribute name="action">app.context-colors-default</attribute></item>
         <item><attribute name="action">app.context-colors-swap</attribute></item>
@@ -711,11 +714,15 @@
           <attribute name="label" translatable="yes" context="filters-action">_Generic</attribute>
           <item><attribute name="action">app.filters-convolution-matrix</attribute></item>
           <item><attribute name="action">app.filters-distance-map</attribute></item>
-          <item><attribute name="action">app.tools-gegl</attribute></item>
-          <item><attribute name="action">app.filters-gegl-graph</attribute></item>
           <item><attribute name="action">app.filters-normal-map</attribute></item>
           <item><attribute name="action">app.filters-dilate</attribute></item>
           <item><attribute name="action">app.filters-erode</attribute></item>
+        </submenu>
+        <submenu>
+          <attribute name="label" translatable="yes" context="filters-action">_GEGL Operations</attribute>
+          <section>
+            <item><attribute name="action">app.filters-gegl-graph</attribute></item>
+          </section>
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">C_ombine</attribute>
