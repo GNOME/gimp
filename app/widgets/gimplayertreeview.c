@@ -808,10 +808,10 @@ gimp_layer_tree_view_select_items (GimpContainerView *view,
                                    GList             *paths)
 {
   GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (view);
-  GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (view);
-  GList             *layers = items;
-  GList             *path   = paths;
-  gboolean           success;
+  GimpLayerTreeView     *layer_view = GIMP_LAYER_TREE_VIEW (view);
+  GList                 *layers     = items;
+  GList                 *path       = paths;
+  gboolean               success;
 
   success = parent_view_iface->select_items (view, items, paths);
 
@@ -819,13 +819,16 @@ gimp_layer_tree_view_select_items (GimpContainerView *view,
     {
       if (success)
         {
-          for (layers = items, path = paths; layers && path; layers = layers->next, path = path->next)
+          for (layers = items, path = paths;
+               layers && path;
+               layers = layers->next, path = path->next)
             {
               GtkTreeIter iter;
 
               gtk_tree_model_get_iter (tree_view->model, &iter, path->data);
               gimp_layer_tree_view_update_borders (layer_view, &iter);
             }
+
           gimp_layer_tree_view_update_options (layer_view, items);
           gimp_layer_tree_view_update_menu (layer_view, items);
         }
@@ -1782,16 +1785,14 @@ static void
 gimp_layer_tree_view_update_menu (GimpLayerTreeView *layer_view,
                                   GList             *layers)
 {
-  GimpContext *context;
-  Gimp        *gimp;
-  GAction     *action;
-  GList       *iter;
-  gboolean     have_masks         = FALSE;
-  gboolean     all_masks_shown    = TRUE;
-  gboolean     all_masks_disabled = TRUE;
+  GimpUIManager   *ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (layer_view));
+  GimpActionGroup *group;
+  GList           *iter;
+  gboolean         have_masks         = FALSE;
+  gboolean         all_masks_shown    = TRUE;
+  gboolean         all_masks_disabled = TRUE;
 
-  context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (layer_view));
-  gimp    = context->gimp;
+  group = gimp_ui_manager_get_action_group (ui_manager, "layers");
 
   for (iter = layers; iter; iter = iter->next)
     {
@@ -1805,26 +1806,16 @@ gimp_layer_tree_view_update_menu (GimpLayerTreeView *layer_view,
         }
     }
 
-  action = g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
-                                       "layers-mask-show");
-  g_return_if_fail (GIMP_IS_TOGGLE_ACTION (action));
-  gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
-                                 have_masks && all_masks_shown);
-
-  action = g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
-                                       "layers-mask-disable");
-  g_return_if_fail (GIMP_IS_TOGGLE_ACTION (action));
-  gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
-                                 have_masks && all_masks_disabled);
+  gimp_action_group_set_action_active (group, "layers-mask-show",
+                                       have_masks && all_masks_shown);
+  gimp_action_group_set_action_active (group, "layers-mask-disable",
+                                       have_masks && all_masks_disabled);
 
   /* Only one layer mask at a time can be edited. */
-  action = g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
-                                       "layers-mask-edit");
-  g_return_if_fail (GIMP_IS_TOGGLE_ACTION (action));
-  gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
-                                 g_list_length (layers) == 1 &&
-                                 gimp_layer_get_mask (layers->data) &&
-                                 gimp_layer_get_edit_mask (layers->data));
+  gimp_action_group_set_action_active (group, "layers-mask-edit",
+                                       g_list_length (layers) == 1 &&
+                                       gimp_layer_get_mask (layers->data) &&
+                                       gimp_layer_get_edit_mask (layers->data));
 }
 
 static void
@@ -2059,7 +2050,12 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
+      GimpUIManager    *ui_manager;
+      GimpActionGroup  *group;
       GimpViewRenderer *renderer;
+
+      ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view));
+      group      = gimp_ui_manager_get_action_group (ui_manager, "layers");
 
       gtk_tree_model_get (tree_view->model, &iter,
                           GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
@@ -2161,19 +2157,8 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
               /* Simple clicks (without modifiers) activate the layer */
 
               if (mask)
-                {
-                  GimpContext *context;
-                  Gimp        *gimp;
-                  GAction     *action;
-
-                  context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (layer_view));
-                  gimp    = context->gimp;
-                  action  = g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
-                                                        "layers-mask-edit");
-                  g_return_if_fail (GIMP_IS_TOGGLE_ACTION (action));
-                  gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
-                                                 FALSE);
-                }
+                gimp_action_group_set_action_active (group,
+                                                     "layers-mask-edit", FALSE);
             }
 
           g_object_unref (renderer);
