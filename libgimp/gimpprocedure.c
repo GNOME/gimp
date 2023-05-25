@@ -360,6 +360,7 @@ gimp_procedure_install_icon (GimpProcedure *procedure)
   if (icon_bytes)
     _gimp_pdb_set_proc_icon (gimp_procedure_get_name (procedure),
                              icon_type, icon_bytes);
+  g_bytes_unref (icon_bytes);
 }
 
 static void
