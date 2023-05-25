@@ -23,13 +23,13 @@
 
 
 GimpColorProfilePolicy
-    color_profile_import_dialog_run (GimpImage                 *image,
-                                     GimpContext               *context,
-                                     GtkWidget                 *parent,
-                                     GimpColorProfile         **dest_profile,
-                                     GimpColorRenderingIntent  *intent,
-                                     gboolean                  *bpc,
-                                     gboolean                  *dont_ask);
+color_profile_import_dialog_run (GimpImage                 *image,
+                                 GimpContext               *context,
+                                 GtkWidget                 *parent,
+                                 GimpColorProfile         **dest_profile,
+                                 GimpColorRenderingIntent  *intent,
+                                 gboolean                  *bpc,
+                                 gboolean                  *dont_ask);
 
 
 #endif  /*  __COLOR_PROFILE_IMPORT_DIALOG_H__  */

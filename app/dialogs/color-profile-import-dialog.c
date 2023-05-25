@@ -147,7 +147,8 @@ color_profile_import_dialog_run (GimpImage                 *image,
   gtk_widget_show (stack);
 
   frame = gimp_frame_new (frame_title);
-  gtk_stack_add_titled (GTK_STACK (stack), frame, "builtin", "Built-in Profile");
+  gtk_stack_add_titled (GTK_STACK (stack), frame, "builtin",
+                        _("Built-in Profile"));
   gtk_widget_show (frame);
 
   label = gimp_color_profile_label_new (*dest_profile);
@@ -162,7 +163,8 @@ color_profile_import_dialog_run (GimpImage                 *image,
         frame_title = _("Convert the image to the preferred RGB color profile?");
 
       frame = gimp_frame_new (frame_title);
-      gtk_stack_add_titled (GTK_STACK (stack), frame, "preferred", "Preferred Profile");
+      gtk_stack_add_titled (GTK_STACK (stack), frame, "preferred",
+                            _("Preferred Profile"));
       gtk_widget_show (frame);
 
       label = gimp_color_profile_label_new (pref_profile);

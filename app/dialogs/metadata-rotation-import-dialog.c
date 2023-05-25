@@ -37,7 +37,6 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
-#include "widgets/gimpwidgets-constructors.h"
 
 #include "metadata-rotation-import-dialog.h"
 
@@ -46,6 +45,7 @@
 
 static GimpMetadataRotationPolicy   gimp_image_metadata_rotate_dialog (GimpImage         *image,
                                                                        GimpContext       *context,
+                                                                       GtkWidget         *parent,
                                                                        GExiv2Orientation  orientation,
                                                                        gboolean          *dont_ask);
 static GdkPixbuf                  * gimp_image_metadata_rotate_pixbuf (GdkPixbuf         *pixbuf,
@@ -70,45 +70,48 @@ metadata_rotation_import_dialog_run (GimpImage   *image,
       orientation >  GEXIV2_ORIENTATION_MAX)
     return GIMP_METADATA_ROTATION_POLICY_KEEP;
 
-  return gimp_image_metadata_rotate_dialog (image, context, orientation, dont_ask);
+  return gimp_image_metadata_rotate_dialog (image, context, parent,
+                                            orientation, dont_ask);
 }
 
 static GimpMetadataRotationPolicy
 gimp_image_metadata_rotate_dialog (GimpImage         *image,
                                    GimpContext       *context,
+                                   GtkWidget         *parent,
                                    GExiv2Orientation  orientation,
                                    gboolean          *dont_ask)
 {
-  GtkWidget   *dialog;
-  GtkWidget   *main_vbox;
-  GtkWidget   *vbox;
-  GtkWidget   *label;
-  GtkWidget   *toggle;
-  const gchar *name;
-  gchar       *title;
-  GdkPixbuf   *pixbuf;
-  gint         width;
-  gint         scale_factor;
-  gint         height;
-  gint         response;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *vbox;
+  GtkWidget *label;
+  GtkWidget *toggle;
+  gchar     *text;
+  GdkPixbuf *pixbuf;
+  gint       width;
+  gint       scale_factor;
+  gint       height;
+  gint       response;
 
-  name = gimp_image_get_display_name (image);
-  title = g_strdup_printf (_("Rotate %s?"), name);
+  dialog =
+    gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
+                              _("Rotate Image?"),
+                              "gimp-metadata-rotate-dialog",
+                              GIMP_ICON_OBJECT_ROTATE_180,
+                              _("Apply metadata rotation"),
+                              parent,
+                              gimp_standard_help_func,
+                              GIMP_HELP_IMAGE_METADATA_ROTATION_IMPORT,
 
-  dialog = gimp_dialog_new (title, "gimp-metadata-rotate-dialog",
-                            NULL, 0, NULL, NULL,
+                              _("_Keep Original"), GTK_RESPONSE_CANCEL,
+                              _("_Rotate"),        GTK_RESPONSE_OK,
 
-                            _("_Keep Original"), GTK_RESPONSE_CANCEL,
-                            _("_Rotate"),        GTK_RESPONSE_OK,
-
-                            NULL);
-
-  g_free (title);
+                              NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
@@ -117,6 +120,24 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, FALSE, FALSE, 0);
   gtk_widget_show (main_vbox);
+
+  text = g_strdup_printf (_("The image '%s' contains Exif orientation "
+                            "metadata"),
+                          gimp_image_get_display_name (image));
+  label = g_object_new (GTK_TYPE_LABEL,
+                        "label",   text,
+                        "wrap",    TRUE,
+                        "justify", GTK_JUSTIFY_LEFT,
+                        "xalign",  0.0,
+                        "yalign",  0.5,
+                        NULL);
+  g_free (text);
+
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   scale_factor = gtk_widget_get_scale_factor (main_vbox);
   width        = gimp_image_get_width  (image);
@@ -191,27 +212,15 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
     }
 
   label = g_object_new (GTK_TYPE_LABEL,
-                        "label",   _("This image contains Exif orientation "
-                                     "metadata."),
-                        "wrap",    TRUE,
-                        "justify", GTK_JUSTIFY_LEFT,
-                        "xalign",  0.0,
-                        "yalign",  0.5,
-                        NULL);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
-                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  label = g_object_new (GTK_TYPE_LABEL,
                         "label",   _("Would you like to rotate the image?"),
                         "wrap",    TRUE,
                         "justify", GTK_JUSTIFY_LEFT,
                         "xalign",  0.0,
                         "yalign",  0.5,
                         NULL);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
   gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -225,7 +234,8 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
 
   gtk_widget_destroy (dialog);
 
-  return (response == GTK_RESPONSE_OK) ? GIMP_METADATA_ROTATION_POLICY_ROTATE : GIMP_COLOR_PROFILE_POLICY_KEEP;
+  return (response == GTK_RESPONSE_OK) ?
+         GIMP_METADATA_ROTATION_POLICY_ROTATE : GIMP_COLOR_PROFILE_POLICY_KEEP;
 }
 
 static GdkPixbuf *
