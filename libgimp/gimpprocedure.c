@@ -335,10 +335,10 @@ gimp_procedure_install_icon (GimpProcedure *procedure)
 
         if (pixbuf)
           {
-            gdk_pixbuf_save_to_buffer (pixbuf,
-                                       (gchar **) &icon_data, &icon_data_length,
-                                       "png", NULL, NULL);
-            icon_bytes = g_bytes_new_take (icon_data, icon_data_length);
+            if (gdk_pixbuf_save_to_buffer (pixbuf,
+                                           (gchar **) &icon_data, &icon_data_length,
+                                           "png", NULL, NULL))
+              icon_bytes = g_bytes_new_take (icon_data, icon_data_length);
           }
       }
       break;
@@ -357,7 +357,7 @@ gimp_procedure_install_icon (GimpProcedure *procedure)
       break;
     }
 
-  if (icon_data)
+  if (icon_bytes)
     _gimp_pdb_set_proc_icon (gimp_procedure_get_name (procedure),
                              icon_type, icon_bytes);
 }
