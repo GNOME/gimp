@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-05-22 15:41+0000\n"
-"PO-Revision-Date: 2023-05-22 20:12+0300\n"
+"POT-Creation-Date: 2023-05-24 19:19+0000\n"
+"PO-Revision-Date: 2023-05-25 09:51+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -33,7 +33,7 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/common/border-average.c:195 plug-ins/common/checkerboard.c:184
 #: plug-ins/common/cml-explorer.c:558 plug-ins/common/compose.c:557
 #: plug-ins/common/contrast-retinex.c:253 plug-ins/common/crop-zealous.c:151
-#: plug-ins/common/curve-bend.c:678 plug-ins/common/decompose.c:376
+#: plug-ins/common/curve-bend.c:665 plug-ins/common/decompose.c:376
 #: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:232
 #: plug-ins/common/destripe.c:182 plug-ins/common/gradient-map.c:216
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
@@ -66,12 +66,12 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/border-average.c:432 plug-ins/common/busy-dialog.c:279
 #: plug-ins/common/checkerboard.c:495 plug-ins/common/cml-explorer.c:1348
 #: plug-ins/common/cml-explorer.c:2114 plug-ins/common/cml-explorer.c:2247
-#: plug-ins/common/colormap-remap.c:710 plug-ins/common/compose.c:1183
-#: plug-ins/common/curve-bend.c:1221 plug-ins/common/curve-bend.c:1995
-#: plug-ins/common/curve-bend.c:2030 plug-ins/common/depth-merge.c:733
+#: plug-ins/common/colormap-remap.c:704 plug-ins/common/compose.c:1183
+#: plug-ins/common/curve-bend.c:1203 plug-ins/common/curve-bend.c:1977
+#: plug-ins/common/curve-bend.c:2012 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1163
 #: plug-ins/common/file-heif.c:2351 plug-ins/common/file-pdf-load.c:709
-#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-svg.c:771
+#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-svg.c:757
 #: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
 #: plug-ins/common/grid.c:761 plug-ins/common/mail.c:568
 #: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
@@ -161,10 +161,10 @@ msgstr "Потренувати козу (Javascript)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/border-average.c:433 plug-ins/common/checkerboard.c:496
-#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:711
-#: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1222
+#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:705
+#: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1204
 #: plug-ins/common/depth-merge.c:734 plug-ins/common/file-heif.c:2352
-#: plug-ins/common/file-pdf-load.c:710 plug-ins/common/file-svg.c:772
+#: plug-ins/common/file-pdf-load.c:710 plug-ins/common/file-svg.c:758
 #: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1325
 #: plug-ins/common/grid.c:762 plug-ins/common/qbist.c:945
 #: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
@@ -344,7 +344,7 @@ msgstr "Вирівнювання видимих шарів"
 #. Graphics antialiasing
 #. file save type
 #: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
-#: plug-ins/common/file-ps.c:3744 plug-ins/common/file-ps.c:3752
+#: plug-ins/common/file-ps.c:3745 plug-ins/common/file-ps.c:3753
 #: plug-ins/common/file-psp.c:840 plug-ins/file-tiff/file-tiff-save.c:1322
 #: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
 #: plug-ins/metadata/metadata-tags.c:238
@@ -841,7 +841,7 @@ msgstr "База випадковості"
 
 #. The Load button
 #: plug-ins/common/cml-explorer.c:1425 plug-ins/common/cml-explorer.c:2248
-#: plug-ins/common/curve-bend.c:1481 plug-ins/common/curve-bend.c:1996
+#: plug-ins/common/curve-bend.c:1463 plug-ins/common/curve-bend.c:1978
 #: plug-ins/common/file-cel.c:1002 plug-ins/common/qbist.c:849
 #: plug-ins/common/qbist.c:1032 plug-ins/common/sphere-designer.c:2290
 #: plug-ins/common/sphere-designer.c:2681 plug-ins/flame/flame.c:542
@@ -857,7 +857,7 @@ msgstr "_Відкрити"
 
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1433 plug-ins/common/cml-explorer.c:2115
-#: plug-ins/common/curve-bend.c:1493 plug-ins/common/curve-bend.c:2031
+#: plug-ins/common/curve-bend.c:1475 plug-ins/common/curve-bend.c:2013
 #: plug-ins/common/file-pdf-save.c:1112 plug-ins/common/qbist.c:891
 #: plug-ins/common/qbist.c:1040 plug-ins/common/sphere-designer.c:2290
 #: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:542
@@ -1044,9 +1044,9 @@ msgstr "Увага: джерело і призначення в одному к�
 msgid "Save CML Explorer Parameters"
 msgstr "Збереження параметрів CML Explorer"
 
-#: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
+#: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:822
 #: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:876
-#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1229
+#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1230
 #: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:638 plug-ins/common/file-tga.c:1238
@@ -1072,17 +1072,17 @@ msgstr "Параметри збережено до «%s»"
 msgid "Load CML Explorer Parameters"
 msgstr "Завантажити параметри CML Explorer"
 
-#: plug-ins/common/cml-explorer.c:2339 plug-ins/common/curve-bend.c:890
+#: plug-ins/common/cml-explorer.c:2339 plug-ins/common/curve-bend.c:875
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
 #: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-iff.c:227
 #: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:523
 #: plug-ins/common/file-pcx.c:566 plug-ins/common/file-png.c:673
-#: plug-ins/common/file-ps.c:1126 plug-ins/common/file-ps.c:3635
+#: plug-ins/common/file-ps.c:1126 plug-ins/common/file-ps.c:3636
 #: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
 #: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
 #: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:458
-#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:757
+#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:743
 #: plug-ins/common/file-tga.c:448 plug-ins/common/file-wbmp.c:184
 #: plug-ins/common/file-xbm.c:750 plug-ins/common/file-xmc.c:658
 #: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
@@ -1132,29 +1132,29 @@ msgstr "_Перебудувати мапу кольорів..."
 msgid "Rearrange the colormap"
 msgstr "Перебудувати мапу кольорів"
 
-#: plug-ins/common/colormap-remap.c:226
+#: plug-ins/common/colormap-remap.c:220
 msgid "_Swap Colors"
 msgstr "Поміняти _місцями кольори"
 
-#: plug-ins/common/colormap-remap.c:230
+#: plug-ins/common/colormap-remap.c:224
 msgid "Swap two colors in the colormap"
 msgstr "Поміняти місцями два кольори на мапі"
 
-#: plug-ins/common/colormap-remap.c:429 plug-ins/common/colormap-remap.c:440
-#: plug-ins/common/colormap-remap.c:451
+#: plug-ins/common/colormap-remap.c:423 plug-ins/common/colormap-remap.c:434
+#: plug-ins/common/colormap-remap.c:445
 msgid "Invalid remap array was passed to remap function"
 msgstr "Функції передано некоректну множину"
 
-#: plug-ins/common/colormap-remap.c:475
+#: plug-ins/common/colormap-remap.c:469
 msgid "Rearranging the colormap"
 msgstr "Перебудова мапи кольорів"
 
-#: plug-ins/common/colormap-remap.c:705
+#: plug-ins/common/colormap-remap.c:699
 msgid "Rearrange Colormap"
 msgstr "Перебудувати мапу кольорів"
 
 #. The Reset button
-#: plug-ins/common/colormap-remap.c:709 plug-ins/common/curve-bend.c:1464
+#: plug-ins/common/colormap-remap.c:703 plug-ins/common/curve-bend.c:1446
 #: plug-ins/common/sample-colorize.c:1413
 #: plug-ins/common/sphere-designer.c:2631 plug-ins/common/tile-small.c:531
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:809
@@ -1163,7 +1163,7 @@ msgstr "Перебудувати мапу кольорів"
 msgid "_Reset"
 msgstr "_Скинути"
 
-#: plug-ins/common/colormap-remap.c:811
+#: plug-ins/common/colormap-remap.c:805
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
@@ -1172,7 +1172,7 @@ msgstr ""
 "позначається оригінальний індекс кольору. Меню сортування кольорів "
 "викликається правою кнопкою миші."
 
-#: plug-ins/common/colormap-remap.c:849
+#: plug-ins/common/colormap-remap.c:843
 msgid "Rearrange Colors"
 msgstr "Переупорядкувати кольори"
 
@@ -1505,156 +1505,156 @@ msgstr "Старанне кадрування..."
 msgid "Nothing to crop."
 msgstr "Немає що кадрувати."
 
-#: plug-ins/common/curve-bend.c:431
+#: plug-ins/common/curve-bend.c:430
 msgid "_Curve Bend..."
 msgstr "_Згин за кривою..."
 
-#: plug-ins/common/curve-bend.c:436
+#: plug-ins/common/curve-bend.c:435
 msgid "Bend the image using two control curves"
 msgstr "Вигнути зображення, використовуючи дві напрямні криві"
 
-#: plug-ins/common/curve-bend.c:697
+#: plug-ins/common/curve-bend.c:684
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
 "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
-#: plug-ins/common/curve-bend.c:711
+#: plug-ins/common/curve-bend.c:698
 msgid "Cannot operate on layers with masks."
 msgstr "Не можна використовувати на шарах з маскою."
 
-#: plug-ins/common/curve-bend.c:726
+#: plug-ins/common/curve-bend.c:713
 msgid "Cannot operate on empty selections."
 msgstr "Неможливо виконувати дії з порожнім виділенням."
 
-#: plug-ins/common/curve-bend.c:900
+#: plug-ins/common/curve-bend.c:885
 #, c-format
 msgid "Error while reading '%s': %s"
 msgstr "Помилка при читанні «%s»: %s"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve-bend.c:1217 plug-ins/common/curve-bend.c:2959
+#: plug-ins/common/curve-bend.c:1199 plug-ins/common/curve-bend.c:2941
 msgid "Curve Bend"
 msgstr "Вигин кривої"
 
 #. Preview area, top of column
 #. preview
-#: plug-ins/common/curve-bend.c:1254 plug-ins/gimpressionist/orientmap.c:589
+#: plug-ins/common/curve-bend.c:1236 plug-ins/gimpressionist/orientmap.c:589
 #: plug-ins/gimpressionist/sizemap.c:458 plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "Перегляд"
 
 #. The preview button
-#: plug-ins/common/curve-bend.c:1281
+#: plug-ins/common/curve-bend.c:1263
 msgid "_Preview Once"
 msgstr "_Переглянути"
 
 #. The preview toggle
-#: plug-ins/common/curve-bend.c:1290
+#: plug-ins/common/curve-bend.c:1272
 msgid "Automatic pre_view"
 msgstr "_Автоматичний перегляд"
 
 #. Options area, bottom of column
-#: plug-ins/common/curve-bend.c:1300 plug-ins/gfig/gfig-dialog.c:1215
+#: plug-ins/common/curve-bend.c:1282 plug-ins/gfig/gfig-dialog.c:1215
 msgid "Options"
 msgstr "Параметри"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve-bend.c:1314
+#: plug-ins/common/curve-bend.c:1296
 msgid "Rotat_e:"
 msgstr "_Обертання:"
 
 #. The smoothing toggle
-#: plug-ins/common/curve-bend.c:1333
+#: plug-ins/common/curve-bend.c:1315
 msgid "Smoo_thing"
 msgstr "_Згладжувати зображення"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve-bend.c:1343 plug-ins/common/qbist.c:1009
+#: plug-ins/common/curve-bend.c:1325 plug-ins/common/qbist.c:1009
 msgid "_Antialiasing"
 msgstr "Згладжувати _межі"
 
 #. The work_on_copy toggle
-#: plug-ins/common/curve-bend.c:1353
+#: plug-ins/common/curve-bend.c:1335
 msgid "Work on cop_y"
 msgstr "Працювати з копі_єю"
 
 #. The curves graph
-#: plug-ins/common/curve-bend.c:1363
+#: plug-ins/common/curve-bend.c:1345
 msgid "Modify Curves"
 msgstr "Коригуючі криві"
 
-#: plug-ins/common/curve-bend.c:1392
+#: plug-ins/common/curve-bend.c:1374
 msgid "Curve for Border"
 msgstr "Крива для межі"
 
-#: plug-ins/common/curve-bend.c:1396
+#: plug-ins/common/curve-bend.c:1378
 msgctxt "curve-border"
 msgid "_Upper"
 msgstr "_Верхній"
 
-#: plug-ins/common/curve-bend.c:1397
+#: plug-ins/common/curve-bend.c:1379
 msgctxt "curve-border"
 msgid "_Lower"
 msgstr "_Нижній"
 
-#: plug-ins/common/curve-bend.c:1407
+#: plug-ins/common/curve-bend.c:1389
 msgid "Curve Type"
 msgstr "Тип кривої"
 
-#: plug-ins/common/curve-bend.c:1411
+#: plug-ins/common/curve-bend.c:1393
 msgid "Smoot_h"
 msgstr "_Гладка"
 
-#: plug-ins/common/curve-bend.c:1412
+#: plug-ins/common/curve-bend.c:1394
 msgid "_Free"
 msgstr "Дов_ільна"
 
 #. The Copy button
-#: plug-ins/common/curve-bend.c:1427
+#: plug-ins/common/curve-bend.c:1409
 #: plug-ins/gradient-flare/gradient-flare.c:3083
 msgid "_Copy"
 msgstr "_Копіювати"
 
-#: plug-ins/common/curve-bend.c:1432
+#: plug-ins/common/curve-bend.c:1414
 msgid "Copy the active curve to the other border"
 msgstr "Копіювати активну криву  на інший край"
 
 #. The CopyInv button
-#: plug-ins/common/curve-bend.c:1439
+#: plug-ins/common/curve-bend.c:1421
 msgid "_Mirror"
 msgstr "_Віддзеркалити"
 
-#: plug-ins/common/curve-bend.c:1444
+#: plug-ins/common/curve-bend.c:1426
 msgid "Mirror the active curve to the other border"
 msgstr "Віддзеркалити активну криву на інший край"
 
 #. The Swap button
-#: plug-ins/common/curve-bend.c:1452
+#: plug-ins/common/curve-bend.c:1434
 msgid "S_wap"
 msgstr "_Переставити"
 
-#: plug-ins/common/curve-bend.c:1457
+#: plug-ins/common/curve-bend.c:1439
 msgid "Swap the two curves"
 msgstr "Переставити дві криві"
 
-#: plug-ins/common/curve-bend.c:1469
+#: plug-ins/common/curve-bend.c:1451
 msgid "Reset the active curve"
 msgstr "Скинути активну криву"
 
-#: plug-ins/common/curve-bend.c:1486
+#: plug-ins/common/curve-bend.c:1468
 msgid "Load the curves from a file"
 msgstr "Завантажити криві з файлу"
 
-#: plug-ins/common/curve-bend.c:1498
+#: plug-ins/common/curve-bend.c:1480
 msgid "Save the curves to a file"
 msgstr "Зберегти криві у файлі"
 
-#: plug-ins/common/curve-bend.c:1991
+#: plug-ins/common/curve-bend.c:1973
 msgid "Load Curve Points from File"
 msgstr "Завантажити точки кривої з файлу"
 
-#: plug-ins/common/curve-bend.c:2026
+#: plug-ins/common/curve-bend.c:2008
 msgid "Save Curve Points to File"
 msgstr "Зберегти точки кривої у файлі"
 
@@ -2736,55 +2736,55 @@ msgstr ""
 msgid "GIMP brush (animated)"
 msgstr "Пензель GIMP(анімаційний)"
 
-#: plug-ins/common/file-gih.c:636
+#: plug-ins/common/file-gih.c:632
 msgid "Brush Pipe"
 msgstr "Анімаційний пензель"
 
-#: plug-ins/common/file-gih.c:654 plug-ins/imagemap/imap_settings.c:105
+#: plug-ins/common/file-gih.c:650 plug-ins/imagemap/imap_settings.c:105
 msgid "_Description:"
 msgstr "_Опис:"
 
-#: plug-ins/common/file-gih.c:668
+#: plug-ins/common/file-gih.c:664
 msgid "_Spacing (percent):"
 msgstr "_Інтервал (відсотки):"
 
-#: plug-ins/common/file-gih.c:722
+#: plug-ins/common/file-gih.c:718
 msgid "Pixels"
 msgstr "точок"
 
-#: plug-ins/common/file-gih.c:727
+#: plug-ins/common/file-gih.c:723
 msgid "Ce_ll size:"
 msgstr "Роз_мір комірки:"
 
-#: plug-ins/common/file-gih.c:739
+#: plug-ins/common/file-gih.c:735
 msgid "_Number of cells:"
 msgstr "_Кількість комірок:"
 
-#: plug-ins/common/file-gih.c:764
+#: plug-ins/common/file-gih.c:760
 msgid " Rows of "
 msgstr " рядків"
 
-#: plug-ins/common/file-gih.c:776
+#: plug-ins/common/file-gih.c:772
 msgid " Columns on each layer"
 msgstr " стовпчиків у кожному шарі"
 
-#: plug-ins/common/file-gih.c:780
+#: plug-ins/common/file-gih.c:776
 msgid " (Width Mismatch!) "
 msgstr " (помилкова ширина!) "
 
-#: plug-ins/common/file-gih.c:784
+#: plug-ins/common/file-gih.c:780
 msgid " (Height Mismatch!) "
 msgstr " (помилкова висота!) "
 
-#: plug-ins/common/file-gih.c:789
+#: plug-ins/common/file-gih.c:785
 msgid "Display as:"
 msgstr "Показати як:"
 
-#: plug-ins/common/file-gih.c:800
+#: plug-ins/common/file-gih.c:796
 msgid "Di_mension:"
 msgstr "_Розмір:"
 
-#: plug-ins/common/file-gih.c:873
+#: plug-ins/common/file-gih.c:869
 msgid "Ranks:"
 msgstr "Кількість кадрів:"
 
@@ -3490,7 +3490,7 @@ msgstr "Записати фрагмент tIME (час створення)"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:729 plug-ins/common/file-png.c:2253
+#: plug-ins/common/file-mng.c:729 plug-ins/common/file-png.c:2254
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Не вдається зберегти прозорість, натомість зберігатиметься непрозорість."
@@ -3677,31 +3677,31 @@ msgstr "Скористатися вбудованою палітрою зобр�
 msgid "Use black and white palette"
 msgstr "Скористатися чорно-білою палітрою"
 
-#: plug-ins/common/file-pcx.c:1180 plug-ins/common/file-pnm.c:1631
+#: plug-ins/common/file-pcx.c:1181 plug-ins/common/file-pnm.c:1631
 msgid "Cannot export images with alpha channel."
 msgstr "Неможливо експортувати зображення з альфа-каналом."
 
-#: plug-ins/common/file-pcx.c:1200
+#: plug-ins/common/file-pcx.c:1201
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Некоректний зсув вздовж X: %d"
 
-#: plug-ins/common/file-pcx.c:1206
+#: plug-ins/common/file-pcx.c:1207
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Некоректний зсув вздовж Y: %d"
 
-#: plug-ins/common/file-pcx.c:1212
+#: plug-ins/common/file-pcx.c:1213
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Права межа знаходиться за припустимими межами (має бути < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1219
+#: plug-ins/common/file-pcx.c:1220
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Нижня межа знаходиться за припустимими межами (має бути < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1295 plug-ins/common/file-qoi.c:394
+#: plug-ins/common/file-pcx.c:1296 plug-ins/common/file-qoi.c:394
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Помилка при записі до файлу «%s»: %s"
@@ -3793,7 +3793,7 @@ msgid "_Resolution:"
 msgstr "_Роздільна здатність:"
 
 #: plug-ins/common/file-pdf-load.c:1538 plug-ins/common/file-pdf-load.c:1539
-#: plug-ins/common/file-svg.c:949 plug-ins/common/file-wmf.c:722
+#: plug-ins/common/file-svg.c:935 plug-ins/common/file-wmf.c:722
 #: plug-ins/print/print-page-layout.c:307
 #, c-format
 msgid "pixels/%a"
@@ -4054,40 +4054,40 @@ msgstr ""
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
 
-#: plug-ins/common/file-png.c:2295 plug-ins/common/file-ps.c:3738
+#: plug-ins/common/file-png.c:2296 plug-ins/common/file-ps.c:3739
 #: plug-ins/file-fits/fits.c:1002
 msgid "Automatic"
 msgstr "Автоматично"
 
-#: plug-ins/common/file-png.c:2296
+#: plug-ins/common/file-png.c:2297
 msgid "8 bpc RGB"
 msgstr "8 біт/кан RGB"
 
-#: plug-ins/common/file-png.c:2297
+#: plug-ins/common/file-png.c:2298
 msgid "8 bpc GRAY"
 msgstr "8 біт/кан GRAY"
 
-#: plug-ins/common/file-png.c:2298
+#: plug-ins/common/file-png.c:2299
 msgid "8 bpc RGBA"
 msgstr "8 біт/кан RGBA"
 
-#: plug-ins/common/file-png.c:2299
+#: plug-ins/common/file-png.c:2300
 msgid "8 bpc GRAYA"
 msgstr "8 біт/кан GRAYA"
 
-#: plug-ins/common/file-png.c:2300
+#: plug-ins/common/file-png.c:2301
 msgid "16 bpc RGB"
 msgstr "16 біт/кан RGB"
 
-#: plug-ins/common/file-png.c:2301
+#: plug-ins/common/file-png.c:2302
 msgid "16 bpc GRAY"
 msgstr "16 біт/кан GRAY"
 
-#: plug-ins/common/file-png.c:2302
+#: plug-ins/common/file-png.c:2303
 msgid "16 bpc RGBA"
 msgstr "16 біт/кан RGBA"
 
-#: plug-ins/common/file-png.c:2303
+#: plug-ins/common/file-png.c:2304
 msgid "16 bpc GRAYA"
 msgstr "16 біт/кан GRAYA"
 
@@ -4394,45 +4394,45 @@ msgstr "%s-сторінок"
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Зображення з альфа-каналами не можна експортувати як PostScript"
 
-#: plug-ins/common/file-ps.c:3728
+#: plug-ins/common/file-ps.c:3729
 msgid "Rendering"
 msgstr "Візуалізація"
 
 #. Coloring
-#: plug-ins/common/file-ps.c:3735
+#: plug-ins/common/file-ps.c:3736
 msgid "B/W"
 msgstr "Ч/Б"
 
-#: plug-ins/common/file-ps.c:3736
+#: plug-ins/common/file-ps.c:3737
 msgid "Gray"
 msgstr "Сірий"
 
-#: plug-ins/common/file-ps.c:3737 plug-ins/common/file-xpm.c:511
+#: plug-ins/common/file-ps.c:3738 plug-ins/common/file-xpm.c:511
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:169
 msgid "Color"
 msgstr "Колір"
 
-#: plug-ins/common/file-ps.c:3745 plug-ins/common/file-ps.c:3753
+#: plug-ins/common/file-ps.c:3746 plug-ins/common/file-ps.c:3754
 msgid "Weak"
 msgstr "Слабке"
 
-#: plug-ins/common/file-ps.c:3746 plug-ins/common/file-ps.c:3754
+#: plug-ins/common/file-ps.c:3747 plug-ins/common/file-ps.c:3755
 msgid "Strong"
 msgstr "Сильне"
 
-#: plug-ins/common/file-ps.c:3780
+#: plug-ins/common/file-ps.c:3781
 msgid "Pages:"
 msgstr "Сторінки:"
 
-#: plug-ins/common/file-ps.c:3784
+#: plug-ins/common/file-ps.c:3785
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Сторінок для завантаження(наприклад: 1-4 чи 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3790
+#: plug-ins/common/file-ps.c:3791
 msgid "Open as"
 msgstr "Відкрити як"
 
-#: plug-ins/common/file-ps.c:3883
+#: plug-ins/common/file-ps.c:3884
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -4440,37 +4440,37 @@ msgstr ""
 "Якщо вибрано, вихідне зображення буде масштабуватись до заповнення вказаного "
 "розміру без зміни пропорцій."
 
-#: plug-ins/common/file-ps.c:3889
+#: plug-ins/common/file-ps.c:3890
 msgid "Image Size"
 msgstr "Розмір зображення"
 
 #. Unit
-#: plug-ins/common/file-ps.c:3900
+#: plug-ins/common/file-ps.c:3901
 msgid "_Inch"
 msgstr "_Дюйм"
 
-#: plug-ins/common/file-ps.c:3901
+#: plug-ins/common/file-ps.c:3902
 msgid "_Millimeter"
 msgstr "_Міліметр"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3914
+#: plug-ins/common/file-ps.c:3915
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3915
+#: plug-ins/common/file-ps.c:3916
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3916
+#: plug-ins/common/file-ps.c:3917
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3917
+#: plug-ins/common/file-ps.c:3918
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3924
+#: plug-ins/common/file-ps.c:3925
 msgid "Output"
 msgstr "Вивід"
 
@@ -5005,7 +5005,7 @@ msgstr "_RLE-кодування"
 msgid "SVG image"
 msgstr "Зображення SVG"
 
-#: plug-ins/common/file-svg.c:367 plug-ins/common/file-svg.c:759
+#: plug-ins/common/file-svg.c:367 plug-ins/common/file-svg.c:745
 msgid "Unknown reason"
 msgstr "Невідома причина"
 
@@ -5017,12 +5017,12 @@ msgstr "Візуалізація SVG"
 msgid "Rendered SVG"
 msgstr "Створений SVG"
 
-#: plug-ins/common/file-svg.c:513 plug-ins/common/file-wmf.c:401
+#: plug-ins/common/file-svg.c:499 plug-ins/common/file-wmf.c:401
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: plug-ins/common/file-svg.c:521
+#: plug-ins/common/file-svg.c:507
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -5035,15 +5035,15 @@ msgstr ""
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:685
+#: plug-ins/common/file-svg.c:671
 msgid "Disable safety size limits?"
 msgstr "Вимкнути безпекові обмеження на розмір?"
 
-#: plug-ins/common/file-svg.c:690
+#: plug-ins/common/file-svg.c:676
 msgid "_No"
 msgstr "_Ні"
 
-#: plug-ins/common/file-svg.c:691
+#: plug-ins/common/file-svg.c:677
 msgid "_Yes"
 msgstr "_Так"
 
@@ -5057,7 +5057,7 @@ msgstr "_Так"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:715
+#: plug-ins/common/file-svg.c:701
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -5068,61 +5068,61 @@ msgstr ""
 "зловмисниками файли SVG можуть скористатися зняттям обмежень для споживання "
 "надто великого об'єму пам'яті."
 
-#: plug-ins/common/file-svg.c:727
+#: plug-ins/common/file-svg.c:713
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr ""
 "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
-#: plug-ins/common/file-svg.c:734
+#: plug-ins/common/file-svg.c:720
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 "Повторити без обмежень, які накладаються на обробку великих масивів даних?"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: plug-ins/common/file-svg.c:766
+#: plug-ins/common/file-svg.c:752
 msgid "Render Scalable Vector Graphics"
 msgstr "Створити Scalable Vector Graphics"
 
 #. Width and Height
-#: plug-ins/common/file-svg.c:825 plug-ins/common/file-wmf.c:606
+#: plug-ins/common/file-svg.c:811 plug-ins/common/file-wmf.c:606
 #: plug-ins/common/grid.c:844
 msgid "Width:"
 msgstr "Ширина:"
 
-#: plug-ins/common/file-svg.c:831 plug-ins/common/file-wmf.c:611
+#: plug-ins/common/file-svg.c:817 plug-ins/common/file-wmf.c:611
 msgid "Height:"
 msgstr "Висота:"
 
-#: plug-ins/common/file-svg.c:903 plug-ins/common/file-wmf.c:679
+#: plug-ins/common/file-svg.c:889 plug-ins/common/file-wmf.c:679
 msgid "_X ratio:"
 msgstr "Коефіцієнт по _X:"
 
-#: plug-ins/common/file-svg.c:924 plug-ins/common/file-wmf.c:699
+#: plug-ins/common/file-svg.c:910 plug-ins/common/file-wmf.c:699
 msgid "_Y ratio:"
 msgstr "Коефіцієнт по _Y:"
 
-#: plug-ins/common/file-svg.c:938 plug-ins/common/file-wmf.c:712
+#: plug-ins/common/file-svg.c:924 plug-ins/common/file-wmf.c:712
 msgid "Constrain aspect ratio"
 msgstr "Пропорції"
 
 #. Resolution
-#: plug-ins/common/file-svg.c:943 plug-ins/common/file-wmf.c:717
+#: plug-ins/common/file-svg.c:929 plug-ins/common/file-wmf.c:717
 msgid "Resolution:"
 msgstr "Роздільна здатність:"
 
 #. Path Import
-#: plug-ins/common/file-svg.c:969
+#: plug-ins/common/file-svg.c:955
 msgid "Import _paths"
 msgstr "Імпорт _контурів"
 
-#: plug-ins/common/file-svg.c:976
+#: plug-ins/common/file-svg.c:962
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Імпортувати елементи з контуру SVG, так, щоб вони могли використовуватись "
 "інструментом \"Контури\""
 
-#: plug-ins/common/file-svg.c:984
+#: plug-ins/common/file-svg.c:970
 msgid "Merge imported paths"
 msgstr "Об'єднати імпортовані контури"
 
@@ -6042,28 +6042,28 @@ msgstr "Розмір відблиску на межах кожного елем�
 msgid "Assembling jigsaw"
 msgstr "Складання головоломки"
 
-#: plug-ins/common/jigsaw.c:727
+#: plug-ins/common/jigsaw.c:730
 msgid "draw_jigsaw: bad style\n"
 msgstr "draw_jigsaw: помилковий стиль\n"
 
-#: plug-ins/common/jigsaw.c:2490
+#: plug-ins/common/jigsaw.c:2493
 msgid "Jigsaw"
 msgstr "Головоломка"
 
-#: plug-ins/common/jigsaw.c:2515
+#: plug-ins/common/jigsaw.c:2518
 msgid "Number of Tiles"
 msgstr "Кількість частин головоломки"
 
-#: plug-ins/common/jigsaw.c:2532
+#: plug-ins/common/jigsaw.c:2535
 msgid "Bevel Edges"
 msgstr "Фаска меж"
 
 #. frame for primitive radio buttons
-#: plug-ins/common/jigsaw.c:2541
+#: plug-ins/common/jigsaw.c:2544
 msgid "Square"
 msgstr "Квадратна"
 
-#: plug-ins/common/jigsaw.c:2542
+#: plug-ins/common/jigsaw.c:2545
 msgid "Curved"
 msgstr "Криволінійна"
 
@@ -6178,6 +6178,18 @@ msgstr "Огляд _додатків"
 msgid "Display information about plug-ins"
 msgstr "Показати інформацію про розширення"
 
+#: plug-ins/common/plugin-browser.c:175
+msgid ""
+"Allows one to browse the plug-in menus system. You can search for plug-in "
+"names, sort by name or menu location and you can view a tree representation "
+"of the plug-in menus. Can also be of help to find where new plug-ins have "
+"installed themselves in the menus."
+msgstr ""
+"Надає змогу виконувати навігацію системою меню додатків. Ви можете шукати"
+" додатки за назвами, упорядковувати за назвою або розташуванням меню і"
+" можете переглядати ієрархічне представлення меню додатків. Також стане у"
+" пригоді для пошуку місця, куди встановлені додатки додають себе у меню."
+
 #: plug-ins/common/plugin-browser.c:372
 msgid "Searching by name"
 msgstr "Триває пошук за назвою"
@@ -6210,30 +6222,30 @@ msgstr "Немає відповідностей"
 msgid "Plug-in Browser"
 msgstr "Огляд доповнень"
 
-#: plug-ins/common/plugin-browser.c:599 plug-ins/metadata/metadata-editor.c:605
+#: plug-ins/common/plugin-browser.c:601 plug-ins/metadata/metadata-editor.c:605
 #: plug-ins/metadata/metadata-editor.c:641
 #: plug-ins/metadata/metadata-editor.c:648
 #: plug-ins/metadata/metadata-editor.c:655
 msgid "Name"
 msgstr "Назва"
 
-#: plug-ins/common/plugin-browser.c:607 plug-ins/common/plugin-browser.c:670
+#: plug-ins/common/plugin-browser.c:609 plug-ins/common/plugin-browser.c:672
 msgid "Menu Path"
 msgstr "Шлях у меню"
 
-#: plug-ins/common/plugin-browser.c:615 plug-ins/common/plugin-browser.c:679
+#: plug-ins/common/plugin-browser.c:617 plug-ins/common/plugin-browser.c:681
 msgid "Image Types"
 msgstr "Типи зображень"
 
-#: plug-ins/common/plugin-browser.c:625 plug-ins/common/plugin-browser.c:688
+#: plug-ins/common/plugin-browser.c:627 plug-ins/common/plugin-browser.c:690
 msgid "Installation Date"
 msgstr "Дата встановлення"
 
-#: plug-ins/common/plugin-browser.c:649
+#: plug-ins/common/plugin-browser.c:651
 msgid "List View"
 msgstr "У вигляді списку"
 
-#: plug-ins/common/plugin-browser.c:711
+#: plug-ins/common/plugin-browser.c:713
 msgid "Tree View"
 msgstr "У вигляді дерева"
 
@@ -8257,7 +8269,6 @@ msgid "Error loading PSD file: %s"
 msgstr "Помилка при відкритті файлу PSD: «%s»"
 
 #: plug-ins/file-psd/psd-load.c:440
-#| msgid "Invalid ANI metadata"
 msgid "Invalid PSD metadata layer format"
 msgstr "Некоректний формат шару метаданих PSD"
 
@@ -8382,7 +8393,6 @@ msgid "Adjustment layers are not yet supported and will be dropped."
 msgstr "Підтримки шарів коригування ще не реалізовано, їх буде відкинуто."
 
 #: plug-ins/file-psd/psd-load.c:3591
-#| msgid "Metadata fill layers are not supported and will be dropped."
 msgid "Metadata non-raster layers are not yet supported and will be dropped."
 msgstr ""
 "Підтримку метаданих нерастрових шарів ще не реалізовано, їх буде відкинуто."
