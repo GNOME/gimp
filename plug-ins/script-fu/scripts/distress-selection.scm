@@ -87,9 +87,9 @@
     (plug-in-gauss-iir RUN-NONINTERACTIVE theImage theLayer 1 TRUE TRUE)
     (gimp-image-select-item inImage CHANNEL-OP-REPLACE theLayer)
     (gimp-image-remove-layer theImage theLayer)
-    (if (and (= (car (gimp-item-is-channel inDrawable)) TRUE)
-             (= (car (gimp-item-is-layer-mask inDrawable)) FALSE))
-      (gimp-image-set-active-channel theImage inDrawable)
+    (if (and (= (car (gimp-item-id-is-channel inDrawable)) TRUE)
+             (= (car (gimp-item-id-is-layer-mask inDrawable)) FALSE))
+      (gimp-image-set-selected-channels theImage 1 (make-vector 1 inDrawable))
       )
     (gimp-image-undo-group-end theImage)
 
