@@ -1,4 +1,5 @@
 subdir('Default')
+subdir('Darker')
 subdir('Compact')
 
 themes = [

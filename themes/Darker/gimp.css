@@ -1,4 +1,4 @@
-/* Dark variant for the Default theme for GIMP 3.0 */
+/* Light variant for the Default theme for GIMP 3.0 */
 
 /* Hint for debugging themes:
  * first enable the GTK inspector with
@@ -8,54 +8,66 @@
  */
 
 /* Basic foreground, background and border colors. */
-@define-color fg-color               rgb(220,220,220);
-@define-color bg-color               rgb(60,60,60);
-@define-color border-color           rgb(26,26,26);
+@define-color fg-color               black;
+@define-color bg-color               rgb(235,235,235);
+@define-color border-color           rgb(220,220,220);
 
 /********* Variants for foreground colors *********/
 
 /* In places where we want not as strongly contrasted text. */
-@define-color dimmed-fg-color        rgb(155,155,155);
+@define-color dimmed-fg-color        rgb(100,100,100);
 /* Disabled items, such as disabled actions in menus. */
-@define-color disabled-fg-color      rgb(145,145,145);
+@define-color disabled-fg-color      rgb(110,110,110);
 /* Disabled buttons are dimmed even more (text needs to still be
  * readable, but buttons design are usually enough. */
-@define-color disabled-button-color  rgb(100,100,100);
+@define-color disabled-button-color  rgb(200,200,200);
 
 /********* Variants for background colors *********/
 
 /* Background color for hovered items to "stick out". */
-@define-color hover-color            rgb(100,100,100);
+@define-color hover-color            rgb(250,250,250);
 /* Background color when we want widgets-in-widgets to differenciate. It
  * will usually be "less extreme", i.e. darker on a light theme, or
  * lighter on a dark theme.
  */
-@define-color widget-bg-color        rgb(42,42,42);
+@define-color widget-bg-color        rgb(220,220,220);
 /* Color for selected items, in particular when their usual background
  * color is @widget-bg-color or @bg-color. It will usually be ligher on
  * a light theme, or darker on a dark theme.
  */
-@define-color selected-color         rgb(30,30,30);
+@define-color selected-color         rgb(250,250,250);
 
 /* Background color more extreme in the theme tendency, i.e. darker on a
  * dark theme, ligther on a light theme. */
-@define-color extreme-bg-color       rgb(36,36,36);
+@define-color extreme-bg-color       rgb(250,250,250);
 /* Color for a selected item to "stick out" when @extreme-bg-color is
  * used. It will usually be darker than @bg-color on a light theme,
- * lighter on a dark theme.
+ * ligher on a dark theme.
  */
-@define-color extreme-selected-color rgb(55,55,55);
+@define-color extreme-selected-color rgb(220,220,220);
 
 /********* Variants for border colors *********/
 
-@define-color strong-border-color    rgb(40,40,40);
-@define-color stronger-border-color  rgb(75,75,75);
+@define-color strong-border-color    rgb(200,200,200);
+@define-color stronger-border-color  rgb(185,185,185);
 
 /********* Colors for special cases *********/
 
-@define-color scrollbar-slider-color rgb(140,140,140);
-@define-color scrollbar-trough-color rgb(60,60,60);
+@define-color scrollbar-slider-color rgb(110,110,110);
+@define-color scrollbar-trough-color rgb(250,250,250);
 
-@define-color ruler-color            rgba(35,35,35,0.3);
+@define-color ruler-color            rgba(220,220,220,0.3);
 
-@import url("common-dark.css");
+/*
+ * Paned separator handles
+ */
+paned.horizontal > separator {
+  background-image: url("../Default/ui/separator-handle-v.svg");
+}
+
+paned.vertical > separator {
+  background-image: url("../Default/ui/separator-handle-h.svg");
+}
+
+
+@import url("../Default/common-light.css");

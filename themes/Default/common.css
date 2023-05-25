@@ -89,7 +89,7 @@ combobox window.popup, combobox window {
 }
 
 combobox box, combobox box.linked, combobox button {
-  background-color: @bg-color;
+  background-color: @widget-bg-color;
   color: @fg-color;
   background-image: none;
   border-color: @stronger-border-color;
@@ -161,7 +161,7 @@ notebook header tabs tab:hover {
  */
 .text-button {
   color: @fg-color;
-  background-color: @bg-color;
+  background-color: @widget-bg-color;
   background-image: none;
   font-weight: normal;
 }
@@ -311,9 +311,14 @@ GimpSpinScale entry progress {
 }
 
 /* Checkboxes */
-checkbutton, radiobutton {
+checkbutton, checkbutton.text-button, radiobutton, checkbutton label {
   color: @fg-color;
   background-color: @bg-color;
+}
+
+checkbutton:hover, checkbutton.text-button:hover, radiobutton:hover, checkbutton label:hover {
+  color: @fg-color;
+  background-color: @hover-color;
 }
 
 checkbutton check, radiobutton radio {
@@ -422,7 +427,7 @@ headerbar:backdrop * {
 /* GtkListBox widgets */
 
 list {
-  background-color: @bg-color;
+  background-color: @widget-bg-color;
 }
 
 /* GtkSwitch buttons */

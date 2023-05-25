@@ -15,9 +15,11 @@
  */
 paned.horizontal > separator {
   background-image: url("ui/separator-handle-v-dark.svg");
+  background-color: @bg-color;
 }
 
 paned.vertical > separator {
   background-image: url("ui/separator-handle-h-dark.svg");
+  background-color: @bg-color;
 }
 
