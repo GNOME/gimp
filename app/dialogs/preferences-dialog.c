@@ -2073,6 +2073,16 @@ prefs_dialog_new (Gimp       *gimp,
                             _("Use dark theme variant if available"),
                             GTK_BOX (vbox2));
 
+#ifdef G_OS_UNIX
+    g_object_bind_property (object, "follow-system-colorscheme",
+                            button, "sensitive",
+                            G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
+
+    prefs_check_button_add (object, "follow-system-colorscheme",
+                            _("Follow system color scheme"),
+                            GTK_BOX (vbox2));
+#endif
+
     /* Override icon sizes. */
     button = prefs_check_button_add (object, "override-theme-icon-size",
                                      _("_Override icon sizes set by the theme"),
@@ -2106,6 +2116,7 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_box_pack_start (GTK_BOX (vbox3), scale, FALSE, FALSE, 0);
     gtk_widget_show (scale);
 
+
     /* Reload Current Theme button */
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
@@ -2118,6 +2129,7 @@ prefs_dialog_new (Gimp       *gimp,
                       G_CALLBACK (prefs_theme_reload_callback),
                       gimp);
   }
+
 
   /****************************/
   /*  Interface / Icon Theme  */

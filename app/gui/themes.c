@@ -51,12 +51,18 @@ static void   themes_theme_change_notify (GimpGuiConfig          *config,
 static void   themes_theme_paths_notify  (GimpExtensionManager   *manager,
                                           GParamSpec             *pspec,
                                           Gimp                   *gimp);
+static void   xdg_settings_portal_changed (GDBusProxy            *proxy,
+                                           const gchar           *sender_name,
+                                           const gchar           *signal_name,
+                                           GVariant              *parameters,
+                                           Gimp                  *gimp);
 
 
 /*  private variables  */
 
 static GHashTable       *themes_hash           = NULL;
 static GtkStyleProvider *themes_style_provider = NULL;
+static GDBusProxy       *xdg_settings_portal   = NULL;
 
 
 /*  public functions  */
@@ -65,6 +71,7 @@ void
 themes_init (Gimp *gimp)
 {
   GimpGuiConfig *config;
+  GError        *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -85,7 +92,33 @@ themes_init (Gimp *gimp)
                                              themes_style_provider,
                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION + 1);
 
+  if (config->follow_system_colorscheme)
+    {
+      xdg_settings_portal = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+                                                           G_DBUS_PROXY_FLAGS_NONE,
+                                                           NULL,
+                                                           "org.freedesktop.portal.Desktop",
+                                                           "/org/freedesktop/portal/desktop",
+                                                           "org.freedesktop.portal.Settings",
+                                                           NULL,
+                                                           &error);
+      if (error)
+        {
+          g_debug ("Settings portal not found: %s", error->message);
+          g_clear_error (&error);
+        }
+      else
+        {
+          g_signal_connect (xdg_settings_portal, "g-signal",
+                            G_CALLBACK (xdg_settings_portal_changed),
+                            gimp);
+        }
+    }
+
   g_signal_connect (config, "notify::theme",
+                    G_CALLBACK (themes_theme_change_notify),
+                    gimp);
+  g_signal_connect (config, "notify::follow-system-colorscheme",
                     G_CALLBACK (themes_theme_change_notify),
                     gimp);
   g_signal_connect (config, "notify::prefer-dark-theme",
@@ -120,6 +153,7 @@ themes_exit (Gimp *gimp)
     }
 
   g_clear_object (&themes_style_provider);
+  g_clear_object (&xdg_settings_portal);
 }
 
 gchar **
@@ -437,6 +471,42 @@ themes_theme_change_notify (GimpGuiConfig *config,
   GFile  *theme_css;
   GError *error = NULL;
 
+  if (config->follow_system_colorscheme)
+    {
+      GVariant *ret = NULL;
+      guint32 color_scheme;
+
+      ret = g_dbus_proxy_call_sync (xdg_settings_portal,
+                                    "Read",
+                                    g_variant_new ("(ss)",
+                                                   "org.freedesktop.appearance",
+                                                   "color-scheme"),
+                                    G_DBUS_CALL_FLAGS_NONE,
+                                    G_MAXINT,
+                                    NULL,
+                                    &error);
+      if (error)
+        {
+          g_warning ("Error trying to read out XDG color-scheme: %s",
+                     error->message);
+        }
+      else
+        {
+          GVariant *child = NULL, *child2 = NULL;
+
+          g_variant_get (ret, "(v)", &child);
+          g_variant_get (child, "v", &child2);
+          color_scheme = g_variant_get_uint32 (child2);
+
+          config->prefer_dark_theme = (color_scheme == 1);
+
+          g_variant_unref (child2);
+          g_variant_unref (child);
+        }
+
+        g_clear_pointer (&ret, g_variant_unref);
+    }
+
   g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
                 "gtk-application-prefer-dark-theme", config->prefer_dark_theme,
                 NULL);
@@ -539,4 +609,29 @@ themes_theme_paths_notify (GimpExtensionManager *manager,
 
       g_list_free_full (path, (GDestroyNotify) g_object_unref);
     }
+}
+
+static void
+xdg_settings_portal_changed (GDBusProxy  *proxy,
+                             const gchar *sender_name,
+                             const gchar *signal_name,
+                             GVariant    *parameters,
+                             Gimp        *gimp)
+{
+  const char *namespace;
+  const char *name;
+  GVariant   *value = NULL;
+
+  if (g_strcmp0 (signal_name, "SettingChanged"))
+    return;
+
+  g_variant_get (parameters, "(&s&sv)", &namespace, &name, &value);
+
+  if (g_strcmp0 (namespace, "org.freedesktop.appearance") == 0 &&
+      g_strcmp0 (name, "color-scheme") == 0)
+    {
+      themes_theme_change_notify (GIMP_GUI_CONFIG (gimp->config), NULL, gimp);
+    }
+
+  g_variant_unref (value);
 }

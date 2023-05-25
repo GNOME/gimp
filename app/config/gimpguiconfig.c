@@ -70,6 +70,7 @@ enum
   PROP_TOOLBOX_GROUPS,
   PROP_THEME_PATH,
   PROP_THEME,
+  PROP_FOLLOW_SYSTEM_COLORSCHEME,
   PROP_PREFER_DARK_THEME,
   PROP_OVERRIDE_THEME_ICON_SIZE,
   PROP_CUSTOM_ICON_SIZE,
@@ -314,6 +315,14 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             THEME_BLURB,
                             GIMP_CONFIG_DEFAULT_THEME,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FOLLOW_SYSTEM_COLORSCHEME,
+                            "follow-system-colorscheme",
+                            "Follow system color scheme",
+                            THEME_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PREFER_DARK_THEME,
                             "prefer-dark-theme",
                             "Prefer Dark Theme",
@@ -675,6 +684,9 @@ gimp_gui_config_set_property (GObject      *object,
       g_free (gui_config->theme);
       gui_config->theme = g_value_dup_string (value);
       break;
+    case PROP_FOLLOW_SYSTEM_COLORSCHEME:
+      gui_config->follow_system_colorscheme = g_value_get_boolean (value);
+      break;
     case PROP_PREFER_DARK_THEME:
       gui_config->prefer_dark_theme = g_value_get_boolean (value);
       break;
@@ -853,6 +865,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_THEME:
       g_value_set_string (value, gui_config->theme);
+      break;
+    case PROP_FOLLOW_SYSTEM_COLORSCHEME:
+      g_value_set_boolean (value, gui_config->follow_system_colorscheme);
       break;
     case PROP_PREFER_DARK_THEME:
       g_value_set_boolean (value, gui_config->prefer_dark_theme);
