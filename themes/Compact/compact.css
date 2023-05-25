@@ -2,6 +2,7 @@
 
 * {
   -GimpToolPalette-tool-icon-size: small-toolbar;
+  font-size: small;
 }
 
 toolpalette button {

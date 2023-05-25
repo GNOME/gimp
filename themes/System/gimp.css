@@ -60,10 +60,6 @@ GimpFgBgEditor:active {
     border-width: 2px 2px 2px 2px;
 }
 
-GimpDock {
-    font-size: smaller;
-}
-
 GimpDock notebook tab {
     padding: 0 0 0 0;
 }
@@ -94,18 +90,6 @@ GimpDisplayShell grid > button {
     padding: 0 0 0 0;
 }
 
-GimpDisplayShell combobox entry {
-    font-size: smaller;
-}
-
-GimpDisplayShell combobox button {
-    font-size: smaller;
-}
-
-GimpDisplayShell progressbar text {
-    font-size: larger;
-}
-
 GimpDisplayShell progressbar trough,
 GimpDisplayShell progressbar progress {
     min-height: 1em;
@@ -115,10 +99,6 @@ GimpFileDialog progressbar trough,
 GimpFileDialog progressbar progress {
     min-width: 1px; /* hack */
     min-height: 1em;
-}
-
-GimpRuler {
-    font-size: smaller;
 }
 
 spinbutton entry {
