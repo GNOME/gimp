@@ -117,7 +117,7 @@ static const GimpActionEntry windows_actions[] =
 static const GimpToggleActionEntry windows_toggle_actions[] =
 {
   { "windows-hide-docks", NULL,
-    NC_("windows-action", "_Hide Docks"), NULL, { "Tab", NULL },
+    NC_("windows-action", "_Hide Docks"), NULL, { NULL },
     NC_("windows-action", "When enabled, docks and other dialogs are hidden, leaving only image windows."),
     windows_hide_docks_cmd_callback,
     FALSE,
