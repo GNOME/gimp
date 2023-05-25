@@ -165,7 +165,7 @@
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_USE_SRGB    "gimp-image-color-profile-use-srgb"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_SAVE        "gimp-image-color-profile-save"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_IMPORT      "gimp-image-color-profile-import"
-#define GIMP_HELP_IMAGE_METADATA_ROTATION_IMPORT  "gimp-image-metdata-rotation-import"
+#define GIMP_HELP_IMAGE_METADATA_ROTATION_IMPORT  "gimp-image-metadata-rotation-import"
 #define GIMP_HELP_IMAGE_GRID                      "gimp-image-grid"
 #define GIMP_HELP_IMAGE_PROPERTIES                "gimp-image-properties"
 
