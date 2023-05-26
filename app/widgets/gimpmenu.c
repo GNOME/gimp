@@ -116,9 +116,6 @@ static void     gimp_menu_toggle_item_toggled     (GtkWidget               *item
 
 static void     gimp_menu_toggle_action_toggled   (GimpAction              *action,
                                                    GtkCheckMenuItem        *item);
-static void     gimp_menu_action_notify_sensitive (GimpAction              *action,
-                                                   const GParamSpec        *pspec,
-                                                   GtkCheckMenuItem        *item);
 static void     gimp_menu_action_notify_visible   (GimpAction              *action,
                                                    const GParamSpec        *pspec,
                                                    GtkWidget               *item);
@@ -520,12 +517,6 @@ gimp_menu_add_action (GimpMenu          *menu,
   gimp_action_set_proxy (action, item);
   g_object_set_data (G_OBJECT (item), GIMP_MENU_ACTION_KEY, action);
 
-  gtk_widget_set_sensitive (GTK_WIDGET (item),
-                            gimp_action_is_sensitive (action, NULL));
-  g_signal_connect_object (action, "notify::sensitive",
-                           G_CALLBACK (gimp_menu_action_notify_sensitive),
-                           item, 0);
-
   if (sibling)
     {
       GList *children;
@@ -780,15 +771,6 @@ gimp_menu_toggle_action_toggled (GimpAction       *action,
   g_signal_handlers_unblock_by_func (item,
                                    G_CALLBACK (gimp_menu_toggle_item_toggled),
                                    action);
-}
-
-static void
-gimp_menu_action_notify_sensitive (GimpAction       *action,
-                                   const GParamSpec *pspec,
-                                   GtkCheckMenuItem *item)
-{
-  gtk_widget_set_sensitive (GTK_WIDGET (item),
-                            gimp_action_is_sensitive (action, NULL));
 }
 
 static void

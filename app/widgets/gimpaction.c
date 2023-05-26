@@ -86,20 +86,22 @@ struct _GimpActionPrivate
 
 
 static GimpActionPrivate *
-              gimp_action_get_private           (GimpAction        *action);
-static void   gimp_action_private_finalize      (GimpActionPrivate *priv);
+              gimp_action_get_private            (GimpAction        *action);
+static void   gimp_action_private_finalize       (GimpActionPrivate *priv);
 
-static void   gimp_action_label_notify          (GimpAction        *action,
-                                                 const GParamSpec  *pspec,
-                                                 gpointer           data);
+static void   gimp_action_label_notify           (GimpAction        *action,
+                                                  const GParamSpec  *pspec,
+                                                  gpointer           data);
 
-static void   gimp_action_proxy_destroy         (GtkWidget         *proxy,
-                                                 GimpAction        *action);
-static void   gimp_action_proxy_button_activate (GtkButton         *button,
-                                                 GimpAction        *action);
+static void   gimp_action_proxy_destroy          (GtkWidget         *proxy,
+                                                  GimpAction        *action);
+static void   gimp_action_proxy_button_activate  (GtkButton         *button,
+                                                  GimpAction        *action);
 
-static void   gimp_action_update_proxy_tooltip  (GimpAction     *action,
-                                                 GtkWidget      *proxy);
+static void   gimp_action_update_proxy_sensitive (GimpAction        *action,
+                                                  GtkWidget         *proxy);
+static void   gimp_action_update_proxy_tooltip   (GimpAction        *action,
+                                                  GtkWidget         *proxy);
 
 
 G_DEFINE_INTERFACE (GimpAction, gimp_action, GIMP_TYPE_OBJECT)
@@ -486,7 +488,7 @@ gimp_action_set_sensitive (GimpAction  *action,
 
       g_object_notify (G_OBJECT (action), "sensitive");
 
-      gimp_action_update_proxy_tooltip (action, NULL);
+      gimp_action_update_proxy_sensitive (action, NULL);
 
       g_object_notify (G_OBJECT (action), "enabled");
     }
@@ -1139,7 +1141,7 @@ gimp_action_set_proxy (GimpAction *action,
                           (GCallback) gimp_action_proxy_button_activate,
                           action);
 
-      gimp_action_update_proxy_tooltip (action, proxy);
+      gimp_action_update_proxy_sensitive (action, proxy);
     }
 
   g_clear_object (&pixbuf);
@@ -1332,6 +1334,27 @@ gimp_action_proxy_button_activate (GtkButton  *button,
 }
 
 static void
+gimp_action_update_proxy_sensitive (GimpAction *action,
+                                    GtkWidget  *proxy)
+{
+  GimpActionPrivate *priv      = GET_PRIVATE (action);
+  gboolean           sensitive = gimp_action_is_sensitive (action, NULL);
+
+  if (proxy)
+    {
+      gtk_widget_set_sensitive (proxy, sensitive);
+      gimp_action_update_proxy_tooltip (action, proxy);
+    }
+  else
+    {
+      for (GList *list = priv->proxies; list; list = list->next)
+        gtk_widget_set_sensitive (list->data, sensitive);
+
+      gimp_action_update_proxy_tooltip (action, NULL);
+    }
+}
+
+static void
 gimp_action_update_proxy_tooltip (GimpAction *action,
                                   GtkWidget  *proxy)
 {
@@ -1358,14 +1381,24 @@ gimp_action_update_proxy_tooltip (GimpAction *action,
                             escaped_reason && tooltip ? "\n" : "",
                             escaped_reason ? escaped_reason : "");
 
+  /*  This hack makes sure we don't replace the tooltips of GimpButtons
+   *  with extended callbacks (for Shift+Click etc.), because these
+   *  buttons already have customly constructed multi-line tooltips
+   *  which we want to keep.
+   */
+#define HAS_EXTENDED_ACTIONS(widget) \
+  (g_object_get_data (G_OBJECT (widget), "extended-actions") != NULL)
+
   if (proxy != NULL)
     {
-      gimp_help_set_help_data_with_markup (proxy, markup, help_id);
+      if (! HAS_EXTENDED_ACTIONS (proxy))
+        gimp_help_set_help_data_with_markup (proxy, markup, help_id);
     }
   else
     {
       for (GList *list = priv->proxies; list; list = list->next)
-        gimp_help_set_help_data_with_markup (list->data, markup, help_id);
+        if (! HAS_EXTENDED_ACTIONS (list->data))
+          gimp_help_set_help_data_with_markup (list->data, markup, help_id);
     }
 
   g_free (escaped_reason);
