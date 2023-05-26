@@ -365,9 +365,17 @@ action_data_get_image (gpointer data)
   recursion = TRUE;
 
   if (GIMP_IS_ITEM_TREE_VIEW (data))
-    result = gimp_item_tree_view_get_image ((GimpItemTreeView *) data);
+    {
+      result = gimp_item_tree_view_get_image ((GimpItemTreeView *) data);
+      recursion = FALSE;
+      return result;
+    }
   else if (GIMP_IS_IMAGE_EDITOR (data))
-    result = ((GimpImageEditor *) data)->image;
+    {
+      result = ((GimpImageEditor *) data)->image;
+      recursion = FALSE;
+      return result;
+    }
 
   if (! result)
     {
