@@ -35,8 +35,8 @@ static GSList gimp_atomic_slist_sentinel;
 
 
 void
-gimp_atomic_slist_push_head (GSList   * volatile *list,
-                             gpointer             data)
+gimp_atomic_slist_push_head (GSList   **list,
+                             gpointer   data)
 {
   GSList *old_head;
   GSList *new_head;
@@ -61,7 +61,7 @@ gimp_atomic_slist_push_head (GSList   * volatile *list,
 }
 
 gpointer
-gimp_atomic_slist_pop_head (GSList * volatile *list)
+gimp_atomic_slist_pop_head (GSList **list)
 {
   GSList   *old_head;
   GSList   *new_head;

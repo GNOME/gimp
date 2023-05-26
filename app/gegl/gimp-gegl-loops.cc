@@ -1014,12 +1014,12 @@ gimp_gegl_average_color (GeglBuffer          *buffer,
     gint   n;
   } Sum;
 
-  const Babl        *average_format;
-  GeglRectangle      roi;
-  GSList * volatile  sums    = NULL;
-  GSList            *list;
-  Sum                average = {};
-  gint               c;
+  const Babl    *average_format;
+  GeglRectangle  roi;
+  GSList        *sums    = NULL;
+  GSList        *list;
+  Sum            average = {};
+  gint           c;
 
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
   g_return_if_fail (color != NULL);

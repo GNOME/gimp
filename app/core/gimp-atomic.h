@@ -24,9 +24,9 @@
 
 /*  GSList  */
 
-void       gimp_atomic_slist_push_head (GSList   * volatile *list,
-                                        gpointer             data);
-gpointer   gimp_atomic_slist_pop_head  (GSList   * volatile *list);
+void       gimp_atomic_slist_push_head (GSList   **list,
+                                        gpointer   data);
+gpointer   gimp_atomic_slist_pop_head  (GSList   **list);
 
 
 #endif /* __GIMP_ATOMIC_H__ */
