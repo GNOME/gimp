@@ -1,6 +1,0 @@
-.deps
-.libs
-/output
-Makefile
-Makefile.in
-test-operations*

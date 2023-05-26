@@ -1,8 +1,0 @@
-/Makefile
-/Makefile.in
-/.deps
-/.libs
-/*.lo
-/libappplug-in.a
-/libappplug-in.la
-/xgen-pec

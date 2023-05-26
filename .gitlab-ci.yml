@@ -1,5 +1,5 @@
 # Default commit CI should only run the following pipelines:
-# - Linux autotools and meson (base & fast)
+# - Linux meson (base & fast)
 # - Win64 crossbuild (base & fast)
 # Scheduled CI ($CI_PIPELINE_SOURCE == "schedule") will run regularly:
 # - Win 32/64 native builds (base but slow)
@@ -8,12 +8,10 @@
 # - cppcheck (static code analysis)
 # - Flatpak build (slow and doesn't need constant publishing)
 # Releases ($CI_COMMIT_TAG != null) should run only:
-# - Linux autotools (distcheck source tarball)
 # - Win 32/64 native builds (Windows installer creation)
 #
 # To force step-specific pipelines without waiting for commits and/or
 # pipelines, these are the variable you should set:
-# - GIMP_CI_AUTOTOOLS: trigger the autotools/gcc build.
 # - GIMP_CI_MESON_GCC: trigger the meson/gcc build.
 # - GIMP_CI_MESON_CLANG: trigger the meson/clang build.
 # - GIMP_CI_CROSSROAD_WIN32: trigger the crossroad/meson build for Win 32-bit.
@@ -21,10 +19,10 @@
 # - GIMP_CI_MSYS2_WIN32: trigger the native MSYS2 build for Win 32-bit.
 # - GIMP_CI_MSYS2_WIN64: trigger the native MSYS2 build for Win 64-bit.
 # - GIMP_CI_WIN_INSTALLER: trigger both native MSYS2 builds then creates Windows installer.
-# - GIMP_CI_SOURCES: trigger the autotools/gcc build and the source tarball job.
+# - GIMP_CI_SOURCES: trigger the meson/gcc build and the source tarball job.
 # - GIMP_CI_CPPCHECK: trigger cppcheck static analysis.
 # - GIMP_CI_FLATPAK: trigger the nightly flatpak build and publishing.
-# - GIMP_CI_RASTER_ICONS: trigger the autotools and meson builds without vector icons.
+# - GIMP_CI_RASTER_ICONS: trigger the meson build without vector icons.
 
 include: 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
 
@@ -54,7 +52,6 @@ build-image:
     # On releases.
     - if: '$CI_COMMIT_TAG != null'
     # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_AUTOTOOLS != null'
     - if: '$GIMP_CI_SOURCES != null'
     - if: '$GIMP_CI_MESON_GCC != null'
     - if: '$GIMP_CI_MESON_CLANG != null'
@@ -73,7 +70,7 @@ build-image:
     - echo "FROM debian:testing" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
-    - echo "appstream at-spi2-core automake autopoint build-essential desktop-file-utils ffmpeg gettext ghostscript gi-docgen git glib-networking gobject-introspection graphviz graphviz-dev hicolor-icon-theme iso-codes libaa1-dev libappstream-glib-dev libbz2-dev libcfitsio-dev libdbus-glib-1-dev libexif-dev libgexiv2-dev libgirepository1.0-dev libgs-dev libgtk-3-bin libgtk-3-dev libgudev-1.0-dev libheif-dev libjson-glib-dev libjxl-dev liblcms2-dev liblzma-dev libmng-dev libmypaint-dev libopenexr-dev libpoppler-glib-dev libraw-dev libraw20 librsvg2-dev libspiro-dev libsuitesparse-dev libtiff-dev libtiff5-dev libtool libumfpack5 libwebp-dev libwmf-dev libxmu-dev libxpm-dev luajit meson mypaint-brushes poppler-data python3 python3-pip valac xauth xsltproc xvfb xz-utils yelp-tools" >> Dockerfile
+    - echo "appstream at-spi2-core build-essential desktop-file-utils ffmpeg gettext ghostscript gi-docgen git glib-networking gobject-introspection graphviz graphviz-dev hicolor-icon-theme iso-codes libaa1-dev libappstream-glib-dev libbz2-dev libcfitsio-dev libdbus-glib-1-dev libexif-dev libgexiv2-dev libgirepository1.0-dev libgs-dev libgtk-3-bin libgtk-3-dev libgudev-1.0-dev libheif-dev libjson-glib-dev libjxl-dev liblcms2-dev liblzma-dev libmng-dev libmypaint-dev libopenexr-dev libpoppler-glib-dev libraw-dev libraw20 librsvg2-dev libspiro-dev libsuitesparse-dev libtiff-dev libtiff5-dev libtool libumfpack5 libwebp-dev libwmf-dev libxmu-dev libxpm-dev luajit meson mypaint-brushes poppler-data python3 python3-pip valac xauth xsltproc xvfb xz-utils yelp-tools" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest --cache=true --cache-ttl=120h
 
@@ -104,7 +101,7 @@ build-image-win64:
     # specifically g++-mingw-w64-x86-64-posix and gcc-mingw-w64-x86-64-posix.
     # Note that we can't install both the -posix and -win32 versions since
     # update gcc-mingw-w64 (25).
-    - echo "automake autopoint build-essential cmake cpio g++-mingw-w64-x86-64-posix gcc-mingw-w64-x86-64-posix gettext git libgdk-pixbuf2.0-dev libgirepository1.0-dev libglib2.0-bin librsvg2-dev meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm python3-zstandard xsltproc xvfb" >> Dockerfile
+    - echo "build-essential cmake cpio g++-mingw-w64-x86-64-posix gcc-mingw-w64-x86-64-posix gettext git libgdk-pixbuf2.0-dev libgirepository1.0-dev libglib2.0-bin librsvg2-dev meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm python3-zstandard xsltproc xvfb" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win64-latest --cache=true --cache-ttl=120h
 
@@ -127,7 +124,7 @@ build-image-win32:
     - echo "FROM debian:testing" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
-    - echo "automake autopoint build-essential cpio g++-mingw-w64-i686 gcc-mingw-w64-i686 gettext git libgdk-pixbuf2.0-dev libglib2.0-bin librsvg2-dev meson pkg-config python3 python3-distutils python3-docutils python3-pip python3-zstandard rpm xsltproc xvfb" >> Dockerfile
+    - echo "build-essential cpio g++-mingw-w64-i686 gcc-mingw-w64-i686 gettext git libgdk-pixbuf2.0-dev libglib2.0-bin librsvg2-dev meson pkg-config python3 python3-distutils python3-docutils python3-pip python3-zstandard rpm xsltproc xvfb" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win32-latest --cache=true --cache-ttl=120h
 
@@ -142,7 +139,6 @@ deps-debian:
     # On releases.
     - if: '$CI_COMMIT_TAG != null'
     # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_AUTOTOOLS != null'
     - if: '$GIMP_CI_SOURCES != null'
     - if: '$GIMP_CI_MESON_GCC != null'
     - if: '$GIMP_CI_MESON_CLANG != null'
@@ -202,30 +198,6 @@ deps-debian:
     - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
     - export PATH="${INSTALL_PREFIX}/bin:$PATH"
   needs: ["deps-debian"]
-
-gimp-distcheck-debian:
-  rules:
-    # On commits and merge requests.
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    # On releases.
-    - if: '$CI_COMMIT_TAG != null'
-    # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_AUTOTOOLS != null'
-    - if: '$GIMP_CI_SOURCES != null'
-  extends: .gimp-debian-base
-  script:
-    - mkdir _build
-    - cd _build
-    - ../autogen.sh
-        --prefix="${INSTALL_PREFIX}"
-        --enable-debug
-        --enable-gi-docgen
-        --enable-g-ir-doc
-        --enable-windows-installer
-    - make -j "$(nproc)"
-    - make -j "$(nproc)" check
-    - make -j "$(nproc)" distcheck
 
 gimp-meson-debian:
   rules:
@@ -290,26 +262,6 @@ gimp-meson-raster-icons:
        -Dvector-icons=false
     - ninja -C _build
     - ninja -C _build test
-
-gimp-autotools-raster-icons:
-  rules:
-    # Custom builds only (web GUI, API or schedules).
-    - if: '$GIMP_CI_RASTER_ICONS != null'
-  extends: .gimp-debian-base
-  script:
-    - tools/generate-icon-makefiles.py
-    - diff="$(git diff)"
-    - if [ -n "$diff" ]; then
-        echo "Outdated icon-list.mk - please run tools/generate-icon-makefiles.py";
-        echo "$diff";
-        exit 1;
-      fi
-    - mkdir _build
-    - cd _build
-    - ../autogen.sh
-        --prefix="${INSTALL_PREFIX}"
-        --disable-vector-icons
-    - make -j "$(nproc)"
 
 ## WINDOWS 64-bit CI (native MSYS2) ##
 
@@ -771,34 +723,6 @@ win-installer-nightly:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/installer-gimp-msys2.sh > installer.log 2>&1"
   needs: ["packaging-win32-native", "packaging-win64-native"]
-
-sources-autotools:
-  rules:
-    # On commits.
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-    # On releases.
-    - if: '$CI_COMMIT_TAG != null'
-    # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_CI_SOURCES != null'
-  stage: distribution
-  dependencies:
-    - gimp-distcheck-debian
-  artifacts:
-    name: "GIMP-sources-${CI_COMMIT_SHORT_SHA}"
-    when: always
-    expire_in: 2 days
-    paths:
-    - gimp-*.tar.bz2
-    - gimp-*.tar.bz2.SHA256SUMS
-    - gimp-*.tar.bz2.SHA512SUMS
-  script:
-    - mv _build/gimp-*.tar.bz2 .
-    - BASENAME=`ls gimp-*.tar.bz2 | sed 's/.tar.bz2//'` &&
-      FILENAME="$BASENAME-autotools.tar.bz2"            &&
-      mv $BASENAME.tar.bz2 $FILENAME                    &&
-      sha256sum gimp-*.tar.bz2 > ${FILENAME}.SHA256SUMS &&
-      sha512sum gimp-*.tar.bz2 > ${FILENAME}.SHA512SUMS
-  needs: ["gimp-distcheck-debian"]
 
 sources-meson:
   rules:

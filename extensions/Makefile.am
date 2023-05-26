@@ -1,2 +1,0 @@
-SUBDIRS = \
-	  goat-exercises

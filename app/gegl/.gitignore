@@ -1,8 +1,0 @@
-/Makefile
-/Makefile.in
-/.deps
-/.libs
-/libappgegl.a
-/libappgegl-generic.a
-/libappgegl-sse2.a
-/xgen-ggec

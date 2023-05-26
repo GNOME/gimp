@@ -1,7 +1,0 @@
-/Makefile
-/Makefile.in
-/.deps
-/.libs
-/*.lo
-/libappmenus.a
-/libappmenus.la

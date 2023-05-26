@@ -1,9 +1,0 @@
-/Makefile
-/Makefile.in
-/.deps
-/.libs
-/*.lo
-/gimpdbusservice-generated.c
-/gimpdbusservice-generated.h
-/libappgui.a
-/libappgui.la

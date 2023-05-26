@@ -1829,7 +1829,6 @@ subdir('data')
 subdir('desktop')
 subdir('etc')
 subdir('icons')
-subdir('m4macros')
 subdir('menus')
 subdir('themes')
 
