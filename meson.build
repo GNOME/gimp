@@ -2016,13 +2016,3 @@ if warnings.length() > 0
     warning(warning)
   endforeach
 endif
-
-if not platform_windows
-  warning('''
-
-          MESON BUILD IS IN EXTENSIVE TESTING PHASE!
-
-          we now encourage usage of meson for packagers.
-          Please build GIMP with meson and report bugs.
-          ''')
-endif

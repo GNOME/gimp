@@ -211,14 +211,6 @@ help in that regard:
  17. Configure GIMP by running `meson _build`. You may want to pass some
      options to it, see below.
 
-     Note that we now recommend officially to build GIMP with `meson`
-     instead of `autotools` (`configure` script, make, etc.).
-     The autotools build scripts are left alive a bit longer in the git
-     repository , so that we can revert the recommendation in case big
-     regressions were discovered.
-     So if you encounter issues with the meson build, now is the time to
-     report them!
-
  18. Build GIMP by running `ninja -C _build'.
 
  19. Install GIMP by running `ninja -C _build install'. In order to
