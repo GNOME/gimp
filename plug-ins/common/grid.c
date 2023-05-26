@@ -413,14 +413,14 @@ grid (GimpImage    *image,
       GimpDrawable *drawable,
       GimpPreview  *preview)
 {
-  GeglBuffer *src_buffer;
-  GeglBuffer *dest_buffer;
+  GeglBuffer *src_buffer  = NULL;
+  GeglBuffer *dest_buffer = NULL;
   const Babl *format;
   gint        bytes;
   gint        x_offset;
   gint        y_offset;
-  guchar     *dest;
-  guchar     *buffer = NULL;
+  guchar     *dest        = NULL;
+  guchar     *buffer      = NULL;
   gint        x, y;
   gboolean    alpha;
   gboolean    blend;
