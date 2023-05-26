@@ -1461,6 +1461,8 @@ gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
  * @height:   Height in pixels
  *
  * Sets Exif.Image.ImageWidth and Exif.Image.ImageLength on @metadata.
+ * If already present, also sets Exif.Photo.PixelXDimension and
+ * Exif.Photo.PixelYDimension.
  *
  * Since: 2.10
  */
@@ -1476,10 +1478,24 @@ gimp_metadata_set_pixel_size (GimpMetadata *metadata,
   g_snprintf (buffer, sizeof (buffer), "%d", width);
   gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
                                       "Exif.Image.ImageWidth", buffer, NULL);
+  if (gexiv2_metadata_try_has_tag (GEXIV2_METADATA (metadata),
+                                   "Exif.Photo.PixelXDimension", NULL))
+    {
+      gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
+                                          "Exif.Photo.PixelXDimension",
+                                          buffer, NULL);
+    }
 
   g_snprintf (buffer, sizeof (buffer), "%d", height);
   gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
                                       "Exif.Image.ImageLength", buffer, NULL);
+  if (gexiv2_metadata_try_has_tag (GEXIV2_METADATA (metadata),
+                                   "Exif.Photo.PixelYDimension", NULL))
+    {
+      gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
+                                          "Exif.Photo.PixelYDimension",
+                                          buffer, NULL);
+    }
 }
 
 /**
