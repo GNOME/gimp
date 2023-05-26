@@ -80,6 +80,7 @@ static void   vectors_new_callback             (GtkWidget    *dialog,
                                                 GimpColorTag  vectors_color_tag,
                                                 gboolean      vectors_lock_content,
                                                 gboolean      vectors_lock_position,
+                                                gboolean      vectors_lock_visibility,
                                                 gpointer      user_data);
 static void   vectors_edit_attributes_callback (GtkWidget    *dialog,
                                                 GimpImage    *image,
@@ -90,6 +91,7 @@ static void   vectors_edit_attributes_callback (GtkWidget    *dialog,
                                                 GimpColorTag  vectors_color_tag,
                                                 gboolean      vectors_lock_content,
                                                 gboolean      vectors_lock_position,
+                                                gboolean      vectors_lock_visibility,
                                                 gpointer      user_data);
 static void   vectors_import_callback          (GtkWidget    *dialog,
                                                 GimpImage    *image,
@@ -178,6 +180,7 @@ vectors_edit_attributes_cmd_callback (GimpAction *action,
                                            gimp_item_get_color_tag (item),
                                            gimp_item_get_lock_content (item),
                                            gimp_item_get_lock_position (item),
+                                           gimp_item_get_lock_visibility (item),
                                            vectors_edit_attributes_callback,
                                            NULL);
 
@@ -217,6 +220,7 @@ vectors_new_cmd_callback (GimpAction *action,
                                            config->vectors_new_name,
                                            FALSE,
                                            GIMP_COLOR_TAG_NONE,
+                                           FALSE,
                                            FALSE,
                                            FALSE,
                                            vectors_new_callback,
@@ -823,6 +827,7 @@ vectors_new_callback (GtkWidget    *dialog,
                       GimpColorTag  vectors_color_tag,
                       gboolean      vectors_lock_content,
                       gboolean      vectors_lock_position,
+                      gboolean      vectors_lock_visibility,
                       gpointer      user_data)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
@@ -836,6 +841,7 @@ vectors_new_callback (GtkWidget    *dialog,
   gimp_item_set_color_tag (GIMP_ITEM (vectors), vectors_color_tag, FALSE);
   gimp_item_set_lock_content (GIMP_ITEM (vectors), vectors_lock_content, FALSE);
   gimp_item_set_lock_position (GIMP_ITEM (vectors), vectors_lock_position, FALSE);
+  gimp_item_set_lock_visibility (GIMP_ITEM (vectors), vectors_lock_visibility, FALSE);
 
   gimp_image_add_vectors (image, vectors,
                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
@@ -854,15 +860,17 @@ vectors_edit_attributes_callback (GtkWidget    *dialog,
                                   GimpColorTag  vectors_color_tag,
                                   gboolean      vectors_lock_content,
                                   gboolean      vectors_lock_position,
+                                  gboolean      vectors_lock_visibility,
                                   gpointer      user_data)
 {
   GimpItem *item = GIMP_ITEM (vectors);
 
-  if (strcmp (vectors_name, gimp_object_get_name (vectors))      ||
-      vectors_visible       != gimp_item_get_visible (item)      ||
-      vectors_color_tag     != gimp_item_get_color_tag (item)    ||
-      vectors_lock_content  != gimp_item_get_lock_content (item) ||
-      vectors_lock_position != gimp_item_get_lock_position (item))
+  if (strcmp (vectors_name, gimp_object_get_name (vectors))         ||
+      vectors_visible         != gimp_item_get_visible (item)       ||
+      vectors_color_tag       != gimp_item_get_color_tag (item)     ||
+      vectors_lock_content    != gimp_item_get_lock_content (item)  ||
+      vectors_lock_position   != gimp_item_get_lock_position (item) ||
+      vectors_lock_visibility != gimp_item_get_lock_visibility (item))
     {
       gimp_image_undo_group_start (image,
                                    GIMP_UNDO_GROUP_ITEM_PROPERTIES,
@@ -882,6 +890,9 @@ vectors_edit_attributes_callback (GtkWidget    *dialog,
 
       if (vectors_lock_position != gimp_item_get_lock_position (item))
         gimp_item_set_lock_position (item, vectors_lock_position, TRUE);
+
+      if (vectors_lock_visibility != gimp_item_get_lock_visibility (item))
+        gimp_item_set_lock_visibility (item, vectors_lock_visibility, TRUE);
 
       gimp_image_undo_group_end (image);
 

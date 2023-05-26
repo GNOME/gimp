@@ -83,6 +83,7 @@ static void   layer_options_dialog_callback       (GtkWidget          *dialog,
                                                    GimpColorTag        item_color_tag,
                                                    gboolean            item_lock_content,
                                                    gboolean            item_lock_position,
+                                                   gboolean            item_lock_visibility,
                                                    gpointer            user_data);
 static void
      layer_options_dialog_update_mode_sensitivity (LayerOptionsDialog *private);
@@ -116,6 +117,7 @@ layer_options_dialog_new (GimpImage                *image,
                           GimpColorTag              layer_color_tag,
                           gboolean                  layer_lock_content,
                           gboolean                  layer_lock_position,
+                          gboolean                  layer_lock_visibility,
                           gboolean                  layer_lock_alpha,
                           GimpLayerOptionsCallback  callback,
                           gpointer                  user_data)
@@ -161,14 +163,16 @@ layer_options_dialog_new (GimpImage                *image,
                                     parent, title, role,
                                     icon_name, desc, help_id,
                                     _("Layer _name:"),
-                                    GIMP_ICON_TOOL_PAINTBRUSH,
+                                    GIMP_ICON_LOCK_CONTENT,
                                     _("Lock _pixels"),
                                     _("Lock position and _size"),
+                                    _("Lock visibility"),
                                     layer_name,
                                     layer_visible,
                                     layer_color_tag,
                                     layer_lock_content,
                                     layer_lock_position,
+                                    layer_lock_visibility,
                                     layer_options_dialog_callback,
                                     private);
 
@@ -411,7 +415,7 @@ layer_options_dialog_new (GimpImage                *image,
                           G_BINDING_INVERT_BOOLEAN);
 
   button = item_options_dialog_add_switch (dialog,
-                                           GIMP_ICON_TRANSPARENCY,
+                                           GIMP_ICON_LOCK_ALPHA,
                                            _("Lock _alpha"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->lock_alpha);
@@ -458,6 +462,7 @@ layer_options_dialog_callback (GtkWidget    *dialog,
                                GimpColorTag  item_color_tag,
                                gboolean      item_lock_content,
                                gboolean      item_lock_position,
+                               gboolean      item_lock_visibility,
                                gpointer      user_data)
 {
   LayerOptionsDialog *private = user_data;
@@ -502,6 +507,7 @@ layer_options_dialog_callback (GtkWidget    *dialog,
                      item_color_tag,
                      item_lock_content,
                      item_lock_position,
+                     item_lock_visibility,
                      private->lock_alpha,
                      private->rename_text_layers,
                      private->user_data);

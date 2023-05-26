@@ -58,6 +58,7 @@ static void   quick_mask_configure_callback (GtkWidget     *dialog,
                                              GimpColorTag   channel_color_tag,
                                              gboolean       channel_lock_content,
                                              gboolean       channel_lock_position,
+                                             gboolean       channel_lock_visibility,
                                              gpointer       user_data);
 
 
@@ -137,6 +138,7 @@ quick_mask_configure_cmd_callback (GimpAction *action,
                                            GIMP_COLOR_TAG_NONE,
                                            FALSE,
                                            FALSE,
+                                           FALSE,
                                            quick_mask_configure_callback,
                                            NULL);
 
@@ -163,6 +165,7 @@ quick_mask_configure_callback (GtkWidget     *dialog,
                                GimpColorTag   channel_color_tag,
                                gboolean       channel_lock_content,
                                gboolean       channel_lock_position,
+                               gboolean       channel_lock_visibility,
                                gpointer       user_data)
 {
   GimpRGB old_color;

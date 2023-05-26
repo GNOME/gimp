@@ -28,6 +28,7 @@ typedef void (* GimpVectorsOptionsCallback) (GtkWidget    *dialog,
                                              GimpColorTag  vectors_color_tag,
                                              gboolean      vectors_lock_content,
                                              gboolean      vectors_lock_position,
+                                             gboolean      vectors_lock_visibility,
                                              gpointer      user_data);
 
 
@@ -45,6 +46,7 @@ GtkWidget * vectors_options_dialog_new (GimpImage                  *image,
                                         GimpColorTag                vectors_color_tag,
                                         gboolean                    vectors_lock_content,
                                         gboolean                    vectors_lock_position,
+                                        gboolean                    vectors_lock_visibility,
                                         GimpVectorsOptionsCallback  callback,
                                         gpointer                    user_data);
 

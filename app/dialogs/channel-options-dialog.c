@@ -62,6 +62,7 @@ static void channel_options_dialog_callback (GtkWidget            *dialog,
                                              GimpColorTag          item_color_tag,
                                              gboolean              item_lock_content,
                                              gboolean              item_lock_position,
+                                             gboolean              item_lock_visibility,
                                              gpointer              user_data);
 static void channel_options_opacity_changed (GtkAdjustment        *adjustment,
                                              GimpColorButton      *color_button);
@@ -90,6 +91,7 @@ channel_options_dialog_new (GimpImage                  *image,
                             GimpColorTag                channel_color_tag,
                             gboolean                    channel_lock_content,
                             gboolean                    channel_lock_position,
+                            gboolean                    channel_lock_visibility,
                             GimpChannelOptionsCallback  callback,
                             gpointer                    user_data)
 {
@@ -121,14 +123,16 @@ channel_options_dialog_new (GimpImage                  *image,
                                     parent, title, role,
                                     icon_name, desc, help_id,
                                     channel_name ? _("Channel _name:") : NULL,
-                                    GIMP_ICON_TOOL_PAINTBRUSH,
+                                    GIMP_ICON_LOCK_CONTENT,
                                     _("Lock _pixels"),
                                     _("Lock position and _size"),
+                                    _("Lock visivility"),
                                     channel_name,
                                     channel_visible,
                                     channel_color_tag,
                                     channel_lock_content,
                                     channel_lock_position,
+                                    channel_lock_visibility,
                                     channel_options_dialog_callback,
                                     private);
 
@@ -191,6 +195,7 @@ channel_options_dialog_callback (GtkWidget    *dialog,
                                  GimpColorTag  item_color_tag,
                                  gboolean      item_lock_content,
                                  gboolean      item_lock_position,
+                                 gboolean      item_lock_visibility,
                                  gpointer      user_data)
 {
   ChannelOptionsDialog *private = user_data;
@@ -215,6 +220,7 @@ channel_options_dialog_callback (GtkWidget    *dialog,
                      item_color_tag,
                      item_lock_content,
                      item_lock_position,
+                     item_lock_visibility,
                      private->user_data);
 }
 

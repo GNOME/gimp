@@ -30,6 +30,7 @@ typedef void (* GimpChannelOptionsCallback) (GtkWidget     *dialog,
                                              GimpColorTag   channel_color_tag,
                                              gboolean       channel_lock_content,
                                              gboolean       channel_lock_position,
+                                             gboolean       channel_lock_visibility,
                                              gpointer       user_data);
 
 
@@ -51,6 +52,7 @@ GtkWidget * channel_options_dialog_new (GimpImage                  *image,
                                         GimpColorTag                channel_color_tag,
                                         gboolean                    channel_lock_content,
                                         gboolean                    channel_lock_position,
+                                        gboolean                    channel_lock_visibility,
                                         GimpChannelOptionsCallback  callback,
                                         gpointer                    user_data);
 

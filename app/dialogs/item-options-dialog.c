@@ -51,6 +51,7 @@ struct _ItemOptionsDialog
   GimpColorTag             color_tag;
   gboolean                 lock_content;
   gboolean                 lock_position;
+  gboolean                 lock_visibility;
   GimpItemOptionsCallback  callback;
   gpointer                 user_data;
 
@@ -91,11 +92,13 @@ item_options_dialog_new (GimpImage               *image,
                          const gchar             *lock_content_icon_name,
                          const gchar             *lock_content_label,
                          const gchar             *lock_position_label,
+                         const gchar             *lock_visibility_label,
                          const gchar             *item_name,
                          gboolean                 item_visible,
                          GimpColorTag             item_color_tag,
                          gboolean                 item_lock_content,
                          gboolean                 item_lock_position,
+                         gboolean                 item_lock_visibility,
                          GimpItemOptionsCallback  callback,
                          gpointer                 user_data)
 {
@@ -119,15 +122,16 @@ item_options_dialog_new (GimpImage               *image,
 
   private = g_slice_new0 (ItemOptionsDialog);
 
-  private->image         = image;
-  private->item          = item;
-  private->context       = context;
-  private->visible       = item_visible;
-  private->color_tag     = item_color_tag;
-  private->lock_content  = item_lock_content;
-  private->lock_position = item_lock_position;
-  private->callback      = callback;
-  private->user_data     = user_data;
+  private->image           = image;
+  private->item            = item;
+  private->context         = context;
+  private->visible         = item_visible;
+  private->color_tag       = item_color_tag;
+  private->lock_content    = item_lock_content;
+  private->lock_position   = item_lock_position;
+  private->lock_visibility = item_lock_visibility;
+  private->callback        = callback;
+  private->user_data       = user_data;
 
   if (item)
     viewable = GIMP_VIEWABLE (item);
@@ -275,7 +279,7 @@ item_options_dialog_new (GimpImage               *image,
                     &private->lock_content);
 
   button = check_button_with_icon_new (lock_position_label,
-                                       GIMP_ICON_TOOL_MOVE,
+                                       GIMP_ICON_LOCK_POSITION,
                                        GTK_BOX (private->right_vbox));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->lock_position);
@@ -284,6 +288,15 @@ item_options_dialog_new (GimpImage               *image,
                     &private->lock_position);
 
   private->lock_position_toggle = button;
+
+  button = check_button_with_icon_new (lock_visibility_label,
+                                       GIMP_ICON_LOCK_VISIBILITY,
+                                       GTK_BOX (private->right_vbox));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                private->lock_visibility);
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &private->lock_visibility);
 
   return dialog;
 }
@@ -439,6 +452,7 @@ item_options_dialog_response (GtkWidget         *dialog,
                          private->color_tag,
                          private->lock_content,
                          private->lock_position,
+                         private->lock_visibility,
                          private->user_data);
     }
   else

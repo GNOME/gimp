@@ -108,6 +108,7 @@ static void   layers_new_callback             (GtkWidget             *dialog,
                                                GimpColorTag           layer_color_tag,
                                                gboolean               layer_lock_pixels,
                                                gboolean               layer_lock_position,
+                                               gboolean               layer_lock_visibility,
                                                gboolean               layer_lock_alpha,
                                                gboolean               rename_text_layer,
                                                gpointer               user_data);
@@ -130,6 +131,7 @@ static void   layers_edit_attributes_callback (GtkWidget             *dialog,
                                                GimpColorTag           layer_color_tag,
                                                gboolean               layer_lock_pixels,
                                                gboolean               layer_lock_position,
+                                               gboolean               layer_lock_visibility,
                                                gboolean               layer_lock_alpha,
                                                gboolean               rename_text_layer,
                                                gpointer               user_data);
@@ -294,6 +296,7 @@ layers_edit_attributes_cmd_callback (GimpAction *action,
                                          gimp_item_get_color_tag (item),
                                          gimp_item_get_lock_content (item),
                                          gimp_item_get_lock_position (item),
+                                         gimp_item_get_lock_visibility (item),
                                          gimp_layer_get_lock_alpha (layer),
                                          layers_edit_attributes_callback,
                                          NULL);
@@ -376,6 +379,7 @@ layers_new_cmd_callback (GimpAction *action,
                                          config->layer_new_fill_type,
                                          TRUE,
                                          GIMP_COLOR_TAG_NONE,
+                                         FALSE,
                                          FALSE,
                                          FALSE,
                                          FALSE,
@@ -2172,6 +2176,7 @@ layers_new_callback (GtkWidget              *dialog,
                      GimpColorTag            layer_color_tag,
                      gboolean                layer_lock_pixels,
                      gboolean                layer_lock_position,
+                     gboolean                layer_lock_visibility,
                      gboolean                layer_lock_alpha,
                      gboolean                rename_text_layer, /* unused */
                      gpointer                user_data)
@@ -2241,6 +2246,8 @@ layers_new_callback (GtkWidget              *dialog,
                                       FALSE);
           gimp_item_set_lock_position (GIMP_ITEM (layer), layer_lock_position,
                                        FALSE);
+          gimp_item_set_lock_visibility (GIMP_ITEM (layer), layer_lock_visibility,
+                                         FALSE);
           gimp_layer_set_lock_alpha (layer, layer_lock_alpha, FALSE);
           gimp_layer_set_blend_space (layer, layer_blend_space, FALSE);
           gimp_layer_set_composite_space (layer, layer_composite_space, FALSE);
@@ -2285,6 +2292,7 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
                                  GimpColorTag            layer_color_tag,
                                  gboolean                layer_lock_pixels,
                                  gboolean                layer_lock_position,
+                                 gboolean                layer_lock_visibility,
                                  gboolean                layer_lock_alpha,
                                  gboolean                rename_text_layer,
                                  gpointer                user_data)
@@ -2303,6 +2311,7 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
       layer_color_tag       != gimp_item_get_color_tag (item)         ||
       layer_lock_pixels     != gimp_item_get_lock_content (item)      ||
       layer_lock_position   != gimp_item_get_lock_position (item)     ||
+      layer_lock_visibility != gimp_item_get_lock_visibility (item)   ||
       layer_lock_alpha      != gimp_layer_get_lock_alpha (layer))
     {
       gimp_image_undo_group_start (image,
@@ -2357,6 +2366,9 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
 
       if (layer_lock_position != gimp_item_get_lock_position (item))
         gimp_item_set_lock_position (item, layer_lock_position, TRUE);
+
+      if (layer_lock_visibility != gimp_item_get_lock_visibility (item))
+        gimp_item_set_lock_visibility (item, layer_lock_visibility, TRUE);
 
       if (layer_lock_alpha != gimp_layer_get_lock_alpha (layer))
         gimp_layer_set_lock_alpha (layer, layer_lock_alpha, TRUE);

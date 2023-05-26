@@ -28,6 +28,7 @@ typedef void (* GimpItemOptionsCallback) (GtkWidget    *dialog,
                                           GimpColorTag  item_color_tag,
                                           gboolean      item_lock_content,
                                           gboolean      item_lock_position,
+                                          gboolean      item_lock_visibility,
                                           gpointer      user_data);
 
 
@@ -44,11 +45,13 @@ GtkWidget * item_options_dialog_new (GimpImage               *image,
                                      const gchar             *lock_content_icon_name,
                                      const gchar             *lock_content_label,
                                      const gchar             *lock_position_label,
+                                     const gchar             *lock_visibility_label,
                                      const gchar             *item_name,
                                      gboolean                 item_visible,
                                      GimpColorTag             item_color_tag,
                                      gboolean                 item_lock_content,
                                      gboolean                 item_lock_position,
+                                     gboolean                 item_lock_visibility,
                                      GimpItemOptionsCallback  callback,
                                      gpointer                 user_data);
 

@@ -56,6 +56,7 @@ static void  vectors_options_dialog_callback (GtkWidget            *dialog,
                                               GimpColorTag          item_color_tag,
                                               gboolean              item_lock_content,
                                               gboolean              item_lock_position,
+                                              gboolean              item_lock_visibility,
                                               gpointer              user_data);
 
 
@@ -76,6 +77,7 @@ vectors_options_dialog_new (GimpImage                  *image,
                             GimpColorTag                vectors_color_tag,
                             gboolean                    vectors_lock_content,
                             gboolean                    vectors_lock_position,
+                            gboolean                    vectors_lock_visibility,
                             GimpVectorsOptionsCallback  callback,
                             gpointer                    user_data)
 {
@@ -102,14 +104,16 @@ vectors_options_dialog_new (GimpImage                  *image,
                                     parent, title, role,
                                     icon_name, desc, help_id,
                                     _("Path _name:"),
-                                    GIMP_ICON_TOOL_PATH,
+                                    GIMP_ICON_LOCK_CONTENT,
                                     _("Lock path _strokes"),
                                     _("Lock path _position"),
+                                    _("Lock path _visibility"),
                                     vectors_name,
                                     vectors_visible,
                                     vectors_color_tag,
                                     vectors_lock_content,
                                     vectors_lock_position,
+                                    vectors_lock_visibility,
                                     vectors_options_dialog_callback,
                                     private);
 
@@ -138,6 +142,7 @@ vectors_options_dialog_callback (GtkWidget    *dialog,
                                  GimpColorTag  item_color_tag,
                                  gboolean      item_lock_content,
                                  gboolean      item_lock_position,
+                                 gboolean      item_lock_visibility,
                                  gpointer      user_data)
 {
   VectorsOptionsDialog *private = user_data;
@@ -151,5 +156,6 @@ vectors_options_dialog_callback (GtkWidget    *dialog,
                      item_color_tag,
                      item_lock_content,
                      item_lock_position,
+                     item_lock_visibility,
                      private->user_data);
 }
