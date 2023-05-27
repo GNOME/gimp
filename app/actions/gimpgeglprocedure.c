@@ -190,6 +190,7 @@ gimp_gegl_procedure_get_sensitive (GimpProcedure  *procedure,
       if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
         sensitive = FALSE;
     }
+
   g_list_free (drawables);
 
   return sensitive;
@@ -203,30 +204,38 @@ gimp_gegl_procedure_execute (GimpProcedure   *procedure,
                              GimpValueArray  *args,
                              GError         **error)
 {
-  GimpImage    *image;
-  GimpDrawable *drawable;
-  GObject      *config;
-  GeglNode     *node;
+  GimpImage  *image;
+  gint        n_drawables;
+  GObject   **drawables;
+  GObject    *config;
 
-  image    = g_value_get_object (gimp_value_array_index (args, 1));
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  config   = g_value_get_object (gimp_value_array_index (args, 3));
+  image       = g_value_get_object          (gimp_value_array_index (args, 1));
+  n_drawables = g_value_get_int             (gimp_value_array_index (args, 2));
+  drawables   = gimp_value_get_object_array (gimp_value_array_index (args, 3));
+  config      = g_value_get_object          (gimp_value_array_index (args, 4));
 
-  node = gegl_node_new_child (NULL,
-                              "operation",
-                              GIMP_GEGL_PROCEDURE (procedure)->operation,
-                              NULL);
+  if (n_drawables == 1)
+    {
+      GeglNode *node;
 
-  gimp_drawable_apply_operation_with_config (
-    drawable,
-    progress, gimp_procedure_get_label (procedure),
-    node, config);
+      node = gegl_node_new_child (NULL,
+                                  "operation",
+                                  GIMP_GEGL_PROCEDURE (procedure)->operation,
+                                  NULL);
 
-  g_object_unref (node);
+      gimp_drawable_apply_operation_with_config (GIMP_DRAWABLE (drawables[0]),
+                                                 progress,
+                                                 gimp_procedure_get_label (procedure),
+                                                 node, config);
 
-  gimp_image_flush (image);
+      g_object_unref (node);
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+      gimp_image_flush (image);
+
+      return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, FALSE, NULL);
 }
 
 static void
@@ -244,7 +253,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
   const gchar       *tool_name;
 
   run_mode = g_value_get_enum   (gimp_value_array_index (args, 0));
-  settings = g_value_get_object (gimp_value_array_index (args, 3));
+  settings = g_value_get_object (gimp_value_array_index (args, 4));
 
   if (! settings &&
       (run_mode != GIMP_RUN_INTERACTIVE ||
@@ -255,7 +264,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
       GType          config_type;
       GimpContainer *container;
 
-      config_type = G_VALUE_TYPE (gimp_value_array_index (args, 3));
+      config_type = G_VALUE_TYPE (gimp_value_array_index (args, 4));
 
       container = gimp_operation_config_get_container (gimp, config_type,
                                                        (GCompareFunc)
@@ -282,7 +291,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
         {
           GimpValueArray *return_vals;
 
-          g_value_set_object (gimp_value_array_index (args, 3), settings);
+          g_value_set_object (gimp_value_array_index (args, 4), settings);
           return_vals = gimp_procedure_execute (procedure, gimp, context, progress,
                                                 args, NULL);
           gimp_value_array_unref (return_vals);
@@ -433,11 +442,17 @@ gimp_gegl_procedure_new (Gimp        *gimp,
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "Drawable",
-                                                         "Input drawable",
-                                                         TRUE,
-                                                         GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("n-drawables",
+                                                 "N drawables",
+                                                 "The number of drawables",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_object_array ("drawables",
+                                                             "Drawables",
+                                                             "Input drawables",
+                                                             GIMP_TYPE_DRAWABLE,
+                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_object ("settings",
                                                     "Settings",
