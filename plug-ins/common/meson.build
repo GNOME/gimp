@@ -160,7 +160,12 @@ if have_qoi
   }
 endif
 
-if have_ilbm
+if libiff.found() and libilbm.found()
+  common_plugins_list += {
+    'name': 'file-iff',
+    'deps': [ gtk3, gegl, libiff, libilbm, ],
+  }
+elif have_ilbm
   common_plugins_list += {
     'name': 'file-iff',
     'deps': [ gtk3, gegl, ],

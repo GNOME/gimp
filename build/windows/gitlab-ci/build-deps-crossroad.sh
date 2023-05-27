@@ -40,6 +40,8 @@ crossroad install appstream-glib              \
                   gobject-introspection-runtime \
                   iso-codes                   \
                   libheif                     \
+                  libiff                      \
+                  libilbm                     \
                   libjxl                      \
                   $LIBMNG                     \
                   libmypaint mypaint-brushes  \
