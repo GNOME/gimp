@@ -207,7 +207,8 @@ gimp_parasite_print (GimpParasite *parasite)
 /**
  * gimp_parasite_new:
  * @name:  the new #GimpParasite name.
- * @flags: see libgimpbase/gimpparasite.h macros.
+ * @flags: see [const@Gimp.PARASITE_PERSISTENT] and [const@Gimp.PARASITE_UNDOABLE];
+ *   other values are mainly intended for internal use.
  * @size:  the size of @data, including a terminal %NULL byte if needed.
  * @data:  (nullable) (array length=size) (element-type char): the data to save in a parasite.
  *
@@ -329,6 +330,8 @@ gimp_parasite_compare (const GimpParasite *a,
 /**
  * gimp_parasite_get_flags:
  * @parasite: a #GimpParasite
+ *
+ * Get the flags of the parasite.
  *
  * Returns: @parasite flags.
  */
