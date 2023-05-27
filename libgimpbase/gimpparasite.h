@@ -55,8 +55,23 @@ GParamSpec * gimp_param_spec_parasite      (const gchar  *name,
                                             const gchar  *blurb,
                                             GParamFlags   flags);
 
-
+/**
+ * GIMP_PARASITE_PERSISTENT:
+ *
+ * A persistent parasite will be saved to XCF and can be used again after
+ * reloading. A non persistent parasite will only be available during the
+ * current session.
+ * See [struct@Gimp.Parasite].
+ **/
 #define GIMP_PARASITE_PERSISTENT 1
+
+/**
+ * GIMP_PARASITE_UNDOABLE:
+ *
+ * An undoable parasite that was added, can be removed using the Undo action.
+ * If this flag is not set, undoing will not change the parasite.
+ * See [struct@Gimp.Parasite].
+ **/
 #define GIMP_PARASITE_UNDOABLE   2
 
 #define GIMP_PARASITE_ATTACH_PARENT     (0x80 << 8)
@@ -71,9 +86,10 @@ GParamSpec * gimp_param_spec_parasite      (const gchar  *name,
 /**
  * GimpParasite:
  * @name:  the parasite name, USE A UNIQUE PREFIX
- * @flags: the parasite flags, like save in XCF etc.
+ * @flags: the parasite flags, see [const@Gimp.PARASITE_PERSISTENT] and
+ *   [const@Gimp.PARASITE_UNDOABLE]
  * @size:  the parasite size in bytes
- * @data: (array length=size): the parasite data, the owner os the parasite is responsible
+ * @data: (array length=size): the parasite data, the owner of the parasite is responsible
  *   for tracking byte order and internal structure
  **/
 struct _GimpParasite
