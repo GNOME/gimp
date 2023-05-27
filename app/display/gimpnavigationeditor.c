@@ -56,9 +56,6 @@
 #include "gimp-intl.h"
 
 
-#define UPDATE_DELAY 300 /* From GtkRange in GTK+ 2.22 */
-
-
 static void        gimp_navigation_editor_docked_iface_init            (GimpDockedInterface  *iface);
 
 static void        gimp_navigation_editor_dispose                      (GObject              *object);
@@ -697,9 +694,8 @@ gimp_navigation_editor_zoom_adj_changed (GtkAdjustment        *adj,
     g_source_remove (editor->scale_timeout);
 
   editor->scale_timeout =
-    g_timeout_add (UPDATE_DELAY,
-                   gimp_navigation_editor_zoom_adj_changed_timeout,
-                   editor);
+    g_idle_add (gimp_navigation_editor_zoom_adj_changed_timeout,
+                editor);
 }
 
 static void
