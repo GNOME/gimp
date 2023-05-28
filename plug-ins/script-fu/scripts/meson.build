@@ -21,6 +21,7 @@ scripts = [
   'gimp-online.scm',
   'gradient-example.scm',
   'grid-system.scm',
+  'guides-center-guides.scm',
   'guides-from-selection.scm',
   'guides-new-percent.scm',
   'guides-new.scm',
