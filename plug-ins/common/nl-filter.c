@@ -38,7 +38,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_PROC   "plug-in-nlfilt"
+#define PLUG_IN_PROC   "plug-in-nl-filter"
 #define PLUG_IN_BINARY "nl-filter"
 #define PLUG_IN_ROLE   "gimp-nl-filter"
 
