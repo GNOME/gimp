@@ -123,6 +123,8 @@ static void     gimp_statusbar_soft_proof_optimize_changed
 static void     gimp_statusbar_soft_proof_gamut_toggled
                                                   (GtkWidget         *button,
                                                    GimpStatusbar     *statusbar);
+static void     gimp_statusbar_build_profile_combo(GimpStatusbar     *statusbar,
+                                                   GimpColorConfig   *color_config);
 static gboolean gimp_statusbar_soft_proof_popover_shown
                                                  (GtkWidget          *button,
                                                   GdkEventButton     *bevent,
@@ -240,10 +242,8 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   GtkWidget     *label;
   GtkWidget     *grid;
   GtkWidget     *separator;
-  GtkWidget     *profile_chooser;
   GimpUnitStore *store;
   gchar         *text;
-  GFile         *file;
   GtkListStore  *combo_store;
   gint           row;
 
@@ -511,27 +511,13 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                    0, row++, 2, 1);
   gtk_widget_show (statusbar->profile_label);
 
-  file = gimp_directory_file ("profilerc", NULL);
-  combo_store = gimp_color_profile_store_new (file);
-  g_object_unref (file);
-  gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (combo_store),
-                                     NULL, NULL);
-  profile_chooser = gimp_color_profile_chooser_dialog_new (_("Soft-Proofing Profile"), NULL,
-                                                           GTK_FILE_CHOOSER_ACTION_OPEN);
-  statusbar->profile_combo = gimp_color_profile_combo_box_new_with_model (profile_chooser,
-                                                                          GTK_TREE_MODEL (combo_store));
-
-  gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (statusbar->profile_combo),
-                                                NULL, NULL);
+  gimp_statusbar_build_profile_combo (statusbar, NULL);
 
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Soft-proofing Profile: "),
                             0.0, 0.5,
                             statusbar->profile_combo, 1);
   gtk_widget_show (statusbar->profile_combo);
-  g_signal_connect (statusbar->profile_combo, "changed",
-                    G_CALLBACK (gimp_statusbar_soft_proof_profile_changed),
-                    statusbar);
 
   combo_store =
     gimp_int_store_new ("Perceptual",            GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
@@ -1107,6 +1093,78 @@ gimp_statusbar_soft_proof_gamut_toggled (GtkWidget     *button,
                                             statusbar);
 }
 
+static void
+gimp_statusbar_build_profile_combo (GimpStatusbar   *statusbar,
+                                    GimpColorConfig *color_config)
+{
+  GFile            *file;
+  GtkListStore     *combo_store;
+  GtkWidget        *profile_chooser;
+
+  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+
+  if (statusbar->profile_combo)
+    {
+      g_signal_handlers_disconnect_by_func (statusbar->profile_combo,
+                                            gimp_statusbar_soft_proof_profile_changed,
+                                            statusbar);
+      gtk_combo_box_set_model (GTK_COMBO_BOX (statusbar->profile_combo), NULL);
+    }
+
+  file = gimp_directory_file ("profilerc", NULL);
+  combo_store = gimp_color_profile_store_new (file);
+  g_object_unref (file);
+  gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (combo_store),
+                                     NULL, NULL);
+  profile_chooser = gimp_color_profile_chooser_dialog_new (_("Soft-Proofing Profile"), NULL,
+                                                           GTK_FILE_CHOOSER_ACTION_OPEN);
+
+  if (color_config)
+    {
+      GimpColorProfile *profile;
+      GimpImage        *image;
+
+      gtk_combo_box_set_model (GTK_COMBO_BOX (statusbar->profile_combo),
+                               GTK_TREE_MODEL (combo_store));
+      profile = gimp_color_config_get_cmyk_color_profile (color_config, NULL);
+
+      if (profile)
+        {
+          gchar *path;
+          gchar *label;
+
+          g_object_get (color_config, "cmyk-profile", &path, NULL);
+          file = gimp_file_new_for_config_path (path, NULL);
+          g_free (path);
+          label = g_strdup_printf (_("Preferred CMYK (%s)"),
+                                   gimp_color_profile_get_label (profile));
+          g_object_unref (profile);
+          gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (statusbar->profile_combo),
+                                                 file, label);
+          g_object_unref (file);
+          g_free (label);
+        }
+
+      /* Restore selected simulation profile */
+      image = gimp_display_get_image (statusbar->shell->display);
+      if (image)
+        gimp_color_profile_combo_box_set_active_profile (GIMP_COLOR_PROFILE_COMBO_BOX (statusbar->profile_combo),
+                                                         gimp_image_get_simulation_profile (image));
+    }
+  else
+    {
+      statusbar->profile_combo =
+        gimp_color_profile_combo_box_new_with_model (profile_chooser,
+                                                     GTK_TREE_MODEL (combo_store));
+      gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (statusbar->profile_combo),
+                                                    NULL, NULL);
+    }
+
+  g_signal_connect (statusbar->profile_combo, "changed",
+                    G_CALLBACK (gimp_statusbar_soft_proof_profile_changed),
+                    statusbar);
+}
+
 static gboolean
 gimp_statusbar_soft_proof_popover_shown (GtkWidget      *button,
                                          GdkEventButton *bevent,
@@ -1265,9 +1323,14 @@ gimp_statusbar_set_shell (GimpStatusbar    *statusbar,
                            statusbar, 0);
 
   if (statusbar->shell->color_config)
-    g_signal_connect (statusbar->shell->color_config, "notify",
-                      G_CALLBACK (gimp_statusbar_shell_color_config_notify),
-                      statusbar);
+    {
+      g_signal_connect (statusbar->shell->color_config, "notify",
+                        G_CALLBACK (gimp_statusbar_shell_color_config_notify),
+                        statusbar);
+
+      gimp_statusbar_build_profile_combo (statusbar,
+                                          statusbar->shell->color_config);
+    }
 
   statusbar->gimp = gimp_display_get_gimp (statusbar->shell->display);
   if (statusbar->gimp)
@@ -2017,6 +2080,9 @@ gimp_statusbar_shell_color_config_notify (GObject          *config,
   active = gimp_color_config_get_simulation_gamut_check (color_config);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (statusbar->out_of_gamut_toggle),
                                 active);
+
+  gimp_statusbar_build_profile_combo (statusbar,
+                                      statusbar->shell->color_config);
 }
 
 static void
