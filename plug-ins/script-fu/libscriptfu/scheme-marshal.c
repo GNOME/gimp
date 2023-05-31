@@ -188,8 +188,8 @@ marshal_returned_object_array_to_vector (scheme   *sc,
    */
   for (int j = n - 1; j >= 0; j--)
     {
-      gint     id;
       GObject *object = object_array[j];
+      gint     id;
 
       if (object)
         g_object_get (object, "id", &id, NULL); /* get property "id" */

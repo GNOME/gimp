@@ -55,7 +55,6 @@ typedef struct _PreviewBitmap
 
 struct _GimpBrushSelectButton
 {
-  /* !! Not a pointer, is contained. */
   GimpResourceSelectButton parent_instance;
 
   /* Partial view of brush image. Receives drag.  Receives mouse down to popup zoom. */
@@ -66,7 +65,6 @@ struct _GimpBrushSelectButton
 
 /*  local  */
 
-/* implement virtual. */
 static void gimp_brush_select_button_finalize        (GObject                  *object);
 static void gimp_brush_select_button_draw_interior   (GimpResourceSelectButton *self);
 
@@ -116,36 +114,18 @@ G_DEFINE_FINAL_TYPE (GimpBrushSelectButton,
 static void
 gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
 {
-  /* Alias cast klass to super classes. */
   GObjectClass                  *object_class  = G_OBJECT_CLASS (klass);
   GimpResourceSelectButtonClass *superclass    = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
 
-  g_debug ("%s called", G_STRFUNC);
-
   object_class->finalize     = gimp_brush_select_button_finalize;
 
-  /* Implement pure virtual functions. */
   superclass->draw_interior = gimp_brush_select_button_draw_interior;
-
-  /* Set data member of class. */
   superclass->resource_type = GIMP_TYPE_BRUSH;
-
-  /* We don't define property getter/setters: use superclass getter/setters.
-   * But super property name is "resource", not "brush"
-   */
 }
 
 static void
 gimp_brush_select_button_init (GimpBrushSelectButton *self)
 {
-  g_debug ("%s called", G_STRFUNC);
-
-  /* Specialize:
-   *     - embed our widget interior instance to super widget instance.
-   *     - connect our widget to dnd
-   * These will call superclass methods.
-   * These are on instance, not our subclass.
-   */
   gimp_brush_select_button_embed_interior (self);
 
   gimp_brush_select_button_set_drag_target (self);

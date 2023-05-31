@@ -152,6 +152,7 @@ struct _GimpPlugInPrivate
   GHashTable *displays;
   GHashTable *images;
   GHashTable *items;
+  GHashTable *resources;
 };
 
 
@@ -326,9 +327,10 @@ gimp_plug_in_finalize (GObject *object)
 
   g_clear_pointer (&plug_in->priv->menu_branches, g_list_free);
 
-  gimp_plug_in_destroy_proxies (plug_in->priv->displays, TRUE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->images,   TRUE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->items,    TRUE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->displays,  TRUE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->images,    TRUE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->items,     TRUE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->resources, TRUE);
 
   gimp_plug_in_destroy_hashes (plug_in);
 
@@ -1439,15 +1441,17 @@ gimp_plug_in_pop_procedure (GimpPlugIn    *plug_in,
 
   _gimp_procedure_destroy_proxies (procedure);
 
-  gimp_plug_in_destroy_proxies (plug_in->priv->displays, FALSE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->images,   FALSE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->items,    FALSE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->displays,  FALSE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->images,    FALSE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->items,     FALSE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->resources, FALSE);
 
   if (! plug_in->priv->procedure_stack)
     {
-      gimp_plug_in_destroy_proxies (plug_in->priv->displays, TRUE);
-      gimp_plug_in_destroy_proxies (plug_in->priv->images,   TRUE);
-      gimp_plug_in_destroy_proxies (plug_in->priv->items,    TRUE);
+      gimp_plug_in_destroy_proxies (plug_in->priv->displays,  TRUE);
+      gimp_plug_in_destroy_proxies (plug_in->priv->images,    TRUE);
+      gimp_plug_in_destroy_proxies (plug_in->priv->items,     TRUE);
+      gimp_plug_in_destroy_proxies (plug_in->priv->resources, TRUE);
 
       gimp_plug_in_destroy_hashes (plug_in);
     }
@@ -1583,12 +1587,73 @@ _gimp_plug_in_get_item (GimpPlugIn *plug_in,
   return item;
 }
 
+GimpResource *
+_gimp_plug_in_get_resource (GimpPlugIn *plug_in,
+                            gint32      resource_id)
+{
+  GimpResource *resource = NULL;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+
+  if (G_UNLIKELY (! plug_in->priv->resources))
+    plug_in->priv->resources =
+      g_hash_table_new_full (g_direct_hash,
+                             g_direct_equal,
+                             NULL,
+                             (GDestroyNotify) g_object_unref);
+
+  resource = g_hash_table_lookup (plug_in->priv->resources,
+                                  GINT_TO_POINTER (resource_id));
+
+  if (! resource)
+    {
+      if (gimp_resource_id_is_brush (resource_id))
+        {
+          resource = g_object_new (GIMP_TYPE_BRUSH,
+                                   "id", resource_id,
+                                   NULL);
+        }
+      else if (gimp_resource_id_is_pattern (resource_id))
+        {
+          resource = g_object_new (GIMP_TYPE_PATTERN,
+                                   "id", resource_id,
+                                   NULL);
+        }
+      else if (gimp_resource_id_is_gradient (resource_id))
+        {
+          resource = g_object_new (GIMP_TYPE_GRADIENT,
+                                   "id", resource_id,
+                                   NULL);
+        }
+      else if (gimp_resource_id_is_palette (resource_id))
+        {
+          resource = g_object_new (GIMP_TYPE_PALETTE,
+                                   "id", resource_id,
+                                   NULL);
+        }
+      else if (gimp_resource_id_is_font (resource_id))
+        {
+          resource = g_object_new (GIMP_TYPE_FONT,
+                                   "id", resource_id,
+                                   NULL);
+        }
+
+      if (resource)
+        g_hash_table_insert (plug_in->priv->resources,
+                             GINT_TO_POINTER (resource_id),
+                             g_object_ref (resource) /* add debug ref */);
+    }
+
+  return resource;
+}
+
 static void
 gimp_plug_in_destroy_hashes (GimpPlugIn *plug_in)
 {
-  g_clear_pointer (&plug_in->priv->displays, g_hash_table_unref);
-  g_clear_pointer (&plug_in->priv->images,   g_hash_table_unref);
-  g_clear_pointer (&plug_in->priv->items,    g_hash_table_unref);
+  g_clear_pointer (&plug_in->priv->displays,  g_hash_table_unref);
+  g_clear_pointer (&plug_in->priv->images,    g_hash_table_unref);
+  g_clear_pointer (&plug_in->priv->items,     g_hash_table_unref);
+  g_clear_pointer (&plug_in->priv->resources, g_hash_table_unref);
 }
 
 static void

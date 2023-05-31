@@ -80,6 +80,38 @@ gradient_new_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+gradient_get_by_name_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *name;
+  GimpGradient *gradient = NULL;
+
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+
+      if (! gradient)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_object (gimp_value_array_index (return_vals, 1), gradient);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 gradient_duplicate_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
@@ -98,8 +130,8 @@ gradient_duplicate_invoker (GimpProcedure         *procedure,
     {
       gradient_copy = (GimpGradient *)
         gimp_data_factory_data_duplicate (gimp->gradient_factory, GIMP_DATA (gradient));
-      /* Assert the copy has a unique name. */
-      if (!gradient_copy)
+
+      if (! gradient_copy)
         success = FALSE;
     }
 
@@ -160,16 +192,9 @@ gradient_rename_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      /* Rename the gradient in app. */
       gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
-      /* Assert GIMP might have set a name different from new_name. */
 
-      /* Return a reference.
-       * The wire protocol will create a new proxy on the plugin side.
-       * We don't need an alias here, except to make clear
-       * that we are returning the same real object as passed.
-       */
-       gradient_renamed = gradient;
+      gradient_renamed = gradient;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -372,33 +397,6 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_color_samples);
       gimp_value_take_float_array (gimp_value_array_index (return_vals, 2), color_samples, num_color_samples);
     }
-
-  return return_vals;
-}
-
-static GimpValueArray *
-gradient_id_is_valid_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
-{
-  GimpValueArray *return_vals;
-  const gchar *id;
-  gboolean valid = FALSE;
-
-  id = g_value_get_string (gimp_value_array_index (args, 0));
-
-  valid = (gimp_pdb_get_gradient (gimp, id, GIMP_PDB_DATA_ACCESS_READ, error) != NULL);
-
-  /* When ID is not valid, NULL is returned and error is set.
-   * Clear error so GIMP not display error dialog.
-   */
-  g_clear_error (error);
-
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_boolean (gimp_value_array_index (return_vals, 1), valid);
 
   return return_vals;
 }
@@ -1433,6 +1431,36 @@ register_gradient_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-gradient-get-by-name
+   */
+  procedure = gimp_procedure_new (gradient_get_by_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-gradient-get-by-name");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the gradient with the given name.",
+                                  "Returns the gradient with the given name.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2023");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the gradient",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_gradient ("gradient",
+                                                             "gradient",
+                                                             "The gradient",
+                                                             FALSE,
+                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-gradient-duplicate
    */
   procedure = gimp_procedure_new (gradient_duplicate_invoker);
@@ -1498,8 +1526,7 @@ register_gradient_procs (GimpPDB *pdb)
                                "gimp-gradient-rename");
   gimp_procedure_set_static_help (procedure,
                                   "Renames a gradient. When the name is in use, renames to a unique name.",
-                                  "Renames a gradient. The name is the same as the ID. When the proposed name is already used, GIMP generates a unique name, which get_id() will return.\n"
-                                  "Returns a reference to a renamed gradient, which you should assign to the original var or a differently named var. Any existing references will be invalid. Resources in plugins are proxies holding an ID, which can be invalid when the resource is renamed.",
+                                  "Renames a gradient.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Shlomi Fish <shlomif@iglu.org.il>",
@@ -1673,36 +1700,6 @@ register_gradient_procs (GimpPDB *pdb)
                                                                 "color samples",
                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-gradient-id-is-valid
-   */
-  procedure = gimp_procedure_new (gradient_id_is_valid_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-gradient-id-is-valid");
-  gimp_procedure_set_static_help (procedure,
-                                  "Whether the ID is a valid reference to installed data.",
-                                  "Returns TRUE if this ID is valid.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Lloyd Konneker",
-                                         "Lloyd Konneker",
-                                         "2022");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("id",
-                                                       "id",
-                                                       "The gradient ID",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("valid",
-                                                         "valid",
-                                                         "TRUE if the gradient ID is valid",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

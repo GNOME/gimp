@@ -77,6 +77,38 @@ palette_new_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+palette_get_by_name_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *name;
+  GimpPalette *palette = NULL;
+
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+
+      if (! palette)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_object (gimp_value_array_index (return_vals, 1), palette);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 palette_duplicate_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
@@ -105,33 +137,6 @@ palette_duplicate_invoker (GimpProcedure         *procedure,
 
   if (success)
     g_value_set_object (gimp_value_array_index (return_vals, 1), palette_copy);
-
-  return return_vals;
-}
-
-static GimpValueArray *
-palette_id_is_valid_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
-                             GError               **error)
-{
-  GimpValueArray *return_vals;
-  const gchar *id;
-  gboolean valid = FALSE;
-
-  id = g_value_get_string (gimp_value_array_index (args, 0));
-
-  valid = (gimp_pdb_get_palette (gimp, id, GIMP_PDB_DATA_ACCESS_READ, error) != NULL);
-
-  /* When ID is not valid, NULL is returned and error is set.
-   * Clear error so GIMP not display error dialog.
-   */
-  g_clear_error (error);
-
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_boolean (gimp_value_array_index (return_vals, 1), valid);
 
   return return_vals;
 }
@@ -605,6 +610,36 @@ register_palette_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-palette-get-by-name
+   */
+  procedure = gimp_procedure_new (palette_get_by_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-get-by-name");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the palette with the given name.",
+                                  "Returns the palette with the given name.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2023");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the palette",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_palette ("palette",
+                                                            "palette",
+                                                            "The palette",
+                                                            FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-palette-duplicate
    */
   procedure = gimp_procedure_new (palette_duplicate_invoker);
@@ -630,36 +665,6 @@ register_palette_procs (GimpPDB *pdb)
                                                             "A copy of the palette.",
                                                             FALSE,
                                                             GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-palette-id-is-valid
-   */
-  procedure = gimp_procedure_new (palette_id_is_valid_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-palette-id-is-valid");
-  gimp_procedure_set_static_help (procedure,
-                                  "Whether the ID is a valid reference to installed data.",
-                                  "Returns TRUE if this ID is valid.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Lloyd Konneker",
-                                         "Lloyd Konneker",
-                                         "2022");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("id",
-                                                       "id",
-                                                       "The palette ID",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("valid",
-                                                         "valid",
-                                                         "TRUE if the palette ID is valid",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

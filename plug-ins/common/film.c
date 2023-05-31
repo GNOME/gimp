@@ -744,8 +744,7 @@ draw_number (GimpLayer *layer,
   GimpFont     *font = filmvals.number_font;
   gchar        *fontname;
 
-  /* FIXME: gimp_text methods should take GimpFont font instead of font_name */
-  g_object_get (font, "id", &fontname, NULL);
+  fontname = gimp_resource_get_name (GIMP_RESOURCE (font));
 
   g_snprintf (buf, sizeof (buf), "%d", num);
 
@@ -1428,7 +1427,7 @@ film_load_settings (void)
    * Restore pointer from the name which was also serialized.
    * A hack that goes away when GimpProcedureConfig is used.
    */
-  filmvals.number_font = g_object_new (GIMP_TYPE_FONT, "id", filmvals.font_name, NULL);
+  filmvals.number_font = gimp_font_get_by_name (filmvals.font_name);
 }
 
 static void
@@ -1436,7 +1435,7 @@ film_save_settings (void)
 {
   /* Copy font name from font, i.e. serialize string not pointer. */
   g_strlcpy (filmvals.font_name,
-             gimp_resource_get_id (GIMP_RESOURCE (filmvals.number_font)),
+             gimp_resource_get_name (GIMP_RESOURCE (filmvals.number_font)),
              FONT_LEN);
 
   gimp_set_data (PLUG_IN_PROC, &filmvals, sizeof (FilmVals));

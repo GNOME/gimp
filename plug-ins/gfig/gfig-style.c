@@ -82,28 +82,20 @@ gfig_read_resource (gchar        **text,
           ptr++;
           if (!strcmp (tmpstr, tag))
             {
-              /* Create a resource object, just a proxy for the thing in core. */
-              GimpResource *resource;
-              gchar *resource_id = g_strdup (g_strchug (ptr));
+              const gchar *resource_name = g_strchug (ptr);
 
-              resource = g_object_new (resource_type, "id", resource_id, NULL);
-              /* We own the resource object, its refcount is one.
-               * The resource object owns its string ID.
-               */
-              *style_entry = resource;
-              /* We are not checking the ID is valid.
-               * The user might have uninstalled the resource.
-               */
-
+              *style_entry = gimp_resource_get_by_name (resource_type,
+                                                        resource_name);
               g_free (tmpstr);
               return;
             }
+
           g_free (tmpstr);
         }
+
       ++n;
     }
 
-  /* Fail */
   *style_entry = NULL;
   g_message ("Parameter '%s' not found", tag);
 }
@@ -374,11 +366,11 @@ gfig_save_style (Style   *style,
 
   if (gfig_context->debug_styles)
     g_printerr ("Saving style %s, brush name '%s'\n", style->name,
-                gimp_resource_get_id (GIMP_RESOURCE (style->brush)));
+                gimp_resource_get_name (GIMP_RESOURCE (style->brush)));
 
   g_string_append_printf (string, "<Style %s>\n", style->name);
   g_string_append_printf (string, "BrushName:      %s\n",
-                          gimp_resource_get_id (GIMP_RESOURCE (style->brush)));
+                          gimp_resource_get_name (GIMP_RESOURCE (style->brush)));
   if (!style->brush)
     g_message ("Error saving style %s: saving NULL for brush name", style->name);
 
@@ -390,9 +382,9 @@ gfig_save_style (Style   *style,
                           g_ascii_dtostr (buffer, blen, style->fill_opacity));
 
   g_string_append_printf (string, "Pattern:        %s\n",
-                          gimp_resource_get_id (GIMP_RESOURCE (style->pattern)));
+                          gimp_resource_get_name (GIMP_RESOURCE (style->pattern)));
   g_string_append_printf (string, "Gradient:       %s\n",
-                          gimp_resource_get_id (GIMP_RESOURCE (style->gradient)));
+                          gimp_resource_get_name (GIMP_RESOURCE (style->gradient)));
 
   g_string_append_printf (string, "Foreground: %s %s %s %s\n",
                           g_ascii_dtostr (buffer_r, blen, style->foreground.r),
@@ -425,7 +417,7 @@ gfig_style_save_as_attributes (Style   *style,
 
   /* Tags must match the ones written, see below in the code. */
   g_string_append_printf (string, "BrushName=\"%s\" ",
-                          gimp_resource_get_id (GIMP_RESOURCE (style->brush)));
+                          gimp_resource_get_name (GIMP_RESOURCE (style->brush)));
   /* Why only brush and not pattern and gradient? */
 
   g_string_append_printf (string, "Foreground=\"%s %s %s %s\" ",
@@ -627,7 +619,7 @@ gfig_style_apply (Style *style)
 
   if (! gimp_context_set_brush (style->brush))
     g_message ("Style apply: Failed to set brush to '%s' in style '%s'",
-               gimp_resource_get_id (GIMP_RESOURCE (style->brush)),
+               gimp_resource_get_name (GIMP_RESOURCE (style->brush)),
                style->name);
 
   gimp_context_set_brush_default_size ();

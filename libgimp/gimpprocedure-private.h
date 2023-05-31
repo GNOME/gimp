@@ -29,14 +29,16 @@
 G_BEGIN_DECLS
 
 
-GimpDisplay * _gimp_procedure_get_display     (GimpProcedure *procedure,
-                                               gint32         display_id);
-GimpImage   * _gimp_procedure_get_image       (GimpProcedure *procedure,
-                                               gint32         image_id);
-GimpItem    * _gimp_procedure_get_item        (GimpProcedure *procedure,
-                                               gint32         item_id);
+GimpDisplay  * _gimp_procedure_get_display     (GimpProcedure *procedure,
+                                                gint32         display_id);
+GimpImage    * _gimp_procedure_get_image       (GimpProcedure *procedure,
+                                               gint32          image_id);
+GimpItem     * _gimp_procedure_get_item        (GimpProcedure *procedure,
+                                                gint32         item_id);
+GimpResource * _gimp_procedure_get_resource    (GimpProcedure *procedure,
+                                                gint32         resource_id);
 
-void          _gimp_procedure_destroy_proxies (GimpProcedure *procedure);
+void           _gimp_procedure_destroy_proxies (GimpProcedure *procedure);
 
 
 G_END_DECLS

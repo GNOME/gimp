@@ -32,12 +32,11 @@
 #include "libgimp-intl.h"
 
 
-/* Annotation for the class, which appears in the GimpUi doc. */
-
 /**
  * SECTION: gimpresourceselectbutton
  * @title: GimpResourceSelectButton
- * @short_description: Base class for buttons that popup a resource selection dialog.
+ * @short_description: Base class for buttons that popup a resource
+ *                     selection dialog.
  *
  * A button which pops up a resource selection dialog.
  *
@@ -75,12 +74,6 @@
  * Since: 3.0
  **/
 
-/* This class was derived from GimpSelectButton and its subclass GimpPatternSelectButton.
- * By moving things from the subclass to the super class, generalizing.
- * I.E. refactored by inheriting methods that are the same across subclasses.
- */
-
-
 
 enum
 {
@@ -97,36 +90,17 @@ enum
 };
 
 
-/* Private structure definition. */
 typedef struct
 {
-  GimpResource *resource;       /* Thing self widget chooses*/
-  /* Type of resource is known by the class, not instance.
-   * e.g. GimpFont, some subclass of GimpResource
-   */
-
-  /* Self collaborates with a remote widget, a popup chooser dialog.  */
-  const gchar  *title; /* Title of remote widget. */
-
-  /* Interface functions to remote dialog.
-   * Instance knows a temporary PDB procedure which the remote dialog callbacks self.
-   * This specializes us, and is returned by a call to e.g. gimp_pattern_select_new,
-   * a libgimp function that talks to remote dialog.
-   *
-   * It does not need to be freed, owned by the PDB.
-   */
-  const gchar *temp_callback_from_remote_dialog;
-
-  /* Self is-a GtkContainer widget to which subclasses will embed. */
-  /* Widget interior to self, created and drawn by subclass. */
-  GtkWidget *interior_widget;
-
+  GimpResource *resource;
+  gchar        *title;
+  const gchar  *temp_callback_from_remote_dialog;
+  GtkWidget    *interior_widget;
 } GimpResourceSelectButtonPrivate;
 
 
 /*  local function prototypes  */
 
-/* Overridden GObject methods. */
 static void   gimp_resource_select_button_dispose      (GObject      *object);
 static void   gimp_resource_select_button_finalize     (GObject      *object);
 
@@ -169,19 +143,14 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpResourceSelectButton, gimp_resource_select_butto
 static void
 gimp_resource_select_button_class_init (GimpResourceSelectButtonClass *klass)
 {
-  /* Root super class */
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  g_debug ("%s", G_STRFUNC);
-
-  /* Override to root super class GObject. */
   object_class->dispose      = gimp_resource_select_button_dispose;
   object_class->finalize     = gimp_resource_select_button_finalize;
   object_class->set_property = gimp_resource_select_button_set_property;
   object_class->get_property = gimp_resource_select_button_get_property;
 
-  /* Signals */
-  klass->resource_set = NULL;
+  klass->resource_set        = NULL;
 
   /**
    * GimpResourceSelectButton:title:
@@ -190,14 +159,13 @@ gimp_resource_select_button_class_init (GimpResourceSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  /* Default is not localized i18n since caller should provide a value. */
-  resource_button_props[PROP_TITLE]
-    = g_param_spec_string ("title",
-                           "Title",
-                           "The title to be used for the resource selection popup dialog",
-                           "Resource Selection",  /* default */
-                           GIMP_PARAM_READWRITE |
-                           G_PARAM_CONSTRUCT_ONLY);
+  resource_button_props[PROP_TITLE] =
+    g_param_spec_string ("title",
+                         "Title",
+                         "The title to be used for the resource selection popup dialog",
+                         "Resource Selection",
+                         GIMP_PARAM_READWRITE |
+                         G_PARAM_CONSTRUCT_ONLY);
 
   /**
    * GimpResourceSelectButton:resource:
@@ -206,15 +174,15 @@ gimp_resource_select_button_class_init (GimpResourceSelectButtonClass *klass)
    *
    * Since: 2.4
    */
-  /* Has no default. */
-  resource_button_props[PROP_RESOURCE]
-    = gimp_param_spec_resource ("resource",  /* name */
-                                "Resource",  /* nick */
-                                "The currently selected resource",
-                                TRUE,  /* none_ok */
-                                GIMP_PARAM_READWRITE);
+  resource_button_props[PROP_RESOURCE] =
+    gimp_param_spec_resource ("resource",
+                              "Resource",
+                              "The currently selected resource",
+                              TRUE,  /* none_ok */
+                              GIMP_PARAM_READWRITE);
 
-  g_object_class_install_properties (object_class, N_PROPS, resource_button_props);
+  g_object_class_install_properties (object_class,
+                                     N_PROPS, resource_button_props);
 
   /**
    * GimpResourceSelectButton::resource-set:
@@ -241,25 +209,34 @@ gimp_resource_select_button_class_init (GimpResourceSelectButtonClass *klass)
 static void
 gimp_resource_select_button_init (GimpResourceSelectButton *self)
 {
-  GimpResourceSelectButtonPrivate *priv = gimp_resource_select_button_get_instance_private (self);
-
-  g_debug ("%s", G_STRFUNC);
-
-  g_return_if_fail (GIMP_IS_RESOURCE_SELECT_BUTTON (self));
-
-  gtk_orientable_set_orientation (GTK_ORIENTABLE (self), GTK_ORIENTATION_HORIZONTAL);
-
-  /* No need to initialize interior_widget. A subclass will add it, which must have a clickable.*/
-
-  /* Remote dialog not exist yet. */
-  priv->temp_callback_from_remote_dialog = NULL;
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (self),
+                                  GTK_ORIENTATION_HORIZONTAL);
 }
 
+static void
+gimp_resource_select_button_dispose (GObject *self)
+{
+  gimp_resource_select_button_close_popup (GIMP_RESOURCE_SELECT_BUTTON (self));
+
+  G_OBJECT_CLASS (gimp_resource_select_button_parent_class)->dispose (self);
+}
+
+static void
+gimp_resource_select_button_finalize (GObject *object)
+{
+  GimpResourceSelectButton *self = GIMP_RESOURCE_SELECT_BUTTON (object);
+  GimpResourceSelectButtonPrivate *priv = gimp_resource_select_button_get_instance_private (self);
+
+  g_clear_pointer (&priv->title, g_free);
+
+  G_OBJECT_CLASS (gimp_resource_select_button_parent_class)->finalize (object);
+}
 
 /**
  * gimp_resource_select_button_set_drag_target:
  * @self: A #GimpResourceSelectButton
- * @drag_region_widget: An interior widget to be a droppable region and emit "drag-data-received" signal
+ * @drag_region_widget: An interior widget to be a droppable region
+ *                      and emit "drag-data-received" signal
  * @drag_target: The drag target to accept
  *
  * Called by a subclass init to specialize the instance.
@@ -271,13 +248,10 @@ gimp_resource_select_button_init (GimpResourceSelectButton *self)
  * Since: 3.0
  **/
 void
-gimp_resource_select_button_set_drag_target (
-  GimpResourceSelectButton *self,
-  GtkWidget                *drag_region_widget,
-  const GtkTargetEntry     *drag_target)
+gimp_resource_select_button_set_drag_target (GimpResourceSelectButton *self,
+                                             GtkWidget                *drag_region_widget,
+                                             const GtkTargetEntry     *drag_target)
 {
-  g_debug ("%s", G_STRFUNC);
-
   g_return_if_fail (GIMP_IS_RESOURCE_SELECT_BUTTON (self));
   g_return_if_fail (drag_target != NULL);
   g_return_if_fail (drag_region_widget != NULL);
@@ -312,8 +286,6 @@ void
 gimp_resource_select_button_set_clickable (GimpResourceSelectButton *self,
                                            GtkWidget                *widget)
 {
-  g_debug ("%s", G_STRFUNC);
-
   g_return_if_fail (GIMP_IS_RESOURCE_SELECT_BUTTON (self));
   g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
@@ -343,6 +315,7 @@ gimp_resource_select_button_get_resource (GimpResourceSelectButton *self)
   g_return_val_if_fail (GIMP_IS_RESOURCE_SELECT_BUTTON (self), NULL);
 
   priv = gimp_resource_select_button_get_instance_private (self);
+
   return priv->resource;
 }
 
@@ -366,8 +339,6 @@ gimp_resource_select_button_set_resource (GimpResourceSelectButton *self,
   g_return_if_fail (resource != NULL);
 
   priv = gimp_resource_select_button_get_instance_private (self);
-
-  g_debug ("%s", G_STRFUNC);
 
   if (priv->temp_callback_from_remote_dialog)
     {
@@ -398,7 +369,8 @@ gimp_resource_select_button_set_resource (GimpResourceSelectButton *self,
  * Since: 3.0
  */
 void
-gimp_resource_select_button_embed_interior (GimpResourceSelectButton *self, GtkWidget * interior)
+gimp_resource_select_button_embed_interior (GimpResourceSelectButton *self,
+                                            GtkWidget                *interior)
 {
   g_return_if_fail (GIMP_IS_RESOURCE_SELECT_BUTTON (self));
   g_return_if_fail (GTK_IS_WIDGET (interior));
@@ -406,7 +378,6 @@ gimp_resource_select_button_embed_interior (GimpResourceSelectButton *self, GtkW
 
   gtk_container_add (GTK_CONTAINER (self), interior);
 
-  /* Show self as widget, now it is complete. */
   gtk_widget_show_all (GTK_WIDGET (self));
 
   /* We can't draw the interior until self property "resource" is set. */
@@ -421,29 +392,21 @@ gimp_resource_select_button_embed_interior (GimpResourceSelectButton *self, GtkW
  * Not public.
  */
 static void
-gimp_resource_select_button_draw_interior (GimpResourceSelectButton  *self, GimpResource *resource)
+gimp_resource_select_button_draw_interior (GimpResourceSelectButton  *self,
+                                           GimpResource              *resource)
 {
   GimpResourceSelectButtonClass *klass;
-
-  g_debug ("%s", G_STRFUNC);
 
   g_return_if_fail (GIMP_IS_RESOURCE_SELECT_BUTTON (self));
   g_return_if_fail (GIMP_IS_RESOURCE (resource));
 
   klass = GIMP_RESOURCE_SELECT_BUTTON_GET_CLASS (self);
 
-  /* Check subclass has overridden before calling it. */
   g_return_if_fail (klass->draw_interior != NULL);
-  /* Call the subclass drawing method. */
-  klass->draw_interior (self);
 
-  /* Note that gtk_widget_queue_draw is specific to cairo drawing areas,
-   * and is not a general method of forcing a refresh of a wiget.
-   * We always call the subclass draw method via its implementation
-   * of our virtual draw method.
-   * The subclass may use gtk_widget_queue_draw, but we don't.
-   */
+  klass->draw_interior (self);
 }
+
 
 /*  private functions  */
 
@@ -454,15 +417,12 @@ gimp_resource_select_button_set_remote_dialog (GimpResourceSelectButton *self,
   GimpResourceSelectButtonPrivate *priv;
   GimpResourceSelectButtonClass   *klass;
 
-  g_debug ("%s", G_STRFUNC);
-
   g_return_if_fail (GIMP_IS_RESOURCE_SELECT_BUTTON (self));
   g_return_if_fail (resource != NULL);
 
   priv = gimp_resource_select_button_get_instance_private (self);
   klass = GIMP_RESOURCE_SELECT_BUTTON_GET_CLASS (self);
 
-  /* Require virtual method was overridden by subclass. */
   g_return_if_fail (klass->resource_type != G_TYPE_INVALID);
 
   /* The ultimate remote setter is e.g. gimp_fonts_set_popup, a PDB procedure.
@@ -475,12 +435,6 @@ gimp_resource_select_button_set_remote_dialog (GimpResourceSelectButton *self,
                             klass->resource_type);
 }
 
-/* Setter for property.
- * Overrides setter of base class GObject.
- * The underlying field may be NULL after init,
- * but after that, do not allow it to be set to NULL.
- * I.E. invariant is (priv->resource != NULL) after new ()
- */
 static void
 gimp_resource_select_button_set_property (GObject      *object,
                                           guint         property_id,
@@ -490,8 +444,6 @@ gimp_resource_select_button_set_property (GObject      *object,
   GimpResourceSelectButton        *self = GIMP_RESOURCE_SELECT_BUTTON (object);
   GimpResourceSelectButtonPrivate *priv = gimp_resource_select_button_get_instance_private (self);
 
-  g_debug ("%s, id: %i", G_STRFUNC, property_id);
-
   switch (property_id)
     {
     case PROP_TITLE:
@@ -499,18 +451,7 @@ gimp_resource_select_button_set_property (GObject      *object,
       break;
 
     case PROP_RESOURCE:
-      {
-        /* Do not use the exported method set_resource.
-         * That is internal and less safe
-         * because it is agnostic of NULL values passed,
-         * and does not unref any existing value.
-         */
-        GimpResource *specific_value;
-
-        specific_value = g_value_get_object (gvalue);
-        g_assert (specific_value != NULL);
-        priv->resource = specific_value;
-      }
+      priv->resource = g_value_get_object (gvalue);
       break;
 
     default:
@@ -519,14 +460,13 @@ gimp_resource_select_button_set_property (GObject      *object,
     }
 }
 
-
 static void
 gimp_resource_select_button_get_property (GObject    *object,
                                           guint       property_id,
                                           GValue     *value,
                                           GParamSpec *pspec)
 {
-  GimpResourceSelectButton *self = GIMP_RESOURCE_SELECT_BUTTON (object);
+  GimpResourceSelectButton        *self = GIMP_RESOURCE_SELECT_BUTTON (object);
   GimpResourceSelectButtonPrivate *priv = gimp_resource_select_button_get_instance_private (self);
 
   switch (property_id)
@@ -562,31 +502,27 @@ gimp_resource_select_button_callback (GimpResource *resource,
   GimpResourceSelectButton        *self = GIMP_RESOURCE_SELECT_BUTTON (user_data);
   GimpResourceSelectButtonPrivate *priv = gimp_resource_select_button_get_instance_private (self);
 
-  g_debug ("%s, id: %s", G_STRFUNC, gimp_resource_get_id (resource));
-
-  g_object_unref (priv->resource);
   priv->resource = resource;
 
   /* Feedback user choice of resource into the look of the widget interior.
    * Call virtual method overridden by subclass.
    */
-  gimp_resource_select_button_draw_interior (self, resource);
+  gimp_resource_select_button_draw_interior (self, priv->resource);
 
   if (dialog_closing)
     priv->temp_callback_from_remote_dialog = NULL;
 
-  g_signal_emit (self, resource_button_signals[RESOURCE_SET], 0, resource, dialog_closing);
-  g_object_notify_by_pspec (G_OBJECT (self), resource_button_props[PROP_RESOURCE]);
+  g_signal_emit (self, resource_button_signals[RESOURCE_SET], 0,
+                 resource, dialog_closing);
+  g_object_notify_by_pspec (G_OBJECT (self),
+                            resource_button_props[PROP_RESOURCE]);
 }
-
 
 static void
 gimp_resource_select_button_clicked (GimpResourceSelectButton *self)
 {
-  GimpResourceSelectButtonPrivate *priv = gimp_resource_select_button_get_instance_private (self);
-  GimpResourceSelectButtonClass  *klass = GIMP_RESOURCE_SELECT_BUTTON_GET_CLASS (self);
-
-  g_debug ("%s called", G_STRFUNC);
+  GimpResourceSelectButtonPrivate *priv  = gimp_resource_select_button_get_instance_private (self);
+  GimpResourceSelectButtonClass   *klass = GIMP_RESOURCE_SELECT_BUTTON_GET_CLASS (self);
 
   if (priv->temp_callback_from_remote_dialog)
     {
@@ -595,8 +531,6 @@ gimp_resource_select_button_clicked (GimpResourceSelectButton *self)
     }
   else
     {
-      g_debug ("%s calling newer of remote dialog", G_STRFUNC);
-
       /* Call GimpResourceSelect which dispatches on resource_type. */
       priv->temp_callback_from_remote_dialog =
         gimp_resource_select_new (priv->title,
@@ -606,7 +540,6 @@ gimp_resource_select_button_clicked (GimpResourceSelectButton *self)
                                   self,
                                   NULL);  /* No func to free data. */
     }
-  g_debug ("%s returns", G_STRFUNC);
 }
 
 
@@ -625,8 +558,6 @@ gimp_resource_select_drag_data_received (GimpResourceSelectButton *self,
   gchar *str;
 
   GimpResourceSelectButtonClass *klass;
-
-  g_debug ("%s called", G_STRFUNC);
 
   klass = GIMP_RESOURCE_SELECT_BUTTON_GET_CLASS (self);
   /* Require class resource_type was initialized. */
@@ -655,10 +586,7 @@ gimp_resource_select_drag_data_received (GimpResourceSelectButton *self,
           gchar        *name = str + name_offset;
           GimpResource *resource;
 
-          /* Create just a proxy object, not a new resource in core.
-           * Create an instance of the type (e.g. GimpFont) that this class creates.
-           */
-          resource = g_object_new (klass->resource_type, "id", name, NULL);
+          resource = gimp_resource_get_by_name (klass->resource_type, name);
           gimp_resource_select_button_set_resource (self, resource);
         }
     }
@@ -666,23 +594,6 @@ gimp_resource_select_drag_data_received (GimpResourceSelectButton *self,
   g_free (str);
 }
 
-
-/* Dispose, finalize, destroy. */
-
-/* When self is disposed, e.g. when user Cancels owning dialog,
- * close the remote popup, which will destroy it.
- * Dispose is first phase to break possible cycle of the popup referencing self.
- */
-static void
-gimp_resource_select_button_dispose (GObject *self)
-{
-  g_debug ("%s", G_STRFUNC);
-
-  gimp_resource_select_button_close_popup (GIMP_RESOURCE_SELECT_BUTTON (self));
-
-  /* Chain up. */
-  G_OBJECT_CLASS (gimp_resource_select_button_parent_class)->dispose (self);
-}
 
 /**
  * gimp_resource_select_button_close_popup:
@@ -701,8 +612,6 @@ gimp_resource_select_button_close_popup (GimpResourceSelectButton *self)
 {
   GimpResourceSelectButtonPrivate *priv;
 
-  g_debug ("%s", G_STRFUNC);
-
   g_return_if_fail (GIMP_IS_RESOURCE_SELECT_BUTTON (self));
   priv = gimp_resource_select_button_get_instance_private (self);
 
@@ -713,19 +622,4 @@ gimp_resource_select_button_close_popup (GimpResourceSelectButton *self)
       priv->temp_callback_from_remote_dialog = NULL;
     }
   /* Else already closed. */
-}
-
-static void
-gimp_resource_select_button_finalize (GObject *object)
-{
-  GimpResourceSelectButton *self = GIMP_RESOURCE_SELECT_BUTTON (object);
-  GimpResourceSelectButtonPrivate *priv = gimp_resource_select_button_get_instance_private (self);
-
-  g_debug ("%s", G_STRFUNC);
-
-  g_clear_pointer (&priv->resource,  g_object_unref);
-  g_free ((gpointer) priv->title);
-
-  /* Chain up. */
-  G_OBJECT_CLASS (gimp_resource_select_button_parent_class)->finalize (object);
 }

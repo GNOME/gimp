@@ -232,29 +232,20 @@ static gboolean
 get_gradient_data (GimpGradientSelectButton *self,
                    gint                      allocation_width,
                    gint                     *sample_count,
-                   gdouble                 **sample_array
-                   )
+                   gdouble                 **sample_array)
 {
-  gboolean result;
-  gdouble *samples;
-  gint     n_samples;
-
   GimpGradient *gradient;
+  gboolean      result;
+  gdouble      *samples;
+  gint          n_samples;
 
-  g_debug ("%s", G_STRFUNC);
-
-  /* Self's gradient is property "resource"
-   * (resource field of super is private.)
-   */
   g_object_get (self, "resource", &gradient, NULL);
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), FALSE);
 
-  result = gimp_gradient_get_uniform_samples (
-    gradient,
-    allocation_width,
-    FALSE,  /* not reversed. */
-    &n_samples,
-    &samples);
+  result = gimp_gradient_get_uniform_samples (gradient,
+                                              allocation_width,
+                                              FALSE,  /* not reversed. */
+                                              &n_samples,
+                                              &samples);
 
   if (result)
     {

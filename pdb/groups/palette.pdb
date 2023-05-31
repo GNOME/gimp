@@ -54,6 +54,34 @@ CODE
     );
 }
 
+sub palette_get_by_name {
+    $blurb = "Returns the palette with the given name.";
+    $help  = "Returns the palette with the given name.";
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+      { name => 'name', type => 'string', non_empty => 1,
+        desc => 'The name of the palette' }
+    );
+
+    @outargs = (
+      { name => 'palette', type => 'palette', non_empty => 1,
+        desc => 'The palette' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+
+  if (! palette)
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub palette_is_editable {
     $blurb = "Whether the palette can be edited";
     $help  = "Returns TRUE if you have permission to change the palette";
@@ -102,39 +130,6 @@ sub palette_duplicate {
   /* Assert the copy has a unique name. */
   if (!palette_copy)
     success = FALSE;
-}
-CODE
-    );
-}
-
-sub palette_id_is_valid {
-    $blurb = "Whether the ID is a valid reference to installed data.";
-    $help  = "Returns TRUE if this ID is valid.";
-
-    &bootchk_pdb_misc('2022', '3.0');
-
-    @inargs = (
-      { name => 'id',
-        type => 'string',
-        non_empty => 1,
-        no_validate => 1,
-        desc => 'The palette ID' }
-    );
-
-    @outargs = (
-      { name => 'valid', type => 'boolean',
-        desc => 'TRUE if the palette ID is valid' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  valid = (gimp_pdb_get_palette (gimp, id, GIMP_PDB_DATA_ACCESS_READ, error) != NULL);
-
-  /* When ID is not valid, NULL is returned and error is set.
-   * Clear error so GIMP not display error dialog.
-   */
-  g_clear_error (error);
 }
 CODE
     );
@@ -555,8 +550,8 @@ CODE
               "gimppdb-utils.h");
 
 @procs = qw(palette_new
+            palette_get_by_name
             palette_duplicate
-            palette_id_is_valid
             palette_rename
             palette_delete
             palette_is_editable

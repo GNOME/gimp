@@ -48,6 +48,7 @@
     plug_in
     plug_in_compat
     progress
+    resource
     selection
     text_layer
     text_tool

@@ -25,9 +25,12 @@
 
 G_BEGIN_DECLS
 
-/* Inherits GObject.  Inheritable by e.g. GimpBrush. */
+/* For information look into the C source or the html documentation */
+
+
 #define GIMP_TYPE_RESOURCE (gimp_resource_get_type ())
 G_DECLARE_DERIVABLE_TYPE (GimpResource, gimp_resource, GIMP, RESOURCE, GObject)
+
 
 struct _GimpResourceClass
 {
@@ -44,7 +47,34 @@ struct _GimpResourceClass
   void (*_gimp_reserved8) (void);
 };
 
-gchar * gimp_resource_get_id (GimpResource *self);
+gint32         gimp_resource_get_id      (GimpResource *resource);
+GimpResource * gimp_resource_get_by_id   (gint32        resource_id);
+GimpResource * gimp_resource_get_by_name (GType         resource_type,
+                                          const gchar  *resource_name);
+
+gboolean       gimp_resource_is_valid    (GimpResource *resource);
+gboolean       gimp_resource_is_brush    (GimpResource *resource);
+gboolean       gimp_resource_is_pattern  (GimpResource *resource);
+gboolean       gimp_resource_is_gradient (GimpResource *resource);
+gboolean       gimp_resource_is_palette  (GimpResource *resource);
+gboolean       gimp_resource_is_font     (GimpResource *resource);
+
+
+#define GIMP_TYPE_BRUSH (gimp_brush_get_type ())
+G_DECLARE_FINAL_TYPE (GimpBrush, gimp_brush, GIMP, BRUSH, GimpResource)
+
+#define GIMP_TYPE_PATTERN (gimp_pattern_get_type ())
+G_DECLARE_FINAL_TYPE (GimpPattern, gimp_pattern, GIMP, PATTERN, GimpResource)
+
+#define GIMP_TYPE_GRADIENT (gimp_gradient_get_type ())
+G_DECLARE_FINAL_TYPE (GimpGradient, gimp_gradient, GIMP, GRADIENT, GimpResource)
+
+#define GIMP_TYPE_PALETTE (gimp_palette_get_type ())
+G_DECLARE_FINAL_TYPE (GimpPalette, gimp_palette, GIMP, PALETTE, GimpResource)
+
+#define GIMP_TYPE_FONT (gimp_font_get_type ())
+G_DECLARE_FINAL_TYPE (GimpFont, gimp_font, GIMP, FONT, GimpResource)
+
 
 G_END_DECLS
 

@@ -20,8 +20,11 @@
 
 #include "gimp.h"
 
-/* deriveable type not included in gimp.h. */
-#include "gimpresource.h"
+#include "libgimpbase/gimpwire.h" /* FIXME kill this include */
+
+#include "gimpplugin-private.h"
+#include "gimpprocedure-private.h"
+
 
 /* GimpResource: base class for resources.
  *
@@ -65,13 +68,12 @@
  * a GimpResource on the libgimp side is a proxy.
  * There is no GimpResource class in core.
  *
- * One use of GimpResource and its subclasses
- * is as a held type of GParamSpecObject, used to declare the parameters of a  PDB procedure.
- * A GimpResource is serializable just for the purpose of serializing GimpProcedureConfig,
- * a "settings" i.e. a set of values for the arguments to a GimpProcedure.
- * A GimpResource just holds the id as a way to identify a *resource*
- * in calls to PDB procedures that ultimately access the core instance of the resource.
-
+ * One use of GimpResource and its subclasses is as a held type of
+ * GParamSpecObject, used to declare the parameters of a PDB
+ * procedure.  A GimpResource just holds the id as a way to identify a
+ * *resource* in calls to PDB procedures that ultimately access the
+ * core instance of the resource.
+ *
  * A GimpResource that has been serialized in a GimpConfig refers to a *resource*
  * that might not still exist in core in the set of loaded resources (files.)
  *
@@ -103,13 +105,12 @@ enum
   N_PROPS
 };
 
-/* Private structure definition. */
-typedef struct
+
+typedef struct _GimpResourcePrivate
 {
-  char *id;
+  gint id;
 } GimpResourcePrivate;
 
-static void     gimp_resource_finalize           (GObject      *object);
 
 static void     gimp_resource_set_property       (GObject      *object,
                                                   guint         property_id,
@@ -120,128 +121,51 @@ static void     gimp_resource_get_property       (GObject      *object,
                                                   GValue       *value,
                                                   GParamSpec   *pspec);
 
-/* Implementation of the GimpConfigInterface */
-static void     gimp_resource_config_iface_init (GimpConfigInterface *iface);
 
-static gboolean gimp_resource_serialize          (GimpConfig       *config,
-                                                  GimpConfigWriter *writer,
-                                                  gpointer          data);
-static gboolean gimp_resource_deserialize        (GimpConfig       *config,
-                                                  GScanner         *scanner,
-                                                  gint              nest_level,
-                                                  gpointer          data);
-
-/* The class type is both deriveable (has private) AND implements interface. */
-G_DEFINE_ABSTRACT_TYPE_WITH_CODE (GimpResource, gimp_resource, G_TYPE_OBJECT,
-                                  G_ADD_PRIVATE (GimpResource)
-                                  G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                         gimp_resource_config_iface_init))
+G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpResource, gimp_resource, G_TYPE_OBJECT)
 
 #define parent_class gimp_resource_parent_class
 
 static GParamSpec *props[N_PROPS] = { NULL, };
 
-/* Class construction */
+
 static void
 gimp_resource_class_init (GimpResourceClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  g_debug("gimp_resource_class_init");
-
-  object_class->finalize     = gimp_resource_finalize;
-
   object_class->set_property = gimp_resource_set_property;
   object_class->get_property = gimp_resource_get_property;
 
   props[PROP_ID] =
-    g_param_spec_string ("id",
-                         "The id",
-                         "The id for internal use",
-                         "unknown",
-                         GIMP_PARAM_READWRITE);
+    g_param_spec_int ("id",
+                      "The id",
+                      "The id for internal use",
+                      0, G_MAXINT32, 0,
+                      GIMP_PARAM_READWRITE |
+                      G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, N_PROPS, props);
 }
 
-/* Instance construction. */
 static void
-gimp_resource_init (GimpResource *self)
+gimp_resource_init (GimpResource *resource)
 {
-  /* Initialize private data to 0 */
-  GimpResourcePrivate *priv = gimp_resource_get_instance_private (self);
-  priv->id = NULL;
-  g_debug("gimp_resource_init");
 }
 
-
-/* The next comment annotates the class. */
-
-/**
-* GimpResource:
-*
-* Installable data having serializable ID.  Superclass of Font, Brush, etc.
-**/
-
-
-/**
- * gimp_resource_get_id:
- * @self: The resource.
- *
- * Returns an internal key to the store of resources in the core app.
- * The key can be invalid after a user uninstalls or deletes a resource.
- *
- * Returns: (transfer none): the resource's ID.
- *
- * Since: 3.0
- **/
-gchar *
-gimp_resource_get_id (GimpResource *self)
-{
-  GimpResourcePrivate *priv = gimp_resource_get_instance_private (self);
-  return self ? priv->id : "";
-}
-
-
-/* Two stage dispose/finalize.
- * We don't need dispose since no objects to unref. id is a string, not a GObject.
- * Some docs say must define both.
- */
-
-static void
-gimp_resource_finalize (GObject *self)
-{
-  GimpResourcePrivate *priv = gimp_resource_get_instance_private (GIMP_RESOURCE(self));
-
-  g_debug ("gimp_resource_finalize");
-
-  /* Free string property. g_clear_pointer is safe if already freed. */
-  g_clear_pointer (&priv->id, g_free);
-
-  /* Chain up. */
-  G_OBJECT_CLASS (parent_class)->finalize (self);
-}
-
-
-/*
- * Override the GObject methods for set/get property.
- * i.e. override g_object_set_property.
- */
 static void
 gimp_resource_set_property (GObject      *object,
                             guint         property_id,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
-  GimpResource *self = GIMP_RESOURCE (object);
-  GimpResourcePrivate *priv = gimp_resource_get_instance_private (self);
+  GimpResource        *resource = GIMP_RESOURCE (object);
+  GimpResourcePrivate *priv     = gimp_resource_get_instance_private (resource);
 
-  g_debug ("gimp_resource_set_property");
   switch (property_id)
     {
     case PROP_ID:
-      g_free (priv->id);
-      priv->id = g_value_dup_string (value);
+      priv->id = g_value_get_int (value);
       break;
 
     default:
@@ -256,15 +180,13 @@ gimp_resource_get_property (GObject    *object,
                             GValue     *value,
                             GParamSpec *pspec)
 {
-  GimpResource *self = GIMP_RESOURCE (object);
-  GimpResourcePrivate *priv = gimp_resource_get_instance_private (self);
+  GimpResource        *resource = GIMP_RESOURCE (object);
+  GimpResourcePrivate *priv     = gimp_resource_get_instance_private (resource);
 
-  g_debug ("gimp_resource_get_property");
   switch (property_id)
     {
     case PROP_ID:
-      g_value_set_string (value, priv->id);
-      /* Assert id string was copied into GValue. */
+      g_value_set_int (value, priv->id);
       break;
 
     default:
@@ -273,74 +195,251 @@ gimp_resource_get_property (GObject    *object,
     }
 }
 
-
-/* config iface */
-
-static void
-gimp_resource_config_iface_init (GimpConfigInterface *iface)
-{
-  /* We don't implement the serialize_property methods. */
-  iface->deserialize = gimp_resource_deserialize;
-  iface->serialize   = gimp_resource_serialize;
-}
-
-
-/* Serialize the whole thing, which is the id.
+/**
+ * gimp_resource_get_id:
+ * @resource: The resource.
  *
- * Requires the id is not NULL.
- * When id is NULL, writes nothing and returns FALSE.
- */
-static gboolean
-gimp_resource_serialize (GimpConfig       *config,
-                         GimpConfigWriter *writer,
-                         gpointer          data)  /* Unused. */
+ * Returns: the resource ID.
+ *
+ * Since: 3.0
+ **/
+gint32
+gimp_resource_get_id (GimpResource *resource)
 {
-  /* Require config is-a GimpResource instance implementing Config iface. */
-  GimpResource *self = GIMP_RESOURCE (config);
-  GimpResourcePrivate *priv = gimp_resource_get_instance_private (self);
-
-  g_debug ("resource serialize");
-
-  if (priv->id != NULL)
+  if (resource)
     {
-      g_debug ("resource serialize: %s", priv->id);
-      /* require the caller opened and will close writer.
-       * Caller wrote the subclass type name "Gimp<Foo>"
-       */
-      gimp_config_writer_string (writer, priv->id);
-      return TRUE;
+      GimpResourcePrivate *priv = gimp_resource_get_instance_private (resource);
+
+      return priv->id;
     }
   else
     {
-      g_debug ("resource serialize failed: NULL id");
-      return FALSE;
+      return -1;
     }
 }
 
-
-static gboolean
-gimp_resource_deserialize (GimpConfig *config,
-                           GScanner   *scanner,
-                           gint        nest_level,
-                           gpointer    data)
+/**
+ * gimp_resource_get_by_id:
+ * @resource_id: The resource id.
+ *
+ * Returns a #GimpResource representing @resource_id. Since #GimpResource is an
+ * abstract class, the real object type will actually be the proper
+ * subclass.
+ *
+ * Returns: (nullable) (transfer none): a #GimpResource for @resource_id or
+ *          %NULL if @resource_id does not represent a valid resource.
+ *          The object belongs to libgimp and you must not modify
+ *          or unref it.
+ *
+ * Since: 3.0
+ **/
+GimpResource *
+gimp_resource_get_by_id (gint32 resource_id)
 {
-  gchar *id;
-  GimpResource *self = GIMP_RESOURCE (config);
-  GimpResourcePrivate *priv = gimp_resource_get_instance_private (self);
-
-  g_debug ("resource deserialize");
-
-  if (! gimp_scanner_parse_string (scanner, &id))
+  if (resource_id > 0)
     {
-      g_scanner_error (scanner,
-                       "Fail scan string for resource");
-      return FALSE;
-    }
-  else
-    {
-      g_debug ("resource deserialize: %s", id);
-      priv->id = id;
+      GimpPlugIn    *plug_in   = gimp_get_plug_in ();
+      GimpProcedure *procedure = _gimp_plug_in_get_procedure (plug_in);
+
+      return _gimp_procedure_get_resource (procedure, resource_id);
     }
 
-  return TRUE;
+  return NULL;
 }
+
+GimpResource *
+gimp_resource_get_by_name (GType        resource_type,
+                           const gchar *resource_name)
+{
+  g_return_val_if_fail (g_type_is_a (resource_type, GIMP_TYPE_RESOURCE), NULL);
+
+  if (resource_name == NULL)
+    return NULL;
+
+  if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
+    {
+      return (GimpResource *) gimp_brush_get_by_name (resource_name);
+    }
+  else if (g_type_is_a (resource_type, GIMP_TYPE_PATTERN))
+    {
+      return (GimpResource *) gimp_pattern_get_by_name (resource_name);
+    }
+  else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
+    {
+      return (GimpResource *) gimp_gradient_get_by_name (resource_name);
+    }
+  else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
+    {
+      return (GimpResource *) gimp_palette_get_by_name (resource_name);
+    }
+  else if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
+    {
+      return (GimpResource *) gimp_font_get_by_name (resource_name);
+    }
+
+  g_return_val_if_reached (NULL);
+}
+
+/**
+ * gimp_resource_is_valid:
+ * @resource: The resource to check.
+ *
+ * Returns TRUE if the resource is valid.
+ *
+ * This procedure checks if the given resource is valid and refers to an
+ * existing resource.
+ *
+ * Returns: Whether the resource is valid.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_resource_is_valid (GimpResource *resource)
+{
+  return gimp_resource_id_is_valid (gimp_resource_get_id (resource));
+}
+
+/**
+ * gimp_resource_is_brush:
+ * @resource: The resource.
+ *
+ * Returns whether the resource is a brush.
+ *
+ * This procedure returns TRUE if the specified resource is a brush.
+ *
+ * Returns: TRUE if the resource is a brush, FALSE otherwise.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_resource_is_brush (GimpResource *resource)
+{
+  return gimp_resource_id_is_brush (gimp_resource_get_id (resource));
+}
+
+/**
+ * gimp_resource_is_pattern:
+ * @resource: The resource.
+ *
+ * Returns whether the resource is a pattern.
+ *
+ * This procedure returns TRUE if the specified resource is a pattern.
+ *
+ * Returns: TRUE if the resource is a pattern, FALSE otherwise.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_resource_is_pattern (GimpResource *resource)
+{
+  return gimp_resource_id_is_pattern (gimp_resource_get_id (resource));
+}
+
+/**
+ * gimp_resource_is_gradient:
+ * @resource: The resource.
+ *
+ * Returns whether the resource is a gradient.
+ *
+ * This procedure returns TRUE if the specified resource is a gradient.
+ *
+ * Returns: TRUE if the resource is a gradient, FALSE otherwise.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_resource_is_gradient (GimpResource *resource)
+{
+  return gimp_resource_id_is_gradient (gimp_resource_get_id (resource));
+}
+
+/**
+ * gimp_resource_is_palette:
+ * @resource: The resource.
+ *
+ * Returns whether the resource is a palette.
+ *
+ * This procedure returns TRUE if the specified resource is a palette.
+ *
+ * Returns: TRUE if the resource is a palette, FALSE otherwise.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_resource_is_palette (GimpResource *resource)
+{
+  return gimp_resource_id_is_palette (gimp_resource_get_id (resource));
+}
+
+/**
+ * gimp_resource_is_font:
+ * @resource: The resource.
+ *
+ * Returns whether the resource is a font.
+ *
+ * This procedure returns TRUE if the specified resource is a font.
+ *
+ * Returns: TRUE if the resource is a font, FALSE otherwise.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_resource_is_font (GimpResource *resource)
+{
+  return gimp_resource_id_is_font (gimp_resource_get_id (resource));
+}
+
+
+struct _GimpBrush
+{
+  GimpResource parent_instance;
+};
+
+G_DEFINE_TYPE (GimpBrush, gimp_brush, GIMP_TYPE_RESOURCE);
+
+static void gimp_brush_class_init (GimpBrushClass *klass) {}
+static void gimp_brush_init       (GimpBrush       *self) {}
+
+
+struct _GimpPattern
+{
+  GimpResource parent_instance;
+};
+
+G_DEFINE_TYPE (GimpPattern, gimp_pattern, GIMP_TYPE_RESOURCE);
+
+static void gimp_pattern_class_init (GimpPatternClass *klass) {}
+static void gimp_pattern_init       (GimpPattern       *self) {}
+
+
+struct _GimpGradient
+{
+  GimpResource parent_instance;
+};
+
+G_DEFINE_TYPE (GimpGradient, gimp_gradient, GIMP_TYPE_RESOURCE);
+
+static void gimp_gradient_class_init (GimpGradientClass *klass) {}
+static void gimp_gradient_init       (GimpGradient       *self) {}
+
+
+struct _GimpPalette
+{
+  GimpResource parent_instance;
+};
+
+G_DEFINE_TYPE (GimpPalette, gimp_palette, GIMP_TYPE_RESOURCE);
+
+static void gimp_palette_class_init (GimpPaletteClass *klass) {}
+static void gimp_palette_init       (GimpPalette       *self) {}
+
+
+struct _GimpFont
+{
+  GimpResource parent_instance;
+};
+
+G_DEFINE_TYPE (GimpFont, gimp_font, GIMP_TYPE_RESOURCE);
+
+static void gimp_font_class_init (GimpFontClass *klass) {}
+static void gimp_font_init       (GimpFont       *self) {}

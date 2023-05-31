@@ -37,6 +37,42 @@
 
 
 /**
+ * gimp_pattern_get_by_name:
+ * @name: The name of the pattern.
+ *
+ * Returns the pattern with the given name.
+ *
+ * Returns the pattern with the given name.
+ *
+ * Returns: (transfer full): The pattern.
+ *
+ * Since: 3.0
+ **/
+GimpPattern *
+gimp_pattern_get_by_name (const gchar *name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpPattern *pattern = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pattern-get-by-name",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    pattern = GIMP_VALUES_GET_PATTERN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return pattern;
+}
+
+/**
  * gimp_pattern_get_info:
  * @pattern: The pattern.
  * @width: (out): The pattern width.
@@ -145,40 +181,4 @@ gimp_pattern_get_pixels (GimpPattern  *pattern,
   gimp_value_array_unref (return_vals);
 
   return success;
-}
-
-/**
- * gimp_pattern_id_is_valid:
- * @id: The pattern ID.
- *
- * Whether the ID is a valid reference to installed data.
- *
- * Returns TRUE if this ID is valid.
- *
- * Returns: TRUE if the pattern ID is valid.
- *
- * Since: 3.0
- **/
-gboolean
-gimp_pattern_id_is_valid (const gchar *id)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean valid = FALSE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, id,
-                                          G_TYPE_NONE);
-
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-pattern-id-is-valid",
-                                              args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return valid;
 }

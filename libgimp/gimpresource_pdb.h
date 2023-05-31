@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimppattern_pdb.h
+ * gimpresource_pdb.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,26 +24,23 @@
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PATTERN_PDB_H__
-#define __GIMP_PATTERN_PDB_H__
+#ifndef __GIMP_RESOURCE_PDB_H__
+#define __GIMP_RESOURCE_PDB_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-GimpPattern* gimp_pattern_get_by_name (const gchar  *name);
-gboolean     gimp_pattern_get_info    (GimpPattern  *pattern,
-                                       gint         *width,
-                                       gint         *height,
-                                       gint         *bpp);
-gboolean     gimp_pattern_get_pixels  (GimpPattern  *pattern,
-                                       gint         *width,
-                                       gint         *height,
-                                       gint         *bpp,
-                                       GBytes      **color_bytes);
+gboolean gimp_resource_id_is_valid    (gint          resource_id);
+gboolean gimp_resource_id_is_brush    (gint          resource_id);
+gboolean gimp_resource_id_is_pattern  (gint          resource_id);
+gboolean gimp_resource_id_is_gradient (gint          resource_id);
+gboolean gimp_resource_id_is_palette  (gint          resource_id);
+gboolean gimp_resource_id_is_font     (gint          resource_id);
+gchar*   gimp_resource_get_name       (GimpResource *resource);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_PATTERN_PDB_H__ */
+#endif /* __GIMP_RESOURCE_PDB_H__ */

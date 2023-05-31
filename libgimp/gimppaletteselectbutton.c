@@ -19,8 +19,6 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-/* Similar to gimpfontselectbutton.c, initially created by simple substitution. */
-
 #include "config.h"
 
 #include <gegl.h>
@@ -47,7 +45,6 @@
 
 struct _GimpPaletteSelectButton
 {
-  /* !! Not a pointer, is contained. */
   GimpResourceSelectButton parent_instance;
 
   GtkWidget *palette_name_label;
@@ -55,17 +52,15 @@ struct _GimpPaletteSelectButton
   GtkWidget *button;
 };
 
-/*  local  */
 
-/* implement virtual */
 static void gimp_palette_select_button_finalize        (GObject                  *object);
 static void gimp_palette_select_button_draw_interior   (GimpResourceSelectButton *self);
 
-/* Called at init. */
 static GtkWidget *gimp_palette_select_button_create_interior  (GimpPaletteSelectButton     *self);
 
-/* A GtkTargetEntry has a string and two ints. This is one, but treat as an array.*/
+
 static const GtkTargetEntry drag_target = { "application/x-gimp-palette-name", 0, 0 };
+
 
 G_DEFINE_FINAL_TYPE (GimpPaletteSelectButton,
                      gimp_palette_select_button,
@@ -75,24 +70,13 @@ G_DEFINE_FINAL_TYPE (GimpPaletteSelectButton,
 static void
 gimp_palette_select_button_class_init (GimpPaletteSelectButtonClass *klass)
 {
-  /* Alias cast klass to super classes. */
-  GObjectClass                  *object_class  = G_OBJECT_CLASS (klass);
-  GimpResourceSelectButtonClass *superclass    = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
+  GObjectClass                  *object_class = G_OBJECT_CLASS (klass);
+  GimpResourceSelectButtonClass *superclass   = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
 
-  g_debug ("%s called", G_STRFUNC);
-
-  /* Override virtual. */
   object_class->finalize     = gimp_palette_select_button_finalize;
 
-  /* Implement pure virtual functions. */
   superclass->draw_interior = gimp_palette_select_button_draw_interior;
-
-  /* Set data member of class. */
   superclass->resource_type = GIMP_TYPE_PALETTE;
-
-  /* We don't define property getter/setters: use superclass getter/setters.
-   * But super property name is "resource", not "palette"
-   */
 }
 
 static void
@@ -100,26 +84,13 @@ gimp_palette_select_button_init (GimpPaletteSelectButton *self)
 {
   GtkWidget *interior;
 
-  g_debug ("%s called", G_STRFUNC);
-
-  /* Specialize super:
-   *     - embed our widget interior instance to super widget instance.
-   *     - tell super our dnd widget
-   *     - tell super our clickable button
-   * Call superclass methods, with upcasts.
-   * These are on instance, not our subclass.
-   */
   interior = gimp_palette_select_button_create_interior (self);
-  /* require self has sub widgets initialized. */
 
-  /* Embed the whole button.*/
   gimp_resource_select_button_embed_interior (GIMP_RESOURCE_SELECT_BUTTON (self), interior);
 
-  /* Self knows the GtkTargetEntry, super creates target and handles receive drag. */
   gimp_resource_select_button_set_drag_target (GIMP_RESOURCE_SELECT_BUTTON (self),
                                                self->drag_region_widget,
                                                &drag_target);
-  /* Super handles button clicks. */
   gimp_resource_select_button_set_clickable (GIMP_RESOURCE_SELECT_BUTTON (self),
                                              self->button);
 }
@@ -144,24 +115,9 @@ gimp_palette_select_button_new (const gchar  *title,
 {
   GtkWidget *self;
 
-  g_debug ("%s called", G_STRFUNC);
-
   if (resource == NULL)
-    {
-      g_debug ("%s defaulting palette from context", G_STRFUNC);
-      resource = GIMP_RESOURCE (gimp_context_get_palette ());
-    }
-  g_assert (resource != NULL);
-  /* This method is polymorphic, so a factory can call it, but requires Palette. */
-  g_return_val_if_fail (GIMP_IS_PALETTE (resource), NULL);
+    resource = GIMP_RESOURCE (gimp_context_get_palette ());
 
-  /* Create instance of self (not super.)
-   * This will call superclass init, self class init, superclass init, and instance init.
-   * Self subclass class_init will specialize by implementing virtual funcs
-   * that open and set remote chooser dialog, and that draw self interior.
-   *
-   * !!! property belongs to superclass and is named "resource"
-   */
    if (title)
      self = g_object_new (GIMP_TYPE_PALETTE_SELECT_BUTTON,
                           "title",     title,
@@ -172,16 +128,7 @@ gimp_palette_select_button_new (const gchar  *title,
                           "resource",  resource,
                           NULL);
 
-  /* We don't subscribe to events from super (such as draw events.)
-   * Super will call our draw method when it's resource changes.
-   * Except that the above setting of property happens too late,
-   * so we now draw the initial resource.
-   */
-
-  /* Draw with the initial resource. Cast self from Widget. */
   gimp_palette_select_button_draw_interior (GIMP_RESOURCE_SELECT_BUTTON (self));
-
-  g_debug ("%s returns", G_STRFUNC);
 
   return self;
 }
@@ -303,35 +250,17 @@ gimp_palette_select_button_create_interior (GimpPaletteSelectButton *self)
   return button;
 }
 
-
-/* Knows how to draw self interior.
- * Self knows resource, it is not passed.
- *
- * Overrides virtual method in super, so it is generic on Resource.
- */
 static void
 gimp_palette_select_button_draw_interior (GimpResourceSelectButton *self)
 {
-  gchar                *palette_name;
-  GimpResource         *resource;
-  GimpPaletteSelectButton *self_as_palette_select;
+  GimpPaletteSelectButton *palette_select= GIMP_PALETTE_SELECT_BUTTON (self);
+  GimpResource            *resource;
+  gchar                   *name = NULL;
 
-  g_debug ("%s", G_STRFUNC);
+  resource = gimp_resource_select_button_get_resource (self);
 
-  g_return_if_fail (GIMP_IS_PALETTE_SELECT_BUTTON (self));
-  self_as_palette_select = GIMP_PALETTE_SELECT_BUTTON (self);
+  if (resource)
+    name = gimp_resource_get_name (resource);
 
-  g_object_get (self, "resource", &resource, NULL);
-
-  /* For now, the "id" property of the resource is the name.
-   * FUTURE: core will support name distinct from ID.
-   */
-  g_object_get (resource, "id", &palette_name, NULL);
-
-  /* We are not keeping a copy of palette name, nothing to free. */
-
-  /* Not styling the text using the chosen palette,
-   * just replacing the text with the name of the chosen palette.
-   */
-  gtk_label_set_text (GTK_LABEL (self_as_palette_select->palette_name_label), palette_name);
+  gtk_label_set_text (GTK_LABEL (palette_select->palette_name_label), name);
 }

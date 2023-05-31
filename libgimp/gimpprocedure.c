@@ -92,6 +92,7 @@ struct _GimpProcedurePrivate
   GHashTable       *displays;
   GHashTable       *images;
   GHashTable       *items;
+  GHashTable       *resources;
 };
 
 
@@ -2280,12 +2281,46 @@ _gimp_procedure_get_item (GimpProcedure *procedure,
   return item;
 }
 
+GimpResource *
+_gimp_procedure_get_resource (GimpProcedure *procedure,
+                              gint32         resource_id)
+{
+  GimpResource *resource = NULL;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (gimp_resource_id_is_valid (resource_id), NULL);
+
+  if (G_UNLIKELY (! procedure->priv->resources))
+    procedure->priv->resources =
+      g_hash_table_new_full (g_direct_hash,
+                             g_direct_equal,
+                             NULL,
+                             (GDestroyNotify) g_object_unref);
+
+  resource = g_hash_table_lookup (procedure->priv->resources,
+                                  GINT_TO_POINTER (resource_id));
+
+  if (! resource)
+    {
+      resource = _gimp_plug_in_get_resource (procedure->priv->plug_in,
+                                             resource_id);
+
+      if (resource)
+        g_hash_table_insert (procedure->priv->resources,
+                             GINT_TO_POINTER (resource_id),
+                             g_object_ref (resource));
+    }
+
+  return resource;
+}
+
 void
 _gimp_procedure_destroy_proxies (GimpProcedure *procedure)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  g_clear_pointer (&procedure->priv->displays, g_hash_table_unref);
-  g_clear_pointer (&procedure->priv->images,   g_hash_table_unref);
-  g_clear_pointer (&procedure->priv->items,    g_hash_table_unref);
+  g_clear_pointer (&procedure->priv->displays,  g_hash_table_unref);
+  g_clear_pointer (&procedure->priv->images,    g_hash_table_unref);
+  g_clear_pointer (&procedure->priv->items,     g_hash_table_unref);
+  g_clear_pointer (&procedure->priv->resources, g_hash_table_unref);
 }

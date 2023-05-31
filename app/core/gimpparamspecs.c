@@ -25,24 +25,21 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimpbrush.h"
 #include "gimpdisplay.h"
+#include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
+#include "gimppalette.h"
 #include "gimpparamspecs.h"
+#include "gimppattern.h"
 #include "gimpselection.h"
 
+#include "text/gimpfont.h"
 #include "text/gimptextlayer.h"
 
 #include "vectors/gimpvectors.h"
-
-/* resource types */
-#include "gimpresource.h"
-#include "gimpbrush.h"
-#include "gimpgradient.h"
-#include "gimppalette.h"
-#include "gimppattern.h"
-#include "text/gimpfont.h"
 
 
 /*
@@ -346,15 +343,14 @@ gimp_param_spec_enum_exclude_value (GimpParamSpecEnum *espec,
 /*  include the implementation of the remaining paramspecs, they are
  *  shared between app/ and libgimp/ but need different headers.
  */
-#define gimp_image_is_valid(image) TRUE
-#define gimp_item_is_valid(item) TRUE
+#define gimp_image_is_valid(image)     TRUE
+#define gimp_item_is_valid(item)       TRUE
 #define gimp_display_is_valid(display) TRUE
-/* resource types. */
-#define gimp_brush_is_valid(image)    TRUE
-#define gimp_font_is_valid(image)     TRUE
-#define gimp_gradient_is_valid(image) TRUE
-#define gimp_palette_is_valid(image)  TRUE
-#define gimp_pattern_is_valid(image)  TRUE
+#define gimp_resource_is_valid(image)  TRUE
+#define gimp_brush_is_valid(image)     TRUE
+#define gimp_font_is_valid(image)      TRUE
+#define gimp_gradient_is_valid(image)  TRUE
+#define gimp_palette_is_valid(image)   TRUE
+#define gimp_pattern_is_valid(image)   TRUE
 
 #include "../../libgimp/gimpparamspecs-body.c"
-#include "../../libgimp/gimpparamspecs-body-resource.c"

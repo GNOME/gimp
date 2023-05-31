@@ -73,6 +73,42 @@ gimp_gradient_new (const gchar *name)
 }
 
 /**
+ * gimp_gradient_get_by_name:
+ * @name: The name of the gradient.
+ *
+ * Returns the gradient with the given name.
+ *
+ * Returns the gradient with the given name.
+ *
+ * Returns: (transfer full): The gradient.
+ *
+ * Since: 3.0
+ **/
+GimpGradient *
+gimp_gradient_get_by_name (const gchar *name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpGradient *gradient = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-gradient-get-by-name",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    gradient = GIMP_VALUES_GET_GRADIENT (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return gradient;
+}
+
+/**
  * gimp_gradient_duplicate:
  * @gradient: The gradient.
  *
@@ -152,13 +188,7 @@ gimp_gradient_is_editable (GimpGradient *gradient)
  * Renames a gradient. When the name is in use, renames to a unique
  * name.
  *
- * Renames a gradient. The name is the same as the ID. When the
- * proposed name is already used, GIMP generates a unique name, which
- * get_id() will return.
- * Returns a reference to a renamed gradient, which you should assign
- * to the original var or a differently named var. Any existing
- * references will be invalid. Resources in plugins are proxies holding
- * an ID, which can be invalid when the resource is renamed.
+ * Renames a gradient.
  *
  * Returns: (transfer full): A reference to the renamed gradient.
  *
@@ -381,42 +411,6 @@ gimp_gradient_get_custom_samples (GimpGradient   *gradient,
   gimp_value_array_unref (return_vals);
 
   return success;
-}
-
-/**
- * gimp_gradient_id_is_valid:
- * @id: The gradient ID.
- *
- * Whether the ID is a valid reference to installed data.
- *
- * Returns TRUE if this ID is valid.
- *
- * Returns: TRUE if the gradient ID is valid.
- *
- * Since: 3.0
- **/
-gboolean
-gimp_gradient_id_is_valid (const gchar *id)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean valid = FALSE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, id,
-                                          G_TYPE_NONE);
-
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-gradient-id-is-valid",
-                                              args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return valid;
 }
 
 /**

@@ -29,6 +29,7 @@
 
 #include "gimp-memsize.h"
 #include "gimpdata.h"
+#include "gimpidtable.h"
 #include "gimptag.h"
 #include "gimptagged.h"
 
@@ -44,6 +45,7 @@ enum
 enum
 {
   PROP_0,
+  PROP_ID,
   PROP_FILE,
   PROP_WRITABLE,
   PROP_DELETABLE,
@@ -53,6 +55,7 @@ enum
 
 struct _GimpDataPrivate
 {
+  gint    ID;
   GFile  *file;
   GQuark  mime_type;
   guint   writable  : 1;
@@ -115,6 +118,8 @@ G_DEFINE_TYPE_WITH_CODE (GimpData, gimp_data, GIMP_TYPE_VIEWABLE,
 
 static guint data_signals[LAST_SIGNAL] = { 0 };
 
+static GimpIdTable *data_id_table = NULL;
+
 
 static void
 gimp_data_class_init (GimpDataClass *klass)
@@ -151,6 +156,11 @@ gimp_data_class_init (GimpDataClass *klass)
   klass->duplicate                 = gimp_data_real_duplicate;
   klass->compare                   = gimp_data_real_compare;
 
+  g_object_class_install_property (object_class, PROP_ID,
+                                   g_param_spec_int ("id", NULL, NULL,
+                                                     0, G_MAXINT, 0,
+                                                     GIMP_PARAM_READABLE));
+
   g_object_class_install_property (object_class, PROP_FILE,
                                    g_param_spec_object ("file", NULL, NULL,
                                                         G_TYPE_FILE,
@@ -171,6 +181,8 @@ gimp_data_class_init (GimpDataClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  data_id_table = gimp_id_table_new ();
 }
 
 static void
@@ -190,6 +202,7 @@ gimp_data_init (GimpData *data)
 
   data->priv = private;
 
+  private->ID        = gimp_id_table_insert (data_id_table, data);
   private->writable  = TRUE;
   private->deletable = TRUE;
   private->dirty     = TRUE;
@@ -215,6 +228,8 @@ static void
 gimp_data_finalize (GObject *object)
 {
   GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (object);
+
+  gimp_id_table_remove (data_id_table, private->ID);
 
   g_clear_object (&private->file);
 
@@ -278,6 +293,10 @@ gimp_data_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_ID:
+      g_value_set_int (value, private->ID);
+      break;
+
     case PROP_FILE:
       g_value_set_object (value, private->file);
       break;
@@ -490,6 +509,23 @@ static gchar *
 gimp_data_get_checksum (GimpTagged *tagged)
 {
   return NULL;
+}
+
+
+/*  public functions  */
+
+gint
+gimp_data_get_id (GimpData *data)
+{
+  g_return_val_if_fail (GIMP_IS_DATA (data), -1);
+
+  return GIMP_DATA_GET_PRIVATE (data)->ID;
+}
+
+GimpData *
+gimp_data_get_by_id (gint data_id)
+{
+  return (GimpData *) gimp_id_table_lookup (data_id_table, data_id);
 }
 
 /**

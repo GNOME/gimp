@@ -74,6 +74,9 @@ struct _GimpDataClass
 
 GType         gimp_data_get_type         (void) G_GNUC_CONST;
 
+gint          gimp_data_get_id           (GimpData     *data);
+GimpData    * gimp_data_get_by_id        (gint          id);
+
 gboolean      gimp_data_save             (GimpData     *data,
                                           GError      **error);
 

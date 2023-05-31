@@ -104,6 +104,7 @@ pdb_wrappers_sources = [
   'gimppatterns_pdb.c',
   'gimppatternselect_pdb.c',
   'gimpprogress_pdb.c',
+  'gimpresource_pdb.c',
   'gimpselection_pdb.c',
   'gimptextlayer_pdb.c',
   'gimptexttool_pdb.c',
@@ -157,6 +158,7 @@ pdb_wrappers_headers = [
   'gimppatterns_pdb.h',
   'gimppatternselect_pdb.h',
   'gimpprogress_pdb.h',
+  'gimpresource_pdb.h',
   'gimpselection_pdb.h',
   'gimptextlayer_pdb.h',
   'gimptexttool_pdb.h',
@@ -188,7 +190,6 @@ libgimp_sources_introspectable = [
   'gimpprogress.c',
   'gimpresource.c',
   'gimpresourceselect.c',
-  'gimpresource-subclass.c',
   'gimpsaveprocedure.c',
   'gimpselection.c',
   'gimptextlayer.c',
@@ -243,7 +244,6 @@ libgimp_headers_introspectable = [
   'gimpprogress.h',
   'gimpresource.h',
   'gimpresourceselect.h',
-  'gimpresource-subclass.h',
   'gimpsaveprocedure.h',
   'gimpselection.h',
   'gimptextlayer.h',
@@ -413,8 +413,7 @@ libgimp_introspectable_files = [
   libgimpconfig_introspectable,
   libgimpmath_introspectable,
   libgimpmodule_introspectable,
-  'gimpparamspecs-body.c',
-  'gimpparamspecs-body-resource.c',
+  'gimpparamspecs-body.c'
 ]
 
 libgimpui_introspectable_files = [

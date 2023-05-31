@@ -24,6 +24,34 @@ $pattern_arg_spec = { name => 'pattern', type => 'pattern', non_empty => 1,
   desc => 'The pattern' };
 
 
+sub pattern_get_by_name {
+    $blurb = "Returns the pattern with the given name.";
+    $help  = "Returns the pattern with the given name.";
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+      { name => 'name', type => 'string', non_empty => 1,
+        desc => 'The name of the pattern' }
+    );
+
+    @outargs = (
+      { name => 'pattern', type => 'pattern', non_empty => 1,
+        desc => 'The pattern' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  pattern = gimp_pdb_get_pattern (gimp, name, error);
+
+  if (! pattern)
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub pattern_get_info {
     $blurb = 'Gets information about the pattern.';
 
@@ -113,40 +141,6 @@ CODE
     );
 }
 
-sub pattern_id_is_valid {
-    $blurb = "Whether the ID is a valid reference to installed data.";
-    $help  = "Returns TRUE if this ID is valid.";
-
-    &bootchk_pdb_misc('2022', '3.0');
-
-    @inargs = (
-      { name => 'id',
-        type => 'string',
-        non_empty => 1,
-        no_validate => 1,
-        desc => 'The pattern ID' }
-    );
-
-    @outargs = (
-      { name => 'valid', type => 'boolean',
-        desc => 'TRUE if the pattern ID is valid' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  /* !!! pattern has one fewer args than other resources. */
-  valid = (gimp_pdb_get_pattern (gimp, id, error) != NULL);
-
-  /* When ID is not valid, NULL is returned and error is set.
-   * Clear error so GIMP not display error dialog.
-   */
-  g_clear_error (error);
-}
-CODE
-    );
-}
-
 
 @headers = qw(<string.h>
               "gegl/gimp-babl-compat.h"
@@ -156,9 +150,9 @@ CODE
               "core/gimptempbuf.h"
               "gimppdb-utils.h");
 
-@procs = qw(pattern_get_info
-            pattern_get_pixels
-            pattern_id_is_valid);
+@procs = qw(pattern_get_by_name
+            pattern_get_info
+            pattern_get_pixels);
 
 %exports = (app => [@procs], lib => [@procs]);
 

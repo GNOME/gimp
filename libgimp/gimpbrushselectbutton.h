@@ -29,9 +29,6 @@
 
 G_BEGIN_DECLS
 
-/* This defines certain structs and the usual macros.
- * A final type has no private.
- */
 #define GIMP_TYPE_BRUSH_SELECT_BUTTON (gimp_brush_select_button_get_type ())
 G_DECLARE_FINAL_TYPE (GimpBrushSelectButton,
                       gimp_brush_select_button,

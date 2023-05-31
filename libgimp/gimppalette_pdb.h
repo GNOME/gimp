@@ -33,8 +33,8 @@ G_BEGIN_DECLS
 
 
 GimpPalette* gimp_palette_new             (const gchar    *name);
+GimpPalette* gimp_palette_get_by_name     (const gchar    *name);
 GimpPalette* gimp_palette_duplicate       (GimpPalette    *palette);
-gboolean     gimp_palette_id_is_valid     (const gchar    *id);
 GimpPalette* gimp_palette_rename          (GimpPalette    *palette,
                                            const gchar    *new_name);
 gboolean     gimp_palette_delete          (GimpPalette    *palette);

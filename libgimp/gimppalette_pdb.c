@@ -76,6 +76,42 @@ gimp_palette_new (const gchar *name)
 }
 
 /**
+ * gimp_palette_get_by_name:
+ * @name: The name of the palette.
+ *
+ * Returns the palette with the given name.
+ *
+ * Returns the palette with the given name.
+ *
+ * Returns: (transfer full): The palette.
+ *
+ * Since: 3.0
+ **/
+GimpPalette *
+gimp_palette_get_by_name (const gchar *name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpPalette *palette = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-palette-get-by-name",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    palette = GIMP_VALUES_GET_PALETTE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return palette;
+}
+
+/**
  * gimp_palette_duplicate:
  * @palette: The palette.
  *
@@ -109,42 +145,6 @@ gimp_palette_duplicate (GimpPalette *palette)
   gimp_value_array_unref (return_vals);
 
   return palette_copy;
-}
-
-/**
- * gimp_palette_id_is_valid:
- * @id: The palette ID.
- *
- * Whether the ID is a valid reference to installed data.
- *
- * Returns TRUE if this ID is valid.
- *
- * Returns: TRUE if the palette ID is valid.
- *
- * Since: 3.0
- **/
-gboolean
-gimp_palette_id_is_valid (const gchar *id)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean valid = FALSE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, id,
-                                          G_TYPE_NONE);
-
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-id-is-valid",
-                                              args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return valid;
 }
 
 /**

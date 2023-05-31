@@ -25,42 +25,27 @@
 
 G_BEGIN_DECLS
 
-/* Inherits GtkBox
- * Inheritable by e.g. GimpBrushSelectButton.
- */
 #define GIMP_TYPE_RESOURCE_SELECT_BUTTON (gimp_resource_select_button_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpResourceSelectButton, gimp_resource_select_button, GIMP, RESOURCE_SELECT_BUTTON, GtkBox)
+G_DECLARE_DERIVABLE_TYPE (GimpResourceSelectButton,
+                          gimp_resource_select_button,
+                          GIMP, RESOURCE_SELECT_BUTTON, GtkBox)
 
 struct _GimpResourceSelectButtonClass
 {
   GtkBoxClass parent_class;
 
-  /* Signal resource_set. Emitted when user chooses a resource.
-   * The signal carries only the resource (a proxy having an ID).
-   * The resource knows its own attributes needed for drawing it.
-   * Such attributes are NOT in the signal.
-   *
-   * Seems to be unused by GIMP internal code,
-   * instead GimpPropChooser binds to property.
-   */
-  /* FIXME: should be an annotation. */
   void (* resource_set) (GimpResourceSelectButton *self,
                          GimpResource             *resource,
                          gboolean                  dialog_closing);
 
-  /* virtual methods. */
   void (*draw_interior) (GimpResourceSelectButton *self);
 
-  /* Specialized by subclass. */
-  GType resource_type;  /* e.g. GimpBrush */
+  GType resource_type;
 
   /* Padding for future expansion */
   gpointer padding[8];
 };
 
-/* Abstract, no new(), instead new a subclass. */
-
-/* API from above, e.g. used by GimpPropChooser */
 GimpResource *gimp_resource_select_button_get_resource (GimpResourceSelectButton *self);
 void          gimp_resource_select_button_set_resource (GimpResourceSelectButton *self,
                                                         GimpResource             *resource);

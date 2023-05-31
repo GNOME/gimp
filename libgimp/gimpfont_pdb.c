@@ -37,37 +37,37 @@
 
 
 /**
- * gimp_font_id_is_valid:
- * @id: The font ID.
+ * gimp_font_get_by_name:
+ * @name: The name of the font.
  *
- * Whether the ID is a valid reference to installed data.
+ * Returns the font with the given name.
  *
- * Returns TRUE if this ID is valid.
+ * Returns the font with the given name.
  *
- * Returns: TRUE if the font ID is valid.
+ * Returns: (transfer full): The font.
  *
  * Since: 3.0
  **/
-gboolean
-gimp_font_id_is_valid (const gchar *id)
+GimpFont *
+gimp_font_get_by_name (const gchar *name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gboolean valid = FALSE;
+  GimpFont *font = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, id,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-font-id-is-valid",
+                                              "gimp-font-get-by-name",
                                               args);
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+    font = GIMP_VALUES_GET_FONT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return valid;
+  return font;
 }

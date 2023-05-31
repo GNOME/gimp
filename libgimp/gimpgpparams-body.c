@@ -197,19 +197,22 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
                                         param_def->meta.m_id.none_ok,
                                         flags);
 
-      /* Resources */
       if (! strcmp (param_def->type_name, "GimpParamBrush"))
         return gimp_param_spec_brush (name, nick, blurb,
                                       param_def->meta.m_id.none_ok, flags);
+
       if (! strcmp (param_def->type_name, "GimpParamFont"))
         return gimp_param_spec_font (name, nick, blurb,
                                      param_def->meta.m_id.none_ok, flags);
+
       if (! strcmp (param_def->type_name, "GimpParamGradient"))
         return gimp_param_spec_gradient (name, nick, blurb,
                                          param_def->meta.m_id.none_ok, flags);
+
       if (! strcmp (param_def->type_name, "GimpParamPalette"))
         return gimp_param_spec_palette (name, nick, blurb,
                                         param_def->meta.m_id.none_ok, flags);
+
       if (! strcmp (param_def->type_name, "GimpParamPattern"))
         return gimp_param_spec_pattern (name, nick, blurb,
                                         param_def->meta.m_id.none_ok, flags);
@@ -223,7 +226,8 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       break;
     }
 
-  g_warning ("%s: GParamSpec type unsupported '%s'", G_STRFUNC, param_def->type_name);
+  g_warning ("%s: GParamSpec type unsupported '%s'", G_STRFUNC,
+             param_def->type_name);
 
   return NULL;
 }
@@ -355,46 +359,45 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 
       param_def->meta.m_id.none_ok = ispec->none_ok;
     }
-  /* Resources. */
   else if (GIMP_IS_PARAM_SPEC_BRUSH (pspec))
     {
-      GimpParamSpecBrush *ispec = GIMP_PARAM_SPEC_BRUSH (pspec);
+      GimpParamSpecResource *rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
-      param_def->meta.m_id.none_ok = ispec->none_ok;
-    }
-  else if (GIMP_IS_PARAM_SPEC_FONT (pspec))
-    {
-      GimpParamSpecFont *ispec = GIMP_PARAM_SPEC_FONT (pspec);
-
-      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
-
-      param_def->meta.m_id.none_ok = ispec->none_ok;
-    }
-  else if (GIMP_IS_PARAM_SPEC_GRADIENT (pspec))
-    {
-      GimpParamSpecGradient *ispec = GIMP_PARAM_SPEC_GRADIENT (pspec);
-
-      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
-
-      param_def->meta.m_id.none_ok = ispec->none_ok;
-    }
-  else if (GIMP_IS_PARAM_SPEC_PALETTE (pspec))
-    {
-      GimpParamSpecPalette *ispec = GIMP_PARAM_SPEC_PALETTE (pspec);
-
-      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
-
-      param_def->meta.m_id.none_ok = ispec->none_ok;
+      param_def->meta.m_id.none_ok = rspec->none_ok;
     }
   else if (GIMP_IS_PARAM_SPEC_PATTERN (pspec))
     {
-      GimpParamSpecPattern *ispec = GIMP_PARAM_SPEC_PATTERN (pspec);
+      GimpParamSpecResource *rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
-      param_def->meta.m_id.none_ok = ispec->none_ok;
+      param_def->meta.m_id.none_ok = rspec->none_ok;
+    }
+  else if (GIMP_IS_PARAM_SPEC_GRADIENT (pspec))
+    {
+      GimpParamSpecResource *rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
+
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
+
+      param_def->meta.m_id.none_ok = rspec->none_ok;
+    }
+  else if (GIMP_IS_PARAM_SPEC_PALETTE (pspec))
+    {
+      GimpParamSpecResource *rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
+
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
+
+      param_def->meta.m_id.none_ok = rspec->none_ok;
+    }
+  else if (GIMP_IS_PARAM_SPEC_FONT (pspec))
+    {
+      GimpParamSpecResource *rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
+
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
+
+      param_def->meta.m_id.none_ok = rspec->none_ok;
     }
   else if (GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (pspec))
     {
@@ -476,7 +479,8 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       else
         {
           g_warning ("%s: GParamSpecObject for unsupported type '%s:%s'",
-                     G_STRFUNC, param_def->type_name, param_def->value_type_name);
+                     G_STRFUNC,
+                     param_def->type_name, param_def->value_type_name);
         }
     }
 }
@@ -514,87 +518,30 @@ get_display_by_id (gpointer gimp,
 #endif
 }
 
-
-/* Return an object instance by ID, for a subclass of GimpResource
- *
- * On app/core side, returns existing instance.
- * (But GimpResource is not defined app/core)
- *
- * On libgimp side, creates a new instance of a proxy.
- * The new instance is put in a GValue.
- * The new instance's life is the same as the GValue.
- * The GValue should eventually be freed by the caller,
- * but not while the resource proxy instance is in use.
- */
 static GObject *
-get_resource_by_id (gpointer gimp,
-                    GType    gtype,
-                    gchar   *id)
+get_resource_by_id (gint id)
 {
-  GObject *resource = NULL;
-  GError  *error    = NULL;
-
-  g_return_val_if_fail (id != NULL, NULL);
-
 #ifdef LIBGIMP_COMPILATION
-  /* Return a new proxy instance, not any instance already existing.
-   * Primarily for class's new() and duplicate() methods,
-   * and for procedure args of a resource type.
-   */
-  resource = g_object_new (gtype, NULL);
-  g_object_set (resource, "id", id, NULL);
-  g_debug ("libgimp:get_resource_by_id");
+  return (GObject *) gimp_resource_get_by_id (id);
 #else
-  if (gtype == GIMP_TYPE_BRUSH)
-    resource = (GObject*) gimp_pdb_get_brush (gimp, id, GIMP_PDB_DATA_ACCESS_READ, &error);
-  else if (gtype == GIMP_TYPE_FONT)
-    resource = (GObject*) gimp_pdb_get_font (gimp, id, &error);
-  else if (gtype == GIMP_TYPE_GRADIENT)
-    resource = (GObject*) gimp_pdb_get_gradient (gimp, id, GIMP_PDB_DATA_ACCESS_READ, &error);
-  else if (gtype == GIMP_TYPE_PALETTE)
-    resource = (GObject*) gimp_pdb_get_palette (gimp, id, GIMP_PDB_DATA_ACCESS_READ, &error);
-  else if (gtype == GIMP_TYPE_PATTERN)
-    resource = (GObject*) gimp_pdb_get_pattern (gimp, id, &error);
-  else
-    g_warning ("%s unsupported type: %s", G_STRFUNC, g_type_name (gtype));
-
-  if (error != NULL)
-    g_warning ("A plugin is trying to use resource '%s' (of type %s) that is no longer installed: %s",
-               id, g_type_name (gtype), error->message);
+  return (GObject *) gimp_data_get_by_id (id);
 #endif
-
-  g_clear_error (&error);
-
-  return resource;
 }
 
-/* Return a resource's ID.
- * This hides the fact that app/core uses object name as ID, and doesn't have a GimpResource class.
- *
- * On app/core side, object name. GimpResource is not a class.
- *
- * On libgimp side, returns the id property.  Class GimpResource is defined.
- */
-static gchar *
+static gint
 get_resource_id (GObject *resource)
 {
-
 #ifdef LIBGIMP_COMPILATION
-  gchar *id = NULL;
-
-  /* Require resource is-a GimpResource having property id. */
-  g_debug ("libgimp: %s", G_STRFUNC);
-  g_object_get (resource, "id", &id, NULL);
-  return id;
+  return gimp_resource_get_id (GIMP_RESOURCE (resource));
 #else
-  /* Cast to avoid "discarding const qualifier" */
-  return (gchar*) gimp_object_get_name (resource);
+  return gimp_data_get_id (GIMP_DATA (resource));
 #endif
 }
 
 
-
-/* Deserialize a gp_param (from the wire) to an instance of object or primitive type.
+/* Deserialize a gp_param (from the wire) to an instance of object or
+ * primitive type.
+ *
  * This is used on both the core and plugin (libgimp) side,
  * each having its own class definitions for a same named class.
  * Thus this creates different objects, depending on which side it is.
@@ -613,7 +560,15 @@ gimp_gp_param_to_value (gpointer        gimp,
     {
       type = g_type_from_name (param->type_name);
       if (type == 0)
-        g_critical ("%s: type name %s is not registered", G_STRFUNC, param->type_name);
+        {
+          if (! strcmp (param->type_name, "GimpResource"))
+            type = g_type_from_name ("GimpData");
+          else if (! strcmp (param->type_name, "GimpData"))
+            type = g_type_from_name ("GimpResource");
+          else
+            g_critical ("%s: type name %s is not registered", G_STRFUNC,
+                        param->type_name);
+        }
     }
   /* assert type is not G_TYPE_NONE and type is not G_TYPE_INVALID. */
 
@@ -737,13 +692,7 @@ gimp_gp_param_to_value (gpointer        gimp,
     }
   else if (GIMP_VALUE_HOLDS_RESOURCE (value))
     {
-      /* when compiled in app, use generic pointer. */
-      gpointer resource = NULL;
-
-      if (param->data.d_string != NULL)
-        resource = get_resource_by_id (gimp, G_VALUE_TYPE (value),  param->data.d_string);
-
-      g_value_set_object (value, resource);
+      g_value_set_object (value, get_resource_by_id (param->data.d_int));
     }
   else if (G_VALUE_HOLDS_PARAM (value))
     {
@@ -1082,28 +1031,9 @@ gimp_value_to_gp_param (const GValue *value,
     {
       GObject *resource = g_value_get_object (value);
 
-      /* Represent by a char*, which must be NULL when resource is NULL.
-       * resource may be NULL e.g. for return value of a canceled dialog.
-       */
-      param->param_type = GP_PARAM_TYPE_STRING;
+      param->param_type = GP_PARAM_TYPE_INT;
 
-      if (resource != NULL)
-        {
-          gchar *resource_id = get_resource_id (resource);
-
-          /* resource_id can be NULL if resource is invalid. */
-          if (full_copy)
-            param->data.d_string = g_strdup (resource_id);
-          else
-            param->data.d_string = resource_id;
-        }
-      else
-        {
-          param->data.d_string = NULL;
-        }
-      /* Ensure ( full_copy AND ( d_string==NULL OR points to new allocation ))
-       *     OR ( not full copy AND ( d_string==NULL OR points to resource's ID char* )
-       */
+      param->data.d_int = resource ? get_resource_id (resource) : -1;
     }
   else if (G_VALUE_HOLDS_PARAM (value))
     {

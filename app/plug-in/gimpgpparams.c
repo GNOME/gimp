@@ -52,6 +52,10 @@
 #include "libgimp/gimpgpparams.h"
 
 
+#undef GIMP_VALUE_HOLDS_RESOURCE
+#define GIMP_VALUE_HOLDS_RESOURCE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), \
+                                          GIMP_TYPE_DATA))
+
 /*  include the implementation, they are shared between app/ and
  *  libgimp/ but need different headers.
  */

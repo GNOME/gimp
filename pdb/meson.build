@@ -50,6 +50,7 @@ pdb_names = [
   'plug_in_compat',
   'plug_in',
   'progress',
+  'resource',
   'selection',
   'text_layer',
   'text_tool',

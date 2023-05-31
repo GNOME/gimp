@@ -414,7 +414,18 @@ package Gimp::CodeGen::pdb;
 		     set_value_func  => 'g_value_set_int ($value, $var)',
 		     take_value_func => 'g_value_set_int ($value, $var)' },
 
-    # resources
+    resource    => { name            => 'RESOURCE',
+		     gtype           => 'GIMP_TYPE_RESOURCE',
+		     type            => 'GimpResource *',
+		     const_type      => 'GimpResource *',
+		     init_value      => 'NULL',
+		     out_annotate    => '(transfer full)',
+		     get_value_func  => '$var = g_value_get_object ($value)',
+		     dup_value_func  => '$var = GIMP_VALUES_GET_RESOURCE ($value)',
+		     set_value_func  => 'g_value_set_object ($value, $var)',
+		     take_value_func => 'g_value_set_object ($value, $var)',
+		     headers         => [ qw("core/gimpresource.h") ] },
+
     brush       => { name            => 'BRUSH',
 		     gtype           => 'GIMP_TYPE_BRUSH',
 		     type            => 'GimpBrush *',
@@ -427,18 +438,18 @@ package Gimp::CodeGen::pdb;
 		     take_value_func => 'g_value_set_object ($value, $var)',
 		     headers         => [ qw("core/gimpbrush.h") ] },
 
-    # !!! include file /app/text/gimpfont.h
-    font        => { name            => 'FONT',
-		     gtype           => 'GIMP_TYPE_FONT',
-		     type            => 'GimpFont *',
-		     const_type      => 'GimpFont *',
+
+    pattern     => { name            => 'PATTERN',
+		     gtype           => 'GIMP_TYPE_PATTERN',
+		     type            => 'GimpPattern *',
+		     const_type      => 'GimpPattern *',
 		     init_value      => 'NULL',
 		     out_annotate    => '(transfer full)',
 		     get_value_func  => '$var = g_value_get_object ($value)',
-		     dup_value_func  => '$var = GIMP_VALUES_GET_FONT ($value)',
+		     dup_value_func  => '$var = GIMP_VALUES_GET_PATTERN ($value)',
 		     set_value_func  => 'g_value_set_object ($value, $var)',
 		     take_value_func => 'g_value_set_object ($value, $var)',
-		     headers         => [ qw("text/gimpfont.h") ] },
+		     headers         => [ qw("core/gimppattern.h") ] },
 
     gradient    => { name            => 'GRADIENT',
 		     gtype           => 'GIMP_TYPE_GRADIENT',
@@ -464,17 +475,17 @@ package Gimp::CodeGen::pdb;
 		     take_value_func => 'g_value_set_object ($value, $var)',
 		     headers         => [ qw("core/gimppalette.h") ] },
 
-    pattern     => { name            => 'PATTERN',
-		     gtype           => 'GIMP_TYPE_PATTERN',
-		     type            => 'GimpPattern *',
-		     const_type      => 'GimpPattern *',
+    font        => { name            => 'FONT',
+		     gtype           => 'GIMP_TYPE_FONT',
+		     type            => 'GimpFont *',
+		     const_type      => 'GimpFont *',
 		     init_value      => 'NULL',
 		     out_annotate    => '(transfer full)',
 		     get_value_func  => '$var = g_value_get_object ($value)',
-		     dup_value_func  => '$var = GIMP_VALUES_GET_PATTERN ($value)',
+		     dup_value_func  => '$var = GIMP_VALUES_GET_FONT ($value)',
 		     set_value_func  => 'g_value_set_object ($value, $var)',
 		     take_value_func => 'g_value_set_object ($value, $var)',
-		     headers         => [ qw("core/gimppattern.h") ] }
+		     headers         => [ qw("text/gimpfont.h") ] }
 );
 
 # Split out the parts of an arg constraint

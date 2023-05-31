@@ -56,6 +56,7 @@
 #include <libgimp/gimpprocedureconfig.h>
 #include <libgimp/gimpprocedure-params.h>
 #include <libgimp/gimpprogress.h>
+#include <libgimp/gimpresource.h>
 #include <libgimp/gimpsaveprocedure.h>
 #include <libgimp/gimpselection.h>
 #include <libgimp/gimptextlayer.h>
@@ -63,9 +64,7 @@
 #include <libgimp/gimpvectors.h>
 
 /* Resources and their widgets. Order important. */
-#include <libgimp/gimpresource.h>
 #include <libgimp/gimpresourceselect.h>
-#include <libgimp/gimpresource-subclass.h>
 
 #include <libgimp/gimp_pdb_headers.h>
 

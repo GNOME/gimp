@@ -19,44 +19,38 @@
 # The invoke code is compiled on the app side.
 # The invoke code must assign to each result var
 
-sub font_id_is_valid {
-    $blurb = "Whether the ID is a valid reference to installed data.";
-    $help  = "Returns TRUE if this ID is valid.";
+sub font_get_by_name {
+    $blurb = "Returns the font with the given name.";
+    $help  = "Returns the font with the given name.";
 
-    &bootchk_pdb_misc('2022', '3.0');
+    &mitch_pdb_misc('2023', '3.0');
 
     @inargs = (
-      { name => 'id',
-        type => 'string',
-        non_empty => 1,
-        no_validate => 1,
-        desc => 'The font ID' }
+      { name => 'name', type => 'string', non_empty => 1,
+        desc => 'The name of the font' }
     );
 
     @outargs = (
-      { name => 'valid', type => 'boolean',
-        desc => 'TRUE if the font ID is valid' }
+      { name => 'font', type => 'font', non_empty => 1,
+        desc => 'The font' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  valid = (gimp_pdb_get_font (gimp, id, error) != NULL);
+  font = gimp_pdb_get_font (gimp, name, error);
 
-  /* When ID is not valid, NULL is returned and error is set.
-   * Clear error so GIMP not display error dialog.
-   */
-  g_clear_error (error);
+  if (! font)
+    success = FALSE;
 }
 CODE
     );
 }
 
-
 @headers = qw("core/gimp.h"
               "gimppdb-utils.h");
 
-@procs = qw(font_id_is_valid);
+@procs = qw(font_get_by_name);
 
 %exports = (app => [@procs], lib => [@procs]);
 

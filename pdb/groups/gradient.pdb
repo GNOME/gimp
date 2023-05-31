@@ -68,6 +68,33 @@ CODE
     );
 }
 
+sub gradient_get_by_name {
+    $blurb = "Returns the gradient with the given name.";
+    $help  = "Returns the gradient with the given name.";
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+      { name => 'name', type => 'string', non_empty => 1,
+        desc => 'The name of the gradient' }
+    );
+
+    @outargs = (
+      ${gradient_arg_spec}
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+
+  if (! gradient)
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub gradient_duplicate {
     $blurb = 'Duplicates a gradient';
     $help  = 'Returns a copy having a different, unique ID';
@@ -89,42 +116,9 @@ sub gradient_duplicate {
 {
   gradient_copy = (GimpGradient *)
     gimp_data_factory_data_duplicate (gimp->gradient_factory, GIMP_DATA (gradient));
-  /* Assert the copy has a unique name. */
-  if (!gradient_copy)
+
+  if (! gradient_copy)
     success = FALSE;
-}
-CODE
-    );
-}
-
-sub gradient_id_is_valid {
-    $blurb = "Whether the ID is a valid reference to installed data.";
-    $help  = "Returns TRUE if this ID is valid.";
-
-    &bootchk_pdb_misc('2022', '3.0');
-
-    @inargs = (
-      { name => 'id',
-        type => 'string',
-        non_empty => 1,
-        no_validate => 1,
-        desc => 'The gradient ID' }
-    );
-
-    @outargs = (
-      { name => 'valid', type => 'boolean',
-        desc => 'TRUE if the gradient ID is valid' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  valid = (gimp_pdb_get_gradient (gimp, id, GIMP_PDB_DATA_ACCESS_READ, error) != NULL);
-
-  /* When ID is not valid, NULL is returned and error is set.
-   * Clear error so GIMP not display error dialog.
-   */
-  g_clear_error (error);
 }
 CODE
     );
@@ -155,18 +149,8 @@ CODE
 }
 
 sub gradient_rename {
-  $blurb = "Renames a gradient. When the name is in use, renames to a unique name.";
-  $help = <<'HELP';
-Renames a gradient.  The name is the same as the ID.
-When the proposed name is already used, GIMP generates a unique name,
-which get_id() will return.
-
-Returns a reference to a renamed gradient, which you should assign
-to the original var or a differently named var.
-Any existing references will be invalid.
-Resources in plugins are proxies holding an ID,
-which can be invalid when the resource is renamed.
-HELP
+    $blurb = "Renames a gradient. When the name is in use, renames to a unique name.";
+    $help  = 'Renames a gradient.';
 
     &shlomi_pdb_misc('2003', '2.2');
 
@@ -185,16 +169,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  /* Rename the gradient in app. */
   gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
-  /* Assert GIMP might have set a name different from new_name. */
 
-  /* Return a reference.
-   * The wire protocol will create a new proxy on the plugin side.
-   * We don't need an alias here, except to make clear
-   * that we are returning the same real object as passed.
-   */
-   gradient_renamed = gradient;
+  gradient_renamed = gradient;
 }
 CODE
     );
@@ -1389,6 +1366,7 @@ CODE
               "gimppdb-utils.h");
 
 @procs = qw(gradient_new
+            gradient_get_by_name
             gradient_duplicate
             gradient_is_editable
             gradient_rename
@@ -1396,7 +1374,6 @@ CODE
             gradient_get_number_of_segments
             gradient_get_uniform_samples
             gradient_get_custom_samples
-            gradient_id_is_valid
             gradient_segment_get_left_color  gradient_segment_set_left_color
             gradient_segment_get_right_color gradient_segment_set_right_color
             gradient_segment_get_left_pos    gradient_segment_set_left_pos

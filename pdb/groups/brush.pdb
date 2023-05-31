@@ -40,10 +40,37 @@ sub brush_new {
     %invoke = (
         code => <<'CODE'
 {
-  brush = (GimpBrush*) gimp_data_factory_data_new (gimp->brush_factory,
-                                                   context, name);
+  brush = (GimpBrush *) gimp_data_factory_data_new (gimp->brush_factory,
+                                                    context, name);
 
-  if (!brush)
+  if (! brush)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub brush_get_by_name {
+    $blurb = "Returns the brush with the given name.";
+    $help  = "Returns the brush with the given name.";
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+      { name => 'name', type => 'string', non_empty => 1,
+        desc => 'The name of the brush' }
+    );
+
+    @outargs = (
+      ${brush_arg_spec}
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+
+  if (! brush)
     success = FALSE;
 }
 CODE
@@ -71,47 +98,13 @@ sub brush_duplicate {
 {
   brush_copy = (GimpBrush *)
     gimp_data_factory_data_duplicate (gimp->brush_factory, GIMP_DATA (brush));
-  /* Assert the copy has a unique name. */
+
   if (!brush_copy)
     success = FALSE;
 }
 CODE
     );
 }
-
-sub brush_id_is_valid {
-    $blurb = "Whether the ID is a valid reference to installed brush data.";
-    $help  = "Returns TRUE when ID is valid.";
-
-    &bootchk_pdb_misc('2022', '3.0');
-
-    @inargs = (
-      { name => 'id',
-        type => 'string',
-        non_empty => 1,
-        no_validate => 1,
-        desc => 'The brush ID' }
-    );
-
-    @outargs = (
-      { name => 'valid', type => 'boolean',
-        desc => 'TRUE if the brush ID is valid' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  valid = (gimp_pdb_get_brush (gimp, id, GIMP_PDB_DATA_ACCESS_READ, error) != NULL);
-
-  /* When ID is not valid, NULL is returned and error is set.
-   * Clear error so GIMP not display error dialog.
-   */
-  g_clear_error (error);
-}
-CODE
-    );
-}
-
 
 sub brush_is_generated {
     $blurb = "Whether the brush is generated (parametric versus raster).";
@@ -891,9 +884,9 @@ CODE
               "gimppdb-utils.h");
 
 @procs = qw(brush_new
+            brush_get_by_name
             brush_duplicate
             brush_is_generated
-            brush_id_is_valid
             brush_rename
             brush_delete
             brush_is_editable

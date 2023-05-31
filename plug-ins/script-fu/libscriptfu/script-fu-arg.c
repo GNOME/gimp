@@ -586,24 +586,16 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
     case SF_GRADIENT:
     case SF_BRUSH:
       {
-        /* The GValue is a GObject of type inheriting GimpResource having property "id" */
+        /* The GValue is a GObject of type inheriting GimpResource */
         GimpResource *resource;
-        gchar        *resource_name;
-
-        /* !!! These only check whether gvalue CAN hold object type, not that it does. */
-        g_assert (G_VALUE_HOLDS_OBJECT (gvalue));
-        g_assert (GIMP_VALUE_HOLDS_RESOURCE (gvalue));
-        g_debug ("gvalue type is: %s", G_VALUE_TYPE_NAME(gvalue));
-        /* Check the value's type is suitable for a gvalue. */
-        g_assert (G_TYPE_IS_VALUE (G_VALUE_TYPE (gvalue)));
-
-        /* Check that gvalue actually holds type, AND IS NOT NULL. */
-        g_assert (G_VALUE_HOLDS (gvalue, GIMP_TYPE_RESOURCE ));
+        gchar        *name = NULL;
 
         resource = g_value_get_object (gvalue);
 
-        g_object_get (resource, "id", &resource_name, NULL);
-        g_string_append_printf (result_string, "\"%s\"", resource_name);
+        if (resource)
+          name = gimp_resource_get_name (resource);
+
+        g_string_append_printf (result_string, "\"%s\"", name);
       }
       break;
 

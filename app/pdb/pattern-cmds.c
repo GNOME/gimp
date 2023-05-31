@@ -45,6 +45,38 @@
 
 
 static GimpValueArray *
+pattern_get_by_name_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *name;
+  GimpPattern *pattern = NULL;
+
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      pattern = gimp_pdb_get_pattern (gimp, name, error);
+
+      if (! pattern)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_object (gimp_value_array_index (return_vals, 1), pattern);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 pattern_get_info_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
@@ -136,38 +168,40 @@ pattern_get_pixels_invoker (GimpProcedure         *procedure,
   return return_vals;
 }
 
-static GimpValueArray *
-pattern_id_is_valid_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
-                             GError               **error)
-{
-  GimpValueArray *return_vals;
-  const gchar *id;
-  gboolean valid = FALSE;
-
-  id = g_value_get_string (gimp_value_array_index (args, 0));
-
-  /* !!! pattern has one fewer args than other resources. */
-  valid = (gimp_pdb_get_pattern (gimp, id, error) != NULL);
-
-  /* When ID is not valid, NULL is returned and error is set.
-   * Clear error so GIMP not display error dialog.
-   */
-  g_clear_error (error);
-
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_boolean (gimp_value_array_index (return_vals, 1), valid);
-
-  return return_vals;
-}
-
 void
 register_pattern_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
+
+  /*
+   * gimp-pattern-get-by-name
+   */
+  procedure = gimp_procedure_new (pattern_get_by_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pattern-get-by-name");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the pattern with the given name.",
+                                  "Returns the pattern with the given name.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2023");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the pattern",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_pattern ("pattern",
+                                                            "pattern",
+                                                            "The pattern",
+                                                            FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-pattern-get-info
@@ -254,36 +288,6 @@ register_pattern_procs (GimpPDB *pdb)
                                                        "The pattern data.",
                                                        G_TYPE_BYTES,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-pattern-id-is-valid
-   */
-  procedure = gimp_procedure_new (pattern_id_is_valid_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-pattern-id-is-valid");
-  gimp_procedure_set_static_help (procedure,
-                                  "Whether the ID is a valid reference to installed data.",
-                                  "Returns TRUE if this ID is valid.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Lloyd Konneker",
-                                         "Lloyd Konneker",
-                                         "2022");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("id",
-                                                       "id",
-                                                       "The pattern ID",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("valid",
-                                                         "valid",
-                                                         "TRUE if the pattern ID is valid",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

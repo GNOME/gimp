@@ -239,6 +239,16 @@ gimp_param_spec_image ("$name",
                        $flags)
 CODE
     }
+    elsif ($pdbtype eq 'resource') {
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+	$pspec = <<CODE;
+gimp_param_spec_resource ("$name",
+                          "$nick",
+                          "$blurb",
+                          $none_ok,
+                          $flags)
+CODE
+    }
     elsif ($pdbtype eq 'brush') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;

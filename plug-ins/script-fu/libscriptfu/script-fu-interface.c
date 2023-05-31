@@ -602,42 +602,25 @@ script_fu_resource_widget (const gchar   *title,
   GtkWidget    *result_widget = NULL;
   GimpResource *resource;
 
-  /* New resource instance, from string *id_handle. */
-  resource = g_object_new (resource_type, "id", *id_handle, NULL);
+  resource = gimp_resource_get_by_name (resource_type, *id_handle);
 
-  /* If not valid, substitute NULL
-   * String provided by script author might not name an installed font.
-   */
-  /*
-  if ( ! gimp_resource_is_valid (resource) )
+  if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
     {
-      g_object_unref (resource);
-      resource = NULL;
-    }
-    */
-
-  if (resource_type == GIMP_TYPE_FONT)
-    {
-      if ( ! gimp_font_is_valid (GIMP_FONT (resource)))
-        {
-          g_object_unref (resource);
-          resource = NULL;
-        }
       result_widget = gimp_font_select_button_new (title, resource);
     }
-  else if (resource_type == GIMP_TYPE_BRUSH)
+  else if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
     {
       result_widget = gimp_brush_select_button_new (title, resource);
     }
-  else if (resource_type == GIMP_TYPE_GRADIENT)
+  else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
     {
       result_widget = gimp_gradient_select_button_new (title, resource);
     }
-  else if (resource_type == GIMP_TYPE_PALETTE)
+  else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
     {
       result_widget = gimp_palette_select_button_new (title, resource);
     }
-  else if (resource_type == GIMP_TYPE_PATTERN)
+  else if (g_type_is_a (resource_type, GIMP_TYPE_PATTERN))
     {
       result_widget = gimp_pattern_select_button_new (title, resource);
     }
@@ -737,7 +720,7 @@ script_fu_resource_set_handler (gpointer      data,  /* callback "data" */
     g_free (*id_handle);
 
   /* We don't own the resource, nor its string.  Copy the string. */
-  *id_handle = g_strdup (gimp_resource_get_id (resource));
+  *id_handle = g_strdup (gimp_resource_get_name (resource));
 
   if (closing) script_fu_activate_main_dialog ();
 }

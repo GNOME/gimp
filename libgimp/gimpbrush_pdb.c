@@ -73,6 +73,42 @@ gimp_brush_new (const gchar *name)
 }
 
 /**
+ * gimp_brush_get_by_name:
+ * @name: The name of the brush.
+ *
+ * Returns the brush with the given name.
+ *
+ * Returns the brush with the given name.
+ *
+ * Returns: (transfer full): The brush.
+ *
+ * Since: 3.0
+ **/
+GimpBrush *
+gimp_brush_get_by_name (const gchar *name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpBrush *brush = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-brush-get-by-name",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    brush = GIMP_VALUES_GET_BRUSH (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return brush;
+}
+
+/**
  * gimp_brush_duplicate:
  * @brush: The brush.
  *
@@ -142,42 +178,6 @@ gimp_brush_is_generated (GimpBrush *brush)
   gimp_value_array_unref (return_vals);
 
   return generated;
-}
-
-/**
- * gimp_brush_id_is_valid:
- * @id: The brush ID.
- *
- * Whether the ID is a valid reference to installed brush data.
- *
- * Returns TRUE when ID is valid.
- *
- * Returns: TRUE if the brush ID is valid.
- *
- * Since: 3.0
- **/
-gboolean
-gimp_brush_id_is_valid (const gchar *id)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean valid = FALSE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, id,
-                                          G_TYPE_NONE);
-
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-brush-id-is-valid",
-                                              args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return valid;
 }
 
 /**

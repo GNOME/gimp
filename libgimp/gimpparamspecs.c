@@ -31,5 +31,6 @@
 /*  include the implementation, they are shared between app/ and
  *  libgimp/ but need different headers.
  */
+#define LIBGIMP_COMPILATION
 #include "gimpparamspecs-body.c"
-#include "gimpparamspecs-body-resource.c"
+#undef LIBGIMP_COMPILATION

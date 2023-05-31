@@ -57,6 +57,7 @@ libappinternalprocs_sources = [
   'plug-in-cmds.c',
   'plug-in-compat-cmds.c',
   'progress-cmds.c',
+  'resource-cmds.c',
   'selection-cmds.c',
   'text-layer-cmds.c',
   'text-tool-cmds.c',

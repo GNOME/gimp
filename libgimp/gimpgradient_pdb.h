@@ -33,6 +33,7 @@ G_BEGIN_DECLS
 
 
 GimpGradient* gimp_gradient_new                                 (const gchar               *name);
+GimpGradient* gimp_gradient_get_by_name                         (const gchar               *name);
 GimpGradient* gimp_gradient_duplicate                           (GimpGradient              *gradient);
 gboolean      gimp_gradient_is_editable                         (GimpGradient              *gradient);
 GimpGradient* gimp_gradient_rename                              (GimpGradient              *gradient,
@@ -50,7 +51,6 @@ gboolean      gimp_gradient_get_custom_samples                  (GimpGradient   
                                                                  gboolean                   reverse,
                                                                  gint                      *num_color_samples,
                                                                  gdouble                  **color_samples);
-gboolean      gimp_gradient_id_is_valid                         (const gchar               *id);
 gboolean      gimp_gradient_segment_get_left_color              (GimpGradient              *gradient,
                                                                  gint                       segment,
                                                                  GimpRGB                   *color,

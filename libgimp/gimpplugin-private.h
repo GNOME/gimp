@@ -53,6 +53,8 @@ GimpImage     * _gimp_plug_in_get_image         (GimpPlugIn      *plug_in,
                                                  gint32           image_id);
 GimpItem      * _gimp_plug_in_get_item          (GimpPlugIn      *plug_in,
                                                  gint32           item_id);
+GimpResource  * _gimp_plug_in_get_resource      (GimpPlugIn      *plug_in,
+                                                 gint32           resource_id);
 
 
 G_END_DECLS

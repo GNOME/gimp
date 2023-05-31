@@ -1,0 +1,251 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub resource_id_is_valid {
+    $blurb = 'Returns TRUE if the resource ID is valid.';
+
+    $help = <<'HELP';
+This procedure checks if the given resource ID is valid and refers to an
+existing resource.
+HELP
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+	{ name => 'resource_id', type => 'int32',
+	  desc => 'The resource ID to check' }
+    );
+
+    @outargs = (
+	{ name => 'valid', type => 'boolean',
+	  desc => 'Whether the resource ID is valid' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpData *data = gimp_data_get_by_id (resource_id);
+
+  valid = GIMP_IS_DATA (data);
+}
+CODE
+    );
+}
+
+sub resource_id_is_brush {
+    $blurb = 'Returns whether the resource ID is a brush.';
+
+    $help = <<HELP;
+This procedure returns TRUE if the specified resource ID is a brush.
+HELP
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+	{ name => 'resource_id', type => 'int32',
+	  desc => 'The resource ID' }
+    );
+
+    @outargs = (
+	{ name => 'brush', type => 'boolean',
+	  desc => 'TRUE if the resource ID is a brush, FALSE otherwise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpData *data = gimp_data_get_by_id (resource_id);
+
+  brush = GIMP_IS_BRUSH (data);
+}
+CODE
+    );
+}
+
+sub resource_id_is_pattern {
+    $blurb = 'Returns whether the resource ID is a pattern.';
+
+    $help = <<HELP;
+This procedure returns TRUE if the specified resource ID is a pattern.
+HELP
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+	{ name => 'resource_id', type => 'int32',
+	  desc => 'The resource ID' }
+    );
+
+    @outargs = (
+	{ name => 'pattern', type => 'boolean',
+	  desc => 'TRUE if the resource ID is a pattern, FALSE otherwise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpData *data = gimp_data_get_by_id (resource_id);
+
+  pattern = GIMP_IS_PATTERN (data);
+}
+CODE
+    );
+}
+
+sub resource_id_is_gradient {
+    $blurb = 'Returns whether the resource ID is a gradient.';
+
+    $help = <<HELP;
+This procedure returns TRUE if the specified resource ID is a gradient.
+HELP
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+	{ name => 'resource_id', type => 'int32',
+	  desc => 'The resource ID' }
+    );
+
+    @outargs = (
+	{ name => 'gradient', type => 'boolean',
+	  desc => 'TRUE if the resource ID is a gradient, FALSE otherwise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpData *data = gimp_data_get_by_id (resource_id);
+
+  gradient = GIMP_IS_GRADIENT (data);
+}
+CODE
+    );
+}
+
+sub resource_id_is_palette {
+    $blurb = 'Returns whether the resource ID is a palette.';
+
+    $help = <<HELP;
+This procedure returns TRUE if the specified resource ID is a palette.
+HELP
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+	{ name => 'resource_id', type => 'int32',
+	  desc => 'The resource ID' }
+    );
+
+    @outargs = (
+	{ name => 'palette', type => 'boolean',
+	  desc => 'TRUE if the resource ID is a palette, FALSE otherwise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpData *data = gimp_data_get_by_id (resource_id);
+
+  palette = GIMP_IS_PALETTE (data);
+}
+CODE
+    );
+}
+
+sub resource_id_is_font {
+    $blurb = 'Returns whether the resource ID is a font.';
+
+    $help = <<HELP;
+This procedure returns TRUE if the specified resource ID is a font.
+HELP
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+	{ name => 'resource_id', type => 'int32',
+	  desc => 'The resource ID' }
+    );
+
+    @outargs = (
+	{ name => 'font', type => 'boolean',
+	  desc => 'TRUE if the resource ID is a font, FALSE otherwise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpData *data = gimp_data_get_by_id (resource_id);
+
+  font = GIMP_IS_FONT (data);
+}
+CODE
+    );
+}
+
+sub resource_get_name {
+    $blurb = "Returns the resource's name.";
+
+    $help = <<HELP;
+This procedure returns the resource's name.
+HELP
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+	{ name => 'resource', type => 'resource',
+	  desc => 'The resource' }
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => "The resource's name" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  name = g_strdup (gimp_object_get_name (GIMP_OBJECT (resource)));
+}
+CODE
+    );
+}
+
+
+@headers = qw("core/gimpbrush.h"
+              "core/gimpgradient.h"
+              "core/gimppalette.h"
+              "core/gimppattern.h"
+              "text/gimpfont.h"
+              "gimp-intl.h");
+
+@procs = qw(resource_id_is_valid
+            resource_id_is_brush
+            resource_id_is_pattern
+            resource_id_is_gradient
+            resource_id_is_palette
+            resource_id_is_font
+            resource_get_name);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Resource procedures';
+$doc_title = 'gimpresource';
+$doc_short_desc = 'Functions to manipulate resources.';
+$doc_long_desc = 'Functions to manipulate resources.';
+
+1;

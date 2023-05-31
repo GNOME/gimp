@@ -1256,23 +1256,17 @@ script_fu_marshal_procedure_call (scheme   *sc,
         }
       else if (GIMP_VALUE_HOLDS_RESOURCE (&value))
         {
-          GType type = G_VALUE_TYPE (&value);
-
           if (! sc->vptr->is_string (sc->vptr->pair_car (a)))
             return script_type_error (sc, "string", i, proc_name);
           else
             {
               /* Create new instance of a resource object. */
               GimpResource *resource;
-              gchar* id = sc->vptr->string_value (sc->vptr->pair_car (a));
-
-              resource = g_object_new (type, NULL);
-
-              g_object_set (resource, "id", id,  NULL);
-              /* Assert set property copies the string. */
+              GType         type = G_VALUE_TYPE (&value);
+              const gchar  *name = sc->vptr->string_value (sc->vptr->pair_car (a));
+              resource = gimp_resource_get_by_name (type, name);
 
               g_value_set_object (&value, resource);
-              /* Assert set_object refs the resource. */
             }
         }
       else
@@ -1397,26 +1391,18 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               /* ScriptFu represents resource objects by ther unique string ID's. */
               GObject *object = g_value_get_object (value);
-              gchar   *id     = "";
+              gchar   *name   = NULL;
 
-              /* expect a GIMP opaque object having an "id" property */
               if (object)
-                {
-                  g_object_get (object, "id", &id, NULL);
-                  g_object_unref (object);
-                }
+                name = gimp_resource_get_name (GIMP_RESOURCE(object));
 
-              /* id is empty when the gvalue had no GObject*,
-               * or the referenced object had no property "id".
-               * This can be an undetected fault in the called procedure.
-               * It is not necessarily an error in the script.
-               */
-              if (strlen(id) == 0)
-                g_warning("PDB procedure returned NULL GIMP object or non-GIMP object.");
+              if (! name)
+                g_warning("PDB procedure returned NULL object.");
 
-              g_debug ("PDB procedure returned object ID: %s", id);
+              return_val = sc->vptr->cons (sc, sc->vptr->mk_string (sc, name),
+                                           return_val);
 
-              return_val = sc->vptr->cons (sc, sc->vptr->mk_string (sc, id), return_val);
+              g_free (name);
             }
           else if (G_VALUE_HOLDS_OBJECT (value))
             {
@@ -1438,7 +1424,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
                * It is not necessarily an error in the script.
                */
               if (id == -1)
-                g_warning("PDB procedure returned NULL GIMP object or non-GIMP object.");
+                g_warning("PDB procedure returned NULL GIMP object.");
 
               g_debug ("PDB procedure returned object ID: %i", id);
 

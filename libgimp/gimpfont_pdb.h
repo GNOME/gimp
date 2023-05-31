@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_font_id_is_valid (const gchar *id);
+GimpFont* gimp_font_get_by_name (const gchar *name);
 
 
 G_END_DECLS
