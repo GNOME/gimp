@@ -45,17 +45,14 @@
 
 struct _GimpFontSelectButton
 {
-  GimpResourceSelectButton parent_instance;
+  GimpResourceSelectButton  parent_instance;
 
-  GtkWidget *font_name_label;
-  GtkWidget *drag_region_widget;
-  GtkWidget *button;
+  GtkWidget                *label;
+  GtkWidget                *button;
 };
 
 
 static void gimp_font_select_button_draw_interior (GimpResourceSelectButton *self);
-
-static GtkWidget *gimp_font_select_button_create_interior  (GimpFontSelectButton     *self);
 
 
 static const GtkTargetEntry drag_target = { "application/x-gimp-font-name", 0, 0 };
@@ -78,14 +75,26 @@ gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
 static void
 gimp_font_select_button_init (GimpFontSelectButton *self)
 {
-  GtkWidget *interior;
+  GtkWidget *hbox;
+  GtkWidget *image;
 
-  interior = gimp_font_select_button_create_interior (self);
+  self->button = gtk_button_new ();
+  gtk_container_add (GTK_CONTAINER (self), self->button);
 
-  gimp_resource_select_button_embed_interior (GIMP_RESOURCE_SELECT_BUTTON (self), interior);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+  gtk_container_add (GTK_CONTAINER (self->button), hbox);
+
+  image = gtk_image_new_from_icon_name (GIMP_ICON_FONT,
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+
+  self->label = gtk_label_new ("unknown");
+  gtk_box_pack_start (GTK_BOX (hbox), self->label, TRUE, TRUE, 4);
+
+  gtk_widget_show_all (GTK_WIDGET (self));
 
   gimp_resource_select_button_set_drag_target (GIMP_RESOURCE_SELECT_BUTTON (self),
-                                               self->drag_region_widget,
+                                               hbox,
                                                &drag_target);
 
   gimp_resource_select_button_set_clickable (GIMP_RESOURCE_SELECT_BUTTON (self),
@@ -173,44 +182,6 @@ gimp_font_select_button_set_font (GimpFontSelectButton *self,
 
 /*  private functions  */
 
-/* This is NOT an implementation of virtual function.
- *
- * Create a widget that is the interior of a button.
- * Super creates the button, self creates interior.
- * Button is-a container and self calls super to add interior to the container.
- *
- * Special: an hbox containing a general icon for a font and
- * a label that is the name of the font family and style.
- * FUTURE: label styled in the current font family and style.
- */
-static GtkWidget*
-gimp_font_select_button_create_interior (GimpFontSelectButton *self)
-{
-  GtkWidget   *button;
-  GtkWidget   *hbox;
-  GtkWidget   *image;
-  GtkWidget   *label;
-  gchar       *font_name = "unknown";
-
-  button = gtk_button_new ();
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-  gtk_container_add (GTK_CONTAINER (button), hbox);
-
-  image = gtk_image_new_from_icon_name (GIMP_ICON_FONT,
-                                        GTK_ICON_SIZE_BUTTON);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-
-  label = gtk_label_new (font_name);
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 4);
-
-  self->font_name_label = label;  /* Save label for redraw. */
-  self->drag_region_widget = hbox;
-  self->button = button;
-
-  return button;
-}
-
 static void
 gimp_font_select_button_draw_interior (GimpResourceSelectButton *self)
 {
@@ -223,5 +194,5 @@ gimp_font_select_button_draw_interior (GimpResourceSelectButton *self)
   if (resource)
     name = gimp_resource_get_name (resource);
 
-  gtk_label_set_text (GTK_LABEL (font_select->font_name_label), name);
+  gtk_label_set_text (GTK_LABEL (font_select->label), name);
 }

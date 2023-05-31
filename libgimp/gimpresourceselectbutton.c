@@ -211,6 +211,7 @@ gimp_resource_select_button_init (GimpResourceSelectButton *self)
 {
   gtk_orientable_set_orientation (GTK_ORIENTABLE (self),
                                   GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_set_spacing (GTK_BOX (self), 6);
 }
 
 static void
@@ -356,32 +357,6 @@ gimp_resource_select_button_set_resource (GimpResourceSelectButton *self,
     }
 }
 
-
-/**
- * gimp_resource_select_button_embed_interior:
- * @self: A #GimpResourceSelectButton
- * @interior: Interior widget to embed into the exterior container widget.
- *
- * Called by subclasses init to specialize the instance.
- *
- * Embed an interior widget into self's outer container widget.
- *
- * Since: 3.0
- */
-void
-gimp_resource_select_button_embed_interior (GimpResourceSelectButton *self,
-                                            GtkWidget                *interior)
-{
-  g_return_if_fail (GIMP_IS_RESOURCE_SELECT_BUTTON (self));
-  g_return_if_fail (GTK_IS_WIDGET (interior));
-  g_return_if_fail (GTK_IS_CONTAINER (self));
-
-  gtk_container_add (GTK_CONTAINER (self), interior);
-
-  gtk_widget_show_all (GTK_WIDGET (self));
-
-  /* We can't draw the interior until self property "resource" is set. */
-}
 
 /* Calls the virtual method of a similar name, which subclasses must override.
  *

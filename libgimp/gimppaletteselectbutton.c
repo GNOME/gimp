@@ -45,18 +45,14 @@
 
 struct _GimpPaletteSelectButton
 {
-  GimpResourceSelectButton parent_instance;
+  GimpResourceSelectButton  parent_instance;
 
-  GtkWidget *palette_name_label;
-  GtkWidget *drag_region_widget;
-  GtkWidget *button;
+  GtkWidget                *label;
+  GtkWidget                *button;
 };
 
 
-static void gimp_palette_select_button_finalize        (GObject                  *object);
-static void gimp_palette_select_button_draw_interior   (GimpResourceSelectButton *self);
-
-static GtkWidget *gimp_palette_select_button_create_interior  (GimpPaletteSelectButton     *self);
+static void gimp_palette_select_button_draw_interior (GimpResourceSelectButton *self);
 
 
 static const GtkTargetEntry drag_target = { "application/x-gimp-palette-name", 0, 0 };
@@ -70,10 +66,7 @@ G_DEFINE_FINAL_TYPE (GimpPaletteSelectButton,
 static void
 gimp_palette_select_button_class_init (GimpPaletteSelectButtonClass *klass)
 {
-  GObjectClass                  *object_class = G_OBJECT_CLASS (klass);
-  GimpResourceSelectButtonClass *superclass   = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
-
-  object_class->finalize     = gimp_palette_select_button_finalize;
+  GimpResourceSelectButtonClass *superclass = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
 
   superclass->draw_interior = gimp_palette_select_button_draw_interior;
   superclass->resource_type = GIMP_TYPE_PALETTE;
@@ -82,18 +75,31 @@ gimp_palette_select_button_class_init (GimpPaletteSelectButtonClass *klass)
 static void
 gimp_palette_select_button_init (GimpPaletteSelectButton *self)
 {
-  GtkWidget *interior;
+  GtkWidget *hbox;
+  GtkWidget *image;
 
-  interior = gimp_palette_select_button_create_interior (self);
+  self->button = gtk_button_new ();
+  gtk_container_add (GTK_CONTAINER (self), self->button);
 
-  gimp_resource_select_button_embed_interior (GIMP_RESOURCE_SELECT_BUTTON (self), interior);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+  gtk_container_add (GTK_CONTAINER (self->button), hbox);
+
+  image = gtk_image_new_from_icon_name (GIMP_ICON_PALETTE,
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+
+  self->label = gtk_label_new ("unknown");
+  gtk_box_pack_start (GTK_BOX (hbox), self->label, TRUE, TRUE, 4);
+
+  gtk_widget_show_all (GTK_WIDGET (self));
 
   gimp_resource_select_button_set_drag_target (GIMP_RESOURCE_SELECT_BUTTON (self),
-                                               self->drag_region_widget,
+                                               hbox,
                                                &drag_target);
   gimp_resource_select_button_set_clickable (GIMP_RESOURCE_SELECT_BUTTON (self),
                                              self->button);
 }
+
 
 /**
  * gimp_palette_select_button_new:
@@ -185,72 +191,6 @@ gimp_palette_select_button_set_palette (GimpPaletteSelectButton *self,
 /*  private functions  */
 
 static void
-gimp_palette_select_button_finalize (GObject *object)
-{
-  g_debug ("%s called", G_STRFUNC);
-
-  /* Has no allocations.*/
-
-  /* Chain up. */
-  G_OBJECT_CLASS (gimp_palette_select_button_parent_class)->finalize (object);
-}
-
-
-
-
-/* This is NOT an implementation of virtual function.
- *
- * Create a widget that is the interior of a button.
- * Super creates the button, self creates interior.
- * Button is-a container and self calls super to add interior to the container.
- *
- * Special: an hbox containing a general icon for a palette and
- * a label that is the name of the palette family and style.
- * FUTURE: label styled in the current palette family and style.
- */
-static GtkWidget*
-gimp_palette_select_button_create_interior (GimpPaletteSelectButton *self)
-{
-  GtkWidget   *button;
-  GtkWidget   *hbox;
-  GtkWidget   *image;
-  GtkWidget   *label;
-  gchar       *palette_name = "unknown";
-
-  g_debug ("%s", G_STRFUNC);
-
-  /* Outermost is-a button. */
-  button = gtk_button_new ();
-
-  /* inside the button is hbox. */
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-  gtk_container_add (GTK_CONTAINER (button), hbox);
-
-  /* first item in hbox is an icon. */
-  image = gtk_image_new_from_icon_name (GIMP_ICON_PALETTE,
-                                        GTK_ICON_SIZE_BUTTON);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-
-  /* Second item in hbox is palette name.
-   * The initial text is dummy, a draw will soon refresh it.
-   * This function does not know the resource/palette.
-   */
-  label = gtk_label_new (palette_name);
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 4);
-
-  /* Ensure sub widgets saved for subsequent use. */
-
-  self->palette_name_label = label;  /* Save label for redraw. */
-  self->drag_region_widget = hbox;
-  self->button = button;
-
-  /* This subclass does not connect to draw signal on interior widget. */
-
-  /* Return the whole interior, which is-a button. */
-  return button;
-}
-
-static void
 gimp_palette_select_button_draw_interior (GimpResourceSelectButton *self)
 {
   GimpPaletteSelectButton *palette_select= GIMP_PALETTE_SELECT_BUTTON (self);
@@ -262,5 +202,5 @@ gimp_palette_select_button_draw_interior (GimpResourceSelectButton *self)
   if (resource)
     name = gimp_resource_get_name (resource);
 
-  gtk_label_set_text (GTK_LABEL (palette_select->palette_name_label), name);
+  gtk_label_set_text (GTK_LABEL (palette_select->label), name);
 }

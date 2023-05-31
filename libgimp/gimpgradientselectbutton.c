@@ -46,21 +46,15 @@
 
 struct _GimpGradientSelectButton
 {
-  /* !! Not a pointer, is contained. */
-  GimpResourceSelectButton parent_instance;
+  GimpResourceSelectButton  parent_instance;
 
-  GtkWidget *button;
-  GtkWidget *drag_region_widget;
-  GtkWidget *preview;             /* needed by draw. */
+  GtkWidget                *preview;
 };
+
 
 /*  local function prototypes  */
 
-static void   gimp_gradient_select_button_finalize      (GObject                  *object);
-
-static void gimp_gradient_select_button_embed_interior  (GimpGradientSelectButton *self);
 static void gimp_gradient_select_button_draw_interior   (GimpResourceSelectButton *self);
-static void gimp_gradient_select_button_set_drag_target (GimpGradientSelectButton *self);
 
 static void gimp_gradient_select_preview_size_allocate  (GtkWidget                *widget,
                                                          GtkAllocation            *allocation,
@@ -83,31 +77,40 @@ G_DEFINE_FINAL_TYPE (GimpGradientSelectButton,
 static void
 gimp_gradient_select_button_class_init (GimpGradientSelectButtonClass *klass)
 {
-  GObjectClass                  *object_class = G_OBJECT_CLASS (klass);
-  GimpResourceSelectButtonClass *superclass   = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
+  GimpResourceSelectButtonClass *superclass = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
 
-  g_debug ("%s", G_STRFUNC);
-
-  object_class->finalize     = gimp_gradient_select_button_finalize;
-
-  /* Implement pure virtual functions. */
-  superclass->draw_interior          = gimp_gradient_select_button_draw_interior;
-
-  /* Set data member of class. */
+  superclass->draw_interior = gimp_gradient_select_button_draw_interior;
   superclass->resource_type = GIMP_TYPE_GRADIENT;
 }
 
 static void
 gimp_gradient_select_button_init (GimpGradientSelectButton *self)
 {
-  g_debug ("%s", G_STRFUNC);
+  GtkWidget *button;
 
-  gimp_gradient_select_button_embed_interior (self);
+  button = gtk_button_new ();
+  gtk_container_add (GTK_CONTAINER (self), button);
 
-  gimp_gradient_select_button_set_drag_target (self);
+  self->preview = gtk_drawing_area_new ();
+  gtk_widget_set_size_request (self->preview, CELL_WIDTH, CELL_HEIGHT);
+  gtk_container_add (GTK_CONTAINER (button), self->preview);
+
+  g_signal_connect (self->preview, "size-allocate",
+                    G_CALLBACK (gimp_gradient_select_preview_size_allocate),
+                    self);
+
+  g_signal_connect (self->preview, "draw",
+                    G_CALLBACK (gimp_gradient_select_preview_draw_handler),
+                    self);
+
+  gtk_widget_show_all (GTK_WIDGET (self));
+
+  gimp_resource_select_button_set_drag_target (GIMP_RESOURCE_SELECT_BUTTON (self),
+                                               self->preview,
+                                               &drag_target);
 
   gimp_resource_select_button_set_clickable (GIMP_RESOURCE_SELECT_BUTTON (self),
-                                             self->button);
+                                             button);
 }
 
 /**
@@ -129,27 +132,20 @@ gimp_gradient_select_button_new (const gchar  *title,
   GtkWidget *self;
 
   if (gradient == NULL)
-    {
-      g_debug ("%s defaulting gradient from context", G_STRFUNC);
-      gradient = GIMP_RESOURCE (gimp_context_get_gradient ());
-    }
-  g_assert (gradient != NULL);
-  /* This method is polymorphic, so a factory can call it, but requires gradient. */
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
-
-  g_debug ("%s", G_STRFUNC);
+    gradient = GIMP_RESOURCE (gimp_context_get_gradient ());
 
   if (title)
     self = g_object_new (GIMP_TYPE_GRADIENT_SELECT_BUTTON,
-                           "title",    title,
-                           "resource", gradient,
-                           NULL);
+                         "title",    title,
+                         "resource", gradient,
+                         NULL);
   else
     self = g_object_new (GIMP_TYPE_GRADIENT_SELECT_BUTTON,
-                           "resource", gradient,
-                           NULL);
+                         "resource", gradient,
+                         NULL);
 
   gimp_gradient_select_button_draw_interior (GIMP_RESOURCE_SELECT_BUTTON (self));
+
   return self;
 }
 
@@ -167,8 +163,6 @@ gimp_gradient_select_button_new (const gchar  *title,
 GimpGradient *
 gimp_gradient_select_button_get_gradient (GimpGradientSelectButton *self)
 {
-  g_debug ("%s", G_STRFUNC);
-
   g_return_val_if_fail (GIMP_IS_GRADIENT_SELECT_BUTTON (self), NULL);
 
   /* Delegate to super w upcast arg and downcast result. */
@@ -191,7 +185,6 @@ gimp_gradient_select_button_set_gradient (GimpGradientSelectButton *self,
 {
   g_return_if_fail (GIMP_IS_GRADIENT_SELECT_BUTTON (self));
 
-  g_debug ("%s", G_STRFUNC);
 
   /* Delegate to super with upcasts */
   gimp_resource_select_button_set_resource (GIMP_RESOURCE_SELECT_BUTTON (self), GIMP_RESOURCE (gradient));
@@ -201,27 +194,11 @@ gimp_gradient_select_button_set_gradient (GimpGradientSelectButton *self,
 /*  private functions  */
 
 static void
-gimp_gradient_select_button_finalize (GObject *object)
-{
-  g_debug ("%s", G_STRFUNC);
-
-  /* Nothing was allocated. */
-
-  G_OBJECT_CLASS (gimp_gradient_select_button_parent_class)->finalize (object);
-}
-
-static void
 gimp_gradient_select_button_draw_interior (GimpResourceSelectButton *self)
 {
-  GimpGradientSelectButton  *self_as_gradient_select;
+  GimpGradientSelectButton *gradient_select = GIMP_GRADIENT_SELECT_BUTTON (self);
 
-  g_debug ("%s", G_STRFUNC);
-
-  g_return_if_fail (GIMP_IS_GRADIENT_SELECT_BUTTON (self));
-  self_as_gradient_select = GIMP_GRADIENT_SELECT_BUTTON (self);
-
-    /* Not actually draw, just queue. Continuation is the handler. */
-  gtk_widget_queue_draw (self_as_gradient_select->preview);
+  gtk_widget_queue_draw (gradient_select->preview);
 }
 
 /* Get array of samples from self's gradient.
@@ -284,11 +261,10 @@ gimp_gradient_select_preview_size_allocate (GtkWidget                *widget,
  * This understands mostly cairo, and little about gradient.
  */
 static void
-gimp_gradient_select_preview_draw (
-  cairo_t   *cr,
-  gint       src_width,
-  gint       dest_width,
-  gdouble   *src)
+gimp_gradient_select_preview_draw (cairo_t   *cr,
+                                   gint       src_width,
+                                   gint       dest_width,
+                                   gdouble   *src)
 {
   cairo_pattern_t *pattern;
   cairo_surface_t *surface;
@@ -340,10 +316,9 @@ gimp_gradient_select_preview_draw (
  * Is passed neither gradient nor attributes of gradient: get them now from self.
  */
 static gboolean
-gimp_gradient_select_preview_draw_handler (
-  GtkWidget                *widget,
-  cairo_t                  *cr,
-  GimpGradientSelectButton *self)
+gimp_gradient_select_preview_draw_handler (GtkWidget                *widget,
+                                           cairo_t                  *cr,
+                                           GimpGradientSelectButton *self)
 {
   GtkAllocation    allocation;
 
@@ -351,8 +326,6 @@ gimp_gradient_select_preview_draw_handler (
   gdouble   *src;
   gint       n_samples;
   gint       src_width;
-
-  g_debug ("%s", G_STRFUNC);
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -367,49 +340,4 @@ gimp_gradient_select_preview_draw_handler (
   g_free (src);
 
   return FALSE;
-}
-
-
-static void
-gimp_gradient_select_button_embed_interior (GimpGradientSelectButton *self)
-{
-  GtkWidget *button;
-  GtkWidget *preview;
-
-  g_debug ("%s", G_STRFUNC);
-
-  /* Outermost is button. */
-  button = gtk_button_new ();
-
-  /* Entire interior of button is a preview image. */
-  preview = gtk_drawing_area_new ();
-  gtk_widget_set_size_request (preview, CELL_WIDTH, CELL_HEIGHT);
-  gtk_container_add (GTK_CONTAINER (button), preview);
-
-  g_signal_connect (preview, "size-allocate",
-                    G_CALLBACK (gimp_gradient_select_preview_size_allocate),
-                    self);
-
-  g_signal_connect (preview, "draw",
-                    G_CALLBACK (gimp_gradient_select_preview_draw_handler),
-                    self);
-
-  gtk_widget_show_all (button);
-
-  /* Remember widgets needed later. */
-  self->drag_region_widget = preview;
-  self->button             = button;
-  self->preview            = preview;
-
-  /* Call super with upcasts. */
-  gimp_resource_select_button_embed_interior (GIMP_RESOURCE_SELECT_BUTTON (self), button);
-}
-
-static void
-gimp_gradient_select_button_set_drag_target (GimpGradientSelectButton *self)
-{
-  /* Self knows the GtkTargetEntry, super knows how to create target and receive drag. */
-  gimp_resource_select_button_set_drag_target (GIMP_RESOURCE_SELECT_BUTTON (self),
-                                               self->drag_region_widget,
-                                               &drag_target);
 }

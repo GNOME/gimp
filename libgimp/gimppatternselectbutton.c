@@ -60,25 +60,16 @@ typedef struct _PreviewImage
 
 struct _GimpPatternSelectButton
 {
-  /* !! Not a pointer, is contained. */
-  GimpResourceSelectButton parent_instance;
+  GimpResourceSelectButton  parent_instance;
 
-  /* Partial view of pattern image. Receives drag.  Receives mouse down to popup zoom. */
-  GtkWidget     *peephole_view;
-  GtkWidget     *popup;         /* Popup showing entire, full-size pattern image. */
-  GtkWidget     *browse_button; /* Clickable area that popups remote chooser. */
+  GtkWidget                *preview;
+  GtkWidget                *popup;
 };
 
 /*  local  */
 
-/* implement virtual. */
-static void gimp_pattern_select_button_finalize        (GObject                  *object);
 static void gimp_pattern_select_button_draw_interior   (GimpResourceSelectButton *self);
 
-/* init methods. */
-static GtkWidget *gimp_pattern_select_button_create_interior (GimpPatternSelectButton *self);
-
-/* Event handlers. */
 static void     gimp_pattern_select_on_preview_resize  (GimpPatternSelectButton *button);
 static gboolean gimp_pattern_select_on_preview_events  (GtkWidget               *widget,
                                                         GdkEvent                *event,
@@ -118,54 +109,47 @@ G_DEFINE_FINAL_TYPE (GimpPatternSelectButton,
 static void
 gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
 {
-  /* Alias cast klass to super classes. */
-  GObjectClass                  *object_class  = G_OBJECT_CLASS (klass);
-  GimpResourceSelectButtonClass *superclass    = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
+  GimpResourceSelectButtonClass *superclass = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
 
-  g_debug ("%s called", G_STRFUNC);
-
-  object_class->finalize     = gimp_pattern_select_button_finalize;
-
-  /* Implement pure virtual functions. */
   superclass->draw_interior = gimp_pattern_select_button_draw_interior;
-
-  /* Set data member of class. */
   superclass->resource_type = GIMP_TYPE_PATTERN;
-
-  /* We don't define property getter/setters: use superclass getter/setters.
-   * But super property name is "resource", not "pattern"
-   */
 }
 
 static void
 gimp_pattern_select_button_init (GimpPatternSelectButton *self)
 {
-  GtkWidget *interior;
+  GtkWidget *frame;
+  GtkWidget *button;
 
-  g_debug ("%s called", G_STRFUNC);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (self), frame, FALSE, FALSE, 0);
 
-  /* Specialize:
-   *     - embed our widget interior instance to super widget instance.
-   *     - connect our widget to dnd
-   * These will call superclass methods.
-   * These are on instance, not our subclass.
-   */
-  interior = gimp_pattern_select_button_create_interior (self);
+  self->preview = gimp_preview_area_new ();
+  gtk_widget_add_events (self->preview,
+                         GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
+  gtk_widget_set_size_request (self->preview, CELL_SIZE, CELL_SIZE);
+  gtk_container_add (GTK_CONTAINER (frame), self->preview);
 
-  gimp_resource_select_button_embed_interior (GIMP_RESOURCE_SELECT_BUTTON (self), interior);
+  g_signal_connect_swapped (self->preview, "size-allocate",
+                            G_CALLBACK (gimp_pattern_select_on_preview_resize),
+                            self);
 
-  /* Self knows the GtkTargetEntry, super knows how to create target and receive drag. */
-  /* Only the peephole_view receives drag. */
+  g_signal_connect (self->preview, "event",
+                    G_CALLBACK (gimp_pattern_select_on_preview_events),
+                    self);
+
+  button = gtk_button_new_with_mnemonic (_("_Browse..."));
+  gtk_box_pack_start (GTK_BOX (self), button, FALSE, FALSE, 0);
+
+  gtk_widget_show_all (GTK_WIDGET (self));
+
   gimp_resource_select_button_set_drag_target (GIMP_RESOURCE_SELECT_BUTTON (self),
-                                               self->peephole_view,
+                                               self->preview,
                                                &drag_target);
 
-  /* Tell super which sub widget pops up remote chooser.
-   * Only the browse_button.
-   * A click in the peephole_view does something else: popup a zoom.
-   */
   gimp_resource_select_button_set_clickable (GIMP_RESOURCE_SELECT_BUTTON (self),
-                                             self->browse_button);
+                                             button);
 }
 
 /**
@@ -184,28 +168,14 @@ gimp_pattern_select_button_init (GimpPatternSelectButton *self)
  */
 GtkWidget *
 gimp_pattern_select_button_new (const gchar  *title,
-                             GimpResource *resource)
+                                GimpResource *resource)
 {
   GtkWidget *self;
 
-  g_debug ("%s called", G_STRFUNC);
-
   if (resource == NULL)
-    {
-      g_debug ("%s defaulting pattern from context", G_STRFUNC);
-      resource = GIMP_RESOURCE (gimp_context_get_pattern ());
-    }
-  g_assert (resource != NULL);
-  /* This method is polymorphic, so a factory can call it, but requires Pattern. */
+    resource = GIMP_RESOURCE (gimp_context_get_pattern ());
   g_return_val_if_fail (GIMP_IS_PATTERN (resource), NULL);
 
-  /* Create instance of self (not super.)
-   * This will call superclass init, self class init, superclass init, and instance init.
-   * Self subclass class_init will specialize by implementing virtual funcs
-   * that open and set remote chooser dialog, and that draw self interior.
-   *
-   * !!! property belongs to superclass and is named "resource"
-   */
    if (title)
      self = g_object_new (GIMP_TYPE_PATTERN_SELECT_BUTTON,
                           "title",     title,
@@ -216,20 +186,7 @@ gimp_pattern_select_button_new (const gchar  *title,
                           "resource",  resource,
                           NULL);
 
-  /* We don't subscribe to events from super.
-   * Super will queue a draw when it's resource changes.
-   * Except that the above setting of property happens too late,
-   * so we now draw the initial resource.
-   */
-
-  /* Draw it with the initial resource.
-   * Easier to call draw method than to queue a draw.
-   *
-   * Cast self from Widget.
-   */
   gimp_pattern_select_button_draw_interior (GIMP_RESOURCE_SELECT_BUTTON (self));
-
-  g_debug ("%s returns", G_STRFUNC);
 
   return self;
 }
@@ -272,79 +229,16 @@ gimp_pattern_select_button_get_pattern (GimpPatternSelectButton *self)
  */
 void
 gimp_pattern_select_button_set_pattern (GimpPatternSelectButton *self,
-                                  GimpPattern             *pattern)
+                                        GimpPattern             *pattern)
 {
   g_return_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (self));
 
-  g_debug ("%s", G_STRFUNC);
-
-  /* Delegate to super with upcasts */
-  gimp_resource_select_button_set_resource (GIMP_RESOURCE_SELECT_BUTTON (self), GIMP_RESOURCE (pattern));
+  gimp_resource_select_button_set_resource (GIMP_RESOURCE_SELECT_BUTTON (self),
+                                            GIMP_RESOURCE (pattern));
 }
 
 
 /*  private functions  */
-
-static void
-gimp_pattern_select_button_finalize (GObject *object)
-{
-  g_debug ("%s called", G_STRFUNC);
-
-  /* Has no allocations.*/
-
-  /* Chain up. */
-  G_OBJECT_CLASS (gimp_pattern_select_button_parent_class)->finalize (object);
-}
-
-
-/* Create a widget that is the interior of another widget, a GimpPatternSelectButton.
- * Super creates the exterior, self creates interior.
- * Exterior is-a container and self calls super to add interior to the container.
- */
-static GtkWidget *
-gimp_pattern_select_button_create_interior (GimpPatternSelectButton *self)
-{
-  GtkWidget *hbox;
-  GtkWidget *frame;
-  GtkWidget *peephole_view;
-  GtkWidget *browse_button;
-
-  g_debug ("%s", G_STRFUNC);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-
-  peephole_view = gimp_preview_area_new ();
-  gtk_widget_add_events (peephole_view,
-                         GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-  gtk_widget_set_size_request (peephole_view, CELL_SIZE, CELL_SIZE);
-  gtk_container_add (GTK_CONTAINER (frame), peephole_view);
-
-  g_signal_connect_swapped (peephole_view, "size-allocate",
-                            G_CALLBACK (gimp_pattern_select_on_preview_resize),
-                            self);
-
-  /* preview receives mouse events to popup and down. */
-  g_signal_connect (peephole_view, "event",
-                    G_CALLBACK (gimp_pattern_select_on_preview_events),
-                    self);
-
-  browse_button = gtk_button_new_with_mnemonic (_("_Browse..."));
-  gtk_box_pack_start (GTK_BOX (hbox), browse_button, TRUE, TRUE, 0);
-
-  gtk_widget_show_all (hbox);
-
-  /* Ensure self knows sub widgets. */
-  self->peephole_view = peephole_view;
-  self->browse_button = browse_button;
-
-  /* Return the whole, it is not a button, only contains a button. */
-  return hbox;
-}
-
 
 /* Knows how to draw self interior.
  * Self knows resource, it is not passed.
@@ -364,18 +258,15 @@ gimp_pattern_select_button_draw_interior (GimpResourceSelectButton *self)
 
 /* Draw self.
  *
- * This knows that we only draw the peephole_view. Gtk draws the browse button.
+ * This knows that we only draw the preview. Gtk draws the browse button.
  */
 static void
 gimp_pattern_select_button_draw (GimpPatternSelectButton *self)
 {
   _PreviewImage image;
 
-  g_debug ("%s", G_STRFUNC);
-
-  /* Draw the peephole. */
   image = gimp_pattern_select_button_get_pattern_image (self);
-  gimp_pattern_select_preview_fill_draw (self->peephole_view, image);
+  gimp_pattern_select_preview_fill_draw (self->preview, image);
   g_free (image.pixelels);
 }
 
@@ -417,7 +308,7 @@ gimp_pattern_select_on_preview_resize (GimpPatternSelectButton *self)
 }
 
 
-/* On mouse events in self's peephole_view, popup a zoom view of entire pattern */
+/* On mouse events in self's preview, popup a zoom view of entire pattern */
 static gboolean
 gimp_pattern_select_on_preview_events (GtkWidget               *widget,
                                        GdkEvent                *event,
@@ -546,18 +437,13 @@ gimp_pattern_select_button_open_popup (GimpPatternSelectButton *self,
   gint          y_org;
   _PreviewImage image;
 
-  g_debug ("%s", G_STRFUNC);
-
   if (self->popup)
     gimp_pattern_select_button_close_popup (self);
 
   image = gimp_pattern_select_button_get_pattern_image (self);
 
   if (image.width <= CELL_SIZE && image.height <= CELL_SIZE)
-    {
-      g_debug ("%s: omit popup smaller than peephole.", G_STRFUNC);
-      return;
-    }
+    return;
 
   self->popup = gtk_window_new (GTK_WINDOW_POPUP);
   gtk_window_set_type_hint (GTK_WINDOW (self->popup), GDK_WINDOW_TYPE_HINT_DND);
@@ -574,8 +460,8 @@ gimp_pattern_select_button_open_popup (GimpPatternSelectButton *self,
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
-  /* decide where to put the popup: near the peephole_view i.e. at mousedown coords */
-  gdk_window_get_origin (gtk_widget_get_window (self->peephole_view),
+  /* decide where to put the popup: near the preview i.e. at mousedown coords */
+  gdk_window_get_origin (gtk_widget_get_window (self->preview),
                          &x_org, &y_org);
 
   monitor = gimp_widget_get_monitor (GTK_WIDGET (self));

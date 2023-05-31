@@ -52,8 +52,6 @@ void          gimp_resource_select_button_set_resource (GimpResourceSelectButton
 
 /* API from below, used by subclasses e.g. GimpBrushSelectButton */
 
-void      gimp_resource_select_button_embed_interior   (GimpResourceSelectButton *self,
-                                                        GtkWidget                *interior);
 void      gimp_resource_select_button_set_drag_target  (GimpResourceSelectButton *self,
                                                         GtkWidget                *drag_region_widget,
                                                         const GtkTargetEntry     *drag_target);
