@@ -36,12 +36,9 @@ G_DECLARE_FINAL_TYPE (GimpFontSelectButton,
                       GimpResourceSelectButton)
 
 
-GtkWidget * gimp_font_select_button_new      (const gchar          *title,
-                                              GimpResource         *resource);
+GtkWidget * gimp_font_select_button_new (const gchar  *title,
+                                         GimpResource *resource);
 
-GimpFont  * gimp_font_select_button_get_font (GimpFontSelectButton *self);
-void        gimp_font_select_button_set_font (GimpFontSelectButton *self,
-                                              GimpFont             *font);
 
 G_END_DECLS
 

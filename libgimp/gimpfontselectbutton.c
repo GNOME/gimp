@@ -48,7 +48,6 @@ struct _GimpFontSelectButton
   GimpResourceSelectButton  parent_instance;
 
   GtkWidget                *label;
-  GtkWidget                *button;
 };
 
 
@@ -75,14 +74,15 @@ gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
 static void
 gimp_font_select_button_init (GimpFontSelectButton *self)
 {
+  GtkWidget *button;
   GtkWidget *hbox;
   GtkWidget *image;
 
-  self->button = gtk_button_new ();
-  gtk_container_add (GTK_CONTAINER (self), self->button);
+  button = gtk_button_new ();
+  gtk_container_add (GTK_CONTAINER (self), button);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-  gtk_container_add (GTK_CONTAINER (self->button), hbox);
+  gtk_container_add (GTK_CONTAINER (button), hbox);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_FONT,
                                         GTK_ICON_SIZE_BUTTON);
@@ -98,8 +98,24 @@ gimp_font_select_button_init (GimpFontSelectButton *self)
                                                &drag_target);
 
   gimp_resource_select_button_set_clickable (GIMP_RESOURCE_SELECT_BUTTON (self),
-                                             self->button);
+                                             button);
 }
+
+static void
+gimp_font_select_button_draw_interior (GimpResourceSelectButton *self)
+{
+  GimpFontSelectButton *font_select= GIMP_FONT_SELECT_BUTTON (self);
+  GimpResource         *resource;
+  gchar                *name = NULL;
+
+  resource = gimp_resource_select_button_get_resource (self);
+
+  if (resource)
+    name = gimp_resource_get_name (resource);
+
+  gtk_label_set_text (GTK_LABEL (font_select->label), name);
+}
+
 
 /**
  * gimp_font_select_button_new:
@@ -139,60 +155,4 @@ gimp_font_select_button_new (const gchar  *title,
   gimp_font_select_button_draw_interior (GIMP_RESOURCE_SELECT_BUTTON (self));
 
   return self;
-}
-
-/**
- * gimp_font_select_button_get_font:
- * @self: A #GimpFontSelectButton
- *
- * Gets the currently selected font.
- *
- * Returns: (transfer none): an internal copy of the font which must not be freed.
- *
- * Since: 2.4
- */
-GimpFont *
-gimp_font_select_button_get_font (GimpFontSelectButton *self)
-{
-  g_return_val_if_fail (GIMP_IS_FONT_SELECT_BUTTON (self), NULL);
-
-  return (GimpFont *) gimp_resource_select_button_get_resource ((GimpResourceSelectButton*) self);
-}
-
-/**
- * gimp_font_select_button_set_font:
- * @self: A #GimpFontSelectButton
- * @font: Font to set.
- *
- * Sets the currently selected font.
- * Usually you should not call this; the user is in charge.
- * Changes the selection in both the button and it's popup chooser.
- *
- * Since: 2.4
- */
-void
-gimp_font_select_button_set_font (GimpFontSelectButton *self,
-                                  GimpFont             *font)
-{
-  g_return_if_fail (GIMP_IS_FONT_SELECT_BUTTON (self));
-
-  gimp_resource_select_button_set_resource (GIMP_RESOURCE_SELECT_BUTTON (self), GIMP_RESOURCE (font));
-}
-
-
-/*  private functions  */
-
-static void
-gimp_font_select_button_draw_interior (GimpResourceSelectButton *self)
-{
-  GimpFontSelectButton *font_select= GIMP_FONT_SELECT_BUTTON (self);
-  GimpResource         *resource;
-  gchar                *name = NULL;
-
-  resource = gimp_resource_select_button_get_resource (self);
-
-  if (resource)
-    name = gimp_resource_get_name (resource);
-
-  gtk_label_set_text (GTK_LABEL (font_select->label), name);
 }

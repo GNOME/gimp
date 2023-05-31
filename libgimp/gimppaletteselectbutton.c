@@ -100,6 +100,21 @@ gimp_palette_select_button_init (GimpPaletteSelectButton *self)
                                              self->button);
 }
 
+static void
+gimp_palette_select_button_draw_interior (GimpResourceSelectButton *self)
+{
+  GimpPaletteSelectButton *palette_select= GIMP_PALETTE_SELECT_BUTTON (self);
+  GimpResource            *resource;
+  gchar                   *name = NULL;
+
+  resource = gimp_resource_select_button_get_resource (self);
+
+  if (resource)
+    name = gimp_resource_get_name (resource);
+
+  gtk_label_set_text (GTK_LABEL (palette_select->label), name);
+}
+
 
 /**
  * gimp_palette_select_button_new:
@@ -137,70 +152,4 @@ gimp_palette_select_button_new (const gchar  *title,
   gimp_palette_select_button_draw_interior (GIMP_RESOURCE_SELECT_BUTTON (self));
 
   return self;
-}
-
-
-/* Getter and setter.
- * We could omit these, and use only the superclass methods.
- * But script-fu-interface.c uses these, until FUTURE.
- */
-
-/**
- * gimp_palette_select_button_get_palette:
- * @self: A #GimpPaletteSelectButton
- *
- * Gets the currently selected palette.
- *
- * Returns: (transfer none): an internal copy of the palette which must not be freed.
- *
- * Since: 2.4
- */
-GimpPalette *
-gimp_palette_select_button_get_palette (GimpPaletteSelectButton *self)
-{
-  g_return_val_if_fail (GIMP_IS_PALETTE_SELECT_BUTTON (self), NULL);
-
-  /* Delegate to super w upcast arg and downcast result. */
-  return (GimpPalette *) gimp_resource_select_button_get_resource ((GimpResourceSelectButton*) self);
-}
-
-/**
- * gimp_palette_select_button_set_palette:
- * @self: A #GimpPaletteSelectButton
- * @palette: Palette to set.
- *
- * Sets the currently selected palette.
- * Usually you should not call this; the user is in charge.
- * Changes the selection in both the button and it's popup chooser.
- *
- * Since: 2.4
- */
-void
-gimp_palette_select_button_set_palette (GimpPaletteSelectButton *self,
-                                        GimpPalette             *palette)
-{
-  g_return_if_fail (GIMP_IS_PALETTE_SELECT_BUTTON (self));
-
-  g_debug ("%s", G_STRFUNC);
-
-  /* Delegate to super with upcasts */
-  gimp_resource_select_button_set_resource (GIMP_RESOURCE_SELECT_BUTTON (self), GIMP_RESOURCE (palette));
-}
-
-
-/*  private functions  */
-
-static void
-gimp_palette_select_button_draw_interior (GimpResourceSelectButton *self)
-{
-  GimpPaletteSelectButton *palette_select= GIMP_PALETTE_SELECT_BUTTON (self);
-  GimpResource            *resource;
-  gchar                   *name = NULL;
-
-  resource = gimp_resource_select_button_get_resource (self);
-
-  if (resource)
-    name = gimp_resource_get_name (resource);
-
-  gtk_label_set_text (GTK_LABEL (palette_select->label), name);
 }

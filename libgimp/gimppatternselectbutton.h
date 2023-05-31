@@ -29,9 +29,6 @@
 
 G_BEGIN_DECLS
 
-/* This defines certain structs and the usual macros.
- * A final type has no private.
- */
 #define GIMP_TYPE_PATTERN_SELECT_BUTTON (gimp_pattern_select_button_get_type ())
 G_DECLARE_FINAL_TYPE (GimpPatternSelectButton,
                       gimp_pattern_select_button,
@@ -39,13 +36,9 @@ G_DECLARE_FINAL_TYPE (GimpPatternSelectButton,
                       GimpResourceSelectButton)
 
 
-GtkWidget   * gimp_pattern_select_button_new    (const gchar          *title,
-                                                 GimpResource         *resource);
+GtkWidget * gimp_pattern_select_button_new (const gchar  *title,
+                                            GimpResource *resource);
 
-/* FUTURE eliminate.  Use superclass method get_resource */
-GimpPattern  *gimp_pattern_select_button_get_pattern (GimpPatternSelectButton *self);
-void          gimp_pattern_select_button_set_pattern (GimpPatternSelectButton *self,
-                                                      GimpPattern             *pattern);
 
 G_END_DECLS
 

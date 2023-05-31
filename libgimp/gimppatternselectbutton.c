@@ -152,6 +152,13 @@ gimp_pattern_select_button_init (GimpPatternSelectButton *self)
                                              button);
 }
 
+static void
+gimp_pattern_select_button_draw_interior (GimpResourceSelectButton *self)
+{
+  gimp_pattern_select_button_draw (GIMP_PATTERN_SELECT_BUTTON (self));
+}
+
+
 /**
  * gimp_pattern_select_button_new:
  * @title: (nullable): Title of the dialog to use or %NULL to use the default title.
@@ -192,70 +199,6 @@ gimp_pattern_select_button_new (const gchar  *title,
 }
 
 
-/* Getter and setter.
- * We could omit these, and use only the superclass methods.
- * But script-fu-interface.c uses these, until FUTURE.
- */
-
-/**
- * gimp_pattern_select_button_get_pattern:
- * @self: A #GimpPatternSelectButton
- *
- * Gets the currently selected pattern.
- *
- * Returns: (transfer none): an internal copy of the pattern which must not be freed.
- *
- * Since: 2.4
- */
-GimpPattern *
-gimp_pattern_select_button_get_pattern (GimpPatternSelectButton *self)
-{
-  g_return_val_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (self), NULL);
-
-  /* Delegate to super w upcast arg and downcast result. */
-  return (GimpPattern *) gimp_resource_select_button_get_resource ((GimpResourceSelectButton*) self);
-}
-
-/**
- * gimp_pattern_select_button_set_pattern:
- * @self: A #GimpPatternSelectButton
- * @pattern: Pattern to set.
- *
- * Sets the currently selected pattern.
- * Usually you should not call this; the user is in charge.
- * Changes the selection in both the button and it's popup chooser.
- *
- * Since: 2.4
- */
-void
-gimp_pattern_select_button_set_pattern (GimpPatternSelectButton *self,
-                                        GimpPattern             *pattern)
-{
-  g_return_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (self));
-
-  gimp_resource_select_button_set_resource (GIMP_RESOURCE_SELECT_BUTTON (self),
-                                            GIMP_RESOURCE (pattern));
-}
-
-
-/*  private functions  */
-
-/* Knows how to draw self interior.
- * Self knows resource, it is not passed.
- *
- * Overrides virtual method in super, so it is generic on Resource.
- */
-static void
-gimp_pattern_select_button_draw_interior (GimpResourceSelectButton *self)
-{
-  g_debug ("%s", G_STRFUNC);
-
-  g_return_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (self));
-
-  gimp_pattern_select_button_draw (GIMP_PATTERN_SELECT_BUTTON (self));
-}
-
-
 /* Draw self.
  *
  * This knows that we only draw the preview. Gtk draws the browse button.
@@ -283,8 +226,6 @@ gimp_pattern_select_button_get_pattern_image (GimpPatternSelectButton *self)
   GBytes         *color_bytes;
   _PreviewImage   result;
 
-  g_debug ("%s", G_STRFUNC);
-
   g_object_get (self, "resource", &pattern, NULL);
 
   gimp_pattern_get_pixels (pattern,
@@ -302,8 +243,6 @@ gimp_pattern_select_button_get_pattern_image (GimpPatternSelectButton *self)
 static void
 gimp_pattern_select_on_preview_resize (GimpPatternSelectButton *self)
 {
-  g_debug ("%s", G_STRFUNC);
-
   gimp_pattern_select_button_draw (self);
 }
 
@@ -315,8 +254,6 @@ gimp_pattern_select_on_preview_events (GtkWidget               *widget,
                                        GimpPatternSelectButton *self)
 {
   GdkEventButton *bevent;
-
-  g_debug ("%s", G_STRFUNC);
 
   switch (event->type)
     {
@@ -358,8 +295,6 @@ gimp_pattern_select_preview_draw (GimpPreviewArea *area,
 {
   GimpImageType type;
 
-  g_debug ("%s", G_STRFUNC);
-
   switch (image.bpp)
     {
     case 1:  type = GIMP_GRAY_IMAGE;   break;
@@ -389,8 +324,6 @@ gimp_pattern_select_preview_fill_draw (GtkWidget      *preview,
   gint             x, y;
   gint             width, height;
   _PreviewImage    drawn_image;
-
-  g_debug ("%s", G_STRFUNC);
 
   gtk_widget_get_allocation (preview, &allocation);
 
@@ -488,7 +421,5 @@ gimp_pattern_select_button_open_popup (GimpPatternSelectButton *self,
 static void
 gimp_pattern_select_button_close_popup (GimpPatternSelectButton *self)
 {
-  g_debug ("%s", G_STRFUNC);
-
   g_clear_pointer (&self->popup, gtk_widget_destroy);
 }

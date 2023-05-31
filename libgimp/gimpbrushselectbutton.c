@@ -140,6 +140,13 @@ gimp_brush_select_button_init (GimpBrushSelectButton *self)
                                              button);
 }
 
+static void
+gimp_brush_select_button_draw_interior (GimpResourceSelectButton *self)
+{
+  gimp_brush_select_button_draw (GIMP_BRUSH_SELECT_BUTTON (self));
+}
+
+
 /**
  * gimp_brush_select_button_new:
  * @title: (nullable): Title of the dialog to use or %NULL to use the default title.
@@ -179,64 +186,7 @@ gimp_brush_select_button_new (const gchar  *title,
 }
 
 
-/* Getter and setter.
- * We could omit these, and use only the superclass methods.
- * But script-fu-interface.c uses these, until FUTURE.
- */
-
-/**
- * gimp_brush_select_button_get_brush:
- * @self: A #GimpBrushSelectButton
- *
- * Gets the currently selected brush.
- *
- * Returns: (transfer none): an internal copy of the brush which must not be freed.
- *
- * Since: 2.4
- */
-GimpBrush *
-gimp_brush_select_button_get_brush (GimpBrushSelectButton *self)
-{
-  g_return_val_if_fail (GIMP_IS_BRUSH_SELECT_BUTTON (self), NULL);
-
-  /* Delegate to super w upcast arg and downcast result. */
-  return (GimpBrush *) gimp_resource_select_button_get_resource ((GimpResourceSelectButton*) self);
-}
-
-/**
- * gimp_brush_select_button_set_brush:
- * @self: A #GimpBrushSelectButton
- * @brush: Brush to set.
- *
- * Sets the currently selected brush.
- * Usually you should not call this; the user is in charge.
- * Changes the selection in both the button and it's popup chooser.
- *
- * Since: 2.4
- */
-void
-gimp_brush_select_button_set_brush (GimpBrushSelectButton *self,
-                                    GimpBrush             *brush)
-{
-  g_return_if_fail (GIMP_IS_BRUSH_SELECT_BUTTON (self));
-
-  /* Delegate to super with upcasts */
-  gimp_resource_select_button_set_resource (GIMP_RESOURCE_SELECT_BUTTON (self), GIMP_RESOURCE (brush));
-}
-
-
 /*  private functions  */
-
-static void
-gimp_brush_select_button_draw_interior (GimpResourceSelectButton *self)
-{
-  g_debug ("%s", G_STRFUNC);
-
-  g_return_if_fail (GIMP_IS_BRUSH_SELECT_BUTTON (self));
-
-  gimp_brush_select_button_draw (GIMP_BRUSH_SELECT_BUTTON (self));
-}
-
 
 /* Draw self.
  *
@@ -268,8 +218,6 @@ gimp_brush_select_button_get_brush_bitmap (GimpBrushSelectButton *self)
   GBytes                       *color_data;
   _PreviewBitmap                result;
 
-  g_debug ("%s", G_STRFUNC);
-
   g_object_get (self, "resource", &brush, NULL);
 
   gimp_brush_get_pixels (brush,
@@ -292,8 +240,6 @@ gimp_brush_select_button_get_brush_bitmap (GimpBrushSelectButton *self)
 static void
 gimp_brush_select_on_preview_resize (GimpBrushSelectButton *self)
 {
-  g_debug ("%s", G_STRFUNC);
-
   gimp_brush_select_button_draw (self);
 }
 
@@ -305,8 +251,6 @@ gimp_brush_select_on_preview_events (GtkWidget             *widget,
                                      GimpBrushSelectButton *self)
 {
   GdkEventButton *bevent;
-
-  g_debug ("%s", G_STRFUNC);
 
   switch (event->type)
     {
@@ -351,8 +295,6 @@ gimp_brush_select_preview_draw (GimpPreviewArea *area,
   guchar       *buf;
   gint          i, j;
 
-  g_debug ("%s", G_STRFUNC);
-
   buf = g_new (guchar, mask.width * mask.height);
 
   src  = mask.mask_data;
@@ -387,8 +329,6 @@ gimp_brush_select_preview_fill_draw (GtkWidget      *preview,
   gint             x, y;
   gint             width, height;
   _PreviewBitmap   drawn_mask;
-
-  g_debug ("%s", G_STRFUNC);
 
   gtk_widget_get_allocation (preview, &allocation);
 
@@ -433,8 +373,6 @@ gimp_brush_select_button_open_popup (GimpBrushSelectButton *self,
   gint                          x_org;
   gint                          y_org;
   _PreviewBitmap mask;
-
-  g_debug ("%s", G_STRFUNC);
 
   if (self->popup)
     gimp_brush_select_button_close_popup (self);
@@ -487,7 +425,5 @@ gimp_brush_select_button_open_popup (GimpBrushSelectButton *self,
 static void
 gimp_brush_select_button_close_popup (GimpBrushSelectButton *self)
 {
-  g_debug ("%s", G_STRFUNC);
-
   g_clear_pointer (&self->popup, gtk_widget_destroy);
 }

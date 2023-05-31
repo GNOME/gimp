@@ -113,6 +113,15 @@ gimp_gradient_select_button_init (GimpGradientSelectButton *self)
                                              button);
 }
 
+static void
+gimp_gradient_select_button_draw_interior (GimpResourceSelectButton *self)
+{
+  GimpGradientSelectButton *gradient_select = GIMP_GRADIENT_SELECT_BUTTON (self);
+
+  gtk_widget_queue_draw (gradient_select->preview);
+}
+
+
 /**
  * gimp_gradient_select_button_new:
  * @title: (nullable): Title of the dialog to use or %NULL to use the default title.
@@ -150,56 +159,7 @@ gimp_gradient_select_button_new (const gchar  *title,
 }
 
 
-/**
- * gimp_gradient_select_button_get_gradient:
- * @self: A #GimpGradientSelectButton
- *
- * Gets the currently selected gradient.
- *
- * Returns: (transfer none): an internal copy of the gradient, which you must not free.
- *
- * Since: 2.4
- */
-GimpGradient *
-gimp_gradient_select_button_get_gradient (GimpGradientSelectButton *self)
-{
-  g_return_val_if_fail (GIMP_IS_GRADIENT_SELECT_BUTTON (self), NULL);
-
-  /* Delegate to super w upcast arg and downcast result. */
-  return (GimpGradient *) gimp_resource_select_button_get_resource ((GimpResourceSelectButton*) self);
-}
-
-
-/**
- * gimp_gradient_select_button_set_gradient:
- * @self: A #GimpGradientSelectButton
- * @gradient: (nullable): Gradient to set.
- *
- * Sets the current gradient for the gradient select button.
- *
- * Since: 2.4
- */
-void
-gimp_gradient_select_button_set_gradient (GimpGradientSelectButton *self,
-                                          GimpGradient             *gradient)
-{
-  g_return_if_fail (GIMP_IS_GRADIENT_SELECT_BUTTON (self));
-
-
-  /* Delegate to super with upcasts */
-  gimp_resource_select_button_set_resource (GIMP_RESOURCE_SELECT_BUTTON (self), GIMP_RESOURCE (gradient));
-}
-
-
 /*  private functions  */
-
-static void
-gimp_gradient_select_button_draw_interior (GimpResourceSelectButton *self)
-{
-  GimpGradientSelectButton *gradient_select = GIMP_GRADIENT_SELECT_BUTTON (self);
-
-  gtk_widget_queue_draw (gradient_select->preview);
-}
 
 /* Get array of samples from self's gradient.
  * Return array and size at given handles.
@@ -242,8 +202,6 @@ gimp_gradient_select_preview_size_allocate (GtkWidget                *widget,
                                             GtkAllocation            *allocation,
                                             GimpGradientSelectButton *self)
 {
-  g_debug ("%s", G_STRFUNC);
-
   /* Do nothing.
    *
    * In former code, we cached the gradient data in self, on allocate event.

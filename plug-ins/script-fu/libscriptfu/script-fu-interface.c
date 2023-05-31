@@ -976,27 +976,12 @@ script_fu_reset (SFScript *script)
          * this temporaryily slightly changed behavior.
          */
         case SF_FONT:
-          gimp_font_select_button_set_font (GIMP_FONT_SELECT_BUTTON (widget),
-                                            NULL);
-          break;
-
         case SF_PALETTE:
-          gimp_palette_select_button_set_palette (GIMP_PALETTE_SELECT_BUTTON (widget),
-                                                  NULL);
-          break;
-
         case SF_PATTERN:
-          gimp_pattern_select_button_set_pattern (GIMP_PATTERN_SELECT_BUTTON (widget),
-                                                  NULL);
-          break;
-
         case SF_GRADIENT:
-          gimp_gradient_select_button_set_gradient (GIMP_GRADIENT_SELECT_BUTTON (widget),
-                                                    NULL);
-          break;
-
         case SF_BRUSH:
-          gimp_brush_select_button_set_brush (GIMP_BRUSH_SELECT_BUTTON (widget), NULL);
+          gimp_resource_select_button_set_resource (GIMP_RESOURCE_SELECT_BUTTON (widget),
+                                                    NULL);
           break;
 
         case SF_OPTION:
