@@ -80,8 +80,9 @@ extensions_dialog_new (Gimp *gimp)
                             NULL);
 
   widget = gtk_window_get_titlebar (GTK_WINDOW (dialog));
-  gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (widget),
-                                        FALSE);
+  if (widget)
+    gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (widget),
+                                          FALSE);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (extensions_dialog_response),
@@ -229,14 +230,25 @@ extensions_dialog_extension_activated (GimpExtensionList *list,
   GtkWidget *header_bar;
   GtkWidget *widget;
 
-  /* Add a back button to the header bar. */
+  /* Add a back button to the dialogue. */
   header_bar = gtk_window_get_titlebar (GTK_WINDOW (dialog));
   widget = gtk_button_new_from_icon_name ("go-previous", GTK_ICON_SIZE_SMALL_TOOLBAR);
   g_signal_connect (widget, "clicked",
                     G_CALLBACK (extensions_dialog_back_button_clicked),
                     stack);
   gtk_widget_show (widget);
-  gtk_header_bar_pack_start (GTK_HEADER_BAR (header_bar), widget);
+
+  if (header_bar)
+    {
+      gtk_header_bar_pack_start (GTK_HEADER_BAR (header_bar), widget);
+    }
+  else
+    {
+      GtkWidget *content_area;
+
+      content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+      gtk_container_add (GTK_CONTAINER (content_area), widget);
+    }
 
   /* Show the details of the extension. */
   widget = gtk_stack_get_child_by_name (stack, GIMP_EXTENSION_DETAILS_STACK_CHILD);
