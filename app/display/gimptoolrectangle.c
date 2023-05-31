@@ -1876,9 +1876,6 @@ gimp_tool_rectangle_motion_modifier (GimpToolWidget  *widget,
 {
   GimpToolRectangle        *rectangle = GIMP_TOOL_RECTANGLE (widget);
   GimpToolRectanglePrivate *private   = rectangle->private;
-  gboolean                  button1_down;
-
-  button1_down = (state & GDK_BUTTON1_MASK);
 
   if (key == gimp_get_extend_selection_mask ())
     {
@@ -1890,10 +1887,14 @@ gimp_tool_rectangle_motion_modifier (GimpToolWidget  *widget,
                                        gimp_tool_rectangle_options_notify,
                                        rectangle);
 #endif
+      /* Only change the shape if the mouse is still down (i.e. the user is
+       * still editing the rectangle.
+       */
       if (private->modifier_toggle_allowed)
-        g_object_set (rectangle,
-                      "fixed-rule-active", ! private->fixed_rule_active,
-                      NULL);
+        {
+          g_object_set (rectangle,
+                        "fixed-rule-active", ! private->fixed_rule_active,
+                        NULL);
 
 #if 0
       g_signal_handlers_unblock_by_func (options,
@@ -1901,11 +1902,6 @@ gimp_tool_rectangle_motion_modifier (GimpToolWidget  *widget,
                                          rectangle);
 #endif
 
-      /* Only change the shape if the mouse is still down (i.e. the user is
-       * still editing the rectangle.
-       */
-      if (button1_down)
-        {
           if (! private->fixed_rule_active)
             {
               /* Reset anchor point */
@@ -1922,39 +1918,26 @@ gimp_tool_rectangle_motion_modifier (GimpToolWidget  *widget,
 
   if (key == gimp_get_toggle_behavior_mask ())
     {
+      /* Only change the shape if the mouse is still down (i.e. the user is
+       * still editing the rectangle.
+       */
       if (private->modifier_toggle_allowed)
-        g_object_set (rectangle,
-                      "fixed-center", ! private->fixed_center,
-                      NULL);
-
-      if (private->fixed_center)
         {
-          gimp_tool_rectangle_update_with_coord (rectangle,
-                                                 private->lastx,
-                                                 private->lasty);
+          g_object_set (rectangle,
+                        "fixed-center", ! private->fixed_center,
+                        NULL);
 
-          /* Only emit the rectangle-changed signal if the button is
-           * not down. If it is down, the signal will and shall be
-           * emitted on _button_release instead.
-           */
-          if (! button1_down)
-            {
-              gimp_tool_rectangle_change_complete (rectangle);
-            }
+          if (private->fixed_center)
+              gimp_tool_rectangle_update_with_coord (rectangle,
+                                                     private->lastx,
+                                                     private->lasty);
+          else
+            gimp_tool_rectangle_set_other_side_coord (rectangle,
+                                                      private->other_side_x,
+                                                      private->other_side_y);
         }
-      else if (button1_down)
-        {
-          /* If we are leaving fixed_center mode we want to set the
-           * "other side" where it should be. Don't do anything if we
-           * came here by a mouse-click though, since then the user
-           * has confirmed the shape and we don't want to modify it
-           * afterwards.
-           */
-          gimp_tool_rectangle_set_other_side_coord (rectangle,
-                                                    private->other_side_x,
-                                                    private->other_side_y);
-        }
-    }
+
+   }
 
   gimp_tool_rectangle_update_options (rectangle);
 }
