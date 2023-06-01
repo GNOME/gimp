@@ -28,6 +28,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "dialogs-types.h"
@@ -380,6 +381,31 @@ color_profile_combo_box_new (ProfileDialog *private)
     {
       gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (store),
                                          NULL, NULL);
+    }
+
+  if (private->dialog_type == COLOR_PROFILE_DIALOG_SELECT_SOFTPROOF_PROFILE)
+    {
+      GimpColorProfile *profile;
+
+      profile = gimp_color_config_get_cmyk_color_profile (private->config,
+                                                          NULL);
+      if (profile)
+        {
+          GFile *file;
+          gchar *path;
+          gchar *label;
+
+          g_object_get (private->config, "cmyk-profile", &path, NULL);
+          file = gimp_file_new_for_config_path (path, NULL);
+          g_free (path);
+          label = g_strdup_printf (_("Preferred CMYK (%s)"),
+                                   gimp_color_profile_get_label (profile));
+          g_object_unref (profile);
+          gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (store),
+                                                 file, label);
+          g_object_unref (file);
+          g_free (label);
+        }
     }
 
   chooser =
