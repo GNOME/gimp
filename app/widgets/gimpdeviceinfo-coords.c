@@ -121,12 +121,37 @@ gimp_device_info_get_event_coords (GimpDeviceInfo *info,
   return FALSE;
 }
 
+#define GIMP_AXIS_HOPEFULLY_LAST 36
+/* gtk2 has a bug where gdk_device_get_state may write
+   more coordinates than GDK_AXIS_LAST in a caller-provided
+   array, resulting in a buffer overflow.
+
+   This happens when the underlying X device supports more axes -- as
+   of 2023, the Wacom tablet driver 1.20 supports 8 axes when
+   GDK_AXIS_LAST is 7.
+
+   To be safe we over-estimate the maximum number of axes that any
+   driver may provide to gtk, to avoid buffer overflows. It would be nicer
+   to fix gdk upstream (to never write more than GDK_AXIS_LAST - GDK_AXIS_X
+   coordinates), but the proper upstream fix was rejected as gtk2 is EOL:
+    https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/6045
+
+   Our constant might in theory become wrong if new device drivers
+   start returning much more axes than they do today -- more than 32,
+   when the current maximum is 8. Hopefully, by the time this happens,
+   users have migrated to gtk3 versions of gimp that use a different
+   API and do not suffer from this bug.
+
+   We chose 36 as it is also the internal limit MAX_VALUATORS on the
+   number of 'valuators' used by current X server implementations.
+*/
+
 void
 gimp_device_info_get_device_coords (GimpDeviceInfo *info,
                                     GdkWindow      *window,
                                     GimpCoords     *coords)
 {
-  gdouble axes[GDK_AXIS_LAST] = { 0, };
+  gdouble axes[GIMP_AXIS_HOPEFULLY_LAST] = { 0, };
 
   *coords = default_coords;
 
