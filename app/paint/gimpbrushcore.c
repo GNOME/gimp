@@ -815,6 +815,12 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
   gint           x1, y1, x2, y2;
   gint           drawable_width, drawable_height;
   gint           brush_width, brush_height;
+  gint           new_width, new_height, new_off_x, new_off_y;
+  GimpContext   *context   = GIMP_CONTEXT (paint_options);
+  GimpFillType   fill_type = GIMP_FILL_TRANSPARENT;
+  GeglBuffer    *undo_buffer;
+  GeglBuffer    *new_buffer;
+  const Babl    *format;
 
   gimp_brush_transform_size (core->brush,
                              core->scale, core->aspect_ratio,
@@ -834,10 +840,87 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
   drawable_width  = gimp_item_get_width  (GIMP_ITEM (drawable));
   drawable_height = gimp_item_get_height (GIMP_ITEM (drawable));
 
-  x1 = CLAMP (x - 1, 0, drawable_width);
-  y1 = CLAMP (y - 1, 0, drawable_height);
-  x2 = CLAMP (x + brush_width  + 1, 0, drawable_width);
-  y2 = CLAMP (y + brush_height + 1, 0, drawable_height);
+  x1 = x - 1;
+  y1 = y - 1;
+  x2 = x + brush_width  + 1;
+  y2 = y + brush_height + 1;
+
+  /* resize buffers if the current stroke cannot fit in */
+  new_width  = drawable_width;
+  new_height = drawable_height;
+  new_off_x  = 0;
+  new_off_y  = 0;
+
+  if (x1 < 0)
+    {
+      new_width += 100 - x1;
+      new_off_x += 100 - x1;
+    }
+  if (y1 < 0)
+    {
+      new_height += 100 - y1;
+      new_off_y += 100 - y1;
+    }
+  if (x2 > drawable_width)
+    {
+      new_width += x2 - drawable_width + 100;
+    }
+  if (y2 > drawable_height)
+    {
+      new_height += y2 - drawable_height + 100;
+    }
+  if (new_width != drawable_width || new_height != drawable_height || new_off_x || new_off_y)
+    {
+      GIMP_ITEM_GET_CLASS (GIMP_ITEM (drawable))->resize (GIMP_ITEM (drawable),
+                                                          context,   fill_type,
+                                                          new_width, new_height,
+                                                          new_off_x, new_off_y);
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+
+      format     = gegl_buffer_get_format (paint_core->canvas_buffer);
+      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, new_width, new_height),
+                                    format);
+      gimp_gegl_buffer_copy (
+        paint_core->canvas_buffer,
+        GEGL_RECTANGLE (0, 0,
+                        gegl_buffer_get_width (paint_core->canvas_buffer),
+                        gegl_buffer_get_height (paint_core->canvas_buffer)),
+        GEGL_ABYSS_NONE,
+        new_buffer,
+        GEGL_RECTANGLE (new_off_x, new_off_y, 0, 0));
+      g_object_unref (paint_core->canvas_buffer);
+      paint_core->canvas_buffer = new_buffer;
+
+      undo_buffer = g_hash_table_lookup (paint_core->undo_buffers, drawable);
+      g_object_ref (undo_buffer);
+
+      format     = gegl_buffer_get_format (undo_buffer);
+      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, new_width, new_height),
+                                    format);
+
+      gimp_gegl_buffer_copy (
+        undo_buffer,
+        GEGL_RECTANGLE (0, 0,
+                        gegl_buffer_get_width (undo_buffer),
+                        gegl_buffer_get_height (undo_buffer)),
+        GEGL_ABYSS_NONE,
+        new_buffer,
+        GEGL_RECTANGLE (new_off_x, new_off_y, 0, 0));
+      g_hash_table_insert (paint_core->undo_buffers, drawable, new_buffer);
+      g_object_unref (undo_buffer);
+
+      /* recalculating values for new buffers */
+      drawable_width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+      drawable_height = gimp_item_get_height (GIMP_ITEM (drawable));
+
+      /* changing frame of reference */
+      x += new_off_x;
+      y += new_off_y;
+    }
+    x1 = CLAMP (x - 1, 0, drawable_width);
+    y1 = CLAMP (y - 1, 0, drawable_height);
+    x2 = CLAMP (x + brush_width  + 1, 0, drawable_width);
+    y2 = CLAMP (y + brush_height + 1, 0, drawable_height);
 
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))

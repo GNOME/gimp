@@ -310,6 +310,12 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                                                        &paint_buffer_y,
                                                        &paint_width,
                                                        &paint_height);
+
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      coords    = *(gimp_symmetry_get_coords (sym, i));
+      coords.x -= off_x;
+      coords.y -= off_y;
+
       if (! paint_buffer)
         continue;
 

@@ -906,6 +906,10 @@ gimp_drawable_real_set_buffer (GimpDrawable        *drawable,
     }
 
   g_set_object (&drawable->private->buffer, buffer);
+
+  if (gimp_drawable_is_painting (drawable))
+    g_set_object (&drawable->private->paint_buffer, buffer);
+
   g_clear_object (&drawable->private->format_profile);
 
   if (drawable->private->buffer_source_node)
