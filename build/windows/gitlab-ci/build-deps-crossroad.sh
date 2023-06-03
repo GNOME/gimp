@@ -27,6 +27,7 @@ if [ "x$CROSSROAD_PLATFORM" = "xw64" ]; then
 fi
 
 crossroad install appstream-glib              \
+                  aalib                       \
                   atk                         \
                   cfitsio                     \
                   drmingw                     \
