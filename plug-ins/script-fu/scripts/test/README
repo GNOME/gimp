@@ -1,7 +1,42 @@
-Scripts to test script-fu-interpreter.
+Scripts to test various cases for ScriptFu subsystem.
 
 Not usually installed.
 
 Should not be localized i18n : for developers only.
 
-To use, copy the test<x> dirs into /plugins and ensure the .scm files have execute permission.
+## Install
+
+To use, install them:
+
+1. Old style scripts: copy to /scripts.
+
+2. New style independently interpreted scripts:
+copy a dir containing the test script into /plugins
+and ensure the .scm files have execute permission.
+
+Old style scripts test and are interpreted by extension-script-fu.
+When a script crashes extension-script-fu, you must restart Gimp.
+
+New style scripts are interpreted in a separate process
+running binary script-fu-interpreter-3.0.
+
+## Invoke
+
+Any installed script can be tested in the SF Console
+by just calling it from the PDB: "(script-fu-test-foo)"
+since they are PDB procedures.
+
+Scripts that have menu items can be tested from the Gimp GUI.
+
+Any test script can be called by another script.
+
+## Testing framework
+
+test9.scm has a built-in testing framework.
+
+FUTURE: extract the framework to a Scheme extension
+that is in the Gimp repo,
+that other scripts can load and use.
+
+
+

@@ -4213,7 +4213,23 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
 #endif /* USE_PLIST */
      case OP_QUIT:       /* quit */
           if(is_pair(sc->args)) {
-               sc->retcode=ivalue(car(sc->args));
+               gint err_code = ivalue (car (sc->args));
+
+               sc->retcode = err_code;
+
+               /* ScriptFu specific.
+                * Non-zero code means script as PDB procedure declares failure.
+                * Invariant that a SF fail puts message to output port.
+                *
+                * FIXME: instead of this, which diverges from upstream,
+                * ask upstream for QUIT_HOOK OR make script_fu_interpret_string
+                * ensure non-empty error message in this case.
+                */
+               if (err_code != 0)
+                 {
+                    snprintf (sc->strbuff, STRBUFFSIZE, "script quit with code: %d", err_code);
+                    putstr (sc, sc->strbuff);
+                 }
           }
           return (sc->NIL);
 
