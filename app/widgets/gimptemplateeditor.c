@@ -458,21 +458,21 @@ gimp_template_editor_constructed (GObject *object)
                             private->simulation_profile_combo, 1);
 
   private->simulation_intent_combo =
-    gimp_enum_combo_box_new (GIMP_TYPE_COLOR_RENDERING_INTENT);
+    gimp_prop_enum_combo_box_new (G_OBJECT (template),
+                                  "simulation-intent",
+                                  0, 0);
 
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Soft-proofing rendering intent:"), 0.0, 0.5,
                             private->simulation_intent_combo, 1);
-
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->simulation_intent_combo),
-                                 GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
 
   g_signal_connect (private->simulation_intent_combo, "changed",
                     G_CALLBACK (gimp_template_editor_simulation_intent_changed),
                     editor);
 
   private->simulation_bpc_toggle =
-    gtk_check_button_new_with_mnemonic (_("_Use Black Point Compensation"));
+    gimp_prop_check_button_new (G_OBJECT (template), "simulation-bpc",
+                                _("_Use Black Point Compensation"));
 
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             NULL, 0.0, 0.5,
