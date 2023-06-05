@@ -247,6 +247,18 @@ gimp_resource_get_by_id (gint32 resource_id)
   return NULL;
 }
 
+/**
+ * gimp_resource_get_by_name:
+ * @resource_type: The #GType of the resource.
+ * @resource_name: The name of the resource.
+ *
+ * Returns the resource with the given @resource_type and
+ * @resource_name.
+ *
+ * Returns: (transfer full): The resource.
+ *
+ * Since: 3.0
+ **/
 GimpResource *
 gimp_resource_get_by_name (GType        resource_type,
                            const gchar *resource_name)
