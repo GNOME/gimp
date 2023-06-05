@@ -1016,8 +1016,6 @@ gimp_param_spec_resource (const gchar *name,
 }
 
 
-
-
 /*
  * GIMP_TYPE_PARAM_BRUSH
  */
@@ -1098,16 +1096,15 @@ gimp_param_spec_brush (const gchar *name,
 }
 
 
-
 /*
- * GIMP_TYPE_PARAM_FONT
+ * GIMP_TYPE_PARAM_PATTERN
  */
 
-static void   gimp_param_font_class_init (GParamSpecClass *klass);
-static void   gimp_param_font_init       (GParamSpec      *pspec);
+static void   gimp_param_pattern_class_init (GParamSpecClass *klass);
+static void   gimp_param_pattern_init       (GParamSpec      *pspec);
 
 GType
-gimp_param_font_get_type (void)
+gimp_param_pattern_get_type (void)
 {
   static GType type = 0;
 
@@ -1117,58 +1114,58 @@ gimp_param_font_get_type (void)
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
-        (GClassInitFunc) gimp_param_font_class_init,
+        (GClassInitFunc) gimp_param_pattern_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecFont),
+        sizeof (GimpParamSpecPattern),
         0,
-        (GInstanceInitFunc) gimp_param_font_init
+        (GInstanceInitFunc) gimp_param_pattern_init
       };
 
       type = g_type_register_static (GIMP_TYPE_PARAM_RESOURCE,
-                                     "GimpParamFont", &info, 0);
+                                     "GimpParamPattern", &info, 0);
     }
 
   return type;
 }
 
 static void
-gimp_param_font_class_init (GParamSpecClass *klass)
+gimp_param_pattern_class_init (GParamSpecClass *klass)
 {
-  klass->value_type = GIMP_TYPE_FONT;
+  klass->value_type = GIMP_TYPE_PATTERN;
 }
 
 static void
-gimp_param_font_init (GParamSpec *pspec)
+gimp_param_pattern_init (GParamSpec *pspec)
 {
 }
 
 /**
- * gimp_param_spec_font:
+ * gimp_param_spec_pattern:
  * @name:    Canonical name of the property specified.
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
  * @none_ok: Whether no  is a valid value.
  * @flags:   Flags for the property specified.
  *
- * Creates a new #GimpParamSpecFont specifying a
- * #GIMP_TYPE_FONT property.
+ * Creates a new #GimpParamSpecPattern specifying a
+ * #GIMP_TYPE_PATTERN property.
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecFont.
+ * Returns: (transfer full): The newly created #GimpParamSpecPattern.
  *
  * Since: 3.0
  **/
 GParamSpec *
-gimp_param_spec_font (const gchar *name,
-                      const gchar *nick,
-                      const gchar *blurb,
-                      gboolean     none_ok,
-                      GParamFlags  flags)
+gimp_param_spec_pattern (const gchar *name,
+                         const gchar *nick,
+                         const gchar *blurb,
+                         gboolean     none_ok,
+                         GParamFlags  flags)
 {
   GimpParamSpecResource *rspec;
 
-  rspec = g_param_spec_internal (GIMP_TYPE_PARAM_FONT,
+  rspec = g_param_spec_internal (GIMP_TYPE_PARAM_PATTERN,
                                  name, nick, blurb, flags);
 
   g_return_val_if_fail (rspec, NULL);
@@ -1177,7 +1174,6 @@ gimp_param_spec_font (const gchar *name,
 
   return G_PARAM_SPEC (rspec);
 }
-
 
 
 /*
@@ -1341,14 +1337,14 @@ gimp_param_spec_palette (const gchar *name,
 
 
 /*
- * GIMP_TYPE_PARAM_PATTERN
+ * GIMP_TYPE_PARAM_FONT
  */
 
-static void   gimp_param_pattern_class_init (GParamSpecClass *klass);
-static void   gimp_param_pattern_init       (GParamSpec      *pspec);
+static void   gimp_param_font_class_init (GParamSpecClass *klass);
+static void   gimp_param_font_init       (GParamSpec      *pspec);
 
 GType
-gimp_param_pattern_get_type (void)
+gimp_param_font_get_type (void)
 {
   static GType type = 0;
 
@@ -1358,58 +1354,58 @@ gimp_param_pattern_get_type (void)
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
-        (GClassInitFunc) gimp_param_pattern_class_init,
+        (GClassInitFunc) gimp_param_font_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecPattern),
+        sizeof (GimpParamSpecFont),
         0,
-        (GInstanceInitFunc) gimp_param_pattern_init
+        (GInstanceInitFunc) gimp_param_font_init
       };
 
       type = g_type_register_static (GIMP_TYPE_PARAM_RESOURCE,
-                                     "GimpParamPattern", &info, 0);
+                                     "GimpParamFont", &info, 0);
     }
 
   return type;
 }
 
 static void
-gimp_param_pattern_class_init (GParamSpecClass *klass)
+gimp_param_font_class_init (GParamSpecClass *klass)
 {
-  klass->value_type = GIMP_TYPE_PATTERN;
+  klass->value_type = GIMP_TYPE_FONT;
 }
 
 static void
-gimp_param_pattern_init (GParamSpec *pspec)
+gimp_param_font_init (GParamSpec *pspec)
 {
 }
 
 /**
- * gimp_param_spec_pattern:
+ * gimp_param_spec_font:
  * @name:    Canonical name of the property specified.
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
  * @none_ok: Whether no  is a valid value.
  * @flags:   Flags for the property specified.
  *
- * Creates a new #GimpParamSpecPattern specifying a
- * #GIMP_TYPE_PATTERN property.
+ * Creates a new #GimpParamSpecFont specifying a
+ * #GIMP_TYPE_FONT property.
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecPattern.
+ * Returns: (transfer full): The newly created #GimpParamSpecFont.
  *
  * Since: 3.0
  **/
 GParamSpec *
-gimp_param_spec_pattern (const gchar *name,
-                         const gchar *nick,
-                         const gchar *blurb,
-                         gboolean     none_ok,
-                         GParamFlags  flags)
+gimp_param_spec_font (const gchar *name,
+                      const gchar *nick,
+                      const gchar *blurb,
+                      gboolean     none_ok,
+                      GParamFlags  flags)
 {
   GimpParamSpecResource *rspec;
 
-  rspec = g_param_spec_internal (GIMP_TYPE_PARAM_PATTERN,
+  rspec = g_param_spec_internal (GIMP_TYPE_PARAM_FONT,
                                  name, nick, blurb, flags);
 
   g_return_val_if_fail (rspec, NULL);

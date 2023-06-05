@@ -236,7 +236,6 @@ libgimp_headers_introspectable = [
   'gimplayermask.h',
   'gimploadprocedure.h',
   'gimpparamspecs.h',
-  'gimpparamspecs-resource.h',
   'gimppdb.h',
   'gimpplugin.h',
   'gimpprocedure.h',

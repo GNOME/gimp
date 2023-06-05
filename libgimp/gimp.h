@@ -50,7 +50,6 @@
 #include <libgimp/gimplayermask.h>
 #include <libgimp/gimploadprocedure.h>
 #include <libgimp/gimpparamspecs.h>
-#include <libgimp/gimpparamspecs-resource.h>
 #include <libgimp/gimppdb.h>
 #include <libgimp/gimpplugin.h>
 #include <libgimp/gimpprocedureconfig.h>

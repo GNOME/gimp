@@ -85,7 +85,6 @@ void   gimp_param_spec_enum_exclude_value (GimpParamSpecEnum *espec,
  */
 #define GIMP_COMPILATION
 #include "../../libgimp/gimpparamspecs.h"
-#include "../../libgimp/gimpparamspecs-resource.h"
 #undef GIMP_COMPILATION
 
 
