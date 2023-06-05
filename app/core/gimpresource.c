@@ -22,32 +22,20 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "core-types.h"
+
 #include "gimpresource.h"
 
- /* This class exists to support gimp_param_spec_resource,
-  * which is needed to communicate with libgimp.
-  * So that gimp_param_spec_resource has a GIMP_TYPE_RESOURCE on the app side.
-  *
-  * This class on libgimp side is a superclass.
-  * On app side of wire, it is not a superclass (e.g. GimpBrush does not inherit.)
-  * On app side, the class is never inherited and never instantiated.
-  *
-  * The code is derived from libgimp/gimpresource.c
-  */
+
+G_DEFINE_TYPE (GimpResource, gimp_resource, GIMP_TYPE_VIEWABLE)
 
 
-G_DEFINE_TYPE (GimpResource, gimp_resource, G_TYPE_OBJECT)
-
-/* Class construction */
 static void
 gimp_resource_class_init (GimpResourceClass *klass)
 {
-  g_debug("gimp_resource_class_init");
 }
 
-/* Instance construction. */
 static void
 gimp_resource_init (GimpResource *self)
 {
-  g_debug("gimp_resource_init");
 }

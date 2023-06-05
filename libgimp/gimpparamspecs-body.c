@@ -942,11 +942,7 @@ gimp_param_spec_display (const gchar *name,
  static void
  gimp_param_resource_class_init (GParamSpecClass *klass)
  {
-#ifdef LIBGIMP_COMPILATION
    klass->value_type     = GIMP_TYPE_RESOURCE;
-#else
-   klass->value_type     = GIMP_TYPE_DATA;
-#endif
    klass->value_validate = gimp_param_resource_validate;
  }
 

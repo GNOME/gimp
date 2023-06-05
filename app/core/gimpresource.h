@@ -18,15 +18,32 @@
 #ifndef __GIMP_RESOURCE_H__
 #define __GIMP_RESOURCE_H__
 
-#define GIMP_TYPE_RESOURCE (gimp_resource_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpResource, gimp_resource, GIMP, RESOURCE, GObject)
+
+#include "gimpviewable.h"
+
+
+#define GIMP_TYPE_RESOURCE            (gimp_resource_get_type ())
+#define GIMP_RESOURCE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RESOURCE, GimpResource))
+#define GIMP_RESOURCE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_RESOURCE, GimpResourceClass))
+#define GIMP_IS_RESOURCE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_RESOURCE))
+#define GIMP_IS_RESOURCE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_RESOURCE))
+#define GIMP_RESOURCE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_RESOURCE, GimpResourceClass))
+
+
+typedef struct _GimpResourceClass GimpResourceClass;
+
+struct _GimpResource
+{
+  GimpViewable parent_instance;
+};
 
 struct _GimpResourceClass
 {
-  GObjectClass parent_class;
-
-  /* Padding for future expansion */
-  gpointer padding[8];
+  GimpViewableClass parent_class;
 };
+
+
+GType   gimp_resource_get_type (void) G_GNUC_CONST;
+
 
 #endif /* __GIMP_RESOURCE_H__ */

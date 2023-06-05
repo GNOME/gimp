@@ -22,7 +22,7 @@
 #define __GIMP_DATA_H__
 
 
-#include "gimpviewable.h"
+#include "gimpresource.h"
 
 
 typedef enum
@@ -47,14 +47,14 @@ typedef struct _GimpDataClass   GimpDataClass;
 
 struct _GimpData
 {
-  GimpViewable     parent_instance;
+  GimpResource     parent_instance;
 
   GimpDataPrivate *priv;
 };
 
 struct _GimpDataClass
 {
-  GimpViewableClass  parent_class;
+  GimpResourceClass  parent_class;
 
   /*  signals  */
   void          (* dirty)         (GimpData  *data);

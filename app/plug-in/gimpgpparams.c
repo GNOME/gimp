@@ -31,16 +31,15 @@
 #include "plug-in-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpbrush.h"
 #include "core/gimpdisplay.h"
+#include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
-#include "core/gimpselection.h"
-/* resource types. */
-#include "core/gimpbrush.h"
-#include "core/gimpgradient.h"
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
+#include "core/gimpselection.h"
 #include "text/gimpfont.h"
 
 #include "core/gimpparamspecs.h"
@@ -51,10 +50,6 @@
 
 #include "libgimp/gimpgpparams.h"
 
-
-#undef GIMP_VALUE_HOLDS_RESOURCE
-#define GIMP_VALUE_HOLDS_RESOURCE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), \
-                                          GIMP_TYPE_DATA))
 
 /*  include the implementation, they are shared between app/ and
  *  libgimp/ but need different headers.

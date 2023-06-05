@@ -109,7 +109,7 @@ static gchar    * gimp_data_get_identifier    (GimpTagged          *tagged);
 static gchar    * gimp_data_get_checksum      (GimpTagged          *tagged);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpData, gimp_data, GIMP_TYPE_VIEWABLE,
+G_DEFINE_TYPE_WITH_CODE (GimpData, gimp_data, GIMP_TYPE_RESOURCE,
                          G_ADD_PRIVATE (GimpData)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
                                                 gimp_data_tagged_iface_init))

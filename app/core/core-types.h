@@ -139,6 +139,7 @@ typedef struct _GimpToolItem                    GimpToolItem;
 
 typedef struct _GimpDataFactory                 GimpDataFactory;
 typedef struct _GimpDataLoaderFactory           GimpDataLoaderFactory;
+typedef struct _GimpResource                    GimpResource;
 typedef struct _GimpData                        GimpData;
 typedef struct _GimpBrush                       GimpBrush;
 typedef struct _GimpBrushCache                  GimpBrushCache;
