@@ -43,9 +43,6 @@
 
 static void     gimp_combo_tag_entry_constructed       (GObject              *object);
 
-static gboolean gimp_combo_tag_entry_draw              (GtkWidget            *widget,
-                                                        cairo_t              *cr);
-
 static void     gimp_combo_tag_entry_icon_press        (GtkWidget            *widget,
                                                         GtkEntryIconPosition  icon_pos,
                                                         GdkEvent             *event,
@@ -67,12 +64,9 @@ G_DEFINE_TYPE (GimpComboTagEntry, gimp_combo_tag_entry, GIMP_TYPE_TAG_ENTRY);
 static void
 gimp_combo_tag_entry_class_init (GimpComboTagEntryClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructed = gimp_combo_tag_entry_constructed;
-
-  widget_class->draw        = gimp_combo_tag_entry_draw;
 }
 
 static void
@@ -104,29 +98,6 @@ gimp_combo_tag_entry_constructed (GObject *object)
                            "tag-count-changed",
                            G_CALLBACK (gimp_combo_tag_entry_tag_count_changed),
                            entry, 0);
-}
-
-static gboolean
-gimp_combo_tag_entry_draw (GtkWidget *widget,
-                           cairo_t   *cr)
-{
-  GtkStyleContext *style = gtk_widget_get_style_context (widget);
-  GdkRectangle     icon_area;
-  gint             x, y;
-
-  cairo_save (cr);
-  GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
-  cairo_restore (cr);
-
-  gtk_entry_get_icon_area (GTK_ENTRY (widget), GTK_ENTRY_ICON_SECONDARY,
-                           &icon_area);
-
-  x = icon_area.x + (icon_area.width  - 8) / 2;
-  y = icon_area.y + (icon_area.height - 8) / 2;
-
-  gtk_render_arrow (style, cr, G_PI, x, y, 8);
-
-  return FALSE;
 }
 
 /**
