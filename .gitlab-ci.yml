@@ -70,8 +70,67 @@ build-image:
     - echo "FROM debian:testing" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
-    - echo "appstream at-spi2-core build-essential desktop-file-utils ffmpeg gettext ghostscript gi-docgen git glib-networking gobject-introspection graphviz graphviz-dev hicolor-icon-theme iso-codes libaa1-dev libappstream-glib-dev libbz2-dev libcfitsio-dev libdbus-glib-1-dev libexif-dev libgexiv2-dev libgirepository1.0-dev libgs-dev libgtk-3-bin libgtk-3-dev libgudev-1.0-dev libheif-dev libjson-glib-dev libjxl-dev liblcms2-dev liblzma-dev libmng-dev libmypaint-dev libopenexr-dev libpoppler-glib-dev libraw-dev libraw20 librsvg2-dev libspiro-dev libsuitesparse-dev libtiff-dev libtiff5-dev libtool libumfpack5 libwebp-dev libwmf-dev libxmu-dev libxpm-dev luajit meson mypaint-brushes poppler-data python3 python3-pip valac xauth xsltproc xvfb xz-utils yelp-tools" >> Dockerfile
-
+    - echo "appstream
+            at-spi2-core
+            build-essential
+            desktop-file-utils
+            ffmpeg
+            gettext
+            ghostscript
+            gi-docgen
+            git
+            glib-networking
+            gobject-introspection
+            graphviz
+            graphviz-dev
+            hicolor-icon-theme
+            iso-codes
+            libaa1-dev
+            libappstream-glib-dev
+            libbz2-dev
+            libcfitsio-dev
+            libdbus-glib-1-dev
+            libexif-dev
+            libgexiv2-dev
+            libgirepository1.0-dev
+            libgs-dev
+            libgtk-3-bin
+            libgtk-3-dev
+            libgudev-1.0-dev
+            libheif-dev
+            libjson-glib-dev
+            libjxl-dev
+            liblcms2-dev
+            liblzma-dev
+            libmng-dev
+            libmypaint-dev
+            libopenexr-dev
+            libpoppler-glib-dev
+            libraw-dev
+            libraw20
+            librsvg2-dev
+            libspiro-dev
+            libsuitesparse-dev
+            libtiff-dev
+            libtiff5-dev
+            libtool
+            libumfpack5
+            libwebp-dev
+            libwmf-dev
+            libxmu-dev
+            libxpm-dev
+            luajit
+            meson
+            mypaint-brushes
+            poppler-data
+            python3
+            python3-pip
+            valac
+            xauth
+            xsltproc
+            xvfb
+            xz-utils
+            yelp-tools" >> Dockerfile
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest --cache=true --cache-ttl=120h
 
 
@@ -101,8 +160,27 @@ build-image-win64:
     # specifically g++-mingw-w64-x86-64-posix and gcc-mingw-w64-x86-64-posix.
     # Note that we can't install both the -posix and -win32 versions since
     # update gcc-mingw-w64 (25).
-    - echo "build-essential cmake cpio g++-mingw-w64-x86-64-posix gcc-mingw-w64-x86-64-posix gettext git libgdk-pixbuf2.0-dev libgirepository1.0-dev libglib2.0-bin librsvg2-dev meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm python3-zstandard xsltproc xvfb" >> Dockerfile
-
+    - echo "build-essential
+            cmake
+            cpio
+            g++-mingw-w64-x86-64-posix
+            gcc-mingw-w64-x86-64-posix
+            gettext
+            git
+            libgdk-pixbuf2.0-dev
+            libgirepository1.0-dev
+            libglib2.0-bin
+            librsvg2-dev
+            meson
+            pkg-config
+            python3
+            python3-distutils
+            python3-docutils
+            python3-pip
+            rpm
+            python3-zstandard
+            xsltproc
+            xvfb" >> Dockerfile
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win64-latest --cache=true --cache-ttl=120h
 
 
@@ -124,8 +202,25 @@ build-image-win32:
     - echo "FROM debian:testing" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
-    - echo "build-essential cpio g++-mingw-w64-i686 gcc-mingw-w64-i686 gettext git libgdk-pixbuf2.0-dev libglib2.0-bin librsvg2-dev meson pkg-config python3 python3-distutils python3-docutils python3-pip python3-zstandard rpm xsltproc xvfb" >> Dockerfile
-
+    - echo "build-essential
+            cpio
+            g++-mingw-w64-i686
+            gcc-mingw-w64-i686
+            gettext
+            git
+            libgdk-pixbuf2.0-dev
+            libglib2.0-bin
+            librsvg2-dev
+            meson
+            pkg-config
+            python3
+            python3-distutils
+            python3-docutils
+            python3-pip
+            python3-zstandard
+            rpm
+            xsltproc
+            xvfb" >> Dockerfile
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win32-latest --cache=true --cache-ttl=120h
 
 
