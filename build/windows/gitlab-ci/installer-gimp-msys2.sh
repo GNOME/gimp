@@ -75,16 +75,17 @@ cd -
 cp _build-w64/build/windows/installer/lang/*isl build/windows/installer/lang
 
 # Construct now the installer.
-MAJOR_VERSION=`grep 'm4_define(\[gimp_major_version' configure.ac |sed 's/m4_define(\[gimp_major_version.*\[\([0-9]*\)\].*/\1/'`
-MINOR_VERSION=`grep 'm4_define(\[gimp_minor_version' configure.ac |sed 's/m4_define(\[gimp_minor_version.*\[\([0-9]*\)\].*/\1/'`
-MICRO_VERSION=`grep 'm4_define(\[gimp_micro_version' configure.ac |sed 's/m4_define(\[gimp_micro_version.*\[\([0-9]*\)\].*/\1/'`
+VERSION=`grep -rI '\<version *:' meson.build | head -1 | sed "s/^.*version *: *'\([0-9]\+\.[0-9]\+\.[0-9]\+\)' *,.*$/\1/"`
+#MAJOR_VERSION=`echo $VERSION | sed "s/^\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)$/\1/"`
+#MINOR_VERSION=`echo $VERSION | sed "s/^\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)$/\2/"`
+#MICRO_VERSION=`echo $VERSION | sed "s/^\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)$/\3/"`
 cd build/windows/installer
-./compile.bat ${MAJOR_VERSION}.${MINOR_VERSION}.${MICRO_VERSION} ../../.. gimp-w32 gimp-w64 ../../.. gimp-w32 gimp-w64
+./compile.bat ${VERSION} ../../.. gimp-w32 gimp-w64 ../../.. gimp-w32 gimp-w64
 
 # Test if the installer was created and return success/failure.
-if [ -f "_Output/gimp-${MAJOR_VERSION}.${MINOR_VERSION}.${MICRO_VERSION}-setup.exe" ]; then
+if [ -f "_Output/gimp-${VERSION}-setup.exe" ]; then
   cd _Output/
-  INSTALLER="gimp-${MAJOR_VERSION}.${MINOR_VERSION}.${MICRO_VERSION}-setup.exe"
+  INSTALLER="gimp-${VERSION}-setup.exe"
   sha256sum $INSTALLER > ${INSTALLER}.SHA256SUMS
   sha512sum $INSTALLER > ${INSTALLER}.SHA512SUMS
   exit 0
