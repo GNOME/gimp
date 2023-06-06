@@ -104,6 +104,8 @@ gimp_menu_factory_finalize (GObject *object)
   g_list_free (factory->p->registered_menus);
   factory->p->registered_menus = NULL;
 
+  g_clear_weak_pointer (&factory->p->action_factory);
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -118,8 +120,8 @@ gimp_menu_factory_new (Gimp              *gimp,
 
   factory = g_object_new (GIMP_TYPE_MENU_FACTORY, NULL);
 
-  factory->p->gimp           = gimp;
-  factory->p->action_factory = action_factory;
+  factory->p->gimp = gimp;
+  g_set_weak_pointer (&factory->p->action_factory, action_factory);
 
   return factory;
 }
