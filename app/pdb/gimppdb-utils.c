@@ -32,12 +32,16 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-sample-points.h"
 #include "core/gimpitem.h"
+#include "core/gimppalette.h"
+#include "core/gimppattern.h"
 
 #include "text/gimptextlayer.h"
+#include "text/gimpfont.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -70,6 +74,36 @@ gimp_pdb_get_data_factory_item (GimpDataFactory *factory,
   return object;
 }
 
+GimpDataFactory *
+gimp_pdb_get_data_factory (Gimp  *gimp,
+                           GType  data_type)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (g_type_is_a (data_type, GIMP_TYPE_DATA), NULL);
+
+  if (g_type_is_a (data_type, GIMP_TYPE_BRUSH))
+    {
+      return gimp->brush_factory;
+    }
+  else if (g_type_is_a (data_type, GIMP_TYPE_PATTERN))
+    {
+      return gimp->pattern_factory;
+    }
+  else if (g_type_is_a (data_type, GIMP_TYPE_GRADIENT))
+    {
+      return gimp->gradient_factory;
+    }
+  else if (g_type_is_a (data_type, GIMP_TYPE_PALETTE))
+    {
+      return gimp->palette_factory;
+    }
+  else if (g_type_is_a (data_type, GIMP_TYPE_FONT))
+    {
+      return gimp->font_factory;
+    }
+
+  g_return_val_if_reached (NULL);
+}
 
 GimpBrush *
 gimp_pdb_get_brush (Gimp               *gimp,

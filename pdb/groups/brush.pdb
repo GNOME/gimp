@@ -77,35 +77,6 @@ CODE
     );
 }
 
-sub brush_duplicate {
-    $blurb = "Duplicates a brush.";
-    $help  = "Returns a copy having a different, unique ID.";
-
-    &mitch_pdb_misc('2004', '2.2');
-
-    @inargs = (
-      ${brush_arg_spec}
-    );
-
-    @outargs = (
-      { name => 'brush_copy',
-        type => 'brush',
-        desc => "A copy of the brush." }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  brush_copy = (GimpBrush *)
-    gimp_data_factory_data_duplicate (gimp->brush_factory, GIMP_DATA (brush));
-
-  if (!brush_copy)
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub brush_is_generated {
     $blurb = "Whether the brush is generated (parametric versus raster).";
     $help  = "Returns TRUE when brush is parametric.";
@@ -125,104 +96,6 @@ sub brush_is_generated {
         code => <<'CODE'
 {
   generated = GIMP_IS_BRUSH_GENERATED (brush);
-}
-CODE
-    );
-}
-
-sub brush_is_editable {
-    $blurb = "Whether the brush can be edited.";
-    $help  = "Returns TRUE if you have permission to change the brush.";
-
-    &bill_pdb_misc('2004', '2.4');
-
-    @inargs = (
-      ${brush_arg_spec}
-    );
-
-    @outargs = (
-      { name => 'editable', type => 'boolean',
-        desc => 'TRUE if the brush can be edited' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  editable = gimp_data_is_writable (GIMP_DATA (brush));
-}
-CODE
-    );
-}
-
-sub brush_rename {
-    $blurb = "Renames a brush. When the name is in use, renames to a unique name.";
-
-    $help = <<'HELP';
-Renames a brush.  The name is the same as the ID.
-When the proposed name is already used, GIMP generates a unique name,
-which get_id() will return.
-
-Returns a reference to a renamed brush, which you should assign
-to the original var or a differently named var.
-Any existing references will be invalid.
-Resources in plugins are proxies holding an ID,
-which can be invalid when the resource is renamed.
-HELP
-
-    &mitch_pdb_misc('2004', '2.2');
-
-    @inargs = (
-      ${brush_arg_spec},
-      { name => 'new_name', type => 'string', non_empty => 1,
-        desc => 'The proposed new name of the brush' }
-    );
-
-    @outargs = (
-      { name => 'brush_renamed',
-        type => 'brush',
-        desc => "A reference to the renamed brush." }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  /* Rename the brush in app. */
-  gimp_object_set_name (GIMP_OBJECT (brush), new_name);
-  /* Assert GIMP might have set a name different from new_name. */
-
-  /* Return a reference.
-   * The wire protocol will create a new proxy on the plugin side.
-   * We don't need an alias here, except to make clear
-   * that we are returning the same real object as passed.
-   */
-   brush_renamed = brush;
-}
-CODE
-    );
-}
-
-sub brush_delete {
-    $blurb = "Deletes a brush.";
-    $help = <<'HELP';
-Deletes a brush.  Returns an error if the brush is not deletable.
-Deletes the brush's data.  You should not use the brush afterwards.
-HELP
-
-    &mitch_pdb_misc('2004', '2.2');
-
-    @inargs = (
-      ${brush_arg_spec}
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (brush && gimp_data_is_deletable (GIMP_DATA (brush)))
-    success = gimp_data_factory_data_delete (gimp->brush_factory,
-                                             GIMP_DATA (brush),
-                                             TRUE, error);
-  else
-    success = FALSE;
 }
 CODE
     );
@@ -885,11 +758,7 @@ CODE
 
 @procs = qw(brush_new
             brush_get_by_name
-            brush_duplicate
             brush_is_generated
-            brush_rename
-            brush_delete
-            brush_is_editable
             brush_get_info
             brush_get_pixels
             brush_get_spacing      brush_set_spacing

@@ -34,11 +34,6 @@ G_BEGIN_DECLS
 
 GimpGradient* gimp_gradient_new                                 (const gchar               *name);
 GimpGradient* gimp_gradient_get_by_name                         (const gchar               *name);
-GimpGradient* gimp_gradient_duplicate                           (GimpGradient              *gradient);
-gboolean      gimp_gradient_is_editable                         (GimpGradient              *gradient);
-GimpGradient* gimp_gradient_rename                              (GimpGradient              *gradient,
-                                                                 const gchar               *new_name);
-gboolean      gimp_gradient_delete                              (GimpGradient              *gradient);
 gint          gimp_gradient_get_number_of_segments              (GimpGradient              *gradient);
 gboolean      gimp_gradient_get_uniform_samples                 (GimpGradient              *gradient,
                                                                  gint                       num_samples,

@@ -34,12 +34,7 @@ G_BEGIN_DECLS
 
 GimpBrush* gimp_brush_new              (const gchar              *name);
 GimpBrush* gimp_brush_get_by_name      (const gchar              *name);
-GimpBrush* gimp_brush_duplicate        (GimpBrush                *brush);
 gboolean   gimp_brush_is_generated     (GimpBrush                *brush);
-GimpBrush* gimp_brush_rename           (GimpBrush                *brush,
-                                        const gchar              *new_name);
-gboolean   gimp_brush_delete           (GimpBrush                *brush);
-gboolean   gimp_brush_is_editable      (GimpBrush                *brush);
 gboolean   gimp_brush_get_info         (GimpBrush                *brush,
                                         gint                     *width,
                                         gint                     *height,

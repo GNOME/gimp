@@ -82,134 +82,6 @@ CODE
     );
 }
 
-sub palette_is_editable {
-    $blurb = "Whether the palette can be edited";
-    $help  = "Returns TRUE if you have permission to change the palette";
-
-    &bill_pdb_misc('2004', '2.4');
-
-    @inargs = (
-      ${palette_arg_spec}
-    );
-
-    @outargs = (
-      { name => 'editable', type => 'boolean',
-        desc => "TRUE if the palette can be edited" }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  editable = gimp_data_is_writable (GIMP_DATA (palette));
-}
-CODE
-    );
-}
-
-sub palette_duplicate {
-    $blurb = "Duplicates a palette";
-    $help  = "Returns a copy having a different, unique ID.";
-
-    &mitch_pdb_misc('2004', '2.2');
-
-    @inargs = (
-        ${palette_arg_spec}
-    );
-
-    @outargs = (
-        { name => 'palette_copy',
-          type => 'palette',
-          desc => "A copy of the palette." }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  palette_copy = (GimpPalette *)
-    gimp_data_factory_data_duplicate (gimp->palette_factory, GIMP_DATA (palette));
-  /* Assert the copy has a unique name. */
-  if (!palette_copy)
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub palette_rename {
-    $blurb = "Rename a palette";
-    $help = <<'HELP';
-Renames a palette.  The name is the same as the ID.
-When the proposed name is already used, GIMP generates a unique name,
-which get_id() will return.
-
-Returns a reference to a renamed palette, which you should assign
-to the original var or a differently named var.
-Any existing references will be invalid.
-Resources in plugins are proxies holding an ID,
-which can be invalid when the resource is renamed.
-HELP
-
-    &mitch_pdb_misc('2004', '2.2');
-
-    @inargs = (
-        ${palette_arg_spec},
-        { name => 'new_name', type => 'string', non_empty => 1,
-          desc => "The requested new name of the palette" }
-    );
-
-    @outargs = (
-        { name => 'palette_renamed',
-          type => 'palette',
-          desc => "A reference to the renamed palette." }
-        );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  /* Rename the palette in app. */
-  gimp_object_set_name (GIMP_OBJECT (palette), new_name);
-  /* Assert GIMP might have set a name different from new_name. */
-
-  /* Return a reference.
-   * The wire protocol will create a new proxy on the plugin side.
-   * We don't need an alias here, except to make clear
-   * that we are returning the same real object as passed.
-   */
-   palette_renamed = palette;
-}
-CODE
-    );
-}
-
-sub palette_delete {
-    $blurb = "Deletes a palette";
-    $help = <<'HELP';
-Deletes a palette.  Returns an error if the palette is not deletable.
-Deletes the palette's data.  You should not use the palette afterwards.
-HELP
-
-    &mitch_pdb_misc('2004', '2.2');
-
-    @inargs = (
-      ${palette_arg_spec}
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (palette && gimp_data_is_deletable (GIMP_DATA (palette)))
-    success = gimp_data_factory_data_delete (gimp->palette_factory,
-                                             GIMP_DATA (palette),
-                                             TRUE, error);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-# When returns a single value, omit:  void_ret => 1,
-
 sub palette_get_color_count {
     $blurb = 'Get the count of colors in the palette.';
 
@@ -220,6 +92,7 @@ sub palette_get_color_count {
     @inargs = (
       ${palette_arg_spec}
     );
+
     @outargs = (
         { name => 'num_colors', type => 'int32',
           desc => 'The number of colors in the palette' }
@@ -551,10 +424,6 @@ CODE
 
 @procs = qw(palette_new
             palette_get_by_name
-            palette_duplicate
-            palette_rename
-            palette_delete
-            palette_is_editable
             palette_get_color_count
             palette_get_colors
             palette_get_columns palette_set_columns

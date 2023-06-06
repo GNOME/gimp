@@ -112,39 +112,6 @@ brush_get_by_name_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-brush_duplicate_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
-                         GError               **error)
-{
-  gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpBrush *brush;
-  GimpBrush *brush_copy = NULL;
-
-  brush = g_value_get_object (gimp_value_array_index (args, 0));
-
-  if (success)
-    {
-      brush_copy = (GimpBrush *)
-        gimp_data_factory_data_duplicate (gimp->brush_factory, GIMP_DATA (brush));
-
-      if (!brush_copy)
-        success = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-
-  if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), brush_copy);
-
-  return return_vals;
-}
-
-static GimpValueArray *
 brush_is_generated_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
@@ -169,102 +136,6 @@ brush_is_generated_invoker (GimpProcedure         *procedure,
 
   if (success)
     g_value_set_boolean (gimp_value_array_index (return_vals, 1), generated);
-
-  return return_vals;
-}
-
-static GimpValueArray *
-brush_rename_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
-                      GError               **error)
-{
-  gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpBrush *brush;
-  const gchar *new_name;
-  GimpBrush *brush_renamed = NULL;
-
-  brush = g_value_get_object (gimp_value_array_index (args, 0));
-  new_name = g_value_get_string (gimp_value_array_index (args, 1));
-
-  if (success)
-    {
-      /* Rename the brush in app. */
-      gimp_object_set_name (GIMP_OBJECT (brush), new_name);
-      /* Assert GIMP might have set a name different from new_name. */
-
-      /* Return a reference.
-       * The wire protocol will create a new proxy on the plugin side.
-       * We don't need an alias here, except to make clear
-       * that we are returning the same real object as passed.
-       */
-       brush_renamed = brush;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-
-  if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), brush_renamed);
-
-  return return_vals;
-}
-
-static GimpValueArray *
-brush_delete_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
-                      GError               **error)
-{
-  gboolean success = TRUE;
-  GimpBrush *brush;
-
-  brush = g_value_get_object (gimp_value_array_index (args, 0));
-
-  if (success)
-    {
-      if (brush && gimp_data_is_deletable (GIMP_DATA (brush)))
-        success = gimp_data_factory_data_delete (gimp->brush_factory,
-                                                 GIMP_DATA (brush),
-                                                 TRUE, error);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
-brush_is_editable_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
-                           GError               **error)
-{
-  gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpBrush *brush;
-  gboolean editable = FALSE;
-
-  brush = g_value_get_object (gimp_value_array_index (args, 0));
-
-  if (success)
-    {
-      editable = gimp_data_is_writable (GIMP_DATA (brush));
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-
-  if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), editable);
 
   return return_vals;
 }
@@ -957,35 +828,6 @@ register_brush_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-duplicate
-   */
-  procedure = gimp_procedure_new (brush_duplicate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-duplicate");
-  gimp_procedure_set_static_help (procedure,
-                                  "Duplicates a brush.",
-                                  "Returns a copy having a different, unique ID.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
-                                         "Michael Natterer",
-                                         "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_brush ("brush",
-                                                      "brush",
-                                                      "The brush",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_brush ("brush-copy",
-                                                          "brush copy",
-                                                          "A copy of the brush.",
-                                                          FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-brush-is-generated
    */
   procedure = gimp_procedure_new (brush_is_generated_invoker);
@@ -1009,95 +851,6 @@ register_brush_procs (GimpPDB *pdb)
                                    g_param_spec_boolean ("generated",
                                                          "generated",
                                                          "TRUE if the brush is generated",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-brush-rename
-   */
-  procedure = gimp_procedure_new (brush_rename_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-rename");
-  gimp_procedure_set_static_help (procedure,
-                                  "Renames a brush. When the name is in use, renames to a unique name.",
-                                  "Renames a brush. The name is the same as the ID. When the proposed name is already used, GIMP generates a unique name, which get_id() will return.\n"
-                                  "Returns a reference to a renamed brush, which you should assign to the original var or a differently named var. Any existing references will be invalid. Resources in plugins are proxies holding an ID, which can be invalid when the resource is renamed.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
-                                         "Michael Natterer",
-                                         "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_brush ("brush",
-                                                      "brush",
-                                                      "The brush",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("new-name",
-                                                       "new name",
-                                                       "The proposed new name of the brush",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_brush ("brush-renamed",
-                                                          "brush renamed",
-                                                          "A reference to the renamed brush.",
-                                                          FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-brush-delete
-   */
-  procedure = gimp_procedure_new (brush_delete_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-delete");
-  gimp_procedure_set_static_help (procedure,
-                                  "Deletes a brush.",
-                                  "Deletes a brush. Returns an error if the brush is not deletable. Deletes the brush's data. You should not use the brush afterwards.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
-                                         "Michael Natterer",
-                                         "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_brush ("brush",
-                                                      "brush",
-                                                      "The brush",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-brush-is-editable
-   */
-  procedure = gimp_procedure_new (brush_is_editable_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-brush-is-editable");
-  gimp_procedure_set_static_help (procedure,
-                                  "Whether the brush can be edited.",
-                                  "Returns TRUE if you have permission to change the brush.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-                                         "Bill Skaggs",
-                                         "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_brush ("brush",
-                                                      "brush",
-                                                      "The brush",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("editable",
-                                                         "editable",
-                                                         "TRUE if the brush can be edited",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

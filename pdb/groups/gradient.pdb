@@ -95,115 +95,6 @@ CODE
     );
 }
 
-sub gradient_duplicate {
-    $blurb = 'Duplicates a gradient';
-    $help  = 'Returns a copy having a different, unique ID';
-
-    &shlomi_pdb_misc('2003', '2.2');
-
-    @inargs = (
-      ${gradient_arg_spec}
-    );
-
-    @outargs = (
-      { name => 'gradient_copy',
-        type => 'gradient',
-        desc => "A copy of the gradient." }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  gradient_copy = (GimpGradient *)
-    gimp_data_factory_data_duplicate (gimp->gradient_factory, GIMP_DATA (gradient));
-
-  if (! gradient_copy)
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub gradient_is_editable {
-    $blurb = 'Tests if gradient can be edited';
-    $help  = 'Returns TRUE if you have permission to change the gradient';
-
-    &bill_pdb_misc('2004', '2.4');
-
-    @inargs = (
-      ${gradient_arg_spec}
-    );
-
-    @outargs = (
-      { name => 'editable', type => 'boolean',
-        desc => 'TRUE if the gradient can be edited' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  editable = gimp_data_is_writable (GIMP_DATA (gradient));
-}
-CODE
-    );
-}
-
-sub gradient_rename {
-    $blurb = "Renames a gradient. When the name is in use, renames to a unique name.";
-    $help  = 'Renames a gradient.';
-
-    &shlomi_pdb_misc('2003', '2.2');
-
-    @inargs = (
-      ${gradient_arg_spec},
-      { name => 'new_name', type => 'string', non_empty => 1,
-        desc => 'The new name of the gradient' }
-    );
-
-    @outargs = (
-      { name => 'gradient_renamed',
-        type => 'gradient',
-        desc => "A reference to the renamed gradient." }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
-
-  gradient_renamed = gradient;
-}
-CODE
-    );
-}
-
-sub gradient_delete {
-    $blurb = 'Deletes a gradient';
-    $help = <<'HELP';
-Deletes a gradient.  Returns an error if the gradient is not deletable.
-Deletes the gradient's data.  You should not use the gradient afterwards.
-HELP
-
-    &shlomi_pdb_misc('2003', '2.2');
-
-    @inargs = (
-      ${gradient_arg_spec},
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gradient && gimp_data_is_deletable (GIMP_DATA (gradient)))
-    success = gimp_data_factory_data_delete (gimp->gradient_factory,
-                                             GIMP_DATA (gradient),
-                                             TRUE, error);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub gradient_get_number_of_segments {
     $blurb = 'Gets the number of segments of the gradient';
     $help = 'Gets the number of segments of the gradient';
@@ -1367,10 +1258,6 @@ CODE
 
 @procs = qw(gradient_new
             gradient_get_by_name
-            gradient_duplicate
-            gradient_is_editable
-            gradient_rename
-            gradient_delete
             gradient_get_number_of_segments
             gradient_get_uniform_samples
             gradient_get_custom_samples

@@ -7,8 +7,6 @@ EXPORTS
 	gimp_batch_procedure_new
 	gimp_batch_procedure_set_interpreter_name
 	gimp_brush_application_mode_get_type
-	gimp_brush_delete
-	gimp_brush_duplicate
 	gimp_brush_get_angle
 	gimp_brush_get_aspect_ratio
 	gimp_brush_get_by_name
@@ -20,10 +18,8 @@ EXPORTS
 	gimp_brush_get_spacing
 	gimp_brush_get_spikes
 	gimp_brush_get_type
-	gimp_brush_is_editable
 	gimp_brush_is_generated
 	gimp_brush_new
-	gimp_brush_rename
 	gimp_brush_set_angle
 	gimp_brush_set_aspect_ratio
 	gimp_brush_set_hardness
@@ -315,16 +311,12 @@ EXPORTS
 	gimp_getpid
 	gimp_gimprc_query
 	gimp_gimprc_set
-	gimp_gradient_delete
-	gimp_gradient_duplicate
 	gimp_gradient_get_by_name
 	gimp_gradient_get_custom_samples
 	gimp_gradient_get_number_of_segments
 	gimp_gradient_get_type
 	gimp_gradient_get_uniform_samples
-	gimp_gradient_is_editable
 	gimp_gradient_new
-	gimp_gradient_rename
 	gimp_gradient_segment_get_blending_function
 	gimp_gradient_segment_get_coloring_type
 	gimp_gradient_segment_get_left_color
@@ -636,9 +628,7 @@ EXPORTS
 	gimp_paintbrush
 	gimp_paintbrush_default
 	gimp_palette_add_entry
-	gimp_palette_delete
 	gimp_palette_delete_entry
-	gimp_palette_duplicate
 	gimp_palette_entry_get_color
 	gimp_palette_entry_get_name
 	gimp_palette_entry_set_color
@@ -648,9 +638,7 @@ EXPORTS
 	gimp_palette_get_colors
 	gimp_palette_get_columns
 	gimp_palette_get_type
-	gimp_palette_is_editable
 	gimp_palette_new
-	gimp_palette_rename
 	gimp_palette_set_columns
 	gimp_palettes_close_popup
 	gimp_palettes_get_list
@@ -803,6 +791,8 @@ EXPORTS
 	gimp_progress_uninstall
 	gimp_progress_update
 	gimp_quit
+	gimp_resource_delete
+	gimp_resource_duplicate
 	gimp_resource_get_by_id
 	gimp_resource_get_by_name
 	gimp_resource_get_id
@@ -815,11 +805,13 @@ EXPORTS
      	gimp_resource_id_is_pattern
      	gimp_resource_id_is_valid
     	gimp_resource_is_brush
+	gimp_resource_is_editable
    	gimp_resource_is_font
 	gimp_resource_is_gradient
 	gimp_resource_is_palette
 	gimp_resource_is_pattern
  	gimp_resource_is_valid
+	gimp_resource_rename
 	gimp_resource_select_destroy
 	gimp_resource_select_new
 	gimp_resource_select_set

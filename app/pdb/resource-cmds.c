@@ -30,6 +30,7 @@
 #include "pdb-types.h"
 
 #include "core/gimpbrush.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
 #include "core/gimppalette.h"
 #include "core/gimpparamspecs.h"
@@ -38,6 +39,8 @@
 #include "text/gimpfont.h"
 
 #include "gimppdb.h"
+#include "gimppdberror.h"
+#include "gimppdb-utils.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -259,6 +262,136 @@ resource_get_name_invoker (GimpProcedure         *procedure,
   return return_vals;
 }
 
+static GimpValueArray *
+resource_is_editable_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpResource *resource;
+  gboolean editable = FALSE;
+
+  resource = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      editable = gimp_data_is_writable (GIMP_DATA (resource));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), editable);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+resource_duplicate_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpResource *resource;
+  GimpResource *resource_copy = NULL;
+
+  resource = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpDataFactory *factory;
+
+      factory = gimp_pdb_get_data_factory (gimp, G_TYPE_FROM_INSTANCE (resource));
+
+      resource_copy = (GimpResource *)
+        gimp_data_factory_data_duplicate (factory, GIMP_DATA (resource));
+
+      if (! resource_copy)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_object (gimp_value_array_index (return_vals, 1), resource_copy);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+resource_rename_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
+{
+  gboolean success = TRUE;
+  GimpResource *resource;
+  const gchar *new_name;
+
+  resource = g_value_get_object (gimp_value_array_index (args, 0));
+  new_name = g_value_get_string (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      if (gimp_viewable_is_name_editable (GIMP_VIEWABLE (resource)))
+        {
+          gimp_object_set_name (GIMP_OBJECT (resource), new_name);
+        }
+      else
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                       _("Resource '%s' is not renamable"),
+                      gimp_object_get_name (GIMP_OBJECT (resource)));
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+resource_delete_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
+{
+  gboolean success = TRUE;
+  GimpResource *resource;
+
+  resource = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpDataFactory *factory;
+
+      factory = gimp_pdb_get_data_factory (gimp, G_TYPE_FROM_INSTANCE (resource));
+
+      if (gimp_data_is_deletable (GIMP_DATA (resource)))
+        success = gimp_data_factory_data_delete (factory, GIMP_DATA (resource),
+                                                 TRUE, error);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
 void
 register_resource_procs (GimpPDB *pdb)
 {
@@ -465,6 +598,117 @@ register_resource_procs (GimpPDB *pdb)
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-resource-is-editable
+   */
+  procedure = gimp_procedure_new (resource_is_editable_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-resource-is-editable");
+  gimp_procedure_set_static_help (procedure,
+                                  "Whether the resource can be edited.",
+                                  "Returns TRUE if you have permission to change the resource.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2023");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_resource ("resource",
+                                                         "resource",
+                                                         "The resource",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("editable",
+                                                         "editable",
+                                                         "TRUE if the resource can be edited",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-resource-duplicate
+   */
+  procedure = gimp_procedure_new (resource_duplicate_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-resource-duplicate");
+  gimp_procedure_set_static_help (procedure,
+                                  "Duplicates a resource.",
+                                  "Returns a copy having a different, unique ID.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2023");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_resource ("resource",
+                                                         "resource",
+                                                         "The resource",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_resource ("resource-copy",
+                                                             "resource copy",
+                                                             "A copy of the resource.",
+                                                             FALSE,
+                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-resource-rename
+   */
+  procedure = gimp_procedure_new (resource_rename_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-resource-rename");
+  gimp_procedure_set_static_help (procedure,
+                                  "Renames a resource. When the name is in use, renames to a unique name.",
+                                  "Renames a resource. When the proposed name is already used, GIMP generates a unique name.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2023");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_resource ("resource",
+                                                         "resource",
+                                                         "The resource",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("new-name",
+                                                       "new name",
+                                                       "The proposed new name of the resource",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-resource-delete
+   */
+  procedure = gimp_procedure_new (resource_delete_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-resource-delete");
+  gimp_procedure_set_static_help (procedure,
+                                  "Deletes a resource.",
+                                  "Deletes a resource. Returns an error if the resource is not deletable. Deletes the resource's data. You should not use the resource afterwards.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2023");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_resource ("resource",
+                                                         "resource",
+                                                         "The resource",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

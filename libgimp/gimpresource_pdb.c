@@ -292,3 +292,152 @@ gimp_resource_get_name (GimpResource *resource)
 
   return name;
 }
+
+/**
+ * gimp_resource_is_editable:
+ * @resource: The resource.
+ *
+ * Whether the resource can be edited.
+ *
+ * Returns TRUE if you have permission to change the resource.
+ *
+ * Returns: TRUE if the resource can be edited.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_resource_is_editable (GimpResource *resource)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean editable = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_RESOURCE, resource,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-resource-is-editable",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    editable = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return editable;
+}
+
+/**
+ * gimp_resource_duplicate:
+ * @resource: The resource.
+ *
+ * Duplicates a resource.
+ *
+ * Returns a copy having a different, unique ID.
+ *
+ * Returns: (transfer full): A copy of the resource.
+ *
+ * Since: 3.0
+ **/
+GimpResource *
+gimp_resource_duplicate (GimpResource *resource)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpResource *resource_copy = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_RESOURCE, resource,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-resource-duplicate",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    resource_copy = GIMP_VALUES_GET_RESOURCE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return resource_copy;
+}
+
+/**
+ * gimp_resource_rename:
+ * @resource: The resource.
+ * @new_name: The proposed new name of the resource.
+ *
+ * Renames a resource. When the name is in use, renames to a unique
+ * name.
+ *
+ * Renames a resource. When the proposed name is already used, GIMP
+ * generates a unique name.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_resource_rename (GimpResource *resource,
+                      const gchar  *new_name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_RESOURCE, resource,
+                                          G_TYPE_STRING, new_name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-resource-rename",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_resource_delete:
+ * @resource: The resource.
+ *
+ * Deletes a resource.
+ *
+ * Deletes a resource. Returns an error if the resource is not
+ * deletable. Deletes the resource's data. You should not use the
+ * resource afterwards.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_resource_delete (GimpResource *resource)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_RESOURCE, resource,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-resource-delete",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}

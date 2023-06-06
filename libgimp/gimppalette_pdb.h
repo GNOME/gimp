@@ -34,11 +34,6 @@ G_BEGIN_DECLS
 
 GimpPalette* gimp_palette_new             (const gchar    *name);
 GimpPalette* gimp_palette_get_by_name     (const gchar    *name);
-GimpPalette* gimp_palette_duplicate       (GimpPalette    *palette);
-GimpPalette* gimp_palette_rename          (GimpPalette    *palette,
-                                           const gchar    *new_name);
-gboolean     gimp_palette_delete          (GimpPalette    *palette);
-gboolean     gimp_palette_is_editable     (GimpPalette    *palette);
 gint         gimp_palette_get_color_count (GimpPalette    *palette);
 GimpRGB*     gimp_palette_get_colors      (GimpPalette    *palette,
                                            gint           *num_colors);

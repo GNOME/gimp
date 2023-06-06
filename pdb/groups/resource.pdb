@@ -27,8 +27,8 @@ HELP
     &mitch_pdb_misc('2023', '3.0');
 
     @inargs = (
-	{ name => 'resource_id', type => 'int32',
-	  desc => 'The resource ID to check' }
+      { name => 'resource_id', type => 'int32',
+        desc => 'The resource ID to check' }
     );
 
     @outargs = (
@@ -57,13 +57,13 @@ HELP
     &mitch_pdb_misc('2023', '3.0');
 
     @inargs = (
-	{ name => 'resource_id', type => 'int32',
-	  desc => 'The resource ID' }
+      { name => 'resource_id', type => 'int32',
+        desc => 'The resource ID' }
     );
 
     @outargs = (
-	{ name => 'brush', type => 'boolean',
-	  desc => 'TRUE if the resource ID is a brush, FALSE otherwise' }
+      { name => 'brush', type => 'boolean',
+        desc => 'TRUE if the resource ID is a brush, FALSE otherwise' }
     );
 
     %invoke = (
@@ -87,13 +87,13 @@ HELP
     &mitch_pdb_misc('2023', '3.0');
 
     @inargs = (
-	{ name => 'resource_id', type => 'int32',
-	  desc => 'The resource ID' }
+      { name => 'resource_id', type => 'int32',
+        desc => 'The resource ID' }
     );
 
     @outargs = (
-	{ name => 'pattern', type => 'boolean',
-	  desc => 'TRUE if the resource ID is a pattern, FALSE otherwise' }
+      { name => 'pattern', type => 'boolean',
+        desc => 'TRUE if the resource ID is a pattern, FALSE otherwise' }
     );
 
     %invoke = (
@@ -117,17 +117,17 @@ HELP
     &mitch_pdb_misc('2023', '3.0');
 
     @inargs = (
-	{ name => 'resource_id', type => 'int32',
-	  desc => 'The resource ID' }
+      { name => 'resource_id', type => 'int32',
+        desc => 'The resource ID' }
     );
 
     @outargs = (
-	{ name => 'gradient', type => 'boolean',
-	  desc => 'TRUE if the resource ID is a gradient, FALSE otherwise' }
+      { name => 'gradient', type => 'boolean',
+        desc => 'TRUE if the resource ID is a gradient, FALSE otherwise' }
     );
 
     %invoke = (
-	code => <<'CODE'
+        code => <<'CODE'
 {
   GimpData *data = gimp_data_get_by_id (resource_id);
 
@@ -225,12 +225,141 @@ CODE
     );
 }
 
+sub resource_is_editable {
+    $blurb = "Whether the resource can be edited.";
+    $help  = "Returns TRUE if you have permission to change the resource.";
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+	{ name => 'resource', type => 'resource',
+	  desc => 'The resource' }
+    );
+
+    @outargs = (
+      { name => 'editable', type => 'boolean',
+        desc => 'TRUE if the resource can be edited' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  editable = gimp_data_is_writable (GIMP_DATA (resource));
+}
+CODE
+    );
+}
+
+sub resource_duplicate {
+    $blurb = "Duplicates a resource.";
+    $help  = "Returns a copy having a different, unique ID.";
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+	{ name => 'resource', type => 'resource',
+	  desc => 'The resource' }
+    );
+
+    @outargs = (
+      { name => 'resource_copy',
+        type => 'resource',
+        desc => "A copy of the resource." }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpDataFactory *factory;
+
+  factory = gimp_pdb_get_data_factory (gimp, G_TYPE_FROM_INSTANCE (resource));
+
+  resource_copy = (GimpResource *)
+    gimp_data_factory_data_duplicate (factory, GIMP_DATA (resource));
+
+  if (! resource_copy)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub resource_rename {
+    $blurb = "Renames a resource. When the name is in use, renames to a unique name.";
+
+    $help = <<'HELP';
+Renames a resource. When the proposed name is already used, GIMP
+generates a unique name.
+HELP
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+        { name => 'resource', type => 'resource',
+          desc => 'The resource' },
+        { name => 'new_name', type => 'string', non_empty => 1,
+          desc => 'The proposed new name of the resource' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_viewable_is_name_editable (GIMP_VIEWABLE (resource)))
+    {
+      gimp_object_set_name (GIMP_OBJECT (resource), new_name);
+    }
+  else
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("Resource '%s' is not renamable"),
+                  gimp_object_get_name (GIMP_OBJECT (resource)));
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub resource_delete {
+    $blurb = "Deletes a resource.";
+    $help = <<'HELP';
+Deletes a resource.  Returns an error if the resource is not deletable.
+Deletes the resource's data.  You should not use the resource afterwards.
+HELP
+
+    &mitch_pdb_misc('2023', '3.0');
+
+    @inargs = (
+      { name => 'resource', type => 'resource',
+        desc => 'The resource' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpDataFactory *factory;
+
+  factory = gimp_pdb_get_data_factory (gimp, G_TYPE_FROM_INSTANCE (resource));
+
+  if (gimp_data_is_deletable (GIMP_DATA (resource)))
+    success = gimp_data_factory_data_delete (factory, GIMP_DATA (resource),
+                                             TRUE, error);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 
 @headers = qw("core/gimpbrush.h"
+              "core/gimpdatafactory.h"
               "core/gimpgradient.h"
               "core/gimppalette.h"
               "core/gimppattern.h"
               "text/gimpfont.h"
+              "gimppdb-utils.h"
+              "gimppdberror.h"
               "gimp-intl.h");
 
 @procs = qw(resource_id_is_valid
@@ -239,7 +368,11 @@ CODE
             resource_id_is_gradient
             resource_id_is_palette
             resource_id_is_font
-            resource_get_name);
+            resource_get_name
+            resource_is_editable
+            resource_duplicate
+            resource_rename
+            resource_delete);
 
 %exports = (app => [@procs], lib => [@procs]);
 

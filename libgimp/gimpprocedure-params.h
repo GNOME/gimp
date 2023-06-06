@@ -887,6 +887,11 @@ G_BEGIN_DECLS
                                                         GIMP_TYPE_PATTERN,\
                                                         flags))
 
+#define GIMP_VALUES_GET_RESOURCE(args, n) \
+  g_value_get_object (gimp_value_array_index (args, n))
+#define GIMP_VALUES_SET_RESOURCE(args, n, value) \
+  g_value_set_object (gimp_value_array_index (args, n), value)
+
 #define GIMP_VALUES_GET_BRUSH(args, n) \
   g_value_get_object (gimp_value_array_index (args, n))
 #define GIMP_VALUES_SET_BRUSH(args, n, value) \
