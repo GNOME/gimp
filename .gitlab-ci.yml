@@ -412,7 +412,7 @@ gimp-win64-native:
     paths:
     - _install-w64
     - _build-w64/build/windows/installer/lang/
-    - _build-w64/config.log
+    - _build-w64/meson-*/
   cache:
     paths:
     - _ccache/
@@ -499,7 +499,7 @@ gimp-win32-native:
     expire_in: 1 day
     paths:
     - _install-w32
-    - _build-w32/config.log
+    - _build-w32/meson-*/
   cache:
     paths:
     - _ccache/
