@@ -3898,7 +3898,6 @@ msgid "Deflate Compression factor (0..9)"
 msgstr "Factor de compressió de deflació (0..9)"
 
 #: plug-ins/common/file-png.c:246
-#, fuzzy
 msgid "Write bKGD chunk (PNG metadata)"
 msgstr "Escriu el fragment bKGD (metadades PNG)"
 
@@ -3907,7 +3906,6 @@ msgid "Save layer o_ffset"
 msgstr "_Desa el desplaçament de la capa"
 
 #: plug-ins/common/file-png.c:252
-#, fuzzy
 msgid "Write oFFs chunk (PNG metadata)"
 msgstr "Escriu el fragment oFFs (metadades PNG)"
 
@@ -3916,38 +3914,32 @@ msgid "Save resol_ution"
 msgstr "D_esa la resolució"
 
 #: plug-ins/common/file-png.c:258
-#, fuzzy
 msgid "Write pHYs chunk (PNG metadata)"
 msgstr "Escriu un fragment de pHYs (metadades PNG)"
 
 #: plug-ins/common/file-png.c:264
-#, fuzzy
 msgid "Write tIME chunk (PNG metadata)"
 msgstr "Escriu el fragment tIME (metadades PNG)"
 
 #: plug-ins/common/file-png.c:269
-#, fuzzy
 msgid "Save color _values from transparent pixels"
-msgstr "Desa els valors de color dels píxels transparents"
+msgstr "_Desa els valors de color dels píxels transparents"
 
 #: plug-ins/common/file-png.c:270
-#, fuzzy
 msgid "Preserve color of completely transparent pixels"
 msgstr "Conserva el color dels píxels completament transparents"
 
 #: plug-ins/common/file-png.c:275
-#, fuzzy
 msgid "_Optimize for smallest possible palette size"
-msgstr "Optimitza per a la mida més petita possible de la paleta"
+msgstr "_Optimitza per a la mida més petita possible de la paleta"
 
 #: plug-ins/common/file-png.c:276
-#, fuzzy
 msgid ""
 "When checked, save as 1, 2, 4, or 8-bit depending on number of colors used. "
 "When unchecked, always save as 8-bit"
 msgstr ""
 "Quan està marcada, es desarà com a 1, 2, 4 o 8 bits depenent del nombre de "
-"colors utilitzats. Quan no estigui marcat, sempre desar com a 8 bits"
+"colors utilitzats. Quan no estigui marcat, sempre es desarà com a 8 bits"
 
 #: plug-ins/common/file-png.c:284
 msgid "PNG export format"
@@ -4082,10 +4074,8 @@ msgid "PNM Image"
 msgstr "Imatge PNM"
 
 #: plug-ins/common/file-pnm.c:318
-#, fuzzy
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Loads files in the PNM file format"
-msgstr "Carrega fitxers en el format de fitxer JPEG-XL"
+msgstr "Carrega fitxers en el format de fitxer PNM"
 
 #: plug-ins/common/file-pnm.c:319
 msgid "This plug-in loads files in the various Netpbm portable file formats."
@@ -4096,16 +4086,12 @@ msgid "PNM image"
 msgstr "Imatge PNM"
 
 #: plug-ins/common/file-pnm.c:350
-#, fuzzy
-#| msgid "PNG"
 msgid "PNM"
-msgstr "PNG"
+msgstr "PNM"
 
 #: plug-ins/common/file-pnm.c:353
-#, fuzzy
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Exports files in the PNM file format"
-msgstr "Carrega fitxers en el format de fitxer JPEG-XL"
+msgstr "Exporta fitxers en el format de fitxer PNM"
 
 #: plug-ins/common/file-pnm.c:354
 msgid "PNM export handles all image types without transparency."
@@ -4130,10 +4116,8 @@ msgid "PBM image"
 msgstr "Imatge PBM"
 
 #: plug-ins/common/file-pnm.c:389
-#, fuzzy
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Exports files in the PBM file format"
-msgstr "Carrega fitxers en el format de fitxer JPEG-XL"
+msgstr "Exporta fitxers en el format de fitxer PBM"
 
 #: plug-ins/common/file-pnm.c:390
 msgid "PBM exporting produces mono images without transparency."
@@ -4144,16 +4128,12 @@ msgid "PGM image"
 msgstr "Imatge PGM"
 
 #: plug-ins/common/file-pnm.c:423
-#, fuzzy
-#| msgid "PNG"
 msgid "PGM"
-msgstr "PNG"
+msgstr "PGM"
 
 #: plug-ins/common/file-pnm.c:425
-#, fuzzy
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Exports files in the PGM file format"
-msgstr "Carrega fitxers en el format de fitxer JPEG-XL"
+msgstr "Exporta fitxers en el format de fitxer PGM"
 
 #: plug-ins/common/file-pnm.c:426
 msgid "PGM exporting produces grayscale images without transparency."
@@ -4165,13 +4145,11 @@ msgstr "Imatge PPM"
 
 #: plug-ins/common/file-pnm.c:459
 msgid "PPM"
-msgstr ""
+msgstr "PPM"
 
 #: plug-ins/common/file-pnm.c:461
-#, fuzzy
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Exports files in the PPM file format"
-msgstr "Carrega fitxers en el format de fitxer JPEG-XL"
+msgstr "Exporta fitxers en el format de fitxer PPM"
 
 #: plug-ins/common/file-pnm.c:462
 #, fuzzy
@@ -4186,10 +4164,8 @@ msgid "PAM image"
 msgstr "Imatge PAM"
 
 #: plug-ins/common/file-pnm.c:496
-#, fuzzy
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Exports files in the PAM file format"
-msgstr "Carrega fitxers en el format de fitxer JPEG-XL"
+msgstr "Exporta fitxers en el format de fitxer PAM"
 
 #: plug-ins/common/file-pnm.c:497
 msgid "PAM export handles RGB images with or without transparency."
@@ -4200,16 +4176,12 @@ msgid "PFM image"
 msgstr "Imatge PFM"
 
 #: plug-ins/common/file-pnm.c:525
-#, fuzzy
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Exports files in the PFM file format"
-msgstr "Carrega fitxers en el format de fitxer JPEG-XL"
+msgstr "Exporta fitxers en el format de fitxer PFM"
 
 #: plug-ins/common/file-pnm.c:526
-#, fuzzy
-#| msgid "FITS export cannot handle images with alpha channels"
 msgid "PFM export handles all images without transparency."
-msgstr "L'exportació a FITS no pot gestionar imatges amb canals alfa"
+msgstr ""
 
 #: plug-ins/common/file-pnm.c:661
 #, c-format
@@ -4261,9 +4233,8 @@ msgid "Unsupported maximum value."
 msgstr "El valor màxim no és compatible."
 
 #: plug-ins/common/file-pnm.c:944
-#, fuzzy
 msgid "PAM: Unsupported inofficial PNM variant."
-msgstr "PAM: Variant PNM no suportada."
+msgstr "PAM: Variant PNM no oficial no suportada."
 
 #: plug-ins/common/file-pnm.c:948
 msgid "PAM: Premature end of file."
@@ -4481,10 +4452,8 @@ msgid "Paint Shop Pro image"
 msgstr "Imatge del Paint Shop Pro"
 
 #: plug-ins/common/file-psp.c:667
-#, fuzzy
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Loads images from the Paint Shop Pro PSP file format"
-msgstr "Carrega fitxers en el format de fitxer JPEG-XL"
+msgstr "Carrega imatges en el format de fitxer Paint Shop Pro PSP"
 
 #: plug-ins/common/file-psp.c:669
 msgid ""
@@ -4642,38 +4611,28 @@ msgid "Quite OK Image"
 msgstr ""
 
 #: plug-ins/common/file-qoi.c:140
-#, fuzzy
-#| msgid "Loads files in the OpenEXR file format"
 msgid "Load file in the QOI file format"
-msgstr "Carrega fitxers en el format de fitxer OpenEXR"
+msgstr "Carrega fitxer en el format de fitxer QOI"
 
 #: plug-ins/common/file-qoi.c:141
-#, fuzzy
-#| msgid "Loads files in the OpenEXR file format"
 msgid "Load file in the QOI file format (Quite OK Image)"
-msgstr "Carrega fitxers en el format de fitxer OpenEXR"
+msgstr "Carrega fitxer en el format de fitxer QOI (Quite OK Image)"
 
 #: plug-ins/common/file-qoi.c:167
-#, fuzzy
-#| msgid "Loads files in the OpenEXR file format"
 msgid "Export image in the QOI file format"
-msgstr "Carrega fitxers en el format de fitxer OpenEXR"
+msgstr "Exporta imatge en el format de fitxer QOI"
 
 #: plug-ins/common/file-qoi.c:168
 msgid "Export image in the QOI file format (Quite OK Image)"
-msgstr ""
+msgstr "Exporta imatge en el format de fitxer QOI (Quite OK Image)"
 
 #: plug-ins/common/file-qoi.c:262
-#, fuzzy
-#| msgid "SGI format does not support multiple layers."
 msgid "QOI format does not support multiple layers."
-msgstr "El format SGI no admet múltiples capes."
+msgstr "El format QOI no admet múltiples capes."
 
 #: plug-ins/common/file-qoi.c:312
-#, fuzzy
-#| msgid "Couldn't read file:"
 msgid "Failed to read QOI file"
-msgstr "No s'ha pogut llegir el fitxer:"
+msgstr "No s'ha pogut llegir el fitxer QOI"
 
 #: plug-ins/common/file-raw-data.c:333 plug-ins/common/file-raw-data.c:452
 msgid "Raw image data"
@@ -4684,9 +4643,8 @@ msgid "Digital Elevation Model data"
 msgstr "Dades del model d'elevació digital"
 
 #: plug-ins/common/file-raw-data.c:481
-#, fuzzy
 msgid "Raw Data"
-msgstr "Dades crues"
+msgstr "Dades sense format"
 
 #: plug-ins/common/file-raw-data.c:550
 #, c-format
@@ -4741,88 +4699,72 @@ msgstr "SRTM-3 (3 arcs de segon)"
 #. * right type of raw data.
 #.
 #: plug-ins/common/file-raw-data.c:2702
-#, fuzzy
 msgid "RGB 8-bit"
 msgstr "RGB de 8 bits"
 
 #: plug-ins/common/file-raw-data.c:2703
-#, fuzzy
 msgid "RGB 16-bit"
 msgstr "RGB de 16 bits"
 
 #: plug-ins/common/file-raw-data.c:2704
-#, fuzzy
 msgid "RGB 32-bit"
 msgstr "RGB de 32 bits"
 
 #: plug-ins/common/file-raw-data.c:2706
-#, fuzzy
 msgid "RGBA 8-bit"
 msgstr "RGBA de 8 bits"
 
 #: plug-ins/common/file-raw-data.c:2707
-#, fuzzy
 msgid "RGBA 16-bit"
 msgstr "RGBA de 16 bits"
 
 #: plug-ins/common/file-raw-data.c:2708
-#, fuzzy
 msgid "RGBA 32-bit"
 msgstr "RGBA de 32 bits"
 
 #: plug-ins/common/file-raw-data.c:2710
-#, fuzzy
 msgid "RGB565"
 msgstr "RGB565"
 
 #: plug-ins/common/file-raw-data.c:2711
-#, fuzzy
 msgid "BGR565"
 msgstr "BGR565"
 
 #: plug-ins/common/file-raw-data.c:2713
 msgid "B&W 1 bit"
-msgstr "B&W 1 bit"
+msgstr "B&N 1 bit"
 
 #: plug-ins/common/file-raw-data.c:2714
-#, fuzzy
 msgid "Grayscale 2-bit"
 msgstr "Escala de grisos de 2 bits"
 
 #: plug-ins/common/file-raw-data.c:2715
-#, fuzzy
 msgid "Grayscale 4-bit"
 msgstr "Escala de grisos de 4 bits"
 
 #: plug-ins/common/file-raw-data.c:2716
-#, fuzzy
 msgid "Grayscale 8-bit"
 msgstr "Escala de grisos de 8 bits"
 
 #: plug-ins/common/file-raw-data.c:2717
-#, fuzzy
 msgid "Grayscale 16-bit"
 msgstr "Escala de grisos de 16 bits"
 
 #: plug-ins/common/file-raw-data.c:2718
-#, fuzzy
 msgid "Grayscale 32-bit"
 msgstr "Escala de grisos de 32 bits"
 
 #: plug-ins/common/file-raw-data.c:2720
-#, fuzzy
 msgid "Grayscale-Alpha 8-bit"
-msgstr "Escala de grisos-Alfa de 8 bits"
+msgstr "Escala de grisos alfa de 8 bits"
 
 #: plug-ins/common/file-raw-data.c:2721
-#, fuzzy
 msgid "Grayscale-Alpha 16-bit"
-msgstr "Escala de grisos-Alfa de 16 bits"
+msgstr "Escala de grisos alfa de 16 bits"
 
 #: plug-ins/common/file-raw-data.c:2722
-#, fuzzy
 msgid "Grayscale-Alpha 32-bit"
-msgstr "Escala de grisos-Alfa de 32 bits"
+msgstr "Escala de grisos alfa de 32 bits"
 
 #: plug-ins/common/file-raw-data.c:2724
 msgid "Indexed"
@@ -4830,17 +4772,15 @@ msgstr "Indexat"
 
 #: plug-ins/common/file-raw-data.c:2725
 msgid "Indexed Alpha"
-msgstr "Indexat amb Alfa"
+msgstr "Indexat amb alfa"
 
 #: plug-ins/common/file-raw-data.c:2731
-#, fuzzy
 msgid "Unsigned Integer"
 msgstr "Enter sense signe"
 
 #: plug-ins/common/file-raw-data.c:2732
-#, fuzzy
 msgid "Signed Integer"
-msgstr "Enter signat"
+msgstr "Enter amb signe"
 
 #: plug-ins/common/file-raw-data.c:2733
 msgid "Floating Point"
@@ -5028,10 +4968,8 @@ msgid "Export Image as SUNRAS"
 msgstr "Exporta la imatge com a SUNRAS"
 
 #: plug-ins/common/file-sunras.c:1791
-#, fuzzy
-#| msgid "Standard"
 msgid "S_tandard"
-msgstr "Estàndard"
+msgstr "_Estàndard"
 
 #: plug-ins/common/file-sunras.c:1792
 #, fuzzy
@@ -5074,9 +5012,8 @@ msgstr ""
 #. * files.
 #.
 #: plug-ins/common/file-svg.c:687
-#, fuzzy
 msgid "Disable safety size limits?"
-msgstr "Vols desactivar els límits de la mida de seguretat?"
+msgstr "Voleu desactivar els límits de seguretat de la mida?"
 
 #: plug-ins/common/file-svg.c:692
 msgid "_No"
@@ -5097,7 +5034,6 @@ msgstr "_Sí"
 #. * case it might be the huge data error.
 #.
 #: plug-ins/common/file-svg.c:717
-#, fuzzy
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -5105,17 +5041,15 @@ msgid ""
 msgstr ""
 "S'ha produït un error d'anàlisi.\n"
 "Inhabilitar els límits de seguretat pot ajudar. Els fitxers SVG maliciosos "
-"poden utilitzar això per a consumir massa memòria."
+"poden utilitzar-los per a consumir massa memòria."
 
 #: plug-ins/common/file-svg.c:729
-#, fuzzy
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr ""
-"Per raons de seguretat, això només s'hauria d'utilitzar per a l'entrada de "
+"Per raons de seguretat, això només s'hauria d'utilitzar per a entrades de "
 "confiança!"
 
 #: plug-ins/common/file-svg.c:736
-#, fuzzy
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 "Voleu tornar-ho a intentar sense límits i evitar analitzar dades enormes?"
@@ -5173,20 +5107,16 @@ msgid "TarGA image"
 msgstr "Imatge TarGA"
 
 #: plug-ins/common/file-tga.c:302
-#, fuzzy
-#| msgid "_RLE compression"
 msgid "_Use RLE compression"
-msgstr "Compressió _RLE"
+msgstr "_Usa compressió _RLE"
 
 #: plug-ins/common/file-tga.c:303
-#, fuzzy
-#| msgid "RLE compression"
 msgid "Use RLE compression"
-msgstr "Compressió RLE"
+msgstr "U_sa compressió RLE"
 
 #: plug-ins/common/file-tga.c:308
 msgid "Ori_gin"
-msgstr ""
+msgstr "_Origen"
 
 #: plug-ins/common/file-tga.c:309
 msgid "Image origin (0 = top-left, 1 = bottom-left)"
@@ -5224,22 +5154,20 @@ msgid "Top left"
 msgstr "Superior esquerre"
 
 #: plug-ins/common/file-wbmp.c:116
-#, fuzzy
 msgid "Wireless BMP image"
 msgstr "Imatge BMP sense fil"
 
 #: plug-ins/common/file-wbmp.c:119 plug-ins/common/file-wbmp.c:120
-#, fuzzy
 msgid "Loads files of Wireless BMP file format"
 msgstr "Carrega els fitxers del format de fitxer BMP sense fil"
 
 #: plug-ins/common/file-wbmp.c:193
 #, c-format
 msgid "'%s': Invalid WBMP type value"
-msgstr "«%s» no és un valor de tipus WBMP vàlid"
+msgstr "«%s»: no és un valor de tipus WBMP vàlid"
 
 #: plug-ins/common/file-wbmp.c:202
-#, fuzzy, c-format
+#, c-format
 msgid "'%s': Unsupported WBMP fixed header value"
 msgstr "«%s»: el valor de la capçalera fixa WBMP no és compatible"
 
@@ -5273,10 +5201,8 @@ msgid "X BitMap image"
 msgstr "Mapa de bits X"
 
 #: plug-ins/common/file-xbm.c:162
-#, fuzzy
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Load a file in X10 or X11 bitmap (XBM) file format"
-msgstr "Carrega fitxers en el format de fitxer JPEG-XL"
+msgstr ""
 
 #: plug-ins/common/file-xbm.c:164
 msgid ""
@@ -5295,10 +5221,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/file-xbm.c:203
-#, fuzzy
-#| msgid "XMP"
 msgid "XBM"
-msgstr "XMP"
+msgstr "XBM"
 
 #: plug-ins/common/file-xbm.c:212
 msgid "_Write comment"
@@ -5309,10 +5233,8 @@ msgid "Write a comment at the beginning of the file."
 msgstr "Escriu un comentari al començament del fitxer."
 
 #: plug-ins/common/file-xbm.c:218
-#, fuzzy
-#| msgid "Co_mment:"
 msgid "Co_mment"
-msgstr "Co_mentari:"
+msgstr "Co_mentari"
 
 #: plug-ins/common/file-xbm.c:219
 msgid "Image description (maximum 72 bytes)"
@@ -5323,10 +5245,8 @@ msgid "_X10 format bitmap"
 msgstr "Format del mapa de bits _X10"
 
 #: plug-ins/common/file-xbm.c:228
-#, fuzzy
-#| msgid "PNG export format"
 msgid "Export in X10 format"
-msgstr "Format de exportació PNG"
+msgstr "Exporta en format X10"
 
 #: plug-ins/common/file-xbm.c:233
 #, fuzzy

@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-05-28 03:13+0000\n"
-"PO-Revision-Date: 2023-05-28 18:06+0100\n"
+"PO-Revision-Date: 2023-06-07 18:06+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -5063,10 +5063,9 @@ msgid "Delete"
 msgstr "Suprimeix"
 
 #: app/actions/gradient-editor-actions.c:102
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Recenter"
-msgstr "Recents"
+msgstr "Torna a centrar"
 
 #: app/actions/gradient-editor-actions.c:107
 msgctxt "gradient-editor-action"
@@ -5532,20 +5531,14 @@ msgid "Remove the image's color profile"
 msgstr "Elimina el perfil de color de la imatge"
 
 #: app/actions/image-actions.c:85
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "_Softproof Profile..."
 msgctxt "image-action"
 msgid "_Soft-proof Profile..."
-msgstr "Perfil a prova en pantalla..."
+msgstr "_Perfil prova en pantalla..."
 
 #: app/actions/image-actions.c:86
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Set the softproofing profile"
 msgctxt "image-action"
 msgid "Set the soft-proofing profile"
-msgstr "Estableix el perfil de provatura suau"
+msgstr "Estableix el perfil de prova"
 
 #: app/actions/image-actions.c:91
 msgctxt "image-action"
@@ -8712,25 +8705,16 @@ msgid "Stro_ke Paths..."
 msgstr "Traça els camins..."
 
 #: app/actions/vectors-actions.c:124
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Paint along the path"
 msgctxt "vectors-action"
 msgid "Paint along the paths"
 msgstr "Pinta al llarg dels camins"
 
 #: app/actions/vectors-actions.c:129
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Stro_ke Path"
 msgctxt "vectors-action"
 msgid "Stro_ke Paths"
-msgstr "Traç dels camins"
+msgstr "_Traça els camins"
 
 #: app/actions/vectors-actions.c:130
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Paint along the path with last values"
 msgctxt "vectors-action"
 msgid "Paint along the paths with last values"
 msgstr "Pinta al llarg dels camins amb els últims valors"
@@ -8876,25 +8860,16 @@ msgid "Selection Fr_om Paths"
 msgstr "S_elecció des de camins"
 
 #: app/actions/vectors-actions.c:243
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Replace selection with path"
 msgctxt "vectors-action"
 msgid "Replace selection with paths"
 msgstr "Substitueix la selecció per camins"
 
 #: app/actions/vectors-actions.c:248
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "_Add Masks to Selection"
 msgctxt "vectors-action"
 msgid "_Add Paths to Selection"
-msgstr "Afegeix camins a la selecció"
+msgstr "_Afegeix camins a la selecció"
 
 #: app/actions/vectors-actions.c:249
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Add path to selection"
 msgctxt "vectors-action"
 msgid "Add paths to selection"
 msgstr "Afegeix camins a la selecció"
@@ -10000,17 +9975,14 @@ msgstr "Mode de finestra única inhabilitat"
 #. * tab or window above others) specific images or views of image. The part
 #. * between quotes is the image name and other view identifiers.
 #: app/actions/windows-actions.c:391
-#, c-format, fuzzy
-#| msgid "R_e-Show \"%s\""
+#, c-format
 msgid "Show \"%s-%d.%d\""
 msgstr "Mostra «%s-%d.%d»"
 
 #. TRANSLATORS: the first argument (%1$s) is the image name, the
 #. * second (%2$d) is its tab order in the graphical interface.
 #: app/actions/windows-actions.c:465
-#, c-format, fuzzy
-#| msgctxt "windows-action"
-#| msgid "Switch to the next image"
+#, c-format
 msgid "Switch to the first image view: %1$s"
 msgid_plural "Switch to image view %2$d: %1$s"
 msgstr[0] "Canvia a la primera vista d'imatge: %1$s"
@@ -11494,8 +11466,6 @@ msgid "RGB (0..255)"
 msgstr "RGB (0..255)"
 
 #: app/core/core-enums.c:173
-#, fuzzy
-#| msgid "Grayscale"
 msgctxt "color-pick-mode"
 msgid "Grayscale (%)"
 msgstr "Escala de grisos (%)"
@@ -13389,7 +13359,6 @@ msgid "Fill with Background Color"
 msgstr "Omple amb el color de fons"
 
 #: app/core/gimpfilloptions.c:385
-#, fuzzy
 msgctxt "undo-type"
 msgid "Fill with Middle Gray (CIELAB) Color"
 msgstr "Omple amb el color de gris mitjà (CIELAB)"
@@ -15160,8 +15129,6 @@ msgid "The image '%s' has an embedded color profile"
 msgstr "La imatge «%s» té un perfil de color incrustat"
 
 #: app/dialogs/color-profile-import-dialog.c:151
-#, fuzzy
-#| msgid "Simulation profile"
 msgid "Built-in Profile"
 msgstr "Perfil integrat"
 
@@ -15175,8 +15142,6 @@ msgid "Convert the image to the preferred RGB color profile?"
 msgstr "Vols convertir la imatge al perfil de color RGB preferit?"
 
 #: app/dialogs/color-profile-import-dialog.c:167
-#, fuzzy
-#| msgid "Preferred Profiles"
 msgid "Preferred Profile"
 msgstr "Perfil preferit"
 
@@ -15799,15 +15764,10 @@ msgid "Killer GEGLs from Outer Space"
 msgstr "Els GEGLs assassins de l'espai exterior"
 
 #: app/dialogs/metadata-rotation-import-dialog.c:98
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Rotate image"
 msgid "Rotate Image?"
-msgstr "Girar la imatge?"
+msgstr "Gira la imatge?"
 
 #: app/dialogs/metadata-rotation-import-dialog.c:101
-#, fuzzy
-#| msgid "Metadata _rotation policy:"
 msgid "Apply metadata rotation"
 msgstr "Aplica la rotació de metadades"
 
@@ -15821,10 +15781,9 @@ msgid "_Rotate"
 msgstr "Gi_ra"
 
 #: app/dialogs/metadata-rotation-import-dialog.c:124
-#, c-format, fuzzy
-#| msgid "This image contains Exif orientation metadata."
+#, c-format
 msgid "The image '%s' contains Exif orientation metadata"
-msgstr "La imatge «%s» conté metadades d'orientació Exif"
+msgstr "La imatge «%s» conté metadades Exif d'orientació"
 
 #: app/dialogs/metadata-rotation-import-dialog.c:182
 msgid "Original"
@@ -17918,10 +17877,8 @@ msgid "Lock path _position"
 msgstr "_Bloqueja la posició del camí"
 
 #: app/dialogs/vectors-options-dialog.c:110
-#, fuzzy
-#| msgid "Lock visibility"
 msgid "Lock path _visibility"
-msgstr "Bloqueja la visibilitat del camí"
+msgstr "B_loqueja la visibilitat del camí"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:86
@@ -19974,10 +19931,9 @@ msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "S'està ometent «%s»: versió errònia de protocol del GIMP."
 
 #: app/menus/shortcuts-rc.c:151
-#, c-format, fuzzy
-#| msgid "Skipping '%s': wrong pluginrc file format version."
+#, c-format
 msgid "Skipping '%s': wrong shortcutsrc file format version."
-msgstr "S'omet «%s»: la versió del format de fitxer «shortsrc» és incorrecta."
+msgstr "S'omet «%s»: la versió del format de fitxer «shortcutsrc» és incorrecta."
 
 #: app/paint/gimpairbrush.c:80 app/tools/gimpairbrushtool.c:67
 msgid "Airbrush"
@@ -22076,9 +22032,8 @@ msgid "Selected paths will be aligned or distributed by the tool"
 msgstr "Els camins seleccionats s'alinearan o distribuiran per l'eina"
 
 #: app/tools/gimpalignoptions.c:168
-#, fuzzy
 msgid "Use extents of layer contents"
-msgstr "Utilitza l'extensió del contingut de la capa"
+msgstr ""
 
 #: app/tools/gimpalignoptions.c:169
 msgid ""
@@ -22094,7 +22049,6 @@ msgid "Targets"
 msgstr "Destinacions"
 
 #: app/tools/gimpalignoptions.c:405
-#, fuzzy
 msgid "Set anchor point of targets"
 msgstr "Estableix el punt d'ancoratge dels objectius"
 
@@ -22120,7 +22074,6 @@ msgstr ""
 "referència"
 
 #: app/tools/gimpalignoptions.c:487
-#, fuzzy
 msgid "Align anchor points of targets on vertical middle of reference"
 msgstr ""
 "Alinea els punts d'ancoratge dels objectius al mig vertical de la referència"
@@ -22154,25 +22107,21 @@ msgid "Distribute"
 msgstr "Distribueix"
 
 #: app/tools/gimpalignoptions.c:526
-#, fuzzy
 msgid "Distribute anchor points of targets evenly in the horizontal"
 msgstr ""
 "Distribueix uniformement els punts d'ancoratge dels objectius a "
 "l'horitzontal"
 
 #: app/tools/gimpalignoptions.c:529
-#, fuzzy
 msgid "Distribute horizontally with even horizontal gaps"
 msgstr "Distribueix horitzontalment amb espais horitzontals parells"
 
 #: app/tools/gimpalignoptions.c:538
-#, fuzzy
 msgid "Distribute anchor points of targets evenly in the vertical"
 msgstr ""
 "Distribueix uniformement els punts d'ancoratge dels objectius a la vertical"
 
 #: app/tools/gimpalignoptions.c:541
-#, fuzzy
 msgid "Distribute vertically with even vertical gaps"
 msgstr "Distribueix verticalment amb buits verticals parells"
 
@@ -24647,9 +24596,8 @@ msgid "Outline width unit"
 msgstr "Unitat d'amplada del contorn"
 
 #: app/tools/gimptextoptions.c:314
-#, fuzzy
 msgid "Outline miter limit"
-msgstr "Límit del contorn del ratolí"
+msgstr ""
 
 #: app/tools/gimptextoptions.c:822
 msgid "Hinting:"
@@ -27441,9 +27389,6 @@ msgid "Set layers mode"
 msgstr "Defineix el mode capes"
 
 #: app/widgets/gimplayertreeview.c:1852
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Anchor the floating layer"
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "Ancora la màscara flotant"
@@ -27488,7 +27433,7 @@ msgstr "S'estan editant els modificadors per al botó %d"
 #. TRANSLATORS: first %s is modifier keys, %d is button
 #. * number, last %s is an input device (e.g. a mouse) name.
 #: app/widgets/gimpmodifierseditor.c:655
-#, c-format, fuzzy
+#, c-format
 msgid "Select Action for %s button %d of %s"
 msgstr "Seleccioneu una acció per al botó %s %d de %s"
 
