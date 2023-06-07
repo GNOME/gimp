@@ -537,8 +537,9 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
       gint              index = -1;
 
       data = gimp_data_editor_get_data (GIMP_DATA_EDITOR (editor));
-      index = gimp_palette_get_entry_position (GIMP_PALETTE (data),
-                                               editor->color);
+      if (editor->color)
+        index = gimp_palette_get_entry_position (GIMP_PALETTE (data),
+                                                 editor->color);
 
       switch (pick_state)
         {
