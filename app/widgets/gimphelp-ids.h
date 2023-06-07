@@ -226,7 +226,8 @@
 #define GIMP_HELP_LAYER_RESIZE                    "gimp-layer-resize"
 #define GIMP_HELP_LAYER_RESIZE_TO_IMAGE           "gimp-layer-resize-to-image"
 #define GIMP_HELP_LAYER_SCALE                     "gimp-layer-scale"
-#define GIMP_HELP_LAYER_CROP                      "gimp-layer-crop"
+#define GIMP_HELP_LAYER_RESIZE_TO_SELECTION       "gimp-layer-resize-to-selection"
+#define GIMP_HELP_LAYER_CROP_TO_CONTENT           "gimp-layer-crop-to-content"
 #define GIMP_HELP_LAYER_EDIT                      "gimp-layer-edit"
 
 #define GIMP_HELP_CHANNEL_DIALOG                  "gimp-channel-dialog"

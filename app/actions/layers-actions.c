@@ -213,13 +213,13 @@ static const GimpActionEntry layers_actions[] =
     NC_("layers-action", "_Resize Layers to Selection"), NULL, { NULL },
     NC_("layers-action", "Resize the layers to the extents of the selection"),
     layers_crop_to_selection_cmd_callback,
-    GIMP_HELP_LAYER_CROP },
+    GIMP_HELP_LAYER_RESIZE_TO_SELECTION },
 
   { "layers-crop-to-content", GIMP_ICON_TOOL_CROP,
     NC_("layers-action", "Crop Layers to C_ontent"), NULL, { NULL },
     NC_("layers-action", "Crop the layers to the extents of their content (remove empty borders from the layer)"),
     layers_crop_to_content_cmd_callback,
-    GIMP_HELP_LAYER_CROP },
+    GIMP_HELP_LAYER_CROP_TO_CONTENT },
 
   { "layers-mask-add", GIMP_ICON_LAYER_MASK,
     NC_("layers-action", "Add La_yer Masks..."), NULL, { NULL },
