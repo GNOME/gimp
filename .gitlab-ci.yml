@@ -329,6 +329,7 @@ gimp-meson-debian:
       - "_build/config.h"
       - "_build/meson-logs"
       - "_build/meson-dist"
+      - "_build/devel-docs"
       - "${INSTALL_DIR}"
 
 gimp-clang-debian:
