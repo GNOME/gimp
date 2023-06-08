@@ -392,6 +392,68 @@ load_image (GFile            *file,
   return image;
 }
 
+#if ! LIBRSVG_CHECK_VERSION(2, 46, 0)
+/* XXX Why we keep old deprecated implementation next to newer librsvg API is
+ * because librsvg uses Rust since version 2.41.0. There are 2 raised problems:
+ * 1. Rust is still not available or well tested on every architecture/OS out
+ *    there yet so unless we decide to have SVG support as optional again, it
+ *    would make GIMP non-available on these.
+ * 2. There are some technical-ideological position against Rust for bundling
+ *    and linking dependencies statically.
+ * While the second point may or may not be a problem we want to take into
+ * account (I guess that it mostly depends on the amount of additional
+ * maintenance work it would imply), the first is definitely enough of a reason
+ * to keep an old version requirement.
+ * See also report #6821.
+ */
+static void
+load_set_size_callback (gint     *width,
+                        gint     *height,
+                        gpointer  data)
+{
+  SvgLoadVals *vals = data;
+
+  if (*width < 1 || *height < 1)
+    {
+      *width  = SVG_DEFAULT_SIZE;
+      *height = SVG_DEFAULT_SIZE;
+    }
+
+  if (!vals->width || !vals->height)
+    return;
+
+  /*  either both arguments negative or none  */
+  if ((vals->width * vals->height) < 0)
+    return;
+
+  if (vals->width > 0)
+    {
+      *width  = vals->width;
+      *height = vals->height;
+    }
+  else
+    {
+      gdouble w      = *width;
+      gdouble h      = *height;
+      gdouble aspect = (gdouble) vals->width / (gdouble) vals->height;
+
+      if (aspect > (w / h))
+        {
+          *height = abs (vals->height);
+          *width  = (gdouble) abs (vals->width) * (w / h) + 0.5;
+        }
+      else
+        {
+          *width  = abs (vals->width);
+          *height = (gdouble) abs (vals->height) / (w / h) + 0.5;
+        }
+
+      vals->width  = *width;
+      vals->height = *height;
+    }
+}
+#endif /* ! LIBRSVG_CHECK_VERSION(2, 46, 0) */
+
 /*  This function renders a pixbuf from an SVG file according to vals.  */
 static GdkPixbuf *
 load_rsvg_pixbuf (GFile            *file,
@@ -401,12 +463,15 @@ load_rsvg_pixbuf (GFile            *file,
                   GError          **error)
 {
   GdkPixbuf  *pixbuf  = NULL;
-  cairo_surface_t *surf = NULL;
-  cairo_t *cr = NULL;
   RsvgHandle *handle;
-  RsvgRectangle viewport = { 0, };
-  guchar *src;
-  gint y;
+
+#if LIBRSVG_CHECK_VERSION(2, 46, 0)
+  cairo_surface_t *surf = NULL;
+  cairo_t         *cr = NULL;
+  RsvgRectangle    viewport = { 0, };
+  guchar          *src;
+  gint             y;
+#endif
 
   handle = rsvg_handle_new_from_gfile_sync (file, rsvg_flags, NULL, error);
 
@@ -421,6 +486,7 @@ load_rsvg_pixbuf (GFile            *file,
     }
 
   rsvg_handle_set_dpi (handle, vals->resolution);
+#if LIBRSVG_CHECK_VERSION(2, 46, 0)
   pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
                            vals->width, vals->height);
   surf = cairo_image_surface_create_for_data (gdk_pixbuf_get_pixels (pixbuf),
@@ -437,7 +503,6 @@ load_rsvg_pixbuf (GFile            *file,
 
   cairo_destroy (cr);
   cairo_surface_destroy (surf);
-  g_object_unref (handle);
 
   /* un-premultiply the data */
   src = gdk_pixbuf_get_pixels (pixbuf);
@@ -455,6 +520,12 @@ load_rsvg_pixbuf (GFile            *file,
 
       src += gdk_pixbuf_get_rowstride (pixbuf);
     }
+#else
+  rsvg_handle_set_size_callback (handle, load_set_size_callback, vals, NULL);
+  pixbuf = rsvg_handle_get_pixbuf (handle);
+#endif
+
+  g_object_unref (handle);
 
   return pixbuf;
 }
@@ -471,6 +542,9 @@ load_rsvg_size (GFile            *file,
   RsvgHandle        *handle;
   gboolean           has_size;
   gdouble            width, height;
+#if ! LIBRSVG_CHECK_VERSION(2, 52, 0)
+  RsvgDimensionData  dim;
+#endif
 
   handle = rsvg_handle_new_from_gfile_sync (file, rsvg_flags, NULL, error);
 
@@ -479,7 +553,15 @@ load_rsvg_size (GFile            *file,
 
   rsvg_handle_set_dpi (handle, vals->resolution);
 
-  if (rsvg_handle_get_intrinsic_size_in_pixels (handle, &width, &height))
+#if LIBRSVG_CHECK_VERSION(2, 52, 0)
+  rsvg_handle_get_intrinsic_size_in_pixels (handle, &width, &height);
+#else
+  rsvg_handle_get_dimensions (handle, &dim);
+  width  = (gdouble) dim.width;
+  height = (gdouble) dim.height;
+#endif
+
+  if (width > 0.0 && height > 0.0)
     {
       vals->width  = ceil (width);
       vals->height = ceil (height);
