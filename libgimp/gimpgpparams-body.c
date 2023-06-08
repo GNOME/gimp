@@ -177,6 +177,11 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
                                       param_def->meta.m_id.none_ok,
                                       flags);
 
+      if (! strcmp (param_def->type_name, "GimpParamTextLayer"))
+        return gimp_param_spec_text_layer (name, nick, blurb,
+                                           param_def->meta.m_id.none_ok,
+                                           flags);
+
       if (! strcmp (param_def->type_name, "GimpParamChannel"))
         return gimp_param_spec_channel (name, nick, blurb,
                                         param_def->meta.m_id.none_ok,
