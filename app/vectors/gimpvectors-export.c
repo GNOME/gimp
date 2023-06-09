@@ -47,19 +47,26 @@ static gchar   * gimp_vectors_export_path_data  (GimpVectors *vectors);
 
 /**
  * gimp_vectors_export_file:
- * @image: the #GimpImage from which to export vectors
- * @vectors: a #GList of #GimpVectors objects or %NULL to export all vectors in @image
+ * @image: the #GimpImage from which to export
+ * @path_list: a #GList of #GimpVectors objects or %NULL to export all paths in @image
  * @file: the file to write
  * @error: return location for errors
  *
- * Exports one or more vectors to a SVG file.
+ * Exports one or more vectors aka path to an SVG file aka XML doc.
+ *
+ * When @path_list is %NULL aka empty list, exports all paths in image.
+ *
+ * When @path_list is empty and image has no paths,
+ * this still writes a non-empty file containing an XML doc.
+ *
+ * Will overwrite any existing file.
  *
  * Returns: %TRUE on success,
- *               %FALSE if there was an error writing the file
+ *          %FALSE when there was an error writing the file
  **/
 gboolean
 gimp_vectors_export_file (GimpImage    *image,
-                          GList        *vectors,
+                          GList        *path_list,
                           GFile        *file,
                           GError      **error)
 {
@@ -77,7 +84,7 @@ gimp_vectors_export_file (GimpImage    *image,
   if (! output)
     return FALSE;
 
-  string = gimp_vectors_export (image, vectors);
+  string = gimp_vectors_export (image, path_list);
 
   if (! g_output_stream_write_all (output, string->str, string->len,
                                    NULL, NULL, &my_error))
@@ -107,20 +114,25 @@ gimp_vectors_export_file (GimpImage    *image,
 
 /**
  * gimp_vectors_export_string:
- * @image: the #GimpImage from which to export vectors
- * @vectors: a #GimpVectors object or %NULL to export all vectors in @image
+ * @image: the #GimpImage from which to export
+ * @path_list: a #GList of #GimpVectors objects, or %NULL to export all paths in @image
  *
- * Exports one or more vectors to a SVG string.
+ * Exports one or more vectors aka path to a SVG string.
  *
- * Returns: a %NUL-terminated string that holds a complete XML document
+ * When @path_list is %NULL aka empty list, exports all paths in image.
+ *
+ * When @path_list is empty and image has no paths,
+ * this still returns a string for an empty XML doc.
+ *
+ * Returns: a NULL-terminated string that holds a complete XML document
  **/
 gchar *
 gimp_vectors_export_string (GimpImage *image,
-                            GList     *vectors)
+                            GList     *path_list)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return g_string_free (gimp_vectors_export (image, vectors), FALSE);
+  return g_string_free (gimp_vectors_export (image, path_list), FALSE);
 }
 
 static GString *
