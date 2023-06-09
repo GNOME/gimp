@@ -254,7 +254,7 @@ ico_save_init (GimpImage   *image,
     {
       num_colors = ico_get_layer_num_colors (iter->data, &uses_alpha_values);
 
-      if (!uses_alpha_values)
+      if (! uses_alpha_values)
         {
           if (num_colors <= 2)
             {
@@ -647,6 +647,15 @@ ico_get_layer_num_colors (GimpLayer *layer,
     }
 
   num_colors = g_hash_table_size (hash);
+
+  /* Icons with 1 bit masks are converted to
+   * full transparency when loaded in GIMP.
+   * If the layer is not semi-transparent, we
+   * can subtract the "mask color" out to fix
+   * the default depth value for 1/4/8 bpp icons.
+   */
+  if (! *uses_alpha_levels)
+    num_colors--;
 
   g_hash_table_destroy (hash);
 
