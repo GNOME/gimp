@@ -91,6 +91,11 @@ menus_init (Gimp *gimp)
                                       NULL,
                                       "/image-menubar",
                                       "image-menu", image_menu_setup,
+                                      NULL);
+
+  gimp_menu_factory_manager_register (global_menu_factory, "<QuickMask>",
+                                      "quick-mask",
+                                      NULL,
                                       "/quick-mask-popup",
                                       "quick-mask-menu", NULL,
                                       NULL);

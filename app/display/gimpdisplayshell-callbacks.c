@@ -32,6 +32,7 @@
 #include "menus/menus.h"
 
 #include "widgets/gimpcairo-wilber.h"
+#include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
 
 #include "gimpcanvasitem.h"
@@ -349,8 +350,11 @@ gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
 
       if (window)
         {
-          GimpUIManager *manager = menus_get_image_manager_singleton (shell->display->gimp);
+          Gimp          *gimp;
+          GimpUIManager *manager;
 
+          gimp    = shell->display->gimp;
+          manager = gimp_menu_factory_get_manager (menus_get_global_menu_factory (gimp), "<QuickMask>", gimp);
           gimp_ui_manager_ui_popup_at_widget (manager,
                                               "/quick-mask-popup",
                                               NULL, NULL,
