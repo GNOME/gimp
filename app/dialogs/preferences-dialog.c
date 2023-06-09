@@ -3102,6 +3102,18 @@ prefs_dialog_new (Gimp       *gimp,
   /*  General  */
   vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
 
+  prefs_check_button_add (object, "custom-title-bar",
+                          _("Merge menu and title bar"),
+                          GTK_BOX (vbox2));
+  hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
+                             _("GIMP will try to convince your system not to decorate image windows. "
+                               "If it doesn't work properly on your system "
+                               "(i.e. you get 2 title bars), please report."));
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  g_object_bind_property (object, "custom-title-bar",
+                          hbox,   "visible",
+                          G_BINDING_SYNC_CREATE);
+
   prefs_check_button_add (object, "default-show-all",
                           _("Use \"Show _all\" by default"),
                           GTK_BOX (vbox2));

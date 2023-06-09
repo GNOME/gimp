@@ -77,6 +77,9 @@ _("Context-dependent mouse pointers are helpful.  They are enabled by " \
 "Specify a default tool preset.  The tool preset is searched for in the " \
 "specified tool prests path."
 
+#define CUSTOM_TITLE_BAR_BLURB \
+_("Merge menu and title bar (client-side decoration)")
+
 #define DEFAULT_SHOW_ALL_BLURB \
 _("Show full image content by default.")
 

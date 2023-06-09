@@ -85,6 +85,7 @@ enum
   PROP_USER_MANUAL_ONLINE_URI,
   PROP_DOCK_WINDOW_HINT,
   PROP_CURSOR_HANDEDNESS,
+  PROP_CUSTOM_TITLE_BAR,
 
   PROP_PLAYGROUND_NPD_TOOL,
   PROP_PLAYGROUND_SEAMLESS_CLONE_TOOL,
@@ -424,6 +425,14 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                          GIMP_HANDEDNESS_RIGHT,
                          GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CUSTOM_TITLE_BAR,
+                            "custom-title-bar",
+                            "Custom title bar embedding the menu",
+                            CUSTOM_TITLE_BAR_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_CONFIG_PARAM_RESTART);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PLAYGROUND_NPD_TOOL,
                             "playground-npd-tool",
                             "Playground N-Point Deformation tool",
@@ -715,6 +724,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_CURSOR_HANDEDNESS:
       gui_config->cursor_handedness = g_value_get_enum (value);
       break;
+    case PROP_CUSTOM_TITLE_BAR:
+      gui_config->custom_title_bar = g_value_get_boolean (value);
+      break;
 
     case PROP_PLAYGROUND_NPD_TOOL:
       gui_config->playground_npd_tool = g_value_get_boolean (value);
@@ -886,6 +898,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_CURSOR_HANDEDNESS:
       g_value_set_enum (value, gui_config->cursor_handedness);
+      break;
+    case PROP_CUSTOM_TITLE_BAR:
+      g_value_set_boolean (value, gui_config->custom_title_bar);
       break;
 
     case PROP_PLAYGROUND_NPD_TOOL:

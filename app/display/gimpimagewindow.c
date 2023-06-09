@@ -405,9 +405,6 @@ gimp_image_window_constructed (GObject *object)
     {
       private->menubar = gimp_menu_bar_new (private->menubar_model, menubar_manager);
 
-      gtk_box_pack_start (GTK_BOX (private->main_vbox),
-                          private->menubar, FALSE, FALSE, 0);
-
       /*  make sure we can activate accels even if the menubar is invisible
        *  (see https://bugzilla.gnome.org/show_bug.cgi?id=137151)
        */
@@ -425,6 +422,35 @@ gimp_image_window_constructed (GObject *object)
       g_signal_connect (private->menubar, "key-press-event",
                         G_CALLBACK (gimp_image_window_shell_events),
                         window);
+
+      if (config->custom_title_bar)
+        {
+          GtkWidget *headerbar;
+
+          headerbar = gtk_header_bar_new ();
+          gtk_window_set_titlebar (GTK_WINDOW (window), headerbar);
+
+          /* This is important to turn off space reservation for the subtitle
+           * (resulting in too high header bar).
+           */
+          gtk_header_bar_set_has_subtitle (GTK_HEADER_BAR (headerbar), FALSE);
+
+          gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (headerbar), TRUE);
+          gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), private->menubar);
+          gtk_widget_show (headerbar);
+
+          /* XXX There are competing propositions on how the title should be
+           * aligned. GTK is trying to center it (relatively to the window) as
+           * much as it can. But some people seem to thing it should be centered
+           * relatively to the remaining empty space after the menu.
+           * I am personally unsure so leaving GTK's defaults for now.
+           */
+        }
+      else
+        {
+          gtk_box_pack_start (GTK_BOX (private->main_vbox),
+                              private->menubar, FALSE, FALSE, 0);
+        }
     }
 
 #ifndef GDK_WINDOWING_QUARTZ
@@ -691,10 +717,42 @@ static void
 gimp_image_window_update_csd_on_fullscreen (GtkWidget *child,
                                             gpointer   user_data)
 {
-  gboolean fullscreen = GPOINTER_TO_INT (user_data);
+  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (user_data);
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  gboolean                fullscreen;
+
+  fullscreen = gimp_image_window_get_fullscreen (window);
 
   if (GTK_IS_HEADER_BAR (child))
-    gtk_widget_set_visible (child, !fullscreen);
+    {
+      gtk_widget_set_visible (child, !fullscreen);
+
+      /* When we manage the menubar ourselves (i.e. not when using the GTK
+       * menubar, e.g. on macOS), if the menubar was set to stay visible in
+       * fullscreen mode, we need to move it out of the header bar.
+       * Note that here we only move the menubar from one parent to another.
+       * This is not where we handle whether we make it visible or not.
+       */
+      if (private->menubar)
+        {
+          GtkWidget *parent = gtk_widget_get_parent (private->menubar);
+
+          g_object_ref (private->menubar);
+          gtk_container_remove (GTK_CONTAINER (parent), private->menubar);
+          if (fullscreen)
+            {
+              gtk_box_pack_start (GTK_BOX (private->main_vbox),
+                                  private->menubar, FALSE, FALSE, 0);
+              gtk_box_reorder_child (GTK_BOX (private->main_vbox),
+                                     private->menubar, 0);
+            }
+          else
+            {
+              gtk_header_bar_pack_start (GTK_HEADER_BAR (child), private->menubar);
+            }
+          g_object_unref (private->menubar);
+        }
+    }
 }
 
 static gboolean
@@ -732,7 +790,7 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
        * an internal child, so we use this workaround instead */
       gtk_container_forall (GTK_CONTAINER (window),
                             gimp_image_window_update_csd_on_fullscreen,
-                            GINT_TO_POINTER (fullscreen));
+                            window);
     }
 
   if (event->changed_mask & GDK_WINDOW_STATE_ICONIFIED)

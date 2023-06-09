@@ -79,6 +79,7 @@ struct _GimpGuiConfig
   gint                 action_history_size;
   GimpWindowHint       dock_window_hint;
   GimpHandedness       cursor_handedness;
+  gboolean             custom_title_bar;
 
   /* experimental playground */
   gboolean             playground_npd_tool;
