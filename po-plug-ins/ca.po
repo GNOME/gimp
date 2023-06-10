@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-05-14 15:33+0000\n"
-"PO-Revision-Date: 2023-05-17 10:17+0100\n"
+"PO-Revision-Date: 2023-06-09 10:17+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -33,23 +33,23 @@ msgstr "Exercita en _C menor"
 msgid "Exercise a goat in the C language"
 msgstr "Entrena una cabra en el llenguatge C"
 
-#: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
-#: plug-ins/common/border-average.c:195 plug-ins/common/checkerboard.c:184
-#: plug-ins/common/cml-explorer.c:558 plug-ins/common/compose.c:557
-#: plug-ins/common/contrast-retinex.c:253 plug-ins/common/crop-zealous.c:151
-#: plug-ins/common/curve-bend.c:678 plug-ins/common/decompose.c:376
-#: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:232
-#: plug-ins/common/destripe.c:182 plug-ins/common/gradient-map.c:216
-#: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
-#: plug-ins/common/jigsaw.c:473 plug-ins/common/nl-filter.c:224
-#: plug-ins/common/qbist.c:253 plug-ins/common/sample-colorize.c:431
-#: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:307
-#: plug-ins/common/sphere-designer.c:3179 plug-ins/common/tile.c:220
-#: plug-ins/common/tile-small.c:308 plug-ins/common/van-gogh-lic.c:913
-#: plug-ins/common/warp.c:375 plug-ins/common/wavelet-decompose.c:182
-#: plug-ins/file-dds/dds.c:519 plug-ins/flame/flame.c:241
-#: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:215
-#: plug-ins/gimpressionist/gimp.c:178
+#: extensions/goat-exercises/goat-exercise-c.c:150
+#: plug-ins/common/blinds.c:202 plug-ins/common/border-average.c:195
+#: plug-ins/common/checkerboard.c:184 plug-ins/common/cml-explorer.c:558
+#: plug-ins/common/compose.c:557 plug-ins/common/contrast-retinex.c:253
+#: plug-ins/common/crop-zealous.c:151 plug-ins/common/curve-bend.c:678
+#: plug-ins/common/decompose.c:376 plug-ins/common/depth-merge.c:307
+#: plug-ins/common/despeckle.c:232 plug-ins/common/destripe.c:182
+#: plug-ins/common/gradient-map.c:216 plug-ins/common/grid.c:283
+#: plug-ins/common/hot.c:311 plug-ins/common/jigsaw.c:473
+#: plug-ins/common/nl-filter.c:224 plug-ins/common/qbist.c:253
+#: plug-ins/common/sample-colorize.c:431 plug-ins/common/smooth-palette.c:208
+#: plug-ins/common/sparkle.c:307 plug-ins/common/sphere-designer.c:3179
+#: plug-ins/common/tile.c:220 plug-ins/common/tile-small.c:308
+#: plug-ins/common/van-gogh-lic.c:913 plug-ins/common/warp.c:375
+#: plug-ins/common/wavelet-decompose.c:182 plug-ins/file-dds/dds.c:519
+#: plug-ins/flame/flame.c:241 plug-ins/fractal-explorer/fractal-explorer.c:399
+#: plug-ins/gfig/gfig.c:215 plug-ins/gimpressionist/gimp.c:178
 #: plug-ins/gradient-flare/gradient-flare.c:935
 #: plug-ins/ifs-compose/ifs-compose.c:537 plug-ins/imagemap/imap_main.c:632
 #: plug-ins/lighting/lighting-main.c:404
@@ -103,9 +103,10 @@ msgstr "Entrena una cabra (C)"
 #: plug-ins/ifs-compose/ifs-compose.c:958
 #: plug-ins/ifs-compose/ifs-compose.c:2604
 #: plug-ins/ifs-compose/ifs-compose.c:2641 plug-ins/imagemap/imap_browse.c:80
-#: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
-#: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:1038
-#: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
+#: plug-ins/imagemap/imap_default_dialog.c:106
+#: plug-ins/imagemap/imap_file.c:73 plug-ins/imagemap/imap_file.c:128
+#: plug-ins/lighting/lighting-ui.c:1038 plug-ins/lighting/lighting-ui.c:1163
+#: plug-ins/lighting/lighting-ui.c:1307
 #: plug-ins/map-object/map-object-ui.c:1317
 #: plug-ins/metadata/metadata-editor.c:1181
 #: plug-ins/metadata/metadata-editor.c:1677
@@ -138,13 +139,10 @@ msgstr "_Executa"
 #, c-format, python-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
-"Check out the last version of the source code online by clicking the "
-"\"Source\" button."
+"Check out the last version of the source code online by clicking the \"Source\" button."
 msgstr ""
-"Aquest connector és un exercici de «%s» per a demostrar la creació del "
-"connector.\n"
-"Consulteu la darrera versió del codi font en línia fent clic al botó "
-"«Source»."
+"Aquest connector és un exercici de «%s» per a demostrar la creació del connector.\n"
+"Consulteu la darrera versió del codi font en línia fent clic al botó «Source»."
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:63
 msgid "Exercise a JavaScript goat"
@@ -194,20 +192,16 @@ msgstr "_D'acord"
 
 #. GIMP - The GNU Image Manipulation Program
 #. Copyright (C) 1995 Spencer Kimball and Peter Mattis
-#.
 #. goat-exercise-lua.lua
 #. Copyright (C) Jehan
-#.
 #. This program is free software: you can redistribute it and/or modify
 #. it under the terms of the GNU General Public License as published by
 #. the Free Software Foundation; either version 3 of the License, or
 #. (at your option) any later version.
-#.
 #. This program is distributed in the hope that it will be useful,
 #. but WITHOUT ANY WARRANTY; without even the implied warranty of
 #. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #. GNU General Public License for more details.
-#.
 #. You should have received a copy of the GNU General Public License
 #. along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #. procedure:new_return_values() crashes LGI so we construct the
@@ -264,11 +258,11 @@ msgstr "Connectors de demostració oficials"
 
 #: extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in:8
 msgid ""
-"This extension provides a set of basic examples to demonstrate how to create "
-"your own plug-ins. Each plug-in does the same thing, except it is developed "
-"in a different programming language. They all create a GTK dialog with a "
-"text view displaying their own code (hence also demonstrating how to package "
-"data) and a button which calls a GEGL operation on the active layer."
+"This extension provides a set of basic examples to demonstrate how to create"
+" your own plug-ins. Each plug-in does the same thing, except it is developed"
+" in a different programming language. They all create a GTK dialog with a "
+"text view displaying their own code (hence also demonstrating how to package"
+" data) and a button which calls a GEGL operation on the active layer."
 msgstr ""
 "Aquesta extensió proporciona un conjunt d'exemples bàsics per a demostrar "
 "com crear els vostres propis connectors. Cada connector fa el mateix, tret "
@@ -291,9 +285,11 @@ msgstr "Estil _horitzontal"
 
 #: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:208
 msgid ""
-"(None = 0, Collect = 1, Fill left to right = 2, Fill right to left = 3, Snap "
-"to grid = 4)"
+"(None = 0, Collect = 1, Fill left to right = 2, Fill right to left = 3, Snap"
+" to grid = 4)"
 msgstr ""
+"(Cap = 0, Recull = 1, Emplena d'esquerra a dreta = 2, Emplena de dreta a "
+"esquerra = 3, Ajusta a la quadrícula = 4)"
 
 #: plug-ins/common/align-layers.c:200
 msgid "Hori_zontal base"
@@ -301,7 +297,7 @@ msgstr "Base ho_ritzontal"
 
 #: plug-ins/common/align-layers.c:201 plug-ins/common/align-layers.c:216
 msgid "(Left edge = 0, Center = 1, Right edge = 2)"
-msgstr ""
+msgstr "(Vora esquerra = 0, Centre = 1, Vora dreta = 2)"
 
 #: plug-ins/common/align-layers.c:207
 msgid "_Vertical style"
@@ -463,7 +459,7 @@ msgstr "_Desplaçament"
 
 #: plug-ins/common/blinds.c:155
 msgid "Angle of Displacement"
-msgstr ""
+msgstr "Angle de desplaçament"
 
 #: plug-ins/common/blinds.c:160
 msgid "_Number of segments"
@@ -471,7 +467,7 @@ msgstr "_Nombre de segments"
 
 #: plug-ins/common/blinds.c:161
 msgid "Number of segments in blinds"
-msgstr ""
+msgstr "Nombre de segments en els angles morts"
 
 #: plug-ins/common/blinds.c:166
 msgid "Orientation"
@@ -487,7 +483,7 @@ msgstr "_Transparent"
 
 #: plug-ins/common/blinds.c:175
 msgid "Background transparent"
-msgstr ""
+msgstr "Fons transparent"
 
 #: plug-ins/common/blinds.c:238
 msgid "Adding blinds"
@@ -505,9 +501,7 @@ msgstr "Horitzontal"
 msgid "Vertical"
 msgstr "Vertical"
 
-#.
 #. * Create the "background" layer to hold the image...
-#.
 #: plug-ins/common/blinds.c:301 plug-ins/common/compose.c:1129
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
@@ -921,15 +915,10 @@ msgstr "Commuta a «amb llavor» amb la darrera llavor"
 #: plug-ins/common/cml-explorer.c:1555
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
-"The same seed produces the same image, if (1) the widths of images are same "
-"(this is the reason why image on drawable is different from preview), and "
-"(2) all mutation rates equal to zero."
+"The same seed produces the same image, if (1) the widths of images are same (this is the reason why image on drawable is different from preview), and (2) all mutation rates equal to zero."
 msgstr ""
 "El botó «Llavor fixa» és un àlies meu.\n"
-"La mateixa llavor produeix la mateixa imatge, si (1) les amplades de les "
-"imatges són les mateixes (aquesta és la raó per la qual la imatge dibuixada "
-"és diferent de la previsualitzada) i (2) tots els valors de mutació són "
-"iguals a zero."
+"La mateixa llavor produeix la mateixa imatge, si (1) les amplades de les imatges són les mateixes (aquesta és la raó per la qual la imatge dibuixada és diferent de la previsualitzada) i (2) tots els valors de mutació són iguals a zero."
 
 #: plug-ins/common/cml-explorer.c:1563
 msgid "O_thers"
@@ -1121,8 +1110,8 @@ msgstr "Avís: «%s» és un fitxer en format antic."
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr ""
-"Avís: «%s» és un fitxer de paràmetres per a un explorador CML més modern que "
-"el que esteu utilitzant."
+"Avís: «%s» és un fitxer de paràmetres per a un explorador CML més modern que"
+" el que esteu utilitzant."
 
 #: plug-ins/common/cml-explorer.c:2435
 msgid "Error: failed to load parameters"
@@ -1162,7 +1151,8 @@ msgstr "Ajusta el mapa de colors"
 #: plug-ins/common/sample-colorize.c:1413
 #: plug-ins/common/sphere-designer.c:2631 plug-ins/common/tile-small.c:531
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:809
-#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:957
+#: plug-ins/gimpressionist/preview.c:182
+#: plug-ins/ifs-compose/ifs-compose.c:957
 #: plug-ins/selection-to-path/selection-to-path.c:412
 msgid "_Reset"
 msgstr "_Restableix"
@@ -1181,8 +1171,8 @@ msgid "Rearrange Colors"
 msgstr "Reordena els colors"
 
 #. Decompositions availables.
-#. * All the following values have to be kept in sync with those of decompose.c
-#.
+#. * All the following values have to be kept in sync with those of
+#. decompose.c
 #: plug-ins/common/compose.c:204
 msgid "_Red:"
 msgstr "Ve_rmell:"
@@ -1432,6 +1422,10 @@ msgid ""
 "color independence from the spectral distribution of the scene illuminant, "
 "and color/lightness rendition."
 msgstr ""
+"L'algorisme de millora d'imatge Retinex és un mètode de millora automàtica "
+"d'imatge que millora una imatge digital en termes de compressió de rang "
+"dinàmic, independència del color de la distribució espectral de l'escena "
+"il·luminant, i la reproducció de color/lluminositat."
 
 #: plug-ins/common/contrast-retinex.c:199
 msgid "Scal_e"
@@ -1439,7 +1433,7 @@ msgstr "_Escala"
 
 #: plug-ins/common/contrast-retinex.c:200
 msgid "Biggest scale value"
-msgstr ""
+msgstr "Valor d'escala més gran"
 
 #: plug-ins/common/contrast-retinex.c:205
 msgid "Scale _division"
@@ -1448,7 +1442,7 @@ msgstr "_Divisió de l'escala"
 #: plug-ins/common/contrast-retinex.c:206
 #: plug-ins/common/wavelet-decompose.c:132
 msgid "Number of scales"
-msgstr ""
+msgstr "Nombre d'escales"
 
 #: plug-ins/common/contrast-retinex.c:211
 msgid "Le_vel"
@@ -1457,6 +1451,7 @@ msgstr "_Nivell"
 #: plug-ins/common/contrast-retinex.c:212
 msgid "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
 msgstr ""
+"Distribució Retinex a través d'escales { Uniforme (0), Baix (1), Alt (2) }"
 
 #: plug-ins/common/contrast-retinex.c:218
 msgid "Dy_namic"
@@ -1464,7 +1459,7 @@ msgstr "Di_nàmic"
 
 #: plug-ins/common/contrast-retinex.c:219
 msgid "Variance value"
-msgstr ""
+msgstr "Valor de la variància"
 
 #: plug-ins/common/contrast-retinex.c:297
 msgid "Retinex"
@@ -1478,11 +1473,13 @@ msgstr "Millora de la imatge Retinex"
 msgid "Uniform"
 msgstr "Uniforme"
 
-#: plug-ins/common/contrast-retinex.c:353 plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/common/contrast-retinex.c:353
+#: plug-ins/metadata/metadata-tags.c:238
 msgid "Low"
 msgstr "Baix"
 
-#: plug-ins/common/contrast-retinex.c:354 plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/common/contrast-retinex.c:354
+#: plug-ins/metadata/metadata-tags.c:238
 msgid "High"
 msgstr "Alt"
 
@@ -1541,7 +1538,8 @@ msgstr "Distorsiona segons la corba"
 #. Preview area, top of column
 #. preview
 #: plug-ins/common/curve-bend.c:1254 plug-ins/gimpressionist/orientmap.c:589
-#: plug-ins/gimpressionist/sizemap.c:458 plug-ins/print/print-page-layout.c:180
+#: plug-ins/gimpressionist/sizemap.c:458
+#: plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "Previsualitza"
 
@@ -1837,12 +1835,13 @@ msgstr "_Realça el color del primer pla"
 
 #: plug-ins/common/decompose.c:938
 msgid ""
-"Pixels in the foreground color will appear black in all output images.  This "
-"can be used for things like crop marks that have to show up on all channels."
+"Pixels in the foreground color will appear black in all output images.  This"
+" can be used for things like crop marks that have to show up on all "
+"channels."
 msgstr ""
-"Els píxels que tinguin el color de primer pla es mostraran en negre en totes "
-"les imatges de sortida. Això es pot utilitzar com a marques de talls que han "
-"de mostrar-se en tots els canals."
+"Els píxels que tinguin el color de primer pla es mostraran en negre en totes"
+" les imatges de sortida. Això es pot utilitzar com a marques de talls que "
+"han de mostrar-se en tots els canals."
 
 #: plug-ins/common/depth-merge.c:218
 msgid "_Depth Merge..."
@@ -1851,7 +1850,8 @@ msgstr "Fusió per profun_ditat..."
 #: plug-ins/common/depth-merge.c:222
 msgid "Combine two images using depth maps (z-buffers)"
 msgstr ""
-"Combina dues imatges utilitzant mapes de profunditat (memòries intermèdies z)"
+"Combina dues imatges utilitzant mapes de profunditat (memòries intermèdies "
+"z)"
 
 #: plug-ins/common/depth-merge.c:469
 msgid "Depth-merging"
@@ -1903,6 +1903,8 @@ msgid ""
 "This plug-in selectively performs a median or adaptive box filter on an "
 "image."
 msgstr ""
+"Aquest connector realitza selectivament un filtre de mediana o de caixa "
+"adaptativa sobre una imatge."
 
 #: plug-ins/common/despeckle.c:185
 msgid "R_adius"
@@ -1910,7 +1912,7 @@ msgstr "R_adi"
 
 #: plug-ins/common/despeckle.c:186
 msgid "Filter box radius"
-msgstr ""
+msgstr "Radi del quadre de filtre"
 
 #: plug-ins/common/despeckle.c:191
 msgid "_Filter Type"
@@ -1921,6 +1923,8 @@ msgid ""
 "Filter type { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
 "ADAPTIVE (3) }"
 msgstr ""
+"Tipus de filtre { MEDIANA (0), ADAPTATIVA (1), RECURSIVA-MEDIANA (2), "
+"RECURSIVA-ADAPTATIVA (3) }"
 
 #: plug-ins/common/despeckle.c:198
 msgid "_Black level"
@@ -1953,11 +1957,11 @@ msgstr "Adaptable"
 
 #: plug-ins/common/despeckle.c:420
 msgid "Recursive-Median"
-msgstr ""
+msgstr "Mediana - Recursiu"
 
 #: plug-ins/common/despeckle.c:421
 msgid "Recursive-Adaptive"
-msgstr ""
+msgstr "Recursiu - Adaptatiu"
 
 #: plug-ins/common/destripe.c:126
 msgid "Des_tripe..."
@@ -1969,7 +1973,7 @@ msgstr "Elimina les bandes verticals de la imatge"
 
 #: plug-ins/common/destripe.c:132
 msgid "This plug-in tries to remove vertical stripes from an image."
-msgstr ""
+msgstr "Aquest connector intenta eliminar les ratlles verticals d'una imatge."
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:194
 #: plug-ins/common/file-ps.c:383 plug-ins/common/file-ps.c:497
@@ -1979,7 +1983,7 @@ msgstr "Am_plada"
 
 #: plug-ins/common/destripe.c:142
 msgid "Averaging filter width"
-msgstr ""
+msgstr "Amplada mitjana del filtre"
 
 #: plug-ins/common/destripe.c:148
 msgid "Create _histogram"
@@ -1987,7 +1991,7 @@ msgstr "Crea un _histograma"
 
 #: plug-ins/common/destripe.c:149
 msgid "Output a histogram"
-msgstr ""
+msgstr "Sortida d'un histograma"
 
 #: plug-ins/common/destripe.c:270
 msgid "Destriping"
@@ -2003,13 +2007,15 @@ msgstr "Art ASCII"
 
 #: plug-ins/common/file-aa.c:136
 msgid "Saves grayscale image in various text formats"
-msgstr ""
+msgstr "Desa la imatge en escala de grisos en diversos formats de text"
 
 #: plug-ins/common/file-aa.c:138
 msgid ""
 "This plug-in uses aalib to save grayscale image as ascii art into a variety "
 "of text formats"
 msgstr ""
+"Aquest connector utilitza aalib per a desar la imatge en escala de grisos "
+"com a art ascii en una varietat de formats de text"
 
 #: plug-ins/common/file-aa.c:155
 msgid "_Format"
@@ -2017,7 +2023,7 @@ msgstr "_Formata"
 
 #: plug-ins/common/file-aa.c:156
 msgid "File type to use"
-msgstr ""
+msgstr "Tipus de fitxer a utilitzar"
 
 #: plug-ins/common/file-aa.c:209
 msgid "ASCII art does not support multiple layers."
@@ -2058,9 +2064,7 @@ msgstr ""
 #. Number of items read from file
 #. max. rows allocated
 #. column, highest column ever used
-#.
 #. * Open the file for reading...
-#.
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:883 plug-ins/common/file-jp2-load.c:1091
@@ -2109,8 +2113,8 @@ msgstr "No es pot crear una imatge nova"
 #: plug-ins/common/file-cel.c:589
 msgid "EOF or error while reading image data"
 msgstr ""
-"S'ha arribat al final del fitxer (EOF) o s'ha produït un error en llegir les "
-"dades de la imatge"
+"S'ha arribat al final del fitxer (EOF) o s'ha produït un error en llegir les"
+" dades de la imatge"
 
 #: plug-ins/common/file-cel.c:607
 #, c-format
@@ -2148,9 +2152,7 @@ msgstr ""
 "llegir les dades de la paleta"
 
 #. init the progress meter
-#.
 #. * Open the file for writing...
-#.
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:916
 #: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1374
 #: plug-ins/common/file-pcx.c:1114 plug-ins/common/file-pix.c:560
@@ -2174,11 +2176,11 @@ msgstr "Codi font C"
 
 #: plug-ins/common/file-csource.c:124
 msgid "Dump image data in RGB(A) format for C source"
-msgstr ""
+msgstr "Bolca les dades de la imatge en format RGB(A) per a codi en C"
 
 #: plug-ins/common/file-csource.c:126
 msgid "CSource cannot be run non-interactively."
-msgstr ""
+msgstr "CSource no es pot executar de forma no interactiva."
 
 #: plug-ins/common/file-csource.c:141
 msgid "_Prefixed name"
@@ -2226,7 +2228,7 @@ msgstr "Desa com a RGB565 (1_6-bit)"
 
 #: plug-ins/common/file-csource.c:175
 msgid "Use RGB565 encoding"
-msgstr ""
+msgstr "Usa la codificació RGB565"
 
 #: plug-ins/common/file-csource.c:180
 msgid "_Use macros instead of struct"
@@ -2238,11 +2240,11 @@ msgstr "Utilitza macros C"
 
 #: plug-ins/common/file-csource.c:186
 msgid "Use _1 bit Run-Length-Encoding"
-msgstr ""
+msgstr "U_sa la codificació Run-Length d'1 bit"
 
 #: plug-ins/common/file-csource.c:187
 msgid "Use run-length-encoding"
-msgstr ""
+msgstr "Utilitza la codificació run-length"
 
 #: plug-ins/common/file-csource.c:192
 msgid "Opaci_ty"
@@ -2343,7 +2345,7 @@ msgstr "Pinzell"
 
 #: plug-ins/common/file-gbr.c:131 plug-ins/common/file-gbr.c:133
 msgid "Exports files in the GIMP brush file format"
-msgstr ""
+msgstr "Exporta fitxers en el format de fitxer de pinzell del GIMP"
 
 #: plug-ins/common/file-gbr.c:151
 msgid "Sp_acing"
@@ -2351,7 +2353,7 @@ msgstr "_Espaiat"
 
 #: plug-ins/common/file-gbr.c:152
 msgid "Spacing of the brush"
-msgstr ""
+msgstr "Espaiat del pinzell"
 
 #: plug-ins/common/file-gbr.c:157 plug-ins/common/file-pat.c:133
 msgid "_Description"
@@ -2359,7 +2361,7 @@ msgstr "_Descripció"
 
 #: plug-ins/common/file-gbr.c:158
 msgid "Short description of the brush"
-msgstr ""
+msgstr "Descripció breu del pinzell"
 
 #: plug-ins/common/file-gbr.c:159
 msgid "GIMP Brush"
@@ -2400,15 +2402,15 @@ msgstr "Aquest no és un fitxer GIF: codi màgic incorrecte"
 
 #: plug-ins/common/file-gif-load.c:433
 msgid "Incorrect GIF version: not '87a' or '89a'"
-msgstr ""
+msgstr "Versió incorrecta del GIF: no és «87a» ni «89a»"
 
 #: plug-ins/common/file-gif-load.c:440
 msgid "screen descriptor"
-msgstr ""
+msgstr "descriptor de pantalla"
 
 #: plug-ins/common/file-gif-load.c:458
 msgid "global colormap"
-msgstr ""
+msgstr "mapa de colors global"
 
 #: plug-ins/common/file-gif-load.c:466
 msgid "Non-square pixels.  Image might look squashed."
@@ -2416,19 +2418,20 @@ msgstr "Els píxels no són quadrats. La imatge pot semblar aixafada."
 
 #: plug-ins/common/file-gif-load.c:476 plug-ins/common/file-gif-load.c:1060
 msgid "image data"
-msgstr ""
+msgstr "dades de la imatge"
 
 #: plug-ins/common/file-gif-load.c:493
 msgid "extension data"
-msgstr ""
+msgstr "dades de l'extensió"
 
 #: plug-ins/common/file-gif-load.c:513
 msgid "frame info"
-msgstr ""
+msgstr "informació del marc"
 
 #: plug-ins/common/file-gif-load.c:526
+#, fuzzy
 msgid "local colormap"
-msgstr ""
+msgstr "mapa de colors local"
 
 #: plug-ins/common/file-gif-load.c:586 plug-ins/common/file-gif-load.c:591
 #, c-format
@@ -2441,44 +2444,52 @@ msgstr "S'ha produït un error en llegir %s. %s"
 #: plug-ins/common/file-gif-load.c:926 plug-ins/common/file-gif-load.c:945
 #: plug-ins/common/file-gif-load.c:1046 plug-ins/common/file-gif-load.c:1050
 #: plug-ins/common/file-gif-load.c:1195
+#, fuzzy
 msgid "Image may be corrupt!"
-msgstr ""
+msgstr "La imatge pot estar malmesa!"
 
 #: plug-ins/common/file-gif-load.c:743
+#, fuzzy
 msgid "Error reading data size"
-msgstr ""
+msgstr "Error en llegir la mida de les dades"
 
 #: plug-ins/common/file-gif-load.c:751
 msgid "Error reading data"
 msgstr "S'ha produït un error en llegir les dades"
 
 #: plug-ins/common/file-gif-load.c:782
+#, fuzzy
 msgid "Not enough compressed data"
-msgstr ""
+msgstr "No hi ha prou dades comprimides"
 
 #: plug-ins/common/file-gif-load.c:836
+#, fuzzy
 msgid "Value out of range for code size"
-msgstr ""
+msgstr "Valor fora de rang per a la mida del codi"
 
 #: plug-ins/common/file-gif-load.c:925
+#, fuzzy
 msgid "Invalid code, expecting end of data marker"
-msgstr ""
+msgstr "Codi no vàlid, s'espera el final del marcador de dades"
 
 #: plug-ins/common/file-gif-load.c:945
+#, fuzzy
 msgid "Unexpected extra data"
-msgstr ""
+msgstr "Dades extres inesperades"
 
 #: plug-ins/common/file-gif-load.c:964
+#, fuzzy
 msgid "Invalid table entry"
-msgstr ""
+msgstr "Entrada de taula no vàlida"
 
 #: plug-ins/common/file-gif-load.c:964 plug-ins/common/file-gif-load.c:970
 msgid "Image is corrupt!"
 msgstr "La imatge està malmesa!"
 
 #: plug-ins/common/file-gif-load.c:970
+#, fuzzy
 msgid "Circular table entry"
-msgstr ""
+msgstr "Entrada de taula circular"
 
 #: plug-ins/common/file-gif-load.c:1045
 #, c-format
@@ -2486,12 +2497,14 @@ msgid "%s. %s"
 msgstr "%s. %s"
 
 #: plug-ins/common/file-gif-load.c:1046 plug-ins/common/file-gif-load.c:1050
+#, fuzzy
 msgid "Invalid frame dimensions"
-msgstr ""
+msgstr "Dimensions no vàlides del marc"
 
 #: plug-ins/common/file-gif-load.c:1066
+#, fuzzy
 msgid "compressed image data"
-msgstr ""
+msgstr "dades d'imatge comprimides"
 
 #: plug-ins/common/file-gif-load.c:1099
 #, c-format
@@ -2516,8 +2529,8 @@ msgstr "Marc %d (%d%s)"
 #: plug-ins/common/file-gif-load.c:1188
 #, c-format
 msgid ""
-"GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
-"play or re-save perfectly."
+"GIF: Undocumented GIF composite type %d is not handled.  Animation might not"
+" play or re-save perfectly."
 msgstr ""
 "GIF: No es pot gestionar el tipus de composició GIF %d no documentat. Pot "
 "ser que l'animació no es reprodueixi o no es torni a desar perfectament."
@@ -2528,25 +2541,31 @@ msgid "Unknown composite type %d. %s"
 msgstr "Tipus de composició %d. %s desconeguda"
 
 #: plug-ins/common/file-gif-load.c:1237
+#, fuzzy
 msgid ""
 "Can't handle non-alpha RGB frames.\n"
 "Please file a bug report at https://gitlab.gnome.org/GNOME/gimp/issues"
 msgstr ""
+"No es poden gestionar fotogrames RGB no alfa.\n"
+"Informeu d'error a https://gitlab.gnome.org/GNOME/gimp/issues"
 
 #: plug-ins/common/file-gif-load.c:1364
+#, fuzzy
 msgid "Too much compressed data, ignoring extra..."
-msgstr ""
+msgstr "Hi ha massa dades comprimides, s'ignoraran les extra..."
 
 #: plug-ins/common/file-gif-save.c:151
+#, fuzzy
 msgid "GIF"
-msgstr ""
+msgstr "GIF"
 
 #: plug-ins/common/file-gif-save.c:154
+#, fuzzy
 msgid "exports files in Compuserve GIF file format"
-msgstr ""
+msgstr "exporta fitxers en format de fitxer GIF compilat"
 
 #: plug-ins/common/file-gif-save.c:156
-#, c-format
+#, c-format, fuzzy
 msgid ""
 "Export a file in Compuserve GIF format, with possible animation, "
 "transparency, and comment. To export an animation, operate on a multi-layer "
@@ -2554,47 +2573,59 @@ msgid ""
 "interpret <50% alpha as transparent. When run non-interactively, the value "
 "for the comment is taken from the 'gimp-comment' parasite.  "
 msgstr ""
+"Exporta un fitxer en format GIF compilat, amb una possible animació, "
+"transparència i comentari. Per a exportar una animació, opera en un fitxer "
+"multicapa i dona el paràmetre «com a animació» com a CERT. El connector "
+"interpretarà  alpha50% alfa com a transparent. Quan s'executa de forma no "
+"interactiva, el valor del comentari es pren del paràsit «gimp-comment»."
 
 #: plug-ins/common/file-gif-save.c:182 plug-ins/common/file-mng.c:277
 msgid "_Interlace"
 msgstr "_Entrellaça"
 
 #: plug-ins/common/file-gif-save.c:183
+#, fuzzy
 msgid "Try to export as interlaced"
-msgstr ""
+msgstr "Intenta exportar com a entrellaçat"
 
 #: plug-ins/common/file-gif-save.c:188
 msgid "Loop _Forever"
 msgstr "_Bucle sense fi"
 
 #: plug-ins/common/file-gif-save.c:189
+#, fuzzy
 msgid "(animated gif) Loop infinitely"
-msgstr ""
+msgstr "(gif animat) Bucle infinit"
 
 #: plug-ins/common/file-gif-save.c:194
 msgid "_Number of repeats"
 msgstr "_Nombre de repeticions"
 
 #: plug-ins/common/file-gif-save.c:195
+#, fuzzy
 msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
-msgstr ""
+msgstr "(gif animat) Nombre de repeticions (s'ignora si «loop» és CERT)"
 
 #: plug-ins/common/file-gif-save.c:201
 msgid "_Delay between frames when unspecified"
 msgstr "_Retard entre fotogrames no especificats"
 
 #: plug-ins/common/file-gif-save.c:202
+#, fuzzy
 msgid "(animated gif) Default delay between frames in milliseconds"
-msgstr ""
+msgstr "(gif animat) Retard predeterminat entre fotogrames en mil·lisegons"
 
 #: plug-ins/common/file-gif-save.c:208
 msgid "Frame disposal _when unspecified"
 msgstr "Disposició dels _fotogrames quan no s'especifiqui"
 
 #: plug-ins/common/file-gif-save.c:209
+#, fuzzy
 msgid ""
 "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)"
 msgstr ""
+"(gif animat) Tipus de disposició predeterminat (0=`no importa`, 1=combina, "
+"2=substitueix)"
 
 #: plug-ins/common/file-gif-save.c:217
 msgid "_As animation"
@@ -2609,16 +2640,19 @@ msgid "_Use delay entered above for all frames"
 msgstr "_Utilitza el retard per a tots els fotogrames"
 
 #: plug-ins/common/file-gif-save.c:224
+#, fuzzy
 msgid "(animated gif) Use specified delay for all frames"
-msgstr ""
+msgstr "(gif animat) Usa el retard especificat per a tots els fotogrames"
 
 #: plug-ins/common/file-gif-save.c:229
+#, fuzzy
 msgid "Use dis_posal entered above for all frames"
-msgstr ""
+msgstr "Usa la disposició introduïda anteriorment per a tots els fotogrames"
 
 #: plug-ins/common/file-gif-save.c:231
+#, fuzzy
 msgid "(animated gif) Use specified disposal for all frames"
-msgstr ""
+msgstr "(gif animat) Usa la disposició especificada per a tots els fotogrames"
 
 #: plug-ins/common/file-gif-save.c:236
 msgid "Sa_ve comment"
@@ -2647,8 +2681,8 @@ msgstr "No s'ha pogut reduir més els colors. S'exporta com a opac."
 #: plug-ins/common/file-gif-save.c:676
 #, c-format
 msgid ""
-"Unable to export '%s'.  The GIF file format does not support images that are "
-"more than %d pixels wide or tall."
+"Unable to export '%s'.  The GIF file format does not support images that are"
+" more than %d pixels wide or tall."
 msgstr ""
 "No s'ha pogut exportar «%s». El format de fitxer GIF no permet imatges de "
 "més de %d píxels d'amplada o alçada."
@@ -2670,7 +2704,8 @@ msgstr ""
 
 #: plug-ins/common/file-gif-save.c:1109
 msgid "Delay inserted to prevent evil CPU-sucking animation."
-msgstr "Retard inserit en l'animació per a prevenir sobresaturacions a la CPU."
+msgstr ""
+"Retard inserit en l'animació per a prevenir sobresaturacions a la CPU."
 
 #: plug-ins/common/file-gif-save.c:1158
 msgid ""
@@ -2686,11 +2721,12 @@ msgstr "_Escapça"
 
 #: plug-ins/common/file-gif-save.c:1175
 msgid ""
-"The GIF file format does not allow this.  You may choose whether to crop all "
-"of the layers to the image borders, or cancel this export."
+"The GIF file format does not allow this.  You may choose whether to crop all"
+" of the layers to the image borders, or cancel this export."
 msgstr ""
 "Això no està permès en el format de fitxer GIF. Podeu triar entre escapçar "
-"totes les capes d'acord amb les vores de la imatge o cancel·lar l'exportació."
+"totes les capes d'acord amb les vores de la imatge o cancel·lar "
+"l'exportació."
 
 #: plug-ins/common/file-gif-save.c:1265 plug-ins/common/file-mng.c:1642
 msgid "milliseconds"
@@ -2798,8 +2834,8 @@ msgid ""
 "Typical suffices for HEIF files are .heif, .heic."
 msgstr ""
 "Carregueu la imatge emmagatzemada en format HEIF (format de fitxer d'imatge "
-"d'alta eficiència). Les terminacions típiques per als fitxers HEIF són: ."
-"heif, .heic."
+"d'alta eficiència). Les terminacions típiques per als fitxers HEIF són: "
+".heif, .heic."
 
 #: plug-ins/common/file-heif.c:241
 msgid "Exports HEIF images"
@@ -2808,15 +2844,17 @@ msgstr "Exporta imatges HEIF"
 #: plug-ins/common/file-heif.c:242
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
-"Deseu la imatge en format HEIF (format de fitxer d'imatge d'alta eficiència)."
+"Deseu la imatge en format HEIF (format de fitxer d'imatge d'alta "
+"eficiència)."
 
 #: plug-ins/common/file-heif.c:258 plug-ins/common/file-heif.c:368
 msgid "_Quality"
 msgstr "_Qualitat"
 
 #: plug-ins/common/file-heif.c:259 plug-ins/common/file-heif.c:369
+#, fuzzy
 msgid "Quality factor (0 = worst, 100 = best)"
-msgstr ""
+msgstr "Factor de qualitat (0 = pitjor, 100 = millor)"
 
 #: plug-ins/common/file-heif.c:264 plug-ins/common/file-heif.c:374
 #: plug-ins/common/file-jpegxl.c:185 plug-ins/file-webp/file-webp.c:175
@@ -2852,16 +2890,19 @@ msgid "_Pixel format"
 msgstr "_Format de píxel"
 
 #: plug-ins/common/file-heif.c:283 plug-ins/common/file-heif.c:393
+#, fuzzy
 msgid "Format of color sub-sampling"
-msgstr ""
+msgstr "Format del submostratge de color"
 
 #: plug-ins/common/file-heif.c:289 plug-ins/common/file-heif.c:399
+#, fuzzy
 msgid "Enco_der speed"
-msgstr ""
+msgstr "Velocitat del codificador"
 
 #: plug-ins/common/file-heif.c:290 plug-ins/common/file-heif.c:400
+#, fuzzy
 msgid "Tradeoff between speed and compression"
-msgstr ""
+msgstr "Compromís entre velocitat i compressió"
 
 #: plug-ins/common/file-heif.c:296 plug-ins/common/file-heif.c:406
 #: plug-ins/common/file-jpegxl.c:222
@@ -2988,24 +3029,30 @@ msgid "HTML Table"
 msgstr "Taula HTML"
 
 #: plug-ins/common/file-html-table.c:158
+#, fuzzy
 msgid "GIMP Table Magic"
-msgstr ""
+msgstr "Màgia de la taula del GIMP"
 
 #: plug-ins/common/file-html-table.c:159
+#, fuzzy
 msgid "Allows you to draw an HTML table in GIMP. See help for more info."
 msgstr ""
+"Permet dibuixar una taula HTML en el GIMP. Vegeu l'ajuda per a més "
+"informació."
 
 #: plug-ins/common/file-html-table.c:175
+#, fuzzy
 msgid "Use c_aption"
-msgstr ""
+msgstr "Utilitza la llegenda"
 
 #: plug-ins/common/file-html-table.c:176
 msgid "Enable if you would like to have the table captioned."
 msgstr "Habiliteu-ho si voleu la taula amb títol."
 
 #: plug-ins/common/file-html-table.c:182
+#, fuzzy
 msgid "Capt_ion"
-msgstr ""
+msgstr "Llegenda"
 
 #: plug-ins/common/file-html-table.c:183
 msgid "The text for the table caption."
@@ -3031,7 +3078,8 @@ msgstr "A_lçada"
 
 #: plug-ins/common/file-html-table.c:202
 msgid "The height for each table cell. Can be a number or a percent."
-msgstr "Alçada de cada cel·la de la taula. Pot ser un nombre o un percentatge."
+msgstr ""
+"Alçada de cada cel·la de la taula. Pot ser un nombre o un percentatge."
 
 #: plug-ins/common/file-html-table.c:208
 msgid "_Generate full HTML document"
@@ -3072,7 +3120,8 @@ msgstr "Co_mprimeix les etiquetes TD"
 #: plug-ins/common/file-html-table.c:232
 msgid ""
 "Enabling this will cause GTM to leave no whitespace between the TD tags and "
-"the cell content. This is only necessary for pixel level positioning control."
+"the cell content. This is only necessary for pixel level positioning "
+"control."
 msgstr ""
 "Si activeu l'opció GTM, no deixarà espais en blanc entre les etiquetes TD i "
 "el contingut de la cel·la. Només és necessari per al control de "
@@ -3133,12 +3182,14 @@ msgid "Load file in the IFF file format"
 msgstr "Carrega fitxers en el format de fitxer IFF"
 
 #: plug-ins/common/file-iff.c:254
+#, fuzzy
 msgid "Invalid or missing ILBM image"
-msgstr ""
+msgstr "Imatge ILBM no vàlida o mancant"
 
 #: plug-ins/common/file-iff.c:259
+#, fuzzy
 msgid "ILBM contains no image data - likely a palette file"
-msgstr ""
+msgstr "ILBM no conté dades d'imatge - probablement un fitxer de paleta"
 
 #: plug-ins/common/file-jp2-load.c:187
 msgid "JPEG 2000 image"
@@ -3157,22 +3208,30 @@ msgid "Loads JPEG 2000 codestream."
 msgstr "Carrega un flux de codis JPEG 2000."
 
 #: plug-ins/common/file-jp2-load.c:227
+#, fuzzy
 msgid ""
 "Loads JPEG 2000 codestream. If the color space is set to UNKNOWN (0), we "
 "will try to guess, which is only possible for few spaces (such as "
 "grayscale). Most such calls will fail. You are rather expected to know the "
 "color space of your data."
 msgstr ""
+"Carrega el flux de codi JPEG 2000. Si l'espai de color està establert a "
+"DESCONEGUT (0), intentarem endevinar, el qual només és possible per a pocs "
+"espais (com ara l'escala de grisos). La majoria d'aquestes trucades "
+"fracassaran. S'espera que conegueu l'espai de color de les vostres dades."
 
 #: plug-ins/common/file-jp2-load.c:247
 msgid "Color s_pace"
 msgstr "_Espai de color"
 
 #: plug-ins/common/file-jp2-load.c:248
+#, fuzzy
 msgid ""
 "Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), CMYK (3), YCbCr (4), "
 "xvYCC (5) }"
 msgstr ""
+"Espai de color { UNKNOWN (0), ESCALA DE GRISOS (1), RGB (2), CMYK (3), YCbCr"
+" (4), xvYCC (5) }"
 
 #. Can be RGB, YUV and YCC.
 #. Can be RGB, YUV and YCC with alpha or CMYK.
@@ -3363,10 +3422,13 @@ msgid "Saves images in the MNG file format"
 msgstr "Desa les imatges en el format de fitxer MNG"
 
 #: plug-ins/common/file-mng.c:260
+#, fuzzy
 msgid ""
 "This plug-in saves images in the Multiple-image Network Graphics (MNG) "
 "format which can be used as a replacement for animated GIFs, and more."
 msgstr ""
+"Aquest connector desa les imatges en el format MNG (Multiple-image Network "
+"Graphics) que es pot utilitzar com a substitut dels GIF animats, i més."
 
 #: plug-ins/common/file-mng.c:278
 msgid "Use interlacing"
@@ -3404,70 +3466,81 @@ msgid "L_oop"
 msgstr "_Bucle"
 
 #: plug-ins/common/file-mng.c:303
+#, fuzzy
 msgid "(ANIMATED MNG) Loop infinitely"
-msgstr ""
+msgstr "(ANIMAT MNG) Bucle infinit"
 
 #: plug-ins/common/file-mng.c:308
 msgid "Default fra_me delay"
 msgstr "_Retard per defecte del fotograma"
 
 #: plug-ins/common/file-mng.c:309
+#, fuzzy
 msgid "(ANIMATED MNG) Default delay between frames in milliseconds"
-msgstr ""
+msgstr "(MNG animat) Retard predeterminat entre fotogrames en mil·lisegons"
 
 #: plug-ins/common/file-mng.c:315
 msgid "Default chunks t_ype"
 msgstr "_Tipus de fragments per defecte"
 
 #: plug-ins/common/file-mng.c:316
+#, fuzzy
 msgid ""
 "(ANIMATED MNG) Default chunks type (0 = PNG + Delta PNG; 1 = JNG + Delta "
 "PNG; 2 = All PNG; 3 = All JNG)"
 msgstr ""
+"(MNG animat) Tipus de trossos per defecte (0 = PNG + Delta PNG; 1 = JNG + "
+"Delta PNG; 2 = Tot PNG; 3 = Tot JNG)"
 
 #: plug-ins/common/file-mng.c:323
 msgid "De_fault frame disposal"
 msgstr "D_isposició per defecte dels marcs"
 
 #: plug-ins/common/file-mng.c:324
+#, fuzzy
 msgid "(ANIMATED MNG) Default dispose type (0 = combine; 1 = replace)"
 msgstr ""
+"(MNG animat) Tipus d'eliminació predeterminat (0 = combinació; 1 = "
+"substitució)"
 
 #: plug-ins/common/file-mng.c:330 plug-ins/common/file-png.c:245
 msgid "Save _background color"
 msgstr "Desa el color de _fons"
 
 #: plug-ins/common/file-mng.c:331
+#, fuzzy
 msgid "Write bKGd (background color) chunk"
-msgstr ""
+msgstr "Escriu el fragment bKGd (color de fons)"
 
 #: plug-ins/common/file-mng.c:336
 msgid "Save _gamma"
 msgstr "Desa la _gamma"
 
 #: plug-ins/common/file-mng.c:337
+#, fuzzy
 msgid "Write gAMA (gamma) chunk"
-msgstr ""
+msgstr "Escriu el fragment gAMA (gamma)"
 
 #: plug-ins/common/file-mng.c:342
 msgid "Sa_ve resolution"
 msgstr "_Desa la resolució"
 
 #: plug-ins/common/file-mng.c:343
+#, fuzzy
 msgid "Write pHYs (image resolution) chunk"
-msgstr ""
+msgstr "Escriu el fragment «pHYs» (resolució d'imatge)"
 
 #: plug-ins/common/file-mng.c:348 plug-ins/common/file-png.c:263
 msgid "Save creation _time"
 msgstr "Desa la da_ta de creació"
 
 #: plug-ins/common/file-mng.c:349
+#, fuzzy
 msgid "Write tIME (creation time) chunk"
-msgstr ""
+msgstr "Escriu el fragment tIME (hora de creació)"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#.
 #: plug-ins/common/file-mng.c:729 plug-ins/common/file-png.c:2253
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
@@ -3526,18 +3599,23 @@ msgid "GIMP pattern"
 msgstr "Patró del GIMP"
 
 #: plug-ins/common/file-pat.c:115
+#, fuzzy
 msgid "Exports GIMP pattern file (.PAT)"
-msgstr ""
+msgstr "Exporta el fitxer de patrons del GIMP (.PAT)"
 
 #: plug-ins/common/file-pat.c:116
+#, fuzzy
 msgid ""
 "New GIMP patterns can be created by exporting them in the appropriate place "
 "with this plug-in."
 msgstr ""
+"Es poden crear nous patrons del GIMP exportant-los al lloc adequat amb "
+"aquest connector."
 
 #: plug-ins/common/file-pat.c:134
+#, fuzzy
 msgid "Short description of the pattern"
-msgstr ""
+msgstr "Descripció breu del patró"
 
 #: plug-ins/common/file-pat.c:135
 msgid "GIMP Pattern"
@@ -3560,8 +3638,9 @@ msgid "Palette Options"
 msgstr "Opcions de la paleta"
 
 #: plug-ins/common/file-pcx.c:220 plug-ins/common/file-pcx.c:251
+#, fuzzy
 msgid "Use built-in palette (0) or override with black/white (1)"
-msgstr ""
+msgstr "Utilitza la paleta integrada (0) o substitueix amb blanc/negre (1)"
 
 #: plug-ins/common/file-pcx.c:238
 msgid "ZSoft DCX image"
@@ -3580,26 +3659,28 @@ msgid "Could not load PCX image"
 msgstr "No s'ha pogut carregar una imatge PCX"
 
 #: plug-ins/common/file-pcx.c:582
+#, fuzzy
 msgid "DCX image offset exceeds the file size"
-msgstr ""
+msgstr "El desplaçament de la imatge DCX excedeix la mida del fitxer"
 
 #: plug-ins/common/file-pcx.c:593
 msgid "Could not load DCX image"
 msgstr "No s'ha pogut carregar una imatge DCX"
 
 #: plug-ins/common/file-pcx.c:616
-#, c-format
+#, c-format, fuzzy
 msgid "%s: DCX image offset exceeds the file size: %s\n"
-msgstr ""
+msgstr "%s: el desplaçament de la imatge DCX excedeix la mida del fitxer: %s"
 
 #: plug-ins/common/file-pcx.c:633
+#, fuzzy
 msgid "Mixed-mode DCX image not loaded"
-msgstr ""
+msgstr "No s'ha carregat la imatge DCX de mode mixt"
 
 #: plug-ins/common/file-pcx.c:640
-#, c-format
+#, c-format, fuzzy
 msgid "%s: Could not load all DCX images: %s\n"
-msgstr ""
+msgstr "%s: No s'han pogut carregar totes les imatges DCX: %s"
 
 #: plug-ins/common/file-pcx.c:680
 #, c-format
@@ -3641,16 +3722,19 @@ msgid "Unusual PCX flavour, giving up"
 msgstr "No es pot reconèixer el format del fitxer PCX, es deixarà estar"
 
 #: plug-ins/common/file-pcx.c:887
+#, fuzzy
 msgid "Import from PCX"
-msgstr ""
+msgstr "Importa des de PCX"
 
 #: plug-ins/common/file-pcx.c:896
+#, fuzzy
 msgid "Use PCX image's built-in palette"
-msgstr ""
+msgstr "Utilitza la paleta integrada de la imatge PCX"
 
 #: plug-ins/common/file-pcx.c:897
+#, fuzzy
 msgid "Use black and white palette"
-msgstr ""
+msgstr "Utilitza la paleta en blanc i negre"
 
 #: plug-ins/common/file-pcx.c:1180 plug-ins/common/file-pnm.c:1631
 msgid "Cannot export images with alpha channel."
@@ -3690,24 +3774,28 @@ msgid "Open pages as"
 msgstr "Obre pàgines com a"
 
 #: plug-ins/common/file-pdf-load.c:368
+#, fuzzy
 msgid "Number of pages to load (0 for all)"
-msgstr ""
+msgstr "Nombre de pàgines a carregar (0 per a tots)"
 
 #: plug-ins/common/file-pdf-load.c:392
 msgid "Use _Anti-aliasing"
 msgstr "Utilitza _antialiàsing"
 
 #: plug-ins/common/file-pdf-load.c:393
+#, fuzzy
 msgid "Render texts with anti-aliasing"
-msgstr ""
+msgstr "Renderitza els textos amb antialiàsing"
 
 #: plug-ins/common/file-pdf-load.c:398
+#, fuzzy
 msgid "_Fill transparent areas with white"
-msgstr ""
+msgstr "Omple les àrees transparents amb blanc"
 
 #: plug-ins/common/file-pdf-load.c:399
+#, fuzzy
 msgid "Render all pages as opaque by filling the background in white"
-msgstr ""
+msgstr "Representa totes les pàgines com a opaques emplenant el fons en blanc"
 
 #: plug-ins/common/file-pdf-load.c:407 plug-ins/common/file-pdf-load.c:408
 msgid "Resolution"
@@ -3717,7 +3805,6 @@ msgstr "Resolució"
 #. * second is out-of-range page number,
 #. * third is number of pages.
 #. * Specify order as in English if needed.
-#.
 #: plug-ins/common/file-pdf-load.c:531
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
@@ -3786,7 +3873,8 @@ msgstr "_Omple les àrees transparents amb el color de fons"
 msgid ""
 "Fill transparent areas with background color if layer has an alpha channel"
 msgstr ""
-"Omple les àrees transparents amb el color de fons si la capa té un canal alfa"
+"Omple les àrees transparents amb el color de fons si la capa té un canal "
+"alfa"
 
 #: plug-ins/common/file-pdf-save.c:394
 msgid "_Create multipage PDF..."
@@ -3797,25 +3885,20 @@ msgstr "_Crea un PDF amb múltiples pàgines..."
 msgid ""
 "An error occurred while creating the PDF file:\n"
 "%s\n"
-"Make sure you entered a valid filename and that the selected location isn't "
-"read only!"
+"Make sure you entered a valid filename and that the selected location isn't read only!"
 msgstr ""
 "S'ha produït un error quan s'estava generant el fitxer PDF:\n"
 "%s\n"
-"Assegureu-vos que heu introduït un nom de fitxer vàlid i que la ubicació no "
-"és només de lectura."
+"Assegureu-vos que heu introduït un nom de fitxer vàlid i que la ubicació no és només de lectura."
 
 #: plug-ins/common/file-pdf-save.c:1006
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
-"It is recommended to convert your text layers to image or to install the "
-"missing fonts before exporting, otherwise your design may not look right."
+"It is recommended to convert your text layers to image or to install the missing fonts before exporting, otherwise your design may not look right."
 msgstr ""
 "No es poden trobar les següents lletres tipogràfiques: %s.\n"
-"Es recomana convertir les capes de text en imatge o instal·lar les lletres "
-"tipogràfiques que falten abans d'exportar-lo, altrament pot ser que el "
-"disseny no sembli correcte."
+"Es recomana convertir les capes de text en imatge o instal·lar les lletres tipogràfiques que falten abans d'exportar-lo, altrament pot ser que el disseny no sembli correcte."
 
 #: plug-ins/common/file-pdf-save.c:1104
 msgid "Save to:"
@@ -4021,7 +4104,8 @@ msgstr ""
 
 #: plug-ins/common/file-png.c:1468
 #, c-format
-msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgid ""
+"Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "S'ha produït un error en l'exportació de «%s». No s'ha pogut crear "
 "l'estructura d'informació a la capçalera PNG."
@@ -4030,7 +4114,8 @@ msgstr ""
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr ""
-"S'ha produït un error en l'exportació «%s». No s'ha pogut exportar la imatge."
+"S'ha produït un error en l'exportació «%s». No s'ha pogut exportar la "
+"imatge."
 
 #: plug-ins/common/file-png.c:2295 plug-ins/common/file-ps.c:3738
 #: plug-ins/file-fits/fits.c:1002
@@ -4078,8 +4163,11 @@ msgid "Loads files in the PNM file format"
 msgstr "Carrega fitxers en el format de fitxer PNM"
 
 #: plug-ins/common/file-pnm.c:319
+#, fuzzy
 msgid "This plug-in loads files in the various Netpbm portable file formats."
 msgstr ""
+"Aquest connector carrega fitxers en els diversos formats de fitxer portàtils"
+" Netpbm."
 
 #: plug-ins/common/file-pnm.c:348
 msgid "PNM image"
@@ -4094,8 +4182,10 @@ msgid "Exports files in the PNM file format"
 msgstr "Exporta fitxers en el format de fitxer PNM"
 
 #: plug-ins/common/file-pnm.c:354
+#, fuzzy
 msgid "PNM export handles all image types without transparency."
 msgstr ""
+"L'exportació PNM gestiona tots els tipus d'imatge sense transparència."
 
 #: plug-ins/common/file-pnm.c:370 plug-ins/common/file-pnm.c:406
 #: plug-ins/common/file-pnm.c:442
@@ -4104,12 +4194,14 @@ msgstr "S'estan formatant les dades"
 
 #: plug-ins/common/file-pnm.c:371 plug-ins/common/file-pnm.c:407
 #: plug-ins/common/file-pnm.c:443 plug-ins/common/file-pnm.c:479
+#, fuzzy
 msgid "TRUE for raw output, FALSE for ascii output"
-msgstr ""
+msgstr "CERT per a la sortida RAW, FALS per a la sortida ascii"
 
 #: plug-ins/common/file-pnm.c:385
+#, fuzzy
 msgid "PBM"
-msgstr ""
+msgstr "PBM"
 
 #: plug-ins/common/file-pnm.c:386
 msgid "PBM image"
@@ -4120,8 +4212,9 @@ msgid "Exports files in the PBM file format"
 msgstr "Exporta fitxers en el format de fitxer PBM"
 
 #: plug-ins/common/file-pnm.c:390
+#, fuzzy
 msgid "PBM exporting produces mono images without transparency."
-msgstr ""
+msgstr "L'exportació de PBM produeix imatges mono sense transparència."
 
 #: plug-ins/common/file-pnm.c:421
 msgid "PGM image"
@@ -4136,8 +4229,11 @@ msgid "Exports files in the PGM file format"
 msgstr "Exporta fitxers en el format de fitxer PGM"
 
 #: plug-ins/common/file-pnm.c:426
+#, fuzzy
 msgid "PGM exporting produces grayscale images without transparency."
 msgstr ""
+"L'exportació de PGM produeix imatges en escala de grisos sense "
+"transparència."
 
 #: plug-ins/common/file-pnm.c:457
 msgid "PPM image"
@@ -4153,7 +4249,8 @@ msgstr "Exporta fitxers en el format de fitxer PPM"
 
 #: plug-ins/common/file-pnm.c:462
 #, fuzzy
-#| msgid "Cannot export indexed image with transparency in BMP file format."
+#| msgid ""
+#| "Cannot export indexed image with transparency in BMP file format."
 msgid "PPM export handles RGB images without transparency."
 msgstr ""
 "No es pot exportar la imatge indexada amb transparència en un format de "
@@ -4168,8 +4265,9 @@ msgid "Exports files in the PAM file format"
 msgstr "Exporta fitxers en el format de fitxer PAM"
 
 #: plug-ins/common/file-pnm.c:497
+#, fuzzy
 msgid "PAM export handles RGB images with or without transparency."
-msgstr ""
+msgstr "L'exportació PAM gestiona imatges RGB amb o sense transparència."
 
 #: plug-ins/common/file-pnm.c:522
 msgid "PFM image"
@@ -4180,8 +4278,9 @@ msgid "Exports files in the PFM file format"
 msgstr "Exporta fitxers en el format de fitxer PFM"
 
 #: plug-ins/common/file-pnm.c:526
+#, fuzzy
 msgid "PFM export handles all images without transparency."
-msgstr ""
+msgstr "L'exportació PFM gestiona totes les imatges sense transparència."
 
 #: plug-ins/common/file-pnm.c:661
 #, c-format
@@ -4282,8 +4381,9 @@ msgid "Resol_ution"
 msgstr "R_esolució"
 
 #: plug-ins/common/file-ps.c:395
+#, fuzzy
 msgid "Try _Bounding Box"
-msgstr ""
+msgstr "Prova el contenidor contenidor"
 
 #: plug-ins/common/file-ps.c:401
 msgid "_Pages"
@@ -4428,20 +4528,24 @@ msgstr "_Mil·límetre"
 
 #. Rotation
 #: plug-ins/common/file-ps.c:3914
+#, fuzzy
 msgid "_0"
-msgstr ""
+msgstr "0"
 
 #: plug-ins/common/file-ps.c:3915
+#, fuzzy
 msgid "_90"
-msgstr ""
+msgstr "90"
 
 #: plug-ins/common/file-ps.c:3916
+#, fuzzy
 msgid "_180"
-msgstr ""
+msgstr "180"
 
 #: plug-ins/common/file-ps.c:3917
+#, fuzzy
 msgid "_270"
-msgstr ""
+msgstr "270"
 
 #: plug-ins/common/file-ps.c:3924
 msgid "Output"
@@ -4456,10 +4560,14 @@ msgid "Loads images from the Paint Shop Pro PSP file format"
 msgstr "Carrega imatges en el format de fitxer Paint Shop Pro PSP"
 
 #: plug-ins/common/file-psp.c:669
+#, fuzzy
 msgid ""
-"This plug-in loads and exports images in Paint Shop Pro's native PSP format. "
-"Vector layers aren't handled. Exporting isn't yet implemented."
+"This plug-in loads and exports images in Paint Shop Pro's native PSP format."
+" Vector layers aren't handled. Exporting isn't yet implemented."
 msgstr ""
+"Aquest connector carrega i exporta imatges en el format PSP natiu de Paint "
+"Shop Pro. Les capes vectorials no es gestionen. L'exportació encara no està "
+"implementada."
 
 #: plug-ins/common/file-psp.c:841
 msgid "RLE"
@@ -4534,7 +4642,8 @@ msgstr "error zlib"
 #: plug-ins/common/file-psp.c:1792 plug-ins/common/file-psp.c:1826
 #: plug-ins/common/file-psp.c:1836
 msgid "Error reading layer extension information"
-msgstr "S'ha produït un error en llegir la informació de l'extensió de la capa"
+msgstr ""
+"S'ha produït un error en llegir la informació de l'extensió de la capa"
 
 #: plug-ins/common/file-psp.c:1813
 msgid "Error reading block information"
@@ -4607,8 +4716,9 @@ msgid "Exporting not implemented yet."
 msgstr "No s'ha implementat l'exportació."
 
 #: plug-ins/common/file-qoi.c:137 plug-ins/common/file-qoi.c:164
+#, fuzzy
 msgid "Quite OK Image"
-msgstr ""
+msgstr "Imatge bastant correcta"
 
 #: plug-ins/common/file-qoi.c:140
 msgid "Load file in the QOI file format"
@@ -4649,7 +4759,8 @@ msgstr "Dades sense format"
 #: plug-ins/common/file-raw-data.c:550
 #, c-format
 msgid ""
-"%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
+"%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and "
+"3."
 msgstr ""
 "%d no és una mostra d'espaiat vàlida. Els valors vàlids són: 0 (detecció "
 "automàtica), 1 i 3."
@@ -4658,13 +4769,13 @@ msgstr ""
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
-"valid HGT file or its variant is not supported yet. Supported HGT files are: "
-"SRTM-1 and SRTM-3. If you know the variant, run with argument 1 or 3."
+"valid HGT file or its variant is not supported yet. Supported HGT files are:"
+" SRTM-1 and SRTM-3. If you know the variant, run with argument 1 or 3."
 msgstr ""
 "Ha fallat la detecció automàtica de la mostra d'espaiat. «%s» no sembla ser "
 "un fitxer HGT vàlid o la seva variant encara no és compatible. Els fitxers "
-"HGT suportats són: SRTM-1 i SRTM-3. Si coneixeu la variant, executeu amb els "
-"arguments 1 o 3."
+"HGT suportats són: SRTM-1 i SRTM-3. Si coneixeu la variant, executeu amb els"
+" arguments 1 o 3."
 
 #: plug-ins/common/file-raw-data.c:654
 msgid "RAW export does not support multiple layers."
@@ -4680,13 +4791,13 @@ msgid "Load Image from Raw Data"
 msgstr "Carrega una imatge des de dades sense format"
 
 #. 2 types of HGT files are possible: SRTM-1 and SRTM-3.
-#. * From the documentation: https://dds.cr.usgs.gov/srtm/version1/Documentation/SRTM_Topo.txt
+#. * From the documentation:
+#. https://dds.cr.usgs.gov/srtm/version1/Documentation/SRTM_Topo.txt
 #. * "SRTM-1 data are sampled at one arc-second of latitude and longitude and
 #. *  each file contains 3601 lines and 3601 samples.
 #. * [...]
 #. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
 #. * 1201 samples with similar overlapping rows and columns."
-#.
 #: plug-ins/common/file-raw-data.c:2690
 msgid "SRTM-1 (1 arc-second)"
 msgstr "SRTM-1 (1 arc de segon)"
@@ -4697,7 +4808,6 @@ msgstr "SRTM-3 (3 arcs de segon)"
 
 #. Generic case for any data. Let's leave choice to select the
 #. * right type of raw data.
-#.
 #: plug-ins/common/file-raw-data.c:2702
 msgid "RGB 8-bit"
 msgstr "RGB de 8 bits"
@@ -4807,7 +4917,6 @@ msgstr "Planar"
 #. Translators: Digital Elevation Model (DEM) is a technical term
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
-#.
 #: plug-ins/common/file-raw-data.c:2796
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Dades del model d'elevació digital (1 arc de segon)"
@@ -4834,7 +4943,6 @@ msgstr "Paleta"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
-#.
 #: plug-ins/common/file-raw-data.c:2896
 #, c-format
 msgid "_Contiguous (%s)"
@@ -4846,7 +4954,6 @@ msgstr "Co_ntigua"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
-#.
 #: plug-ins/common/file-raw-data.c:2904
 #, c-format
 msgid "_Planar (%s)"
@@ -4874,8 +4981,9 @@ msgid "Data Formatting"
 msgstr "S'estan formatant les dades"
 
 #: plug-ins/common/file-sunras.c:320
+#, fuzzy
 msgid "Use standard (0) or Run-Length Encoded (1) output"
-msgstr ""
+msgstr "Usa la sortida estàndard (0) o Run-Length codificada (1)"
 
 #: plug-ins/common/file-sunras.c:404
 msgid "SUNRAS format does not support multiple layers."
@@ -5010,7 +5118,6 @@ msgstr ""
 #. * option (XML_PARSE_HUGE in libxml) because it is considered
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
-#.
 #: plug-ins/common/file-svg.c:687
 msgid "Disable safety size limits?"
 msgstr "Voleu desactivar els límits de seguretat de la mida?"
@@ -5032,16 +5139,13 @@ msgstr "_Sí"
 #. * just directly return from the plug-in as a failure run in other
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
-#.
 #: plug-ins/common/file-svg.c:717
 msgid ""
 "A parsing error occurred.\n"
-"Disabling safety limits may help. Malicious SVG files may use this to "
-"consume too much memory."
+"Disabling safety limits may help. Malicious SVG files may use this to consume too much memory."
 msgstr ""
 "S'ha produït un error d'anàlisi.\n"
-"Inhabilitar els límits de seguretat pot ajudar. Els fitxers SVG maliciosos "
-"poden utilitzar-los per a consumir massa memòria."
+"Inhabilitar els límits de seguretat pot ajudar. Els fitxers SVG maliciosos poden utilitzar-los per a consumir massa memòria."
 
 #: plug-ins/common/file-svg.c:729
 msgid "For security reasons, this should only be used for trusted input!"
@@ -5119,8 +5223,9 @@ msgid "Ori_gin"
 msgstr "_Origen"
 
 #: plug-ins/common/file-tga.c:309
+#, fuzzy
 msgid "Image origin (0 = top-left, 1 = bottom-left)"
-msgstr ""
+msgstr "Origen de la imatge (0 = superior esquerra, 1 = inferior esquerra)"
 
 #: plug-ins/common/file-tga.c:391 plug-ins/common/file-xwd.c:442
 msgid "TGA format does not support multiple layers."
@@ -5201,24 +5306,32 @@ msgid "X BitMap image"
 msgstr "Mapa de bits X"
 
 #: plug-ins/common/file-xbm.c:162
+#, fuzzy
 msgid "Load a file in X10 or X11 bitmap (XBM) file format"
-msgstr ""
+msgstr "Carrega un fitxer en format X10 o X11 bitmap (XBM)"
 
 #: plug-ins/common/file-xbm.c:164
+#, fuzzy
 msgid ""
-"Load a file in X10 or X11 bitmap (XBM) file format. XBM is a lossless format "
-"for flat black-and-white (two color indexed) images."
+"Load a file in X10 or X11 bitmap (XBM) file format. XBM is a lossless format"
+" for flat black-and-white (two color indexed) images."
 msgstr ""
+"Carrega un fitxer en format X10 o X11 bitmap (XBM). XBM és un format sense "
+"pèrdua per a imatges planes en blanc i negre (dos colors indexats)."
 
 #: plug-ins/common/file-xbm.c:190
+#, fuzzy
 msgid "Export a file in X10 or X11 bitmap (XBM) file format"
-msgstr ""
+msgstr "Exporta un fitxer en format X10 o X11 bitmap (XBM)"
 
 #: plug-ins/common/file-xbm.c:192
+#, fuzzy
 msgid ""
-"X10 or X11 bitmap (XBM) file format. XBM is a lossless format for flat black-"
-"and-white (two color indexed) images."
+"X10 or X11 bitmap (XBM) file format. XBM is a lossless format for flat "
+"black-and-white (two color indexed) images."
 msgstr ""
+"Format de fitxer X10 o X11 bitmap (XBM). XBM és un format sense pèrdua per a"
+" imatges planes en blanc i negre (dos colors indexats)."
 
 #: plug-ins/common/file-xbm.c:203
 msgid "XBM"
@@ -5237,8 +5350,9 @@ msgid "Co_mment"
 msgstr "Co_mentari"
 
 #: plug-ins/common/file-xbm.c:219
+#, fuzzy
 msgid "Image description (maximum 72 bytes)"
-msgstr ""
+msgstr "Descripció de la imatge (màxim 72 bytes)"
 
 #: plug-ins/common/file-xbm.c:227
 msgid "_X10 format bitmap"
@@ -5267,8 +5381,9 @@ msgid "Hot s_pot X"
 msgstr "Punt calent _X:"
 
 #: plug-ins/common/file-xbm.c:240
+#, fuzzy
 msgid "X coordinate of hotspot"
-msgstr ""
+msgstr "Coordenada X del punt d'accés Wi-Fi"
 
 #: plug-ins/common/file-xbm.c:245
 #, fuzzy
@@ -5277,8 +5392,9 @@ msgid "Hot spot _Y"
 msgstr "Punt calent _Y:"
 
 #: plug-ins/common/file-xbm.c:246
+#, fuzzy
 msgid "Y coordinate of hotspot"
-msgstr ""
+msgstr "Coordenada Y del punt d'accés Wi-Fi"
 
 #: plug-ins/common/file-xbm.c:251
 #, fuzzy
@@ -5287,8 +5403,9 @@ msgid "I_dentifier prefix"
 msgstr "Prefix de l'_identificador:"
 
 #: plug-ins/common/file-xbm.c:252
+#, fuzzy
 msgid "Identifier prefix [determined from filename]"
-msgstr ""
+msgstr "Prefix d'identificador [determinat des del nom de fitxer]"
 
 #: plug-ins/common/file-xbm.c:257
 #, fuzzy
@@ -5339,15 +5456,13 @@ msgstr ""
 #. The image is not black-and-white.
 #: plug-ins/common/file-xbm.c:1015
 msgid ""
-"The image which you are trying to export as an XBM contains more than two "
-"colors.\n"
+"The image which you are trying to export as an XBM contains more than two colors.\n"
 "\n"
 "Please convert it to a black and white (1-bit) indexed image and try again."
 msgstr ""
 "La imatge que esteu intentant exportar com a XBM conté més de dos colors.\n"
 "\n"
-"Convertiu-la en una imatge indexada en blanc i negre (1-bit) i torneu-ho a "
-"provar."
+"Convertiu-la en una imatge indexada en blanc i negre (1-bit) i torneu-ho a provar."
 
 #: plug-ins/common/file-xbm.c:1027
 msgid ""
@@ -5362,8 +5477,7 @@ msgid ""
 "Writing a comment will make the XBM file unreadable by some applications.\n"
 "The comment will not affect embedding the XBM in C source code."
 msgstr ""
-"En escriure un comentari, el fitxer XBM serà il·legible per algunes "
-"aplicacions.\n"
+"En escriure un comentari, el fitxer XBM serà il·legible per algunes aplicacions.\n"
 "El comentari no afectarà la incrustació de la XBM en codi font C."
 
 #: plug-ins/common/file-xmc.c:299 plug-ins/common/file-xmc.c:348
@@ -5376,8 +5490,7 @@ msgid ""
 "You must arrange layers so that all of them have an intersection."
 msgstr ""
 "No s'ha pogut determinar el punt calent.\n"
-"Hauríeu de disposar les capes de manera que totes elles tinguin una "
-"intersecció."
+"Hauríeu de disposar les capes de manera que totes elles tinguin una intersecció."
 
 #: plug-ins/common/file-xmc.c:665
 #, c-format
@@ -5444,15 +5557,12 @@ msgstr "Esc_apça automàticament tots els marcs"
 #: plug-ins/common/file-xmc.c:1158
 msgid ""
 "Remove the empty borders of all frames.\n"
-"This reduces the file size and may fix the problem that some large cursors "
-"disorder the screen.\n"
+"This reduces the file size and may fix the problem that some large cursors disorder the screen.\n"
 "Uncheck if you plan to edit the exported cursor using other programs."
 msgstr ""
 "Suprimiu les vores buides de tots els marcs.\n"
-"Això reduirà la mida del fitxer i hauria de solucionar el problema que "
-"alguns cursors grans causen a la pantalla.\n"
-"Desmarqueu aquesta opció si penseu editar el cursor exportat amb alguna "
-"altra aplicació."
+"Això reduirà la mida del fitxer i hauria de solucionar el problema que alguns cursors grans causen a la pantalla.\n"
+"Desmarqueu aquesta opció si penseu editar el cursor exportat amb alguna altra aplicació."
 
 #: plug-ins/common/file-xmc.c:1177
 msgid ""
@@ -5465,21 +5575,14 @@ msgstr ""
 #: plug-ins/common/file-xmc.c:1181
 msgid ""
 "Choose the nominal size of frames.\n"
-"If you don't have plans to make multi-sized cursor, or you have no idea, "
-"leave it \"32px\".\n"
+"If you don't have plans to make multi-sized cursor, or you have no idea, leave it \"32px\".\n"
 "Nominal size has no relation with the actual size (width or height).\n"
-"It is only used to determine which frame depends on which animation "
-"sequence, and which sequence is used based on the value of \"gtk-cursor-"
-"theme-size\"."
+"It is only used to determine which frame depends on which animation sequence, and which sequence is used based on the value of \"gtk-cursor-theme-size\"."
 msgstr ""
 "Escolliu la mida nominal dels marcs.\n"
-"Si no penseu crear un cursor amb mida variable, o no ho sabeu, deixeu "
-"«32px».\n"
-"La mida nominal no té relació amb la mida real (amb l'amplada o amb "
-"l'alçada).\n"
-"Només s'utilitza per a determinar quin fotograma depèn amb quina seqüència "
-"de l'animació i quina seqüència s'utilitza en cada cas basant-se en el valor "
-"de «gtk-cursor-theme-size»."
+"Si no penseu crear un cursor amb mida variable, o no ho sabeu, deixeu «32px».\n"
+"La mida nominal no té relació amb la mida real (amb l'amplada o amb l'alçada).\n"
+"Només s'utilitza per a determinar quin fotograma depèn amb quina seqüència de l'animació i quina seqüència s'utilitza en cada cas basant-se en el valor de «gtk-cursor-theme-size»."
 
 #: plug-ins/common/file-xmc.c:1194
 msgid "Use size entered above for all frames"
@@ -5555,48 +5658,35 @@ msgstr "L'amplada i/o l'alçada del marc «%s» és zero."
 #, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
-"Try to change the hot spot position, layer geometry or export without auto-"
-"crop."
+"Try to change the hot spot position, layer geometry or export without auto-crop."
 msgstr ""
 "No s'ha pogut exportar el cursor perquè el punt calent no és a «%s».\n"
-"Intenteu canviar la posició del punt calent, la geometria de la capa o "
-"exporteu la capa sense l'escapçat automàtic."
+"Intenteu canviar la posició del punt calent, la geometria de la capa o exporteu la capa sense l'escapçat automàtic."
 
 #: plug-ins/common/file-xmc.c:1681
 #, c-format
 msgid ""
-"Your cursor was successfully exported but it contains one or more frames "
-"whose width or height is more than %ipx, a historical max dimension value "
-"for X bitmap cursors.\n"
+"Your cursor was successfully exported but it contains one or more frames whose width or height is more than %ipx, a historical max dimension value for X bitmap cursors.\n"
 "It might be unsupported by some environments."
 msgstr ""
-"El cursor s'ha exportat correctament però conté un o més marcs que "
-"excedeixen l'alçada o l'amplada en %ipx , un valor de dimensió màxima "
-"històrica per als cursors de mapa de bits X.\n"
+"El cursor s'ha exportat correctament però conté un o més marcs que excedeixen l'alçada o l'amplada en %ipx , un valor de dimensió màxima històrica per als cursors de mapa de bits X.\n"
 "Alguns entorns podrien no suportar-ho."
 
 #: plug-ins/common/file-xmc.c:1689
 msgid ""
-"Your cursor was successfully exported but it contains one or more frames "
-"whose nominal size is not supported by GNOME settings.\n"
-"You can satisfy it by checking \"Replace the size of all frames...\" in the "
-"export dialog, or your cursor may not appear in GNOME settings."
+"Your cursor was successfully exported but it contains one or more frames whose nominal size is not supported by GNOME settings.\n"
+"You can satisfy it by checking \"Replace the size of all frames...\" in the export dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
-"El cursor s'ha exportat amb èxit però conté un o més marcs dels quals la "
-"grandària nominal no és compatible amb la configuració del GNOME.\n"
-"Es pot satisfer mitjançant la comprovació «Substituir la mida de tots els "
-"marcs...» al diàleg d'exportació, o el cursor no pot aparèixer en la "
-"configuració del GNOME."
+"El cursor s'ha exportat amb èxit però conté un o més marcs dels quals la grandària nominal no és compatible amb la configuració del GNOME.\n"
+"Es pot satisfer mitjançant la comprovació «Substituir la mida de tots els marcs...» al diàleg d'exportació, o el cursor no pot aparèixer en la configuració del GNOME."
 
 #: plug-ins/common/file-xmc.c:1971
 #, c-format
 msgid ""
-"Your cursor was successfully exported but it contains one or more frames "
-"whose size is over 8 digits.\n"
+"Your cursor was successfully exported but it contains one or more frames whose size is over 8 digits.\n"
 "We clamped it to %dpx. You should check the exported cursor."
 msgstr ""
-"El cursor s'ha exportat correctament però conté un o més marcs que "
-"excedeixen l'alçada o l'amplada en 8 dígits.\n"
+"El cursor s'ha exportat correctament però conté un o més marcs que excedeixen l'alçada o l'amplada en 8 dígits.\n"
 "L'hem fixat a %dpx. Heu de comprovar el cursor exportat."
 
 #. translators: the %i is *always* 8 here
@@ -5613,7 +5703,8 @@ msgstr ""
 msgid "X PixMap image"
 msgstr "Imatge X PixMap"
 
-#: plug-ins/common/file-xpm.c:256 plug-ins/gradient-flare/gradient-flare.c:3014
+#: plug-ins/common/file-xpm.c:256
+#: plug-ins/gradient-flare/gradient-flare.c:3014
 msgid "_Threshold"
 msgstr "_Llindar"
 
@@ -5676,11 +5767,11 @@ msgstr "No es poden llegir les entrades de color"
 #: plug-ins/common/file-xwd.c:628
 #, c-format
 msgid ""
-"XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
-"not supported."
+"XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is"
+" not supported."
 msgstr ""
-"El fitxer XWD %s que té el format %d, la profunditat %d i %d bits per píxel. "
-"No és compatible actualment."
+"El fitxer XWD %s que té el format %d, la profunditat %d i %d bits per píxel."
+" No és compatible actualment."
 
 #: plug-ins/common/file-xwd.c:659
 msgid "Cannot export images with alpha channels."
@@ -5954,12 +6045,14 @@ msgid "Hot"
 msgstr "Càlid"
 
 #: plug-ins/common/hot.c:690
+#, fuzzy
 msgid "N_TSC"
-msgstr ""
+msgstr "NTSC"
 
 #: plug-ins/common/hot.c:691
+#, fuzzy
 msgid "_PAL"
-msgstr ""
+msgstr "PAL"
 
 #: plug-ins/common/hot.c:696
 msgid "Reduce _Luminance"
@@ -5982,8 +6075,9 @@ msgid "Add a jigsaw-puzzle pattern to the image"
 msgstr "Afegeix un patró en forma de puzle a la imatge"
 
 #: plug-ins/common/jigsaw.c:405
+#, fuzzy
 msgid "Jigsaw puzzle look"
-msgstr ""
+msgstr "Aspecte del trencaclosques Jigsaw"
 
 #: plug-ins/common/jigsaw.c:413 plug-ins/common/tile-small.c:511
 #: plug-ins/pagecurl/pagecurl.c:586
@@ -6008,20 +6102,23 @@ msgid "Jigsaw Style"
 msgstr "Estil d'enllaç"
 
 #: plug-ins/common/jigsaw.c:426
+#, fuzzy
 msgid "The style/shape of the jigsaw puzzle { Square (0), Curved (1) }"
-msgstr ""
+msgstr "L'estil/forma del trencaclosques { Square (0), corbat (1) }"
 
 #: plug-ins/common/jigsaw.c:432
+#, fuzzy
 msgid "_Blend width"
-msgstr ""
+msgstr "Amplada de la barreja"
 
 #: plug-ins/common/jigsaw.c:433
 msgid "Degree of slope of each piece's edge"
 msgstr "Grau d'inclinació de la vora de cada peça"
 
 #: plug-ins/common/jigsaw.c:438
+#, fuzzy
 msgid "Hi_ghlight"
-msgstr ""
+msgstr "Ressalta"
 
 #: plug-ins/common/jigsaw.c:439
 msgid "The amount of highlighting on the edges of each piece"
@@ -6032,8 +6129,9 @@ msgid "Assembling jigsaw"
 msgstr "S'està muntant el puzle"
 
 #: plug-ins/common/jigsaw.c:727
+#, fuzzy
 msgid "draw_jigsaw: bad style\n"
-msgstr ""
+msgstr "drawjigsaw: estil incorrecte"
 
 #: plug-ins/common/jigsaw.c:2490
 msgid "Jigsaw"
@@ -6108,10 +6206,13 @@ msgid "Nonlinear swiss army knife filter"
 msgstr "Filtre navalla suïssa no-lineal"
 
 #: plug-ins/common/nl-filter.c:163
+#, fuzzy
 msgid ""
 "This is the pnmnlfilt, in GIMP's clothing. See the pnmnlfilt manpage for "
 "details."
 msgstr ""
+"Aquest és el pnmnlfilt, a la roba del GIMP. Vegeu la pàgina man del "
+"pnmnlfilt per a més detalls."
 
 #: plug-ins/common/nl-filter.c:174
 msgid "_Alpha"
@@ -6136,10 +6237,13 @@ msgid "Filter"
 msgstr "Filtre"
 
 #: plug-ins/common/nl-filter.c:187
+#, fuzzy
 msgid ""
 "The Filter to Run, 0 - alpha trimmed mean; 1 - optimal estimation (alpha "
 "controls noise variance); 2 - edge enhancement"
 msgstr ""
+"El filtre a executar, 0 - mitjana retallada alfa; 1 - estimació òptima "
+"(variància de soroll de controls alfa); 2 - millora de la vora"
 
 #: plug-ins/common/nl-filter.c:1031 plug-ins/common/nl-filter.c:1129
 msgid "NL Filter"
@@ -6197,7 +6301,8 @@ msgstr "Cap resultat"
 msgid "Plug-in Browser"
 msgstr "Navegador de connectors"
 
-#: plug-ins/common/plugin-browser.c:599 plug-ins/metadata/metadata-editor.c:605
+#: plug-ins/common/plugin-browser.c:599
+#: plug-ins/metadata/metadata-editor.c:605
 #: plug-ins/metadata/metadata-editor.c:641
 #: plug-ins/metadata/metadata-editor.c:648
 #: plug-ins/metadata/metadata-editor.c:655
@@ -6293,7 +6398,8 @@ msgstr "Obtén color_s de mostra"
 #: plug-ins/common/sample-colorize.c:1416 plug-ins/common/tile-small.c:635
 #: plug-ins/fractal-explorer/fractal-explorer.c:1225
 #: plug-ins/gimpressionist/orientmap.c:527
-#: plug-ins/gimpressionist/presets.c:1060 plug-ins/gimpressionist/sizemap.c:400
+#: plug-ins/gimpressionist/presets.c:1060
+#: plug-ins/gimpressionist/sizemap.c:400
 #: plug-ins/imagemap/imap_default_dialog.c:103
 msgid "_Apply"
 msgstr "_Aplica"
@@ -6408,10 +6514,13 @@ msgid "Turn bright spots into starry sparkles"
 msgstr "Converteix les taques de llum en espurnes enlluernadores"
 
 #: plug-ins/common/sparkle.c:184
+#, fuzzy
 msgid ""
 "Uses a percentage based luminosity threshold to find candidate pixels for "
 "adding some sparkles (spikes)."
 msgstr ""
+"Utilitza un llindar de lluminositat basat en un percentatge per a trobar "
+"píxels candidats per a afegir algunes espurnes (espurnes)."
 
 #: plug-ins/common/sparkle.c:196
 msgid "Lu_minosity threshold"
@@ -6520,12 +6629,14 @@ msgid "Draw a border of spikes around the image"
 msgstr "Dibuixa una vora plena de puntes al voltant de la imatge"
 
 #: plug-ins/common/sparkle.c:271
+#, fuzzy
 msgid "Color type"
-msgstr ""
+msgstr "Tipus de color"
 
 #: plug-ins/common/sparkle.c:272
+#, fuzzy
 msgid "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }"
-msgstr ""
+msgstr "Color de les espurnes: { NATURAL (0), PRIMER PLA (1), FONS (2) }"
 
 #: plug-ins/common/sparkle.c:321
 msgid "Region selected for filter is empty"
@@ -6540,8 +6651,9 @@ msgid "Sparkle"
 msgstr "Espurnes"
 
 #: plug-ins/common/sparkle.c:447
+#, fuzzy
 msgid "Additional Options"
-msgstr ""
+msgstr "Opcions addicionals"
 
 #. colortype
 #: plug-ins/common/sparkle.c:453
@@ -6936,7 +7048,8 @@ msgstr "Crea una unitat nova des de zero"
 
 #: plug-ins/common/unit-editor.c:298
 msgid "Create a new unit using the currently selected unit as template"
-msgstr "Crea una unitat nova utilitzant la unitat seleccionada com a plantilla"
+msgstr ""
+"Crea una unitat nova utilitzant la unitat seleccionada com a plantilla"
 
 #: plug-ins/common/unit-editor.c:431
 msgid "Add a New Unit"
@@ -7450,28 +7563,36 @@ msgid "Ru_n-Length Encoded"
 msgstr "Codificació _Run-Lenght"
 
 #: plug-ins/file-bmp/bmp.c:198
+#, fuzzy
 msgid ""
 "Use run-length-encoding compression (only valid for 4 and 8-bit indexed "
 "images)"
 msgstr ""
+"Usa la compressió run-length-encoding (només vàlida per a imatges indexades "
+"de 4 i 8 bits)"
 
 #: plug-ins/file-bmp/bmp.c:204
 msgid "_Write color space information"
 msgstr "_Escriure informació de l'espai en color"
 
 #: plug-ins/file-bmp/bmp.c:205
+#, fuzzy
 msgid "Whether or not to write BITMAPV5HEADER color space data"
-msgstr ""
+msgstr "Si escriure o no dades de l'espai de color BITMAPV5HEADER"
 
 #: plug-ins/file-bmp/bmp.c:211
+#, fuzzy
 msgid "R_GB format"
-msgstr ""
+msgstr "Format RGB"
 
 #: plug-ins/file-bmp/bmp.c:212
+#, fuzzy
 msgid ""
 "Export format for RGB images (0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, "
 "4=RGBA_8888, 5=RGBX_8888)"
 msgstr ""
+"Format d'exportació per a les imatges RGB (0=RGB565, 1=RGBA5551, 2=RGB555, "
+"3=RGB888, 4=RGBA8888, 5=RGBX888888)"
 
 #: plug-ins/file-bmp/bmp.c:296
 msgid "BMP format does not support multiple layers."
@@ -7492,8 +7613,9 @@ msgid "Load _mipmaps"
 msgstr "Carrega e_ls mipmaps"
 
 #: plug-ins/file-dds/dds.c:166
+#, fuzzy
 msgid "Load mipmaps if present"
-msgstr ""
+msgstr "Carrega els mipmaps si hi són"
 
 #: plug-ins/file-dds/dds.c:171
 msgid "Automatically decode YCoCg/AE_xp images when detected"
@@ -7508,24 +7630,27 @@ msgid "Decode YCoCg"
 msgstr "Descodifica YCoCg"
 
 #: plug-ins/file-dds/dds.c:327 plug-ins/file-dds/dds.c:328
+#, fuzzy
 msgid "Converts YCoCg encoded pixels to RGB"
-msgstr ""
+msgstr "Converteix els píxels codificats en YCoCg a RGB"
 
 #: plug-ins/file-dds/dds.c:345
 msgid "Decode YCoCg (scaled)"
 msgstr "Descodifica  YCoCg (escalat)"
 
 #: plug-ins/file-dds/dds.c:349 plug-ins/file-dds/dds.c:351
+#, fuzzy
 msgid "Converts YCoCg (scaled) encoded pixels to RGB"
-msgstr ""
+msgstr "Converteix els píxels codificats de YCoCg (escalats) a RGB"
 
 #: plug-ins/file-dds/dds.c:369
 msgid "Decode Alpha exponent"
 msgstr "Descodifica l'exponent alfa"
 
 #: plug-ins/file-dds/dds.c:375 plug-ins/file-dds/dds.c:373
+#, fuzzy
 msgid "Converts alpha exponent encoded pixels to RGB"
-msgstr ""
+msgstr "Converteix píxels codificats amb exponent alfa a RGB"
 
 #: plug-ins/file-dds/ddsread.c:366
 msgid "Could not allocate a new image."
@@ -7705,7 +7830,8 @@ msgstr ""
 #: plug-ins/file-faxg3/faxg3.c:560
 #, c-format
 msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
-msgstr "Dimensions d'imatge no vàlides (%d x %d). La imatge pot estar malmesa."
+msgstr ""
+"Dimensions d'imatge no vàlides (%d x %d). La imatge pot estar malmesa."
 
 #: plug-ins/file-faxg3/faxg3.c:570
 msgid "Could not create image."
@@ -7720,8 +7846,11 @@ msgid "Load file of the FITS file format"
 msgstr "Carrega fitxers en el format de fitxer FITS"
 
 #: plug-ins/file-fits/fits.c:181
+#, fuzzy
 msgid "Load file of the FITS file format (Flexible Image Transport System)"
 msgstr ""
+"Carrega el fitxer del format de fitxer FITS (Sistema de transport d'imatges "
+"flexible)"
 
 #: plug-ins/file-fits/fits.c:198 plug-ins/file-fits/fits.c:199
 msgid "Replacement for undefined pixels"
@@ -7732,17 +7861,21 @@ msgid "Pixel value scaling"
 msgstr "Escalat del valor dels píxels"
 
 #: plug-ins/file-fits/fits.c:205
+#, fuzzy
 msgid "Use DATAMIN/DATAMAX-scaling if possible"
-msgstr ""
+msgstr "Usa l'escalat «DATAMIN»/DATAMAX si és possible"
 
 #: plug-ins/file-fits/fits.c:221
 msgid "Export file in the FITS file format"
 msgstr "Exporta el fitxer en el format de fitxer FITS"
 
 #: plug-ins/file-fits/fits.c:222
+#, fuzzy
 msgid ""
 "FITS exporting handles all image types except those with alpha channels."
 msgstr ""
+"L'exportació FITS gestiona tots els tipus d'imatge excepte els que tenen "
+"canals alfa."
 
 #: plug-ins/file-fits/fits.c:326
 msgid "FITS format does not support multiple layers."
@@ -7757,8 +7890,9 @@ msgid "FITS file keeps no displayable images"
 msgstr "El fitxer FITS conserva imatges no visualitzables"
 
 #: plug-ins/file-fits/fits.c:516
+#, fuzzy
 msgid "FITS HDU"
-msgstr ""
+msgstr "FITS HDU"
 
 #: plug-ins/file-fits/fits.c:624
 msgid "FITS export cannot handle images with alpha channels"
@@ -7809,7 +7943,8 @@ msgstr "El nombre de fotogrames és 0. S'està establint a 2."
 #: plug-ins/file-fli/fli.c:220
 #, c-format
 msgid "Suspicious frame delay of %ums. Setting delay to 70ms."
-msgstr "Retard sospitós del fotograma de %ums. S'està establint el retard a 70ms."
+msgstr ""
+"Retard sospitós del fotograma de %ums. S'està establint el retard a 70ms."
 
 #: plug-ins/file-fli/fli.c:249 plug-ins/file-fli/fli.c:258
 #: plug-ins/file-fli/fli.c:269 plug-ins/file-fli/fli.c:276
@@ -7902,20 +8037,24 @@ msgid "Load FLI-movies"
 msgstr "Carrega la flama"
 
 #: plug-ins/file-fli/fli-gimp.c:185 plug-ins/file-fli/fli-gimp.c:223
+#, fuzzy
 msgid "This is an experimental plug-in to handle FLI movies"
-msgstr ""
+msgstr "Aquest és un connector experimental per a gestionar pel·lícules FLI"
 
 #: plug-ins/file-fli/fli-gimp.c:199 plug-ins/file-fli/fli-gimp.c:237
+#, fuzzy
 msgid "_From frame"
-msgstr ""
+msgstr "Des del fotograma"
 
 #: plug-ins/file-fli/fli-gimp.c:200
+#, fuzzy
 msgid "Load beginning from this frame"
-msgstr ""
+msgstr "Carrega a partir d'aquest fotograma"
 
 #: plug-ins/file-fli/fli-gimp.c:205 plug-ins/file-fli/fli-gimp.c:243
+#, fuzzy
 msgid "_To frame"
-msgstr ""
+msgstr "Al marc"
 
 #: plug-ins/file-fli/fli-gimp.c:206
 msgid "End loading with this frame"
@@ -7934,12 +8073,15 @@ msgid "Export FLI-movies"
 msgstr "Exporta les icones"
 
 #: plug-ins/file-fli/fli-gimp.c:238
+#, fuzzy
 msgid "Export beginning from this frame"
-msgstr ""
+msgstr "Exporta des d'aquest fotograma"
 
 #: plug-ins/file-fli/fli-gimp.c:244
+#, fuzzy
 msgid "End exporting with this frame (or -1 for all frames)"
 msgstr ""
+"Finalitza l'exportació amb aquest fotograma (o -1 per a tots els fotogrames)"
 
 #: plug-ins/file-fli/fli-gimp.c:587
 #, c-format
@@ -7957,7 +8099,8 @@ msgstr "Obre l'animació FLIC"
 
 #: plug-ins/file-icns/file-icns-load.c:431
 #, fuzzy, c-format
-#| msgid "Error trying to open temporary file '%s' for parasite loading: %s"
+#| msgid ""
+#| "Error trying to open temporary file '%s' for parasite loading: %s"
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr ""
 "S'ha produït un error en obrir el fitxer temporal «%s» per a carregar el "
@@ -8026,8 +8169,8 @@ msgid ""
 "24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
 msgstr ""
 "No hi ha capes de mida vàlida. Només les mides de capa vàlides són 16x12, "
-"16x16, 18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, o "
-"1024x1024."
+"16x16, 18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, o"
+" 1024x1024."
 
 #: plug-ins/file-icns/file-icns-save.c:604
 #, fuzzy
@@ -8036,8 +8179,8 @@ msgid ""
 "24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, or 1024x1024."
 msgstr ""
 "Mida/es de capa/es no vàlida/es. Només les mides de capa vàlides són 16x12, "
-"16x16, 18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, o "
-"1024x1024."
+"16x16, 18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, o"
+" 1024x1024."
 
 #: plug-ins/file-icns/file-icns.c:131
 #, fuzzy
@@ -8142,11 +8285,11 @@ msgstr "La coordenada X no és vàlida: %d"
 #: plug-ins/file-ico/ico-save.c:213
 #, c-format
 msgid ""
-"Called non-interactively with %d and %d hotspot coordinates with an image of "
-"%d icons."
+"Called non-interactively with %d and %d hotspot coordinates with an image of"
+" %d icons."
 msgstr ""
-"Cridat sense interacció amb les coordenades del punt %d i %d d'accés amb una "
-"imatge de %d icones."
+"Cridat sense interacció amb les coordenades del punt %d i %d d'accés amb una"
+" imatge de %d icones."
 
 #: plug-ins/file-ico/ico.c:168 plug-ins/file-ico/ico.c:291
 msgid "Microsoft Windows icon"
@@ -8194,7 +8337,8 @@ msgstr "Previsualització del JPEG"
 
 #: plug-ins/file-jpeg/jpeg-load.c:485
 #, fuzzy, c-format
-#| msgid "Error trying to open temporary file '%s' for parasite loading: %s"
+#| msgid ""
+#| "Error trying to open temporary file '%s' for parasite loading: %s"
 msgid ""
 "Error trying to open temporary %s file '%s' for jpeg metadata loading: %s"
 msgstr ""
@@ -8405,64 +8549,86 @@ msgid "Compatibility Notice"
 msgstr "Avís de compatibilitat PSD"
 
 #: plug-ins/file-psd/psd-load.c:3474
+#, fuzzy
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
 msgstr ""
+"Aquest fitxer PSD conté característiques que\n"
+"Encara no estan totalment suportats en el GIMP:"
 
 #: plug-ins/file-psd/psd-load.c:3488
+#, fuzzy
 msgid "Adjustment layers are not yet supported and will be dropped."
-msgstr ""
+msgstr "Les capes d'ajust encara no estan admeses i es deixaran anar."
 
 #: plug-ins/file-psd/psd-load.c:3492 plug-ins/file-psd/psd.c:562
+#, fuzzy
 msgid "Metadata fill layers are not supported and will be dropped."
 msgstr ""
+"Les capes d'emplenat de metadades no estan admeses i es deixaran anar."
 
 #: plug-ins/file-psd/psd-load.c:3496
+#, fuzzy
 msgid ""
 "Fill layers are partially supported and will be converted to raster layers."
 msgstr ""
+"Les capes d'emplenat estan parcialment suportades i es convertiran en capes "
+"ràster."
 
 #: plug-ins/file-psd/psd-load.c:3501
+#, fuzzy
 msgid ""
 "Text layers are partially supported and will be converted to raster layers."
 msgstr ""
+"Les capes de text estan parcialment suportades i es convertiran en capes "
+"ràster."
 
 #: plug-ins/file-psd/psd-load.c:3506
+#, fuzzy
 msgid "Linked layers are not yet supported and will be dropped."
-msgstr ""
+msgstr "Les capes enllaçades encara no estan admeses i es deixaran anar."
 
 #: plug-ins/file-psd/psd-load.c:3510
+#, fuzzy
 msgid ""
 "Vector masks are partially supported and will be converted to raster layers."
 msgstr ""
+"Les màscares vectorials estan parcialment suportades i es convertiran en "
+"capes ràster."
 
 #: plug-ins/file-psd/psd-load.c:3515
+#, fuzzy
 msgid "Vector strokes are not yet supported and will be dropped."
-msgstr ""
+msgstr "Els traços vectorials encara no estan admesos i es deixaran anar."
 
 #: plug-ins/file-psd/psd-load.c:3519
+#, fuzzy
 msgid "Layer effects are not yet supported and will be dropped."
-msgstr ""
+msgstr "Els efectes de la capa encara no estan admesos i es deixaran anar."
 
 #: plug-ins/file-psd/psd-load.c:3523
+#, fuzzy
 msgid "Smart objects are not yet supported and will be dropped."
 msgstr ""
+"Els objectes intel·ligents encara no estan admesos i es deixaran anar."
 
 #. Translators: short for layer compositions
 #: plug-ins/file-psd/psd-load.c:3528
+#, fuzzy
 msgid "Layer comps are not yet supported and will be dropped."
-msgstr ""
+msgstr "Els comes de la capa encara no estan admesos i es deixaran anar."
 
 #: plug-ins/file-psd/psd-save.c:502
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "Error: no es pot convertir de tipus d'imatge base del GIMP al mode PSD"
+msgstr ""
+"Error: no es pot convertir de tipus d'imatge base del GIMP al mode PSD"
 
 #: plug-ins/file-psd/psd-save.c:2153
 #, c-format
 msgid ""
-"Unable to export '%s'.  The PSD file format does not support images that are "
-"more than 30,000 pixels wide or tall."
+"Unable to export '%s'.  The PSD file format does not support images that are"
+" more than 30,000 pixels wide or tall."
 msgstr ""
 "No s'ha pogut exportar «%s». El format de fitxer PSD no és compatible amb "
 "imatges de més de 30.000 píxels d'amplada o alçada."
@@ -8499,11 +8665,15 @@ msgstr ""
 "La resta es descartarà."
 
 #: plug-ins/file-psd/psd-save.c:2663
+#, fuzzy
 msgid ""
 "Legacy layer modes have been reported to have better compatibility with "
 "Photoshop. If you encounter display issues, consider switching to those "
 "layer modes."
 msgstr ""
+"S'ha informat que els modes de capa heretats tenen una millor compatibilitat"
+" amb Photoshop. Si trobeu problemes de visualització, considereu canviar a "
+"aquests modes de capa."
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -8578,8 +8748,8 @@ msgstr "Exporta com a Duotone"
 #: plug-ins/file-psd/psd.c:262
 #, fuzzy
 msgid ""
-"Export as a Duotone PSD file if Duotone color space information was attached "
-"to the image when originally imported."
+"Export as a Duotone PSD file if Duotone color space information was attached"
+" to the image when originally imported."
 msgstr ""
 "Exporta com a fitxer PSD Duotone si s'ha adjuntat informació de l'espai de "
 "color Duotone a la imatge quan s'importava originalment."
@@ -8750,8 +8920,9 @@ msgid "Compression _type"
 msgstr "_Tipus de compressió:"
 
 #: plug-ins/file-sgi/sgi.c:192
+#, fuzzy
 msgid "Compression level (0 = none, 1 = RLE, 2 = ARLE)"
-msgstr ""
+msgstr "Nivell de compressió (0 = cap, 1 = RLE, 2 = ARLE)"
 
 #: plug-ins/file-sgi/sgi.c:274
 msgid "SGI format does not support multiple layers."
@@ -8820,11 +8991,11 @@ msgstr "La imatge TIFF «%s» no conté cap directori"
 #: plug-ins/file-tiff/file-tiff-load.c:336
 #, c-format
 msgid ""
-"TIFF '%s' directory count by header failed though there seems to be %d page. "
-"Attempting to load the file with this assumption."
+"TIFF '%s' directory count by header failed though there seems to be %d page."
+" Attempting to load the file with this assumption."
 msgid_plural ""
-"TIFF '%s' directory count by header failed though there seem to be %d pages. "
-"Attempting to load the file with this assumption."
+"TIFF '%s' directory count by header failed though there seem to be %d pages."
+" Attempting to load the file with this assumption."
 msgstr[0] ""
 "El recompte de directoris TIFF «%s» per capçalera ha fallat, tot i que "
 "sembla ser la pàgina %d. Intentant carregar el fitxer amb aquesta suposició."
@@ -8842,22 +9013,21 @@ msgstr "Canals addicionals amb dades no especificades."
 #. * must be present if there are extra samples". So the files
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
-#.
 #: plug-ins/file-tiff/file-tiff-load.c:479
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
-msgstr "TIFF no conforme: canals addicionals sense camp «Mostres Addicionals»."
+msgstr ""
+"TIFF no conforme: canals addicionals sense camp «Mostres Addicionals»."
 
 #: plug-ins/file-tiff/file-tiff-load.c:573
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
-msgstr ""
-"No s'ha pogut llegir la pàgina %d de %d. La imatge pot estar malmesa.\n"
+msgstr "No s'ha pogut llegir la pàgina %d de %d. La imatge pot estar malmesa.\n"
 
 #: plug-ins/file-tiff/file-tiff-load.c:602
 #, c-format
 msgid ""
-"This image has a linear color profile but it was not set on the first layer. "
-"The layers below layer # %d will be interpreted as non linear."
+"This image has a linear color profile but it was not set on the first layer."
+" The layers below layer # %d will be interpreted as non linear."
 msgstr ""
 "Aquesta imatge té un perfil de color lineal però no s'ha definit a la "
 "primera capa. Les capes inferiors a la capa # %d s'interpretaran com a no "
@@ -8869,8 +9039,8 @@ msgid ""
 "leads to incorrect results you should consider loading each layer as a "
 "separate image."
 msgstr ""
-"Aquesta imatge té múltiples perfils de color. Utilitzarem el primer. Si això "
-"condueix a resultats incorrectes, hauríeu de considerar la càrrega de cada "
+"Aquesta imatge té múltiples perfils de color. Utilitzarem el primer. Si això"
+" condueix a resultats incorrectes, hauríeu de considerar la càrrega de cada "
 "capa com una imatge separada."
 
 #: plug-ins/file-tiff/file-tiff-load.c:622
@@ -8906,8 +9076,8 @@ msgstr ""
 #: plug-ins/file-tiff/file-tiff-load.c:748
 #, c-format
 msgid ""
-"Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
-"is-white"
+"Could not get photometric from '%s'. Image is CCITT compressed, assuming "
+"min-is-white"
 msgstr ""
 "No s'ha pogut obtenir la fotometria de «%s». La imatge està comprimida amb "
 "CCITT, s'assumeix que «min-is-white»"
@@ -8932,8 +9102,8 @@ msgstr ""
 #: plug-ins/file-tiff/file-tiff-load.c:812
 #, c-format
 msgid ""
-"Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
-"not set while extra channels are present. Assuming the first extra channel "
+"Image '%s' does not conform to the TIFF specification: ExtraSamples field is"
+" not set while extra channels are present. Assuming the first extra channel "
 "is non-premultiplied alpha."
 msgstr ""
 "La imatge «%s» no s'ajusta a l'especificació TIFF: el camp ExtraSamples no "
@@ -8983,7 +9153,6 @@ msgstr "No s'han pogut llegir els mapes de color de «%s»"
 #. * Photoshop. A higher number most likely means a corrupt image
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
-#.
 #: plug-ins/file-tiff/file-tiff-load.c:1511
 #, fuzzy, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
@@ -9003,7 +9172,8 @@ msgstr ""
 #: plug-ins/file-tiff/file-tiff-load.c:1760
 #: plug-ins/file-tiff/file-tiff-load.c:1802
 #, fuzzy, c-format
-#| msgid "Error trying to open temporary file '%s' for parasite loading: %s"
+#| msgid ""
+#| "Error trying to open temporary file '%s' for parasite loading: %s"
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
 msgstr ""
@@ -9030,8 +9200,8 @@ msgstr ""
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
-"No s'ha pogut llegir l'escanejat per files. La imatge pot estar malmesa a la "
-"línia %d."
+"No s'ha pogut llegir l'escanejat per files. La imatge pot estar malmesa a la"
+" línia %d."
 
 #: plug-ins/file-tiff/file-tiff-load.c:2549
 msgid "Import from TIFF"
@@ -9072,8 +9242,8 @@ msgstr "Cana_l"
 
 #: plug-ins/file-tiff/file-tiff-save.c:648
 msgid ""
-"Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
-"Group 3\"."
+"Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT"
+" Group 3\"."
 msgstr ""
 "Només les imatges monocromes es poden comprimir amb «CCITT grup 4» o «CCITT "
 "grup 3»."
@@ -9105,8 +9275,8 @@ msgid ""
 "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
 "different compression algorithm, or cancel."
 msgstr ""
-"Avís: s'ha excedit la mida màxima del fitxer TIFF. Reintenta com a BigTIFF o "
-"amb un algoritme de compressió diferent, o cancel·la."
+"Avís: s'ha excedit la mida màxima del fitxer TIFF. Reintenta com a BigTIFF o"
+" amb un algoritme de compressió diferent, o cancel·la."
 
 #: plug-ins/file-tiff/file-tiff-save.c:1323
 msgid "LZW"
@@ -9187,7 +9357,6 @@ msgstr "Utilitza YUV aguda"
 
 #. TRANSLATORS: \xe2\x86\x92 is a Unicode
 #. * "Rightward Arrow" in UTF-8 encoding.
-#.
 #: plug-ins/file-webp/file-webp.c:197
 #, fuzzy
 msgid "Use sharper (but slower) RGB→YUV conversion"
@@ -9275,12 +9444,14 @@ msgid "Default"
 msgstr "Per defecte"
 
 #: plug-ins/file-webp/file-webp-dialog.c:81
+#, fuzzy
 msgid "Picture"
-msgstr ""
+msgstr "Imatge"
 
 #: plug-ins/file-webp/file-webp-dialog.c:82
+#, fuzzy
 msgid "Photo"
-msgstr ""
+msgstr "Fotografia"
 
 #: plug-ins/file-webp/file-webp-dialog.c:83
 #, fuzzy
@@ -9646,7 +9817,8 @@ msgstr "Previsualització en temps re_al"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:638
 msgid "If enabled the preview will be redrawn automatically"
-msgstr "Si es marca l'opció, la previsualització es redibuixarà automàticament"
+msgstr ""
+"Si es marca l'opció, la previsualització es redibuixarà automàticament"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:641
 msgid "R_edraw preview"
@@ -9790,7 +9962,8 @@ msgstr "Utilitza el suavitzat loglog"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr "Utilitza el suavitzat log log per a eliminar «les bandes» del resultat"
+msgstr ""
+"Utilitza el suavitzat log log per a eliminar «les bandes» del resultat"
 
 #. Color Density frame
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:937
@@ -9888,11 +10061,12 @@ msgstr "Com s'especifica a sobre"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1129
 msgid ""
-"Create a color-map with the options you specified above (color density/"
-"function). The result is visible in the preview image"
+"Create a color-map with the options you specified above (color "
+"density/function). The result is visible in the preview image"
 msgstr ""
-"Crea un mapa de color amb les opcions que heu especificat abans (densitat/"
-"funció del color). El resultat es pot veure en la previsualització d'imatge"
+"Crea un mapa de color amb les opcions que heu especificat abans "
+"(densitat/funció del color). El resultat es pot veure en la previsualització"
+" d'imatge"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1139
 msgid "Apply active gradient to final image"
@@ -10159,8 +10333,9 @@ msgid "Raise selected object to top"
 msgstr "Apuja l'objecte seleccionat al capdamunt"
 
 #: plug-ins/gfig/gfig-dialog.c:421
+#, fuzzy
 msgid "To Bottom"
-msgstr ""
+msgstr "A baix"
 
 #: plug-ins/gfig/gfig-dialog.c:421
 msgid "Lower selected object to bottom"
@@ -10410,7 +10585,8 @@ msgstr "Crea formes geomètriques"
 
 #: plug-ins/gfig/gfig.c:976
 msgid ""
-"Error trying to save figure as a parasite: can't attach parasite to drawable."
+"Error trying to save figure as a parasite: can't attach parasite to "
+"drawable."
 msgstr ""
 "S'ha produït un error en desar la figura com a paràsit: no es pot adjuntar "
 "un paràsit en una imatge."
@@ -10442,7 +10618,8 @@ msgstr "Gamma:"
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Canvia la brillantor del pinzell seleccionat"
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1367
+#: plug-ins/gimpressionist/brush.c:585
+#: plug-ins/metadata/metadata-editor.c:1367
 msgid "Select:"
 msgstr "Selecciona:"
 
@@ -10543,7 +10720,8 @@ msgstr "En mosaic"
 
 #: plug-ins/gimpressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr "Seleccioneu-lo si la imatge resultant hauria de semblar-se a un mosaic"
+msgstr ""
+"Seleccioneu-lo si la imatge resultant hauria de semblar-se a un mosaic"
 
 #: plug-ins/gimpressionist/general.c:221
 msgid "Drop shadow"
@@ -10575,7 +10753,8 @@ msgstr "Profunditat de l'ombra:"
 
 #: plug-ins/gimpressionist/general.c:257
 msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+"The depth of the drop shadow, i.e. how far apart from the object it should "
+"be"
 msgstr ""
 "La profunditat de l'ombra caiguda, p. ex. quina distància s'hauria "
 "d'allunyar de l'objecte"
@@ -10645,9 +10824,11 @@ msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr ""
-"Permet que el valor (lluminositat) de la regió determini la direcció del traç"
+"Permet que el valor (lluminositat) de la regió determini la direcció del "
+"traç"
 
-#: plug-ins/gimpressionist/orientation.c:152 plug-ins/gimpressionist/size.c:159
+#: plug-ins/gimpressionist/orientation.c:152
+#: plug-ins/gimpressionist/size.c:159
 msgid "Radius"
 msgstr "Radi"
 
@@ -10662,19 +10843,23 @@ msgstr ""
 msgid "Selects a random direction of each stroke"
 msgstr "Selecciona aleatòriament una direcció de cada traç"
 
-#: plug-ins/gimpressionist/orientation.c:160 plug-ins/gimpressionist/size.c:167
+#: plug-ins/gimpressionist/orientation.c:160
+#: plug-ins/gimpressionist/size.c:167
 msgid "Radial"
 msgstr "Radial"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid "Let the direction from the center determine the direction of the stroke"
+msgid ""
+"Let the direction from the center determine the direction of the stroke"
 msgstr "Permet que la direcció des del centre determini la direcció del traç"
 
-#: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
+#: plug-ins/gimpressionist/orientation.c:168
+#: plug-ins/gimpressionist/size.c:175
 msgid "Flowing"
 msgstr "Flotant"
 
-#: plug-ins/gimpressionist/orientation.c:169 plug-ins/gimpressionist/size.c:176
+#: plug-ins/gimpressionist/orientation.c:169
+#: plug-ins/gimpressionist/size.c:176
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Els traços segueixen a un patró «flotant»"
 
@@ -10688,7 +10873,8 @@ msgstr ""
 "La direcció que coincideix amb la imatge original se selecciona la més "
 "propera"
 
-#: plug-ins/gimpressionist/orientation.c:184 plug-ins/gimpressionist/size.c:192
+#: plug-ins/gimpressionist/orientation.c:184
+#: plug-ins/gimpressionist/size.c:192
 msgid "Manual"
 msgstr "Manual"
 
@@ -10882,7 +11068,6 @@ msgstr "La densitat relativa dels traços del pinzell"
 #  * gimp_filename_to_utf8 () and g_strerror () return temporary strings
 #  * that need not and should not be freed. So this call is OK.
 #  *
-#.
 #. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
@@ -10931,8 +11116,9 @@ msgstr "Suprimeix la preconfiguració seleccionada"
 msgid "Reread the folder of Presets"
 msgstr "Torna a llegir la carpeta de valors predefinits"
 
-#: plug-ins/gimpressionist/preview.c:174 plug-ins/gimpressionist/repaint.c:1197
-#: plug-ins/imagemap/imap_polygon.c:513 plug-ins/lighting/lighting-ui.c:1093
+#: plug-ins/gimpressionist/preview.c:174
+#: plug-ins/gimpressionist/repaint.c:1197 plug-ins/imagemap/imap_polygon.c:513
+#: plug-ins/lighting/lighting-ui.c:1093
 msgid "_Update"
 msgstr "Act_ualitza"
 
@@ -11025,9 +11211,9 @@ msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
-"El camp vector sm. Feu un clic en el botó esquerre del ratolí per a moure el "
-"vector sm, el botó dret per a apuntar cap al ratolí i el botó del mig per a "
-"afegir un de nou."
+"El camp vector sm. Feu un clic en el botó esquerre del ratolí per a moure el"
+" vector sm, el botó dret per a apuntar cap al ratolí i el botó del mig per a"
+" afegir un de nou."
 
 #: plug-ins/gimpressionist/sizemap.c:479
 msgid "Select previous smvector"
@@ -11089,9 +11275,7 @@ msgstr "_Llum enlluernadora..."
 msgid "Produce a lense flare effect using gradients"
 msgstr "Produeix un efecte de punt de llum enlluernador amb degradats"
 
-#.
 #. *    Dialog Shell
-#.
 #: plug-ins/gradient-flare/gradient-flare.c:1048
 #: plug-ins/gradient-flare/gradient-flare.c:2513
 msgid "Gradient Flare"
@@ -11125,8 +11309,7 @@ msgid ""
 msgstr ""
 "El GFlare «%s» no s'ha desat. Si afegiu una nova entrada a «%s», com ara:\n"
 "(gflare-path «%s»)\n"
-"i creeu una carpeta «%s», podeu desar els vostres propis GFlare's en aquesta "
-"carpeta."
+"i creeu una carpeta «%s», podeu desar els vostres propis GFlare's en aquesta carpeta."
 
 #: plug-ins/gradient-flare/gradient-flare.c:1597
 #, c-format
@@ -11141,12 +11324,8 @@ msgstr "Previs_ualització automàtica"
 msgid "'Default' is created."
 msgstr "S'ha creat «per defecte»."
 
-#.
 #. *  Scales
-#.
-#.
 #. *    Scales
-#.
 #: plug-ins/gradient-flare/gradient-flare.c:2910
 #: plug-ins/gradient-flare/gradient-flare.c:3730
 #: plug-ins/gradient-flare/gradient-flare.c:3832
@@ -11265,9 +11444,7 @@ msgstr "Opcions de pintura dels raigs"
 msgid "Second Flares Paint Options"
 msgstr "Opcions de pintura de les flamarades secundàries"
 
-#.
 #. *  Gradient Menus
-#.
 #: plug-ins/gradient-flare/gradient-flare.c:3703
 #: plug-ins/gradient-flare/gradient-flare.c:3803
 #: plug-ins/gradient-flare/gradient-flare.c:3936
@@ -11332,9 +11509,7 @@ msgstr "Degradat del factor de mida:"
 msgid "Probability gradient:"
 msgstr "Degradat de la probabilitat:"
 
-#.
 #. *    Shape Radio Button Frame
-#.
 #: plug-ins/gradient-flare/gradient-flare.c:4013
 msgid "Shape of Second Flares"
 msgstr "Forma de les flamarades secundàries"
@@ -11409,14 +11584,13 @@ msgstr "El manual d'usuari del GIMP no està disponible."
 #. * technical limitations, make sure the URL
 #. * ends with a space, a newline or is end of text.
 #. * Cf. bug 762282.
-#.
 #: plug-ins/help/gimphelpdomain.c:193
 msgid ""
-"Please install the additional help package or use the online user manual at: "
-"https://docs.gimp.org/"
+"Please install the additional help package or use the online user manual at:"
+" https://docs.gimp.org/"
 msgstr ""
-"Heu d'instal·lar el paquet d'ajuda addicional o utilitzeu el manual d'usuari "
-"en línia a http://docs.gimp.org/"
+"Heu d'instal·lar el paquet d'ajuda addicional o utilitzeu el manual d'usuari"
+" en línia a http://docs.gimp.org/"
 
 #: plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -11433,10 +11607,9 @@ msgid "Loading index from '%s'"
 msgstr "S'està carregant l'índex de «%s»"
 
 #: plug-ins/help/gimphelplocale.c:239
-#, fuzzy, c-format
-#| msgid "Could not load '%s': %s"
+#, c-format
 msgid "Could not load data from '%s': %s"
-msgstr "No s'ha pogut carregar «%s»: %s"
+msgstr "No s'han pogut carregar dades de «%s»: %s"
 
 #: plug-ins/help/gimphelplocale.c:311
 #, c-format
@@ -11733,9 +11906,9 @@ msgstr "Límit de guies resultant: %d,%d a %d,%d (%d àrees)"
 #: plug-ins/imagemap/imap_cmd_guides.c:142
 msgid ""
 "Guides are pre-defined rectangles covering the image. You define them by "
-"their width, height, and spacing from each other. This allows you to rapidly "
-"create the most common image map type - image collection of \"thumbnails\", "
-"suitable for navigation bars."
+"their width, height, and spacing from each other. This allows you to rapidly"
+" create the most common image map type - image collection of \"thumbnails\","
+" suitable for navigation bars."
 msgstr ""
 "Les guies són rectangles predefinits que cobreixen la imatge. Podeu definir-"
 "les per la seva amplada, alçada i espaiat d'una a l'altra. Això us permet "
@@ -12509,11 +12682,13 @@ msgstr "Imatge de l'entorn que s'utilitzarà"
 msgid "Op_tions"
 msgstr "Op_cions"
 
-#: plug-ins/lighting/lighting-ui.c:969 plug-ins/map-object/map-object-ui.c:1267
+#: plug-ins/lighting/lighting-ui.c:969
+#: plug-ins/map-object/map-object-ui.c:1267
 msgid "_Light"
 msgstr "_Llum"
 
-#: plug-ins/lighting/lighting-ui.c:973 plug-ins/map-object/map-object-ui.c:1271
+#: plug-ins/lighting/lighting-ui.c:973
+#: plug-ins/map-object/map-object-ui.c:1271
 msgid "_Material"
 msgstr "_Material"
 
@@ -12696,8 +12871,8 @@ msgstr "Reflexió"
 #: plug-ins/map-object/map-object-ui.c:881
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr ""
-"Els valors alts fan que l'objecte es reflecteixi de manera més clara (sembla "
-"més clar)"
+"Els valors alts fan que l'objecte es reflecteixi de manera més clara (sembla"
+" més clar)"
 
 #: plug-ins/map-object/map-object-ui.c:894
 msgid "Specular:"
@@ -12833,10 +13008,8 @@ msgid "Description"
 msgstr "Descripció"
 
 #: plug-ins/metadata/metadata-editor.c:488
-#, fuzzy
-#| msgid "Description Writer\t"
 msgid "Description Writer"
-msgstr "Escriptor de descripcions\t"
+msgstr "Descripció de l'escriptor"
 
 #: plug-ins/metadata/metadata-editor.c:489
 msgid "Rating"
@@ -13270,17 +13443,13 @@ msgstr "Estableix la data"
 #: plug-ins/metadata/metadata-editor.c:2412
 msgid ""
 "Enter or edit GPS value here.\n"
-"Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
-"the following examples:\n"
-"10deg 15' 20\", or 10° 15' 20\", or 10:15:20.45, or 10 15 20, or 10 15.30, "
-"or 10.45\n"
+"Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see the following examples:\n"
+"10deg 15' 20\", or 10° 15' 20\", or 10:15:20.45, or 10 15 20, or 10 15.30, or 10.45\n"
 "Delete all text to remove the current value."
 msgstr ""
 "Introduïu o editeu el valor del GPS aquí.\n"
-"Els valors vàlids consisteixen en 1, 2 o 3 nombres (graus, minuts, segons); "
-"mireu els exemples següents:\n"
-"10deg 15' 20 \", o 10° 15' 20\", o 10: 15:20.45, o 10 15 20, o 10 15.30, o "
-"10.45\n"
+"Els valors vàlids consisteixen en 1, 2 o 3 nombres (graus, minuts, segons); mireu els exemples següents:\n"
+"10deg 15' 20 \", o 10° 15' 20\", o 10: 15:20.45, o 10 15 20, o 10 15.30, o 10.45\n"
 "Suprimiu tot el text per a eliminar el valor actual."
 
 #: plug-ins/metadata/metadata-editor.c:2418
@@ -13288,15 +13457,13 @@ msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
 "e.g. 100, or 12.24\n"
-"Depending on the selected measurement type the value should be entered in "
-"meter (m) or feet (ft)\n"
+"Depending on the selected measurement type the value should be entered in meter (m) or feet (ft)\n"
 "Delete all text to remove the current value."
 msgstr ""
 "Introduïu o editeu el valor de l'altitud del GPS aquí.\n"
 "Un valor vàlid consisteix en un número:\n"
 "per exemple. 100 o 12.24\n"
-"En funció del tipus de mesura seleccionat, el valor s'ha d'introduir en "
-"metres (m) o peus (peus)\n"
+"En funció del tipus de mesura seleccionat, el valor s'ha d'introduir en metres (m) o peus (peus)\n"
 "Suprimiu tot el text per a eliminar el valor actual."
 
 #: plug-ins/metadata/metadata-editor.c:2552
@@ -13304,10 +13471,9 @@ msgid "Unrated"
 msgstr "Sense valoració"
 
 #: plug-ins/metadata/metadata-editor.c:4491
-#, fuzzy, c-format
-#| msgid "Failed to set metadata tag %s"
+#, c-format
 msgid "Failed to set metadata tag %s: %s"
-msgstr "No s'ha pogut establir l'etiqueta de metadades %s"
+msgstr "No s'ha pogut establir l'etiqueta de metadades %s: %s"
 
 #: plug-ins/metadata/metadata-editor.c:5303
 msgid "Import Metadata File"
@@ -13354,7 +13520,7 @@ msgstr "No aplicable"
 msgid "Unlimited Model Releases"
 msgstr "Llançament del model il·limitat"
 
-#: plug-ins/metadata/metadata-tags.c:198
+#g: plug-ins/metadata/metadata-tags.c:198
 msgid "Limited or Incomplete Model Releases"
 msgstr "Llançament del model incomplet o limitat"
 
@@ -13372,51 +13538,51 @@ msgstr "Edat desconeguda"
 
 #: plug-ins/metadata/metadata-tags.c:220
 msgid "Age 25 or Over"
-msgstr "Edat de 25 anys o més"
+msgstr "25 anys o més"
 
 #: plug-ins/metadata/metadata-tags.c:221
 msgid "Age 24"
-msgstr "Edat de 24"
+msgstr "24 anys"
 
 #: plug-ins/metadata/metadata-tags.c:222
 msgid "Age 23"
-msgstr "Edat de 23"
+msgstr "23 anys"
 
 #: plug-ins/metadata/metadata-tags.c:223
 msgid "Age 22"
-msgstr "Edat de 22"
+msgstr "22 anys"
 
 #: plug-ins/metadata/metadata-tags.c:224
 msgid "Age 21"
-msgstr "Edat de 21"
+msgstr "21 anys"
 
 #: plug-ins/metadata/metadata-tags.c:225
 msgid "Age 20"
-msgstr "Edat de 20"
+msgstr "20 anys"
 
 #: plug-ins/metadata/metadata-tags.c:226
 msgid "Age 19"
-msgstr "Edat de 19"
+msgstr "19 anys"
 
 #: plug-ins/metadata/metadata-tags.c:227
 msgid "Age 18"
-msgstr "Edat de 18"
+msgstr "18 anys"
 
 #: plug-ins/metadata/metadata-tags.c:228
 msgid "Age 17"
-msgstr "Edat de 17"
+msgstr "17 anys"
 
 #: plug-ins/metadata/metadata-tags.c:229
 msgid "Age 16"
-msgstr "Edat de 16"
+msgstr "16 anys"
 
 #: plug-ins/metadata/metadata-tags.c:230
 msgid "Age 15"
-msgstr "Edat de 15"
+msgstr "15 anys"
 
 #: plug-ins/metadata/metadata-tags.c:231
 msgid "Age 14 or Under"
-msgstr "Edat de 14 o inferior"
+msgstr "14 anys o inferior"
 
 #: plug-ins/metadata/metadata-tags.c:238
 msgid "2"
@@ -13827,7 +13993,8 @@ msgstr "Punter del ratolí"
 msgid "Specified window not found"
 msgstr "No s'ha trobat la finestra especificada"
 
-#. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
+#. printf("width = %d, height =
+#. %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: plug-ins/selection-to-path/pxl-outline.c:81
 msgid "Selection to Path"
 msgstr "Selecció a camí"
@@ -13871,8 +14038,8 @@ msgstr "Cantó envoltat:"
 msgid ""
 "Number of points to consider when determining if a point is a corner or not."
 msgstr ""
-"Nombre de punts per a considerar, quan es determina si un punt és un angle o "
-"no."
+"Nombre de punts per a considerar, quan es determina si un punt és un angle o"
+" no."
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:152
 msgid "Corner Threshold:"
@@ -13883,8 +14050,8 @@ msgid ""
 "If a point, its predecessors, and its successors define an angle smaller "
 "than this, it's a corner."
 msgstr ""
-"Si els predecessors i els successors d'un punt defineixen un angle més petit "
-"que aquest, aleshores és un cantó."
+"Si els predecessors i els successors d'un punt defineixen un angle més petit"
+" que aquest, aleshores és un cantó."
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:165
 msgid "Error Threshold:"
@@ -13917,8 +14084,8 @@ msgid ""
 "from filter_alternative_surround."
 msgstr ""
 "Si els angles entre els vectors produïts pel filtre envoltant i els punts "
-"del filtre envoltant alternatiu difereixen més que això, utilitzeu el filtre "
-"envoltant alternatiu."
+"del filtre envoltant alternatiu difereixen més que això, utilitzeu el filtre"
+" envoltant alternatiu."
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:205
 msgid "Filter Iteration Count:"
@@ -13986,9 +14153,9 @@ msgid ""
 "likely to be reverted."
 msgstr ""
 "Si una corba spline està més a prop d'una línia recta, es manté com a línia "
-"recta, fins i tot si canviés per a tornar a ser una corba. Està ponderat pel "
-"quadrat de la longitud de la corba, per a fer corbes més curtes probablement "
-"per a ser revertides."
+"recta, fins i tot si canviés per a tornar a ser una corba. Està ponderat pel"
+" quadrat de la longitud de la corba, per a fer corbes més curtes "
+"probablement per a ser revertides."
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:286
 msgid "Line Threshold:"
@@ -14026,11 +14193,11 @@ msgid ""
 "Raphson iteration to improve it.  It may be that it would be better to "
 "detect the cases where we didn't find any corners."
 msgstr ""
-"Quantitat d'error del qual no té sentit valorar. Això succeeix, per exemple, "
-"quan estem tractant d'encaixar el contorn de la part exterior d'una «O» amb "
-"una sola corba spline. L'encabiment inicial no és prou bo per a millorar la "
-"iteració Newton-Raphson. Potser seria millor detectar els casos en què no hi "
-"ha angles."
+"Quantitat d'error del qual no té sentit valorar. Això succeeix, per exemple,"
+" quan estem tractant d'encaixar el contorn de la part exterior d'una «O» amb"
+" una sola corba spline. L'encabiment inicial no és prou bo per a millorar la"
+" iteració Newton-Raphson. Potser seria millor detectar els casos en què no "
+"hi ha angles."
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:328
 msgid "Subdivide Search:"
@@ -14038,8 +14205,8 @@ msgstr "Subdivideix la recerca:"
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:330
 msgid ""
-"Percentage of the curve away from the worst point to look for a better place "
-"to subdivide."
+"Percentage of the curve away from the worst point to look for a better place"
+" to subdivide."
 msgstr "Percentatge de la corba, lluny del pitjor punt per a subdividir."
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:340
@@ -14048,8 +14215,8 @@ msgstr "Subdivisió envoltada:"
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:342
 msgid ""
-"Number of points to consider when deciding whether a given point is a better "
-"place to subdivide."
+"Number of points to consider when deciding whether a given point is a better"
+" place to subdivide."
 msgstr ""
 "Nombre de punts per a tenir en compte si un punt donat és bo per a "
 "subdividir."
@@ -14095,4 +14262,3 @@ msgstr "E_scàner/càmera..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "S'estan transferint dades de l'escàner/càmera"
-
