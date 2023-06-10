@@ -753,6 +753,7 @@ filters_actions_setup (GimpActionGroup *group)
   gint                      i;
   GList                    *op_classes;
   GList                    *iter;
+  GStrvBuilder             *gegl_actions;
 
   gimp_action_group_add_string_actions (group, "filters-action",
                                         filters_actions,
@@ -775,7 +776,8 @@ filters_actions_setup (GimpActionGroup *group)
   filters_actions_set_tooltips (group, filters_interactive_actions,
                                 G_N_ELEMENTS (filters_interactive_actions));
 
-  op_classes = gimp_gegl_get_op_classes ();
+  gegl_actions = g_strv_builder_new ();
+  op_classes   = gimp_gegl_get_op_classes ();
 
   for (iter = op_classes; iter; iter = iter->next)
     {
@@ -826,10 +828,28 @@ filters_actions_setup (GimpActionGroup *group)
                                             &entry, 1,
                                             filters_apply_interactive_cmd_callback);
 
+      if (gegl_operation_class_get_key (op_class, "gimp:menu-label"))
+        {
+          GimpAction *action;
+
+          action = gimp_action_group_get_action (group, action_name);
+
+          gimp_action_set_short_label (action,
+                                       gegl_operation_class_get_key (op_class,
+                                                                     "gimp:menu-label"));
+        }
+
+      g_strv_builder_add (gegl_actions, action_name);
+
       g_free (label);
       g_free (action_name);
     }
 
+  g_object_set_data_full (G_OBJECT (group),
+                          "filters-group-generated-gegl-actions",
+                          g_strv_builder_end (gegl_actions),
+                          (GDestroyNotify) g_strfreev);
+  g_strv_builder_unref (gegl_actions);
   g_list_free (op_classes);
 
   gimp_action_group_add_enum_actions (group, "filters-action",
