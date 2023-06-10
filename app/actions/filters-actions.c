@@ -790,6 +790,18 @@ filters_actions_setup (GimpActionGroup *group)
       formatted_op_name = g_strdup (op_class->name);
       gimp_make_valid_action_name (formatted_op_name);
       action_name = g_strdup_printf ("filters-%s", formatted_op_name);
+      i           = 2;
+      while (gimp_action_group_get_action (group, action_name) != NULL)
+        {
+          /* In the off-chance that after formatting to a valid action name, 2
+           * operations end up generating the same action name. Typically we
+           * don't want a third-party operation called "my-op" to have the same
+           * action name than "my_op" (which is to say that one will be
+           * overrided by the other).
+           */
+          g_free (action_name);
+          action_name = g_strdup_printf ("filters-%s-%d", formatted_op_name, i++);
+        }
       g_free (formatted_op_name);
 
       title   = gegl_operation_class_get_key (op_class, "title");
