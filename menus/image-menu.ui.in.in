@@ -717,9 +717,6 @@
           <item><attribute name="action">app.filters-normal-map</attribute></item>
           <item><attribute name="action">app.filters-dilate</attribute></item>
           <item><attribute name="action">app.filters-erode</attribute></item>
-        </submenu>
-        <submenu>
-          <attribute name="label" translatable="yes" context="filters-action">_GEGL Operations</attribute>
           <section>
             <item><attribute name="action">app.filters-gegl-graph</attribute></item>
           </section>
