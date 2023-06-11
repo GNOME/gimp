@@ -44,6 +44,9 @@ Core:
    third-party GEGL operations which might be user-installed. It makes these
    filters also searchable in the action search, usable in menus and shortcuts
    can be assigned as well.
+ - If present, the GEGL key "gimp:menu-label" will be used to set the short
+   label of the generated action (short labels are typically used in menus since
+   the menu path can serve as context).
  - GimpAction now have a concept of short vs. long labels, which can be used in
    different places. In particular, in action search, we usually want the long
    label, whereas in menus, we usually want the short label as we have context
@@ -59,6 +62,11 @@ Core:
    exit() anyway. This became necessary because of recent memory issues we
    experienced ever since GLib's GSlice implementation changed (GLib 2.75.3).
  - New grayscale color picking mode.
+ - .aco palettes are now imported with babl. As a result, it is now possible to
+   import CIE Lab palettes (colorspace 7)
+ - Action search now displays a "help" icon which can be clicked to show the
+   currently selected action's manual page (or the action search manual page if
+   no actions are selected). Alternatively the F1 shortcut will do the same.
 
 Tools:
 
@@ -79,12 +87,15 @@ Graphical User Interface:
     proofing"
   - The "GEGL Operation…" item was moved out of the "Filters > Generic" menu and
     into the "Tools" menu.
-  - New "Filters > Generic > GEGL Operations" menu:
-    * "GEGL Graph" was moved into this submenu;
-    * It is followed by one item per generated action from GEGL Operations which
-      would also be listed in the "GEGL Operation" tool.
+  - If present, the GEGL key "gimp:menu-path" will now be used by GIMP to create
+    a menu item for an operation in a given menu path.
   - Default theme is less dark and the previous Default theme is renamed
     "Darker".
+  - "Default" theme does not use smaller font size (than system theme) anymore;
+    but the "Compact" theme now does.
+  - New option "Merge menu and title bar" in Preferences > Image Windows: this
+    is basically an option to switch to Client Side Decoration for the image
+    windows (menu will be inside the title bar). It is OFF by default.
 
 Actions:
 
@@ -171,12 +182,13 @@ API:
         properties.
   - Changes in libgimp:
     * New classes:
-      + GimpResource
-      + GimpBrush
-      + GimpFont
-      + GimpGradient
-      + GimpPalette
-      + GimpPattern
+      + GimpResource: with unique int ID, instead of data name. Actual data will
+        be one of the following subclasses:
+        + GimpBrush
+        + GimpFont
+        + GimpGradient
+        + GimpPalette
+        + GimpPattern
     * New functions:
       + gimp_procedure_dialog_fill_scrolled_window()
     * Improved annotations or usage:
@@ -194,6 +206,9 @@ API:
       + Metadata "Exif.Image.ImageResources" and "Exif.Image.0x935c" are not
         exported anymore. These are specific to Photoshop, and while we cannot
         modify them, they can contain sensitive information (e.g. a thumbnail).
+      + Exif.Photo.PixelXDimension and Exif.Photo.PixelYDimension metadata tags
+        will now be updated (if they already exist in the image) when resizing
+        and exporting.
    - PDB:
      * Remove GimpUint8Array in favor of GBytes.
 
@@ -212,6 +227,11 @@ Build:
   - Meson build 'vala-plugins' option was renamed to simply 'vala'.
   - Added dependency to Exiv2 0.27.4.
   - JUnit reports from Meson for the CI build.
+  - autotools was fully dropped!
+  - Debian 12 bookworm is now our base platform for CI, but also for deciding
+    whether we can bump a dependency minimum required version or not. This is a
+    consequence of approaching GIMP 3.0 release so we don't want to bump minimum
+    versions too high.
 
 Debugging:
 
