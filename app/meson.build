@@ -46,16 +46,6 @@ libapp_sources = [
   gimpdbusservice_gen,
 ]
 
-libapp = static_library('app',
-  libapp_sources,
-  include_directories: [ rootInclude, rootAppInclude, configInclude, ],
-  c_args: [ '-DG_LOG_DOMAIN="Gimp"', '-DGIMP_APP_GLUE_COMPILATION', ],
-  dependencies: [
-    gdk_pixbuf, gegl, gexiv2, gtk3,
-  ],
-)
-
-
 if platform_windows
   # for GimpDashboard and GimpBacktrace
   psapi_cflags = [ '-DPSAPI_VERSION=1' ]
@@ -70,24 +60,39 @@ if platform_osx
   link_args += osx_ldflags
 endif
 
-libapp_dep = declare_dependency(
-  dependencies: [
-    cairo,
-    dbghelp,
-    drmingw,
-    gegl,
-    gexiv2,
-    gio,
-    gio_specific,
-    gtk3,
-    lcms,
-    libbacktrace,
-    pangocairo,
-    pangoft2,
-    rpc,
-  ],
-  link_with: [
-    libapp,
+libapp_c_args = [
+  '-DG_LOG_DOMAIN="Gimp"',
+  '-DGIMP_APP_GLUE_COMPILATION',
+  psapi_cflags,
+]
+
+# Put GIMP core in a lib so we can conveniently link against that in test cases
+# and main GIMP executable. Note that we should not use this static library for
+# the console executable as it uses different macro flags.
+libapp = static_library('app',
+  libapp_sources,
+  include_directories: [ rootInclude, rootAppInclude, configInclude, ],
+  c_args: libapp_c_args,
+  dependencies: [ gdk_pixbuf, gegl, gexiv2, gtk3, ],
+)
+
+gimpconsole_deps = [
+  cairo,
+  dbghelp,
+  drmingw,
+  gdk_pixbuf,
+  gegl,
+  gexiv2,
+  gio,
+  gio_specific,
+  lcms,
+  libbacktrace,
+  pangocairo,
+  pangoft2,
+  rpc,
+]
+
+console_libapps = [
     libappcore,
     libappfile,
     libappfiledata,
@@ -102,6 +107,16 @@ libapp_dep = declare_dependency(
     libapptext,
     libappvectors,
     libappxcf,
+]
+
+libapp_dep = declare_dependency(
+  dependencies: [
+    gimpconsole_deps,
+    gtk3,
+  ],
+  link_with: [
+    libapp,
+    console_libapps,
   ],
   include_directories: [
     rootInclude,
@@ -111,15 +126,13 @@ libapp_dep = declare_dependency(
   link_args: link_args,
 )
 
-
 # Those subdirs need to link against the first ones
 subdir('config')
 subdir('tests')
 
+console_libapps += [ libappconfig ]
 
-
-app_links = [
-  libappconfig,
+app_libgimps = [
   libgimpbase,
   libgimpcolor,
   libgimpconfig,
@@ -128,7 +141,8 @@ app_links = [
   libgimpthumb,
 ]
 
-app_gui_links = [
+gui_libapps = [
+  console_libapps,
   libappactions,
   libappdialogs,
   libappdisplay,
@@ -188,33 +202,29 @@ if enable_console_bin
     'main.c',
     libapp_sources,
     console_rc_file,
-    c_args: [
-      '-DG_LOG_DOMAIN="Gimp"',
-      '-DGIMP_APP_GLUE_COMPILATION',
-      '-DGIMP_CONSOLE_COMPILATION',
-      psapi_cflags,
-    ],
-    dependencies: libapp_dep,
+    c_args: [ libapp_c_args, '-DGIMP_CONSOLE_COMPILATION', ],
+    dependencies: gimpconsole_deps,
     link_with: [
-      app_links,
+      app_libgimps,
+      console_libapps
     ],
+    include_directories: [
+      rootInclude,
+      rootAppInclude,
+    ],
+    link_args: link_args,
     install: true,
   )
 endif
 
 gimpmain_exe = executable('gimp' + exec_ver,
   'main.c',
-  libapp_sources,
   gui_rc_file,
-  c_args: [
-    '-DG_LOG_DOMAIN="Gimp"',
-    '-DGIMP_APP_GLUE_COMPILATION',
-    psapi_cflags,
-  ],
+  c_args: libapp_c_args,
   dependencies: libapp_dep,
   link_with: [
-    app_links,
-    app_gui_links,
+    app_libgimps,
+    gui_libapps,
   ],
   install: true,
 )
