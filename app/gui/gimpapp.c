@@ -131,6 +131,18 @@ gimp_app_new (Gimp        *gimp,
 
   app = g_object_new (GIMP_TYPE_APP,
                       "application-id",    GIMP_APPLICATION_ID,
+                      /* We have our own code to handle process uniqueness, so
+                       * when we reached this code, we are already passed this
+                       * (it means that either this is the first process, or we
+                       * don't want uniqueness). See bugs #9598 and #9599 for
+                       * what happens when we let GIO try to handle uniqueness.
+                       *
+                       * TODO: since GApplication has code to pass over files
+                       * and command line arguments, we may eventually want to
+                       * remove our own code for uniqueness and batch command
+                       * inter-process communication. This should be tested.
+                       */
+                      "flags",             G_APPLICATION_DEFAULT_FLAGS | G_APPLICATION_NON_UNIQUE,
                       "gimp",              gimp,
                       "filenames",         filenames,
                       "as-new",            as_new,
