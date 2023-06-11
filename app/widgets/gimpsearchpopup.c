@@ -33,6 +33,7 @@
 #include "core/gimp.h"
 
 #include "gimpaction.h"
+#include "gimphelp-ids.h"
 #include "gimppopup.h"
 #include "gimpsearchpopup.h"
 #include "gimptoggleaction.h"
@@ -576,7 +577,29 @@ keyword_entry_key_release_event (GtkWidget       *widget,
   gtk_window_get_size (GTK_WINDOW (popup), &width, NULL);
   entry_text = g_strstrip (gtk_editable_get_chars (GTK_EDITABLE (widget), 0, -1));
 
-  if (strcmp (entry_text, "") != 0)
+  if (event->keyval == GDK_KEY_F1)
+    {
+      const gchar      *help_id = NULL;
+      GimpAction       *action  = NULL;
+      GtkTreeSelection *selection;
+      GtkTreeModel     *model;
+      GtkTreeIter       iter;
+
+      selection = gtk_tree_view_get_selection (tree_view);
+
+      if (gtk_tree_selection_get_selected (selection, &model, &iter))
+        {
+          gtk_tree_model_get (model, &iter, COLUMN_ACTION, &action, -1);
+          help_id = gimp_action_get_help_id (action);
+        }
+
+      if (help_id == NULL)
+        help_id = GIMP_HELP_ACTION_SEARCH_DIALOG;
+
+      gimp_help (popup->priv->gimp, NULL, NULL, help_id);
+      g_clear_object (&action);
+    }
+  else if (strcmp (entry_text, "") != 0)
     {
       path = gtk_tree_path_new_from_string ("0");
       gtk_window_resize (GTK_WINDOW (popup),
