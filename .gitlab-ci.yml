@@ -182,7 +182,7 @@ deps-debian/oldstable:
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
     - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
     - export PATH="${INSTALL_PREFIX}/bin:$PATH"
-  needs: ["deps-debian/stable"]
+  needs: ["deps-debian/oldstable"]
 
 gimp-debian/oldstable-autotools:
   extends: .gimp-debian/oldstable-base
