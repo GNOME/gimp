@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-05-24 19:19+0000\n"
-"PO-Revision-Date: 2023-05-25 09:51+0300\n"
+"POT-Creation-Date: 2023-06-09 05:59+0000\n"
+"PO-Revision-Date: 2023-06-11 18:57+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -71,8 +71,8 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/curve-bend.c:2012 plug-ins/common/depth-merge.c:733
 #: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1163
 #: plug-ins/common/file-heif.c:2351 plug-ins/common/file-pdf-load.c:709
-#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-svg.c:757
-#: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1324
+#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-svg.c:839
+#: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1323
 #: plug-ins/common/grid.c:761 plug-ins/common/mail.c:568
 #: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
 #: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
@@ -164,8 +164,8 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:705
 #: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1204
 #: plug-ins/common/depth-merge.c:734 plug-ins/common/file-heif.c:2352
-#: plug-ins/common/file-pdf-load.c:710 plug-ins/common/file-svg.c:758
-#: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1325
+#: plug-ins/common/file-pdf-load.c:710 plug-ins/common/file-svg.c:840
+#: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1324
 #: plug-ins/common/grid.c:762 plug-ins/common/qbist.c:945
 #: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
@@ -346,8 +346,8 @@ msgstr "Вирівнювання видимих шарів"
 #: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
 #: plug-ins/common/file-ps.c:3745 plug-ins/common/file-ps.c:3753
 #: plug-ins/common/file-psp.c:840 plug-ins/file-tiff/file-tiff-save.c:1322
-#: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:204 plug-ins/metadata/metadata-tags.c:216
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "None"
 msgstr "Немає"
 
@@ -516,7 +516,7 @@ msgstr "Вертикально"
 #: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
 #: plug-ins/common/file-sunras.c:1083 plug-ins/common/file-tga.c:1117
 #: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:912
-#: plug-ins/common/film.c:812 plug-ins/common/smooth-palette.c:332
+#: plug-ins/common/film.c:811 plug-ins/common/smooth-palette.c:332
 #: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
 #: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
 #: plug-ins/file-fits/fits.c:667 plug-ins/file-jpeg/jpeg-load.c:231
@@ -1082,7 +1082,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
 #: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
 #: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:458
-#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:743
+#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:825
 #: plug-ins/common/file-tga.c:448 plug-ins/common/file-wbmp.c:184
 #: plug-ins/common/file-xbm.c:750 plug-ins/common/file-xmc.c:658
 #: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
@@ -1477,11 +1477,11 @@ msgstr "Покращення зображення за допомогою рет
 msgid "Uniform"
 msgstr "Рівномірний"
 
-#: plug-ins/common/contrast-retinex.c:353 plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/common/contrast-retinex.c:353 plug-ins/metadata/metadata-tags.c:247
 msgid "Low"
 msgstr "Низький"
 
-#: plug-ins/common/contrast-retinex.c:354 plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/common/contrast-retinex.c:354 plug-ins/metadata/metadata-tags.c:247
 msgid "High"
 msgstr "Високий"
 
@@ -3793,7 +3793,7 @@ msgid "_Resolution:"
 msgstr "_Роздільна здатність:"
 
 #: plug-ins/common/file-pdf-load.c:1538 plug-ins/common/file-pdf-load.c:1539
-#: plug-ins/common/file-svg.c:935 plug-ins/common/file-wmf.c:722
+#: plug-ins/common/file-svg.c:1017 plug-ins/common/file-wmf.c:722
 #: plug-ins/print/print-page-layout.c:307
 #, c-format
 msgid "pixels/%a"
@@ -5005,7 +5005,7 @@ msgstr "_RLE-кодування"
 msgid "SVG image"
 msgstr "Зображення SVG"
 
-#: plug-ins/common/file-svg.c:367 plug-ins/common/file-svg.c:745
+#: plug-ins/common/file-svg.c:367 plug-ins/common/file-svg.c:827
 msgid "Unknown reason"
 msgstr "Невідома причина"
 
@@ -5017,12 +5017,12 @@ msgstr "Візуалізація SVG"
 msgid "Rendered SVG"
 msgstr "Створений SVG"
 
-#: plug-ins/common/file-svg.c:499 plug-ins/common/file-wmf.c:401
+#: plug-ins/common/file-svg.c:581 plug-ins/common/file-wmf.c:401
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: plug-ins/common/file-svg.c:507
+#: plug-ins/common/file-svg.c:589
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -5035,15 +5035,15 @@ msgstr ""
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:671
+#: plug-ins/common/file-svg.c:753
 msgid "Disable safety size limits?"
 msgstr "Вимкнути безпекові обмеження на розмір?"
 
-#: plug-ins/common/file-svg.c:676
+#: plug-ins/common/file-svg.c:758
 msgid "_No"
 msgstr "_Ні"
 
-#: plug-ins/common/file-svg.c:677
+#: plug-ins/common/file-svg.c:759
 msgid "_Yes"
 msgstr "_Так"
 
@@ -5057,7 +5057,7 @@ msgstr "_Так"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:701
+#: plug-ins/common/file-svg.c:783
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -5068,61 +5068,61 @@ msgstr ""
 "зловмисниками файли SVG можуть скористатися зняттям обмежень для споживання "
 "надто великого об'єму пам'яті."
 
-#: plug-ins/common/file-svg.c:713
+#: plug-ins/common/file-svg.c:795
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr ""
 "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
-#: plug-ins/common/file-svg.c:720
+#: plug-ins/common/file-svg.c:802
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 "Повторити без обмежень, які накладаються на обробку великих масивів даних?"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: plug-ins/common/file-svg.c:752
+#: plug-ins/common/file-svg.c:834
 msgid "Render Scalable Vector Graphics"
 msgstr "Створити Scalable Vector Graphics"
 
 #. Width and Height
-#: plug-ins/common/file-svg.c:811 plug-ins/common/file-wmf.c:606
+#: plug-ins/common/file-svg.c:893 plug-ins/common/file-wmf.c:606
 #: plug-ins/common/grid.c:844
 msgid "Width:"
 msgstr "Ширина:"
 
-#: plug-ins/common/file-svg.c:817 plug-ins/common/file-wmf.c:611
+#: plug-ins/common/file-svg.c:899 plug-ins/common/file-wmf.c:611
 msgid "Height:"
 msgstr "Висота:"
 
-#: plug-ins/common/file-svg.c:889 plug-ins/common/file-wmf.c:679
+#: plug-ins/common/file-svg.c:971 plug-ins/common/file-wmf.c:679
 msgid "_X ratio:"
 msgstr "Коефіцієнт по _X:"
 
-#: plug-ins/common/file-svg.c:910 plug-ins/common/file-wmf.c:699
+#: plug-ins/common/file-svg.c:992 plug-ins/common/file-wmf.c:699
 msgid "_Y ratio:"
 msgstr "Коефіцієнт по _Y:"
 
-#: plug-ins/common/file-svg.c:924 plug-ins/common/file-wmf.c:712
+#: plug-ins/common/file-svg.c:1006 plug-ins/common/file-wmf.c:712
 msgid "Constrain aspect ratio"
 msgstr "Пропорції"
 
 #. Resolution
-#: plug-ins/common/file-svg.c:929 plug-ins/common/file-wmf.c:717
+#: plug-ins/common/file-svg.c:1011 plug-ins/common/file-wmf.c:717
 msgid "Resolution:"
 msgstr "Роздільна здатність:"
 
 #. Path Import
-#: plug-ins/common/file-svg.c:955
+#: plug-ins/common/file-svg.c:1037
 msgid "Import _paths"
 msgstr "Імпорт _контурів"
 
-#: plug-ins/common/file-svg.c:962
+#: plug-ins/common/file-svg.c:1044
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Імпортувати елементи з контуру SVG, так, щоб вони могли використовуватись "
 "інструментом \"Контури\""
 
-#: plug-ins/common/file-svg.c:970
+#: plug-ins/common/file-svg.c:1052
 msgid "Merge imported paths"
 msgstr "Об'єднати імпортовані контури"
 
@@ -5725,39 +5725,39 @@ msgstr "Об'єднати декілька зображень у одне на �
 msgid "Composing images"
 msgstr "Збирання зображень"
 
-#: plug-ins/common/film.c:938
+#: plug-ins/common/film.c:937
 msgid "Available images:"
 msgstr "Доступні:"
 
-#: plug-ins/common/film.c:939
+#: plug-ins/common/film.c:938
 msgid "On film:"
 msgstr "На плівку:"
 
-#: plug-ins/common/film.c:990 plug-ins/common/unit-editor.c:440
+#: plug-ins/common/film.c:989 plug-ins/common/unit-editor.c:440
 msgid "_Add"
 msgstr "_Додати"
 
-#: plug-ins/common/film.c:990 plug-ins/imagemap/imap_polygon.c:531
+#: plug-ins/common/film.c:989 plug-ins/imagemap/imap_polygon.c:531
 msgid "_Remove"
 msgstr "В_идалити"
 
 #. Create selection
-#: plug-ins/common/film.c:1026 plug-ins/imagemap/imap_selection.c:339
+#: plug-ins/common/film.c:1025 plug-ins/imagemap/imap_selection.c:339
 #: plug-ins/selection-to-path/selection-to-path.c:540
 msgid "Selection"
 msgstr "Вибір"
 
 #. Film height/color
-#: plug-ins/common/film.c:1037 plug-ins/common/film.c:1320
+#: plug-ins/common/film.c:1036 plug-ins/common/film.c:1319
 msgid "Filmstrip"
 msgstr "Фотоплівка"
 
 #. Keep maximum image height
-#: plug-ins/common/film.c:1046
+#: plug-ins/common/film.c:1045
 msgid "_Fit height to images"
 msgstr "_Розтягувати до висоти зображення"
 
-#: plug-ins/common/film.c:1067 plug-ins/common/smooth-palette.c:536
+#: plug-ins/common/film.c:1066 plug-ins/common/smooth-palette.c:536
 #: plug-ins/common/tile.c:523 plug-ins/imagemap/imap_cmd_guides.c:173
 #: plug-ins/imagemap/imap_rectangle.c:405
 #: plug-ins/print/print-page-layout.c:288
@@ -5765,82 +5765,82 @@ msgid "_Height:"
 msgstr "_Висота:"
 
 #. Film color
-#: plug-ins/common/film.c:1088
+#: plug-ins/common/film.c:1087
 msgid "Select Film Color"
 msgstr "Вибір кольору плівки"
 
-#: plug-ins/common/film.c:1093 plug-ins/common/film.c:1150
+#: plug-ins/common/film.c:1092 plug-ins/common/film.c:1149
 msgid "Co_lor:"
 msgstr "_Колір:"
 
 #. Film numbering: Startindex/Font/color
-#: plug-ins/common/film.c:1105
+#: plug-ins/common/film.c:1104
 msgid "Numbering"
 msgstr "Нумерація"
 
-#: plug-ins/common/film.c:1126
+#: plug-ins/common/film.c:1125
 msgid "Start _index:"
 msgstr "Рахувати _від:"
 
-#: plug-ins/common/film.c:1140
+#: plug-ins/common/film.c:1139
 msgid "_Font:"
 msgstr "_Шрифт:"
 
 #. Numbering color
-#: plug-ins/common/film.c:1145
+#: plug-ins/common/film.c:1144
 msgid "Select Number Color"
 msgstr "Вибір кольору номерів"
 
-#: plug-ins/common/film.c:1163
+#: plug-ins/common/film.c:1162
 msgid "At _bottom"
 msgstr "З_низу"
 
-#: plug-ins/common/film.c:1164
+#: plug-ins/common/film.c:1163
 msgid "At _top"
 msgstr "Зв_ерху"
 
 #. ** The right frame keeps the image selection **
-#: plug-ins/common/film.c:1177
+#: plug-ins/common/film.c:1176
 msgid "Image Selection"
 msgstr "Вибір зображення"
 
-#: plug-ins/common/film.c:1210
+#: plug-ins/common/film.c:1209
 msgid "All Values are Fractions of the Strip Height"
 msgstr "Всі значення є долями висоти плівки"
 
-#: plug-ins/common/film.c:1213
+#: plug-ins/common/film.c:1212
 msgid "Ad_vanced"
 msgstr "Д_одатково"
 
-#: plug-ins/common/film.c:1229
+#: plug-ins/common/film.c:1228
 msgid "Image _height:"
 msgstr "_Висота зображення:"
 
-#: plug-ins/common/film.c:1238
+#: plug-ins/common/film.c:1237
 msgid "Image spac_ing:"
 msgstr "_Інтервал між зображеннями:"
 
-#: plug-ins/common/film.c:1250
+#: plug-ins/common/film.c:1249
 msgid "_Hole offset:"
 msgstr "_Зсув отворів:"
 
-#: plug-ins/common/film.c:1259
+#: plug-ins/common/film.c:1258
 msgid "Ho_le width:"
 msgstr "_Ширина отворів:"
 
-#: plug-ins/common/film.c:1268
+#: plug-ins/common/film.c:1267
 msgid "Hol_e height:"
 msgstr "Висота _отворів:"
 
-#: plug-ins/common/film.c:1277
+#: plug-ins/common/film.c:1276
 msgid "Hole sp_acing:"
 msgstr "І_нтервал між отворами:"
 
-#: plug-ins/common/film.c:1289
+#: plug-ins/common/film.c:1288
 msgid "_Number height:"
 msgstr "Висота _чисел:"
 
-#: plug-ins/common/film.c:1301
+#: plug-ins/common/film.c:1300
 msgid "Re_set"
 msgstr "_Скинути"
 
@@ -6185,10 +6185,10 @@ msgid ""
 "of the plug-in menus. Can also be of help to find where new plug-ins have "
 "installed themselves in the menus."
 msgstr ""
-"Надає змогу виконувати навігацію системою меню додатків. Ви можете шукати"
-" додатки за назвами, упорядковувати за назвою або розташуванням меню і"
-" можете переглядати ієрархічне представлення меню додатків. Також стане у"
-" пригоді для пошуку місця, куди встановлені додатки додають себе у меню."
+"Надає змогу виконувати навігацію системою меню додатків. Ви можете шукати "
+"додатки за назвами, упорядковувати за назвою або розташуванням меню і можете "
+"переглядати ієрархічне представлення меню додатків. Також стане у пригоді "
+"для пошуку місця, куди встановлені додатки додають себе у меню."
 
 #: plug-ins/common/plugin-browser.c:372
 msgid "Searching by name"
@@ -10274,7 +10274,7 @@ msgstr "Тип сітки:"
 
 #: plug-ins/gfig/gfig-dialog.c:1458
 #: plug-ins/gradient-flare/gradient-flare.c:749
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "Normal"
 msgstr "Звичайна"
 
@@ -13241,8 +13241,8 @@ msgstr "Експорт файлу метаданих"
 msgid "_Export"
 msgstr "_Експорт"
 
-#: plug-ins/metadata/metadata-tags.c:180 plug-ins/metadata/metadata-tags.c:194
-#: plug-ins/metadata/metadata-tags.c:254 plug-ins/metadata/metadata-tags.c:271
+#: plug-ins/metadata/metadata-tags.c:180 plug-ins/metadata/metadata-tags.c:203
+#: plug-ins/metadata/metadata-tags.c:263 plug-ins/metadata/metadata-tags.c:280
 msgid "Select a value"
 msgstr "Виберіть значення"
 
@@ -13263,169 +13263,206 @@ msgid "Digitized from a print on non-transparent medium"
 msgstr "Оцифровано з друкованого на непрозорому носії"
 
 #: plug-ins/metadata/metadata-tags.c:185
+msgid "Original media with minor human edits"
+msgstr "Початкові мультимедійні дані із незначними редагуваннями людиною"
+
+#: plug-ins/metadata/metadata-tags.c:186
+msgid "Composite of captured elements"
+msgstr "Композиція зі знятих зображень"
+
+#: plug-ins/metadata/metadata-tags.c:187
+msgid "Algorithmically-enhanced media"
+msgstr "Алгоритмічно удосконалені мультимедійні дані"
+
+#: plug-ins/metadata/metadata-tags.c:188
+msgid "Data-driven media"
+msgstr "Мультимедійні дані на основі числових даних"
+
+#: plug-ins/metadata/metadata-tags.c:189
+#| msgid "Digital Source Type"
+msgid "Digital art"
+msgstr "Цифрове мистецтво"
+
+#: plug-ins/metadata/metadata-tags.c:190
+msgid "Virtual recording"
+msgstr "Віртуальний запис"
+
+#: plug-ins/metadata/metadata-tags.c:191
+msgid "Composite including synthetic elements"
+msgstr "Композиція із синтетичними елементами"
+
+#: plug-ins/metadata/metadata-tags.c:192
+msgid "Trained algorithmic media"
+msgstr "Мультимедійні дані на основі глибинного навчання"
+
+#: plug-ins/metadata/metadata-tags.c:193
+msgid "Pure algorithmic media"
+msgstr "Мультимедійні дані, створені лише на основі алгоритмів"
+
+#: plug-ins/metadata/metadata-tags.c:194
 msgid "Created by software"
 msgstr "Створено програмою"
 
-#: plug-ins/metadata/metadata-tags.c:196 plug-ins/metadata/metadata-tags.c:208
+#: plug-ins/metadata/metadata-tags.c:205 plug-ins/metadata/metadata-tags.c:217
 msgid "Not Applicable"
 msgstr "Не застосовується"
 
-#: plug-ins/metadata/metadata-tags.c:197
+#: plug-ins/metadata/metadata-tags.c:206
 msgid "Unlimited Model Releases"
 msgstr "Необмежений реліз моделі"
 
-#: plug-ins/metadata/metadata-tags.c:198
+#: plug-ins/metadata/metadata-tags.c:207
 msgid "Limited or Incomplete Model Releases"
 msgstr "Обмежений або не повний реліз моделі"
 
-#: plug-ins/metadata/metadata-tags.c:209
+#: plug-ins/metadata/metadata-tags.c:218
 msgid "Unlimited Property Releases"
 msgstr "Необмежений реліз власника"
 
-#: plug-ins/metadata/metadata-tags.c:210
+#: plug-ins/metadata/metadata-tags.c:219
 msgid "Limited or Incomplete Property Releases"
 msgstr "Обмежений або не повний реліз власника"
 
-#: plug-ins/metadata/metadata-tags.c:219
+#: plug-ins/metadata/metadata-tags.c:228
 msgid "Age Unknown"
 msgstr "Вік невідомий"
 
-#: plug-ins/metadata/metadata-tags.c:220
+#: plug-ins/metadata/metadata-tags.c:229
 msgid "Age 25 or Over"
 msgstr "25 років або більше"
 
-#: plug-ins/metadata/metadata-tags.c:221
+#: plug-ins/metadata/metadata-tags.c:230
 msgid "Age 24"
 msgstr "24 роки"
 
-#: plug-ins/metadata/metadata-tags.c:222
+#: plug-ins/metadata/metadata-tags.c:231
 msgid "Age 23"
 msgstr "23 роки"
 
-#: plug-ins/metadata/metadata-tags.c:223
+#: plug-ins/metadata/metadata-tags.c:232
 msgid "Age 22"
 msgstr "22 роки"
 
-#: plug-ins/metadata/metadata-tags.c:224
+#: plug-ins/metadata/metadata-tags.c:233
 msgid "Age 21"
 msgstr "21 рік"
 
-#: plug-ins/metadata/metadata-tags.c:225
+#: plug-ins/metadata/metadata-tags.c:234
 msgid "Age 20"
 msgstr "20 років"
 
-#: plug-ins/metadata/metadata-tags.c:226
+#: plug-ins/metadata/metadata-tags.c:235
 msgid "Age 19"
 msgstr "19 років"
 
-#: plug-ins/metadata/metadata-tags.c:227
+#: plug-ins/metadata/metadata-tags.c:236
 msgid "Age 18"
 msgstr "18 років"
 
-#: plug-ins/metadata/metadata-tags.c:228
+#: plug-ins/metadata/metadata-tags.c:237
 msgid "Age 17"
 msgstr "17 років"
 
-#: plug-ins/metadata/metadata-tags.c:229
+#: plug-ins/metadata/metadata-tags.c:238
 msgid "Age 16"
 msgstr "16 років"
 
-#: plug-ins/metadata/metadata-tags.c:230
+#: plug-ins/metadata/metadata-tags.c:239
 msgid "Age 15"
 msgstr "15 років"
 
-#: plug-ins/metadata/metadata-tags.c:231
+#: plug-ins/metadata/metadata-tags.c:240
 msgid "Age 14 or Under"
 msgstr "14 років або менше"
 
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "2"
 msgstr "2"
 
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "3"
 msgstr "3"
 
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "4"
 msgstr "4"
 
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "6"
 msgstr "6"
 
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "7"
 msgstr "7"
 
-#: plug-ins/metadata/metadata-tags.c:245 plug-ins/metadata/metadata-tags.c:281
-#: plug-ins/metadata/metadata-tags.c:288 plug-ins/metadata/metadata-tags.c:295
+#: plug-ins/metadata/metadata-tags.c:254 plug-ins/metadata/metadata-tags.c:290
+#: plug-ins/metadata/metadata-tags.c:297 plug-ins/metadata/metadata-tags.c:304
 msgid "Unknown"
 msgstr "Невідомо"
 
 #. DO NOT SAVE
-#: plug-ins/metadata/metadata-tags.c:246
+#: plug-ins/metadata/metadata-tags.c:255
 msgid "Copyrighted"
 msgstr "Захищено авторським правом"
 
 #. TRUE
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:256
 msgid "Public Domain"
 msgstr "Суспільне надбання"
 
-#: plug-ins/metadata/metadata-tags.c:255
+#: plug-ins/metadata/metadata-tags.c:264
 msgid "Work"
 msgstr "Робочий"
 
-#: plug-ins/metadata/metadata-tags.c:256
+#: plug-ins/metadata/metadata-tags.c:265
 msgid "Cell"
 msgstr "Мобільний"
 
-#: plug-ins/metadata/metadata-tags.c:257
+#: plug-ins/metadata/metadata-tags.c:266
 msgid "Fax"
 msgstr "Факс"
 
-#: plug-ins/metadata/metadata-tags.c:258
+#: plug-ins/metadata/metadata-tags.c:267
 msgid "Home"
 msgstr "Домашній"
 
-#: plug-ins/metadata/metadata-tags.c:259
+#: plug-ins/metadata/metadata-tags.c:268
 msgid "Pager"
 msgstr "Пейджер"
 
-#: plug-ins/metadata/metadata-tags.c:272
+#: plug-ins/metadata/metadata-tags.c:281
 msgid "Male"
 msgstr "Чоловік"
 
-#: plug-ins/metadata/metadata-tags.c:273
+#: plug-ins/metadata/metadata-tags.c:282
 msgid "Female"
 msgstr "Жінка"
 
-#: plug-ins/metadata/metadata-tags.c:274
+#: plug-ins/metadata/metadata-tags.c:283
 msgid "Other"
 msgstr "Інше"
 
-#: plug-ins/metadata/metadata-tags.c:281
+#: plug-ins/metadata/metadata-tags.c:290
 msgid "Above sea level"
 msgstr "Над рівнем моря"
 
-#: plug-ins/metadata/metadata-tags.c:281
+#: plug-ins/metadata/metadata-tags.c:290
 msgid "Below sea level"
 msgstr "Під рівнем моря"
 
-#: plug-ins/metadata/metadata-tags.c:288
+#: plug-ins/metadata/metadata-tags.c:297
 msgid "North"
 msgstr "Північ"
 
-#: plug-ins/metadata/metadata-tags.c:288
+#: plug-ins/metadata/metadata-tags.c:297
 msgid "South"
 msgstr "Південь"
 
-#: plug-ins/metadata/metadata-tags.c:295
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "East"
 msgstr "Схід"
 
-#: plug-ins/metadata/metadata-tags.c:295
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "West"
 msgstr "Захід"
 
