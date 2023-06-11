@@ -767,16 +767,19 @@ main (int    argc,
 #ifndef GIMP_CONSOLE_COMPILATION
   if (! new_instance && gimp_unique_open (filenames, as_new))
     {
+      int success = EXIT_SUCCESS;
+
       if (be_verbose)
         g_print ("%s\n",
                  _("Another GIMP instance is already running."));
 
-      if (batch_commands)
-        gimp_unique_batch_run (batch_interpreter, batch_commands);
+      if (batch_commands &&
+          ! gimp_unique_batch_run (batch_interpreter, batch_commands))
+        success = EXIT_FAILURE;
 
       gdk_notify_startup_complete ();
 
-      return EXIT_SUCCESS;
+      return success;
     }
 #endif
 
