@@ -1,4 +1,4 @@
-image: debian:stable
+image: debian:bullseye
 
 stages:
   - dependencies
@@ -13,7 +13,7 @@ variables:
 
 ## GNU/Linux 64-bit CIs ##
 
-deps-debian/stable:
+deps-debian/oldstable:
   stage: dependencies
   cache:
     paths:
@@ -115,10 +115,10 @@ deps-debian/stable:
     - patch -p1 < ../pygtk-Drop-the-PangoFont-find_shaper-virtual-method.patch
     - ./configure --prefix="${INSTALL_PREFIX}" && make && make install
 
-.gimp-debian/stable-base:
+.gimp-debian/oldstable-base:
   stage: gimp
   dependencies:
-    - deps-debian/stable
+    - deps-debian/oldstable
   artifacts:
     expire_in: 1 week
     when: always
@@ -184,8 +184,8 @@ deps-debian/stable:
     - export PATH="${INSTALL_PREFIX}/bin:$PATH"
   needs: ["deps-debian/stable"]
 
-gimp-debian/stable-autotools:
-  extends: .gimp-debian/stable-base
+gimp-debian/oldstable-autotools:
+  extends: .gimp-debian/oldstable-base
   script:
     - mkdir _build
     - cd _build
@@ -195,8 +195,8 @@ gimp-debian/stable-autotools:
     - make -j "$(nproc)"
     - make check
 
-gimp-debian/stable-autotools-distcheck:
-  extends: .gimp-debian/stable-base
+gimp-debian/oldstable-autotools-distcheck:
+  extends: .gimp-debian/oldstable-base
   script:
     # Actual build.
     - mkdir _build
@@ -214,7 +214,7 @@ gimp-debian/stable-autotools-distcheck:
 sources:
   stage: distribution
   dependencies:
-    - gimp-debian/stable-autotools-distcheck
+    - gimp-debian/oldstable-autotools-distcheck
   artifacts:
     when: always
     expire_in: 2 days
@@ -224,4 +224,4 @@ sources:
   script:
     - mv _build/gimp-*.tar.* .
     - sha256sum gimp-*.tar.* > SHA256SUMS
-  needs: ["gimp-debian/stable-autotools-distcheck"]
+  needs: ["gimp-debian/oldstable-autotools-distcheck"]
