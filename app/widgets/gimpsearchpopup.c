@@ -89,12 +89,16 @@ static void       gimp_search_popup_size_allocate        (GtkWidget         *wid
 static void       gimp_search_popup_confirm              (GimpPopup *popup);
 
 /* Signal handlers on the search entry */
-static gboolean   keyword_entry_key_press_event          (GtkWidget         *widget,
-                                                          GdkEventKey       *event,
-                                                          GimpSearchPopup   *popup);
-static gboolean   keyword_entry_key_release_event        (GtkWidget         *widget,
-                                                          GdkEventKey       *event,
-                                                          GimpSearchPopup   *popup);
+static void       keyword_entry_icon_press               (GtkEntry             *entry,
+                                                          GtkEntryIconPosition  icon_pos,
+                                                          GdkEvent             *event,
+                                                          GimpSearchPopup      *popup);
+static gboolean   keyword_entry_key_press_event          (GtkWidget            *widget,
+                                                          GdkEventKey          *event,
+                                                          GimpSearchPopup      *popup);
+static gboolean   keyword_entry_key_release_event        (GtkWidget            *widget,
+                                                          GdkEventKey          *event,
+                                                          GimpSearchPopup      *popup);
 
 /* Signal handlers on the results list */
 static gboolean   results_list_key_press_event           (GtkWidget         *widget,
@@ -109,6 +113,7 @@ static void       results_list_row_activated             (GtkTreeView       *tre
 static void       gimp_search_popup_run_selected         (GimpSearchPopup   *popup);
 static void       gimp_search_popup_setup_results        (GtkWidget        **results_list,
                                                           GtkWidget        **list_view);
+static void       gimp_search_popup_help                 (GimpSearchPopup   *popup);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpSearchPopup, gimp_search_popup, GIMP_TYPE_POPUP)
@@ -408,6 +413,10 @@ gimp_search_popup_constructed (GObject *object)
                                      GTK_ENTRY_ICON_PRIMARY, "edit-find");
   gtk_entry_set_icon_activatable (GTK_ENTRY (popup->priv->keyword_entry),
                                   GTK_ENTRY_ICON_PRIMARY, FALSE);
+  gtk_entry_set_icon_from_icon_name (GTK_ENTRY (popup->priv->keyword_entry),
+                                     GTK_ENTRY_ICON_SECONDARY, GIMP_ICON_HELP);
+  gtk_entry_set_icon_activatable (GTK_ENTRY (popup->priv->keyword_entry),
+                                  GTK_ENTRY_ICON_SECONDARY, TRUE);
   gtk_box_pack_start (GTK_BOX (main_vbox),
                       popup->priv->keyword_entry,
                       FALSE, FALSE, 0);
@@ -425,6 +434,9 @@ gimp_search_popup_constructed (GObject *object)
                          GDK_SCROLL_MASK       |
                          GDK_SMOOTH_SCROLL_MASK);
 
+  g_signal_connect (popup->priv->keyword_entry, "icon-press",
+                    G_CALLBACK (keyword_entry_icon_press),
+                    popup);
   g_signal_connect (popup->priv->keyword_entry, "key-press-event",
                     G_CALLBACK (keyword_entry_key_press_event),
                     popup);
@@ -528,6 +540,16 @@ gimp_search_popup_confirm (GimpPopup *popup)
   gimp_search_popup_run_selected (search_popup);
 }
 
+static void
+keyword_entry_icon_press (GtkEntry             *entry,
+                          GtkEntryIconPosition  icon_pos,
+                          GdkEvent             *event,
+                          GimpSearchPopup      *popup)
+{
+  if (icon_pos == GTK_ENTRY_ICON_SECONDARY)
+    gimp_search_popup_help (popup);
+}
+
 static gboolean
 keyword_entry_key_press_event (GtkWidget       *widget,
                                GdkEventKey     *event,
@@ -579,25 +601,7 @@ keyword_entry_key_release_event (GtkWidget       *widget,
 
   if (event->keyval == GDK_KEY_F1)
     {
-      const gchar      *help_id = NULL;
-      GimpAction       *action  = NULL;
-      GtkTreeSelection *selection;
-      GtkTreeModel     *model;
-      GtkTreeIter       iter;
-
-      selection = gtk_tree_view_get_selection (tree_view);
-
-      if (gtk_tree_selection_get_selected (selection, &model, &iter))
-        {
-          gtk_tree_model_get (model, &iter, COLUMN_ACTION, &action, -1);
-          help_id = gimp_action_get_help_id (action);
-        }
-
-      if (help_id == NULL)
-        help_id = GIMP_HELP_ACTION_SEARCH_DIALOG;
-
-      gimp_help (popup->priv->gimp, NULL, NULL, help_id);
-      g_clear_object (&action);
+      gimp_search_popup_help (popup);
     }
   else if (strcmp (entry_text, "") != 0)
     {
@@ -804,4 +808,30 @@ gimp_search_popup_setup_results (GtkWidget **results_list,
 
   gtk_container_add (GTK_CONTAINER (*list_view), *results_list);
   g_object_unref (G_OBJECT (store));
+}
+
+static void
+gimp_search_popup_help (GimpSearchPopup *popup)
+{
+  GtkTreeView      *tree_view;
+  const gchar      *help_id = NULL;
+  GimpAction       *action  = NULL;
+  GtkTreeSelection *selection;
+  GtkTreeModel     *model;
+  GtkTreeIter       iter;
+
+  tree_view = GTK_TREE_VIEW (popup->priv->results_list);
+  selection = gtk_tree_view_get_selection (tree_view);
+
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      gtk_tree_model_get (model, &iter, COLUMN_ACTION, &action, -1);
+      help_id = gimp_action_get_help_id (action);
+    }
+
+  if (help_id == NULL)
+    help_id = GIMP_HELP_ACTION_SEARCH_DIALOG;
+
+  gimp_help (popup->priv->gimp, NULL, NULL, help_id);
+  g_clear_object (&action);
 }
