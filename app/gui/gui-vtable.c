@@ -512,16 +512,16 @@ gui_wait (Gimp         *gimp,
   args = gimp_procedure_get_arguments (procedure);
   gimp_value_array_truncate (args, 5);
 
-  g_value_set_enum   (gimp_value_array_index (args, 0),
-                      GIMP_RUN_INTERACTIVE);
-  g_value_set_int    (gimp_value_array_index (args, 1),
-                      output_pipe[0]);
-  g_value_set_int    (gimp_value_array_index (args, 2),
-                      input_pipe[1]);
-  g_value_set_string (gimp_value_array_index (args, 3),
-                      message);
-  g_value_set_int    (gimp_value_array_index (args, 4),
-                      GIMP_IS_CANCELABLE (waitable));
+  g_value_set_enum    (gimp_value_array_index (args, 0),
+                       GIMP_RUN_INTERACTIVE);
+  g_value_set_int     (gimp_value_array_index (args, 1),
+                       output_pipe[0]);
+  g_value_set_int     (gimp_value_array_index (args, 2),
+                       input_pipe[1]);
+  g_value_set_string  (gimp_value_array_index (args, 3),
+                       message);
+  g_value_set_boolean (gimp_value_array_index (args, 4),
+                       GIMP_IS_CANCELABLE (waitable));
 
   gimp_procedure_execute_async (procedure, gimp,
                                 gimp_get_user_context (gimp),
