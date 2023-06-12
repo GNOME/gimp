@@ -56,11 +56,6 @@ Core:
  - Stroke Selection: "Line" and "Paint tool" styles are now in a a stack
    switcher instead of radio buttons. More advanced options are not "hidden"
    anymore in a foldable widget.
- - The quick/dirty exit() now happens on all release code (even micro version)
-   instead of stable code (even minor version). Also in non-release builds, the
-   GIMP_DIRTY_EXIT environment variable can be set in order to force the quick
-   exit() anyway. This became necessary because of recent memory issues we
-   experienced ever since GLib's GSlice implementation changed (GLib 2.75.3).
  - New grayscale color picking mode.
  - .aco palettes are now imported with babl. As a result, it is now possible to
    import CIE Lab palettes (colorspace 7)
