@@ -595,11 +595,13 @@ layers_new_group_cmd_callback (GimpAction *action,
                                gpointer    data)
 {
   GimpImage *image;
-  GList     *new_layers = NULL;
+  GList     *new_layers  = NULL;
   GList     *layers;
+  GimpLayer *layer;
   GList     *iter;
   gint       n_layers;
   gboolean   run_once;
+  gboolean   group_added = FALSE;
 
   return_if_no_image (image, data);
 
@@ -610,39 +612,36 @@ layers_new_group_cmd_callback (GimpAction *action,
 
   gimp_image_undo_group_start (image,
                                GIMP_UNDO_GROUP_LAYER_ADD,
-                               ngettext ("New layer group",
-                                         "New layer groups",
-                                         n_layers > 0 ? n_layers : 1));
+                               _("New layer group"));
+
+  layer = gimp_group_layer_new (image);
 
   for (iter = layers; iter || run_once ; iter = iter ? iter->next : NULL)
     {
-      GimpLayer *layer;
       GimpLayer *parent;
       gint       position;
 
       run_once = FALSE;
       if (iter)
         {
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
-            {
-              parent   = iter->data;
-              position = 0;
-            }
-          else
-            {
-              parent   = GIMP_LAYER (gimp_item_get_parent (iter->data));
-              position = gimp_item_get_index (iter->data);
-            }
+          parent   = GIMP_LAYER (gimp_item_get_parent (iter->data));
+          position = gimp_item_get_index (iter->data);
         }
       else /* run_once */
         {
           parent   = NULL;
           position = -1;
         }
-      layer = gimp_group_layer_new (image);
 
-      gimp_image_add_layer (image, layer, parent, position, TRUE);
-      new_layers = g_list_prepend (new_layers, layer);
+      if (! group_added)
+        {
+          gimp_image_add_layer (image, layer, parent, position, TRUE);
+          new_layers = g_list_prepend (new_layers, layer);
+          group_added = TRUE;
+        }
+
+      gimp_image_reorder_item (image, iter->data, GIMP_ITEM (layer),
+                               position + 1, TRUE, NULL);
     }
 
   gimp_image_set_selected_layers (image, new_layers);
