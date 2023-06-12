@@ -74,6 +74,42 @@
   </provides>
 
   <releases>
+    <release version="2.99.16" date="2023-06-25" type="development">
+      <description>
+        <p>
+        GIMP 2.99.16 marks the end of the GTK+3 port as there is no massive usage of deprecated GTK API anymore.
+        We are therefore getting extremely close to release candidates!
+        Apart from internal work on the codebase, here are some of the more visible improvements:
+        </p>
+        <ul>
+          <li>Action search now displays the menu path for actions and a help icon</li>
+          <li>An action is generated for every third-party GEGL operation</li>
+          <li>GEGL operations can register a menu item through the "gimp:menu-path" key</li>
+
+          <li>Log-off and shutdown can be inhibited when images are not saved</li>
+          <li>New option "Merge menu and title bar" for client-side decorations on image windows</li>
+
+          <li>New "Middle Gray (CIELAB)" fill option (new image or new layer)</li>
+          <li>The Stroke Selection dialog has been reorganized</li>
+
+          <li>New "Grayscale (%)" view in Color Picker tool's info window and sample points</li>
+          <li>Better ACO color palettes support, ported to babl, including CIELAB palettes</li>
+
+          <li>Themes are still being worked on</li>
+
+          <li>JPEG-XL: initial support for CMYK/A export</li>
+          <li>PSD: support of clipping path import and export</li>
+          <li>PSD: compatibility warning dialogs raised on import and export, when relevant</li>
+          <li>TIFF: PSD metadata and IBM PC layers now supported on import</li>
+          <li>JPEG: PSD metadata and clipping paths now supported on import</li>
+          <li>DDS: OpenMP support enabled when available</li>
+          <li>FITS: import and export code ported to cfitsio, resulting in much better coverage</li>
+          <li>Newly added support for import and export: PAM and QOI</li>
+          <li>Newly added import-only support: Amiga IFF/ILBM and DCX</li>
+          <li>Script-Fu: new type 'byte' to handle binary data</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.99.14" date="2022-11-13" type="development">
       <description>
         <p>
