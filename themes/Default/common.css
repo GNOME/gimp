@@ -250,6 +250,10 @@ paned separator {
   padding: 3px;
 }
 
+paned menu separator {
+    padding: 0px;
+}
+
 .view button {
   background-color: @bg-color;
   border-color: @border-color;
@@ -350,8 +354,9 @@ tooltip {
 
 /* The border around a tooltip */
 .background {
-  background-color: @border-color;
-  border: 1px;
+  background-color: @bg-color;
+  border-color: @border-color;
+  border-width: 1px;
 }
 
 /* The border around a frame */
