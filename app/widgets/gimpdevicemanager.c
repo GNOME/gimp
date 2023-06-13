@@ -46,6 +46,12 @@ enum
   PROP_CURRENT_DEVICE
 };
 
+enum
+{
+  CONFIGURE_PAD,
+  LAST_SIGNAL
+};
+
 
 
 struct _GimpDeviceManagerPrivate
@@ -104,6 +110,8 @@ static void   gimp_device_manager_device_defaults (GdkSeat           *seat,
 G_DEFINE_TYPE_WITH_PRIVATE (GimpDeviceManager, gimp_device_manager,
                             GIMP_TYPE_LIST)
 
+static guint device_manager_signals[LAST_SIGNAL];
+
 #define parent_class gimp_device_manager_parent_class
 
 
@@ -117,6 +125,14 @@ gimp_device_manager_class_init (GimpDeviceManagerClass *klass)
   object_class->finalize           = gimp_device_manager_finalize;
   object_class->set_property       = gimp_device_manager_set_property;
   object_class->get_property       = gimp_device_manager_get_property;
+
+  device_manager_signals[CONFIGURE_PAD] =
+    g_signal_new ("configure-pad",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST, 0,
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_DEVICE_INFO);
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -511,6 +527,9 @@ gimp_device_manager_device_added (GdkSeat           *seat,
       gimp_container_add (GIMP_CONTAINER (manager), GIMP_OBJECT (device_info));
       g_object_unref (device_info);
     }
+
+  if (gdk_device_get_source (device) == GDK_SOURCE_TABLET_PAD)
+    g_signal_emit (manager, device_manager_signals[CONFIGURE_PAD], 0, device_info);
 }
 
 static void
@@ -536,6 +555,9 @@ gimp_device_manager_device_removed (GdkSeat           *seat,
 
           gimp_device_manager_set_current_device (manager, device_info);
         }
+
+      if (gdk_device_get_source (device) == GDK_SOURCE_TABLET_PAD)
+        g_signal_emit (manager, device_manager_signals[CONFIGURE_PAD], 0, device_info);
     }
 }
 
