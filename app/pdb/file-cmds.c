@@ -185,7 +185,7 @@ file_load_layers_invoker (GimpProcedure         *procedure,
                                      image, FALSE,
                                      file, run_mode, NULL, &status, error);
 
-      if (layers)
+      if (layer_list)
         {
           GList *list;
           gint i;
