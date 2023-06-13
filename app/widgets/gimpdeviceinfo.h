@@ -124,6 +124,8 @@ GimpDeviceInfo * gimp_device_info_get_by_device         (GdkDevice       *device
 gint             gimp_device_info_compare               (GimpDeviceInfo  *a,
                                                          GimpDeviceInfo  *b);
 
+GimpPadActions * gimp_device_info_get_pad_actions       (GimpDeviceInfo  *info);
+
 
 G_END_DECLS
 

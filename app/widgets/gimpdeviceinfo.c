@@ -34,6 +34,7 @@
 #include "core/gimpcurve.h"
 #include "core/gimpcurve-map.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimppadactions.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimptoolinfo.h"
 
@@ -83,7 +84,8 @@ enum
   PROP_TOOL_HARDWARE_ID,
   PROP_AXES,
   PROP_KEYS,
-  PROP_PRESSURE_CURVE
+  PROP_PRESSURE_CURVE,
+  PROP_PAD_ACTIONS
 };
 
 struct _GimpDeviceInfoPrivate
@@ -100,6 +102,8 @@ struct _GimpDeviceInfoPrivate
 
   gint            n_keys;
   GimpDeviceKey  *keys;
+
+  GimpPadActions *pad_actions;
 
   /*  curves  */
 
@@ -249,6 +253,13 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
                            NULL,
                            GIMP_TYPE_CURVE,
                            GIMP_CONFIG_PARAM_AGGREGATE);
+
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_PAD_ACTIONS,
+                           "pad-actions",
+                           _("Pad actions"),
+                           NULL,
+                           GIMP_TYPE_PAD_ACTIONS,
+                           GIMP_CONFIG_PARAM_AGGREGATE);
 }
 
 static void
@@ -260,6 +271,7 @@ gimp_device_info_init (GimpDeviceInfo *info)
   info->priv->mode           = GDK_MODE_DISABLED;
   info->priv->pressure_curve = GIMP_CURVE (gimp_curve_new ("pressure curve"));
   info->priv->axes_names     = NULL;
+  info->priv->pad_actions    = gimp_pad_actions_new ();
 
   g_signal_connect (info, "notify::name",
                     G_CALLBACK (gimp_device_info_guess_icon),
@@ -289,6 +301,7 @@ gimp_device_info_finalize (GObject *object)
   g_strfreev (info->priv->axes_names);
 
   g_clear_object (&info->priv->pressure_curve);
+  g_clear_object (&info->priv->pad_actions);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -406,6 +419,11 @@ gimp_device_info_set_property (GObject      *object,
     case PROP_PRESSURE_CURVE:
       src_curve  = g_value_get_object (value);
       dest_curve = info->priv->pressure_curve;
+      break;
+
+    case PROP_PAD_ACTIONS:
+      g_clear_object (&info->priv->pad_actions);
+      info->priv->pad_actions = g_value_get_object (value);
       break;
 
     default:
@@ -540,6 +558,10 @@ gimp_device_info_get_property (GObject    *object,
 
     case PROP_PRESSURE_CURVE:
       g_value_set_object (value, info->priv->pressure_curve);
+      break;
+
+    case PROP_PAD_ACTIONS:
+      g_value_set_object (value, info->priv->pad_actions);
       break;
 
     default:
@@ -1395,4 +1417,10 @@ gimp_device_info_compare (GimpDeviceInfo *a,
       return gimp_object_name_collate ((GimpObject *) a,
                                        (GimpObject *) b);
     }
+}
+
+GimpPadActions *
+gimp_device_info_get_pad_actions (GimpDeviceInfo *info)
+{
+  return info->priv->pad_actions;
 }
