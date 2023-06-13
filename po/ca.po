@@ -9718,7 +9718,7 @@ msgstr "_Manté la separació en mode «Mostra-ho tot»"
 msgctxt "view-padding-color"
 msgid "Keep canvas padding when \"View -> Show All\" is enabled"
 msgstr ""
-"Manté la separació del llenç quan està habilitat «Visualitza -> Mostra-ho "
+"Mantén la separació del llenç quan està habilitat «Visualitza -> Mostra-ho "
 "tot»"
 
 #: app/actions/view-actions.c:560
@@ -24825,7 +24825,7 @@ msgstr "Restringeix el moviment a angles de 45° des del centre (%s)"
 #: app/tools/gimptransformgridoptions.c:569
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
-msgstr "Manté la relació d'aspecte quan s'ajusta la mida (%s)"
+msgstr "Mantén la relació d'aspecte quan s'ajusta la mida (%s)"
 
 #: app/tools/gimptransformgridoptions.c:571
 #, c-format
@@ -24839,7 +24839,8 @@ msgstr "Inclina només al llarg de la direcció del cantó (%s)"
 
 #: app/tools/gimptransformgridoptions.c:575
 #, c-format
-msgid "Constrain perspective handles to move along edges and diagonal (%s)"
+msgid
+ "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 "Restringeix els tiradors de perspectiva per a moure's al llarg dels cantons "
 "i la diagonal (%s)"
@@ -24862,7 +24863,7 @@ msgstr "Inclina el cantó oposat la mateixa quantitat (%s)"
 #: app/tools/gimptransformgridoptions.c:584
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
-msgstr "Manté la posició del pivot mentre es canvia la perspectiva (%s)"
+msgstr "Mantén la posició del pivot mentre es canvia la perspectiva (%s)"
 
 #: app/tools/gimptransformgridoptions.c:587
 msgid "Pivot"
@@ -26167,7 +26168,7 @@ msgstr "Esdeveniments de la roda del ratolí"
 
 #: app/widgets/gimpcriticaldialog.c:55
 msgid "Copy Bug Information"
-msgstr "Copia _la informació de l'error"
+msgstr "Copia la informació de l'error"
 
 #: app/widgets/gimpcriticaldialog.c:56
 msgid "Open Bug Tracker"

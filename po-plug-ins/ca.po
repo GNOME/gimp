@@ -2094,7 +2094,7 @@ msgstr "no és un fitxer d'imatge CEL"
 #: plug-ins/common/file-cel.c:460
 #, c-format
 msgid "illegal bpp value in image: %hhu"
-msgstr "el valor de bpp no es permès a la imatge: %hhu"
+msgstr "el valor de bpp no és permès a la imatge: %hhu"
 
 #: plug-ins/common/file-cel.c:475
 #, c-format
@@ -3307,7 +3307,7 @@ msgstr "No es pot convertir la imatge CMYK JP2 en «%s» a RGB."
 #: plug-ins/common/file-jp2-load.c:1267
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
-msgstr "No es pot convertir la imatge  xvYCC JP2 en «%s» a RGB."
+msgstr "No es pot convertir la imatge xvYCC JP2 en «%s» a RGB."
 
 #: plug-ins/common/file-jp2-load.c:1294
 #, c-format
@@ -3447,7 +3447,7 @@ msgstr ""
 
 #: plug-ins/common/file-mng.c:290
 msgid "JPEG compression _quality"
-msgstr "_   Qualitat de compressió JPEG"
+msgstr "_Qualitat de compressió JPEG"
 
 #: plug-ins/common/file-mng.c:291
 msgid "JPEG quality factor"
@@ -4584,7 +4584,7 @@ msgstr "S'ha produït un error en llegir la capçalera del bloc"
 #: plug-ins/common/file-psp.c:941
 #, c-format
 msgid "Invalid block header at %ld"
-msgstr "La capçalera del bloc no es vàlida a %ld"
+msgstr "La capçalera del bloc no és vàlida a %ld"
 
 #: plug-ins/common/file-psp.c:944
 msgid "Invalid block header"
@@ -7636,7 +7636,7 @@ msgstr "Converteix els píxels codificats en YCoCg a RGB"
 
 #: plug-ins/file-dds/dds.c:345
 msgid "Decode YCoCg (scaled)"
-msgstr "Descodifica  YCoCg (escalat)"
+msgstr "Descodifica YCoCg (escalat)"
 
 #: plug-ins/file-dds/dds.c:349 plug-ins/file-dds/dds.c:351
 #, fuzzy
@@ -14135,7 +14135,7 @@ msgstr "Nombre de punts per a considerar quan es filtra."
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:257
 msgid "Keep Knees"
-msgstr "Mantenir els angles"
+msgstr "Conserva els angles"
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:261
 msgid "Says whether or not to remove 'knee' points after finding the outline."
