@@ -352,7 +352,7 @@ gimp_device_manager_reset (GimpDeviceManager *manager)
       GList      *iter;
 
       seat    = gdk_display_get_default_seat (display);
-      devices = gdk_seat_get_slaves (seat, GDK_SEAT_CAPABILITY_ALL_POINTING);
+      devices = gdk_seat_get_slaves (seat, GDK_SEAT_CAPABILITY_ALL);
 
       for (iter = devices; iter; iter = g_list_next (iter))
         {
@@ -398,7 +398,7 @@ gimp_device_manager_display_opened (GdkDisplayManager *disp_manager,
   device = gdk_seat_get_pointer (seat);
   gimp_device_manager_device_added (seat, device, manager);
 
-  devices = gdk_seat_get_slaves (seat, GDK_SEAT_CAPABILITY_ALL_POINTING);
+  devices = gdk_seat_get_slaves (seat, GDK_SEAT_CAPABILITY_ALL);
 
   /*  create device info structures for present devices */
   for (list = devices; list; list = g_list_next (list))
