@@ -411,19 +411,19 @@ gimp_channel_get_node (GimpFilter *filter)
   if (channel->show_masked)
     {
       gegl_node_link (source, channel->invert_node);
-      gegl_node_connect_to (channel->invert_node, "output",
-                            channel->mask_node,   "aux");
+      gegl_node_connect (channel->invert_node, "output",
+                         channel->mask_node,   "aux");
     }
   else
     {
-      gegl_node_connect_to (source,             "output",
-                            channel->mask_node, "aux");
+      gegl_node_connect (source,             "output",
+                         channel->mask_node, "aux");
     }
 
   mode_node = gimp_drawable_get_mode_node (drawable);
 
-  gegl_node_connect_to (channel->mask_node, "output",
-                        mode_node,          "aux");
+  gegl_node_connect (channel->mask_node, "output",
+                     mode_node,          "aux");
 
   return node;
 }
@@ -1753,15 +1753,15 @@ gimp_channel_set_show_masked (GimpChannel *channel,
           if (channel->show_masked)
             {
               gegl_node_link (source, channel->invert_node);
-              gegl_node_connect_to (channel->invert_node, "output",
-                                    channel->mask_node,   "aux");
+              gegl_node_connect (channel->invert_node, "output",
+                                 channel->mask_node,   "aux");
             }
           else
             {
               gegl_node_disconnect (channel->invert_node, "input");
 
-              gegl_node_connect_to (source,             "output",
-                                    channel->mask_node, "aux");
+              gegl_node_connect (source,             "output",
+                                 channel->mask_node, "aux");
             }
         }
 

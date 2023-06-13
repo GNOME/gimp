@@ -694,11 +694,11 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
 
   gegl_node_link_many (input, op, overlay, output, NULL);
 
-  gegl_node_connect_to (paste,   "output",
-                        op,      "aux");
+  gegl_node_connect (paste,   "output",
+                     op,      "aux");
 
-  gegl_node_connect_to (input,   "output",
-                        overlay, "aux");
+  gegl_node_connect (input,   "output",
+                     overlay, "aux");
 
 
   sc->render_node = node;

@@ -866,8 +866,8 @@ gimp_paint_select_tool_create_graph (GimpPaintSelectTool  *ps_tool)
   else
     gegl_node_link_many (crop, ps_tool->ps_node, ps_tool->render_node, NULL);
 
-  gegl_node_connect_to (d, "output", ps_tool->ps_node, "aux");
-  gegl_node_connect_to (t, "output", ps_tool->ps_node, "aux2");
+  gegl_node_connect (d, "output", ps_tool->ps_node, "aux");
+  gegl_node_connect (t, "output", ps_tool->ps_node, "aux2");
 }
 
 static void

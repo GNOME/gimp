@@ -276,8 +276,7 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
                        filter->crop_after,
                        NULL);
 
-  gegl_node_connect_to (filter->crop_after, "output",
-                        node,               "aux");
+  gegl_node_connect (filter->crop_after, "output", node, "aux");
 
   return filter;
 }

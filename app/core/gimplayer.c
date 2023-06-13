@@ -826,8 +826,7 @@ gimp_layer_get_node (GimpFilter *filter)
   if (! source_node_hijacked)
     gegl_node_add_child (node, source);
 
-  gegl_node_connect_to (input,  "output",
-                        source, "input");
+  gegl_node_connect (input, "output", source, "input");
 
   g_warn_if_fail (layer->layer_offset_node == NULL);
   g_warn_if_fail (layer->mask_offset_node == NULL);
@@ -852,14 +851,14 @@ gimp_layer_get_node (GimpFilter *filter)
 
   if (! source_node_hijacked)
     {
-      gegl_node_connect_to (source,                   "output",
-                            layer->layer_offset_node, "input");
+      gegl_node_connect (source,                   "output",
+                         layer->layer_offset_node, "input");
     }
 
   if (! (layer->mask && gimp_layer_get_show_mask (layer)))
     {
-      gegl_node_connect_to (layer->layer_offset_node, "output",
-                            mode_node,                "aux");
+      gegl_node_connect (layer->layer_offset_node, "output",
+                         mode_node,                "aux");
     }
 
   if (layer->mask)
@@ -868,18 +867,18 @@ gimp_layer_get_node (GimpFilter *filter)
 
       mask = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer->mask));
 
-      gegl_node_connect_to (mask,                    "output",
-                            layer->mask_offset_node, "input");
+      gegl_node_connect (mask,                    "output",
+                         layer->mask_offset_node, "input");
 
       if (gimp_layer_get_show_mask (layer))
         {
-          gegl_node_connect_to (layer->mask_offset_node, "output",
-                                mode_node,               "aux");
+          gegl_node_connect (layer->mask_offset_node, "output",
+                             mode_node,               "aux");
         }
       else if (gimp_layer_get_apply_mask (layer))
         {
-          gegl_node_connect_to (layer->mask_offset_node, "output",
-                                mode_node,               "aux2");
+          gegl_node_connect (layer->mask_offset_node, "output",
+                             mode_node,               "aux2");
         }
     }
 
@@ -1972,18 +1971,18 @@ gimp_layer_add_mask (GimpLayer      *layer,
 
       mask = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer->mask));
 
-      gegl_node_connect_to (mask,                    "output",
-                            layer->mask_offset_node, "input");
+      gegl_node_connect (mask,                    "output",
+                         layer->mask_offset_node, "input");
 
       if (layer->show_mask)
         {
-          gegl_node_connect_to (layer->mask_offset_node, "output",
-                                mode_node,               "aux");
+          gegl_node_connect (layer->mask_offset_node, "output",
+                             mode_node,               "aux");
         }
       else
         {
-          gegl_node_connect_to (layer->mask_offset_node, "output",
-                                mode_node,               "aux2");
+          gegl_node_connect (layer->mask_offset_node, "output",
+                             mode_node,               "aux2");
         }
 
       gimp_layer_update_mode_node (layer);
@@ -2301,8 +2300,8 @@ gimp_layer_apply_mask (GimpLayer         *layer,
 
       if (layer->show_mask)
         {
-          gegl_node_connect_to (layer->layer_offset_node, "output",
-                                mode_node,                "aux");
+          gegl_node_connect (layer->layer_offset_node, "output",
+                             mode_node,                "aux");
         }
       else
         {
@@ -2362,8 +2361,8 @@ gimp_layer_set_apply_mask (GimpLayer *layer,
 
           if (layer->apply_mask)
             {
-              gegl_node_connect_to (layer->mask_offset_node, "output",
-                                    mode_node,               "aux2");
+              gegl_node_connect (layer->mask_offset_node, "output",
+                                 mode_node,               "aux2");
             }
           else
             {
@@ -2444,18 +2443,18 @@ gimp_layer_set_show_mask (GimpLayer *layer,
             {
               gegl_node_disconnect (mode_node, "aux2");
 
-              gegl_node_connect_to (layer->mask_offset_node, "output",
-                                    mode_node,               "aux");
+              gegl_node_connect (layer->mask_offset_node, "output",
+                                 mode_node,               "aux");
             }
           else
             {
-              gegl_node_connect_to (layer->layer_offset_node, "output",
-                                    mode_node,                "aux");
+              gegl_node_connect (layer->layer_offset_node, "output",
+                                 mode_node,                "aux");
 
               if (gimp_layer_get_apply_mask (layer))
                 {
-                  gegl_node_connect_to (layer->mask_offset_node, "output",
-                                        mode_node,               "aux2");
+                  gegl_node_connect (layer->mask_offset_node, "output",
+                                     mode_node,               "aux2");
                 }
             }
 

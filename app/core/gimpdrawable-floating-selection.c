@@ -229,8 +229,8 @@ _gimp_drawable_add_floating_sel_filter (GimpDrawable *drawable)
                                                NULL);
 
   gegl_node_link (fs_source, private->fs_crop_node);
-  gegl_node_connect_to (private->fs_crop_node, "output",
-                        node,                  "aux");
+  gegl_node_connect (private->fs_crop_node, "output",
+                     node,                  "aux");
 
   gimp_drawable_add_filter (drawable, private->fs_filter);
 

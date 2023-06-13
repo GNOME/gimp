@@ -494,8 +494,7 @@ combine_buffers (GeglBuffer *layer_buffer,
                                 "buffer", buffer,
                                 NULL);
   gegl_node_link_many (backdrop, over, target, NULL);
-  gegl_node_connect_to (source, "output",
-                        over, "aux");
+  gegl_node_connect (source, "output", over, "aux");
   gegl_node_process (target);
   g_object_unref (graph);
 

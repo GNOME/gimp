@@ -106,8 +106,7 @@ gimp_drawable_calculate_histogram_internal (GimpDrawable  *drawable,
                                          gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
                                          -off_x, -off_y);
 
-          gegl_node_connect_to (mask_source,    "output",
-                                histogram_sink, "aux");
+          gegl_node_connect (mask_source, "output", histogram_sink, "aux");
         }
 
       processor = gegl_node_new_processor (histogram_sink,

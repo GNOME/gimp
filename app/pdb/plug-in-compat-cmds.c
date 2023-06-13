@@ -266,7 +266,7 @@ bump_map (GimpDrawable *drawable,
 
       src_node = create_buffer_source_node (graph, bump_map);
 
-      gegl_node_connect_to (src_node, "output", node, "aux");
+      gegl_node_connect (src_node, "output", node, "aux");
 
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Bump Map"),
@@ -330,14 +330,14 @@ displace (GimpDrawable  *drawable,
             {
               GeglNode *src_node;
               src_node = create_buffer_source_node (graph, displace_map_x);
-              gegl_node_connect_to (src_node, "output", node, "aux");
+              gegl_node_connect (src_node, "output", node, "aux");
             }
 
           if (do_y)
             {
               GeglNode *src_node;
               src_node = create_buffer_source_node (graph, displace_map_y);
-              gegl_node_connect_to (src_node, "output", node, "aux2");
+              gegl_node_connect (src_node, "output", node, "aux2");
             }
 
           gimp_drawable_apply_operation (drawable, progress,
@@ -3079,14 +3079,14 @@ plug_in_oilify_enhanced_invoker (GimpProcedure         *procedure,
             {
               GeglNode *src_node;
               src_node = create_buffer_source_node (graph, mask_size_map);
-              gegl_node_connect_to (src_node, "output", node, "aux");
+              gegl_node_connect (src_node, "output", node, "aux");
             }
 
           if (exponent_map)
             {
               GeglNode *src_node;
               src_node = create_buffer_source_node (graph, exponent_map);
-              gegl_node_connect_to (src_node, "output", node, "aux2");
+              gegl_node_connect (src_node, "output", node, "aux2");
             }
 
           gimp_drawable_apply_operation (drawable, progress,

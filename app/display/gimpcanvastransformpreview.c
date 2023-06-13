@@ -559,8 +559,8 @@ gimp_canvas_transform_preview_sync_node (GimpCanvasTransformPreview *transform_p
                            private->transform_node,
                            NULL);
 
-      gegl_node_connect_to (private->layer_mask_source_node,  "output",
-                            private->layer_mask_opacity_node, "aux");
+      gegl_node_connect (private->layer_mask_source_node,  "output",
+                         private->layer_mask_opacity_node, "aux");
 
       gegl_node_link_many (private->mask_source_node,
                            private->mask_translate_node,
@@ -680,8 +680,8 @@ gimp_canvas_transform_preview_sync_node (GimpCanvasTransformPreview *transform_p
 
       if (! private->node_mask)
         {
-          gegl_node_connect_to (private->mask_crop_node, "output",
-                                private->opacity_node,   "aux");
+          gegl_node_connect (private->mask_crop_node, "output",
+                             private->opacity_node,   "aux");
         }
     }
   else if (private->node_mask)

@@ -1341,8 +1341,7 @@ gimp_line_art_close (GeglBuffer  *buffer,
                                  "metric",    GEGL_DISTANCE_METRIC_EUCLIDEAN,
                                  "normalize", FALSE,
                                  NULL);
-      gegl_node_connect_to (input, "output",
-                            op, "input");
+      gegl_node_link (input, op);
       gegl_node_blit (op, 1.0, gegl_buffer_get_extent (closed),
                       NULL, *closed_distmap,
                       GEGL_AUTO_ROWSTRIDE, GEGL_BLIT_DEFAULT);
@@ -2343,7 +2342,7 @@ gimp_lineart_estimate_strokes_radii (GeglBuffer *mask,
                              "metric",    GEGL_DISTANCE_METRIC_EUCLIDEAN,
                              "normalize", FALSE,
                              NULL);
-  gegl_node_connect_to (input, "output", op, "input");
+  gegl_node_link (input, op);
   gegl_node_blit (op, 1.0, gegl_buffer_get_extent (mask),
                   NULL, dist, GEGL_AUTO_ROWSTRIDE, GEGL_BLIT_DEFAULT);
   g_object_unref (graph);

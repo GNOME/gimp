@@ -673,8 +673,8 @@ gimp_operation_tool_aux_input_new (GimpOperationTool *op_tool,
                                      "operation", "gegl:buffer-source",
                                      NULL);
 
-  gegl_node_connect_to (input->node, "output",
-                        operation,   input_pad);
+  gegl_node_connect (input->node, "output",
+                     operation,   input_pad);
 
   context = GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (op_tool));
 

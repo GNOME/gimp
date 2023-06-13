@@ -150,8 +150,8 @@ gimp_applicator_new (GeglNode *parent)
                        applicator->apply_offset_node,
                        NULL);
 
-  gegl_node_connect_to (applicator->apply_offset_node, "output",
-                        applicator->mode_node,         "aux");
+  gegl_node_connect (applicator->apply_offset_node, "output",
+                     applicator->mode_node,         "aux");
 
   applicator->mask_node =
     gegl_node_new_child (applicator->node,
@@ -195,8 +195,8 @@ gimp_applicator_new (GeglNode *parent)
                        applicator->output_node,
                        NULL);
 
-  gegl_node_connect_to (applicator->mode_node,   "output",
-                        applicator->affect_node, "aux");
+  gegl_node_connect (applicator->mode_node,   "output",
+                     applicator->affect_node, "aux");
 
   return applicator;
 }
@@ -318,8 +318,8 @@ gimp_applicator_set_mask_buffer (GimpApplicator *applicator,
 
   if (mask_buffer)
     {
-      gegl_node_connect_to (applicator->mask_offset_node, "output",
-                            applicator->mode_node,        "aux2");
+      gegl_node_connect (applicator->mask_offset_node, "output",
+                         applicator->mode_node,        "aux2");
     }
   else
     {
@@ -378,8 +378,8 @@ gimp_applicator_set_apply_buffer (GimpApplicator *applicator,
 
       if (! applicator->apply_buffer)
         {
-          gegl_node_connect_to (applicator->apply_src_node,    "output",
-                                applicator->apply_offset_node, "input");
+          gegl_node_connect (applicator->apply_src_node,    "output",
+                             applicator->apply_offset_node, "input");
         }
     }
   else if (applicator->apply_buffer)
@@ -599,8 +599,8 @@ gimp_applicator_set_crop (GimpApplicator      *applicator,
                              "height",    rect->height,
                              NULL);
 
-              gegl_node_connect_to (applicator->input_node, "output",
-                                    applicator->crop_node,  "aux");
+              gegl_node_connect (applicator->input_node, "output",
+                                 applicator->crop_node,  "aux");
             }
           else
             {

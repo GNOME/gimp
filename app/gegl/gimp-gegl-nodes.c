@@ -76,8 +76,8 @@ gimp_gegl_create_flatten_node (const GimpRGB       *background,
                                 composite_space,
                                 GIMP_LAYER_COMPOSITE_AUTO);
 
-  gegl_node_connect_to (input,  "output",
-                        mode,   "aux");
+  gegl_node_connect (input,  "output",
+                     mode,   "aux");
   gegl_node_link_many (color, mode, output, NULL);
 
   return node;
@@ -114,8 +114,8 @@ gimp_gegl_create_apply_opacity_node (GeglBuffer *mask,
                                              mask_offset_y);
 
   gegl_node_link_many (input, opacity_node, output, NULL);
-  gegl_node_connect_to (mask_source,  "output",
-                        opacity_node, "aux");
+  gegl_node_connect (mask_source,  "output",
+                     opacity_node, "aux");
 
   return node;
 }

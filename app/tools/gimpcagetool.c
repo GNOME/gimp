@@ -1241,13 +1241,13 @@ gimp_cage_tool_create_render_node (GimpCageTool *ct)
 
   gegl_node_link (input, ct->cage_node);
 
-  gegl_node_connect_to (ct->coef_node, "output",
-                        ct->cage_node, "aux");
+  gegl_node_connect (ct->coef_node, "output",
+                     ct->cage_node, "aux");
 
   gegl_node_link (input, render);
 
-  gegl_node_connect_to (ct->cage_node, "output",
-                        render,        "aux");
+  gegl_node_connect (ct->cage_node, "output",
+                     render,        "aux");
 
   gegl_node_link (render, output);
 

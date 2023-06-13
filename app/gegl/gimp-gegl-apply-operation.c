@@ -267,8 +267,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                         "operation", "gimp:normal",
                                         NULL);
 
-          gegl_node_connect_to (operation, "output",
-                                effect,    "aux");
+          gegl_node_connect (operation, "output", effect,    "aux");
         }
 
       gegl_node_link (src_node, effect);
@@ -534,7 +533,7 @@ gimp_gegl_apply_border (GeglBuffer             *src_buffer,
 
         gegl_node_link_many (input, grow, subtract, output, NULL);
         gegl_node_link (input, shrink);
-        gegl_node_connect_to (shrink, "output", subtract, "aux");
+        gegl_node_connect (shrink, "output", subtract, "aux");
       }
       break;
 

@@ -634,8 +634,8 @@ gimp_warp_tool_undo (GimpTool    *tool,
    */
   prev_node = gegl_node_get_producer (to_delete, "input", NULL);
 
-  gegl_node_connect_to (prev_node,       "output",
-                        wt->render_node, "aux");
+  gegl_node_connect (prev_node,       "output",
+                     wt->render_node, "aux");
 
   gimp_warp_tool_update_bounds (wt);
   gimp_warp_tool_update_stroke (wt, to_delete);
@@ -652,8 +652,8 @@ gimp_warp_tool_redo (GimpTool    *tool,
 
   to_add = wt->redo_stack->data;
 
-  gegl_node_connect_to (to_add,          "output",
-                        wt->render_node, "aux");
+  gegl_node_connect (to_add,          "output",
+                     wt->render_node, "aux");
 
   wt->redo_stack = g_list_remove_link (wt->redo_stack, wt->redo_stack);
 
@@ -1066,8 +1066,8 @@ gimp_warp_tool_create_graph (GimpWarpTool *wt)
                                 NULL);
 
   gegl_node_link_many (input, render, output, NULL);
-  gegl_node_connect_to (coords, "output",
-                        render, "aux");
+  gegl_node_connect (coords, "output",
+                     render, "aux");
 
 
   wt->graph       = graph;
@@ -1370,8 +1370,8 @@ gimp_warp_tool_add_op (GimpWarpTool *wt,
 
   gegl_node_disconnect (wt->render_node, "aux");
   gegl_node_link (last_op, op);
-  gegl_node_connect_to (op,              "output",
-                        wt->render_node, "aux");
+  gegl_node_connect (op,              "output",
+                     wt->render_node, "aux");
 }
 
 static void
@@ -1385,8 +1385,8 @@ gimp_warp_tool_remove_op (GimpWarpTool *wt,
   previous = gegl_node_get_producer (op, "input", NULL);
 
   gegl_node_disconnect (op,              "input");
-  gegl_node_connect_to (previous,        "output",
-                        wt->render_node, "aux");
+  gegl_node_connect (previous,        "output",
+                     wt->render_node, "aux");
 
   gegl_node_remove_child (wt->graph, op);
 }

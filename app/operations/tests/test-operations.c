@@ -345,7 +345,7 @@ process_operations (GType type)
                                             "operation", "gegl:save",
                                             "path", output_path,
                                             NULL);
-              gegl_node_connect_to (composition, "output", output, "input");
+              gegl_node_connect (composition, "output", output, "input");
               gegl_node_process (output);
 
               if (image_compare (output_path, image_path))
