@@ -255,6 +255,7 @@ static const GimpDialogFactoryEntry entries[] =
 
   FOREIGN ("gimp-controller-editor-dialog",        FALSE, TRUE),
   FOREIGN ("gimp-controller-action-dialog",        FALSE, TRUE),
+  FOREIGN ("gimp-pad-action-dialog",               FALSE, TRUE),
 
   /*  ordinary toplevels  */
   TOPLEVEL ("gimp-image-new-dialog",
