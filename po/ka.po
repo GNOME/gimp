@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-06-12 17:44+0000\n"
-"PO-Revision-Date: 2023-06-13 05:52+0200\n"
+"PO-Revision-Date: 2023-06-13 05:57+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -20041,7 +20041,7 @@ msgstr "პალიტრა %s ჩასწორებადი არაა"
 #: app/pdb/gimppdb-utils.c:370
 #, c-format
 msgid "Palette '%s' is not renamable"
-msgstr "პალიტრა %s-ის სახელის გადარქმევა შეუძლებელია"
+msgstr "პალიტრისთვის %s სახელის გადარქმევა შეუძლებელია"
 
 #: app/pdb/gimppdb-utils.c:390
 msgid "Invalid empty font name"
@@ -20719,10 +20719,9 @@ msgid "Wind"
 msgstr "ქარი"
 
 #: app/pdb/resource-cmds.c:355
-#, fuzzy, c-format
-#| msgid "Palette '%s' is not renamable"
+#, c-format
 msgid "Resource '%s' is not renamable"
-msgstr "პალიტრა %s-ის სახელის გადარქმევა შეუძლებელია"
+msgstr "რესურსისთვის %s სახელის გადარქმევა შეუძლებელია"
 
 #: app/pdb/text-layer-cmds.c:97
 msgid "Failed to create text layer"
