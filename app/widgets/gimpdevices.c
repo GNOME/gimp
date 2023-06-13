@@ -197,6 +197,7 @@ gimp_devices_save (Gimp     *gimp,
   g_object_unref (file);
 
   devicerc_deleted = FALSE;
+  gimp_device_manager_reconfigure_pads (manager);
 }
 
 gboolean

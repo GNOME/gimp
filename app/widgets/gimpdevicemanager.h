@@ -62,6 +62,9 @@ void                gimp_device_manager_set_current_device (GimpDeviceManager *m
 
 void                gimp_device_manager_reset              (GimpDeviceManager *manager);
 
+void                gimp_device_manager_reconfigure_pads   (GimpDeviceManager *manager);
+
+
 G_END_DECLS
 
 #endif /* __GIMP_DEVICE_MANAGER_H__ */

@@ -106,6 +106,9 @@ static void   gimp_device_manager_device_defaults (GdkSeat           *seat,
                                                    GdkDevice         *device,
                                                    GimpDeviceManager *manager);
 
+static void   gimp_device_manager_reconfigure_pad_foreach (GimpDeviceInfo    *info,
+                                                           GimpDeviceManager *manager);
+
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpDeviceManager, gimp_device_manager,
                             GIMP_TYPE_LIST)
@@ -379,6 +382,16 @@ gimp_device_manager_reset (GimpDeviceManager *manager)
     }
 
   g_slist_free (displays);
+
+  gimp_device_manager_reconfigure_pads (manager);
+}
+
+void
+gimp_device_manager_reconfigure_pads (GimpDeviceManager *manager)
+{
+  gimp_container_foreach (GIMP_CONTAINER (manager),
+                          (GFunc) gimp_device_manager_reconfigure_pad_foreach,
+                          manager);
 }
 
 
@@ -741,4 +754,16 @@ gimp_device_manager_device_defaults (GdkSeat           *seat,
             gimp_curve_reset (curve, TRUE);
         }
     }
+}
+
+static void
+gimp_device_manager_reconfigure_pad_foreach (GimpDeviceInfo    *info,
+                                             GimpDeviceManager *manager)
+{
+  if (gimp_device_info_get_device (info, NULL) == NULL)
+    return;
+  if (gimp_device_info_get_source (info) != GDK_SOURCE_TABLET_PAD)
+    return;
+
+  g_signal_emit (manager, device_manager_signals[CONFIGURE_PAD], 0, info);
 }
