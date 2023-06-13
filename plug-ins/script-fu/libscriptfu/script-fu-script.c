@@ -602,12 +602,12 @@ script_fu_script_set_drawable_sensitivity (GimpProcedure *procedure, SFScript *s
     {
     case SF_TWO_OR_MORE_DRAWABLE:
       gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES );
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES);
       break;
     case SF_ONE_OR_MORE_DRAWABLE:
       gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE );
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE |
+                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES);
       break;
     case SF_ONE_DRAWABLE:
       gimp_procedure_set_sensitivity_mask (procedure, GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
