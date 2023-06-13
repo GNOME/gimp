@@ -38,6 +38,8 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpaction.h"
+
 #include "gimpdeviceinfo.h"
 
 #include "gimp-intl.h"
@@ -761,6 +763,48 @@ gimp_device_info_updated (GimpDeviceInfo *info)
   g_object_thaw_notify (G_OBJECT (info));
 }
 
+static void
+gimp_device_info_pad_action_map_foreach (GimpPadActions    *pad_actions,
+                                         GimpPadActionType  action_type,
+                                         guint              number,
+                                         guint              mode,
+                                         const gchar       *action_name,
+                                         gpointer           data)
+{
+  GtkPadController *controller = data;
+  GimpDeviceInfo   *info;
+  Gimp             *gimp;
+  GimpAction       *action;
+  gchar            *label;
+  gchar            *accel_pos;
+
+  info = g_object_get_data (G_OBJECT (controller), "device-info");
+  if (!info)
+    return;
+
+  gimp = GIMP_TOOL_PRESET (info)->gimp;
+
+  action = GIMP_ACTION (g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
+                                                    action_name));
+  if (!action)
+    return;
+
+  /* Trim the accelerator from the feedback string */
+  label = g_strdup (gimp_action_get_label (action));
+  accel_pos = g_utf8_strchr (label, -1, '_');
+  if (accel_pos)
+    strcpy (accel_pos, accel_pos + 1);
+
+  gtk_pad_controller_set_action (controller,
+                                 /* Action type enums are binary compatible */
+                                 (GtkPadActionType) action_type,
+                                 number, mode,
+                                 label,
+                                 gimp_action_get_name (action));
+  g_free (label);
+}
+
+
 /*  public functions  */
 
 GimpDeviceInfo *
@@ -1427,4 +1471,30 @@ GimpPadActions *
 gimp_device_info_get_pad_actions (GimpDeviceInfo *info)
 {
   return info->priv->pad_actions;
+}
+
+GtkPadController *
+gimp_device_info_create_pad_controller (GimpDeviceInfo *info,
+                                        GimpWindow     *window)
+{
+  Gimp             *gimp;
+  GimpPadActions   *pad_actions;
+  GtkPadController *controller;
+
+  gimp = GIMP_TOOL_PRESET (info)->gimp;
+
+  pad_actions = gimp_device_info_get_pad_actions (info);
+
+  if (gimp_pad_actions_get_n_actions (pad_actions) == 0)
+    return NULL;
+
+  controller = gtk_pad_controller_new (GTK_WINDOW (window),
+                                       G_ACTION_GROUP (gimp->app),
+                                       info->priv->device);
+  g_object_set_data (G_OBJECT (controller), "device-info", info);
+  gimp_pad_actions_foreach (pad_actions,
+                            gimp_device_info_pad_action_map_foreach,
+                            controller);
+
+  return controller;
 }

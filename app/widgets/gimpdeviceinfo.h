@@ -126,6 +126,9 @@ gint             gimp_device_info_compare               (GimpDeviceInfo  *a,
 
 GimpPadActions * gimp_device_info_get_pad_actions       (GimpDeviceInfo  *info);
 
+GtkPadController * gimp_device_info_create_pad_controller (GimpDeviceInfo *info,
+                                                           GimpWindow     *window);
+
 
 G_END_DECLS
 
