@@ -44,6 +44,9 @@
 #include "core/gimpcontainer.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpdeviceinfo.h"
+#include "widgets/gimpdevicemanager.h"
+#include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdockbook.h"
@@ -127,6 +130,8 @@ struct _GimpImageWindowPrivate
   GtkWidget         *right_hpane;
   GtkWidget         *notebook;
   GtkWidget         *right_docks;
+
+  GHashTable        *pad_controllers;
 
   GdkWindowState     window_state;
 
@@ -261,6 +266,11 @@ static GtkWidget *
                                                         GimpDisplayShell    *shell);
 static void      gimp_image_window_update_tab_labels   (GimpImageWindow     *window);
 
+static void      gimp_image_window_configure_pad       (GimpImageWindow     *window,
+                                                        GimpDeviceInfo      *info);
+static void      gimp_image_window_init_pad_foreach    (GimpDeviceInfo      *info,
+                                                        GimpImageWindow     *window);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpImageWindow, gimp_image_window, GIMP_TYPE_WINDOW,
                          G_ADD_PRIVATE (GimpImageWindow)
@@ -351,6 +361,7 @@ gimp_image_window_constructed (GObject *object)
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   GimpUIManager          *menubar_manager;
   GimpGuiConfig          *config;
+  GimpDeviceManager      *device_manager;
   gboolean                use_gtk_menubar = TRUE;
   gboolean                use_app_menu    = TRUE;
 
@@ -547,6 +558,17 @@ gimp_image_window_constructed (GObject *object)
                                     NULL /*new_display*/,
                                     gimp_image_window_config_to_entry_id (config),
                                     private->initial_monitor);
+
+  private->pad_controllers =
+    g_hash_table_new_full (NULL, NULL, NULL, g_object_unref);
+
+  device_manager = gimp_devices_get_manager (private->gimp);
+  g_signal_connect_object (device_manager, "configure-pad",
+                           G_CALLBACK (gimp_image_window_configure_pad),
+                           window, G_CONNECT_SWAPPED);
+  gimp_container_foreach (GIMP_CONTAINER (device_manager),
+                          (GFunc) gimp_image_window_init_pad_foreach,
+                          window);
 }
 
 static void
@@ -568,6 +590,7 @@ gimp_image_window_dispose (GObject *object)
       private->update_ui_manager_idle_id = 0;
     }
 
+  g_clear_pointer (&private->pad_controllers, g_hash_table_unref);
   g_clear_object (&private->menubar_model);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -2462,4 +2485,34 @@ gimp_image_window_update_tab_labels (GimpImageWindow *window)
     }
 
   g_list_free (children);
+}
+
+static void
+gimp_image_window_configure_pad (GimpImageWindow *window,
+                                 GimpDeviceInfo  *info)
+{
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GtkPadController       *controller;
+
+  g_hash_table_remove (private->pad_controllers, info);
+
+  if (gimp_device_info_get_device (info, NULL) != NULL)
+    {
+      controller =
+        gimp_device_info_create_pad_controller (info, GIMP_WINDOW (window));
+      if (controller)
+        g_hash_table_insert (private->pad_controllers, info, controller);
+    }
+}
+
+static void
+gimp_image_window_init_pad_foreach (GimpDeviceInfo  *info,
+                                    GimpImageWindow *window)
+{
+  if (gimp_device_info_get_device (info, NULL) == NULL)
+    return;
+  if (gimp_device_info_get_source (info) != GDK_SOURCE_TABLET_PAD)
+    return;
+
+  gimp_image_window_configure_pad (window, info);
 }
