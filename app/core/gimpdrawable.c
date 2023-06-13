@@ -481,10 +481,8 @@ gimp_drawable_get_node (GimpFilter *filter)
   input  = gegl_node_get_input_proxy  (node, "input");
   output = gegl_node_get_output_proxy (node, "output");
 
-  gegl_node_connect_to (input,                        "output",
-                        drawable->private->mode_node, "input");
-  gegl_node_connect_to (drawable->private->mode_node, "output",
-                        output,                       "input");
+  gegl_node_link (input, drawable->private->mode_node);
+  gegl_node_link (drawable->private->mode_node, output);
 
   return node;
 }
@@ -1532,21 +1530,18 @@ gimp_drawable_get_source_node (GimpDrawable *drawable)
 
   if (gegl_node_has_pad (source, "input"))
     {
-      gegl_node_connect_to (input,  "output",
-                            source, "input");
+      gegl_node_link (input, source);
     }
 
   filter = gimp_filter_stack_get_graph (GIMP_FILTER_STACK (drawable->private->filter_stack));
 
   gegl_node_add_child (drawable->private->source_node, filter);
 
-  gegl_node_connect_to (source, "output",
-                        filter, "input");
+  gegl_node_link (source, filter);
 
   output = gegl_node_get_output_proxy (drawable->private->source_node, "output");
 
-  gegl_node_connect_to (filter, "output",
-                        output, "input");
+  gegl_node_link (filter, output);
 
   if (gimp_drawable_get_floating_sel (drawable))
     _gimp_drawable_add_floating_sel_filter (drawable);

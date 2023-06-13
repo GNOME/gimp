@@ -400,8 +400,7 @@ gimp_channel_get_node (GimpFilter *filter)
   channel->mask_node = gegl_node_new_child (node,
                                             "operation", "gegl:opacity",
                                             NULL);
-  gegl_node_connect_to (channel->color_node, "output",
-                        channel->mask_node,  "input");
+  gegl_node_link (channel->color_node, channel->mask_node);
 
   g_warn_if_fail (channel->invert_node == NULL);
 
@@ -411,8 +410,7 @@ gimp_channel_get_node (GimpFilter *filter)
 
   if (channel->show_masked)
     {
-      gegl_node_connect_to (source,               "output",
-                            channel->invert_node, "input");
+      gegl_node_link (source, channel->invert_node);
       gegl_node_connect_to (channel->invert_node, "output",
                             channel->mask_node,   "aux");
     }
@@ -1754,8 +1752,7 @@ gimp_channel_set_show_masked (GimpChannel *channel,
 
           if (channel->show_masked)
             {
-              gegl_node_connect_to (source,               "output",
-                                    channel->invert_node, "input");
+              gegl_node_link (source, channel->invert_node);
               gegl_node_connect_to (channel->invert_node, "output",
                                     channel->mask_node,   "aux");
             }

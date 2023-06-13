@@ -90,8 +90,7 @@ gimp_drawable_calculate_histogram_internal (GimpDrawable  *drawable,
                              "histogram", histogram,
                              NULL);
 
-      gegl_node_connect_to (source,         "output",
-                            histogram_sink, "input");
+      gegl_node_link (source, histogram_sink);
 
       if (! gimp_channel_is_empty (mask))
         {

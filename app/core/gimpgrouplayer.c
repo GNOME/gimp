@@ -1136,8 +1136,7 @@ gimp_group_layer_get_source_node (GimpDrawable *drawable)
 
   if (gegl_node_has_pad (private->parent_source_node, "input"))
     {
-      gegl_node_connect_to (input,                       "output",
-                            private->parent_source_node, "input");
+      gegl_node_link (input, private->parent_source_node);
     }
 
   /* make sure we have a graph */
@@ -1432,8 +1431,7 @@ gimp_group_layer_get_graph (GimpProjectable *projectable)
 
   gegl_node_add_child (private->graph, layers_node);
 
-  gegl_node_connect_to (input,       "output",
-                        layers_node, "input");
+  gegl_node_link (input, layers_node);
 
   gimp_item_get_offset (GIMP_ITEM (group), &off_x, &off_y);
 
@@ -1443,13 +1441,11 @@ gimp_group_layer_get_graph (GimpProjectable *projectable)
                                               "y",         (gdouble) -off_y,
                                               NULL);
 
-  gegl_node_connect_to (layers_node,          "output",
-                        private->offset_node, "input");
+  gegl_node_link (layers_node, private->offset_node);
 
   output = gegl_node_get_output_proxy (private->graph, "output");
 
-  gegl_node_connect_to (private->offset_node, "output",
-                        output,               "input");
+  gegl_node_link (private->offset_node, output);
 
   return private->graph;
 }
@@ -1480,8 +1476,7 @@ gimp_group_layer_end_render (GimpProjectable *projectable)
 
       input = gegl_node_get_input_proxy (private->source_node, "input");
 
-      gegl_node_connect_to (input,          "output",
-                            private->graph, "input");
+      gegl_node_link (input, private->graph);
     }
 }
 
@@ -2203,17 +2198,14 @@ gimp_group_layer_update_source_node (GimpGroupLayer *group)
 
   if (private->pass_through)
     {
-      gegl_node_connect_to (input,          "output",
-                            private->graph, "input");
-      gegl_node_connect_to (private->graph, "output",
-                            output,         "input");
+      gegl_node_link (input, private->graph);
+      gegl_node_link (private->graph, output);
     }
   else
     {
       gegl_node_disconnect (private->graph, "input");
 
-      gegl_node_connect_to (private->parent_source_node, "output",
-                            output,                      "input");
+      gegl_node_link (private->parent_source_node, output);
     }
 }
 
@@ -2236,8 +2228,7 @@ gimp_group_layer_update_mode_node (GimpGroupLayer *group)
     }
   else
     {
-      gegl_node_connect_to (input,     "output",
-                            mode_node, "input");
+      gegl_node_link (input, mode_node);
     }
 }
 

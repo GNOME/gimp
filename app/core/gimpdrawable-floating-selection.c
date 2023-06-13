@@ -228,8 +228,7 @@ _gimp_drawable_add_floating_sel_filter (GimpDrawable *drawable)
                                                "operation", "gegl:nop",
                                                NULL);
 
-  gegl_node_connect_to (fs_source,             "output",
-                        private->fs_crop_node, "input");
+  gegl_node_link (fs_source, private->fs_crop_node);
   gegl_node_connect_to (private->fs_crop_node, "output",
                         node,                  "aux");
 
@@ -307,8 +306,7 @@ gimp_drawable_remove_fs_filter (GimpDrawable *drawable)
         {
           gegl_node_add_child (gimp_filter_get_node (GIMP_FILTER (fs)),
                                fs_source);
-          gegl_node_connect_to (fs_source,             "output",
-                                fs->layer_offset_node, "input");
+          gegl_node_link (fs_source, fs->layer_offset_node);
         }
 
       g_clear_object (&private->fs_filter);

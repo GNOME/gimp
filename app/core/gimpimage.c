@@ -1743,21 +1743,18 @@ gimp_image_get_graph (GimpProjectable *projectable)
                          "alpha",     1.0,
                          NULL);
 
-  gegl_node_connect_to (layers_node,           "output",
-                        private->visible_mask, "input");
+  gegl_node_link (layers_node, private->visible_mask);
 
   channels_node =
     gimp_filter_stack_get_graph (GIMP_FILTER_STACK (private->channels->container));
 
   gegl_node_add_child (private->graph, channels_node);
 
-  gegl_node_connect_to (private->visible_mask, "output",
-                        channels_node,         "input");
+  gegl_node_link (private->visible_mask, channels_node);
 
   output = gegl_node_get_output_proxy (private->graph, "output");
 
-  gegl_node_connect_to (channels_node, "output",
-                        output,        "input");
+  gegl_node_link (channels_node, output);
 
   return private->graph;
 }

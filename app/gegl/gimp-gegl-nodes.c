@@ -78,10 +78,7 @@ gimp_gegl_create_flatten_node (const GimpRGB       *background,
 
   gegl_node_connect_to (input,  "output",
                         mode,   "aux");
-  gegl_node_connect_to (color,  "output",
-                        mode,   "input");
-  gegl_node_connect_to (mode,   "output",
-                        output, "input");
+  gegl_node_link_many (color, mode, output, NULL);
 
   return node;
 }
@@ -116,12 +113,9 @@ gimp_gegl_create_apply_opacity_node (GeglBuffer *mask,
                                              mask_offset_x,
                                              mask_offset_y);
 
-  gegl_node_connect_to (input,        "output",
-                        opacity_node, "input");
+  gegl_node_link_many (input, opacity_node, output, NULL);
   gegl_node_connect_to (mask_source,  "output",
                         opacity_node, "aux");
-  gegl_node_connect_to (opacity_node, "output",
-                        output,       "input");
 
   return node;
 }
@@ -167,8 +161,7 @@ gimp_gegl_add_buffer_source (GeglNode   *parent,
                              "y",         (gdouble) offset_y,
                              NULL);
 
-      gegl_node_connect_to (buffer_source, "output",
-                            translate,     "input");
+      gegl_node_link (buffer_source, translate);
 
       buffer_source = translate;
     }

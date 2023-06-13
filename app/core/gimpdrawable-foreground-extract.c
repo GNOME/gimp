@@ -117,7 +117,7 @@ gimp_drawable_foreground_extract (GimpDrawable      *drawable,
                                   "y", 1.0 * off_y,
                                   NULL);
 
-      gegl_node_connect_to (trimap_node,   "output", pre, "input");
+      gegl_node_link (trimap_node, pre);
       gegl_node_connect_to (pre,  "output", matting_node, "aux");
       gegl_node_link_many (input_node, matting_node, post, output_node, NULL);
     }

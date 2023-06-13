@@ -256,8 +256,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                            "height",    (gdouble) dest_rect->height,
                                            NULL);
 
-          gegl_node_connect_to (src_node,  "output",
-                                crop_node, "input");
+          gegl_node_link (src_node, crop_node);
 
           src_node = crop_node;
         }
@@ -272,8 +271,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                 effect,    "aux");
         }
 
-      gegl_node_connect_to (src_node, "output",
-                            effect,   "input");
+      gegl_node_link (src_node, effect);
     }
 
   dest_node = gegl_node_new_child (gegl,
@@ -281,8 +279,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                    "buffer",    result_buffer,
                                    NULL);
 
-  gegl_node_connect_to (effect,    "output",
-                        dest_node, "input");
+  gegl_node_link (effect, dest_node);
 
   iter = gimp_chunk_iterator_new (region);
 
@@ -358,8 +355,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
   if (operation_src_node)
     {
-      gegl_node_connect_to (operation_src_node, "output",
-                            operation,          "input");
+      gegl_node_link (operation_src_node, operation);
     }
 
   if (progress_started)

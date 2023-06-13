@@ -1065,14 +1065,10 @@ gimp_warp_tool_create_graph (GimpWarpTool *wt)
                                 "abyss-policy", options->abyss_policy,
                                 NULL);
 
-  gegl_node_connect_to (input,  "output",
-                        render, "input");
-
+  gegl_node_link_many (input, render, output, NULL);
   gegl_node_connect_to (coords, "output",
                         render, "aux");
 
-  gegl_node_connect_to (render, "output",
-                        output, "input");
 
   wt->graph       = graph;
   wt->render_node = render;
@@ -1373,8 +1369,7 @@ gimp_warp_tool_add_op (GimpWarpTool *wt,
   last_op = gegl_node_get_producer (wt->render_node, "aux", NULL);
 
   gegl_node_disconnect (wt->render_node, "aux");
-  gegl_node_connect_to (last_op,         "output",
-                        op    ,          "input");
+  gegl_node_link (last_op, op);
   gegl_node_connect_to (op,              "output",
                         wt->render_node, "aux");
 }

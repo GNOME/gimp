@@ -139,8 +139,7 @@ gimp_applicator_new (GeglNode *parent)
   gimp_gegl_mode_node_set_opacity (applicator->mode_node,
                                    applicator->opacity);
 
-  gegl_node_connect_to (applicator->input_node, "output",
-                        applicator->mode_node,  "input");
+  gegl_node_link (applicator->input_node, applicator->mode_node);
 
   applicator->apply_offset_node =
     gegl_node_new_child (applicator->node,
@@ -164,8 +163,7 @@ gimp_applicator_new (GeglNode *parent)
                          "operation", "gegl:translate",
                          NULL);
 
-  gegl_node_connect_to (applicator->mask_node,        "output",
-                        applicator->mask_offset_node, "input");
+  gegl_node_link (applicator->mask_node, applicator->mask_offset_node);
   /* don't connect the the mask offset node to mode's aux2 yet */
 
   applicator->affect_node =
@@ -386,8 +384,7 @@ gimp_applicator_set_apply_buffer (GimpApplicator *applicator,
     }
   else if (applicator->apply_buffer)
     {
-      gegl_node_connect_to (applicator->aux_node,          "output",
-                            applicator->apply_offset_node, "input");
+      gegl_node_link (applicator->aux_node, applicator->apply_offset_node);
     }
 
   applicator->apply_buffer = apply_buffer;

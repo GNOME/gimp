@@ -211,16 +211,14 @@ gimp_filter_stack_get_graph (GimpFilterStack *stack)
 
       gegl_node_add_child (stack->graph, node);
 
-      gegl_node_connect_to (previous, "output",
-                            node,     "input");
+      gegl_node_link (previous, node);
 
       previous = node;
     }
 
   output = gegl_node_get_output_proxy (stack->graph, "output");
 
-  gegl_node_connect_to (previous, "output",
-                        output,   "input");
+  gegl_node_link (previous, output);
 
   return stack->graph;
 }
@@ -259,10 +257,8 @@ gimp_filter_stack_add_node (GimpFilterStack *stack,
 
   node_below = gegl_node_get_producer (node_above, "input", NULL);
 
-  gegl_node_connect_to (node_below, "output",
-                        node,       "input");
-  gegl_node_connect_to (node,       "output",
-                        node_above, "input");
+  gegl_node_link (node_below, node);
+  gegl_node_link (node, node_above);
 }
 
 static void
@@ -297,8 +293,7 @@ gimp_filter_stack_remove_node (GimpFilterStack *stack,
 
   gegl_node_disconnect (node, "input");
 
-  gegl_node_connect_to (node_below, "output",
-                        node_above, "input");
+  gegl_node_link (node_below, node_above);
 }
 
 static void

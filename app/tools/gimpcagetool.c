@@ -1187,8 +1187,7 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct)
                                 "format",    format,
                                 NULL);
 
-  gegl_node_connect_to (input, "output",
-                        output, "input");
+  gegl_node_link (input, output);
 
   processor = gegl_node_new_processor (output, NULL);
 
@@ -1240,20 +1239,17 @@ gimp_cage_tool_create_render_node (GimpCageTool *ct)
                                 "operation", "gegl:map-absolute",
                                 NULL);
 
-  gegl_node_connect_to (input,         "output",
-                        ct->cage_node, "input");
+  gegl_node_link (input, ct->cage_node);
 
   gegl_node_connect_to (ct->coef_node, "output",
                         ct->cage_node, "aux");
 
-  gegl_node_connect_to (input,  "output",
-                        render, "input");
+  gegl_node_link (input, render);
 
   gegl_node_connect_to (ct->cage_node, "output",
                         render,        "aux");
 
-  gegl_node_connect_to (render, "output",
-                        output, "input");
+  gegl_node_link (render, output);
 
   gimp_gegl_progress_connect (ct->cage_node, GIMP_PROGRESS (ct),
                               _("Cage Transform"));
