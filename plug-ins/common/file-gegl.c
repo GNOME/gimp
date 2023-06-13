@@ -363,8 +363,7 @@ load_image (GFile        *file,
                               "buffer",    &src_buf,
                               NULL);
 
-  gegl_node_connect_to (source, "output",
-                        sink,   "input");
+  gegl_node_link (source, sink);
 
   gegl_node_process (sink);
 
@@ -509,8 +508,7 @@ save_image (GFile         *file,
                               "path",      g_file_peek_path (file),
                               NULL);
 
-  gegl_node_connect_to (source, "output",
-                        sink,   "input");
+  gegl_node_link (source, sink);
 
   gegl_node_process (sink);
 
