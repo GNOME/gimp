@@ -197,6 +197,7 @@ libappcore_sources = [
   'gimpmybrush.c',
   'gimpobject.c',
   'gimpobjectqueue.c',
+  'gimppadactions.c',
   'gimppaintinfo.c',
   'gimppalette-import.c',
   'gimppalette-load.c',
