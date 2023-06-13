@@ -1076,6 +1076,10 @@ gimp_device_info_get_source (GimpDeviceInfo *info)
   if (info->priv->device)
     return gdk_device_get_source (info->priv->device);
 
+  if (info->priv->pad_actions &&
+      gimp_pad_actions_get_n_actions (info->priv->pad_actions) > 0)
+    return GDK_SOURCE_TABLET_PAD;
+
   return GDK_SOURCE_MOUSE;
 }
 
