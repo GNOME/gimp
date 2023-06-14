@@ -733,6 +733,14 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
       count  = gimp_histogram_get_count (hist, view->channel,
                                          view->start, view->end);
 
+      /* For the RGB histogram, we need to divide by three
+       * since it combines three histograms in one */
+      if (view->channel == GIMP_HISTOGRAM_RGB)
+        {
+          pixels /= 3;
+          count /= 3;
+        }
+
       g_snprintf (text, sizeof (text), "%.3f",
                   gimp_histogram_get_mean (hist, view->channel,
                                            view->start, view->end));
