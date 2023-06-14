@@ -1012,6 +1012,8 @@ static void
 gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
                                     GimpImage        *image)
 {
+  GimpImage *old_image = view->priv->image;
+
   if (view->priv->image == image)
     return;
 
@@ -1024,13 +1026,17 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
                                             gimp_item_tree_view_size_changed,
                                             view);
 
+      /* This prevents the image's layers from being deselected
+       * when the container changes */
+      view->priv->image = NULL;
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view), NULL);
 
-      g_signal_handlers_disconnect_by_func (view->priv->image,
+      g_signal_handlers_disconnect_by_func (old_image,
                                             gimp_item_tree_view_image_flush,
                                             view);
     }
 
+  old_image = NULL;
   view->priv->image = image;
 
   if (view->priv->image)
@@ -1238,27 +1244,27 @@ gimp_item_tree_view_select_items (GimpContainerView *view,
                                   GList             *items,
                                   GList             *paths)
 {
-  GimpItemTreeView *tree_view         = GIMP_ITEM_TREE_VIEW (view);
-  gboolean          options_sensitive = FALSE;
-  gboolean          success;
+  GimpItemTreeViewClass *item_view_class;
+  GimpItemTreeView      *tree_view         = GIMP_ITEM_TREE_VIEW (view);
+  gboolean               options_sensitive = FALSE;
+  gboolean               success;
+
+  if (! tree_view->priv->image)
+    return TRUE;
 
   success = parent_view_iface->select_items (view, items, paths);
 
-  if (items)
+  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (tree_view);
+  if (TRUE) /* XXX: test if new selection same as old. */
     {
-      GimpItemTreeViewClass *item_view_class;
+      item_view_class->set_selected_items (tree_view->priv->image, items);
+      gimp_image_flush (tree_view->priv->image);
 
-      item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (tree_view);
-      if (TRUE) /* XXX: test if new selection same as old. */
-        {
-          item_view_class->set_selected_items (tree_view->priv->image, items);
-          gimp_image_flush (tree_view->priv->image);
-
-          items = item_view_class->get_selected_items (tree_view->priv->image);
-        }
-
-      options_sensitive = TRUE;
+      items = item_view_class->get_selected_items (tree_view->priv->image);
     }
+
+  if (items)
+    options_sensitive = TRUE;
 
   gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view)), tree_view);
 
