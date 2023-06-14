@@ -484,6 +484,7 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
                                  GimpRunMode           run_mode,
                                  const GimpValueArray *args)
 {
+  GParamSpec  *run_mode_pspec;
   GParamSpec **pspecs;
   guint        n_pspecs;
   gint         i;
@@ -560,6 +561,13 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
           break;
         }
     }
+
+  /* Always set the run-mode in the end, which should be influenced neither by
+   * the default property value, nor last run's value.
+   */
+  run_mode_pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "run-mode");
+  if (run_mode_pspec != NULL && G_IS_PARAM_SPEC_ENUM (run_mode_pspec))
+    g_object_set (config, "run-mode", run_mode, NULL);
 
   g_free (pspecs);
 }
