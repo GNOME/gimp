@@ -52,7 +52,7 @@ static GimpProcedure  * glob_create_procedure (GimpPlugIn           *plug_in,
                                                const gchar          *name);
 
 static GimpValueArray * glob_run              (GimpProcedure        *procedure,
-                                               const GimpValueArray *args,
+                                               GimpProcedureConfig  *config,
                                                gpointer              run_data);
 
 static gboolean         glob_match            (const gchar          *pattern,
@@ -96,9 +96,9 @@ glob_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
-                                      glob_run, NULL, NULL);
+      procedure = gimp_procedure_new2 (plug_in, name,
+                                       GIMP_PDB_PROC_TYPE_PLUGIN,
+                                       glob_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Returns a list of matching filenames",
@@ -141,29 +141,33 @@ glob_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 glob_run (GimpProcedure        *procedure,
-          const GimpValueArray *args,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  const gchar    *pattern;
+  gchar          *pattern;
   gboolean        filename_encoding;
   gchar         **matches;
 
-  pattern           = GIMP_VALUES_GET_STRING  (args, 0);
-  filename_encoding = GIMP_VALUES_GET_BOOLEAN (args, 1);
+  g_object_get (config,
+                "pattern",           &pattern,
+                "filename-encoding", &filename_encoding,
+                NULL);
 
   if (! glob_match (pattern, filename_encoding, &matches))
     {
-      return gimp_procedure_new_return_values (procedure,
+      return_vals = gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
                                                NULL);
     }
-
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
-                                                  NULL);
-
-  GIMP_VALUES_TAKE_STRV (return_vals, 1, matches);
+  else
+    {
+      return_vals = gimp_procedure_new_return_values (procedure,
+                                                      GIMP_PDB_SUCCESS,
+                                                      NULL);
+      GIMP_VALUES_TAKE_STRV (return_vals, 1, matches);
+    }
+  g_free (pattern);
 
   return return_vals;
 }

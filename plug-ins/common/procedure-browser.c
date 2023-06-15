@@ -80,7 +80,7 @@ static GimpProcedure  * browser_create_procedure (GimpPlugIn           *plug_in,
                                                   const gchar          *name);
 
 static GimpValueArray * browser_run              (GimpProcedure        *procedure,
-                                                  const GimpValueArray *args,
+                                                  GimpProcedureConfig  *config,
                                                   gpointer              run_data);
 
 
@@ -119,9 +119,9 @@ browser_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
-                                      browser_run, NULL, NULL);
+      procedure = gimp_procedure_new2 (plug_in, name,
+                                       GIMP_PDB_PROC_TYPE_PLUGIN,
+                                       browser_run, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Procedure _Browser"));
       gimp_procedure_add_menu_path (procedure, "<Image>/Help/[Programming]");
@@ -148,11 +148,12 @@ browser_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 browser_run (GimpProcedure        *procedure,
-             const GimpValueArray *args,
+             GimpProcedureConfig  *config,
              gpointer              run_data)
 {
-  GimpRunMode run_mode = GIMP_VALUES_GET_ENUM (args, 0);
+  GimpRunMode run_mode;
 
+  g_object_get (config, "run-mode", &run_mode, NULL);
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
@@ -176,11 +177,17 @@ browser_run (GimpProcedure        *procedure,
 
     case GIMP_RUN_WITH_LAST_VALS:
     case GIMP_RUN_NONINTERACTIVE:
-      g_printerr (PLUG_IN_PROC " allows only interactive invocation");
+        {
+          GError *error = NULL;
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               NULL);
+          g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                       _("Procedure %s allows only interactive invocation."),
+                       gimp_procedure_get_name (procedure));
+
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CALLING_ERROR,
+                                                   error);
+        }
       break;
 
     default:

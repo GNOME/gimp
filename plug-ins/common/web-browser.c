@@ -67,7 +67,7 @@ static GimpProcedure  * browser_create_procedure (GimpPlugIn           *plug_in,
                                                   const gchar          *name);
 
 static GimpValueArray * browser_run              (GimpProcedure        *procedure,
-                                                  const GimpValueArray *args,
+                                                  GimpProcedureConfig  *config,
                                                   gpointer              run_data);
 
 static gboolean         browser_open_url         (GtkWindow            *window,
@@ -110,9 +110,9 @@ browser_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
-                                      browser_run, NULL, NULL);
+      procedure = gimp_procedure_new2 (plug_in, name,
+                                       GIMP_PDB_PROC_TYPE_PLUGIN,
+                                       browser_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Open an URL in the user specified "
@@ -128,7 +128,7 @@ browser_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_STRING (procedure, "url",
                             "URL",
                             "URL to open",
-                            "http://www.gimp.org/",
+                            "https://www.gimp.org/",
                             G_PARAM_READWRITE);
     }
 
@@ -137,19 +137,22 @@ browser_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 browser_run (GimpProcedure        *procedure,
-             const GimpValueArray *args,
+             GimpProcedureConfig  *config,
              gpointer              run_data)
 {
   GError *error = NULL;
+  gchar  *url   = NULL;
 
-  if (! browser_open_url (NULL, GIMP_VALUES_GET_STRING (args, 0),
-                          &error))
+  g_object_get (config, "url", &url, NULL);
+  if (! browser_open_url (NULL, url, &error))
     {
+      g_free (url);
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
                                                error);
     }
 
+  g_free (url);
   return gimp_procedure_new_return_values (procedure,
                                            GIMP_PDB_SUCCESS,
                                            NULL);

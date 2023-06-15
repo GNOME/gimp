@@ -73,10 +73,10 @@ static GimpProcedure  * help_create_procedure  (GimpPlugIn           *plug_in,
                                                 const gchar          *name);
 
 static GimpValueArray * help_run               (GimpProcedure        *procedure,
-                                                const GimpValueArray *args,
+                                                GimpProcedureConfig  *config,
                                                 gpointer              run_data);
 static GimpValueArray * help_temp_run          (GimpProcedure        *procedure,
-                                                const GimpValueArray *args,
+                                                GimpProcedureConfig  *config,
                                                 gpointer              run_data);
 
 static void             help_temp_proc_install (GimpPlugIn           *plug_in);
@@ -126,9 +126,9 @@ help_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, GIMP_HELP_EXT_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_EXTENSION,
-                                      help_run, NULL, NULL);
+      procedure = gimp_procedure_new2 (plug_in, name,
+                                       GIMP_PDB_PROC_TYPE_EXTENSION,
+                                       help_run, NULL, NULL);
 
       gimp_procedure_set_attribution (procedure,
                                       "Sven Neumann <sven@gimp.org>, "
@@ -153,16 +153,23 @@ help_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 help_run (GimpProcedure        *procedure,
-          const GimpValueArray *args,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType   status       = GIMP_PDB_SUCCESS;
+  gchar             **domain_names = NULL;
+  gchar             **domain_uris  = NULL;
 
-  if (! gimp_help_init (GIMP_VALUES_GET_STRV (args, 0),
-                        GIMP_VALUES_GET_STRV (args, 1)))
-    {
-      status = GIMP_PDB_CALLING_ERROR;
-    }
+  g_object_get (config,
+                "domain-names", &domain_names,
+                "domain-uris",  &domain_uris,
+                NULL);
+  if (! gimp_help_init ((const gchar **) domain_names,
+                        (const gchar **) domain_uris))
+    status = GIMP_PDB_CALLING_ERROR;
+
+  g_strfreev (domain_names);
+  g_strfreev (domain_uris);
 
   if (status == GIMP_PDB_SUCCESS)
     {
@@ -191,9 +198,9 @@ help_temp_proc_install (GimpPlugIn *plug_in)
 {
   GimpProcedure *procedure;
 
-  procedure = gimp_procedure_new (plug_in, GIMP_HELP_TEMP_EXT_PROC,
-                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                  help_temp_run, NULL, NULL);
+  procedure = gimp_procedure_new2 (plug_in, GIMP_HELP_TEMP_EXT_PROC,
+                                   GIMP_PDB_PROC_TYPE_TEMPORARY,
+                                   help_temp_run, NULL, NULL);
 
   gimp_procedure_set_attribution (procedure,
                                   "Sven Neumann <sven@gimp.org>, "
@@ -233,32 +240,38 @@ help_temp_proc_install (GimpPlugIn *plug_in)
 
 static GimpValueArray *
 help_temp_run (GimpProcedure        *procedure,
-               const GimpValueArray *args,
+               GimpProcedureConfig  *config,
                gpointer              run_data)
 {
   GimpPDBStatusType  status       = GIMP_PDB_SUCCESS;
-  const gchar       *help_proc    = NULL;
-  const gchar       *help_domain  = GIMP_HELP_DEFAULT_DOMAIN;
-  const gchar       *help_locales = NULL;
-  const gchar       *help_id      = GIMP_HELP_DEFAULT_ID;
+  gchar             *help_proc    = NULL;
+  gchar             *help_domain  = NULL;
+  gchar             *help_locales = NULL;
+  gchar             *help_id      = NULL;
 
-  if (GIMP_VALUES_GET_STRING (args, 0))
-    help_proc = GIMP_VALUES_GET_STRING (args, 0);
+  g_object_get (config,
+                "help-proc",    &help_proc,
+                "help-domain",  &help_domain,
+                "help-locales", &help_locales,
+                "help-id",      &help_id,
+                NULL);
 
-  if (GIMP_VALUES_GET_STRING (args, 1))
-    help_domain = GIMP_VALUES_GET_STRING (args, 1);
+  if (help_domain == NULL)
+    help_domain = g_strdup (GIMP_HELP_DEFAULT_DOMAIN);
 
-  if (GIMP_VALUES_GET_STRING (args, 2))
-    help_locales = GIMP_VALUES_GET_STRING (args, 2);
-
-  if (GIMP_VALUES_GET_STRING (args, 3))
-    help_id = GIMP_VALUES_GET_STRING (args, 3);
+  if (help_id == NULL)
+    help_id = g_strdup (GIMP_HELP_DEFAULT_ID);
 
   if (! help_proc)
     status = GIMP_PDB_CALLING_ERROR;
 
   if (status == GIMP_PDB_SUCCESS)
     help_load (help_proc, help_domain, help_locales, help_id);
+
+  g_free (help_proc);
+  g_free (help_domain);
+  g_free (help_locales);
+  g_free (help_id);
 
   return gimp_procedure_new_return_values (procedure, status, NULL);
 }

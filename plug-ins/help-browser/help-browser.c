@@ -48,12 +48,12 @@ G_DECLARE_FINAL_TYPE (GimpHelpBrowser, gimp_help_browser,
                       GimpPlugIn)
 
 static GimpValueArray * help_browser_run              (GimpProcedure        *procedure,
-                                                       const GimpValueArray *args,
+                                                       GimpProcedureConfig  *config,
                                                        gpointer              run_data);
 
 static void             temp_proc_install             (GimpPlugIn           *plug_in);
 static GimpValueArray * temp_proc_run                 (GimpProcedure        *procedure,
-                                                       const GimpValueArray *args,
+                                                       GimpProcedureConfig  *config,
                                                        gpointer              run_data);
 
 static GimpHelpProgress * help_browser_progress_new   (void);
@@ -85,9 +85,9 @@ help_browser_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, GIMP_HELP_BROWSER_EXT_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_EXTENSION,
-                                      help_browser_run, plug_in, NULL);
+      procedure = gimp_procedure_new2 (plug_in, name,
+                                       GIMP_PDB_PROC_TYPE_EXTENSION,
+                                       help_browser_run, plug_in, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Browse the GIMP user manual",
@@ -149,18 +149,29 @@ on_app_activate (GApplication *gapp,
 
 static GimpValueArray *
 help_browser_run (GimpProcedure        *procedure,
-                  const GimpValueArray *args,
+                  GimpProcedureConfig  *config,
                   gpointer              user_data)
 {
-  GimpHelpBrowser *browser = GIMP_HELP_BROWSER (user_data);
+  GimpHelpBrowser  *browser      = GIMP_HELP_BROWSER (user_data);
+  gchar           **domain_names = NULL;
+  gchar           **domain_uris  = NULL;
 
-  if (! gimp_help_init (GIMP_VALUES_GET_STRV (args, 1),
-                        GIMP_VALUES_GET_STRV (args, 2)))
+  g_object_get (config,
+                "domain-names", &domain_names,
+                "domain-uris",  &domain_uris,
+                NULL);
+  if (! gimp_help_init ((const gchar **) domain_names,
+                        (const gchar **) domain_uris))
     {
+      g_strfreev (domain_names);
+      g_strfreev (domain_uris);
+
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_CALLING_ERROR,
                                                NULL);
     }
+  g_strfreev (domain_names);
+  g_strfreev (domain_uris);
 
   temp_proc_install (gimp_procedure_get_plug_in (procedure));
 
@@ -186,9 +197,9 @@ temp_proc_install (GimpPlugIn *plug_in)
 {
   GimpProcedure *procedure;
 
-  procedure = gimp_procedure_new (plug_in, GIMP_HELP_BROWSER_TEMP_EXT_PROC,
-                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                  temp_proc_run, plug_in, NULL);
+  procedure = gimp_procedure_new2 (plug_in, GIMP_HELP_BROWSER_TEMP_EXT_PROC,
+                                   GIMP_PDB_PROC_TYPE_TEMPORARY,
+                                   temp_proc_run, plug_in, NULL);
 
   gimp_procedure_set_documentation (procedure,
                                     "DON'T USE THIS ONE",
@@ -286,25 +297,28 @@ show_help_on_idle (gpointer user_data)
 
 static GimpValueArray *
 temp_proc_run (GimpProcedure        *procedure,
-               const GimpValueArray *args,
+               GimpProcedureConfig  *config,
                gpointer              user_data)
 {
   GimpHelpBrowser *browser = GIMP_HELP_BROWSER (user_data);
   IdleClosure     *closure;
-  const char      *str;
+  gchar           *str;
 
   closure = g_new0 (IdleClosure, 1);
   closure->browser = browser;
 
-  str = GIMP_VALUES_GET_STRING (args, 0);
+  g_object_get (config, "help-domain", &str, NULL);
   closure->help_domain = g_strdup ((str && *str)? str : GIMP_HELP_DEFAULT_DOMAIN);
+  g_free (str);
 
-  str = GIMP_VALUES_GET_STRING (args, 1);
+  g_object_get (config, "help-locales", &str, NULL);
   if (str && *str)
     closure->help_locales = g_strdup (str);
+  g_free (str);
 
-  str = GIMP_VALUES_GET_STRING (args, 2);
+  g_object_get (config, "help-id", &str, NULL);
   closure->help_id = g_strdup ((str && *str)? str : GIMP_HELP_DEFAULT_ID);
+  g_free (str);
 
   /* Do this on idle, to make sure everything is initialized already */
   g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,

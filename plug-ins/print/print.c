@@ -504,13 +504,17 @@ create_custom_widget (GtkPrintOperation *operation,
 #ifndef EMBED_PAGE_SETUP
 static GimpValueArray *
 print_temp_proc_run (GimpProcedure        *procedure,
-                     const GimpValueArray *args,
+                     GimpProcedureConfig  *config,
                      gpointer              run_data)
 {
-  GimpImage *image = GIMP_VALUES_GET_IMAGE (args, 0);
+  GimpImage *image;
+
+  g_object_get (config, "image", &image, NULL);
 
   if (print_operation)
     print_page_setup_load (print_operation, image);
+
+  g_object_unref (image);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
@@ -529,9 +533,9 @@ print_temp_proc_install (GimpImage *image)
   gchar         *name    = print_temp_proc_name (image);
   GimpProcedure *procedure;
 
-  procedure = gimp_procedure_new (plug_in, name,
-                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                  print_temp_proc_run, NULL, NULL);
+  procedure = gimp_procedure_new2 (plug_in, name,
+                                   GIMP_PDB_PROC_TYPE_TEMPORARY,
+                                   print_temp_proc_run, NULL, NULL);
 
   gimp_procedure_set_documentation (procedure,
                                     "DON'T USE THIS ONE",
