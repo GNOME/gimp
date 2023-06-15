@@ -485,7 +485,7 @@ gimp_procedure_real_run (GimpProcedure        *procedure,
     {
       GimpProcedureConfig *config;
       GimpImage           *image    = NULL;
-      GimpRunMode          run_mode = GIMP_RUN_INTERACTIVE;
+      GimpRunMode          run_mode = GIMP_RUN_NONINTERACTIVE;
       GimpValueArray      *retvals;
       GimpPDBStatusType    status   = GIMP_PDB_EXECUTION_ERROR;
 
