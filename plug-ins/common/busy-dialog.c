@@ -62,7 +62,7 @@ static GList             * busy_dialog_query_procedures    (GimpPlugIn          
 static GimpProcedure     * busy_dialog_create_procedure    (GimpPlugIn           *plug_in,
                                                             const gchar          *name);
 static GimpValueArray    * busy_dialog_run                 (GimpProcedure        *procedure,
-                                                            const GimpValueArray *args,
+                                                            GimpProcedureConfig  *config,
                                                             gpointer              run_data);
 
 static GimpPDBStatusType   busy_dialog                     (gint              read_fd,
@@ -116,9 +116,9 @@ busy_dialog_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
-                                      busy_dialog_run, NULL, NULL);
+      procedure = gimp_procedure_new2 (plug_in, name,
+                                       GIMP_PDB_PROC_TYPE_PLUGIN,
+                                       busy_dialog_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Show a dialog while waiting for an "
@@ -173,30 +173,30 @@ busy_dialog_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 busy_dialog_run (GimpProcedure        *procedure,
-                 const GimpValueArray *args,
+                 GimpProcedureConfig  *config,
                  gpointer              run_data)
 {
   GimpValueArray    *return_vals = NULL;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRunMode        run_mode;
+  GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode    = GIMP_RUN_INTERACTIVE;
+  gint               read_fd;
+  gint               write_fd;
+  const gchar       *message;
+  gboolean           cancelable;
 
-  run_mode = GIMP_VALUES_GET_ENUM (args, 0);
+  g_object_get (config,
+                "run-mode",   &run_mode,
+                "read-fd",    &read_fd,
+                "write-fd",   &write_fd,
+                "message",    &message,
+                "cancelable", &cancelable,
+                NULL);
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_NONINTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      if (gimp_value_array_length (args) != 5)
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
-      else
-        {
-          status = busy_dialog (GIMP_VALUES_GET_INT (args, 1),
-                                GIMP_VALUES_GET_INT (args, 2),
-                                GIMP_VALUES_GET_STRING (args, 3),
-                                GIMP_VALUES_GET_BOOLEAN (args, 4));
-        }
+      status = busy_dialog (read_fd, write_fd, message, cancelable);
       break;
 
     default:

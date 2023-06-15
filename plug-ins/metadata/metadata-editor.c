@@ -72,7 +72,7 @@ static GimpProcedure  * metadata_create_procedure (GimpPlugIn           *plug_in
                                                    const gchar          *name);
 
 static GimpValueArray * metadata_run              (GimpProcedure        *procedure,
-                                                   const GimpValueArray *args,
+                                                   GimpProcedureConfig  *config,
                                                    gpointer              run_data);
 
 
@@ -743,9 +743,9 @@ metadata_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
-                                      metadata_run, NULL, NULL);
+      procedure = gimp_procedure_new2 (plug_in, name,
+                                       GIMP_PDB_PROC_TYPE_PLUGIN,
+                                       metadata_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -784,7 +784,7 @@ metadata_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 metadata_run (GimpProcedure        *procedure,
-              const GimpValueArray *args,
+              GimpProcedureConfig  *config,
               gpointer              run_data)
 {
   GimpImage    *image;
@@ -793,7 +793,7 @@ metadata_run (GimpProcedure        *procedure,
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  image = GIMP_VALUES_GET_IMAGE (args, 1);
+  g_object_get (config, "image", &image, NULL);
 
   metadata = gimp_image_get_metadata (image);
 

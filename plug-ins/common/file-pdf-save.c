@@ -192,7 +192,7 @@ static GimpValueArray * pdf_save                 (GimpProcedure        *procedur
                                                   const GimpValueArray *args,
                                                   gpointer              run_data);
 static GimpValueArray * pdf_save_multi           (GimpProcedure        *procedure,
-                                                  const GimpValueArray *args,
+                                                  GimpProcedureConfig  *config,
                                                   gpointer              run_data);
 
 static GimpPDBStatusType pdf_save_image          (GimpProcedure        *procedure,
@@ -385,9 +385,9 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_MULTI_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
-                                      pdf_save_multi, NULL, NULL);
+      procedure = gimp_procedure_new2 (plug_in, name,
+                                       GIMP_PDB_PROC_TYPE_PLUGIN,
+                                       pdf_save_multi, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -534,10 +534,9 @@ pdf_save (GimpProcedure        *procedure,
 
 static GimpValueArray *
 pdf_save_multi (GimpProcedure        *procedure,
-                const GimpValueArray *args,
+                GimpProcedureConfig  *config,
                 gpointer              run_data)
 {
-  GimpProcedureConfig *config;
   GError              *error  = NULL;
   GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
   GimpRunMode          run_mode;
@@ -550,13 +549,11 @@ pdf_save_multi (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  run_mode = GIMP_VALUES_GET_ENUM (args, 0);
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
   g_object_get (config,
-                "uri",    &uri,
-                "count",  &multi_page.image_count,
-                "images", &image_ids,
+                "run-mode", &run_mode,
+                "uri",      &uri,
+                "count",    &multi_page.image_count,
+                "images",   &image_ids,
                 NULL);
 
   file = g_file_new_for_uri (uri);
@@ -607,9 +604,6 @@ pdf_save_multi (GimpProcedure        *procedure,
     status = pdf_save_image (procedure, config, FALSE,
                              (run_mode != GIMP_RUN_NONINTERACTIVE),
                              &error);
-
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

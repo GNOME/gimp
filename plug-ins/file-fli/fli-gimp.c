@@ -108,7 +108,7 @@ static GimpValueArray * fli_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 static GimpValueArray * fli_info             (GimpProcedure        *procedure,
-                                              const GimpValueArray *args,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 
 static GimpImage      * load_image           (GFile                *file,
@@ -248,9 +248,9 @@ fli_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, INFO_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
-                                      fli_info, NULL, NULL);
+      procedure = gimp_procedure_new2 (plug_in, name,
+                                       GIMP_PDB_PROC_TYPE_PLUGIN,
+                                       fli_info, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Get information about a Fli movie",
@@ -405,7 +405,7 @@ fli_save (GimpProcedure        *procedure,
 
 static GimpValueArray *
 fli_info (GimpProcedure        *procedure,
-          const GimpValueArray *args,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
   GimpValueArray *return_vals;
@@ -415,7 +415,7 @@ fli_info (GimpProcedure        *procedure,
   gint32          frames;
   GError         *error = NULL;
 
-  file = GIMP_VALUES_GET_FILE (args, 0);
+  g_object_get (config, "file", &file, NULL);
 
   if (! get_info (file, &width, &height, &frames,
                   &error))
