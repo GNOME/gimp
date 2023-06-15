@@ -32,6 +32,7 @@
 #include "gimpconfigtypes.h"
 
 #include "gimpconfigwriter.h"
+#include "gimpconfig-array.h"
 #include "gimpconfig-iface.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-path.h"
@@ -311,6 +312,10 @@ gimp_config_serialize_property (GimpConfig       *config,
               gboolean has_alpha = gimp_param_spec_rgb_has_alpha (param_spec);
 
               success = gimp_config_serialize_rgb (&value, str, has_alpha);
+            }
+          else if (G_VALUE_TYPE (&value) == G_TYPE_STRV)
+            {
+              success = gimp_config_serialize_strv (&value, str);
             }
           else
             {

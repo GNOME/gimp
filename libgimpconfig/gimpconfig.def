@@ -30,6 +30,7 @@ EXPORTS
 	gimp_config_deserialize_return
 	gimp_config_deserialize_stream
 	gimp_config_deserialize_string
+	gimp_config_deserialize_strv
 	gimp_config_diff
 	gimp_config_duplicate
 	gimp_config_error_quark
@@ -48,6 +49,7 @@ EXPORTS
 	gimp_config_serialize_properties
 	gimp_config_serialize_property
 	gimp_config_serialize_property_by_name
+	gimp_config_serialize_strv
 	gimp_config_serialize_to_fd
 	gimp_config_serialize_to_file
 	gimp_config_serialize_to_parasite

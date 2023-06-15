@@ -32,6 +32,7 @@
 #include "gimpconfigtypes.h"
 
 #include "gimpconfigwriter.h"
+#include "gimpconfig-array.h"
 #include "gimpconfig-iface.h"
 #include "gimpconfig-deserialize.h"
 #include "gimpconfig-params.h"
@@ -371,6 +372,10 @@ gimp_config_deserialize_value (GValue     *value,
     {
       return gimp_config_deserialize_value_array (value,
                                                   config, prop_spec, scanner);
+    }
+  else if (prop_spec->value_type == G_TYPE_STRV)
+    {
+      return gimp_config_deserialize_strv (value, scanner);
     }
   else if (prop_spec->value_type == GIMP_TYPE_UNIT)
     {

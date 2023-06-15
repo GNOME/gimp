@@ -3,6 +3,7 @@
 libgimpconfig_introspectable_headers =	\
 	../libgimpconfig/gimpconfigenums.h		\
 	../libgimpconfig/gimpconfigtypes.h		\
+	../libgimpconfig/gimpconfig-array.h		\
 	../libgimpconfig/gimpconfig-iface.h		\
 	../libgimpconfig/gimpconfig-deserialize.h	\
 	../libgimpconfig/gimpconfig-error.h		\
@@ -16,6 +17,7 @@ libgimpconfig_introspectable_headers =	\
 	../libgimpconfig/gimpcolorconfig.h
 
 libgimpconfig_introspectable =	\
+	../libgimpconfig/gimpconfig-array.c		\
 	../libgimpconfig/gimpconfig-iface.c		\
 	../libgimpconfig/gimpconfig-deserialize.c	\
 	../libgimpconfig/gimpconfig-error.c		\

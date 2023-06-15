@@ -21,6 +21,7 @@ stamp_config_enums = custom_target('stamp-gimpconfigenums.h',
 
 libgimpconfig_sources_introspectable = files(
   'gimpcolorconfig.c',
+  'gimpconfig-array.c',
   'gimpconfig-deserialize.c',
   'gimpconfig-error.c',
   'gimpconfig-iface.c',
@@ -42,6 +43,7 @@ libgimpconfig_sources = [
 
 libgimpconfig_headers_introspectable = files(
   'gimpcolorconfig.h',
+  'gimpconfig-array.h',
   'gimpconfig-deserialize.h',
   'gimpconfig-error.h',
   'gimpconfig-iface.h',
