@@ -151,9 +151,9 @@ gif_create_procedure (GimpPlugIn  *plug_in,
                                            _("GIF"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("exports files in Compuserve GIF "
+                                        _("exports files in GIF "
                                           "file format"),
-                                        _("Export a file in Compuserve GIF "
+                                        _("Export a file in GIF "
                                           "format, with possible animation, "
                                           "transparency, and comment. To export "
                                           "an animation, operate on a multi-layer "
@@ -162,7 +162,7 @@ gif_create_procedure (GimpPlugIn  *plug_in,
                                           "interpret <50% alpha as transparent. "
                                           "When run non-interactively, the value "
                                           "for the comment is taken from the "
-                                          "'gimp-comment' parasite.  "),
+                                          "'gimp-comment' parasite."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Spencer Kimball, Peter Mattis, "
