@@ -57,6 +57,7 @@ struct _GimpProcedureDialogPrivate
   GimpProcedureConfig *config;
   GimpProcedureConfig *initial_config;
 
+  GtkWidget           *ok_button;
   GtkWidget           *reset_popover;
   GtkWidget           *load_settings_button;
 
@@ -319,6 +320,7 @@ gimp_procedure_dialog_constructed (GObject *object)
   gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "cancel");
   button = gimp_dialog_add_button (GIMP_DIALOG (dialog),
                                    ok_label, GTK_RESPONSE_OK);
+  dialog->priv->ok_button = button;
   gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "ok");
   /* OK button is the default action and has focus from start.
    * This allows to just accept quickly whatever default values.
@@ -544,6 +546,34 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
                        "config",    config,
                        "title",     title,
                        NULL);
+}
+
+/**
+ * gimp_procedure_dialog_set_ok_label:
+ * @dialog:   the associated #GimpProcedureDialog.
+ * @ok_label: a label to replace the OK button's text.
+ *
+ * Changes the "OK" button's label of @dialog to @ok_label.
+ */
+void
+gimp_procedure_dialog_set_ok_label (GimpProcedureDialog *dialog,
+                                    const gchar         *ok_label)
+{
+  if (ok_label == NULL)
+    {
+      GimpProcedure *procedure = dialog->priv->procedure;
+
+      if (GIMP_IS_LOAD_PROCEDURE (procedure))
+        ok_label = _("_Open");
+      else if (GIMP_IS_SAVE_PROCEDURE (procedure))
+        ok_label = _("_Export");
+      else
+        ok_label = _("_OK");
+    }
+
+  gtk_button_set_label (GTK_BUTTON (dialog->priv->ok_button), ok_label);
+  gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog),
+                                        dialog->priv->ok_button, NULL, "ok");
 }
 
 /**

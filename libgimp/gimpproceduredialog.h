@@ -74,6 +74,8 @@ GType       gimp_procedure_dialog_get_type          (void) G_GNUC_CONST;
 GtkWidget * gimp_procedure_dialog_new               (GimpProcedure       *procedure,
                                                      GimpProcedureConfig *config,
                                                      const gchar         *title);
+void        gimp_procedure_dialog_set_ok_label      (GimpProcedureDialog *dialog,
+                                                     const gchar         *ok_label);
 
 GtkWidget * gimp_procedure_dialog_get_widget        (GimpProcedureDialog *dialog,
                                                      const gchar         *property,
