@@ -34,7 +34,7 @@ typedef enum
   SCREENSHOT_CAN_SHOOT_POINTER         = 0x1 << 1,
   SCREENSHOT_CAN_PICK_NONINTERACTIVELY = 0x1 << 2,
   SCREENSHOT_CAN_SHOOT_REGION          = 0x1 << 3,
-  /* SHOOT_WINDOW mode only: it window selection requires active click. */
+  /* SHOOT_WINDOW mode only: if window selection requires active click. */
   SCREENSHOT_CAN_PICK_WINDOW           = 0x1 << 4,
   /* SHOOT_WINDOW + SCREENSHOT_CAN_PICK_WINDOW only: if a delay can be
    * inserted in-between selection click and actual snapshot. */
@@ -55,24 +55,8 @@ typedef enum
   SHOOT_REGION
 } ShootType;
 
-typedef struct
-{
-  ShootType               shoot_type;
-  gboolean                decorate;
-  guint                   window_id;
-  GdkMonitor             *monitor;
-  guint                   select_delay;
-  guint                   screenshot_delay;
-  gint                    x1;
-  gint                    y1;
-  gint                    x2;
-  gint                    y2;
-  gboolean                show_cursor;
-  ScreenshotProfilePolicy profile_policy;
-} ScreenshotValues;
 
-
-void   screenshot_delay (gint seconds);
+void   screenshot_wait_delay (gint seconds);
 
 
 #endif /* __SCREENSHOT_H__ */

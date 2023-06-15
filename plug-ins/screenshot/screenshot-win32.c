@@ -164,33 +164,35 @@ screenshot_win32_get_capabilities (void)
 }
 
 GimpPDBStatusType
-screenshot_win32_shoot (ScreenshotValues  *shootvals,
-                        GdkMonitor        *monitor,
-                        GimpImage        **_image,
-                        GError           **error)
+screenshot_win32_shoot (ShootType    shoot_type,
+                        guint        screenshot_delay,
+                        gboolean     show_cursor,
+                        GdkMonitor  *monitor,
+                        GimpImage  **_image,
+                        GError     **error)
 {
   GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
 
-  /* leave "shootvals->monitor" alone until somebody patches the code
+  /* leave "monitor" alone until somebody patches the code
    * to be able to get a monitor's color profile
    */
 
   image = _image;
 
-  winsnapvals.delay = shootvals->screenshot_delay;
-  capturePointer = shootvals->show_cursor;
+  winsnapvals.delay = screenshot_delay;
+  capturePointer = show_cursor;
 
-  if (shootvals->shoot_type == SHOOT_ROOT)
+  if (shoot_type == SHOOT_ROOT)
     {
       doCapture (0);
 
       status = GIMP_PDB_SUCCESS;
     }
-  else if (shootvals->shoot_type == SHOOT_WINDOW)
+  else if (shoot_type == SHOOT_WINDOW)
     {
       status = 0 == doWindowCapture () ? GIMP_PDB_CANCEL : GIMP_PDB_SUCCESS;
     }
-  else if (shootvals->shoot_type == SHOOT_REGION)
+  else if (shoot_type == SHOOT_REGION)
     {
       /* FIXME */
     }

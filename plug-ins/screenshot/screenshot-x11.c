@@ -48,7 +48,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static guint32     select_window        (ScreenshotValues *shootvals,
+static guint32     select_window        (GimpProcedureConfig  *config,
                                          GdkMonitor       *monitor);
 static GimpImage * create_image         (cairo_surface_t  *surface,
                                          cairo_region_t   *shape,
@@ -58,8 +58,8 @@ static GimpImage * create_image         (cairo_surface_t  *surface,
 /* Allow the user to select a window or a region with the mouse */
 
 static guint32
-select_window (ScreenshotValues *shootvals,
-               GdkMonitor       *monitor)
+select_window (GimpProcedureConfig *config,
+               GdkMonitor          *monitor)
 {
   Display      *x_dpy    = GDK_DISPLAY_XDISPLAY (gdk_monitor_get_display (monitor));
   gint          x_scr    = 0;
@@ -76,7 +76,21 @@ select_window (ScreenshotValues *shootvals,
   gint          mask     = ButtonPressMask | ButtonReleaseMask;
   gboolean      cancel   = FALSE;
 
-  if (shootvals->shoot_type == SHOOT_REGION)
+  ShootType     shoot_type;
+  guint         screenshot_delay;
+  gboolean      decorate;
+  gint          x1 = 0;
+  gint          y1 = 0;
+  gint          x2 = 0;
+  gint          y2 = 0;
+
+  g_object_get (config,
+                "shoot-type",         &shoot_type,
+                "screenshot-delay",   &screenshot_delay,
+                "include-decoration", &decorate,
+                NULL);
+
+  if (shoot_type == SHOOT_REGION)
     mask |= PointerMotionMask;
 
   status = XGrabPointer (x_dpy, x_root, False,
@@ -95,7 +109,7 @@ select_window (ScreenshotValues *shootvals,
         g_message (_("Error selecting the window"));
     }
 
-  if (shootvals->shoot_type == SHOOT_REGION)
+  if (shoot_type == SHOOT_REGION)
     {
       XGCValues gc_values;
 
@@ -176,12 +190,12 @@ select_window (ScreenshotValues *shootvals,
               if (x_win == None)
                 x_win = x_root;
 #ifdef HAVE_X11_XMU_WINUTIL_H
-              else if (! shootvals->decorate)
+              else if (! decorate)
                 x_win = XmuClientWindow (x_dpy, x_win);
 #endif
 
-              shootvals->x2 = shootvals->x1 = x_event.xbutton.x_root;
-              shootvals->y2 = shootvals->y1 = x_event.xbutton.y_root;
+              x2 = x1 = x_event.xbutton.x_root;
+              y2 = y1 = x_event.xbutton.y_root;
             }
 
           buttons++;
@@ -191,39 +205,39 @@ select_window (ScreenshotValues *shootvals,
           if (buttons > 0)
             buttons--;
 
-          if (! buttons && shootvals->shoot_type == SHOOT_REGION)
+          if (! buttons && shoot_type == SHOOT_REGION)
             {
-              x = MIN (shootvals->x1, shootvals->x2);
-              y = MIN (shootvals->y1, shootvals->y2);
-              w = ABS (shootvals->x2 - shootvals->x1);
-              h = ABS (shootvals->y2 - shootvals->y1);
+              x = MIN (x1, x2);
+              y = MIN (y1, y2);
+              w = ABS (x2 - x1);
+              h = ABS (y2 - y1);
 
               if (w > 0 && h > 0)
                 XDrawRectangle (x_dpy, x_root, x_gc, x, y, w, h);
 
-              shootvals->x2 = x_event.xbutton.x_root;
-              shootvals->y2 = x_event.xbutton.y_root;
+              x2 = x_event.xbutton.x_root;
+              y2 = x_event.xbutton.y_root;
             }
           break;
 
         case MotionNotify:
           if (buttons > 0)
             {
-              x = MIN (shootvals->x1, shootvals->x2);
-              y = MIN (shootvals->y1, shootvals->y2);
-              w = ABS (shootvals->x2 - shootvals->x1);
-              h = ABS (shootvals->y2 - shootvals->y1);
+              x = MIN (x1, x2);
+              y = MIN (y1, y2);
+              w = ABS (x2 - x1);
+              h = ABS (y2 - y1);
 
               if (w > 0 && h > 0)
                 XDrawRectangle (x_dpy, x_root, x_gc, x, y, w, h);
 
-              shootvals->x2 = x_event.xmotion.x_root;
-              shootvals->y2 = x_event.xmotion.y_root;
+              x2 = x_event.xmotion.x_root;
+              y2 = x_event.xmotion.y_root;
 
-              x = MIN (shootvals->x1, shootvals->x2);
-              y = MIN (shootvals->y1, shootvals->y2);
-              w = ABS (shootvals->x2 - shootvals->x1);
-              h = ABS (shootvals->y2 - shootvals->y1);
+              x = MIN (x1, x2);
+              y = MIN (y1, y2);
+              w = ABS (x2 - x1);
+              h = ABS (y2 - y1);
 
               if (w > 0 && h > 0)
                 XDrawRectangle (x_dpy, x_root, x_gc, x, y, w, h);
@@ -282,6 +296,8 @@ select_window (ScreenshotValues *shootvals,
 
   if (x_gc != NULL)
     XFreeGC (x_dpy, x_gc);
+
+  g_object_set (config, "x1", x1, "x2", x2, "y1", y1, "y2", y2, NULL);
 
   return x_win;
 }
@@ -556,10 +572,10 @@ screenshot_x11_get_capabilities (void)
 }
 
 GimpPDBStatusType
-screenshot_x11_shoot (ScreenshotValues  *shootvals,
-                      GdkMonitor        *monitor,
-                      GimpImage        **image,
-                      GError           **error)
+screenshot_x11_shoot (GimpProcedureConfig  *config,
+                      GdkMonitor           *monitor,
+                      GimpImage           **image,
+                      GError              **error)
 {
   GdkDisplay       *display;
   GdkScreen        *screen;
@@ -573,33 +589,55 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
   gchar            *name  = NULL;
   gint              x, y;
 
+  ShootType         shoot_type;
+  guint             screenshot_delay;
+  guint             select_delay;
+  gboolean          show_cursor;
+  guint             window_id = 0;
+
+  g_object_get (config,
+                "shoot-type",       &shoot_type,
+                "screenshot-delay", &screenshot_delay,
+                "selection-delay",  &select_delay,
+                "include-pointer",  &show_cursor,
+                NULL);
+
   /* use default screen if we are running non-interactively */
   if (monitor == NULL)
     monitor = gdk_display_get_monitor (gdk_display_get_default (), 0);
 
-  if (shootvals->shoot_type != SHOOT_ROOT && ! shootvals->window_id)
+  if (shoot_type != SHOOT_ROOT)
     {
-      if (shootvals->select_delay > 0)
-        screenshot_delay (shootvals->select_delay);
+      if (select_delay > 0)
+        screenshot_wait_delay (select_delay);
 
-      shootvals->window_id = select_window (shootvals, monitor);
+      window_id = select_window (config, monitor);
 
-      if (! shootvals->window_id)
+      if (! window_id)
         return GIMP_PDB_CANCEL;
     }
 
-  if (shootvals->screenshot_delay > 0)
-    screenshot_delay (shootvals->screenshot_delay);
+  if (screenshot_delay > 0)
+    screenshot_wait_delay (screenshot_delay);
 
   display = gdk_monitor_get_display (monitor);
   screen  = gdk_display_get_default_screen (display);
 
-  if (shootvals->shoot_type == SHOOT_REGION)
+  if (shoot_type == SHOOT_REGION)
     {
-      rect.x      = MIN (shootvals->x1, shootvals->x2);
-      rect.y      = MIN (shootvals->y1, shootvals->y2);
-      rect.width  = ABS (shootvals->x2 - shootvals->x1);
-      rect.height = ABS (shootvals->y2 - shootvals->y1);
+      gint x1;
+      gint y1;
+      gint x2;
+      gint y2;
+
+      g_object_get (config,
+                    "x1", &x1, "y1", &y1,
+                    "x2", &x2, "y2", &y2,
+                    NULL);
+      rect.x      = MIN (x1, x2);
+      rect.y      = MIN (y1, y2);
+      rect.width  = ABS (x2 - x1);
+      rect.height = ABS (y2 - y1);
 
       monitor = gdk_display_get_monitor_at_point (display,
                                                   rect.x + rect.width  / 2,
@@ -607,7 +645,7 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
     }
   else
     {
-      if (shootvals->shoot_type == SHOOT_ROOT)
+      if (shoot_type == SHOOT_ROOT)
         {
           window = gdk_screen_get_root_window (screen);
 
@@ -615,9 +653,7 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
         }
       else
         {
-          window = gdk_x11_window_foreign_new_for_display (display,
-                                                           shootvals->window_id);
-
+          window  = gdk_x11_window_foreign_new_for_display (display, window_id);
           monitor = gdk_display_get_monitor_at_window (display, window);
         }
 
@@ -658,11 +694,11 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
 
   gdk_display_beep (display);
 
-  if (shootvals->shoot_type == SHOOT_WINDOW)
+  if (shoot_type == SHOOT_WINDOW)
     {
-      name = window_get_title (display, shootvals->window_id);
+      name = window_get_title (display, window_id);
 
-      shape = window_get_shape (monitor, shootvals->window_id);
+      shape = window_get_shape (monitor, window_id);
 
       if (shape)
         cairo_region_translate (shape, x - rect.x, y - rect.y);
@@ -680,8 +716,7 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
   /* FIXME: Some time might have passed until we get here.
    *        The cursor image should be grabbed together with the screenshot.
    */
-  if ((shootvals->shoot_type == SHOOT_ROOT ||
-       shootvals->shoot_type == SHOOT_WINDOW) && shootvals->show_cursor)
+  if ((shoot_type == SHOOT_ROOT || shoot_type == SHOOT_WINDOW) && show_cursor)
     add_cursor_image (*image, display);
 
   profile = gimp_monitor_get_color_profile (monitor);

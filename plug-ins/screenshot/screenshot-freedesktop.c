@@ -123,10 +123,9 @@ screenshot_freedesktop_dbus_signal (GDBusProxy  *proxy,
 }
 
 GimpPDBStatusType
-screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
-                              GdkMonitor        *monitor,
-                              GimpImage        **image,
-                              GError           **error)
+screenshot_freedesktop_shoot (GdkMonitor  *monitor,
+                              GimpImage  **image,
+                              GError     **error)
 {
   GVariant        *retval;
   GVariantBuilder *options;
@@ -148,15 +147,6 @@ screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
         }
     }
 #endif
-
-  if (shootvals->shoot_type != SHOOT_ROOT)
-    {
-      /* This should not happen. */
-      return GIMP_PDB_EXECUTION_ERROR;
-    }
-
-  if (shootvals->screenshot_delay > 0)
-    screenshot_delay (shootvals->screenshot_delay);
 
   options = g_variant_builder_new (G_VARIANT_TYPE ("a{sv}"));
   /* "interactive" option will display the options first (otherwise, it

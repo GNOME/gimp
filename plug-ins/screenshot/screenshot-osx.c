@@ -74,10 +74,13 @@ screenshot_osx_get_capabilities (void)
 }
 
 GimpPDBStatusType
-screenshot_osx_shoot (ScreenshotValues  *shootvals,
-                      GdkScreen         *screen,
-                      GimpImage        **image,
-                      GError           **error)
+screenshot_osx_shoot (ShootType   shoot_type,
+                      guint       select_delay,
+                      guint       screenshot_delay,
+                      gboolean    decorate,
+                      gboolean    show_cursor,
+                      GimpImage **image,
+                      GError    **error)
 {
   const gchar *mode    = " ";
   const gchar *cursor  = " ";
@@ -86,30 +89,30 @@ screenshot_osx_shoot (ScreenshotValues  *shootvals,
   gchar       *quoted;
   gchar       *command = NULL;
 
-  switch (shootvals->shoot_type)
+  switch (shoot_type)
     {
     case SHOOT_REGION:
-      if (shootvals->select_delay > 0)
-        screenshot_delay (shootvals->select_delay);
+      if (select_delay > 0)
+        screenshot_wait_delay (select_delay);
 
       mode = "-is";
       break;
 
     case SHOOT_WINDOW:
-      if (shootvals->select_delay > 0)
-        screenshot_delay (shootvals->select_delay);
+      if (select_delay > 0)
+        screenshot_wait_delay (select_delay);
 
-      if (shootvals->decorate)
+      if (decorate)
         mode = "-iwo";
       else
         mode = "-iw";
-      if (shootvals->show_cursor)
+      if (show_cursor)
         cursor = "-C";
       break;
 
     case SHOOT_ROOT:
       mode = " ";
-      if (shootvals->show_cursor)
+      if (show_cursor)
         cursor = "-C";
       break;
 
@@ -118,7 +121,7 @@ screenshot_osx_shoot (ScreenshotValues  *shootvals,
       break;
     }
 
-  delay = g_strdup_printf ("-T %i", shootvals->screenshot_delay);
+  delay = g_strdup_printf ("-T %i", screenshot_delay);
 
   tmpfile = gimp_temp_file ("png");
   quoted  = g_shell_quote (g_file_peek_path (tmpfile));
