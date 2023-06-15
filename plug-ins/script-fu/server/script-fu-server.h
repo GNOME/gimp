@@ -20,7 +20,7 @@
 
 
 GimpValueArray * script_fu_server_run      (GimpProcedure        *procedure,
-                                            const GimpValueArray *args);
+                                            GimpProcedureConfig  *config);
 
 
 #endif /*  __SCRIPT_FU_SERVER__  */

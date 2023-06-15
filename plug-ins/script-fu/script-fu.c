@@ -53,7 +53,7 @@ static void             script_fu_run_init         (GimpProcedure        *proced
                                                     GimpRunMode           run_mode);
 static void             script_fu_extension_init   (GimpPlugIn           *plug_in);
 static GimpValueArray * script_fu_refresh_proc     (GimpProcedure        *procedure,
-                                                    const GimpValueArray *args,
+                                                    GimpProcedureConfig  *config,
                                                     gpointer              run_data);
 
 
@@ -338,9 +338,9 @@ script_fu_extension_init (GimpPlugIn *plug_in)
   gimp_plug_in_add_menu_branch (plug_in, "<Image>/Filters",
                                 N_("Alpha to _Logo"));
 
-  procedure = gimp_procedure_new (plug_in, "script-fu-refresh",
-                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                  script_fu_refresh_proc, NULL, NULL);
+  procedure = gimp_procedure_new2 (plug_in, "script-fu-refresh",
+                                   GIMP_PDB_PROC_TYPE_TEMPORARY,
+                                   script_fu_refresh_proc, NULL, NULL);
 
   gimp_procedure_set_menu_label (procedure, _("_Refresh Scripts"));
   gimp_procedure_add_menu_path (procedure,
@@ -368,7 +368,7 @@ script_fu_extension_init (GimpPlugIn *plug_in)
 
 static GimpValueArray *
 script_fu_refresh_proc (GimpProcedure        *procedure,
-                        const GimpValueArray *args,
+                        GimpProcedureConfig  *config,
                         gpointer              run_data)
 {
   if (script_fu_extension_is_busy ())

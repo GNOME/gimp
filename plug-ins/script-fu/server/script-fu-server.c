@@ -271,18 +271,20 @@ script_fu_server_post_command (void)
 
 GimpValueArray *
 script_fu_server_run (GimpProcedure        *procedure,
-                      const GimpValueArray *args)
+                      GimpProcedureConfig  *config)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
-  const gchar       *ip;
+  gchar             *ip;
   gint               port;
-  const gchar       *logfile;
+  gchar             *logfile;
 
-  run_mode = GIMP_VALUES_GET_ENUM   (args, 0);
-  ip       = GIMP_VALUES_GET_STRING (args, 1);
-  port     = GIMP_VALUES_GET_INT    (args, 2);
-  logfile  = GIMP_VALUES_GET_STRING (args, 3);
+  g_object_get (config,
+                "run-mode", &run_mode,
+                "ip",       &ip,
+                "port",     &port,
+                "logfile",  &logfile,
+                NULL);
 
   script_fu_set_run_mode (run_mode);
   script_fu_set_print_flag (1);
@@ -312,6 +314,8 @@ script_fu_server_run (GimpProcedure        *procedure,
     default:
       break;
     }
+  g_free (ip);
+  g_free (logfile);
 
   return gimp_procedure_new_return_values (procedure, status, NULL);
 }

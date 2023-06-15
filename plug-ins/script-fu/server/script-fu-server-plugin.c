@@ -40,7 +40,7 @@ static GimpProcedure  * script_fu_server_create_procedure (GimpPlugIn           
                                                            const gchar          *name);
 
 static GimpValueArray * script_fu_server_outer_run        (GimpProcedure        *procedure,
-                                                           const GimpValueArray *args,
+                                                           GimpProcedureConfig  *config,
                                                            gpointer              run_data);
 static void             script_fu_server_run_init         (GimpProcedure        *procedure,
                                                            GimpRunMode           run_mode);
@@ -84,9 +84,9 @@ script_fu_server_create_procedure (GimpPlugIn  *plug_in,
   GimpProcedure *procedure = NULL;
 
   /* The run func script_fu_server_outer_run is defined in this source file. */
-  procedure = gimp_procedure_new (plug_in, name,
-                                  GIMP_PDB_PROC_TYPE_PLUGIN,
-                                  script_fu_server_outer_run, NULL, NULL);
+  procedure = gimp_procedure_new2 (plug_in, name,
+                                   GIMP_PDB_PROC_TYPE_PLUGIN,
+                                   script_fu_server_outer_run, NULL, NULL);
 
   gimp_procedure_set_menu_label (procedure, _("_Start Server..."));
   gimp_procedure_add_menu_path (procedure,
@@ -184,15 +184,14 @@ script_fu_server_create_procedure (GimpPlugIn  *plug_in,
  */
 static GimpValueArray *
 script_fu_server_outer_run (GimpProcedure        *procedure,
-                            const GimpValueArray *args,
+                            GimpProcedureConfig  *config,
                             gpointer              run_data)
 {
   GimpValueArray *return_vals = NULL;
+  GimpRunMode     run_mode    = GIMP_RUN_NONINTERACTIVE;
 
-  if (gimp_value_array_length (args) > 0)
-    script_fu_server_run_init (procedure, GIMP_VALUES_GET_ENUM (args, 0));
-  else
-    script_fu_server_run_init (procedure, GIMP_RUN_NONINTERACTIVE);
+  g_object_get (config, "run-mode", &run_mode, NULL);
+  script_fu_server_run_init (procedure, run_mode);
 
   /* Remind any users watching the console. */
   g_debug ("Starting. Further logging by server might be to a log file.");
@@ -201,7 +200,7 @@ script_fu_server_outer_run (GimpProcedure        *procedure,
    * Call the inner run func, defined in script-fu-server.c
    * !!! This does not return unless a client evals "(gimp-quit)"
    */
-  return_vals = script_fu_server_run (procedure, args);
+  return_vals = script_fu_server_run (procedure, config);
 
   /*
    * The server returns SUCCESS but no other values (to the caller)
