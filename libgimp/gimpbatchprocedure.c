@@ -124,12 +124,14 @@ static GimpValueArray *
 gimp_batch_procedure_run (GimpProcedure        *procedure,
                           const GimpValueArray *args)
 {
-  GimpBatchProcedure *batch_proc = GIMP_BATCH_PROCEDURE (procedure);
-  GimpValueArray    *remaining;
-  GimpValueArray    *return_values;
-  GimpRunMode        run_mode;
-  const gchar       *cmd;
-  gint               i;
+  GimpBatchProcedure  *batch_proc = GIMP_BATCH_PROCEDURE (procedure);
+  GimpValueArray      *remaining;
+  GimpValueArray      *return_values;
+  GimpRunMode          run_mode;
+  const gchar         *cmd;
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status = GIMP_PDB_EXECUTION_ERROR;
+  gint                 i;
 
   run_mode = GIMP_VALUES_GET_ENUM   (args, 0);
   cmd      = GIMP_VALUES_GET_STRING (args, 1);
@@ -143,12 +145,22 @@ gimp_batch_procedure_run (GimpProcedure        *procedure,
       gimp_value_array_append (remaining, value);
     }
 
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, remaining);
+  gimp_value_array_unref (remaining);
+
   return_values = batch_proc->priv->run_func (procedure,
                                               run_mode,
                                               cmd,
-                                              remaining,
+                                              config,
                                               batch_proc->priv->run_data);
-  gimp_value_array_unref (remaining);
+  if (return_values != NULL                       &&
+      gimp_value_array_length (return_values) > 0 &&
+      G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
+    status = GIMP_VALUES_GET_ENUM (return_values, 0);
+
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
 
   return return_values;
 }

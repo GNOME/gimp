@@ -96,16 +96,14 @@ static void      script_fu_command_to_history    (ConsoleInterface    *console,
  */
 
 GimpValueArray *
-script_fu_console_run (GimpProcedure        *procedure,
-                       const GimpValueArray *args)
+script_fu_console_run (GimpProcedure       *procedure,
+                       GimpProcedureConfig *config)
 {
   ConsoleInterface  console = { 0, };
   GtkWidget        *vbox;
   GtkWidget        *button;
   GtkWidget        *scrolled_window;
   GtkWidget        *hbox;
-
-  GimpProcedureConfig *config;
 
   script_fu_set_print_flag (1);
 
@@ -115,10 +113,6 @@ script_fu_console_run (GimpProcedure        *procedure,
   console.total_history = console_total_history_new ();
   console_history_init (&console.history);
   console_total_append_welcome (console.total_history);
-
-  /* Get previous or default settings into config. */
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, GIMP_RUN_INTERACTIVE, args);
 
   script_fu_models_from_settings (&console, config);
 
@@ -217,8 +211,6 @@ script_fu_console_run (GimpProcedure        *procedure,
 
   /* Update config with user's change to history */
   console_history_to_settings (&console.history, config);
-  /* Persist config */
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }

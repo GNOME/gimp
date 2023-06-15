@@ -33,7 +33,7 @@ G_BEGIN_DECLS
  * GimpBatchFunc:
  * @procedure:   the #GimpProcedure that runs.
  * @run_mode:    the #GimpRunMode.
- * @args:        the @procedure's remaining arguments.
+ * @config:      the @procedure's remaining arguments.
  * @run_data: (closure): the run_data given in gimp_batch_procedure_new().
  *
  * The batch function is run during the lifetime of the GIMP session,
@@ -46,7 +46,7 @@ G_BEGIN_DECLS
 typedef GimpValueArray * (* GimpBatchFunc) (GimpProcedure        *procedure,
                                             GimpRunMode           run_mode,
                                             const gchar          *command,
-                                            const GimpValueArray *args,
+                                            GimpProcedureConfig  *config,
                                             gpointer              run_data);
 
 

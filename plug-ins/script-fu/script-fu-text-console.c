@@ -33,7 +33,7 @@
 
 GimpValueArray *
 script_fu_text_console_run (GimpProcedure        *procedure,
-                            const GimpValueArray *args)
+                            GimpProcedureConfig  *config)
 {
   script_fu_redirect_output_to_stdout ();
 

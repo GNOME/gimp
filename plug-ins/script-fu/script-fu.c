@@ -42,12 +42,12 @@ static GimpProcedure  * script_fu_create_procedure (GimpPlugIn           *plug_i
                                                     const gchar          *name);
 
 static GimpValueArray * script_fu_run              (GimpProcedure        *procedure,
-                                                    const GimpValueArray *args,
+                                                    GimpProcedureConfig  *config,
                                                     gpointer              run_data);
 static GimpValueArray * script_fu_batch_run        (GimpProcedure        *procedure,
                                                     GimpRunMode           run_mode,
                                                     const gchar          *code,
-                                                    const GimpValueArray *args,
+                                                    GimpProcedureConfig  *config,
                                                     gpointer              run_data);
 static void             script_fu_run_init         (GimpProcedure        *procedure,
                                                     GimpRunMode           run_mode);
@@ -99,9 +99,9 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, "extension-script-fu"))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_EXTENSION,
-                                      script_fu_run, NULL, NULL);
+      procedure = gimp_procedure_new2 (plug_in, name,
+                                       GIMP_PDB_PROC_TYPE_EXTENSION,
+                                       script_fu_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "A scheme interpreter for scripting "
@@ -115,9 +115,9 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, "plug-in-script-fu-console"))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
-                                      script_fu_run, NULL, NULL);
+      procedure = gimp_procedure_new2 (plug_in, name,
+                                       GIMP_PDB_PROC_TYPE_PLUGIN,
+                                       script_fu_run, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Script-Fu _Console"));
       gimp_procedure_add_menu_path (procedure,
@@ -147,9 +147,9 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, "plug-in-script-fu-text-console"))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
-                                      script_fu_run, NULL, NULL);
+      procedure = gimp_procedure_new2 (plug_in, name,
+                                       GIMP_PDB_PROC_TYPE_PLUGIN,
+                                       script_fu_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Provides a text console mode for "
@@ -191,17 +191,17 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 script_fu_run (GimpProcedure        *procedure,
-               const GimpValueArray *args,
+               GimpProcedureConfig  *config,
                gpointer              run_data)
 {
   GimpPlugIn     *plug_in     = gimp_procedure_get_plug_in (procedure);
   const gchar    *name        = gimp_procedure_get_name (procedure);
   GimpValueArray *return_vals = NULL;
+  GimpRunMode     run_mode    = GIMP_RUN_NONINTERACTIVE;
 
-  if (gimp_value_array_length (args) > 0)
-    script_fu_run_init (procedure, GIMP_VALUES_GET_ENUM (args, 0));
-  else
-    script_fu_run_init (procedure, GIMP_RUN_NONINTERACTIVE);
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (config), "run-mode") != NULL)
+    g_object_get (config, "run-mode", &run_mode, NULL);
+  script_fu_run_init (procedure, run_mode);
 
   if (strcmp (name, "extension-script-fu") == 0)
     {
@@ -222,7 +222,7 @@ script_fu_run (GimpProcedure        *procedure,
        *  The script-fu text console for interactive Scheme development
        */
 
-      return_vals = script_fu_text_console_run (procedure, args);
+      return_vals = script_fu_text_console_run (procedure, config);
     }
   else if (strcmp (name, "plug-in-script-fu-console") == 0)
     {
@@ -230,7 +230,7 @@ script_fu_run (GimpProcedure        *procedure,
        *  The script-fu console for interactive Scheme development
        */
 
-      return_vals = script_fu_console_run (procedure, args);
+      return_vals = script_fu_console_run (procedure, config);
     }
 
   if (! return_vals)
@@ -245,7 +245,7 @@ static GimpValueArray *
 script_fu_batch_run (GimpProcedure        *procedure,
                      GimpRunMode           run_mode,
                      const gchar          *code,
-                     const GimpValueArray *args,
+                     GimpProcedureConfig  *config,
                      gpointer              run_data)
 {
   const gchar    *name        = gimp_procedure_get_name (procedure);
@@ -261,9 +261,9 @@ script_fu_batch_run (GimpProcedure        *procedure,
 
       if (g_strcmp0 (code, "-") == 0)
         /* Redirecting to script-fu text console, for backward compatibility  */
-        return_vals = script_fu_text_console_run (procedure, args);
+        return_vals = script_fu_text_console_run (procedure, config);
       else
-        return_vals = script_fu_eval_run (procedure, run_mode, code, args);
+        return_vals = script_fu_eval_run (procedure, run_mode, code, config);
     }
 
   if (! return_vals)

@@ -26,12 +26,11 @@ from gi.repository import Gio
 import sys
 
 
-def code_eval(procedure, run_mode, code, args, data):
+def code_eval(procedure, run_mode, code, config, data):
     if code == '-':
         code = sys.stdin.read()
     exec(code, globals())
     return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
-
 
 class PythonEval (Gimp.PlugIn):
     ## GimpPlugIn virtual methods ##
