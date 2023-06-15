@@ -153,6 +153,13 @@ void        gimp_procedure_dialog_set_sensitive     (GimpProcedureDialog *dialog
                                                      const gchar         *config_property,
                                                      gboolean             config_invert);
 
+void        gimp_procedure_dialog_set_sensitive_if_in (GimpProcedureDialog *dialog,
+                                                       const gchar         *property,
+                                                       GObject             *config,
+                                                       const gchar         *config_property,
+                                                       GimpValueArray      *values,
+                                                       gboolean             in_values);
+
 gboolean    gimp_procedure_dialog_run               (GimpProcedureDialog *dialog);
 
 

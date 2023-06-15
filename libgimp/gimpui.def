@@ -51,6 +51,7 @@ EXPORTS
 	gimp_procedure_dialog_new
 	gimp_procedure_dialog_run
 	gimp_procedure_dialog_set_sensitive
+	gimp_procedure_dialog_set_sensitive_if_in
 	gimp_progress_bar_get_type
 	gimp_progress_bar_new
 	gimp_prop_chooser_brush_new

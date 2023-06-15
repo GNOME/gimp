@@ -77,6 +77,15 @@ typedef struct GimpProcedureDialogSensitiveData
   gboolean  config_invert;
 } GimpProcedureDialogSensitiveData;
 
+typedef struct GimpProcedureDialogSensitiveData2
+{
+  GimpProcedureDialog *dialog;
+  gchar               *widget_property;
+
+  GimpValueArray      *values;
+  gboolean             in_values;
+} GimpProcedureDialogSensitiveData2;
+
 
 static GObject * gimp_procedure_dialog_constructor    (GType                  type,
                                                        guint                  n_construct_properties,
@@ -116,7 +125,11 @@ static GtkWidget *
                                                        GtkContainer         *container,
                                                        GList                *properties);
 
-static void gimp_procedure_dialog_sensitive_data_free (GimpProcedureDialogSensitiveData *data);
+static void      gimp_procedure_dialog_set_sensitive_if_in_cb (GObject                           *config,
+                                                               GParamSpec                        *param_spec,
+                                                               GimpProcedureDialogSensitiveData2 *data);
+static void gimp_procedure_dialog_sensitive_data_free         (GimpProcedureDialogSensitiveData  *data);
+static void gimp_procedure_dialog_sensitive_cb_data_free      (GimpProcedureDialogSensitiveData2 *data);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedureDialog, gimp_procedure_dialog,
@@ -2090,6 +2103,82 @@ gimp_procedure_dialog_set_sensitive (GimpProcedureDialog *dialog,
 }
 
 /**
+ * gimp_procedure_dialog_set_sensitive_if_in:
+ * @dialog:          the #GimpProcedureDialog.
+ * @property:        name of a property of the #GimpProcedure @dialog
+ *                   has been created for.
+ * @config:          (nullable): an optional config object (if %NULL,
+ *                   @property's config will be used).
+ * @config_property: name of a property of @config.
+ * @values:          (not nullable) (transfer full):
+ *                   an array of GValues which could be values of @config_property.
+ * @in_values:       whether @property should be sensitive when @config_property
+ *                   is one of @values, or the opposite.
+ *
+ * Sets sensitivity of the widget associated to @property in @dialog if the
+ * value of @config_property in @config is equal to one of @values.
+ *
+ * If @config is %NULL, then the configuration object of @dialog is used.
+ *
+ * If @in_values is FALSE, then the widget is set sensitive if the value of
+ * @config_property is **not** in @values.
+ */
+void
+gimp_procedure_dialog_set_sensitive_if_in (GimpProcedureDialog *dialog,
+                                           const gchar         *property,
+                                           GObject             *config,
+                                           const gchar         *config_property,
+                                           GimpValueArray      *values,
+                                           gboolean             in_values)
+{
+  GimpProcedureDialogSensitiveData2 *data;
+  GParamSpec                        *pspec;
+  gchar                             *signal_name;
+
+  g_return_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog));
+  g_return_if_fail (property != NULL);
+  g_return_if_fail (config_property != NULL);
+  g_return_if_fail (values != NULL);
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                        property);
+  if (! pspec)
+    {
+      g_warning ("%s: parameter %s does not exist on the GimpProcedure.",
+                 G_STRFUNC, property);
+      return;
+    }
+
+  if (! config)
+    config = G_OBJECT (dialog->priv->config);
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                        config_property);
+  if (! pspec)
+    {
+      g_warning ("%s: parameter %s does not exist on the config object.",
+                 G_STRFUNC, config_property);
+      return;
+    }
+
+  data = g_new (GimpProcedureDialogSensitiveData2, 1);
+  data->dialog           = dialog;
+  data->widget_property  = g_strdup (property);
+  data->values           = values;
+  data->in_values        = in_values;
+
+  signal_name = g_strconcat ("notify::", config_property, NULL);
+
+  g_signal_connect_data (config, signal_name,
+                         G_CALLBACK (gimp_procedure_dialog_set_sensitive_if_in_cb),
+                         data,
+                         (GClosureNotify) gimp_procedure_dialog_sensitive_cb_data_free,
+                         0);
+  gimp_procedure_dialog_set_sensitive_if_in_cb (config, pspec, data);
+  g_free (signal_name);
+}
+
+/**
  * gimp_procedure_dialog_run:
  * @dialog: the #GimpProcedureDialog.
  *
@@ -2408,10 +2497,62 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
 }
 
 static void
+gimp_procedure_dialog_set_sensitive_if_in_cb (GObject                           *config,
+                                              GParamSpec                        *param_spec,
+                                              GimpProcedureDialogSensitiveData2 *data)
+{
+  GimpProcedureDialog *dialog = data->dialog;
+  GtkWidget           *widget;
+
+  widget = g_hash_table_lookup (dialog->priv->widgets, data->widget_property);
+
+  if (widget)
+    {
+      GValue   param_value = G_VALUE_INIT;
+      gboolean sensitive;
+      gint     n_values    = gimp_value_array_length (data->values);
+
+      g_value_init (&param_value, param_spec->value_type);
+      g_object_get_property (config, param_spec->name, &param_value);
+
+      sensitive = (! data->in_values);
+      for (gint i = 0; i < n_values; i++)
+        {
+          GValue *value;
+
+          value = gimp_value_array_index (data->values, i);
+
+          if (g_param_values_cmp (param_spec, &param_value, value) == 0)
+            {
+              sensitive = data->in_values;
+              break;
+            }
+        }
+      gtk_widget_set_sensitive (widget, sensitive);
+      g_value_unset (&param_value);
+    }
+  else
+    {
+      g_printerr ("gimp_procedure_dialog_set_sensitive_if_in: "
+                  "no widget was created for property \"%s\".\n",
+                  data->widget_property);
+    }
+}
+
+static void
 gimp_procedure_dialog_sensitive_data_free (GimpProcedureDialogSensitiveData *data)
 {
   g_free (data->config_property);
   g_clear_object (&data->config);
 
   g_slice_free (GimpProcedureDialogSensitiveData, data);
+}
+
+static void
+gimp_procedure_dialog_sensitive_cb_data_free (GimpProcedureDialogSensitiveData2 *data)
+{
+  g_free (data->widget_property);
+  gimp_value_array_unref (data->values);
+
+  g_free (data);
 }
