@@ -86,13 +86,11 @@ console_total_append_welcome (GtkTextBuffer *self)
   {
     const gchar * const greetings[] =
     {
-      "strong",   N_("Welcome to TinyScheme"),
+      "emphasis", N_("Welcome to TinyScheme"),
       NULL,       "\n",
-      NULL,       "Copyright (c) Dimitrios Souflis",
+      "emphasis", "Copyright (c) Dimitrios Souflis",
       NULL,       "\n",
-      "strong",   N_("Script-Fu Console"),
-      NULL,       " - ",
-      "emphasis", N_("Interactive Scheme Development"),
+      "emphasis", N_("Scripting GIMP in the Scheme language"),
       NULL,       "\n"
     };
 
@@ -125,6 +123,7 @@ console_total_append_text_normal (GtkTextBuffer *self,
 
   gtk_text_buffer_get_end_iter (self, &cursor);
   gtk_text_buffer_insert (self, &cursor, text, len);
+  gtk_text_buffer_insert (self, &cursor, "\n", 1);
 }
 
 void
@@ -139,6 +138,7 @@ console_total_append_text_emphasize (GtkTextBuffer *self,
                                             &cursor,
                                             text, len, "emphasis",
                                             NULL);
+  gtk_text_buffer_insert (self, &cursor, "\n", 1);
 }
 
 /* Write newlines, prompt, and command. */
@@ -150,7 +150,8 @@ console_total_append_command (GtkTextBuffer *self,
 
   gtk_text_buffer_get_end_iter (self, &cursor);
 
-  gtk_text_buffer_insert (self, &cursor, "\n", 1);
+  /* assert we are just after a newline. */
+
   /* Write repr of a prompt.
    * SFConsole doesn't have a prompt in it's command line,
    * But we show one in the history view to distinguish commands.

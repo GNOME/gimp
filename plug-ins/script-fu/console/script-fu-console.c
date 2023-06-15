@@ -80,11 +80,16 @@ static void      script_fu_browse_row_activated  (GtkDialog        *dialog);
 static gboolean  script_fu_editor_key_function   (GtkWidget        *widget,
                                                   GdkEventKey      *event,
                                                   ConsoleInterface *console);
-
+static void      script_fu_console_scroll_end    (GtkWidget        *view);
 static void      script_fu_output_to_console     (gboolean          is_error,
                                                   const gchar      *text,
                                                   gint              len,
                                                   gpointer          user_data);
+
+static void      script_fu_models_from_settings  (ConsoleInterface    *console,
+                                                  GimpProcedureConfig *config);
+static void      script_fu_command_to_history    (ConsoleInterface    *console,
+                                                  const gchar         *command);
 
 /*
  *  Function definitions
@@ -100,11 +105,24 @@ script_fu_console_run (GimpProcedure        *procedure,
   GtkWidget        *scrolled_window;
   GtkWidget        *hbox;
 
+  GimpProcedureConfig *config;
+
   script_fu_set_print_flag (1);
 
   gimp_ui_init ("script-fu");
 
-  console.dialog = gimp_dialog_new (_("Script-Fu Console"),
+  /* Create model early so we can fill from settings. */
+  console.total_history = console_total_history_new ();
+  console_history_init (&console.history);
+  console_total_append_welcome (console.total_history);
+
+  /* Get previous or default settings into config. */
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, GIMP_RUN_INTERACTIVE, args);
+
+  script_fu_models_from_settings (&console, config);
+
+  console.dialog = gimp_dialog_new (_("Script Console"),
                                     "gimp-script-fu-console",
                                     NULL, 0,
                                     gimp_standard_help_func, PROC_NAME,
@@ -145,8 +163,6 @@ script_fu_console_run (GimpProcedure        *procedure,
   gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
-  console.total_history = console_total_history_new ();
-
   console.history_view = gtk_text_view_new_with_buffer (console.total_history);
   /* View keeps reference.  Unref our ref so buffer is destroyed with view. */
   g_object_unref (console.total_history);
@@ -159,8 +175,6 @@ script_fu_console_run (GimpProcedure        *procedure,
   gtk_widget_set_size_request (console.history_view, TEXT_WIDTH, TEXT_HEIGHT);
   gtk_container_add (GTK_CONTAINER (scrolled_window), console.history_view);
   gtk_widget_show (console.history_view);
-
-  console_total_append_welcome (console.total_history);
 
   /*  An editor of a command to be executed. */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -188,9 +202,10 @@ script_fu_console_run (GimpProcedure        *procedure,
                     G_CALLBACK (script_fu_browse_callback),
                     &console);
 
-  console_history_init (&console.history, console.total_history);
-
   gtk_widget_show (console.dialog);
+
+  /* The history model may fill the view, scroll. */
+  script_fu_console_scroll_end (console.history_view);
 
   gtk_main ();
 
@@ -199,6 +214,11 @@ script_fu_console_run (GimpProcedure        *procedure,
 
   if (console.dialog)
     gtk_widget_destroy (console.dialog);
+
+  /* Update config with user's change to history */
+  console_history_to_settings (&console.history, config);
+  /* Persist config */
+  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
@@ -425,12 +445,12 @@ script_fu_console_scroll_end (GtkWidget *view)
   g_idle_add ((GSourceFunc) script_fu_console_idle_scroll_end, view);
 }
 
-/* Write results of execution to the console view.
+/* Write result of eval to the console view.
  * But not put results in the history model.
  */
 static void
 script_fu_output_to_console (gboolean      is_error_msg,
-                             const gchar  *text,
+                             const gchar  *result_text,
                              gint          len,
                              gpointer      user_data)
 {
@@ -439,9 +459,9 @@ script_fu_output_to_console (gboolean      is_error_msg,
   if (console && console->history_view)
     {
       if (! is_error_msg)
-        console_total_append_text_normal (console->total_history, text, len);
+        console_total_append_text_normal (console->total_history, result_text, len);
       else
-        console_total_append_text_emphasize (console->total_history, text, len);
+        console_total_append_text_emphasize (console->total_history, result_text, len);
 
       script_fu_console_scroll_end (console->history_view);
     }
@@ -468,16 +488,9 @@ script_fu_editor_key_function (GtkWidget        *widget,
         return TRUE;
 
       command = g_strdup (console_editor_get_text (console->editor));
-      /* Put to history model.
-       *
-       * We own the command.
-       * This transfers ownership to history model.
-       * We retain a reference, used below, but soon out of scope.
-       */
-      console_history_set_tail (&console->history, command);
 
-      /* Put decorated command to total_history, distinct from history model. */
-      console_total_append_command (console->total_history, command);
+      script_fu_command_to_history (console, command);
+      /* Assert history advanced to new, empty tail. */
 
       script_fu_console_scroll_end (console->history_view);
 
@@ -502,8 +515,6 @@ script_fu_editor_key_function (GtkWidget        *widget,
       g_string_free (output, TRUE);
 
       gimp_displays_flush ();
-
-      console_history_new_tail (&console->history);
 
       return TRUE;
       break;
@@ -531,6 +542,11 @@ script_fu_editor_key_function (GtkWidget        *widget,
       break;
 
     default:
+      /* Any other key is the user editing.
+       * Set cursor to tail: user is done scrolling history.
+       * Must do this to ensure edited command line is saved in history.
+       */
+      console_history_cursor_to_tail (&console->history);
       break;
     }
 
@@ -541,12 +557,14 @@ script_fu_editor_key_function (GtkWidget        *widget,
        * So any edited text is not lost if user moves cursor back to tail.
        */
       command = console_editor_get_text (console->editor);
+      /* command can be NULL */
       if (console_history_is_cursor_at_tail (&console->history))
         console_history_set_tail (&console->history, g_strdup (command));
 
       /* Now move cursor and replace editor contents. */
       console_history_move_cursor (&console->history, direction);
       command = console_history_get_at_cursor (&console->history);
+      /* command can be NULL. */
       console_editor_set_text_and_position (console->editor,
                                             command,
                                             -1);
@@ -555,4 +573,70 @@ script_fu_editor_key_function (GtkWidget        *widget,
     }
 
   return FALSE;
+}
+
+/* Restore models from settings.
+ * This understands how to get history as a GStrv from settings
+ * and how to put GStrv into both models.
+ *
+ * Just the model.  The view does not exist yet.
+ */
+static void
+script_fu_models_from_settings (ConsoleInterface    *console,
+                                GimpProcedureConfig *config)
+
+{
+  GStrv strings_in;
+
+  /* Assert the History model is empty, recently init. */
+
+  strings_in = console_history_from_settings (&console->history, config);
+
+  /* The history setting can be empty, and GStrv can be NULL.
+   * !!! But g_strv_length requires its arg!=NULL
+   */
+  if (strings_in==NULL)
+    return;
+
+  /* Adding requires a new tail. */
+  console_history_new_tail (&console->history);
+
+  /* Order of the GStrv is earliest command first.
+   * Iterate ascending, i.e. earliest command to history first.
+   * Not concerned with performance.
+   */
+  for (gint i = 0; i < g_strv_length (strings_in); i++)
+    script_fu_command_to_history (console, g_strdup (strings_in[i]));
+
+  g_strfreev (strings_in);
+}
+
+
+/* Append a command to history.
+ *
+ * Knows to put to both TotalHistory and History models.
+ *
+ * Transfers ownership of command to History model.
+ * Caller may retain a reference, for a short time.
+ *
+ * !!! The History model is finite and limits itself.
+ * While the TotalHistory model is nearly unlimited.
+ * More commands in the view than in the History model.
+ */
+static void
+script_fu_command_to_history (ConsoleInterface *console,
+                              const gchar      *command)
+{
+  /* Require new_tail called previously. */
+
+  /* To History model. */
+  console_history_set_tail (&console->history, command);
+
+  /* Advance history, editor wants preallocated tail. */
+  console_history_new_tail (&console->history);
+
+  /* Decorated command to TotalHistory model. */
+  console_total_append_command (console->total_history, command);
+
+  /* Ensure there is a new tail. */
 }

@@ -28,8 +28,7 @@ typedef struct
 } CommandHistory;
 
 
-void         console_history_init              (CommandHistory *self,
-                                                GtkTextBuffer  *total_history);
+void         console_history_init              (CommandHistory *self);
 
 void         console_history_new_tail          (CommandHistory *self);
 void         console_history_set_tail          (CommandHistory *self,
@@ -37,8 +36,14 @@ void         console_history_set_tail          (CommandHistory *self,
 
 void         console_history_move_cursor       (CommandHistory *self,
                                                 gint            direction);
+void         console_history_cursor_to_tail    (CommandHistory *self);
 gboolean     console_history_is_cursor_at_tail (CommandHistory *self);
 const gchar *console_history_get_at_cursor     (CommandHistory *self);
+
+GStrv        console_history_from_settings     (CommandHistory       *self,
+                                                GimpProcedureConfig  *config);
+void         console_history_to_settings       (CommandHistory       *self,
+                                                GimpProcedureConfig  *config);
 
 
 #endif /*  __SCRIPT_FU_CONSOLE_HISTORY_H__  */

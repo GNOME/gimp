@@ -53,7 +53,9 @@ console_editor_set_text_and_position (GtkWidget   *self,
                                       const gchar *text,
                                       gint         position)
 {
-  gtk_entry_set_text (GTK_ENTRY (self), text);
+  /* gtk_entry_set_text not allow NULL */
+  if (text != NULL)
+    gtk_entry_set_text (GTK_ENTRY (self), text);
   gtk_editable_set_position (GTK_EDITABLE (self), position);
 }
 

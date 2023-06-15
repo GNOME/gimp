@@ -140,6 +140,10 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
                           GIMP_TYPE_RUN_MODE,
                           GIMP_RUN_INTERACTIVE,
                           G_PARAM_READWRITE);
+      GIMP_PROC_AUX_ARG_STRV (procedure, "history",
+                              "Command history",
+                              "History",
+                              G_PARAM_READWRITE);
     }
   else if (! strcmp (name, "plug-in-script-fu-text-console"))
     {

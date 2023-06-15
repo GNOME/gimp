@@ -17,9 +17,12 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include "libgimp/gimp.h"
 
 #include "script-fu-console-history.h"
+
+static gint            console_history_tail_position (CommandHistory *self);
+static GStrv           console_history_to_strv       (CommandHistory *self);
 
 
 /* CommandHistory
@@ -60,24 +63,22 @@
  * !!! Self does not currently write TotalHistory;
  * The main console logic writes TotalHistory,
  *
- * FUTURE:
  * CommandHistory is persistent across sessions of the ScriptFu Console,
  * and across sessions of Gimp.
  * When the SFConsole starts, the TotalHistory,
- * is just the CommandHistory, without results.
+ * is just the CommandHistory, without results of eval.
  * Old results are not meaningful since the environment changed.
  * Specifically, a new session of SFConsole has a new initialized interpreter.
- * Similarly, when the user quits the console,
+ * Similarly, when the user closes the console,
  * only the CommandHistory is saved as settings.
  */
 
 void
-console_history_init (CommandHistory *self,
-                      GtkTextBuffer  *model_of_view)
+console_history_init (CommandHistory *self)
 {
   self->model     = g_list_append (self->model, NULL);
   self->model_len = 1;
-  self->model_max = 50;
+  self->model_max = 100;
 }
 
 
@@ -98,7 +99,7 @@ console_history_set_tail (CommandHistory *self,
   GList *list;
 
   list = g_list_nth (self->model,
-                     (g_list_length (self->model) - 1));
+                     console_history_tail_position (self));
 
   if (list->data)
     g_free (list->data);
@@ -107,8 +108,30 @@ console_history_set_tail (CommandHistory *self,
   list->data = (gpointer) command;
 }
 
-/* Allocate an empty element at tail of CommandHistory.
- * Prune head when max exceeded.
+/* Remove the head of the history and free its string.
+ *
+ * GList doesn't have such a direct method.
+ * Search web to find this solution.
+ * !!! g_list_remove does not free the data of the removed element.
+ *
+ * Remove the element whose data (a string)
+ * matches the data of the first element.
+ * Then free the data of the first element.
+ */
+static void
+console_history_remove_head (CommandHistory *self)
+{
+  gpointer * data;
+
+  g_return_if_fail (self->model != NULL);
+
+  data = self->model->data;
+  self->model = g_list_remove (self->model, data);
+  g_free (data);
+}
+
+/* Append NULL string at tail of CommandHistory.
+ * Prune head when max exceeded, freeing the string.
  * Position the cursor at last element.
  */
 void
@@ -118,23 +141,26 @@ console_history_new_tail (CommandHistory *self)
 
   if (self->model_len == self->model_max)
     {
-      /* FIXME: is this correct, seems to be double freeing the head. */
-      self->model = g_list_remove (self->model, self->model->data);
-      if (self->model->data)
-        g_free (self->model->data);
+      console_history_remove_head (self);
     }
   else
     {
       self->model_len++;
     }
 
-  self->model_cursor = g_list_length (self->model) - 1;
+  self->model_cursor = console_history_tail_position (self);
+}
+
+void
+console_history_cursor_to_tail (CommandHistory *self)
+{
+  self->model_cursor = console_history_tail_position (self);
 }
 
 gboolean
 console_history_is_cursor_at_tail (CommandHistory *self)
 {
-  return self->model_cursor == g_list_length (self->model) - 1;
+  return self->model_cursor == console_history_tail_position (self);
 }
 
 void
@@ -143,6 +169,7 @@ console_history_move_cursor (CommandHistory *self,
 {
   self->model_cursor += direction;
 
+  /* Clamp cursor in range [0, model_len-1] */
   if (self->model_cursor < 0)
     self->model_cursor = 0;
 
@@ -154,4 +181,78 @@ const gchar *
 console_history_get_at_cursor (CommandHistory *self)
 {
   return g_list_nth (self->model, self->model_cursor)->data;
+}
+
+
+/* Methods for persisting history as a setting. */
+
+/* Return a GStrv of the history from settings.
+ * The Console knows how to put GStrv to both models!
+ *
+ * !!! Handle attack on settings file.
+ * The returned cardinality of the set of strings
+ * may be zero or very many.
+ * Elsewhere ensure we don't overflow models.
+ */
+GStrv
+console_history_from_settings (CommandHistory       *self,
+                               GimpProcedureConfig  *config)
+{
+  GStrv           in_history;
+
+  /* Get aux arg from property of config. */
+  g_object_get (config,
+                "history", &in_history,
+                NULL);
+
+  return in_history;
+}
+
+void
+console_history_to_settings (CommandHistory       *self,
+                             GimpProcedureConfig  *config)
+{
+  GStrv           out_history;
+
+  out_history = console_history_to_strv (self);
+
+  /* set an aux arg in config. */
+  g_object_set (config,
+                "history", out_history,
+                NULL);
+}
+
+/* Return history model as GStrv.
+ * Converts from interal list into a string array.
+ *
+ * !!! The exported history may have a tail
+ * which is user's edits to the command line,
+ * that the user never evaluated.
+ * Exported history does not have an empty tail.
+ *
+ * Caller must g_strfreev the returned GStrv.
+ */
+static GStrv
+console_history_to_strv (CommandHistory *self)
+{
+  GStrv         history_strv;
+  GStrvBuilder *builder;
+
+  builder = g_strv_builder_new ();
+  /* Order is earliest first. */
+  for (GList *l = self->model; l != NULL; l = l->next)
+    {
+      /* Don't write an empty pre-allocated tail. */
+      if (l->data != NULL)
+        g_strv_builder_add (builder, l->data);
+    }
+  history_strv = g_strv_builder_end (builder);
+  g_strv_builder_unref (builder);
+  return history_strv;
+}
+
+static gint
+console_history_tail_position (CommandHistory *self)
+{
+  return g_list_length (self->model) - 1;
 }
