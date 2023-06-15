@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-05-14 15:33+0000\n"
-"PO-Revision-Date: 2023-06-09 10:17+0100\n"
+"PO-Revision-Date: 2023-06-14 10:17+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -2429,7 +2429,6 @@ msgid "frame info"
 msgstr "informació del marc"
 
 #: plug-ins/common/file-gif-load.c:526
-#, fuzzy
 msgid "local colormap"
 msgstr "mapa de colors local"
 
@@ -2444,12 +2443,10 @@ msgstr "S'ha produït un error en llegir %s. %s"
 #: plug-ins/common/file-gif-load.c:926 plug-ins/common/file-gif-load.c:945
 #: plug-ins/common/file-gif-load.c:1046 plug-ins/common/file-gif-load.c:1050
 #: plug-ins/common/file-gif-load.c:1195
-#, fuzzy
 msgid "Image may be corrupt!"
 msgstr "La imatge pot estar malmesa!"
 
 #: plug-ins/common/file-gif-load.c:743
-#, fuzzy
 msgid "Error reading data size"
 msgstr "Error en llegir la mida de les dades"
 
@@ -2458,27 +2455,22 @@ msgid "Error reading data"
 msgstr "S'ha produït un error en llegir les dades"
 
 #: plug-ins/common/file-gif-load.c:782
-#, fuzzy
 msgid "Not enough compressed data"
 msgstr "No hi ha prou dades comprimides"
 
 #: plug-ins/common/file-gif-load.c:836
-#, fuzzy
 msgid "Value out of range for code size"
 msgstr "Valor fora de rang per a la mida del codi"
 
 #: plug-ins/common/file-gif-load.c:925
-#, fuzzy
 msgid "Invalid code, expecting end of data marker"
 msgstr "Codi no vàlid, s'espera el final del marcador de dades"
 
 #: plug-ins/common/file-gif-load.c:945
-#, fuzzy
 msgid "Unexpected extra data"
 msgstr "Dades extres inesperades"
 
 #: plug-ins/common/file-gif-load.c:964
-#, fuzzy
 msgid "Invalid table entry"
 msgstr "Entrada de taula no vàlida"
 
@@ -2487,7 +2479,6 @@ msgid "Image is corrupt!"
 msgstr "La imatge està malmesa!"
 
 #: plug-ins/common/file-gif-load.c:970
-#, fuzzy
 msgid "Circular table entry"
 msgstr "Entrada de taula circular"
 
@@ -2497,12 +2488,10 @@ msgid "%s. %s"
 msgstr "%s. %s"
 
 #: plug-ins/common/file-gif-load.c:1046 plug-ins/common/file-gif-load.c:1050
-#, fuzzy
 msgid "Invalid frame dimensions"
 msgstr "Dimensions no vàlides del marc"
 
 #: plug-ins/common/file-gif-load.c:1066
-#, fuzzy
 msgid "compressed image data"
 msgstr "dades d'imatge comprimides"
 
@@ -2541,31 +2530,26 @@ msgid "Unknown composite type %d. %s"
 msgstr "Tipus de composició %d. %s desconeguda"
 
 #: plug-ins/common/file-gif-load.c:1237
-#, fuzzy
 msgid ""
 "Can't handle non-alpha RGB frames.\n"
 "Please file a bug report at https://gitlab.gnome.org/GNOME/gimp/issues"
 msgstr ""
 "No es poden gestionar fotogrames RGB no alfa.\n"
-"Informeu d'error a https://gitlab.gnome.org/GNOME/gimp/issues"
+"Informeu de l'error a https://gitlab.gnome.org/GNOME/gimp/issues"
 
 #: plug-ins/common/file-gif-load.c:1364
-#, fuzzy
 msgid "Too much compressed data, ignoring extra..."
 msgstr "Hi ha massa dades comprimides, s'ignoraran les extra..."
 
 #: plug-ins/common/file-gif-save.c:151
-#, fuzzy
 msgid "GIF"
 msgstr "GIF"
 
 #: plug-ins/common/file-gif-save.c:154
-#, fuzzy
 msgid "exports files in Compuserve GIF file format"
-msgstr "exporta fitxers en format de fitxer GIF compilat"
+msgstr "exporta fitxers en format de fitxer Compuserve GIF"
 
 #: plug-ins/common/file-gif-save.c:156
-#, c-format, fuzzy
 msgid ""
 "Export a file in Compuserve GIF format, with possible animation, "
 "transparency, and comment. To export an animation, operate on a multi-layer "
@@ -2573,10 +2557,10 @@ msgid ""
 "interpret <50% alpha as transparent. When run non-interactively, the value "
 "for the comment is taken from the 'gimp-comment' parasite.  "
 msgstr ""
-"Exporta un fitxer en format GIF compilat, amb una possible animació, "
+"Exporta un fitxer en format GIF Compuserve, amb una possible animació, "
 "transparència i comentari. Per a exportar una animació, opera en un fitxer "
 "multicapa i dona el paràmetre «com a animació» com a CERT. El connector "
-"interpretarà  alpha50% alfa com a transparent. Quan s'executa de forma no "
+"interpretarà un alfa inferior a 50% com a transparent. Quan s'executa de forma no "
 "interactiva, el valor del comentari es pren del paràsit «gimp-comment»."
 
 #: plug-ins/common/file-gif-save.c:182 plug-ins/common/file-mng.c:277
@@ -2584,7 +2568,6 @@ msgid "_Interlace"
 msgstr "_Entrellaça"
 
 #: plug-ins/common/file-gif-save.c:183
-#, fuzzy
 msgid "Try to export as interlaced"
 msgstr "Intenta exportar com a entrellaçat"
 
@@ -2593,7 +2576,6 @@ msgid "Loop _Forever"
 msgstr "_Bucle sense fi"
 
 #: plug-ins/common/file-gif-save.c:189
-#, fuzzy
 msgid "(animated gif) Loop infinitely"
 msgstr "(gif animat) Bucle infinit"
 
@@ -2602,7 +2584,6 @@ msgid "_Number of repeats"
 msgstr "_Nombre de repeticions"
 
 #: plug-ins/common/file-gif-save.c:195
-#, fuzzy
 msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
 msgstr "(gif animat) Nombre de repeticions (s'ignora si «loop» és CERT)"
 
@@ -2611,7 +2592,6 @@ msgid "_Delay between frames when unspecified"
 msgstr "_Retard entre fotogrames no especificats"
 
 #: plug-ins/common/file-gif-save.c:202
-#, fuzzy
 msgid "(animated gif) Default delay between frames in milliseconds"
 msgstr "(gif animat) Retard predeterminat entre fotogrames en mil·lisegons"
 
@@ -2620,7 +2600,6 @@ msgid "Frame disposal _when unspecified"
 msgstr "Disposició dels _fotogrames quan no s'especifiqui"
 
 #: plug-ins/common/file-gif-save.c:209
-#, fuzzy
 msgid ""
 "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)"
 msgstr ""
@@ -2640,17 +2619,14 @@ msgid "_Use delay entered above for all frames"
 msgstr "_Utilitza el retard per a tots els fotogrames"
 
 #: plug-ins/common/file-gif-save.c:224
-#, fuzzy
 msgid "(animated gif) Use specified delay for all frames"
 msgstr "(gif animat) Usa el retard especificat per a tots els fotogrames"
 
 #: plug-ins/common/file-gif-save.c:229
-#, fuzzy
 msgid "Use dis_posal entered above for all frames"
-msgstr "Usa la disposició introduïda anteriorment per a tots els fotogrames"
+msgstr "Us_a la disposició introduïda anteriorment per a tots els fotogrames"
 
 #: plug-ins/common/file-gif-save.c:231
-#, fuzzy
 msgid "(animated gif) Use specified disposal for all frames"
 msgstr "(gif animat) Usa la disposició especificada per a tots els fotogrames"
 
@@ -2852,7 +2828,6 @@ msgid "_Quality"
 msgstr "_Qualitat"
 
 #: plug-ins/common/file-heif.c:259 plug-ins/common/file-heif.c:369
-#, fuzzy
 msgid "Quality factor (0 = worst, 100 = best)"
 msgstr "Factor de qualitat (0 = pitjor, 100 = millor)"
 
@@ -2890,17 +2865,14 @@ msgid "_Pixel format"
 msgstr "_Format de píxel"
 
 #: plug-ins/common/file-heif.c:283 plug-ins/common/file-heif.c:393
-#, fuzzy
 msgid "Format of color sub-sampling"
 msgstr "Format del submostratge de color"
 
 #: plug-ins/common/file-heif.c:289 plug-ins/common/file-heif.c:399
-#, fuzzy
 msgid "Enco_der speed"
-msgstr "Velocitat del codificador"
+msgstr "_Velocitat del codificador"
 
 #: plug-ins/common/file-heif.c:290 plug-ins/common/file-heif.c:400
-#, fuzzy
 msgid "Tradeoff between speed and compression"
 msgstr "Compromís entre velocitat i compressió"
 
@@ -3029,30 +3001,27 @@ msgid "HTML Table"
 msgstr "Taula HTML"
 
 #: plug-ins/common/file-html-table.c:158
-#, fuzzy
+# N.T.: Nom del connector
 msgid "GIMP Table Magic"
-msgstr "Màgia de la taula del GIMP"
+msgstr "GIMP Table Magic"
 
 #: plug-ins/common/file-html-table.c:159
-#, fuzzy
 msgid "Allows you to draw an HTML table in GIMP. See help for more info."
 msgstr ""
 "Permet dibuixar una taula HTML en el GIMP. Vegeu l'ajuda per a més "
 "informació."
 
 #: plug-ins/common/file-html-table.c:175
-#, fuzzy
 msgid "Use c_aption"
-msgstr "Utilitza la llegenda"
+msgstr "_Utilitza la llegenda"
 
 #: plug-ins/common/file-html-table.c:176
 msgid "Enable if you would like to have the table captioned."
 msgstr "Habiliteu-ho si voleu la taula amb títol."
 
 #: plug-ins/common/file-html-table.c:182
-#, fuzzy
 msgid "Capt_ion"
-msgstr "Llegenda"
+msgstr "_Llegenda"
 
 #: plug-ins/common/file-html-table.c:183
 msgid "The text for the table caption."
@@ -3182,12 +3151,10 @@ msgid "Load file in the IFF file format"
 msgstr "Carrega fitxers en el format de fitxer IFF"
 
 #: plug-ins/common/file-iff.c:254
-#, fuzzy
 msgid "Invalid or missing ILBM image"
-msgstr "Imatge ILBM no vàlida o mancant"
+msgstr "Imatge ILBM no és vàlida o falta"
 
 #: plug-ins/common/file-iff.c:259
-#, fuzzy
 msgid "ILBM contains no image data - likely a palette file"
 msgstr "ILBM no conté dades d'imatge - probablement un fitxer de paleta"
 
@@ -3208,7 +3175,6 @@ msgid "Loads JPEG 2000 codestream."
 msgstr "Carrega un flux de codis JPEG 2000."
 
 #: plug-ins/common/file-jp2-load.c:227
-#, fuzzy
 msgid ""
 "Loads JPEG 2000 codestream. If the color space is set to UNKNOWN (0), we "
 "will try to guess, which is only possible for few spaces (such as "
@@ -3216,7 +3182,7 @@ msgid ""
 "color space of your data."
 msgstr ""
 "Carrega el flux de codi JPEG 2000. Si l'espai de color està establert a "
-"DESCONEGUT (0), intentarem endevinar, el qual només és possible per a pocs "
+"DESCONEGUT (0), intentarem deduir, això només és possible per a pocs "
 "espais (com ara l'escala de grisos). La majoria d'aquestes trucades "
 "fracassaran. S'espera que conegueu l'espai de color de les vostres dades."
 
@@ -3225,12 +3191,11 @@ msgid "Color s_pace"
 msgstr "_Espai de color"
 
 #: plug-ins/common/file-jp2-load.c:248
-#, fuzzy
 msgid ""
 "Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), CMYK (3), YCbCr (4), "
 "xvYCC (5) }"
 msgstr ""
-"Espai de color { UNKNOWN (0), ESCALA DE GRISOS (1), RGB (2), CMYK (3), YCbCr"
+"Espai de color { DESCONEGUT (0), ESCALA DE GRISOS (1), RGB (2), CMYK (3), YCbCr"
 " (4), xvYCC (5) }"
 
 #. Can be RGB, YUV and YCC.
@@ -3422,7 +3387,6 @@ msgid "Saves images in the MNG file format"
 msgstr "Desa les imatges en el format de fitxer MNG"
 
 #: plug-ins/common/file-mng.c:260
-#, fuzzy
 msgid ""
 "This plug-in saves images in the Multiple-image Network Graphics (MNG) "
 "format which can be used as a replacement for animated GIFs, and more."
@@ -3466,16 +3430,14 @@ msgid "L_oop"
 msgstr "_Bucle"
 
 #: plug-ins/common/file-mng.c:303
-#, fuzzy
 msgid "(ANIMATED MNG) Loop infinitely"
-msgstr "(ANIMAT MNG) Bucle infinit"
+msgstr "(MNG animat) Bucle infinit"
 
 #: plug-ins/common/file-mng.c:308
 msgid "Default fra_me delay"
 msgstr "_Retard per defecte del fotograma"
 
 #: plug-ins/common/file-mng.c:309
-#, fuzzy
 msgid "(ANIMATED MNG) Default delay between frames in milliseconds"
 msgstr "(MNG animat) Retard predeterminat entre fotogrames en mil·lisegons"
 
@@ -3484,7 +3446,6 @@ msgid "Default chunks t_ype"
 msgstr "_Tipus de fragments per defecte"
 
 #: plug-ins/common/file-mng.c:316
-#, fuzzy
 msgid ""
 "(ANIMATED MNG) Default chunks type (0 = PNG + Delta PNG; 1 = JNG + Delta "
 "PNG; 2 = All PNG; 3 = All JNG)"
@@ -5212,7 +5173,7 @@ msgstr "Imatge TarGA"
 
 #: plug-ins/common/file-tga.c:302
 msgid "_Use RLE compression"
-msgstr "_Usa compressió _RLE"
+msgstr "_Usa compressió RLE"
 
 #: plug-ins/common/file-tga.c:303
 msgid "Use RLE compression"
@@ -5223,7 +5184,6 @@ msgid "Ori_gin"
 msgstr "_Origen"
 
 #: plug-ins/common/file-tga.c:309
-#, fuzzy
 msgid "Image origin (0 = top-left, 1 = bottom-left)"
 msgstr "Origen de la imatge (0 = superior esquerra, 1 = inferior esquerra)"
 
@@ -5306,12 +5266,10 @@ msgid "X BitMap image"
 msgstr "Mapa de bits X"
 
 #: plug-ins/common/file-xbm.c:162
-#, fuzzy
 msgid "Load a file in X10 or X11 bitmap (XBM) file format"
 msgstr "Carrega un fitxer en format X10 o X11 bitmap (XBM)"
 
 #: plug-ins/common/file-xbm.c:164
-#, fuzzy
 msgid ""
 "Load a file in X10 or X11 bitmap (XBM) file format. XBM is a lossless format"
 " for flat black-and-white (two color indexed) images."
@@ -5320,12 +5278,10 @@ msgstr ""
 "pèrdua per a imatges planes en blanc i negre (dos colors indexats)."
 
 #: plug-ins/common/file-xbm.c:190
-#, fuzzy
 msgid "Export a file in X10 or X11 bitmap (XBM) file format"
 msgstr "Exporta un fitxer en format X10 o X11 bitmap (XBM)"
 
 #: plug-ins/common/file-xbm.c:192
-#, fuzzy
 msgid ""
 "X10 or X11 bitmap (XBM) file format. XBM is a lossless format for flat "
 "black-and-white (two color indexed) images."
@@ -5350,7 +5306,6 @@ msgid "Co_mment"
 msgstr "Co_mentari"
 
 #: plug-ins/common/file-xbm.c:219
-#, fuzzy
 msgid "Image description (maximum 72 bytes)"
 msgstr "Descripció de la imatge (màxim 72 bytes)"
 
@@ -5363,8 +5318,6 @@ msgid "Export in X10 format"
 msgstr "Exporta en format X10"
 
 #: plug-ins/common/file-xbm.c:233
-#, fuzzy
-#| msgid "_Write hot spot values"
 msgid "Write hot spot _values"
 msgstr "Escriu els _valors del punt calent"
 
@@ -6045,14 +5998,12 @@ msgid "Hot"
 msgstr "Càlid"
 
 #: plug-ins/common/hot.c:690
-#, fuzzy
 msgid "N_TSC"
-msgstr "NTSC"
+msgstr "N_TSC"
 
 #: plug-ins/common/hot.c:691
-#, fuzzy
 msgid "_PAL"
-msgstr "PAL"
+msgstr "_PAL"
 
 #: plug-ins/common/hot.c:696
 msgid "Reduce _Luminance"
@@ -6075,7 +6026,6 @@ msgid "Add a jigsaw-puzzle pattern to the image"
 msgstr "Afegeix un patró en forma de puzle a la imatge"
 
 #: plug-ins/common/jigsaw.c:405
-#, fuzzy
 msgid "Jigsaw puzzle look"
 msgstr "Aspecte del trencaclosques Jigsaw"
 
@@ -6102,23 +6052,20 @@ msgid "Jigsaw Style"
 msgstr "Estil d'enllaç"
 
 #: plug-ins/common/jigsaw.c:426
-#, fuzzy
 msgid "The style/shape of the jigsaw puzzle { Square (0), Curved (1) }"
 msgstr "L'estil/forma del trencaclosques { Square (0), corbat (1) }"
 
 #: plug-ins/common/jigsaw.c:432
-#, fuzzy
 msgid "_Blend width"
-msgstr "Amplada de la barreja"
+msgstr "_Amplada de la barreja"
 
 #: plug-ins/common/jigsaw.c:433
 msgid "Degree of slope of each piece's edge"
 msgstr "Grau d'inclinació de la vora de cada peça"
 
 #: plug-ins/common/jigsaw.c:438
-#, fuzzy
 msgid "Hi_ghlight"
-msgstr "Ressalta"
+msgstr "R_essalta"
 
 #: plug-ins/common/jigsaw.c:439
 msgid "The amount of highlighting on the edges of each piece"
@@ -6129,9 +6076,8 @@ msgid "Assembling jigsaw"
 msgstr "S'està muntant el puzle"
 
 #: plug-ins/common/jigsaw.c:727
-#, fuzzy
 msgid "draw_jigsaw: bad style\n"
-msgstr "drawjigsaw: estil incorrecte"
+msgstr "draw_jigsaw: estil incorrecte\n"
 
 #: plug-ins/common/jigsaw.c:2490
 msgid "Jigsaw"
@@ -6206,12 +6152,11 @@ msgid "Nonlinear swiss army knife filter"
 msgstr "Filtre navalla suïssa no-lineal"
 
 #: plug-ins/common/nl-filter.c:163
-#, fuzzy
 msgid ""
 "This is the pnmnlfilt, in GIMP's clothing. See the pnmnlfilt manpage for "
 "details."
 msgstr ""
-"Aquest és el pnmnlfilt, a la roba del GIMP. Vegeu la pàgina man del "
+"Aquest és el pnmnlfilt, amb la roba del GIMP. Vegeu la pàgina man del "
 "pnmnlfilt per a més detalls."
 
 #: plug-ins/common/nl-filter.c:174
@@ -6219,10 +6164,8 @@ msgid "_Alpha"
 msgstr "_Alfa"
 
 #: plug-ins/common/nl-filter.c:175
-#, fuzzy
-#| msgid "The angle span of the first brush to create"
 msgid "The amount of the filter to apply"
-msgstr "Obertura de l'angle del primer pinzell a crear"
+msgstr ""
 
 #: plug-ins/common/nl-filter.c:180
 msgid "Ra_dius"
@@ -6237,7 +6180,6 @@ msgid "Filter"
 msgstr "Filtre"
 
 #: plug-ins/common/nl-filter.c:187
-#, fuzzy
 msgid ""
 "The Filter to Run, 0 - alpha trimmed mean; 1 - optimal estimation (alpha "
 "controls noise variance); 2 - edge enhancement"
@@ -6250,10 +6192,8 @@ msgid "NL Filter"
 msgstr "Filtre NL"
 
 #: plug-ins/common/nl-filter.c:1144
-#, fuzzy
-#| msgid "_Alpha trimmed mean"
 msgid "Alpha trimmed mean"
-msgstr "Mitja retallada d'_alfa"
+msgstr "_Mitja retallada d'alfa"
 
 #: plug-ins/common/nl-filter.c:1145
 msgid "Optimal estimation"
@@ -6514,13 +6454,12 @@ msgid "Turn bright spots into starry sparkles"
 msgstr "Converteix les taques de llum en espurnes enlluernadores"
 
 #: plug-ins/common/sparkle.c:184
-#, fuzzy
 msgid ""
 "Uses a percentage based luminosity threshold to find candidate pixels for "
 "adding some sparkles (spikes)."
 msgstr ""
 "Utilitza un llindar de lluminositat basat en un percentatge per a trobar "
-"píxels candidats per a afegir algunes espurnes (espurnes)."
+"píxels candidats per a afegir algunes espurnes (puntes)."
 
 #: plug-ins/common/sparkle.c:196
 msgid "Lu_minosity threshold"
@@ -6558,11 +6497,9 @@ msgstr "Nombre de _focus:"
 
 #: plug-ins/common/sparkle.c:215
 msgid "Adjust the number of spikes"
-msgstr "Ajusta el nombre de focus"
+msgstr "Ajusta el nombre de puntes"
 
 #: plug-ins/common/sparkle.c:220
-#, fuzzy
-#| msgid "Spi_ke angle (-1: random):"
 msgid "Spike angle (-_1: random)"
 msgstr "An_gle de les puntes (-1: aleatori):"
 
@@ -11491,11 +11428,11 @@ msgstr "_Lluentor"
 
 #: plug-ins/gradient-flare/gradient-flare.c:3876
 msgid "# of Spikes:"
-msgstr "Nombre de punxes:"
+msgstr "Nombre de puntes:"
 
 #: plug-ins/gradient-flare/gradient-flare.c:3887
 msgid "Spike thickness:"
-msgstr "Gruix de les punxes:"
+msgstr "Gruix de les putntes:"
 
 #: plug-ins/gradient-flare/gradient-flare.c:3901
 msgid "_Rays"
