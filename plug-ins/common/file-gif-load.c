@@ -129,7 +129,7 @@ DEFINE_STD_SET_I18N
 
 
 static guchar        used_cmap[3][256];
-static guchar        highest_used_index;
+static guint         highest_used_index;
 static gboolean      promote_to_rgb   = FALSE;
 static guchar        gimp_cmap[768];
 static GimpParasite *comment_parasite = NULL;
@@ -255,7 +255,7 @@ gif_load (GimpProcedure        *procedure,
 
   if (! promote_to_rgb)
     gimp_image_set_colormap (image,
-                             gimp_cmap, highest_used_index + 1);
+                             gimp_cmap, highest_used_index);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -287,7 +287,7 @@ gif_load_thumb (GimpProcedure        *procedure,
                                              error);
 
   if (! promote_to_rgb)
-    gimp_image_set_colormap (image, gimp_cmap, highest_used_index + 1);
+    gimp_image_set_colormap (image, gimp_cmap, highest_used_index);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -466,8 +466,7 @@ load_image (GFile     *file,
       g_message (_("Non-square pixels.  Image might look squashed."));
     }
 
-
-  highest_used_index = 0;
+  highest_used_index = GifScreen.BitPixel;
 
   while (TRUE)
     {
@@ -527,6 +526,7 @@ load_image (GFile     *file,
               fclose (fd);
               return image; /* will be NULL if failed on first image! */
             }
+          highest_used_index = bitPixel;
 
           status = ReadImage (fd, file, LM_to_uint (buf[4], buf[5]),
                               LM_to_uint (buf[6], buf[7]),
@@ -1251,8 +1251,6 @@ ReadImage (FILE        *fd,
     {
       if (alpha_frame)
         {
-          if (((guchar) v > highest_used_index) && !(v == Gif89.transparent))
-            highest_used_index = (guchar) v;
 
           if (promote_to_rgb)
             {
@@ -1271,8 +1269,6 @@ ReadImage (FILE        *fd,
         }
       else
         {
-          if ((guchar) v > highest_used_index)
-            highest_used_index = (guchar) v;
 
           temp = dest + (ypos * len) + xpos;
           *temp = (guchar) v;
