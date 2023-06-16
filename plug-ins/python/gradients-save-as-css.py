@@ -61,21 +61,13 @@ def format_text(text):
 
     return ",".join(new_text)
 
-def gradient_css_save(procedure, args, data):
-    if args.length() != 3:
-        error = 'Wrong parameters given'
-        return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
-                                           GLib.Error(error))
-    runmode = args.index(0)
-    gradient = args.index(1)
-    file = args.index(2)
-
-    config = procedure.create_config()
-    config.begin_run(None, Gimp.RunMode.INTERACTIVE, args)
+def gradient_css_save(procedure, config, data):
+    runmode = config.get_property("run-mode")
 
     if runmode == Gimp.RunMode.INTERACTIVE:
         GimpUi.init('python-fu-gradient-save-as-css')
         dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
+        file   = None
 
         # Add gradient button
         dialog.fill (["gradient"])
@@ -137,20 +129,19 @@ def gradient_css_save(procedure, args, data):
 
         if not dialog.run():
             dialog.destroy()
-            config.end_run(Gimp.PDBStatusType.CANCEL)
             return procedure.new_return_values(Gimp.PDBStatusType.CANCEL, GLib.Error())
         else:
-            gradient = config.get_property("gradient")
             file = Gio.file_new_for_path(file_entry.get_text())
-
             #Save configs for non-connected UI element
             config.set_property ("file", file)
 
             dialog.destroy()
 
+    gradient = config.get_property("gradient")
+    file     = config.get_property("file")
+
     if file is None:
         error = 'No file given'
-        config.end_run(Gimp.PDBStatusType.CALLING_ERROR)
         return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
                                            GLib.Error(error))
 
@@ -187,10 +178,8 @@ def gradient_css_save(procedure, args, data):
                                           flags=Gio.FileCreateFlags.REPLACE_DESTINATION,
                                           cancellable=None)
     if success:
-        config.end_run(Gimp.PDBStatusType.SUCCESS)
         return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
     else:
-        config.end_run(Gimp.PDBStatusType.EXECUTION_ERROR)
         return procedure.new_return_values(Gimp.PDBStatusType.EXECUTION_ERROR,
                                            GLib.Error('File saving failed: {}'.format(file.get_path())))
 
@@ -225,7 +214,7 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
             procedure.set_documentation (_("Creates a new palette from a given gradient"),
                                          _("Creates a new palette from a given gradient"),
                                          name)
-            procedure.set_menu_label(_("Save as CSS..."))
+            procedure.set_menu_label(_("Save Gradient as CSS..."))
             procedure.set_attribution("Joao S. O. Bueno",
                                       "(c) GPL V3.0 or later",
                                       "2011")

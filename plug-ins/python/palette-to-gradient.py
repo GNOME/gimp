@@ -33,7 +33,7 @@ def make_gradient(palette, num_segments, num_colors):
 
     # name the gradient same as the source palette
     # For now, the name of a resource is the same as the ID
-    palette_name = palette.get_id()
+    palette_name = palette.get_name()
     gradient = Gimp.Gradient.new(palette_name)
     # assert gradient is valid but is has only one segment
     assert gradient.get_number_of_segments() == 1
@@ -56,13 +56,9 @@ def make_gradient(palette, num_segments, num_colors):
     Gimp.context_set_gradient(gradient)
     return gradient
 
-def run(procedure, args, data):
-    config = procedure.create_config()
-    config.begin_run(None, Gimp.RunMode.INTERACTIVE, args)
-
+def run(procedure, config, data):
     # Get the parameters
-    run_mode = args.index(0)
-    palette = args.index(1)
+    run_mode = config.get_property("run-mode")
 
     if run_mode == Gimp.RunMode.INTERACTIVE:
         GimpUi.init(procedure.get_name())
@@ -73,19 +69,18 @@ def run(procedure, args, data):
 
         if not dialog.run():
             dialog.destroy()
-            config.end_run(Gimp.PDBStatusType.CANCEL)
             return procedure.new_return_values(Gimp.PDBStatusType.CANCEL, GLib.Error())
-        else:
-            palette = config.get_property("palette")
 
-            dialog.destroy()
+        dialog.destroy()
 
+    palette = config.get_property("palette")
     if palette is None or not palette.is_valid():
         if palette is not None:
           sys.stderr.write(f'Invalid palette id: {palette.get_id()}\n')
           sys.stderr.write('This should not happen. Please report to GIMP project.\n')
           sys.stderr.write('Falling back to context palette instead.\n')
         palette = Gimp.context_get_palette()
+        config.set_property("palette", palette)
 
     num_colors = palette.get_color_count()
 
@@ -95,7 +90,6 @@ def run(procedure, args, data):
         num_segments = num_colors
     gradient = make_gradient(palette, num_segments, num_colors)
 
-    config.end_run(Gimp.PDBStatusType.SUCCESS)
     # XXX: for the error parameter, we want to return None.
     # Unfortunately even though the argument is (nullable), pygobject
     # looks like it may have a bug. So workaround is to just set a
@@ -132,7 +126,7 @@ class PaletteToGradient (Gimp.PlugIn):
     ## Parameter: palette ##
     @GObject.Property(type=Gimp.Palette,
                       default=None,
-                      nick= _("Palette"))
+                      nick= _("_Palette"))
     def palette(self):
         '''Palette or None for the currently selected palette'''
         return self.palette

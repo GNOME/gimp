@@ -444,21 +444,9 @@ class PaletteSort (Gimp.PlugIn):
 
         return procedure
 
-    def run(self, procedure, args, data):
-        config = procedure.create_config()
-        config.begin_run(None, Gimp.RunMode.INTERACTIVE, args)
-
-        run_mode = args.index(0)
-        palette = args.index(1)
-        selection = args.index(2)
-        slice_expr = args.index(3)
-        channel1 = args.index(4)
-        ascending1 = args.index(5)
-        channel2 = args.index(6)
-        ascending2 = args.index(7)
-        quantize = args.index(8)
-        pchannel = args.index(9)
-        pquantize = args.index(10)
+    def run(self, procedure, config, data):
+        run_mode = config.get_property("run-mode")
+        palette  = config.get_property("palette")
 
         if palette is None or not palette.is_valid():
             if palette is not None:
@@ -466,6 +454,7 @@ class PaletteSort (Gimp.PlugIn):
               sys.stderr.write('This should not happen. Please report to GIMP project.\n')
               sys.stderr.write('Falling back to context palette instead.\n')
             palette = Gimp.context_get_palette()
+            config.set_property("palette", palette)
 
         if not palette.is_valid():
             palette_name = palette.get_id()
@@ -489,22 +478,20 @@ class PaletteSort (Gimp.PlugIn):
 
             if not dialog.run():
                 dialog.destroy()
-                config.end_run(Gimp.PDBStatusType.CANCEL)
                 return procedure.new_return_values(Gimp.PDBStatusType.CANCEL, GLib.Error())
-            else:
-                palette = config.get_property("palette")
-                selection = config.get_property("selections")
-                slice_expr = config.get_property ("slice_expr")
-                channel1 = config.get_property("channel1")
-                ascending1 = config.get_property ("ascending1")
-                channel2 = config.get_property("channel2")
-                ascending2 = config.get_property ("ascending2")
-                quantize = config.get_property ("quantize")
-                pchannel = config.get_property("pchannel")
-                pquantize = config.get_property ("pquantize")
 
-                dialog.destroy()
+            dialog.destroy()
 
+        palette    = config.get_property("palette")
+        selection  = config.get_property("selections")
+        slice_expr = config.get_property ("slice_expr")
+        channel1   = config.get_property("channel1")
+        ascending1 = config.get_property ("ascending1")
+        channel2   = config.get_property("channel2")
+        ascending2 = config.get_property ("ascending2")
+        quantize   = config.get_property ("quantize")
+        pchannel   = config.get_property("pchannel")
+        pquantize  = config.get_property ("pquantize")
         try:
             new_palette = palette_sort(palette, selection, slice_expr, channel1, ascending1,
                                        channel2, ascending2, quantize, pchannel, pquantize)
@@ -512,13 +499,10 @@ class PaletteSort (Gimp.PlugIn):
             return procedure.new_return_values(Gimp.PDBStatusType.EXECUTION_ERROR,
                                                GLib.Error(str(err)))
 
-        config.end_run(Gimp.PDBStatusType.SUCCESS)
-
         return_val = procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
         value = GObject.Value(Gimp.Palette, new_palette)
         return_val.remove(1)
         return_val.insert(1, value)
         return return_val
-
 
 Gimp.main(PaletteSort.__gtype__, sys.argv)

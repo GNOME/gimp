@@ -41,7 +41,7 @@ PROC_NAME = 'python-fu-console'
 
 RESPONSE_BROWSE, RESPONSE_CLEAR, RESPONSE_SAVE = range(3)
 
-def run(procedure, args, data):
+def run(procedure, config, data):
     GimpUi.init ("python-console.py")
 
     namespace = {'__builtins__': __builtins__,

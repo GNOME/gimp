@@ -108,29 +108,19 @@ class PaletteOffset (Gimp.PlugIn):
 
         return procedure
 
-    def run(self, procedure, args, data):
-        palette = None
-        amount  = 1
+    def run(self, procedure, config, data):
+        runmode = config.get_property("run-mode")
+        palette = config.get_property("palette")
+        amount  = config.get_property("amount")
 
-        # Get the parameters
-        if args.length() < 1:
-            error = 'No parameters given'
-            return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
-                                               GLib.Error(error))
-        runmode = args.index(0)
-
-        if args.length() > 1:
-            palette = args.index(1)
         if palette is None:
             palette = Gimp.context_get_palette()
+            config.set_property("palette", palette)
 
         if not palette.is_valid():
             error = f'Invalid palette ID: {palette.get_id()}'
             return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
                                                GLib.Error(error))
-
-        if args.length() > 2:
-            amount = args.index(2)
 
         if runmode == Gimp.RunMode.INTERACTIVE:
             gi.require_version('Gtk', '3.0')
@@ -140,7 +130,7 @@ class PaletteOffset (Gimp.PlugIn):
 
             use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
             dialog = GimpUi.Dialog(use_header_bar=use_header_bar,
-                                 title=_("Offset Palette..."))
+                                   title=_("Offset Palette..."))
 
             dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
             dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
@@ -162,10 +152,10 @@ class PaletteOffset (Gimp.PlugIn):
 
             dialog.show()
             if dialog.run() != Gtk.ResponseType.OK:
-                print ("Canceled")
                 return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
                                                    GLib.Error("Canceled"))
             amount = self.get_property("amount")
+            config.set_property("amount", amount)
 
         #If palette is read only, work on a copy:
         editable = palette.is_editable()
