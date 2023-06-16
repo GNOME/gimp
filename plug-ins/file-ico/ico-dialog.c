@@ -223,12 +223,23 @@ ico_create_icon_hbox (GtkWidget    *icon_preview,
 {
   static GtkSizeGroup *size = NULL;
 
+  GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *vbox;
   GtkWidget *combo;
   GtkWidget *checkbox;
+  gchar     *frame_header;
+  gint       width  = gimp_drawable_get_width (layer);
+  gint       height = gimp_drawable_get_height (layer);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+
+  frame_header = g_strdup_printf ("%dx%d", width, height);
+
+  frame = gimp_frame_new (frame_header);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_set_visible (frame, TRUE);
+  g_free (frame_header);
 
   /* To make life easier for the callbacks, we store the
      layer's ID and stacking number with the hbox. */
@@ -241,7 +252,7 @@ ico_create_icon_hbox (GtkWidget    *icon_preview,
   g_object_set_data (G_OBJECT (hbox), "icon_preview", icon_preview);
   gtk_widget_set_halign (icon_preview, GTK_ALIGN_END);
   gtk_widget_set_valign (icon_preview, GTK_ALIGN_CENTER);
-  gtk_box_pack_start (GTK_BOX (hbox), icon_preview, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), icon_preview);
   gtk_widget_show (icon_preview);
 
   if (! size)
@@ -261,6 +272,7 @@ ico_create_icon_hbox (GtkWidget    *icon_preview,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                  info->depths[layer_num]);
+  gtk_widget_set_margin_top (GTK_WIDGET (combo), 6);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (ico_dialog_bpp_changed),
