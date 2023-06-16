@@ -498,6 +498,8 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
   config->priv->image    = image;
   config->priv->run_mode = run_mode;
 
+  gimp_procedure_config_set_values (config, args);
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE :
@@ -524,7 +526,6 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      gimp_procedure_config_set_values (config, args);
       break;
     }
 

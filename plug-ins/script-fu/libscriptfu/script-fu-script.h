@@ -39,11 +39,15 @@ void       script_fu_script_reset                   (SFScript             *scrip
                                                      gboolean              reset_ids);
 
 gint       script_fu_script_collect_standard_args   (SFScript             *script,
-                                                     const GimpValueArray *args);
+                                                     GParamSpec          **pspecs,
+                                                     guint                 n_pspecs,
+                                                     GimpProcedureConfig  *config);
 
 gchar    * script_fu_script_get_command             (SFScript             *script);
 gchar    * script_fu_script_get_command_from_params (SFScript             *script,
-                                                     const GimpValueArray *args);
+                                                     GParamSpec          **pspecs,
+                                                     guint                 n_pspecs,
+                                                     GimpProcedureConfig  *config);
 gchar    * script_fu_script_get_command_for_image_proc (
                                                      SFScript             *script,
                                                      GimpImage            *image,

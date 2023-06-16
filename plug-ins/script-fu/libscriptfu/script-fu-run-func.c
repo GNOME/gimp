@@ -124,14 +124,17 @@ script_fu_run_image_procedure ( GimpProcedure         *procedure, /* GimpImagePr
  * Since prior to 3.0 but formerly named script_fu_script_proc
  */
 GimpValueArray *
-script_fu_run_procedure (GimpProcedure        *procedure,
-                         const GimpValueArray *args,
-                         gpointer              data)
+script_fu_run_procedure (GimpProcedure       *procedure,
+                         GimpProcedureConfig *config,
+                         gpointer             data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  SFScript          *script;
-  GimpRunMode        run_mode;
-  GError            *error = NULL;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
+  SFScript           *script;
+  GParamSpec        **pspecs;
+  guint               n_pspecs;
+  gint                n_aux_args;
+  GimpRunMode         run_mode;
+  GError             *error = NULL;
 
   script = script_fu_find_script (gimp_procedure_get_name (procedure));
 
@@ -140,7 +143,10 @@ script_fu_run_procedure (GimpProcedure        *procedure,
                                              GIMP_PDB_CALLING_ERROR,
                                              NULL);
 
-  run_mode = GIMP_VALUES_GET_ENUM (args, 0);
+  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config), &n_pspecs);
+  gimp_procedure_get_aux_arguments (procedure, &n_aux_args);
+
+  g_object_get (config, "run-mode", &run_mode, NULL);
 
   ts_set_run_mode (run_mode);
 
@@ -151,7 +157,7 @@ script_fu_run_procedure (GimpProcedure        *procedure,
         gint min_args = 0;
 
         /*  First, try to collect the standard script arguments...  */
-        min_args = script_fu_script_collect_standard_args (script, args);
+        min_args = script_fu_script_collect_standard_args (script, pspecs, n_pspecs, config);
 
         /*  ...then acquire the rest of arguments (if any) with a dialog  */
         if (script->n_args > min_args)
@@ -166,14 +172,14 @@ script_fu_run_procedure (GimpProcedure        *procedure,
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there  */
-      if (gimp_value_array_length (args) != (script->n_args + 1))
+      if (n_pspecs != script->n_args + n_aux_args + 1)
         status = GIMP_PDB_CALLING_ERROR;
 
       if (status == GIMP_PDB_SUCCESS)
         {
           gchar *command;
 
-          command = script_fu_script_get_command_from_params (script, args);
+          command = script_fu_script_get_command_from_params (script, pspecs, n_pspecs, config);
 
           /*  run the command through the interpreter  */
           if (! script_fu_run_command (command, &error))
@@ -192,7 +198,7 @@ script_fu_run_procedure (GimpProcedure        *procedure,
         gchar *command;
 
         /*  First, try to collect the standard script arguments  */
-        script_fu_script_collect_standard_args (script, args);
+        script_fu_script_collect_standard_args (script, pspecs, n_pspecs, config);
 
         command = script_fu_script_get_command (script);
 

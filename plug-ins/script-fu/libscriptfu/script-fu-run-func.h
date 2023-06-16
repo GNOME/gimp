@@ -19,7 +19,7 @@
 #define __SCRIPT_FU_RUN_FUNC_H__
 
 GimpValueArray *script_fu_run_procedure       (GimpProcedure        *procedure,
-                                               const GimpValueArray *args,
+                                               GimpProcedureConfig  *config,
                                                gpointer              data);
 
 GimpValueArray *script_fu_run_image_procedure (GimpProcedure        *procedure,

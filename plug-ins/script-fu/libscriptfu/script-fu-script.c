@@ -36,7 +36,9 @@
  */
 
 static gboolean script_fu_script_param_init (SFScript             *script,
-                                             const GimpValueArray *args,
+                                             GParamSpec          **pspecs,
+                                             guint                 n_pspecs,
+                                             GimpProcedureConfig  *config,
                                              SFArgType             type,
                                              gint                  n);
 static void     script_fu_script_set_proc_metadata (
@@ -183,10 +185,10 @@ script_fu_script_create_PDB_procedure (GimpPlugIn     *plug_in,
       g_debug ("script_fu_script_create_PDB_procedure: %s, plugin type %i, ordinary proc",
                script->name, plug_in_type);
 
-      procedure = gimp_procedure_new (plug_in, script->name,
-                                      plug_in_type,
-                                      script_fu_run_procedure,
-                                      script, NULL);
+      procedure = gimp_procedure_new2 (plug_in, script->name,
+                                       plug_in_type,
+                                       script_fu_run_procedure,
+                                       script, NULL);
 
       script_fu_script_set_proc_metadata (procedure, script);
 
@@ -266,23 +268,25 @@ script_fu_script_reset (SFScript *script,
 
 gint
 script_fu_script_collect_standard_args (SFScript             *script,
-                                        const GimpValueArray *args)
+                                        GParamSpec          **pspecs,
+                                        guint                 n_pspecs,
+                                        GimpProcedureConfig  *config)
 {
   gint params_consumed = 0;
 
   g_return_val_if_fail (script != NULL, 0);
 
   /*  the first parameter may be a DISPLAY id  */
-  if (script_fu_script_param_init (script,
-                                   args, SF_DISPLAY,
+  if (script_fu_script_param_init (script, pspecs, n_pspecs,
+                                   config, SF_DISPLAY,
                                    params_consumed))
     {
       params_consumed++;
     }
 
   /*  an IMAGE id may come first or after the DISPLAY id  */
-  if (script_fu_script_param_init (script,
-                                   args, SF_IMAGE,
+  if (script_fu_script_param_init (script, pspecs, n_pspecs,
+                                   config, SF_IMAGE,
                                    params_consumed))
     {
       params_consumed++;
@@ -290,17 +294,17 @@ script_fu_script_collect_standard_args (SFScript             *script,
       /*  and may be followed by a DRAWABLE, LAYER, CHANNEL or
        *  VECTORS id
        */
-      if (script_fu_script_param_init (script,
-                                       args, SF_DRAWABLE,
+      if (script_fu_script_param_init (script, pspecs, n_pspecs,
+                                       config, SF_DRAWABLE,
                                        params_consumed) ||
-          script_fu_script_param_init (script,
-                                       args, SF_LAYER,
+          script_fu_script_param_init (script, pspecs, n_pspecs,
+                                       config, SF_LAYER,
                                        params_consumed) ||
-          script_fu_script_param_init (script,
-                                       args, SF_CHANNEL,
+          script_fu_script_param_init (script, pspecs, n_pspecs,
+                                       config, SF_CHANNEL,
                                        params_consumed) ||
-          script_fu_script_param_init (script,
-                                       args, SF_VECTORS,
+          script_fu_script_param_init (script, pspecs, n_pspecs,
+                                       config, SF_VECTORS,
                                        params_consumed))
         {
           params_consumed++;
@@ -339,7 +343,9 @@ script_fu_script_get_command (SFScript *script)
 
 gchar *
 script_fu_script_get_command_from_params (SFScript             *script,
-                                          const GimpValueArray *args)
+                                          GParamSpec          **pspecs,
+                                          guint                 n_pspecs,
+                                          GimpProcedureConfig  *config)
 {
   GString *s;
   gint     i;
@@ -351,13 +357,18 @@ script_fu_script_get_command_from_params (SFScript             *script,
 
   for (i = 0; i < script->n_args; i++)
     {
-      GValue *value = gimp_value_array_index (args, i + 1);
+      GValue      value = G_VALUE_INIT;
+      GParamSpec *pspec = pspecs[i + 1];
+
+      g_value_init (&value, pspec->value_type);
+      g_object_get_property (G_OBJECT (config), pspec->name, &value);
 
       g_string_append_c (s, ' ');
 
       script_fu_arg_append_repr_from_gvalue (&script->args[i],
                                              s,
-                                             value);
+                                             &value);
+      g_value_unset (&value);
     }
 
   g_string_append_c (s, ')');
@@ -462,7 +473,9 @@ script_fu_script_infer_drawable_arity (SFScript *script)
 
 static gboolean
 script_fu_script_param_init (SFScript             *script,
-                             const GimpValueArray *args,
+                             GParamSpec          **pspecs,
+                             guint                 n_pspecs,
+                             GimpProcedureConfig  *config,
                              SFArgType             type,
                              gint                  n)
 {
@@ -470,16 +483,20 @@ script_fu_script_param_init (SFScript             *script,
 
   if (script->n_args > n &&
       arg->type == type  &&
-      gimp_value_array_length (args) > n + 1)
+      /* The first pspec is "procedure", the second is "run-mode". */
+      n_pspecs > n + 2)
     {
-      GValue *value = gimp_value_array_index (args, n + 1);
+      GValue      value = G_VALUE_INIT;
+      GParamSpec *pspec = pspecs[n + 2];
 
+      g_value_init (&value, pspec->value_type);
+      g_object_get_property (G_OBJECT (config), pspec->name, &value);
       switch (type)
         {
         case SF_IMAGE:
-          if (GIMP_VALUE_HOLDS_IMAGE (value))
+          if (GIMP_VALUE_HOLDS_IMAGE (&value))
             {
-              GimpImage *image = g_value_get_object (value);
+              GimpImage *image = g_value_get_object (&value);
 
               arg->value.sfa_image = gimp_image_get_id (image);
               return TRUE;
@@ -487,9 +504,9 @@ script_fu_script_param_init (SFScript             *script,
           break;
 
         case SF_DRAWABLE:
-          if (GIMP_VALUE_HOLDS_DRAWABLE (value))
+          if (GIMP_VALUE_HOLDS_DRAWABLE (&value))
             {
-              GimpItem *item = g_value_get_object (value);
+              GimpItem *item = g_value_get_object (&value);
 
               arg->value.sfa_drawable = gimp_item_get_id (item);
               return TRUE;
@@ -497,9 +514,9 @@ script_fu_script_param_init (SFScript             *script,
           break;
 
         case SF_LAYER:
-          if (GIMP_VALUE_HOLDS_LAYER (value))
+          if (GIMP_VALUE_HOLDS_LAYER (&value))
             {
-              GimpItem *item = g_value_get_object (value);
+              GimpItem *item = g_value_get_object (&value);
 
               arg->value.sfa_layer = gimp_item_get_id (item);
               return TRUE;
@@ -507,9 +524,9 @@ script_fu_script_param_init (SFScript             *script,
           break;
 
         case SF_CHANNEL:
-          if (GIMP_VALUE_HOLDS_CHANNEL (value))
+          if (GIMP_VALUE_HOLDS_CHANNEL (&value))
             {
-              GimpItem *item = g_value_get_object (value);
+              GimpItem *item = g_value_get_object (&value);
 
               arg->value.sfa_channel = gimp_item_get_id (item);
               return TRUE;
@@ -517,9 +534,9 @@ script_fu_script_param_init (SFScript             *script,
           break;
 
         case SF_VECTORS:
-          if (GIMP_VALUE_HOLDS_VECTORS (value))
+          if (GIMP_VALUE_HOLDS_VECTORS (&value))
             {
-              GimpItem *item = g_value_get_object (value);
+              GimpItem *item = g_value_get_object (&value);
 
               arg->value.sfa_vectors = gimp_item_get_id (item);
               return TRUE;
@@ -527,9 +544,9 @@ script_fu_script_param_init (SFScript             *script,
           break;
 
         case SF_DISPLAY:
-          if (GIMP_VALUE_HOLDS_DISPLAY (value))
+          if (GIMP_VALUE_HOLDS_DISPLAY (&value))
             {
-              GimpDisplay *display = g_value_get_object (value);
+              GimpDisplay *display = g_value_get_object (&value);
 
               arg->value.sfa_display = gimp_display_get_id (display);
               return TRUE;
@@ -539,6 +556,7 @@ script_fu_script_param_init (SFScript             *script,
         default:
           break;
         }
+      g_value_unset (&value);
     }
 
   return FALSE;
