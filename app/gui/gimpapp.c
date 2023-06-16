@@ -142,7 +142,11 @@ gimp_app_new (Gimp        *gimp,
                        * remove our own code for uniqueness and batch command
                        * inter-process communication. This should be tested.
                        */
+#if GLIB_CHECK_VERSION(2,74,0)
                       "flags",             G_APPLICATION_DEFAULT_FLAGS | G_APPLICATION_NON_UNIQUE,
+#else
+                      "flags",             G_APPLICATION_FLAGS_NONE | G_APPLICATION_NON_UNIQUE,
+#endif
                       "gimp",              gimp,
                       "filenames",         filenames,
                       "as-new",            as_new,

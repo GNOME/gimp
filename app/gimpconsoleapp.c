@@ -66,7 +66,11 @@ gimp_console_app_new (Gimp        *gimp,
 
   app = g_object_new (GIMP_TYPE_CONSOLE_APP,
                       "application-id",    GIMP_APPLICATION_ID,
+#if GLIB_CHECK_VERSION(2,74,0)
                       "flags",             G_APPLICATION_DEFAULT_FLAGS | G_APPLICATION_NON_UNIQUE,
+#else
+                      "flags",             G_APPLICATION_FLAGS_NONE | G_APPLICATION_NON_UNIQUE,
+#endif
                       "gimp",              gimp,
                       "filenames",         filenames,
                       "as-new",            as_new,
