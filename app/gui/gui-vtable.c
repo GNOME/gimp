@@ -952,9 +952,10 @@ gui_query_rotation_policy (Gimp        *gimp,
 static void
 gui_inhibit (Gimp *gimp)
 {
-  static gboolean  in_test = TRUE;
-  static gint      cookie  = 0;
-  static gchar    *reason  = NULL;
+  static gboolean  in_test      = TRUE;
+  static gint      cookie       = 0;
+  static gint      n_images     = 0;
+  static gint64    last_failure = 0;
   GtkApplication  *app;
   GimpContainer   *images  = NULL;
 
@@ -970,28 +971,18 @@ gui_inhibit (Gimp *gimp)
 
   if (gimp_displays_dirty (gimp))
     {
-      gchar *new_reason;
-      gint   num_images;
+      gint n_dirty_images;
 
-      images     = gimp_displays_get_dirty_images (gimp);
-      num_images = gimp_container_get_n_children (images);
+      images         = gimp_displays_get_dirty_images (gimp);
+      n_dirty_images = gimp_container_get_n_children (images);
 
-      /* TRANSLATORS: unless your language msgstr[0] applies to 1 only (as in
-       * English), replace "one" with %d.
-       */
-      new_reason = g_strdup_printf (ngettext ("There is one image with unsaved changes!",
-                                              "There are %d images with unsaved changes!",
-                                              num_images),
-                                    num_images);
-
-      if (reason && g_strcmp0 (reason, new_reason) == 0)
+      if (cookie && n_images == n_dirty_images)
         {
-          g_free (new_reason);
+          g_object_unref (images);
           return;
         }
 
-      g_free (reason);
-      reason = new_reason;
+      n_images = n_dirty_images;
     }
 
   if (gtk_application_is_inhibited (app, GTK_APPLICATION_INHIBIT_LOGOUT))
@@ -1000,11 +991,22 @@ gui_inhibit (Gimp *gimp)
       cookie = 0;
     }
 
+  if (last_failure != 0 && g_get_monotonic_time () - last_failure < G_TIME_SPAN_MINUTE * 10)
+    {
+      /* Don't repeatedly try to inhibit when we are constantly failing.
+       * Especially as in some case, it may lock the thread.
+       */
+      g_clear_object (&images);
+      return;
+    }
+  last_failure = 0;
+
   if (gimp_displays_dirty (gimp))
     {
       GimpImage *image;
       GList     *list;
       GtkWindow *window = NULL;
+      gchar     *reason;
 
       image = (GimpImage *) gimp_container_get_first_child (images);
       g_object_unref (images);
@@ -1029,13 +1031,24 @@ gui_inhibit (Gimp *gimp)
             }
         }
 
+      /* TRANSLATORS: unless your language msgstr[0] applies to 1 only (as in
+       * English), replace "one" with %d.
+       */
+      reason = g_strdup_printf (ngettext ("There is one image with unsaved changes!",
+                                          "There are %d images with unsaved changes!",
+                                          n_images),
+                                n_images);
       cookie = gtk_application_inhibit (app, window,
                                         GTK_APPLICATION_INHIBIT_LOGOUT,
                                         reason);
+      g_free (reason);
+
+      if (cookie == 0)
+        last_failure = g_get_monotonic_time ();
     }
 
   if (cookie == 0)
-    g_clear_pointer (&reason, g_free);
+    n_images = 0;
 }
 
 static void
