@@ -952,9 +952,11 @@ gui_query_rotation_policy (Gimp        *gimp,
 static void
 gui_inhibit (Gimp *gimp)
 {
-  static gint      cookie  = 0;
   static gboolean  in_test = TRUE;
+  static gint      cookie  = 0;
+  static gchar    *reason  = NULL;
   GtkApplication  *app;
+  GimpContainer   *images  = NULL;
 
   if (in_test)
     {
@@ -966,6 +968,32 @@ gui_inhibit (Gimp *gimp)
 
   app = GTK_APPLICATION (g_application_get_default ());
 
+  if (gimp_displays_dirty (gimp))
+    {
+      gchar *new_reason;
+      gint   num_images;
+
+      images     = gimp_displays_get_dirty_images (gimp);
+      num_images = gimp_container_get_n_children (images);
+
+      /* TRANSLATORS: unless your language msgstr[0] applies to 1 only (as in
+       * English), replace "one" with %d.
+       */
+      new_reason = g_strdup_printf (ngettext ("There is one image with unsaved changes!",
+                                              "There are %d images with unsaved changes!",
+                                              num_images),
+                                    num_images);
+
+      if (reason && g_strcmp0 (reason, new_reason) == 0)
+        {
+          g_free (new_reason);
+          return;
+        }
+
+      g_free (reason);
+      reason = new_reason;
+    }
+
   if (gtk_application_is_inhibited (app, GTK_APPLICATION_INHIBIT_LOGOUT))
     {
       gtk_application_uninhibit (app, cookie);
@@ -974,16 +1002,11 @@ gui_inhibit (Gimp *gimp)
 
   if (gimp_displays_dirty (gimp))
     {
-      GimpContainer *images;
-      gint           num_images;
-      gchar         *reason;
-      GimpImage     *image;
-      GList         *list;
-      GtkWindow     *window = NULL;
+      GimpImage *image;
+      GList     *list;
+      GtkWindow *window = NULL;
 
-      images     = gimp_displays_get_dirty_images (gimp);
-      num_images = gimp_container_get_n_children (images);
-      image      = (GimpImage *) gimp_container_get_first_child (images);
+      image = (GimpImage *) gimp_container_get_first_child (images);
       g_object_unref (images);
 
       for (list = gimp_get_display_iter (gimp); list; list = list->next)
@@ -1006,18 +1029,13 @@ gui_inhibit (Gimp *gimp)
             }
         }
 
-      /* TRANSLATORS: unless your language msgstr[0] applies to 1 only (as in
-       * English), replace "one" with %d.
-       */
-      reason = g_strdup_printf (ngettext ("There is one image with unsaved changes!",
-                                          "There are %d images with unsaved changes!",
-                                          num_images),
-                                num_images);
       cookie = gtk_application_inhibit (app, window,
                                         GTK_APPLICATION_INHIBIT_LOGOUT,
                                         reason);
-      g_free (reason);
     }
+
+  if (cookie == 0)
+    g_clear_pointer (&reason, g_free);
 }
 
 static void
