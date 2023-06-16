@@ -119,9 +119,9 @@ browser_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new2 (plug_in, name,
-                                       GIMP_PDB_PROC_TYPE_PLUGIN,
-                                       browser_run, NULL, NULL);
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+                                      browser_run, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Procedure _Browser"));
       gimp_procedure_add_menu_path (procedure, "<Image>/Help/[Programming]");

@@ -168,9 +168,9 @@ metadata_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new2 (plug_in, name,
-                                       GIMP_PDB_PROC_TYPE_PLUGIN,
-                                       metadata_run, NULL, NULL);
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+                                      metadata_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 

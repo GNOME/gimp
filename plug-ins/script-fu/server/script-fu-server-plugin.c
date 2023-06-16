@@ -84,9 +84,9 @@ script_fu_server_create_procedure (GimpPlugIn  *plug_in,
   GimpProcedure *procedure = NULL;
 
   /* The run func script_fu_server_outer_run is defined in this source file. */
-  procedure = gimp_procedure_new2 (plug_in, name,
-                                   GIMP_PDB_PROC_TYPE_PLUGIN,
-                                   script_fu_server_outer_run, NULL, NULL);
+  procedure = gimp_procedure_new (plug_in, name,
+                                  GIMP_PDB_PROC_TYPE_PLUGIN,
+                                  script_fu_server_outer_run, NULL, NULL);
 
   gimp_procedure_set_menu_label (procedure, _("_Start Server..."));
   gimp_procedure_add_menu_path (procedure,

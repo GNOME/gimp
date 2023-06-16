@@ -533,9 +533,9 @@ print_temp_proc_install (GimpImage *image)
   gchar         *name    = print_temp_proc_name (image);
   GimpProcedure *procedure;
 
-  procedure = gimp_procedure_new2 (plug_in, name,
-                                   GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                   print_temp_proc_run, NULL, NULL);
+  procedure = gimp_procedure_new (plug_in, name,
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
+                                  print_temp_proc_run, NULL, NULL);
 
   gimp_procedure_set_documentation (procedure,
                                     "DON'T USE THIS ONE",

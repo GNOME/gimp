@@ -84,7 +84,6 @@ struct _GimpProcedurePrivate
   GParamSpec      **values;
 
   GimpRunFunc       run_func;
-  GimpRunConfigFunc run_config_func;
   gpointer          run_data;
   GDestroyNotify    run_data_destroy;
 
@@ -481,44 +480,36 @@ static GimpValueArray *
 gimp_procedure_real_run (GimpProcedure        *procedure,
                          const GimpValueArray *args)
 {
-  if (procedure->priv->run_config_func)
+  GimpProcedureConfig *config;
+  GimpImage           *image    = NULL;
+  GimpRunMode          run_mode = GIMP_RUN_NONINTERACTIVE;
+  GimpValueArray      *retvals;
+  GimpPDBStatusType    status   = GIMP_PDB_EXECUTION_ERROR;
+
+  if (gimp_value_array_length (args) > 0 &&
+      G_VALUE_HOLDS_ENUM (gimp_value_array_index (args, 0)))
     {
-      GimpProcedureConfig *config;
-      GimpImage           *image    = NULL;
-      GimpRunMode          run_mode = GIMP_RUN_NONINTERACTIVE;
-      GimpValueArray      *retvals;
-      GimpPDBStatusType    status   = GIMP_PDB_EXECUTION_ERROR;
+      run_mode = GIMP_VALUES_GET_ENUM (args, 0);
 
-      if (gimp_value_array_length (args) > 0 &&
-          G_VALUE_HOLDS_ENUM (gimp_value_array_index (args, 0)))
-        {
-          run_mode = GIMP_VALUES_GET_ENUM (args, 0);
-
-          if (gimp_value_array_length (args) > 1 &&
-              GIMP_VALUE_HOLDS_IMAGE (gimp_value_array_index (args, 1)))
-            image = GIMP_VALUES_GET_IMAGE (args, 1);
-        }
-
-      config = gimp_procedure_create_config (procedure);
-      gimp_procedure_config_begin_run (config, image, run_mode, args);
-
-      retvals = procedure->priv->run_config_func (procedure, config,
-                                                  procedure->priv->run_data);
-      if (retvals != NULL                       &&
-          gimp_value_array_length (retvals) > 0 &&
-          G_VALUE_HOLDS_ENUM (gimp_value_array_index (retvals, 0)))
-        status = GIMP_VALUES_GET_ENUM (retvals, 0);
-
-      gimp_procedure_config_end_run (config, status);
-      g_object_unref (config);
-
-      return retvals;
+      if (gimp_value_array_length (args) > 1 &&
+          GIMP_VALUE_HOLDS_IMAGE (gimp_value_array_index (args, 1)))
+        image = GIMP_VALUES_GET_IMAGE (args, 1);
     }
-  else
-    {
-      return procedure->priv->run_func (procedure, args,
-                                        procedure->priv->run_data);
-    }
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
+
+  retvals = procedure->priv->run_func (procedure, config,
+                                       procedure->priv->run_data);
+  if (retvals != NULL                       &&
+      gimp_value_array_length (retvals) > 0 &&
+      G_VALUE_HOLDS_ENUM (gimp_value_array_index (retvals, 0)))
+    status = GIMP_VALUES_GET_ENUM (retvals, 0);
+
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
+
+  return retvals;
 }
 
 static GimpProcedureConfig *
@@ -615,12 +606,12 @@ gimp_procedure_real_create_config (GimpProcedure  *procedure,
  * Since: 3.0
  **/
 GimpProcedure *
-gimp_procedure_new (GimpPlugIn      *plug_in,
-                    const gchar     *name,
-                    GimpPDBProcType  proc_type,
-                    GimpRunFunc      run_func,
-                    gpointer         run_data,
-                    GDestroyNotify   run_data_destroy)
+gimp_procedure_new (GimpPlugIn        *plug_in,
+                    const gchar       *name,
+                    GimpPDBProcType    proc_type,
+                    GimpRunFunc        run_func,
+                    gpointer           run_data,
+                    GDestroyNotify     run_data_destroy)
 {
   GimpProcedure *procedure;
 
@@ -636,84 +627,6 @@ gimp_procedure_new (GimpPlugIn      *plug_in,
                             NULL);
 
   procedure->priv->run_func         = run_func;
-  procedure->priv->run_data         = run_data;
-  procedure->priv->run_data_destroy = run_data_destroy;
-
-  return procedure;
-}
-
-/**
- * gimp_procedure_new2:
- * @plug_in:   a #GimpPlugIn.
- * @name:      the new procedure's name.
- * @proc_type: the new procedure's #GimpPDBProcType.
- * @run_func:  the run function for the new procedure.
- * @run_data:  user data passed to @run_func.
- * @run_data_destroy: (nullable): free function for @run_data, or %NULL.
- *
- * Creates a new procedure named @name which will call @run_func when
- * invoked.
- *
- * The @name parameter is mandatory and should be unique, or it will
- * overwrite an already existing procedure (overwrite procedures only
- * if you know what you're doing).
- *
- * @proc_type should be %GIMP_PDB_PROC_TYPE_PLUGIN for "normal" plug-ins.
- *
- * Using %GIMP_PDB_PROC_TYPE_EXTENSION means that the plug-in will add
- * temporary procedures. Therefore, the GIMP core will wait until the
- * %GIMP_PDB_PROC_TYPE_EXTENSION procedure has called
- * [method@Procedure.extension_ready], which means that the procedure
- * has done its initialization, installed its temporary procedures and
- * is ready to run.
- *
- * *Not calling [method@Procedure.extension_ready] from a
- * %GIMP_PDB_PROC_TYPE_EXTENSION procedure will cause the GIMP core to
- * lock up.*
- *
- * Additionally, a %GIMP_PDB_PROC_TYPE_EXTENSION procedure with no
- * arguments added is an "automatic" extension that will be
- * automatically started on each GIMP startup.
- *
- * %GIMP_PDB_PROC_TYPE_TEMPORARY must be used for temporary procedures
- * that are created during a plug-ins lifetime. They must be added to
- * the #GimpPlugIn using [method@PlugIn.add_temp_procedure].
- *
- * @run_func is called via [method@Procedure.run].
- *
- * For %GIMP_PDB_PROC_TYPE_PLUGIN and %GIMP_PDB_PROC_TYPE_EXTENSION
- * procedures the call of @run_func is basically the lifetime of the
- * plug-in.
- *
- * TODO: when all plug-ins have been ported to gimp_procedure_new2(), it must be
- * renamed and gimp_procedure_new() removed.
- *
- * Returns: a new #GimpProcedure.
- *
- * Since: 3.0
- **/
-GimpProcedure *
-gimp_procedure_new2 (GimpPlugIn        *plug_in,
-                     const gchar       *name,
-                     GimpPDBProcType    proc_type,
-                     GimpRunConfigFunc  run_func,
-                     gpointer           run_data,
-                     GDestroyNotify     run_data_destroy)
-{
-  GimpProcedure *procedure;
-
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (name), NULL);
-  g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_INTERNAL, NULL);
-  g_return_val_if_fail (run_func != NULL, NULL);
-
-  procedure = g_object_new (GIMP_TYPE_PROCEDURE,
-                            "plug-in",        plug_in,
-                            "name",           name,
-                            "procedure-type", proc_type,
-                            NULL);
-
-  procedure->priv->run_config_func  = run_func;
   procedure->priv->run_data         = run_data;
   procedure->priv->run_data_destroy = run_data_destroy;
 

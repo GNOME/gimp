@@ -365,12 +365,12 @@ gimp_resource_select_new (const gchar                 *title,
 
   /* !!! Only part of the adaption has been initialized. */
 
-  procedure = gimp_procedure_new2 (plug_in,
-                                   temp_PDB_callback_name,
-                                   GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                   gimp_temp_resource_run,
-                                   adaption,
-                                   (GDestroyNotify) gimp_resource_data_free);
+  procedure = gimp_procedure_new (plug_in,
+                                  temp_PDB_callback_name,
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
+                                  gimp_temp_resource_run,
+                                  adaption,
+                                  (GDestroyNotify) gimp_resource_data_free);
 
   create_callback_PDB_procedure_params (procedure, resource_type);
 

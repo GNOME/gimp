@@ -99,13 +99,13 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
   progress_data->data              = user_data;
   progress_data->data_destroy      = user_data_destroy;
 
-  procedure = gimp_procedure_new2 (plug_in,
-                                   progress_callback,
-                                   GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                   gimp_temp_progress_run,
-                                   progress_data,
-                                   (GDestroyNotify)
-                                   gimp_progress_data_free);
+  procedure = gimp_procedure_new (plug_in,
+                                  progress_callback,
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
+                                  gimp_temp_progress_run,
+                                  progress_data,
+                                  (GDestroyNotify)
+                                  gimp_progress_data_free);
 
   GIMP_PROC_ARG_ENUM (procedure, "command",
                       "Command",

@@ -34,7 +34,7 @@ G_BEGIN_DECLS
 /**
  * GimpRunFunc:
  * @procedure: the #GimpProcedure that runs.
- * @args:      the @procedure's arguments.
+ * @config:    the @procedure's arguments in a config object.
  * @run_data: (closure): the run_data given in gimp_procedure_new().
  *
  * The run function is run during the lifetime of the GIMP session,
@@ -44,12 +44,9 @@ G_BEGIN_DECLS
  *
  * Since: 3.0
  **/
-typedef GimpValueArray * (* GimpRunFunc)       (GimpProcedure        *procedure,
-                                                const GimpValueArray *args,
-                                                gpointer              run_data);
-typedef GimpValueArray * (* GimpRunConfigFunc) (GimpProcedure        *procedure,
-                                                GimpProcedureConfig   *config,
-                                                gpointer               run_data);
+typedef GimpValueArray * (* GimpRunFunc) (GimpProcedure       *procedure,
+                                          GimpProcedureConfig *config,
+                                          gpointer             run_data);
 
 
 /**
@@ -139,12 +136,6 @@ GimpProcedure  * gimp_procedure_new                (GimpPlugIn           *plug_i
                                                     const gchar          *name,
                                                     GimpPDBProcType       proc_type,
                                                     GimpRunFunc           run_func,
-                                                    gpointer              run_data,
-                                                    GDestroyNotify        run_data_destroy);
-GimpProcedure  * gimp_procedure_new2               (GimpPlugIn           *plug_in,
-                                                    const gchar          *name,
-                                                    GimpPDBProcType       proc_type,
-                                                    GimpRunConfigFunc     run_func,
                                                     gpointer              run_data,
                                                     GDestroyNotify        run_data_destroy);
 

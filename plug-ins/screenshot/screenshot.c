@@ -117,9 +117,9 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new2 (plug_in, name,
-                                       GIMP_PDB_PROC_TYPE_PLUGIN,
-                                       screenshot_run, NULL, NULL);
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+                                      screenshot_run, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("_Screenshot..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/File/Create");

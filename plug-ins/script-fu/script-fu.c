@@ -99,9 +99,9 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, "extension-script-fu"))
     {
-      procedure = gimp_procedure_new2 (plug_in, name,
-                                       GIMP_PDB_PROC_TYPE_EXTENSION,
-                                       script_fu_run, NULL, NULL);
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_EXTENSION,
+                                      script_fu_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "A scheme interpreter for scripting "
@@ -115,9 +115,9 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, "plug-in-script-fu-console"))
     {
-      procedure = gimp_procedure_new2 (plug_in, name,
-                                       GIMP_PDB_PROC_TYPE_PLUGIN,
-                                       script_fu_run, NULL, NULL);
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+                                      script_fu_run, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Script-Fu _Console"));
       gimp_procedure_add_menu_path (procedure,
@@ -147,9 +147,9 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, "plug-in-script-fu-text-console"))
     {
-      procedure = gimp_procedure_new2 (plug_in, name,
-                                       GIMP_PDB_PROC_TYPE_PLUGIN,
-                                       script_fu_run, NULL, NULL);
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+                                      script_fu_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Provides a text console mode for "
@@ -338,9 +338,9 @@ script_fu_extension_init (GimpPlugIn *plug_in)
   gimp_plug_in_add_menu_branch (plug_in, "<Image>/Filters",
                                 N_("Alpha to _Logo"));
 
-  procedure = gimp_procedure_new2 (plug_in, "script-fu-refresh",
-                                   GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                   script_fu_refresh_proc, NULL, NULL);
+  procedure = gimp_procedure_new (plug_in, "script-fu-refresh",
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
+                                  script_fu_refresh_proc, NULL, NULL);
 
   gimp_procedure_set_menu_label (procedure, _("_Refresh Scripts"));
   gimp_procedure_add_menu_path (procedure,

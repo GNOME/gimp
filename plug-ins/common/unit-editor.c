@@ -168,9 +168,9 @@ editor_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new2 (plug_in, name,
-                                       GIMP_PDB_PROC_TYPE_PLUGIN,
-                                       editor_run, plug_in, NULL);
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+                                      editor_run, plug_in, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("U_nits"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_TOOL_MEASURE);

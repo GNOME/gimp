@@ -126,9 +126,9 @@ help_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, GIMP_HELP_EXT_PROC))
     {
-      procedure = gimp_procedure_new2 (plug_in, name,
-                                       GIMP_PDB_PROC_TYPE_EXTENSION,
-                                       help_run, NULL, NULL);
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_EXTENSION,
+                                      help_run, NULL, NULL);
 
       gimp_procedure_set_attribution (procedure,
                                       "Sven Neumann <sven@gimp.org>, "
@@ -198,9 +198,9 @@ help_temp_proc_install (GimpPlugIn *plug_in)
 {
   GimpProcedure *procedure;
 
-  procedure = gimp_procedure_new2 (plug_in, GIMP_HELP_TEMP_EXT_PROC,
-                                   GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                   help_temp_run, NULL, NULL);
+  procedure = gimp_procedure_new (plug_in, GIMP_HELP_TEMP_EXT_PROC,
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
+                                  help_temp_run, NULL, NULL);
 
   gimp_procedure_set_attribution (procedure,
                                   "Sven Neumann <sven@gimp.org>, "

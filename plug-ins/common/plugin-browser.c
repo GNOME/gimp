@@ -162,9 +162,9 @@ browser_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (procedure_name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new2 (plug_in, procedure_name,
-                                       GIMP_PDB_PROC_TYPE_PLUGIN,
-                                       browser_run, NULL, NULL);
+      procedure = gimp_procedure_new (plug_in, procedure_name,
+                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+                                      browser_run, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("_Plug-In Browser"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_PLUGIN);
