@@ -52,7 +52,7 @@ typedef struct
 static void             gimp_resource_data_free (GimpResourceAdaption *adaption);
 
 static GimpValueArray * gimp_temp_resource_run  (GimpProcedure        *procedure,
-                                                 const GimpValueArray *args,
+                                                 GimpProcedureConfig  *config,
                                                  gpointer              run_data);
 static gboolean         gimp_temp_resource_idle (GimpResourceAdaption *adaption);
 
@@ -314,40 +314,6 @@ close_remote_chooser (gchar *temp_PDB_callback_name,
     }
 }
 
-/* Get the index of the is_closing arg in a GimpValueArray of the tempPDBproc.
- * Count the extra args above, and add that to 1.
- */
-static gint
-index_of_is_closing_arg (GType  resource_type)
-{
-  if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
-    {
-      return 1;
-    }
-  else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
-    {
-      return 3;
-    }
-  else if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
-    {
-      return 7;
-    }
-  else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
-    {
-      return 2;
-    }
-  else if (g_type_is_a (resource_type, GIMP_TYPE_PATTERN))
-    {
-      return 5;
-    }
-  else
-    {
-      g_warning ("%s: unhandled resource type", G_STRFUNC);
-      return 0;
-    }
-}
-
-
 /**
  * gimp_resource_select_new:
  * @title:      Title of the resource selection dialog.
@@ -399,12 +365,12 @@ gimp_resource_select_new (const gchar                 *title,
 
   /* !!! Only part of the adaption has been initialized. */
 
-  procedure = gimp_procedure_new (plug_in,
-                                  temp_PDB_callback_name,
-                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                  gimp_temp_resource_run,
-                                  adaption,
-                                  (GDestroyNotify) gimp_resource_data_free);
+  procedure = gimp_procedure_new2 (plug_in,
+                                   temp_PDB_callback_name,
+                                   GIMP_PDB_PROC_TYPE_TEMPORARY,
+                                   gimp_temp_resource_run,
+                                   adaption,
+                                   (GDestroyNotify) gimp_resource_data_free);
 
   create_callback_PDB_procedure_params (procedure, resource_type);
 
@@ -517,26 +483,29 @@ gimp_resource_data_free (GimpResourceAdaption *adaption)
  * Called when user chooses a resource in remote dialog.
  */
 static GimpValueArray *
-gimp_temp_resource_run (GimpProcedure        *procedure,
-                        const GimpValueArray *args,
-                        gpointer              run_data)
+gimp_temp_resource_run (GimpProcedure       *procedure,
+                        GimpProcedureConfig *config,
+                        gpointer             run_data)
 {
   GimpResourceAdaption *adaption = run_data;
-  const gchar          *resource_name;
+  gchar                *resource_name;
   GimpResource         *resource;
 
-  resource_name = GIMP_VALUES_GET_STRING (args, 0);
+  g_object_get (config,
+                "resource-name", &resource_name,
+                "closing",       &adaption->closing,
+                NULL);
 
   resource = gimp_resource_get_by_name (adaption->resource_type,
                                         resource_name);
 
   adaption->resource_id = gimp_resource_get_id (resource);
 
-  adaption->closing = GIMP_VALUES_GET_BOOLEAN (args, index_of_is_closing_arg (adaption->resource_type));
-
   if (! adaption->idle_id)
     adaption->idle_id = g_idle_add ((GSourceFunc) gimp_temp_resource_idle,
                                     adaption);
+
+  g_free (resource_name);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }

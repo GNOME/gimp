@@ -40,11 +40,11 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void             gimp_progress_data_free (GimpProgressData     *data);
+static void             gimp_progress_data_free (GimpProgressData    *data);
 
-static GimpValueArray * gimp_temp_progress_run  (GimpProcedure        *procedure,
-                                                 const GimpValueArray *args,
-                                                 gpointer              run_data);
+static GimpValueArray * gimp_temp_progress_run  (GimpProcedure       *procedure,
+                                                 GimpProcedureConfig *config,
+                                                 gpointer             run_data);
 
 
 /*  private variables  */
@@ -99,13 +99,13 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
   progress_data->data              = user_data;
   progress_data->data_destroy      = user_data_destroy;
 
-  procedure = gimp_procedure_new (plug_in,
-                                  progress_callback,
-                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                  gimp_temp_progress_run,
-                                  progress_data,
-                                  (GDestroyNotify)
-                                  gimp_progress_data_free);
+  procedure = gimp_procedure_new2 (plug_in,
+                                   progress_callback,
+                                   GIMP_PDB_PROC_TYPE_TEMPORARY,
+                                   gimp_temp_progress_run,
+                                   progress_data,
+                                   (GDestroyNotify)
+                                   gimp_progress_data_free);
 
   GIMP_PROC_ARG_ENUM (procedure, "command",
                       "Command",
@@ -340,18 +340,20 @@ gimp_progress_data_free (GimpProgressData *data)
 }
 
 static GimpValueArray *
-gimp_temp_progress_run (GimpProcedure        *procedure,
-                        const GimpValueArray *args,
-                        gpointer              run_data)
+gimp_temp_progress_run (GimpProcedure       *procedure,
+                        GimpProcedureConfig *config,
+                        gpointer             run_data)
 {
   GimpProgressData    *progress_data = run_data;
   GimpProgressCommand  command;
-  const gchar         *text;
+  gchar               *text;
   gdouble              value;
 
-  command = GIMP_VALUES_GET_ENUM   (args, 0);
-  text    = GIMP_VALUES_GET_STRING (args, 1);
-  value   = GIMP_VALUES_GET_DOUBLE (args, 2);
+  g_object_get (config,
+                "command", &command,
+                "text",    &text,
+                "value",   &value,
+                NULL);
 
   switch (command)
     {
@@ -391,16 +393,20 @@ gimp_temp_progress_run (GimpProcedure        *procedure,
                                                         GIMP_PDB_SUCCESS,
                                                         NULL);
         GIMP_VALUES_SET_DOUBLE (return_vals, 1, window_id);
+        g_free (text);
 
         return return_vals;
       }
       break;
 
     default:
+      g_free (text);
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_CALLING_ERROR,
                                                NULL);
     }
+
+  g_free (text);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
