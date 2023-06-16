@@ -466,6 +466,7 @@ EXPORTS
 	gimp_image_policy_rotate
 	gimp_image_procedure_get_type
 	gimp_image_procedure_new
+	gimp_image_procedure_new2
 	gimp_image_raise_item
 	gimp_image_raise_item_to_top
 	gimp_image_remove_channel

@@ -54,6 +54,31 @@ typedef GimpValueArray * (* GimpRunImageFunc) (GimpProcedure         *procedure,
                                                const GimpValueArray  *args,
                                                gpointer               run_data);
 
+/**
+ * GimpRunImageFunc2:
+ * @procedure:   the #GimpProcedure that runs.
+ * @run_mode:    the #GimpRunMode.
+ * @image:       the #GimpImage.
+ * @n_drawables: the number of #GimpDrawable-s.
+ * @drawables: (array length=n_drawables): the input #GimpDrawable-s.
+ * @config:      the @procedure's remaining arguments.
+ * @run_data: (closure): the run_data given in gimp_image_procedure_new().
+ *
+ * The image function is run during the lifetime of the GIMP session,
+ * each time a plug-in image procedure is called.
+ *
+ * Returns: (transfer full): the @procedure's return values.
+ *
+ * Since: 3.0
+ **/
+typedef GimpValueArray * (* GimpRunImageFunc2) (GimpProcedure         *procedure,
+                                                GimpRunMode            run_mode,
+                                                GimpImage             *image,
+                                                gint                   n_drawables,
+                                                GimpDrawable         **drawables,
+                                                GimpProcedureConfig   *config,
+                                                gpointer               run_data);
+
 
 #define GIMP_TYPE_IMAGE_PROCEDURE            (gimp_image_procedure_get_type ())
 #define GIMP_IMAGE_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_PROCEDURE, GimpImageProcedure))
@@ -86,6 +111,12 @@ GimpProcedure * gimp_image_procedure_new      (GimpPlugIn       *plug_in,
                                                const gchar      *name,
                                                GimpPDBProcType   proc_type,
                                                GimpRunImageFunc  run_func,
+                                               gpointer          run_data,
+                                               GDestroyNotify    run_data_destroy);
+GimpProcedure * gimp_image_procedure_new2     (GimpPlugIn       *plug_in,
+                                               const gchar      *name,
+                                               GimpPDBProcType   proc_type,
+                                               GimpRunImageFunc2 run_func,
                                                gpointer          run_data,
                                                GDestroyNotify    run_data_destroy);
 
