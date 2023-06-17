@@ -628,7 +628,10 @@ gimp_drawable_resize (GimpItem     *item,
                         copy_y - new_offset_y, 0, 0));
     }
 
-  gimp_drawable_set_buffer_full (drawable, gimp_item_is_attached (item), NULL,
+  gimp_drawable_set_buffer_full (drawable,
+                                 gimp_item_is_attached (item) &&
+                                 (!gimp_drawable_is_painting (drawable)),
+                                 NULL,
                                  new_buffer,
                                  GEGL_RECTANGLE (new_offset_x, new_offset_y,
                                                  0,            0),

@@ -65,6 +65,7 @@ struct _GimpPaintCore
   GeglBuffer     *paint_buffer;      /*  the buffer to paint pixels to       */
   gint            paint_buffer_x;
   gint            paint_buffer_y;
+  GHashTable     *original_bounds;   /* the original bounds of drawables     */
 
   GeglBuffer     *mask_buffer;       /*  the target drawable's mask          */
 
