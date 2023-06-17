@@ -502,7 +502,7 @@ ico_load_thumb (GimpProcedure        *procedure,
   image = ico_load_thumbnail_image (file,
                                     &width, &height, 0, &error);
 
-  if (image)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -541,7 +541,7 @@ ani_load_thumb (GimpProcedure        *procedure,
   image = ani_load_image (file, TRUE,
                           &width, &height, &error);
 
-  if (image)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
