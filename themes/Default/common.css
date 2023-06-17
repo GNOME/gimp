@@ -320,7 +320,7 @@ checkbutton, checkbutton.text-button, radiobutton, checkbutton label {
   background-color: @bg-color;
 }
 
-checkbutton:hover, checkbutton.text-button:hover, radiobutton:hover, checkbutton label:hover {
+checkbutton:hover, checkbutton.text-button:hover, checkbutton:hover label, radiobutton:hover, checkbutton label:hover {
   color: @fg-color;
   background-color: @hover-color;
 }
