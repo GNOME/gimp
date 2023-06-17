@@ -372,6 +372,11 @@ border {
 
 /* Top menu items  */
 
+/* give the menu bar a color, fix for the default color being too dark */
+menubar {
+  background-color: @bg-color;
+}
+
 /* The top menu item itself: File, Edit ... */
 menuitem menuitem {
   color: @fg-color;
