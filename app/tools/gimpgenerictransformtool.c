@@ -93,10 +93,8 @@ gimp_generic_transform_tool_dialog (GimpTransformGridTool *tg_tool)
   GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tg_tool);
   GtkWidget                *frame;
   GtkWidget                *vbox;
-  GtkWidget                *grid;
   GtkWidget                *label;
   GtkSizeGroup             *size_group;
-  gint                      x, y;
 
   frame = gimp_frame_new (_("Transform Matrix"));
   gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tg_tool->gui)), frame,
@@ -109,27 +107,12 @@ gimp_generic_transform_tool_dialog (GimpTransformGridTool *tg_tool)
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
 
-  grid = generic->matrix_grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), grid, TRUE, TRUE, 0);
-  gtk_size_group_add_widget (size_group, grid);
-  gtk_widget_show (grid);
-
-  for (y = 0; y < 3; y++)
-    {
-      for (x = 0; x < 3; x++)
-        {
-          label = generic->matrix_labels[y][x] = gtk_label_new (" ");
-          gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-          gtk_label_set_width_chars (GTK_LABEL (label), 8);
-          gimp_label_set_attributes (GTK_LABEL (label),
-                                     PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
-                                     -1);
-          gtk_grid_attach (GTK_GRID (grid), label, x, y, 1, 1);
-          gtk_widget_show (label);
-        }
-    }
+  label = generic->matrix_label = gtk_label_new (" ");
+  gtk_size_group_add_widget (size_group, label);
+  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
+  gimp_label_set_attributes (GTK_LABEL (label), PANGO_ATTR_SCALE, PANGO_SCALE_SMALL, -1);
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
+  gtk_widget_show (label);
 
   label = generic->invalid_label = gtk_label_new (_("Invalid transform"));
   gimp_label_set_attributes (GTK_LABEL (label),
@@ -153,27 +136,21 @@ gimp_generic_transform_tool_dialog_update (GimpTransformGridTool *tg_tool)
 
   if (transform_valid)
     {
-      gint x, y;
-
-      gtk_widget_show (generic->matrix_grid);
+      gchar buf[256];
+      gtk_widget_show (generic->matrix_label);
       gtk_widget_hide (generic->invalid_label);
 
-      for (y = 0; y < 3; y++)
-        {
-          for (x = 0; x < 3; x++)
-            {
-              gchar buf[32];
-
-              g_snprintf (buf, sizeof (buf), "%.4f", transform.coeff[y][x]);
-
-              gtk_label_set_text (GTK_LABEL (generic->matrix_labels[y][x]), buf);
-            }
-        }
+      g_snprintf (buf, sizeof (buf), "<tt>% 11.4f\t% 11.4f\t% 11.4f\n% 11.4f\t% 11.4f"
+                  "\t% 11.4f\n% 11.4f\t% 11.4f\t% 11.4f</tt>",
+                  transform.coeff[0][0], transform.coeff[0][1], transform.coeff[0][2],
+                  transform.coeff[1][0], transform.coeff[1][1], transform.coeff[1][2],
+                  transform.coeff[2][0], transform.coeff[2][1], transform.coeff[2][2]);
+      gtk_label_set_markup (GTK_LABEL (generic->matrix_label), buf);
     }
   else
     {
       gtk_widget_show (generic->invalid_label);
-      gtk_widget_hide (generic->matrix_grid);
+      gtk_widget_hide (generic->matrix_label);
     }
 }
 

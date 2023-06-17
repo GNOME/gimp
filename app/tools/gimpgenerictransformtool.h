@@ -39,8 +39,7 @@ struct _GimpGenericTransformTool
   GimpVector2            input_points[4];
   GimpVector2            output_points[4];
 
-  GtkWidget             *matrix_grid;
-  GtkWidget             *matrix_labels[3][3];
+  GtkWidget             *matrix_label;
   GtkWidget             *invalid_label;
 };
 
