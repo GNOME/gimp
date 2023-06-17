@@ -838,6 +838,15 @@ filters_actions_setup (GimpActionGroup *group)
                                        gegl_operation_class_get_key (op_class,
                                                                      "gimp:menu-label"));
         }
+      else if (title)
+        {
+          GimpAction *action;
+          gchar *short_label = g_strdup_printf ("%s..", title);
+
+          action = gimp_action_group_get_action (group, action_name);
+          gimp_action_set_short_label (action, short_label);
+          g_free (short_label);
+        }
 
       g_strv_builder_add (gegl_actions, action_name);
 
