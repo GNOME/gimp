@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-05-14 15:33+0000\n"
-"PO-Revision-Date: 2023-06-14 10:17+0100\n"
+"PO-Revision-Date: 2023-06-18 10:17+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -3458,7 +3458,6 @@ msgid "De_fault frame disposal"
 msgstr "D_isposició per defecte dels marcs"
 
 #: plug-ins/common/file-mng.c:324
-#, fuzzy
 msgid "(ANIMATED MNG) Default dispose type (0 = combine; 1 = replace)"
 msgstr ""
 "(MNG animat) Tipus d'eliminació predeterminat (0 = combinació; 1 = "
@@ -3469,7 +3468,6 @@ msgid "Save _background color"
 msgstr "Desa el color de _fons"
 
 #: plug-ins/common/file-mng.c:331
-#, fuzzy
 msgid "Write bKGd (background color) chunk"
 msgstr "Escriu el fragment bKGd (color de fons)"
 
@@ -3478,7 +3476,6 @@ msgid "Save _gamma"
 msgstr "Desa la _gamma"
 
 #: plug-ins/common/file-mng.c:337
-#, fuzzy
 msgid "Write gAMA (gamma) chunk"
 msgstr "Escriu el fragment gAMA (gamma)"
 
@@ -3487,18 +3484,16 @@ msgid "Sa_ve resolution"
 msgstr "_Desa la resolució"
 
 #: plug-ins/common/file-mng.c:343
-#, fuzzy
 msgid "Write pHYs (image resolution) chunk"
-msgstr "Escriu el fragment «pHYs» (resolució d'imatge)"
+msgstr "Escriu el fragment pHY» (resolució d'imatge)"
 
 #: plug-ins/common/file-mng.c:348 plug-ins/common/file-png.c:263
 msgid "Save creation _time"
 msgstr "Desa la da_ta de creació"
 
 #: plug-ins/common/file-mng.c:349
-#, fuzzy
 msgid "Write tIME (creation time) chunk"
-msgstr "Escriu el fragment tIME (hora de creació)"
+msgstr "Escriu el fragment tIME (data de creació)"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -3560,12 +3555,10 @@ msgid "GIMP pattern"
 msgstr "Patró del GIMP"
 
 #: plug-ins/common/file-pat.c:115
-#, fuzzy
 msgid "Exports GIMP pattern file (.PAT)"
 msgstr "Exporta el fitxer de patrons del GIMP (.PAT)"
 
 #: plug-ins/common/file-pat.c:116
-#, fuzzy
 msgid ""
 "New GIMP patterns can be created by exporting them in the appropriate place "
 "with this plug-in."
@@ -3574,7 +3567,6 @@ msgstr ""
 "aquest connector."
 
 #: plug-ins/common/file-pat.c:134
-#, fuzzy
 msgid "Short description of the pattern"
 msgstr "Descripció breu del patró"
 
@@ -3599,7 +3591,6 @@ msgid "Palette Options"
 msgstr "Opcions de la paleta"
 
 #: plug-ins/common/file-pcx.c:220 plug-ins/common/file-pcx.c:251
-#, fuzzy
 msgid "Use built-in palette (0) or override with black/white (1)"
 msgstr "Utilitza la paleta integrada (0) o substitueix amb blanc/negre (1)"
 
@@ -3620,7 +3611,6 @@ msgid "Could not load PCX image"
 msgstr "No s'ha pogut carregar una imatge PCX"
 
 #: plug-ins/common/file-pcx.c:582
-#, fuzzy
 msgid "DCX image offset exceeds the file size"
 msgstr "El desplaçament de la imatge DCX excedeix la mida del fitxer"
 
@@ -3629,19 +3619,18 @@ msgid "Could not load DCX image"
 msgstr "No s'ha pogut carregar una imatge DCX"
 
 #: plug-ins/common/file-pcx.c:616
-#, c-format, fuzzy
+#, c-format
 msgid "%s: DCX image offset exceeds the file size: %s\n"
-msgstr "%s: el desplaçament de la imatge DCX excedeix la mida del fitxer: %s"
+msgstr "%s: el desplaçament de la imatge DCX excedeix la mida del fitxer: %s\n"
 
 #: plug-ins/common/file-pcx.c:633
-#, fuzzy
 msgid "Mixed-mode DCX image not loaded"
 msgstr "No s'ha carregat la imatge DCX de mode mixt"
 
 #: plug-ins/common/file-pcx.c:640
-#, c-format, fuzzy
+#, c-format
 msgid "%s: Could not load all DCX images: %s\n"
-msgstr "%s: No s'han pogut carregar totes les imatges DCX: %s"
+msgstr "%s: No s'han pogut carregar totes les imatges DCX: %s\n"
 
 #: plug-ins/common/file-pcx.c:680
 #, c-format
@@ -3683,17 +3672,14 @@ msgid "Unusual PCX flavour, giving up"
 msgstr "No es pot reconèixer el format del fitxer PCX, es deixarà estar"
 
 #: plug-ins/common/file-pcx.c:887
-#, fuzzy
 msgid "Import from PCX"
 msgstr "Importa des de PCX"
 
 #: plug-ins/common/file-pcx.c:896
-#, fuzzy
 msgid "Use PCX image's built-in palette"
 msgstr "Utilitza la paleta integrada de la imatge PCX"
 
 #: plug-ins/common/file-pcx.c:897
-#, fuzzy
 msgid "Use black and white palette"
 msgstr "Utilitza la paleta en blanc i negre"
 
@@ -3735,28 +3721,24 @@ msgid "Open pages as"
 msgstr "Obre pàgines com a"
 
 #: plug-ins/common/file-pdf-load.c:368
-#, fuzzy
 msgid "Number of pages to load (0 for all)"
-msgstr "Nombre de pàgines a carregar (0 per a tots)"
+msgstr "Nombre de pàgines a carregar (0 per a totes)"
 
 #: plug-ins/common/file-pdf-load.c:392
 msgid "Use _Anti-aliasing"
 msgstr "Utilitza _antialiàsing"
 
 #: plug-ins/common/file-pdf-load.c:393
-#, fuzzy
 msgid "Render texts with anti-aliasing"
 msgstr "Renderitza els textos amb antialiàsing"
 
 #: plug-ins/common/file-pdf-load.c:398
-#, fuzzy
 msgid "_Fill transparent areas with white"
-msgstr "Omple les àrees transparents amb blanc"
+msgstr "_Omple les àrees transparents amb blanc"
 
 #: plug-ins/common/file-pdf-load.c:399
-#, fuzzy
 msgid "Render all pages as opaque by filling the background in white"
-msgstr "Representa totes les pàgines com a opaques emplenant el fons en blanc"
+msgstr "Renderitza totes les pàgines com a opaques emplenant el fons en blanc"
 
 #: plug-ins/common/file-pdf-load.c:407 plug-ins/common/file-pdf-load.c:408
 msgid "Resolution"
@@ -4124,10 +4106,9 @@ msgid "Loads files in the PNM file format"
 msgstr "Carrega fitxers en el format de fitxer PNM"
 
 #: plug-ins/common/file-pnm.c:319
-#, fuzzy
 msgid "This plug-in loads files in the various Netpbm portable file formats."
 msgstr ""
-"Aquest connector carrega fitxers en els diversos formats de fitxer portàtils"
+"Aquest connector carrega fitxers en els diversos formats de fitxer portables"
 " Netpbm."
 
 #: plug-ins/common/file-pnm.c:348
@@ -4143,7 +4124,6 @@ msgid "Exports files in the PNM file format"
 msgstr "Exporta fitxers en el format de fitxer PNM"
 
 #: plug-ins/common/file-pnm.c:354
-#, fuzzy
 msgid "PNM export handles all image types without transparency."
 msgstr ""
 "L'exportació PNM gestiona tots els tipus d'imatge sense transparència."
@@ -4155,12 +4135,10 @@ msgstr "S'estan formatant les dades"
 
 #: plug-ins/common/file-pnm.c:371 plug-ins/common/file-pnm.c:407
 #: plug-ins/common/file-pnm.c:443 plug-ins/common/file-pnm.c:479
-#, fuzzy
 msgid "TRUE for raw output, FALSE for ascii output"
-msgstr "CERT per a la sortida RAW, FALS per a la sortida ascii"
+msgstr "CERT per a la sortida sense format, FALS per a la sortida ascii"
 
 #: plug-ins/common/file-pnm.c:385
-#, fuzzy
 msgid "PBM"
 msgstr "PBM"
 
@@ -4173,7 +4151,6 @@ msgid "Exports files in the PBM file format"
 msgstr "Exporta fitxers en el format de fitxer PBM"
 
 #: plug-ins/common/file-pnm.c:390
-#, fuzzy
 msgid "PBM exporting produces mono images without transparency."
 msgstr "L'exportació de PBM produeix imatges mono sense transparència."
 
@@ -4190,7 +4167,6 @@ msgid "Exports files in the PGM file format"
 msgstr "Exporta fitxers en el format de fitxer PGM"
 
 #: plug-ins/common/file-pnm.c:426
-#, fuzzy
 msgid "PGM exporting produces grayscale images without transparency."
 msgstr ""
 "L'exportació de PGM produeix imatges en escala de grisos sense "
@@ -4489,24 +4465,20 @@ msgstr "_Mil·límetre"
 
 #. Rotation
 #: plug-ins/common/file-ps.c:3914
-#, fuzzy
 msgid "_0"
-msgstr "0"
+msgstr "_0"
 
 #: plug-ins/common/file-ps.c:3915
-#, fuzzy
 msgid "_90"
-msgstr "90"
+msgstr "_90"
 
 #: plug-ins/common/file-ps.c:3916
-#, fuzzy
 msgid "_180"
-msgstr "180"
+msgstr "_180"
 
 #: plug-ins/common/file-ps.c:3917
-#, fuzzy
 msgid "_270"
-msgstr "270"
+msgstr "_270"
 
 #: plug-ins/common/file-ps.c:3924
 msgid "Output"
@@ -4521,12 +4493,11 @@ msgid "Loads images from the Paint Shop Pro PSP file format"
 msgstr "Carrega imatges en el format de fitxer Paint Shop Pro PSP"
 
 #: plug-ins/common/file-psp.c:669
-#, fuzzy
 msgid ""
 "This plug-in loads and exports images in Paint Shop Pro's native PSP format."
 " Vector layers aren't handled. Exporting isn't yet implemented."
 msgstr ""
-"Aquest connector carrega i exporta imatges en el format PSP natiu de Paint "
+"Aquest connector carrega i exporta imatges en el format PSP natiu del Paint "
 "Shop Pro. Les capes vectorials no es gestionen. L'exportació encara no està "
 "implementada."
 
@@ -4677,9 +4648,8 @@ msgid "Exporting not implemented yet."
 msgstr "No s'ha implementat l'exportació."
 
 #: plug-ins/common/file-qoi.c:137 plug-ins/common/file-qoi.c:164
-#, fuzzy
 msgid "Quite OK Image"
-msgstr "Imatge bastant correcta"
+msgstr "Imatge Quite OK"
 
 #: plug-ins/common/file-qoi.c:140
 msgid "Load file in the QOI file format"
@@ -4942,7 +4912,6 @@ msgid "Data Formatting"
 msgstr "S'estan formatant les dades"
 
 #: plug-ins/common/file-sunras.c:320
-#, fuzzy
 msgid "Use standard (0) or Run-Length Encoded (1) output"
 msgstr "Usa la sortida estàndard (0) o Run-Length codificada (1)"
 
@@ -5041,8 +5010,6 @@ msgid "S_tandard"
 msgstr "_Estàndard"
 
 #: plug-ins/common/file-sunras.c:1792
-#, fuzzy
-#| msgid "_Run-Length Encoded"
 msgid "R_un-Length Encoded"
 msgstr "Codificació _Run-Lenght"
 
@@ -5322,67 +5289,48 @@ msgid "Write hot spot _values"
 msgstr "Escriu els _valors del punt calent"
 
 #: plug-ins/common/file-xbm.c:234
-#, fuzzy
-#| msgid "_Write color space information"
 msgid "Write hotspot information"
-msgstr "_Escriure informació de l'espai en color"
+msgstr ""
 
 #: plug-ins/common/file-xbm.c:239
-#, fuzzy
-#| msgid "Hot spot _X:"
 msgid "Hot s_pot X"
-msgstr "Punt calent _X:"
+msgstr "Punt calent _X"
 
 #: plug-ins/common/file-xbm.c:240
-#, fuzzy
 msgid "X coordinate of hotspot"
-msgstr "Coordenada X del punt d'accés Wi-Fi"
+msgstr "Coordenada X del punt calent"
 
 #: plug-ins/common/file-xbm.c:245
-#, fuzzy
-#| msgid "Hot spot _Y:"
 msgid "Hot spot _Y"
-msgstr "Punt calent _Y:"
+msgstr "Punt calent _Y"
 
 #: plug-ins/common/file-xbm.c:246
-#, fuzzy
 msgid "Y coordinate of hotspot"
-msgstr "Coordenada Y del punt d'accés Wi-Fi"
+msgstr "Coordenada Y del punt calent"
 
 #: plug-ins/common/file-xbm.c:251
-#, fuzzy
-#| msgid "_Identifier prefix:"
 msgid "I_dentifier prefix"
-msgstr "Prefix de l'_identificador:"
+msgstr "Prefix de l'_identificador"
 
 #: plug-ins/common/file-xbm.c:252
-#, fuzzy
 msgid "Identifier prefix [determined from filename]"
 msgstr "Prefix d'identificador [determinat des del nom de fitxer]"
 
 #: plug-ins/common/file-xbm.c:257
-#, fuzzy
-#| msgid "W_rite extra mask file"
 msgid "Write extra mask _file"
 msgstr "Esc_riu el fitxer de màscara extra"
 
 #: plug-ins/common/file-xbm.c:258
-#, fuzzy
-#| msgid "W_rite extra mask file"
 msgid "Write extra mask file"
-msgstr "Esc_riu el fitxer de màscara extra"
+msgstr "Escriu el fitxer de màscara extra"
 
 #: plug-ins/common/file-xbm.c:263
-#, fuzzy
-#| msgid "_Mask file extension:"
 msgid "Mas_k file extensions"
-msgstr "Extensió del fitxer de _màscara:"
+msgstr "_Extensions de fitxer de màscara"
 
 #: plug-ins/common/file-xbm.c:264
-#, fuzzy
-#| msgid "Quality of the image"
 msgid "Suffix of the mask file"
-msgstr "Qualitat de la imatge"
+msgstr ""
 
 #: plug-ins/common/file-xbm.c:376
 msgid "XBM format does not support multiple layers."
@@ -6566,7 +6514,6 @@ msgid "Draw a border of spikes around the image"
 msgstr "Dibuixa una vora plena de puntes al voltant de la imatge"
 
 #: plug-ins/common/sparkle.c:271
-#, fuzzy
 msgid "Color type"
 msgstr "Tipus de color"
 
@@ -6588,7 +6535,6 @@ msgid "Sparkle"
 msgstr "Espurnes"
 
 #: plug-ins/common/sparkle.c:447
-#, fuzzy
 msgid "Additional Options"
 msgstr "Opcions addicionals"
 
@@ -7513,23 +7459,20 @@ msgid "_Write color space information"
 msgstr "_Escriure informació de l'espai en color"
 
 #: plug-ins/file-bmp/bmp.c:205
-#, fuzzy
 msgid "Whether or not to write BITMAPV5HEADER color space data"
-msgstr "Si escriure o no dades de l'espai de color BITMAPV5HEADER"
+msgstr "Si s'ha d'escriure o no les dades de l'espai de color BITMAPV5HEADER"
 
 #: plug-ins/file-bmp/bmp.c:211
-#, fuzzy
 msgid "R_GB format"
-msgstr "Format RGB"
+msgstr "Format R_GB"
 
 #: plug-ins/file-bmp/bmp.c:212
-#, fuzzy
 msgid ""
 "Export format for RGB images (0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, "
 "4=RGBA_8888, 5=RGBX_8888)"
 msgstr ""
-"Format d'exportació per a les imatges RGB (0=RGB565, 1=RGBA5551, 2=RGB555, "
-"3=RGB888, 4=RGBA8888, 5=RGBX888888)"
+"Format d'exportació per a les imatges RGB (0=RGB_565, 1=RGBA_5551, 2=RGB_555, "
+"3=RGB_888, 4=RGBA_8888, 5=RGBX_8888)"
 
 #: plug-ins/file-bmp/bmp.c:296
 msgid "BMP format does not support multiple layers."
@@ -8214,10 +8157,8 @@ msgid "Icon #%i"
 msgstr "Icona #%i"
 
 #: plug-ins/file-ico/ico-load.c:841 plug-ins/file-ico/ico-load.c:872
-#, fuzzy
-#| msgid "Invalid X offset: %d"
 msgid "Invalid ANI metadata"
-msgstr "La coordenada X no és vàlida: %d"
+msgstr ""
 
 #: plug-ins/file-ico/ico-save.c:213
 #, c-format
@@ -8225,7 +8166,7 @@ msgid ""
 "Called non-interactively with %d and %d hotspot coordinates with an image of"
 " %d icons."
 msgstr ""
-"Cridat sense interacció amb les coordenades del punt %d i %d d'accés amb una"
+"Cridat sense interacció amb les coordenades del punt calent %d i %d amb una"
 " imatge de %d icones."
 
 #: plug-ins/file-ico/ico.c:168 plug-ins/file-ico/ico.c:291
@@ -8241,30 +8182,22 @@ msgid "Microsoft Windows animated cursor"
 msgstr "Cursor animat del Microsoft Windows"
 
 #: plug-ins/file-ico/ico.c:230
-#, fuzzy
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Loads files of Windows ANI file format"
-msgstr "Carrega fitxers en el format de fitxer JPEG-XL"
+msgstr "Carrega fitxers en el format de fitxer ANI"
 
 #: plug-ins/file-ico/ico.c:272
-#, fuzzy
-#| msgid "Load the curves from a file"
 msgid "Loads a preview from a Windows ANI files"
-msgstr "Carrega les corbes des d'un fitxer"
+msgstr ""
 
 #: plug-ins/file-ico/ico.c:367 plug-ins/file-ico/ico.c:368
-#, fuzzy
-#| msgid "Saves files in the JPEG XL file format"
 msgid "Saves files in Windows ANI file format"
-msgstr "Desa els fitxers en el format de fitxer JPEG-XL"
+msgstr "Desa els fitxers en el format de fitxer ANI"
 
 #: plug-ins/file-ico/ico.c:384
-#, fuzzy
 msgid "Cursor Name (Optional)"
 msgstr "Nom del cursor (opcional)"
 
 #: plug-ins/file-ico/ico.c:390
-#, fuzzy
 msgid "Cursor Author (Optional)"
 msgstr "Autor del cursor (opcional)"
 
@@ -8273,14 +8206,12 @@ msgid "JPEG preview"
 msgstr "Previsualització del JPEG"
 
 #: plug-ins/file-jpeg/jpeg-load.c:485
-#, fuzzy, c-format
-#| msgid ""
-#| "Error trying to open temporary file '%s' for parasite loading: %s"
+#, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for jpeg metadata loading: %s"
 msgstr ""
-"S'ha produït un error en obrir el fitxer temporal «%s» per a carregar el "
-"paràsit: %s"
+"S'ha produït un error en obrir el fitxer temporal %s «%s» per a carregar les "
+"metadades jpeg: %s"
 
 #: plug-ins/file-jpeg/jpeg-save.c:139 plug-ins/file-jpeg/jpeg-save.c:146
 #, c-format
@@ -8464,12 +8395,10 @@ msgid "Failed to decompress data"
 msgstr "No s'han pogut descomprimir les dades"
 
 #: plug-ins/file-psd/psd-load.c:3450
-#, fuzzy
 msgid "Duotone Import"
 msgstr "Importació de Duotone"
 
 #: plug-ins/file-psd/psd-load.c:3451
-#, fuzzy
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -8480,19 +8409,16 @@ msgstr ""
 "i es pot tornar a aplicar en exportar."
 
 #: plug-ins/file-psd/psd-load.c:3473 plug-ins/file-psd/psd-save.c:2662
-#, fuzzy
-#| msgid "PSD Compatibility Notice"
 msgid "Compatibility Notice"
-msgstr "Avís de compatibilitat PSD"
+msgstr "Avís de compatibilitat"
 
 #: plug-ins/file-psd/psd-load.c:3474
-#, fuzzy
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
 msgstr ""
 "Aquest fitxer PSD conté característiques que\n"
-"Encara no estan totalment suportats en el GIMP:"
+"encara no estan totalment suportades en el GIMP:"
 
 #: plug-ins/file-psd/psd-load.c:3488
 #, fuzzy
@@ -8506,7 +8432,6 @@ msgstr ""
 "Les capes d'emplenat de metadades no estan admeses i es deixaran anar."
 
 #: plug-ins/file-psd/psd-load.c:3496
-#, fuzzy
 msgid ""
 "Fill layers are partially supported and will be converted to raster layers."
 msgstr ""
@@ -8514,7 +8439,6 @@ msgstr ""
 "ràster."
 
 #: plug-ins/file-psd/psd-load.c:3501
-#, fuzzy
 msgid ""
 "Text layers are partially supported and will be converted to raster layers."
 msgstr ""
@@ -8522,12 +8446,10 @@ msgstr ""
 "ràster."
 
 #: plug-ins/file-psd/psd-load.c:3506
-#, fuzzy
 msgid "Linked layers are not yet supported and will be dropped."
 msgstr "Les capes enllaçades encara no estan admeses i es deixaran anar."
 
 #: plug-ins/file-psd/psd-load.c:3510
-#, fuzzy
 msgid ""
 "Vector masks are partially supported and will be converted to raster layers."
 msgstr ""
@@ -8535,20 +8457,17 @@ msgstr ""
 "capes ràster."
 
 #: plug-ins/file-psd/psd-load.c:3515
-#, fuzzy
 msgid "Vector strokes are not yet supported and will be dropped."
-msgstr "Els traços vectorials encara no estan admesos i es deixaran anar."
+msgstr "Els traços vectorials encara no estan admesos i es descartaran."
 
 #: plug-ins/file-psd/psd-load.c:3519
-#, fuzzy
 msgid "Layer effects are not yet supported and will be dropped."
-msgstr "Els efectes de la capa encara no estan admesos i es deixaran anar."
+msgstr "Els efectes de la capa encara no estan admesos i es descartaran."
 
 #: plug-ins/file-psd/psd-load.c:3523
-#, fuzzy
 msgid "Smart objects are not yet supported and will be dropped."
 msgstr ""
-"Els objectes intel·ligents encara no estan admesos i es deixaran anar."
+"Els objectes intel·ligents encara no estan admesos i es descartaran."
 
 #. Translators: short for layer compositions
 #: plug-ins/file-psd/psd-load.c:3528
@@ -8584,16 +8503,14 @@ msgid "Export Image as PSD"
 msgstr "Exporta la imatge com a PSD"
 
 #: plug-ins/file-psd/psd-save.c:2493
-#, fuzzy
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
 msgstr ""
-"Informació de l'espai de color Duotone de l'original\n"
-"S'utilitzarà la imatge importada."
+"S'utilitzarà la informació de l'espai de color\n"
+"Duotone de la imatge original importada."
 
 #: plug-ins/file-psd/psd-save.c:2561
-#, fuzzy
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
@@ -8602,13 +8519,12 @@ msgstr ""
 "La resta es descartarà."
 
 #: plug-ins/file-psd/psd-save.c:2663
-#, fuzzy
 msgid ""
 "Legacy layer modes have been reported to have better compatibility with "
 "Photoshop. If you encounter display issues, consider switching to those "
 "layer modes."
 msgstr ""
-"S'ha informat que els modes de capa heretats tenen una millor compatibilitat"
+"Se'ns ha informat que els modes de capa antics tenen una millor compatibilitat"
 " amb Photoshop. Si trobeu problemes de visualització, considereu canviar a "
 "aquests modes de capa."
 
@@ -8631,33 +8547,29 @@ msgid "Photoshop image (merged)"
 msgstr "Imatge del Photoshop (fusionada)"
 
 #: plug-ins/file-psd/psd.c:234
-#, fuzzy
 msgid "Assign a Clipping _Path"
-msgstr "Assigna un camí de retall"
+msgstr "_Assigna un camí de retall"
 
 #: plug-ins/file-psd/psd.c:235
-#, fuzzy
 msgid "Select a path to be the clipping path"
 msgstr "Seleccioneu un camí per a ser el camí de retall"
 
 #: plug-ins/file-psd/psd.c:241
-#, fuzzy
 msgid "Clipping Path _Name"
-msgstr "Nom del camí de retall"
+msgstr "_Nom del camí de retall"
 
 #: plug-ins/file-psd/psd.c:242
-#, fuzzy
 msgid ""
 "Clipping path name\n"
 "(ignored if no clipping path)"
 msgstr ""
-"Nom del camí del retallat\n"
+"Nom del camí de retall\n"
 "(s'ignora si no hi ha cap camí de retall)"
 
 #: plug-ins/file-psd/psd.c:248
 #, fuzzy
 msgid "Path _Flatness"
-msgstr "Planor del camí"
+msgstr "_Planor del camí"
 
 #: plug-ins/file-psd/psd.c:249
 #, fuzzy
@@ -8673,14 +8585,12 @@ msgid "Export as _CMYK"
 msgstr "Exporta com a _CMYK"
 
 #: plug-ins/file-psd/psd.c:256
-#, fuzzy
 msgid "Export a CMYK PSD image using the soft-proofing color profile"
-msgstr "Exporta una imatge PSD CMYK usant el perfil de color de prova suau"
+msgstr "Exporta una imatge PSD CMYK usant el perfil de color de prova"
 
 #: plug-ins/file-psd/psd.c:261
-#, fuzzy
 msgid "Export as _Duotone"
-msgstr "Exporta com a Duotone"
+msgstr "_Exporta com a Duotone"
 
 #: plug-ins/file-psd/psd.c:262
 #, fuzzy
@@ -8692,16 +8602,12 @@ msgstr ""
 "color Duotone a la imatge quan s'importava originalment."
 
 #: plug-ins/file-psd/psd.c:361
-#, fuzzy
-#| msgid "Import from PDF"
 msgid "Import PSD"
-msgstr "Importa d'un PDF"
+msgstr "Importa d'un PSD"
 
 #: plug-ins/file-psd/psd.c:558
-#, fuzzy
-#| msgid "Import metadata"
 msgid "Import PSD metadata"
-msgstr "Importa les metadades"
+msgstr "Importa les metadades PSD"
 
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
@@ -8827,37 +8733,26 @@ msgid "Silicon Graphics IRIS image"
 msgstr "Imatge IRIS de Silicon Graphics"
 
 #: plug-ins/file-sgi/sgi.c:147
-#, fuzzy
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Loads files in SGI image file format"
-msgstr "Carrega fitxers en el format de fitxer JPEG-XL"
+msgstr "Carrega fitxers en el format de fitxer SGI"
 
 #: plug-ins/file-sgi/sgi.c:148
-#, fuzzy
-#| msgid "is not a CEL image file"
 msgid "This plug-in loads SGI image files."
-msgstr "no és un fitxer d'imatge CEL"
+msgstr ""
 
 #: plug-ins/file-sgi/sgi.c:177
-#, fuzzy
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Exports files in SGI image file format"
-msgstr "Carrega fitxers en el format de fitxer JPEG-XL"
+msgstr ""
 
 #: plug-ins/file-sgi/sgi.c:178
-#, fuzzy
-#| msgid "is not a CEL image file"
 msgid "This plug-in exports SGI image files."
-msgstr "no és un fitxer d'imatge CEL"
+msgstr ""
 
 #: plug-ins/file-sgi/sgi.c:191
-#, fuzzy
-#| msgid "Compression _type:"
 msgid "Compression _type"
-msgstr "_Tipus de compressió:"
+msgstr "_Tipus de compressió"
 
 #: plug-ins/file-sgi/sgi.c:192
-#, fuzzy
 msgid "Compression level (0 = none, 1 = RLE, 2 = ARLE)"
 msgstr "Nivell de compressió (0 = cap, 1 = RLE, 2 = ARLE)"
 
@@ -9076,10 +8971,8 @@ msgid "Warning: no y resolution info, assuming same as x"
 msgstr "Avís: no hi ha informació de resolució y, s'assumeix la mateixa que x"
 
 #: plug-ins/file-tiff/file-tiff-load.c:1364
-#, fuzzy
-#| msgid "Warning: no y resolution info, assuming same as x"
 msgid "Invalid image resolution info, using default"
-msgstr "Avís: no hi ha informació de resolució y, s'assumeix la mateixa que x"
+msgstr ""
 
 #: plug-ins/file-tiff/file-tiff-load.c:1423
 #, c-format
@@ -9091,10 +8984,10 @@ msgstr "No s'han pogut llegir els mapes de color de «%s»"
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #: plug-ins/file-tiff/file-tiff-load.c:1511
-#, fuzzy, c-format
+#, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr ""
-"Nombre sospitós de canals addicionals: %d. Possiblement imatge corrupta."
+"Nombre sospitós de canals addicionals: %d. Possiblement la imatge és malmesa."
 
 #: plug-ins/file-tiff/file-tiff-load.c:1573
 msgid "TIFF Channel"
@@ -9207,13 +9100,12 @@ msgid "Writing pages with different bit depth is strange."
 msgstr "És estrany escriure pàgines amb una profunditat de bits diferent."
 
 #: plug-ins/file-tiff/file-tiff-save.c:1310
-#, fuzzy
 msgid ""
 "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
 "different compression algorithm, or cancel."
 msgstr ""
-"Avís: s'ha excedit la mida màxima del fitxer TIFF. Reintenta com a BigTIFF o"
-" amb un algoritme de compressió diferent, o cancel·la."
+"Avís: s'ha excedit la mida màxima del fitxer TIFF. Reintenteu com a BigTIFF o"
+" amb un algoritme de compressió diferent, o cancel·leu."
 
 #: plug-ins/file-tiff/file-tiff-save.c:1323
 msgid "LZW"
@@ -9257,12 +9149,11 @@ msgid "Source _type"
 msgstr "_Tipus de font"
 
 #: plug-ins/file-webp/file-webp.c:169
-#, fuzzy
 msgid ""
 "WebP encoder preset (Default=0, Picture=1, Photo=2, Drawing=3, Icon=4, "
 "Text=5)"
 msgstr ""
-"Predefinit del codificador WebP (Per defecte=0, Imatge=1, Foto=2, Dibuix=3, "
+"Preconfiguració del codificador WebP (Per defecte=0, Imatge=1, Foto=2, Dibuix=3, "
 "Icon=4, Text=5)"
 
 #: plug-ins/file-webp/file-webp.c:176
@@ -9282,20 +9173,16 @@ msgid "Alpha q_uality"
 msgstr "_Qualitat alfa"
 
 #: plug-ins/file-webp/file-webp.c:188
-#, fuzzy
-#| msgid "Cannot export images with alpha channel."
 msgid "Quality of the image's alpha channel"
-msgstr "No es poden exportar imatges amb canal alfa."
+msgstr ""
 
 #: plug-ins/file-webp/file-webp.c:193
-#, fuzzy
 msgid "Use Sharp YU_V"
-msgstr "Utilitza YUV aguda"
+msgstr "Utilitza _YUV nítida"
 
 #. TRANSLATORS: \xe2\x86\x92 is a Unicode
 #. * "Rightward Arrow" in UTF-8 encoding.
 #: plug-ins/file-webp/file-webp.c:197
-#, fuzzy
 msgid "Use sharper (but slower) RGB→YUV conversion"
 msgstr "Usa una conversió RGB→YUV més nítida (però més lenta)"
 
@@ -9304,7 +9191,6 @@ msgid "Loop _forever"
 msgstr "_Bucle sense fi"
 
 #: plug-ins/file-webp/file-webp.c:203
-#, fuzzy
 msgid "Loop animation infinitely"
 msgstr "Animació en bucle infinitament"
 
@@ -9313,27 +9199,22 @@ msgid "_Minimize output size (slower)"
 msgstr "_Minimitza la mida de sortida (més lent)"
 
 #: plug-ins/file-webp/file-webp.c:209
-#, fuzzy
-#| msgid "_Minimize output size (slower)"
 msgid "Minimize output file size"
-msgstr "_Minimitza la mida de sortida (més lent)"
+msgstr "Minimitza la mida del fitxer sortida"
 
 #: plug-ins/file-webp/file-webp.c:214
 msgid "Max distance between _key-frames"
 msgstr "_Distància màxima entre els fotogrames clau"
 
 #: plug-ins/file-webp/file-webp.c:215
-#, fuzzy
-#| msgid "Max distance between _key-frames"
 msgid "Maximum distance between keyframes"
-msgstr "_Distància màxima entre els fotogrames clau"
+msgstr "Distància màxima entre els fotogrames clau"
 
 #: plug-ins/file-webp/file-webp.c:220
 msgid "_Default delay between frames"
 msgstr "_Retard per defecte entre fotogrames"
 
 #: plug-ins/file-webp/file-webp.c:221
-#, fuzzy
 msgid ""
 "Default delay (in milliseconds) to use when timestamps for frames are not "
 "available or forced."
@@ -9346,17 +9227,14 @@ msgid "Use default dela_y for all frames"
 msgstr "_Usa el retard per defecte per a tots els fotogrames"
 
 #: plug-ins/file-webp/file-webp.c:228
-#, fuzzy
-#| msgid "Use default dela_y for all frames"
 msgid "Force default delay on all frames"
-msgstr "_Usa el retard per defecte per a tots els fotogrames"
+msgstr "Força el retard per defecte a tots els fotogrames"
 
 #: plug-ins/file-webp/file-webp.c:233
 msgid "Save a_nimation"
 msgstr "D_esa l'animació"
 
 #: plug-ins/file-webp/file-webp.c:234
-#, fuzzy
 msgid "Use layers for animation"
 msgstr "Utilitza capes per a l'animació"
 
@@ -9381,32 +9259,24 @@ msgid "Default"
 msgstr "Per defecte"
 
 #: plug-ins/file-webp/file-webp-dialog.c:81
-#, fuzzy
 msgid "Picture"
 msgstr "Imatge"
 
 #: plug-ins/file-webp/file-webp-dialog.c:82
-#, fuzzy
 msgid "Photo"
 msgstr "Fotografia"
 
 #: plug-ins/file-webp/file-webp-dialog.c:83
-#, fuzzy
-#| msgid "Drawing grid"
 msgid "Drawing"
-msgstr "Quadrícula de dibuix"
+msgstr "Dibuix"
 
 #: plug-ins/file-webp/file-webp-dialog.c:84
-#, fuzzy
-#| msgid "Icon #%i"
 msgid "Icon"
-msgstr "Icona #%i"
+msgstr "Icona"
 
 #: plug-ins/file-webp/file-webp-dialog.c:85
-#, fuzzy
-#| msgid "Texture"
 msgid "Text"
-msgstr "Textura"
+msgstr "Text"
 
 #: plug-ins/file-webp/file-webp-load.c:107
 #, c-format
@@ -9454,10 +9324,9 @@ msgstr "configuració invàlida"
 
 #. TRANSLATORS: widthxheight with UTF-8 encoded multiply sign.
 #: plug-ins/file-webp/file-webp-save.c:110
-#, fuzzy, c-format
-#| msgid "Image dimensions: %d × %d"
+#, c-format
 msgid "bad image dimensions (maximum: %d×%d)"
-msgstr "Dimensions de la imatge: %d × %d"
+msgstr ""
 
 #: plug-ins/file-webp/file-webp-save.c:113
 msgid "partition is bigger than 512K"
@@ -10208,10 +10077,8 @@ msgid "Move an object"
 msgstr "Mou un objecte"
 
 #: plug-ins/gfig/gfig-dialog.c:406
-#, fuzzy
-#| msgid "Mouse Pointer"
 msgid "Move Point"
-msgstr "Punter del ratolí"
+msgstr "Punt de moviment"
 
 #: plug-ins/gfig/gfig-dialog.c:406
 msgid "Move a single point"
@@ -10270,7 +10137,6 @@ msgid "Raise selected object to top"
 msgstr "Apuja l'objecte seleccionat al capdamunt"
 
 #: plug-ins/gfig/gfig-dialog.c:421
-#, fuzzy
 msgid "To Bottom"
 msgstr "A baix"
 
