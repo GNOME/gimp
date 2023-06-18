@@ -42,6 +42,8 @@
 #include "gimp-intl.h"
 
 
+static void   gimp_image_view_select_item   (GimpContainerEditor *editor,
+                                             GimpViewable        *viewable);
 static void   gimp_image_view_activate_item (GimpContainerEditor *editor,
                                              GimpViewable        *viewable);
 
@@ -56,6 +58,7 @@ gimp_image_view_class_init (GimpImageViewClass *klass)
 {
   GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
+  editor_class->select_item   = gimp_image_view_select_item;
   editor_class->activate_item = gimp_image_view_activate_item;
 }
 
@@ -138,6 +141,25 @@ gimp_image_view_new (GimpViewType     view_type,
                           editor);
 
   return GTK_WIDGET (image_view);
+}
+
+static void
+gimp_image_view_select_item (GimpContainerEditor *editor,
+                             GimpViewable        *viewable)
+{
+  GimpImageView *view = GIMP_IMAGE_VIEW (editor);
+  GimpContainer *container;
+
+  if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
+    GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
+
+  container = gimp_container_view_get_container (editor->view);
+
+  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
+    {
+      if (view->raise_button)
+        gtk_button_clicked (GTK_BUTTON (view->raise_button));
+    }
 }
 
 static void
