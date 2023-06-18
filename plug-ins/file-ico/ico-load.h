@@ -24,6 +24,7 @@
 
 GimpImage * ico_load_image           (GFile         *file,
                                       gint32        *file_offset,
+                                      gint           frame_num,
                                       GError       **error);
 GimpImage * ani_load_image           (GFile         *file,
                                       gboolean       load_thumb,

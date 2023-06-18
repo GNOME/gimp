@@ -608,13 +608,13 @@ ico_load_layer (FILE        *fp,
                 guchar      *buf,
                 gint         maxsize,
                 gint32       file_offset,
+                gchar       *layer_prefix,
                 IcoLoadInfo *info)
 {
   gint        width, height;
   GimpLayer  *layer;
   guint32     first_bytes;
   GeglBuffer *buffer;
-  gchar       name[ICO_MAXBUF];
 
   if (fseek (fp, info->offset + file_offset, SEEK_SET) < 0 ||
       ! ico_read_int32 (fp, &first_bytes, 1))
@@ -636,10 +636,8 @@ ico_load_layer (FILE        *fp,
     }
 
   /* read successfully. add to image */
-  g_snprintf (name, sizeof (name), _("Icon #%i"), icon_num+1);
-  layer = gimp_layer_new (image, name, width, height,
-                          GIMP_RGBA_IMAGE,
-                          100,
+  layer = gimp_layer_new (image, layer_prefix, width, height,
+                          GIMP_RGBA_IMAGE, 100,
                           gimp_image_get_default_new_layer_mode (image));
   gimp_image_insert_layer (image, layer, NULL, icon_num);
 
@@ -657,6 +655,7 @@ ico_load_layer (FILE        *fp,
 GimpImage *
 ico_load_image (GFile        *file,
                 gint32       *file_offset,
+                gint          frame_num,
                 GError      **error)
 {
   FILE          *fp;
@@ -727,8 +726,36 @@ ico_load_image (GFile        *file,
   for (i = 0; i < icon_count; i++)
     {
       GimpLayer *layer;
+      gchar     *layer_prefix;
+      gchar     *icon_metadata;
 
-      layer = ico_load_layer (fp, image, i, buf, maxsize, file_offset ? *file_offset : 0, info+i);
+      if (info[i].bpp)
+        icon_metadata = g_strdup_printf ("(%dx%d, %dbpp)", info[i].width,
+                                         info[i].height, info[i].bpp);
+      else
+        icon_metadata = g_strdup_printf ("(%dx%d)", info[i].width,
+                                         info[i].height);
+
+      if (frame_num > -1)
+        {
+          layer_prefix = g_strdup_printf ("Cursor %s Frame #%i", icon_metadata,
+                                          frame_num);
+        }
+      else
+        {
+          if (header.resource_type == 1)
+            layer_prefix = g_strdup_printf ("Icon #%i %s ", i + 1,
+                                            icon_metadata);
+          else
+            layer_prefix = g_strdup_printf ("Cursor #%i %s ", i + 1,
+                                            icon_metadata);
+        }
+
+      layer = ico_load_layer (fp, image, i + 1, buf, maxsize,
+                              file_offset ? *file_offset : 0,
+                              layer_prefix, info + i);
+      g_free (icon_metadata);
+      g_free (layer_prefix);
 
       /* Save CUR hot spot information */
       if (header.resource_type == 2)
@@ -889,7 +916,7 @@ ani_load_image (GFile   *file,
              {
                if (! image)
                  {
-                   image = ico_load_image (file, &file_offset, error);
+                   image = ico_load_image (file, &file_offset, 1, error);
                  }
                else
                  {
@@ -898,7 +925,8 @@ ani_load_image (GFile   *file,
                    GimpLayer    *new_layer;
                    gint          nlayers;
 
-                   temp_image = ico_load_image (file, &file_offset, error);
+                   temp_image = ico_load_image (file, &file_offset, frame + 1,
+                                                error);
                    layers = gimp_image_get_layers (temp_image, &nlayers);
                    if (layers)
                      {
@@ -1041,7 +1069,8 @@ ico_load_thumbnail_image (GFile   *file,
 
   image = gimp_image_new (w, h, GIMP_RGB);
   buf = g_new (guchar, w*h*4);
-  ico_load_layer (fp, image, match, buf, w*h*4, file_offset, info+match);
+  ico_load_layer (fp, image, match, buf, w*h*4, file_offset,
+                  "Thumbnail", info + match);
   g_free (buf);
 
   *width  = w;

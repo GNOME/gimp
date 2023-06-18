@@ -435,7 +435,7 @@ ico_load (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  image = ico_load_image (file, NULL, &error);
+  image = ico_load_image (file, NULL, -1, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
