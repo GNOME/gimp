@@ -51,12 +51,6 @@ static gchar * filters_parse_operation (Gimp          *gimp,
                                         const gchar   *icon_name,
                                         GimpObject   **settings);
 
-static void    filters_run_procedure   (Gimp          *gimp,
-                                        GimpDisplay   *display,
-                                        GimpProcedure *procedure,
-                                        GimpRunMode    run_mode);
-
-
 /*  public functions  */
 
 void
@@ -86,6 +80,7 @@ filters_apply_cmd_callback (GimpAction *action,
                                        &settings);
 
   procedure = gimp_gegl_procedure_new (image->gimp,
+                                       NULL,
                                        GIMP_RUN_NONINTERACTIVE, settings,
                                        operation,
                                        gimp_action_get_name (action),
@@ -130,6 +125,7 @@ filters_apply_interactive_cmd_callback (GimpAction *action,
     }
 
   procedure = gimp_gegl_procedure_new (image->gimp,
+                                       NULL,
                                        GIMP_RUN_INTERACTIVE, NULL,
                                        g_variant_get_string (value, NULL),
                                        gimp_action_get_name (action),
@@ -240,7 +236,7 @@ filters_parse_operation (Gimp         *gimp,
   return g_strdup (operation_str);
 }
 
-static void
+void
 filters_run_procedure (Gimp          *gimp,
                        GimpDisplay   *display,
                        GimpProcedure *procedure,

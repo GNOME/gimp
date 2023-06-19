@@ -27,6 +27,8 @@
 #include "gimp.h"
 #include "gimpchannelpropundo.h"
 #include "gimpchannelundo.h"
+#include "gimpdrawablefilter.h"
+#include "gimpdrawablefilterundo.h"
 #include "gimpdrawablemodundo.h"
 #include "gimpdrawablepropundo.h"
 #include "gimpdrawableundo.h"
@@ -302,6 +304,58 @@ gimp_image_undo_push_drawable_format (GimpImage    *image,
                                GIMP_UNDO_DRAWABLE_FORMAT, undo_desc,
                                GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
                                "item", drawable,
+                               NULL);
+}
+
+
+/***************************/
+/*  Drawable Filter Undos  */
+/***************************/
+GimpUndo *
+gimp_image_undo_push_filter_add (GimpImage          *image,
+                                 const gchar        *undo_desc,
+                                 GimpDrawable       *drawable,
+                                 GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_DRAWABLE_FILTER_UNDO,
+                               GIMP_UNDO_FILTER_ADD, undo_desc,
+                               GIMP_DIRTY_DRAWABLE,
+                               "filter", filter,
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_filter_remove (GimpImage          *image,
+                                    const gchar        *undo_desc,
+                                    GimpDrawable       *drawable,
+                                    GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_DRAWABLE_FILTER_UNDO,
+                               GIMP_UNDO_FILTER_REMOVE, undo_desc,
+                               GIMP_DIRTY_DRAWABLE,
+                               "filter", filter,
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_filter_reorder (GimpImage          *image,
+                                     const gchar        *undo_desc,
+                                     GimpDrawable       *drawable,
+                                     GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_DRAWABLE_FILTER_UNDO,
+                               GIMP_UNDO_FILTER_REORDER, undo_desc,
+                               GIMP_DIRTY_DRAWABLE,
+                               "filter", filter,
                                NULL);
 }
 

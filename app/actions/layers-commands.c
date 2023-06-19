@@ -39,6 +39,8 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-fill.h"
+#include "core/gimpdrawable-filters.h"
+#include "core/gimpdrawablefilter.h"
 #include "core/gimpgrouplayer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
@@ -48,6 +50,7 @@
 #include "core/gimplayerpropundo.h"
 #include "core/gimplayer-floating-selection.h"
 #include "core/gimplayer-new.h"
+#include "core/gimplist.h"
 #include "core/gimppickable.h"
 #include "core/gimppickable-auto-shrink.h"
 #include "core/gimptoolinfo.h"
@@ -811,6 +814,35 @@ layers_duplicate_cmd_callback (GimpAction *action,
                             gimp_item_get_index (iter->data),
                             TRUE);
       new_layers = g_list_prepend (new_layers, new_layer);
+
+      /* Import any attached layer effects */
+      if (gimp_drawable_has_filters (GIMP_DRAWABLE (iter->data)))
+        {
+          GList         *filter_list;
+          GimpContainer *filters;
+
+          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (iter->data));
+
+          for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
+               filter_list = g_list_previous (filter_list))
+            {
+              if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+                {
+                  GimpDrawableFilter *old_filter = filter_list->data;
+                  GimpDrawableFilter *filter;
+
+                  filter =
+                    gimp_drawable_filter_duplicate (GIMP_DRAWABLE (new_layer),
+                                                    old_filter);
+
+                  gimp_drawable_filter_apply (filter, NULL);
+                  gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
+
+                  gimp_drawable_filter_layer_mask_freeze (filter);
+                  g_object_unref (filter);
+                }
+            }
+        }
     }
 
   gimp_image_set_selected_layers (image, new_layers);

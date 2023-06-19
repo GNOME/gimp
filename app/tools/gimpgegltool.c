@@ -249,7 +249,7 @@ gimp_gegl_tool_halt (GimpGeglTool *gegl_tool)
 {
   GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (gegl_tool);
 
-  gimp_operation_tool_set_operation (op_tool, NULL,
+  gimp_operation_tool_set_operation (op_tool, NULL, NULL,
                                      NULL, NULL, NULL, NULL, NULL);
 }
 
@@ -272,9 +272,14 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
 
   if (operation)
     {
+      const gchar *title;
       const gchar *description;
 
+      title       = gegl_operation_get_key (operation, "title");
       description = gegl_operation_get_key (operation, "description");
+
+      if (! title)
+        title = gegl_operation_get_key (operation, "name");
 
       if (description)
         {
@@ -287,9 +292,11 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
         }
 
       gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (tool),
+                                         NULL,
                                          operation,
                                          _("GEGL Operation"),
-                                         _("GEGL Operation"),
+                                         title ?
+                                         title : _("GEGL Operation"),
                                          NULL,
                                          GIMP_ICON_GEGL,
                                          GIMP_HELP_TOOL_GEGL);

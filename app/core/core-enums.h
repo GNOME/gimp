@@ -605,7 +605,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_ITEM_COLOR_TAG,              /*< desc="Item color tag"                 >*/
   GIMP_UNDO_ITEM_LOCK_CONTENT,           /*< desc="Lock/Unlock content"            >*/
   GIMP_UNDO_ITEM_LOCK_POSITION,          /*< desc="Lock/Unlock position"           >*/
-  GIMP_UNDO_ITEM_LOCK_VISIBILITY,        /*< desc="Lock/Unlock visibility"      >*/
+  GIMP_UNDO_ITEM_LOCK_VISIBILITY,        /*< desc="Lock/Unlock visibility"         >*/
   GIMP_UNDO_LAYER_ADD,                   /*< desc="New layer"                      >*/
   GIMP_UNDO_LAYER_REMOVE,                /*< desc="Delete layer"                   >*/
   GIMP_UNDO_LAYER_MODE,                  /*< desc="Set layer mode"                 >*/
@@ -638,6 +638,9 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_FOREGROUND_SELECT,           /*< desc="Select foreground"              >*/
   GIMP_UNDO_PARASITE_ATTACH,             /*< desc="Attach parasite"                >*/
   GIMP_UNDO_PARASITE_REMOVE,             /*< desc="Remove parasite"                >*/
+  GIMP_UNDO_FILTER_ADD,                  /*< desc="Add effect"                     >*/
+  GIMP_UNDO_FILTER_REMOVE,               /*< desc="Remove effect"                  >*/
+  GIMP_UNDO_FILTER_REORDER,              /*< desc="Reorder effect"                 >*/
 
   GIMP_UNDO_CANT                         /*< desc="Not undoable"                   >*/
 } GimpUndoType;

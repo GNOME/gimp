@@ -188,6 +188,23 @@ gimp_pickable_get_buffer (GimpPickable *pickable)
   return NULL;
 }
 
+GeglBuffer *
+gimp_pickable_get_buffer_with_effects (GimpPickable *pickable)
+{
+  GimpPickableInterface *pickable_iface;
+
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+
+  pickable_iface = GIMP_PICKABLE_GET_IFACE (pickable);
+
+  if (pickable_iface->get_buffer_with_effects)
+    return pickable_iface->get_buffer_with_effects (pickable);
+  else if (pickable_iface->get_buffer)
+    return pickable_iface->get_buffer (pickable);
+
+  return NULL;
+}
+
 gboolean
 gimp_pickable_get_pixel_at (GimpPickable *pickable,
                             gint          x,

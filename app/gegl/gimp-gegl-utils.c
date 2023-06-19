@@ -141,13 +141,25 @@ gimp_gegl_progress_connect (GeglNode     *node,
   g_return_if_fail (GIMP_IS_PROGRESS (progress));
   g_return_if_fail (text != NULL);
 
-  g_signal_connect (node, "progress",
-                    G_CALLBACK (gimp_gegl_progress_callback),
-                    progress);
+  g_signal_connect_object (node, "progress",
+                           G_CALLBACK (gimp_gegl_progress_callback),
+                           progress, 0);
 
   g_object_set_data_full (G_OBJECT (node),
                           "gimp-progress-text", g_strdup (text),
                           (GDestroyNotify) g_free);
+}
+
+void
+gimp_gegl_progress_disconnect (GeglNode     *node,
+                               GimpProgress *progress)
+{
+  g_return_if_fail (GEGL_IS_NODE (node));
+  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+
+  g_signal_handlers_disconnect_by_func (node,
+                                        gimp_gegl_progress_callback,
+                                        progress);
 }
 
 gboolean

@@ -44,6 +44,7 @@
 #include "gimp-parasites.h"
 #include "gimp-utils.h"
 #include "gimpcontext.h"
+#include "gimpdrawable-filters.h"
 #include "gimpdrawable-floating-selection.h"
 #include "gimpdrawablestack.h"
 #include "gimpgrid.h"
@@ -2974,6 +2975,13 @@ gimp_image_get_xcf_version (GimpImage    *image,
                                        "GIMP 3.0"));
           version = MAX (19, version);
         }
+
+      if (gimp_drawable_has_filters (GIMP_DRAWABLE (layer)))
+        {
+          ADD_REASON (g_strdup_printf (_("Layer effects were added in %s"),
+                                       "GIMP 3.0"));
+          version = MAX (20, version);
+        }
     }
   g_list_free (items);
 
@@ -3141,6 +3149,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 17:
     case 18:
     case 19:
+    case 20:
       if (gimp_version)   *gimp_version   = 300;
       if (version_string) *version_string = "GIMP 3.0";
       break;

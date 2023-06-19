@@ -16,6 +16,38 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+sub drawable_merge_filters {
+    $blurb = 'Merge the layer effect filters to the specified drawable.';
+
+    $help = <<'HELP';
+This procedure combines the contents of the drawable's filter stack
+(for export) with the specified drawable.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimpdrawable-filters.h") ],
+	code    => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      gimp_drawable_merge_filters (drawable);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub drawable_merge_shadow {
     $blurb = 'Merge the shadow buffer with the specified drawable.';
 
@@ -899,6 +931,7 @@ CODE
               "gegl/gimp-babl-compat.h"
               "core/gimp.h"
               "core/gimpchannel-select.h"
+              "core/gimpdrawable-filters.h"
               "core/gimpdrawable-offset.h"
               "core/gimpimage.h"
               "core/gimptempbuf.h"
@@ -920,10 +953,11 @@ CODE
             drawable_get_offsets
             drawable_mask_bounds
             drawable_mask_intersect
+            drawable_merge_filters
             drawable_merge_shadow
             drawable_free_shadow
             drawable_update
-	    drawable_fill
+            drawable_fill
             drawable_offset
             drawable_thumbnail
             drawable_sub_thumbnail

@@ -39,6 +39,7 @@ struct _GimpFilterTool
   GimpColorTool       parent_instance;
 
   GeglNode           *operation;
+  GimpDrawableFilter *existing_filter;
   GObject            *config;
   GObject            *default_config;
   GimpContainer      *settings;
@@ -103,7 +104,8 @@ struct _GimpFilterToolClass
 
 GType       gimp_filter_tool_get_type              (void) G_GNUC_CONST;
 
-void        gimp_filter_tool_get_operation         (GimpFilterTool     *filter_tool);
+void        gimp_filter_tool_get_operation         (GimpFilterTool     *filter_tool,
+                                                    GimpDrawableFilter *existing_filter);
 
 void        gimp_filter_tool_set_config            (GimpFilterTool     *filter_tool,
                                                     GimpConfig         *config);

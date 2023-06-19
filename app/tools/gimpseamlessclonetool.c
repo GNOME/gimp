@@ -379,7 +379,8 @@ gimp_seamless_clone_tool_commit (GimpSeamlessCloneTool *sc)
     {
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_drawable_filter_commit (sc->filter, GIMP_PROGRESS (tool), FALSE);
+      gimp_drawable_filter_commit (sc->filter, FALSE,
+                                   GIMP_PROGRESS (tool), FALSE);
       g_clear_object (&sc->filter);
 
       gimp_tool_control_pop_preserve (tool->control);
@@ -528,7 +529,8 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
            *       rectangle each time (in the update function) or by
            *       invalidating and re-rendering all now (expensive and
            *       perhaps useless */
-          gimp_drawable_filter_commit (sct->filter, GIMP_PROGRESS (tool), FALSE);
+          gimp_drawable_filter_commit (sct->filter, FALSE,
+                                       GIMP_PROGRESS (tool), FALSE);
           g_clear_object (&sct->filter);
 
           gimp_tool_control_set_preserve (tool->control, FALSE);

@@ -77,6 +77,26 @@ GimpUndo * gimp_image_undo_push_drawable_format     (GimpImage     *image,
                                                      GimpDrawable  *drawable);
 
 
+/*  drawable filter undos  */
+GimpUndo * gimp_image_undo_push_filter_add          (GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     GimpDrawable  *drawable,
+                                                     GimpDrawableFilter
+                                                                   *filter);
+
+GimpUndo * gimp_image_undo_push_filter_remove       (GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     GimpDrawable  *drawable,
+                                                     GimpDrawableFilter
+                                                                   *filter);
+
+GimpUndo * gimp_image_undo_push_filter_reorder      (GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     GimpDrawable  *drawable,
+                                                     GimpDrawableFilter
+                                                                   *filter);
+
+
 /*  mask undos  */
 
 GimpUndo * gimp_image_undo_push_mask                (GimpImage     *image,

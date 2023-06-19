@@ -810,13 +810,14 @@ gimp_operation_tool_relink_chains (GimpOperationTool *op_tool)
 /*  public functions  */
 
 void
-gimp_operation_tool_set_operation (GimpOperationTool *op_tool,
-                                   const gchar       *operation,
-                                   const gchar       *title,
-                                   const gchar       *description,
-                                   const gchar       *undo_desc,
-                                   const gchar       *icon_name,
-                                   const gchar       *help_id)
+gimp_operation_tool_set_operation (GimpOperationTool  *op_tool,
+                                   GimpDrawableFilter *filter,
+                                   const gchar        *operation,
+                                   const gchar        *title,
+                                   const gchar        *description,
+                                   const gchar        *undo_desc,
+                                   const gchar        *icon_name,
+                                   const gchar        *help_id)
 {
   GimpTool       *tool;
   GimpFilterTool *filter_tool;
@@ -855,7 +856,13 @@ gimp_operation_tool_set_operation (GimpOperationTool *op_tool,
   if (! operation)
     return;
 
-  gimp_filter_tool_get_operation (filter_tool);
+  gimp_filter_tool_get_operation (filter_tool, filter);
+
+  /* Update filter name for GeglOperation tool presets */
+  if (filter_tool->filter && description)
+    g_object_set (filter_tool->filter,
+                  "name", description,
+                  NULL);
 
   if (tool->drawables)
     gimp_operation_tool_sync_op (op_tool, TRUE);

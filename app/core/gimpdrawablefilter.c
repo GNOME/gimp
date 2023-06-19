@@ -54,12 +54,19 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_MASK
+};
+
 
 struct _GimpDrawableFilter
 {
   GimpFilter              parent_instance;
 
   GimpDrawable           *drawable;
+  GimpChannel            *mask;
   GeglNode               *operation;
 
   gboolean                has_input;
@@ -94,7 +101,15 @@ struct _GimpDrawableFilter
   GimpApplicator         *applicator;
 };
 
+static void       gimp_drawable_filter_set_property          (GObject             *object,
+                                                              guint                property_id,
+                                                              const GValue        *value,
+                                                              GParamSpec          *pspec);
 
+static void       gimp_drawable_filter_get_property          (GObject             *object,
+                                                              guint                property_id,
+                                                              GValue              *value,
+                                                              GParamSpec          *pspec);
 static void       gimp_drawable_filter_dispose               (GObject             *object);
 static void       gimp_drawable_filter_finalize              (GObject             *object);
 
@@ -159,8 +174,16 @@ gimp_drawable_filter_class_init (GimpDrawableFilterClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->dispose  = gimp_drawable_filter_dispose;
-  object_class->finalize = gimp_drawable_filter_finalize;
+  object_class->set_property = gimp_drawable_filter_set_property;
+  object_class->get_property = gimp_drawable_filter_get_property;
+  object_class->dispose      = gimp_drawable_filter_dispose;
+  object_class->finalize     = gimp_drawable_filter_finalize;
+
+  g_object_class_install_property (object_class, PROP_MASK,
+                                   g_param_spec_object ("mask",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_CHANNEL,
+                                                        GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -180,6 +203,49 @@ gimp_drawable_filter_init (GimpDrawableFilter *drawable_filter)
 }
 
 static void
+gimp_drawable_filter_set_property (GObject      *object,
+                                   guint         property_id,
+                                   const GValue *value,
+                                   GParamSpec   *pspec)
+{
+  GimpDrawableFilter *filter = GIMP_DRAWABLE_FILTER (object);
+
+  switch (property_id)
+    {
+    case PROP_MASK:
+      g_set_object (&filter->mask, g_value_get_object (value));
+
+      if (filter->mask)
+        gimp_drawable_filter_sync_mask (filter);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_drawable_filter_get_property (GObject    *object,
+                                   guint       property_id,
+                                   GValue     *value,
+                                   GParamSpec *pspec)
+{
+  GimpDrawableFilter *filter = GIMP_DRAWABLE_FILTER (object);
+
+  switch (property_id)
+    {
+    case PROP_MASK:
+      g_value_set_object (value, gimp_drawable_filter_get_mask (filter));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
 gimp_drawable_filter_dispose (GObject *object)
 {
   GimpDrawableFilter *drawable_filter = GIMP_DRAWABLE_FILTER (object);
@@ -195,9 +261,10 @@ gimp_drawable_filter_finalize (GObject *object)
 {
   GimpDrawableFilter *drawable_filter = GIMP_DRAWABLE_FILTER (object);
 
-  g_clear_object (&drawable_filter->operation);
   g_clear_object (&drawable_filter->applicator);
   g_clear_object (&drawable_filter->drawable);
+  g_clear_object (&drawable_filter->operation);
+  g_clear_object (&drawable_filter->mask);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -219,6 +286,7 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
   filter = g_object_new (GIMP_TYPE_DRAWABLE_FILTER,
                          "name",      undo_desc,
                          "icon-name", icon_name,
+                         "mask",      NULL,
                          NULL);
 
   filter->drawable  = g_object_ref (drawable);
@@ -226,8 +294,11 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
 
   node = gimp_filter_get_node (GIMP_FILTER (filter));
 
-  gegl_node_add_child (node, operation);
-  gimp_gegl_node_set_underlying_operation (node, operation);
+  if (! gegl_node_get_parent (operation))
+    {
+      gegl_node_add_child (node, operation);
+      gimp_gegl_node_set_underlying_operation (node, operation);
+    }
 
   filter->applicator = gimp_applicator_new (node);
 
@@ -281,6 +352,78 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
   return filter;
 }
 
+GimpDrawableFilter *
+gimp_drawable_filter_duplicate (GimpDrawable       *drawable,
+                                GimpDrawableFilter *prior_filter)
+{
+  GimpDrawableFilter *filter;
+  GimpChannel        *mask;
+  GeglNode           *prior_node;
+  GeglNode           *node = gegl_node_new ();
+  const gchar        *operation;
+  const gchar        *undo_desc;
+  const gchar        *icon_name;
+  GParamSpec        **pspecs;
+  guint               n_pspecs;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (prior_filter), NULL);
+
+  prior_node = gimp_drawable_filter_get_operation (prior_filter);
+
+  g_object_get (prior_filter,
+                "name",      &undo_desc,
+                "icon-name", &icon_name,
+                NULL);
+
+  gegl_node_get (prior_node,
+                 "operation", &operation,
+                 NULL);
+
+  gegl_node_set (node,
+                 "operation", operation,
+                 NULL);
+
+  pspecs = gegl_operation_list_properties (operation, &n_pspecs);
+
+  for (gint i = 0; i < n_pspecs; i++)
+    {
+      GParamSpec *pspec = pspecs[i];
+      GValue      value = G_VALUE_INIT;
+
+      g_value_init (&value, pspec->value_type);
+      gegl_node_get_property (prior_node, pspec->name,
+                              &value);
+
+      gegl_node_set_property (node, pspec->name,
+                              &value);
+      g_value_unset (&value);
+    }
+  g_free (pspecs);
+
+  filter = gimp_drawable_filter_new (drawable, undo_desc, node, icon_name);
+  g_object_unref (node);
+
+  gimp_drawable_filter_set_opacity (filter, prior_filter->opacity);
+  gimp_drawable_filter_set_mode (filter,
+                                 prior_filter->paint_mode,
+                                 prior_filter->blend_space,
+                                 prior_filter->composite_space,
+                                 prior_filter->composite_mode);
+  gimp_drawable_filter_set_region (filter,
+                                   prior_filter->region);
+
+  mask = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (prior_filter->mask),
+                                            GIMP_TYPE_CHANNEL));
+
+  g_object_set (filter,
+                "mask", mask,
+                NULL);
+  g_object_unref (mask);
+
+  return filter;
+}
+
 GimpDrawable *
 gimp_drawable_filter_get_drawable (GimpDrawableFilter *filter)
 {
@@ -297,6 +440,62 @@ gimp_drawable_filter_get_operation (GimpDrawableFilter *filter)
   return filter->operation;
 }
 
+GimpChannel *
+gimp_drawable_filter_get_mask (GimpDrawableFilter  *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), NULL);
+
+  return filter->mask;
+}
+
+gdouble
+gimp_drawable_filter_get_opacity (GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), 0.0f);
+
+  return filter->opacity;
+}
+
+GimpLayerMode
+gimp_drawable_filter_get_paint_mode (GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), 0);
+
+  return filter->paint_mode;
+}
+
+GimpLayerColorSpace
+gimp_drawable_filter_get_blend_space (GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), 0);
+
+  return filter->blend_space;
+}
+
+GimpLayerColorSpace
+gimp_drawable_filter_get_composite_space (GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), 0);
+
+  return filter->composite_space;
+}
+
+GimpLayerCompositeMode
+gimp_drawable_filter_get_composite_mode (GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), 0);
+
+  return filter->composite_mode;
+}
+
+GimpFilterRegion
+gimp_drawable_filter_get_region (GimpDrawableFilter  *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), 0);
+
+  return filter->region;
+}
+
 void
 gimp_drawable_filter_set_clip (GimpDrawableFilter *filter,
                                gboolean            clip)
@@ -307,6 +506,7 @@ gimp_drawable_filter_set_clip (GimpDrawableFilter *filter,
     {
       filter->clip = clip;
 
+      gimp_drawable_filter_sync_region (filter);
       gimp_drawable_filter_sync_clip (filter, TRUE);
     }
 }
@@ -568,6 +768,7 @@ gimp_drawable_filter_apply (GimpDrawableFilter  *filter,
 
 gboolean
 gimp_drawable_filter_commit (GimpDrawableFilter *filter,
+                             gboolean            non_destructive,
                              GimpProgress       *progress,
                              gboolean            cancellable)
 {
@@ -589,16 +790,25 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
                                               filter->preview_split_position);
       gimp_drawable_filter_set_preview (filter, TRUE);
 
-      success = gimp_drawable_merge_filter (filter->drawable,
-                                            GIMP_FILTER (filter),
-                                            progress,
-                                            gimp_object_get_name (filter),
-                                            format,
-                                            filter->filter_clip,
-                                            cancellable,
-                                            FALSE);
+      /* Only commit if filter is applied destructively */
+      if (! non_destructive)
+        {
+          success = gimp_drawable_merge_filter (filter->drawable,
+                                                GIMP_FILTER (filter),
+                                                progress,
+                                                gimp_object_get_name (filter),
+                                                format,
+                                                filter->filter_clip,
+                                                cancellable,
+                                                FALSE);
 
-      gimp_drawable_filter_remove_filter (filter);
+          gimp_drawable_filter_remove_filter (filter);
+        }
+      else
+        {
+          if (gimp_viewable_preview_is_frozen (GIMP_VIEWABLE (filter->drawable)))
+            gimp_viewable_preview_thaw (GIMP_VIEWABLE (filter->drawable));
+        }
 
       if (! success)
         gimp_drawable_filter_update_drawable (filter, NULL);
@@ -620,6 +830,41 @@ gimp_drawable_filter_abort (GimpDrawableFilter *filter)
     }
 }
 
+void
+gimp_drawable_filter_layer_mask_freeze (GimpDrawableFilter *filter)
+{
+  GimpImage   *image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
+  GimpChannel *mask;
+
+  if (! filter->mask)
+    {
+      mask = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (image)),
+                           GIMP_TYPE_CHANNEL));
+
+      g_set_object (&filter->mask, mask);
+      g_object_unref (mask);
+    }
+
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_drawable_filter_mask_changed,
+                                        filter);
+}
+
+void gimp_drawable_filter_refresh_crop (GimpDrawableFilter *filter,
+                                        GeglRectangle      *rect)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+
+  if (rect)
+    {
+      gimp_drawable_filter_set_clip (filter, TRUE);
+      gimp_drawable_filter_set_clip (filter, FALSE);
+      gimp_drawable_filter_set_region (filter, GIMP_FILTER_REGION_SELECTION);
+      gimp_drawable_filter_set_region (filter, GIMP_FILTER_REGION_DRAWABLE);
+      gimp_drawable_filter_set_crop (filter, NULL, FALSE);
+      gimp_drawable_filter_set_crop (filter, rect, FALSE);
+    }
+}
 
 /*  private functions  */
 
@@ -642,10 +887,9 @@ gimp_drawable_filter_sync_clip (GimpDrawableFilter *filter,
 
   if (! clip)
     {
-      GimpImage   *image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
-      GimpChannel *mask  = gimp_image_get_mask (image);
+      GimpChannel *mask = GIMP_CHANNEL (filter->mask);
 
-      if (! gimp_channel_is_empty (mask))
+      if (mask && ! gimp_channel_is_empty (mask))
         clip = TRUE;
     }
 
@@ -838,7 +1082,7 @@ gimp_drawable_filter_sync_crop (GimpDrawableFilter  *filter,
 
   gimp_applicator_set_crop (filter->applicator, enabled ? &new_rect : NULL);
 
-  if (update                                     &&
+  if (update                                  &&
       gimp_drawable_filter_is_active (filter) &&
       ! gegl_rectangle_equal (&old_rect, &new_rect))
     {
@@ -921,11 +1165,22 @@ static void
 gimp_drawable_filter_sync_mask (GimpDrawableFilter *filter)
 {
   GimpImage   *image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
-  GimpChannel *mask  = gimp_image_get_mask (image);
+  GimpChannel *mask  = NULL;
 
-  if (gimp_channel_is_empty (mask))
+  if (! filter->mask)
+    mask = gimp_image_get_mask (image);
+  else
+    mask = GIMP_CHANNEL (filter->mask);
+
+  if (! mask || gimp_channel_is_empty (mask))
     {
       gimp_applicator_set_mask_buffer (filter->applicator, NULL);
+
+      gimp_item_mask_intersect (GIMP_ITEM (filter->drawable),
+                                &filter->filter_area.x,
+                                &filter->filter_area.y,
+                                &filter->filter_area.width,
+                                &filter->filter_area.height);
     }
   else
     {
@@ -939,13 +1194,15 @@ gimp_drawable_filter_sync_mask (GimpDrawableFilter *filter)
       gimp_applicator_set_mask_buffer (filter->applicator, mask_buffer);
       gimp_applicator_set_mask_offset (filter->applicator,
                                        -offset_x, -offset_y);
-    }
 
-  gimp_item_mask_intersect (GIMP_ITEM (filter->drawable),
-                            &filter->filter_area.x,
-                            &filter->filter_area.y,
-                            &filter->filter_area.width,
-                            &filter->filter_area.height);
+      /* Update filter crop */
+      filter->filter_area.x      = mask->x1;
+      filter->filter_area.y      = mask->y1;
+      filter->filter_area.width  = mask->x2 - mask->x1;
+      filter->filter_area.height = mask->y2 - mask->y1;
+
+      gimp_drawable_filter_sync_region (filter);
+    }
 }
 
 static void
@@ -1052,24 +1309,25 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
       g_signal_connect (image, "component-active-changed",
                         G_CALLBACK (gimp_drawable_filter_affect_changed),
                         filter);
-      g_signal_connect (image, "mask-changed",
-                        G_CALLBACK (gimp_drawable_filter_mask_changed),
-                        filter);
-      g_signal_connect (filter->drawable, "lock-position-changed",
-                        G_CALLBACK (gimp_drawable_filter_lock_position_changed),
-                        filter);
-      g_signal_connect (filter->drawable, "format-changed",
-                        G_CALLBACK (gimp_drawable_filter_format_changed),
-                        filter);
-      g_signal_connect (filter->drawable, "removed",
-                        G_CALLBACK (gimp_drawable_filter_drawable_removed),
-                        filter);
+      if (! filter->mask)
+        g_signal_connect_object (image, "mask-changed",
+                                 G_CALLBACK (gimp_drawable_filter_mask_changed),
+                                 filter, 0);
+      g_signal_connect_object (filter->drawable, "lock-position-changed",
+                               G_CALLBACK (gimp_drawable_filter_lock_position_changed),
+                               filter, 0);
+      g_signal_connect_object (filter->drawable, "format-changed",
+                               G_CALLBACK (gimp_drawable_filter_format_changed),
+                               filter, 0);
+      g_signal_connect_object (filter->drawable, "removed",
+                               G_CALLBACK (gimp_drawable_filter_drawable_removed),
+                               filter, 0);
 
       if (GIMP_IS_LAYER (filter->drawable))
         {
-          g_signal_connect (filter->drawable, "lock-alpha-changed",
-                            G_CALLBACK (gimp_drawable_filter_lock_alpha_changed),
-                            filter);
+          g_signal_connect_object (filter->drawable, "lock-alpha-changed",
+                                   G_CALLBACK (gimp_drawable_filter_lock_alpha_changed),
+                                   filter, 0);
         }
 
       return TRUE;
@@ -1101,9 +1359,7 @@ gimp_drawable_filter_remove_filter (GimpDrawableFilter *filter)
       g_signal_handlers_disconnect_by_func (filter->drawable,
                                             gimp_drawable_filter_lock_position_changed,
                                             filter);
-      g_signal_handlers_disconnect_by_func (image,
-                                            gimp_drawable_filter_mask_changed,
-                                            filter);
+
       g_signal_handlers_disconnect_by_func (image,
                                             gimp_drawable_filter_affect_changed,
                                             filter);
@@ -1111,9 +1367,12 @@ gimp_drawable_filter_remove_filter (GimpDrawableFilter *filter)
       gimp_drawable_remove_filter (filter->drawable,
                                    GIMP_FILTER (filter));
 
-      gimp_drawable_update_bounding_box (filter->drawable);
+      if (filter->drawable &&
+          GIMP_IS_DRAWABLE (filter->drawable))
+        gimp_drawable_update_bounding_box (filter->drawable);
 
-      gimp_viewable_preview_thaw (GIMP_VIEWABLE (filter->drawable));
+      if (gimp_viewable_preview_is_frozen (GIMP_VIEWABLE (filter->drawable)))
+        gimp_viewable_preview_thaw (GIMP_VIEWABLE (filter->drawable));
 
       return TRUE;
     }
@@ -1181,13 +1440,22 @@ static void
 gimp_drawable_filter_mask_changed (GimpImage          *image,
                                    GimpDrawableFilter *filter)
 {
-  gimp_drawable_filter_update_drawable (filter, NULL);
+  if (! filter->mask)
+    {
+      gimp_drawable_filter_update_drawable (filter, NULL);
 
-  gimp_drawable_filter_sync_mask (filter);
-  gimp_drawable_filter_sync_clip (filter, FALSE);
-  gimp_drawable_filter_sync_region (filter);
+      gimp_drawable_filter_sync_mask (filter);
+      gimp_drawable_filter_sync_clip (filter, FALSE);
+      gimp_drawable_filter_sync_region (filter);
 
-  gimp_drawable_filter_update_drawable (filter, NULL);
+      gimp_drawable_filter_update_drawable (filter, NULL);
+    }
+  else
+    {
+      g_signal_handlers_disconnect_by_func (image,
+                                            gimp_drawable_filter_mask_changed,
+                                            filter);
+    }
 }
 
 static void
@@ -1210,7 +1478,8 @@ static void
 gimp_drawable_filter_drawable_removed (GimpDrawable       *drawable,
                                        GimpDrawableFilter *filter)
 {
-  gimp_drawable_filter_remove_filter (filter);
+  if (filter)
+    gimp_drawable_filter_remove_filter (filter);
 }
 
 static void

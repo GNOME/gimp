@@ -593,6 +593,40 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
 }
 
 /**
+ * gimp_drawable_merge_filters:
+ * @drawable: The drawable.
+ *
+ * Merge the layer effect filters to the specified drawable.
+ *
+ * This procedure combines the contents of the drawable's filter stack
+ * (for export) with the specified drawable.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_drawable_merge_filters (GimpDrawable *drawable)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-merge-filters",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_drawable_merge_shadow:
  * @drawable: The drawable.
  * @undo: Push merge to undo stack?

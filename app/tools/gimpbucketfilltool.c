@@ -497,7 +497,7 @@ gimp_bucket_fill_tool_commit (GimpBucketFillTool *tool)
 {
   if (tool->priv->filter)
     {
-      gimp_drawable_filter_commit (tool->priv->filter,
+      gimp_drawable_filter_commit (tool->priv->filter, FALSE,
                                    GIMP_PROGRESS (tool), FALSE);
       gimp_image_flush (gimp_display_get_image (GIMP_TOOL (tool)->display));
     }

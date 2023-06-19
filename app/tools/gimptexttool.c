@@ -35,6 +35,8 @@
 #include "core/gimpasyncset.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimpdrawable-filters.h"
+#include "core/gimpdrawablefilter.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimp-palettes.h"
@@ -42,6 +44,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplayer-floating-selection.h"
+#include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
 
@@ -1088,6 +1091,26 @@ gimp_text_tool_frame_item (GimpTextTool *text_tool)
 
   gimp_tool_rectangle_frame_item (GIMP_TOOL_RECTANGLE (text_tool->widget),
                                   GIMP_ITEM (text_tool->layer));
+
+  /* Update crop of any filters applied to text */
+  if (text_tool->layer)
+  {
+    GList         *list;
+    GimpDrawable  *drawable = GIMP_DRAWABLE (text_tool->layer);
+    GimpContainer *filters  = gimp_drawable_get_filters (drawable);
+
+    for (list = GIMP_LIST (filters)->queue->tail;
+         list; list = g_list_previous (list))
+      {
+        GimpDrawableFilter *filter = list->data;
+
+        /* TODO: Handle partial layer effect */
+        gimp_drawable_filter_set_region (filter, GIMP_FILTER_REGION_SELECTION);
+        gimp_drawable_filter_set_region (filter, GIMP_FILTER_REGION_DRAWABLE);
+      }
+    if (list)
+      g_list_free (list);
+  }
 
   text_tool->handle_rectangle_change_complete = TRUE;
 }

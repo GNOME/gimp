@@ -30,6 +30,8 @@
 
 #include "gimp.h"
 #include "gimpchannel.h"
+#include "gimpdrawable-filters.h"
+#include "gimpdrawablefilter.h"
 #include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
@@ -259,6 +261,36 @@ gimp_image_duplicate_layers (GimpImage *image,
 
       gimp_image_add_layer (new_image, new_layer,
                             NULL, count++, FALSE);
+
+      /* Import any attached layer effects */
+      if (gimp_drawable_has_filters (GIMP_DRAWABLE (layer)))
+        {
+          GList         *filter_list;
+          GimpContainer *filters;
+
+          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
+
+          for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
+               filter_list = g_list_previous (filter_list))
+            {
+              if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+                {
+                  GimpDrawableFilter *old_filter = filter_list->data;
+                  GimpDrawableFilter *filter;
+
+                  filter =
+                    gimp_drawable_filter_duplicate (GIMP_DRAWABLE (new_layer),
+                                                    old_filter);
+
+                  gimp_drawable_filter_apply (filter, NULL);
+                  gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
+
+                  gimp_drawable_filter_layer_mask_freeze (filter);
+
+                  g_object_unref (filter);
+                }
+            }
+        }
     }
 
   new_item_stack = GIMP_ITEM_STACK (gimp_image_get_layers (new_image));

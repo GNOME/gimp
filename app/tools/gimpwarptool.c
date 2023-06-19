@@ -982,7 +982,8 @@ gimp_warp_tool_commit (GimpWarpTool *wt)
 
       gimp_warp_tool_set_sampler (wt, /* commit = */ TRUE);
 
-      gimp_drawable_filter_commit (wt->filter, GIMP_PROGRESS (tool), FALSE);
+      gimp_drawable_filter_commit (wt->filter, FALSE,
+                                   GIMP_PROGRESS (tool), FALSE);
       g_clear_object (&wt->filter);
 
       gimp_tool_control_pop_preserve (tool->control);

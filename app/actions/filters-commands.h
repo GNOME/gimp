@@ -33,5 +33,10 @@ void   filters_history_cmd_callback           (GimpAction *action,
                                                GVariant   *value,
                                                gpointer    data);
 
+void    filters_run_procedure                 (Gimp          *gimp,
+                                               GimpDisplay   *display,
+                                               GimpProcedure *procedure,
+                                               GimpRunMode    run_mode);
+
 
 #endif /* __FILTERS_COMMANDS_H__ */

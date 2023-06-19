@@ -1029,7 +1029,8 @@ gimp_cage_tool_commit (GimpCageTool *ct)
 
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_drawable_filter_commit (ct->filter, GIMP_PROGRESS (tool), FALSE);
+      gimp_drawable_filter_commit (ct->filter, FALSE,
+                                   GIMP_PROGRESS (tool), FALSE);
       g_clear_object (&ct->filter);
 
       gimp_tool_control_pop_preserve (tool->control);

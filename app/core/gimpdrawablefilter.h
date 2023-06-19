@@ -54,10 +54,29 @@ GimpDrawableFilter *
                                                 const gchar         *undo_desc,
                                                 GeglNode            *operation,
                                                 const gchar         *icon_name);
+GimpDrawableFilter *
+           gimp_drawable_filter_duplicate      (GimpDrawable        *drawable,
+                                                GimpDrawableFilter  *prior_filter);
 
 GimpDrawable *
            gimp_drawable_filter_get_drawable   (GimpDrawableFilter  *filter);
 GeglNode * gimp_drawable_filter_get_operation  (GimpDrawableFilter  *filter);
+GimpChannel *
+           gimp_drawable_filter_get_mask       (GimpDrawableFilter  *filter);
+gdouble    gimp_drawable_filter_get_opacity    (GimpDrawableFilter  *filter);
+GimpLayerMode
+           gimp_drawable_filter_get_paint_mode (GimpDrawableFilter  *filter);
+GimpLayerColorSpace
+           gimp_drawable_filter_get_blend_space
+                                               (GimpDrawableFilter  *filter);
+GimpLayerColorSpace
+           gimp_drawable_filter_get_composite_space
+                                               (GimpDrawableFilter  *filter);
+GimpLayerCompositeMode
+           gimp_drawable_filter_get_composite_mode
+                                               (GimpDrawableFilter  *filter);
+GimpFilterRegion
+           gimp_drawable_filter_get_region     (GimpDrawableFilter  *filter);
 
 void       gimp_drawable_filter_set_clip       (GimpDrawableFilter  *filter,
                                                 gboolean             clip);
@@ -97,9 +116,15 @@ void       gimp_drawable_filter_apply          (GimpDrawableFilter  *filter,
                                                 const GeglRectangle *area);
 
 gboolean   gimp_drawable_filter_commit         (GimpDrawableFilter  *filter,
+                                                gboolean             non_destructive,
                                                 GimpProgress        *progress,
                                                 gboolean             cancellable);
 void       gimp_drawable_filter_abort          (GimpDrawableFilter  *filter);
+
+void       gimp_drawable_filter_layer_mask_freeze
+                                               (GimpDrawableFilter  *filter);
+void       gimp_drawable_filter_refresh_crop   (GimpDrawableFilter  *filter,
+                                                GeglRectangle       *rect);
 
 
 #endif /* __GIMP_DRAWABLE_FILTER_H__ */

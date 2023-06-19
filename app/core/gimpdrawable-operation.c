@@ -89,7 +89,7 @@ gimp_drawable_apply_operation_with_config (GimpDrawable *drawable,
     }
 
   gimp_drawable_filter_apply  (filter, NULL);
-  gimp_drawable_filter_commit (filter, progress, TRUE);
+  gimp_drawable_filter_commit (filter, FALSE, progress, TRUE);
 
   g_object_unref (filter);
 

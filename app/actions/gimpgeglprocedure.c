@@ -41,6 +41,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdisplay.h"
 #include "core/gimpdrawable-operation.h"
+#include "core/gimpdrawablefilter.h"
 #include "core/gimpimage.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparamspecs.h"
@@ -366,6 +367,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
       if (! strcmp (tool_name, "gimp-operation-tool"))
         {
           gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (active_tool),
+                                             gegl_procedure->filter,
                                              gegl_procedure->operation,
                                              gimp_procedure_get_label (procedure),
                                              gimp_procedure_get_label (procedure),
@@ -375,6 +377,25 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
         }
 
       tool_manager_initialize_active (gimp, display);
+
+      /* For GIMP-specific GEGL operations, we need to copy over the
+       * config object stored in the GeglNode */
+      if (gegl_procedure->filter                                            &&
+          (! strcmp (gegl_procedure->operation, "gimp:brightness-contrast") ||
+           ! strcmp (gegl_procedure->operation, "gimp:curves")              ||
+           ! strcmp (gegl_procedure->operation, "gimp:levels")              ||
+           ! strcmp (gegl_procedure->operation, "gimp:threshold")))
+        {
+          GeglNode *node;
+
+          GIMP_FILTER_TOOL (active_tool)->existing_filter = gegl_procedure->filter;
+          gimp_filter_set_active (GIMP_FILTER (gegl_procedure->filter), FALSE);
+
+          node = gimp_drawable_filter_get_operation (gegl_procedure->filter);
+          gegl_node_get (node,
+                         "config", &settings,
+                         NULL);
+        }
 
       if (settings)
         gimp_filter_tool_set_config (GIMP_FILTER_TOOL (active_tool),
@@ -386,15 +407,16 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
 /*  public functions  */
 
 GimpProcedure *
-gimp_gegl_procedure_new (Gimp        *gimp,
-                         GimpRunMode  default_run_mode,
-                         GimpObject  *default_settings,
-                         const gchar *operation,
-                         const gchar *name,
-                         const gchar *menu_label,
-                         const gchar *tooltip,
-                         const gchar *icon_name,
-                         const gchar *help_id)
+gimp_gegl_procedure_new (Gimp               *gimp,
+                         GimpDrawableFilter *filter,
+                         GimpRunMode         default_run_mode,
+                         GimpObject         *default_settings,
+                         const gchar        *operation,
+                         const gchar        *name,
+                         const gchar        *menu_label,
+                         const gchar        *tooltip,
+                         const gchar        *icon_name,
+                         const gchar        *help_id)
 {
   GimpProcedure     *procedure;
   GimpGeglProcedure *gegl_procedure;
@@ -412,6 +434,7 @@ gimp_gegl_procedure_new (Gimp        *gimp,
 
   gegl_procedure = GIMP_GEGL_PROCEDURE (procedure);
 
+  gegl_procedure->filter           = filter;
   gegl_procedure->operation        = g_strdup (operation);
   gegl_procedure->default_run_mode = default_run_mode;
   gegl_procedure->menu_label       = g_strdup (menu_label);

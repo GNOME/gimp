@@ -33,6 +33,7 @@
 #include "core/gimp.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpdrawable-fill.h"
+#include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawable-foreground-extract.h"
 #include "core/gimpdrawable-offset.h"
 #include "core/gimpdrawable-preview.h"
@@ -500,6 +501,35 @@ drawable_mask_intersect_invoker (GimpProcedure         *procedure,
     }
 
   return return_vals;
+}
+
+static GimpValueArray *
+drawable_merge_filters_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          gimp_drawable_merge_filters (drawable);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GimpValueArray *
@@ -1345,6 +1375,29 @@ register_drawable_procs (GimpPDB *pdb)
                                                      "height of the intersection",
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-merge-filters
+   */
+  procedure = gimp_procedure_new (drawable_merge_filters_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-merge-filters");
+  gimp_procedure_set_static_help (procedure,
+                                  "Merge the layer effect filters to the specified drawable.",
+                                  "This procedure combines the contents of the drawable's filter stack (for export) with the specified drawable.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

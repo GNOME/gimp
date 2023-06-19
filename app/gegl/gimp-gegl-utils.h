@@ -33,6 +33,8 @@ GeglColor   * gimp_gegl_color_new                     (const GimpRGB       *rgb,
 void          gimp_gegl_progress_connect              (GeglNode            *node,
                                                        GimpProgress        *progress,
                                                        const gchar         *text);
+void          gimp_gegl_progress_disconnect           (GeglNode            *node,
+                                                       GimpProgress        *progress);
 
 gboolean      gimp_gegl_node_is_source_operation      (GeglNode            *node);
 gboolean      gimp_gegl_node_is_point_operation       (GeglNode            *node);

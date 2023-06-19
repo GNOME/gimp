@@ -173,6 +173,21 @@ export_flatten (GimpImage  *image,
 }
 
 static void
+export_merge_layer_effects (GimpImage  *image,
+                            GList     **drawables)
+{
+  GList  *layers;
+  GList  *iter;
+
+  layers = gimp_image_list_layers (image);
+
+  for (iter = layers; iter; iter = g_list_next (iter))
+    gimp_drawable_merge_filters (GIMP_DRAWABLE (iter->data));
+
+  g_list_free (layers);
+}
+
+static void
 export_remove_alpha (GimpImage  *image,
                      GList     **drawables)
 {
@@ -376,6 +391,15 @@ static ExportAction export_action_flatten =
   NULL,
   N_("%s plug-in can't handle transparency"),
   { N_("Flatten Image"), NULL },
+  0
+};
+
+static ExportAction export_action_merge_layer_effects =
+{
+  export_merge_layer_effects,
+  NULL,
+  N_("%s plug-in can't handle layer effects"),
+  { N_("Merge Layer Effects"), NULL },
   0
 };
 
@@ -870,6 +894,9 @@ gimp_export_image (GimpImage               **image,
         return GIMP_EXPORT_CANCEL;
     }
 
+  /* Merge down layer effects for non-project file formats */
+  if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYER_EFFECTS))
+    actions = g_slist_prepend (actions, &export_action_merge_layer_effects);
 
   /* check alpha and layer masks */
   layers = gimp_image_list_layers (*image);

@@ -224,7 +224,7 @@ gimp_drawable_edit_fill (GimpDrawable    *drawable,
                                         composite_mode);
 
       gimp_drawable_filter_apply  (filter, NULL);
-      gimp_drawable_filter_commit (filter, NULL, FALSE);
+      gimp_drawable_filter_commit (filter, FALSE, NULL, FALSE);
 
       g_object_unref (filter);
       g_object_unref (operation);

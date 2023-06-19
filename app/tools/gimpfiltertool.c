@@ -46,12 +46,14 @@
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimperror.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-pick-color.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimplayer.h"
 #include "core/gimplist.h"
 #include "core/gimppickable.h"
@@ -153,7 +155,8 @@ static void      gimp_filter_tool_real_config_notify
                                                   const GParamSpec    *pspec);
 
 static void      gimp_filter_tool_halt           (GimpFilterTool      *filter_tool);
-static void      gimp_filter_tool_commit         (GimpFilterTool      *filter_tool);
+static void      gimp_filter_tool_commit         (GimpFilterTool      *filter_tool,
+                                                  gboolean             non_destructive);
 
 static void      gimp_filter_tool_dialog         (GimpFilterTool      *filter_tool);
 static void      gimp_filter_tool_reset          (GimpFilterTool      *filter_tool);
@@ -331,7 +334,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  gimp_filter_tool_get_operation (filter_tool);
+  gimp_filter_tool_get_operation (filter_tool, NULL);
 
   gimp_filter_tool_disable_color_picking (filter_tool);
 
@@ -339,7 +342,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
   g_list_free (tool->drawables);
   tool->drawables = drawables;
 
-  if (filter_tool->config)
+  if (filter_tool->config && ! filter_tool->existing_filter)
     gimp_config_reset (GIMP_CONFIG (filter_tool->config));
 
   if (! filter_tool->gui)
@@ -465,7 +468,8 @@ gimp_filter_tool_control (GimpTool       *tool,
                           GimpToolAction  action,
                           GimpDisplay    *display)
 {
-  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (tool);
+  GimpFilterTool *filter_tool     = GIMP_FILTER_TOOL (tool);
+  gboolean        non_destructive = TRUE;
 
   switch (action)
     {
@@ -478,7 +482,12 @@ gimp_filter_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
-      gimp_filter_tool_commit (filter_tool);
+      /* TODO: Expand non-destructive editing to other drawables
+       * besides layers */
+      if (! GIMP_IS_LAYER (tool->drawables->data))
+        non_destructive = FALSE;
+
+      gimp_filter_tool_commit (filter_tool, non_destructive);
       break;
     }
 
@@ -994,9 +1003,16 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
   if (filter_tool->filter)
     {
       gimp_drawable_filter_abort (filter_tool->filter);
+      g_signal_handlers_disconnect_by_func (filter_tool->filter,
+                                            gimp_filter_tool_flush,
+                                            filter_tool);
       g_clear_object (&filter_tool->filter);
       gimp_filter_tool_remove_guide (filter_tool);
     }
+
+  if (filter_tool->operation)
+    gimp_gegl_progress_disconnect (filter_tool->operation,
+                                   GIMP_PROGRESS (filter_tool));
 
   g_clear_object (&filter_tool->operation);
 
@@ -1022,15 +1038,79 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
   tool->display   = NULL;
   g_list_free (tool->drawables);
   tool->drawables = NULL;
+
+  if (filter_tool->existing_filter)
+    {
+      gimp_filter_set_active (GIMP_FILTER (filter_tool->existing_filter), TRUE);
+
+      /* Restore buttons in layer tree view */
+      gimp_drawable_filters_changed (gimp_drawable_filter_get_drawable (filter_tool->existing_filter));
+    }
+
+  filter_tool->existing_filter = NULL;
 }
 
+/* Add code to prevent creating new filter when editing */
 static void
-gimp_filter_tool_commit (GimpFilterTool *filter_tool)
+gimp_filter_tool_commit (GimpFilterTool *filter_tool,
+                         gboolean        non_destructive)
 {
   GimpTool *tool = GIMP_TOOL (filter_tool);
 
   if (filter_tool->gui)
     gimp_tool_gui_hide (filter_tool->gui);
+
+  /* Copy over filter info back to existing filter */
+  if (filter_tool->existing_filter)
+    {
+      GeglNode                *existing_node;
+      gdouble                  opacity;
+      GimpLayerMode            paint_mode;
+      GimpLayerColorSpace      blend_space;
+      GimpLayerColorSpace      composite_space;
+      GimpLayerCompositeMode   composite_mode;
+      GimpFilterRegion         region;
+      GParamSpec             **pspecs;
+      guint                    n_pspecs;
+      gchar                   *name          = NULL;
+
+      opacity         = gimp_drawable_filter_get_opacity (filter_tool->filter);
+      paint_mode      = gimp_drawable_filter_get_paint_mode (filter_tool->filter);
+      blend_space     = gimp_drawable_filter_get_blend_space (filter_tool->filter);
+      composite_space = gimp_drawable_filter_get_composite_space (filter_tool->filter);
+      composite_mode  = gimp_drawable_filter_get_composite_mode (filter_tool->filter);
+      region          = gimp_drawable_filter_get_region (filter_tool->filter);
+
+      existing_node = gimp_drawable_filter_get_operation (filter_tool->existing_filter);
+      gegl_node_get (existing_node,
+                     "operation", &name,
+                     NULL);
+
+      pspecs = gegl_operation_list_properties (name, &n_pspecs);
+      g_free (name);
+
+      for (gint i = 0; i < n_pspecs; i++)
+        {
+          GParamSpec *pspec = pspecs[i];
+          GValue      value = G_VALUE_INIT;
+
+          g_value_init (&value, pspec->value_type);
+          gegl_node_get_property (filter_tool->operation, pspec->name,
+                                  &value);
+
+          gegl_node_set_property (existing_node, pspec->name,
+                                  &value);
+        }
+
+      gimp_drawable_filter_set_opacity (filter_tool->existing_filter, opacity);
+      gimp_drawable_filter_set_mode (filter_tool->existing_filter,
+                                     paint_mode, blend_space, composite_space,
+                                     composite_mode);
+      gimp_drawable_filter_set_region (filter_tool->existing_filter, region);
+
+      /* Restore buttons in layer tree view */
+      gimp_drawable_filters_changed (gimp_drawable_filter_get_drawable (filter_tool->existing_filter));
+    }
 
   if (filter_tool->filter)
     {
@@ -1039,10 +1119,36 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool)
       if (! options->preview)
         gimp_drawable_filter_apply (filter_tool->filter, NULL);
 
+      gimp_drawable_filter_layer_mask_freeze (filter_tool->filter);
+
+      if (non_destructive)
+        {
+          gimp_drawable_filter_abort (filter_tool->filter);
+
+          if (! filter_tool->existing_filter)
+            gimp_drawable_filter_apply (filter_tool->filter, NULL);
+        }
+
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_drawable_filter_commit (filter_tool->filter,
-                                   GIMP_PROGRESS (tool), TRUE);
+      if (! filter_tool->existing_filter)
+        gimp_drawable_filter_commit (filter_tool->filter, non_destructive,
+                                     GIMP_PROGRESS (tool), non_destructive);
+
+      g_signal_handlers_disconnect_by_func (filter_tool->filter,
+                                            gimp_filter_tool_flush,
+                                            filter_tool);
+
+      if (non_destructive && ! filter_tool->existing_filter)
+        {
+          GimpDrawable *drawable =
+            gimp_drawable_filter_get_drawable (filter_tool->filter);
+
+          gimp_image_undo_push_filter_add (gimp_display_get_image (tool->display),
+                                           _("Add filter"),
+                                           drawable, filter_tool->filter);
+        }
+
       g_clear_object (&filter_tool->filter);
 
       gimp_tool_control_pop_preserve (tool->control);
@@ -1059,6 +1165,11 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool)
                                          config->filter_tool_max_recent);
         }
     }
+
+  if (filter_tool->existing_filter)
+    gimp_filter_set_active (GIMP_FILTER (filter_tool->existing_filter), TRUE);
+
+  filter_tool->existing_filter = NULL;
 }
 
 static void
@@ -1227,6 +1338,33 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
 
   if (options->preview)
     gimp_drawable_filter_apply (filter_tool->filter, NULL);
+
+  /* If editing existing filter, shift into the right location
+   * in the filter stack. */
+  if (filter_tool->existing_filter)
+    {
+      GimpContainer *filters;
+      GimpChannel   *mask;
+      gint           index;
+      const gchar   *name = _("Editing filter...");
+
+      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (tool->drawables->data));
+
+      if (filters)
+        {
+          index = gimp_container_get_child_index (filters,
+                                                  GIMP_OBJECT (filter_tool->existing_filter));
+
+          gimp_container_reorder (filters, GIMP_OBJECT (filter_tool->filter),
+                                  index);
+        }
+
+      mask = gimp_drawable_filter_get_mask (filter_tool->existing_filter);
+      g_object_set (filter_tool->filter,
+                    "name", name,
+                    "mask", mask,
+                    NULL);
+    }
 }
 
 static void
@@ -1594,7 +1732,8 @@ gimp_filter_tool_set_has_settings (GimpFilterTool *filter_tool,
 /*  public functions  */
 
 void
-gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
+gimp_filter_tool_get_operation (GimpFilterTool     *filter_tool,
+                                GimpDrawableFilter *existing_filter)
 {
   GimpTool             *tool;
   GimpFilterToolClass  *klass;
@@ -1643,6 +1782,11 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
   filter_tool->operation = gegl_node_new_child (NULL,
                                                 "operation", operation_name,
                                                 NULL);
+  if (existing_filter)
+    {
+      filter_tool->existing_filter = existing_filter;
+      gimp_filter_set_active (GIMP_FILTER (filter_tool->existing_filter), FALSE);
+    }
 
   filter_tool->config =
     g_object_new (gimp_operation_config_get_type (tool->tool_info->gimp,
@@ -1650,6 +1794,55 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
                                                   gimp_tool_get_icon_name (tool),
                                                   GIMP_TYPE_OPERATION_SETTINGS),
                   NULL);
+
+  /* Update layer effect if we're editing it */
+  if (filter_tool->existing_filter)
+    {
+      GeglNode          *existing_node;
+      gdouble            opacity;
+      GimpLayerMode      paint_mode;
+      GimpFilterRegion   region;
+      GParamSpec       **pspecs;
+      guint              n_pspecs;
+      const gchar       *name;
+
+      opacity    = gimp_drawable_filter_get_opacity (filter_tool->existing_filter);
+      paint_mode = gimp_drawable_filter_get_paint_mode (filter_tool->existing_filter);
+      region     = gimp_drawable_filter_get_region (filter_tool->existing_filter);
+
+      existing_node = gimp_drawable_filter_get_operation (filter_tool->existing_filter);
+      gegl_node_get (existing_node,
+                     "operation", &name,
+                     NULL);
+
+      if (! strcmp (gimp_object_get_name (tool->tool_info), "gimp-operation-tool"))
+        {
+          pspecs = gegl_operation_list_properties (operation_name, &n_pspecs);
+
+          for (gint i = 0; i < n_pspecs; i++)
+            {
+              GValue      value      = G_VALUE_INIT;
+              GParamSpec *pspec      = pspecs[i];
+              GParamSpec *gimp_pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (filter_tool->config),
+                                                                     pspec->name);
+
+              g_value_init (&value, pspec->value_type);
+              gegl_node_get_property (existing_node, pspec->name,
+                                      &value);
+
+              g_object_set_property (G_OBJECT (filter_tool->config), gimp_pspec->name,
+                                      &value);
+              g_value_unset (&value);
+            }
+          g_free (pspecs);
+        }
+
+      g_object_set (filter_tool->config,
+                    "gimp-opacity", opacity,
+                    "gimp-mode",    paint_mode,
+                    "gimp-region",  region,
+                    NULL);
+    }
 
   gimp_operation_config_sync_node (filter_tool->config,
                                    filter_tool->operation);

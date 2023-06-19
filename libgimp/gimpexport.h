@@ -40,6 +40,7 @@ G_BEGIN_DECLS
  * @GIMP_EXPORT_CAN_HANDLE_ALPHA:               Handles alpha channels
  * @GIMP_EXPORT_CAN_HANDLE_LAYERS:              Handles layers
  * @GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION: Handles animation of layers
+ * @GIMP_EXPORT_CAN_HANDLE_LAYER_EFFECTS:       Handles layer effects
  * @GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS:         Handles layer masks
  * @GIMP_EXPORT_NEEDS_ALPHA:                    Needs alpha channels
  * @GIMP_EXPORT_NEEDS_CROP:                     Needs to crop content to image bounds
@@ -56,8 +57,9 @@ typedef enum
   GIMP_EXPORT_CAN_HANDLE_LAYERS              = 1 << 5,
   GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION = 1 << 6,
   GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS         = 1 << 7,
-  GIMP_EXPORT_NEEDS_ALPHA                    = 1 << 8,
-  GIMP_EXPORT_NEEDS_CROP                     = 1 << 9
+  GIMP_EXPORT_CAN_HANDLE_LAYER_EFFECTS       = 1 << 8,
+  GIMP_EXPORT_NEEDS_ALPHA                    = 1 << 9,
+  GIMP_EXPORT_NEEDS_CROP                     = 1 << 10
 } GimpExportCapabilities;
 
 

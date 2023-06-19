@@ -40,12 +40,13 @@ struct _GimpGeglProcedure
 {
   GimpProcedure  parent_instance;
 
-  gchar         *operation;
+  GimpDrawableFilter *filter;
+  gchar              *operation;
 
-  GimpRunMode    default_run_mode;
-  GimpObject    *default_settings;
+  GimpRunMode         default_run_mode;
+  GimpObject         *default_settings;
 
-  gchar         *menu_label;
+  gchar              *menu_label;
 };
 
 struct _GimpGeglProcedureClass
@@ -56,15 +57,15 @@ struct _GimpGeglProcedureClass
 
 GType           gimp_gegl_procedure_get_type (void) G_GNUC_CONST;
 
-GimpProcedure * gimp_gegl_procedure_new      (Gimp        *gimp,
-                                              GimpRunMode  default_run_mode,
-                                              GimpObject  *default_settings,
-                                              const gchar *operation,
-                                              const gchar *name,
-                                              const gchar *menu_label,
-                                              const gchar *tooltip,
-                                              const gchar *icon_name,
-                                              const gchar *help_id);
-
+GimpProcedure * gimp_gegl_procedure_new           (Gimp               *gimp,
+                                                   GimpDrawableFilter *filter,
+                                                   GimpRunMode         default_run_mode,
+                                                   GimpObject         *default_settings,
+                                                   const gchar        *operation,
+                                                   const gchar        *name,
+                                                   const gchar        *menu_label,
+                                                   const gchar        *tooltip,
+                                                   const gchar        *icon_name,
+                                                   const gchar        *help_id);
 
 #endif /* __GIMP_GEGL_PROCEDURE_H__ */

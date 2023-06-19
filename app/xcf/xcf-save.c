@@ -38,6 +38,8 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdrawable-filters.h"
+#include "core/gimpdrawablefilter.h"
 #include "core/gimpgrid.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
@@ -51,6 +53,7 @@
 #include "core/gimpitemlist.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
+#include "core/gimplist.h"
 #include "core/gimpparasitelist.h"
 #include "core/gimpprogress.h"
 #include "core/gimpsamplepoint.h"
@@ -114,6 +117,10 @@ static gboolean xcf_save_channel_props (XcfInfo           *info,
                                         GimpImage         *image,
                                         GimpChannel       *channel,
                                         GError           **error);
+static gboolean xcf_save_effect_props  (XcfInfo           *info,
+                                        GimpImage         *image,
+                                        GimpFilter        *filter,
+                                        GError           **error);
 static gboolean xcf_save_path_props    (XcfInfo           *info,
                                         GimpImage         *image,
                                         GimpVectors       *vectors,
@@ -130,6 +137,10 @@ static gboolean xcf_save_layer         (XcfInfo           *info,
 static gboolean xcf_save_channel       (XcfInfo           *info,
                                         GimpImage         *image,
                                         GimpChannel       *channel,
+                                        GError           **error);
+static gboolean xcf_save_effect        (XcfInfo           *info,
+                                        GimpImage         *image,
+                                        GimpFilter        *filter,
                                         GError           **error);
 static gboolean xcf_save_path          (XcfInfo           *info,
                                         GimpImage         *image,
@@ -811,6 +822,44 @@ xcf_save_channel_props (XcfInfo      *info,
           g_list_free (items);
         }
     }
+
+  xcf_check_error (xcf_save_prop (info, image, PROP_END, error), ;);
+
+  return TRUE;
+}
+
+static gboolean
+xcf_save_effect_props (XcfInfo      *info,
+                       GimpImage    *image,
+                       GimpFilter   *filter,
+                       GError      **error)
+{
+  const gchar *name;
+  const gchar *icon;
+
+  g_object_get (filter,
+                "name",      &name,
+                "icon-name", &icon,
+                NULL);
+
+  xcf_check_error (xcf_save_prop (info, image, PROP_FILTER_NAME, error,
+                                  name), ;);
+  xcf_check_error (xcf_save_prop (info, image, PROP_FILTER_ICON, error,
+                                  icon), ;);
+  xcf_check_error (xcf_save_prop (info, image, PROP_VISIBLE, error,
+                                  gimp_filter_get_active (filter)), ;);
+  xcf_check_error (xcf_save_prop (info, image, PROP_OPACITY, error,
+                                  gimp_drawable_filter_get_opacity (GIMP_DRAWABLE_FILTER (filter))), ;);
+  xcf_check_error (xcf_save_prop (info, image, PROP_MODE, error,
+                                  gimp_drawable_filter_get_paint_mode (GIMP_DRAWABLE_FILTER (filter))), ;);
+  xcf_check_error (xcf_save_prop (info, image, PROP_BLEND_SPACE, error,
+                                  gimp_drawable_filter_get_blend_space (GIMP_DRAWABLE_FILTER (filter))), ;);
+  xcf_check_error (xcf_save_prop (info, image, PROP_COMPOSITE_SPACE, error,
+                                  gimp_drawable_filter_get_composite_space (GIMP_DRAWABLE_FILTER (filter))), ;);
+  xcf_check_error (xcf_save_prop (info, image, PROP_COMPOSITE_MODE, error,
+                                  gimp_drawable_filter_get_composite_mode (GIMP_DRAWABLE_FILTER (filter))), ;);
+  xcf_check_error (xcf_save_prop (info, image, PROP_FILTER_REGION, error,
+                                  gimp_drawable_filter_get_region (GIMP_DRAWABLE_FILTER (filter))), ;);
 
   xcf_check_error (xcf_save_prop (info, image, PROP_END, error), ;);
 
@@ -1620,6 +1669,37 @@ xcf_save_prop (XcfInfo    *info,
         xcf_write_int32_check_error (info, &set_n, 1, va_end (args));
       }
       break;
+
+    case PROP_FILTER_NAME:
+      {
+        const gchar *filter_name = va_arg (args, gchar *);
+
+        xcf_write_prop_type_check_error (info, prop_type, va_end (args));
+        xcf_write_string_check_error (info, (gchar **) &filter_name, 1, va_end (args));
+      }
+      break;
+
+    case PROP_FILTER_ICON:
+      {
+        const gchar *filter_icon = va_arg (args, gchar *);
+
+        xcf_write_prop_type_check_error (info, prop_type, va_end (args));
+        xcf_write_string_check_error (info, (gchar **) &filter_icon, 1, va_end (args));
+      }
+      break;
+
+    case PROP_FILTER_REGION:
+      {
+        guint32 filter_region = va_arg (args, guint32);
+
+        size = 4;
+
+        xcf_write_prop_type_check_error (info, prop_type, va_end (args));
+        xcf_write_int32_check_error (info, &size, 1, va_end (args));
+
+        xcf_write_int32_check_error (info, &filter_region, 1, va_end (args));
+      }
+      break;
     }
 
   va_end (args);
@@ -1633,11 +1713,15 @@ xcf_save_layer (XcfInfo    *info,
                 GimpLayer  *layer,
                 GError    **error)
 {
-  goffset      saved_pos;
-  goffset      offset;
-  guint32      value;
-  const gchar *string;
-  GError      *tmp_error = NULL;
+  goffset        saved_pos;
+  goffset        offset;
+  guint32        value;
+  const gchar   *string;
+  GimpContainer *filters;
+  GList         *filter_list;
+  guint32        num_effects = 0;
+  GList         *list;
+  GError        *tmp_error   = NULL;
 
   /* check and see if this is the drawable that the floating
    *  selection is attached to.
@@ -1648,6 +1732,17 @@ xcf_save_layer (XcfInfo    *info,
       xcf_check_error (xcf_seek_pos (info, info->floating_sel_offset, error), ;);
       xcf_write_offset_check_error (info, &saved_pos, 1, ;);
       xcf_check_error (xcf_seek_pos (info, saved_pos, error), ;);
+    }
+
+  /* Get filter information */
+  filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
+  /* Since floating selections are also stored in the filter stack,
+   * we need to verify what's in there to get the correct count */
+  for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
+       filter_list = g_list_previous (filter_list))
+    {
+      if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+        num_effects++;
     }
 
   /* write out the width, height and image type information for the layer */
@@ -1667,14 +1762,18 @@ xcf_save_layer (XcfInfo    *info,
   /* write out the layer properties */
   xcf_save_layer_props (info, image, layer, error);
 
-  /* write out the layer tile hierarchy */
-  offset = info->cp + 2 * info->bytes_per_offset;
+  /* write out the layer tile hierarchy and effects */
+  offset = info->cp + (2 + (num_effects * 2) + 1) * info->bytes_per_offset;
   xcf_write_offset_check_error (info, &offset, 1, ;);
 
   saved_pos = info->cp;
 
   /* write a zero layer mask offset */
   xcf_write_zero_offset_check_error (info, 1, ;);
+
+  /* write out zero effect and effect mask offset(s) */
+  for (gint i = 0; i <= (num_effects * 2); i++)
+    xcf_write_zero_offset_check_error (info, 1, ;);
 
   xcf_check_error (xcf_save_buffer (info, image,
                                     gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
@@ -1690,9 +1789,53 @@ xcf_save_layer (XcfInfo    *info,
       xcf_check_error (xcf_seek_pos (info, saved_pos, error), ;);
       xcf_write_offset_check_error (info, &offset, 1, ;);
 
+      saved_pos = info->cp;
+
       xcf_check_error (xcf_seek_pos (info, offset, error), ;);
       xcf_check_error (xcf_save_channel (info, image, GIMP_CHANNEL (mask),
                                          error), ;);
+    }
+
+  /* write out any layer effects and effect masks */
+  if (num_effects > 0)
+    {
+      saved_pos += info->bytes_per_offset;
+
+      for (list = GIMP_LIST (filters)->queue->head; list;
+           list = g_list_next (list))
+        {
+          if (GIMP_IS_DRAWABLE_FILTER (list->data))
+            {
+              GimpDrawableFilter *filter = list->data;
+              GimpChannel        *effect_mask;
+
+              offset = info->cp;
+
+              xcf_check_error (xcf_seek_pos (info, saved_pos, error), ;);
+              xcf_write_offset_check_error (info, &offset, 1, ;);
+
+              saved_pos = info->cp;
+
+              xcf_check_error (xcf_seek_pos (info, offset, error), ;);
+              xcf_check_error (xcf_save_effect (info, image, GIMP_FILTER (filter),
+                                                error), ;);
+
+              /* write out effect mask */
+              effect_mask = gimp_drawable_filter_get_mask (filter);
+
+              offset = info->cp;
+
+              xcf_check_error (xcf_seek_pos (info, saved_pos, error), ;);
+              xcf_write_offset_check_error (info, &offset, 1, ;);
+
+              saved_pos = info->cp;
+
+              xcf_check_error (xcf_seek_pos (info, offset, error), ;);
+              xcf_check_error (xcf_save_channel (info, image, effect_mask,
+                                                 error), ;);
+            }
+        }
+      g_list_free (list);
     }
 
   return TRUE;
@@ -1742,6 +1885,60 @@ xcf_save_channel (XcfInfo      *info,
   xcf_check_error (xcf_save_buffer (info, image,
                                     gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                                     error), ;);
+
+  return TRUE;
+}
+
+static gboolean
+xcf_save_effect (XcfInfo     *info,
+                 GimpImage   *image,
+                 GimpFilter  *filter,
+                 GError     **error)
+{
+  const gchar        *string;
+  GimpDrawableFilter *filter_drawable;
+  GeglNode           *node;
+  GeglNode           *save_node = gegl_node_new ();
+  const gchar        *operation;
+  GParamSpec        **pspecs;
+  guint               n_pspecs;
+  GError             *tmp_error = NULL;
+
+  filter_drawable = GIMP_DRAWABLE_FILTER (filter);
+  node            = gimp_drawable_filter_get_operation (filter_drawable);
+
+  /* Create operation-only node */
+  gegl_node_get (node,
+                 "operation", &operation,
+                 NULL);
+
+  gegl_node_set (save_node,
+                 "operation", operation,
+                 NULL);
+
+  pspecs = gegl_operation_list_properties (operation, &n_pspecs);
+
+  for (gint i = 0; i < n_pspecs; i++)
+    {
+      GParamSpec *pspec = pspecs[i];
+      GValue      value = G_VALUE_INIT;
+
+      g_value_init (&value, pspec->value_type);
+      gegl_node_get_property (node, pspec->name,
+                              &value);
+
+      gegl_node_set_property (save_node, pspec->name,
+                              &value);
+      g_value_unset (&value);
+    }
+  g_free (pspecs);
+
+  /* Write out GEGL xml */
+  string = gegl_node_to_xml_full (save_node, save_node, "/");
+  xcf_write_string_check_error (info, (gchar **) &string, 1, ;);
+
+  /* write out the effect properties */
+  xcf_save_effect_props (info, image, filter, error);
 
   return TRUE;
 }

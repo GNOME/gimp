@@ -1284,6 +1284,9 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_FOREGROUND_SELECT, "GIMP_UNDO_FOREGROUND_SELECT", "foreground-select" },
     { GIMP_UNDO_PARASITE_ATTACH, "GIMP_UNDO_PARASITE_ATTACH", "parasite-attach" },
     { GIMP_UNDO_PARASITE_REMOVE, "GIMP_UNDO_PARASITE_REMOVE", "parasite-remove" },
+    { GIMP_UNDO_FILTER_ADD, "GIMP_UNDO_FILTER_ADD", "filter-add" },
+    { GIMP_UNDO_FILTER_REMOVE, "GIMP_UNDO_FILTER_REMOVE", "filter-remove" },
+    { GIMP_UNDO_FILTER_REORDER, "GIMP_UNDO_FILTER_REORDER", "filter-reorder" },
     { GIMP_UNDO_CANT, "GIMP_UNDO_CANT", "cant" },
     { 0, NULL, NULL }
   };
@@ -1393,6 +1396,9 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_FOREGROUND_SELECT, NC_("undo-type", "Select foreground"), NULL },
     { GIMP_UNDO_PARASITE_ATTACH, NC_("undo-type", "Attach parasite"), NULL },
     { GIMP_UNDO_PARASITE_REMOVE, NC_("undo-type", "Remove parasite"), NULL },
+    { GIMP_UNDO_FILTER_ADD, NC_("undo-type", "Add effect"), NULL },
+    { GIMP_UNDO_FILTER_REMOVE, NC_("undo-type", "Remove effect"), NULL },
+    { GIMP_UNDO_FILTER_REORDER, NC_("undo-type", "Reorder effect"), NULL },
     { GIMP_UNDO_CANT, NC_("undo-type", "Not undoable"), NULL },
     { 0, NULL, NULL }
   };

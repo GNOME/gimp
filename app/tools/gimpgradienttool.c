@@ -769,7 +769,7 @@ gimp_gradient_tool_commit (GimpGradientTool *gradient_tool)
 
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_drawable_filter_commit (gradient_tool->filter,
+      gimp_drawable_filter_commit (gradient_tool->filter, FALSE,
                                    GIMP_PROGRESS (tool), FALSE);
       g_clear_object (&gradient_tool->filter);
 
