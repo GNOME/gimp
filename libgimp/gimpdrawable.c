@@ -186,24 +186,19 @@ gimp_drawable_get_sub_thumbnail_data (GimpDrawable *drawable,
                                       gint         *actual_height,
                                       gint         *bpp)
 {
-  gint    ret_width, ret_height;
   GBytes *image_bytes;
-  gsize   data_size;
 
   _gimp_drawable_sub_thumbnail (drawable,
                                 src_x, src_y,
                                 src_width, src_height,
-                                 dest_width,
-                                 dest_height,
-                                &ret_width,
-                                &ret_height,
+                                dest_width,
+                                dest_height,
+                                actual_width,
+                                actual_height,
                                 bpp,
                                 &image_bytes);
 
-  *actual_width  = ret_width;
-  *actual_height = ret_height;
-
-  return g_bytes_unref_to_data (image_bytes, &data_size);
+  return image_bytes;
 }
 
 /**
