@@ -33,15 +33,6 @@
 #define PLUG_IN_ROLE   "gimp-tile"
 
 
-typedef struct
-{
-  gint new_width;
-  gint new_height;
-  gint constrain;
-  gint new_image;
-} TileVals;
-
-
 typedef struct _Tile      Tile;
 typedef struct _TileClass TileClass;
 
@@ -70,11 +61,14 @@ static GimpValueArray * tile_run              (GimpProcedure        *procedure,
                                                GimpImage            *image,
                                                gint                  n_drawables,
                                                GimpDrawable        **drawables,
-                                               const GimpValueArray *args,
+                                               GimpProcedureConfig  *config,
                                                gpointer              run_data);
 
 static void             tile                  (GimpImage            *image,
                                                GimpDrawable         *drawable,
+                                               gint                  new_width,
+                                               gint                  new_height,
+                                               gboolean              create_new_image,
                                                GimpImage           **new_image,
                                                GimpLayer           **new_layer);
 
@@ -85,7 +79,9 @@ static void             tile_gegl             (GeglBuffer           *src,
                                                gint                  dst_width,
                                                gint                  dst_height);
 
-static gboolean         tile_dialog           (GimpImage            *image,
+static gboolean         tile_dialog           (GimpProcedure        *procedure,
+                                               GimpProcedureConfig  *config,
+                                               GimpImage            *image,
                                                GimpDrawable         *drawable);
 
 
@@ -93,15 +89,6 @@ G_DEFINE_TYPE (Tile, tile, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (TILE_TYPE)
 DEFINE_STD_SET_I18N
-
-
-static TileVals tvals =
-{
-  1,     /* new_width  */
-  1,     /* new_height */
-  TRUE,  /* constrain  */
-  TRUE   /* new_image  */
-};
 
 
 static void
@@ -133,9 +120,9 @@ tile_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            tile_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             tile_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -162,20 +149,28 @@ tile_create_procedure (GimpPlugIn  *plug_in,
                                       "Spencer Kimball & Peter Mattis",
                                       "1996-1997");
 
+      /* XXX: we actually don't care about the default value as we always set
+       * the width/height of the active image, though it would be nice to reuse
+       * the previously stored value if we run tile on the same image twice.
+       * TODO: a flag and/or some special handler function would be interesting
+       * for such specific cases where a hardcoded default value doesn't make
+       * sense or when we want stored values to only apply when run on a same
+       * image.
+       */
       GIMP_PROC_ARG_INT (procedure, "new-width",
-                         "New width",
+                         "New _width",
                          "New (tiled) image width",
                          1, GIMP_MAX_IMAGE_SIZE, 1,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "new-height",
-                         "New height",
+                         "New _height",
                          "New (tiled) image height",
                          1, GIMP_MAX_IMAGE_SIZE, 1,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "new-image",
-                             "New image",
+                             "New _image",
                              "Create a new image",
                              TRUE,
                              G_PARAM_READWRITE);
@@ -202,13 +197,16 @@ tile_run (GimpProcedure        *procedure,
           GimpImage            *image,
           gint                  n_drawables,
           GimpDrawable        **drawables,
-          const GimpValueArray *args,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
   GimpValueArray *return_vals;
   GimpLayer      *new_layer;
   GimpImage      *new_image;
   GimpDrawable   *drawable;
+  gint            new_width;
+  gint            new_height;
+  gboolean        create_new_image;
 
   gegl_init (NULL, NULL);
 
@@ -232,9 +230,7 @@ tile_run (GimpProcedure        *procedure,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &tvals);
-
-      if (! tile_dialog (image, drawable))
+      if (! tile_dialog (procedure, config, image, drawable))
         {
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_CANCEL,
@@ -243,29 +239,26 @@ tile_run (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      tvals.new_width  = GIMP_VALUES_GET_INT     (args, 0);
-      tvals.new_height = GIMP_VALUES_GET_INT     (args, 1);
-      tvals.new_image  = GIMP_VALUES_GET_BOOLEAN (args, 2);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &tvals);
       break;
     }
 
+  g_object_get (config,
+                "new-width",  &new_width,
+                "new-height", &new_height,
+                "new-image",  &create_new_image,
+                NULL);
+
   gimp_progress_init (_("Tiling"));
 
-  tile (image,
-        drawable,
-        &new_image,
-        &new_layer);
-
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data (PLUG_IN_PROC, &tvals, sizeof (TileVals));
+  tile (image, drawable, new_width, new_height,
+        create_new_image, &new_image, &new_layer);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     {
-      if (tvals.new_image)
+      if (create_new_image)
         gimp_display_new (new_image);
       else
         gimp_displays_flush ();
@@ -349,20 +342,21 @@ tile_gegl (GeglBuffer  *src,
 static void
 tile (GimpImage     *image,
       GimpDrawable  *drawable,
+      gint           new_width,
+      gint           new_height,
+      gboolean       create_new_image,
       GimpImage    **new_image,
       GimpLayer    **new_layer)
 {
   GimpDrawable *dst_drawable;
   GeglBuffer   *dst_buffer;
   GeglBuffer   *src_buffer;
-  gint          dst_width  = tvals.new_width;
-  gint          dst_height = tvals.new_height;
   gint          src_width  = gimp_drawable_get_width (drawable);
   gint          src_height = gimp_drawable_get_height (drawable);
 
   GimpImageBaseType  image_type   = GIMP_RGB;
 
-  if (tvals.new_image)
+  if (create_new_image)
     {
       /*  create  a new image  */
       gint32 precision = gimp_image_get_precision (image);
@@ -385,8 +379,8 @@ tile (GimpImage     *image,
           break;
         }
 
-      *new_image = gimp_image_new_with_precision (dst_width,
-                                                  dst_height,
+      *new_image = gimp_image_new_with_precision (new_width,
+                                                  new_height,
                                                   image_type,
                                                   precision);
       gimp_image_undo_disable (*new_image);
@@ -403,7 +397,7 @@ tile (GimpImage     *image,
         }
 
       *new_layer = gimp_layer_new (*new_image, _("Background"),
-                                   dst_width, dst_height,
+                                   new_width, new_height,
                                    gimp_drawable_type (drawable),
                                    100,
                                    gimp_image_get_default_new_layer_mode (*new_image));
@@ -420,17 +414,17 @@ tile (GimpImage     *image,
       *new_layer = NULL;
 
       gimp_image_undo_group_start (image);
-      gimp_image_resize (image, dst_width, dst_height, 0, 0);
+      gimp_image_resize (image, new_width, new_height, 0, 0);
 
       if (gimp_item_is_layer (GIMP_ITEM (drawable)))
         {
-          gimp_layer_resize (GIMP_LAYER (drawable), dst_width, dst_height, 0, 0);
+          gimp_layer_resize (GIMP_LAYER (drawable), new_width, new_height, 0, 0);
         }
       else if (gimp_item_is_layer_mask (GIMP_ITEM (drawable)))
         {
           GimpLayer *layer = gimp_layer_from_mask (GIMP_LAYER_MASK (drawable));
 
-          gimp_layer_resize (layer, dst_width, dst_height, 0, 0);
+          gimp_layer_resize (layer, new_width, new_height, 0, 0);
         }
 
       dst_drawable = drawable;
@@ -440,12 +434,12 @@ tile (GimpImage     *image,
   dst_buffer = gimp_drawable_get_buffer (dst_drawable);
 
   tile_gegl (src_buffer, src_width, src_height,
-             dst_buffer, dst_width, dst_height);
+             dst_buffer, new_width, new_height);
 
   gegl_buffer_flush (dst_buffer);
-  gimp_drawable_update (dst_drawable, 0, 0, dst_width, dst_height);
+  gimp_drawable_update (dst_drawable, 0, 0, new_width, new_height);
 
-  if (tvals.new_image)
+  if (create_new_image)
     {
       gimp_image_undo_enable (*new_image);
     }
@@ -459,98 +453,45 @@ tile (GimpImage     *image,
 }
 
 static gboolean
-tile_dialog (GimpImage    *image,
-             GimpDrawable *drawable)
+tile_dialog (GimpProcedure       *procedure,
+             GimpProcedureConfig *config,
+             GimpImage           *image,
+             GimpDrawable        *drawable)
 {
   GtkWidget *dlg;
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *sizeentry;
-  GtkWidget *chainbutton;
-  GtkWidget *toggle;
   gint       width;
   gint       height;
-  gdouble    xres;
-  gdouble    yres;
-  GimpUnit   unit;
   gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
   width  = gimp_drawable_get_width (drawable);
   height = gimp_drawable_get_height (drawable);
-  unit   = gimp_image_get_unit (image);
-  gimp_image_get_resolution (image, &xres, &yres);
 
-  tvals.new_width  = width;
-  tvals.new_height = height;
+  g_object_set (config,
+                "new-width",  width,
+                "new-height", height,
+                NULL);
 
-  dlg = gimp_dialog_new (_("Tile"), PLUG_IN_ROLE,
-                         NULL, 0,
-                         gimp_standard_help_func, PLUG_IN_PROC,
+  dlg = gimp_procedure_dialog_new (procedure,
+                                   GIMP_PROCEDURE_CONFIG (config),
+                                   _("Tile"));
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dlg),
+                                   "new-size-label", _("Tile to New Size"));
+  /* TODO: we should have a new GimpProcedureDialog widget which would tie 2
+   * arguments for dimensions (or coordinates), and possibly more aux args for
+   * the constrain boolean choice, the unit, etc.
+   */
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dlg),
+                                  "new-size-box",
+                                  "new-width", "new-height",
+                                  NULL);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dlg),
+                                    "new-size-frame", "new-size-label", FALSE,
+                                    "new-size-box");
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dlg), "new-size-frame", "new-image", NULL);
 
-                         _("_Cancel"), GTK_RESPONSE_CANCEL,
-                         _("_OK"),     GTK_RESPONSE_OK,
-
-                         NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dlg));
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
-                      vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  frame = gimp_frame_new (_("Tile to New Size"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  sizeentry = gimp_coordinates_new (unit, "%a", TRUE, TRUE, 8,
-                                    GIMP_SIZE_ENTRY_UPDATE_SIZE,
-
-                                    tvals.constrain, TRUE,
-
-                                    _("_Width:"), width, xres,
-                                    1, GIMP_MAX_IMAGE_SIZE,
-                                    0, width,
-
-                                    _("_Height:"), height, yres,
-                                    1, GIMP_MAX_IMAGE_SIZE,
-                                    0, height);
-  gtk_container_add (GTK_CONTAINER (frame), sizeentry);
-  gtk_widget_show (sizeentry);
-
-  chainbutton = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (sizeentry));
-
-  toggle = gtk_check_button_new_with_mnemonic (_("C_reate new image"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tvals.new_image);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &tvals.new_image);
-
-  gtk_widget_show (dlg);
-
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
-
-  if (run)
-    {
-      tvals.new_width =
-        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry), 0));
-      tvals.new_height =
-        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry), 1));
-
-      tvals.constrain =
-        gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chainbutton));
-    }
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dlg));
 
   gtk_widget_destroy (dlg);
 
