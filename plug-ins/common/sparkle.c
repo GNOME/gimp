@@ -78,7 +78,7 @@ static GimpValueArray * sparkle_run              (GimpProcedure        *procedur
                                                   GimpImage            *image,
                                                   gint                  n_drawables,
                                                   GimpDrawable        **drawables,
-                                                  const GimpValueArray *args,
+                                                  GimpProcedureConfig  *config,
                                                   gpointer              run_data);
 
 static gboolean         sparkle_dialog           (GimpProcedure        *procedure,
@@ -166,9 +166,9 @@ sparkle_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            sparkle_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             sparkle_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -284,24 +284,17 @@ sparkle_run (GimpProcedure        *procedure,
              GimpImage            *image,
              gint                  n_drawables,
              GimpDrawable        **drawables,
-             const GimpValueArray *args,
+             GimpProcedureConfig  *config,
              gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpDrawable        *drawable;
-  gint                 x, y, w, h;
+  GimpDrawable *drawable;
+  gint          x, y, w, h;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   if (n_drawables != 1)
     {
       GError *error = NULL;
-
-      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
-      g_object_unref (config);
 
       g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
@@ -320,32 +313,15 @@ sparkle_run (GimpProcedure        *procedure,
     {
       g_message (_("Region selected for filter is empty"));
 
-      gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-      g_object_unref (config);
-
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_SUCCESS,
                                                NULL);
     }
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-      if (! sparkle_dialog (procedure, G_OBJECT (config), drawable))
-        {
-          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
-          g_object_unref (config);
-
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
-      break;
-
-
-    default:
-      break;
-    }
+  if (run_mode == GIMP_RUN_INTERACTIVE && ! sparkle_dialog (procedure, G_OBJECT (config), drawable))
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_CANCEL,
+                                             NULL);
 
   if (gimp_drawable_is_rgb (drawable) ||
       gimp_drawable_is_gray (drawable))
@@ -359,16 +335,10 @@ sparkle_run (GimpProcedure        *procedure,
     }
   else
     {
-      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
-      g_object_unref (config);
-
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
                                                NULL);
     }
-
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }

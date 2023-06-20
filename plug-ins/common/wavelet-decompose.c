@@ -60,7 +60,7 @@ static GimpValueArray * wavelet_run              (GimpProcedure        *procedur
                                                   GimpImage            *image,
                                                   gint                  n_drawables,
                                                   GimpDrawable        **drawables,
-                                                  const GimpValueArray *args,
+                                                  GimpProcedureConfig  *config,
                                                   gpointer              run_data);
 
 static void             wavelet_blur             (GimpDrawable         *drawable,
@@ -107,9 +107,9 @@ wavelet_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            wavelet_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             wavelet_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -157,20 +157,19 @@ wavelet_run (GimpProcedure        *procedure,
               GimpImage            *image,
               gint                  n_drawables,
               GimpDrawable        **drawables,
-              const GimpValueArray *args,
+              GimpProcedureConfig  *config,
               gpointer              run_data)
 {
-  GimpProcedureConfig  *config;
-  GimpLayer           **scale_layers;
-  GimpLayer            *new_scale;
-  GimpLayer            *parent             = NULL;
-  GimpDrawable         *drawable;
-  GimpLayerMode         grain_extract_mode = GIMP_LAYER_MODE_GRAIN_EXTRACT;
-  GimpLayerMode         grain_merge_mode   = GIMP_LAYER_MODE_GRAIN_MERGE;
-  gint                  id;
-  gint                  scales;
-  gboolean              create_group;
-  gboolean              create_masks;
+  GimpLayer     **scale_layers;
+  GimpLayer      *new_scale;
+  GimpLayer      *parent             = NULL;
+  GimpDrawable   *drawable;
+  GimpLayerMode   grain_extract_mode = GIMP_LAYER_MODE_GRAIN_EXTRACT;
+  GimpLayerMode   grain_merge_mode   = GIMP_LAYER_MODE_GRAIN_MERGE;
+  gint            id;
+  gint            scales;
+  gboolean        create_group;
+  gboolean        create_masks;
 
   gegl_init (NULL, NULL);
 
@@ -191,36 +190,16 @@ wavelet_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
+  if (run_mode == GIMP_RUN_INTERACTIVE && ! wavelet_decompose_dialog (procedure, G_OBJECT (config)))
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_CANCEL,
+                                             NULL);
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-      if (! wavelet_decompose_dialog (procedure, G_OBJECT (config)))
-        {
-          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
-          g_object_unref (config);
-
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      break;
-
-    default:
-      break;
-    }
-
-    g_object_get (config,
-                  "scales",       &scales,
-                  "create-group", &create_group,
-                  "create-masks", &create_masks,
-                  NULL);
+  g_object_get (config,
+                "scales",       &scales,
+                "create-group", &create_group,
+                "create-masks", &create_masks,
+                NULL);
 
   gimp_progress_init (_("Wavelet-Decompose"));
 
@@ -355,9 +334,6 @@ wavelet_run (GimpProcedure        *procedure,
   gimp_progress_update (1.0);
 
   gimp_displays_flush ();
-
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-  g_object_unref (config);
 
   gegl_exit ();
 

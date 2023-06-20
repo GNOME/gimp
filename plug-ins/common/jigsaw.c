@@ -201,7 +201,7 @@ static GimpValueArray * jigsaw_run              (GimpProcedure        *procedure
                                                  GimpImage            *image,
                                                  gint                  n_drawables,
                                                  GimpDrawable        **drawables,
-                                                 const GimpValueArray *args,
+                                                 GimpProcedureConfig  *config,
                                                  gpointer              run_data);
 
 static void     jigsaw                          (GObject              *config,
@@ -387,9 +387,9 @@ jigsaw_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            jigsaw_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             jigsaw_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -451,23 +451,16 @@ jigsaw_run (GimpProcedure        *procedure,
             GimpImage            *image,
             gint                  n_drawables,
             GimpDrawable        **drawables,
-            const GimpValueArray *args,
+            GimpProcedureConfig  *config,
             gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpDrawable        *drawable;
+  GimpDrawable *drawable;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   if (n_drawables != 1)
     {
       GError *error = NULL;
-
-      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
-      g_object_unref (config);
 
       g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
@@ -482,23 +475,10 @@ jigsaw_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-      if (! jigsaw_dialog (procedure, G_OBJECT (config), drawable))
-        {
-          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
-          g_object_unref (config);
-
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
-      break;
-
-    default:
-      break;
-    };
+  if (run_mode == GIMP_RUN_INTERACTIVE && ! jigsaw_dialog (procedure, G_OBJECT (config), drawable))
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_CANCEL,
+                                             NULL);
 
   gimp_progress_init (_("Assembling jigsaw"));
 
@@ -506,9 +486,6 @@ jigsaw_run (GimpProcedure        *procedure,
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
-
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }

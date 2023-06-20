@@ -158,7 +158,7 @@ static GimpValueArray * hot_run              (GimpProcedure        *procedure,
                                               GimpImage            *image,
                                               gint                  n_drawables,
                                               GimpDrawable        **drawables,
-                                              const GimpValueArray *args,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 
 static gboolean         pluginCore           (GimpImage            *image,
@@ -238,9 +238,9 @@ hot_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            hot_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             hot_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -295,11 +295,10 @@ hot_run (GimpProcedure        *procedure,
          GimpImage            *image,
          gint                  n_drawables,
          GimpDrawable        **drawables,
-         const GimpValueArray *args,
+         GimpProcedureConfig  *config,
          gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpDrawable        *drawable;
+  GimpDrawable *drawable;
 
   gegl_init (NULL, NULL);
 
@@ -320,41 +319,15 @@ hot_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
-
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-
-      if (! plugin_dialog (procedure, G_OBJECT (config)))
-        {
-          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
-          g_object_unref (config);
-
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      break;
-    }
+  if (run_mode == GIMP_RUN_INTERACTIVE && ! plugin_dialog (procedure, G_OBJECT (config)))
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_CANCEL,
+                                             NULL);
 
   if (! pluginCore (image, drawable, G_OBJECT (config)))
-    {
-      gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
-      g_object_unref (config);
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
-                                               NULL);
-    }
-
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-  g_object_unref (config);
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             NULL);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();

@@ -88,7 +88,7 @@ static GimpValueArray * retinex_run              (GimpProcedure        *procedur
                                                   GimpImage            *image,
                                                   gint                  n_drawables,
                                                   GimpDrawable        **drawables,
-                                                  const GimpValueArray *args,
+                                                  GimpProcedureConfig  *config,
                                                   gpointer              run_data);
 
 static gboolean retinex_dialog              (GimpProcedure *procedure,
@@ -167,9 +167,9 @@ retinex_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            retinex_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             retinex_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -230,24 +230,17 @@ retinex_run (GimpProcedure        *procedure,
              GimpImage            *image,
              gint                  n_drawables,
              GimpDrawable        **drawables,
-             const GimpValueArray *args,
+             GimpProcedureConfig  *config,
              gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpDrawable        *drawable;
-  gint                 x, y, width, height;
+  GimpDrawable *drawable;
+  gint          x, y, width, height;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   if (n_drawables != 1)
     {
       GError *error = NULL;
-
-      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
-      g_object_unref (config);
 
       g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
@@ -265,32 +258,14 @@ retinex_run (GimpProcedure        *procedure,
   if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height) ||
       width  < MIN_GAUSSIAN_SCALE ||
       height < MIN_GAUSSIAN_SCALE)
-    {
-      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
-      g_object_unref (config);
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             NULL);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
-                                               NULL);
-    }
-
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-      if (! retinex_dialog (procedure, G_OBJECT (config), drawable))
-        {
-          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
-          g_object_unref (config);
-
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
-      break;
-
-    default:
-      break;
-    }
+  if (run_mode == GIMP_RUN_INTERACTIVE && ! retinex_dialog (procedure, G_OBJECT (config), drawable))
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_CANCEL,
+                                             NULL);
 
   if (gimp_drawable_is_rgb (drawable))
     {
@@ -303,16 +278,10 @@ retinex_run (GimpProcedure        *procedure,
     }
   else
     {
-      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
-      g_object_unref (config);
-
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
                                                NULL);
     }
-
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }

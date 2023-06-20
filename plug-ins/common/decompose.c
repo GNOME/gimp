@@ -100,7 +100,7 @@ static GimpValueArray * decompose_run              (GimpProcedure        *proced
                                                     GimpImage            *image,
                                                     gint                  n_drawables,
                                                     GimpDrawable        **drawables,
-                                                    const GimpValueArray *args,
+                                                    GimpProcedureConfig  *config,
                                                     gpointer              run_data);
 
 static gint        decompose                   (GimpImage           *image,
@@ -271,9 +271,9 @@ decompose_create_procedure (GimpPlugIn  *plug_in,
           g_string_append_c (type_desc, '"');
         }
 
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            decompose_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             decompose_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -351,20 +351,19 @@ decompose_run (GimpProcedure        *procedure,
                GimpImage            *image,
                gint                  n_drawables,
                GimpDrawable        **drawables,
-               const GimpValueArray *args,
+               GimpProcedureConfig  *config,
                gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpValueArray      *return_vals;
-  GimpDrawable        *drawable;
-  gint                 num_images;
-  GimpImage           *image_extract[MAX_EXTRACT_IMAGES];
-  GimpLayer           *layer_extract[MAX_EXTRACT_IMAGES];
-  gint                 num_layers;
-  GString             *data;
-  gchar               *decompose_type;
-  gchar               *tmp;
-  gint                 j;
+  GimpValueArray *return_vals;
+  GimpDrawable   *drawable;
+  gint            num_images;
+  GimpImage      *image_extract[MAX_EXTRACT_IMAGES];
+  GimpLayer      *layer_extract[MAX_EXTRACT_IMAGES];
+  gint            num_layers;
+  GString        *data;
+  gchar          *decompose_type;
+  gchar          *tmp;
+  gint            j;
 
   gegl_init (NULL, NULL);
 
@@ -385,9 +384,6 @@ decompose_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
-
   g_object_get (config,
                 "decompose-type", &decompose_type,
                 NULL);
@@ -401,15 +397,8 @@ decompose_run (GimpProcedure        *procedure,
 
   g_free (tmp);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    {
-      if (! decompose_dialog (procedure, G_OBJECT (config)))
-        {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
-    }
+  if (run_mode == GIMP_RUN_INTERACTIVE && ! decompose_dialog (procedure, G_OBJECT (config)))
+    return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
 
   gimp_progress_init (_("Decomposing"));
 
@@ -421,14 +410,7 @@ decompose_run (GimpProcedure        *procedure,
                           layer_extract);
 
   if (num_images <= 0)
-    {
-      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
-      g_object_unref (config);
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
-                                               NULL);
-    }
+    return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, NULL);
 
   /* create decompose-data parasite */
   data = g_string_new ("");
@@ -468,9 +450,6 @@ decompose_run (GimpProcedure        *procedure,
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_display_new (image_extract[j]);
     }
-
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-  g_object_unref (config);
 
   gimp_progress_end ();
 

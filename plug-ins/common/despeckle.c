@@ -94,7 +94,7 @@ static GimpValueArray * despeckle_run              (GimpProcedure        *proced
                                                     GimpImage            *image,
                                                     gint                  n_drawables,
                                                     GimpDrawable        **drawables,
-                                                    const GimpValueArray *args,
+                                                    GimpProcedureConfig  *config,
                                                     gpointer              run_data);
 
 static void             despeckle                  (GimpDrawable         *drawable,
@@ -158,9 +158,9 @@ despeckle_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            despeckle_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             despeckle_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -216,11 +216,10 @@ despeckle_run (GimpProcedure        *procedure,
                GimpImage            *image,
                gint                  n_drawables,
                GimpDrawable        **drawables,
-               const GimpValueArray *args,
+               GimpProcedureConfig  *config,
                gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpDrawable        *drawable;
+  GimpDrawable *drawable;
 
   gegl_init (NULL, NULL);
 
@@ -241,34 +240,13 @@ despeckle_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  if (! gimp_drawable_is_rgb  (drawable) &&
-      ! gimp_drawable_is_gray (drawable))
-    {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
-                                               NULL);
-    }
+  if (! gimp_drawable_is_rgb (drawable) && ! gimp_drawable_is_gray (drawable))
+    return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
-
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    {
-      if (! despeckle_dialog (procedure, G_OBJECT (config), drawable))
-        {
-          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
-          g_object_unref (config);
-
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
-    }
+  if (run_mode == GIMP_RUN_INTERACTIVE && ! despeckle_dialog (procedure, G_OBJECT (config), drawable))
+    return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
 
   despeckle (drawable, G_OBJECT (config));
-
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }

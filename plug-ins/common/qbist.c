@@ -112,7 +112,7 @@ static GimpValueArray * qbist_run              (GimpProcedure        *procedure,
                                                 GimpImage            *image,
                                                 gint                  n_drawables,
                                                 GimpDrawable        **drawables,
-                                                const GimpValueArray *args,
+                                                GimpProcedureConfig  *config,
                                                 gpointer              run_data);
 
 static gboolean         dialog_run             (void);
@@ -174,9 +174,9 @@ qbist_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            qbist_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             qbist_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -228,20 +228,19 @@ qbist_run (GimpProcedure        *procedure,
            GimpImage            *image,
            gint                  n_drawables,
            GimpDrawable        **drawables,
-           const GimpValueArray *args,
+           GimpProcedureConfig  *config,
            gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  gint                 sel_x1, sel_y1, sel_width, sel_height;
-  gint                 img_height, img_width;
-  GeglBuffer          *buffer;
-  GeglBufferIterator  *iter;
-  GimpDrawable        *drawable;
-  GimpParasite        *pattern_parasite;
-  gconstpointer        pattern_data;
-  guint32              pattern_data_length;
-  gint                 total_pixels;
-  gint                 done_pixels;
+  gint                sel_x1, sel_y1, sel_width, sel_height;
+  gint                img_height, img_width;
+  GeglBuffer         *buffer;
+  GeglBufferIterator *iter;
+  GimpDrawable       *drawable;
+  GimpParasite       *pattern_parasite;
+  gconstpointer       pattern_data;
+  guint32             pattern_data_length;
+  gint                total_pixels;
+  gint                done_pixels;
 
   gegl_init (NULL, NULL);
 
@@ -261,9 +260,6 @@ qbist_run (GimpProcedure        *procedure,
     {
       drawable = drawables[0];
     }
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   img_width  = gimp_drawable_get_width (drawable);
   img_height = gimp_drawable_get_height (drawable);
@@ -308,13 +304,9 @@ qbist_run (GimpProcedure        *procedure,
         }
 
       if (! dialog_run ())
-        {
-          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
-
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
 
       pattern_parasite = gimp_parasite_new ("pattern", 0,
                                             sizeof (qbist_info.info),
@@ -403,9 +395,6 @@ qbist_run (GimpProcedure        *procedure,
   gimp_displays_flush ();
 
   g_rand_free (gr);
-
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }

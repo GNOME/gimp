@@ -98,7 +98,7 @@ static GimpValueArray * align_layers_run                    (GimpProcedure      
                                                              GimpImage            *image,
                                                              gint                  n_drawables,
                                                              GimpDrawable        **drawables,
-                                                             const GimpValueArray *args,
+                                                             GimpProcedureConfig  *config,
                                                              gpointer              run_data);
 
 
@@ -166,9 +166,9 @@ align_layers_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            align_layers_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             align_layers_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -266,18 +266,14 @@ align_layers_run (GimpProcedure        *procedure,
                   GimpImage            *image,
                   gint                  n_drawables,
                   GimpDrawable        **drawables,
-                  const GimpValueArray *args,
+                  GimpProcedureConfig  *config,
                   gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpValueArray      *return_vals = NULL;
-  GimpPDBStatusType    status      = GIMP_PDB_EXECUTION_ERROR;
-  GError              *error       = NULL;
-  GList               *layers;
-  gint                 layer_num;
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
+  GimpValueArray    *return_vals = NULL;
+  GimpPDBStatusType  status      = GIMP_PDB_EXECUTION_ERROR;
+  GError            *error       = NULL;
+  GList             *layers;
+  gint               layer_num;
 
   switch ( run_mode )
     {
@@ -312,11 +308,7 @@ align_layers_run (GimpProcedure        *procedure,
         gimp_displays_flush ();
     }
 
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
-
-  return_vals = gimp_procedure_new_return_values (procedure, status,
-                                                  error);
+  return_vals = gimp_procedure_new_return_values (procedure, status, error);
 
   return return_vals;
 }
