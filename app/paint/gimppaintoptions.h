@@ -105,6 +105,9 @@ struct _GimpPaintOptions
 
   gboolean                  hard;
 
+  gboolean                  expand_use;
+  gdouble                   expand_amount;
+
   GimpJitterOptions        *jitter_options;
 
   gboolean                  dynamics_enabled;

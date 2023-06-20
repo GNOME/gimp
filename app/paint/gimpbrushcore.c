@@ -816,8 +816,9 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
   gint           drawable_width, drawable_height;
   gint           brush_width, brush_height;
   gint           new_width, new_height, new_off_x, new_off_y;
-  GimpContext   *context   = GIMP_CONTEXT (paint_options);
-  GimpFillType   fill_type = GIMP_FILL_TRANSPARENT;
+  gint           expand_amount = paint_options->expand_amount;
+  GimpContext   *context       = GIMP_CONTEXT (paint_options);
+  GimpFillType   fill_type     = GIMP_FILL_TRANSPARENT;
   GeglBuffer    *undo_buffer;
   GeglBuffer    *new_buffer;
   const Babl    *format;
@@ -853,23 +854,27 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
 
   if (x1 < 0)
     {
-      new_width += 100 - x1;
-      new_off_x += 100 - x1;
+      new_width += expand_amount - x1;
+      new_off_x += expand_amount - x1;
     }
   if (y1 < 0)
     {
-      new_height += 100 - y1;
-      new_off_y += 100 - y1;
+      new_height += expand_amount - y1;
+      new_off_y += expand_amount - y1;
     }
   if (x2 > drawable_width)
     {
-      new_width += x2 - drawable_width + 100;
+      new_width += x2 - drawable_width + expand_amount;
     }
   if (y2 > drawable_height)
     {
-      new_height += y2 - drawable_height + 100;
+      new_height += y2 - drawable_height + expand_amount;
     }
-  if (new_width != drawable_width || new_height != drawable_height || new_off_x || new_off_y)
+  if ((new_width != drawable_width   ||
+       new_height != drawable_height ||
+       new_off_x                     ||
+       new_off_y)                  &&
+      paint_options->expand_use)
     {
       GIMP_ITEM_GET_CLASS (GIMP_ITEM (drawable))->resize (GIMP_ITEM (drawable),
                                                           context,   fill_type,

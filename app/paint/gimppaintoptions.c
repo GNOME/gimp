@@ -79,6 +79,9 @@
 #define DEFAULT_SMOOTHING_QUALITY       20
 #define DEFAULT_SMOOTHING_FACTOR        50
 
+#define DEFAULT_EXPAND_USE              FALSE
+#define DEFAULT_EXPAND_AMOUNT           100.0
+
 enum
 {
   PROP_0,
@@ -130,7 +133,10 @@ enum
 
   PROP_USE_SMOOTHING,
   PROP_SMOOTHING_QUALITY,
-  PROP_SMOOTHING_FACTOR
+  PROP_SMOOTHING_FACTOR,
+
+  PROP_EXPAND_USE,
+  PROP_EXPAND_AMOUNT
 };
 
 
@@ -303,6 +309,20 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                             _("Scatter brush as you paint"),
                             DEFAULT_USE_JITTER,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EXPAND_USE,
+                            "expand-use",
+                            _("Expand Layers"),
+                            _("Expand active layer as you paint"),
+                            DEFAULT_EXPAND_USE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_EXPAND_AMOUNT,
+                           "expand-amount",
+                           _("Amount"),
+                           _("Amount of expansion"),
+                           1.0, 1000.0, DEFAULT_EXPAND_AMOUNT,
+                           GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DYNAMICS_ENABLED,
                             "dynamics-enabled",
@@ -638,6 +658,13 @@ gimp_paint_options_set_property (GObject      *object,
       smoothing_options->smoothing_factor = g_value_get_double (value);
       break;
 
+    case PROP_EXPAND_USE:
+      options->expand_use = g_value_get_boolean (value);
+      break;
+    case PROP_EXPAND_AMOUNT:
+      options->expand_amount = g_value_get_double (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -782,6 +809,13 @@ gimp_paint_options_get_property (GObject    *object,
       break;
     case PROP_SMOOTHING_FACTOR:
       g_value_set_double (value, smoothing_options->smoothing_factor);
+      break;
+
+    case PROP_EXPAND_USE:
+      g_value_set_boolean (value, options->expand_use);
+      break;
+    case PROP_EXPAND_AMOUNT:
+      g_value_set_double (value, options->expand_amount);
       break;
 
     default:

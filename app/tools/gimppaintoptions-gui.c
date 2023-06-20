@@ -73,6 +73,8 @@ static GtkWidget * jitter_options_gui          (GimpPaintOptions *paint_options,
                                                 GType             tool_type);
 static GtkWidget * smoothing_options_gui       (GimpPaintOptions *paint_options,
                                                 GType             tool_type);
+static GtkWidget * expand_options_gui          (GimpPaintOptions *paint_options,
+                                                GType             tool_type);
 
 static GtkWidget * gimp_paint_options_gui_scale_with_buttons
                                                (GObject      *config,
@@ -268,6 +270,22 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       button = gimp_prop_check_button_new (config, "hard", NULL);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+    }
+
+  /* the "expand layers" options */
+  if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
+      tool_type == GIMP_TYPE_PENCIL_TOOL     ||
+      tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
+      tool_type == GIMP_TYPE_CLONE_TOOL      ||
+      tool_type == GIMP_TYPE_HEAL_TOOL       ||
+      tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
+      tool_type == GIMP_TYPE_SMUDGE_TOOL)
+    {
+      GtkWidget *frame;
+
+      frame = expand_options_gui (options, tool_type);
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
     }
 
   return vbox;
@@ -483,6 +501,28 @@ gimp_paint_options_gui_reset_force (GtkWidget        *button,
   g_object_set (paint_options,
                 "brush-force", 0.5,
                 NULL);
+}
+
+static GtkWidget *
+expand_options_gui (GimpPaintOptions *paint_options,
+                    GType             tool_type)
+{
+  GObject   *config = G_OBJECT (paint_options);
+  GtkWidget *frame;
+  GtkWidget *scale;
+
+  scale = gimp_prop_spin_scale_new (config, "expand-amount",
+                                    1, 10, 2);
+  gimp_spin_scale_set_constrain_drag (GIMP_SPIN_SCALE (scale), TRUE);
+
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
+  gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), 1.0);
+
+
+  frame = gimp_prop_expanding_frame_new (config, "expand-use", NULL,
+                                         scale, NULL);
+
+  return frame;
 }
 
 static GtkWidget *
