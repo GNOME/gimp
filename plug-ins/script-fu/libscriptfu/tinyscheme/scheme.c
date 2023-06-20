@@ -4541,8 +4541,13 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                } else {
                     s_return(sc,x);
                }
+          case TOK_RPAREN:
+               Error_1 (sc, "syntax error: unexpected right parenthesis", 0);
+          case TOK_DOT:
+               Error_1 (sc, "syntax error: unexpected dot", 0);
           default:
-               Error_1(sc, "syntax error: illegal token", mk_integer (sc, sc->tok));
+               g_warning ("%s: unhandled token", G_STRFUNC);
+               break;
           }
           break;
 
@@ -4558,7 +4563,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
           }
 */
           if (sc->tok == TOK_EOF)
-               { s_return(sc,sc->EOF_OBJ); }
+               { Error_0 (sc,"syntax error: expected right paren, found EOF"); }
           else if (sc->tok == TOK_RPAREN) {
                gunichar c = inchar(sc);
                if (c != '\n')
