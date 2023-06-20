@@ -1115,6 +1115,33 @@ gimp_iscissors_tool_key_press (GimpTool    *tool,
           gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
           return TRUE;
         }
+      else if (g_queue_get_length (iscissors->curve->segments) > 1)
+        {
+          /* Create a closed curve if there are at least three points
+             and we haven't connected it yet */
+          ISegment *first = g_queue_peek_head (iscissors->curve->segments);
+          ISegment *last  = g_queue_peek_tail (iscissors->curve->segments);
+
+          if (first && last && first != last)
+            {
+              ISegment *segment;
+
+              gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+              gimp_iscissors_tool_push_undo (iscissors);
+
+              segment = icurve_append_segment (iscissors->curve,
+                                               last->x2, last->y2,
+                                               first->x1, first->y1);
+
+              icurve_close (iscissors->curve);
+              calculate_segment (iscissors, segment);
+              iscissors_convert (iscissors, display);
+
+              gimp_iscissors_tool_free_redo (iscissors);
+              gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+            }
+          return TRUE;
+        }
       return FALSE;
 
     case GDK_KEY_Escape:
