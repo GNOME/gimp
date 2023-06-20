@@ -3714,8 +3714,8 @@ plug_in_ripple_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint period;
-  gint amplitude;
+  gdouble period;
+  gdouble amplitude;
   gint orientation;
   gint edges;
   gint waveform;
@@ -3723,8 +3723,8 @@ plug_in_ripple_invoker (GimpProcedure         *procedure,
   gboolean tile;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  period = g_value_get_int (gimp_value_array_index (args, 3));
-  amplitude = g_value_get_int (gimp_value_array_index (args, 4));
+  period = g_value_get_double (gimp_value_array_index (args, 3));
+  amplitude = g_value_get_double (gimp_value_array_index (args, 4));
   orientation = g_value_get_int (gimp_value_array_index (args, 5));
   edges = g_value_get_int (gimp_value_array_index (args, 6));
   waveform = g_value_get_int (gimp_value_array_index (args, 7));
@@ -8504,17 +8504,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("period",
-                                                 "period",
-                                                 "Period: number of pixels for one wave to complete",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("period",
+                                                    "period",
+                                                    "Period: number of pixels for one wave to complete",
+                                                    0.0, 1000.0, 200,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("amplitude",
-                                                 "amplitude",
-                                                 "Amplitude: maximum displacement of wave",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("amplitude",
+                                                    "amplitude",
+                                                    "Amplitude: maximum displacement of wave",
+                                                    0.0, 1000.0, 25,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("orientation",
                                                  "orientation",
