@@ -346,21 +346,6 @@ struct _GradientCacheItem
   guchar             values[4 * GRADIENT_RESOLUTION];
 };
 
-typedef struct
-{
-  gint     xcenter;
-  gint     ycenter;
-  gdouble  radius;
-  gdouble  rotation;
-  gdouble  hue;
-  gdouble  vangle;
-  gdouble  vlength;
-  gint     use_asupsample;
-  gint     asupsample_max_depth;
-  gdouble  asupsample_threshold;
-  gchar    gflare_name[GFLARE_NAME_MAX];
-} PluginValues;
-
 
 typedef void (* QueryFunc) (GtkWidget *,
                             gpointer,
@@ -395,7 +380,7 @@ static GimpValueArray * gflare_run              (GimpProcedure        *procedure
                                                  GimpImage            *image,
                                                  gint                  n_drawables,
                                                  GimpDrawable        **drawables,
-                                                 const GimpValueArray *args,
+                                                 GimpProcedureConfig  *config,
                                                  gpointer              run_data);
 
 static GFlare * gflare_new_with_default (const gchar *new_name);
@@ -406,8 +391,6 @@ static void     gflare_copy             (GFlare      *dest,
 static GFlare * gflare_load             (const gchar *filename,
                                          const gchar *name);
 static void     gflare_save             (GFlare      *gflare);
-static void     gflare_name_copy        (gchar       *dest,
-                                         const gchar *src);
 
 static gint     gflares_list_insert     (GFlare      *gflare);
 static GFlare * gflares_list_lookup     (const gchar *name);
@@ -418,8 +401,8 @@ static void     gflares_list_free_all   (void);
 
 static void     calc_init_params   (GFlare  *gflare,
                                     gint     calc_type,
-                                    gdouble  xcenter,
-                                    gdouble  ycenter,
+                                    gint     xcenter,
+                                    gint     ycenter,
                                     gdouble  radius,
                                     gdouble  rotation,
                                     gdouble  hue,
@@ -442,7 +425,8 @@ static void     calc_gflare_pix    (guchar  *dest_pix,
                                     gdouble  y,
                                     guchar  *src_pix);
 
-static gboolean    dlg_run                 (void);
+static gboolean    dlg_run                 (GimpProcedure       *procedure,
+                                            GimpProcedureConfig *config);
 static void        dlg_preview_calc_window (void);
 static void        ed_preview_calc_window  (void);
 static GtkWidget * ed_mode_menu_new        (GFlareMode *mode_var);
@@ -466,202 +450,223 @@ static void        preview_rgba_to_rgb  (guchar            *dest,
 static void             gradient_menu_init    (void);
 static void             gradient_menu_rescan  (void);
 static GradientMenu   * gradient_menu_new     (GradientMenuCallback callback,
-                                               gpointer        callback_data,
-                                               const gchar    *default_gradient_name);
-static void             gradient_name_copy    (gchar       *dest,
-                                               const gchar *src);
-static void             gradient_name_encode  (gchar       *dest,
-                                               const gchar *src);
-static void             gradient_name_decode  (gchar       *dest,
-                                               const gchar *src);
+                                               gpointer             callback_data,
+                                               const gchar         *default_gradient_name);
+static void             gradient_name_copy    (gchar               *dest,
+                                               const gchar         *src);
+static void             gradient_name_encode  (gchar               *dest,
+                                               const gchar         *src);
+static void             gradient_name_decode  (gchar               *dest,
+                                               const gchar         *src);
 static void             gradient_init         (void);
 static void             gradient_free         (void);
-static gchar         ** gradient_get_list     (gint   *num_gradients);
-static void             gradient_get_values   (const gchar *gradient_name,
-                                               guchar      *values,
-                                               gint         nvalues);
+static gchar         ** gradient_get_list     (gint                *num_gradients);
+static void             gradient_get_values   (const gchar         *gradient_name,
+                                               guchar              *values,
+                                               gint                 nvalues);
 static void             gradient_cache_flush  (void);
 
 /**
 ***     +++ Static Functions Prototypes
 **/
 
-static void plugin_do                   (void);
+static void plugin_do                    (GimpProcedureConfig *config);
 
-static void plugin_do_non_asupsample    (GeglBuffer   *src_buffer,
-                                         GeglBuffer   *dest_buffer);
-static void plugin_do_asupsample        (GeglBuffer   *src_buffer,
-                                         GeglBuffer   *dest_buffer);
-static void plugin_render_func          (gdouble       x,
-                                         gdouble       y,
-                                         GimpRGB      *color,
-                                         gpointer      data);
-static void plugin_put_pixel_func       (gint          ix,
-                                         gint          iy,
-                                         GimpRGB      *color,
-                                         gpointer      data);
-static void plugin_progress_func        (gint          y1,
-                                         gint          y2,
-                                         gint          curr_y,
-                                         gpointer      data);
+static void plugin_do_non_asupsample     (GeglBuffer          *src_buffer,
+                                          GeglBuffer          *dest_buffer);
+static void plugin_do_asupsample         (GeglBuffer          *src_buffer,
+                                          GeglBuffer          *dest_buffer,
+                                          gint                 asupsample_max_depth,
+                                          gdouble              asupsample_threshold);
+static void plugin_render_func           (gdouble              x,
+                                          gdouble              y,
+                                          GimpRGB             *color,
+                                          gpointer             data);
+static void plugin_put_pixel_func        (gint                 ix,
+                                          gint                 iy,
+                                          GimpRGB             *color,
+                                          gpointer             data);
+static void plugin_progress_func         (gint                 y1,
+                                          gint                 y2,
+                                          gint                 curr_y,
+                                          gpointer             data);
 
-static GFlare * gflare_new              (void);
-static void gflare_free                 (GFlare       *gflare);
-static void gflare_read_int             (gint         *intvar,
-                                         GFlareFile   *gf);
-static void gflare_read_double          (gdouble      *dblvar,
-                                         GFlareFile   *gf);
-static void gflare_read_gradient_name   (GradientName  name,
-                                         GFlareFile   *gf);
-static void gflare_read_shape           (GFlareShape  *shape,
-                                         GFlareFile   *gf);
-static void gflare_read_mode            (GFlareMode   *mode,
-                                         GFlareFile   *gf);
-static void gflare_write_gradient_name  (GradientName  name,
-                                         FILE         *fp);
+static GFlare * gflare_new               (void);
+static void gflare_free                  (GFlare              *gflare);
+static void gflare_read_int              (gint                *intvar,
+                                          GFlareFile          *gf);
+static void gflare_read_double           (gdouble             *dblvar,
+                                          GFlareFile          *gf);
+static void gflare_read_gradient_name    (GradientName         name,
+                                          GFlareFile          *gf);
+static void gflare_read_shape            (GFlareShape         *shape,
+                                          GFlareFile          *gf);
+static void gflare_read_mode             (GFlareMode          *mode,
+                                          GFlareFile          *gf);
+static void gflare_write_gradient_name   (GradientName         name,
+                                          FILE                *fp);
 
-static gint calc_sample_one_gradient    (void);
-static void calc_place_sflare           (void);
-static void calc_get_gradient           (guchar       *pix,
-                                         guchar       *gradient,
-                                         gdouble       pos);
-static gdouble fmod_positive            (gdouble       x,
-                                         gdouble       m);
-static void calc_paint_func             (guchar       *dest,
-                                         guchar       *src1,
-                                         guchar       *src2,
-                                         gint          opacity,
-                                         GFlareMode    mode);
-static void calc_combine                (guchar       *dest,
-                                         guchar       *src1,
-                                         guchar       *src2,
-                                         gint          opacity);
-static void calc_addition               (guchar       *dest,
-                                         guchar       *src1,
-                                         guchar       *src2);
-static void calc_screen                 (guchar       *dest,
-                                         guchar       *src1,
-                                         guchar       *src2);
-static void calc_overlay                (guchar       *dest,
-                                         guchar       *src1,
-                                         guchar       *src2);
+static gint calc_sample_one_gradient     (void);
+static void calc_place_sflare            (void);
+static void calc_get_gradient            (guchar              *pix,
+                                          guchar              *gradient,
+                                          gdouble              pos);
+static gdouble fmod_positive             (gdouble              x,
+                                          gdouble              m);
+static void calc_paint_func              (guchar              *dest,
+                                          guchar              *src1,
+                                          guchar              *src2,
+                                          gint                 opacity,
+                                          GFlareMode           mode);
+static void calc_combine                 (guchar              *dest,
+                                          guchar              *src1,
+                                          guchar              *src2,
+                                          gint                 opacity);
+static void calc_addition                (guchar              *dest,
+                                          guchar              *src1,
+                                          guchar              *src2);
+static void calc_screen                  (guchar              *dest,
+                                          guchar              *src1,
+                                          guchar              *src2);
+static void calc_overlay                 (guchar              *dest,
+                                          guchar              *src1,
+                                          guchar              *src2);
 
-static void dlg_setup_gflare            (void);
-static void dlg_preview_realize         (GtkWidget    *widget);
-static gboolean dlg_preview_handle_event (GtkWidget    *widget,
-                                          GdkEvent     *event);
-static void dlg_preview_update          (void);
-static gint dlg_preview_init_func       (Preview      *preview,
-                                         gpointer      data);
-static void dlg_preview_render_func     (Preview      *preview,
-                                         guchar       *dest,
-                                         gint          y,
-                                         gpointer      data);
-static void dlg_preview_deinit_func     (Preview      *preview,
-                                         gpointer      data);
-static void dlg_make_page_settings      (GFlareDialog *dlg,
-                                         GtkWidget    *notebook);
-static void dlg_position_entry_callback (GtkWidget    *widget,
-                                         gpointer      data);
-static void dlg_update_preview_callback (GtkWidget    *widget,
-                                         gpointer      data);
-static void dlg_make_page_selector      (GFlareDialog *dlg,
-                                         GtkWidget    *notebook);
+static void dlg_setup_gflare             (const gchar         *gflare_name);
+static void dlg_preview_realize          (GtkWidget           *widget);
+static gboolean dlg_preview_handle_event (GtkWidget           *widget,
+                                          GdkEvent            *event,
+                                          GimpProcedureConfig *config);
+static void dlg_preview_update           (void);
+static gint dlg_preview_init_func        (Preview             *preview,
+                                          gpointer             data);
+static void dlg_preview_render_func      (Preview             *preview,
+                                          guchar              *dest,
+                                          gint                 y,
+                                          gpointer             data);
+static void dlg_preview_deinit_func      (Preview             *preview,
+                                          gpointer             data);
+static void dlg_make_page_settings       (GFlareDialog        *dlg,
+                                          GtkWidget           *notebook,
+                                          GimpProcedureConfig *config);
+static void dlg_position_entry_callback  (GtkWidget           *widget,
+                                          GimpProcedureConfig *config);
+static void dlg_update_preview_callback  (GtkWidget           *widget,
+                                          gpointer             data);
+static void dlg_make_page_selector       (GFlareDialog        *dlg,
+                                          GtkWidget           *notebook,
+                                          GimpProcedureConfig *config);
 
 static void dlg_selector_setup_listbox      (void);
 static void dlg_selector_list_item_callback (GtkTreeSelection *selection);
 
-static void dlg_selector_new_callback       (GtkWidget   *widget,
-                                             gpointer     data);
-static void dlg_selector_new_ok_callback    (GtkWidget   *widget,
-                                             const gchar *new_name,
-                                             gpointer     data);
+static void dlg_selector_new_callback       (GtkWidget        *widget,
+                                             gpointer          data);
+static void dlg_selector_new_ok_callback    (GtkWidget        *widget,
+                                             const gchar      *new_name,
+                                             gpointer          data);
 
-static void dlg_selector_edit_callback      (GtkWidget   *widget,
-                                             gpointer     data);
-static void dlg_selector_edit_done_callback (gint         updated,
-                                             gpointer     data);
+static void dlg_selector_edit_callback      (GtkWidget        *widget,
+                                             gpointer          data);
+static void dlg_selector_edit_done_callback (gint              updated,
+                                             gpointer          data);
 
-static void dlg_selector_copy_callback      (GtkWidget   *widget,
-                                             gpointer    data);
-static void dlg_selector_copy_ok_callback   (GtkWidget   *widget,
-                                             const gchar *copy_name,
-                                             gpointer     data);
+static void dlg_selector_copy_callback      (GtkWidget        *widget,
+                                             gpointer         data);
+static void dlg_selector_copy_ok_callback   (GtkWidget        *widget,
+                                             const gchar      *copy_name,
+                                             gpointer          data);
 
-static void dlg_selector_delete_callback    (GtkWidget   *widget,
-                                             gpointer     data);
-static void dlg_selector_do_delete_callback (GtkWidget   *widget,
-                                             gboolean     delete,
-                                             gpointer     data);
+static void dlg_selector_delete_callback    (GtkWidget        *widget,
+                                             gpointer          data);
+static void dlg_selector_do_delete_callback (GtkWidget        *widget,
+                                             gboolean          delete,
+                                             gpointer          data);
 
 static void ed_run                (GtkWindow            *parent,
                                    GFlare               *target_gflare,
                                    GFlareEditorCallback  callback,
                                    gpointer              calldata);
-static void ed_destroy_callback   (GtkWidget    *widget,
-                                   GFlareEditor *ed);
-static void ed_response           (GtkWidget    *widget,
-                                   gint          response_id,
-                                   GFlareEditor *ed);
-static void ed_make_page_general  (GFlareEditor *ed,
-                                   GtkWidget    *notebook);
-static void ed_make_page_glow     (GFlareEditor *ed,
-                                   GtkWidget    *notebook);
-static void ed_make_page_rays     (GFlareEditor *ed,
-                                   GtkWidget    *notebook);
-static void ed_make_page_sflare   (GFlareEditor *ed,
-                                   GtkWidget    *notebook);
-static void ed_put_gradient_menu  (GtkWidget    *grid,
-                                   gint          x,
-                                   gint          y,
-                                   const gchar  *caption,
-                                   GradientMenu *gm);
-static void ed_mode_menu_callback (GtkWidget    *widget,
-                                   gpointer      data);
+static void ed_destroy_callback   (GtkWidget            *widget,
+                                   GFlareEditor         *ed);
+static void ed_response           (GtkWidget            *widget,
+                                   gint                  response_id,
+                                   GFlareEditor         *ed);
+static void ed_make_page_general  (GFlareEditor         *ed,
+                                   GtkWidget            *notebook);
+static void ed_make_page_glow     (GFlareEditor         *ed,
+                                   GtkWidget            *notebook);
+static void ed_make_page_rays     (GFlareEditor         *ed,
+                                   GtkWidget            *notebook);
+static void ed_make_page_sflare   (GFlareEditor         *ed,
+                                   GtkWidget            *notebook);
+static void ed_put_gradient_menu  (GtkWidget            *grid,
+                                   gint                  x,
+                                   gint                  y,
+                                   const gchar          *caption,
+                                   GradientMenu         *gm);
+static void ed_mode_menu_callback (GtkWidget            *widget,
+                                   gpointer              data);
 static void ed_gradient_menu_callback (const gchar *gradient_name,
                                        gpointer     data);
-static void ed_shape_radio_callback   (GtkWidget *widget, gpointer data);
-static void ed_ientry_callback        (GtkWidget *widget, gpointer data);
-static void ed_page_map_callback      (GtkWidget *widget, gpointer data);
+static void ed_shape_radio_callback   (GtkWidget   *widget,
+                                       gpointer     data);
+static void ed_ientry_callback        (GtkWidget   *widget,
+                                       gpointer     data);
+static void ed_page_map_callback      (GtkWidget   *widget,
+                                       gpointer     data);
 static void ed_preview_update         (void);
-static gint ed_preview_init_func      (Preview *preview, gpointer data);
-static void ed_preview_deinit_func    (Preview *preview, gpointer data);
-static void ed_preview_render_func    (Preview *preview,
-                                       guchar *buffer, gint y, gpointer data);
-static void ed_preview_render_general (guchar *buffer, gint y);
-static void ed_preview_render_glow    (guchar *buffer, gint y);
-static void ed_preview_render_rays    (guchar *buffer, gint y);
-static void ed_preview_render_sflare  (guchar *buffer, gint y);
+static gint ed_preview_init_func      (Preview     *preview,
+                                       gpointer     data);
+static void ed_preview_deinit_func    (Preview     *preview,
+                                       gpointer     data);
+static void ed_preview_render_func    (Preview     *preview,
+                                       guchar      *buffer,
+                                       gint         y,
+                                       gpointer     data);
+static void ed_preview_render_general (guchar      *buffer,
+                                       gint         y);
+static void ed_preview_render_glow    (guchar      *buffer,
+                                       gint         y);
+static void ed_preview_render_rays    (guchar      *buffer,
+                                       gint         y);
+static void ed_preview_render_sflare  (guchar      *buffer,
+                                       gint         y);
 
 static gint preview_render_start_2    (Preview *preview);
 static gint preview_handle_idle       (Preview *preview);
 
-static void gm_gradient_get_list            (void);
-static void gm_gradient_combo_fill          (GradientMenu *gm,
-                                             const gchar  *default_gradient);
-static void gm_gradient_combo_callback      (GtkWidget    *widget,
-                                             gpointer      data);
-static void gm_preview_draw                 (GtkWidget    *preview,
-                                             const gchar  *gradient_name);
-static void gm_combo_destroy_callback       (GtkWidget    *widget,
-                                             gpointer      data);
+static void gm_gradient_get_list                (void);
+static void gm_gradient_combo_fill              (GradientMenu   *gm,
+                                                 const gchar    *default_gradient);
+static void gm_gradient_combo_callback          (GtkWidget      *widget,
+                                                 gpointer        data);
+static void gm_preview_draw                     (GtkWidget      *preview,
+                                                 const gchar    *gradient_name);
+static void gm_combo_destroy_callback           (GtkWidget      *widget,
+                                                 gpointer        data);
 
-static void gradient_get_values_internal    (const gchar *gradient_name,
-                                             guchar *values, gint nvalues);
-static void gradient_get_blend              (const guchar *fg,
-                                             const guchar *bg,
-                                             guchar *values, gint nvalues);
-static void gradient_get_random             (guchar *values, gint nvalues);
-static void gradient_get_default            (const gchar *name,
-                                             guchar *values, gint nvalues);
-static void gradient_get_values_external    (const gchar *gradient_name,
-                                             guchar *values, gint nvalues);
-static void gradient_get_values_real_external   (const gchar *gradient_name,
-                                                 guchar   *values,
-                                                 gint      nvalues,
-                                                 gboolean  reverse);
-static GradientCacheItem *gradient_cache_lookup (const gchar *name,
-                                                 gboolean    *found);
+static void gradient_get_values_internal        (const gchar    *gradient_name,
+                                                 guchar         *values,
+                                                 gint            nvalues);
+static void gradient_get_blend                  (const guchar   *fg,
+                                                 const guchar   *bg,
+                                                 guchar         *values,
+                                                 gint            nvalues);
+static void gradient_get_random                 (guchar         *values,
+                                                 gint            nvalues);
+static void gradient_get_default                (const gchar    *name,
+                                                 guchar         *values,
+                                                 gint            nvalues);
+static void gradient_get_values_external        (const gchar    *gradient_name,
+                                                 guchar         *values,
+                                                 gint            nvalues);
+static void gradient_get_values_real_external   (const gchar    *gradient_name,
+                                                 guchar         *values,
+                                                 gint            nvalues,
+                                                 gboolean        reverse);
+static GradientCacheItem *gradient_cache_lookup (const gchar    *name,
+                                                 gboolean       *found);
 static void gradient_cache_zorch                (void);
 static void gradient_scale_entry_update_double  (GimpLabelSpin  *entry,
                                                  gdouble        *value);
@@ -674,21 +679,6 @@ G_DEFINE_TYPE (Gflare, gflare, GIMP_TYPE_PLUG_IN)
 GIMP_MAIN (GFLARE_TYPE)
 DEFINE_STD_SET_I18N
 
-
-PluginValues pvals =
-{
-  128,          /* xcenter */
-  128,          /* ycenter */
-  100.0,        /* radius */
-  0.0,          /* rotation */
-  0.0,          /* hue */
-  60.0,         /* vangle */
-  400.0,        /* vlength */
-  FALSE,        /* use_asupsample */
-  3,            /* asupsample_max_depth */
-  0.2,          /* asupsample_threshold */
-  "Default"     /* gflare_name */
-};
 
 GFlare default_gflare =
 {
@@ -808,9 +798,9 @@ gflare_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            gflare_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             gflare_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -860,50 +850,50 @@ gflare_create_procedure (GimpPlugIn  *plug_in,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "radius",
-                            "Radius",
+                            _("Radi_us"),
                             "Radius of GFlare (pixel)",
                             1, GIMP_MAX_IMAGE_SIZE, 100,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "rotation",
-                            "Rotation",
+                            _("Ro_tation"),
                             "Rotation of GFlare (degree)",
                             0, 360, 0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "hue",
-                            "Hue",
-                            "Hue rotation of GFlare (degree)",
+                            _("_Hue rotation"),
+                            "_Hue rotation of GFlare (degree)",
                             0, 360, 0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "vector-angle",
-                            "Vector angle",
+                            _("Vector _angle"),
                             "Vector angle for second flares (degree)",
                             0, 360, 60,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "vector-length",
-                            "Vector length",
+                            _("Vector len_gth"),
                             "Vector length for second flares "
                             "(percentage of Radius)",
                             0, 10000, 400,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "use-asupsample",
-                             "Use asupsample",
+                             _("Ada_ptive supersampling"),
                              "Use adaptive supersampling while rendering",
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "asupsample-max-depth",
-                         "Asupsample max depth",
+                         _("_Max depth"),
                          "Max depth for adaptive supersampling",
                          0, 10, 3,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "asupsample-threshold",
-                            "Asupsample threshold",
+                            _("Threshol_d"),
                             "Threshold for adaptive supersampling",
                             0.0, 1.0, 0.2,
                             G_PARAM_READWRITE);
@@ -918,7 +908,7 @@ gflare_run (GimpProcedure        *procedure,
             GimpImage            *_image,
             gint                  n_drawables,
             GimpDrawable        **drawables,
-            const GimpValueArray *args,
+            GimpProcedureConfig  *config,
             gpointer              run_data)
 {
   gchar *path;
@@ -1008,52 +998,20 @@ gflare_run (GimpProcedure        *procedure,
 
   gflares_list_load_all ();
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &pvals);
-
-      if (! dlg_run ())
-        {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      gflare_name_copy (pvals.gflare_name,
-                        GIMP_VALUES_GET_STRING (args, 0));
-
-      pvals.xcenter              = GIMP_VALUES_GET_INT     (args, 1);
-      pvals.ycenter              = GIMP_VALUES_GET_INT     (args, 2);
-      pvals.radius               = GIMP_VALUES_GET_DOUBLE  (args, 3);
-      pvals.rotation             = GIMP_VALUES_GET_DOUBLE  (args, 4);
-      pvals.hue                  = GIMP_VALUES_GET_DOUBLE  (args, 5);
-      pvals.vangle               = GIMP_VALUES_GET_DOUBLE  (args, 6);
-      pvals.vlength              = GIMP_VALUES_GET_DOUBLE  (args, 7);
-      pvals.use_asupsample       = GIMP_VALUES_GET_BOOLEAN (args, 8);
-      pvals.asupsample_max_depth = GIMP_VALUES_GET_INT     (args, 9);
-      pvals.asupsample_threshold = GIMP_VALUES_GET_DOUBLE  (args, 10);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &pvals);
-      break;
-    }
+  if (run_mode == GIMP_RUN_INTERACTIVE && ! dlg_run (procedure, config))
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_CANCEL,
+                                             NULL);
 
   if (gimp_drawable_is_rgb  (drawable) ||
       gimp_drawable_is_gray (drawable))
     {
       gimp_progress_init (_("Gradient Flare"));
 
-      plugin_do ();
+      plugin_do (config);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
-
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &pvals, sizeof (PluginValues));
     }
   else
     {
@@ -1075,33 +1033,60 @@ gflare_run (GimpProcedure        *procedure,
 }
 
 static void
-plugin_do (void)
+plugin_do (GimpProcedureConfig *config)
 {
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
   GFlare     *gflare;
+  gchar      *gflare_name;
+  gint        xcenter;
+  gint        ycenter;
+  gdouble     radius;
+  gdouble     rotation;
+  gdouble     hue;
+  gdouble     vangle;
+  gdouble     vlength;
+  gboolean    use_asupsample;
+  gint        asupsample_max_depth;
+  gdouble     asupsample_threshold;
 
-  gflare = gflares_list_lookup (pvals.gflare_name);
+  g_object_get (config,
+                "gflare-name",          &gflare_name,
+                "center-x",             &xcenter,
+                "center-y",             &ycenter,
+                "radius",               &radius,
+                "rotation",             &rotation,
+                "hue",                  &hue,
+                "vector-angle",         &vangle,
+                "vector-length",        &vlength,
+                "use-asupsample",       &use_asupsample,
+                "asupsample-max-depth", &asupsample_max_depth,
+                "asupsample-threshold", &asupsample_threshold,
+                NULL);
+
+  gflare = gflares_list_lookup (gflare_name);
   if (gflare == NULL)
     {
       /* FIXME */
-      g_warning ("Not found %s\n", pvals.gflare_name);
+      g_warning ("Not found %s\n", gflare_name);
+      g_free (gflare_name);
       return;
     }
+  g_free (gflare_name);
 
   /* Initialize calc params and gradients */
   calc_init_params (gflare, CALC_GLOW | CALC_RAYS | CALC_SFLARE,
-                    pvals.xcenter, pvals.ycenter,
-                    pvals.radius, pvals.rotation, pvals.hue,
-                    pvals.vangle, pvals.vlength);
+                    xcenter, ycenter,
+                    radius, rotation, hue,
+                    vangle, vlength);
   while (calc_init_progress ()) ;
 
   src_buffer  = gimp_drawable_get_buffer (drawable);
   dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
   /* Render it ! */
-  if (pvals.use_asupsample)
-    plugin_do_asupsample (src_buffer, dest_buffer);
+  if (use_asupsample)
+    plugin_do_asupsample (src_buffer, dest_buffer, asupsample_max_depth, asupsample_threshold);
   else
     plugin_do_non_asupsample (src_buffer, dest_buffer);
 
@@ -1199,13 +1184,15 @@ plugin_do_non_asupsample (GeglBuffer   *src_buffer,
 }
 
 static void
-plugin_do_asupsample (GeglBuffer   *src_buffer,
-                      GeglBuffer   *dest_buffer)
+plugin_do_asupsample (GeglBuffer *src_buffer,
+                      GeglBuffer *dest_buffer,
+                      gint        asupsample_max_depth,
+                      gdouble     asupsample_threshold)
 {
   gimp_adaptive_supersample_area (dinfo.x, dinfo.y,
                                   dinfo.x + dinfo.w - 1, dinfo.y + dinfo.h - 1,
-                                  pvals.asupsample_max_depth,
-                                  pvals.asupsample_threshold,
+                                  asupsample_max_depth,
+                                  asupsample_threshold,
                                   plugin_render_func,
                                   src_buffer,
                                   plugin_put_pixel_func,
@@ -1666,13 +1653,6 @@ gflare_write_gradient_name (GradientName  name,
   fprintf (fp, "%s\n", enc);
 }
 
-static void
-gflare_name_copy (gchar       *dest,
-                  const gchar *src)
-{
-  g_strlcpy (dest, src, GFLARE_NAME_MAX);
-}
-
 /*************************************************************************/
 /**                                                                     **/
 /**             +++ GFlares List                                        **/
@@ -1833,8 +1813,8 @@ gflares_list_free_all (void)
 static void
 calc_init_params (GFlare  *gflare,
                   gint     calc_type,
-                  gdouble  xcenter,
-                  gdouble  ycenter,
+                  gint     xcenter,
+                  gint     ycenter,
                   gdouble  radius,
                   gdouble  rotation,
                   gdouble  hue,
@@ -2478,7 +2458,8 @@ calc_overlay (guchar *dest, guchar *src1, guchar *src2)
  */
 
 static gboolean
-dlg_run (void)
+dlg_run (GimpProcedure       *procedure,
+         GimpProcedureConfig *config)
 {
   GeglBuffer *src_buffer;
   GtkWidget  *shell;
@@ -2488,6 +2469,7 @@ dlg_run (void)
   GtkWidget  *button;
   GtkWidget  *notebook;
   gboolean    run = FALSE;
+  gchar      *gflare_name;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -2500,7 +2482,9 @@ dlg_run (void)
   dlg->update_preview = TRUE;
 
   gradient_menu_init (); /* FIXME: this should go elsewhere  */
-  dlg_setup_gflare ();
+  g_object_get (config, "gflare-name", &gflare_name, NULL);
+  dlg_setup_gflare (gflare_name);
+  g_free (gflare_name);
 
   g_assert (gflares_list != NULL);
   g_assert (dlg->gflare != NULL);
@@ -2510,19 +2494,9 @@ dlg_run (void)
    *    Dialog Shell
    */
 
-  shell = dlg->shell = gimp_dialog_new (_("Gradient Flare"), PLUG_IN_ROLE,
-                                        NULL, 0,
-                                        gimp_standard_help_func, PLUG_IN_PROC,
-
-                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                        _("_OK"),     GTK_RESPONSE_OK,
-
-                                        NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (shell),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+  shell = dlg->shell = gimp_procedure_dialog_new (procedure,
+                                                  GIMP_PROCEDURE_CONFIG (config),
+                                                  _("Gradient Flare"));
 
   /*
    *    main hbox
@@ -2551,7 +2525,7 @@ dlg_run (void)
   src_buffer = gimp_drawable_get_buffer (drawable);
 
   dlg->preview = preview_new (DLG_PREVIEW_WIDTH, DLG_PREVIEW_HEIGHT,
-                              dlg_preview_init_func, NULL,
+                              dlg_preview_init_func, config,
                               dlg_preview_render_func, src_buffer,
                               dlg_preview_deinit_func, NULL);
   gtk_widget_set_events (GTK_WIDGET (dlg->preview->widget), DLG_PREVIEW_MASK);
@@ -2562,7 +2536,7 @@ dlg_run (void)
                     NULL);
   g_signal_connect (dlg->preview->widget, "event",
                     G_CALLBACK (dlg_preview_handle_event),
-                    NULL);
+                    config);
 
   dlg_preview_calc_window ();
 
@@ -2584,8 +2558,8 @@ dlg_run (void)
   gtk_box_pack_start (GTK_BOX (hbox), notebook, TRUE, TRUE, 0);
   gtk_widget_show (notebook);
 
-  dlg_make_page_settings (dlg, notebook);
-  dlg_make_page_selector (dlg, notebook);
+  dlg_make_page_settings (dlg, notebook, config);
+  dlg_make_page_selector (dlg, notebook, config);
 
   gtk_widget_show (shell);
 
@@ -2597,7 +2571,9 @@ dlg_run (void)
 
   if (gimp_dialog_run (GIMP_DIALOG (shell)) == GTK_RESPONSE_OK)
     {
-      gflare_name_copy (pvals.gflare_name, dlg->gflare->name);
+      g_object_set (config,
+                    "gflare-name", dlg->gflare->name,
+                    NULL);
 
       run = TRUE;
     }
@@ -2610,9 +2586,9 @@ dlg_run (void)
 }
 
 static void
-dlg_setup_gflare (void)
+dlg_setup_gflare (const gchar *gflare_name)
 {
-  dlg->gflare = gflares_list_lookup (pvals.gflare_name);
+  dlg->gflare = gflares_list_lookup (gflare_name);
 
   if (!dlg->gflare)
     {
@@ -2709,11 +2685,20 @@ dlg_preview_realize (GtkWidget *widget)
 }
 
 static gboolean
-dlg_preview_handle_event (GtkWidget *widget,
-                          GdkEvent  *event)
+dlg_preview_handle_event (GtkWidget           *widget,
+                          GdkEvent            *event,
+                          GimpProcedureConfig *config)
 {
   GdkEventButton *bevent;
-  gint           bx, by, x, y;
+  gint            bx, by, x, y;
+  gint         xcenter;
+  gint         ycenter;
+  gboolean        handled = FALSE;
+
+  g_object_get (config,
+                "center-x", &xcenter,
+                "center-y", &ycenter,
+                NULL);
 
   switch (event->type)
     {
@@ -2728,27 +2713,34 @@ dlg_preview_handle_event (GtkWidget *widget,
       y = dlg->pwin.y0 + (double) (dlg->pwin.y1 - dlg->pwin.y0)
                                         * by / DLG_PREVIEW_HEIGHT;
 
-      if ((x != pvals.xcenter || y != pvals.ycenter))
+      if ((x != xcenter || y != ycenter))
         {
-          if (x != pvals.xcenter)
+          if (x != xcenter)
             {
-              pvals.xcenter = x;
+              xcenter = x;
               gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dlg->sizeentry),
                                           0, x);
             }
-          if (y != pvals.ycenter)
+          if (y != ycenter)
             {
-              pvals.ycenter = y;
+              ycenter = y;
               gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dlg->sizeentry),
                                           1, y);
             }
           dlg_preview_update ();
         }
-      return TRUE;
+      handled = TRUE;
+      break;
     default:
       break;
     }
-  return FALSE;
+
+  g_object_set (config,
+                "center-x", xcenter,
+                "center-y", ycenter,
+                NULL);
+
+  return handled;
 }
 
 static void
@@ -2763,17 +2755,38 @@ dlg_preview_update (void)
 
 /*      preview callbacks       */
 static gint
-dlg_preview_init_func (Preview *preview, gpointer data)
+dlg_preview_init_func (Preview *preview,
+                       gpointer data)
 {
+  GimpProcedureConfig *config = GIMP_PROCEDURE_CONFIG (data);
+
   /* call init_params first, and iterate init_progress while
      it returns true */
   if (dlg->init_params_done == FALSE)
     {
+      gint    xcenter;
+      gint    ycenter;
+      gdouble radius;
+      gdouble rotation;
+      gdouble hue;
+      gdouble vangle;
+      gdouble vlength;
+
+      g_object_get (config,
+                    "center-x",      &xcenter,
+                    "center-y",      &ycenter,
+                    "radius",        &radius,
+                    "rotation",      &rotation,
+                    "hue",           &hue,
+                    "vector-angle",  &vangle,
+                    "vector-length", &vlength,
+                    NULL);
+
       calc_init_params (dlg->gflare,
                         CALC_GLOW | CALC_RAYS | CALC_SFLARE,
-                        pvals.xcenter, pvals.ycenter,
-                        pvals.radius, pvals.rotation, pvals.hue,
-                        pvals.vangle, pvals.vlength);
+                        xcenter, ycenter,
+                        radius, rotation, hue,
+                        vangle, vlength);
       dlg->init_params_done = TRUE;
       return TRUE;
     }
@@ -2858,27 +2871,23 @@ dlg_preview_deinit_func (Preview *preview, gpointer data)
 /*****************************************/
 
 static void
-dlg_make_page_settings (GFlareDialog *dlg,
-                        GtkWidget    *notebook)
+dlg_make_page_settings (GFlareDialog        *dlg,
+                        GtkWidget           *notebook,
+                        GimpProcedureConfig *config)
 {
   GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *center;
   GtkWidget *chain;
-  GtkWidget *grid;
-  GtkWidget *button;
-  GtkWidget *asup_grid;
   GtkWidget *scale;
   gdouble    xres, yres;
-  gint       row;
+  gint       xcenter;
+  gint       ycenter;
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-
-  frame = gimp_frame_new (_("Center"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
+  g_object_get (config,
+                "center-x", &xcenter,
+                "center-y", &ycenter,
+                NULL);
   gimp_image_get_resolution (image, &xres, &yres);
 
   center = dlg->sizeentry =
@@ -2887,146 +2896,92 @@ dlg_make_page_settings (GFlareDialog *dlg,
 
                           FALSE, FALSE,
 
-                          _("_X:"), pvals.xcenter, xres,
+                          _("_X:"), xcenter, xres,
                           -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
                           0, gimp_drawable_get_width (drawable),
 
-                          _("_Y:"), pvals.ycenter, yres,
+                          _("_Y:"), ycenter, yres,
                           -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
                           0, gimp_drawable_get_height (drawable));
 
   chain = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (center));
 
-  gtk_container_add (GTK_CONTAINER (frame), center);
   g_signal_connect (center, "value-changed",
                     G_CALLBACK (dlg_position_entry_callback),
-                    NULL);
+                    config);
   g_signal_connect (center, "refval-changed",
                     G_CALLBACK (dlg_position_entry_callback),
-                    NULL);
+                    config);
   gtk_widget_hide (chain);
   gtk_widget_show (center);
 
-  frame = gimp_frame_new (_("Parameters"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dlg->shell),
+                                   "center-title", _("Center"));
+  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dlg->shell),
+                                            "center-frame", "center-title",
+                                            FALSE, NULL);
+  gtk_container_add (GTK_CONTAINER (frame), center);
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dlg->shell), "radius", 1.0);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0,
+                                    gimp_drawable_get_width (drawable) / 2);
 
-  row = 0;
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dlg->shell), "rotation", 1.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dlg->shell), "hue", 1.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dlg->shell), "vector-angle", 1.0);
 
-  scale = gimp_scale_entry_new (_("_Radius:"), pvals.radius, 0.0, GIMP_MAX_IMAGE_SIZE, 1);
-  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0.0, gimp_drawable_get_width (drawable) / 2, TRUE);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (gradient_scale_entry_update_double),
-                    &pvals.radius);
-  g_signal_connect (scale, "value-changed",
+  scale = gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dlg->shell), "vector-length", 1.0);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000);
+
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dlg->shell),
+                                  "parameters-box",
+                                  "radius", "rotation", "hue",
+                                  "vector-angle", "vector-length",
+                                  NULL);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dlg->shell),
+                                   "parameters-title", _("Parameters"));
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dlg->shell),
+                                    "parameters-frame", "parameters-title",
+                                    FALSE, "parameters-box");
+
+  g_signal_connect (config, "notify",
                     G_CALLBACK (dlg_preview_update),
                     NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
-
-  scale = gimp_scale_entry_new (_("Ro_tation:"), pvals.rotation, -180.0, 180.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (gradient_scale_entry_update_double),
-                    &pvals.rotation);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (dlg_preview_update),
-                    NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
-
-  scale = gimp_scale_entry_new (_("_Hue rotation:"), pvals.hue, -180.0, 180.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (gradient_scale_entry_update_double),
-                    &pvals.hue);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (dlg_preview_update),
-                    NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
-
-  scale = gimp_scale_entry_new (_("Vector _angle:"), pvals.vangle, 0.0, 359.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1.0, 15.0);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (gradient_scale_entry_update_double),
-                    &pvals.vangle);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (dlg_preview_update),
-                    NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
-
-  scale = gimp_scale_entry_new (_("Vector _length:"), pvals.vlength, 1, GIMP_MAX_IMAGE_SIZE, 1);
-  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 1, 1000, TRUE);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (gradient_scale_entry_update_double),
-                    &pvals.vlength);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (dlg_preview_update),
-                    NULL);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
 
   /**
   ***   Asupsample settings
   ***   This code is stolen from gimp-0.99.x/app/blend.c
   **/
 
-  /*  asupsample frame */
-  frame = dlg->asupsample_frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dlg->shell),
+                                        "asupsample-max-depth", 1.0);
 
-  button = gtk_check_button_new_with_mnemonic (_("A_daptive supersampling"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                pvals.use_asupsample);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-  gtk_widget_show (button);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dlg->shell),
+                                        "asupsample-threshold", 1.0);
 
-  asup_grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (asup_grid), 6);
-  gtk_grid_set_row_spacing (GTK_GRID (asup_grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), asup_grid);
-  gtk_widget_show (asup_grid);
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dlg->shell),
+                                  "asupsample-box",
+                                  "asupsample-max-depth", "asupsample-threshold",
+                                  NULL);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dlg->shell),
+                                    "asupsample-frame", "use-asupsample",
+                                    FALSE, "asupsample-box");
 
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &pvals.use_asupsample);
-
-  g_object_bind_property (button,    "active",
-                          asup_grid, "sensitive",
-                          G_BINDING_SYNC_CREATE);
-
-  scale = gimp_scale_entry_new (_("_Max depth:"), pvals.asupsample_max_depth, 1.0, 10.0, 0);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (gradient_scale_entry_update_int),
-                    &pvals.asupsample_max_depth);
-  gtk_grid_attach (GTK_GRID (asup_grid), scale, 0, 0, 3, 1);
-  gtk_widget_show (scale);
-
-  scale = gimp_scale_entry_new (_("_Threshold"), pvals.asupsample_threshold, 0.0, 4.0, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.01, 0.1);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (gradient_scale_entry_update_double),
-                    &pvals.asupsample_threshold);
-  gtk_grid_attach (GTK_GRID (asup_grid), scale, 0, 1, 3, 1);
-  gtk_widget_show (scale);
-
+  main_vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dlg->shell),
+                                              "settings-page",
+                                              "center-frame", "parameters-frame", "asupsample-frame",
+                                              NULL);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), main_vbox,
                             gtk_label_new_with_mnemonic (_("_Settings")));
   gtk_widget_show (main_vbox);
 }
 
 static void
-dlg_position_entry_callback (GtkWidget *widget, gpointer data)
+dlg_position_entry_callback (GtkWidget           *widget,
+                             GimpProcedureConfig *config)
 {
+  gint xcenter;
+  gint ycenter;
   gint x, y;
 
   x = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
@@ -3034,11 +2989,17 @@ dlg_position_entry_callback (GtkWidget *widget, gpointer data)
 
   DEBUG_PRINT (("dlg_position_entry_callback\n"));
 
-  if (pvals.xcenter != x ||
-      pvals.ycenter != y)
+  g_object_get (config,
+                "center-x", &xcenter,
+                "center-y", &ycenter,
+                NULL);
+
+  if (xcenter != x || ycenter != y)
     {
-      pvals.xcenter = x;
-      pvals.ycenter = y;
+      g_object_set (config,
+                    "center-x", x,
+                    "center-y", y,
+                    NULL);
 
       dlg_preview_update ();
     }
@@ -3058,8 +3019,9 @@ dlg_update_preview_callback (GtkWidget *widget,
 /*****************************************/
 
 static void
-dlg_make_page_selector (GFlareDialog *dlg,
-                        GtkWidget    *notebook)
+dlg_make_page_selector (GFlareDialog        *dlg,
+                        GtkWidget           *notebook,
+                        GimpProcedureConfig *config)
 {
   GtkWidget         *vbox;
   GtkWidget         *hbox;
@@ -3142,7 +3104,7 @@ dlg_make_page_selector (GFlareDialog *dlg,
 
       g_signal_connect (button, "clicked",
                         buttons[i].callback,
-                        button);
+                        config);
     }
 
   gtk_widget_show (vbox);
@@ -3265,7 +3227,7 @@ dlg_selector_edit_callback (GtkWidget *widget,
   preview_render_end (dlg->preview);
   gtk_widget_set_sensitive (dlg->shell, FALSE);
   ed_run (GTK_WINDOW (dlg->shell),
-          dlg->gflare, dlg_selector_edit_done_callback, NULL);
+          dlg->gflare, dlg_selector_edit_done_callback, data);
 }
 
 static void
@@ -3458,6 +3420,8 @@ ed_run (GtkWindow            *parent,
   GtkWidget *frame;
   GtkWidget *notebook;
 
+  g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (calldata));
+
   if (!ed)
     ed = g_new0 (GFlareEditor, 1);
   ed->init          = TRUE;
@@ -3515,14 +3479,14 @@ ed_run (GtkWindow            *parent,
   gtk_widget_show (frame);
 
   ed->preview = preview_new (ED_PREVIEW_WIDTH, ED_PREVIEW_HEIGHT,
-                             ed_preview_init_func, NULL,
+                             ed_preview_init_func, calldata,
                              ed_preview_render_func, NULL,
                              ed_preview_deinit_func, NULL);
   gtk_widget_set_events (GTK_WIDGET (ed->preview->widget), DLG_PREVIEW_MASK);
   gtk_container_add (GTK_CONTAINER (frame), ed->preview->widget);
   g_signal_connect (ed->preview->widget, "event",
                     G_CALLBACK (dlg_preview_handle_event),
-                    NULL);
+                    calldata);
   ed_preview_calc_window ();
 
   /*
@@ -4196,10 +4160,18 @@ ed_preview_update (void)
 static gint
 ed_preview_init_func (Preview *preview, gpointer data)
 {
-  int   type = 0;
+  GimpProcedureConfig *config = GIMP_PROCEDURE_CONFIG (data);
+  int                  type   = 0;
 
   if (ed->init_params_done == FALSE)
     {
+      gdouble vangle;
+      gdouble vlength;
+
+      g_object_get (config,
+                    "vector-angle",  &vangle,
+                    "vector-length", &vlength,
+                    NULL);
       switch (ed->cur_page)
         {
         case PAGE_GENERAL:
@@ -4221,7 +4193,7 @@ ed_preview_init_func (Preview *preview, gpointer data)
       calc_init_params (ed->gflare, type,
                         ED_PREVIEW_WIDTH/2, ED_PREVIEW_HEIGHT/2,
                         ED_PREVIEW_WIDTH/2, 0.0, 0.0,
-                        pvals.vangle, pvals.vlength);
+                        vangle, vlength);
 
       ed->init_params_done = TRUE;
       return TRUE;
