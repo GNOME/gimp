@@ -99,7 +99,7 @@ static GimpValueArray * play_run              (GimpProcedure        *procedure,
                                                GimpImage            *image,
                                                gint                  n_drawables,
                                                GimpDrawable        **drawables,
-                                               const GimpValueArray *args,
+                                               GimpProcedureConfig  *config,
                                                gpointer              run_data);
 
 static void        initialize                (GimpPlay        *play);
@@ -317,9 +317,9 @@ play_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            play_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             play_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -351,7 +351,7 @@ play_run (GimpProcedure        *procedure,
           GimpImage            *_image,
           gint                  n_drawables,
           GimpDrawable        **drawables,
-          const GimpValueArray *args,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
   GMenu    *section;

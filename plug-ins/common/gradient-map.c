@@ -68,7 +68,7 @@ static GimpValueArray * map_run              (GimpProcedure        *procedure,
                                               GimpImage            *image,
                                               gint                  n_drawables,
                                               GimpDrawable        **drawables,
-                                              const GimpValueArray *args,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 
 static void             map                  (GeglBuffer           *buffer,
@@ -119,11 +119,11 @@ map_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, GRADMAP_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            map_run,
-                                            GINT_TO_POINTER (GRADIENT_MODE),
-                                            NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             map_run,
+                                             GINT_TO_POINTER (GRADIENT_MODE),
+                                             NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -155,11 +155,11 @@ map_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PALETTEMAP_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            map_run,
-                                            GINT_TO_POINTER (PALETTE_MODE),
-                                            NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             map_run,
+                                             GINT_TO_POINTER (PALETTE_MODE),
+                                             NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -193,13 +193,13 @@ map_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-map_run (GimpProcedure         *procedure,
-         GimpRunMode            run_mode,
-         GimpImage             *image,
-         gint                   n_drawables,
-         GimpDrawable         **drawables,
-         const GimpValueArray  *args,
-         gpointer               run_data)
+map_run (GimpProcedure        *procedure,
+         GimpRunMode           run_mode,
+         GimpImage            *image,
+         gint                  n_drawables,
+         GimpDrawable        **drawables,
+         GimpProcedureConfig  *config,
+         gpointer              run_data)
 {
   MapMode       mode = GPOINTER_TO_INT (run_data);
   GeglBuffer   *shadow_buffer;

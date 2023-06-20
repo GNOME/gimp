@@ -88,7 +88,7 @@ static GimpValueArray * optimize_run              (GimpProcedure        *procedu
                                                    GimpImage            *image,
                                                    gint                  n_drawables,
                                                    GimpDrawable        **drawables,
-                                                   const GimpValueArray *args,
+                                                   GimpProcedureConfig  *config,
                                                    gpointer              run_data);
 
 static  GimpImage     * do_optimizations          (GimpRunMode  run_mode,
@@ -167,9 +167,9 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, OPTIMIZE_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            optimize_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             optimize_run, NULL, NULL);
 
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
@@ -195,9 +195,9 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, OPTIMIZE_DIFF_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            optimize_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             optimize_run, NULL, NULL);
 
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
@@ -220,9 +220,9 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, UNOPTIMIZE_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            optimize_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             optimize_run, NULL, NULL);
 
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
@@ -242,9 +242,9 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, REMOVE_BACKDROP_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            optimize_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             optimize_run, NULL, NULL);
 
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
@@ -263,9 +263,9 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, FIND_BACKDROP_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            optimize_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             optimize_run, NULL, NULL);
 
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
@@ -311,7 +311,7 @@ optimize_run (GimpProcedure        *procedure,
               GimpImage            *image,
               gint                  n_drawables,
               GimpDrawable        **drawables,
-              const GimpValueArray *args,
+              GimpProcedureConfig  *config,
               gpointer              run_data)
 {
   GimpValueArray *return_vals;
