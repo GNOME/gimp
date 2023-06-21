@@ -224,8 +224,7 @@ gimp_toolbar_add_action (GimpToolbar *toolbar,
                          gboolean     top)
 {
   GimpUIManager *manager;
-  GApplication  *app;
-  GAction       *action;
+  GimpAction    *action;
   const gchar   *action_label;
   GtkToolItem   *item;
   gboolean       visible;
@@ -233,12 +232,7 @@ gimp_toolbar_add_action (GimpToolbar *toolbar,
   g_return_if_fail (GIMP_IS_TOOLBAR (toolbar));
 
   manager = gimp_menu_shell_get_manager (GIMP_MENU_SHELL (toolbar));
-  app     = manager->gimp->app;
-
-  if (g_str_has_prefix (action_name, "app."))
-    action = g_action_map_lookup_action (G_ACTION_MAP (app), action_name + 4);
-  else
-    action = g_action_map_lookup_action (G_ACTION_MAP (app), action_name);
+  action  = gimp_ui_manager_find_action (manager, NULL, action_name);
 
   g_return_if_fail (GIMP_IS_ACTION (action));
 
