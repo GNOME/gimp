@@ -430,8 +430,9 @@ borderaverage_dialog (GimpProcedure *procedure,
     gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0,
                               MIN (gegl_buffer_get_width (buffer),
                                    gegl_buffer_get_height (buffer)));
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0,
-                                         1.0, 256.0);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0, 1.0,
+                                         MIN (gegl_buffer_get_width (buffer),
+                                              gegl_buffer_get_height (buffer)) / 2);
 
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "border-size-frame", "border-size-label",
