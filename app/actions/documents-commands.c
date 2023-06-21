@@ -34,6 +34,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimagefile.h"
+#include "core/gimpimage.h"
 
 #include "file/file-open.h"
 
@@ -121,7 +122,7 @@ documents_raise_or_open_cmd_callback (GimpAction *action,
       closure.name  = gimp_object_get_name (imagefile);
       closure.found = FALSE;
 
-      gimp_container_foreach (context->gimp->displays,
+      gimp_container_foreach (GIMP_CONTAINER (context->gimp->displays),
                               (GFunc) documents_raise_display,
                               &closure);
 
@@ -399,11 +400,24 @@ static void
 documents_raise_display (GimpDisplay  *display,
                          RaiseClosure *closure)
 {
-  const gchar *uri = gimp_object_get_name (gimp_display_get_image (display));
+  GimpImage *image;
+  GFile     *file;
+  gchar     *uri = NULL;
+
+  image = gimp_display_get_image (display);
+
+  file = gimp_image_get_file (image);
+  if (! file)
+    file = gimp_image_get_imported_file (image);
+
+  if (file)
+    uri = g_file_get_uri (file);
 
   if (! g_strcmp0 (closure->name, uri))
     {
       closure->found = TRUE;
       gimp_display_shell_present (gimp_display_get_shell (display));
     }
+
+  g_free (uri);
 }
