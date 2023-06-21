@@ -327,16 +327,17 @@ merge_run (GimpProcedure        *procedure,
 
       if (! DepthMerge_construct (&dm))
         {
-          gimp_procedure_new_return_values (procedure,
-                                            GIMP_PDB_SUCCESS,
-                                            NULL);
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_EXECUTION_ERROR,
+                                                   NULL);
         }
 
-      if (!DepthMerge_dialog (&dm))
+      if (! DepthMerge_dialog (&dm))
         {
-          gimp_procedure_new_return_values (procedure,
-                                            GIMP_PDB_CANCEL,
-                                            NULL);
+          DepthMerge_destroy (&dm);
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
         }
       break;
 
@@ -354,29 +355,29 @@ merge_run (GimpProcedure        *procedure,
 
       if (! DepthMerge_construct (&dm))
         {
-          gimp_procedure_new_return_values (procedure,
-                                            GIMP_PDB_SUCCESS,
-                                            NULL);
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_EXECUTION_ERROR,
+                                                   NULL);
         }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data (PLUG_IN_PROC, &dm.params);
 
-      if (!DepthMerge_construct (&dm))
+      if (! DepthMerge_construct (&dm))
         {
-          gimp_procedure_new_return_values (procedure,
-                                            GIMP_PDB_SUCCESS,
-                                            NULL);
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_EXECUTION_ERROR,
+                                                   NULL);
         }
       break;
     }
 
   if (! DepthMerge_execute (&dm))
     {
-      gimp_procedure_new_return_values (procedure,
-                                        GIMP_PDB_EXECUTION_ERROR,
-                                        NULL);
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
     }
   else
     {
