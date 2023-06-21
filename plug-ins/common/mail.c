@@ -112,7 +112,9 @@ GIMP_MAIN (MAIL_TYPE)
 DEFINE_STD_SET_I18N
 
 
+#ifdef SENDMAIL
 static gchar *mesg_body = NULL;
+#endif
 
 
 static void
@@ -322,12 +324,12 @@ send_image (GObject       *config,
   GPid               mailpid;
   FILE              *mailpipe = NULL;
 #endif
-  GError            *error = NULL;
-  const gchar       *filename;
-  gchar              receipt[BUFFER_SIZE];
-  gchar              from[BUFFER_SIZE];
-  gchar              subject[BUFFER_SIZE];
-  gchar              comment[BUFFER_SIZE];
+  GError            *error    = NULL;
+  gchar             *filename = NULL;
+  gchar             *receipt  = NULL;
+  gchar             *from     = NULL;
+  gchar             *subject  = NULL;
+  gchar             *comment  = NULL;
 
   g_object_get (config,
                 "filename",     &filename,
@@ -429,17 +431,17 @@ send_image (GObject       *config,
   mailcmd[1] = "--attach";
   mailcmd[2] = filepath;
   i = 3;
-  if (strlen (subject) > 0)
+  if (subject != NULL && strlen (subject) > 0)
     {
       mailcmd[i++] = "--subject";
       mailcmd[i++] = subject;
     }
-  if (strlen (comment) > 0)
+  if (comment != NULL && strlen (comment) > 0)
     {
       mailcmd[i++] = "--body";
       mailcmd[i++] = comment;
     }
-  if (strlen (receipt) > 0)
+  if (receipt != NULL && strlen (receipt) > 0)
     {
       mailcmd[i++] = receipt;
     }
@@ -511,6 +513,12 @@ cleanup:
   if (filepath)
     g_free (filepath);
 #endif
+
+  g_free (filename);
+  g_free (receipt);
+  g_free (from);
+  g_free (subject);
+  g_free (comment);
 
   g_free (mailcmd[0]);
   g_free (tmpname);
@@ -766,11 +774,11 @@ static void
 sendmail_create_headers (FILE    *mailpipe,
                          GObject *config)
 {
-  const gchar *filename;
-  gchar        receipt[BUFFER_SIZE];
-  gchar        from[BUFFER_SIZE];
-  gchar        subject[BUFFER_SIZE];
-  gchar        comment[BUFFER_SIZE];
+  gchar *filename = NULL;
+  gchar *receipt  = NULL;
+  gchar *from     = NULL;
+  gchar *subject  = NULL;
+  gchar *comment  = NULL;
 
   g_object_get (config,
                 "filename",     &filename,
@@ -787,7 +795,7 @@ sendmail_create_headers (FILE    *mailpipe,
 
   fprintf (mailpipe, "To: %s \n", receipt);
   fprintf (mailpipe, "Subject: %s \n", subject);
-  if (strlen (from) > 0)
+  if (from != NULL && strlen (from) > 0)
     fprintf (mailpipe, "From: %s \n", from);
 
   fprintf (mailpipe, "X-Mailer: GIMP Useless Mail plug-in %s\n", GIMP_VERSION);
@@ -818,6 +826,12 @@ sendmail_create_headers (FILE    *mailpipe,
 
     g_free (content);
   }
+
+  g_free (filename);
+  g_free (receipt);
+  g_free (from);
+  g_free (subject);
+  g_free (comment);
 }
 
 static gboolean
