@@ -689,15 +689,30 @@ user_update_sessionrc (const GMatchInfo *matched_value,
 }
 
 #define GIMPRC_UPDATE_PATTERN \
-  "\\(theme [^)]*\\)"    "|" \
-  "^ *\\(.*-path \".*\"\\) *$"
+  "\\(theme [^)]*\\)"          "|" \
+  "^ *\\(.*-path \".*\"\\) *$" "|" \
+  "\\(style solid\\)"
 
 static gboolean
 user_update_gimprc (const GMatchInfo *matched_value,
                     GString          *new_value,
                     gpointer          data)
 {
-  /* Do not migrate paths and themes from GIMP < 2.10. */
+  gchar *match = g_match_info_fetch (matched_value, 0);
+
+  if (g_strcmp0 (match, "(style solid)") == 0)
+    {
+      /* See MR !706: GIMP_FILL_STYLE_SOLID was split in
+       * GIMP_FILL_STYLE_FG_COLOR and GIMP_FILL_STYLE_BG_COLOR.
+       */
+      g_string_append (new_value, "(style fg-color)");
+    }
+  else
+    {
+      /* Do not migrate paths and themes from GIMP < 3.0. */
+    }
+
+  g_free (match);
   return FALSE;
 }
 
