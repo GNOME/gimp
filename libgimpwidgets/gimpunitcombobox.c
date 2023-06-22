@@ -39,10 +39,8 @@
  **/
 
 
-static void   gimp_unit_combo_box_style_updated (GtkWidget        *widget);
-static void   gimp_unit_combo_box_popup_shown   (GtkWidget        *widget,
-                                                 const GParamSpec *pspec);
-
+static void gimp_unit_combo_box_popup_shown (GimpUnitComboBox *widget);
+static void gimp_unit_combo_box_constructed (GObject          *object);
 
 G_DEFINE_TYPE (GimpUnitComboBox, gimp_unit_combo_box, GTK_TYPE_COMBO_BOX)
 
@@ -52,53 +50,35 @@ G_DEFINE_TYPE (GimpUnitComboBox, gimp_unit_combo_box, GTK_TYPE_COMBO_BOX)
 static void
 gimp_unit_combo_box_class_init (GimpUnitComboBoxClass *klass)
 {
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  widget_class->style_updated = gimp_unit_combo_box_style_updated;
+  object_class->constructed = gimp_unit_combo_box_constructed;
 }
 
 static void
 gimp_unit_combo_box_init (GimpUnitComboBox *combo)
 {
-  GtkCellLayout   *layout = GTK_CELL_LAYOUT (combo);
-  GtkCellRenderer *cell;
-
-  cell = gtk_cell_renderer_text_new ();
-  gtk_cell_layout_pack_start (layout, cell, TRUE);
-  gtk_cell_layout_set_attributes (layout, cell,
-                                  "text", GIMP_UNIT_STORE_UNIT_LONG_FORMAT,
-                                  NULL);
-
   g_signal_connect (combo, "notify::popup-shown",
                     G_CALLBACK (gimp_unit_combo_box_popup_shown),
                     NULL);
 }
 
 static void
-gimp_unit_combo_box_style_updated (GtkWidget *widget)
+gimp_unit_combo_box_constructed (GObject *object)
 {
-  GtkCellLayout   *layout;
-  GtkCellRenderer *cell;
+  GimpUnitComboBox *combo = GIMP_UNIT_COMBO_BOX (object);
 
-  /*  hackedehack ...  */
-  layout = GTK_CELL_LAYOUT (gtk_bin_get_child (GTK_BIN (widget)));
-  gtk_cell_layout_clear (layout);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  cell = gtk_cell_renderer_text_new ();
-  gtk_cell_layout_pack_start (layout, cell, TRUE);
-  gtk_cell_layout_set_attributes (layout, cell,
-                                  "text",  GIMP_UNIT_STORE_UNIT_SHORT_FORMAT,
-                                  NULL);
-
-  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
+  gimp_unit_combo_box_popup_shown (combo);
 }
 
 static void
-gimp_unit_combo_box_popup_shown (GtkWidget        *widget,
-                                 const GParamSpec *pspec)
+gimp_unit_combo_box_popup_shown (GimpUnitComboBox *widget)
 {
-  GimpUnitStore *store;
-  gboolean       shown;
+  GimpUnitStore   *store;
+  gboolean         shown;
+  GtkCellRenderer *cell;
 
   g_object_get (widget,
                 "model",       &store,
@@ -111,6 +91,24 @@ gimp_unit_combo_box_popup_shown (GtkWidget        *widget,
         _gimp_unit_store_sync_units (store);
 
       g_object_unref (store);
+    }
+
+  gtk_cell_layout_clear (GTK_CELL_LAYOUT (widget));
+  cell = gtk_cell_renderer_text_new ();
+
+  if (shown)
+    {
+      gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (widget), cell, TRUE);
+      gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget), cell,
+                                      "text", GIMP_UNIT_STORE_UNIT_LONG_FORMAT,
+                                      NULL);
+    }
+  else
+    {
+      gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (widget), cell, FALSE);
+      gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget), cell,
+                                      "text", GIMP_UNIT_STORE_UNIT_SHORT_FORMAT,
+                                      NULL);
     }
 }
 
@@ -129,7 +127,8 @@ gimp_unit_combo_box_new (void)
   store = gimp_unit_store_new (0);
 
   combo_box = g_object_new (GIMP_TYPE_UNIT_COMBO_BOX,
-                            "model", store,
+                            "model",     store,
+                            "id-column", GIMP_UNIT_STORE_UNIT_LONG_FORMAT,
                             NULL);
 
   g_object_unref (store);
@@ -147,7 +146,8 @@ GtkWidget *
 gimp_unit_combo_box_new_with_model (GimpUnitStore *model)
 {
   return g_object_new (GIMP_TYPE_UNIT_COMBO_BOX,
-                       "model", model,
+                       "model",     model,
+                       "id-column", GIMP_UNIT_STORE_UNIT_LONG_FORMAT,
                        NULL);
 }
 
