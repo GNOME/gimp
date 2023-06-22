@@ -720,6 +720,7 @@ gimp_text_set_property (GObject      *object,
                             GIMP_TEXT_HINT_STYLE_NONE);
       break;
     case PROP_GIMP:
+      text->gimp = g_value_get_object (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
