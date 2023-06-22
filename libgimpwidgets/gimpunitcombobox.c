@@ -102,6 +102,20 @@ gimp_unit_combo_box_popup_shown (GimpUnitComboBox *widget)
       gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget), cell,
                                       "text", GIMP_UNIT_STORE_UNIT_LONG_FORMAT,
                                       NULL);
+
+      /* XXX This is ugly but it seems that GtkComboBox won't resize its popup
+       * menu when the contents changes (it only resizes the main "chosen item"
+       * area). We force a redraw by popping down then up after a contents
+       * change.
+       */
+      g_signal_handlers_disconnect_by_func (widget,
+                                            G_CALLBACK (gimp_unit_combo_box_popup_shown),
+                                            NULL);
+      gtk_combo_box_popdown (GTK_COMBO_BOX (widget));
+      gtk_combo_box_popup (GTK_COMBO_BOX (widget));
+      g_signal_connect (widget, "notify::popup-shown",
+                        G_CALLBACK (gimp_unit_combo_box_popup_shown),
+                        NULL);
     }
   else
     {
