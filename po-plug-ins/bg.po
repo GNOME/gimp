@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-05-10 17:27+0000\n"
-"PO-Revision-Date: 2023-06-20 13:57+0300\n"
+"PO-Revision-Date: 2023-06-23 10:35+0300\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -74,17 +74,6 @@ msgstr ""
 msgid "_Cancel"
 msgstr "_Отказ"
 
-#. Text antialiasing
-#. Graphics antialiasing
-#. file save type
-#: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
-#: plug-ins/common/file-ps.c:3744 plug-ins/common/file-ps.c:3752
-#: plug-ins/common/file-psp.c:840 plug-ins/file-tiff/file-tiff-save.c:1322
-#: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
-#: plug-ins/metadata/metadata-tags.c:238
-msgid "None"
-msgstr "Няма"
-
 #: plug-ins/common/cml-explorer.c:303 plug-ins/common/cml-explorer.c:311
 #: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
 #: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:317
@@ -101,6 +90,584 @@ msgstr "Стойност"
 #: plug-ins/metadata/metadata-viewer.c:272
 msgid "_Close"
 msgstr "_Затваряне"
+
+#: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
+#: plug-ins/common/border-average.c:195 plug-ins/common/checkerboard.c:184
+#: plug-ins/common/cml-explorer.c:558 plug-ins/common/compose.c:557
+#: plug-ins/common/contrast-retinex.c:253 plug-ins/common/crop-zealous.c:151
+#: plug-ins/common/curve-bend.c:678 plug-ins/common/decompose.c:376
+#: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:232
+#: plug-ins/common/destripe.c:182 plug-ins/common/gradient-map.c:216
+#: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
+#: plug-ins/common/jigsaw.c:473 plug-ins/common/nl-filter.c:224
+#: plug-ins/common/qbist.c:253 plug-ins/common/sample-colorize.c:431
+#: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:307
+#: plug-ins/common/sphere-designer.c:3179 plug-ins/common/tile.c:220
+#: plug-ins/common/tile-small.c:308 plug-ins/common/van-gogh-lic.c:913
+#: plug-ins/common/warp.c:375 plug-ins/common/wavelet-decompose.c:182
+#: plug-ins/file-dds/dds.c:519 plug-ins/flame/flame.c:241
+#: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:215
+#: plug-ins/gimpressionist/gimp.c:178
+#: plug-ins/gradient-flare/gradient-flare.c:935
+#: plug-ins/ifs-compose/ifs-compose.c:537 plug-ins/imagemap/imap_main.c:632
+#: plug-ins/lighting/lighting-main.c:404
+#: plug-ins/map-object/map-object-main.c:496 plug-ins/pagecurl/pagecurl.c:302
+#, c-format
+msgid "Procedure '%s' only works with one drawable."
+msgstr "Процедурата „%s“ работи само с едно нарисувано."
+
+#: extensions/goat-exercises/goat-exercise-gjs.js:96
+#: extensions/goat-exercises/goat-exercise-lua.lua:73
+#: extensions/goat-exercises/goat-exercise-py3.py:79
+#: plug-ins/common/border-average.c:433 plug-ins/common/checkerboard.c:496
+#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:707
+#: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1222
+#: plug-ins/common/depth-merge.c:734 plug-ins/common/file-heif.c:2358
+#: plug-ins/common/file-pdf-load.c:710 plug-ins/common/file-svg.c:774
+#: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1325
+#: plug-ins/common/grid.c:762 plug-ins/common/qbist.c:945
+#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
+#: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
+#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
+#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3434
+#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
+#: plug-ins/fractal-explorer/fractal-explorer.c:1270
+#: plug-ins/gimpressionist/gimpressionist.c:143
+#: plug-ins/gimpressionist/orientmap.c:529
+#: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
+#: plug-ins/gradient-flare/gradient-flare.c:2518
+#: plug-ins/gradient-flare/gradient-flare.c:3480
+#: plug-ins/ifs-compose/ifs-compose.c:959
+#: plug-ins/imagemap/imap_default_dialog.c:109
+#: plug-ins/lighting/lighting-ui.c:1039
+#: plug-ins/map-object/map-object-ui.c:1318 plug-ins/pagecurl/pagecurl.c:497
+#: plug-ins/selection-to-path/selection-to-path.c:414
+msgid "_OK"
+msgstr "_Добре"
+
+#: plug-ins/common/cml-explorer.c:130
+msgid "Keep image's values"
+msgstr "Запазване на стойностите на изображението"
+
+#: plug-ins/common/cml-explorer.c:131
+msgid "Keep the first value"
+msgstr "Запазване на първата стойност"
+
+#: plug-ins/common/cml-explorer.c:132
+msgid "Fill with parameter k"
+msgstr "Запълване на изображението с параметър k"
+
+#: plug-ins/common/cml-explorer.c:133
+msgid "k{x(1-x)}^p"
+msgstr "k{x(1-x)}ᵖ"
+
+#: plug-ins/common/cml-explorer.c:134
+msgid "k{x(1-x)}^p stepped"
+msgstr "k{x(1-x)}ᵖ постъпково"
+
+#: plug-ins/common/cml-explorer.c:135
+msgid "kx^p"
+msgstr "kxᵖ"
+
+#: plug-ins/common/cml-explorer.c:136
+msgid "kx^p stepped"
+msgstr "kxᵖ постъпково"
+
+#: plug-ins/common/cml-explorer.c:137
+msgid "k(1-x^p)"
+msgstr "k(1-xᵖ)"
+
+#: plug-ins/common/cml-explorer.c:138
+msgid "k(1-x^p) stepped"
+msgstr "k(1-xᵖ) постъпково"
+
+#: plug-ins/common/cml-explorer.c:139
+msgid "Delta function"
+msgstr "Делта функция"
+
+#: plug-ins/common/cml-explorer.c:140
+msgid "Delta function stepped"
+msgstr "Делта функция, постъпково"
+
+#: plug-ins/common/cml-explorer.c:141
+msgid "sin^p-based function"
+msgstr "функция на база sinᵖ"
+
+#: plug-ins/common/cml-explorer.c:142
+msgid "sin^p, stepped"
+msgstr "sinᵖ, постъпково"
+
+#: plug-ins/common/cml-explorer.c:167
+msgctxt "cml-composition"
+msgid "None"
+msgstr "Няма"
+
+#: plug-ins/common/cml-explorer.c:168
+msgid "Max (x, -)"
+msgstr "Max (x, -)"
+
+#: plug-ins/common/cml-explorer.c:169
+msgid "Max (x+d, -)"
+msgstr "Max (x+d, -)"
+
+#: plug-ins/common/cml-explorer.c:170
+msgid "Max (x-d, -)"
+msgstr "Max (x-d, -)"
+
+#: plug-ins/common/cml-explorer.c:171
+msgid "Min (x, -)"
+msgstr "Min (x, -)"
+
+#: plug-ins/common/cml-explorer.c:172
+msgid "Min (x+d, -)"
+msgstr "Min (x+d, -)"
+
+#: plug-ins/common/cml-explorer.c:173
+msgid "Min (x-d, -)"
+msgstr "Min (x-d, -)"
+
+#: plug-ins/common/cml-explorer.c:174
+msgid "Max (x+d, -), (x < 0.5)"
+msgstr "Max (x+d, -), (x < 0,5)"
+
+#: plug-ins/common/cml-explorer.c:175
+msgid "Max (x+d, -), (0.5 < x)"
+msgstr "Max (x+d, -), (0,5 < x)"
+
+#: plug-ins/common/cml-explorer.c:176
+msgid "Max (x-d, -), (x < 0.5)"
+msgstr "Max (x-d, -), (x < 0,5)"
+
+#: plug-ins/common/cml-explorer.c:177
+msgid "Max (x-d, -), (0.5 < x)"
+msgstr "Max (x-d, -), (0,5 < x)"
+
+#: plug-ins/common/cml-explorer.c:178
+msgid "Min (x+d, -), (x < 0.5)"
+msgstr "Min (x+d, -), (x < 0,5)"
+
+#: plug-ins/common/cml-explorer.c:179
+msgid "Min (x+d, -), (0.5 < x)"
+msgstr "Min (x+d, -), (0,5 < x)"
+
+#: plug-ins/common/cml-explorer.c:180
+msgid "Min (x-d, -), (x < 0.5)"
+msgstr "Min (x-d, -), (x < 0,5)"
+
+#: plug-ins/common/cml-explorer.c:181
+msgid "Min (x-d, -), (0.5 < x)"
+msgstr "Min (x-d, -), (0,5 < x)"
+
+#: plug-ins/common/cml-explorer.c:201
+msgid "Standard"
+msgstr "Стандартно"
+
+#: plug-ins/common/cml-explorer.c:202
+msgid "Use average value"
+msgstr "Използване на средна стойност"
+
+#: plug-ins/common/cml-explorer.c:203
+msgid "Use reverse value"
+msgstr "Използване на обратна стойност"
+
+#: plug-ins/common/cml-explorer.c:204
+msgid "With random power (0,10)"
+msgstr "Случайна степен (0;10)"
+
+#: plug-ins/common/cml-explorer.c:205
+msgid "With random power (0,1)"
+msgstr "Случайна степен (0;1)"
+
+#: plug-ins/common/cml-explorer.c:206
+msgid "With gradient power (0,1)"
+msgstr "Степен с градиент (0;1)"
+
+#: plug-ins/common/cml-explorer.c:207
+msgid "Multiply rand. value (0,1)"
+msgstr "Случаен множител (0;1)"
+
+#: plug-ins/common/cml-explorer.c:208
+msgid "Multiply rand. value (0,2)"
+msgstr "Случаен множител (0;2)"
+
+#: plug-ins/common/cml-explorer.c:209
+msgid "Multiply gradient (0,1)"
+msgstr "Множител с градиент (0;1)"
+
+#: plug-ins/common/cml-explorer.c:210
+msgid "With p and random (0,1)"
+msgstr "С p и произволно (0;1)"
+
+#: plug-ins/common/cml-explorer.c:224
+msgid "All black"
+msgstr "Изцяло черно"
+
+#: plug-ins/common/cml-explorer.c:225
+msgid "All gray"
+msgstr "Изцяло сиво"
+
+#: plug-ins/common/cml-explorer.c:226
+msgid "All white"
+msgstr "Изцяло бяло"
+
+#: plug-ins/common/cml-explorer.c:227
+msgid "The first row of the image"
+msgstr "Първи ред от изображението"
+
+#: plug-ins/common/cml-explorer.c:228
+msgid "Continuous gradient"
+msgstr "Непрекъснат градиент"
+
+#: plug-ins/common/cml-explorer.c:229
+msgid "Continuous grad. w/o gap"
+msgstr "Непрекъснат градиент без ленти"
+
+#: plug-ins/common/cml-explorer.c:230
+msgid "Random, ch. independent"
+msgstr "Случайно, независимо от канала"
+
+#: plug-ins/common/cml-explorer.c:231
+msgid "Random shared"
+msgstr "Случайно, споделено"
+
+#: plug-ins/common/cml-explorer.c:232
+msgid "Randoms from seed"
+msgstr "Случайно според началната стойност"
+
+#: plug-ins/common/cml-explorer.c:233
+msgid "Randoms from seed (shared)"
+msgstr "Случайно според началната стойност, споделено"
+
+#: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
+#: plug-ins/common/decompose.c:202 plug-ins/gimpressionist/orientation.c:172
+#: plug-ins/gimpressionist/size.c:179
+msgid "Hue"
+msgstr "Нюанс"
+
+#: plug-ins/common/cml-explorer.c:302 plug-ins/common/cml-explorer.c:310
+#: plug-ins/common/decompose.c:203
+msgid "Saturation"
+msgstr "Насищане"
+
+#: plug-ins/common/cml-explorer.c:308
+msgid "(None)"
+msgstr "(Няма)"
+
+#: plug-ins/common/cml-explorer.c:508
+msgid "CML _Explorer..."
+msgstr "_Четец на CML…"
+
+#: plug-ins/common/cml-explorer.c:513
+msgid "Create abstract Coupled-Map Lattice patterns"
+msgstr "Създаване на абстрактни шарки на база решетки със свързани карти (CML)"
+
+#: plug-ins/common/cml-explorer.c:877
+msgid "CML Explorer: evoluting"
+msgstr "Преглед на CML: еволюция"
+
+#: plug-ins/common/cml-explorer.c:1344
+msgid "Coupled-Map-Lattice Explorer"
+msgstr "Преглед на решетки със свързани карти"
+
+#: plug-ins/common/cml-explorer.c:1388
+msgid "New Seed"
+msgstr "Нова начална стойност"
+
+#: plug-ins/common/cml-explorer.c:1399
+msgid "Fix Seed"
+msgstr "Зададена начална стойност"
+
+#: plug-ins/common/cml-explorer.c:1410
+msgid "Random Seed"
+msgstr "Случайна начална стойност"
+
+#. The Load button
+#: plug-ins/common/cml-explorer.c:1425 plug-ins/common/cml-explorer.c:2248
+#: plug-ins/common/curve-bend.c:1481 plug-ins/common/curve-bend.c:1996
+#: plug-ins/common/file-cel.c:1002 plug-ins/common/qbist.c:849
+#: plug-ins/common/qbist.c:1032 plug-ins/common/sphere-designer.c:2290
+#: plug-ins/common/sphere-designer.c:2681 plug-ins/flame/flame.c:542
+#: plug-ins/flame/flame.c:1104
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:801
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1632
+#: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:955
+#: plug-ins/ifs-compose/ifs-compose.c:2642 plug-ins/imagemap/imap_browse.c:81
+#: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:608
+#: plug-ins/lighting/lighting-ui.c:1308
+msgid "_Open"
+msgstr "_Отваряне"
+
+#. The Save button
+#: plug-ins/common/cml-explorer.c:1433 plug-ins/common/cml-explorer.c:2115
+#: plug-ins/common/curve-bend.c:1493 plug-ins/common/curve-bend.c:2031
+#: plug-ins/common/file-pdf-save.c:1112 plug-ins/common/qbist.c:891
+#: plug-ins/common/qbist.c:1040 plug-ins/common/sphere-designer.c:2290
+#: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:542
+#: plug-ins/flame/flame.c:1112
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:818
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1670
+#: plug-ins/gfig/gfig-dialog.c:832 plug-ins/gimpressionist/brush.c:271
+#: plug-ins/ifs-compose/ifs-compose.c:956
+#: plug-ins/ifs-compose/ifs-compose.c:2605 plug-ins/imagemap/imap_file.c:129
+#: plug-ins/lighting/lighting-ui.c:601 plug-ins/lighting/lighting-ui.c:1164
+msgid "_Save"
+msgstr "_Запазване"
+
+#: plug-ins/common/cml-explorer.c:1452 plug-ins/common/van-gogh-lic.c:736
+msgid "_Hue"
+msgstr "_Нюанс"
+
+#: plug-ins/common/cml-explorer.c:1456
+msgid "Sat_uration"
+msgstr "_Насищане"
+
+#: plug-ins/common/cml-explorer.c:1460
+msgid "_Value"
+msgstr "_Стойност"
+
+#: plug-ins/common/cml-explorer.c:1464
+msgid "_Advanced"
+msgstr "_Разширени"
+
+#: plug-ins/common/cml-explorer.c:1479
+msgid "Channel Independent Parameters"
+msgstr "Независещи от канала параметри"
+
+#: plug-ins/common/cml-explorer.c:1501
+msgid "Initial value:"
+msgstr "Начална стойност:"
+
+#: plug-ins/common/cml-explorer.c:1506
+msgid "Zoom scale:"
+msgstr "Мащаб:"
+
+#: plug-ins/common/cml-explorer.c:1513
+msgid "Start offset:"
+msgstr "Начално отместване:"
+
+#: plug-ins/common/cml-explorer.c:1521
+msgid "Seed of Random (only for \"From Seed\" Modes)"
+msgstr "Произволна начална стойност (само за режимите „От начална стойност“)"
+
+#: plug-ins/common/cml-explorer.c:1531
+msgid "Seed:"
+msgstr "Начална стойност:"
+
+#: plug-ins/common/cml-explorer.c:1543
+msgid "Switch to \"From seed\" With the Last Seed"
+msgstr "Превключване към „От начална стойност“ с последната стойност"
+
+#: plug-ins/common/cml-explorer.c:1555
+msgid ""
+"\"Fix seed\" button is an alias of me.\n"
+"The same seed produces the same image, if (1) the widths of images are same "
+"(this is the reason why image on drawable is different from preview), and "
+"(2) all mutation rates equal to zero."
+msgstr ""
+"Бутонът „Задаване на начална стойност“ прави същото.\n"
+"Една и съща начална стойност създава едно и също изображение, ако (1) "
+"широчините на изображенията са еднакви (ето защо финалното изображение е "
+"различно от предварителния преглед) и (2) всички скорости на мутации са "
+"равни на нула."
+
+#: plug-ins/common/cml-explorer.c:1563
+msgid "O_thers"
+msgstr "_Други"
+
+#: plug-ins/common/cml-explorer.c:1578
+msgid "Copy Settings"
+msgstr "Копиране на настройките"
+
+#: plug-ins/common/cml-explorer.c:1597
+msgid "Source channel:"
+msgstr "Канал-източник:"
+
+#: plug-ins/common/cml-explorer.c:1612 plug-ins/common/cml-explorer.c:1659
+msgid "Destination channel:"
+msgstr "Целеви канал:"
+
+#: plug-ins/common/cml-explorer.c:1616
+msgid "Copy Parameters"
+msgstr "Копиране на параметрите"
+
+#: plug-ins/common/cml-explorer.c:1624
+msgid "Selective Load Settings"
+msgstr "Зареждане на параметри по избор"
+
+#: plug-ins/common/cml-explorer.c:1644
+msgid "Source channel in file:"
+msgstr "Канал-източник във файла:"
+
+#: plug-ins/common/cml-explorer.c:1665
+msgid "_Misc"
+msgstr "_Други"
+
+#: plug-ins/common/cml-explorer.c:1724
+msgid "Function type:"
+msgstr "Вид функция:"
+
+#: plug-ins/common/cml-explorer.c:1740
+msgid "Composition:"
+msgstr "Композиция:"
+
+#: plug-ins/common/cml-explorer.c:1754
+msgid "Misc arrange:"
+msgstr "Друга подредба:"
+
+#: plug-ins/common/cml-explorer.c:1758
+msgid "Use cyclic range"
+msgstr "Използване на цикличен обхват"
+
+#: plug-ins/common/cml-explorer.c:1767
+msgid "Mod. rate:"
+msgstr "Скорост на промяна:"
+
+#: plug-ins/common/cml-explorer.c:1774
+msgid "Env. sensitivity:"
+msgstr "Чувствителност на средата:"
+
+#: plug-ins/common/cml-explorer.c:1781
+msgid "Diffusion dist.:"
+msgstr "Разпределяне на дифузия:"
+
+#: plug-ins/common/cml-explorer.c:1788
+msgid "# of subranges:"
+msgstr "брой подобхвати:"
+
+#: plug-ins/common/cml-explorer.c:1795
+msgid "P(ower factor):"
+msgstr "P(степен):"
+
+#: plug-ins/common/cml-explorer.c:1803
+msgid "Parameter k:"
+msgstr "Параметър k:"
+
+#: plug-ins/common/cml-explorer.c:1811
+msgid "Range low:"
+msgstr "Долна граница:"
+
+#: plug-ins/common/cml-explorer.c:1818
+msgid "Range high:"
+msgstr "Горна граница:"
+
+#: plug-ins/common/cml-explorer.c:1829
+msgid "Plot a Graph of the Settings"
+msgstr "Изчертаване на графика на настройките"
+
+#: plug-ins/common/cml-explorer.c:1871
+msgid "Ch. sensitivity:"
+msgstr "Чувствителност на канала:"
+
+#: plug-ins/common/cml-explorer.c:1879
+msgid "Mutation rate:"
+msgstr "Скорост на мутация:"
+
+#: plug-ins/common/cml-explorer.c:1887
+msgid "Mutation dist.:"
+msgstr "Разпределение на мутациите:"
+
+#: plug-ins/common/cml-explorer.c:1979
+msgid "Graph of the Current Settings"
+msgstr "Графика на текущите настройки"
+
+#: plug-ins/common/cml-explorer.c:2051
+msgid "Warning: the source and the destination are the same channel."
+msgstr "Внимание: каналите източник и цел са един и същ."
+
+#: plug-ins/common/cml-explorer.c:2110
+msgid "Save CML Explorer Parameters"
+msgstr "Запазване на параметрите за CML"
+
+#: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
+#: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:876
+#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1229
+#: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
+#: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
+#: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
+#: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
+#: plug-ins/file-bmp/bmp-save.c:341 plug-ins/file-fits/fits.c:513
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:428
+#: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
+#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
+#: plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
+#: plug-ins/gfig/gfig.c:1040 plug-ins/ifs-compose/ifs-compose.c:2464
+#: plug-ins/lighting/lighting-ui.c:1233
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Не може да се отвори „%s“ за записване: %s"
+
+#: plug-ins/common/cml-explorer.c:2221
+#, c-format
+msgid "Parameters were saved to '%s'"
+msgstr "Параметрите са запазени в „%s“"
+
+#: plug-ins/common/cml-explorer.c:2243
+msgid "Load CML Explorer Parameters"
+msgstr "Зареждане параметри на CML"
+
+#: plug-ins/common/cml-explorer.c:2339 plug-ins/common/curve-bend.c:890
+#: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
+#: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
+#: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-iff.c:222
+#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:523
+#: plug-ins/common/file-pcx.c:566 plug-ins/common/file-png.c:673
+#: plug-ins/common/file-ps.c:1126 plug-ins/common/file-ps.c:3635
+#: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
+#: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
+#: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
+#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:759
+#: plug-ins/common/file-tga.c:445 plug-ins/common/file-wbmp.c:184
+#: plug-ins/common/file-xbm.c:750 plug-ins/common/file-xmc.c:658
+#: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
+#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
+#: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
+#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:459
+#: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
+#: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
+#: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
+#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:614
+#: plug-ins/file-psd/psd-load.c:168 plug-ins/file-psd/psd-load.c:173
+#: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1855
+#: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:670
+#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
+#: plug-ins/lighting/lighting-ui.c:1377
+#, c-format
+msgid "Could not open '%s' for reading: %s"
+msgstr "Не може да се отвори „%s“ за четене: %s"
+
+#: plug-ins/common/cml-explorer.c:2361
+msgid "Error: it's not CML parameter file."
+msgstr "Грешка: това не е файл с параметри за CML."
+
+#: plug-ins/common/cml-explorer.c:2368
+#, c-format
+msgid "Warning: '%s' is an old format file."
+msgstr "Внимание: файлът „%s“ е в стар формат."
+
+#: plug-ins/common/cml-explorer.c:2372
+#, c-format
+msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
+msgstr "Внимание: „%s“ е файл с параметри за по-нова версия на четеца на CML."
+
+#: plug-ins/common/cml-explorer.c:2435
+msgid "Error: failed to load parameters"
+msgstr "Внимание: грешка при зареждането на параметри"
+
+#. Text antialiasing
+#. Graphics antialiasing
+#. file save type
+#: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
+#: plug-ins/common/file-ps.c:3744 plug-ins/common/file-ps.c:3752
+#: plug-ins/common/file-psp.c:840 plug-ins/file-tiff/file-tiff-save.c:1322
+#: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
+#: plug-ins/metadata/metadata-tags.c:238
+msgid "None"
+msgstr "Няма"
 
 #: plug-ins/common/contrast-retinex.c:353 plug-ins/metadata/metadata-tags.c:238
 msgid "Low"
@@ -883,31 +1450,6 @@ msgstr ""
 msgid "Exercise a goat in the C language"
 msgstr ""
 
-#: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
-#: plug-ins/common/border-average.c:195 plug-ins/common/checkerboard.c:184
-#: plug-ins/common/cml-explorer.c:558 plug-ins/common/compose.c:557
-#: plug-ins/common/contrast-retinex.c:253 plug-ins/common/crop-zealous.c:151
-#: plug-ins/common/curve-bend.c:678 plug-ins/common/decompose.c:376
-#: plug-ins/common/depth-merge.c:307 plug-ins/common/despeckle.c:232
-#: plug-ins/common/destripe.c:182 plug-ins/common/gradient-map.c:216
-#: plug-ins/common/grid.c:283 plug-ins/common/hot.c:311
-#: plug-ins/common/jigsaw.c:473 plug-ins/common/nl-filter.c:224
-#: plug-ins/common/qbist.c:253 plug-ins/common/sample-colorize.c:431
-#: plug-ins/common/smooth-palette.c:208 plug-ins/common/sparkle.c:307
-#: plug-ins/common/sphere-designer.c:3179 plug-ins/common/tile.c:220
-#: plug-ins/common/tile-small.c:308 plug-ins/common/van-gogh-lic.c:913
-#: plug-ins/common/warp.c:375 plug-ins/common/wavelet-decompose.c:182
-#: plug-ins/file-dds/dds.c:519 plug-ins/flame/flame.c:241
-#: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:215
-#: plug-ins/gimpressionist/gimp.c:178
-#: plug-ins/gradient-flare/gradient-flare.c:935
-#: plug-ins/ifs-compose/ifs-compose.c:537 plug-ins/imagemap/imap_main.c:632
-#: plug-ins/lighting/lighting-main.c:404
-#: plug-ins/map-object/map-object-main.c:496 plug-ins/pagecurl/pagecurl.c:302
-#, c-format
-msgid "Procedure '%s' only works with one drawable."
-msgstr ""
-
 #: extensions/goat-exercises/goat-exercise-c.c:180
 msgid "Exercise a goat (C)"
 msgstr ""
@@ -954,36 +1496,6 @@ msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:90
 msgid "Exercise a goat (JavaScript)"
-msgstr ""
-
-#: extensions/goat-exercises/goat-exercise-gjs.js:96
-#: extensions/goat-exercises/goat-exercise-lua.lua:73
-#: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/border-average.c:433 plug-ins/common/checkerboard.c:496
-#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:707
-#: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1222
-#: plug-ins/common/depth-merge.c:734 plug-ins/common/file-heif.c:2358
-#: plug-ins/common/file-pdf-load.c:710 plug-ins/common/file-svg.c:774
-#: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1325
-#: plug-ins/common/grid.c:762 plug-ins/common/qbist.c:945
-#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
-#: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
-#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
-#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3434
-#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
-#: plug-ins/fractal-explorer/fractal-explorer.c:1270
-#: plug-ins/gimpressionist/gimpressionist.c:143
-#: plug-ins/gimpressionist/orientmap.c:529
-#: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/gradient-flare/gradient-flare.c:2518
-#: plug-ins/gradient-flare/gradient-flare.c:3480
-#: plug-ins/ifs-compose/ifs-compose.c:959
-#: plug-ins/imagemap/imap_default_dialog.c:109
-#: plug-ins/lighting/lighting-ui.c:1039
-#: plug-ins/map-object/map-object-ui.c:1318 plug-ins/pagecurl/pagecurl.c:497
-#: plug-ins/selection-to-path/selection-to-path.c:414
-msgid "_OK"
 msgstr ""
 
 #. GIMP - The GNU Image Manipulation Program
@@ -1408,533 +1920,6 @@ msgstr "_Размер:"
 #: plug-ins/common/checkerboard.c:565
 msgid "_Psychobilly"
 msgstr "_Психоделично"
-
-#: plug-ins/common/cml-explorer.c:130
-msgid "Keep image's values"
-msgstr "Запазване на стойностите на изображението"
-
-#: plug-ins/common/cml-explorer.c:131
-msgid "Keep the first value"
-msgstr "Запазване на първата стойност"
-
-#: plug-ins/common/cml-explorer.c:132
-msgid "Fill with parameter k"
-msgstr "Запълване на изображението с периметър k"
-
-#: plug-ins/common/cml-explorer.c:133
-#, fuzzy
-msgid "k{x(1-x)}^p"
-msgstr "k{x(1-x)}^p"
-
-#: plug-ins/common/cml-explorer.c:134
-#, fuzzy
-msgid "k{x(1-x)}^p stepped"
-msgstr "k{x(1-x)}^p постъпково"
-
-#: plug-ins/common/cml-explorer.c:135
-#, fuzzy
-msgid "kx^p"
-msgstr "kx^p"
-
-#: plug-ins/common/cml-explorer.c:136
-#, fuzzy
-msgid "kx^p stepped"
-msgstr "kx^p постъпково"
-
-#: plug-ins/common/cml-explorer.c:137
-msgid "k(1-x^p)"
-msgstr "k(1-x^p)"
-
-#: plug-ins/common/cml-explorer.c:138
-msgid "k(1-x^p) stepped"
-msgstr "k(1-x^p) постъпково"
-
-#: plug-ins/common/cml-explorer.c:139
-msgid "Delta function"
-msgstr "Делта функция"
-
-#: plug-ins/common/cml-explorer.c:140
-msgid "Delta function stepped"
-msgstr "Делта функция, постъпково"
-
-#: plug-ins/common/cml-explorer.c:141
-msgid "sin^p-based function"
-msgstr "sin^p-базирана функция"
-
-#: plug-ins/common/cml-explorer.c:142
-msgid "sin^p, stepped"
-msgstr "sin^p, постъпково"
-
-#: plug-ins/common/cml-explorer.c:167
-msgctxt "cml-composition"
-msgid "None"
-msgstr "Няма"
-
-#: plug-ins/common/cml-explorer.c:168
-msgid "Max (x, -)"
-msgstr "Max (x, -)"
-
-#: plug-ins/common/cml-explorer.c:169
-msgid "Max (x+d, -)"
-msgstr "Max (x+d, -)"
-
-#: plug-ins/common/cml-explorer.c:170
-msgid "Max (x-d, -)"
-msgstr "Max (x-d, -)"
-
-#: plug-ins/common/cml-explorer.c:171
-msgid "Min (x, -)"
-msgstr "Min (x, -)"
-
-#: plug-ins/common/cml-explorer.c:172
-msgid "Min (x+d, -)"
-msgstr "Min (x+d, -)"
-
-#: plug-ins/common/cml-explorer.c:173
-msgid "Min (x-d, -)"
-msgstr "Min (x-d, -)"
-
-#: plug-ins/common/cml-explorer.c:174
-msgid "Max (x+d, -), (x < 0.5)"
-msgstr "Max (x+d, -), (x < 0.5)"
-
-#: plug-ins/common/cml-explorer.c:175
-msgid "Max (x+d, -), (0.5 < x)"
-msgstr "Max (x+d, -), (0.5 < x)"
-
-#: plug-ins/common/cml-explorer.c:176
-msgid "Max (x-d, -), (x < 0.5)"
-msgstr "Max (x-d, -), (x < 0.5)"
-
-#: plug-ins/common/cml-explorer.c:177
-msgid "Max (x-d, -), (0.5 < x)"
-msgstr "Max (x-d, -), (0.5 < x)"
-
-#: plug-ins/common/cml-explorer.c:178
-msgid "Min (x+d, -), (x < 0.5)"
-msgstr "Min (x+d, -), (x < 0.5)"
-
-#: plug-ins/common/cml-explorer.c:179
-msgid "Min (x+d, -), (0.5 < x)"
-msgstr "Min (x+d, -), (0.5 < x)"
-
-#: plug-ins/common/cml-explorer.c:180
-msgid "Min (x-d, -), (x < 0.5)"
-msgstr "Min (x-d, -), (x < 0.5)"
-
-#: plug-ins/common/cml-explorer.c:181
-msgid "Min (x-d, -), (0.5 < x)"
-msgstr "Min (x-d, -), (0.5 < x)"
-
-#: plug-ins/common/cml-explorer.c:201
-msgid "Standard"
-msgstr "Стандартно"
-
-#: plug-ins/common/cml-explorer.c:202
-msgid "Use average value"
-msgstr "Използване на средна стойност"
-
-#: plug-ins/common/cml-explorer.c:203
-msgid "Use reverse value"
-msgstr "Използване на обратна стойност"
-
-#: plug-ins/common/cml-explorer.c:204
-msgid "With random power (0,10)"
-msgstr "С произволна сила (0,10)"
-
-#: plug-ins/common/cml-explorer.c:205
-msgid "With random power (0,1)"
-msgstr "С произволна сила (0,1)"
-
-#: plug-ins/common/cml-explorer.c:206
-msgid "With gradient power (0,1)"
-msgstr "С усилваща сила (0,1)"
-
-#: plug-ins/common/cml-explorer.c:207
-msgid "Multiply rand. value (0,1)"
-msgstr "Умножена произволна стойност (0,1)"
-
-#: plug-ins/common/cml-explorer.c:208
-msgid "Multiply rand. value (0,2)"
-msgstr "Умножена произволна стойност (0,2)"
-
-#: plug-ins/common/cml-explorer.c:209
-msgid "Multiply gradient (0,1)"
-msgstr "Умножено усилване (0,1)"
-
-#: plug-ins/common/cml-explorer.c:210
-msgid "With p and random (0,1)"
-msgstr "С p и произволно (0,1)"
-
-#: plug-ins/common/cml-explorer.c:224
-msgid "All black"
-msgstr "Изцяло черно"
-
-#: plug-ins/common/cml-explorer.c:225
-msgid "All gray"
-msgstr "Изцяло сиво"
-
-#: plug-ins/common/cml-explorer.c:226
-msgid "All white"
-msgstr "Изцяло бяло"
-
-#: plug-ins/common/cml-explorer.c:227
-msgid "The first row of the image"
-msgstr "Първи ред от изображението"
-
-#: plug-ins/common/cml-explorer.c:228
-msgid "Continuous gradient"
-msgstr "Непрекъсната преливка"
-
-#: plug-ins/common/cml-explorer.c:229
-msgid "Continuous grad. w/o gap"
-msgstr "Непрекъсната преливка без ленти"
-
-#: plug-ins/common/cml-explorer.c:230
-msgid "Random, ch. independent"
-msgstr "Случайно, независимо от канала"
-
-#: plug-ins/common/cml-explorer.c:231
-msgid "Random shared"
-msgstr "Случайно, споделено"
-
-#: plug-ins/common/cml-explorer.c:232
-msgid "Randoms from seed"
-msgstr "Случайно според първоначалната стойност"
-
-#: plug-ins/common/cml-explorer.c:233
-msgid "Randoms from seed (shared)"
-msgstr "Случайно според първоначалната стойност, споделено"
-
-#: plug-ins/common/cml-explorer.c:301 plug-ins/common/cml-explorer.c:309
-#: plug-ins/common/decompose.c:202 plug-ins/gimpressionist/orientation.c:172
-#: plug-ins/gimpressionist/size.c:179
-msgid "Hue"
-msgstr "Нюанс"
-
-#: plug-ins/common/cml-explorer.c:302 plug-ins/common/cml-explorer.c:310
-#: plug-ins/common/decompose.c:203
-msgid "Saturation"
-msgstr "Насищане"
-
-#: plug-ins/common/cml-explorer.c:308
-msgid "(None)"
-msgstr "(Няма)"
-
-# HERE
-#: plug-ins/common/cml-explorer.c:508
-#, fuzzy
-msgid "CML _Explorer..."
-msgstr "СКР _четец…"
-
-#: plug-ins/common/cml-explorer.c:513
-#, fuzzy
-msgid "Create abstract Coupled-Map Lattice patterns"
-msgstr "Създаване на абстрактни Coupled-Map Lattice шарки"
-
-#: plug-ins/common/cml-explorer.c:877
-#, fuzzy
-msgid "CML Explorer: evoluting"
-msgstr "СКР _четец: развитие"
-
-#: plug-ins/common/cml-explorer.c:1344
-#, fuzzy
-msgid "Coupled-Map-Lattice Explorer"
-msgstr "Сдвоена-карта-решетка браузър"
-
-#: plug-ins/common/cml-explorer.c:1388
-msgid "New Seed"
-msgstr "Нова първоначална стойност"
-
-#: plug-ins/common/cml-explorer.c:1399
-msgid "Fix Seed"
-msgstr "Зададена първоначална стойност"
-
-#: plug-ins/common/cml-explorer.c:1410
-msgid "Random Seed"
-msgstr "Случайна първоначална стойност"
-
-#. The Load button
-#: plug-ins/common/cml-explorer.c:1425 plug-ins/common/cml-explorer.c:2248
-#: plug-ins/common/curve-bend.c:1481 plug-ins/common/curve-bend.c:1996
-#: plug-ins/common/file-cel.c:1002 plug-ins/common/qbist.c:849
-#: plug-ins/common/qbist.c:1032 plug-ins/common/sphere-designer.c:2290
-#: plug-ins/common/sphere-designer.c:2681 plug-ins/flame/flame.c:542
-#: plug-ins/flame/flame.c:1104
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:801
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1632
-#: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:955
-#: plug-ins/ifs-compose/ifs-compose.c:2642 plug-ins/imagemap/imap_browse.c:81
-#: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:608
-#: plug-ins/lighting/lighting-ui.c:1308
-msgid "_Open"
-msgstr "_Отваряне"
-
-#. The Save button
-#: plug-ins/common/cml-explorer.c:1433 plug-ins/common/cml-explorer.c:2115
-#: plug-ins/common/curve-bend.c:1493 plug-ins/common/curve-bend.c:2031
-#: plug-ins/common/file-pdf-save.c:1112 plug-ins/common/qbist.c:891
-#: plug-ins/common/qbist.c:1040 plug-ins/common/sphere-designer.c:2290
-#: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:542
-#: plug-ins/flame/flame.c:1112
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:818
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1670
-#: plug-ins/gfig/gfig-dialog.c:832 plug-ins/gimpressionist/brush.c:271
-#: plug-ins/ifs-compose/ifs-compose.c:956
-#: plug-ins/ifs-compose/ifs-compose.c:2605 plug-ins/imagemap/imap_file.c:129
-#: plug-ins/lighting/lighting-ui.c:601 plug-ins/lighting/lighting-ui.c:1164
-msgid "_Save"
-msgstr "_Запазване"
-
-#: plug-ins/common/cml-explorer.c:1452 plug-ins/common/van-gogh-lic.c:736
-msgid "_Hue"
-msgstr "_Нюанс"
-
-#: plug-ins/common/cml-explorer.c:1456
-msgid "Sat_uration"
-msgstr "_Насищане"
-
-#: plug-ins/common/cml-explorer.c:1460
-msgid "_Value"
-msgstr "_Стойност"
-
-#: plug-ins/common/cml-explorer.c:1464
-msgid "_Advanced"
-msgstr "_Разширени"
-
-#: plug-ins/common/cml-explorer.c:1479
-msgid "Channel Independent Parameters"
-msgstr "Независещи от канала параметри"
-
-#: plug-ins/common/cml-explorer.c:1501
-msgid "Initial value:"
-msgstr "Начална стойност:"
-
-#: plug-ins/common/cml-explorer.c:1506
-#, fuzzy
-msgid "Zoom scale:"
-msgstr "Стойност на приближаване:"
-
-#: plug-ins/common/cml-explorer.c:1513
-#, fuzzy
-msgid "Start offset:"
-msgstr "Начално отместване:"
-
-#: plug-ins/common/cml-explorer.c:1521
-#, fuzzy
-msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr "Произволно посяване (само за режимите „От посяване“)"
-
-#: plug-ins/common/cml-explorer.c:1531
-#, fuzzy
-msgid "Seed:"
-msgstr "Разпръскване:"
-
-#: plug-ins/common/cml-explorer.c:1543
-#, fuzzy
-msgid "Switch to \"From seed\" With the Last Seed"
-msgstr "Превключване към „От посяване“ в последно посяване"
-
-#: plug-ins/common/cml-explorer.c:1555
-msgid ""
-"\"Fix seed\" button is an alias of me.\n"
-"The same seed produces the same image, if (1) the widths of images are same "
-"(this is the reason why image on drawable is different from preview), and "
-"(2) all mutation rates equal to zero."
-msgstr ""
-"Бутона „Фиксирано посяване“ е измислен от мен.\n"
-"Едно и също посяване създава едно и също изображение, ако (1) ширините на "
-"изображенията са еднакви (ето защо финалното изображение е различно от "
-"предварителния преглед) и (2) всички стойности на мутации са равни на нула."
-
-#: plug-ins/common/cml-explorer.c:1563
-msgid "O_thers"
-msgstr "_Други"
-
-#: plug-ins/common/cml-explorer.c:1578
-msgid "Copy Settings"
-msgstr "Копиране на настройките"
-
-#: plug-ins/common/cml-explorer.c:1597
-msgid "Source channel:"
-msgstr "Изходен канал:"
-
-#: plug-ins/common/cml-explorer.c:1612 plug-ins/common/cml-explorer.c:1659
-msgid "Destination channel:"
-msgstr "Целеви канал:"
-
-#: plug-ins/common/cml-explorer.c:1616
-msgid "Copy Parameters"
-msgstr "Копиране на параметрите"
-
-#: plug-ins/common/cml-explorer.c:1624
-msgid "Selective Load Settings"
-msgstr "Изборно зареждане на параметри"
-
-#: plug-ins/common/cml-explorer.c:1644
-msgid "Source channel in file:"
-msgstr "Изходен канал във файла:"
-
-#: plug-ins/common/cml-explorer.c:1665
-#, fuzzy
-#| msgid "_Misc Ops."
-msgid "_Misc"
-msgstr "_Други настр."
-
-#: plug-ins/common/cml-explorer.c:1724
-msgid "Function type:"
-msgstr "Функция тип:"
-
-#: plug-ins/common/cml-explorer.c:1740
-msgid "Composition:"
-msgstr "Композиция:"
-
-#: plug-ins/common/cml-explorer.c:1754
-msgid "Misc arrange:"
-msgstr "Друга подредба:"
-
-#: plug-ins/common/cml-explorer.c:1758
-msgid "Use cyclic range"
-msgstr "Използване на цикличен обхват"
-
-#: plug-ins/common/cml-explorer.c:1767
-msgid "Mod. rate:"
-msgstr "Сила на промяна:"
-
-#: plug-ins/common/cml-explorer.c:1774
-msgid "Env. sensitivity:"
-msgstr "Чувствителност на средата:"
-
-#: plug-ins/common/cml-explorer.c:1781
-msgid "Diffusion dist.:"
-msgstr "Разпределяне на разпр.:"
-
-#: plug-ins/common/cml-explorer.c:1788
-msgid "# of subranges:"
-msgstr "# подобхвати:"
-
-#: plug-ins/common/cml-explorer.c:1795
-msgid "P(ower factor):"
-msgstr "С(илов фактор):"
-
-#: plug-ins/common/cml-explorer.c:1803
-msgid "Parameter k:"
-msgstr "Параметър k:"
-
-#: plug-ins/common/cml-explorer.c:1811
-msgid "Range low:"
-msgstr "Долна граница:"
-
-#: plug-ins/common/cml-explorer.c:1818
-msgid "Range high:"
-msgstr "Горна граница:"
-
-#: plug-ins/common/cml-explorer.c:1829
-msgid "Plot a Graph of the Settings"
-msgstr "Изчертаване на графика на настройките"
-
-#: plug-ins/common/cml-explorer.c:1871
-msgid "Ch. sensitivity:"
-msgstr "Чувствителност на канала:"
-
-#: plug-ins/common/cml-explorer.c:1879
-msgid "Mutation rate:"
-msgstr "Сила на мутацията:"
-
-#: plug-ins/common/cml-explorer.c:1887
-msgid "Mutation dist.:"
-msgstr "Разпределение на мутацията:"
-
-#: plug-ins/common/cml-explorer.c:1979
-msgid "Graph of the Current Settings"
-msgstr "Графика на текущите настройки"
-
-#: plug-ins/common/cml-explorer.c:2051
-msgid "Warning: the source and the destination are the same channel."
-msgstr "Внимание: каналите източник и краен са един и същ."
-
-#: plug-ins/common/cml-explorer.c:2110
-msgid "Save CML Explorer Parameters"
-msgstr "Запазване параметрите за CML"
-
-#: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
-#: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:876
-#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1229
-#: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
-#: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
-#: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
-#: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
-#: plug-ins/file-bmp/bmp-save.c:341 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:428
-#: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
-#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
-#: plug-ins/file-tiff/file-tiff-save.c:1084
-#: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
-#: plug-ins/gfig/gfig.c:1040 plug-ins/ifs-compose/ifs-compose.c:2464
-#: plug-ins/lighting/lighting-ui.c:1233
-#, c-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "Не може да се отвори „%s“ за записване: %s"
-
-#: plug-ins/common/cml-explorer.c:2221
-#, c-format
-msgid "Parameters were saved to '%s'"
-msgstr "Параметрите са запазени в „%s“"
-
-#: plug-ins/common/cml-explorer.c:2243
-msgid "Load CML Explorer Parameters"
-msgstr "Зареждане параметри на CML"
-
-#: plug-ins/common/cml-explorer.c:2339 plug-ins/common/curve-bend.c:890
-#: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
-#: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
-#: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-iff.c:222
-#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:523
-#: plug-ins/common/file-pcx.c:566 plug-ins/common/file-png.c:673
-#: plug-ins/common/file-ps.c:1126 plug-ins/common/file-ps.c:3635
-#: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
-#: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
-#: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
-#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:759
-#: plug-ins/common/file-tga.c:445 plug-ins/common/file-wbmp.c:184
-#: plug-ins/common/file-xbm.c:750 plug-ins/common/file-xmc.c:658
-#: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
-#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
-#: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
-#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:459
-#: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
-#: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
-#: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
-#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:614
-#: plug-ins/file-psd/psd-load.c:168 plug-ins/file-psd/psd-load.c:173
-#: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
-#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1855
-#: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:670
-#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
-#: plug-ins/lighting/lighting-ui.c:1377
-#, c-format
-msgid "Could not open '%s' for reading: %s"
-msgstr "Не може да се отвори „%s“ за четене: %s"
-
-#: plug-ins/common/cml-explorer.c:2361
-msgid "Error: it's not CML parameter file."
-msgstr "Грешка: това не е СКР файл с параметри."
-
-#: plug-ins/common/cml-explorer.c:2368
-#, c-format
-msgid "Warning: '%s' is an old format file."
-msgstr "Внимание: файлът „%s“ е в стар формат."
-
-#: plug-ins/common/cml-explorer.c:2372
-#, c-format
-msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
-msgstr "Внимание: '%s'·е файл с параметри за по-нова версия на СКР четеца."
-
-#: plug-ins/common/cml-explorer.c:2435
-msgid "Error: failed to load parameters"
-msgstr "Внимание: грешка при зареждането на параметри"
 
 #: plug-ins/common/colormap-remap.c:186
 msgid "R_earrange Colormap..."
