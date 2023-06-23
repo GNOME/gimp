@@ -50,7 +50,7 @@ struct _GimpTextOptions
   GimpTextBoxMode        box_mode;
 
   GimpTextOutline        outline;
-  GimpFillStyle          outline_style;
+  GimpCustomStyle        outline_style;
   GimpRGB                outline_foreground;
   GimpPattern           *outline_pattern;
   gdouble                outline_width;

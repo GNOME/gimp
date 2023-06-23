@@ -48,6 +48,7 @@ enum
 {
   PROP_0,
   PROP_STYLE,
+  PROP_CUSTOM_STYLE,
   PROP_ANTIALIAS,
   PROP_FEATHER,
   PROP_FEATHER_RADIUS,
@@ -60,10 +61,11 @@ typedef struct _GimpFillOptionsPrivate GimpFillOptionsPrivate;
 
 struct _GimpFillOptionsPrivate
 {
-  GimpFillStyle style;
-  gboolean      antialias;
-  gboolean      feather;
-  gdouble       feather_radius;
+  GimpFillStyle   style;
+  GimpCustomStyle custom_style;
+  gboolean        antialias;
+  gboolean        feather;
+  gdouble         feather_radius;
 
   GimpViewType  pattern_view_type;
   GimpViewSize  pattern_view_size;
@@ -111,6 +113,14 @@ gimp_fill_options_class_init (GimpFillOptionsClass *klass)
                          NULL,
                          GIMP_TYPE_FILL_STYLE,
                          GIMP_FILL_STYLE_FG_COLOR,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CUSTOM_STYLE,
+                         "custom-style",
+                         _("Custom style"),
+                         NULL,
+                         GIMP_TYPE_CUSTOM_STYLE,
+                         GIMP_CUSTOM_STYLE_SOLID_COLOR,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
@@ -177,6 +187,10 @@ gimp_fill_options_set_property (GObject      *object,
       private->style = g_value_get_enum (value);
       private->undo_desc = NULL;
       break;
+    case PROP_CUSTOM_STYLE:
+      private->custom_style = g_value_get_enum (value);
+      private->undo_desc = NULL;
+      break;
     case PROP_ANTIALIAS:
       private->antialias = g_value_get_boolean (value);
       break;
@@ -212,6 +226,9 @@ gimp_fill_options_get_property (GObject    *object,
     {
     case PROP_STYLE:
       g_value_set_enum (value, private->style);
+      break;
+    case PROP_CUSTOM_STYLE:
+      g_value_set_enum (value, private->custom_style);
       break;
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, private->antialias);
@@ -291,6 +308,24 @@ gimp_fill_options_set_style (GimpFillOptions *options,
   g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
 
   g_object_set (options, "style", style, NULL);
+}
+
+GimpCustomStyle
+gimp_fill_options_get_custom_style (GimpFillOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options),
+                        GIMP_CUSTOM_STYLE_SOLID_COLOR);
+
+  return GET_PRIVATE (options)->custom_style;
+}
+
+void
+gimp_fill_options_set_custom_style (GimpFillOptions *options,
+                                    GimpCustomStyle  custom_style)
+{
+  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
+
+  g_object_set (options, "custom-style", custom_style, NULL);
 }
 
 gboolean

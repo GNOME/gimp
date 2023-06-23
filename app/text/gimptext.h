@@ -50,7 +50,7 @@ struct _GimpText
   gchar                 *language;
   GimpTextDirection      base_dir;
   GimpRGB                color;
-  GimpFillStyle          outline_style;
+  GimpCustomStyle        outline_style;
   GimpPattern           *outline_pattern;
   GimpRGB                outline_foreground;
   gdouble                outline_width;

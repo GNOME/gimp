@@ -43,7 +43,8 @@ enum
 {
   PROP_0,
   PROP_OPTIONS,
-  PROP_EDIT_CONTEXT
+  PROP_EDIT_CONTEXT,
+  PROP_USE_CUSTOM_STYLE
 };
 
 
@@ -87,6 +88,13 @@ gimp_fill_editor_class_init (GimpFillEditorClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_EDIT_CONTEXT,
+                                   g_param_spec_boolean ("use-custom-style",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -109,8 +117,17 @@ gimp_fill_editor_constructed (GObject *object)
 
   gimp_assert (GIMP_IS_FILL_OPTIONS (editor->options));
 
-  box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options), "style",
-                                      0, 0);
+  g_object_get (object,
+                "use-custom-style", &editor->use_custom_style,
+                NULL);
+
+  if (editor->use_custom_style)
+    box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options),
+                                        "custom-style", 0, 0);
+  else
+    box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options), "style",
+                                        0, 0);
+
   gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
 
   if (editor->edit_context)
@@ -118,25 +135,40 @@ gimp_fill_editor_constructed (GObject *object)
       GtkWidget *color_button;
       GtkWidget *pattern_box;
 
-      color_button = gimp_prop_color_button_new (G_OBJECT (editor->options),
-                                                 "foreground",
-                                                 _("Fill Color"),
-                                                 1, 24,
-                                                 GIMP_COLOR_AREA_SMALL_CHECKS);
-      gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
-                                    GIMP_CONTEXT (editor->options));
-      gimp_enum_radio_box_add (GTK_BOX (box), color_button,
-                               GIMP_FILL_STYLE_FG_COLOR, FALSE);
+      if (editor->use_custom_style)
+        {
+          color_button = gimp_prop_color_button_new (G_OBJECT (editor->options),
+                                                     "foreground",
+                                                     _("Fill Color"),
+                                                     1, 24,
+                                                     GIMP_COLOR_AREA_SMALL_CHECKS);
+          gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
+                                        GIMP_CONTEXT (editor->options));
+          gimp_enum_radio_box_add (GTK_BOX (box), color_button,
+                                   GIMP_CUSTOM_STYLE_SOLID_COLOR, FALSE);
+        }
+      else
+        {
+          color_button = gimp_prop_color_button_new (G_OBJECT (editor->options),
+                                                     "foreground",
+                                                     _("Fill Color"),
+                                                     1, 24,
+                                                     GIMP_COLOR_AREA_SMALL_CHECKS);
+          gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
+                                        GIMP_CONTEXT (editor->options));
+          gimp_enum_radio_box_add (GTK_BOX (box), color_button,
+                                   GIMP_FILL_STYLE_FG_COLOR, FALSE);
 
-      color_button = gimp_prop_color_button_new (G_OBJECT (editor->options),
-                                                 "background",
-                                                 _("Fill BG Color"),
-                                                 1, 24,
-                                                 GIMP_COLOR_AREA_SMALL_CHECKS);
-      gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
-                                    GIMP_CONTEXT (editor->options));
-      gimp_enum_radio_box_add (GTK_BOX (box), color_button,
-                               GIMP_FILL_STYLE_BG_COLOR, FALSE);
+          color_button = gimp_prop_color_button_new (G_OBJECT (editor->options),
+                                                     "background",
+                                                     _("Fill BG Color"),
+                                                     1, 24,
+                                                     GIMP_COLOR_AREA_SMALL_CHECKS);
+          gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
+                                        GIMP_CONTEXT (editor->options));
+          gimp_enum_radio_box_add (GTK_BOX (box), color_button,
+                                   GIMP_FILL_STYLE_BG_COLOR, FALSE);
+        }
 
       pattern_box = gimp_prop_pattern_box_new (NULL,
                                                GIMP_CONTEXT (editor->options),
@@ -144,7 +176,10 @@ gimp_fill_editor_constructed (GObject *object)
                                                "pattern-view-type",
                                                "pattern-view-size");
       gimp_enum_radio_box_add (GTK_BOX (box), pattern_box,
-                               GIMP_FILL_STYLE_PATTERN, FALSE);
+                               (editor->use_custom_style ?
+                                GIMP_CUSTOM_STYLE_PATTERN :
+                                GIMP_FILL_STYLE_PATTERN),
+                               FALSE);
     }
 
   button = gimp_prop_check_button_new (G_OBJECT (editor->options),
@@ -183,6 +218,10 @@ gimp_fill_editor_set_property (GObject      *object,
       editor->edit_context = g_value_get_boolean (value);
       break;
 
+    case PROP_USE_CUSTOM_STYLE:
+      editor->use_custom_style = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -207,6 +246,10 @@ gimp_fill_editor_get_property (GObject    *object,
       g_value_set_boolean (value, editor->edit_context);
       break;
 
+    case PROP_USE_CUSTOM_STYLE:
+      g_value_set_boolean (value, editor->use_custom_style);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -215,12 +258,14 @@ gimp_fill_editor_get_property (GObject    *object,
 
 GtkWidget *
 gimp_fill_editor_new (GimpFillOptions *options,
-                      gboolean         edit_context)
+                      gboolean         edit_context,
+                      gboolean         use_custom_style)
 {
   g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
 
   return g_object_new (GIMP_TYPE_FILL_EDITOR,
-                       "options",      options,
-                       "edit-context", edit_context ? TRUE : FALSE,
+                       "options",          options,
+                       "edit-context",     edit_context ? TRUE : FALSE,
+                       "use_custom_style", use_custom_style ? TRUE : FALSE,
                        NULL);
 }

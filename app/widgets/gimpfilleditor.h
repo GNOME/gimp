@@ -38,6 +38,7 @@ struct _GimpFillEditor
 
   GimpFillOptions *options;
   gboolean         edit_context;
+  gboolean         use_custom_style; /* For solid color and pattern only */
 };
 
 struct _GimpFillEditorClass
@@ -49,7 +50,8 @@ struct _GimpFillEditorClass
 GType       gimp_fill_editor_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_fill_editor_new      (GimpFillOptions *options,
-                                       gboolean         edit_context);
+                                       gboolean         edit_context,
+                                       gboolean         use_custom_style);
 
 
 #endif /* __GIMP_FILL_EDITOR_H__ */

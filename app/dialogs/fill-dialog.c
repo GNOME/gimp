@@ -138,7 +138,7 @@ fill_dialog_new (GList            *items,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  fill_editor = gimp_fill_editor_new (private->options, FALSE);
+  fill_editor = gimp_fill_editor_new (private->options, FALSE, FALSE);
   gtk_box_pack_start (GTK_BOX (main_vbox), fill_editor, FALSE, FALSE, 0);
   gtk_widget_show (fill_editor);
 

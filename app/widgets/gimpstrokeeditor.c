@@ -308,14 +308,16 @@ gimp_stroke_editor_get_property (GObject    *object,
 GtkWidget *
 gimp_stroke_editor_new (GimpStrokeOptions *options,
                         gdouble            resolution,
-                        gboolean           edit_context)
+                        gboolean           edit_context,
+                        gboolean           use_custom_style)
 {
   g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), NULL);
 
   return g_object_new (GIMP_TYPE_STROKE_EDITOR,
-                       "options",      options,
-                       "resolution",   resolution,
-                       "edit-context", edit_context ? TRUE : FALSE,
+                       "options",          options,
+                       "resolution",       resolution,
+                       "edit-context",     edit_context ? TRUE : FALSE,
+                       "use-custom-style", use_custom_style ? TRUE: FALSE,
                        NULL);
 }
 

@@ -56,6 +56,11 @@ GimpFillStyle     gimp_fill_options_get_style        (GimpFillOptions     *optio
 void              gimp_fill_options_set_style        (GimpFillOptions     *options,
                                                       GimpFillStyle        style);
 
+GimpCustomStyle     gimp_fill_options_get_custom_style
+                                                     (GimpFillOptions     *options);
+void              gimp_fill_options_set_custom_style (GimpFillOptions     *options,
+                                                      GimpCustomStyle      custom_style);
+
 gboolean          gimp_fill_options_get_antialias    (GimpFillOptions     *options);
 void              gimp_fill_options_set_antialias    (GimpFillOptions     *options,
                                                       gboolean             antialias);

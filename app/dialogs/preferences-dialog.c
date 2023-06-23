@@ -2601,7 +2601,7 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
 
   editor = gimp_fill_editor_new (GIMP_DIALOG_CONFIG (object)->fill_options,
-                                 FALSE);
+                                 FALSE, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox2), editor, FALSE, FALSE, 0);
   gtk_widget_show (editor);
 
@@ -2617,7 +2617,7 @@ prefs_dialog_new (Gimp       *gimp,
    */
   editor = gimp_stroke_editor_new (GIMP_DIALOG_CONFIG (object)->stroke_options,
                                    gimp_template_get_resolution_y (core_config->default_image),
-                                   FALSE);
+                                   FALSE, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox2), editor, FALSE, FALSE, 0);
   gtk_widget_show (editor);
 

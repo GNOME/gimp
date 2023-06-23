@@ -279,10 +279,10 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                          GIMP_PARAM_STATIC_STRINGS |
                          GIMP_CONFIG_PARAM_DEFAULTS);
    GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_STYLE,
-                          "outline-style",
+                          "outline-custom-style",
                           NULL, NULL,
-                          GIMP_TYPE_FILL_STYLE,
-                          GIMP_FILL_STYLE_FG_COLOR,
+                          GIMP_TYPE_CUSTOM_STYLE,
+                          GIMP_CUSTOM_STYLE_SOLID_COLOR,
                           GIMP_PARAM_STATIC_STRINGS);
    GIMP_CONFIG_PROP_RGB (object_class, PROP_OUTLINE_FOREGROUND,
                          "outline-foreground",
@@ -627,7 +627,7 @@ gimp_text_options_reset (GimpConfig *config)
   gimp_config_reset_property (object, "box-mode");
 
   gimp_config_reset_property (object, "outline");
-  gimp_config_reset_property (object, "outline-style");
+  gimp_config_reset_property (object, "outline-custom-style");
   gimp_config_reset_property (object, "outline-foreground");
   gimp_config_reset_property (object, "outline-pattern");
   gimp_config_reset_property (object, "outline-width");
@@ -917,7 +917,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   g_object_bind_property (options, "outline-" #a,  \
                           stroke_options, #a,                           \
                           G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE)
-  BIND (style);
+  BIND (custom-style);
   BIND (foreground);
   BIND (pattern);
   BIND (width);
@@ -929,7 +929,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   BIND (dash-offset);
   BIND (dash-info);
 
-  editor = gimp_stroke_editor_new (stroke_options, 72.0, TRUE);
+  editor = gimp_stroke_editor_new (stroke_options, 72.0, TRUE, TRUE);
   gtk_container_add (GTK_CONTAINER (outline_frame), editor);
   gtk_widget_show (editor);
 

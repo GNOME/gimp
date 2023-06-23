@@ -52,7 +52,8 @@ GType       gimp_stroke_editor_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_stroke_editor_new      (GimpStrokeOptions *options,
                                          gdouble            resolution,
-                                         gboolean           edit_context);
+                                         gboolean           edit_context,
+                                         gboolean           use_custom_style);
 
 
 #endif /* __GIMP_STROKE_EDITOR_H__ */

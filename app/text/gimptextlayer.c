@@ -981,7 +981,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
       if (text->outline_dash_info)
         gimp_text_layer_set_dash_info (cr, text->outline_width, text->outline_dash_offset, text->outline_dash_info);
 
-      if (text->outline_style == GIMP_FILL_STYLE_PATTERN && text->outline_pattern)
+      if (text->outline_style == GIMP_CUSTOM_STYLE_PATTERN && text->outline_pattern)
         {
           GimpTempBuf     *tempbuf = gimp_pattern_get_mask (text->outline_pattern);
           cairo_surface_t *surface = gimp_temp_buf_create_cairo_surface (tempbuf);

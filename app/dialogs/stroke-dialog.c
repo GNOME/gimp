@@ -180,7 +180,8 @@ stroke_dialog_new (GList              *items,
 
     gimp_image_get_resolution (image, &xres, &yres);
 
-    stroke_editor = gimp_stroke_editor_new (private->options, yres, FALSE);
+    stroke_editor = gimp_stroke_editor_new (private->options, yres, FALSE,
+                                            FALSE);
     gtk_container_add (GTK_CONTAINER (frame), stroke_editor);
     gtk_widget_show (stroke_editor);
 

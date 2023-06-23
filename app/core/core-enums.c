@@ -588,6 +588,35 @@ gimp_dynamics_output_type_get_type (void)
 }
 
 GType
+gimp_custom_style_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_CUSTOM_STYLE_SOLID_COLOR, "GIMP_CUSTOM_STYLE_SOLID_COLOR", "solid-color" },
+    { GIMP_CUSTOM_STYLE_PATTERN, "GIMP_CUSTOM_STYLE_PATTERN", "pattern" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_CUSTOM_STYLE_SOLID_COLOR, NC_("custom-style", "Solid color"), NULL },
+    { GIMP_CUSTOM_STYLE_PATTERN, NC_("custom-style", "Pattern"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpCustomStyle", values);
+      gimp_type_set_translation_context (type, "custom-style");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_fill_style_get_type (void)
 {
   static const GEnumValue values[] =

@@ -290,6 +290,16 @@ typedef enum  /*< pdb-skip >*/
 } GimpDynamicsOutputType;
 
 
+#define GIMP_TYPE_CUSTOM_STYLE (gimp_custom_style_get_type ())
+
+GType gimp_custom_style_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_CUSTOM_STYLE_SOLID_COLOR,  /*< desc="Solid color" >*/
+  GIMP_CUSTOM_STYLE_PATTERN       /*< desc="Pattern"          >*/
+} GimpCustomStyle;
+
 #define GIMP_TYPE_FILL_STYLE (gimp_fill_style_get_type ())
 
 GType gimp_fill_style_get_type (void) G_GNUC_CONST;
