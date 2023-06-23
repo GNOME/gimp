@@ -29,15 +29,6 @@
 #define PLUG_IN_PROC      "plug-in-checkerboard"
 #define PLUG_IN_BINARY    "checkerboard"
 #define PLUG_IN_ROLE      "gimp-checkerboard"
-#define SPIN_BUTTON_WIDTH 8
-
-
-/* Variables set in dialog box */
-typedef struct data
-{
-  gboolean mode;
-  gint     size;
-} CheckVals;
 
 
 typedef struct _Checkerboard      Checkerboard;
@@ -71,29 +62,24 @@ static GimpValueArray * checkerboard_run              (GimpProcedure        *pro
                                                        const GimpValueArray *args,
                                                        gpointer              run_data);
 
-static void             do_checkerboard_pattern       (GimpDrawable *drawable,
-                                                       GimpPreview  *preview);
-static void             do_checkerboard_preview       (GimpDrawable *drawable,
-                                                       GimpPreview  *preview);
-static gint             inblock                       (gint          pos,
-                                                       gint          size);
+static void             do_checkerboard_pattern       (GObject       *config,
+                                                       GimpDrawable  *drawable,
+                                                       GimpPreview   *preview);
+static void             do_checkerboard_preview       (GtkWidget     *widget,
+                                                       GObject       *config);
+static gint             inblock                       (gint           pos,
+                                                       gint           size);
 
-static gboolean         checkerboard_dialog           (GimpImage    *image,
-                                                       GimpDrawable *drawable);
-static void             check_size_update_callback    (GtkWidget    *widget);
+static gboolean         checkerboard_dialog           (GimpProcedure *procedure,
+                                                       GObject       *config,
+                                                       GimpImage     *image,
+                                                       GimpDrawable  *drawable);
 
 
 G_DEFINE_TYPE (Checkerboard, checkerboard, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (CHECKERBOARD_TYPE)
 DEFINE_STD_SET_I18N
-
-
-static CheckVals cvals =
-{
-  FALSE,     /* mode */
-  10         /* size */
-};
 
 
 static void
@@ -134,12 +120,12 @@ checkerboard_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
       gimp_procedure_set_menu_label (procedure,
-                                     N_("_Checkerboard (legacy)..."));
+                                     _("_Checkerboard (legacy)..."));
       gimp_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Render/Pattern");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Create a checkerboard pattern"),
+                                        _("Create a checkerboard pattern"),
                                         "More here later",
                                         name);
       gimp_procedure_set_attribution (procedure,
@@ -148,16 +134,22 @@ checkerboard_create_procedure (GimpPlugIn  *plug_in,
                                       "1997");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "psychobily",
-                             "Psychobily",
-                             "Render a psychobiliy checkerboard",
+                             _("_Psychobilly"),
+                             _("Render a psychobilly checkerboard"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "check-size",
-                         "Check size",
-                         "Size of the checks",
+                         _("_Size"),
+                         _("Size of the checks"),
                          1, GIMP_MAX_IMAGE_SIZE, 10,
                          G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_UNIT (procedure, "check-size-unit",
+                              _("Check size unit of measure"),
+                              _("Check size unit of measure"),
+                              TRUE, TRUE, GIMP_UNIT_PIXEL,
+                              GIMP_PARAM_READWRITE);
     }
 
   return procedure;
@@ -172,7 +164,8 @@ checkerboard_run (GimpProcedure        *procedure,
                   const GimpValueArray *args,
                   gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  GimpProcedureConfig *config;
+  GimpDrawable        *drawable;
 
   gegl_init (NULL, NULL);
 
@@ -193,26 +186,22 @@ checkerboard_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &cvals);
-
-      if (! checkerboard_dialog (image, drawable))
+      if (! checkerboard_dialog (procedure, G_OBJECT (config), image,
+                                 drawable))
         {
+          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
+          g_object_unref (config);
+
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_CANCEL,
                                                    NULL);
         }
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      cvals.mode = GIMP_VALUES_GET_BOOLEAN (args, 0);
-      cvals.size = GIMP_VALUES_GET_INT     (args, 1);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &cvals);
       break;
 
     default:
@@ -222,20 +211,23 @@ checkerboard_run (GimpProcedure        *procedure,
   if (gimp_drawable_is_rgb  (drawable) ||
       gimp_drawable_is_gray (drawable))
     {
-      do_checkerboard_pattern (drawable, NULL);
+      do_checkerboard_pattern (G_OBJECT (config), drawable, NULL);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
-
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &cvals, sizeof (CheckVals));
     }
   else
     {
+      gimp_procedure_config_end_run (config, GIMP_PDB_EXECUTION_ERROR);
+      g_object_unref (config);
+
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
                                                NULL);
     }
+
+  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
+  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
@@ -251,6 +243,8 @@ checkerboard_func (gint      x,
                    gint      y,
                    guchar   *dest,
                    gint      bpp,
+                   gint      size,
+                   gboolean  mode,
                    gpointer  data)
 {
   CheckerboardParam_t *param = (CheckerboardParam_t*) data;
@@ -258,10 +252,10 @@ checkerboard_func (gint      x,
   gint val, xp, yp;
   gint b;
 
-  if (cvals.mode)
+  if (mode)
     {
       /* Psychobilly Mode */
-      val = (inblock (x, cvals.size) != inblock (y, cvals.size));
+      val = (inblock (x, size) != inblock (y, size));
     }
   else
     {
@@ -269,8 +263,8 @@ checkerboard_func (gint      x,
        * Determine base factor (even or odd) of block
        * this x/y position is in.
        */
-      xp = x / cvals.size;
-      yp = y / cvals.size;
+      xp = x / size;
+      yp = y / size;
 
       /* if both even or odd, color sqr */
       val = ( (xp & 1) != (yp & 1) );
@@ -281,13 +275,22 @@ checkerboard_func (gint      x,
 }
 
 static void
-do_checkerboard_pattern (GimpDrawable *drawable,
+do_checkerboard_pattern (GObject      *config,
+                         GimpDrawable *drawable,
                          GimpPreview  *preview)
 {
   CheckerboardParam_t  param;
   GimpRGB              fg, bg;
   const Babl          *format;
   gint                 bpp;
+  gboolean             mode = FALSE;
+  gint                 size = 10;
+
+  if (config)
+    g_object_get (config,
+                  "check-size", &size,
+                  "psychobily", &mode,
+                  NULL);
 
   gimp_context_get_background (&bg);
   gimp_context_get_foreground (&fg);
@@ -321,10 +324,10 @@ do_checkerboard_pattern (GimpDrawable *drawable,
 
   bpp = babl_format_get_bytes_per_pixel (format);
 
-  if (cvals.size < 1)
+  if (size < 1)
     {
       /* make size 1 to prevent division by zero */
-      cvals.size = 1;
+      size = 1;
     }
 
   if (preview)
@@ -344,7 +347,8 @@ do_checkerboard_pattern (GimpDrawable *drawable,
           checkerboard_func (x1 + i % width,
                              y1 + i / width,
                              buffer + i * bpp,
-                             bpp, &param);
+                             bpp, size, mode,
+                             &param);
         }
 
       gimp_preview_draw_buffer (preview, buffer, width * bpp);
@@ -388,7 +392,8 @@ do_checkerboard_pattern (GimpDrawable *drawable,
                   checkerboard_func (roi.x + x1,
                                      roi.y + y1,
                                      d + x1 * bpp,
-                                     bpp, &param);
+                                     bpp, size, mode,
+                                     &param);
                 }
 
               d += roi.width * bpp;
@@ -409,10 +414,13 @@ do_checkerboard_pattern (GimpDrawable *drawable,
 }
 
 static void
-do_checkerboard_preview (GimpDrawable *drawable,
-                         GimpPreview  *preview)
+do_checkerboard_preview (GtkWidget *widget,
+                         GObject   *config)
 {
-  do_checkerboard_pattern (drawable, preview);
+  GimpPreview  *preview  = GIMP_PREVIEW (widget);
+  GimpDrawable *drawable = g_object_get_data (config, "drawable");
+
+  do_checkerboard_pattern (config, drawable, preview);
 }
 
 static gint
@@ -471,31 +479,25 @@ inblock (gint pos,
 }
 
 static gboolean
-checkerboard_dialog (GimpImage    *image,
-                     GimpDrawable *drawable)
+checkerboard_dialog (GimpProcedure *procedure,
+                     GObject       *config,
+                     GimpImage     *image,
+                     GimpDrawable  *drawable)
 {
   GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
   GtkWidget *preview;
   GtkWidget *toggle;
   GtkWidget *size_entry;
   gint       size, width, height;
-  GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
   gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Checkerboard"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
-
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-
-                            NULL);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Checkerboard"));
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -504,42 +506,25 @@ checkerboard_dialog (GimpImage    *image,
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
   preview = gimp_drawable_preview_new_from_drawable (drawable);
-  gtk_box_pack_start (GTK_BOX (vbox), preview, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
-  g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (do_checkerboard_preview),
-                            drawable);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
 
   /*  Get the image resolution and unit  */
   gimp_image_get_resolution (image, &xres, &yres);
-  unit = gimp_image_get_unit (image);
 
   width  = gimp_drawable_get_width (drawable);
   height = gimp_drawable_get_height (drawable);
   size   = MIN (width, height);
 
-  size_entry = gimp_size_entry_new (1, unit, "%a",
-                                    TRUE, TRUE, FALSE, SPIN_BUTTON_WIDTH,
-                                    GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  gtk_box_pack_start (GTK_BOX (hbox), size_entry, FALSE, FALSE, 0);
-  gtk_widget_show (size_entry);
-
-  /*  set the unit back to pixels, since most times we will want pixels */
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);
-
-  /*  set the resolution to the image resolution  */
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);
+  size_entry =
+    gimp_procedure_dialog_get_size_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                          "check-size", TRUE,
+                                          "check-size-unit", "%a",
+                                          GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                          xres);
+  gtk_widget_set_margin_bottom (size_entry, 12);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0, size);
@@ -548,43 +533,30 @@ checkerboard_dialog (GimpImage    *image,
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0,
                                          1.0, size);
 
-  /*  initialize the values  */
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_entry), 0, cvals.size);
+  toggle = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                             "psychobily",
+                                             GTK_TYPE_CHECK_BUTTON);
+  gtk_widget_set_margin_bottom (toggle, 12);
 
-  /*  attach labels  */
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry),
-                                _("_Size:"), 1, 0, 0.0);
+  g_object_set_data (config, "drawable", drawable);
 
-  g_signal_connect (size_entry, "value-changed",
-                    G_CALLBACK (check_size_update_callback),
-                    &cvals.size);
-  g_signal_connect_swapped (size_entry, "value-changed",
+  g_signal_connect (preview, "invalidated",
+                    G_CALLBACK (do_checkerboard_preview),
+                    config);
+
+  g_signal_connect_swapped (config, "notify",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Psychobilly"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cvals.mode);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &cvals.mode);
-  g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "check-size", "psychobily",
+                              NULL);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
   return run;
-}
-
-static void
-check_size_update_callback (GtkWidget *widget)
-{
-  cvals.size = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
 }
