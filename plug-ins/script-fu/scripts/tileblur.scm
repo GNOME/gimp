@@ -31,7 +31,8 @@
              (floating-sel (aref (cadr pasted) (- num-pasted 1)))
             )
         (gimp-layer-set-offsets floating-sel (* xoff theWidth) (* yoff theHeight) )
-        (gimp-floating-sel-anchor floating-sel)
+        (if (= (car (gimp-layer-is-floating-sel floating-sel)) TRUE)
+            (gimp-floating-sel-anchor floating-sel))
       )
     )
 
