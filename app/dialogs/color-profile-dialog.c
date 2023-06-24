@@ -63,6 +63,7 @@ typedef struct
   GtkWidget                *dialog;
   GtkWidget                *main_vbox;
   GtkWidget                *combo;
+  GtkWidget                *warning_label;
   GtkWidget                *dest_view;
 
 } ProfileDialog;
@@ -257,6 +258,10 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
   private->combo = color_profile_combo_box_new (private);
   gtk_box_pack_start (GTK_BOX (vbox), private->combo, FALSE, FALSE, 0);
   gtk_widget_show (private->combo);
+
+  /* The text for this will be updated as the profile is changed */
+  private->warning_label = gtk_label_new (NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), private->warning_label, FALSE, FALSE, 0);
 
   expander = gtk_expander_new_with_mnemonic (_("Profile _details"));
   gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
@@ -487,8 +492,77 @@ color_profile_dest_changed (GtkWidget     *combo,
 
   if (dest_profile)
     {
+      GtkWidget   *button;
+      gboolean     wrong_profile = FALSE;
+      gchar       *profile_warning;
+      const gchar *color_warning;
+
+      button = gtk_dialog_get_widget_for_response (GTK_DIALOG (private->dialog),
+                                                   GTK_RESPONSE_OK);
+
       gimp_color_profile_view_set_profile (GIMP_COLOR_PROFILE_VIEW (private->dest_view),
                                            dest_profile);
+
+      /* Check if profile is the same color model as image
+       * or if we're converting to that format */
+      switch (gimp_image_get_base_type (private->image))
+        {
+        case GIMP_INDEXED:
+        case GIMP_RGB:
+          if (! gimp_color_profile_is_rgb (dest_profile) &&
+              private->dialog_type != COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY)
+            {
+              wrong_profile = TRUE;
+              color_warning = _("Your image requires a RGB color profile.");
+            }
+          else if (! gimp_color_profile_is_gray (dest_profile) &&
+                   private->dialog_type == COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY)
+            {
+              wrong_profile = TRUE;
+              color_warning = _("A gray color profile is required to convert.");
+            }
+          break;
+
+        case GIMP_GRAY:
+          if (! gimp_color_profile_is_gray (dest_profile) &&
+              private->dialog_type != COLOR_PROFILE_DIALOG_CONVERT_TO_RGB)
+            {
+              wrong_profile = TRUE;
+              color_warning = _("Your image requires a grayscale color profile.");
+            }
+          else if (! gimp_color_profile_is_rgb (dest_profile) &&
+                   private->dialog_type == COLOR_PROFILE_DIALOG_CONVERT_TO_RGB)
+            {
+              wrong_profile = TRUE;
+              color_warning = _("A RGB color profile is required to convert.");
+            }
+          break;
+        }
+
+      if (private->dialog_type != COLOR_PROFILE_DIALOG_SELECT_SOFTPROOF_PROFILE &&
+          wrong_profile)
+        {
+          if (gimp_color_profile_is_cmyk (dest_profile))
+            profile_warning = g_strdup_printf ("<i>%s\n%s</i>", color_warning,
+                                               _("CMYK profiles can only "
+                                                 "be used as Soft-Proof "
+                                                 "profiles."));
+          else
+            profile_warning = g_strdup_printf ("<i>%s</i>", color_warning);
+
+          gtk_label_set_markup (GTK_LABEL (private->warning_label),
+                                           profile_warning);
+          g_free (profile_warning);
+
+          gtk_widget_set_sensitive (button, FALSE);
+          gtk_widget_set_visible (private->warning_label, TRUE);
+        }
+      else
+        {
+          gtk_widget_set_sensitive (button, TRUE);
+          gtk_widget_set_visible (private->warning_label, FALSE);
+        }
+
       g_object_unref (dest_profile);
     }
 }
