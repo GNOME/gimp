@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-05-10 17:27+0000\n"
-"PO-Revision-Date: 2023-06-23 10:35+0300\n"
+"PO-Revision-Date: 2023-06-24 12:00+0300\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -73,14 +73,6 @@ msgstr ""
 #: plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_Cancel"
 msgstr "_Отказ"
-
-#: plug-ins/common/cml-explorer.c:303 plug-ins/common/cml-explorer.c:311
-#: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
-#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:317
-#: plug-ins/metadata/metadata-viewer.c:355
-#: plug-ins/metadata/metadata-viewer.c:393
-msgid "Value"
-msgstr "Стойност"
 
 #: plug-ins/common/cml-explorer.c:1983 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:168
@@ -145,6 +137,1019 @@ msgstr "Процедурата „%s“ работи само с едно нар
 #: plug-ins/selection-to-path/selection-to-path.c:414
 msgid "_OK"
 msgstr "_Добре"
+
+#. The Load button
+#: plug-ins/common/cml-explorer.c:1425 plug-ins/common/cml-explorer.c:2248
+#: plug-ins/common/curve-bend.c:1481 plug-ins/common/curve-bend.c:1996
+#: plug-ins/common/file-cel.c:1002 plug-ins/common/qbist.c:849
+#: plug-ins/common/qbist.c:1032 plug-ins/common/sphere-designer.c:2290
+#: plug-ins/common/sphere-designer.c:2681 plug-ins/flame/flame.c:542
+#: plug-ins/flame/flame.c:1104
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:801
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1632
+#: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:955
+#: plug-ins/ifs-compose/ifs-compose.c:2642 plug-ins/imagemap/imap_browse.c:81
+#: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:608
+#: plug-ins/lighting/lighting-ui.c:1308
+msgid "_Open"
+msgstr "_Отваряне"
+
+#. The Save button
+#: plug-ins/common/cml-explorer.c:1433 plug-ins/common/cml-explorer.c:2115
+#: plug-ins/common/curve-bend.c:1493 plug-ins/common/curve-bend.c:2031
+#: plug-ins/common/file-pdf-save.c:1112 plug-ins/common/qbist.c:891
+#: plug-ins/common/qbist.c:1040 plug-ins/common/sphere-designer.c:2290
+#: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:542
+#: plug-ins/flame/flame.c:1112
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:818
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1670
+#: plug-ins/gfig/gfig-dialog.c:832 plug-ins/gimpressionist/brush.c:271
+#: plug-ins/ifs-compose/ifs-compose.c:956
+#: plug-ins/ifs-compose/ifs-compose.c:2605 plug-ins/imagemap/imap_file.c:129
+#: plug-ins/lighting/lighting-ui.c:601 plug-ins/lighting/lighting-ui.c:1164
+msgid "_Save"
+msgstr "_Запазване"
+
+#: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
+#: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:876
+#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1229
+#: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
+#: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
+#: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
+#: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
+#: plug-ins/file-bmp/bmp-save.c:341 plug-ins/file-fits/fits.c:513
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:428
+#: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
+#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
+#: plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
+#: plug-ins/gfig/gfig.c:1040 plug-ins/ifs-compose/ifs-compose.c:2464
+#: plug-ins/lighting/lighting-ui.c:1233
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Не може да се отвори „%s“ за записване: %s"
+
+#: plug-ins/common/cml-explorer.c:2339 plug-ins/common/curve-bend.c:890
+#: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
+#: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
+#: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-iff.c:222
+#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:523
+#: plug-ins/common/file-pcx.c:566 plug-ins/common/file-png.c:673
+#: plug-ins/common/file-ps.c:1126 plug-ins/common/file-ps.c:3635
+#: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
+#: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
+#: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
+#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:759
+#: plug-ins/common/file-tga.c:445 plug-ins/common/file-wbmp.c:184
+#: plug-ins/common/file-xbm.c:750 plug-ins/common/file-xmc.c:658
+#: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
+#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
+#: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
+#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:459
+#: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
+#: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
+#: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
+#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:614
+#: plug-ins/file-psd/psd-load.c:168 plug-ins/file-psd/psd-load.c:173
+#: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1855
+#: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:670
+#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
+#: plug-ins/lighting/lighting-ui.c:1377
+#, c-format
+msgid "Could not open '%s' for reading: %s"
+msgstr "Не може да се отвори „%s“ за четене: %s"
+
+#: plug-ins/gfig/gfig-dialog.c:1458
+#: plug-ins/gradient-flare/gradient-flare.c:749
+#: plug-ins/metadata/metadata-tags.c:238
+msgid "Normal"
+msgstr "Нормално"
+
+#: plug-ins/common/align-layers.c:223 plug-ins/common/grid.c:757
+#: plug-ins/gfig/gfig-dialog.c:1360 plug-ins/imagemap/imap_main.c:1923
+msgid "Grid"
+msgstr "Мрежа"
+
+#.
+#. * Create the "background" layer to hold the image...
+#.
+#: plug-ins/common/blinds.c:301 plug-ins/common/compose.c:1129
+#: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
+#: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
+#: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
+#: plug-ins/common/file-iff.c:331 plug-ins/common/file-jp2-load.c:1317
+#: plug-ins/common/file-pcx.c:742 plug-ins/common/file-pcx.c:750
+#: plug-ins/common/file-pcx.c:758 plug-ins/common/file-pix.c:422
+#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:869
+#: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
+#: plug-ins/common/file-sunras.c:1080 plug-ins/common/file-tga.c:1114
+#: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:912
+#: plug-ins/common/film.c:812 plug-ins/common/smooth-palette.c:332
+#: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
+#: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
+#: plug-ins/file-fits/fits.c:542 plug-ins/file-jpeg/jpeg-load.c:231
+#: plug-ins/file-psd/psd-image-res-load.c:1082
+#: plug-ins/file-psd/psd-load.c:2634 plug-ins/file-sgi/sgi.c:475
+#: plug-ins/file-tiff/file-tiff-load.c:1534
+#: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1290
+#: plug-ins/gimpressionist/general.c:139
+#: plug-ins/map-object/map-object-apply.c:245
+#: plug-ins/screenshot/screenshot-win32.c:315 plug-ins/twain/twain.c:661
+msgid "Background"
+msgstr "Фон"
+
+#. Options area, bottom of column
+#: plug-ins/common/curve-bend.c:1300 plug-ins/gfig/gfig-dialog.c:1215
+msgid "Options"
+msgstr "Настройки"
+
+#: plug-ins/common/decompose.c:215 plug-ins/common/warp.c:617
+#: plug-ins/flame/flame.c:1223 plug-ins/gfig/gfig-dialog.c:1459
+msgid "Black"
+msgstr "Черно"
+
+#: plug-ins/common/file-ps.c:536 plug-ins/map-object/map-object-ui.c:1013
+msgid "Rotation"
+msgstr "Завъртане"
+
+#: plug-ins/common/sphere-designer.c:343 plug-ins/flame/flame.c:820
+#: plug-ins/gfig/gfig-dialog.c:399
+msgid "Spiral"
+msgstr "Спирала"
+
+#: plug-ins/common/sphere-designer.c:2877
+#: plug-ins/map-object/map-object-ui.c:1121
+msgid "Scale X:"
+msgstr "Мащабиране по хоризонтал:"
+
+#: plug-ins/flame/flame.c:815 plug-ins/gfig/gfig-dialog.c:1441
+msgid "Polar"
+msgstr "Полярно"
+
+#: plug-ins/flame/flame.c:835 plug-ins/map-object/map-object-ui.c:465
+msgid "Cylinder"
+msgstr "Цилиндрично"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:541
+#: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
+#: plug-ins/gradient-flare/gradient-flare.c:998
+#, c-format
+msgid ""
+"No %s in gimprc:\n"
+"You need to add an entry like\n"
+"(%s \"%s\")\n"
+"to your %s file."
+msgstr ""
+"В gimprc липсва „%s“:\n"
+"Трябва да въведете стойност като\n"
+"(%s „%s“)\n"
+"във файла „%s“."
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:726
+#: plug-ins/map-object/map-object-ui.c:1078
+msgid "Left:"
+msgstr "Ляво:"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:735
+#: plug-ins/map-object/map-object-ui.c:1078
+msgid "Right:"
+msgstr "Дясно:"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:744
+#: plug-ins/map-object/map-object-ui.c:1077
+msgid "Top:"
+msgstr "Горе:"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:753
+#: plug-ins/map-object/map-object-ui.c:1077
+msgid "Bottom:"
+msgstr "Долу:"
+
+#: plug-ins/gfig/gfig-bezier.c:402
+msgid "Closed"
+msgstr "Затворено"
+
+#: plug-ins/gfig/gfig-bezier.c:407
+msgid "Close curve on completion"
+msgstr "Затваряне на кривата при завършване"
+
+#: plug-ins/gfig/gfig-bezier.c:412
+msgid "Show Line Frame"
+msgstr "Показване на линеен кадър"
+
+#: plug-ins/gfig/gfig-bezier.c:417
+msgid "Draws lines between the control points. Only during curve creation"
+msgstr ""
+"Рисува линии между контролни точки. Единствено по време на създаване на "
+"кривата."
+
+#. Start building the dialog up
+#: plug-ins/gfig/gfig-dialog.c:350
+msgid "Gfig"
+msgstr "Gfig"
+
+#: plug-ins/gfig/gfig-dialog.c:385
+msgid "Line"
+msgstr "Линия"
+
+#: plug-ins/gfig/gfig-dialog.c:385
+msgid "Create line"
+msgstr "Създаване на линия"
+
+#: plug-ins/gfig/gfig-dialog.c:387 plug-ins/gfig/gfig-dialog.c:1440
+#: plug-ins/imagemap/imap_main.c:1940
+msgid "Rectangle"
+msgstr "Правоъгълник"
+
+#: plug-ins/gfig/gfig-dialog.c:387
+msgid "Create rectangle"
+msgstr "Създаване на триъгълник"
+
+#: plug-ins/gfig/gfig-dialog.c:389
+#: plug-ins/gradient-flare/gradient-flare.c:4021
+#: plug-ins/imagemap/imap_main.c:1942
+msgid "Circle"
+msgstr "Кръг"
+
+#: plug-ins/gfig/gfig-dialog.c:389
+msgid "Create circle"
+msgstr "Създаване на кръг"
+
+#: plug-ins/gfig/gfig-dialog.c:391
+msgid "Ellipse"
+msgstr "Елипса"
+
+#: plug-ins/gfig/gfig-dialog.c:391
+msgid "Create ellipse"
+msgstr "Създаване на елипса"
+
+#: plug-ins/gfig/gfig-dialog.c:393
+msgid "Arc"
+msgstr "Дъга"
+
+#: plug-ins/gfig/gfig-dialog.c:393
+msgid "Create arc"
+msgstr "Създаване на дъга"
+
+#: plug-ins/gfig/gfig-dialog.c:395
+#: plug-ins/gradient-flare/gradient-flare.c:4038
+#: plug-ins/imagemap/imap_main.c:1944
+msgid "Polygon"
+msgstr "Многоъгълник"
+
+#: plug-ins/gfig/gfig-dialog.c:395
+msgid "Create reg polygon"
+msgstr "Създаване на многоъгълник"
+
+#: plug-ins/gfig/gfig-dialog.c:397
+msgid "Star"
+msgstr "Звезда"
+
+#: plug-ins/gfig/gfig-dialog.c:397
+msgid "Create star"
+msgstr "Създаване на звезда"
+
+#: plug-ins/gfig/gfig-dialog.c:399
+msgid "Create spiral"
+msgstr "Създаване на спирала"
+
+#: plug-ins/gfig/gfig-dialog.c:401
+msgid "Bezier"
+msgstr "Безие"
+
+#: plug-ins/gfig/gfig-dialog.c:401
+msgid "Create bezier curve. Shift + Button ends object creation."
+msgstr "Създаване на крива на Безие. Shift + бутон завършва обекта."
+
+#: plug-ins/gfig/gfig-dialog.c:404
+msgid "Move Object"
+msgstr "Преместване на обект"
+
+#: plug-ins/gfig/gfig-dialog.c:404
+msgid "Move an object"
+msgstr "Преместване на обект"
+
+#: plug-ins/gfig/gfig-dialog.c:406
+msgid "Move Point"
+msgstr "Преместване на точка"
+
+#: plug-ins/gfig/gfig-dialog.c:406
+msgid "Move a single point"
+msgstr "Преместване на отделна точка"
+
+#: plug-ins/gfig/gfig-dialog.c:408 plug-ins/gfig/gfig-dialog.c:1293
+#: plug-ins/imagemap/imap_cmd_copy.c:53
+#: plug-ins/imagemap/imap_cmd_copy_object.c:54
+#: plug-ins/imagemap/imap_main.c:1905
+msgid "Copy"
+msgstr "Копиране"
+
+#: plug-ins/gfig/gfig-dialog.c:408
+msgid "Copy an object"
+msgstr "Копиране на обект"
+
+#: plug-ins/gfig/gfig-dialog.c:410 plug-ins/ifs-compose/ifs-compose.c:1004
+#: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
+msgid "Delete"
+msgstr "Изтриване"
+
+#: plug-ins/gfig/gfig-dialog.c:410
+msgid "Delete an object"
+msgstr "Изтриване на обект"
+
+#: plug-ins/gfig/gfig-dialog.c:412 plug-ins/imagemap/imap_cmd_select.c:52
+msgid "Select"
+msgstr "Избиране"
+
+#: plug-ins/gfig/gfig-dialog.c:412
+msgid "Select an object"
+msgstr "Избиране на обект"
+
+#: plug-ins/gfig/gfig-dialog.c:415
+msgid "Raise"
+msgstr "Повдигане"
+
+#: plug-ins/gfig/gfig-dialog.c:415
+msgid "Raise selected object"
+msgstr "Повдигане на избрания обект"
+
+#: plug-ins/gfig/gfig-dialog.c:417
+msgid "Lower"
+msgstr "Снижаване"
+
+#: plug-ins/gfig/gfig-dialog.c:417
+msgid "Lower selected object"
+msgstr "Снижаване на избрания обект"
+
+#: plug-ins/gfig/gfig-dialog.c:419
+msgid "To Top"
+msgstr "Най-горе"
+
+#: plug-ins/gfig/gfig-dialog.c:419
+msgid "Raise selected object to top"
+msgstr "Повдигане на избрания най-отгоре"
+
+#: plug-ins/gfig/gfig-dialog.c:421
+msgid "To Bottom"
+msgstr "Най-долу"
+
+#: plug-ins/gfig/gfig-dialog.c:421
+msgid "Lower selected object to bottom"
+msgstr "Снижаване на избрания обект отдолу"
+
+#: plug-ins/gfig/gfig-dialog.c:424
+msgid "Show Previous"
+msgstr "Предишен обект"
+
+#: plug-ins/gfig/gfig-dialog.c:424
+msgid "Show previous object"
+msgstr "Показване на предишния обект"
+
+#: plug-ins/gfig/gfig-dialog.c:426
+msgid "Show Next"
+msgstr "Следващ обект"
+
+#: plug-ins/gfig/gfig-dialog.c:426
+msgid "Show next object"
+msgstr "Показване на следващия обект"
+
+#: plug-ins/gfig/gfig-dialog.c:428
+msgid "Show All"
+msgstr "Показване на всички"
+
+#: plug-ins/gfig/gfig-dialog.c:428
+msgid "Show all objects"
+msgstr "Показване на всички обекти"
+
+#. Tool options notebook
+#: plug-ins/gfig/gfig-dialog.c:456
+msgid "Tool Options"
+msgstr "Настройки на инструмента"
+
+#: plug-ins/gfig/gfig-dialog.c:473
+msgid "_Stroke"
+msgstr "_Черта"
+
+#. Fill frame on right side
+#: plug-ins/gfig/gfig-dialog.c:519
+msgid "Fill"
+msgstr "Запълване"
+
+#: plug-ins/gfig/gfig-dialog.c:533
+msgid "No fill"
+msgstr "Без запълване"
+
+#: plug-ins/gfig/gfig-dialog.c:534
+msgid "Color fill"
+msgstr "Запълване с цвят"
+
+#: plug-ins/gfig/gfig-dialog.c:535
+msgid "Pattern fill"
+msgstr "Запълване със шарка"
+
+#: plug-ins/gfig/gfig-dialog.c:536
+msgid "Shape gradient"
+msgstr "Преливка по форма"
+
+#: plug-ins/gfig/gfig-dialog.c:537
+msgid "Vertical gradient"
+msgstr "Вертикална преливка"
+
+#: plug-ins/gfig/gfig-dialog.c:538
+msgid "Horizontal gradient"
+msgstr "Хоризонтална преливка"
+
+#. "show image" checkbutton at bottom of style frame
+#: plug-ins/gfig/gfig-dialog.c:600
+msgid "Show image"
+msgstr "Показване на изображение"
+
+#. "snap to grid" checkbutton at bottom of style frame
+#: plug-ins/gfig/gfig-dialog.c:613
+msgctxt "checkbutton"
+msgid "Snap to grid"
+msgstr "Прилепяне към мрежата"
+
+#. "show grid" checkbutton at bottom of style frame
+#: plug-ins/gfig/gfig-dialog.c:622
+msgid "Show grid"
+msgstr "Зареждане на мрежа"
+
+#: plug-ins/gfig/gfig-dialog.c:777
+msgid "Load Gfig Object Collection"
+msgstr "Зареждане на колекция с обекти на Gfig"
+
+#: plug-ins/gfig/gfig-dialog.c:827
+msgid "Save Gfig Drawing"
+msgstr "Запазване на обект на Gfig"
+
+#: plug-ins/gfig/gfig-dialog.c:1002
+msgid "First Gfig"
+msgstr "Първи Gfig"
+
+#: plug-ins/gfig/gfig-dialog.c:1021
+msgid "This tool has no options"
+msgstr "Този инструмент няма настройки"
+
+#. Put buttons in
+#: plug-ins/gfig/gfig-dialog.c:1237
+msgid "Show position"
+msgstr "Показване на позиция"
+
+#: plug-ins/gfig/gfig-dialog.c:1249
+msgid "Show control points"
+msgstr "Показване на контролни точки"
+
+#: plug-ins/gfig/gfig-dialog.c:1265
+msgid "Antialiasing"
+msgstr "Заглаждане"
+
+#: plug-ins/gfig/gfig-dialog.c:1282
+msgid "Max undo:"
+msgstr "Максимална отмяна:"
+
+#: plug-ins/gfig/gfig-dialog.c:1289 plug-ins/gimpressionist/general.c:184
+msgid "Transparent"
+msgstr "Прозрачно"
+
+#: plug-ins/gfig/gfig-dialog.c:1291
+msgid "Foreground"
+msgstr "Цвят за рисуване"
+
+#: plug-ins/gfig/gfig-dialog.c:1292 plug-ins/gfig/gfig-dialog.c:1460
+msgid "White"
+msgstr "Бяло"
+
+#: plug-ins/gfig/gfig-dialog.c:1302
+msgid ""
+"Layer background type. Copy causes the previous layer to be copied before "
+"the draw is performed."
+msgstr ""
+"Слой от фонов тип. Първо се копира предишния слой, преди да се извърши "
+"изчертаване."
+
+#: plug-ins/gfig/gfig-dialog.c:1308
+msgid "Background:"
+msgstr "Фон:"
+
+#: plug-ins/gfig/gfig-dialog.c:1311
+msgid "Feather"
+msgstr "Смекчаване"
+
+#: plug-ins/gfig/gfig-dialog.c:1333
+msgid "Radius:"
+msgstr "Радиус:"
+
+#: plug-ins/gfig/gfig-dialog.c:1391
+msgid "Grid spacing:"
+msgstr "Разстояния в мрежата:"
+
+#: plug-ins/gfig/gfig-dialog.c:1407
+msgid "Polar grid sectors desired:"
+msgstr "Желани сектори на полярната решетка:"
+
+#: plug-ins/gfig/gfig-dialog.c:1424
+msgid "Polar grid radius interval:"
+msgstr "Интервал на радиуса на полярната решетка:"
+
+#: plug-ins/gfig/gfig-dialog.c:1442
+msgid "Isometric"
+msgstr "Изометрично"
+
+#: plug-ins/gfig/gfig-dialog.c:1451
+msgid "Grid type:"
+msgstr "Вид мрежа:"
+
+#: plug-ins/gfig/gfig-dialog.c:1461
+msgid "Grey"
+msgstr "Сиво"
+
+#: plug-ins/gfig/gfig-dialog.c:1462
+msgid "Darker"
+msgstr "По-тъмно"
+
+#: plug-ins/gfig/gfig-dialog.c:1463
+msgid "Lighter"
+msgstr "По-светло"
+
+#: plug-ins/gfig/gfig-dialog.c:1464
+msgid "Very dark"
+msgstr "Много тъмно"
+
+#: plug-ins/gfig/gfig-dialog.c:1473
+msgid "Grid color:"
+msgstr "Цвят на мрежата:"
+
+#: plug-ins/gfig/gfig-dialog.c:1698
+msgid "Sides:"
+msgstr "Страни"
+
+#: plug-ins/gfig/gfig-dialog.c:1707
+msgid "Right"
+msgstr "Дясно"
+
+#: plug-ins/gfig/gfig-dialog.c:1708
+msgid "Left"
+msgstr "Ляво"
+
+#: plug-ins/gfig/gfig-dialog.c:1718 plug-ins/gimpressionist/orientation.c:140
+msgid "Orientation:"
+msgstr "Ориентация:"
+
+#: plug-ins/gfig/gfig-dobject.c:581
+msgid "Hey, where has the object gone?"
+msgstr "Къде изчезнаха обектите?"
+
+#: plug-ins/gfig/gfig-dobject.c:926
+msgid "Error reading file"
+msgstr "Грешка при четене на файл"
+
+#: plug-ins/gfig/gfig-dobject.c:1024
+msgid "Editing read-only object - you will not be able to save it"
+msgstr "Редактиране на обект само за четене — няма да е възможно запазване"
+
+#: plug-ins/gfig/gfig-poly.c:51
+msgid "Regular Polygon Number of Sides"
+msgstr "Брой страни на правилен многоъгълник"
+
+#: plug-ins/gfig/gfig-preview.c:322
+msgid "Object Details"
+msgstr "Характеристики на обекта"
+
+#. Position labels
+#: plug-ins/gfig/gfig-preview.c:373
+msgid "XY position:"
+msgstr "Позиция по X u Y:"
+
+#: plug-ins/gfig/gfig-spiral.c:55
+msgid "Spiral Number of Turns"
+msgstr "Брой кръгове на спиралата"
+
+#: plug-ins/gfig/gfig-star.c:52
+msgid "Star Number of Points"
+msgstr "Брой върхове на звездата"
+
+#: plug-ins/gfig/gfig.c:170
+msgid "_Gfig..."
+msgstr "_Gfig…"
+
+#: plug-ins/gfig/gfig.c:174
+msgid "Create geometric shapes"
+msgstr "Създаване на геометрични форми"
+
+#: plug-ins/gfig/gfig.c:976
+msgid ""
+"Error trying to save figure as a parasite: can't attach parasite to drawable."
+msgstr ""
+"Грешка при опит да се запази фигура като изрично свойство: не може да се "
+"прикрепи към рисуваното"
+
+#: plug-ins/gfig/gfig.c:1006
+#, c-format
+msgid "Error trying to open temporary file '%s' for parasite loading: %s"
+msgstr ""
+"Грешка при опит за отваряне на временен файл „%s“ при зареждане на изрично "
+"свойство: %s"
+
+#. X
+#: plug-ins/ifs-compose/ifs-compose.c:685 plug-ins/lighting/lighting-ui.c:546
+#: plug-ins/map-object/map-object-ui.c:663
+#: plug-ins/map-object/map-object-ui.c:717
+#: plug-ins/map-object/map-object-ui.c:977
+#: plug-ins/map-object/map-object-ui.c:1023
+msgid "X:"
+msgstr "Хоризонтално:"
+
+#. Y
+#: plug-ins/ifs-compose/ifs-compose.c:699 plug-ins/lighting/lighting-ui.c:561
+#: plug-ins/map-object/map-object-ui.c:677
+#: plug-ins/map-object/map-object-ui.c:730
+#: plug-ins/map-object/map-object-ui.c:989
+#: plug-ins/map-object/map-object-ui.c:1034
+#: plug-ins/map-object/map-object-ui.c:1133
+msgid "Y:"
+msgstr "Вертикално:"
+
+#: plug-ins/imagemap/imap_preferences.c:476
+#: plug-ins/map-object/map-object-ui.c:572
+msgid "_Threshold:"
+msgstr "_Праг:"
+
+#. General options
+#: plug-ins/lighting/lighting-ui.c:311 plug-ins/map-object/map-object-ui.c:446
+msgid "General Options"
+msgstr "Общи настройки"
+
+#: plug-ins/lighting/lighting-ui.c:342 plug-ins/map-object/map-object-ui.c:515
+msgid "Create a new image when applying filter"
+msgstr "Създаване на ново изображение с прилагането на филтъра"
+
+#: plug-ins/lighting/lighting-ui.c:389 plug-ins/map-object/map-object-ui.c:606
+msgid "Light Settings"
+msgstr "Настройки на светлината"
+
+#: plug-ins/lighting/lighting-ui.c:441 plug-ins/map-object/map-object-ui.c:630
+msgid "Type of light source to apply"
+msgstr "Вид светлинен източник"
+
+#: plug-ins/lighting/lighting-ui.c:443 plug-ins/map-object/map-object-ui.c:632
+msgid "Select lightsource color"
+msgstr "Избор на цвят на светлинния източник"
+
+#: plug-ins/lighting/lighting-ui.c:458 plug-ins/map-object/map-object-ui.c:645
+msgid "Set light source color"
+msgstr "Задаване на цвят на светлинния източник"
+
+#: plug-ins/lighting/lighting-ui.c:479 plug-ins/map-object/map-object-ui.c:647
+#: plug-ins/map-object/map-object-ui.c:967
+#: plug-ins/print/print-page-layout.c:384
+msgid "Position"
+msgstr "Позиция"
+
+#: plug-ins/lighting/lighting-ui.c:499 plug-ins/map-object/map-object-ui.c:671
+msgid "Light source X position in XYZ space"
+msgstr ""
+"Местоположение на светлинния източник по хоризонтал в координатната система"
+
+#: plug-ins/lighting/lighting-ui.c:516 plug-ins/map-object/map-object-ui.c:685
+msgid "Light source Y position in XYZ space"
+msgstr ""
+"Местоположение на светлинния източник по вертикал в координатната система"
+
+#: plug-ins/lighting/lighting-ui.c:533 plug-ins/map-object/map-object-ui.c:699
+msgid "Light source Z position in XYZ space"
+msgstr ""
+"Местоположение на светлинния източник по дълбочина в координатната система"
+
+#: plug-ins/lighting/lighting-ui.c:554 plug-ins/map-object/map-object-ui.c:725
+msgid "Light source X direction in XYZ space"
+msgstr "Хоризонтална посока на светлинния източник в координатната система"
+
+#: plug-ins/lighting/lighting-ui.c:569 plug-ins/map-object/map-object-ui.c:738
+msgid "Light source Y direction in XYZ space"
+msgstr "Вертикална посока на светлинния източник в координатната система"
+
+#: plug-ins/lighting/lighting-ui.c:576 plug-ins/map-object/map-object-ui.c:691
+#: plug-ins/map-object/map-object-ui.c:743
+#: plug-ins/map-object/map-object-ui.c:1001
+#: plug-ins/map-object/map-object-ui.c:1045
+#: plug-ins/map-object/map-object-ui.c:1145
+msgid "Z:"
+msgstr "Дълбочина:"
+
+#: plug-ins/lighting/lighting-ui.c:584 plug-ins/map-object/map-object-ui.c:751
+msgid "Light source Z direction in XYZ space"
+msgstr "Дълбочинна посока на светлинния източник в координатната система"
+
+#: plug-ins/lighting/lighting-ui.c:678 plug-ins/map-object/map-object-ui.c:812
+msgid "Amount of original color to show where no direct light falls"
+msgstr "Количество на оригиналния цвят, където не попада директна светлина"
+
+#: plug-ins/lighting/lighting-ui.c:709 plug-ins/map-object/map-object-ui.c:839
+msgid "Intensity of original color when lit by a light source"
+msgstr "Интензитет на оригиналния цвят, където е осветен"
+
+#: plug-ins/lighting/lighting-ui.c:740 plug-ins/map-object/map-object-ui.c:908
+msgid "Controls how intense the highlights will be"
+msgstr "Контролира колко да са интензивни светлите зони"
+
+#: plug-ins/lighting/lighting-ui.c:770 plug-ins/map-object/map-object-ui.c:935
+msgid "Higher values makes the highlights more focused"
+msgstr "Високи стойности правят осветените зони по-фокусирани"
+
+#: plug-ins/lighting/lighting-ui.c:969 plug-ins/map-object/map-object-ui.c:1267
+msgid "_Light"
+msgstr "_Светлина"
+
+#: plug-ins/lighting/lighting-ui.c:973 plug-ins/map-object/map-object-ui.c:1271
+msgid "_Material"
+msgstr "_Материал"
+
+#: plug-ins/lighting/lighting-ui.c:1100
+#: plug-ins/map-object/map-object-ui.c:1382
+msgid "Recompute preview image"
+msgstr "Преизчисляване на предварителния преглед"
+
+#: plug-ins/map-object/map-object-apply.c:241
+#: plug-ins/map-object/map-object-apply.c:266
+msgid "Map to plane"
+msgstr "Преобразуване към плоскост"
+
+#: plug-ins/map-object/map-object-apply.c:242
+#: plug-ins/map-object/map-object-apply.c:269
+msgid "Map to sphere"
+msgstr "Преобразуване към сфера"
+
+#: plug-ins/map-object/map-object-apply.c:243
+#: plug-ins/map-object/map-object-apply.c:272
+msgid "Map to box"
+msgstr "Преобразуване към кутия"
+
+#: plug-ins/map-object/map-object-apply.c:244
+#: plug-ins/map-object/map-object-apply.c:275
+msgid "Map to cylinder"
+msgstr "Преобразуване към цилиндър"
+
+#: plug-ins/map-object/map-object-main.c:121
+msgid "Map _Object..."
+msgstr "Преобразуване на _обект…"
+
+#: plug-ins/map-object/map-object-main.c:125
+msgid "Map the image to an object (plane, sphere, box or cylinder)"
+msgstr ""
+"Вид преобразуване на изображението (към равнина, сфера, кутия или цилиндър)"
+
+#: plug-ins/map-object/map-object-ui.c:219
+#: plug-ins/map-object/map-object-ui.c:1282
+msgid "_Box"
+msgstr "_Кутия"
+
+#: plug-ins/map-object/map-object-ui.c:236
+#: plug-ins/map-object/map-object-ui.c:1289
+msgid "C_ylinder"
+msgstr "_Цилиндър"
+
+#: plug-ins/map-object/map-object-ui.c:458
+msgid "Map to:"
+msgstr "Преобразуване към:"
+
+#: plug-ins/map-object/map-object-ui.c:462
+msgid "Plane"
+msgstr "Плоскост"
+
+#: plug-ins/map-object/map-object-ui.c:463
+msgid "Sphere"
+msgstr "Сфера"
+
+#: plug-ins/map-object/map-object-ui.c:464
+msgid "Box"
+msgstr "Кутия"
+
+#: plug-ins/map-object/map-object-ui.c:475
+msgid "Type of object to map to"
+msgstr "Към какъв вид обекта да се преобразува"
+
+#: plug-ins/map-object/map-object-ui.c:477
+msgid "Transparent background"
+msgstr "Прозрачен фон"
+
+#: plug-ins/map-object/map-object-ui.c:488
+msgid "Make image transparent outside object"
+msgstr "Прозрачно изображение извън обекта"
+
+#: plug-ins/map-object/map-object-ui.c:490
+msgid "Tile source image"
+msgstr "Повторение на изходното изображение като плочка"
+
+#: plug-ins/map-object/map-object-ui.c:501
+msgid "Tile source image: useful for infinite planes"
+msgstr ""
+"Повторение на изходното изображение като плочка: полезно за безкрайни равнини"
+
+#: plug-ins/map-object/map-object-ui.c:504
+msgid "Create new image"
+msgstr "Създаване на ново изображение"
+
+#: plug-ins/map-object/map-object-ui.c:517
+msgid "Create new layer"
+msgstr "Създаване на нов слой"
+
+#: plug-ins/map-object/map-object-ui.c:528
+msgid "Create a new layer when applying filter"
+msgstr "Създаване на нов слой с прилагането на филтъра"
+
+#: plug-ins/map-object/map-object-ui.c:536
+msgid "Enable _antialiasing"
+msgstr "Включване на _заглаждането"
+
+#: plug-ins/map-object/map-object-ui.c:547
+msgid "Enable/disable jagged edges removal (antialiasing)"
+msgstr "Включване/Изключване на заглаждането на ръбове"
+
+#: plug-ins/map-object/map-object-ui.c:560
+msgid "_Depth:"
+msgstr "_Дълбочина:"
+
+#: plug-ins/map-object/map-object-ui.c:561
+msgid "Antialiasing quality. Higher is better, but slower"
+msgstr "Качество на заглаждането. По-високо е по-добре, но по-бавно"
+
+#: plug-ins/map-object/map-object-ui.c:580
+msgid "Stop when pixel differences are smaller than this value"
+msgstr "Спиране, когато разликата между пикселите е по-малка от тази стойност"
+
+#: plug-ins/map-object/map-object-ui.c:616
+msgid "Point light"
+msgstr "Точкова светлина"
+
+#: plug-ins/map-object/map-object-ui.c:617
+msgid "Directional light"
+msgstr "Насочена светлина"
+
+#: plug-ins/map-object/map-object-ui.c:618
+msgid "No light"
+msgstr "Без светлина"
+
+#: plug-ins/map-object/map-object-ui.c:623
+msgid "Lightsource type:"
+msgstr "Вид светлинен източник:"
+
+#: plug-ins/map-object/map-object-ui.c:637
+msgid "Lightsource color:"
+msgstr "Цвят на светлинния източник:"
+
+#: plug-ins/map-object/map-object-ui.c:702
+msgid "Direction Vector"
+msgstr "Вектор на посока"
+
+#: plug-ins/map-object/map-object-ui.c:778
+msgid "Intensity Levels"
+msgstr "Нива на интензитет"
+
+#: plug-ins/map-object/map-object-ui.c:798
+msgid "Ambient:"
+msgstr "Обкръжение:"
+
+#: plug-ins/map-object/map-object-ui.c:825
+#: plug-ins/map-object/map-object-ui.c:867
+msgid "Diffuse:"
+msgstr "Разсейване:"
+
+#: plug-ins/map-object/map-object-ui.c:847
+msgid "Reflectivity"
+msgstr "Отражаемост"
+
+#: plug-ins/map-object/map-object-ui.c:881
+msgid "Higher values makes the object reflect more light (appear lighter)"
+msgstr ""
+"По-високи стойности карат обекта да отразява повече светлина (изглежда по-"
+"светъл)"
+
+#: plug-ins/map-object/map-object-ui.c:894
+msgid "Specular:"
+msgstr "Фонова:"
+
+#: plug-ins/map-object/map-object-ui.c:921
+msgid "Highlight:"
+msgstr "Светли петна:"
+
+#: plug-ins/map-object/map-object-ui.c:978
+msgid "Object X position in XYZ space"
+msgstr "Позиция на обекта по хоризонтал в пространството"
+
+#: plug-ins/map-object/map-object-ui.c:990
+msgid "Object Y position in XYZ space"
+msgstr "Позиция на обекта по вертикал в пространството"
+
+#: plug-ins/map-object/map-object-ui.c:1002
+msgid "Object Z position in XYZ space"
+msgstr "Позиция на обекта в дълбочина в пространството"
+
+#: plug-ins/map-object/map-object-ui.c:1025
+msgid "Rotation angle about X axis"
+msgstr "Завъртане по хоризонтал"
+
+#: plug-ins/map-object/map-object-ui.c:1036
+msgid "Rotation angle about Y axis"
+msgstr "Завъртане по вертикал"
+
+#: plug-ins/map-object/map-object-ui.c:1047
+msgid "Rotation angle about Z axis"
+msgstr "Завъртане в дълбочина"
+
+#: plug-ins/map-object/map-object-ui.c:1076
+msgid "Front:"
+msgstr "Отпред:"
+
+#: plug-ins/map-object/map-object-ui.c:1076
+msgid "Back:"
+msgstr "Отзад:"
+
+#: plug-ins/map-object/map-object-ui.c:1084
+msgid "Map Images to Box Faces"
+msgstr "Разполагане на изображенията по стените на кутията"
+
+#: plug-ins/map-object/map-object-ui.c:1123
+msgid "X scale (size)"
+msgstr "Мащабиране по хоризонтал (размер)"
+
+#: plug-ins/map-object/map-object-ui.c:1135
+msgid "Y scale (size)"
+msgstr "Мащабиране по вертикал (размер)"
+
+#: plug-ins/map-object/map-object-ui.c:1147
+msgid "Z scale (size)"
+msgstr "Мащабиране в дълбочина (размер)"
+
+#: plug-ins/map-object/map-object-ui.c:1173
+#: plug-ins/print/print-page-layout.c:447
+msgid "_Top:"
+msgstr "_Горе:"
+
+#: plug-ins/map-object/map-object-ui.c:1173
+#: plug-ins/print/print-page-layout.c:468
+msgid "_Bottom:"
+msgstr "_Долу:"
+
+#: plug-ins/map-object/map-object-ui.c:1178
+msgid "Images for the Cap Faces"
+msgstr "Изображения за лицата на капаците"
+
+#: plug-ins/map-object/map-object-ui.c:1207
+#: plug-ins/print/print-page-layout.c:253
+msgid "Size"
+msgstr "Размер"
+
+#: plug-ins/map-object/map-object-ui.c:1217
+msgid "R_adius:"
+msgstr "_Радиус:"
+
+#: plug-ins/map-object/map-object-ui.c:1218
+msgid "Cylinder radius"
+msgstr "Радиус на цилиндъра"
+
+#: plug-ins/map-object/map-object-ui.c:1229
+msgid "L_ength:"
+msgstr "_Дължина:"
+
+#: plug-ins/map-object/map-object-ui.c:1230
+msgid "Cylinder length"
+msgstr "Дължина на цилиндъра"
+
+#: plug-ins/map-object/map-object-ui.c:1263
+msgid "O_ptions"
+msgstr "_Настройки"
+
+#: plug-ins/map-object/map-object-ui.c:1275
+msgid "O_rientation"
+msgstr "_Ориентация"
+
+#: plug-ins/map-object/map-object-ui.c:1313
+msgid "Map to Object"
+msgstr "Преобразуване към обект"
+
+#: plug-ins/map-object/map-object-ui.c:1370
+msgid "_Preview!"
+msgstr "_Предварителен преглед!"
+
+#: plug-ins/map-object/map-object-ui.c:1400
+msgid "Show _wireframe"
+msgstr "Показване на _скелета"
+
+#: plug-ins/map-object/map-object-ui.c:1409
+msgid "Update preview _live"
+msgstr "_Обновяване на предварителния преглед"
+
+#: plug-ins/common/cml-explorer.c:303 plug-ins/common/cml-explorer.c:311
+#: plug-ins/common/decompose.c:204 plug-ins/gimpressionist/orientation.c:148
+#: plug-ins/gimpressionist/size.c:155 plug-ins/metadata/metadata-viewer.c:317
+#: plug-ins/metadata/metadata-viewer.c:355
+#: plug-ins/metadata/metadata-viewer.c:393
+msgid "Value"
+msgstr "Стойност"
 
 #: plug-ins/common/cml-explorer.c:130
 msgid "Keep image's values"
@@ -382,38 +1387,6 @@ msgstr "Зададена начална стойност"
 msgid "Random Seed"
 msgstr "Случайна начална стойност"
 
-#. The Load button
-#: plug-ins/common/cml-explorer.c:1425 plug-ins/common/cml-explorer.c:2248
-#: plug-ins/common/curve-bend.c:1481 plug-ins/common/curve-bend.c:1996
-#: plug-ins/common/file-cel.c:1002 plug-ins/common/qbist.c:849
-#: plug-ins/common/qbist.c:1032 plug-ins/common/sphere-designer.c:2290
-#: plug-ins/common/sphere-designer.c:2681 plug-ins/flame/flame.c:542
-#: plug-ins/flame/flame.c:1104
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:801
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1632
-#: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:955
-#: plug-ins/ifs-compose/ifs-compose.c:2642 plug-ins/imagemap/imap_browse.c:81
-#: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:608
-#: plug-ins/lighting/lighting-ui.c:1308
-msgid "_Open"
-msgstr "_Отваряне"
-
-#. The Save button
-#: plug-ins/common/cml-explorer.c:1433 plug-ins/common/cml-explorer.c:2115
-#: plug-ins/common/curve-bend.c:1493 plug-ins/common/curve-bend.c:2031
-#: plug-ins/common/file-pdf-save.c:1112 plug-ins/common/qbist.c:891
-#: plug-ins/common/qbist.c:1040 plug-ins/common/sphere-designer.c:2290
-#: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:542
-#: plug-ins/flame/flame.c:1112
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:818
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1670
-#: plug-ins/gfig/gfig-dialog.c:832 plug-ins/gimpressionist/brush.c:271
-#: plug-ins/ifs-compose/ifs-compose.c:956
-#: plug-ins/ifs-compose/ifs-compose.c:2605 plug-ins/imagemap/imap_file.c:129
-#: plug-ins/lighting/lighting-ui.c:601 plug-ins/lighting/lighting-ui.c:1164
-msgid "_Save"
-msgstr "_Запазване"
-
 #: plug-ins/common/cml-explorer.c:1452 plug-ins/common/van-gogh-lic.c:736
 msgid "_Hue"
 msgstr "_Нюанс"
@@ -579,26 +1552,6 @@ msgstr "Внимание: каналите източник и цел са ед�
 msgid "Save CML Explorer Parameters"
 msgstr "Запазване на параметрите за CML"
 
-#: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
-#: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:876
-#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1229
-#: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
-#: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
-#: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1235
-#: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
-#: plug-ins/file-bmp/bmp-save.c:341 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:428
-#: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
-#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
-#: plug-ins/file-tiff/file-tiff-save.c:1084
-#: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
-#: plug-ins/gfig/gfig.c:1040 plug-ins/ifs-compose/ifs-compose.c:2464
-#: plug-ins/lighting/lighting-ui.c:1233
-#, c-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "Не може да се отвори „%s“ за записване: %s"
-
 #: plug-ins/common/cml-explorer.c:2221
 #, c-format
 msgid "Parameters were saved to '%s'"
@@ -607,38 +1560,6 @@ msgstr "Параметрите са запазени в „%s“"
 #: plug-ins/common/cml-explorer.c:2243
 msgid "Load CML Explorer Parameters"
 msgstr "Зареждане параметри на CML"
-
-#: plug-ins/common/cml-explorer.c:2339 plug-ins/common/curve-bend.c:890
-#: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
-#: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
-#: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-iff.c:222
-#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:523
-#: plug-ins/common/file-pcx.c:566 plug-ins/common/file-png.c:673
-#: plug-ins/common/file-ps.c:1126 plug-ins/common/file-ps.c:3635
-#: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
-#: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
-#: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:455
-#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:759
-#: plug-ins/common/file-tga.c:445 plug-ins/common/file-wbmp.c:184
-#: plug-ins/common/file-xbm.c:750 plug-ins/common/file-xmc.c:658
-#: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
-#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
-#: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
-#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:459
-#: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
-#: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
-#: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
-#: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:614
-#: plug-ins/file-psd/psd-load.c:168 plug-ins/file-psd/psd-load.c:173
-#: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
-#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1855
-#: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:670
-#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
-#: plug-ins/lighting/lighting-ui.c:1377
-#, c-format
-msgid "Could not open '%s' for reading: %s"
-msgstr "Не може да се отвори „%s“ за четене: %s"
 
 #: plug-ins/common/cml-explorer.c:2361
 msgid "Error: it's not CML parameter file."
@@ -688,12 +1609,6 @@ msgstr "Име"
 #: plug-ins/metadata/metadata-editor.c:5300
 msgid "_Import"
 msgstr "_Внасяне"
-
-#: plug-ins/gfig/gfig-dialog.c:1458
-#: plug-ins/gradient-flare/gradient-flare.c:749
-#: plug-ins/metadata/metadata-tags.c:238
-msgid "Normal"
-msgstr "Нормално"
 
 #: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1360
 msgid "Select:"
@@ -1623,11 +2538,6 @@ msgstr "_Вертикална база:"
 msgid "_Grid"
 msgstr "_Мрежа"
 
-#: plug-ins/common/align-layers.c:223 plug-ins/common/grid.c:757
-#: plug-ins/gfig/gfig-dialog.c:1360 plug-ins/imagemap/imap_main.c:1923
-msgid "Grid"
-msgstr "Мрежа"
-
 #: plug-ins/common/align-layers.c:229
 #, fuzzy
 #| msgid "_Ignore the bottom layer even if visible"
@@ -1825,34 +2735,6 @@ msgstr "Хоризонтално"
 #: plug-ins/common/blinds.c:295
 msgid "Vertical"
 msgstr "Вертикално"
-
-#.
-#. * Create the "background" layer to hold the image...
-#.
-#: plug-ins/common/blinds.c:301 plug-ins/common/compose.c:1129
-#: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
-#: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
-#: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
-#: plug-ins/common/file-iff.c:331 plug-ins/common/file-jp2-load.c:1317
-#: plug-ins/common/file-pcx.c:742 plug-ins/common/file-pcx.c:750
-#: plug-ins/common/file-pcx.c:758 plug-ins/common/file-pix.c:422
-#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:869
-#: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
-#: plug-ins/common/file-sunras.c:1080 plug-ins/common/file-tga.c:1114
-#: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:912
-#: plug-ins/common/film.c:812 plug-ins/common/smooth-palette.c:332
-#: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
-#: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
-#: plug-ins/file-fits/fits.c:542 plug-ins/file-jpeg/jpeg-load.c:231
-#: plug-ins/file-psd/psd-image-res-load.c:1082
-#: plug-ins/file-psd/psd-load.c:2634 plug-ins/file-sgi/sgi.c:475
-#: plug-ins/file-tiff/file-tiff-load.c:1534
-#: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1290
-#: plug-ins/gimpressionist/general.c:139
-#: plug-ins/map-object/map-object-apply.c:245
-#: plug-ins/screenshot/screenshot-win32.c:315 plug-ins/twain/twain.c:661
-msgid "Background"
-msgstr "Фон"
 
 #: plug-ins/common/border-average.c:139
 msgid "_Border Average..."
@@ -2367,11 +3249,6 @@ msgstr "_Предварителен преглед веднъж"
 msgid "Automatic pre_view"
 msgstr "_Автоматичен предварителен преглед"
 
-#. Options area, bottom of column
-#: plug-ins/common/curve-bend.c:1300 plug-ins/gfig/gfig-dialog.c:1215
-msgid "Options"
-msgstr "Настройки"
-
 #. Rotate spinbutton
 #: plug-ins/common/curve-bend.c:1314
 msgid "Rotat_e:"
@@ -2612,11 +3489,6 @@ msgstr "Магента"
 #: plug-ins/common/decompose.c:214
 msgid "Yellow"
 msgstr "Жълто"
-
-#: plug-ins/common/decompose.c:215 plug-ins/common/warp.c:617
-#: plug-ins/flame/flame.c:1223 plug-ins/gfig/gfig-dialog.c:1459
-msgid "Black"
-msgstr "Черно"
 
 #: plug-ins/common/decompose.c:282
 msgid "_Decompose..."
@@ -5453,10 +6325,6 @@ msgstr "Единица"
 msgid "_Keep aspect ratio"
 msgstr "_Запазване на пропорцията"
 
-#: plug-ins/common/file-ps.c:536 plug-ins/map-object/map-object-ui.c:1013
-msgid "Rotation"
-msgstr "Завъртане"
-
 #: plug-ins/common/file-ps.c:542
 #, fuzzy
 #| msgid "_PostScript level 2"
@@ -7823,11 +8691,6 @@ msgstr "Шум"
 msgid "Wood"
 msgstr "Дърво"
 
-#: plug-ins/common/sphere-designer.c:343 plug-ins/flame/flame.c:820
-#: plug-ins/gfig/gfig-dialog.c:399
-msgid "Spiral"
-msgstr "Спирала"
-
 #: plug-ins/common/sphere-designer.c:344
 msgid "Spots"
 msgstr "Петна"
@@ -7942,11 +8805,6 @@ msgstr "Сенки:"
 #: plug-ins/common/sphere-designer.c:2863
 msgid "Transformations"
 msgstr "Трансформации"
-
-#: plug-ins/common/sphere-designer.c:2877
-#: plug-ins/map-object/map-object-ui.c:1121
-msgid "Scale X:"
-msgstr "Мащабиране по хоризонтал:"
 
 #: plug-ins/common/sphere-designer.c:2885
 msgid "Scale Y:"
@@ -10786,10 +11644,6 @@ msgstr "Завихряне"
 msgid "Horseshoe"
 msgstr "Подкова"
 
-#: plug-ins/flame/flame.c:815 plug-ins/gfig/gfig-dialog.c:1441
-msgid "Polar"
-msgstr "Полярно"
-
 #: plug-ins/flame/flame.c:816
 msgid "Bent"
 msgstr "Привличане"
@@ -10869,10 +11723,6 @@ msgstr ""
 #: plug-ins/flame/flame.c:834
 msgid "Bubble"
 msgstr ""
-
-#: plug-ins/flame/flame.c:835 plug-ins/map-object/map-object-ui.c:465
-msgid "Cylinder"
-msgstr "Цилиндър"
 
 #: plug-ins/flame/flame.c:837
 #, fuzzy
@@ -10958,21 +11808,6 @@ msgstr "По _хоризонтал:"
 msgid "_Y:"
 msgstr "По _вертикал:"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:541
-#: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
-#: plug-ins/gradient-flare/gradient-flare.c:998
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-"Няма %s в gimprc:\n"
-"Трябва да въведете стойност като\n"
-"(%s „%s“)\n"
-"във файла %s."
-
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:557
 #, fuzzy
 #| msgid "_Fractal Explorer..."
@@ -11031,26 +11866,6 @@ msgstr "_Параметри"
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:717
 msgid "Fractal Parameters"
 msgstr "Параметри на фрактала"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:726
-#: plug-ins/map-object/map-object-ui.c:1078
-msgid "Left:"
-msgstr "Ляво:"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:735
-#: plug-ins/map-object/map-object-ui.c:1078
-msgid "Right:"
-msgstr "Дясно:"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:744
-#: plug-ins/map-object/map-object-ui.c:1077
-msgid "Top:"
-msgstr "Горе:"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:753
-#: plug-ins/map-object/map-object-ui.c:1077
-msgid "Bottom:"
-msgstr "Долу:"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:764
 msgid ""
@@ -11345,450 +12160,6 @@ msgstr "Обновяване на списъка"
 #: plug-ins/fractal-explorer/fractal-explorer.c:1283
 msgid "Add FractalExplorer Path"
 msgstr "Добавяне на нова папка"
-
-#: plug-ins/gfig/gfig-bezier.c:402
-msgid "Closed"
-msgstr "Затворено"
-
-#: plug-ins/gfig/gfig-bezier.c:407
-msgid "Close curve on completion"
-msgstr "Затваряне на кривата при завършване"
-
-#: plug-ins/gfig/gfig-bezier.c:412
-msgid "Show Line Frame"
-msgstr "Показване на линеен кадър"
-
-#: plug-ins/gfig/gfig-bezier.c:417
-msgid "Draws lines between the control points. Only during curve creation"
-msgstr ""
-"Рисува линии между контролни точки. Единствено по време на създаване на "
-"кривата."
-
-#. Start building the dialog up
-#: plug-ins/gfig/gfig-dialog.c:350
-msgid "Gfig"
-msgstr "Gfig"
-
-#: plug-ins/gfig/gfig-dialog.c:385
-msgid "Line"
-msgstr "Линия"
-
-#: plug-ins/gfig/gfig-dialog.c:385
-msgid "Create line"
-msgstr "Създаване на линия"
-
-#: plug-ins/gfig/gfig-dialog.c:387 plug-ins/gfig/gfig-dialog.c:1440
-#: plug-ins/imagemap/imap_main.c:1940
-msgid "Rectangle"
-msgstr "Правоъгълник"
-
-#: plug-ins/gfig/gfig-dialog.c:387
-msgid "Create rectangle"
-msgstr "Създаване на триъгълник"
-
-#: plug-ins/gfig/gfig-dialog.c:389
-#: plug-ins/gradient-flare/gradient-flare.c:4021
-#: plug-ins/imagemap/imap_main.c:1942
-msgid "Circle"
-msgstr "Кръг"
-
-#: plug-ins/gfig/gfig-dialog.c:389
-msgid "Create circle"
-msgstr "Създаване на кръг"
-
-#: plug-ins/gfig/gfig-dialog.c:391
-msgid "Ellipse"
-msgstr ""
-
-#: plug-ins/gfig/gfig-dialog.c:391
-msgid "Create ellipse"
-msgstr "Създаване на елипса"
-
-#: plug-ins/gfig/gfig-dialog.c:393
-msgid "Arc"
-msgstr ""
-
-#: plug-ins/gfig/gfig-dialog.c:393
-msgid "Create arc"
-msgstr "Създаване на дъга"
-
-#: plug-ins/gfig/gfig-dialog.c:395
-#: plug-ins/gradient-flare/gradient-flare.c:4038
-#: plug-ins/imagemap/imap_main.c:1944
-msgid "Polygon"
-msgstr "Полигон"
-
-#: plug-ins/gfig/gfig-dialog.c:395
-msgid "Create reg polygon"
-msgstr "Създаване на полигон"
-
-#: plug-ins/gfig/gfig-dialog.c:397
-msgid "Star"
-msgstr ""
-
-#: plug-ins/gfig/gfig-dialog.c:397
-msgid "Create star"
-msgstr "Създаване на звезда"
-
-#: plug-ins/gfig/gfig-dialog.c:399
-msgid "Create spiral"
-msgstr "Създаване на спирала"
-
-#: plug-ins/gfig/gfig-dialog.c:401
-msgid "Bezier"
-msgstr ""
-
-#: plug-ins/gfig/gfig-dialog.c:401
-msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr ""
-"Създаване на крива на Беазие. Shift + бутон завършва създаването на обекта."
-
-#: plug-ins/gfig/gfig-dialog.c:404
-#, fuzzy
-#| msgid "Move an object"
-msgid "Move Object"
-msgstr "Преместване на обект"
-
-#: plug-ins/gfig/gfig-dialog.c:404
-msgid "Move an object"
-msgstr "Преместване на обект"
-
-#: plug-ins/gfig/gfig-dialog.c:406
-#, fuzzy
-#| msgid "Move Down"
-msgid "Move Point"
-msgstr "Преместване надолу"
-
-#: plug-ins/gfig/gfig-dialog.c:406
-msgid "Move a single point"
-msgstr "Преместване на отделна точка"
-
-#: plug-ins/gfig/gfig-dialog.c:408 plug-ins/gfig/gfig-dialog.c:1293
-#: plug-ins/imagemap/imap_cmd_copy.c:53
-#: plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: plug-ins/imagemap/imap_main.c:1905
-msgid "Copy"
-msgstr "Копиране"
-
-#: plug-ins/gfig/gfig-dialog.c:408
-msgid "Copy an object"
-msgstr "Копиране на обект"
-
-#: plug-ins/gfig/gfig-dialog.c:410 plug-ins/ifs-compose/ifs-compose.c:1004
-#: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
-msgid "Delete"
-msgstr "Изтриване"
-
-#: plug-ins/gfig/gfig-dialog.c:410
-msgid "Delete an object"
-msgstr "Изтриване на обект"
-
-#: plug-ins/gfig/gfig-dialog.c:412 plug-ins/imagemap/imap_cmd_select.c:52
-msgid "Select"
-msgstr "Избиране"
-
-#: plug-ins/gfig/gfig-dialog.c:412
-msgid "Select an object"
-msgstr "Избиране на обект"
-
-#: plug-ins/gfig/gfig-dialog.c:415
-msgid "Raise"
-msgstr ""
-
-#: plug-ins/gfig/gfig-dialog.c:415
-msgid "Raise selected object"
-msgstr "Повдигане на избрания обект"
-
-#: plug-ins/gfig/gfig-dialog.c:417
-#, fuzzy
-#| msgid "_Lower"
-msgid "Lower"
-msgstr "_Долно"
-
-#: plug-ins/gfig/gfig-dialog.c:417
-msgid "Lower selected object"
-msgstr "Снижаване на избрания обект"
-
-#: plug-ins/gfig/gfig-dialog.c:419
-msgid "To Top"
-msgstr ""
-
-#: plug-ins/gfig/gfig-dialog.c:419
-msgid "Raise selected object to top"
-msgstr "Повдигане на избрания обект отгоре"
-
-#: plug-ins/gfig/gfig-dialog.c:421
-#, fuzzy
-#| msgid "To _bottom"
-msgid "To Bottom"
-msgstr "На_долу"
-
-#: plug-ins/gfig/gfig-dialog.c:421
-msgid "Lower selected object to bottom"
-msgstr "Снижаване на избрания обект отдолу"
-
-#: plug-ins/gfig/gfig-dialog.c:424
-#, fuzzy
-#| msgid "Show previous object"
-msgid "Show Previous"
-msgstr "Показване на предишния обект"
-
-#: plug-ins/gfig/gfig-dialog.c:424
-msgid "Show previous object"
-msgstr "Показване на предишния обект"
-
-#: plug-ins/gfig/gfig-dialog.c:426
-#, fuzzy
-#| msgid "Show next object"
-msgid "Show Next"
-msgstr "Показване на следващия обект"
-
-#: plug-ins/gfig/gfig-dialog.c:426
-msgid "Show next object"
-msgstr "Показване на следващия обект"
-
-#: plug-ins/gfig/gfig-dialog.c:428
-#, fuzzy
-#| msgid "Show color"
-msgid "Show All"
-msgstr "Показване на цвят"
-
-#: plug-ins/gfig/gfig-dialog.c:428
-msgid "Show all objects"
-msgstr "Показване на всички обекти"
-
-#. Tool options notebook
-#: plug-ins/gfig/gfig-dialog.c:456
-msgid "Tool Options"
-msgstr "Настройки на инструмента"
-
-#: plug-ins/gfig/gfig-dialog.c:473
-msgid "_Stroke"
-msgstr "_Черта"
-
-#. Fill frame on right side
-#: plug-ins/gfig/gfig-dialog.c:519
-msgid "Fill"
-msgstr "Запълване"
-
-#: plug-ins/gfig/gfig-dialog.c:533
-msgid "No fill"
-msgstr "Без запълване"
-
-#: plug-ins/gfig/gfig-dialog.c:534
-msgid "Color fill"
-msgstr "Запълване с цвят"
-
-#: plug-ins/gfig/gfig-dialog.c:535
-msgid "Pattern fill"
-msgstr "Запълване със шарка"
-
-#: plug-ins/gfig/gfig-dialog.c:536
-msgid "Shape gradient"
-msgstr "Преливка по форма"
-
-#: plug-ins/gfig/gfig-dialog.c:537
-msgid "Vertical gradient"
-msgstr "Вертикална преливка"
-
-#: plug-ins/gfig/gfig-dialog.c:538
-msgid "Horizontal gradient"
-msgstr "Хоризонтална преливка"
-
-#. "show image" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:600
-msgid "Show image"
-msgstr "Показване на изображение"
-
-#. "snap to grid" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:613
-#, fuzzy
-#| msgid "Snap to grid"
-msgctxt "checkbutton"
-msgid "Snap to grid"
-msgstr "Прилепване към мрежата"
-
-#. "show grid" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:622
-msgid "Show grid"
-msgstr "Зареждане на мрежа"
-
-#: plug-ins/gfig/gfig-dialog.c:777
-msgid "Load Gfig Object Collection"
-msgstr "Зареждане колекция с мрежови обекти"
-
-#: plug-ins/gfig/gfig-dialog.c:827
-msgid "Save Gfig Drawing"
-msgstr "Запазване на Gfig рисунката"
-
-#: plug-ins/gfig/gfig-dialog.c:1002
-msgid "First Gfig"
-msgstr "Първи Gfig"
-
-#: plug-ins/gfig/gfig-dialog.c:1021
-msgid "This tool has no options"
-msgstr "Този инструмент няма настройки"
-
-#. Put buttons in
-#: plug-ins/gfig/gfig-dialog.c:1237
-msgid "Show position"
-msgstr "Показване на позиция"
-
-#: plug-ins/gfig/gfig-dialog.c:1249
-msgid "Show control points"
-msgstr "Показване на контролни точки"
-
-#: plug-ins/gfig/gfig-dialog.c:1265
-msgid "Antialiasing"
-msgstr "Заглаждане"
-
-#: plug-ins/gfig/gfig-dialog.c:1282
-msgid "Max undo:"
-msgstr "Максимално отменяне:"
-
-#: plug-ins/gfig/gfig-dialog.c:1289 plug-ins/gimpressionist/general.c:184
-msgid "Transparent"
-msgstr "Прозрачно"
-
-#: plug-ins/gfig/gfig-dialog.c:1291
-msgid "Foreground"
-msgstr "Цвят за рисуване"
-
-#: plug-ins/gfig/gfig-dialog.c:1292 plug-ins/gfig/gfig-dialog.c:1460
-msgid "White"
-msgstr "Бяло"
-
-#: plug-ins/gfig/gfig-dialog.c:1302
-msgid ""
-"Layer background type. Copy causes the previous layer to be copied before "
-"the draw is performed."
-msgstr ""
-"Слой от фонов тип. Копирането изисква първо да бъде копиран предишния слой."
-
-#: plug-ins/gfig/gfig-dialog.c:1308
-msgid "Background:"
-msgstr "Фон:"
-
-#: plug-ins/gfig/gfig-dialog.c:1311
-msgid "Feather"
-msgstr "Смесване"
-
-#: plug-ins/gfig/gfig-dialog.c:1333
-msgid "Radius:"
-msgstr "Радиус:"
-
-#: plug-ins/gfig/gfig-dialog.c:1391
-msgid "Grid spacing:"
-msgstr "Разстояния в мрежата:"
-
-#: plug-ins/gfig/gfig-dialog.c:1407
-msgid "Polar grid sectors desired:"
-msgstr "Желани сектори на полярната решетка:"
-
-#: plug-ins/gfig/gfig-dialog.c:1424
-msgid "Polar grid radius interval:"
-msgstr "Интервал на радиуса на полярната решетка:"
-
-#: plug-ins/gfig/gfig-dialog.c:1442
-msgid "Isometric"
-msgstr "Изомертрично"
-
-#: plug-ins/gfig/gfig-dialog.c:1451
-msgid "Grid type:"
-msgstr "Тип на мрежата:"
-
-#: plug-ins/gfig/gfig-dialog.c:1461
-msgid "Grey"
-msgstr "Сиво"
-
-#: plug-ins/gfig/gfig-dialog.c:1462
-msgid "Darker"
-msgstr "По-тъмно"
-
-#: plug-ins/gfig/gfig-dialog.c:1463
-msgid "Lighter"
-msgstr "По-светло"
-
-#: plug-ins/gfig/gfig-dialog.c:1464
-msgid "Very dark"
-msgstr "Много тъмно"
-
-#: plug-ins/gfig/gfig-dialog.c:1473
-msgid "Grid color:"
-msgstr "Цвят на мрежата:"
-
-#: plug-ins/gfig/gfig-dialog.c:1698
-msgid "Sides:"
-msgstr "Страни"
-
-#: plug-ins/gfig/gfig-dialog.c:1707
-msgid "Right"
-msgstr "Дясно"
-
-#: plug-ins/gfig/gfig-dialog.c:1708
-msgid "Left"
-msgstr "Ляво"
-
-#: plug-ins/gfig/gfig-dialog.c:1718 plug-ins/gimpressionist/orientation.c:140
-msgid "Orientation:"
-msgstr "Ориентация:"
-
-#: plug-ins/gfig/gfig-dobject.c:581
-#, fuzzy
-#| msgid "Hey where has the object gone ?"
-msgid "Hey, where has the object gone?"
-msgstr "Къде отидоха обектите ?"
-
-#: plug-ins/gfig/gfig-dobject.c:926
-msgid "Error reading file"
-msgstr "Грешка при четене на файл"
-
-#: plug-ins/gfig/gfig-dobject.c:1024
-msgid "Editing read-only object - you will not be able to save it"
-msgstr "Редактиране на обект само за четене — няма да е възможно запазване"
-
-#: plug-ins/gfig/gfig-poly.c:51
-msgid "Regular Polygon Number of Sides"
-msgstr "Брой страни на обикновен полигон"
-
-#: plug-ins/gfig/gfig-preview.c:322
-msgid "Object Details"
-msgstr "Характеристики на обекта"
-
-#. Position labels
-#: plug-ins/gfig/gfig-preview.c:373
-msgid "XY position:"
-msgstr "Позиция:"
-
-#: plug-ins/gfig/gfig-spiral.c:55
-msgid "Spiral Number of Turns"
-msgstr "Брой кръгове на спиралата"
-
-#: plug-ins/gfig/gfig-star.c:52
-msgid "Star Number of Points"
-msgstr "Брой върхове на звездата"
-
-#: plug-ins/gfig/gfig.c:170
-msgid "_Gfig..."
-msgstr "_Gfig…"
-
-#: plug-ins/gfig/gfig.c:174
-msgid "Create geometric shapes"
-msgstr "Създаване на геометрични форми"
-
-#: plug-ins/gfig/gfig.c:976
-msgid ""
-"Error trying to save figure as a parasite: can't attach parasite to drawable."
-msgstr ""
-"Грешка при опит да се запази фигура като допълнение: не може да се прикрепи "
-"допълнение към рисуваемо."
-
-#: plug-ins/gfig/gfig.c:1006
-#, c-format
-msgid "Error trying to open temporary file '%s' for parasite loading: %s"
-msgstr ""
-"Грешка при опит за отваряне на временен файл „%s“ за зареждане на "
-"допълнение: %s"
 
 #: plug-ins/gimpressionist/brush.c:261
 msgid "Can only save drawables!"
@@ -12819,25 +13190,6 @@ msgstr "_IFS Фрактал…"
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Създаване на фрактал Iterated Function System (IFS)"
 
-#. X
-#: plug-ins/ifs-compose/ifs-compose.c:685 plug-ins/lighting/lighting-ui.c:546
-#: plug-ins/map-object/map-object-ui.c:663
-#: plug-ins/map-object/map-object-ui.c:717
-#: plug-ins/map-object/map-object-ui.c:977
-#: plug-ins/map-object/map-object-ui.c:1023
-msgid "X:"
-msgstr "Хоризонтално:"
-
-#. Y
-#: plug-ins/ifs-compose/ifs-compose.c:699 plug-ins/lighting/lighting-ui.c:561
-#: plug-ins/map-object/map-object-ui.c:677
-#: plug-ins/map-object/map-object-ui.c:730
-#: plug-ins/map-object/map-object-ui.c:989
-#: plug-ins/map-object/map-object-ui.c:1034
-#: plug-ins/map-object/map-object-ui.c:1133
-msgid "Y:"
-msgstr "Вертикално:"
-
 #. Asym
 #: plug-ins/ifs-compose/ifs-compose.c:741
 msgid "Asymmetry:"
@@ -13559,11 +13911,6 @@ msgstr "Повторения:"
 msgid "Co_ntiguous Region"
 msgstr "_Продължаваща област"
 
-#: plug-ins/imagemap/imap_preferences.c:476
-#: plug-ins/map-object/map-object-ui.c:572
-msgid "_Threshold:"
-msgstr "_Праг:"
-
 #: plug-ins/imagemap/imap_preferences.c:478
 msgid "_Automatically convert"
 msgstr "_Автоматично конвертиране"
@@ -13648,11 +13995,6 @@ msgstr "_Светлинни ефекти…"
 msgid "Apply various lighting effects to an image"
 msgstr "Прилагане на различни светлинни ефекти върху изображение"
 
-#. General options
-#: plug-ins/lighting/lighting-ui.c:311 plug-ins/map-object/map-object-ui.c:446
-msgid "General Options"
-msgstr "Общи настройки"
-
 #: plug-ins/lighting/lighting-ui.c:319
 msgid "T_ransparent background"
 msgstr "_Прозрачен фон"
@@ -13665,10 +14007,6 @@ msgstr "Прозрачно изображение-цел, където висо�
 msgid "Cre_ate new image"
 msgstr "_Създаване на ново изображение"
 
-#: plug-ins/lighting/lighting-ui.c:342 plug-ins/map-object/map-object-ui.c:515
-msgid "Create a new image when applying filter"
-msgstr "Създаване на ново изображение с прилагането на филтъра"
-
 #: plug-ins/lighting/lighting-ui.c:344
 msgid "High _quality preview"
 msgstr "_Висококачествен предварителен преглед"
@@ -13680,10 +14018,6 @@ msgstr "Включване/изключване на висококачеств�
 #: plug-ins/lighting/lighting-ui.c:356
 msgid "Distance:"
 msgstr "Разстояние:"
-
-#: plug-ins/lighting/lighting-ui.c:389 plug-ins/map-object/map-object-ui.c:606
-msgid "Light Settings"
-msgstr "Настройки на светлината"
 
 #: plug-ins/lighting/lighting-ui.c:399
 msgid "Light 1"
@@ -13728,18 +14062,6 @@ msgstr "Насочена"
 msgid "Point"
 msgstr "Точкова"
 
-#: plug-ins/lighting/lighting-ui.c:441 plug-ins/map-object/map-object-ui.c:630
-msgid "Type of light source to apply"
-msgstr "Тип на светлинния източник"
-
-#: plug-ins/lighting/lighting-ui.c:443 plug-ins/map-object/map-object-ui.c:632
-msgid "Select lightsource color"
-msgstr "Избор на цвят на светлинния източник"
-
-#: plug-ins/lighting/lighting-ui.c:458 plug-ins/map-object/map-object-ui.c:645
-msgid "Set light source color"
-msgstr "Задаване цвят на светлинния източник"
-
 #: plug-ins/lighting/lighting-ui.c:468
 msgid "_Intensity:"
 msgstr "_Интензитет:"
@@ -13748,54 +14070,13 @@ msgstr "_Интензитет:"
 msgid "Light intensity"
 msgstr "Интензитет на светлината"
 
-#: plug-ins/lighting/lighting-ui.c:479 plug-ins/map-object/map-object-ui.c:647
-#: plug-ins/map-object/map-object-ui.c:967
-#: plug-ins/print/print-page-layout.c:384
-msgid "Position"
-msgstr "Позиция"
-
-#: plug-ins/lighting/lighting-ui.c:499 plug-ins/map-object/map-object-ui.c:671
-msgid "Light source X position in XYZ space"
-msgstr ""
-"Местоположение на светлинния източник по хоризонтал в координатната система"
-
-#: plug-ins/lighting/lighting-ui.c:516 plug-ins/map-object/map-object-ui.c:685
-msgid "Light source Y position in XYZ space"
-msgstr ""
-"Местоположение на светлинния източник по вертикал в координатната система"
-
 #: plug-ins/lighting/lighting-ui.c:525
 msgid "_Z:"
 msgstr "_Дълбочина:"
 
-#: plug-ins/lighting/lighting-ui.c:533 plug-ins/map-object/map-object-ui.c:699
-msgid "Light source Z position in XYZ space"
-msgstr ""
-"Местоположение на светлинния източник по дълбочина в координатната система"
-
 #: plug-ins/lighting/lighting-ui.c:536
 msgid "Direction"
 msgstr "Посока"
-
-#: plug-ins/lighting/lighting-ui.c:554 plug-ins/map-object/map-object-ui.c:725
-msgid "Light source X direction in XYZ space"
-msgstr "Хоризонтална посока на светлинния източник в координатната система"
-
-#: plug-ins/lighting/lighting-ui.c:569 plug-ins/map-object/map-object-ui.c:738
-msgid "Light source Y direction in XYZ space"
-msgstr "Вертикална посока на светлинния източник в координатната система"
-
-#: plug-ins/lighting/lighting-ui.c:576 plug-ins/map-object/map-object-ui.c:691
-#: plug-ins/map-object/map-object-ui.c:743
-#: plug-ins/map-object/map-object-ui.c:1001
-#: plug-ins/map-object/map-object-ui.c:1045
-#: plug-ins/map-object/map-object-ui.c:1145
-msgid "Z:"
-msgstr "Дълбочина:"
-
-#: plug-ins/lighting/lighting-ui.c:584 plug-ins/map-object/map-object-ui.c:751
-msgid "Light source Z direction in XYZ space"
-msgstr "Дълбочинна посока на светлинния източник в координатната система"
 
 #: plug-ins/lighting/lighting-ui.c:587
 msgid "I_solate"
@@ -13813,33 +14094,17 @@ msgstr "Свойства на материала"
 msgid "_Glowing:"
 msgstr "_Светене:"
 
-#: plug-ins/lighting/lighting-ui.c:678 plug-ins/map-object/map-object-ui.c:812
-msgid "Amount of original color to show where no direct light falls"
-msgstr "Количество на оригиналния цвят, където не попада директна светлина"
-
 #: plug-ins/lighting/lighting-ui.c:691
 msgid "_Bright:"
 msgstr "_Осветеност:"
-
-#: plug-ins/lighting/lighting-ui.c:709 plug-ins/map-object/map-object-ui.c:839
-msgid "Intensity of original color when lit by a light source"
-msgstr "Интензитет на оригиналния цвят, където е осветен"
 
 #: plug-ins/lighting/lighting-ui.c:722
 msgid "_Shiny:"
 msgstr "_Блясък:"
 
-#: plug-ins/lighting/lighting-ui.c:740 plug-ins/map-object/map-object-ui.c:908
-msgid "Controls how intense the highlights will be"
-msgstr "Контролира колко да са интензивни светлите зони"
-
 #: plug-ins/lighting/lighting-ui.c:752
 msgid "_Polished:"
 msgstr "_Полираност:"
-
-#: plug-ins/lighting/lighting-ui.c:770 plug-ins/map-object/map-object-ui.c:935
-msgid "Higher values makes the highlights more focused"
-msgstr "Високи стойности правят осветените зони по-фокусирани"
 
 #. Metallic
 #: plug-ins/lighting/lighting-ui.c:779
@@ -13894,14 +14159,6 @@ msgstr "Изображение на средата, което ще се изп�
 msgid "Op_tions"
 msgstr "_Настройки"
 
-#: plug-ins/lighting/lighting-ui.c:969 plug-ins/map-object/map-object-ui.c:1267
-msgid "_Light"
-msgstr "_Светлина"
-
-#: plug-ins/lighting/lighting-ui.c:973 plug-ins/map-object/map-object-ui.c:1271
-msgid "_Material"
-msgstr "_Материал"
-
 #: plug-ins/lighting/lighting-ui.c:977
 msgid "_Bump Map"
 msgstr "_Релеф"
@@ -13909,11 +14166,6 @@ msgstr "_Релеф"
 #: plug-ins/lighting/lighting-ui.c:981
 msgid "_Environment Map"
 msgstr "_Карта на средата"
-
-#: plug-ins/lighting/lighting-ui.c:1100
-#: plug-ins/map-object/map-object-ui.c:1382
-msgid "Recompute preview image"
-msgstr "Преизчисляване на предварителния преглед"
 
 #: plug-ins/lighting/lighting-ui.c:1102
 msgid "I_nteractive"
@@ -13930,283 +14182,6 @@ msgstr "Запазване настройките на осветлението"
 #: plug-ins/lighting/lighting-ui.c:1303
 msgid "Load Lighting Preset"
 msgstr "Зареждане настройки на осветлението"
-
-#: plug-ins/map-object/map-object-apply.c:241
-#: plug-ins/map-object/map-object-apply.c:266
-msgid "Map to plane"
-msgstr "Карта към плоскост"
-
-#: plug-ins/map-object/map-object-apply.c:242
-#: plug-ins/map-object/map-object-apply.c:269
-msgid "Map to sphere"
-msgstr "Карта към сфера"
-
-#: plug-ins/map-object/map-object-apply.c:243
-#: plug-ins/map-object/map-object-apply.c:272
-msgid "Map to box"
-msgstr "Карта към кутия"
-
-#: plug-ins/map-object/map-object-apply.c:244
-#: plug-ins/map-object/map-object-apply.c:275
-msgid "Map to cylinder"
-msgstr "Карта към цилиндър"
-
-#: plug-ins/map-object/map-object-main.c:121
-msgid "Map _Object..."
-msgstr "Обвиване на _обект…"
-
-#: plug-ins/map-object/map-object-main.c:125
-msgid "Map the image to an object (plane, sphere, box or cylinder)"
-msgstr ""
-"Картиране на изображението по обекта (равнина, сфера, кутия или цилиндър)"
-
-#: plug-ins/map-object/map-object-ui.c:219
-#: plug-ins/map-object/map-object-ui.c:1282
-msgid "_Box"
-msgstr "_Кутия"
-
-#: plug-ins/map-object/map-object-ui.c:236
-#: plug-ins/map-object/map-object-ui.c:1289
-msgid "C_ylinder"
-msgstr "_Цилиндър"
-
-#: plug-ins/map-object/map-object-ui.c:458
-msgid "Map to:"
-msgstr "Обвиване на:"
-
-#: plug-ins/map-object/map-object-ui.c:462
-msgid "Plane"
-msgstr "Плоскост"
-
-#: plug-ins/map-object/map-object-ui.c:463
-msgid "Sphere"
-msgstr "Сфера"
-
-#: plug-ins/map-object/map-object-ui.c:464
-msgid "Box"
-msgstr "Кутия"
-
-#: plug-ins/map-object/map-object-ui.c:475
-msgid "Type of object to map to"
-msgstr "Тип на обекта за обвиване"
-
-#: plug-ins/map-object/map-object-ui.c:477
-msgid "Transparent background"
-msgstr "Прозрачен фон"
-
-#: plug-ins/map-object/map-object-ui.c:488
-msgid "Make image transparent outside object"
-msgstr "Прозрачно изображение извън обекта"
-
-#: plug-ins/map-object/map-object-ui.c:490
-msgid "Tile source image"
-msgstr "Повторение на изходното изображение"
-
-#: plug-ins/map-object/map-object-ui.c:501
-msgid "Tile source image: useful for infinite planes"
-msgstr "Повторение на изходното изображение: полезно за безкрайни равнини"
-
-#: plug-ins/map-object/map-object-ui.c:504
-msgid "Create new image"
-msgstr "Създаване на ново изображение"
-
-#: plug-ins/map-object/map-object-ui.c:517
-#, fuzzy
-#| msgid "Create _new layer"
-msgid "Create new layer"
-msgstr "Създаване на _нов слой"
-
-#: plug-ins/map-object/map-object-ui.c:528
-#, fuzzy
-#| msgid "Create a new image when applying filter"
-msgid "Create a new layer when applying filter"
-msgstr "Създаване на ново изображение с прилагането на филтъра"
-
-#: plug-ins/map-object/map-object-ui.c:536
-msgid "Enable _antialiasing"
-msgstr "Включване на _заглаждането"
-
-#: plug-ins/map-object/map-object-ui.c:547
-msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr "Включване/изключване премахването на назъбените ръбове (заглаждане)"
-
-#: plug-ins/map-object/map-object-ui.c:560
-msgid "_Depth:"
-msgstr "_Дълбочина:"
-
-#: plug-ins/map-object/map-object-ui.c:561
-msgid "Antialiasing quality. Higher is better, but slower"
-msgstr "Качество на заглаждането. По-високо е по-добре, но по-бавно"
-
-#: plug-ins/map-object/map-object-ui.c:580
-msgid "Stop when pixel differences are smaller than this value"
-msgstr "Спиране, когато разликата между пикселите е по-малка от тази стойност"
-
-#: plug-ins/map-object/map-object-ui.c:616
-msgid "Point light"
-msgstr "Точкова светлина"
-
-#: plug-ins/map-object/map-object-ui.c:617
-msgid "Directional light"
-msgstr "Насочена светлина"
-
-#: plug-ins/map-object/map-object-ui.c:618
-msgid "No light"
-msgstr "Без светлина"
-
-#: plug-ins/map-object/map-object-ui.c:623
-msgid "Lightsource type:"
-msgstr "Тип на светлинния източник:"
-
-#: plug-ins/map-object/map-object-ui.c:637
-msgid "Lightsource color:"
-msgstr "Цвят на светлинния източник:"
-
-#: plug-ins/map-object/map-object-ui.c:702
-msgid "Direction Vector"
-msgstr "Вектор на посока"
-
-#: plug-ins/map-object/map-object-ui.c:778
-msgid "Intensity Levels"
-msgstr "Нива на интензитет"
-
-#: plug-ins/map-object/map-object-ui.c:798
-msgid "Ambient:"
-msgstr "Обкръжение:"
-
-#: plug-ins/map-object/map-object-ui.c:825
-#: plug-ins/map-object/map-object-ui.c:867
-msgid "Diffuse:"
-msgstr "Разсейване:"
-
-#: plug-ins/map-object/map-object-ui.c:847
-msgid "Reflectivity"
-msgstr "Отражаемост"
-
-#: plug-ins/map-object/map-object-ui.c:881
-msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr ""
-"По-високи стойности карат обекта да отразява повече светлина (изглежда по-"
-"светъл)"
-
-#: plug-ins/map-object/map-object-ui.c:894
-msgid "Specular:"
-msgstr "Фонова:"
-
-#: plug-ins/map-object/map-object-ui.c:921
-msgid "Highlight:"
-msgstr "Светли петна:"
-
-#: plug-ins/map-object/map-object-ui.c:978
-msgid "Object X position in XYZ space"
-msgstr "Позиция на обекта по хоризонтал в пространството"
-
-#: plug-ins/map-object/map-object-ui.c:990
-msgid "Object Y position in XYZ space"
-msgstr "Позиция на обекта по вертикал в пространството"
-
-#: plug-ins/map-object/map-object-ui.c:1002
-msgid "Object Z position in XYZ space"
-msgstr "Позиция на обекта в дълбочина в пространството"
-
-#: plug-ins/map-object/map-object-ui.c:1025
-msgid "Rotation angle about X axis"
-msgstr "Завъртане по хоризонтал"
-
-#: plug-ins/map-object/map-object-ui.c:1036
-msgid "Rotation angle about Y axis"
-msgstr "Завъртане по вертикал"
-
-#: plug-ins/map-object/map-object-ui.c:1047
-msgid "Rotation angle about Z axis"
-msgstr "Завъртане в дълбочина"
-
-#: plug-ins/map-object/map-object-ui.c:1076
-msgid "Front:"
-msgstr "Отпред:"
-
-#: plug-ins/map-object/map-object-ui.c:1076
-msgid "Back:"
-msgstr "Отзад:"
-
-#: plug-ins/map-object/map-object-ui.c:1084
-msgid "Map Images to Box Faces"
-msgstr "Разполагане на изображенията по стените на кутията"
-
-#: plug-ins/map-object/map-object-ui.c:1123
-msgid "X scale (size)"
-msgstr "Мащабиране по хоризонтал (размер)"
-
-#: plug-ins/map-object/map-object-ui.c:1135
-msgid "Y scale (size)"
-msgstr "Мащабиране по вертикал (размер)"
-
-#: plug-ins/map-object/map-object-ui.c:1147
-msgid "Z scale (size)"
-msgstr "Мащабиране в дълбочина (размер)"
-
-#: plug-ins/map-object/map-object-ui.c:1173
-#: plug-ins/print/print-page-layout.c:447
-msgid "_Top:"
-msgstr "_Горе:"
-
-#: plug-ins/map-object/map-object-ui.c:1173
-#: plug-ins/print/print-page-layout.c:468
-msgid "_Bottom:"
-msgstr "_Долу:"
-
-#: plug-ins/map-object/map-object-ui.c:1178
-msgid "Images for the Cap Faces"
-msgstr "Изображения за лицата на капаците"
-
-#: plug-ins/map-object/map-object-ui.c:1207
-#: plug-ins/print/print-page-layout.c:253
-msgid "Size"
-msgstr "Размер"
-
-#: plug-ins/map-object/map-object-ui.c:1217
-msgid "R_adius:"
-msgstr "_Радиус:"
-
-#: plug-ins/map-object/map-object-ui.c:1218
-msgid "Cylinder radius"
-msgstr "Радиус на цилиндъра"
-
-#: plug-ins/map-object/map-object-ui.c:1229
-msgid "L_ength:"
-msgstr "_Дължина:"
-
-#: plug-ins/map-object/map-object-ui.c:1230
-msgid "Cylinder length"
-msgstr "Дължина на цилиндъра"
-
-#: plug-ins/map-object/map-object-ui.c:1263
-msgid "O_ptions"
-msgstr "_Настройки"
-
-#: plug-ins/map-object/map-object-ui.c:1275
-msgid "O_rientation"
-msgstr "_Ориентация"
-
-#: plug-ins/map-object/map-object-ui.c:1313
-msgid "Map to Object"
-msgstr "Обвиване на обекта"
-
-#: plug-ins/map-object/map-object-ui.c:1370
-msgid "_Preview!"
-msgstr "_Предварителен преглед!"
-
-#: plug-ins/map-object/map-object-ui.c:1400
-#, fuzzy
-#| msgid "Show preview _wireframe"
-msgid "Show _wireframe"
-msgstr "Показване _скелета на обекта"
-
-#: plug-ins/map-object/map-object-ui.c:1409
-#, fuzzy
-#| msgid "Recompute preview image"
-msgid "Update preview _live"
-msgstr "Преизчисляване на предварителния преглед"
 
 #: plug-ins/pagecurl/pagecurl.c:231
 msgid "_Pagecurl..."
