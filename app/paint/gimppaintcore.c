@@ -759,6 +759,98 @@ gimp_paint_core_get_show_all (GimpPaintCore *core)
 }
 
 void
+gimp_paint_core_expand_drawable (GimpPaintCore    *core,
+                                 GimpDrawable     *drawable,
+                                 GimpPaintOptions *options,
+                                 gint              x1,
+                                 gint              x2,
+                                 gint              y1,
+                                 gint              y2,
+                                 gint             *new_off_x,
+                                 gint             *new_off_y)
+{
+  gint           drawable_width, drawable_height;
+  gint           new_width, new_height;
+  gint           expand_amount;
+  GimpContext   *context       = GIMP_CONTEXT (options);
+  GimpFillType   fill_type     = GIMP_FILL_TRANSPARENT;
+  GeglBuffer    *undo_buffer;
+  GeglBuffer    *new_buffer;
+  const Babl    *format;
+
+  drawable_width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+  drawable_height = gimp_item_get_height (GIMP_ITEM (drawable));
+
+  new_width  = drawable_width;
+  new_height = drawable_height;
+  *new_off_x = 0;
+  *new_off_y = 0;
+
+  expand_amount = options->expand_amount;
+
+  if (!options->expand_use)
+    return;
+
+  if (x1 < 0)
+    {
+        new_width += expand_amount - x1;
+        *new_off_x += expand_amount - x1;
+    }
+  if (y1 < 0)
+    {
+        new_height += expand_amount - y1;
+        *new_off_y += expand_amount - y1;
+    }
+  if (x2 > drawable_width)
+    new_width += x2 - drawable_width + expand_amount;
+  if (y2 > drawable_height)
+    new_height += y2 - drawable_height + expand_amount;
+    
+
+  if (new_width != drawable_width   || *new_off_x ||
+      new_height != drawable_height || *new_off_y)
+    {
+      GIMP_ITEM_GET_CLASS (GIMP_ITEM (drawable))->resize (GIMP_ITEM (drawable),
+                                                          context,   fill_type,
+                                                          new_width, new_height,
+                                                          *new_off_x, *new_off_y);
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+
+      format     = gegl_buffer_get_format (core->canvas_buffer);
+      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, new_width, new_height),
+                                    format);
+      gimp_gegl_buffer_copy (
+        core->canvas_buffer,
+        GEGL_RECTANGLE (0, 0,
+                        gegl_buffer_get_width (core->canvas_buffer),
+                        gegl_buffer_get_height (core->canvas_buffer)),
+        GEGL_ABYSS_NONE,
+        new_buffer,
+        GEGL_RECTANGLE (*new_off_x, *new_off_y, 0, 0));
+      g_object_unref (core->canvas_buffer);
+      core->canvas_buffer = new_buffer;
+
+      undo_buffer = g_hash_table_lookup (core->undo_buffers, drawable);
+      g_object_ref (undo_buffer);
+
+      format     = gegl_buffer_get_format (undo_buffer);
+      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, new_width, new_height),
+                                    format);
+
+      gimp_gegl_buffer_copy (
+        undo_buffer,
+        GEGL_RECTANGLE (0, 0,
+                        gegl_buffer_get_width (undo_buffer),
+                        gegl_buffer_get_height (undo_buffer)),
+        GEGL_ABYSS_NONE,
+        new_buffer,
+        GEGL_RECTANGLE (*new_off_x, *new_off_y, 0, 0));
+      g_hash_table_insert (core->undo_buffers, drawable, new_buffer);
+      g_object_unref (undo_buffer);
+    }
+}
+
+void
 gimp_paint_core_set_current_coords (GimpPaintCore    *core,
                                     const GimpCoords *coords)
 {

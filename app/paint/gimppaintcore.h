@@ -153,6 +153,16 @@ void      gimp_paint_core_set_show_all              (GimpPaintCore    *core,
                                                      gboolean          show_all);
 gboolean  gimp_paint_core_get_show_all              (GimpPaintCore    *core);
 
+void      gimp_paint_core_expand_drawable           (GimpPaintCore    *paint_core,
+                                                     GimpDrawable     *drawable,
+                                                     GimpPaintOptions *paint_options,
+                                                     gint              x1,
+                                                     gint              x2,
+                                                     gint              y1,
+                                                     gint              y2,
+                                                     gint             *x,
+                                                     gint             *y);
+
 void      gimp_paint_core_set_current_coords        (GimpPaintCore    *core,
                                                      const GimpCoords *coords);
 void      gimp_paint_core_get_current_coords        (GimpPaintCore    *core,
