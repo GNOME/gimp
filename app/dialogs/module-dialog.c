@@ -257,8 +257,8 @@ dialog_select_callback (GtkListBox    *listbox,
 {
   guint                 i;
   GimpModule           *module;
-  const gchar          *location;
   const GimpModuleInfo *info;
+  const gchar          *location      = NULL;
   const gchar          *text[N_INFOS] = { NULL, };
   gboolean              show_error;
 
@@ -288,13 +288,11 @@ dialog_select_callback (GtkListBox    *listbox,
       text[INFO_VERSION]   = info->version;
       text[INFO_DATE]      = info->date;
       text[INFO_COPYRIGHT] = info->copyright;
-      text[INFO_LOCATION]  = gimp_module_is_on_disk (module) ?
-                             location : _("Only in memory");
+      text[INFO_LOCATION]  = location ? location : _("Only in memory");
     }
   else
     {
-      text[INFO_LOCATION]  = gimp_module_is_on_disk (module) ?
-                             location : _("No longer available");
+      text[INFO_LOCATION]  = location ? location : _("No longer available");
     }
 
   for (i = 0; i < N_INFOS; i++)
