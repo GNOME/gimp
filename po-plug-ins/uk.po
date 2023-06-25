@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-09 05:59+0000\n"
-"PO-Revision-Date: 2023-06-11 18:57+0300\n"
+"POT-Creation-Date: 2023-06-23 14:14+0000\n"
+"PO-Revision-Date: 2023-06-25 16:39+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -30,7 +30,7 @@ msgid "Exercise a goat in the C language"
 msgstr "Потренувати козу у мові Сі"
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
-#: plug-ins/common/border-average.c:195 plug-ins/common/checkerboard.c:184
+#: plug-ins/common/border-average.c:186 plug-ins/common/checkerboard.c:177
 #: plug-ins/common/cml-explorer.c:558 plug-ins/common/compose.c:557
 #: plug-ins/common/contrast-retinex.c:253 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:665 plug-ins/common/decompose.c:376
@@ -63,20 +63,18 @@ msgstr "Потренувати козу (Сі)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/border-average.c:432 plug-ins/common/busy-dialog.c:279
-#: plug-ins/common/checkerboard.c:495 plug-ins/common/cml-explorer.c:1348
+#: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1348
 #: plug-ins/common/cml-explorer.c:2114 plug-ins/common/cml-explorer.c:2247
 #: plug-ins/common/colormap-remap.c:704 plug-ins/common/compose.c:1183
 #: plug-ins/common/curve-bend.c:1203 plug-ins/common/curve-bend.c:1977
-#: plug-ins/common/curve-bend.c:2012 plug-ins/common/depth-merge.c:733
+#: plug-ins/common/curve-bend.c:2012 plug-ins/common/depth-merge.c:734
 #: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1163
 #: plug-ins/common/file-heif.c:2351 plug-ins/common/file-pdf-load.c:709
 #: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-svg.c:839
 #: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1323
-#: plug-ins/common/grid.c:761 plug-ins/common/mail.c:568
-#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
-#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
-#: plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/grid.c:761 plug-ins/common/qbist.c:848
+#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
+#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:439
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -160,10 +158,9 @@ msgstr "Потренувати козу (Javascript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/border-average.c:433 plug-ins/common/checkerboard.c:496
 #: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:705
 #: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1204
-#: plug-ins/common/depth-merge.c:734 plug-ins/common/file-heif.c:2352
+#: plug-ins/common/depth-merge.c:735 plug-ins/common/file-heif.c:2352
 #: plug-ins/common/file-pdf-load.c:710 plug-ins/common/file-svg.c:840
 #: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1324
 #: plug-ins/common/grid.c:762 plug-ins/common/qbist.c:945
@@ -508,7 +505,7 @@ msgstr "Вертикально"
 #: plug-ins/common/blinds.c:301 plug-ins/common/compose.c:1129
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
-#: plug-ins/common/file-gegl.c:466 plug-ins/common/file-gif-load.c:1097
+#: plug-ins/common/file-gegl.c:465 plug-ins/common/file-gif-load.c:1097
 #: plug-ins/common/file-iff.c:343 plug-ins/common/file-jp2-load.c:1317
 #: plug-ins/common/file-pcx.c:742 plug-ins/common/file-pcx.c:750
 #: plug-ins/common/file-pcx.c:758 plug-ins/common/file-pix.c:422
@@ -530,37 +527,60 @@ msgstr "Вертикально"
 msgid "Background"
 msgstr "Тло"
 
-#: plug-ins/common/border-average.c:139
+#: plug-ins/common/border-average.c:124
 msgid "_Border Average..."
 msgstr "_Середній колір рамки..."
 
-#: plug-ins/common/border-average.c:143
+#: plug-ins/common/border-average.c:128
 msgid "Set foreground to the average color of the image border"
 msgstr ""
-"Встановити колір переднього плану таким, як середнє значенню кольору межі "
+"Встановити колір переднього плану таким, як середнє значення кольору межі "
 "зображення"
 
-#: plug-ins/common/border-average.c:244 plug-ins/common/border-average.c:428
+#: plug-ins/common/border-average.c:137
+#| msgid "_Thickness:"
+msgid "_Thickness"
+msgstr "_Товщина"
+
+#: plug-ins/common/border-average.c:138
+msgid "Border size to take in count"
+msgstr "Розмір рамки, який слід врахувати"
+
+#: plug-ins/common/border-average.c:142
+msgid "Thickness unit of measure"
+msgstr "Одиниця вимірювання товщини"
+
+#: plug-ins/common/border-average.c:143
+msgid "Border size unit of measure"
+msgstr "Одиниця виміру розміру рамки"
+
+#: plug-ins/common/border-average.c:147
+#| msgid "_Bucket size:"
+msgid "Bucket Si_ze"
+msgstr "_Розмір відра"
+
+#: plug-ins/common/border-average.c:148
+msgid "Bits for bucket size (default=4: 16 Levels)"
+msgstr "Біти для розміру відра (типове значення=4: 16 рівнів)"
+
+#: plug-ins/common/border-average.c:153 plug-ins/common/border-average.c:154
+#| msgid "Set foreground to the average color of the image border"
+msgid "The average color of the specified border."
+msgstr "Середній колір вказаної рамки."
+
+#: plug-ins/common/border-average.c:225 plug-ins/common/border-average.c:406
 msgid "Border Average"
 msgstr "Пошук середнього значення кольору"
 
-#: plug-ins/common/border-average.c:450
+#: plug-ins/common/border-average.c:417
 msgid "Border Size"
 msgstr "Розмір рамки"
 
-#: plug-ins/common/border-average.c:458
-msgid "_Thickness:"
-msgstr "_Товщина:"
-
 #. Number of Colors frame
-#: plug-ins/common/border-average.c:494
+#: plug-ins/common/border-average.c:443
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:906
 msgid "Number of Colors"
 msgstr "Кількість кольорів"
-
-#: plug-ins/common/border-average.c:502
-msgid "_Bucket size:"
-msgstr "_Кількість кольорів:"
 
 #: plug-ins/common/busy-dialog.c:255 plug-ins/common/busy-dialog.c:271
 msgid "Please Wait"
@@ -575,25 +595,37 @@ msgstr "Будь ласка, зачекайте на завершення дії
 msgid "Canceling..."
 msgstr "Скасовуємо…"
 
-#: plug-ins/common/checkerboard.c:137
+#: plug-ins/common/checkerboard.c:123
 msgid "_Checkerboard (legacy)..."
 msgstr "_Шахова дошка (старий)..."
 
-#: plug-ins/common/checkerboard.c:142
+#: plug-ins/common/checkerboard.c:128
 msgid "Create a checkerboard pattern"
 msgstr "Створити текстуру у вигляді шахової дошки"
 
-#: plug-ins/common/checkerboard.c:366 plug-ins/common/checkerboard.c:491
-msgid "Checkerboard"
-msgstr "Шахова дошка"
-
-#: plug-ins/common/checkerboard.c:556 plug-ins/gimpressionist/sizemap.c:508
-msgid "_Size:"
-msgstr "_Розмір:"
-
-#: plug-ins/common/checkerboard.c:565
+#: plug-ins/common/checkerboard.c:137
 msgid "_Psychobilly"
 msgstr "_Психоделія"
+
+#: plug-ins/common/checkerboard.c:138
+msgid "Render a psychobilly checkerboard"
+msgstr "Показати психоделічну шахівницю"
+
+#: plug-ins/common/checkerboard.c:143 plug-ins/gimpressionist/size.c:94
+msgid "_Size"
+msgstr "_Розмір"
+
+#: plug-ins/common/checkerboard.c:144
+msgid "Size of the checks"
+msgstr "Розмір клітинок"
+
+#: plug-ins/common/checkerboard.c:149 plug-ins/common/checkerboard.c:150
+msgid "Check size unit of measure"
+msgstr "Одиниця вимірювання розміру клітинки"
+
+#: plug-ins/common/checkerboard.c:370 plug-ins/common/checkerboard.c:500
+msgid "Checkerboard"
+msgstr "Шахова дошка"
 
 #: plug-ins/common/cml-explorer.c:130
 msgid "Keep image's values"
@@ -1052,8 +1084,8 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-sunras.c:638 plug-ins/common/file-tga.c:1238
 #: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:341 plug-ins/file-fli/fli-gimp.c:817
-#: plug-ins/file-icns/file-icns-save.c:428 plug-ins/file-ico/ico-save.c:1332
-#: plug-ins/file-ico/ico-save.c:1549 plug-ins/file-jpeg/jpeg-save.c:317
+#: plug-ins/file-icns/file-icns-save.c:428 plug-ins/file-ico/ico-save.c:1341
+#: plug-ins/file-ico/ico-save.c:1558 plug-ins/file-jpeg/jpeg-save.c:317
 #: plug-ins/file-psd/psd-save.c:2214 plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
@@ -1090,8 +1122,8 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
 #: plug-ins/file-fits/fits.c:396 plug-ins/file-fli/fli-gimp.c:459
 #: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
-#: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:682
-#: plug-ins/file-ico/ico-load.c:792 plug-ins/file-ico/ico-load.c:991
+#: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:681
+#: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1019
 #: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:614
 #: plug-ins/file-psd/psd-load.c:169 plug-ins/file-psd/psd-load.c:174
 #: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
@@ -1851,40 +1883,40 @@ msgstr "Об'єднання _глибин..."
 msgid "Combine two images using depth maps (z-buffers)"
 msgstr "Об'єднати два зображення, використовуючи карту глибин (z-buffers)"
 
-#: plug-ins/common/depth-merge.c:469
+#: plug-ins/common/depth-merge.c:470
 msgid "Depth-merging"
 msgstr "Об'єднання глибин"
 
-#: plug-ins/common/depth-merge.c:729
+#: plug-ins/common/depth-merge.c:730
 msgid "Depth Merge"
 msgstr "Об'єднання глибин"
 
-#: plug-ins/common/depth-merge.c:779
+#: plug-ins/common/depth-merge.c:780
 msgid "Source 1:"
 msgstr "Джерело 1:"
 
-#: plug-ins/common/depth-merge.c:792 plug-ins/common/depth-merge.c:820
+#: plug-ins/common/depth-merge.c:793 plug-ins/common/depth-merge.c:821
 msgid "Depth map:"
 msgstr "Мапа глибин:"
 
-#: plug-ins/common/depth-merge.c:807
+#: plug-ins/common/depth-merge.c:808
 msgid "Source 2:"
 msgstr "Джерело 2:"
 
 #. Numeric parameters
-#: plug-ins/common/depth-merge.c:836
+#: plug-ins/common/depth-merge.c:837
 msgid "O_verlap:"
 msgstr "_Перекриття:"
 
-#: plug-ins/common/depth-merge.c:845
+#: plug-ins/common/depth-merge.c:846
 msgid "O_ffset:"
 msgstr "_Зсув:"
 
-#: plug-ins/common/depth-merge.c:854
+#: plug-ins/common/depth-merge.c:855
 msgid "Sc_ale 1:"
 msgstr "_Масштаб 1:"
 
-#: plug-ins/common/depth-merge.c:863
+#: plug-ins/common/depth-merge.c:864
 msgid "Sca_le 2:"
 msgstr "Мас_штаб 2:"
 
@@ -2077,8 +2109,8 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-xpm.c:385 plug-ins/common/file-xwd.c:473
 #: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:188
 #: plug-ins/file-faxg3/faxg3.c:240 plug-ins/file-fli/fli-gimp.c:502
-#: plug-ins/file-icns/file-icns-load.c:507 plug-ins/file-ico/ico-load.c:674
-#: plug-ins/file-ico/ico-load.c:784 plug-ins/file-jpeg/jpeg-load.c:90
+#: plug-ins/file-icns/file-icns-load.c:507 plug-ins/file-ico/ico-load.c:673
+#: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
 #: plug-ins/file-psd/psd-load.c:182 plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:334
 #: plug-ins/file-tiff/file-tiff-load.c:290
@@ -2157,8 +2189,8 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-xbm.c:1051 plug-ins/common/file-xpm.c:705
 #: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
 #: plug-ins/file-fits/fits.c:640 plug-ins/file-fli/fli-gimp.c:784
-#: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1324
-#: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
+#: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1333
+#: plug-ins/file-ico/ico-save.c:1542 plug-ins/file-jpeg/jpeg-save.c:272
 #: plug-ins/file-psd/psd-save.c:2160 plug-ins/file-sgi/sgi.c:646
 #: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
@@ -2379,7 +2411,7 @@ msgid "GEGL export plug-in does not support multiple layers."
 msgstr ""
 "Для додатка експортування GEGL не передбачено підтримку декількох шарів."
 
-#: plug-ins/common/file-gegl.c:376
+#: plug-ins/common/file-gegl.c:375
 #, c-format
 msgid "Could not open '%s'"
 msgstr "Не вдалось відкрити «%s»"
@@ -2412,19 +2444,19 @@ msgstr "загальна мапа кольорів"
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "Неквадратні точки. Зображення, ймовірно, пошкоджене."
 
-#: plug-ins/common/file-gif-load.c:476 plug-ins/common/file-gif-load.c:1060
+#: plug-ins/common/file-gif-load.c:475 plug-ins/common/file-gif-load.c:1060
 msgid "image data"
 msgstr "дані зображення"
 
-#: plug-ins/common/file-gif-load.c:493
+#: plug-ins/common/file-gif-load.c:492
 msgid "extension data"
 msgstr "дані розширення"
 
-#: plug-ins/common/file-gif-load.c:513
+#: plug-ins/common/file-gif-load.c:512
 msgid "frame info"
 msgstr "відомості щодо кадру"
 
-#: plug-ins/common/file-gif-load.c:526
+#: plug-ins/common/file-gif-load.c:525
 msgid "local colormap"
 msgstr "локальна мапа кольорів"
 
@@ -2534,7 +2566,7 @@ msgstr ""
 "Будь ласка, повідомте про цю ваду за допомогою сторінки https://gitlab.gnome."
 "org/GNOME/gimp/issues"
 
-#: plug-ins/common/file-gif-load.c:1364
+#: plug-ins/common/file-gif-load.c:1360
 msgid "Too much compressed data, ignoring extra..."
 msgstr "Забагато стиснених даних, ігноруємо зайві..."
 
@@ -2543,23 +2575,30 @@ msgid "GIF"
 msgstr "GIF"
 
 #: plug-ins/common/file-gif-save.c:154
-msgid "exports files in Compuserve GIF file format"
-msgstr "експортує файли у форматі файлів GIF Compuserve"
+#| msgid "Exports files in SGI image file format"
+msgid "exports files in GIF file format"
+msgstr "експортує файли у форматі GIF"
 
 #: plug-ins/common/file-gif-save.c:156
 #, c-format
+#| msgid ""
+#| "Export a file in Compuserve GIF format, with possible animation, "
+#| "transparency, and comment. To export an animation, operate on a multi-"
+#| "layer file and give the 'as-animation' parameter as TRUE. The plug-in "
+#| "will interpret <50% alpha as transparent. When run non-interactively, the "
+#| "value for the comment is taken from the 'gimp-comment' parasite.  "
 msgid ""
-"Export a file in Compuserve GIF format, with possible animation, "
-"transparency, and comment. To export an animation, operate on a multi-layer "
-"file and give the 'as-animation' parameter as TRUE. The plug-in will "
-"interpret <50% alpha as transparent. When run non-interactively, the value "
-"for the comment is taken from the 'gimp-comment' parasite.  "
+"Export a file in GIF format, with possible animation, transparency, and "
+"comment. To export an animation, operate on a multi-layer file and give the "
+"'as-animation' parameter as TRUE. The plug-in will interpret <50% alpha as "
+"transparent. When run non-interactively, the value for the comment is taken "
+"from the 'gimp-comment' parasite."
 msgstr ""
-"Експортувати файл у форматі GIF Compuserve із можливою анімацією, прозорістю "
+"Експортувати файл у форматі GIF із можливою анімацією, прозорістю "
 "та коментарями. Для експортування анімації працюйте з багатошаровим файлом і "
 "вкажіть для параметра «as-animation» значення TRUE. Додаток вважатиме "
 "значення альфи <50%a прозорістю. Якщо запущено у неінтерактивному режимі, "
-"значення для коментаря буде взято з додатка «gimp-comment».  "
+"значення для коментаря буде взято з додатка «gimp-comment»."
 
 #: plug-ins/common/file-gif-save.c:182 plug-ins/common/file-mng.c:277
 msgid "_Interlace"
@@ -5264,7 +5303,7 @@ msgstr "За_писати коментар"
 msgid "Write a comment at the beginning of the file."
 msgstr "Записати коментар на початку файла."
 
-#: plug-ins/common/file-xbm.c:218
+#: plug-ins/common/file-xbm.c:218 plug-ins/common/mail.c:235
 msgid "Co_mment"
 msgstr "_Коментар"
 
@@ -5431,7 +5470,7 @@ msgstr "Помилка при читанні."
 msgid "Export Image as X11 Mouse Cursor"
 msgstr "Експортувати зображення як вказівник миші X11"
 
-#: plug-ins/common/file-xmc.c:1130 plug-ins/file-ico/ico-dialog.c:571
+#: plug-ins/common/file-xmc.c:1130 plug-ins/file-ico/ico-dialog.c:583
 msgid "Hot spot _X:"
 msgstr "_X «гарячої точки»:"
 
@@ -5441,7 +5480,7 @@ msgstr ""
 "Введіть координату X «гарячої точки». Початок координат у верхньому лівому "
 "куті."
 
-#: plug-ins/common/file-xmc.c:1144 plug-ins/file-ico/ico-dialog.c:584
+#: plug-ins/common/file-xmc.c:1144 plug-ins/file-ico/ico-dialog.c:596
 msgid "Hot spot _Y:"
 msgstr "_Y «гарячої точки»:"
 
@@ -5541,7 +5580,7 @@ msgstr "Введіть бажаний коментар"
 
 #. Begin displaying export progress
 #: plug-ins/common/file-xmc.c:1370 plug-ins/file-webp/file-webp-save.c:198
-#: plug-ins/file-webp/file-webp-save.c:598
+#: plug-ins/file-webp/file-webp-save.c:597
 #, c-format
 msgid "Saving '%s'"
 msgstr "Збереження «%s»"
@@ -6067,45 +6106,85 @@ msgstr "Квадратна"
 msgid "Curved"
 msgstr "Криволінійна"
 
-#: plug-ins/common/mail.c:204
+#: plug-ins/common/mail.c:188
 msgid "Send by E_mail..."
 msgstr "Надіслати по_штою..."
 
-#: plug-ins/common/mail.c:209
+#: plug-ins/common/mail.c:193
 msgid "Send the image by email"
 msgstr "Передати це зображення електронною поштою"
 
-#: plug-ins/common/mail.c:564
+#: plug-ins/common/mail.c:195
+msgid "Sendmail is used to send emails and must be properly configured."
+msgstr ""
+"Для надсилання електронної пошти буде використано Sendmail, тому програму"
+" має бути належним чином налаштовано."
+
+#: plug-ins/common/mail.c:198
+msgid ""
+"The preferred email composer is used to send emails and must be properly "
+"configured."
+msgstr ""
+"Для надсилання електронної пошти буде використано бажаний редактор"
+" електронної пошти, тому програму має бути належним чином налаштовано."
+
+#: plug-ins/common/mail.c:211
+#| msgid "Filename:"
+msgid "File_name"
+msgstr "Назва _файлу"
+
+#: plug-ins/common/mail.c:212
+#| msgid "The amount of the filter to apply"
+msgid "The name of the file to save the image in"
+msgstr "Назва файла, до якого слід зберегти зображення"
+
+#: plug-ins/common/mail.c:217
+#| msgid "_To:"
+msgid "_To"
+msgstr "_Кому"
+
+#: plug-ins/common/mail.c:218
+msgid "The email address to send to"
+msgstr "Адреса електронної пошти, куди буде надіслано дані"
+
+#: plug-ins/common/mail.c:223
+#| msgid "_From:"
+msgid "_From"
+msgstr "_Від"
+
+#: plug-ins/common/mail.c:224
+msgid "The email address for the From: field"
+msgstr "Адреса електронної пошти для поля «Від:»"
+
+#: plug-ins/common/mail.c:229
+#| msgid "S_ubject:"
+msgid "Su_bject"
+msgstr "_Тема"
+
+#: plug-ins/common/mail.c:230
+#| msgid "Move Object"
+msgid "The subject"
+msgstr "Тема повідомлення"
+
+#: plug-ins/common/mail.c:236
+#| msgid "Save comment"
+msgid "The comment"
+msgstr "Коментар"
+
+#: plug-ins/common/mail.c:563
 msgid "Send by Email"
 msgstr "Надіслати поштою"
 
-#: plug-ins/common/mail.c:569
-msgid "_Send"
-msgstr "_Надіслати:"
+#: plug-ins/common/mail.c:567
+#| msgid "_Send"
+msgid "Send"
+msgstr "Надіслати"
 
-#: plug-ins/common/mail.c:600
-msgid "_Filename:"
-msgstr "Назва _файлу:"
-
-#: plug-ins/common/mail.c:614
-msgctxt "email-address"
-msgid "_To:"
-msgstr "_Кому:"
-
-#: plug-ins/common/mail.c:628
-msgctxt "email-address"
-msgid "_From:"
-msgstr "_Від:"
-
-#: plug-ins/common/mail.c:640
-msgid "S_ubject:"
-msgstr "_Тема:"
-
-#: plug-ins/common/mail.c:708
+#: plug-ins/common/mail.c:703
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "певна помилка у розширенні файлу"
 
-#: plug-ins/common/mail.c:892
+#: plug-ins/common/mail.c:888
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Не вдається запустити sendmail (%s)"
@@ -7963,7 +8042,7 @@ msgstr ""
 "Помилка при відкриванні тимчасового файла %s «%s» для завантаження icns: %s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:558 plug-ins/file-ico/ico-load.c:983
+#: plug-ins/file-icns/file-icns-load.c:558 plug-ins/file-ico/ico-load.c:1011
 #: plug-ins/file-jpeg/jpeg-load.c:600 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-darktable.c:513
 #: plug-ins/file-raw/file-rawtherapee.c:455
@@ -8080,27 +8159,27 @@ msgstr ""
 "Великі значки та стиснення не підтримуються всіма програмами. Більш старі "
 "програми можуть некоректно відкривати цей файл."
 
-#: plug-ins/file-ico/ico-dialog.c:256
+#: plug-ins/file-ico/ico-dialog.c:267
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 біт/точку, 1-біт альфа-каналом, 2-кольорова палітра"
 
-#: plug-ins/file-ico/ico-dialog.c:257
+#: plug-ins/file-ico/ico-dialog.c:268
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 біта/точку, 1-біт альфа-канал, 16-кольорова палітра"
 
-#: plug-ins/file-ico/ico-dialog.c:258
+#: plug-ins/file-ico/ico-dialog.c:269
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 біт/точку, 1-біт альфа-канал, 256-кольорова палітра"
 
-#: plug-ins/file-ico/ico-dialog.c:259
+#: plug-ins/file-ico/ico-dialog.c:270
 msgid "24 bpp, 1-bit alpha, no palette"
 msgstr "24 біт/точку, 1-біт альфа-канал, без палітри"
 
-#: plug-ins/file-ico/ico-dialog.c:260
+#: plug-ins/file-ico/ico-dialog.c:271
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 біт/точку, 8-біт альфа-канал, без палітри"
 
-#: plug-ins/file-ico/ico-dialog.c:274
+#: plug-ins/file-ico/ico-dialog.c:286
 msgid "Compressed (PNG)"
 msgstr "Стиснений (PNG)"
 
@@ -8114,13 +8193,7 @@ msgstr "Не вдалось прочитати '%lu' байтів"
 msgid "Icon #%d has zero width or height"
 msgstr "Піктограма %d має нульову ширину або висоту"
 
-#. read successfully. add to image
-#: plug-ins/file-ico/ico-load.c:639
-#, c-format
-msgid "Icon #%i"
-msgstr "Піктограма %i"
-
-#: plug-ins/file-ico/ico-load.c:841 plug-ins/file-ico/ico-load.c:872
+#: plug-ins/file-ico/ico-load.c:868 plug-ins/file-ico/ico-load.c:899
 msgid "Invalid ANI metadata"
 msgstr "Некоректні метадані ANI"
 
@@ -9330,7 +9403,7 @@ msgid "unknown error"
 msgstr "невідома помилка"
 
 #: plug-ins/file-webp/file-webp-save.c:208
-#: plug-ins/file-webp/file-webp-save.c:608
+#: plug-ins/file-webp/file-webp-save.c:607
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "Не вдається відкрити «%s» для запису: %s"
@@ -10870,10 +10943,6 @@ msgstr "Оновити вікно перегляду"
 msgid "Revert to the original image"
 msgstr "Повернути до початкового зображення"
 
-#: plug-ins/gimpressionist/size.c:94
-msgid "_Size"
-msgstr "_Розмір"
-
 #: plug-ins/gimpressionist/size.c:107
 msgid "Size variants:"
 msgstr "Варіанти розміру:"
@@ -10968,6 +11037,10 @@ msgstr "Додати новий sm-вектор"
 #: plug-ins/gimpressionist/sizemap.c:500
 msgid "Delete selected smvector"
 msgstr "Видалити вибраний sm-вектор"
+
+#: plug-ins/gimpressionist/sizemap.c:508
+msgid "_Size:"
+msgstr "_Розмір:"
 
 #: plug-ins/gimpressionist/sizemap.c:510
 msgid "Change the angle of the selected smvector"
@@ -13279,7 +13352,6 @@ msgid "Data-driven media"
 msgstr "Мультимедійні дані на основі числових даних"
 
 #: plug-ins/metadata/metadata-tags.c:189
-#| msgid "Digital Source Type"
 msgid "Digital art"
 msgstr "Цифрове мистецтво"
 
@@ -14050,6 +14122,24 @@ msgstr "_Сканер/Камера..."
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
 
+#~ msgid "exports files in Compuserve GIF file format"
+#~ msgstr "експортує файли у форматі файлів GIF Compuserve"
+
+#~ msgid "_Filename:"
+#~ msgstr "Назва _файлу:"
+
+#~ msgctxt "email-address"
+#~ msgid "_To:"
+#~ msgstr "_Кому:"
+
+#~ msgctxt "email-address"
+#~ msgid "_From:"
+#~ msgstr "_Від:"
+
+#, c-format
+#~ msgid "Icon #%i"
+#~ msgstr "Піктограма %i"
+
 #~ msgid "Export Image as C-Source"
 #~ msgstr "Експортувати зображення як код мовою Сі"
 
@@ -14164,12 +14254,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Use the foreground color"
 #~ msgstr "Використовувати колір переднього плану"
-
-#~ msgid "_From:"
-#~ msgstr "_Від:"
-
-#~ msgid "_To:"
-#~ msgstr "_До:"
 
 #~ msgid "_Level:"
 #~ msgstr "_Рівень:"
