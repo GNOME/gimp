@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-05-10 17:27+0000\n"
-"PO-Revision-Date: 2023-06-24 12:00+0300\n"
+"PO-Revision-Date: 2023-06-25 22:42+0300\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -73,15 +73,6 @@ msgstr ""
 #: plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_Cancel"
 msgstr "_Отказ"
-
-#: plug-ins/common/cml-explorer.c:1983 plug-ins/common/plugin-browser.c:560
-#: plug-ins/common/procedure-browser.c:168
-#: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:355
-#: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
-#: plug-ins/ifs-compose/ifs-compose.c:1258
-#: plug-ins/metadata/metadata-viewer.c:272
-msgid "_Close"
-msgstr "_Затваряне"
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
 #: plug-ins/common/border-average.c:195 plug-ins/common/checkerboard.c:184
@@ -228,6 +219,1143 @@ msgstr "Не може да се отвори „%s“ за четене: %s"
 msgid "Normal"
 msgstr "Нормално"
 
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:541
+#: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
+#: plug-ins/gradient-flare/gradient-flare.c:998
+#, c-format
+msgid ""
+"No %s in gimprc:\n"
+"You need to add an entry like\n"
+"(%s \"%s\")\n"
+"to your %s file."
+msgstr ""
+"В gimprc липсва „%s“:\n"
+"Трябва да въведете стойност като\n"
+"(%s „%s“)\n"
+"във файла „%s“."
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:726
+#: plug-ins/map-object/map-object-ui.c:1078
+msgid "Left:"
+msgstr "Ляво:"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:735
+#: plug-ins/map-object/map-object-ui.c:1078
+msgid "Right:"
+msgstr "Дясно:"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:744
+#: plug-ins/map-object/map-object-ui.c:1077
+msgid "Top:"
+msgstr "Горе:"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:753
+#: plug-ins/map-object/map-object-ui.c:1077
+msgid "Bottom:"
+msgstr "Долу:"
+
+#: plug-ins/gfig/gfig-dialog.c:389
+#: plug-ins/gradient-flare/gradient-flare.c:4021
+#: plug-ins/imagemap/imap_main.c:1942
+msgid "Circle"
+msgstr "Кръг"
+
+#: plug-ins/gfig/gfig-dialog.c:395
+#: plug-ins/gradient-flare/gradient-flare.c:4038
+#: plug-ins/imagemap/imap_main.c:1944
+msgid "Polygon"
+msgstr "Многоъгълник"
+
+#. X
+#: plug-ins/ifs-compose/ifs-compose.c:685 plug-ins/lighting/lighting-ui.c:546
+#: plug-ins/map-object/map-object-ui.c:663
+#: plug-ins/map-object/map-object-ui.c:717
+#: plug-ins/map-object/map-object-ui.c:977
+#: plug-ins/map-object/map-object-ui.c:1023
+msgid "X:"
+msgstr "Хоризонтално:"
+
+#. Y
+#: plug-ins/ifs-compose/ifs-compose.c:699 plug-ins/lighting/lighting-ui.c:561
+#: plug-ins/map-object/map-object-ui.c:677
+#: plug-ins/map-object/map-object-ui.c:730
+#: plug-ins/map-object/map-object-ui.c:989
+#: plug-ins/map-object/map-object-ui.c:1034
+#: plug-ins/map-object/map-object-ui.c:1133
+msgid "Y:"
+msgstr "Вертикално:"
+
+#. General options
+#: plug-ins/lighting/lighting-ui.c:311 plug-ins/map-object/map-object-ui.c:446
+msgid "General Options"
+msgstr "Общи настройки"
+
+#: plug-ins/lighting/lighting-ui.c:342 plug-ins/map-object/map-object-ui.c:515
+msgid "Create a new image when applying filter"
+msgstr "Създаване на ново изображение с прилагането на филтъра"
+
+#: plug-ins/lighting/lighting-ui.c:389 plug-ins/map-object/map-object-ui.c:606
+msgid "Light Settings"
+msgstr "Настройки на светлината"
+
+#: plug-ins/lighting/lighting-ui.c:441 plug-ins/map-object/map-object-ui.c:630
+msgid "Type of light source to apply"
+msgstr "Вид светлинен източник"
+
+#: plug-ins/lighting/lighting-ui.c:443 plug-ins/map-object/map-object-ui.c:632
+msgid "Select lightsource color"
+msgstr "Избор на цвят на светлинния източник"
+
+#: plug-ins/lighting/lighting-ui.c:458 plug-ins/map-object/map-object-ui.c:645
+msgid "Set light source color"
+msgstr "Задаване на цвят на светлинния източник"
+
+#: plug-ins/lighting/lighting-ui.c:479 plug-ins/map-object/map-object-ui.c:647
+#: plug-ins/map-object/map-object-ui.c:967
+#: plug-ins/print/print-page-layout.c:384
+msgid "Position"
+msgstr "Позиция"
+
+#: plug-ins/lighting/lighting-ui.c:499 plug-ins/map-object/map-object-ui.c:671
+msgid "Light source X position in XYZ space"
+msgstr ""
+"Местоположение на светлинния източник по хоризонтал в координатната система"
+
+#: plug-ins/lighting/lighting-ui.c:516 plug-ins/map-object/map-object-ui.c:685
+msgid "Light source Y position in XYZ space"
+msgstr ""
+"Местоположение на светлинния източник по вертикал в координатната система"
+
+#: plug-ins/lighting/lighting-ui.c:533 plug-ins/map-object/map-object-ui.c:699
+msgid "Light source Z position in XYZ space"
+msgstr ""
+"Местоположение на светлинния източник по дълбочина в координатната система"
+
+#: plug-ins/lighting/lighting-ui.c:554 plug-ins/map-object/map-object-ui.c:725
+msgid "Light source X direction in XYZ space"
+msgstr "Хоризонтална посока на светлинния източник в координатната система"
+
+#: plug-ins/lighting/lighting-ui.c:569 plug-ins/map-object/map-object-ui.c:738
+msgid "Light source Y direction in XYZ space"
+msgstr "Вертикална посока на светлинния източник в координатната система"
+
+#: plug-ins/lighting/lighting-ui.c:576 plug-ins/map-object/map-object-ui.c:691
+#: plug-ins/map-object/map-object-ui.c:743
+#: plug-ins/map-object/map-object-ui.c:1001
+#: plug-ins/map-object/map-object-ui.c:1045
+#: plug-ins/map-object/map-object-ui.c:1145
+msgid "Z:"
+msgstr "Дълбочина:"
+
+#: plug-ins/lighting/lighting-ui.c:584 plug-ins/map-object/map-object-ui.c:751
+msgid "Light source Z direction in XYZ space"
+msgstr "Дълбочинна посока на светлинния източник в координатната система"
+
+#: plug-ins/lighting/lighting-ui.c:678 plug-ins/map-object/map-object-ui.c:812
+msgid "Amount of original color to show where no direct light falls"
+msgstr "Количество на първоначалния цвят, където не попада директна светлина"
+
+#: plug-ins/lighting/lighting-ui.c:709 plug-ins/map-object/map-object-ui.c:839
+msgid "Intensity of original color when lit by a light source"
+msgstr "Интензитет на първоначалния цвят, където е осветен"
+
+#: plug-ins/lighting/lighting-ui.c:740 plug-ins/map-object/map-object-ui.c:908
+msgid "Controls how intense the highlights will be"
+msgstr "Определя колко интензивни да са светлите зони"
+
+#: plug-ins/lighting/lighting-ui.c:770 plug-ins/map-object/map-object-ui.c:935
+msgid "Higher values makes the highlights more focused"
+msgstr "Високи стойности правят осветените зони по-фокусирани"
+
+#: plug-ins/lighting/lighting-ui.c:969 plug-ins/map-object/map-object-ui.c:1267
+msgid "_Light"
+msgstr "_Светлина"
+
+#: plug-ins/lighting/lighting-ui.c:973 plug-ins/map-object/map-object-ui.c:1271
+msgid "_Material"
+msgstr "_Материал"
+
+#: plug-ins/lighting/lighting-ui.c:1100
+#: plug-ins/map-object/map-object-ui.c:1382
+msgid "Recompute preview image"
+msgstr "Преизчисляване на предварителния преглед"
+
+#: plug-ins/common/align-layers.c:759 plug-ins/common/align-layers.c:777
+#: plug-ins/gradient-flare/gradient-flare.c:2878
+msgid "Center"
+msgstr "Център"
+
+#. Number of Colors frame
+#: plug-ins/common/border-average.c:494
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:906
+msgid "Number of Colors"
+msgstr "Брой цветове"
+
+#. The Reset button
+#: plug-ins/common/colormap-remap.c:705 plug-ins/common/curve-bend.c:1464
+#: plug-ins/common/sample-colorize.c:1413
+#: plug-ins/common/sphere-designer.c:2631 plug-ins/common/tile-small.c:531
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:809
+#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:957
+#: plug-ins/selection-to-path/selection-to-path.c:412
+msgid "_Reset"
+msgstr "_Зануляване"
+
+#. The Copy button
+#: plug-ins/common/curve-bend.c:1427
+#: plug-ins/gradient-flare/gradient-flare.c:3083
+msgid "_Copy"
+msgstr "_Копие"
+
+#. Redmode radio frame
+#: plug-ins/common/decompose.c:196
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:985
+msgid "Red"
+msgstr "Червено"
+
+#. Greenmode radio frame
+#: plug-ins/common/decompose.c:197
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1026
+msgid "Green"
+msgstr "Зелено"
+
+#. Bluemode radio frame
+#: plug-ins/common/decompose.c:198
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1067
+msgid "Blue"
+msgstr "Синьо"
+
+#: plug-ins/common/file-xpm.c:256 plug-ins/gradient-flare/gradient-flare.c:3014
+msgid "_Threshold"
+msgstr "_Праг"
+
+#: plug-ins/common/qbist.c:1024
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:683
+msgid "_Undo"
+msgstr "_Отмяна"
+
+#: plug-ins/common/sample-colorize.c:1416 plug-ins/common/tile-small.c:635
+#: plug-ins/fractal-explorer/fractal-explorer.c:1225
+#: plug-ins/gimpressionist/orientmap.c:527
+#: plug-ins/gimpressionist/presets.c:1060 plug-ins/gimpressionist/sizemap.c:400
+#: plug-ins/imagemap/imap_default_dialog.c:103
+msgid "_Apply"
+msgstr "_Прилагане"
+
+#: plug-ins/common/sphere-designer.c:2739
+#: plug-ins/gradient-flare/gradient-flare.c:3081
+msgid "_New"
+msgstr "_Нов"
+
+#: plug-ins/common/sphere-designer.c:2751
+#: plug-ins/fractal-explorer/fractal-explorer.c:875
+#: plug-ins/fractal-explorer/fractal-explorer.c:1236
+#: plug-ins/gimpressionist/presets.c:1067
+#: plug-ins/gradient-flare/gradient-flare.c:3084
+#: plug-ins/gradient-flare/gradient-flare.c:3367
+msgid "_Delete"
+msgstr "_Изтриване"
+
+#. row labels
+#: plug-ins/common/sphere-designer.c:2784 plug-ins/lighting/lighting-ui.c:414
+msgid "Type:"
+msgstr "Вид:"
+
+#. destroy model automatically with view
+#. Put buttons in
+#: plug-ins/common/unit-editor.c:253
+#: plug-ins/fractal-explorer/fractal-explorer.c:1214
+#: plug-ins/gimpressionist/presets.c:1073
+msgid "_Refresh"
+msgstr "_Обновяване"
+
+#: plug-ins/common/warp.c:543
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:762
+#: plug-ins/ifs-compose/ifs-compose.c:1289
+msgid "Iterations:"
+msgstr "Итерации:"
+
+#. Create the combobox containing the presets
+#: plug-ins/file-webp/file-webp-dialog.c:80
+#: plug-ins/gradient-flare/gradient-flare.c:2623
+msgid "Default"
+msgstr "Стандартно"
+
+#: plug-ins/flame/flame.c:810 plug-ins/lighting/lighting-ui.c:855
+msgid "Linear"
+msgstr "Линейно"
+
+#: plug-ins/flame/flame.c:811 plug-ins/lighting/lighting-ui.c:857
+msgid "Sinusoidal"
+msgstr "Синуидално"
+
+#: plug-ins/flame/flame.c:812 plug-ins/lighting/lighting-ui.c:858
+msgid "Spherical"
+msgstr "Сферично"
+
+#: plug-ins/flame/flame.c:824
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:842
+msgid "Julia"
+msgstr "Джулия"
+
+#: plug-ins/flame/flame.c:830
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:991
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1032
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1073
+msgid "Cosine"
+msgstr "Косинус"
+
+#: plug-ins/flame/flame.c:1096 plug-ins/gimpressionist/orientation.c:190
+#: plug-ins/gimpressionist/size.c:199
+#: plug-ins/gradient-flare/gradient-flare.c:3082
+msgid "_Edit"
+msgstr "_Редактиране"
+
+#: plug-ins/flame/flame.c:1296 plug-ins/gradient-flare/gradient-flare.c:2890
+#: plug-ins/lighting/lighting-ui.c:491
+msgid "_X:"
+msgstr "По _хоризонтал:"
+
+#: plug-ins/flame/flame.c:1308 plug-ins/gradient-flare/gradient-flare.c:2894
+#: plug-ins/lighting/lighting-ui.c:508
+msgid "_Y:"
+msgstr "По _вертикал:"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:557
+msgid "Fractal Explorer"
+msgstr "Разглеждане на фрактали"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:630
+msgid "Re_altime preview"
+msgstr "П_реглед в реално време"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:638
+msgid "If enabled the preview will be redrawn automatically"
+msgstr "Ако се включи това, прегледът ще се обновява автоматично"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:641
+msgid "R_edraw preview"
+msgstr "_Обновяване на прегледа"
+
+#. Zoom Options
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:649
+msgid "Zoom"
+msgstr "Увеличение"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:662
+msgid "Zoom _In"
+msgstr "У_величаване"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:670
+msgid "Zoom _Out"
+msgstr "С_маляване"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:687
+msgid "Undo last zoom change"
+msgstr "Отмяна на последната промяна на увеличение"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:693
+msgid "_Redo"
+msgstr "_Връщане"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:697
+msgid "Redo last zoom change"
+msgstr "Повтаряне на последната промяна на увеличение"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:714
+msgid "_Parameters"
+msgstr "_Параметри"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:717
+msgid "Fractal Parameters"
+msgstr "Параметри на фрактала"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:764
+msgid ""
+"The higher the number of iterations, the more details will be calculated"
+msgstr ""
+"Колкото по-висок е броят итерации, толкова повече детайли ще бъдат изчислени."
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:774
+msgid "CX:"
+msgstr "CX:"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:777
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:788
+msgid "Changes aspect of fractal"
+msgstr "Промяна на съотношeнията на страните на фрактала"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:785
+msgid "CY:"
+msgstr "CY:"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:807
+msgid "Load a fractal from file"
+msgstr "Зареждане на фрактал от файл"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:815
+msgid "Reset parameters to default values"
+msgstr "Връщане на параметрите към стандартните стойности"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:824
+msgid "Save active fractal to file"
+msgstr "Запазване на активния фрактал като файл"
+
+#. Fractal type toggle box
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:827
+msgid "Fractal Type"
+msgstr "Вид фрактал"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:840
+msgid "Mandelbrot"
+msgstr "Манделброт"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:844
+msgid "Barnsley 1"
+msgstr "Барнсли 1"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:846
+msgid "Barnsley 2"
+msgstr "Барнсли 2"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:848
+msgid "Barnsley 3"
+msgstr "Барнсли 3"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:850
+msgid "Spider"
+msgstr "Паяк"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:852
+msgid "Man'o'war"
+msgstr "Португалска галера"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:854
+msgid "Lambda"
+msgstr "Ламбда"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:856
+msgid "Sierpinski"
+msgstr "Серпински"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:902
+msgid "Co_lors"
+msgstr "_Цветове"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:915
+msgid "Number of colors:"
+msgstr "Брой цветове:"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:917
+msgid "Change the number of colors in the mapping"
+msgstr "Промяна на броя на цветовете"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:926
+msgid "Use loglog smoothing"
+msgstr "Използване на постепенно заглаждане"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
+msgid "Use log log smoothing to eliminate \"banding\" in the result"
+msgstr ""
+"Използване на постепенно заглаждане за да се избегнат „ивици“ в резултата"
+
+#. Color Density frame
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:937
+msgid "Color Density"
+msgstr "Гъстота на цветовете"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:946
+msgid "Red:"
+msgstr "Червено:"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:948
+msgid "Change the intensity of the red channel"
+msgstr "Промяна интензивността на червения канал"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:956
+msgid "Green:"
+msgstr "Зелено:"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:958
+msgid "Change the intensity of the green channel"
+msgstr "Промяна интензивността на зеления канал"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:966
+msgid "Blue:"
+msgstr "Синьо:"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:968
+msgid "Change the intensity of the blue channel"
+msgstr "Промяна интензивността на синия канал"
+
+#. Color Function frame
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:976
+msgid "Color Function"
+msgstr "Цветова функция"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:989
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1030
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1071
+msgid "Sine"
+msgstr "Синус"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:993
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1034
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1075
+msgctxt "color-function"
+msgid "None"
+msgstr "Няма"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:998
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1039
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1080
+msgid "Use sine-function for this color component"
+msgstr "Използване на функция синус в цветовия компонент"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1001
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1042
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1083
+msgid "Use cosine-function for this color component"
+msgstr "Използване на функция косинус в цветовия компонент"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1004
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1045
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1086
+msgid ""
+"Use linear mapping instead of any trigonometrical function for this color "
+"channel"
+msgstr ""
+"Използване на линейна, вместо каквато и да е тригонометрична функция за този "
+"цветови канал"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1013
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1054
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1095
+msgid "Inversion"
+msgstr "Инверсия"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1021
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1062
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1103
+msgid ""
+"If you enable this option higher color values will be swapped with lower "
+"ones and vice versa"
+msgstr ""
+"Ако включите това, по-високите цветови стойности ще бъдат заменени от по-"
+"ниските и обратно"
+
+#. Colormode toggle box
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1108
+msgid "Color Mode"
+msgstr "Цветови режим"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1117
+msgid "As specified above"
+msgstr "Като посоченото горе"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1129
+msgid ""
+"Create a color-map with the options you specified above (color density/"
+"function). The result is visible in the preview image"
+msgstr ""
+"Създаване на цветова карта с посочените горе настройки (цветова плътност/ "
+"функция). Резултатът е видим в предварителния преглед"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1139
+msgid "Apply active gradient to final image"
+msgstr "Прилагане на активната преливка в крайното изображение"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1151
+msgid "Create a color-map using a gradient from the gradient editor"
+msgstr ""
+"Създаване на цветова карта въз основа на преливка от редактора на преливки"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1162
+msgid "FractalExplorer Gradient"
+msgstr "Четец за фрактали — преливка"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1192
+msgid "_Fractals"
+msgstr "_Фрактали"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
+#, c-format
+msgid "Could not write '%s': %s"
+msgstr "Не може да се запише „%s“: %s"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1627
+msgid "Load Fractal Parameters"
+msgstr "Зареждане на параметрите на фрактал"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1665
+msgid "Save Fractal Parameters"
+msgstr "Запазване на параметрите на фрактал"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1863
+#, c-format
+msgid "'%s' is not a FractalExplorer file"
+msgstr "„%s“ не е файл за фрактали"
+
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1870
+#, c-format
+msgid "'%s' is corrupt. Line %d Option section incorrect"
+msgstr "„%s“ е повреден. Разделът на ред %d е неправилен"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:241
+msgid "_Fractal Explorer..."
+msgstr "_Разглеждане на фрактали…"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:245
+msgid "Render fractal art"
+msgstr "Генериране на фрактално изкуство"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:489
+msgid "Rendering fractal"
+msgstr "Генериране на фрактал"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:866
+#: plug-ins/gradient-flare/gradient-flare.c:3358
+#, c-format
+msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
+msgstr "Сигурни ли сте че искате да изтриете „%s“ от списъка и от диска?"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:870
+msgid "Delete Fractal"
+msgstr "Изтриване на фрактал"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:1059
+#, c-format
+msgid "File '%s' is not a FractalExplorer file"
+msgstr "Файлът „%s“ не е файл за фрактали"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:1069
+#, c-format
+msgid ""
+"File '%s' is corrupt.\n"
+"Line %d Option section incorrect"
+msgstr ""
+"Файлът „%s“ е повреден.\n"
+"Разделът на ред %d е неправилен"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:1155
+msgid "My first fractal"
+msgstr "Моят първи фрактал"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:1219
+msgid "Select folder and rescan collection"
+msgstr "Избор на папка и обновяване на колекцията"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:1230
+msgid "Apply currently selected fractal"
+msgstr "Прилагане на текущия фрактал"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:1241
+msgid "Delete currently selected fractal"
+msgstr "Изтриване на текущия фрактал"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:1264
+msgid "Rescan for Fractals"
+msgstr "Обновяване на списъка"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:1283
+msgid "Add FractalExplorer Path"
+msgstr "Добавяне на нова папка"
+
+#: plug-ins/gimpressionist/general.c:133
+#: plug-ins/gradient-flare/gradient-flare.c:3677
+msgid "_General"
+msgstr "_Общи"
+
+#: plug-ins/gimpressionist/preview.c:174 plug-ins/gimpressionist/repaint.c:1197
+#: plug-ins/imagemap/imap_polygon.c:513 plug-ins/lighting/lighting-ui.c:1093
+msgid "_Update"
+msgstr "_Обновяване"
+
+#: plug-ins/gradient-flare/gradient-flare.c:750
+msgid "Addition"
+msgstr "Добавяне"
+
+#: plug-ins/gradient-flare/gradient-flare.c:751
+msgid "Overlay"
+msgstr "Покриване"
+
+#: plug-ins/gradient-flare/gradient-flare.c:752
+msgid "Screen"
+msgstr "Екран"
+
+#: plug-ins/gradient-flare/gradient-flare.c:819
+msgid "_Gradient Flare..."
+msgstr "_Отблясък с преливка…"
+
+#: plug-ins/gradient-flare/gradient-flare.c:824
+msgid "Produce a lense flare effect using gradients"
+msgstr "Ефект на отблясък от лещи чрез преливки"
+
+#.
+#. *    Dialog Shell
+#.
+#: plug-ins/gradient-flare/gradient-flare.c:1048
+#: plug-ins/gradient-flare/gradient-flare.c:2513
+msgid "Gradient Flare"
+msgstr "Отблясък с преливка"
+
+#: plug-ins/gradient-flare/gradient-flare.c:1062
+msgid "Cannot operate on indexed color images."
+msgstr "Не работи с изображения с индексирани цветове."
+
+#: plug-ins/gradient-flare/gradient-flare.c:1375
+#, c-format
+msgid "Failed to open GFlare file '%s': %s"
+msgstr "Грешка при отваряне на файл на GFlare „%s“: %s"
+
+#: plug-ins/gradient-flare/gradient-flare.c:1383
+#, c-format
+msgid "'%s' is not a valid GFlare file."
+msgstr "„%s“ не е файл на GFlare."
+
+#: plug-ins/gradient-flare/gradient-flare.c:1437
+#, c-format
+msgid "invalid formatted GFlare file: %s\n"
+msgstr "неправилно форматиран файл на GFlare: %s\n"
+
+#: plug-ins/gradient-flare/gradient-flare.c:1562
+#, c-format
+msgid ""
+"GFlare '%s' is not saved. If you add a new entry in '%s', like:\n"
+"(gflare-path \"%s\")\n"
+"and make a folder '%s', then you can save your own GFlares into that folder."
+msgstr ""
+"GFlare „%s“ не е запазен. Ако добавите нов запис в „%s“, като:\n"
+"(gflare-път „%s“)\n"
+"и създадете папка „%s“, може да запазвате собствени файлове на GFlare в тази "
+"папка."
+
+#: plug-ins/gradient-flare/gradient-flare.c:1597
+#, c-format
+msgid "Failed to write GFlare file '%s': %s"
+msgstr "Грешка при запазване на файл на GFlare „%s“: %s"
+
+#: plug-ins/gradient-flare/gradient-flare.c:2569
+msgid "A_uto update preview"
+msgstr "_Автоматично обновяване на предварителния преглед"
+
+#: plug-ins/gradient-flare/gradient-flare.c:2622
+msgid "'Default' is created."
+msgstr "Създадени са нови „стандартни“ стойности."
+
+#.
+#. *  Scales
+#.
+#.
+#. *    Scales
+#.
+#: plug-ins/gradient-flare/gradient-flare.c:2910
+#: plug-ins/gradient-flare/gradient-flare.c:3730
+#: plug-ins/gradient-flare/gradient-flare.c:3832
+#: plug-ins/gradient-flare/gradient-flare.c:3963
+msgid "Parameters"
+msgstr "Параметри"
+
+#: plug-ins/gradient-flare/gradient-flare.c:2922
+#: plug-ins/imagemap/imap_circle.c:275
+msgid "_Radius:"
+msgstr "_Радиус:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:2933
+msgid "Ro_tation:"
+msgstr "_Завъртане:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:2944
+msgid "_Hue rotation:"
+msgstr "Завъртане на _тона:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:2955
+msgid "Vector _angle:"
+msgstr "_Ъгъл на вектора:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:2966
+msgid "Vector _length:"
+msgstr "_Дължина на вектора:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:2987
+msgid "A_daptive supersampling"
+msgstr "_Адаптивно свръхотчитане:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3007
+msgid "_Max depth:"
+msgstr "_Максимална дълбочина:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3023
+msgid "_Settings"
+msgstr "_Настройки"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3151
+msgid "S_elector"
+msgstr "_Селектор"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3215
+msgid "New Gradient Flare"
+msgstr "Нов отблясък с преливка"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3218
+msgid "Enter a name for the new GFlare"
+msgstr "Въвеждане на име за новия отблясък"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3219
+msgid "Unnamed"
+msgstr "Без име"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3239
+#: plug-ins/gradient-flare/gradient-flare.c:3321
+#, c-format
+msgid "The name '%s' is used already!"
+msgstr "Името „%s“ вече се използва!"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3295
+msgid "Copy Gradient Flare"
+msgstr "Копиране на отблясъка"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3298
+msgid "Enter a name for the copied GFlare"
+msgstr "Въвеждане име за копирания отблясък"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3352
+msgid "Cannot delete!! There must be at least one GFlare."
+msgstr "Не може да бъде изтрито! Трябва да има поне един отблясък."
+
+#: plug-ins/gradient-flare/gradient-flare.c:3362
+msgid "Delete Gradient Flare"
+msgstr "Изриване на отблясък"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3434
+#, c-format
+msgid "not found %s in gflares_list"
+msgstr "%s не е намерен в gflares_list"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3474
+msgid "Gradient Flare Editor"
+msgstr "Редактор на отблясъци с преливка"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3478
+msgid "_Rescan Gradients"
+msgstr "_Препрочитане на преливките"
+
+#. Glow
+#: plug-ins/gradient-flare/gradient-flare.c:3600
+msgid "Glow Paint Options"
+msgstr "Настройки на сиянието"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3610
+#: plug-ins/gradient-flare/gradient-flare.c:3636
+#: plug-ins/gradient-flare/gradient-flare.c:3662
+msgid "Opacity:"
+msgstr "Плътност:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3622
+#: plug-ins/gradient-flare/gradient-flare.c:3648
+#: plug-ins/gradient-flare/gradient-flare.c:3674
+msgid "Paint mode:"
+msgstr "Вид рисуване:"
+
+#. Rays
+#: plug-ins/gradient-flare/gradient-flare.c:3626
+msgid "Rays Paint Options"
+msgstr "Настройки на лъчите"
+
+#. Rays
+#: plug-ins/gradient-flare/gradient-flare.c:3652
+msgid "Second Flares Paint Options"
+msgstr "Настройки на вторичните лъчи"
+
+#.
+#. *  Gradient Menus
+#.
+#: plug-ins/gradient-flare/gradient-flare.c:3703
+#: plug-ins/gradient-flare/gradient-flare.c:3803
+#: plug-ins/gradient-flare/gradient-flare.c:3936
+msgid "Gradients"
+msgstr "Преливки"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3714
+#: plug-ins/gradient-flare/gradient-flare.c:3816
+#: plug-ins/gradient-flare/gradient-flare.c:3947
+msgid "Radial gradient:"
+msgstr "Кръгова преливка:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3718
+#: plug-ins/gradient-flare/gradient-flare.c:3820
+msgid "Angular gradient:"
+msgstr "Ъглова преливка:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3722
+#: plug-ins/gradient-flare/gradient-flare.c:3824
+msgid "Angular size gradient:"
+msgstr "Ъглова спирална преливка:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3741
+#: plug-ins/gradient-flare/gradient-flare.c:3843
+#: plug-ins/gradient-flare/gradient-flare.c:3974
+msgid "Size (%):"
+msgstr "Размер [%]:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3752
+#: plug-ins/gradient-flare/gradient-flare.c:3854
+#: plug-ins/gradient-flare/gradient-flare.c:3985
+msgid "Rotation:"
+msgstr "Завъртане:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3763
+#: plug-ins/gradient-flare/gradient-flare.c:3865
+#: plug-ins/gradient-flare/gradient-flare.c:3996
+msgid "Hue rotation:"
+msgstr "Завъртане на тона:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3777
+msgid "G_low"
+msgstr "_Сияние"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3876
+msgid "# of Spikes:"
+msgstr "Брой лъчи:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3887
+msgid "Spike thickness:"
+msgstr "Дебелина на лъчите:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3901
+msgid "_Rays"
+msgstr "_Лъчи"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3951
+msgid "Size factor gradient:"
+msgstr "Преливка за размера:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:3955
+msgid "Probability gradient:"
+msgstr "Вероятностна преливка:"
+
+#.
+#. *    Shape Radio Button Frame
+#.
+#: plug-ins/gradient-flare/gradient-flare.c:4013
+msgid "Shape of Second Flares"
+msgstr "Форма на вторичните отблясъци"
+
+#: plug-ins/gradient-flare/gradient-flare.c:4072
+msgid "Random seed:"
+msgstr "Случайна начална стойност:"
+
+#: plug-ins/gradient-flare/gradient-flare.c:4086
+msgid "_Second Flares"
+msgstr "_Вторични отблясъци"
+
+#: plug-ins/lighting/lighting-apply.c:101 plug-ins/lighting/lighting-ui.c:1034
+msgid "Lighting Effects"
+msgstr "Светлинни ефекти"
+
+#: plug-ins/lighting/lighting-main.c:121
+msgid "_Lighting Effects..."
+msgstr "_Светлинни ефекти…"
+
+#: plug-ins/lighting/lighting-main.c:126
+msgid "Apply various lighting effects to an image"
+msgstr "Прилагане на различни светлинни ефекти върху изображение"
+
+#: plug-ins/lighting/lighting-ui.c:319
+msgid "T_ransparent background"
+msgstr "_Прозрачен фон"
+
+#: plug-ins/lighting/lighting-ui.c:329
+msgid "Make destination image transparent where bump height is zero"
+msgstr "Прозрачно изображение-цел, където височината на релефа е нула"
+
+#: plug-ins/lighting/lighting-ui.c:332
+msgid "Cre_ate new image"
+msgstr "_Създаване на ново изображение"
+
+#: plug-ins/lighting/lighting-ui.c:344
+msgid "High _quality preview"
+msgstr "_Висококачествен предварителен преглед"
+
+#: plug-ins/lighting/lighting-ui.c:354
+msgid "Enable/disable high quality preview"
+msgstr "Включване/Изключване на висококачествения предварителен преглед"
+
+#: plug-ins/lighting/lighting-ui.c:356
+msgid "Distance:"
+msgstr "Разстояние:"
+
+#: plug-ins/lighting/lighting-ui.c:399
+msgid "Light 1"
+msgstr "Светлина 1"
+
+#: plug-ins/lighting/lighting-ui.c:400
+msgid "Light 2"
+msgstr "Светлина 2"
+
+#: plug-ins/lighting/lighting-ui.c:401
+msgid "Light 3"
+msgstr "Светлина 3"
+
+#: plug-ins/lighting/lighting-ui.c:402
+msgid "Light 4"
+msgstr "Светлина 4"
+
+#: plug-ins/lighting/lighting-ui.c:403
+msgid "Light 5"
+msgstr "Светлина 5"
+
+#: plug-ins/lighting/lighting-ui.c:404
+msgid "Light 6"
+msgstr "Светлина 6"
+
+#: plug-ins/lighting/lighting-ui.c:419
+msgid "Color:"
+msgstr "Цвят:"
+
+#: plug-ins/lighting/lighting-ui.c:425
+msgctxt "light-source"
+msgid "None"
+msgstr "Няма"
+
+#: plug-ins/lighting/lighting-ui.c:426
+msgid "Directional"
+msgstr "Насочена"
+
+#: plug-ins/lighting/lighting-ui.c:427
+msgid "Point"
+msgstr "Точкова"
+
+#: plug-ins/lighting/lighting-ui.c:468
+msgid "_Intensity:"
+msgstr "_Интензитет:"
+
+#: plug-ins/lighting/lighting-ui.c:476
+msgid "Light intensity"
+msgstr "Интензитет на светлината"
+
+#: plug-ins/lighting/lighting-ui.c:525
+msgid "_Z:"
+msgstr "_Дълбочина:"
+
+#: plug-ins/lighting/lighting-ui.c:536
+msgid "Direction"
+msgstr "Посока"
+
+#: plug-ins/lighting/lighting-ui.c:587
+msgid "I_solate"
+msgstr "_Изолиране"
+
+#: plug-ins/lighting/lighting-ui.c:596
+msgid "Lighting preset:"
+msgstr "Шаблон на осветление:"
+
+#: plug-ins/lighting/lighting-ui.c:641
+msgid "Material Properties"
+msgstr "Свойства на материала"
+
+#: plug-ins/lighting/lighting-ui.c:660
+msgid "_Glowing:"
+msgstr "_Светене:"
+
+#: plug-ins/lighting/lighting-ui.c:691
+msgid "_Bright:"
+msgstr "_Осветеност:"
+
+#: plug-ins/lighting/lighting-ui.c:722
+msgid "_Shiny:"
+msgstr "_Блясък:"
+
+#: plug-ins/lighting/lighting-ui.c:752
+msgid "_Polished:"
+msgstr "_Полираност:"
+
+#. Metallic
+#: plug-ins/lighting/lighting-ui.c:779
+msgid "_Metallic"
+msgstr "_Металност"
+
+#: plug-ins/lighting/lighting-ui.c:815
+msgid "E_nable bump mapping"
+msgstr "_Включване на карта на релефа"
+
+#: plug-ins/lighting/lighting-ui.c:829
+msgid "Enable/disable bump-mapping (image depth)"
+msgstr "Включване/Изключване на карта на релефа (дълбочина на изображението)"
+
+#: plug-ins/lighting/lighting-ui.c:852
+msgid "Bumpm_ap image:"
+msgstr "Прилагане на релеф:"
+
+#: plug-ins/lighting/lighting-ui.c:856
+msgid "Logarithmic"
+msgstr "Логаритмично"
+
+#: plug-ins/lighting/lighting-ui.c:868
+msgid "Cu_rve:"
+msgstr "_Крива:"
+
+#: plug-ins/lighting/lighting-ui.c:874
+msgid "Ma_ximum height:"
+msgstr "_Максимална височина:"
+
+#: plug-ins/lighting/lighting-ui.c:884
+msgid "Maximum height for bumps"
+msgstr "Максимална височина на релефа"
+
+#: plug-ins/lighting/lighting-ui.c:908
+msgid "E_nable environment mapping"
+msgstr "Включване на картата на _обкръжението"
+
+#: plug-ins/lighting/lighting-ui.c:922
+msgid "Enable/disable environment-mapping (reflection)"
+msgstr "Включване/Изключване на картата на средата (отражение)"
+
+#: plug-ins/lighting/lighting-ui.c:940
+msgid "En_vironment image:"
+msgstr "_Изображение на средата:"
+
+#: plug-ins/lighting/lighting-ui.c:943
+msgid "Environment image to use"
+msgstr "Изображение на средата, което ще се използва"
+
+#: plug-ins/lighting/lighting-ui.c:965
+msgid "Op_tions"
+msgstr "_Настройки"
+
+#: plug-ins/lighting/lighting-ui.c:977
+msgid "_Bump Map"
+msgstr "_Релеф"
+
+#: plug-ins/lighting/lighting-ui.c:981
+msgid "_Environment Map"
+msgstr "_Карта на средата"
+
+#: plug-ins/lighting/lighting-ui.c:1102
+msgid "I_nteractive"
+msgstr "_Интерактивно"
+
+#: plug-ins/lighting/lighting-ui.c:1116
+msgid "Enable/disable real time preview of changes"
+msgstr "Включване/Изключване на показването на промените в реално време"
+
+#: plug-ins/lighting/lighting-ui.c:1159
+msgid "Save Lighting Preset"
+msgstr "Запазване на настройките на осветлението"
+
+#: plug-ins/lighting/lighting-ui.c:1303
+msgid "Load Lighting Preset"
+msgstr "Зареждане на настройките на осветлението"
+
+#: plug-ins/common/cml-explorer.c:1983 plug-ins/common/plugin-browser.c:560
+#: plug-ins/common/procedure-browser.c:168
+#: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:355
+#: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
+#: plug-ins/ifs-compose/ifs-compose.c:1258
+#: plug-ins/metadata/metadata-viewer.c:272
+msgid "_Close"
+msgstr "_Затваряне"
+
 #: plug-ins/common/align-layers.c:223 plug-ins/common/grid.c:757
 #: plug-ins/gfig/gfig-dialog.c:1360 plug-ins/imagemap/imap_main.c:1923
 msgid "Grid"
@@ -293,41 +1421,6 @@ msgstr "Полярно"
 msgid "Cylinder"
 msgstr "Цилиндрично"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:541
-#: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
-#: plug-ins/gradient-flare/gradient-flare.c:998
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-"В gimprc липсва „%s“:\n"
-"Трябва да въведете стойност като\n"
-"(%s „%s“)\n"
-"във файла „%s“."
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:726
-#: plug-ins/map-object/map-object-ui.c:1078
-msgid "Left:"
-msgstr "Ляво:"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:735
-#: plug-ins/map-object/map-object-ui.c:1078
-msgid "Right:"
-msgstr "Дясно:"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:744
-#: plug-ins/map-object/map-object-ui.c:1077
-msgid "Top:"
-msgstr "Горе:"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:753
-#: plug-ins/map-object/map-object-ui.c:1077
-msgid "Bottom:"
-msgstr "Долу:"
-
 #: plug-ins/gfig/gfig-bezier.c:402
 msgid "Closed"
 msgstr "Затворено"
@@ -369,12 +1462,6 @@ msgid "Create rectangle"
 msgstr "Създаване на триъгълник"
 
 #: plug-ins/gfig/gfig-dialog.c:389
-#: plug-ins/gradient-flare/gradient-flare.c:4021
-#: plug-ins/imagemap/imap_main.c:1942
-msgid "Circle"
-msgstr "Кръг"
-
-#: plug-ins/gfig/gfig-dialog.c:389
 msgid "Create circle"
 msgstr "Създаване на кръг"
 
@@ -393,12 +1480,6 @@ msgstr "Дъга"
 #: plug-ins/gfig/gfig-dialog.c:393
 msgid "Create arc"
 msgstr "Създаване на дъга"
-
-#: plug-ins/gfig/gfig-dialog.c:395
-#: plug-ins/gradient-flare/gradient-flare.c:4038
-#: plug-ins/imagemap/imap_main.c:1944
-msgid "Polygon"
-msgstr "Многоъгълник"
 
 #: plug-ins/gfig/gfig-dialog.c:395
 msgid "Create reg polygon"
@@ -754,124 +1835,10 @@ msgstr ""
 "Грешка при опит за отваряне на временен файл „%s“ при зареждане на изрично "
 "свойство: %s"
 
-#. X
-#: plug-ins/ifs-compose/ifs-compose.c:685 plug-ins/lighting/lighting-ui.c:546
-#: plug-ins/map-object/map-object-ui.c:663
-#: plug-ins/map-object/map-object-ui.c:717
-#: plug-ins/map-object/map-object-ui.c:977
-#: plug-ins/map-object/map-object-ui.c:1023
-msgid "X:"
-msgstr "Хоризонтално:"
-
-#. Y
-#: plug-ins/ifs-compose/ifs-compose.c:699 plug-ins/lighting/lighting-ui.c:561
-#: plug-ins/map-object/map-object-ui.c:677
-#: plug-ins/map-object/map-object-ui.c:730
-#: plug-ins/map-object/map-object-ui.c:989
-#: plug-ins/map-object/map-object-ui.c:1034
-#: plug-ins/map-object/map-object-ui.c:1133
-msgid "Y:"
-msgstr "Вертикално:"
-
 #: plug-ins/imagemap/imap_preferences.c:476
 #: plug-ins/map-object/map-object-ui.c:572
 msgid "_Threshold:"
 msgstr "_Праг:"
-
-#. General options
-#: plug-ins/lighting/lighting-ui.c:311 plug-ins/map-object/map-object-ui.c:446
-msgid "General Options"
-msgstr "Общи настройки"
-
-#: plug-ins/lighting/lighting-ui.c:342 plug-ins/map-object/map-object-ui.c:515
-msgid "Create a new image when applying filter"
-msgstr "Създаване на ново изображение с прилагането на филтъра"
-
-#: plug-ins/lighting/lighting-ui.c:389 plug-ins/map-object/map-object-ui.c:606
-msgid "Light Settings"
-msgstr "Настройки на светлината"
-
-#: plug-ins/lighting/lighting-ui.c:441 plug-ins/map-object/map-object-ui.c:630
-msgid "Type of light source to apply"
-msgstr "Вид светлинен източник"
-
-#: plug-ins/lighting/lighting-ui.c:443 plug-ins/map-object/map-object-ui.c:632
-msgid "Select lightsource color"
-msgstr "Избор на цвят на светлинния източник"
-
-#: plug-ins/lighting/lighting-ui.c:458 plug-ins/map-object/map-object-ui.c:645
-msgid "Set light source color"
-msgstr "Задаване на цвят на светлинния източник"
-
-#: plug-ins/lighting/lighting-ui.c:479 plug-ins/map-object/map-object-ui.c:647
-#: plug-ins/map-object/map-object-ui.c:967
-#: plug-ins/print/print-page-layout.c:384
-msgid "Position"
-msgstr "Позиция"
-
-#: plug-ins/lighting/lighting-ui.c:499 plug-ins/map-object/map-object-ui.c:671
-msgid "Light source X position in XYZ space"
-msgstr ""
-"Местоположение на светлинния източник по хоризонтал в координатната система"
-
-#: plug-ins/lighting/lighting-ui.c:516 plug-ins/map-object/map-object-ui.c:685
-msgid "Light source Y position in XYZ space"
-msgstr ""
-"Местоположение на светлинния източник по вертикал в координатната система"
-
-#: plug-ins/lighting/lighting-ui.c:533 plug-ins/map-object/map-object-ui.c:699
-msgid "Light source Z position in XYZ space"
-msgstr ""
-"Местоположение на светлинния източник по дълбочина в координатната система"
-
-#: plug-ins/lighting/lighting-ui.c:554 plug-ins/map-object/map-object-ui.c:725
-msgid "Light source X direction in XYZ space"
-msgstr "Хоризонтална посока на светлинния източник в координатната система"
-
-#: plug-ins/lighting/lighting-ui.c:569 plug-ins/map-object/map-object-ui.c:738
-msgid "Light source Y direction in XYZ space"
-msgstr "Вертикална посока на светлинния източник в координатната система"
-
-#: plug-ins/lighting/lighting-ui.c:576 plug-ins/map-object/map-object-ui.c:691
-#: plug-ins/map-object/map-object-ui.c:743
-#: plug-ins/map-object/map-object-ui.c:1001
-#: plug-ins/map-object/map-object-ui.c:1045
-#: plug-ins/map-object/map-object-ui.c:1145
-msgid "Z:"
-msgstr "Дълбочина:"
-
-#: plug-ins/lighting/lighting-ui.c:584 plug-ins/map-object/map-object-ui.c:751
-msgid "Light source Z direction in XYZ space"
-msgstr "Дълбочинна посока на светлинния източник в координатната система"
-
-#: plug-ins/lighting/lighting-ui.c:678 plug-ins/map-object/map-object-ui.c:812
-msgid "Amount of original color to show where no direct light falls"
-msgstr "Количество на оригиналния цвят, където не попада директна светлина"
-
-#: plug-ins/lighting/lighting-ui.c:709 plug-ins/map-object/map-object-ui.c:839
-msgid "Intensity of original color when lit by a light source"
-msgstr "Интензитет на оригиналния цвят, където е осветен"
-
-#: plug-ins/lighting/lighting-ui.c:740 plug-ins/map-object/map-object-ui.c:908
-msgid "Controls how intense the highlights will be"
-msgstr "Контролира колко да са интензивни светлите зони"
-
-#: plug-ins/lighting/lighting-ui.c:770 plug-ins/map-object/map-object-ui.c:935
-msgid "Higher values makes the highlights more focused"
-msgstr "Високи стойности правят осветените зони по-фокусирани"
-
-#: plug-ins/lighting/lighting-ui.c:969 plug-ins/map-object/map-object-ui.c:1267
-msgid "_Light"
-msgstr "_Светлина"
-
-#: plug-ins/lighting/lighting-ui.c:973 plug-ins/map-object/map-object-ui.c:1271
-msgid "_Material"
-msgstr "_Материал"
-
-#: plug-ins/lighting/lighting-ui.c:1100
-#: plug-ins/map-object/map-object-ui.c:1382
-msgid "Recompute preview image"
-msgstr "Преизчисляване на предварителния преглед"
 
 #: plug-ins/map-object/map-object-apply.c:241
 #: plug-ins/map-object/map-object-apply.c:266
@@ -2588,11 +3555,6 @@ msgstr "Прилепване към мрежата"
 msgid "Left edge"
 msgstr "Ляв ръб"
 
-#: plug-ins/common/align-layers.c:759 plug-ins/common/align-layers.c:777
-#: plug-ins/gradient-flare/gradient-flare.c:2878
-msgid "Center"
-msgstr "Център"
-
 #: plug-ins/common/align-layers.c:760
 msgid "Right edge"
 msgstr "Десен ръб"
@@ -2757,12 +3719,6 @@ msgstr "Размер на границата"
 msgid "_Thickness:"
 msgstr "_Колебания:"
 
-#. Number of Colors frame
-#: plug-ins/common/border-average.c:494
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:906
-msgid "Number of Colors"
-msgstr "Брой цветове"
-
 #: plug-ins/common/border-average.c:502
 #, fuzzy
 msgid "_Bucket size:"
@@ -2831,18 +3787,6 @@ msgstr "Пренареждане на цветовата карта"
 #: plug-ins/common/colormap-remap.c:701
 msgid "Rearrange Colormap"
 msgstr "Пренареждане на цветовата карта"
-
-#. The Reset button
-#: plug-ins/common/colormap-remap.c:705 plug-ins/common/curve-bend.c:1464
-#: plug-ins/common/sample-colorize.c:1413
-#: plug-ins/common/sphere-designer.c:2631 plug-ins/common/tile-small.c:531
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:809
-#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:957
-#: plug-ins/selection-to-path/selection-to-path.c:412
-#, fuzzy
-#| msgid "_Presets"
-msgid "_Reset"
-msgstr "_Шаблони"
 
 #: plug-ins/common/colormap-remap.c:807
 msgid ""
@@ -3304,12 +4248,6 @@ msgstr "_Изглаждане"
 msgid "_Free"
 msgstr "_Свободно"
 
-#. The Copy button
-#: plug-ins/common/curve-bend.c:1427
-#: plug-ins/gradient-flare/gradient-flare.c:3083
-msgid "_Copy"
-msgstr "_Копие"
-
 #: plug-ins/common/curve-bend.c:1432
 msgid "Copy the active curve to the other border"
 msgstr "Копиране на активната крива в друга рамка"
@@ -3443,24 +4381,6 @@ msgstr "синьо-cb709"
 #: plug-ins/common/decompose.c:188
 msgid "redness-cr709"
 msgstr "червено-cr709"
-
-#. Redmode radio frame
-#: plug-ins/common/decompose.c:196
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:985
-msgid "Red"
-msgstr "Червено"
-
-#. Greenmode radio frame
-#: plug-ins/common/decompose.c:197
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1026
-msgid "Green"
-msgstr "Зелено"
-
-#. Bluemode radio frame
-#: plug-ins/common/decompose.c:198
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1067
-msgid "Blue"
-msgstr "Синьо"
 
 #: plug-ins/common/decompose.c:199
 msgid "Alpha"
@@ -7653,10 +8573,6 @@ msgstr ""
 msgid "X PixMap image"
 msgstr "X PixMap изображение"
 
-#: plug-ins/common/file-xpm.c:256 plug-ins/gradient-flare/gradient-flare.c:3014
-msgid "_Threshold"
-msgstr "_Праг"
-
 #: plug-ins/common/file-xpm.c:257
 #, fuzzy
 #| msgid "_Alpha threshold:"
@@ -8338,11 +9254,6 @@ msgstr "G-Qbist "
 msgid "Pattern"
 msgstr "Запълване със шарка"
 
-#: plug-ins/common/qbist.c:1024
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:683
-msgid "_Undo"
-msgstr "_Отмяна"
-
 #: plug-ins/common/sample-colorize.c:330
 msgid "_Sample Colorize..."
 msgstr "_Оцветяване по пример…"
@@ -8358,14 +9269,6 @@ msgstr "Оцветяване по пример"
 #: plug-ins/common/sample-colorize.c:1414
 msgid "Get _Sample Colors"
 msgstr "_Вземане на примерни цветове"
-
-#: plug-ins/common/sample-colorize.c:1416 plug-ins/common/tile-small.c:635
-#: plug-ins/fractal-explorer/fractal-explorer.c:1225
-#: plug-ins/gimpressionist/orientmap.c:527
-#: plug-ins/gimpressionist/presets.c:1060 plug-ins/gimpressionist/sizemap.c:400
-#: plug-ins/imagemap/imap_default_dialog.c:103
-msgid "_Apply"
-msgstr ""
 
 #. layer combo_box (Dst)
 #: plug-ins/common/sample-colorize.c:1443
@@ -8738,25 +9641,9 @@ msgstr "Създаване на сфери"
 msgid "Layers"
 msgstr "Слоеве"
 
-#: plug-ins/common/sphere-designer.c:2739
-#: plug-ins/gradient-flare/gradient-flare.c:3081
-msgid "_New"
-msgstr ""
-
 #: plug-ins/common/sphere-designer.c:2745
 msgid "D_uplicate"
 msgstr ""
-
-#: plug-ins/common/sphere-designer.c:2751
-#: plug-ins/fractal-explorer/fractal-explorer.c:875
-#: plug-ins/fractal-explorer/fractal-explorer.c:1236
-#: plug-ins/gimpressionist/presets.c:1067
-#: plug-ins/gradient-flare/gradient-flare.c:3084
-#: plug-ins/gradient-flare/gradient-flare.c:3367
-#, fuzzy
-#| msgid "Delete"
-msgid "_Delete"
-msgstr "Изтриване"
 
 #: plug-ins/common/sphere-designer.c:2761
 msgid "Properties"
@@ -8765,11 +9652,6 @@ msgstr "Настройки"
 #: plug-ins/common/sphere-designer.c:2776
 msgid "Bump"
 msgstr "Релеф"
-
-#. row labels
-#: plug-ins/common/sphere-designer.c:2784 plug-ins/lighting/lighting-ui.c:414
-msgid "Type:"
-msgstr "Тип:"
 
 #: plug-ins/common/sphere-designer.c:2803
 msgid "Texture:"
@@ -9022,14 +9904,6 @@ msgstr "Създаване или променяне на използванит
 msgid "Unit Editor"
 msgstr "Редактор на единици"
 
-#. destroy model automatically with view
-#. Put buttons in
-#: plug-ins/common/unit-editor.c:253
-#: plug-ins/fractal-explorer/fractal-explorer.c:1214
-#: plug-ins/gimpressionist/presets.c:1073
-msgid "_Refresh"
-msgstr ""
-
 #: plug-ins/common/unit-editor.c:260
 msgid "_Help"
 msgstr "_Помощ"
@@ -9173,12 +10047,6 @@ msgstr "Основни настройки"
 #: plug-ins/common/warp.c:529
 msgid "Step size:"
 msgstr "Стъпка:"
-
-#: plug-ins/common/warp.c:543
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:762
-#: plug-ins/ifs-compose/ifs-compose.c:1289
-msgid "Iterations:"
-msgstr "Повторения:"
 
 #. Displacement map menu
 #: plug-ins/common/warp.c:552
@@ -11441,12 +12309,6 @@ msgstr ""
 msgid "(all frames are keyframes)"
 msgstr ""
 
-#. Create the combobox containing the presets
-#: plug-ins/file-webp/file-webp-dialog.c:80
-#: plug-ins/gradient-flare/gradient-flare.c:2623
-msgid "Default"
-msgstr "По подразбиране"
-
 #: plug-ins/file-webp/file-webp-dialog.c:81
 msgid "Picture"
 msgstr ""
@@ -11624,18 +12486,6 @@ msgstr "Същата"
 msgid "Random"
 msgstr "Произволно"
 
-#: plug-ins/flame/flame.c:810 plug-ins/lighting/lighting-ui.c:855
-msgid "Linear"
-msgstr "Линейно"
-
-#: plug-ins/flame/flame.c:811 plug-ins/lighting/lighting-ui.c:857
-msgid "Sinusoidal"
-msgstr "Синуидално"
-
-#: plug-ins/flame/flame.c:812 plug-ins/lighting/lighting-ui.c:858
-msgid "Spherical"
-msgstr "Сферично"
-
 #: plug-ins/flame/flame.c:813
 msgid "Swirl"
 msgstr "Завихряне"
@@ -11672,11 +12522,6 @@ msgstr "Диаманд"
 msgid "Ex"
 msgstr ""
 
-#: plug-ins/flame/flame.c:824
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:842
-msgid "Julia"
-msgstr "Джулия"
-
 #: plug-ins/flame/flame.c:825
 msgid "Waves"
 msgstr "Вълнички"
@@ -11700,13 +12545,6 @@ msgstr "_Експонент:"
 #| msgid "Slower"
 msgid "Power"
 msgstr "По-бавно"
-
-#: plug-ins/flame/flame.c:830
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:991
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1032
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1073
-msgid "Cosine"
-msgstr "Косинус"
 
 #: plug-ins/flame/flame.c:831
 msgid "Rings"
@@ -11752,12 +12590,6 @@ msgstr "Запазване на огън"
 msgid "Flame"
 msgstr "Огън"
 
-#: plug-ins/flame/flame.c:1096 plug-ins/gimpressionist/orientation.c:190
-#: plug-ins/gimpressionist/size.c:199
-#: plug-ins/gradient-flare/gradient-flare.c:3082
-msgid "_Edit"
-msgstr "_Редактиране"
-
 #: plug-ins/flame/flame.c:1127
 msgid "_Rendering"
 msgstr "_Генериране"
@@ -11797,369 +12629,6 @@ msgstr "_Камера"
 #: plug-ins/flame/flame.c:1284
 msgid "_Zoom:"
 msgstr "_Приближаване:"
-
-#: plug-ins/flame/flame.c:1296 plug-ins/gradient-flare/gradient-flare.c:2890
-#: plug-ins/lighting/lighting-ui.c:491
-msgid "_X:"
-msgstr "По _хоризонтал:"
-
-#: plug-ins/flame/flame.c:1308 plug-ins/gradient-flare/gradient-flare.c:2894
-#: plug-ins/lighting/lighting-ui.c:508
-msgid "_Y:"
-msgstr "По _вертикал:"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:557
-#, fuzzy
-#| msgid "_Fractal Explorer..."
-msgid "Fractal Explorer"
-msgstr "_Четец за фрактали"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:630
-#, fuzzy
-#| msgid "Realtime preview"
-msgid "Re_altime preview"
-msgstr "Преглед в реално време"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:638
-msgid "If enabled the preview will be redrawn automatically"
-msgstr "Ако се включи това, прегледа ще се обновява автоматично"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:641
-msgid "R_edraw preview"
-msgstr "_Обновяване на прегледа"
-
-#. Zoom Options
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:649
-msgid "Zoom"
-msgstr "Приближаване"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:662
-#, fuzzy
-#| msgid "Zoom in"
-msgid "Zoom _In"
-msgstr "Приближаване"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:670
-#, fuzzy
-#| msgid "Zoom out"
-msgid "Zoom _Out"
-msgstr "Отдалечаване"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:687
-msgid "Undo last zoom change"
-msgstr "Отмяна на последното приближаване"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:693
-#, fuzzy
-#| msgid "Redo"
-msgid "_Redo"
-msgstr "Отново"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:697
-msgid "Redo last zoom change"
-msgstr "Повтаряне на последното приближаване"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:714
-msgid "_Parameters"
-msgstr "_Параметри"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:717
-msgid "Fractal Parameters"
-msgstr "Параметри на фрактала"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:764
-msgid ""
-"The higher the number of iterations, the more details will be calculated"
-msgstr ""
-"Колкото по-висок е броя повторения, толкова повече детайли ще бъдат "
-"изчислени."
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:774
-msgid "CX:"
-msgstr "CX:"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:777
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:788
-msgid "Changes aspect of fractal"
-msgstr "Промяна на съотношeнията на фрактала"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:785
-msgid "CY:"
-msgstr "CY:"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:807
-msgid "Load a fractal from file"
-msgstr "Зареждане на фрактал от файл"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:815
-msgid "Reset parameters to default values"
-msgstr "Връщане на параметрите към стойностите по подразбиране"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:824
-msgid "Save active fractal to file"
-msgstr "Запазване на активния фрактал като файл"
-
-#. Fractal type toggle box
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:827
-msgid "Fractal Type"
-msgstr "Тип на фрактала"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:840
-msgid "Mandelbrot"
-msgstr "Манделброт"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:844
-msgid "Barnsley 1"
-msgstr "Барнсли 1"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:846
-msgid "Barnsley 2"
-msgstr "Барнсли 2"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:848
-msgid "Barnsley 3"
-msgstr "Барнсли 3"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:850
-msgid "Spider"
-msgstr "Паяк"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:852
-msgid "Man'o'war"
-msgstr "Man'o'war"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:854
-msgid "Lambda"
-msgstr "Ламбда"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:856
-msgid "Sierpinski"
-msgstr "Сиерпински"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:902
-msgid "Co_lors"
-msgstr "_Цветове"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:915
-msgid "Number of colors:"
-msgstr "Брой цветове:"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:917
-msgid "Change the number of colors in the mapping"
-msgstr "Промяна броя на цветовете"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:926
-msgid "Use loglog smoothing"
-msgstr "Използване на постепенно заглаждане"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
-msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr ""
-"Използване на постепенно заглаждане за да се избегнат „ивици“ в резултата"
-
-#. Color Density frame
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:937
-msgid "Color Density"
-msgstr "Гъстота на цветовете"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:946
-msgid "Red:"
-msgstr "Червено:"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:948
-msgid "Change the intensity of the red channel"
-msgstr "Промяна интензивността на червения канал"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:956
-msgid "Green:"
-msgstr "Зелено:"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:958
-msgid "Change the intensity of the green channel"
-msgstr "Промяна интензивността на зеления канал"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:966
-msgid "Blue:"
-msgstr "Синьо:"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:968
-msgid "Change the intensity of the blue channel"
-msgstr "Промяна интензивността на синия канал"
-
-#. Color Function frame
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:976
-msgid "Color Function"
-msgstr "Цветова функция"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:989
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1030
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1071
-msgid "Sine"
-msgstr "Синус"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:993
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1034
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1075
-#, fuzzy
-#| msgid "None"
-msgctxt "color-function"
-msgid "None"
-msgstr "Няма"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:998
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1039
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1080
-msgid "Use sine-function for this color component"
-msgstr "Използване на синусна функция в цветовия компонент"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1001
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1042
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1083
-msgid "Use cosine-function for this color component"
-msgstr "Използване на косинусна функция в цветовия компонент"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1004
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1045
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1086
-msgid ""
-"Use linear mapping instead of any trigonometrical function for this color "
-"channel"
-msgstr ""
-"Използване на линейна, вместо каквато и да е тригонометрична функция за този "
-"цветови канал"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1013
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1054
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1095
-msgid "Inversion"
-msgstr "Инверсия"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1021
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1062
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1103
-msgid ""
-"If you enable this option higher color values will be swapped with lower "
-"ones and vice versa"
-msgstr ""
-"Ако включите това, по-високите цветови стойности ще бъдат заменени от по-"
-"ниските и обратно"
-
-#. Colormode toggle box
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1108
-msgid "Color Mode"
-msgstr "Цветови режим"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1117
-msgid "As specified above"
-msgstr "Като посоченото горе"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1129
-msgid ""
-"Create a color-map with the options you specified above (color density/"
-"function). The result is visible in the preview image"
-msgstr ""
-"Създаване на цветова карта с посочените горе настройки (цветова плътност/ "
-"функция). Резултатът е видим в предварителния преглед"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1139
-msgid "Apply active gradient to final image"
-msgstr "Прилагане на активната преливка в крайното изображение"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1151
-msgid "Create a color-map using a gradient from the gradient editor"
-msgstr ""
-"Създаване на цветова карта, въз основа на преливка от редактора на преливки"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1162
-msgid "FractalExplorer Gradient"
-msgstr "Четец за фрактали — преливка"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1192
-msgid "_Fractals"
-msgstr "_Фрактали"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
-#, c-format
-msgid "Could not write '%s': %s"
-msgstr "Не може да се запише „%s“: %s"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1627
-msgid "Load Fractal Parameters"
-msgstr "Зареждане параметри на фрактал"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1665
-msgid "Save Fractal Parameters"
-msgstr "Запазване параметри на фрактал"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1863
-#, c-format
-msgid "'%s' is not a FractalExplorer file"
-msgstr "„%s“ не е файл на браузъра за фрактали"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1870
-#, c-format
-msgid "'%s' is corrupt. Line %d Option section incorrect"
-msgstr "„%s“ е повреден. Редът %d за избор на опция е неправилен"
-
-#: plug-ins/fractal-explorer/fractal-explorer.c:241
-msgid "_Fractal Explorer..."
-msgstr "_Четец за фрактали…"
-
-#: plug-ins/fractal-explorer/fractal-explorer.c:245
-msgid "Render fractal art"
-msgstr "Генериране на фрактално изкуство"
-
-#: plug-ins/fractal-explorer/fractal-explorer.c:489
-msgid "Rendering fractal"
-msgstr "Генериране на фрактал"
-
-#: plug-ins/fractal-explorer/fractal-explorer.c:866
-#: plug-ins/gradient-flare/gradient-flare.c:3358
-#, c-format
-msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
-msgstr "Сигурни ли сте че искате да изтриете „%s“ от списъка и от диска?"
-
-#: plug-ins/fractal-explorer/fractal-explorer.c:870
-msgid "Delete Fractal"
-msgstr "Изтриване на фрактал"
-
-#: plug-ins/fractal-explorer/fractal-explorer.c:1059
-#, c-format
-msgid "File '%s' is not a FractalExplorer file"
-msgstr "Файлът „%s“ не е файл на браузъра за фрактали"
-
-#: plug-ins/fractal-explorer/fractal-explorer.c:1069
-#, c-format
-msgid ""
-"File '%s' is corrupt.\n"
-"Line %d Option section incorrect"
-msgstr ""
-"Файлът „%s“ е повреден.\n"
-"Редът %d за избор на опция е неправилен"
-
-#: plug-ins/fractal-explorer/fractal-explorer.c:1155
-msgid "My first fractal"
-msgstr "Моят първи фрактал"
-
-#: plug-ins/fractal-explorer/fractal-explorer.c:1219
-msgid "Select folder and rescan collection"
-msgstr "Избор на папка и обновяване на колекцията"
-
-#: plug-ins/fractal-explorer/fractal-explorer.c:1230
-msgid "Apply currently selected fractal"
-msgstr "Прилагане на текущия фрактал"
-
-#: plug-ins/fractal-explorer/fractal-explorer.c:1241
-msgid "Delete currently selected fractal"
-msgstr "Изтриване на текущия фрактал"
-
-#: plug-ins/fractal-explorer/fractal-explorer.c:1264
-msgid "Rescan for Fractals"
-msgstr "Обновяване на списъка"
-
-#: plug-ins/fractal-explorer/fractal-explorer.c:1283
-msgid "Add FractalExplorer Path"
-msgstr "Добавяне на нова папка"
 
 #: plug-ins/gimpressionist/brush.c:261
 msgid "Can only save drawables!"
@@ -12234,11 +12703,6 @@ msgstr "Цветови _шум:"
 #: plug-ins/gimpressionist/color.c:89
 msgid "Adds random noise to the color"
 msgstr "Добавя се произволен шум към цвета"
-
-#: plug-ins/gimpressionist/general.c:133
-#: plug-ins/gradient-flare/gradient-flare.c:3677
-msgid "_General"
-msgstr "_Общи"
 
 #: plug-ins/gimpressionist/general.c:149
 msgid "Keep original"
@@ -12653,11 +13117,6 @@ msgstr "Изтриване на избрания шаблон"
 msgid "Reread the folder of Presets"
 msgstr "Ново четене на папката със шаблоните"
 
-#: plug-ins/gimpressionist/preview.c:174 plug-ins/gimpressionist/repaint.c:1197
-#: plug-ins/imagemap/imap_polygon.c:513 plug-ins/lighting/lighting-ui.c:1093
-msgid "_Update"
-msgstr "_Обновяване"
-
 #: plug-ins/gimpressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "Обновяване на прозореца за предварителен преглед"
@@ -12790,288 +13249,6 @@ msgid ""
 "influence"
 msgstr ""
 "В режим Вороной само КРвектори близки до зададената точка биват повлияни."
-
-#: plug-ins/gradient-flare/gradient-flare.c:750
-msgid "Addition"
-msgstr "Добавяне"
-
-#: plug-ins/gradient-flare/gradient-flare.c:751
-msgid "Overlay"
-msgstr "Покриване"
-
-#: plug-ins/gradient-flare/gradient-flare.c:752
-msgid "Screen"
-msgstr "Екран"
-
-#: plug-ins/gradient-flare/gradient-flare.c:819
-msgid "_Gradient Flare..."
-msgstr "_Отблясък с преливка…"
-
-#: plug-ins/gradient-flare/gradient-flare.c:824
-msgid "Produce a lense flare effect using gradients"
-msgstr "Създава ефект на отблясък от лещи чрез преливки"
-
-#.
-#. *    Dialog Shell
-#.
-#: plug-ins/gradient-flare/gradient-flare.c:1048
-#: plug-ins/gradient-flare/gradient-flare.c:2513
-msgid "Gradient Flare"
-msgstr "Отблясък с преливка"
-
-#: plug-ins/gradient-flare/gradient-flare.c:1062
-msgid "Cannot operate on indexed color images."
-msgstr "Не работи на изображения с индексирани цветове."
-
-#: plug-ins/gradient-flare/gradient-flare.c:1375
-#, c-format
-msgid "Failed to open GFlare file '%s': %s"
-msgstr "Грешка при отваряне на GFlare файл „%s“: %s"
-
-#: plug-ins/gradient-flare/gradient-flare.c:1383
-#, c-format
-msgid "'%s' is not a valid GFlare file."
-msgstr "„%s“ не е валиден GFlare файл."
-
-#: plug-ins/gradient-flare/gradient-flare.c:1437
-#, c-format
-msgid "invalid formatted GFlare file: %s\n"
-msgstr "неправилно форматиран GFlare файл: %s\n"
-
-#: plug-ins/gradient-flare/gradient-flare.c:1562
-#, c-format
-msgid ""
-"GFlare '%s' is not saved. If you add a new entry in '%s', like:\n"
-"(gflare-path \"%s\")\n"
-"and make a folder '%s', then you can save your own GFlares into that folder."
-msgstr ""
-"GFlare „%s“ не е запазен. Ако добавите ново „%s“, като:\n"
-"(gflare-път „%s“)\n"
-"и създадете папка „%s“, можете да запазвате собствени GFlare-файлове в тази "
-"папка."
-
-#: plug-ins/gradient-flare/gradient-flare.c:1597
-#, c-format
-msgid "Failed to write GFlare file '%s': %s"
-msgstr "Грешка при записване на GFlare файл „%s“: %s"
-
-#: plug-ins/gradient-flare/gradient-flare.c:2569
-msgid "A_uto update preview"
-msgstr "_Автоматично обновяване на предварителния преглед"
-
-#: plug-ins/gradient-flare/gradient-flare.c:2622
-#, fuzzy
-#| msgid "`Default' is created."
-msgid "'Default' is created."
-msgstr "Създадени са нови стойности на „по подразбиране“."
-
-#.
-#. *  Scales
-#.
-#.
-#. *    Scales
-#.
-#: plug-ins/gradient-flare/gradient-flare.c:2910
-#: plug-ins/gradient-flare/gradient-flare.c:3730
-#: plug-ins/gradient-flare/gradient-flare.c:3832
-#: plug-ins/gradient-flare/gradient-flare.c:3963
-msgid "Parameters"
-msgstr "Параметри"
-
-#: plug-ins/gradient-flare/gradient-flare.c:2922
-#: plug-ins/imagemap/imap_circle.c:275
-msgid "_Radius:"
-msgstr "_Радиус:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:2933
-msgid "Ro_tation:"
-msgstr "_Завъртане:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:2944
-msgid "_Hue rotation:"
-msgstr "Завъртане на _тона:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:2955
-msgid "Vector _angle:"
-msgstr "_Ъгъл на вектора:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:2966
-msgid "Vector _length:"
-msgstr "_Дължина на вектора:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:2987
-msgid "A_daptive supersampling"
-msgstr "_Адаптивно суперсемплиране:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3007
-msgid "_Max depth:"
-msgstr "_Максимална дълбочина:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3023
-msgid "_Settings"
-msgstr "_Настройки"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3151
-msgid "S_elector"
-msgstr "_Селектор"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3215
-msgid "New Gradient Flare"
-msgstr "Нов отблясък с преливка"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3218
-msgid "Enter a name for the new GFlare"
-msgstr "Въвеждане на име за новия отблясък"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3219
-msgid "Unnamed"
-msgstr "Неименуван"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3239
-#: plug-ins/gradient-flare/gradient-flare.c:3321
-#, c-format
-msgid "The name '%s' is used already!"
-msgstr "Името „%s“ вече се използва!"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3295
-msgid "Copy Gradient Flare"
-msgstr "Копиране на отблясъка"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3298
-msgid "Enter a name for the copied GFlare"
-msgstr "Въвеждане име за копираният отблясък"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3352
-msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Не може да бъде изтрито! Трябва да има поне един отблясък."
-
-#: plug-ins/gradient-flare/gradient-flare.c:3362
-msgid "Delete Gradient Flare"
-msgstr "Изриване на отблясък"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3434
-#, c-format
-msgid "not found %s in gflares_list"
-msgstr "%s не е намерен в gflares_list"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3474
-msgid "Gradient Flare Editor"
-msgstr "Редактор на отблясъци с преливка"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3478
-#, fuzzy
-#| msgid "Rescan Gradients"
-msgid "_Rescan Gradients"
-msgstr "Ново четене на преливките"
-
-#. Glow
-#: plug-ins/gradient-flare/gradient-flare.c:3600
-msgid "Glow Paint Options"
-msgstr "Настройки на сиянието"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3610
-#: plug-ins/gradient-flare/gradient-flare.c:3636
-#: plug-ins/gradient-flare/gradient-flare.c:3662
-msgid "Opacity:"
-msgstr "Плътност:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3622
-#: plug-ins/gradient-flare/gradient-flare.c:3648
-#: plug-ins/gradient-flare/gradient-flare.c:3674
-msgid "Paint mode:"
-msgstr "Тип:"
-
-#. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3626
-msgid "Rays Paint Options"
-msgstr "Настройки на лъчите"
-
-#. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3652
-msgid "Second Flares Paint Options"
-msgstr "Настройки на вторичните лъчи"
-
-#.
-#. *  Gradient Menus
-#.
-#: plug-ins/gradient-flare/gradient-flare.c:3703
-#: plug-ins/gradient-flare/gradient-flare.c:3803
-#: plug-ins/gradient-flare/gradient-flare.c:3936
-msgid "Gradients"
-msgstr "Преливки"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3714
-#: plug-ins/gradient-flare/gradient-flare.c:3816
-#: plug-ins/gradient-flare/gradient-flare.c:3947
-msgid "Radial gradient:"
-msgstr "Кръгова преливка:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3718
-#: plug-ins/gradient-flare/gradient-flare.c:3820
-msgid "Angular gradient:"
-msgstr "Ъглова преливка:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3722
-#: plug-ins/gradient-flare/gradient-flare.c:3824
-msgid "Angular size gradient:"
-msgstr "Ъглова спирална преливка:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3741
-#: plug-ins/gradient-flare/gradient-flare.c:3843
-#: plug-ins/gradient-flare/gradient-flare.c:3974
-msgid "Size (%):"
-msgstr "Размер (%):"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3752
-#: plug-ins/gradient-flare/gradient-flare.c:3854
-#: plug-ins/gradient-flare/gradient-flare.c:3985
-msgid "Rotation:"
-msgstr "Завъртане:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3763
-#: plug-ins/gradient-flare/gradient-flare.c:3865
-#: plug-ins/gradient-flare/gradient-flare.c:3996
-msgid "Hue rotation:"
-msgstr "Завъртане на тона:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3777
-msgid "G_low"
-msgstr "_Сияние"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3876
-msgid "# of Spikes:"
-msgstr "Брой лъчи:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3887
-msgid "Spike thickness:"
-msgstr "Разлика между лъчите:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3901
-msgid "_Rays"
-msgstr "_Лъчи"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3951
-msgid "Size factor gradient:"
-msgstr "Преливка за размера:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:3955
-msgid "Probability gradient:"
-msgstr "Преливка за вероятността:"
-
-#.
-#. *    Shape Radio Button Frame
-#.
-#: plug-ins/gradient-flare/gradient-flare.c:4013
-msgid "Shape of Second Flares"
-msgstr "Форма на вторичните отблясъци"
-
-#: plug-ins/gradient-flare/gradient-flare.c:4072
-msgid "Random seed:"
-msgstr "Разпръскване:"
-
-#: plug-ins/gradient-flare/gradient-flare.c:4086
-msgid "_Second Flares"
-msgstr "_Вторични отблясъци"
 
 #. the dialog window
 #: plug-ins/help-browser/dialog.c:261 plug-ins/help-browser/dialog.c:893
@@ -13982,206 +14159,6 @@ msgstr "Картов файлов формат"
 #: plug-ins/imagemap/imap_source.c:68
 msgid "View Source"
 msgstr "Преглед на кода"
-
-#: plug-ins/lighting/lighting-apply.c:101 plug-ins/lighting/lighting-ui.c:1034
-msgid "Lighting Effects"
-msgstr "Светлинни ефекти"
-
-#: plug-ins/lighting/lighting-main.c:121
-msgid "_Lighting Effects..."
-msgstr "_Светлинни ефекти…"
-
-#: plug-ins/lighting/lighting-main.c:126
-msgid "Apply various lighting effects to an image"
-msgstr "Прилагане на различни светлинни ефекти върху изображение"
-
-#: plug-ins/lighting/lighting-ui.c:319
-msgid "T_ransparent background"
-msgstr "_Прозрачен фон"
-
-#: plug-ins/lighting/lighting-ui.c:329
-msgid "Make destination image transparent where bump height is zero"
-msgstr "Прозрачно изображение-цел, където височината на релефа е нула"
-
-#: plug-ins/lighting/lighting-ui.c:332
-msgid "Cre_ate new image"
-msgstr "_Създаване на ново изображение"
-
-#: plug-ins/lighting/lighting-ui.c:344
-msgid "High _quality preview"
-msgstr "_Висококачествен предварителен преглед"
-
-#: plug-ins/lighting/lighting-ui.c:354
-msgid "Enable/disable high quality preview"
-msgstr "Включване/изключване на висококачествения предварителен преглед"
-
-#: plug-ins/lighting/lighting-ui.c:356
-msgid "Distance:"
-msgstr "Разстояние:"
-
-#: plug-ins/lighting/lighting-ui.c:399
-msgid "Light 1"
-msgstr "Светлина 1"
-
-#: plug-ins/lighting/lighting-ui.c:400
-msgid "Light 2"
-msgstr "Светлина 2"
-
-#: plug-ins/lighting/lighting-ui.c:401
-msgid "Light 3"
-msgstr "Светлина 3"
-
-#: plug-ins/lighting/lighting-ui.c:402
-msgid "Light 4"
-msgstr "Светлина 4"
-
-#: plug-ins/lighting/lighting-ui.c:403
-msgid "Light 5"
-msgstr "Светлина 5"
-
-#: plug-ins/lighting/lighting-ui.c:404
-msgid "Light 6"
-msgstr "Светлина 6"
-
-#: plug-ins/lighting/lighting-ui.c:419
-msgid "Color:"
-msgstr "Цвят:"
-
-#: plug-ins/lighting/lighting-ui.c:425
-#, fuzzy
-#| msgid "None"
-msgctxt "light-source"
-msgid "None"
-msgstr "Няма"
-
-#: plug-ins/lighting/lighting-ui.c:426
-msgid "Directional"
-msgstr "Насочена"
-
-#: plug-ins/lighting/lighting-ui.c:427
-msgid "Point"
-msgstr "Точкова"
-
-#: plug-ins/lighting/lighting-ui.c:468
-msgid "_Intensity:"
-msgstr "_Интензитет:"
-
-#: plug-ins/lighting/lighting-ui.c:476
-msgid "Light intensity"
-msgstr "Интензитет на светлината"
-
-#: plug-ins/lighting/lighting-ui.c:525
-msgid "_Z:"
-msgstr "_Дълбочина:"
-
-#: plug-ins/lighting/lighting-ui.c:536
-msgid "Direction"
-msgstr "Посока"
-
-#: plug-ins/lighting/lighting-ui.c:587
-msgid "I_solate"
-msgstr "_Изолиране"
-
-#: plug-ins/lighting/lighting-ui.c:596
-msgid "Lighting preset:"
-msgstr "Шаблон на осветление:"
-
-#: plug-ins/lighting/lighting-ui.c:641
-msgid "Material Properties"
-msgstr "Свойства на материала"
-
-#: plug-ins/lighting/lighting-ui.c:660
-msgid "_Glowing:"
-msgstr "_Светене:"
-
-#: plug-ins/lighting/lighting-ui.c:691
-msgid "_Bright:"
-msgstr "_Осветеност:"
-
-#: plug-ins/lighting/lighting-ui.c:722
-msgid "_Shiny:"
-msgstr "_Блясък:"
-
-#: plug-ins/lighting/lighting-ui.c:752
-msgid "_Polished:"
-msgstr "_Полираност:"
-
-#. Metallic
-#: plug-ins/lighting/lighting-ui.c:779
-msgid "_Metallic"
-msgstr "_Металност"
-
-#: plug-ins/lighting/lighting-ui.c:815
-msgid "E_nable bump mapping"
-msgstr "_Включване карта на релефа"
-
-#: plug-ins/lighting/lighting-ui.c:829
-msgid "Enable/disable bump-mapping (image depth)"
-msgstr "Включване/изключване картата та на релефа (дълбочина на изображението)"
-
-#: plug-ins/lighting/lighting-ui.c:852
-msgid "Bumpm_ap image:"
-msgstr "Прилагане на релеф:"
-
-#: plug-ins/lighting/lighting-ui.c:856
-msgid "Logarithmic"
-msgstr "Логаритмично"
-
-#: plug-ins/lighting/lighting-ui.c:868
-msgid "Cu_rve:"
-msgstr "_Крива:"
-
-#: plug-ins/lighting/lighting-ui.c:874
-msgid "Ma_ximum height:"
-msgstr "_Максимална височина:"
-
-#: plug-ins/lighting/lighting-ui.c:884
-msgid "Maximum height for bumps"
-msgstr "Максимална височина на релефа"
-
-#: plug-ins/lighting/lighting-ui.c:908
-msgid "E_nable environment mapping"
-msgstr "Включване карта на _обкръжението"
-
-#: plug-ins/lighting/lighting-ui.c:922
-msgid "Enable/disable environment-mapping (reflection)"
-msgstr "Включване/изключване на картата на средата (отражение)"
-
-#: plug-ins/lighting/lighting-ui.c:940
-msgid "En_vironment image:"
-msgstr "_Изображение на средата:"
-
-#: plug-ins/lighting/lighting-ui.c:943
-msgid "Environment image to use"
-msgstr "Изображение на средата, което ще се използва"
-
-#: plug-ins/lighting/lighting-ui.c:965
-msgid "Op_tions"
-msgstr "_Настройки"
-
-#: plug-ins/lighting/lighting-ui.c:977
-msgid "_Bump Map"
-msgstr "_Релеф"
-
-#: plug-ins/lighting/lighting-ui.c:981
-msgid "_Environment Map"
-msgstr "_Карта на средата"
-
-#: plug-ins/lighting/lighting-ui.c:1102
-msgid "I_nteractive"
-msgstr "_Интерактивно"
-
-#: plug-ins/lighting/lighting-ui.c:1116
-msgid "Enable/disable real time preview of changes"
-msgstr "Включване/изключване показването на промените в реално време"
-
-#: plug-ins/lighting/lighting-ui.c:1159
-msgid "Save Lighting Preset"
-msgstr "Запазване настройките на осветлението"
-
-#: plug-ins/lighting/lighting-ui.c:1303
-msgid "Load Lighting Preset"
-msgstr "Зареждане настройки на осветлението"
 
 #: plug-ins/pagecurl/pagecurl.c:231
 msgid "_Pagecurl..."
