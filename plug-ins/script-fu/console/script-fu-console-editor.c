@@ -19,6 +19,8 @@
 
 #include <gtk/gtk.h>
 
+#include "script-fu-console-editor.h"
+
 
 /* ConsoleEditor
 
@@ -40,7 +42,7 @@
  */
 
 GtkWidget *
-console_editor_new ()
+console_editor_new (void)
 {
   return gtk_entry_new ();
 }

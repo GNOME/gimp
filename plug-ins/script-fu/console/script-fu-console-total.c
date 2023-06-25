@@ -35,7 +35,7 @@
 
 
 GtkTextBuffer *
-console_total_history_new ()
+console_total_history_new (void)
 {
   return gtk_text_buffer_new (NULL);
 }
