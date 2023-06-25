@@ -1,25 +1,25 @@
 # Swedish messages for GIMP Script-Fu.
-# Copyright © 2000-2003, 2007, 2008, 2011, 2015, 2017-2022 Free Software Foundation, Inc.
+# Copyright © 2000-2003, 2007, 2008, 2011, 2015, 2017-2023 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Tomas Ögren <stric@ing.umu.se>, 2001.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2011.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020, 2021, 2022.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020, 2021, 2022, 2023.
 # Sebastian Rasmussen <sebras@gmail.com>, 2015, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-12 21:38+0000\n"
-"PO-Revision-Date: 2022-11-13 00:13+0100\n"
+"POT-Creation-Date: 2023-06-25 18:45+0000\n"
+"PO-Revision-Date: 2023-06-25 21:37+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: plug-ins/script-fu/script-fu.c:122
 msgid "Script-Fu _Console"
@@ -29,123 +29,126 @@ msgstr "Script-Fu-_konsol"
 msgid "Interactive console for Script-Fu development"
 msgstr "Interaktiv konsol för Script-Fu-utveckling"
 
-#: plug-ins/script-fu/script-fu.c:310
+#: plug-ins/script-fu/script-fu.c:314
 msgid "_GIMP Online"
 msgstr "_GIMP på nätet"
 
-#: plug-ins/script-fu/script-fu.c:311
+#: plug-ins/script-fu/script-fu.c:315
 msgid "_User Manual"
 msgstr "A_nvändarhandbok"
 
-#: plug-ins/script-fu/script-fu.c:314
+#: plug-ins/script-fu/script-fu.c:318
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:316
+#: plug-ins/script-fu/script-fu.c:320
 msgid "_Test"
 msgstr "_Testa"
 
-#: plug-ins/script-fu/script-fu.c:319
+#: plug-ins/script-fu/script-fu.c:323
 msgid "_Buttons"
 msgstr "_Knappar"
 
-#: plug-ins/script-fu/script-fu.c:321
+#: plug-ins/script-fu/script-fu.c:325
 msgid "_Logos"
 msgstr "_Logotyper"
 
-#: plug-ins/script-fu/script-fu.c:323
+#: plug-ins/script-fu/script-fu.c:327
 msgid "_Patterns"
 msgstr "_Mönster"
 
-#: plug-ins/script-fu/script-fu.c:326
+#: plug-ins/script-fu/script-fu.c:330
 msgid "_Web Page Themes"
 msgstr "_Webbsideteman"
 
-#: plug-ins/script-fu/script-fu.c:328
+#: plug-ins/script-fu/script-fu.c:332
 msgid "_Alien Glow"
 msgstr "Rymd_glöd"
 
-#: plug-ins/script-fu/script-fu.c:330
+#: plug-ins/script-fu/script-fu.c:334
 msgid "_Beveled Pattern"
 msgstr "Av_fasat mönster"
 
-#: plug-ins/script-fu/script-fu.c:332
+#: plug-ins/script-fu/script-fu.c:336
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: plug-ins/script-fu/script-fu.c:335
+#: plug-ins/script-fu/script-fu.c:339
 msgid "Alpha to _Logo"
 msgstr "Alfa till _logotyp"
 
-#: plug-ins/script-fu/script-fu.c:341
+#: plug-ins/script-fu/script-fu.c:345
 msgid "_Refresh Scripts"
 msgstr "_Uppdatera skript"
 
-#: plug-ins/script-fu/script-fu.c:346
+#: plug-ins/script-fu/script-fu.c:350
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Läs om alla tillgängliga Script-Fu-skript"
 
-#: plug-ins/script-fu/script-fu.c:372
-msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
-msgstr "Du kan inte använda ”Uppdatera skript” när en Script-Fu-dialogruta är öppen.  Stäng alla Script-Fu-fönster och försök igen."
-
-#: plug-ins/script-fu/script-fu-console.c:110
-#: plug-ins/script-fu/script-fu-console.c:177
-msgid "Script-Fu Console"
-msgstr "Script-Fu-konsol"
-
-#: plug-ins/script-fu/script-fu-console.c:115
-#: plug-ins/script-fu/script-fu-console.c:281
-msgid "_Save"
-msgstr "_Spara"
-
-#: plug-ins/script-fu/script-fu-console.c:116
-msgid "C_lear"
-msgstr "Tö_m"
-
-#: plug-ins/script-fu/script-fu-console.c:117
-#: plug-ins/script-fu/script-fu-console.c:359
-msgid "_Close"
-msgstr "S_täng"
-
-#: plug-ins/script-fu/script-fu-console.c:173
-msgid "Welcome to TinyScheme"
-msgstr "Välkommen till TinyScheme"
-
-#: plug-ins/script-fu/script-fu-console.c:179
-msgid "Interactive Scheme Development"
-msgstr "Interaktiv Scheme-utveckling"
-
-#: plug-ins/script-fu/script-fu-console.c:215
-msgid "_Browse..."
-msgstr "_Bläddra…"
-
-#: plug-ins/script-fu/script-fu-console.c:276
-msgid "Save Script-Fu Console Output"
-msgstr "Spara utdata från Script-Fu-konsol"
-
-#: plug-ins/script-fu/script-fu-console.c:280
-#: plug-ins/script-fu/server/script-fu-server.c:884
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:236
-msgid "_Cancel"
-msgstr "A_vbryt"
-
-#: plug-ins/script-fu/script-fu-console.c:325
-#, c-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "Kunde inte öppna ”%s” för skrivning: %s"
-
-#: plug-ins/script-fu/script-fu-console.c:354
-msgid "Script-Fu Procedure Browser"
-msgstr "Script-Fu-procedurbläddrare"
-
-#: plug-ins/script-fu/script-fu-console.c:358
-msgid "_Apply"
-msgstr "V_erkställ"
+#: plug-ins/script-fu/script-fu.c:376
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+"Du kan inte använda ”Uppdatera skript” när en Script-Fu-dialogruta är "
+"öppen.  Stäng alla Script-Fu-fönster och försök igen."
 
 #: plug-ins/script-fu/script-fu-eval.c:50
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu-evalueringsläget tillåter endast icke-interaktiv användning"
+
+#: plug-ins/script-fu/console/script-fu-console.c:125
+msgid "Script Console"
+msgstr "Skriptkonsol"
+
+#: plug-ins/script-fu/console/script-fu-console.c:130
+#: plug-ins/script-fu/console/script-fu-console.c:259
+msgid "_Save"
+msgstr "_Spara"
+
+#: plug-ins/script-fu/console/script-fu-console.c:131
+msgid "C_lear"
+msgstr "Tö_m"
+
+#: plug-ins/script-fu/console/script-fu-console.c:132
+#: plug-ins/script-fu/console/script-fu-console.c:332
+msgid "_Close"
+msgstr "S_täng"
+
+#: plug-ins/script-fu/console/script-fu-console.c:193
+msgid "_Browse..."
+msgstr "_Bläddra…"
+
+#: plug-ins/script-fu/console/script-fu-console.c:254
+msgid "Save Script-Fu Console Output"
+msgstr "Spara utdata från Script-Fu-konsol"
+
+#: plug-ins/script-fu/console/script-fu-console.c:258
+#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:218
+msgid "_Cancel"
+msgstr "A_vbryt"
+
+#: plug-ins/script-fu/console/script-fu-console.c:301
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Kunde inte öppna ”%s” för skrivning: %s"
+
+#: plug-ins/script-fu/console/script-fu-console.c:327
+msgid "Script-Fu Procedure Browser"
+msgstr "Script-Fu-procedurbläddrare"
+
+#: plug-ins/script-fu/console/script-fu-console.c:331
+msgid "_Apply"
+msgstr "V_erkställ"
+
+#: plug-ins/script-fu/console/script-fu-console-total.c:89
+msgid "Welcome to TinyScheme"
+msgstr "Välkommen till TinyScheme"
+
+#: plug-ins/script-fu/console/script-fu-console-total.c:93
+msgid "Scripting GIMP in the Scheme language"
+msgstr "Skript för GIMP i språket Scheme"
 
 #: plug-ins/script-fu/server/script-fu-server.c:880
 msgid "Script-Fu Server Options"
@@ -168,8 +171,12 @@ msgid "Server logfile:"
 msgstr "Serverloggfil:"
 
 #: plug-ins/script-fu/server/script-fu-server.c:944
-msgid "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can allow attackers to remotely execute arbitrary code on this machine."
-msgstr "Att lyssna på en annan IP-adress än 127.0.0.1 (särskilt 0.0.0.0) kan tillåta en angripare att köra godtycklig kod från distans på den här maskinen."
+msgid ""
+"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
+"allow attackers to remotely execute arbitrary code on this machine."
+msgstr ""
+"Att lyssna på en annan IP-adress än 127.0.0.1 (särskilt 0.0.0.0) kan tillåta "
+"en angripare att köra godtycklig kod från distans på den här maskinen."
 
 #: plug-ins/script-fu/server/script-fu-server-plugin.c:91
 msgid "_Start Server..."
@@ -179,69 +186,69 @@ msgstr "_Starta servern…"
 msgid "Server for remote Script-Fu operation"
 msgstr "Server för fjärråtgärder i Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:202
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:184
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kan inte köra två skript på samma gång."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:204
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:186
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Du kör redan skriptet ”%s”."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:228
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:210
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:235
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:217
 msgid "_Reset"
 msgstr "Å_terställ"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:237
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:219
 msgid "_OK"
 msgstr "_OK"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:291
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:341
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:323
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-färgväljare"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:468
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:450
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filväljare"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:471
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mappväljare"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:484
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:466
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu-typsnittsväljare"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:492
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:472
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu-palettväljare"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:501
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:479
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu-mönsterväljare"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:510
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-gradientväljare"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:519
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:493
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penselväljare"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:898
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:868
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Fel vid körning av %s:"
@@ -321,8 +328,12 @@ msgid "_Blend..."
 msgstr "_Intoning…"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:229
-msgid "Create intermediate layers to blend two or more layers over a background as an animation"
-msgstr "Skapa mellanliggande lager för att tona två eller fler lager över en bakgrund som en animation"
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr ""
+"Skapa mellanliggande lager för att tona två eller fler lager över en "
+"bakgrund som en animation"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:236
 msgid "Intermediate frames"
@@ -338,16 +349,24 @@ msgstr "Evig slinga"
 
 #. --- false form of "if-1"
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:217
-msgid "The Burn-In script needs two layers in total. A foreground layer with transparency and a background layer."
-msgstr "Skriptet Inbränning behöver totalt två lager. Ett förgrundslager med transparens och ett bakgrundslager."
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr ""
+"Skriptet Inbränning behöver totalt två lager. Ett förgrundslager med "
+"transparens och ett bakgrundslager."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:224
 msgid "B_urn-In..."
 msgstr "In_bränning…"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:225
-msgid "Create intermediate layers to produce an animated 'burn-in' transition between two layers"
-msgstr "Skapa mellanliggande lager för att producera en animerad ”inbränd” övergång mellan två lager"
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr ""
+"Skapa mellanliggande lager för att producera en animerad ”inbränd” övergång "
+"mellan två lager"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:232
 msgid "Glow color"
@@ -406,8 +425,11 @@ msgid "Stencil C_arve..."
 msgstr "Stencilerad kar_vning…"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:222
-msgid "Use the specified drawable as a stencil to carve from the specified image."
-msgstr "Använde den angivna ritytan som en stencil att karva ut från den angivna bilden."
+msgid ""
+"Use the specified drawable as a stencil to carve from the specified image."
+msgstr ""
+"Använde den angivna ritytan som en stencil att karva ut från den angivna "
+"bilden."
 
 #: plug-ins/script-fu/scripts/carve-it.scm:229
 msgid "Image to carve"
@@ -451,8 +473,12 @@ msgid "Stencil C_hrome..."
 msgstr "Stencilerat k_rom…"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:242
-msgid "Add a chrome effect to the selected region (or alpha) using a specified (grayscale) stencil"
-msgstr "Lägg till en kromeffekt till markerad region (eller alfa) med en angiven (gråskalig) stencil"
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
+msgstr ""
+"Lägg till en kromeffekt till markerad region (eller alfa) med en angiven "
+"(gråskalig) stencil"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:249
 msgid "Chrome saturation"
@@ -491,8 +517,10 @@ msgid "_Circuit..."
 msgstr "_Krets…"
 
 #: plug-ins/script-fu/scripts/circuit.scm:132
-msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
-msgstr "Fyll markerad region (eller alfa) med spår som liknar de på ett kretskort"
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr ""
+"Fyll markerad region (eller alfa) med spår som liknar de på ett kretskort"
 
 #: plug-ins/script-fu/scripts/circuit.scm:139
 msgid "Oilify mask size"
@@ -508,14 +536,12 @@ msgstr "Ingen bakgrund (endast för separat lager)"
 
 #: plug-ins/script-fu/scripts/circuit.scm:142
 #: plug-ins/script-fu/scripts/lava.scm:141
-#: plug-ins/script-fu/scripts/predator.scm:138
 #: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Keep selection"
 msgstr "Behåll markering"
 
 #: plug-ins/script-fu/scripts/circuit.scm:143
 #: plug-ins/script-fu/scripts/lava.scm:142
-#: plug-ins/script-fu/scripts/predator.scm:139
 msgid "Separate layer"
 msgstr "Separat lager"
 
@@ -708,8 +734,11 @@ msgid "Render _Font Map..."
 msgstr "Rendera typsnitts_karta…"
 
 #: plug-ins/script-fu/scripts/font-map.scm:162
-msgid "Create an image filled with previews of fonts matching a fontname filter"
-msgstr "Skapa en bild fylld med förhandsvisningar av typsnitt som matchar ett typsnittsfilter"
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
+msgstr ""
+"Skapa en bild fylld med förhandsvisningar av typsnitt som matchar ett "
+"typsnittsfilter"
 
 #: plug-ins/script-fu/scripts/font-map.scm:167
 msgid "_Text"
@@ -898,8 +927,12 @@ msgid "_Grid..."
 msgstr "_Rutnät…"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:85
-msgid "Draw a grid as specified by the lists of X and Y locations using the current brush"
-msgstr "Rita ett rutnät angivet av listorna för X- och Y-koordinaterna med aktuell pensel"
+msgid ""
+"Draw a grid as specified by the lists of X and Y locations using the current "
+"brush"
+msgstr ""
+"Rita ett rutnät angivet av listorna för X- och Y-koordinaterna med aktuell "
+"pensel"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:92
 msgid "X divisions"
@@ -915,7 +948,8 @@ msgstr "Nya hjälplinjer från _markering"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "Create four guides around the bounding box of the current selection"
-msgstr "Skapa fyra hjälplinjer runt begränsningsrutan för den aktuella markeringen"
+msgstr ""
+"Skapa fyra hjälplinjer runt begränsningsrutan för den aktuella markeringen"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
@@ -923,7 +957,9 @@ msgstr "Ny hjälplinje (i _procent)…"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:28
 msgid "Add a guide at the position specified as a percentage of the image size"
-msgstr "Lägg till en hjälplinje på angiven position som ett procenttal av bildstorleken"
+msgstr ""
+"Lägg till en hjälplinje på angiven position som ett procenttal av "
+"bildstorleken"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: plug-ins/script-fu/scripts/guides-new.scm:35
@@ -950,7 +986,8 @@ msgstr "Ny _hjälplinje…"
 
 #: plug-ins/script-fu/scripts/guides-new.scm:28
 msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr "Lägg till en hjälplinje med angiven orientering och position (i bildpunkter)"
+msgstr ""
+"Lägg till en hjälplinje med angiven orientering och position (i bildpunkter)"
 
 #: plug-ins/script-fu/scripts/guides-new.scm:36
 msgid "_Position"
@@ -1002,8 +1039,11 @@ msgid "Line _Nova..."
 msgstr "Linje_nova…"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:107
-msgid "Fill a layer with rays emanating outward from its center using the foreground color"
-msgstr "Fyll ett lager med utåtriktade strålar från dess centrum med förgrundsfärgen"
+msgid ""
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
+msgstr ""
+"Fyll ett lager med utåtriktade strålar från dess centrum med förgrundsfärgen"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:114
 msgid "Number of lines"
@@ -1100,20 +1140,32 @@ msgid "Folder for the output file"
 msgstr "Mapp för utdatafilen"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:227
-msgid "The name of the file to create (if a file with this name already exist, it will be replaced)"
-msgstr "Namnet på filen att skapa (om en fil med detta namn redan finns så kommer den att ersättas)"
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+"Namnet på filen att skapa (om en fil med detta namn redan finns så kommer "
+"den att ersättas)"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
 msgstr "Filnamnet som du angav är inte ett lämpligt namn för en fil."
 
 #: plug-ins/script-fu/scripts/palette-export.scm:237
-msgid "All characters in the name are either white-spaces or characters which can not appear in filenames."
-msgstr "Alla tecken i namnet är antingen blanksteg eller tecken som inte får förekomma i filnamn."
+msgid ""
+"All characters in the name are either white-spaces or characters which can "
+"not appear in filenames."
+msgstr ""
+"Alla tecken i namnet är antingen blanksteg eller tecken som inte får "
+"förekomma i filnamn."
 
 #: plug-ins/script-fu/scripts/palette-export.scm:265
-msgid "Export the active palette as a CSS stylesheet with the color entry name as their class name, and the color itself as the color attribute"
-msgstr "Exportera den aktiva paletten som en CSS-stilmall med färgnamnen som deras klassnamn samt själva färgen som färgattributet"
+msgid ""
+"Export the active palette as a CSS stylesheet with the color entry name as "
+"their class name, and the color itself as the color attribute"
+msgstr ""
+"Exportera den aktiva paletten som en CSS-stilmall med färgnamnen som deras "
+"klassnamn samt själva färgen som färgattributet"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
@@ -1124,8 +1176,12 @@ msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Exportera den aktiva paletten som ett Python-dictionary (namn: färg)"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:352
-msgid "Write all the colors in a palette to a text file, one hexadecimal value per line (no names)"
-msgstr "Skriv alla färgerna i en palett till en textfil, ett hexadecimalt värde per rad (inga namn)"
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr ""
+"Skriv alla färgerna i en palett till en textfil, ett hexadecimalt värde per "
+"rad (inga namn)"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:399
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
@@ -1198,26 +1254,6 @@ msgstr "Relativ längd på skugga"
 msgid "Interpolation"
 msgstr "Interpolation"
 
-#: plug-ins/script-fu/scripts/predator.scm:127
-msgid "_Predator..."
-msgstr "_Predator…"
-
-#: plug-ins/script-fu/scripts/predator.scm:128
-msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "Lägg till en ”Predator”-effekt till markerad region (eller alfa)"
-
-#: plug-ins/script-fu/scripts/predator.scm:135
-msgid "Edge amount"
-msgstr "Hörnmängd"
-
-#: plug-ins/script-fu/scripts/predator.scm:136
-msgid "Pixelize"
-msgstr "Pixelisera"
-
-#: plug-ins/script-fu/scripts/predator.scm:137
-msgid "Pixel amount"
-msgstr "Mängd bildpunkter"
-
 #: plug-ins/script-fu/scripts/reverse-layers.scm:42
 msgid "Reverse Layer _Order"
 msgstr "_Omvänd lagerordning"
@@ -1231,8 +1267,11 @@ msgid "_Rippling..."
 msgstr "_Krusning…"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:70
-msgid "Create a multi-layer image by adding a ripple effect to the current layer"
-msgstr "Skapa en flerlagrad bild genom att lägga till en krusningseffekt till aktuellt lager"
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current layer"
+msgstr ""
+"Skapa en flerlagrad bild genom att lägga till en krusningseffekt till "
+"aktuellt lager"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Rippling strength"
@@ -1264,8 +1303,11 @@ msgid "_Round Corners..."
 msgstr "_Runda hörn…"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:132
-msgid "Round the corners of an image and optionally add a drop-shadow and background"
-msgstr "Runda av hörnen i en bild och lägg valfritt till en skuggkastning och bakgrund"
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and background"
+msgstr ""
+"Runda av hörnen i en bild och lägg valfritt till en skuggkastning och "
+"bakgrund"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:139
 msgid "Edge radius"
@@ -1345,7 +1387,9 @@ msgstr "_Bildspel…"
 
 #: plug-ins/script-fu/scripts/slide.scm:246
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-msgstr "Lägg till en diabildsliknande bildruta, perforeringar och etiketter till en bild"
+msgstr ""
+"Lägg till en diabildsliknande bildruta, perforeringar och etiketter till en "
+"bild"
 
 #: plug-ins/script-fu/scripts/slide.scm:253
 msgid "Text"
@@ -1436,8 +1480,12 @@ msgid "_Waves..."
 msgstr "_Vågor…"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:96
-msgid "Create a multi-layer image with an effect like a stone was thrown into the current image"
-msgstr "Skapa en flerlagrad bild med en effekt liknande en sten som kastats genom den aktuella bilden"
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
+msgstr ""
+"Skapa en flerlagrad bild med en effekt liknande en sten som kastats genom "
+"den aktuella bilden"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:103
 msgid "Amplitude"
@@ -1456,8 +1504,12 @@ msgid "_Weave..."
 msgstr "_Väv…"
 
 #: plug-ins/script-fu/scripts/weave.scm:419
-msgid "Create a new layer filled with a weave effect to be used as an overlay or bump map"
-msgstr "Skapa ett nytt lager fyllt med en väveffekt som kan användas som en överliggande eller bumpmapp"
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr ""
+"Skapa ett nytt lager fyllt med en väveffekt som kan användas som en "
+"överliggande eller bumpmapp"
 
 #: plug-ins/script-fu/scripts/weave.scm:426
 msgid "Ribbon width"
@@ -1497,7 +1549,9 @@ msgstr "_Xach-effekt…"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:122
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr "Lägg till en subtil halvgenomskinlig 3D-effekt till markerad region (eller alfa)"
+msgstr ""
+"Lägg till en subtil halvgenomskinlig 3D-effekt till markerad region (eller "
+"alfa)"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:129
 msgid "Highlight X offset"
@@ -1534,6 +1588,24 @@ msgstr "X-avstånd för skuggkastning"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Y-avstånd för skuggkastning"
+
+#~ msgid "Interactive Scheme Development"
+#~ msgstr "Interaktiv Scheme-utveckling"
+
+#~ msgid "_Predator..."
+#~ msgstr "_Predator…"
+
+#~ msgid "Add a 'Predator' effect to the selected region (or alpha)"
+#~ msgstr "Lägg till en ”Predator”-effekt till markerad region (eller alfa)"
+
+#~ msgid "Edge amount"
+#~ msgstr "Hörnmängd"
+
+#~ msgid "Pixelize"
+#~ msgstr "Pixelisera"
+
+#~ msgid "Pixel amount"
+#~ msgstr "Mängd bildpunkter"
 
 #~ msgid "Too few arguments to 'script-fu-register' call"
 #~ msgstr "För få argument till ”script-fu-register”-anrop"
