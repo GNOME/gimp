@@ -406,6 +406,13 @@ menu box {
   background-color: transparent;
 }
 
+/* In some cases, the GtkSeparatorMenuItem-s get very ugly top/bottom margin
+ * with a different background color. Let's get rid of it.
+ */
+menu separator {
+  margin: 0;
+}
+
 /* Sidebar in File > Open */
 
 /* The background to either side of the directory buttons.
