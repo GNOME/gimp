@@ -126,6 +126,7 @@ static gboolean gimp_menu_copy_placeholders       (gpointer                  key
 
 static void     gimp_menu_help_fun                (const gchar             *bogus_help_id,
                                                    gpointer                 help_data);
+static void     gimp_menu_hide_double_separators  (GimpMenu                *menu);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpMenu, gimp_menu, GTK_TYPE_MENU,
@@ -293,6 +294,8 @@ gimp_menu_append (GimpMenuShell *shell,
       g_clear_object (&submenu);
       g_clear_object (&subsection);
     }
+
+  gimp_menu_hide_double_separators (menu);
 }
 
 static void
@@ -341,6 +344,8 @@ gimp_menu_add_ui (GimpMenuShell  *shell,
       gimp_menu_add_ui (GIMP_MENU_SHELL (submenu), paths + 1,
                         action_name, placeholder_key, top);
     }
+
+  gimp_menu_hide_double_separators (menu);
 }
 
 static void
@@ -366,6 +371,8 @@ gimp_menu_remove_ui (GimpMenuShell  *shell,
 
       gimp_menu_remove_ui (GIMP_MENU_SHELL (submenu), paths + 1, action_name);
     }
+
+  gimp_menu_hide_double_separators (menu);
 }
 
 static void
@@ -696,6 +703,8 @@ gimp_menu_section_items_changed (GMenuModel *model,
       position++;
     }
   g_list_free (children);
+
+  gimp_menu_hide_double_separators (menu);
 }
 
 static void
@@ -818,6 +827,8 @@ gimp_menu_action_notify_visible (GimpAction       *action,
             gtk_widget_hide (widget);
         }
     }
+
+  gimp_menu_hide_double_separators (GIMP_MENU (container));
 }
 
 static gboolean
@@ -877,4 +888,49 @@ gimp_menu_help_fun (const gchar *bogus_help_id,
   g_free (help_domain);
   g_free (help_string);
   g_free (help_id);
+}
+
+/* With successive sections, we will end up with double separators (end one then
+ * start one of the next section). Moreover sometimes, empty sections (e.g.
+ * because items are expected to be added later through placeholders) would make
+ * even 3 to 4 separators next to each other. This renders very ugly. We need to
+ * call this function to hide and show separators after changes.
+ *
+ * This also hides start and end separators in the menu.
+ */
+static void
+gimp_menu_hide_double_separators (GimpMenu *menu)
+{
+  GList     *children;
+  GList     *iter;
+  GtkWidget *prev_item = NULL;
+
+  children = gtk_container_get_children (GTK_CONTAINER (menu));
+  for (iter = children; iter; iter = iter->next)
+    {
+      GtkWidget *item = iter->data;
+
+      if (GTK_IS_SEPARATOR_MENU_ITEM (item))
+        {
+          if (prev_item == NULL ||
+              GTK_IS_SEPARATOR_MENU_ITEM (prev_item))
+            {
+              gtk_widget_hide (item);
+            }
+          else
+            {
+              gtk_widget_show (item);
+              prev_item = item;
+            }
+        }
+      else if (gtk_widget_get_visible (item))
+        {
+          prev_item = item;
+        }
+    }
+
+  if (prev_item != NULL && GTK_IS_SEPARATOR_MENU_ITEM (prev_item))
+    gtk_widget_hide (prev_item);
+
+  g_list_free (children);
 }
