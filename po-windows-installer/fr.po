@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-22 21:28+0200\n"
-"PO-Revision-Date: 2020-12-27 21:09+0100\n"
+"POT-Creation-Date: 2023-03-21 07:27+0000\n"
+"PO-Revision-Date: 2023-06-26 10:35+0200\n"
 "Last-Translator: Julien Hardelin <jhardlin@orange.fr>\n"
 "Language-Team: French <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Gtranslator 3.38.0\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -45,14 +45,14 @@ msgid ""
 "gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
 "installation anyway?"
 msgstr ""
-"Ceci est une version de développement de l’installateur GIMP et certaines "
-"fonctions peuvent ne pas être au point.%nElle n’est pas destinée au travail "
-"de tous les jours, car elle est instable et vous courez le risque de perdre "
-"votre travail.%nSi vous rencontrez des problèmes, assurez-vous d’abord "
-"qu’ils n’ont pas déjà été réglés dans GIT avant de contacter les "
-"développeurs ou de les rapporter dans le gitlab GIMP :%n_https://gitlab."
-"gnome.org/GNOME/gimp/issues%n%nSouhaitez-vous tout de même poursuivre "
-"l’installation ?"
+"Ceci est une version de développement de GIMP et certaines fonctions peuvent "
+"ne pas être au point, ou être instables.%nCette version de GIMP n’est pas "
+"destinée au travail de tous les jours, car elle est instable et vous courez "
+"le risque de perdre votre travail.%nSi vous rencontrez des problèmes, "
+"assurez-vous d’abord qu’ils n’ont pas déjà été réglés dans GIT avant de "
+"contacter les développeurs ou de les rapporter dans le gitlab GIMP :"
+"%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nSouhaitez-vous tout de même "
+"poursuivre l’installation ?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
@@ -137,11 +137,10 @@ msgid "Run-time libraries"
 msgstr "Bibliothèques d’exécution"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-#, fuzzy
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
 "Bibliothèques d’exécution utilisées par GIMP, y compris l’environnement "
-"d’exécution GTK+"
+"d’exécution GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -149,12 +148,11 @@ msgstr "Symboles de débogage"
 
 #: build/windows/installer/lang/setup.isl.xml.in:109
 msgid "Include information to help with debugging GIMP"
-msgstr "Inclure des informations aidant à déboguer GIMP"
+msgstr "Inclut des informations aidant à déboguer GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-#, fuzzy
 msgid "MS-Windows engine for GTK"
-msgstr "Moteur GTK+ pour Windows"
+msgstr "Moteur GTK pour Windows"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
@@ -166,7 +164,7 @@ msgstr "Prise en charge des anciens greffons"
 
 #: build/windows/installer/lang/setup.isl.xml.in:125
 msgid "Install libraries needed by old third-party plug-ins"
-msgstr "Installe les bibliothèques requises par d’anciens greffons"
+msgstr "Installe les bibliothèques requises par d’anciens greffons tiers"
 
 #: build/windows/installer/lang/setup.isl.xml.in:129
 #: build/windows/installer/lang/setup.isl.xml.in:133
@@ -179,7 +177,7 @@ msgstr "Prise en charge des scripts Python"
 
 #: build/windows/installer/lang/setup.isl.xml.in:141
 msgid "Allows you to use GIMP plugins written in Python scripting language."
-msgstr "Prise en charge des greffons GIMP écrits en langage Python."
+msgstr "Permet la prise en charge des greffons GIMP écrits en langage Python."
 
 #: build/windows/installer/lang/setup.isl.xml.in:145
 msgid "Lua scripting"
@@ -187,7 +185,7 @@ msgstr "Prise en charge des scripts Lua"
 
 #: build/windows/installer/lang/setup.isl.xml.in:149
 msgid "Allows you to use GIMP plugins written in Lua scripting language."
-msgstr "Prise en charge des greffons GIMP écrits en langage Lua."
+msgstr "Permet la prise en charge des greffons GIMP écrits en langage Lua."
 
 #: build/windows/installer/lang/setup.isl.xml.in:153
 msgid "MyPaint brushes"
@@ -207,7 +205,7 @@ msgstr "Permet le chargement de fichiers PostScript dans GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:169
 msgid "Support for 32-bit plug-ins"
-msgstr "Gestion des greffons 32 bits"
+msgstr "Prise en charge des greffons 32 bits"
 
 #: build/windows/installer/lang/setup.isl.xml.in:173
 msgid ""
@@ -257,7 +255,7 @@ msgstr "Erreur durant la mise à jour des informations sur les brosses MyPaint."
 
 #: build/windows/installer/lang/setup.isl.xml.in:211
 msgid "There was an error updating %1."
-msgstr "Erreur de mise à jour du fichier %1."
+msgstr "Erreur lors de la mise à jour de %1."
 
 #: build/windows/installer/lang/setup.isl.xml.in:215
 msgid "There was an error updating GIMP's configuration file %1."
@@ -277,7 +275,7 @@ msgstr "Extensions :"
 
 #: build/windows/installer/lang/setup.isl.xml.in:233
 msgid "Select the file types you wish to associate with GIMP"
-msgstr "Sélectionner les extensions de fichiers à associer à GIMP"
+msgstr "Sélectionnez les extensions de fichiers à associer à GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:237
 msgid ""
@@ -315,26 +313,28 @@ msgid ""
 "choose a Custom install, and select a different installation folder.%n%nThe "
 "Setup will now exit."
 msgstr ""
-"La désinstallation automatique de votre version de GIMP actuelle a échoué, "
-"et GIMP %1 ne peut l’écraser.%n%nVeuillez désinstaller manuellement "
-"l’ancienne version de GIMP et relancez l’installation dans %2, ou choisissez "
-"l’option d’installation personnalisée et un dossier de destination différent."
+"GIMP %1 ne peut pas être installée par dessus votre version actuelle de "
+"GIMP, et la désinstallation automatique de l'ancienne version a échoué."
+"%n%nVeuillez désinstaller manuellement l’ancienne version de GIMP et "
+"relancez l’installation dans %2, ou choisissez l’option d’installation "
+"personnalisée puis définissez un dossier de destination différent."
 "%n%nL’installateur va à présent s’arrêter."
 
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
-"installing this version in %2, or choose a Custom install, and select a "
-"different installation folder.%n%nThe Setup will now exit."
+"Setup couldn't determine how to remove the old version automatically."
+"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+"before installing this version in %2, or choose a Custom install, and select "
+"a different installation folder.%n%nThe Setup will now exit."
 msgstr ""
-"La méthode de désinstallation automatique de votre version de GIMP actuelle "
-"n’a pu être déterminée, et GIMP %1 ne peut écraser votre version de GIMP "
-"actuelle.%n%nVeuillez désinstaller manuellement l’ancienne version de GIMP "
-"et ses greffons avant de retenter une installation dans %2, ou choisissez "
-"une installation personnalisée et un dossier de destination différent.%n"
-"%nL’installateur va à présent s’arrêter."
+"GIMP %1 ne peut pas être installée par dessus votre version actuelle de "
+"GIMP, et la méthode de désinstallation automatique de votre version actuelle "
+"de GIMP n’a pu être déterminée.%n%nVeuillez désinstaller manuellement "
+"l’ancienne version de GIMP et ses greffons avant de retenter une "
+"installation dans %2, ou choisissez une installation personnalisée puis "
+"définissez un dossier de destination différent.%n%nL’installateur va à "
+"présent s’arrêter."
 
 #: build/windows/installer/lang/setup.isl.xml.in:270
 msgid ""
@@ -342,7 +342,7 @@ msgid ""
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
 "Setup will continue next time an administrator logs in."
 msgstr ""
-"Votre version précédente de GIMP a été supprimée avec succès, mais Windows "
+"L'ancienne version de GIMP a été désinstallée avec succès, mais Windows "
 "requiert un redémarrage avant de poursuivre l’installation.%n%nAprès le "
 "redémarrage, l’installation reprendra à la connexion d’un administrateur."
 
@@ -400,7 +400,7 @@ msgid ""
 "anyway?"
 msgstr ""
 "GIMP ne semble pas être installé dans le dossier sélectionné. Souhaitez-vous "
-"continuer ?"
+"continuer malgré tout ?"
 
 #~ msgid ""
 #~ "Setup built by Jernej Simonèiè, jernej-gimp@ena.si%n%nImage on opening "
