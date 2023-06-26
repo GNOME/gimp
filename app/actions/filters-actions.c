@@ -841,7 +841,11 @@ filters_actions_setup (GimpActionGroup *group)
       else if (title)
         {
           GimpAction *action;
-          gchar *short_label = g_strdup_printf ("%s..", title);
+          /* TRANSLATORS: %s is the title of a GEGL operation (filter), after
+           * which we append "..." as the standardized labelling to indicate
+           * that this action raises a dialog.
+           */
+          gchar      *short_label = g_strdup_printf (_("%s..."), title);
 
           action = gimp_action_group_get_action (group, action_name);
           gimp_action_set_short_label (action, short_label);
