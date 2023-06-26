@@ -129,6 +129,18 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), editor);
   gtk_widget_show (editor);
 
+  /* Extend layer options */
+  scale = gimp_prop_spin_scale_new (config, "expand-amount",
+                                    1, 10, 2);
+  gimp_spin_scale_set_constrain_drag (GIMP_SPIN_SCALE (scale), TRUE);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
+  gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), 1.0);
+
+  frame = gimp_prop_expanding_frame_new (config, "expand-use", NULL,
+                                         scale, NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   gimp_config_connect (config, G_OBJECT (editor), "blob-type");
   gimp_config_connect (config, G_OBJECT (editor), "blob-aspect");
   gimp_config_connect (config, G_OBJECT (editor), "blob-angle");

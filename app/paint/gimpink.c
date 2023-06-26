@@ -238,16 +238,39 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
                            gint             *paint_width,
                            gint             *paint_height)
 {
-  GimpInk *ink = GIMP_INK (paint_core);
-  gint     x, y;
-  gint     width, height;
-  gint     dwidth, dheight;
-  gint     x1, y1, x2, y2;
+  GimpInk    *ink = GIMP_INK (paint_core);
+  gint        x, y;
+  gint        width, height;
+  gint        dwidth, dheight;
+  gint        x1, y1, x2, y2;
+  gint        offset_change_x, offset_change_y;
+  GimpCoords  new_coords;
+  GList      *iter;
 
   gimp_blob_bounds (ink->cur_blob, &x, &y, &width, &height);
 
+  x1 = x / SUBSAMPLE - 1;
+  y1 = y / SUBSAMPLE - 1;
+  x2 = (x + width)  / SUBSAMPLE + 2;
+  y2 = (y + height) / SUBSAMPLE + 2;
+
+  gimp_paint_core_expand_drawable (paint_core, drawable, paint_options,
+                                   x1, x2, y1, y2,
+                                   &offset_change_x, &offset_change_y);
+
   dwidth  = gimp_item_get_width  (GIMP_ITEM (drawable));
   dheight = gimp_item_get_height (GIMP_ITEM (drawable));
+
+  if (offset_change_x || offset_change_y)
+    {
+      x += SUBSAMPLE * offset_change_x;
+      y += SUBSAMPLE * offset_change_y;
+
+      for (iter = ink->last_blobs; iter; iter = g_list_next (iter))
+        gimp_blob_move (iter->data,
+                        SUBSAMPLE * offset_change_x,
+                        SUBSAMPLE * offset_change_y);
+    }
 
   x1 = CLAMP (x / SUBSAMPLE - 1,            0, dwidth);
   y1 = CLAMP (y / SUBSAMPLE - 1,            0, dheight);
@@ -418,6 +441,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
                                      &foreground, &foreground);
   color = gimp_gegl_color_new (&foreground, gimp_drawable_get_space (drawable));
+  ink->blobs_to_render = blobs_to_render;
 
   for (i = 0; i < n_strokes; i++)
     {
