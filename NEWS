@@ -46,7 +46,8 @@ Core:
    can be assigned as well.
  - If present, the GEGL key "gimp:menu-label" will be used to set the short
    label of the generated action (short labels are typically used in menus since
-   the menu path can serve as context).
+   the menu path can serve as context). Otherwise the "title" with appended
+   "..." is used.
  - GimpAction now have a concept of short vs. long labels, which can be used in
    different places. In particular, in action search, we usually want the long
    label, whereas in menus, we usually want the short label as we have context
@@ -62,6 +63,9 @@ Core:
  - Action search now displays a "help" icon which can be clicked to show the
    currently selected action's manual page (or the action search manual page if
    no actions are selected). Alternatively the F1 shortcut will do the same.
+ - Basic matrix operations code was optimized.
+ - Fill/Stroke Path/Selection split the "Solid color" option into a "Foreground
+   color" and "Background color".
 
 Tools:
 
@@ -71,6 +75,10 @@ Tools:
   - Align tool: "use extents of layer contents" also applies to the alignment
     reference (not only the target objects).
   - Color picker: pick in the image's RGB space.
+  - Text tool: new tool option "Show on-canvas editor" to toggle the visibility
+    of the on-canvas dialog.
+  - Unified Transform tool: the transform matrix is now selectable in the
+    on-canvas dialog (for instance to be easily re-usable in other software).
 
 Graphical User Interface:
 
@@ -108,6 +116,8 @@ Plug-ins:
   - Script-fu:
     * Byte support: add a new type 'byte' to be able to handle binary data while
       still retaining the utf8 char and string behavior.
+    * Enum values are now generated from GIR.
+  - Script-fu console: command history now persists accross GIMP sessions.
   - PSD:
     * PSD clipping paths: import and export support.
     * Unsupported features are now listed in a dialog on import.
@@ -133,7 +143,10 @@ Plug-ins:
   - PAM: import and export (formats: RAYSCALE, GRAYSCALE_ALPHA, RGB, RGB_ALPHA)
     support added. PAM files are essentially PPM files with a different header
     format and alpha/16 bit support.
-  - GIF: load error message handling improved.
+  - GIF:
+    * Load error message handling improved.
+    * Keep GIF's full palette on import (sometimes needed for consistency when
+      used in a specific pipeline, e.g. a videogame engine with fixed palette).
   - PCX:
     * new radio option "override-palette" to override PCX 1 bit palette.
     * 8bpp with 4 planes in PCX/DC import support added (we were only supporting
@@ -150,7 +163,8 @@ Plug-ins:
     file-pat, file-xpm, file-csource, file-jp2-load, file-dds (import),
     file-sgi, file-fli, file-pnm, file-gbr, file-psp, file-aa, bmp-save,
     despeckle, blinds, contrast-retinex, jigsaw, nl-filter, destripe, file-mng,
-    file-html-table, file-xbm, file-pdf-load, file-gif-save, file-ps.
+    file-html-table, file-xbm, file-pdf-load, file-gif-save, file-ps,
+    border-average, mail, checkerboard.
   - metadata-viewer and metadata-editor: graphical interfaces are not built from
     GtkBuilder .ui files anymore. These were the last instances of using this
     format (except for our new menus!) for creating full GUIs as we don't want
@@ -163,7 +177,6 @@ Plug-ins:
   - ILBM: "Hold and Modify" (HAM) mode use control bits to increase the
     palette beyond what's stored in the CMAP chunk. We now check if HAM
     mode is set and then interprets the plane bits accordingly.
-  - Script-fu: enum values are now generated from GIR.
 
 API:
 
@@ -186,6 +199,7 @@ API:
         + GimpPattern
     * New functions:
       + gimp_procedure_dialog_fill_scrolled_window()
+      + gimp_procedure_dialog_get_size_entry()
     * Improved annotations or usage:
       + set_i18n() method of GimpPlugIn expects a UTF-8 catalog directory.
       + clarify gimp_image_set_file() usage (only for XCF files).
@@ -204,6 +218,12 @@ API:
       + Exif.Photo.PixelXDimension and Exif.Photo.PixelYDimension metadata tags
         will now be updated (if they already exist in the image) when resizing
         and exporting.
+  - Changes in libgimpconfig:
+    GStrv config properties are now properly serialized and deserialized for use
+    as plug-ins arguments.
+    * New functions:
+      + gimp_config_serialize_strv()
+      + gimp_config_deserialize_strv()
    - PDB:
      * Remove GimpUint8Array in favor of GBytes.
 
@@ -227,6 +247,7 @@ Build:
     whether we can bump a dependency minimum required version or not. This is a
     consequence of approaching GIMP 3.0 release so we don't want to bump minimum
     versions too high.
+  - GEGL requirement bumped to GEGL 0.4.46.
 
 Debugging:
 
