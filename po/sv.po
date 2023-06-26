@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-25 07:42+0000\n"
-"PO-Revision-Date: 2023-06-25 14:59+0200\n"
+"POT-Creation-Date: 2023-06-26 00:43+0000\n"
+"PO-Revision-Date: 2023-06-26 09:50+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -4940,25 +4940,34 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Visa dialogrutan för senast använda filter igen"
 
-#: app/actions/filters-actions.c:1174
+#. TRANSLATORS: %s is the title of a GEGL operation (filter), after
+#. * which we append "..." as the standardized labelling to indicate
+#. * that this action raises a dialog.
+#.
+#: app/actions/filters-actions.c:848
+#, c-format
+msgid "%s..."
+msgstr "%s…"
+
+#: app/actions/filters-actions.c:1178
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "U_pprepa ”%s”"
 
-#: app/actions/filters-actions.c:1175
+#: app/actions/filters-actions.c:1179
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "V_isa ”%s” igen"
 
-#: app/actions/filters-actions.c:1213
+#: app/actions/filters-actions.c:1217
 msgid "Repeat Last"
 msgstr "Upprepa senaste"
 
-#: app/actions/filters-actions.c:1215
+#: app/actions/filters-actions.c:1219
 msgid "Re-Show Last"
 msgstr "Visa senaste igen"
 
-#: app/actions/filters-actions.c:1218 app/actions/filters-actions.c:1220
+#: app/actions/filters-actions.c:1222 app/actions/filters-actions.c:1224
 msgid "No last used filters"
 msgstr "Inga senast använda filter"
 
@@ -30364,9 +30373,6 @@ msgstr "Banmeny"
 #~ msgid "Modify paint mode and opacity of the last pixel manipulation"
 #~ msgstr ""
 #~ "Ändra målningsläge och opacitet för senaste bildspunktmanipuleringen"
-
-#~ msgid "_Fade %s..."
-#~ msgstr "_Tona %s…"
 
 #~ msgid "_Fade..."
 #~ msgstr "_Tona…"
