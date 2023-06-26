@@ -414,7 +414,7 @@ gimp-win64-native:
     expire_in: 1 day
     paths:
     - _install-w64
-    - _build-w64/build/windows/installer/lang/
+    - _build-w64/build/windows/installer/
     - _build-w64/meson-*/
   cache:
     paths:
@@ -446,7 +446,7 @@ packaging-win64-native:
     expire_in: 1 day
     paths:
     - gimp-w64
-    - _build-w64/build/windows/installer/lang/
+    - _build-w64/build/windows/installer/
     - done-dll.list
   needs: ["gimp-win64-native"]
 

@@ -74,6 +74,9 @@ cd -
 # Copy generated language files into the source directory.
 cp _build-w64/build/windows/installer/lang/*isl build/windows/installer/lang
 
+# Copy generated welcome images into the source directory.
+cp _build-w64/build/windows/installer/*bmp build/windows/installer/
+
 # Construct now the installer.
 VERSION=`grep -rI '\<version *:' meson.build | head -1 | sed "s/^.*version *: *'\([0-9]\+\.[0-9]\+\.[0-9]\+\)' *,.*$/\1/"`
 #MAJOR_VERSION=`echo $VERSION | sed "s/^\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)$/\1/"`
