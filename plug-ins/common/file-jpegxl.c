@@ -658,7 +658,10 @@ load_image (GFile        *file,
   result_size += extra_channel_size;
 
 
-  if (JxlDecoderGetColorAsEncodedProfile (decoder, &pixel_format,
+  if (JxlDecoderGetColorAsEncodedProfile (decoder,
+#if JPEGXL_NUMERIC_VERSION < JPEGXL_COMPUTE_NUMERIC_VERSION(0,9,0)
+                                          &pixel_format,
+#endif
                                           JXL_COLOR_PROFILE_TARGET_DATA,
                                           &color_encoding) == JXL_DEC_SUCCESS)
     {
@@ -702,7 +705,10 @@ load_image (GFile        *file,
 
   if (! profile)
     {
-      if (JxlDecoderGetICCProfileSize (decoder, &pixel_format,
+      if (JxlDecoderGetICCProfileSize (decoder,
+#if JPEGXL_NUMERIC_VERSION < JPEGXL_COMPUTE_NUMERIC_VERSION(0,9,0)
+                                       &pixel_format,
+#endif
                                        JXL_COLOR_PROFILE_TARGET_DATA,
                                        &icc_size) == JXL_DEC_SUCCESS)
         {
@@ -710,7 +716,10 @@ load_image (GFile        *file,
             {
               gpointer raw_icc_profile = g_malloc (icc_size);
 
-              if (JxlDecoderGetColorAsICCProfile (decoder, &pixel_format,
+              if (JxlDecoderGetColorAsICCProfile (decoder,
+#if JPEGXL_NUMERIC_VERSION < JPEGXL_COMPUTE_NUMERIC_VERSION(0,9,0)
+                                                  &pixel_format,
+#endif
                                                   JXL_COLOR_PROFILE_TARGET_DATA,
                                                   raw_icc_profile, icc_size)
                   == JXL_DEC_SUCCESS)
