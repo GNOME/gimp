@@ -761,7 +761,8 @@ gimp_container_view_set_property (GObject      *object,
     case GIMP_CONTAINER_VIEW_PROP_VIEW_SIZE:
     case GIMP_CONTAINER_VIEW_PROP_VIEW_BORDER_WIDTH:
       {
-        gint size, border;
+        gint size;
+        gint border = 0;
 
         size = gimp_container_view_get_view_size (view, &border);
 
@@ -804,7 +805,8 @@ gimp_container_view_get_property (GObject    *object,
     case GIMP_CONTAINER_VIEW_PROP_VIEW_SIZE:
     case GIMP_CONTAINER_VIEW_PROP_VIEW_BORDER_WIDTH:
       {
-        gint size, border;
+        gint size;
+        gint border = 0;
 
         size = gimp_container_view_get_view_size (view, &border);
 
