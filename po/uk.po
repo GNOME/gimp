@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-24 20:11+0000\n"
-"PO-Revision-Date: 2023-06-25 16:43+0300\n"
+"POT-Creation-Date: 2023-06-26 00:43+0000\n"
+"PO-Revision-Date: 2023-06-26 21:56+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -4938,25 +4938,34 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Знову відкрити діалог останнього використаного фільтру"
 
-#: app/actions/filters-actions.c:1174
+#. TRANSLATORS: %s is the title of a GEGL operation (filter), after
+#. * which we append "..." as the standardized labelling to indicate
+#. * that this action raises a dialog.
+#.
+#: app/actions/filters-actions.c:848
+#, c-format
+msgid "%s..."
+msgstr "%s…"
+
+#: app/actions/filters-actions.c:1178
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Пов_торити \"%s\""
 
-#: app/actions/filters-actions.c:1175
+#: app/actions/filters-actions.c:1179
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "П_овторити з налаштуванням «%s»"
 
-#: app/actions/filters-actions.c:1213
+#: app/actions/filters-actions.c:1217
 msgid "Repeat Last"
 msgstr "Повторити останній"
 
-#: app/actions/filters-actions.c:1215
+#: app/actions/filters-actions.c:1219
 msgid "Re-Show Last"
 msgstr "Показати останній ще раз"
 
-#: app/actions/filters-actions.c:1218 app/actions/filters-actions.c:1220
+#: app/actions/filters-actions.c:1222 app/actions/filters-actions.c:1224
 msgid "No last used filters"
 msgstr "Немає останніх використаних фільтрів"
 
@@ -11641,26 +11650,21 @@ msgid "Jitter"
 msgstr "Тремтіння"
 
 #: app/core/core-enums.c:602
-#| msgctxt "fill-style"
-#| msgid "Solid color"
 msgctxt "custom-style"
 msgid "Solid color"
 msgstr "Суцільний колір"
 
 #: app/core/core-enums.c:603
-#| msgid "Pattern"
 msgctxt "custom-style"
 msgid "Pattern"
 msgstr "Текстура"
 
 #: app/core/core-enums.c:632
-#| msgid "Foreground color"
 msgctxt "fill-style"
 msgid "Foreground color"
 msgstr "Колір переднього плану"
 
 #: app/core/core-enums.c:633
-#| msgid "Background color"
 msgctxt "fill-style"
 msgid "Background color"
 msgstr "Колір тла"
@@ -13276,7 +13280,6 @@ msgid "Style"
 msgstr "Стиль"
 
 #: app/core/gimpfilloptions.c:120
-#| msgid "Custom"
 msgid "Custom style"
 msgstr "Нетиповий стиль"
 
@@ -24477,7 +24480,6 @@ msgstr ""
 "«Enter»"
 
 #: app/tools/gimptextoptions.c:249
-#| msgid "Use info window"
 msgid "Use editor window"
 msgstr "Використовувати вікно редактора"
 
@@ -24486,12 +24488,10 @@ msgid "Use an external editor window for text entry"
 msgstr "Використовувати вікно зовнішнього редактора для запису тексту"
 
 #: app/tools/gimptextoptions.c:256
-#| msgid "Show on-canvas filter controls"
 msgid "Show on-canvas editor"
 msgstr "Показувати редактор на полотні"
 
 #: app/tools/gimptextoptions.c:257
-#| msgid "Show on-canvas filter controls"
 msgid "Show on-canvas text editor"
 msgstr "Показувати текстоивй редактор на полотні"
 
@@ -26891,7 +26891,6 @@ msgid "Fill Color"
 msgstr "Колір заповнення"
 
 #: app/widgets/gimpfilleditor.c:164
-#| msgid "Fill Color"
 msgid "Fill BG Color"
 msgstr "Заповнити кольором тла"
 
