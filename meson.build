@@ -1804,6 +1804,8 @@ meson.add_dist_script('meson_dist_script.sh',
 rootInclude = include_directories('.')
 appInclude  = include_directories('app')
 
+subdir('build/windows')
+
 # Tools
 subdir('libgimpbase')
 subdir('tools')
@@ -1847,7 +1849,6 @@ subdir('docs')
 subdir('devel-docs')
 
 # Windows installer
-subdir('build/windows')
 if get_option('windows-installer')
   subdir('po-windows-installer')
   subdir('build/windows/installer')
