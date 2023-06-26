@@ -31,6 +31,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-atk \
     mingw-w64-$MSYS2_ARCH-brotli \
     mingw-w64-$MSYS2_ARCH-cairo \
+    mingw-w64-$MSYS2_ARCH-cfitsio \
     mingw-w64-$MSYS2_ARCH-drmingw \
     mingw-w64-$MSYS2_ARCH-gexiv2 \
     mingw-w64-$MSYS2_ARCH-ghostscript \
@@ -62,6 +63,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-poppler-data \
     mingw-w64-$MSYS2_ARCH-python \
     mingw-w64-$MSYS2_ARCH-python3-gobject \
+    mingw-w64-$MSYS2_ARCH-qoi \
     mingw-w64-$MSYS2_ARCH-shared-mime-info \
     mingw-w64-$MSYS2_ARCH-suitesparse \
     mingw-w64-$MSYS2_ARCH-vala \
