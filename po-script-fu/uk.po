@@ -2,13 +2,13 @@
 # Yuri Syrota <rasta@renome.rovno.ua>, 2000.
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2008.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-12 21:38+0000\n"
-"PO-Revision-Date: 2022-11-14 01:00+0200\n"
+"POT-Creation-Date: 2023-06-25 18:45+0000\n"
+"PO-Revision-Date: 2023-06-26 21:57+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -27,63 +27,63 @@ msgstr "_Консоль скриптфу"
 msgid "Interactive console for Script-Fu development"
 msgstr "Інтерактивна консоль розробки на скриптфу"
 
-#: plug-ins/script-fu/script-fu.c:310
+#: plug-ins/script-fu/script-fu.c:314
 msgid "_GIMP Online"
 msgstr "GIMP у _Інтернет"
 
-#: plug-ins/script-fu/script-fu.c:311
+#: plug-ins/script-fu/script-fu.c:315
 msgid "_User Manual"
 msgstr "_Посібник користувача"
 
-#: plug-ins/script-fu/script-fu.c:314
+#: plug-ins/script-fu/script-fu.c:318
 msgid "_Script-Fu"
 msgstr "_Скриптфу"
 
-#: plug-ins/script-fu/script-fu.c:316
+#: plug-ins/script-fu/script-fu.c:320
 msgid "_Test"
 msgstr "_Тест"
 
-#: plug-ins/script-fu/script-fu.c:319
+#: plug-ins/script-fu/script-fu.c:323
 msgid "_Buttons"
 msgstr "_Кнопки"
 
-#: plug-ins/script-fu/script-fu.c:321
+#: plug-ins/script-fu/script-fu.c:325
 msgid "_Logos"
 msgstr "_Емблеми"
 
-#: plug-ins/script-fu/script-fu.c:323
+#: plug-ins/script-fu/script-fu.c:327
 msgid "_Patterns"
 msgstr "_Текстури"
 
-#: plug-ins/script-fu/script-fu.c:326
+#: plug-ins/script-fu/script-fu.c:330
 msgid "_Web Page Themes"
 msgstr "Теми _веб-сторінок"
 
-#: plug-ins/script-fu/script-fu.c:328
+#: plug-ins/script-fu/script-fu.c:332
 msgid "_Alien Glow"
 msgstr "Чуже _сяйво"
 
-#: plug-ins/script-fu/script-fu.c:330
+#: plug-ins/script-fu/script-fu.c:334
 msgid "_Beveled Pattern"
 msgstr "_Шаблон зі скосами"
 
-#: plug-ins/script-fu/script-fu.c:332
+#: plug-ins/script-fu/script-fu.c:336
 msgid "_Classic.Gimp.Org"
 msgstr "_Класичний Gimp.Org"
 
-#: plug-ins/script-fu/script-fu.c:335
+#: plug-ins/script-fu/script-fu.c:339
 msgid "Alpha to _Logo"
 msgstr "_Альфа на емблему"
 
-#: plug-ins/script-fu/script-fu.c:341
+#: plug-ins/script-fu/script-fu.c:345
 msgid "_Refresh Scripts"
 msgstr "_Оновити сценарій"
 
-#: plug-ins/script-fu/script-fu.c:346
+#: plug-ins/script-fu/script-fu.c:350
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Перечитати всі доступні сценарії скриптфу"
 
-#: plug-ins/script-fu/script-fu.c:372
+#: plug-ins/script-fu/script-fu.c:376
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -91,63 +91,63 @@ msgstr ""
 "Ви не можете використовувати функцію «Оновити сценарії», доки відкритий "
 "діалог скриптфу. Закрийте всі вікна скриптфу та спробуйте знову."
 
-#: plug-ins/script-fu/script-fu-console.c:110
-#: plug-ins/script-fu/script-fu-console.c:177
-msgid "Script-Fu Console"
-msgstr "Консоль скриптфу"
+#: plug-ins/script-fu/script-fu-eval.c:50
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "Режим оцінки скриптфу дозволяє лише неінтерактивну роботу"
 
-#: plug-ins/script-fu/script-fu-console.c:115
-#: plug-ins/script-fu/script-fu-console.c:281
+#: plug-ins/script-fu/console/script-fu-console.c:125
+#| msgid "Script-Fu Console"
+msgid "Script Console"
+msgstr "Консоль скриптів"
+
+#: plug-ins/script-fu/console/script-fu-console.c:130
+#: plug-ins/script-fu/console/script-fu-console.c:259
 msgid "_Save"
 msgstr "_Зберегти"
 
-#: plug-ins/script-fu/script-fu-console.c:116
+#: plug-ins/script-fu/console/script-fu-console.c:131
 msgid "C_lear"
 msgstr "_Очистити"
 
-#: plug-ins/script-fu/script-fu-console.c:117
-#: plug-ins/script-fu/script-fu-console.c:359
+#: plug-ins/script-fu/console/script-fu-console.c:132
+#: plug-ins/script-fu/console/script-fu-console.c:332
 msgid "_Close"
 msgstr "З_акрити"
 
-#: plug-ins/script-fu/script-fu-console.c:173
-msgid "Welcome to TinyScheme"
-msgstr "Ласкаво просимо до TinyScheme"
-
-#: plug-ins/script-fu/script-fu-console.c:179
-msgid "Interactive Scheme Development"
-msgstr "Інтерактивне середовище розробки на Scheme"
-
-#: plug-ins/script-fu/script-fu-console.c:215
+#: plug-ins/script-fu/console/script-fu-console.c:193
 msgid "_Browse..."
 msgstr "О_гляд…"
 
-#: plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/console/script-fu-console.c:254
 msgid "Save Script-Fu Console Output"
 msgstr "Зберегти вивід консолі скриптфу"
 
-#: plug-ins/script-fu/script-fu-console.c:280
+#: plug-ins/script-fu/console/script-fu-console.c:258
 #: plug-ins/script-fu/server/script-fu-server.c:884
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:236
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:218
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: plug-ins/script-fu/script-fu-console.c:325
+#: plug-ins/script-fu/console/script-fu-console.c:301
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не вдається відкрити '%s' для запису: %s"
 
-#: plug-ins/script-fu/script-fu-console.c:354
+#: plug-ins/script-fu/console/script-fu-console.c:327
 msgid "Script-Fu Procedure Browser"
 msgstr "Переглядач процедур скриптфу"
 
-#: plug-ins/script-fu/script-fu-console.c:358
+#: plug-ins/script-fu/console/script-fu-console.c:331
 msgid "_Apply"
 msgstr "За_стосувати"
 
-#: plug-ins/script-fu/script-fu-eval.c:50
-msgid "Script-Fu evaluation mode only allows non-interactive invocation"
-msgstr "Режим оцінки скриптфу дозволяє лише неінтерактивну роботу"
+#: plug-ins/script-fu/console/script-fu-console-total.c:89
+msgid "Welcome to TinyScheme"
+msgstr "Ласкаво просимо до TinyScheme"
+
+#: plug-ins/script-fu/console/script-fu-console-total.c:93
+msgid "Scripting GIMP in the Scheme language"
+msgstr "Керування GIMP за допомогою скриптів мовою Scheme"
 
 #: plug-ins/script-fu/server/script-fu-server.c:880
 msgid "Script-Fu Server Options"
@@ -185,69 +185,69 @@ msgstr "_Запустити сервер…"
 msgid "Server for remote Script-Fu operation"
 msgstr "Сервер для віддаленого виконання скриптфу"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:202
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:184
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "скриптфуне може обробляти два сценарії одночасно."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:204
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:186
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Ви вже запустили сценарій \"%s\"."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:228
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:210
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Скриптфу: %s"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:235
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:217
 msgid "_Reset"
 msgstr "С_кинути"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:237
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:219
 msgid "_OK"
 msgstr "_Гаразд"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:291
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:341
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:323
 msgid "Script-Fu Color Selection"
 msgstr "Скриптфу: Вибір кольору"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:468
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:450
 msgid "Script-Fu File Selection"
 msgstr "Скриптфу: Вибір файлу"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:471
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
 msgid "Script-Fu Folder Selection"
 msgstr "Скриптфу: Вибір теки"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:484
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:466
 msgid "Script-Fu Font Selection"
 msgstr "Скриптфу: Вибір шрифту"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:492
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:472
 msgid "Script-Fu Palette Selection"
 msgstr "Скриптфу: Вибір палітри"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:501
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:479
 msgid "Script-Fu Pattern Selection"
 msgstr "Скриптфу: Вибір текстури"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:510
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
 msgstr "Скриптфу: Вибір градієнту"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:519
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:493
 msgid "Script-Fu Brush Selection"
 msgstr "Скриптфу: Вибір пензля"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:898
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:868
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Помилка під час виконання: %s"
@@ -534,14 +534,12 @@ msgstr "Без тла (лише для окремого шару)"
 
 #: plug-ins/script-fu/scripts/circuit.scm:142
 #: plug-ins/script-fu/scripts/lava.scm:141
-#: plug-ins/script-fu/scripts/predator.scm:138
 #: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Keep selection"
 msgstr "Зберегти виділення"
 
 #: plug-ins/script-fu/scripts/circuit.scm:143
 #: plug-ins/script-fu/scripts/lava.scm:142
-#: plug-ins/script-fu/scripts/predator.scm:139
 msgid "Separate layer"
 msgstr "Відділити шар"
 
@@ -1189,7 +1187,6 @@ msgid "There is no image data in the clipboard to paste."
 msgstr "В буфері обміну немає зображення для вставки."
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:64
-#| msgid "New _Brush..."
 msgid "Paste as New _Brush..."
 msgstr "Вставити як новий _пензель…"
 
@@ -1215,7 +1212,6 @@ msgid "_Spacing"
 msgstr "І_нтервал"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
-#| msgid "New _Pattern..."
 msgid "Paste as New _Pattern..."
 msgstr "Вставити як нову _текстуру…"
 
@@ -1251,26 +1247,6 @@ msgstr "Відносна довжина тіні"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:211
 msgid "Interpolation"
 msgstr "Інтерполяція"
-
-#: plug-ins/script-fu/scripts/predator.scm:127
-msgid "_Predator..."
-msgstr "_Хижак…"
-
-#: plug-ins/script-fu/scripts/predator.scm:128
-msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "Додати до виділеної області (чи альфа-каналу) ефект «Хижак»"
-
-#: plug-ins/script-fu/scripts/predator.scm:135
-msgid "Edge amount"
-msgstr "Розмір грані"
-
-#: plug-ins/script-fu/scripts/predator.scm:136
-msgid "Pixelize"
-msgstr "Пікселізація"
-
-#: plug-ins/script-fu/scripts/predator.scm:137
-msgid "Pixel amount"
-msgstr "Кількість точок"
 
 #: plug-ins/script-fu/scripts/reverse-layers.scm:42
 msgid "Reverse Layer _Order"
@@ -1602,6 +1578,24 @@ msgstr "Зсув тіні вздовж X"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Зсув тіні вздовж Y"
+
+#~ msgid "Interactive Scheme Development"
+#~ msgstr "Інтерактивне середовище розробки на Scheme"
+
+#~ msgid "_Predator..."
+#~ msgstr "_Хижак…"
+
+#~ msgid "Add a 'Predator' effect to the selected region (or alpha)"
+#~ msgstr "Додати до виділеної області (чи альфа-каналу) ефект «Хижак»"
+
+#~ msgid "Edge amount"
+#~ msgstr "Розмір грані"
+
+#~ msgid "Pixelize"
+#~ msgstr "Пікселізація"
+
+#~ msgid "Pixel amount"
+#~ msgstr "Кількість точок"
 
 #~ msgid "Too few arguments to 'script-fu-register' call"
 #~ msgstr "Бракує аргументів для виклику 'script-fu-register'"
