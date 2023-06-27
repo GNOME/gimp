@@ -213,7 +213,7 @@ foreach plugin : common_plugins_list
     )
   endif
 
-  executable(plugin_name,
+  plugin_exe = executable(plugin_name,
     plugin_sources,
     include_directories: [ rootInclude, ],
     link_with : [
@@ -229,5 +229,16 @@ foreach plugin : common_plugins_list
     c_args: plugin_cflags,
     install: true,
     install_dir: gimpplugindir / 'plug-ins' / plugin_name,
+  )
+
+  # Ugly trick to copy executables into subfolders so that we can run GIMP from
+  # the build directory without installing it.
+  custom_target('test-' + plugin_name,
+    input: [ plugin_exe ],
+    output: [ plugin_name + '.dummy' ],
+    command: [ python, meson.project_source_root() / '.gitlab/cp-plug-in-subfolder.py',
+               plugin_exe, meson.current_build_dir() / 'test-plug-ins' / plugin_name,
+               meson.current_build_dir() / 'test-plug-ins' / plugin_name + '.dummy' ],
+    build_by_default: true,
   )
 endforeach

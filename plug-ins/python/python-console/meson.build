@@ -1,5 +1,5 @@
 
 plugins += {
   'name': 'python-console',
-  'srcs': files('pyconsole.py', 'python-console.py'),
+  'srcs': [ 'python-console/pyconsole.py', 'python-console/python-console.py' ],
 }

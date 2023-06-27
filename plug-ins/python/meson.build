@@ -25,10 +25,17 @@ subdir('python-console')
 
 foreach plugin : plugins
   name = plugin.get('name')
-  srcs = plugin.get('srcs', name + '.py')
+  srcs = plugin.get('srcs', [name + '.py'])
 
   install_data(srcs, install_dir: gimpplugindir / 'plug-ins' / name,
                install_mode: 'rwxr-xr-x')
+
+  foreach src : srcs
+    # Ugly trick to copy Python plug-ins into subfolders so that we can run GIMP
+    # from the build directory without installing it.
+    run_command(python, meson.project_source_root() / '.gitlab/cp-plug-in-subfolder.py',
+                meson.current_source_dir() / src, meson.current_build_dir() / name, check: true)
+  endforeach
 endforeach
 
 
