@@ -124,6 +124,7 @@ build-image:
             mypaint-brushes
             poppler-data
             python3
+            python3-gi
             python3-pip
             valac
             xauth
@@ -291,6 +292,7 @@ deps-debian:
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
     - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
+    - export GI_TYPELIB_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`/girepository-1.0/:${GI_TYPELIB_PATH}"
     - export PATH="${INSTALL_PREFIX}/bin:$PATH"
   needs: ["deps-debian"]
 
@@ -309,6 +311,7 @@ gimp-meson-debian:
     - meson setup _build
       --prefix="${INSTALL_PREFIX}"
       -Dg-ir-doc=true -Dgi-docgen=enabled
+      -Dwindows-installer=true
     - ninja -C _build
     - ninja -C _build test
     # The src should not be changed by the build. If it is, something is
@@ -330,6 +333,7 @@ gimp-meson-debian:
       - "_build/meson-logs"
       - "_build/meson-dist"
       - "_build/devel-docs"
+      - "_build/build/windows/installer/"
       - "${INSTALL_DIR}"
 
 gimp-clang-debian:
@@ -446,7 +450,6 @@ packaging-win64-native:
     expire_in: 1 day
     paths:
     - gimp-w64
-    - _build-w64/build/windows/installer/
     - done-dll.list
   needs: ["gimp-win64-native"]
 
@@ -810,6 +813,7 @@ win-installer-nightly:
   dependencies:
     - packaging-win64-native
     - packaging-win32-native
+    - gimp-meson-debian
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     when: always
@@ -820,7 +824,7 @@ win-installer-nightly:
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/gitlab-ci/installer-gimp-msys2.sh > installer.log 2>&1"
-  needs: ["packaging-win32-native", "packaging-win64-native"]
+  needs: ["packaging-win32-native", "packaging-win64-native", "gimp-meson-debian"]
 
 sources-meson:
   rules:

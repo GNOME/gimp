@@ -11,7 +11,6 @@ else
     export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
     export MSYS2_PREFIX="/c/msys64/mingw64/"
-    export GIMP_OPTIONS="-Dwindows-installer=true"
 fi
 
 export ACLOCAL_FLAGS="-I${MSYS2_PREFIX}/share/aclocal"
@@ -63,6 +62,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-pango \
     mingw-w64-$MSYS2_ARCH-poppler \
     mingw-w64-$MSYS2_ARCH-poppler-data \
+    mingw-w64-$MSYS2_ARCH-python \
     mingw-w64-$MSYS2_ARCH-python3-gobject \
     mingw-w64-$MSYS2_ARCH-qoi \
     mingw-w64-$MSYS2_ARCH-shared-mime-info \
