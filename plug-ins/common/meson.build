@@ -238,7 +238,7 @@ foreach plugin : common_plugins_list
     output: [ plugin_name + '.dummy' ],
     command: [ python, meson.project_source_root() / '.gitlab/cp-plug-in-subfolder.py',
                plugin_exe, meson.current_build_dir() / 'test-plug-ins' / plugin_name,
-               meson.current_build_dir() / 'test-plug-ins' / plugin_name + '.dummy' ],
+               '@OUTPUT@' ],
     build_by_default: true,
   )
 endforeach
