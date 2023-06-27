@@ -636,7 +636,7 @@ make_remap_table (const guchar  old_palette[],
   /* Third pass - rank all used indices to the beginning of the
    * palette.
    */
-  palentries = g_new (PalEntry, used);
+  palentries = g_new (PalEntry, (guint) used);
 
   for (i = 0; i < used; i++)
     {
