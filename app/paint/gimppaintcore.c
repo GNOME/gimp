@@ -770,8 +770,13 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
                                  gint             *new_off_y)
 {
   gint           drawable_width, drawable_height;
+  gint           drawable_offset_x, drawable_offset_y;
+  gint           image_width, image_height;
   gint           new_width, new_height;
   gint           expand_amount;
+  gboolean       show_all;
+  gboolean       outside_image;
+  GimpImage     *image         = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpContext   *context       = GIMP_CONTEXT (options);
   GimpFillType   fill_type     = GIMP_FILL_TRANSPARENT;
   GeglBuffer    *undo_buffer;
@@ -780,32 +785,92 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
 
   drawable_width  = gimp_item_get_width  (GIMP_ITEM (drawable));
   drawable_height = gimp_item_get_height (GIMP_ITEM (drawable));
+  gimp_item_get_offset (GIMP_ITEM (drawable), &drawable_offset_x, &drawable_offset_y);
 
   new_width  = drawable_width;
   new_height = drawable_height;
   *new_off_x = 0;
   *new_off_y = 0;
 
+  image_width  = gimp_image_get_width (image);
+  image_height = gimp_image_get_height (image);
+
   expand_amount = options->expand_amount;
+  show_all      = gimp_paint_core_get_show_all (core);
+  outside_image = x2 < -drawable_offset_x || x1 > image_width - drawable_offset_x ||
+                  y2 < -drawable_offset_y || y1 > image_height - drawable_offset_y;
+
+  if (gimp_item_get_lock_position (GIMP_ITEM (drawable)))
+    return;
+
+  if (!gimp_paint_core_get_show_all (core) && outside_image)
+    return;
 
   if (!options->expand_use)
     return;
 
   if (x1 < 0)
     {
-        new_width += expand_amount - x1;
-        *new_off_x += expand_amount - x1;
+      if (show_all)
+        {
+          new_width += expand_amount - x1;
+          *new_off_x += expand_amount - x1;
+        }
+      else if (drawable_offset_x > 0)
+        {
+          new_width += expand_amount - x1;
+          *new_off_x += expand_amount - x1;
+          if (*new_off_x > drawable_offset_x)
+            {
+              new_width -= *new_off_x - drawable_offset_x;
+              *new_off_x = drawable_offset_x;
+            }
+        }
     }
   if (y1 < 0)
     {
-        new_height += expand_amount - y1;
-        *new_off_y += expand_amount - y1;
+      if (show_all)
+        {
+          new_height += expand_amount - y1;
+          *new_off_y += expand_amount - y1;
+        }
+      else if (drawable_offset_y > 0)
+        {
+          new_height += expand_amount - y1;
+          *new_off_y += expand_amount - y1;
+          if (*new_off_y > drawable_offset_y)
+            {
+              new_height -= *new_off_y - drawable_offset_y;
+              *new_off_y = drawable_offset_y;
+            }
+        }
     }
   if (x2 > drawable_width)
-    new_width += x2 - drawable_width + expand_amount;
+    {
+      if (show_all)
+        {
+          new_width += x2 - drawable_width + expand_amount;
+        }
+      else if (drawable_width + drawable_offset_x < image_width)
+        {
+          new_width += x2 - drawable_width + expand_amount;
+          if (new_width + drawable_offset_x - *new_off_x > image_width)
+            new_width = image_width + *new_off_x - drawable_offset_x;
+        }
+    }
   if (y2 > drawable_height)
-    new_height += y2 - drawable_height + expand_amount;
-    
+    {
+      if (show_all)
+        {
+          new_height += y2 - drawable_height + expand_amount;
+        }
+      else if (drawable_height + drawable_offset_y < image_height)
+        {
+          new_height += y2 - drawable_height + expand_amount;
+          if (new_height + drawable_offset_y - *new_off_y > image_height)
+            new_height = image_height + *new_off_y - drawable_offset_y;
+        }
+    }
 
   if (new_width != drawable_width   || *new_off_x ||
       new_height != drawable_height || *new_off_y)
