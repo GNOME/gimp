@@ -22,11 +22,17 @@ env.append('LD_LIBRARY_PATH', meson.project_build_root() / 'libgimpmodule')
 env.append('LD_LIBRARY_PATH', meson.project_build_root() / 'libgimpthumb')
 env.append('LD_LIBRARY_PATH', meson.project_build_root() / 'libgimpwidgets')
 
+if enable_console_bin
+  gimp_exe=gimpconsole_exe
+else
+  gimp_exe=gimpmain_exe
+endif
+
 installsplash = custom_target('installsplash-devel.bmp',
   input : [ 'splash2installer.py' ],
   depend_files: [ source_splash ],
   output: [ 'installsplash-devel.bmp', ],
-  command: [ gimpmain_exe, '-nidfs', source_splash,
+  command: [ gimp_exe, '-nidfs', source_splash,
              '--batch-interpreter', 'python-fu-eval',
              '-b', '-', '--quit'],
   feed: true,
