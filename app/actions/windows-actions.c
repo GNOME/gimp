@@ -450,6 +450,7 @@ windows_actions_update_display_accels (GimpActionGroup *group)
           const gchar *ntooltip;
           gchar       *tooltip;
           gchar       *accel;
+          gchar       *display_name;
 
           if (i < 9)
             accel = gtk_accelerator_name (GDK_KEY_1 + i, GDK_MOD1_MASK);
@@ -468,6 +469,24 @@ windows_actions_update_display_accels (GimpActionGroup *group)
           tooltip = g_strdup_printf (ntooltip, gimp_image_get_display_path (image), i + 1);
           gimp_action_set_tooltip (action, tooltip);
           g_free (tooltip);
+
+          display_name =
+            gimp_escape_uline (gimp_image_get_display_name (image));
+
+          if (gimp_image_is_dirty (image))
+            {
+              /* Asterisk to indicate image has unsaved changes */
+              gchar *action_name_dirty = g_strdup_printf ("\xE2\x9C\xB1%s", display_name);
+
+              gimp_action_set_short_label (action, action_name_dirty);
+              g_free (action_name_dirty);
+            }
+          else
+            {
+              gimp_action_set_short_label (action, display_name);
+            }
+
+          g_free (display_name);
         }
     }
 }
