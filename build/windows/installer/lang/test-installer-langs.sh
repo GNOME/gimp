@@ -24,18 +24,6 @@ if [ "$PO_LANGS" != "$INSTALLER_LANGS" ]; then
   exit 1
 fi
 
-AUTOTOOLS_LANGS=`grep '^\s*[a-zA-Z_]*:[a-zA-Z_]*\s*\\\\\?' ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/installer/lang/Makefile.am | \
-                 sed 's/^\t*\([a-zA-Z_]*\):.*$/\1/' |sort`
-AUTOTOOLS_LANGS=`echo "$AUTOTOOLS_LANGS" | tr '\n\r' ' ' | sed 's/\<en\> //'`
-
-if [ "$PO_LANGS" != "$AUTOTOOLS_LANGS" ]; then
-  echo "Error: languages listed in the autotools script do not match the .po files in po-windows-installer/."
-  echo "- PO languages:        $PO_LANGS"
-  echo "- Autotools languages: $AUTOTOOLS_LANGS"
-  echo "Please verify: build/windows/installer/lang/Makefile.am"
-  exit 1
-fi
-
 MESON_LANGS=`grep "'code':" ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/installer/lang/meson.build | \
             sed "s/^.*'code': *'\([^']*\)'.*$/\1/" |sort`
 MESON_LANGS=`echo "$MESON_LANGS" | tr '\n\r' ' ' | sed 's/\<en\> //'`
