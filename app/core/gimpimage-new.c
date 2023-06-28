@@ -99,7 +99,6 @@ gimp_image_new_from_template (Gimp         *gimp,
   GimpColorRenderingIntent intent;
   gboolean                 bpc;
   gint                     width, height;
-  gboolean                 has_alpha;
   const gchar             *comment;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -152,13 +151,8 @@ gimp_image_new_from_template (Gimp         *gimp,
   width  = gimp_image_get_width (image);
   height = gimp_image_get_height (image);
 
-  if (gimp_template_get_fill_type (template) == GIMP_FILL_TRANSPARENT)
-    has_alpha = TRUE;
-  else
-    has_alpha = FALSE;
-
   layer = gimp_layer_new (image, width, height,
-                          gimp_image_get_layer_format (image, has_alpha),
+                          gimp_image_get_layer_format (image, TRUE),
                           _("Background"),
                           GIMP_OPACITY_OPAQUE,
                           gimp_image_get_default_new_layer_mode (image));
