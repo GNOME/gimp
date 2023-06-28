@@ -491,6 +491,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
 {
   GimpImage   *image;
   const gchar *mime_type = NULL;
+  GimpRunMode  run_mode  = GIMP_RUN_INTERACTIVE;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -499,11 +500,14 @@ file_open_with_proc_and_display (Gimp                *gimp,
   g_return_val_if_fail (monitor == NULL || G_IS_OBJECT (monitor), NULL);
   g_return_val_if_fail (status != NULL, NULL);
 
+  if (gimp->no_interface)
+    run_mode = GIMP_RUN_NONINTERACTIVE;
+
   image = file_open_image (gimp, context, progress,
                            file,
                            as_new,
                            file_proc,
-                           GIMP_RUN_INTERACTIVE,
+                           run_mode,
                            status,
                            &mime_type,
                            error);
