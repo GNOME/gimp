@@ -775,7 +775,6 @@ save_image (GFile   *file,
 
   GimpColorProfile        *profile = NULL;
   const Babl              *file_format = NULL;
-  const Babl              *space = NULL;
   gboolean                 out_linear = FALSE;
 
   size_t                   offset = 0;
@@ -797,20 +796,13 @@ save_image (GFile   *file,
 
   output_info.uses_original_profile = JXL_TRUE;
 
-  profile = gimp_image_get_effective_color_profile (image);
-  out_linear = gimp_color_profile_is_linear (profile);
-
-  space = gimp_color_profile_get_space (profile,
-                                        GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                        error);
-
-  if (error && *error)
+  profile = gimp_image_get_color_profile (image);
+  if (! profile)
     {
-      g_printerr ("%s: error getting the profile space: %s\n",
-                  G_STRFUNC, (*error)->message);
-      g_object_unref (buffer);
-      return FALSE;
+      profile = gimp_image_get_effective_color_profile (image);
     }
+
+  out_linear = gimp_color_profile_is_linear (profile);
 
   pixel_format.data_type = JXL_TYPE_UINT8;
   output_info.bits_per_sample = 8;
@@ -864,7 +856,7 @@ save_image (GFile   *file,
       save_icc = FALSE;
       break;
     case GIMP_RGBA_IMAGE:
-      file_format = babl_format_with_space (out_linear ? "RGBA u8" : "R'G'B'A u8", space);
+      file_format = babl_format (out_linear ? "RGBA u8" : "R'G'B'A u8");
       output_info.alpha_bits = 8;
       pixel_format.num_channels = 4;
       output_info.num_color_channels = 3;
@@ -874,7 +866,7 @@ save_image (GFile   *file,
       save_icc = TRUE;
       break;
     case GIMP_RGB_IMAGE:
-      file_format = babl_format_with_space (out_linear ? "RGB u8" : "R'G'B' u8", space);
+      file_format = babl_format (out_linear ? "RGB u8" : "R'G'B' u8");
       pixel_format.num_channels = 3;
       output_info.num_color_channels = 3;
       output_info.alpha_bits = 0;
