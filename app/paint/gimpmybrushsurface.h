@@ -29,5 +29,18 @@ gimp_mypaint_surface_new (GeglBuffer         *buffer,
                           gint                paint_mask_y,
                           GimpMybrushOptions *options);
 
+void
+gimp_mypaint_surface_set_buffer (GimpMybrushSurface *surface,
+                                 GeglBuffer         *buffer,
+                                 gint                paint_mask_x,
+                                 gint                paint_mask_y);
+void
+gimp_mypaint_surface_set_offset (GimpMybrushSurface *surface,
+                                 gint                off_x,
+                                 gint                off_y);
+void
+gimp_mypaint_surface_get_offset (GimpMybrushSurface *surface,
+                                 gint               *off_x,
+                                 gint               *off_y);
 
 #endif  /*  __GIMP_MYBRUSH_SURFACE_H__  */

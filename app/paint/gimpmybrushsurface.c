@@ -34,13 +34,15 @@
 
 struct _GimpMybrushSurface
 {
-  MyPaintSurface surface;
-  GeglBuffer *buffer;
-  GeglBuffer *paint_mask;
-  gint        paint_mask_x;
-  gint        paint_mask_y;
-  GeglRectangle dirty;
-  GimpComponentMask component_mask;
+  MyPaintSurface      surface;
+  GeglBuffer         *buffer;
+  GeglBuffer         *paint_mask;
+  gint                paint_mask_x;
+  gint                paint_mask_y;
+  gint                off_x;
+  gint                off_y;
+  GeglRectangle       dirty;
+  GimpComponentMask   component_mask;
   GimpMybrushOptions *options;
 };
 
@@ -378,6 +380,8 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
   colorize = opaque * colorize;
 
   /* FIXME: This should use the real matrix values to trim aspect_ratio dabs */
+  x += surface->off_x;
+  y += surface->off_y;
   dabRect = calculate_dab_roi (x, y, radius);
   gegl_rectangle_intersect (&dabRect, &dabRect, gegl_buffer_get_extent (surface->buffer));
 
@@ -557,5 +561,40 @@ gimp_mypaint_surface_new (GeglBuffer         *buffer,
   surface->paint_mask_y         = paint_mask_y;
   surface->dirty                = *GEGL_RECTANGLE (0, 0, 0, 0);
 
+  surface->off_x                = 0;
+  surface->off_y                = 0;
+
   return surface;
+}
+
+void
+gimp_mypaint_surface_set_buffer (GimpMybrushSurface *surface,
+                                 GeglBuffer         *buffer,
+                                 gint                paint_mask_x,
+                                 gint                paint_mask_y)
+{
+  g_object_unref (surface->buffer);
+
+  surface->buffer = g_object_ref (buffer);
+
+  surface->paint_mask_x = paint_mask_x;
+  surface->paint_mask_y = paint_mask_y;
+}
+
+void
+gimp_mypaint_surface_set_offset (GimpMybrushSurface *surface,
+                                 gint                off_x,
+                                 gint                off_y)
+{
+  surface->off_x = off_x;
+  surface->off_y = off_y;
+}
+
+void
+gimp_mypaint_surface_get_offset (GimpMybrushSurface *surface,
+                                 gint               *off_x,
+                                 gint               *off_y)
+{
+  *off_x = surface->off_x;
+  *off_y = surface->off_y;
 }

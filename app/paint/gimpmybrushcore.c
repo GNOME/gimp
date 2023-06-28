@@ -322,6 +322,35 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
       MyPaintBrush *brush    = iter->data;
       GimpCoords    coords   = *(gimp_symmetry_get_coords (sym, i));
       gdouble       pressure = coords.pressure;
+      gboolean      expanded;
+      gfloat        radius   = 100;
+      gint          x1, x2, y1, y2;
+      gint          offset_change_x, offset_change_y;
+      gint          off_x_surf, off_y_surf;
+      gint          off_x, off_y;
+
+      x1 = coords.x - radius;
+      y1 = coords.y - radius;
+      x2 = coords.x + radius;
+      y2 = coords.y + radius;
+
+      expanded = gimp_paint_core_expand_drawable (paint_core, drawable, paint_options,
+                                                  x1, x2, y1, y2,
+                                                  &offset_change_x, &offset_change_y);
+
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      if (expanded)
+        gimp_mypaint_surface_set_buffer (mybrush->private->surface, gimp_drawable_get_buffer (drawable),
+                                         off_x, off_y);
+
+      gimp_mypaint_surface_get_offset (mybrush->private->surface, &off_x_surf, &off_y_surf);
+      coords.x -= off_x_surf;
+      coords.y -= off_y_surf;
+
+      if (offset_change_x || offset_change_y)
+        gimp_mypaint_surface_set_offset (mybrush->private->surface,
+                                         off_x_surf + offset_change_x,
+                                         off_y_surf + offset_change_y);
 
       mypaint_brush_stroke_to (brush,
                                (MyPaintSurface *) mybrush->private->surface,
