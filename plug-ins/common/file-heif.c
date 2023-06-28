@@ -1300,7 +1300,6 @@ save_image (GFile                        *file,
   GeglBuffer                           *buffer;
   const gchar                          *encoding;
   const Babl                           *format;
-  const Babl                           *space   = NULL;
   guint8                               *data;
   gint                                  stride;
   gint                                  width;
@@ -1452,16 +1451,6 @@ save_image (GFile                        *file,
 
       icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
       heif_image_set_raw_color_profile (image, "prof", icc_data, icc_length);
-      space = gimp_color_profile_get_space (profile,
-                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                            error);
-      if (error && *error)
-        {
-          /* Don't make this a hard failure yet output the error. */
-          g_printerr ("%s: error getting the profile space: %s",
-                      G_STRFUNC, (*error)->message);
-          g_clear_error (error);
-        }
 
       g_object_unref (profile);
     }
@@ -1479,14 +1468,10 @@ save_image (GFile                        *file,
 
       heif_image_set_nclx_color_profile (image, &nclx_profile);
 
-      space = babl_space ("sRGB");
       out_linear = FALSE;
 #endif
     }
 #endif /* LIBHEIF_HAVE_VERSION(1,4,0) */
-
-  if (! space)
-    space = gimp_drawable_get_format (drawable_ID);
 
   if (params->save_bit_depth > 8)
     {
@@ -1518,7 +1503,7 @@ save_image (GFile                        *file,
       data16 = g_malloc_n (height, rowentries * 2);
       src16 = data16;
 
-      format = babl_format_with_space (encoding, space);
+      format = babl_format (encoding);
 
       buffer = gimp_drawable_get_buffer (drawable_ID);
 
@@ -1605,7 +1590,7 @@ save_image (GFile                        *file,
           else
             encoding = "R'G'B' u8";
         }
-      format = babl_format_with_space (encoding, space);
+      format = babl_format (encoding);
 
       gegl_buffer_get (buffer,
                        GEGL_RECTANGLE (0, 0, width, height),
