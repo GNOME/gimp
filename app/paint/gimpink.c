@@ -330,6 +330,11 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   gint            i;
 
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+  coords    = *(gimp_symmetry_get_origin (sym));
+  coords.x -= off_x;
+  coords.y -= off_y;
+  gimp_symmetry_set_origin (sym, drawable, &coords);
+
   n_strokes = gimp_symmetry_get_size (sym);
 
   if (ink->last_blobs &&
@@ -352,8 +357,6 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
           GimpMatrix3 transform;
 
           coords    = *(gimp_symmetry_get_coords (sym, i));
-          coords.x -= off_x;
-          coords.y -= off_y;
 
           gimp_symmetry_get_matrix (sym, i, &transform);
 
@@ -385,8 +388,6 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
           GimpMatrix3  transform;
 
           coords    = *(gimp_symmetry_get_coords (sym, i));
-          coords.x -= off_x;
-          coords.y -= off_y;
 
           gimp_symmetry_get_matrix (sym, i, &transform);
 
@@ -423,8 +424,6 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
       GimpBlob *blob_to_render = g_list_nth_data (blobs_to_render, i);
 
       coords    = *(gimp_symmetry_get_coords (sym, i));
-      coords.x -= off_x;
-      coords.y -= off_y;
 
       ink->cur_blob = blob_to_render;
       paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,

@@ -255,6 +255,7 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
 {
   GimpMybrushCore  *mybrush = GIMP_MYBRUSH_CORE (paint_core);
   MyPaintRectangle  rect;
+  GimpCoords        coords;
   GList            *iter;
   gdouble           dt = 0.0;
   gint              off_x, off_y;
@@ -263,6 +264,11 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
 
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
   n_strokes = gimp_symmetry_get_size (sym);
+
+  coords    = *(gimp_symmetry_get_origin (sym));
+  coords.x -= off_x;
+  coords.y -= off_y;
+  gimp_symmetry_set_origin (sym, drawable, &coords);
 
   /* The number of strokes may change during a motion, depending on
    * the type of symmetry. When that happens, reset the brushes.
@@ -281,13 +287,14 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
            iter;
            iter = g_list_next (iter), i++)
         {
-          MyPaintBrush *brush  = iter->data;
-          GimpCoords    coords = *(gimp_symmetry_get_coords (sym, i));
+          MyPaintBrush *brush = iter->data;
+
+          coords = *(gimp_symmetry_get_coords (sym, i));
 
           mypaint_brush_stroke_to (brush,
                                    (MyPaintSurface *) mybrush->private->surface,
-                                   coords.x - off_x,
-                                   coords.y - off_y,
+                                   coords.x,
+                                   coords.y,
                                    0.0f,
                                    coords.xtilt,
                                    coords.ytilt,
@@ -318,8 +325,8 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
 
       mypaint_brush_stroke_to (brush,
                                (MyPaintSurface *) mybrush->private->surface,
-                               coords.x - off_x,
-                               coords.y - off_y,
+                               coords.x,
+                               coords.y,
                                pressure,
                                coords.xtilt,
                                coords.ytilt,

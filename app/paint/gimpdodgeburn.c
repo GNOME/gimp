@@ -140,6 +140,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   coords = *(gimp_symmetry_get_origin (sym));
   coords.x -= off_x;
   coords.y -= off_y;
+  gimp_symmetry_set_origin (sym, drawable, &coords);
 
   opacity = gimp_dynamics_get_linear_value (dynamics,
                                             GIMP_DYNAMICS_OUTPUT_OPACITY,
@@ -162,8 +163,6 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   for (i = 0; i < n_strokes; i++)
     {
       coords = *(gimp_symmetry_get_coords (sym, i));
-      coords.x -= off_x;
-      coords.y -= off_y;
 
       gimp_brush_core_eval_transform_symmetry (brush_core, sym, i);
 
