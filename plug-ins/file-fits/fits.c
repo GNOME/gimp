@@ -502,8 +502,12 @@ load_image (GFile        *file,
                                     NULL);
         }
 
-      /* If RGB FITS image, we need to increase the size by the number of channels */
-      pixels = (gdouble *) malloc (width * sizeof (gdouble) * channels);
+      /* If RGB FITS image, we need to read in the whole image so we can convert
+       * the planes format to RGB */
+      if (hdu.naxis == 2)
+        pixels = (gdouble *) malloc (width * sizeof (gdouble) * channels);
+      else
+        pixels = (gdouble *) malloc (width * height * sizeof (gdouble) * channels);
 
       if (! image)
         {
@@ -543,41 +547,60 @@ load_image (GFile        *file,
         show_fits_errors (status);
 
       /* Read pixel values in */
-      for (fpixel[1] = height; fpixel[1] >= 1; fpixel[1]--)
+      if (hdu.naxis == 2)
         {
-          gdouble *temp =
-            (gdouble *) malloc (width * sizeof (gdouble) * channels);
-
-          if (fits_read_pix (ifp, TDOUBLE, fpixel, row_length, &replace_val,
-                             pixels, NULL, &status))
-            break;
-
-          if (datamin < datamax)
+          for (fpixel[1] = height; fpixel[1] >= 1; fpixel[1]--)
             {
-              for (gint ii = 0; ii < row_length; ii++)
-                pixels[ii] = (pixels[ii] - datamin) / (datamax - datamin);
+              if (fits_read_pix (ifp, TDOUBLE, fpixel, row_length, &replace_val,
+                                 pixels, NULL, &status))
+                break;
+
+              if (datamin < datamax)
+                {
+                  for (gint ii = 0; ii < row_length; ii++)
+                    pixels[ii] = (pixels[ii] - datamin) / (datamax - datamin);
+                }
+
+              gegl_buffer_set (buffer,
+                               GEGL_RECTANGLE (0, height - fpixel[1],
+                                               width, 1), 0,
+                               format, pixels, GEGL_AUTO_ROWSTRIDE);
             }
+        }
+      else if (hdu.naxisn[2] && hdu.naxisn[2] == 3)
+        {
+          gint total_size = width * height * channels;
 
-          if (hdu.naxisn[2] && hdu.naxisn[2] == 3) /* Packed RGB format */
+          fits_read_img (ifp, TDOUBLE, 1, total_size, &replace_val,
+                         pixels, NULL, &status);
+
+          if (! status)
             {
-              /* Cover planes to RGB format */
-              for (gint ii = 0; ii < (row_length / 3); ii++)
+              gdouble *temp;
+
+              temp = (gdouble *) malloc (width * height * sizeof (gdouble) * channels);
+
+              if (datamin < datamax)
+                {
+                  for (gint ii = 0; ii < total_size; ii++)
+                    pixels[ii] = (pixels[ii] - datamin) / (datamax - datamin);
+                }
+
+              for (gint ii = 0; ii < (total_size / 3); ii++)
                 {
                   temp[(ii * 3)]     = pixels[ii];
-                  temp[(ii * 3) + 1] = pixels[ii + (row_length / 3)];
-                  temp[(ii * 3) + 2] = pixels[ii + ((row_length / 3) * 2)];
+                  temp[(ii * 3) + 1] = pixels[ii + (total_size / 3)];
+                  temp[(ii * 3) + 2] = pixels[ii + ((total_size / 3) * 2)];
                 }
-            }
-          else
-            {
-              temp = pixels;
-            }
 
-          gegl_buffer_set (buffer,
-                           GEGL_RECTANGLE (0, height - fpixel[1],
-                                           width, 1), 0,
-                           format, temp, GEGL_AUTO_ROWSTRIDE);
+              gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                               format, temp, GEGL_AUTO_ROWSTRIDE);
+
+              if (temp)
+                g_free (temp);
+            }
         }
+
       if (status)
         show_fits_errors (status);
 
