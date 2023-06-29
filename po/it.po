@@ -35,12 +35,14 @@
 # offset = scostamento
 # shift/move = spostamento
 # vanishing point = punto di fuga (prospettiva)
+# proof = provino
+# soft-proof = provino video
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-02 23:03+0200\n"
-"PO-Revision-Date: 2023-05-18 13:50+0200\n"
+"POT-Creation-Date: 2023-06-29 10:24+0200\n"
+"PO-Revision-Date: 2023-06-29 11:53+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -10043,7 +10045,7 @@ msgstr "Intento di _rendering per il display"
 #: ../app/actions/view-actions.c:82
 msgctxt "view-action"
 msgid "Soft-Proofing Re_ndering Intent"
-msgstr "Intento di re_ndering del softproof"
+msgstr "Intento di re_ndering del provino video"
 
 #: ../app/actions/view-actions.c:85
 msgctxt "view-action"
@@ -10165,12 +10167,12 @@ msgstr ""
 #: ../app/actions/view-actions.c:156
 msgctxt "view-action"
 msgid "Soft-_Proofing Profile..."
-msgstr "Profilo _softproof..."
+msgstr "Profilo provino _video..."
 
 #: ../app/actions/view-actions.c:157
 msgctxt "view-action"
 msgid "Set the soft-proofing profile"
-msgstr "Imposta il profilo softproof"
+msgstr "Imposta il profilo provino video"
 
 #: ../app/actions/view-actions.c:162
 msgctxt "view-action"
@@ -10225,12 +10227,12 @@ msgstr "Usa la gestione del colore per questa vista"
 #: ../app/actions/view-actions.c:199
 msgctxt "view-action"
 msgid "_Proof Colors"
-msgstr "Colori del _proof"
+msgstr "Colori del _provino"
 
 #: ../app/actions/view-actions.c:200
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
-msgstr "Usa questa vista per il softproof"
+msgstr "Usa questa vista per il provino video"
 
 #: ../app/actions/view-actions.c:206 ../app/actions/view-actions.c:213
 msgctxt "view-action"
@@ -10246,7 +10248,7 @@ msgstr ""
 #: ../app/actions/view-actions.c:214
 msgctxt "view-action"
 msgid "Use black point compensation for soft-proofing"
-msgstr "Usa la compensazione del punto nero per il softproof"
+msgstr "Usa la compensazione del punto nero per il provino video"
 
 #: ../app/actions/view-actions.c:220
 msgctxt "view-action"
@@ -10258,9 +10260,7 @@ msgctxt "view-action"
 msgid ""
 "When soft-proofing, mark colors which cannot be represented in the target "
 "color space"
-msgstr ""
-"Durante il softproof, evidenzia i colori che non possono venir rappresentati "
-"nello spazio colore del risultato"
+msgstr "Durante il provino video, evidenzia i colori che non possono venir rappresentati nello spazio colore del risultato"
 
 #: ../app/actions/view-actions.c:228
 msgctxt "view-action"
@@ -10275,7 +10275,7 @@ msgstr "Mostra il bordo della selezione"
 #: ../app/actions/view-actions.c:235
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
-msgstr "Mostra margini del _livello"
+msgstr "Margini del _livello"
 
 #: ../app/actions/view-actions.c:236
 msgctxt "view-action"
@@ -10285,7 +10285,7 @@ msgstr "Disegna un bordo intorno al livello attivo"
 #: ../app/actions/view-actions.c:242
 msgctxt "view-action"
 msgid "Show Canvas Bounda_ry"
-msgstr "Mostra ma_rgini dell'area di disegno"
+msgstr "Ma_rgini dell'area di disegno"
 
 #: ../app/actions/view-actions.c:243
 msgctxt "view-action"
@@ -10315,7 +10315,7 @@ msgstr "Mostra la griglia immagine"
 #: ../app/actions/view-actions.c:263
 msgctxt "view-action"
 msgid "Sh_ow Sample Points"
-msgstr "M_ostra i punti di campionamento"
+msgstr "Punti di campi_onamento"
 
 #: ../app/actions/view-actions.c:264
 msgctxt "view-action"
@@ -10690,22 +10690,22 @@ msgstr "L'intento di rendering del display è colorimetrico assoluto"
 #: ../app/actions/view-actions.c:574
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
-msgstr "L'intento di rendering del softproof è percettivo"
+msgstr "L'intento di rendering del provino video è percettivo"
 
 #: ../app/actions/view-actions.c:580
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
-msgstr "L'intento di rendering del softproof è colorimetrico relativo"
+msgstr "L'intento di rendering del provino video è colorimetrico relativo"
 
 #: ../app/actions/view-actions.c:586
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is saturation"
-msgstr "L'intento di rendering per il softproof è saturazione"
+msgstr "L'intento di rendering per il provino video è saturazione"
 
 #: ../app/actions/view-actions.c:592
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
-msgstr "L'intento di rendering per il softproof è colorimetrico assoluto"
+msgstr "L'intento di rendering per il provino video è colorimetrico assoluto"
 
 #: ../app/actions/view-actions.c:600
 msgctxt "view-padding-color"
@@ -11917,7 +11917,14 @@ msgid ""
 "is used with large images. Also, things can get horribly slow if the swap "
 "file is created on a folder that is mounted over NFS.  For these reasons, it "
 "may be desirable to put your swap file in \"/tmp\"."
-msgstr "Imposta la posizione del file di scambio. GIMP usa uno schema di allocazione basata su \"tile\". Il file di scambio viene usato per spostare facilmente e velocemente le 'tile' da e verso il disco. Attenzione al fatto che il file di scambio di GIMP può allargarsi molto se si elaborano immagini molto grandi. Inoltre le elaborazioni possono diventare terribilmente lente se il file di scambio viene creato in una cartella montata su NFS. Per queste ragioni è preferibile mettere il file di scambio in \"/tmp\"."
+msgstr ""
+"Imposta la posizione del file di scambio. GIMP usa uno schema di allocazione "
+"basata su \"tile\". Il file di scambio viene usato per spostare facilmente e "
+"velocemente le 'tile' da e verso il disco. Attenzione al fatto che il file "
+"di scambio di GIMP può allargarsi molto se si elaborano immagini molto "
+"grandi. Inoltre le elaborazioni possono diventare terribilmente lente se il "
+"file di scambio viene creato in una cartella montata su NFS. Per queste "
+"ragioni è preferibile mettere il file di scambio in \"/tmp\"."
 
 #: ../app/config/gimprc-blurbs.h:494
 msgid "When enabled, menus can be torn off."
@@ -12261,7 +12268,12 @@ msgid ""
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
 "images that wouldn't fit into memory otherwise.  If you have a lot of RAM, "
 "you may want to set this to a higher value."
-msgstr "Quando l'ammontare dei dati pixel eccede questo limite, GIMP comincerà a trasferire tile su disco. Ciò rallenta molto le operazioni ma permette di lavorare su immagini che altrimenti non sarebbero mantenute in memoria. Se si possiede molta  memoria RAM può essere desiderabile impostare la voce ad un valore maggiore."
+msgstr ""
+"Quando l'ammontare dei dati pixel eccede questo limite, GIMP comincerà a "
+"trasferire tile su disco. Ciò rallenta molto le operazioni ma permette di "
+"lavorare su immagini che altrimenti non sarebbero mantenute in memoria. Se "
+"si possiede molta  memoria RAM può essere desiderabile impostare la voce ad "
+"un valore maggiore."
 
 #: ../app/config/gimprc-blurbs.h:680
 msgid "Show the current foreground and background colors in the toolbox."
@@ -15747,11 +15759,11 @@ msgstr "Converti immagine in scala di grigi"
 
 #: ../app/dialogs/color-profile-dialog.c:200
 msgid "Soft-Proof Profile"
-msgstr "Profilo softproof"
+msgstr "Profilo provino video"
 
 #: ../app/dialogs/color-profile-dialog.c:203
 msgid "Select Soft-Proof Profile"
-msgstr "Seleziona il profilo del softproof"
+msgstr "Seleziona il profilo del provino video"
 
 #: ../app/dialogs/color-profile-dialog.c:209
 #: ../app/tools/gimpforegroundselecttool.c:321
@@ -16811,15 +16823,15 @@ msgstr "_Ottimizza la visualizzazione immagine per:"
 #. Print Simulation (Soft-proofing)
 #: ../app/dialogs/preferences-dialog.c:1386
 msgid "Soft-Proofing"
-msgstr "Softproof"
+msgstr "Provino video"
 
 #: ../app/dialogs/preferences-dialog.c:1396
 msgid "Select Soft-Proofing Color Profile"
-msgstr "Seleziona il profilo colore del softproof"
+msgstr "Seleziona il profilo colore del provino video"
 
 #: ../app/dialogs/preferences-dialog.c:1397
 msgid "_Soft-proofing profile:"
-msgstr "Profilo _softproof:"
+msgstr "Profilo provino _video:"
 
 #: ../app/dialogs/preferences-dialog.c:1403
 msgid "Re_ndering intent:"
@@ -16831,7 +16843,7 @@ msgstr "Usa compensazione del _punto nero"
 
 #: ../app/dialogs/preferences-dialog.c:1418
 msgid "O_ptimize soft-proofing for:"
-msgstr "Ottimizza il soft_proof per:"
+msgstr "Ottimizza il _provino video per:"
 
 #: ../app/dialogs/preferences-dialog.c:1427
 msgid "Mar_k out of gamut colors"
@@ -22771,7 +22783,9 @@ msgstr "Permetti la crescita"
 
 #: ../app/tools/gimpcropoptions.c:109
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
-msgstr "Permetti la ridimensione dell'area disegnabile trascinando il bordo di ritaglio oltre i limiti dell'immagine"
+msgstr ""
+"Permetti la ridimensione dell'area disegnabile trascinando il bordo di "
+"ritaglio oltre i limiti dell'immagine"
 
 #: ../app/tools/gimpcropoptions.c:116 ../app/tools/gimpcropoptions.c:226
 msgid "Fill with"
