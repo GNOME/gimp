@@ -11,61 +11,59 @@ Overview of Changes from GIMP 2.99.14 to GIMP 2.99.16
 
 Core:
 
- - MacPorts support for macOS added (this is even now the official support as we
-   build our new packages with MacPorts).
- - "Anchor" tooltip changing depending on whether we are floating over a layer
-   or layer mask.
- - GIMP_TIMER_START|END are no-op on release builds.
- - Ctrl-F overrided in our item dockables to trigger our item search popover
-   (multi-item selection, ability to use regexp or glob search by enabling these
-   in Preferences, etc.) rather than the default GTK selection popup for tree
-   views.
- - All code is now multi-item aware (even though it might mean specififically
-   forbidding using some features on multiple items).
- - Better support of non-ASCII characters in paths on Windows and other fixes
-   for Windows: API un-deprecation, unicode variants of functions…
- - Copy|Cut-Paste code reworked further.
- - Action "Crop to Selection" renamed to "Resize Layers to Selection".
- - Action "Crop to Content" renamed to "Crop Layers to Content".
- - If any opened image (with a display) is dirty, then GIMP will now inhibit the
-   log-out event on OSes which support it.
- - Port from GtkAction/GtkUIManager to GAction/GMenu finished.
- - The action search now shows the top menu path for actions when available.
- - Actions can now be attributed multiple shortcuts. The duplicate actions
-   ending in `-accel` were removed in favor of multiple shortcuts and a few
-   secondary (semantic) shortcuts were added such as `Copy`/`Cut`/`Paste`
-   buttons for relevant actions, or `ZoomIn`/`ZoomOut` for canvas zoom,
-   `Forward`/`Back` to navigate through image tabs, but also some numpad
-   shortcuts like the `/` divide from the numpad for the action search
-   (additionally to the base keyboard `/` key).
-   It is not possible to attribute several shortcuts from GUI yet.
- - An action is automatically generated for all GEGL operations which would
-   normally appear in the GEGL Operation tool. This includes in particular
-   third-party GEGL operations which might be user-installed. It makes these
-   filters also searchable in the action search, usable in menus and shortcuts
-   can be assigned as well.
- - If present, the GEGL key "gimp:menu-label" will be used to set the short
-   label of the generated action (short labels are typically used in menus since
-   the menu path can serve as context). Otherwise the "title" with appended
-   "..." is used.
- - GimpAction now have a concept of short vs. long labels, which can be used in
-   different places. In particular, in action search, we usually want the long
-   label, whereas in menus, we usually want the short label as we have context
-   (though the latter can be tweaked by a custom "label-variant" attribute in
-   .ui files).
- - New "Middle Gray (CIELAB)" fill option (new image or new layer).
- - Stroke Selection: "Line" and "Paint tool" styles are now in a a stack
-   switcher instead of radio buttons. More advanced options are not "hidden"
-   anymore in a foldable widget.
- - New grayscale color picking mode.
- - .aco palettes are now imported with babl. As a result, it is now possible to
-   import CIE Lab palettes (colorspace 7)
- - Action search now displays a "help" icon which can be clicked to show the
-   currently selected action's manual page (or the action search manual page if
-   no actions are selected). Alternatively the F1 shortcut will do the same.
- - Basic matrix operations code was optimized.
- - Fill/Stroke Path/Selection split the "Solid color" option into a "Foreground
-   color" and "Background color".
+  - "Anchor" tooltip changing depending on whether we are floating over a layer
+    or layer mask.
+  - GIMP_TIMER_START|END are no-op on release builds.
+  - Ctrl-F overrided in our item dockables to trigger our item search popover
+    (multi-item selection, ability to use regexp or glob search by enabling these
+    in Preferences, etc.) rather than the default GTK selection popup for tree
+    views.
+  - All code is now multi-item aware (even though it might mean specififically
+    forbidding using some features on multiple items).
+  - Better support of non-ASCII characters in paths on Windows and other fixes
+    for Windows: API un-deprecation, unicode variants of functions…
+  - Copy|Cut-Paste code reworked further.
+  - Action "Crop to Selection" renamed to "Resize Layers to Selection".
+  - Action "Crop to Content" renamed to "Crop Layers to Content".
+  - If any opened image (with a display) is dirty, then GIMP will now inhibit the
+    log-out event on OSes which support it.
+  - Port from GtkAction/GtkUIManager to GAction/GMenu finished.
+  - The action search now shows the top menu path for actions when available.
+  - Actions can now be attributed multiple shortcuts. The duplicate actions
+    ending in `-accel` were removed in favor of multiple shortcuts and a few
+    secondary (semantic) shortcuts were added such as `Copy`/`Cut`/`Paste`
+    buttons for relevant actions, or `ZoomIn`/`ZoomOut` for canvas zoom,
+    `Forward`/`Back` to navigate through image tabs, but also some numpad
+    shortcuts like the `/` divide from the numpad for the action search
+    (additionally to the base keyboard `/` key).
+    It is not possible to attribute several shortcuts from GUI yet.
+  - An action is automatically generated for all GEGL operations which would
+    normally appear in the GEGL Operation tool. This includes in particular
+    third-party GEGL operations which might be user-installed. It makes these
+    filters also searchable in the action search, usable in menus and shortcuts
+    can be assigned as well.
+  - If present, the GEGL key "gimp:menu-label" will be used to set the short
+    label of the generated action (short labels are typically used in menus since
+    the menu path can serve as context). Otherwise the "title" with appended
+    "..." is used.
+  - GimpAction now have a concept of short vs. long labels, which can be used in
+    different places. In particular, in action search, we usually want the long
+    label, whereas in menus, we usually want the short label as we have context
+    (though the latter can be tweaked by a custom "label-variant" attribute in
+    .ui files).
+  - New "Middle Gray (CIELAB)" fill option (new image or new layer).
+  - Stroke Selection: "Line" and "Paint tool" styles are now in a a stack
+    switcher instead of radio buttons. More advanced options are not "hidden"
+    anymore in a foldable widget.
+  - New grayscale color picking mode.
+  - .aco palettes are now imported with babl. As a result, it is now possible to
+    import CIE Lab palettes (colorspace 7)
+  - Action search now displays a "help" icon which can be clicked to show the
+    currently selected action's manual page (or the action search manual page if
+    no actions are selected). Alternatively the F1 shortcut will do the same.
+  - Basic matrix operations code was optimized.
+  - Fill/Stroke Path/Selection split the "Solid color" option into a "Foreground
+    color" and "Background color".
 
 Tools:
 
@@ -113,6 +111,9 @@ Plug-ins:
       Per the specification developers, the format does not support 'naive' CMYK
       conversion, so a profile is required for export. The option will be
       disabled if not set.
+    * Support libjxl 0.9: some API were removed which would have broken
+      the plug-in build. Now it should work both with old and new
+      version.
   - Script-fu:
     * Byte support: add a new type 'byte' to be able to handle binary data while
       still retaining the utf8 char and string behavior.
@@ -229,6 +230,8 @@ API:
 
 Build:
 
+  - MacPorts support for macOS added (this is even now the official support as we
+    build our new packages with MacPorts).
   - meson: make sure libgimp does not depend on GTK+.
   - GLib requirement bumped to version 2.70 as minimum.
   - Improved C99 compatibility of IPC_RMID check.
@@ -248,6 +251,13 @@ Build:
     consequence of approaching GIMP 3.0 release so we don't want to bump minimum
     versions too high.
   - GEGL requirement bumped to GEGL 0.4.46.
+  - Windows installer's welcome image is now generated in several sizes
+    from our splash screen image, avoiding discrepancies as well as
+    unecessarily filling our repository with a history of duplicate
+    images.
+  - Add some logic to common/ and python/ plug-ins to facilitate running
+    GIMP from the build directory (without being installed) while still
+    able to load all plug-ins.
 
 Debugging:
 
@@ -260,6 +270,14 @@ Documentation:
   - More developer docs is being moved to the new developer website.
   - Better clarify licensing of files under data/.
   - Improve flatpak maintainance doc (build/flatpak/README.md).
+
+Translations:
+
+  - 24 translations were updated: Basque, Bulgarian, Catalan, Chinese
+    (China), Chinese (Taiwan), Danish, Esperanto, French, Georgian,
+    German, Greek, Hungarian, Icelandic, Lithuanian, Persian, Polish,
+    Portuguese, Romanian, Russian, Slovenian, Spanish, Swedish, Turkish,
+    Ukrainian.
 
 
 Overview of Changes from GIMP 2.99.12 to GIMP 2.99.14
