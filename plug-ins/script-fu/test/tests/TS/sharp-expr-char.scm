@@ -21,9 +21,9 @@
 
 ; #\space #\newline #\return and #\tab also denote character constants.
 
-; FIXME: sharp followed by space parses as a token,
-; but I don't know that it is legal syntax
+; sharp backslash space "#\ " parses as a token and yields a char atom.
 ; See the code, there is a space here: " tfodxb\\"
+; See the test below.
 
 ; #U+<x> notation for unichar character constants is not in ScriptFu
 
@@ -111,10 +111,9 @@
 (assert '(char? #\x3))
 ; sharp char hex notation accepts two hex digits
 (assert '(char? #\x33))
+
 ; edge case, max hex that fits in 8-bits
-; FIXME currently is syntax error, untestable.
-; It should not be a syntax error.
-; (assert '(char? #\xff))
+(assert '(char? #\xff))
 
 ; sharp car expr hex accepts three digits
 ; when they are leading zeroes
@@ -145,7 +144,7 @@
 ; These tests are not a complete test of UTF-8 compliance !!!
 
 ; Edge case: max valid codepoint
-; FIXME (assert (equal? #\x10FFFF #\􏿿))
+(assert (equal? #\x10FFFF #\􏿿))
 
 ; Edge case: zero is considered a valid codepoint
 ; !!! Although also a string terminator.
@@ -222,15 +221,13 @@
 ;               Untestable sharp constant hex character
 
 ; Test framework can't test, these cases are syntax errors.
-; These cases yield "undefined sharp expression" in REPL
-; FIXME: the error message should be more specific, should say "syntax"
+; These cases yield "syntax: illegal sharp constant expression" in REPL
 
 ; sharp constant hex having non-hex digit is an error
 ; z is not in [a-f0-9]
-; Only testable in REPL
 ; > #\xz
-; Error: undefined sharp expression
-; Not testable here since it is syntax
+; Error: syntax: illegal sharp constant expression
+; Also prints warning "Hex literal has invalid digits" in stderr
 
 
 

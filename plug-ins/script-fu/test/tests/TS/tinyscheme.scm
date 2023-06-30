@@ -19,7 +19,7 @@
 
 (testing:load-test "sharp-expr.scm")
 (testing:load-test "sharp-expr-char.scm")
-; Currently failing badly (testing:load-test "sharp-expr-unichar.scm")
+(testing:load-test "sharp-expr-unichar.scm")
 
 ; test unichar without using sharp char expr
 (testing:load-test "unichar.scm")

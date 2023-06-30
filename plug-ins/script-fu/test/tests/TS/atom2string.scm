@@ -43,9 +43,9 @@
 (assert `(string=? (atom->string 1.0)
                     "1.0"))
 
-; FIXME the above is known to fail in German
-; currently prints 1,0
-; FIXME need a test with other locale?
+; FIXME the above is known to fail in German:
+; currently prints 1,0.
+; To test, set locale to German and retest.
 
 ; There are no other numeric types in TinyScheme.
 ; Refer to discussions of "Lisp numeric tower"
@@ -76,27 +76,33 @@
 (assert `(string=? (atom->string #\newline)
                     "
 "))
-; TODO #\return
+; Note between quotes is an escaped return char,
+; which readstring() converts to a single char
+; decimal 13, hex 0d
+(assert `(string=? (atom->string #\return)
+                    "\x0d"))
 
 ; char, ASCII, non-printing control
-; FIXME, should yield a single glyph.
-; !!! It should not yield a sharp constant "#\x7"
 (assert `(string=? (atom->string #\x7)
 										""))
-; !!! This also passes, because readstring interprets
-; the \x.. escape sequence.
+; !!! This also passes, because readstring converts
+; the \x.. escape sequence to a char.
 (assert `(string=? (atom->string #\x7)
                     "\x07"))
+; !!! Note the REPL for (atom->string #\x7)
+; yields "\x07" which is not a sharp char expr wrapped in quotes
+; but is a string that can be turned around and evaluated
+; to a string containing one character.
 
 
-;             multi-byte UTF-8 encode chars
+
+;             multi-byte UTF-8 encoded chars
+
+; see more tests in sharp-expr-unichar.scm
 
 ; char, unichar outside the ASCII range
-; FIXME: needs unichar fixes
-; (assert `(string=? (atom->string 'a)
-;                    "a"))
-
-
+(assert `(string=? (atom->string #\λ)
+                   "λ"))
 
 
 

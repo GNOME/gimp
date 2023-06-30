@@ -1,7 +1,13 @@
 ; test integer->char function
 
-; Is R5RS, but with unicode
+; Is R5RS, but ScriptFu supports unicode
 
+; Also test the inverse operation: char->integer
+
+; TinyScheme does not implement some char functions in MIT Scheme.
+; For example char->name char->digit
+
+; TODO test char=? char-upcase
 
 ; General test strategy:
 ; Generate char atom using integer->char.
@@ -20,36 +26,54 @@
 
 ;            ASCII NUL character.
 
-; 0 is a valid codepoint
-; whose repr in the REPL is #\x0
-; > (integer->char 0)
-; "#\x0"
+; 0 is a valid codepoint.
+; But ASCII null terminates the string early, so to speak.
+
+; Since null byte terminates string early
+; the repr in the REPL of codepoint 0 is #\
+
+; re-test
+; (integer->char 0)
+; #\
+
+(assert (= (char->integer (integer->char 0))
+           0))
+
+; codepoint zero equals its sharp char hex repr
+(assert (equal? (integer->char 0)
+                #\x0))
 
 ; Converting the atom to string yields an empty string
 (assert `(string=? (atom->string (integer->char 0))
                    ""))
 
-; ASCII null terminates the string early, so to speak.
-
 ; You can also represent as escaped hex "x\00"
 (assert `(string=? "\x00"
                    ""))
+
 ; Escaped hex must have more than one hex digit.
-; Can't be tested: (assert-error `(string? "\x0") "Error reading string ")
-; In REPL:
-; > "\x0"
+; Testing framework can't test: (assert-error `(string? "\x0") "Error reading string ")
+
+; re-test REPL
+; (null? "\x0")
 ; Error: Error reading string
 
 
-;           the first non-ASCII character;
+;           the first non-ASCII character (often the euro sign)
 
-; TODO (integer->char 128),
+(assert (integer->char 128))
 
+; converted string is equivalent to a string literal that displays
+(assert `(string=? (atom->string (integer->char 128))
+                   ""))
 
-;           first Unicode character outside the 8-bit range;
+;           first Unicode character outside the 8-bit range
 
 ; evaluates without complaint
 (assert (integer->char 256))
+
+(assert (= (char->integer (integer->char 256))
+           256))
 
 ; length of converted string is 1
 ; The length is count of characters, not the count of bytes.
@@ -62,8 +86,10 @@
 
 
 ;      first Unicode character outside the Basic Multilingual Plane
-
 (assert (integer->char 65536))
+
+(assert (= (char->integer (integer->char 65536))
+           65536))
 
 (assert `(= (string-length (atom->string (integer->char 65536)))
             1))
@@ -75,6 +101,6 @@
 (assert `(string=? (atom->string (integer->char 65536))
                    "𐀀"))
 
-; !!! Note the SF Console REPL yields #\
-; which is not the correct representation.
-; FIXME
+; re-test REPL yields a sharp char expr
+; (integer->char 65536)
+; #\𐀀

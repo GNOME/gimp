@@ -999,8 +999,22 @@ mk_byte (scheme *sc, guint8 b)
   return x;
 }
 
+/* Returns atom of type char from 32-bit codepoint.
+ * Returns nil when codepoint is not valid UTF-8 encoding.
+ */
 INTERFACE pointer mk_character(scheme *sc, gunichar c) {
-  pointer x = get_cell(sc,sc->NIL, sc->NIL);
+  pointer x;
+
+  /* Reject invalid codepoints in UTF-8. */
+  if (!g_unichar_validate (c))
+    {
+      g_warning ("Failed make character from invalid codepoint.");
+      return sc->NIL;
+    }
+
+  x = get_cell(sc,sc->NIL, sc->NIL);
+
+  /* g_debug ("%s %i", G_STRFUNC, c); */
 
   typeflag(x) = (T_CHARACTER | T_ATOM);
   ivalue_unchecked(x)= c;
@@ -1245,7 +1259,12 @@ static pointer mk_atom(scheme *sc, char *q) {
      return (mk_integer(sc, atol(q)));
 }
 
-/* make constant */
+/* make atom from sharp expr representing constant.
+ * Returns atom of type integer, char, or boolean.
+ * Returns nil for certain errors in sharp char expr,
+ * including invalid UTF-8 encoding
+ * or sharp hex char expr that is invalid codepoint.
+ */
 static pointer mk_sharp_const(scheme *sc, char *name) {
      long    x;
      char    tmp[STRBUFFSIZE];
@@ -1268,33 +1287,51 @@ static pointer mk_sharp_const(scheme *sc, char *name) {
      } else if (*name == 'b') {    /* #b (binary) */
           x = binary_decode(name+1);
           return (mk_integer(sc, x));
-     } else if (*name == '\\') { /* #\w (character) */
-          gunichar c=0;
+     } else if (*name == '\\') {
+          /* #\<foo>  or #\x<foo> (character) */
+          gunichar codepoint;
           if(stricmp(name+1,"space")==0) {
-               c=' ';
+               codepoint=' ';
           } else if(stricmp(name+1,"newline")==0) {
-               c='\n';
+               codepoint='\n';
           } else if(stricmp(name+1,"return")==0) {
-               c='\r';
+               codepoint='\r';
           } else if(stricmp(name+1,"tab")==0) {
-               c='\t';
-     } else if(name[1]=='x' && name[2]!=0) {
-          int c1=0;
-          if(sscanf(name+2,"%x",(unsigned int *)&c1)==1 && c1 < UCHAR_MAX) {
-               c=c1;
-          } else {
-               return sc->NIL;
-     }
+               codepoint='\t';
+          } else if(name[1]=='x' && name[2]!=0) {
+            /* Hex literal in ASCII bytes longer than
+             * \xffffffff won't fit in codepoint.
+             */
+            if (strlen (name) > 10) {
+              g_warning ("Hex literal larger than 32-bit");
+              return sc->NIL;
+            }
+            else {
+              /* #\x<[0-f]*> Convert hex literal to codepoint. */
+              if(sscanf(name+2,"%x",(unsigned int *)&codepoint)!=1) {
+                g_warning ("Hex literal has invalid digits");
+                return sc->NIL;
+              }
+            }
 #if USE_ASCII_NAMES
-          } else if(is_ascii_name(name+1,&c)) {
-               /* nothing */
+          } else if(is_ascii_name(name+1,&codepoint)) {
+               /* nothing, side effect is fill codepoint.  */
 #endif
-          } else if(name[2]==0) {
-               c=name[1];
           } else {
-               return sc->NIL;
+               /* #\<UTF-8 encoding>
+                * i.e. one to four bytes.
+                */
+               codepoint = g_utf8_get_char_validated (&name[1], -1);
+               if (codepoint == -1) {
+                  g_warning ("Invalid UTF-8 encoding");
+                  return sc->NIL;
+               }
           }
-          return mk_character(sc,c);
+          /* Not assert is valid codepoint yet.
+           * mk_character does not require but will return NIL
+           * when not valid.
+           */
+          return mk_character(sc,codepoint);
      } else
           return (sc->NIL);
 }
@@ -2136,6 +2173,95 @@ static void printatom(scheme *sc, pointer l, int f) {
   putbytes (sc, p, len);
 }
 
+/* Encode 32-bit codepoint into null-terminated byte sequence in buffer.
+ * Require buffer >6 bytes, per GTK docs.
+ * (Not four since the algorithm temporarily uses more.)
+ *
+ * !!! Does not ensure the sequence is valid,
+ * just that the encoding algorithm was followed.
+ *
+ * Ensures buffer is null-terminated.
+ *
+ * This encapsulates call to g_unichar_to_utf8
+ * to ensure null termination.
+ */
+static void
+get_utf8_from_codepoint (gunichar codepoint, gchar *buffer)
+{
+  guint len;
+
+  len = g_unichar_to_utf8 (codepoint, buffer);
+  /* assert len is ALWAYS [1,6]. */
+
+  /* Despite what GTK docs say, g_unichar_to_utf8 does NOT null-terminate. */
+  buffer[len] = 0;
+}
+
+/* Return a string representing an atom of type char
+ * whose value i.e. codepoint is given.
+ * String is a sharp char expression.
+ *
+ * Returned string is static.
+ *
+ * Translates whitespace to sharp expression like #\tab.
+ *
+ * Translate all other non-whitespace codepoints to sharp char expr
+ * of form #\* where * is a utf8 encoding (a glyph)
+ * The reverse of mk_sharp_constant.
+ *
+ * Note TinyScheme differs when USE_ASCII_NAMES,
+ * e.g. returns #\del .
+ *
+ * ScriptFu returns sharp char expr with suffix
+ * one glyph in utf8 for all other non-whitespace codepoints
+ * (even c<32 i.e. control chars and c=127).
+ * I.E. a sharp constant #\* where * is a unichar.
+ * The unichar may have a box-w-hex glyph.
+ *
+ * Also does not return sharp char expr hex
+ * of form #\x* where * is a hex literal.
+ * ScriptFu may return that format elsewhere,
+ * for other atom types for certain <base> codes.
+ */
+static gchar *
+get_sharp_char_expr (gunichar codepoint)
+{
+  gchar *result;
+
+  /* g_debug ("%s %i", G_STRFUNC, codepoint); */
+
+  /* codepoint is unsigned, insure char constants do not sign extend. */
+  switch (codepoint)
+    {
+    case ' ':
+      result = "#\\space";
+      break;
+    case '\n':
+      result = "#\\newline";
+      break;
+    case '\r':
+      result = "#\\return";
+      break;
+    case '\t':
+      result = "#\\tab";
+      break;
+    default:
+      {
+        /* g_unichar_to_utf8 requires >6 byte buffer. */
+        gchar        utf8_bytes[7];
+        /* Plus two bytes for "#\" */
+        static gchar sharp_constant[9];
+
+        get_utf8_from_codepoint (codepoint, utf8_bytes);
+
+        /* Cat null terminated sequence of bytes (UTF-8 encoding) to "#\" */
+        snprintf (sharp_constant, 9, "#\\%s", utf8_bytes);
+        result = sharp_constant;
+      }
+    } /* end switch codepoint */
+  /* g_debug ("%s result %s", G_STRFUNC, result); */
+  return result;
+}
 
 /* Uses internal buffer unless string pointer is already available */
 static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
@@ -2215,43 +2341,16 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
            }
      } else if (is_character(l)) {
           gunichar c=charvalue(l);
-          p = sc->strbuff;
           if (!f) {
-               int len = g_unichar_to_utf8(c, p);
-               p[len]=0;
+               /* Return just the utf8 encoding, the glyphs themselves.
+                * versus a sharp char expr.
+                */
+               /* Use strbuff, which is >6 bytes */
+               p = sc->strbuff;
+               get_utf8_from_codepoint (c, p);
           } else {
-               switch(c) {
-               case ' ':
-                    p = "#\\space";
-                    break;
-               case '\n':
-                    p = "#\\newline";
-                    break;
-               case '\r':
-                    p = "#\\return";
-                    break;
-               case '\t':
-                    p = "#\\tab";
-                    break;
-               default:
-#if USE_ASCII_NAMES
-                    if(c==127) {
-                         p = "#\\del";
-                         break;
-                    } else if(c<32) {
-                         snprintf(p,STRBUFFSIZE, "#\\%s", charnames[c]);
-                         break;
-                    }
-#else
-                    if(c<32) {
-                      snprintf(p,STRBUFFSIZE,"#\\x%x",c);
-                      break;
-                    }
-#endif
-                    snprintf(p,STRBUFFSIZE,"#\\%c",c);
-                    break;
-               }
-          }
+               p = get_sharp_char_expr (c);
+          } /* end if format code. */
      } else if (is_symbol(l)) {
           p = symname(l);
      } else if (is_proc(l)) {
@@ -4529,7 +4628,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
           case TOK_SHARP: {
                pointer f=find_slot_in_env(sc,sc->envir,sc->SHARP_HOOK,1);
                if(f==sc->NIL) {
-                    Error_0(sc,"undefined sharp expression");
+                    Error_0(sc,"syntax: illegal sharp expression");
                } else {
                     sc->code=cons(sc,slot_value_in_env(f),sc->NIL);
                     s_goto(sc,OP_EVAL);
@@ -4537,7 +4636,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
           }
           case TOK_SHARP_CONST:
                if ((x = mk_sharp_const(sc, readstr_upto(sc, DELIMITERS))) == sc->NIL) {
-                    Error_0(sc,"undefined sharp expression");
+                    Error_0(sc,"syntax: illegal sharp constant expression");
                } else {
                     s_return(sc,x);
                }

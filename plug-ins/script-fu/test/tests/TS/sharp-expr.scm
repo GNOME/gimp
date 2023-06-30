@@ -44,9 +44,7 @@
 
 ; #\space #\newline #\return and #\tab also denote character constants.
 
-; FIXME: sharp followed by space parses as a token,
-; but I don't know that it is legal syntax
-; See the code, there is a space here: " tfodxb\\"
+; Note: sharp backslash followed by space/blank parses as a token,
 
 ; #U+<x> notation for unichar character constants is not in ScriptFu
 
@@ -56,10 +54,11 @@
 
 
 ; block quote parses
-; TODO only testable in REPL?
+; Seems only testable in REPL?
 ; Note there is a newline after foo
 ;(assert '#! foo
-;         )
+;        )
+; but is not testable by the framework
 
 ; #t denotes truth
 (assert #t)

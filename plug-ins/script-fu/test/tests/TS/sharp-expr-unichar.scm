@@ -4,6 +4,12 @@
 
 ; See unichar.scm for tests of unichar without using sharp char expr
 
+; This file also documents cases that the testing framework can't test
+; since they are syntax errors
+; or otherwise throw error in way that testing framework can't catch.
+; Such cases are documented with pairs of comments in re-test format:
+; First line starting with "; (" and next line "; <expected REPL display>"
+
 ; This is NOT a test of the REPL: ScriptFu Console.
 ; A REPL displays using obj2str,
 ; or internal atom2str() which this doesn't test.
@@ -17,89 +23,140 @@
 
 ; conversion from number to character equal sharp char expr unicode
 (assert `(equal? (integer->char 955) #\λ))
+; char=? also works
+(assert `(char=? (integer->char 955) #\λ))
 
-; hex sharp char is same as sharp char
+; a sharp char expr unicode is-a char
+(assert (char? #\λ))
+
+; sharp char hex expr is same as sharp char expr
 (assert (equal? #\x3bb  #\λ))
+; sharp char hex expr is-a char
 (assert '(char? #\x3bb))
 
 ; Unichar extracted from string equals sharp char expr unicode
 (assert (equal? (string-ref "λ" 0) #\λ))
 
 
-; Omitted, a test of the REPL
-; quoted Unichar is equal to its usual representation
-(assert `(equal? ,λ #\λ))
 
-; a sharp char expr unicode is-a char
-(assert (char? #\λ))
+;             Edge cases for sharp char expressions: hex: Unicode
 
+; see also integer2char.scm
+; where same cases are tested
+
+
+;       extended ASCII 128-255
+
+; 128 the euro sign
+(assert #\x80)
+; 255
+(assert #\xff)
+
+; 159 \xao is non-breaking space, not visible in most editors
+
+; 256, does not fit in one byte
+(assert #\x100)
+
+
+; outside the Basic Multilingual Plane
+; won't fit in two bytes
+
+; Least outside: 65536
+(assert #\x10000)
+
+; max valid codepoint #\x10ffff
+(assert #\x10ffff)
+
+; Any 32-bit value greater than x10ffff yields a syntax error:
+; syntax: illegal sharp constant expression
+; and not testable in testing framework
+
+
+
+;         extra tests of sharp char expr in other constructed expressions
 
 ; sharp char expr unicode passed to string function
-(assert (equal? (string #\λ) "λ")
+(assert (string=? (string #\λ) "λ"))
 
 ; sharp char expr unicode in a list
-(assert (equal? (list (string-ref "λ" 0)) '(#\λ))
+(assert (equal? (list (string-ref "λ" 0)) '(#\λ)))
 
 ; sharp char expr unicode in vector
-(assert (equal? (vector (string-ref "λ" 0)) '#(#\λ))
+(assert (equal? (vector (string-ref "λ" 0)) '#(#\λ)))
+
+; atom->string
+(assert `(string=? (atom->string #\λ)
+                   "λ"))
 
 
-; Omitted: a test of REPL
-; display unichar
-; > (display (string-ref "λ" 0))
+
+;             Quoted unichar
+
+; quoted unichar is not type char
+(assert `(not (char? 'λ)))
+; quoted unichar is type symbol
+(assert `(symbol? 'λ))
+
+
+
+
+;                 unichar tested in REPL
+
+; What follows are tests that can't be tested by the "testing" framework
+; but can be tested by the "re-test" framework
+; Testing framework can't test side effects on display.
+
+
+
+; re-test display unichar
+; (display (string-ref "λ" 0))
 ; λ#t
 
-
-; This is 0x7 BEL
-; TODO for greek lambda unicode char
-; string function takes sequence of chars
-(assert (equal? (string #\) ""))
+; re-test
+; (begin (display "Unicode lambda char: ") (string-ref "λ" 0))
+; Unicode lambda char: #\λ
 
 
 
+;             Unicode character can be passed to error function and displayed
 
-
-
-
-;                 unichar in context of other expressions
-
-; unichar evaluated after evaluating display.
-; Prints side effect of display
-; followed by value of the last expression, a unichar
-;> (begin (display "Unicode lambda char: ") (string-ref "λ" 0))
-;Unicode lambda char: #\λ
-
-; Single Unicode character outside of string can be displayed in error
-;>(display "Unicode lambda char: ")(error "testUnicodeKo1: " (string-ref "λ" 0))
-;Unicode lambda char: #tError: testUnicodeKo1:  #\λ
-; TODO this test seems to infinite loop
-; Maybe the problems is catting string to char
-;(assert-error `(error "Error: " (string-ref "λ" 0))
-;              "Error: λ")
-;(assert-error `(error "Error: " "λ")
- ;              "Error: λ")
+; Seems to be flaw in testing framework,
+; this can't be tested:
 ;(assert-error `(error "Error λ")
-;               "Error: λ")
-; Seems to be flaw in testing framework
+;               "Error: Error λ")
+
+; re-test
+; (error "Error λ")
+; Error: Error: λ
 
 
 
-; Edge case: first invalid codepoint greater than max valid
-; '#\x110000
-; TODO
+;               syntax errors in sharp char hex expr
+
+; Syntax errors are not testable in testing framework.
+
+
+; exceeding max range of int 32 codepoint
+; longer than 8 hex digits \xf87654321
+; > (assert '#\xf87654321
+
+; re-test
+; (null? #\xf87654321 )
+; syntax: illegal sharp constant expression
+; Also prints warning "Hex literal larger than 32-bit" to stderr
+
 
 ; A codepoint that fits in 32 bits but invalid UTF-8 encoding
-; '#\xd800
-; TODO
 
-; sharp constant hex exceeding max range of int 32 codepoint
-; longer than 8 hex digits \xf87654321
+; re-test
+; (null? '#\xd800)
+; syntax: illegal sharp constant expression
+; Also prints warning "Failed make character from invalid codepoint." to stderr
 
-; FIXME currently this fails to pass or fail
-; Yields #\! in the REPL ????
-; (assert '#\xf87654321 )
 
-; FIXME This passes but it should not.
-; It should be a syntax or other error
-; If syntax, not testable here.
-(assert `(not (null? #\xf87654321 )))
+; Edge error case: first invalid codepoint greater than max valid
+
+; re-test
+; (null? '#\x110000)
+; syntax: illegal sharp constant expression
+; Also prints warning "Failed make character from invalid codepoint." to stderr
