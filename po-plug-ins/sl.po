@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-23 14:14+0000\n"
-"PO-Revision-Date: 2023-06-24 21:20+0200\n"
+"POT-Creation-Date: 2023-06-29 10:16+0000\n"
+"PO-Revision-Date: 2023-06-30 17:28+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -613,12 +613,10 @@ msgid "_Size"
 msgstr "_Velikost"
 
 #: plug-ins/common/checkerboard.c:144
-#, fuzzy
 msgid "Size of the checks"
 msgstr "Velikost kljukic"
 
 #: plug-ins/common/checkerboard.c:149 plug-ins/common/checkerboard.c:150
-#, fuzzy
 msgid "Check size unit of measure"
 msgstr "Merska enota velikosti kljukic"
 
@@ -2176,7 +2174,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:916
-#: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1374
+#: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1383
 #: plug-ins/common/file-pcx.c:1114 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
 #: plug-ins/common/file-ps.c:1338 plug-ins/common/file-qoi.c:375
@@ -2984,7 +2982,7 @@ msgstr "YUV444"
 msgid "YUV420"
 msgstr "YUV420"
 
-#: plug-ins/common/file-heif.c:2527 plug-ins/common/file-jpegxl.c:2020
+#: plug-ins/common/file-heif.c:2527 plug-ins/common/file-jpegxl.c:2029
 msgid "8 bit/channel"
 msgstr "8 bitov/kanal"
 
@@ -3330,56 +3328,56 @@ msgstr "Shrani ori_ginalni profil"
 msgid "Store ICC profile to exported JXL file"
 msgstr "Shrani profil ICC v izvoženo datoteko JXL"
 
-#: plug-ins/common/file-jpegxl.c:2006
+#: plug-ins/common/file-jpegxl.c:2015
 msgid "lightning (fastest)"
 msgstr "strela (najhitrejše)"
 
-#: plug-ins/common/file-jpegxl.c:2007
+#: plug-ins/common/file-jpegxl.c:2016
 msgid "thunder"
 msgstr "grom"
 
-#: plug-ins/common/file-jpegxl.c:2008
+#: plug-ins/common/file-jpegxl.c:2017
 msgid "falcon (faster)"
 msgstr "sokol (hitreje)"
 
-#: plug-ins/common/file-jpegxl.c:2009
+#: plug-ins/common/file-jpegxl.c:2018
 msgid "cheetah"
 msgstr "gepard"
 
-#: plug-ins/common/file-jpegxl.c:2010
+#: plug-ins/common/file-jpegxl.c:2019
 msgid "hare"
 msgstr "zajec"
 
-#: plug-ins/common/file-jpegxl.c:2011
+#: plug-ins/common/file-jpegxl.c:2020
 msgid "wombat"
 msgstr "vombat"
 
-#: plug-ins/common/file-jpegxl.c:2012
+#: plug-ins/common/file-jpegxl.c:2021
 msgid "squirrel"
 msgstr "veverica"
 
-#: plug-ins/common/file-jpegxl.c:2013
+#: plug-ins/common/file-jpegxl.c:2022
 msgid "kitten"
 msgstr "mucka"
 
-#: plug-ins/common/file-jpegxl.c:2014
+#: plug-ins/common/file-jpegxl.c:2023
 msgid "tortoise (slower)"
 msgstr "želva (počasneje)"
 
-#: plug-ins/common/file-jpegxl.c:2021
+#: plug-ins/common/file-jpegxl.c:2030
 msgid "16 bit/channel"
 msgstr "16 bitov/kanal"
 
-#: plug-ins/common/file-jpegxl.c:2029
+#: plug-ins/common/file-jpegxl.c:2038
 msgid "CMYK profile required for export"
 msgstr "Profil CMYK, potreben za izvoz"
 
-#: plug-ins/common/file-jpegxl.c:2036 plug-ins/file-jpeg/jpeg-save.c:898
+#: plug-ins/common/file-jpegxl.c:2045 plug-ins/file-jpeg/jpeg-save.c:898
 #: plug-ins/file-psd/psd-save.c:2458 plug-ins/file-tiff/file-tiff-save.c:1369
 msgid "Name of the color profile used for CMYK export."
 msgstr "Ime barvnega profila, uporabljenega za izvoz CMYK."
 
-#: plug-ins/common/file-jpegxl.c:2055 plug-ins/file-jpeg/jpeg-save.c:909
+#: plug-ins/common/file-jpegxl.c:2064 plug-ins/file-jpeg/jpeg-save.c:909
 #: plug-ins/file-psd/psd-save.c:2469 plug-ins/file-tiff/file-tiff-save.c:1381
 #, c-format
 msgid "Profile: %s"
