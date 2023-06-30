@@ -72,6 +72,8 @@ struct _GimpPaintCore
   GHashTable     *applicators;
 
   GArray         *stroke_buffer;
+
+  GimpSymmetry   *sym;
 };
 
 struct _GimpPaintCoreClass

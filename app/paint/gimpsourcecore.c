@@ -343,6 +343,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   coords.x -= off_x;
   coords.y -= off_y;
   gimp_symmetry_set_origin (sym, drawable, &coords);
+  paint_core->sym = sym;
 
   /* Some settings are based on the original stroke. */
   opacity = gimp_dynamics_get_linear_value (dynamics,

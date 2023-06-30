@@ -402,6 +402,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   coords.x -= off_x;
   coords.y -= off_y;
   gimp_symmetry_set_origin (sym, drawable, &coords);
+  paint_core->sym = sym;
 
   opacity = gimp_dynamics_get_linear_value (dynamics,
                                             GIMP_DYNAMICS_OUTPUT_OPACITY,

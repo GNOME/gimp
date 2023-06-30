@@ -816,6 +816,7 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
   gint           drawable_width, drawable_height;
   gint           brush_width, brush_height;
   gint           offset_change_x, offset_change_y;
+  GimpCoords     new_coords;
 
   gimp_brush_transform_size (core->brush,
                              core->scale, core->aspect_ratio,
@@ -845,6 +846,11 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
     {
       x += offset_change_x;
       y += offset_change_y;
+
+      new_coords   = *coords;
+      new_coords.x = coords->x + offset_change_x;
+      new_coords.y = coords->y + offset_change_y;
+      gimp_symmetry_set_origin (paint_core->sym, drawable, &new_coords);
     }
 
   drawable_width  = gimp_item_get_width  (GIMP_ITEM (drawable));
