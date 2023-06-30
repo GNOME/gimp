@@ -56,10 +56,27 @@ do
     echo "-0: install the last build."
     echo "-1: install the previous build."
     echo "-2: install the before-previous build (and so on)."
+    echo "-[0-9]+: and so on..."
     echo
-    echo "--beta: list or install a beta release"
+    echo "--beta:    list or install a beta release"
     echo "--nightly: list or install a nightly release"
-    echo "--system: install as system flatpak (default to user install)"
+    echo
+    echo "--runtime: list or install runtimes (can be associated with --beta and --nightly)"
+    echo
+    echo "--system:  install as system flatpak (default to user install)"
+    echo
+    echo "Examples:"
+    echo
+    echo "* List all beta flatpak bulds:"
+    echo "    flathub-releases --beta"
+    echo "* Install 2-build old beta flatpak:"
+    echo "*   flathub-releases --beta -2"
+    echo "* Install the latest beta flatpak:"
+    echo "*   flathub-releases --beta -0"
+    echo "* List all builds of the runtime used by the beta flatpak:"
+    echo "*   flathub-releases --beta --runtime"
+    echo "* Install the previous runtime build to be used by the beta flatpak:"
+    echo "*   flathub-releases --beta --runtime -1"
     exit 1
   else
     appid=$var
@@ -69,6 +86,7 @@ done
 package_info_cmd="flatpak remote-info $remote $appid"
 package_info=`$package_info_cmd 2>&1`
 got_info="$?"
+commit_prefix="app"
 if [ "$got_info" -ne 0 ]; then
   # By default flatpak will just use either the user or system install
   # depending on what it finds. Funnily the command may fail if the
@@ -90,15 +108,31 @@ elif [ "$show_runtime" -eq 1 ]; then
   # the application.
   runtime=`echo "$package_info" | grep Runtime: |sed 's/^ *Runtime: //'`
   appid=$runtime
-  package_info_cmd="flatpak remote-info $user_system $remote $appid"
+  # The beta runtime is in the stable repository.
+  if [[ $branch = 'beta' ]]; then
+    remote='flathub'
+  fi
+  package_info_cmd="flatpak remote-info $user_system $remote $appid//$branch"
 
   package_info=`$package_info_cmd 2>&1`
   got_info="$?"
 
   if [ "$got_info" -ne 0 ]; then
-    echo "Flathub query failed with the following error: $package_info"
-    exit 2
+    if [ -z "$user_system" ]; then
+      # Do the user/system dance again. Previously we were doing this about the
+      # main package, not its runtime.
+      user_system="--user"
+      package_info_cmd="flatpak remote-info $user_system $remote $appid//$branch"
+      package_info=`$package_info_cmd 2>&1`
+      got_info="$?"
+    fi
+    if [ "$got_info" -ne 0 ]; then
+      echo "Flathub query failed with the following error: $package_info"
+      exit 2
+    fi
   fi
+
+  commit_prefix="runtime"
 fi
 
 release_number=0
@@ -110,7 +144,7 @@ do
   release_subject=`echo "$package_info" | grep Subject: |sed 's/^ *Subject: //'`
   if [ "$install" -eq -1 ]; then
     # In non-install mode, just list the whole release.
-    printf "%2d: %s [%s] - app-commit: %s\n" $release_number "$release_subject" "$release_date" "$release_commit"
+    printf "%2d: %s [%s] - $commit_prefix-commit: %s\n" $release_number "$release_subject" "$release_date" "$release_commit"
   elif [ "$install" -eq "$release_number" ]; then
     install_commit=$release_commit
     break
