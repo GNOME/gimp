@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-26 00:43+0000\n"
-"PO-Revision-Date: 2023-06-26 09:50+0200\n"
+"POT-Creation-Date: 2023-06-30 15:47+0000\n"
+"PO-Revision-Date: 2023-06-30 18:22+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -5710,63 +5710,63 @@ msgstr "Konvertera bilden till indexerade färger"
 
 #: app/actions/image-actions.c:203
 msgctxt "image-convert-action"
-msgid "8 bit integer"
-msgstr "8 bitars heltal"
+msgid "8-bit integer"
+msgstr "8-bitars heltal"
 
 #: app/actions/image-actions.c:205
 msgctxt "image-convert-action"
-msgid "Convert the image to 8 bit integer"
-msgstr "Konvertera bilden till 8-bit heltal"
+msgid "Convert the image to 8-bit integer"
+msgstr "Konvertera bilden till 8-bitars heltal"
 
 #: app/actions/image-actions.c:209
 msgctxt "image-convert-action"
-msgid "16 bit integer"
-msgstr "16 bitars heltal"
+msgid "16-bit integer"
+msgstr "16-bitars heltal"
 
 #: app/actions/image-actions.c:211
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit integer"
-msgstr "Konvertera bilden till 16-bit heltal"
+msgid "Convert the image to 16-bit integer"
+msgstr "Konvertera bilden till 16-bitars heltal"
 
 #: app/actions/image-actions.c:215
 msgctxt "image-convert-action"
-msgid "32 bit integer"
-msgstr "32 bitars heltal"
+msgid "32-bit integer"
+msgstr "32-bitars heltal"
 
 #: app/actions/image-actions.c:217
 msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit integer"
-msgstr "Konvertera bilden till 32-bit heltal"
+msgid "Convert the image to 32-bit integer"
+msgstr "Konvertera bilden till 32-bitars heltal"
 
 #: app/actions/image-actions.c:221
 msgctxt "image-convert-action"
-msgid "16 bit floating point"
-msgstr "16-bit flyttal"
+msgid "16-bit floating point"
+msgstr "16-bitars flyttal"
 
 #: app/actions/image-actions.c:223
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit floating point"
-msgstr "Konvertera bilden till 16-bit flyttal"
+msgid "Convert the image to 16-bit floating point"
+msgstr "Konvertera bilden till 16-bitars flyttal"
 
 #: app/actions/image-actions.c:227
 msgctxt "image-convert-action"
-msgid "32 bit floating point"
-msgstr "32-bit flyttal"
+msgid "32-bit floating point"
+msgstr "32-bitars flyttal"
 
 #: app/actions/image-actions.c:229
 msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit floating point"
-msgstr "Konvertera bilden till 32-bit flyttal"
+msgid "Convert the image to 32-bit floating point"
+msgstr "Konvertera bilden till 32-bitars flyttal"
 
 #: app/actions/image-actions.c:233
 msgctxt "image-convert-action"
-msgid "64 bit floating point"
-msgstr "64-bit flyttal"
+msgid "64-bit floating point"
+msgstr "64-bitars flyttal"
 
 #: app/actions/image-actions.c:235
 msgctxt "image-convert-action"
-msgid "Convert the image to 64 bit floating point"
-msgstr "Konvertera bilden till 64-bit flyttal"
+msgid "Convert the image to 64-bit floating point"
+msgstr "Konvertera bilden till 64-bitars flyttal"
 
 #: app/actions/image-actions.c:242
 msgctxt "image-convert-action"
@@ -18705,11 +18705,11 @@ msgstr "Insticksmodulen %s returnerade LYCKADES men returnerade ingen bild"
 msgid "%s plug-in could not open image"
 msgstr "Insticksmodulen %s kunde inte öppna bild"
 
-#: app/file/file-open.c:641
+#: app/file/file-open.c:645
 msgid "Image doesn't contain any layers"
 msgstr "Bilden innehåller inga lager"
 
-#: app/file/file-open.c:699
+#: app/file/file-open.c:703
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Öppnande av ”%s” misslyckades: %s"
