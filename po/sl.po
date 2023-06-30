@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-24 20:11+0000\n"
-"PO-Revision-Date: 2023-06-25 00:25+0200\n"
+"POT-Creation-Date: 2023-06-29 10:15+0000\n"
+"PO-Revision-Date: 2023-06-30 17:26+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -4937,25 +4937,34 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Pokaži znova pogovorno okno nazadnje uporabljenega filtra"
 
-#: app/actions/filters-actions.c:1174
+#. TRANSLATORS: %s is the title of a GEGL operation (filter), after
+#. * which we append "..." as the standardized labelling to indicate
+#. * that this action raises a dialog.
+#.
+#: app/actions/filters-actions.c:848
+#, c-format
+msgid "%s..."
+msgstr "%s ..."
+
+#: app/actions/filters-actions.c:1178
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Ponovi »%s«"
 
-#: app/actions/filters-actions.c:1175
+#: app/actions/filters-actions.c:1179
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Ponovno po_kaži »%s«"
 
-#: app/actions/filters-actions.c:1213
+#: app/actions/filters-actions.c:1217
 msgid "Repeat Last"
 msgstr "Ponovi zadnjega"
 
-#: app/actions/filters-actions.c:1215
+#: app/actions/filters-actions.c:1219
 msgid "Re-Show Last"
 msgstr "Ponovno pokaži zadnjega"
 
-#: app/actions/filters-actions.c:1218 app/actions/filters-actions.c:1220
+#: app/actions/filters-actions.c:1222 app/actions/filters-actions.c:1224
 msgid "No last used filters"
 msgstr "Ni nazadnje uporabljenih filtrov"
 
@@ -18713,11 +18722,11 @@ msgstr ""
 msgid "%s plug-in could not open image"
 msgstr "Z vstavkom %s ni mogoče odpreti slike"
 
-#: app/file/file-open.c:641
+#: app/file/file-open.c:645
 msgid "Image doesn't contain any layers"
 msgstr "Slika ne vsebuje nobenih plasti"
 
-#: app/file/file-open.c:699
+#: app/file/file-open.c:703
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Odpiranje »%s« ni uspelo: %s"
