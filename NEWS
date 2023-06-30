@@ -14,11 +14,11 @@ Core:
   - "Anchor" tooltip changing depending on whether we are floating over a layer
     or layer mask.
   - GIMP_TIMER_START|END are no-op on release builds.
-  - Ctrl-F overrided in our item dockables to trigger our item search popover
+  - Ctrl-F overridden in our item dockables to trigger our item search popover
     (multi-item selection, ability to use regexp or glob search by enabling these
     in Preferences, etc.) rather than the default GTK selection popup for tree
     views.
-  - All code is now multi-item aware (even though it might mean specififically
+  - All code is now multi-item aware (even though it might mean specifically
     forbidding using some features on multiple items).
   - Better support of non-ASCII characters in paths on Windows and other fixes
     for Windows: API un-deprecation, unicode variants of functions…
@@ -52,7 +52,7 @@ Core:
     (though the latter can be tweaked by a custom "label-variant" attribute in
     .ui files).
   - New "Middle Gray (CIELAB)" fill option (new image or new layer).
-  - Stroke Selection: "Line" and "Paint tool" styles are now in a a stack
+  - Stroke Selection: "Line" and "Paint tool" styles are now in a stack
     switcher instead of radio buttons. More advanced options are not "hidden"
     anymore in a foldable widget.
   - New grayscale color picking mode.
@@ -118,7 +118,7 @@ Plug-ins:
     * Byte support: add a new type 'byte' to be able to handle binary data while
       still retaining the utf8 char and string behavior.
     * Enum values are now generated from GIR.
-  - Script-fu console: command history now persists accross GIMP sessions.
+  - Script-fu console: command history now persists across GIMP sessions.
   - PSD:
     * PSD clipping paths: import and export support.
     * Unsupported features are now listed in a dialog on import.
@@ -253,7 +253,7 @@ Build:
   - GEGL requirement bumped to GEGL 0.4.46.
   - Windows installer's welcome image is now generated in several sizes
     from our splash screen image, avoiding discrepancies as well as
-    unecessarily filling our repository with a history of duplicate
+    unnecessarily filling our repository with a history of duplicate
     images.
   - Add some logic to common/ and python/ plug-ins to facilitate running
     GIMP from the build directory (without being installed) while still
@@ -269,7 +269,7 @@ Documentation:
 
   - More developer docs is being moved to the new developer website.
   - Better clarify licensing of files under data/.
-  - Improve flatpak maintainance doc (build/flatpak/README.md).
+  - Improve flatpak maintenance doc (build/flatpak/README.md).
 
 Translations:
 
