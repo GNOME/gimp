@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-29 10:15+0000\n"
-"PO-Revision-Date: 2023-06-30 17:26+0200\n"
+"POT-Creation-Date: 2023-06-30 15:47+0000\n"
+"PO-Revision-Date: 2023-06-30 17:59+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -5706,62 +5706,62 @@ msgstr "Pretvori sliko v barvno indeksirano"
 
 #: app/actions/image-actions.c:203
 msgctxt "image-convert-action"
-msgid "8 bit integer"
+msgid "8-bit integer"
 msgstr "8-bitna celoštevilska"
 
 #: app/actions/image-actions.c:205
 msgctxt "image-convert-action"
-msgid "Convert the image to 8 bit integer"
+msgid "Convert the image to 8-bit integer"
 msgstr "Pretvori sliko v 8-bitno celoštevilsko"
 
 #: app/actions/image-actions.c:209
 msgctxt "image-convert-action"
-msgid "16 bit integer"
+msgid "16-bit integer"
 msgstr "16-bitna celoštevilska"
 
 #: app/actions/image-actions.c:211
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit integer"
+msgid "Convert the image to 16-bit integer"
 msgstr "Pretvori sliko v 16-bitno celoštevilsko"
 
 #: app/actions/image-actions.c:215
 msgctxt "image-convert-action"
-msgid "32 bit integer"
+msgid "32-bit integer"
 msgstr "32-bitna celoštevilska"
 
 #: app/actions/image-actions.c:217
 msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit integer"
+msgid "Convert the image to 32-bit integer"
 msgstr "Pretvori sliko v 32-bitno celoštevilsko"
 
 #: app/actions/image-actions.c:221
 msgctxt "image-convert-action"
-msgid "16 bit floating point"
+msgid "16-bit floating point"
 msgstr "16-bitna s plavajočo vejico"
 
 #: app/actions/image-actions.c:223
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit floating point"
+msgid "Convert the image to 16-bit floating point"
 msgstr "Pretvori sliko v 16-bitno s plavajočo vejico"
 
 #: app/actions/image-actions.c:227
 msgctxt "image-convert-action"
-msgid "32 bit floating point"
+msgid "32-bit floating point"
 msgstr "32-bitna s plavajočo vejico"
 
 #: app/actions/image-actions.c:229
 msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit floating point"
+msgid "Convert the image to 32-bit floating point"
 msgstr "Pretvori sliko v 32-bitno s plavajočo vejico"
 
 #: app/actions/image-actions.c:233
 msgctxt "image-convert-action"
-msgid "64 bit floating point"
+msgid "64-bit floating point"
 msgstr "64-bitna s plavajočo vejico"
 
 #: app/actions/image-actions.c:235
 msgctxt "image-convert-action"
-msgid "Convert the image to 64 bit floating point"
+msgid "Convert the image to 64-bit floating point"
 msgstr "Pretvori sliko v 64-bitno s plavajočo vejico"
 
 #: app/actions/image-actions.c:242
