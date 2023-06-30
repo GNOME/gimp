@@ -714,7 +714,6 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
             g_free (dir_utf16);
             g_free (filename);
             g_free (filename_utf16);
-            g_free (device_key);
           }
       }
   }
