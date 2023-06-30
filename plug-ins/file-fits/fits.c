@@ -605,6 +605,17 @@ load_image (GFile        *file,
         show_fits_errors (status);
 
       g_object_unref (buffer);
+
+      if (hdu.naxisn[2] && hdu.naxisn[2] == 3)
+        {
+          /* Per SiriL developers, FITS images should be loaded from the
+           * bottom up. fits_read_img () loads them from top down, so we
+           * should flip the layer. */
+          gimp_item_transform_flip_simple (GIMP_ITEM (layer),
+                                           GIMP_ORIENTATION_VERTICAL,
+                                           TRUE, -1.0);
+        }
+
       if (pixels)
         g_free (pixels);
 
