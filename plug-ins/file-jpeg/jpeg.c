@@ -224,7 +224,7 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
-                             "Export as _CMYK",
+                             "Export as CM_YK",
                              "Create a CMYK JPEG image using the soft-proofing color profile",
                              FALSE,
                              G_PARAM_READWRITE);
@@ -232,9 +232,9 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_INT (procedure, "sub-sampling",
                          _("Su_bsampling"),
                          "Sub-sampling type { 0 == 4:2:0 (chroma quartered), "
-                         "1 == 4:2:2 Horizontal (chroma halved), "
+                         "1 == 4:2:2 (chroma halved horizontally), "
                          "2 == 4:4:4 (best quality), "
-                         "3 == 4:2:2 Vertical (chroma halved)",
+                         "3 == 4:4:0 (chroma halved vertically)",
                          JPEG_SUBSAMPLING_2x2_1x1_1x1,
                          JPEG_SUBSAMPLING_1x2_1x1_1x1,
                          JPEG_SUBSAMPLING_1x1_1x1_1x1,
