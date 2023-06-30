@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8 scriptfu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-12 21:38+0000\n"
-"PO-Revision-Date: 2022-11-16 15:19+0100\n"
+"POT-Creation-Date: 2023-06-29 10:16+0000\n"
+"PO-Revision-Date: 2023-06-30 17:25+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: plug-ins/script-fu/script-fu.c:122
 msgid "Script-Fu _Console"
@@ -30,63 +30,63 @@ msgstr "_Konzola Script-Fu"
 msgid "Interactive console for Script-Fu development"
 msgstr "Interaktivna konzola za razvoj Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:310
+#: plug-ins/script-fu/script-fu.c:314
 msgid "_GIMP Online"
 msgstr "_GIMP na spletu"
 
-#: plug-ins/script-fu/script-fu.c:311
+#: plug-ins/script-fu/script-fu.c:315
 msgid "_User Manual"
 msgstr "_Uporabniški vodnik"
 
-#: plug-ins/script-fu/script-fu.c:314
+#: plug-ins/script-fu/script-fu.c:318
 msgid "_Script-Fu"
 msgstr "_Skript-Fu"
 
-#: plug-ins/script-fu/script-fu.c:316
+#: plug-ins/script-fu/script-fu.c:320
 msgid "_Test"
 msgstr "_Preizkusi"
 
-#: plug-ins/script-fu/script-fu.c:319
+#: plug-ins/script-fu/script-fu.c:323
 msgid "_Buttons"
 msgstr "_Gumbi"
 
-#: plug-ins/script-fu/script-fu.c:321
+#: plug-ins/script-fu/script-fu.c:325
 msgid "_Logos"
 msgstr "_Logotipi"
 
-#: plug-ins/script-fu/script-fu.c:323
+#: plug-ins/script-fu/script-fu.c:327
 msgid "_Patterns"
 msgstr "_Vzorci"
 
-#: plug-ins/script-fu/script-fu.c:326
+#: plug-ins/script-fu/script-fu.c:330
 msgid "_Web Page Themes"
 msgstr "_Teme spletnih strani"
 
-#: plug-ins/script-fu/script-fu.c:328
+#: plug-ins/script-fu/script-fu.c:332
 msgid "_Alien Glow"
 msgstr "_Svetleči napis"
 
-#: plug-ins/script-fu/script-fu.c:330
+#: plug-ins/script-fu/script-fu.c:334
 msgid "_Beveled Pattern"
 msgstr "_Izbočeni vzorec"
 
-#: plug-ins/script-fu/script-fu.c:332
+#: plug-ins/script-fu/script-fu.c:336
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: plug-ins/script-fu/script-fu.c:335
+#: plug-ins/script-fu/script-fu.c:339
 msgid "Alpha to _Logo"
 msgstr "Alfa v _logotip"
 
-#: plug-ins/script-fu/script-fu.c:341
+#: plug-ins/script-fu/script-fu.c:345
 msgid "_Refresh Scripts"
 msgstr "_Osveži skripte"
 
-#: plug-ins/script-fu/script-fu.c:346
+#: plug-ins/script-fu/script-fu.c:350
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Ponovno preberi vse dosegljive skripte Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:372
+#: plug-ins/script-fu/script-fu.c:376
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -94,63 +94,62 @@ msgstr ""
 "Ko je odprto pogovorno okno Script-Fu, ne smete uporabiti \"Osveži skripte"
 "\".  Prosimo, zaprite vsa okna Script-Fu in poskusite znova."
 
-#: plug-ins/script-fu/script-fu-console.c:110
-#: plug-ins/script-fu/script-fu-console.c:177
-msgid "Script-Fu Console"
-msgstr "Konzola Script-Fu"
+#: plug-ins/script-fu/script-fu-eval.c:50
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "Ocenjevalni način konzole Script-Fu omogoča le ne-interaktiven priklic"
 
-#: plug-ins/script-fu/script-fu-console.c:115
-#: plug-ins/script-fu/script-fu-console.c:281
+#: plug-ins/script-fu/console/script-fu-console.c:125
+msgid "Script Console"
+msgstr "Skriptna konzola"
+
+#: plug-ins/script-fu/console/script-fu-console.c:130
+#: plug-ins/script-fu/console/script-fu-console.c:259
 msgid "_Save"
 msgstr "_Shrani"
 
-#: plug-ins/script-fu/script-fu-console.c:116
+#: plug-ins/script-fu/console/script-fu-console.c:131
 msgid "C_lear"
 msgstr "Po_čisti"
 
-#: plug-ins/script-fu/script-fu-console.c:117
-#: plug-ins/script-fu/script-fu-console.c:359
+#: plug-ins/script-fu/console/script-fu-console.c:132
+#: plug-ins/script-fu/console/script-fu-console.c:332
 msgid "_Close"
 msgstr "Z_apri"
 
-#: plug-ins/script-fu/script-fu-console.c:173
-msgid "Welcome to TinyScheme"
-msgstr "Dobrodošli v TinyScheme"
-
-#: plug-ins/script-fu/script-fu-console.c:179
-msgid "Interactive Scheme Development"
-msgstr "Interaktivni razvoj shem"
-
-#: plug-ins/script-fu/script-fu-console.c:215
+#: plug-ins/script-fu/console/script-fu-console.c:193
 msgid "_Browse..."
 msgstr "_Prebrskaj ..."
 
-#: plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/console/script-fu-console.c:254
 msgid "Save Script-Fu Console Output"
 msgstr "Shrani izpis konzole Script-Fu"
 
-#: plug-ins/script-fu/script-fu-console.c:280
+#: plug-ins/script-fu/console/script-fu-console.c:258
 #: plug-ins/script-fu/server/script-fu-server.c:884
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:236
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:218
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
-#: plug-ins/script-fu/script-fu-console.c:325
+#: plug-ins/script-fu/console/script-fu-console.c:301
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "'%s' ni mogoče odpreti za pisanje: %s"
 
-#: plug-ins/script-fu/script-fu-console.c:354
+#: plug-ins/script-fu/console/script-fu-console.c:327
 msgid "Script-Fu Procedure Browser"
 msgstr "Brskalnik procedur Script-Fu"
 
-#: plug-ins/script-fu/script-fu-console.c:358
+#: plug-ins/script-fu/console/script-fu-console.c:331
 msgid "_Apply"
 msgstr "_Uporabi"
 
-#: plug-ins/script-fu/script-fu-eval.c:50
-msgid "Script-Fu evaluation mode only allows non-interactive invocation"
-msgstr "Ocenjevalni način konzole Script-Fu omogoča le ne-interaktiven priklic"
+#: plug-ins/script-fu/console/script-fu-console-total.c:89
+msgid "Welcome to TinyScheme"
+msgstr "Dobrodošli v TinyScheme"
+
+#: plug-ins/script-fu/console/script-fu-console-total.c:93
+msgid "Scripting GIMP in the Scheme language"
+msgstr "Skriptanje GIMP-a v jeziku Scheme"
 
 #: plug-ins/script-fu/server/script-fu-server.c:880
 msgid "Script-Fu Server Options"
@@ -188,69 +187,69 @@ msgstr "_Zaženi strežnik ..."
 msgid "Server for remote Script-Fu operation"
 msgstr "Strežnik za oddaljeno upravljanje Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:202
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:184
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu ne more obdelati dveh skriptov naenkrat."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:204
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:186
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Že poganjate skript \"%s\"."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:228
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:210
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:235
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:217
 msgid "_Reset"
 msgstr "_Ponastavi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:237
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:219
 msgid "_OK"
 msgstr "V _redu"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:291
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:341
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:323
 msgid "Script-Fu Color Selection"
 msgstr "Izbor barv Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:468
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:450
 msgid "Script-Fu File Selection"
 msgstr "Izbor datoteke Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:471
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
 msgid "Script-Fu Folder Selection"
 msgstr "Izbor mape Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:484
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:466
 msgid "Script-Fu Font Selection"
 msgstr "Izbor pisave Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:492
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:472
 msgid "Script-Fu Palette Selection"
 msgstr "Izbor palete Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:501
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:479
 msgid "Script-Fu Pattern Selection"
 msgstr "Izbor vzorca Script-fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:510
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
 msgstr "Izbor preliva Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:519
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:493
 msgid "Script-Fu Brush Selection"
 msgstr "Izbor čopiča Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:898
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:868
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Napaka pri izvajanju %s:"
@@ -537,14 +536,12 @@ msgstr "Brez ozadja (samo pri ločenih plasteh)"
 
 #: plug-ins/script-fu/scripts/circuit.scm:142
 #: plug-ins/script-fu/scripts/lava.scm:141
-#: plug-ins/script-fu/scripts/predator.scm:138
 #: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Keep selection"
 msgstr "Ohrani izbor"
 
 #: plug-ins/script-fu/scripts/circuit.scm:143
 #: plug-ins/script-fu/scripts/lava.scm:142
-#: plug-ins/script-fu/scripts/predator.scm:139
 msgid "Separate layer"
 msgstr "Loči plast"
 
@@ -1252,26 +1249,6 @@ msgstr "Relativna dolžina sence"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:211
 msgid "Interpolation"
 msgstr "Interpolacija"
-
-#: plug-ins/script-fu/scripts/predator.scm:127
-msgid "_Predator..."
-msgstr "_Roparica …"
-
-#: plug-ins/script-fu/scripts/predator.scm:128
-msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "Izbranemu področju (ali alfi) doda učinek ‘roparice’"
-
-#: plug-ins/script-fu/scripts/predator.scm:135
-msgid "Edge amount"
-msgstr "Količina roba"
-
-#: plug-ins/script-fu/scripts/predator.scm:136
-msgid "Pixelize"
-msgstr "Pikseliziraj"
-
-#: plug-ins/script-fu/scripts/predator.scm:137
-msgid "Pixel amount"
-msgstr "Število slikovnih točk"
 
 #: plug-ins/script-fu/scripts/reverse-layers.scm:42
 msgid "Reverse Layer _Order"
