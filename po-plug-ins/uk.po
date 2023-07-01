@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-23 14:14+0000\n"
-"PO-Revision-Date: 2023-06-25 16:39+0300\n"
+"POT-Creation-Date: 2023-06-30 17:29+0000\n"
+"PO-Revision-Date: 2023-07-01 23:06+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -516,7 +516,7 @@ msgstr "Вертикально"
 #: plug-ins/common/film.c:811 plug-ins/common/smooth-palette.c:332
 #: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
 #: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
-#: plug-ins/file-fits/fits.c:667 plug-ins/file-jpeg/jpeg-load.c:231
+#: plug-ins/file-fits/fits.c:701 plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2733 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1534
@@ -538,7 +538,6 @@ msgstr ""
 "зображення"
 
 #: plug-ins/common/border-average.c:137
-#| msgid "_Thickness:"
 msgid "_Thickness"
 msgstr "_Товщина"
 
@@ -555,7 +554,6 @@ msgid "Border size unit of measure"
 msgstr "Одиниця виміру розміру рамки"
 
 #: plug-ins/common/border-average.c:147
-#| msgid "_Bucket size:"
 msgid "Bucket Si_ze"
 msgstr "_Розмір відра"
 
@@ -564,7 +562,6 @@ msgid "Bits for bucket size (default=4: 16 Levels)"
 msgstr "Біти для розміру відра (типове значення=4: 16 рівнів)"
 
 #: plug-ins/common/border-average.c:153 plug-ins/common/border-average.c:154
-#| msgid "Set foreground to the average color of the image border"
 msgid "The average color of the specified border."
 msgstr "Середній колір вказаної рамки."
 
@@ -1829,7 +1826,7 @@ msgid "Yellow"
 msgstr "Жовтий"
 
 #: plug-ins/common/decompose.c:215 plug-ins/common/warp.c:617
-#: plug-ins/file-fits/fits.c:994 plug-ins/flame/flame.c:1223
+#: plug-ins/file-fits/fits.c:1028 plug-ins/flame/flame.c:1223
 #: plug-ins/gfig/gfig-dialog.c:1459
 msgid "Black"
 msgstr "Чорний"
@@ -2181,14 +2178,14 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:916
-#: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1374
+#: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1383
 #: plug-ins/common/file-pcx.c:1114 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
 #: plug-ins/common/file-ps.c:1338 plug-ins/common/file-qoi.c:375
 #: plug-ins/common/file-sunras.c:629 plug-ins/common/file-tga.c:1230
 #: plug-ins/common/file-xbm.c:1051 plug-ins/common/file-xpm.c:705
 #: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
-#: plug-ins/file-fits/fits.c:640 plug-ins/file-fli/fli-gimp.c:784
+#: plug-ins/file-fits/fits.c:674 plug-ins/file-fli/fli-gimp.c:784
 #: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1333
 #: plug-ins/file-ico/ico-save.c:1542 plug-ins/file-jpeg/jpeg-save.c:272
 #: plug-ins/file-psd/psd-save.c:2160 plug-ins/file-sgi/sgi.c:646
@@ -2358,7 +2355,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "Неможливо зберегти зображення з альфа-каналом."
 
 #: plug-ins/common/file-dicom.c:1542 plug-ins/common/file-ps.c:1333
-#: plug-ins/common/file-xwd.c:670 plug-ins/file-fits/fits.c:635
+#: plug-ins/common/file-xwd.c:670 plug-ins/file-fits/fits.c:669
 msgid "Cannot operate on unknown image types."
 msgstr "Не вдається виконати дії із зображеннями невідомого типу."
 
@@ -2575,18 +2572,11 @@ msgid "GIF"
 msgstr "GIF"
 
 #: plug-ins/common/file-gif-save.c:154
-#| msgid "Exports files in SGI image file format"
 msgid "exports files in GIF file format"
 msgstr "експортує файли у форматі GIF"
 
 #: plug-ins/common/file-gif-save.c:156
 #, c-format
-#| msgid ""
-#| "Export a file in Compuserve GIF format, with possible animation, "
-#| "transparency, and comment. To export an animation, operate on a multi-"
-#| "layer file and give the 'as-animation' parameter as TRUE. The plug-in "
-#| "will interpret <50% alpha as transparent. When run non-interactively, the "
-#| "value for the comment is taken from the 'gimp-comment' parasite.  "
 msgid ""
 "Export a file in GIF format, with possible animation, transparency, and "
 "comment. To export an animation, operate on a multi-layer file and give the "
@@ -2594,8 +2584,8 @@ msgid ""
 "transparent. When run non-interactively, the value for the comment is taken "
 "from the 'gimp-comment' parasite."
 msgstr ""
-"Експортувати файл у форматі GIF із можливою анімацією, прозорістю "
-"та коментарями. Для експортування анімації працюйте з багатошаровим файлом і "
+"Експортувати файл у форматі GIF із можливою анімацією, прозорістю та "
+"коментарями. Для експортування анімації працюйте з багатошаровим файлом і "
 "вкажіть для параметра «as-animation» значення TRUE. Додаток вважатиме "
 "значення альфи <50%a прозорістю. Якщо запущено у неінтерактивному режимі, "
 "значення для коментаря буде взято з додатка «gimp-comment»."
@@ -3005,7 +2995,7 @@ msgstr "YUV444"
 msgid "YUV420"
 msgstr "YUV420"
 
-#: plug-ins/common/file-heif.c:2527 plug-ins/common/file-jpegxl.c:2020
+#: plug-ins/common/file-heif.c:2527 plug-ins/common/file-jpegxl.c:2029
 msgid "8 bit/channel"
 msgstr "8 біт/канал"
 
@@ -3350,56 +3340,56 @@ msgstr "Зберегти _початковий профіль"
 msgid "Store ICC profile to exported JXL file"
 msgstr "Зберегти профіль ICC у експортованому файлі JXL"
 
-#: plug-ins/common/file-jpegxl.c:2006
+#: plug-ins/common/file-jpegxl.c:2015
 msgid "lightning (fastest)"
 msgstr "блискавиця (найшвидше)"
 
-#: plug-ins/common/file-jpegxl.c:2007
+#: plug-ins/common/file-jpegxl.c:2016
 msgid "thunder"
 msgstr "грім"
 
-#: plug-ins/common/file-jpegxl.c:2008
+#: plug-ins/common/file-jpegxl.c:2017
 msgid "falcon (faster)"
 msgstr "сокіл (швидко)"
 
-#: plug-ins/common/file-jpegxl.c:2009
+#: plug-ins/common/file-jpegxl.c:2018
 msgid "cheetah"
 msgstr "гепард"
 
-#: plug-ins/common/file-jpegxl.c:2010
+#: plug-ins/common/file-jpegxl.c:2019
 msgid "hare"
 msgstr "заєць"
 
-#: plug-ins/common/file-jpegxl.c:2011
+#: plug-ins/common/file-jpegxl.c:2020
 msgid "wombat"
 msgstr "вомбат"
 
-#: plug-ins/common/file-jpegxl.c:2012
+#: plug-ins/common/file-jpegxl.c:2021
 msgid "squirrel"
 msgstr "білка"
 
-#: plug-ins/common/file-jpegxl.c:2013
+#: plug-ins/common/file-jpegxl.c:2022
 msgid "kitten"
 msgstr "кошеня"
 
-#: plug-ins/common/file-jpegxl.c:2014
+#: plug-ins/common/file-jpegxl.c:2023
 msgid "tortoise (slower)"
 msgstr "черепаха (повільно)"
 
-#: plug-ins/common/file-jpegxl.c:2021
+#: plug-ins/common/file-jpegxl.c:2030
 msgid "16 bit/channel"
 msgstr "16 біт/канал"
 
-#: plug-ins/common/file-jpegxl.c:2029
+#: plug-ins/common/file-jpegxl.c:2038
 msgid "CMYK profile required for export"
 msgstr "Для експортування потрібен профіль CMYK"
 
-#: plug-ins/common/file-jpegxl.c:2036 plug-ins/file-jpeg/jpeg-save.c:898
+#: plug-ins/common/file-jpegxl.c:2045 plug-ins/file-jpeg/jpeg-save.c:898
 #: plug-ins/file-psd/psd-save.c:2458 plug-ins/file-tiff/file-tiff-save.c:1369
 msgid "Name of the color profile used for CMYK export."
 msgstr "Назва профілю кольорів, який використано для експортування CMYK."
 
-#: plug-ins/common/file-jpegxl.c:2055 plug-ins/file-jpeg/jpeg-save.c:909
+#: plug-ins/common/file-jpegxl.c:2064 plug-ins/file-jpeg/jpeg-save.c:909
 #: plug-ins/file-psd/psd-save.c:2469 plug-ins/file-tiff/file-tiff-save.c:1381
 #, c-format
 msgid "Profile: %s"
@@ -4094,7 +4084,7 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
 
 #: plug-ins/common/file-png.c:2296 plug-ins/common/file-ps.c:3739
-#: plug-ins/file-fits/fits.c:1002
+#: plug-ins/file-fits/fits.c:1036
 msgid "Automatic"
 msgstr "Автоматично"
 
@@ -6117,29 +6107,26 @@ msgstr "Передати це зображення електронною пош
 #: plug-ins/common/mail.c:195
 msgid "Sendmail is used to send emails and must be properly configured."
 msgstr ""
-"Для надсилання електронної пошти буде використано Sendmail, тому програму"
-" має бути належним чином налаштовано."
+"Для надсилання електронної пошти буде використано Sendmail, тому програму "
+"має бути належним чином налаштовано."
 
 #: plug-ins/common/mail.c:198
 msgid ""
 "The preferred email composer is used to send emails and must be properly "
 "configured."
 msgstr ""
-"Для надсилання електронної пошти буде використано бажаний редактор"
-" електронної пошти, тому програму має бути належним чином налаштовано."
+"Для надсилання електронної пошти буде використано бажаний редактор "
+"електронної пошти, тому програму має бути належним чином налаштовано."
 
 #: plug-ins/common/mail.c:211
-#| msgid "Filename:"
 msgid "File_name"
 msgstr "Назва _файлу"
 
 #: plug-ins/common/mail.c:212
-#| msgid "The amount of the filter to apply"
 msgid "The name of the file to save the image in"
 msgstr "Назва файла, до якого слід зберегти зображення"
 
 #: plug-ins/common/mail.c:217
-#| msgid "_To:"
 msgid "_To"
 msgstr "_Кому"
 
@@ -6148,7 +6135,6 @@ msgid "The email address to send to"
 msgstr "Адреса електронної пошти, куди буде надіслано дані"
 
 #: plug-ins/common/mail.c:223
-#| msgid "_From:"
 msgid "_From"
 msgstr "_Від"
 
@@ -6157,17 +6143,14 @@ msgid "The email address for the From: field"
 msgstr "Адреса електронної пошти для поля «Від:»"
 
 #: plug-ins/common/mail.c:229
-#| msgid "S_ubject:"
 msgid "Su_bject"
 msgstr "_Тема"
 
 #: plug-ins/common/mail.c:230
-#| msgid "Move Object"
 msgid "The subject"
 msgstr "Тема повідомлення"
 
 #: plug-ins/common/mail.c:236
-#| msgid "Save comment"
 msgid "The comment"
 msgstr "Коментар"
 
@@ -6176,7 +6159,6 @@ msgid "Send by Email"
 msgstr "Надіслати поштою"
 
 #: plug-ins/common/mail.c:567
-#| msgid "_Send"
 msgid "Send"
 msgstr "Надіслати"
 
@@ -7840,28 +7822,28 @@ msgstr "Для формату FITS не передбачено підтримк�
 msgid "Error during opening of FITS file"
 msgstr "Помилка при відкриванні файлу FITS"
 
-#: plug-ins/file-fits/fits.c:422 plug-ins/file-fits/fits.c:600
+#: plug-ins/file-fits/fits.c:422 plug-ins/file-fits/fits.c:634
 msgid "FITS file keeps no displayable images"
 msgstr "Файл FITS не містить зображень, які можна показати"
 
-#: plug-ins/file-fits/fits.c:516
+#: plug-ins/file-fits/fits.c:520
 msgid "FITS HDU"
 msgstr "FITS HDU"
 
-#: plug-ins/file-fits/fits.c:624
+#: plug-ins/file-fits/fits.c:658
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "Зображення з альфа-каналами не можна експортувати як FITS"
 
-#: plug-ins/file-fits/fits.c:990
+#: plug-ins/file-fits/fits.c:1024
 msgid "Open FITS File"
 msgstr "Відкриття файла FITS"
 
-#: plug-ins/file-fits/fits.c:995 plug-ins/gfig/gfig-dialog.c:1292
+#: plug-ins/file-fits/fits.c:1029 plug-ins/gfig/gfig-dialog.c:1292
 #: plug-ins/gfig/gfig-dialog.c:1460
 msgid "White"
 msgstr "Білий"
 
-#: plug-ins/file-fits/fits.c:1003
+#: plug-ins/file-fits/fits.c:1037
 msgid "By DATAMIN/DATAMAX"
 msgstr "За DATAMIN/DATAMAX"
 
@@ -8278,12 +8260,14 @@ msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (найвища якість)"
 
 #: plug-ins/file-jpeg/jpeg-save.c:942
-msgid "4:2:2 horizontal (chroma halved)"
-msgstr "4:2:2 горизонтально (колірність поділена пополам)"
+#| msgid "4:2:2 vertical (chroma halved)"
+msgid "4:2:2 (chroma halved horizontally)"
+msgstr "4:2:2 (колірність поділена навпіл горизонтально)"
 
 #: plug-ins/file-jpeg/jpeg-save.c:944
-msgid "4:2:2 vertical (chroma halved)"
-msgstr "4:2:2 вертикально (колірність поділена пополам)"
+#| msgid "4:2:2 vertical (chroma halved)"
+msgid "4:4:0 (chroma halved vertically)"
+msgstr "4:2:2 (колірність поділена навпіл вертикально)"
 
 #: plug-ins/file-jpeg/jpeg-save.c:946
 msgid "4:2:0 (chroma quartered)"
@@ -14121,6 +14105,9 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "4:2:2 horizontal (chroma halved)"
+#~ msgstr "4:2:2 горизонтально (колірність поділена пополам)"
 
 #~ msgid "exports files in Compuserve GIF file format"
 #~ msgstr "експортує файли у форматі файлів GIF Compuserve"
