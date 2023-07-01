@@ -55,6 +55,6 @@ Source: "{#DEPS_DIR}\{#DDIR}\lib\python3.10\*"; DestDir: "{app}\lib\python3.10";
 #ifdef LUA
 Source: "{#DEPS_DIR}\{#DDIR}\bin\luajit.exe"; DestDir: "{app}\bin"; Components: lua and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR}\{#DDIR}\bin\lua51.dll"; DestDir: "{app}\bin"; Components: lua and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR}\{#DDIR}\bin\lua\*"; DestDir: "{app}\bin\lua"; Components: lua and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
-Source: "{#DEPS_DIR}\{#DDIR}\bin\lgi\*"; DestDir: "{app}\bin\lgi"; Components: lua and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\share\lua\*"; DestDir: "{app}\share\lua"; Components: lua and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\lib\lua\*"; DestDir: "{app}\lib\lua"; Components: lua and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 #endif
