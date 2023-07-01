@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-24 20:11+0000\n"
-"PO-Revision-Date: 2023-06-25 09:21+0200\n"
+"POT-Creation-Date: 2023-06-30 15:47+0000\n"
+"PO-Revision-Date: 2023-07-01 08:06+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -4883,25 +4883,34 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "ბოლოს გამოყენებული ფილტრის ფანჯრის თავიდან ჩვენება"
 
-#: app/actions/filters-actions.c:1174
+#. TRANSLATORS: %s is the title of a GEGL operation (filter), after
+#. * which we append "..." as the standardized labelling to indicate
+#. * that this action raises a dialog.
+#.
+#: app/actions/filters-actions.c:848
+#, c-format
+msgid "%s..."
+msgstr "%s..."
+
+#: app/actions/filters-actions.c:1178
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "%s-ის გამე_ორება"
 
-#: app/actions/filters-actions.c:1175
+#: app/actions/filters-actions.c:1179
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "%s-ის თავიდან ჩ_ვენება"
 
-#: app/actions/filters-actions.c:1213
+#: app/actions/filters-actions.c:1217
 msgid "Repeat Last"
 msgstr "უკანასკნელის გამეორება"
 
-#: app/actions/filters-actions.c:1215
+#: app/actions/filters-actions.c:1219
 msgid "Re-Show Last"
 msgstr "უკანასკნელის თავიდან ჩვენება"
 
-#: app/actions/filters-actions.c:1218 app/actions/filters-actions.c:1220
+#: app/actions/filters-actions.c:1222 app/actions/filters-actions.c:1224
 msgid "No last used filters"
 msgstr "ბოლოს გამოყენებული ფილტრების სია ცარიელია"
 
@@ -5640,63 +5649,63 @@ msgstr "ინდექსირებულ ფერებში გადა�
 
 #: app/actions/image-actions.c:203
 msgctxt "image-convert-action"
-msgid "8 bit integer"
+msgid "8-bit integer"
 msgstr "8-ბიტიანი მთელი რიცხვი"
 
 #: app/actions/image-actions.c:205
 msgctxt "image-convert-action"
-msgid "Convert the image to 8 bit integer"
+msgid "Convert the image to 8-bit integer"
 msgstr "გამოსახულების 8-ბიტიან მთელ რიცხვში გადაყვანა"
 
 #: app/actions/image-actions.c:209
 msgctxt "image-convert-action"
-msgid "16 bit integer"
+msgid "16-bit integer"
 msgstr "16-ბიტიანი მთელი რიცხვი"
 
 #: app/actions/image-actions.c:211
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit integer"
+msgid "Convert the image to 16-bit integer"
 msgstr "გამოსახულების 16-ბიტიან მთელ რიცხვში გადაყვანა"
 
 #: app/actions/image-actions.c:215
 msgctxt "image-convert-action"
-msgid "32 bit integer"
+msgid "32-bit integer"
 msgstr "32-ბიტიანი მთელი რიცხვი"
 
 #: app/actions/image-actions.c:217
 msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit integer"
+msgid "Convert the image to 32-bit integer"
 msgstr "გამოსახულების 32-ბიტიან მთელ რიცხვში გადაყვანა"
 
 #: app/actions/image-actions.c:221
 msgctxt "image-convert-action"
-msgid "16 bit floating point"
-msgstr "16-ბიტიანი წილადი რიცხვი"
+msgid "16-bit floating point"
+msgstr "16-ბიტიანი მცურავმძიმიანი რიცხვი"
 
 #: app/actions/image-actions.c:223
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit floating point"
-msgstr "გამოსახულების 16-ბიტიან წილად რიცხვში გადაყვანა"
+msgid "Convert the image to 16-bit floating point"
+msgstr "გამოსახულების 16-ბიტიან მცურავმძიმიან რიცხვში გადაყვანა"
 
 #: app/actions/image-actions.c:227
 msgctxt "image-convert-action"
-msgid "32 bit floating point"
-msgstr "32-ბიტიანი წილადი რიცხვი"
+msgid "32-bit floating point"
+msgstr "32-ბიტიანი მცურავმძიმიანი რიცხვი"
 
 #: app/actions/image-actions.c:229
 msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit floating point"
-msgstr "გამოსახულების 32-ბიტიან წილად რიცხვში გადაყვანა"
+msgid "Convert the image to 32-bit floating point"
+msgstr "გამოსახულების 32-ბიტიან მცურამძიმიან რიცხვში გადაყვანა"
 
 #: app/actions/image-actions.c:233
 msgctxt "image-convert-action"
-msgid "64 bit floating point"
-msgstr "64-ბიტიანი წილადი რიცხვი"
+msgid "64-bit floating point"
+msgstr "64-ბიტიანი მცურავმძიმიანი რიცხვი"
 
 #: app/actions/image-actions.c:235
 msgctxt "image-convert-action"
-msgid "Convert the image to 64 bit floating point"
-msgstr "გამოსახულების 64-ბიტიან წილად რიცხვში გადაყვანა"
+msgid "Convert the image to 64-bit floating point"
+msgstr "გამოსახულების 64-ბიტიან მცურავმძიმიან რიცხვში გადაყვანა"
 
 #: app/actions/image-actions.c:242
 msgctxt "image-convert-action"
@@ -18374,11 +18383,11 @@ msgstr "დამატებამ დააბრუნა წარმატ�
 msgid "%s plug-in could not open image"
 msgstr "დამატებამ ვერ შეძლო ფაილის გახსნა: %s"
 
-#: app/file/file-open.c:641
+#: app/file/file-open.c:645
 msgid "Image doesn't contain any layers"
 msgstr "გამოსახულება არცერთ ფენას შეიცავს"
 
-#: app/file/file-open.c:699
+#: app/file/file-open.c:703
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "'%s'-ის გახსნის შეცდომა: %s"
