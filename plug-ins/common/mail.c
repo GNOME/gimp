@@ -80,7 +80,7 @@ static GimpValueArray * mail_run              (GimpProcedure        *procedure,
                                                GimpImage            *image,
                                                gint                  n_drawables,
                                                GimpDrawable        **drawables,
-                                               const GimpValueArray *args,
+                                               GimpProcedureConfig  *config,
                                                gpointer              run_data);
 
 static GimpPDBStatusType  send_image          (GObject              *config,
@@ -175,9 +175,9 @@ mail_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            mail_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             mail_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -247,57 +247,37 @@ mail_run (GimpProcedure        *procedure,
           GimpImage            *image,
           gint                  n_drawables,
           GimpDrawable        **drawables,
-          const GimpValueArray *args,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
-
-  switch (run_mode)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-    case GIMP_RUN_INTERACTIVE:
-      {
-        gchar *filename = g_file_get_path (gimp_image_get_file (image));
+      gchar *filename = g_file_get_path (gimp_image_get_file (image));
 
-        if (filename)
-          {
-            gchar *basename = g_filename_display_basename (filename);
-            gchar  buffername[BUFFER_SIZE];
+      if (filename)
+        {
+          gchar *basename = g_filename_display_basename (filename);
+          gchar  buffername[BUFFER_SIZE];
 
-            g_strlcpy (buffername, basename, BUFFER_SIZE);
+          g_strlcpy (buffername, basename, BUFFER_SIZE);
 
-            g_object_set (config,
-                          "filename", buffername,
-                          NULL);
-            g_free (basename);
-            g_free (filename);
-          }
-      }
+          g_object_set (config,
+                        "filename", buffername,
+                        NULL);
+          g_free (basename);
+          g_free (filename);
+        }
 
       if (! send_dialog (procedure, G_OBJECT (config)))
-        {
-          gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
-          g_object_unref (config);
-
-          return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
-      break;
-
-    default:
-      break;
+        return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
     }
 
   status = send_image (G_OBJECT (config),
                        image,
                        n_drawables, drawables,
                        run_mode);
-
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, status, NULL);
 }

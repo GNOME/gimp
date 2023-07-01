@@ -59,7 +59,7 @@ static GimpValueArray * border_average_run                    (GimpProcedure    
                                                                GimpImage            *image,
                                                                gint                  n_drawables,
                                                                GimpDrawable        **drawables,
-                                                               const GimpValueArray *args,
+                                                               GimpProcedureConfig  *config,
                                                                gpointer              run_data);
 
 
@@ -107,15 +107,15 @@ border_average_query_procedures (GimpPlugIn *plug_in)
 
 static GimpProcedure *
 border_average_create_procedure (GimpPlugIn  *plug_in,
-                               const gchar *name)
+                                 const gchar *name)
 {
   GimpProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            border_average_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             border_average_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -166,15 +166,14 @@ border_average_run (GimpProcedure        *procedure,
                     GimpImage            *image,
                     gint                  n_drawables,
                     GimpDrawable        **drawables,
-                    const GimpValueArray *args,
+                    GimpProcedureConfig  *config,
                     gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpDrawable        *drawable;
-  GimpValueArray      *return_vals = NULL;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpRGB              result_color = { 0.0, };
-  GeglBuffer          *buffer;
+  GimpDrawable      *drawable;
+  GimpValueArray    *return_vals = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRGB            result_color = { 0.0, };
+  GeglBuffer        *buffer;
 
   gegl_init (NULL, NULL);
 
@@ -195,27 +194,11 @@ border_average_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
-
   buffer = gimp_drawable_get_buffer (drawable);
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-      if (! borderaverage_dialog (procedure, G_OBJECT (config),
-                                  image, drawable))
-        status = GIMP_PDB_EXECUTION_ERROR;
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      if (gimp_value_array_length (args) != 2)
-        status = GIMP_PDB_CALLING_ERROR;
-      break;
-
-    default:
-      break;
-    }
+  if (run_mode == GIMP_RUN_INTERACTIVE &&
+      ! borderaverage_dialog (procedure, G_OBJECT (config), image, drawable))
+    return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
 
   if (status == GIMP_PDB_SUCCESS)
     {
@@ -237,9 +220,6 @@ border_average_run (GimpProcedure        *procedure,
   g_object_unref (buffer);
 
   return_vals = gimp_procedure_new_return_values (procedure, status, NULL);
-
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-  g_object_unref (config);
 
   if (status == GIMP_PDB_SUCCESS)
     GIMP_VALUES_SET_RGB (return_vals, 1, &result_color);
