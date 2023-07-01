@@ -151,7 +151,6 @@ gimp_drawable_get_thumbnail (GimpDrawable           *drawable,
                                      thumb_width, thumb_height, thumb_bpp,
                                      alpha);
 
-  g_bytes_unref (data);
   return pixbuf;
 }
 
