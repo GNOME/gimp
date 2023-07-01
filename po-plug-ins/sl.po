@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-29 10:16+0000\n"
-"PO-Revision-Date: 2023-06-30 17:28+0200\n"
+"POT-Creation-Date: 2023-06-30 17:29+0000\n"
+"PO-Revision-Date: 2023-07-01 20:55+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -518,7 +518,7 @@ msgstr "Navpične"
 #: plug-ins/common/film.c:811 plug-ins/common/smooth-palette.c:332
 #: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
 #: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
-#: plug-ins/file-fits/fits.c:667 plug-ins/file-jpeg/jpeg-load.c:231
+#: plug-ins/file-fits/fits.c:701 plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2733 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1534
@@ -1824,7 +1824,7 @@ msgid "Yellow"
 msgstr "Rumena"
 
 #: plug-ins/common/decompose.c:215 plug-ins/common/warp.c:617
-#: plug-ins/file-fits/fits.c:994 plug-ins/flame/flame.c:1223
+#: plug-ins/file-fits/fits.c:1028 plug-ins/flame/flame.c:1223
 #: plug-ins/gfig/gfig-dialog.c:1459
 msgid "Black"
 msgstr "Črna"
@@ -2181,7 +2181,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-sunras.c:629 plug-ins/common/file-tga.c:1230
 #: plug-ins/common/file-xbm.c:1051 plug-ins/common/file-xpm.c:705
 #: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
-#: plug-ins/file-fits/fits.c:640 plug-ins/file-fli/fli-gimp.c:784
+#: plug-ins/file-fits/fits.c:674 plug-ins/file-fli/fli-gimp.c:784
 #: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1333
 #: plug-ins/file-ico/ico-save.c:1542 plug-ins/file-jpeg/jpeg-save.c:272
 #: plug-ins/file-psd/psd-save.c:2160 plug-ins/file-sgi/sgi.c:646
@@ -2349,7 +2349,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "Slik ni mogoče shraniti s kanalom alfa."
 
 #: plug-ins/common/file-dicom.c:1542 plug-ins/common/file-ps.c:1333
-#: plug-ins/common/file-xwd.c:670 plug-ins/file-fits/fits.c:635
+#: plug-ins/common/file-xwd.c:670 plug-ins/file-fits/fits.c:669
 msgid "Cannot operate on unknown image types."
 msgstr "S slikami neznane vrste ni mogoče delovati."
 
@@ -4061,7 +4061,7 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr "Napaka pri izvažanju »%s«. Slike ni mogoče izvoziti."
 
 #: plug-ins/common/file-png.c:2296 plug-ins/common/file-ps.c:3739
-#: plug-ins/file-fits/fits.c:1002
+#: plug-ins/file-fits/fits.c:1036
 msgid "Automatic"
 msgstr "Samodejno"
 
@@ -7772,28 +7772,28 @@ msgstr "Zapis FITS ne podpira več plasti."
 msgid "Error during opening of FITS file"
 msgstr "Napaka pri odpiranju datoteke FITS"
 
-#: plug-ins/file-fits/fits.c:422 plug-ins/file-fits/fits.c:600
+#: plug-ins/file-fits/fits.c:422 plug-ins/file-fits/fits.c:634
 msgid "FITS file keeps no displayable images"
 msgstr "Datoteka FITS ne shrani slik za prikaz"
 
-#: plug-ins/file-fits/fits.c:516
+#: plug-ins/file-fits/fits.c:520
 msgid "FITS HDU"
 msgstr "FITS HDU"
 
-#: plug-ins/file-fits/fits.c:624
+#: plug-ins/file-fits/fits.c:658
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "Izvažanje v FITS ne podpira slik s kanali alfa"
 
-#: plug-ins/file-fits/fits.c:990
+#: plug-ins/file-fits/fits.c:1024
 msgid "Open FITS File"
 msgstr "Odpri datoteko FITS"
 
-#: plug-ins/file-fits/fits.c:995 plug-ins/gfig/gfig-dialog.c:1292
+#: plug-ins/file-fits/fits.c:1029 plug-ins/gfig/gfig-dialog.c:1292
 #: plug-ins/gfig/gfig-dialog.c:1460
 msgid "White"
 msgstr "Bela"
 
-#: plug-ins/file-fits/fits.c:1003
+#: plug-ins/file-fits/fits.c:1037
 msgid "By DATAMIN/DATAMAX"
 msgstr "Za DATAMIN/DATAMAX"
 
@@ -8206,12 +8206,12 @@ msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (najvišja kakovost)"
 
 #: plug-ins/file-jpeg/jpeg-save.c:942
-msgid "4:2:2 horizontal (chroma halved)"
-msgstr "4:2:2 vodoravno (polovična kroma)"
+msgid "4:2:2 (chroma halved horizontally)"
+msgstr "4:2:2 navpično (razpolovljena kroma vodoravno)"
 
 #: plug-ins/file-jpeg/jpeg-save.c:944
-msgid "4:2:2 vertical (chroma halved)"
-msgstr "4:2:2 navpično (polovična kroma)"
+msgid "4:4:0 (chroma halved vertically)"
+msgstr "4:2:2 navpično (razpolovljena kroma navpično)"
 
 #: plug-ins/file-jpeg/jpeg-save.c:946
 msgid "4:2:0 (chroma quartered)"
