@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-27 19:09+0200\n"
-"PO-Revision-Date: 2023-06-27 19:17+0200\n"
+"POT-Creation-Date: 2023-07-02 02:18+0200\n"
+"PO-Revision-Date: 2023-07-02 02:19+0200\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -5682,62 +5682,62 @@ msgstr "Преобразовать изображение в индексиро�
 
 #: ../app/actions/image-actions.c:203
 msgctxt "image-convert-action"
-msgid "8 bit integer"
+msgid "8-bit integer"
 msgstr "8 бит, целочисленное"
 
 #: ../app/actions/image-actions.c:205
 msgctxt "image-convert-action"
-msgid "Convert the image to 8 bit integer"
+msgid "Convert the image to 8-bit integer"
 msgstr "Преобразовать в целочисленное 8-битное изображение"
 
 #: ../app/actions/image-actions.c:209
 msgctxt "image-convert-action"
-msgid "16 bit integer"
+msgid "16-bit integer"
 msgstr "16 бит, целочисленное"
 
 #: ../app/actions/image-actions.c:211
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit integer"
+msgid "Convert the image to 16-bit integer"
 msgstr "Преобразовать в целочисленное 16-битное изображение"
 
 #: ../app/actions/image-actions.c:215
 msgctxt "image-convert-action"
-msgid "32 bit integer"
+msgid "32-bit integer"
 msgstr "32 бита, целочисленное"
 
 #: ../app/actions/image-actions.c:217
 msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit integer"
+msgid "Convert the image to 32-bit integer"
 msgstr "Преобразовать в целочисленное 32-битное изображение"
 
 #: ../app/actions/image-actions.c:221
 msgctxt "image-convert-action"
-msgid "16 bit floating point"
+msgid "16-bit floating point"
 msgstr "16 бит, с плавающей запятой"
 
 #: ../app/actions/image-actions.c:223
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit floating point"
+msgid "Convert the image to 16-bit floating point"
 msgstr "Преобразовать в 16-битное изображение с плавающей запятой"
 
 #: ../app/actions/image-actions.c:227
 msgctxt "image-convert-action"
-msgid "32 bit floating point"
+msgid "32-bit floating point"
 msgstr "32 бита, с плавающей запятой"
 
 #: ../app/actions/image-actions.c:229
 msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit floating point"
+msgid "Convert the image to 32-bit floating point"
 msgstr "Преобразовать в 32-битное изображение с плавающей запятой"
 
 #: ../app/actions/image-actions.c:233
 msgctxt "image-convert-action"
-msgid "64 bit floating point"
+msgid "64-bit floating point"
 msgstr "64 бита, с плавающей запятой"
 
 #: ../app/actions/image-actions.c:235
 msgctxt "image-convert-action"
-msgid "Convert the image to 64 bit floating point"
+msgid "Convert the image to 64-bit floating point"
 msgstr "Преобразовать в 64-битное изображение с плавающей запятой"
 
 #: ../app/actions/image-actions.c:242
@@ -18875,11 +18875,11 @@ msgstr "Расширение «%s» успешно закончило работ
 msgid "%s plug-in could not open image"
 msgstr "Расширению %s не удалось открыть изображение"
 
-#: ../app/file/file-open.c:641
+#: ../app/file/file-open.c:645
 msgid "Image doesn't contain any layers"
 msgstr "Изображение не содержит слоев"
 
-#: ../app/file/file-open.c:699
+#: ../app/file/file-open.c:703
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Сбой открытия '%s': %s"
