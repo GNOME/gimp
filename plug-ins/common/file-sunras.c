@@ -210,7 +210,8 @@ static gint             save_index              (FILE                *ofp,
 static gint             save_rgb                (FILE                *ofp,
                                                  GimpImage           *image,
                                                  GimpDrawable        *drawable,
-                                                 gint                 rle);
+                                                 gint                 rle,
+                                                 gint                 as_32bpp);
 
 static gboolean         save_dialog             (GimpImage           *image,
                                                  GimpProcedure       *procedure,
@@ -323,6 +324,12 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
                          _("Use standard (0) or Run-Length Encoded (1) output"),
                          0, 1, 1,
                          G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "as-32bpp",
+                             _("Save as _32bpp"),
+                             _("Save as 32bpp image (if RGB)."),
+                             FALSE,
+                             G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -598,12 +605,14 @@ save_image (GFile         *file,
   FILE          *ofp;
   GimpImageType  drawable_type;
   gint           rle;
+  gint           as_32bpp;
   gboolean       retval;
 
   drawable_type = gimp_drawable_type (drawable);
 
   g_object_get (config,
-                "rle", &rle,
+                "rle",      &rle,
+                "as-32bpp", &as_32bpp,
                 NULL);
 
   /*  Make sure we're not exporting an image with an alpha channel  */
@@ -650,7 +659,7 @@ save_image (GFile         *file,
     }
   else if (drawable_type == GIMP_RGB_IMAGE)
     {
-      retval = save_rgb (ofp, image, drawable, rle);
+      retval = save_rgb (ofp, image, drawable, rle, as_32bpp);
     }
   else
     {
@@ -1660,7 +1669,8 @@ static gboolean
 save_rgb (FILE         *ofp,
           GimpImage    *image,
           GimpDrawable *drawable,
-          gint          rle)
+          gint          rle,
+          gint          as_32bpp)
 {
   int              height, width, tile_height, linepad;
   int              i, j, bpp;
@@ -1682,12 +1692,11 @@ save_rgb (FILE         *ofp,
   src = data = g_malloc (tile_height * width *
                          babl_format_get_bytes_per_pixel (format));
 
-/* #define SUNRAS_32 */
-#ifdef SUNRAS_32
-  bpp = 4;
-#else
-  bpp = 3;
-#endif
+  if (as_32bpp)
+    bpp = 4;
+  else
+    bpp = 3;
+
   linepad = (width * bpp) % 2;
 
   /* Fill in the SUN header */
@@ -1785,7 +1794,9 @@ save_dialog (GimpImage     *image,
              GObject       *config)
 {
   GtkWidget    *dialog;
+  GtkWidget    *toggle;
   GtkListStore *store;
+  gboolean      is_rgb = FALSE;
   gboolean      run;
 
   dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
@@ -1798,8 +1809,20 @@ save_dialog (GimpImage     *image,
   gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
                                        "rle", GIMP_INT_STORE (store));
 
+  toggle = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                             "as-32bpp",
+                                             GTK_TYPE_CHECK_BUTTON);
+  gtk_widget_set_margin_bottom (toggle, 12);
+
+  is_rgb = (gimp_image_get_base_type (image) == GIMP_RGB);
+  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "as-32bpp", is_rgb, NULL, NULL,
+                                       FALSE);
+
+
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              NULL);
+                              "as-32bpp", "rle", NULL);
+
 
   gtk_widget_show (dialog);
 
