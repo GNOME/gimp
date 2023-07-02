@@ -37,6 +37,14 @@ enum
   PROP_VALUE
 };
 
+#define GET_PRIVATE(obj) (gimp_double_action_get_instance_private ((GimpDoubleAction *) (obj)))
+
+typedef struct _GimpDoubleActionPrivate GimpDoubleActionPrivate;
+
+struct _GimpDoubleActionPrivate
+{
+  gdouble stateful_value;
+};
 
 static void   gimp_double_action_g_action_iface_init (GActionInterface *iface);
 
@@ -54,6 +62,7 @@ static void   gimp_double_action_activate            (GAction          *action,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDoubleAction, gimp_double_action, GIMP_TYPE_ACTION_IMPL,
+                         G_ADD_PRIVATE (GimpDoubleAction)
                          G_IMPLEMENT_INTERFACE (G_TYPE_ACTION, gimp_double_action_g_action_iface_init))
 
 #define parent_class gimp_double_action_parent_class
@@ -78,6 +87,9 @@ gimp_double_action_class_init (GimpDoubleActionClass *klass)
 static void
 gimp_double_action_init (GimpDoubleAction *action)
 {
+  GimpDoubleActionPrivate *private = GET_PRIVATE (action);
+
+  private->stateful_value = -1;
 }
 
 static void
@@ -155,7 +167,38 @@ static void
 gimp_double_action_activate (GAction  *action,
                              GVariant *parameter)
 {
-  GimpDoubleAction *double_action = GIMP_DOUBLE_ACTION (action);
+  GimpDoubleAction        *double_action = GIMP_DOUBLE_ACTION (action);
+  GimpDoubleActionPrivate *private       = GET_PRIVATE (double_action);
+
+  /* Handle double parameters in a way friendly to GtkPadController */
+  if (g_variant_is_of_type (parameter, G_VARIANT_TYPE_DOUBLE))
+    {
+      double value      = g_variant_get_double (parameter);
+      double delta;
+      double new_value;
+
+      if (private->stateful_value < 0)
+        {
+          /* Initial event */
+          delta = 0;
+          new_value = value;
+        }
+      else if (private->stateful_value == value)
+        {
+          /* Last (stop) event */
+          delta = 0;
+          new_value = -1;
+        }
+      else
+        {
+          /* Intermediate event */
+          delta = (private->stateful_value < value) ? 1 : -1;
+          new_value = value;
+        }
+
+      double_action->value += delta;
+      private->stateful_value = new_value;
+    }
 
   gimp_action_emit_activate (GIMP_ACTION (action),
                              g_variant_new_double (double_action->value));
