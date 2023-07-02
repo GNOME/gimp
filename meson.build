@@ -1149,17 +1149,6 @@ if not lua.found() and have_lua
 endif
 
 
-# Check for GTK Mac Integration
-if platform_osx and (gtk3.get_variable(pkgconfig: 'targets').contains('quartz'))
-  # Support for homebrew version of gtk-mac-integration
-  gtk3_macos = dependency('gtk-mac-integration-gtk3', version: '>=3.0.1', required: false)
-  if not gtk3_macos.found()
-    gtk3_macos = dependency('gtk-mac-integration', version: '>=3.0.1')
-  endif
-else
-  gtk3_macos = no_dep
-endif
-
 # Check for XML tools
 xmllint             = find_program('xmllint', required: false)
 xsltproc            = find_program('xsltproc')

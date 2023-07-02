@@ -185,7 +185,7 @@ libgimpwidgets_introspectable = [
   libgimpwidgets_headers_introspectable,
 ]
 
-if gtk3_macos.found()
+if platform_osx
   libgimpwidgets_sources += [
     'gimppickbutton-quartz.c',
   ]

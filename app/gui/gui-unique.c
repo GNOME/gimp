@@ -26,7 +26,6 @@
 
 #ifdef GDK_WINDOWING_QUARTZ
 #import <AppKit/AppKit.h>
-#include <gtkosxapplication.h>
 #endif
 
 #include "gui/gui-types.h"
@@ -262,30 +261,6 @@ gui_unique_quartz_idle_open (GFile *file)
   return FALSE;
 }
 
-static gboolean
-gui_unique_quartz_nsopen_file_callback (GtkosxApplication *osx_app,
-                                        gchar             *path,
-                                        gpointer           user_data)
-{
-  GSource  *source;
-  GClosure *closure;
-
-  closure = g_cclosure_new (G_CALLBACK (gui_unique_quartz_idle_open),
-                            g_file_new_for_path (path),
-                            (GClosureNotify) g_object_unref);
-
-  g_object_watch_closure (G_OBJECT (unique_gimp), closure);
-
-  source = g_idle_source_new ();
-
-  g_source_set_priority (source, G_PRIORITY_LOW);
-  g_source_set_closure (source, closure);
-  g_source_attach (source, NULL);
-  g_source_unref (source);
-
-  return TRUE;
-}
-
 @implementation GimpAppleEventHandler
 - (void) handleEvent: (NSAppleEventDescriptor *) inEvent
         andReplyWith: (NSAppleEventDescriptor *) replyEvent
@@ -328,18 +303,10 @@ gui_unique_quartz_nsopen_file_callback (GtkosxApplication *osx_app,
 static void
 gui_unique_quartz_init (Gimp *gimp)
 {
-  GtkosxApplication *osx_app;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (unique_gimp == NULL);
 
-  osx_app = gtkosx_application_get ();
-
   unique_gimp = gimp;
-
-  g_signal_connect (osx_app, "NSApplicationOpenFile",
-                    G_CALLBACK (gui_unique_quartz_nsopen_file_callback),
-                    gimp);
 
   /* Using the event handler is a hack, it is necessary because
    * gtkosx_application will drop the file open events if any
