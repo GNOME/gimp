@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-18 19:11+0000\n"
+"POT-Creation-Date: 2023-06-30 15:47+0000\n"
 "PO-Revision-Date: 2023-06-19 18:06+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
@@ -1037,7 +1037,7 @@ msgstr[0] "Abaixa el canal a la part inferior"
 msgstr[1] "Abaixa els canals a la part inferior"
 
 #: app/actions/channels-commands.c:384 app/core/gimpimage-new.c:506
-#: app/display/gimpdisplayshell-dnd.c:683
+#: app/display/gimpdisplayshell-dnd.c:687
 #: app/widgets/gimpchanneltreeview.c:259 app/widgets/gimplayertreeview.c:1055
 #, c-format
 msgid "%s Channel Copy"
@@ -2390,7 +2390,7 @@ msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 segons"
 
-#: app/actions/dashboard-commands.c:118 app/actions/documents-commands.c:237
+#: app/actions/dashboard-commands.c:118 app/actions/documents-commands.c:238
 #: app/actions/edit-commands.c:169 app/actions/error-console-commands.c:100
 #: app/actions/file-commands.c:449 app/actions/gradient-editor-commands.c:409
 #: app/actions/gradient-editor-commands.c:520
@@ -2490,12 +2490,12 @@ msgstr "Afegeix un marcador"
 msgid "Enter a description for the marker"
 msgstr "Introduïu una descripció pel marcador"
 
-#: app/actions/data-commands.c:90 app/actions/documents-commands.c:392
+#: app/actions/data-commands.c:90 app/actions/documents-commands.c:393
 #: app/actions/file-commands.c:211 app/dialogs/file-open-dialog.c:228
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:626 app/widgets/gimplayertreeview.c:1013
+#: app/display/gimpdisplayshell-dnd.c:630 app/widgets/gimplayertreeview.c:1013
 #: app/widgets/gimptoolbox.c:752 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -2515,7 +2515,7 @@ msgstr ""
 msgid "Untitled"
 msgstr "Sense títol"
 
-#: app/actions/data-commands.c:216 app/actions/documents-commands.c:194
+#: app/actions/data-commands.c:216 app/actions/documents-commands.c:195
 #: app/actions/file-commands.c:555
 #, c-format
 msgid "Can't show file in file manager: %s"
@@ -3338,20 +3338,20 @@ msgctxt "documents-action"
 msgid "Remove entries for which the corresponding file is not available"
 msgstr "Suprimeix els fitxers de la llista que ja no existeixen"
 
-#: app/actions/documents-commands.c:230
+#: app/actions/documents-commands.c:231
 msgid "Clear Document History"
 msgstr "Buida l'historial de documents"
 
-#: app/actions/documents-commands.c:238 app/actions/edit-commands.c:170
+#: app/actions/documents-commands.c:239 app/actions/edit-commands.c:170
 #: app/dialogs/preferences-dialog.c:687
 msgid "Cl_ear"
 msgstr "_Buida"
 
-#: app/actions/documents-commands.c:253
+#: app/actions/documents-commands.c:254
 msgid "Clear the Recent Documents list?"
 msgstr "Voleu buidar la llista de fitxers recents?"
 
-#: app/actions/documents-commands.c:256
+#: app/actions/documents-commands.c:257
 msgid ""
 "Clearing the document history will permanently remove all images from the "
 "recent documents list."
@@ -4956,25 +4956,33 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Mostra de nou el diàleg del darrer filtre utilitzat"
 
-#: app/actions/filters-actions.c:1174
+#. TRANSLATORS: %s is the title of a GEGL operation (filter), after
+#. * which we append "..." as the standardized labelling to indicate
+#. * that this action raises a dialog.
+#: app/actions/filters-actions.c:848
+#, c-format
+msgid "%s..."
+msgstr "%s..."
+
+#: app/actions/filters-actions.c:1178
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Re_peteix «%s»"
 
-#: app/actions/filters-actions.c:1175
+#: app/actions/filters-actions.c:1179
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "To_rna a mostrar «%s»"
 
-#: app/actions/filters-actions.c:1213
+#: app/actions/filters-actions.c:1217
 msgid "Repeat Last"
 msgstr "Repeteix el darrer"
 
-#: app/actions/filters-actions.c:1215
+#: app/actions/filters-actions.c:1219
 msgid "Re-Show Last"
 msgstr "Torna a mostrar el darrer"
 
-#: app/actions/filters-actions.c:1218 app/actions/filters-actions.c:1220
+#: app/actions/filters-actions.c:1222 app/actions/filters-actions.c:1224
 msgid "No last used filters"
 msgstr "No hi ha últims filtres utilitzats"
 
@@ -5721,62 +5729,62 @@ msgstr "Converteix la imatge en un format de colors indexats"
 
 #: app/actions/image-actions.c:203
 msgctxt "image-convert-action"
-msgid "8 bit integer"
+msgid "8-bit integer"
 msgstr "Enter de 8 bits"
 
 #: app/actions/image-actions.c:205
 msgctxt "image-convert-action"
-msgid "Convert the image to 8 bit integer"
+msgid "Convert the image to 8-bit integer"
 msgstr "Converteix la imatge a enters de 8 bits"
 
 #: app/actions/image-actions.c:209
 msgctxt "image-convert-action"
-msgid "16 bit integer"
+msgid "16-bit integer"
 msgstr "Enter de 16 bits"
 
 #: app/actions/image-actions.c:211
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit integer"
+msgid "Convert the image to 16-bit integer"
 msgstr "Converteix la imatge a enters de 16 bits"
 
 #: app/actions/image-actions.c:215
 msgctxt "image-convert-action"
-msgid "32 bit integer"
+msgid "32-bit integer"
 msgstr "Enter de 32 bits"
 
 #: app/actions/image-actions.c:217
 msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit integer"
+msgid "Convert the image to 32-bit integer"
 msgstr "Converteix la imatge a enters de 32 bits"
 
 #: app/actions/image-actions.c:221
 msgctxt "image-convert-action"
-msgid "16 bit floating point"
+msgid "16-bit floating point"
 msgstr "Punt flotant de 16 bits"
 
 #: app/actions/image-actions.c:223
 msgctxt "image-convert-action"
-msgid "Convert the image to 16 bit floating point"
+msgid "Convert the image to 16-bit floating point"
 msgstr "Converteix la imatge a punt flotant de 16 bits"
 
 #: app/actions/image-actions.c:227
 msgctxt "image-convert-action"
-msgid "32 bit floating point"
+msgid "32-bit floating point"
 msgstr "Punt flotant de 32 bits"
 
 #: app/actions/image-actions.c:229
 msgctxt "image-convert-action"
-msgid "Convert the image to 32 bit floating point"
+msgid "Convert the image to 32-bit floating point"
 msgstr "Converteix la imatge a punt flotant de 32 bits"
 
 #: app/actions/image-actions.c:233
 msgctxt "image-convert-action"
-msgid "64 bit floating point"
+msgid "64-bit floating point"
 msgstr "Punt flotant de 64 bits"
 
 #: app/actions/image-actions.c:235
 msgctxt "image-convert-action"
-msgid "Convert the image to 64 bit floating point"
+msgid "Convert the image to 64-bit floating point"
 msgstr "Converteix la imatge a punt flotant de 64 bits"
 
 #: app/actions/image-actions.c:242
@@ -11695,43 +11703,58 @@ msgid "Jitter"
 msgstr "Dispersa"
 
 #: app/core/core-enums.c:602
-msgctxt "fill-style"
+msgctxt "custom-style"
 msgid "Solid color"
 msgstr "Color sòlid"
 
 #: app/core/core-enums.c:603
+msgctxt "custom-style"
+msgid "Pattern"
+msgstr "Patró"
+
+#: app/core/core-enums.c:632
+msgctxt "fill-style"
+msgid "Foreground color"
+msgstr "Color de primer pla"
+
+#: app/core/core-enums.c:633
+msgctxt "fill-style"
+msgid "Background color"
+msgstr "Color de fons"
+
+#: app/core/core-enums.c:634
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "Patró"
 
-#: app/core/core-enums.c:631
+#: app/core/core-enums.c:662
 msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "Utilitza la selecció com a entrada"
 
-#: app/core/core-enums.c:632
+#: app/core/core-enums.c:663
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "Utilitza la capa sencera com a entrada"
 
-#: app/core/core-enums.c:663
+#: app/core/core-enums.c:694
 msgctxt "gradient-color"
 msgid "Fixed"
 msgstr "Fixat"
 
-#: app/core/core-enums.c:664
+#: app/core/core-enums.c:695
 msgctxt "gradient-color"
 msgid "Foreground color"
 msgstr "Color de primer pla"
 
 #. Translators: this is an abbreviated version of "Foreground color".
 #. Keep it short.
-#: app/core/core-enums.c:667
+#: app/core/core-enums.c:698
 msgctxt "gradient-color"
 msgid "FG"
 msgstr "Primer pla"
 
-#: app/core/core-enums.c:668
+#: app/core/core-enums.c:699
 msgctxt "gradient-color"
 msgid "Foreground color (transparent)"
 msgstr "Color de primer pla (transparent)"
@@ -11739,24 +11762,24 @@ msgstr "Color de primer pla (transparent)"
 #. Translators: this is an abbreviated version of "Foreground color
 #. (transparent)".
 #. Keep it short.
-#: app/core/core-enums.c:671
+#: app/core/core-enums.c:702
 msgctxt "gradient-color"
 msgid "FG (t)"
 msgstr "Primer pla (t)"
 
-#: app/core/core-enums.c:672
+#: app/core/core-enums.c:703
 msgctxt "gradient-color"
 msgid "Background color"
 msgstr "Color de fons"
 
 #. Translators: this is an abbreviated version of "Background color".
 #. Keep it short.
-#: app/core/core-enums.c:675
+#: app/core/core-enums.c:706
 msgctxt "gradient-color"
 msgid "BG"
 msgstr "Fons"
 
-#: app/core/core-enums.c:676
+#: app/core/core-enums.c:707
 msgctxt "gradient-color"
 msgid "Background color (transparent)"
 msgstr "Color de fons (transparent)"
@@ -11764,654 +11787,654 @@ msgstr "Color de fons (transparent)"
 #. Translators: this is an abbreviated version of "Background color
 #. (transparent)".
 #. Keep it short.
-#: app/core/core-enums.c:679
+#: app/core/core-enums.c:710
 msgctxt "gradient-color"
 msgid "BG (t)"
 msgstr "Primer pla (t)"
 
-#: app/core/core-enums.c:792
+#: app/core/core-enums.c:823
 msgctxt "histogram-channel"
 msgid "Value"
 msgstr "Valor"
 
-#: app/core/core-enums.c:793
+#: app/core/core-enums.c:824
 msgctxt "histogram-channel"
 msgid "Red"
 msgstr "Vermell"
 
-#: app/core/core-enums.c:794
+#: app/core/core-enums.c:825
 msgctxt "histogram-channel"
 msgid "Green"
 msgstr "Verd"
 
-#: app/core/core-enums.c:795
+#: app/core/core-enums.c:826
 msgctxt "histogram-channel"
 msgid "Blue"
 msgstr "Blau"
 
-#: app/core/core-enums.c:796
+#: app/core/core-enums.c:827
 msgctxt "histogram-channel"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: app/core/core-enums.c:797
+#: app/core/core-enums.c:828
 msgctxt "histogram-channel"
 msgid "Luminance"
 msgstr "Lluminositat"
 
-#: app/core/core-enums.c:798
+#: app/core/core-enums.c:829
 msgctxt "histogram-channel"
 msgid "RGB"
 msgstr "RGB"
 
-#: app/core/core-enums.c:828
+#: app/core/core-enums.c:859
 msgctxt "item-set"
 msgid "None"
 msgstr "Cap"
 
-#: app/core/core-enums.c:829
+#: app/core/core-enums.c:860
 msgctxt "item-set"
 msgid "All layers"
 msgstr "Totes les capes"
 
-#: app/core/core-enums.c:830
+#: app/core/core-enums.c:861
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "Capes de mida de la imatge"
 
-#: app/core/core-enums.c:831
+#: app/core/core-enums.c:862
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "Totes les capes visibles"
 
-#: app/core/core-enums.c:859
+#: app/core/core-enums.c:890
 msgctxt "matting-engine"
 msgid "Matting Global"
 msgstr "Mat global"
 
-#: app/core/core-enums.c:860
+#: app/core/core-enums.c:891
 msgctxt "matting-engine"
 msgid "Matting Levin"
 msgstr "Mat Levin"
 
-#: app/core/core-enums.c:891
+#: app/core/core-enums.c:922
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Missatge"
 
-#: app/core/core-enums.c:892
+#: app/core/core-enums.c:923
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Avís"
 
-#: app/core/core-enums.c:893
+#: app/core/core-enums.c:924
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Error"
 
-#: app/core/core-enums.c:894
+#: app/core/core-enums.c:925
 msgctxt "message-severity"
 msgid "WARNING"
 msgstr "ADVERTIMENT"
 
-#: app/core/core-enums.c:895
+#: app/core/core-enums.c:926
 msgctxt "message-severity"
 msgid "CRITICAL"
 msgstr "CRÍTIC"
 
-#: app/core/core-enums.c:924
+#: app/core/core-enums.c:955
 msgctxt "metadata-rotation-policy"
 msgid "Ask what to do"
 msgstr "Pregunta què s'ha de fer"
 
-#: app/core/core-enums.c:925
+#: app/core/core-enums.c:956
 msgctxt "metadata-rotation-policy"
 msgid "Discard metadata without rotating"
 msgstr "Descarta les metadades sense girar"
 
-#: app/core/core-enums.c:926
+#: app/core/core-enums.c:957
 msgctxt "metadata-rotation-policy"
 msgid "Rotate the image then discard metadata"
 msgstr "Gireu la imatge i descarteu les metadades"
 
-#: app/core/core-enums.c:999
+#: app/core/core-enums.c:1030
 msgctxt "win32-pointer-input-api"
 msgid "Wintab"
 msgstr "Wintab"
 
 # N.T. Nom de paquet del Windows
-#: app/core/core-enums.c:1000
+#: app/core/core-enums.c:1031
 msgctxt "win32-pointer-input-api"
 msgid "Windows Ink"
 msgstr "Windows Ink"
 
-#: app/core/core-enums.c:1029
+#: app/core/core-enums.c:1060
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Sense miniatures"
 
-#: app/core/core-enums.c:1030
+#: app/core/core-enums.c:1061
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Normal (128x128)"
 
-#: app/core/core-enums.c:1031
+#: app/core/core-enums.c:1062
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Gran (256x256)"
 
-#: app/core/core-enums.c:1060
+#: app/core/core-enums.c:1091
 msgctxt "trc-type"
 msgid "Linear"
 msgstr "Lineal"
 
-#: app/core/core-enums.c:1061
+#: app/core/core-enums.c:1092
 msgctxt "trc-type"
 msgid "Non-Linear"
 msgstr "No lineal"
 
-#: app/core/core-enums.c:1062
+#: app/core/core-enums.c:1093
 msgctxt "trc-type"
 msgid "Perceptual"
 msgstr "Perceptiu"
 
-#: app/core/core-enums.c:1261
+#: app/core/core-enums.c:1292
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<no vàlid>>"
 
-#: app/core/core-enums.c:1262
+#: app/core/core-enums.c:1293
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Ajusta la mida de la imatge"
 
-#: app/core/core-enums.c:1263
+#: app/core/core-enums.c:1294
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Canvia la mida de la imatge"
 
-#: app/core/core-enums.c:1264
+#: app/core/core-enums.c:1295
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Capgira la imatge"
 
-#: app/core/core-enums.c:1265
+#: app/core/core-enums.c:1296
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Gira la imatge"
 
-#: app/core/core-enums.c:1266
+#: app/core/core-enums.c:1297
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "Transforma la imatge"
 
-#: app/core/core-enums.c:1267
+#: app/core/core-enums.c:1298
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Escapça la imatge"
 
-#: app/core/core-enums.c:1268
+#: app/core/core-enums.c:1299
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Converteix la imatge"
 
-#: app/core/core-enums.c:1269
+#: app/core/core-enums.c:1300
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Suprimeix l'element"
 
-#: app/core/core-enums.c:1270 app/core/core-enums.c:1323
+#: app/core/core-enums.c:1301 app/core/core-enums.c:1354
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Reordena l'element"
 
-#: app/core/core-enums.c:1271
+#: app/core/core-enums.c:1302
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Fusiona les capes"
 
-#: app/core/core-enums.c:1272
+#: app/core/core-enums.c:1303
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Fusiona els camins"
 
-#: app/core/core-enums.c:1273
+#: app/core/core-enums.c:1304
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Màscara ràpida"
 
-#: app/core/core-enums.c:1274 app/core/core-enums.c:1313
+#: app/core/core-enums.c:1305 app/core/core-enums.c:1344
 #: app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Quadrícula"
 
-#: app/core/core-enums.c:1275 app/core/core-enums.c:1317
+#: app/core/core-enums.c:1306 app/core/core-enums.c:1348
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Guia"
 
-#: app/core/core-enums.c:1276 app/core/core-enums.c:1318
+#: app/core/core-enums.c:1307 app/core/core-enums.c:1349
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Punt de mostra"
 
-#: app/core/core-enums.c:1277 app/core/core-enums.c:1319
+#: app/core/core-enums.c:1308 app/core/core-enums.c:1350
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Capa/canal"
 
-#: app/core/core-enums.c:1278 app/core/core-enums.c:1320
+#: app/core/core-enums.c:1309 app/core/core-enums.c:1351
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Modificació de la capa o canal"
 
-#: app/core/core-enums.c:1279 app/core/core-enums.c:1322
+#: app/core/core-enums.c:1310 app/core/core-enums.c:1353
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Màscara de selecció"
 
-#: app/core/core-enums.c:1280 app/core/core-enums.c:1326
+#: app/core/core-enums.c:1311 app/core/core-enums.c:1357
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Visibilitat de l'element"
 
-#: app/core/core-enums.c:1281
+#: app/core/core-enums.c:1312
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "Bloqueja/desbloqueja els continguts"
 
-#: app/core/core-enums.c:1282 app/core/core-enums.c:1329
+#: app/core/core-enums.c:1313 app/core/core-enums.c:1360
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Bloqueja/desbloqueja la posició"
 
-#: app/core/core-enums.c:1283 app/core/core-enums.c:1330
+#: app/core/core-enums.c:1314 app/core/core-enums.c:1361
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
 msgstr "Bloqueja/desbloqueja la visibilitat"
 
-#: app/core/core-enums.c:1284
+#: app/core/core-enums.c:1315
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Propietats de l'element"
 
-#: app/core/core-enums.c:1285 app/core/core-enums.c:1325
+#: app/core/core-enums.c:1316 app/core/core-enums.c:1356
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Mou l'element"
 
-#: app/core/core-enums.c:1286
+#: app/core/core-enums.c:1317
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Ajusta la mida de l'element"
 
-#: app/core/core-enums.c:1287
+#: app/core/core-enums.c:1318
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Canvia la mida de l'element"
 
-#: app/core/core-enums.c:1288
+#: app/core/core-enums.c:1319
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Afegeix una capa"
 
-#: app/core/core-enums.c:1289
+#: app/core/core-enums.c:1320
 msgctxt "undo-type"
 msgid "Add alpha channel"
 msgstr "Afegeix el canal alfa"
 
-#: app/core/core-enums.c:1290 app/core/core-enums.c:1346
+#: app/core/core-enums.c:1321 app/core/core-enums.c:1377
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Afegeix una màscara de capa"
 
-#: app/core/core-enums.c:1291 app/core/core-enums.c:1348
+#: app/core/core-enums.c:1322 app/core/core-enums.c:1379
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Aplica una màscara de capa"
 
-#: app/core/core-enums.c:1292
+#: app/core/core-enums.c:1323
 msgctxt "undo-type"
 msgid "Remove alpha channel"
 msgstr "Suprimeix el canal alfa"
 
-#: app/core/core-enums.c:1293
+#: app/core/core-enums.c:1324
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
 msgstr "Bloqueja/desbloqueja la posició"
 
-#: app/core/core-enums.c:1294
+#: app/core/core-enums.c:1325
 msgctxt "undo-type"
 msgid "Set layers opacity"
 msgstr "Defineix l'opacitat de les capes"
 
-#: app/core/core-enums.c:1295
+#: app/core/core-enums.c:1326
 msgctxt "undo-type"
 msgid "Set layers mode"
 msgstr "Defineix el mode capes"
 
-#: app/core/core-enums.c:1296
+#: app/core/core-enums.c:1327
 msgctxt "undo-type"
 msgid "Add channels"
 msgstr "Afegeix canals"
 
-#: app/core/core-enums.c:1297 app/core/core-enums.c:1356
+#: app/core/core-enums.c:1328 app/core/core-enums.c:1387
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Converteix la selecció flotant en una capa"
 
-#: app/core/core-enums.c:1298
+#: app/core/core-enums.c:1329
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Selecció flotant"
 
-#: app/core/core-enums.c:1299
+#: app/core/core-enums.c:1330
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Ancora la selecció flotant"
 
-#: app/core/core-enums.c:1300 app/core/gimp-edit.c:764
+#: app/core/core-enums.c:1331 app/core/gimp-edit.c:764
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Enganxa"
 
-#: app/core/core-enums.c:1301 app/core/gimp-edit.c:1116
+#: app/core/core-enums.c:1332 app/core/gimp-edit.c:1116
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Retalla"
 
-#: app/core/core-enums.c:1302
+#: app/core/core-enums.c:1333
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Text"
 
-#: app/core/core-enums.c:1303 app/core/gimpdrawable-transform.c:721
+#: app/core/core-enums.c:1334 app/core/gimpdrawable-transform.c:721
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transforma"
 
-#: app/core/core-enums.c:1304 app/core/core-enums.c:1358
+#: app/core/core-enums.c:1335 app/core/core-enums.c:1389
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Pinta"
 
-#: app/core/core-enums.c:1305 app/core/core-enums.c:1361
+#: app/core/core-enums.c:1336 app/core/core-enums.c:1392
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Adjunta un paràsit"
 
-#: app/core/core-enums.c:1306 app/core/core-enums.c:1362
+#: app/core/core-enums.c:1337 app/core/core-enums.c:1393
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Suprimeix el paràsit"
 
-#: app/core/core-enums.c:1307
+#: app/core/core-enums.c:1338
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Importa camins"
 
-#: app/core/core-enums.c:1308
+#: app/core/core-enums.c:1339
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Connector"
 
-#: app/core/core-enums.c:1309
+#: app/core/core-enums.c:1340
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Tipus d'imatge"
 
-#: app/core/core-enums.c:1310
+#: app/core/core-enums.c:1341
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Precisió de la imatge"
 
-#: app/core/core-enums.c:1311
+#: app/core/core-enums.c:1342
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Mida de la imatge"
 
-#: app/core/core-enums.c:1312
+#: app/core/core-enums.c:1343
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Canvi de resolució de la imatge"
 
-#: app/core/core-enums.c:1314
+#: app/core/core-enums.c:1345
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Canvia les metadades"
 
-#: app/core/core-enums.c:1315
+#: app/core/core-enums.c:1346
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Canvia la paleta indexada"
 
-#: app/core/core-enums.c:1316
+#: app/core/core-enums.c:1347
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
 msgstr "Amaga/mostra el perfil de color"
 
-#: app/core/core-enums.c:1321
+#: app/core/core-enums.c:1352
 msgctxt "undo-type"
 msgid "Layer/Channel format"
 msgstr "Format de la capa/canal"
 
-#: app/core/core-enums.c:1324
+#: app/core/core-enums.c:1355
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Reanomena l'element"
 
-#: app/core/core-enums.c:1327
+#: app/core/core-enums.c:1358
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Element etiqueta color"
 
-#: app/core/core-enums.c:1328
+#: app/core/core-enums.c:1359
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Bloqueja/desbloqueja el contingut"
 
-#: app/core/core-enums.c:1331
+#: app/core/core-enums.c:1362
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Capa nova"
 
-#: app/core/core-enums.c:1332
+#: app/core/core-enums.c:1363
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Suprimeix la capa"
 
-#: app/core/core-enums.c:1333
+#: app/core/core-enums.c:1364
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Defineix el mode de la capa"
 
-#: app/core/core-enums.c:1334
+#: app/core/core-enums.c:1365
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Defineix l'opacitat de la capa"
 
-#: app/core/core-enums.c:1335
+#: app/core/core-enums.c:1366
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Bloqueja/desbloqueja el canal alfa"
 
-#: app/core/core-enums.c:1336
+#: app/core/core-enums.c:1367
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Atura l'acció de redimensionar el grup de capes"
 
-#: app/core/core-enums.c:1337
+#: app/core/core-enums.c:1368
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Reprèn l'acció de redimensionar el grup de capes"
 
-#: app/core/core-enums.c:1338
+#: app/core/core-enums.c:1369
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "Atura la màscara de capa del grup"
 
-#: app/core/core-enums.c:1339
+#: app/core/core-enums.c:1370
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "Reprèn la màscara de capa del grup"
 
-#: app/core/core-enums.c:1340
+#: app/core/core-enums.c:1371
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Comença la transformació de la capa del grup"
 
-#: app/core/core-enums.c:1341
+#: app/core/core-enums.c:1372
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Finalitza la transformació de la capa del grup"
 
-#: app/core/core-enums.c:1342
+#: app/core/core-enums.c:1373
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Converteix la capa del grup"
 
-#: app/core/core-enums.c:1343
+#: app/core/core-enums.c:1374
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Capa de text"
 
-#: app/core/core-enums.c:1344
+#: app/core/core-enums.c:1375
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Modificació de la capa de text"
 
-#: app/core/core-enums.c:1345
+#: app/core/core-enums.c:1376
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Converteix la capa de text"
 
-#: app/core/core-enums.c:1347
+#: app/core/core-enums.c:1378
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Suprimeix la màscara de capa"
 
-#: app/core/core-enums.c:1349
+#: app/core/core-enums.c:1380
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Mostra la màscara de capa"
 
-#: app/core/core-enums.c:1350
+#: app/core/core-enums.c:1381
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Canal nou"
 
-#: app/core/core-enums.c:1351
+#: app/core/core-enums.c:1382
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Suprimeix el canal"
 
-#: app/core/core-enums.c:1352
+#: app/core/core-enums.c:1383
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Color del canal"
 
-#: app/core/core-enums.c:1353
+#: app/core/core-enums.c:1384
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Camí nou"
 
-#: app/core/core-enums.c:1354
+#: app/core/core-enums.c:1385
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Suprimeix el camí"
 
-#: app/core/core-enums.c:1355
+#: app/core/core-enums.c:1386
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Modificació del camí"
 
-#: app/core/core-enums.c:1357
+#: app/core/core-enums.c:1388
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Transforma la graella"
 
-#: app/core/core-enums.c:1359
+#: app/core/core-enums.c:1390
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Tinta"
 
-#: app/core/core-enums.c:1360
+#: app/core/core-enums.c:1391
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Selecciona el color de primer pla"
 
-#: app/core/core-enums.c:1363
+#: app/core/core-enums.c:1394
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "No es pot desfer"
 
-#: app/core/core-enums.c:1398
+#: app/core/core-enums.c:1429
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Diminut"
 
-#: app/core/core-enums.c:1399
+#: app/core/core-enums.c:1430
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Molt petit"
 
-#: app/core/core-enums.c:1400
+#: app/core/core-enums.c:1431
 msgctxt "view-size"
 msgid "Small"
 msgstr "Petit"
 
-#: app/core/core-enums.c:1401
+#: app/core/core-enums.c:1432
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Mitjà"
 
-#: app/core/core-enums.c:1402
+#: app/core/core-enums.c:1433
 msgctxt "view-size"
 msgid "Large"
 msgstr "Gran"
 
-#: app/core/core-enums.c:1403
+#: app/core/core-enums.c:1434
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Molt gran"
 
-#: app/core/core-enums.c:1404
+#: app/core/core-enums.c:1435
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Immens"
 
-#: app/core/core-enums.c:1405
+#: app/core/core-enums.c:1436
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Enorme"
 
-#: app/core/core-enums.c:1406
+#: app/core/core-enums.c:1437
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Gegant"
 
-#: app/core/core-enums.c:1434
+#: app/core/core-enums.c:1465
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Visualitza com a llista"
 
-#: app/core/core-enums.c:1435
+#: app/core/core-enums.c:1466
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Visualitza com a quadrícula"
 
-#: app/core/core-enums.c:1464
+#: app/core/core-enums.c:1495
 msgctxt "select-method"
 msgid "Selection by basic text search"
 msgstr "Selecció per cerca bàsica de text"
 
-#: app/core/core-enums.c:1465
+#: app/core/core-enums.c:1496
 msgctxt "select-method"
 msgid "Selection by regular expression search"
 msgstr "Selecció per cerca d'expressions regulars"
 
-#: app/core/core-enums.c:1466
+#: app/core/core-enums.c:1497
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
 msgstr "Selecció per cerca de patrons glob"
@@ -12692,7 +12715,7 @@ msgstr "S'està creant la carpeta «%s»..."
 msgid "Cannot create folder '%s': %s"
 msgstr "No s'ha pogut crear la carpeta «%s»: %s"
 
-#: app/core/gimp-utils.c:591 app/core/gimpfilloptions.c:408
+#: app/core/gimp-utils.c:591 app/core/gimpfilloptions.c:444
 msgid "No patterns available for this operation."
 msgstr "No hi ha patrons disponibles per a aquesta operació."
 
@@ -13147,7 +13170,7 @@ msgid "Palette"
 msgstr "Paleta"
 
 #: app/core/gimpcontext.c:742 app/core/gimpcontext.c:743
-#: app/tools/gimptextoptions.c:780
+#: app/tools/gimptextoptions.c:795
 msgid "Font"
 msgstr "Estil de lletra"
 
@@ -13177,7 +13200,7 @@ msgstr "còpia"
 msgid "%s copy"
 msgstr "còpia de %s"
 
-#: app/core/gimpdatafactory.c:611 app/tools/gimptextoptions.c:761
+#: app/core/gimpdatafactory.c:611 app/tools/gimptextoptions.c:776
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "S'estan carregant lletres tipogràfiques (pot tardar una mica...)"
@@ -13247,7 +13270,7 @@ msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Pot de pintura"
 
-#: app/core/gimpdrawable-edit.c:151
+#: app/core/gimpdrawable-edit.c:152
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Buida"
@@ -13317,73 +13340,72 @@ msgstr "Transformació"
 msgid "Output type"
 msgstr "Nivells de sortida"
 
-#: app/core/gimpfilloptions.c:110
+#: app/core/gimpfilloptions.c:112
 msgid "Style"
 msgstr "Estil"
 
-#: app/core/gimpfilloptions.c:118 app/pdb/gimppdbcontext.c:101
+#: app/core/gimpfilloptions.c:120
+msgid "Custom style"
+msgstr "Estil personalitzat"
+
+#: app/core/gimpfilloptions.c:128 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:81
-#: app/tools/gimptextoptions.c:175
+#: app/tools/gimptextoptions.c:176
 msgid "Antialiasing"
 msgstr "Antialiàsing"
 
 # Quim: opció en el diàleg selecció, per fer que les puntes de la selecció
 # rectangular siguin arrodonides
-#: app/core/gimpfilloptions.c:125 app/tools/gimpbucketfilloptions.c:196
+#: app/core/gimpfilloptions.c:135 app/tools/gimpbucketfilloptions.c:196
 #: app/tools/gimpselectionoptions.c:88
 msgid "Feather edges"
 msgstr "Difumina les vores"
 
-#: app/core/gimpfilloptions.c:126 app/tools/gimpbucketfilloptions.c:197
+#: app/core/gimpfilloptions.c:136 app/tools/gimpbucketfilloptions.c:197
 msgid "Enable feathering of fill edges"
 msgstr "Habilita el difuminat de l'emplenat de les vores"
 
-#: app/core/gimpfilloptions.c:132 app/paint/gimpmybrushoptions.c:87
+#: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:87
 #: app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
 #: app/tools/gimpselectionoptions.c:95 app/widgets/gimpbrusheditor.c:154
 msgid "Radius"
 msgstr "Radi"
 
-#: app/core/gimpfilloptions.c:133 app/tools/gimpbucketfilloptions.c:204
+#: app/core/gimpfilloptions.c:143 app/tools/gimpbucketfilloptions.c:204
 #: app/tools/gimpselectionoptions.c:96
 msgid "Radius of feathering"
 msgstr "Radi de la difuminació"
 
-#: app/core/gimpfilloptions.c:357
+#: app/core/gimpfilloptions.c:393 app/core/gimpfilloptions.c:515
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Omple amb el color de primer pla"
 
-#: app/core/gimpfilloptions.c:362
+#: app/core/gimpfilloptions.c:398 app/core/gimpfilloptions.c:518
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Omple amb el color de fons"
 
-#: app/core/gimpfilloptions.c:385
+#: app/core/gimpfilloptions.c:421
 msgctxt "undo-type"
 msgid "Fill with Middle Gray (CIELAB) Color"
 msgstr "Omple amb el color de gris mitjà (CIELAB)"
 
-#: app/core/gimpfilloptions.c:391
+#: app/core/gimpfilloptions.c:427
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Omple amb el color blanc"
 
-#: app/core/gimpfilloptions.c:398
+#: app/core/gimpfilloptions.c:434
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Omple amb transparència"
 
-#: app/core/gimpfilloptions.c:414 app/core/gimpfilloptions.c:482
+#: app/core/gimpfilloptions.c:450 app/core/gimpfilloptions.c:521
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Omple amb el patró"
-
-#: app/core/gimpfilloptions.c:479
-msgctxt "undo-type"
-msgid "Fill with Solid Color"
-msgstr "Omple amb un color sòlid"
 
 #: app/core/gimpgradient-load.c:73
 msgid "Not a GIMP gradient file."
@@ -14544,7 +14566,7 @@ msgid "Line width"
 msgstr "Amplada de la línia"
 
 #: app/core/gimpstrokeoptions.c:168 app/core/gimptemplate.c:158
-#: app/tools/gimptextoptions.c:162 app/tools/gimptextoptions.c:298
+#: app/tools/gimptextoptions.c:163 app/tools/gimptextoptions.c:306
 msgid "Unit"
 msgstr "Unitat"
 
@@ -14560,7 +14582,7 @@ msgstr "Estil de la unió"
 msgid "Miter limit"
 msgstr "Límit de mesura"
 
-#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:315
+#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:323
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -15811,31 +15833,31 @@ msgstr "_Actualitza"
 msgid "You will have to restart GIMP for the changes to take effect."
 msgstr "Cal que reinicieu el GIMP perquè els canvis tinguin efecte."
 
-#: app/dialogs/module-dialog.c:292
+#: app/dialogs/module-dialog.c:291
 msgid "Only in memory"
 msgstr "Només a la memòria"
 
-#: app/dialogs/module-dialog.c:297
+#: app/dialogs/module-dialog.c:295
 msgid "No longer available"
 msgstr "Ja no es troba disponible"
 
-#: app/dialogs/module-dialog.c:329
+#: app/dialogs/module-dialog.c:327
 msgid "Author:"
 msgstr "Autor:"
 
-#: app/dialogs/module-dialog.c:330
+#: app/dialogs/module-dialog.c:328
 msgid "Version:"
 msgstr "Versió:"
 
-#: app/dialogs/module-dialog.c:331
+#: app/dialogs/module-dialog.c:329
 msgid "Date:"
 msgstr "Data:"
 
-#: app/dialogs/module-dialog.c:332
+#: app/dialogs/module-dialog.c:330
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: app/dialogs/module-dialog.c:333
+#: app/dialogs/module-dialog.c:331
 msgid "Location:"
 msgstr "Ubicació:"
 
@@ -16504,7 +16526,7 @@ msgstr "Interfície d'usuari"
 msgid "Interface"
 msgstr "Interfície"
 
-#: app/dialogs/preferences-dialog.c:1911 app/tools/gimptextoptions.c:192
+#: app/dialogs/preferences-dialog.c:1911 app/tools/gimptextoptions.c:193
 msgid "Language"
 msgstr "Idioma"
 
@@ -17775,11 +17797,11 @@ msgstr "Tria l'estil de traçat"
 msgid "_Stroke"
 msgstr "_Traça"
 
-#: app/dialogs/stroke-dialog.c:214
+#: app/dialogs/stroke-dialog.c:215
 msgid "P_aint tool:"
 msgstr "Eina pint_a:"
 
-#: app/dialogs/stroke-dialog.c:228
+#: app/dialogs/stroke-dialog.c:229
 msgid "_Emulate brush dynamics"
 msgstr "_Emula la dinàmica del pinzell"
 
@@ -18273,8 +18295,8 @@ msgid "The image has been exported to '%s'."
 msgstr "S'ha exportat la imatge a «%s»."
 
 #: app/display/gimpdisplayshell-dnd.c:249
-#: app/display/gimpdisplayshell-dnd.c:686
-#: app/display/gimpdisplayshell-dnd.c:745
+#: app/display/gimpdisplayshell-dnd.c:690
+#: app/display/gimpdisplayshell-dnd.c:749
 msgid "Drop New Layer"
 msgstr "Elimina la capa nova"
 
@@ -18292,27 +18314,27 @@ msgstr "No es poden modificar els píxels de grups de capes."
 msgid "A selected layer's pixels are locked."
 msgstr "Els píxels d'una capa seleccionada estan bloquejats."
 
-#: app/display/gimpdisplayshell-dnd.c:426
+#: app/display/gimpdisplayshell-dnd.c:430
 #: app/widgets/gimpdrawabletreeview.c:267
 #: app/widgets/gimpdrawabletreeview.c:381
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Deixa anar un patró a la capa"
 
-#: app/display/gimpdisplayshell-dnd.c:448
+#: app/display/gimpdisplayshell-dnd.c:452
 #: app/widgets/gimpdrawabletreeview.c:298
 #: app/widgets/gimpdrawabletreeview.c:401
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Deixa anar un color a la capa"
 
-#: app/display/gimpdisplayshell-dnd.c:576 app/widgets/gimpitemtreeview.c:1406
+#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1406
 #: app/widgets/gimplayertreeview.c:1004
 msgid "Drop layers"
 msgstr "Elimina les capes"
 
-#: app/display/gimpdisplayshell-dnd.c:719
-#: app/display/gimpdisplayshell-dnd.c:736 app/widgets/gimplayertreeview.c:1081
+#: app/display/gimpdisplayshell-dnd.c:723
+#: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:1081
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Objecte eliminat del porta-retalls del GIMP"
@@ -18857,11 +18879,11 @@ msgstr ""
 msgid "%s plug-in could not open image"
 msgstr "El connector %s no ha pogut obrir la imatge"
 
-#: app/file/file-open.c:641
+#: app/file/file-open.c:645
 msgid "Image doesn't contain any layers"
 msgstr "La imatge no conté cap capa"
 
-#: app/file/file-open.c:699
+#: app/file/file-open.c:703
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "No s'ha pogut obrir «%s»: %s"
@@ -23291,11 +23313,11 @@ msgstr "Operació _GEGL..."
 msgid "Select an operation from the list above"
 msgstr "Seleccioneu una operació de la llista anterior"
 
-#: app/tools/gimpgenerictransformtool.c:101
+#: app/tools/gimpgenerictransformtool.c:99
 msgid "Transform Matrix"
 msgstr "Matriu de transformació"
 
-#: app/tools/gimpgenerictransformtool.c:134
+#: app/tools/gimpgenerictransformtool.c:117
 msgid "Invalid transform"
 msgstr "Transformació no vàlida"
 
@@ -23392,7 +23414,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:833
+#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:851
 msgid "Color:"
 msgstr "Color:"
 
@@ -24254,7 +24276,7 @@ msgstr "Actual"
 msgid "Fixed"
 msgstr "Fixat"
 
-#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:794
+#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:809
 msgid "Size:"
 msgstr "Mida:"
 
@@ -24530,66 +24552,66 @@ msgstr "Feu clic per a empastifar"
 msgid "Click to smudge the line"
 msgstr "Feu clic per a empastifar la línia"
 
-#: app/tools/gimptextoptions.c:163
+#: app/tools/gimptextoptions.c:164
 msgid "Font size unit"
 msgstr "Unitat de la mida de la lletra"
 
-#: app/tools/gimptextoptions.c:168 app/tools/gimptextoptions.c:169
+#: app/tools/gimptextoptions.c:169 app/tools/gimptextoptions.c:170
 msgid "Font size"
 msgstr "Mida de la lletra"
 
-#: app/tools/gimptextoptions.c:182
+#: app/tools/gimptextoptions.c:183
 msgid "Hinting"
 msgstr "Millora del contorn"
 
-#: app/tools/gimptextoptions.c:183
+#: app/tools/gimptextoptions.c:184
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Altera el contorn de la font tipogràfica perquè les lletres més petites es "
 "puguin llegir bé"
 
-#: app/tools/gimptextoptions.c:193
+#: app/tools/gimptextoptions.c:194
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "La manera en què es renderitza el text pot dependre de l'idioma."
 
-#: app/tools/gimptextoptions.c:207
+#: app/tools/gimptextoptions.c:208
 msgid "Justify"
 msgstr "Justifica"
 
-#: app/tools/gimptextoptions.c:208
+#: app/tools/gimptextoptions.c:209
 msgid "Text alignment"
 msgstr "Alineació del text"
 
-#: app/tools/gimptextoptions.c:215
+#: app/tools/gimptextoptions.c:216
 msgid "Indentation"
 msgstr "Sagnat"
 
-#: app/tools/gimptextoptions.c:216
+#: app/tools/gimptextoptions.c:217
 msgid "Indentation of the first line"
 msgstr "Indexació de la primera línia"
 
-#: app/tools/gimptextoptions.c:223
+#: app/tools/gimptextoptions.c:224
 msgid "Line spacing"
 msgstr "Interlineat"
 
-#: app/tools/gimptextoptions.c:224
+#: app/tools/gimptextoptions.c:225
 msgid "Adjust line spacing"
 msgstr "Ajusta l'interlineat"
 
-#: app/tools/gimptextoptions.c:231
+#: app/tools/gimptextoptions.c:232
 msgid "Letter spacing"
 msgstr "Espaiat de la lletra"
 
-#: app/tools/gimptextoptions.c:232
+#: app/tools/gimptextoptions.c:233
 msgid "Adjust letter spacing"
 msgstr "Ajusta l'espaiat entre lletres"
 
-#: app/tools/gimptextoptions.c:239
+#: app/tools/gimptextoptions.c:240
 msgid "Box"
 msgstr "Caixa"
 
-#: app/tools/gimptextoptions.c:240
+#: app/tools/gimptextoptions.c:241
 msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
@@ -24597,55 +24619,63 @@ msgstr ""
 "Escriu el text mantenint-lo sempre dins del rectangle o bé només salta de "
 "línia quan premeu la tecla de retorn"
 
-#: app/tools/gimptextoptions.c:248
-msgid "Use editor"
-msgstr "Utilitza l'editor"
-
 #: app/tools/gimptextoptions.c:249
+msgid "Use editor window"
+msgstr "Utilitza la finestra de l'editor"
+
+#: app/tools/gimptextoptions.c:250
 msgid "Use an external editor window for text entry"
 msgstr "Utilitza una finestra d'un editor extern per a escriure el text"
 
-#: app/tools/gimptextoptions.c:291
+#: app/tools/gimptextoptions.c:256
+msgid "Show on-canvas editor"
+msgstr "Mostra l'editor en el llenç"
+
+#: app/tools/gimptextoptions.c:257
+msgid "Show on-canvas text editor"
+msgstr "Mostra l'editor de text en el llenç"
+
+#: app/tools/gimptextoptions.c:299
 msgid "Outline width"
 msgstr "Amplada del contorn"
 
-#: app/tools/gimptextoptions.c:292
+#: app/tools/gimptextoptions.c:300
 msgid "Adjust outline width"
 msgstr "Ajusta l'amplada del contorn"
 
-#: app/tools/gimptextoptions.c:299
+#: app/tools/gimptextoptions.c:307
 msgid "Outline width unit"
 msgstr "Unitat d'amplada del contorn"
 
-#: app/tools/gimptextoptions.c:314
+#: app/tools/gimptextoptions.c:322
 msgid "Outline miter limit"
 msgstr "Límit del contorn de mesura"
 
-#: app/tools/gimptextoptions.c:822
+#: app/tools/gimptextoptions.c:840
 msgid "Hinting:"
 msgstr "Millora del contorn:"
 
-#: app/tools/gimptextoptions.c:826
+#: app/tools/gimptextoptions.c:844
 msgid "Text Color"
 msgstr "Color del text"
 
-#: app/tools/gimptextoptions.c:839
+#: app/tools/gimptextoptions.c:857
 msgid "Style:"
 msgstr "Estil:"
 
-#: app/tools/gimptextoptions.c:843
+#: app/tools/gimptextoptions.c:861
 msgid "Outline Options"
 msgstr "Opcions del contorn"
 
-#: app/tools/gimptextoptions.c:864
+#: app/tools/gimptextoptions.c:882
 msgid "Justify:"
 msgstr "Justifica:"
 
-#: app/tools/gimptextoptions.c:894
+#: app/tools/gimptextoptions.c:912
 msgid "Box:"
 msgstr "Caixa:"
 
-#: app/tools/gimptextoptions.c:934
+#: app/tools/gimptextoptions.c:952
 msgid "Language:"
 msgstr "Idioma:"
 
@@ -24711,7 +24741,7 @@ msgstr "Sense capes."
 msgid "Exactly one path must be selected."
 msgstr "S'ha de seleccionar exactament un camí."
 
-#: app/tools/gimptexttool-editor.c:1361
+#: app/tools/gimptexttool-editor.c:1371
 msgid "GIMP Text Editor"
 msgstr "Editor de text del GIMP"
 
@@ -26988,11 +27018,15 @@ msgstr "Seleccioneu el _tipus de fitxer"
 msgid "File Type"
 msgstr "Tipus de fitxer"
 
-#: app/widgets/gimpfilleditor.c:123
+#: app/widgets/gimpfilleditor.c:142 app/widgets/gimpfilleditor.c:154
 msgid "Fill Color"
 msgstr "Color de farciment"
 
-#: app/widgets/gimpfilleditor.c:142
+#: app/widgets/gimpfilleditor.c:164
+msgid "Fill BG Color"
+msgstr "Omple el color del fons"
+
+#: app/widgets/gimpfilleditor.c:187
 msgid "_Antialiasing"
 msgstr "_Antialiàsing"
 
@@ -28475,517 +28509,3 @@ msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Menú dels camins"
 
-#~ msgctxt "dialogs-action"
-#~ msgid "_Preferences Dialog"
-#~ msgstr "Diàleg _Preferències"
-
-#, c-format
-#~ msgid "Rotate %s?"
-#~ msgstr "Gira %s?"
-
-#~ msgid "Module"
-#~ msgstr "Mòdul"
-
-# Quim: no és 'menú dels porta-retalls' pel mateix criteri que 'brushes menu'
-#~ msgctxt "buffers-action"
-#~ msgid "Buffers Menu"
-#~ msgstr "Menú del porta-retalls"
-
-#~ msgctxt "channels-action"
-#~ msgid "_Add to Selection"
-#~ msgstr "_Afegeix a la selecció"
-
-#~ msgctxt "channels-action"
-#~ msgid "_Subtract from Selection"
-#~ msgstr "_Sostreu de la selecció"
-
-#~ msgctxt "channels-action"
-#~ msgid "_Intersect with Selection"
-#~ msgstr "_Interseca amb la selecció"
-
-#~ msgctxt "colormap-action"
-#~ msgid "Colormap Menu"
-#~ msgstr "Menú del mapa de color"
-
-#~ msgctxt "context-action"
-#~ msgid "_Context"
-#~ msgstr "_Context"
-
-#~ msgctxt "context-action"
-#~ msgid "_Colors"
-#~ msgstr "_Colors"
-
-#~ msgctxt "context-action"
-#~ msgid "_Opacity"
-#~ msgstr "_Opacitat"
-
-#~ msgctxt "context-action"
-#~ msgid "Paint _Mode"
-#~ msgstr "_Mode de pintura"
-
-#~ msgctxt "context-action"
-#~ msgid "_Tool"
-#~ msgstr "_Eina"
-
-#~ msgctxt "context-action"
-#~ msgid "_Brush"
-#~ msgstr "Pin_zell"
-
-#~ msgctxt "context-action"
-#~ msgid "_Pattern"
-#~ msgstr "_Patró"
-
-#~ msgctxt "context-action"
-#~ msgid "_Palette"
-#~ msgstr "Pa_leta"
-
-#~ msgctxt "context-action"
-#~ msgid "_Gradient"
-#~ msgstr "De_gradat"
-
-#~ msgctxt "context-action"
-#~ msgid "_Font"
-#~ msgstr "Estil de _lletra"
-
-#~ msgctxt "context-action"
-#~ msgid "_Shape"
-#~ msgstr "_Forma"
-
-#~ msgctxt "context-action"
-#~ msgid "_Radius"
-#~ msgstr "_Radi"
-
-#~ msgctxt "context-action"
-#~ msgid "S_pikes"
-#~ msgstr "_Puntes"
-
-#~ msgctxt "context-action"
-#~ msgid "_Hardness"
-#~ msgstr "_Duresa"
-
-#~ msgctxt "context-action"
-#~ msgid "_Aspect Ratio"
-#~ msgstr "Relació d'_aspecte"
-
-#~ msgctxt "context-action"
-#~ msgid "A_ngle"
-#~ msgstr "A_ngle"
-
-#~ msgctxt "dock-action"
-#~ msgid "M_ove to Screen"
-#~ msgstr "Can_via de pantalla"
-
-# Quim: no és 'menú dels diàlegs' pel mateix criteri que 'brushes menu'
-#~ msgctxt "dockable-action"
-#~ msgid "Dialogs Menu"
-#~ msgstr "Menú del diàleg"
-
-#~ msgctxt "dockable-action"
-#~ msgid "_Add Tab"
-#~ msgstr "_Afegeix una pestanya"
-
-#~ msgctxt "dockable-action"
-#~ msgid "_Preview Size"
-#~ msgstr "Mida de la _previsualització"
-
-#~ msgctxt "dockable-action"
-#~ msgid "_Tab Style"
-#~ msgstr "Es_til de la pestanya"
-
-# Quim: és el menú que surt com a opció en el diàleg 'fitxers recents'
-#~ msgctxt "documents-action"
-#~ msgid "Documents Menu"
-#~ msgstr "Menú dels fitxers recents"
-
-#~ msgctxt "edit-action"
-#~ msgid "_Edit"
-#~ msgstr "_Edita"
-
-#~ msgctxt "edit-action"
-#~ msgid "Paste _as"
-#~ msgstr "Enganxa com _a"
-
-#~ msgctxt "edit-action"
-#~ msgid "_Buffer"
-#~ msgstr "_Memòria intermèdia"
-
-#~ msgctxt "error-console-action"
-#~ msgid "Error Console Menu"
-#~ msgstr "Menú de la consola d'errors"
-
-#~ msgctxt "file-action"
-#~ msgid "_File"
-#~ msgstr "_Fitxer"
-
-#~ msgctxt "file-action"
-#~ msgid "Crea_te"
-#~ msgstr "_Crea"
-
-#~ msgctxt "file-action"
-#~ msgid "Open _Recent"
-#~ msgstr "Obre un fitxer _recent"
-
-#~ msgctxt "filters-action"
-#~ msgid "Filte_rs"
-#~ msgstr "Filt_res"
-
-#~ msgctxt "filters-action"
-#~ msgid "Recently _Used"
-#~ msgstr "_Utilitzat recentment"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Blur"
-#~ msgstr "_Difumina"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Noise"
-#~ msgstr "_Soroll"
-
-#~ msgctxt "filters-action"
-#~ msgid "Edge-De_tect"
-#~ msgstr "De_tecció de vores"
-
-#~ msgctxt "filters-action"
-#~ msgid "En_hance"
-#~ msgstr "_Millora"
-
-#~ msgctxt "filters-action"
-#~ msgid "C_ombine"
-#~ msgstr "C_ombina"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Generic"
-#~ msgstr "_Genèric"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Light and Shadow"
-#~ msgstr "_Llums i ombres"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Distorts"
-#~ msgstr "_Distorsions"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Artistic"
-#~ msgstr "_Artístic"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Decor"
-#~ msgstr "D_ecora"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Map"
-#~ msgstr "_Mapa"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Render"
-#~ msgstr "_Renderitzar"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Clouds"
-#~ msgstr "_Núvols"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Fractals"
-#~ msgstr "_Fractals"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Nature"
-#~ msgstr "_Natura"
-
-#~ msgctxt "filters-action"
-#~ msgid "N_oise"
-#~ msgstr "S_oroll"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Pattern"
-#~ msgstr "_Patró"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Web"
-#~ msgstr "_Web"
-
-#~ msgctxt "filters-action"
-#~ msgid "An_imation"
-#~ msgstr "An_imació"
-
-# Quim: no és 'menú dels tipus de lletra' pel mateix criteri que 'brushes
-# menu'
-#~ msgctxt "fonts-action"
-#~ msgid "Fonts Menu"
-#~ msgstr "Menú dels estils de lletra"
-
-#~ msgctxt "image-action"
-#~ msgid "Image Menu"
-#~ msgstr "Menú de la imatge"
-
-#~ msgctxt "image-action"
-#~ msgid "_Image"
-#~ msgstr "_Imatge"
-
-#~ msgctxt "image-action"
-#~ msgid "_Mode"
-#~ msgstr "_Mode"
-
-#~ msgctxt "image-action"
-#~ msgid "_Encoding"
-#~ msgstr "_Codificació"
-
-#~ msgctxt "image-action"
-#~ msgid "Color Ma_nagement"
-#~ msgstr "_Gestió del color"
-
-#~ msgctxt "image-action"
-#~ msgid "_Transform"
-#~ msgstr "_Transforma"
-
-#~ msgctxt "image-action"
-#~ msgid "_Guides"
-#~ msgstr "_Guies"
-
-#~ msgctxt "image-action"
-#~ msgid "Meta_data"
-#~ msgstr "Meta_dades"
-
-#~ msgctxt "image-action"
-#~ msgid "_Colors"
-#~ msgstr "_Colors"
-
-#~ msgctxt "image-action"
-#~ msgid "I_nfo"
-#~ msgstr "I_nformació"
-
-#~ msgctxt "image-action"
-#~ msgid "_Auto"
-#~ msgstr "_Automàtic"
-
-#~ msgctxt "image-action"
-#~ msgid "_Map"
-#~ msgstr "_Mapa"
-
-#~ msgctxt "image-action"
-#~ msgid "_Tone Mapping"
-#~ msgstr "_Mapa del to"
-
-#~ msgctxt "image-action"
-#~ msgid "C_omponents"
-#~ msgstr "C_omponents"
-
-#~ msgctxt "image-action"
-#~ msgid "D_esaturate"
-#~ msgstr "D_essatura"
-
-#~ msgctxt "image-action"
-#~ msgid "Soft-Proofing Re_ndering Intent"
-#~ msgstr "_Intenció de renderització de les proves suaus"
-
-# Quim: és el menú que surt com a opció en el diàleg 'imatges obertes'
-#~ msgctxt "images-action"
-#~ msgid "Images Menu"
-#~ msgstr "Menú de les imatges obertes"
-
-#~ msgctxt "layers-action"
-#~ msgid "Blend Space"
-#~ msgstr "Espai de barreja"
-
-#~ msgctxt "layers-action"
-#~ msgid "Composite Space"
-#~ msgstr "Espai de composició"
-
-#~ msgctxt "layers-action"
-#~ msgid "Composite Mode"
-#~ msgstr "Mode de composició"
-
-#~ msgctxt "layers-action"
-#~ msgid "Color Tag"
-#~ msgstr "Etiqueta color"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Layer"
-#~ msgstr "_Capes"
-
-#~ msgctxt "layers-action"
-#~ msgid "Stac_k"
-#~ msgstr "P_ila"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Mask"
-#~ msgstr "_Màscara"
-
-#~ msgctxt "layers-action"
-#~ msgid "Tr_ansparency"
-#~ msgstr "Tr_ansparència"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Transform"
-#~ msgstr "_Transforma"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Properties"
-#~ msgstr "_Propietats"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Opacity"
-#~ msgstr "_Opacitat"
-
-#~ msgctxt "layers-action"
-#~ msgid "Layer _Mode"
-#~ msgstr "_Mode de capa"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Anchor Layer"
-#~ msgstr "Ancor_a la capa"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Crop to Selection"
-#~ msgstr "Es_capça a la selecció"
-
-#~ msgctxt "layers-action"
-#~ msgid "Crop the layers to the extents of the selection"
-#~ msgstr "Escapça les capes fins a l'extensió de la selecció"
-
-#~ msgctxt "layers-action"
-#~ msgid "Crop to C_ontent"
-#~ msgstr "Escapça al c_ontingut"
-
-#~ msgctxt "layers-action"
-#~ msgid "Add La_yer Masks"
-#~ msgstr "_Afegeix màscares de capa"
-
-#~ msgctxt "mypaint-brushes-action"
-#~ msgid "MyPaint Brushes Menu"
-#~ msgstr "Menú de pinzells MyPaint"
-
-# Quim: no és 'menú dels patrons' pel mateix criteri que 'brushes menu'
-#~ msgctxt "patterns-action"
-#~ msgid "Patterns Menu"
-#~ msgstr "Menú de patrons"
-
-#~ msgctxt "quick-mask-action"
-#~ msgid "Quick Mask Menu"
-#~ msgstr "Menú de la màscara ràpida"
-
-#~ msgctxt "select-action"
-#~ msgid "_Select"
-#~ msgstr "_Selecciona"
-
-# Quim: no és 'menú de les plantilles' pel mateix criteri que 'brushes menu'
-#~ msgctxt "templates-action"
-#~ msgid "Templates Menu"
-#~ msgstr "Menú de la plantilla"
-
-#~ msgctxt "tools-action"
-#~ msgid "_Tools"
-#~ msgstr "_Eines"
-
-#~ msgctxt "tools-action"
-#~ msgid "_Selection Tools"
-#~ msgstr "Eines de _selecció"
-
-#~ msgctxt "tools-action"
-#~ msgid "_Paint Tools"
-#~ msgstr "Eines de _pintura"
-
-#~ msgctxt "tools-action"
-#~ msgid "_Transform Tools"
-#~ msgstr "Eines de _transformació"
-
-#~ msgctxt "tools-action"
-#~ msgid "_Color Tools"
-#~ msgstr "Eines de _color"
-
-#~ msgctxt "vector-toolpath-action"
-#~ msgid "Vector Toolpath Menu"
-#~ msgstr "Menú de l'eina camí del vector"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Color Tag"
-#~ msgstr "Etiqueta color"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Fr_om Path"
-#~ msgstr "Des d'un ca_mí"
-
-#~ msgctxt "vectors-action"
-#~ msgid "_Add to Selection"
-#~ msgstr "_Afegeix a la selecció"
-
-#~ msgctxt "vectors-action"
-#~ msgid "_Subtract from Selection"
-#~ msgstr "_Sostreu de la selecció"
-
-#~ msgctxt "vectors-action"
-#~ msgid "_Intersect with Selection"
-#~ msgstr "_Interseca amb la selecció"
-
-#~ msgctxt "view-action"
-#~ msgid "_View"
-#~ msgstr "_Visualitza"
-
-#~ msgctxt "view-action"
-#~ msgid "_Zoom"
-#~ msgstr "_Ampliació/Reducció"
-
-#~ msgctxt "view-action"
-#~ msgid "_Flip & Rotate"
-#~ msgstr "Capgira i gi_ra"
-
-#~ msgctxt "view-action"
-#~ msgid "_Padding Color"
-#~ msgstr "_Color de farciment del llenç"
-
-#~ msgctxt "view-action"
-#~ msgid "_Color Management"
-#~ msgstr "Gestió del _color"
-
-#~ msgctxt "view-action"
-#~ msgid "Display _Rendering Intent"
-#~ msgstr "_Intenció de renderització de la visualització"
-
-#~ msgctxt "view-action"
-#~ msgid "Move to Screen"
-#~ msgstr "Canvia de pantalla"
-
-#~ msgctxt "view-zoom-action"
-#~ msgid "Zoom Out"
-#~ msgstr "Redueix"
-
-#~ msgctxt "view-zoom-action"
-#~ msgid "Zoom In"
-#~ msgstr "Amplia"
-
-#~ msgctxt "windows-action"
-#~ msgid "_Windows"
-#~ msgstr "_Finestres"
-
-#~ msgctxt "windows-action"
-#~ msgid "_Recently Closed Docks"
-#~ msgstr "_Acobladors tancats recentment"
-
-#~ msgctxt "windows-action"
-#~ msgid "_Dockable Dialogs"
-#~ msgstr "_Diàlegs acoblables"
-
-#~ msgid "_Use dynamic keyboard shortcuts"
-#~ msgstr "_Utilitza les dreceres de teclat dinàmiques"
-
-#~ msgid "Removing shortcut failed."
-#~ msgstr "No s'ha pogut suprimir la drecera."
-
-#~ msgid "_Line Style"
-#~ msgstr "Estil de la _línia"
-
-#~ msgid "Your GIMP installation is incomplete:"
-#~ msgstr "La vostra instal·lació del GIMP és incompleta:"
-
-#~ msgid "Please make sure the menu XML files are correctly installed."
-#~ msgstr ""
-#~ "Cal que us assegureu que els fitxers de menú XML s'han instal·lat "
-#~ "correctament."
-
-#, c-format
-#~ msgid "There was an error parsing the menu definition from %s: %s"
-#~ msgstr "S'ha produït un error quan es llegia la definició del menú %s: %s"
-
-#~ msgid "Lock path strokes"
-#~ msgstr "Bloqueja els punts del camí"
