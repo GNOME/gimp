@@ -1252,7 +1252,6 @@ gimp_item_tree_view_select_items (GimpContainerView *view,
       if (TRUE) /* XXX: test if new selection same as old. */
         {
           item_view_class->set_selected_items (tree_view->priv->image, items);
-          gimp_image_flush (tree_view->priv->image);
 
           items = item_view_class->get_selected_items (tree_view->priv->image);
         }
