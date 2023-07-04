@@ -153,6 +153,7 @@ gif_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("exports files in GIF "
                                           "file format"),
+					/* xgettext: no-c-format */
                                         _("Export a file in GIF "
                                           "format, with possible animation, "
                                           "transparency, and comment. To export "
