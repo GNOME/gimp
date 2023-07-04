@@ -60,7 +60,7 @@ foreach theme : themes
       foreach input : inputs
         icon_list = 'icon-lists/@0@.list'.format(input)
         py_cmd = 'print(",".join([line.strip() for line in open("@0@") if line.strip() != "" and line.strip()[0] != "#"]))'
-        cmd = run_command('python3', '-c',
+        cmd = run_command(python, '-c',
                           py_cmd.format(icon_list),
                           check: true)
         dup_icons += cmd.stdout().strip().split(',')

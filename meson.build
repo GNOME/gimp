@@ -1609,12 +1609,12 @@ endif
 
 
 # git-version.h is already present and not generated if dist tarball
-is_git_repository = run_command('python3', '-c',
+is_git_repository = run_command(python, '-c',
   'import sys,os; sys.exit(0 if os.path.exists(".git") else 1)',
   check: false
 ).returncode() == 0
 
-has_version_h = run_command('python3', '-c',
+has_version_h = run_command(python, '-c',
   'import sys,os; sys.exit(0 if os.path.exists("git-version.h") else 1)',
   check: false
 ).returncode() == 0

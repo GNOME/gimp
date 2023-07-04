@@ -23,7 +23,7 @@ foreach install : install_icons
   dup_icons = []
   foreach input : inputs
     input = '../icon-lists/@0@.list'.format(input)
-    cmd = run_command('python3', '-c',
+    cmd = run_command(python, '-c',
                       py_cmd.format(indir, suffix, input),
                       check: true)
     dup_icons += cmd.stdout().strip().split(',')
