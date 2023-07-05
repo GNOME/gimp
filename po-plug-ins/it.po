@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-09 19:13+0100\n"
-"PO-Revision-Date: 2023-02-09 19:15+0100\n"
+"POT-Creation-Date: 2023-07-05 08:32+0200\n"
+"PO-Revision-Date: 2023-07-05 08:34+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -46,11 +46,11 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1908
+#: ../plug-ins/common/file-gif-save.c:1127 ../plug-ins/common/file-heif.c:1927
 #: ../plug-ins/common/file-jp2-load.c:961
-#: ../plug-ins/common/file-pdf-load.c:702
-#: ../plug-ins/common/file-pdf-load.c:1282
-#: ../plug-ins/common/file-pdf-save.c:936 ../plug-ins/common/file-ps.c:3447
+#: ../plug-ins/common/file-pdf-load.c:708
+#: ../plug-ins/common/file-pdf-load.c:1356
+#: ../plug-ins/common/file-pdf-save.c:1020 ../plug-ins/common/file-ps.c:3447
 #: ../plug-ins/common/file-raw-data.c:1816 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
 #: ../plug-ins/common/filter-pack.c:1264 ../plug-ins/common/fractal-trace.c:711
@@ -111,8 +111,8 @@ msgstr "_Annulla"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1909
-#: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1928
+#: ../plug-ins/common/file-pdf-load.c:709 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
 #: ../plug-ins/common/grid.c:678 ../plug-ins/common/hot.c:615
@@ -375,12 +375,12 @@ msgstr "Velocità di riproduzione"
 
 #. 2 styles of default frame disposals: cumulative layers and one frame per layer.
 #: ../plug-ins/common/animation-play.c:931
-#: ../plug-ins/common/file-gif-save.c:1321
+#: ../plug-ins/common/file-gif-save.c:1336
 msgid "Cumulative layers (combine)"
 msgstr "Livelli cumulativi (combina)"
 
 #: ../plug-ins/common/animation-play.c:935
-#: ../plug-ins/common/file-gif-save.c:1323
+#: ../plug-ins/common/file-gif-save.c:1338
 msgid "One frame per layer (replace)"
 msgstr "Un fotogramma per livello (rimpiazza)"
 
@@ -442,7 +442,7 @@ msgstr "_Verticale"
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1375
-#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1111
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1116
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
@@ -842,7 +842,7 @@ msgstr "A_pri"
 #. The Save button
 #: ../plug-ins/common/cml-explorer.c:1317
 #: ../plug-ins/common/cml-explorer.c:2027 ../plug-ins/common/curve-bend.c:1567
-#: ../plug-ins/common/curve-bend.c:2173 ../plug-ins/common/file-pdf-save.c:935
+#: ../plug-ins/common/curve-bend.c:2173 ../plug-ins/common/file-pdf-save.c:1019
 #: ../plug-ins/common/qbist.c:763 ../plug-ins/common/qbist.c:893
 #: ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2618 ../plug-ins/flame/flame.c:483
@@ -1041,10 +1041,10 @@ msgstr "Salva parametri Esploratore CML"
 #: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-dicom.c:1524 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
-#: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
+#: ../plug-ins/common/file-pdf-save.c:550 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1173
 #: ../plug-ins/common/file-raw-data.c:1202 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1222 ../plug-ins/common/file-xmc.c:1504
+#: ../plug-ins/common/file-tga.c:1227 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
@@ -2145,8 +2145,8 @@ msgstr ""
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:338
 #: ../plug-ins/common/file-gegl.c:322 ../plug-ins/common/file-gif-load.c:353
-#: ../plug-ins/common/file-heif.c:703 ../plug-ins/common/file-jp2-load.c:1077
-#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1048
+#: ../plug-ins/common/file-heif.c:737 ../plug-ins/common/file-jp2-load.c:1077
+#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1059
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1067
 #: ../plug-ins/common/file-raw-data.c:1277 ../plug-ins/common/file-sunras.c:429
@@ -2236,12 +2236,12 @@ msgstr ""
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:880
+#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:895
 #: ../plug-ins/common/file-html-table.c:238
-#: ../plug-ins/common/file-jpegxl.c:778 ../plug-ins/common/file-pcx.c:761
+#: ../plug-ins/common/file-jpegxl.c:787 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1278
-#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1216
+#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1221
 #: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:319
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
@@ -2444,11 +2444,11 @@ msgstr ""
 "GIF: il tipo composito GIF %d non documentato non è gestibile. L'animazione "
 "non può essere eseguita o salvata perfettamente."
 
-#: ../plug-ins/common/file-gif-save.c:541
+#: ../plug-ins/common/file-gif-save.c:556
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "Impossibile ridurre ulteriormente i colori. Salvataggio come opaco."
 
-#: ../plug-ins/common/file-gif-save.c:660
+#: ../plug-ins/common/file-gif-save.c:675
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -2457,7 +2457,7 @@ msgstr ""
 "Impossibile esportare \"%s\". Il formato file GIF non supporta immagini più "
 "larghe o alte di %d pixel."
 
-#: ../plug-ins/common/file-gif-save.c:773
+#: ../plug-ins/common/file-gif-save.c:788
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -2465,20 +2465,20 @@ msgstr ""
 "Il formato GIF supporta solo commenti in codifica ASCII a 7bit. Commento non "
 "salvato."
 
-#: ../plug-ins/common/file-gif-save.c:853
+#: ../plug-ins/common/file-gif-save.c:868
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Impossibile esportare come immagini RGB a colori. Convertire prima in colore "
 "indicizzato o in scala di grigi."
 
-#: ../plug-ins/common/file-gif-save.c:1058
+#: ../plug-ins/common/file-gif-save.c:1073
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 "Ritardo inserito per prevenire l'uso di tutta la CPU da parte "
 "dell'animazione."
 
-#: ../plug-ins/common/file-gif-save.c:1107
+#: ../plug-ins/common/file-gif-save.c:1122
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2486,11 +2486,11 @@ msgstr ""
 "L'immagine che si sta tentando di esportare in formato GIF contiene livelli "
 "che si estendono oltre i limiti dell'immagine."
 
-#: ../plug-ins/common/file-gif-save.c:1113
+#: ../plug-ins/common/file-gif-save.c:1128
 msgid "Cr_op"
 msgstr "Rita_glia"
 
-#: ../plug-ins/common/file-gif-save.c:1124
+#: ../plug-ins/common/file-gif-save.c:1139
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2498,11 +2498,11 @@ msgstr ""
 "Il formato file GIF non lo consente. Si può scegliere di ritagliare tutti i "
 "livelli ai bordi dell'immagine o annullare il salvataggio."
 
-#: ../plug-ins/common/file-gif-save.c:1258
+#: ../plug-ins/common/file-gif-save.c:1273
 msgid "GIF"
 msgstr "GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1266
+#: ../plug-ins/common/file-gif-save.c:1281
 #, c-format
 msgid ""
 "Error loading UI file '%s':\n"
@@ -2511,11 +2511,11 @@ msgstr ""
 "Errore di caricamento file IU \"%s\":\n"
 "%s"
 
-#: ../plug-ins/common/file-gif-save.c:1319
+#: ../plug-ins/common/file-gif-save.c:1334
 msgid "I don't care"
 msgstr "Non importa"
 
-#: ../plug-ins/common/file-gif-save.c:1340
+#: ../plug-ins/common/file-gif-save.c:1355
 msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
@@ -2525,7 +2525,7 @@ msgstr ""
 "livello."
 
 #. translators: the %d is *always* 240 here
-#: ../plug-ins/common/file-gif-save.c:2556
+#: ../plug-ins/common/file-gif-save.c:2571
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Il commento predefinito è limitato a %d caratteri."
@@ -2586,11 +2586,11 @@ msgstr "Ranghi:"
 msgid "C source code header"
 msgstr "Intestazione codice sorgente C"
 
-#: ../plug-ins/common/file-heif.c:143
+#: ../plug-ins/common/file-heif.c:147
 msgid "Loads HEIF images"
 msgstr "Carica immagini HEIF"
 
-#: ../plug-ins/common/file-heif.c:144
+#: ../plug-ins/common/file-heif.c:148
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -2598,96 +2598,96 @@ msgstr ""
 "Carica l'immagine salvata in formato HEIF (formato immagine ad alta "
 "efficienza). I suffissi tipici per le immagini HEIF sono .heif e .heic."
 
-#: ../plug-ins/common/file-heif.c:150 ../plug-ins/common/file-heif.c:179
+#: ../plug-ins/common/file-heif.c:154 ../plug-ins/common/file-heif.c:183
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: ../plug-ins/common/file-heif.c:173
+#: ../plug-ins/common/file-heif.c:177
 msgid "Exports HEIF images"
 msgstr "Esporta immagini HEIF"
 
-#: ../plug-ins/common/file-heif.c:174
+#: ../plug-ins/common/file-heif.c:178
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
 "Salva l'immagine in formato HEIF (formato immagine ad alta efficienza)."
 
-#: ../plug-ins/common/file-heif.c:194
+#: ../plug-ins/common/file-heif.c:198
 msgid "Exports AVIF images"
 msgstr "Esporta immagini AVIF"
 
-#: ../plug-ins/common/file-heif.c:195
+#: ../plug-ins/common/file-heif.c:199
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Salva l'immagine in formato AV1 (AVIF)."
 
-#: ../plug-ins/common/file-heif.c:742 ../plug-ins/common/file-heif.c:775
-#: ../plug-ins/common/file-heif.c:814 ../plug-ins/common/file-heif.c:880
+#: ../plug-ins/common/file-heif.c:776 ../plug-ins/common/file-heif.c:809
+#: ../plug-ins/common/file-heif.c:848 ../plug-ins/common/file-heif.c:914
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Caricamento dell'immagine HEIF fallito: %s"
 
-#: ../plug-ins/common/file-heif.c:764
+#: ../plug-ins/common/file-heif.c:798
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Caricamento immagine HEIF fallito: il file in ingresso non contiene immagini "
 "leggibili"
 
-#: ../plug-ins/common/file-heif.c:1007
+#: ../plug-ins/common/file-heif.c:1041
 msgid "image content"
 msgstr "contenuto immagine"
 
-#: ../plug-ins/common/file-heif.c:1328
+#: ../plug-ins/common/file-heif.c:1361
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Esportazione di '%s' con codificatore %s"
 
-#: ../plug-ins/common/file-heif.c:1379 ../plug-ins/common/file-heif.c:1633
+#: ../plug-ins/common/file-heif.c:1412 ../plug-ins/common/file-heif.c:1652
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Codifica immagine HEIF fallita: %s"
 
-#: ../plug-ins/common/file-heif.c:1670
+#: ../plug-ins/common/file-heif.c:1689
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Scrittura immagine HEIF fallita: %s"
 
-#: ../plug-ins/common/file-heif.c:1759
+#: ../plug-ins/common/file-heif.c:1778
 msgid "primary"
 msgstr "primario"
 
-#: ../plug-ins/common/file-heif.c:1904
+#: ../plug-ins/common/file-heif.c:1923
 msgid "Load HEIF Image"
 msgstr "Carica immagine HEIF"
 
-#: ../plug-ins/common/file-heif.c:1918
+#: ../plug-ins/common/file-heif.c:1937
 msgid "Select Image"
 msgstr "Seleziona immagine"
 
-#: ../plug-ins/common/file-heif.c:2084
+#: ../plug-ins/common/file-heif.c:2103
 msgid "Nearly _lossless"
 msgstr "_Quasi senza perdite"
 
-#: ../plug-ins/common/file-heif.c:2088 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2107 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Qualità:"
 
-#: ../plug-ins/common/file-heif.c:2131
+#: ../plug-ins/common/file-heif.c:2150
 msgid "Bit depth:"
 msgstr "Profondità di colore:"
 
-#: ../plug-ins/common/file-heif.c:2137
+#: ../plug-ins/common/file-heif.c:2156
 msgid "8 bit/channel"
 msgstr "8 bit/canale"
 
-#: ../plug-ins/common/file-heif.c:2138
+#: ../plug-ins/common/file-heif.c:2157
 msgid "10 bit/channel"
 msgstr "10 bit/canale"
 
-#: ../plug-ins/common/file-heif.c:2139
+#: ../plug-ins/common/file-heif.c:2158
 msgid "12 bit/channel"
 msgstr "12 bit/canale"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2148 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2167 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:404
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
 msgid "Save color _profile"
@@ -3122,10 +3122,11 @@ msgstr "Bordo inferiore fuori dai limiti (deve essere < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Fallita la scrittura sul file \"%s\": %s"
 
-#: ../plug-ins/common/file-pdf-load.c:324
-#: ../plug-ins/common/file-pdf-load.c:343
-#: ../plug-ins/common/file-pdf-save.c:350
-#: ../plug-ins/common/file-pdf-save.c:367
+#: ../plug-ins/common/file-pdf-load.c:329
+#: ../plug-ins/common/file-pdf-load.c:348
+#: ../plug-ins/common/file-pdf-save.c:383
+#: ../plug-ins/common/file-pdf-save.c:400
+#: ../plug-ins/common/file-pdf-save.c:418
 msgid "Portable Document Format"
 msgstr "Portable Document Format (PDF)"
 
@@ -3133,7 +3134,7 @@ msgstr "Portable Document Format (PDF)"
 #. * second is out-of-range page number, third is
 #. * number of pages. Specify order as in English if needed.
 #.
-#: ../plug-ins/common/file-pdf-load.c:507
+#: ../plug-ins/common/file-pdf-load.c:512
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
@@ -3142,85 +3143,91 @@ msgstr[0] ""
 msgstr[1] ""
 "Il documento PDF \"%1$s\" ha %3$d pagine. La pagina %2$d è fuori campo."
 
-#: ../plug-ins/common/file-pdf-load.c:689
+#: ../plug-ins/common/file-pdf-load.c:695
 msgid "PDF is password protected, please input the password:"
 msgstr "Il PDF è protetto da password, inserire la password:"
 
-#: ../plug-ins/common/file-pdf-load.c:699
+#: ../plug-ins/common/file-pdf-load.c:705
 msgid "Encrypted PDF"
 msgstr "PDF crittografato"
 
-#: ../plug-ins/common/file-pdf-load.c:726
+#: ../plug-ins/common/file-pdf-load.c:732
 msgid "Wrong password! Please input the right one:"
 msgstr "Password errata! Inserire quella giusta:"
 
-#: ../plug-ins/common/file-pdf-load.c:744
+#: ../plug-ins/common/file-pdf-load.c:750
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Impossibile caricare \"%s\": %s"
 
-#: ../plug-ins/common/file-pdf-load.c:1085
+#: ../plug-ins/common/file-pdf-load.c:1096
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1087 ../plug-ins/common/file-ps.c:1197
+#: ../plug-ins/common/file-pdf-load.c:1098 ../plug-ins/common/file-ps.c:1197
 #, c-format
 msgid "%s-pages"
 msgstr "%s-pagine"
 
-#: ../plug-ins/common/file-pdf-load.c:1278
+#: ../plug-ins/common/file-pdf-load.c:1352
 msgid "Import from PDF"
 msgstr "Importa da PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3448
+#: ../plug-ins/common/file-pdf-load.c:1357 ../plug-ins/common/file-ps.c:3448
 #: ../plug-ins/file-tiff/file-tiff-load.c:2665
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "_Importa"
 
-#: ../plug-ins/common/file-pdf-load.c:1316
+#: ../plug-ins/common/file-pdf-load.c:1390
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Errore nell'ottenere il numero di pagine dal file PDF fornito"
 
 #. "Load in reverse order" toggle button
-#: ../plug-ins/common/file-pdf-load.c:1357
+#: ../plug-ins/common/file-pdf-load.c:1435
 msgid "Load in reverse order"
 msgstr "Carica in ordine inverso"
 
-#: ../plug-ins/common/file-pdf-load.c:1375
+#: ../plug-ins/common/file-pdf-load.c:1453
 msgid "_Width (pixels):"
 msgstr "_Larghezza (pixel):"
 
-#: ../plug-ins/common/file-pdf-load.c:1376
+#: ../plug-ins/common/file-pdf-load.c:1454
 msgid "_Height (pixels):"
 msgstr "_Altezza (pixel):"
 
-#: ../plug-ins/common/file-pdf-load.c:1378
+#: ../plug-ins/common/file-pdf-load.c:1456
 msgid "_Resolution:"
 msgstr "_Risoluzione:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1389
+#: ../plug-ins/common/file-pdf-load.c:1467
 msgid "Use _Anti-aliasing"
 msgstr "Usa l'_antialiasing"
 
-#: ../plug-ins/common/file-pdf-load.c:1667
-#: ../plug-ins/common/file-pdf-load.c:1668 ../plug-ins/common/file-svg.c:852
+#. White Background
+#: ../plug-ins/common/file-pdf-load.c:1476
+msgid "_Fill transparent areas with white"
+msgstr "_Riempi le aree trasparenti con il bianco"
+
+#: ../plug-ins/common/file-pdf-load.c:1762
+#: ../plug-ins/common/file-pdf-load.c:1763 ../plug-ins/common/file-svg.c:852
 #: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
 msgstr "Punti/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:382
+#: ../plug-ins/common/file-pdf-save.c:433
+#: ../plug-ins/common/file-pdf-save.c:451
 msgid "_Create multipage PDF..."
 msgstr "_Crea PDF multipagina..."
 
-#: ../plug-ins/common/file-pdf-save.c:465
+#: ../plug-ins/common/file-pdf-save.c:535
 msgid "You must select a file to save!"
 msgstr "È necessario selezionare un file da salvare!"
 
-#: ../plug-ins/common/file-pdf-save.c:491
+#: ../plug-ins/common/file-pdf-save.c:561
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -3233,83 +3240,88 @@ msgstr ""
 "Assicurarsi di aver inserito un nome file valido e che la posizione scelta "
 "consenta la scrittura!"
 
-#: ../plug-ins/common/file-pdf-save.c:823
-#: ../plug-ins/common/file-pdf-save.c:983
+#: ../plug-ins/common/file-pdf-save.c:899
+#: ../plug-ins/common/file-pdf-save.c:1067
+msgid "_Fill transparent areas with background color"
+msgstr "Riempi le aree trasparenti con il colore di s_fondo"
+
+#: ../plug-ins/common/file-pdf-save.c:904
+#: ../plug-ins/common/file-pdf-save.c:1072
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr "_Omettere livelli invisibili e con opacità a zero"
 
-#: ../plug-ins/common/file-pdf-save.c:828
-#: ../plug-ins/common/file-pdf-save.c:988
+#: ../plug-ins/common/file-pdf-save.c:909
+#: ../plug-ins/common/file-pdf-save.c:1077
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "Converti le _bitmap in grafica vettoriale ove possibile"
 
-#: ../plug-ins/common/file-pdf-save.c:833
-#: ../plug-ins/common/file-pdf-save.c:993
+#: ../plug-ins/common/file-pdf-save.c:914
+#: ../plug-ins/common/file-pdf-save.c:1082
 msgid "_Apply layer masks before saving"
 msgstr "_Applica le maschere di livello prima di salvare"
 
-#: ../plug-ins/common/file-pdf-save.c:837
-#: ../plug-ins/common/file-pdf-save.c:997
+#: ../plug-ins/common/file-pdf-save.c:918
+#: ../plug-ins/common/file-pdf-save.c:1086
 msgid "Keeping the masks will not change the output"
 msgstr "Mantenendo le maschere non verrà modificato il risultato"
 
-#: ../plug-ins/common/file-pdf-save.c:843
+#: ../plug-ins/common/file-pdf-save.c:924
 #, c-format
 msgid "_Layers as pages (%s)"
 msgstr "_Livelli come pagine (%s)"
 
-#: ../plug-ins/common/file-pdf-save.c:845
-#: ../plug-ins/common/file-pdf-save.c:1044
+#: ../plug-ins/common/file-pdf-save.c:926
+#: ../plug-ins/common/file-pdf-save.c:1135
 msgid "top layers first"
 msgstr "prima i livelli in cima"
 
-#: ../plug-ins/common/file-pdf-save.c:845
-#: ../plug-ins/common/file-pdf-save.c:1044
+#: ../plug-ins/common/file-pdf-save.c:926
+#: ../plug-ins/common/file-pdf-save.c:1135
 msgid "bottom layers first"
 msgstr "prima i livelli in basso"
 
-#: ../plug-ins/common/file-pdf-save.c:853
+#: ../plug-ins/common/file-pdf-save.c:934
 msgid "_Reverse the pages order"
 msgstr "Inve_rti l'ordine delle pagine"
 
-#: ../plug-ins/common/file-pdf-save.c:927
+#: ../plug-ins/common/file-pdf-save.c:1011
 msgid "Save to:"
 msgstr "Salva in:"
 
-#: ../plug-ins/common/file-pdf-save.c:931
+#: ../plug-ins/common/file-pdf-save.c:1015
 msgid "Browse..."
 msgstr "Sfoglia..."
 
-#: ../plug-ins/common/file-pdf-save.c:932
+#: ../plug-ins/common/file-pdf-save.c:1016
 msgid "Multipage PDF export"
 msgstr "Esportazione PDF multipagina"
 
-#: ../plug-ins/common/file-pdf-save.c:968
+#: ../plug-ins/common/file-pdf-save.c:1052
 msgid "Remove the selected pages"
 msgstr "Rimuovi le pagine selezionate"
 
-#: ../plug-ins/common/file-pdf-save.c:978
+#: ../plug-ins/common/file-pdf-save.c:1062
 msgid "Add this image"
 msgstr "Aggiungi questa immagine"
 
-#: ../plug-ins/common/file-pdf-save.c:1042
+#: ../plug-ins/common/file-pdf-save.c:1133
 #, c-format
 msgid "Layers as pages (%s)"
 msgstr "Livelli come pagine (%s)"
 
-#: ../plug-ins/common/file-pdf-save.c:1099
-#: ../plug-ins/common/file-pdf-save.c:1167
-#: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1941
+#: ../plug-ins/common/file-pdf-save.c:1190
+#: ../plug-ins/common/file-pdf-save.c:1258
+#: ../plug-ins/common/file-pdf-save.c:1356 ../plug-ins/common/file-ps.c:1941
 #: ../plug-ins/file-tiff/file-tiff-load.c:1546
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
 
-#: ../plug-ins/common/file-pdf-save.c:1136
+#: ../plug-ins/common/file-pdf-save.c:1227
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Errore! Per salvare il file, deve essere aggiunta almeno un'immagine!"
 
-#: ../plug-ins/common/file-pdf-save.c:1312
+#: ../plug-ins/common/file-pdf-save.c:1403
 #: ../plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
@@ -4234,24 +4246,24 @@ msgstr "Impossibile leggere l'estensione da '%s'"
 msgid "Cannot read header from '%s'"
 msgstr "Impossibile leggere l'intestazione da \"%s\""
 
-#: ../plug-ins/common/file-tga.c:1434
+#: ../plug-ins/common/file-tga.c:1439
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1443 ../plug-ins/file-sgi/sgi.c:683
+#: ../plug-ins/common/file-tga.c:1448 ../plug-ins/file-sgi/sgi.c:683
 msgid "_RLE compression"
 msgstr "Compressione _RLE"
 
-#: ../plug-ins/common/file-tga.c:1457
+#: ../plug-ins/common/file-tga.c:1462
 msgid "Or_igin:"
 msgstr "Or_igine:"
 
-#: ../plug-ins/common/file-tga.c:1461
+#: ../plug-ins/common/file-tga.c:1466
 msgid "Bottom left"
 msgstr "In basso a sinistra"
 
-#: ../plug-ins/common/file-tga.c:1462
+#: ../plug-ins/common/file-tga.c:1467
 msgid "Top left"
 msgstr "In alto a sinistra"
 
@@ -6998,7 +7010,7 @@ msgstr "Icona #%i"
 msgid "Opening thumbnail for '%s'"
 msgstr "Apertura miniatura per '%s'"
 
-#: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:136
+#: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:137
 msgid "Microsoft Windows icon"
 msgstr "Icona Microsoft Windows"
 
