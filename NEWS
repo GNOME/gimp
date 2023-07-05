@@ -64,6 +64,8 @@ Core:
   - Basic matrix operations code was optimized.
   - Fill/Stroke Path/Selection split the "Solid color" option into a "Foreground
     color" and "Background color".
+  - Standardize to "X-bit" wording (e.g. "32-bit floating point" rather "32 bit
+    floating point").
 
 Tools:
 
@@ -136,6 +138,10 @@ Plug-ins:
     * PSD metadata (image level only, e.g. paths) can now be loaded by calling
       the new "file-psd-load-metadata" PDB procedure.
     * Clipping path import added.
+    * Option "4:2:2 horizontal (chroma halved)" renamed to "4:2:2 (chroma halved
+      horizontally)" and "4:2:2 vertical (chroma halved)" renamed to "4:4:0
+      (chroma halved vertically)". Research indicates it to be the most usual
+      notation for these options.
   - DDS:
     * OpenMP support enabled when available on the build machine.
   - All Python 3 plug-ins whose Python 2 variants used to have a GUI now also
@@ -258,6 +264,8 @@ Build:
   - Add some logic to common/ and python/ plug-ins to facilitate running
     GIMP from the build directory (without being installed) while still
     able to load all plug-ins.
+  - gtk-mac-integration was dropped as a dependency on macOS. It made problems
+    and is apparently less needed with GTK+3.
 
 Debugging:
 
@@ -273,11 +281,10 @@ Documentation:
 
 Translations:
 
-  - 24 translations were updated: Basque, Bulgarian, Catalan, Chinese
-    (China), Chinese (Taiwan), Danish, Esperanto, French, Georgian,
-    German, Greek, Hungarian, Icelandic, Lithuanian, Persian, Polish,
-    Portuguese, Romanian, Russian, Slovenian, Spanish, Swedish, Turkish,
-    Ukrainian.
+  - 25 translations were updated: Basque, Bulgarian, Catalan, Chinese (China),
+    Chinese (Taiwan), Danish, Esperanto, French, Georgian, German, Greek,
+    Hungarian, Icelandic, Italian, Lithuanian, Persian, Polish, Portuguese,
+    Romanian, Russian, Slovenian, Spanish, Swedish, Turkish, Ukrainian.
 
 
 Overview of Changes from GIMP 2.99.12 to GIMP 2.99.14
