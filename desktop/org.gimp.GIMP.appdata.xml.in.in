@@ -74,7 +74,7 @@
   </provides>
 
   <releases>
-    <release version="2.99.16" date="2023-06-25" type="development">
+    <release version="2.99.16" date="2023-07-05" type="development">
       <description>
         <p>
         GIMP 2.99.16 marks the end of the GTK+3 port as there is no massive usage of deprecated GTK API anymore.
