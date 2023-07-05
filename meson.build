@@ -1,6 +1,6 @@
 project('gimp',
   'c', 'cpp',
-  version: '2.99.15',
+  version: '2.99.16',
   meson_version: '>=0.59.0',
   default_options: [
     'cpp_std=gnu++14',
@@ -52,7 +52,7 @@ gimp_api_name = 'gimp-' + gimp_api_version
 
 
 # Libtool versioning
-gimp_interface_age = 15
+gimp_interface_age = 16
 
 gimp_binary_age = 100 * gimp_app_version_minor + gimp_app_version_micro
 lt_current      = 100 * gimp_app_version_minor + gimp_app_version_micro - gimp_interface_age
