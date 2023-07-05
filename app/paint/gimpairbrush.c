@@ -132,6 +132,7 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
   GimpAirbrush        *airbrush = GIMP_AIRBRUSH (paint_core);
   GimpAirbrushOptions *options  = GIMP_AIRBRUSH_OPTIONS (paint_options);
   GimpDynamics        *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpCoords           coords;
 
   g_return_if_fail (g_list_length (drawables) == 1);
 
@@ -151,15 +152,15 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_MOTION:
+      coords = *(gimp_symmetry_get_origin (sym));
       gimp_airbrush_motion (paint_core, drawables->data, paint_options, sym);
 
       if ((options->rate != 0.0) && ! options->motion_only)
         {
-          GimpImage  *image = gimp_item_get_image (GIMP_ITEM (drawables->data));
-          gdouble     fade_point;
-          gdouble     dynamic_rate;
-          gint        timeout;
-          GimpCoords *coords;
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawables->data));
+          gdouble    fade_point;
+          gdouble    dynamic_rate;
+          gint       timeout;
 
           fade_point = gimp_paint_options_get_fade (paint_options, image,
                                                     paint_core->pixel_dist);
@@ -167,18 +168,17 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
           airbrush->drawable      = drawables->data;
           airbrush->paint_options = paint_options;
 
+          gimp_symmetry_set_origin (sym, drawables->data, &coords);
           if (airbrush->sym)
             g_object_unref (airbrush->sym);
           airbrush->sym = g_object_ref (sym);
 
           /* Base our timeout on the original stroke. */
-          coords = gimp_symmetry_get_origin (sym);
-
-          airbrush->coords = *coords;
+          airbrush->coords = coords;
 
           dynamic_rate = gimp_dynamics_get_linear_value (dynamics,
                                                          GIMP_DYNAMICS_OUTPUT_RATE,
-                                                         coords,
+                                                         &coords,
                                                          paint_options,
                                                          fade_point);
 
