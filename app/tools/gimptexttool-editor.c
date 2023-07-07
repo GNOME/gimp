@@ -232,7 +232,8 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
     }
 
   gimp_text_tool_editor_position (text_tool);
-  gtk_widget_show (text_tool->style_overlay);
+  if (options->show_on_canvas)
+    gtk_widget_show (text_tool->style_overlay);
 }
 
 void
@@ -1336,6 +1337,8 @@ gimp_text_tool_options_notify (GimpTextOptions *options,
   else if (! strcmp (param_name, "show-on-canvas"))
     {
       gtk_widget_set_visible (text_tool->style_editor,
+                              options->show_on_canvas);
+      gtk_widget_set_visible (text_tool->style_overlay,
                               options->show_on_canvas);
     }
 }
