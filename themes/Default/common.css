@@ -462,6 +462,11 @@ switch:checked {
   background-color: rgb(200,200,255);
 }
 
+/* This prevents the 1/0 labels from appearing inside the switch slider */
+switch image {
+  color: transparent;
+}
+
 /* XXX: should this actually go in the Compact theme instead?
  * I find the headerbar on GNOME default theme (Adwaita) to be kinda huge. But
  * maybe the default theme should not try and override this?
