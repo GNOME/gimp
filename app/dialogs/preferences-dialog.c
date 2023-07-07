@@ -3102,6 +3102,11 @@ prefs_dialog_new (Gimp       *gimp,
   /*  General  */
   vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
 
+  /* See app/display/gimpimagewindow.c: the code path where "custom-title-bar"
+   * is verified never happens for macOS which always uses
+   * gtk_application_set_menubar() instead.
+   */
+#ifndef GDK_WINDOWING_QUARTZ
   prefs_check_button_add (object, "custom-title-bar",
                           _("Merge menu and title bar"),
                           GTK_BOX (vbox2));
@@ -3113,6 +3118,7 @@ prefs_dialog_new (Gimp       *gimp,
   g_object_bind_property (object, "custom-title-bar",
                           hbox,   "visible",
                           G_BINDING_SYNC_CREATE);
+#endif
 
   prefs_check_button_add (object, "default-show-all",
                           _("Use \"Show _all\" by default"),
