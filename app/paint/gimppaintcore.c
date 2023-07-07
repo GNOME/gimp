@@ -43,11 +43,13 @@
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-symmetry.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpimage-undo-push.h"
+#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
 #include "core/gimppickable.h"
 #include "core/gimpprojection.h"
 #include "core/gimpsymmetry.h"
 #include "core/gimptempbuf.h"
-#include "core/gimpimage-undo-push.h"
 
 #include "gimppaintcore.h"
 #include "gimppaintcoreundo.h"
@@ -599,6 +601,9 @@ gimp_paint_core_finish (GimpPaintCore *core,
             }
           else
             {
+              /* drawable is expanded only if drawable is layer or layer mask*/
+              g_return_if_fail (GIMP_IS_LAYER (iter->data) || GIMP_IS_LAYER_MASK (iter->data));
+
               /* create a copy of original buffer from undo data */
               buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                         old_rect.width,
@@ -615,17 +620,47 @@ gimp_paint_core_finish (GimpPaintCore *core,
                                      GEGL_RECTANGLE (0, 0, 0, 0));
 
               /* make a backup copy of drawable to restore */
-              drawable_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                                 rect.width,
-                                                                 rect.height),
-                                                 gimp_drawable_get_format (iter->data));
+              drawable_buffer = g_object_ref (gimp_drawable_get_buffer (GIMP_DRAWABLE (iter->data)));
 
-              gimp_gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (iter->data)),
-                                     GEGL_RECTANGLE (0, 0, rect.width, rect.height),
-                                     GEGL_ABYSS_NONE,
-                                     drawable_buffer,
-                                     GEGL_RECTANGLE (0, 0, 0, 0));
+              if (GIMP_IS_LAYER_MASK (drawables->data) || GIMP_LAYER (drawables->data)->mask)
+                {
+                  GeglBuffer   *other_new;
+                  GeglBuffer   *other_old;
+                  GimpDrawable *other_drawable;
 
+                  if (GIMP_IS_LAYER_MASK (drawables->data))
+                    other_drawable = GIMP_DRAWABLE ((GIMP_LAYER_MASK (drawables->data))->layer);
+                  else
+                    other_drawable = GIMP_DRAWABLE (GIMP_LAYER (drawables->data)->mask);
+
+                  /* create a copy of original buffer by taking the required area */
+                  other_old = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                               old_rect.width,
+                                                               old_rect.height),
+                                               gimp_drawable_get_format (other_drawable));
+
+                  gimp_gegl_buffer_copy (gimp_drawable_get_buffer (other_drawable),
+                                         GEGL_RECTANGLE (old_rect.x - rect.x,
+                                                         old_rect.y - rect.y,
+                                                         old_rect.width,
+                                                         old_rect.height),
+                                         GEGL_ABYSS_NONE,
+                                         other_old,
+                                         GEGL_RECTANGLE (0, 0, 0, 0));
+
+                  /* make a backup copy of drawable to restore */
+                  other_new = g_object_ref (gimp_drawable_get_buffer (other_drawable));
+
+                  gimp_drawable_set_buffer_full (other_drawable, FALSE, NULL,
+                                                 other_old, &old_rect,
+                                                 FALSE);
+                  gimp_drawable_set_buffer_full (other_drawable, TRUE, NULL,
+                                                 other_new, &rect,
+                                                 FALSE);
+
+                  g_object_unref (other_new);
+                  g_object_unref (other_old);
+                }
               /* Restore drawable to state before painting started */
               gimp_drawable_set_buffer_full (iter->data, FALSE, NULL,
                                              buffer, &old_rect,
@@ -779,6 +814,7 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
   GimpImage     *image         = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpContext   *context       = GIMP_CONTEXT (options);
   GimpFillType   fill_type     = GIMP_FILL_TRANSPARENT;
+  GimpLayer     *layer;
   GeglBuffer    *undo_buffer;
   GeglBuffer    *new_buffer;
   const Babl    *format;
@@ -875,11 +911,46 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
   if (new_width != drawable_width   || *new_off_x ||
       new_height != drawable_height || *new_off_y)
     {
-      GIMP_ITEM_GET_CLASS (GIMP_ITEM (drawable))->resize (GIMP_ITEM (drawable),
-                                                          context,   fill_type,
-                                                          new_width, new_height,
-                                                          *new_off_x, *new_off_y);
-      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+      /* resize the layer even if editing the layer mask */
+      if (GIMP_IS_LAYER_MASK (drawable))
+        layer = (GIMP_LAYER_MASK (drawable))->layer;
+      else
+        layer = GIMP_LAYER (drawable);
+
+      g_object_freeze_notify (G_OBJECT (layer));
+
+      if (GIMP_IS_LAYER_MASK (drawable))
+          gimp_drawable_start_paint (GIMP_DRAWABLE (layer));
+
+      GIMP_LAYER_GET_CLASS (layer)->resize (layer, context, fill_type,
+                                            new_width, new_height,
+                                            *new_off_x, *new_off_y);
+
+      if (GIMP_IS_LAYER_MASK (drawable))
+          gimp_drawable_end_paint (GIMP_DRAWABLE (layer));
+
+      if (layer->mask)
+        {
+          g_object_freeze_notify (G_OBJECT (layer->mask));
+
+          /* Fixme: using paint start and paint end to prevent pushing undo is inefficient */
+
+          /* Resize channel will not be pushed to stack if the drawable is being drawn upon */
+          if (!GIMP_IS_LAYER_MASK (drawable))
+            gimp_drawable_start_paint (GIMP_DRAWABLE (layer->mask));
+
+          GIMP_ITEM_GET_CLASS (layer->mask)->resize (GIMP_ITEM (layer->mask), context, fill_type,
+                                                     new_width, new_height,
+                                                     *new_off_x, *new_off_y);
+          if (!GIMP_IS_LAYER_MASK (drawable))
+            gimp_drawable_end_paint (GIMP_DRAWABLE (layer->mask));
+
+          g_object_thaw_notify (G_OBJECT (layer->mask));
+        }
+
+      g_object_thaw_notify (G_OBJECT (layer));
+
+      gimp_image_flush (image);
 
       format     = gegl_buffer_get_format (core->canvas_buffer);
       new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, new_width, new_height),
