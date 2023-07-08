@@ -1523,7 +1523,7 @@ HELP
 
   colormap_data = gimp_image_get_colormap (image);
   colormap = g_bytes_new_take (colormap_data,
-                               gimp_image_get_colormap_size (image));
+                               3 * gimp_image_get_colormap_size (image));
 }
 CODE
     );
