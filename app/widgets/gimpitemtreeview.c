@@ -140,6 +140,8 @@ static void   gimp_item_tree_view_real_set_image    (GimpItemTreeView  *view,
 static void   gimp_item_tree_view_image_flush       (GimpImage         *image,
                                                      gboolean           invalidate_preview,
                                                      GimpItemTreeView  *view);
+static gboolean
+              gimp_item_tree_view_image_flush_idle  (gpointer           user_data);
 
 static void   gimp_item_tree_view_set_container     (GimpContainerView *view,
                                                      GimpContainer     *container);
@@ -1063,7 +1065,23 @@ gimp_item_tree_view_image_flush (GimpImage        *image,
                                  gboolean          invalidate_preview,
                                  GimpItemTreeView *view)
 {
+  g_idle_add_full (G_PRIORITY_LOW,
+                   (GSourceFunc) gimp_item_tree_view_image_flush_idle,
+                   g_object_ref (view), g_object_unref);
+}
+
+static gboolean
+gimp_item_tree_view_image_flush_idle (gpointer user_data)
+{
+  GimpItemTreeView *view = user_data;
+
+  /* This needs to be run as idle because we want this to be run in the main
+   * thread even when the flush happened in a thread (e.g. from the paint
+   * thread).
+   */
   gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (view)), view);
+
+  return G_SOURCE_REMOVE;
 }
 
 
