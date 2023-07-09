@@ -256,10 +256,12 @@ help in that regard:
      Package Name        Version        Feature
 
      cairo-pdf           @CAIRO_PDF_REQUIRED_VERSION@         PDF export
+     cfitsio             -              FITS
      ExcHndl             -              Crash logs on Windows with Dr. MinGW
      gs                  -              ghostscript
      libaa               -              ASCII art
      libheif             @LIBHEIF_REQUIRED_VERSION@          HEIF
+     libilbm             -              Amiga IFF/ILBM
      libmng              -              MNG
      libwebp             @WEBP_REQUIRED_VERSION@          WebP (built with --enable-libwebpmux and --enable-libwebpdemux)
      libwmf              @WMF_REQUIRED_VERSION@          WMF
@@ -267,6 +269,7 @@ help in that regard:
      libxpm              -              XPM
      openexr             @OPENEXR_REQUIRED_VERSION@          OpenEXR
      OpenJPEG            @OPENJPEG_REQUIRED_VERSION@          JPEG 2000
+     qoi                 -              QOI
      webkit              @WEBKITGTK_REQUIRED_VERSION@         Help browser & webpage
      vala                -              Vala plug-ins
 
