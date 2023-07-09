@@ -147,7 +147,7 @@ Plug-ins:
   - All Python 3 plug-ins whose Python 2 variants used to have a GUI now also
     have one.
   - Script "Predator" removed.
-  - PAM: import and export (formats: RAYSCALE, GRAYSCALE_ALPHA, RGB, RGB_ALPHA)
+  - PAM: import and export (formats: GRAYSCALE, GRAYSCALE_ALPHA, RGB, RGB_ALPHA)
     support added. PAM files are essentially PPM files with a different header
     format and alpha/16 bit support.
   - GIF:
