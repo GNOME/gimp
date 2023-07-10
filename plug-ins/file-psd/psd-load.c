@@ -364,7 +364,7 @@ load_image_metadata (GFile        *file,
             }
 
           if (load_image_resource (&res_a, image, &img_a, input,
-                                   &profile_loaded, &resolution_loaded,
+                                   &resolution_loaded, &profile_loaded,
                                    error) < 0)
             break;
         }
