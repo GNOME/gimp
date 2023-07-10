@@ -3567,7 +3567,7 @@ load_dialog (const gchar *title,
     {
       GtkWidget *scrolled_window;
       GtkWidget *title_label;
-      gchar     *message = "";
+      gchar     *message = g_strdup ("");
       gchar     *title   = g_strdup_printf ("<b>%s</b>\n%s\n",
                                             _("Compatibility Notice"),
                                             _("This PSD file contains features "
@@ -3582,50 +3582,59 @@ load_dialog (const gchar *title,
       gtk_box_pack_start (GTK_BOX (vbox), title_label, FALSE, FALSE, 0);
       gtk_widget_show (title_label);
 
+#define ADD_UNSUPPORTED_MESSAGE(message, text)                                \
+        {                                                                     \
+          gchar *old_message = message;                                       \
+          message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", old_message,      \
+                                     _(text));                                \
+          g_free (old_message);                                               \
+        }                                                                     \
+
       if (unsupported_features->adjustment_layer)
-        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
-                                   _("Adjustment layers are not yet "
-                                     "supported and will be dropped."));
+        ADD_UNSUPPORTED_MESSAGE (message,
+                                 "Adjustment layers are not yet "
+                                 "supported and will be dropped.");
       if (unsupported_features->psd_metadata)
-        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
-                                   _("Metadata non-raster layers are "
-                                     "not yet supported and will be dropped."));
+        ADD_UNSUPPORTED_MESSAGE (message,
+                                 "Metadata non-raster layers are "
+                                 "not yet supported and will be dropped.");
       if (unsupported_features->fill_layer)
-        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
-                                   _("Fill layers are partially "
-                                     "supported and will be converted "
-                                     "to raster layers."));
+        ADD_UNSUPPORTED_MESSAGE (message,
+                                 "Fill layers are partially "
+                                 "supported and will be converted "
+                                 "to raster layers.");
       if (unsupported_features->text_layer)
-        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
-                                   _("Text layers are partially "
-                                     "supported and will be converted "
-                                     "to raster layers."));
+        ADD_UNSUPPORTED_MESSAGE (message,
+                                 "Text layers are partially "
+                                 "supported and will be converted "
+                                 "to raster layers.");
       if (unsupported_features->linked_layer)
-        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
-                                   _("Linked layers are not yet "
-                                     "supported and will be dropped."));
+        ADD_UNSUPPORTED_MESSAGE (message,
+                                 "Linked layers are not yet "
+                                 "supported and will be dropped.");
       if (unsupported_features->vector_mask)
-        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
-                                   _("Vector masks are partially "
-                                     "supported and will be converted "
-                                     "to raster layers."));
+        ADD_UNSUPPORTED_MESSAGE (message,
+                                 "Vector masks are partially "
+                                 "supported and will be converted "
+                                 "to raster layers.");
       if (unsupported_features->stroke)
-        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
-                                   _("Vector strokes are not yet "
-                                     "supported and will be dropped."));
+        ADD_UNSUPPORTED_MESSAGE (message,
+                                 "Vector strokes are not yet "
+                                 "supported and will be dropped.");
       if (unsupported_features->layer_effect)
-        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
-                                   _("Layer effects are not yet "
-                                     "supported and will be dropped."));
+        ADD_UNSUPPORTED_MESSAGE (message,
+                                 "Layer effects are not yet "
+                                 "supported and will be dropped.");
       if (unsupported_features->smart_object)
-        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
-                                   _("Smart objects are not yet "
-                                     "supported and will be dropped."));
+        ADD_UNSUPPORTED_MESSAGE (message,
+                                 "Smart objects are not yet "
+                                 "supported and will be dropped.");
       if (unsupported_features->layer_comp)
-        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
-                                   /* Translators: short for layer compositions */
-                                   _("Layer comps are not yet "
-                                     "supported and will be dropped."));
+        ADD_UNSUPPORTED_MESSAGE (message,
+                                 /* Translators: short for layer compositions */
+                                 "Layer comps are not yet "
+                                 "supported and will be dropped.");
+#undef ADD_UNSUPPORTED_MESSAGE
 
       scrolled_window = gtk_scrolled_window_new (NULL, NULL);
       gtk_widget_set_size_request (scrolled_window, -1, 100);
