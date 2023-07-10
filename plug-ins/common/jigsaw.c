@@ -560,7 +560,7 @@ jigsaw (GObject      *config,
       bytes = babl_format_get_bytes_per_pixel (format);
 
       /* setup image buffer */
-      buffer_size = bytes * width * height;
+      buffer_size = (gsize) bytes * width * height;
       buffer = g_new (guchar, buffer_size);
 
       gegl_buffer_get (gegl_buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
