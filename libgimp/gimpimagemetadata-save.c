@@ -612,7 +612,6 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
                                    G_STRFUNC, second_struct, error->message);
                       g_clear_error (&error);
                     }
-                  g_free (second_struct);
                 }
               else
                 {
@@ -623,6 +622,7 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
                       exclude = g_list_prepend (exclude, g_strdup (tag_split[1]));
                     }
                 }
+              g_free (second_struct);
             }
         }
 
