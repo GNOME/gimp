@@ -1079,7 +1079,8 @@ gimp_item_tree_view_image_flush_idle (gpointer user_data)
    * thread even when the flush happened in a thread (e.g. from the paint
    * thread).
    */
-  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (view)), view);
+  if (gimp_editor_get_ui_manager (GIMP_EDITOR (view)))
+    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (view)), view);
 
   return G_SOURCE_REMOVE;
 }
