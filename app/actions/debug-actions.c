@@ -31,40 +31,42 @@
 #include "debug-actions.h"
 #include "debug-commands.h"
 
+#include "gimp-intl.h"
+
 
 static const GimpActionEntry debug_actions[] =
 {
   { "debug-gtk-inspector", NULL,
-    "Start _GtkInspector", NULL, { NULL }, NULL,
+    N_("Start _GtkInspector"), NULL, { NULL }, NULL,
     debug_gtk_inspector_cmd_callback,
     NULL },
 
   { "debug-mem-profile", NULL,
-    "_Memory Profile", NULL, { NULL }, NULL,
+    N_("_Memory Profile"), NULL, { NULL }, NULL,
     debug_mem_profile_cmd_callback,
     NULL },
 
   { "debug-benchmark-projection", NULL,
-    "Benchmark _Projection", NULL, { NULL },
-    "Invalidates the entire projection, measures the time it takes to "
+    N_("Benchmark _Projection"), NULL, { NULL },
+    N_("Invalidates the entire projection, measures the time it takes to "
     "validate (render) the part that is visible in the active display, "
-    "and print the result to stdout.",
+    "and print the result to stdout."),
     debug_benchmark_projection_cmd_callback,
     NULL },
 
   { "debug-show-image-graph", NULL,
-    "Show Image _Graph", NULL, { NULL },
-    "Creates a new image showing the GEGL graph of this image",
+    N_("Show Image _Graph"), NULL, { NULL },
+    N_("Creates a new image showing the GEGL graph of this image"),
     debug_show_image_graph_cmd_callback,
     NULL },
 
   { "debug-dump-keyboard-shortcuts", NULL,
-    "Dump _Keyboard Shortcuts", NULL, { NULL }, NULL,
+    N_("Dump _Keyboard Shortcuts"), NULL, { NULL }, NULL,
     debug_dump_keyboard_shortcuts_cmd_callback,
     NULL },
 
   { "debug-dump-attached-data", NULL,
-    "Dump Attached Data", NULL, { NULL }, NULL,
+    N_("Dump _Attached Data"), NULL, { NULL }, NULL,
     debug_dump_attached_data_cmd_callback,
     NULL }
 };

@@ -27,6 +27,7 @@ app/actions/data-commands.c
 app/actions/debug-actions.c
 app/actions/dialogs-actions.c
 app/actions/dock-actions.c
+app/actions/debug-actions.c
 app/actions/dockable-actions.c
 app/actions/documents-actions.c
 app/actions/documents-commands.c
