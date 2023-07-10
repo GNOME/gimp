@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-10 10:14+0000\n"
-"PO-Revision-Date: 2023-07-10 15:56+0200\n"
+"POT-Creation-Date: 2023-07-10 15:25+0000\n"
+"PO-Revision-Date: 2023-07-10 22:43+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2532,6 +2532,43 @@ msgstr "Neimenovano"
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Datoteke ni mogoče pokazati v upravljalniku datotek: %s"
+
+#: app/actions/debug-actions.c:40
+msgid "Start _GtkInspector"
+msgstr "Zaženi _GtkInspector"
+
+#: app/actions/debug-actions.c:45
+msgid "_Memory Profile"
+msgstr "Profil po_mnilnika"
+
+#: app/actions/debug-actions.c:50
+msgid "Benchmark _Projection"
+msgstr "_Preizkusi projekcijo"
+
+#: app/actions/debug-actions.c:51
+msgid ""
+"Invalidates the entire projection, measures the time it takes to validate "
+"(render) the part that is visible in the active display, and print the "
+"result to stdout."
+msgstr ""
+"Potrdi veljavnost celotne projekcije, izmeri čas, potreben za potrditev "
+"(izris) dela, ki je viden na dejavnem zaslonu, in izpiše rezultat na stdout."
+
+#: app/actions/debug-actions.c:58
+msgid "Show Image _Graph"
+msgstr "Pokaži _grafikon slike"
+
+#: app/actions/debug-actions.c:59
+msgid "Creates a new image showing the GEGL graph of this image"
+msgstr "Ustvari novo sliko, ki prikazuje grafikon GEGL te slike"
+
+#: app/actions/debug-actions.c:64
+msgid "Dump _Keyboard Shortcuts"
+msgstr "Odloži tip_ke za bližnjico"
+
+#: app/actions/debug-actions.c:69
+msgid "Dump _Attached Data"
+msgstr "Odloži _pripete podatke"
 
 #: app/actions/dialogs-actions.c:47
 msgctxt "windows-action"
@@ -18178,7 +18215,7 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Spusti barvo na plast"
 
-#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1423
+#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1424
 #: app/widgets/gimplayertreeview.c:1004
 msgid "Drop layers"
 msgstr "Spusti plasti"
