@@ -658,10 +658,12 @@ menus/brushes-menu.ui
 menus/channels-menu.ui
 menus/cursor-info-menu.ui
 menus/dashboard-menu.ui
+menus/dockable-menu.ui.in.in
 menus/dynamics-editor-menu.ui
 menus/dynamics-menu.ui
 menus/gradient-editor-menu.ui
 menus/gradients-menu.ui
+menus/image-menu.ui.in.in
 menus/layers-menu.ui
 menus/palette-editor-menu.ui
 menus/palettes-menu.ui
