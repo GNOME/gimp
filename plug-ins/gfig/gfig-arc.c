@@ -269,7 +269,7 @@ arc_details (GdkPoint *vert_a,
   if (ay == by || by == cy || ay == cy)
     {
       /* Horz line -> midpoint gives inter_y */
-      if (ax == bx && bx == cx)
+      if (ay == by && by == cy)
         {
           /* Straight line */
           double minx = ax;
