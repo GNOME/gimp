@@ -67,7 +67,7 @@
 #define PLUG_IN_ROLE   "gimp-file-xwd"
 
 
-typedef gulong  L_CARD32;
+typedef guint32 L_CARD32;
 typedef gushort L_CARD16;
 typedef guchar  L_CARD8;
 
@@ -204,15 +204,18 @@ static void             set_color_table      (GimpImage            *image,
 static GimpImage      * load_xwd_f2_d1_b1    (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
-                                              L_XWDCOLOR           *xwdcolmap);
+                                              L_XWDCOLOR           *xwdcolmap,
+                                              GError              **error);
 static GimpImage      * load_xwd_f2_d8_b8    (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
-                                              L_XWDCOLOR           *xwdcolmap);
+                                              L_XWDCOLOR           *xwdcolmap,
+                                              GError              **error);
 static GimpImage      * load_xwd_f2_d16_b16  (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
-                                              L_XWDCOLOR           *xwdcolmap);
+                                              L_XWDCOLOR           *xwdcolmap,
+                                              GError              **error);
 static GimpImage      * load_xwd_f2_d24_b32  (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
@@ -221,7 +224,8 @@ static GimpImage      * load_xwd_f2_d24_b32  (GFile                *file,
 static GimpImage      * load_xwd_f2_d32_b32  (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
-                                              L_XWDCOLOR           *xwdcolmap);
+                                              L_XWDCOLOR           *xwdcolmap,
+                                              GError              **error);
 static GimpImage      * load_xwd_f1_d24_b1   (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
@@ -254,7 +258,8 @@ static gboolean         write_xwd_header     (GOutputStream        *output,
 
 static void             read_xwd_cols        (FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
-                                              L_XWDCOLOR           *xwdcolmap);
+                                              L_XWDCOLOR           *xwdcolmap,
+                                              GError              **error);
 
 static gboolean         write_xwd_cols       (GOutputStream        *output,
                                               L_XWDFILEHEADER      *xwdhdr,
@@ -484,6 +489,28 @@ load_image (GFile   *file,
     }
 
   read_xwd_header (ifp, &xwdhdr);
+
+#ifdef XWD_DEBUG
+  /* Write info about header */
+  g_printerr ("XWD header:\n\t"
+              "Header size: %u, filer version: %u, image type: %u\n\t"
+              "Depth: %u, Width: %u, Height: %u\n\t"
+              "X-offset: %u, byte order: %u, bitmap unit: %u, bit order: %u\n\t"
+              "bitmap pad: %u, bits per pixel: %u, bytes per line: %u\n\t"
+              "visual class: %u, Masks: red %x, green %x, blue %x, bits per rgb: %u\n\t"
+              "Number of colors: %u, color map entries: %u\n\t"
+              "Window width: %u, height: %u, x: %u, y: %u, border width: %u"
+              "\n", xwdhdr.l_header_size, xwdhdr.l_file_version, xwdhdr.l_pixmap_format,
+              xwdhdr.l_pixmap_depth, xwdhdr.l_pixmap_width, xwdhdr.l_pixmap_height,
+              xwdhdr.l_xoffset, xwdhdr.l_byte_order, xwdhdr.l_bitmap_unit,
+              xwdhdr.l_bitmap_bit_order, xwdhdr.l_bitmap_pad, xwdhdr.l_bits_per_pixel,
+              xwdhdr.l_bytes_per_line, xwdhdr.l_visual_class,
+              xwdhdr.l_red_mask, xwdhdr.l_green_mask, xwdhdr.l_blue_mask,
+              xwdhdr.l_bits_per_rgb, xwdhdr.l_ncolors, xwdhdr.l_colormap_entries,
+              xwdhdr.l_window_width, xwdhdr.l_window_height,
+              xwdhdr.l_window_x, xwdhdr.l_window_y, xwdhdr.l_window_bdrwidth);
+#endif
+
   if (xwdhdr.l_file_version != 7)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -502,15 +529,22 @@ load_image (GFile   *file,
 #endif
 
   /* Position to start of XWDColor structures */
-  fseek (ifp, (long)xwdhdr.l_header_size, SEEK_SET);
+  if (fseek (ifp, (long)xwdhdr.l_header_size, SEEK_SET) != 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s':\nSeek error"),
+                   gimp_file_get_utf8_name (file));
+      goto out;
+    }
 
   /* Guard against insanely huge color maps -- gimp_image_set_colormap() only
    * accepts colormaps with 0..256 colors anyway. */
   if (xwdhdr.l_colormap_entries > 256)
     {
-      g_message (_("'%s':\nIllegal number of colormap entries: %ld"),
-                 gimp_file_get_utf8_name (file),
-                 (long)xwdhdr.l_colormap_entries);
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s':\nIllegal number of colormap entries: %u"),
+                   gimp_file_get_utf8_name (file),
+                   xwdhdr.l_colormap_entries);
       goto out;
     }
 
@@ -518,14 +552,17 @@ load_image (GFile   *file,
     {
       if (xwdhdr.l_colormap_entries < xwdhdr.l_ncolors)
         {
-          g_message (_("'%s':\nNumber of colormap entries < number of colors"),
-                     gimp_file_get_utf8_name (file));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("'%s':\nNumber of colormap entries < number of colors"),
+                       gimp_file_get_utf8_name (file));
           goto out;
         }
 
       xwdcolmap = g_new (L_XWDCOLOR, xwdhdr.l_colormap_entries);
 
-      read_xwd_cols (ifp, &xwdhdr, xwdcolmap);
+      read_xwd_cols (ifp, &xwdhdr, xwdcolmap, error);
+      if (error && *error)
+        goto out;
 
 #ifdef XWD_COL_DEBUG
       {
@@ -541,83 +578,85 @@ load_image (GFile   *file,
 
       if (xwdhdr.l_file_version != 7)
         {
-          g_message (_("Can't read color entries"));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Can't read color entries"));
           goto out;
         }
     }
 
   if (xwdhdr.l_pixmap_width <= 0)
     {
-      g_message (_("'%s':\nNo image width specified"),
-                 gimp_file_get_utf8_name (file));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s':\nNo image width specified"),
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
   if (xwdhdr.l_pixmap_width > GIMP_MAX_IMAGE_SIZE
       || xwdhdr.l_bytes_per_line > GIMP_MAX_IMAGE_SIZE * 3)
     {
-      g_message (_("'%s':\nImage width is larger than GIMP can handle"),
-                 gimp_file_get_utf8_name (file));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s':\nImage width is larger than GIMP can handle"),
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
   if (xwdhdr.l_pixmap_height <= 0)
     {
-      g_message (_("'%s':\nNo image height specified"),
-                 gimp_file_get_utf8_name (file));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s':\nNo image height specified"),
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
   if (xwdhdr.l_pixmap_height > GIMP_MAX_IMAGE_SIZE)
     {
-      g_message (_("'%s':\nImage height is larger than GIMP can handle"),
-                 gimp_file_get_utf8_name (file));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s':\nImage height is larger than GIMP can handle"),
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
   depth = xwdhdr.l_pixmap_depth;
   bpp   = xwdhdr.l_bits_per_pixel;
 
-  image = NULL;
-
   switch (xwdhdr.l_pixmap_format)
     {
     case 0:    /* Single plane bitmap */
       if ((depth == 1) && (bpp == 1))
         { /* Can be performed by format 2 loader */
-          image = load_xwd_f2_d1_b1 (file, ifp, &xwdhdr, xwdcolmap);
+          image = load_xwd_f2_d1_b1 (file, ifp, &xwdhdr, xwdcolmap, error);
         }
       break;
 
     case 1:    /* Single plane pixmap */
       if ((depth <= 24) && (bpp == 1))
         {
-          image = load_xwd_f1_d24_b1 (file, ifp, &xwdhdr, xwdcolmap,
-                                      error);
+          image = load_xwd_f1_d24_b1 (file, ifp, &xwdhdr, xwdcolmap, error);
         }
       break;
 
     case 2:    /* Multiplane pixmaps */
       if ((depth == 1) && (bpp == 1))
         {
-          image = load_xwd_f2_d1_b1 (file, ifp, &xwdhdr, xwdcolmap);
+          image = load_xwd_f2_d1_b1 (file, ifp, &xwdhdr, xwdcolmap, error);
         }
       else if ((depth <= 8) && (bpp == 8))
         {
-          image = load_xwd_f2_d8_b8 (file, ifp, &xwdhdr, xwdcolmap);
+          image = load_xwd_f2_d8_b8 (file, ifp, &xwdhdr, xwdcolmap, error);
         }
       else if ((depth <= 16) && (bpp == 16))
         {
-          image = load_xwd_f2_d16_b16 (file, ifp, &xwdhdr, xwdcolmap);
+          if (xwdcolmap)
+            image = load_xwd_f2_d16_b16 (file, ifp, &xwdhdr, xwdcolmap, error);
         }
       else if ((depth <= 24) && ((bpp == 24) || (bpp == 32)))
         {
-          image = load_xwd_f2_d24_b32 (file, ifp, &xwdhdr, xwdcolmap,
-                                       error);
+          image = load_xwd_f2_d24_b32 (file, ifp, &xwdhdr, xwdcolmap, error);
         }
       else if ((depth <= 32) && (bpp == 32))
         {
-          image = load_xwd_f2_d32_b32 (file, ifp, &xwdhdr, xwdcolmap);
+          image = load_xwd_f2_d32_b32 (file, ifp, &xwdhdr, xwdcolmap, error);
         }
       break;
     }
@@ -843,7 +882,7 @@ read_xwd_header (FILE            *ifp,
 
 /* Write out an XWD-fileheader. The header size is calculated here */
 static gboolean
-write_xwd_header (GOutputStream   *output,
+write_xwd_header (GOutputStream    *output,
                   L_XWDFILEHEADER  *xwdhdr,
                   GError          **error)
 
@@ -874,9 +913,10 @@ write_xwd_header (GOutputStream   *output,
 
 
 static void
-read_xwd_cols (FILE            *ifp,
-               L_XWDFILEHEADER *xwdhdr,
-               L_XWDCOLOR      *colormap)
+read_xwd_cols (FILE             *ifp,
+               L_XWDFILEHEADER  *xwdhdr,
+               L_XWDCOLOR       *colormap,
+               GError          **error)
 {
   gint  j, err = 0;
   gint  flag_is_bad, index_is_bad;
@@ -909,7 +949,13 @@ read_xwd_cols (FILE            *ifp,
     return;
 
   /* Read in XWD-Color structures (with 4 bytes inserted infront of RGB) */
-  fseek (ifp, colmappos, SEEK_SET);
+  if (fseek (ifp, colmappos, SEEK_SET) != 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Seek error"));
+      return;
+    }
+
   flag_is_bad = index_is_bad = 0;
   for (j = 0; j < xwdhdr->l_ncolors; j++)
     {
@@ -937,7 +983,13 @@ read_xwd_cols (FILE            *ifp,
     return;
 
   /* Read in XWD-Color structures (with 2 bytes inserted infront of RGB) */
-  fseek (ifp, colmappos, SEEK_SET);
+  if (fseek (ifp, colmappos, SEEK_SET) !=0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Seek error"));
+      return;
+    }
+
   flag_is_bad = index_is_bad = 0;
   for (j = 0; j < xwdhdr->l_ncolors; j++)
     {
@@ -968,7 +1020,13 @@ read_xwd_cols (FILE            *ifp,
     return;
 
   /* Read in XWD-Color structures (every value is 8 bytes from a CRAY) */
-  fseek (ifp, colmappos, SEEK_SET);
+  if (fseek (ifp, colmappos, SEEK_SET) != 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Seek error"));
+      return;
+    }
+
   flag_is_bad = index_is_bad = 0;
   for (j = 0; j < xwdhdr->l_ncolors; j++)
     {
@@ -1319,7 +1377,8 @@ static GimpImage *
 load_xwd_f2_d1_b1 (GFile           *file,
                    FILE            *ifp,
                    L_XWDFILEHEADER *xwdhdr,
-                   L_XWDCOLOR      *xwdcolmap)
+                   L_XWDCOLOR      *xwdcolmap,
+                   GError         **error)
 {
   register int     pix8;
   register guchar *dest, *src;
@@ -1335,7 +1394,7 @@ load_xwd_f2_d1_b1 (GFile           *file,
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
-  g_printf ("load_xwd_f2_d1_b1 (%s)\n", filename);
+  g_printf ("load_xwd_f2_d1_b1 (%s)\n", gimp_file_get_utf8_name (file));
 #endif
 
   width  = xwdhdr->l_pixmap_width;
@@ -1442,18 +1501,20 @@ load_xwd_f2_d1_b1 (GFile           *file,
           scan_lines = 0;
           dest = data;
         }
-      if (err) break;
     }
 
   g_free (data);
   g_free (scanline);
-
-  if (err)
-    g_message (_("EOF encountered on reading"));
-
   g_object_unref (buffer);
 
-  return err ? NULL : image;
+  if (err)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("EOF encountered on reading"));
+      return NULL;
+    }
+
+  return image;
 }
 
 
@@ -1463,7 +1524,8 @@ static GimpImage *
 load_xwd_f2_d8_b8 (GFile           *file,
                    FILE            *ifp,
                    L_XWDFILEHEADER *xwdhdr,
-                   L_XWDCOLOR      *xwdcolmap)
+                   L_XWDCOLOR      *xwdcolmap,
+                   GError         **error)
 {
   gint        width, height, linepad, tile_height, scan_lines;
   gint        i, j, ncols;
@@ -1475,7 +1537,7 @@ load_xwd_f2_d8_b8 (GFile           *file,
   GeglBuffer *buffer;
 
 #ifdef XWD_DEBUG
-  g_printf ("load_xwd_f2_d8_b8 (%s)\n", filename);
+  g_printf ("load_xwd_f2_d8_b8 (%s)\n", gimp_file_get_utf8_name (file));
 #endif
 
   width  = xwdhdr->l_pixmap_width;
@@ -1532,7 +1594,13 @@ load_xwd_f2_d8_b8 (GFile           *file,
       dest += width;
 
       for (j = 0; j < linepad; j++)
-        getc (ifp);
+        if (getc (ifp) < 0)
+          {
+            err = 1;
+            break;
+          }
+      if (err)
+        break;
 
       scan_lines++;
 
@@ -1551,13 +1619,16 @@ load_xwd_f2_d8_b8 (GFile           *file,
     }
 
   g_free (data);
-
-  if (err)
-    g_message (_("EOF encountered on reading"));
-
   g_object_unref (buffer);
 
-  return err ? NULL : image;
+  if (err)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("EOF encountered on reading"));
+      return NULL;
+    }
+
+  return image;
 }
 
 
@@ -1567,16 +1638,17 @@ static GimpImage *
 load_xwd_f2_d16_b16 (GFile           *file,
                      FILE            *ifp,
                      L_XWDFILEHEADER *xwdhdr,
-                     L_XWDCOLOR      *xwdcolmap)
+                     L_XWDCOLOR      *xwdcolmap,
+                     GError         **error)
 {
   register guchar *dest, lsbyte_first;
   gint             width, height, linepad, i, j, c0, c1, ncols;
   gint             red, green, blue, redval, greenval, blueval;
   gint             maxred, maxgreen, maxblue;
   gint             tile_height, scan_lines;
-  gulong           redmask, greenmask, bluemask;
+  guint32          redmask, greenmask, bluemask;
   guint            redshift, greenshift, blueshift;
-  gulong           maxval;
+  guint32          maxval;
   guchar          *ColorMap, *cm, *data;
   gint             err = 0;
   GimpImage       *image;
@@ -1584,7 +1656,7 @@ load_xwd_f2_d16_b16 (GFile           *file,
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
-  g_printf ("load_xwd_f2_d16_b16 (%s)\n", filename);
+  g_printf ("load_xwd_f2_d16_b16 (%s)\n", gimp_file_get_utf8_name (file));
 #endif
 
   width  = xwdhdr->l_pixmap_width;
@@ -1692,7 +1764,13 @@ load_xwd_f2_d16_b16 (GFile           *file,
         break;
 
       for (j = 0; j < linepad; j++)
-        getc (ifp);
+        if (getc (ifp) < 0)
+          {
+            err = 1;
+            break;
+          }
+      if (err)
+        break;
 
       scan_lines++;
 
@@ -1712,12 +1790,16 @@ load_xwd_f2_d16_b16 (GFile           *file,
   g_free (data);
   g_free (ColorMap);
 
-  if (err)
-    g_message (_("EOF encountered on reading"));
-
   g_object_unref (buffer);
 
-  return err ? NULL : image;
+  if (err)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("EOF encountered on reading"));
+      return NULL;
+    }
+
+  return image;
 }
 
 
@@ -1735,8 +1817,8 @@ load_xwd_f2_d24_b32 (GFile            *file,
   gint             tile_height, scan_lines;
   L_CARD32         pixelval;
   gint             red, green, blue, ncols;
-  gint             maxred, maxgreen, maxblue;
-  gulong           redmask, greenmask, bluemask;
+  guint32          maxred, maxgreen, maxblue;
+  guint32          redmask, greenmask, bluemask;
   guint            redshift, greenshift, blueshift;
   guchar           redmap[256], greenmap[256], bluemap[256];
   guchar          *data;
@@ -1747,7 +1829,7 @@ load_xwd_f2_d24_b32 (GFile            *file,
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
-  g_printf ("load_xwd_f2_d24_b32 (%s)\n", filename);
+  g_printf ("load_xwd_f2_d24_b32 (%s)\n", gimp_file_get_utf8_name (file));
 #endif
 
   width  = xwdhdr->l_pixmap_width;
@@ -1780,9 +1862,9 @@ load_xwd_f2_d24_b32 (GFile            *file,
   maxblue = 0; while (bluemask >> (blueshift + maxblue)) maxblue++;
   maxblue = (1 << maxblue) - 1;
 
-  if (maxred   > sizeof (redmap)   ||
-      maxgreen > sizeof (greenmap) ||
-      maxblue  > sizeof (bluemap))
+  if (maxred   == 0 || maxred   >= sizeof (redmap)   ||
+      maxgreen == 0 || maxgreen >= sizeof (greenmap) ||
+      maxblue  == 0 || maxblue  >= sizeof (bluemap))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("XWD-file %s is corrupt."),
@@ -1857,7 +1939,13 @@ load_xwd_f2_d24_b32 (GFile            *file,
             break;
 
           for (j = 0; j < linepad; j++)
-            getc (ifp);
+            if (getc (ifp) < 0)
+              {
+                err = 1;
+                break;
+              }
+          if (err)
+            break;
 
           if ((i % 20) == 0)
             gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
@@ -1909,7 +1997,13 @@ load_xwd_f2_d24_b32 (GFile            *file,
             break;
 
           for (j = 0; j < linepad; j++)
-            getc (ifp);
+            if (getc (ifp) < 0)
+              {
+                err = 1;
+                break;
+              }
+          if (err)
+            break;
 
           if ((i % 20) == 0)
             gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
@@ -1928,12 +2022,16 @@ load_xwd_f2_d24_b32 (GFile            *file,
 
   g_free (data);
 
-  if (err)
-    g_message (_("EOF encountered on reading"));
-
   g_object_unref (buffer);
 
-  return err ? NULL : image;
+  if (err)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("EOF encountered on reading"));
+      return NULL;
+    }
+
+  return image;
 }
 
 /* Load XWD with pixmap_format 2, pixmap_depth up to 32, bits_per_pixel 32 */
@@ -1942,15 +2040,16 @@ static GimpImage *
 load_xwd_f2_d32_b32 (GFile           *file,
                      FILE            *ifp,
                      L_XWDFILEHEADER *xwdhdr,
-                     L_XWDCOLOR      *xwdcolmap)
+                     L_XWDCOLOR      *xwdcolmap,
+                     GError         **error)
 {
   register guchar *dest, lsbyte_first;
   gint             width, height, linepad, i, j, c0, c1, c2, c3;
   gint             tile_height, scan_lines;
   L_CARD32         pixelval;
   gint             red, green, blue, alpha, ncols;
-  gint             maxred, maxgreen, maxblue, maxalpha;
-  gulong           redmask, greenmask, bluemask, alphamask;
+  guint32          maxred, maxgreen, maxblue, maxalpha;
+  guint32          redmask, greenmask, bluemask, alphamask;
   guint            redshift, greenshift, blueshift, alphashift;
   guchar           redmap[256], greenmap[256], bluemap[256], alphamap[256];
   guchar          *data;
@@ -1961,8 +2060,16 @@ load_xwd_f2_d32_b32 (GFile           *file,
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
-  g_printf ("load_xwd_f2_d32_b32 (%s)\n", filename);
+  g_printf ("load_xwd_f2_d32_b32 (%s)\n", gimp_file_get_utf8_name (file));
 #endif
+
+  if (! xwdcolmap)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s':\nInvalid color map"),
+                   gimp_file_get_utf8_name (file));
+      return NULL;
+    }
 
   width  = xwdhdr->l_pixmap_width;
   height = xwdhdr->l_pixmap_height;
@@ -2004,6 +2111,17 @@ load_xwd_f2_d32_b32 (GFile           *file,
 
   maxalpha = 0; while (alphamask >> (alphashift + maxalpha)) maxalpha++;
   maxalpha = (1 << maxalpha) - 1;
+
+  if (maxred   == 0 || maxred   >= sizeof (redmap)   ||
+      maxgreen == 0 || maxgreen >= sizeof (greenmap) ||
+      maxblue  == 0 || maxblue  >= sizeof (bluemap)  ||
+      maxalpha == 0 || maxalpha >= sizeof (alphamap))
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                    _("XWD-file %s is corrupt."),
+                    gimp_file_get_utf8_name (file));
+      return NULL;
+    }
 
   /* Set map-arrays for red, green, blue */
   for (red = 0; red <= maxred; red++)
@@ -2069,7 +2187,13 @@ load_xwd_f2_d32_b32 (GFile           *file,
         break;
 
       for (j = 0; j < linepad; j++)
-        getc (ifp);
+        if (getc (ifp) < 0)
+          {
+            err = 1;
+            break;
+          }
+      if (err)
+        break;
 
       if ((i % 20) == 0)
         gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
@@ -2087,12 +2211,16 @@ load_xwd_f2_d32_b32 (GFile           *file,
 
   g_free (data);
 
-  if (err)
-    g_message (_("EOF encountered on reading"));
-
   g_object_unref (buffer);
 
-  return err ? NULL : image;
+  if (err)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("EOF encountered on reading"));
+      return NULL;
+    }
+
+  return image;
 }
 
 /* Load XWD with pixmap_format 1, pixmap_depth up to 24, bits_per_pixel 1 */
@@ -2110,10 +2238,10 @@ load_xwd_f1_d24_b1 (GFile            *file,
   gint             indexed, bytes_per_pixel;
   gint             maxred, maxgreen, maxblue;
   gint             red, green, blue, ncols, standard_rgb;
-  glong            data_offset, plane_offset, tile_offset;
-  gulong           redmask, greenmask, bluemask;
+  goffset          data_offset, plane_offset, tile_offset;
+  guint32          redmask, greenmask, bluemask;
   guint            redshift, greenshift, blueshift;
-  gulong           g;
+  guint32          g;
   guchar           redmap[256], greenmap[256], bluemap[256];
   guchar           bit_reverse[256];
   guchar          *xwddata, *xwdin, *data;
@@ -2125,7 +2253,7 @@ load_xwd_f1_d24_b1 (GFile            *file,
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
-  g_printf ("load_xwd_f1_d24_b1 (%s)\n", filename);
+  g_printf ("load_xwd_f1_d24_b1 (%s)\n", gimp_file_get_utf8_name (file));
 #endif
 
   xwddata = g_malloc (xwdhdr->l_bytes_per_line);
@@ -2180,9 +2308,9 @@ load_xwd_f1_d24_b1 (GFile            *file,
       maxblue = 0; while (bluemask >> (blueshift + maxblue)) maxblue++;
       maxblue = (1 << maxblue) - 1;
 
-      if (maxred   > sizeof (redmap)   ||
-          maxgreen > sizeof (greenmap) ||
-          maxblue  > sizeof (bluemap))
+      if (maxred   == 0 || maxred   >= sizeof (redmap)   ||
+          maxgreen == 0 || maxgreen >= sizeof (greenmap) ||
+          maxblue  == 0 || maxblue  >= sizeof (bluemap))
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("XWD-file %s is corrupt."),
@@ -2241,7 +2369,11 @@ load_xwd_f1_d24_b1 (GFile            *file,
           dest = data;    /* Position to start of tile within the plane */
           plane_offset = data_offset + plane*height*xwdhdr->l_bytes_per_line;
           tile_offset = plane_offset + tile_start*xwdhdr->l_bytes_per_line;
-          fseek (ifp, tile_offset, SEEK_SET);
+          if (fseek (ifp, tile_offset, SEEK_SET) != 0)
+            {
+              err = 1;
+              break;
+            }
 
           /* Place the last plane at the least significant bit */
 
@@ -2313,7 +2445,11 @@ load_xwd_f1_d24_b1 (GFile            *file,
                   inmask >>= 1;
                 }
             }
+          if (err)
+            break;
         }
+      if (err)
+        break;
 
       /* For indexed images, the mapping to colors is done by the color table. */
       /* Otherwise we must do the mapping by ourself. */
@@ -2351,12 +2487,16 @@ load_xwd_f1_d24_b1 (GFile            *file,
   g_free (data);
   g_free (xwddata);
 
-  if (err)
-    g_message (_("EOF encountered on reading"));
-
   g_object_unref (buffer);
 
-  return err ? NULL : image;
+  if (err)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("EOF encountered on reading"));
+      return NULL;
+    }
+
+  return image;
 }
 
 
@@ -2372,7 +2512,7 @@ save_index (GOutputStream  *output,
   gint             tile_height;
   gint             i, j;
   gint             ncolors, vclass;
-  glong            tmp = 0;
+  gsize            tmp = 0;
   guchar          *data, *src, *cmap;
   L_XWDFILEHEADER  xwdhdr;
   L_XWDCOLOR       xwdcolmap[256];
@@ -2516,7 +2656,7 @@ save_rgb (GOutputStream  *output,
   gint             linepad;
   gint             tile_height;
   gint             i;
-  glong            tmp = 0;
+  gsize            tmp = 0;
   guchar          *data, *src;
   L_XWDFILEHEADER  xwdhdr;
   const Babl      *format;
