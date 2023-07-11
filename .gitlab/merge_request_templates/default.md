@@ -1,7 +1,7 @@
 Contribution guidelines:
 
 - Follow our coding style, which is mostly the GNU coding style
-  with some specificities: see [HACKING](HACKING#L123).
+  with some specificities: see [Coding Style](https://developer.gimp.org/core/coding_style/).
 
 - Make sure no trailing spaces or tabs are left out.
 
