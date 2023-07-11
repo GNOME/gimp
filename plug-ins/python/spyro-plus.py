@@ -591,12 +591,11 @@ class PreviewTool:
         Gimp.context_set_foreground(foreground)
         Gimp.context_enable_dynamics(False)
 
-        # Create a brush proxy. Set the 'id' property, not a Python attribute.
-        # The id must match an installed real brush.
-        # FUTURE: add method of brush, say get_named()
-        brush = Gimp.Brush()
-        brush.set_property('id', '1. Pixel')
-        assert brush.is_valid()
+        # TODO: in the future, there could be several brushes with this name. We
+        # should have methods to loop through all of them and to know whether
+        # they are default/system brushes or not.
+        brush = Gimp.Brush.get_by_name('1. Pixel')
+        assert brush is not None
 
         Gimp.context_set_brush(brush)
         Gimp.context_set_brush_size(1.0)
