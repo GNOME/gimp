@@ -17,7 +17,7 @@ After GIMP 3.0 release, we might get back to depend on Debian Testing.
 
 ### macOS
 
-Compatibility with 10.12 and over.
+Compatibility with 10.13 and over.
 64-bit only.
 
 ### Windows
