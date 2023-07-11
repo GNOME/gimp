@@ -1832,6 +1832,14 @@ load_xwd_f2_d24_b32 (GFile            *file,
   g_printf ("load_xwd_f2_d24_b32 (%s)\n", gimp_file_get_utf8_name (file));
 #endif
 
+  /* issue #8082: depth and bits per pixel is 24, but 4 bytes are used per pixel */
+  if (xwdhdr->l_bits_per_pixel == 24)
+    {
+      if (xwdhdr->l_bytes_per_line / xwdhdr->l_pixmap_width == 4 &&
+          xwdhdr->l_bytes_per_line % xwdhdr->l_pixmap_width == 0)
+        xwdhdr->l_bits_per_pixel = 32;
+    }
+
   width  = xwdhdr->l_pixmap_width;
   height = xwdhdr->l_pixmap_height;
 
