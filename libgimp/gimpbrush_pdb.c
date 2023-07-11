@@ -44,7 +44,7 @@
  *
  * Creates a new, parametric brush.
  *
- * Returns: (transfer full): The brush.
+ * Returns: (transfer none): The brush.
  *
  * Since: 2.2
  **/
@@ -77,6 +77,9 @@ gimp_brush_new (const gchar *name)
  * @name: The name of the brush.
  *
  * Returns the brush with the given name.
+ *
+ * Search and return an existing brush with the name in argument, or
+ * nothing if no brush has this name.
  *
  * Returns: (transfer none): The brush.
  *

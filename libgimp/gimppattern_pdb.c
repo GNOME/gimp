@@ -44,7 +44,7 @@
  *
  * Returns the pattern with the given name.
  *
- * Returns: (transfer full): The pattern.
+ * Returns: (transfer none): The pattern.
  *
  * Since: 3.0
  **/

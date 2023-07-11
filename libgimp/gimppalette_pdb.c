@@ -47,7 +47,7 @@
  * be different than the requested name, when the requested name is
  * already in use.
  *
- * Returns: (transfer full): The palette.
+ * Returns: (transfer none): The palette.
  *
  * Since: 2.2
  **/
@@ -83,7 +83,7 @@ gimp_palette_new (const gchar *name)
  *
  * Returns the palette with the given name.
  *
- * Returns: (transfer full): The palette.
+ * Returns: (transfer none): The palette.
  *
  * Since: 3.0
  **/

@@ -52,7 +52,10 @@ CODE
 
 sub brush_get_by_name {
     $blurb = "Returns the brush with the given name.";
-    $help  = "Returns the brush with the given name.";
+    $help = <<'HELP';
+Search and return an existing brush with the name in argument, or nothing if no
+brush has this name.
+HELP
 
     &mitch_pdb_misc('2023', '3.0');
 

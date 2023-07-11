@@ -44,7 +44,7 @@
  *
  * Returns the font with the given name.
  *
- * Returns: (transfer full): The font.
+ * Returns: (transfer none): The font.
  *
  * Since: 3.0
  **/

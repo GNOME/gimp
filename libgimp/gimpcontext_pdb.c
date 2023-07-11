@@ -1229,7 +1229,7 @@ gimp_context_set_line_dash_pattern (gint           num_dashes,
  * Returns the currently active brush. All paint and stroke operations
  * use this brush.
  *
- * Returns: (transfer full): The active brush.
+ * Returns: (transfer none): The active brush.
  *
  * Since: 2.2
  **/
@@ -2043,7 +2043,7 @@ gimp_context_set_mypaint_brush (const gchar *name)
  * bucket-fill operations with patterns will use this pattern to
  * control the application of paint to the image.
  *
- * Returns: (transfer full): The active pattern.
+ * Returns: (transfer none): The active pattern.
  *
  * Since: 2.2
  **/
@@ -2115,7 +2115,7 @@ gimp_context_set_pattern (GimpPattern *pattern)
  *
  * Returns the currently active gradient.
  *
- * Returns: (transfer full): The active gradient.
+ * Returns: (transfer none): The active gradient.
  *
  * Since: 2.2
  **/
@@ -2533,7 +2533,7 @@ gimp_context_set_gradient_reverse (gboolean reverse)
  *
  * Returns the currently active palette.
  *
- * Returns: (transfer full): The active palette.
+ * Returns: (transfer none): The active palette.
  *
  * Since: 2.2
  **/
@@ -2604,7 +2604,7 @@ gimp_context_set_palette (GimpPalette *palette)
  *
  * Returns the currently active font.
  *
- * Returns: (transfer full): The active font.
+ * Returns: (transfer none): The active font.
  *
  * Since: 2.2
  **/

@@ -44,7 +44,7 @@
  *
  * Creates a new gradient having no segments.
  *
- * Returns: (transfer full): The gradient.
+ * Returns: (transfer none): The gradient.
  *
  * Since: 2.2
  **/
@@ -80,7 +80,7 @@ gimp_gradient_new (const gchar *name)
  *
  * Returns the gradient with the given name.
  *
- * Returns: (transfer full): The gradient.
+ * Returns: (transfer none): The gradient.
  *
  * Since: 3.0
  **/

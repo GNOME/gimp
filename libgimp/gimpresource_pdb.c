@@ -337,7 +337,7 @@ gimp_resource_is_editable (GimpResource *resource)
  *
  * Returns a copy having a different, unique ID.
  *
- * Returns: (transfer full): A copy of the resource.
+ * Returns: (transfer none): A copy of the resource.
  *
  * Since: 3.0
  **/

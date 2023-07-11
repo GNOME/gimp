@@ -805,7 +805,7 @@ register_brush_procs (GimpPDB *pdb)
                                "gimp-brush-get-by-name");
   gimp_procedure_set_static_help (procedure,
                                   "Returns the brush with the given name.",
-                                  "Returns the brush with the given name.",
+                                  "Search and return an existing brush with the name in argument, or nothing if no brush has this name.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
