@@ -731,12 +731,12 @@ script_fu_arg_append_repr_from_self (SFArg       *arg,
 /* Array the size of the enum
  * Counts names generated per SF type per generator session.
  */
-static gint arg_count[SF_DISPLAY] = { 0, };
+static gint arg_count[SF_DISPLAY + 1] = { 0, };
 
 void
 script_fu_arg_reset_name_generator (void)
 {
-  for (guint i = 0; i<SF_DISPLAY; i++)
+  for (guint i = 0; i <= SF_DISPLAY; i++)
     arg_count[i] = 0;
 }
 
