@@ -78,9 +78,7 @@ gimp_brush_new (const gchar *name)
  *
  * Returns the brush with the given name.
  *
- * Returns the brush with the given name.
- *
- * Returns: (transfer full): The brush.
+ * Returns: (transfer none): The brush.
  *
  * Since: 3.0
  **/
