@@ -1827,22 +1827,22 @@ mklabel (texture * t)
   static gchar tmps[100];
 
   if (t->majtype == 0)
-    strcpy (tmps, _("Texture"));
+    g_strlcpy (tmps, _("Texture"), sizeof(tmps));
   else if (t->majtype == 1)
-    strcpy (tmps, _("Bumpmap"));
+    g_strlcpy (tmps, _("Bumpmap"), sizeof(tmps));
   else if (t->majtype == 2)
-    strcpy (tmps, _("Light"));
+    g_strlcpy (tmps, _("Light"), sizeof(tmps));
   else
-    strcpy (tmps, "<unknown>");
+    g_strlcpy (tmps, "<unknown>", sizeof(tmps));
   if ((t->majtype == 0) || (t->majtype == 1))
     {
-      strcat (tmps, " / ");
+      g_strlcat (tmps, " / ", sizeof(tmps));
       l = textures;
       while (l->s)
         {
           if (t->type == l->n)
             {
-              strcat (tmps, gettext (l->s));
+              g_strlcat (tmps, gettext (l->s), sizeof(tmps));
               break;
             }
           l++;
