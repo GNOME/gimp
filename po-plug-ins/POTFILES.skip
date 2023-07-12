@@ -16,8 +16,6 @@ libgimpthumb
 libgimpwidgets
 menus
 modules
-plug-ins/common/animation-play.c
-plug-ins/common/curve-bend.c
 plug-ins/goat-exercises/goat-exercise-vala.c
 plug-ins/imagemap/imap_cern_parse.c
 plug-ins/imagemap/imap_csim_parse.c
