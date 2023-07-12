@@ -345,7 +345,7 @@ optimize_run (GimpProcedure        *procedure,
   image = do_optimizations (run_mode, image, diff_only);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_displays_flush();
+    gimp_displays_flush ();
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -590,7 +590,7 @@ do_optimizations (GimpRunMode  run_mode,
 
       for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
         {
-          these_rows[this_frame_num] = g_malloc(width * pixelstep);
+          these_rows[this_frame_num] = g_malloc (width * pixelstep);
 
           red[this_frame_num]   = g_new (guchar, width);
           green[this_frame_num] = g_new (guchar, width);
@@ -601,7 +601,7 @@ do_optimizations (GimpRunMode  run_mode,
 
       for (row = 0; row < height; row++)
         {
-          memset(num_colors, 0, width * sizeof(guint));
+          memset (num_colors, 0, width * sizeof (guint));
 
           for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
             {
@@ -702,9 +702,9 @@ do_optimizations (GimpRunMode  run_mode,
                 (best_count == 0) ? 0 : 255;
 
               if (best_count == 0)
-                g_warning("yayyyy!");
+                g_warning ("yayyyy!");
             }
-          /*      memcpy(&back_frame[width * pixelstep * row],
+          /*      memcpy (&back_frame[width * pixelstep * row],
                   these_rows[0],
                   width * pixelstep);*/
         }
@@ -763,7 +763,7 @@ do_optimizations (GimpRunMode  run_mode,
             GIMP_DRAWABLE (layers[total_frames-(this_frame_num+1)]);
 
           /* Image has been closed/etc since we got the layer list? */
-          /* FIXME - How do we tell if a gimp_drawable_get() fails? */
+          /* FIXME - How do we tell if a gimp_drawable_get () fails? */
           if (gimp_drawable_get_width (drawable) == 0)
             {
               gimp_quit ();
@@ -1048,7 +1048,7 @@ do_optimizations (GimpRunMode  run_mode,
               /*
                * Collapse opti_frame data down such that the data
                *  which occupies the bounding box sits at the start
-               *  of the data (for convenience with ..set_rect()).
+               *  of the data (for convenience with ..set_rect ()).
                */
               destptr = opti_frame;
               /*
@@ -1095,23 +1095,23 @@ do_optimizations (GimpRunMode  run_mode,
           oldlayer_name =
             gimp_item_get_name (GIMP_ITEM (layers[total_frames-(this_frame_num+1)]));
 
-          buflen = strlen(oldlayer_name) + 40;
+          buflen = strlen (oldlayer_name) + 40;
 
-          newlayer_name = g_malloc(buflen);
+          newlayer_name = g_malloc (buflen);
 
-          remove_disposal_tag(newlayer_name, oldlayer_name);
-          g_free(oldlayer_name);
+          remove_disposal_tag (newlayer_name, oldlayer_name);
+          g_free (oldlayer_name);
 
-          oldlayer_name = g_malloc(buflen);
+          oldlayer_name = g_malloc (buflen);
 
-          remove_ms_tag(oldlayer_name, newlayer_name);
+          remove_ms_tag (oldlayer_name, newlayer_name);
 
-          g_snprintf(newlayer_name, buflen, "%s(%dms)%s",
-                     oldlayer_name, this_delay,
-                     (this_frame_num ==  0) ? "" :
-                     can_combine ? "(combine)" : "(replace)");
+          g_snprintf (newlayer_name, buflen, "%s(%dms)%s",
+                      oldlayer_name, this_delay,
+                      (this_frame_num ==  0) ? "" :
+                      can_combine ? "(combine)" : "(replace)");
 
-          g_free(oldlayer_name);
+          g_free (oldlayer_name);
 
           /* Empty frame! */
           if (bbox_right <= bbox_left ||
@@ -1251,7 +1251,7 @@ is_ms_tag (const gchar *str,
   gint offset;
   gint length;
 
-  length = strlen(str);
+  length = strlen (str);
 
   if (str[0] != '(')
     return FALSE;
@@ -1353,7 +1353,7 @@ parse_disposal_tag (const gchar *str)
   gint        i, dummy;
   gint        length;
 
-  length = strlen(str);
+  length = strlen (str);
 
   for (i=0; i<length; i++)
     {
@@ -1376,13 +1376,13 @@ remove_disposal_tag (gchar *dest,
   int         taglength;
   DisposeType dummy;
 
-  length = strlen(src);
+  length = strlen (src);
 
-  strcpy(dest, src);
+  strcpy (dest, src);
 
   while (offset<=length)
     {
-      if (is_disposal_tag(&src[offset], &dummy, &taglength))
+      if (is_disposal_tag (&src[offset], &dummy, &taglength))
         {
           offset += taglength;
         }
@@ -1404,13 +1404,13 @@ remove_ms_tag (gchar *dest,
   gint taglength;
   gint dummy;
 
-  length = strlen(src);
+  length = strlen (src);
 
-  strcpy(dest, src);
+  strcpy (dest, src);
 
   while (offset<=length)
     {
-      if (is_ms_tag(&src[offset], &dummy, &taglength))
+      if (is_ms_tag (&src[offset], &dummy, &taglength))
         {
           offset += taglength;
         }
