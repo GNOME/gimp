@@ -39,6 +39,7 @@ option('cairo-pdf',         type: 'feature', value: 'auto', description: 'Cairo-
 option('ghostscript',       type: 'feature', value: 'auto', description: 'Ghostscript support')
 option('gudev',             type: 'feature', value: 'auto', description: 'Gudev support')
 option('heif',              type: 'feature', value: 'auto', description: 'HEIF support')
+option('ilbm',              type: 'feature', value: 'auto', description: 'Amiga IFF support')
 option('jpeg2000',          type: 'feature', value: 'auto', description: 'Jpeg-2000 support')
 option('jpeg-xl',           type: 'feature', value: 'auto', description: 'JPEG XL support')
 option('mng',               type: 'feature', value: 'auto', description: 'Mng support')
