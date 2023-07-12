@@ -42,6 +42,9 @@ static void   gimp_image_editor_real_set_image (GimpImageEditor  *editor,
 static void   gimp_image_editor_image_flush    (GimpImage        *image,
                                                 gboolean          invalidate_preview,
                                                 GimpImageEditor  *editor);
+static gboolean
+              gimp_image_editor_image_flush_idle
+                                               (gpointer user_data);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpImageEditor, gimp_image_editor, GIMP_TYPE_EDITOR,
@@ -173,7 +176,19 @@ gimp_image_editor_image_flush (GimpImage       *image,
                                gboolean         invalidate_preview,
                                GimpImageEditor *editor)
 {
+  g_idle_add_full (G_PRIORITY_LOW,
+                   (GSourceFunc) gimp_image_editor_image_flush_idle,
+                   g_object_ref (editor), g_object_unref);
+}
+
+static gboolean
+gimp_image_editor_image_flush_idle (gpointer user_data)
+{
+  GimpImageEditor *editor = user_data;
+
   if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
     gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
                             gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
+
+  return G_SOURCE_REMOVE;
 }
