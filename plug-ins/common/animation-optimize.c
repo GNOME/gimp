@@ -1142,6 +1142,7 @@ do_optimizations (GimpRunMode  run_mode,
               gimp_item_set_name (GIMP_ITEM (last_true_frame), newlayer_name);
 
               g_free (newlayer_name);
+              g_free (oldlayer_name);
             }
           else
             {
