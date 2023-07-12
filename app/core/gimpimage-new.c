@@ -112,6 +112,7 @@ gimp_image_new_from_template (Gimp         *gimp,
                              gimp_template_get_base_type (template),
                              gimp_template_get_precision (template),
                              FALSE);
+  gimp_context_set_image (context, image);
 
   gimp_image_undo_disable (image);
 
