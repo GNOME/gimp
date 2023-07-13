@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-11 23:34+0000\n"
-"PO-Revision-Date: 2023-07-12 05:43+0200\n"
+"POT-Creation-Date: 2023-07-13 04:56+0000\n"
+"PO-Revision-Date: 2023-07-13 06:59+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -427,6 +427,122 @@ msgstr "ანიმაციის ფონის ძებნა"
 #: plug-ins/common/animation-optimize.c:533
 msgid "Optimizing animation"
 msgstr "ანიმაციის ოპტიმიზაცია"
+
+#: plug-ins/common/animation-play.c:331
+msgid "_Playback..."
+msgstr ""
+
+#: plug-ins/common/animation-play.c:336
+msgid "Preview a GIMP layer-based animation"
+msgstr ""
+
+#. list is given in "fps" - frames per second
+#: plug-ins/common/animation-play.c:498 plug-ins/common/animation-play.c:556
+#: plug-ins/common/animation-play.c:834
+#, fuzzy, c-format
+msgid "%.1f %%"
+msgstr "%.1f %%"
+
+#. Image Name
+#: plug-ins/common/animation-play.c:689
+msgid "Animation Playback:"
+msgstr ""
+
+#: plug-ins/common/animation-play.c:767 plug-ins/common/animation-play.c:1383
+msgid "Start playback"
+msgstr ""
+
+#: plug-ins/common/animation-play.c:769
+msgid "Step _back"
+msgstr ""
+
+#: plug-ins/common/animation-play.c:769
+msgid "Step back to previous frame"
+msgstr ""
+
+#: plug-ins/common/animation-play.c:771
+msgid "_Step"
+msgstr ""
+
+#: plug-ins/common/animation-play.c:771
+#, fuzzy
+#| msgid "Show Line Frame"
+msgid "Step to next frame"
+msgstr "ხაზის კადრის ჩვენება"
+
+#: plug-ins/common/animation-play.c:773
+#, fuzzy
+#| msgid "Save a_nimation"
+msgid "Rewind the animation"
+msgstr "_ანიმაციის შენახვა"
+
+#: plug-ins/common/animation-play.c:776
+#, fuzzy
+msgid "Detach"
+msgstr "მოხსნა"
+
+#: plug-ins/common/animation-play.c:776
+msgid "Detach the animation from the dialog window"
+msgstr ""
+
+#: plug-ins/common/animation-play.c:778
+#, fuzzy
+#| msgid "Reload current page"
+msgid "Reload the image"
+msgstr "მიმდინარე გვერდის თავიდან ჩატვირთვა"
+
+#. Zoom Options
+#: plug-ins/common/animation-play.c:849
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:649
+msgid "Zoom"
+msgstr "გადიდება"
+
+#. list is given in "fps" - frames per second
+#: plug-ins/common/animation-play.c:859
+#, c-format
+msgid "%d fps"
+msgstr ""
+
+#: plug-ins/common/animation-play.c:870
+#, fuzzy
+#| msgid "Default fra_me delay"
+msgid "Default framerate"
+msgstr "ნაგულისხმები _კადრის დაყოვნება"
+
+#: plug-ins/common/animation-play.c:890
+#, fuzzy
+msgid "Playback speed"
+msgstr "დაკვრის სიჩქარე"
+
+#. 2 styles of default frame disposals: cumulative layers and one
+#. * frame per layer.
+#.
+#: plug-ins/common/animation-play.c:901 plug-ins/common/file-gif-save.c:1273
+msgid "Cumulative layers (combine)"
+msgstr ""
+
+#: plug-ins/common/animation-play.c:906 plug-ins/common/file-gif-save.c:1275
+msgid "One frame per layer (replace)"
+msgstr ""
+
+#: plug-ins/common/animation-play.c:1002
+msgid "Memory could not be allocated to the frame container."
+msgstr ""
+
+#: plug-ins/common/animation-play.c:1069
+msgid "Invalid image. Did you close it?"
+msgstr ""
+
+#: plug-ins/common/animation-play.c:1181
+#, fuzzy, c-format
+#| msgid "Frame %d (%d%s)"
+msgid "Frame %d of %d"
+msgstr "კადრი %d (%d%s)"
+
+#: plug-ins/common/animation-play.c:1383
+#, fuzzy
+msgid "Stop playback"
+msgstr "დაკვრის გაჩერება"
 
 #: plug-ins/common/blinds.c:140
 msgid "_Blinds..."
@@ -2659,14 +2775,6 @@ msgstr "მილიწამი"
 #: plug-ins/common/file-gif-save.c:1271
 msgid "I don't care"
 msgstr "არ მაინტერესებს"
-
-#: plug-ins/common/file-gif-save.c:1273
-msgid "Cumulative layers (combine)"
-msgstr ""
-
-#: plug-ins/common/file-gif-save.c:1275
-msgid "One frame per layer (replace)"
-msgstr ""
 
 #: plug-ins/common/file-gif-save.c:1306
 msgid "Animated GIF"
@@ -6832,31 +6940,31 @@ msgstr ""
 
 #: plug-ins/common/van-gogh-lic.c:781
 msgid "_Effect image:"
-msgstr ""
+msgstr "_ეფექტის გამოსახულება"
 
 #: plug-ins/common/van-gogh-lic.c:791
 msgid "_Filter length:"
-msgstr ""
+msgstr "_ფილტრის სიგრძე:"
 
 #: plug-ins/common/van-gogh-lic.c:799
 msgid "_Noise magnitude:"
-msgstr ""
+msgstr "_ხმაურის სიმძლავრე:"
 
 #: plug-ins/common/van-gogh-lic.c:807
 msgid "In_tegration steps:"
-msgstr ""
+msgstr "_ინტეგრაციის საფეხურები:"
 
 #: plug-ins/common/van-gogh-lic.c:814
 msgid "_Minimum value:"
-msgstr ""
+msgstr "_მინიმალური მნიშვნელობა:"
 
 #: plug-ins/common/van-gogh-lic.c:821
 msgid "M_aximum value:"
-msgstr ""
+msgstr "მ_აქსიმალური მნიშვნელობა:"
 
 #: plug-ins/common/van-gogh-lic.c:878
 msgid "_Van Gogh (LIC)..."
-msgstr ""
+msgstr "_ვან გოგი (LIC)..."
 
 #: plug-ins/common/van-gogh-lic.c:882
 msgid "Special effects that nobody understands"
@@ -8187,8 +8295,9 @@ msgid "Error reading data. Most likely unexpected end of file."
 msgstr ""
 
 #: plug-ins/file-psd/psd-util.c:199
+#, fuzzy
 msgid "Unexpected end of file"
-msgstr ""
+msgstr "ფაილის მოულოდნელი ბოლო"
 
 #: plug-ins/file-psd/psd.c:131 plug-ins/file-psd/psd.c:211
 msgid "Photoshop image"
@@ -9210,11 +9319,6 @@ msgstr ""
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:641
 msgid "R_edraw preview"
 msgstr ""
-
-#. Zoom Options
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:649
-msgid "Zoom"
-msgstr "გადიდება"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:662
 msgid "Zoom _In"
