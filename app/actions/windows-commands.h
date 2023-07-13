@@ -48,6 +48,9 @@ void  windows_show_dock_cmd_callback              (GimpAction *action,
 void  windows_open_recent_cmd_callback            (GimpAction *action,
                                                    GVariant   *value,
                                                    gpointer    data);
+void  windows_save_positions_cmd_callback         (GimpAction *action,
+                                                   GVariant   *value,
+                                                   gpointer    data);
 
 
 #endif /* __WINDOWS_COMMANDS_H__ */

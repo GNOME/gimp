@@ -112,6 +112,12 @@ static const GimpActionEntry windows_actions[] =
 
   { "windows-tab-position",        NULL, NC_("windows-action",
                                              "_Tabs Position")   },
+
+  { "windows-save-positions", NULL,
+    NC_("windows-action", "Save _Window Positions"), NULL, { NULL },
+    NC_("windows-action", "Save the current session layout"),
+    windows_save_positions_cmd_callback,
+    NULL },
 };
 
 static const GimpToggleActionEntry windows_toggle_actions[] =
@@ -248,6 +254,8 @@ windows_actions_update (GimpActionGroup *group,
 
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
+#define SET_SENSITIVE(action,condition) \
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_ACTIVE ("windows-use-single-window-mode", config->single_window_mode);
   SET_ACTIVE ("windows-hide-docks", config->hide_docks);
@@ -278,7 +286,12 @@ windows_actions_update (GimpActionGroup *group,
   gimp_action_group_set_action_sensitive (group, "windows-show-tabs", config->single_window_mode,
                                           _("Single-window mode disabled"));
 
+#ifdef GDK_WINDOWING_WAYLAND
+  SET_SENSITIVE ("windows-save-positions", FALSE);
+#endif
+
 #undef SET_ACTIVE
+#undef SET_SENSITIVE
 }
 
 gchar *

@@ -42,6 +42,8 @@
 
 #include "dialogs/dialogs.h"
 
+#include "gui/session.h"
+
 #include "actions.h"
 #include "dialogs-actions.h"
 #include "windows-commands.h"
@@ -221,4 +223,16 @@ windows_open_recent_cmd_callback (GimpAction *action,
                              gimp_widget_get_monitor (widget));
 
   g_object_unref (info);
+}
+
+void
+windows_save_positions_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
+{
+  Gimp *gimp;
+
+  return_if_no_gimp (gimp, data);
+
+  session_save (gimp, TRUE);
 }

@@ -885,6 +885,7 @@
           <item><attribute name="action">app.windows-tabs-position-left</attribute></item>
           <item><attribute name="action">app.windows-tabs-position-right</attribute></item>
         </submenu>
+        <item><attribute name="action">app.windows-save-positions</attribute></item>
         <item><attribute name="action">app.windows-use-single-window-mode</attribute></item>
       </section>
     </submenu>
