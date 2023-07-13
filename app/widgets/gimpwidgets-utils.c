@@ -2424,8 +2424,29 @@ gimp_utils_make_canonical_menu_label (const gchar *path)
   return canon_path;
 }
 
+/**
+ * gimp_utils_break_menu_path:
+ * @path:
+ * @section_name:
+ *
+ * Break @path which is in the form "/_some/p_ath" into a GStrv containing "some"
+ * and "path", in a canonical way:
+ * - Multiple slashes are folded to one (e.g. "//some///path/" and "/some/path"
+ *   are equivalent).
+ * - End slash or none are equivalent.
+ * - Individual path components are canonicalized with
+ *   gimp_utils_make_canonical_menu_label(), in particular with mnemonic
+ *   underscore removed.
+ *
+ * Moreover if @section_name is not %NULL, then a path component of the form
+ * "[section]" at the end of the path will be removed and "section" will be
+ * stored inside @section_name. Furthermore, "[[label]]" or "[[label]" will both
+ * be transformed into a component path "[label]", without being removed, as a
+ * way to create menu paths containing square brackets.
+ */
 gchar **
-gimp_utils_break_menu_path (const gchar *path)
+gimp_utils_break_menu_path (const gchar  *path,
+                            gchar       **section_name)
 {
   GRegex *path_regex;
   gchar **paths;
@@ -2452,6 +2473,33 @@ gimp_utils_break_menu_path (const gchar *path)
     {
       gchar *canon_path;
 
+      if (section_name && paths[i + 1] == NULL)
+        {
+          gint path_len;
+
+          path_len = strlen (paths[i]);
+          if (path_len > 2 && paths[i][0] == '[' && paths[i][path_len - 1] == ']')
+            {
+              if (paths[i][1] == '[')
+                {
+                  if (paths[i][path_len - 2] == ']')
+                    paths[i][path_len - 1] = '\0';
+
+                  canon_path = g_strdup (paths[i] + 1);
+                  g_free (paths[i]);
+                  paths[i] = canon_path;
+                }
+              else
+                {
+                  paths[i][path_len - 1] = '\0';
+                  *section_name = g_strdup (paths[i] + 1);
+
+                  g_free (paths[i]);
+                  paths[i] = NULL;
+                  break;
+                }
+            }
+        }
       canon_path = gimp_utils_make_canonical_menu_label (paths[i]);
       g_free (paths[i]);
       paths[i] = canon_path;
@@ -2463,8 +2511,9 @@ gimp_utils_break_menu_path (const gchar *path)
 }
 
 gboolean
-gimp_utils_are_menu_path_identical (const gchar *path1,
-                                    const gchar *path2)
+gimp_utils_are_menu_path_identical (const gchar  *path1,
+                                    const gchar  *path2,
+                                    gchar       **path1_section_name)
 {
   gchar    **paths1;
   gchar    **paths2;
@@ -2475,8 +2524,8 @@ gimp_utils_are_menu_path_identical (const gchar *path1,
   if (path2 == NULL)
     path2 = "/";
 
-  paths1 = gimp_utils_break_menu_path (path1);
-  paths2 = gimp_utils_break_menu_path (path2);
+  paths1 = gimp_utils_break_menu_path (path1, path1_section_name);
+  paths2 = gimp_utils_break_menu_path (path2, NULL);
   if (g_strv_length (paths1) != g_strv_length (paths2))
     {
       identical = FALSE;

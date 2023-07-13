@@ -155,9 +155,11 @@ void              gimp_widget_flush_expose         (void);
 void              gimp_make_valid_action_name      (gchar                 *action_name);
 
 gchar           * gimp_utils_make_canonical_menu_label (const gchar       *path);
-gchar          ** gimp_utils_break_menu_path           (const gchar       *path);
+gchar          ** gimp_utils_break_menu_path           (const gchar       *path,
+                                                        gchar            **section_name);
 gboolean          gimp_utils_are_menu_path_identical   (const gchar       *path1,
-                                                        const gchar       *path2);
+                                                        const gchar       *path2,
+                                                        gchar            **path1_section_name);
 
 
 #endif /* __APP_GIMP_WIDGETS_UTILS_H__ */

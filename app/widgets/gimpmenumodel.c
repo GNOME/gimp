@@ -80,6 +80,8 @@ struct _GimpMenuModelPrivate
   GimpRGB       *submenu_color;
 
   GList         *items;
+
+  GHashTable    *named_sections;
 };
 
 
@@ -115,7 +117,8 @@ static gboolean     gimp_menu_model_is_mutable               (GMenuModel        
 static void         gimp_menu_model_initialize               (GimpMenuModel       *model,
                                                               GMenuModel          *gmodel);
 static gboolean     gimp_menu_model_handles_subpath          (GimpMenuModel       *model,
-                                                              const gchar         *path);
+                                                              const gchar         *path,
+                                                              const gchar         *section_name);
 
 static GMenuItem  * gimp_menu_model_get_item                 (GimpMenuModel       *model,
                                                               gint                 idx);
@@ -216,6 +219,9 @@ gimp_menu_model_init (GimpMenuModel *model)
   model->priv->is_section    = FALSE;
   model->priv->submenu_item  = NULL;
   model->priv->submenu_color = NULL;
+
+  model->priv->named_sections = g_hash_table_new_full (g_str_hash, g_str_equal,
+                                                       g_free, NULL);
 }
 
 static void
@@ -228,6 +234,7 @@ gimp_menu_model_finalize (GObject *object)
   g_list_free_full (model->priv->items, g_object_unref);
   g_free (model->priv->path);
   g_free (model->priv->submenu_color);
+  g_hash_table_destroy (model->priv->named_sections);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -675,10 +682,18 @@ gimp_menu_model_initialize (GimpMenuModel *model,
       if (subsection != NULL)
         {
           GimpMenuModel *submodel;
+          gchar         *section_name = NULL;
 
           submodel = gimp_menu_model_new_section (model->priv->manager, subsection,
                                                   model->priv->path);
           item = g_menu_item_new_section (label, G_MENU_MODEL (submodel));
+
+          if (g_menu_model_get_item_attribute (G_MENU_MODEL (gmodel), i,
+                                               "section-name", "s", &section_name))
+            g_hash_table_insert (model->priv->named_sections,
+                                 (gpointer) section_name,
+                                 item);
+
           g_object_unref (submodel);
         }
       else if (submenu != NULL && label == NULL)
@@ -809,10 +824,21 @@ gimp_menu_model_initialize (GimpMenuModel *model,
 
 static gboolean
 gimp_menu_model_handles_subpath (GimpMenuModel *model,
-                                 const gchar   *path)
+                                 const gchar   *path,
+                                 const gchar   *section_name)
 {
-  if (model->priv->path != NULL && ! g_str_has_prefix (path, model->priv->path))
-    return FALSE;
+  gchar *real_path;
+
+  if (section_name != NULL)
+    real_path = g_strndup (path, strlen (path) - strlen (section_name) - 2);
+  else
+    real_path = g_strdup (path);
+
+  if (model->priv->path != NULL && ! g_str_has_prefix (real_path, model->priv->path))
+    {
+      g_free (real_path);
+      return FALSE;
+    }
 
   for (GList *iter = model->priv->items; iter; iter = iter->next)
     {
@@ -830,7 +856,7 @@ gimp_menu_model_handles_subpath (GimpMenuModel *model,
            * the whole menu. So we only handle the negative result (which means
            * we found a submenu model which will handle this path instead).
            */
-          if (! gimp_menu_model_handles_subpath (GIMP_MENU_MODEL (subsection), path))
+          if (! gimp_menu_model_handles_subpath (GIMP_MENU_MODEL (subsection), real_path, NULL))
             {
               g_free (label);
               g_clear_object (&subsection);
@@ -844,14 +870,15 @@ gimp_menu_model_handles_subpath (GimpMenuModel *model,
           g_return_val_if_fail (label != NULL, FALSE);
           subpath = g_strdup_printf ("%s/", GIMP_MENU_MODEL (submenu)->priv->path);
 
-          if (g_strcmp0 (path, GIMP_MENU_MODEL (submenu)->priv->path) == 0 ||
-              g_str_has_prefix (path, subpath))
+          if (g_strcmp0 (real_path, GIMP_MENU_MODEL (submenu)->priv->path) == 0 ||
+              g_str_has_prefix (real_path, subpath))
             {
               /* A submodel will handle the new path. */
               g_free (subpath);
               g_free (label);
               g_clear_object (&subsection);
               g_clear_object (&submenu);
+              g_free (real_path);
 
               return FALSE;
             }
@@ -863,6 +890,8 @@ gimp_menu_model_handles_subpath (GimpMenuModel *model,
       g_clear_object (&subsection);
       g_clear_object (&submenu);
     }
+
+  g_free (real_path);
 
   /* This is a subpath with submenus to be created! */
   return TRUE;
@@ -923,7 +952,7 @@ gimp_menu_model_get_menu_item_rec (GimpMenuModel  *model,
   g_return_val_if_fail (item == model->priv->submenu_item, NULL);
   g_return_val_if_fail (menu != NULL && *menu == NULL, NULL);
 
-  if (gimp_utils_are_menu_path_identical (path, model->priv->path))
+  if (gimp_utils_are_menu_path_identical (path, model->priv->path, NULL))
     {
       *menu = model;
       return item;
@@ -1023,9 +1052,11 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
                           gboolean       top,
                           GimpMenuModel *model)
 {
-  gboolean added = FALSE;
+  gchar         *section_name = NULL;
+  gboolean       added        = FALSE;
+  GimpMenuModel *mod_model    = g_object_ref (model);
 
-  if (gimp_utils_are_menu_path_identical (path, model->priv->path))
+  if (gimp_utils_are_menu_path_identical (path, model->priv->path, &section_name))
     {
       GApplication *app = model->priv->manager->gimp->app;
       GAction      *action;
@@ -1061,6 +1092,18 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
 
       if (model->priv->manager->store_action_paths)
         gimp_action_set_menu_path (GIMP_ACTION (action), gimp_menu_model_get_path (model));
+
+      if (section_name != NULL)
+        {
+          GMenuItem *section_item;
+
+          section_item = g_hash_table_lookup (model->priv->named_sections, section_name);
+          if (section_item)
+            {
+              g_object_unref (mod_model);
+              mod_model = GIMP_MENU_MODEL (g_menu_item_get_link (section_item, G_MENU_LINK_SECTION));
+            }
+        }
 
       if (placeholder_key)
         {
@@ -1114,16 +1157,16 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
         }
       else if (top)
         {
-          model->priv->items = g_list_prepend (model->priv->items, item);
+          mod_model->priv->items = g_list_prepend (mod_model->priv->items, item);
         }
       else
         {
-          model->priv->items = g_list_append (model->priv->items, item);
+          mod_model->priv->items = g_list_append (mod_model->priv->items, item);
         }
 
       if (added)
         {
-          gint position = gimp_menu_model_get_position (model, action_name, NULL);
+          gint position = gimp_menu_model_get_position (mod_model, action_name, NULL);
 
           g_signal_connect_object (action,
                                    "notify::visible",
@@ -1137,14 +1180,14 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
                                    "notify::label",
                                    G_CALLBACK (gimp_menu_model_action_notify_label),
                                    item, 0);
-          g_menu_model_items_changed (G_MENU_MODEL (model), position, 0, 1);
+          g_menu_model_items_changed (G_MENU_MODEL (mod_model), position, 0, 1);
         }
       else
         {
           g_object_unref (item);
         }
     }
-  else if (gimp_menu_model_handles_subpath (model, path))
+  else if (gimp_menu_model_handles_subpath (model, path, section_name))
     {
       GimpMenuModel *submodel;
       GMenuItem     *item;
@@ -1163,6 +1206,21 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
       end_new_dir = strstr (new_dir, "/");
       if (end_new_dir)
         *end_new_dir = '\0';
+
+      if (strlen (new_dir) > 3 &&
+          new_dir[0] == '[' && new_dir[1] == '[' &&
+          new_dir[strlen (new_dir) - 1] == ']')
+        {
+          /* We allow both "[[dir]" and "[[dir]]" to be canonicalized as
+           * "[dir]". This allows to differentiate with the original "[section]"
+           * as the syntax to indicate a menu section while still allowing
+           * people to use square brackets if they want to.
+           */
+          if (new_dir[strlen (new_dir) - 2] == ']')
+            new_dir[strlen (new_dir) - 1] = '\0';
+
+          new_dir++;
+        }
 
       canon_label   = gimp_utils_make_canonical_menu_label (new_dir);
       submodel_path = g_strdup_printf ("%s/%s",
@@ -1184,6 +1242,9 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
 
       g_free (new_dirs);
     }
+
+  g_clear_object (&mod_model);
+  g_free (section_name);
 
   return added;
 }
