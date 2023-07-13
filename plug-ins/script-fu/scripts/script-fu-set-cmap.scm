@@ -61,4 +61,4 @@
     SF-PALETTE  _"Palette"  "Default"
 )
 
-(script-fu-menu-register "script-fu-set-cmap" "<Image>/Colors/Map/Colormap")
+(script-fu-menu-register "script-fu-set-cmap" "<Image>/Colors/Map/[Colormap]")

@@ -161,4 +161,4 @@
 )
 
 (script-fu-menu-register "script-fu-selection-rounded-rectangle"
-                         "<Image>/Select/Modify")
+                         "<Image>/Select/[Modify]")

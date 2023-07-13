@@ -187,7 +187,7 @@ mail_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_menu_label (procedure, _("Send by E_mail..."));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_EDIT);
-      gimp_procedure_add_menu_path (procedure, "<Image>/File");
+      gimp_procedure_add_menu_path (procedure, "<Image>/File/[Send]");
 
       gimp_procedure_set_documentation (procedure,
                                         _("Send the image by email"),

@@ -497,7 +497,7 @@ script_fu_menu_map (const gchar *menu_path)
     { "<Image>/Script-Fu/Decor",         "<Image>/Filters/Decor"               },
     { "<Image>/Script-Fu/Render",        "<Image>/Filters/Render"              },
     { "<Image>/Script-Fu/Selection",     "<Image>/Select/Modify"               },
-    { "<Image>/Script-Fu/Shadow",        "<Image>/Filters/Light and Shadow/Shadow" },
+    { "<Image>/Script-Fu/Shadow",        "<Image>/Filters/Light and Shadow/[Shadow]" },
     { "<Image>/Script-Fu/Stencil Ops",   "<Image>/Filters/Decor"               }
   };
 

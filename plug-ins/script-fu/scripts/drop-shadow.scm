@@ -184,4 +184,4 @@
 )
 
 (script-fu-menu-register "script-fu-drop-shadow"
-                         "<Image>/Filters/Light and Shadow/Shadow")
+                         "<Image>/Filters/Light and Shadow/[Shadow]")

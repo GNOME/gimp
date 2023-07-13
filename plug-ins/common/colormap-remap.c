@@ -185,7 +185,7 @@ remap_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_menu_label (procedure, _("R_earrange Colormap..."));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_COLORMAP);
-      gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Map/Colormap");
+      gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Map/[Colormap]");
       gimp_procedure_add_menu_path (procedure, "<Colormap>");
 
       gimp_procedure_set_documentation (procedure,

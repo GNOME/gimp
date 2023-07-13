@@ -10,7 +10,6 @@
         <submenu>
           <attribute name="label" translatable="yes" context="file-action">Crea_te</attribute>
           <item><attribute name="action">app.edit-paste-as-new-image</attribute></item>
-          <!-- TODO: "From Clipboard" and "From webpage", probably from plug-ins. -->
         </submenu>
         <item><attribute name="action">app.file-open</attribute></item>
         <item><attribute name="action">app.file-open-as-layers</attribute></item>
@@ -52,7 +51,9 @@
         <item><attribute name="action">app.file-export-as</attribute></item>
         <item><attribute name="action">app.file-create-template</attribute></item>
       </section>
-      <!-- TODO: print and send by email missing. -->
+      <section>
+        <attribute name="section-name">Send</attribute>
+      </section>
       <section>
         <item><attribute name="action">app.file-copy-location</attribute></item>
         <item><attribute name="action">app.file-show-in-file-manager</attribute></item>
@@ -106,12 +107,12 @@
         <item><attribute name="action">app.vectors-stroke</attribute></item>
       </section>
       <section>
+        <attribute name="section-name">Preferences</attribute>
         <item><attribute name="action">app.dialogs-preferences</attribute></item>
         <item><attribute name="action">app.dialogs-extensions</attribute></item>
         <item><attribute name="action">app.dialogs-input-devices</attribute></item>
         <item><attribute name="action">app.dialogs-keyboard-shortcuts</attribute></item>
         <item><attribute name="action">app.dialogs-module-dialog</attribute></item>
-        <!-- TODO: missing "Units", probably from plug-in. -->
       </section>
     </submenu>
 
@@ -127,13 +128,15 @@
         <item><attribute name="action">app.tools-by-color-select-short</attribute></item>
         <item><attribute name="action">app.vectors-selection-from-vectors</attribute></item>
         <item><attribute name="action">app.dialogs-selection-editor</attribute></item>
+      </section>
+      <section>
+        <attribute name="section-name">Modify</attribute>
         <item><attribute name="action">app.select-feather</attribute></item>
         <item><attribute name="action">app.select-sharpen</attribute></item>
         <item><attribute name="action">app.select-shrink</attribute></item>
         <item><attribute name="action">app.select-grow</attribute></item>
         <item><attribute name="action">app.select-border</attribute></item>
         <item><attribute name="action">app.select-flood</attribute></item>
-        <!-- TODO: missing Distort and Rounded Rect, prob from plug-ins. -->
       </section>
       <section>
         <item><attribute name="action">app.quick-mask-toggle</attribute></item>
@@ -150,7 +153,6 @@
       <item><attribute name="action">app.view-show-all</attribute></item>
       <item><attribute name="action">app.view-dot-for-dot</attribute></item>
       <submenu>
-        <!-- TODO: Zoom label shows current zoom value. -->
         <attribute name="label" translatable="yes" context="view-action">_Zoom</attribute>
         <section>
           <item><attribute name="action">app.view-zoom-revert</attribute></item>
@@ -176,7 +178,6 @@
         </section>
       </submenu>
       <submenu>
-        <!-- TODO: shows the current rotation angle. -->
         <attribute name="label" translatable="yes" context="view-action">_Flip &amp; Rotate</attribute>
         <section>
           <item><attribute name="action">app.view-reset</attribute></item>
@@ -347,25 +348,27 @@
         <item><attribute name="action">app.image-scale</attribute></item>
       </section>
       <section>
+        <attribute name="section-name">Crop</attribute>
         <item><attribute name="action">app.image-crop-to-selection</attribute></item>
         <item><attribute name="action">app.image-crop-to-content</attribute></item>
       </section>
-      <!-- TODO: missing (prob from plug-ins): Slice using guides, zealous crop -->
       <section>
+        <attribute name="section-name">Arrange</attribute>
         <item><attribute name="action">app.image-merge-layers</attribute></item>
         <item><attribute name="action">app.image-flatten</attribute></item>
-        <!-- TODO: missing (prob from plug-ins): align visible layers -->
       </section>
       <section>
         <submenu>
           <attribute name="label" translatable="yes" context="image-action">_Guides</attribute>
-          <!-- TODO: missing (prob from plug-ins): all guides actions -->
         </submenu>
         <item><attribute name="action">app.image-configure-grid</attribute></item>
       </section>
       <section>
+        <attribute name="section-name">Properties</attribute>
         <item><attribute name="action">app.image-properties</attribute></item>
-        <!-- TODO: missing (prob from plug-ins): metadata -->
+        <submenu>
+          <attribute name="label" translatable="yes" context="image-action">Meta_data</attribute>
+        </submenu>
       </section>
     </submenu>
 
@@ -403,7 +406,6 @@
             <item><attribute name="action">app.layers-raise-to-top</attribute></item>
             <item><attribute name="action">app.layers-lower-to-bottom</attribute></item>
           </section>
-          <!-- TODO: miss Reverse Layer Order -->
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="layers-action">_Mask</attribute>
@@ -499,7 +501,6 @@
           <item><attribute name="action">app.filters-channel-mixer</attribute></item>
           <item><attribute name="action">app.filters-component-extract</attribute></item>
           <item><attribute name="action">app.filters-mono-mixer</attribute></item>
-          <!-- TODO Missing: compose, decompose, recompose -->
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="image-action">D_esaturate</attribute>
@@ -510,13 +511,14 @@
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="image-action">_Map</attribute>
-          <!-- TODO: missing 2 plug-ins -->
+          <section>
+            <attribute name="section-name">Colormap</attribute>
+          </section>
           <section>
             <item><attribute name="action">app.filters-alien-map</attribute></item>
             <item><attribute name="action">app.filters-color-exchange</attribute></item>
             <item><attribute name="action">app.filters-color-rotate</attribute></item>
           </section>
-          <!-- TODO: missing 3 plug-ins -->
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="image-action">_Tone Mapping</attribute>
@@ -524,22 +526,20 @@
           <item><attribute name="action">app.filters-mantiuk-2006</attribute></item>
           <item><attribute name="action">app.filters-reinhard-2005</attribute></item>
           <item><attribute name="action">app.filters-stress</attribute></item>
-          <!-- TODO: missing 2 plug-ins -->
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="image-action">I_nfo</attribute>
           <item><attribute name="action">app.dialogs-histogram</attribute></item>
-          <!-- TODO: missing 3 plug-ins -->
         </submenu>
       </section>
       <section>
+        <attribute name="section-name">Modify</attribute>
         <item><attribute name="action">app.filters-threshold</attribute></item>
         <item><attribute name="action">app.filters-colorize</attribute></item>
         <item><attribute name="action">app.filters-posterize</attribute></item>
         <item><attribute name="action">app.filters-color-to-alpha</attribute></item>
         <item><attribute name="action">app.filters-dither</attribute></item>
         <item><attribute name="action">app.filters-rgb-clip</attribute></item>
-        <!-- TODO: missing 1 plug-in -->
       </section>
     </submenu>
 
@@ -643,7 +643,6 @@
           <item><attribute name="action">app.filters-motion-blur-circular</attribute></item>
           <item><attribute name="action">app.filters-motion-blur-linear</attribute></item>
           <item><attribute name="action">app.filters-motion-blur-zoom</attribute></item>
-          <!-- TODO Miss: tileable blur -->
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">En_hance</attribute>
@@ -654,7 +653,6 @@
           <item><attribute name="action">app.filters-red-eye-removal</attribute></item>
           <item><attribute name="action">app.filters-snn-mean</attribute></item>
           <item><attribute name="action">app.filters-unsharp-mask</attribute></item>
-          <!-- TODO Miss: several plug-ins -->
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">_Distorts</attribute>
@@ -674,21 +672,20 @@
           <item><attribute name="action">app.filters-waves</attribute></item>
           <item><attribute name="action">app.filters-whirl-pinch</attribute></item>
           <item><attribute name="action">app.filters-wind</attribute></item>
-          <!-- TODO Miss: 3 plug-ins -->
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">_Light and Shadow</attribute>
           <section>
+            <attribute name="section-name">Light</attribute>
             <item><attribute name="action">app.filters-bloom</attribute></item>
             <item><attribute name="action">app.filters-supernova</attribute></item>
             <item><attribute name="action">app.filters-lens-flare</attribute></item>
-            <!-- TODO Miss: 3 plug-ins -->
           </section>
           <section>
+            <attribute name="section-name">Shadow</attribute>
             <item><attribute name="action">app.filters-dropshadow</attribute></item>
             <item><attribute name="action">app.filters-long-shadow</attribute></item>
             <item><attribute name="action">app.filters-vignette</attribute></item>
-            <!-- TODO Miss: 3 plug-ins -->
           </section>
         </submenu>
         <submenu>
@@ -723,7 +720,6 @@
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">C_ombine</attribute>
-          <!-- TODO Miss: all plug-ins -->
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">_Artistic</attribute>
@@ -736,11 +732,9 @@
           <item><attribute name="action">app.filters-slic</attribute></item>
           <item><attribute name="action">app.filters-softglow</attribute></item>
           <item><attribute name="action">app.filters-waterpixels</attribute></item>
-          <!-- TODO Miss: various plug-ins -->
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">_Decor</attribute>
-          <!-- TODO Miss: all plug-ins -->
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">_Map</attribute>
@@ -753,40 +747,38 @@
           <item><attribute name="action">app.filters-recursive-transform</attribute></item>
           <item><attribute name="action">app.filters-tile-paper</attribute></item>
           <item><attribute name="action">app.filters-tile-seamless</attribute></item>
-          <!-- TODO Miss: various plug-ins -->
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">_Render</attribute>
-            <!-- TODO Miss: Fractals/ dir -->
-          <submenu>
-            <attribute name="label" translatable="yes" context="filters-action">N_oise</attribute>
-            <item><attribute name="action">app.filters-noise-cell</attribute></item>
-            <item><attribute name="action">app.filters-noise-perlin</attribute></item>
-            <item><attribute name="action">app.filters-plasma</attribute></item>
-            <item><attribute name="action">app.filters-noise-simplex</attribute></item>
-            <item><attribute name="action">app.filters-noise-solid</attribute></item>
-            <!-- TODO Miss: diff clouds plug-in -->
-          </submenu>
-          <submenu>
-            <attribute name="label" translatable="yes" context="filters-action">_Pattern</attribute>
-            <item><attribute name="action">app.filters-bayer-matrix</attribute></item>
-            <item><attribute name="action">app.filters-checkerboard</attribute></item>
-            <item><attribute name="action">app.filters-diffraction-patterns</attribute></item>
-            <item><attribute name="action">app.filters-grid</attribute></item>
-            <item><attribute name="action">app.filters-linear-sinusoid</attribute></item>
-            <item><attribute name="action">app.filters-maze</attribute></item>
-            <item><attribute name="action">app.filters-sinus</attribute></item>
-            <item><attribute name="action">app.filters-spiral</attribute></item>
-            <!-- TODO Miss: various plug-ins -->
-          </submenu>
-          <!-- TODO Miss: various plug-ins -->
+          <section>
+            <submenu>
+              <attribute name="label" translatable="yes" context="filters-action">_Fractals</attribute>
+            </submenu>
+            <submenu>
+              <attribute name="label" translatable="yes" context="filters-action">N_oise</attribute>
+              <item><attribute name="action">app.filters-noise-cell</attribute></item>
+              <item><attribute name="action">app.filters-noise-perlin</attribute></item>
+              <item><attribute name="action">app.filters-plasma</attribute></item>
+              <item><attribute name="action">app.filters-noise-simplex</attribute></item>
+              <item><attribute name="action">app.filters-noise-solid</attribute></item>
+            </submenu>
+            <submenu>
+              <attribute name="label" translatable="yes" context="filters-action">_Pattern</attribute>
+              <item><attribute name="action">app.filters-bayer-matrix</attribute></item>
+              <item><attribute name="action">app.filters-checkerboard</attribute></item>
+              <item><attribute name="action">app.filters-diffraction-patterns</attribute></item>
+              <item><attribute name="action">app.filters-grid</attribute></item>
+              <item><attribute name="action">app.filters-linear-sinusoid</attribute></item>
+              <item><attribute name="action">app.filters-maze</attribute></item>
+              <item><attribute name="action">app.filters-sinus</attribute></item>
+              <item><attribute name="action">app.filters-spiral</attribute></item>
+            </submenu>
+          </section>
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">_Web</attribute>
           <item><attribute name="action">app.filters-semi-flatten</attribute></item>
-          <!-- TODO Miss: 1 plug-in -->
         </submenu>
-        <!-- TODO Miss: Animation and Development folders. -->
       </section>
     </submenu>
 
@@ -837,7 +829,9 @@
       <section>
         <item><attribute name="action">app.dialogs-action-search</attribute></item>
       </section>
-      <!-- TODO: Missing various actions. -->
+      <section>
+        <attribute name="section-name">Programming</attribute>
+      </section>
     </submenu>
   </menu>
 </interface>

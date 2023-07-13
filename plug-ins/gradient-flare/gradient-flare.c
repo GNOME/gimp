@@ -818,7 +818,7 @@ gflare_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_menu_label (procedure, _("_Gradient Flare..."));
       gimp_procedure_add_menu_path (procedure,
-                                    "<Image>/Filters/Light and Shadow/Light");
+                                    "<Image>/Filters/Light and Shadow/[Light]");
 
       gimp_procedure_set_documentation (procedure,
                                         _("Produce a lense flare effect "

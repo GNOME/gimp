@@ -213,4 +213,4 @@
 )
 
 (script-fu-menu-register "script-fu-perspective-shadow"
-                         "<Image>/Filters/Light and Shadow/Shadow")
+                         "<Image>/Filters/Light and Shadow/[Shadow]")

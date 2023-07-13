@@ -139,4 +139,4 @@
 )
 
 (script-fu-menu-register "script-fu-xach-effect"
-                         "<Image>/Filters/Light and Shadow/Shadow")
+                         "<Image>/Filters/Light and Shadow/[Shadow]")

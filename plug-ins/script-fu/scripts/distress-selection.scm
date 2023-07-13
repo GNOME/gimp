@@ -119,4 +119,4 @@
 )
 
 (script-fu-menu-register "script-fu-distress-selection"
-                         "<Image>/Select/Modify")
+                         "<Image>/Select/[Modify]")

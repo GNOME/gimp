@@ -174,7 +174,7 @@ editor_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_menu_label (procedure, _("U_nits"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_TOOL_MEASURE);
-      gimp_procedure_add_menu_path (procedure, "<Image>/Edit");
+      gimp_procedure_add_menu_path (procedure, "<Image>/Edit/[Preferences]");
 
       gimp_procedure_set_documentation (procedure,
                                         _("Create or alter units used in GIMP"),
