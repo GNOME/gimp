@@ -59,7 +59,10 @@
       <section>
         <item><attribute name="action">app.view-close</attribute></item>
         <item><attribute name="action">app.file-close-all</attribute></item>
-        <item><attribute name="action">app.file-quit</attribute></item>
+        <item>
+          <attribute name="hidden-when">macos-menubar</attribute>
+          <attribute name="action">app.file-quit</attribute>
+        </item>
       </section>
     </submenu>
 
@@ -106,10 +109,19 @@
       </section>
       <section>
         <attribute name="section-name" translatable="no">Preferences</attribute>
-        <item><attribute name="action">app.dialogs-preferences</attribute></item>
+        <item>
+          <attribute name="hidden-when">macos-menubar</attribute>
+          <attribute name="action">app.dialogs-preferences</attribute>
+        </item>
         <item><attribute name="action">app.dialogs-extensions</attribute></item>
-        <item><attribute name="action">app.dialogs-input-devices</attribute></item>
-        <item><attribute name="action">app.dialogs-keyboard-shortcuts</attribute></item>
+        <item>
+          <attribute name="hidden-when">macos-menubar</attribute>
+          <attribute name="action">app.dialogs-input-devices</attribute>
+        </item>
+        <item>
+          <attribute name="hidden-when">macos-menubar</attribute>
+          <attribute name="action">app.dialogs-keyboard-shortcuts</attribute>
+        </item>
         <item><attribute name="action">app.dialogs-module-dialog</attribute></item>
       </section>
     </submenu>
