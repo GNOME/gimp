@@ -170,11 +170,7 @@
 )
 
 (define (gimp-online-roadmap)
-  (plug-in-web-browser "https://wiki.gimp.org/wiki/Roadmap")
-)
-
-(define (gimp-online-wiki)
-  (plug-in-web-browser "https://wiki.gimp.org/wiki/Main_Page")
+  (plug-in-web-browser "https://developer.gimp.org/core/roadmap/")
 )
 
 (define (gimp-online-bugs-features)
@@ -213,8 +209,8 @@
 
 
 (script-fu-register "gimp-online-roadmap"
-   _"_Roadmap"
-   _"Bookmark to the roadmap of GIMP"
+   _"_Roadmaps"
+   _"Bookmark to the roadmaps of GIMP"
     "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
     "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
     "2018"
@@ -222,19 +218,6 @@
 )
 
 (script-fu-menu-register "gimp-online-roadmap"
-                         "<Image>/Help/GIMP Online")
-
-
-(script-fu-register "gimp-online-wiki"
-   _"_Wiki"
-   _"Bookmark to the wiki of GIMP"
-    "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
-    "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
-    "2018"
-    ""
-)
-
-(script-fu-menu-register "gimp-online-wiki"
                          "<Image>/Help/GIMP Online")
 
 
@@ -248,7 +231,7 @@
 )
 
 (script-fu-menu-register "gimp-online-bugs-features"
-                         "<Image>/Help")
+                         "<Image>/Help/GIMP Online")
 
 
 (script-fu-register "gimp-online-docs-web-site"
