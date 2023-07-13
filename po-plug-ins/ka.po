@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-07-13 04:56+0000\n"
-"PO-Revision-Date: 2023-07-13 06:59+0200\n"
+"PO-Revision-Date: 2023-07-13 07:02+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -439,9 +439,9 @@ msgstr ""
 #. list is given in "fps" - frames per second
 #: plug-ins/common/animation-play.c:498 plug-ins/common/animation-play.c:556
 #: plug-ins/common/animation-play.c:834
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f %%"
-msgstr "%.1f %%"
+msgstr ""
 
 #. Image Name
 #: plug-ins/common/animation-play.c:689
@@ -465,31 +465,24 @@ msgid "_Step"
 msgstr ""
 
 #: plug-ins/common/animation-play.c:771
-#, fuzzy
-#| msgid "Show Line Frame"
 msgid "Step to next frame"
-msgstr "ხაზის კადრის ჩვენება"
+msgstr "შემდეგ კადრზე გადასვლა"
 
 #: plug-ins/common/animation-play.c:773
-#, fuzzy
-#| msgid "Save a_nimation"
 msgid "Rewind the animation"
-msgstr "_ანიმაციის შენახვა"
+msgstr "_ანიმაციის გადახვევა"
 
 #: plug-ins/common/animation-play.c:776
-#, fuzzy
 msgid "Detach"
-msgstr "მოხსნა"
+msgstr ""
 
 #: plug-ins/common/animation-play.c:776
 msgid "Detach the animation from the dialog window"
 msgstr ""
 
 #: plug-ins/common/animation-play.c:778
-#, fuzzy
-#| msgid "Reload current page"
 msgid "Reload the image"
-msgstr "მიმდინარე გვერდის თავიდან ჩატვირთვა"
+msgstr "გამოსახულების თავიდან ჩატვირთვა"
 
 #. Zoom Options
 #: plug-ins/common/animation-play.c:849
@@ -504,15 +497,12 @@ msgid "%d fps"
 msgstr ""
 
 #: plug-ins/common/animation-play.c:870
-#, fuzzy
-#| msgid "Default fra_me delay"
 msgid "Default framerate"
-msgstr "ნაგულისხმები _კადრის დაყოვნება"
+msgstr "ნაგულისხმები კადრების სიხშირეა"
 
 #: plug-ins/common/animation-play.c:890
-#, fuzzy
 msgid "Playback speed"
-msgstr "დაკვრის სიჩქარე"
+msgstr ""
 
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
@@ -534,15 +524,13 @@ msgid "Invalid image. Did you close it?"
 msgstr ""
 
 #: plug-ins/common/animation-play.c:1181
-#, fuzzy, c-format
-#| msgid "Frame %d (%d%s)"
+#, c-format
 msgid "Frame %d of %d"
-msgstr "კადრი %d (%d%s)"
+msgstr "კადრი %d %d-დან"
 
 #: plug-ins/common/animation-play.c:1383
-#, fuzzy
 msgid "Stop playback"
-msgstr "დაკვრის გაჩერება"
+msgstr ""
 
 #: plug-ins/common/blinds.c:140
 msgid "_Blinds..."
@@ -6940,31 +6928,31 @@ msgstr ""
 
 #: plug-ins/common/van-gogh-lic.c:781
 msgid "_Effect image:"
-msgstr "_ეფექტის გამოსახულება"
+msgstr ""
 
 #: plug-ins/common/van-gogh-lic.c:791
 msgid "_Filter length:"
-msgstr "_ფილტრის სიგრძე:"
+msgstr ""
 
 #: plug-ins/common/van-gogh-lic.c:799
 msgid "_Noise magnitude:"
-msgstr "_ხმაურის სიმძლავრე:"
+msgstr ""
 
 #: plug-ins/common/van-gogh-lic.c:807
 msgid "In_tegration steps:"
-msgstr "_ინტეგრაციის საფეხურები:"
+msgstr ""
 
 #: plug-ins/common/van-gogh-lic.c:814
 msgid "_Minimum value:"
-msgstr "_მინიმალური მნიშვნელობა:"
+msgstr ""
 
 #: plug-ins/common/van-gogh-lic.c:821
 msgid "M_aximum value:"
-msgstr "მ_აქსიმალური მნიშვნელობა:"
+msgstr ""
 
 #: plug-ins/common/van-gogh-lic.c:878
 msgid "_Van Gogh (LIC)..."
-msgstr "_ვან გოგი (LIC)..."
+msgstr ""
 
 #: plug-ins/common/van-gogh-lic.c:882
 msgid "Special effects that nobody understands"
@@ -8295,9 +8283,8 @@ msgid "Error reading data. Most likely unexpected end of file."
 msgstr ""
 
 #: plug-ins/file-psd/psd-util.c:199
-#, fuzzy
 msgid "Unexpected end of file"
-msgstr "ფაილის მოულოდნელი ბოლო"
+msgstr ""
 
 #: plug-ins/file-psd/psd.c:131 plug-ins/file-psd/psd.c:211
 msgid "Photoshop image"
@@ -13162,7 +13149,7 @@ msgstr "XMP"
 
 #: plug-ins/metadata/metadata-viewer.c:384
 msgid "IPTC Tag"
-msgstr ""
+msgstr "IPTC ჭდე"
 
 #: plug-ins/metadata/metadata-viewer.c:481
 #, c-format
@@ -13327,7 +13314,7 @@ msgstr "დაბეჭდვა"
 
 #: plug-ins/screenshot/screenshot.c:139
 msgid "_Screenshot..."
-msgstr ""
+msgstr "_ეკრანის ანაბეჭდი..."
 
 #: plug-ins/screenshot/screenshot.c:144
 msgid "Create an image from an area of the screen"
@@ -13667,7 +13654,7 @@ msgstr ""
 
 #: plug-ins/twain/twain.c:207
 msgid "_Scanner/Camera..."
-msgstr ""
+msgstr "_სკანერი/კამერა..."
 
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:521
