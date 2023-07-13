@@ -50,7 +50,7 @@
         <item><attribute name="action">app.file-create-template</attribute></item>
       </section>
       <section>
-        <attribute name="section-name">Send</attribute>
+        <attribute name="section-name" translatable="no">Send</attribute>
       </section>
       <section>
         <item><attribute name="action">app.file-copy-location</attribute></item>
@@ -105,7 +105,7 @@
         <item><attribute name="action">app.vectors-stroke</attribute></item>
       </section>
       <section>
-        <attribute name="section-name">Preferences</attribute>
+        <attribute name="section-name" translatable="no">Preferences</attribute>
         <item><attribute name="action">app.dialogs-preferences</attribute></item>
         <item><attribute name="action">app.dialogs-extensions</attribute></item>
         <item><attribute name="action">app.dialogs-input-devices</attribute></item>
@@ -128,7 +128,7 @@
         <item><attribute name="action">app.dialogs-selection-editor</attribute></item>
       </section>
       <section>
-        <attribute name="section-name">Modify</attribute>
+        <attribute name="section-name" translatable="no">Modify</attribute>
         <item><attribute name="action">app.select-feather</attribute></item>
         <item><attribute name="action">app.select-sharpen</attribute></item>
         <item><attribute name="action">app.select-shrink</attribute></item>
@@ -346,12 +346,12 @@
         <item><attribute name="action">app.image-scale</attribute></item>
       </section>
       <section>
-        <attribute name="section-name">Crop</attribute>
+        <attribute name="section-name" translatable="no">Crop</attribute>
         <item><attribute name="action">app.image-crop-to-selection</attribute></item>
         <item><attribute name="action">app.image-crop-to-content</attribute></item>
       </section>
       <section>
-        <attribute name="section-name">Arrange</attribute>
+        <attribute name="section-name" translatable="no">Arrange</attribute>
         <item><attribute name="action">app.image-merge-layers</attribute></item>
         <item><attribute name="action">app.image-flatten</attribute></item>
       </section>
@@ -362,7 +362,7 @@
         <item><attribute name="action">app.image-configure-grid</attribute></item>
       </section>
       <section>
-        <attribute name="section-name">Properties</attribute>
+        <attribute name="section-name" translatable="no">Properties</attribute>
         <item><attribute name="action">app.image-properties</attribute></item>
         <submenu>
           <attribute name="label" translatable="yes" context="image-action">Meta_data</attribute>
@@ -510,7 +510,7 @@
         <submenu>
           <attribute name="label" translatable="yes" context="image-action">_Map</attribute>
           <section>
-            <attribute name="section-name">Colormap</attribute>
+            <attribute name="section-name" translatable="no">Colormap</attribute>
           </section>
           <section>
             <item><attribute name="action">app.filters-alien-map</attribute></item>
@@ -531,7 +531,7 @@
         </submenu>
       </section>
       <section>
-        <attribute name="section-name">Modify</attribute>
+        <attribute name="section-name" translatable="no">Modify</attribute>
         <item><attribute name="action">app.filters-threshold</attribute></item>
         <item><attribute name="action">app.filters-colorize</attribute></item>
         <item><attribute name="action">app.filters-posterize</attribute></item>
@@ -675,13 +675,13 @@
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">_Light and Shadow</attribute>
           <section>
-            <attribute name="section-name">Light</attribute>
+            <attribute name="section-name" translatable="no">Light</attribute>
             <item><attribute name="action">app.filters-bloom</attribute></item>
             <item><attribute name="action">app.filters-supernova</attribute></item>
             <item><attribute name="action">app.filters-lens-flare</attribute></item>
           </section>
           <section>
-            <attribute name="section-name">Shadow</attribute>
+            <attribute name="section-name" translatable="no">Shadow</attribute>
             <item><attribute name="action">app.filters-dropshadow</attribute></item>
             <item><attribute name="action">app.filters-long-shadow</attribute></item>
             <item><attribute name="action">app.filters-vignette</attribute></item>
@@ -828,7 +828,7 @@
         <item><attribute name="action">app.dialogs-action-search</attribute></item>
       </section>
       <section>
-        <attribute name="section-name">Programming</attribute>
+        <attribute name="section-name" translatable="no">Programming</attribute>
       </section>
     </submenu>
   </menu>
