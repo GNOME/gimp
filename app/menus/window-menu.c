@@ -110,8 +110,7 @@ window_menu_display_opened (GdkDisplayManager *disp_manager,
    * "/dockable-popup/Move to Screen".
    */
   if (g_str_has_prefix (ui_path, "/image-menubar/"))
-    gimp_ui_manager_add_ui (manager, "/View/Move to Screen",
-                            action_name, NULL, FALSE);
+    gimp_ui_manager_add_ui (manager, "/View/Move to Screen", action_name, FALSE);
 
   g_free (action_name);
 

@@ -17,9 +17,7 @@
         <submenu>
           <attribute name="label" translatable="yes" context="file-action">Open _Recent</attribute>
           <section>
-            <!-- Placeholder for recently opened files. -->
-            <item><attribute name="label" translatable="no">Files</attribute></item>
-
+            <attribute name="section-name" translatable="no">Files</attribute>
           </section>
           <item><attribute name="action">app.dialogs-document-history</attribute></item>
         </submenu>
@@ -624,8 +622,9 @@
         <item><attribute name="action">app.filters-reshow</attribute></item>
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">Recently Used</attribute>
-          <!-- Placeholder for recently used filters and plug-ins. -->
-          <item><attribute name="label" translatable="no">Filters</attribute></item>
+          <section>
+            <attribute name="section-name" translatable="no">Filters</attribute>
+          </section>
         </submenu>
         <item><attribute name="action">app.plug-in-reset-all</attribute></item>
       </section>
@@ -795,13 +794,12 @@
         </submenu>
         <item><attribute name="action">app.dialogs-toolbox</attribute></item>
       </section>
-      <!-- Placeholder invisible item to know where to place opened images list -->
       <section>
-      <item><attribute name="label" translatable="no">Images</attribute></item>
+        <attribute name="section-name" translatable="no">Images</attribute>
       </section>
-      <!-- Placeholder invisible item - TODO GMenu: is this one actually working/used? -->
       <section>
-        <item><attribute name="label" translatable="no">Docks</attribute></item>
+        <!-- TODO GMenu: is this placeholder section actually working/used? -->
+        <attribute name="section-name" translatable="no">Docks</attribute>
       </section>
       <section>
         <item><attribute name="action">app.windows-hide-docks</attribute></item>

@@ -67,7 +67,6 @@ static void   gimp_menu_bar_append                  (GimpMenuShell           *sh
 static void   gimp_menu_bar_add_ui                  (GimpMenuShell           *shell,
                                                      const gchar            **paths,
                                                      const gchar             *action_name,
-                                                     const gchar             *placeholder_key,
                                                      gboolean                 top);
 
 
@@ -172,8 +171,8 @@ gimp_menu_bar_append (GimpMenuShell *shell,
             g_warning ("%s: unexpected subsection. Only menus are allowed in menu bar's root.",
                        G_STRFUNC);
           if (action_name == NULL)
-            g_warning ("%s: unexpected placeholder '%s'. Only menus are allowed in menu bar's root.",
-                       G_STRFUNC, label);
+            g_warning ("%s: missing action name. Only menus are allowed in menu bar's root.",
+                       G_STRFUNC);
           else
             g_warning ("%s: unexpected action '%s'. Only menus are allowed in menu bar's root.",
                        G_STRFUNC, action_name);
@@ -189,7 +188,6 @@ static void
 gimp_menu_bar_add_ui (GimpMenuShell  *shell,
                       const gchar   **paths,
                       const gchar    *action_name,
-                      const gchar    *placeholder_key,
                       gboolean        top)
 {
   GimpMenuBar   *bar     = GIMP_MENU_BAR (shell);
@@ -223,9 +221,7 @@ gimp_menu_bar_add_ui (GimpMenuShell  *shell,
         }
 
       GIMP_MENU_SHELL_GET_INTERFACE (menu)->add_ui (GIMP_MENU_SHELL (menu),
-                                                    paths + 1,
-                                                    action_name,
-                                                    placeholder_key, top);
+                                                    paths + 1, action_name, top);
     }
 }
 

@@ -209,7 +209,7 @@ windows_menu_image_notify (GimpDisplay      *display,
 
       action_name = gimp_display_get_action_name (display);
 
-      gimp_ui_manager_add_ui (manager, "/Windows", action_name, "Images", TRUE);
+      gimp_ui_manager_add_ui (manager, "/Windows/[Images]", action_name, FALSE);
 
       g_free (action_name);
     }
@@ -225,7 +225,7 @@ windows_menu_dock_window_added (GimpDialogFactory *factory,
   action_name = windows_actions_dock_window_to_action_name (dock_window);
 
   /* TODO GMenu: doesn't look like it's working, neither will old or new API. */
-  gimp_ui_manager_add_ui (manager, "/Windows", action_name, "Docks", FALSE);
+  gimp_ui_manager_add_ui (manager, "/Windows/[Docks]", action_name, FALSE);
 
   g_free (action_name);
 }
@@ -255,8 +255,7 @@ windows_menu_recent_add (GimpContainer   *container,
 
   action_name = g_strdup_printf ("windows-recent-%04d", info_id);
 
-  gimp_ui_manager_add_ui (manager, "/Windows/Recently Closed Docks",
-                          action_name, NULL, TRUE);
+  gimp_ui_manager_add_ui (manager, "/Windows/Recently Closed Docks", action_name, TRUE);
 
   g_free (action_name);
 }

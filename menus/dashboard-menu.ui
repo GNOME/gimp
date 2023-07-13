@@ -7,8 +7,9 @@
       <attribute name="icon">gimp-dashboard</attribute>
       <submenu>
         <attribute name="label" translatable="yes" context="dashboard-action">Groups</attribute>
-        <!-- Placeholder for recently used filters and plug-ins. -->
-        <item><attribute name="label" translatable="no">Groups</attribute></item>
+        <section>
+          <attribute name="section-name" translatable="no">Groups</attribute>
+        </section>
       </submenu>
       <submenu>
         <attribute name="label" translatable="yes" context="dashboard-action">_Update Interval</attribute>

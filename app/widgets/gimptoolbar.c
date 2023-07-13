@@ -64,12 +64,10 @@ static void   gimp_toolbar_append                  (GimpMenuShell           *she
 static void   gimp_toolbar_add_ui                  (GimpMenuShell           *shell,
                                                     const gchar            **paths,
                                                     const gchar             *action_name,
-                                                    const gchar             *placeholder_key,
                                                     gboolean                 top);
 
 static void   gimp_toolbar_add_action              (GimpToolbar             *toolbar,
                                                     const gchar             *action_name,
-                                                    const gchar             *placeholder_key G_GNUC_UNUSED,
                                                     gboolean                 top);
 
 static void   gimp_toolbar_toggle_item_toggled     (GtkToggleToolButton     *item,
@@ -155,7 +153,7 @@ gimp_toolbar_append (GimpMenuShell *shell,
         }
       else if (submenu == NULL && action_name != NULL)
         {
-          gimp_toolbar_add_action (toolbar, action_name, NULL, FALSE);
+          gimp_toolbar_add_action (toolbar, action_name, FALSE);
         }
       else
         {
@@ -163,7 +161,7 @@ gimp_toolbar_append (GimpMenuShell *shell,
             g_warning ("%s: unexpected submenu. Only actions and sections are allowed in toolbar's root.",
                        G_STRFUNC);
           else if (label != NULL)
-            g_warning ("%s: unexpected placeholder '%s'. Only actions and sections are allowed in toolbar's root.",
+            g_warning ("%s: unexpected label '%s'. Only actions and sections are allowed in toolbar's root.",
                        G_STRFUNC, label);
           else
             g_warning ("%s: unexpected toolbar item. Only actions and sections are allowed in toolbar's root.",
@@ -181,7 +179,6 @@ static void
 gimp_toolbar_add_ui (GimpMenuShell  *shell,
                      const gchar   **paths,
                      const gchar    *action_name,
-                     const gchar    *placeholder_key,
                      gboolean        top)
 {
   GimpToolbar *toolbar = GIMP_TOOLBAR (shell);
@@ -192,7 +189,7 @@ gimp_toolbar_add_ui (GimpMenuShell  *shell,
     g_warning ("%s: unexpected path '%s'. Menus are not allowed in toolbar's root.",
                G_STRFUNC, paths[0]);
   else
-    gimp_toolbar_add_action (toolbar, action_name, placeholder_key, top);
+    gimp_toolbar_add_action (toolbar, action_name, top);
 }
 
 
@@ -217,10 +214,6 @@ gimp_toolbar_new (GimpMenuModel *model,
 static void
 gimp_toolbar_add_action (GimpToolbar *toolbar,
                          const gchar *action_name,
-                         /* XXX: right now unused, maybe be useful later for
-                          * when we want to support user-managed toolbars.
-                          */
-                         const gchar *placeholder_key G_GNUC_UNUSED,
                          gboolean     top)
 {
   GimpUIManager *manager;

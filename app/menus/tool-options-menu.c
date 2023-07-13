@@ -123,7 +123,7 @@ tool_options_menu_update_presets (GimpUIManager *manager,
       action_name = g_strdup_printf ("%s%03d", action_prefix, i);
       path        = g_strdup_printf ("/Tool Options Menu/%s", menu_path);
 
-      gimp_ui_manager_add_ui (manager, path, action_name, NULL, FALSE);
+      gimp_ui_manager_add_ui (manager, path, action_name, FALSE);
 
       g_free (action_name);
       g_free (path);

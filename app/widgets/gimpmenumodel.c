@@ -140,7 +140,6 @@ static void         gimp_menu_model_action_notify_label      (GimpAction        
 static gboolean     gimp_menu_model_ui_added                 (GimpUIManager       *manager,
                                                               const gchar         *path,
                                                               const gchar         *action_name,
-                                                              const gchar         *placeholder_key,
                                                               gboolean             top,
                                                               GimpMenuModel       *model);
 static gboolean     gimp_menu_model_ui_removed               (GimpUIManager       *manager,
@@ -757,46 +756,43 @@ gimp_menu_model_initialize (GimpMenuModel *model,
         }
       else
         {
+          GimpAction *action;
+          gchar      *label_variant = NULL;
+
           item = g_menu_item_new_from_model (G_MENU_MODEL (gmodel), i);
 
-          if (action_name)
-            {
-              GimpAction *action;
-              gchar      *label_variant = NULL;
+          g_return_if_fail (action_name != NULL);
 
-              action = gimp_ui_manager_find_action (model->priv->manager, NULL, action_name);
+          action = gimp_ui_manager_find_action (model->priv->manager, NULL, action_name);
 
-              if (model->priv->manager->store_action_paths)
-                /* Special-case the main menu manager when constructing it as
-                 * this is the only one which should set the menu path.
-                 */
-                gimp_action_set_menu_path (action, gimp_menu_model_get_path (model));
+          if (model->priv->manager->store_action_paths)
+            /* Special-case the main menu manager when constructing it as
+             * this is the only one which should set the menu path.
+             */
+            gimp_action_set_menu_path (action, gimp_menu_model_get_path (model));
 
-              g_signal_connect_object (action,
-                                       "notify::visible",
-                                       G_CALLBACK (gimp_menu_model_action_notify_visible),
-                                       model, 0);
+          g_signal_connect_object (action,
+                                   "notify::visible",
+                                   G_CALLBACK (gimp_menu_model_action_notify_visible),
+                                   model, 0);
 
-              g_menu_item_get_attribute (item, "label-variant", "s",
-                                         &label_variant);
-              if (g_strcmp0 (label_variant, "long") == 0)
-                g_menu_item_set_label (item, gimp_action_get_label (action));
-              else
-                g_menu_item_set_label (item, gimp_action_get_short_label (action));
+          g_menu_item_get_attribute (item, "label-variant", "s",
+                                     &label_variant);
+          if (g_strcmp0 (label_variant, "long") == 0)
+            g_menu_item_set_label (item, gimp_action_get_label (action));
+          else
+            g_menu_item_set_label (item, gimp_action_get_short_label (action));
 
-              g_signal_connect_object (action,
-                                       "notify::short-label",
-                                       G_CALLBACK (gimp_menu_model_action_notify_label),
-                                       item, 0);
-              g_signal_connect_object (action,
-                                       "notify::label",
-                                       G_CALLBACK (gimp_menu_model_action_notify_label),
-                                       item, 0);
+          g_signal_connect_object (action,
+                                   "notify::short-label",
+                                   G_CALLBACK (gimp_menu_model_action_notify_label),
+                                   item, 0);
+          g_signal_connect_object (action,
+                                   "notify::label",
+                                   G_CALLBACK (gimp_menu_model_action_notify_label),
+                                   item, 0);
 
-              g_free (label_variant);
-            }
-
-          /* else we instal a placeholder (no-action and always invisible) item. */
+          g_free (label_variant);
         }
 
       if (item)
@@ -917,9 +913,7 @@ gimp_menu_model_get_item (GimpMenuModel *model,
         {
           cur++;
         }
-      /* Count neither placeholders (items with no action_name), nor invisible
-       * actions.
-       */
+      /* Do not count invisible actions. */
       else if (g_menu_item_get_attribute (iter->data,
                                           G_MENU_ATTRIBUTE_ACTION,
                                           "&s", &action_name))
@@ -1048,7 +1042,6 @@ static gboolean
 gimp_menu_model_ui_added (GimpUIManager *manager,
                           const gchar   *path,
                           const gchar   *action_name,
-                          const gchar   *placeholder_key,
                           gboolean       top,
                           GimpMenuModel *model)
 {
@@ -1082,17 +1075,6 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
 
       added = TRUE;
 
-      g_signal_handlers_disconnect_by_func (action,
-                                            G_CALLBACK (gimp_menu_model_action_notify_visible),
-                                            model);
-      detailed_action_name = g_strdup_printf ("%s.%s", action_prefix, g_action_get_name (action));
-      item = g_menu_item_new (gimp_action_get_short_label (GIMP_ACTION (action)), detailed_action_name);
-      /* TODO: add also G_MENU_ATTRIBUTE_ICON attribute? */
-      g_free (detailed_action_name);
-
-      if (model->priv->manager->store_action_paths)
-        gimp_action_set_menu_path (GIMP_ACTION (action), gimp_menu_model_get_path (model));
-
       if (section_name != NULL)
         {
           GMenuItem *section_item;
@@ -1105,57 +1087,18 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
             }
         }
 
-      if (placeholder_key)
-        {
-          GList      *placeholder = NULL;
-          GMenuModel *subsection  = NULL;
+      g_signal_handlers_disconnect_by_func (action,
+                                            G_CALLBACK (gimp_menu_model_action_notify_visible),
+                                            mod_model);
+      detailed_action_name = g_strdup_printf ("%s.%s", action_prefix, g_action_get_name (action));
+      item = g_menu_item_new (gimp_action_get_short_label (GIMP_ACTION (action)), detailed_action_name);
+      /* TODO: add also G_MENU_ATTRIBUTE_ICON attribute? */
+      g_free (detailed_action_name);
 
-          for (GList *iter = model->priv->items; iter; iter = iter->next)
-            {
-              const gchar *label;
+      if (model->priv->manager->store_action_paths)
+        gimp_action_set_menu_path (GIMP_ACTION (action), gimp_menu_model_get_path (model));
 
-              subsection = g_menu_item_get_link (iter->data, G_MENU_LINK_SECTION);
-
-              if (subsection != NULL)
-                {
-                  if (gimp_menu_model_ui_added (manager, path, action_name,
-                                                placeholder_key, top,
-                                                GIMP_MENU_MODEL (subsection)))
-                    break;
-                  else
-                    g_clear_object (&subsection);
-                }
-              else if (g_menu_item_get_attribute (iter->data,
-                                                  G_MENU_ATTRIBUTE_LABEL,
-                                                  "&s", &label) &&
-                       g_strcmp0 (label, placeholder_key) == 0)
-                {
-                  placeholder = iter;
-                  break;
-                }
-            }
-
-          if (placeholder)
-            {
-              if (top)
-                model->priv->items = g_list_insert_before (model->priv->items,
-                                                           placeholder, item);
-              else
-                model->priv->items = g_list_insert_before (model->priv->items,
-                                                           placeholder->next, item);
-            }
-          else
-            {
-              added = FALSE;
-
-              if (subsection == NULL && ! model->priv->is_section)
-                g_warning ("%s: no placeholder item '%s'.", G_STRFUNC, placeholder_key);
-            }
-          /* else: added in a subsection. */
-
-          g_clear_object (&subsection);
-        }
-      else if (top)
+      if (top)
         {
           mod_model->priv->items = g_list_prepend (mod_model->priv->items, item);
         }
@@ -1171,7 +1114,7 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
           g_signal_connect_object (action,
                                    "notify::visible",
                                    G_CALLBACK (gimp_menu_model_action_notify_visible),
-                                   model, 0);
+                                   mod_model, 0);
           g_signal_connect_object (action,
                                    "notify::short-label",
                                    G_CALLBACK (gimp_menu_model_action_notify_label),

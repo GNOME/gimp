@@ -54,8 +54,8 @@ file_menu_setup (GimpUIManager *manager,
 
       action_name = g_strdup_printf ("file-open-recent-%02d", i + 1);
 
-      gimp_ui_manager_add_ui (manager, "/File/Open Recent",
-                              action_name, "Files", TRUE);
+      gimp_ui_manager_add_ui (manager, "/File/Open Recent/[Files]",
+                              action_name, FALSE);
 
       g_free (action_name);
     }

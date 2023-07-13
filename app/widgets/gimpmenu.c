@@ -62,7 +62,6 @@
 struct _GimpMenuPrivate
 {
   GTree      *submenus;
-  GTree      *placeholders;
 
   GHashTable *sections;
 };
@@ -77,15 +76,12 @@ static void     gimp_menu_append                  (GimpMenuShell           *shel
 static void     gimp_menu_add_ui                  (GimpMenuShell           *shell,
                                                    const gchar            **paths,
                                                    const gchar             *action_name,
-                                                   const gchar             *placeholder_key,
                                                    gboolean                 top);
 static void     gimp_menu_remove_ui               (GimpMenuShell           *shell,
                                                    const gchar            **paths,
                                                    const gchar             *action_name);
 static void     gimp_menu_model_deleted           (GimpMenuShell           *shell);
 
-static void     gimp_menu_add_placeholder         (GimpMenu                *menu,
-                                                   const gchar             *label);
 static void     gimp_menu_add_action              (GimpMenu                *menu,
                                                    const gchar             *action_name,
                                                    gboolean                 long_label,
@@ -120,10 +116,6 @@ static void     gimp_menu_action_notify_visible   (GimpAction              *acti
                                                    const GParamSpec        *pspec,
                                                    GtkWidget               *item);
 
-static gboolean gimp_menu_copy_placeholders       (gpointer                  key,
-                                                   gpointer                  item,
-                                                   GTree                    *placeholders);
-
 static void     gimp_menu_help_fun                (const gchar             *bogus_help_id,
                                                    gpointer                 help_data);
 static void     gimp_menu_hide_double_separators  (GimpMenu                *menu);
@@ -157,8 +149,6 @@ gimp_menu_init (GimpMenu *menu)
 
   menu->priv->submenus     = g_tree_new_full ((GCompareDataFunc) g_strcmp0, NULL,
                                               g_free, NULL);
-  menu->priv->placeholders = g_tree_new_full ((GCompareDataFunc) g_strcmp0, NULL,
-                                              g_free, NULL);
   menu->priv->sections     = g_hash_table_new_full (g_direct_hash, g_direct_equal,
                                                     g_object_unref, NULL);
 
@@ -183,7 +173,6 @@ gimp_menu_finalize (GObject *object)
   GimpMenu *menu = GIMP_MENU (object);
 
   g_clear_pointer (&menu->priv->submenus, g_tree_unref);
-  g_clear_pointer (&menu->priv->placeholders, g_tree_unref);
   g_hash_table_unref (menu->priv->sections);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -262,21 +251,11 @@ gimp_menu_append (GimpMenuShell *shell,
                             G_CALLBACK (gimp_menu_submenu_notify_color),
                             item);
         }
-      else if (action_name == NULL)
-        {
-          /* Special case: we use items with no action and a label as
-           * placeholder which allows us to specify a placement in menus, which
-           * might not be only top or bottom.
-           */
-          g_return_if_fail (label != NULL);
-
-          group = NULL;
-
-          gimp_menu_add_placeholder (menu, label);
-        }
       else
         {
           gchar *label_variant = NULL;
+
+          g_return_if_fail (action_name != NULL);
 
           g_menu_model_get_item_attribute (G_MENU_MODEL (model), i, "label-variant", "s", &label_variant);
           gimp_menu_add_action (menu, action_name,
@@ -302,48 +281,31 @@ static void
 gimp_menu_add_ui (GimpMenuShell  *shell,
                   const gchar   **paths,
                   const gchar    *action_name,
-                  const gchar    *placeholder_key,
                   gboolean        top)
 {
   GimpMenu      *menu    = GIMP_MENU (shell);
   GimpUIManager *manager = gimp_menu_shell_get_manager (GIMP_MENU_SHELL (shell));
+  GtkWidget     *submenu;
 
-  g_return_if_fail (paths != NULL);
+  g_return_if_fail (paths != NULL && paths[0] != NULL);
 
-  if (paths[0] == NULL)
+  submenu = g_tree_lookup (menu->priv->submenus, paths[0]);
+
+  if (submenu == NULL)
     {
-      GtkWidget *placeholder;
+      GtkWidget *item;
 
-      placeholder = g_tree_lookup (menu->priv->placeholders, placeholder_key);
+      item = gtk_menu_item_new_with_mnemonic (paths[0]);
+      gtk_container_add (GTK_CONTAINER (shell), item);
 
-      if (! placeholder)
-        g_warning ("%s: no placeholder item '%s'.", G_STRFUNC, placeholder_key);
+      submenu = gimp_menu_new (manager);
+      gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), submenu);
+      gtk_widget_show (submenu);
 
-      gimp_menu_add_action (menu, action_name, FALSE, placeholder, top, NULL);
+      g_tree_insert (menu->priv->submenus, g_strdup (paths[0]), submenu);
     }
-  else
-    {
-      GtkWidget *submenu;
 
-      submenu = g_tree_lookup (menu->priv->submenus, paths[0]);
-
-      if (submenu == NULL)
-        {
-          GtkWidget *item;
-
-          item = gtk_menu_item_new_with_mnemonic (paths[0]);
-          gtk_container_add (GTK_CONTAINER (shell), item);
-
-          submenu = gimp_menu_new (manager);
-          gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), submenu);
-          gtk_widget_show (submenu);
-
-          g_tree_insert (menu->priv->submenus, g_strdup (paths[0]), submenu);
-        }
-
-      gimp_menu_add_ui (GIMP_MENU_SHELL (submenu), paths + 1,
-                        action_name, placeholder_key, top);
-    }
+  gimp_menu_add_ui (GIMP_MENU_SHELL (submenu), paths + 1, action_name, top);
 
   gimp_menu_hide_double_separators (menu);
 }
@@ -420,29 +382,12 @@ gimp_menu_merge (GimpMenu *menu,
       g_object_unref (item);
     }
 
-  g_tree_foreach (menu2->priv->placeholders,
-                  (GTraverseFunc) gimp_menu_copy_placeholders,
-                  menu->priv->placeholders);
-
   gtk_widget_destroy (GTK_WIDGET (menu2));
   g_list_free (children);
 }
 
 
 /* Private functions */
-
-static void
-gimp_menu_add_placeholder (GimpMenu    *menu,
-                           const gchar *label)
-{
-  GtkWidget *item;
-
-  /* Placeholders are inserted yet never shown, on purpose. */
-  item = gtk_menu_item_new_with_mnemonic (label);
-  gtk_container_add (GTK_CONTAINER (menu), item);
-
-  g_tree_insert (menu->priv->placeholders, g_strdup (label), item);
-}
 
 static void
 gimp_menu_add_action (GimpMenu          *menu,
@@ -831,15 +776,6 @@ gimp_menu_action_notify_visible (GimpAction       *action,
   gimp_menu_hide_double_separators (GIMP_MENU (container));
 }
 
-static gboolean
-gimp_menu_copy_placeholders (gpointer  key,
-                             gpointer  item,
-                             GTree    *placeholders)
-{
-  g_tree_insert (placeholders, g_strdup ((gchar *) key), item);
-  return FALSE;
-}
-
 static void
 gimp_menu_help_fun (const gchar *bogus_help_id,
                     gpointer     help_data)
@@ -892,9 +828,9 @@ gimp_menu_help_fun (const gchar *bogus_help_id,
 
 /* With successive sections, we will end up with double separators (end one then
  * start one of the next section). Moreover sometimes, empty sections (e.g.
- * because items are expected to be added later through placeholders) would make
- * even 3 to 4 separators next to each other. This renders very ugly. We need to
- * call this function to hide and show separators after changes.
+ * because items are expected to be added later) would make even 3 to 4
+ * separators next to each other. This renders very ugly. We need to call this
+ * function to hide and show separators after changes.
  *
  * This also hides start and end separators in the menu.
  */

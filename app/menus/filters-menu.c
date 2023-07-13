@@ -54,8 +54,8 @@ filters_menu_setup (GimpUIManager *manager,
 
       action_name = g_strdup_printf ("filters-recent-%02d", i + 1);
 
-      gimp_ui_manager_add_ui (manager, "/Filters/Recently Used",
-                              action_name, "Filters", TRUE);
+      gimp_ui_manager_add_ui (manager, "/Filters/Recently Used/[Filters]",
+                              action_name, FALSE);
 
       g_free (action_name);
     }
@@ -112,7 +112,7 @@ filters_menu_setup (GimpUIManager *manager,
               *root = '/';
 
               for (GList *m = managers; m; m = m->next)
-                gimp_ui_manager_add_ui (m->data, root, gegl_actions[i], NULL, FALSE);
+                gimp_ui_manager_add_ui (m->data, root, gegl_actions[i], FALSE);
             }
         }
       g_free (path);

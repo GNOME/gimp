@@ -28,7 +28,6 @@
 typedef void (* GimpUIMenuCallback)  (GimpUIManager *manager,
                                       const gchar   *path,
                                       const gchar   *action_name,
-                                      const gchar   *placeholder,
                                       gboolean       top,
                                       gpointer       user_data);
 
@@ -90,7 +89,6 @@ struct _GimpUIManagerClass
   void (* ui_added)     (GimpUIManager *manager,
                          const gchar   *path,
                          const gchar   *action_name,
-                         const gchar   *placeholder,
                          gboolean       top);
   void (* ui_removed)   (GimpUIManager *manager,
                          const gchar   *path,
@@ -124,7 +122,6 @@ void            gimp_ui_manager_remove_uis      (GimpUIManager      *manager,
 void            gimp_ui_manager_add_ui          (GimpUIManager      *manager,
                                                  const gchar        *path,
                                                  const gchar        *action_name,
-                                                 const gchar        *placeholder,
                                                  gboolean            top);
 void            gimp_ui_manager_foreach_ui      (GimpUIManager      *manager,
                                                  GimpUIMenuCallback  callback,

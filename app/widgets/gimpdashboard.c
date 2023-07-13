@@ -5014,8 +5014,8 @@ gimp_dashboard_menu_setup (GimpUIManager *manager,
 
       action_name = g_strdup_printf ("dashboard-group-%s", group_info->name);
 
-      gimp_ui_manager_add_ui (manager, "/Dashboard Menu/Groups",
-                              action_name, "Groups", FALSE);
+      gimp_ui_manager_add_ui (manager, "/Dashboard Menu/Groups/[Groups]",
+                              action_name, FALSE);
 
       g_free (action_name);
     }

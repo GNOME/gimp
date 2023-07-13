@@ -302,7 +302,7 @@ plug_in_menus_add_proc (GimpUIManager       *manager,
 
   gimp_ui_manager_add_ui (manager, menu_path,
                           gimp_object_get_name (proc),
-                          NULL, FALSE);
+                          FALSE);
 }
 
 static void
