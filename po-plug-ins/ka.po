@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-21 19:37+0000\n"
-"PO-Revision-Date: 2023-06-22 08:30+0200\n"
+"POT-Creation-Date: 2023-07-11 23:34+0000\n"
+"PO-Revision-Date: 2023-07-12 05:43+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -27,7 +27,7 @@ msgid "Exercise a goat in the C language"
 msgstr "ავარჯიშეთ თხა C-ში"
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
-#: plug-ins/common/border-average.c:186 plug-ins/common/checkerboard.c:184
+#: plug-ins/common/border-average.c:186 plug-ins/common/checkerboard.c:177
 #: plug-ins/common/cml-explorer.c:558 plug-ins/common/compose.c:557
 #: plug-ins/common/contrast-retinex.c:253 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:665 plug-ins/common/decompose.c:376
@@ -60,19 +60,18 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/busy-dialog.c:279 plug-ins/common/checkerboard.c:495
-#: plug-ins/common/cml-explorer.c:1348 plug-ins/common/cml-explorer.c:2114
-#: plug-ins/common/cml-explorer.c:2247 plug-ins/common/colormap-remap.c:704
-#: plug-ins/common/compose.c:1183 plug-ins/common/curve-bend.c:1203
-#: plug-ins/common/curve-bend.c:1977 plug-ins/common/curve-bend.c:2012
-#: plug-ins/common/depth-merge.c:734 plug-ins/common/file-cel.c:1001
-#: plug-ins/common/file-gif-save.c:1163 plug-ins/common/file-heif.c:2351
-#: plug-ins/common/file-pdf-load.c:709 plug-ins/common/file-pdf-save.c:1113
-#: plug-ins/common/file-svg.c:839 plug-ins/common/file-wmf.c:546
-#: plug-ins/common/film.c:1323 plug-ins/common/grid.c:761
-#: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
-#: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
-#: plug-ins/common/sphere-designer.c:2287
+#: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1348
+#: plug-ins/common/cml-explorer.c:2114 plug-ins/common/cml-explorer.c:2247
+#: plug-ins/common/colormap-remap.c:704 plug-ins/common/compose.c:1183
+#: plug-ins/common/curve-bend.c:1203 plug-ins/common/curve-bend.c:1977
+#: plug-ins/common/curve-bend.c:2012 plug-ins/common/depth-merge.c:734
+#: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1164
+#: plug-ins/common/file-heif.c:2351 plug-ins/common/file-pdf-load.c:709
+#: plug-ins/common/file-pdf-save.c:1113 plug-ins/common/file-svg.c:839
+#: plug-ins/common/file-wmf.c:546 plug-ins/common/film.c:1323
+#: plug-ins/common/grid.c:761 plug-ins/common/qbist.c:848
+#: plug-ins/common/qbist.c:890 plug-ins/common/qbist.c:944
+#: plug-ins/common/smooth-palette.c:511 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:439
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
@@ -153,18 +152,17 @@ msgstr ""
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/checkerboard.c:496 plug-ins/common/cml-explorer.c:1349
-#: plug-ins/common/colormap-remap.c:705 plug-ins/common/compose.c:1184
-#: plug-ins/common/curve-bend.c:1204 plug-ins/common/depth-merge.c:735
-#: plug-ins/common/file-heif.c:2352 plug-ins/common/file-pdf-load.c:710
-#: plug-ins/common/file-svg.c:840 plug-ins/common/file-wmf.c:547
-#: plug-ins/common/film.c:1324 plug-ins/common/grid.c:762
-#: plug-ins/common/qbist.c:945 plug-ins/common/smooth-palette.c:512
-#: plug-ins/common/sphere-designer.c:2633 plug-ins/common/tile.c:493
-#: plug-ins/common/tile-small.c:447 plug-ins/common/unit-editor.c:268
-#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
-#: plug-ins/file-psd/psd-load.c:3533 plug-ins/flame/flame.c:717
-#: plug-ins/flame/flame.c:1034
+#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:705
+#: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1204
+#: plug-ins/common/depth-merge.c:735 plug-ins/common/file-heif.c:2352
+#: plug-ins/common/file-pdf-load.c:710 plug-ins/common/file-svg.c:840
+#: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1324
+#: plug-ins/common/grid.c:762 plug-ins/common/qbist.c:945
+#: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
+#: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
+#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
+#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3533
+#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -503,7 +501,7 @@ msgstr "ვერტიკალური"
 #: plug-ins/common/film.c:811 plug-ins/common/smooth-palette.c:332
 #: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
 #: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
-#: plug-ins/file-fits/fits.c:667 plug-ins/file-jpeg/jpeg-load.c:231
+#: plug-ins/file-fits/fits.c:701 plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2733 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1534
@@ -577,25 +575,37 @@ msgstr "დაელოდეთ ოპერაციის დასრულ�
 msgid "Canceling..."
 msgstr "გაუქმება..."
 
-#: plug-ins/common/checkerboard.c:137
+#: plug-ins/common/checkerboard.c:123
 msgid "_Checkerboard (legacy)..."
 msgstr ""
 
-#: plug-ins/common/checkerboard.c:142
+#: plug-ins/common/checkerboard.c:128
 msgid "Create a checkerboard pattern"
 msgstr ""
 
-#: plug-ins/common/checkerboard.c:366 plug-ins/common/checkerboard.c:491
-msgid "Checkerboard"
-msgstr "ჭადრაკის დაფა"
-
-#: plug-ins/common/checkerboard.c:556 plug-ins/gimpressionist/sizemap.c:508
-msgid "_Size:"
-msgstr "_ზომა:"
-
-#: plug-ins/common/checkerboard.c:565
+#: plug-ins/common/checkerboard.c:137
 msgid "_Psychobilly"
 msgstr ""
+
+#: plug-ins/common/checkerboard.c:138
+msgid "Render a psychobilly checkerboard"
+msgstr ""
+
+#: plug-ins/common/checkerboard.c:143 plug-ins/gimpressionist/size.c:94
+msgid "_Size"
+msgstr "ზომა"
+
+#: plug-ins/common/checkerboard.c:144
+msgid "Size of the checks"
+msgstr ""
+
+#: plug-ins/common/checkerboard.c:149 plug-ins/common/checkerboard.c:150
+msgid "Check size unit of measure"
+msgstr ""
+
+#: plug-ins/common/checkerboard.c:370 plug-ins/common/checkerboard.c:500
+msgid "Checkerboard"
+msgstr "ჭადრაკის დაფა"
 
 #: plug-ins/common/cml-explorer.c:130
 msgid "Keep image's values"
@@ -1083,7 +1093,7 @@ msgstr ""
 #: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:825
 #: plug-ins/common/file-tga.c:448 plug-ins/common/file-wbmp.c:184
 #: plug-ins/common/file-xbm.c:750 plug-ins/common/file-xmc.c:658
-#: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
+#: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:486
 #: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
 #: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
 #: plug-ins/file-fits/fits.c:396 plug-ins/file-fli/fli-gimp.c:459
@@ -1777,7 +1787,7 @@ msgid "Yellow"
 msgstr "ყვითელი"
 
 #: plug-ins/common/decompose.c:215 plug-ins/common/warp.c:617
-#: plug-ins/file-fits/fits.c:994 plug-ins/flame/flame.c:1223
+#: plug-ins/file-fits/fits.c:1028 plug-ins/flame/flame.c:1223
 #: plug-ins/gfig/gfig-dialog.c:1459
 msgid "Black"
 msgstr "შავი"
@@ -2044,7 +2054,7 @@ msgstr ""
 #: plug-ins/common/file-sunras.c:450 plug-ins/common/file-tga.c:440
 #: plug-ins/common/file-wbmp.c:176 plug-ins/common/file-wmf.c:1026
 #: plug-ins/common/file-xbm.c:742 plug-ins/common/file-xmc.c:648
-#: plug-ins/common/file-xpm.c:385 plug-ins/common/file-xwd.c:473
+#: plug-ins/common/file-xpm.c:385 plug-ins/common/file-xwd.c:478
 #: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:188
 #: plug-ins/file-faxg3/faxg3.c:240 plug-ins/file-fli/fli-gimp.c:502
 #: plug-ins/file-icns/file-icns-load.c:507 plug-ins/file-ico/ico-load.c:673
@@ -2116,15 +2126,15 @@ msgstr ""
 #.
 #. * Open the file for writing...
 #.
-#: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:916
-#: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1374
+#: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:917
+#: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1383
 #: plug-ins/common/file-pcx.c:1114 plug-ins/common/file-pix.c:560
 #: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
 #: plug-ins/common/file-ps.c:1338 plug-ins/common/file-qoi.c:375
 #: plug-ins/common/file-sunras.c:629 plug-ins/common/file-tga.c:1230
 #: plug-ins/common/file-xbm.c:1051 plug-ins/common/file-xpm.c:705
-#: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
-#: plug-ins/file-fits/fits.c:640 plug-ins/file-fli/fli-gimp.c:784
+#: plug-ins/common/file-xwd.c:714 plug-ins/file-bmp/bmp-save.c:333
+#: plug-ins/file-fits/fits.c:674 plug-ins/file-fli/fli-gimp.c:784
 #: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1333
 #: plug-ins/file-ico/ico-save.c:1542 plug-ins/file-jpeg/jpeg-save.c:272
 #: plug-ins/file-psd/psd-save.c:2160 plug-ins/file-sgi/sgi.c:646
@@ -2291,7 +2301,7 @@ msgid "Cannot save images with alpha channel."
 msgstr ""
 
 #: plug-ins/common/file-dicom.c:1542 plug-ins/common/file-ps.c:1333
-#: plug-ins/common/file-xwd.c:670 plug-ins/file-fits/fits.c:635
+#: plug-ins/common/file-xwd.c:709 plug-ins/file-fits/fits.c:669
 msgid "Cannot operate on unknown image types."
 msgstr ""
 
@@ -2505,8 +2515,8 @@ msgstr "GIF"
 msgid "exports files in GIF file format"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:156
-#, c-format
+#: plug-ins/common/file-gif-save.c:157
+#, no-c-format
 msgid ""
 "Export a file in GIF format, with possible animation, transparency, and "
 "comment. To export an animation, operate on a multi-layer file and give the "
@@ -2515,154 +2525,154 @@ msgid ""
 "from the 'gimp-comment' parasite."
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:182 plug-ins/common/file-mng.c:277
+#: plug-ins/common/file-gif-save.c:183 plug-ins/common/file-mng.c:277
 msgid "_Interlace"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:183
+#: plug-ins/common/file-gif-save.c:184
 msgid "Try to export as interlaced"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:188
+#: plug-ins/common/file-gif-save.c:189
 msgid "Loop _Forever"
 msgstr "სამუდამო _მარყუჟი"
 
-#: plug-ins/common/file-gif-save.c:189
+#: plug-ins/common/file-gif-save.c:190
 msgid "(animated gif) Loop infinitely"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:194
+#: plug-ins/common/file-gif-save.c:195
 msgid "_Number of repeats"
 msgstr "_გამეორებების რაოდენობა"
 
-#: plug-ins/common/file-gif-save.c:195
+#: plug-ins/common/file-gif-save.c:196
 msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:201
+#: plug-ins/common/file-gif-save.c:202
 msgid "_Delay between frames when unspecified"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:202
+#: plug-ins/common/file-gif-save.c:203
 msgid "(animated gif) Default delay between frames in milliseconds"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:208
+#: plug-ins/common/file-gif-save.c:209
 msgid "Frame disposal _when unspecified"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:209
+#: plug-ins/common/file-gif-save.c:210
 msgid ""
 "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:217
+#: plug-ins/common/file-gif-save.c:218
 msgid "_As animation"
 msgstr "_როგორც ანიმაცია"
 
-#: plug-ins/common/file-gif-save.c:218
+#: plug-ins/common/file-gif-save.c:219
 msgid "Export GIF as animation?"
 msgstr "გავიტანო GIF-ი ანიმაციის სახით?"
 
-#: plug-ins/common/file-gif-save.c:223
+#: plug-ins/common/file-gif-save.c:224
 msgid "_Use delay entered above for all frames"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:224
+#: plug-ins/common/file-gif-save.c:225
 msgid "(animated gif) Use specified delay for all frames"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:229
+#: plug-ins/common/file-gif-save.c:230
 msgid "Use dis_posal entered above for all frames"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:231
+#: plug-ins/common/file-gif-save.c:232
 msgid "(animated gif) Use specified disposal for all frames"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:236
+#: plug-ins/common/file-gif-save.c:237
 msgid "Sa_ve comment"
 msgstr "კომენტარის _შენახვა"
 
-#: plug-ins/common/file-gif-save.c:237
+#: plug-ins/common/file-gif-save.c:238
 msgid "Save the image comment in the GIF file"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:242
+#: plug-ins/common/file-gif-save.c:243
 msgid "Commen_t"
 msgstr "_კომენტარი"
 
-#: plug-ins/common/file-gif-save.c:243
+#: plug-ins/common/file-gif-save.c:244
 msgid "Image comment"
 msgstr "გამოსახულების კომენტარი"
 
-#: plug-ins/common/file-gif-save.c:349
+#: plug-ins/common/file-gif-save.c:350
 msgid "GIF format does not support multiple layers."
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:557
+#: plug-ins/common/file-gif-save.c:558
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:676
+#: plug-ins/common/file-gif-save.c:677
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:802
+#: plug-ins/common/file-gif-save.c:803
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:889
+#: plug-ins/common/file-gif-save.c:890
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:1109
+#: plug-ins/common/file-gif-save.c:1110
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:1158
+#: plug-ins/common/file-gif-save.c:1159
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:1164
+#: plug-ins/common/file-gif-save.c:1165
 msgid "Cr_op"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:1175
+#: plug-ins/common/file-gif-save.c:1176
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:1265 plug-ins/common/file-mng.c:1642
+#: plug-ins/common/file-gif-save.c:1266 plug-ins/common/file-mng.c:1642
 msgid "milliseconds"
 msgstr "მილიწამი"
 
-#: plug-ins/common/file-gif-save.c:1270
+#: plug-ins/common/file-gif-save.c:1271
 msgid "I don't care"
 msgstr "არ მაინტერესებს"
 
-#: plug-ins/common/file-gif-save.c:1272
+#: plug-ins/common/file-gif-save.c:1273
 msgid "Cumulative layers (combine)"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:1274
+#: plug-ins/common/file-gif-save.c:1275
 msgid "One frame per layer (replace)"
 msgstr ""
 
-#: plug-ins/common/file-gif-save.c:1305
+#: plug-ins/common/file-gif-save.c:1306
 msgid "Animated GIF"
 msgstr "ანიმირებული GIF"
 
-#: plug-ins/common/file-gif-save.c:1311
+#: plug-ins/common/file-gif-save.c:1312
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -2901,7 +2911,7 @@ msgstr "YUV444"
 msgid "YUV420"
 msgstr "YUV420"
 
-#: plug-ins/common/file-heif.c:2527 plug-ins/common/file-jpegxl.c:2020
+#: plug-ins/common/file-heif.c:2527 plug-ins/common/file-jpegxl.c:2029
 msgid "8 bit/channel"
 msgstr "8 ბიტი/არხი"
 
@@ -3226,56 +3236,56 @@ msgstr ""
 msgid "Store ICC profile to exported JXL file"
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2006
+#: plug-ins/common/file-jpegxl.c:2015
 msgid "lightning (fastest)"
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2007
+#: plug-ins/common/file-jpegxl.c:2016
 msgid "thunder"
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2008
+#: plug-ins/common/file-jpegxl.c:2017
 msgid "falcon (faster)"
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2009
+#: plug-ins/common/file-jpegxl.c:2018
 msgid "cheetah"
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2010
+#: plug-ins/common/file-jpegxl.c:2019
 msgid "hare"
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2011
+#: plug-ins/common/file-jpegxl.c:2020
 msgid "wombat"
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2012
+#: plug-ins/common/file-jpegxl.c:2021
 msgid "squirrel"
 msgstr "ციყვი"
 
-#: plug-ins/common/file-jpegxl.c:2013
+#: plug-ins/common/file-jpegxl.c:2022
 msgid "kitten"
 msgstr "კნუტი"
 
-#: plug-ins/common/file-jpegxl.c:2014
+#: plug-ins/common/file-jpegxl.c:2023
 msgid "tortoise (slower)"
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2021
+#: plug-ins/common/file-jpegxl.c:2030
 msgid "16 bit/channel"
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2029
+#: plug-ins/common/file-jpegxl.c:2038
 msgid "CMYK profile required for export"
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2036 plug-ins/file-jpeg/jpeg-save.c:898
+#: plug-ins/common/file-jpegxl.c:2045 plug-ins/file-jpeg/jpeg-save.c:898
 #: plug-ins/file-psd/psd-save.c:2458 plug-ins/file-tiff/file-tiff-save.c:1369
 msgid "Name of the color profile used for CMYK export."
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2055 plug-ins/file-jpeg/jpeg-save.c:909
+#: plug-ins/common/file-jpegxl.c:2064 plug-ins/file-jpeg/jpeg-save.c:909
 #: plug-ins/file-psd/psd-save.c:2469 plug-ins/file-tiff/file-tiff-save.c:1381
 #, c-format
 msgid "Profile: %s"
@@ -3931,7 +3941,7 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr ""
 
 #: plug-ins/common/file-png.c:2296 plug-ins/common/file-ps.c:3739
-#: plug-ins/file-fits/fits.c:1002
+#: plug-ins/file-fits/fits.c:1036
 msgid "Automatic"
 msgstr "ავტომატური"
 
@@ -4786,7 +4796,7 @@ msgid "Type of colormap not supported"
 msgstr ""
 
 #: plug-ins/common/file-sunras.c:524 plug-ins/common/file-xbm.c:838
-#: plug-ins/common/file-xwd.c:551
+#: plug-ins/common/file-xwd.c:590
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4794,7 +4804,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/file-sunras.c:532 plug-ins/common/file-xbm.c:846
-#: plug-ins/common/file-xwd.c:559
+#: plug-ins/common/file-xwd.c:599
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4802,7 +4812,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/file-sunras.c:540 plug-ins/common/file-xbm.c:854
-#: plug-ins/common/file-xwd.c:566
+#: plug-ins/common/file-xwd.c:607
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4810,7 +4820,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/file-sunras.c:548 plug-ins/common/file-xbm.c:862
-#: plug-ins/common/file-xwd.c:573
+#: plug-ins/common/file-xwd.c:615
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4831,9 +4841,9 @@ msgstr ""
 
 #: plug-ins/common/file-sunras.c:1193 plug-ins/common/file-sunras.c:1288
 #: plug-ins/common/file-sunras.c:1372 plug-ins/common/file-sunras.c:1472
-#: plug-ins/common/file-xwd.c:1452 plug-ins/common/file-xwd.c:1556
-#: plug-ins/common/file-xwd.c:1716 plug-ins/common/file-xwd.c:1932
-#: plug-ins/common/file-xwd.c:2091 plug-ins/common/file-xwd.c:2355
+#: plug-ins/common/file-xwd.c:1513 plug-ins/common/file-xwd.c:1627
+#: plug-ins/common/file-xwd.c:1798 plug-ins/common/file-xwd.c:2038
+#: plug-ins/common/file-xwd.c:2227 plug-ins/common/file-xwd.c:2503
 msgid "EOF encountered on reading"
 msgstr ""
 
@@ -4988,7 +4998,7 @@ msgstr ""
 msgid "Image origin (0 = top-left, 1 = bottom-left)"
 msgstr ""
 
-#: plug-ins/common/file-tga.c:394 plug-ins/common/file-xwd.c:442
+#: plug-ins/common/file-tga.c:394 plug-ins/common/file-xwd.c:447
 msgid "TGA format does not support multiple layers."
 msgstr ""
 
@@ -5092,7 +5102,7 @@ msgstr ""
 msgid "Write a comment at the beginning of the file."
 msgstr ""
 
-#: plug-ins/common/file-xbm.c:218 plug-ins/common/mail.c:233
+#: plug-ins/common/file-xbm.c:218 plug-ins/common/mail.c:235
 msgid "Co_mment"
 msgstr "კომე_ნტარი"
 
@@ -5426,58 +5436,80 @@ msgstr "XPM ფაილი არასწორია"
 msgid "Unsupported drawable type"
 msgstr ""
 
-#: plug-ins/common/file-xwd.c:319 plug-ins/common/file-xwd.c:349
+#: plug-ins/common/file-xwd.c:324 plug-ins/common/file-xwd.c:354
 msgid "X window dump"
 msgstr "X-ის ფანჯრის დამპი"
 
-#: plug-ins/common/file-xwd.c:490
+#: plug-ins/common/file-xwd.c:517
 #, c-format
 msgid "Could not read XWD header from '%s'"
 msgstr ""
 
-#: plug-ins/common/file-xwd.c:511
+#: plug-ins/common/file-xwd.c:535
 #, c-format
 msgid ""
 "'%s':\n"
-"Illegal number of colormap entries: %ld"
+"Seek error"
+msgstr ""
+"'%s':\n"
+"გადახვევის შეცდომა"
+
+#: plug-ins/common/file-xwd.c:545
+#, c-format
+msgid ""
+"'%s':\n"
+"Illegal number of colormap entries: %u"
 msgstr ""
 
-#: plug-ins/common/file-xwd.c:521
+#: plug-ins/common/file-xwd.c:556
 #, c-format
 msgid ""
 "'%s':\n"
 "Number of colormap entries < number of colors"
 msgstr ""
 
-#: plug-ins/common/file-xwd.c:544
+#: plug-ins/common/file-xwd.c:582
 msgid "Can't read color entries"
 msgstr "ფერის ჩანაწერების წაკითხვა შეუძლებელია"
 
-#: plug-ins/common/file-xwd.c:628
+#: plug-ins/common/file-xwd.c:667
 #, c-format
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
 msgstr ""
 
-#: plug-ins/common/file-xwd.c:659
+#: plug-ins/common/file-xwd.c:698
 msgid "Cannot export images with alpha channels."
 msgstr ""
 
-#: plug-ins/common/file-xwd.c:682
+#: plug-ins/common/file-xwd.c:721
 #, c-format
 msgid "Could not open '%s' for writing: "
 msgstr ""
 
-#: plug-ins/common/file-xwd.c:709
+#: plug-ins/common/file-xwd.c:748
 #, c-format
 msgid "Error exporting '%s': "
 msgstr "'%s'-ის გატანის შეცდომა: "
 
-#: plug-ins/common/file-xwd.c:1788 plug-ins/common/file-xwd.c:2188
+#: plug-ins/common/file-xwd.c:955 plug-ins/common/file-xwd.c:989
+#: plug-ins/common/file-xwd.c:1026
+msgid "Seek error"
+msgstr "გადახვევის შეცდომა"
+
+#: plug-ins/common/file-xwd.c:1878 plug-ins/common/file-xwd.c:2129
+#: plug-ins/common/file-xwd.c:2324
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "XWD-ფაილი %s დაზიანებულია."
+
+#: plug-ins/common/file-xwd.c:2077
+#, c-format
+msgid ""
+"'%s':\n"
+"Invalid color map"
+msgstr ""
 
 #: plug-ins/common/film.c:241
 msgid "_Filmstrip..."
@@ -5829,73 +5861,73 @@ msgstr "კვადრატი"
 msgid "Curved"
 msgstr "მრუდი"
 
-#: plug-ins/common/mail.c:186
+#: plug-ins/common/mail.c:188
 msgid "Send by E_mail..."
 msgstr ""
 
-#: plug-ins/common/mail.c:191
+#: plug-ins/common/mail.c:193
 msgid "Send the image by email"
 msgstr ""
 
-#: plug-ins/common/mail.c:193
+#: plug-ins/common/mail.c:195
 msgid "Sendmail is used to send emails and must be properly configured."
 msgstr ""
 
-#: plug-ins/common/mail.c:196
+#: plug-ins/common/mail.c:198
 msgid ""
 "The preferred email composer is used to send emails and must be properly "
 "configured."
 msgstr ""
 
-#: plug-ins/common/mail.c:209
+#: plug-ins/common/mail.c:211
 msgid "File_name"
 msgstr "ფაილის სახელი"
 
-#: plug-ins/common/mail.c:210
+#: plug-ins/common/mail.c:212
 msgid "The name of the file to save the image in"
 msgstr ""
 
-#: plug-ins/common/mail.c:215
+#: plug-ins/common/mail.c:217
 msgid "_To"
 msgstr "_ვის"
 
-#: plug-ins/common/mail.c:216
+#: plug-ins/common/mail.c:218
 msgid "The email address to send to"
 msgstr ""
 
-#: plug-ins/common/mail.c:221
+#: plug-ins/common/mail.c:223
 msgid "_From"
 msgstr "_ვისგან"
 
-#: plug-ins/common/mail.c:222
+#: plug-ins/common/mail.c:224
 msgid "The email address for the From: field"
 msgstr ""
 
-#: plug-ins/common/mail.c:227
+#: plug-ins/common/mail.c:229
 msgid "Su_bject"
 msgstr "_თემა"
 
-#: plug-ins/common/mail.c:228
+#: plug-ins/common/mail.c:230
 msgid "The subject"
 msgstr "თემა"
 
-#: plug-ins/common/mail.c:234
+#: plug-ins/common/mail.c:236
 msgid "The comment"
 msgstr "კომენტარი"
 
-#: plug-ins/common/mail.c:555
+#: plug-ins/common/mail.c:563
 msgid "Send by Email"
 msgstr ""
 
-#: plug-ins/common/mail.c:559
+#: plug-ins/common/mail.c:567
 msgid "Send"
 msgstr "გაგზავნა"
 
-#: plug-ins/common/mail.c:695
+#: plug-ins/common/mail.c:703
 msgid "some sort of error with the file extension or lack thereof"
 msgstr ""
 
-#: plug-ins/common/mail.c:874
+#: plug-ins/common/mail.c:888
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr ""
@@ -7519,28 +7551,28 @@ msgstr ""
 msgid "Error during opening of FITS file"
 msgstr "შეცდომა FITS ფაილის გახსნისას"
 
-#: plug-ins/file-fits/fits.c:422 plug-ins/file-fits/fits.c:600
+#: plug-ins/file-fits/fits.c:422 plug-ins/file-fits/fits.c:634
 msgid "FITS file keeps no displayable images"
 msgstr ""
 
-#: plug-ins/file-fits/fits.c:516
+#: plug-ins/file-fits/fits.c:520
 msgid "FITS HDU"
 msgstr ""
 
-#: plug-ins/file-fits/fits.c:624
+#: plug-ins/file-fits/fits.c:658
 msgid "FITS export cannot handle images with alpha channels"
 msgstr ""
 
-#: plug-ins/file-fits/fits.c:990
+#: plug-ins/file-fits/fits.c:1024
 msgid "Open FITS File"
 msgstr "FITS ფაილის გახსნა"
 
-#: plug-ins/file-fits/fits.c:995 plug-ins/gfig/gfig-dialog.c:1292
+#: plug-ins/file-fits/fits.c:1029 plug-ins/gfig/gfig-dialog.c:1292
 #: plug-ins/gfig/gfig-dialog.c:1460
 msgid "White"
 msgstr "თეთრი"
 
-#: plug-ins/file-fits/fits.c:1003
+#: plug-ins/file-fits/fits.c:1037
 msgid "By DATAMIN/DATAMAX"
 msgstr ""
 
@@ -7933,11 +7965,11 @@ msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (საუკეთესო ხარისხი)"
 
 #: plug-ins/file-jpeg/jpeg-save.c:942
-msgid "4:2:2 horizontal (chroma halved)"
+msgid "4:2:2 (chroma halved horizontally)"
 msgstr ""
 
 #: plug-ins/file-jpeg/jpeg-save.c:944
-msgid "4:2:2 vertical (chroma halved)"
+msgid "4:4:0 (chroma halved vertically)"
 msgstr ""
 
 #: plug-ins/file-jpeg/jpeg-save.c:946
@@ -8107,50 +8139,6 @@ msgstr "თავსებადობის შენიშვნა"
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:3587
-msgid "Adjustment layers are not yet supported and will be dropped."
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:3591
-msgid "Metadata non-raster layers are not yet supported and will be dropped."
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:3595
-msgid ""
-"Fill layers are partially supported and will be converted to raster layers."
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:3600
-msgid ""
-"Text layers are partially supported and will be converted to raster layers."
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:3605
-msgid "Linked layers are not yet supported and will be dropped."
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:3609
-msgid ""
-"Vector masks are partially supported and will be converted to raster layers."
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:3614
-msgid "Vector strokes are not yet supported and will be dropped."
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:3618
-msgid "Layer effects are not yet supported and will be dropped."
-msgstr ""
-
-#: plug-ins/file-psd/psd-load.c:3622
-msgid "Smart objects are not yet supported and will be dropped."
-msgstr ""
-
-#. Translators: short for layer compositions
-#: plug-ins/file-psd/psd-load.c:3627
-msgid "Layer comps are not yet supported and will be dropped."
 msgstr ""
 
 #: plug-ins/file-psd/psd-save.c:502
@@ -10473,10 +10461,6 @@ msgstr ""
 msgid "Revert to the original image"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:94
-msgid "_Size"
-msgstr "ზომა"
-
 #: plug-ins/gimpressionist/size.c:107
 msgid "Size variants:"
 msgstr ""
@@ -10568,6 +10552,10 @@ msgstr ""
 #: plug-ins/gimpressionist/sizemap.c:500
 msgid "Delete selected smvector"
 msgstr ""
+
+#: plug-ins/gimpressionist/sizemap.c:508
+msgid "_Size:"
+msgstr "_ზომა:"
 
 #: plug-ins/gimpressionist/sizemap.c:510
 msgid "Change the angle of the selected smvector"
@@ -12657,7 +12645,7 @@ msgstr "სიმაღლე"
 
 #: plug-ins/metadata/metadata-editor.c:688
 msgid "Altitude Reference"
-msgstr ""
+msgstr "სიმაღლის საწყისი მნიშვნელობა"
 
 #: plug-ins/metadata/metadata-editor.c:694
 msgid "Patient"
