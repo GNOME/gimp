@@ -779,6 +779,23 @@
           <item><attribute name="action">app.filters-semi-flatten</attribute></item>
         </submenu>
       </section>
+      <section>
+        <submenu>
+          <attribute name="label" translatable="yes" context="filters-action">An_imation</attribute>
+        </submenu>
+        <submenu>
+          <attribute name="label" translatable="yes" context="filters-action">De_velopment</attribute>
+          <submenu>
+            <attribute name="label" translatable="yes" context="filters-action">_Goat exercises</attribute>
+          </submenu>
+          <submenu>
+            <attribute name="label" translatable="yes" context="filters-action">_Python-Fu</attribute>
+          </submenu>
+          <submenu>
+            <attribute name="label" translatable="yes" context="filters-action">_Script-Fu</attribute>
+          </submenu>
+        </submenu>
+      </section>
     </submenu>
 
     <submenu>
@@ -830,6 +847,12 @@
       <section>
         <attribute name="section-name" translatable="no">Programming</attribute>
       </section>
+      <submenu>
+        <attribute name="label" translatable="yes" context="help-action">_GIMP Online</attribute>
+      </submenu>
+      <submenu>
+        <attribute name="label" translatable="yes" context="help-action">_User Manual</attribute>
+      </submenu>
     </submenu>
   </menu>
 </interface>
