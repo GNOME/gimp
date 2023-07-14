@@ -15,7 +15,7 @@ plugins = [
   { 'name': 'spyro-plus' },
 ]
 
-if not stable
+if not stable or not release
   plugins += [
     { 'name': 'test-dialog' },
   ]
