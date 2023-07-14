@@ -33,6 +33,7 @@ gboolean    save_image         (GFile                *file,
 gboolean    save_dialog        (GimpProcedure        *procedure,
                                 GimpProcedureConfig  *config,
                                 GimpDrawable         *drawable,
-                                GimpImage            *image);
+                                GimpImage            *image,
+                                gboolean              has_alpha);
 
 #endif /* __JPEG_SAVE_H__ */

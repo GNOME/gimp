@@ -838,11 +838,13 @@ gboolean
 save_dialog (GimpProcedure       *procedure,
              GimpProcedureConfig *config,
              GimpDrawable        *drawable,
-             GimpImage           *image)
+             GimpImage           *image,
+             gboolean             has_alpha)
 {
   GtkWidget        *dialog;
   GtkWidget        *widget;
   GtkWidget        *profile_label;
+  GtkWidget        *vbox;
   GtkListStore     *store;
   GimpColorProfile *cmyk_profile = NULL;
   gint              orig_quality;
@@ -982,20 +984,36 @@ save_dialog (GimpProcedure       *procedure,
                         NULL);
     }
 
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                  "advanced-options",
-                                  "smoothing",
-                                  "progressive",
-                                  "cmyk-frame",
+  vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "advanced-options",
+                                         "smoothing",
+                                         "progressive",
+                                         "cmyk-frame",
 #ifdef C_ARITH_CODING_SUPPORTED
-                                  "arithmetic-frame",
+                                         "arithmetic-frame",
 #else
-                                  "optimize",
+                                         "optimize",
 #endif
-                                  "restart-frame",
-                                  "sub-sampling",
-                                  "dct",
-                                  NULL);
+                                         "restart-frame",
+                                         "sub-sampling",
+                                         "dct",
+                                         NULL);
+
+  if (has_alpha)
+    {
+      GtkWidget *warning;
+
+      warning = g_object_new (GIMP_TYPE_HINT_BOX,
+                              "icon-name", GIMP_ICON_DIALOG_WARNING,
+                              "hint",
+                              _("The JPEG format does not support transparency.\n"
+                                "Use another format like PNG or TIFF if you need "
+                                "to retain transparency."),
+                              NULL);
+      gtk_box_pack_end (GTK_BOX (vbox), warning, FALSE, FALSE, 12);
+      gtk_widget_set_visible (warning, TRUE);
+    }
+
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "advanced-frame", "advanced-title", FALSE,
                                     "advanced-options");
