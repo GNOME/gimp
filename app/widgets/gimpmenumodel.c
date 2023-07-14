@@ -1175,7 +1175,11 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
       submodel = gimp_menu_model_new_submenu (model->priv->manager, NULL, submodel_path);
       item     = g_menu_item_new_submenu (new_dir, G_MENU_MODEL (submodel));
 
-      model->priv->items = g_list_append (model->priv->items, item);
+      if (model->priv->path == NULL)
+        model->priv->items = g_list_insert (model->priv->items, item,
+                                            g_list_length (model->priv->items) - 2);
+      else
+        model->priv->items = g_list_append (model->priv->items, item);
 
       g_free (canon_label);
       g_object_unref (submodel);
