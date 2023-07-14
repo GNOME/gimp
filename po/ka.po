@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-10 15:25+0000\n"
-"PO-Revision-Date: 2023-07-10 19:06+0200\n"
+"POT-Creation-Date: 2023-07-13 21:05+0000\n"
+"PO-Revision-Date: 2023-07-14 07:03+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -2247,12 +2247,12 @@ msgctxt "dashboard-action"
 msgid "_Groups"
 msgstr "_ჯგუფები"
 
-#: app/actions/dashboard-actions.c:42 menus/dashboard-menu.ui:14
+#: app/actions/dashboard-actions.c:42 menus/dashboard-menu.ui:15
 msgctxt "dashboard-action"
 msgid "_Update Interval"
 msgstr "განახლების ინტერვალი"
 
-#: app/actions/dashboard-actions.c:44 menus/dashboard-menu.ui:22
+#: app/actions/dashboard-actions.c:44 menus/dashboard-menu.ui:23
 msgctxt "dashboard-action"
 msgid "_History Duration"
 msgstr "შენახული ისტორიის ხანგრძლივობა"
@@ -5427,7 +5427,7 @@ msgstr "გრადაციის ჩასწორება"
 msgid "Save '%s' as POV-Ray"
 msgstr "'%s'-ის POV-Ray-ის სახით შენახვა"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:829
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:836
 msgctxt "help-action"
 msgid "_Help"
 msgstr "_დახმარება"
@@ -9798,7 +9798,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "წინა გამოსახულებაზე გადართვა"
 
-#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:818
+#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:825
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "_ჩანართის პოზიცია"
@@ -27637,12 +27637,13 @@ msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr ""
+"ეს XCF ფაილი დაზიანებულია!  ჩავტვირთე, რამდენიც შემეძლო, მაგრამ დაზიანებულია."
 
 #: app/xcf/xcf-load.c:966
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
-msgstr ""
+msgstr "ეს XCF ფაილი დაზიანებულია!  მონაცემები ნაწილობრივაც კი ვერ ამოვიღე."
 
 #: app/xcf/xcf-load.c:1057
 msgid ""
@@ -27757,113 +27758,116 @@ msgctxt "file-action"
 msgid "Crea_te"
 msgstr "შექმნა"
 
-#: menus/image-menu.ui.in.in:19
+#: menus/image-menu.ui.in.in:18
 msgctxt "file-action"
 msgid "Open _Recent"
 msgstr "ბოლოს გახსნილი ფაილი"
 
-#: menus/image-menu.ui.in.in:30
+#: menus/image-menu.ui.in.in:27
 msgid "_Debug"
 msgstr "_გამართვა"
 
-#: menus/image-menu.ui.in.in:70
+#: menus/image-menu.ui.in.in:69
 msgctxt "edit-action"
 msgid "_Edit"
 msgstr "ჩასწორება"
 
-#: menus/image-menu.ui.in.in:83
+#: menus/image-menu.ui.in.in:82
 msgctxt "edit-action"
 msgid "Paste _as"
 msgstr "ჩასმა როგორ_ც"
 
-#: menus/image-menu.ui.in.in:91
+#: menus/image-menu.ui.in.in:90
 msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_ბaფერი"
 
-#: menus/image-menu.ui.in.in:121
+#: menus/image-menu.ui.in.in:120
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_მონიშვნა"
 
-#: menus/image-menu.ui.in.in:148
+#: menus/image-menu.ui.in.in:149
 msgctxt "view-action"
 msgid "_View"
 msgstr "_ხედი"
 
-#. TODO: Zoom label shows current zoom value.
 #: menus/image-menu.ui.in.in:154
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "_გადიდება"
 
-#. TODO: shows the current rotation angle.
-#: menus/image-menu.ui.in.in:180
+#: menus/image-menu.ui.in.in:179
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "ამო_ბრუნება და შემობრუნება"
 
-#: menus/image-menu.ui.in.in:204
+#: menus/image-menu.ui.in.in:203
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "ეკრანზე გატანა"
 
-#: menus/image-menu.ui.in.in:213
+#: menus/image-menu.ui.in.in:212
 msgctxt "view-action"
 msgid "_Color Management"
 msgstr "ფერების მართვა"
 
-#: menus/image-menu.ui.in.in:220
+#: menus/image-menu.ui.in.in:219
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
 msgstr "ეკრანზე რენდერის დანიშნულება"
 
-#: menus/image-menu.ui.in.in:250
+#: menus/image-menu.ui.in.in:249
 msgctxt "view-action"
 msgid "_Padding color"
 msgstr "_ფანჯრის ფონის ფერი"
 
-#: menus/image-menu.ui.in.in:274
+#: menus/image-menu.ui.in.in:273
 msgctxt "image-action"
 msgid "_Image"
 msgstr "_გამოსახულება"
 
-#: menus/image-menu.ui.in.in:280
+#: menus/image-menu.ui.in.in:279
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_რეჟიმი"
 
-#: menus/image-menu.ui.in.in:286
+#: menus/image-menu.ui.in.in:285
 msgctxt "image-action"
 msgid "_Encoding"
 msgstr "_კოდირება"
 
-#: menus/image-menu.ui.in.in:302
+#: menus/image-menu.ui.in.in:301
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "ფერების მართვა"
 
-#: menus/image-menu.ui.in.in:319
+#: menus/image-menu.ui.in.in:318
 msgctxt "image-action"
 msgid "Soft-Proofing Re_ndering Intent"
 msgstr "ფერების გადაცე_მის ტიპი"
 
-#: menus/image-menu.ui.in.in:331
+#: menus/image-menu.ui.in.in:330
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "_გარდაქმნა"
 
-#: menus/image-menu.ui.in.in:361
+#: menus/image-menu.ui.in.in:360
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_გიდები"
 
-#: menus/image-menu.ui.in.in:375
+#: menus/image-menu.ui.in.in:368
+msgctxt "image-action"
+msgid "Meta_data"
+msgstr "_მეტა_ინფორმაცია"
+
+#: menus/image-menu.ui.in.in:376
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "_ფენა"
 
-#: menus/image-menu.ui.in.in:393
+#: menus/image-menu.ui.in.in:394
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "_შეკვრა"
@@ -27898,12 +27902,12 @@ msgctxt "image-action"
 msgid "C_omponents"
 msgstr "კო_მპონენტები"
 
-#: menus/image-menu.ui.in.in:505
+#: menus/image-menu.ui.in.in:504
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "გაუფერუ_ლება"
 
-#: menus/image-menu.ui.in.in:512
+#: menus/image-menu.ui.in.in:511
 msgctxt "image-action"
 msgid "_Map"
 msgstr "რუ_კა"
@@ -27913,130 +27917,171 @@ msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "_ტონალური პროექტია"
 
-#: menus/image-menu.ui.in.in:530
+#: menus/image-menu.ui.in.in:529
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "ი_ნფო"
 
-#: menus/image-menu.ui.in.in:549
+#: menus/image-menu.ui.in.in:547
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "_ხელსაწყოები"
 
-#: menus/image-menu.ui.in.in:552
+#: menus/image-menu.ui.in.in:550
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "მონიშვნის ხელსაწყოები"
 
-#: menus/image-menu.ui.in.in:565
+#: menus/image-menu.ui.in.in:563
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "_სახატავი ხელსაწყოები"
 
-#: menus/image-menu.ui.in.in:582
+#: menus/image-menu.ui.in.in:580
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "_გარდაქმნის ხელსაწყოები"
 
-#: menus/image-menu.ui.in.in:621
+#: menus/image-menu.ui.in.in:619
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "ფილტ_რები"
 
-#: menus/image-menu.ui.in.in:626
+#: menus/image-menu.ui.in.in:624
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "ახლახანს გამოყენებული"
 
-#: menus/image-menu.ui.in.in:634
+#: menus/image-menu.ui.in.in:633
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "_ბუნდოვნება"
 
-#: menus/image-menu.ui.in.in:649
+#: menus/image-menu.ui.in.in:647
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "გაუმჯობესება"
 
-#: menus/image-menu.ui.in.in:660
+#: menus/image-menu.ui.in.in:657
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "_დამახინჯებები"
 
-#: menus/image-menu.ui.in.in:680
+#: menus/image-menu.ui.in.in:676
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_სინათლე და ჩრდილი"
 
-#: menus/image-menu.ui.in.in:695
+#: menus/image-menu.ui.in.in:691
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "_ხმაური"
 
-#: menus/image-menu.ui.in.in:705
+#: menus/image-menu.ui.in.in:701
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "კუთხ_ის პოვნა"
 
-#: menus/image-menu.ui.in.in:714
+#: menus/image-menu.ui.in.in:710
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "ზოგადი"
 
-#: menus/image-menu.ui.in.in:725
+#: menus/image-menu.ui.in.in:721
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "შეერთება"
 
-#: menus/image-menu.ui.in.in:729
+#: menus/image-menu.ui.in.in:724
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "_არტისტული"
 
-#: menus/image-menu.ui.in.in:742
+#: menus/image-menu.ui.in.in:736
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "ორნ_ამენტი"
 
-#: menus/image-menu.ui.in.in:746
+#: menus/image-menu.ui.in.in:739
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "რუ_კა"
 
-#: menus/image-menu.ui.in.in:759
+#: menus/image-menu.ui.in.in:751
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "რენდერი"
 
-#: menus/image-menu.ui.in.in:762
+#: menus/image-menu.ui.in.in:754
+msgctxt "filters-action"
+msgid "_Fractals"
+msgstr "_ფრაქტალები"
+
+#: menus/image-menu.ui.in.in:757
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "_ხმაური"
 
-#: menus/image-menu.ui.in.in:771
+#: menus/image-menu.ui.in.in:765
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_შაბლონი"
 
-#: menus/image-menu.ui.in.in:785
+#: menus/image-menu.ui.in.in:778
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "_ვები"
 
-#: menus/image-menu.ui.in.in:794
+#: menus/image-menu.ui.in.in:784
+msgctxt "filters-action"
+msgid "An_imation"
+msgstr "ან_იმაცია"
+
+#: menus/image-menu.ui.in.in:787
+msgctxt "filters-action"
+msgid "De_velopment"
+msgstr ""
+
+#: menus/image-menu.ui.in.in:789
+msgctxt "filters-action"
+msgid "_Goat exercises"
+msgstr ""
+
+#: menus/image-menu.ui.in.in:792
+msgctxt "filters-action"
+msgid "_Python-Fu"
+msgstr "_Python-Fu"
+
+#: menus/image-menu.ui.in.in:795
+#| msgid "Scripts"
+msgctxt "filters-action"
+msgid "_Script-Fu"
+msgstr "_Script-Fu"
+
+#: menus/image-menu.ui.in.in:802
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_ფანჯრები"
 
-#: menus/image-menu.ui.in.in:797
+#: menus/image-menu.ui.in.in:805
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "ახლა_ხანს დახურული მიმაგრებები"
 
-#: menus/image-menu.ui.in.in:801
+#: menus/image-menu.ui.in.in:809
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_მიმაგრებადი ფანჯრები"
+
+#: menus/image-menu.ui.in.in:851
+msgctxt "help-action"
+msgid "_GIMP Online"
+msgstr "_GIMP-ის ონლაინ რესურსები"
+
+#: menus/image-menu.ui.in.in:854
+msgctxt "help-action"
+msgid "_User Manual"
+msgstr "მომხმარებლის სახელმძღვ_ანელო"
 
 #: menus/layers-menu.ui:6
 msgctxt "layers-action"
@@ -28231,16 +28276,8 @@ msgstr "კონტურების მენიუ"
 #~ msgstr "_ღრუბლები"
 
 #~ msgctxt "filters-action"
-#~ msgid "_Fractals"
-#~ msgstr "_ფრაქტალები"
-
-#~ msgctxt "filters-action"
 #~ msgid "_Nature"
 #~ msgstr "_ბუნება"
-
-#~ msgctxt "filters-action"
-#~ msgid "An_imation"
-#~ msgstr "ან_იმაცია"
 
 #~ msgctxt "fonts-action"
 #~ msgid "Fonts Menu"
@@ -28249,10 +28286,6 @@ msgstr "კონტურების მენიუ"
 #~ msgctxt "image-action"
 #~ msgid "Image Menu"
 #~ msgstr "გამოსახულების მენიუ"
-
-#~ msgctxt "image-action"
-#~ msgid "Meta_data"
-#~ msgstr "_მეტა_ინფორმაცია"
 
 #~ msgctxt "images-action"
 #~ msgid "Images Menu"
