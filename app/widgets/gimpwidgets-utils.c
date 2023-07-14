@@ -2446,15 +2446,20 @@ gimp_utils_make_canonical_menu_label (const gchar *path)
  */
 gchar **
 gimp_utils_break_menu_path (const gchar  *path,
+                            gchar       **mnemonic_path1,
                             gchar       **section_name)
 {
-  GRegex *path_regex;
-  gchar **paths;
-  gint    start = 0;
+  GRegex   *path_regex;
+  gchar   **paths;
+  GString  *mnemonic_string = NULL;
+  gint      start = 0;
 
   g_return_val_if_fail (path != NULL, NULL);
 
   path_regex = g_regex_new ("/+", 0, 0, NULL);
+
+  if (mnemonic_path1 != NULL)
+    mnemonic_string = g_string_new (NULL);
 
   /* Get rid of leading slashes. */
   while (path[start] == '/' && path[start] != '\0')
@@ -2500,10 +2505,17 @@ gimp_utils_break_menu_path (const gchar  *path,
                 }
             }
         }
+
+      if (mnemonic_string != NULL)
+        g_string_append_printf (mnemonic_string, "/%s", paths[i]);
+
       canon_path = gimp_utils_make_canonical_menu_label (paths[i]);
       g_free (paths[i]);
       paths[i] = canon_path;
     }
+
+  if (mnemonic_path1 != NULL)
+    *mnemonic_path1 = g_string_free (mnemonic_string, FALSE);
 
   g_regex_unref (path_regex);
 
@@ -2513,6 +2525,8 @@ gimp_utils_break_menu_path (const gchar  *path,
 gboolean
 gimp_utils_are_menu_path_identical (const gchar  *path1,
                                     const gchar  *path2,
+                                    gchar       **canonical_path1,
+                                    gchar       **mnemonic_path1,
                                     gchar       **path1_section_name)
 {
   gchar    **paths1;
@@ -2524,8 +2538,8 @@ gimp_utils_are_menu_path_identical (const gchar  *path1,
   if (path2 == NULL)
     path2 = "/";
 
-  paths1 = gimp_utils_break_menu_path (path1, path1_section_name);
-  paths2 = gimp_utils_break_menu_path (path2, NULL);
+  paths1 = gimp_utils_break_menu_path (path1, mnemonic_path1, path1_section_name);
+  paths2 = gimp_utils_break_menu_path (path2, NULL, NULL);
   if (g_strv_length (paths1) != g_strv_length (paths2))
     {
       identical = FALSE;
@@ -2541,6 +2555,16 @@ gimp_utils_are_menu_path_identical (const gchar  *path1,
             }
         }
     }
+
+  if (canonical_path1)
+    {
+      gchar *joined = g_strjoinv ("/", paths1);
+
+      *canonical_path1 = g_strdup_printf ("/%s", joined);
+
+      g_free (joined);
+    }
+
   g_strfreev (paths1);
   g_strfreev (paths2);
 

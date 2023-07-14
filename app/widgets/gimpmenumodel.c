@@ -116,13 +116,13 @@ static gboolean     gimp_menu_model_is_mutable               (GMenuModel        
 
 static void         gimp_menu_model_initialize               (GimpMenuModel       *model,
                                                               GMenuModel          *gmodel);
-static gboolean     gimp_menu_model_handles_subpath          (GimpMenuModel       *model,
-                                                              const gchar         *path,
-                                                              const gchar         *section_name);
+static gchar      * gimp_menu_model_handles_subpath          (GimpMenuModel       *model,
+                                                              const gchar         *canonical_path,
+                                                              const gchar         *mnemonic_path);
 
 static GMenuItem  * gimp_menu_model_get_item                 (GimpMenuModel       *model,
                                                               gint                 idx);
-static GMenuItem *  gimp_menu_model_get_menu_item_rec        (GimpMenuModel       *model,
+static GMenuItem  * gimp_menu_model_get_menu_item_rec        (GimpMenuModel       *model,
                                                               const gchar         *path,
                                                               GimpMenuModel      **menu,
                                                               GMenuItem           *item);
@@ -818,33 +818,43 @@ gimp_menu_model_initialize (GimpMenuModel *model,
     }
 }
 
-static gboolean
+/*
+ * Returns the directory to create as a new submodel to @model, with
+ * @canonical_path being the fully canonical path name (all slashes unique,
+ * leading slash, no trailing slash, section name removed and no mnemonic), e.g.
+ * "/some/path/name" and @mnemonic_path is the fully canonical path name, except
+ * that it contains mnemonics, e.g. "/_some/p_ath/_name".
+ *
+ * The code relies on these canonicalized characteristics so you must make sure
+ * to feed properly formatted paths.
+ *
+ * The return value is the canonical path of the first submenu to create,
+ * including mnemonics, e.g. if @model was for path "/some", then this function
+ * returns "p_ath".
+ */
+static gchar *
 gimp_menu_model_handles_subpath (GimpMenuModel *model,
-                                 const gchar   *path,
-                                 const gchar   *section_name)
+                                 const gchar   *canonical_path,
+                                 const gchar   *mnemonic_path)
 {
-  gchar *real_path;
+  gchar *new_dir;
+  gchar *end_new_dir;
+  gint   n_slash = 0;
 
-  if (section_name != NULL)
-    real_path = g_strndup (path, strlen (path) - strlen (section_name) - 2);
-  else
-    real_path = g_strdup (path);
-
-  if (model->priv->path != NULL && ! g_str_has_prefix (real_path, model->priv->path))
+  if (model->priv->path != NULL &&
+      (! g_str_has_prefix (canonical_path, model->priv->path) ||
+       canonical_path[strlen (model->priv->path)] != '/'))
     {
-      g_free (real_path);
       return FALSE;
     }
 
   for (GList *iter = model->priv->items; iter; iter = iter->next)
     {
-      GMenuModel  *submenu    = NULL;
-      GMenuModel  *subsection = NULL;
-      gchar       *label      = NULL;
-      GMenuItem   *item       = iter->data;
+      GMenuModel *submenu    = NULL;
+      GMenuModel *subsection = NULL;
+      GMenuItem  *item       = iter->data;
 
       subsection = g_menu_item_get_link (item, G_MENU_LINK_SECTION);
-      g_menu_item_get_attribute (item, G_MENU_ATTRIBUTE_LABEL, "s", &label);
 
       if (subsection != NULL)
         {
@@ -852,45 +862,61 @@ gimp_menu_model_handles_subpath (GimpMenuModel *model,
            * the whole menu. So we only handle the negative result (which means
            * we found a submenu model which will handle this path instead).
            */
-          if (! gimp_menu_model_handles_subpath (GIMP_MENU_MODEL (subsection), real_path, NULL))
+          new_dir = gimp_menu_model_handles_subpath (GIMP_MENU_MODEL (subsection),
+                                                     canonical_path, mnemonic_path);
+          if (new_dir == NULL)
             {
-              g_free (label);
               g_clear_object (&subsection);
-              return FALSE;
+              return NULL;
+            }
+          else
+            {
+              g_free (new_dir);
             }
         }
       else if ((submenu = g_menu_item_get_link (item, G_MENU_LINK_SUBMENU)) != NULL)
         {
           gchar *subpath;
 
-          g_return_val_if_fail (label != NULL, FALSE);
           subpath = g_strdup_printf ("%s/", GIMP_MENU_MODEL (submenu)->priv->path);
 
-          if (g_strcmp0 (real_path, GIMP_MENU_MODEL (submenu)->priv->path) == 0 ||
-              g_str_has_prefix (real_path, subpath))
+          if (g_strcmp0 (canonical_path, GIMP_MENU_MODEL (submenu)->priv->path) == 0 ||
+              g_str_has_prefix (canonical_path, subpath))
             {
               /* A submodel will handle the new path. */
               g_free (subpath);
-              g_free (label);
               g_clear_object (&subsection);
               g_clear_object (&submenu);
-              g_free (real_path);
 
-              return FALSE;
+              return NULL;
             }
 
           g_free (subpath);
         }
 
-      g_free (label);
       g_clear_object (&subsection);
       g_clear_object (&submenu);
     }
 
-  g_free (real_path);
+  if (model->priv->path != NULL)
+    {
+      n_slash = 1;
+      new_dir = model->priv->path;
+      while ((new_dir = strstr (new_dir + 1, "/")) != NULL)
+        n_slash++;
+    }
 
-  /* This is a subpath with submenus to be created! */
-  return TRUE;
+  new_dir = (gchar *) mnemonic_path + 1;
+  while (n_slash-- > 0)
+    new_dir = strstr (new_dir, "/") + 1;
+
+  end_new_dir = strstr (new_dir, "/");
+  if (end_new_dir)
+    new_dir = g_strndup (new_dir, end_new_dir - new_dir);
+  else
+    new_dir = g_strdup (new_dir);
+
+  return new_dir;
 }
 
 static GMenuItem *
@@ -946,7 +972,7 @@ gimp_menu_model_get_menu_item_rec (GimpMenuModel  *model,
   g_return_val_if_fail (item == model->priv->submenu_item, NULL);
   g_return_val_if_fail (menu != NULL && *menu == NULL, NULL);
 
-  if (gimp_utils_are_menu_path_identical (path, model->priv->path, NULL))
+  if (gimp_utils_are_menu_path_identical (path, model->priv->path, NULL, NULL, NULL))
     {
       *menu = model;
       return item;
@@ -1045,11 +1071,15 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
                           gboolean       top,
                           GimpMenuModel *model)
 {
-  gchar         *section_name = NULL;
-  gboolean       added        = FALSE;
-  GimpMenuModel *mod_model    = g_object_ref (model);
+  gchar         *canonical_path = NULL;
+  gchar         *mnemonic_path  = NULL;
+  gchar         *section_name   = NULL;
+  gboolean       added          = FALSE;
+  GimpMenuModel *mod_model      = g_object_ref (model);
+  gchar         *new_dir;
 
-  if (gimp_utils_are_menu_path_identical (path, model->priv->path, &section_name))
+  if (gimp_utils_are_menu_path_identical (path, model->priv->path, &canonical_path,
+                                          &mnemonic_path, &section_name))
     {
       GApplication *app = model->priv->manager->gimp->app;
       GAction      *action;
@@ -1130,40 +1160,12 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
           g_object_unref (item);
         }
     }
-  else if (gimp_menu_model_handles_subpath (model, path, section_name))
+  else if ((new_dir = gimp_menu_model_handles_subpath (model, canonical_path, mnemonic_path)))
     {
       GimpMenuModel *submodel;
       GMenuItem     *item;
       gchar         *canon_label;
       gchar         *submodel_path;
-      gchar         *new_dirs;
-      gchar         *new_dir;
-      gchar         *end_new_dir;
-
-      new_dirs = g_strdup (path + (model->priv->path ? strlen (model->priv->path) + 1 : 1));
-      new_dir  = new_dirs;
-
-      while (*new_dir == '/')
-        new_dir++;
-
-      end_new_dir = strstr (new_dir, "/");
-      if (end_new_dir)
-        *end_new_dir = '\0';
-
-      if (strlen (new_dir) > 3 &&
-          new_dir[0] == '[' && new_dir[1] == '[' &&
-          new_dir[strlen (new_dir) - 1] == ']')
-        {
-          /* We allow both "[[dir]" and "[[dir]]" to be canonicalized as
-           * "[dir]". This allows to differentiate with the original "[section]"
-           * as the syntax to indicate a menu section while still allowing
-           * people to use square brackets if they want to.
-           */
-          if (new_dir[strlen (new_dir) - 2] == ']')
-            new_dir[strlen (new_dir) - 1] = '\0';
-
-          new_dir++;
-        }
 
       canon_label   = gimp_utils_make_canonical_menu_label (new_dir);
       submodel_path = g_strdup_printf ("%s/%s",
@@ -1178,15 +1180,16 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
       g_free (canon_label);
       g_object_unref (submodel);
       g_free (submodel_path);
+      g_free (new_dir);
 
       g_menu_model_items_changed (G_MENU_MODEL (model),
                                   gimp_menu_model_get_position (model, NULL, NULL),
                                   1, 0);
-
-      g_free (new_dirs);
     }
 
   g_clear_object (&mod_model);
+  g_free (canonical_path);
+  g_free (mnemonic_path);
   g_free (section_name);
 
   return added;

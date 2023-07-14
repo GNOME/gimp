@@ -156,9 +156,12 @@ void              gimp_make_valid_action_name      (gchar                 *actio
 
 gchar           * gimp_utils_make_canonical_menu_label (const gchar       *path);
 gchar          ** gimp_utils_break_menu_path           (const gchar       *path,
+                                                        gchar            **mnemonic_path1,
                                                         gchar            **section_name);
 gboolean          gimp_utils_are_menu_path_identical   (const gchar       *path1,
                                                         const gchar       *path2,
+                                                        gchar            **canonical_path1,
+                                                        gchar            **mnemonic_path1,
                                                         gchar            **path1_section_name);
 
 

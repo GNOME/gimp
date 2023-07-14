@@ -1206,7 +1206,7 @@ gimp_action_set_menu_path (GimpAction  *action,
 
   if (menu_path)
     {
-      paths = gimp_utils_break_menu_path (menu_path, NULL);
+      paths = gimp_utils_break_menu_path (menu_path, NULL, NULL);
       /* The 4 raw bytes are the "rightwards triangle arrowhead" unicode character. */
       priv->menu_path = g_strjoinv (" \xF0\x9F\xA2\x92 ", paths);
       g_strfreev (paths);
