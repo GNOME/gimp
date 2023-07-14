@@ -362,6 +362,10 @@ gimp_menu_model_get_item_attributes (GMenuModel  *model,
   value = g_menu_item_get_attribute_value (item, G_MENU_ATTRIBUTE_TARGET, NULL);
   if (value)
     g_hash_table_insert (*attributes, G_MENU_ATTRIBUTE_TARGET, value);
+
+  value = g_menu_item_get_attribute_value (item, "hidden-when", NULL);
+  if (value)
+    g_hash_table_insert (*attributes, "hidden-when", value);
 }
 
 static GMenuModel*
