@@ -45,37 +45,47 @@ def process_args(brush, font, gradient, palette, pattern):
     assert brush is not None
     assert isinstance(brush, Gimp.Brush)
     id = brush.get_id()
+    name = brush.get_name()
     assert id is not None
-    print("Brush id is:", id)
-    Gimp.message(id)
+    msg = "Brush: {} (ID: {})".format(name, id)
+    print(msg)
+    Gimp.message(msg)
 
     assert font is not None
     assert isinstance(font, Gimp.Font)
     id = font.get_id()
+    name = font.get_name()
     assert id is not None
-    print("font id is:", id)
-    Gimp.message(id)
+    msg = "Font: {} (ID: {})".format(name, id)
+    print(msg)
+    Gimp.message(msg)
 
     assert gradient is not None
     assert isinstance(gradient, Gimp.Gradient)
     id = gradient.get_id()
+    name = gradient.get_name()
     assert id is not None
-    print("gradient id is:", id)
-    Gimp.message(id)
+    msg = "Gradient: {} (ID: {})".format(name, id)
+    print(msg)
+    Gimp.message(msg)
 
     assert palette is not None
     assert isinstance(palette, Gimp.Palette)
     id = palette.get_id()
+    name = palette.get_name()
     assert id is not None
-    print("palette id is:", id)
-    Gimp.message(id)
+    msg = "Palette: {} (ID: {})".format(name, id)
+    print(msg)
+    Gimp.message(msg)
 
     assert pattern is not None
     assert isinstance(pattern, Gimp.Pattern)
     id = pattern.get_id()
+    name = pattern.get_name()
     assert id is not None
-    print("pattern id is:", id)
-    Gimp.message(id)
+    msg = "Pattern: {} (ID: {})".format(name, id)
+    print(msg)
+    Gimp.message(msg)
 
     return
 
