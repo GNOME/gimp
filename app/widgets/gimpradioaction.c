@@ -74,12 +74,15 @@ static void      gimp_radio_action_set_property        (GObject          *object
                                                         const GValue     *value,
                                                         GParamSpec       *pspec);
 
+static gboolean  gimp_radio_action_get_enabled         (GAction          *action);
+static void      gimp_radio_action_change_state        (GAction          *action,
+                                                        GVariant         *value);
 static const GVariantType *
                  gimp_radio_action_get_state_type      (GAction          *action);
 static GVariant *
                  gimp_radio_action_get_state           (GAction          *action);
-static void      gimp_radio_action_change_state        (GAction          *action,
-                                                        GVariant         *value);
+static const GVariantType *
+                 gimp_radio_action_get_parameter_type  (GAction          *action);
 
 static void      gimp_radio_action_activate            (GAction          *action,
                                                         GVariant         *parameter);
@@ -168,12 +171,14 @@ gimp_radio_action_class_init (GimpRadioActionClass *klass)
 static void
 gimp_radio_action_g_action_iface_init (GActionInterface *iface)
 {
-  iface->get_name       = (const gchar* (*) (GAction*)) gimp_action_get_name;
-  iface->activate       = gimp_radio_action_activate;
+  iface->get_name           = (const gchar* (*) (GAction*)) gimp_action_get_name;
+  iface->activate           = gimp_radio_action_activate;
+  iface->get_enabled        = gimp_radio_action_get_enabled;
 
-  iface->change_state   = gimp_radio_action_change_state;
-  iface->get_state_type = gimp_radio_action_get_state_type;
-  iface->get_state      = gimp_radio_action_get_state;
+  iface->change_state       = gimp_radio_action_change_state;
+  iface->get_state_type     = gimp_radio_action_get_state_type;
+  iface->get_state          = gimp_radio_action_get_state;
+  iface->get_parameter_type = gimp_radio_action_get_parameter_type;
 }
 
 static void
@@ -289,6 +294,15 @@ gimp_radio_action_set_property (GObject      *object,
     }
 }
 
+
+static gboolean
+gimp_radio_action_get_enabled (GAction *action)
+{
+  GimpRadioAction *radio = GIMP_RADIO_ACTION (action);
+
+  return gimp_radio_action_get_current_value (radio) != radio->priv->value;
+}
+
 static void
 gimp_radio_action_change_state (GAction  *action,
                                 GVariant *value)
@@ -320,6 +334,25 @@ gimp_radio_action_get_state (GAction *action)
   state = g_variant_new_int32 (gimp_radio_action_get_current_value (radio));
 
   return g_variant_ref_sink (state);
+}
+
+/* This is a bit on the ugly side. In order to be shown as a radio item when the
+ * GUI is created by GTK (which happens either on macOS or with environment
+ * variable GIMP_GTK_MENUBAR), the menu item requires a "target" attribute
+ * (which is automatically added in GimpMenuModel) and the action needs to have
+ * a parameter type of the right type.
+ * In reality, how we use our radio actions is to have several tied actions
+ * rather than a single action to which we pass a parameter (we ignore the
+ * passed parameter anyway). This makes it a lot easier to have people assign
+ * shortcuts to these.
+ * So the ugly part is to add a parameter type here, even though the parameter
+ * just won't be used.
+ * See #9704.
+ */
+static const GVariantType *
+gimp_radio_action_get_parameter_type (GAction *action)
+{
+  return G_VARIANT_TYPE_INT32;
 }
 
 static void
@@ -531,6 +564,8 @@ gimp_radio_action_set_current_value (GimpRadioAction *action,
           _gimp_toggle_action_set_active (changed2, FALSE);
           g_object_notify (G_OBJECT (changed2), "active");
           g_signal_emit_by_name (changed2, "toggled");
+          g_object_notify (G_OBJECT (changed2), "enabled");
+          g_object_notify (G_OBJECT (changed2), "state");
         }
       g_object_notify (G_OBJECT (changed1), "active");
 
@@ -540,5 +575,7 @@ gimp_radio_action_set_current_value (GimpRadioAction *action,
           gimp_action_emit_change_state (GIMP_ACTION (slist->data),
                                          g_variant_new_int32 (current_value));
         }
+      g_object_notify (G_OBJECT (changed1), "enabled");
+      g_object_notify (G_OBJECT (changed1), "state");
     }
 }

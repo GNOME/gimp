@@ -358,6 +358,10 @@ gimp_menu_model_get_item_attributes (GMenuModel  *model,
   value = g_menu_item_get_attribute_value (item, G_MENU_LINK_SECTION, NULL);
   if (value)
     g_hash_table_insert (*attributes, G_MENU_LINK_SECTION, value);
+
+  value = g_menu_item_get_attribute_value (item, G_MENU_ATTRIBUTE_TARGET, NULL);
+  if (value)
+    g_hash_table_insert (*attributes, G_MENU_ATTRIBUTE_TARGET, value);
 }
 
 static GMenuModel*
@@ -791,6 +795,23 @@ gimp_menu_model_initialize (GimpMenuModel *model,
                                    "notify::label",
                                    G_CALLBACK (gimp_menu_model_action_notify_label),
                                    item, 0);
+
+          /* We want GimpRadioAction to be GTK_MENU_TRACKER_ITEM_ROLE_RADIO,
+           * in order to be displayed as radio menu items (as used to be
+           * GtkRadioAction) even in the gtk_application_set_menubar() code path.
+           *
+           * GTK do this by checking that the item has a "target" parameter,
+           * which we don't add in our .ui file. Instead let's do this
+           * programmatically, hence avoiding human errors.
+           * See: gtk/gtkmenutrackeritem.c
+           */
+          if (GIMP_IS_RADIO_ACTION (action))
+            {
+              gint target;
+
+              g_object_get (action, "value", &target, NULL);
+              g_menu_item_set_attribute (item, G_MENU_ATTRIBUTE_TARGET, "i", target);
+            }
 
           g_free (label_variant);
         }
