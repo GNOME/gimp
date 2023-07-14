@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-13 14:10+0000\n"
-"PO-Revision-Date: 2023-07-13 17:53+0200\n"
+"POT-Creation-Date: 2023-07-13 21:05+0000\n"
+"PO-Revision-Date: 2023-07-14 11:03+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2293,12 +2293,12 @@ msgctxt "dashboard-action"
 msgid "_Groups"
 msgstr "_Skupine"
 
-#: app/actions/dashboard-actions.c:42 menus/dashboard-menu.ui:14
+#: app/actions/dashboard-actions.c:42 menus/dashboard-menu.ui:15
 msgctxt "dashboard-action"
 msgid "_Update Interval"
 msgstr "_Interval osveževanja"
 
-#: app/actions/dashboard-actions.c:44 menus/dashboard-menu.ui:22
+#: app/actions/dashboard-actions.c:44 menus/dashboard-menu.ui:23
 msgctxt "dashboard-action"
 msgid "_History Duration"
 msgstr "_Trajanje zgodovine"
@@ -5484,7 +5484,7 @@ msgstr "Uredi ta preliv"
 msgid "Save '%s' as POV-Ray"
 msgstr "Shrani »%s« kot žarek POV"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:821
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:836
 msgctxt "help-action"
 msgid "_Help"
 msgstr "Po_moč"
@@ -9901,7 +9901,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Preklopi na predhodnjo sliko"
 
-#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:810
+#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:825
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "Po_ložaj zavihkov"
@@ -28276,289 +28276,324 @@ msgctxt "file-action"
 msgid "Open _Recent"
 msgstr "Odpri ne_davne"
 
-#: menus/image-menu.ui.in.in:29
+#: menus/image-menu.ui.in.in:27
 msgid "_Debug"
 msgstr "Raz_hrošči"
 
-#: menus/image-menu.ui.in.in:71
+#: menus/image-menu.ui.in.in:69
 msgctxt "edit-action"
 msgid "_Edit"
 msgstr "Ur_edi"
 
-#: menus/image-menu.ui.in.in:84
+#: menus/image-menu.ui.in.in:82
 msgctxt "edit-action"
 msgid "Paste _as"
 msgstr "Prilepi _kot"
 
-#: menus/image-menu.ui.in.in:92
+#: menus/image-menu.ui.in.in:90
 msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_Medpomnilnik"
 
-#: menus/image-menu.ui.in.in:122
+#: menus/image-menu.ui.in.in:120
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_Izberi"
 
-#: menus/image-menu.ui.in.in:151
+#: menus/image-menu.ui.in.in:149
 msgctxt "view-action"
 msgid "_View"
 msgstr "Po_gled"
 
-#: menus/image-menu.ui.in.in:156
+#: menus/image-menu.ui.in.in:154
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "_Povečava"
 
-#: menus/image-menu.ui.in.in:181
+#: menus/image-menu.ui.in.in:179
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "Pre_zrcali in zasukaj"
 
-#: menus/image-menu.ui.in.in:205
+#: menus/image-menu.ui.in.in:203
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Premakni na zaslon"
 
-#: menus/image-menu.ui.in.in:214
+#: menus/image-menu.ui.in.in:212
 msgctxt "view-action"
 msgid "_Color Management"
 msgstr "_Upravljanje z barvami"
 
-#: menus/image-menu.ui.in.in:221
+#: menus/image-menu.ui.in.in:219
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
 msgstr "_Namen upodabljanja prikaza"
 
-#: menus/image-menu.ui.in.in:251
+#: menus/image-menu.ui.in.in:249
 msgctxt "view-action"
 msgid "_Padding color"
 msgstr "Barva za_polnjevanja"
 
-#: menus/image-menu.ui.in.in:275
+#: menus/image-menu.ui.in.in:273
 msgctxt "image-action"
 msgid "_Image"
 msgstr "_Slika"
 
-#: menus/image-menu.ui.in.in:281
+#: menus/image-menu.ui.in.in:279
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_Način"
 
-#: menus/image-menu.ui.in.in:287
+#: menus/image-menu.ui.in.in:285
 msgctxt "image-action"
 msgid "_Encoding"
 msgstr "_Kodiranje"
 
-#: menus/image-menu.ui.in.in:303
+#: menus/image-menu.ui.in.in:301
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "Upra_vljanje z barvami"
 
-#: menus/image-menu.ui.in.in:320
+#: menus/image-menu.ui.in.in:318
 msgctxt "image-action"
 msgid "Soft-Proofing Re_ndering Intent"
 msgstr "Namen upo_dabljanja za preverjanje"
 
-#: menus/image-menu.ui.in.in:332
+#: menus/image-menu.ui.in.in:330
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "Preo_blikuj"
 
-#: menus/image-menu.ui.in.in:362
+#: menus/image-menu.ui.in.in:360
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_Vodila"
 
-#: menus/image-menu.ui.in.in:370
+#: menus/image-menu.ui.in.in:368
 msgctxt "image-action"
 msgid "Meta_data"
 msgstr "Metapo_datki"
 
-#: menus/image-menu.ui.in.in:378
+#: menus/image-menu.ui.in.in:376
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "P_last"
 
-#: menus/image-menu.ui.in.in:396
+#: menus/image-menu.ui.in.in:394
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "S_klad"
 
-#: menus/image-menu.ui.in.in:411
+#: menus/image-menu.ui.in.in:409
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Maska"
 
-#: menus/image-menu.ui.in.in:430
+#: menus/image-menu.ui.in.in:428
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "Pr_osojnost"
 
-#: menus/image-menu.ui.in.in:446
+#: menus/image-menu.ui.in.in:444
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "Preo_blikuj"
 
-#: menus/image-menu.ui.in.in:472
+#: menus/image-menu.ui.in.in:470
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Barve"
 
-#: menus/image-menu.ui.in.in:492
+#: menus/image-menu.ui.in.in:490
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Samodejno"
 
-#: menus/image-menu.ui.in.in:500
+#: menus/image-menu.ui.in.in:498
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "_Komponente"
 
-#: menus/image-menu.ui.in.in:506
+#: menus/image-menu.ui.in.in:504
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "Z_manjšaj nasičenost"
 
-#: menus/image-menu.ui.in.in:513
+#: menus/image-menu.ui.in.in:511
 msgctxt "image-action"
 msgid "_Map"
 msgstr "Pres_likaj "
 
-#: menus/image-menu.ui.in.in:524
+#: menus/image-menu.ui.in.in:522
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "Preslikovanje _tonov"
 
-#: menus/image-menu.ui.in.in:531
+#: menus/image-menu.ui.in.in:529
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "_Podatki"
 
-#: menus/image-menu.ui.in.in:549
+#: menus/image-menu.ui.in.in:547
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "O_rodja"
 
-#: menus/image-menu.ui.in.in:552
+#: menus/image-menu.ui.in.in:550
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "Orodja iz_bora"
 
-#: menus/image-menu.ui.in.in:565
+#: menus/image-menu.ui.in.in:563
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "Orodja _barvanja"
 
-#: menus/image-menu.ui.in.in:582
+#: menus/image-menu.ui.in.in:580
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "Orodja preo_blikovanja"
 
-#: menus/image-menu.ui.in.in:621
+#: menus/image-menu.ui.in.in:619
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "_Filtri"
 
-#: menus/image-menu.ui.in.in:626
+#: menus/image-menu.ui.in.in:624
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "Nedavno uporabljeno"
 
-#: menus/image-menu.ui.in.in:634
+#: menus/image-menu.ui.in.in:633
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "Za_briši"
 
-#: menus/image-menu.ui.in.in:648
+#: menus/image-menu.ui.in.in:647
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "_Izboljšaj"
 
-#: menus/image-menu.ui.in.in:658
+#: menus/image-menu.ui.in.in:657
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "Popa_čenja"
 
-#: menus/image-menu.ui.in.in:677
+#: menus/image-menu.ui.in.in:676
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_Svetloba in sence"
 
-#: menus/image-menu.ui.in.in:692
+#: menus/image-menu.ui.in.in:691
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "Šu_m"
 
-#: menus/image-menu.ui.in.in:702
+#: menus/image-menu.ui.in.in:701
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "_Razpoznava robov"
 
-#: menus/image-menu.ui.in.in:711
+#: menus/image-menu.ui.in.in:710
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "Sp_lošno"
 
-#: menus/image-menu.ui.in.in:722
+#: menus/image-menu.ui.in.in:721
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "Zdru_ži"
 
-#: menus/image-menu.ui.in.in:725
+#: menus/image-menu.ui.in.in:724
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "_Umetniško"
 
-#: menus/image-menu.ui.in.in:737
+#: menus/image-menu.ui.in.in:736
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "O_krasitev"
 
-#: menus/image-menu.ui.in.in:740
+#: menus/image-menu.ui.in.in:739
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "Pres_likaj "
 
-#: menus/image-menu.ui.in.in:752
+#: menus/image-menu.ui.in.in:751
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "_Upodobi"
 
-#: menus/image-menu.ui.in.in:755
+#: menus/image-menu.ui.in.in:754
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "_Fraktali"
 
-#: menus/image-menu.ui.in.in:758
+#: menus/image-menu.ui.in.in:757
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "_Šum"
 
-#: menus/image-menu.ui.in.in:766
+#: menus/image-menu.ui.in.in:765
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_Vzorec"
 
-#: menus/image-menu.ui.in.in:779
+#: menus/image-menu.ui.in.in:778
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "S_plet"
 
-#: menus/image-menu.ui.in.in:786
+#: menus/image-menu.ui.in.in:784
+msgctxt "filters-action"
+msgid "An_imation"
+msgstr "An_imacija"
+
+#: menus/image-menu.ui.in.in:787
+msgctxt "filters-action"
+msgid "De_velopment"
+msgstr "Raz_voj"
+
+#: menus/image-menu.ui.in.in:789
+msgctxt "filters-action"
+msgid "_Goat exercises"
+msgstr "_Kozje vaje"
+
+#: menus/image-menu.ui.in.in:792
+msgctxt "filters-action"
+msgid "_Python-Fu"
+msgstr "_Python-Fu"
+
+#: menus/image-menu.ui.in.in:795
+msgctxt "filters-action"
+msgid "_Script-Fu"
+msgstr "_Skript-Fu"
+
+#: menus/image-menu.ui.in.in:802
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Okna"
 
-#: menus/image-menu.ui.in.in:789
+#: menus/image-menu.ui.in.in:805
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "_Nedavno zaprta sidrišča"
 
-#: menus/image-menu.ui.in.in:793
+#: menus/image-menu.ui.in.in:809
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_Sidranju prilagojena okna"
+
+#: menus/image-menu.ui.in.in:851
+msgctxt "help-action"
+msgid "_GIMP Online"
+msgstr "_GIMP na spletu"
+
+#: menus/image-menu.ui.in.in:854
+msgctxt "help-action"
+msgid "_User Manual"
+msgstr "_Uporabniški vodnik"
 
 #: menus/layers-menu.ui:6
 msgctxt "layers-action"
