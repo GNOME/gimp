@@ -829,13 +829,24 @@ gimp_procedure_get_menu_label (GimpProcedure *procedure)
  * submenu which you want to localize from your plug-in with gettext. You could
  * call:
  *
- * ```
- * gimp_procedure_add_menu_path (procedure,
- *                               g_build_path ("/", "<Image>/Layer",
- *                                             _("Create"), NULL));
+ * ```C
+ * path = g_build_path ("/", "<Image>/Layer", _("Create"), NULL);
+ * gimp_procedure_add_menu_path (procedure, path);
+ * g_free (path);
  * ```
  *
  * See also: gimp_plug_in_add_menu_branch().
+ *
+ * GIMP menus also have a concept of named section. For instance, say you are
+ * creating a plug-in which you want to show next to the "Export", "Export As"
+ * plug-ins in the File menu. You would add it to the menu path "File/[Export]".
+ * If you actually wanted to create a submenu called "[Export]" (with square
+ * brackets), double the brackets: "File/[[Export]]"
+ *
+ * See also: https://gitlab.gnome.org/GNOME/gimp/-/blob/master/menus/image-menu.ui.in.in
+ *
+ * This function will place your procedure to the bottom of the selected path or
+ * section. Order is not assured relatively to other plug-ins.
  *
  * Since: 3.0
  **/
