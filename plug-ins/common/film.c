@@ -36,35 +36,11 @@
 #define PLUG_IN_ROLE        "gimp-film"
 
 /* Maximum number of pictures per film */
-#define MAX_FILM_PICTURES   64
+#define MAX_FILM_PICTURES   1024
 #define COLOR_BUTTON_WIDTH  50
 #define COLOR_BUTTON_HEIGHT 20
 
 #define FONT_LEN            256
-
-/* Define how the plug-in works. Values marked (r) are with regard */
-/* to film_height (i.e. it should be a value from 0.0 to 1.0) */
-/* Saved as settings.  Must be trivially serializable; no pointers. */
-typedef struct
-{
-  gint     film_height;           /* height of the film */
-  GimpRGB  film_color;            /* color of film */
-  gdouble  picture_height;        /* height of picture (r) */
-  gdouble  picture_space;         /* space between pictures (r) */
-  gdouble  hole_offset;           /* distance from hole to edge of film (r) */
-  gdouble  hole_width;            /* width of hole (r) */
-  gdouble  hole_height;           /* height of holes (r) */
-  gdouble  hole_space;            /* distance of holes (r) */
-  gdouble  number_height;         /* height of picture numbering (r) */
-  gint     number_start;          /* number for first picture */
-  GimpRGB  number_color;          /* color of number */
-  GimpFont *number_font;          /* font family for numbering */
-  gchar    font_name[FONT_LEN];   /* serializable name of font for numbering */
-  gint     number_pos[2];         /* flags where to draw numbers (top/bottom) */
-  gint     keep_height;           /* flag if to keep max. image height */
-  gint     num_images;            /* number of images */
-  gint32   images[MAX_FILM_PICTURES]; /* list of image IDs */
-} FilmVals;
 
 /* Data to use for the dialog */
 typedef struct
@@ -103,7 +79,7 @@ static GimpValueArray * film_run              (GimpProcedure        *procedure,
                                                GimpImage            *image,
                                                gint                  n_drawables,
                                                GimpDrawable        **drawables,
-                                               const GimpValueArray *args,
+                                               GimpProcedureConfig  *config,
                                                gpointer              run_data);
 
 static GimpImage      * create_new_image      (guint                 width,
@@ -113,22 +89,24 @@ static GimpImage      * create_new_image      (guint                 width,
 
 static gchar          * compose_image_name    (GimpImage            *image);
 
-static GimpImage      * film                  (void);
+static GimpImage      * film                  (GimpProcedureConfig  *config);
 
-static gboolean         check_filmvals        (void);
+static gboolean         check_filmvals        (GimpProcedureConfig  *config);
 
 static void             set_pixels            (gint                  numpix,
                                                guchar               *dst,
                                                GimpRGB              *color);
 
 static guchar         * create_hole_rgb       (gint                  width,
-                                               gint                  height);
+                                               gint                  height,
+                                               GimpRGB              *film_color);
 
 static void             draw_number           (GimpLayer            *layer,
                                                gint                  num,
                                                gint                  x,
                                                gint                  y,
-                                               gint                  height);
+                                               gint                  height,
+                                               GimpFont             *font);
 
 
 static void            add_list_item_callback (GtkWidget            *widget,
@@ -140,19 +118,17 @@ static GtkTreeModel  * add_image_list         (gboolean              add_box_fla
                                                GList                *images,
                                                GtkWidget            *hbox);
 
-static gboolean        film_dialog            (GimpImage            *image);
+static gboolean        film_dialog            (GimpImage            *image,
+                                               GimpProcedureConfig  *config);
 static void            film_reset_callback    (GtkWidget            *widget,
                                                gpointer              data);
 static void         film_font_select_callback (GimpFontSelectButton *button,
-                                               GimpResource         *font,
+                                               GimpResource         *resource,
                                                gboolean              closing,
-                                               gpointer              data);
+                                               GimpFont            **font);
 
 static void    film_scale_entry_update_double (GimpLabelSpin        *entry,
                                                gdouble              *value);
-
-static void    film_load_settings             (void);
-static void    film_save_settings             (void);
 
 G_DEFINE_TYPE (Film, film, GIMP_TYPE_PLUG_IN)
 
@@ -169,27 +145,6 @@ static gdouble advanced_defaults[] =
   0.081,           /* Hole height */
   0.081,           /* Hole distance */
   0.052            /* Image number height */
-};
-
-static FilmVals filmvals =
-{
-  256,             /* Height of film */
-  { 0.0, 0.0, 0.0, 1.0 }, /* Color of film */
-  0.695,           /* Picture height */
-  0.040,           /* Picture spacing */
-  0.058,           /* Hole offset to edge of film */
-  0.052,           /* Hole width */
-  0.081,           /* Hole height */
-  0.081,           /* Hole distance */
-  0.052,           /* Image number height */
-  1,               /* Start index of numbering */
-  { 0.93, 0.61, 0.0, 1.0 }, /* Color of number */
-  NULL,            /* !!! No default, must be set later. */
-  "Monospace",     /* Case sensitive, must be name of an installed font. */
-  { TRUE, TRUE },  /* Numbering on top and bottom */
-  0,               /* Don't keep max. image height */
-  0,               /* Number of images */
-  { 0 }            /* Input image list */
 };
 
 static FilmInterface filmint =
@@ -225,12 +180,14 @@ film_create_procedure (GimpPlugIn  *plug_in,
                        const gchar *name)
 {
   GimpProcedure *procedure = NULL;
+  const GimpRGB  default_film_color   = { 0.0, 0.0, 0.0, 1.0 };
+  const GimpRGB  default_number_color = { 0.93, 0.61, 0.0, 1.0 };
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            film_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             film_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -260,13 +217,13 @@ film_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_RGB (procedure, "film-color",
                          "Film color",
                          "Color of the film",
-                         TRUE, NULL,
+                         TRUE, &default_film_color,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "number-start",
                          "Number start",
                          "Start index for numbering",
-                         G_MININT, G_MAXINT, 1,
+                         0, G_MAXINT, 1,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_FONT (procedure, "number-font",
@@ -277,7 +234,7 @@ film_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_RGB (procedure, "number-color",
                          "Number color",
                          "Color for numbers",
-                         TRUE, NULL,
+                         TRUE, &default_number_color,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "at-top",
@@ -292,8 +249,10 @@ film_create_procedure (GimpPlugIn  *plug_in,
                              TRUE,
                              G_PARAM_READWRITE);
 
+      /* Arguments ignored in interactive mode. */
+
       GIMP_PROC_ARG_INT (procedure, "num-images",
-                         "Num images",
+                         "Number of images",
                          "Number of images to be used for film",
                          1, MAX_FILM_PICTURES, 1,
                          G_PARAM_READWRITE);
@@ -303,6 +262,60 @@ film_create_procedure (GimpPlugIn  *plug_in,
                                   "num-images images to be used for film",
                                   GIMP_TYPE_IMAGE,
                                   G_PARAM_READWRITE);
+
+      /* The more specific settings. */
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "picture-height",
+                            "Picture height",
+                            "As fraction of the strip height",
+                            0.0, 1.0, 0.695,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "picture-spacing",
+                            "Picture spacing",
+                            "The spacing between 2 images, as fraction of the strip height",
+                            0.0, 1.0, 0.040,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "hole-offset",
+                            "Hole offset",
+                            "Hole offset to edge of film, as fraction of the strip height",
+                            0.0, 1.0, 0.058,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "hole-width",
+                            "Hole width",
+                            "Hole width, as fraction of the strip height",
+                            0.0, 1.0, 0.052,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "hole-height",
+                            "Hole height",
+                            "Hole height, as fraction of the strip height",
+                            0.0, 1.0, 0.081,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "hole-spacing",
+                            "Hole distance",
+                            "Hole distance, as fraction of the strip height",
+                            0.0, 1.0, 0.081,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "number-height",
+                            "Number height",
+                            "Image number height, as fraction of the strip height",
+                            0.0, 1.0, 0.052,
+                            G_PARAM_READWRITE);
+
+      /* Auxiliary argument mostly for the GUI. */
+
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "keep-height",
+                                 _("_Fit height to images"),
+                                 "Keep maximum image height",
+                                 FALSE,
+                                 G_PARAM_READWRITE);
+
+      /* Returned image. */
 
       GIMP_PROC_VAL_IMAGE (procedure, "new-image",
                            "New image",
@@ -320,61 +333,45 @@ film_run (GimpProcedure        *procedure,
           GimpImage            *image,
           gint                  n_drawables,
           GimpDrawable        **drawables,
-          const GimpValueArray *args,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
   GimpValueArray     *return_vals = NULL;
   GimpPDBStatusType   status      = GIMP_PDB_SUCCESS;
-  GimpImage         **images;
-  gint                i;
+  gint                film_height;
 
   gegl_init (NULL, NULL);
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      film_load_settings();
-
-      if (! film_dialog (image))
-        {
-          return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
+      if (! film_dialog (image, config))
+        return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
+                                                 NULL);
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      filmvals.film_height = GIMP_VALUES_GET_INT (args, 0);
-      if (filmvals.film_height <= 0)
-        {
-          filmvals.keep_height = TRUE;
-          filmvals.film_height = 128; /* arbitrary */
-        }
+      g_object_get (config, "film-height", &film_height, NULL);
+      if (film_height <= 0)
+        g_object_set (config,
+                      "film-height", 128, /* arbitrary */
+                      "keep-height", TRUE,
+                      NULL);
       else
-        {
-          filmvals.keep_height = FALSE;
-        }
-      GIMP_VALUES_GET_RGB (args, 1, &filmvals.film_color);
-      filmvals.number_start = GIMP_VALUES_GET_INT           (args, 2);
-      filmvals.number_font  = GIMP_VALUES_GET_FONT          (args, 3);
-      GIMP_VALUES_GET_RGB (args, 4, &filmvals.number_color);
-      filmvals.number_pos[0] = GIMP_VALUES_GET_INT          (args, 5);
-      filmvals.number_pos[1] = GIMP_VALUES_GET_INT          (args, 6);
-      filmvals.num_images    = GIMP_VALUES_GET_INT          (args, 7);
-      images                 = GIMP_VALUES_GET_OBJECT_ARRAY (args, 8);
+        g_object_set (config,
+                      "keep-height", FALSE,
+                      NULL);
 
-      for (i = 0; i < filmvals.num_images; i++)
-        filmvals.images[i] = gimp_image_get_id (images[i]);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      film_load_settings();
       break;
 
     default:
       break;
     }
 
-  if (! check_filmvals ())
+  if (! check_filmvals (config))
     status = GIMP_PDB_CALLING_ERROR;
 
   if (status == GIMP_PDB_SUCCESS)
@@ -383,7 +380,7 @@ film_run (GimpProcedure        *procedure,
 
       gimp_progress_init (_("Composing images"));
 
-      image = film ();
+      image = film (config);
 
       if (! image)
         {
@@ -402,9 +399,6 @@ film_run (GimpProcedure        *procedure,
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_display_new (image);
         }
-
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        film_save_settings();
     }
 
   if (! return_vals)
@@ -415,89 +409,117 @@ film_run (GimpProcedure        *procedure,
 
 /* Compose a roll film image from several images */
 static GimpImage *
-film (void)
+film (GimpProcedureConfig *config)
 {
-  gint          width, height;
-  guchar       *hole;
-  gint          film_height, film_width;
-  gint          picture_width, picture_height;
-  gint          picture_space, picture_x0, picture_y0;
-  gint          hole_offset, hole_width, hole_height, hole_space, hole_x;
-  gint          number_height, num_images, num_pictures;
-  gint          picture_count;
-  gdouble       f;
-  GimpImage    *image_dst;
-  GimpImage    *image_tmp;
-  GimpLayer    *layer_src;
-  GimpLayer    *layer_dst;
-  GimpLayer    *new_layer;
-  GimpLayer    *floating_sel;
+  GimpObjectArray *images;
+  gint             width, height;
+  guchar          *hole;
+  gint             film_height;
+  gint             film_width;
+  gint             picture_width;
+  gdouble          picture_height;
+  gdouble          picture_space;
+  gint             picture_x0;
+  gint             picture_y0;
+  gdouble          hole_offset;
+  gdouble          hole_width;
+  gdouble          hole_height;
+  gdouble          hole_space;
+  gint             hole_x;
+  gdouble          number_height;
+  gint             num_pictures;
+  gint             number_start;
+  gboolean         at_top;
+  gboolean         at_bottom;
+  gint             picture_count;
+  GimpRGB         *number_color;
+  GimpRGB         *film_color;
+  gboolean         keep_height;
+  gdouble          f;
+  GimpImage       *image_dst;
+  GimpImage       *image_tmp;
+  GimpLayer       *layer_src;
+  GimpLayer       *layer_dst;
+  GimpLayer       *new_layer;
+  GimpLayer       *floating_sel;
 
-  GList        *images_src = NULL;
-  GList        *layers     = NULL;
-  GList        *iter;
-  GList        *iter2;
-  gint          i;
+  GimpFont        *number_font;
 
+  GList           *layers     = NULL;
+  GList           *iter2;
+  gint             i;
 
-  num_images = filmvals.num_images;
+  g_object_get (config,
+                "images",          &images,
+                "film-height",     &film_height,
+                "keep-height",     &keep_height,
+                "number-color",    &number_color,
+                "number-font",     &number_font,
+                "film-color",      &film_color,
+                "picture-height",  &picture_height,
+                "picture-spacing", &picture_space,
+                "number-height",   &number_height,
+                "hole-offset",     &hole_offset,
+                "hole-width",      &hole_width,
+                "hole-height",     &hole_height,
+                "hole-spacing",    &hole_space,
+                "number-start",    &number_start,
+                "at-top",          &at_top,
+                "at-bottom",       &at_bottom,
+                NULL);
 
-  if (num_images <= 0)
+  if (images->length <= 0)
     return NULL;
 
-  for (i = 0; i < filmvals.num_images; i++)
-    {
-      images_src = g_list_append (images_src,
-                                  gimp_image_get_by_id (filmvals.images[i]));
-    }
-
   gimp_context_push ();
-  gimp_context_set_foreground (&filmvals.number_color);
-  gimp_context_set_background (&filmvals.film_color);
+  gimp_context_set_foreground (number_color);
+  gimp_context_set_background (film_color);
 
-  if (filmvals.keep_height) /* Search maximum picture height */
+  if (keep_height) /* Search maximum picture height */
     {
-      picture_height = 0;
-      for (iter = images_src; iter; iter = iter->next)
+      gdouble max_height = 0;
+
+      for (i = 0; i < images->length; i++)
         {
-          height = gimp_image_get_height (iter->data);
-          if (height > picture_height) picture_height = height;
+          GimpImage *image = GIMP_IMAGE (images->data[i]);
+
+          height = gimp_image_get_height (image);
+          if ((gdouble) height > max_height)
+            max_height = (gdouble) height;
         }
-      film_height = (int)(picture_height / filmvals.picture_height + 0.5);
-      filmvals.film_height = film_height;
-    }
-  else
-    {
-      film_height = filmvals.film_height;
-      picture_height = (int)(film_height * filmvals.picture_height + 0.5);
+      film_height = (int) (max_height / picture_height + 0.5);
     }
 
-  picture_space = (int)(film_height * filmvals.picture_space + 0.5);
-  picture_y0 = (film_height - picture_height)/2;
+  picture_height = film_height * picture_height + 0.5;
 
-  number_height = film_height * filmvals.number_height;
+  picture_space = (gdouble) film_height * picture_space + 0.5;
+  picture_y0 = (film_height - picture_height) / 2;
+
+  number_height = film_height * number_height;
 
   /* Calculate total film width */
   film_width = 0;
   num_pictures = 0;
-  for (iter = images_src; iter; iter = g_list_next (iter))
+  for (i = 0; i < images->length; i++)
     {
-      layers = gimp_image_list_layers (iter->data);
+      GimpImage *image = GIMP_IMAGE (images->data[i]);
+
+      layers = gimp_image_list_layers (image);
 
       /* Get scaled image size */
-      width = gimp_image_get_width (iter->data);
-      height = gimp_image_get_height (iter->data);
-      f = ((double)picture_height) / (double)height;
-      picture_width = width * f;
+      width = gimp_image_get_width (image);
+      height = gimp_image_get_height (image);
+      f = picture_height / (gdouble) height;
+      picture_width = (gint) width * f;
 
       for (iter2 = layers; iter2; iter2 = g_list_next (iter2))
         {
           if (gimp_layer_is_floating_sel (iter2->data))
             continue;
 
-          film_width += (picture_space/2);  /* Leading space */
+          film_width += (gint) (picture_space / 2.0);  /* Leading space */
           film_width += picture_width;      /* Scaled image width */
-          film_width += (picture_space/2);  /* Trailing space */
+          film_width += (gint) (picture_space / 2.0);  /* Trailing space */
           num_pictures++;
         }
 
@@ -506,7 +528,7 @@ film (void)
 
 #ifdef FILM_DEBUG
   g_printerr ("film_height = %d, film_width = %d\n", film_height, film_width);
-  g_printerr ("picture_height = %d, picture_space = %d, picture_y0 = %d\n",
+  g_printerr ("picture_height = %f, picture_space = %f, picture_y0 = %d\n",
               picture_height, picture_space, picture_y0);
   g_printerr ("Number of pictures = %d\n", num_pictures);
 #endif
@@ -518,10 +540,10 @@ film (void)
   gimp_drawable_fill (GIMP_DRAWABLE (layer_dst), GIMP_FILL_BACKGROUND);
 
   /* Draw all the holes */
-  hole_offset = film_height * filmvals.hole_offset;
-  hole_width  = film_height * filmvals.hole_width;
-  hole_height = film_height * filmvals.hole_height;
-  hole_space  = film_height * filmvals.hole_space;
+  hole_offset = film_height * hole_offset;
+  hole_width  = film_height * hole_width;
+  hole_height = film_height * hole_height;
+  hole_space  = film_height * hole_space;
   hole_x = hole_space / 2;
 
 #ifdef FILM_DEBUG
@@ -529,7 +551,7 @@ film (void)
               hole_x, hole_offset, hole_width, hole_height, hole_space );
 #endif
 
-  hole = create_hole_rgb (hole_width, hole_height);
+  hole = create_hole_rgb ((gint) hole_width, (gint) hole_height, film_color);
   if (hole)
     {
       GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer_dst));
@@ -562,9 +584,11 @@ film (void)
   /* Compose all images and layers */
   picture_x0 = 0;
   picture_count = 0;
-  for (iter = images_src; iter; iter = iter->next)
+  for (i = 0; i < images->length; i++)
     {
-      image_tmp = gimp_image_duplicate (iter->data);
+      GimpImage *image = GIMP_IMAGE (images->data[i]);
+
+      image_tmp = gimp_image_duplicate (image);
       width = gimp_image_get_width (image_tmp);
       height = gimp_image_get_height (image_tmp);
       f = ((gdouble) picture_height) / (gdouble) height;
@@ -590,20 +614,21 @@ film (void)
           gimp_layer_set_offsets (new_layer, picture_x0, picture_y0);
 
           /* Draw picture numbers */
-          if ((number_height > 0) &&
-              (filmvals.number_pos[0] || filmvals.number_pos[1]))
+          if (number_height > 0.0 && (at_top || at_bottom))
             {
-              if (filmvals.number_pos[0])
+              if (at_top)
                 draw_number (layer_dst,
-                             filmvals.number_start + picture_count,
+                             number_start + picture_count,
                              picture_x0 + picture_width/2,
-                             (hole_offset-number_height)/2, number_height);
-              if (filmvals.number_pos[1])
+                             (hole_offset-number_height)/2, number_height,
+                             number_font);
+              if (at_bottom)
                 draw_number (layer_dst,
-                             filmvals.number_start + picture_count,
+                             number_start + picture_count,
                              picture_x0 + picture_width/2,
                              film_height - (hole_offset + number_height)/2,
-                             number_height);
+                             number_height,
+                             number_font);
             }
 
           picture_x0 += picture_width + (picture_space/2);
@@ -619,8 +644,6 @@ film (void)
       gimp_image_delete (image_tmp);
     }
 
-  g_list_free (images_src);
-
   gimp_progress_update (1.0);
 
   gimp_image_flatten (image_dst);
@@ -632,41 +655,64 @@ film (void)
 
   gimp_context_pop ();
 
+  gimp_object_array_free (images);
+  g_free (number_color);
+  g_free (film_color);
+  g_clear_object (&number_font);
+
   return image_dst;
 }
 
-/* Check filmvals. Unreasonable values are reset to a default. */
+/* Unreasonable values are reset to a default. */
 /* If this is not possible, FALSE is returned. Otherwise TRUE is returned. */
 static gboolean
-check_filmvals (void)
+check_filmvals (GimpProcedureConfig *config)
 {
-  gint i, j;
+  GimpFont        *font;
+  GimpObjectArray *images;
+  gint             num_images;
+  gint             film_height;
+  gint             i, j;
+  gboolean         success = FALSE;
 
-  if (filmvals.film_height < 10)
-    filmvals.film_height = 10;
+  g_object_get (config,
+                "num-images",  &num_images,
+                "images",      &images,
+                "number-font", &font,
+                "film-height", &film_height,
+                NULL);
 
-  if (filmvals.number_start < 0)
-    filmvals.number_start = 0;
+  if (film_height < 10)
+    g_object_set (config, "film-height", 10, NULL);
 
-  if (filmvals.number_font == NULL)
-    filmvals.number_font = gimp_context_get_font ();
-  g_assert (GIMP_IS_FONT (filmvals.number_font));
-
-  for (i = 0, j = 0; i < filmvals.num_images; i++)
+  if (font == NULL)
     {
-      if (gimp_image_id_is_valid (filmvals.images[i]))
+      g_assert (GIMP_IS_FONT (gimp_context_get_font ()));
+      g_object_set (config, "number-font", gimp_context_get_font (), NULL);
+    }
+
+  for (i = 0, j = 0; i < num_images; i++)
+    {
+      if (gimp_image_is_valid (GIMP_IMAGE (images->data[i])))
         {
-          filmvals.images[j] = filmvals.images[i];
+          images->data[j] = images->data[i];
           j++;
         }
     }
 
-  filmvals.num_images = j;
+  if (j > 0)
+    {
+      images->length = j;
+      g_object_set (config,
+                    "num-images", j,
+                    "images",     images,
+                    NULL);
+      success = TRUE;
+    }
 
-  if (filmvals.num_images < 1)
-    return FALSE;
+  gimp_object_array_free (images);
 
-  return TRUE;
+  return success;
 }
 
 /* Assigns numpix pixels starting at dst with color r,g,b */
@@ -694,8 +740,9 @@ set_pixels (gint     numpix,
 
 /* Create the RGB-pixels that make up the hole */
 static guchar *
-create_hole_rgb (gint width,
-                 gint height)
+create_hole_rgb (gint     width,
+                 gint     height,
+                 GimpRGB *film_color)
 {
   guchar *hole, *top, *bottom;
   gint    radius, length, k;
@@ -715,10 +762,10 @@ create_hole_rgb (gint width,
                      - 0.5);
       if (length > 0)
         {
-          set_pixels (length, top, &filmvals.film_color);
-          set_pixels (length, top + (width-length)*3, &filmvals.film_color);
-          set_pixels (length, bottom, &filmvals.film_color);
-          set_pixels (length, bottom + (width-length)*3, &filmvals.film_color);
+          set_pixels (length, top, film_color);
+          set_pixels (length, top + (width-length)*3, film_color);
+          set_pixels (length, bottom, film_color);
+          set_pixels (length, bottom + (width-length)*3, film_color);
         }
       top += width*3;
       bottom -= width*3;
@@ -733,7 +780,8 @@ draw_number (GimpLayer *layer,
              gint       num,
              gint       x,
              gint       y,
-             gint       height)
+             gint       height,
+             GimpFont  *font)
 {
   gchar         buf[32];
   gint          k, delta, max_delta;
@@ -741,7 +789,6 @@ draw_number (GimpLayer *layer,
   GimpLayer    *text_layer;
   gint          text_width, text_height, text_ascent, descent;
 
-  GimpFont     *font = filmvals.number_font;
   gchar        *fontname;
 
   fontname = gimp_resource_get_name (GIMP_RESOURCE (font));
@@ -1000,10 +1047,19 @@ add_image_list (gboolean   add_box_flag,
 }
 
 static void
-create_selection_tab (GtkWidget *notebook,
-                      GimpImage *image)
+create_selection_tab (GtkWidget            *notebook,
+                      GimpImage            *image,
+                      GimpProcedureConfig  *config,
+                      gint                 *film_height,
+                      gint                 *number_start,
+                      GimpFont            **number_font,
+                      GimpRGB              *number_color,
+                      GimpRGB              *film_color,
+                      gboolean             *keep_height,
+                      gboolean             *at_top,
+                      gboolean             *at_bottom)
 {
-  GimpColorConfig *config;
+  GimpColorConfig *color_config;
   GtkSizeGroup    *group;
   GtkWidget       *vbox;
   GtkWidget       *vbox2;
@@ -1017,7 +1073,6 @@ create_selection_tab (GtkWidget *notebook,
   GtkWidget       *button;
   GtkWidget       *font_button;
   GList           *image_list;
-  gint             j;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
@@ -1048,7 +1103,7 @@ create_selection_tab (GtkWidget *notebook,
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &filmvals.keep_height);
+                    keep_height);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -1057,7 +1112,7 @@ create_selection_tab (GtkWidget *notebook,
   gtk_widget_show (grid);
 
   /* Film height */
-  adj = gtk_adjustment_new (filmvals.film_height, 10,
+  adj = gtk_adjustment_new (*film_height, 10,
                             GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
   spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
@@ -1070,7 +1125,7 @@ create_selection_tab (GtkWidget *notebook,
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
-                    &filmvals.film_height);
+                    film_height);
 
   g_object_bind_property (toggle,     "active",
                           spinbutton, "sensitive",
@@ -1080,13 +1135,12 @@ create_selection_tab (GtkWidget *notebook,
                           g_list_nth_data (gtk_container_get_children (GTK_CONTAINER (grid)), 1), "sensitive",
                           G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                filmvals.keep_height);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *keep_height);
 
   /* Film color */
   button = gimp_color_button_new (_("Select Film Color"),
                                   COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
-                                  &filmvals.film_color,
+                                  film_color,
                                   GIMP_COLOR_AREA_FLAT);
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                     _("Co_lor:"), 0.0, 0.5,
@@ -1095,10 +1149,10 @@ create_selection_tab (GtkWidget *notebook,
 
   g_signal_connect (button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
-                    &filmvals.film_color);
+                    film_color);
 
-  config = gimp_get_color_configuration ();
-  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (button), config);
+  color_config = gimp_get_color_configuration ();
+  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (button), color_config);
 
   /* Film numbering: Startindex/Font/color */
   frame = gimp_frame_new (_("Numbering"));
@@ -1116,7 +1170,7 @@ create_selection_tab (GtkWidget *notebook,
   gtk_widget_show (grid);
 
   /* Startindex */
-  adj = gtk_adjustment_new (filmvals.number_start, 0,
+  adj = gtk_adjustment_new (*number_start, 0,
                             GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
   spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
@@ -1128,13 +1182,13 @@ create_selection_tab (GtkWidget *notebook,
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
-                    &filmvals.number_start);
+                    number_start);
 
   /* Fontfamily for numbering */
-  /* Require filmvals.number_font is NULL or a valid GimpFont. */
-  font_button = gimp_font_select_button_new (NULL, GIMP_RESOURCE (filmvals.number_font));
+  /* Require *number_font is NULL or a valid GimpFont. */
+  font_button = gimp_font_select_button_new (NULL, GIMP_RESOURCE (*number_font));
   g_signal_connect (font_button, "resource-set",
-                    G_CALLBACK (film_font_select_callback), &filmvals);
+                    G_CALLBACK (film_font_select_callback), number_font);
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                     _("_Font:"), 0.0, 0.5,
                                     font_button, 1);
@@ -1143,7 +1197,7 @@ create_selection_tab (GtkWidget *notebook,
   /* Numbering color */
   button = gimp_color_button_new (_("Select Number Color"),
                                   COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
-                                  &filmvals.number_color,
+                                  number_color,
                                   GIMP_COLOR_AREA_FLAT);
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                                     _("Co_lor:"), 0.0, 0.5,
@@ -1152,25 +1206,30 @@ create_selection_tab (GtkWidget *notebook,
 
   g_signal_connect (button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
-                    &filmvals.number_color);
+                    number_color);
 
-  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (button), config);
-  g_object_unref (config);
+  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (button), color_config);
+  g_object_unref (color_config);
 
-  for (j = 0; j < 2; j++)
-    {
-      toggle = gtk_check_button_new_with_mnemonic (j ? _("At _bottom")
-                                                   : _("At _top"));
-      gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                    filmvals.number_pos[j]);
-      gtk_widget_show (toggle);
+  /* Numbering positions */
 
-      g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &filmvals.number_pos[j]);
-    }
+  toggle = gtk_check_button_new_with_mnemonic (_("At _top"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *at_top);
+  gtk_widget_show (toggle);
 
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    at_top);
+
+  toggle = gtk_check_button_new_with_mnemonic (_("At _bottom"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *at_bottom);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    at_bottom);
 
   /*** The right frame keeps the image selection ***/
   frame = gimp_frame_new (_("Image Selection"));
@@ -1196,7 +1255,15 @@ create_selection_tab (GtkWidget *notebook,
 }
 
 static void
-create_advanced_tab (GtkWidget *notebook)
+create_advanced_tab (GtkWidget           *notebook,
+                     GimpProcedureConfig *config,
+                     gdouble             *picture_height,
+                     gdouble             *picture_space,
+                     gdouble             *number_height,
+                     gdouble             *hole_offset,
+                     gdouble             *hole_width,
+                     gdouble             *hole_height,
+                     gdouble             *hole_space)
 {
   GtkWidget *vbox;
   GtkWidget *hbox;
@@ -1225,20 +1292,20 @@ create_advanced_tab (GtkWidget *notebook)
   row = 0;
 
   filmint.scales[0] = scale =
-    gimp_scale_entry_new (_("Image _height:"), filmvals.picture_height, 0.0, 1.0, 3);
+    gimp_scale_entry_new (_("Image _height:"), *picture_height, 0.0, 1.0, 3);
   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
-                    &filmvals.picture_height);
+                    picture_height);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
   filmint.scales[1] = scale =
-    gimp_scale_entry_new (_("Image spac_ing:"), filmvals.picture_space, 0.0, 1.0, 3);
+    gimp_scale_entry_new (_("Image spac_ing:"), *picture_space, 0.0, 1.0, 3);
   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
-                    &filmvals.picture_space);
+                    picture_space);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_set_margin_bottom (gimp_labeled_get_label (GIMP_LABELED (scale)), 6);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scale)), 6);
@@ -1246,38 +1313,38 @@ create_advanced_tab (GtkWidget *notebook)
   gtk_widget_show (scale);
 
   filmint.scales[2] = scale =
-    gimp_scale_entry_new (_("_Hole offset:"), filmvals.hole_offset, 0.0, 1.0, 3);
+    gimp_scale_entry_new (_("_Hole offset:"), *hole_offset, 0.0, 1.0, 3);
   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
-                    &filmvals.hole_offset);
+                    hole_offset);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
   filmint.scales[3] = scale =
-    gimp_scale_entry_new (_("Ho_le width:"), filmvals.hole_width, 0.0, 1.0, 3);
+    gimp_scale_entry_new (_("Ho_le width:"), *hole_width, 0.0, 1.0, 3);
   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
-                    &filmvals.hole_width);
+                    hole_width);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
   filmint.scales[4] = scale =
-    gimp_scale_entry_new (_("Hol_e height:"), filmvals.hole_height, 0.0, 1.0, 3);
+    gimp_scale_entry_new (_("Hol_e height:"), *hole_height, 0.0, 1.0, 3);
   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
-                    &filmvals.hole_height);
+                    hole_height);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
   filmint.scales[5] = scale =
-    gimp_scale_entry_new (_("Hole sp_acing:"), filmvals.hole_space, 0.0, 1.0, 3);
+    gimp_scale_entry_new (_("Hole sp_acing:"), *hole_space, 0.0, 1.0, 3);
   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
-                    &filmvals.hole_space);
+                    hole_space);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_set_margin_bottom (gimp_labeled_get_label (GIMP_LABELED (scale)), 6);
   gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scale)), 6);
@@ -1285,11 +1352,11 @@ create_advanced_tab (GtkWidget *notebook)
   gtk_widget_show (scale);
 
   filmint.scales[6] = scale =
-    gimp_scale_entry_new (_("_Number height:"), filmvals.number_height, 0.0, 1.0, 3);
+    gimp_scale_entry_new (_("_Number height:"), *number_height, 0.0, 1.0, 3);
   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (film_scale_entry_update_double),
-                    &filmvals.number_height);
+                    number_height);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
   gtk_widget_show (scale);
 
@@ -1307,12 +1374,49 @@ create_advanced_tab (GtkWidget *notebook)
 }
 
 static gboolean
-film_dialog (GimpImage *image)
+film_dialog (GimpImage           *image,
+             GimpProcedureConfig *config)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
   GtkWidget *notebook;
   gboolean   run;
+
+  gint       film_height;
+  gint       number_start;
+  GimpFont  *number_font;
+  GimpRGB   *number_color;
+  GimpRGB   *film_color;
+  gboolean   keep_height;
+  gboolean   at_top;
+  gboolean   at_bottom;
+
+  gdouble    picture_height;
+  gdouble    picture_space;
+  gdouble    number_height;
+  gdouble    hole_offset;
+  gdouble    hole_width;
+  gdouble    hole_height;
+  gdouble    hole_space;
+
+  g_object_get (config,
+                "film-height",     &film_height,
+                "keep-height",     &keep_height,
+                "number-color",    &number_color,
+                "film-color",      &film_color,
+                "number-start",    &number_start,
+                "number-font",     &number_font,
+                "at-top",          &at_top,
+                "at-bottom",       &at_bottom,
+
+                "picture-height",  &picture_height,
+                "picture-spacing", &picture_space,
+                "number-height",   &number_height,
+                "hole-offset",     &hole_offset,
+                "hole-width",      &hole_width,
+                "hole-height",     &hole_height,
+                "hole-spacing",    &hole_space,
+                NULL);
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -1341,8 +1445,23 @@ film_dialog (GimpImage *image)
   notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (main_vbox), notebook, TRUE, TRUE, 0);
 
-  create_selection_tab (notebook, image);
-  create_advanced_tab (notebook);
+  create_selection_tab (notebook, image, config,
+                        &film_height,
+                        &number_start,
+                        &number_font,
+                        number_color,
+                        film_color,
+                        &keep_height,
+                        &at_top,
+                        &at_bottom);
+  create_advanced_tab (notebook, config,
+                       &picture_height,
+                       &picture_space,
+                       &number_height,
+                       &hole_offset,
+                       &hole_width,
+                       &hole_height,
+                       &hole_space);
 
   gtk_widget_show (notebook);
 
@@ -1352,9 +1471,11 @@ film_dialog (GimpImage *image)
 
   if (run)
     {
-      gint        num_images = 0;
-      gboolean    iter_valid;
-      GtkTreeIter iter;
+      GimpObjectArray *images_array;
+      GimpImage       *images[MAX_FILM_PICTURES];
+      gint             num_images = 0;
+      gboolean         iter_valid;
+      GtkTreeIter      iter;
 
       for (iter_valid = gtk_tree_model_get_iter_first (filmint.image_list_film,
                                                        &iter);
@@ -1370,15 +1491,41 @@ film_dialog (GimpImage *image)
 
           if ((image_id >= 0) && (num_images < MAX_FILM_PICTURES))
             {
-              filmvals.images[num_images] = image_id;
+              images[num_images] = gimp_image_get_by_id (image_id);
               num_images++;
             }
         }
 
-      filmvals.num_images = num_images;
+      images_array = gimp_object_array_new (GIMP_TYPE_IMAGE, (GObject **) images, num_images, FALSE);
+
+      g_object_set (config,
+                    "images",          images_array,
+                    "num-images",      num_images,
+                    "film-height",     film_height,
+
+                    "keep-height",     keep_height,
+                    "number-color",    number_color,
+                    "film-color",      film_color,
+                    "number-start",    number_start,
+                    "at-top",          at_top,
+                    "at-bottom",       at_bottom,
+
+                    "picture-height",  picture_height,
+                    "picture-spacing", picture_space,
+                    "number-height",   number_height,
+                    "hole-offset",     hole_offset,
+                    "hole-width",      hole_width,
+                    "hole-height",     hole_height,
+                    "hole-spacing",    hole_space,
+                    NULL);
+
+      gimp_object_array_free (images_array);
     }
 
   gtk_widget_destroy (dlg);
+  g_free (number_color);
+  g_free (film_color);
+  g_clear_object (&number_font);
 
   return run;
 }
@@ -1395,14 +1542,13 @@ film_reset_callback (GtkWidget *widget,
 }
 
 static void
-film_font_select_callback (GimpFontSelectButton *button,
-                           GimpResource         *resource,
-                           gboolean              closing,
-                           gpointer              data)
+film_font_select_callback (GimpFontSelectButton  *button,
+                           GimpResource          *resource,
+                           gboolean               closing,
+                           GimpFont             **font)
 {
-  FilmVals *vals = (FilmVals *) data;
-
-  vals->number_font = GIMP_FONT (resource);
+  g_clear_object (font);
+  *font = GIMP_FONT (resource);
 }
 
 static void
@@ -1410,33 +1556,4 @@ film_scale_entry_update_double (GimpLabelSpin *entry,
                                 gdouble       *value)
 {
   *value = gimp_label_spin_get_value (entry);
-}
-
-/* FIXME: use GimpProcedureConfig
- *
- * Now using the old method: get_data.
- * And chunking the settings into global struct filmvals instead of properties.
- */
-static void
-film_load_settings (void)
-{
-  (void) gimp_get_data (PLUG_IN_PROC, &filmvals);
-  /* When no data, returns false and filmvals is as statically initialized. */
-
-  /* The GimpFont pointer was unserialized but garbage.
-   * Restore pointer from the name which was also serialized.
-   * A hack that goes away when GimpProcedureConfig is used.
-   */
-  filmvals.number_font = gimp_font_get_by_name (filmvals.font_name);
-}
-
-static void
-film_save_settings (void)
-{
-  /* Copy font name from font, i.e. serialize string not pointer. */
-  g_strlcpy (filmvals.font_name,
-             gimp_resource_get_name (GIMP_RESOURCE (filmvals.number_font)),
-             FONT_LEN);
-
-  gimp_set_data (PLUG_IN_PROC, &filmvals, sizeof (FilmVals));
 }
