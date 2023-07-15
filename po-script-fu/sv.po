@@ -11,15 +11,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-25 18:45+0000\n"
-"PO-Revision-Date: 2023-06-25 21:37+0200\n"
+"POT-Creation-Date: 2023-07-15 14:23+0000\n"
+"PO-Revision-Date: 2023-07-15 16:45+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: plug-ins/script-fu/script-fu.c:122
 msgid "Script-Fu _Console"
@@ -852,45 +852,37 @@ msgstr "Rita _enkla objekt"
 msgid "Create and Use _Selections"
 msgstr "Skapa och använd _markeringar"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:190
+#: plug-ins/script-fu/scripts/gimp-online.scm:186
 msgid "_Main Web Site"
 msgstr "_Huvudwebbplats"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:191
-#: plug-ins/script-fu/scripts/gimp-online.scm:204
-#: plug-ins/script-fu/scripts/gimp-online.scm:256
+#: plug-ins/script-fu/scripts/gimp-online.scm:187
+#: plug-ins/script-fu/scripts/gimp-online.scm:200
+#: plug-ins/script-fu/scripts/gimp-online.scm:239
 msgid "Bookmark to the GIMP web site"
-msgstr "Bokmärke till GIMP:s webbplats"
+msgstr "Bokmärke till GIMPs webbplats"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/gimp-online.scm:199
 msgid "_Developer Web Site"
 msgstr "Webbplats för _utvecklare"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:216
-msgid "_Roadmap"
-msgstr "Färd_plan"
+#: plug-ins/script-fu/scripts/gimp-online.scm:212
+msgid "_Roadmaps"
+msgstr "Färd_planer"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "Bokmärke till GIMP:s färdplan"
+#: plug-ins/script-fu/scripts/gimp-online.scm:213
+msgid "Bookmark to the roadmaps of GIMP"
+msgstr "Bokmärke till GIMPs färdplaner"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
-msgid "_Wiki"
-msgstr "_Wiki"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "Bokmärke till GIMP:s wiki"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/gimp-online.scm:225
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Felrapporter och önskemål om funktionalitet"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:243
+#: plug-ins/script-fu/scripts/gimp-online.scm:226
 msgid "Bookmark to the bug tracker of GIMP"
-msgstr "Bokmärke till GIMP:s felrapporteringssystem"
+msgstr "Bokmärke till GIMPs felrapporteringssystem"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/gimp-online.scm:238
 msgid "_User Manual Web Site"
 msgstr "Webbplats för _användarhandbok"
 
@@ -1184,8 +1176,9 @@ msgstr ""
 "rad (inga namn)"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:399
-msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-msgstr "Exportera den aktiva paletten som en java.util.Hashtable<Sträng, Färg>"
+msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
+msgstr ""
+"Exportera den aktiva paletten som en java.util.Hashtable&lt;Sträng,Färg&gt;"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:58
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
@@ -1588,6 +1581,12 @@ msgstr "X-avstånd för skuggkastning"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Y-avstånd för skuggkastning"
+
+#~ msgid "_Wiki"
+#~ msgstr "_Wiki"
+
+#~ msgid "Bookmark to the wiki of GIMP"
+#~ msgstr "Bokmärke till GIMP:s wiki"
 
 #~ msgid "Interactive Scheme Development"
 #~ msgstr "Interaktiv Scheme-utveckling"
@@ -3269,7 +3268,7 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgstr "<Toolbox>/Hjälp/GIMP på nätet/Register över insticksmoduler"
 
 #~ msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
-#~ msgstr "<Toolbox>/Hjälp/GIMP på nätet/_Utvecklarnas webbsajt"
+#~ msgstr "<Toolbox>/Hjälp/GIMP på nätet/_Utvecklarnas webbplats"
 
 #~ msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
 #~ msgstr "<Image>/Script-Fu/Skugga/_Xach-effekt..."
