@@ -89,10 +89,18 @@ combobox window.popup, combobox window {
 }
 
 combobox box, combobox box.linked, combobox button {
-  background-color: @widget-bg-color;
   color: @fg-color;
   background-image: none;
   border-color: @stronger-border-color;
+}
+
+/* Remove "corners" around the combo boxes */
+combobox box, combobox box.linked {
+  background-color: transparent;
+}
+
+combobox button {
+  background-color: @widget-bg-color;
 }
 
 /* Get rid of the outline around all tabs in the gimpcolordialog */
