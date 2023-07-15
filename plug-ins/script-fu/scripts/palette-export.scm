@@ -396,7 +396,7 @@
   )
 
 (register-palette-exporter "java" "J_ava map..." "java"
-                           _"Export the active palette as a java.util.Hashtable<String, Color>"
+                           _"Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
                            "Barak Itkin <lightningismyname@gmail.com>"
 			   "Barak Itkin" "May 15th, 2009")
 
