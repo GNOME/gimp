@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8 scriptfu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-13 21:16+0000\n"
-"PO-Revision-Date: 2023-07-14 11:05+0200\n"
+"POT-Creation-Date: 2023-07-15 14:23+0000\n"
+"PO-Revision-Date: 2023-07-15 18:48+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1172,8 +1172,8 @@ msgstr ""
 "na vrstico (brez imen)"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:399
-msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-msgstr "Izvozi aktivno paleto kot java.util.Hashtable<Niz, Barva>"
+msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
+msgstr "Izvozi aktivno paleto kot java.util.Hashtable&lt;Niz, Barva&gt;"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:58
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
