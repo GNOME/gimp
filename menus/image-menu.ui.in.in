@@ -6,6 +6,7 @@
     <submenu>
       <attribute name="label" translatable="yes" context="file-action">_File</attribute>
       <section>
+        <attribute name="section-name" translatable="no">Open</attribute>
         <item><attribute name="action">app.image-new</attribute></item>
         <submenu>
           <attribute name="label" translatable="yes" context="file-action">Crea_te</attribute>
@@ -22,7 +23,6 @@
           <item><attribute name="action">app.dialogs-document-history</attribute></item>
         </submenu>
 
-        <!--  TODO: the debug-menu is hidden by default for stable releases  -->
         <submenu>
           <attribute name="label" translatable="yes">_Debug</attribute>
           <item><attribute name="action">app.debug-gtk-inspector</attribute></item>
@@ -38,12 +38,14 @@
         </submenu>
       </section>
       <section>
+        <attribute name="section-name" translatable="no">Save</attribute>
         <item><attribute name="action">app.file-save</attribute></item>
         <item><attribute name="action">app.file-save-as</attribute></item>
         <item><attribute name="action">app.file-save-a-copy</attribute></item>
         <item><attribute name="action">app.file-revert</attribute></item>
       </section>
       <section>
+        <attribute name="section-name" translatable="no">Export</attribute>
         <item><attribute name="action">app.file-overwrite</attribute></item>
         <item><attribute name="action">app.file-export</attribute></item>
         <item><attribute name="action">app.file-export-as</attribute></item>
@@ -53,10 +55,12 @@
         <attribute name="section-name" translatable="no">Send</attribute>
       </section>
       <section>
+        <attribute name="section-name" translatable="no">Info</attribute>
         <item><attribute name="action">app.file-copy-location</attribute></item>
         <item><attribute name="action">app.file-show-in-file-manager</attribute></item>
       </section>
       <section>
+        <attribute name="section-name" translatable="no">Close</attribute>
         <item><attribute name="action">app.view-close</attribute></item>
         <item><attribute name="action">app.file-close-all</attribute></item>
         <item>
@@ -71,11 +75,14 @@
     <submenu>
       <attribute name="label" translatable="yes" context="edit-action">_Edit</attribute>
       <section>
+        <attribute name="section-name" translatable="no">Undo</attribute>
         <item><attribute name="action">app.edit-undo</attribute></item>
         <item><attribute name="action">app.edit-redo</attribute></item>
         <item><attribute name="action">app.dialogs-undo-history</attribute></item>
       </section>
       <section>
+        <!-- TODO: In 2.10, we actually had 3 sections "Cut", "Copy" and "Paste" yet don't want delimiters. -->
+        <attribute name="section-name" translatable="no">Paste</attribute>
         <item><attribute name="action">app.edit-cut</attribute></item>
         <item><attribute name="action">app.edit-copy</attribute></item>
         <item><attribute name="action">app.edit-copy-visible</attribute></item>
@@ -98,6 +105,8 @@
         </submenu>
       </section>
       <section>
+        <!-- TODO: In 2.10, we actually had 3 sections "Clear", "Fill" and "Stroke" yet don't want delimiters. -->
+        <attribute name="section-name" translatable="no">Stroke</attribute>
         <item><attribute name="action">app.edit-clear</attribute></item>
         <item><attribute name="action">app.edit-fill-fg</attribute></item>
         <item><attribute name="action">app.edit-fill-bg</attribute></item>
@@ -284,6 +293,7 @@
     <submenu>
       <attribute name="label" translatable="yes" context="image-action">_Image</attribute>
       <section>
+        <attribute name="section-name" translatable="no">New</attribute>
         <item><attribute name="action">app.image-duplicate</attribute></item>
       </section>
       <section>
@@ -338,13 +348,17 @@
         </submenu>
       </section>
       <section>
+        <!-- XXX This section should actually start after the submenu and there should be a "Resize" section first but we want to avoid the separators. -->
+        <attribute name="section-name" translatable="no">Scale</attribute>
         <submenu>
           <attribute name="label" translatable="yes" context="image-action">_Transform</attribute>
           <section>
+            <attribute name="section-name" translatable="no">Flip</attribute>
             <item><attribute name="action">app.image-flip-horizontal</attribute></item>
             <item><attribute name="action">app.image-flip-vertical</attribute></item>
           </section>
           <section>
+            <attribute name="section-name" translatable="no">Rotate</attribute>
             <item><attribute name="action">app.image-rotate-90</attribute></item>
             <item><attribute name="action">app.image-rotate-270</attribute></item>
             <item><attribute name="action">app.image-rotate-180</attribute></item>
@@ -363,6 +377,7 @@
         <item><attribute name="action">app.image-crop-to-content</attribute></item>
       </section>
       <section>
+        <!-- TODO: missing "Structure" section. -->
         <attribute name="section-name" translatable="no">Arrange</attribute>
         <item><attribute name="action">app.image-merge-layers</attribute></item>
         <item><attribute name="action">app.image-flatten</attribute></item>
@@ -387,6 +402,8 @@
     <submenu>
       <attribute name="label" translatable="yes" context="layers-action">_Layer</attribute>
       <section>
+        <!-- TODO: missing "New" section. -->
+        <attribute name="section-name" translatable="no">Structure</attribute>
         <item><attribute name="action">app.layers-new</attribute></item>
         <item><attribute name="action">app.layers-new-from-visible</attribute></item>
         <item><attribute name="action">app.layers-new-group</attribute></item>
@@ -397,6 +414,7 @@
         <item><attribute name="action">app.layers-delete</attribute></item>
       </section>
       <section>
+        <attribute name="section-name" translatable="no">Text</attribute>
         <item><attribute name="action">app.layers-text-discard</attribute></item>
         <item><attribute name="action">app.layers-text-to-vectors</attribute></item>
         <item><attribute name="action">app.layers-text-along-vectors</attribute></item>
@@ -405,12 +423,14 @@
         <submenu>
           <attribute name="label" translatable="yes" context="layers-action">Stac_k</attribute>
           <section>
+            <attribute name="section-name" translatable="no">Select</attribute>
             <item><attribute name="action">app.layers-select-previous</attribute></item>
             <item><attribute name="action">app.layers-select-next</attribute></item>
             <item><attribute name="action">app.layers-select-top</attribute></item>
             <item><attribute name="action">app.layers-select-bottom</attribute></item>
           </section>
           <section>
+            <attribute name="section-name" translatable="no">Position</attribute>
             <item><attribute name="action">app.layers-raise</attribute></item>
             <item><attribute name="action">app.layers-lower</attribute></item>
             <item><attribute name="action">app.layers-raise-to-top</attribute></item>
@@ -420,16 +440,19 @@
         <submenu>
           <attribute name="label" translatable="yes" context="layers-action">_Mask</attribute>
           <section>
+            <attribute name="section-name" translatable="no">Modify</attribute>
             <item><attribute name="action">app.layers-mask-add</attribute></item>
             <item><attribute name="action">app.layers-mask-apply</attribute></item>
             <item><attribute name="action">app.layers-mask-delete</attribute></item>
           </section>
           <section>
+            <attribute name="section-name" translatable="no">Properties</attribute>
             <item><attribute name="action">app.layers-mask-show</attribute></item>
             <item><attribute name="action">app.layers-mask-edit</attribute></item>
             <item><attribute name="action">app.layers-mask-disable</attribute></item>
           </section>
           <section>
+            <attribute name="section-name" translatable="no">Selection</attribute>
             <item><attribute name="action">app.layers-mask-selection-replace</attribute></item>
             <item><attribute name="action">app.layers-mask-selection-add</attribute></item>
             <item><attribute name="action">app.layers-mask-selection-subtract</attribute></item>
@@ -439,6 +462,7 @@
         <submenu>
           <attribute name="label" translatable="yes" context="layers-action">Tr_ansparency</attribute>
           <section>
+            <attribute name="section-name" translatable="no">Modify</attribute>
             <item><attribute name="action">app.layers-alpha-add</attribute></item>
             <item><attribute name="action">app.layers-alpha-remove</attribute></item>
             <item><attribute name="action">app.filters-color-to-alpha</attribute></item>
@@ -446,6 +470,7 @@
             <item><attribute name="action">app.filters-threshold-alpha</attribute></item>
           </section>
           <section>
+            <attribute name="section-name" translatable="no">Selection</attribute>
             <item><attribute name="action">app.layers-alpha-selection-replace</attribute></item>
             <item><attribute name="action">app.layers-alpha-selection-add</attribute></item>
             <item><attribute name="action">app.layers-alpha-selection-subtract</attribute></item>
@@ -455,10 +480,12 @@
         <submenu>
           <attribute name="label" translatable="yes" context="layers-action">_Transform</attribute>
           <section>
+            <attribute name="section-name" translatable="no">Flip</attribute>
             <item><attribute name="action">app.drawable-flip-horizontal</attribute></item>
             <item><attribute name="action">app.drawable-flip-vertical</attribute></item>
           </section>
           <section>
+            <attribute name="section-name" translatable="no">Rotate</attribute>
             <item><attribute name="action">app.drawable-rotate-90</attribute></item>
             <item><attribute name="action">app.drawable-rotate-270</attribute></item>
             <item><attribute name="action">app.drawable-rotate-180</attribute></item>
@@ -468,6 +495,8 @@
         </submenu>
       </section>
       <section>
+        <!-- TODO: missing "Resize" and "Scale" sections. -->
+        <attribute name="section-name" translatable="no">Crop</attribute>
         <item><attribute name="action">app.layers-resize</attribute></item>
         <item><attribute name="action">app.layers-resize-to-image</attribute></item>
         <item><attribute name="action">app.layers-scale</attribute></item>
@@ -493,6 +522,7 @@
         <item><attribute name="action">app.filters-curves</attribute></item>
       </section>
       <section>
+        <attribute name="section-name" translatable="no">Invert</attribute>
         <item><attribute name="action">app.filters-invert-perceptual</attribute></item>
         <item><attribute name="action">app.filters-invert-linear</attribute></item>
         <item><attribute name="action">app.filters-invert-value</attribute></item>
@@ -643,6 +673,7 @@
       <section>
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">_Blur</attribute>
+          <!-- TODO: missing subsections? -->
           <item><attribute name="action">app.filters-focus-blur</attribute></item>
           <item><attribute name="action">app.filters-gaussian-blur</attribute></item>
           <item><attribute name="action">app.filters-lens-blur</attribute></item>
