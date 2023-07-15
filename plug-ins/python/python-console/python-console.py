@@ -76,10 +76,10 @@ def run(procedure, args, data):
             self.set_property("help-id", PROC_NAME)
             Gtk.Window.set_title(self, _("Python Console"))
             Gtk.Window.set_role(self, PROC_NAME)
-            Gtk.Dialog.add_button(self, "_Save", Gtk.ResponseType.OK)
-            Gtk.Dialog.add_button(self, "Cl_ear", RESPONSE_CLEAR)
+            Gtk.Dialog.add_button(self, _("_Save"), Gtk.ResponseType.OK)
+            Gtk.Dialog.add_button(self, _("Cl_ear"), RESPONSE_CLEAR)
             Gtk.Dialog.add_button(self, _("_Browse..."), RESPONSE_BROWSE)
-            Gtk.Dialog.add_button(self, "_Close", Gtk.ResponseType.CLOSE)
+            Gtk.Dialog.add_button(self, _("_Close"), Gtk.ResponseType.CLOSE)
 
             Gtk.Widget.set_name (self, PROC_NAME)
             GimpUi.Dialog.set_alternative_button_order_from_array(self,
@@ -256,8 +256,8 @@ def run(procedure, args, data):
                 dlg = GimpUi.ProcBrowserDialog(use_header_bar=use_header_bar)
                 Gtk.Window.set_title(dlg, _("Python Procedure Browser"))
                 Gtk.Window.set_role(dlg, PROC_NAME)
-                Gtk.Dialog.add_button(dlg, "Apply", Gtk.ResponseType.APPLY)
-                Gtk.Dialog.add_button(dlg, "Close", Gtk.ResponseType.CLOSE)
+                Gtk.Dialog.add_button(dlg, _("_Apply"), Gtk.ResponseType.APPLY)
+                Gtk.Dialog.add_button(dlg, _("_Close"), Gtk.ResponseType.CLOSE)
 
                 Gtk.Dialog.set_default_response(self, Gtk.ResponseType.OK)
                 GimpUi.Dialog.set_alternative_button_order_from_array(dlg,
@@ -308,8 +308,8 @@ def run(procedure, args, data):
                 dlg = Gtk.FileChooserDialog()
                 Gtk.Window.set_title(dlg, _("Save Python-Fu Console Output"))
                 Gtk.Window.set_transient_for(dlg, self)
-                Gtk.Dialog.add_button(dlg, "_Cancel", Gtk.ResponseType.CANCEL)
-                Gtk.Dialog.add_button(dlg, "_Save", Gtk.ResponseType.OK)
+                Gtk.Dialog.add_button(dlg, _("_Cancel"), Gtk.ResponseType.CANCEL)
+                Gtk.Dialog.add_button(dlg, _("_Save"), Gtk.ResponseType.OK)
                 Gtk.Dialog.set_default_response(self, Gtk.ResponseType.OK)
                 GimpUi.Dialog.set_alternative_button_order_from_array(dlg,
                                                                     [ Gtk.ResponseType.OK,

@@ -1721,8 +1721,8 @@ class SpyroWindow():
 
         def dialog_button_box():
 
-            self.dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
-            self.ok_btn = self.dialog.add_button("_OK", Gtk.ResponseType.OK)
+            self.dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+            self.ok_btn = self.dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
             btn = self.dialog.add_button(_("Re_draw"), RESPONSE_REDRAW)
             btn.set_tooltip_text(
                 _("If you change the settings of a tool, change color, or change the selection, "

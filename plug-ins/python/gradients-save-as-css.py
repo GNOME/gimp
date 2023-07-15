@@ -121,8 +121,8 @@ def gradient_css_save(procedure, args, data):
         file_chooser_dialog = Gtk.FileChooserDialog(use_header_bar=use_header_bar,
                                                     title=_("Save as CSS file..."),
                                                     action=Gtk.FileChooserAction.SAVE)
-        file_chooser_dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
-        file_chooser_dialog.add_button("_OK", Gtk.ResponseType.OK)
+        file_chooser_dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        file_chooser_dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
 
         #Connect config so reset works on custom widget
         def gradient_reset (*args):

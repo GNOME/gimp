@@ -142,8 +142,8 @@ class PaletteOffset (Gimp.PlugIn):
             dialog = GimpUi.Dialog(use_header_bar=use_header_bar,
                                  title=_("Offset Palette..."))
 
-            dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
-            dialog.add_button("_OK", Gtk.ResponseType.OK)
+            dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+            dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
 
             box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                           homogeneous=False, spacing=12)

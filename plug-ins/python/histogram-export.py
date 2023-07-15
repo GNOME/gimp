@@ -201,8 +201,8 @@ def run(procedure, run_mode, image, n_layers, layers, args, data):
         use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
         dialog = GimpUi.Dialog(use_header_bar=use_header_bar,
                              title=_("Histogram Export..."))
-        dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
-        dialog.add_button("_OK", Gtk.ResponseType.OK)
+        dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
 
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                        homogeneous=False, spacing=10)
@@ -243,8 +243,8 @@ def run(procedure, run_mode, image, n_layers, layers, args, data):
         file_chooser_dialog = Gtk.FileChooserDialog(use_header_bar=use_header_bar,
                                                     title=_("Histogram Export file..."),
                                                     action=Gtk.FileChooserAction.SAVE)
-        file_chooser_dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
-        file_chooser_dialog.add_button("_OK", Gtk.ResponseType.OK)
+        file_chooser_dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        file_chooser_dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
 
         # Bucket size parameter
         label = Gtk.Label.new_with_mnemonic(_("_Bucket Size"))

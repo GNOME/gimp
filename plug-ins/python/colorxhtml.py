@@ -89,14 +89,14 @@ def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, args, da
         use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
         dialog = Gtk.Dialog(use_header_bar=use_header_bar,
                             title=_("Save as colored HTML text..."))
-        dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
-        dialog.add_button("_OK", Gtk.ResponseType.OK)
+        dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
 
         choose_file_dialog = Gtk.FileChooserDialog(use_header_bar=use_header_bar,
                                        title=_("Read characters from file..."),
                                        action=Gtk.FileChooserAction.OPEN)
-        choose_file_dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
-        choose_file_dialog.add_button("_OK", Gtk.ResponseType.OK)
+        choose_file_dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        choose_file_dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
 
         def choose_file(button, user_data=None):
             choose_file_dialog.show()

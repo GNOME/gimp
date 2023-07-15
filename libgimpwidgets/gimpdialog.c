@@ -174,7 +174,7 @@ gimp_dialog_constructed (GObject *object)
   if (show_help_button && private->help_func && private->help_id)
     {
       private->help_button = gtk_dialog_add_button (GTK_DIALOG (object),
-                                                    ("_Help"),
+                                                    _("_Help"),
                                                     GTK_RESPONSE_HELP);
     }
 }
