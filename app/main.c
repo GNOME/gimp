@@ -147,7 +147,7 @@ static gboolean            use_cpu_accel     = TRUE;
 static gboolean            console_messages  = FALSE;
 static gboolean            use_debug_handler = FALSE;
 
-#ifdef GIMP_UNSTABLE
+#if defined (GIMP_UNSTABLE) || ! defined (GIMP_RELEASE)
 static gboolean            show_playground   = TRUE;
 static gboolean            show_debug_menu   = TRUE;
 static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_QUERY;
