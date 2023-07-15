@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-24 11:00+0000\n"
-"PO-Revision-Date: 2023-04-24 16:26+0200\n"
+"POT-Creation-Date: 2023-07-15 14:41+0000\n"
+"PO-Revision-Date: 2023-07-15 13:57+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -20,9 +20,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
-#: libgimp/gimpbrushselectbutton.c:325 libgimp/gimppatternselectbutton.c:335
+#: libgimp/gimpbrushselectbutton.c:130 libgimp/gimppatternselectbutton.c:142
 msgid "_Browse..."
 msgstr "_Bläddra…"
 
@@ -232,11 +232,11 @@ msgstr ""
 msgid "Export Image as %s"
 msgstr "Exportera bild som %s"
 
-#: libgimp/gimpimagemetadata.c:306
+#: libgimp/gimpimagemetadata.c:284
 msgid "Background"
 msgstr "Bakgrund"
 
-#: libgimp/gimpimagemetadata-save.c:654 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:760 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -260,100 +260,100 @@ msgstr "anropsfel"
 msgid "cancelled"
 msgstr "avbruten"
 
-#: libgimp/gimpprocbrowserdialog.c:162
+#: libgimp/gimpprocbrowserdialog.c:164
 msgid "by name"
 msgstr "efter namn"
 
-#: libgimp/gimpprocbrowserdialog.c:163
+#: libgimp/gimpprocbrowserdialog.c:165
 msgid "by description"
 msgstr "efter beskrivning"
 
-#: libgimp/gimpprocbrowserdialog.c:164
+#: libgimp/gimpprocbrowserdialog.c:166
 msgid "by help"
 msgstr "efter hjälp"
 
-#: libgimp/gimpprocbrowserdialog.c:165
+#: libgimp/gimpprocbrowserdialog.c:167
 msgid "by authors"
 msgstr "efter upphovsmän"
 
-#: libgimp/gimpprocbrowserdialog.c:166
+#: libgimp/gimpprocbrowserdialog.c:168
 msgid "by copyright"
 msgstr "efter copyright"
 
-#: libgimp/gimpprocbrowserdialog.c:167
+#: libgimp/gimpprocbrowserdialog.c:169
 msgid "by date"
 msgstr "efter datum"
 
-#: libgimp/gimpprocbrowserdialog.c:168
+#: libgimp/gimpprocbrowserdialog.c:170
 msgid "by type"
 msgstr "efter typ"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:369 libgimp/gimpprocbrowserdialog.c:527
+#: libgimp/gimpprocbrowserdialog.c:371 libgimp/gimpprocbrowserdialog.c:529
 #: libgimpwidgets/gimpbrowser.c:168
 msgid "No matches"
 msgstr "Inga sökträffar"
 
-#: libgimp/gimpprocbrowserdialog.c:372
+#: libgimp/gimpprocbrowserdialog.c:374
 msgid "Search term invalid or incomplete"
 msgstr "Söktermen är ogiltig eller ofullständig"
 
-#: libgimp/gimpprocbrowserdialog.c:381
+#: libgimp/gimpprocbrowserdialog.c:383
 msgid "Searching"
 msgstr "Söker"
 
-#: libgimp/gimpprocbrowserdialog.c:393
+#: libgimp/gimpprocbrowserdialog.c:395
 msgid "Searching by name"
 msgstr "Söker efter namn"
 
-#: libgimp/gimpprocbrowserdialog.c:414
+#: libgimp/gimpprocbrowserdialog.c:416
 msgid "Searching by description"
 msgstr "Söker efter beskrivning"
 
-#: libgimp/gimpprocbrowserdialog.c:422
+#: libgimp/gimpprocbrowserdialog.c:424
 msgid "Searching by help"
 msgstr "Söker efter hjälp"
 
-#: libgimp/gimpprocbrowserdialog.c:430
+#: libgimp/gimpprocbrowserdialog.c:432
 msgid "Searching by authors"
 msgstr "Söker efter upphovsmän"
 
-#: libgimp/gimpprocbrowserdialog.c:438
+#: libgimp/gimpprocbrowserdialog.c:440
 msgid "Searching by copyright"
 msgstr "Söker efter copyright"
 
-#: libgimp/gimpprocbrowserdialog.c:446
+#: libgimp/gimpprocbrowserdialog.c:448
 msgid "Searching by date"
 msgstr "Söker efter datum"
 
-#: libgimp/gimpprocbrowserdialog.c:454
+#: libgimp/gimpprocbrowserdialog.c:456
 msgid "Searching by type"
 msgstr "Söker efter typ"
 
-#: libgimp/gimpprocbrowserdialog.c:467
+#: libgimp/gimpprocbrowserdialog.c:469
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d procedur"
 msgstr[1] "%d procedurer"
 
-#: libgimp/gimpprocbrowserdialog.c:476
+#: libgimp/gimpprocbrowserdialog.c:478
 msgid "No matches for your query"
 msgstr "Inga träffar för din sökning"
 
-#: libgimp/gimpprocbrowserdialog.c:480
+#: libgimp/gimpprocbrowserdialog.c:482
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedur matchar din sökning"
 msgstr[1] "%d procedurer matchar din sökning"
 
-#: libgimp/gimpprocedure.c:1917
+#: libgimp/gimpprocedure.c:1925
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Proceduren ”%s” returnerade inga svarsvärden"
 
-#: libgimp/gimpprocedure.c:2008
+#: libgimp/gimpprocedure.c:2016
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -362,7 +362,7 @@ msgstr ""
 "Proceduren ”%s” returnerade en felaktig värdetyp för svarsvärdet ”%s” (nr. "
 "%d). Förväntade %s, fick %s."
 
-#: libgimp/gimpprocedure.c:2020
+#: libgimp/gimpprocedure.c:2028
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
@@ -371,7 +371,7 @@ msgstr ""
 "Proceduren ”%s” har anropats med en felaktig värdetyp för argumentet "
 "”%s” (nr. %d). Förväntade %s, fick %s."
 
-#: libgimp/gimpprocedure.c:2055
+#: libgimp/gimpprocedure.c:2063
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -380,7 +380,7 @@ msgstr ""
 "Proceduren ”%s” returnerade ”%s” som svarsvärde ”%s” (nr. %d, typ %s). Det "
 "här värdet är utanför intervallet."
 
-#: libgimp/gimpprocedure.c:2069
+#: libgimp/gimpprocedure.c:2077
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -389,13 +389,13 @@ msgstr ""
 "Proceduren ”%s” har anropats med värdet ”%s” för argumentet ”%s” (nr. %d, "
 "typ %s). Det här värdet är utanför intervallet."
 
-#: libgimp/gimpprocedure.c:2113
+#: libgimp/gimpprocedure.c:2121
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "Proceduren ”%s” returnerade en ogiltig UTF-8-sträng för argumentet ”%s”."
 
-#: libgimp/gimpprocedure.c:2123
+#: libgimp/gimpprocedure.c:2131
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -455,11 +455,11 @@ msgstr "Palettväljare"
 msgid "Pattern Chooser"
 msgstr "Mönsterväljare"
 
-#: libgimp/gimpproceduredialog.c:2036
+#: libgimp/gimpproceduredialog.c:2128
 msgid "Reset to _Initial Values"
 msgstr "Återställ till _ursprungsvärden"
 
-#: libgimp/gimpproceduredialog.c:2045
+#: libgimp/gimpproceduredialog.c:2137
 msgid "Reset to _Factory Defaults"
 msgstr "Återställ till _fabriksinställningar"
 
@@ -1171,10 +1171,11 @@ msgctxt "join-style"
 msgid "Bevel"
 msgstr "Avfasad"
 
+# merge-type för lager
 #: libgimpbase/gimpbaseenums.c:1066
 msgctxt "merge-type"
 msgid "Expanded as necessary"
-msgstr "Expanderad efter behov"
+msgstr "Expanderat efter behov"
 
 #: libgimpbase/gimpbaseenums.c:1067
 msgctxt "merge-type"
@@ -1551,27 +1552,27 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Beskär med förhållande"
 
-#: libgimpbase/gimpmetadata.c:1072
+#: libgimpbase/gimpmetadata.c:1215
 msgid "Can load metadata only from local files"
 msgstr "Kan endast läsa in metadata från lokala filer"
 
-#: libgimpbase/gimpmetadata.c:1128
+#: libgimpbase/gimpmetadata.c:1271
 msgid "Can save metadata only to local files"
 msgstr "Kan endast spara metadata till lokala filer"
 
-#: libgimpbase/gimpmetadata.c:1176
+#: libgimpbase/gimpmetadata.c:1319
 msgid "Invalid Exif data size."
 msgstr "Ogiltig storlek på Exif-data."
 
-#: libgimpbase/gimpmetadata.c:1205
+#: libgimpbase/gimpmetadata.c:1348
 msgid "Parsing Exif data failed."
 msgstr "Misslyckades med tolkning av Exif-data."
 
-#: libgimpbase/gimpmetadata.c:1255
+#: libgimpbase/gimpmetadata.c:1398
 msgid "Parsing IPTC data failed."
 msgstr "Tolkning av IPTC-data misslyckades."
 
-#: libgimpbase/gimpmetadata.c:1303
+#: libgimpbase/gimpmetadata.c:1446
 msgid "Parsing XMP data failed."
 msgstr "Misslyckades med tolkning av XMP-data."
 
@@ -1883,28 +1884,28 @@ msgstr "Färgprofil ”%s” passar inte med GRÅ-färgrymd."
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Färgprofil ”%s” passar inte med CMYK-färgrymd."
 
-#: libgimpconfig/gimpconfig-deserialize.c:116
+#: libgimpconfig/gimpconfig-deserialize.c:117
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "värde för elementet %s är inte en giltig UTF-8-sträng"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:480
+#: libgimpconfig/gimpconfig-deserialize.c:485
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "”yes” eller ”no” för booleskt element %s förväntades, fick ”%s”"
 
-#: libgimpconfig/gimpconfig-deserialize.c:595
+#: libgimpconfig/gimpconfig-deserialize.c:600
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ogiltigt värde ”%s” för element %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:610
+#: libgimpconfig/gimpconfig-deserialize.c:615
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ogiltigt värde ”%ld” för element %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:679
+#: libgimpconfig/gimpconfig-deserialize.c:684
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "vid tolkning av elementet ”%s”: %s"
@@ -1959,26 +1960,26 @@ msgstr "förväntade ett ”yes” eller ”no” för booleskt element, fick �
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Fel vid tolkning av ”%s” på rad %d: %s"
 
-#: libgimpmodule/gimpmodule.c:172 libgimpmodule/gimpmodule.c:190
-#: libgimpmodule/gimpmodule.c:451 libgimpmodule/gimpmodule.c:474
-#: libgimpmodule/gimpmodule.c:524
+#: libgimpmodule/gimpmodule.c:221 libgimpmodule/gimpmodule.c:239
+#: libgimpmodule/gimpmodule.c:500 libgimpmodule/gimpmodule.c:523
+#: libgimpmodule/gimpmodule.c:573
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Modul ”%s” inläsningsfel: %s"
 
-#: libgimpmodule/gimpmoduledb.c:500
+#: libgimpmodule/gimpmoduledb.c:450
 msgid "Module error"
 msgstr "Modulfel"
 
-#: libgimpmodule/gimpmoduledb.c:501
+#: libgimpmodule/gimpmoduledb.c:451
 msgid "Loaded"
 msgstr "Inläst"
 
-#: libgimpmodule/gimpmoduledb.c:502
+#: libgimpmodule/gimpmoduledb.c:452
 msgid "Load failed"
 msgstr "Inläsning misslyckades"
 
-#: libgimpmodule/gimpmoduledb.c:503
+#: libgimpmodule/gimpmoduledb.c:453
 msgid "Not loaded"
 msgstr "Inte inläst"
 
@@ -2086,6 +2087,10 @@ msgstr "Gammal:"
 #: libgimpwidgets/gimpcolorselection.c:343
 msgid "HTML _notation:"
 msgstr "HTML-_notation:"
+
+#: libgimpwidgets/gimpdialog.c:177
+msgid "_Help"
+msgstr "_Hjälp"
 
 #: libgimpwidgets/gimpfileentry.c:167
 msgid "Show file location in the file manager"
@@ -2481,7 +2486,7 @@ msgstr "Färgväljare i vattenfärgsstil"
 msgid "Watercolor"
 msgstr "Vattenfärg"
 
-#: modules/color-selector-water.c:198
+#: modules/color-selector-water.c:196
 msgid "Pressure"
 msgstr "Tryck"
 
@@ -3080,9 +3085,6 @@ msgstr "Kontrast"
 #~ msgctxt "precision"
 #~ msgid "64-bit gamma floating point"
 #~ msgstr "64-bit gamma flyttal"
-
-#~ msgid "_Help"
-#~ msgstr "_Hjälp"
 
 #~ msgid "Anchor"
 #~ msgstr "Ankare"
