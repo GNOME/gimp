@@ -27,6 +27,7 @@
 
 #ifdef PLATFORM_OSX
 #include <AppKit/AppKit.h>
+#include <libunwind.h>
 #endif
 
 #ifdef HAVE_EXECINFO_H
@@ -1220,6 +1221,61 @@ gimp_stack_trace_print (const gchar   *prog_name,
 {
   gboolean stack_printed = FALSE;
 
+#ifdef PLATFORM_OSX
+  pid_t    pid = getpid();
+  uint64   tid64;
+  long     tid;
+  GString *gtrace = NULL;
+
+  /* On macOS, we can't use gdb or lldb to attach to a process, so we
+   * have to use the stacktrace() API.
+   */
+
+  unw_cursor_t cursor;
+  unw_context_t context;
+
+  unw_getcontext (&context);
+  unw_init_local (&cursor, &context);
+
+
+  pthread_threadid_np (NULL, &tid64);
+  tid = (long) tid64;
+
+  if (stream)
+      g_fprintf (stream,
+                  "\n# Stack traces obtained from PID %d - Thread 0x%lx #\n\n",
+                  pid, tid);
+  if (trace)
+    {
+      gtrace = g_string_new (NULL);
+      g_string_printf (gtrace,
+                        "\n# Stack traces obtained from PID %d - Thread 0x%lx #\n\n",
+                        pid, tid);
+    }
+
+  while (unw_step (&cursor) > 0)
+    {
+      unw_word_t offset, pc;
+      char fname[64];
+
+      unw_get_reg (&cursor, UNW_REG_IP, &pc);
+      fname[0] = '\0';
+      unw_get_proc_name (&cursor, fname, sizeof(fname), &offset);
+
+      stack_printed = TRUE;
+      if (stream)
+        g_fprintf (stream, "%p : (%s+0x%lx)\n", (void *)pc, fname, (unsigned long)offset);
+      if (trace)
+        g_string_append_printf (gtrace, "%p : (%s+0x%lx)\n", (void *) pc, fname, (unsigned long) offset);
+    }
+
+  if (trace)
+    *trace = g_string_free (gtrace, FALSE);
+
+  /* Stack printing conflicts with the OS stack printing */
+  return stack_printed;
+
+#else /* PLATFORM_OSX */
   /* This works only on UNIX systems. */
 #ifndef G_OS_WIN32
   GString *gtrace = NULL;
@@ -1233,12 +1289,6 @@ gimp_stack_trace_print (const gchar   *prog_name,
   gint     eintr_count = 0;
 #if defined(G_OS_WIN32)
   DWORD    tid = GetCurrentThreadId ();
-#elif defined(PLATFORM_OSX)
-  uint64   tid64;
-  long     tid;
-
-  pthread_threadid_np (NULL, &tid64);
-  tid = (long) tid64;
 #elif defined(SYS_gettid)
   long     tid = syscall (SYS_gettid);
 #elif defined(HAVE_THR_SELF)
@@ -1351,6 +1401,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
                * Yet to avoid infinite loop (in case the error really
                * happens at every call), we abandon after a few
                * consecutive errors.
+               * Note: macOS no longer runs through this code path
                */
               if (errno == EINTR && eintr_count <= 5)
                 {
@@ -1362,12 +1413,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
           eintr_count = 0;
           if (! stack_printed)
             {
-#if defined(PLATFORM_OSX)
-              if (stream)
-                g_fprintf (stream,
-                           "\n# Stack traces obtained from PID %d - Thread 0x%lx #\n\n",
-                           pid, tid);
-#elif defined(G_OS_WIN32) || defined(SYS_gettid) || defined(HAVE_THR_SELF)
+#if defined(G_OS_WIN32) || defined(SYS_gettid) || defined(HAVE_THR_SELF)
               if (stream)
                 g_fprintf (stream,
                            "\n# Stack traces obtained from PID %d - Thread %lu #\n\n",
@@ -1376,11 +1422,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
               if (trace)
                 {
                   gtrace = g_string_new (NULL);
-#if defined(PLATFORM_OSX)
-                  g_string_printf (gtrace,
-                                   "\n# Stack traces obtained from PID %d - Thread 0x%lx #\n\n",
-                                   pid, tid);
-#elif defined(G_OS_WIN32) || defined(SYS_gettid) || defined(HAVE_THR_SELF)
+#if defined(G_OS_WIN32) || defined(SYS_gettid) || defined(HAVE_THR_SELF)
                   g_string_printf (gtrace,
                                    "\n# Stack traces obtained from PID %d - Thread %lu #\n\n",
                                    pid, tid);
@@ -1469,6 +1511,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
 #endif /* G_OS_WIN32 */
 
   return stack_printed;
+#endif /* PLATFORM_OSX */
 }
 
 /**
