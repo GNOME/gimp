@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-21 08:10+0000\n"
-"PO-Revision-Date: 2023-01-21 16:55+0100\n"
+"POT-Creation-Date: 2023-07-15 14:42+0000\n"
+"PO-Revision-Date: 2023-07-16 06:44+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -16,11 +16,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: plug-ins/python/colorxhtml.py:91
 msgid "Save as colored HTML text..."
 msgstr ""
+
+#: plug-ins/python/colorxhtml.py:92 plug-ins/python/colorxhtml.py:98
+#: plug-ins/python/gradients-save-as-css.py:124
+#: plug-ins/python/histogram-export.py:204
+#: plug-ins/python/histogram-export.py:246
+#: plug-ins/python/palette-offset.py:145
+#: plug-ins/python/python-console/python-console.py:311
+#: plug-ins/python/spyro-plus.py:1724
+msgid "_Cancel"
+msgstr "გაუქმება"
+
+#: plug-ins/python/colorxhtml.py:93 plug-ins/python/colorxhtml.py:99
+#: plug-ins/python/gradients-save-as-css.py:125
+#: plug-ins/python/histogram-export.py:205
+#: plug-ins/python/histogram-export.py:247
+#: plug-ins/python/palette-offset.py:146 plug-ins/python/spyro-plus.py:1725
+msgid "_OK"
+msgstr "კარგი"
 
 #: plug-ins/python/colorxhtml.py:96
 msgid "Read characters from file..."
@@ -310,7 +328,7 @@ msgstr "მნიშვნელობა"
 
 #: plug-ins/python/palette-sort.py:45
 msgid "Saturation (HSL)"
-msgstr ""
+msgstr "გაჯერებულობა (HSL)"
 
 #: plug-ins/python/palette-sort.py:45
 msgid "Lightness (HSL)"
@@ -453,13 +471,31 @@ msgstr ""
 msgid "Python Console"
 msgstr "Python-ის კონსოლი"
 
+#: plug-ins/python/python-console/python-console.py:79
+#: plug-ins/python/python-console/python-console.py:312
+msgid "_Save"
+msgstr "_შენახვა"
+
+#: plug-ins/python/python-console/python-console.py:80
+msgid "Cl_ear"
+msgstr "_გასუფთავება"
+
 #: plug-ins/python/python-console/python-console.py:81
 msgid "_Browse..."
 msgstr "დათვალიერება..."
 
+#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:260
+msgid "_Close"
+msgstr "_დახურვა"
+
 #: plug-ins/python/python-console/python-console.py:257
 msgid "Python Procedure Browser"
 msgstr ""
+
+#: plug-ins/python/python-console/python-console.py:259
+msgid "_Apply"
+msgstr "_გადატარება"
 
 #: plug-ins/python/python-console/python-console.py:285
 #, python-format
@@ -516,7 +552,7 @@ msgid "Polygon-Star"
 msgstr ""
 
 #. Sine wave on a circle ring.
-#: plug-ins/python/spyro-plus.py:162 plug-ins/python/spyro-plus.py:995
+#: plug-ins/python/spyro-plus.py:162 plug-ins/python/spyro-plus.py:994
 msgid "Sine"
 msgstr "სინუსიოდი"
 
@@ -545,73 +581,73 @@ msgstr "ფანქარი"
 msgid "AirBrush"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:607
+#: plug-ins/python/spyro-plus.py:606
 msgid "Preview"
 msgstr "ესკიზი"
 
-#: plug-ins/python/spyro-plus.py:612
+#: plug-ins/python/spyro-plus.py:611
 msgid "Stroke"
 msgstr "გამოძრავება"
 
-#: plug-ins/python/spyro-plus.py:659
+#: plug-ins/python/spyro-plus.py:658
 msgid "PaintBrush"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:661
+#: plug-ins/python/spyro-plus.py:660
 msgid "Ink"
 msgstr "მელანი"
 
-#: plug-ins/python/spyro-plus.py:662
+#: plug-ins/python/spyro-plus.py:661
 msgid "MyPaintBrush"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:981
+#: plug-ins/python/spyro-plus.py:980
 msgid "Spyrograph"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:988
+#: plug-ins/python/spyro-plus.py:987
 msgid "Epitrochoid"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1015
+#: plug-ins/python/spyro-plus.py:1014
 msgid "Lissajous"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1462
+#: plug-ins/python/spyro-plus.py:1461
 msgid "Curve Type"
 msgstr "მრუდის ტიპი"
 
-#: plug-ins/python/spyro-plus.py:1463
+#: plug-ins/python/spyro-plus.py:1462
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1468
+#: plug-ins/python/spyro-plus.py:1467
 msgid "Tool"
 msgstr "ხელსაწყო"
 
-#: plug-ins/python/spyro-plus.py:1469
+#: plug-ins/python/spyro-plus.py:1468
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1474
+#: plug-ins/python/spyro-plus.py:1473
 msgid "Long Gradient"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1476
+#: plug-ins/python/spyro-plus.py:1475
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
 "gradient and repeat mode from the gradient tool settings."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1496
+#: plug-ins/python/spyro-plus.py:1495
 msgid "Specify pattern using one of the following tabs:"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1498
+#: plug-ins/python/spyro-plus.py:1497
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -619,111 +655,111 @@ msgid ""
 "similar."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1522
+#: plug-ins/python/spyro-plus.py:1521
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1525 plug-ins/python/spyro-plus.py:1553
+#: plug-ins/python/spyro-plus.py:1524 plug-ins/python/spyro-plus.py:1552
 msgid "Fixed Gear Teeth"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1533
+#: plug-ins/python/spyro-plus.py:1532
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1536 plug-ins/python/spyro-plus.py:1558
+#: plug-ins/python/spyro-plus.py:1535 plug-ins/python/spyro-plus.py:1557
 msgid "Moving Gear Teeth"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1541
+#: plug-ins/python/spyro-plus.py:1540
 msgid "Hole percent"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1542
+#: plug-ins/python/spyro-plus.py:1541
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1563
+#: plug-ins/python/spyro-plus.py:1562
 msgid "Hole Number"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1564
+#: plug-ins/python/spyro-plus.py:1563
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1575
+#: plug-ins/python/spyro-plus.py:1574
 msgid "Flower Petals"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1576
+#: plug-ins/python/spyro-plus.py:1575
 msgid "The number of petals in the pattern."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1581
+#: plug-ins/python/spyro-plus.py:1580
 msgid "Petal Skip"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1582
+#: plug-ins/python/spyro-plus.py:1581
 msgid "The number of petals to advance for drawing the next petal."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1587
+#: plug-ins/python/spyro-plus.py:1586
 msgid "Hole Radius(%)"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1588
+#: plug-ins/python/spyro-plus.py:1587
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
 "produce no hole. A Value of 99 will produce a thin line on the edge."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1609
+#: plug-ins/python/spyro-plus.py:1608
 msgid "Width(%)"
 msgstr "სიგანე(%)"
 
-#: plug-ins/python/spyro-plus.py:1610
+#: plug-ins/python/spyro-plus.py:1609
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
 "fixed gear."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1621
+#: plug-ins/python/spyro-plus.py:1620
 msgid "Visual"
 msgstr "ვიზუალი"
 
-#: plug-ins/python/spyro-plus.py:1627
+#: plug-ins/python/spyro-plus.py:1626
 msgid "Toy Kit"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1633
+#: plug-ins/python/spyro-plus.py:1632
 msgid "Gears"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1646 plug-ins/python/spyro-plus.py:1690
+#: plug-ins/python/spyro-plus.py:1645 plug-ins/python/spyro-plus.py:1689
 msgid "Rotation"
 msgstr "შემობრუნება"
 
-#: plug-ins/python/spyro-plus.py:1647
+#: plug-ins/python/spyro-plus.py:1646
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1670
+#: plug-ins/python/spyro-plus.py:1669
 msgid "Shape"
 msgstr "ფორმა"
 
-#: plug-ins/python/spyro-plus.py:1671
+#: plug-ins/python/spyro-plus.py:1670
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -732,159 +768,159 @@ msgid ""
 "non-rectangular."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1680
+#: plug-ins/python/spyro-plus.py:1679
 msgid "Sides"
 msgstr "მხარეები"
 
-#: plug-ins/python/spyro-plus.py:1680
+#: plug-ins/python/spyro-plus.py:1679
 msgid "Number of sides of the shape."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1685
+#: plug-ins/python/spyro-plus.py:1684
 msgid "Morph"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1685
+#: plug-ins/python/spyro-plus.py:1684
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1690
+#: plug-ins/python/spyro-plus.py:1689
 msgid "Rotation of the fixed gear, in degrees"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1705
+#: plug-ins/python/spyro-plus.py:1704
 msgid "Margin (px)"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1705
+#: plug-ins/python/spyro-plus.py:1704
 msgid "Margin from edge of selection."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1710
+#: plug-ins/python/spyro-plus.py:1709
 msgid "Make width and height equal"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1712
+#: plug-ins/python/spyro-plus.py:1711
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1727
+#: plug-ins/python/spyro-plus.py:1726
 msgid "Re_draw"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1729
+#: plug-ins/python/spyro-plus.py:1728
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1732
+#: plug-ins/python/spyro-plus.py:1731
 msgid "_Reset"
 msgstr "_გადატვირთვა"
 
-#: plug-ins/python/spyro-plus.py:1740
+#: plug-ins/python/spyro-plus.py:1739
 msgid "Save"
 msgstr "შენახვა"
 
-#: plug-ins/python/spyro-plus.py:1741
+#: plug-ins/python/spyro-plus.py:1740
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1755
+#: plug-ins/python/spyro-plus.py:1754
 msgid "Spyrogimp"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1764 plug-ins/python/spyro-plus.py:2301
+#: plug-ins/python/spyro-plus.py:1763 plug-ins/python/spyro-plus.py:2300
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1777
+#: plug-ins/python/spyro-plus.py:1776
 msgid "Curve Pattern"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1780
+#: plug-ins/python/spyro-plus.py:1779
 msgid "Fixed Gear"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:1783
+#: plug-ins/python/spyro-plus.py:1782
 msgid "Size"
 msgstr "ზომა"
 
-#: plug-ins/python/spyro-plus.py:2139
+#: plug-ins/python/spyro-plus.py:2138
 msgid "Rendering Pattern"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2151
+#: plug-ins/python/spyro-plus.py:2150
 msgid "Please wait : Rendering Pattern"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2217 plug-ins/python/spyro-plus.py:2218
+#: plug-ins/python/spyro-plus.py:2216 plug-ins/python/spyro-plus.py:2217
 msgid ""
 "The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2222 plug-ins/python/spyro-plus.py:2223
+#: plug-ins/python/spyro-plus.py:2221 plug-ins/python/spyro-plus.py:2222
 msgid "Shape of fixed gear"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2227 plug-ins/python/spyro-plus.py:2228
+#: plug-ins/python/spyro-plus.py:2226 plug-ins/python/spyro-plus.py:2227
 msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2232 plug-ins/python/spyro-plus.py:2233
+#: plug-ins/python/spyro-plus.py:2231 plug-ins/python/spyro-plus.py:2232
 msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2237 plug-ins/python/spyro-plus.py:2238
+#: plug-ins/python/spyro-plus.py:2236 plug-ins/python/spyro-plus.py:2237
 msgid "Number of teeth for fixed gear"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2242 plug-ins/python/spyro-plus.py:2243
+#: plug-ins/python/spyro-plus.py:2241 plug-ins/python/spyro-plus.py:2242
 msgid "Number of teeth for moving gear"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2247 plug-ins/python/spyro-plus.py:2249
+#: plug-ins/python/spyro-plus.py:2246 plug-ins/python/spyro-plus.py:2248
 msgid ""
 "Location of hole in moving gear in percent, where 100 means that the hole is "
 "at the edge of the gear, and 0 means the hole is at the center"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2254 plug-ins/python/spyro-plus.py:2255
+#: plug-ins/python/spyro-plus.py:2253 plug-ins/python/spyro-plus.py:2254
 msgid "Margin from selection, in pixels"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2259 plug-ins/python/spyro-plus.py:2260
+#: plug-ins/python/spyro-plus.py:2258 plug-ins/python/spyro-plus.py:2259
 msgid "Make height and width equal"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2264 plug-ins/python/spyro-plus.py:2265
+#: plug-ins/python/spyro-plus.py:2263 plug-ins/python/spyro-plus.py:2264
 msgid "Pattern rotation, in degrees"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2269 plug-ins/python/spyro-plus.py:2270
+#: plug-ins/python/spyro-plus.py:2268 plug-ins/python/spyro-plus.py:2269
 msgid "Shape rotation of fixed gear, in degrees"
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2274 plug-ins/python/spyro-plus.py:2275
+#: plug-ins/python/spyro-plus.py:2273 plug-ins/python/spyro-plus.py:2274
 msgid "Tool to use for drawing the pattern."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2279 plug-ins/python/spyro-plus.py:2281
+#: plug-ins/python/spyro-plus.py:2278 plug-ins/python/spyro-plus.py:2280
 msgid ""
 "Whether to apply a long gradient to match the length of the pattern. Only "
 "applicable to some of the tools."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2302
+#: plug-ins/python/spyro-plus.py:2301
 msgid ""
 "Uses current tool settings to draw Spyrograph patterns. The size and "
 "location of the pattern is based on the current selection."
 msgstr ""
 
-#: plug-ins/python/spyro-plus.py:2305
+#: plug-ins/python/spyro-plus.py:2304
 msgid "Spyrogimp..."
 msgstr ""
