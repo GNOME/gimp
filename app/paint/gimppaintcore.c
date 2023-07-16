@@ -912,6 +912,12 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
   if (new_width != drawable_width   || *new_off_x ||
       new_height != drawable_height || *new_off_y)
     {
+      /* ensure that every expansion is pushed to undo stack */
+      if (core->x2 == core->x1)
+        core->x2++;
+      if (core->y2 == core->y1)
+        core->y2++;
+
       /* resize the layer even if editing the layer mask */
       if (GIMP_IS_LAYER_MASK (drawable))
         layer = (GIMP_LAYER_MASK (drawable))->layer;
