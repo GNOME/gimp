@@ -793,7 +793,8 @@ gimp_paint_core_get_show_all (GimpPaintCore *core)
   return core->show_all;
 }
 
-void
+
+gboolean
 gimp_paint_core_expand_drawable (GimpPaintCore    *core,
                                  GimpDrawable     *drawable,
                                  GimpPaintOptions *options,
@@ -837,13 +838,13 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
                   y2 < -drawable_offset_y || y1 > image_height - drawable_offset_y;
 
   if (gimp_item_get_lock_position (GIMP_ITEM (drawable)))
-    return;
+    return FALSE;
 
   if (!gimp_paint_core_get_show_all (core) && outside_image)
-    return;
+    return FALSE;
 
   if (!options->expand_use)
-    return;
+    return FALSE;
 
   if (x1 < 0)
     {
@@ -983,7 +984,10 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
         GEGL_RECTANGLE (*new_off_x, *new_off_y, 0, 0));
       g_hash_table_insert (core->undo_buffers, drawable, new_buffer);
       g_object_unref (undo_buffer);
+
+      return TRUE;
     }
+  return FALSE;
 }
 
 void

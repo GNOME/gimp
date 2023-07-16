@@ -155,7 +155,7 @@ void      gimp_paint_core_set_show_all              (GimpPaintCore    *core,
                                                      gboolean          show_all);
 gboolean  gimp_paint_core_get_show_all              (GimpPaintCore    *core);
 
-void      gimp_paint_core_expand_drawable           (GimpPaintCore    *paint_core,
+gboolean  gimp_paint_core_expand_drawable           (GimpPaintCore    *paint_core,
                                                      GimpDrawable     *drawable,
                                                      GimpPaintOptions *paint_options,
                                                      gint              x1,
