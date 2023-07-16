@@ -1009,7 +1009,7 @@ if directx_sdk_path != '' and platform_windows
 endif
 conf.set('HAVE_DX_DINPUT', directx.found())
 
-cfitsio_dep = dependency('cfitsio', required: false)
+cfitsio_dep = dependency('cfitsio', required: get_option('fits'))
 if cfitsio_dep.found()
   MIMEtypes += 'image/fits'
 endif
@@ -1366,7 +1366,7 @@ conf.set('HAVE_GETTEXT', true)
 conf.set10('ENABLE_MP', get_option('enable-multiproc'))
 
 # Enable support for OpenMP
-openmp = dependency('openmp', required : false)
+openmp = dependency('openmp', required : get_option('openmp'))
 if openmp.found()
   have_openmp = true
 else
