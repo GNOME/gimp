@@ -9,7 +9,7 @@
       <item><attribute name="action">error-console.error-console-save-selection</attribute></item>
     </section>
     <submenu>
-      <attribute name="label">_Highlight</attribute>
+      <attribute name="label" translatable="yes" context="error-console-action">_Highlight</attribute>
       <item><attribute name="action">error-console.error-console-highlight-error</attribute></item>
       <item><attribute name="action">error-console.error-console-highlight-warning</attribute></item>
       <item><attribute name="action">error-console.error-console-highlight-info</attribute></item>

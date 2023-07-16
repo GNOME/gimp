@@ -9,7 +9,7 @@
       <item><attribute name="action">app.vectors-edit</attribute></item>
       <item><attribute name="action">app.vectors-edit-attributes</attribute></item>
       <submenu>
-        <attribute name="label">Color Tags</attribute>
+        <attribute name="label" translatable="yes">Color Tags</attribute>
         <item><attribute name="action">app.vectors-color-tag-none</attribute></item>
         <item><attribute name="action">app.vectors-color-tag-blue</attribute></item>
         <item><attribute name="action">app.vectors-color-tag-green</attribute></item>

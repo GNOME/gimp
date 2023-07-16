@@ -8,7 +8,7 @@
 
       <item><attribute name="action">app.channels-edit-attributes</attribute></item>
       <submenu>
-        <attribute name="label">Color Tags</attribute>
+        <attribute name="label" translatable="yes">Color Tags</attribute>
         <item><attribute name="action">app.channels-color-tag-none</attribute></item>
         <item><attribute name="action">app.channels-color-tag-blue</attribute></item>
         <item><attribute name="action">app.channels-color-tag-green</attribute></item>

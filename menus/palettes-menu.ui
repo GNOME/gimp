@@ -20,5 +20,8 @@
         <item><attribute name="action">palettes.palettes-refresh</attribute></item>
       </section>
     </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes" context="palettes-action">Export as</attribute>
+    </submenu>
   </menu>
 </interface>

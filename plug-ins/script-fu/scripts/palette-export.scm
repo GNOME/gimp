@@ -261,7 +261,7 @@
         )
     )
   )
-(register-palette-exporter "css" "_CSS stylesheet..." "css"
+(register-palette-exporter "css" _"_CSS stylesheet..." "css"
                            (string-append _"Export the active palette as a CSS stylesheet with the color entry name as their class name, and the color itself as the color attribute")
                            "Barak Itkin <lightningismyname@gmail.com>"
 			   "Barak Itkin" "May 15th, 2009")
@@ -287,7 +287,7 @@
         )
     )
   )
-(register-palette-exporter "php" "P_HP dictionary..." "php"
+(register-palette-exporter "php" _"P_HP dictionary..." "php"
                            _"Export the active palette as a PHP dictionary (name => color)"
                            "Barak Itkin <lightningismyname@gmail.com>"
 			   "Barak Itkin" "May 15th, 2009")
@@ -319,7 +319,7 @@
         )
     )
   )
-(register-palette-exporter "python" "_Python dictionary" "py"
+(register-palette-exporter "python" _"_Python dictionary..." "py"
                            _"Export the active palette as a Python dictionary (name: color)"
                            "Barak Itkin <lightningismyname@gmail.com>"
 			   "Barak Itkin" "May 15th, 2009")
@@ -348,7 +348,7 @@
         )
     )
   )
-(register-palette-exporter "text" "_Text file..." "txt"
+(register-palette-exporter "text" _"_Text file..." "txt"
                            _"Write all the colors in a palette to a text file, one hexadecimal value per line (no names)"
                            "Barak Itkin <lightningismyname@gmail.com>"
 			   "Barak Itkin" "May 15th, 2009")
@@ -395,7 +395,7 @@
     )
   )
 
-(register-palette-exporter "java" "J_ava map..." "java"
+(register-palette-exporter "java" _"J_ava map..." "java"
                            _"Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
                            "Barak Itkin <lightningismyname@gmail.com>"
 			   "Barak Itkin" "May 15th, 2009")

@@ -9,19 +9,19 @@
       <item><attribute name="action">app.layers-edit-text</attribute></item>
       <item><attribute name="action">app.layers-edit-attributes</attribute></item>
       <submenu>
-        <attribute name="label">Blend Space</attribute>
+        <attribute name="label" translatable="yes" context="layers-action">Blend Space</attribute>
         <item><attribute name="action">app.layers-blend-space-auto</attribute></item>
         <item><attribute name="action">app.layers-blend-space-rgb-linear</attribute></item>
         <item><attribute name="action">app.layers-blend-space-rgb-perceptual</attribute></item>
       </submenu>
       <submenu>
-        <attribute name="label">Composite Space</attribute>
+        <attribute name="label" translatable="yes" context="layers-action">Composite Space</attribute>
         <item><attribute name="action">app.layers-composite-space-auto</attribute></item>
         <item><attribute name="action">app.layers-composite-space-rgb-linear</attribute></item>
         <item><attribute name="action">app.layers-composite-space-rgb-perceptual</attribute></item>
       </submenu>
       <submenu>
-        <attribute name="label">Composite Mode</attribute>
+        <attribute name="label" translatable="yes" context="layers-action">Composite Mode</attribute>
         <item><attribute name="action">app.layers-composite-mode-auto</attribute></item>
         <item><attribute name="action">app.layers-composite-mode-union</attribute></item>
         <item><attribute name="action">app.layers-composite-mode-clip-to-backdrop</attribute></item>
@@ -29,7 +29,7 @@
         <item><attribute name="action">app.layers-composite-mode-intersection</attribute></item>
       </submenu>
       <submenu>
-        <attribute name="label">Color Tags</attribute>
+        <attribute name="label" translatable="yes">Color Tags</attribute>
         <item><attribute name="action">app.layers-color-tag-none</attribute></item>
         <item><attribute name="action">app.layers-color-tag-blue</attribute></item>
         <item><attribute name="action">app.layers-color-tag-green</attribute></item>

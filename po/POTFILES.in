@@ -662,6 +662,7 @@ menus/dashboard-menu.ui
 menus/dockable-menu.ui.in.in
 menus/dynamics-editor-menu.ui
 menus/dynamics-menu.ui
+menus/error-console-menu.ui
 menus/gradient-editor-menu.ui
 menus/gradients-menu.ui
 menus/image-menu.ui.in.in
