@@ -1230,9 +1230,10 @@ gimp_menu_model_ui_removed (GimpUIManager *manager,
                             const gchar   *action_name,
                             GimpMenuModel *model)
 {
-  gboolean removed = FALSE;
+  gchar    *section_name = NULL;
+  gboolean  removed      = FALSE;
 
-  if (g_strcmp0 (path, model->priv->path) == 0)
+  if (gimp_utils_are_menu_path_identical (path, model->priv->path, NULL, NULL, &section_name))
     {
       GApplication *app         = model->priv->manager->gimp->app;
       GMenuItem    *item        = NULL;
@@ -1301,6 +1302,7 @@ gimp_menu_model_ui_removed (GimpUIManager *manager,
 
       g_clear_object (&subsection);
     }
+  g_free (section_name);
 
   return removed;
 }
