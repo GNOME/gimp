@@ -2916,7 +2916,8 @@ dlg_make_page_settings (GFlareDialog        *dlg,
   gtk_widget_show (center);
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dlg->shell),
-                                   "center-title", _("Center"));
+                                   "center-title", _("Center"),
+                                   FALSE, FALSE);
   frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dlg->shell),
                                             "center-frame", "center-title",
                                             FALSE, NULL);
@@ -2939,7 +2940,8 @@ dlg_make_page_settings (GFlareDialog        *dlg,
                                   "vector-angle", "vector-length",
                                   NULL);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dlg->shell),
-                                   "parameters-title", _("Parameters"));
+                                   "parameters-title", _("Parameters"),
+                                   FALSE, FALSE);
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dlg->shell),
                                     "parameters-frame", "parameters-title",
                                     FALSE, "parameters-box");

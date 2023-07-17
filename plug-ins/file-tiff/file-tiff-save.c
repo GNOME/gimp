@@ -1311,7 +1311,8 @@ save_dialog (GimpImage     *image,
                                 "Retry as BigTIFF or with a different compression algorithm, "
                                 "or cancel."));
       label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "big-tif-warning", text);
+                                               "big-tif-warning", text,
+                                               FALSE, FALSE);
       g_free (text);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_label_set_line_wrap_mode (GTK_LABEL (label), PANGO_WRAP_WORD);
@@ -1359,7 +1360,8 @@ save_dialog (GimpImage     *image,
 
   /* Profile label. */
   profile_label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                                   "profile-label", _("No soft-proofing profile"));
+                                                   "profile-label", _("No soft-proofing profile"),
+                                                   FALSE, FALSE);
   gtk_label_set_xalign (GTK_LABEL (profile_label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (profile_label), PANGO_ELLIPSIZE_END);
   gimp_label_set_attributes (GTK_LABEL (profile_label),

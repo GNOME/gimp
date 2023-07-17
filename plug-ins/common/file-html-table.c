@@ -613,7 +613,8 @@ save_dialog (GimpImage     *image,
                                        "warning-label",
                                        _("You are about to create a huge\n"
                                         "HTML file which will most likely\n"
-                                        "crash your browser."));
+                                        "crash your browser."),
+                                       FALSE, FALSE);
       hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                              "warning-hbox", "warning-label",
                                              NULL);
@@ -628,7 +629,8 @@ save_dialog (GimpImage     *image,
       gtk_widget_set_margin_end (eek, 24);
 
       gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "warning-frame-label", _("Warning"));
+                                       "warning-frame-label", _("Warning"),
+                                       FALSE, FALSE);
       frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                                 "warning-frame",
                                                 "warning-frame-label",
@@ -641,7 +643,8 @@ save_dialog (GimpImage     *image,
 
   /* HTML Page Options */
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "page-label", _("HTML Page Options"));
+                                   "page-label", _("HTML Page Options"),
+                                   FALSE, FALSE);
   frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                             "page-frame",
                                             "page-label",
@@ -651,7 +654,8 @@ save_dialog (GimpImage     *image,
   /* HTML Table Creation Options */
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                    "creation-label",
-                                   _("Table Creation Options"));
+                                   _("Table Creation Options"),
+                                   FALSE, FALSE);
 
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                   "creation-vbox", "span-tags",
@@ -670,7 +674,8 @@ save_dialog (GimpImage     *image,
   gtk_widget_set_margin_bottom (frame, 8);
   /* HTML Table Options */
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "table-label", _("Table Options"));
+                                   "table-label", _("Table Options"),
+                                   FALSE, FALSE);
 
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                   "table-vbox", "border", "cell-width",

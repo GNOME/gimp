@@ -3726,7 +3726,8 @@ load_dialog (GFile         *file,
                     config);
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "rendering-title", _("Rendering"));
+                                   "rendering-title", _("Rendering"),
+                                   FALSE, FALSE);
 
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "rendering-frame", "rendering-title",
@@ -3887,7 +3888,8 @@ save_dialog (GimpProcedure *procedure,
                            "#keep_aspect_ratio"),
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "image-title", _("Image Size"));
+                                   "image-title", _("Image Size"),
+                                   FALSE, FALSE);
 
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog), "image-box",
                                   "width", "height", "x-offset", "y-offset",
@@ -3922,7 +3924,8 @@ save_dialog (GimpProcedure *procedure,
 
   /* Output */
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "output-title", _("Output"));
+                                   "output-title", _("Output"),
+                                   FALSE, FALSE);
 
   gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
                                        "preview",

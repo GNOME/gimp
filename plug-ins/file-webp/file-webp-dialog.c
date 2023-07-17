@@ -104,7 +104,8 @@ save_dialog (GimpImage     *image,
 
   /* Create frame for additional features like Sharp YUV */
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "advanced-title", _("Advanced Options"));
+                                   "advanced-title", _("Advanced Options"),
+                                   FALSE, FALSE);
 
   gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
                                        "use-sharp-yuv",
@@ -124,7 +125,8 @@ save_dialog (GimpImage     *image,
 
       /* Hint for some special values of keyframe-distance. */
       label_kf = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                                  "keyframe-hint", NULL);
+                                                  "keyframe-hint", NULL,
+                                                  FALSE, FALSE);
       gtk_label_set_xalign (GTK_LABEL (label_kf), 1.0);
       gtk_label_set_ellipsize (GTK_LABEL (label_kf), PANGO_ELLIPSIZE_END);
       gimp_label_set_attributes (GTK_LABEL (label_kf),

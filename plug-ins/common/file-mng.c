@@ -1593,7 +1593,8 @@ mng_save_dialog (GimpImage     *image,
                                   "bkgd", "gama", "phys", "time",
                                   NULL);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "options-label", _("MNG Options"));
+                                   "options-label", _("MNG Options"),
+                                   FALSE, FALSE);
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "options-frame", "options-label",
                                     FALSE, "options-vbox");
@@ -1639,7 +1640,7 @@ mng_save_dialog (GimpImage     *image,
   /* MNG Animation Options */
   label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                            "milliseconds-label",
-                                           _("milliseconds"));
+                                           _("milliseconds"), FALSE, FALSE);
   gtk_widget_set_margin_start (label, 6);
   hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                          "animation-box", "default-delay",
@@ -1652,7 +1653,7 @@ mng_save_dialog (GimpImage     *image,
                                   "animation-box", NULL);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                    "mng-animation-label",
-                                   _("Animated MNG Options"));
+                                   _("Animated MNG Options"), FALSE, FALSE);
   frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                             "mng-animation-frame",
                                             "mng-animation-label", FALSE,

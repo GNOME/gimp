@@ -394,7 +394,8 @@ borderaverage_dialog (GimpProcedure *procedure,
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                    "border-size-label",
-                                   _("Border Size"));
+                                   _("Border Size"),
+                                   FALSE, FALSE);
 
   /*  Get the image resolution  */
   gimp_image_get_resolution (image, &xres, &yres);
@@ -420,7 +421,8 @@ borderaverage_dialog (GimpProcedure *procedure,
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                    "bucket-size-label",
-                                   _("Number of Colors"));
+                                   _("Number of Colors"),
+                                   FALSE, FALSE);
 
   store = gimp_int_store_new ("1",   0, "2",   1, "4",   2, "8",   3,
                               "16",  4, "32",  5, "64",  6, "128", 7,

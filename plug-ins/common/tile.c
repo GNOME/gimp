@@ -477,7 +477,8 @@ tile_dialog (GimpProcedure       *procedure,
                                    GIMP_PROCEDURE_CONFIG (config),
                                    _("Tile"));
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dlg),
-                                   "new-size-label", _("Tile to New Size"));
+                                   "new-size-label", _("Tile to New Size"),
+                                   FALSE, FALSE);
   /* TODO: we should have a new GimpProcedureDialog widget which would tie 2
    * arguments for dimensions (or coordinates), and possibly more aux args for
    * the constrain boolean choice, the unit, etc.

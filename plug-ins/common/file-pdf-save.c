@@ -1007,8 +1007,8 @@ gui_single (GimpProcedure       *procedure,
        * the warning more obvious.
        */
       widget = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (window),
-                                       "missing-fonts-label",
-                                       text);
+                                                "missing-fonts-label",
+                                                text, FALSE, FALSE);
       gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
       gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (window),
                                         "convert-text-layers-frame",

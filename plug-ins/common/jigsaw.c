@@ -2492,7 +2492,8 @@ jigsaw_dialog (GimpProcedure *procedure,
   gtk_widget_set_margin_bottom (scale, 12);
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "num-tiles-label", _("Number of Tiles"));
+                                   "num-tiles-label", _("Number of Tiles"),
+                                   FALSE, FALSE);
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                   "num-tiles-vbox", "x", "y", NULL);
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
@@ -2509,7 +2510,8 @@ jigsaw_dialog (GimpProcedure *procedure,
   gtk_widget_set_margin_bottom (scale, 12);
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "bevel-label", _("Bevel Edges"));
+                                   "bevel-label", _("Bevel Edges"),
+                                   FALSE, FALSE);
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                   "bevel-vbox", "blend-lines", "blend-amount",
                                   NULL);

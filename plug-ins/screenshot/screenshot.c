@@ -533,7 +533,7 @@ shoot_dialog (GimpProcedure        *procedure,
 
       gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                        "contents-frame-title",
-                                       _("Contents"));
+                                       _("Contents"), FALSE, FALSE);
       gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                         "contents-frame", "contents-frame-title",
                                         FALSE, "contents-box");
@@ -592,7 +592,7 @@ shoot_dialog (GimpProcedure        *procedure,
 
       gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                        "delay-frame-title",
-                                       _("Delay"));
+                                       _("Delay"), FALSE, FALSE);
       gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                         "delay-frame", "delay-frame-title",
                                         FALSE, "delay-box");

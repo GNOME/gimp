@@ -1263,7 +1263,8 @@ save_dialog (GimpImage     *image,
 
       widget = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                                 "milliseconds",
-                                                _("milliseconds"));
+                                                _("milliseconds"),
+                                                FALSE, FALSE);
       gtk_label_set_xalign (GTK_LABEL (widget), 0.1);
       gtk_grid_attach (GTK_GRID (grid), widget, 1, 1, 1, 1);
       gtk_widget_set_visible (widget, TRUE);
@@ -1301,9 +1302,11 @@ save_dialog (GimpImage     *image,
 
       /* Used to create vbox to store hintbox in */
       gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "spacer", " ");
+                                       "spacer", " ",
+                                       FALSE, FALSE);
       gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "no-ani-title", _("Animated GIF"));
+                                       "no-ani-title", _("Animated GIF"),
+                                       FALSE, FALSE);
 
       vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                              "no-animation-vbox", "spacer",

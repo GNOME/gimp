@@ -876,7 +876,8 @@ save_dialog (GimpProcedure       *procedure,
 
   /* File size label. */
   preview_size = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                                  "preview-size", _("File size: unknown"));
+                                                  "preview-size", _("File size: unknown"),
+                                                  FALSE, FALSE);
   gtk_label_set_xalign (GTK_LABEL (preview_size), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (preview_size), PANGO_ELLIPSIZE_END);
   gimp_label_set_attributes (GTK_LABEL (preview_size),
@@ -888,7 +889,8 @@ save_dialog (GimpProcedure       *procedure,
 
   /* Profile label. */
   profile_label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                                   "profile-label", _("No soft-proofing profile"));
+                                                   "profile-label", _("No soft-proofing profile"),
+                                                   FALSE, FALSE);
   gtk_label_set_xalign (GTK_LABEL (profile_label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (profile_label), PANGO_ELLIPSIZE_END);
   gimp_label_set_attributes (GTK_LABEL (profile_label),
@@ -965,7 +967,8 @@ save_dialog (GimpProcedure       *procedure,
                                        "dct", GIMP_INT_STORE (store));
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "advanced-title", _("Advanced Options"));
+                                   "advanced-title", _("Advanced Options"),
+                                   FALSE, FALSE);
   widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                              "smoothing", GIMP_TYPE_SPIN_SCALE);
   gimp_help_set_help_data (widget, NULL, "file-jpeg-save-smoothing");

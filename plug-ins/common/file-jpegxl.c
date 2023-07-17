@@ -2035,7 +2035,8 @@ save_dialog (GimpImage     *image,
 
   /* Profile label */
   profile_label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                                   "profile-label", _("CMYK profile required for export"));
+                                                   "profile-label", _("CMYK profile required for export"),
+                                                   FALSE, FALSE);
   gtk_label_set_xalign (GTK_LABEL (profile_label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (profile_label), PANGO_ELLIPSIZE_END);
   gimp_label_set_attributes (GTK_LABEL (profile_label),

@@ -414,7 +414,8 @@ sparkle_dialog (GimpProcedure *procedure,
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                    "sparkle-bool-label",
-                                   _("Additional Options"));
+                                   _("Additional Options"),
+                                   FALSE, FALSE);
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "sparkle-bool-frame", "sparkle-bool-label",
                                     FALSE, "sparkle-bool-vbox");

@@ -1006,7 +1006,8 @@ save_dialog (GimpProcedure *procedure,
 
   /* Compatibility Options */
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "color-space-title", _("Compatibility"));
+                                   "color-space-title", _("Compatibility"),
+                                   FALSE, FALSE);
   toggle = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                              "write-color-space",
                                              GTK_TYPE_CHECK_BUTTON);

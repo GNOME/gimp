@@ -106,7 +106,9 @@ GtkWidget * gimp_procedure_dialog_get_size_entry    (GimpProcedureDialog *dialog
                                                      gdouble              resolution);
 GtkWidget * gimp_procedure_dialog_get_label         (GimpProcedureDialog *dialog,
                                                      const gchar         *label_id,
-                                                     const gchar         *text);
+                                                     const gchar         *text,
+                                                     gboolean             is_markup,
+                                                     gboolean             with_mnemonic);
 GtkWidget * gimp_procedure_dialog_get_file_chooser  (GimpProcedureDialog *dialog,
                                                      const gchar         *property,
                                                      GtkFileChooserAction action);

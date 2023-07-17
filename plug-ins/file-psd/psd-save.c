@@ -2448,7 +2448,8 @@ save_dialog (GimpImage     *image,
 
   /* CMYK profile label */
   profile_label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                                   "profile-label", _("No soft-proofing profile"));
+                                                   "profile-label", _("No soft-proofing profile"),
+                                                   FALSE, FALSE);
   gtk_label_set_xalign (GTK_LABEL (profile_label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (profile_label), PANGO_ELLIPSIZE_END);
   gimp_label_set_attributes (GTK_LABEL (profile_label),
@@ -2492,7 +2493,8 @@ save_dialog (GimpImage     *image,
                                                              "duotone-notice",
                                                              _("Duotone color space information "
                                                              "from the original\nimported image "
-                                                             "will be used."));
+                                                             "will be used."),
+                                                             FALSE, FALSE);
            gtk_label_set_xalign (GTK_LABEL (duotone_notice), 0.0);
            gtk_label_set_ellipsize (GTK_LABEL (duotone_notice), PANGO_ELLIPSIZE_END);
            gimp_label_set_attributes (GTK_LABEL (duotone_notice),
@@ -2560,7 +2562,8 @@ save_dialog (GimpImage     *image,
                                                    "path-warning",
                                                    _("PSD files can store up to "
                                                      "998 paths. \nThe rest "
-                                                     "will be discarded."));
+                                                     "will be discarded."),
+                                                   FALSE, FALSE);
            gtk_label_set_xalign (GTK_LABEL (label), 0.0);
            gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
            gimp_label_set_attributes (GTK_LABEL (label),
@@ -2666,7 +2669,8 @@ save_dialog (GimpImage     *image,
                             "switching to those layer modes."));
 
   label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                           "compat-notice", "Compatibility Notice");
+                                           "compat-notice", "Compatibility Notice",
+                                           FALSE, FALSE);
   gtk_label_set_markup (GTK_LABEL (label), text);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_max_width_chars (GTK_LABEL (label), 50);

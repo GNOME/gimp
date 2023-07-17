@@ -1351,9 +1351,11 @@ gimp_procedure_dialog_get_size_entry (GimpProcedureDialog       *dialog,
 
 /**
  * gimp_procedure_dialog_get_label:
- * @dialog:   the #GimpProcedureDialog.
- * @label_id: the label for the #GtkLabel.
- * @text:     the text for the label.
+ * @dialog:    the #GimpProcedureDialog.
+ * @label_id:  the label for the #GtkLabel.
+ * @text:      the text for the label.
+ * @is_markup: whether @text is formatted with Pango markup.
+ * @with_mnemonic: whether @text contains a mnemonic character.
  *
  * Creates a new #GtkLabel with @text. It can be useful for packing
  * textual information in between property settings.
@@ -1371,7 +1373,9 @@ gimp_procedure_dialog_get_size_entry (GimpProcedureDialog       *dialog,
 GtkWidget *
 gimp_procedure_dialog_get_label (GimpProcedureDialog *dialog,
                                  const gchar         *label_id,
-                                 const gchar         *text)
+                                 const gchar         *text,
+                                 gboolean             is_markup,
+                                 gboolean             with_mnemonic)
 {
   GtkWidget *label;
 
@@ -1392,7 +1396,16 @@ gimp_procedure_dialog_get_label (GimpProcedureDialog *dialog,
       return label;
     }
 
-  label = gtk_label_new (text);
+  label = gtk_label_new (NULL);
+  if (with_mnemonic && is_markup)
+    gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), text);
+  else if (with_mnemonic)
+    gtk_label_set_text_with_mnemonic (GTK_LABEL (label), text);
+  else if (is_markup)
+    gtk_label_set_markup (GTK_LABEL (label), text);
+  else
+    gtk_label_set_text (GTK_LABEL (label), text);
+
   g_hash_table_insert (dialog->priv->widgets, g_strdup (label_id), label);
   if (g_object_is_floating (label))
     g_object_ref_sink (label);

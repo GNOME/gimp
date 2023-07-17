@@ -275,7 +275,7 @@ blinds_dialog (GimpProcedure *procedure,
                                        "orientation", GIMP_INT_STORE (store));
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                   "bg_label", _("Background"));
+                                   "bg_label", _("Background"), FALSE, FALSE);
 
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "bg-frame", "bg_label", FALSE,
