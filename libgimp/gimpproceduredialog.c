@@ -498,11 +498,6 @@ gimp_procedure_dialog_real_fill_list (GimpProcedureDialog *dialog,
       widget = gimp_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
       if (widget)
         {
-          /* Reference the widget because the hash table will
-           * unreference it anyway when getting destroyed so we don't
-           * want to give the only reference to the parent widget.
-           */
-          g_object_ref (widget);
           gtk_box_pack_start (GTK_BOX (content_area), widget, TRUE, TRUE, 0);
           gtk_widget_show (widget);
         }
@@ -1839,7 +1834,6 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
           return frame;
         }
 
-      g_object_ref (contents);
       gtk_container_add (GTK_CONTAINER (frame), contents);
       gtk_widget_show (contents);
     }
@@ -1854,7 +1848,6 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
           return frame;
         }
 
-      g_object_ref (title);
       gtk_frame_set_label_widget (GTK_FRAME (frame), title);
       gtk_widget_show (title);
 
@@ -1944,7 +1937,6 @@ gimp_procedure_dialog_fill_expander (GimpProcedureDialog *dialog,
           return expander;
         }
 
-      g_object_ref (contents);
       gtk_container_add (GTK_CONTAINER (expander), contents);
       gtk_widget_show (contents);
     }
@@ -1959,7 +1951,6 @@ gimp_procedure_dialog_fill_expander (GimpProcedureDialog *dialog,
           return expander;
         }
 
-      g_object_ref (title);
       gtk_expander_set_label_widget (GTK_EXPANDER (expander), title);
       gtk_expander_set_resize_toplevel (GTK_EXPANDER (expander), TRUE);
       gtk_widget_show (title);
@@ -2499,11 +2490,6 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
       widget = gimp_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
       if (widget)
         {
-          /* Reference the widget because the hash table will
-           * unreference it anyway when getting destroyed so we don't
-           * want to give the only reference to the parent widget.
-           */
-          g_object_ref (widget);
           gtk_container_add (container, widget);
           if (GIMP_IS_LABELED (widget))
             {
