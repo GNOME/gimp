@@ -188,6 +188,14 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
         status = GIMP_VALUES_GET_ENUM (return_values, 0);
 
       gimp_procedure_config_end_run (config, status);
+
+      /* This is debug printing to help plug-in developers figure out best
+       * practices.
+       */
+      if (G_OBJECT (config)->ref_count > 1)
+        g_printerr ("%s: ERROR: the GimpProcedureConfig object was refed "
+                    "by plug-in, it MUST NOT do that!\n", G_STRFUNC);
+
       g_object_unref (config);
     }
   else
