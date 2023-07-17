@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8 scriptfu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-15 14:23+0000\n"
-"PO-Revision-Date: 2023-07-15 18:48+0200\n"
+"POT-Creation-Date: 2023-07-17 12:09+0000\n"
+"PO-Revision-Date: 2023-07-17 16:47+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1147,6 +1147,10 @@ msgstr ""
 "Vsi znaki v imenu so presledki ali znaki, ki ne smejo nastopiti v imenih "
 "datotek."
 
+#: plug-ins/script-fu/scripts/palette-export.scm:264
+msgid "_CSS stylesheet..."
+msgstr "Slogovna predloga _CSS …"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
@@ -1155,13 +1159,25 @@ msgstr ""
 "Izvozi aktivno paleto kot slogovno predlogo CSS z vnosom imena barve kot ime "
 "razreda ter s samo barvo kot barvnim atributom"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:290
+msgid "P_HP dictionary..."
+msgstr "Slovar P_HP ..."
+
 #: plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Izvozi aktivno paleto kot slovar PHP (ime => barva)"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:322
+msgid "_Python dictionary..."
+msgstr "Slovar _Python ..."
+
 #: plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Izvozi aktivno paleto kot slovar Python (ime: barva)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:351
+msgid "_Text file..."
+msgstr "_Besedilna datoteka …"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
@@ -1170,6 +1186,10 @@ msgid ""
 msgstr ""
 "Zapiši vse barve palete v besedilno datoteko, z eno šestnajstiško vrednostjo "
 "na vrstico (brez imen)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:398
+msgid "J_ava map..."
+msgstr "Zemljevid J_ava ..."
 
 #: plug-ins/script-fu/scripts/palette-export.scm:399
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
