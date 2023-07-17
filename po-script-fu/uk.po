@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-25 18:45+0000\n"
-"PO-Revision-Date: 2023-06-26 21:57+0300\n"
+"POT-Creation-Date: 2023-07-17 12:09+0000\n"
+"PO-Revision-Date: 2023-07-18 00:07+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -96,7 +96,6 @@ msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Режим оцінки скриптфу дозволяє лише неінтерактивну роботу"
 
 #: plug-ins/script-fu/console/script-fu-console.c:125
-#| msgid "Script-Fu Console"
 msgid "Script Console"
 msgstr "Консоль скриптів"
 
@@ -850,45 +849,39 @@ msgstr "_Малювання простих об'єктів"
 msgid "Create and Use _Selections"
 msgstr "Зберегти та використати _вибране"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:190
+#: plug-ins/script-fu/scripts/gimp-online.scm:186
 msgid "_Main Web Site"
 msgstr "_Головна веб-сторінка"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:191
-#: plug-ins/script-fu/scripts/gimp-online.scm:204
-#: plug-ins/script-fu/scripts/gimp-online.scm:256
+#: plug-ins/script-fu/scripts/gimp-online.scm:187
+#: plug-ins/script-fu/scripts/gimp-online.scm:200
+#: plug-ins/script-fu/scripts/gimp-online.scm:239
 msgid "Bookmark to the GIMP web site"
 msgstr "Закладка на сайт GIMP"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/gimp-online.scm:199
 msgid "_Developer Web Site"
 msgstr "_Веб-сторінка розробників"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:216
-msgid "_Roadmap"
+#: plug-ins/script-fu/scripts/gimp-online.scm:212
+#| msgid "_Roadmap"
+msgid "_Roadmaps"
 msgstr "_Плани щодо розробки"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
+#: plug-ins/script-fu/scripts/gimp-online.scm:213
+#| msgid "Bookmark to the roadmap of GIMP"
+msgid "Bookmark to the roadmaps of GIMP"
 msgstr "Закладка для сторінки планів щодо розробки GIMP"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
-msgid "_Wiki"
-msgstr "_Вікі"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "Закладка для сторінки вікі GIMP"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/gimp-online.scm:225
 msgid "_Bug Reports and Feature Requests"
 msgstr "З_віти щодо вад та запити щодо нових можливостей"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:243
+#: plug-ins/script-fu/scripts/gimp-online.scm:226
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Закладка для сторінки системи стеження за вадами у GIMP"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/gimp-online.scm:238
 msgid "_User Manual Web Site"
 msgstr "_Сайт з посібником користувача"
 
@@ -1153,6 +1146,10 @@ msgstr ""
 "Усі символи у назві або пробіли, або символи, що не показуються у назві "
 "файлу."
 
+#: plug-ins/script-fu/scripts/palette-export.scm:264
+msgid "_CSS stylesheet..."
+msgstr "_Таблиця стилів CSS…"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
@@ -1161,13 +1158,25 @@ msgstr ""
 "Експортувати поточну палітру як таблицю стилів CSS з кольором назви запису "
 "як назву їхнього класу, і сам колір як колір атрибуту"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:290
+msgid "P_HP dictionary..."
+msgstr "С_ловник PHP…"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Експортувати поточну палітру як словник PHP (назва => колір)"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:322
+msgid "_Python dictionary..."
+msgstr "Сл_овник Python…"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Експортувати поточну палітру як словник Python (назва: колір)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:351
+msgid "_Text file..."
+msgstr "_Текстовий файл…"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
@@ -1177,9 +1186,15 @@ msgstr ""
 "Очистити усі кольори у палітрі до текстового файлу, одне шістнадцяткове "
 "значення на лінію (без назв)"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:398
+msgid "J_ava map..."
+msgstr "_Мапа Java…"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:399
-msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-msgstr "Експортувати поточну палітру як java.util.Hashtable<Рядок, Колір>"
+#| msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
+msgstr ""
+"Експортувати поточну палітру як java.util.Hashtable&lt;Рядок, Колір&gt;"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:58
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
@@ -1578,6 +1593,12 @@ msgstr "Зсув тіні вздовж X"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Зсув тіні вздовж Y"
+
+#~ msgid "_Wiki"
+#~ msgstr "_Вікі"
+
+#~ msgid "Bookmark to the wiki of GIMP"
+#~ msgstr "Закладка для сторінки вікі GIMP"
 
 #~ msgid "Interactive Scheme Development"
 #~ msgstr "Інтерактивне середовище розробки на Scheme"
