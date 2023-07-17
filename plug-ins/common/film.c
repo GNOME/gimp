@@ -87,8 +87,6 @@ static GimpImage      * create_new_image      (guint                 width,
                                                GimpImageType         gdtype,
                                                GimpLayer           **layer);
 
-static gchar          * compose_image_name    (GimpImage            *image);
-
 static GimpImage      * film                  (GimpProcedureConfig  *config);
 
 static gboolean         check_filmvals        (GimpProcedureConfig  *config);
@@ -108,7 +106,7 @@ static void             draw_number           (GimpLayer            *layer,
                                                gint                  height,
                                                GimpFont             *font);
 
-
+static gchar         * compose_image_name     (GimpImage            *image);
 static void            add_list_item_callback (GtkWidget            *widget,
                                                GtkTreeSelection     *sel);
 static void            del_list_item_callback (GtkWidget            *widget,
@@ -117,35 +115,18 @@ static void            del_list_item_callback (GtkWidget            *widget,
 static GtkTreeModel  * add_image_list         (gboolean              add_box_flag,
                                                GList                *images,
                                                GtkWidget            *hbox);
-
+static void            create_selection_tab   (GimpProcedureDialog  *dialog,
+                                               GimpImage            *image);
 static gboolean        film_dialog            (GimpImage            *image,
+                                               GimpProcedure        *procedure,
                                                GimpProcedureConfig  *config);
-static void            film_reset_callback    (GtkWidget            *widget,
-                                               gpointer              data);
-static void         film_font_select_callback (GimpFontSelectButton *button,
-                                               GimpResource         *resource,
-                                               gboolean              closing,
-                                               GimpFont            **font);
 
-static void    film_scale_entry_update_double (GimpLabelSpin        *entry,
-                                               gdouble              *value);
 
 G_DEFINE_TYPE (Film, film, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (FILM_TYPE)
 DEFINE_STD_SET_I18N
 
-
-static gdouble advanced_defaults[] =
-{
-  0.695,           /* Picture height */
-  0.040,           /* Picture spacing */
-  0.058,           /* Hole offset to edge of film */
-  0.052,           /* Hole width */
-  0.081,           /* Hole height */
-  0.081,           /* Hole distance */
-  0.052            /* Image number height */
-};
 
 static FilmInterface filmint =
 {
@@ -209,42 +190,42 @@ film_create_procedure (GimpPlugIn  *plug_in,
                                       "1997");
 
       GIMP_PROC_ARG_INT (procedure, "film-height",
-                         "Film height",
+                         "Film _height",
                          "Height of film (0: fit to images)",
                          0, GIMP_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_RGB (procedure, "film-color",
-                         "Film color",
+                         "_Film color",
                          "Color of the film",
                          TRUE, &default_film_color,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "number-start",
-                         "Number start",
+                         "Start _index",
                          "Start index for numbering",
                          0, G_MAXINT, 1,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_FONT (procedure, "number-font",
-                          "Number font",
+                          "Number _font",
                           "Font for drawing numbers",
                           G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_RGB (procedure, "number-color",
-                         "Number color",
+                         "_Number color",
                          "Color for numbers",
                          TRUE, &default_number_color,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "at-top",
-                             "At top",
+                             "At _top",
                              "Draw numbers at top",
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "at-bottom",
-                             "At bottom",
+                             "At _bottom",
                              "Draw numbers at bottom",
                              TRUE,
                              G_PARAM_READWRITE);
@@ -266,53 +247,53 @@ film_create_procedure (GimpPlugIn  *plug_in,
       /* The more specific settings. */
 
       GIMP_PROC_ARG_DOUBLE (procedure, "picture-height",
-                            "Picture height",
-                            "As fraction of the strip height",
+                            _("Image _height"),
+                            _("As fraction of the strip height"),
                             0.0, 1.0, 0.695,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "picture-spacing",
-                            "Picture spacing",
-                            "The spacing between 2 images, as fraction of the strip height",
+                            _("Image s_pacing"),
+                            _("The spacing between 2 images, as fraction of the strip height"),
                             0.0, 1.0, 0.040,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "hole-offset",
-                            "Hole offset",
-                            "Hole offset to edge of film, as fraction of the strip height",
+                            _("Hole offse_t"),
+                            _("The offset from the edge of film, as fraction of the strip height"),
                             0.0, 1.0, 0.058,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "hole-width",
-                            "Hole width",
-                            "Hole width, as fraction of the strip height",
+                            _("Hole _width"),
+                            _("The width of the holes, as fraction of the strip height"),
                             0.0, 1.0, 0.052,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "hole-height",
-                            "Hole height",
-                            "Hole height, as fraction of the strip height",
+                            _("Hole hei_ght"),
+                            _("The height of the holes, as fraction of the strip height"),
                             0.0, 1.0, 0.081,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "hole-spacing",
-                            "Hole distance",
-                            "Hole distance, as fraction of the strip height",
+                            _("Hole _distance"),
+                            _("The distance between holes, as fraction of the strip height"),
                             0.0, 1.0, 0.081,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "number-height",
-                            "Number height",
-                            "Image number height, as fraction of the strip height",
+                            _("_Number height"),
+                            _("The height of drawn numbers, as fraction of the strip height"),
                             0.0, 1.0, 0.052,
                             G_PARAM_READWRITE);
 
       /* Auxiliary argument mostly for the GUI. */
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "keep-height",
-                                 _("_Fit height to images"),
+                                 _("F_it height to images"),
                                  "Keep maximum image height",
-                                 FALSE,
+                                 TRUE,
                                  G_PARAM_READWRITE);
 
       /* Returned image. */
@@ -345,23 +326,30 @@ film_run (GimpProcedure        *procedure,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      if (! film_dialog (image, config))
-        return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
-                                                 NULL);
+        {
+          GParamSpec *spec;
+          gint        default_value;
+
+          /* In interactive mode, not only do we always use the current image's
+           * height as initial value, but also as factory default. Any other
+           * value makes no sense as a "default".
+           */
+          default_value = gimp_image_get_height (image);
+          spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "film-height");
+          G_PARAM_SPEC_INT (spec)->default_value = default_value;
+          g_object_set (config, "film-height", default_value, NULL);
+
+          if (! film_dialog (image, procedure, config))
+            return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
+                                                     NULL);
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       g_object_get (config, "film-height", &film_height, NULL);
-      if (film_height <= 0)
-        g_object_set (config,
-                      "film-height", 128, /* arbitrary */
-                      "keep-height", TRUE,
-                      NULL);
-      else
-        g_object_set (config,
-                      "keep-height", FALSE,
-                      NULL);
-
+      g_object_set (config,
+                    "keep-height", (film_height == 0),
+                    NULL);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -668,7 +656,7 @@ film (GimpProcedureConfig *config)
 static gboolean
 check_filmvals (GimpProcedureConfig *config)
 {
-  GimpFont        *font;
+  GimpFont        *font = NULL;
   GimpObjectArray *images;
   gint             num_images;
   gint             film_height;
@@ -711,6 +699,7 @@ check_filmvals (GimpProcedureConfig *config)
     }
 
   gimp_object_array_free (images);
+  g_clear_object (&font);
 
   return success;
 }
@@ -783,13 +772,12 @@ draw_number (GimpLayer *layer,
              gint       height,
              GimpFont  *font)
 {
-  gchar         buf[32];
-  gint          k, delta, max_delta;
-  GimpImage    *image;
-  GimpLayer    *text_layer;
-  gint          text_width, text_height, text_ascent, descent;
-
-  gchar        *fontname;
+  gchar      buf[32];
+  gint       k, delta, max_delta;
+  GimpImage *image;
+  GimpLayer *text_layer;
+  gint       text_width, text_height, text_ascent, descent;
+  gchar     *fontname;
 
   fontname = gimp_resource_get_name (GIMP_RESOURCE (font));
 
@@ -1047,199 +1035,63 @@ add_image_list (gboolean   add_box_flag,
 }
 
 static void
-create_selection_tab (GtkWidget            *notebook,
-                      GimpImage            *image,
-                      GimpProcedureConfig  *config,
-                      gint                 *film_height,
-                      gint                 *number_start,
-                      GimpFont            **number_font,
-                      GimpRGB              *number_color,
-                      GimpRGB              *film_color,
-                      gboolean             *keep_height,
-                      gboolean             *at_top,
-                      gboolean             *at_bottom)
+create_selection_tab (GimpProcedureDialog *dialog,
+                      GimpImage           *image)
 {
-  GimpColorConfig *color_config;
-  GtkSizeGroup    *group;
-  GtkWidget       *vbox;
-  GtkWidget       *vbox2;
-  GtkWidget       *hbox;
-  GtkWidget       *grid;
-  GtkWidget       *label;
-  GtkWidget       *frame;
-  GtkWidget       *toggle;
-  GtkWidget       *spinbutton;
-  GtkAdjustment   *adj;
-  GtkWidget       *button;
-  GtkWidget       *font_button;
-  GList           *image_list;
+  GtkWidget *paned;
+  GtkWidget *frame;
+  GtkWidget *hbox;
+  GList     *image_list;
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), hbox,
-                            gtk_label_new_with_mnemonic (_("Selection")));
-  gtk_widget_show (hbox);
+  gimp_procedure_dialog_fill_frame (dialog,
+                                    "fit-height-frame",
+                                    "keep-height", TRUE,
+                                    "film-height");
+  gimp_procedure_dialog_fill_box (dialog,
+                                  "filmstrip-box",
+                                  "fit-height-frame",
+                                  "film-color",
+                                  NULL);
+  gimp_procedure_dialog_get_label (dialog, "filmstrip-title", _("Filmstrip"), FALSE, FALSE);
+  gimp_procedure_dialog_fill_frame (dialog,
+                                    "filmstrip-frame",
+                                    "filmstrip-title", FALSE,
+                                    "filmstrip-box");
 
-  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
-  gtk_widget_set_hexpand (vbox2, FALSE);
-  gtk_widget_show (vbox2);
+  gimp_procedure_dialog_fill_box (dialog,
+                                  "numbering-box",
+                                  "number-start",
+                                  "number-font",
+                                  "number-color",
+                                  "at-top",
+                                  "at-bottom",
+                                  NULL);
+  gimp_procedure_dialog_get_label (dialog, "numbering-title", _("Numbering"), FALSE, FALSE);
+  gimp_procedure_dialog_fill_frame (dialog,
+                                    "numbering-frame",
+                                    "numbering-title", FALSE,
+                                    "numbering-box");
 
-  group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  gimp_procedure_dialog_fill_box (dialog,
+                                  "selection-box",
+                                  "filmstrip-frame",
+                                  "numbering-frame",
+                                  NULL);
 
-  /* Film height/color */
-  frame = gimp_frame_new (_("Filmstrip"));
-  gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  /* Keep maximum image height */
-  toggle = gtk_check_button_new_with_mnemonic (_("_Fit height to images"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    keep_height);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
-  /* Film height */
-  adj = gtk_adjustment_new (*film_height, 10,
-                            GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adj, 1, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                                    _("_Height:"), 0.0, 0.5,
-                                    spinbutton, 1);
-  gtk_size_group_add_widget (group, label);
-  g_object_unref (group);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    film_height);
-
-  g_object_bind_property (toggle,     "active",
-                          spinbutton, "sensitive",
-                          G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
-  g_object_bind_property (toggle,     "active",
-                          /* FIXME: eeeeeek */
-                          g_list_nth_data (gtk_container_get_children (GTK_CONTAINER (grid)), 1), "sensitive",
-                          G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *keep_height);
-
-  /* Film color */
-  button = gimp_color_button_new (_("Select Film Color"),
-                                  COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
-                                  film_color,
-                                  GIMP_COLOR_AREA_FLAT);
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                                    _("Co_lor:"), 0.0, 0.5,
-                                    button, 1);
-  gtk_size_group_add_widget (group, label);
-
-  g_signal_connect (button, "color-changed",
-                    G_CALLBACK (gimp_color_button_get_color),
-                    film_color);
-
-  color_config = gimp_get_color_configuration ();
-  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (button), color_config);
-
-  /* Film numbering: Startindex/Font/color */
-  frame = gimp_frame_new (_("Numbering"));
-  gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
-  /* Startindex */
-  adj = gtk_adjustment_new (*number_start, 0,
-                            GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adj, 1, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                                    _("Start _index:"), 0.0, 0.5,
-                                    spinbutton, 1);
-  gtk_size_group_add_widget (group, label);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    number_start);
-
-  /* Fontfamily for numbering */
-  /* Require *number_font is NULL or a valid GimpFont. */
-  font_button = gimp_font_select_button_new (NULL, GIMP_RESOURCE (*number_font));
-  g_signal_connect (font_button, "resource-set",
-                    G_CALLBACK (film_font_select_callback), number_font);
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                                    _("_Font:"), 0.0, 0.5,
-                                    font_button, 1);
-  gtk_size_group_add_widget (group, label);
-
-  /* Numbering color */
-  button = gimp_color_button_new (_("Select Number Color"),
-                                  COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
-                                  number_color,
-                                  GIMP_COLOR_AREA_FLAT);
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
-                                    _("Co_lor:"), 0.0, 0.5,
-                                    button, 1);
-  gtk_size_group_add_widget (group, label);
-
-  g_signal_connect (button, "color-changed",
-                    G_CALLBACK (gimp_color_button_get_color),
-                    number_color);
-
-  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (button), color_config);
-  g_object_unref (color_config);
-
-  /* Numbering positions */
-
-  toggle = gtk_check_button_new_with_mnemonic (_("At _top"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *at_top);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    at_top);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("At _bottom"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *at_bottom);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    at_bottom);
+  paned = gimp_procedure_dialog_fill_paned (dialog,
+                                            "selection-paned",
+                                            GTK_ORIENTATION_HORIZONTAL,
+                                            "selection-box", NULL);
 
   /*** The right frame keeps the image selection ***/
   frame = gimp_frame_new (_("Image Selection"));
   gtk_widget_set_hexpand (frame, TRUE);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
 
   /* Get a list of all image names */
   image_list = gimp_list_images ();
@@ -1251,223 +1103,55 @@ create_selection_tab (GtkWidget            *notebook,
   filmint.image_list_film = add_image_list (FALSE, image_list, hbox);
   g_list_free (image_list);
 
-  gtk_widget_show (hbox);
-}
-
-static void
-create_advanced_tab (GtkWidget           *notebook,
-                     GimpProcedureConfig *config,
-                     gdouble             *picture_height,
-                     gdouble             *picture_space,
-                     gdouble             *number_height,
-                     gdouble             *hole_offset,
-                     gdouble             *hole_width,
-                     gdouble             *hole_height,
-                     gdouble             *hole_space)
-{
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *grid;
-  GtkWidget *frame;
-  GtkWidget *scale;
-  GtkWidget *button;
-  gint       row;
-
-  frame = gimp_frame_new (_("All Values are Fractions of the Strip Height"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
-                            gtk_label_new_with_mnemonic (_("Ad_vanced")));
-  gtk_widget_show (frame);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
-  row = 0;
-
-  filmint.scales[0] = scale =
-    gimp_scale_entry_new (_("Image _height:"), *picture_height, 0.0, 1.0, 3);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (film_scale_entry_update_double),
-                    picture_height);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
-
-  filmint.scales[1] = scale =
-    gimp_scale_entry_new (_("Image spac_ing:"), *picture_space, 0.0, 1.0, 3);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (film_scale_entry_update_double),
-                    picture_space);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_set_margin_bottom (gimp_labeled_get_label (GIMP_LABELED (scale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scale)), 6);
-  gtk_widget_set_margin_bottom (gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (scale)), 6);
-  gtk_widget_show (scale);
-
-  filmint.scales[2] = scale =
-    gimp_scale_entry_new (_("_Hole offset:"), *hole_offset, 0.0, 1.0, 3);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (film_scale_entry_update_double),
-                    hole_offset);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
-
-  filmint.scales[3] = scale =
-    gimp_scale_entry_new (_("Ho_le width:"), *hole_width, 0.0, 1.0, 3);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (film_scale_entry_update_double),
-                    hole_width);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
-
-  filmint.scales[4] = scale =
-    gimp_scale_entry_new (_("Hol_e height:"), *hole_height, 0.0, 1.0, 3);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (film_scale_entry_update_double),
-                    hole_height);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
-
-  filmint.scales[5] = scale =
-    gimp_scale_entry_new (_("Hole sp_acing:"), *hole_space, 0.0, 1.0, 3);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (film_scale_entry_update_double),
-                    hole_space);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_set_margin_bottom (gimp_labeled_get_label (GIMP_LABELED (scale)), 6);
-  gtk_widget_set_margin_bottom (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scale)), 6);
-  gtk_widget_set_margin_bottom (gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (scale)), 6);
-  gtk_widget_show (scale);
-
-  filmint.scales[6] = scale =
-    gimp_scale_entry_new (_("_Number height:"), *number_height, 0.0, 1.0, 3);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (film_scale_entry_update_double),
-                    number_height);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, row++, 3, 1);
-  gtk_widget_show (scale);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_with_mnemonic (_("Re_set"));
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (film_reset_callback),
-                    NULL);
+  gtk_paned_pack2 (GTK_PANED (paned), frame, TRUE, FALSE);
 }
 
 static gboolean
 film_dialog (GimpImage           *image,
+             GimpProcedure       *procedure,
              GimpProcedureConfig *config)
 {
-  GtkWidget *dlg;
-  GtkWidget *main_vbox;
-  GtkWidget *notebook;
+  GtkWidget *dialog;
   gboolean   run;
-
-  gint       film_height;
-  gint       number_start;
-  GimpFont  *number_font;
-  GimpRGB   *number_color;
-  GimpRGB   *film_color;
-  gboolean   keep_height;
-  gboolean   at_top;
-  gboolean   at_bottom;
-
-  gdouble    picture_height;
-  gdouble    picture_space;
-  gdouble    number_height;
-  gdouble    hole_offset;
-  gdouble    hole_width;
-  gdouble    hole_height;
-  gdouble    hole_space;
-
-  g_object_get (config,
-                "film-height",     &film_height,
-                "keep-height",     &keep_height,
-                "number-color",    &number_color,
-                "film-color",      &film_color,
-                "number-start",    &number_start,
-                "number-font",     &number_font,
-                "at-top",          &at_top,
-                "at-bottom",       &at_bottom,
-
-                "picture-height",  &picture_height,
-                "picture-spacing", &picture_space,
-                "number-height",   &number_height,
-                "hole-offset",     &hole_offset,
-                "hole-width",      &hole_width,
-                "hole-height",     &hole_height,
-                "hole-spacing",    &hole_space,
-                NULL);
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dlg = gimp_dialog_new (_("Filmstrip"), PLUG_IN_ROLE,
-                         NULL, 0,
-                         gimp_standard_help_func, PLUG_IN_PROC,
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Filmstrip"));
 
-                         _("_Cancel"), GTK_RESPONSE_CANCEL,
-                         _("_OK"),     GTK_RESPONSE_OK,
+  create_selection_tab (GIMP_PROCEDURE_DIALOG (dialog), image);
 
-                         NULL);
+  /* Create Advanced tab. */
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "advanced-box",
+                                  "picture-height",
+                                  "picture-spacing",
+                                  "hole-offset",
+                                  "hole-width",
+                                  "hole-height",
+                                  "hole-spacing",
+                                  "number-height",
+                                  NULL);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog), "advanced-frame-label",
+                                   _("All Values are Fractions of the Strip Height"), FALSE, FALSE);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "advanced-frame",
+                                    "advanced-frame-label", FALSE,
+                                    "advanced-box");
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dlg));
-
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
-
-  notebook = gtk_notebook_new ();
-  gtk_box_pack_start (GTK_BOX (main_vbox), notebook, TRUE, TRUE, 0);
-
-  create_selection_tab (notebook, image, config,
-                        &film_height,
-                        &number_start,
-                        &number_font,
-                        number_color,
-                        film_color,
-                        &keep_height,
-                        &at_top,
-                        &at_bottom);
-  create_advanced_tab (notebook, config,
-                       &picture_height,
-                       &picture_space,
-                       &number_height,
-                       &hole_offset,
-                       &hole_width,
-                       &hole_height,
-                       &hole_space);
-
-  gtk_widget_show (notebook);
-
-  gtk_widget_show (dlg);
-
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  /* Fill the notebook. */
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog), "advanced-tab", _("Ad_vanced"), FALSE, TRUE);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog), "selection-tab", _("_Selection"), FALSE, TRUE);
+  gimp_procedure_dialog_fill_notebook (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "main-notebook",
+                                       "selection-tab",
+                                       "selection-paned",
+                                       "advanced-tab",
+                                       "advanced-frame",
+                                       NULL);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "main-notebook", NULL);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   if (run)
     {
@@ -1496,64 +1180,17 @@ film_dialog (GimpImage           *image,
             }
         }
 
-      images_array = gimp_object_array_new (GIMP_TYPE_IMAGE, (GObject **) images, num_images, FALSE);
+      images_array = gimp_object_array_new (GIMP_TYPE_IMAGE, (GObject **) images, num_images, TRUE);
 
       g_object_set (config,
-                    "images",          images_array,
-                    "num-images",      num_images,
-                    "film-height",     film_height,
-
-                    "keep-height",     keep_height,
-                    "number-color",    number_color,
-                    "film-color",      film_color,
-                    "number-start",    number_start,
-                    "at-top",          at_top,
-                    "at-bottom",       at_bottom,
-
-                    "picture-height",  picture_height,
-                    "picture-spacing", picture_space,
-                    "number-height",   number_height,
-                    "hole-offset",     hole_offset,
-                    "hole-width",      hole_width,
-                    "hole-height",     hole_height,
-                    "hole-spacing",    hole_space,
+                    "images",     images_array,
+                    "num-images", num_images,
                     NULL);
 
       gimp_object_array_free (images_array);
     }
 
-  gtk_widget_destroy (dlg);
-  g_free (number_color);
-  g_free (film_color);
-  g_clear_object (&number_font);
+  gtk_widget_destroy (dialog);
 
   return run;
-}
-
-static void
-film_reset_callback (GtkWidget *widget,
-                     gpointer   data)
-{
-  gint i;
-
-  for (i = 0; i < G_N_ELEMENTS (advanced_defaults) ; i++)
-    gimp_label_spin_set_value (GIMP_LABEL_SPIN (filmint.scales[i]),
-                               advanced_defaults[i]);
-}
-
-static void
-film_font_select_callback (GimpFontSelectButton  *button,
-                           GimpResource          *resource,
-                           gboolean               closing,
-                           GimpFont             **font)
-{
-  g_clear_object (font);
-  *font = GIMP_FONT (resource);
-}
-
-static void
-film_scale_entry_update_double (GimpLabelSpin *entry,
-                                gdouble       *value)
-{
-  *value = gimp_label_spin_get_value (entry);
 }
