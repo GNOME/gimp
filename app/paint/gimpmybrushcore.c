@@ -255,7 +255,7 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
 {
   GimpMybrushCore  *mybrush = GIMP_MYBRUSH_CORE (paint_core);
   MyPaintRectangle  rect;
-  GimpCoords        coords;
+  GimpCoords        origin;
   GList            *iter;
   gdouble           dt = 0.0;
   gint              off_x, off_y;
@@ -265,10 +265,10 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
   n_strokes = gimp_symmetry_get_size (sym);
 
-  coords    = *(gimp_symmetry_get_origin (sym));
-  coords.x -= off_x;
-  coords.y -= off_y;
-  gimp_symmetry_set_origin (sym, drawable, &coords);
+  origin    = *(gimp_symmetry_get_origin (sym));
+  origin.x -= off_x;
+  origin.y -= off_y;
+  gimp_symmetry_set_origin (sym, drawable, &origin);
 
   /* The number of strokes may change during a motion, depending on
    * the type of symmetry. When that happens, reset the brushes.
@@ -287,9 +287,8 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
            iter;
            iter = g_list_next (iter), i++)
         {
-          MyPaintBrush *brush = iter->data;
-
-          coords = *(gimp_symmetry_get_coords (sym, i));
+          MyPaintBrush *brush  = iter->data;
+          GimpCoords    coords = *(gimp_symmetry_get_coords (sym, i));
 
           mypaint_brush_stroke_to (brush,
                                    (MyPaintSurface *) mybrush->private->surface,
@@ -348,9 +347,16 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
       coords.y -= off_y_surf;
 
       if (offset_change_x || offset_change_y)
-        gimp_mypaint_surface_set_offset (mybrush->private->surface,
-                                         off_x_surf + offset_change_x,
-                                         off_y_surf + offset_change_y);
+        {
+          gimp_mypaint_surface_set_offset (mybrush->private->surface,
+                                           off_x_surf + offset_change_x,
+                                           off_y_surf + offset_change_y);
+
+          origin    = *(gimp_symmetry_get_origin (sym));
+          origin.x += offset_change_x;
+          origin.y += offset_change_y;
+          gimp_symmetry_set_origin (sym, drawable, &origin);
+        }
 
       mypaint_brush_stroke_to (brush,
                                (MyPaintSurface *) mybrush->private->surface,
