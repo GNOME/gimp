@@ -2169,6 +2169,77 @@ gimp_procedure_dialog_fill_notebook_list (GimpProcedureDialog *dialog,
 }
 
 /**
+ * gimp_procedure_dialog_fill_paned:
+ * @dialog:       the #GimpProcedureDialog.
+ * @container_id: a container identifier.
+ * @child1_id:    (nullable): the first child's ID.
+ * @child2_id:    (nullable): the second child's ID.
+ *
+ * Creates and populates a new #GtkPaned containing widgets corresponding to
+ * @child1_id and @child2_id.
+ * This is similar of how gimp_procedure_dialog_fill() works except that it
+ * creates a new widget which is not inside @dialog itself.
+ *
+ * The @container_id must be a unique ID which is neither the name of a
+ * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * the ID of any previously created container. This ID can later be used
+ * together with property names to be packed in other containers or
+ * inside @dialog itself.
+ *
+ * Returns: (transfer none): the #GtkPaned representing @property. The
+ *                           object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_fill_paned (GimpProcedureDialog *dialog,
+                                  const gchar         *container_id,
+                                  GtkOrientation       orientation,
+                                  const gchar         *child1_id,
+                                  const gchar         *child2_id)
+{
+  GtkWidget *paned;
+  GtkWidget *child1;
+  GtkWidget *child2;
+
+  g_return_val_if_fail (container_id != NULL, NULL);
+
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                    container_id))
+    {
+      g_warning ("%s: container identifier '%s' cannot be an existing property name.",
+                 G_STRFUNC, container_id);
+      return NULL;
+    }
+
+  if (g_hash_table_lookup (dialog->priv->widgets, container_id))
+    {
+      g_warning ("%s: container identifier '%s' was already configured.",
+                 G_STRFUNC, container_id);
+      return g_hash_table_lookup (dialog->priv->widgets, container_id);
+    }
+
+  paned = gtk_paned_new (orientation);
+  g_object_ref_sink (paned);
+
+  if (child1_id != NULL)
+    {
+      child1 = gimp_procedure_dialog_get_widget (dialog, child1_id, G_TYPE_NONE);
+      gtk_paned_pack1 (GTK_PANED (paned), child1, TRUE, FALSE);
+      gtk_widget_show (child1);
+    }
+  if (child2_id != NULL)
+    {
+      child2 = gimp_procedure_dialog_get_widget (dialog, child2_id, G_TYPE_NONE);
+      gtk_paned_pack2 (GTK_PANED (paned), child2, TRUE, FALSE);
+      gtk_widget_show (child2);
+    }
+
+  g_hash_table_insert (dialog->priv->widgets, g_strdup (container_id), paned);
+
+  return paned;
+}
+
+/**
  * gimp_procedure_dialog_set_sensitive:
  * @dialog:          the #GimpProcedureDialog.
  * @property:        name of a property of the #GimpProcedure @dialog

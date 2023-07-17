@@ -154,6 +154,12 @@ GtkWidget * gimp_procedure_dialog_fill_notebook_list
                                                      GList               *label_list,
                                                      GList               *page_list);
 
+GtkWidget * gimp_procedure_dialog_fill_paned        (GimpProcedureDialog *dialog,
+                                                     const gchar         *container_id,
+                                                     GtkOrientation       orientation,
+                                                     const gchar         *child1_id,
+                                                     const gchar         *child2_id);
+
 void        gimp_procedure_dialog_fill              (GimpProcedureDialog *dialog,
                                                      ...) G_GNUC_NULL_TERMINATED;
 void        gimp_procedure_dialog_fill_list         (GimpProcedureDialog *dialog,

@@ -39,6 +39,7 @@ EXPORTS
 	gimp_procedure_dialog_fill_list
 	gimp_procedure_dialog_fill_notebook
 	gimp_procedure_dialog_fill_notebook_list
+	gimp_procedure_dialog_fill_paned
 	gimp_procedure_dialog_fill_scrolled_window
 	gimp_procedure_dialog_get_color_widget
 	gimp_procedure_dialog_get_file_chooser
