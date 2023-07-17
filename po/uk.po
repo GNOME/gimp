@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-10 15:25+0000\n"
-"PO-Revision-Date: 2023-07-10 22:44+0300\n"
+"POT-Creation-Date: 2023-07-17 12:07+0000\n"
+"PO-Revision-Date: 2023-07-18 00:03+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2292,12 +2292,12 @@ msgctxt "dashboard-action"
 msgid "_Groups"
 msgstr "_Групи"
 
-#: app/actions/dashboard-actions.c:42 menus/dashboard-menu.ui:14
+#: app/actions/dashboard-actions.c:42 menus/dashboard-menu.ui:15
 msgctxt "dashboard-action"
 msgid "_Update Interval"
 msgstr "Інтервал _оновлення"
 
-#: app/actions/dashboard-actions.c:44 menus/dashboard-menu.ui:22
+#: app/actions/dashboard-actions.c:44 menus/dashboard-menu.ui:23
 msgctxt "dashboard-action"
 msgid "_History Duration"
 msgstr "_Тривалість ведення журналу"
@@ -2538,12 +2538,10 @@ msgid "Start _GtkInspector"
 msgstr "Запустити _GtkInspector"
 
 #: app/actions/debug-actions.c:45
-#| msgid "C_olor Profile"
 msgid "_Memory Profile"
 msgstr "П_рофіль пам'яті"
 
 #: app/actions/debug-actions.c:50
-#| msgid "Panorama Projection: "
 msgid "Benchmark _Projection"
 msgstr "Тестова п_роєкція"
 
@@ -2553,23 +2551,18 @@ msgid ""
 "(render) the part that is visible in the active display, and print the "
 "result to stdout."
 msgstr ""
-"Скасовує чинність усієї проєкції, вимірює час на обчислення (обробку)"
-" видимої частини на активному дисплеї і виводить результат до stdout."
+"Скасовує чинність усієї проєкції, вимірює час на обчислення (обробку) "
+"видимої частини на активному дисплеї і виводить результат до stdout."
 
 #: app/actions/debug-actions.c:58
-#| msgid "Show image preview"
 msgid "Show Image _Graph"
 msgstr "Показати _графік зображення"
 
 #: app/actions/debug-actions.c:59
-#| msgctxt "file-action"
-#| msgid "Create a new template from this image"
 msgid "Creates a new image showing the GEGL graph of this image"
 msgstr "Створює зображення, де показано GEGL-графік цього зображення"
 
 #: app/actions/debug-actions.c:64
-#| msgctxt "dialogs-action"
-#| msgid "_Keyboard Shortcuts"
 msgid "Dump _Keyboard Shortcuts"
 msgstr "Створити дамп _комбінацій клавіш"
 
@@ -3976,7 +3969,7 @@ msgctxt "error-console-action"
 msgid "Select all error messages"
 msgstr "Вибрати всі повідомлення про помилки"
 
-#: app/actions/error-console-actions.c:52
+#: app/actions/error-console-actions.c:52 menus/error-console-menu.ui:12
 msgctxt "error-console-action"
 msgid "_Highlight"
 msgstr "Підс_вітити"
@@ -5494,7 +5487,7 @@ msgstr "Змінити цей градієнт"
 msgid "Save '%s' as POV-Ray"
 msgstr "Збереження «%s» як POV-Ray"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:829
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:879
 msgctxt "help-action"
 msgid "_Help"
 msgstr "_Довідка"
@@ -9924,7 +9917,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Перемкнутись на попереднє зображення"
 
-#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:818
+#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:868
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "_Позиція позначок"
@@ -28306,6 +28299,12 @@ msgctxt "channels-action"
 msgid "Channels Menu"
 msgstr "Меню каналів"
 
+#: menus/channels-menu.ui:11 menus/layers-menu.ui:32 menus/vectors-menu.ui:12
+#| msgctxt "channels-action"
+#| msgid "Color Tag"
+msgid "Color Tags"
+msgstr "Мітки кольорів"
+
 #: menus/cursor-info-menu.ui:6
 msgctxt "cursor-info-action"
 msgid "Pointer Information Menu"
@@ -28322,29 +28321,21 @@ msgid "Groups"
 msgstr "Групи"
 
 #: menus/dockable-menu.ui.in.in:6
-#| msgctxt "dockable-action"
-#| msgid "_Add Tab"
 msgctxt "file-action"
 msgid "_Add Tab"
 msgstr "_Додати вкладку"
 
 #: menus/dockable-menu.ui.in.in:14
-#| msgctxt "dockable-action"
-#| msgid "_Preview Size"
 msgctxt "file-action"
 msgid "_Preview Size"
 msgstr "_Розмір ескізу"
 
 #: menus/dockable-menu.ui.in.in:25
-#| msgctxt "dockable-action"
-#| msgid "_Tab Style"
 msgctxt "file-action"
 msgid "_Tab Style"
 msgstr "_Стиль вкладок"
 
 #: menus/dockable-menu.ui.in.in:41
-#| msgctxt "view-action"
-#| msgid "Move to Screen"
 msgctxt "file-action"
 msgid "Move to Screen"
 msgstr "Перемістити на екран"
@@ -28374,7 +28365,7 @@ msgctxt "file-action"
 msgid "_File"
 msgstr "_Файл"
 
-#: menus/image-menu.ui.in.in:11
+#: menus/image-menu.ui.in.in:12
 msgctxt "file-action"
 msgid "Crea_te"
 msgstr "_Одержати"
@@ -28384,291 +28375,347 @@ msgctxt "file-action"
 msgid "Open _Recent"
 msgstr "Відкрити н_едавні"
 
-#: menus/image-menu.ui.in.in:30
-#| msgid "Debug"
+#: menus/image-menu.ui.in.in:27
 msgid "_Debug"
 msgstr "Зневад_ження"
 
-#: menus/image-menu.ui.in.in:70
+#: menus/image-menu.ui.in.in:76
 msgctxt "edit-action"
 msgid "_Edit"
 msgstr "З_міни"
 
-#: menus/image-menu.ui.in.in:83
+#: menus/image-menu.ui.in.in:92
 msgctxt "edit-action"
 msgid "Paste _as"
 msgstr "Вставити _як"
 
-#: menus/image-menu.ui.in.in:91
+#: menus/image-menu.ui.in.in:100
 msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_Буфер"
 
-#: menus/image-menu.ui.in.in:121
+#: menus/image-menu.ui.in.in:141
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_Вибір"
 
-#: menus/image-menu.ui.in.in:148
+#: menus/image-menu.ui.in.in:170
 msgctxt "view-action"
 msgid "_View"
 msgstr "П_ерегляд"
 
-#. TODO: Zoom label shows current zoom value.
-#: menus/image-menu.ui.in.in:154
+#: menus/image-menu.ui.in.in:175
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "Мас_штабувати"
 
-#. TODO: shows the current rotation angle.
-#: menus/image-menu.ui.in.in:180
+#: menus/image-menu.ui.in.in:200
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "Відд_зеркалення і обертання"
 
-#: menus/image-menu.ui.in.in:204
+#: menus/image-menu.ui.in.in:224
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Перемістити на екран"
 
-#: menus/image-menu.ui.in.in:213
+#: menus/image-menu.ui.in.in:233
 msgctxt "view-action"
 msgid "_Color Management"
 msgstr "К_ерування кольором"
 
-#: menus/image-menu.ui.in.in:220
+#: menus/image-menu.ui.in.in:240
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
 msgstr "Відтворення кольорів на _дисплеї"
 
-#: menus/image-menu.ui.in.in:250
-#| msgctxt "view-action"
-#| msgid "_Padding Color"
+#: menus/image-menu.ui.in.in:270
 msgctxt "view-action"
 msgid "_Padding color"
 msgstr "Колір _фаски"
 
-#: menus/image-menu.ui.in.in:274
+#: menus/image-menu.ui.in.in:294
 msgctxt "image-action"
 msgid "_Image"
 msgstr "_Образ"
 
-#: menus/image-menu.ui.in.in:280
+#: menus/image-menu.ui.in.in:301
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "Ре_жим"
 
-#: menus/image-menu.ui.in.in:286
+#: menus/image-menu.ui.in.in:307
 msgctxt "image-action"
 msgid "_Encoding"
 msgstr "_Кодування"
 
-#: menus/image-menu.ui.in.in:302
+#: menus/image-menu.ui.in.in:323
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "К_ерування кольором"
 
-#: menus/image-menu.ui.in.in:319
+#: menus/image-menu.ui.in.in:340
 msgctxt "image-action"
 msgid "Soft-Proofing Re_ndering Intent"
 msgstr "Відтворення кольорів на п_робі"
 
-#: menus/image-menu.ui.in.in:331
+#: menus/image-menu.ui.in.in:354
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "Пере_творення"
 
-#: menus/image-menu.ui.in.in:361
+#: menus/image-menu.ui.in.in:387
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_Напрямні"
 
-#: menus/image-menu.ui.in.in:375
+#: menus/image-menu.ui.in.in:395
+msgctxt "image-action"
+msgid "Meta_data"
+msgstr "Мета_дані"
+
+#: menus/image-menu.ui.in.in:403
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "_Шар"
 
-#: menus/image-menu.ui.in.in:393
+#: menus/image-menu.ui.in.in:424
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "С_тіг"
 
-#: menus/image-menu.ui.in.in:409
+#: menus/image-menu.ui.in.in:441
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Маска"
 
-#: menus/image-menu.ui.in.in:428
+#: menus/image-menu.ui.in.in:463
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "Про_зорість"
 
-#: menus/image-menu.ui.in.in:444
+#: menus/image-menu.ui.in.in:481
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "Пере_творення"
 
-#: menus/image-menu.ui.in.in:470
+#: menus/image-menu.ui.in.in:511
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Колір"
 
-#: menus/image-menu.ui.in.in:490
+#: menus/image-menu.ui.in.in:532
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Автоматично"
 
-#: menus/image-menu.ui.in.in:498
+#: menus/image-menu.ui.in.in:540
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "С_кладові"
 
-#: menus/image-menu.ui.in.in:505
+#: menus/image-menu.ui.in.in:546
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "З_небарвлення"
 
-#: menus/image-menu.ui.in.in:512
+#: menus/image-menu.ui.in.in:553
 msgctxt "image-action"
 msgid "_Map"
 msgstr "_Перетворення"
 
-#: menus/image-menu.ui.in.in:522
+#: menus/image-menu.ui.in.in:564
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "Перетворення _тонів"
 
-#: menus/image-menu.ui.in.in:530
+#: menus/image-menu.ui.in.in:571
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "_Інформація"
 
-#: menus/image-menu.ui.in.in:549
+#: menus/image-menu.ui.in.in:589
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "_Засоби"
 
-#: menus/image-menu.ui.in.in:552
+#: menus/image-menu.ui.in.in:592
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "Ви_бирання"
 
-#: menus/image-menu.ui.in.in:565
+#: menus/image-menu.ui.in.in:605
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "_Малювання"
 
-#: menus/image-menu.ui.in.in:582
+#: menus/image-menu.ui.in.in:622
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "П_еретворення"
 
-#: menus/image-menu.ui.in.in:621
+#: menus/image-menu.ui.in.in:661
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "Філь_три"
 
-#: menus/image-menu.ui.in.in:626
-#| msgctxt "filters-action"
-#| msgid "Recently _Used"
+#: menus/image-menu.ui.in.in:666
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "Недавно використані"
 
-#: menus/image-menu.ui.in.in:634
+#: menus/image-menu.ui.in.in:675
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "_Розмиття"
 
-#: menus/image-menu.ui.in.in:649
+#: menus/image-menu.ui.in.in:690
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "_Покращення"
 
-#: menus/image-menu.ui.in.in:660
+#: menus/image-menu.ui.in.in:700
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "Ви_кривлення"
 
-#: menus/image-menu.ui.in.in:680
+#: menus/image-menu.ui.in.in:719
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_Світло та тінь"
 
-#: menus/image-menu.ui.in.in:695
+#: menus/image-menu.ui.in.in:734
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "_Шум"
 
-#: menus/image-menu.ui.in.in:705
+#: menus/image-menu.ui.in.in:744
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "Виявлення ме_ж"
 
-#: menus/image-menu.ui.in.in:714
+#: menus/image-menu.ui.in.in:753
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "_Загальні"
 
-#: menus/image-menu.ui.in.in:725
+#: menus/image-menu.ui.in.in:764
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "_Об'єднання"
 
-#: menus/image-menu.ui.in.in:729
+#: menus/image-menu.ui.in.in:767
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "_Імітація"
 
-#: menus/image-menu.ui.in.in:742
+#: menus/image-menu.ui.in.in:779
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "_Декорація"
 
-#: menus/image-menu.ui.in.in:746
+#: menus/image-menu.ui.in.in:782
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "_Мапа"
 
-#: menus/image-menu.ui.in.in:759
+#: menus/image-menu.ui.in.in:794
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "Візуа_лізація"
 
-#: menus/image-menu.ui.in.in:762
+#: menus/image-menu.ui.in.in:797
+msgctxt "filters-action"
+msgid "_Fractals"
+msgstr "_Фрактали"
+
+#: menus/image-menu.ui.in.in:800
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "Ш_ум"
 
-#: menus/image-menu.ui.in.in:771
+#: menus/image-menu.ui.in.in:808
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_Текстура"
 
-#: menus/image-menu.ui.in.in:785
+#: menus/image-menu.ui.in.in:821
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "_Веб"
 
-#: menus/image-menu.ui.in.in:794
+#: menus/image-menu.ui.in.in:827
+msgctxt "filters-action"
+msgid "An_imation"
+msgstr "_Анімація"
+
+#: menus/image-menu.ui.in.in:830
+msgctxt "filters-action"
+msgid "De_velopment"
+msgstr "Р_озробка"
+
+#: menus/image-menu.ui.in.in:832
+msgctxt "filters-action"
+msgid "_Goat exercises"
+msgstr "Вправи із _козою"
+
+#: menus/image-menu.ui.in.in:835
+msgctxt "filters-action"
+msgid "_Python-Fu"
+msgstr "_Python-фу"
+
+#: menus/image-menu.ui.in.in:838
+#| msgid "Scripts"
+msgctxt "filters-action"
+msgid "_Script-Fu"
+msgstr "_Скриптфу"
+
+#: menus/image-menu.ui.in.in:845
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "Вік_на"
 
-#: menus/image-menu.ui.in.in:797
+#: menus/image-menu.ui.in.in:848
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "_Нещодавно закриті панелі"
 
-#: menus/image-menu.ui.in.in:801
+#: menus/image-menu.ui.in.in:852
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "Діалоги з підтримкою _прикріплення"
+
+#: menus/image-menu.ui.in.in:894
+#| msgid "GIMP extension"
+msgctxt "help-action"
+msgid "_GIMP Online"
+msgstr "_GIMP в інтернеті"
+
+#: menus/image-menu.ui.in.in:897
+#| msgid "U_ser manual:"
+msgctxt "help-action"
+msgid "_User Manual"
+msgstr "_Посібник користувача"
 
 #: menus/layers-menu.ui:6
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "Меню шарів"
+
+#: menus/layers-menu.ui:12
+msgctxt "layers-action"
+msgid "Blend Space"
+msgstr "Простір змішування"
+
+#: menus/layers-menu.ui:18
+msgctxt "layers-action"
+msgid "Composite Space"
+msgstr "Простір компонування"
+
+#: menus/layers-menu.ui:24
+msgctxt "layers-action"
+msgid "Composite Mode"
+msgstr "Режим композиції"
 
 #: menus/palette-editor-menu.ui:6
 msgctxt "palette-editor-action"
@@ -28679,6 +28726,12 @@ msgstr "Меню редактора палітри"
 msgctxt "palettes-action"
 msgid "Palettes Menu"
 msgstr "Меню палітр"
+
+#: menus/palettes-menu.ui:24
+#| msgid "Export to %s"
+msgctxt "palettes-action"
+msgid "Export as"
+msgstr "Експортувати як"
 
 #: menus/sample-points-menu.ui:6
 msgctxt "sample-points-action"
@@ -28764,10 +28817,6 @@ msgstr "Меню контурів"
 #~ msgctxt "buffers-action"
 #~ msgid "Buffers Menu"
 #~ msgstr "Меню буферів"
-
-#~ msgctxt "channels-action"
-#~ msgid "Color Tag"
-#~ msgstr "Тег кольору"
 
 #~ msgctxt "colormap-action"
 #~ msgid "Colormap Menu"
@@ -28858,16 +28907,8 @@ msgstr "Меню контурів"
 #~ msgstr "_Хмари"
 
 #~ msgctxt "filters-action"
-#~ msgid "_Fractals"
-#~ msgstr "_Фрактали"
-
-#~ msgctxt "filters-action"
 #~ msgid "_Nature"
 #~ msgstr "П_рирода"
-
-#~ msgctxt "filters-action"
-#~ msgid "An_imation"
-#~ msgstr "_Анімація"
 
 #~ msgctxt "fonts-action"
 #~ msgid "Fonts Menu"
@@ -28877,25 +28918,9 @@ msgstr "Меню контурів"
 #~ msgid "Image Menu"
 #~ msgstr "Меню зображення"
 
-#~ msgctxt "image-action"
-#~ msgid "Meta_data"
-#~ msgstr "Мета_дані"
-
 #~ msgctxt "images-action"
 #~ msgid "Images Menu"
 #~ msgstr "Меню списку зображень"
-
-#~ msgctxt "layers-action"
-#~ msgid "Blend Space"
-#~ msgstr "Простір змішування"
-
-#~ msgctxt "layers-action"
-#~ msgid "Composite Space"
-#~ msgstr "Простір компонування"
-
-#~ msgctxt "layers-action"
-#~ msgid "Composite Mode"
-#~ msgstr "Режим композиції"
 
 #~ msgctxt "layers-action"
 #~ msgid "Color Tag"
