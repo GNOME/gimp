@@ -145,6 +145,12 @@ notebook header tabs tab:hover {
   background-color: @hover-color;
 }
 
+/* Add margin to image tabs so the close button fits */
+notebook header tabs tab > box > button
+{
+  margin-right: 5px;
+}
+
 /* The background of many dialogs, e.g. Preferences and gimpcolordialog */
 .vertical {
   color: @fg-color;
