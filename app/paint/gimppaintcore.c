@@ -840,6 +840,11 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
   if (gimp_item_get_lock_position (GIMP_ITEM (drawable)))
     return FALSE;
 
+  /* If editing a layer mask, also check position lock for parent layer */
+  if (GIMP_IS_LAYER_MASK (drawable))
+    if (gimp_item_get_lock_position (GIMP_ITEM (GIMP_LAYER_MASK (drawable)->layer)))
+      return FALSE;
+
   if (!gimp_paint_core_get_show_all (core) && outside_image)
     return FALSE;
 
