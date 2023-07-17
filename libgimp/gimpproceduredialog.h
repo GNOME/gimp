@@ -139,9 +139,20 @@ GtkWidget * gimp_procedure_dialog_fill_expander     (GimpProcedureDialog *dialog
                                                      const gchar         *contents_id);
 
 GtkWidget * gimp_procedure_dialog_fill_scrolled_window
-                                                   (GimpProcedureDialog  *dialog,
-                                                    const gchar          *container_id,
-                                                    const gchar          *contents_id);
+                                                    (GimpProcedureDialog  *dialog,
+                                                     const gchar          *container_id,
+                                                     const gchar          *contents_id);
+
+GtkWidget * gimp_procedure_dialog_fill_notebook     (GimpProcedureDialog *dialog,
+                                                     const gchar         *container_id,
+                                                     const gchar         *label_id,
+                                                     const gchar         *page_id,
+                                                     ...) G_GNUC_NULL_TERMINATED;
+GtkWidget * gimp_procedure_dialog_fill_notebook_list
+                                                    (GimpProcedureDialog *dialog,
+                                                     const gchar         *container_id,
+                                                     GList               *label_list,
+                                                     GList               *page_list);
 
 void        gimp_procedure_dialog_fill              (GimpProcedureDialog *dialog,
                                                      ...) G_GNUC_NULL_TERMINATED;

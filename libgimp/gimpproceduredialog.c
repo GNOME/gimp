@@ -2032,6 +2032,141 @@ gimp_procedure_dialog_fill_scrolled_window (GimpProcedureDialog *dialog,
   return scrolled_window;
 }
 
+/**
+ * gimp_procedure_dialog_fill_notebook:
+ * @dialog:       the #GimpProcedureDialog.
+ * @container_id: a container identifier.
+ * @label_id:     the first page's label.
+ * @page_id:      the first page's contents.
+ * @...:          a %NULL-terminated list of other property names.
+ *
+ * Creates and populates a new #GtkNotebook with widgets corresponding to every
+ * listed properties.
+ * This is similar of how gimp_procedure_dialog_fill() works except that it
+ * creates a new widget which is not inside @dialog itself.
+ *
+ * The @container_id must be a unique ID which is neither the name of a
+ * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * the ID of any previously created container. This ID can later be used
+ * together with property names to be packed in other containers or
+ * inside @dialog itself.
+ *
+ * Returns: (transfer none): the #GtkNotebook representing @property. The
+ *                           object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_fill_notebook (GimpProcedureDialog *dialog,
+                                     const gchar         *container_id,
+                                     const gchar         *label_id,
+                                     const gchar         *page_id,
+                                     ...)
+{
+  GtkWidget *notebook;
+  GList     *label_list = NULL;
+  GList     *page_list  = NULL;
+  va_list    va_args;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
+  g_return_val_if_fail (container_id != NULL, NULL);
+  g_return_val_if_fail (label_id != NULL && page_id != NULL, NULL);
+
+  va_start (va_args, page_id);
+
+  do
+    {
+      label_list = g_list_prepend (label_list, (gpointer) label_id);
+      page_list  = g_list_prepend (page_list, (gpointer) page_id);
+
+      label_id = va_arg (va_args, const gchar *);
+      page_id  = va_arg (va_args, const gchar *);
+    }
+  while (label_id != NULL && page_id != NULL);
+
+  va_end (va_args);
+
+  label_list = g_list_reverse (label_list);
+  page_list  = g_list_reverse (page_list);
+  notebook = gimp_procedure_dialog_fill_notebook_list (dialog, container_id, label_list, page_list);
+  g_list_free (label_list);
+  g_list_free (page_list);
+
+  return notebook;
+}
+
+/**
+ * gimp_procedure_dialog_fill_notebook_list: (rename-to gimp_procedure_dialog_fill_notebook)
+ * @dialog:       the #GimpProcedureDialog.
+ * @container_id: a container identifier.
+ * @label_list: (not nullable) (element-type gchar*): the list of label IDs.
+ * @page_list:  (not nullable) (element-type gchar*): the list of page IDs.
+ *
+ * Creates and populates a new #GtkNotebook with widgets corresponding to every
+ * listed properties.
+ * This is similar of how gimp_procedure_dialog_fill_list() works except that it
+ * creates a new widget which is not inside @dialog itself.
+ *
+ * The @container_id must be a unique ID which is neither the name of a
+ * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * the ID of any previously created container. This ID can later be used
+ * together with property names to be packed in other containers or
+ * inside @dialog itself.
+ *
+ * Returns: (transfer none): the #GtkNotebook representing @property. The
+ *                           object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_fill_notebook_list (GimpProcedureDialog *dialog,
+                                          const gchar         *container_id,
+                                          GList               *label_list,
+                                          GList               *page_list)
+{
+  GtkWidget *notebook;
+  GList     *iter_label = label_list;
+  GList     *iter_page  = page_list;
+
+  g_return_val_if_fail (container_id != NULL, NULL);
+  g_return_val_if_fail (g_list_length (label_list) > 0 &&
+                        g_list_length (label_list) == g_list_length (page_list), NULL);
+
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                    container_id))
+    {
+      g_warning ("%s: container identifier '%s' cannot be an existing property name.",
+                 G_STRFUNC, container_id);
+      return NULL;
+    }
+
+  if (g_hash_table_lookup (dialog->priv->widgets, container_id))
+    {
+      g_warning ("%s: container identifier '%s' was already configured.",
+                 G_STRFUNC, container_id);
+      return g_hash_table_lookup (dialog->priv->widgets, container_id);
+    }
+
+  notebook = gtk_notebook_new ();
+  g_object_ref_sink (notebook);
+
+  for (; iter_label; iter_label = iter_label->next, iter_page = iter_page->next)
+    {
+      GtkWidget *label;
+      GtkWidget *page;
+
+      label = gimp_procedure_dialog_get_widget (dialog, iter_label->data, G_TYPE_NONE);
+      page  = gimp_procedure_dialog_get_widget (dialog, iter_page->data, G_TYPE_NONE);
+      if (label != NULL && page != NULL)
+        {
+          gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
+          gtk_widget_show (label);
+          gtk_widget_show (page);
+        }
+    }
+
+  g_hash_table_insert (dialog->priv->widgets, g_strdup (container_id), notebook);
+
+  return notebook;
+}
 
 /**
  * gimp_procedure_dialog_set_sensitive:
