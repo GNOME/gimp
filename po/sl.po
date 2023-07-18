@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-17 12:07+0000\n"
-"PO-Revision-Date: 2023-07-17 16:49+0200\n"
+"POT-Creation-Date: 2023-07-18 18:50+0000\n"
+"PO-Revision-Date: 2023-07-19 00:15+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -9732,7 +9732,7 @@ msgstr "Ohrani način zapolnjevanja platna v načinu »Pokaži vse«"
 msgctxt "view-padding-color"
 msgid "Keep canvas padding when \"View -> Show All\" is enabled"
 msgstr ""
-"Ohrani oblazinjenje platna, ko je omogočena možnost »Pogled-> Pokaži vse«"
+"Ohrani zapolnjevanje platna, ko je omogočena možnost »Pogled-> Pokaži vse«"
 
 #: app/actions/view-actions.c:560
 msgctxt "view-action"
@@ -10289,7 +10289,7 @@ msgid ""
 "Specifies whether to keep the canvas padding when \"View -> Show All\" is "
 "enabled."
 msgstr ""
-"Določa, ali naj bo platno oblazinjeno, ko je omogočena možnost »Pogled -> "
+"Določa, ali naj bo platno zapolnjeno, ko je omogočena možnost »Pogled -> "
 "Pokaži vse«."
 
 #: app/config/gimprc-blurbs.h:41
@@ -17808,6 +17808,10 @@ msgstr "Zakleni _vidljivost poti"
 msgid "Welcome to GIMP %s"
 msgstr "Dobrodošli v GIMP %s"
 
+#: app/dialogs/welcome-dialog.c:118
+msgid "Welcome"
+msgstr "Dobrodošli"
+
 #. Welcome title.
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:135
@@ -17855,6 +17859,10 @@ msgstr "Prispevajte"
 #: app/dialogs/welcome-dialog.c:232
 msgid "Donating"
 msgstr "Donacije"
+
+#: app/dialogs/welcome-dialog.c:246
+msgid "Release Notes"
+msgstr "Opombe ob izdaji"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:257
@@ -28336,7 +28344,7 @@ msgstr "_Namen upodabljanja prikaza"
 
 #: menus/image-menu.ui.in.in:270
 msgctxt "view-action"
-msgid "_Padding color"
+msgid "_Padding Color"
 msgstr "Barva za_polnjevanja"
 
 #: menus/image-menu.ui.in.in:294
