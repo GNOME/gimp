@@ -267,7 +267,7 @@
       </section>
       <section>
         <submenu>
-          <attribute name="label" translatable="yes" context="view-action">_Padding color</attribute>
+          <attribute name="label" translatable="yes" context="view-action">_Padding Color</attribute>
           <section>
             <item><attribute name="action">app.view-padding-color-theme</attribute></item>
             <item><attribute name="action">app.view-padding-color-light-check</attribute></item>
