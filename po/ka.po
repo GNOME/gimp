@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-13 21:05+0000\n"
-"PO-Revision-Date: 2023-07-14 07:03+0200\n"
+"POT-Creation-Date: 2023-07-17 12:07+0000\n"
+"PO-Revision-Date: 2023-07-18 05:31+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -3916,7 +3916,7 @@ msgctxt "error-console-action"
 msgid "Select all error messages"
 msgstr "ყველა შეცდომის მონიშვნა"
 
-#: app/actions/error-console-actions.c:52
+#: app/actions/error-console-actions.c:52 menus/error-console-menu.ui:12
 msgctxt "error-console-action"
 msgid "_Highlight"
 msgstr "_მარკერი"
@@ -5427,7 +5427,7 @@ msgstr "გრადაციის ჩასწორება"
 msgid "Save '%s' as POV-Ray"
 msgstr "'%s'-ის POV-Ray-ის სახით შენახვა"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:836
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:879
 msgctxt "help-action"
 msgid "_Help"
 msgstr "_დახმარება"
@@ -9798,7 +9798,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "წინა გამოსახულებაზე გადართვა"
 
-#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:825
+#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:868
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "_ჩანართის პოზიცია"
@@ -27693,6 +27693,10 @@ msgctxt "channels-action"
 msgid "Channels Menu"
 msgstr "არხების მენიუ"
 
+#: menus/channels-menu.ui:11 menus/layers-menu.ui:32 menus/vectors-menu.ui:12
+msgid "Color Tags"
+msgstr "ფერადი ჭდეები"
+
 #: menus/cursor-info-menu.ui:6
 msgctxt "cursor-info-action"
 msgid "Pointer Information Menu"
@@ -27753,12 +27757,12 @@ msgctxt "file-action"
 msgid "_File"
 msgstr "_ფაილი"
 
-#: menus/image-menu.ui.in.in:11
+#: menus/image-menu.ui.in.in:12
 msgctxt "file-action"
 msgid "Crea_te"
 msgstr "შექმნა"
 
-#: menus/image-menu.ui.in.in:18
+#: menus/image-menu.ui.in.in:19
 msgctxt "file-action"
 msgid "Open _Recent"
 msgstr "ბოლოს გახსნილი ფაილი"
@@ -27767,318 +27771,317 @@ msgstr "ბოლოს გახსნილი ფაილი"
 msgid "_Debug"
 msgstr "_გამართვა"
 
-#: menus/image-menu.ui.in.in:69
+#: menus/image-menu.ui.in.in:76
 msgctxt "edit-action"
 msgid "_Edit"
 msgstr "ჩასწორება"
 
-#: menus/image-menu.ui.in.in:82
+#: menus/image-menu.ui.in.in:92
 msgctxt "edit-action"
 msgid "Paste _as"
 msgstr "ჩასმა როგორ_ც"
 
-#: menus/image-menu.ui.in.in:90
+#: menus/image-menu.ui.in.in:100
 msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_ბaფერი"
 
-#: menus/image-menu.ui.in.in:120
+#: menus/image-menu.ui.in.in:141
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_მონიშვნა"
 
-#: menus/image-menu.ui.in.in:149
+#: menus/image-menu.ui.in.in:170
 msgctxt "view-action"
 msgid "_View"
 msgstr "_ხედი"
 
-#: menus/image-menu.ui.in.in:154
+#: menus/image-menu.ui.in.in:175
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "_გადიდება"
 
-#: menus/image-menu.ui.in.in:179
+#: menus/image-menu.ui.in.in:200
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "ამო_ბრუნება და შემობრუნება"
 
-#: menus/image-menu.ui.in.in:203
+#: menus/image-menu.ui.in.in:224
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "ეკრანზე გატანა"
 
-#: menus/image-menu.ui.in.in:212
+#: menus/image-menu.ui.in.in:233
 msgctxt "view-action"
 msgid "_Color Management"
 msgstr "ფერების მართვა"
 
-#: menus/image-menu.ui.in.in:219
+#: menus/image-menu.ui.in.in:240
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
 msgstr "ეკრანზე რენდერის დანიშნულება"
 
-#: menus/image-menu.ui.in.in:249
+#: menus/image-menu.ui.in.in:270
 msgctxt "view-action"
 msgid "_Padding color"
 msgstr "_ფანჯრის ფონის ფერი"
 
-#: menus/image-menu.ui.in.in:273
+#: menus/image-menu.ui.in.in:294
 msgctxt "image-action"
 msgid "_Image"
 msgstr "_გამოსახულება"
 
-#: menus/image-menu.ui.in.in:279
+#: menus/image-menu.ui.in.in:301
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_რეჟიმი"
 
-#: menus/image-menu.ui.in.in:285
+#: menus/image-menu.ui.in.in:307
 msgctxt "image-action"
 msgid "_Encoding"
 msgstr "_კოდირება"
 
-#: menus/image-menu.ui.in.in:301
+#: menus/image-menu.ui.in.in:323
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "ფერების მართვა"
 
-#: menus/image-menu.ui.in.in:318
+#: menus/image-menu.ui.in.in:340
 msgctxt "image-action"
 msgid "Soft-Proofing Re_ndering Intent"
 msgstr "ფერების გადაცე_მის ტიპი"
 
-#: menus/image-menu.ui.in.in:330
+#: menus/image-menu.ui.in.in:354
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "_გარდაქმნა"
 
-#: menus/image-menu.ui.in.in:360
+#: menus/image-menu.ui.in.in:387
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_გიდები"
 
-#: menus/image-menu.ui.in.in:368
+#: menus/image-menu.ui.in.in:395
 msgctxt "image-action"
 msgid "Meta_data"
 msgstr "_მეტა_ინფორმაცია"
 
-#: menus/image-menu.ui.in.in:376
+#: menus/image-menu.ui.in.in:403
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "_ფენა"
 
-#: menus/image-menu.ui.in.in:394
+#: menus/image-menu.ui.in.in:424
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "_შეკვრა"
 
-#: menus/image-menu.ui.in.in:409
+#: menus/image-menu.ui.in.in:441
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_ნიღაბი"
 
-#: menus/image-menu.ui.in.in:428
+#: menus/image-menu.ui.in.in:463
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "გ_ამჭვირვალობა"
 
-#: menus/image-menu.ui.in.in:444
+#: menus/image-menu.ui.in.in:481
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "_გარდაქმნა"
 
-#: menus/image-menu.ui.in.in:470
+#: menus/image-menu.ui.in.in:511
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_ფერები"
 
-#: menus/image-menu.ui.in.in:490
+#: menus/image-menu.ui.in.in:532
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "ავტო"
 
-#: menus/image-menu.ui.in.in:498
+#: menus/image-menu.ui.in.in:540
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "კო_მპონენტები"
 
-#: menus/image-menu.ui.in.in:504
+#: menus/image-menu.ui.in.in:546
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "გაუფერუ_ლება"
 
-#: menus/image-menu.ui.in.in:511
+#: menus/image-menu.ui.in.in:553
 msgctxt "image-action"
 msgid "_Map"
 msgstr "რუ_კა"
 
-#: menus/image-menu.ui.in.in:522
+#: menus/image-menu.ui.in.in:564
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "_ტონალური პროექტია"
 
-#: menus/image-menu.ui.in.in:529
+#: menus/image-menu.ui.in.in:571
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "ი_ნფო"
 
-#: menus/image-menu.ui.in.in:547
+#: menus/image-menu.ui.in.in:589
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "_ხელსაწყოები"
 
-#: menus/image-menu.ui.in.in:550
+#: menus/image-menu.ui.in.in:592
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "მონიშვნის ხელსაწყოები"
 
-#: menus/image-menu.ui.in.in:563
+#: menus/image-menu.ui.in.in:605
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "_სახატავი ხელსაწყოები"
 
-#: menus/image-menu.ui.in.in:580
+#: menus/image-menu.ui.in.in:622
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "_გარდაქმნის ხელსაწყოები"
 
-#: menus/image-menu.ui.in.in:619
+#: menus/image-menu.ui.in.in:661
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "ფილტ_რები"
 
-#: menus/image-menu.ui.in.in:624
+#: menus/image-menu.ui.in.in:666
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "ახლახანს გამოყენებული"
 
-#: menus/image-menu.ui.in.in:633
+#: menus/image-menu.ui.in.in:675
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "_ბუნდოვნება"
 
-#: menus/image-menu.ui.in.in:647
+#: menus/image-menu.ui.in.in:690
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "გაუმჯობესება"
 
-#: menus/image-menu.ui.in.in:657
+#: menus/image-menu.ui.in.in:700
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "_დამახინჯებები"
 
-#: menus/image-menu.ui.in.in:676
+#: menus/image-menu.ui.in.in:719
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_სინათლე და ჩრდილი"
 
-#: menus/image-menu.ui.in.in:691
+#: menus/image-menu.ui.in.in:734
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "_ხმაური"
 
-#: menus/image-menu.ui.in.in:701
+#: menus/image-menu.ui.in.in:744
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "კუთხ_ის პოვნა"
 
-#: menus/image-menu.ui.in.in:710
+#: menus/image-menu.ui.in.in:753
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "ზოგადი"
 
-#: menus/image-menu.ui.in.in:721
+#: menus/image-menu.ui.in.in:764
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "შეერთება"
 
-#: menus/image-menu.ui.in.in:724
+#: menus/image-menu.ui.in.in:767
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "_არტისტული"
 
-#: menus/image-menu.ui.in.in:736
+#: menus/image-menu.ui.in.in:779
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "ორნ_ამენტი"
 
-#: menus/image-menu.ui.in.in:739
+#: menus/image-menu.ui.in.in:782
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "რუ_კა"
 
-#: menus/image-menu.ui.in.in:751
+#: menus/image-menu.ui.in.in:794
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "რენდერი"
 
-#: menus/image-menu.ui.in.in:754
+#: menus/image-menu.ui.in.in:797
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "_ფრაქტალები"
 
-#: menus/image-menu.ui.in.in:757
+#: menus/image-menu.ui.in.in:800
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "_ხმაური"
 
-#: menus/image-menu.ui.in.in:765
+#: menus/image-menu.ui.in.in:808
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_შაბლონი"
 
-#: menus/image-menu.ui.in.in:778
+#: menus/image-menu.ui.in.in:821
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "_ვები"
 
-#: menus/image-menu.ui.in.in:784
+#: menus/image-menu.ui.in.in:827
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "ან_იმაცია"
 
-#: menus/image-menu.ui.in.in:787
+#: menus/image-menu.ui.in.in:830
 msgctxt "filters-action"
 msgid "De_velopment"
 msgstr ""
 
-#: menus/image-menu.ui.in.in:789
+#: menus/image-menu.ui.in.in:832
 msgctxt "filters-action"
 msgid "_Goat exercises"
 msgstr ""
 
-#: menus/image-menu.ui.in.in:792
+#: menus/image-menu.ui.in.in:835
 msgctxt "filters-action"
 msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
-#: menus/image-menu.ui.in.in:795
-#| msgid "Scripts"
+#: menus/image-menu.ui.in.in:838
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: menus/image-menu.ui.in.in:802
+#: menus/image-menu.ui.in.in:845
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_ფანჯრები"
 
-#: menus/image-menu.ui.in.in:805
+#: menus/image-menu.ui.in.in:848
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "ახლა_ხანს დახურული მიმაგრებები"
 
-#: menus/image-menu.ui.in.in:809
+#: menus/image-menu.ui.in.in:852
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_მიმაგრებადი ფანჯრები"
 
-#: menus/image-menu.ui.in.in:851
+#: menus/image-menu.ui.in.in:894
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "_GIMP-ის ონლაინ რესურსები"
 
-#: menus/image-menu.ui.in.in:854
+#: menus/image-menu.ui.in.in:897
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "მომხმარებლის სახელმძღვ_ანელო"
@@ -28087,6 +28090,21 @@ msgstr "მომხმარებლის სახელმძღვ_ან�
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "ფენათა მენიუ"
+
+#: menus/layers-menu.ui:12
+msgctxt "layers-action"
+msgid "Blend Space"
+msgstr "სივრცის შერევა"
+
+#: menus/layers-menu.ui:18
+msgctxt "layers-action"
+msgid "Composite Space"
+msgstr "კომპოზიტური სივრცე"
+
+#: menus/layers-menu.ui:24
+msgctxt "layers-action"
+msgid "Composite Mode"
+msgstr "კომპოზიტური რეჟიმი"
 
 #: menus/palette-editor-menu.ui:6
 msgctxt "palette-editor-action"
@@ -28097,6 +28115,11 @@ msgstr "პალიტრის ჩასწორების მენიუ"
 msgctxt "palettes-action"
 msgid "Palettes Menu"
 msgstr "პალიტრების მენიუ"
+
+#: menus/palettes-menu.ui:24
+msgctxt "palettes-action"
+msgid "Export as"
+msgstr "გატანა, როგორც"
 
 #: menus/sample-points-menu.ui:6
 msgctxt "sample-points-action"
@@ -28182,10 +28205,6 @@ msgstr "კონტურების მენიუ"
 #~ msgctxt "buffers-action"
 #~ msgid "Buffers Menu"
 #~ msgstr "ბაფერების მენიუ"
-
-#~ msgctxt "channels-action"
-#~ msgid "Color Tag"
-#~ msgstr "ფერადი ჭდე"
 
 #~ msgctxt "colormap-action"
 #~ msgid "Colormap Menu"
@@ -28290,18 +28309,6 @@ msgstr "კონტურების მენიუ"
 #~ msgctxt "images-action"
 #~ msgid "Images Menu"
 #~ msgstr "გამოსახულებათა მენიუ"
-
-#~ msgctxt "layers-action"
-#~ msgid "Blend Space"
-#~ msgstr "სივრცის შერევა"
-
-#~ msgctxt "layers-action"
-#~ msgid "Composite Space"
-#~ msgstr "კომპოზიტური სივრცე"
-
-#~ msgctxt "layers-action"
-#~ msgid "Composite Mode"
-#~ msgstr "კომპოზიტური რეჟიმი"
 
 #~ msgctxt "layers-action"
 #~ msgid "Color Tag"
@@ -28758,9 +28765,6 @@ msgstr "კონტურების მენიუ"
 #~ msgstr "_შიგნით ჩასმა"
 
 #~ msgctxt "file-action"
-#~ msgid "Export to"
-#~ msgstr "გატანა"
-
 #~ msgid "Export to"
 #~ msgstr "გატანა"
 
