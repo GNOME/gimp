@@ -73,6 +73,7 @@ gimp_config_serialize_properties (GimpConfig       *config,
   GParamSpec   **property_specs;
   guint          n_property_specs;
   guint          i;
+  gboolean       success = TRUE;
 
   g_return_val_if_fail (G_IS_OBJECT (config), FALSE);
 
@@ -81,7 +82,7 @@ gimp_config_serialize_properties (GimpConfig       *config,
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
   if (! property_specs)
-    return TRUE;
+    return success;
 
   for (i = 0; i < n_property_specs; i++)
     {
@@ -90,13 +91,16 @@ gimp_config_serialize_properties (GimpConfig       *config,
       if (! (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
         continue;
 
+      /* Some properties may fail writing, which shouldn't break serializing
+       * more properties, yet final result would be a (partial) failure.
+       */
       if (! gimp_config_serialize_property (config, prop_spec, writer))
-        return FALSE;
+        success = FALSE;
     }
 
   g_free (property_specs);
 
-  return TRUE;
+  return success;
 }
 
 /**
@@ -119,7 +123,8 @@ gimp_config_serialize_changed_properties (GimpConfig       *config,
   GParamSpec   **property_specs;
   guint          n_property_specs;
   guint          i;
-  GValue         value = G_VALUE_INIT;
+  GValue         value   = G_VALUE_INIT;
+  gboolean       success = TRUE;
 
   g_return_val_if_fail (G_IS_OBJECT (config), FALSE);
 
@@ -128,7 +133,7 @@ gimp_config_serialize_changed_properties (GimpConfig       *config,
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
   if (! property_specs)
-    return TRUE;
+    return success;
 
   for (i = 0; i < n_property_specs; i++)
     {
@@ -142,8 +147,11 @@ gimp_config_serialize_changed_properties (GimpConfig       *config,
 
       if (! g_param_value_defaults (prop_spec, &value))
         {
+          /* Some properties may fail writing, which shouldn't break serializing
+           * more properties, yet final result would be a (partial) failure.
+           */
           if (! gimp_config_serialize_property (config, prop_spec, writer))
-            return FALSE;
+            success = FALSE;
         }
 
       g_value_unset (&value);
@@ -151,7 +159,7 @@ gimp_config_serialize_changed_properties (GimpConfig       *config,
 
   g_free (property_specs);
 
-  return TRUE;
+  return success;
 }
 
 /**
