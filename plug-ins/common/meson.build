@@ -28,6 +28,7 @@ common_plugins_list = [
     'deps': [ gtk3, gegl, gdk_pixbuf, cairo, ],
   },
   { 'name': 'file-dicom', },
+  { 'name': 'file-farbfeld', },
   { 'name': 'file-gbr', },
   { 'name': 'file-gegl', },
   { 'name': 'file-gif-load',

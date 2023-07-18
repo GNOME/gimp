@@ -31,6 +31,7 @@ plug-ins/common/file-csource.c
 plug-ins/common/file-compressor.c
 plug-ins/common/file-desktop-link.c
 plug-ins/common/file-dicom.c
+plug-ins/common/file-farbfeld.c
 plug-ins/common/file-gbr.c
 plug-ins/common/file-gegl.c
 plug-ins/common/file-gif-load.c
