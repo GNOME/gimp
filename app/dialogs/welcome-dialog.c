@@ -115,7 +115,7 @@ welcome_dialog_create (Gimp *gimp)
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_stack_add_titled (GTK_STACK (stack), vbox, "welcome",
-                        "Welcome");
+                        _("Welcome"));
   gtk_widget_show (vbox);
 
   image = gtk_image_new_from_icon_name ("gimp-wilber",
@@ -243,7 +243,7 @@ welcome_dialog_create (Gimp *gimp)
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
       gtk_stack_add_titled (GTK_STACK (stack), vbox, "release-notes",
-                            "Release Notes");
+                            _("Release Notes"));
       gtk_widget_show (vbox);
 
       /* Release note title. */
