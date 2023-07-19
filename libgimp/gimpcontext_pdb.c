@@ -4231,3 +4231,39 @@ gimp_context_set_ink_blob_angle (gdouble angle)
 
   return success;
 }
+
+/**
+ * _gimp_context_get_resource:
+ * @type_name: The name of the resource type.
+ *
+ * Get the currently active resource for a type.
+ *
+ * Returns the currently active resource for the given type name.
+ *
+ * Returns: (transfer none): The active resource.
+ *
+ * Since: 3.0
+ **/
+GimpResource *
+_gimp_context_get_resource (const gchar *type_name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpResource *resource = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, type_name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-context-get-resource",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    resource = GIMP_VALUES_GET_RESOURCE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return resource;
+}

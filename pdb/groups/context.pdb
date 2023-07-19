@@ -3358,6 +3358,57 @@ CODE
     );
 }
 
+sub context_get_resource {
+    $blurb = 'Get the currently active resource for a type.';
+
+    $help = <<'HELP';
+Returns the currently active resource for the given type name.
+HELP
+
+    $lib_private = 1;
+
+    &jehan_pdb_misc('2023', '3.0');
+
+    @inargs = (
+        { name => 'type_name', type => 'string', non_empty => 1,
+          desc => 'The name of the resource type' }
+    );
+    @outargs = (
+	{ name  => 'resource',
+          type  => 'resource',
+	  desc  => 'The active resource' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GType type = g_type_from_name (type_name);
+
+  if (g_type_is_a (type, GIMP_TYPE_RESOURCE))
+    {
+      if (type == GIMP_TYPE_BRUSH)
+        resource = GIMP_RESOURCE (gimp_context_get_brush (context));
+      else if (type == GIMP_TYPE_FONT)
+        resource = GIMP_RESOURCE (gimp_context_get_font (context));
+      else if (type == GIMP_TYPE_GRADIENT)
+        resource = GIMP_RESOURCE (gimp_context_get_gradient (context));
+      else if (type == GIMP_TYPE_PATTERN)
+        resource = GIMP_RESOURCE (gimp_context_get_pattern (context));
+      else if (type == GIMP_TYPE_PALETTE)
+        resource = GIMP_RESOURCE (gimp_context_get_palette (context));
+      else
+        /* Should not be reached. */
+        success = FALSE;
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
 @headers = qw("core/gimp.h"
               "core/gimp-gradients.h"
               "core/gimpcontainer.h"
@@ -3437,7 +3488,8 @@ CODE
             context_get_ink_speed_sensitivity context_set_ink_speed_sensitivity
             context_get_ink_blob_type context_set_ink_blob_type
             context_get_ink_blob_aspect_ratio context_set_ink_blob_aspect_ratio
-            context_get_ink_blob_angle context_set_ink_blob_angle);
+            context_get_ink_blob_angle context_set_ink_blob_angle
+            context_get_resource);
 
 %exports = (app => [@procs], lib => [@procs]);
 

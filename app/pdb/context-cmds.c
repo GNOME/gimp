@@ -47,6 +47,7 @@
 #include "core/gimppalette.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimppattern.h"
+#include "core/gimpresource.h"
 #include "core/gimpstrokeoptions.h"
 #include "paint/gimppaintoptions.h"
 #include "plug-in/gimpplugin-context.h"
@@ -3017,6 +3018,56 @@ context_set_ink_blob_angle_invoker (GimpProcedure         *procedure,
                                            error ? *error : NULL);
 }
 
+static GimpValueArray *
+context_get_resource_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *type_name;
+  GimpResource *resource = NULL;
+
+  type_name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GType type = g_type_from_name (type_name);
+
+      if (g_type_is_a (type, GIMP_TYPE_RESOURCE))
+        {
+          if (type == GIMP_TYPE_BRUSH)
+            resource = GIMP_RESOURCE (gimp_context_get_brush (context));
+          else if (type == GIMP_TYPE_FONT)
+            resource = GIMP_RESOURCE (gimp_context_get_font (context));
+          else if (type == GIMP_TYPE_GRADIENT)
+            resource = GIMP_RESOURCE (gimp_context_get_gradient (context));
+          else if (type == GIMP_TYPE_PATTERN)
+            resource = GIMP_RESOURCE (gimp_context_get_pattern (context));
+          else if (type == GIMP_TYPE_PALETTE)
+            resource = GIMP_RESOURCE (gimp_context_get_palette (context));
+          else
+            /* Should not be reached. */
+            success = FALSE;
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_object (gimp_value_array_index (return_vals, 1), resource);
+
+  return return_vals;
+}
+
 void
 register_context_procs (GimpPDB *pdb)
 {
@@ -5693,6 +5744,36 @@ register_context_procs (GimpPDB *pdb)
                                                     "ink blob angle in degrees",
                                                     -180, 180, -180,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-resource
+   */
+  procedure = gimp_procedure_new (context_get_resource_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-resource");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the currently active resource for a type.",
+                                  "Returns the currently active resource for the given type name.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2023");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("type-name",
+                                                       "type name",
+                                                       "The name of the resource type",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_resource ("resource",
+                                                             "resource",
+                                                             "The active resource",
+                                                             FALSE,
+                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }
