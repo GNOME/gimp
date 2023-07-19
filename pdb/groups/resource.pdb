@@ -259,6 +259,49 @@ CODE
     );
 }
 
+sub resource_get_identifiers {
+    $blurb = "Returns a triplet identifying the resource.";
+
+    $help = <<HELP;
+This procedure returns 2 strings and a boolean. The first string is the resource
+name, similar to what you would obtain calling gimp_resource_get_name(). The
+second is an opaque identifier for the collection this resource belongs to.
+
+Note: as far as GIMP is concerned, a collection of resource usually corresponds
+to a single file on disk (which may or may not contain several resources).
+Therefore the identifier may be derived from the local file path. Nevertheless
+you should not use this string as such as this is not guaranteed to be always
+the case. You should consider it as an opaque identifier only to be used again
+through _gimp_resource_get_by_identifier().
+HELP
+
+    &jehan_pdb_misc('2023', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name => 'resource', type => 'resource',
+	  desc => 'The resource' }
+    );
+
+    @outargs = (
+        { name => 'is_internal', type => 'boolean',
+          desc => 'Whether this is the identifier for internal data'},
+	{ name => 'name', type => 'string',
+	  desc => "The resource's name" },
+	{ name => 'collection_id', type => 'string',
+	  desc => "The resource's collection identifier" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_data_get_identifiers (GIMP_DATA (resource), &name, &collection_id, &is_internal);
+}
+CODE
+    );
+}
+
 sub resource_is_editable {
     $blurb = "Whether the resource can be edited.";
     $help  = "Returns TRUE if you have permission to change the resource.";
@@ -404,6 +447,7 @@ CODE
             resource_id_is_palette
             resource_id_is_font
             resource_get_name
+            resource_get_identifiers
             resource_is_editable
             resource_duplicate
             resource_rename

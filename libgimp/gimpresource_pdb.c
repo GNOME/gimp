@@ -333,6 +333,60 @@ gimp_resource_get_name (GimpResource *resource)
 }
 
 /**
+ * _gimp_resource_get_identifiers:
+ * @resource: The resource.
+ * @name: (out) (transfer full): The resource's name.
+ * @collection_id: (out) (transfer full): The resource's collection identifier.
+ *
+ * Returns a triplet identifying the resource.
+ *
+ * This procedure returns 2 strings and a boolean. The first string is
+ * the resource name, similar to what you would obtain calling
+ * gimp_resource_get_name(). The second is an opaque identifier for the
+ * collection this resource belongs to.
+ * Note: as far as GIMP is concerned, a collection of resource usually
+ * corresponds to a single file on disk (which may or may not contain
+ * several resources). Therefore the identifier may be derived from the
+ * local file path. Nevertheless you should not use this string as such
+ * as this is not guaranteed to be always the case. You should consider
+ * it as an opaque identifier only to be used again through
+ * _gimp_resource_get_by_identifier().
+ *
+ * Returns: Whether this is the identifier for internal data.
+ *
+ * Since: 3.0
+ **/
+gboolean
+_gimp_resource_get_identifiers (GimpResource  *resource,
+                                gchar        **name,
+                                gchar        **collection_id)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean is_internal = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_RESOURCE, resource,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-resource-get-identifiers",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    {
+      is_internal = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+      *name = GIMP_VALUES_DUP_STRING (return_vals, 2);
+      *collection_id = GIMP_VALUES_DUP_STRING (return_vals, 3);
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return is_internal;
+}
+
+/**
  * gimp_resource_is_editable:
  * @resource: The resource.
  *

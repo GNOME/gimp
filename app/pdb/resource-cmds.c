@@ -298,6 +298,41 @@ resource_get_name_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+resource_get_identifiers_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpResource *resource;
+  gboolean is_internal = FALSE;
+  gchar *name = NULL;
+  gchar *collection_id = NULL;
+
+  resource = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      gimp_data_get_identifiers (GIMP_DATA (resource), &name, &collection_id, &is_internal);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_set_boolean (gimp_value_array_index (return_vals, 1), is_internal);
+      g_value_take_string (gimp_value_array_index (return_vals, 2), name);
+      g_value_take_string (gimp_value_array_index (return_vals, 3), collection_id);
+    }
+
+  return return_vals;
+}
+
+static GimpValueArray *
 resource_is_editable_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
@@ -667,6 +702,50 @@ register_resource_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The resource's name",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-resource-get-identifiers
+   */
+  procedure = gimp_procedure_new (resource_get_identifiers_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-resource-get-identifiers");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns a triplet identifying the resource.",
+                                  "This procedure returns 2 strings and a boolean. The first string is the resource name, similar to what you would obtain calling 'gimp-resource-get-name'. The second is an opaque identifier for the collection this resource belongs to.\n"
+                                  "Note: as far as GIMP is concerned, a collection of resource usually corresponds to a single file on disk (which may or may not contain several resources). Therefore the identifier may be derived from the local file path. Nevertheless you should not use this string as such as this is not guaranteed to be always the case. You should consider it as an opaque identifier only to be used again through _'gimp-resource-get-by-identifier'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2023");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_resource ("resource",
+                                                         "resource",
+                                                         "The resource",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("is-internal",
+                                                         "is internal",
+                                                         "Whether this is the identifier for internal data",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The resource's name",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("collection-id",
+                                                           "collection id",
+                                                           "The resource's collection identifier",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
