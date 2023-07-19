@@ -112,6 +112,8 @@ typedef struct _GimpResourcePrivate
 } GimpResourcePrivate;
 
 
+static void     gimp_resource_config_iface_init  (GimpConfigInterface *iface);
+
 static void     gimp_resource_set_property       (GObject      *object,
                                                   guint         property_id,
                                                   const GValue *value,
@@ -121,8 +123,21 @@ static void     gimp_resource_get_property       (GObject      *object,
                                                   GValue       *value,
                                                   GParamSpec   *pspec);
 
+static gboolean gimp_resource_serialize          (GimpConfig       *config,
+                                                  GimpConfigWriter *writer,
+                                                  gpointer          data);
+static GimpConfig *
+                gimp_resource_deserialize_create (GType             type,
+                                                  GScanner         *scanner,
+                                                  gint              nest_level,
+                                                  gpointer          data);
 
-G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpResource, gimp_resource, G_TYPE_OBJECT)
+
+G_DEFINE_TYPE_EXTENDED (GimpResource, gimp_resource, G_TYPE_OBJECT,
+                        G_TYPE_FLAG_ABSTRACT,
+                        G_ADD_PRIVATE (GimpResource)
+                        G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                               gimp_resource_config_iface_init))
 
 #define parent_class gimp_resource_parent_class
 
@@ -146,6 +161,13 @@ gimp_resource_class_init (GimpResourceClass *klass)
                       G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, N_PROPS, props);
+}
+
+static void
+gimp_resource_config_iface_init (GimpConfigInterface *iface)
+{
+  iface->serialize          = gimp_resource_serialize;
+  iface->deserialize_create = gimp_resource_deserialize_create;
 }
 
 static void
@@ -193,6 +215,63 @@ gimp_resource_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static gboolean
+gimp_resource_serialize (GimpConfig       *config,
+                         GimpConfigWriter *writer,
+                         gpointer          data)
+{
+  GimpResource  *resource;
+  gchar         *name;
+  gchar         *collection;
+  gboolean       is_internal;
+
+  g_return_val_if_fail (GIMP_IS_RESOURCE (config), FALSE);
+
+  resource    = GIMP_RESOURCE (config);
+  is_internal = _gimp_resource_get_identifiers (resource, &name, &collection);
+
+  if (is_internal)
+    gimp_config_writer_identifier (writer, "internal");
+  gimp_config_writer_string (writer, name);
+  gimp_config_writer_string (writer, collection);
+
+  g_free (name);
+  g_free (collection);
+
+  return TRUE;
+}
+
+static GimpConfig *
+gimp_resource_deserialize_create (GType     type,
+                                  GScanner *scanner,
+                                  gint      nest_level,
+                                  gpointer  data)
+{
+  GimpResource *resource    = NULL;
+  gchar        *name        = NULL;
+  gchar        *collection  = NULL;
+  gboolean      is_internal = FALSE;
+
+  if (gimp_scanner_parse_identifier (scanner, "internal"))
+    is_internal = TRUE;
+
+  if (gimp_scanner_parse_string (scanner, &name) &&
+      gimp_scanner_parse_string (scanner, &collection))
+    resource = _gimp_resource_get_by_identifiers (g_type_name (type), name, collection, is_internal);
+
+  if (resource == NULL)
+    /* Default to context resource. */
+    resource = _gimp_context_get_resource (g_type_name (type));
+
+  if (resource)
+    g_object_ref (resource);
+
+  g_free (collection);
+  g_free (name);;
+
+  return GIMP_CONFIG (resource);;
 }
 
 /**

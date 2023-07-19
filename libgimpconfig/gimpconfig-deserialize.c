@@ -781,8 +781,28 @@ gimp_config_deserialize_object (GValue     *value,
   if (! config_iface)
     return gimp_config_deserialize_any (value, prop_spec, scanner);
 
-  if (! config_iface->deserialize (prop_object, scanner, nest_level + 1, NULL))
-    return G_TOKEN_NONE;
+  if (config_iface->deserialize_create != NULL)
+    {
+      /* Some class may prefer to create themselves their objects, for instance
+       * to maintain unicity of objects (in libgimp in particular, the various
+       * GimpItem or GimpResource are managed by the lib. A single item or
+       * resource must be represented for a single object across the whole
+       * processus.
+       */
+      GimpConfig *created_object;
+
+      created_object = config_iface->deserialize_create (G_TYPE_FROM_INSTANCE (prop_object),
+                                                         scanner, nest_level + 1, NULL);
+
+      if (created_object == NULL)
+        return G_TOKEN_NONE;
+      else
+        g_value_take_object (value, created_object);
+    }
+  else if (! config_iface->deserialize (prop_object, scanner, nest_level + 1, NULL))
+    {
+      return G_TOKEN_NONE;
+    }
 
   return G_TOKEN_RIGHT_PAREN;
 }

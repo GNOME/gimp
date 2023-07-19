@@ -44,6 +44,10 @@ struct _GimpConfigInterface
                                          GScanner         *scanner,
                                          gint              nest_level,
                                          gpointer          data);
+  GimpConfig * (* deserialize_create)   (GType             type,
+                                         GScanner         *scanner,
+                                         gint              nest_level,
+                                         gpointer          data);
   gboolean     (* serialize_property)   (GimpConfig       *config,
                                          guint             property_id,
                                          const GValue     *value,

@@ -454,7 +454,7 @@ gimp_config_serialize_to_parasite (GimpConfig  *config,
 
 /**
  * gimp_config_deserialize_file:
- * @config: an oObject that implements the #GimpConfigInterface.
+ * @config: an object that implements the #GimpConfigInterface.
  * @file: the file to read configuration from.
  * @data: user data passed to the deserialize implementation.
  * @error: return location for a possible error
