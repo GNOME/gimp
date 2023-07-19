@@ -32,23 +32,27 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-G_GNUC_INTERNAL GimpResource* _gimp_resource_get_by_name     (const gchar   *type_name,
-                                                              const gchar   *resource_name);
-gboolean                      gimp_resource_id_is_valid      (gint           resource_id);
-gboolean                      gimp_resource_id_is_brush      (gint           resource_id);
-gboolean                      gimp_resource_id_is_pattern    (gint           resource_id);
-gboolean                      gimp_resource_id_is_gradient   (gint           resource_id);
-gboolean                      gimp_resource_id_is_palette    (gint           resource_id);
-gboolean                      gimp_resource_id_is_font       (gint           resource_id);
-gchar*                        gimp_resource_get_name         (GimpResource  *resource);
-G_GNUC_INTERNAL gboolean      _gimp_resource_get_identifiers (GimpResource  *resource,
-                                                              gchar        **name,
-                                                              gchar        **collection_id);
-gboolean                      gimp_resource_is_editable      (GimpResource  *resource);
-GimpResource*                 gimp_resource_duplicate        (GimpResource  *resource);
-gboolean                      gimp_resource_rename           (GimpResource  *resource,
-                                                              const gchar   *new_name);
-gboolean                      gimp_resource_delete           (GimpResource  *resource);
+G_GNUC_INTERNAL GimpResource* _gimp_resource_get_by_name        (const gchar   *type_name,
+                                                                 const gchar   *resource_name);
+G_GNUC_INTERNAL GimpResource* _gimp_resource_get_by_identifiers (const gchar   *type_name,
+                                                                 const gchar   *resource_name,
+                                                                 const gchar   *collection,
+                                                                 gboolean       is_internal);
+gboolean                      gimp_resource_id_is_valid         (gint           resource_id);
+gboolean                      gimp_resource_id_is_brush         (gint           resource_id);
+gboolean                      gimp_resource_id_is_pattern       (gint           resource_id);
+gboolean                      gimp_resource_id_is_gradient      (gint           resource_id);
+gboolean                      gimp_resource_id_is_palette       (gint           resource_id);
+gboolean                      gimp_resource_id_is_font          (gint           resource_id);
+gchar*                        gimp_resource_get_name            (GimpResource  *resource);
+G_GNUC_INTERNAL gboolean      _gimp_resource_get_identifiers    (GimpResource  *resource,
+                                                                 gchar        **name,
+                                                                 gchar        **collection_id);
+gboolean                      gimp_resource_is_editable         (GimpResource  *resource);
+GimpResource*                 gimp_resource_duplicate           (GimpResource  *resource);
+gboolean                      gimp_resource_rename              (GimpResource  *resource,
+                                                                 const gchar   *new_name);
+gboolean                      gimp_resource_delete              (GimpResource  *resource);
 
 
 G_END_DECLS

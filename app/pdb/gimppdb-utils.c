@@ -54,61 +54,24 @@
 #include "gimp-intl.h"
 
 
-static GimpResource * gimp_pdb_get_data_factory_item (Gimp        *gimp,
-                                                      GType        data_type,
-                                                      const gchar *name);
-const gchar *         gimp_pdb_get_data_label         (GType       data_type);
-
-
-static GimpResource *
-gimp_pdb_get_data_factory_item (Gimp        *gimp,
-                                GType        data_type,
-                                const gchar *name)
+typedef struct
 {
-  GimpDataFactory *factory;
-  GimpObject      *resource;
+  const gchar *name;
+  const gchar *collection;
+  gboolean     is_internal;
+} SearchData;
 
-  factory = gimp_pdb_get_data_factory (gimp, data_type);
-  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
 
-  resource = gimp_container_get_child_by_name (gimp_data_factory_get_container (factory), name);
+static GimpResource * gimp_pdb_get_data_factory_item    (Gimp         *gimp,
+                                                         GType         data_type,
+                                                         const gchar  *name,
+                                                         const gchar  *collection,
+                                                         gboolean      is_internal);
+const gchar *         gimp_pdb_get_data_label           (GType         data_type);
 
-  if (! resource)
-    resource = gimp_container_get_child_by_name (gimp_data_factory_get_container_obsolete (factory),
-                                                 name);
+static gboolean       gimp_pdb_search_in_data_container (GimpData     *data,
+                                                         SearchData   *search_data);;
 
-  if (! resource && ! strcmp (name, "Standard"))
-    resource = (GimpObject *) gimp_data_factory_data_get_standard (factory,
-                                                                   gimp_get_user_context (gimp));
-
-  return (GimpResource *) resource;
-}
-
-const gchar *
-gimp_pdb_get_data_label (GType data_type)
-{
-  g_return_val_if_fail (g_type_is_a (data_type, GIMP_TYPE_DATA), NULL);
-
-  if (g_type_is_a (data_type, GIMP_TYPE_BRUSH_GENERATED))
-    return C_("PDB-error-data-label", "Generated brush");
-  else if (g_type_is_a (data_type, GIMP_TYPE_BRUSH))
-    return C_("PDB-error-data-label", "Brush");
-  else if (g_type_is_a (data_type, GIMP_TYPE_PATTERN))
-    return C_("PDB-error-data-label", "Pattern");
-  else if (g_type_is_a (data_type, GIMP_TYPE_GRADIENT))
-    return C_("PDB-error-data-label", "Gradient");
-  else if (g_type_is_a (data_type, GIMP_TYPE_PALETTE))
-    return C_("PDB-error-data-label", "Palette");
-  else if (g_type_is_a (data_type, GIMP_TYPE_FONT))
-    return C_("PDB-error-data-label", "Font");
-  else if (g_type_is_a (data_type, GIMP_TYPE_DYNAMICS))
-    return C_("PDB-error-data-label", "Paint dynamics");
-  else if (g_type_is_a (data_type, GIMP_TYPE_MYBRUSH))
-    return C_("PDB-error-data-label", "MyPaint brush");
-
-  /* If we reach this, it means we forgot a data type in our list! */
-  g_return_val_if_reached (NULL);
-}
 
 GimpDataFactory *
 gimp_pdb_get_data_factory (Gimp  *gimp,
@@ -164,7 +127,72 @@ gimp_pdb_get_resource (Gimp               *gimp,
       return NULL;
     }
 
-  resource = gimp_pdb_get_data_factory_item (gimp, data_type, name);
+  resource = gimp_pdb_get_data_factory_item (gimp, data_type, name, NULL, TRUE);
+
+  if (! resource)
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   /* TRANSLATOR: the first %s is a data label from the
+                    * PDB-error-data-label context. The second %s is a data
+                    * name.
+                    */
+                   C_("PDB-error-message", "%s '%s' not found"), label, name);
+    }
+  else if ((access & GIMP_PDB_DATA_ACCESS_WRITE) &&
+           ! gimp_data_is_writable (GIMP_DATA (resource)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   /* TRANSLATOR: the first %s is a data label from the
+                    * PDB-error-data-label context. The second %s is a data
+                    * name.
+                    */
+                   C_("PDB-error-message", "%s '%s' is not editable"), label, name);
+      return NULL;
+    }
+  else if ((access & GIMP_PDB_DATA_ACCESS_RENAME) &&
+           ! gimp_viewable_is_name_editable (GIMP_VIEWABLE (resource)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   /* TRANSLATOR: the first %s is a data label from the
+                    * PDB-error-data-label context. The second %s is a data
+                    * name.
+                    */
+                   C_("PDB-error-message", "%s '%s' is not renamable"), label, name);
+      return NULL;
+    }
+
+  return resource;
+}
+
+GimpResource *
+gimp_pdb_get_resource_by_id (Gimp               *gimp,
+                             GType               data_type,
+                             const gchar        *name,
+                             const gchar        *collection,
+                             gboolean            is_internal,
+                             GimpPDBDataAccess   access,
+                             GError            **error)
+{
+  GimpResource *resource;
+  const gchar  *label;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  label = gimp_pdb_get_data_label (data_type);
+
+  if (! name || ! strlen (name))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   /* TRANSLATOR: %s is a data label from the
+                    * PDB-error-data-label context.
+                    */
+                   C_("PDB-error-message", "%s name cannot be empty"),
+                   g_type_name (data_type));
+      return NULL;
+    }
+
+  resource = gimp_pdb_get_data_factory_item (gimp, data_type, name, collection, is_internal);
 
   if (! resource)
     {
@@ -718,4 +746,84 @@ gimp_pdb_is_canonical_procedure (const gchar  *procedure_name,
     }
 
   return TRUE;
+}
+
+
+/* Private functions. */
+
+static GimpResource *
+gimp_pdb_get_data_factory_item (Gimp        *gimp,
+                                GType        data_type,
+                                const gchar *name,
+                                const gchar *collection,
+                                gboolean     is_internal)
+{
+  GimpDataFactory *factory;
+  GimpContainer   *container;
+  GimpObject      *resource;
+
+  factory = gimp_pdb_get_data_factory (gimp, data_type);
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
+
+  container = gimp_data_factory_get_container (factory);
+
+  if (collection == NULL)
+    {
+      resource = gimp_container_get_child_by_name (container, name);
+    }
+  else
+    {
+      SearchData *data = g_new (SearchData, 1);
+
+      data->name        = name;
+      data->collection  = collection;
+      data->is_internal = is_internal;
+      resource = gimp_container_search (container,
+                                        (GimpContainerSearchFunc) gimp_pdb_search_in_data_container,
+                                        data);
+      g_free (data);
+    }
+
+  if (! resource)
+    resource = gimp_container_get_child_by_name (gimp_data_factory_get_container_obsolete (factory),
+                                                 name);
+
+  if (! resource && ! strcmp (name, "Standard"))
+    resource = (GimpObject *) gimp_data_factory_data_get_standard (factory,
+                                                                   gimp_get_user_context (gimp));
+
+  return (GimpResource *) resource;
+}
+
+const gchar *
+gimp_pdb_get_data_label (GType data_type)
+{
+  g_return_val_if_fail (g_type_is_a (data_type, GIMP_TYPE_DATA), NULL);
+
+  if (g_type_is_a (data_type, GIMP_TYPE_BRUSH_GENERATED))
+    return C_("PDB-error-data-label", "Generated brush");
+  else if (g_type_is_a (data_type, GIMP_TYPE_BRUSH))
+    return C_("PDB-error-data-label", "Brush");
+  else if (g_type_is_a (data_type, GIMP_TYPE_PATTERN))
+    return C_("PDB-error-data-label", "Pattern");
+  else if (g_type_is_a (data_type, GIMP_TYPE_GRADIENT))
+    return C_("PDB-error-data-label", "Gradient");
+  else if (g_type_is_a (data_type, GIMP_TYPE_PALETTE))
+    return C_("PDB-error-data-label", "Palette");
+  else if (g_type_is_a (data_type, GIMP_TYPE_FONT))
+    return C_("PDB-error-data-label", "Font");
+  else if (g_type_is_a (data_type, GIMP_TYPE_DYNAMICS))
+    return C_("PDB-error-data-label", "Paint dynamics");
+  else if (g_type_is_a (data_type, GIMP_TYPE_MYBRUSH))
+    return C_("PDB-error-data-label", "MyPaint brush");
+
+  /* If we reach this, it means we forgot a data type in our list! */
+  g_return_val_if_reached (NULL);
+}
+
+static gboolean
+gimp_pdb_search_in_data_container (GimpData   *data,
+                                   SearchData *search_data)
+{
+  return gimp_data_identify (data, search_data->name, search_data->collection, search_data->is_internal);
 }

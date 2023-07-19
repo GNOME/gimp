@@ -27,6 +27,13 @@ GimpResource    * gimp_pdb_get_resource           (Gimp               *gimp,
                                                    const gchar        *name,
                                                    GimpPDBDataAccess   access,
                                                    GError            **error);
+GimpResource    * gimp_pdb_get_resource_by_id     (Gimp               *gimp,
+                                                   GType               data_type,
+                                                   const gchar        *name,
+                                                   const gchar        *collection,
+                                                   gboolean            is_internal,
+                                                   GimpPDBDataAccess   access,
+                                                   GError            **error);
 GimpBrush       * gimp_pdb_get_generated_brush    (Gimp               *gimp,
                                                    const gchar        *name,
                                                    GimpPDBDataAccess   access,

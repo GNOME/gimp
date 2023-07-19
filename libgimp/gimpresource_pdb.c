@@ -76,6 +76,53 @@ _gimp_resource_get_by_name (const gchar *type_name,
 }
 
 /**
+ * _gimp_resource_get_by_identifiers:
+ * @type_name: The name of the resource type.
+ * @resource_name: The name of the resource.
+ * @collection: The collection identifier.
+ * @is_internal: Whether this is the identifier for internal data.
+ *
+ * Returns the resource contained in a given file with a given name.
+ *
+ * Returns a resource specifically stored in a given file path, under a
+ * given name (a single path may be a collection containing several
+ * resources).
+ *
+ * Returns: (transfer none): The resource.
+ *
+ * Since: 3.0
+ **/
+GimpResource *
+_gimp_resource_get_by_identifiers (const gchar *type_name,
+                                   const gchar *resource_name,
+                                   const gchar *collection,
+                                   gboolean     is_internal)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpResource *resource = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, type_name,
+                                          G_TYPE_STRING, resource_name,
+                                          G_TYPE_STRING, collection,
+                                          G_TYPE_BOOLEAN, is_internal,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-resource-get-by-identifiers",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    resource = GIMP_VALUES_GET_RESOURCE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return resource;
+}
+
+/**
  * gimp_resource_id_is_valid:
  * @resource_id: The resource ID to check.
  *
