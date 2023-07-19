@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-17 12:07+0000\n"
-"PO-Revision-Date: 2023-07-18 05:31+0200\n"
+"POT-Creation-Date: 2023-07-18 18:50+0000\n"
+"PO-Revision-Date: 2023-07-19 06:14+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -17497,6 +17497,10 @@ msgstr "ხილვადობის ბილიკის _ჩაკეტვ
 msgid "Welcome to GIMP %s"
 msgstr "მოგესალმებათ GIMP %s"
 
+#: app/dialogs/welcome-dialog.c:118
+msgid "Welcome"
+msgstr "კეთილი იყოს თქვენი მობრძანება"
+
 #. Welcome title.
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:135
@@ -17541,6 +17545,10 @@ msgstr "წვლილი შეიტანა"
 #: app/dialogs/welcome-dialog.c:232
 msgid "Donating"
 msgstr "შეწირვა"
+
+#: app/dialogs/welcome-dialog.c:246
+msgid "Release Notes"
+msgstr "გამოშვების შენიშვნები"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:257
@@ -27823,7 +27831,7 @@ msgstr "ეკრანზე რენდერის დანიშნულ�
 
 #: menus/image-menu.ui.in.in:270
 msgctxt "view-action"
-msgid "_Padding color"
+msgid "_Padding Color"
 msgstr "_ფანჯრის ფონის ფერი"
 
 #: menus/image-menu.ui.in.in:294
