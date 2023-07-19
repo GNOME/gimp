@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-12 12:19+0000\n"
-"PO-Revision-Date: 2023-07-12 16:14+0200\n"
+"POT-Creation-Date: 2023-07-19 01:34+0000\n"
+"PO-Revision-Date: 2023-07-19 08:32+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -611,18 +611,19 @@ msgstr "Navpične"
 #: plug-ins/common/blinds.c:301 plug-ins/common/compose.c:1129
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
-#: plug-ins/common/file-gegl.c:465 plug-ins/common/file-gif-load.c:1097
-#: plug-ins/common/file-iff.c:343 plug-ins/common/file-jp2-load.c:1317
-#: plug-ins/common/file-pcx.c:742 plug-ins/common/file-pcx.c:750
-#: plug-ins/common/file-pcx.c:758 plug-ins/common/file-pix.c:422
-#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:869
-#: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
-#: plug-ins/common/file-sunras.c:1083 plug-ins/common/file-tga.c:1117
-#: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:912
-#: plug-ins/common/film.c:811 plug-ins/common/smooth-palette.c:332
-#: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
-#: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
-#: plug-ins/file-fits/fits.c:701 plug-ins/file-jpeg/jpeg-load.c:231
+#: plug-ins/common/file-farbfeld.c:322 plug-ins/common/file-gegl.c:465
+#: plug-ins/common/file-gif-load.c:1097 plug-ins/common/file-iff.c:343
+#: plug-ins/common/file-jp2-load.c:1317 plug-ins/common/file-pcx.c:742
+#: plug-ins/common/file-pcx.c:750 plug-ins/common/file-pcx.c:758
+#: plug-ins/common/file-pix.c:422 plug-ins/common/file-png.c:950
+#: plug-ins/common/file-pnm.c:869 plug-ins/common/file-qoi.c:321
+#: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1083
+#: plug-ins/common/file-tga.c:1117 plug-ins/common/file-wbmp.c:270
+#: plug-ins/common/file-xbm.c:912 plug-ins/common/film.c:811
+#: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
+#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:271
+#: plug-ins/file-faxg3/faxg3.c:574 plug-ins/file-fits/fits.c:701
+#: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2733 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1534
@@ -1178,16 +1179,17 @@ msgid "Save CML Explorer Parameters"
 msgstr "Shrani parametre raziskovalca MZP"
 
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:822
-#: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:876
-#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1230
-#: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
-#: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
-#: plug-ins/common/file-sunras.c:638 plug-ins/common/file-tga.c:1238
-#: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
-#: plug-ins/file-bmp/bmp-save.c:341 plug-ins/file-fli/fli-gimp.c:817
-#: plug-ins/file-icns/file-icns-save.c:428 plug-ins/file-ico/ico-save.c:1341
-#: plug-ins/file-ico/ico-save.c:1558 plug-ins/file-jpeg/jpeg-save.c:317
-#: plug-ins/file-psd/psd-save.c:2214 plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-farbfeld.c:381
+#: plug-ins/common/file-mng.c:876 plug-ins/common/file-mng.c:1223
+#: plug-ins/common/file-pcx.c:1230 plug-ins/common/file-pdf-save.c:720
+#: plug-ins/common/file-png.c:1502 plug-ins/common/file-raw-data.c:1345
+#: plug-ins/common/file-raw-data.c:1374 plug-ins/common/file-sunras.c:638
+#: plug-ins/common/file-tga.c:1238 plug-ins/common/file-xmc.c:1383
+#: plug-ins/common/sphere-designer.c:2201 plug-ins/file-bmp/bmp-save.c:341
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:428
+#: plug-ins/file-ico/ico-save.c:1341 plug-ins/file-ico/ico-save.c:1558
+#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
+#: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
 #: plug-ins/gfig/gfig.c:1044 plug-ins/ifs-compose/ifs-compose.c:2468
@@ -1208,21 +1210,22 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: plug-ins/common/cml-explorer.c:2339 plug-ins/common/curve-bend.c:875
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
-#: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-iff.c:227
-#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:523
-#: plug-ins/common/file-pcx.c:566 plug-ins/common/file-png.c:673
-#: plug-ins/common/file-ps.c:1126 plug-ins/common/file-ps.c:3636
-#: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
-#: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
-#: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:458
-#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:825
-#: plug-ins/common/file-tga.c:448 plug-ins/common/file-wbmp.c:184
-#: plug-ins/common/file-xbm.c:750 plug-ins/common/file-xmc.c:658
-#: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:486
-#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
-#: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
-#: plug-ins/file-fits/fits.c:396 plug-ins/file-fli/fli-gimp.c:459
-#: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
+#: plug-ins/common/file-farbfeld.c:299 plug-ins/common/file-gif-load.c:410
+#: plug-ins/common/file-iff.c:227 plug-ins/common/file-mng.c:1407
+#: plug-ins/common/file-pcx.c:523 plug-ins/common/file-pcx.c:566
+#: plug-ins/common/file-png.c:673 plug-ins/common/file-ps.c:1126
+#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2383
+#: plug-ins/common/file-psp.c:2433 plug-ins/common/file-qoi.c:300
+#: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
+#: plug-ins/common/file-sunras.c:458 plug-ins/common/file-svg.c:365
+#: plug-ins/common/file-svg.c:825 plug-ins/common/file-tga.c:448
+#: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:750
+#: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:897
+#: plug-ins/common/file-xwd.c:486 plug-ins/common/sphere-designer.c:2090
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
+#: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:396
+#: plug-ins/file-fli/fli-gimp.c:459 plug-ins/file-fli/fli-gimp.c:510
+#: plug-ins/file-icns/file-icns-load.c:515
 #: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:681
 #: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1019
 #: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:614
@@ -2277,19 +2280,19 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #.
 #. * Open the file for writing...
 #.
-#: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:917
-#: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1383
-#: plug-ins/common/file-pcx.c:1114 plug-ins/common/file-pix.c:560
-#: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
-#: plug-ins/common/file-ps.c:1338 plug-ins/common/file-qoi.c:375
-#: plug-ins/common/file-sunras.c:629 plug-ins/common/file-tga.c:1230
-#: plug-ins/common/file-xbm.c:1051 plug-ins/common/file-xpm.c:705
-#: plug-ins/common/file-xwd.c:714 plug-ins/file-bmp/bmp-save.c:333
-#: plug-ins/file-fits/fits.c:674 plug-ins/file-fli/fli-gimp.c:784
-#: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1333
-#: plug-ins/file-ico/ico-save.c:1542 plug-ins/file-jpeg/jpeg-save.c:272
-#: plug-ins/file-psd/psd-save.c:2160 plug-ins/file-sgi/sgi.c:646
-#: plug-ins/file-tiff/file-tiff-save.c:1074
+#: plug-ins/common/file-cel.c:840 plug-ins/common/file-farbfeld.c:373
+#: plug-ins/common/file-gif-save.c:917 plug-ins/common/file-html-table.c:364
+#: plug-ins/common/file-jpegxl.c:1383 plug-ins/common/file-pcx.c:1114
+#: plug-ins/common/file-pix.c:560 plug-ins/common/file-png.c:1494
+#: plug-ins/common/file-pnm.c:1635 plug-ins/common/file-ps.c:1338
+#: plug-ins/common/file-qoi.c:375 plug-ins/common/file-sunras.c:629
+#: plug-ins/common/file-tga.c:1230 plug-ins/common/file-xbm.c:1051
+#: plug-ins/common/file-xpm.c:705 plug-ins/common/file-xwd.c:714
+#: plug-ins/file-bmp/bmp-save.c:333 plug-ins/file-fits/fits.c:674
+#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-icns/file-icns-save.c:612
+#: plug-ins/file-ico/ico-save.c:1333 plug-ins/file-ico/ico-save.c:1542
+#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2160
+#: plug-ins/file-sgi/sgi.c:646 plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Izvažanje »%s« ..."
@@ -2456,6 +2459,30 @@ msgstr "Slik ni mogoče shraniti s kanalom alfa."
 #: plug-ins/common/file-xwd.c:709 plug-ins/file-fits/fits.c:669
 msgid "Cannot operate on unknown image types."
 msgstr "S slikami neznane vrste ni mogoče delovati."
+
+#: plug-ins/common/file-farbfeld.c:135 plug-ins/common/file-farbfeld.c:161
+msgid "Farbfeld"
+msgstr "Farbfeld"
+
+#: plug-ins/common/file-farbfeld.c:138 plug-ins/common/file-farbfeld.c:140
+msgid "Load file in the Farbfeld file format"
+msgstr "Naloži datoteko v zapisu Farbfeld"
+
+#: plug-ins/common/file-farbfeld.c:164 plug-ins/common/file-farbfeld.c:166
+msgid "Export image in the Farbfeld file format"
+msgstr "Izvozi sliko v zapisu datoteke Farbfeld."
+
+#: plug-ins/common/file-farbfeld.c:258
+msgid "Farbfeld format does not support multiple layers."
+msgstr "Zapis Farbfeld ne podpira večjega števila plasti."
+
+#: plug-ins/common/file-farbfeld.c:310
+msgid "Failed to read Farbfeld header"
+msgstr "Branje datoteke Farbfeld ni uspelo"
+
+#: plug-ins/common/file-farbfeld.c:336
+msgid "Premature end of Farbfeld pixel data"
+msgstr "Predčasen konec podatkov slikovnih točk Farbfeld."
 
 #: plug-ins/common/file-gbr.c:125
 msgid "GIMP brush"
