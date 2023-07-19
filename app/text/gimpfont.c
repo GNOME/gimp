@@ -80,7 +80,6 @@ struct _GimpFontClass
 };
 
 
-static void          gimp_font_constructed      (GObject       *object);
 static void          gimp_font_finalize         (GObject       *object);
 static void          gimp_font_set_property     (GObject       *object,
                                                  guint          property_id,
@@ -138,7 +137,6 @@ gimp_font_class_init (GimpFontClass *klass)
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->constructed         = gimp_font_constructed;
   object_class->finalize            = gimp_font_finalize;
   object_class->set_property        = gimp_font_set_property;
 
@@ -158,15 +156,6 @@ gimp_font_class_init (GimpFontClass *klass)
 static void
 gimp_font_init (GimpFont *font)
 {
-}
-
-static void
-gimp_font_constructed (GObject *object)
-{
-  G_OBJECT_CLASS (parent_class)->constructed (object);
-
-  gimp_data_make_internal (GIMP_DATA (object),
-                           gimp_object_get_name (object));
 }
 
 static void

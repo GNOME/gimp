@@ -518,9 +518,10 @@ static void
 gimp_font_factory_add_font (GimpContainer        *container,
                             PangoContext         *context,
                             PangoFontDescription *desc,
-                            gchar                *full_name)
+                            const gchar          *full_name,
+                            const gchar          *path)
 {
-  gchar *name = full_name;
+  gchar *name = (gchar *) full_name;
 
   if (! desc && ! full_name)
     return;
@@ -542,6 +543,21 @@ gimp_font_factory_add_font (GimpContainer        *container,
                            "pango-context", context,
                            NULL);
       gimp_font_set_lookup_name (font, pango_font_description_to_string (desc));
+
+      if (path != NULL)
+        {
+          GFile *file;
+
+          file = g_file_new_for_path (path);
+          gimp_data_set_file (GIMP_DATA (font), file, FALSE, FALSE);
+
+          g_object_unref (file);
+        }
+      else
+        {
+          gimp_data_make_internal (GIMP_DATA (font), "gimp-font-standard-alias");
+        }
+
       gimp_container_add (container, GIMP_OBJECT (font));
       g_object_unref (font);
     }
@@ -575,7 +591,12 @@ gimp_font_factory_make_alias (GimpContainer *container,
                                      PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL);
   pango_font_description_set_stretch (desc, PANGO_STRETCH_NORMAL);
 
-  gimp_font_factory_add_font (container, context, desc, NULL);
+  /* This might be the only valid time where a NULL path is valid. Though I do
+   * wonder if really these aliases are the right thing to do. Generic aliases
+   * are the best way to have differing text renders over time (and that's not
+   * something to be wished for). XXX
+   */
+  gimp_font_factory_add_font (container, context, desc, NULL, NULL);
 
   pango_font_description_free (desc);
 }
@@ -727,7 +748,7 @@ gimp_font_factory_load_names (GimpContainer *container,
           if (fullname2 != NULL && g_str_is_ascii (fullname2))
             fullname = fullname2;
 
-          gimp_font_factory_add_font (container, context, pfd, fullname);
+          gimp_font_factory_add_font (container, context, pfd, fullname, (const gchar *) file);
           pango_font_description_free (pfd);
           continue;
         }
@@ -756,11 +777,11 @@ gimp_font_factory_load_names (GimpContainer *container,
                               family);
       g_free (family);
 
-      file = g_markup_escape_text (file, -1);
+      desc_file = g_markup_escape_text (file, -1);
       g_string_append_printf (xml,
                               "<edit name=\"file\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
-                              file);
-      g_free (file);
+                              desc_file);
+      g_free (desc_file);
 
       if (FcPatternGetString (fontset->fonts[i], FC_POSTSCRIPT_NAME, 0, (FcChar8 **) &psname) == FcResultMatch)
         {
@@ -814,7 +835,7 @@ gimp_font_factory_load_names (GimpContainer *container,
       if (fullname2 != NULL && g_str_is_ascii (fullname2))
         fullname = fullname2;
 
-      gimp_font_factory_add_font (container, context, pfd, fullname);
+      gimp_font_factory_add_font (container, context, pfd, fullname, (const gchar *) file);
 
       pango_font_description_free (pfd);
       g_free (newname);
@@ -862,7 +883,11 @@ gimp_font_factory_load_names (GimpContainer *container,
           PangoFontDescription *desc;
 
           desc = pango_font_face_describe (faces[j]);
-          gimp_font_factory_add_font (container, context, desc, NULL);
+          /* TODO: doesn't look like we can get a file path from PangoFontFace.
+           * So this basically makes the ! USE_FONTCONFIG_DIRECTLY code path
+           * broken.
+           */
+          gimp_font_factory_add_font (container, context, desc, NULL, NULL);
           pango_font_description_free (desc);
         }
     }
