@@ -16,6 +16,40 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+sub resource_get_by_name {
+    $blurb = "Returns a resource with the given name.";
+    $help  = "Returns a resource with the given name.";
+
+    &jehan_pdb_misc('2023', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+        { name => 'type_name', type => 'string', non_empty => 1,
+          desc => 'The name of the resource type' },
+	{ name => 'resource_name', type => 'string', non_empty => 1,
+	  desc => 'The name of the resource' }
+    );
+
+    @outargs = (
+      { name => 'resource',
+        type => 'resource',
+        desc => "The resource" }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  resource = gimp_pdb_get_resource (gimp, g_type_from_name (type_name), resource_name,
+                                    GIMP_PDB_DATA_ACCESS_READ, error);
+
+  if (! resource)
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub resource_id_is_valid {
     $blurb = 'Returns TRUE if the resource ID is valid.';
 
@@ -362,7 +396,8 @@ CODE
               "gimppdberror.h"
               "gimp-intl.h");
 
-@procs = qw(resource_id_is_valid
+@procs = qw(resource_get_by_name
+            resource_id_is_valid
             resource_id_is_brush
             resource_id_is_pattern
             resource_id_is_gradient

@@ -61,7 +61,7 @@ pattern_get_by_name_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      pattern = gimp_pdb_get_pattern (gimp, name, error);
+      pattern = GIMP_PATTERN (gimp_pdb_get_resource (gimp, GIMP_TYPE_PATTERN, name, GIMP_PDB_DATA_ACCESS_READ, error));
 
       if (! pattern)
         success = FALSE;

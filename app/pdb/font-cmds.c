@@ -56,7 +56,7 @@ font_get_by_name_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      font = gimp_pdb_get_font (gimp, name, error);
+      font = GIMP_FONT (gimp_pdb_get_resource (gimp, GIMP_TYPE_FONT, name, GIMP_PDB_DATA_ACCESS_READ, error));
 
       if (! font)
         success = FALSE;

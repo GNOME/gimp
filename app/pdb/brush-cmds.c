@@ -96,7 +96,8 @@ brush_get_by_name_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      brush = GIMP_BRUSH (gimp_pdb_get_resource (gimp, GIMP_TYPE_BRUSH, name,
+                                                 GIMP_PDB_DATA_ACCESS_READ, error));
 
       if (! brush)
         success = FALSE;

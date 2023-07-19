@@ -141,7 +141,8 @@ HELP
 	  break;
 
 	case GIMP_CONVERT_PALETTE_CUSTOM:
-          pal = gimp_pdb_get_palette (gimp, palette, FALSE, error);
+          pal = GIMP_PALETTE (gimp_pdb_get_resource (gimp, GIMP_TYPE_PALETTE, palette,
+                                                     GIMP_PDB_DATA_ACCESS_READ, error));
 	  if (! pal)
             {
               success = FALSE;

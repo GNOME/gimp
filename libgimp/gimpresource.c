@@ -268,28 +268,7 @@ gimp_resource_get_by_name (GType        resource_type,
   if (resource_name == NULL)
     return NULL;
 
-  if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
-    {
-      return (GimpResource *) gimp_brush_get_by_name (resource_name);
-    }
-  else if (g_type_is_a (resource_type, GIMP_TYPE_PATTERN))
-    {
-      return (GimpResource *) gimp_pattern_get_by_name (resource_name);
-    }
-  else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
-    {
-      return (GimpResource *) gimp_gradient_get_by_name (resource_name);
-    }
-  else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
-    {
-      return (GimpResource *) gimp_palette_get_by_name (resource_name);
-    }
-  else if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
-    {
-      return (GimpResource *) gimp_font_get_by_name (resource_name);
-    }
-
-  g_return_val_if_reached (NULL);
+  return _gimp_resource_get_by_name (g_type_name (resource_type), resource_name);
 }
 
 /**

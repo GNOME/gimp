@@ -40,8 +40,10 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdashpattern.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimpdynamics.h"
 #include "core/gimpgradient.h"
 #include "core/gimplist.h"
+#include "core/gimpmybrush.h"
 #include "core/gimppalette.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimppattern.h"
@@ -1371,7 +1373,7 @@ context_set_dynamics_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpDynamics *dynamics = gimp_pdb_get_dynamics (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      GimpDynamics *dynamics = GIMP_DYNAMICS (gimp_pdb_get_resource (gimp, GIMP_TYPE_DYNAMICS, name, GIMP_PDB_DATA_ACCESS_READ, error));
 
       if (dynamics)
         gimp_context_set_dynamics (context, dynamics);
@@ -1485,7 +1487,8 @@ context_set_mypaint_brush_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpMybrush *brush = gimp_pdb_get_mybrush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      GimpMybrush *brush = GIMP_MYBRUSH (gimp_pdb_get_resource (gimp, GIMP_TYPE_MYBRUSH, name,
+                                                                GIMP_PDB_DATA_ACCESS_READ, error));
 
       if (brush)
         gimp_context_set_mybrush (context, brush);

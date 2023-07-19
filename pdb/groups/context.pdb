@@ -1493,7 +1493,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpDynamics *dynamics = gimp_pdb_get_dynamics (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  GimpDynamics *dynamics = GIMP_DYNAMICS (gimp_pdb_get_resource (gimp, GIMP_TYPE_DYNAMICS, name, GIMP_PDB_DATA_ACCESS_READ, error));
 
   if (dynamics)
     gimp_context_set_dynamics (context, dynamics);
@@ -1614,7 +1614,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpMybrush *brush = gimp_pdb_get_mybrush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  GimpMybrush *brush = GIMP_MYBRUSH (gimp_pdb_get_resource (gimp, GIMP_TYPE_MYBRUSH, name,
+                                                            GIMP_PDB_DATA_ACCESS_READ, error));
 
   if (brush)
     gimp_context_set_mybrush (context, brush);
@@ -3362,7 +3363,9 @@ CODE
               "core/gimpcontainer.h"
               "core/gimpdashpattern.h"
               "core/gimpdatafactory.h"
+              "core/gimpdynamics.h"
               "core/gimplist.h"
+              "core/gimpmybrush.h"
               "core/gimpstrokeoptions.h"
               "paint/gimppaintoptions.h"
               "libgimpconfig/gimpconfig.h"

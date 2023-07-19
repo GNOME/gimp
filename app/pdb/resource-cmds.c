@@ -48,6 +48,41 @@
 
 
 static GimpValueArray *
+resource_get_by_name_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *type_name;
+  const gchar *resource_name;
+  GimpResource *resource = NULL;
+
+  type_name = g_value_get_string (gimp_value_array_index (args, 0));
+  resource_name = g_value_get_string (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      resource = gimp_pdb_get_resource (gimp, g_type_from_name (type_name), resource_name,
+                                        GIMP_PDB_DATA_ACCESS_READ, error);
+
+      if (! resource)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_object (gimp_value_array_index (return_vals, 1), resource);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 resource_id_is_valid_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
@@ -396,6 +431,43 @@ void
 register_resource_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
+
+  /*
+   * gimp-resource-get-by-name
+   */
+  procedure = gimp_procedure_new (resource_get_by_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-resource-get-by-name");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns a resource with the given name.",
+                                  "Returns a resource with the given name.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2023");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("type-name",
+                                                       "type name",
+                                                       "The name of the resource type",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("resource-name",
+                                                       "resource name",
+                                                       "The name of the resource",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_resource ("resource",
+                                                             "resource",
+                                                             "The resource",
+                                                             FALSE,
+                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-resource-id-is-valid

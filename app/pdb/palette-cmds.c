@@ -93,7 +93,8 @@ palette_get_by_name_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      palette = GIMP_PALETTE (gimp_pdb_get_resource (gimp, GIMP_TYPE_PALETTE, name,
+                                                     GIMP_PDB_DATA_ACCESS_READ, error));
 
       if (! palette)
         success = FALSE;

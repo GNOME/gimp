@@ -96,7 +96,8 @@ gradient_get_by_name_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+      gradient = GIMP_GRADIENT (gimp_pdb_get_resource (gimp, GIMP_TYPE_GRADIENT, name,
+                                                       GIMP_PDB_DATA_ACCESS_READ, error));
 
       if (! gradient)
         success = FALSE;

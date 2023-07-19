@@ -37,6 +37,45 @@
 
 
 /**
+ * _gimp_resource_get_by_name:
+ * @type_name: The name of the resource type.
+ * @resource_name: The name of the resource.
+ *
+ * Returns a resource with the given name.
+ *
+ * Returns a resource with the given name.
+ *
+ * Returns: (transfer none): The resource.
+ *
+ * Since: 3.0
+ **/
+GimpResource *
+_gimp_resource_get_by_name (const gchar *type_name,
+                            const gchar *resource_name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpResource *resource = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, type_name,
+                                          G_TYPE_STRING, resource_name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-resource-get-by-name",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    resource = GIMP_VALUES_GET_RESOURCE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return resource;
+}
+
+/**
  * gimp_resource_id_is_valid:
  * @resource_id: The resource ID to check.
  *

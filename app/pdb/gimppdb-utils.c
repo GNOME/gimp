@@ -27,16 +27,19 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpbrush.h"
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdynamics.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-sample-points.h"
 #include "core/gimpitem.h"
+#include "core/gimpmybrush.h"
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
 
@@ -51,27 +54,60 @@
 #include "gimp-intl.h"
 
 
-static GimpObject *
-gimp_pdb_get_data_factory_item (GimpDataFactory *factory,
-                                const gchar     *name)
+static GimpResource * gimp_pdb_get_data_factory_item (Gimp        *gimp,
+                                                      GType        data_type,
+                                                      const gchar *name);
+const gchar *         gimp_pdb_get_data_label         (GType       data_type);
+
+
+static GimpResource *
+gimp_pdb_get_data_factory_item (Gimp        *gimp,
+                                GType        data_type,
+                                const gchar *name)
 {
-  GimpObject *object;
+  GimpDataFactory *factory;
+  GimpObject      *resource;
 
-  object = gimp_container_get_child_by_name (gimp_data_factory_get_container (factory), name);
+  factory = gimp_pdb_get_data_factory (gimp, data_type);
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
 
-  if (! object)
-    object = gimp_container_get_child_by_name (gimp_data_factory_get_container_obsolete (factory), name);
+  resource = gimp_container_get_child_by_name (gimp_data_factory_get_container (factory), name);
 
-  if (! object && ! strcmp (name, "Standard"))
-    {
-      Gimp *gimp = gimp_data_factory_get_gimp (factory);
+  if (! resource)
+    resource = gimp_container_get_child_by_name (gimp_data_factory_get_container_obsolete (factory),
+                                                 name);
 
-      object = (GimpObject *)
-        gimp_data_factory_data_get_standard (factory,
-                                             gimp_get_user_context (gimp));
-    }
+  if (! resource && ! strcmp (name, "Standard"))
+    resource = (GimpObject *) gimp_data_factory_data_get_standard (factory,
+                                                                   gimp_get_user_context (gimp));
 
-  return object;
+  return (GimpResource *) resource;
+}
+
+const gchar *
+gimp_pdb_get_data_label (GType data_type)
+{
+  g_return_val_if_fail (g_type_is_a (data_type, GIMP_TYPE_DATA), NULL);
+
+  if (g_type_is_a (data_type, GIMP_TYPE_BRUSH_GENERATED))
+    return C_("PDB-error-data-label", "Generated brush");
+  else if (g_type_is_a (data_type, GIMP_TYPE_BRUSH))
+    return C_("PDB-error-data-label", "Brush");
+  else if (g_type_is_a (data_type, GIMP_TYPE_PATTERN))
+    return C_("PDB-error-data-label", "Pattern");
+  else if (g_type_is_a (data_type, GIMP_TYPE_GRADIENT))
+    return C_("PDB-error-data-label", "Gradient");
+  else if (g_type_is_a (data_type, GIMP_TYPE_PALETTE))
+    return C_("PDB-error-data-label", "Palette");
+  else if (g_type_is_a (data_type, GIMP_TYPE_FONT))
+    return C_("PDB-error-data-label", "Font");
+  else if (g_type_is_a (data_type, GIMP_TYPE_DYNAMICS))
+    return C_("PDB-error-data-label", "Paint dynamics");
+  else if (g_type_is_a (data_type, GIMP_TYPE_MYBRUSH))
+    return C_("PDB-error-data-label", "MyPaint brush");
+
+  /* If we reach this, it means we forgot a data type in our list! */
+  g_return_val_if_reached (NULL);
 }
 
 GimpDataFactory *
@@ -81,71 +117,88 @@ gimp_pdb_get_data_factory (Gimp  *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (g_type_is_a (data_type, GIMP_TYPE_DATA), NULL);
 
-  if (g_type_is_a (data_type, GIMP_TYPE_BRUSH))
-    {
-      return gimp->brush_factory;
-    }
+  if (g_type_is_a (data_type, GIMP_TYPE_BRUSH_GENERATED))
+    return gimp->brush_factory;
+  else if (g_type_is_a (data_type, GIMP_TYPE_BRUSH))
+    return gimp->brush_factory;
   else if (g_type_is_a (data_type, GIMP_TYPE_PATTERN))
-    {
-      return gimp->pattern_factory;
-    }
+    return gimp->pattern_factory;
   else if (g_type_is_a (data_type, GIMP_TYPE_GRADIENT))
-    {
-      return gimp->gradient_factory;
-    }
+    return gimp->gradient_factory;
   else if (g_type_is_a (data_type, GIMP_TYPE_PALETTE))
-    {
-      return gimp->palette_factory;
-    }
+    return gimp->palette_factory;
   else if (g_type_is_a (data_type, GIMP_TYPE_FONT))
-    {
-      return gimp->font_factory;
-    }
+    return gimp->font_factory;
+  else if (g_type_is_a (data_type, GIMP_TYPE_DYNAMICS))
+    return gimp->dynamics_factory;
+  else if (g_type_is_a (data_type, GIMP_TYPE_MYBRUSH))
+    return gimp->mybrush_factory;
 
+  /* If we reach this, it means we forgot a data factory in our list! */
   g_return_val_if_reached (NULL);
 }
 
-GimpBrush *
-gimp_pdb_get_brush (Gimp               *gimp,
-                    const gchar        *name,
-                    GimpPDBDataAccess   access,
-                    GError            **error)
+GimpResource *
+gimp_pdb_get_resource (Gimp               *gimp,
+                       GType               data_type,
+                       const gchar        *name,
+                       GimpPDBDataAccess   access,
+                       GError            **error)
 {
-  GimpBrush *brush;
+  GimpResource *resource;
+  const gchar  *label;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
+  label = gimp_pdb_get_data_label (data_type);
+
   if (! name || ! strlen (name))
     {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                           _("Invalid empty brush name"));
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   /* TRANSLATOR: %s is a data label from the
+                    * PDB-error-data-label context.
+                    */
+                   C_("PDB-error-message", "%s name cannot be empty"),
+                   g_type_name (data_type));
       return NULL;
     }
 
-  brush = (GimpBrush *) gimp_pdb_get_data_factory_item (gimp->brush_factory, name);
+  resource = gimp_pdb_get_data_factory_item (gimp, data_type, name);
 
-  if (! brush)
+  if (! resource)
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Brush '%s' not found"), name);
+                   /* TRANSLATOR: the first %s is a data label from the
+                    * PDB-error-data-label context. The second %s is a data
+                    * name.
+                    */
+                   C_("PDB-error-message", "%s '%s' not found"), label, name);
     }
   else if ((access & GIMP_PDB_DATA_ACCESS_WRITE) &&
-           ! gimp_data_is_writable (GIMP_DATA (brush)))
+           ! gimp_data_is_writable (GIMP_DATA (resource)))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Brush '%s' is not editable"), name);
+                   /* TRANSLATOR: the first %s is a data label from the
+                    * PDB-error-data-label context. The second %s is a data
+                    * name.
+                    */
+                   C_("PDB-error-message", "%s '%s' is not editable"), label, name);
       return NULL;
     }
   else if ((access & GIMP_PDB_DATA_ACCESS_RENAME) &&
-           ! gimp_viewable_is_name_editable (GIMP_VIEWABLE (brush)))
+           ! gimp_viewable_is_name_editable (GIMP_VIEWABLE (resource)))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Brush '%s' is not renamable"), name);
+                   /* TRANSLATOR: the first %s is a data label from the
+                    * PDB-error-data-label context. The second %s is a data
+                    * name.
+                    */
+                   C_("PDB-error-message", "%s '%s' is not renamable"), label, name);
       return NULL;
     }
 
-  return brush;
+  return resource;
 }
 
 GimpBrush *
@@ -159,12 +212,9 @@ gimp_pdb_get_generated_brush (Gimp               *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  brush = gimp_pdb_get_brush (gimp, name, access, error);
+  brush = GIMP_BRUSH (gimp_pdb_get_resource (gimp, GIMP_TYPE_BRUSH_GENERATED, name, access, error));
 
-  if (! brush)
-    return NULL;
-
-  if (! GIMP_IS_BRUSH_GENERATED (brush))
+  if (brush != NULL && ! GIMP_IS_BRUSH_GENERATED (brush))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Brush '%s' is not a generated brush"), name);
@@ -172,234 +222,6 @@ gimp_pdb_get_generated_brush (Gimp               *gimp,
     }
 
   return brush;
-}
-
-GimpDynamics *
-gimp_pdb_get_dynamics (Gimp               *gimp,
-                       const gchar        *name,
-                       GimpPDBDataAccess   access,
-                       GError            **error)
-{
-  GimpDynamics *dynamics;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  if (! name || ! strlen (name))
-    {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                           _("Invalid empty paint dynamics name"));
-      return NULL;
-    }
-
-  dynamics = (GimpDynamics *) gimp_pdb_get_data_factory_item (gimp->dynamics_factory, name);
-
-  if (! dynamics)
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Paint dynamics '%s' not found"), name);
-    }
-  else if ((access & GIMP_PDB_DATA_ACCESS_WRITE) &&
-           ! gimp_data_is_writable (GIMP_DATA (dynamics)))
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Paint dynamics '%s' is not editable"), name);
-      return NULL;
-    }
-  else if ((access & GIMP_PDB_DATA_ACCESS_RENAME) &&
-           ! gimp_viewable_is_name_editable (GIMP_VIEWABLE (dynamics)))
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Paint dynamics '%s' is not renamable"), name);
-      return NULL;
-    }
-
-  return dynamics;
-}
-
-GimpMybrush *
-gimp_pdb_get_mybrush (Gimp               *gimp,
-                      const gchar        *name,
-                      GimpPDBDataAccess   access,
-                      GError            **error)
-{
-  GimpMybrush *brush;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  if (! name || ! strlen (name))
-    {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                           _("Invalid empty MyPaint brush name"));
-      return NULL;
-    }
-
-  brush = (GimpMybrush *) gimp_pdb_get_data_factory_item (gimp->mybrush_factory, name);
-
-  if (! brush)
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("MyPaint brush '%s' not found"), name);
-    }
-  else if ((access & GIMP_PDB_DATA_ACCESS_WRITE) &&
-           ! gimp_data_is_writable (GIMP_DATA (brush)))
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("MyPaint brush '%s' is not editable"), name);
-      return NULL;
-    }
-  else if ((access & GIMP_PDB_DATA_ACCESS_RENAME) &&
-           ! gimp_viewable_is_name_editable (GIMP_VIEWABLE (brush)))
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("MyPaint brush '%s' is not renamable"), name);
-      return NULL;
-    }
-
-  return brush;
-}
-
-GimpPattern *
-gimp_pdb_get_pattern (Gimp         *gimp,
-                      const gchar  *name,
-                      GError      **error)
-{
-  GimpPattern *pattern;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  if (! name || ! strlen (name))
-    {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                           _("Invalid empty pattern name"));
-      return NULL;
-    }
-
-  pattern = (GimpPattern *) gimp_pdb_get_data_factory_item (gimp->pattern_factory, name);
-
-  if (! pattern)
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Pattern '%s' not found"), name);
-    }
-
-  return pattern;
-}
-
-GimpGradient *
-gimp_pdb_get_gradient (Gimp               *gimp,
-                       const gchar        *name,
-                       GimpPDBDataAccess   access,
-                       GError            **error)
-{
-  GimpGradient *gradient;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  if (! name || ! strlen (name))
-    {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                           _("Invalid empty gradient name"));
-      return NULL;
-    }
-
-  gradient = (GimpGradient *) gimp_pdb_get_data_factory_item (gimp->gradient_factory, name);
-
-  if (! gradient)
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Gradient '%s' not found"), name);
-    }
-  else if ((access & GIMP_PDB_DATA_ACCESS_WRITE) &&
-           ! gimp_data_is_writable (GIMP_DATA (gradient)))
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Gradient '%s' is not editable"), name);
-      return NULL;
-    }
-  else if ((access & GIMP_PDB_DATA_ACCESS_RENAME) &&
-           ! gimp_viewable_is_name_editable (GIMP_VIEWABLE (gradient)))
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Gradient '%s' is not renamable"), name);
-      return NULL;
-    }
-
-  return gradient;
-}
-
-GimpPalette *
-gimp_pdb_get_palette (Gimp               *gimp,
-                      const gchar        *name,
-                      GimpPDBDataAccess   access,
-                      GError            **error)
-{
-  GimpPalette *palette;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  if (! name || ! strlen (name))
-    {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                           _("Invalid empty palette name"));
-      return NULL;
-    }
-
-  palette = (GimpPalette *) gimp_pdb_get_data_factory_item (gimp->palette_factory, name);
-
-  if (! palette)
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Palette '%s' not found"), name);
-    }
-  else if ((access & GIMP_PDB_DATA_ACCESS_WRITE) &&
-           ! gimp_data_is_writable (GIMP_DATA (palette)))
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Palette '%s' is not editable"), name);
-      return NULL;
-    }
-  else if ((access & GIMP_PDB_DATA_ACCESS_RENAME) &&
-           ! gimp_viewable_is_name_editable (GIMP_VIEWABLE (palette)))
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Palette '%s' is not renamable"), name);
-      return NULL;
-    }
-
-  return palette;
-}
-
-GimpFont *
-gimp_pdb_get_font (Gimp         *gimp,
-                   const gchar  *name,
-                   GError      **error)
-{
-  GimpFont *font;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  if (! name || ! strlen (name))
-    {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                           _("Invalid empty font name"));
-      return NULL;
-    }
-
-  font = (GimpFont *) gimp_pdb_get_data_factory_item (gimp->font_factory, name);
-
-  if (! font)
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                   _("Font '%s' not found"), name);
-    }
-
-  return font;
 }
 
 GimpBuffer *
