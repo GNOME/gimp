@@ -258,7 +258,6 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
       for (iter = save_dialog->priv->additional_metadata; iter; iter = iter->next)
         {
           widget = gimp_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
-          g_object_ref (widget);
           gtk_grid_attach (GTK_GRID (grid), widget, left, top, 6 / n_metadata, 1);
           left += 6 / n_metadata;
           if (left >= 6)
