@@ -1586,6 +1586,8 @@ gimp_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
 
       if (properties)
         free_properties = TRUE;
+
+      g_free (pspecs);
     }
 
   GIMP_PROCEDURE_DIALOG_GET_CLASS (dialog)->fill_list (dialog,
@@ -2699,6 +2701,8 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
 
       if (properties)
         free_properties = TRUE;
+
+      g_free (pspecs);
     }
 
   sz_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
