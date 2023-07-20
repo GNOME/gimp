@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-17 12:07+0000\n"
-"PO-Revision-Date: 2023-07-18 00:03+0300\n"
+"POT-Creation-Date: 2023-07-18 18:50+0000\n"
+"PO-Revision-Date: 2023-07-20 19:21+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -17857,6 +17857,12 @@ msgstr "Заблокувати видимість _шляху"
 msgid "Welcome to GIMP %s"
 msgstr "Вітаємо у GIMP %s"
 
+#: app/dialogs/welcome-dialog.c:118
+#| msgctxt "dialogs-action"
+#| msgid "Welcome Dialog"
+msgid "Welcome"
+msgstr "Вітаємо"
+
 #. Welcome title.
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:135
@@ -17905,6 +17911,11 @@ msgstr "Участь"
 #: app/dialogs/welcome-dialog.c:232
 msgid "Donating"
 msgstr "Фінансова підтримка"
+
+#: app/dialogs/welcome-dialog.c:246
+#| msgid "GIMP %s Release Notes"
+msgid "Release Notes"
+msgstr "Нотатки щодо випуску"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:257
@@ -28300,8 +28311,6 @@ msgid "Channels Menu"
 msgstr "Меню каналів"
 
 #: menus/channels-menu.ui:11 menus/layers-menu.ui:32 menus/vectors-menu.ui:12
-#| msgctxt "channels-action"
-#| msgid "Color Tag"
 msgid "Color Tags"
 msgstr "Мітки кольорів"
 
@@ -28430,8 +28439,10 @@ msgid "Display _Rendering Intent"
 msgstr "Відтворення кольорів на _дисплеї"
 
 #: menus/image-menu.ui.in.in:270
+#| msgctxt "view-action"
+#| msgid "_Padding color"
 msgctxt "view-action"
-msgid "_Padding color"
+msgid "_Padding Color"
 msgstr "Колір _фаски"
 
 #: menus/image-menu.ui.in.in:294
@@ -28665,7 +28676,6 @@ msgid "_Python-Fu"
 msgstr "_Python-фу"
 
 #: menus/image-menu.ui.in.in:838
-#| msgid "Scripts"
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Скриптфу"
@@ -28686,13 +28696,11 @@ msgid "_Dockable Dialogs"
 msgstr "Діалоги з підтримкою _прикріплення"
 
 #: menus/image-menu.ui.in.in:894
-#| msgid "GIMP extension"
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "_GIMP в інтернеті"
 
 #: menus/image-menu.ui.in.in:897
-#| msgid "U_ser manual:"
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "_Посібник користувача"
@@ -28728,7 +28736,6 @@ msgid "Palettes Menu"
 msgstr "Меню палітр"
 
 #: menus/palettes-menu.ui:24
-#| msgid "Export to %s"
 msgctxt "palettes-action"
 msgid "Export as"
 msgstr "Експортувати як"
