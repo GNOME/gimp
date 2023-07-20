@@ -29,32 +29,25 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_FILE_PROCEDURE            (gimp_file_procedure_get_type ())
-#define GIMP_FILE_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FILE_PROCEDURE, GimpFileProcedure))
-#define GIMP_FILE_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILE_PROCEDURE, GimpFileProcedureClass))
-#define GIMP_IS_FILE_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FILE_PROCEDURE))
-#define GIMP_IS_FILE_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FILE_PROCEDURE))
-#define GIMP_FILE_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FILE_PROCEDURE, GimpFileProcedureClass))
-
-
-typedef struct _GimpFileProcedure        GimpFileProcedure;
-typedef struct _GimpFileProcedureClass   GimpFileProcedureClass;
-typedef struct _GimpFileProcedurePrivate GimpFileProcedurePrivate;
-
-struct _GimpFileProcedure
-{
-  GimpProcedure             parent_instance;
-
-  GimpFileProcedurePrivate *priv;
-};
+#define GIMP_TYPE_FILE_PROCEDURE (gimp_file_procedure_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpFileProcedure, gimp_file_procedure, GIMP, FILE_PROCEDURE, GimpProcedure)
 
 struct _GimpFileProcedureClass
 {
   GimpProcedureClass parent_class;
+
+  /* Padding for future expansion */
+  void (*_gimp_reserved1) (void);
+  void (*_gimp_reserved2) (void);
+  void (*_gimp_reserved3) (void);
+  void (*_gimp_reserved4) (void);
+  void (*_gimp_reserved5) (void);
+  void (*_gimp_reserved6) (void);
+  void (*_gimp_reserved7) (void);
+  void (*_gimp_reserved8) (void);
+  void (*_gimp_reserved9) (void);
 };
 
-
-GType           gimp_file_procedure_get_type        (void) G_GNUC_CONST;
 
 void            gimp_file_procedure_set_format_name (GimpFileProcedure *procedure,
                                                      const gchar       *format_name);

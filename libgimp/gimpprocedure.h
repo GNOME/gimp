@@ -72,6 +72,7 @@ typedef enum
 #define GIMP_IS_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PROCEDURE))
 #define GIMP_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROCEDURE, GimpProcedureClass))
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpProcedure, g_object_unref);
 
 typedef struct _GimpProcedureClass   GimpProcedureClass;
 typedef struct _GimpProcedurePrivate GimpProcedurePrivate;

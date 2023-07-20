@@ -24,7 +24,7 @@
 #include "gimpfileprocedure.h"
 
 
-struct _GimpFileProcedurePrivate
+typedef struct _GimpFileProcedurePrivate
 {
   gchar    *format_name;
   gchar    *mime_types;
@@ -33,7 +33,7 @@ struct _GimpFileProcedurePrivate
   gchar    *magics;
   gint      priority;
   gboolean  handles_remote;
-};
+} GimpFileProcedurePrivate;
 
 
 static void   gimp_file_procedure_constructed (GObject *object);
@@ -58,7 +58,6 @@ gimp_file_procedure_class_init (GimpFileProcedureClass *klass)
 static void
 gimp_file_procedure_init (GimpFileProcedure *procedure)
 {
-  procedure->priv = gimp_file_procedure_get_instance_private (procedure);
 }
 
 static void
@@ -79,13 +78,17 @@ gimp_file_procedure_constructed (GObject *object)
 static void
 gimp_file_procedure_finalize (GObject *object)
 {
-  GimpFileProcedure *procedure = GIMP_FILE_PROCEDURE (object);
+  GimpFileProcedure        *procedure;
+  GimpFileProcedurePrivate *priv;
 
-  g_clear_pointer (&procedure->priv->format_name, g_free);
-  g_clear_pointer (&procedure->priv->mime_types, g_free);
-  g_clear_pointer (&procedure->priv->extensions, g_free);
-  g_clear_pointer (&procedure->priv->prefixes,   g_free);
-  g_clear_pointer (&procedure->priv->magics,     g_free);
+  procedure = GIMP_FILE_PROCEDURE (object);
+  priv      = gimp_file_procedure_get_instance_private (procedure);
+
+  g_clear_pointer (&priv->format_name, g_free);
+  g_clear_pointer (&priv->mime_types,  g_free);
+  g_clear_pointer (&priv->extensions,  g_free);
+  g_clear_pointer (&priv->prefixes,    g_free);
+  g_clear_pointer (&priv->magics,      g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -121,10 +124,13 @@ void
 gimp_file_procedure_set_format_name (GimpFileProcedure *procedure,
                                      const gchar       *format_name)
 {
+  GimpFileProcedurePrivate *priv;
+
   g_return_if_fail (GIMP_IS_FILE_PROCEDURE (procedure));
 
-  g_free (procedure->priv->format_name);
-  procedure->priv->format_name = g_strdup (format_name);
+  priv = gimp_file_procedure_get_instance_private (procedure);
+  g_free (priv->format_name);
+  priv->format_name = g_strdup (format_name);
 }
 
 /**
@@ -141,9 +147,13 @@ gimp_file_procedure_set_format_name (GimpFileProcedure *procedure,
 const gchar *
 gimp_file_procedure_get_format_name (GimpFileProcedure *procedure)
 {
+  GimpFileProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_FILE_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->format_name;
+  priv = gimp_file_procedure_get_instance_private (procedure);
+
+  return priv->format_name;
 }
 
 /**
@@ -166,10 +176,13 @@ void
 gimp_file_procedure_set_mime_types (GimpFileProcedure *procedure,
                                     const gchar       *mime_types)
 {
+  GimpFileProcedurePrivate *priv;
+
   g_return_if_fail (GIMP_IS_FILE_PROCEDURE (procedure));
 
-  g_free (procedure->priv->mime_types);
-  procedure->priv->mime_types = g_strdup (mime_types);
+  priv = gimp_file_procedure_get_instance_private (procedure);
+  g_free (priv->mime_types);
+  priv->mime_types = g_strdup (mime_types);
 }
 
 /**
@@ -186,9 +199,13 @@ gimp_file_procedure_set_mime_types (GimpFileProcedure *procedure,
 const gchar *
 gimp_file_procedure_get_mime_types (GimpFileProcedure *procedure)
 {
+  GimpFileProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_FILE_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->mime_types;
+  priv = gimp_file_procedure_get_instance_private (procedure);
+
+  return priv->mime_types;
 }
 
 /**
@@ -206,10 +223,13 @@ void
 gimp_file_procedure_set_extensions (GimpFileProcedure *procedure,
                                     const gchar       *extensions)
 {
+  GimpFileProcedurePrivate *priv;
+
   g_return_if_fail (GIMP_IS_FILE_PROCEDURE (procedure));
 
-  g_free (procedure->priv->extensions);
-  procedure->priv->extensions = g_strdup (extensions);
+  priv = gimp_file_procedure_get_instance_private (procedure);
+  g_free (priv->extensions);
+  priv->extensions = g_strdup (extensions);
 }
 
 /**
@@ -226,9 +246,13 @@ gimp_file_procedure_set_extensions (GimpFileProcedure *procedure,
 const gchar *
 gimp_file_procedure_get_extensions (GimpFileProcedure *procedure)
 {
+  GimpFileProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_FILE_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->extensions;
+  priv = gimp_file_procedure_get_instance_private (procedure);
+
+  return priv->extensions;
 }
 
 /**
@@ -246,10 +270,13 @@ void
 gimp_file_procedure_set_prefixes (GimpFileProcedure *procedure,
                                   const gchar       *prefixes)
 {
+  GimpFileProcedurePrivate *priv;
+
   g_return_if_fail (GIMP_IS_FILE_PROCEDURE (procedure));
 
-  g_free (procedure->priv->prefixes);
-  procedure->priv->prefixes = g_strdup (prefixes);
+  priv = gimp_file_procedure_get_instance_private (procedure);
+  g_free (priv->prefixes);
+  priv->prefixes = g_strdup (prefixes);
 }
 
 /**
@@ -266,9 +293,13 @@ gimp_file_procedure_set_prefixes (GimpFileProcedure *procedure,
 const gchar *
 gimp_file_procedure_get_prefixes (GimpFileProcedure *procedure)
 {
+  GimpFileProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_FILE_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->prefixes;
+  priv = gimp_file_procedure_get_instance_private (procedure);
+
+  return priv->prefixes;
 }
 
 /**
@@ -284,10 +315,13 @@ void
 gimp_file_procedure_set_magics (GimpFileProcedure *procedure,
                                 const gchar       *magics)
 {
+  GimpFileProcedurePrivate *priv;
+
   g_return_if_fail (GIMP_IS_FILE_PROCEDURE (procedure));
 
-  g_free (procedure->priv->magics);
-  procedure->priv->magics = g_strdup (magics);
+  priv = gimp_file_procedure_get_instance_private (procedure);
+  g_free (priv->magics);
+  priv->magics = g_strdup (magics);
 }
 
 /**
@@ -303,9 +337,13 @@ gimp_file_procedure_set_magics (GimpFileProcedure *procedure,
 const gchar *
 gimp_file_procedure_get_magics (GimpFileProcedure *procedure)
 {
+  GimpFileProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_FILE_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->magics;
+  priv = gimp_file_procedure_get_instance_private (procedure);
+
+  return priv->magics;
 }
 
 /**
@@ -326,9 +364,12 @@ void
 gimp_file_procedure_set_priority (GimpFileProcedure *procedure,
                                   gint               priority)
 {
+  GimpFileProcedurePrivate *priv;
+
   g_return_if_fail (GIMP_IS_FILE_PROCEDURE (procedure));
 
-  procedure->priv->priority = priority;
+  priv = gimp_file_procedure_get_instance_private (procedure);
+  priv->priority = priority;
 }
 
 /**
@@ -345,9 +386,13 @@ gimp_file_procedure_set_priority (GimpFileProcedure *procedure,
 gint
 gimp_file_procedure_get_priority (GimpFileProcedure *procedure)
 {
+  GimpFileProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_FILE_PROCEDURE (procedure), 0);
 
-  return procedure->priv->priority;
+  priv = gimp_file_procedure_get_instance_private (procedure);
+
+  return priv->priority;
 }
 
 /**
@@ -372,9 +417,12 @@ void
 gimp_file_procedure_set_handles_remote (GimpFileProcedure *procedure,
                                         gint               handles_remote)
 {
+  GimpFileProcedurePrivate *priv;
+
   g_return_if_fail (GIMP_IS_FILE_PROCEDURE (procedure));
 
-  procedure->priv->handles_remote = handles_remote;
+  priv = gimp_file_procedure_get_instance_private (procedure);
+  priv->handles_remote = handles_remote;
 }
 
 /**
@@ -391,7 +439,10 @@ gimp_file_procedure_set_handles_remote (GimpFileProcedure *procedure,
 gint
 gimp_file_procedure_get_handles_remote (GimpFileProcedure *procedure)
 {
+  GimpFileProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_FILE_PROCEDURE (procedure), 0);
 
-  return procedure->priv->handles_remote;
+  priv = gimp_file_procedure_get_instance_private (procedure);
+  return priv->handles_remote;
 }
