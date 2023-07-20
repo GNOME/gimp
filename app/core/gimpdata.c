@@ -65,10 +65,10 @@ struct _GimpDataPrivate
   gint    freeze_count;
   gint64  mtime;
 
-  /* Identifies the GimpData object across sessions. Used when there
-   * is not a filename associated with the object.
+  /* Identifies the collection this GimpData belongs to.
+   * Used when there is not a filename associated with the object.
    */
-  gchar  *identifier;
+  gchar  *collection;
 
   GList  *tags;
 };
@@ -107,6 +107,8 @@ static gboolean   gimp_data_remove_tag        (GimpTagged          *tagged,
 static GList    * gimp_data_get_tags          (GimpTagged          *tagged);
 static gchar    * gimp_data_get_identifier    (GimpTagged          *tagged);
 static gchar    * gimp_data_get_checksum      (GimpTagged          *tagged);
+
+static gchar    * gimp_data_get_collection    (GimpData            *data);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpData, gimp_data, GIMP_TYPE_RESOURCE,
@@ -239,7 +241,7 @@ gimp_data_finalize (GObject *object)
       private->tags = NULL;
     }
 
-  g_clear_pointer (&private->identifier, g_free);
+  g_clear_pointer (&private->collection, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -391,6 +393,9 @@ gimp_data_real_compare (GimpData *data1,
   if (private1->deletable != private2->deletable)
     return private1->deletable ? -1 : 1;
 
+  if (g_strcmp0 (private1->collection, private2->collection) != 0)
+    return g_strcmp0 (private1->collection, private2->collection);
+
   return gimp_object_name_collate ((GimpObject *) data1,
                                    (GimpObject *) data2);
 }
@@ -448,8 +453,53 @@ gimp_data_get_tags (GimpTagged *tagged)
 static gchar *
 gimp_data_get_identifier (GimpTagged *tagged)
 {
-  GimpDataPrivate *private    = GIMP_DATA_GET_PRIVATE (tagged);
+  GimpData        *data       = GIMP_DATA (tagged);
+  GimpDataPrivate *private    = GIMP_DATA_GET_PRIVATE (data);
   gchar           *identifier = NULL;
+  gchar           *collection = NULL;
+
+  g_return_val_if_fail (private->internal || private->file != NULL, NULL);
+
+  collection = gimp_data_get_collection (data);
+  /* The identifier is guaranteed to be unique because we use 2 directory
+   * separators between the collection and the data name. Since the collection
+   * is either a controlled internal name or built from g_file_get_path(), which
+   * is guaranteed to be a canonical path, we know it won't contain 2
+   * separators. Therefore it should be impossible to construct a file path able
+   * to create duplicate identifiers.
+   * The last point is obviously that it should not be possible to have
+   * duplicate data names in a single collection. So every identifier should be
+   * unique.
+   */
+  identifier = g_strdup_printf ("%s:%s%s%s%s",
+                                private->internal ? "internal" : "external",
+                                collection, G_DIR_SEPARATOR_S, G_DIR_SEPARATOR_S,
+                                gimp_object_get_name (GIMP_OBJECT (data)));
+  g_free (collection);
+
+  return identifier;
+}
+
+static gchar *
+gimp_data_get_checksum (GimpTagged *tagged)
+{
+  return NULL;
+}
+
+/*
+ * A data collection name is either generated from the file path, or set when
+ * marking a data as internal.
+ * Several data objects may belong to a same collection. A very common example
+ * of this in fonts are collections of fonts (e.g. TrueType Collection .TTC
+ * files).
+ */
+static gchar *
+gimp_data_get_collection (GimpData *data)
+{
+  GimpDataPrivate *private    = GIMP_DATA_GET_PRIVATE (data);
+  gchar           *collection = NULL;
+
+  g_return_val_if_fail (private->internal || private->file != NULL, NULL);
 
   if (private->file)
     {
@@ -463,7 +513,7 @@ gimp_data_get_identifier (GimpTagged *tagged)
           tmp = g_strconcat ("${gimp_data_dir}",
                              path + strlen (data_dir),
                              NULL);
-          identifier = g_filename_to_utf8 (tmp, -1, NULL, NULL, NULL);
+          collection = g_filename_to_utf8 (tmp, -1, NULL, NULL, NULL);
           g_free (tmp);
         }
       else if (g_str_has_prefix (path, gimp_dir))
@@ -471,7 +521,7 @@ gimp_data_get_identifier (GimpTagged *tagged)
           tmp = g_strconcat ("${gimp_dir}",
                              path + strlen (gimp_dir),
                              NULL);
-          identifier = g_filename_to_utf8 (tmp, -1, NULL, NULL, NULL);
+          collection = g_filename_to_utf8 (tmp, -1, NULL, NULL, NULL);
           g_free (tmp);
         }
       else if (g_str_has_prefix (path, MYPAINT_BRUSHES_DIR))
@@ -479,36 +529,30 @@ gimp_data_get_identifier (GimpTagged *tagged)
           tmp = g_strconcat ("${mypaint_brushes_dir}",
                              path + strlen (MYPAINT_BRUSHES_DIR),
                              NULL);
-          identifier = g_filename_to_utf8 (tmp, -1, NULL, NULL, NULL);
+          collection = g_filename_to_utf8 (tmp, -1, NULL, NULL, NULL);
           g_free (tmp);
         }
       else
         {
-          identifier = g_filename_to_utf8 (path, -1,
+          collection = g_filename_to_utf8 (path, -1,
                                            NULL, NULL, NULL);
         }
 
-      if (! identifier)
+      if (! collection)
         {
           g_printerr ("%s: failed to convert '%s' to utf8.\n",
                       G_STRFUNC, path);
-          identifier = g_strdup (path);
+          collection = g_strdup (path);
         }
 
       g_free (path);
     }
   else if (private->internal)
     {
-      identifier = g_strdup (private->identifier);
+      collection = g_strdup (private->collection);
     }
 
-  return identifier;
-}
-
-static gchar *
-gimp_data_get_checksum (GimpTagged *tagged)
-{
-  return NULL;
+  return collection;
 }
 
 
@@ -1197,19 +1241,20 @@ gimp_data_duplicate (GimpData *data)
 
 /**
  * gimp_data_make_internal:
- * @data: a #GimpData object.
+ * @data:       a #GimpData object.
+ * @collection: internal collection title @data belongs to.
  *
  * Mark @data as "internal" to Gimp, which means that it will not be
  * saved to disk.  Note that if you do this, later calls to
  * gimp_data_save() and gimp_data_delete_from_disk() will
  * automatically return successfully without giving any warning.
  *
- * The identifier name shall be an untranslated globally unique string
- * that identifies the internal object across sessions.
+ * The @collection shall be an untranslated globally unique string
+ * that identifies the internal object collection across sessions.
  **/
 void
 gimp_data_make_internal (GimpData    *data,
-                         const gchar *identifier)
+                         const gchar *collection)
 {
   GimpDataPrivate *private;
 
@@ -1219,8 +1264,8 @@ gimp_data_make_internal (GimpData    *data,
 
   g_clear_object (&private->file);
 
-  g_free (private->identifier);
-  private->identifier = g_strdup (identifier);
+  g_free (private->collection);
+  private->collection = g_strdup (collection);
 
   private->writable  = FALSE;
   private->deletable = FALSE;
@@ -1265,6 +1310,67 @@ gimp_data_compare (GimpData *data1,
   return GIMP_DATA_GET_CLASS (data1)->compare (data1, data2);
 }
 
+/**
+ * gimp_data_identify:
+ * @data:        a #GimpData object.
+ * @name:        name of the #GimpData object.
+ * @collection:  text uniquely identifying the collection @data belongs to.
+ * @is_internal: whether this is internal data.
+ *
+ * Determine whether (@name, @collection, @is_internal) uniquely identify @data.
+ *
+ * Returns: %TRUE if the triplet identifies @data, %FALSE otherwise.
+ **/
+gboolean
+gimp_data_identify (GimpData    *data,
+                    const gchar *name,
+                    const gchar *collection,
+                    gboolean     is_internal)
+{
+  gchar    *current_collection = gimp_data_get_collection (data);
+  gboolean  identified;
+
+  identified = (is_internal == gimp_data_is_internal (data)      &&
+                g_strcmp0 (collection, current_collection) == 0  &&
+                g_strcmp0 (name, gimp_object_get_name (GIMP_OBJECT (data))) == 0);
+
+  g_free (current_collection);
+
+  return identified;
+}
+
+/**
+ * gimp_data_get_identifiers:
+ * @data:        a #GimpData object.
+ * @name:        name of the #GimpData object.
+ * @collection:  text uniquely identifying the collection @data belongs to.
+ * @is_internal: whether this is internal data.
+ *
+ * Generates a triplet of identifiers which, together, should uniquely identify
+ * this @data.
+ * @name will be the same value as gimp_object_get_name() and @is_internal the
+ * same value as returned by gimp_data_is_internal(), except that it is not
+ * enough because two data from different sources may end up having the same
+ * name. Nevertheless all data names within a single collection of data are
+ * unique. @collection therefore identifies the source collection. And these 3
+ * identifiers together are enough to identify a GimpData.
+ *
+ * Internally the collection will likely be a single file name, therefore
+ * @collection will be constructed from the file name (if it exists, or an
+ * opaque identifier string otherwise, for internal data). Nevertheless you
+ * should not take this for granted and should always use this string as an
+ * opaque identifier only to be reused in gimp_data_identify().
+ **/
+void
+gimp_data_get_identifiers (GimpData  *data,
+                           gchar    **name,
+                           gchar    **collection,
+                           gboolean  *is_internal)
+{
+  *collection  = gimp_data_get_collection (data);
+  *name        = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
+  *is_internal = gimp_data_is_internal (data);
+}
 /**
  * gimp_data_error_quark:
  *

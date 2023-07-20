@@ -122,11 +122,19 @@ gboolean      gimp_data_is_duplicatable  (GimpData     *data);
 GimpData    * gimp_data_duplicate        (GimpData     *data);
 
 void          gimp_data_make_internal    (GimpData     *data,
-                                          const gchar  *identifier);
+                                          const gchar  *collection);
 gboolean      gimp_data_is_internal      (GimpData     *data);
 
 gint          gimp_data_compare          (GimpData     *data1,
                                           GimpData     *data2);
+gboolean      gimp_data_identify         (GimpData     *data,
+                                          const gchar  *name,
+                                          const gchar  *collection_id,
+                                          gboolean      is_internal);
+void          gimp_data_get_identifiers  (GimpData     *data,
+                                          gchar       **name,
+                                          gchar       **collection_id,
+                                          gboolean     *is_internal);
 
 #define GIMP_DATA_ERROR (gimp_data_error_quark ())
 
