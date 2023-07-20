@@ -189,7 +189,8 @@ static GimpValueArray * pdf_save                 (GimpProcedure        *procedur
                                                   gint                  n_drawables,
                                                   GimpDrawable        **drawables,
                                                   GFile                *file,
-                                                  const GimpValueArray *args,
+                                                  GimpMetadata         *metadata,
+                                                  GimpProcedureConfig  *config,
                                                   gpointer              run_data);
 static GimpValueArray * pdf_save_multi           (GimpProcedure        *procedure,
                                                   GimpProcedureConfig  *config,
@@ -305,9 +306,9 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pdf_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            "application/pdf", pdf_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -472,22 +473,19 @@ pdf_save (GimpProcedure        *procedure,
           gint                  n_drawables,
           GimpDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          GimpMetadata         *metadata,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GError              *error          = NULL;
-  GimpPDBStatusType    status         = GIMP_PDB_SUCCESS;
-  gboolean             had_saved_list = FALSE;
+  GError            *error          = NULL;
+  GimpPDBStatusType  status         = GIMP_PDB_SUCCESS;
+  gboolean           had_saved_list = FALSE;
 
   gegl_init (NULL, NULL);
 
   /* Initializing all the settings */
   multi_page.image_count = 0;
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_export (config, image, run_mode,
-                                      args, "application/pdf");
   file_name = g_file_get_path (file);
 
   switch (run_mode)
@@ -525,9 +523,6 @@ pdf_save (GimpProcedure        *procedure,
     status = pdf_save_image (procedure, config, TRUE,
                              (run_mode != GIMP_RUN_NONINTERACTIVE),
                              &error);
-
-  gimp_procedure_config_end_export (config, image, file, status);
-  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

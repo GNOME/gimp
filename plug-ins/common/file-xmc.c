@@ -173,7 +173,8 @@ static GimpValueArray * xmc_save             (GimpProcedure        *procedure,
                                               gint                  n_drawables,
                                               GimpDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              GimpMetadata         *metadata,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 
 static GimpImage      * load_image           (GFile            *file,
@@ -339,9 +340,9 @@ xmc_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           xmc_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, xmc_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGBA");
 
@@ -513,17 +514,17 @@ xmc_save (GimpProcedure        *procedure,
           gint                  n_drawables,
           GimpDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          GimpMetadata         *metadata,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpImage           *orig_image;
-  GeglRectangle       *hotspot_range;
-  gint                 hot_spot_x;
-  gint                 hot_spot_y;
-  GError              *error = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GimpImage         *orig_image;
+  GeglRectangle     *hotspot_range;
+  gint               hot_spot_x;
+  gint               hot_spot_y;
+  GError            *error = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -542,9 +543,6 @@ xmc_save (GimpProcedure        *procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
                                                error);
     }
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_export (config, image, run_mode, args, NULL);
 
   switch (run_mode)
     {
@@ -615,9 +613,6 @@ xmc_save (GimpProcedure        *procedure,
     }
 
   g_free (hotspot_range);
-
-  gimp_procedure_config_end_export (config, image, file, status);
-  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

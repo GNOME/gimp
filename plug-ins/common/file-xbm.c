@@ -89,7 +89,8 @@ static GimpValueArray * xbm_save             (GimpProcedure        *procedure,
                                               gint                  n_drawables,
                                               GimpDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              GimpMetadata         *metadata,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 
 static GimpImage      * load_image           (GFile                *file,
@@ -178,9 +179,9 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           xbm_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, xbm_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED");
 
@@ -336,19 +337,16 @@ xbm_save (GimpProcedure        *procedure,
           gint                  n_drawables,
           GimpDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          GimpMetadata         *metadata,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
   GimpPDBStatusType    status        = GIMP_PDB_SUCCESS;
   GimpExportReturn     export        = GIMP_EXPORT_CANCEL;
   gchar               *mask_basename = NULL;
   GError              *error         = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_export (config, image, run_mode, args, NULL);
 
   switch (run_mode)
     {
@@ -485,9 +483,6 @@ xbm_save (GimpProcedure        *procedure,
 
       g_object_unref (mask_file);
     }
-
-  gimp_procedure_config_end_export (config, image, file, status);
-  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     {

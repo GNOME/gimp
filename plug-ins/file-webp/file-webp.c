@@ -70,7 +70,8 @@ static GimpValueArray * webp_save             (GimpProcedure        *procedure,
                                                gint                  n_drawables,
                                                GimpDrawable        **drawables,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               GimpMetadata         *metadata,
+                                               GimpProcedureConfig  *config,
                                                gpointer              run_data);
 
 
@@ -139,9 +140,9 @@ webp_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           webp_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            "image/webp", webp_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -281,21 +282,16 @@ webp_save (GimpProcedure        *procedure,
            gint                  n_drawables,
            GimpDrawable        **drawables,
            GFile                *file,
-           const GimpValueArray *args,
+           GimpMetadata         *metadata,
+           GimpProcedureConfig  *config,
            gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpMetadata        *metadata;
-  gboolean             animation;
-  GError              *error  = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  gboolean           animation;
+  GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
-                                                 args, "image/webp");
 
   if (run_mode == GIMP_RUN_INTERACTIVE ||
       run_mode == GIMP_RUN_WITH_LAST_VALS)
@@ -374,9 +370,6 @@ webp_save (GimpProcedure        *procedure,
 
       gimp_metadata_set_bits_per_sample (metadata, 8);
     }
-
-  gimp_procedure_config_end_export (config, image, file, status);
-  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     {

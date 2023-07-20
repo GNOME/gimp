@@ -95,7 +95,8 @@ static GimpValueArray  * tiff_save             (GimpProcedure        *procedure,
                                                 gint                  n_drawables,
                                                 GimpDrawable        **drawables,
                                                 GFile                *file,
-                                                const GimpValueArray *args,
+                                                GimpMetadata         *metadata,
+                                                GimpProcedureConfig  *config,
                                                 gpointer              run_data);
 static GimpPDBStatusType tiff_save_rec         (GimpProcedure        *procedure,
                                                 GimpRunMode           run_mode,
@@ -179,9 +180,9 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           tiff_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            "image/tiff", tiff_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -332,19 +333,14 @@ tiff_save (GimpProcedure        *procedure,
            gint                  n_drawables,
            GimpDrawable        **drawables,
            GFile                *file,
-           const GimpValueArray *args,
+           GimpMetadata         *metadata,
+           GimpProcedureConfig  *config,
            gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpMetadata        *metadata;
-  GError              *error  = NULL;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GError            *error  = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
-                                                 args, "image/tiff");
 
   switch (run_mode)
     {
@@ -359,9 +355,6 @@ tiff_save (GimpProcedure        *procedure,
   status = tiff_save_rec (procedure, run_mode, image,
                           n_drawables, drawables,
                           file, config, metadata, FALSE, &error);
-
-  gimp_procedure_config_end_export (config, image, file, status);
-  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

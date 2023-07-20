@@ -74,7 +74,8 @@ static GimpValueArray * jpeg_save             (GimpProcedure        *procedure,
                                                gint                  n_drawables,
                                                GimpDrawable        **drawables,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               GimpMetadata         *metadata,
+                                               GimpProcedureConfig  *config,
                                                gpointer              run_data);
 
 
@@ -171,9 +172,9 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           jpeg_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            "image/jpeg", jpeg_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
 
@@ -428,15 +429,14 @@ jpeg_save (GimpProcedure        *procedure,
            gint                  n_drawables,
            GimpDrawable        **drawables,
            GFile                *file,
-           const GimpValueArray *args,
+           GimpMetadata         *metadata,
+           GimpProcedureConfig  *config,
            gpointer              run_data)
 {
-  GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
-  GimpProcedureConfig   *config;
-  GimpMetadata          *metadata;
-  GimpImage             *orig_image;
-  GimpExportReturn       export = GIMP_EXPORT_CANCEL;
-  GError                *error  = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpImage         *orig_image;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   gint                   orig_num_quant_tables = -1;
   gint                   orig_quality          = -1;
@@ -444,9 +444,6 @@ jpeg_save (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
-                                                 args, "image/jpeg");
   preview_image = NULL;
   preview_layer = NULL;
 
@@ -609,9 +606,6 @@ jpeg_save (GimpProcedure        *procedure,
       if (metadata)
         gimp_metadata_set_bits_per_sample (metadata, 8);
     }
-
-  gimp_procedure_config_end_export (config, image, file, status);
-  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     {

@@ -96,7 +96,8 @@ static GimpValueArray * png_save             (GimpProcedure        *procedure,
                                               gint                  n_drawables,
                                               GimpDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              GimpMetadata         *metadata,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 
 static GimpImage * load_image                (GFile            *file,
@@ -201,9 +202,9 @@ png_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           png_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            "image/png", png_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -374,22 +375,17 @@ png_save (GimpProcedure        *procedure,
           gint                  n_drawables,
           GimpDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          GimpMetadata         *metadata,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpMetadata        *metadata;
-  GimpImage           *orig_image;
-  gboolean             alpha;
-  GError              *error = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GimpImage         *orig_image;
+  gboolean           alpha;
+  GError            *error = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
-                                                 args, "image/png");
 
   orig_image = image;
 
@@ -460,9 +456,6 @@ png_save (GimpProcedure        *procedure,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-
-  gimp_procedure_config_end_export (config, image, file, status);
-  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     {

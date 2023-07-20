@@ -155,7 +155,8 @@ static GimpValueArray * pnm_save             (GimpProcedure        *procedure,
                                               gint                  n_drawables,
                                               GimpDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              GimpMetadata         *metadata,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 
 static GimpImage      * load_image           (GFile                *file,
@@ -337,11 +338,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PNM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pnm_save,
-                                           GINT_TO_POINTER (FILE_TYPE_PNM),
-                                           NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, pnm_save,
+                                            GINT_TO_POINTER (FILE_TYPE_PNM),
+                                            NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -374,11 +375,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PBM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pnm_save,
-                                           GINT_TO_POINTER (FILE_TYPE_PBM),
-                                           NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, pnm_save,
+                                            GINT_TO_POINTER (FILE_TYPE_PBM),
+                                            NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
       gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
@@ -410,11 +411,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PGM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pnm_save,
-                                           GINT_TO_POINTER (FILE_TYPE_PGM),
-                                           NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, pnm_save,
+                                            GINT_TO_POINTER (FILE_TYPE_PGM),
+                                            NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -446,11 +447,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PPM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pnm_save,
-                                           GINT_TO_POINTER (FILE_TYPE_PPM),
-                                           NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, pnm_save,
+                                            GINT_TO_POINTER (FILE_TYPE_PPM),
+                                            NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -482,9 +483,9 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PAM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
+      procedure = gimp_save_procedure_new2 (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pnm_save,
+                                           NULL, pnm_save,
                                            GINT_TO_POINTER (FILE_TYPE_PAM),
                                            NULL);
 
@@ -511,9 +512,9 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PFM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
+      procedure = gimp_save_procedure_new2 (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pnm_save,
+                                           NULL, pnm_save,
                                            GINT_TO_POINTER (FILE_TYPE_PFM),
                                            NULL);
 
@@ -578,20 +579,17 @@ pnm_save (GimpProcedure        *procedure,
           gint                  n_drawables,
           GimpDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          GimpMetadata         *metadata,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  FileType             file_type   = GPOINTER_TO_INT (run_data);
-  GimpPDBStatusType    status      = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export      = GIMP_EXPORT_CANCEL;
-  const gchar         *format_name = NULL;
-  GError              *error       = NULL;
+  FileType           file_type   = GPOINTER_TO_INT (run_data);
+  GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export      = GIMP_EXPORT_CANCEL;
+  const gchar       *format_name = NULL;
+  GError            *error       = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_export (config, image, run_mode, args, NULL);
 
   switch (run_mode)
     {
@@ -682,9 +680,6 @@ pnm_save (GimpProcedure        *procedure,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-
-  gimp_procedure_config_end_export (config, image, file, status);
-  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     {

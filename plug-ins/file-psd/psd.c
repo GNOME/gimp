@@ -72,7 +72,8 @@ static GimpValueArray * psd_save             (GimpProcedure        *procedure,
                                               gint                  n_drawables,
                                               GimpDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              GimpMetadata         *metadata,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 static GimpValueArray * psd_load_metadata    (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
@@ -202,9 +203,9 @@ psd_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           psd_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            "image/x-psd", psd_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -433,20 +434,15 @@ psd_save (GimpProcedure        *procedure,
           gint                  n_drawables,
           GimpDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          GimpMetadata         *metadata,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
-  GimpProcedureConfig   *config;
-  GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
-  GimpMetadata          *metadata;
-  GimpExportReturn       export = GIMP_EXPORT_IGNORE;
-  GError                *error = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GError            *error = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
-                                                 args, "image/x-psd");
 
   switch (run_mode)
     {
@@ -487,9 +483,6 @@ psd_save (GimpProcedure        *procedure,
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
-
-  gimp_procedure_config_end_export (config, image, file, status);
-  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     {
