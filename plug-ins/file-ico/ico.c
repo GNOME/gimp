@@ -95,7 +95,8 @@ static GimpValueArray * ico_save             (GimpProcedure        *procedure,
                                               gint                  n_drawables,
                                               GimpDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              GimpMetadata         *metadata,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 static GimpValueArray * cur_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
@@ -103,7 +104,8 @@ static GimpValueArray * cur_save             (GimpProcedure        *procedure,
                                               gint                  n_drawables,
                                               GimpDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              GimpMetadata         *metadata,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 static GimpValueArray * ani_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
@@ -111,7 +113,8 @@ static GimpValueArray * ani_save             (GimpProcedure        *procedure,
                                               gint                  n_drawables,
                                               GimpDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              GimpMetadata         *metadata,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 
 
@@ -282,9 +285,9 @@ ico_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           ico_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, ico_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -307,9 +310,9 @@ ico_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_CUR_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           cur_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, cur_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -354,9 +357,9 @@ ico_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_ANI_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           ani_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, ani_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -566,7 +569,8 @@ ico_save (GimpProcedure        *procedure,
           gint                  n_drawables,
           GimpDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          GimpMetadata         *metadata,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
   GimpPDBStatusType  status;
@@ -586,21 +590,18 @@ cur_save (GimpProcedure        *procedure,
           gint                  n_drawables,
           GimpDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          GimpMetadata         *metadata,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status;
-  GError              *error        = NULL;
-  gint32              *hot_spot_x   = NULL;
-  gint32              *hot_spot_y   = NULL;
-  gint                 n_hot_spot_x = 0;
-  gint                 n_hot_spot_y = 0;
+  GimpPDBStatusType  status;
+  GError            *error        = NULL;
+  gint32            *hot_spot_x   = NULL;
+  gint32            *hot_spot_y   = NULL;
+  gint               n_hot_spot_x = 0;
+  gint               n_hot_spot_y = 0;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   g_object_get (config,
                 "n-hot-spot-x", &n_hot_spot_x,
@@ -630,9 +631,6 @@ cur_save (GimpProcedure        *procedure,
       g_free (hot_spot_y);
     }
 
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
-
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
@@ -643,26 +641,23 @@ ani_save (GimpProcedure        *procedure,
           gint                  n_drawables,
           GimpDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          GimpMetadata         *metadata,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status;
-  GError              *error        = NULL;
-  gchar               *inam         = NULL;
-  gchar               *iart         = NULL;
-  gint                 jif_rate     = 0;
-  gint32              *hot_spot_x   = NULL;
-  gint32              *hot_spot_y   = NULL;
-  gint                 n_hot_spot_x = 0;
-  gint                 n_hot_spot_y = 0;
-  AniFileHeader        header;
-  AniSaveInfo          ani_info;
+  GimpPDBStatusType  status;
+  GError            *error        = NULL;
+  gchar             *inam         = NULL;
+  gchar             *iart         = NULL;
+  gint               jif_rate     = 0;
+  gint32            *hot_spot_x   = NULL;
+  gint32            *hot_spot_y   = NULL;
+  gint               n_hot_spot_x = 0;
+  gint               n_hot_spot_y = 0;
+  AniFileHeader      header;
+  AniSaveInfo        ani_info;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   g_object_get (config,
                 "cursor-name",   &inam,
@@ -708,9 +703,6 @@ ani_save (GimpProcedure        *procedure,
       g_free (ani_info.iart);
       memset (&ani_info, 0, sizeof (AniSaveInfo));
     }
-
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

@@ -89,7 +89,8 @@ static GimpValueArray * goat_save             (GimpProcedure        *procedure,
                                                gint                  n_drawables,
                                                GimpDrawable        **drawables,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               GimpMetadata         *metadata,
+                                               GimpProcedureConfig  *config,
                                                gpointer              run_data);
 
 static GimpImage      * load_image            (GFile                *file,
@@ -212,9 +213,9 @@ goat_create_procedure (GimpPlugIn  *plug_in,
         }
       else if (! g_strcmp0 (name, format->save_proc))
         {
-          procedure = gimp_save_procedure_new (plug_in, name,
-                                               GIMP_PDB_PROC_TYPE_PLUGIN,
-                                               goat_save,
+          procedure = gimp_save_procedure_new2 (plug_in, name,
+                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+                                                NULL, goat_save,
                                                (gpointer) format, NULL);
 
           gimp_procedure_set_image_types (procedure, "*");
@@ -273,7 +274,8 @@ goat_save (GimpProcedure        *procedure,
            gint                  n_drawables,
            GimpDrawable        **drawables,
            GFile                *file,
-           const GimpValueArray *args,
+           GimpMetadata         *metadata,
+           GimpProcedureConfig  *config,
            gpointer              run_data)
 {
   const FileFormat  *format = run_data;

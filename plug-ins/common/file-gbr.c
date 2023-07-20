@@ -73,7 +73,8 @@ static GimpValueArray * gbr_save             (GimpProcedure        *procedure,
                                               gint                  n_drawables,
                                               GimpDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              GimpMetadata         *metadata,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 
 static gboolean         save_dialog          (GimpProcedure        *procedure,
@@ -116,9 +117,9 @@ gbr_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           gbr_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, gbr_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -170,17 +171,14 @@ gbr_save (GimpProcedure        *procedure,
           gint                  n_drawables,
           GimpDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          GimpMetadata         *metadata,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  gchar               *description;
-  GError              *error  = NULL;
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  gchar             *description;
+  GError            *error  = NULL;
 
   g_object_get (config,
                 "description", &description,
@@ -276,9 +274,6 @@ gbr_save (GimpProcedure        *procedure,
 
       gimp_value_array_unref (save_retvals);
     }
-
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     {

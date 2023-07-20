@@ -81,7 +81,8 @@ static GimpValueArray * dds_save             (GimpProcedure        *procedure,
                                               gint                  n_drawables,
                                               GimpDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              GimpMetadata         *metadata,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 #if 0
 static GimpValueArray * dds_decode           (GimpProcedure        *procedure,
@@ -175,9 +176,9 @@ dds_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           dds_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, dds_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB");
 
@@ -428,19 +429,16 @@ dds_save (GimpProcedure        *procedure,
           gint                  n_drawables,
           GimpDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          GimpMetadata         *metadata,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GError              *error = NULL;
-  gdouble              gamma;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error = NULL;
+  gdouble            gamma;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   switch (run_mode)
     {
@@ -491,9 +489,6 @@ dds_save (GimpProcedure        *procedure,
       gimp_image_delete (image);
       g_free (drawables);
     }
-
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
