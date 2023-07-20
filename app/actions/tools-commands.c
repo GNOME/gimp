@@ -912,23 +912,15 @@ static void
 tools_activate_enum_action (const gchar *action_desc,
                             GVariant    *value)
 {
-  gchar *group_name;
-  gchar *action_name;
-
-  group_name  = g_strdup (action_desc);
-  action_name = strchr (group_name, '/');
-
-  if (action_name)
+  if (action_desc)
     {
       GList      *managers;
       GimpAction *action;
 
-      *action_name++ = '\0';
-
       managers = gimp_ui_managers_from_name ("<Image>");
 
       action = gimp_ui_manager_find_action (managers->data,
-                                            group_name, action_name);
+                                            NULL, action_desc);
 
       if (GIMP_IS_ENUM_ACTION (action) &&
           GIMP_ENUM_ACTION (action)->value_variable)
@@ -936,6 +928,4 @@ tools_activate_enum_action (const gchar *action_desc,
           gimp_action_emit_activate (GIMP_ACTION (action), value);
         }
     }
-
-  g_free (group_name);
 }
