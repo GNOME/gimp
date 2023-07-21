@@ -78,8 +78,8 @@ gimp_prop_chooser_factory (GimpResourceWidgetCreator  widget_creator_func,
    */
 
   /* Create the wrapped widget. For example, call gimp_font_select_button_new.*/
-  result_widget = widget_creator_func (chooser_title,
-                                       initial_resource);
+  result_widget = widget_creator_func (chooser_title, initial_resource);
+  g_object_unref (initial_resource);
 
   /* Bind the wrapped widget's property to the config's property.
    *
