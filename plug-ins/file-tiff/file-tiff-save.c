@@ -693,7 +693,7 @@ save_layer (TIFF        *tif,
         TIFFSetField (tif, TIFFTAG_ICCPROFILE, icc_length, icc_data);
 
       g_object_unref (profile);
-      g_object_unref (cmyk_profile);
+      g_clear_object (&cmyk_profile);
     }
 #endif
 
