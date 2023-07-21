@@ -208,6 +208,7 @@ static void       gimp_plug_in_pop_procedure     (GimpPlugIn      *plug_in,
                                                   GimpProcedure   *procedure);
 static void       gimp_plug_in_destroy_hashes    (GimpPlugIn      *plug_in);
 static void       gimp_plug_in_destroy_proxies   (GHashTable      *hash_table,
+                                                  const gchar     *type,
                                                   gboolean         destroy_all);
 
 static void       gimp_plug_in_init_i18n         (GimpPlugIn      *plug_in);
@@ -327,10 +328,10 @@ gimp_plug_in_finalize (GObject *object)
 
   g_clear_pointer (&plug_in->priv->menu_branches, g_list_free);
 
-  gimp_plug_in_destroy_proxies (plug_in->priv->displays,  TRUE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->images,    TRUE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->items,     TRUE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->resources, TRUE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->displays,  "display",  TRUE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->images,    "image",    TRUE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->items,     "item",     TRUE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->resources, "resource", TRUE);
 
   gimp_plug_in_destroy_hashes (plug_in);
 
@@ -1441,17 +1442,17 @@ gimp_plug_in_pop_procedure (GimpPlugIn    *plug_in,
 
   _gimp_procedure_destroy_proxies (procedure);
 
-  gimp_plug_in_destroy_proxies (plug_in->priv->displays,  FALSE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->images,    FALSE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->items,     FALSE);
-  gimp_plug_in_destroy_proxies (plug_in->priv->resources, FALSE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->displays,  "display",  FALSE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->images,    "image",    FALSE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->items,     "item",     FALSE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->resources, "resource", FALSE);
 
   if (! plug_in->priv->procedure_stack)
     {
-      gimp_plug_in_destroy_proxies (plug_in->priv->displays,  TRUE);
-      gimp_plug_in_destroy_proxies (plug_in->priv->images,    TRUE);
-      gimp_plug_in_destroy_proxies (plug_in->priv->items,     TRUE);
-      gimp_plug_in_destroy_proxies (plug_in->priv->resources, TRUE);
+      gimp_plug_in_destroy_proxies (plug_in->priv->displays,  "display",  TRUE);
+      gimp_plug_in_destroy_proxies (plug_in->priv->images,    "image",    TRUE);
+      gimp_plug_in_destroy_proxies (plug_in->priv->items,     "item",     TRUE);
+      gimp_plug_in_destroy_proxies (plug_in->priv->resources, "resource", TRUE);
 
       gimp_plug_in_destroy_hashes (plug_in);
     }
@@ -1483,7 +1484,7 @@ _gimp_plug_in_get_display (GimpPlugIn *plug_in,
 
       g_hash_table_insert (plug_in->priv->displays,
                            GINT_TO_POINTER (display_id),
-                           g_object_ref (display) /* add debug ref */);
+                           display);
     }
 
   return display;
@@ -1515,7 +1516,7 @@ _gimp_plug_in_get_image (GimpPlugIn *plug_in,
 
       g_hash_table_insert (plug_in->priv->images,
                            GINT_TO_POINTER (image_id),
-                           g_object_ref (image) /* add debug ref */);
+                           image);
     }
 
   return image;
@@ -1581,7 +1582,7 @@ _gimp_plug_in_get_item (GimpPlugIn *plug_in,
       if (item)
         g_hash_table_insert (plug_in->priv->items,
                              GINT_TO_POINTER (item_id),
-                             g_object_ref (item) /* add debug ref */);
+                             item);
     }
 
   return item;
@@ -1641,7 +1642,7 @@ _gimp_plug_in_get_resource (GimpPlugIn *plug_in,
       if (resource)
         g_hash_table_insert (plug_in->priv->resources,
                              GINT_TO_POINTER (resource_id),
-                             g_object_ref (resource) /* add debug ref */);
+                             resource);
     }
 
   return resource;
@@ -1657,8 +1658,9 @@ gimp_plug_in_destroy_hashes (GimpPlugIn *plug_in)
 }
 
 static void
-gimp_plug_in_destroy_proxies (GHashTable *hash_table,
-                              gboolean    destroy_all)
+gimp_plug_in_destroy_proxies (GHashTable  *hash_table,
+                              const gchar *type,
+                              gboolean     destroy_all)
 {
   GHashTableIter iter;
   gpointer       key, value;
@@ -1672,34 +1674,29 @@ gimp_plug_in_destroy_proxies (GHashTable *hash_table,
     {
       GObject *object = value;
 
-      if (object->ref_count == 2)
+      if (object->ref_count == 1)
         {
-          /* this is the normal case for an unused proxy */
-
-          g_object_unref (object);
+          /* this is the normal case for an unused proxy, since we already
+           * destroyed the only other reference in procedure with
+           * _gimp_procedure_destroy_proxies().
+           */
           g_hash_table_iter_remove (&iter);
         }
-      else if (object->ref_count == 1)
+      else if (! G_IS_OBJECT (object))
         {
-          /* this is debug code, a plug-in MUST NOT unref a proxy, we
-           * only catch one unref here, more then one will crash right
-           * in this function
+          /* this is debug code, a plug-in MUST NOT unref a proxy. To be nice,
+           * we steal the object from the table, as removing it normally would
+           * crash, since the object is not valid anymore.
            */
-
-          gint id;
-
-          g_object_get (object, "id", &id, NULL);
-
-          g_printerr ("%s: ERROR: %s proxy with ID %d was unrefed "
+          g_printerr ("%s: ERROR: %s proxy was unrefed "
                       "by plug-in, it MUST NOT do that!\n",
-                      G_STRFUNC, G_OBJECT_TYPE_NAME (object), id);
+                      G_STRFUNC, type);
 
-          g_hash_table_iter_remove (&iter);
+          g_hash_table_iter_steal (&iter);
         }
       else if (destroy_all)
         {
           /* this is debug code, a plug-in MUST NOT ref a proxy */
-
           gint id;
 
           g_object_get (object, "id", &id, NULL);
