@@ -652,7 +652,7 @@ gimp_color_area_enable_drag (GimpColorArea   *area,
  * @draw_border: whether to draw a border or not
  *
  * The @area can draw a thin border in the foreground color around
- * itself.  This function toggles this behaviour on and off. The
+ * itself.  This function toggles this behavior on and off. The
  * default is not draw a border.
  **/
 void

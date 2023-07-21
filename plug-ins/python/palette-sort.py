@@ -251,7 +251,7 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
         except ValueError:
             # bad expression is okay here, just assume one row
             nrows = 1
-        # remaining behaviour is implemented by SELECT_SLICE 'inheritance'.
+        # remaining behavior is implemented by SELECT_SLICE 'inheritance'.
         selection = SELECT_SLICE
     elif selection in (SELECT_SLICE, SELECT_PARTITIONED):
         start, nrows, length = parse_slice(slice_expr, num_colors)

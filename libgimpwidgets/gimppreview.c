@@ -862,7 +862,7 @@ gimp_preview_get_area (GimpPreview  *preview)
  * @preview: a #GimpPreview widget
  *
  * Calls the GimpPreview::draw method. GimpPreview itself doesn't
- * implement a default draw method so the behaviour is determined by
+ * implement a default draw method so the behavior is determined by
  * the derived class implementing this method.
  *
  * #GimpDrawablePreview implements gimp_preview_draw() by drawing the
@@ -886,7 +886,7 @@ gimp_preview_draw (GimpPreview *preview)
  * @rowstride: the @buffer's rowstride
  *
  * Calls the GimpPreview::draw_buffer method. GimpPreview itself
- * doesn't implement this method so the behaviour is determined by the
+ * doesn't implement this method so the behavior is determined by the
  * derived class implementing this method.
  *
  * Since: 2.2

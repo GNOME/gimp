@@ -669,7 +669,7 @@
 # (edit-non-visible no)
 
 # If enabled, the move tool sets the edited layer or path as active.  This
-# used to be the default behaviour in older versions.  Possible values are
+# used to be the default behavior in older versions.  Possible values are
 # yes and no.
 # 
 # (move-tool-changes-active no)

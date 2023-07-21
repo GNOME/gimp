@@ -401,7 +401,7 @@ gimp_scale_entry_set_bounds (GimpScaleEntry *entry,
 /**
  * gimp_scale_entry_set_logarithmic:
  * @entry:       a #GimpScaleEntry as returned by gimp_scale_entry_new()
- * @logarithmic: a boolean value to set or reset logarithmic behaviour
+ * @logarithmic: a boolean value to set or reset logarithmic behavior
  *               of the scale widget
  *
  * Sets whether @entry's scale widget will behave in a linear
@@ -433,7 +433,7 @@ gimp_scale_entry_set_logarithmic (GimpScaleEntry *entry,
  * @entry: a #GimpScaleEntry as returned by gimp_scale_entry_new()
  *
  * Returns: %TRUE if @entry's scale widget will behave in
- *          logarithmic fashion, %FALSE for linear behaviour.
+ *          logarithmic fashion, %FALSE for linear behavior.
  *
  * Since: 2.2
  **/

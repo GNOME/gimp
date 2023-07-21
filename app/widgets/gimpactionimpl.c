@@ -308,7 +308,7 @@ gimp_action_impl_change_state (GAction  *action,
   if (g_signal_has_handler_pending (action, gimp_action_impl_signals[CHANGE_STATE], 0, TRUE))
     g_signal_emit (action, gimp_action_impl_signals[CHANGE_STATE], 0, value);
   else
-    /* If not, then the default behaviour is to just set the state. */
+    /* If not, then the default behavior is to just set the state. */
     gimp_action_impl_set_state (GIMP_ACTION (action), value);
 }
 

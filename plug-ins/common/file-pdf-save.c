@@ -70,7 +70,7 @@
  * May 6, 2009 Barak | Itkin <lightningismyname@gmail.com>
  *   Added new features and several bugfixes:
  *   - Added handling for image resolutions
- *   - fixed the behaviour of getting font sizes
+ *   - fixed the behavior of getting font sizes
  *   - Added various optimizations (solid rectangles instead of bitmaps, ignoring
  *     invisible layers, etc.) as a macro flag.
  *   - Added handling for layer masks, use CAIRO_FORMAT_A8 for grayscale drawables.

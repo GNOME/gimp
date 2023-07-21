@@ -3860,7 +3860,7 @@ gimp_tool_rectangle_update_int_rect (GimpToolRectangle *rectangle)
  * @ccoord_x_output:
  * @ccoord_x_output:
  *
- * Transforms a coordinate to better fit the public behaviour of the
+ * Transforms a coordinate to better fit the public behavior of the
  * rectangle.
  */
 static void

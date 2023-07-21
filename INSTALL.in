@@ -59,7 +59,7 @@ help in that regard:
      GIR data is when cross-compiling because of the difficulty to make cross-tools
      for GObject Introspection.
      Nevertheless if you have working GIR cross-tools, you can force the expected
-     behaviour with GIMP's meson option -Dcan-crosscompile-gir=true
+     behavior with GIMP's meson option -Dcan-crosscompile-gir=true
 
      Optional:
 

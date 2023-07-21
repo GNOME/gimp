@@ -325,7 +325,7 @@ _("When enabled, non-visible layers can be edited as normal.")
 
 #define MOVE_TOOL_CHANGES_ACTIVE_BLURB \
 _("If enabled, the move tool sets the edited layer or path as active.  " \
-  "This used to be the default behaviour in older versions.")
+  "This used to be the default behavior in older versions.")
 
 #define MYPAINT_BRUSH_PATH_BLURB \
 "Sets the brush search path."

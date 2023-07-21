@@ -997,7 +997,7 @@ main (int    argc,
   if (argc == 1)
     usage (EXIT_SUCCESS);
 
-  /* First scan for flags that affect our behaviour globally, but
+  /* First scan for flags that affect our behavior globally, but
    * are still allowed late on the command line.
    */
   argi = 0;

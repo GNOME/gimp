@@ -234,7 +234,7 @@ gimp_image_undo_enable (GimpImage *image)
  * all undo steps when undo is thawed, so is more suited to interactive
  * in-situ previews. It is important in this case that the image is
  * back to the same state it was frozen in before thawing, else 'undo'
- * behaviour is undefined.
+ * behavior is undefined.
  *
  * Returns: TRUE if the image undo has been frozen.
  **/

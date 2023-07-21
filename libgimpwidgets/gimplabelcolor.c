@@ -320,7 +320,7 @@ gimp_label_color_populate (GimpLabeled *labeled,
  * In the editable case, the @label is reused as the color chooser's
  * dialog title.
  *
- * If you wish to customize any of these default behaviours, get the
+ * If you wish to customize any of these default behaviors, get the
  * #GimpColorArea or #GimpColorButton with gimp_label_color_get_color_widget().
  *
  * Returns: (transfer full): The new #GimpLabelColor widget.

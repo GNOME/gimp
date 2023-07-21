@@ -1531,7 +1531,7 @@ prefs_dialog_new (Gimp       *gimp,
     grid = prefs_grid_new (GTK_CONTAINER (vbox2));
 
     button = prefs_enum_combo_box_add (object, "color-profile-policy", 0, 0,
-                                       _("_File Open behaviour:"),
+                                       _("_File Open behavior:"),
                                        GTK_GRID (grid), 0, size_group);
 
     /*  Filter Dialogs  */
