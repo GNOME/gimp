@@ -89,7 +89,8 @@ static GimpImage      * create_new_image      (guint                 width,
 
 static GimpImage      * film                  (GimpProcedureConfig  *config);
 
-static gboolean         check_filmvals        (GimpProcedureConfig  *config);
+static gboolean         check_filmvals        (GimpProcedureConfig  *config,
+                                               GError              **error);
 
 static void             set_pixels            (gint                  numpix,
                                                guchar               *dst,
@@ -232,15 +233,9 @@ film_create_procedure (GimpPlugIn  *plug_in,
 
       /* Arguments ignored in interactive mode. */
 
-      GIMP_PROC_ARG_INT (procedure, "num-images",
-                         "Number of images",
-                         "Number of images to be used for film",
-                         1, MAX_FILM_PICTURES, 1,
-                         G_PARAM_READWRITE);
-
       GIMP_PROC_ARG_OBJECT_ARRAY (procedure, "images",
                                   "Images",
-                                  "num-images images to be used for film",
+                                  "Images to be used for film",
                                   GIMP_TYPE_IMAGE,
                                   G_PARAM_READWRITE);
 
@@ -319,6 +314,7 @@ film_run (GimpProcedure        *procedure,
 {
   GimpValueArray     *return_vals = NULL;
   GimpPDBStatusType   status      = GIMP_PDB_SUCCESS;
+  GError             *error       = NULL;
   gint                film_height;
 
   gegl_init (NULL, NULL);
@@ -359,7 +355,7 @@ film_run (GimpProcedure        *procedure,
       break;
     }
 
-  if (! check_filmvals (config))
+  if (! check_filmvals (config, &error))
     status = GIMP_PDB_CALLING_ERROR;
 
   if (status == GIMP_PDB_SUCCESS)
@@ -390,7 +386,7 @@ film_run (GimpProcedure        *procedure,
     }
 
   if (! return_vals)
-    return_vals = gimp_procedure_new_return_values (procedure, status, NULL);
+    return_vals = gimp_procedure_new_return_values (procedure, status, error);
 
   return return_vals;
 }
@@ -654,17 +650,16 @@ film (GimpProcedureConfig *config)
 /* Unreasonable values are reset to a default. */
 /* If this is not possible, FALSE is returned. Otherwise TRUE is returned. */
 static gboolean
-check_filmvals (GimpProcedureConfig *config)
+check_filmvals (GimpProcedureConfig  *config,
+                GError              **error)
 {
   GimpFont        *font = NULL;
   GimpObjectArray *images;
-  gint             num_images;
   gint             film_height;
   gint             i, j;
   gboolean         success = FALSE;
 
   g_object_get (config,
-                "num-images",  &num_images,
                 "images",      &images,
                 "number-font", &font,
                 "film-height", &film_height,
@@ -679,24 +674,30 @@ check_filmvals (GimpProcedureConfig *config)
       g_object_set (config, "number-font", gimp_context_get_font (), NULL);
     }
 
-  for (i = 0, j = 0; i < num_images; i++)
+  if (images != NULL)
     {
-      if (gimp_image_is_valid (GIMP_IMAGE (images->data[i])))
+      for (i = 0, j = 0; i < images->length; i++)
         {
-          images->data[j] = images->data[i];
-          j++;
+          if (gimp_image_is_valid (GIMP_IMAGE (images->data[i])))
+            {
+              images->data[j] = images->data[i];
+              j++;
+            }
+        }
+
+      if (j > 0)
+        {
+          images->length = j;
+          g_object_set (config,
+                        "images", images,
+                        NULL);
+          success = TRUE;
         }
     }
 
-  if (j > 0)
-    {
-      images->length = j;
-      g_object_set (config,
-                    "num-images", j,
-                    "images",     images,
-                    NULL);
-      success = TRUE;
-    }
+  if (images == NULL || images->length == 0)
+    g_set_error_literal (error, GIMP_PLUG_IN_ERROR, 0,
+                         _("\"Filmstrip\" cannot be run without any input images"));
 
   gimp_object_array_free (images);
   g_clear_object (&font);
@@ -1183,8 +1184,7 @@ film_dialog (GimpImage           *image,
       images_array = gimp_object_array_new (GIMP_TYPE_IMAGE, (GObject **) images, num_images, TRUE);
 
       g_object_set (config,
-                    "images",     images_array,
-                    "num-images", num_images,
+                    "images", images_array,
                     NULL);
 
       gimp_object_array_free (images_array);
