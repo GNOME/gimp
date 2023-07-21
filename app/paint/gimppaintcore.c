@@ -20,10 +20,12 @@
 
 #include <string.h>
 
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "paint-types.h"
@@ -805,20 +807,19 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
                                  gint             *new_off_x,
                                  gint             *new_off_y)
 {
-  gint           drawable_width, drawable_height;
-  gint           drawable_offset_x, drawable_offset_y;
-  gint           image_width, image_height;
-  gint           new_width, new_height;
-  gint           expand_amount;
-  gboolean       show_all;
-  gboolean       outside_image;
-  GimpImage     *image         = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpContext   *context       = GIMP_CONTEXT (options);
-  GimpFillType   fill_type     = GIMP_FILL_TRANSPARENT;
-  GimpLayer     *layer;
-  GeglBuffer    *undo_buffer;
-  GeglBuffer    *new_buffer;
-  const Babl    *format;
+  gint          drawable_width, drawable_height;
+  gint          drawable_offset_x, drawable_offset_y;
+  gint          image_width, image_height;
+  gint          new_width, new_height;
+  gint          expand_amount;
+  gboolean      show_all;
+  gboolean      outside_image;
+  GimpImage    *image     = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpContext  *context   = GIMP_CONTEXT (options);
+  GimpFillType  fill_type = GIMP_FILL_TRANSPARENT;
+  GimpLayer    *layer;
+  GeglBuffer   *undo_buffer;
+  GeglBuffer   *new_buffer;
 
   drawable_width  = gimp_item_get_width  (GIMP_ITEM (drawable));
   drawable_height = gimp_item_get_height (GIMP_ITEM (drawable));
@@ -917,6 +918,9 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
   if (new_width != drawable_width   || *new_off_x ||
       new_height != drawable_height || *new_off_y)
     {
+      GimpRGB      color;
+      GimpPattern *pattern;
+
       /* ensure that every expansion is pushed to undo stack */
       if (core->x2 == core->x1)
         core->x2++;
@@ -964,35 +968,28 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
 
       gimp_image_flush (image);
 
-      format     = gegl_buffer_get_format (core->canvas_buffer);
-      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, new_width, new_height),
-                                    format);
-      gimp_gegl_buffer_copy (
-        core->canvas_buffer,
-        GEGL_RECTANGLE (0, 0,
-                        gegl_buffer_get_width (core->canvas_buffer),
-                        gegl_buffer_get_height (core->canvas_buffer)),
-        GEGL_ABYSS_NONE,
-        new_buffer,
-        GEGL_RECTANGLE (*new_off_x, *new_off_y, 0, 0));
+      if (fill_type == GIMP_FILL_TRANSPARENT &&
+          ! gimp_drawable_has_alpha (drawable))
+        {
+          fill_type = GIMP_FILL_BACKGROUND;
+        }
+
+      new_buffer = gimp_gegl_buffer_resize (core->canvas_buffer, new_width, new_height,
+                                            *new_off_x * -1, *new_off_y * -1, NULL);
       g_object_unref (core->canvas_buffer);
       core->canvas_buffer = new_buffer;
+
+      gimp_get_fill_params (context, fill_type, &color, &pattern, NULL);
+      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                         &color, &color);
+      if (! gimp_drawable_has_alpha (drawable))
+        gimp_rgb_set_alpha (&color, 1.0);
 
       undo_buffer = g_hash_table_lookup (core->undo_buffers, drawable);
       g_object_ref (undo_buffer);
 
-      format     = gegl_buffer_get_format (undo_buffer);
-      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, new_width, new_height),
-                                    format);
-
-      gimp_gegl_buffer_copy (
-        undo_buffer,
-        GEGL_RECTANGLE (0, 0,
-                        gegl_buffer_get_width (undo_buffer),
-                        gegl_buffer_get_height (undo_buffer)),
-        GEGL_ABYSS_NONE,
-        new_buffer,
-        GEGL_RECTANGLE (*new_off_x, *new_off_y, 0, 0));
+      new_buffer = gimp_gegl_buffer_resize (undo_buffer, new_width, new_height,
+                                            -1 * *new_off_x, -1 * *new_off_y, &color);
       g_hash_table_insert (core->undo_buffers, drawable, new_buffer);
       g_object_unref (undo_buffer);
 

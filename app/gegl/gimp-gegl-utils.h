@@ -55,6 +55,12 @@ gboolean      gimp_gegl_param_spec_has_key            (GParamSpec          *pspe
                                                        const gchar         *value);
 
 GeglBuffer  * gimp_gegl_buffer_dup                    (GeglBuffer          *buffer);
+GeglBuffer  * gimp_gegl_buffer_resize                 (GeglBuffer          *buffer,
+                                                       gint                 new_width,
+                                                       gint                 new_height,
+                                                       gint                 offset_x,
+                                                       gint                 offset_y,
+                                                       GimpRGB             *color);
 
 gboolean      gimp_gegl_buffer_set_extent             (GeglBuffer          *buffer,
                                                        const GeglRectangle *extent);

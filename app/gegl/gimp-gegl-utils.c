@@ -333,6 +333,59 @@ gimp_gegl_buffer_dup (GeglBuffer *buffer)
   return new_buffer;
 }
 
+GeglBuffer *
+gimp_gegl_buffer_resize (GeglBuffer   *buffer,
+                         gint          new_width,
+                         gint          new_height,
+                         gint          offset_x,
+                         gint          offset_y,
+                         GimpRGB      *color)
+{
+  GeglBuffer          *new_buffer;
+  gboolean             intersect;
+  GeglRectangle        copy_rect;
+  const GeglRectangle *extent;
+  const Babl          *format;
+
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
+
+  extent     = gegl_buffer_get_extent (buffer);
+  format     = gegl_buffer_get_format (buffer);
+  new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, new_width, new_height),
+                                format);
+
+  intersect = gegl_rectangle_intersect (&copy_rect,
+                                        GEGL_RECTANGLE (0, 0, extent->width,
+                                                        extent->height),
+                                        GEGL_RECTANGLE (offset_x, offset_y,
+                                                        new_width, new_height));
+
+  if (! intersect                   ||
+      copy_rect.width  != new_width ||
+      copy_rect.height != new_height)
+    {
+      /*  Clear the new buffer if needed and color is given */
+      if (color)
+        {
+          GeglColor *gegl_color;
+
+          gegl_color = gimp_gegl_color_new (color, gegl_buffer_get_format (buffer));
+          gegl_buffer_set_color (new_buffer, NULL, gegl_color);
+          g_object_unref (gegl_color);
+        }
+    }
+
+  if (intersect && copy_rect.width && copy_rect.height)
+    {
+      /*  Copy the pixels in the intersection  */
+      gimp_gegl_buffer_copy (buffer, &copy_rect, GEGL_ABYSS_NONE, new_buffer,
+                             GEGL_RECTANGLE (copy_rect.x - offset_x,
+                                             copy_rect.y - offset_y, 0, 0));
+    }
+
+  return new_buffer;
+}
+
 gboolean
 gimp_gegl_buffer_set_extent (GeglBuffer          *buffer,
                              const GeglRectangle *extent)
