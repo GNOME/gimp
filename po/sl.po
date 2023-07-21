@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-18 18:50+0000\n"
-"PO-Revision-Date: 2023-07-19 00:15+0200\n"
+"POT-Creation-Date: 2023-07-21 19:36+0000\n"
+"PO-Revision-Date: 2023-07-22 00:13+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -10610,10 +10610,10 @@ msgstr "Če je vključeno, lahko ne vidne plasti urejate kot navadne."
 #: app/config/gimprc-blurbs.h:327
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
-"used to be the default behaviour in older versions."
+"used to be the default behavior in older versions."
 msgstr ""
 "Če je vključeno, orodje za premikanje nastavi urejevano plast ali pot kot "
-"aktivno.  To je bilo v starejših različicah privzeto vedenje."
+"dejavno.  To je bilo v starejših različicah privzeto vedenje."
 
 #: app/config/gimprc-blurbs.h:336
 msgid ""
@@ -16181,8 +16181,8 @@ msgid "Policies"
 msgstr "Politike"
 
 #: app/dialogs/preferences-dialog.c:1534
-msgid "_File Open behaviour:"
-msgstr "Vedenje odpiranja _datoteke:"
+msgid "_File Open behavior:"
+msgstr "Vedenje _odpiranja datoteke:"
 
 #. Filter Dialogs
 #: app/dialogs/preferences-dialog.c:1538 app/dialogs/preferences-dialog.c:2408
