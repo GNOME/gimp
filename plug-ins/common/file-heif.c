@@ -84,7 +84,8 @@ static GimpValueArray * heif_save             (GimpProcedure        *procedure,
                                                gint                  n_drawables,
                                                GimpDrawable        **drawables,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               GimpMetadata         *metadata,
+                                               GimpProcedureConfig  *config,
                                                gpointer              run_data);
 
 #if LIBHEIF_HAVE_VERSION(1,8,0)
@@ -94,7 +95,8 @@ static GimpValueArray * heif_av1_save         (GimpProcedure        *procedure,
                                                gint                  n_drawables,
                                                GimpDrawable        **drawables,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               GimpMetadata         *metadata,
+                                               GimpProcedureConfig  *config,
                                                gpointer              run_data);
 #endif
 
@@ -221,9 +223,9 @@ heif_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           heif_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, heif_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
 
@@ -330,9 +332,9 @@ heif_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC_AV1))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           heif_av1_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, heif_av1_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
 
@@ -461,19 +463,16 @@ heif_save (GimpProcedure        *procedure,
            gint                  n_drawables,
            GimpDrawable        **drawables,
            GFile                *file,
-           const GimpValueArray *args,
+           GimpMetadata         *metadata_unused,
+           GimpProcedureConfig  *config,
            gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpMetadata        *metadata;
-  GError              *error  = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GimpMetadata      *metadata;
+  GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
@@ -537,9 +536,6 @@ heif_save (GimpProcedure        *procedure,
         }
     }
 
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
-
   if (export == GIMP_EXPORT_EXPORT)
     {
       gimp_image_delete (image);
@@ -557,19 +553,16 @@ heif_av1_save (GimpProcedure        *procedure,
                gint                  n_drawables,
                GimpDrawable        **drawables,
                GFile                *file,
-               const GimpValueArray *args,
+               GimpMetadata         *metadata_unused,
+               GimpProcedureConfig  *config,
                gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpMetadata        *metadata;
-  GError              *error  = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GimpMetadata      *metadata;
+  GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
@@ -632,9 +625,6 @@ heif_av1_save (GimpProcedure        *procedure,
           g_object_unref (metadata);
         }
     }
-
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     {

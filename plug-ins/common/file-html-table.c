@@ -90,7 +90,8 @@ static GimpValueArray * html_save              (GimpProcedure        *procedure,
                                                 gint                  n_drawables,
                                                 GimpDrawable        **drawables,
                                                 GFile                *file,
-                                                const GimpValueArray *args,
+                                                GimpMetadata         *metadata,
+                                                GimpProcedureConfig  *config,
                                                 gpointer              run_data);
 
 static gboolean         save_image             (GFile                *file,
@@ -144,9 +145,9 @@ html_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           html_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, html_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -260,13 +261,13 @@ html_save (GimpProcedure        *procedure,
            gint                  n_drawables,
            GimpDrawable        **drawables,
            GFile                *file,
-           const GimpValueArray *args,
+           GimpMetadata         *metadata,
+           GimpProcedureConfig  *config,
            gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GeglBuffer          *buffer;
-  GError              *error  = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GeglBuffer        *buffer;
+  GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -274,9 +275,6 @@ html_save (GimpProcedure        *procedure,
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_CALLING_ERROR,
                                              NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   if (! save_dialog (image, procedure, G_OBJECT (config)))
     return gimp_procedure_new_return_values (procedure,
@@ -302,9 +300,6 @@ html_save (GimpProcedure        *procedure,
     }
 
   g_object_unref (buffer);
-
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

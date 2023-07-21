@@ -147,7 +147,8 @@ static GimpValueArray * ps_save             (GimpProcedure        *procedure,
                                              gint                  n_drawables,
                                              GimpDrawable        **drawables,
                                              GFile                *file,
-                                             const GimpValueArray *args,
+                                             GimpMetadata         *metadata,
+                                             GimpProcedureConfig  *config,
                                              gpointer              run_data);
 
 static GimpImage      * load_image          (GFile                *file,
@@ -440,9 +441,9 @@ ps_create_procedure (GimpPlugIn  *plug_in,
   else if (! strcmp (name, SAVE_PS_PROC) ||
            ! strcmp (name, SAVE_EPS_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           ps_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, ps_save, NULL, NULL);
 
       if (! strcmp (name, SAVE_PS_PROC))
         {
@@ -672,20 +673,17 @@ ps_save (GimpProcedure        *procedure,
          gint                  n_drawables,
          GimpDrawable        **drawables,
          GFile                *file,
-         const GimpValueArray *args,
+         GimpMetadata         *metadata,
+         GimpProcedureConfig  *config,
          gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status   = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export   = GIMP_EXPORT_CANCEL;
-  GimpImage           *orig_image;
-  gboolean             eps_flag = FALSE;
-  GError              *error    = NULL;
+  GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export   = GIMP_EXPORT_CANCEL;
+  GimpImage         *orig_image;
+  gboolean           eps_flag = FALSE;
+  GError            *error    = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   eps_flag = strcmp (gimp_procedure_get_name (procedure), SAVE_PS_PROC);
   g_object_set (config,
@@ -762,9 +760,6 @@ ps_save (GimpProcedure        *procedure,
       if (! save_image (file, G_OBJECT (config), image, drawables[0], &error))
         status = GIMP_PDB_EXECUTION_ERROR;
     }
-
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     {

@@ -159,7 +159,8 @@ static GimpValueArray * compressor_save             (GimpProcedure        *proce
                                                      gint                  n_drawables,
                                                      GimpDrawable        **drawables,
                                                      GFile                *file,
-                                                     const GimpValueArray *args,
+                                                     GimpMetadata         *metadata,
+                                                     GimpProcedureConfig  *config,
                                                      gpointer              run_data);
 static GimpValueArray * compressor_load             (GimpProcedure        *procedure,
                                                      GimpRunMode           run_mode,
@@ -328,10 +329,10 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
         }
       else if (! strcmp (name, compressor->save_proc))
         {
-          procedure = gimp_save_procedure_new (plug_in, name,
-                                               GIMP_PDB_PROC_TYPE_PLUGIN,
-                                               compressor_save,
-                                               (gpointer) compressor, NULL);
+          procedure = gimp_save_procedure_new2 (plug_in, name,
+                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+                                                NULL, compressor_save,
+                                                (gpointer) compressor, NULL);
 
           gimp_procedure_set_image_types (procedure, "RGB*, GRAY*, INDEXED*");
 
@@ -400,7 +401,8 @@ compressor_save (GimpProcedure        *procedure,
                  gint                  n_drawables,
                  GimpDrawable        **drawables,
                  GFile                *file,
-                 const GimpValueArray *args,
+                 GimpMetadata         *metadata,
+                 GimpProcedureConfig  *config,
                  gpointer              run_data)
 {
   const CompressorEntry *compressor = run_data;

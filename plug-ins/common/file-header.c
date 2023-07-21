@@ -59,7 +59,8 @@ static GimpValueArray * header_save             (GimpProcedure        *procedure
                                                  gint                  n_drawables,
                                                  GimpDrawable        **drawables,
                                                  GFile                *file,
-                                                 const GimpValueArray *args,
+                                                 GimpMetadata         *metadata,
+                                                 GimpProcedureConfig  *config,
                                                  gpointer              run_data);
 
 static gboolean         save_image              (GFile                *file,
@@ -108,9 +109,9 @@ header_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           header_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, header_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED, RGB");
 
@@ -144,7 +145,8 @@ header_save (GimpProcedure        *procedure,
              gint                  n_drawables,
              GimpDrawable        **drawables,
              GFile                *file,
-             const GimpValueArray *args,
+             GimpMetadata         *metadata,
+             GimpProcedureConfig  *config,
              gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;

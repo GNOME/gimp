@@ -98,7 +98,8 @@ static GimpValueArray * fits_save             (GimpProcedure        *procedure,
                                                gint                  n_drawables,
                                                GimpDrawable        **drawables,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               GimpMetadata         *metadata,
+                                               GimpProcedureConfig  *config,
                                                gpointer              run_data);
 
 static GimpImage      * load_image            (GFile              *file,
@@ -208,9 +209,9 @@ fits_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           fits_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, fits_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -288,7 +289,8 @@ fits_save (GimpProcedure        *procedure,
            gint                  n_drawables,
            GimpDrawable        **drawables,
            GFile                *file,
-           const GimpValueArray *args,
+           GimpMetadata         *metadata,
+           GimpProcedureConfig  *config,
            gpointer              run_data)
 {
   GimpImage          *duplicate_image;
