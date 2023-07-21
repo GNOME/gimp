@@ -53,15 +53,6 @@
 #define PLUG_IN_ROLE   "gimp-file-gih"
 
 
-/* Parameters applicable each time we export a gih, exported in the
- * main gimp application between invocations of this plug-in.
- */
-typedef struct
-{
-  gchar description[256];
-  gint  spacing;
-} BrushInfo;
-
 typedef struct
 {
   GimpOrientationType  orientation;
@@ -110,10 +101,13 @@ static GimpValueArray * gih_save             (GimpProcedure        *procedure,
                                               gint                  n_drawables,
                                               GimpDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              GimpMetadata         *metadata,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 
-static gboolean         gih_save_dialog      (GimpImage            *image);
+static gboolean         gih_save_dialog      (GimpImage            *image,
+                                              gchar               **description,
+                                              gint                 *spacing);
 
 
 G_DEFINE_TYPE (Gih, gih, GIMP_TYPE_PLUG_IN)
@@ -121,12 +115,6 @@ G_DEFINE_TYPE (Gih, gih, GIMP_TYPE_PLUG_IN)
 GIMP_MAIN (GIH_TYPE)
 DEFINE_STD_SET_I18N
 
-
-static BrushInfo info =
-{
-  "GIMP Brush Pipe",
-  20
-};
 
 static gint              num_layers = 0;
 static GimpPixPipeParams gihparams  = { 0, };
@@ -169,9 +157,9 @@ gih_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           gih_save, NULL, NULL);
+      procedure = gimp_save_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            NULL, gih_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
 
@@ -203,15 +191,15 @@ gih_create_procedure (GimpPlugIn  *plug_in,
                                               TRUE);
 
       GIMP_PROC_ARG_INT (procedure, "spacing",
-                         "Spacing",
+                         "Spacing (percent)",
                          "Spacing of the brush",
-                         1, 1000, 10,
+                         1, 1000, 20,
                          GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_STRING (procedure, "description",
                             "Description",
-                            "Short description of the gihtern",
-                            "GIMP Gihtern",
+                            "Short description of the GIH brush pipe",
+                            "GIMP Brush Pipe",
                             GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "cell-width",
@@ -265,7 +253,8 @@ gih_save (GimpProcedure        *procedure,
           gint                  n_drawables,
           GimpDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          GimpMetadata         *metadata,
+          GimpProcedureConfig  *config,
           gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
@@ -275,6 +264,9 @@ gih_save (GimpProcedure        *procedure,
   GError            *error  = NULL;
   gint               i;
   GBytes            *rank_bytes;
+  gint               dimension_2;
+  gchar             *description = NULL;
+  gint               spacing;
 
   orig_image = image;
 
@@ -296,8 +288,6 @@ gih_save (GimpProcedure        *procedure,
                                                  NULL);
 
       /*  Possibly retrieve data  */
-      gimp_get_data (SAVE_PROC, &info);
-
       parasite = gimp_image_get_parasite (orig_image,
                                           "gimp-brush-pipe-name");
       if (parasite)
@@ -307,8 +297,7 @@ gih_save (GimpProcedure        *procedure,
 
           parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
 
-          g_strlcpy (info.description, parasite_data,
-                     MIN (sizeof (info.description), parasite_size));
+          g_object_set (config, "description", parasite_data , NULL);
 
           gimp_parasite_free (parasite);
         }
@@ -320,25 +309,9 @@ gih_save (GimpProcedure        *procedure,
             name[strlen (name) - 4] = '\0';
 
           if (strlen (name))
-            g_strlcpy (info.description, name, sizeof (info.description));
+            g_object_set (config, "description", name, NULL);
 
           g_free (name);
-        }
-
-      parasite = gimp_image_get_parasite (orig_image,
-                                          "gimp-brush-pipe-spacing");
-      if (parasite)
-        {
-          gchar   *parasite_data;
-          guint32  parasite_size;
-
-          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
-          parasite_data = g_strndup (parasite_data, parasite_size);
-
-          info.spacing = atoi (parasite_data);
-
-          gimp_parasite_free (parasite);
-          g_free (parasite_data);
         }
       break;
 
@@ -349,6 +322,11 @@ gih_save (GimpProcedure        *procedure,
   g_free (gimp_image_get_layers (image, &num_layers));
 
   gimp_pixpipe_params_init (&gihparams);
+
+  g_object_get (config,
+                "spacing",     &spacing,
+                "description", &description,
+                NULL);
 
   switch (run_mode)
     {
@@ -380,7 +358,7 @@ gih_save (GimpProcedure        *procedure,
       if (gihparams.dim == 1)
         gihparams.rank[0] = gihparams.ncells;
 
-      if (! gih_save_dialog (image))
+      if (! gih_save_dialog (image, &description, &spacing))
         {
           status = GIMP_PDB_CANCEL;
           goto out;
@@ -388,35 +366,37 @@ gih_save (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      info.spacing = GIMP_VALUES_GET_INT (args, 0);
-      g_strlcpy (info.description,
-                 GIMP_VALUES_GET_STRING (args, 1),
-                 sizeof (info.description));
+      g_object_get (config,
+                    "cell-width",   &gihparams.cellwidth,
+                    "cell-height",  &gihparams.cellheight,
+                    "display-cols", &gihparams.cols,
+                    "display-rows", &gihparams.rows,
+                    "rank",         &rank_bytes,
+                    "dimension-2",  &dimension_2,
+                    NULL);
 
-      gihparams.cellwidth  = GIMP_VALUES_GET_INT (args, 2);
-      gihparams.cellheight = GIMP_VALUES_GET_INT (args, 3);
-      gihparams.cols       = GIMP_VALUES_GET_INT (args, 4);
-      gihparams.rows       = GIMP_VALUES_GET_INT (args, 5);
-      rank_bytes           = GIMP_VALUES_GET_BYTES (args, 6);
       gihparams.dim        = g_bytes_get_size (rank_bytes);
       gihparams.ncells     = 1;
 
-      if (GIMP_VALUES_GET_INT (args, 7) != gihparams.dim)
+      if (dimension_2 != gihparams.dim)
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
       else
         {
           const guint8  *rank = g_bytes_get_data (rank_bytes, NULL);
-          const gchar  **sel  = GIMP_VALUES_GET_STRV (args, 8);
+          const gchar  **sel;
 
+          g_object_get (config, "sel", &sel, NULL);
           for (i = 0; i < gihparams.dim; i++)
             {
               gihparams.rank[i]      = rank[i];
               gihparams.selection[i] = g_strdup (sel[i]);
               gihparams.ncells       *= gihparams.rank[i];
             }
+          g_strfreev (sel);
         }
+      g_bytes_unref (rank_bytes);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -441,7 +421,6 @@ gih_save (GimpProcedure        *procedure,
   if (status == GIMP_PDB_SUCCESS)
     {
       GimpValueArray *save_retvals;
-      gchar           spacing[8];
       gchar          *paramstring;
       GimpValueArray *args;
 
@@ -453,8 +432,8 @@ gih_save (GimpProcedure        *procedure,
                                               G_TYPE_INT,             n_drawables,
                                               GIMP_TYPE_OBJECT_ARRAY, NULL,
                                               G_TYPE_FILE,            file,
-                                              G_TYPE_INT,             info.spacing,
-                                              G_TYPE_STRING,          info.description,
+                                              G_TYPE_INT,             spacing,
+                                              G_TYPE_STRING,          description,
                                               G_TYPE_STRING,          paramstring,
                                               G_TYPE_NONE);
       gimp_value_set_object_array (gimp_value_array_index (args, 3),
@@ -467,21 +446,10 @@ gih_save (GimpProcedure        *procedure,
 
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) == GIMP_PDB_SUCCESS)
         {
-          gimp_set_data (SAVE_PROC, &info, sizeof (info));
-
           parasite = gimp_parasite_new ("gimp-brush-pipe-name",
                                         GIMP_PARASITE_PERSISTENT,
-                                        strlen (info.description) + 1,
-                                        info.description);
-          gimp_image_attach_parasite (orig_image, parasite);
-          gimp_parasite_free (parasite);
-
-          g_snprintf (spacing, sizeof (spacing), "%d",
-                      info.spacing);
-
-          parasite = gimp_parasite_new ("gimp-brush-pipe-spacing",
-                                        GIMP_PARASITE_PERSISTENT,
-                                        strlen (spacing) + 1, spacing);
+                                        strlen (description) + 1,
+                                        description);
           gimp_image_attach_parasite (orig_image, parasite);
           gimp_parasite_free (parasite);
 
@@ -506,6 +474,7 @@ gih_save (GimpProcedure        *procedure,
     }
 
   gimp_pixpipe_params_free (&gihparams);
+  g_free (description);
 
  out:
   if (export == GIMP_EXPORT_EXPORT)
@@ -576,12 +545,11 @@ size_adjustment_callback (GtkAdjustment      *adjustment,
 }
 
 static void
-entry_callback (GtkWidget *widget,
-                gpointer   data)
+entry_callback (GtkWidget  *widget,
+                gchar     **description)
 {
-  if (data == info.description)
-    g_strlcpy (info.description, gtk_entry_get_text (GTK_ENTRY (widget)),
-               sizeof (info.description));
+  g_free (*description);
+  *description = g_strdup (gtk_entry_get_text (GTK_ENTRY (widget)));
 }
 
 static void
@@ -611,7 +579,9 @@ dim_callback (GtkAdjustment      *adjustment,
 }
 
 static gboolean
-gih_save_dialog (GimpImage *image)
+gih_save_dialog (GimpImage  *image,
+                 gchar     **description,
+                 gint       *spacing)
 {
   GtkWidget          *dialog;
   GtkWidget          *grid;
@@ -645,19 +615,19 @@ gih_save_dialog (GimpImage *image)
    */
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 200, -1);
-  gtk_entry_set_text (GTK_ENTRY (entry), info.description);
+  gtk_entry_set_text (GTK_ENTRY (entry), *description);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("_Description:"), 0.0, 0.5,
                             entry, 1);
 
   g_signal_connect (entry, "changed",
                     G_CALLBACK (entry_callback),
-                    info.description);
+                    description);
 
   /*
    * Spacing: __
    */
-  adjustment = gtk_adjustment_new (info.spacing, 1, 1000, 1, 10, 0);
+  adjustment = gtk_adjustment_new (*spacing, 1, 1000, 1, 10, 0);
   spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
@@ -666,7 +636,7 @@ gih_save_dialog (GimpImage *image)
 
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
-                    &info.spacing);
+                    spacing);
 
   /*
    * Cell size: __ x __ pixels
