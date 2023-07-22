@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-18 18:50+0000\n"
-"PO-Revision-Date: 2023-07-19 06:14+0200\n"
+"POT-Creation-Date: 2023-07-21 19:36+0000\n"
+"PO-Revision-Date: 2023-07-22 05:55+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -10465,7 +10465,7 @@ msgstr "თუ ჩართულია, არა-ხილული ფენ�
 #: app/config/gimprc-blurbs.h:327
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
-"used to be the default behaviour in older versions."
+"used to be the default behavior in older versions."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:336
@@ -13323,7 +13323,7 @@ msgstr "ერთზე მეტი მონიშნული ფენა �
 #: app/core/gimpimage.c:3073
 #, c-format
 msgid "Off-canvas guides added in %s"
-msgstr ""
+msgstr "%s-ში ტილოსგარე გიდები დამატებულია"
 
 #: app/core/gimpimage.c:3084
 #, c-format
@@ -13612,7 +13612,7 @@ msgstr "ფენების ჯგუფის შერწყმა შეუ
 
 #: app/core/gimpimage-merge.c:341
 msgid "The layer to merge down to is locked."
-msgstr ""
+msgstr "შესარწყამი ფენა დაბლოკილია."
 
 #: app/core/gimpimage-merge.c:356
 msgid "There is no visible layer to merge down to."
@@ -15877,7 +15877,7 @@ msgid "Policies"
 msgstr "წესები"
 
 #: app/dialogs/preferences-dialog.c:1534
-msgid "_File Open behaviour:"
+msgid "_File Open behavior:"
 msgstr "ფაილის გახსნის _ფანჯრის ქცევა:"
 
 #. Filter Dialogs
@@ -16588,6 +16588,8 @@ msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
 msgstr ""
+"GIMP-ის დახმარების ბრაუზერი, როგორც ჩანს, დაყენებული არაა. გამოვიყენებ ვებ "
+"ბრაუზერს."
 
 #. Action Search
 #: app/dialogs/preferences-dialog.c:2751
@@ -21500,12 +21502,12 @@ msgstr "შევსებული"
 #: app/text/text-enums.c:55
 msgctxt "text-outline"
 msgid "Outlined"
-msgstr ""
+msgstr "გამოკვეთილია"
 
 #: app/text/text-enums.c:56
 msgctxt "text-outline"
 msgid "Outlined and filled"
-msgstr ""
+msgstr "გამოკვეთილი და შევსებულია"
 
 #: app/tools/gimpairbrushtool.c:68
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
