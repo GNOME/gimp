@@ -441,9 +441,9 @@ ps_create_procedure (GimpPlugIn  *plug_in,
   else if (! strcmp (name, SAVE_PS_PROC) ||
            ! strcmp (name, SAVE_EPS_PROC))
     {
-      procedure = gimp_save_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            NULL, ps_save, NULL, NULL);
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           FALSE, ps_save, NULL, NULL);
 
       if (! strcmp (name, SAVE_PS_PROC))
         {

@@ -203,9 +203,9 @@ psd_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            "image/x-psd", psd_save, NULL, NULL);
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           TRUE, psd_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 

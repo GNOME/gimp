@@ -213,9 +213,9 @@ goat_create_procedure (GimpPlugIn  *plug_in,
         }
       else if (! g_strcmp0 (name, format->save_proc))
         {
-          procedure = gimp_save_procedure_new2 (plug_in, name,
-                                                GIMP_PDB_PROC_TYPE_PLUGIN,
-                                                NULL, goat_save,
+          procedure = gimp_save_procedure_new (plug_in, name,
+                                               GIMP_PDB_PROC_TYPE_PLUGIN,
+                                               FALSE, goat_save,
                                                (gpointer) format, NULL);
 
           gimp_procedure_set_image_types (procedure, "*");

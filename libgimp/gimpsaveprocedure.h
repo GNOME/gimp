@@ -37,34 +37,9 @@ G_BEGIN_DECLS
  * @n_drawables: the number of drawables to save.
  * @drawables: (array length=n_drawables):   the drawables to save.
  * @file:        the #GFile to save to.
- * @args:        the @procedure's remaining arguments.
- * @run_data: (closure): the run_data given in gimp_save_procedure_new().
- *
- * The save function is run during the lifetime of the GIMP session,
- * each time a plug-in save procedure is called.
- *
- * Returns: (transfer full): the @procedure's return values.
- *
- * Since: 3.0
- **/
-typedef GimpValueArray * (* GimpRunSaveFunc) (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-/**
- * GimpRunSaveFunc2:
- * @procedure:   the #GimpProcedure that runs.
- * @run_mode:    the #GimpRunMode.
- * @image:       the image to save.
- * @n_drawables: the number of drawables to save.
- * @drawables: (array length=n_drawables):   the drawables to save.
  * @metadata:    metadata object prepared for the mimetype passed in
- *               gimp_save_procedure_new().
- * @file:        the #GFile to save to.
+ *               gimp_file_procedure_set_mime_types() if export_metadata
+ *               argument was set in gimp_save_procedure_new().
  * @config:      the @procedure's remaining arguments.
  * @run_data: (closure): the run_data given in gimp_save_procedure_new().
  *
@@ -80,15 +55,15 @@ typedef GimpValueArray * (* GimpRunSaveFunc) (GimpProcedure        *procedure,
  *
  * Since: 3.0
  **/
-typedef GimpValueArray * (* GimpRunSaveFunc2) (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
-                                               gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               GFile                *file,
-                                               GimpMetadata         *metadata,
-                                               GimpProcedureConfig  *config,
-                                               gpointer              run_data);
+typedef GimpValueArray * (* GimpRunSaveFunc) (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GimpImage            *image,
+                                              gint                  n_drawables,
+                                              GimpDrawable        **drawables,
+                                              GFile                *file,
+                                              GimpMetadata         *metadata,
+                                              GimpProcedureConfig  *config,
+                                              gpointer              run_data);
 
 
 #define GIMP_TYPE_SAVE_PROCEDURE            (gimp_save_procedure_get_type ())
@@ -116,21 +91,15 @@ struct _GimpSaveProcedureClass
 };
 
 
-GType           gimp_save_procedure_get_type (void) G_GNUC_CONST;
+GType           gimp_save_procedure_get_type              (void) G_GNUC_CONST;
 
-GimpProcedure * gimp_save_procedure_new      (GimpPlugIn      *plug_in,
-                                              const gchar     *name,
-                                              GimpPDBProcType  proc_type,
-                                              GimpRunSaveFunc  run_func,
-                                              gpointer         run_data,
-                                              GDestroyNotify   run_data_destroy);
-GimpProcedure * gimp_save_procedure_new2     (GimpPlugIn      *plug_in,
-                                              const gchar     *name,
-                                              GimpPDBProcType  proc_type,
-                                              const gchar     *mimetype,
-                                              GimpRunSaveFunc2 run_func,
-                                              gpointer         run_data,
-                                              GDestroyNotify   run_data_destroy);
+GimpProcedure * gimp_save_procedure_new                   (GimpPlugIn        *plug_in,
+                                                           const gchar       *name,
+                                                           GimpPDBProcType    proc_type,
+                                                           gboolean           export_metadata,
+                                                           GimpRunSaveFunc    run_func,
+                                                           gpointer           run_data,
+                                                           GDestroyNotify     run_data_destroy);
 
 void            gimp_save_procedure_set_support_exif      (GimpSaveProcedure *procedure,
                                                            gboolean           supports);

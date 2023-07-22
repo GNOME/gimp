@@ -824,7 +824,6 @@ EXPORTS
 	gimp_save_procedure_get_support_xmp
 	gimp_save_procedure_get_type
 	gimp_save_procedure_new
-	gimp_save_procedure_new2
 	gimp_save_procedure_set_support_comment
 	gimp_save_procedure_set_support_exif
 	gimp_save_procedure_set_support_iptc

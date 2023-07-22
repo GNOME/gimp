@@ -42,7 +42,6 @@ enum
 struct _GimpSaveProcedurePrivate
 {
   GimpRunSaveFunc  run_func;
-  GimpRunSaveFunc2 run_func2;
   gpointer         run_data;
   GDestroyNotify   run_data_destroy;
 
@@ -53,7 +52,7 @@ struct _GimpSaveProcedurePrivate
   gboolean         supports_thumbnail;
   gboolean         supports_comment;
 
-  gchar           *mimetype;
+  gboolean         export_metadata;
 };
 
 
@@ -189,7 +188,7 @@ gimp_save_procedure_init (GimpSaveProcedure *procedure)
 {
   procedure->priv = gimp_save_procedure_get_instance_private (procedure);
 
-  procedure->priv->mimetype = NULL;
+  procedure->priv->export_metadata = FALSE;
 }
 
 static void
@@ -230,8 +229,6 @@ gimp_save_procedure_finalize (GObject *object)
 
   if (procedure->priv->run_data_destroy)
     procedure->priv->run_data_destroy (procedure->priv->run_data);
-
-  g_free (procedure->priv->mimetype);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -340,15 +337,18 @@ static GimpValueArray *
 gimp_save_procedure_run (GimpProcedure        *procedure,
                          const GimpValueArray *args)
 {
-  GimpSaveProcedure *save_proc = GIMP_SAVE_PROCEDURE (procedure);
-  GimpValueArray    *remaining;
-  GimpValueArray    *return_values;
-  GimpRunMode        run_mode;
-  GimpImage         *image;
-  GimpDrawable     **drawables;
-  GFile             *file;
-  gint               n_drawables;
-  gint               i;
+  GimpSaveProcedure    *save_proc = GIMP_SAVE_PROCEDURE (procedure);
+  GimpValueArray       *remaining;
+  GimpValueArray       *return_values;
+  GimpProcedureConfig  *config;
+  GimpRunMode           run_mode;
+  GimpImage            *image;
+  GimpDrawable        **drawables;
+  GFile                *file;
+  gint                  n_drawables;
+  GimpMetadata         *metadata;
+  gchar                *mimetype = NULL;
+  GimpPDBStatusType     status   = GIMP_PDB_EXECUTION_ERROR;
 
   run_mode    = GIMP_VALUES_GET_ENUM         (args, 0);
   image       = GIMP_VALUES_GET_IMAGE        (args, 1);
@@ -358,55 +358,66 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
 
   remaining = gimp_value_array_new (gimp_value_array_length (args) - ARG_OFFSET);
 
-  for (i = ARG_OFFSET; i < gimp_value_array_length (args); i++)
+  for (gint i = ARG_OFFSET; i < gimp_value_array_length (args); i++)
     {
       GValue *value = gimp_value_array_index (args, i);
 
       gimp_value_array_append (remaining, value);
     }
 
-  if (save_proc->priv->run_func2)
+  config = gimp_procedure_create_config (procedure);
+  if (save_proc->priv->export_metadata)
     {
-      GimpProcedureConfig *config;
-      GimpMetadata        *metadata;
-      GimpPDBStatusType    status = GIMP_PDB_EXECUTION_ERROR;
+      mimetype = (gchar *) gimp_file_procedure_get_mime_types (GIMP_FILE_PROCEDURE (procedure));
+      if (mimetype == NULL)
+        {
+          g_printerr ("%s: ERROR: the GimpSaveProcedureConfig object was created "
+                      "with export_metadata but you didn't set any MimeType with gimp_file_procedure_set_mime_types()!\n",
+                      G_STRFUNC);
+        }
+      else
+        {
+          char *delim;
 
-      config   = gimp_procedure_create_config (procedure);
-      metadata = gimp_procedure_config_begin_export (config, image, run_mode, remaining,
-                                                     save_proc->priv->mimetype);
-
-      return_values = save_proc->priv->run_func2 (procedure, run_mode,
-                                                  image, n_drawables, drawables,
-                                                  file, metadata, config,
-                                                  save_proc->priv->run_data);
-
-      if (return_values != NULL                       &&
-          gimp_value_array_length (return_values) > 0 &&
-          G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
-        status = GIMP_VALUES_GET_ENUM (return_values, 0);
-
-      gimp_procedure_config_end_export (config, image, file, status);
-
-      /* This is debug printing to help plug-in developers figure out best
-       * practices.
-       */
-      if (G_OBJECT (config)->ref_count > 1)
-        g_printerr ("%s: ERROR: the GimpSaveProcedureConfig object was refed "
-                    "by plug-in, it MUST NOT do that!\n", G_STRFUNC);
-
-      g_object_unref (config);
+          mimetype = g_strdup (mimetype);
+          mimetype = g_strstrip (mimetype);
+          delim = strstr (mimetype, ",");
+          if (delim)
+            *delim = '\0';
+          /* Though docs only writes about the list being comma-separated, our
+           * code apparently also split by spaces.
+           */
+          delim = strstr (mimetype, " ");
+          if (delim)
+            *delim = '\0';
+          delim = strstr (mimetype, "\t");
+          if (delim)
+            *delim = '\0';
+        }
     }
-  else
-    {
-      return_values = save_proc->priv->run_func (procedure,
-                                                 run_mode,
-                                                 image,
-                                                 n_drawables,
-                                                 drawables,
-                                                 file,
-                                                 remaining,
-                                                 save_proc->priv->run_data);
-    }
+  metadata = gimp_procedure_config_begin_export (config, image, run_mode, remaining, mimetype);
+  g_free (mimetype);
+
+  return_values = save_proc->priv->run_func (procedure, run_mode,
+                                             image, n_drawables, drawables,
+                                             file, metadata, config,
+                                             save_proc->priv->run_data);
+
+  if (return_values != NULL                       &&
+      gimp_value_array_length (return_values) > 0 &&
+      G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
+    status = GIMP_VALUES_GET_ENUM (return_values, 0);
+
+  gimp_procedure_config_end_export (config, image, file, status);
+
+  /* This is debug printing to help plug-in developers figure out best
+   * practices.
+   */
+  if (G_OBJECT (config)->ref_count > 1)
+    g_printerr ("%s: ERROR: the GimpSaveProcedureConfig object was refed "
+                "by plug-in, it MUST NOT do that!\n", G_STRFUNC);
+
+  g_object_unref (config);
   gimp_value_array_unref (remaining);
 
   return return_values;
@@ -502,6 +513,7 @@ gimp_save_procedure_add_metadata (GimpSaveProcedure *save_procedure)
  * @plug_in:          a #GimpPlugIn.
  * @name:             the new procedure's name.
  * @proc_type:        the new procedure's #GimpPDBProcType.
+ * @export_metadata:  whether GIMP should handle metadata exporting.
  * @run_func:         the run function for the new procedure.
  * @run_data:         user data passed to @run_func.
  * @run_data_destroy: (nullable): free function for @run_data, or %NULL.
@@ -523,17 +535,22 @@ gimp_save_procedure_add_metadata (GimpSaveProcedure *save_procedure)
  *
  * When invoked via gimp_procedure_run(), it unpacks these standard
  * arguments and calls @run_func which is a #GimpRunSaveFunc. The
- * "args" #GimpValueArray of #GimpRunSaveFunc only contains
- * additionally added arguments.
+ * #GimpProcedureConfig of #GimpRunSaveFunc only contains additionally added
+ * arguments.
+ *
+ * If @export_metadata is TRUE, then the class will also handle the metadata
+ * export if the format is supported by our backend. This requires you to also
+ * set appropriate MimeType with gimp_file_procedure_set_mime_types().
  *
  * Returns: a new #GimpProcedure.
  *
  * Since: 3.0
  **/
-GimpProcedure  *
+GimpProcedure *
 gimp_save_procedure_new (GimpPlugIn      *plug_in,
                          const gchar     *name,
                          GimpPDBProcType  proc_type,
+                         gboolean         export_metadata,
                          GimpRunSaveFunc  run_func,
                          gpointer         run_data,
                          GDestroyNotify   run_data_destroy)
@@ -553,74 +570,7 @@ gimp_save_procedure_new (GimpPlugIn      *plug_in,
                             NULL);
 
   procedure->priv->run_func         = run_func;
-  procedure->priv->run_data         = run_data;
-  procedure->priv->run_data_destroy = run_data_destroy;
-
-  return GIMP_PROCEDURE (procedure);
-}
-
-/**
- * gimp_save_procedure_new:
- * @plug_in:          a #GimpPlugIn.
- * @name:             the new procedure's name.
- * @proc_type:        the new procedure's #GimpPDBProcType.
- * @mimetype:         the exported format's MimeType.
- * @run_func:         the run function for the new procedure.
- * @run_data:         user data passed to @run_func.
- * @run_data_destroy: (nullable): free function for @run_data, or %NULL.
- *
- * Creates a new save procedure named @name which will call @run_func
- * when invoked.
- *
- * See gimp_procedure_new() for information about @proc_type.
- *
- * #GimpSaveProcedure is a #GimpProcedure subclass that makes it easier
- * to write file save procedures.
- *
- * It automatically adds the standard
- *
- * (#GimpRunMode, #GimpImage, #GimpDrawable, #GFile)
- *
- * arguments of a save procedure. It is possible to add additional
- * arguments.
- *
- * When invoked via gimp_procedure_run(), it unpacks these standard
- * arguments and calls @run_func which is a #GimpRunSaveFunc. The
- * "args" #GimpValueArray of #GimpRunSaveFunc only contains
- * additionally added arguments.
- *
- * If @mimetype is non-%NULL, then the class will also handle the metadata
- * export if the format is supported by our backend.
- *
- * Returns: a new #GimpProcedure.
- *
- * Since: 3.0
- **/
-GimpProcedure *
-gimp_save_procedure_new2 (GimpPlugIn      *plug_in,
-                          const gchar     *name,
-                          GimpPDBProcType  proc_type,
-                          const gchar     *mimetype,
-                          GimpRunSaveFunc2 run_func,
-                          gpointer         run_data,
-                          GDestroyNotify   run_data_destroy)
-{
-  GimpSaveProcedure *procedure;
-
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (name), NULL);
-  g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_INTERNAL, NULL);
-  g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_EXTENSION, NULL);
-  g_return_val_if_fail (run_func != NULL, NULL);
-
-  procedure = g_object_new (GIMP_TYPE_SAVE_PROCEDURE,
-                            "plug-in",        plug_in,
-                            "name",           name,
-                            "procedure-type", proc_type,
-                            NULL);
-
-  procedure->priv->run_func2        = run_func;
-  procedure->priv->mimetype         = g_strdup (mimetype);
+  procedure->priv->export_metadata  = export_metadata;
   procedure->priv->run_data         = run_data;
   procedure->priv->run_data_destroy = run_data_destroy;
 

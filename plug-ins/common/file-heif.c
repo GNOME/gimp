@@ -223,9 +223,9 @@ heif_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            NULL, heif_save, NULL, NULL);
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           FALSE, heif_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
 
@@ -332,9 +332,9 @@ heif_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC_AV1))
     {
-      procedure = gimp_save_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            NULL, heif_av1_save, NULL, NULL);
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           FALSE, heif_av1_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
 

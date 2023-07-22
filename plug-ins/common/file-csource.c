@@ -114,9 +114,9 @@ csource_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            NULL, csource_save, NULL, NULL);
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           FALSE, csource_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 

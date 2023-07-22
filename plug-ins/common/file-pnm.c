@@ -338,11 +338,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PNM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            NULL, pnm_save,
-                                            GINT_TO_POINTER (FILE_TYPE_PNM),
-                                            NULL);
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           FALSE, pnm_save,
+                                           GINT_TO_POINTER (FILE_TYPE_PNM),
+                                           NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -375,11 +375,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PBM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            NULL, pnm_save,
-                                            GINT_TO_POINTER (FILE_TYPE_PBM),
-                                            NULL);
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           FALSE, pnm_save,
+                                           GINT_TO_POINTER (FILE_TYPE_PBM),
+                                           NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
       gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
@@ -411,11 +411,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PGM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            NULL, pnm_save,
-                                            GINT_TO_POINTER (FILE_TYPE_PGM),
-                                            NULL);
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           FALSE, pnm_save,
+                                           GINT_TO_POINTER (FILE_TYPE_PGM),
+                                           NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -447,11 +447,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PPM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            NULL, pnm_save,
-                                            GINT_TO_POINTER (FILE_TYPE_PPM),
-                                            NULL);
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           FALSE, pnm_save,
+                                           GINT_TO_POINTER (FILE_TYPE_PPM),
+                                           NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -483,9 +483,9 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PAM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new2 (plug_in, name,
+      procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           NULL, pnm_save,
+                                           FALSE, pnm_save,
                                            GINT_TO_POINTER (FILE_TYPE_PAM),
                                            NULL);
 
@@ -512,9 +512,9 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PFM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new2 (plug_in, name,
+      procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           NULL, pnm_save,
+                                           FALSE, pnm_save,
                                            GINT_TO_POINTER (FILE_TYPE_PFM),
                                            NULL);
 
