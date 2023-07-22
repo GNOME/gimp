@@ -461,13 +461,14 @@ gimp_label_spin_set_increments (GimpLabelSpin *spin,
   gdouble               upper;
 
   g_return_if_fail (GIMP_IS_LABEL_SPIN (spin));
-  g_return_if_fail (step < page);
+  g_return_if_fail (step <= page);
 
   spinbutton = GTK_SPIN_BUTTON (priv->spinbutton);
 
   gtk_spin_button_get_range (spinbutton, &lower, &upper);
   g_return_if_fail (upper >= lower);
-  g_return_if_fail (step < upper - lower && page < upper - lower);
+  g_return_if_fail ((upper == lower || step <= upper - lower) &&
+                    (upper == lower || page <= upper - lower));
 
   g_object_freeze_notify (G_OBJECT (spinbutton));
   gtk_adjustment_set_step_increment (gtk_spin_button_get_adjustment (spinbutton), step);
