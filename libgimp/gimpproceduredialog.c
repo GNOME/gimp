@@ -1360,10 +1360,14 @@ gimp_procedure_dialog_get_size_entry (GimpProcedureDialog       *dialog,
  * Creates a new #GtkLabel with @text. It can be useful for packing
  * textual information in between property settings.
  *
- * The @label_id must be a unique ID which is neither the name of a
- * property of the #GimpProcedureConfig associated to @dialog, nor is it
- * the ID of any previously created label or container. This ID can
- * later be used together with property names to be packed in other
+ * If @label_id is an existing string property of the #GimpProcedureConfig
+ * associated to @dialog, then it will sync to the property value. In this case,
+ * @text should be %NULL.
+ *
+ * If @label_id is a unique ID which is neither the name of a property of the
+ * #GimpProcedureConfig associated to @dialog, nor is it the ID of any
+ * previously created label or container, it will be initialized to @text. This
+ * ID can later be used together with property names to be packed in other
  * containers or inside @dialog itself.
  *
  * Returns: (transfer none): the #GtkWidget representing @label_id. The
@@ -1377,14 +1381,17 @@ gimp_procedure_dialog_get_label (GimpProcedureDialog *dialog,
                                  gboolean             is_markup,
                                  gboolean             with_mnemonic)
 {
-  GtkWidget *label;
+  GtkWidget  *label;
+  GParamSpec *pspec;
 
   g_return_val_if_fail (label_id != NULL, NULL);
 
-  if (g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
-                                    label_id))
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                        label_id);
+  if (pspec != NULL && G_PARAM_SPEC_TYPE (pspec) != G_TYPE_PARAM_STRING)
     {
-      g_warning ("%s: label identifier '%s' cannot be an existing property name.",
+      g_warning ("%s: label identifier '%s' must either not already exist or "
+                 "be an existing string property.",
                  G_STRFUNC, label_id);
       return NULL;
     }
@@ -1397,14 +1404,16 @@ gimp_procedure_dialog_get_label (GimpProcedureDialog *dialog,
     }
 
   label = gtk_label_new (NULL);
-  if (with_mnemonic && is_markup)
-    gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), text);
-  else if (with_mnemonic)
-    gtk_label_set_text_with_mnemonic (GTK_LABEL (label), text);
-  else if (is_markup)
-    gtk_label_set_markup (GTK_LABEL (label), text);
+  g_object_set (label,
+                "use-markup",    is_markup,
+                "use-underline", with_mnemonic,
+                NULL);
+  if (pspec != NULL)
+    g_object_bind_property (dialog->priv->config, label_id,
+                            label,                "label",
+                            G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
   else
-    gtk_label_set_text (GTK_LABEL (label), text);
+    g_object_set (label, "label", text, NULL);
 
   g_hash_table_insert (dialog->priv->widgets, g_strdup (label_id), label);
   if (g_object_is_floating (label))
