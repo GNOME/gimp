@@ -190,7 +190,7 @@ def thumbnail_ora(procedure, file, thumb_size, args, data):
 # We would expect the n_drawables parameter to not be there with introspection but
 # currently that isn't working, see issue #5312. Until that is resolved we keep
 # this parameter here or else saving would fail.
-def save_ora(procedure, run_mode, image, n_drawables, drawables, file, args, data):
+def save_ora(procedure, run_mode, image, n_drawables, drawables, file, metadata, config, data):
     def write_file_str(zfile, fname, data):
         # work around a permission bug in the zipfile library:
         # http://bugs.python.org/issue3394
@@ -465,7 +465,7 @@ class FileOpenRaster (Gimp.PlugIn):
         if name == 'file-openraster-save':
             procedure = Gimp.SaveProcedure.new(self, name,
                                                Gimp.PDBProcType.PLUGIN,
-                                               save_ora, None)
+                                               False, save_ora, None)
             procedure.set_image_types("*");
             procedure.set_documentation ('save an OpenRaster (.ora) file',
                                          'save an OpenRaster (.ora) file',

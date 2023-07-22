@@ -68,11 +68,11 @@ fmt_from_bpp = {
         12: 'III'
 }
 
-def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, args, data):
-    source_file = args.index(0)
-    characters = args.index(1)
-    size =  args.index(2)
-    separate = args.index(3)
+def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, metadata, config, data):
+    source_file = config.get_property("source-file")
+    characters  = config.get_property("characters")
+    size        = config.get_property("font-size");
+    separate    = config.get_property("separate")
 
     if file is None:
         error = 'No file given'
@@ -240,6 +240,8 @@ def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, args, da
             chars[0:0] = data
 
         for x in range(0, width):
+            # gimp_drawable_get_pixel() was removed mistakenly in commit
+            # 89c359ce47. This must get fixed.
             pixel_bytes = layer.get_pixel(x, y)
             pixel_tuple = struct.unpack(fmt, pixel_bytes)
             if bpp > 3:
@@ -313,8 +315,8 @@ class ColorXhtml(Gimp.PlugIn):
         procedure = None
         if name == 'file-colorxhtml-save':
             procedure = Gimp.SaveProcedure.new(self, name,
-                                           Gimp.PDBProcType.PLUGIN,
-                                           save_colorxhtml, None)
+                                               Gimp.PDBProcType.PLUGIN,
+                                               False, save_colorxhtml, None)
             procedure.set_image_types("RGB")
             procedure.set_documentation (
                 _("Save as colored HTML text"),
