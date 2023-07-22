@@ -64,7 +64,7 @@ function run(procedure, run_mode, image, drawables, args, run_data)
   if run_mode == "INTERACTIVE" then
     GimpUi.init("goat-exercise-lua");
     local dialog = GimpUi.Dialog {
-      title          = N_("Exercise a goat (Lua)"),
+      title          = _("Exercise a goat (Lua)"),
       role           = "goat-exercise-Lua",
       use_header_bar = 1
     }
@@ -85,8 +85,8 @@ function run(procedure, run_mode, image, drawables, args, run_data)
     box:show()
 
     local lang = "Lua"
-    local head_text = "This plug-in is an exercise in '%s' to demo plug-in creation.\n" ..
-                      "Check out the last version of the source code online by clicking the \"Source\" button."
+    local head_text = _("This plug-in is an exercise in '%s' to demo plug-in creation.\n" ..
+                      "Check out the last version of the source code online by clicking the \"Source\" button.")
 
     local label = Gtk.Label { label = string.format(head_text, lang) }
     box:pack_start(label, false, false, 1)
@@ -169,11 +169,11 @@ function Goat.Exercise:do_create_procedure(name)
   procedure:set_image_types("*");
   procedure:set_sensitivity_mask(Gimp.ProcedureSensitivityMask.DRAWABLE);
 
-  procedure:set_menu_label("Exercise a Lua goat");
+  procedure:set_menu_label(_("Exercise a Lua goat"));
   procedure:set_icon_name(GimpUi.ICON_GEGL);
   procedure:add_menu_path('<Image>/Filters/Development/Goat exercises/');
 
-  procedure:set_documentation("Exercise a goat in the Lua language",
+  procedure:set_documentation(_("Exercise a goat in the Lua language"),
                               "Takes a goat for a walk in Lua",
                               name);
   procedure:set_attribution("Jehan", "Jehan", "2019");

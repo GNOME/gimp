@@ -111,13 +111,13 @@ goat_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("Exercise in _C minor"));
+      gimp_procedure_set_menu_label (procedure, _("Exercise in _C minor"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_GEGL);
       gimp_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Development/Goat exercises/");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Exercise a goat in the C language"),
+                                        _("Exercise a goat in the C language"),
                                         "Takes a goat for a walk",
                                         PLUG_IN_PROC);
       gimp_procedure_set_attribution (procedure,

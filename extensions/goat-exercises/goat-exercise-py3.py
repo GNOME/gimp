@@ -43,12 +43,12 @@ class Goat (Gimp.PlugIn):
         procedure.set_image_types("*")
         procedure.set_sensitivity_mask (Gimp.ProcedureSensitivityMask.DRAWABLE)
 
-        procedure.set_menu_label(N_("Exercise a goat and a python"))
+        procedure.set_menu_label(_("Exercise a goat and a python"))
         procedure.set_icon_name(GimpUi.ICON_GEGL)
         procedure.add_menu_path('<Image>/Filters/Development/Goat exercises/')
 
-        procedure.set_documentation(N_("Exercise a goat in the Python 3 language"),
-                                    N_("Takes a goat for a walk in Python 3"),
+        procedure.set_documentation(_("Exercise a goat in the Python 3 language"),
+                                    _("Takes a goat for a walk in Python 3"),
                                     name)
         procedure.set_attribution("Jehan", "Jehan", "2019")
 
