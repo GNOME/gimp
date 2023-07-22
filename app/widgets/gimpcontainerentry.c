@@ -132,8 +132,8 @@ gimp_container_entry_init (GimpContainerEntry *entry)
   entry->viewable = NULL;
 
   completion = g_object_new (GTK_TYPE_ENTRY_COMPLETION,
-                             "inline-completion",  TRUE,
-                             "popup-single-match", FALSE,
+                             "inline-completion",  FALSE,
+                             "popup-single-match", TRUE,
                              "popup-set-width",    FALSE,
                              NULL);
 
