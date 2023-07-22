@@ -774,10 +774,8 @@ gimp_procedure_get_sensitivity_mask (GimpProcedure *procedure)
  * location(s) where to register in the menu hierarchy is chosen using
  * gimp_procedure_add_menu_path().
  *
- * For translations of menu labels to work properly, @menu_label
- * should only be marked for translation but passed to this function
- * untranslated, for example using N_("Label"). GIMP will look up the
- * translation in the textdomain registered for the plug-in.
+ * Plug-ins are responsible for their own translations. You are expected to send
+ * localized strings to GIMP if your plug-in is internationalized.
  *
  * Since: 3.0
  **/
@@ -1041,10 +1039,8 @@ gimp_procedure_get_icon_pixbuf (GimpProcedure *procedure)
  * @blurb is used as the @procedure's tooltip when represented in the UI,
  * for example as a menu entry.
  *
- * For translations of tooltips to work properly, @blurb should only
- * be marked for translation but passed to this function untranslated,
- * for example using N_("Blurb"). GIMP will look up the translation in
- * the textdomain registered for the plug-in.
+ * Plug-ins are responsible for their own translations. You are expected to send
+ * localized strings to GIMP if your plug-in is internationalized.
  *
  * @help is a free-form text that's meant as documentation for
  * developers of scripts and plug-ins.
