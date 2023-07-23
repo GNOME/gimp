@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-19 01:34+0000\n"
-"PO-Revision-Date: 2023-07-20 18:59+0300\n"
+"POT-Creation-Date: 2023-07-22 22:21+0000\n"
+"PO-Revision-Date: 2023-07-23 21:01+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -127,9 +127,10 @@ msgstr "_Запустити"
 #. string. You may just use recommended Python format() or
 #. any style you like in your plug-ins.
 #: extensions/goat-exercises/goat-exercise-c.c:200
+#: extensions/goat-exercises/goat-exercise-lua.lua:88
 #: extensions/goat-exercises/goat-exercise-py3.py:93
 #: extensions/goat-exercises/goat-exercise-vala.vala:89
-#, c-format, python-format
+#, c-format, python-format, lua-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
 "Check out the last version of the source code online by clicking the "
@@ -209,6 +210,17 @@ msgstr "_Гаразд"
 #: extensions/goat-exercises/goat-exercise-lua.lua:67
 msgid "Exercise a goat (Lua)"
 msgstr "Потренувати козу (Lua)"
+
+#. CANCEL, CLOSE, DELETE_EVENT
+#: extensions/goat-exercises/goat-exercise-lua.lua:172
+#| msgid "Exercise a Vala goat"
+msgid "Exercise a Lua goat"
+msgstr "Потренувати козу Lua"
+
+#: extensions/goat-exercises/goat-exercise-lua.lua:176
+#| msgid "Exercise a goat in the C language"
+msgid "Exercise a goat in the Lua language"
+msgstr "Потренувати козу у мові Lua"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:46
 msgid "Exercise a goat and a python"
@@ -2471,27 +2483,22 @@ msgid "Farbfeld"
 msgstr "Farbfeld"
 
 #: plug-ins/common/file-farbfeld.c:138 plug-ins/common/file-farbfeld.c:140
-#| msgid "Load file in the IFF file format"
 msgid "Load file in the Farbfeld file format"
 msgstr "Завантажити файл у форматі Farbfeld"
 
 #: plug-ins/common/file-farbfeld.c:164 plug-ins/common/file-farbfeld.c:166
-#| msgid "Export image in the QOI file format"
 msgid "Export image in the Farbfeld file format"
 msgstr "Експортувати зображення у форматі Farbfeld"
 
 #: plug-ins/common/file-farbfeld.c:258
-#| msgid "GIF format does not support multiple layers."
 msgid "Farbfeld format does not support multiple layers."
 msgstr "Для формату Farbfeld не передбачено підтримку декількох шарів."
 
 #: plug-ins/common/file-farbfeld.c:310
-#| msgid "Failed to read QOI file"
 msgid "Failed to read Farbfeld header"
 msgstr "Не вдалося прочитати заголовок Farbfeld"
 
 #: plug-ins/common/file-farbfeld.c:336
-#| msgid "Premature end of file."
 msgid "Premature end of Farbfeld pixel data"
 msgstr "Передчасне закінчення піксельних даних Farbfeld"
 
