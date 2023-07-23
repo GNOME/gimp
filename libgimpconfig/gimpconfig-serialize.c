@@ -275,6 +275,30 @@ gimp_config_serialize_property (GimpConfig       *config,
           else
             gimp_config_writer_revert (writer);
         }
+      else if (G_VALUE_TYPE (&value) == G_TYPE_BYTES)
+        {
+          GBytes *bytes = g_value_get_boxed (&value);
+
+          gimp_config_writer_open (writer, param_spec->name);
+
+          if (bytes)
+            {
+              gconstpointer data;
+              gsize         data_length;
+
+              data = g_bytes_get_data (bytes, &data_length);
+
+              gimp_config_writer_printf (writer, "%lu", data_length);
+              gimp_config_writer_data (writer, data_length, data);
+
+              success = TRUE;
+            }
+
+          if (success)
+            gimp_config_writer_close (writer);
+          else
+            gimp_config_writer_revert (writer);
+        }
       else if (G_VALUE_HOLDS_OBJECT (&value) &&
                G_VALUE_TYPE (&value) != G_TYPE_FILE)
         {

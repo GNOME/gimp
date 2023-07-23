@@ -98,6 +98,9 @@ static GTokenType  gimp_config_deserialize_file_value     (GValue     *value,
 static GTokenType  gimp_config_deserialize_parasite_value (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_bytes          (GValue     *value,
+                                                           GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_any            (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
@@ -388,6 +391,10 @@ gimp_config_deserialize_value (GValue     *value,
   else if (prop_spec->value_type == GIMP_TYPE_PARASITE)
     {
       return gimp_config_deserialize_parasite_value (value, prop_spec, scanner);
+    }
+  else if (prop_spec->value_type == G_TYPE_BYTES)
+    {
+      return gimp_config_deserialize_bytes (value, prop_spec, scanner);
     }
 
   /*  This fallback will only work for value_types that
@@ -1026,6 +1033,28 @@ gimp_config_deserialize_parasite_value (GValue     *value,
   parasite = gimp_parasite_new (name, flags, data_length, data);
 
   g_value_take_boxed (value, parasite);
+
+  return G_TOKEN_RIGHT_PAREN;
+}
+
+static GTokenType
+gimp_config_deserialize_bytes (GValue     *value,
+                               GParamSpec *prop_spec,
+                               GScanner   *scanner)
+{
+  GBytes *bytes;
+  guint8 *data;
+  gint    data_length;
+
+  if (! gimp_scanner_parse_int (scanner, &data_length))
+    return G_TOKEN_INT;
+
+  if (! gimp_scanner_parse_data (scanner, data_length, &data))
+    return G_TOKEN_STRING;
+
+  bytes = g_bytes_new (data, data_length);
+
+  g_value_take_boxed (value, bytes);
 
   return G_TOKEN_RIGHT_PAREN;
 }
