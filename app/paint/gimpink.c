@@ -271,6 +271,10 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
       new_coords.y = coords->y + offset_change_y;
       gimp_symmetry_set_origin (paint_core->sym, drawable, &new_coords);
 
+      for (iter = ink->blobs_to_render; iter; iter = g_list_next (iter))
+        gimp_blob_move (iter->data,
+                        SUBSAMPLE * offset_change_x,
+                        SUBSAMPLE * offset_change_y);
       for (iter = ink->last_blobs; iter; iter = g_list_next (iter))
         gimp_blob_move (iter->data,
                         SUBSAMPLE * offset_change_x,
