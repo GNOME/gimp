@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-18 18:50+0000\n"
-"PO-Revision-Date: 2023-07-20 19:21+0300\n"
+"POT-Creation-Date: 2023-07-21 19:36+0000\n"
+"PO-Revision-Date: 2023-07-23 21:02+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -10631,9 +10631,12 @@ msgid "When enabled, non-visible layers can be edited as normal."
 msgstr "Якщо ввімкнено, невидимі шари можна буде редагувати як звичайні."
 
 #: app/config/gimprc-blurbs.h:327
+#| msgid ""
+#| "If enabled, the move tool sets the edited layer or path as active.  This "
+#| "used to be the default behaviour in older versions."
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
-"used to be the default behaviour in older versions."
+"used to be the default behavior in older versions."
 msgstr ""
 "При включенні цього параметра інструмент \"Переміщення\" робить активним "
 "шар, що переміщується. У минулих версіях це була типова поведінка."
@@ -16223,7 +16226,8 @@ msgid "Policies"
 msgstr "Політики"
 
 #: app/dialogs/preferences-dialog.c:1534
-msgid "_File Open behaviour:"
+#| msgid "_File Open behaviour:"
+msgid "_File Open behavior:"
 msgstr "Поведінка при відкриванні _файла:"
 
 #. Filter Dialogs
@@ -17858,8 +17862,6 @@ msgid "Welcome to GIMP %s"
 msgstr "Вітаємо у GIMP %s"
 
 #: app/dialogs/welcome-dialog.c:118
-#| msgctxt "dialogs-action"
-#| msgid "Welcome Dialog"
 msgid "Welcome"
 msgstr "Вітаємо"
 
@@ -17913,7 +17915,6 @@ msgid "Donating"
 msgstr "Фінансова підтримка"
 
 #: app/dialogs/welcome-dialog.c:246
-#| msgid "GIMP %s Release Notes"
 msgid "Release Notes"
 msgstr "Нотатки щодо випуску"
 
@@ -28439,8 +28440,6 @@ msgid "Display _Rendering Intent"
 msgstr "Відтворення кольорів на _дисплеї"
 
 #: menus/image-menu.ui.in.in:270
-#| msgctxt "view-action"
-#| msgid "_Padding color"
 msgctxt "view-action"
 msgid "_Padding Color"
 msgstr "Колір _фаски"
