@@ -12,6 +12,7 @@ subdir('scripts')
 subdir('server')
 subdir('interpreter')
 subdir('console')
+subdir('test')
 
 
 executable_name = 'script-fu'
