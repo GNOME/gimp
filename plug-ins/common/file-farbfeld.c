@@ -74,7 +74,8 @@ static GimpValueArray * farbfeld_save             (GimpProcedure        *procedu
                                                    gint                  n_drawables,
                                                    GimpDrawable        **drawables,
                                                    GFile                *file,
-                                                   const GimpValueArray *args,
+                                                   GimpMetadata         *metadata,
+                                                   GimpProcedureConfig  *config,
                                                    gpointer              run_data);
 
 static GimpImage      * load_image                (GFile                *file,
@@ -154,7 +155,7 @@ farbfeld_create_procedure (GimpPlugIn  *plug_in,
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           farbfeld_save, NULL, NULL);
+                                           FALSE, farbfeld_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -221,7 +222,8 @@ farbfeld_save (GimpProcedure        *procedure,
                gint                  n_drawables,
                GimpDrawable        **drawables,
                GFile                *file,
-               const GimpValueArray *args,
+               GimpMetadata         *metadata,
+               GimpProcedureConfig  *config,
                gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
