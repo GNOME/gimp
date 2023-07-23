@@ -6,6 +6,37 @@
 This is the unstable branch of GIMP.
 
 
+Overview of Changes from GIMP 2.99.16 to GIMP 2.99.18
+=====================================================
+
+Graphical User Interface:
+
+  - "Merge menu and title bar" option is not shown on macOS as it is not usable
+    there (the main menu is anyway out of the window from the start).
+  - Top menu has been special-cased for macOS (some items are removed with
+    "hidden-when" attribute set to "macos-menubar" value) for items which are
+    also available in the application menu.
+  - Menu section can now be named with the "section-name" attribute in
+    GtkBuilder ".ui" files. This can be used as a replacement of the former
+    "Placeholder" concept which we used to have (and has now been completely
+    removed).
+    Plug-ins or GEGL operations which want to make use of sections can use the
+    "[Section]" syntax. For instance installing a plug-in in the menu path
+    "<Image>/File/[Open]" will install the menu item at the end of the Open
+    section (i.e. after the various other open-file actions at the top of the
+    File menu).
+  - Some string or naming consistencies were fixed in source strings.
+
+Plug-ins:
+
+  - Farbfeld: new image format import/export support.
+
+Translations:
+
+  - Many non-translatable strings were made translatable. Various other
+    localization bugs we handled.
+
+
 Overview of Changes from GIMP 2.99.14 to GIMP 2.99.16
 =====================================================
 
@@ -266,6 +297,7 @@ Build:
     able to load all plug-ins.
   - gtk-mac-integration was dropped as a dependency on macOS. It made problems
     and is apparently less needed with GTK+3.
+  - Supported macOS version was bumped from macOS 10.12 to macOS 10.13.
 
 Debugging:
 
