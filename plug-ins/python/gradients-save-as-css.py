@@ -225,7 +225,7 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
             procedure.set_documentation (_("Creates a new palette from a given gradient"),
                                          _("Creates a new palette from a given gradient"),
                                          name)
-            procedure.set_menu_label("Save as CSS...")
+            procedure.set_menu_label(_("Save as CSS..."))
             procedure.set_attribution("Joao S. O. Bueno",
                                       "(c) GPL V3.0 or later",
                                       "2011")

@@ -150,7 +150,7 @@ class PaletteOffset (Gimp.PlugIn):
             dialog.get_content_area().add(box)
             box.show()
 
-            label = Gtk.Label.new_with_mnemonic("Off_set")
+            label = Gtk.Label.new(_("Offset"))
             box.pack_start(label, False, False, 1)
             label.show()
 
