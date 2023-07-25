@@ -9,6 +9,20 @@ This is the unstable branch of GIMP.
 Overview of Changes from GIMP 2.99.16 to GIMP 2.99.18
 =====================================================
 
+Core:
+
+  - New snapping options:
+    * "Snap to Bounding Boxes": allows on-canvas snapping to either layer
+      borders or center.
+    * "Snap to Equidistance": allows to snap a layer to be at the same distance
+      from a second one that this second one is to a third one, either
+      horizontally or vertically.
+    * GIMP is now able to use fonts with custom styles, which Pango is unable to
+      work with.
+    * Font names are not unique anymore, which means that we don't rename
+      identically named fonts with #1 or #2, etc. as we used to do. These fonts
+      with same name are now properly working despite the name clash.
+
 Graphical User Interface:
 
   - "Merge menu and title bar" option is not shown on macOS as it is not usable
@@ -26,6 +40,14 @@ Graphical User Interface:
     section (i.e. after the various other open-file actions at the top of the
     File menu).
   - Some string or naming consistencies were fixed in source strings.
+  - GimpContainerEntry don't have inline completion anymore. Instead the result
+    pop-up always appear, even for one result. This is because a limitation of
+    GtkEntryCompletion: we cannot remove the case sensitivity search (see
+    gtk#275) which was very bad usage experience because when we reached a
+    single result, suddenly nothing happened anymore (no popup, no completion)
+    if case was different on any letter. It's just better to always have popup
+    with case insensitivity.
+    This widget is used for instance for on-canvas font selection.
 
 Plug-ins:
 
