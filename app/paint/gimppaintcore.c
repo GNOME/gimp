@@ -975,7 +975,7 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
         }
 
       new_buffer = gimp_gegl_buffer_resize (core->canvas_buffer, new_width, new_height,
-                                            *new_off_x * -1, *new_off_y * -1, NULL);
+                                            -(*new_off_x), -(*new_off_y), NULL, NULL, 0, 0);
       g_object_unref (core->canvas_buffer);
       core->canvas_buffer = new_buffer;
 
@@ -989,7 +989,8 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
       g_object_ref (undo_buffer);
 
       new_buffer = gimp_gegl_buffer_resize (undo_buffer, new_width, new_height,
-                                            -1 * *new_off_x, -1 * *new_off_y, &color);
+                                            -(*new_off_x), -(*new_off_y), &color,
+                                            pattern, 0, 0);
       g_hash_table_insert (core->undo_buffers, drawable, new_buffer);
       g_object_unref (undo_buffer);
 

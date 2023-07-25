@@ -60,7 +60,10 @@ GeglBuffer  * gimp_gegl_buffer_resize                 (GeglBuffer          *buff
                                                        gint                 new_height,
                                                        gint                 offset_x,
                                                        gint                 offset_y,
-                                                       GimpRGB             *color);
+                                                       GimpRGB             *color,
+                                                       GimpPattern         *pattern,
+                                                       gint                 pattern_offset_x,
+                                                       gint                 pattern_offset_y);
 
 gboolean      gimp_gegl_buffer_set_extent             (GeglBuffer          *buffer,
                                                        const GeglRectangle *extent);

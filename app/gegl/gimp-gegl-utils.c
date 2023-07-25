@@ -22,13 +22,19 @@
 
 #include <string.h>
 
+#include <cairo.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 #include <gegl-plugin.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "gimp-gegl-types.h"
 
+#include "core/gimppattern.h"
 #include "core/gimpprogress.h"
 
+#include "gimp-babl.h"
 #include "gimp-gegl-loops.h"
 #include "gimp-gegl-utils.h"
 
@@ -339,7 +345,10 @@ gimp_gegl_buffer_resize (GeglBuffer   *buffer,
                          gint          new_height,
                          gint          offset_x,
                          gint          offset_y,
-                         GimpRGB      *color)
+                         GimpRGB      *color,
+                         GimpPattern  *pattern,
+                         gint          pattern_offset_x,
+                         gint          pattern_offset_y)
 {
   GeglBuffer          *new_buffer;
   gboolean             intersect;
@@ -364,8 +373,45 @@ gimp_gegl_buffer_resize (GeglBuffer   *buffer,
       copy_rect.width  != new_width ||
       copy_rect.height != new_height)
     {
-      /*  Clear the new buffer if needed and color is given */
-      if (color)
+      /*  Clear the new buffer if needed and color/pattern is given */
+      if (pattern)
+        {
+          GeglBuffer       *src_buffer;
+          GeglBuffer       *dest_buffer;
+          GimpColorProfile *src_profile;
+          GimpColorProfile *dest_profile;
+
+          src_buffer = gimp_pattern_create_buffer (pattern);
+
+          src_profile  = gimp_babl_format_get_color_profile (
+                           gegl_buffer_get_format (src_buffer));
+          dest_profile = gimp_babl_format_get_color_profile (
+                           gegl_buffer_get_format (new_buffer));
+
+          if (gimp_color_transform_can_gegl_copy (src_profile, dest_profile))
+            {
+              dest_buffer = g_object_ref (src_buffer);
+            }
+          else
+            {
+              dest_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
+                                             gegl_buffer_get_format (new_buffer));
+
+              gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
+                                               dest_buffer, NULL, dest_profile,
+                                               GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                               TRUE, NULL);
+            }
+
+          g_object_unref (src_profile);
+
+          gegl_buffer_set_pattern (new_buffer, NULL, dest_buffer,
+                                   pattern_offset_x, pattern_offset_y);
+
+          g_object_unref (src_buffer);
+          g_object_unref (dest_buffer);
+        }
+      else if (color)
         {
           GeglColor *gegl_color;
 
