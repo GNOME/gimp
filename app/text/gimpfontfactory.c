@@ -607,6 +607,8 @@ gimp_font_factory_load_names (GimpContainer *container,
   FcObjectSet *os;
   FcPattern   *pat;
   FcFontSet   *fontset;
+  GString     *ignored_fonts;
+  gint         n_ignored = 0;
   gint         i;
 
   os = FcObjectSetBuild (FC_FAMILY,
@@ -631,7 +633,8 @@ gimp_font_factory_load_names (GimpContainer *container,
       return;
     }
 
-  fontset = FcFontList (NULL, pat, os);
+  fontset       = FcFontList (NULL, pat, os);
+  ignored_fonts = g_string_new (NULL);
 
   FcPatternDestroy (pat);
   FcObjectSetDestroy (os);
@@ -675,8 +678,8 @@ gimp_font_factory_load_names (GimpContainer *container,
           g_str_has_suffix (file, ".pfm")    ||
           g_str_has_suffix (file, ".pfb"))
         {
-          g_printerr("Font file: %s is not supported by Pango, it can not be loaded.\n",
-                     file);
+          g_string_append_printf (ignored_fonts, "- %s (not supported by pango)\n", file);
+          n_ignored++;
           continue;
         }
 
@@ -684,11 +687,19 @@ gimp_font_factory_load_names (GimpContainer *container,
       if (FcPatternGetString (fontset->fonts[i], FC_FONTFORMAT, 0, (FcChar8 **) &fontformat) != FcResultMatch ||
           (g_ascii_strcasecmp (fontformat, "TrueType") != 0 &&
            g_ascii_strcasecmp (fontformat, "CFF")      != 0))
-        continue;
+        {
+          g_string_append_printf (ignored_fonts, "- %s (non-SFNT font)\n", file);
+          n_ignored++;
+          continue;
+        }
 
       /* Some variable fonts have only a family name and a font version. */
       if (FcPatternGetString (fontset->fonts[i], FC_FULLNAME, 0, (FcChar8 **) &fullname) != FcResultMatch)
-        continue;
+        {
+          g_string_append_printf (ignored_fonts, "- %s (no full name)\n", file);
+          n_ignored++;
+          continue;
+        }
 
       /* Sometimes a font has more than one fullname,
        * sometimes the second is more appropriate for display,
@@ -808,6 +819,16 @@ gimp_font_factory_load_names (GimpContainer *container,
       g_free (newname);
       g_string_free (xml, TRUE);
     }
+
+  if (n_ignored > 0)
+    {
+      if (g_getenv ("GIMP_DEBUG_FONTS") == NULL)
+        g_printerr ("%s: %d unsupported fonts were ignored. Set the GIMP_DEBUG_FONTS environment variable for a listing.\n", G_STRFUNC, n_ignored);
+      else
+        g_printerr ("%s: %d unsupported fonts were ignored: %s", G_STRFUNC, n_ignored, ignored_fonts->str);
+    }
+
+  g_string_free (ignored_fonts, TRUE);
 
   /*  only create aliases if there is at least one font available  */
   if (fontset->nfont > 0)
