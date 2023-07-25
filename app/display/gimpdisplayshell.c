@@ -1655,7 +1655,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                 gint              snap_width,
                                 gint              snap_height)
 {
-  GimpSnappingData  snapping_data =
+  GimpImageSnapData snapping_data =
     {
       GIMP_ARRANGE_HFILL,
       NULL,

@@ -50,17 +50,17 @@ static gboolean  gimp_image_snap_distance (const gdouble  unsnapped,
 /*  public functions  */
 
 gboolean
-gimp_image_snap_x (GimpImage        *image,
-                   GimpSnappingData *snapping_data,
-                   gdouble           x,
-                   gdouble          *tx,
-                   gdouble           epsilon_x,
-                   gboolean          snap_to_guides,
-                   gboolean          snap_to_grid,
-                   gboolean          snap_to_canvas,
-                   gboolean          snap_to_bbox,
-                   gboolean          snap_to_equidistance,
-                   GimpAlignmentType alignment_side)
+gimp_image_snap_x (GimpImage         *image,
+                   GimpImageSnapData *snapping_data,
+                   gdouble            x,
+                   gdouble           *tx,
+                   gdouble            epsilon_x,
+                   gboolean           snap_to_guides,
+                   gboolean           snap_to_grid,
+                   gboolean           snap_to_canvas,
+                   gboolean           snap_to_bbox,
+                   gboolean           snap_to_equidistance,
+                   GimpAlignmentType  alignment_side)
 {
   gdouble   mindist   = G_MAXDOUBLE;
   gdouble   mindist_t = G_MAXDOUBLE;
@@ -310,17 +310,17 @@ gimp_image_snap_x (GimpImage        *image,
 }
 
 gboolean
-gimp_image_snap_y (GimpImage        *image,
-                   GimpSnappingData *snapping_data,
-                   gdouble           y,
-                   gdouble          *ty,
-                   gdouble           epsilon_y,
-                   gboolean          snap_to_guides,
-                   gboolean          snap_to_grid,
-                   gboolean          snap_to_canvas,
-                   gboolean          snap_to_bbox,
-                   gboolean          snap_to_equidistance,
-                   GimpAlignmentType alignment_side)
+gimp_image_snap_y (GimpImage         *image,
+                   GimpImageSnapData *snapping_data,
+                   gdouble            y,
+                   gdouble           *ty,
+                   gdouble            epsilon_y,
+                   gboolean           snap_to_guides,
+                   gboolean           snap_to_grid,
+                   gboolean           snap_to_canvas,
+                   gboolean           snap_to_bbox,
+                   gboolean           snap_to_equidistance,
+                   GimpAlignmentType  alignment_side)
 {
   gdouble    mindist   = G_MAXDOUBLE;
   gdouble    mindist_t = G_MAXDOUBLE;
@@ -782,22 +782,22 @@ gimp_image_snap_point (GimpImage *image,
 }
 
 gboolean
-gimp_image_snap_rectangle (GimpImage        *image,
-                           GimpSnappingData *snapping_data,
-                           gdouble           x1,
-                           gdouble           y1,
-                           gdouble           x2,
-                           gdouble           y2,
-                           gdouble          *tx1,
-                           gdouble          *ty1,
-                           gdouble           epsilon_x,
-                           gdouble           epsilon_y,
-                           gboolean          snap_to_guides,
-                           gboolean          snap_to_grid,
-                           gboolean          snap_to_canvas,
-                           gboolean          snap_to_vectors,
-                           gboolean          snap_to_bbox,
-                           gboolean          snap_to_equidistance)
+gimp_image_snap_rectangle (GimpImage         *image,
+                           GimpImageSnapData *snapping_data,
+                           gdouble            x1,
+                           gdouble            y1,
+                           gdouble            x2,
+                           gdouble            y2,
+                           gdouble           *tx1,
+                           gdouble           *ty1,
+                           gdouble            epsilon_x,
+                           gdouble            epsilon_y,
+                           gboolean           snap_to_guides,
+                           gboolean           snap_to_grid,
+                           gboolean           snap_to_canvas,
+                           gboolean           snap_to_vectors,
+                           gboolean           snap_to_bbox,
+                           gboolean           snap_to_equidistance)
 {
   gdouble           nx, ny;
   gdouble           mindist_x  = G_MAXDOUBLE;
