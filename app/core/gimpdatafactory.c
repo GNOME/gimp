@@ -53,7 +53,8 @@ enum
   PROP_WRITABLE_PROPERTY_NAME,
   PROP_EXT_PROPERTY_NAME,
   PROP_NEW_FUNC,
-  PROP_GET_STANDARD_FUNC
+  PROP_GET_STANDARD_FUNC,
+  PROP_UNIQUE_NAMES
 };
 
 
@@ -64,6 +65,7 @@ struct _GimpDataFactoryPrivate
   GType                    data_type;
   GimpContainer           *container;
   GimpContainer           *container_obsolete;
+  gboolean                 unique_names;
 
   gchar                   *path_property_name;
   gchar                   *writable_property_name;
@@ -178,6 +180,14 @@ gimp_data_factory_class_init (GimpDataFactoryClass *klass)
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_UNIQUE_NAMES,
+                                   g_param_spec_boolean ("unique-names",
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
+
 }
 
 static void
@@ -200,7 +210,8 @@ gimp_data_factory_constructed (GObject *object)
   gimp_assert (GIMP_DATA_FACTORY_GET_CLASS (object)->data_init != NULL);
   gimp_assert (GIMP_DATA_FACTORY_GET_CLASS (object)->data_refresh != NULL);
 
-  priv->container = gimp_list_new (priv->data_type, TRUE);
+  /* Passing along the "unique names" property to the data container. */
+  priv->container = gimp_list_new (priv->data_type, priv->unique_names);
   gimp_list_set_sort_func (GIMP_LIST (priv->container),
                            (GCompareFunc) gimp_data_compare);
 
@@ -247,6 +258,10 @@ gimp_data_factory_set_property (GObject      *object,
       priv->data_get_standard_func = g_value_get_pointer (value);
       break;
 
+    case PROP_UNIQUE_NAMES:
+      priv->unique_names = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -289,6 +304,10 @@ gimp_data_factory_get_property (GObject    *object,
 
     case PROP_GET_STANDARD_FUNC:
       g_value_set_pointer (value, priv->data_get_standard_func);
+      break;
+
+    case PROP_UNIQUE_NAMES:
+      g_value_set_boolean (value, priv->unique_names);
       break;
 
     default:
