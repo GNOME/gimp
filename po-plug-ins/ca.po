@@ -8,14 +8,14 @@
 # Quim Perez i Noguer <noguer@gmail.com>, 2005-2009.
 # Joaquim Perez Noguer <noguer@gmail.com>, 2009
 # Pau Iranzo <pau.iranzo@softcatala.org>, 2011.
-# Jordi Mas i Hernàndez, <jmas@softcatala.org>, 2018, 2021-2023
+# Jordi Mas i Hernàndez, <jmas@softcatala.org>, 2018-2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-05 11:22+0000\n"
-"PO-Revision-Date: 2023-07-05 10:17+0100\n"
+"POT-Creation-Date: 2023-07-22 22:21+0000\n"
+"PO-Revision-Date: 2023-07-25 10:17+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -132,9 +132,10 @@ msgstr "_Executa"
 #. string. You may just use recommended Python format() or
 #. any style you like in your plug-ins.
 #: extensions/goat-exercises/goat-exercise-c.c:200
+#: extensions/goat-exercises/goat-exercise-lua.lua:88
 #: extensions/goat-exercises/goat-exercise-py3.py:93
 #: extensions/goat-exercises/goat-exercise-vala.vala:89
-#, c-format, python-format
+#, c-format, python-format, lua-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
 "Check out the last version of the source code online by clicking the \"Source\" button."
@@ -208,6 +209,15 @@ msgstr "_D'acord"
 #: extensions/goat-exercises/goat-exercise-lua.lua:67
 msgid "Exercise a goat (Lua)"
 msgstr "Entrena una cabra (Lua)"
+
+#. CANCEL, CLOSE, DELETE_EVENT
+#: extensions/goat-exercises/goat-exercise-lua.lua:172
+msgid "Exercise a Lua goat"
+msgstr "Entrena una cabra Lua"
+
+#: extensions/goat-exercises/goat-exercise-lua.lua:176
+msgid "Exercise a goat in the Lua language"
+msgstr "Entrena una cabra en el llenguatge Lua"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:46
 msgid "Exercise a goat and a python"
@@ -442,6 +452,109 @@ msgstr "S'està cercant el fons de l'animació"
 msgid "Optimizing animation"
 msgstr "S'està optimitzant l'animació"
 
+#: plug-ins/common/animation-play.c:331
+msgid "_Playback..."
+msgstr "_Reprodueix..."
+
+#: plug-ins/common/animation-play.c:336
+msgid "Preview a GIMP layer-based animation"
+msgstr "Previsualitza una animació basada en capes del GIMP"
+
+#. list is given in "fps" - frames per second
+#: plug-ins/common/animation-play.c:498 plug-ins/common/animation-play.c:556
+#: plug-ins/common/animation-play.c:834
+#, c-format
+msgid "%.1f %%"
+msgstr "%.1f %%"
+
+#. Image Name
+#: plug-ins/common/animation-play.c:689
+msgid "Animation Playback:"
+msgstr "Reproducció de l'animació:"
+
+#: plug-ins/common/animation-play.c:767 plug-ins/common/animation-play.c:1383
+msgid "Start playback"
+msgstr "Inicia la reproducció"
+
+#: plug-ins/common/animation-play.c:769
+msgid "Step _back"
+msgstr "_Pas enrere"
+
+#: plug-ins/common/animation-play.c:769
+msgid "Step back to previous frame"
+msgstr "Ves enrere al fotograma anterior"
+
+#: plug-ins/common/animation-play.c:771
+msgid "_Step"
+msgstr "_Pas"
+
+#: plug-ins/common/animation-play.c:771
+msgid "Step to next frame"
+msgstr "Ves al fotograma següent"
+
+#: plug-ins/common/animation-play.c:773
+msgid "Rewind the animation"
+msgstr "Rebobina l'animació"
+
+#: plug-ins/common/animation-play.c:776
+msgid "Detach"
+msgstr "Separa"
+
+#: plug-ins/common/animation-play.c:776
+msgid "Detach the animation from the dialog window"
+msgstr "Separa l'animació des de la finestra del diàleg"
+
+#: plug-ins/common/animation-play.c:778
+msgid "Reload the image"
+msgstr "Torna a carregar la imatge"
+
+#. Zoom Options
+#: plug-ins/common/animation-play.c:849
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:649
+msgid "Zoom"
+msgstr "Ampliació/Reducció"
+
+#. list is given in "fps" - frames per second
+#: plug-ins/common/animation-play.c:859
+#, c-format
+msgid "%d fps"
+msgstr "%d fps"
+
+#: plug-ins/common/animation-play.c:870
+msgid "Default framerate"
+msgstr "Fotogrames per defecte"
+
+#: plug-ins/common/animation-play.c:890
+msgid "Playback speed"
+msgstr "Velocitat de reproducció"
+
+#. 2 styles of default frame disposals: cumulative layers and one
+#. * frame per layer.
+#: plug-ins/common/animation-play.c:901 plug-ins/common/file-gif-save.c:1273
+msgid "Cumulative layers (combine)"
+msgstr "Capes acumulatives (combina)"
+
+#: plug-ins/common/animation-play.c:906 plug-ins/common/file-gif-save.c:1275
+msgid "One frame per layer (replace)"
+msgstr "Un fotograma per capa (substitueix)"
+
+#: plug-ins/common/animation-play.c:1002
+msgid "Memory could not be allocated to the frame container."
+msgstr "No s'ha pogut assignar memòria al contenidor de marcs."
+
+#: plug-ins/common/animation-play.c:1069
+msgid "Invalid image. Did you close it?"
+msgstr "Imatge no vàlida. L'has tancat?"
+
+#: plug-ins/common/animation-play.c:1181
+#, c-format
+msgid "Frame %d of %d"
+msgstr "Marc %d de %d"
+
+#: plug-ins/common/animation-play.c:1383
+msgid "Stop playback"
+msgstr "Atura la reproducció"
+
 #: plug-ins/common/blinds.c:140
 msgid "_Blinds..."
 msgstr "An_gles morts..."
@@ -502,18 +615,19 @@ msgstr "Vertical"
 #: plug-ins/common/blinds.c:301 plug-ins/common/compose.c:1129
 #: plug-ins/common/decompose.c:666 plug-ins/common/file-cel.c:496
 #: plug-ins/common/file-cel.c:501 plug-ins/common/file-dicom.c:745
-#: plug-ins/common/file-gegl.c:465 plug-ins/common/file-gif-load.c:1097
-#: plug-ins/common/file-iff.c:343 plug-ins/common/file-jp2-load.c:1317
-#: plug-ins/common/file-pcx.c:742 plug-ins/common/file-pcx.c:750
-#: plug-ins/common/file-pcx.c:758 plug-ins/common/file-pix.c:422
-#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:869
-#: plug-ins/common/file-qoi.c:321 plug-ins/common/file-raw-data.c:1836
-#: plug-ins/common/file-sunras.c:1083 plug-ins/common/file-tga.c:1117
-#: plug-ins/common/file-wbmp.c:270 plug-ins/common/file-xbm.c:912
-#: plug-ins/common/film.c:811 plug-ins/common/smooth-palette.c:332
-#: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
-#: plug-ins/file-exr/file-exr.c:271 plug-ins/file-faxg3/faxg3.c:574
-#: plug-ins/file-fits/fits.c:701 plug-ins/file-jpeg/jpeg-load.c:231
+#: plug-ins/common/file-farbfeld.c:322 plug-ins/common/file-gegl.c:465
+#: plug-ins/common/file-gif-load.c:1097 plug-ins/common/file-iff.c:343
+#: plug-ins/common/file-jp2-load.c:1317 plug-ins/common/file-pcx.c:742
+#: plug-ins/common/file-pcx.c:750 plug-ins/common/file-pcx.c:758
+#: plug-ins/common/file-pix.c:422 plug-ins/common/file-png.c:950
+#: plug-ins/common/file-pnm.c:869 plug-ins/common/file-qoi.c:321
+#: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1083
+#: plug-ins/common/file-tga.c:1117 plug-ins/common/file-wbmp.c:270
+#: plug-ins/common/file-xbm.c:912 plug-ins/common/film.c:811
+#: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
+#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:271
+#: plug-ins/file-faxg3/faxg3.c:574 plug-ins/file-fits/fits.c:701
+#: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
 #: plug-ins/file-psd/psd-load.c:2733 plug-ins/file-sgi/sgi.c:475
 #: plug-ins/file-tiff/file-tiff-load.c:1534
@@ -1067,16 +1181,17 @@ msgid "Save CML Explorer Parameters"
 msgstr "Desa els paràmetres de l'Explorador CML"
 
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:822
-#: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-mng.c:876
-#: plug-ins/common/file-mng.c:1223 plug-ins/common/file-pcx.c:1230
-#: plug-ins/common/file-pdf-save.c:720 plug-ins/common/file-png.c:1502
-#: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
-#: plug-ins/common/file-sunras.c:638 plug-ins/common/file-tga.c:1238
-#: plug-ins/common/file-xmc.c:1383 plug-ins/common/sphere-designer.c:2201
-#: plug-ins/file-bmp/bmp-save.c:341 plug-ins/file-fli/fli-gimp.c:817
-#: plug-ins/file-icns/file-icns-save.c:428 plug-ins/file-ico/ico-save.c:1341
-#: plug-ins/file-ico/ico-save.c:1558 plug-ins/file-jpeg/jpeg-save.c:317
-#: plug-ins/file-psd/psd-save.c:2214 plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/common/file-dicom.c:1558 plug-ins/common/file-farbfeld.c:381
+#: plug-ins/common/file-mng.c:876 plug-ins/common/file-mng.c:1223
+#: plug-ins/common/file-pcx.c:1230 plug-ins/common/file-pdf-save.c:720
+#: plug-ins/common/file-png.c:1502 plug-ins/common/file-raw-data.c:1345
+#: plug-ins/common/file-raw-data.c:1374 plug-ins/common/file-sunras.c:638
+#: plug-ins/common/file-tga.c:1238 plug-ins/common/file-xmc.c:1383
+#: plug-ins/common/sphere-designer.c:2201 plug-ins/file-bmp/bmp-save.c:341
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:428
+#: plug-ins/file-ico/ico-save.c:1341 plug-ins/file-ico/ico-save.c:1558
+#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2214
+#: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
 #: plug-ins/gfig/gfig.c:1044 plug-ins/ifs-compose/ifs-compose.c:2468
@@ -1097,21 +1212,22 @@ msgstr "Carrega els paràmetres de l'explorador CML"
 #: plug-ins/common/cml-explorer.c:2339 plug-ins/common/curve-bend.c:875
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:641 plug-ins/common/file-dicom.c:377
-#: plug-ins/common/file-gif-load.c:410 plug-ins/common/file-iff.c:227
-#: plug-ins/common/file-mng.c:1407 plug-ins/common/file-pcx.c:523
-#: plug-ins/common/file-pcx.c:566 plug-ins/common/file-png.c:673
-#: plug-ins/common/file-ps.c:1126 plug-ins/common/file-ps.c:3636
-#: plug-ins/common/file-psp.c:2383 plug-ins/common/file-psp.c:2433
-#: plug-ins/common/file-qoi.c:300 plug-ins/common/file-raw-data.c:514
-#: plug-ins/common/file-raw-data.c:1673 plug-ins/common/file-sunras.c:458
-#: plug-ins/common/file-svg.c:365 plug-ins/common/file-svg.c:825
-#: plug-ins/common/file-tga.c:448 plug-ins/common/file-wbmp.c:184
-#: plug-ins/common/file-xbm.c:750 plug-ins/common/file-xmc.c:658
-#: plug-ins/common/file-xmc.c:897 plug-ins/common/file-xwd.c:481
-#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
-#: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
-#: plug-ins/file-fits/fits.c:396 plug-ins/file-fli/fli-gimp.c:459
-#: plug-ins/file-fli/fli-gimp.c:510 plug-ins/file-icns/file-icns-load.c:515
+#: plug-ins/common/file-farbfeld.c:299 plug-ins/common/file-gif-load.c:410
+#: plug-ins/common/file-iff.c:227 plug-ins/common/file-mng.c:1407
+#: plug-ins/common/file-pcx.c:523 plug-ins/common/file-pcx.c:566
+#: plug-ins/common/file-png.c:673 plug-ins/common/file-ps.c:1126
+#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2383
+#: plug-ins/common/file-psp.c:2433 plug-ins/common/file-qoi.c:300
+#: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
+#: plug-ins/common/file-sunras.c:458 plug-ins/common/file-svg.c:365
+#: plug-ins/common/file-svg.c:825 plug-ins/common/file-tga.c:448
+#: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:750
+#: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:897
+#: plug-ins/common/file-xwd.c:486 plug-ins/common/sphere-designer.c:2090
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
+#: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:396
+#: plug-ins/file-fli/fli-gimp.c:459 plug-ins/file-fli/fli-gimp.c:510
+#: plug-ins/file-icns/file-icns-load.c:515
 #: plug-ins/file-icns/file-icns-load.c:566 plug-ins/file-ico/ico-load.c:681
 #: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1019
 #: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:614
@@ -2104,7 +2220,7 @@ msgstr ""
 #: plug-ins/common/file-sunras.c:450 plug-ins/common/file-tga.c:440
 #: plug-ins/common/file-wbmp.c:176 plug-ins/common/file-wmf.c:1026
 #: plug-ins/common/file-xbm.c:742 plug-ins/common/file-xmc.c:648
-#: plug-ins/common/file-xpm.c:385 plug-ins/common/file-xwd.c:473
+#: plug-ins/common/file-xpm.c:385 plug-ins/common/file-xwd.c:478
 #: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:188
 #: plug-ins/file-faxg3/faxg3.c:240 plug-ins/file-fli/fli-gimp.c:502
 #: plug-ins/file-icns/file-icns-load.c:507 plug-ins/file-ico/ico-load.c:673
@@ -2182,19 +2298,19 @@ msgstr ""
 
 #. init the progress meter
 #. * Open the file for writing...
-#: plug-ins/common/file-cel.c:840 plug-ins/common/file-gif-save.c:917
-#: plug-ins/common/file-html-table.c:364 plug-ins/common/file-jpegxl.c:1383
-#: plug-ins/common/file-pcx.c:1114 plug-ins/common/file-pix.c:560
-#: plug-ins/common/file-png.c:1494 plug-ins/common/file-pnm.c:1635
-#: plug-ins/common/file-ps.c:1338 plug-ins/common/file-qoi.c:375
-#: plug-ins/common/file-sunras.c:629 plug-ins/common/file-tga.c:1230
-#: plug-ins/common/file-xbm.c:1051 plug-ins/common/file-xpm.c:705
-#: plug-ins/common/file-xwd.c:675 plug-ins/file-bmp/bmp-save.c:333
-#: plug-ins/file-fits/fits.c:674 plug-ins/file-fli/fli-gimp.c:784
-#: plug-ins/file-icns/file-icns-save.c:612 plug-ins/file-ico/ico-save.c:1333
-#: plug-ins/file-ico/ico-save.c:1542 plug-ins/file-jpeg/jpeg-save.c:272
-#: plug-ins/file-psd/psd-save.c:2160 plug-ins/file-sgi/sgi.c:646
-#: plug-ins/file-tiff/file-tiff-save.c:1074
+#: plug-ins/common/file-cel.c:840 plug-ins/common/file-farbfeld.c:373
+#: plug-ins/common/file-gif-save.c:917 plug-ins/common/file-html-table.c:364
+#: plug-ins/common/file-jpegxl.c:1383 plug-ins/common/file-pcx.c:1114
+#: plug-ins/common/file-pix.c:560 plug-ins/common/file-png.c:1494
+#: plug-ins/common/file-pnm.c:1635 plug-ins/common/file-ps.c:1338
+#: plug-ins/common/file-qoi.c:375 plug-ins/common/file-sunras.c:629
+#: plug-ins/common/file-tga.c:1230 plug-ins/common/file-xbm.c:1051
+#: plug-ins/common/file-xpm.c:705 plug-ins/common/file-xwd.c:714
+#: plug-ins/file-bmp/bmp-save.c:333 plug-ins/file-fits/fits.c:674
+#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-icns/file-icns-save.c:612
+#: plug-ins/file-ico/ico-save.c:1333 plug-ins/file-ico/ico-save.c:1542
+#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2160
+#: plug-ins/file-sgi/sgi.c:646 plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Exportació «%s»"
@@ -2360,9 +2476,33 @@ msgid "Cannot save images with alpha channel."
 msgstr "No es poden desar imatges amb canal alfa."
 
 #: plug-ins/common/file-dicom.c:1542 plug-ins/common/file-ps.c:1333
-#: plug-ins/common/file-xwd.c:670 plug-ins/file-fits/fits.c:669
+#: plug-ins/common/file-xwd.c:709 plug-ins/file-fits/fits.c:669
 msgid "Cannot operate on unknown image types."
 msgstr "No es pot operar en tipus d'imatge desconeguts."
+
+#: plug-ins/common/file-farbfeld.c:135 plug-ins/common/file-farbfeld.c:161
+msgid "Farbfeld"
+msgstr "Farbfeld"
+
+#: plug-ins/common/file-farbfeld.c:138 plug-ins/common/file-farbfeld.c:140
+msgid "Load file in the Farbfeld file format"
+msgstr "Carrega el fitxer en el format de fitxer Farbfeld"
+
+#: plug-ins/common/file-farbfeld.c:164 plug-ins/common/file-farbfeld.c:166
+msgid "Export image in the Farbfeld file format"
+msgstr "Exporta la imatge en el format de fitxer Farbfeld"
+
+#: plug-ins/common/file-farbfeld.c:258
+msgid "Farbfeld format does not support multiple layers."
+msgstr "El format Farbfeld no admet múltiples capes."
+
+#: plug-ins/common/file-farbfeld.c:310
+msgid "Failed to read Farbfeld header"
+msgstr "No s'ha pogut llegir la capçalera Farbfeld"
+
+#: plug-ins/common/file-farbfeld.c:336
+msgid "Premature end of Farbfeld pixel data"
+msgstr "Final prematur de les dades dels píxels de Farbfeld"
 
 #: plug-ins/common/file-gbr.c:125
 msgid "GIMP brush"
@@ -2568,7 +2708,7 @@ msgstr ""
 
 #: plug-ins/common/file-gif-load.c:1360
 msgid "Too much compressed data, ignoring extra..."
-msgstr "Hi ha massa dades comprimides, s'ignoraran les extra..."
+msgstr "Hi ha massa dades comprimides, s'ignoraran les extres..."
 
 #: plug-ins/common/file-gif-save.c:151
 msgid "GIF"
@@ -2589,9 +2729,9 @@ msgid ""
 msgstr ""
 "Exporta un fitxer en format GIF, amb una possible animació, transparència i "
 "comentari. Per a exportar una animació, opera en un fitxer multicapa i dona "
-"el paràmetre «com a animació» coem a CERT. El connector interpretarà  "
-"un alfa menor del 50% com a transparent. Quan s'executa de forma no interactiva, el "
-"valor del comentari es pren del paràsit «gimp-comment»."
+"el paràmetre «com a animació» coem a CERT. El connector interpretarà un "
+"alfa menor del 50% com a transparent. Quan s'executa de forma no "
+"interactiva, el valor del comentari es pren del paràsit «gimp-comment»."
 
 #: plug-ins/common/file-gif-save.c:183 plug-ins/common/file-mng.c:277
 msgid "_Interlace"
@@ -2741,14 +2881,6 @@ msgstr "mil·lisegons"
 #: plug-ins/common/file-gif-save.c:1271
 msgid "I don't care"
 msgstr "No importa"
-
-#: plug-ins/common/file-gif-save.c:1273
-msgid "Cumulative layers (combine)"
-msgstr "Capes acumulatives (combina)"
-
-#: plug-ins/common/file-gif-save.c:1275
-msgid "One frame per layer (replace)"
-msgstr "Un fotograma per capa (substitueix)"
 
 #: plug-ins/common/file-gif-save.c:1306
 msgid "Animated GIF"
@@ -4228,7 +4360,7 @@ msgstr "Exporta fitxers en el format de fitxer PAM"
 
 #: plug-ins/common/file-pnm.c:497
 msgid "PAM export handles RGB images with or without transparency."
-msgstr "L'exportació PAM gestiona imatges RGB amb o sense transparència."
+msgstr "L'exportació PAM gestiona imatges RGB amb transparència o sense."
 
 #: plug-ins/common/file-pnm.c:522
 msgid "PFM image"
@@ -4962,7 +5094,7 @@ msgid "Type of colormap not supported"
 msgstr "El tipus de mapa de colors no és compatible"
 
 #: plug-ins/common/file-sunras.c:524 plug-ins/common/file-xbm.c:838
-#: plug-ins/common/file-xwd.c:551
+#: plug-ins/common/file-xwd.c:590
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4972,7 +5104,7 @@ msgstr ""
 "No s'ha especificat l'amplada de la imatge"
 
 #: plug-ins/common/file-sunras.c:532 plug-ins/common/file-xbm.c:846
-#: plug-ins/common/file-xwd.c:559
+#: plug-ins/common/file-xwd.c:599
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4982,7 +5114,7 @@ msgstr ""
 "El GIMP no pot gestionar imatges d'aquesta amplada"
 
 #: plug-ins/common/file-sunras.c:540 plug-ins/common/file-xbm.c:854
-#: plug-ins/common/file-xwd.c:566
+#: plug-ins/common/file-xwd.c:607
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4992,7 +5124,7 @@ msgstr ""
 "No s'ha especificat l'alçada de la imatge"
 
 #: plug-ins/common/file-sunras.c:548 plug-ins/common/file-xbm.c:862
-#: plug-ins/common/file-xwd.c:573
+#: plug-ins/common/file-xwd.c:615
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5015,9 +5147,9 @@ msgstr "No es pot operar en tipus d'imatge desconeguts"
 
 #: plug-ins/common/file-sunras.c:1193 plug-ins/common/file-sunras.c:1288
 #: plug-ins/common/file-sunras.c:1372 plug-ins/common/file-sunras.c:1472
-#: plug-ins/common/file-xwd.c:1452 plug-ins/common/file-xwd.c:1556
-#: plug-ins/common/file-xwd.c:1716 plug-ins/common/file-xwd.c:1932
-#: plug-ins/common/file-xwd.c:2091 plug-ins/common/file-xwd.c:2355
+#: plug-ins/common/file-xwd.c:1513 plug-ins/common/file-xwd.c:1627
+#: plug-ins/common/file-xwd.c:1798 plug-ins/common/file-xwd.c:2038
+#: plug-ins/common/file-xwd.c:2227 plug-ins/common/file-xwd.c:2503
 msgid "EOF encountered on reading"
 msgstr "S'ha arribat al fi de fitxer en llegir"
 
@@ -5178,7 +5310,7 @@ msgstr "_Origen"
 msgid "Image origin (0 = top-left, 1 = bottom-left)"
 msgstr "Origen de la imatge (0 = superior esquerra, 1 = inferior esquerra)"
 
-#: plug-ins/common/file-tga.c:394 plug-ins/common/file-xwd.c:442
+#: plug-ins/common/file-tga.c:394 plug-ins/common/file-xwd.c:447
 msgid "TGA format does not support multiple layers."
 msgstr "El format TGA no admet múltiples capes."
 
@@ -5654,25 +5786,34 @@ msgstr "El fitxer XPM no és vàlid"
 msgid "Unsupported drawable type"
 msgstr "El tipus dibuixable no és compatible"
 
-#: plug-ins/common/file-xwd.c:319 plug-ins/common/file-xwd.c:349
+#: plug-ins/common/file-xwd.c:324 plug-ins/common/file-xwd.c:354
 msgid "X window dump"
 msgstr "Bolcat de la finestra X"
 
-#: plug-ins/common/file-xwd.c:490
+#: plug-ins/common/file-xwd.c:517
 #, c-format
 msgid "Could not read XWD header from '%s'"
 msgstr "No s'ha pogut llegir la capçalera XWD de «%s»"
 
-#: plug-ins/common/file-xwd.c:511
+#: plug-ins/common/file-xwd.c:535
 #, c-format
 msgid ""
 "'%s':\n"
-"Illegal number of colormap entries: %ld"
+"Seek error"
 msgstr ""
 "«%s»:\n"
-"El nombre d'entrades al mapa de colors no és permès: %ld"
+"Error de cerca"
 
-#: plug-ins/common/file-xwd.c:521
+#: plug-ins/common/file-xwd.c:545
+#, c-format
+msgid ""
+"'%s':\n"
+"Illegal number of colormap entries: %u"
+msgstr ""
+"«%s»:\n"
+"El nombre d'entrades al mapa de colors no és permès: %u"
+
+#: plug-ins/common/file-xwd.c:556
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5681,11 +5822,11 @@ msgstr ""
 "«%s»:\n"
 "El nombre d'entrades al mapa de colors és menor al nombre de colors"
 
-#: plug-ins/common/file-xwd.c:544
+#: plug-ins/common/file-xwd.c:582
 msgid "Can't read color entries"
 msgstr "No es poden llegir les entrades de color"
 
-#: plug-ins/common/file-xwd.c:628
+#: plug-ins/common/file-xwd.c:667
 #, c-format
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is"
@@ -5694,24 +5835,39 @@ msgstr ""
 "El fitxer XWD %s que té el format %d, la profunditat %d i %d bits per píxel."
 " No és compatible actualment."
 
-#: plug-ins/common/file-xwd.c:659
+#: plug-ins/common/file-xwd.c:698
 msgid "Cannot export images with alpha channels."
 msgstr "No es poden exportar imatges amb canals alfa."
 
-#: plug-ins/common/file-xwd.c:682
+#: plug-ins/common/file-xwd.c:721
 #, c-format
 msgid "Could not open '%s' for writing: "
 msgstr "No s'ha pogut obrir «%s» per a escriptura: "
 
-#: plug-ins/common/file-xwd.c:709
+#: plug-ins/common/file-xwd.c:748
 #, c-format
 msgid "Error exporting '%s': "
 msgstr "S'ha produït un error d'exportació «%s»: "
 
-#: plug-ins/common/file-xwd.c:1788 plug-ins/common/file-xwd.c:2188
+#: plug-ins/common/file-xwd.c:955 plug-ins/common/file-xwd.c:989
+#: plug-ins/common/file-xwd.c:1026
+msgid "Seek error"
+msgstr "Error de cerca"
+
+#: plug-ins/common/file-xwd.c:1878 plug-ins/common/file-xwd.c:2129
+#: plug-ins/common/file-xwd.c:2324
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "El fitxer XWD %s està malmès."
+
+#: plug-ins/common/file-xwd.c:2077
+#, c-format
+msgid ""
+"'%s':\n"
+"Invalid color map"
+msgstr ""
+"«%s»:\n"
+"Mapa de color no vàlid"
 
 #: plug-ins/common/film.c:241
 msgid "_Filmstrip..."
@@ -6511,7 +6667,7 @@ msgstr "Ajusta l'angle entre les puntes (-1 per a un angle aleatori)"
 
 #: plug-ins/common/sparkle.c:227
 msgid "Spike _density"
-msgstr "D_ensitat de puntes:"
+msgstr "D_ensitat de puntes"
 
 #: plug-ins/common/sparkle.c:228
 msgid "Adjust the spike density"
@@ -8252,7 +8408,6 @@ msgid "4:2:2 (chroma halved horizontally)"
 msgstr "4:2:2 vertical (croma reduït a la meitat)"
 
 #: plug-ins/file-jpeg/jpeg-save.c:944
-#
 msgid "4:4:0 (chroma halved vertically)"
 msgstr "4:4:0 (chroma a la meitat verticalment)"
 
@@ -8431,56 +8586,6 @@ msgid ""
 msgstr ""
 "Aquest fitxer PSD conté característiques que\n"
 "encara no estan totalment suportades en el GIMP:"
-
-#: plug-ins/file-psd/psd-load.c:3587
-msgid "Adjustment layers are not yet supported and will be dropped."
-msgstr "Les capes d'ajust encara no estan admeses i es descartaran."
-
-#: plug-ins/file-psd/psd-load.c:3591
-msgid "Metadata non-raster layers are not yet supported and will be dropped."
-msgstr "Les capes d'emplenat de metadades no estan admeses i es descartaran."
-
-#: plug-ins/file-psd/psd-load.c:3595
-msgid ""
-"Fill layers are partially supported and will be converted to raster layers."
-msgstr ""
-"Les capes d'emplenat estan parcialment suportades i es convertiran en capes "
-"de trama."
-
-#: plug-ins/file-psd/psd-load.c:3600
-msgid ""
-"Text layers are partially supported and will be converted to raster layers."
-msgstr ""
-"Les capes de text estan parcialment suportades i es convertiran en capes "
-"de trama."
-
-#: plug-ins/file-psd/psd-load.c:3605
-msgid "Linked layers are not yet supported and will be dropped."
-msgstr "Les capes enllaçades encara no estan admeses i es descartaran."
-
-#: plug-ins/file-psd/psd-load.c:3609
-msgid ""
-"Vector masks are partially supported and will be converted to raster layers."
-msgstr ""
-"Les màscares vectorials estan parcialment suportades i es convertiran en "
-"capes de trama."
-
-#: plug-ins/file-psd/psd-load.c:3614
-msgid "Vector strokes are not yet supported and will be dropped."
-msgstr "Els traços vectorials encara no estan admesos i es descartaran."
-
-#: plug-ins/file-psd/psd-load.c:3618
-msgid "Layer effects are not yet supported and will be dropped."
-msgstr "Els efectes de la capa encara no estan admesos i es descartaran."
-
-#: plug-ins/file-psd/psd-load.c:3622
-msgid "Smart objects are not yet supported and will be dropped."
-msgstr "Els objectes intel·ligents encara no estan admesos i es descartaran."
-
-#. Translators: short for layer compositions
-#: plug-ins/file-psd/psd-load.c:3627
-msgid "Layer comps are not yet supported and will be dropped."
-msgstr "Les capes de composició encara no estan admeses i es destacaran."
 
 #: plug-ins/file-psd/psd-save.c:502
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
@@ -9635,11 +9740,6 @@ msgstr ""
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:641
 msgid "R_edraw preview"
 msgstr "R_edibuixa la previsualització"
-
-#. Zoom Options
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:649
-msgid "Zoom"
-msgstr "Ampliació/Reducció"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:662
 msgid "Zoom _In"
@@ -14108,6 +14208,45 @@ msgstr "E_scàner/càmera..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "S'estan transferint dades de l'escàner/càmera"
+
+#~ msgid "Adjustment layers are not yet supported and will be dropped."
+#~ msgstr "Les capes d'ajust encara no estan admeses i es descartaran."
+
+#~ msgid "Metadata non-raster layers are not yet supported and will be dropped."
+#~ msgstr "Les capes d'emplenat de metadades no estan admeses i es descartaran."
+
+#~ msgid ""
+#~ "Fill layers are partially supported and will be converted to raster layers."
+#~ msgstr ""
+#~ "Les capes d'emplenat estan parcialment suportades i es convertiran en capes "
+#~ "de trama."
+
+#~ msgid ""
+#~ "Text layers are partially supported and will be converted to raster layers."
+#~ msgstr ""
+#~ "Les capes de text estan parcialment suportades i es convertiran en capes de "
+#~ "trama."
+
+#~ msgid "Linked layers are not yet supported and will be dropped."
+#~ msgstr "Les capes enllaçades encara no estan admeses i es descartaran."
+
+#~ msgid ""
+#~ "Vector masks are partially supported and will be converted to raster layers."
+#~ msgstr ""
+#~ "Les màscares vectorials estan parcialment suportades i es convertiran en "
+#~ "capes de trama."
+
+#~ msgid "Vector strokes are not yet supported and will be dropped."
+#~ msgstr "Els traços vectorials encara no estan admesos i es descartaran."
+
+#~ msgid "Layer effects are not yet supported and will be dropped."
+#~ msgstr "Els efectes de la capa encara no estan admesos i es descartaran."
+
+#~ msgid "Smart objects are not yet supported and will be dropped."
+#~ msgstr "Els objectes intel·ligents encara no estan admesos i es descartaran."
+
+#~ msgid "Layer comps are not yet supported and will be dropped."
+#~ msgstr "Les capes de composició encara no estan admeses i es destacaran."
 
 #~ msgid "4:2:2 horizontal (chroma halved)"
 #~ msgstr "4:2:2 horitzontal (croma reduït a la meitat)"

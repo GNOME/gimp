@@ -461,7 +461,7 @@ msgstr "Crea un degradat repetitiu emprant els colors de la paleta"
 
 #: plug-ins/python/palette-to-gradient.py:177
 msgid "Create a new repeating gradient using colors from the palette."
-msgstr "Crea un degradat repetitiu emprant els colors de la paleta"
+msgstr "Crea un degradat repetitiu emprant els colors de la paleta."
 
 #: plug-ins/python/python-console/python-console.py:77
 msgid "Python Console"

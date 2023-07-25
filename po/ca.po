@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-30 15:47+0000\n"
-"PO-Revision-Date: 2023-06-19 18:06+0100\n"
+"POT-Creation-Date: 2023-07-21 19:36+0000\n"
+"PO-Revision-Date: 2023-07-25 18:06+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -316,7 +316,7 @@ msgstr "Editor del pinzell"
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:115 app/core/gimp-data-factories.c:356
-#: app/dialogs/dialogs.c:340 app/dialogs/preferences-dialog.c:3501
+#: app/dialogs/dialogs.c:340 app/dialogs/preferences-dialog.c:3507
 msgid "Brushes"
 msgstr "Pinzells"
 
@@ -399,7 +399,7 @@ msgstr "Filtres"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:172 app/core/gimp-data-factories.c:390
-#: app/dialogs/dialogs.c:358 app/dialogs/preferences-dialog.c:3531
+#: app/dialogs/dialogs.c:358 app/dialogs/preferences-dialog.c:3537
 msgid "Fonts"
 msgstr "Lletres tipogràfiques"
 
@@ -410,12 +410,12 @@ msgstr "Editor de degradats"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:178 app/core/gimp-data-factories.c:381
-#: app/dialogs/dialogs.c:352 app/dialogs/preferences-dialog.c:3525
+#: app/dialogs/dialogs.c:352 app/dialogs/preferences-dialog.c:3531
 msgid "Gradients"
 msgstr "Degradats"
 
 #: app/actions/actions.c:181 app/core/gimp-data-factories.c:397
-#: app/dialogs/dialogs.c:364 app/dialogs/preferences-dialog.c:3537
+#: app/dialogs/dialogs.c:364 app/dialogs/preferences-dialog.c:3543
 msgid "Tool Presets"
 msgstr "Valors predefinits de l'eina"
 
@@ -446,7 +446,7 @@ msgstr "Capes"
 
 #. initialize the list of mypaint brushes
 #: app/actions/actions.c:199 app/core/gimp-data-factories.c:366
-#: app/dialogs/dialogs.c:346 app/dialogs/preferences-dialog.c:3543
+#: app/dialogs/dialogs.c:346 app/dialogs/preferences-dialog.c:3549
 msgid "MyPaint Brushes"
 msgstr "Pinzells MyPaint"
 
@@ -457,17 +457,17 @@ msgstr "Editor de la paleta"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:205 app/core/gimp-data-factories.c:376
-#: app/dialogs/dialogs.c:355 app/dialogs/preferences-dialog.c:3519
+#: app/dialogs/dialogs.c:355 app/dialogs/preferences-dialog.c:3525
 msgid "Palettes"
 msgstr "Paletes"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:208 app/core/gimp-data-factories.c:371
-#: app/dialogs/dialogs.c:349 app/dialogs/preferences-dialog.c:3513
+#: app/dialogs/dialogs.c:349 app/dialogs/preferences-dialog.c:3519
 msgid "Patterns"
 msgstr "Patrons"
 
-#: app/actions/actions.c:211 app/dialogs/preferences-dialog.c:3549
+#: app/actions/actions.c:211 app/dialogs/preferences-dialog.c:3555
 msgid "Plug-ins"
 msgstr "Connectors"
 
@@ -2280,12 +2280,12 @@ msgctxt "dashboard-action"
 msgid "_Groups"
 msgstr "_Grups"
 
-#: app/actions/dashboard-actions.c:42 menus/dashboard-menu.ui:14
+#: app/actions/dashboard-actions.c:42 menus/dashboard-menu.ui:15
 msgctxt "dashboard-action"
 msgid "_Update Interval"
 msgstr "Interval d'act_ualització"
 
-#: app/actions/dashboard-actions.c:44 menus/dashboard-menu.ui:22
+#: app/actions/dashboard-actions.c:44 menus/dashboard-menu.ui:23
 msgctxt "dashboard-action"
 msgid "_History Duration"
 msgstr "Duració de l'_historial"
@@ -2520,6 +2520,44 @@ msgstr "Sense títol"
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "No es pot mostrar el fitxer al gestor de fitxers: %s"
+
+#: app/actions/debug-actions.c:40
+msgid "Start _GtkInspector"
+msgstr "Inicia _GtkInspector"
+
+#: app/actions/debug-actions.c:45
+msgid "_Memory Profile"
+msgstr "_Anàlisi de memòria"
+
+#: app/actions/debug-actions.c:50
+msgid "Benchmark _Projection"
+msgstr "Projecció de _rendiment"
+
+#: app/actions/debug-actions.c:51
+msgid ""
+"Invalidates the entire projection, measures the time it takes to validate "
+"(render) the part that is visible in the active display, and print the "
+"result to stdout."
+msgstr ""
+"Invalida tota la projecció, mesura el temps que triga a validar "
+"(renderitzar) la part visible a la pantalla activa, i imprimir el resultat a"
+" la sortida estàndard."
+
+#: app/actions/debug-actions.c:58
+msgid "Show Image _Graph"
+msgstr "Mostra el _graf de la imatge"
+
+#: app/actions/debug-actions.c:59
+msgid "Creates a new image showing the GEGL graph of this image"
+msgstr "Crea una imatge nova que mostra el graf GEGL d'aquesta imatge"
+
+#: app/actions/debug-actions.c:64
+msgid "Dump _Keyboard Shortcuts"
+msgstr "_Bolca les dreceres de teclat"
+
+#: app/actions/debug-actions.c:69
+msgid "Dump _Attached Data"
+msgstr "B_olca les dades adjuntes"
 
 #: app/actions/dialogs-actions.c:47
 msgctxt "windows-action"
@@ -3946,7 +3984,7 @@ msgctxt "error-console-action"
 msgid "Select all error messages"
 msgstr "Selecciona tots els errors"
 
-#: app/actions/error-console-actions.c:52
+#: app/actions/error-console-actions.c:52 menus/error-console-menu.ui:12
 msgctxt "error-console-action"
 msgid "_Highlight"
 msgstr "_Ressaltat"
@@ -5467,7 +5505,7 @@ msgstr "Edita el degradat"
 msgid "Save '%s' as POV-Ray"
 msgstr "Desa «%s» com a POV-Ray"
 
-#: app/actions/help-actions.c:39
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:879
 msgctxt "help-action"
 msgid "_Help"
 msgstr "A_juda"
@@ -6041,19 +6079,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "Suprimeix aquesta imatge"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:531
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:533
 msgid "Lock content"
 msgstr "Bloqueja el contingut"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:532
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:534
 msgid "Unlock content"
 msgstr "Desbloqueja el contingut"
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:547
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:549
 msgid "Lock position"
 msgstr "Bloqueja la posició"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:548
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:550
 msgid "Unlock position"
 msgstr "Desbloqueja la posició"
 
@@ -9894,7 +9932,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Commuta a la imatge anterior"
 
-#: app/actions/windows-actions.c:114
+#: app/actions/windows-actions.c:114 menus/image-menu.ui.in.in:868
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "Posició de les pes_tanyes"
@@ -10617,11 +10655,10 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:327
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
-"used to be the default behaviour in older versions."
+"used to be the default behavior in older versions."
 msgstr ""
-"Si es marca l'opció, l'eina Mou canvia la capa o camí que s'estigui editant "
-"com a actiu. Aquest era el comportament per defecte en les versions més "
-"antigues."
+"Si està activada, l'eina Mou estableix la capa o el camí editat com a actiu."
+" Aquest era el comportament predeterminat en versions anteriors."
 
 #: app/config/gimprc-blurbs.h:336
 msgid ""
@@ -12459,7 +12496,7 @@ msgid "Parasites"
 msgstr "Paràsits"
 
 #. initialize the module list
-#: app/core/gimp.c:856 app/dialogs/preferences-dialog.c:3561
+#: app/core/gimp.c:856 app/dialogs/preferences-dialog.c:3567
 msgid "Modules"
 msgstr "Mòduls"
 
@@ -12513,7 +12550,7 @@ msgstr "No s'ha pogut suprimir «%s»: %s"
 
 #. initialize the list of gimp dynamics
 #: app/core/gimp-data-factories.c:361 app/core/gimpcontext.c:707
-#: app/dialogs/preferences-dialog.c:3507 app/tools/gimppaintoptions-gui.c:309
+#: app/dialogs/preferences-dialog.c:3513 app/tools/gimppaintoptions-gui.c:309
 msgid "Dynamics"
 msgstr "Dinàmica"
 
@@ -15015,7 +15052,7 @@ msgstr "Bl_oqueja la posició i la mida"
 
 #: app/dialogs/channel-options-dialog.c:129
 #: app/dialogs/layer-options-dialog.c:169
-#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:563
+#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:565
 msgid "Lock visibility"
 msgstr "Bloqueja la visibilitat"
 
@@ -16284,8 +16321,8 @@ msgid "Policies"
 msgstr "Polítiques"
 
 #: app/dialogs/preferences-dialog.c:1534
-msgid "_File Open behaviour:"
-msgstr "Comportament de _fitxer obert:"
+msgid "_File Open behavior:"
+msgstr "_Comportament d'obertura del fitxer:"
 
 #. Filter Dialogs
 #: app/dialogs/preferences-dialog.c:1538 app/dialogs/preferences-dialog.c:2408
@@ -16641,7 +16678,7 @@ msgid "Toolbox"
 msgstr "Caixa d'eines"
 
 #. Appearance
-#: app/dialogs/preferences-dialog.c:2261 app/dialogs/preferences-dialog.c:3156
+#: app/dialogs/preferences-dialog.c:2261 app/dialogs/preferences-dialog.c:3162
 #: app/widgets/gimpgrideditor.c:133
 msgid "Appearance"
 msgstr "Aparença"
@@ -17184,11 +17221,11 @@ msgstr "Di_stància d'ajust:"
 msgid "Image Windows"
 msgstr "Finestres d'imatge"
 
-#: app/dialogs/preferences-dialog.c:3106
+#: app/dialogs/preferences-dialog.c:3111
 msgid "Merge menu and title bar"
 msgstr "Fusiona la barra de menús i de títol"
 
-#: app/dialogs/preferences-dialog.c:3109
+#: app/dialogs/preferences-dialog.c:3114
 msgid ""
 "GIMP will try to convince your system not to decorate image windows. If it "
 "doesn't work properly on your system (i.e. you get 2 title bars), please "
@@ -17198,383 +17235,383 @@ msgstr ""
 " Si no funciona correctament en el vostre sistema (és a dir, obteniu 2 "
 "barres de títol), informeu-ne."
 
-#: app/dialogs/preferences-dialog.c:3118
+#: app/dialogs/preferences-dialog.c:3124
 msgid "Use \"Show _all\" by default"
 msgstr "_Utilitza per defecte «Mostra-ho tot»"
 
-#: app/dialogs/preferences-dialog.c:3122
+#: app/dialogs/preferences-dialog.c:3128
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Utilitza «punt a punt» per _defecte"
 
-#: app/dialogs/preferences-dialog.c:3128
+#: app/dialogs/preferences-dialog.c:3134
 msgid "Marching ants s_peed:"
 msgstr "Velocit_at del caminet de formiguetes:"
 
 #. Zoom & Resize Behavior
-#: app/dialogs/preferences-dialog.c:3132
+#: app/dialogs/preferences-dialog.c:3138
 msgid "Zoom & Resize Behavior"
 msgstr "Opcions d'ampliació/reducció i redimensionament"
 
-#: app/dialogs/preferences-dialog.c:3136
+#: app/dialogs/preferences-dialog.c:3142
 msgid "Resize window on _zoom"
 msgstr "Redimensiona la finestra quan s'_ampliï/redueixi la imatge"
 
-#: app/dialogs/preferences-dialog.c:3139
+#: app/dialogs/preferences-dialog.c:3145
 msgid "Resize window on image _size change"
 msgstr "Redimensiona la fine_stra quan es canviï la de la imatge"
 
-#: app/dialogs/preferences-dialog.c:3145
+#: app/dialogs/preferences-dialog.c:3151
 msgid "Show entire image"
 msgstr "Mostra la imatge sencera"
 
-#: app/dialogs/preferences-dialog.c:3147
+#: app/dialogs/preferences-dialog.c:3153
 msgid "Initial zoom _ratio:"
 msgstr "_Factor d'ampliació/reducció inicial:"
 
-#: app/dialogs/preferences-dialog.c:3155
+#: app/dialogs/preferences-dialog.c:3161
 msgid "Image Window Appearance"
 msgstr "Aparença de la finestra d'imatge"
 
-#: app/dialogs/preferences-dialog.c:3165
+#: app/dialogs/preferences-dialog.c:3171
 msgid "Default Appearance in Normal Mode"
 msgstr "Aparença predeterminada en mode normal"
 
-#: app/dialogs/preferences-dialog.c:3170
+#: app/dialogs/preferences-dialog.c:3176
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Aparença predeterminada en mode a pantalla completa"
 
-#: app/dialogs/preferences-dialog.c:3179
+#: app/dialogs/preferences-dialog.c:3185
 msgid "Image Title & Statusbar Format"
 msgstr "Format del títol d'imatge i de la barra d'estat"
 
-#: app/dialogs/preferences-dialog.c:3180
+#: app/dialogs/preferences-dialog.c:3186
 msgid "Title & Status"
 msgstr "Títol i estat"
 
-#: app/dialogs/preferences-dialog.c:3198
+#: app/dialogs/preferences-dialog.c:3204
 msgid "Current format"
 msgstr "Format actual"
 
-#: app/dialogs/preferences-dialog.c:3199
+#: app/dialogs/preferences-dialog.c:3205
 msgid "Default format"
 msgstr "Format predeterminat"
 
-#: app/dialogs/preferences-dialog.c:3200
+#: app/dialogs/preferences-dialog.c:3206
 msgid "Show zoom percentage"
 msgstr "Mostra el percentatge d'ampliació/reducció"
 
-#: app/dialogs/preferences-dialog.c:3201
+#: app/dialogs/preferences-dialog.c:3207
 msgid "Show zoom ratio"
 msgstr "Mostra el factor d'ampliació/reducció"
 
-#: app/dialogs/preferences-dialog.c:3202
+#: app/dialogs/preferences-dialog.c:3208
 msgid "Show image size"
 msgstr "Mostra la mida de la imatge"
 
-#: app/dialogs/preferences-dialog.c:3203
+#: app/dialogs/preferences-dialog.c:3209
 msgid "Show drawable size"
 msgstr "Mostra la mida del dibuixable"
 
-#: app/dialogs/preferences-dialog.c:3216
+#: app/dialogs/preferences-dialog.c:3222
 msgid "Image Title Format"
 msgstr "Format del títol de la imatge"
 
-#: app/dialogs/preferences-dialog.c:3218
+#: app/dialogs/preferences-dialog.c:3224
 msgid "Image Statusbar Format"
 msgstr "Format de la imatge de la barra d'estat"
 
-#: app/dialogs/preferences-dialog.c:3312 app/dialogs/preferences-dialog.c:3313
+#: app/dialogs/preferences-dialog.c:3318 app/dialogs/preferences-dialog.c:3319
 msgid "Input Devices"
 msgstr "Dispositius d'entrada"
 
-#: app/dialogs/preferences-dialog.c:3324
+#: app/dialogs/preferences-dialog.c:3330
 msgid "Pointers"
 msgstr "Punters"
 
-#: app/dialogs/preferences-dialog.c:3331
+#: app/dialogs/preferences-dialog.c:3337
 msgid "Pointer _mode:"
 msgstr "_Mode del punter:"
 
-#: app/dialogs/preferences-dialog.c:3334
+#: app/dialogs/preferences-dialog.c:3340
 msgid "Pointer _handedness:"
 msgstr "_Estil del punter:"
 
-#: app/dialogs/preferences-dialog.c:3338
+#: app/dialogs/preferences-dialog.c:3344
 msgid "Paint Tools"
 msgstr "Eines de _pintura"
 
-#: app/dialogs/preferences-dialog.c:3342
+#: app/dialogs/preferences-dialog.c:3348
 msgid "Show _brush outline"
 msgstr "Mostra el contorn del pin_zell"
 
-#: app/dialogs/preferences-dialog.c:3350
+#: app/dialogs/preferences-dialog.c:3356
 msgid "S_nap brush outline to stroke"
 msgstr "Ajusta el contorn del pi_nzell per a traçar"
 
-#: app/dialogs/preferences-dialog.c:3354
+#: app/dialogs/preferences-dialog.c:3360
 msgid "Show pointer for paint _tools"
 msgstr "Mos_tra el punter per a les eines de pintar"
 
 #. Extended Input Devices
-#: app/dialogs/preferences-dialog.c:3358
+#: app/dialogs/preferences-dialog.c:3364
 msgid "Extended Input Devices"
 msgstr "Dispositius d'entrada expandits"
 
-#: app/dialogs/preferences-dialog.c:3374
+#: app/dialogs/preferences-dialog.c:3380
 msgid "Pointer Input API:"
 msgstr "API d'entrada del punter:"
 
-#: app/dialogs/preferences-dialog.c:3385
+#: app/dialogs/preferences-dialog.c:3391
 msgid "S_hare tool and tool options between input devices"
 msgstr "C_omparteix l'eina i les seves opcions entre dispositius d'entrada"
 
-#: app/dialogs/preferences-dialog.c:3389
+#: app/dialogs/preferences-dialog.c:3395
 msgid "Configure E_xtended Input Devices..."
 msgstr "Configura dispositius d'entrada e_xpandits..."
 
-#: app/dialogs/preferences-dialog.c:3396
+#: app/dialogs/preferences-dialog.c:3402
 msgid "_Save input device settings on exit"
 msgstr "De_sa els paràmetres dels dispositius d'entrada en sortir"
 
-#: app/dialogs/preferences-dialog.c:3400
+#: app/dialogs/preferences-dialog.c:3406
 msgid "Save Input Device Settings _Now"
 msgstr "Desa _ara els paràmetres dels dispositius"
 
-#: app/dialogs/preferences-dialog.c:3407
+#: app/dialogs/preferences-dialog.c:3413
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr ""
 "_Restableix la configuració desada dels dispositius d'entrada als valors per"
 " defecte"
 
-#: app/dialogs/preferences-dialog.c:3422
+#: app/dialogs/preferences-dialog.c:3428
 msgid "Additional Input Controllers"
 msgstr "Controladors d'entrada addicionals"
 
-#: app/dialogs/preferences-dialog.c:3423
+#: app/dialogs/preferences-dialog.c:3429
 msgid "Input Controllers"
 msgstr "Controladors d'entrada"
 
-#: app/dialogs/preferences-dialog.c:3438 app/dialogs/preferences-dialog.c:3439
+#: app/dialogs/preferences-dialog.c:3444 app/dialogs/preferences-dialog.c:3445
 msgid "Folders"
 msgstr "Carpetes"
 
-#: app/dialogs/preferences-dialog.c:3446
+#: app/dialogs/preferences-dialog.c:3452
 msgid "Reset _Folders"
 msgstr "_Reinicia les carpetes"
 
-#: app/dialogs/preferences-dialog.c:3462
+#: app/dialogs/preferences-dialog.c:3468
 msgid "_Temporary folder:"
 msgstr "Carpeta _temporal:"
 
-#: app/dialogs/preferences-dialog.c:3463
+#: app/dialogs/preferences-dialog.c:3469
 msgid "Select Folder for Temporary Files"
 msgstr "Selecciona una carpeta per als fitxers temporals"
 
-#: app/dialogs/preferences-dialog.c:3467
+#: app/dialogs/preferences-dialog.c:3473
 msgid "_Swap folder:"
 msgstr "_Carpeta d'intercanvi:"
 
-#: app/dialogs/preferences-dialog.c:3468
+#: app/dialogs/preferences-dialog.c:3474
 msgid "Select Swap Folder"
 msgstr "Seleccioneu la carpeta d'intercanvi"
 
-#: app/dialogs/preferences-dialog.c:3501
+#: app/dialogs/preferences-dialog.c:3507
 msgid "Brush Folders"
 msgstr "Carpetes de pinzells"
 
-#: app/dialogs/preferences-dialog.c:3504
+#: app/dialogs/preferences-dialog.c:3510
 msgid "Reset Brush _Folders"
 msgstr "R_einicia les carpetes de pinzells"
 
-#: app/dialogs/preferences-dialog.c:3505
+#: app/dialogs/preferences-dialog.c:3511
 msgid "Select Brush Folders"
 msgstr "Selecciona les carpetes de pinzells"
 
-#: app/dialogs/preferences-dialog.c:3507
+#: app/dialogs/preferences-dialog.c:3513
 msgid "Dynamics Folders"
 msgstr "Carpetes de dinàmiques"
 
-#: app/dialogs/preferences-dialog.c:3510
+#: app/dialogs/preferences-dialog.c:3516
 msgid "Reset Dynamics _Folders"
 msgstr "R_einicia les carpetes de dinàmiques"
 
-#: app/dialogs/preferences-dialog.c:3511
+#: app/dialogs/preferences-dialog.c:3517
 msgid "Select Dynamics Folders"
 msgstr "Selecciona les carpetes de dinàmiques"
 
-#: app/dialogs/preferences-dialog.c:3513
+#: app/dialogs/preferences-dialog.c:3519
 msgid "Pattern Folders"
 msgstr "Carpetes de patrons"
 
-#: app/dialogs/preferences-dialog.c:3516
+#: app/dialogs/preferences-dialog.c:3522
 msgid "Reset Pattern _Folders"
 msgstr "Re_inicia les carpetes de patrons"
 
-#: app/dialogs/preferences-dialog.c:3517
+#: app/dialogs/preferences-dialog.c:3523
 msgid "Select Pattern Folders"
 msgstr "Selecciona les carpetes de patrons"
 
-#: app/dialogs/preferences-dialog.c:3519
+#: app/dialogs/preferences-dialog.c:3525
 msgid "Palette Folders"
 msgstr "Carpeta de paletes"
 
-#: app/dialogs/preferences-dialog.c:3522
+#: app/dialogs/preferences-dialog.c:3528
 msgid "Reset Palette _Folders"
 msgstr "Reinicia les _carpetes de paletes"
 
-#: app/dialogs/preferences-dialog.c:3523
+#: app/dialogs/preferences-dialog.c:3529
 msgid "Select Palette Folders"
 msgstr "Selecciona les carpetes de paletes"
 
-#: app/dialogs/preferences-dialog.c:3525
+#: app/dialogs/preferences-dialog.c:3531
 msgid "Gradient Folders"
 msgstr "Carpetes de degradats"
 
-#: app/dialogs/preferences-dialog.c:3528
+#: app/dialogs/preferences-dialog.c:3534
 msgid "Reset Gradient _Folders"
 msgstr "_Reinicia les carpetes de degradats"
 
-#: app/dialogs/preferences-dialog.c:3529
+#: app/dialogs/preferences-dialog.c:3535
 msgid "Select Gradient Folders"
 msgstr "Selecciona les carpetes de degradats"
 
-#: app/dialogs/preferences-dialog.c:3531
+#: app/dialogs/preferences-dialog.c:3537
 msgid "Font Folders"
 msgstr "Carpetes de lletres tipogràfiques"
 
-#: app/dialogs/preferences-dialog.c:3534
+#: app/dialogs/preferences-dialog.c:3540
 msgid "Reset Font _Folders"
 msgstr "Reinicia les _carpetes de lletres tipogràfiques"
 
-#: app/dialogs/preferences-dialog.c:3535
+#: app/dialogs/preferences-dialog.c:3541
 msgid "Select Font Folders"
 msgstr "Selecciona les carpetes de lletres tipogràfiques"
 
-#: app/dialogs/preferences-dialog.c:3537
+#: app/dialogs/preferences-dialog.c:3543
 msgid "Tool Preset Folders"
 msgstr "Carpetes de valors predefinits de l'eina"
 
-#: app/dialogs/preferences-dialog.c:3540
+#: app/dialogs/preferences-dialog.c:3546
 msgid "Reset Tool Preset _Folders"
 msgstr "Rei_nicia les carpetes dels predefinits de l'eina"
 
-#: app/dialogs/preferences-dialog.c:3541
+#: app/dialogs/preferences-dialog.c:3547
 msgid "Select Tool Preset Folders"
 msgstr "Selecciona les carpetes de valors predefinits de l'eina"
 
-#: app/dialogs/preferences-dialog.c:3543
+#: app/dialogs/preferences-dialog.c:3549
 msgid "MyPaint Brush Folders"
 msgstr "Carpetes de pinzells MyPaint"
 
-#: app/dialogs/preferences-dialog.c:3546
+#: app/dialogs/preferences-dialog.c:3552
 msgid "Reset MyPaint Brush _Folders"
 msgstr "R_einicia les carpetes de pinzells MyPaint"
 
-#: app/dialogs/preferences-dialog.c:3547
+#: app/dialogs/preferences-dialog.c:3553
 msgid "Select MyPaint Brush Folders"
 msgstr "Selecciona les carpetes de pinzells MyPaint"
 
-#: app/dialogs/preferences-dialog.c:3549
+#: app/dialogs/preferences-dialog.c:3555
 msgid "Plug-in Folders"
 msgstr "Carpetes de connectors"
 
-#: app/dialogs/preferences-dialog.c:3552
+#: app/dialogs/preferences-dialog.c:3558
 msgid "Reset plug-in _Folders"
 msgstr "Re_inicia les carpetes de connectors"
 
-#: app/dialogs/preferences-dialog.c:3553
+#: app/dialogs/preferences-dialog.c:3559
 msgid "Select plug-in Folders"
 msgstr "Selecciona les carpetes de connectors"
 
-#: app/dialogs/preferences-dialog.c:3555
+#: app/dialogs/preferences-dialog.c:3561
 msgid "Scripts"
 msgstr "Funcions (scripts)"
 
-#: app/dialogs/preferences-dialog.c:3555
+#: app/dialogs/preferences-dialog.c:3561
 msgid "Script-Fu Folders"
 msgstr "Carpetes de Script-Fu"
 
-#: app/dialogs/preferences-dialog.c:3558
+#: app/dialogs/preferences-dialog.c:3564
 msgid "Reset Script-Fu _Folders"
 msgstr "R_einicia les carpetes de Script-Fu"
 
-#: app/dialogs/preferences-dialog.c:3559
+#: app/dialogs/preferences-dialog.c:3565
 msgid "Select Script-Fu Folders"
 msgstr "Selecciona les carpetes de Script-Fu"
 
-#: app/dialogs/preferences-dialog.c:3561
+#: app/dialogs/preferences-dialog.c:3567
 msgid "Module Folders"
 msgstr "Carpetes de mòduls"
 
-#: app/dialogs/preferences-dialog.c:3564
+#: app/dialogs/preferences-dialog.c:3570
 msgid "Reset Module _Folders"
 msgstr "Reini_cia les carpetes dels mòduls"
 
-#: app/dialogs/preferences-dialog.c:3565
+#: app/dialogs/preferences-dialog.c:3571
 msgid "Select Module Folders"
 msgstr "Selecciona les carpetes de mòduls"
 
-#: app/dialogs/preferences-dialog.c:3567
+#: app/dialogs/preferences-dialog.c:3573
 msgid "Interpreters"
 msgstr "Intèrprets"
 
-#: app/dialogs/preferences-dialog.c:3567
+#: app/dialogs/preferences-dialog.c:3573
 msgid "Interpreter Folders"
 msgstr "Carpetes d'intèrprets"
 
-#: app/dialogs/preferences-dialog.c:3570
+#: app/dialogs/preferences-dialog.c:3576
 msgid "Reset Interpreter _Folders"
 msgstr "Re_inicia les carpetes d'intèrprets"
 
-#: app/dialogs/preferences-dialog.c:3571
+#: app/dialogs/preferences-dialog.c:3577
 msgid "Select Interpreter Folders"
 msgstr "Selecciona les carpetes d'intèrprets"
 
-#: app/dialogs/preferences-dialog.c:3573
+#: app/dialogs/preferences-dialog.c:3579
 msgid "Environment"
 msgstr "Entorn"
 
-#: app/dialogs/preferences-dialog.c:3573
+#: app/dialogs/preferences-dialog.c:3579
 msgid "Environment Folders"
 msgstr "Carpetes d'entorn"
 
-#: app/dialogs/preferences-dialog.c:3576
+#: app/dialogs/preferences-dialog.c:3582
 msgid "Reset Environment _Folders"
 msgstr "Re_inicia les carpetes d'entorns"
 
-#: app/dialogs/preferences-dialog.c:3577
+#: app/dialogs/preferences-dialog.c:3583
 msgid "Select Environment Folders"
 msgstr "Selecciona les carpetes d'entorns"
 
-#: app/dialogs/preferences-dialog.c:3579
+#: app/dialogs/preferences-dialog.c:3585
 msgid "Themes"
 msgstr "Temes"
 
-#: app/dialogs/preferences-dialog.c:3579
+#: app/dialogs/preferences-dialog.c:3585
 msgid "Theme Folders"
 msgstr "Carpetes de temes"
 
-#: app/dialogs/preferences-dialog.c:3582
+#: app/dialogs/preferences-dialog.c:3588
 msgid "Reset Theme _Folders"
 msgstr "Reinici_a les carpetes de temes"
 
-#: app/dialogs/preferences-dialog.c:3583
+#: app/dialogs/preferences-dialog.c:3589
 msgid "Select Theme Folders"
 msgstr "Selecciona les carpetes de temes"
 
-#: app/dialogs/preferences-dialog.c:3585
+#: app/dialogs/preferences-dialog.c:3591
 msgid "Icon Themes"
 msgstr "Temes de les icones"
 
-#: app/dialogs/preferences-dialog.c:3585
+#: app/dialogs/preferences-dialog.c:3591
 msgid "Icon Theme Folders"
 msgstr "Carpetes dels temes de les icones"
 
-#: app/dialogs/preferences-dialog.c:3588
+#: app/dialogs/preferences-dialog.c:3594
 msgid "Reset Icon Theme _Folders"
 msgstr "_Reinicia les carpetes dels temes de les icones"
 
-#: app/dialogs/preferences-dialog.c:3589
+#: app/dialogs/preferences-dialog.c:3595
 msgid "Select Icon Theme Folders"
 msgstr "Selecciona les carpetes dels temes de les icones"
 
@@ -17924,6 +17961,10 @@ msgstr "B_loqueja la visibilitat del camí"
 msgid "Welcome to GIMP %s"
 msgstr "Us donem la benvinguda al GIMP %s"
 
+#: app/dialogs/welcome-dialog.c:118
+msgid "Welcome"
+msgstr "Us donem la benvinguda"
+
 #. Welcome title.
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:135
@@ -17970,6 +18011,10 @@ msgstr "Col·laboració"
 #: app/dialogs/welcome-dialog.c:232
 msgid "Donating"
 msgstr "Donació"
+
+#: app/dialogs/welcome-dialog.c:246
+msgid "Release Notes"
+msgstr "Notes de publicació"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:257
@@ -18328,7 +18373,7 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Deixa anar un color a la capa"
 
-#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1406
+#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1424
 #: app/widgets/gimplayertreeview.c:1004
 msgid "Drop layers"
 msgstr "Elimina les capes"
@@ -24741,7 +24786,7 @@ msgstr "Sense capes."
 msgid "Exactly one path must be selected."
 msgstr "S'ha de seleccionar exactament un camí."
 
-#: app/tools/gimptexttool-editor.c:1371
+#: app/tools/gimptexttool-editor.c:1374
 msgid "GIMP Text Editor"
 msgstr "Editor de text del GIMP"
 
@@ -27350,19 +27395,19 @@ msgid_plural "Indexed color (%d colors)"
 msgstr[0] "Color indexat (monocrom)"
 msgstr[1] "Color indexat (%d colors)"
 
-#: app/widgets/gimpitemtreeview.c:533
+#: app/widgets/gimpitemtreeview.c:535
 msgid "Set Item Exclusive Content Lock"
 msgstr "Defineix que l'element tingui exclusivament el contingut bloquejat"
 
-#: app/widgets/gimpitemtreeview.c:549
+#: app/widgets/gimpitemtreeview.c:551
 msgid "Set Item Exclusive Position Lock"
 msgstr "Defineix que l'element tingui exclusivament la posició bloquejada"
 
-#: app/widgets/gimpitemtreeview.c:564
+#: app/widgets/gimpitemtreeview.c:566
 msgid "Unlock visibility"
 msgstr "Desbloqueja la visibilitat"
 
-#: app/widgets/gimpitemtreeview.c:565
+#: app/widgets/gimpitemtreeview.c:567
 msgid "Set Item Exclusive Visibility Lock"
 msgstr ""
 "Defineix que l'element tingui exclusivament el bloqueig de visibilitat"
@@ -28394,6 +28439,10 @@ msgctxt "channels-action"
 msgid "Channels Menu"
 msgstr "Menú del canal"
 
+#: menus/channels-menu.ui:11 menus/layers-menu.ui:32 menus/vectors-menu.ui:12
+msgid "Color Tags"
+msgstr "Etiquetes de color"
+
 #: menus/cursor-info-menu.ui:6
 msgctxt "cursor-info-action"
 msgid "Pointer Information Menu"
@@ -28409,6 +28458,26 @@ msgstr "Menú del diàleg"
 msgctxt "dashboard-action"
 msgid "Groups"
 msgstr "Grups"
+
+#: menus/dockable-menu.ui.in.in:6
+msgctxt "file-action"
+msgid "_Add Tab"
+msgstr "_Afegeix una pestanya"
+
+#: menus/dockable-menu.ui.in.in:14
+msgctxt "file-action"
+msgid "_Preview Size"
+msgstr "_Mida de la vista prèvia"
+
+#: menus/dockable-menu.ui.in.in:25
+msgctxt "file-action"
+msgid "_Tab Style"
+msgstr "_Estil de la pestanya"
+
+#: menus/dockable-menu.ui.in.in:41
+msgctxt "file-action"
+msgid "Move to Screen"
+msgstr "M_ou a la pantalla"
 
 #: menus/dynamics-editor-menu.ui:6
 msgctxt "dynamics-editor-action"
@@ -28431,11 +28500,360 @@ msgctxt "gradients-action"
 msgid "Gradients Menu"
 msgstr "Menú de degradats"
 
+#: menus/image-menu.ui.in.in:7
+msgctxt "file-action"
+msgid "_File"
+msgstr "_Fitxer"
+
+#: menus/image-menu.ui.in.in:12
+msgctxt "file-action"
+msgid "Crea_te"
+msgstr "C_rea"
+
+#: menus/image-menu.ui.in.in:19
+msgctxt "file-action"
+msgid "Open _Recent"
+msgstr "O_bre un fitxer recent"
+
+#: menus/image-menu.ui.in.in:27
+msgid "_Debug"
+msgstr "D_epura"
+
+#: menus/image-menu.ui.in.in:76
+msgctxt "edit-action"
+msgid "_Edit"
+msgstr "_Edita"
+
+#: menus/image-menu.ui.in.in:92
+msgctxt "edit-action"
+msgid "Paste _as"
+msgstr "E_nganxa com a"
+
+#: menus/image-menu.ui.in.in:100
+msgctxt "edit-action"
+msgid "_Buffer"
+msgstr "_Memòria intermèdia"
+
+#: menus/image-menu.ui.in.in:141
+msgctxt "select-action"
+msgid "_Select"
+msgstr "_Selecciona"
+
+#: menus/image-menu.ui.in.in:170
+msgctxt "view-action"
+msgid "_View"
+msgstr "V_isualitza"
+
+#: menus/image-menu.ui.in.in:175
+msgctxt "view-action"
+msgid "_Zoom"
+msgstr "_Zoom"
+
+#: menus/image-menu.ui.in.in:200
+msgctxt "view-action"
+msgid "_Flip & Rotate"
+msgstr "_Inverteix i gira"
+
+#: menus/image-menu.ui.in.in:224
+msgctxt "view-action"
+msgid "Move to Screen"
+msgstr "Mou a la pantalla"
+
+#: menus/image-menu.ui.in.in:233
+msgctxt "view-action"
+msgid "_Color Management"
+msgstr "_Gestió del color"
+
+#: menus/image-menu.ui.in.in:240
+msgctxt "view-action"
+msgid "Display _Rendering Intent"
+msgstr "_Propòsit de renderització de la pantalla"
+
+#: menus/image-menu.ui.in.in:270
+msgctxt "view-action"
+msgid "_Padding Color"
+msgstr "C_olor del farciment"
+
+#: menus/image-menu.ui.in.in:294
+msgctxt "image-action"
+msgid "_Image"
+msgstr "I_matge"
+
+#: menus/image-menu.ui.in.in:301
+msgctxt "image-action"
+msgid "_Mode"
+msgstr "M_ode"
+
+#: menus/image-menu.ui.in.in:307
+msgctxt "image-action"
+msgid "_Encoding"
+msgstr "_Codificació"
+
+#: menus/image-menu.ui.in.in:323
+msgctxt "image-action"
+msgid "Color Ma_nagement"
+msgstr "_Gestió del color"
+
+#: menus/image-menu.ui.in.in:340
+msgctxt "image-action"
+msgid "Soft-Proofing Re_ndering Intent"
+msgstr "_Propòsit de la renderització de prova en pantalla"
+
+#: menus/image-menu.ui.in.in:354
+msgctxt "image-action"
+msgid "_Transform"
+msgstr "T_ransforma"
+
+#: menus/image-menu.ui.in.in:387
+msgctxt "image-action"
+msgid "_Guides"
+msgstr "Gu_ies"
+
+#: menus/image-menu.ui.in.in:395
+msgctxt "image-action"
+msgid "Meta_data"
+msgstr "_Metadades"
+
+#: menus/image-menu.ui.in.in:403
+msgctxt "layers-action"
+msgid "_Layer"
+msgstr "Ca_pa"
+
+#: menus/image-menu.ui.in.in:424
+msgctxt "layers-action"
+msgid "Stac_k"
+msgstr "_Pila"
+
+#: menus/image-menu.ui.in.in:441
+msgctxt "layers-action"
+msgid "_Mask"
+msgstr "_Màscara"
+
+#: menus/image-menu.ui.in.in:463
+msgctxt "layers-action"
+msgid "Tr_ansparency"
+msgstr "_Transparència"
+
+#: menus/image-menu.ui.in.in:481
+msgctxt "layers-action"
+msgid "_Transform"
+msgstr "T_ransforma"
+
+#: menus/image-menu.ui.in.in:511
+msgctxt "image-action"
+msgid "_Colors"
+msgstr "C_olors"
+
+#: menus/image-menu.ui.in.in:532
+msgctxt "image-action"
+msgid "_Auto"
+msgstr "A_utomàtica"
+
+#: menus/image-menu.ui.in.in:540
+msgctxt "image-action"
+msgid "C_omponents"
+msgstr "Co_mponents"
+
+#: menus/image-menu.ui.in.in:546
+msgctxt "image-action"
+msgid "D_esaturate"
+msgstr "_Dessatura"
+
+#: menus/image-menu.ui.in.in:553
+msgctxt "image-action"
+msgid "_Map"
+msgstr "_Mapa"
+
+#: menus/image-menu.ui.in.in:564
+msgctxt "image-action"
+msgid "_Tone Mapping"
+msgstr "_Mapatge de tons"
+
+#: menus/image-menu.ui.in.in:571
+msgctxt "image-action"
+msgid "I_nfo"
+msgstr "_Informació"
+
+#: menus/image-menu.ui.in.in:589
+msgctxt "tools-action"
+msgid "_Tools"
+msgstr "E_ines"
+
+#: menus/image-menu.ui.in.in:592
+msgctxt "tools-action"
+msgid "_Selection Tools"
+msgstr "_Eines de selecció"
+
+#: menus/image-menu.ui.in.in:605
+msgctxt "tools-action"
+msgid "_Paint Tools"
+msgstr "_Eines de pintura"
+
+#: menus/image-menu.ui.in.in:622
+msgctxt "tools-action"
+msgid "_Transform Tools"
+msgstr "_Eines de transformació"
+
+#: menus/image-menu.ui.in.in:661
+msgctxt "filters-action"
+msgid "Filte_rs"
+msgstr "_Filtres"
+
+#: menus/image-menu.ui.in.in:666
+msgctxt "filters-action"
+msgid "Recently Used"
+msgstr "_Utilitzats recentment"
+
+#: menus/image-menu.ui.in.in:675
+msgctxt "filters-action"
+msgid "_Blur"
+msgstr "_Difuminat"
+
+#: menus/image-menu.ui.in.in:690
+msgctxt "filters-action"
+msgid "En_hance"
+msgstr "_Millora"
+
+#: menus/image-menu.ui.in.in:700
+msgctxt "filters-action"
+msgid "_Distorts"
+msgstr "_Distorsions"
+
+#: menus/image-menu.ui.in.in:719
+msgctxt "filters-action"
+msgid "_Light and Shadow"
+msgstr "_Llum i ombra"
+
+#: menus/image-menu.ui.in.in:734
+msgctxt "filters-action"
+msgid "_Noise"
+msgstr "_Soroll"
+
+#: menus/image-menu.ui.in.in:744
+msgctxt "filters-action"
+msgid "Edge-De_tect"
+msgstr "_Detecció de vores"
+
+#: menus/image-menu.ui.in.in:753
+msgctxt "filters-action"
+msgid "_Generic"
+msgstr "_Genèric"
+
+#: menus/image-menu.ui.in.in:764
+msgctxt "filters-action"
+msgid "C_ombine"
+msgstr "_Combina"
+
+#: menus/image-menu.ui.in.in:767
+msgctxt "filters-action"
+msgid "_Artistic"
+msgstr "_Artístic"
+
+#: menus/image-menu.ui.in.in:779
+msgctxt "filters-action"
+msgid "_Decor"
+msgstr "_Decoració"
+
+#: menus/image-menu.ui.in.in:782
+msgctxt "filters-action"
+msgid "_Map"
+msgstr "_Mapa"
+
+#: menus/image-menu.ui.in.in:794
+msgctxt "filters-action"
+msgid "_Render"
+msgstr "R_enderitza"
+
+#: menus/image-menu.ui.in.in:797
+msgctxt "filters-action"
+msgid "_Fractals"
+msgstr "_Fractals"
+
+#: menus/image-menu.ui.in.in:800
+msgctxt "filters-action"
+msgid "N_oise"
+msgstr "S_oroll"
+
+#: menus/image-menu.ui.in.in:808
+msgctxt "filters-action"
+msgid "_Pattern"
+msgstr "_Patró"
+
+#: menus/image-menu.ui.in.in:821
+msgctxt "filters-action"
+msgid "_Web"
+msgstr "_Web"
+
+#: menus/image-menu.ui.in.in:827
+msgctxt "filters-action"
+msgid "An_imation"
+msgstr "_Animació"
+
+#: menus/image-menu.ui.in.in:830
+msgctxt "filters-action"
+msgid "De_velopment"
+msgstr "D_esenvolupament"
+
+#: menus/image-menu.ui.in.in:832
+msgctxt "filters-action"
+msgid "_Goat exercises"
+msgstr "_Exercicis de la cabra"
+
+#: menus/image-menu.ui.in.in:835
+msgctxt "filters-action"
+msgid "_Python-Fu"
+msgstr "_Python-Fu"
+
+#: menus/image-menu.ui.in.in:838
+msgctxt "filters-action"
+msgid "_Script-Fu"
+msgstr "_Script-Fu"
+
+#: menus/image-menu.ui.in.in:845
+msgctxt "windows-action"
+msgid "_Windows"
+msgstr "_Finestres"
+
+#: menus/image-menu.ui.in.in:848
+msgctxt "windows-action"
+msgid "_Recently Closed Docks"
+msgstr "_Acobladors tancats recentment"
+
+#: menus/image-menu.ui.in.in:852
+msgctxt "windows-action"
+msgid "_Dockable Dialogs"
+msgstr "D_iàlegs acoblables"
+
+#: menus/image-menu.ui.in.in:894
+msgctxt "help-action"
+msgid "_GIMP Online"
+msgstr "_GIMP en línia"
+
+#: menus/image-menu.ui.in.in:897
+msgctxt "help-action"
+msgid "_User Manual"
+msgstr "_Manual d'usuari"
+
 # Quim: no és 'menú de les capes' pel mateix criteri que 'brushes menu'
 #: menus/layers-menu.ui:6
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "Menú Capes"
+
+#: menus/layers-menu.ui:12
+msgctxt "layers-action"
+msgid "Blend Space"
+msgstr "Barreja l'espai"
+
+#: menus/layers-menu.ui:18
+msgctxt "layers-action"
+msgid "Composite Space"
+msgstr "Espai de composició"
+
+#: menus/layers-menu.ui:24
+msgctxt "layers-action"
+msgid "Composite Mode"
+msgstr "Mode composició"
 
 #: menus/palette-editor-menu.ui:6
 msgctxt "palette-editor-action"
@@ -28447,6 +28865,11 @@ msgstr "Menú de l'editor de la paleta"
 msgctxt "palettes-action"
 msgid "Palettes Menu"
 msgstr "Menú de paletes"
+
+#: menus/palettes-menu.ui:24
+msgctxt "palettes-action"
+msgid "Export as"
+msgstr "Exporta com a"
 
 #: menus/sample-points-menu.ui:6
 msgctxt "sample-points-action"
@@ -28508,4 +28931,3 @@ msgstr "Menú de l'historial de desfer"
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Menú dels camins"
-
