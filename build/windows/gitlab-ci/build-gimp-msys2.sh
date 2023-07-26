@@ -63,7 +63,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-poppler \
     mingw-w64-$MSYS2_ARCH-poppler-data \
     mingw-w64-$MSYS2_ARCH-python \
-    mingw-w64-$MSYS2_ARCH-python3-gobject \
+    mingw-w64-$MSYS2_ARCH-python-gobject \
     mingw-w64-$MSYS2_ARCH-qoi \
     mingw-w64-$MSYS2_ARCH-shared-mime-info \
     mingw-w64-$MSYS2_ARCH-suitesparse \
