@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-15 14:42+0000\n"
-"PO-Revision-Date: 2023-07-16 06:44+0200\n"
+"POT-Creation-Date: 2023-07-25 21:27+0000\n"
+"PO-Revision-Date: 2023-07-26 05:48+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
-"Language-Team: \n"
+"Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -192,6 +192,10 @@ msgstr "_ფაილი"
 msgid "Creates a new palette from a given gradient"
 msgstr ""
 
+#: plug-ins/python/gradients-save-as-css.py:228
+msgid "Save as CSS..."
+msgstr "CSS ფაილად შენახვა..."
+
 #: plug-ins/python/histogram-export.py:92
 msgid "Pixel count"
 msgstr "პიქსელების რაოდენობა"
@@ -274,7 +278,7 @@ msgstr "პალიტრა"
 msgid "Off_set"
 msgstr "_წანაცვლება"
 
-#: plug-ins/python/palette-offset.py:63
+#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:153
 msgid "Offset"
 msgstr "გადაწევა"
 
@@ -392,7 +396,7 @@ msgstr ""
 
 #: plug-ins/python/palette-sort.py:366
 msgid "Channel _to sort"
-msgstr ""
+msgstr "_დასალაგებელი არხი"
 
 #: plug-ins/python/palette-sort.py:371
 msgid "_Ascending"
@@ -412,7 +416,7 @@ msgstr "ზრდის მიხედვით"
 
 #: plug-ins/python/palette-sort.py:386
 msgid "_Quantization"
-msgstr ""
+msgstr "_ქვანტიზაცია"
 
 #: plug-ins/python/palette-sort.py:387
 msgid "Quantization"
@@ -420,7 +424,7 @@ msgstr "ქვანტიზაცია"
 
 #: plug-ins/python/palette-sort.py:391
 msgid "_Partitioning channel"
-msgstr ""
+msgstr "არხის _დაყოფა"
 
 #: plug-ins/python/palette-sort.py:396
 msgid "Partition q_uantization"
