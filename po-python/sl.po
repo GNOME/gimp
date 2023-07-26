@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-15 14:42+0000\n"
-"PO-Revision-Date: 2023-07-15 18:50+0200\n"
+"POT-Creation-Date: 2023-07-25 21:27+0000\n"
+"PO-Revision-Date: 2023-07-26 10:56+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org\n"
 "Language: sl\n"
@@ -202,6 +202,10 @@ msgstr "_Datoteka"
 msgid "Creates a new palette from a given gradient"
 msgstr "Ustvari novo paleto iz danega preliva"
 
+#: plug-ins/python/gradients-save-as-css.py:228
+msgid "Save as CSS..."
+msgstr "Shrani kot CSS …"
+
 #: plug-ins/python/histogram-export.py:92
 msgid "Pixel count"
 msgstr "Število slik. točk"
@@ -286,7 +290,7 @@ msgstr "Paleta"
 msgid "Off_set"
 msgstr "_Zamik"
 
-#: plug-ins/python/palette-offset.py:63
+#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:153
 msgid "Offset"
 msgstr "Zamik"
 
