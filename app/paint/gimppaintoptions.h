@@ -107,6 +107,8 @@ struct _GimpPaintOptions
 
   gboolean                  expand_use;
   gdouble                   expand_amount;
+  GimpFillType              expand_fill_type;
+  GimpAddMaskType           expand_mask_fill_type;
 
   GimpJitterOptions        *jitter_options;
 

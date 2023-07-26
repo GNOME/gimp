@@ -743,7 +743,7 @@ gimp_channel_resize (GimpItem     *item,
                      gint          offset_x,
                      gint          offset_y)
 {
-  GIMP_ITEM_CLASS (parent_class)->resize (item, context, GIMP_FILL_TRANSPARENT,
+  GIMP_ITEM_CLASS (parent_class)->resize (item, context, fill_type,
                                           new_width, new_height,
                                           offset_x, offset_y);
 

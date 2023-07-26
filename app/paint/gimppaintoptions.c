@@ -81,6 +81,8 @@
 
 #define DEFAULT_EXPAND_USE              FALSE
 #define DEFAULT_EXPAND_AMOUNT           100.0
+#define DEFAULT_EXPAND_FILL_TYPE        GIMP_FILL_TRANSPARENT
+#define DEFAULT_EXPAND_MASK_FILL_TYPE   GIMP_ADD_MASK_WHITE
 
 enum
 {
@@ -136,7 +138,9 @@ enum
   PROP_SMOOTHING_FACTOR,
 
   PROP_EXPAND_USE,
-  PROP_EXPAND_AMOUNT
+  PROP_EXPAND_AMOUNT,
+  PROP_EXPAND_FILL_TYPE,
+  PROP_EXPAND_MASK_FILL_TYPE
 };
 
 
@@ -323,6 +327,22 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                            _("Amount of expansion"),
                            1.0, 1000.0, DEFAULT_EXPAND_AMOUNT,
                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_EXPAND_FILL_TYPE,
+                         "expand-fill-type",
+                         _("Fill With"),
+                         _("Fill layer with"),
+                         GIMP_TYPE_FILL_TYPE,
+                         DEFAULT_EXPAND_FILL_TYPE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_EXPAND_MASK_FILL_TYPE,
+                         "expand-mask-fill-type",
+                         _("Fill Mask With"),
+                         _("Fill layer mask with"),
+                         GIMP_TYPE_ADD_MASK_TYPE,
+                         DEFAULT_EXPAND_MASK_FILL_TYPE,
+                         GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DYNAMICS_ENABLED,
                             "dynamics-enabled",
@@ -664,6 +684,12 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_EXPAND_AMOUNT:
       options->expand_amount = g_value_get_double (value);
       break;
+    case PROP_EXPAND_FILL_TYPE:
+      options->expand_fill_type = g_value_get_enum (value);
+      break;
+    case PROP_EXPAND_MASK_FILL_TYPE:
+      options->expand_mask_fill_type = g_value_get_enum (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -816,6 +842,12 @@ gimp_paint_options_get_property (GObject    *object,
       break;
     case PROP_EXPAND_AMOUNT:
       g_value_set_double (value, options->expand_amount);
+      break;
+    case PROP_EXPAND_FILL_TYPE:
+      g_value_set_enum (value, options->expand_fill_type);
+      break;
+    case PROP_EXPAND_MASK_FILL_TYPE:
+      g_value_set_enum (value, options->expand_mask_fill_type);
       break;
 
     default:

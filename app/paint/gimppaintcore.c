@@ -815,11 +815,7 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
   gboolean      show_all;
   gboolean      outside_image;
   GimpImage    *image     = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpContext  *context   = GIMP_CONTEXT (options);
-  GimpFillType  fill_type = GIMP_FILL_TRANSPARENT;
   GimpLayer    *layer;
-  GeglBuffer   *undo_buffer;
-  GeglBuffer   *new_buffer;
 
   drawable_width  = gimp_item_get_width  (GIMP_ITEM (drawable));
   drawable_height = gimp_item_get_height (GIMP_ITEM (drawable));
@@ -838,13 +834,17 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
   outside_image = x2 < -drawable_offset_x || x1 > image_width - drawable_offset_x ||
                   y2 < -drawable_offset_y || y1 > image_height - drawable_offset_y;
 
-  if (gimp_item_get_lock_position (GIMP_ITEM (drawable)))
+  /* Don't expand if drawable is anything other
+   * than layer or layer mask */
+  if (GIMP_IS_LAYER_MASK (drawable))
+    layer = (GIMP_LAYER_MASK (drawable))->layer;
+  else if (GIMP_IS_LAYER (drawable))
+    layer = GIMP_LAYER (drawable);
+  else
     return FALSE;
 
-  /* If editing a layer mask, also check position lock for parent layer */
-  if (GIMP_IS_LAYER_MASK (drawable))
-    if (gimp_item_get_lock_position (GIMP_ITEM (GIMP_LAYER_MASK (drawable)->layer)))
-      return FALSE;
+  if (gimp_item_get_lock_position (GIMP_ITEM (layer)))
+    return FALSE;
 
   if (!gimp_paint_core_get_show_all (core) && outside_image)
     return FALSE;
@@ -918,20 +918,30 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
   if (new_width != drawable_width   || *new_off_x ||
       new_height != drawable_height || *new_off_y)
     {
-      GimpRGB      color;
-      GimpPattern *pattern;
+      GimpRGB       color;
+      GimpPattern  *pattern;
+      GimpContext  *context   = GIMP_CONTEXT (options);
+      GimpFillType  fill_type = options->expand_fill_type;
+      gboolean      context_has_image;
+      GimpFillType  mask_fill_type;
+      GeglBuffer   *undo_buffer;
+      GeglBuffer   *new_buffer;
+
+      mask_fill_type = options->expand_mask_fill_type == GIMP_ADD_MASK_BLACK ?
+                         GIMP_FILL_TRANSPARENT :
+                         GIMP_FILL_WHITE;
+
+      /* The image field of context is null but
+       * is required for Filling with Middle Gray */
+      context_has_image = context->image != NULL;
+      if (!context_has_image)
+        context->image = image;
 
       /* ensure that every expansion is pushed to undo stack */
       if (core->x2 == core->x1)
         core->x2++;
       if (core->y2 == core->y1)
         core->y2++;
-
-      /* resize the layer even if editing the layer mask */
-      if (GIMP_IS_LAYER_MASK (drawable))
-        layer = (GIMP_LAYER_MASK (drawable))->layer;
-      else
-        layer = GIMP_LAYER (drawable);
 
       g_object_freeze_notify (G_OBJECT (layer));
 
@@ -955,8 +965,8 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
           if (!GIMP_IS_LAYER_MASK (drawable))
             gimp_drawable_start_paint (GIMP_DRAWABLE (layer->mask));
 
-          GIMP_ITEM_GET_CLASS (layer->mask)->resize (GIMP_ITEM (layer->mask), context, fill_type,
-                                                     new_width, new_height,
+          GIMP_ITEM_GET_CLASS (layer->mask)->resize (GIMP_ITEM (layer->mask), context,
+                                                     mask_fill_type, new_width, new_height,
                                                      *new_off_x, *new_off_y);
           if (!GIMP_IS_LAYER_MASK (drawable))
             gimp_drawable_end_paint (GIMP_DRAWABLE (layer->mask));
@@ -968,8 +978,12 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
 
       gimp_image_flush (image);
 
-      if (fill_type == GIMP_FILL_TRANSPARENT &&
-          ! gimp_drawable_has_alpha (drawable))
+      if (GIMP_IS_LAYER_MASK (drawable))
+        {
+          fill_type = mask_fill_type;
+        }
+      else if (fill_type == GIMP_FILL_TRANSPARENT &&
+               ! gimp_drawable_has_alpha (drawable))
         {
           fill_type = GIMP_FILL_BACKGROUND;
         }
@@ -993,6 +1007,10 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
                                             pattern, 0, 0);
       g_hash_table_insert (core->undo_buffers, drawable, new_buffer);
       g_object_unref (undo_buffer);
+
+      /* Restore context to its original state */
+      if (!context_has_image)
+        context->image = NULL;
 
       return TRUE;
     }

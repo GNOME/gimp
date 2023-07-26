@@ -46,8 +46,10 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
+  GtkWidget *vbox2;
   GtkWidget *button;
   GtkWidget *scale;
+  GtkWidget *combo_box;
   GtkWidget *frame;
 
   /* the brush */
@@ -79,15 +81,26 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
                                     0.1, 1.0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  /* Extend layer options */
+  /* Expand layer options */
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+
   scale = gimp_prop_spin_scale_new (config, "expand-amount",
                                     1, 10, 2);
   gimp_spin_scale_set_constrain_drag (GIMP_SPIN_SCALE (scale), TRUE);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
   gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), 1.0);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+
+  combo_box = gimp_prop_enum_combo_box_new (config, "expand-fill-type", 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), combo_box, FALSE, FALSE, 0);
+
+  frame = gimp_prop_enum_radio_frame_new (config, "expand-mask-fill-type",
+                                          "Fill Layer Mask With", 0, 1);
+  gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
 
   frame = gimp_prop_expanding_frame_new (config, "expand-use", NULL,
-                                         scale, NULL);
+                                         vbox2, NULL);
+
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
