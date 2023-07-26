@@ -691,10 +691,10 @@ gimp_dialog_run (GimpDialog *dialog)
  * @n_buttons:                       The size of @order
  * @order: (array length=n_buttons): array of buttons' response ids.
  *
- * Reorder @dialog's buttons if "gtk-alternative-button-order" setting
+ * Reorder @dialog's buttons if [property@Gtk.Settings:gtk-alternative-button-order]
  * is set to TRUE. This is mostly a wrapper around the GTK function
- * gtk_dialog_set_alternative_button_order(), except it won't output a
- * deprecation warning.
+ * [method@Gtk.Dialog.set_alternative_button_order], except it won't
+ * output a deprecation warning.
  *
  * Since: 3.0
  **/
