@@ -42,7 +42,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-29 10:24+0200\n"
-"PO-Revision-Date: 2023-06-29 11:53+0200\n"
+"PO-Revision-Date: 2023-07-26 22:06+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -355,8 +355,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "New progressive performance logs and dashboard updates"
-msgstr ""
-"Nuovi aggiornamenti ai log della performance progressiva e al cruscotto"
+msgstr "Nuovi aggiornamenti ai log della prestazione progressiva e al cruscotto"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Verbose debug now shows Flatpak info when relevant"
@@ -735,9 +734,7 @@ msgstr ""
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
-msgstr ""
-"Vari strumenti di misurazione di performance sono stati aggiunti e i "
-"risultati delle registrazioni sono stati resi disponibili nel pannello"
+msgstr "Vari strumenti di misurazione delle prestazioni sono stati aggiunti e i risultati delle registrazioni sono stati resi disponibili nel pannello"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
 msgid ""
@@ -3395,7 +3392,7 @@ msgstr "Avvio/_stop registrazione..."
 #: ../app/actions/dashboard-actions.c:52
 msgctxt "dashboard-action"
 msgid "Start/stop recording performance log"
-msgstr "Avvio/stop registrazione del log della performance"
+msgstr "Avvio/stop registrazione del log delle prestazioni"
 
 #: ../app/actions/dashboard-actions.c:56
 msgctxt "dashboard-action"
@@ -3405,7 +3402,7 @@ msgstr "_Aggiungi marcatore..."
 #: ../app/actions/dashboard-actions.c:57
 msgctxt "dashboard-action"
 msgid "Add an event marker to the performance log"
-msgstr "Aggiungi un marcatore evento al log della performance"
+msgstr "Aggiungi un marcatore evento al log delle prestazioni"
 
 #: ../app/actions/dashboard-actions.c:62
 msgctxt "dashboard-action"
@@ -3415,7 +3412,7 @@ msgstr "Aggiungi marcator_e vuoto"
 #: ../app/actions/dashboard-actions.c:63
 msgctxt "dashboard-action"
 msgid "Add an empty event marker to the performance log"
-msgstr "Aggiungi un marcatore evento vuoto al log della performance"
+msgstr "Aggiungi un marcatore evento vuoto al log delle prestazioni"
 
 #: ../app/actions/dashboard-actions.c:69
 msgctxt "dashboard-action"
@@ -25881,7 +25878,7 @@ msgstr "Nessuna"
 #: ../app/widgets/gimpcompressioncombobox.c:114
 msgctxt "compression"
 msgid "Best performance"
-msgstr "Migliore performance"
+msgstr "Migliore prestazione"
 
 #: ../app/widgets/gimpcompressioncombobox.c:120
 msgctxt "compression"
