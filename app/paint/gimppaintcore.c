@@ -945,31 +945,21 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
 
       g_object_freeze_notify (G_OBJECT (layer));
 
-      if (GIMP_IS_LAYER_MASK (drawable))
-          gimp_drawable_start_paint (GIMP_DRAWABLE (layer));
-
+      gimp_drawable_disable_undo (GIMP_DRAWABLE (layer));
       GIMP_LAYER_GET_CLASS (layer)->resize (layer, context, fill_type,
                                             new_width, new_height,
                                             *new_off_x, *new_off_y);
-
-      if (GIMP_IS_LAYER_MASK (drawable))
-          gimp_drawable_end_paint (GIMP_DRAWABLE (layer));
+      gimp_drawable_enable_undo (GIMP_DRAWABLE (layer));
 
       if (layer->mask)
         {
           g_object_freeze_notify (G_OBJECT (layer->mask));
 
-          /* Fixme: using paint start and paint end to prevent pushing undo is inefficient */
-
-          /* Resize channel will not be pushed to stack if the drawable is being drawn upon */
-          if (!GIMP_IS_LAYER_MASK (drawable))
-            gimp_drawable_start_paint (GIMP_DRAWABLE (layer->mask));
-
+          gimp_drawable_disable_undo (GIMP_DRAWABLE (layer->mask));
           GIMP_ITEM_GET_CLASS (layer->mask)->resize (GIMP_ITEM (layer->mask), context,
                                                      mask_fill_type, new_width, new_height,
                                                      *new_off_x, *new_off_y);
-          if (!GIMP_IS_LAYER_MASK (drawable))
-            gimp_drawable_end_paint (GIMP_DRAWABLE (layer->mask));
+          gimp_drawable_enable_undo (GIMP_DRAWABLE (layer->mask));
 
           g_object_thaw_notify (G_OBJECT (layer->mask));
         }

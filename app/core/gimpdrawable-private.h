@@ -41,6 +41,8 @@ struct _GimpDrawablePrivate
   GeglBuffer       *paint_buffer;
   cairo_region_t   *paint_copy_region;
   cairo_region_t   *paint_update_region;
+
+  gboolean          no_undo;
 };
 
 #endif /* __GIMP_DRAWABLE_PRIVATE_H__ */
