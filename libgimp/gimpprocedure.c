@@ -1031,21 +1031,24 @@ gimp_procedure_get_icon_pixbuf (GimpProcedure *procedure)
 
 /**
  * gimp_procedure_set_documentation:
- * @procedure: A #GimpProcedure.
- * @blurb:     The @procedure's blurb.
- * @help:      The @procedure's help text.
- * @help_id:   The @procedure's help ID.
+ * @procedure:           A #GimpProcedure.
+ * @blurb:               The @procedure's blurb.
+ * @help:    (nullable): The @procedure's help text.
+ * @help_id: (nullable): The @procedure's help ID.
  *
- * @blurb is used as the @procedure's tooltip when represented in the UI,
- * for example as a menu entry.
+ * Sets various documentation strings on @procedure:
+ *
+ * * @blurb is used for instance as the @procedure's tooltip when represented in
+ *   the UI such as a menu entry.
+ * * @help is a free-form text that's meant as additional documentation for
+ *   developers of scripts and plug-ins. If the @blurb and the argument names
+ *   and descriptions are enough for a quite self-explanatory procedure, you may
+ *   set @help to %NULL, rather than setting an uninformative @help (avoid
+ *   setting the same text as @blurb or redundant information).
  *
  * Plug-ins are responsible for their own translations. You are expected to send
- * localized strings to GIMP if your plug-in is internationalized.
- *
- * @help is a free-form text that's meant as documentation for
- * developers of scripts and plug-ins.
- *
- * Sets various documentation strings on @procedure.
+ * localized strings of @blurb and @help to GIMP if your plug-in is
+ * internationalized.
  *
  * Since: 3.0
  **/
