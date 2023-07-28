@@ -148,6 +148,9 @@ gimp_image_snap_x (GimpImage         *image,
 
       for (GList *iter = layers_list; iter; iter = iter->next)
         {
+          if (!gimp_item_is_visible (iter->data))
+            continue;
+
           gimp_item_bounds (iter->data, &gx, &gy, &gw, &gh);
           gimp_item_get_offset (iter->data, &gx, &gy);
           gcx = (gdouble) gx + (gdouble) gw/2.0;
@@ -219,6 +222,9 @@ gimp_image_snap_x (GimpImage         *image,
 
       for (GList *iter = layers_list; iter; iter = iter->next)
         {
+          if (!gimp_item_is_visible (iter->data))
+            continue;
+
           gimp_item_bounds (iter->data, &gx, &gy, &gw, &gh);
           gimp_item_get_offset (iter->data, &gx, &gy);
 
@@ -254,6 +260,9 @@ gimp_image_snap_x (GimpImage         *image,
         {
           for (GList *iter = layers_list; iter; iter = iter->next)
             {
+              if (!gimp_item_is_visible (iter->data))
+                continue;
+
               gimp_item_bounds (iter->data, &gx, &gy, &gw, &gh);
               gimp_item_get_offset (iter->data, &gx, &gy);
 
@@ -408,6 +417,9 @@ gimp_image_snap_y (GimpImage         *image,
 
       for (GList *iter = layers_list; iter; iter = iter->next)
         {
+          if (!gimp_item_is_visible (iter->data))
+            continue;
+
           gimp_item_bounds (iter->data, &gx, &gy, &gw, &gh);
           gimp_item_get_offset (iter->data, &gx, &gy);
           gcy = (gdouble) gy + (gdouble) gh/2.0;
@@ -479,6 +491,9 @@ gimp_image_snap_y (GimpImage         *image,
 
       for (GList *iter = layers_list; iter; iter = iter->next)
         {
+          if (!gimp_item_is_visible (iter->data))
+            continue;
+
           gimp_item_bounds (iter->data, &gx, &gy, &gw, &gh);
           gimp_item_get_offset (iter->data, &gx, &gy);
 
@@ -514,6 +529,9 @@ gimp_image_snap_y (GimpImage         *image,
         {
           for (GList *iter = layers_list; iter; iter = iter->next)
             {
+              if (!gimp_item_is_visible (iter->data))
+                continue;
+
               gimp_item_bounds (iter->data, &gx, &gy, &gw, &gh);
               gimp_item_get_offset (iter->data, &gx, &gy);
 
@@ -739,6 +757,9 @@ gimp_image_snap_point (GimpImage *image,
 
       for (GList *iter = layers_list; iter; iter = iter->next)
         {
+          if (!gimp_item_is_visible (iter->data))
+            continue;
+
           gimp_item_bounds (iter->data, &gx, &gy, &gw, &gh);
           gimp_item_get_offset (iter->data, &gx, &gy);
           gcx = (gdouble) gx + (gdouble) gw/2.0;
