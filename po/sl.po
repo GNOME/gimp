@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-25 16:35+0000\n"
-"PO-Revision-Date: 2023-07-26 10:55+0200\n"
+"POT-Creation-Date: 2023-07-27 13:41+0000\n"
+"PO-Revision-Date: 2023-07-28 11:58+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -12623,12 +12623,12 @@ msgid "Please wait: %s\n"
 msgstr "Počakajte: %s\n"
 
 #: app/core/gimp-internal-data.c:286 app/core/gimp-internal-data.c:299
-#: app/core/gimpdata.c:583 app/core/gimpdata.c:596
+#: app/core/gimpdata.c:627 app/core/gimpdata.c:640
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Napaka pri shranjevanju »%s«: "
 
-#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:602
+#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:646
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Napaka pri shranjevanju »%s«"
@@ -13150,8 +13150,8 @@ msgstr "Pisava"
 msgid "Tool Preset"
 msgstr "Prednastavitve orodja"
 
-#: app/core/gimpdatafactory.c:369 app/core/gimpdatafactory.c:403
-#: app/core/gimpdatafactory.c:743 app/core/gimpdatafactory.c:774
+#: app/core/gimpdatafactory.c:388 app/core/gimpdatafactory.c:422
+#: app/core/gimpdatafactory.c:762 app/core/gimpdatafactory.c:793
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -13162,22 +13162,22 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdatafactory.c:442 app/core/gimpdatafactory.c:445
+#: app/core/gimpdatafactory.c:461 app/core/gimpdatafactory.c:464
 #: app/core/gimpitem.c:572 app/core/gimpitem.c:575
 msgid "copy"
 msgstr "kopija"
 
-#: app/core/gimpdatafactory.c:454 app/core/gimpitem.c:583
+#: app/core/gimpdatafactory.c:473 app/core/gimpitem.c:583
 #, c-format
 msgid "%s copy"
 msgstr "Kopija %s"
 
-#: app/core/gimpdatafactory.c:611 app/tools/gimptextoptions.c:776
+#: app/core/gimpdatafactory.c:630 app/tools/gimptextoptions.c:776
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Nalaganje pisav (to lahko traja dlje časa …)"
 
-#: app/core/gimpdatafactory.c:948
+#: app/core/gimpdatafactory.c:967
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -13188,7 +13188,7 @@ msgstr ""
 "obstaja. Najprej ustvarite mapo ali pa popravite nastavitev v odseku "
 "Nastavite pogovornega okna »Mape«."
 
-#: app/core/gimpdatafactory.c:967
+#: app/core/gimpdatafactory.c:986
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
 "your data search path. You probably edited the gimprc file manually, please "
@@ -13198,7 +13198,7 @@ msgstr ""
 "poti iskanja podatkov. Najverjetneje ste ročno urejali datoteko gimprc, "
 "popravite jo v odseku Nastavite pogovornega okna »Mape«."
 
-#: app/core/gimpdatafactory.c:977
+#: app/core/gimpdatafactory.c:996
 msgid "You don't have any writable data folder configured."
 msgstr "Podatkovne mape za pisanje še niste nastavili."
 
@@ -15152,7 +15152,7 @@ msgid "Dithering text layers will make them uneditable"
 msgstr ""
 "Stresanje plasti besedila bo povzročilo, da jih ne bo več mogoče urejati"
 
-#: app/dialogs/convert-indexed-dialog.c:414 app/pdb/image-convert-cmds.c:163
+#: app/dialogs/convert-indexed-dialog.c:414 app/pdb/image-convert-cmds.c:164
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Ni mogoče pretvoriti v barvno paleto z več kot 256 barvami."
 
@@ -20403,153 +20403,79 @@ msgstr ""
 msgid "Writing PDB file '%s' failed: %s"
 msgstr "Odpiranje datoteke PDB »%s« ni uspelo: %s"
 
-#: app/pdb/gimppdb-utils.c:122
-msgid "Invalid empty brush name"
-msgstr "Neveljavno prazno ime za čopič"
-
-#: app/pdb/gimppdb-utils.c:131
+#. TRANSLATOR: %s is a data label from the
+#. * PDB-error-data-label context.
+#.
+#: app/pdb/gimppdb-utils.c:125 app/pdb/gimppdb-utils.c:190
 #, c-format
-msgid "Brush '%s' not found"
-msgstr "Čopiča »%s« ni mogoče najti"
+msgctxt "PDB-error-message"
+msgid "%s name cannot be empty"
+msgstr "Ime %s ne sme biti prazno"
 
-#: app/pdb/gimppdb-utils.c:137
+#. TRANSLATOR: the first %s is a data label from the
+#. * PDB-error-data-label context. The second %s is a data
+#. * name.
+#.
+#: app/pdb/gimppdb-utils.c:139 app/pdb/gimppdb-utils.c:204
 #, c-format
-msgid "Brush '%s' is not editable"
-msgstr "Čopiča »%s« ni mogoče urejati"
+msgctxt "PDB-error-message"
+msgid "%s '%s' not found"
+msgstr "%s »%s« ni mogoče najti"
 
-#: app/pdb/gimppdb-utils.c:144
+#. TRANSLATOR: the first %s is a data label from the
+#. * PDB-error-data-label context. The second %s is a data
+#. * name.
+#.
+#: app/pdb/gimppdb-utils.c:149 app/pdb/gimppdb-utils.c:214
 #, c-format
-msgid "Brush '%s' is not renamable"
-msgstr "Čopiča »%s« ni mogoče preimenovati"
+msgctxt "PDB-error-message"
+msgid "%s '%s' is not editable"
+msgstr "%s »%s« ni mogoče urejati"
 
-#: app/pdb/gimppdb-utils.c:170
+#. TRANSLATOR: the first %s is a data label from the
+#. * PDB-error-data-label context. The second %s is a data
+#. * name.
+#.
+#: app/pdb/gimppdb-utils.c:160 app/pdb/gimppdb-utils.c:225
+#, c-format
+msgctxt "PDB-error-message"
+msgid "%s '%s' is not renamable"
+msgstr "%s »%s« ni mogoče preimenovati"
+
+#: app/pdb/gimppdb-utils.c:248
 #, c-format
 msgid "Brush '%s' is not a generated brush"
 msgstr "Čopič »%s« ni generirani čopič"
 
-#: app/pdb/gimppdb-utils.c:191
-msgid "Invalid empty paint dynamics name"
-msgstr "Neveljavno prazno ime za dinamiko slikanja"
-
-#: app/pdb/gimppdb-utils.c:200
-#, c-format
-msgid "Paint dynamics '%s' not found"
-msgstr "Dinamike slikanja »%s« ni mogoče najti"
-
-#: app/pdb/gimppdb-utils.c:206
-#, c-format
-msgid "Paint dynamics '%s' is not editable"
-msgstr "Dinamike slikanja »%s« ni mogoče urejati"
-
-#: app/pdb/gimppdb-utils.c:213
-#, c-format
-msgid "Paint dynamics '%s' is not renamable"
-msgstr "Dinamike slikanja »%s« ni mogoče preimenovati"
-
-#: app/pdb/gimppdb-utils.c:234
-msgid "Invalid empty MyPaint brush name"
-msgstr "Neveljavno prazno ime za čopič MyPaint"
-
-#: app/pdb/gimppdb-utils.c:243
-#, c-format
-msgid "MyPaint brush '%s' not found"
-msgstr "Čopiča MyPaint »%s« ni mogoče najti"
-
-#: app/pdb/gimppdb-utils.c:249
-#, c-format
-msgid "MyPaint brush '%s' is not editable"
-msgstr "Čopiča MyPaint »%s« ni mogoče urejati"
-
-#: app/pdb/gimppdb-utils.c:256
-#, c-format
-msgid "MyPaint brush '%s' is not renamable"
-msgstr "Čopiča MyPaint »%s« ni mogoče preimenovati"
-
-#: app/pdb/gimppdb-utils.c:276
-msgid "Invalid empty pattern name"
-msgstr "Neveljavno prazno ime za vzorec"
-
-#: app/pdb/gimppdb-utils.c:285
-#, c-format
-msgid "Pattern '%s' not found"
-msgstr "Vzorca »%s« ni mogoče najti"
-
-#: app/pdb/gimppdb-utils.c:305
-msgid "Invalid empty gradient name"
-msgstr "Neveljavno prazno ime za preliv"
-
-#: app/pdb/gimppdb-utils.c:314
-#, c-format
-msgid "Gradient '%s' not found"
-msgstr "Preliva »%s« ni mogoče najti"
-
-#: app/pdb/gimppdb-utils.c:320
-#, c-format
-msgid "Gradient '%s' is not editable"
-msgstr "Preliva »%s« ni mogoče urejati"
-
-#: app/pdb/gimppdb-utils.c:327
-#, c-format
-msgid "Gradient '%s' is not renamable"
-msgstr "Preliva »%s« ni mogoče preimenovati"
-
-#: app/pdb/gimppdb-utils.c:348
-msgid "Invalid empty palette name"
-msgstr "Neveljavno prazno ime za paleto"
-
-#: app/pdb/gimppdb-utils.c:357
-#, c-format
-msgid "Palette '%s' not found"
-msgstr "Palete »%s« ni mogoče najti"
-
-#: app/pdb/gimppdb-utils.c:363
-#, c-format
-msgid "Palette '%s' is not editable"
-msgstr "Palete »%s« ni mogoče urejati"
-
-#: app/pdb/gimppdb-utils.c:370
-#, c-format
-msgid "Palette '%s' is not renamable"
-msgstr "Palete »%s« ni mogoče preimenovati"
-
-#: app/pdb/gimppdb-utils.c:390
-msgid "Invalid empty font name"
-msgstr "Neveljavno prazno ime za pisavo"
-
-#: app/pdb/gimppdb-utils.c:399
-#, c-format
-msgid "Font '%s' not found"
-msgstr "Pisave »%s« ni mogoče najti"
-
-#: app/pdb/gimppdb-utils.c:418
+#: app/pdb/gimppdb-utils.c:268
 msgid "Invalid empty buffer name"
 msgstr "Neveljavno prazno ime za medpomnilnik"
 
-#: app/pdb/gimppdb-utils.c:428
+#: app/pdb/gimppdb-utils.c:278
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "Imenovanega medpomnilnika »%s« ni mogoče najti"
 
-#: app/pdb/gimppdb-utils.c:447
+#: app/pdb/gimppdb-utils.c:297
 msgid "Invalid empty paint method name"
 msgstr "Neveljavno prazno ime za metodo barvanja"
 
-#: app/pdb/gimppdb-utils.c:457
+#: app/pdb/gimppdb-utils.c:307
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "Metoda barvanja »%s« ne obstaja"
 
-#: app/pdb/gimppdb-utils.c:476
+#: app/pdb/gimppdb-utils.c:326
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr "Elementa »%s« (%d) ni mogoče uporabiti, ker ni bil dodan sliki"
 
-#: app/pdb/gimppdb-utils.c:486
+#: app/pdb/gimppdb-utils.c:336
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr "Elementa »%s« (%d) ni mogoče uporabiti, ker je pripet drugi sliki"
 
-#: app/pdb/gimppdb-utils.c:512
+#: app/pdb/gimppdb-utils.c:362
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
@@ -20558,7 +20484,7 @@ msgstr ""
 "Elementa »%s« (%d) ni mogoče uporabiti, ker ni neposreden otrok drevesa "
 "elementa"
 
-#: app/pdb/gimppdb-utils.c:540
+#: app/pdb/gimppdb-utils.c:390
 #, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
@@ -20567,28 +20493,28 @@ msgstr ""
 "Elementov »%s« (%d) in »%s« (%d) ni mogoče uporabiti, ker nista del drevesa "
 "istega elementa"
 
-#: app/pdb/gimppdb-utils.c:565
+#: app/pdb/gimppdb-utils.c:415
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
 msgstr "Element »%s« (%d) ne sme biti prednik elementa »%s« (%d)"
 
-#: app/pdb/gimppdb-utils.c:589
+#: app/pdb/gimppdb-utils.c:439
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "Element »%s« (%d) je bil že dodan sliki"
 
-#: app/pdb/gimppdb-utils.c:597
+#: app/pdb/gimppdb-utils.c:447
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "Poskus dodajanja elementa »%s« (%d) napačni sliki"
 
-#: app/pdb/gimppdb-utils.c:624
+#: app/pdb/gimppdb-utils.c:474
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
 "Elementa »%s« (%d) ni mogoče spremeniti, ker je njegova vsebina zaklenjena"
 
-#: app/pdb/gimppdb-utils.c:634
+#: app/pdb/gimppdb-utils.c:484
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
@@ -20596,32 +20522,32 @@ msgstr ""
 "Elementa »%s« (%d) ni mogoče spremeniti, ker sta njegov položaj in velikost "
 "zaklenjena"
 
-#: app/pdb/gimppdb-utils.c:654
+#: app/pdb/gimppdb-utils.c:504
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
 msgstr "Elementa »%s« (%d) ni mogoče uporabiti, ker ni skupinski element"
 
-#: app/pdb/gimppdb-utils.c:674
+#: app/pdb/gimppdb-utils.c:524
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr "Elementa »%s« (%d) ni mogoče spremeniti, ker je skupinski element"
 
-#: app/pdb/gimppdb-utils.c:695
+#: app/pdb/gimppdb-utils.c:545
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr "Plasti »%s« (%d) ni mogoče uporabiti, ker ni besedilna plast"
 
-#: app/pdb/gimppdb-utils.c:736
+#: app/pdb/gimppdb-utils.c:586
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr "Slika »%s« (%d) je vrste »%s«, pričakovana pa je slika vrste »%s«"
 
-#: app/pdb/gimppdb-utils.c:759
+#: app/pdb/gimppdb-utils.c:609
 #, c-format
 msgid "Image '%s' (%d) must not be of type '%s'"
 msgstr "Slika »%s« (%d) ne sme biti vrste »%s«"
 
-#: app/pdb/gimppdb-utils.c:779
+#: app/pdb/gimppdb-utils.c:629
 #, c-format
 msgid ""
 "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
@@ -20630,30 +20556,70 @@ msgstr ""
 "Slika »%s« (%d) je v natančnosti »%s«, pričakovana pa je slika v natančnosti "
 "»%s«"
 
-#: app/pdb/gimppdb-utils.c:802
+#: app/pdb/gimppdb-utils.c:652
 #, c-format
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "Slika »%s« (%d) mora biti v natančnosti »%s«"
 
-#: app/pdb/gimppdb-utils.c:826 app/pdb/image-guides-cmds.c:181
+#: app/pdb/gimppdb-utils.c:676 app/pdb/image-guides-cmds.c:181
 #, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
 msgstr "Slika »%s« (%d) ne vsebuje vodnika z identifikacijo %d"
 
-#: app/pdb/gimppdb-utils.c:849 app/pdb/image-sample-points-cmds.c:146
+#: app/pdb/gimppdb-utils.c:699 app/pdb/image-sample-points-cmds.c:146
 #, c-format
 msgid "Image '%s' (%d) does not contain sample point with ID %d"
 msgstr "Slika »%s« (%d) ne vsebuje vzorčne točke z identifikacijo %d"
 
-#: app/pdb/gimppdb-utils.c:877
+#: app/pdb/gimppdb-utils.c:727
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "Vektorski predmet %d ne vsebuje poteze z identifikacijo %d"
 
-#: app/pdb/gimppdb-utils.c:893
+#: app/pdb/gimppdb-utils.c:743
 #, c-format
 msgid "Procedure name '%s' is not a canonical identifier"
 msgstr "Ime procedure »%s« ni kanonski identifikator"
+
+#: app/pdb/gimppdb-utils.c:804
+msgctxt "PDB-error-data-label"
+msgid "Generated brush"
+msgstr "Generiranega čopiča"
+
+#: app/pdb/gimppdb-utils.c:806
+msgctxt "PDB-error-data-label"
+msgid "Brush"
+msgstr "Čopiča"
+
+#: app/pdb/gimppdb-utils.c:808
+msgctxt "PDB-error-data-label"
+msgid "Pattern"
+msgstr "Vzorca"
+
+#: app/pdb/gimppdb-utils.c:810
+msgctxt "PDB-error-data-label"
+msgid "Gradient"
+msgstr "Preliva"
+
+#: app/pdb/gimppdb-utils.c:812
+msgctxt "PDB-error-data-label"
+msgid "Palette"
+msgstr "Palete"
+
+#: app/pdb/gimppdb-utils.c:814
+msgctxt "PDB-error-data-label"
+msgid "Font"
+msgstr "Pisave"
+
+#: app/pdb/gimppdb-utils.c:816
+msgctxt "PDB-error-data-label"
+msgid "Paint dynamics"
+msgstr "Dinamike slikanja"
+
+#: app/pdb/gimppdb-utils.c:818
+msgctxt "PDB-error-data-label"
+msgid "MyPaint brush"
+msgstr "Čopiča MyPaint"
 
 #: app/pdb/gimppdb.c:304 app/pdb/gimppdb.c:377 app/pdb/pdb-cmds.c:71
 #, c-format
@@ -21202,7 +21168,7 @@ msgctxt "undo-type"
 msgid "Wind"
 msgstr "Veter"
 
-#: app/pdb/resource-cmds.c:355
+#: app/pdb/resource-cmds.c:465
 #, c-format
 msgid "Resource '%s' is not renamable"
 msgstr "Vira »%s« ni mogoče preimenovati"
@@ -21822,7 +21788,7 @@ msgstr ""
 "Priznam, bil sem že vegi,\n"
 "dihal češnje, tofu in bicikel."
 
-#: app/text/gimpfontfactory.c:399
+#: app/text/gimpfontfactory.c:400
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -27721,47 +27687,47 @@ msgstr "Zapisovanje besedilne datoteke »%s« ni uspelo: %s"
 msgid "_Use selected font"
 msgstr "_Uporabi izbrano pisavo"
 
-#: app/widgets/gimptextstyleeditor.c:210 app/widgets/gimptextstyleeditor.c:1324
+#: app/widgets/gimptextstyleeditor.c:211 app/widgets/gimptextstyleeditor.c:1325
 msgid "Change font of selected text"
 msgstr "Spremeni pisavo izbranega besedila"
 
-#: app/widgets/gimptextstyleeditor.c:220
+#: app/widgets/gimptextstyleeditor.c:221
 msgid "Change size of selected text"
 msgstr "Spremeni velikost izbranega besedila"
 
-#: app/widgets/gimptextstyleeditor.c:239
+#: app/widgets/gimptextstyleeditor.c:240
 msgid "Clear style of selected text"
 msgstr "Počisti slog izbranega besedila"
 
-#: app/widgets/gimptextstyleeditor.c:250 app/widgets/gimptextstyleeditor.c:260
+#: app/widgets/gimptextstyleeditor.c:251 app/widgets/gimptextstyleeditor.c:261
 msgid "Change color of selected text"
 msgstr "Spremeni barvo izbranega besedila"
 
-#: app/widgets/gimptextstyleeditor.c:276
+#: app/widgets/gimptextstyleeditor.c:277
 msgid "Change kerning of selected text"
 msgstr "Spremeni spodsekavanje izbranega besedila"
 
-#: app/widgets/gimptextstyleeditor.c:292
+#: app/widgets/gimptextstyleeditor.c:293
 msgid "Change baseline of selected text"
 msgstr "Spremeni osnovnico izbranega besedila"
 
-#: app/widgets/gimptextstyleeditor.c:331
+#: app/widgets/gimptextstyleeditor.c:332
 msgid "Bold"
 msgstr "Krepko"
 
-#: app/widgets/gimptextstyleeditor.c:334
+#: app/widgets/gimptextstyleeditor.c:335
 msgid "Italic"
 msgstr "Ležeče"
 
-#: app/widgets/gimptextstyleeditor.c:337
+#: app/widgets/gimptextstyleeditor.c:338
 msgid "Underline"
 msgstr "Podčrtano"
 
-#: app/widgets/gimptextstyleeditor.c:340
+#: app/widgets/gimptextstyleeditor.c:341
 msgid "Strikethrough"
 msgstr "Prečrtano"
 
-#: app/widgets/gimptextstyleeditor.c:1316
+#: app/widgets/gimptextstyleeditor.c:1317
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
 msgstr "Pisava »%s« na tem sistemu ni na voljo"
