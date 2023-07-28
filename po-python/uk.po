@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-15 14:42+0000\n"
-"PO-Revision-Date: 2023-07-17 23:56+0300\n"
+"POT-Creation-Date: 2023-07-26 20:31+0000\n"
+"PO-Revision-Date: 2023-07-28 16:35+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -196,6 +196,11 @@ msgstr "_Файл"
 msgid "Creates a new palette from a given gradient"
 msgstr "Створює палітру з вказаного градієнта"
 
+#: plug-ins/python/gradients-save-as-css.py:228
+#| msgid "Save as CSS file..."
+msgid "Save as CSS..."
+msgstr "Зберегти як CSS…"
+
 #: plug-ins/python/histogram-export.py:92
 msgid "Pixel count"
 msgstr "Число точок"
@@ -281,7 +286,7 @@ msgstr "Палітра"
 msgid "Off_set"
 msgstr "Зс_ув"
 
-#: plug-ins/python/palette-offset.py:63
+#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:153
 msgid "Offset"
 msgstr "Зсув"
 
@@ -482,7 +487,6 @@ msgstr "Консоль Python"
 
 #: plug-ins/python/python-console/python-console.py:79
 #: plug-ins/python/python-console/python-console.py:312
-#| msgid "Save"
 msgid "_Save"
 msgstr "З_берегти"
 
