@@ -28,7 +28,7 @@
  *
  *                      Value    Time     Space
  *  Coupled-Map Lattice cont.    discrete discrete
- *  Celluar Automata    discrete discrete discrete
+ *  Cellular Automata   discrete discrete discrete
  *  Differential Eq.    cont.    cont.    cont.
  *
  *  (But this program uses a parameter: hold-rate to avoid very fast changes.
@@ -340,7 +340,7 @@ static GimpValueArray * explorer_run              (GimpProcedure        *procedu
                                                    GimpImage            *image,
                                                    gint                  n_drawables,
                                                    GimpDrawable        **drawables,
-                                                   const GimpValueArray *args,
+                                                   GimpProcedureConfig  *config,
                                                    gpointer              run_data);
 
 static gboolean          CML_main_function     (gboolean   preview_p);
@@ -497,9 +497,9 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            explorer_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             explorer_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -512,14 +512,14 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Create abstract Coupled-Map "
                                           "Lattice patterns"),
-                                        "Make an image of Coupled-Map Lattice "
-                                        "(CML). CML is a kind of Cellula "
-                                        "Automata on continuous (value) "
-                                        "domain. In GIMP_RUN_NONINTERACTIVE, "
-                                        "the name of a parameter file is "
-                                        "passed as the 4th arg. You can "
-                                        "control CML_explorer via parameter "
-                                        "file.",
+                                        _("Make an image of Coupled-Map Lattice "
+                                          "(CML). CML is a kind of Cellular "
+                                          "Automata on continuous (value) "
+                                          "domain. In GIMP_RUN_NONINTERACTIVE, "
+                                          "the name of a parameter file is "
+                                          "passed as the 4th arg. You can "
+                                          "control CML_explorer via parameter "
+                                          "file."),
                                         /*  Or do you want to call me
                                          *  with over 50 args?
                                          */
@@ -531,9 +531,9 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
                                       "1997");
 
       GIMP_PROC_ARG_STRING (procedure, "parameter-uri",
-                            "Parameter UTI",
-                            "The local file:// URI of parameter file. "
-                            "CML_explorer makes an image with its settings.",
+                            _("Parameter URI"),
+                            _("The local file:// URI of parameter file. "
+                              "CML_explorer makes an image with its settings."),
                             NULL,
                             G_PARAM_READWRITE);
     }
@@ -547,7 +547,7 @@ explorer_run (GimpProcedure        *procedure,
               GimpImage            *image,
               gint                  n_drawables,
               GimpDrawable        **drawables,
-              const GimpValueArray *args,
+              GimpProcedureConfig  *config,
               gpointer              run_data)
 {
   if (n_drawables != 1)
@@ -580,8 +580,13 @@ explorer_run (GimpProcedure        *procedure,
 
     case GIMP_RUN_NONINTERACTIVE:
       {
-        const gchar *uri      = GIMP_VALUES_GET_STRING (args, 0);
-        GFile       *file     = g_file_new_for_uri (uri);
+        gchar *uri;
+        GFile *file;
+
+        g_object_get (config,
+                      "parameter-uri", &uri,
+                      NULL);
+        file = g_file_new_for_uri (uri);
 
         if (! CML_load_parameter_file (g_file_peek_path (file), FALSE))
           {
@@ -592,6 +597,8 @@ explorer_run (GimpProcedure        *procedure,
                                                      NULL);
           }
 
+        if (uri)
+          g_free (uri);
         g_object_unref (file);
       }
       break;
@@ -2407,7 +2414,7 @@ CML_load_parameter_file (const gchar *filename,
         }
       if (flag)
         {
-          gint dummy;
+          gint dummy = 0;
 
           if (fgets (line, CML_LINE_SIZE - 1, file) == NULL) /* skip a line */
             dummy = 1;
