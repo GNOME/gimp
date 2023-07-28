@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-25 16:35+0000\n"
-"PO-Revision-Date: 2023-07-25 22:03+0300\n"
+"POT-Creation-Date: 2023-07-27 13:41+0000\n"
+"PO-Revision-Date: 2023-07-28 16:38+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -9369,34 +9369,28 @@ msgid "Tool operations snap to the active path"
 msgstr "При роботі курсор активного інструменту прилипає до активного контуру"
 
 #: app/actions/view-actions.c:281
-#| msgid "Snap to _Guides"
 msgctxt "view-action"
 msgid "Snap to _Bounding Boxes"
 msgstr "Прилипання до _обмежувальних прямокутників"
 
 #: app/actions/view-actions.c:282
-#| msgctxt "view-action"
-#| msgid "Tool operations snap to the canvas edges"
 msgctxt "view-action"
 msgid "Tool operations snap to the bounding boxes"
 msgstr ""
-"При роботі курсор активного інструменту прилипає до обмежувальних"
-" прямокутників"
+"При роботі курсор активного інструменту прилипає до обмежувальних "
+"прямокутників"
 
 #: app/actions/view-actions.c:288
-#| msgid "Snap to _Guides"
 msgctxt "view-action"
 msgid "Snap to _Equidistance"
 msgstr "Прилипання до _рівновіддалених"
 
 #: app/actions/view-actions.c:289
-#| msgctxt "view-action"
-#| msgid "Tool operations snap to the canvas edges"
 msgctxt "view-action"
 msgid "Tool operations snap to the equidistance between three bounding boxes"
 msgstr ""
-"При роботі курсор активного інструменту прилипає до рівновіддалених точок"
-" між трьома обмежувальних прямокутників"
+"При роботі курсор активного інструменту прилипає до рівновіддалених точок "
+"між трьома обмежувальних прямокутників"
 
 #: app/actions/view-actions.c:295
 msgctxt "view-action"
@@ -10420,20 +10414,18 @@ msgstr ""
 "Типово увімкнено прилипання до активного контуру у вікнах нових зображень."
 
 #: app/config/gimprc-blurbs.h:128
-#| msgid "Snap to the canvas edges by default in new image windows."
 msgid "Snap to the layers bounding boxes by default in new image windows."
 msgstr ""
-"Типово увімкнено прилипання до обмежувальних прямокутників шарів у вікнах"
-" нових зображень."
+"Типово увімкнено прилипання до обмежувальних прямокутників шарів у вікнах "
+"нових зображень."
 
 #: app/config/gimprc-blurbs.h:131
-#| msgid "Snap to the canvas edges by default in new image windows."
 msgid ""
 "Snap to the equidistance between three bounding boxes by default in new "
 "image windows."
 msgstr ""
-"Типово увімкнено прилипання до рівновіддалених точок між трьома"
-" обмежувальним прямокутниками у вікнах нових зображень."
+"Типово увімкнено прилипання до рівновіддалених точок між трьома "
+"обмежувальним прямокутниками у вікнах нових зображень."
 
 #: app/config/gimprc-blurbs.h:134
 msgid ""
@@ -12671,12 +12663,12 @@ msgid "Please wait: %s\n"
 msgstr "Будь ласка, зачекайте: %s\n"
 
 #: app/core/gimp-internal-data.c:286 app/core/gimp-internal-data.c:299
-#: app/core/gimpdata.c:583 app/core/gimpdata.c:596
+#: app/core/gimpdata.c:627 app/core/gimpdata.c:640
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Помилка збереження «%s»: "
 
-#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:602
+#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:646
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Помилка збереження «%s»"
@@ -13197,8 +13189,8 @@ msgstr "Шрифт"
 msgid "Tool Preset"
 msgstr "Шаблон інструментів"
 
-#: app/core/gimpdatafactory.c:369 app/core/gimpdatafactory.c:403
-#: app/core/gimpdatafactory.c:743 app/core/gimpdatafactory.c:774
+#: app/core/gimpdatafactory.c:388 app/core/gimpdatafactory.c:422
+#: app/core/gimpdatafactory.c:762 app/core/gimpdatafactory.c:793
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -13209,22 +13201,22 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdatafactory.c:442 app/core/gimpdatafactory.c:445
+#: app/core/gimpdatafactory.c:461 app/core/gimpdatafactory.c:464
 #: app/core/gimpitem.c:572 app/core/gimpitem.c:575
 msgid "copy"
 msgstr "копія"
 
-#: app/core/gimpdatafactory.c:454 app/core/gimpitem.c:583
+#: app/core/gimpdatafactory.c:473 app/core/gimpitem.c:583
 #, c-format
 msgid "%s copy"
 msgstr "копія %s"
 
-#: app/core/gimpdatafactory.c:611 app/tools/gimptextoptions.c:776
+#: app/core/gimpdatafactory.c:630 app/tools/gimptextoptions.c:776
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Завантажуємо шрифти (їх завантаження може тривати довго…)"
 
-#: app/core/gimpdatafactory.c:948
+#: app/core/gimpdatafactory.c:967
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -13235,7 +13227,7 @@ msgstr ""
 "Будь ласка, створіть теку або поправте налаштування у вікні параметрів "
 "розділу „Теки“."
 
-#: app/core/gimpdatafactory.c:967
+#: app/core/gimpdatafactory.c:986
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
 "your data search path. You probably edited the gimprc file manually, please "
@@ -13245,7 +13237,7 @@ msgstr ""
 "шляху пошуку даних. Імовірно, ви редагували файл gimprc вручну, будь ласка, "
 "поправте це в налаштуваннях у вікні параметрів «Теки»."
 
-#: app/core/gimpdatafactory.c:977
+#: app/core/gimpdatafactory.c:996
 msgid "You don't have any writable data folder configured."
 msgstr "Каталог з правами на запис даних не вказано."
 
@@ -15209,7 +15201,7 @@ msgstr "Увімкнути розмивання _текстових шарів"
 msgid "Dithering text layers will make them uneditable"
 msgstr "Розмиття текстових шарів зробить їх нередагованими"
 
-#: app/dialogs/convert-indexed-dialog.c:414 app/pdb/image-convert-cmds.c:163
+#: app/dialogs/convert-indexed-dialog.c:414 app/pdb/image-convert-cmds.c:164
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Не можна перетворювати у палітру з більш ніж 256 кольорами."
 
@@ -16070,12 +16062,10 @@ msgid "Snap to _Active Path"
 msgstr "Прилипання до _активного контуру"
 
 #: app/dialogs/preferences-dialog.c:1144
-#| msgid "Snap to _Guides"
 msgid "Snap to _Bounding Box"
 msgstr "Прилипання до _обмежувального прямокутника"
 
 #: app/dialogs/preferences-dialog.c:1147
-#| msgid "Snap to _Guides"
 msgid "Snap to _Equidistance"
 msgstr "Прилипання до _рівновіддалених"
 
@@ -20486,157 +20476,87 @@ msgstr "Не вдалось перетворити цей шар, тому що 
 msgid "Writing PDB file '%s' failed: %s"
 msgstr "Запис файлу PDB «%s» не вдався: %s"
 
-#: app/pdb/gimppdb-utils.c:122
-msgid "Invalid empty brush name"
-msgstr "Некоректна порожня назва пензля"
-
-#: app/pdb/gimppdb-utils.c:131
+#. TRANSLATOR: %s is a data label from the
+#. * PDB-error-data-label context.
+#.
+#: app/pdb/gimppdb-utils.c:125 app/pdb/gimppdb-utils.c:190
 #, c-format
-msgid "Brush '%s' not found"
-msgstr "Пензля «%s» не знайдено"
+#| msgid "F1 cannot be remapped."
+msgctxt "PDB-error-message"
+msgid "%s name cannot be empty"
+msgstr "Назва %s не може бути порожньою"
 
-#: app/pdb/gimppdb-utils.c:137
+#. TRANSLATOR: the first %s is a data label from the
+#. * PDB-error-data-label context. The second %s is a data
+#. * name.
+#.
+#: app/pdb/gimppdb-utils.c:139 app/pdb/gimppdb-utils.c:204
 #, c-format
-msgid "Brush '%s' is not editable"
-msgstr "Пензель «%s» не підтримує редагування"
+#| msgid "Brush '%s' not found"
+msgctxt "PDB-error-message"
+msgid "%s '%s' not found"
+msgstr "%s «%s» не знайдено"
 
-#: app/pdb/gimppdb-utils.c:144
+#. TRANSLATOR: the first %s is a data label from the
+#. * PDB-error-data-label context. The second %s is a data
+#. * name.
+#.
+#: app/pdb/gimppdb-utils.c:149 app/pdb/gimppdb-utils.c:214
 #, c-format
-msgid "Brush '%s' is not renamable"
-msgstr "Пензель «%s» не можна перейменовувати"
+#| msgid "Brush '%s' is not editable"
+msgctxt "PDB-error-message"
+msgid "%s '%s' is not editable"
+msgstr "%s «%s» є непридатним до редагування"
 
-#: app/pdb/gimppdb-utils.c:170
+#. TRANSLATOR: the first %s is a data label from the
+#. * PDB-error-data-label context. The second %s is a data
+#. * name.
+#.
+#: app/pdb/gimppdb-utils.c:160 app/pdb/gimppdb-utils.c:225
+#, c-format
+#| msgid "Brush '%s' is not renamable"
+msgctxt "PDB-error-message"
+msgid "%s '%s' is not renamable"
+msgstr "%s «%s» є непридатним до перейменування"
+
+#: app/pdb/gimppdb-utils.c:248
 #, c-format
 msgid "Brush '%s' is not a generated brush"
 msgstr "Пензель «%s» не процедурний"
 
-#: app/pdb/gimppdb-utils.c:191
-msgid "Invalid empty paint dynamics name"
-msgstr "Некоректна порожня назва динаміки малювання"
-
-#: app/pdb/gimppdb-utils.c:200
-#, c-format
-msgid "Paint dynamics '%s' not found"
-msgstr "Динаміки малювання «%s» не знайдено"
-
-#: app/pdb/gimppdb-utils.c:206
-#, c-format
-msgid "Paint dynamics '%s' is not editable"
-msgstr "Динаміка малювання «%s» не підтримує редагування"
-
-#: app/pdb/gimppdb-utils.c:213
-#, c-format
-msgid "Paint dynamics '%s' is not renamable"
-msgstr "Динаміку малювання «%s» не можна перейменовувати"
-
-#: app/pdb/gimppdb-utils.c:234
-msgid "Invalid empty MyPaint brush name"
-msgstr "Некоректна порожня назва пензля MyPaint"
-
-#: app/pdb/gimppdb-utils.c:243
-#, c-format
-msgid "MyPaint brush '%s' not found"
-msgstr "Пензля MyPaint «%s» не знайдено"
-
-#: app/pdb/gimppdb-utils.c:249
-#, c-format
-msgid "MyPaint brush '%s' is not editable"
-msgstr "Пензель MyPaint «%s» не підтримує редагування"
-
-#: app/pdb/gimppdb-utils.c:256
-#, c-format
-msgid "MyPaint brush '%s' is not renamable"
-msgstr "Пензель MyPaint «%s» не можна перейменовувати"
-
-#: app/pdb/gimppdb-utils.c:276
-msgid "Invalid empty pattern name"
-msgstr "Некоректна порожня назва текстури"
-
-#: app/pdb/gimppdb-utils.c:285
-#, c-format
-msgid "Pattern '%s' not found"
-msgstr "Текстуру «%s» не знайдено"
-
-#: app/pdb/gimppdb-utils.c:305
-msgid "Invalid empty gradient name"
-msgstr "Некоректна порожня назва градієнта"
-
-#: app/pdb/gimppdb-utils.c:314
-#, c-format
-msgid "Gradient '%s' not found"
-msgstr "Градієнт «%s» не знайдено"
-
-#: app/pdb/gimppdb-utils.c:320
-#, c-format
-msgid "Gradient '%s' is not editable"
-msgstr "Градієнт «%s» не підтримує редагування"
-
-#: app/pdb/gimppdb-utils.c:327
-#, c-format
-msgid "Gradient '%s' is not renamable"
-msgstr "Градієнт «%s» не можна перейменовувати"
-
-#: app/pdb/gimppdb-utils.c:348
-msgid "Invalid empty palette name"
-msgstr "Некоректна порожня назва набору зразків"
-
-#: app/pdb/gimppdb-utils.c:357
-#, c-format
-msgid "Palette '%s' not found"
-msgstr "Набір зразків «%s» не знайдено"
-
-#: app/pdb/gimppdb-utils.c:363
-#, c-format
-msgid "Palette '%s' is not editable"
-msgstr "Набір зразків «%s» не підтримує редагування"
-
-#: app/pdb/gimppdb-utils.c:370
-#, c-format
-msgid "Palette '%s' is not renamable"
-msgstr "Палітру «%s» не можна перейменовувати"
-
-#: app/pdb/gimppdb-utils.c:390
-msgid "Invalid empty font name"
-msgstr "Некоректна порожня назва шрифту"
-
-#: app/pdb/gimppdb-utils.c:399
-#, c-format
-msgid "Font '%s' not found"
-msgstr "Шрифт «%s» не знайдено"
-
-#: app/pdb/gimppdb-utils.c:418
+#: app/pdb/gimppdb-utils.c:268
 msgid "Invalid empty buffer name"
 msgstr "Некоректна порожня назва буфера"
 
-#: app/pdb/gimppdb-utils.c:428
+#: app/pdb/gimppdb-utils.c:278
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "Іменований буфер «%s» не знайдено"
 
-#: app/pdb/gimppdb-utils.c:447
+#: app/pdb/gimppdb-utils.c:297
 msgid "Invalid empty paint method name"
 msgstr "Некоректна порожні назва методу малювання"
 
-#: app/pdb/gimppdb-utils.c:457
+#: app/pdb/gimppdb-utils.c:307
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "Метод малювання «%s» не існує"
 
-#: app/pdb/gimppdb-utils.c:476
+#: app/pdb/gimppdb-utils.c:326
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr ""
 "Об'єкт «%s» (%d) неможливо використовувати, бо його не додано до зображення"
 
-#: app/pdb/gimppdb-utils.c:486
+#: app/pdb/gimppdb-utils.c:336
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr ""
 "Об'єкт «%s» (%d) неможливо використовувати, бо його долучено до іншого "
 "зображення"
 
-#: app/pdb/gimppdb-utils.c:512
+#: app/pdb/gimppdb-utils.c:362
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
@@ -20645,7 +20565,7 @@ msgstr ""
 "Об'єкт «%s» (%d) неможливо використовувати, бо він не є прямим нащадком "
 "дерева об'єктів"
 
-#: app/pdb/gimppdb-utils.c:540
+#: app/pdb/gimppdb-utils.c:390
 #, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
@@ -20654,28 +20574,28 @@ msgstr ""
 "Об'єкти «%s» (%d) і «%s» (%d) неможливо використовувати, бо вони не є "
 "частиною одного й того ж дерева об'єктів"
 
-#: app/pdb/gimppdb-utils.c:565
+#: app/pdb/gimppdb-utils.c:415
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
 msgstr "Об'єкт «%s» (%d) повинен бути предком «%s» (%d)"
 
-#: app/pdb/gimppdb-utils.c:589
+#: app/pdb/gimppdb-utils.c:439
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "Об'єкт «%s» (%d) вже доданий до зображення"
 
-#: app/pdb/gimppdb-utils.c:597
+#: app/pdb/gimppdb-utils.c:447
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "Спроба додати елемент «%s» (%d) до неправильного зображення"
 
-#: app/pdb/gimppdb-utils.c:624
+#: app/pdb/gimppdb-utils.c:474
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
 "Неможливо змінити об'єкт «%s» (%d), оскільки його вміст заблоковано від змін"
 
-#: app/pdb/gimppdb-utils.c:634
+#: app/pdb/gimppdb-utils.c:484
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
@@ -20683,34 +20603,34 @@ msgstr ""
 "Неможливо змінити об'єкт «%s» (%d), бо його позиція і розмір заблоковані від "
 "змін"
 
-#: app/pdb/gimppdb-utils.c:654
+#: app/pdb/gimppdb-utils.c:504
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
 msgstr "Об'єкт «%s» (%d) неможливо використовувати, бо це не груповий об'єкт"
 
-#: app/pdb/gimppdb-utils.c:674
+#: app/pdb/gimppdb-utils.c:524
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr "Неможливо змінити об'єкт «%s» (%d), оскільки група це група об'єктів"
 
-#: app/pdb/gimppdb-utils.c:695
+#: app/pdb/gimppdb-utils.c:545
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr "Шар «%s» (%d) неможливо використовувати, бо це не текстовий шар"
 
-#: app/pdb/gimppdb-utils.c:736
+#: app/pdb/gimppdb-utils.c:586
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
 "Зображення «%s» (%d) відноситься до типу «%s», хоча очікувалось зображення "
 "типу «%s»"
 
-#: app/pdb/gimppdb-utils.c:759
+#: app/pdb/gimppdb-utils.c:609
 #, c-format
 msgid "Image '%s' (%d) must not be of type '%s'"
 msgstr "Зображення «%s» (%d) не повинно бути типу «%s»"
 
-#: app/pdb/gimppdb-utils.c:779
+#: app/pdb/gimppdb-utils.c:629
 #, c-format
 msgid ""
 "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
@@ -20718,30 +20638,79 @@ msgid ""
 msgstr ""
 "Зображення «%s» (%d) має точність «%s», хоча очікувалось зображення типу «%s»"
 
-#: app/pdb/gimppdb-utils.c:802
+#: app/pdb/gimppdb-utils.c:652
 #, c-format
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "Зображення «%s» (%d) не повинне мати точність «%s»"
 
-#: app/pdb/gimppdb-utils.c:826 app/pdb/image-guides-cmds.c:181
+#: app/pdb/gimppdb-utils.c:676 app/pdb/image-guides-cmds.c:181
 #, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
 msgstr "Зображення «%s» (%d) не містить напрямної із ID %d"
 
-#: app/pdb/gimppdb-utils.c:849 app/pdb/image-sample-points-cmds.c:146
+#: app/pdb/gimppdb-utils.c:699 app/pdb/image-sample-points-cmds.c:146
 #, c-format
 msgid "Image '%s' (%d) does not contain sample point with ID %d"
 msgstr "Зображення «%s» (%d) не містить точки вибірки із ідентифікатором %d"
 
-#: app/pdb/gimppdb-utils.c:877
+#: app/pdb/gimppdb-utils.c:727
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "Векторний об'єкт %d не містить обведення з ID %d"
 
-#: app/pdb/gimppdb-utils.c:893
+#: app/pdb/gimppdb-utils.c:743
 #, c-format
 msgid "Procedure name '%s' is not a canonical identifier"
 msgstr "Назва процедури «%s» не є канонічним ідентифікатором"
+
+#: app/pdb/gimppdb-utils.c:804
+#| msgctxt "brushes-action"
+#| msgid "_Delete Brush"
+msgctxt "PDB-error-data-label"
+msgid "Generated brush"
+msgstr "Створений пензель"
+
+#: app/pdb/gimppdb-utils.c:806
+#| msgid "Brush"
+msgctxt "PDB-error-data-label"
+msgid "Brush"
+msgstr "Пензель"
+
+#: app/pdb/gimppdb-utils.c:808
+#| msgid "Pattern"
+msgctxt "PDB-error-data-label"
+msgid "Pattern"
+msgstr "Текстура"
+
+#: app/pdb/gimppdb-utils.c:810
+#| msgid "Gradient"
+msgctxt "PDB-error-data-label"
+msgid "Gradient"
+msgstr "Градієнт"
+
+#: app/pdb/gimppdb-utils.c:812
+#| msgid "Palette"
+msgctxt "PDB-error-data-label"
+msgid "Palette"
+msgstr "Палітра"
+
+#: app/pdb/gimppdb-utils.c:814
+#| msgid "Font"
+msgctxt "PDB-error-data-label"
+msgid "Font"
+msgstr "Шрифт"
+
+#: app/pdb/gimppdb-utils.c:816
+#| msgid "Paint dynamics"
+msgctxt "PDB-error-data-label"
+msgid "Paint dynamics"
+msgstr "Динаміка малювання"
+
+#: app/pdb/gimppdb-utils.c:818
+#| msgid "MyPaint Brush"
+msgctxt "PDB-error-data-label"
+msgid "MyPaint brush"
+msgstr "Пензель MyPaint"
 
 #: app/pdb/gimppdb.c:304 app/pdb/gimppdb.c:377 app/pdb/pdb-cmds.c:71
 #, c-format
@@ -21290,7 +21259,7 @@ msgctxt "undo-type"
 msgid "Wind"
 msgstr "Вітер"
 
-#: app/pdb/resource-cmds.c:355
+#: app/pdb/resource-cmds.c:465
 #, c-format
 msgid "Resource '%s' is not renamable"
 msgstr "Ресурс «%s» не можна перейменовувати"
@@ -21910,7 +21879,7 @@ msgstr ""
 "Жебракують філософи при ґанку церкви\n"
 "в Гадячі; ще й шатро їхнє п'яне знаємо."
 
-#: app/text/gimpfontfactory.c:399
+#: app/text/gimpfontfactory.c:400
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -27827,47 +27796,47 @@ msgstr "Не вдалося записати текстовий файл «%s»:
 msgid "_Use selected font"
 msgstr "_Використовувати позначений шрифт"
 
-#: app/widgets/gimptextstyleeditor.c:210 app/widgets/gimptextstyleeditor.c:1324
+#: app/widgets/gimptextstyleeditor.c:211 app/widgets/gimptextstyleeditor.c:1325
 msgid "Change font of selected text"
 msgstr "Змінити розмір позначеного тексту"
 
-#: app/widgets/gimptextstyleeditor.c:220
+#: app/widgets/gimptextstyleeditor.c:221
 msgid "Change size of selected text"
 msgstr "Зміна розміру позначеного тексту"
 
-#: app/widgets/gimptextstyleeditor.c:239
+#: app/widgets/gimptextstyleeditor.c:240
 msgid "Clear style of selected text"
 msgstr "Зміна стилю позначеного тексту"
 
-#: app/widgets/gimptextstyleeditor.c:250 app/widgets/gimptextstyleeditor.c:260
+#: app/widgets/gimptextstyleeditor.c:251 app/widgets/gimptextstyleeditor.c:261
 msgid "Change color of selected text"
 msgstr "Змінити розмір позначеного тексту"
 
-#: app/widgets/gimptextstyleeditor.c:276
+#: app/widgets/gimptextstyleeditor.c:277
 msgid "Change kerning of selected text"
 msgstr "Змінити міжзнаковий інтервал позначеного тексту"
 
-#: app/widgets/gimptextstyleeditor.c:292
+#: app/widgets/gimptextstyleeditor.c:293
 msgid "Change baseline of selected text"
 msgstr "Зміна базової лінії позначеного тексту"
 
-#: app/widgets/gimptextstyleeditor.c:331
+#: app/widgets/gimptextstyleeditor.c:332
 msgid "Bold"
 msgstr "Жирний"
 
-#: app/widgets/gimptextstyleeditor.c:334
+#: app/widgets/gimptextstyleeditor.c:335
 msgid "Italic"
 msgstr "Курсив"
 
-#: app/widgets/gimptextstyleeditor.c:337
+#: app/widgets/gimptextstyleeditor.c:338
 msgid "Underline"
 msgstr "Підкреслений"
 
-#: app/widgets/gimptextstyleeditor.c:340
+#: app/widgets/gimptextstyleeditor.c:341
 msgid "Strikethrough"
 msgstr "Закреслений"
 
-#: app/widgets/gimptextstyleeditor.c:1316
+#: app/widgets/gimptextstyleeditor.c:1317
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
 msgstr "Шрифт \"%s\" недоступний на цій системі"
@@ -28851,6 +28820,83 @@ msgstr "Меню журналу скасувань"
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Меню контурів"
+
+#~ msgid "Invalid empty brush name"
+#~ msgstr "Некоректна порожня назва пензля"
+
+#~ msgid "Invalid empty paint dynamics name"
+#~ msgstr "Некоректна порожня назва динаміки малювання"
+
+#, c-format
+#~ msgid "Paint dynamics '%s' not found"
+#~ msgstr "Динаміки малювання «%s» не знайдено"
+
+#, c-format
+#~ msgid "Paint dynamics '%s' is not editable"
+#~ msgstr "Динаміка малювання «%s» не підтримує редагування"
+
+#, c-format
+#~ msgid "Paint dynamics '%s' is not renamable"
+#~ msgstr "Динаміку малювання «%s» не можна перейменовувати"
+
+#~ msgid "Invalid empty MyPaint brush name"
+#~ msgstr "Некоректна порожня назва пензля MyPaint"
+
+#, c-format
+#~ msgid "MyPaint brush '%s' not found"
+#~ msgstr "Пензля MyPaint «%s» не знайдено"
+
+#, c-format
+#~ msgid "MyPaint brush '%s' is not editable"
+#~ msgstr "Пензель MyPaint «%s» не підтримує редагування"
+
+#, c-format
+#~ msgid "MyPaint brush '%s' is not renamable"
+#~ msgstr "Пензель MyPaint «%s» не можна перейменовувати"
+
+#~ msgid "Invalid empty pattern name"
+#~ msgstr "Некоректна порожня назва текстури"
+
+#, c-format
+#~ msgid "Pattern '%s' not found"
+#~ msgstr "Текстуру «%s» не знайдено"
+
+#~ msgid "Invalid empty gradient name"
+#~ msgstr "Некоректна порожня назва градієнта"
+
+#, c-format
+#~ msgid "Gradient '%s' not found"
+#~ msgstr "Градієнт «%s» не знайдено"
+
+#, c-format
+#~ msgid "Gradient '%s' is not editable"
+#~ msgstr "Градієнт «%s» не підтримує редагування"
+
+#, c-format
+#~ msgid "Gradient '%s' is not renamable"
+#~ msgstr "Градієнт «%s» не можна перейменовувати"
+
+#~ msgid "Invalid empty palette name"
+#~ msgstr "Некоректна порожня назва набору зразків"
+
+#, c-format
+#~ msgid "Palette '%s' not found"
+#~ msgstr "Набір зразків «%s» не знайдено"
+
+#, c-format
+#~ msgid "Palette '%s' is not editable"
+#~ msgstr "Набір зразків «%s» не підтримує редагування"
+
+#, c-format
+#~ msgid "Palette '%s' is not renamable"
+#~ msgstr "Палітру «%s» не можна перейменовувати"
+
+#~ msgid "Invalid empty font name"
+#~ msgstr "Некоректна порожня назва шрифту"
+
+#, c-format
+#~ msgid "Font '%s' not found"
+#~ msgstr "Шрифт «%s» не знайдено"
 
 #~ msgctxt "undo-type"
 #~ msgid "Fill with Solid Color"
