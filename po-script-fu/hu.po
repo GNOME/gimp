@@ -1,5 +1,5 @@
 # Hungarian translation for gimp-script-fu.
-# Copyright (C) 2001, 2003, 2004, 2007, 2008, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2003, 2004, 2007, 2008, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-script-fu package.
 #
 # András Tímár <timar at gnome dot hu>, 2001, 2003.
@@ -7,22 +7,22 @@
 # László Dvornik <dvornik at gnome dot hu>, 2004.
 # Árpád Bíró <biro arpad at gmail dot com>, 2004, 2007, 2008.
 # Gábor Kelemen <kelemeng at gnome dot hu>, 2007, 2008, 2016, 2017.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2014, 2016, 2018, 2019, 2020, 2021, 2022.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2014, 2016, 2018, 2019, 2020, 2021, 2022, 2023.
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2018, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-22 14:38+0000\n"
-"PO-Revision-Date: 2022-11-23 00:54+0100\n"
+"POT-Creation-Date: 2023-07-26 20:31+0000\n"
+"PO-Revision-Date: 2023-07-29 08:30+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
-"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.08.2\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #: plug-ins/script-fu/script-fu.c:122
 msgid "Script-Fu _Console"
@@ -32,63 +32,63 @@ msgstr "Script-Fu-_konzol"
 msgid "Interactive console for Script-Fu development"
 msgstr "Interaktív konzol Script-Fu-fejlesztéshez"
 
-#: plug-ins/script-fu/script-fu.c:310
+#: plug-ins/script-fu/script-fu.c:314
 msgid "_GIMP Online"
 msgstr "_GIMP-webhely"
 
-#: plug-ins/script-fu/script-fu.c:311
+#: plug-ins/script-fu/script-fu.c:315
 msgid "_User Manual"
 msgstr "_Felhasználói kézikönyv"
 
-#: plug-ins/script-fu/script-fu.c:314
+#: plug-ins/script-fu/script-fu.c:318
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:316
+#: plug-ins/script-fu/script-fu.c:320
 msgid "_Test"
 msgstr "_Teszt"
 
-#: plug-ins/script-fu/script-fu.c:319
+#: plug-ins/script-fu/script-fu.c:323
 msgid "_Buttons"
 msgstr "_Gombok"
 
-#: plug-ins/script-fu/script-fu.c:321
+#: plug-ins/script-fu/script-fu.c:325
 msgid "_Logos"
 msgstr "_Logók"
 
-#: plug-ins/script-fu/script-fu.c:323
+#: plug-ins/script-fu/script-fu.c:327
 msgid "_Patterns"
 msgstr "M_inták"
 
-#: plug-ins/script-fu/script-fu.c:326
+#: plug-ins/script-fu/script-fu.c:330
 msgid "_Web Page Themes"
 msgstr "_Weblap-témák"
 
-#: plug-ins/script-fu/script-fu.c:328
+#: plug-ins/script-fu/script-fu.c:332
 msgid "_Alien Glow"
 msgstr "Idegen r_agyogás"
 
-#: plug-ins/script-fu/script-fu.c:330
+#: plug-ins/script-fu/script-fu.c:334
 msgid "_Beveled Pattern"
 msgstr "_Térhatású minta"
 
-#: plug-ins/script-fu/script-fu.c:332
+#: plug-ins/script-fu/script-fu.c:336
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: plug-ins/script-fu/script-fu.c:335
+#: plug-ins/script-fu/script-fu.c:339
 msgid "Alpha to _Logo"
 msgstr "Alfát lo_góvá"
 
-#: plug-ins/script-fu/script-fu.c:341
+#: plug-ins/script-fu/script-fu.c:345
 msgid "_Refresh Scripts"
 msgstr "Parancsfájlok _frissítése"
 
-#: plug-ins/script-fu/script-fu.c:346
+#: plug-ins/script-fu/script-fu.c:350
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Összes elérhető Script-Fu-parancsfájl újraolvasása"
 
-#: plug-ins/script-fu/script-fu.c:372
+#: plug-ins/script-fu/script-fu.c:376
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -97,64 +97,64 @@ msgstr ""
 "egy Script-Fu párbeszédablak. Zárja be az összes Script-Fu ablakot és "
 "próbálja újra."
 
-#: plug-ins/script-fu/script-fu-console.c:110
-#: plug-ins/script-fu/script-fu-console.c:177
-msgid "Script-Fu Console"
-msgstr "Script-Fu-konzol"
-
-#: plug-ins/script-fu/script-fu-console.c:115
-#: plug-ins/script-fu/script-fu-console.c:281
-msgid "_Save"
-msgstr "M_entés"
-
-#: plug-ins/script-fu/script-fu-console.c:116
-msgid "C_lear"
-msgstr "_Törlés"
-
-#: plug-ins/script-fu/script-fu-console.c:117
-#: plug-ins/script-fu/script-fu-console.c:359
-msgid "_Close"
-msgstr "_Bezárás"
-
-#: plug-ins/script-fu/script-fu-console.c:173
-msgid "Welcome to TinyScheme"
-msgstr "Üdvözli a TinyScheme"
-
-#: plug-ins/script-fu/script-fu-console.c:179
-msgid "Interactive Scheme Development"
-msgstr "Interaktív Scheme-fejlesztés"
-
-#: plug-ins/script-fu/script-fu-console.c:215
-msgid "_Browse..."
-msgstr "_Tallózás…"
-
-#: plug-ins/script-fu/script-fu-console.c:276
-msgid "Save Script-Fu Console Output"
-msgstr "Script-Fu-konzol kimenetének mentése"
-
-#: plug-ins/script-fu/script-fu-console.c:280
-#: plug-ins/script-fu/server/script-fu-server.c:884
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:236
-msgid "_Cancel"
-msgstr "_Mégse"
-
-#: plug-ins/script-fu/script-fu-console.c:325
-#, c-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "A(z) „%s” nem nyitható meg írásra: %s"
-
-#: plug-ins/script-fu/script-fu-console.c:354
-msgid "Script-Fu Procedure Browser"
-msgstr "Script-Fu-eljárásböngésző"
-
-#: plug-ins/script-fu/script-fu-console.c:358
-msgid "_Apply"
-msgstr "_Alkalmaz"
-
 #: plug-ins/script-fu/script-fu-eval.c:50
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
+
+#: plug-ins/script-fu/console/script-fu-console.c:125
+#| msgid "Script-Fu Console"
+msgid "Script Console"
+msgstr "Parancsfájlkonzol"
+
+#: plug-ins/script-fu/console/script-fu-console.c:130
+#: plug-ins/script-fu/console/script-fu-console.c:259
+msgid "_Save"
+msgstr "M_entés"
+
+#: plug-ins/script-fu/console/script-fu-console.c:131
+msgid "C_lear"
+msgstr "_Törlés"
+
+#: plug-ins/script-fu/console/script-fu-console.c:132
+#: plug-ins/script-fu/console/script-fu-console.c:332
+msgid "_Close"
+msgstr "_Bezárás"
+
+#: plug-ins/script-fu/console/script-fu-console.c:193
+msgid "_Browse..."
+msgstr "_Tallózás…"
+
+#: plug-ins/script-fu/console/script-fu-console.c:254
+msgid "Save Script-Fu Console Output"
+msgstr "Script-Fu-konzol kimenetének mentése"
+
+#: plug-ins/script-fu/console/script-fu-console.c:258
+#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:218
+msgid "_Cancel"
+msgstr "_Mégse"
+
+#: plug-ins/script-fu/console/script-fu-console.c:301
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "A(z) „%s” nem nyitható meg írásra: %s"
+
+#: plug-ins/script-fu/console/script-fu-console.c:327
+msgid "Script-Fu Procedure Browser"
+msgstr "Script-Fu-eljárásböngésző"
+
+#: plug-ins/script-fu/console/script-fu-console.c:331
+msgid "_Apply"
+msgstr "_Alkalmaz"
+
+#: plug-ins/script-fu/console/script-fu-console-total.c:89
+msgid "Welcome to TinyScheme"
+msgstr "Üdvözli a TinyScheme"
+
+#: plug-ins/script-fu/console/script-fu-console-total.c:93
+msgid "Scripting GIMP in the Scheme language"
+msgstr "A GIMP parancsfájllal történő vezérlése Scheme-nyelven"
 
 #: plug-ins/script-fu/server/script-fu-server.c:880
 msgid "Script-Fu Server Options"
@@ -193,69 +193,69 @@ msgstr "Kiszolgáló _indítása…"
 msgid "Server for remote Script-Fu operation"
 msgstr "Kiszolgáló a Script-Fu távoli működtetéséhez"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:202
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:184
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "A Script-Fu nem képes egyszerre több parancsfájlt feldolgozni."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:204
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:186
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Már futtatja a(z) „%s” parancsfájlt."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:228
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:210
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:235
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:217
 msgid "_Reset"
 msgstr "_Visszaállítás"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:237
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:219
 msgid "_OK"
 msgstr "_OK"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:291
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:341
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:323
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu színválasztó"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:468
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:450
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu fájlválasztó"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:471
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu mappaválasztó"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:484
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:466
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu betűkészlet-választó"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:492
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:472
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu palettaválasztó"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:501
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:479
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu mintaválasztó"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:510
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu színátmenet-választó"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:519
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:493
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ecsetválasztó"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:898
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:868
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Hiba „%s” végrehajtása közben:"
@@ -544,14 +544,12 @@ msgstr "Nincs háttér (csak különálló rétegre)"
 
 #: plug-ins/script-fu/scripts/circuit.scm:142
 #: plug-ins/script-fu/scripts/lava.scm:141
-#: plug-ins/script-fu/scripts/predator.scm:138
 #: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Keep selection"
 msgstr "Kijelölés megtartása"
 
 #: plug-ins/script-fu/scripts/circuit.scm:143
 #: plug-ins/script-fu/scripts/lava.scm:142
-#: plug-ins/script-fu/scripts/predator.scm:139
 msgid "Separate layer"
 msgstr "Különálló réteg"
 
@@ -863,45 +861,39 @@ msgstr "_Egyszerű objektumok rajzolása"
 msgid "Create and Use _Selections"
 msgstr "Kiválasztások _létrehozása és használata"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:190
+#: plug-ins/script-fu/scripts/gimp-online.scm:186
 msgid "_Main Web Site"
 msgstr "_Fő webhely"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:191
-#: plug-ins/script-fu/scripts/gimp-online.scm:204
-#: plug-ins/script-fu/scripts/gimp-online.scm:256
+#: plug-ins/script-fu/scripts/gimp-online.scm:187
+#: plug-ins/script-fu/scripts/gimp-online.scm:200
+#: plug-ins/script-fu/scripts/gimp-online.scm:239
 msgid "Bookmark to the GIMP web site"
 msgstr "Könyvjelző a GIMP weblapjához"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/gimp-online.scm:199
 msgid "_Developer Web Site"
 msgstr "Fe_jlesztői webhely"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:216
-msgid "_Roadmap"
-msgstr "Ütem_terv"
+#: plug-ins/script-fu/scripts/gimp-online.scm:212
+#| msgid "_Roadmap"
+msgid "_Roadmaps"
+msgstr "Ütem_tervek"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "Könyvjelző a GIMP ütemtervéhez"
+#: plug-ins/script-fu/scripts/gimp-online.scm:213
+#| msgid "Bookmark to the roadmap of GIMP"
+msgid "Bookmark to the roadmaps of GIMP"
+msgstr "Könyvjelző a GIMP ütemterveihez"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
-msgid "_Wiki"
-msgstr "_Wiki"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "Könyvjelző a GIMP wikihez"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/gimp-online.scm:225
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Hibajelentések és funkciókérések"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:243
+#: plug-ins/script-fu/scripts/gimp-online.scm:226
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Könyvjelző a GIMP hibakövetőjéhez"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/gimp-online.scm:238
 msgid "_User Manual Web Site"
 msgstr "A felhasználói _kézikönyv webhelye"
 
@@ -1164,6 +1156,10 @@ msgid ""
 msgstr ""
 "A név minden karaktere vagy üres hely, vagy nem engedélyezett fájlnévben."
 
+#: plug-ins/script-fu/scripts/palette-export.scm:264
+msgid "_CSS stylesheet..."
+msgstr "_CSS-stíluslap…"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
@@ -1172,13 +1168,25 @@ msgstr ""
 "Az aktív paletta exportálása CSS stíluslapként osztálynévként a "
 "színbejegyzés nevével, és színattribútumként magával a színnel"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:290
+msgid "P_HP dictionary..."
+msgstr "P_HP-könyvtár…"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Az aktív paletta exportálása PHP szótárként (név => szín)"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:322
+msgid "_Python dictionary..."
+msgstr "_Python-könyvtár…"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Az aktív paletta exportálása Python szótárként (név: szín)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:351
+msgid "_Text file..."
+msgstr "_Szövegfájl…"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
@@ -1188,10 +1196,15 @@ msgstr ""
 "A paletta minden színének kiírása szövegfájlba, soronként egy hexadecimális "
 "értékként (nevek nélkül)"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:398
+msgid "J_ava map..."
+msgstr "J_ava-leképezés…"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:399
-msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+#| msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
-"Az aktív paletta exportálása mint java.util.Hashtable<Karakterlánc, Szín>"
+"Az aktív paletta exportálása mint java.util.Hashtable&lt;Karakterlánc,Szín&gt;"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:58
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
@@ -1199,7 +1212,6 @@ msgid "There is no image data in the clipboard to paste."
 msgstr "A vágólapon nincsenek beilleszthető képadatok."
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:64
-#| msgid "New _Brush..."
 msgid "Paste as New _Brush..."
 msgstr "Beillesztés új _ecsetként…"
 
@@ -1225,7 +1237,6 @@ msgid "_Spacing"
 msgstr "_Térköz"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
-#| msgid "New _Pattern..."
 msgid "Paste as New _Pattern..."
 msgstr "Beillesztés új _mintaként…"
 
@@ -1262,26 +1273,6 @@ msgstr "Árnyék viszonylagos hossza"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:211
 msgid "Interpolation"
 msgstr "Interpolálás"
-
-#: plug-ins/script-fu/scripts/predator.scm:127
-msgid "_Predator..."
-msgstr "_Predator…"
-
-#: plug-ins/script-fu/scripts/predator.scm:128
-msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "„Predator” hatás hozzáadása a kijelölt területhez (vagy az alfához)"
-
-#: plug-ins/script-fu/scripts/predator.scm:135
-msgid "Edge amount"
-msgstr "Szél mértéke"
-
-#: plug-ins/script-fu/scripts/predator.scm:136
-msgid "Pixelize"
-msgstr "Pixelesítés"
-
-#: plug-ins/script-fu/scripts/predator.scm:137
-msgid "Pixel amount"
-msgstr "Képpontok mennyisége"
 
 #: plug-ins/script-fu/scripts/reverse-layers.scm:42
 msgid "Reverse Layer _Order"
