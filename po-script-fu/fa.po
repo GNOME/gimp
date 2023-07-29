@@ -4,97 +4,88 @@
 # Meelad Zakaria <meelad@farsiweb.info>, 2007.
 # Elnaz Sarbar <elnaz@farsiweb.info>, 2007.
 # Farzaneh Sarafraz <farzaneh@farsiweb.info>, 2007.
+# Danial Behzadi <dani.behzi@ubuntu.com>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu VERSION\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2014-05-03 22:00+1200\n"
-"PO-Revision-Date: 2007-04-25 19:29+0330\n"
-"Last-Translator: Meelad Zakaria <meelad@farsiweb.info>\n"
+"POT-Creation-Date: 2023-07-17 12:09+0000\n"
+"PO-Revision-Date: 2023-07-29 04:10+0330\n"
+"Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Farsiweb.info\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
 
-#: ../plug-ins/script-fu/script-fu.c:111
+#: plug-ins/script-fu/script-fu.c:122
+msgid "Script-Fu _Console"
+msgstr "_کنسول اسکریپت‌فو"
+
+#: plug-ins/script-fu/script-fu.c:127
 msgid "Interactive console for Script-Fu development"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:117
-#, fuzzy
-msgid "_Console"
-msgstr "_پیشانهٔ اسکریپت‌فو"
-
-#: ../plug-ins/script-fu/script-fu.c:141
-msgid "Server for remote Script-Fu operation"
-msgstr "کارگزار برای عملیات دوردست اسکریپت‌فو"
-
-#: ../plug-ins/script-fu/script-fu.c:151
-msgid "_Start Server..."
-msgstr "آ_غاز کارگزار..."
-
-#: ../plug-ins/script-fu/script-fu.c:307
-#, fuzzy
+#: plug-ins/script-fu/script-fu.c:314
 msgid "_GIMP Online"
-msgstr "ضمیمهٔ گیمپ"
+msgstr "_گیمپ برخط"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: plug-ins/script-fu/script-fu.c:315
 msgid "_User Manual"
-msgstr "_کتابچهٔ راهنمای کاربر"
+msgstr "_راهنمای کاربری"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+#: plug-ins/script-fu/script-fu.c:318
 msgid "_Script-Fu"
 msgstr "ا_سکریپت‌فو"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+#: plug-ins/script-fu/script-fu.c:320
 msgid "_Test"
-msgstr "آ_زمایش"
+msgstr "_آزمون"
 
-#: ../plug-ins/script-fu/script-fu.c:316
+#: plug-ins/script-fu/script-fu.c:323
 msgid "_Buttons"
 msgstr "_دکمه‌ها"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: plug-ins/script-fu/script-fu.c:325
 msgid "_Logos"
-msgstr ""
+msgstr "_نشان‌ها"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: plug-ins/script-fu/script-fu.c:327
 msgid "_Patterns"
 msgstr "ا_لگوها"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: plug-ins/script-fu/script-fu.c:330
 msgid "_Web Page Themes"
 msgstr "_تم‌های صفحهٔ وبی"
 
-#: ../plug-ins/script-fu/script-fu.c:325
-#, fuzzy
+#: plug-ins/script-fu/script-fu.c:332
 msgid "_Alien Glow"
-msgstr "_درخشش فضایی..."
+msgstr "_درخشش بیگانه"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: plug-ins/script-fu/script-fu.c:334
 #, fuzzy
 msgid "_Beveled Pattern"
-msgstr "ا_لگوها"
+msgstr "به _ الگو..."
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: plug-ins/script-fu/script-fu.c:336
 msgid "_Classic.Gimp.Org"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:332
+#: plug-ins/script-fu/script-fu.c:339
 msgid "Alpha to _Logo"
-msgstr ""
+msgstr "آلفا به _نشان"
 
-#: ../plug-ins/script-fu/script-fu.c:335
-msgid "Re-read all available Script-Fu scripts"
-msgstr "بازخوانی همهٔ کدهای اسکریپت‌فوی موجود"
-
-#: ../plug-ins/script-fu/script-fu.c:340
+#: plug-ins/script-fu/script-fu.c:345
 msgid "_Refresh Scripts"
 msgstr "_نوسازی کدنوشته‌ها"
 
-#: ../plug-ins/script-fu/script-fu.c:363
+#: plug-ins/script-fu/script-fu.c:350
+msgid "Re-read all available Script-Fu scripts"
+msgstr "بازخوانی همهٔ کدهای اسکریپت‌فوی موجود"
+
+#: plug-ins/script-fu/script-fu.c:376
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -102,1573 +93,1665 @@ msgstr ""
 "«بازآوردن کدها» هنگامی که جعبهٔ محاورهٔ اسکریپت‌فو باز است ممکن نیست. لطفاً همهٔ "
 "پنجره‌های اسکریپت‌فو را ببندید و دوباره امتحان کنید."
 
-#: ../plug-ins/script-fu/script-fu-console.c:130
-#: ../plug-ins/script-fu/script-fu-console.c:197
-msgid "Script-Fu Console"
-msgstr "پیشانهٔ اسکریپت‌فو"
-
-#: ../plug-ins/script-fu/script-fu-console.c:193
-msgid "Welcome to TinyScheme"
-msgstr ""
-
-#: ../plug-ins/script-fu/script-fu-console.c:199
-msgid "Interactive Scheme Development"
-msgstr ""
-
-#: ../plug-ins/script-fu/script-fu-console.c:235
-msgid "_Browse..."
-msgstr "_مرور..."
-
-#: ../plug-ins/script-fu/script-fu-console.c:293
-msgid "Save Script-Fu Console Output"
-msgstr "ذخیرهٔ خروجی پیشانهٔ اسکریپت‌فو"
-
-#: ../plug-ins/script-fu/script-fu-console.c:340
-#, c-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "نمی‌توان «%s» را برای نوشتن باز کرد: %s"
-
-#: ../plug-ins/script-fu/script-fu-console.c:369
-#, fuzzy
-msgid "Script-Fu Procedure Browser"
-msgstr "مرورگر زیربرنامه"
-
-#: ../plug-ins/script-fu/script-fu-eval.c:60
+#: plug-ins/script-fu/script-fu-eval.c:50
 #, fuzzy
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "حالت ارزیابی اسکریپت‌فو فقط فراخوانی به صورت غیرتعاملی را می‌پذیرد"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
+#: plug-ins/script-fu/console/script-fu-console.c:125
+msgid "Script Console"
+msgstr "کنسول کدنوشته"
+
+#: plug-ins/script-fu/console/script-fu-console.c:130
+#: plug-ins/script-fu/console/script-fu-console.c:259
+msgid "_Save"
+msgstr "_ذخیره"
+
+#: plug-ins/script-fu/console/script-fu-console.c:131
+msgid "C_lear"
+msgstr "_‌پاک سازی"
+
+#: plug-ins/script-fu/console/script-fu-console.c:132
+#: plug-ins/script-fu/console/script-fu-console.c:332
+msgid "_Close"
+msgstr "_بستن"
+
+#: plug-ins/script-fu/console/script-fu-console.c:193
+msgid "_Browse..."
+msgstr "_مرور..."
+
+#: plug-ins/script-fu/console/script-fu-console.c:254
+msgid "Save Script-Fu Console Output"
+msgstr "ذخیرهٔ خروجی پیشانهٔ اسکریپت‌فو"
+
+#: plug-ins/script-fu/console/script-fu-console.c:258
+#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:218
+msgid "_Cancel"
+msgstr "_لغو"
+
+#: plug-ins/script-fu/console/script-fu-console.c:301
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "نمی‌توان «%s» را برای نوشتن باز کرد: %s"
+
+#: plug-ins/script-fu/console/script-fu-console.c:327
+msgid "Script-Fu Procedure Browser"
+msgstr "مرورگر روال‌های اسکریپت‌فو"
+
+#: plug-ins/script-fu/console/script-fu-console.c:331
+msgid "_Apply"
+msgstr "_اِعمال"
+
+#: plug-ins/script-fu/console/script-fu-console-total.c:89
+#, fuzzy
+msgid "Welcome to TinyScheme"
+msgstr "خوش‌آمدید!"
+
+#: plug-ins/script-fu/console/script-fu-console-total.c:93
+msgid "Scripting GIMP in the Scheme language"
+msgstr ""
+
+#: plug-ins/script-fu/server/script-fu-server.c:880
+msgid "Script-Fu Server Options"
+msgstr "گزینه‌های کارگزار اسکریپت‌فو"
+
+#: plug-ins/script-fu/server/script-fu-server.c:885
+msgid "_Start Server"
+msgstr "آ_غاز کارگزار"
+
+#: plug-ins/script-fu/server/script-fu-server.c:918
+#, fuzzy
+msgid "Listen on IP:"
+msgstr "درگاه شنود"
+
+#: plug-ins/script-fu/server/script-fu-server.c:925
+#, fuzzy
+msgid "Server port:"
+msgstr "درگاه برای دسترسی به کارساز رویش."
+
+#: plug-ins/script-fu/server/script-fu-server.c:931
+#, fuzzy
+msgid "Server logfile:"
+msgstr "پرونده‌ای که اعمال صافی در آن ثبت می‌شوند"
+
+#: plug-ins/script-fu/server/script-fu-server.c:944
+msgid ""
+"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can allow "
+"attackers to remotely execute arbitrary code on this machine."
+msgstr ""
+
+#: plug-ins/script-fu/server/script-fu-server-plugin.c:91
+msgid "_Start Server..."
+msgstr "آ_غاز کارگزار..."
+
+#: plug-ins/script-fu/server/script-fu-server-plugin.c:96
+msgid "Server for remote Script-Fu operation"
+msgstr "کارگزار برای عملیات دوردست اسکریپت‌فو"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:184
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "اسکریپت‌فو نمی‌تواند دو کدنوشته را هم‌زمان پردازش کند."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:200
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:186
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "کدنوشتهٔ «%s» از قبل در حال اجرا است."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:226
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:210
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "اسکریپت‌فو: %s"
 
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:217
+msgid "_Reset"
+msgstr "_بازنشانی"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:219
+msgid "_OK"
+msgstr "_تأیید"
+
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:290
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:337
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:323
 msgid "Script-Fu Color Selection"
 msgstr "انتخاب رنگ اسکریپت‌فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:446
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:450
 msgid "Script-Fu File Selection"
 msgstr "انتخاب پروندهٔ اسکریپت‌فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:449
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
 msgid "Script-Fu Folder Selection"
 msgstr "انتخاب پوشهٔ اسکریپت‌فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:466
 msgid "Script-Fu Font Selection"
 msgstr "انتخاب قلم اسکریپت‌فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:470
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:472
 msgid "Script-Fu Palette Selection"
 msgstr "انتخاب تخته‌رنگ اسکریپت‌فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:479
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:479
 #, fuzzy
 msgid "Script-Fu Pattern Selection"
-msgstr "انتخاب الگوی اسکریپت‌فو"
+msgstr "شاخه‌های اسکریپت‌فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:488
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
 msgstr "انتخاب طیف اسکریپت‌فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:497
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:493
 msgid "Script-Fu Brush Selection"
 msgstr "انتخاب قلم‌موی اسکریپت‌فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:840
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:868
 #, fuzzy, c-format
 msgid "Error while executing %s:"
-msgstr ""
-"خطا در حین اجرای\n"
-"‏%s\n"
-"‏%s"
+msgstr "خطای ناشناخته در اجرای فرایند فرزند «%s»"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:146
-msgid "Too few arguments to 'script-fu-register' call"
-msgstr ""
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:605
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:357
 #, fuzzy, c-format
 msgid "Error while loading %s:"
-msgstr ""
-"خطا در حین اجرای\n"
-"‏%s\n"
-"‏%s"
+msgstr "هنگام انتشار به %s خطایی رخ داد:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:827
-msgid "Script-Fu Server Options"
-msgstr "گزینه‌های کارگزار اسکریپت‌فو"
-
-#: ../plug-ins/script-fu/script-fu-server.c:832
-msgid "_Start Server"
-msgstr "آ_غاز کارگزار"
-
-#: ../plug-ins/script-fu/script-fu-server.c:865
-msgid "Listen on IP:"
-msgstr ""
-
-#: ../plug-ins/script-fu/script-fu-server.c:872
-#, fuzzy
-msgid "Server port:"
-msgstr "درگاه کارگزار:"
-
-#: ../plug-ins/script-fu/script-fu-server.c:878
-#, fuzzy
-msgid "Server logfile:"
-msgstr "پروندهٔ ثبتی کارگزار:"
-
-#: ../plug-ins/script-fu/script-fu-server.c:890
-msgid ""
-"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
-"allow attackers to remotely execute arbitrary code on this machine."
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+#: plug-ins/script-fu/scripts/add-bevel.scm:76
 msgid "Bumpmap"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:185
+#: plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add B_evel..."
 msgstr "اضافه کردن لبهٔ _پخ..."
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:186
+#: plug-ins/script-fu/scripts/add-bevel.scm:190
+#, fuzzy
 msgid "Add a beveled border to an image"
-msgstr ""
+msgstr "روی تصویری کلیک کنید تا رنگ به تخته‌رنگش اضافه شود"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:193
+#: plug-ins/script-fu/scripts/add-bevel.scm:197
 msgid "Thickness"
 msgstr "ضخامت"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:194
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
-#: ../plug-ins/script-fu/scripts/old-photo.scm:104
-#: ../plug-ins/script-fu/scripts/round-corners.scm:143
-#: ../plug-ins/script-fu/scripts/slide.scm:248
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
+#: plug-ins/script-fu/scripts/add-bevel.scm:198
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
+#: plug-ins/script-fu/scripts/old-photo.scm:104
+#: plug-ins/script-fu/scripts/round-corners.scm:145
+#: plug-ins/script-fu/scripts/slide.scm:257
+#: plug-ins/script-fu/scripts/spinning-globe.scm:107
 msgid "Work on copy"
 msgstr "کار روی رونوشت"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:195
+#: plug-ins/script-fu/scripts/add-bevel.scm:199
 msgid "Keep bump layer"
 msgstr "نگه داشتن لایهٔ برآمدگی"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:108
+#: plug-ins/script-fu/scripts/addborder.scm:108
 #, fuzzy
 msgid "Border Layer"
-msgstr "اندازهٔ کناره"
+msgstr "_حاشیه:"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:160
+#: plug-ins/script-fu/scripts/addborder.scm:162
 msgid "Add _Border..."
 msgstr "اضافه کردن _کناره..."
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:161
+#: plug-ins/script-fu/scripts/addborder.scm:163
+#, fuzzy
 msgid "Add a border around an image"
-msgstr ""
+msgstr "مرز دور نوار پیشرفت"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:168
+#: plug-ins/script-fu/scripts/addborder.scm:170
 msgid "Border X size"
 msgstr "اندازهٔ X کناره"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:169
+#: plug-ins/script-fu/scripts/addborder.scm:171
 msgid "Border Y size"
 msgstr "اندازهٔ Y کناره"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:170
+#: plug-ins/script-fu/scripts/addborder.scm:172
 msgid "Border color"
 msgstr "رنگ کناره"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:171
+#: plug-ins/script-fu/scripts/addborder.scm:173
 msgid "Delta value on color"
 msgstr "مقدار دلتای رنگ"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:206
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+#: plug-ins/script-fu/scripts/blend-anim.scm:206
 msgid "Frame"
 msgstr "چهارچوب"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+#: plug-ins/script-fu/scripts/blend-anim.scm:222
 msgid "Blend Animation needs at least three source layers"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+#: plug-ins/script-fu/scripts/blend-anim.scm:228
 msgid "_Blend..."
 msgstr "_ترکیب..."
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+#: plug-ins/script-fu/scripts/blend-anim.scm:229
 msgid ""
-"Create intermediate layers to blend two or more layers over a background as "
-"an animation"
+"Create intermediate layers to blend two or more layers over a background as an "
+"animation"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:236
+#: plug-ins/script-fu/scripts/blend-anim.scm:236
 msgid "Intermediate frames"
 msgstr "چهارچوب‌های میانی"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:237
+#: plug-ins/script-fu/scripts/blend-anim.scm:237
 msgid "Max. blur radius"
 msgstr "حداکثر شعاع مه‌آلودگی"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+#: plug-ins/script-fu/scripts/blend-anim.scm:238
 msgid "Looped"
 msgstr "حلقه"
 
 #. --- false form of "if-1"
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:212
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:217
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:219
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:224
+#, fuzzy
 msgid "B_urn-In..."
-msgstr ""
+msgstr "<b>حوزه</b>"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:220
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:225
 msgid ""
-"Create intermediate layers to produce an animated 'burn-in' transition "
-"between two layers"
+"Create intermediate layers to produce an animated 'burn-in' transition between "
+"two layers"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:227
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:232
 msgid "Glow color"
 msgstr "رنگ درخشش"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:228
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:233
 msgid "Fadeout"
 msgstr "محو شدن"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:229
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:234
 msgid "Fadeout width"
 msgstr "عرض ناحیهٔ محو شدن"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:230
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:235
 msgid "Corona width"
 msgstr "عرض هاله"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:231
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:236
 msgid "After glow"
 msgstr "بعد از درخشش"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:237
 msgid "Add glowing"
 msgstr "اضافه کردن درخشش"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:238
 msgid "Prepare for GIF"
 msgstr "آماده‌سازی برای GIF"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:239
 msgid "Speed (pixels/frame)"
 msgstr "سرعت (به نقطه در چهارچوب)"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:168
+#: plug-ins/script-fu/scripts/carve-it.scm:205
+#, fuzzy
 msgid "Carved Surface"
-msgstr ""
+msgstr "سطح"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:169
+#: plug-ins/script-fu/scripts/carve-it.scm:206
 #, fuzzy
 msgid "Bevel Shadow"
-msgstr "سایه"
+msgstr "پالایهٔ نور و سایه"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:170
+#: plug-ins/script-fu/scripts/carve-it.scm:207
 #, fuzzy
 msgid "Bevel Highlight"
-msgstr "عرض لبهٔ پخ"
+msgstr "آغاز برجسته سازی"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:171
+#: plug-ins/script-fu/scripts/carve-it.scm:208
 #, fuzzy
 msgid "Cast Shadow"
-msgstr "ایجاد سایه"
+msgstr "پالایهٔ نور و سایه"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:172
+#: plug-ins/script-fu/scripts/carve-it.scm:209
 msgid "Inset"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:182
+#: plug-ins/script-fu/scripts/carve-it.scm:221
 #, fuzzy
 msgid "Stencil C_arve..."
-msgstr "_حک کردن..."
+msgstr "_سی/سی++"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:183
-msgid ""
-"Use the specified drawable as a stencil to carve from the specified image."
+#: plug-ins/script-fu/scripts/carve-it.scm:222
+msgid "Use the specified drawable as a stencil to carve from the specified image."
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:190
+#: plug-ins/script-fu/scripts/carve-it.scm:229
 msgid "Image to carve"
 msgstr "تصویری که حک شود"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:191
+#: plug-ins/script-fu/scripts/carve-it.scm:230
 msgid "Carve white areas"
 msgstr "حک کردن ناحیه‌های سفید"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:103
-#, fuzzy
+#: plug-ins/script-fu/scripts/chrome-it.scm:95
 msgid "Background"
-msgstr "رنگ پس‌زمینه"
+msgstr "پس‌زمینه"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:104
+#: plug-ins/script-fu/scripts/chrome-it.scm:96
+#, fuzzy
 msgid "Layer 1"
-msgstr ""
+msgstr "_لایه"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:105
+#: plug-ins/script-fu/scripts/chrome-it.scm:97
+#, fuzzy
 msgid "Layer 2"
-msgstr ""
+msgstr "_لایه"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:106
+#: plug-ins/script-fu/scripts/chrome-it.scm:98
+#, fuzzy
 msgid "Layer 3"
-msgstr ""
+msgstr "+۳"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:107
+#: plug-ins/script-fu/scripts/chrome-it.scm:99
 #, fuzzy
 msgid "Drop Shadow"
-msgstr "سایه‌نما"
+msgstr "پالایهٔ نور و سایه"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:201
-#, fuzzy
+#: plug-ins/script-fu/scripts/chrome-it.scm:226
 msgid "Chrome"
-msgstr "_کروم..."
+msgstr "کروم"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:202
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:68
-#, fuzzy
+#: plug-ins/script-fu/scripts/chrome-it.scm:227
+#: plug-ins/script-fu/scripts/xach-effect.scm:68
 msgid "Highlight"
-msgstr "رنگ روشنایی"
+msgstr "برجسته سازی"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:214
+#: plug-ins/script-fu/scripts/chrome-it.scm:241
 #, fuzzy
 msgid "Stencil C_hrome..."
-msgstr "_کروم..."
+msgstr "_سی/سی++"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:215
+#: plug-ins/script-fu/scripts/chrome-it.scm:242
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:222
+#: plug-ins/script-fu/scripts/chrome-it.scm:249
 msgid "Chrome saturation"
 msgstr "اشباع کروم"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:223
+#: plug-ins/script-fu/scripts/chrome-it.scm:250
 msgid "Chrome lightness"
 msgstr "روشنایی کروم"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:224
+#: plug-ins/script-fu/scripts/chrome-it.scm:251
 msgid "Chrome factor"
 msgstr "درجهٔ کروم"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:225
+#: plug-ins/script-fu/scripts/chrome-it.scm:252
 msgid "Environment map"
 msgstr "نقشهٔ محیط"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:228
+#: plug-ins/script-fu/scripts/chrome-it.scm:255
 msgid "Highlight balance"
 msgstr "موازنهٔ نواحی روشن"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:229
+#: plug-ins/script-fu/scripts/chrome-it.scm:256
 msgid "Chrome balance"
 msgstr "موازنهٔ کروم"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:230
+#: plug-ins/script-fu/scripts/chrome-it.scm:257
 msgid "Chrome white areas"
 msgstr "لعاب کروم دادن نواحی سفید"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:81
-#, fuzzy
+#: plug-ins/script-fu/scripts/circuit.scm:74
 msgid "Effect layer"
-msgstr "لایه‌ٔ جدید"
+msgstr "لایهٔ‌جلوه"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:134
+#: plug-ins/script-fu/scripts/circuit.scm:131
 msgid "_Circuit..."
 msgstr "_مدار..."
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:135
+#: plug-ins/script-fu/scripts/circuit.scm:132
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:142
+#: plug-ins/script-fu/scripts/circuit.scm:139
+#, fuzzy
 msgid "Oilify mask size"
-msgstr ""
+msgstr "نقاب گزینش"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:143
+#: plug-ins/script-fu/scripts/circuit.scm:140
 msgid "Circuit seed"
 msgstr "هستهٔ مدار"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:144
+#: plug-ins/script-fu/scripts/circuit.scm:141
 msgid "No background (only for separate layer)"
 msgstr "بدون پس‌زمینه (فقط برای لایهٔ خاص)"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:145
-#: ../plug-ins/script-fu/scripts/lava.scm:129
-#: ../plug-ins/script-fu/scripts/predator.scm:132
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+#: plug-ins/script-fu/scripts/circuit.scm:142
+#: plug-ins/script-fu/scripts/lava.scm:141
+#: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Keep selection"
 msgstr "انتخاب حفظ شود"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:146
-#: ../plug-ins/script-fu/scripts/lava.scm:130
-#: ../plug-ins/script-fu/scripts/predator.scm:133
+#: plug-ins/script-fu/scripts/circuit.scm:143
+#: plug-ins/script-fu/scripts/lava.scm:142
 msgid "Separate layer"
 msgstr "لایه‌ٔ جدید"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:51
+#: plug-ins/script-fu/scripts/clothify.scm:52
 msgid "_Clothify..."
 msgstr "_پارچه‌کاری..."
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:52
+#: plug-ins/script-fu/scripts/clothify.scm:53
 msgid "Add a cloth-like texture to the selected region (or alpha)"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:59
+#: plug-ins/script-fu/scripts/clothify.scm:60
 msgid "Blur X"
 msgstr "مه‌آلودگی X"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:60
+#: plug-ins/script-fu/scripts/clothify.scm:61
 msgid "Blur Y"
 msgstr "مه‌آلودگی Y"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:61
+#: plug-ins/script-fu/scripts/clothify.scm:62
 msgid "Azimuth"
 msgstr "آزیموت"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:62
+#: plug-ins/script-fu/scripts/clothify.scm:63
 msgid "Elevation"
 msgstr "ارتفاع"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:63
+#: plug-ins/script-fu/scripts/clothify.scm:64
 msgid "Depth"
 msgstr "عمق"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:36
+#: plug-ins/script-fu/scripts/coffee.scm:36
 #, fuzzy
 msgid "Stain"
 msgstr "لکه"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:81
+#: plug-ins/script-fu/scripts/coffee.scm:82
 msgid "_Coffee Stain..."
 msgstr "لکهٔ _قهوه..."
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:82
+#: plug-ins/script-fu/scripts/coffee.scm:83
 msgid "Add realistic looking coffee stains to the image"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:89
+#: plug-ins/script-fu/scripts/coffee.scm:90
 msgid "Stains"
 msgstr "لکه"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:90
+#: plug-ins/script-fu/scripts/coffee.scm:91
 #, fuzzy
 msgid "Darken only"
-msgstr "رنگ تیره"
+msgstr "فقط"
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:67
-msgid "Difference Clouds..."
-msgstr ""
+#: plug-ins/script-fu/scripts/difference-clouds.scm:70
+#, fuzzy
+msgid "_Difference Clouds..."
+msgstr "تفاوت"
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:68
+#: plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:102
+#: plug-ins/script-fu/scripts/distress-selection.scm:105
 #, fuzzy
 msgid "_Distort..."
-msgstr "_مدار..."
+msgstr "پالایهٔ تحریف"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:103
+#: plug-ins/script-fu/scripts/distress-selection.scm:106
 #, fuzzy
 msgid "Distress the selection"
-msgstr "_تنگ کردن انتخاب"
+msgstr "بدون گزینش"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:110
+#: plug-ins/script-fu/scripts/distress-selection.scm:113
 #, fuzzy
-msgid "Threshold (bigger 1<-->254 smaller)"
+msgid "_Threshold (bigger 1<-->254 smaller)"
 msgstr "حد نصاب (بزرگتر ۱<-->۲۵۵ کوچکتر)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:111
-msgid "Spread"
+#: plug-ins/script-fu/scripts/distress-selection.scm:114
+#, fuzzy
+#| msgid "Spread"
+msgid "_Spread"
 msgstr "پراکندگی"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:112
-msgid "Granularity (1 is low)"
-msgstr "دانه‌دانگی (۱ یعنی کم)"
-
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-msgid "Smooth"
-msgstr "هموار"
-
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
-msgid "Smooth horizontally"
-msgstr "همواری افقی"
-
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
-msgid "Smooth vertically"
-msgstr "همواری عمودی"
-
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
+#: plug-ins/script-fu/scripts/distress-selection.scm:115
 #, fuzzy
-msgid "_Drop Shadow..."
-msgstr "_سایه‌نما..."
+#| msgid "Granularity (1 is low)"
+msgid "_Granularity (1 is low)"
+msgstr "پایین"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+#: plug-ins/script-fu/scripts/distress-selection.scm:116
+#, fuzzy
+#| msgid "Smooth"
+msgid "S_mooth"
+msgstr "«%s»"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:117
+#, fuzzy
+#| msgid "Smooth horizontally"
+msgid "Smooth hor_izontally"
+msgstr "نرم"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:118
+#, fuzzy
+#| msgid "Smooth vertically"
+msgid "Smooth _vertically"
+msgstr "نرم"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:170
+#, fuzzy
+msgid "_Drop Shadow (legacy)..."
+msgstr "پالایهٔ نور و سایه"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:171
 msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
+#: plug-ins/script-fu/scripts/drop-shadow.scm:178
 msgid "Offset X"
 msgstr "فاصلهٔ X"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
+#: plug-ins/script-fu/scripts/drop-shadow.scm:179
 msgid "Offset Y"
 msgstr "فاصلهٔ Y"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
-#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+#: plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:208
+#: plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Blur radius"
 msgstr "شعاع مه‌آلودگی"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+#: plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:157
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:209
 msgid "Color"
 msgstr "رنگ"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
+#: plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:210
 msgid "Opacity"
 msgstr "شفافیت"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
+#: plug-ins/script-fu/scripts/drop-shadow.scm:183
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:212
 msgid "Allow resizing"
 msgstr "تغییر اندازه مجاز باشد"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:39
+#: plug-ins/script-fu/scripts/erase-rows.scm:42
+#, fuzzy
+msgid "_Erase Every Nth Row..."
+msgstr "_پاک کردن یک سطر در میان..."
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:43
+#, fuzzy
+msgid "Erase every nth row or column"
+msgstr "_پاک کردن یک سطر در میان..."
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:50
+#: plug-ins/script-fu/scripts/erase-rows.scm:65
+msgid "Rows/cols"
+msgstr "سطرها/ستون‌ها"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:50
+#: plug-ins/script-fu/scripts/erase-rows.scm:65
+msgid "Rows"
+msgstr "سطرها"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:50
+#: plug-ins/script-fu/scripts/erase-rows.scm:65
+msgid "Columns"
+msgstr "ستون‌ها"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:52
+#: plug-ins/script-fu/scripts/erase-rows.scm:67
+msgid "Erase/fill"
+msgstr "پاک کردن/رنگ‌آمیزی"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:52
+#: plug-ins/script-fu/scripts/erase-rows.scm:67
+msgid "Erase"
+msgstr "پاک کردن"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:52
+#: plug-ins/script-fu/scripts/erase-rows.scm:67
+msgid "Fill with BG"
+msgstr "رنگ‌آمیزی با پس‌زمینه"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:57
 #, fuzzy
 msgid "_Erase Every Other Row..."
 msgstr "_پاک کردن یک سطر در میان..."
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:40
+#: plug-ins/script-fu/scripts/erase-rows.scm:58
 #, fuzzy
 msgid "Erase every other row or column"
 msgstr "_پاک کردن یک سطر در میان..."
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
-msgid "Rows/cols"
-msgstr "سطرها/ستون‌ها"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
-msgid "Rows"
-msgstr "سطرها"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
-msgid "Columns"
-msgstr "ستون‌ها"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+#: plug-ins/script-fu/scripts/erase-rows.scm:66
 msgid "Even/odd"
 msgstr "زوج/فرد"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+#: plug-ins/script-fu/scripts/erase-rows.scm:66
 msgid "Even"
 msgstr "زوج"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+#: plug-ins/script-fu/scripts/erase-rows.scm:66
 msgid "Odd"
 msgstr "فرد"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
-msgid "Erase/fill"
-msgstr "پاک کردن/رنگ‌آمیزی"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
-msgid "Erase"
-msgstr "پاک کردن"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
-msgid "Fill with BG"
-msgstr "رنگ‌آمیزی با پس‌زمینه"
-
-#: ../plug-ins/script-fu/scripts/font-map.scm:152
+#: plug-ins/script-fu/scripts/font-map.scm:161
 #, fuzzy
 msgid "Render _Font Map..."
-msgstr "رسم ن_قشه..."
+msgstr "سطح مورد پرداخت"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:153
-msgid ""
-"Create an image filled with previews of fonts matching a fontname filter"
+#: plug-ins/script-fu/scripts/font-map.scm:162
+msgid "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
-"ایجاد تصویری که از پیش‌نمایش قلم‌هایی تشکیل شده که در صافی‌ای برای نام قلم‌ها "
-"صدق می‌کنند"
+"ایجاد تصویری که از پیش‌نمایش قلم‌هایی تشکیل شده که در صافی‌ای برای نام قلم‌ها صدق "
+"می‌کنند"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:158
+#: plug-ins/script-fu/scripts/font-map.scm:167
 msgid "_Text"
 msgstr "م_تن"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:159
+#: plug-ins/script-fu/scripts/font-map.scm:168
 msgid "Use font _name as text"
 msgstr "استفاده از _نام قلم به عنوان متن"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:160
+#: plug-ins/script-fu/scripts/font-map.scm:169
 msgid "_Labels"
 msgstr "بر_چسب‌ها"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:161
+#: plug-ins/script-fu/scripts/font-map.scm:170
 msgid "_Filter (regexp)"
 msgstr "_صافی (عبارت منظم)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:162
+#: plug-ins/script-fu/scripts/font-map.scm:171
 msgid "Font _size (pixels)"
 msgstr "ا_ندازهٔ قلم (به نقطه)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:163
+#: plug-ins/script-fu/scripts/font-map.scm:172
 msgid "_Border (pixels)"
 msgstr "_کناره‌ها (به نقطه)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "_Color scheme"
 msgstr "_شِمای رنگی"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "Black on white"
 msgstr "سیاه در زمینهٔ سفید"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "Active colors"
 msgstr "رنگ‌های فعال"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:146
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:149
 msgid "_Fuzzy Border..."
 msgstr "کنارهٔ _تار..."
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:147
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:150
 msgid "Add a jagged, fuzzy border to an image"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:155
-#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:158
+#: plug-ins/script-fu/scripts/old-photo.scm:98
 msgid "Border size"
 msgstr "اندازهٔ کناره"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:156
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:159
 msgid "Blur border"
 msgstr "مه‌آلود کردن کناره"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:160
 msgid "Granularity (1 is Low)"
 msgstr "دانه‌دانگی (۱ یعنی کم)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:161
 msgid "Add shadow"
 msgstr "اضافه کردن سایه"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:162
 msgid "Shadow weight (%)"
 msgstr "وزن سایه (%)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:164
 msgid "Flatten image"
 msgstr "مسطح ساختن تصویر"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: plug-ins/script-fu/scripts/gimp-online.scm:59
+#, fuzzy
 msgid "Using _Paths"
-msgstr ""
+msgstr "مسیرها"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/gimp-online.scm:60
+#: plug-ins/script-fu/scripts/gimp-online.scm:73
+#: plug-ins/script-fu/scripts/gimp-online.scm:86
+#: plug-ins/script-fu/scripts/gimp-online.scm:99
+#: plug-ins/script-fu/scripts/gimp-online.scm:112
+#: plug-ins/script-fu/scripts/gimp-online.scm:125
+#: plug-ins/script-fu/scripts/gimp-online.scm:138
+#: plug-ins/script-fu/scripts/gimp-online.scm:151
+#, fuzzy
 msgid "Bookmark to the user manual"
-msgstr ""
+msgstr "راهنمای کاربری گیمپ"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: plug-ins/script-fu/scripts/gimp-online.scm:72
+#, fuzzy
 msgid "_Preparing your Images for the Web"
-msgstr ""
+msgstr "مرورگر وب پیش‌گزیده‌تان را تغییر دهید."
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/gimp-online.scm:85
+#, fuzzy
 msgid "_Working with Digital Camera Photos"
-msgstr ""
+msgstr "picture;photos;camera;عکس:نگاره:تصویر:دوربین;"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: plug-ins/script-fu/scripts/gimp-online.scm:98
+#, fuzzy
 msgid "Create, Open and Save _Files"
-msgstr ""
+msgstr "گشودن، تغییر و ایجاد پرونده‌های بایگانی فشرده"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: plug-ins/script-fu/scripts/gimp-online.scm:111
+#, fuzzy
 msgid "_Basic Concepts"
-msgstr ""
+msgstr "مفاهیم"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: plug-ins/script-fu/scripts/gimp-online.scm:124
+#, fuzzy
 msgid "How to Use _Dialogs"
-msgstr ""
+msgstr "محاوره‌ها"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#, fuzzy
 msgid "Drawing _Simple Objects"
-msgstr ""
+msgstr "ساده"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/gimp-online.scm:150
 #, fuzzy
 msgid "Create and Use _Selections"
-msgstr "انتخاب حفظ شود"
+msgstr "گزینش‌ها"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+#: plug-ins/script-fu/scripts/gimp-online.scm:186
 msgid "_Main Web Site"
 msgstr "وب‌گاه _اصلی"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
+#: plug-ins/script-fu/scripts/gimp-online.scm:187
+#: plug-ins/script-fu/scripts/gimp-online.scm:200
+#: plug-ins/script-fu/scripts/gimp-online.scm:239
+#, fuzzy
 msgid "Bookmark to the GIMP web site"
-msgstr ""
+msgstr "پایگاه وب کتاب‌خانهٔ گنوم"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: plug-ins/script-fu/scripts/gimp-online.scm:199
 msgid "_Developer Web Site"
 msgstr "وب‌گاه _برنامه‌سازان"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+#: plug-ins/script-fu/scripts/gimp-online.scm:212
+msgid "_Roadmaps"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:213
+#, fuzzy
+msgid "Bookmark to the roadmaps of GIMP"
+msgstr "نشانک"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:225
+msgid "_Bug Reports and Feature Requests"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:226
+#, fuzzy
+msgid "Bookmark to the bug tracker of GIMP"
+msgstr "ردیاب اشکال"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:238
 #, fuzzy
 msgid "_User Manual Web Site"
-msgstr "وب‌گاه _اصلی"
+msgstr "پایگاه وب کتاب‌خانهٔ گنوم"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Plug-in _Registry"
-msgstr "_ثبت‌نام متصل‌شونده"
-
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:63
+#: plug-ins/script-fu/scripts/gradient-example.scm:69
 msgid "Custom _Gradient..."
 msgstr "_طیف سفارشی..."
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:64
+#: plug-ins/script-fu/scripts/gradient-example.scm:70
 #, fuzzy
 msgid "Create an image filled with an example of the current gradient"
 msgstr "ایجاد تصویری با الگوی استتاری"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:69
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:138
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:194
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:263
+#: plug-ins/script-fu/scripts/gradient-example.scm:75
+#: plug-ins/script-fu/scripts/mkbrush.scm:70
+#: plug-ins/script-fu/scripts/mkbrush.scm:140
+#: plug-ins/script-fu/scripts/mkbrush.scm:196
+#: plug-ins/script-fu/scripts/mkbrush.scm:265
 msgid "Width"
 msgstr "عرض"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+#: plug-ins/script-fu/scripts/gradient-example.scm:76
+#: plug-ins/script-fu/scripts/mkbrush.scm:71
+#: plug-ins/script-fu/scripts/mkbrush.scm:141
+#: plug-ins/script-fu/scripts/mkbrush.scm:197
+#: plug-ins/script-fu/scripts/mkbrush.scm:266
 msgid "Height"
 msgstr "ارتفاع"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:71
+#: plug-ins/script-fu/scripts/gradient-example.scm:77
 msgid "Gradient reverse"
 msgstr "معکوس طیف"
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm:84
+#: plug-ins/script-fu/scripts/grid-system.scm:84
 msgid "_Grid..."
 msgstr "_توری..."
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm:85
+#: plug-ins/script-fu/scripts/grid-system.scm:85
 msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm:92
+#: plug-ins/script-fu/scripts/grid-system.scm:92
 msgid "X divisions"
 msgstr "تقسیمات X"
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm:93
+#: plug-ins/script-fu/scripts/grid-system.scm:93
 msgid "Y divisions"
 msgstr "تقسیمات Y"
 
-#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
 msgstr "راهنمای جدید از _انتخاب"
 
-#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
 #, fuzzy
 msgid "Create four guides around the bounding box of the current selection"
 msgstr "چهار راهنما در اطراف مربع محدودکنندهٔ انتخاب فعلی ایجاد می‌کند."
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
 msgstr "راهنمای جدید (از _درصد)..."
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:28
 msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
-msgid "Direction"
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: plug-ins/script-fu/scripts/guides-new.scm:35
+#, fuzzy
+#| msgid "Direction"
+msgid "_Direction"
 msgstr "جهت"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Horizontal"
 msgstr "افقی"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Vertical"
 msgstr "عمودی"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
-msgid "Position (in %)"
-msgstr "موقعیت (به درصد)"
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#, fuzzy
+#| msgid "Position (in %)"
+msgid "_Position (in %)"
+msgstr "جایگاه"
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:27
+#: plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "New _Guide..."
-msgstr "_راهنمای جدید"
+msgstr "_راهنمای جدید..."
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:28
+#: plug-ins/script-fu/scripts/guides-new.scm:28
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:36
-msgid "Position"
-msgstr "موقعیت"
+#: plug-ins/script-fu/scripts/guides-new.scm:36
+#, fuzzy
+#| msgid "Position"
+msgid "_Position"
+msgstr "جایگاه"
 
-#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+#: plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
 msgstr "_حذف همهٔ راهنماها"
 
-#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+#: plug-ins/script-fu/scripts/guides-remove-all.scm:20
 msgid "Remove all horizontal and vertical guides"
 msgstr "حذف همهٔ راهنماهای افقی و عمودی"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:117
+#. else
+#: plug-ins/script-fu/scripts/lava.scm:123
+msgid "Lava works with exactly one selected layer"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm:129
 msgid "_Lava..."
 msgstr "_گدازه..."
 
-#: ../plug-ins/script-fu/scripts/lava.scm:118
+#: plug-ins/script-fu/scripts/lava.scm:130
+#, fuzzy
 msgid "Fill the current selection with lava"
-msgstr ""
+msgstr "رنگ‌آمیزی همهٔ گزینش"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:125
+#: plug-ins/script-fu/scripts/lava.scm:137
 msgid "Seed"
 msgstr "هسته"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:126
+#: plug-ins/script-fu/scripts/lava.scm:138
 msgid "Size"
 msgstr "اندازه"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:127
+#: plug-ins/script-fu/scripts/lava.scm:139
 msgid "Roughness"
 msgstr "زبری"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:128
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+#: plug-ins/script-fu/scripts/lava.scm:140
 msgid "Gradient"
 msgstr "طیف"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:131
+#: plug-ins/script-fu/scripts/lava.scm:143
 msgid "Use current gradient"
 msgstr "استفاده از طیف فعلی"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:106
+#: plug-ins/script-fu/scripts/line-nova.scm:106
+#, fuzzy
 msgid "Line _Nova..."
-msgstr ""
+msgstr "نوواسکوشا"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:107
+#: plug-ins/script-fu/scripts/line-nova.scm:107
 msgid ""
-"Fill a layer with rays emanating outward from its center using the "
-"foreground color"
+"Fill a layer with rays emanating outward from its center using the foreground "
+"color"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:114
+#: plug-ins/script-fu/scripts/line-nova.scm:114
 msgid "Number of lines"
 msgstr "تعداد سطرها"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:115
+#: plug-ins/script-fu/scripts/line-nova.scm:115
 msgid "Sharpness (degrees)"
 msgstr "تیزی (درجه)"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:116
+#: plug-ins/script-fu/scripts/line-nova.scm:116
 msgid "Offset radius"
 msgstr "شعاع فاصله"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:117
+#: plug-ins/script-fu/scripts/line-nova.scm:117
 msgid "Randomness"
 msgstr "تصادفی بودن"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+#: plug-ins/script-fu/scripts/mkbrush.scm:63
 msgid "_Rectangular..."
 msgstr "مست_طیلی..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+#: plug-ins/script-fu/scripts/mkbrush.scm:64
+#, fuzzy
 msgid "Create a rectangular brush"
-msgstr ""
+msgstr "ایجاد یک قلم‌موی مای‌پینت جدید"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:69
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:137
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:193
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:262
+#: plug-ins/script-fu/scripts/mkbrush.scm:69
+#: plug-ins/script-fu/scripts/mkbrush.scm:139
+#: plug-ins/script-fu/scripts/mkbrush.scm:195
+#: plug-ins/script-fu/scripts/mkbrush.scm:264
 msgid "Name"
 msgstr "نام"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:72
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+#: plug-ins/script-fu/scripts/mkbrush.scm:72
+#: plug-ins/script-fu/scripts/mkbrush.scm:143
+#: plug-ins/script-fu/scripts/mkbrush.scm:198
+#: plug-ins/script-fu/scripts/mkbrush.scm:268
 msgid "Spacing"
 msgstr "فاصله‌گذاری"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:131
+#: plug-ins/script-fu/scripts/mkbrush.scm:133
 msgid "Re_ctangular, Feathered..."
 msgstr "مرب_عی، پَردار..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:132
+#: plug-ins/script-fu/scripts/mkbrush.scm:134
 msgid "Create a rectangular brush with feathered edges"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+#: plug-ins/script-fu/scripts/mkbrush.scm:142
+#: plug-ins/script-fu/scripts/mkbrush.scm:267
 msgid "Feathering"
 msgstr "در حال نصب پَر"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:187
+#: plug-ins/script-fu/scripts/mkbrush.scm:189
 msgid "_Elliptical..."
 msgstr "_بیضوی..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:188
+#: plug-ins/script-fu/scripts/mkbrush.scm:190
+#, fuzzy
 msgid "Create an elliptical brush"
-msgstr ""
+msgstr "ایجاد یک قلم‌موی مای‌پینت جدید"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:256
+#: plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Elli_ptical, Feathered..."
 msgstr "بی_ضوی، پَردار..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:257
+#: plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Create an elliptical brush with feathered edges"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:89
+#: plug-ins/script-fu/scripts/old-photo.scm:89
 msgid "_Old Photo..."
 msgstr "عکس _کهنه..."
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:90
+#: plug-ins/script-fu/scripts/old-photo.scm:90
 msgid "Make an image look like an old photo"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:97
+#: plug-ins/script-fu/scripts/old-photo.scm:97
 msgid "Defocus"
 msgstr "تار کردن"
 
 #. since this plug-in uses the fuzzy-border plug-in, I used the
 #. values of the latter, with the exception of the initial value
 #. and the 'minimum' value.
-#: ../plug-ins/script-fu/scripts/old-photo.scm:102
+#: plug-ins/script-fu/scripts/old-photo.scm:102
 msgid "Sepia"
 msgstr "سِپیا"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:103
+#: plug-ins/script-fu/scripts/old-photo.scm:103
 msgid "Mottle"
 msgstr "خال‌مخالی"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+#: plug-ins/script-fu/scripts/palette-export.scm:226
+#, fuzzy
 msgid "Folder for the output file"
-msgstr ""
+msgstr "نام پروندهٔ خروجی"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:236
+#: plug-ins/script-fu/scripts/palette-export.scm:227
 msgid ""
-"The name of the file to create (if a file with this name already exist, it "
-"will be replaced)"
+"The name of the file to create (if a file with this name already exist, it will "
+"be replaced)"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:244
+#: plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:246
+#: plug-ins/script-fu/scripts/palette-export.scm:237
 msgid ""
-"All characters in the name are either white-spaces or characters which can "
-"not appear in filenames."
+"All characters in the name are either white-spaces or characters which can not "
+"appear in filenames."
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:274
+#: plug-ins/script-fu/scripts/palette-export.scm:264
+#, fuzzy
+msgid "_CSS stylesheet..."
+msgstr "استفاده از برگهٔ سبک سفارشی"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
-"Export the active palette as a CSS stylesheet with the color entry name as "
-"their class name, and the color itself as the color attribute"
+"Export the active palette as a CSS stylesheet with the color entry name as their "
+"class name, and the color itself as the color attribute"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:300
+#: plug-ins/script-fu/scripts/palette-export.scm:290
+#, fuzzy
+msgid "P_HP dictionary..."
+msgstr "واژه‌نامهٔ تلفّظ"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:332
+#: plug-ins/script-fu/scripts/palette-export.scm:322
+#, fuzzy
+msgid "_Python dictionary..."
+msgstr "_پایتون"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:361
+#: plug-ins/script-fu/scripts/palette-export.scm:351
+#, fuzzy
+#| msgid "Text C_ircle..."
+msgid "_Text file..."
+msgstr "پروندهٔ متنی"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
-"Write all the colors in a palette to a text file, one hexadecimal value per "
-"line (no names)"
+"Write all the colors in a palette to a text file, one hexadecimal value per line "
+"(no names)"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:408
-msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+#: plug-ins/script-fu/scripts/palette-export.scm:398
+#, fuzzy
+msgid "J_ava map..."
+msgstr "نقشهٔ آشنایان"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:399
+msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
 msgid "There is no image data in the clipboard to paste."
-msgstr ""
+msgstr "دادهٔ تصویری‌ای در تخته‌گیره نیست تا چسبانده شود."
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
-msgid "New _Brush..."
-msgstr "_قلم‌موی جدید..."
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
+#, fuzzy
+#| msgid "New _Brush..."
+msgid "Paste as New _Brush..."
+msgstr "ایجاد یک قلم‌موی جدید"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
 msgid "Paste the clipboard contents into a new brush"
 msgstr "چسباندن محتویات تخته‌گیره در یک قلم‌موی جدید"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
-msgid "Brush name"
-msgstr "نام قلم‌مو"
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/select-to-brush.scm:145
+msgid "_Brush name"
+msgstr "نام _قلم‌مو"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
-msgid "File name"
-msgstr "نام پرونده"
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/select-to-brush.scm:146
+#: plug-ins/script-fu/scripts/select-to-pattern.scm:107
+msgid "_File name"
+msgstr "نام _پرونده"
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
-msgid "New _Pattern..."
-msgstr "ا_لگوی جدید..."
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:72
+#: plug-ins/script-fu/scripts/select-to-brush.scm:147
+msgid "_Spacing"
+msgstr "_فاصله‌گذاری"
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
+msgid "Paste as New _Pattern..."
+msgstr "جایگذاری به عنوان _الگویی جدید..."
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:53
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "چسباندن محتویات تخته‌گیره در یک الگوی جدید"
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-msgid "Pattern name"
-msgstr "نام الگو"
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/select-to-pattern.scm:106
+msgid "_Pattern name"
+msgstr "نام _ الگو"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:197
 msgid "_Perspective..."
 msgstr "ژ_رف‌نمایی..."
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:198
 msgid "Add a perspective shadow to the selected region (or alpha)"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:205
 msgid "Angle"
 msgstr "زاویه"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:206
 msgid "Relative distance of horizon"
 msgstr "فاصلهٔ نسبی افق"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:207
 msgid "Relative length of shadow"
 msgstr "طول نسبی سایه"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:211
 msgid "Interpolation"
 msgstr "درون‌یابی"
 
-#: ../plug-ins/script-fu/scripts/predator.scm:121
-msgid "_Predator..."
-msgstr ""
+#: plug-ins/script-fu/scripts/reverse-layers.scm:42
+#, fuzzy
+msgid "Reverse Layer _Order"
+msgstr "برای معکوس کردن ترتیب:"
 
-#: ../plug-ins/script-fu/scripts/predator.scm:122
-msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/predator.scm:129
-msgid "Edge amount"
-msgstr "مقدار لبه"
-
-#: ../plug-ins/script-fu/scripts/predator.scm:130
-msgid "Pixelize"
-msgstr "نقطه نقطه کردن"
-
-#: ../plug-ins/script-fu/scripts/predator.scm:131
-msgid "Pixel amount"
-msgstr "مقدار نقطه"
-
-#: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
-msgid "Reverse Layer Order"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+#: plug-ins/script-fu/scripts/reverse-layers.scm:43
+#, fuzzy
 msgid "Reverse the order of layers in the image"
-msgstr ""
+msgstr "برای معکوس کردن ترتیب:"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:119
+#: plug-ins/script-fu/scripts/ripply-anim.scm:69
 msgid "_Rippling..."
 msgstr "_موج انداختن..."
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:120
-msgid ""
-"Create a multi-layer image by adding a ripple effect to the current image"
-msgstr ""
+#: plug-ins/script-fu/scripts/ripply-anim.scm:70
+#, fuzzy
+msgid "Create a multi-layer image by adding a ripple effect to the current layer"
+msgstr "ایجاد تصویری با الگوی استتاری"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:127
+#: plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Rippling strength"
 msgstr "شدت موج انداختن"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:128
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:105
+#: plug-ins/script-fu/scripts/ripply-anim.scm:78
+#: plug-ins/script-fu/scripts/waves-anim.scm:105
 msgid "Number of frames"
 msgstr "تعداد چهارچوب‌ها"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
-#, fuzzy
+#: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Edge behavior"
 msgstr "رفتار لبه"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Wrap"
 msgstr "پیچیدن"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Smear"
 msgstr "کم‌رنگ کردن"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Black"
 msgstr "سیاه"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+#: plug-ins/script-fu/scripts/round-corners.scm:131
 msgid "_Round Corners..."
 msgstr "گ_رد کردن گوشه‌ها..."
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+#: plug-ins/script-fu/scripts/round-corners.scm:132
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+#: plug-ins/script-fu/scripts/round-corners.scm:139
 msgid "Edge radius"
 msgstr "شعاع لبه"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+#: plug-ins/script-fu/scripts/round-corners.scm:140
 msgid "Add drop-shadow"
 msgstr "اضافه کردن سایه‌نما"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+#: plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Shadow X offset"
 msgstr "فاصلهٔ X سایه"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+#: plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Shadow Y offset"
 msgstr "فاصلهٔ Y سایه"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+#: plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Add background"
 msgstr "اضافه کردن پس‌زمینه"
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+#, fuzzy
 msgid "Se_t Colormap..."
-msgstr ""
+msgstr "نقشه‌رنگ"
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
-#, fuzzy
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
 msgid "Palette"
-msgstr "الگو"
+msgstr "تخته‌رنگ"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:139
+#: plug-ins/script-fu/scripts/selection-round.scm:139
 msgid "Rounded R_ectangle..."
 msgstr "مستطیل با گوشه‌های گرد..."
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:140
+#: plug-ins/script-fu/scripts/selection-round.scm:140
 #, fuzzy
 msgid "Round the corners of the current selection"
-msgstr "چهار راهنما در اطراف مربع محدودکنندهٔ انتخاب فعلی ایجاد می‌کند."
+msgstr "افزودن این کانال به گزینش کنونی"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:147
-msgid "Radius (%)"
-msgstr "شعاع (٪)"
+#: plug-ins/script-fu/scripts/selection-round.scm:147
+#, fuzzy
+#| msgid "Radius (%)"
+msgid "R_adius (%)"
+msgstr "_تکرار"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:148
-msgid "Concave"
-msgstr "مقعر"
+#: plug-ins/script-fu/scripts/selection-round.scm:148
+#, fuzzy
+#| msgid "Concave"
+msgid "Co_ncave"
+msgstr "اتّ_صال"
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+#: plug-ins/script-fu/scripts/select-to-brush.scm:137
 msgid "To _Brush..."
 msgstr "تبدیل به _قلم‌مو..."
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+#: plug-ins/script-fu/scripts/select-to-brush.scm:138
+#, fuzzy
 msgid "Convert a selection to a brush"
-msgstr ""
+msgstr "برای تبدیل به گزینش کلید ورود را فشار دهید"
 
-#: ../plug-ins/script-fu/scripts/select-to-image.scm:81
+#: plug-ins/script-fu/scripts/select-to-image.scm:85
 msgid "To _Image"
 msgstr "تبدیل به _تصویر"
 
-#: ../plug-ins/script-fu/scripts/select-to-image.scm:82
+#: plug-ins/script-fu/scripts/select-to-image.scm:86
+#, fuzzy
 msgid "Convert a selection to an image"
-msgstr ""
+msgstr "برای تبدیل به گزینش کلید ورود را فشار دهید"
 
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
+#: plug-ins/script-fu/scripts/select-to-pattern.scm:98
 msgid "To _Pattern..."
-msgstr "تبدیل به _ الگو"
+msgstr "به _ الگو..."
 
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
+#: plug-ins/script-fu/scripts/select-to-pattern.scm:99
+#, fuzzy
 msgid "Convert a selection to a pattern"
-msgstr ""
+msgstr "گشودن محاورهٔ گزینش الگو"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:236
+#: plug-ins/script-fu/scripts/slide.scm:245
 msgid "_Slide..."
 msgstr "ا_سلاید..."
 
-#: ../plug-ins/script-fu/scripts/slide.scm:237
+#: plug-ins/script-fu/scripts/slide.scm:246
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/slide.scm:244
+#: plug-ins/script-fu/scripts/slide.scm:253
 msgid "Text"
 msgstr "متن"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:245
+#: plug-ins/script-fu/scripts/slide.scm:254
 msgid "Number"
 msgstr "تعداد"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:246
+#: plug-ins/script-fu/scripts/slide.scm:255
 msgid "Font"
 msgstr "قلم"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:247
+#: plug-ins/script-fu/scripts/slide.scm:256
 msgid "Font color"
 msgstr "رنگ قلم"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+#: plug-ins/script-fu/scripts/spinning-globe.scm:95
 msgid "_Spinning Globe..."
 msgstr "کُرهٔ در حال _چرخش..."
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+#: plug-ins/script-fu/scripts/spinning-globe.scm:96
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+#: plug-ins/script-fu/scripts/spinning-globe.scm:103
 msgid "Frames"
 msgstr "چهارچوب‌ها"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
+#: plug-ins/script-fu/scripts/spinning-globe.scm:104
 msgid "Turn from left to right"
 msgstr "چرخاندن از چپ به راست"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
+#: plug-ins/script-fu/scripts/spinning-globe.scm:105
 msgid "Transparent background"
 msgstr "پس‌زمینهٔ شفاف"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
+#: plug-ins/script-fu/scripts/spinning-globe.scm:106
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "نمایه‌گذاری تا n رنگ (۰ = همان RGB)"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
-msgid "Rendering Spyro"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-msgid "_Spyrogimp..."
-msgstr "مارپیچ گیمپ_"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
-#, fuzzy
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr ""
-"رسم طرح مارپیچی، برون‌چرخه‌زاد و منحنی‌های لیساژو. اطلاعات بیشتر در http://"
-"netword.com/*spyrogimp"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
-msgid "Type"
-msgstr "نوع"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
-msgid "Spyrograph"
-msgstr "طرح مارپیچی"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
-msgid "Epitrochoid"
-msgstr "برون‌چرخه‌زاد"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
-msgid "Lissajous"
-msgstr "لیساژو"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
-msgid "Shape"
-msgstr "شکل"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
-msgid "Circle"
-msgstr "دایره"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
-msgid "Triangle"
-msgstr "مثلث"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
-msgid "Square"
-msgstr "مربع"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
-msgid "Pentagon"
-msgstr "پنج‌ضلعی"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
-msgid "Hexagon"
-msgstr "شش‌ضلعی"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
-msgid "Polygon: 7 sides"
-msgstr "چندضلعی: ۷ ضلع"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
-msgid "Polygon: 8 sides"
-msgstr "چندضلعی: ۸ ضلع"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
-msgid "Polygon: 9 sides"
-msgstr "چندضلعی: ۹ ضلع"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
-msgid "Polygon: 10 sides"
-msgstr "چندضلعی: ۱۰ ضلع"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
-msgid "Outer teeth"
-msgstr "دندانهٔ بیرونی"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
-msgid "Inner teeth"
-msgstr "دندانهٔ داخلی"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
-msgid "Margin (pixels)"
-msgstr "حاشیه (به نقطه)"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
-msgid "Hole ratio"
-msgstr "نسبت حفره"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
-msgid "Start angle"
-msgstr "زاویهٔ شروع"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
-msgid "Tool"
-msgstr "ابزار"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
-msgid "Pencil"
-msgstr "مداد"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
-msgid "Brush"
-msgstr "قلم‌مو"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
-msgid "Airbrush"
-msgstr "قلم رنگ‌پاش"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
-msgid "Color method"
-msgstr "روش رنگ‌آمیزی"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
-msgid "Solid Color"
-msgstr "رنگ یکدست"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
-msgid "Gradient: Loop Sawtooth"
-msgstr "طیف: حلقهٔ دندان‌ارّه‌ای"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
-msgid "Gradient: Loop Triangle"
-msgstr "طیف: حلقهٔ مثلث"
-
-#: ../plug-ins/script-fu/scripts/test-sphere.scm:267
+#: plug-ins/script-fu/scripts/test-sphere.scm:272
 msgid "_Sphere..."
 msgstr "کُر_ه..."
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:68
+#: plug-ins/script-fu/scripts/tileblur.scm:72
 msgid "_Tileable Blur..."
 msgstr "_محو موزائیکی..."
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:69
+#: plug-ins/script-fu/scripts/tileblur.scm:73
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:76
+#: plug-ins/script-fu/scripts/tileblur.scm:80
 msgid "Radius"
 msgstr "شعاع"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:77
+#: plug-ins/script-fu/scripts/tileblur.scm:81
 msgid "Blur vertically"
 msgstr "محو کردن عمودی"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:78
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "Blur horizontally"
 msgstr "محو کردن افقی"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#: plug-ins/script-fu/scripts/tileblur.scm:83
 msgid "Blur type"
 msgstr "نوع محو کردن"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#: plug-ins/script-fu/scripts/tileblur.scm:83
 msgid "IIR"
 msgstr "IIR"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#: plug-ins/script-fu/scripts/tileblur.scm:83
 msgid "RLE"
 msgstr "RLE"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:88
 msgid "Mask size"
 msgstr "اندازهٔ نقاب"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:89
 msgid "Mask opacity"
 msgstr "کدری نقاب"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+#: plug-ins/script-fu/scripts/waves-anim.scm:95
 msgid "_Waves..."
 msgstr "ا_مواج..."
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+#: plug-ins/script-fu/scripts/waves-anim.scm:96
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+#: plug-ins/script-fu/scripts/waves-anim.scm:103
 msgid "Amplitude"
 msgstr "دامنه"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:104
+#: plug-ins/script-fu/scripts/waves-anim.scm:104
 msgid "Wavelength"
 msgstr "طول موج"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+#: plug-ins/script-fu/scripts/waves-anim.scm:106
 msgid "Invert direction"
 msgstr "برعکس کردن جهت"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:389
+#: plug-ins/script-fu/scripts/weave.scm:418
 msgid "_Weave..."
 msgstr "_بافتن..."
 
-#: ../plug-ins/script-fu/scripts/weave.scm:390
+#: plug-ins/script-fu/scripts/weave.scm:419
 msgid ""
-"Create a new layer filled with a weave effect to be used as an overlay or "
-"bump map"
+"Create a new layer filled with a weave effect to be used as an overlay or bump "
+"map"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/weave.scm:397
+#: plug-ins/script-fu/scripts/weave.scm:426
 msgid "Ribbon width"
 msgstr "عرض نوار"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:398
+#: plug-ins/script-fu/scripts/weave.scm:427
 msgid "Ribbon spacing"
 msgstr "فاصله‌گذاری نوار"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:399
+#: plug-ins/script-fu/scripts/weave.scm:428
 msgid "Shadow darkness"
 msgstr "تیرگی سایه"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:400
+#: plug-ins/script-fu/scripts/weave.scm:429
 msgid "Shadow depth"
 msgstr "عمق سایه"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:401
+#: plug-ins/script-fu/scripts/weave.scm:430
 msgid "Thread length"
 msgstr "طول رشته"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:402
+#: plug-ins/script-fu/scripts/weave.scm:431
 msgid "Thread density"
 msgstr "تراکم رشته"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:403
+#: plug-ins/script-fu/scripts/weave.scm:432
 msgid "Thread intensity"
 msgstr "شدت رشته"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+#: plug-ins/script-fu/scripts/xach-effect.scm:92
 msgid "Shadow"
 msgstr "سایه"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+#: plug-ins/script-fu/scripts/xach-effect.scm:121
 msgid "_Xach-Effect..."
 msgstr "_جلوهٔ Xach..."
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+#: plug-ins/script-fu/scripts/xach-effect.scm:122
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+#: plug-ins/script-fu/scripts/xach-effect.scm:129
 msgid "Highlight X offset"
 msgstr "فاصلهٔ X روشنایی"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+#: plug-ins/script-fu/scripts/xach-effect.scm:130
 msgid "Highlight Y offset"
 msgstr "فاصلهٔ Y روشنایی"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+#: plug-ins/script-fu/scripts/xach-effect.scm:131
 msgid "Highlight color"
 msgstr "رنگ روشنایی"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+#: plug-ins/script-fu/scripts/xach-effect.scm:132
 msgid "Highlight opacity"
 msgstr "شفافیت روشنایی"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+#: plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Drop shadow color"
 msgstr "رنگ سایه"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+#: plug-ins/script-fu/scripts/xach-effect.scm:134
 msgid "Drop shadow opacity"
 msgstr "شفافیت سایه"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+#: plug-ins/script-fu/scripts/xach-effect.scm:135
 msgid "Drop shadow blur radius"
 msgstr "شعاع مه‌آلودگی سایه"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+#: plug-ins/script-fu/scripts/xach-effect.scm:136
 msgid "Drop shadow X offset"
 msgstr "فاصلهٔ X سایه"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+#: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "فاصلهٔ‌ Y سایه"
+
+#, fuzzy
+#~ msgid "_Console"
+#~ msgstr "_پیشانهٔ اسکریپت‌فو"
+
+#~ msgid "Plug-in _Registry"
+#~ msgstr "_ثبت‌نام متصل‌شونده"
+
+#~ msgid "Edge amount"
+#~ msgstr "مقدار لبه"
+
+#~ msgid "Pixelize"
+#~ msgstr "نقطه نقطه کردن"
+
+#~ msgid "Pixel amount"
+#~ msgstr "مقدار نقطه"
+
+#~ msgid "_Spyrogimp..."
+#~ msgstr "مارپیچ گیمپ_"
+
+#, fuzzy
+#~ msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+#~ msgstr ""
+#~ "رسم طرح مارپیچی، برون‌چرخه‌زاد و منحنی‌های لیساژو. اطلاعات بیشتر در http://"
+#~ "netword.com/*spyrogimp"
+
+#~ msgid "Type"
+#~ msgstr "نوع"
+
+#~ msgid "Spyrograph"
+#~ msgstr "طرح مارپیچی"
+
+#~ msgid "Epitrochoid"
+#~ msgstr "برون‌چرخه‌زاد"
+
+#~ msgid "Lissajous"
+#~ msgstr "لیساژو"
+
+#~ msgid "Shape"
+#~ msgstr "شکل"
+
+#~ msgid "Circle"
+#~ msgstr "دایره"
+
+#~ msgid "Triangle"
+#~ msgstr "مثلث"
+
+#~ msgid "Square"
+#~ msgstr "مربع"
+
+#~ msgid "Pentagon"
+#~ msgstr "پنج‌ضلعی"
+
+#~ msgid "Hexagon"
+#~ msgstr "شش‌ضلعی"
+
+#~ msgid "Polygon: 7 sides"
+#~ msgstr "چندضلعی: ۷ ضلع"
+
+#~ msgid "Polygon: 8 sides"
+#~ msgstr "چندضلعی: ۸ ضلع"
+
+#~ msgid "Polygon: 9 sides"
+#~ msgstr "چندضلعی: ۹ ضلع"
+
+#~ msgid "Polygon: 10 sides"
+#~ msgstr "چندضلعی: ۱۰ ضلع"
+
+#~ msgid "Outer teeth"
+#~ msgstr "دندانهٔ بیرونی"
+
+#~ msgid "Inner teeth"
+#~ msgstr "دندانهٔ داخلی"
+
+#~ msgid "Margin (pixels)"
+#~ msgstr "حاشیه (به نقطه)"
+
+#~ msgid "Hole ratio"
+#~ msgstr "نسبت حفره"
+
+#~ msgid "Start angle"
+#~ msgstr "زاویهٔ شروع"
+
+#~ msgid "Tool"
+#~ msgstr "ابزار"
+
+#~ msgid "Pencil"
+#~ msgstr "مداد"
+
+#~ msgid "Brush"
+#~ msgstr "قلم‌مو"
+
+#~ msgid "Airbrush"
+#~ msgstr "قلم رنگ‌پاش"
+
+#~ msgid "Color method"
+#~ msgstr "روش رنگ‌آمیزی"
+
+#~ msgid "Solid Color"
+#~ msgstr "رنگ یکدست"
+
+#~ msgid "Gradient: Loop Sawtooth"
+#~ msgstr "طیف: حلقهٔ دندان‌ارّه‌ای"
+
+#~ msgid "Gradient: Loop Triangle"
+#~ msgstr "طیف: حلقهٔ مثلث"
 
 #~ msgid "/Script-Fu/"
 #~ msgstr "/اسکریپت‌فو/"
@@ -2217,9 +2300,6 @@ msgstr "فاصلهٔ‌ Y سایه"
 
 #~ msgid "Antialias"
 #~ msgstr "حذف لبه‌های ناصاف"
-
-#~ msgid "Text C_ircle..."
-#~ msgstr "_دایرهٔ متنی..."
 
 #~ msgid "Ending blend"
 #~ msgstr "ترکیب پایانی"
