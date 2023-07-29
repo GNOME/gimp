@@ -498,6 +498,9 @@ gimp_paint_core_start (GimpPaintCore     *core,
         }
     }
 
+  /* initialize the lock_blink_state */
+  core->lock_blink_state = GIMP_PAINT_LOCK_NOT_BLINKED;
+
   /*  Freeze the drawable preview so that it isn't constantly updated.  */
   for (GList *iter = drawables; iter; iter = iter->next)
     gimp_viewable_preview_freeze (GIMP_VIEWABLE (iter->data));
@@ -843,9 +846,6 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
   else
     return FALSE;
 
-  if (gimp_item_get_lock_position (GIMP_ITEM (layer)))
-    return FALSE;
-
   if (!gimp_paint_core_get_show_all (core) && outside_image)
     return FALSE;
 
@@ -926,6 +926,18 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
       GimpFillType  mask_fill_type;
       GeglBuffer   *undo_buffer;
       GeglBuffer   *new_buffer;
+
+      if (gimp_item_get_lock_position (GIMP_ITEM (layer)))
+        {
+          if (core->lock_blink_state == GIMP_PAINT_LOCK_NOT_BLINKED)
+            core->lock_blink_state = GIMP_PAINT_LOCK_BLINK_PENDING;
+
+          /* Since we are not expanding, set new offset to zero */
+          *new_off_x = 0;
+          *new_off_y = 0;
+
+          return FALSE;
+        }
 
       mask_fill_type = options->expand_mask_fill_type == GIMP_ADD_MASK_BLACK ?
                          GIMP_FILL_TRANSPARENT :

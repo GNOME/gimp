@@ -74,6 +74,8 @@ struct _GimpPaintCore
   GArray         *stroke_buffer;
 
   GimpSymmetry   *sym;
+  GimpPaintLockBlinkState
+                  lock_blink_state;
 };
 
 struct _GimpPaintCoreClass

@@ -81,5 +81,12 @@ typedef enum  /*< skip, pdb-skip >*/
   GIMP_PAINT_STATE_FINISH   /*  Cleanup and/or reset PaintFunc operation     */
 } GimpPaintState;
 
+/*  State of lock blinking  */
+typedef enum /*< skip, pdb-skip >*/
+{
+  GIMP_PAINT_LOCK_NOT_BLINKED,
+  GIMP_PAINT_LOCK_BLINK_PENDING,
+  GIMP_PAINT_LOCK_BLINKED,
+} GimpPaintLockBlinkState;
 
 #endif /* __PAINT_ENUMS_H__ */

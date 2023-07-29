@@ -26,6 +26,8 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
 #include "core/gimpprojection.h"
 
 #include "paint/gimppaintcore.h"
@@ -37,6 +39,7 @@
 
 #include "gimppainttool.h"
 #include "gimppainttool-paint.h"
+#include "gimptools-utils.h"
 
 
 #define DISPLAY_UPDATE_INTERVAL 10000 /* microseconds */
@@ -213,6 +216,27 @@ gimp_paint_tool_paint_interpolate (GimpPaintTool   *paint_tool,
 
   gimp_paint_core_interpolate (core, data->drawables, paint_options,
                                &data->coords, data->time);
+
+  /* Blink the lock box if required */
+  if (core->lock_blink_state == GIMP_PAINT_LOCK_BLINK_PENDING)
+    {
+      GList            *iter;
+      GimpLayer        *layer;
+
+      /* Blink the lock only once per stroke */
+      core->lock_blink_state = GIMP_PAINT_LOCK_BLINKED;
+
+      for (iter = data->drawables; iter; iter = g_list_next (iter))
+        {
+          layer = GIMP_IS_LAYER_MASK (iter->data) ?
+                    GIMP_LAYER_MASK (iter->data)->layer :
+                    GIMP_LAYER (iter->data);
+
+          if (gimp_item_get_lock_position (GIMP_ITEM (layer)))
+            gimp_tools_blink_lock_box (GIMP_CONTEXT (paint_options)->gimp,
+                                       GIMP_ITEM (layer));
+        }
+    }
 
   g_list_free (data->drawables);
   g_slice_free (InterpolateData, data);
