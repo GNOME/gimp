@@ -727,7 +727,7 @@ gimp_param_value_array_values_cmp (GParamSpec   *pspec,
  * @flags:        Flags for the property specified.
  *
  * Creates a new #GimpParamSpecValueArray specifying a
- * #G_TYPE_VALUE_ARRAY property.
+ * [type@GObject.ValueArray] property.
  *
  * See g_param_spec_internal() for details on property names.
  *

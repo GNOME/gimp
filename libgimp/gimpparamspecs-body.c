@@ -103,7 +103,7 @@ gimp_param_image_validate (GParamSpec *pspec,
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecImage specifying a
- * #GIMP_TYPE_IMAGE property.
+ * [type@Image] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -210,7 +210,7 @@ gimp_param_item_validate (GParamSpec *pspec,
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecItem specifying a
- * #GIMP_TYPE_ITEM property.
+ * [type@Item] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -290,7 +290,7 @@ gimp_param_drawable_init (GParamSpec *pspec)
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecDrawable specifying a
- * #GIMP_TYPE_DRAWABLE property.
+ * [type@Drawable] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -370,7 +370,7 @@ gimp_param_layer_init (GParamSpec *pspec)
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecLayer specifying a
- * #GIMP_TYPE_LAYER property.
+ * [type@Layer] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -450,7 +450,7 @@ gimp_param_text_layer_init (GParamSpec *pspec)
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecTextLayer specifying a
- * #GIMP_TYPE_TEXT_LAYER property.
+ * [type@TextLayer] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -530,7 +530,7 @@ gimp_param_channel_init (GParamSpec *pspec)
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecChannel specifying a
- * #GIMP_TYPE_CHANNEL property.
+ * [type@Channel] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -610,7 +610,7 @@ gimp_param_layer_mask_init (GParamSpec *pspec)
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecLayerMask specifying a
- * #GIMP_TYPE_LAYER_MASK property.
+ * [type@LayerMask] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -690,7 +690,7 @@ gimp_param_selection_init (GParamSpec *pspec)
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecSelection specifying a
- * #GIMP_TYPE_SELECTION property.
+ * [type@Selection] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -770,7 +770,7 @@ gimp_param_vectors_init (GParamSpec *pspec)
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecVectors specifying a
- * #GIMP_TYPE_VECTORS property.
+ * [type@Vectors] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -877,7 +877,7 @@ gimp_param_display_validate (GParamSpec *pspec,
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecDisplay specifying a
- * #GIMP_TYPE_DISPLAY property.
+ * [type@Display] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -984,7 +984,7 @@ gimp_param_resource_validate (GParamSpec *pspec,
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecResource specifying a
- * #GIMP_TYPE_RESOURCE property.
+ * [type@Resource] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -1064,7 +1064,7 @@ gimp_param_brush_init (GParamSpec *pspec)
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecBrush specifying a
- * #GIMP_TYPE_BRUSH property.
+ * [type@Brush] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -1144,7 +1144,7 @@ gimp_param_pattern_init (GParamSpec *pspec)
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecPattern specifying a
- * #GIMP_TYPE_PATTERN property.
+ * [type@Pattern] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -1224,7 +1224,7 @@ gimp_param_gradient_init (GParamSpec *pspec)
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecGradient specifying a
- * #GIMP_TYPE_GRADIENT property.
+ * [type@Gradient] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -1304,7 +1304,7 @@ gimp_param_palette_init (GParamSpec *pspec)
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecPalette specifying a
- * #GIMP_TYPE_PALETTE property.
+ * [type@Palette] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -1384,7 +1384,7 @@ gimp_param_font_init (GParamSpec *pspec)
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecFont specifying a
- * #GIMP_TYPE_FONT property.
+ * [type@Font] property.
  *
  * See g_param_spec_internal() for details on property names.
  *

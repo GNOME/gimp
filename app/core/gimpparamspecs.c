@@ -162,7 +162,7 @@ gimp_param_string_validate (GParamSpec *pspec,
  * @flags:          Flags for the property specified.
  *
  * Creates a new #GimpParamSpecString specifying a
- * #G_TYPE_STRING property.
+ * [type@GLib.String] property.
  *
  * If @allow_non_utf8 is %FALSE, non-valid UTF-8 strings will be
  * replaced by question marks.

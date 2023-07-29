@@ -163,7 +163,7 @@ gimp_param_parasite_values_cmp (GParamSpec   *pspec,
  * @flags: Flags for the property specified.
  *
  * Creates a new #GimpParamSpecParasite specifying a
- * #GIMP_TYPE_PARASITE property.
+ * [type@Parasite] property.
  *
  * See g_param_spec_internal() for details on property names.
  *

@@ -177,7 +177,7 @@ gimp_param_array_values_cmp (GParamSpec   *pspec,
  * @flags: Flags for the property specified.
  *
  * Creates a new #GimpParamSpecArray specifying a
- * #GIMP_TYPE_ARRAY property.
+ * [type@Array] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -312,7 +312,7 @@ gimp_param_int32_array_init (GParamSpec *pspec)
  * @flags: Flags for the property specified.
  *
  * Creates a new #GimpParamSpecInt32Array specifying a
- * #GIMP_TYPE_INT32_ARRAY property.
+ * %GIMP_TYPE_INT32_ARRAY property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -482,7 +482,7 @@ gimp_param_float_array_init (GParamSpec *pspec)
  * @flags: Flags for the property specified.
  *
  * Creates a new #GimpParamSpecFloatArray specifying a
- * #GIMP_TYPE_FLOAT_ARRAY property.
+ * %GIMP_TYPE_FLOAT_ARRAY property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -652,7 +652,7 @@ gimp_param_rgb_array_init (GParamSpec *pspec)
  * @flags: Flags for the property specified.
  *
  * Creates a new #GimpParamSpecRGBArray specifying a
- * #GIMP_TYPE_RGB_ARRAY property.
+ * %GIMP_TYPE_RGB_ARRAY property.
  *
  * See g_param_spec_internal() for details on property names.
  *
@@ -983,7 +983,7 @@ gimp_param_object_array_values_cmp (GParamSpec   *pspec,
  * @flags:       Flags for the property specified.
  *
  * Creates a new #GimpParamSpecObjectArray specifying a
- * #GIMP_TYPE_OBJECT_ARRAY property.
+ * [type@ObjectArray] property.
  *
  * See g_param_spec_internal() for details on property names.
  *

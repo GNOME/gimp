@@ -225,10 +225,10 @@ gimp_layer_new_from_pixbuf (GimpImage     *image,
  * @progress_start:  start of progress
  * @progress_end:    end of progress
  *
- * Create a new layer from a #cairo_surface_t.
+ * Create a new layer from a [type@cairo.Surface].
  *
  * This procedure creates a new layer from the given
- * #cairo_surface_t. The image has to be an RGB image and just like
+ * [type@cairo.Surface]. The image has to be an RGB image and just like
  * with gimp_layer_new() you will still need to add the layer to it.
  *
  * If you pass @progress_end > @progress_start to this function,
