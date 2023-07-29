@@ -347,7 +347,6 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   GimpInk        *ink             = GIMP_INK (paint_core);
   GimpInkOptions *options         = GIMP_INK_OPTIONS (paint_options);
   GimpContext    *context         = GIMP_CONTEXT (paint_options);
-  GList          *blob_unions     = NULL;
   GList          *blobs_to_render = NULL;
   GeglBuffer     *paint_buffer;
   gint            paint_buffer_x;
@@ -406,7 +405,8 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
                                             last_blob);
           ink->start_blobs = g_list_prepend (ink->start_blobs,
                                              gimp_blob_duplicate (last_blob));
-          blobs_to_render = g_list_prepend (blobs_to_render, last_blob);
+          blobs_to_render = g_list_prepend (blobs_to_render,
+                                            gimp_blob_duplicate (last_blob));
         }
       ink->start_blobs = g_list_reverse (ink->start_blobs);
       ink->last_blobs = g_list_reverse (ink->last_blobs);
@@ -440,7 +440,6 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
           g_list_nth (ink->last_blobs, i)->data = blob;
 
           blobs_to_render = g_list_prepend (blobs_to_render, blob_union);
-          blob_unions = g_list_prepend (blob_unions, blob_union);
         }
       blobs_to_render = g_list_reverse (blobs_to_render);
     }
@@ -497,8 +496,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
 
   g_object_unref (color);
 
-  g_list_free_full (blob_unions, g_free);
-  g_list_free (blobs_to_render);
+  g_list_free_full (blobs_to_render, g_free);
 }
 
 static GimpBlob *
