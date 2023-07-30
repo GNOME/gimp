@@ -86,7 +86,7 @@
                   (gimp-selection-none image)
                   (gimp-drawable-edit-clear lava-layer)
 
-                  (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
+                  (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
                   (gimp-image-set-selected-layers image 1 (make-vector 1 lava-layer))
                 )
             )
