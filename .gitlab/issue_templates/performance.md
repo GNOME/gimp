@@ -17,7 +17,7 @@ either in the last stable version of GIMP or on updated development code
 <!-- Please record a performance log demonstrating the issue, and attach it to the report.
 For more information, see
 
-  https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/performance-logs/performance-logs.md
+  https://developer.gimp.org/core/debug/performance-logs/
 
 -->
 
