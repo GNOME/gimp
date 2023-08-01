@@ -34,6 +34,8 @@
 
 #include "core/gimperror.h"
 
+#include "gimpfont.h"
+
 #include "gimptext.h"
 #include "gimptextlayout.h"
 
@@ -116,7 +118,7 @@ gimp_text_layout_new (GimpText  *text,
 
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
 
-  font_desc = pango_font_description_from_string (text->font);
+  font_desc = pango_font_description_from_string (gimp_font_get_lookup_name (text->font));
   g_return_val_if_fail (font_desc != NULL, NULL);
 
   size = pango_units_from_double (gimp_units_to_points (text->font_size,

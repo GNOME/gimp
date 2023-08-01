@@ -275,6 +275,8 @@ gimp_g_value_get_memsize (GValue *value)
     {
       if (strcmp ("GimpPattern", G_VALUE_TYPE_NAME (value)) == 0)
         memsize += gimp_g_object_get_memsize (g_value_get_object (value));
+      else if (strcmp ("GimpFont", G_VALUE_TYPE_NAME (value)) == 0)
+        memsize += gimp_g_object_get_memsize (g_value_get_object (value));
       else
         g_printerr ("%s: unhandled object value type: %s\n",
                     G_STRFUNC, G_VALUE_TYPE_NAME (value));

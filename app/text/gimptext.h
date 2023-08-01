@@ -41,7 +41,7 @@ struct _GimpText
 
   gchar                 *text;
   gchar                 *markup;
-  gchar                 *font;
+  GimpFont              *font;
   GimpUnit               unit;
   gdouble                font_size;
   gboolean               antialias;

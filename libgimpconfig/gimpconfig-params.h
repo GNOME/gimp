@@ -182,6 +182,11 @@ G_BEGIN_DECLS
                                    default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 
+#define GIMP_CONFIG_PROP_FONT(class, id, name, nick, blurb, flags) \
+  g_object_class_install_property (class, id,\
+                                   g_param_spec_object (name, nick, blurb,\
+                                   GIMP_TYPE_FONT,\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
 
 /*  object, boxed and pointer properties are _not_ G_PARAM_CONSTRUCT  */
 

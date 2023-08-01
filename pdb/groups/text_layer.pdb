@@ -249,9 +249,13 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
+  GimpFont *font_obj;
+
   g_object_get (gimp_text_layer_get_text (layer),
-                "font", &font,
+                "font", &font_obj,
                 NULL);
+  font = g_strdup (gimp_font_get_lookup_name (font_obj));
+  g_object_unref (font_obj);
 }
 CODE
     );
@@ -990,6 +994,7 @@ CODE
 @headers = qw(<pango/pango.h>
               "libgimpbase/gimpbase.h"
               "core/gimpcontext.h"
+              "text/gimpfont.h"
               "text/gimptext.h"
               "text/gimptextlayer.h"
               "gimppdb-utils.h"

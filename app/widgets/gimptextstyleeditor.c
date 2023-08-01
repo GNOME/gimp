@@ -723,7 +723,7 @@ gimp_text_style_editor_set_default_font (GimpTextStyleEditor *editor)
                                    gimp_text_style_editor_font_changed,
                                    editor);
 
-  gimp_context_set_font_name (editor->context, editor->text->font);
+  gimp_context_set_font (editor->context, editor->text->font);
 
   g_signal_handlers_unblock_by_func (editor->context,
                                      gimp_text_style_editor_font_changed,

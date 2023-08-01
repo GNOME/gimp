@@ -41,6 +41,8 @@
 
 #include "text/gimptext.h"
 
+#include "text/gimpfont.h"
+
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimppropwidgets.h"
@@ -648,11 +650,14 @@ gimp_text_options_notify_font (GimpContext *context,
                                GParamSpec  *pspec,
                                GimpText    *text)
 {
+  if (gimp_context_get_font (context) == text->font)
+    return;
+
   g_signal_handlers_block_by_func (text,
                                    gimp_text_options_notify_text_font,
                                    context);
 
-  g_object_set (text, "font", gimp_context_get_font_name (context), NULL);
+  g_object_set (text, "font", gimp_context_get_font (context), NULL);
 
   g_signal_handlers_unblock_by_func (text,
                                      gimp_text_options_notify_text_font,
@@ -667,7 +672,7 @@ gimp_text_options_notify_text_font (GimpText    *text,
   g_signal_handlers_block_by_func (context,
                                    gimp_text_options_notify_font, text);
 
-  gimp_context_set_font_name (context, text->font);
+  gimp_context_set_font (context, text->font);
 
   g_signal_handlers_unblock_by_func (context,
                                      gimp_text_options_notify_font, text);
@@ -728,7 +733,7 @@ gimp_text_options_connect_text (GimpTextOptions *options,
 
   g_object_set (text,
                 "color", &color,
-                "font",  gimp_context_get_font_name (context),
+                "font",  gimp_context_get_font (context),
                 NULL);
 
   gimp_config_connect (G_OBJECT (options), G_OBJECT (text), NULL);

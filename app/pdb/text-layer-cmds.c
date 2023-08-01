@@ -38,6 +38,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
+#include "text/gimpfont.h"
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
 
@@ -260,9 +261,13 @@ text_layer_get_font_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpFont *font_obj;
+
       g_object_get (gimp_text_layer_get_text (layer),
-                    "font", &font,
+                    "font", &font_obj,
                     NULL);
+      font = g_strdup (gimp_font_get_lookup_name (font_obj));
+      g_object_unref (font_obj);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

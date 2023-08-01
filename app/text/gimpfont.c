@@ -42,6 +42,8 @@
 
 #include "core/gimptempbuf.h"
 
+#include "core/gimp-memsize.h"
+
 #include "gimpfont.h"
 
 #include "gimp-intl.h"
@@ -106,6 +108,8 @@ static GimpTempBuf * gimp_font_get_new_preview  (GimpViewable  *viewable,
 static const gchar * gimp_font_get_sample_string (PangoContext         *context,
                                                   PangoFontDescription *font_desc);
 
+static gint64        gimp_font_get_memsize        (GimpObject           *object,
+                                                   gint64               *gui_size);
 
 G_DEFINE_TYPE (GimpFont, gimp_font, GIMP_TYPE_DATA)
 
@@ -122,7 +126,7 @@ gboolean
 gimp_font_match_by_lookup_name (GimpFont    *font,
                                 const gchar *name)
 {
-  return !g_strcmp0 (gimp_font_get_lookup_name (font), name);
+  return !g_strcmp0 (font->lookup_name, name);
 }
 
 const gchar*
@@ -134,11 +138,13 @@ gimp_font_get_lookup_name (GimpFont *font)
 static void
 gimp_font_class_init (GimpFontClass *klass)
 {
-  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   object_class->finalize            = gimp_font_finalize;
   object_class->set_property        = gimp_font_set_property;
+  gimp_object_class->get_memsize    = gimp_font_get_memsize;
 
   viewable_class->get_preview_size  = gimp_font_get_preview_size;
   viewable_class->get_popup_size    = gimp_font_get_popup_size;
@@ -192,6 +198,19 @@ gimp_font_set_property (GObject       *object,
     }
 }
 
+static gint64
+gimp_font_get_memsize (GimpObject *object,
+                       gint64     *gui_size)
+{
+  GimpFont *font    = GIMP_FONT (object);
+  gint64    memsize = 0;
+
+  memsize += gimp_string_get_memsize (font->lookup_name);
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
+}
+
 static void
 gimp_font_get_preview_size (GimpViewable *viewable,
                             gint          size,
@@ -221,7 +240,7 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   if (! font->pango_context)
     return FALSE;
 
-  name = gimp_font_get_lookup_name (font);
+  name = font->lookup_name;
 
   font_desc = pango_font_description_from_string (name);
   g_return_val_if_fail (font_desc != NULL, FALSE);
@@ -276,7 +295,7 @@ gimp_font_get_new_preview (GimpViewable *viewable,
       PangoFontDescription *font_desc;
       const gchar          *name;
 
-      name = gimp_font_get_lookup_name (font);
+      name = font->lookup_name;
 
       DEBUGPRINT (("%s: ", name));
 

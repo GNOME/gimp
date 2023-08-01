@@ -34,6 +34,8 @@
 
 #include "text-types.h"
 
+#include "gimpfont.h"
+
 #include "core/gimp.h"
 #include "core/gimp-memsize.h"
 #include "core/gimp-utils.h"
@@ -176,11 +178,9 @@ gimp_text_class_init (GimpTextClass *klass)
                            NULL,
                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_FONT,
-                           "font",
-                           NULL, NULL,
-                           "Sans-serif",
-                           GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_FONT (object_class, PROP_FONT,
+                         "font", NULL, NULL,
+                         GIMP_CONFIG_PARAM_FLAGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
                            "font-size",
@@ -415,8 +415,8 @@ gimp_text_finalize (GObject *object)
 
   g_clear_pointer (&text->text,     g_free);
   g_clear_pointer (&text->markup,   g_free);
-  g_clear_pointer (&text->font,     g_free);
   g_clear_pointer (&text->language, g_free);
+  g_clear_object (&text->font);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -438,7 +438,7 @@ gimp_text_get_property (GObject      *object,
       g_value_set_string (value, text->markup);
       break;
     case PROP_FONT:
-      g_value_set_string (value, text->font);
+      g_value_set_object (value, text->font);
       break;
     case PROP_FONT_SIZE:
       g_value_set_double (value, text->font_size);
@@ -580,23 +580,10 @@ gimp_text_set_property (GObject      *object,
       break;
     case PROP_FONT:
       {
-        const gchar *font = g_value_get_string (value);
+        GimpFont *font = g_value_get_object (value);
 
-        g_free (text->font);
-
-        if (font)
-          {
-            gsize len = strlen (font);
-
-            if (g_str_has_suffix (font, " Not-Rotated"))
-              len -= strlen ( " Not-Rotated");
-
-            text->font = g_strndup (font, len);
-          }
-        else
-          {
-            text->font = NULL;
-          }
+        if (font != text->font)
+          g_set_object (&text->font, font);
       }
       break;
     case PROP_FONT_SIZE:
@@ -748,7 +735,6 @@ gimp_text_get_memsize (GimpObject *object,
 
   memsize += gimp_string_get_memsize (text->text);
   memsize += gimp_string_get_memsize (text->markup);
-  memsize += gimp_string_get_memsize (text->font);
   memsize += gimp_string_get_memsize (text->language);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
