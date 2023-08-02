@@ -238,8 +238,6 @@ gimp_icons_init (void)
   static gboolean initialized = FALSE;
 
   GtkSettings *settings;
-  GdkPixbuf   *pixbuf;
-  GError      *error = NULL;
   gchar       *icons_dir;
   gchar       *system_icon_theme;
   gchar       *gimp_icon_theme;
@@ -296,19 +294,6 @@ gimp_icons_init (void)
 
   g_signal_connect (settings, "notify::gtk-icon-theme-name",
                     G_CALLBACK (gimp_icons_notify_system_icon_theme), NULL);
-  pixbuf = gdk_pixbuf_new_from_resource ("/org/gimp/icons/64/gimp-wilber-eek.png",
-                                         &error);
-
-  if (pixbuf)
-    {
-      gtk_icon_theme_add_builtin_icon (GIMP_ICON_WILBER_EEK, 64, pixbuf);
-      g_object_unref (pixbuf);
-    }
-  else
-    {
-      g_critical ("Failed to create icon image: %s", error->message);
-      g_clear_error (&error);
-    }
 
   initialized = TRUE;
 }
