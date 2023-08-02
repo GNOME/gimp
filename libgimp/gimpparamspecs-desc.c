@@ -29,70 +29,124 @@
 #include "gimp.h"
 #include "gimpparamspecs-desc.h"
 
+#include "libgimp-intl.h"
+
 
 static gchar *
 gimp_param_spec_boolean_desc (GParamSpec *pspec)
 {
   GParamSpecBoolean *bspec = G_PARAM_SPEC_BOOLEAN (pspec);
 
-  return g_strdup_printf ("(TRUE or FALSE, default %s)",
+  return g_strdup_printf ("<i>(TRUE or FALSE, default %s)</i>",
                           bspec->default_value ? "TRUE" : "FALSE");
+}
+
+static gchar *
+gimp_param_spec_choice_desc (GParamSpec *pspec)
+{
+  GimpParamSpecChoice *cspec = GIMP_PARAM_SPEC_CHOICE (pspec);
+  GList               *choices;
+  GString             *desc;
+
+  choices = gimp_choice_list_nicks (cspec->choice);
+  desc    = g_string_new ("\n");
+
+  g_string_append_printf (desc, "<i>%s</i>", _("Allowed values:"));
+
+  for (GList *iter = choices; iter; iter = iter->next)
+    {
+      gchar *nick  = iter->data;
+      gchar *label = NULL;
+      gchar *help  = NULL;
+
+      gimp_choice_get_documentation (cspec->choice, (const gchar *) nick, (const gchar **) &label, (const gchar **) &help);
+      nick  = g_markup_escape_text (nick, -1);
+      label = g_markup_escape_text (label, -1);
+      help  = (help != NULL ? g_markup_escape_text (help, -1) : NULL);
+      if (help != NULL)
+        /* \xe2\x80\xa2 is the UTF-8 for the bullet point. */
+        g_string_append_printf (desc, "\n\xe2\x80\xa2 <tt>%s</tt>: %s\n\t%s", nick, label, help);
+      else
+        g_string_append_printf (desc, "\n\xe2\x80\xa2 <tt>%s</tt>: %s", nick, label);
+
+      g_free (nick);
+      g_free (label);
+      g_free (help);
+    }
+
+  return g_string_free (desc, FALSE);
 }
 
 static gchar *
 gimp_param_spec_int_desc (GParamSpec *pspec)
 {
-  GParamSpecInt *ispec = G_PARAM_SPEC_INT (pspec);
+  GParamSpecInt *ispec     = G_PARAM_SPEC_INT (pspec);
+  gchar         *bare_text = NULL;
+  gchar         *markup;
 
   if (ispec->minimum == G_MININT32 && ispec->maximum == G_MAXINT32)
-    return g_strdup_printf ("(default %d)",
-                            ispec->default_value);
+    bare_text = g_strdup_printf ("(default %d)",
+                                 ispec->default_value);
 
   if (ispec->minimum == G_MININT32)
-    return g_strdup_printf ("(%s <= %d, default %d)",
-                            g_param_spec_get_name (pspec),
-                            ispec->maximum,
-                            ispec->default_value);
+    bare_text = g_strdup_printf ("(%s <= %d, default %d)",
+                                 g_param_spec_get_name (pspec),
+                                 ispec->maximum,
+                                 ispec->default_value);
 
   if (ispec->maximum == G_MAXINT32)
-    return g_strdup_printf ("(%s >= %d, default %d)",
-                            g_param_spec_get_name (pspec),
-                            ispec->minimum,
-                            ispec->default_value);
+    bare_text = g_strdup_printf ("(%s >= %d, default %d)",
+                                 g_param_spec_get_name (pspec),
+                                 ispec->minimum,
+                                 ispec->default_value);
 
-  return g_strdup_printf ("(%d <= %s <= %d, default %d)",
-                          ispec->minimum,
-                          g_param_spec_get_name (pspec),
-                          ispec->maximum,
-                          ispec->default_value);
+  if (bare_text == NULL)
+    bare_text = g_strdup_printf ("(%d <= %s <= %d, default %d)",
+                                 ispec->minimum,
+                                 g_param_spec_get_name (pspec),
+                                 ispec->maximum,
+                                 ispec->default_value);
+
+  markup = g_markup_printf_escaped ("<i>%s</i>", bare_text);
+  g_free (bare_text);
+
+  return markup;
 }
 
 static gchar *
 gimp_param_spec_double_desc (GParamSpec *pspec)
 {
-  GParamSpecDouble *dspec = G_PARAM_SPEC_DOUBLE (pspec);
+  GParamSpecDouble *dspec     = G_PARAM_SPEC_DOUBLE (pspec);
+  gchar            *bare_text = NULL;
+  gchar            *markup;
 
   if (dspec->minimum == - G_MAXDOUBLE && dspec->maximum == G_MAXDOUBLE)
-    return g_strdup_printf ("(default %g)",
-                            dspec->default_value);
+    bare_text = g_strdup_printf ("(default %g)",
+                                 dspec->default_value);
 
   if (dspec->minimum == - G_MAXDOUBLE)
-    return g_strdup_printf ("(%s <= %g, default %g)",
-                            g_param_spec_get_name (pspec),
-                            dspec->maximum,
-                            dspec->default_value);
+    bare_text = g_strdup_printf ("(%s <= %g, default %g)",
+                                 g_param_spec_get_name (pspec),
+                                 dspec->maximum,
+                                 dspec->default_value);
 
   if (dspec->maximum == G_MAXDOUBLE)
-    return g_strdup_printf ("(%s >= %g, default %g)",
-                            g_param_spec_get_name (pspec),
-                            dspec->minimum,
-                            dspec->default_value);
+    bare_text = g_strdup_printf ("(%s >= %g, default %g)",
+                                 g_param_spec_get_name (pspec),
+                                 dspec->minimum,
+                                 dspec->default_value);
 
-  return g_strdup_printf ("(%g <= %s <= %g, default %g)",
-                          dspec->minimum,
-                          g_param_spec_get_name (pspec),
-                          dspec->maximum,
-                          dspec->default_value);
+  if (bare_text == NULL)
+    bare_text = g_strdup_printf ("(%g <= %s <= %g, default %g)",
+                                 dspec->minimum,
+                                 g_param_spec_get_name (pspec),
+                                 dspec->maximum,
+                                 dspec->default_value);
+
+  markup = g_markup_printf_escaped ("<i>%s</i>", bare_text);
+  g_free (bare_text);
+
+  return markup;
 }
 
 static gchar *
@@ -113,7 +167,7 @@ gimp_param_spec_enum_desc (GParamSpec *pspec)
 #endif
     excluded = NULL;
 
-  g_string_append (str, "{ ");
+  g_string_append (str, "<i>{ ");
 
   for (i = 0, n = 0, enum_value = enum_class->values;
        i < enum_class->n_values;
@@ -152,7 +206,7 @@ gimp_param_spec_enum_desc (GParamSpec *pspec)
       n++;
     }
 
-  g_string_append (str, " }");
+  g_string_append (str, " }</i>");
 
   if (default_name)
     {
@@ -168,10 +222,10 @@ gimp_param_spec_enum_desc (GParamSpec *pspec)
  * gimp_param_spec_get_desc:
  * @pspec: a #GParamSpec
  *
- * This function creates a description of the passed @pspec, which is
- * suitable for use in the PDB.  Actually, it currently only deals with
- * parameter types used in the PDB and should not be used for anything
- * else.
+ * This function creates a description of the passed @pspec type restrictions.
+ * It currently only deals with parameter types used in the PDB and should not
+ * be used for anything else.
+ * The returned string is pango-markup formatted.
  *
  * Returns: A newly allocated string describing the parameter.
  *
@@ -184,6 +238,10 @@ gimp_param_spec_get_desc (GParamSpec *pspec)
 
   if (GIMP_IS_PARAM_SPEC_UNIT (pspec))
     {
+    }
+  else if (GIMP_IS_PARAM_SPEC_CHOICE (pspec))
+    {
+      return gimp_param_spec_choice_desc (pspec);
     }
   else if (G_IS_PARAM_SPEC_INT (pspec))
     {

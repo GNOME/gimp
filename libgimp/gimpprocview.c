@@ -365,6 +365,7 @@ gimp_proc_view_create_args (GimpProcedure *procedure,
 
       /* description */
       label = gtk_label_new (blurb);
+      gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
       gtk_label_set_selectable (GTK_LABEL (label), TRUE);
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
