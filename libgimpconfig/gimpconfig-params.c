@@ -240,6 +240,15 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                     flags);
         }
     }
+  else if (GIMP_IS_PARAM_SPEC_CHOICE (pspec))
+    {
+      GimpParamSpecChoice *spec = GIMP_PARAM_SPEC_CHOICE (pspec);
+
+      copy = gimp_param_spec_choice (name, nick, blurb,
+                                     g_object_ref (spec->choice),
+                                     spec->default_value,
+                                     flags);
+    }
   else if (GIMP_IS_PARAM_SPEC_RGB (pspec))
     {
       GimpRGB color;

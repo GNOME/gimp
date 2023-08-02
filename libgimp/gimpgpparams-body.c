@@ -74,6 +74,17 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
 
       break;
 
+    case GP_PARAM_DEF_TYPE_CHOICE:
+      if (! strcmp (param_def->type_name, "GimpParamChoice"))
+        {
+          return gimp_param_spec_choice (name, nick, blurb,
+                                         g_object_ref (param_def->meta.m_choice.choice),
+                                         param_def->meta.m_choice.default_val,
+                                         flags);
+        }
+
+      break;
+
     case GP_PARAM_DEF_TYPE_INT:
       if (! strcmp (param_def->type_name, "GParamInt"))
         return g_param_spec_int (name, nick, blurb,
@@ -301,6 +312,15 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ENUM;
 
       param_def->meta.m_enum.default_val = espec->default_value;
+    }
+  else if (pspec_type == GIMP_TYPE_PARAM_CHOICE)
+    {
+      GimpParamSpecChoice *cspec = GIMP_PARAM_SPEC_CHOICE (pspec);
+
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_CHOICE;
+
+      param_def->meta.m_choice.default_val = cspec->default_value;
+      param_def->meta.m_choice.choice      = cspec->choice;
     }
   else if (pspec_type == G_TYPE_PARAM_BOOLEAN)
     {

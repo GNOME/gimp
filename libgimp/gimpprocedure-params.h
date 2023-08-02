@@ -224,6 +224,33 @@ G_BEGIN_DECLS
   g_value_set_enum (gimp_value_array_index (args, n), value)
 
 
+/*  choice  */
+
+#define GIMP_PROC_ARG_CHOICE(procedure, name, nick, blurb, choice, default, flags) \
+  gimp_procedure_add_argument (procedure,\
+                               gimp_param_spec_choice (name, nick, blurb,\
+                               choice, default,\
+                               flags))
+
+#define GIMP_PROC_AUX_ARG_CHOICE(procedure, name, nick, blurb, choice, default, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_choice (name, nick, blurb,\
+                                   choice, default,\
+                                   flags))
+
+#define GIMP_PROC_VAL_CHOICE(procedure, name, nick, blurb, enum_type, default, flags) \
+  gimp_procedure_add_return_value (procedure,\
+                                   gimp_param_spec_choice (name, nick, blurb,\
+                                   choice, default,\
+                                   flags))
+
+#define GIMP_VALUES_GET_CHOICE(args, n) \
+  g_value_get_int (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_SET_CHOICE(args, n, value) \
+  g_value_set_int (gimp_value_array_index (args, n), value)
+
+
 /*  string  */
 
 #define GIMP_PROC_ARG_STRING(procedure, name, nick, blurb, default, flags) \

@@ -166,6 +166,8 @@ GtkWidget     * gimp_prop_string_combo_box_new    (GObject       *config,
                                                    GtkTreeModel  *model,
                                                    gint           id_column,
                                                    gint           label_column);
+GtkWidget *     gimp_prop_choice_combo_box_new    (GObject       *config,
+                                                   const gchar   *property_name);
 
 
 /*  GimpParamPath  */

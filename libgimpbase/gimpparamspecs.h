@@ -75,6 +75,34 @@ G_BEGIN_DECLS
 
 
 /*
+ * GIMP_TYPE_PARAM_CHOICE
+ */
+
+#define GIMP_TYPE_PARAM_CHOICE           (gimp_param_choice_get_type ())
+#define GIMP_PARAM_SPEC_CHOICE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_CHOICE, GimpParamSpecChoice))
+#define GIMP_IS_PARAM_SPEC_CHOICE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_CHOICE))
+
+typedef struct _GimpParamSpecChoice GimpParamSpecChoice;
+
+struct _GimpParamSpecChoice
+{
+  GParamSpecBoxed parent_instance;
+
+  gchar          *default_value;
+  GimpChoice     *choice;
+};
+
+GType        gimp_param_choice_get_type (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_choice     (const gchar  *name,
+                                         const gchar  *nick,
+                                         const gchar  *blurb,
+                                         GimpChoice   *choice,
+                                         const gchar  *default_value,
+                                         GParamFlags   flags);
+
+
+/*
  * GIMP_TYPE_ARRAY
  */
 

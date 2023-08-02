@@ -117,6 +117,7 @@ EXPORTS
 	gimp_orientation_type_get_type
 	gimp_paint_application_mode_get_type
 	gimp_param_array_get_type
+	gimp_param_choice_get_type
 	gimp_param_float_array_get_type
 	gimp_param_int32_array_get_type
 	gimp_param_memsize_get_type
@@ -124,6 +125,7 @@ EXPORTS
 	gimp_param_parasite_get_type
 	gimp_param_rgb_array_get_type
 	gimp_param_spec_array
+	gimp_param_spec_choice
 	gimp_param_spec_float_array
 	gimp_param_spec_int32_array
 	gimp_param_spec_memsize

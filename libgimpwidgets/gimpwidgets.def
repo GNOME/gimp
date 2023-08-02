@@ -363,6 +363,7 @@ EXPORTS
 	gimp_prop_boolean_combo_box_new
 	gimp_prop_boolean_radio_frame_new
 	gimp_prop_check_button_new
+	gimp_prop_choice_combo_box_new
 	gimp_prop_color_area_new
 	gimp_prop_color_select_new
 	gimp_prop_coordinates_connect

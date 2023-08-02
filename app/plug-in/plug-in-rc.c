@@ -826,6 +826,56 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
         }
       break;
 
+    case GP_PARAM_DEF_TYPE_CHOICE:
+        {
+          GimpChoice *choice;
+          gint        n_choices;
+
+          if (! gimp_scanner_parse_string (scanner,
+                                           &param_def.meta.m_choice.default_val) ||
+              ! gimp_scanner_parse_int (scanner, &n_choices))
+            {
+              token = G_TOKEN_INT;
+              goto error;
+            }
+
+          choice = gimp_choice_new ();
+          param_def.meta.m_choice.choice = choice;
+
+          for (int i = 0; i < n_choices; i++)
+            {
+              gchar *nick  = NULL;
+              gchar *label = NULL;
+              gchar *help  = NULL;
+              gint   id;
+
+              if (! gimp_scanner_parse_string (scanner, &nick))
+                {
+                  token = G_TOKEN_STRING;
+                  goto error;
+                }
+              if (! gimp_scanner_parse_int (scanner, &id))
+                {
+                  token = G_TOKEN_INT;
+                  goto error;
+                }
+              if (! gimp_scanner_parse_string (scanner, &label) ||
+                  ! gimp_scanner_parse_string (scanner, &help))
+                {
+                  token = G_TOKEN_STRING;
+                  g_free (nick);
+                  g_free (label);
+                  g_free (help);
+                  goto error;
+                }
+              gimp_choice_add (choice, nick, id, label, help);
+              g_free (nick);
+              g_free (label);
+              g_free (help);
+            }
+        }
+      break;
+
     case GP_PARAM_DEF_TYPE_BOOLEAN:
       if (! gimp_scanner_parse_int (scanner,
                                     &param_def.meta.m_boolean.default_val))
@@ -940,6 +990,11 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
     case GP_PARAM_DEF_TYPE_ID:
       break;
 
+    case GP_PARAM_DEF_TYPE_CHOICE:
+      g_clear_object (&param_def.meta.m_choice.choice);
+      g_free (param_def.meta.m_choice.default_val);
+      break;
+
     case GP_PARAM_DEF_TYPE_ID_ARRAY:
       g_free (param_def.meta.m_id_array.type_name);
       break;
@@ -1032,6 +1087,31 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
     case GP_PARAM_DEF_TYPE_ENUM:
       gimp_config_writer_printf (writer, "%d",
                                  param_def.meta.m_enum.default_val);
+      break;
+
+    case GP_PARAM_DEF_TYPE_CHOICE:
+        {
+          GList *choices;
+
+          choices = gimp_choice_list_nicks (param_def.meta.m_choice.choice);
+          gimp_config_writer_string (writer, param_def.meta.m_choice.default_val);
+          gimp_config_writer_printf (writer, "%d", g_list_length (choices));
+          for (GList *iter = choices; iter; iter = iter->next)
+            {
+              const gchar *nick = iter->data;
+              const gchar *label;
+              const gchar *help;
+              gint         id;
+
+              gimp_choice_get_documentation (param_def.meta.m_choice.choice,
+                                             nick, &label, &help);
+              id = gimp_choice_get_id (param_def.meta.m_choice.choice, nick);
+              gimp_config_writer_string (writer, nick);
+              gimp_config_writer_printf (writer, "%d", id);
+              gimp_config_writer_string (writer, label);
+              gimp_config_writer_string (writer, help);
+            }
+        }
       break;
 
     case GP_PARAM_DEF_TYPE_BOOLEAN:

@@ -26,6 +26,139 @@
 
 
 /*
+ * GIMP_TYPE_PARAM_CHOICE
+ */
+
+static void       gimp_param_choice_class_init  (GParamSpecClass *klass);
+static void       gimp_param_choice_init        (GParamSpec      *pspec);
+static void       gimp_param_choice_finalize    (GParamSpec      *pspec);
+static gboolean   gimp_param_choice_validate    (GParamSpec      *pspec,
+                                                GValue          *value);
+static gint       gimp_param_choice_values_cmp  (GParamSpec      *pspec,
+                                                const GValue    *value1,
+                                                const GValue    *value2);
+
+GType
+gimp_param_choice_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    {
+      const GTypeInfo info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_choice_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecChoice),
+        0,
+        (GInstanceInitFunc) gimp_param_choice_init
+      };
+
+      type = g_type_register_static (G_TYPE_PARAM_BOXED,
+                                     "GimpParamChoice", &info, 0);
+    }
+
+  return type;
+}
+
+static void
+gimp_param_choice_class_init (GParamSpecClass *klass)
+{
+  klass->value_type     = G_TYPE_STRING;
+  klass->finalize       = gimp_param_choice_finalize;
+  klass->value_validate = gimp_param_choice_validate;
+  klass->values_cmp     = gimp_param_choice_values_cmp;
+}
+
+static void
+gimp_param_choice_init (GParamSpec *pspec)
+{
+  GimpParamSpecChoice *choice = GIMP_PARAM_SPEC_CHOICE (pspec);
+
+  choice->choice        = NULL;
+  choice->default_value = NULL;
+}
+
+static void
+gimp_param_choice_finalize (GParamSpec *pspec)
+{
+  GimpParamSpecChoice *spec_choice = GIMP_PARAM_SPEC_CHOICE (pspec);
+
+  g_free (spec_choice->default_value);
+  g_object_unref (spec_choice->choice);
+}
+
+static gboolean
+gimp_param_choice_validate (GParamSpec *pspec,
+                            GValue     *value)
+{
+  GimpParamSpecChoice *spec_choice = GIMP_PARAM_SPEC_CHOICE (pspec);
+  GimpChoice          *choice      = spec_choice->choice;
+  const gchar         *strval      = g_value_get_string (value);
+
+  if (! gimp_choice_is_valid (choice, strval))
+    {
+      g_value_set_string (value, spec_choice->default_value);
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gint
+gimp_param_choice_values_cmp (GParamSpec   *pspec,
+                              const GValue *value1,
+                              const GValue *value2)
+{
+  const gchar *choice1 = g_value_get_string (value1);
+  const gchar *choice2 = g_value_get_string (value2);
+
+  return g_strcmp0 (choice1, choice2);
+}
+
+/**
+ * gimp_param_spec_choice:
+ * @name:  Canonical name of the property specified.
+ * @nick:  Nick name of the property specified.
+ * @blurb: Description of the property specified.
+ * @choice: (transfer full): the %GimpChoice describing allowed choices.
+ * @flags: Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecChoice specifying a
+ * #G_TYPE_STRING property.
+ * This %GimpParamSpecChoice takes ownership of the reference on @choice.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer full): The newly created #GimpParamSpecChoice.
+ *
+ * Since: 3.0
+ **/
+GParamSpec *
+gimp_param_spec_choice (const gchar *name,
+                        const gchar *nick,
+                        const gchar *blurb,
+                        GimpChoice  *choice,
+                        const gchar *default_value,
+                        GParamFlags  flags)
+{
+  GimpParamSpecChoice *choice_spec;
+
+  choice_spec = g_param_spec_internal (GIMP_TYPE_PARAM_CHOICE,
+                                       name, nick, blurb, flags);
+
+  g_return_val_if_fail (choice_spec, NULL);
+
+  choice_spec->choice        = choice;
+  choice_spec->default_value = g_strdup (default_value);
+
+  return G_PARAM_SPEC (choice_spec);
+}
+
+
+/*
  * GIMP_TYPE_ARRAY
  */
 

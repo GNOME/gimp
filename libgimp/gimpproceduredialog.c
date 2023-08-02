@@ -765,6 +765,13 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                                                   property, NULL,
                                                   GTK_FILE_CHOOSER_ACTION_OPEN);
     }
+  else if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_CHOICE)
+    {
+      widget = gimp_prop_choice_combo_box_new (G_OBJECT (dialog->priv->config), property);
+      gtk_widget_set_vexpand (widget, FALSE);
+      gtk_widget_set_hexpand (widget, TRUE);
+      widget = gimp_label_string_widget_new (g_param_spec_get_nick (pspec), widget);
+    }
   /* GimpResource subclasses */
   /* FUTURE: title the chooser more specifically, with a prefix that is the nick of the property. */
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_BRUSH)

@@ -2604,6 +2604,78 @@ gimp_prop_string_combo_box_new (GObject      *config,
   return combo_box;
 }
 
+/**
+ * gimp_prop_choice_combo_box_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of %GimpChoice property controlled by combo box.
+ *
+ * Creates a #GimpStringComboBox widget to display and set the
+ * specified property.
+ *
+ * Returns: (transfer full): The newly created #GimpStringComboBox widget.
+ *
+ * Since: 2.4
+ */
+GtkWidget *
+gimp_prop_choice_combo_box_new (GObject     *config,
+                                const gchar *property_name)
+{
+  GParamSpec          *param_spec;
+  GimpParamSpecChoice *cspec;
+  GtkWidget           *combo_box;
+  GtkListStore        *store;
+  gchar               *value;
+  GList               *values;
+  GList               *iter;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   GIMP_TYPE_PARAM_CHOICE, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  cspec  = GIMP_PARAM_SPEC_CHOICE (param_spec);
+  values = gimp_choice_list_nicks (cspec->choice);
+  store  = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+
+  for (iter = values; iter; iter = iter->next)
+    {
+      const gchar *nick  = iter->data;
+      const gchar *label = gimp_choice_get_label (cspec->choice, nick);
+
+      gtk_list_store_insert_with_values (store, NULL, -1,
+                                         0, nick,
+                                         1, label,
+                                         -1);
+
+    }
+
+  combo_box = gimp_string_combo_box_new (GTK_TREE_MODEL (store), 0, 1);
+  g_object_unref (store);
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+  gimp_string_combo_box_set_active (GIMP_STRING_COMBO_BOX (combo_box), value);
+
+  g_signal_connect (combo_box, "changed",
+                    G_CALLBACK (gimp_prop_string_combo_box_callback),
+                    config);
+
+  set_param_spec (G_OBJECT (combo_box), combo_box, param_spec);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_string_combo_box_notify),
+                  combo_box);
+
+  gimp_widget_set_bound_property (combo_box, config, property_name);
+
+  gtk_widget_show (combo_box);
+
+  return combo_box;
+}
 static void
 gimp_prop_string_combo_box_callback (GtkWidget *widget,
                                      GObject   *config)

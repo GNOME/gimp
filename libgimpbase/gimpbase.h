@@ -24,6 +24,7 @@
 #include <libgimpbase/gimpbasetypes.h>
 
 #include <libgimpbase/gimpchecks.h>
+#include <libgimpbase/gimpchoice.h>
 #include <libgimpbase/gimpcpuaccel.h>
 #include <libgimpbase/gimpenv.h>
 #include <libgimpbase/gimplimits.h>

@@ -22,6 +22,7 @@
 
 #include "gimpbasetypes.h"
 
+#include "gimpchoice.h"
 #include "gimpparamspecs.h"
 #include "gimpparasite.h"
 #include "gimpprotocol.h"
@@ -1100,6 +1101,47 @@ _gp_param_def_read (GIOChannel *channel,
         return FALSE;
       break;
 
+    case GP_PARAM_DEF_TYPE_CHOICE:
+        {
+          GimpChoice *choice;
+          guint32     size;
+          gchar      *nick;
+
+          if (! _gimp_wire_read_string (channel, &nick, (int) 1, user_data))
+            return FALSE;
+
+          param_def->meta.m_choice.default_val = g_strdup (nick);
+
+          if (! _gimp_wire_read_int32 (channel, &size, 1, user_data))
+            return FALSE;
+
+          choice = gimp_choice_new ();
+
+          for (gint i = 0; i < size; i++)
+            {
+              gchar *label;
+              gchar *help;
+              gint   id;
+
+              if (! _gimp_wire_read_string (channel, &nick,
+                                           (int) 1, user_data)  ||
+                  ! _gimp_wire_read_int32 (channel, (guint32 *) &id,
+                                           1, user_data)        ||
+                  ! _gimp_wire_read_string (channel, &label,
+                                            (int) 1, user_data) ||
+                  ! _gimp_wire_read_string (channel, &help,
+                                            (int) 1, user_data))
+                {
+                  g_object_unref (choice);
+                  return FALSE;
+                }
+
+              gimp_choice_add (choice, nick, id, label, help);
+            }
+          param_def->meta.m_choice.choice = choice;
+        }
+      break;
+
     case GP_PARAM_DEF_TYPE_UNIT:
       if (! _gimp_wire_read_int32 (channel,
                                    (guint32 *) &param_def->meta.m_unit.allow_pixels, 1,
@@ -1194,6 +1236,11 @@ _gp_param_def_destroy (GPParamDef *param_def)
 
     case GP_PARAM_DEF_TYPE_BOOLEAN:
     case GP_PARAM_DEF_TYPE_FLOAT:
+      break;
+
+    case GP_PARAM_DEF_TYPE_CHOICE:
+      g_free (param_def->meta.m_choice.default_val);
+      g_object_unref (param_def->meta.m_choice.choice);
       break;
 
     case GP_PARAM_DEF_TYPE_STRING:
@@ -1340,6 +1387,51 @@ _gp_param_def_write (GIOChannel *channel,
                                     (guint64 *) &param_def->meta.m_int.default_val, 1,
                                     user_data))
         return FALSE;
+      break;
+
+    case GP_PARAM_DEF_TYPE_CHOICE:
+        {
+          GList *values;
+          gint   size;
+
+          if (! _gimp_wire_write_string (channel,
+                                         &param_def->meta.m_choice.default_val,
+                                         1, user_data))
+            return FALSE;
+
+          values = gimp_choice_list_nicks (param_def->meta.m_choice.choice);
+          size   = g_list_length (values);
+
+          if (! _gimp_wire_write_int32 (channel,
+                                        (guint32 *) &size, 1,
+                                        user_data))
+            return FALSE;
+
+          for (GList *iter = values; iter; iter = iter->next)
+            {
+              const gchar *label;
+              const gchar *help;
+              gint         id;
+
+              gimp_choice_get_documentation (param_def->meta.m_choice.choice,
+                                             iter->data, &label, &help);
+              id = gimp_choice_get_id (param_def->meta.m_choice.choice,
+                                       iter->data);
+              if (! _gimp_wire_write_string (channel,
+                                             (gchar **) &iter->data,
+                                             1, user_data)  ||
+                  ! _gimp_wire_write_int32 (channel,
+                                            (guint32 *) &id, 1,
+                                            user_data)      ||
+                  ! _gimp_wire_write_string (channel,
+                                             (gchar **) &label,
+                                             1, user_data)  ||
+                  ! _gimp_wire_write_string (channel,
+                                             (gchar **) &help,
+                                             1, user_data))
+                return FALSE;
+            }
+        }
       break;
 
     case GP_PARAM_DEF_TYPE_UNIT:

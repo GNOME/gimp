@@ -44,6 +44,7 @@ G_BEGIN_DECLS
 #endif
 
 
+typedef struct _GimpChoice       GimpChoice;
 typedef struct _GimpParasite     GimpParasite;
 typedef struct _GimpEnumDesc     GimpEnumDesc;
 typedef struct _GimpFlagsDesc    GimpFlagsDesc;
