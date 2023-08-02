@@ -51,6 +51,7 @@ stamp_compat_enums = custom_target('stamp-gimpcompatenums.h',
 libgimpbase_sources_introspectable = files(
   'gimpbasetypes.c',
   'gimpchecks.c',
+  'gimpchoice.c',
   'gimpcpuaccel.c',
   'gimpenv.c',
   'gimpmemsize.c',
