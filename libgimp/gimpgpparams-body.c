@@ -613,7 +613,7 @@ gimp_gp_param_to_value (gpointer        gimp,
     {
       g_value_set_boxed (value, param->data.d_bytes);
     }
-  else if (G_VALUE_TYPE (value) == G_TYPE_FILE)
+  else if (g_type_is_a (G_VALUE_TYPE (value), G_TYPE_FILE))
     {
       g_value_take_object (value, (param->data.d_string ?
                                    g_file_new_for_uri (param->data.d_string) :
@@ -860,7 +860,7 @@ gimp_value_to_gp_param (const GValue *value,
       else
         param->data.d_string = (gchar *) g_value_get_string (value);
     }
-  else if (G_VALUE_TYPE (value) == G_TYPE_FILE)
+  else if (g_type_is_a (G_VALUE_TYPE (value), G_TYPE_FILE))
     {
       GFile *file = g_value_get_object (value);
 
