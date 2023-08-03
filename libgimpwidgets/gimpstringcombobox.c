@@ -46,7 +46,8 @@ enum
   PROP_0,
   PROP_ID_COLUMN,
   PROP_LABEL_COLUMN,
-  PROP_ELLIPSIZE
+  PROP_ELLIPSIZE,
+  PROP_VALUE
 };
 
 
@@ -138,6 +139,21 @@ gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
                                                       PANGO_TYPE_ELLIPSIZE_MODE,
                                                       PANGO_ELLIPSIZE_NONE,
                                                       GIMP_PARAM_READWRITE));
+
+  /**
+   * GimpStringComboBox:value:
+   *
+   * The active value (different from the "active" property of
+   * GtkComboBox which is the active index).
+   *
+   * Since: 3.0
+   */
+  g_object_class_install_property (object_class, PROP_VALUE,
+                                   g_param_spec_string ("value",
+                                                        "Value",
+                                                        "Value of active item",
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -184,6 +200,11 @@ gimp_string_combo_box_set_property (GObject      *object,
       g_object_set_property (G_OBJECT (priv->text_renderer),
                              pspec->name, value);
       break;
+    case PROP_VALUE:
+      gimp_string_combo_box_set_active (GIMP_STRING_COMBO_BOX (object),
+                                        g_value_get_string (value));
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -212,6 +233,15 @@ gimp_string_combo_box_get_property (GObject    *object,
       g_object_get_property (G_OBJECT (priv->text_renderer),
                              pspec->name, value);
       break;
+    case PROP_VALUE:
+      {
+        gchar *v;
+
+        v = gimp_string_combo_box_get_active (GIMP_STRING_COMBO_BOX (object));
+        g_value_take_string (value, v);
+      }
+    break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

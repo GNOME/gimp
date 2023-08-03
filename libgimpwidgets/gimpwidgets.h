@@ -67,6 +67,7 @@
 #include <libgimpwidgets/gimplabelentry.h>
 #include <libgimpwidgets/gimplabelintwidget.h>
 #include <libgimpwidgets/gimplabelspin.h>
+#include <libgimpwidgets/gimplabelstringwidget.h>
 #include <libgimpwidgets/gimpmemsizeentry.h>
 #include <libgimpwidgets/gimpnumberpairentry.h>
 #include <libgimpwidgets/gimpoffsetarea.h>

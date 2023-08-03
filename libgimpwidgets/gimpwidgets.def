@@ -266,6 +266,9 @@ EXPORTS
 	gimp_label_spin_set_digits
 	gimp_label_spin_set_increments
 	gimp_label_spin_set_value
+	gimp_label_string_widget_get_type
+	gimp_label_string_widget_get_widget
+	gimp_label_string_widget_new
 	gimp_labeled_get_label
 	gimp_labeled_get_text
 	gimp_labeled_get_type
