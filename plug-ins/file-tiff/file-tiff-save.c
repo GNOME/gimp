@@ -324,7 +324,6 @@ save_layer (TIFF        *tif,
   gboolean          config_cmyk;
 
   g_object_get (config,
-                "compression",             &config_compression,
                 "gimp-comment",            &config_comment,
                 "save-comment",            &config_save_comment,
                 "save-transparent-pixels", &config_save_transp_pixels,
@@ -333,6 +332,7 @@ save_layer (TIFF        *tif,
                 "cmyk",                    &config_cmyk,
                 NULL);
 
+  config_compression = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "compression");
   compression = gimp_compression_to_tiff_compression (config_compression);
 
   layer_name = gimp_item_get_name (GIMP_ITEM (layer));
@@ -1221,48 +1221,6 @@ out:
   return status;
 }
 
-static gboolean
-combo_sensitivity_func (gint     value,
-                        gpointer data)
-{
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (data));
-
-  if (gimp_int_store_lookup_by_value (model, value, &iter))
-    {
-      gpointer insensitive;
-
-      gtk_tree_model_get (model, &iter,
-                          GIMP_INT_STORE_USER_DATA, &insensitive,
-                          -1);
-
-      return ! GPOINTER_TO_INT (insensitive);
-    }
-
-  return TRUE;
-}
-
-static void
-combo_set_item_sensitive (GtkWidget *widget,
-                          gint       value,
-                          gboolean   sensitive)
-{
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (widget));
-
-  if (gimp_int_store_lookup_by_value (model, value, &iter))
-    {
-      gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                          GIMP_INT_STORE_USER_DATA,
-                          ! GINT_TO_POINTER (sensitive),
-                          -1);
-    }
-}
-
 gboolean
 save_dialog (GimpImage     *image,
              GimpProcedure *procedure,
@@ -1273,17 +1231,22 @@ save_dialog (GimpImage     *image,
              gboolean       is_multi_layer,
              gboolean       classic_tiff_failed)
 {
-  GtkWidget        *dialog;
-  GtkListStore     *store;
-  GtkWidget        *combo;
-  GtkWidget        *profile_label;
-  gchar           **parasites;
-  GimpCompression   compression;
-  gboolean          run;
-  gboolean          has_geotiff  = FALSE;
-  gint              i;
-  GimpColorProfile *cmyk_profile = NULL;
+  GtkWidget           *dialog;
+  GtkWidget           *profile_label;
+  gchar              **parasites;
+  GimpCompression      compression;
+  gboolean             run;
+  gboolean             has_geotiff  = FALSE;
+  gint                 i;
+  GimpColorProfile    *cmyk_profile = NULL;
+  GParamSpec          *comp_spec;
+  GimpParamSpecChoice *cspec;
 
+  comp_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "compression");
+  cspec     = GIMP_PARAM_SPEC_CHOICE (comp_spec);
+  gimp_choice_set_sensitive (cspec->choice, "ccittfax3", is_monochrome);
+  gimp_choice_set_sensitive (cspec->choice, "ccittfax4", is_monochrome);
+  gimp_choice_set_sensitive (cspec->choice, "jpeg",      ! is_indexed);
 
   parasites = gimp_image_get_parasite_list (image);
   for (i = 0; i < g_strv_length (parasites); i++)
@@ -1318,25 +1281,6 @@ save_dialog (GimpImage     *image,
       gtk_label_set_line_wrap_mode (GTK_LABEL (label), PANGO_WRAP_WORD);
       gtk_label_set_max_width_chars (GTK_LABEL (label), 60);
     }
-
-  store =
-    gimp_int_store_new (_("None"),              GIMP_COMPRESSION_NONE,
-                        _("LZW"),               GIMP_COMPRESSION_LZW,
-                        _("Pack Bits"),         GIMP_COMPRESSION_PACKBITS,
-                        _("Deflate"),           GIMP_COMPRESSION_ADOBE_DEFLATE,
-                        _("JPEG"),              GIMP_COMPRESSION_JPEG,
-                        _("CCITT Group 3 fax"), GIMP_COMPRESSION_CCITTFAX3,
-                        _("CCITT Group 4 fax"), GIMP_COMPRESSION_CCITTFAX4,
-                        NULL);
-  combo = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "compression", GIMP_INT_STORE (store));
-  combo = gimp_label_int_widget_get_widget (GIMP_LABEL_INT_WIDGET (combo));
-  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (combo),
-                                      combo_sensitivity_func,
-                                      combo, NULL);
-  combo_set_item_sensitive (combo, GIMP_COMPRESSION_CCITTFAX3, is_monochrome);
-  combo_set_item_sensitive (combo, GIMP_COMPRESSION_CCITTFAX4, is_monochrome);
-  combo_set_item_sensitive (combo, GIMP_COMPRESSION_JPEG,      ! is_indexed);
 
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "layers-frame", "save-layers", FALSE,
@@ -1421,27 +1365,17 @@ save_dialog (GimpImage     *image,
                                 "cmyk-frame",
                                 NULL);
 
-  g_object_get (config,
-                "compression", &compression,
-                NULL);
+  compression = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "compression");
 
   if (! is_monochrome)
     {
       if (compression == GIMP_COMPRESSION_CCITTFAX3 ||
           compression == GIMP_COMPRESSION_CCITTFAX4)
-        {
-          compression = GIMP_COMPRESSION_NONE;
-        }
+        g_object_set (config, "compression", "none", NULL);
     }
 
   if (is_indexed && compression == GIMP_COMPRESSION_JPEG)
-    {
-      compression = GIMP_COMPRESSION_NONE;
-    }
-
-  g_object_set (config,
-                "compression", compression,
-                NULL);
+    g_object_set (config, "compression", "none", NULL);
 
   gtk_widget_show (dialog);
 

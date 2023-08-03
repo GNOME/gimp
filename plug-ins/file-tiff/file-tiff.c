@@ -215,13 +215,18 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "compression",
-                         _("Co_mpression"),
-                         _("Compression type: { NONE (0), LZW (1), PACKBITS (2), "
-                           "DEFLATE (3), JPEG (4), CCITT G3 Fax (5), "
-                           "CCITT G4 Fax (6) }"),
-                         0, 6, 0,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "compression",
+                            _("Co_mpression"),
+                            _("Compression type"),
+                            gimp_choice_new_with_values ("none",          GIMP_COMPRESSION_NONE,          _("None"),              NULL,
+                                                         "lzw",           GIMP_COMPRESSION_LZW,           _("LZW"),               NULL,
+                                                         "packbits",      GIMP_COMPRESSION_PACKBITS,      _("Pack Bits"),         NULL,
+                                                         "adobe_deflate", GIMP_COMPRESSION_ADOBE_DEFLATE, _("Deflate"),           NULL,
+                                                         "jpeg",          GIMP_COMPRESSION_JPEG,          _("JPEG"),              NULL,
+                                                         "ccittfax3",     GIMP_COMPRESSION_CCITTFAX3,     _("CCITT Group 3 fax"), NULL,
+                                                         "ccittfax4",     GIMP_COMPRESSION_CCITTFAX4,     _("CCITT Group 4 fax"), NULL,
+                                                         NULL),
+                            "none", G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent-pixels",
                              _("Save color _values from transparent pixels"),
@@ -403,10 +408,10 @@ tiff_save_rec (GimpProcedure        *procedure,
 
         g_object_get (config,
                       "bigtiff",     &bigtiff,
-                      "compression", &compression,
                       "save-layers", &save_layers,
                       "crop-layers", &crop_layers,
                       NULL);
+        compression = gimp_procedure_config_get_choice_id (config, "compression");
 
         if (compression == GIMP_COMPRESSION_CCITTFAX3 ||
             compression == GIMP_COMPRESSION_CCITTFAX4)
