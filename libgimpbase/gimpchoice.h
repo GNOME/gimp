@@ -63,6 +63,10 @@ gboolean        gimp_choice_get_documentation (GimpChoice   *choice,
                                                const gchar **label,
                                                const gchar **help);
 
+void            gimp_choice_set_sensitive     (GimpChoice   *choice,
+                                               const gchar  *nick,
+                                               gboolean      sensitive);
+
 
 G_END_DECLS
 

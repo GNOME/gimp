@@ -472,6 +472,7 @@ EXPORTS
 	gimp_string_combo_box_get_type
 	gimp_string_combo_box_new
 	gimp_string_combo_box_set_active
+	gimp_string_combo_box_set_sensitivity
 	gimp_toggle_button_update
 	gimp_uint_adjustment_update
 	gimp_unit_combo_box_get_active

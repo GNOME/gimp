@@ -30,10 +30,17 @@
 
 typedef struct _GimpChoiceDesc
 {
-  gchar *label;
-  gchar *help;
-  gint   id;
+  gchar    *label;
+  gchar    *help;
+  gint      id;
+  gboolean  sensitive;
 } GimpChoiceDesc;
+
+enum
+{
+  SENSITIVITY_CHANGED,
+  LAST_SIGNAL
+};
 
 struct _GimpChoice
 {
@@ -53,12 +60,23 @@ G_DEFINE_TYPE (GimpChoice, gimp_choice, G_TYPE_OBJECT)
 
 #define parent_class gimp_choice_parent_class
 
+static guint gimp_choice_signals[LAST_SIGNAL] = { 0 };
+
 static void
 gimp_choice_class_init (GimpChoiceClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize     = gimp_choice_finalize;
+  gimp_choice_signals[SENSITIVITY_CHANGED] =
+    g_signal_new ("sensitivity-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  0, /*G_STRUCT_OFFSET (GimpChoiceClass, sensitivity_changed),*/
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_STRING);
+
+  object_class->finalize = gimp_choice_finalize;
 }
 
 static void
@@ -173,10 +191,11 @@ gimp_choice_add (GimpChoice  *choice,
 
   g_return_if_fail (label != NULL);
 
-  desc        = g_new0 (GimpChoiceDesc, 1);
-  desc->id    = id;
-  desc->label = g_strdup (label);
-  desc->help  = help != NULL ? g_strdup (help) : NULL;
+  desc            = g_new0 (GimpChoiceDesc, 1);
+  desc->id        = id;
+  desc->label     = g_strdup (label);
+  desc->help      = help != NULL ? g_strdup (help) : NULL;
+  desc->sensitive = TRUE;
   g_hash_table_insert (choice->choices, g_strdup (nick), desc);
 
   duplicate = g_list_find_custom (choice->keys, nick, (GCompareFunc) g_strcmp0);
@@ -205,7 +224,13 @@ gboolean
 gimp_choice_is_valid (GimpChoice  *choice,
                       const gchar *nick)
 {
-  return (g_hash_table_lookup (choice->choices, nick) != NULL);
+  GimpChoiceDesc *desc;
+
+  g_return_val_if_fail (GIMP_IS_CHOICE (choice), FALSE);
+  g_return_val_if_fail (nick != NULL, FALSE);
+
+  desc = g_hash_table_lookup (choice->choices, nick);
+  return (desc != NULL && desc->sensitive);
 }
 
 /**
@@ -326,6 +351,39 @@ gimp_choice_get_documentation (GimpChoice   *choice,
     }
 
   return FALSE;
+}
+
+/**
+ * gimp_choice_set_sensitive:
+ * @choice: the %GimpChoice.
+ * @nick:   the nick to lookup.
+ *
+ * Change the sensitivity of a possible @nick. Technically a non-sensitive @nick
+ * means it cannot be chosen anymore (so [method@Gimp.Choice.is_valid] will
+ * return %FALSE; nevertheless [method@Gimp.Choice.list_nicks] and other
+ * functions to get information about a choice will still function).
+ *
+ * Returns: %TRUE if @nick is found, %FALSE otherwise.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_choice_set_sensitive (GimpChoice  *choice,
+                           const gchar *nick,
+                           gboolean     sensitive)
+{
+  GimpChoiceDesc *desc;
+
+  g_return_if_fail (GIMP_IS_CHOICE (choice));
+  g_return_if_fail (nick != NULL);
+
+  desc = g_hash_table_lookup (choice->choices, nick);
+  g_return_if_fail (desc != NULL);
+  if (desc->sensitive != sensitive)
+    {
+      desc->sensitive = sensitive;
+      g_signal_emit (choice, gimp_choice_signals[SENSITIVITY_CHANGED], 0, nick);
+    }
 }
 
 

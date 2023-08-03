@@ -27,6 +27,7 @@ EXPORTS
 	gimp_choice_list_nicks
 	gimp_choice_new
 	gimp_choice_new_with_values
+	gimp_choice_set_sensitive
 	gimp_clone_type_get_type
 	gimp_color_tag_get_type
 	gimp_component_type_get_type

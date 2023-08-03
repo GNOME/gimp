@@ -29,14 +29,16 @@
  * GIMP_TYPE_PARAM_CHOICE
  */
 
-static void       gimp_param_choice_class_init  (GParamSpecClass *klass);
-static void       gimp_param_choice_init        (GParamSpec      *pspec);
-static void       gimp_param_choice_finalize    (GParamSpec      *pspec);
-static gboolean   gimp_param_choice_validate    (GParamSpec      *pspec,
-                                                GValue          *value);
-static gint       gimp_param_choice_values_cmp  (GParamSpec      *pspec,
-                                                const GValue    *value1,
-                                                const GValue    *value2);
+static void       gimp_param_choice_class_init        (GParamSpecClass *klass);
+static void       gimp_param_choice_init              (GParamSpec      *pspec);
+static void       gimp_param_choice_value_set_default (GParamSpec      *pspec,
+                                                       GValue          *value);
+static void       gimp_param_choice_finalize          (GParamSpec      *pspec);
+static gboolean   gimp_param_choice_validate          (GParamSpec      *pspec,
+                                                      GValue          *value);
+static gint       gimp_param_choice_values_cmp        (GParamSpec      *pspec,
+                                                      const GValue    *value1,
+                                                      const GValue    *value2);
 
 GType
 gimp_param_choice_get_type (void)
@@ -66,10 +68,11 @@ gimp_param_choice_get_type (void)
 static void
 gimp_param_choice_class_init (GParamSpecClass *klass)
 {
-  klass->value_type     = G_TYPE_STRING;
-  klass->finalize       = gimp_param_choice_finalize;
-  klass->value_validate = gimp_param_choice_validate;
-  klass->values_cmp     = gimp_param_choice_values_cmp;
+  klass->value_type        = G_TYPE_STRING;
+  klass->value_set_default = gimp_param_choice_value_set_default;
+  klass->finalize          = gimp_param_choice_finalize;
+  klass->value_validate    = gimp_param_choice_validate;
+  klass->values_cmp        = gimp_param_choice_values_cmp;
 }
 
 static void
@@ -79,6 +82,15 @@ gimp_param_choice_init (GParamSpec *pspec)
 
   choice->choice        = NULL;
   choice->default_value = NULL;
+}
+
+static void
+gimp_param_choice_value_set_default (GParamSpec *pspec,
+                                     GValue     *value)
+{
+  GimpParamSpecChoice *cspec = GIMP_PARAM_SPEC_CHOICE (pspec);
+
+  g_value_set_string (value, cspec->default_value);
 }
 
 static void
@@ -100,7 +112,25 @@ gimp_param_choice_validate (GParamSpec *pspec,
 
   if (! gimp_choice_is_valid (choice, strval))
     {
-      g_value_set_string (value, spec_choice->default_value);
+      if (gimp_choice_is_valid (choice, spec_choice->default_value))
+        {
+          g_value_set_string (value, spec_choice->default_value);
+        }
+      else
+        {
+          /* This might happen if the default value is set insensitive. Then we
+           * should just set any valid random nick.
+           */
+          GList *nicks;
+
+          nicks = gimp_choice_list_nicks (choice);
+          for (GList *iter = nicks; iter; iter = iter->next)
+            if (gimp_choice_is_valid (choice, (gchar *) iter->data))
+              {
+                g_value_set_string (value, (gchar *) iter->data);
+                break;
+              }
+        }
       return TRUE;
     }
 

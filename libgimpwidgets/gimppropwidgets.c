@@ -2543,6 +2543,11 @@ static void   gimp_prop_string_combo_box_notify   (GObject     *config,
                                                    GParamSpec  *param_spec,
                                                    GtkWidget   *widget);
 
+static gboolean
+          gimp_prop_choice_combo_box_is_sensitive (const gchar *nick,
+                                                   GimpChoice  *choice);
+
+
 /**
  * gimp_prop_string_combo_box_new:
  * @config:        Object to which property is attached.
@@ -2624,7 +2629,6 @@ gimp_prop_choice_combo_box_new (GObject     *config,
   GimpParamSpecChoice *cspec;
   GtkWidget           *combo_box;
   GtkListStore        *store;
-  gchar               *value;
   GList               *values;
   GList               *iter;
 
@@ -2655,20 +2659,16 @@ gimp_prop_choice_combo_box_new (GObject     *config,
   combo_box = gimp_string_combo_box_new (GTK_TREE_MODEL (store), 0, 1);
   g_object_unref (store);
 
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-  gimp_string_combo_box_set_active (GIMP_STRING_COMBO_BOX (combo_box), value);
+  gimp_string_combo_box_set_sensitivity (GIMP_STRING_COMBO_BOX (combo_box),
+                                         (GimpStringSensitivityFunc) gimp_prop_choice_combo_box_is_sensitive,
+                                         cspec->choice, NULL);
+  g_signal_connect_swapped (cspec->choice, "sensitivity-changed",
+                            G_CALLBACK (gtk_widget_queue_draw),
+                            combo_box);
 
-  g_signal_connect (combo_box, "changed",
-                    G_CALLBACK (gimp_prop_string_combo_box_callback),
-                    config);
-
-  set_param_spec (G_OBJECT (combo_box), combo_box, param_spec);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_string_combo_box_notify),
-                  combo_box);
+  g_object_bind_property (config,    property_name,
+                          combo_box, "value",
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
   gimp_widget_set_bound_property (combo_box, config, property_name);
 
@@ -2676,6 +2676,7 @@ gimp_prop_choice_combo_box_new (GObject     *config,
 
   return combo_box;
 }
+
 static void
 gimp_prop_string_combo_box_callback (GtkWidget *widget,
                                      GObject   *config)
@@ -2721,6 +2722,13 @@ gimp_prop_string_combo_box_notify (GObject    *config,
                                      config);
 
   g_free (value);
+}
+
+static gboolean
+gimp_prop_choice_combo_box_is_sensitive (const gchar *nick,
+                                         GimpChoice  *choice)
+{
+  return gimp_choice_is_valid (choice, nick);
 }
 
 
