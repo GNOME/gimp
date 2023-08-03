@@ -728,6 +728,7 @@ EXPORTS
 	gimp_procedure_config_begin_run
 	gimp_procedure_config_end_export
 	gimp_procedure_config_end_run
+	gimp_procedure_config_get_choice_id
 	gimp_procedure_config_get_procedure
 	gimp_procedure_config_get_type
 	gimp_procedure_config_get_values

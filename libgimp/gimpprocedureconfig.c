@@ -897,6 +897,59 @@ gimp_procedure_config_save_metadata (GimpProcedureConfig *config,
     }
 }
 
+/**
+ * gimp_procedure_config_get_choice_id:
+ * @config:        a #GimpProcedureConfig
+ * @property_name: the name of a [struct@ParamSpecChoice] property.
+ *
+ * A utility function which will get the current string value of a
+ * [struct@ParamSpecChoice] property in @config and convert it to the integer ID
+ * mapped to this value.
+ * This makes it easy to work with an Enum type locally, within a plug-in code.
+ *
+ * Since: 3.0
+ **/
+gint
+gimp_procedure_config_get_choice_id (GimpProcedureConfig *config,
+                                     const gchar         *property_name)
+{
+  GParamSpec          *param_spec;
+  GimpParamSpecChoice *cspec;
+  gchar               *value = NULL;
+  gint                 id;
+
+  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                             property_name);
+
+  if (! param_spec)
+    {
+      g_warning ("%s: %s has no property named '%s'",
+                 G_STRFUNC,
+                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
+                 property_name);
+      return 0;
+    }
+
+  if (! g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), GIMP_TYPE_PARAM_CHOICE))
+    {
+      g_warning ("%s: property '%s' of %s is not a GimpParamSpecChoice.",
+                 G_STRFUNC,
+                 param_spec->name,
+                 g_type_name (param_spec->owner_type));
+      return 0;
+    }
+
+  cspec = GIMP_PARAM_SPEC_CHOICE (param_spec);
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+  id = gimp_choice_get_id (cspec->choice, value);
+
+  g_free (value);
+
+  return id;
+}
+
 
 /*  private functions  */
 

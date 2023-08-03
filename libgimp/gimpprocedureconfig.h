@@ -98,6 +98,12 @@ void    gimp_procedure_config_save_metadata (GimpProcedureConfig  *config,
                                              GFile                *file);
 
 
+/* Utility functions */
+
+gint    gimp_procedure_config_get_choice_id (GimpProcedureConfig  *config,
+                                             const gchar          *property_name);
+
+
 G_END_DECLS
 
 #endif /* __GIMP_PROCEDURE_CONFIG_H__ */
