@@ -280,12 +280,20 @@ png_create_procedure (GimpPlugIn  *plug_in,
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_INT (procedure, "format",
-                             _("_Pixel format"),
-                             _("PNG export format"),
-                             PNG_FORMAT_AUTO, PNG_FORMAT_GRAYA16,
-                             PNG_FORMAT_AUTO,
-                             G_PARAM_READWRITE);
+      GIMP_PROC_AUX_ARG_CHOICE (procedure, "format",
+                                _("_Pixel format"),
+                                _("PNG export format"),
+                                gimp_choice_new_with_values ("auto",    PNG_FORMAT_AUTO,    _("Automatic"),    NULL,
+                                                             "rgb8",    PNG_FORMAT_RGB8,    _("8 bpc RGB"),    NULL,
+                                                             "gray8",   PNG_FORMAT_GRAY8,   _("8 bpc GRAY"),   NULL,
+                                                             "rgba8",   PNG_FORMAT_RGBA8,   _("8 bpc RGBA"),   NULL,
+                                                             "graya8",  PNG_FORMAT_GRAYA8,  _("8 bpc GRAYA"),  NULL,
+                                                             "rgb16",   PNG_FORMAT_RGB16,   _("16 bpc RGB"),   NULL,
+                                                             "gray16",  PNG_FORMAT_GRAY16,  _("16 bpc GRAY"),  NULL,
+                                                             "rgba16",  PNG_FORMAT_RGBA16,  _("16 bpc RGBA"),  NULL,
+                                                             "graya16", PNG_FORMAT_GRAYA16, _("16 bpc GRAYA"), NULL,
+                                                             NULL),
+                                "auto", G_PARAM_READWRITE);
 
       gimp_save_procedure_set_support_exif      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
       gimp_save_procedure_set_support_iptc      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
@@ -1349,9 +1357,10 @@ save_image (GFile        *file,
                 "save-transparent",   &save_transp_pixels,
                 "optimize-palette",   &optimize_palette,
                 "compression",        &compression_level,
-                "format",             &export_format,
                 "save-color-profile", &save_profile,
                 NULL);
+
+  export_format = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "format");
 
   out_linear = FALSE;
   space      = gimp_drawable_get_format (drawable);
@@ -1690,7 +1699,7 @@ save_image (GFile        *file,
           break;
         case PNG_FORMAT_AUTO:
           g_return_val_if_reached (FALSE);
-      }
+        }
     }
 
   if (! file_format)
@@ -2272,10 +2281,9 @@ save_dialog (GimpImage     *image,
              GObject       *config,
              gboolean       alpha)
 {
-  GtkWidget    *dialog;
-  GtkListStore *store;
-  gboolean      run;
-  gboolean      indexed;
+  GtkWidget *dialog;
+  gboolean   run;
+  gboolean   indexed;
 
   indexed = (gimp_image_get_base_type (image) == GIMP_INDEXED);
 
@@ -2285,19 +2293,6 @@ save_dialog (GimpImage     *image,
 
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                     "compression", GIMP_TYPE_SPIN_SCALE);
-
-  store = gimp_int_store_new (_("Automatic"),    PNG_FORMAT_AUTO,
-                              _("8 bpc RGB"),    PNG_FORMAT_RGB8,
-                              _("8 bpc GRAY"),   PNG_FORMAT_GRAY8,
-                              _("8 bpc RGBA"),   PNG_FORMAT_RGBA8,
-                              _("8 bpc GRAYA"),  PNG_FORMAT_GRAYA8,
-                              _("16 bpc RGB"),   PNG_FORMAT_RGB16,
-                              _("16 bpc GRAY"),  PNG_FORMAT_GRAY16,
-                              _("16 bpc RGBA"),  PNG_FORMAT_RGBA16,
-                              _("16 bpc GRAYA"), PNG_FORMAT_GRAYA16,
-                              NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "format", GIMP_INT_STORE (store));
 
   gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
                                        "save-transparent",
