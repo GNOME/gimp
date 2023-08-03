@@ -46,25 +46,25 @@ xml_parser_data                              (GMarkupParseContext  *context,
 
 void
 set_tag_ui                                   (metadata_editor      *args,
-                                              int                   index,
+                                              gint                  index,
                                               gchar                *name,
                                               gchar                *value,
-                                              gchar                *mode);
+                                              MetadataMode          mode);
 
 const gchar *
 get_tag_ui_text                              (metadata_editor      *args,
                                               gchar                *name,
-                                              gchar                *mode);
+                                              MetadataMode          mode);
 
 gchar *
 get_tag_ui_list                              (metadata_editor      *args,
                                               gchar                *name,
-                                              gchar                *mode);
+                                              MetadataMode          mode);
 
 gint
 get_tag_ui_combo                             (metadata_editor      *args,
                                               gchar                *name,
-                                              gchar                *mode);
+                                              MetadataMode          mode);
 
 void
 xml_parser_end_element                       (GMarkupParseContext  *context,

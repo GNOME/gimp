@@ -163,13 +163,13 @@ set_tag_ui (metadata_editor *args,
             gint             index,
             gchar           *name,
             gchar           *value,
-            gchar*           mode)
+            MetadataMode     mode)
 {
   GtkWidget *widget = NULL;
 
   widget = GTK_WIDGET (metadata_editor_get_widget (args, str_tag_name));
 
-  if (!strcmp ("single", mode))
+  if (mode == MODE_SINGLE)
     {
       GtkEntry *entry_widget;
       gchar    *value_utf;
@@ -179,7 +179,7 @@ set_tag_ui (metadata_editor *args,
       gtk_entry_set_text (entry_widget, value_utf);
       g_free (value_utf);
     }
-  else if (!strcmp ("multi", mode))
+  else if (mode == MODE_MULTI)
     {
       GtkTextView   *text_view;
       GtkTextBuffer *buffer;
@@ -191,7 +191,7 @@ set_tag_ui (metadata_editor *args,
       gtk_text_buffer_set_text (buffer, value_utf, -1);
       g_free (value_utf);
     }
-  else if (!strcmp ("combo", mode))
+  else if (mode == MODE_COMBO)
     {
       gint32  value;
       gchar  *value_utf;
@@ -201,7 +201,7 @@ set_tag_ui (metadata_editor *args,
       gtk_combo_box_set_active (GTK_COMBO_BOX(widget), value);
       g_free (value_utf);
     }
-  else if (!strcmp ("list", mode))
+  else if (mode == MODE_LIST)
     {
       GtkTreeModel  *treemodel;
       GtkListStore  *liststore;
@@ -551,18 +551,18 @@ set_tag_ui (metadata_editor *args,
 const gchar *
 get_tag_ui_text (metadata_editor *args,
                  gchar           *name,
-                 gchar           *mode)
+                 MetadataMode     mode)
 {
   GtkWidget *widget = NULL;
 
   widget = metadata_editor_get_widget (args, name);
 
-  if (! strcmp ("single", mode))
+  if (mode == MODE_SINGLE)
     {
       GtkEntry *entry = GTK_ENTRY (widget);
       return gtk_entry_get_text (entry);
     }
-  else if (!strcmp ("multi", mode))
+  else if (mode == MODE_MULTI)
     {
       GtkTextView   *text_view = GTK_TEXT_VIEW (widget);
       GtkTextBuffer *buffer;
@@ -601,7 +601,7 @@ get_list_elements (GString *xmldata, int element_count, gchar **rowtagdata)
 }
 
 gchar *
-get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
+get_tag_ui_list (metadata_editor *args, gchar *name, MetadataMode mode)
 {
   GtkWidget     *widget = NULL;
   GtkTreeModel  *treemodel;
@@ -823,7 +823,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
 }
 
 gint
-get_tag_ui_combo (metadata_editor *args, gchar *name, gchar *mode)
+get_tag_ui_combo (metadata_editor *args, gchar *name, MetadataMode mode)
 {
   return gtk_combo_box_get_active (GTK_COMBO_BOX(metadata_editor_get_widget (args, name)));
 }

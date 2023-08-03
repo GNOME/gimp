@@ -53,6 +53,19 @@ const GMarkupParser xml_markup_parser =
   NULL   /*  error        */
 };
 
+typedef struct
+{
+  MetadataMode  mode;
+  gchar        *mode_string;
+} MetadataModeConversion;
+
+const MetadataModeConversion metadata_mode_conversion[] =
+{
+  { MODE_SINGLE, "single" },
+  { MODE_MULTI,  "multi"  },
+  { MODE_COMBO,  "combo"  },
+  { MODE_LIST,   "list"   },
+};
 
 /* ============================================================================
  * ==[ METADATA IMPORT TEMPLATE ]==============================================
@@ -118,12 +131,12 @@ export_file_metadata (metadata_editor *args)
       g_string_append (xmldata, equivalent_metadata_tags[i].tag);
       g_string_append (xmldata, "</tag-name>\n");
       g_string_append (xmldata, "\t\t<tag-mode>");
-      g_string_append (xmldata, equivalent_metadata_tags[i].mode);
+      g_string_append (xmldata, metadata_mode_conversion[equivalent_metadata_tags[i].mode].mode_string);
       g_string_append (xmldata, "</tag-mode>\n");
       g_string_append (xmldata, "\t\t<tag-value>");
 
-      if (!strcmp("single", default_metadata_tags[index].mode) ||
-          !strcmp("multi", default_metadata_tags[index].mode))
+      if (default_metadata_tags[index].mode == MODE_SINGLE ||
+          default_metadata_tags[index].mode == MODE_MULTI)
         {
           const gchar *value;
 
@@ -139,13 +152,13 @@ export_file_metadata (metadata_editor *args)
               g_free (value_utf);
             }
         }
-      else if (!strcmp("combo", default_metadata_tags[index].mode))
+      else if (default_metadata_tags[index].mode == MODE_COMBO)
         {
           gint data = get_tag_ui_combo (args, default_metadata_tags[index].tag,
                                          default_metadata_tags[index].mode);
           g_string_append_printf (xmldata, "%d", data);
         }
-      else if (!strcmp("list", default_metadata_tags[i].mode))
+      else if (default_metadata_tags[i].mode == MODE_LIST)
         {
             /* No IPTC lists elements at this point */
         }
@@ -162,11 +175,11 @@ export_file_metadata (metadata_editor *args)
       g_string_append (xmldata, default_metadata_tags[i].tag);
       g_string_append (xmldata, "</tag-name>\n");
       g_string_append (xmldata, "\t\t<tag-mode>");
-      g_string_append (xmldata, default_metadata_tags[i].mode);
+      g_string_append (xmldata, metadata_mode_conversion[default_metadata_tags[i].mode].mode_string);
       g_string_append (xmldata, "</tag-mode>\n");
 
-      if (!strcmp("single", default_metadata_tags[i].mode) ||
-          !strcmp("multi", default_metadata_tags[i].mode))
+      if (default_metadata_tags[i].mode == MODE_SINGLE ||
+          default_metadata_tags[i].mode == MODE_MULTI)
         {
           const gchar *value;
 
@@ -185,7 +198,7 @@ export_file_metadata (metadata_editor *args)
 
           g_string_append (xmldata, "</tag-value>\n");
         }
-      else if (!strcmp("combo", default_metadata_tags[i].mode))
+      else if (default_metadata_tags[i].mode == MODE_COMBO)
         {
           gint data;
 
@@ -197,7 +210,7 @@ export_file_metadata (metadata_editor *args)
 
           g_string_append (xmldata, "</tag-value>\n");
         }
-      else if (!strcmp("list", default_metadata_tags[i].mode))
+      else if (default_metadata_tags[i].mode == MODE_LIST)
         {
           gchar *data;
 

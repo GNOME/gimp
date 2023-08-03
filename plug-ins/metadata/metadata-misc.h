@@ -29,13 +29,21 @@ typedef struct
   gchar          *filename;
 } metadata_editor;
 
+typedef enum
+{
+  MODE_SINGLE,
+  MODE_MULTI,
+  MODE_COMBO,
+  MODE_LIST,
+} MetadataMode;
+
 typedef struct
 {
-  gchar  *tag;
-  gchar  *mode;
-  gint32  other_tag_index;
-  gint32  tag_type;
-  gint32  xmp_type;
+  gchar        *tag;
+  MetadataMode  mode;
+  gint32        other_tag_index;
+  gint32        tag_type;
+  gint32        xmp_type;
 } metadata_tag;
 
 typedef struct
@@ -59,11 +67,11 @@ typedef struct
 
 typedef struct
 {
-  gchar  *id;
-  gchar  *tag;
-  gchar  *mode;
-  gint32  other_tag_index;
-  gint32  tag_type;
+  gchar        *id;
+  gchar        *tag;
+  MetadataMode  mode;
+  gint32        other_tag_index;
+  gint32        tag_type;
 } TranslateTag;
 
 #endif /* __METADATA_MISC_H__ */

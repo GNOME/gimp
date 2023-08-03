@@ -1730,14 +1730,14 @@ hasImageSupplierTagData (metadata_editor *meta_info)
 
       object = metadata_editor_get_widget (meta_info, imageSupplierInfoTags[loop].id);
 
-      if (! strcmp (imageSupplierInfoTags[loop].mode, "single"))
+      if (imageSupplierInfoTags[loop].mode == MODE_SINGLE)
         {
           text = gtk_entry_get_text (GTK_ENTRY (object));
 
           if (text && *text)
             return TRUE;
         }
-      else if (! strcmp (imageSupplierInfoTags[loop].mode, "multi"))
+      else if (imageSupplierInfoTags[loop].mode == MODE_MULTI)
         {
           text = gtk_entry_get_text (GTK_ENTRY (object));
 
@@ -1761,7 +1761,7 @@ hasLocationCreationTagData (metadata_editor *meta_info)
 
       widget = metadata_editor_get_widget (meta_info, locationCreationInfoTags[loop].id);
 
-      if (! strcmp (locationCreationInfoTags[loop].mode, "single"))
+      if (locationCreationInfoTags[loop].mode == MODE_SINGLE)
         {
           text = gtk_entry_get_text (GTK_ENTRY (widget));
 
@@ -2678,11 +2678,11 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
           value_utf = clean_xmp_string (value);
           g_free (value);
 
-          if (! strcmp ("single", imageSupplierInfoTags[i].mode))
+          if (imageSupplierInfoTags[i].mode == MODE_SINGLE)
             {
               gtk_entry_set_text (GTK_ENTRY (widget), value_utf);
             }
-          else if (! strcmp ("multi", imageSupplierInfoTags[i].mode))
+          else if (imageSupplierInfoTags[i].mode == MODE_MULTI)
             {
               GtkTextBuffer *buffer;
 
@@ -2711,7 +2711,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
           value_utf = clean_xmp_string (value);
           g_free (value);
 
-          if (! strcmp ("single", locationCreationInfoTags[i].mode))
+          if (locationCreationInfoTags[i].mode == MODE_SINGLE)
             {
               gtk_entry_set_text (GTK_ENTRY (widget), value_utf);
             }
@@ -2915,7 +2915,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                             }
                           else
                             {
-                              if (! strcmp ("multi", equivalent_metadata_tags[index].mode))
+                              if (equivalent_metadata_tags[index].mode == MODE_MULTI)
                                 {
                                   g_string_append (str, "\n");
                                 }
@@ -2936,7 +2936,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                        */
                       if (value && strcmp (value, str->str))
                         {
-                          if (! strcmp ("multi", equivalent_metadata_tags[index].mode))
+                          if (equivalent_metadata_tags[index].mode == MODE_MULTI)
                             {
                               g_string_prepend (str, "\n");
                             }
@@ -2953,7 +2953,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
             }
         }
 
-      if (!strcmp ("list", default_metadata_tags[i].mode))
+      if (default_metadata_tags[i].mode == MODE_LIST)
         {
           /* Tab: IPTC Extension, Label: Location Shown */
           if (! strcmp ("Xmp.iptcExt.LocationShown",
@@ -4133,18 +4133,18 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
 
       if (value)
         {
-          if (! strcmp ("single", default_metadata_tags[i].mode))
+          if (default_metadata_tags[i].mode == MODE_SINGLE)
             {
               gtk_entry_set_text (GTK_ENTRY (widget), value);
             }
-          else if (! strcmp ("multi", default_metadata_tags[i].mode))
+          else if (default_metadata_tags[i].mode == MODE_MULTI)
             {
               GtkTextBuffer *buffer;
 
               buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
               gtk_text_buffer_set_text (buffer, value, -1);
             }
-          else if (! strcmp ("combo", default_metadata_tags[i].mode))
+          else if (default_metadata_tags[i].mode == MODE_COMBO)
             {
               gint32 data = 0;
 
@@ -4435,11 +4435,11 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
           value_utf = clean_xmp_string (value);
           g_free (value);
 
-          if (! strcmp ("single", creatorContactInfoTags[i].mode))
+          if (creatorContactInfoTags[i].mode == MODE_SINGLE)
             {
               gtk_entry_set_text (GTK_ENTRY (widget), value_utf);
             }
-          else if (! strcmp ("multi", creatorContactInfoTags[i].mode))
+          else if (creatorContactInfoTags[i].mode == MODE_MULTI)
             {
               GtkTextBuffer *buffer;
               buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
@@ -4814,14 +4814,14 @@ metadata_editor_write_callback (GtkWidget       *dialog,
           GtkWidget *widget = metadata_editor_get_widget (meta_info,
                                                           creatorContactInfoTags[i].id);
 
-          if (! strcmp ("single", creatorContactInfoTags[i].mode))
+          if (creatorContactInfoTags[i].mode == MODE_SINGLE)
             {
               GtkEntry *entry = GTK_ENTRY (widget);
 
               set_tag_string (g_metadata, creatorContactInfoTags[i].tag,
                               gtk_entry_get_text (entry), FALSE);
             }
-          else if (! strcmp ("multi", creatorContactInfoTags[i].mode))
+          else if (creatorContactInfoTags[i].mode == MODE_MULTI)
             {
               GtkTextView   *text_view = GTK_TEXT_VIEW (widget);
               GtkTextBuffer *buffer;
@@ -4868,7 +4868,7 @@ metadata_editor_write_callback (GtkWidget       *dialog,
 
       /* SINGLE TAGS */
 
-      if (! strcmp ("single", default_metadata_tags[i].mode))
+      if (default_metadata_tags[i].mode == MODE_SINGLE)
         {
           GtkEntry *entry       = GTK_ENTRY (widget);
           gchar    *value_entry = g_strdup (gtk_entry_get_text (entry));
@@ -4947,7 +4947,7 @@ metadata_editor_write_callback (GtkWidget       *dialog,
 
       /* MULTI TAGS */
 
-      else if (! strcmp ("multi", default_metadata_tags[i].mode))
+      else if (default_metadata_tags[i].mode == MODE_MULTI)
         {
           GtkTextView   *text_view = GTK_TEXT_VIEW (widget);
           GtkTextBuffer *buffer;
@@ -5011,7 +5011,7 @@ metadata_editor_write_callback (GtkWidget       *dialog,
 
                 if (text && *text)
                   {
-                    if (! strcmp ("multi", equivalent_metadata_tags[index].mode))
+                    if (equivalent_metadata_tags[index].mode == MODE_MULTI)
                       {
                         gchar **multi;
 
@@ -5028,7 +5028,7 @@ metadata_editor_write_callback (GtkWidget       *dialog,
 
                         g_strfreev (multi);
                       }
-                    else if (! strcmp ("single", equivalent_metadata_tags[index].mode))
+                    else if (equivalent_metadata_tags[index].mode == MODE_SINGLE)
                       {
                         /* Convert from multiline to single line: keep the \n and just add the whole text. */
                         set_tag_string (g_metadata, equivalent_metadata_tags[index].tag,
@@ -5036,9 +5036,8 @@ metadata_editor_write_callback (GtkWidget       *dialog,
                       }
                     else
                       {
-                        g_warning ("Copying from multiline tag %s to %s tag %s not implemented!",
+                        g_warning ("Copying from multiline tag %s to tag %s not implemented!",
                                    default_metadata_tags[i].tag,
-                                   equivalent_metadata_tags[index].mode,
                                    equivalent_metadata_tags[index].tag);
                       }
                   }
@@ -5047,14 +5046,14 @@ metadata_editor_write_callback (GtkWidget       *dialog,
           if (text)
             g_free (text);
         }
-      else if (! strcmp ("list", default_metadata_tags[i].mode))
+      else if (default_metadata_tags[i].mode == MODE_LIST)
         {
           /* MIGHT DO SOMETHING HERE */
         }
 
       /* COMBO TAGS */
 
-      else if (! strcmp ("combo", default_metadata_tags[i].mode))
+      else if (default_metadata_tags[i].mode == MODE_COMBO)
         {
           GtkComboBoxText *combo;
           gint32           value;
