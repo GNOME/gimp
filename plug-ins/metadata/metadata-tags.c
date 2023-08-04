@@ -312,11 +312,6 @@ const gchar *gpsaltsys[] =
 };
 const gint n_gpsaltsys = G_N_ELEMENTS (gpsaltsys);
 
-const TranslateHeaderTag creatorContactInfoHeader =
-{
-  "Xmp.iptc.CreatorContactInfo", "type=\"Struct\"", 8
-};
-
 const TranslateTag creatorContactInfoTags[] =
 {
   { "Xmp.iptc.CiAdrExtadr", "Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiAdrExtadr", MODE_MULTI,  -1,  TAG_TYPE_XMP },
@@ -328,11 +323,7 @@ const TranslateTag creatorContactInfoTags[] =
   { "Xmp.iptc.CiEmailWork", "Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiEmailWork", MODE_MULTI,  -1,  TAG_TYPE_XMP },
   { "Xmp.iptc.CiUrlWork",   "Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiUrlWork",   MODE_MULTI,  -1,  TAG_TYPE_XMP }
 };
-
-const TranslateHeaderTag locationCreationInfoHeader =
-{
-  "Xmp.iptcExt.LocationCreated", "type=\"Bag\"", 6
-};
+const gint n_creatorContactInfoTags = G_N_ELEMENTS (creatorContactInfoTags);
 
 const TranslateTag locationCreationInfoTags[] =
 {
@@ -343,17 +334,14 @@ const TranslateTag locationCreationInfoTags[] =
   { "Xmp.iptcExt.CountryCode",   "Xmp.iptcExt.LocationCreated[1]/Iptc4xmpExt:CountryCode",   MODE_SINGLE, -1,  TAG_TYPE_XMP },
   { "Xmp.iptcExt.WorldRegion",   "Xmp.iptcExt.LocationCreated[1]/Iptc4xmpExt:WorldRegion",   MODE_SINGLE, -1,  TAG_TYPE_XMP }
 };
-
-const TranslateHeaderTag imageSupplierInfoHeader =
-{
-  "Xmp.plus.ImageSupplier", "type=\"Seq\"", 2
-};
+const gint n_locationCreationInfoTags = G_N_ELEMENTS (locationCreationInfoTags);
 
 const TranslateTag imageSupplierInfoTags[] =
 {
   { "Xmp.plus.ImageSupplierName",   "Xmp.plus.ImageSupplier[1]/plus:ImageSupplierName", MODE_MULTI,  -1,  TAG_TYPE_XMP },
   { "Xmp.plus.ImageSupplierID",     "Xmp.plus.ImageSupplier[1]/plus:ImageSupplierID",   MODE_SINGLE, -1,  TAG_TYPE_XMP }
 };
+const gint n_imageSupplierInfoTags = G_N_ELEMENTS (imageSupplierInfoTags);
 
 /* Plus and IPTC extension tags */
 

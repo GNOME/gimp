@@ -1723,7 +1723,7 @@ hasImageSupplierTagData (metadata_editor *meta_info)
 {
   gint loop;
 
-  for (loop = 0; loop < imageSupplierInfoHeader.size; loop++)
+  for (loop = 0; loop < n_imageSupplierInfoTags; loop++)
     {
       GtkWidget   *object;
       const gchar *text;
@@ -1754,7 +1754,7 @@ hasLocationCreationTagData (metadata_editor *meta_info)
 {
   gint loop;
 
-  for (loop = 0; loop < locationCreationInfoHeader.size; loop++)
+  for (loop = 0; loop < n_locationCreationInfoTags; loop++)
     {
       GtkWidget   *widget;
       const gchar *text;
@@ -1792,7 +1792,7 @@ hasCreatorTagData (metadata_editor *meta_info)
   gboolean has_data = FALSE;
   gint     loop;
 
-  for (loop = 0; loop < creatorContactInfoHeader.size; loop++)
+  for (loop = 0; loop < n_creatorContactInfoTags; loop++)
     {
       GtkWidget *widget;
 
@@ -2561,7 +2561,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
   combo_widget = metadata_editor_get_widget (meta_info, "Xmp.xmpRights.Marked");
-  for (i = 0; i < 3; i++)
+  for (i = 0; i < n_marked; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
                                       gettext (marked[i].display));
@@ -2569,7 +2569,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
   combo_widget = metadata_editor_get_widget (meta_info, "Xmp.photoshop.Urgency");
-  for (i = 0; i < 9; i++)
+  for (i = 0; i < n_urgency; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
                                       gettext (urgency[i]));
@@ -2577,7 +2577,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
   combo_widget = metadata_editor_get_widget (meta_info, "Xmp.plus.MinorModelAgeDisclosure");
-  for (i = 0; i < 13; i++)
+  for (i = 0; i < n_minormodelagedisclosure; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
                                       gettext (minormodelagedisclosure[i].display));
@@ -2603,7 +2603,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
   combo_widget = metadata_editor_get_widget (meta_info, "Xmp.plus.PropertyReleaseStatus");
-  for (i = 0; i < 4; i++)
+  for (i = 0; i < n_propertyreleasestatus; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
                                       gettext (propertyreleasestatus[i].display));
@@ -2613,7 +2613,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   gtk_widget_set_size_request (combo_widget, 180, height);
 
   combo_widget = metadata_editor_get_widget (meta_info, "Xmp.DICOM.PatientSex");
-  for (i = 0; i < 4; i++)
+  for (i = 0; i < n_dicom; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
                                       gettext (dicom[i].display));
@@ -2621,7 +2621,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
   combo_widget = metadata_editor_get_widget (meta_info, "Exif.GPSInfo.GPSLatitudeRef");
-  for (i = 0; i < 3; i++)
+  for (i = 0; i < n_gpslatref; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
                                       gettext (gpslatref[i]));
@@ -2629,7 +2629,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
   combo_widget = metadata_editor_get_widget (meta_info, "Exif.GPSInfo.GPSLongitudeRef");
-  for (i = 0; i < 3; i++)
+  for (i = 0; i < n_gpslngref; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
                                       gettext (gpslngref[i]));
@@ -2637,7 +2637,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
   combo_widget = metadata_editor_get_widget (meta_info, "Exif.GPSInfo.GPSAltitudeRef");
-  for (i = 0; i < 3; i++)
+  for (i = 0; i < n_gpsaltref; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
                                       gettext (gpsaltref[i]));
@@ -2645,7 +2645,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
   combo_widget = metadata_editor_get_widget (meta_info, "GPSAltitudeSystem");
-  for (i = 0; i < 2; i++)
+  for (i = 0; i < n_gpsaltsys; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
                                       gettext (gpsaltsys[i]));
@@ -2660,7 +2660,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   /* Set up text view heights */
 
   /* Set up lists */
-  for (i = 0; i < imageSupplierInfoHeader.size; i++)
+  for (i = 0; i < n_imageSupplierInfoTags; i++)
     {
       GtkWidget *widget;
 
@@ -2693,7 +2693,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
         }
     }
 
-  for (i = 0; i < locationCreationInfoHeader.size; i++)
+  for (i = 0; i < n_locationCreationInfoTags; i++)
     {
       GtkWidget *widget;
 
@@ -3826,7 +3826,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
               phonestore = gtk_list_store_new (1, G_TYPE_STRING);
               gtk_list_store_append (phonestore, &phoneiter);
               gtk_list_store_set (phonestore, &phoneiter, 0, "Unknown", -1);
-              for (j=1; j < 6; j++)
+              for (j=1; j < n_phone_types; j++)
                 {
                   gtk_list_store_append (phonestore, &phoneiter);
                   gtk_list_store_set (phonestore, &phoneiter,
@@ -4034,7 +4034,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                       type1 = g_strdup (gettext (phone_types[0].display));
                       type2 = g_strdup (gettext (phone_types[0].display));
 
-                      for (types = 0; types < 6; types++)
+                      for (types = 0; types < n_phone_types; types++)
                         {
                           /* phone type 1 */
                           if (tagdatarow[3] &&
@@ -4372,7 +4372,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                 {
                   gint loop;
 
-                  for (loop = 0; loop < 4; loop++)
+                  for (loop = 0; loop < n_propertyreleasestatus; loop++)
                     {
                       if (! strcmp (propertyreleasestatus[loop].data, value))
                         {
@@ -4418,7 +4418,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
    * different values. Due to a bug in the metadata-editor previously only
    * the short form was saved.
    */
-  for (i = 0; i < creatorContactInfoHeader.size; i++)
+  for (i = 0; i < n_creatorContactInfoTags; i++)
     {
       GtkWidget *widget;
 
@@ -4522,7 +4522,7 @@ get_phonetype (gchar *cur_value)
 
   if (cur_value != NULL)
     {
-      for (types = 0; types < 6; types++)
+      for (types = 0; types < n_phone_types; types++)
         {
           if (! strcmp (cur_value, gettext (phone_types[types].display)))
             {
@@ -4805,11 +4805,7 @@ metadata_editor_write_callback (GtkWidget       *dialog,
 
   if (hasCreatorTagData (meta_info))
     {
-
-      set_tag_string (g_metadata, creatorContactInfoHeader.header,
-                      "type=\"Struct\"", FALSE);
-
-      for (i = 0; i < creatorContactInfoHeader.size; i++)
+      for (i = 0; i < n_creatorContactInfoTags; i++)
         {
           GtkWidget *widget = metadata_editor_get_widget (meta_info,
                                                           creatorContactInfoTags[i].id);
@@ -4847,11 +4843,7 @@ metadata_editor_write_callback (GtkWidget       *dialog,
 
   else
     {
-      gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
-                                     creatorContactInfoHeader.header,
-                                     NULL);
-
-      for (i = 0; i < creatorContactInfoHeader.size; i++)
+      for (i = 0; i < n_creatorContactInfoTags; i++)
         {
           gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
                                          creatorContactInfoTags[i].tag,

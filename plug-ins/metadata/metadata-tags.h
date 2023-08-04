@@ -190,17 +190,14 @@ extern const gint   n_gpslngref;
 extern const gchar *gpsaltsys[];
 extern const gint   n_gpsaltsys;
 
-extern const TranslateHeaderTag creatorContactInfoHeader;
-
 extern const TranslateTag creatorContactInfoTags[];
-
-extern const TranslateHeaderTag locationCreationInfoHeader;
+extern const gint n_creatorContactInfoTags;
 
 extern const TranslateTag locationCreationInfoTags[];
-
-extern const TranslateHeaderTag imageSupplierInfoHeader;
+extern const gint n_locationCreationInfoTags;
 
 extern const TranslateTag imageSupplierInfoTags[];
+extern const gint n_imageSupplierInfoTags;
 
 /* Plus and IPTC extension tags */
 

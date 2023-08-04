@@ -60,13 +60,6 @@ typedef struct
 
 typedef struct
 {
-  gchar  *header;
-  gchar  *type;
-  gint32  size;
-} TranslateHeaderTag;
-
-typedef struct
-{
   gchar        *id;
   gchar        *tag;
   MetadataMode  mode;
