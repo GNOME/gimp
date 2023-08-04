@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-28 02:43+0000\n"
-"PO-Revision-Date: 2023-04-30 20:27+0800\n"
+"POT-Creation-Date: 2023-07-15 14:41+0000\n"
+"PO-Revision-Date: 2023-07-21 10:21+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: Gtranslator 42.0\n"
 
-#: libgimp/gimpbrushselectbutton.c:325 libgimp/gimppatternselectbutton.c:335
+#: libgimp/gimpbrushselectbutton.c:130 libgimp/gimppatternselectbutton.c:142
 msgid "_Browse..."
 msgstr "浏览(_B)…"
 
@@ -225,11 +225,11 @@ msgstr ""
 msgid "Export Image as %s"
 msgstr "导出图像为 %s"
 
-#: libgimp/gimpimagemetadata.c:306
+#: libgimp/gimpimagemetadata.c:284
 msgid "Background"
 msgstr "背景"
 
-#: libgimp/gimpimagemetadata-save.c:654 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:760 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -253,105 +253,105 @@ msgstr "调用错误"
 msgid "cancelled"
 msgstr "已取消"
 
-#: libgimp/gimpprocbrowserdialog.c:162
+#: libgimp/gimpprocbrowserdialog.c:164
 msgid "by name"
 msgstr "按名称"
 
-#: libgimp/gimpprocbrowserdialog.c:163
+#: libgimp/gimpprocbrowserdialog.c:165
 msgid "by description"
 msgstr "按描述"
 
-#: libgimp/gimpprocbrowserdialog.c:164
+#: libgimp/gimpprocbrowserdialog.c:166
 msgid "by help"
 msgstr "按帮助"
 
-#: libgimp/gimpprocbrowserdialog.c:165
+#: libgimp/gimpprocbrowserdialog.c:167
 msgid "by authors"
 msgstr "按作者"
 
-#: libgimp/gimpprocbrowserdialog.c:166
+#: libgimp/gimpprocbrowserdialog.c:168
 msgid "by copyright"
 msgstr "按版权"
 
-#: libgimp/gimpprocbrowserdialog.c:167
+#: libgimp/gimpprocbrowserdialog.c:169
 msgid "by date"
 msgstr "按日期"
 
-#: libgimp/gimpprocbrowserdialog.c:168
+#: libgimp/gimpprocbrowserdialog.c:170
 msgid "by type"
 msgstr "按类型"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:369 libgimp/gimpprocbrowserdialog.c:527
+#: libgimp/gimpprocbrowserdialog.c:371 libgimp/gimpprocbrowserdialog.c:529
 #: libgimpwidgets/gimpbrowser.c:168
 msgid "No matches"
 msgstr "无匹配"
 
-#: libgimp/gimpprocbrowserdialog.c:372
+#: libgimp/gimpprocbrowserdialog.c:374
 msgid "Search term invalid or incomplete"
 msgstr "搜索条件无效或不完整"
 
-#: libgimp/gimpprocbrowserdialog.c:381
+#: libgimp/gimpprocbrowserdialog.c:383
 msgid "Searching"
 msgstr "搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:393
+#: libgimp/gimpprocbrowserdialog.c:395
 msgid "Searching by name"
 msgstr "按名称搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:414
+#: libgimp/gimpprocbrowserdialog.c:416
 msgid "Searching by description"
 msgstr "按描述搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:422
+#: libgimp/gimpprocbrowserdialog.c:424
 msgid "Searching by help"
 msgstr "按帮助搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:430
+#: libgimp/gimpprocbrowserdialog.c:432
 msgid "Searching by authors"
 msgstr "按作者搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:438
+#: libgimp/gimpprocbrowserdialog.c:440
 msgid "Searching by copyright"
 msgstr "按版权搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:446
+#: libgimp/gimpprocbrowserdialog.c:448
 msgid "Searching by date"
 msgstr "按日期搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:454
+#: libgimp/gimpprocbrowserdialog.c:456
 msgid "Searching by type"
 msgstr "按类型搜索"
 
-#: libgimp/gimpprocbrowserdialog.c:467
+#: libgimp/gimpprocbrowserdialog.c:469
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d 个过程"
 
-#: libgimp/gimpprocbrowserdialog.c:476
+#: libgimp/gimpprocbrowserdialog.c:478
 msgid "No matches for your query"
 msgstr "您的查询无匹配项"
 
-#: libgimp/gimpprocbrowserdialog.c:480
+#: libgimp/gimpprocbrowserdialog.c:482
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d 个过程与您的查询相匹配"
 
-#: libgimp/gimpprocedure.c:1917
+#: libgimp/gimpprocedure.c:1925
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "“%s”过程无返回值"
 
-#: libgimp/gimpprocedure.c:2008
+#: libgimp/gimpprocedure.c:2016
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr "“%s”过程返回了错误的值类型用于返回值“%s” (#%d) 。需要 %s，但获得 %s。"
 
-#: libgimp/gimpprocedure.c:2020
+#: libgimp/gimpprocedure.c:2028
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -359,26 +359,26 @@ msgid ""
 msgstr ""
 "调用“%s”过程使用了错误的值类型用于参数“%s” (#%d) 。需要 %s，但获得 %s。"
 
-#: libgimp/gimpprocedure.c:2055
+#: libgimp/gimpprocedure.c:2063
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr "“%s”过程返回了“%s”作为返回值“%s”（#%d，%s 类型）。此值超出范围。"
 
-#: libgimp/gimpprocedure.c:2069
+#: libgimp/gimpprocedure.c:2077
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr "“%s”过程使用了“%s”值用于“%s”参数（#%d，%s 类型）。此值超出范围。"
 
-#: libgimp/gimpprocedure.c:2113
+#: libgimp/gimpprocedure.c:2121
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "“%s”过程为参数“%s”返回了一个无效的 UTF-8 字符串。"
 
-#: libgimp/gimpprocedure.c:2123
+#: libgimp/gimpprocedure.c:2131
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -437,11 +437,11 @@ msgstr "色板选择器"
 msgid "Pattern Chooser"
 msgstr "图案选择器"
 
-#: libgimp/gimpproceduredialog.c:2036
+#: libgimp/gimpproceduredialog.c:2128
 msgid "Reset to _Initial Values"
 msgstr "重置为初始值(_I)"
 
-#: libgimp/gimpproceduredialog.c:2045
+#: libgimp/gimpproceduredialog.c:2137
 msgid "Reset to _Factory Defaults"
 msgstr "重置为出厂默认值(_F)"
 
@@ -1533,27 +1533,27 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "按比例剪裁"
 
-#: libgimpbase/gimpmetadata.c:1076
+#: libgimpbase/gimpmetadata.c:1215
 msgid "Can load metadata only from local files"
 msgstr "只能从本地文件加载元数据"
 
-#: libgimpbase/gimpmetadata.c:1132
+#: libgimpbase/gimpmetadata.c:1271
 msgid "Can save metadata only to local files"
 msgstr "只能向本地文件保存元数据"
 
-#: libgimpbase/gimpmetadata.c:1180
+#: libgimpbase/gimpmetadata.c:1319
 msgid "Invalid Exif data size."
 msgstr "无效 EXIF 数据大小。"
 
-#: libgimpbase/gimpmetadata.c:1209
+#: libgimpbase/gimpmetadata.c:1348
 msgid "Parsing Exif data failed."
 msgstr "解析 EXIF 数据失败。"
 
-#: libgimpbase/gimpmetadata.c:1259
+#: libgimpbase/gimpmetadata.c:1398
 msgid "Parsing IPTC data failed."
 msgstr "解析 IPTC 数据失败。"
 
-#: libgimpbase/gimpmetadata.c:1307
+#: libgimpbase/gimpmetadata.c:1446
 msgid "Parsing XMP data failed."
 msgstr "解析 XMP 数据失败。"
 
@@ -1849,28 +1849,28 @@ msgstr "颜色配置“%s”并非用于灰度颜色空间。"
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "颜色配置“%s”并非用于 CMYK 颜色空间。"
 
-#: libgimpconfig/gimpconfig-deserialize.c:116
+#: libgimpconfig/gimpconfig-deserialize.c:117
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s 的值不是有效的 UTF-8 字符串"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:480
+#: libgimpconfig/gimpconfig-deserialize.c:485
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "期待布尔值 %s 为 “yes” 或 “no”，但得到 “%s”"
 
-#: libgimpconfig/gimpconfig-deserialize.c:595
+#: libgimpconfig/gimpconfig-deserialize.c:600
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "%2$s 的值 “%1$s” 无效"
 
-#: libgimpconfig/gimpconfig-deserialize.c:610
+#: libgimpconfig/gimpconfig-deserialize.c:615
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "%2$s 的值 “%1$ld” 无效"
 
-#: libgimpconfig/gimpconfig-deserialize.c:679
+#: libgimpconfig/gimpconfig-deserialize.c:684
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "解析 “%s” 时：%s"
@@ -1925,26 +1925,26 @@ msgstr "期待布尔值为 “yes” 或 “no”，但得到 “%s”"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "解析 “%s” 第 %d 行时出错：%s"
 
-#: libgimpmodule/gimpmodule.c:172 libgimpmodule/gimpmodule.c:190
-#: libgimpmodule/gimpmodule.c:451 libgimpmodule/gimpmodule.c:474
-#: libgimpmodule/gimpmodule.c:524
+#: libgimpmodule/gimpmodule.c:221 libgimpmodule/gimpmodule.c:239
+#: libgimpmodule/gimpmodule.c:500 libgimpmodule/gimpmodule.c:523
+#: libgimpmodule/gimpmodule.c:573
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "模块“%s”加载错误：%s"
 
-#: libgimpmodule/gimpmoduledb.c:500
+#: libgimpmodule/gimpmoduledb.c:450
 msgid "Module error"
 msgstr "模块错误"
 
-#: libgimpmodule/gimpmoduledb.c:501
+#: libgimpmodule/gimpmoduledb.c:451
 msgid "Loaded"
 msgstr "已加载"
 
-#: libgimpmodule/gimpmoduledb.c:502
+#: libgimpmodule/gimpmoduledb.c:452
 msgid "Load failed"
 msgstr "加载失败"
 
-#: libgimpmodule/gimpmoduledb.c:503
+#: libgimpmodule/gimpmoduledb.c:453
 msgid "Not loaded"
 msgstr "未加载"
 
@@ -2050,6 +2050,10 @@ msgstr "旧的："
 #: libgimpwidgets/gimpcolorselection.c:343
 msgid "HTML _notation:"
 msgstr "HTML 标记(_N)："
+
+#: libgimpwidgets/gimpdialog.c:177
+msgid "_Help"
+msgstr "帮助(_H)"
 
 #: libgimpwidgets/gimpfileentry.c:167
 msgid "Show file location in the file manager"
@@ -2439,7 +2443,7 @@ msgstr "水彩风格的颜色选择器"
 msgid "Watercolor"
 msgstr "水彩"
 
-#: modules/color-selector-water.c:198
+#: modules/color-selector-water.c:196
 msgid "Pressure"
 msgstr "压力"
 
