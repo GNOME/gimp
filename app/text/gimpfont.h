@@ -36,14 +36,36 @@
 
 typedef struct _GimpFontClass GimpFontClass;
 
+GType         gimp_font_get_type               (void) G_GNUC_CONST;
 
-GType         gimp_font_get_type             (void) G_GNUC_CONST;
+GimpData    * gimp_font_get_standard           (void);
+const gchar * gimp_font_get_lookup_name        (GimpFont      *font);
+void          gimp_font_set_lookup_name        (GimpFont      *font,
+                                                gchar         *name);
+gboolean      gimp_font_match_by_lookup_name   (GimpFont      *font,
+                                                const gchar   *name);
+void          gimp_font_set_font_info          (GimpFont      *font,
+                                                gpointer       font_info[]);
+void          gimp_font_class_set_font_factory (GimpContainer *factory);
 
-GimpData    * gimp_font_get_standard         (void);
-const gchar * gimp_font_get_lookup_name      (GimpFont    *font);
-void          gimp_font_set_lookup_name      (GimpFont    *font,
-                                              gchar       *name);
-gboolean      gimp_font_match_by_lookup_name (GimpFont    *font,
-                                              const gchar *name);
+enum
+{
+  /* properties for serialization*/
+  PROP_HASH,
+  PROP_FULLNAME,
+  PROP_FAMILY,
+  PROP_STYLE,
+  PROP_PSNAME,
+  PROP_WEIGHT,
+  PROP_WIDTH,
+  PROP_INDEX,
+  PROP_SLANT,
+  PROP_FONTVERSION,
+
+  /*for backward compatibility*/
+  PROP_DESC,
+
+  PROPERTIES_COUNT
+};
 
 #endif /* __GIMP_FONT_H__ */
