@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-06-25 18:45+0000\n"
-"PO-Revision-Date: 2023-06-26 09:25+0800\n"
+"POT-Creation-Date: 2023-07-17 12:09+0000\n"
+"PO-Revision-Date: 2023-07-21 10:34+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -839,45 +839,37 @@ msgstr "绘制简单对象(_S)"
 msgid "Create and Use _Selections"
 msgstr "创建并使用选区(_S)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:190
+#: plug-ins/script-fu/scripts/gimp-online.scm:186
 msgid "_Main Web Site"
 msgstr "主站(_M)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:191
-#: plug-ins/script-fu/scripts/gimp-online.scm:204
-#: plug-ins/script-fu/scripts/gimp-online.scm:256
+#: plug-ins/script-fu/scripts/gimp-online.scm:187
+#: plug-ins/script-fu/scripts/gimp-online.scm:200
+#: plug-ins/script-fu/scripts/gimp-online.scm:239
 msgid "Bookmark to the GIMP web site"
 msgstr "到 GIMP 网站的书签"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/gimp-online.scm:199
 msgid "_Developer Web Site"
 msgstr "开发者网站(_D)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:216
-msgid "_Roadmap"
-msgstr "开发路线(_R)"
+#: plug-ins/script-fu/scripts/gimp-online.scm:212
+msgid "_Roadmaps"
+msgstr "路线图(_R)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
+#: plug-ins/script-fu/scripts/gimp-online.scm:213
+msgid "Bookmark to the roadmaps of GIMP"
 msgstr "到 GIMP 开发路线的书签"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
-msgid "_Wiki"
-msgstr "维基(_W)"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "到 GIMP 维基的书签"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/gimp-online.scm:225
 msgid "_Bug Reports and Feature Requests"
 msgstr "缺陷报告和特性需求(_B)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:243
+#: plug-ins/script-fu/scripts/gimp-online.scm:226
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "到 GIMP 缺陷追踪系统的书签"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/gimp-online.scm:238
 msgid "_User Manual Web Site"
 msgstr "用户手册网站(_U)"
 
@@ -1135,6 +1127,10 @@ msgid ""
 "not appear in filenames."
 msgstr "命名中的所有字符都是空白字符或不能在文件名中出现的字符。"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:264
+msgid "_CSS stylesheet..."
+msgstr "CSS 样式表(_C)…"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
@@ -1142,13 +1138,25 @@ msgid ""
 msgstr ""
 "导出当前调色板为以颜色条目名称作为类名的 css 样式表，并以颜色本身作为颜色属性"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:290
+msgid "P_HP dictionary..."
+msgstr "PHP 字典(_H)…"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "导出当前调色板为 PHP 字典 (name => color)"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:322
+msgid "_Python dictionary..."
+msgstr "Python 字典(_P)…"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "导出当前调色板为 Python 字典 (name: color)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:351
+msgid "_Text file..."
+msgstr "文本文件(_T)…"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
@@ -1156,9 +1164,13 @@ msgid ""
 "line (no names)"
 msgstr "将调色板内的所有颜色写入到一个文本文件，每行一个十六进制值（无名称）"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:398
+msgid "J_ava map..."
+msgstr "Java 映射(_A)…"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:399
-msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-msgstr "导出当前调色板为 java.util.Hashtable<String, Color>"
+msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
+msgstr "导出激活调色板为 java.util.Hashtable&lt;String,Color&gt;"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:58
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
@@ -1549,6 +1561,12 @@ msgstr "投影 X 偏移"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "投影 Y 偏移"
+
+#~ msgid "_Wiki"
+#~ msgstr "维基(_W)"
+
+#~ msgid "Bookmark to the wiki of GIMP"
+#~ msgstr "到 GIMP 维基的书签"
 
 #~ msgid "Interactive Scheme Development"
 #~ msgstr "交互式 Scheme 开发"
@@ -2337,9 +2355,6 @@ msgstr "投影 Y 偏移"
 
 #~ msgid "Fill angle"
 #~ msgstr "填充角度"
-
-#~ msgid "Text C_ircle..."
-#~ msgstr "文字环(_I)..."
 
 #~ msgid ""
 #~ "Create a textured logo with highlights, shadows, and a mosaic background"
