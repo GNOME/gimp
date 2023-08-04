@@ -441,6 +441,9 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
                                      gimp_drawable_has_alpha (drawable)) ?
                                     1.0f : 0.0f);
       mypaint_brush_set_base_value (brush,
+                                    MYPAINT_BRUSH_SETTING_PRESSURE_GAIN_LOG,
+                                    options->gain);
+      mypaint_brush_set_base_value (brush,
                                     MYPAINT_BRUSH_SETTING_PAINT_MODE,
                                     options->pigment);
       mypaint_brush_set_base_value (brush,

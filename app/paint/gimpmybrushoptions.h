@@ -40,6 +40,7 @@ struct _GimpMybrushOptions
   gdouble           view_rotation;
   gdouble           radius;
   gdouble           opaque;
+  gdouble           gain;
   gdouble           hardness;
   gdouble           pigment;
   gdouble           posterize;

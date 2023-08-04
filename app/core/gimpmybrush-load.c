@@ -147,8 +147,16 @@ gimp_mybrush_load (GimpContext   *context,
     mypaint_brush_get_base_value (mypaint_brush,
                                   MYPAINT_BRUSH_SETTING_OFFSET_BY_RANDOM);
 
+  brush->priv->gain =
+    mypaint_brush_get_base_value (mypaint_brush,
+                                  MYPAINT_BRUSH_SETTING_PRESSURE_GAIN_LOG);
+
   /* Version 2 MyPaint Brush options */
-  brush->priv->pigment = -0.1;
+  brush->priv->pigment =
+    mypaint_brush_get_base_value (mypaint_brush,
+                                  MYPAINT_BRUSH_SETTING_PAINT_MODE);
+  if (brush->priv->pigment == 1.0f)
+    brush->priv->pigment = 0.0f;
 
   brush->priv->posterize =
     mypaint_brush_get_base_value (mypaint_brush,

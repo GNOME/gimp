@@ -59,7 +59,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-libwmf \
     mingw-w64-$MSYS2_ARCH-luajit \
     mingw-w64-$MSYS2_ARCH-maxflow \
-    mingw-w64-$MSYS2_ARCH-mypaint-brushes \
+    mingw-w64-$MSYS2_ARCH-mypaint-brushes2 \
     mingw-w64-$MSYS2_ARCH-openexr \
     mingw-w64-$MSYS2_ARCH-pango \
     mingw-w64-$MSYS2_ARCH-poppler \

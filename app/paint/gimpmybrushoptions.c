@@ -42,6 +42,7 @@ enum
   PROP_VIEW_ROTATION,
   PROP_RADIUS,
   PROP_OPAQUE,
+  PROP_GAIN,
   PROP_HARDNESS,
   PROP_PIGMENT,
   PROP_POSTERIZE,
@@ -122,11 +123,18 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
                            0.0, 1.0, 1.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_GAIN,
+                           "gain",
+                           _("Gain"),
+                           _("Pressure gain"),
+                           -1.8, 1.2, 0.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_PIGMENT,
                            "pigment",
                            _("Pigment"),
                            _("Enable spectral blending"),
-                           -0.1, 1.0, -0.1,
+                           0.0, 1.0, 0.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_POSTERIZE,
@@ -191,6 +199,9 @@ gimp_mybrush_options_set_property (GObject      *object,
     case PROP_RADIUS:
       options->radius = g_value_get_double (value);
       break;
+    case PROP_GAIN:
+      options->gain = g_value_get_double (value);
+      break;
     case PROP_HARDNESS:
       options->hardness = g_value_get_double (value);
       break;
@@ -241,6 +252,9 @@ gimp_mybrush_options_get_property (GObject    *object,
     case PROP_OPAQUE:
       g_value_set_double (value, options->opaque);
       break;
+    case PROP_GAIN:
+      g_value_set_double (value, options->gain);
+      break;
     case PROP_HARDNESS:
       g_value_set_double (value, options->hardness);
       break;
@@ -276,6 +290,7 @@ gimp_mybrush_options_mybrush_changed (GimpContext *context,
                   "viewrotation",   0.0f,
                   "radius",         gimp_mybrush_get_radius (brush),
                   "opaque",         gimp_mybrush_get_opaque (brush),
+                  "gain",           gimp_mybrush_get_gain (brush),
                   "hardness",       gimp_mybrush_get_hardness (brush),
                   "pigment",        gimp_mybrush_get_pigment (brush),
                   "posterize",      gimp_mybrush_get_posterize (brush),

@@ -352,7 +352,7 @@ rgb_to_spectral (float  r,
   for (int i = 0; i < 10; i++) {
     spec_b[i] = spectral_b_small[i] * b;
   }
-  //collapse into one spd
+  /* collapse into one spd */
   for (int i = 0; i < 10; i++) {
     spectral_[i] += spec_r[i] + spec_g[i] + spec_b[i];
   }
@@ -435,7 +435,7 @@ get_color_pixels_accumulate (float    mask,
           fac_b = 1.0 - fac_a;
         }
 
-      if (paint > 0.0f && pixel[ALPHA] > 0)
+      if (paint >= 0.0f && pixel[ALPHA] > 0)
         {
           float spectral[10] = {0};
           rgb_to_spectral (pixel[RED] / pixel[ALPHA],
@@ -464,14 +464,17 @@ get_color_pixels_accumulate (float    mask,
   *sum_b = spec_rgb[2] * paint + (1.0 - paint) * avg_rgb[2];
 }
 
-// Fast sigmoid-like function with constant offsets, used to get a
-// fairly smooth transition between additive and spectral blending.
+/* Fast sigmoid-like function with constant offsets, used to get a
+ * fairly smooth transition between additive and spectral blending. */
 float
 spectral_blend_factor (float x)
 {
-  const float ver_fac = 1.65; // vertical compression factor
-  const float hor_fac = 8.0f; // horizontal compression factor
-  const float hor_offs = 3.0f; // horizontal offset (slightly left of center)
+  /* vertical compression factor */
+  const float ver_fac = 1.65;
+  /* horizontal compression factor */
+  const float hor_fac = 8.0f;
+  /* horizontal offset (slightly left of center) */
+  const float hor_offs = 3.0f;
   const float b = x * hor_fac - hor_offs;
   return 0.5 + b / (1 + fabsf(b) * ver_fac);
 }
@@ -599,7 +602,7 @@ draw_dab_pixels_BlendMode_Normal_and_Eraser_Paint (float *mask,
       rgb[2] = src_term2 * color_b + dst_term * pixel[BLUE];
     }
 
-  if (spectral_factor && pixel[ALPHA] != 0)
+  if (spectral_factor && pixel[ALPHA] > 0)
     {
       /* Convert straightened tile pixel color to a spectral */
       rgb_to_spectral (pixel[RED] / pixel[ALPHA],
@@ -650,11 +653,11 @@ draw_dab_pixels_BlendMode_LockAlpha (float *mask,
 }
 
 void draw_dab_pixels_BlendMode_LockAlpha_Paint (float *mask,
-                                                float    *pixel,
-                                                float     color_r,
-                                                float     color_g,
-                                                float     color_b,
-                                                float     opacity)
+                                                float *pixel,
+                                                float  color_r,
+                                                float  color_g,
+                                                float  color_b,
+                                                float  opacity)
 {
   float spectral_a[10]      = {0};
   float spectral_b[10]      = {0};
@@ -768,24 +771,23 @@ gimp_mypaint_surface_destroy (MyPaintSurface *base_surface)
 /* MyPaintSurface2 implementation */
 static int
 gimp_mypaint_surface_draw_dab_2 (MyPaintSurface2 *base_surface,
-                                float             x,
-                                float             y,
-                                float             radius,
-                                float             color_r,
-                                float             color_g,
-                                float             color_b,
-                                float             opaque,
-                                float             hardness,
-                                float             color_a,
-                                float             aspect_ratio,
-                                float             angle,
-                                float             lock_alpha,
-                                float             colorize,
-                                float             posterize,
-                                float             posterize_num,
-                                float             paint)
+                                 float            x,
+                                 float            y,
+                                 float            radius,
+                                 float            color_r,
+                                 float            color_g,
+                                 float            color_b,
+                                 float            opaque,
+                                 float            hardness,
+                                 float            color_a,
+                                 float            aspect_ratio,
+                                 float            angle,
+                                 float            lock_alpha,
+                                 float            colorize,
+                                 float            posterize,
+                                 float            posterize_num,
+                                 float            paint)
 {
-  /* Placeholder - eventually implement here */
   GimpMybrushSurface *surface = (GimpMybrushSurface *) base_surface;
   GeglBufferIterator *iter;
   GeglRectangle       dabRect;
@@ -793,8 +795,8 @@ gimp_mypaint_surface_draw_dab_2 (MyPaintSurface2 *base_surface,
 
   const float one_over_radius2 = 1.0f / (radius * radius);
   const double angle_rad = angle / 360 * 2 * M_PI;
-  const float cs = cos(angle_rad);
-  const float sn = sin(angle_rad);
+  const float cs = cos (angle_rad);
+  const float sn = sin (angle_rad);
   float normal_mode;
   float segment1_slope;
   float segment2_slope;
@@ -869,7 +871,7 @@ gimp_mypaint_surface_draw_dab_2 (MyPaintSurface2 *base_surface,
               b = pixel[BLUE];
 
               /* v1 Brush code */
-              if (paint < 1.0f)
+              if (paint < 0.0f)
                 {
                   if (color_a == 1.0f)
                     draw_dab_pixels_BlendMode_Normal (&alpha, pixel,
@@ -893,7 +895,7 @@ gimp_mypaint_surface_draw_dab_2 (MyPaintSurface2 *base_surface,
                 }
 
               /* v2 Brush code */
-              if (paint > 0.0f)
+              if (paint >= 0.0f)
                 {
                   if (color_a == 1.0f)
                     draw_dab_pixels_BlendMode_Normal_Paint (&alpha, pixel,
@@ -935,9 +937,9 @@ gimp_mypaint_surface_draw_dab_2 (MyPaintSurface2 *base_surface,
                       out_hsl.s = pixel_hsl.s;
                       gimp_hsl_to_rgb (&out_hsl, &out_rgb);
 
-                      r = (float)out_rgb.r * src_term + r * dst_term;
-                      g = (float)out_rgb.g * src_term + g * dst_term;
-                      b = (float)out_rgb.b * src_term + b * dst_term;
+                      r = (float) out_rgb.r * src_term + r * dst_term;
+                      g = (float) out_rgb.g * src_term + g * dst_term;
+                      b = (float) out_rgb.b * src_term + b * dst_term;
                     }
                 }
 
@@ -952,11 +954,11 @@ gimp_mypaint_surface_draw_dab_2 (MyPaintSurface2 *base_surface,
               if (component_mask != GIMP_COMPONENT_MASK_ALL)
                 {
                   if (component_mask & GIMP_COMPONENT_MASK_RED)
-                    pixel[RED]   = r;
+                    pixel[RED] = r;
                   if (component_mask & GIMP_COMPONENT_MASK_GREEN)
                     pixel[GREEN] = g;
                   if (component_mask & GIMP_COMPONENT_MASK_BLUE)
-                    pixel[BLUE]  = b;
+                    pixel[BLUE] = b;
                   if (component_mask & GIMP_COMPONENT_MASK_ALPHA)
                     pixel[ALPHA] = a;
                 }

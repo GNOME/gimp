@@ -58,6 +58,7 @@ const gchar * gimp_mybrush_get_brush_json       (GimpMybrush *brush);
 
 gdouble       gimp_mybrush_get_radius           (GimpMybrush *brush);
 gdouble       gimp_mybrush_get_opaque           (GimpMybrush *brush);
+gdouble       gimp_mybrush_get_gain             (GimpMybrush *brush);
 gdouble       gimp_mybrush_get_hardness         (GimpMybrush *brush);
 gdouble       gimp_mybrush_get_pigment          (GimpMybrush *brush);
 gdouble       gimp_mybrush_get_posterize        (GimpMybrush *brush);

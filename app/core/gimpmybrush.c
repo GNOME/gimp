@@ -101,7 +101,7 @@ gimp_mybrush_init (GimpMybrush *brush)
   brush->priv->radius        = 1.0;
   brush->priv->opaque        = 1.0;
   brush->priv->hardness      = 1.0;
-  brush->priv->pigment       = -0.1;
+  brush->priv->pigment       = 0.0;
   brush->priv->posterize     = 0.0;
   brush->priv->posterize_num = 1.0;
   brush->priv->eraser        = FALSE;
@@ -258,6 +258,14 @@ gimp_mybrush_get_opaque (GimpMybrush *brush)
 }
 
 gdouble
+gimp_mybrush_get_gain (GimpMybrush *brush)
+{
+  g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), 1.0);
+
+  return brush->priv->gain;
+}
+
+gdouble
 gimp_mybrush_get_hardness (GimpMybrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), 1.0);
@@ -268,7 +276,7 @@ gimp_mybrush_get_hardness (GimpMybrush *brush)
 gdouble
 gimp_mybrush_get_pigment (GimpMybrush *brush)
 {
-  g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), -0.1);
+  g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), 0.0);
 
   return brush->priv->pigment;
 }
@@ -284,7 +292,7 @@ gimp_mybrush_get_posterize (GimpMybrush *brush)
 gdouble
 gimp_mybrush_get_posterize_num (GimpMybrush *brush)
 {
-  g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), 1.0);
+  g_return_val_if_fail (GIMP_IS_MYBRUSH (brush), 0.05);
 
   return brush->priv->posterize_num;
 }
