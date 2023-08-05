@@ -5,8 +5,6 @@ plugin_name = 'imagemap'
 plugin_sources = [
   'imap_about.c',
   'imap_browse.c',
-  'imap_cern_lex.c',
-  'imap_cern_parse.c',
   'imap_circle.c',
   'imap_cmd_clear.c',
   'imap_cmd_copy_object.c',
@@ -39,8 +37,6 @@ plugin_sources = [
   'imap_cmd_unselect_all.c',
   'imap_cmd_unselect.c',
   'imap_command.c',
-  'imap_csim_lex.c',
-  'imap_csim_parse.c',
   'imap_default_dialog.c',
   'imap_edit_area_info.c',
   'imap_file.c',
@@ -51,8 +47,6 @@ plugin_sources = [
   'imap_menu.c',
   'imap_misc.c',
   'imap_mru.c',
-  'imap_ncsa_lex.c',
-  'imap_ncsa_parse.c',
   'imap_object_popup.c',
   'imap_object.c',
   'imap_polygon.c',
@@ -88,6 +82,69 @@ if platform_windows
   )
 endif
 
+syntaxes = [
+  'cern',
+  'csim',
+  'ncsa',
+]
+
+flex  = find_program('flex',  required: false)
+bison = find_program('bison', required: false)
+
+if flex.found() and bison.found()
+  lex_gen = generator(
+                flex,
+     arguments: [
+        '--case-insensitive',
+        '@EXTRA_ARGS@',
+        '--outfile', '@OUTPUT@',
+        '@INPUT@',
+      ],
+      output  : '@BASENAME@_lex.c'
+  )
+
+  parse_gen = generator(
+                bison,
+     arguments: [
+        '--yacc',
+        '-d',
+        '@EXTRA_ARGS@',
+        '--output', '@OUTPUT0@',
+        '--defines=@OUTPUT1@',
+        '@INPUT@'
+      ],
+      output  : [
+        '@BASENAME@_parse.c',
+        '@BASENAME@_parse.h',
+      ]
+  )
+
+  foreach syntax : syntaxes
+    syntax_prefix =  syntax + '_'
+    imapname = 'imap_' + syntax
+
+    plugin_sources += lex_gen.process(
+                  imapname + '.l',
+      extra_args: ['--prefix', syntax_prefix]
+    )
+    plugin_sources += parse_gen.process(
+                  imapname + '.y',
+      extra_args: ['--name-prefix', syntax_prefix]
+    )
+  endforeach
+else
+  foreach syntax : syntaxes
+    syntax_prefix =  syntax + '_'
+    imapname = 'imap_' + syntax
+
+    plugin_sources += [
+      imapname + '_lex.c',
+      imapname + '_parse.c',
+      imapname + '_parse.h'
+    ]
+  endforeach
+endif
+
 executable(plugin_name,
   plugin_sources,
   dependencies: [
@@ -97,62 +154,3 @@ executable(plugin_name,
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / plugin_name,
 )
-
-
-
-flex  = find_program('flex',  required: false)
-bison = find_program('bison', required: false)
-
-if flex.found() and bison.found()
-
-  syntaxes = [
-    'cern',
-    'csim',
-    'ncsa',
-  ]
-
-  foreach syntax : syntaxes
-
-    syntax_prefix =  syntax + '_'
-    imapname = 'imap_' + syntax
-
-    custom_target(
-              imapname + '_lex.c',
-      input : imapname + '.l'    ,
-      output: imapname + '_lex.c',
-      command: [
-        flex,
-        '--case-insensitive',
-        '--prefix', syntax_prefix,
-        '--outfile', '@OUTPUT@',
-        '@INPUT@',
-      ],
-    )
-
-    custom_target(
-              imapname + '_parse.c',
-      input : imapname + '.y'      ,
-      output: imapname + '_parse.c',
-      command: [
-        bison, '--yacc',
-        '-d',
-        '--name-prefix', syntax_prefix,
-        '@INPUT@'
-      ],
-    )
-
-    custom_target(
-              imapname + '_parse.h',
-      input : imapname + '.y'      ,
-      output: imapname + '_parse.h',
-      command: [
-        bison, '--yacc',
-        '-d',
-        '--name-prefix', syntax_prefix,
-        '--output', '@OUTPUT@',
-        '@INPUT@'
-      ],
-    )
-
-  endforeach
-endif
