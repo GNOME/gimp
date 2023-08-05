@@ -46,14 +46,7 @@
 #include "gimp-intl.h"
 
 
-/* Use fontconfig directly for speed. We can use the pango stuff when/if
- * fontconfig/pango get more efficient.
- */
-#define USE_FONTCONFIG_DIRECTLY
-
-#ifdef USE_FONTCONFIG_DIRECTLY
 #include <fontconfig/fontconfig.h>
-#endif
 
 #define CONF_FNAME "fonts.conf"
 
@@ -566,7 +559,6 @@ gimp_font_factory_add_font (GimpContainer        *container,
     g_free (name);
 }
 
-#ifdef USE_FONTCONFIG_DIRECTLY
 /* We're really chummy here with the implementation. Oh well. */
 
 /* This is copied straight from make_alias_description in pango, plus
@@ -858,41 +850,3 @@ gimp_font_factory_load_names (GimpContainer *container,
 
   FcFontSetDestroy (fontset);
 }
-
-#else  /* ! USE_FONTCONFIG_DIRECTLY */
-
-static void
-gimp_font_factory_load_names (GimpContainer *container,
-                              PangoFontMap  *fontmap,
-                              PangoContext  *context)
-{
-  PangoFontFamily **families;
-  PangoFontFace   **faces;
-  gint              n_families;
-  gint              n_faces;
-  gint              i, j;
-
-  pango_font_map_list_families (fontmap, &families, &n_families);
-
-  for (i = 0; i < n_families; i++)
-    {
-      pango_font_family_list_faces (families[i], &faces, &n_faces);
-
-      for (j = 0; j < n_faces; j++)
-        {
-          PangoFontDescription *desc;
-
-          desc = pango_font_face_describe (faces[j]);
-          /* TODO: doesn't look like we can get a file path from PangoFontFace.
-           * So this basically makes the ! USE_FONTCONFIG_DIRECTLY code path
-           * broken.
-           */
-          gimp_font_factory_add_font (container, context, desc, NULL, NULL);
-          pango_font_description_free (desc);
-        }
-    }
-
-  g_free (families);
-}
-
-#endif /* USE_FONTCONFIG_DIRECTLY */
