@@ -217,57 +217,59 @@ struct _PdfClass
 
 GType                   pdf_get_type         (void) G_GNUC_CONST;
 
-static GList          * pdf_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * pdf_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * pdf_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * pdf_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * pdf_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * pdf_load_thumb       (GimpProcedure        *procedure,
-                                              GFile                *file,
-                                              gint                  size,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
+static GimpValueArray * pdf_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * pdf_load_thumb       (GimpProcedure         *procedure,
+                                              GFile                 *file,
+                                              gint                   size,
+                                              const GimpValueArray  *args,
+                                              gpointer               run_data);
 
-static GimpImage       * load_image          (PopplerDocument      *doc,
-                                              GFile                *file,
-                                              GimpRunMode           run_mode,
+static GimpImage       * load_image          (PopplerDocument       *doc,
+                                              GFile                 *file,
+                                              GimpRunMode            run_mode,
                                               GimpPageSelectorTarget target,
-                                              gdouble               resolution,
-                                              gboolean              antialias,
-                                              gboolean              white_background,
-                                              gboolean              reverse_order,
-                                              PdfSelectedPages     *pages);
+                                              gdouble                resolution,
+                                              gboolean               antialias,
+                                              gboolean               white_background,
+                                              gboolean               reverse_order,
+                                              PdfSelectedPages      *pages);
 
-static GimpPDBStatusType load_dialog         (PopplerDocument      *doc,
-                                              PdfSelectedPages     *pages,
-                                              GimpProcedure        *procedure,
-                                              GimpProcedureConfig  *config);
+static GimpPDBStatusType load_dialog         (PopplerDocument       *doc,
+                                              PdfSelectedPages      *pages,
+                                              GimpProcedure         *procedure,
+                                              GimpProcedureConfig   *config);
 
-static PopplerDocument * open_document       (GFile                *file,
-                                              const gchar          *PDF_password,
-                                              GimpRunMode           run_mode,
-                                              GError              **error);
+static PopplerDocument * open_document       (GFile                 *file,
+                                              const gchar           *PDF_password,
+                                              GimpRunMode            run_mode,
+                                              GError               **error);
 
-static cairo_surface_t * get_thumb_surface   (PopplerDocument      *doc,
-                                              gint                  page,
-                                              gint                  preferred_size,
-                                              gboolean              white_background);
+static cairo_surface_t * get_thumb_surface   (PopplerDocument       *doc,
+                                              gint                   page,
+                                              gint                   preferred_size,
+                                              gboolean               white_background);
 
-static GdkPixbuf       * get_thumb_pixbuf    (PopplerDocument      *doc,
-                                              gint                  page,
-                                              gint                  preferred_size,
-                                              gboolean              white_background);
+static GdkPixbuf       * get_thumb_pixbuf    (PopplerDocument       *doc,
+                                              gint                   page,
+                                              gint                   preferred_size,
+                                              gboolean               white_background);
 
-static GimpLayer       * layer_from_surface  (GimpImage            *image,
-                                              const gchar          *layer_name,
-                                              gint                  position,
-                                              cairo_surface_t      *surface,
-                                              gdouble               progress_start,
-                                              gdouble               progress_scale);
+static GimpLayer       * layer_from_surface  (GimpImage             *image,
+                                              const gchar           *layer_name,
+                                              gint                   position,
+                                              cairo_surface_t       *surface,
+                                              gdouble                progress_start,
+                                              gdouble                progress_scale);
 
 
 G_DEFINE_TYPE (Pdf, pdf, GIMP_TYPE_PLUG_IN)
@@ -310,9 +312,9 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pdf_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            pdf_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Portable Document Format"));
 
@@ -431,127 +433,104 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-pdf_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+pdf_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
   GimpValueArray      *return_vals;
   GimpPDBStatusType    status   = GIMP_PDB_SUCCESS;
-  GimpProcedureConfig *config;
   GimpImage           *image    = NULL;
   PopplerDocument     *doc      = NULL;
   PdfSelectedPages     pages    = { 0, NULL };
   GError              *error    = NULL;
+  gchar               *password;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    gimp_ui_init (PLUG_IN_BINARY);
 
-  switch (run_mode)
+  g_object_get (config,
+                "password", &password,
+                NULL);
+  doc = open_document (file,
+                       password,
+                       run_mode, &error);
+  g_free (password);
+
+  if (doc == NULL)
     {
-    case GIMP_RUN_INTERACTIVE:
-        {
-          gchar *password;
-
-          gimp_ui_init (PLUG_IN_BINARY);
-
-          g_object_get (config,
-                        "password", &password,
-                        NULL);
-          doc = open_document (file,
-                               password,
-                               run_mode, &error);
-          g_free (password);
-
-          if (! doc)
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-              break;
-            }
-
-          status = load_dialog (doc, &pages, procedure, config);
-        }
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      /* FIXME: implement last vals mode */
       status = GIMP_PDB_EXECUTION_ERROR;
-      break;
+    }
+  else if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      status = load_dialog (doc, &pages, procedure, config);
+    }
+  else if (run_mode == GIMP_RUN_NONINTERACTIVE)
+    {
+      PopplerPage *test_page = poppler_document_get_page (doc, 0);
 
-    case GIMP_RUN_NONINTERACTIVE:
-      doc = open_document (file,
-                           GIMP_VALUES_GET_STRING (args, 0),
-                           run_mode, &error);
-
-      if (doc)
+      if (test_page)
         {
-          PopplerPage *test_page = poppler_document_get_page (doc, 0);
+          gint i;
+          gint doc_n_pages;
 
-          if (test_page)
+          g_object_get (config, "n-pages", &pages.n_pages, NULL);
+          doc_n_pages = poppler_document_get_n_pages (doc);
+          /* The number of imported pages may be bigger than
+           * the number of pages from the original document.
+           * Indeed it is possible to duplicate some pages
+           * by setting the same number several times in the
+           * "pages" argument.
+           * Not ceiling this value is *not* an error.
+           */
+          if (pages.n_pages <= 0)
             {
-              gint i;
-              gint doc_n_pages;
+              pages.n_pages = doc_n_pages;
+              pages.pages = g_new (gint, pages.n_pages);
+              for (i = 0; i < pages.n_pages; i++)
+                pages.pages[i] = i;
+            }
+          else
+            {
+              const gint32 *p;
 
-              doc_n_pages = poppler_document_get_n_pages (doc);
-              /* The number of imported pages may be bigger than
-               * the number of pages from the original document.
-               * Indeed it is possible to duplicate some pages
-               * by setting the same number several times in the
-               * "pages" argument.
-               * Not ceiling this value is *not* an error.
-               */
-              pages.n_pages = GIMP_VALUES_GET_INT (args, 2);
-              if (pages.n_pages <= 0)
+              g_object_get (config, "pages", &p, NULL);
+
+              pages.pages = g_new (gint, pages.n_pages);
+
+              for (i = 0; i < pages.n_pages; i++)
                 {
-                  pages.n_pages = doc_n_pages;
-                  pages.pages = g_new (gint, pages.n_pages);
-                  for (i = 0; i < pages.n_pages; i++)
-                    pages.pages[i] = i;
-                }
-              else
-                {
-                  const gint32 *p = GIMP_VALUES_GET_INT32_ARRAY (args, 3);
-
-                  pages.pages = g_new (gint, pages.n_pages);
-
-                  for (i = 0; i < pages.n_pages; i++)
+                  if (p[i] >= doc_n_pages)
                     {
-                      if (p[i] >= doc_n_pages)
-                        {
-                          status = GIMP_PDB_EXECUTION_ERROR;
-                          g_set_error (&error, GIMP_PLUGIN_PDF_LOAD_ERROR, 0,
-                                       /* TRANSLATORS: first argument is file name,
-                                        * second is out-of-range page number,
-                                        * third is number of pages.
-                                        * Specify order as in English if needed.
-                                        */
-                                       ngettext ("PDF document '%1$s' has %3$d page. Page %2$d is out of range.",
-                                                 "PDF document '%1$s' has %3$d pages. Page %2$d is out of range.",
-                                                 doc_n_pages),
-                                       gimp_file_get_utf8_name (file),
-                                       p[i],
-                                       doc_n_pages);
-                          break;
-                        }
-                      else
-                        {
-                          pages.pages[i] = p[i];
-                        }
+                      status = GIMP_PDB_EXECUTION_ERROR;
+                      g_set_error (&error, GIMP_PLUGIN_PDF_LOAD_ERROR, 0,
+                                   /* TRANSLATORS: first argument is file name,
+                                    * second is out-of-range page number,
+                                    * third is number of pages.
+                                    * Specify order as in English if needed.
+                                    */
+                                   ngettext ("PDF document '%1$s' has %3$d page. Page %2$d is out of range.",
+                                             "PDF document '%1$s' has %3$d pages. Page %2$d is out of range.",
+                                             doc_n_pages),
+                                   gimp_file_get_utf8_name (file),
+                                   p[i],
+                                   doc_n_pages);
+                      break;
+                    }
+                  else
+                    {
+                      pages.pages[i] = p[i];
                     }
                 }
-
-              g_object_unref (test_page);
             }
+
+          g_object_unref (test_page);
         }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-          g_object_unref (doc);
-        }
-      break;
     }
 
   if (status == GIMP_PDB_SUCCESS)
@@ -586,8 +565,6 @@ pdf_load (GimpProcedure        *procedure,
   if (doc)
     g_object_unref (doc);
 
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
   g_free (pages.pages);
 
   return_vals = gimp_procedure_new_return_values (procedure, status, error);
