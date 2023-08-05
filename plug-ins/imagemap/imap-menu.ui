@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <menu id="imap-menubar">
+    <submenu>
+      <attribute name="label" translatable="yes">File</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Open</attribute>
+          <attribute name="action">app.open</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Save</attribute>
+          <attribute name="action">app.save</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Save As</attribute>
+          <attribute name="action">app.save-as</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Close</attribute>
+          <attribute name="action">app.close</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Quit</attribute>
+          <attribute name="action">app.quit</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">Edit</attribute>
+      <section id="imap-menubar-edit">
+        <item>
+          <attribute name="label" translatable="yes">Undo</attribute>
+          <attribute name="action">app.undo</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Redo</attribute>
+          <attribute name="action">app.redo</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Cut</attribute>
+          <attribute name="action">app.cut</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Copy</attribute>
+          <attribute name="action">app.copy</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Paste</attribute>
+          <attribute name="action">app.paste</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Clear</attribute>
+          <attribute name="action">app.clear</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Select All</attribute>
+          <attribute name="action">app.select-all</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Deselect All</attribute>
+          <attribute name="action">app.deselect-all</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Edit Area Info</attribute>
+          <attribute name="action">app.edit-area-info</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Preferences</attribute>
+          <attribute name="action">app.preferences</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">View</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Area List</attribute>
+          <attribute name="action">app.area-list</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Source...</attribute>
+          <attribute name="action">app.source</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Color</attribute>
+          <attribute name="action">app.colormode</attribute>
+          <attribute name="target">color</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Gray</attribute>
+          <attribute name="action">app.colormode</attribute>
+          <attribute name="target">gray</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Zoom In</attribute>
+          <attribute name="action">app.zoom-in</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Zoom Out</attribute>
+          <attribute name="action">app.zoom-out</attribute>
+        </item>
+        <submenu>
+          <attribute name="label" translatable="yes">Zoom To</attribute>
+          <section>
+            <item>
+              <attribute name="label" translatable="yes">1:1</attribute>
+              <attribute name="action">app.zoom</attribute>
+              <attribute name="target">1</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">1:2</attribute>
+              <attribute name="action">app.zoom</attribute>
+              <attribute name="target">2</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">1:3</attribute>
+              <attribute name="action">app.zoom</attribute>
+              <attribute name="target">3</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">1:4</attribute>
+              <attribute name="action">app.zoom</attribute>
+              <attribute name="target">4</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">1:5</attribute>
+              <attribute name="action">app.zoom</attribute>
+              <attribute name="target">5</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">1:6</attribute>
+              <attribute name="action">app.zoom</attribute>
+              <attribute name="target">6</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">1:7</attribute>
+              <attribute name="action">app.zoom</attribute>
+              <attribute name="target">7</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">1:8</attribute>
+              <attribute name="action">app.zoom</attribute>
+              <attribute name="target">8</attribute>
+            </item>
+          </section>
+        </submenu>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">Mappings</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Arrow</attribute>
+          <attribute name="action">app.shape</attribute>
+          <attribute name="target">arrow</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Rectangle</attribute>
+          <attribute name="action">app.shape</attribute>
+          <attribute name="target">rectangle</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Circle</attribute>
+          <attribute name="action">app.shape</attribute>
+          <attribute name="target">circle</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Polygon</attribute>
+          <attribute name="action">app.shape</attribute>
+          <attribute name="target">polygon</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Edit Map Info...</attribute>
+          <attribute name="action">app.edit-map-info</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">Tools</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Grid</attribute>
+          <attribute name="action">app.grid</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Grid Settings...</attribute>
+          <attribute name="action">app.grid-settings</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Use GIMP Guides...</attribute>
+          <attribute name="action">app.use-gimp-guides</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Create Guides...</attribute>
+          <attribute name="action">app.create-guides</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">Help</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Contents</attribute>
+          <attribute name="action">app.contents</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">About</attribute>
+          <attribute name="action">app.about</attribute>
+        </item>
+      </section>
+    </submenu>
+  </menu>
+
+  <menu id="imap-selectionbar">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Move Up</attribute>
+        <attribute name="action">app.move-up</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Move Down</attribute>
+        <attribute name="action">app.move-down</attribute>
+      </item>
+    </section>
+  </menu>
+
+  <menu id="imap-main-popup">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Edit Map Info...</attribute>
+        <attribute name="action">app.edit-map-info</attribute>
+      </item>
+      <submenu>
+        <attribute name="label" translatable="yes">Tools</attribute>
+        <section>
+          <item>
+            <attribute name="label" translatable="yes">Arrow</attribute>
+            <attribute name="action">app.shape</attribute>
+            <attribute name="target">arrow</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Rectangle</attribute>
+            <attribute name="action">app.shape</attribute>
+            <attribute name="target">rectangle</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Circle</attribute>
+            <attribute name="action">app.shape</attribute>
+            <attribute name="target">circle</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Polygon</attribute>
+            <attribute name="action">app.shape</attribute>
+            <attribute name="target">polygon</attribute>
+          </item>
+        </section>
+      </submenu>
+      <submenu>
+        <attribute name="label" translatable="yes">Zoom</attribute>
+        <section>
+          <item>
+            <attribute name="label" translatable="yes">Zoom In</attribute>
+            <attribute name="action">app.zoom-in</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Zoom Out</attribute>
+            <attribute name="action">app.zoom-out</attribute>
+          </item>
+        </section>
+      </submenu>
+      <item>
+        <attribute name="label" translatable="yes">Grid</attribute>
+        <attribute name="action">app.grid</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Grid Settings...</attribute>
+        <attribute name="action">app.grid-settings</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Create Guides...</attribute>
+        <attribute name="action">app.create-guides</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Paste</attribute>
+        <attribute name="action">app.paste</attribute>
+      </item>
+    </section>
+  </menu>
+
+  <menu id="imap-object-popup">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Edit Area Info...</attribute>
+        <attribute name="action">app.edit-area-info</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Delete Area</attribute>
+        <attribute name="action">app.clear</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Move Up</attribute>
+        <attribute name="action">app.move-up</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Move Down</attribute>
+        <attribute name="action">app.move-down</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Cut</attribute>
+        <attribute name="action">app.cut</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Copy</attribute>
+        <attribute name="action">app.copy</attribute>
+      </item>
+    </section>
+  </menu>
+
+  <menu id="imap-polygon-popup">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Insert Point</attribute>
+        <attribute name="action">app.insert-point</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Delete Point</attribute>
+        <attribute name="action">app.delete-point</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Edit Area Info...</attribute>
+        <attribute name="action">app.edit-area-info</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Delete Area</attribute>
+        <attribute name="action">app.delete-area</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Move Up</attribute>
+        <attribute name="action">app.move-up</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Move Down</attribute>
+        <attribute name="action">app.move-down</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Cut</attribute>
+        <attribute name="action">app.cut</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Copy</attribute>
+        <attribute name="action">app.copy</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

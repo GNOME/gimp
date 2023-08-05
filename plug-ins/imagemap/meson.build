@@ -69,6 +69,11 @@ plugin_sources = [
   imagemap_icon_sources,
 ]
 
+plugin_sources += gnome.compile_resources(
+  'imagemap-menus',
+  'imagemap-menus.gresource.xml',
+)
+
 if platform_windows
   plugin_sources += windows.compile_resources(
     gimp_plugins_rc,
