@@ -55,43 +55,45 @@ struct _JpegXLClass
 
 GType                   jpegxl_get_type (void) G_GNUC_CONST;
 
-static GList           *jpegxl_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure   *jpegxl_create_procedure (GimpPlugIn           *plug_in,
-                                                 const gchar          *name);
+static GList           *jpegxl_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure   *jpegxl_create_procedure (GimpPlugIn            *plug_in,
+                                                 const gchar           *name);
 
-static GimpValueArray *jpegxl_load (GimpProcedure        *procedure,
-                                    GimpRunMode           run_mode,
-                                    GFile                *file,
-                                    const GimpValueArray *args,
-                                    gpointer              run_data);
-static GimpValueArray *jpegxl_save (GimpProcedure        *procedure,
-                                    GimpRunMode           run_mode,
-                                    GimpImage            *image,
-                                    gint                  n_drawables,
-                                    GimpDrawable        **drawables,
-                                    GFile                *file,
-                                    GimpMetadata         *metadata,
-                                    GimpProcedureConfig  *config,
-                                    gpointer              run_data);
+static GimpValueArray *jpegxl_load              (GimpProcedure         *procedure,
+                                                 GimpRunMode            run_mode,
+                                                 GFile                 *file,
+                                                 GimpMetadata          *metadata,
+                                                 GimpMetadataLoadFlags *flags,
+                                                 GimpProcedureConfig   *config,
+                                                 gpointer               run_data);
+static GimpValueArray *jpegxl_save              (GimpProcedure         *procedure,
+                                                 GimpRunMode            run_mode,
+                                                 GimpImage             *image,
+                                                 gint                   n_drawables,
+                                                 GimpDrawable         **drawables,
+                                                 GFile                 *file,
+                                                 GimpMetadata          *metadata,
+                                                 GimpProcedureConfig   *config,
+                                                 gpointer               run_data);
 
-static void      create_cmyk_layer (GimpImage            *image,
-                                    GimpLayer            *layer,
-                                    const Babl           *space,
-                                    const Babl           *type,
-                                    gpointer              picture_buffer,
-                                    gpointer              key_buffer,
-                                    gint                  bit_depth,
-                                    gboolean              has_alpha);
-static void      extract_cmyk      (GeglBuffer           *buffer,
-                                    gpointer             *cmy_data,
-                                    gpointer             *key_data,
-                                    gpointer             *alpha_data,
-                                    const Babl           *type,
-                                    const Babl           *space,
-                                    gint                  width,
-                                    gint                  height,
-                                    gint                  bit_depth,
-                                    gboolean              has_alpha);
+static void      create_cmyk_layer              (GimpImage             *image,
+                                                 GimpLayer             *layer,
+                                                 const Babl            *space,
+                                                 const Babl            *type,
+                                                 gpointer               picture_buffer,
+                                                 gpointer               key_buffer,
+                                                 gint                   bit_depth,
+                                                 gboolean               has_alpha);
+static void      extract_cmyk                   (GeglBuffer            *buffer,
+                                                 gpointer              *cmy_data,
+                                                 gpointer              *key_data,
+                                                 gpointer              *alpha_data,
+                                                 const Babl            *type,
+                                                 const Babl            *space,
+                                                 gint                   width,
+                                                 gint                   height,
+                                                 gint                   bit_depth,
+                                                 gboolean               has_alpha);
 
 
 G_DEFINE_TYPE (JpegXL, jpegxl, GIMP_TYPE_PLUG_IN)
@@ -133,9 +135,9 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           jpegxl_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            jpegxl_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("JPEG XL image"));
 
@@ -1138,37 +1140,27 @@ load_image (GFile        *file,
 }
 
 static GimpValueArray *
-jpegxl_load (GimpProcedure        *procedure,
-             GimpRunMode           run_mode,
-             GFile                *file,
-             const GimpValueArray *args,
-             gpointer              run_data)
+jpegxl_load (GimpProcedure         *procedure,
+             GimpRunMode            run_mode,
+             GFile                 *file,
+             GimpMetadata          *metadata,
+             GimpMetadataLoadFlags *flags,
+             GimpProcedureConfig   *config,
+             gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
-  GError         *error             = NULL;
+  GError         *error = NULL;
 
   gegl_init (NULL, NULL);
-
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
-      break;
-
-    default:
-      break;
-    }
 
   image = load_image (file, run_mode, &error);
 
   if (! image)
-    {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
-                                               error);
-    }
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
+
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);

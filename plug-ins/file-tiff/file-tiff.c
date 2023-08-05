@@ -80,34 +80,36 @@ struct _TiffClass
 
 GType                    tiff_get_type         (void) G_GNUC_CONST;
 
-static GList           * tiff_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure   * tiff_create_procedure (GimpPlugIn           *plug_in,
-                                                const gchar          *name);
+static GList           * tiff_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure   * tiff_create_procedure (GimpPlugIn            *plug_in,
+                                                const gchar           *name);
 
-static GimpValueArray  * tiff_load             (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GFile                *file,
-                                                const GimpValueArray *args,
-                                                gpointer              run_data);
-static GimpValueArray  * tiff_save             (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GimpImage            *image,
-                                                gint                  n_drawables,
-                                                GimpDrawable        **drawables,
-                                                GFile                *file,
-                                                GimpMetadata         *metadata,
-                                                GimpProcedureConfig  *config,
-                                                gpointer              run_data);
-static GimpPDBStatusType tiff_save_rec         (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GimpImage            *orig_image,
-                                                gint                  n_orig_drawables,
-                                                GimpDrawable        **orig_drawables,
-                                                GFile                *file,
-                                                GimpProcedureConfig  *config,
-                                                GimpMetadata         *metadata,
-                                                gboolean              retried,
-                                                GError              **error);
+static GimpValueArray  * tiff_load             (GimpProcedure         *procedure,
+                                                GimpRunMode            run_mode,
+                                                GFile                 *file,
+                                                GimpMetadata          *metadata,
+                                                GimpMetadataLoadFlags *flags,
+                                                GimpProcedureConfig   *config,
+                                                gpointer               run_data);
+static GimpValueArray  * tiff_save             (GimpProcedure         *procedure,
+                                                GimpRunMode            run_mode,
+                                                GimpImage             *image,
+                                                gint                   n_drawables,
+                                                GimpDrawable         **drawables,
+                                                GFile                 *file,
+                                                GimpMetadata          *metadata,
+                                                GimpProcedureConfig   *config,
+                                                gpointer               run_data);
+static GimpPDBStatusType tiff_save_rec         (GimpProcedure         *procedure,
+                                                GimpRunMode            run_mode,
+                                                GimpImage             *orig_image,
+                                                gint                   n_orig_drawables,
+                                                GimpDrawable         **orig_drawables,
+                                                GFile                 *file,
+                                                GimpProcedureConfig   *config,
+                                                GimpMetadata          *metadata,
+                                                gboolean               retried,
+                                                GError               **error);
 
 static gboolean          image_is_monochrome  (GimpImage            *image);
 static gboolean          image_is_multi_layer (GimpImage            *image);
@@ -153,9 +155,9 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           tiff_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            tiff_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("TIFF or BigTIFF image"));
 
@@ -273,11 +275,13 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-tiff_load (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GFile                *file,
-           const GimpValueArray *args,
-           gpointer              run_data)
+tiff_load (GimpProcedure         *procedure,
+           GimpRunMode            run_mode,
+           GFile                 *file,
+           GimpMetadata          *metadata,
+           GimpMetadataLoadFlags *flags,
+           GimpProcedureConfig   *config,
+           gpointer               run_data)
 {
   GimpValueArray    *return_vals;
   GimpPDBStatusType  status;
@@ -285,7 +289,6 @@ tiff_load (GimpProcedure        *procedure,
   gboolean           resolution_loaded  = FALSE;
   gboolean           profile_loaded     = FALSE;
   gboolean           ps_metadata_loaded = FALSE;
-  GimpMetadata      *metadata;
   GError            *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -302,25 +305,11 @@ tiff_load (GimpProcedure        *procedure,
   if (!image)
     return gimp_procedure_new_return_values (procedure, status, error);
 
-  metadata = gimp_image_metadata_load_prepare (image,
-                                               "image/tiff",
-                                               file, NULL);
+  if (resolution_loaded)
+    *flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
-  if (metadata)
-    {
-      GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
-
-      if (resolution_loaded)
-        flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
-
-      if (profile_loaded)
-        flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
-
-      gimp_image_metadata_load_finish (image, "image/tiff",
-                                       metadata, flags);
-
-      g_object_unref (metadata);
-    }
+  if (profile_loaded)
+    *flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,

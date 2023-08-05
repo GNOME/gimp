@@ -73,9 +73,10 @@ create_layer (GimpImage *image,
 }
 
 GimpImage *
-load_image (GFile    *file,
-            gboolean  interactive,
-            GError   **error)
+load_image (GFile                  *file,
+            gboolean                interactive,
+            GimpMetadataLoadFlags  *metadata_flags,
+            GError                **error)
 {
   uint8_t          *indata = NULL;
   gsize             indatalen;
@@ -88,8 +89,6 @@ load_image (GFile    *file,
   uint32_t          flags;
   gboolean          animation = FALSE;
   gboolean          icc       = FALSE;
-  gboolean          exif      = FALSE;
-  gboolean          xmp       = FALSE;
 
   /* Attempt to read the file contents from disk */
   if (! g_file_get_contents (g_file_peek_path (file),
@@ -125,12 +124,6 @@ load_image (GFile    *file,
 
   if (flags & ICCP_FLAG)
     icc = TRUE;
-
-  if (flags & EXIF_FLAG)
-    exif = TRUE;
-
-  if (flags & XMP_FLAG)
-    xmp = TRUE;
 
   /* TODO: decode the image in "chunks" or "tiles" */
   /* TODO: check if an alpha channel is present */
@@ -247,38 +240,8 @@ load_image (GFile    *file,
   /* Free the original compressed data */
   g_free (indata);
 
-  if (exif || xmp)
-    {
-      GimpMetadata *metadata;
-
-      if (exif)
-        {
-          WebPData exif;
-
-          WebPMuxGetChunk (mux, "EXIF", &exif);
-        }
-
-      if (xmp)
-        {
-          WebPData xmp;
-
-          WebPMuxGetChunk (mux, "XMP ", &xmp);
-        }
-
-      metadata = gimp_image_metadata_load_prepare (image, "image/webp",
-                                                   file, NULL);
-      if (metadata)
-        {
-          GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
-
-          if (profile)
-            flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
-
-          gimp_image_metadata_load_finish (image, "image/webp",
-                                           metadata, flags);
-          g_object_unref (metadata);
-        }
-    }
+  if (profile)
+    *metadata_flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
   WebPMuxDelete (mux);
 

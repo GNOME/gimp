@@ -55,24 +55,26 @@ struct _WebpClass
 
 GType                   webp_get_type         (void) G_GNUC_CONST;
 
-static GList          * webp_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * webp_create_procedure (GimpPlugIn           *plug_in,
-                                               const gchar          *name);
+static GList          * webp_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * webp_create_procedure (GimpPlugIn            *plug_in,
+                                               const gchar           *name);
 
-static GimpValueArray * webp_load             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GFile                *file,
-                                               const GimpValueArray *args,
-                                               gpointer              run_data);
-static GimpValueArray * webp_save             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
-                                               gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               GFile                *file,
-                                               GimpMetadata         *metadata,
-                                               GimpProcedureConfig  *config,
-                                               gpointer              run_data);
+static GimpValueArray * webp_load             (GimpProcedure         *procedure,
+                                               GimpRunMode            run_mode,
+                                               GFile                 *file,
+                                               GimpMetadata          *metadata,
+                                               GimpMetadataLoadFlags *flags,
+                                               GimpProcedureConfig   *config,
+                                               gpointer               run_data);
+static GimpValueArray * webp_save             (GimpProcedure         *procedure,
+                                               GimpRunMode            run_mode,
+                                               GimpImage             *image,
+                                               gint                   n_drawables,
+                                               GimpDrawable         **drawables,
+                                               GFile                 *file,
+                                               GimpMetadata          *metadata,
+                                               GimpProcedureConfig   *config,
+                                               gpointer               run_data);
 
 
 G_DEFINE_TYPE (Webp, webp, GIMP_TYPE_PLUG_IN)
@@ -115,9 +117,9 @@ webp_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           webp_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            webp_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("WebP image"));
 
@@ -247,11 +249,13 @@ webp_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-webp_load (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GFile                *file,
-           const GimpValueArray *args,
-           gpointer              run_data)
+webp_load (GimpProcedure         *procedure,
+           GimpRunMode            run_mode,
+           GFile                 *file,
+           GimpMetadata          *metadata,
+           GimpMetadataLoadFlags *flags,
+           GimpProcedureConfig   *config,
+           gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
@@ -259,7 +263,7 @@ webp_load (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  image = load_image (file, FALSE, &error);
+  image = load_image (file, FALSE, flags, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,

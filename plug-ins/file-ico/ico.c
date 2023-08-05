@@ -65,19 +65,23 @@ struct _IcoClass
 
 GType                   ico_get_type         (void) G_GNUC_CONST;
 
-static GList          * ico_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * ico_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * ico_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * ico_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * ico_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * ani_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
+static GimpValueArray * ico_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * ani_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
                                               gpointer              run_data);
 static GimpValueArray * ico_load_thumb       (GimpProcedure        *procedure,
                                               GFile                *file,
@@ -164,9 +168,9 @@ ico_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           ico_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            ico_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Microsoft Windows icon"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
@@ -192,9 +196,9 @@ ico_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, LOAD_CUR_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           ico_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            ico_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Microsoft Windows cursor"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
@@ -222,9 +226,9 @@ ico_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, LOAD_ANI_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           ani_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            ani_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Microsoft Windows animated cursor"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
@@ -426,11 +430,13 @@ ico_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-ico_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+ico_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
@@ -455,11 +461,13 @@ ico_load (GimpProcedure        *procedure,
 }
 
 static GimpValueArray *
-ani_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+ani_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;

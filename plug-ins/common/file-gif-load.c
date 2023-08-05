@@ -102,24 +102,26 @@ struct _GifClass
 
 GType                   gif_get_type         (void) G_GNUC_CONST;
 
-static GList          * gif_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * gif_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * gif_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * gif_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * gif_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * gif_load_thumb       (GimpProcedure        *procedure,
-                                              GFile                *file,
-                                              gint                  size,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
+static GimpValueArray * gif_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * gif_load_thumb       (GimpProcedure         *procedure,
+                                              GFile                 *file,
+                                              gint                   size,
+                                              const GimpValueArray  *args,
+                                              gpointer               run_data);
 
-static GimpImage      * load_image           (GFile                *file,
-                                              gboolean              thumbnail,
-                                              GError              **error);
+static GimpImage      * load_image           (GFile                 *file,
+                                              gboolean               thumbnail,
+                                              GError               **error);
 
 
 G_DEFINE_TYPE (Gif, gif, GIMP_TYPE_PLUG_IN)
@@ -169,16 +171,15 @@ gif_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           gif_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            gif_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("GIF image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files of Compuserve GIF "
-                                        "file format",
-                                        "FIXME: write help for gif_load",
+                                        "file format", NULL,
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Spencer Kimball, Peter Mattis, "
@@ -220,11 +221,13 @@ gif_create_procedure (GimpPlugIn  *plug_in,
 
 
 static GimpValueArray *
-gif_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+gif_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
@@ -261,6 +264,7 @@ gif_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
+  *flags = GIMP_METADATA_LOAD_ALL;
   GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;

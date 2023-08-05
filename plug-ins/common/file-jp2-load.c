@@ -113,31 +113,33 @@ struct _Jp2Class
 
 GType                   jp2_get_type         (void) G_GNUC_CONST;
 
-static GList          * jp2_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * jp2_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * jp2_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * jp2_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * jp2_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
+static GimpValueArray * jp2_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
-static GimpImage      * load_image           (GimpProcedure        *procedure,
-                                              GObject              *config,
-                                              GFile                *file,
-                                              OPJ_CODEC_FORMAT      format,
-                                              OPJ_COLOR_SPACE       color_space,
-                                              gboolean              interactive,
-                                              gboolean             *profile_loaded,
-                                              GError              **error);
+static GimpImage      * load_image           (GimpProcedure         *procedure,
+                                              GObject               *config,
+                                              GFile                 *file,
+                                              OPJ_CODEC_FORMAT       format,
+                                              OPJ_COLOR_SPACE        color_space,
+                                              gboolean               interactive,
+                                              gboolean              *profile_loaded,
+                                              GError               **error);
 
-static OPJ_COLOR_SPACE  open_dialog          (GimpProcedure       *procedure,
-                                              GObject             *config,
-                                              GFile               *file,
-                                              OPJ_CODEC_FORMAT     format,
-                                              gint                 num_components,
-                                              GError             **error);
+static OPJ_COLOR_SPACE  open_dialog          (GimpProcedure         *procedure,
+                                              GObject               *config,
+                                              GFile                 *file,
+                                              OPJ_CODEC_FORMAT       format,
+                                              gint                   num_components,
+                                              GError               **error);
 
 
 G_DEFINE_TYPE (Jp2, jp2, GIMP_TYPE_PLUG_IN)
@@ -180,9 +182,9 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_JP2_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           jp2_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            jp2_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("JPEG 2000 image"));
       gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
@@ -214,9 +216,9 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, LOAD_J2K_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           jp2_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            jp2_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("JPEG 2000 codestream"));
       gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
@@ -255,26 +257,23 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-jp2_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+jp2_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
-  GimpProcedureConfig *config;
-  GimpValueArray      *return_vals;
-  GimpImage           *image          = NULL;
-  OPJ_COLOR_SPACE      color_space    = OPJ_CLRSPC_UNKNOWN;
-  gboolean             interactive;
-  GimpMetadata        *metadata;
-  gboolean             profile_loaded = FALSE;
-  GimpPDBStatusType    status         = GIMP_PDB_SUCCESS;
-  GError              *error          = NULL;
+  GimpValueArray    *return_vals;
+  GimpImage         *image          = NULL;
+  OPJ_COLOR_SPACE    color_space    = OPJ_CLRSPC_UNKNOWN;
+  gboolean           interactive;
+  gboolean           profile_loaded = FALSE;
+  GimpPDBStatusType  status         = GIMP_PDB_SUCCESS;
+  GError            *error          = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
@@ -332,30 +331,11 @@ jp2_load (GimpProcedure        *procedure,
     {
       status = error ? GIMP_PDB_EXECUTION_ERROR : GIMP_PDB_CANCEL;
 
-      gimp_procedure_config_end_run (config, status);
-      g_object_unref (config);
-
       return gimp_procedure_new_return_values (procedure, status, error);
     }
 
-  metadata = gimp_image_metadata_load_prepare (image, "image/jp2",
-                                               file, NULL);
-
-  if (metadata)
-    {
-      GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
-
-      if (profile_loaded)
-        flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
-
-      gimp_image_metadata_load_finish (image, "image/jp2",
-                                       metadata, flags);
-
-      g_object_unref (metadata);
-    }
-
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
+  if (profile_loaded)
+    *flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,

@@ -74,33 +74,35 @@ struct _GoatClass
 
 GType                   goat_get_type         (void) G_GNUC_CONST;
 
-static GList          * goat_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * goat_create_procedure (GimpPlugIn           *plug_in,
-                                               const gchar          *name);
+static GList          * goat_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * goat_create_procedure (GimpPlugIn            *plug_in,
+                                               const gchar           *name);
 
-static GimpValueArray * goat_load             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GFile                *file,
-                                               const GimpValueArray *args,
-                                               gpointer              run_data);
-static GimpValueArray * goat_save             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
-                                               gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               GFile                *file,
-                                               GimpMetadata         *metadata,
-                                               GimpProcedureConfig  *config,
-                                               gpointer              run_data);
+static GimpValueArray * goat_load             (GimpProcedure         *procedure,
+                                               GimpRunMode            run_mode,
+                                               GFile                 *file,
+                                               GimpMetadata          *metadata,
+                                               GimpMetadataLoadFlags *flags,
+                                               GimpProcedureConfig   *config,
+                                               gpointer               run_data);
+static GimpValueArray * goat_save             (GimpProcedure         *procedure,
+                                               GimpRunMode            run_mode,
+                                               GimpImage             *image,
+                                               gint                   n_drawables,
+                                               GimpDrawable         **drawables,
+                                               GFile                 *file,
+                                               GimpMetadata          *metadata,
+                                               GimpProcedureConfig   *config,
+                                               gpointer               run_data);
 
-static GimpImage      * load_image            (GFile                *file,
-                                               const gchar          *gegl_op,
-                                               GError              **error);
-static gboolean         save_image            (GFile                *file,
-                                               const gchar          *gegl_op,
-                                               GimpImage            *image,
-                                               GimpDrawable         *drawable,
-                                               GError              **error);
+static GimpImage      * load_image            (GFile                 *file,
+                                               const gchar           *gegl_op,
+                                               GError               **error);
+static gboolean         save_image            (GFile                 *file,
+                                               const gchar           *gegl_op,
+                                               GimpImage             *image,
+                                               GimpDrawable          *drawable,
+                                               GError               **error);
 
 
 G_DEFINE_TYPE (Goat, goat, GIMP_TYPE_PLUG_IN)
@@ -192,10 +194,10 @@ goat_create_procedure (GimpPlugIn  *plug_in,
 
       if (! g_strcmp0 (name, format->load_proc))
         {
-          procedure = gimp_load_procedure_new (plug_in, name,
-                                               GIMP_PDB_PROC_TYPE_PLUGIN,
-                                               goat_load,
-                                               (gpointer) format, NULL);
+          procedure = gimp_load_procedure_new2 (plug_in, name,
+                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+                                                goat_load,
+                                                (gpointer) format, NULL);
 
           gimp_procedure_set_menu_label (procedure, format->file_type);
 
@@ -238,11 +240,13 @@ goat_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-goat_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+goat_load (GimpProcedure         *procedure,
+           GimpRunMode            run_mode,
+           GFile                 *file,
+           GimpMetadata          *metadata,
+           GimpMetadataLoadFlags *flags,
+           GimpProcedureConfig   *config,
+           gpointer               run_data)
 {
   const FileFormat *format = run_data;
   GimpValueArray   *return_vals;

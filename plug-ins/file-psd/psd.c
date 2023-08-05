@@ -52,34 +52,38 @@ struct _PsdClass
 
 GType                   psd_get_type         (void) G_GNUC_CONST;
 
-static GList          * psd_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * psd_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * psd_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * psd_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * psd_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
+static GimpValueArray * psd_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
                                               gpointer              run_data);
-static GimpValueArray * psd_load_thumb       (GimpProcedure        *procedure,
-                                              GFile                *file,
-                                              gint                  size,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * psd_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GFile                *file,
-                                              GimpMetadata         *metadata,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
-static GimpValueArray * psd_load_metadata    (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
+static GimpValueArray * psd_load_thumb       (GimpProcedure         *procedure,
+                                              GFile                 *file,
+                                              gint                   size,
+                                              const GimpValueArray  *args,
+                                              gpointer               run_data);
+static GimpValueArray * psd_save             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GimpImage             *image,
+                                              gint                   n_drawables,
+                                              GimpDrawable         **drawables,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * psd_load_metadata    (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
 
 G_DEFINE_TYPE (Psd, psd, GIMP_TYPE_PLUG_IN)
@@ -125,9 +129,9 @@ psd_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           psd_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            psd_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Photoshop image"));
 
@@ -154,9 +158,9 @@ psd_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, LOAD_MERGED_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           psd_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            psd_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Photoshop image (merged)"));
 
@@ -267,9 +271,9 @@ psd_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, LOAD_METADATA_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           psd_load_metadata, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            psd_load_metadata, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads Photoshop-format metadata "
@@ -310,17 +314,18 @@ psd_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-psd_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+psd_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
   GimpValueArray *return_vals;
   gboolean        resolution_loaded = FALSE;
   gboolean        profile_loaded    = FALSE;
   GimpImage      *image;
-  GimpMetadata   *metadata;
   GimpParasite   *parasite = NULL;
   GError         *error = NULL;
   PSDSupport      unsupported_features;
@@ -365,23 +370,11 @@ psd_load (GimpProcedure        *procedure,
         gimp_parasite_free (parasite);
     }
 
-  metadata = gimp_image_metadata_load_prepare (image, "image/x-psd",
-                                               file, NULL);
-  if (metadata)
-    {
-      GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+  if (resolution_loaded)
+    *flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
-      if (resolution_loaded)
-        flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
-
-      if (profile_loaded)
-        flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
-
-      gimp_image_metadata_load_finish (image, "image/x-psd",
-                                       metadata, flags);
-
-      g_object_unref (metadata);
-    }
+  if (profile_loaded)
+    *flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -494,11 +487,13 @@ psd_save (GimpProcedure        *procedure,
 }
 
 static GimpValueArray *
-psd_load_metadata (GimpProcedure        *procedure,
-                   GimpRunMode           run_mode,
-                   GFile                *file,
-                   const GimpValueArray *args,
-                   gpointer              run_data)
+psd_load_metadata (GimpProcedure         *procedure,
+                   GimpRunMode            run_mode,
+                   GFile                 *file,
+                   GimpMetadata          *metadata,
+                   GimpMetadataLoadFlags *flags,
+                   GimpProcedureConfig   *config,
+                   gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
@@ -511,22 +506,12 @@ psd_load_metadata (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   /* Retrieve image */
-  if (gimp_value_array_length (args) > 1)
-    {
-      data_length = g_value_get_int (gimp_value_array_index (args, 0));
-      image       = g_value_get_object (gimp_value_array_index (args, 1));
-    }
-  else
-    {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
-                                               error);
-    }
-
-  if (gimp_value_array_length (args) > 2)
-    is_layer = g_value_get_boolean (gimp_value_array_index (args, 2));
-  if (gimp_value_array_length (args) > 3)
-    is_cmyk = g_value_get_boolean (gimp_value_array_index (args, 3));
+  g_object_get (config,
+                "image",         &image,
+                "size",          &data_length,
+                "metadata-type", &is_layer,
+                "cmyk",          &is_cmyk,
+                NULL);
 
   image = load_image_metadata (file, data_length, image, is_layer, is_cmyk,
                                &unsupported_features, &error);

@@ -66,32 +66,34 @@ struct _DdsClass
 
 GType                   dds_get_type         (void) G_GNUC_CONST;
 
-static GList          * dds_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * dds_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * dds_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * dds_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * dds_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * dds_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GFile                *file,
-                                              GimpMetadata         *metadata,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
+static GimpValueArray * dds_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * dds_save             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GimpImage             *image,
+                                              gint                   n_drawables,
+                                              GimpDrawable         **drawables,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 #if 0
-static GimpValueArray * dds_decode           (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
+static GimpValueArray * dds_decode           (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GimpImage             *image,
+                                              gint                   n_drawables,
+                                              GimpDrawable         **drawables,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 #endif
 
 
@@ -140,9 +142,9 @@ dds_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           dds_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            dds_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("DDS image"));
 
@@ -387,13 +389,14 @@ dds_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-dds_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+dds_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
-  GimpProcedureConfig *config;
   GimpValueArray      *return_vals;
   GimpPDBStatusType    status;
   GimpImage           *image;
@@ -401,14 +404,8 @@ dds_load (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
-
   status = read_dds (file, &image, run_mode == GIMP_RUN_INTERACTIVE,
                      procedure, G_OBJECT (config), &error);
-
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
 
   if (status != GIMP_PDB_SUCCESS)
     return gimp_procedure_new_return_values (procedure, status, error);
