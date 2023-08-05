@@ -657,7 +657,6 @@ gimp_font_factory_load_names (GimpContainer *container,
 
   for (i = 0; i < fontset->nfont; i++)
     {
-      PangoFcFont          *font;
       PangoFontDescription *pfd;
       GString              *xml;
       gchar                *fontformat;
@@ -668,8 +667,7 @@ gimp_font_factory_load_names (GimpContainer *container,
       gchar                *escaped_fullname;
       gchar                *fullname;
       gchar                *fullname2;
-      gchar                *desc_fullname;
-      gchar                *desc_file;
+      gchar                *escaped_file;
       gchar                *file;
       gint                  index;
       gint                  weight;
@@ -722,31 +720,6 @@ gimp_font_factory_load_names (GimpContainer *container,
       if (FcPatternGetString (fontset->fonts[i], FC_FULLNAME, 1, (FcChar8 **) &fullname2) != FcResultMatch)
         fullname2 = NULL;
 
-      /*
-       * In case the pango font description constructed from the fc pattern is correct,
-       * we use it instead of renaming the font in fontconfig.
-       */
-      pfd = pango_fc_font_description_from_pattern (fontset->fonts[i], FALSE);
-
-      font = PANGO_FC_FONT (pango_context_load_font (context, pfd));
-
-      FcPatternGetString (pango_fc_font_get_pattern (font), FC_FULLNAME, 0, (FcChar8 **) &desc_fullname);
-      FcPatternGetString (pango_fc_font_get_pattern (font), FC_FILE,     0, (FcChar8 **) &desc_file);
-
-      g_object_unref (font);
-
-      if (!g_strcmp0 (desc_fullname, fullname) && !g_strcmp0 (desc_file, file))
-        {
-          if (fullname2 != NULL && g_str_is_ascii (fullname2))
-            fullname = fullname2;
-
-          gimp_font_factory_add_font (container, context, pfd, fullname, (const gchar *) file);
-          pango_font_description_free (pfd);
-          continue;
-        }
-
-      pango_font_description_free (pfd);
-
       newname = g_strdup_printf ("gimpfont%i", i);
 
       xml = g_string_new ("<?xml version=\"1.0\"?>\n<match>");
@@ -769,11 +742,11 @@ gimp_font_factory_load_names (GimpContainer *container,
                               family);
       g_free (family);
 
-      desc_file = g_markup_escape_text (file, -1);
+      escaped_file = g_markup_escape_text (file, -1);
       g_string_append_printf (xml,
                               "<edit name=\"file\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
-                              desc_file);
-      g_free (desc_file);
+                              escaped_file);
+      g_free (escaped_file);
 
       if (FcPatternGetString (fontset->fonts[i], FC_POSTSCRIPT_NAME, 0, (FcChar8 **) &psname) == FcResultMatch)
         {
