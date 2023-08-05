@@ -162,6 +162,7 @@ plug-ins/help-browser/help-browser.c
 plug-ins/help/gimphelpdomain.c
 plug-ins/help/gimphelplocale.c
 plug-ins/ifs-compose/ifs-compose.c
+plug-ins/ifs-compose/ifs-menus.ui
 plug-ins/imagemap/imap_about.c
 plug-ins/imagemap/imap_browse.c
 plug-ins/imagemap/imap_circle.c

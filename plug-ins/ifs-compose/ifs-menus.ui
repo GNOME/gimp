@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <menu id="ifs-compose-menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Move</attribute>
+        <attribute name="action">app.transform</attribute>
+        <attribute name="target">move</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Rotate</attribute>
+        <attribute name="action">app.transform</attribute>
+        <attribute name="target">rotate</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Stretch</attribute>
+        <attribute name="action">app.transform</attribute>
+        <attribute name="target">stretch</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">New</attribute>
+        <attribute name="action">app.new</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Delete</attribute>
+        <attribute name="action">app.delete</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Undo</attribute>
+        <attribute name="action">app.undo</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Redo</attribute>
+        <attribute name="action">app.redo</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Select All</attribute>
+        <attribute name="action">app.select-all</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Recompute Center</attribute>
+        <attribute name="action">app.center</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Render Options</attribute>
+        <attribute name="action">app.options</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

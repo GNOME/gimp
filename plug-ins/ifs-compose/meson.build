@@ -6,6 +6,11 @@ plugin_sources = [
   'ifs-compose.c',
 ]
 
+plugin_sources += gnome.compile_resources(
+  'ifs-menus',
+  'ifs-menus.gresource.xml',
+)
+
 if platform_windows
   plugin_sources += windows.compile_resources(
     gimp_plugins_rc,

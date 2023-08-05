@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/gimp/ifs/">
+    <file preprocess="xml-stripblanks">ifs-menus.ui</file>
+  </gresource>
+</gresources>
