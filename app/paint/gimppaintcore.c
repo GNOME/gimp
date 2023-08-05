@@ -719,7 +719,8 @@ gimp_paint_core_cancel (GimpPaintCore *core,
                                     &x, &y, &width, &height))
         {
           GeglBuffer    *undo_buffer;
-          GeglRectangle  rect;
+          GeglRectangle  new_rect;
+          GeglRectangle  old_rect;
 
           if (! g_hash_table_steal_extended (core->undo_buffers, iter->data,
                                              NULL, (gpointer*) &undo_buffer))
@@ -729,20 +730,103 @@ gimp_paint_core_cancel (GimpPaintCore *core,
               continue;
             }
 
-          gegl_rectangle_align_to_buffer (&rect,
-                                          GEGL_RECTANGLE (x, y, width, height),
-                                          gimp_drawable_get_buffer (iter->data),
-                                          GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
+          old_rect = *(GeglRectangle*) g_hash_table_lookup (core->original_bounds, iter->data);
 
-          gimp_gegl_buffer_copy (undo_buffer,
-                                 &rect,
-                                 GEGL_ABYSS_NONE,
-                                 gimp_drawable_get_buffer (iter->data),
-                                 &rect);
-          g_object_unref (undo_buffer);
+          gimp_item_get_offset (GIMP_ITEM (iter->data), &new_rect.x, &new_rect.y);
+          new_rect.width = gimp_item_get_width (GIMP_ITEM (iter->data));
+          new_rect.height = gimp_item_get_height (GIMP_ITEM (iter->data));
+
+          if (new_rect.x == old_rect.x         &&
+              new_rect.y == old_rect.y         &&
+              new_rect.width == old_rect.width &&
+              new_rect.height == old_rect.height)
+            {
+              GeglRectangle  rect;
+
+              gegl_rectangle_align_to_buffer (&rect,
+                                              GEGL_RECTANGLE (x, y, width, height),
+                                              gimp_drawable_get_buffer (iter->data),
+                                              GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
+
+              gimp_gegl_buffer_copy (undo_buffer,
+                                     &rect,
+                                     GEGL_ABYSS_NONE,
+                                     gimp_drawable_get_buffer (iter->data),
+                                     &rect);
+              g_object_unref (undo_buffer);
+
+              gimp_drawable_update (iter->data, x, y, width, height);
+            }
+          else
+            {
+              GeglBuffer    *buffer;
+
+              /* drawable is expanded only if drawable is layer or layer mask,
+               * so drawable cannot be anything else */
+              g_return_if_fail (GIMP_IS_LAYER (iter->data) || GIMP_IS_LAYER_MASK (iter->data));
+
+              /* Restore the original content with new size of the buffer and update view it */
+              gimp_gegl_buffer_copy (undo_buffer,
+                                     NULL,
+                                     GEGL_ABYSS_NONE,
+                                     gimp_drawable_get_buffer (iter->data),
+                                     NULL);
+              gimp_drawable_update (iter->data, 0, 0, -1, -1);
+
+              /* create a copy of original buffer from undo data */
+              buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                        old_rect.width,
+                                                        old_rect.height),
+                                        gimp_drawable_get_format (iter->data));
+
+              gimp_gegl_buffer_copy (undo_buffer,
+                                     GEGL_RECTANGLE (old_rect.x - new_rect.x,
+                                                     old_rect.y - new_rect.y,
+                                                     old_rect.width,
+                                                     old_rect.height),
+                                     GEGL_ABYSS_NONE,
+                                     buffer,
+                                     GEGL_RECTANGLE (0, 0, 0, 0));
+
+              if (GIMP_IS_LAYER_MASK (drawables->data) || GIMP_LAYER (drawables->data)->mask)
+                {
+                  GeglBuffer   *other_old;
+                  GimpDrawable *other_drawable;
+
+                  if (GIMP_IS_LAYER_MASK (drawables->data))
+                    other_drawable = GIMP_DRAWABLE ((GIMP_LAYER_MASK (drawables->data))->layer);
+                  else
+                    other_drawable = GIMP_DRAWABLE (GIMP_LAYER (drawables->data)->mask);
+
+                  /* create a copy of original buffer by taking the required area */
+                  other_old = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                               old_rect.width,
+                                                               old_rect.height),
+                                               gimp_drawable_get_format (other_drawable));
+
+                  gimp_gegl_buffer_copy (gimp_drawable_get_buffer (other_drawable),
+                                         GEGL_RECTANGLE (old_rect.x - new_rect.x,
+                                                         old_rect.y - new_rect.y,
+                                                         old_rect.width,
+                                                         old_rect.height),
+                                         GEGL_ABYSS_NONE,
+                                         other_old,
+                                         GEGL_RECTANGLE (0, 0, 0, 0));
+
+                  gimp_drawable_set_buffer_full (other_drawable, FALSE, NULL,
+                                                 other_old, &old_rect,
+                                                 FALSE);
+
+                  g_object_unref (other_old);
+                }
+              /* Restore drawable to state before painting started */
+              gimp_drawable_set_buffer_full (iter->data, FALSE, NULL,
+                                             buffer, &old_rect,
+                                             FALSE);
+
+              gimp_drawable_update (iter->data, 0, 0, -1, -1);
+            }
         }
-
-      gimp_drawable_update (iter->data, x, y, width, height);
 
       gimp_viewable_preview_thaw (GIMP_VIEWABLE (iter->data));
     }
