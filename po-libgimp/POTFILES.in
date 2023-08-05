@@ -6,6 +6,7 @@ libgimp/gimpbrushselectbutton.c
 libgimp/gimpexport.c
 libgimp/gimpimagemetadata.c
 libgimp/gimpimagemetadata-save.c
+libgimp/gimploadprocedure.c
 libgimp/gimpparamspecs-desc.c
 libgimp/gimppatternselectbutton.c
 libgimp/gimppdb.c

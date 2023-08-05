@@ -34,6 +34,7 @@ G_BEGIN_DECLS
 
 /**
  * GimpMetadataLoadFlags:
+ * @GIMP_METADATA_LOAD_NONE:        Do not load the metadata
  * @GIMP_METADATA_LOAD_COMMENT:     Load the comment
  * @GIMP_METADATA_LOAD_RESOLUTION:  Load the resolution
  * @GIMP_METADATA_LOAD_ORIENTATION: Load the orientation (rotation)
@@ -44,6 +45,7 @@ G_BEGIN_DECLS
  **/
 typedef enum
 {
+  GIMP_METADATA_LOAD_NONE        = 0,
   GIMP_METADATA_LOAD_COMMENT     = 1 << 0,
   GIMP_METADATA_LOAD_RESOLUTION  = 1 << 1,
   GIMP_METADATA_LOAD_ORIENTATION = 1 << 2,

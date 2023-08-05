@@ -121,7 +121,6 @@ gimp_image_metadata_load_finish (GimpImage             *image,
                                  GimpMetadataLoadFlags  flags)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (mime_type != NULL);
   g_return_if_fail (GEXIV2_IS_METADATA (metadata));
 
   if (flags & GIMP_METADATA_LOAD_COMMENT)

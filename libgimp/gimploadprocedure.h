@@ -50,6 +50,29 @@ typedef GimpValueArray * (* GimpRunLoadFunc) (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
+/**
+ * GimpRunLoadFunc2:
+ * @procedure:   the #GimpProcedure that runs.
+ * @run_mode:    the #GimpRunMode.
+ * @file:        the #GFile to load from.
+ * @config:      the @procedure's remaining arguments.
+ * @run_data: (closure): the run_data given in gimp_load_procedure_new().
+ *
+ * The load function is run during the lifetime of the GIMP session,
+ * each time a plug-in load procedure is called.
+ *
+ * Returns: (transfer full): the @procedure's return values.
+ *
+ * Since: 3.0
+ **/
+typedef GimpValueArray * (* GimpRunLoadFunc2) (GimpProcedure         *procedure,
+                                               GimpRunMode            run_mode,
+                                               GFile                 *file,
+                                               GimpMetadata          *metadata,
+                                               GimpMetadataLoadFlags *flags,
+                                               GimpProcedureConfig   *config,
+                                               gpointer               run_data);
+
 
 #define GIMP_TYPE_LOAD_PROCEDURE            (gimp_load_procedure_get_type ())
 #define GIMP_LOAD_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LOAD_PROCEDURE, GimpLoadProcedure))
@@ -82,6 +105,12 @@ GimpProcedure * gimp_load_procedure_new                  (GimpPlugIn        *plu
                                                           const gchar       *name,
                                                           GimpPDBProcType    proc_type,
                                                           GimpRunLoadFunc    run_func,
+                                                          gpointer           run_data,
+                                                          GDestroyNotify     run_data_destroy);
+GimpProcedure * gimp_load_procedure_new2                 (GimpPlugIn        *plug_in,
+                                                          const gchar       *name,
+                                                          GimpPDBProcType    proc_type,
+                                                          GimpRunLoadFunc2   run_func,
                                                           gpointer           run_data,
                                                           GDestroyNotify     run_data_destroy);
 
