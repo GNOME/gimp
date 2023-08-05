@@ -81,57 +81,59 @@ struct _PngClass
 
 GType                   png_get_type         (void) G_GNUC_CONST;
 
-static GList          * png_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * png_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * png_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * png_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * png_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * png_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GFile                *file,
-                                              GimpMetadata         *metadata,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
+static GimpValueArray * png_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * png_save             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GimpImage             *image,
+                                              gint                   n_drawables,
+                                              GimpDrawable         **drawables,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
-static GimpImage * load_image                (GFile            *file,
-                                              gboolean          interactive,
-                                              gboolean         *resolution_loaded,
-                                              gboolean         *profile_loaded,
-                                              GError          **error);
-static gboolean    save_image                (GFile            *file,
-                                              GimpImage        *image,
-                                              GimpDrawable     *drawable,
-                                              GimpImage        *orig_image,
-                                              GObject          *config,
-                                              gint             *bits_per_sample,
-                                              gboolean          interactive,
-                                              GError          **error);
+static GimpImage * load_image                (GFile                 *file,
+                                              gboolean               report_progress,
+                                              gboolean              *resolution_loaded,
+                                              gboolean              *profile_loaded,
+                                              GError               **error);
+static gboolean    save_image                (GFile                 *file,
+                                              GimpImage             *image,
+                                              GimpDrawable          *drawable,
+                                              GimpImage             *orig_image,
+                                              GObject               *config,
+                                              gint                  *bits_per_sample,
+                                              gboolean               report_progress,
+                                              GError               **error);
 
-static int         respin_cmap               (png_structp       pp,
-                                              png_infop         info,
-                                              guchar           *remap,
-                                              GimpImage        *image,
-                                              GimpDrawable     *drawable);
+static int         respin_cmap               (png_structp            pp,
+                                              png_infop              info,
+                                              guchar                *remap,
+                                              GimpImage             *image,
+                                              GimpDrawable          *drawable);
 
-static gboolean    save_dialog               (GimpImage        *image,
-                                              GimpProcedure    *procedure,
-                                              GObject          *config,
-                                              gboolean          alpha);
+static gboolean    save_dialog               (GimpImage             *image,
+                                              GimpProcedure         *procedure,
+                                              GObject               *config,
+                                              gboolean               alpha);
 
-static gboolean    offsets_dialog            (gint              offset_x,
-                                              gint              offset_y);
+static gboolean    offsets_dialog            (gint                   offset_x,
+                                              gint                   offset_y);
 
-static gboolean    ia_has_transparent_pixels (GeglBuffer       *buffer);
+static gboolean    ia_has_transparent_pixels (GeglBuffer            *buffer);
 
-static gint        find_unused_ia_color      (GeglBuffer       *buffer,
-                                              gint             *colors);
+static gint        find_unused_ia_color      (GeglBuffer            *buffer,
+                                              gint                  *colors);
 
 
 G_DEFINE_TYPE (Png, png, GIMP_TYPE_PLUG_IN)
@@ -174,9 +176,9 @@ png_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           png_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            png_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("PNG image"));
 
@@ -309,36 +311,31 @@ png_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-png_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+png_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
   GimpValueArray *return_vals;
-  gboolean        interactive;
+  gboolean        report_progress   = FALSE;
   gboolean        resolution_loaded = FALSE;
   gboolean        profile_loaded    = FALSE;
   GimpImage      *image;
-  GimpMetadata   *metadata;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
 
-  switch (run_mode)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
-      interactive = TRUE;
-      break;
-    default:
-      interactive = FALSE;
-      break;
+      report_progress = TRUE;
     }
 
   image = load_image (file,
-                      interactive,
+                      report_progress,
                       &resolution_loaded,
                       &profile_loaded,
                       &error);
@@ -348,24 +345,11 @@ png_load (GimpProcedure        *procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
 
-  metadata = gimp_image_metadata_load_prepare (image, "image/png",
-                                               file, NULL);
+  if (resolution_loaded)
+    *flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
-  if (metadata)
-    {
-      GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
-
-      if (resolution_loaded)
-        flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
-
-      if (profile_loaded)
-        flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
-
-      gimp_image_metadata_load_finish (image, "image/png",
-                                       metadata, flags);
-
-      g_object_unref (metadata);
-    }
+  if (profile_loaded)
+    *flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -586,7 +570,7 @@ Build_sRGBGamma (cmsContext ContextID)
  */
 static GimpImage *
 load_image (GFile        *file,
-            gboolean      interactive,
+            gboolean      report_progress,
             gboolean     *resolution_loaded,
             gboolean     *profile_loaded,
             GError      **error)
@@ -662,7 +646,7 @@ load_image (GFile        *file,
    * Open the file and initialize the PNG read "engine"...
    */
 
-  if (interactive)
+  if (report_progress)
     gimp_progress_init_printf (_("Opening '%s'"),
                                gimp_file_get_utf8_name (file));
 
@@ -970,7 +954,7 @@ load_image (GFile        *file,
       if (offset_x != 0 ||
           offset_y != 0)
         {
-          if (! interactive)
+          if (! report_progress)
             {
               gimp_layer_set_offsets (layer, offset_x, offset_y);
             }
@@ -1105,7 +1089,7 @@ load_image (GFile        *file,
                            pixel,
                            GEGL_AUTO_ROWSTRIDE);
 
-          if (interactive)
+          if (report_progress)
             gimp_progress_update (((gdouble) pass +
                                    (gdouble) end / (gdouble) height) /
                                   (gdouble) num_passes);
@@ -1288,7 +1272,7 @@ save_image (GFile        *file,
             GimpImage    *orig_image,
             GObject      *config,
             gint         *bits_per_sample,
-            gboolean      interactive,
+            gboolean      report_progress,
             GError      **error)
 {
   gint              i, k;             /* Looping vars */
@@ -1492,7 +1476,7 @@ save_image (GFile        *file,
    * Open the file and initialize the PNG write "engine"...
    */
 
-  if (interactive)
+  if (report_progress)
     gimp_progress_init_printf (_("Exporting '%s'"),
                                gimp_file_get_utf8_name (file));
 
@@ -2042,14 +2026,14 @@ save_image (GFile        *file,
 
           png_write_rows (pp, pixels, num);
 
-          if (interactive)
+          if (report_progress)
             gimp_progress_update (((double) pass + (double) end /
                                    (double) height) /
                                   (double) num_passes);
         }
     }
 
-  if (interactive)
+  if (report_progress)
     gimp_progress_update (1.0);
 
   png_write_end (pp, info);
