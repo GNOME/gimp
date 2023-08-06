@@ -556,7 +556,7 @@ static const me_widget_info iptc_extension_tab_data[] =
   { 17, N_("Model Release Identifier"),   ME_WIDGET_TREE_GRID, "Xmp.plus.ModelReleaseID",
         "add_model_rel_id_button",    "rem_model_rel_id_button" },
   { 18, "",                           ME_WIDGET_SEPARATOR,  "" },
-  { 19, N_("Image Supplier Name"),    ME_WIDGET_TEXT,       "Xmp.plus.ImageSupplierName" },
+  { 19, N_("Image Supplier Name"),    ME_WIDGET_ENTRY,      "Xmp.plus.ImageSupplierName" },
   { 20, N_("Image Supplier ID"),      ME_WIDGET_ENTRY,      "Xmp.plus.ImageSupplierID" },
   { 21, N_("Supplier's Image ID"),    ME_WIDGET_ENTRY,      "Xmp.plus.ImageSupplierImageID" },
   { 22, N_("Registry Entry"),         ME_WIDGET_TREE_GRID,  "Xmp.iptcExt.RegistryId",

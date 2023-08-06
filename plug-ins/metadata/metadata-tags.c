@@ -91,7 +91,7 @@ const metadata_tag default_metadata_tags[] =
   { "Xmp.plus.MinorModelAgeDisclosure",          MODE_COMBO,  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 45
   { "Xmp.plus.ModelReleaseStatus",               MODE_COMBO,  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 46
   { "Xmp.plus.ModelReleaseID",                   MODE_LIST,   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 47
-  { "Xmp.plus.ImageSupplierName",                MODE_MULTI,  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 48
+  { "Xmp.plus.ImageSupplierName",                MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 48
   { "Xmp.plus.ImageSupplierID",                  MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 49
   { "Xmp.plus.ImageSupplierImageID",             MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 50
   { "Xmp.plus.ImageCreator",                     MODE_LIST,   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 51
@@ -338,7 +338,7 @@ const gint n_locationCreationInfoTags = G_N_ELEMENTS (locationCreationInfoTags);
 
 const TranslateTag imageSupplierInfoTags[] =
 {
-  { "Xmp.plus.ImageSupplierName",   "Xmp.plus.ImageSupplier[1]/plus:ImageSupplierName", MODE_MULTI,  -1,  TAG_TYPE_XMP },
+  { "Xmp.plus.ImageSupplierName",   "Xmp.plus.ImageSupplier[1]/plus:ImageSupplierName", MODE_SINGLE, -1,  TAG_TYPE_XMP },
   { "Xmp.plus.ImageSupplierID",     "Xmp.plus.ImageSupplier[1]/plus:ImageSupplierID",   MODE_SINGLE, -1,  TAG_TYPE_XMP }
 };
 const gint n_imageSupplierInfoTags = G_N_ELEMENTS (imageSupplierInfoTags);
