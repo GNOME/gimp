@@ -55,7 +55,6 @@
 struct _GimpLoadProcedurePrivate
 {
   GimpRunLoadFunc  run_func;
-  GimpRunLoadFunc2 run_func2;
   gpointer         run_data;
   GDestroyNotify   run_data_destroy;
 
@@ -177,12 +176,18 @@ static GimpValueArray *
 gimp_load_procedure_run (GimpProcedure        *procedure,
                          const GimpValueArray *args)
 {
-  GimpLoadProcedure *load_proc = GIMP_LOAD_PROCEDURE (procedure);
-  GimpValueArray    *remaining;
-  GimpValueArray    *return_values;
-  GimpRunMode        run_mode;
-  GFile             *file;
-  gint               i;
+  GimpLoadProcedure     *load_proc = GIMP_LOAD_PROCEDURE (procedure);
+  GimpValueArray        *remaining;
+  GimpValueArray        *return_values;
+  GimpProcedureConfig   *config;
+  GimpImage             *image    = NULL;
+  GimpMetadata          *metadata = NULL;
+  gchar                 *mimetype = NULL;
+  GimpMetadataLoadFlags  flags    = GIMP_METADATA_LOAD_ALL;
+  GimpPDBStatusType      status   = GIMP_PDB_EXECUTION_ERROR;
+  GimpRunMode            run_mode;
+  GFile                 *file;
+  gint                   i;
 
   run_mode = GIMP_VALUES_GET_ENUM (args, 0);
   file     = GIMP_VALUES_GET_FILE (args, 1);
@@ -196,103 +201,85 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
       gimp_value_array_append (remaining, value);
     }
 
-  if (load_proc->priv->run_func2)
+  config   = gimp_procedure_create_config (procedure);
+  mimetype = (gchar *) gimp_file_procedure_get_mime_types (GIMP_FILE_PROCEDURE (procedure));
+
+  if (mimetype != NULL)
     {
-      GimpProcedureConfig   *config;
-      GimpImage             *image    = NULL;
-      GimpMetadata          *metadata = NULL;
-      gchar                 *mimetype = NULL;
-      GimpMetadataLoadFlags  flags    = GIMP_METADATA_LOAD_ALL;
-      GimpPDBStatusType      status   = GIMP_PDB_EXECUTION_ERROR;
+      char *delim;
 
-      config   = gimp_procedure_create_config (procedure);
-      mimetype = (gchar *) gimp_file_procedure_get_mime_types (GIMP_FILE_PROCEDURE (procedure));
-
-      if (mimetype != NULL)
-        {
-          char *delim;
-
-          mimetype = g_strdup (mimetype);
-          mimetype = g_strstrip (mimetype);
-          delim = strstr (mimetype, ",");
-          if (delim)
-            *delim = '\0';
-          /* Though docs only writes about the list being comma-separated, our
-           * code apparently also split by spaces.
-           */
-          delim = strstr (mimetype, " ");
-          if (delim)
-            *delim = '\0';
-          delim = strstr (mimetype, "\t");
-          if (delim)
-            *delim = '\0';
-
-          metadata = gimp_metadata_load_from_file (file, NULL);
-          g_free (mimetype);
-        }
-      else
-        {
-          flags = GIMP_METADATA_LOAD_NONE;
-        }
-
-      if (metadata == NULL)
-        metadata = gimp_metadata_new ();
-
-      return_values = load_proc->priv->run_func2 (procedure,
-                                                  run_mode,
-                                                  file,
-                                                  metadata, &flags,
-                                                  config,
-                                                  load_proc->priv->run_data);
-
-      if (return_values != NULL                       &&
-          gimp_value_array_length (return_values) > 0 &&
-          G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
-        status = GIMP_VALUES_GET_ENUM (return_values, 0);
-
-      gimp_procedure_config_end_run (config, status);
-
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          if (gimp_value_array_length (return_values) < 2 ||
-              ! GIMP_VALUE_HOLDS_IMAGE (gimp_value_array_index (return_values, 1)))
-            {
-              GError *error = NULL;
-
-              status = GIMP_PDB_EXECUTION_ERROR;
-              g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
-                           _("This file loading plug-in returned SUCCESS as a status without an image. "
-                             "This is a bug in the plug-in code. Contact the plug-in developer."));
-              gimp_value_array_unref (return_values);
-              return_values = gimp_procedure_new_return_values (procedure, status, error);
-            }
-          else
-            {
-              image = GIMP_VALUES_GET_IMAGE (return_values, 1);
-            }
-        }
-
-      if (image != NULL && metadata != NULL && flags != GIMP_METADATA_LOAD_NONE)
-        gimp_image_metadata_load_finish (image, NULL, metadata, flags);
-
-      /* This is debug printing to help plug-in developers figure out best
-       * practices.
+      mimetype = g_strdup (mimetype);
+      mimetype = g_strstrip (mimetype);
+      delim = strstr (mimetype, ",");
+      if (delim)
+        *delim = '\0';
+      /* Though docs only writes about the list being comma-separated, our
+       * code apparently also split by spaces.
        */
-      if (G_OBJECT (config)->ref_count > 1)
-        g_printerr ("%s: ERROR: the GimpSaveProcedureConfig object was refed "
-                    "by plug-in, it MUST NOT do that!\n", G_STRFUNC);
+      delim = strstr (mimetype, " ");
+      if (delim)
+        *delim = '\0';
+      delim = strstr (mimetype, "\t");
+      if (delim)
+        *delim = '\0';
 
-      g_object_unref (config);
+      metadata = gimp_metadata_load_from_file (file, NULL);
+      g_free (mimetype);
     }
   else
     {
-      return_values = load_proc->priv->run_func (procedure,
-                                                 run_mode,
-                                                 file,
-                                                 remaining,
-                                                 load_proc->priv->run_data);
+      flags = GIMP_METADATA_LOAD_NONE;
     }
 
+  if (metadata == NULL)
+    metadata = gimp_metadata_new ();
+
+  return_values = load_proc->priv->run_func (procedure,
+                                             run_mode,
+                                             file,
+                                             metadata, &flags,
+                                             config,
+                                             load_proc->priv->run_data);
+
+  if (return_values != NULL                       &&
+      gimp_value_array_length (return_values) > 0 &&
+      G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
+    status = GIMP_VALUES_GET_ENUM (return_values, 0);
+
+  gimp_procedure_config_end_run (config, status);
+
+  if (status == GIMP_PDB_SUCCESS)
+    {
+      if (gimp_value_array_length (return_values) < 2 ||
+          ! GIMP_VALUE_HOLDS_IMAGE (gimp_value_array_index (return_values, 1)))
+        {
+          GError *error = NULL;
+
+          status = GIMP_PDB_EXECUTION_ERROR;
+          g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+                       _("This file loading plug-in returned SUCCESS as a status without an image. "
+                         "This is a bug in the plug-in code. Contact the plug-in developer."));
+          gimp_value_array_unref (return_values);
+          return_values = gimp_procedure_new_return_values (procedure, status, error);
+        }
+      else
+        {
+          image = GIMP_VALUES_GET_IMAGE (return_values, 1);
+        }
+    }
+
+  if (image != NULL && metadata != NULL && flags != GIMP_METADATA_LOAD_NONE)
+    gimp_image_metadata_load_finish (image, NULL, metadata, flags);
+
+  /* This is debug printing to help plug-in developers figure out best
+   * practices.
+   */
+  if (G_OBJECT (config)->ref_count > 1)
+    g_printerr ("%s: ERROR: the GimpSaveProcedureConfig object was refed "
+                "by plug-in, it MUST NOT do that!\n", G_STRFUNC);
+
+  g_object_unref (config);
+  g_clear_object (&metadata);
   gimp_value_array_unref (remaining);
 
   return return_values;
@@ -363,53 +350,6 @@ gimp_load_procedure_new (GimpPlugIn      *plug_in,
                             NULL);
 
   procedure->priv->run_func         = run_func;
-  procedure->priv->run_data         = run_data;
-  procedure->priv->run_data_destroy = run_data_destroy;
-
-  return GIMP_PROCEDURE (procedure);
-}
-
-/**
- * gimp_load_procedure_new2:
- * @plug_in:          a #GimpPlugIn.
- * @name:             the new procedure's name.
- * @proc_type:        the new procedure's #GimpPDBProcType.
- * @run_func:         the run function for the new procedure.
- * @run_data:         user data passed to @run_func.
- * @run_data_destroy: (nullable): free function for @run_data, or %NULL.
- *
- * Creates a new load procedure named @name which will call @run_func
- * when invoked.
- *
- * See gimp_procedure_new() for information about @proc_type.
- *
- * Returns: (transfer full): a new #GimpProcedure.
- *
- * Since: 3.0
- **/
-GimpProcedure  *
-gimp_load_procedure_new2 (GimpPlugIn      *plug_in,
-                          const gchar     *name,
-                          GimpPDBProcType  proc_type,
-                          GimpRunLoadFunc2 run_func,
-                          gpointer         run_data,
-                          GDestroyNotify   run_data_destroy)
-{
-  GimpLoadProcedure *procedure;
-
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (name), NULL);
-  g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_INTERNAL, NULL);
-  g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_EXTENSION, NULL);
-  g_return_val_if_fail (run_func != NULL, NULL);
-
-  procedure = g_object_new (GIMP_TYPE_LOAD_PROCEDURE,
-                            "plug-in",        plug_in,
-                            "name",           name,
-                            "procedure-type", proc_type,
-                            NULL);
-
-  procedure->priv->run_func2        = run_func;
   procedure->priv->run_data         = run_data;
   procedure->priv->run_data_destroy = run_data_destroy;
 

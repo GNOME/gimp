@@ -182,9 +182,9 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_JP2_PROC))
     {
-      procedure = gimp_load_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            jp2_load, NULL, NULL);
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           jp2_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("JPEG 2000 image"));
       gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
@@ -216,9 +216,9 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, LOAD_J2K_PROC))
     {
-      procedure = gimp_load_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            jp2_load, NULL, NULL);
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           jp2_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("JPEG 2000 codestream"));
       gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),

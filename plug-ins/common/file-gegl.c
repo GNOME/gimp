@@ -194,10 +194,10 @@ goat_create_procedure (GimpPlugIn  *plug_in,
 
       if (! g_strcmp0 (name, format->load_proc))
         {
-          procedure = gimp_load_procedure_new2 (plug_in, name,
-                                                GIMP_PDB_PROC_TYPE_PLUGIN,
-                                                goat_load,
-                                                (gpointer) format, NULL);
+          procedure = gimp_load_procedure_new (plug_in, name,
+                                               GIMP_PDB_PROC_TYPE_PLUGIN,
+                                               goat_load,
+                                               (gpointer) format, NULL);
 
           gimp_procedure_set_menu_label (procedure, format->file_type);
 

@@ -330,9 +330,9 @@ ps_create_procedure (GimpPlugIn  *plug_in,
   if (! strcmp (name, LOAD_PS_PROC) ||
       ! strcmp (name, LOAD_EPS_PROC))
     {
-      procedure = gimp_load_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            ps_load, NULL, NULL);
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           ps_load, NULL, NULL);
 
       if (! strcmp (name, LOAD_PS_PROC))
         {

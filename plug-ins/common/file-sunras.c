@@ -270,9 +270,9 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            sunras_load, NULL, NULL);
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           sunras_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("SUN Rasterfile image"));
 

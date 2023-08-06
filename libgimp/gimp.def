@@ -619,7 +619,6 @@ EXPORTS
 	gimp_load_procedure_get_thumbnail_loader
 	gimp_load_procedure_get_type
 	gimp_load_procedure_new
-	gimp_load_procedure_new2
 	gimp_load_procedure_set_handles_raw
 	gimp_load_procedure_set_thumbnail_loader
 	gimp_main

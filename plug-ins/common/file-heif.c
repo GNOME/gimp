@@ -187,9 +187,9 @@ heif_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            heif_load, NULL, NULL);
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           heif_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("HEIF/HEIC"));
 
@@ -305,9 +305,9 @@ heif_create_procedure (GimpPlugIn  *plug_in,
 #if LIBHEIF_HAVE_VERSION(1,8,0)
   else if (! strcmp (name, LOAD_PROC_AV1))
     {
-      procedure = gimp_load_procedure_new2 (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            heif_load, NULL, NULL);
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           heif_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, "HEIF/AVIF");
 

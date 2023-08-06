@@ -31,47 +31,36 @@ G_BEGIN_DECLS
 
 /**
  * GimpRunLoadFunc:
- * @procedure:   the #GimpProcedure that runs.
- * @run_mode:    the #GimpRunMode.
- * @file:        the #GFile to load from.
- * @args:        the @procedure's remaining arguments.
- * @run_data: (closure): the run_data given in gimp_load_procedure_new().
- *
- * The load function is run during the lifetime of the GIMP session,
- * each time a plug-in load procedure is called.
- *
- * Returns: (transfer full): the @procedure's return values.
- *
- * Since: 3.0
- **/
-typedef GimpValueArray * (* GimpRunLoadFunc) (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-
-/**
- * GimpRunLoadFunc2:
- * @procedure:   the #GimpProcedure that runs.
- * @run_mode:    the #GimpRunMode.
- * @file:        the #GFile to load from.
+ * @procedure:   the [class@Gimp.Procedure] that runs.
+ * @run_mode:    the [enum@RunMode].
+ * @file:        the [iface@Gio.File] to load from.
+ * @metadata:    the [class@Gimp.Metadata] which will be added to the new image.
+ * @flags: (inout): flags to filter which metadata will be added..
  * @config:      the @procedure's remaining arguments.
  * @run_data: (closure): the run_data given in gimp_load_procedure_new().
  *
- * The load function is run during the lifetime of the GIMP session,
- * each time a plug-in load procedure is called.
+ * The load function is run during the lifetime of the GIMP session, each time a
+ * plug-in load procedure is called.
+ *
+ * You are expected to read @file and create a [class@Gimp.Image] out of its
+ * data. This image will be the first return value.
+ * @metadata will be filled from metadata from @file if our infrastructure
+ * supports this format. You may tweak this object, for instance adding metadata
+ * specific to the format. You can also edit @flags if you need to filter out
+ * some specific common fields. For instance, it is customary to remove a
+ * colorspace field with [flags@MetadataLoadFlags] when a profile was added.
  *
  * Returns: (transfer full): the @procedure's return values.
  *
  * Since: 3.0
  **/
-typedef GimpValueArray * (* GimpRunLoadFunc2) (GimpProcedure         *procedure,
-                                               GimpRunMode            run_mode,
-                                               GFile                 *file,
-                                               GimpMetadata          *metadata,
-                                               GimpMetadataLoadFlags *flags,
-                                               GimpProcedureConfig   *config,
-                                               gpointer               run_data);
+typedef GimpValueArray * (* GimpRunLoadFunc) (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
 
 #define GIMP_TYPE_LOAD_PROCEDURE            (gimp_load_procedure_get_type ())
@@ -105,12 +94,6 @@ GimpProcedure * gimp_load_procedure_new                  (GimpPlugIn        *plu
                                                           const gchar       *name,
                                                           GimpPDBProcType    proc_type,
                                                           GimpRunLoadFunc    run_func,
-                                                          gpointer           run_data,
-                                                          GDestroyNotify     run_data_destroy);
-GimpProcedure * gimp_load_procedure_new2                 (GimpPlugIn        *plug_in,
-                                                          const gchar       *name,
-                                                          GimpPDBProcType    proc_type,
-                                                          GimpRunLoadFunc2   run_func,
                                                           gpointer           run_data,
                                                           GDestroyNotify     run_data_destroy);
 
