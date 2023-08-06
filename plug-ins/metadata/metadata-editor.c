@@ -866,6 +866,7 @@ metadata_editor_create_page_grid (GtkWidget   *notebook,
   gtk_widget_show (box);
 
   grid = gtk_grid_new ();
+  gtk_widget_set_margin_bottom (grid, 5);
   gtk_container_set_border_width (GTK_CONTAINER (grid), 6);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 3);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 30);
@@ -937,6 +938,9 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
 
             textview = gtk_text_view_new();
             gtk_container_add (GTK_CONTAINER (scrolled_window), textview);
+            gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (textview), GTK_WRAP_WORD);
+            gtk_text_view_set_left_margin (GTK_TEXT_VIEW (textview), 6);
+            gtk_text_view_set_right_margin (GTK_TEXT_VIEW (textview), 6);
             gtk_widget_show (textview);
             gtk_grid_attach (GTK_GRID (grid), scrolled_window,
                              1, widget_info[i].index,
