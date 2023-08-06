@@ -350,7 +350,7 @@ def save_ora(procedure, run_mode, image, n_drawables, drawables, file, metadata,
         GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS)
     ])
 
-def load_ora(procedure, run_mode, file, args, data):
+def load_ora(procedure, run_mode, file, metadata, flags, config, data):
     tempdir = tempfile.mkdtemp('gimp-plugin-file-openraster')
     orafile = zipfile.ZipFile(file.peek_path())
     stack, w, h = get_image_attributes(orafile)
@@ -358,7 +358,6 @@ def load_ora(procedure, run_mode, file, args, data):
     Gimp.progress_init("Loading openraster image")
 
     img = Gimp.Image.new(w, h, Gimp.ImageBaseType.RGB)
-    img.set_file (file)
 
     def get_layers(root):
         """iterates over layers and nested stacks"""
@@ -448,7 +447,7 @@ def load_ora(procedure, run_mode, file, args, data):
     return Gimp.ValueArray.new_from_values([
         GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS),
         GObject.Value(Gimp.Image, img),
-    ])
+    ]), flags
 
 
 class FileOpenRaster (Gimp.PlugIn):
