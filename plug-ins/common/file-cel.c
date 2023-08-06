@@ -56,48 +56,48 @@ struct _CelClass
 
 GType                   cel_get_type         (void) G_GNUC_CONST;
 
-static GList          * cel_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * cel_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * cel_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * cel_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * cel_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * cel_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GFile                *file,
-                                              GimpMetadata         *metadata,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
+static GimpValueArray * cel_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * cel_save             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GimpImage             *image,
+                                              gint                   n_drawables,
+                                              GimpDrawable         **drawables,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
-static gint             load_palette         (GFile                *file,
-                                              FILE                 *fp,
-                                              guchar                palette[],
-                                              GError              **error);
-static GimpImage      * load_image           (GFile                *file,
-                                              GError              **error);
-static gboolean         save_image           (GFile                *file,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
-                                              GError              **error);
-static void             palette_dialog       (const gchar          *title);
-static gboolean         need_palette         (GFile                *file,
-                                              GError              **error);
+static gint             load_palette         (GFile                 *file,
+                                              guchar                 palette[],
+                                              GError               **error);
+static GimpImage      * load_image           (GFile                 *file,
+                                              GFile                 *palette_file,
+                                              GError               **error);
+static gboolean         save_image           (GFile                 *file,
+                                              GimpImage             *image,
+                                              GimpDrawable          *drawable,
+                                              GError               **error);
+static gboolean         palette_dialog       (const gchar           *title,
+                                              GimpProcedure         *procedure,
+                                              GimpProcedureConfig   *config);
+static gboolean         need_palette         (GFile                 *file,
+                                              GError               **error);
 
 
 G_DEFINE_TYPE (Cel, cel, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (CEL_TYPE)
 DEFINE_STD_SET_I18N
-
-
-static gchar *palette_file = NULL;
-static gsize  data_length  = 0;
 
 
 static void
@@ -134,9 +134,9 @@ cel_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           cel_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            cel_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("KISS CEL"));
 
@@ -155,12 +155,10 @@ cel_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,KiSS\\040");
 
-      GIMP_PROC_ARG_STRING (procedure, "palette-filename",
-                            "Palette filename",
-                            "Filename to load palette from",
-                            NULL,
-                            G_PARAM_READWRITE |
-                            GIMP_PARAM_NO_VALIDATE);
+      GIMP_PROC_ARG_FILE (procedure, "palette-file",
+                          _("_Palette file"),
+                          _("KCF file to load palette from"),
+                          G_PARAM_READWRITE);
     }
   else if (! strcmp (name, SAVE_PROC))
     {
@@ -187,73 +185,80 @@ cel_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "cel");
 
-      GIMP_PROC_ARG_STRING (procedure, "palette-filename",
-                            "Palette filename",
-                            "Filename to save palette to",
-                            NULL,
-                            G_PARAM_READWRITE |
-                            GIMP_PARAM_NO_VALIDATE);
+      GIMP_PROC_ARG_FILE (procedure, "palette-file",
+                          "Palette file",
+                          "File to save palette to",
+                          G_PARAM_READWRITE);
     }
 
   return procedure;
 }
 
 static GimpValueArray *
-cel_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+cel_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image         = NULL;
   gboolean        needs_palette = FALSE;
+  GFile          *palette_file  = NULL;
   GError         *error         = NULL;
 
   gegl_init (NULL, NULL);
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+  needs_palette = need_palette (file, &error);
+  if (error != NULL)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
+
+  g_object_get (config, "palette-file", &palette_file, NULL);
+  switch (run_mode)
     {
-      data_length = gimp_get_data_size (SAVE_PROC);
-      if (data_length > 0)
+    case GIMP_RUN_INTERACTIVE:
+      if (needs_palette)
         {
-          palette_file = g_malloc (data_length);
-          gimp_get_data (SAVE_PROC, palette_file);
+          /* Let user choose KCF palette (cancel ignores) */
+          if (! palette_dialog (_("Load KISS Palette"), procedure, config))
+            return gimp_procedure_new_return_values (procedure,
+                                                     GIMP_PDB_CANCEL,
+                                                     NULL);
+
+          g_clear_object (&palette_file);
+          g_object_get (config, "palette-file", &palette_file, NULL);
         }
-      else
-        {
-          palette_file = g_strdup ("*.kcf");
-          data_length = strlen (palette_file) + 1;
-        }
+      break;
+    case GIMP_RUN_WITH_LAST_VALS:
+      if (! needs_palette)
+        /* It is possible to have a palette file from a previous call. Just ignore
+         * it if it's unneeded, yet keep it stored.
+         */
+        g_clear_object (&palette_file);
+      break;
+    case GIMP_RUN_NONINTERACTIVE:
+      /* Note: we don't forbid setting a palette file when unneeded as a way to
+       * override the embedded palette in scripts.
+       */
+      break;
     }
 
-  if (run_mode == GIMP_RUN_NONINTERACTIVE)
+  if (needs_palette && palette_file == NULL)
     {
-      palette_file = (gchar *) GIMP_VALUES_GET_STRING (args, 0);
-      if (palette_file)
-        data_length = strlen (palette_file) + 1;
-      else
-        data_length = 0;
-    }
-  else if (run_mode == GIMP_RUN_INTERACTIVE)
-    {
-      /* Let user choose KCF palette (cancel ignores) */
-      needs_palette = need_palette (file, &error);
+      g_set_error (&error, G_FILE_ERROR, 0,
+                   _("This KISS CEL image requires a palette file."));
 
-      if (! error)
-        {
-          if (needs_palette)
-            palette_dialog (_("Load KISS Palette"));
-
-          gimp_set_data (SAVE_PROC, palette_file, data_length);
-        }
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
     }
 
-  if (! error)
-    {
-      image = load_image (file, &error);
-    }
-
+  image = load_image (file, palette_file, &error);
+  g_clear_object (&palette_file);
   if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
@@ -316,17 +321,8 @@ cel_save (GimpProcedure        *procedure,
                                                error);
     }
 
-  if (save_image (file, image, drawables[0], &error))
-    {
-      if (data_length)
-        {
-          gimp_set_data (SAVE_PROC, palette_file, data_length);
-        }
-    }
-  else
-    {
-      status = GIMP_PDB_EXECUTION_ERROR;
-    }
+  if (! save_image (file, image, drawables[0], &error))
+    status = GIMP_PDB_EXECUTION_ERROR;
 
   if (export == GIMP_EXPORT_EXPORT)
     {
@@ -374,6 +370,7 @@ need_palette (GFile   *file,
 
 static GimpImage *
 load_image (GFile   *file,
+            GFile   *palette_file,
             GError **error)
 {
   FILE       *fp;            /* Read file pointer */
@@ -382,7 +379,7 @@ load_image (GFile   *file,
               bpp;           /* Bits per pixel */
   gint        height, width, /* Dimensions of image */
               offx, offy,    /* Layer offsets */
-              colors;       /* Number of colors */
+              colors;        /* Number of colors */
 
   GimpImage  *image;         /* Image */
   GimpLayer  *layer;         /* Layer */
@@ -628,29 +625,9 @@ load_image (GFile   *file,
       /* Use palette from file or otherwise default grey palette */
       guchar palette[256 * 3];
 
-      /* Open the file for reading if user picked one */
-      if (palette_file == NULL)
+      if (palette_file != NULL)
         {
-          fp = NULL;
-        }
-      else
-        {
-          fp = g_fopen (palette_file, "r");
-
-          if (fp == NULL)
-            {
-              g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                           _("Could not open '%s' for reading: %s"),
-                           gimp_filename_to_utf8 (palette_file),
-                           g_strerror (errno));
-              return NULL;
-            }
-        }
-
-      if (fp != NULL)
-        {
-          colors = load_palette (g_file_new_for_path (palette_file), fp, palette, error);
-          fclose (fp);
+          colors = load_palette (palette_file, palette, error);
           if (colors < 0 || *error)
             return NULL;
         }
@@ -675,42 +652,43 @@ load_image (GFile   *file,
 }
 
 static gint
-load_palette (GFile       *file,
-              FILE        *fp,
-              guchar       palette[],
-              GError     **error)
+load_palette (GFile   *file,
+              guchar   palette[],
+              GError **error)
 {
-  guchar        header[32];     /* File header */
-  guchar        buffer[2];
-  guchar        file_mark, bpp;
-  gint          i, colors = 0;
-  size_t        n_read;
+  GFileInputStream *input;
+  guchar            header[32];     /* File header */
+  guchar            buffer[2];
+  guchar            file_mark, bpp;
+  gint              i, colors = 0;
+  gssize            n_read;
 
-  n_read = fread (header, 4, 1, fp);
+  input = g_file_read (file, NULL, error);
+  if (input == NULL)
+    return -1;
+
+  n_read = g_input_stream_read (G_INPUT_STREAM (input), header, 4, NULL, error);
 
   if (n_read < 1)
     {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("'%s': EOF or error while reading palette header"),
-                   gimp_file_get_utf8_name (file));
+      g_object_unref (input);
       return -1;
     }
 
   if (!strncmp ((const gchar *) header, "KiSS", 4))
     {
-      n_read = fread (header+4, 28, 1, fp);
+      n_read = g_input_stream_read (G_INPUT_STREAM (input), header + 4, 28, NULL, error);
 
       if (n_read < 1)
         {
-          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("'%s': EOF or error while reading palette header"),
-                       gimp_file_get_utf8_name (file));
+          g_object_unref (input);
           return -1;
         }
 
       file_mark = header[4];
       if (file_mark != 0x10)
         {
+          g_object_unref (input);
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("'%s': is not a KCF palette file"),
                        gimp_file_get_utf8_name (file));
@@ -720,6 +698,7 @@ load_palette (GFile       *file,
       bpp = header[5];
       if (bpp != 12 && bpp != 24)
         {
+          g_object_unref (input);
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("'%s': illegal bpp value in palette: %hhu"),
                        gimp_file_get_utf8_name (file), bpp);
@@ -729,6 +708,7 @@ load_palette (GFile       *file,
       colors = header[8] + header[9] * 256;
       if (colors != 16 && colors != 256)
         {
+          g_object_unref (input);
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("'%s': illegal number of colors: %u"),
                        gimp_file_get_utf8_name (file), colors);
@@ -740,14 +720,20 @@ load_palette (GFile       *file,
         case 12:
           for (i = 0; i < colors; ++i)
             {
-              n_read = fread (buffer, 1, 2, fp);
+              n_read = g_input_stream_read (G_INPUT_STREAM (input), buffer, 2, NULL, error);
 
-              if (n_read < 2)
+              if (n_read == 1)
                 {
+                  g_object_unref (input);
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                _("'%s': EOF or error while reading "
                                  "palette data"),
                                gimp_file_get_utf8_name (file));
+                  return -1;
+                }
+              else if (n_read < 1)
+                {
+                  g_object_unref (input);
                   return -1;
                 }
 
@@ -757,10 +743,16 @@ load_palette (GFile       *file,
             }
           break;
         case 24:
-          n_read = fread (palette, colors, 3, fp);
+          n_read = g_input_stream_read (G_INPUT_STREAM (input), palette, 3 * colors, NULL, error);
 
-          if (n_read < 3)
+          if (n_read < 1)
             {
+              g_object_unref (input);
+              return -1;
+            }
+          else if (n_read < 3 * colors)
+            {
+              g_object_unref (input);
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("'%s': EOF or error while reading palette data"),
                            gimp_file_get_utf8_name (file));
@@ -774,13 +766,24 @@ load_palette (GFile       *file,
   else
     {
       colors = 16;
-      fseek (fp, 0, SEEK_SET);
+      if (! g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_SET, NULL, error))
+        {
+          g_object_unref (input);
+          return -1;
+        }
+
       for (i= 0; i < colors; ++i)
         {
-          n_read = fread (buffer, 1, 2, fp);
+          n_read = g_input_stream_read (G_INPUT_STREAM (input), buffer, 2, NULL, error);
 
-          if (n_read < 2)
+          if (n_read < 1)
             {
+              g_object_unref (input);
+              return -1;
+            }
+          else if (n_read == 1)
+            {
+              g_object_unref (input);
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("'%s': EOF or error while reading palette data"),
                            gimp_file_get_utf8_name (file));
@@ -990,38 +993,25 @@ save_image (GFile         *file,
   return FALSE;
 }
 
-static void
-palette_dialog (const gchar *title)
+static gboolean
+palette_dialog (const gchar         *title,
+                GimpProcedure       *procedure,
+                GimpProcedureConfig *config)
 {
   GtkWidget *dialog;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gtk_file_chooser_dialog_new (title, NULL,
-                                        GTK_FILE_CHOOSER_ACTION_OPEN,
+  dialog = gimp_procedure_dialog_new (GIMP_PROCEDURE (procedure),
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      title);
+  gimp_procedure_dialog_set_ok_label (GIMP_PROCEDURE_DIALOG (dialog), _("_Open"));
 
-                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                        _("_Open"),   GTK_RESPONSE_OK,
-
-                                        NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), palette_file);
-
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-
-  gtk_widget_show (dialog);
-
-  if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
-    {
-      g_free (palette_file);
-      palette_file = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-      data_length = strlen (palette_file) + 1;
-    }
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
+
+  return run;
 }
