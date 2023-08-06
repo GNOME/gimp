@@ -81,50 +81,52 @@ struct _DicomClass
 
 GType                   dicom_get_type         (void) G_GNUC_CONST;
 
-static GList          * dicom_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * dicom_create_procedure (GimpPlugIn           *plug_in,
-                                                const gchar          *name);
+static GList          * dicom_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * dicom_create_procedure (GimpPlugIn            *plug_in,
+                                                const gchar           *name);
 
-static GimpValueArray * dicom_load             (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GFile                *file,
-                                                const GimpValueArray *args,
-                                                gpointer              run_data);
-static GimpValueArray * dicom_save             (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GimpImage            *image,
-                                                gint                  n_drawables,
-                                                GimpDrawable        **drawables,
-                                                GFile                *file,
-                                                GimpMetadata         *metadata,
-                                                GimpProcedureConfig  *config,
-                                                gpointer              run_data);
+static GimpValueArray * dicom_load             (GimpProcedure         *procedure,
+                                                GimpRunMode            run_mode,
+                                                GFile                 *file,
+                                                GimpMetadata          *metadata,
+                                                GimpMetadataLoadFlags *flags,
+                                                GimpProcedureConfig   *config,
+                                                gpointer               run_data);
+static GimpValueArray * dicom_save             (GimpProcedure         *procedure,
+                                                GimpRunMode            run_mode,
+                                                GimpImage             *image,
+                                                gint                   n_drawables,
+                                                GimpDrawable         **drawables,
+                                                GFile                 *file,
+                                                GimpMetadata          *metadata,
+                                                GimpProcedureConfig   *config,
+                                                gpointer               run_data);
 
-static GimpImage      * load_image             (GFile                *file,
-                                                GError              **error);
-static gboolean         save_image             (GFile                *file,
-                                                GimpImage            *image,
-                                                GimpDrawable         *drawable,
-                                                GError              **error);
-static void             dicom_loader           (guint8               *pix_buf,
-                                                DicomInfo            *info,
-                                                GeglBuffer           *buffer);
-static void             guess_and_set_endian2  (guint16              *buf16,
-                                                gint                  length);
-static void             toggle_endian2         (guint16              *buf16,
-                                                gint                  length);
-static void             add_tag_pointer        (GByteArray           *group_stream,
-                                                gint                  group,
-                                                gint                  element,
-                                                const gchar          *value_rep,
-                                                const guint8         *data,
-                                                gint                  length);
-static GSList         * dicom_add_tags         (FILE                 *dicom,
-                                                GByteArray           *group_stream,
-                                                GSList               *elements);
-static gboolean         write_group_to_file    (FILE                 *dicom,
-                                                gint                  group,
-                                                GByteArray           *group_stream);
+static GimpImage      * load_image             (GFile                 *file,
+                                                GError               **error);
+static gboolean         save_image             (GFile                 *file,
+                                                GimpImage             *image,
+                                                GimpDrawable          *drawable,
+                                                GError               **error);
+static void             dicom_loader           (guint8                *pix_buf,
+                                                DicomInfo             *info,
+                                                GeglBuffer            *buffer);
+static void             guess_and_set_endian2  (guint16               *buf16,
+                                                gint                   length);
+static void             toggle_endian2         (guint16               *buf16,
+                                                gint                   length);
+static void             add_tag_pointer        (GByteArray            *group_stream,
+                                                gint                   group,
+                                                gint                   element,
+                                                const gchar           *value_rep,
+                                                const guint8          *data,
+                                                gint                   length);
+static GSList         * dicom_add_tags         (FILE                  *dicom,
+                                                GByteArray            *group_stream,
+                                                GSList                *elements);
+static gboolean         write_group_to_file    (FILE                  *dicom,
+                                                gint                   group,
+                                                GByteArray            *group_stream);
 
 
 G_DEFINE_TYPE (Dicom, dicom, GIMP_TYPE_PLUG_IN)
@@ -167,9 +169,9 @@ dicom_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           dicom_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            dicom_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("DICOM image"));
 
@@ -233,11 +235,13 @@ dicom_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-dicom_load (GimpProcedure        *procedure,
-            GimpRunMode           run_mode,
-            GFile                *file,
-            const GimpValueArray *args,
-            gpointer              run_data)
+dicom_load (GimpProcedure         *procedure,
+            GimpRunMode            run_mode,
+            GFile                 *file,
+            GimpMetadata          *metadata,
+            GimpMetadataLoadFlags *flags,
+            GimpProcedureConfig   *config,
+            gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;

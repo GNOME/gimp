@@ -71,25 +71,27 @@ struct _Faxg3Class
 
 GType                   faxg3_get_type         (void) G_GNUC_CONST;
 
-static GList          * faxg3_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * faxg3_create_procedure (GimpPlugIn           *plug_in,
-                                                const gchar          *name);
+static GList          * faxg3_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * faxg3_create_procedure (GimpPlugIn            *plug_in,
+                                                const gchar           *name);
 
-static GimpValueArray * faxg3_load             (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GFile                *file,
-                                                const GimpValueArray *args,
-                                                gpointer              run_data);
+static GimpValueArray * faxg3_load             (GimpProcedure         *procedure,
+                                                GimpRunMode            run_mode,
+                                                GFile                 *file,
+                                                GimpMetadata          *metadata,
+                                                GimpMetadataLoadFlags *flags,
+                                                GimpProcedureConfig   *config,
+                                                gpointer               run_data);
 
-static GimpImage      * load_image             (GFile                *file,
-                                                GError              **error);
+static GimpImage      * load_image             (GFile                 *file,
+                                                GError               **error);
 
-static GimpImage      *  emitgimp              (gint                  hcol,
-                                                gint                  row,
-                                                const gchar          *bitmap,
-                                                gint                  bperrow,
-                                                GFile                *file,
-                                                GError              **error);
+static GimpImage      *  emitgimp              (gint                   hcol,
+                                                gint                   row,
+                                                const gchar           *bitmap,
+                                                gint                   bperrow,
+                                                GFile                 *file,
+                                                GError               **error);
 
 
 G_DEFINE_TYPE (Faxg3, faxg3, GIMP_TYPE_PLUG_IN)
@@ -127,9 +129,9 @@ faxg3_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           faxg3_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            faxg3_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("G3 fax image"));
 
@@ -155,11 +157,13 @@ faxg3_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-faxg3_load (GimpProcedure        *procedure,
-            GimpRunMode           run_mode,
-            GFile                *file,
-            const GimpValueArray *args,
-            gpointer              run_data)
+faxg3_load (GimpProcedure         *procedure,
+            GimpRunMode            run_mode,
+            GFile                 *file,
+            GimpMetadata          *metadata,
+            GimpMetadataLoadFlags *flags,
+            GimpProcedureConfig   *config,
+            gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;

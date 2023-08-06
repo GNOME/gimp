@@ -160,127 +160,129 @@ struct _RawClass
 
 GType                   raw_get_type         (void) G_GNUC_CONST;
 
-static GList          * raw_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * raw_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * raw_query_procedures (GimpPlugIn               *plug_in);
+static GimpProcedure  * raw_create_procedure (GimpPlugIn               *plug_in,
+                                              const gchar              *name);
 
-static GimpValueArray * raw_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * raw_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GFile                *file,
-                                              GimpMetadata         *metadata,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
+static GimpValueArray * raw_load             (GimpProcedure            *procedure,
+                                              GimpRunMode               run_mode,
+                                              GFile                    *file,
+                                              GimpMetadata             *metadata,
+                                              GimpMetadataLoadFlags    *flags,
+                                              GimpProcedureConfig      *config,
+                                              gpointer                  run_data);
+static GimpValueArray * raw_save             (GimpProcedure            *procedure,
+                                              GimpRunMode               run_mode,
+                                              GimpImage                *image,
+                                              gint                      n_drawables,
+                                              GimpDrawable            **drawables,
+                                              GFile                    *file,
+                                              GimpMetadata             *metadata,
+                                              GimpProcedureConfig      *config,
+                                              gpointer                  run_data);
 
 /* prototypes for the new load functions */
-static gboolean         raw_load_standard    (RawGimpData          *data,
-                                              gint                  width,
-                                              gint                  height,
-                                              gint                  bpp,
-                                              gint                  offset,
-                                              RawType               type,
-                                              gboolean              is_big_endian,
-                                              gboolean              is_signed,
-                                              gboolean              is_float);
-static gboolean         raw_load_planar      (RawGimpData          *data,
-                                              gint                  width,
-                                              gint                  height,
-                                              gint                  bpp,
-                                              gint                  offset,
-                                              RawType               type,
-                                              gboolean              is_big_endian,
-                                              gboolean              is_signed,
-                                              gboolean              is_float);
-static gboolean         raw_load_gray        (RawGimpData          *data,
-                                              gint                  width,
-                                              gint                  height,
-                                              gint                  offset,
-                                              gint                  bpp,
-                                              gint                  bitspp);
-static gboolean         raw_load_rgb565      (RawGimpData          *data,
-                                              gint                  width,
-                                              gint                  height,
-                                              gint                  offset,
-                                              RawType               type,
-                                              RawEndianness         endianness);
-static gboolean         raw_load_palette     (RawGimpData          *data,
-                                              gint                  palette_offset,
-                                              RawPaletteType        palette_type,
-                                              GFile                *palette_file);
+static gboolean         raw_load_standard    (RawGimpData              *data,
+                                              gint                      width,
+                                              gint                      height,
+                                              gint                      bpp,
+                                              gint                      offset,
+                                              RawType                   type,
+                                              gboolean                  is_big_endian,
+                                              gboolean                  is_signed,
+                                              gboolean                  is_float);
+static gboolean         raw_load_planar      (RawGimpData              *data,
+                                              gint                      width,
+                                              gint                      height,
+                                              gint                      bpp,
+                                              gint                      offset,
+                                              RawType                   type,
+                                              gboolean                  is_big_endian,
+                                              gboolean                  is_signed,
+                                              gboolean                  is_float);
+static gboolean         raw_load_gray        (RawGimpData              *data,
+                                              gint                      width,
+                                              gint                      height,
+                                              gint                      offset,
+                                              gint                      bpp,
+                                              gint                      bitspp);
+static gboolean         raw_load_rgb565      (RawGimpData              *data,
+                                              gint                      width,
+                                              gint                      height,
+                                              gint                      offset,
+                                              RawType                   type,
+                                              RawEndianness             endianness);
+static gboolean         raw_load_palette     (RawGimpData              *data,
+                                              gint                      palette_offset,
+                                              RawPaletteType            palette_type,
+                                              GFile                    *palette_file);
 
 /* support functions */
-static goffset          get_file_info        (GFile                *file);
-static void             raw_read_row         (FILE                 *fp,
-                                              guchar               *buf,
-                                              gint32                offset,
-                                              gint32                size);
-static int              mmap_read            (gint                  fd,
-                                              gpointer              buf,
-                                              gint32                len,
-                                              gint32                pos,
-                                              gint                  rowstride);
-static void             rgb_565_to_888       (guint16              *in,
-                                              guchar               *out,
-                                              gint32                num_pixels,
-                                              RawType               type,
-                                              RawEndianness         endianness);
+static goffset          get_file_info        (GFile                    *file);
+static void             raw_read_row         (FILE                     *fp,
+                                              guchar                   *buf,
+                                              gint32                    offset,
+                                              gint32                    size);
+static int              mmap_read            (gint                      fd,
+                                              gpointer                  buf,
+                                              gint32                    len,
+                                              gint32                    pos,
+                                              gint                      rowstride);
+static void             rgb_565_to_888       (guint16                  *in,
+                                              guchar                   *out,
+                                              gint32                    num_pixels,
+                                              RawType                   type,
+                                              RawEndianness             endianness);
 
-static GimpImage      * load_image           (GFile                *file,
-                                              GimpProcedureConfig  *config,
-                                              GError              **error);
-static gboolean         save_image           (GFile                *file,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
-                                              GimpProcedureConfig  *config,
-                                              GError              **error);
+static GimpImage      * load_image           (GFile                    *file,
+                                              GimpProcedureConfig      *config,
+                                              GError                  **error);
+static gboolean         save_image           (GFile                    *file,
+                                              GimpImage                *image,
+                                              GimpDrawable             *drawable,
+                                              GimpProcedureConfig      *config,
+                                              GError                  **error);
 
-static void            get_bpp               (GimpProcedureConfig     *config,
-                                              gint                    *bpp,
-                                              gint                    *bitspp);
-static gboolean        detect_sample_spacing (GimpProcedureConfig     *config,
-                                              GFile                   *file,
-                                              GError                 **error);
-static void           get_load_config_values (GimpProcedureConfig     *config,
-                                              gint32                  *file_offset,
-                                              gint32                  *image_width,
-                                              gint32                  *image_height,
-                                              RawType                 *image_type,
-                                              RawEncoding             *encoding,
-                                              RawEndianness           *endianness,
-                                              RawPlanarConfiguration  *planar_configuration,
-                                              gint32                  *palette_offset,
-                                              RawPaletteType          *palette_type,
-                                              GFile                  **palette_file);
+static void            get_bpp               (GimpProcedureConfig      *config,
+                                              gint                     *bpp,
+                                              gint                     *bitspp);
+static gboolean        detect_sample_spacing (GimpProcedureConfig      *config,
+                                              GFile                    *file,
+                                              GError                  **error);
+static void           get_load_config_values (GimpProcedureConfig      *config,
+                                              gint32                   *file_offset,
+                                              gint32                   *image_width,
+                                              gint32                   *image_height,
+                                              RawType                  *image_type,
+                                              RawEncoding              *encoding,
+                                              RawEndianness            *endianness,
+                                              RawPlanarConfiguration   *planar_configuration,
+                                              gint32                   *palette_offset,
+                                              RawPaletteType           *palette_type,
+                                              GFile                   **palette_file);
 
 /* gui functions */
-static void             halfp2singles        (uint32_t                *xp,
-                                              const uint16_t          *hp,
-                                              int                      numel);
+static void             halfp2singles        (uint32_t                 *xp,
+                                              const uint16_t           *hp,
+                                              int                       numel);
 
-static void             preview_update       (GimpPreviewArea         *preview,
-                                              gboolean                 preview_cmap_update);
-static void             preview_update_size  (GimpPreviewArea         *preview);
-static void             load_config_notify   (GimpProcedureConfig     *config,
-                                              GParamSpec              *pspec,
-                                              GimpPreviewArea         *preview);
-static void             preview_allocate     (GimpPreviewArea         *preview,
-                                              GtkAllocation           *allocation,
-                                              gpointer                 user_data);
-static gboolean         load_dialog          (GFile                   *file,
-                                              GimpProcedure           *procedure,
-                                              GObject                 *config,
-                                              gboolean                 is_hgt);
-static gboolean         save_dialog          (GimpImage               *image,
-                                              GimpProcedure           *procedure,
-                                              gboolean                 has_alpha,
-                                              GObject                 *config);
+static void             preview_update       (GimpPreviewArea          *preview,
+                                              gboolean                  preview_cmap_update);
+static void             preview_update_size  (GimpPreviewArea          *preview);
+static void             load_config_notify   (GimpProcedureConfig      *config,
+                                              GParamSpec               *pspec,
+                                              GimpPreviewArea          *preview);
+static void             preview_allocate     (GimpPreviewArea          *preview,
+                                              GtkAllocation            *allocation,
+                                              gpointer                  user_data);
+static gboolean         load_dialog          (GFile                    *file,
+                                              GimpProcedure            *procedure,
+                                              GObject                  *config,
+                                              gboolean                  is_hgt);
+static gboolean         save_dialog          (GimpImage                *image,
+                                              GimpProcedure            *procedure,
+                                              gboolean                  has_alpha,
+                                              GObject                  *config);
 
 G_DEFINE_TYPE (Raw, raw, GIMP_TYPE_PLUG_IN)
 
@@ -327,9 +329,9 @@ raw_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           raw_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            raw_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Raw image data"));
 
@@ -407,9 +409,9 @@ raw_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, LOAD_HGT_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           raw_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            raw_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure,
                                      _("Digital Elevation Model data"));
@@ -485,23 +487,21 @@ raw_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-raw_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+raw_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
-  GimpValueArray      *return_vals;
-  GimpProcedureConfig *config;
-  gboolean             is_hgt;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpImage           *image  = NULL;
-  GError              *error  = NULL;
+  GimpValueArray    *return_vals;
+  gboolean           is_hgt;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpImage         *image  = NULL;
+  GError            *error  = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   is_hgt = (! strcmp (gimp_procedure_get_name (procedure), LOAD_HGT_PROC));
 
@@ -590,9 +590,6 @@ raw_load (GimpProcedure        *procedure,
                   gimp_file_get_utf8_name (file),
                   error->message);
     }
-
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure, status, error);

@@ -155,127 +155,129 @@ struct _XwdClass
 
 GType                   xwd_get_type         (void) G_GNUC_CONST;
 
-static GList          * xwd_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * xwd_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * xwd_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * xwd_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * xwd_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * xwd_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GFile                *file,
-                                              GimpMetadata         *metadata,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
+static GimpValueArray * xwd_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * xwd_save             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GimpImage             *image,
+                                              gint                   n_drawables,
+                                              GimpDrawable         **drawables,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
-static GimpImage      * load_image           (GFile                *file,
-                                              GError              **error);
-static gboolean         save_image           (GFile                *file,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
-                                              GError              **error);
-static GimpImage      * create_new_image     (GFile                *file,
-                                              guint                 width,
-                                              guint                 height,
-                                              GimpImageBaseType     type,
-                                              GimpImageType         gdtype,
-                                              GimpLayer           **layer,
-                                              GeglBuffer          **buffer);
+static GimpImage      * load_image           (GFile                 *file,
+                                              GError               **error);
+static gboolean         save_image           (GFile                 *file,
+                                              GimpImage             *image,
+                                              GimpDrawable          *drawable,
+                                              GError               **error);
+static GimpImage      * create_new_image     (GFile                 *file,
+                                              guint                  width,
+                                              guint                  height,
+                                              GimpImageBaseType      type,
+                                              GimpImageType          gdtype,
+                                              GimpLayer            **layer,
+                                              GeglBuffer           **buffer);
 
-static int              set_pixelmap         (gint                  ncols,
-                                              L_XWDCOLOR           *xwdcol,
-                                              PIXEL_MAP            *pixelmap);
-static gboolean         get_pixelmap         (L_CARD32              pixelval,
-                                              PIXEL_MAP            *pixelmap,
-                                              guchar               *red,
-                                              guchar               *green,
-                                              guchar               *glue);
+static int              set_pixelmap         (gint                   ncols,
+                                              L_XWDCOLOR            *xwdcol,
+                                              PIXEL_MAP             *pixelmap);
+static gboolean         get_pixelmap         (L_CARD32               pixelval,
+                                              PIXEL_MAP             *pixelmap,
+                                              guchar                *red,
+                                              guchar                *green,
+                                              guchar                *glue);
 
-static void             set_bw_color_table   (GimpImage            *image);
-static void             set_color_table      (GimpImage            *image,
-                                              L_XWDFILEHEADER      *xwdhdr,
-                                              L_XWDCOLOR           *xwdcolmap);
+static void             set_bw_color_table   (GimpImage             *image);
+static void             set_color_table      (GimpImage             *image,
+                                              L_XWDFILEHEADER       *xwdhdr,
+                                              L_XWDCOLOR            *xwdcolmap);
 
-static GimpImage      * load_xwd_f2_d1_b1    (GFile                *file,
-                                              FILE                 *ifp,
-                                              L_XWDFILEHEADER      *xwdhdr,
-                                              L_XWDCOLOR           *xwdcolmap,
-                                              GError              **error);
-static GimpImage      * load_xwd_f2_d8_b8    (GFile                *file,
-                                              FILE                 *ifp,
-                                              L_XWDFILEHEADER      *xwdhdr,
-                                              L_XWDCOLOR           *xwdcolmap,
-                                              GError              **error);
-static GimpImage      * load_xwd_f2_d16_b16  (GFile                *file,
-                                              FILE                 *ifp,
-                                              L_XWDFILEHEADER      *xwdhdr,
-                                              L_XWDCOLOR           *xwdcolmap,
-                                              GError              **error);
-static GimpImage      * load_xwd_f2_d24_b32  (GFile                *file,
-                                              FILE                 *ifp,
-                                              L_XWDFILEHEADER      *xwdhdr,
-                                              L_XWDCOLOR           *xwdcolmap,
-                                              GError              **error);
-static GimpImage      * load_xwd_f2_d32_b32  (GFile                *file,
-                                              FILE                 *ifp,
-                                              L_XWDFILEHEADER      *xwdhdr,
-                                              L_XWDCOLOR           *xwdcolmap,
-                                              GError              **error);
-static GimpImage      * load_xwd_f1_d24_b1   (GFile                *file,
-                                              FILE                 *ifp,
-                                              L_XWDFILEHEADER      *xwdhdr,
-                                              L_XWDCOLOR           *xwdcolmap,
-                                              GError              **error);
+static GimpImage      * load_xwd_f2_d1_b1    (GFile                 *file,
+                                              FILE                  *ifp,
+                                              L_XWDFILEHEADER       *xwdhdr,
+                                              L_XWDCOLOR            *xwdcolmap,
+                                              GError               **error);
+static GimpImage      * load_xwd_f2_d8_b8    (GFile                 *file,
+                                              FILE                  *ifp,
+                                              L_XWDFILEHEADER       *xwdhdr,
+                                              L_XWDCOLOR            *xwdcolmap,
+                                              GError               **error);
+static GimpImage      * load_xwd_f2_d16_b16  (GFile                 *file,
+                                              FILE                  *ifp,
+                                              L_XWDFILEHEADER       *xwdhdr,
+                                              L_XWDCOLOR            *xwdcolmap,
+                                              GError               **error);
+static GimpImage      * load_xwd_f2_d24_b32  (GFile                 *file,
+                                              FILE                  *ifp,
+                                              L_XWDFILEHEADER       *xwdhdr,
+                                              L_XWDCOLOR            *xwdcolmap,
+                                              GError               **error);
+static GimpImage      * load_xwd_f2_d32_b32  (GFile                 *file,
+                                              FILE                  *ifp,
+                                              L_XWDFILEHEADER       *xwdhdr,
+                                              L_XWDCOLOR            *xwdcolmap,
+                                              GError               **error);
+static GimpImage      * load_xwd_f1_d24_b1   (GFile                 *file,
+                                              FILE                  *ifp,
+                                              L_XWDFILEHEADER       *xwdhdr,
+                                              L_XWDCOLOR            *xwdcolmap,
+                                              GError               **error);
 
-static L_CARD32         read_card32          (FILE                 *ifp,
-                                              gint                 *err);
-static L_CARD16         read_card16          (FILE                 *ifp,
-                                              gint                 *err);
-static L_CARD8          read_card8           (FILE                 *ifp,
-                                              gint                 *err);
+static L_CARD32         read_card32          (FILE                  *ifp,
+                                              gint                  *err);
+static L_CARD16         read_card16          (FILE                  *ifp,
+                                              gint                  *err);
+static L_CARD8          read_card8           (FILE                  *ifp,
+                                              gint                  *err);
 
-static gboolean         write_card32         (GOutputStream        *output,
-                                              L_CARD32              c,
-                                              GError              **error);
-static gboolean         write_card16         (GOutputStream        *output,
-                                              L_CARD32              c,
-                                              GError              **error);
-static gboolean         write_card8          (GOutputStream        *output,
-                                              L_CARD32              c,
-                                              GError              **error);
+static gboolean         write_card32         (GOutputStream         *output,
+                                              L_CARD32               c,
+                                              GError               **error);
+static gboolean         write_card16         (GOutputStream         *output,
+                                              L_CARD32               c,
+                                              GError               **error);
+static gboolean         write_card8          (GOutputStream         *output,
+                                              L_CARD32               c,
+                                              GError               **error);
 
-static void             read_xwd_header      (FILE                 *ifp,
-                                              L_XWDFILEHEADER      *xwdhdr);
+static void             read_xwd_header      (FILE                  *ifp,
+                                              L_XWDFILEHEADER       *xwdhdr);
 
-static gboolean         write_xwd_header     (GOutputStream        *output,
-                                              L_XWDFILEHEADER      *xwdhdr,
-                                              GError              **error);
+static gboolean         write_xwd_header     (GOutputStream         *output,
+                                              L_XWDFILEHEADER       *xwdhdr,
+                                              GError               **error);
 
-static void             read_xwd_cols        (FILE                 *ifp,
-                                              L_XWDFILEHEADER      *xwdhdr,
-                                              L_XWDCOLOR           *xwdcolmap,
-                                              GError              **error);
+static void             read_xwd_cols        (FILE                  *ifp,
+                                              L_XWDFILEHEADER       *xwdhdr,
+                                              L_XWDCOLOR            *xwdcolmap,
+                                              GError               **error);
 
-static gboolean         write_xwd_cols       (GOutputStream        *output,
-                                              L_XWDFILEHEADER      *xwdhdr,
-                                              L_XWDCOLOR           *colormap,
-                                              GError              **error);
+static gboolean         write_xwd_cols       (GOutputStream         *output,
+                                              L_XWDFILEHEADER       *xwdhdr,
+                                              L_XWDCOLOR            *colormap,
+                                              GError               **error);
 
-static gint             save_index           (GOutputStream        *output,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
-                                              gboolean              gray,
-                                              GError              **error);
-static gint             save_rgb             (GOutputStream        *output,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
-                                              GError              **error);
+static gint             save_index           (GOutputStream         *output,
+                                              GimpImage             *image,
+                                              GimpDrawable          *drawable,
+                                              gboolean               gray,
+                                              GError               **error);
+static gint             save_rgb             (GOutputStream         *output,
+                                              GimpImage             *image,
+                                              GimpDrawable          *drawable,
+                                              GError               **error);
 
 
 G_DEFINE_TYPE (Xwd, xwd, GIMP_TYPE_PLUG_IN)
@@ -318,9 +320,9 @@ xwd_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           xwd_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            xwd_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("X window dump"));
 
@@ -377,11 +379,13 @@ xwd_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-xwd_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+xwd_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;

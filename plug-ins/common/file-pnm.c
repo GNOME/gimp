@@ -140,98 +140,100 @@ struct _PnmClass
 
 GType                   pnm_get_type         (void) G_GNUC_CONST;
 
-static GList          * pnm_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * pnm_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * pnm_query_procedures (GimpPlugIn             *plug_in);
+static GimpProcedure  * pnm_create_procedure (GimpPlugIn             *plug_in,
+                                              const gchar            *name);
 
-static GimpValueArray * pnm_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * pnm_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GFile                *file,
-                                              GimpMetadata         *metadata,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
+static GimpValueArray * pnm_load             (GimpProcedure          *procedure,
+                                              GimpRunMode             run_mode,
+                                              GFile                  *file,
+                                              GimpMetadata           *metadata,
+                                              GimpMetadataLoadFlags  *flags,
+                                              GimpProcedureConfig    *config,
+                                              gpointer                run_data);
+static GimpValueArray * pnm_save             (GimpProcedure          *procedure,
+                                              GimpRunMode             run_mode,
+                                              GimpImage              *image,
+                                              gint                    n_drawables,
+                                              GimpDrawable          **drawables,
+                                              GFile                  *file,
+                                              GimpMetadata           *metadata,
+                                              GimpProcedureConfig    *config,
+                                              gpointer                run_data);
 
-static GimpImage      * load_image           (GFile                *file,
-                                              GError              **error);
-static gint             save_image           (GFile                *file,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
-                                              FileType              file_type,
-                                              GObject              *config,
-                                              GError              **error);
+static GimpImage      * load_image           (GFile                  *file,
+                                              GError                **error);
+static gint             save_image           (GFile                  *file,
+                                              GimpImage              *image,
+                                              GimpDrawable           *drawable,
+                                              FileType                file_type,
+                                              GObject                *config,
+                                              GError                **error);
 
-static gboolean         save_dialog          (GimpProcedure        *procedure,
-                                              GObject              *config,
-                                              GimpImage            *image);
+static gboolean         save_dialog          (GimpProcedure          *procedure,
+                                              GObject                *config,
+                                              GimpImage              *image);
 
-static void             process_pam_header   (PNMScanner           *scan,
-                                              PNMInfo              *info);
+static void             process_pam_header   (PNMScanner             *scan,
+                                              PNMInfo                *info);
 
-static void             pnm_load_ascii       (PNMScanner           *scan,
-                                              PNMInfo              *info,
-                                              GeglBuffer           *buffer);
-static void             pnm_load_raw         (PNMScanner           *scan,
-                                              PNMInfo              *info,
-                                              GeglBuffer           *buffer);
-static void             pnm_load_rawpbm      (PNMScanner           *scan,
-                                              PNMInfo              *info,
-                                              GeglBuffer           *buffer);
-static void             pnm_load_rawpfm      (PNMScanner           *scan,
-                                              PNMInfo              *info,
-                                              GeglBuffer           *buffer);
+static void             pnm_load_ascii       (PNMScanner             *scan,
+                                              PNMInfo                *info,
+                                              GeglBuffer             *buffer);
+static void             pnm_load_raw         (PNMScanner             *scan,
+                                              PNMInfo                *info,
+                                              GeglBuffer             *buffer);
+static void             pnm_load_rawpbm      (PNMScanner             *scan,
+                                              PNMInfo                *info,
+                                              GeglBuffer             *buffer);
+static void             pnm_load_rawpfm      (PNMScanner             *scan,
+                                              PNMInfo                *info,
+                                              GeglBuffer             *buffer);
 
-static void         create_pam_header        (const gchar         **header_string,
-                                              PNMRowInfo           *rowinfo,
-                                              PNMSaverowFunc       *saverow,
-                                              GimpImageType         drawable_type,
-                                              GeglBuffer           *buffer,
-                                              const Babl          **format,
-                                              gint                 *rowbufsize,
-                                              gint                 *np,
-                                              gchar                *comment);
+static void         create_pam_header        (const gchar           **header_string,
+                                              PNMRowInfo             *rowinfo,
+                                              PNMSaverowFunc         *saverow,
+                                              GimpImageType           drawable_type,
+                                              GeglBuffer             *buffer,
+                                              const Babl            **format,
+                                              gint                   *rowbufsize,
+                                              gint                   *np,
+                                              gchar                  *comment);
 
-static gboolean     pnmsaverow_ascii         (PNMRowInfo           *ri,
-                                              guchar               *data,
-                                              GError              **error);
-static gboolean     pnmsaverow_raw           (PNMRowInfo           *ri,
-                                              guchar               *data,
-                                              GError              **error);
-static gboolean     pnmsaverow_raw_pbm       (PNMRowInfo           *ri,
-                                              guchar               *data,
-                                              GError              **error);
-static gboolean     pnmsaverow_ascii_pbm     (PNMRowInfo           *ri,
-                                              guchar               *data,
-                                              GError              **error);
-static gboolean     pnmsaverow_ascii_indexed (PNMRowInfo           *ri,
-                                              guchar               *data,
-                                              GError              **error);
-static gboolean     pnmsaverow_raw_indexed   (PNMRowInfo           *ri,
-                                              guchar               *data,
-                                              GError              **error);
+static gboolean     pnmsaverow_ascii         (PNMRowInfo             *ri,
+                                              guchar                 *data,
+                                              GError                **error);
+static gboolean     pnmsaverow_raw           (PNMRowInfo             *ri,
+                                              guchar                 *data,
+                                              GError                **error);
+static gboolean     pnmsaverow_raw_pbm       (PNMRowInfo             *ri,
+                                              guchar                 *data,
+                                              GError                **error);
+static gboolean     pnmsaverow_ascii_pbm     (PNMRowInfo             *ri,
+                                              guchar                 *data,
+                                              GError                **error);
+static gboolean     pnmsaverow_ascii_indexed (PNMRowInfo             *ri,
+                                              guchar                 *data,
+                                              GError                **error);
+static gboolean     pnmsaverow_raw_indexed   (PNMRowInfo             *ri,
+                                              guchar                 *data,
+                                              GError                **error);
 
-static PNMScanner * pnmscanner_create        (GInputStream         *input);
-static void         pnmscanner_destroy       (PNMScanner           *s);
-static void         pnmscanner_createbuffer  (PNMScanner           *s,
-                                              gint                  bufsize);
-static void         pnmscanner_getchar       (PNMScanner           *s);
-static void         pnmscanner_eatwhitespace (PNMScanner           *s);
-static void         pnmscanner_eatinnerspace (PNMScanner           *s);
-static void         pnmscanner_gettoken      (PNMScanner           *s,
-                                              gchar                *buf,
-                                              gint                  bufsize);
-static void         pnmscanner_getsmalltoken (PNMScanner           *s,
-                                              gchar                *buf);
-static void         pnmscanner_getheaderline (PNMScanner           *s,
-                                              gchar                *buf,
-                                              gint                  bufsize);
+static PNMScanner * pnmscanner_create        (GInputStream           *input);
+static void         pnmscanner_destroy       (PNMScanner             *s);
+static void         pnmscanner_createbuffer  (PNMScanner             *s,
+                                              gint                    bufsize);
+static void         pnmscanner_getchar       (PNMScanner             *s);
+static void         pnmscanner_eatwhitespace (PNMScanner             *s);
+static void         pnmscanner_eatinnerspace (PNMScanner             *s);
+static void         pnmscanner_gettoken      (PNMScanner             *s,
+                                              gchar                  *buf,
+                                              gint                    bufsize);
+static void         pnmscanner_getsmalltoken (PNMScanner             *s,
+                                              gchar                  *buf);
+static void         pnmscanner_getheaderline (PNMScanner             *s,
+                                              gchar                  *buf,
+                                              gint                    bufsize);
 
 #define pnmscanner_eof(s)   ((s)->eof)
 #define pnmscanner_input(s) ((s)->input)
@@ -309,9 +311,9 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pnm_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            pnm_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("PNM Image"));
 
@@ -544,11 +546,13 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-pnm_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+pnm_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;

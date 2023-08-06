@@ -151,105 +151,106 @@ struct _XmcClass
 #define XMC_TYPE  (xmc_get_type ())
 #define XMC (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XMC_TYPE, Xmc))
 
-GType                   xmc_get_type         (void) G_GNUC_CONST;
+GType                   xmc_get_type                 (void) G_GNUC_CONST;
 
-static GList          * xmc_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * xmc_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * xmc_query_procedures         (GimpPlugIn            *plug_in);
+static GimpProcedure  * xmc_create_procedure         (GimpPlugIn            *plug_in,
+                                                      const gchar           *name);
 
-static GimpValueArray * xmc_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * xmc_load_thumb       (GimpProcedure        *procedure,
-                                              GFile                *file,
-                                              gint                  size,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * xmc_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GFile                *file,
-                                              GimpMetadata         *metadata,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
+static GimpValueArray * xmc_load                     (GimpProcedure         *procedure,
+                                                      GimpRunMode            run_mode,
+                                                      GFile                 *file,
+                                                      GimpMetadata          *metadata,
+                                                      GimpMetadataLoadFlags *flags,
+                                                      GimpProcedureConfig   *config,
+                                                      gpointer               run_data);
+static GimpValueArray * xmc_load_thumb               (GimpProcedure         *procedure,
+                                                      GFile                 *file,
+                                                      gint                   size,
+                                                      const GimpValueArray  *args,
+                                                      gpointer               run_data);
+static GimpValueArray * xmc_save                     (GimpProcedure         *procedure,
+                                                      GimpRunMode            run_mode,
+                                                      GimpImage             *image,
+                                                      gint                   n_drawables,
+                                                      GimpDrawable         **drawables,
+                                                      GFile                 *file,
+                                                      GimpMetadata          *metadata,
+                                                      GimpProcedureConfig   *config,
+                                                      gpointer               run_data);
 
-static GimpImage      * load_image           (GFile            *file,
-                                              GError          **error);
+static GimpImage      * load_image                   (GFile                 *file,
+                                                      GError               **error);
 
-static GimpImage      * load_thumbnail       (GFile            *file,
-                                              gint32            thumb_size,
-                                              gint32           *width,
-                                              gint32           *height,
-                                              gint32           *num_layers,
-                                              GError          **error);
+static GimpImage      * load_thumbnail               (GFile                 *file,
+                                                      gint32                 thumb_size,
+                                                      gint32                *width,
+                                                      gint32                *height,
+                                                      gint32                *num_layers,
+                                                      GError               **error);
 
-static guint32          read32               (FILE             *f,
-                                              GError          **error);
+static guint32          read32                       (FILE                  *f,
+                                                      GError               **error);
 
-static gboolean         save_image           (GFile            *file,
-                                              GimpImage        *image,
-                                              gint              n_drawables,
-                                              GimpDrawable    **drawables,
-                                              GimpImage        *orig_image,
-                                              GObject          *config,
-                                              GError          **error);
+static gboolean         save_image                   (GFile                 *file,
+                                                      GimpImage             *image,
+                                                      gint                   n_drawables,
+                                                      GimpDrawable         **drawables,
+                                                      GimpImage             *orig_image,
+                                                      GObject               *config,
+                                                      GError               **error);
 
-static gboolean         save_dialog          (GimpProcedure    *procedure,
-                                              GObject          *config,
-                                              GimpImage        *image,
-                                              GeglRectangle    *hotspot_range);
+static gboolean         save_dialog                  (GimpProcedure         *procedure,
+                                                      GObject               *config,
+                                                      GimpImage             *image,
+                                                      GeglRectangle         *hotspot_range);
 
-static void             load_default_hotspot (GimpImage        *image,
-                                              GeglRectangle    *hotspot_range,
-                                              GObject          *config);
+static void             load_default_hotspot         (GimpImage             *image,
+                                                      GeglRectangle         *hotspot_range,
+                                                      GObject               *config);
 
-static inline guint32   separate_alpha       (guint32           pixel);
+static inline guint32   separate_alpha               (guint32                pixel);
 
-static inline guint32   premultiply_alpha    (guint32           pixel);
+static inline guint32   premultiply_alpha            (guint32                pixel);
 
-static XcursorComments *set_cursor_comments  (GObject          *config);
+static XcursorComments *set_cursor_comments          (GObject               *config);
 
-static gboolean         set_hotspot_to_parasite (GimpImage     *image,
-                                                 gint           hot_spot_x,
-                                                 gint           hot_spot_y);
+static gboolean         set_hotspot_to_parasite      (GimpImage       *image,
+                                                      gint             hot_spot_x,
+                                                      gint             hot_spot_y);
 
-static gboolean         get_hotspot_from_parasite (GimpImage  *image,
-                                                   gint       *hot_spot_x,
-                                                   gint       *hot_spot_y);
+static gboolean         get_hotspot_from_parasite    (GimpImage       *image,
+                                                      gint            *hot_spot_x,
+                                                      gint            *hot_spot_y);
 
-static void             set_size_and_delay   (GObject         *config,
-                                              const gchar      *framename,
-                                              guint32          *sizep,
-                                              guint32          *delayp,
-                                              GRegex           *re,
-                                              gboolean         *size_warnp);
+static void             set_size_and_delay           (GObject         *config,
+                                                      const gchar      *framename,
+                                                      guint32          *sizep,
+                                                      guint32          *delayp,
+                                                      GRegex           *re,
+                                                      gboolean         *size_warnp);
 
-static gchar          * make_framename       (guint32           size,
-                                              guint32           delay,
-                                              guint             indent,
-                                              GError          **errorp);
+static gchar          * make_framename               (guint32           size,
+                                                      guint32           delay,
+                                                      guint             indent,
+                                                      GError          **errorp);
 
-static void             get_cropped_region   (GeglRectangle    *retrun_rgn,
-                                              GeglBuffer       *buffer);
+static void             get_cropped_region           (GeglRectangle    *retrun_rgn,
+                                                      GeglBuffer       *buffer);
 
-static inline gboolean  pix_is_opaque        (guint32           pix);
+static inline gboolean  pix_is_opaque                (guint32           pix);
 
-static GeglRectangle  * get_intersection_of_frames (GimpImage  *image);
+static GeglRectangle  * get_intersection_of_frames   (GimpImage        *image);
 
-static gboolean         pix_in_region        (gint32            x,
-                                              gint32            y,
-                                              GeglRectangle    *xmcrp);
+static gboolean         pix_in_region                (gint32            x,
+                                                      gint32            y,
+                                                      GeglRectangle    *xmcrp);
 
-static void             find_hotspots_and_dimensions
-                                             (XcursorImages    *xcIs,
-                                              gint32           *xhot,
-                                              gint32           *yhot,
-                                              gint32           *width,
-                                              gint32           *height);
+static void             find_hotspots_and_dimensions (XcursorImages    *xcIs,
+                                                      gint32           *xhot,
+                                                      gint32           *yhot,
+                                                      gint32           *width,
+                                                      gint32           *height);
 
 
 G_DEFINE_TYPE (Xmc, xmc, GIMP_TYPE_PLUG_IN)
@@ -293,9 +294,9 @@ xmc_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           xmc_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            xmc_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("X11 Mouse Cursor"));
 
@@ -439,11 +440,13 @@ xmc_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-xmc_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+xmc_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;

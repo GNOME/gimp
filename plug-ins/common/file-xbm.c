@@ -74,42 +74,44 @@ struct _XbmClass
 
 GType                   xbm_get_type         (void) G_GNUC_CONST;
 
-static GList          * xbm_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * xbm_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * xbm_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * xbm_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * xbm_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * xbm_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GFile                *file,
-                                              GimpMetadata         *metadata,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
+static GimpValueArray * xbm_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * xbm_save             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GimpImage             *image,
+                                              gint                   n_drawables,
+                                              GimpDrawable         **drawables,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
-static GimpImage      * load_image           (GFile                *file,
-                                              GError              **error);
-static gboolean         save_image           (GFile                *file,
-                                              const gchar          *prefix,
-                                              gboolean              save_mask,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
-                                              GObject              *config,
-                                              GError              **error);
-static gboolean         save_dialog          (GimpImage            *image,
-                                              GimpDrawable         *drawable,
-                                              GimpProcedure        *procedure,
-                                              GObject              *config);
+static GimpImage      * load_image           (GFile                 *file,
+                                              GError               **error);
+static gboolean         save_image           (GFile                 *file,
+                                              const gchar           *prefix,
+                                              gboolean               save_mask,
+                                              GimpImage             *image,
+                                              GimpDrawable          *drawable,
+                                              GObject               *config,
+                                              GError               **error);
+static gboolean         save_dialog          (GimpImage             *image,
+                                              GimpDrawable          *drawable,
+                                              GimpProcedure         *procedure,
+                                              GObject               *config);
 
-static gboolean         print                (GOutputStream        *output,
-                                              GError              **error,
-                                              const gchar          *format,
+static gboolean         print                (GOutputStream         *output,
+                                              GError               **error,
+                                              const gchar           *format,
                                               ...) G_GNUC_PRINTF (3, 4);
 
 
@@ -153,9 +155,9 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           xbm_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            xbm_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("X BitMap image"));
 
@@ -271,11 +273,13 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-xbm_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+xbm_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
   GimpValueArray    *return_vals;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;

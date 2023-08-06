@@ -127,38 +127,40 @@ struct _PostScriptClass
 
 GType                   ps_get_type         (void) G_GNUC_CONST;
 
-static GList          * ps_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * ps_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * ps_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * ps_create_procedure (GimpPlugIn            *plug_in,
+                                             const gchar           *name);
 
-static GimpValueArray * ps_load             (GimpProcedure        *procedure,
-                                             GimpRunMode           run_mode,
-                                             GFile                *file,
-                                             const GimpValueArray *args,
-                                             gpointer              run_data);
-static GimpValueArray * ps_load_thumb       (GimpProcedure        *procedure,
-                                             GFile                *file,
-                                             gint                  size,
-                                             const GimpValueArray *args,
-                                             gpointer              run_data);
-static GimpValueArray * ps_save             (GimpProcedure        *procedure,
-                                             GimpRunMode           run_mode,
-                                             GimpImage            *image,
-                                             gint                  n_drawables,
-                                             GimpDrawable        **drawables,
-                                             GFile                *file,
-                                             GimpMetadata         *metadata,
-                                             GimpProcedureConfig  *config,
-                                             gpointer              run_data);
+static GimpValueArray * ps_load             (GimpProcedure         *procedure,
+                                             GimpRunMode            run_mode,
+                                             GFile                 *file,
+                                             GimpMetadata          *metadata,
+                                             GimpMetadataLoadFlags *flags,
+                                             GimpProcedureConfig   *config,
+                                             gpointer               run_data);
+static GimpValueArray * ps_load_thumb       (GimpProcedure         *procedure,
+                                             GFile                 *file,
+                                             gint                   size,
+                                             const GimpValueArray  *args,
+                                             gpointer               run_data);
+static GimpValueArray * ps_save             (GimpProcedure         *procedure,
+                                             GimpRunMode            run_mode,
+                                             GimpImage             *image,
+                                             gint                   n_drawables,
+                                             GimpDrawable         **drawables,
+                                             GFile                 *file,
+                                             GimpMetadata          *metadata,
+                                             GimpProcedureConfig   *config,
+                                             gpointer               run_data);
 
-static GimpImage      * load_image          (GFile                *file,
-                                             GObject              *config,
-                                             GError              **error);
-static gboolean         save_image          (GFile                *file,
-                                             GObject              *config,
-                                             GimpImage            *image,
-                                             GimpDrawable         *drawable,
-                                             GError              **error);
+static GimpImage      * load_image          (GFile                 *file,
+                                             GObject               *config,
+                                             GError               **error);
+static gboolean         save_image          (GFile                 *file,
+                                             GObject               *config,
+                                             GimpImage             *image,
+                                             GimpDrawable          *drawable,
+                                             GError               **error);
 
 static void      ps_set_save_size (GObject           *config,
                                    GimpImage         *image);
@@ -328,9 +330,9 @@ ps_create_procedure (GimpPlugIn  *plug_in,
   if (! strcmp (name, LOAD_PS_PROC) ||
       ! strcmp (name, LOAD_EPS_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           ps_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            ps_load, NULL, NULL);
 
       if (! strcmp (name, LOAD_PS_PROC))
         {
@@ -568,22 +570,19 @@ ps_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-ps_load (GimpProcedure        *procedure,
-         GimpRunMode           run_mode,
-         GFile                *file,
-         const GimpValueArray *args,
-         gpointer              run_data)
+ps_load (GimpProcedure         *procedure,
+         GimpRunMode            run_mode,
+         GFile                 *file,
+         GimpMetadata          *metadata,
+         GimpMetadataLoadFlags *flags,
+         GimpProcedureConfig   *config,
+         gpointer               run_data)
 {
-  GimpProcedureConfig *config;
-  GimpValueArray      *return_vals;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpImage           *image  = NULL;
-  GError              *error  = NULL;
+  GimpValueArray *return_vals;
+  GimpImage      *image  = NULL;
+  GError         *error  = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   l_run_mode = run_mode;
 
@@ -603,9 +602,6 @@ ps_load (GimpProcedure        *procedure,
   check_load_vals (G_OBJECT (config));
 
   image = load_image (file, G_OBJECT (config), &error);
-
-  gimp_procedure_config_end_run (config, status);
-  g_object_unref (config);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,

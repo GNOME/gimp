@@ -52,24 +52,26 @@ struct _WbmpClass
 
 GType                   wbmp_get_type         (void) G_GNUC_CONST;
 
-static GList          * wbmp_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * wbmp_create_procedure (GimpPlugIn           *plug_in,
-                                               const gchar          *name);
+static GList          * wbmp_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * wbmp_create_procedure (GimpPlugIn            *plug_in,
+                                               const gchar           *name);
 
-static GimpValueArray * wbmp_load             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GFile                *file,
-                                               const GimpValueArray *args,
-                                               gpointer              run_data);
+static GimpValueArray * wbmp_load             (GimpProcedure         *procedure,
+                                               GimpRunMode            run_mode,
+                                               GFile                 *file,
+                                               GimpMetadata          *metadata,
+                                               GimpMetadataLoadFlags *flags,
+                                               GimpProcedureConfig   *config,
+                                               gpointer               run_data);
 
-GimpImage             * load_image            (GFile                *file,
-                                               GError              **error);
+GimpImage             * load_image            (GFile                 *file,
+                                               GError               **error);
 
-static GimpImage      * read_image            (FILE                 *fd,
-                                               GFile                *file,
-                                               gint                  width,
-                                               gint                  height,
-                                               GError              **error);
+static GimpImage      * read_image            (FILE                  *fd,
+                                               GFile                 *file,
+                                               gint                   width,
+                                               gint                   height,
+                                               GError               **error);
 
 G_DEFINE_TYPE (Wbmp, wbmp, GIMP_TYPE_PLUG_IN)
 
@@ -109,9 +111,9 @@ wbmp_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           wbmp_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            wbmp_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Wireless BMP image"));
 
@@ -134,11 +136,13 @@ wbmp_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-wbmp_load (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GFile                *file,
-           const GimpValueArray *args,
-           gpointer              run_data)
+wbmp_load (GimpProcedure         *procedure,
+           GimpRunMode            run_mode,
+           GFile                 *file,
+           GimpMetadata          *metadata,
+           GimpMetadataLoadFlags *flags,
+           GimpProcedureConfig   *config,
+           gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;

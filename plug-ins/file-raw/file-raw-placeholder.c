@@ -48,15 +48,17 @@ struct _PlaceholderClass
 
 GType                   placeholder_get_type         (void) G_GNUC_CONST;
 
-static GList          * placeholder_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * placeholder_create_procedure (GimpPlugIn           *plug_in,
-                                                      const gchar          *name);
+static GList          * placeholder_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * placeholder_create_procedure (GimpPlugIn            *plug_in,
+                                                      const gchar           *name);
 
-static GimpValueArray * placeholder_load             (GimpProcedure        *procedure,
-                                                      GimpRunMode           run_mode,
-                                                      GFile                *file,
-                                                      const GimpValueArray *args,
-                                                      gpointer              run_data);
+static GimpValueArray * placeholder_load             (GimpProcedure         *procedure,
+                                                      GimpRunMode            run_mode,
+                                                      GFile                 *file,
+                                                      GimpMetadata          *metadata,
+                                                      GimpMetadataLoadFlags *flags,
+                                                      GimpProcedureConfig   *config,
+                                                      gpointer               run_data);
 
 
 G_DEFINE_TYPE (Placeholder, placeholder, GIMP_TYPE_PLUG_IN)
@@ -126,10 +128,10 @@ placeholder_create_procedure (GimpPlugIn  *plug_in,
       load_blurb = g_strdup_printf (format->load_blurb_format, "placeholder");
       load_help  = g_strdup_printf (format->load_help_format,  "placeholder");
 
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           placeholder_load,
-                                           (gpointer) format, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            placeholder_load,
+                                            (gpointer) format, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         load_blurb, load_help, name);
@@ -159,11 +161,13 @@ placeholder_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-placeholder_load (GimpProcedure        *procedure,
-                  GimpRunMode           run_mode,
-                  GFile                *file,
-                  const GimpValueArray *args,
-                  gpointer              run_data)
+placeholder_load (GimpProcedure         *procedure,
+                  GimpRunMode            run_mode,
+                  GFile                 *file,
+                  GimpMetadata          *metadata,
+                  GimpMetadataLoadFlags *flags,
+                  GimpProcedureConfig   *config,
+                  gpointer               run_data)
 {
   const FileFormat *format = run_data;
   GError           *error = NULL;

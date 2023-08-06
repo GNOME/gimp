@@ -86,40 +86,42 @@ struct _PixClass
 
 GType                   pix_get_type         (void) G_GNUC_CONST;
 
-static GList          * pix_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * pix_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * pix_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * pix_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * pix_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * pix_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GFile                *file,
-                                              GimpMetadata         *metadata,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
+static GimpValueArray * pix_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * pix_save             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GimpImage             *image,
+                                              gint                   n_drawables,
+                                              GimpDrawable         **drawables,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
-static GimpImage      * load_image           (GFile                *file,
-                                              GError              **error);
+static GimpImage      * load_image           (GFile                 *file,
+                                              GError               **error);
 static GimpImage      * load_esm_image       (GInputStream          *input,
                                               GError               **error);
-static gboolean         save_image           (GFile                *file,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
-                                              GError              **error);
+static gboolean         save_image           (GFile                 *file,
+                                              GimpImage             *image,
+                                              GimpDrawable          *drawable,
+                                              GError               **error);
 
-static gboolean         get_short            (GInputStream         *input,
-                                              guint16              *value,
-                                              GError              **error);
-static gboolean         put_short            (GOutputStream        *output,
-                                              guint16               value,
-                                              GError              **error);
+static gboolean         get_short            (GInputStream          *input,
+                                              guint16               *value,
+                                              GError               **error);
+static gboolean         put_short            (GOutputStream         *output,
+                                              guint16                value,
+                                              GError               **error);
 
 
 G_DEFINE_TYPE (Pix, pix, GIMP_TYPE_PLUG_IN)
@@ -162,9 +164,9 @@ pix_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pix_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            pix_load, NULL, NULL);
 
       gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
                                               TRUE);
@@ -221,11 +223,13 @@ pix_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-pix_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+pix_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;

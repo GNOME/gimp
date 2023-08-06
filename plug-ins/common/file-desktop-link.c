@@ -55,19 +55,21 @@ struct _DesktopClass
 
 GType                   desktop_get_type         (void) G_GNUC_CONST;
 
-static GList          * desktop_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * desktop_create_procedure (GimpPlugIn           *plug_in,
-                                                  const gchar          *name);
+static GList          * desktop_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * desktop_create_procedure (GimpPlugIn            *plug_in,
+                                                  const gchar           *name);
 
-static GimpValueArray * desktop_load             (GimpProcedure        *procedure,
-                                                  GimpRunMode           run_mode,
-                                                  GFile                *file,
-                                                  const GimpValueArray *args,
-                                                  gpointer              run_data);
+static GimpValueArray * desktop_load             (GimpProcedure         *procedure,
+                                                  GimpRunMode            run_mode,
+                                                  GFile                 *file,
+                                                  GimpMetadata          *metadata,
+                                                  GimpMetadataLoadFlags *flags,
+                                                  GimpProcedureConfig   *config,
+                                                  gpointer               run_data);
 
-static GimpImage      * load_image               (GFile                *file,
-                                                  GimpRunMode           run_mode,
-                                                  GError              **error);
+static GimpImage      * load_image               (GFile                 *file,
+                                                  GimpRunMode            run_mode,
+                                                  GError               **error);
 
 
 G_DEFINE_TYPE (Desktop, desktop, GIMP_TYPE_PLUG_IN)
@@ -105,9 +107,9 @@ desktop_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           desktop_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            desktop_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("Desktop Link"));
 
@@ -132,11 +134,13 @@ desktop_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-desktop_load (GimpProcedure        *procedure,
-              GimpRunMode           run_mode,
-              GFile                *file,
-              const GimpValueArray *args,
-              gpointer              run_data)
+desktop_load (GimpProcedure         *procedure,
+              GimpRunMode            run_mode,
+              GFile                 *file,
+              GimpMetadata          *metadata,
+              GimpMetadataLoadFlags *flags,
+              GimpProcedureConfig   *config,
+              gpointer               run_data)
 {
   GimpValueArray *return_values;
   GimpImage      *image;

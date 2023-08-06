@@ -106,122 +106,124 @@ struct _SunrasClass
 
 GType                   sunras_get_type         (void) G_GNUC_CONST;
 
-static GList          * sunras_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * sunras_create_procedure (GimpPlugIn           *plug_in,
-                                                 const gchar          *name);
+static GList          * sunras_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * sunras_create_procedure (GimpPlugIn            *plug_in,
+                                                 const gchar           *name);
 
-static GimpValueArray * sunras_load             (GimpProcedure        *procedure,
-                                                 GimpRunMode           run_mode,
-                                                 GFile                *file,
-                                                 const GimpValueArray *args,
-                                                 gpointer              run_data);
-static GimpValueArray * sunras_save             (GimpProcedure        *procedure,
-                                                 GimpRunMode           run_mode,
-                                                 GimpImage            *image,
-                                                 gint                  n_drawables,
-                                                 GimpDrawable        **drawables,
-                                                 GFile                *file,
-                                                 GimpMetadata         *metadata,
-                                                 GimpProcedureConfig  *config,
-                                                 gpointer              run_data);
+static GimpValueArray * sunras_load             (GimpProcedure         *procedure,
+                                                 GimpRunMode            run_mode,
+                                                 GFile                 *file,
+                                                 GimpMetadata          *metadata,
+                                                 GimpMetadataLoadFlags *flags,
+                                                 GimpProcedureConfig   *config,
+                                                 gpointer               run_data);
+static GimpValueArray * sunras_save             (GimpProcedure         *procedure,
+                                                 GimpRunMode            run_mode,
+                                                 GimpImage             *image,
+                                                 gint                   n_drawables,
+                                                 GimpDrawable         **drawables,
+                                                 GFile                 *file,
+                                                 GimpMetadata          *metadata,
+                                                 GimpProcedureConfig   *config,
+                                                 gpointer               run_data);
 
-static GimpImage      * load_image              (GFile                *file,
-                                                 GError              **error);
-static gboolean         save_image              (GFile                *file,
-                                                 GimpImage            *image,
-                                                 GimpDrawable         *drawable,
-                                                 GObject              *config,
-                                                 GError              **error);
+static GimpImage      * load_image              (GFile                 *file,
+                                                 GError               **error);
+static gboolean         save_image              (GFile                 *file,
+                                                 GimpImage             *image,
+                                                 GimpDrawable          *drawable,
+                                                 GObject               *config,
+                                                 GError               **error);
 
-static void             set_color_table         (GimpImage            *image,
-                                                 L_SUNFILEHEADER      *sunhdr,
-                                                 const guchar         *suncolmap);
-static GimpImage      * create_new_image        (GFile                *file,
-                                                 guint                 width,
-                                                 guint                 height,
-                                                 GimpImageBaseType     type,
-                                                 GimpLayer           **layer,
-                                                 GeglBuffer          **buffer);
+static void             set_color_table         (GimpImage             *image,
+                                                 L_SUNFILEHEADER       *sunhdr,
+                                                 const guchar          *suncolmap);
+static GimpImage      * create_new_image        (GFile                 *file,
+                                                 guint                  width,
+                                                 guint                  height,
+                                                 GimpImageBaseType      type,
+                                                 GimpLayer            **layer,
+                                                 GeglBuffer           **buffer);
 
-static GimpImage      * load_sun_d1             (GFile                *file,
-                                                 FILE                 *ifp,
-                                                 L_SUNFILEHEADER      *sunhdr,
-                                                 guchar               *suncolmap);
-static GimpImage      * load_sun_d8             (GFile                *file,
-                                                 FILE                 *ifp,
-                                                 L_SUNFILEHEADER      *sunhdr,
-                                                 guchar               *suncolmap);
-static GimpImage      * load_sun_d24            (GFile                *file,
-                                                 FILE                 *ifp,
-                                                 L_SUNFILEHEADER      *sunhdr,
-                                                 guchar               *suncolmap);
-static GimpImage      * load_sun_d32            (GFile                *file,
-                                                 FILE                 *ifp,
-                                                 L_SUNFILEHEADER      *sunhdr,
-                                                 guchar               *suncolmap);
+static GimpImage      * load_sun_d1             (GFile                 *file,
+                                                 FILE                  *ifp,
+                                                 L_SUNFILEHEADER       *sunhdr,
+                                                 guchar                *suncolmap);
+static GimpImage      * load_sun_d8             (GFile                 *file,
+                                                 FILE                  *ifp,
+                                                 L_SUNFILEHEADER       *sunhdr,
+                                                 guchar                *suncolmap);
+static GimpImage      * load_sun_d24            (GFile                 *file,
+                                                 FILE                  *ifp,
+                                                 L_SUNFILEHEADER       *sunhdr,
+                                                 guchar                *suncolmap);
+static GimpImage      * load_sun_d32            (GFile                 *file,
+                                                 FILE                  *ifp,
+                                                 L_SUNFILEHEADER       *sunhdr,
+                                                 guchar                *suncolmap);
 
-static L_CARD32         read_card32             (FILE                 *ifp,
-                                                 int                  *err);
+static L_CARD32         read_card32             (FILE                  *ifp,
+                                                 int                   *err);
 
-static void             write_card32            (FILE                 *ofp,
-                                                 L_CARD32              c);
+static void             write_card32            (FILE                  *ofp,
+                                                 L_CARD32               c);
 
-static void             byte2bit                (guchar               *byteline,
-                                                 int                   width,
-                                                 guchar               *bitline,
-                                                 gboolean              invert);
+static void             byte2bit                (guchar                *byteline,
+                                                 int                    width,
+                                                 guchar                *bitline,
+                                                 gboolean               invert);
 
-static void             rle_startread           (FILE                 *ifp);
-static int              rle_fread               (char                 *ptr,
-                                                 int                   sz,
-                                                 int                   nelem,
-                                                 FILE                 *ifp);
-static int              rle_fgetc               (FILE                 *ifp);
+static void             rle_startread           (FILE                  *ifp);
+static int              rle_fread               (char                  *ptr,
+                                                 int                    sz,
+                                                 int                    nelem,
+                                                 FILE                  *ifp);
+static int              rle_fgetc               (FILE                  *ifp);
 #define rle_getc(fp) ((rlebuf.n > 0) ? (rlebuf.n)--,rlebuf.val : rle_fgetc (fp))
 
-static void             rle_startwrite          (FILE                 *ofp);
-static int              rle_fwrite              (char                 *ptr,
-                                                 int                   sz,
-                                                 int                   nelem,
-                                                 FILE                 *ofp);
-static int              rle_fputc               (int                   val,
-                                                 FILE                 *ofp);
-static int              rle_putrun              (int                   n,
-                                                 int                   val,
-                                                 FILE                 *ofp);
-static void             rle_endwrite            (FILE                 *ofp);
+static void             rle_startwrite          (FILE                  *ofp);
+static int              rle_fwrite              (char                  *ptr,
+                                                 int                    sz,
+                                                 int                    nelem,
+                                                 FILE                  *ofp);
+static int              rle_fputc               (int                    val,
+                                                 FILE                  *ofp);
+static int              rle_putrun              (int                    n,
+                                                 int                    val,
+                                                 FILE                  *ofp);
+static void             rle_endwrite            (FILE                  *ofp);
 #define rle_putc rle_fputc
 
-static void             read_sun_header         (FILE                 *ifp,
-                                                 L_SUNFILEHEADER      *sunhdr);
-static void             write_sun_header        (FILE                 *ofp,
-                                                 L_SUNFILEHEADER      *sunhdr);
-static void             read_sun_cols           (FILE                 *ifp,
-                                                 L_SUNFILEHEADER      *sunhdr,
-                                                 guchar               *colormap);
-static void             write_sun_cols          (FILE                 *ofp,
-                                                 L_SUNFILEHEADER      *sunhdr,
-                                                 guchar               *colormap);
+static void             read_sun_header         (FILE                  *ifp,
+                                                 L_SUNFILEHEADER       *sunhdr);
+static void             write_sun_header        (FILE                  *ofp,
+                                                 L_SUNFILEHEADER       *sunhdr);
+static void             read_sun_cols           (FILE                  *ifp,
+                                                 L_SUNFILEHEADER       *sunhdr,
+                                                 guchar                *colormap);
+static void             write_sun_cols          (FILE                  *ofp,
+                                                 L_SUNFILEHEADER       *sunhdr,
+                                                 guchar                *colormap);
 
-static gint             save_index              (FILE                *ofp,
-                                                 GimpImage           *image,
-                                                 GimpDrawable        *drawable,
-                                                 gboolean             grey,
-                                                 gint                 rle);
-static gint             save_rgb                (FILE                *ofp,
-                                                 GimpImage           *image,
-                                                 GimpDrawable        *drawable,
-                                                 gint                 rle);
+static gint             save_index              (FILE                  *ofp,
+                                                 GimpImage             *image,
+                                                 GimpDrawable          *drawable,
+                                                 gboolean               grey,
+                                                 gint                   rle);
+static gint             save_rgb                (FILE                  *ofp,
+                                                 GimpImage             *image,
+                                                 GimpDrawable          *drawable,
+                                                 gint                   rle);
 
-static gboolean         save_dialog             (GimpImage           *image,
-                                                 GimpProcedure       *procedure,
-                                                 GObject             *config);
+static gboolean         save_dialog             (GimpImage             *image,
+                                                 GimpProcedure         *procedure,
+                                                 GObject               *config);
 
 /* Portability kludge */
-static int              my_fwrite               (void                *ptr,
-                                                 int                  size,
-                                                 int                  nmemb,
-                                                 FILE                *stream);
+static int              my_fwrite               (void                  *ptr,
+                                                 int                    size,
+                                                 int                    nmemb,
+                                                 FILE                  *stream);
 
 
 G_DEFINE_TYPE (Sunras, sunras, GIMP_TYPE_PLUG_IN)
@@ -268,9 +270,9 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           sunras_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            sunras_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("SUN Rasterfile image"));
 
@@ -330,11 +332,13 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-sunras_load (GimpProcedure        *procedure,
-             GimpRunMode           run_mode,
-             GFile                *file,
-             const GimpValueArray *args,
-             gpointer              run_data)
+sunras_load (GimpProcedure         *procedure,
+             GimpRunMode            run_mode,
+             GFile                 *file,
+             GimpMetadata          *metadata,
+             GimpMetadataLoadFlags *flags,
+             GimpProcedureConfig   *config,
+             gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;

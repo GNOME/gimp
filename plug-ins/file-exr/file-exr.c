@@ -48,22 +48,23 @@ struct _ExrClass
 
 GType                   exr_get_type         (void) G_GNUC_CONST;
 
-static GList          * exr_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * exr_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * exr_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * exr_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * exr_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
+static GimpValueArray * exr_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
-static GimpImage      * load_image           (GFile                *file,
-                                              gboolean              interactive,
-                                              GError              **error);
-static void             sanitize_comment     (gchar                *comment);
+static GimpImage      * load_image           (GFile                 *file,
+                                              gboolean               interactive,
+                                              GError               **error);
+static void             sanitize_comment     (gchar                 *comment);
 void                    load_dialog          (void);
-
 
 
 G_DEFINE_TYPE (Exr, exr, GIMP_TYPE_PLUG_IN)
@@ -101,9 +102,9 @@ exr_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           exr_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            exr_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("OpenEXR image"));
 
@@ -130,11 +131,13 @@ exr_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-exr_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+exr_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;

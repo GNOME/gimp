@@ -83,51 +83,53 @@ typedef struct
   gint   datatype;
 } FitsHduData;
 
-static GList          * fits_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * fits_create_procedure (GimpPlugIn           *plug_in,
-                                               const gchar          *name);
+static GList          * fits_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * fits_create_procedure (GimpPlugIn            *plug_in,
+                                               const gchar           *name);
 
-static GimpValueArray * fits_load             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GFile                *file,
-                                               const GimpValueArray *args,
-                                               gpointer              run_data);
-static GimpValueArray * fits_save             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
-                                               gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               GFile                *file,
-                                               GimpMetadata         *metadata,
-                                               GimpProcedureConfig  *config,
-                                               gpointer              run_data);
+static GimpValueArray * fits_load             (GimpProcedure         *procedure,
+                                               GimpRunMode            run_mode,
+                                               GFile                 *file,
+                                               GimpMetadata          *metadata,
+                                               GimpMetadataLoadFlags *flags,
+                                               GimpProcedureConfig   *config,
+                                               gpointer               run_data);
+static GimpValueArray * fits_save             (GimpProcedure         *procedure,
+                                               GimpRunMode            run_mode,
+                                               GimpImage             *image,
+                                               gint                   n_drawables,
+                                               GimpDrawable         **drawables,
+                                               GFile                 *file,
+                                               GimpMetadata          *metadata,
+                                               GimpProcedureConfig   *config,
+                                               gpointer               run_data);
 
-static GimpImage      * load_image            (GFile              *file,
-                                               GObject            *config,
-                                               GimpRunMode         run_mode,
-                                               GError            **error);
-static gint             save_image            (GFile              *file,
-                                               GimpImage          *image,
-                                               GimpDrawable       *drawable,
-                                               GError            **error);
+static GimpImage      * load_image            (GFile                 *file,
+                                               GObject               *config,
+                                               GimpRunMode            run_mode,
+                                               GError               **error);
+static gint             save_image            (GFile                 *file,
+                                               GimpImage             *image,
+                                               GimpDrawable          *drawable,
+                                               GError               **error);
 
-static gint             save_fits             (GFile              *file,
-                                               GimpImage          *image,
-                                               GimpDrawable       *drawable);
+static gint             save_fits             (GFile                 *file,
+                                               GimpImage             *image,
+                                               GimpDrawable          *drawable);
 
-static GimpImage      * create_new_image      (GFile              *file,
-                                               guint               pagenum,
-                                               guint               width,
-                                               guint               height,
-                                               GimpImageBaseType   itype,
-                                               GimpImageType       dtype,
-                                               GimpPrecision       iprecision,
-                                               GimpLayer         **layer,
-                                               GeglBuffer        **buffer);
+static GimpImage      * create_new_image      (GFile                 *file,
+                                               guint                  pagenum,
+                                               guint                  width,
+                                               guint                  height,
+                                               GimpImageBaseType      itype,
+                                               GimpImageType          dtype,
+                                               GimpPrecision          iprecision,
+                                               GimpLayer            **layer,
+                                               GeglBuffer           **buffer);
 
-static gboolean         load_dialog           (GimpProcedure      *procedure,
-                                               GObject            *config);
-static void             show_fits_errors      (gint                status);
+static gboolean         load_dialog           (GimpProcedure         *procedure,
+                                               GObject               *config);
+static void             show_fits_errors      (gint                   status);
 
 
 G_DEFINE_TYPE (Fits, fits, GIMP_TYPE_PLUG_IN)
@@ -170,9 +172,9 @@ fits_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           fits_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            fits_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure,
                                      _("Flexible Image Transport System"));
@@ -239,21 +241,19 @@ fits_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-fits_load (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GFile                *file,
-           const GimpValueArray *args,
-           gpointer              run_data)
+fits_load (GimpProcedure         *procedure,
+           GimpRunMode            run_mode,
+           GFile                 *file,
+           GimpMetadata          *metadata,
+           GimpMetadataLoadFlags *flags,
+           GimpProcedureConfig   *config,
+           gpointer               run_data)
 {
-  GimpProcedureConfig *config;
-  GimpValueArray      *return_vals;
-  GimpImage           *image;
-  GError              *error = NULL;
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  GError         *error = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -269,9 +269,6 @@ fits_load (GimpProcedure        *procedure,
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
-
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-  g_object_unref (config);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,

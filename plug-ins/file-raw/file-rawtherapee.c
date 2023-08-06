@@ -55,20 +55,22 @@ struct _RawtherapeeClass
 
 GType                   rawtherapee_get_type         (void) G_GNUC_CONST;
 
-static GList          * rawtherapee_init_procedures  (GimpPlugIn           *plug_in);
-static GimpProcedure  * rawtherapee_create_procedure (GimpPlugIn           *plug_in,
-                                                      const gchar          *name);
+static GList          * rawtherapee_init_procedures  (GimpPlugIn            *plug_in);
+static GimpProcedure  * rawtherapee_create_procedure (GimpPlugIn            *plug_in,
+                                                      const gchar           *name);
 
-static GimpValueArray * rawtherapee_load             (GimpProcedure        *procedure,
-                                                      GimpRunMode           run_mode,
-                                                      GFile                *file,
-                                                      const GimpValueArray *args,
-                                                      gpointer              run_data);
-static GimpValueArray * rawtherapee_load_thumb       (GimpProcedure        *procedure,
-                                                      GFile                *file,
-                                                      gint                  size,
-                                                      const GimpValueArray *args,
-                                                      gpointer              run_data);
+static GimpValueArray * rawtherapee_load             (GimpProcedure         *procedure,
+                                                      GimpRunMode            run_mode,
+                                                      GFile                 *file,
+                                                      GimpMetadata          *metadata,
+                                                      GimpMetadataLoadFlags *flags,
+                                                      GimpProcedureConfig   *config,
+                                                      gpointer               run_data);
+static GimpValueArray * rawtherapee_load_thumb       (GimpProcedure         *procedure,
+                                                      GFile                 *file,
+                                                      gint                   size,
+                                                      const GimpValueArray  *args,
+                                                      gpointer               run_data);
 
 static GimpImage      * load_image                   (GFile                *file,
                                                       GimpRunMode           run_mode,
@@ -217,10 +219,10 @@ rawtherapee_create_procedure (GimpPlugIn  *plug_in,
           load_blurb = g_strdup_printf (format->load_blurb_format, "rawtherapee");
           load_help  = g_strdup_printf (format->load_help_format,  "rawtherapee");
 
-          procedure = gimp_load_procedure_new (plug_in, name,
-                                               GIMP_PDB_PROC_TYPE_PLUGIN,
-                                               rawtherapee_load,
-                                               (gpointer) format, NULL);
+          procedure = gimp_load_procedure_new2 (plug_in, name,
+                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+                                                rawtherapee_load,
+                                                (gpointer) format, NULL);
 
           gimp_procedure_set_documentation (procedure,
                                             load_blurb, load_help, name);
@@ -253,11 +255,13 @@ rawtherapee_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-rawtherapee_load (GimpProcedure        *procedure,
-                  GimpRunMode           run_mode,
-                  GFile                *file,
-                  const GimpValueArray *args,
-                  gpointer              run_data)
+rawtherapee_load (GimpProcedure         *procedure,
+                  GimpRunMode            run_mode,
+                  GFile                 *file,
+                  GimpMetadata          *metadata,
+                  GimpMetadataLoadFlags *flags,
+                  GimpProcedureConfig   *config,
+                  gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;

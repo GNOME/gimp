@@ -58,106 +58,110 @@ struct _PcxClass
 
 GType                   pcx_get_type         (void) G_GNUC_CONST;
 
-static GList          * pcx_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * pcx_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * pcx_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * pcx_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * pcx_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * dcx_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * pcx_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GFile                *file,
-                                              GimpMetadata         *metadata,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
+static GimpValueArray * pcx_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * dcx_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * pcx_save             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GimpImage             *image,
+                                              gint                   n_drawables,
+                                              GimpDrawable         **drawables,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
-static GimpImage      * load_single          (GimpProcedure        *procedure,
-                                              GFile                *file,
-                                              GObject              *config,
-                                              gint                  run_mode,
-                                              GError              **error);
-static GimpImage      * load_multi           (GimpProcedure        *procedure,
-                                              GFile                *file,
-                                              GObject              *config,
-                                              gint                  run_mode,
-                                              GError              **error);
+static GimpImage      * load_single          (GimpProcedure         *procedure,
+                                              GFile                 *file,
+                                              GObject               *config,
+                                              gint                   run_mode,
+                                              GError               **error);
+static GimpImage      * load_multi           (GimpProcedure         *procedure,
+                                              GFile                 *file,
+                                              GObject               *config,
+                                              gint                   run_mode,
+                                              GError               **error);
 
-static GimpImage      * load_image           (GimpProcedure        *procedure,
-                                              FILE                 *fd,
-                                              const gchar          *filename,
-                                              GObject              *config,
-                                              gint                  run_mode,
-                                              gint                  image_num,
-                                              GError              **error);
-static gboolean         pcx_load_dialog      (GimpProcedure        *procedure,
-                                              GObject              *config);
+static GimpImage      * load_image           (GimpProcedure         *procedure,
+                                              FILE                  *fd,
+                                              const gchar           *filename,
+                                              GObject               *config,
+                                              gint                   run_mode,
+                                              gint                   image_num,
+                                              GError               **error);
+static gboolean         pcx_load_dialog      (GimpProcedure         *procedure,
+                                              GObject               *config);
 
-static void             load_1               (FILE                 *fp,
-                                              gint                  width,
-                                              gint                  height,
-                                              guchar               *buf,
-                                              guint16               bytes);
-static void             load_4               (FILE                 *fp,
-                                              gint                  width,
-                                              gint                  height,
-                                              guchar               *buf,
-                                              guint16               bytes);
-static void             load_sub_8           (FILE                 *fp,
-                                              gint                  width,
-                                              gint                  height,
-                                              gint                  bpp,
-                                              gint                  plane,
-                                              guchar               *buf,
-                                              guint16               bytes);
-static void             load_8               (FILE                 *fp,
-                                              gint                  width,
-                                              gint                  height,
-                                              guchar               *buf,
-                                              guint16               bytes);
-static void             load_24              (FILE                 *fp,
-                                              gint                  width,
-                                              gint                  height,
-                                              guchar               *buf,
-                                              guint16               bytes,
-                                              guint8                planes);
-static void             readline             (FILE                 *fp,
-                                              guchar               *buf,
-                                              gint                  bytes);
+static void             load_1               (FILE                  *fp,
+                                              gint                   width,
+                                              gint                   height,
+                                              guchar                *buf,
+                                              guint16                bytes);
+static void             load_4               (FILE                  *fp,
+                                              gint                   width,
+                                              gint                   height,
+                                              guchar                *buf,
+                                              guint16                bytes);
+static void             load_sub_8           (FILE                  *fp,
+                                              gint                   width,
+                                              gint                   height,
+                                              gint                   bpp,
+                                              gint                   plane,
+                                              guchar                *buf,
+                                              guint16                bytes);
+static void             load_8               (FILE                  *fp,
+                                              gint                   width,
+                                              gint                   height,
+                                              guchar                *buf,
+                                              guint16                bytes);
+static void             load_24              (FILE                  *fp,
+                                              gint                   width,
+                                              gint                   height,
+                                              guchar                *buf,
+                                              guint16                bytes,
+                                              guint8                 planes);
+static void             readline             (FILE                  *fp,
+                                              guchar                *buf,
+                                              gint                   bytes);
 
-static gboolean         save_image           (GFile                *file,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
-                                              GError              **error);
-static void             save_less_than_8     (FILE                 *fp,
-                                              gint                  width,
-                                              gint                  height,
-                                              const gint            bpp,
-                                              const guchar         *buf,
-                                              gboolean              padding);
-static void             save_8               (FILE                 *fp,
-                                              gint                  width,
-                                              gint                  height,
-                                              const guchar         *buf,
-                                              gboolean              padding);
-static void             save_24              (FILE                 *fp,
-                                              gint                  width,
-                                              gint                  height,
-                                              const guchar         *buf,
-                                              gboolean              padding);
-static void             writeline            (FILE                 *fp,
-                                              const guchar         *buf,
-                                              gint                  bytes);
+static gboolean         save_image           (GFile                 *file,
+                                              GimpImage             *image,
+                                              GimpDrawable          *drawable,
+                                              GError               **error);
+static void             save_less_than_8     (FILE                  *fp,
+                                              gint                   width,
+                                              gint                   height,
+                                              const gint             bpp,
+                                              const guchar          *buf,
+                                              gboolean               padding);
+static void             save_8               (FILE                  *fp,
+                                              gint                   width,
+                                              gint                   height,
+                                              const guchar          *buf,
+                                              gboolean               padding);
+static void             save_24              (FILE                  *fp,
+                                              gint                   width,
+                                              gint                   height,
+                                              const guchar          *buf,
+                                              gboolean               padding);
+static void             writeline            (FILE                  *fp,
+                                              const guchar          *buf,
+                                              gint                   bytes);
 
 
 G_DEFINE_TYPE (Pcx, pcx, GIMP_TYPE_PLUG_IN)
@@ -201,9 +205,9 @@ pcx_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pcx_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            pcx_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("ZSoft PCX image"));
 
@@ -232,9 +236,9 @@ pcx_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, LOAD_PROC_DCX))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           dcx_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            dcx_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("ZSoft DCX image"));
 
@@ -290,36 +294,26 @@ pcx_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-pcx_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+pcx_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
-  GimpProcedureConfig *config;
-  GimpValueArray      *return_vals;
-  GimpImage           *image;
-  GError              *error = NULL;
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  GError         *error = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   image = load_single (procedure, file, G_OBJECT (config), run_mode, &error);
 
   if (! image)
-    {
-      gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
-      g_object_unref (config);
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
-                                               error);
-    }
-
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-  g_object_unref (config);
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -331,36 +325,26 @@ pcx_load (GimpProcedure        *procedure,
 }
 
 static GimpValueArray *
-dcx_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+dcx_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
-  GimpProcedureConfig *config;
-  GimpValueArray      *return_vals;
-  GimpImage           *image;
-  GError              *error = NULL;
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  GError         *error = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   image = load_multi (procedure, file, G_OBJECT (config), run_mode, &error);
 
   if (! image)
-    {
-      gimp_procedure_config_end_run (config, GIMP_PDB_CANCEL);
-      g_object_unref (config);
-
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
-                                               error);
-    }
-
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-  g_object_unref (config);
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,

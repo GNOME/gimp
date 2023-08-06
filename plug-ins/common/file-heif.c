@@ -69,41 +69,43 @@ struct _GimpHeifClass
 
 GType                   gimp_heif_get_type    (void) G_GNUC_CONST;
 
-static GList          * heif_init_procedures  (GimpPlugIn           *plug_in);
-static GimpProcedure  * heif_create_procedure (GimpPlugIn           *plug_in,
-                                               const gchar          *name);
+static GList          * heif_init_procedures  (GimpPlugIn                   *plug_in);
+static GimpProcedure  * heif_create_procedure (GimpPlugIn                   *plug_in,
+                                               const gchar                  *name);
 
-static GimpValueArray * heif_load             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GFile                *file,
-                                               const GimpValueArray *args,
-                                               gpointer              run_data);
-static GimpValueArray * heif_save             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
-                                               gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               GFile                *file,
-                                               GimpMetadata         *metadata,
-                                               GimpProcedureConfig  *config,
-                                               gpointer              run_data);
+static GimpValueArray * heif_load             (GimpProcedure                *procedure,
+                                               GimpRunMode                   run_mode,
+                                               GFile                        *file,
+                                               GimpMetadata                 *metadata,
+                                               GimpMetadataLoadFlags        *flags,
+                                               GimpProcedureConfig          *config,
+                                               gpointer                      run_data);
+static GimpValueArray * heif_save             (GimpProcedure                *procedure,
+                                               GimpRunMode                   run_mode,
+                                               GimpImage                    *image,
+                                               gint                          n_drawables,
+                                               GimpDrawable                **drawables,
+                                               GFile                        *file,
+                                               GimpMetadata                 *metadata,
+                                               GimpProcedureConfig          *config,
+                                               gpointer                      run_data);
 
 #if LIBHEIF_HAVE_VERSION(1,8,0)
-static GimpValueArray * heif_av1_save         (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
-                                               gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               GFile                *file,
-                                               GimpMetadata         *metadata,
-                                               GimpProcedureConfig  *config,
-                                               gpointer              run_data);
+static GimpValueArray * heif_av1_save         (GimpProcedure                *procedure,
+                                               GimpRunMode                   run_mode,
+                                               GimpImage                    *image,
+                                               gint                          n_drawables,
+                                               GimpDrawable                **drawables,
+                                               GFile                        *file,
+                                               GimpMetadata                 *metadata,
+                                               GimpProcedureConfig          *config,
+                                               gpointer                      run_data);
 #endif
 
-static GimpImage      * load_image            (GFile               *file,
-                                               gboolean             interactive,
-                                               GimpPDBStatusType    *status,
-                                               GError              **error);
+static GimpImage      * load_image            (GFile                        *file,
+                                               gboolean                      interactive,
+                                               GimpPDBStatusType            *status,
+                                               GError                      **error);
 static gboolean         save_image            (GFile                        *file,
                                                GimpImage                    *image,
                                                GimpDrawable                 *drawable,
@@ -112,11 +114,11 @@ static gboolean         save_image            (GFile                        *fil
                                                enum heif_compression_format  compression,
                                                GimpMetadata                 *metadata);
 
-static gboolean         load_dialog           (struct heif_context  *heif,
-                                               uint32_t             *selected_image);
-static gboolean         save_dialog           (GimpProcedure        *procedure,
-                                               GObject              *config,
-                                               GimpImage            *image);
+static gboolean         load_dialog           (struct heif_context          *heif,
+                                               uint32_t                     *selected_image);
+static gboolean         save_dialog           (GimpProcedure                *procedure,
+                                               GObject                      *config,
+                                               GimpImage                    *image);
 
 
 G_DEFINE_TYPE (GimpHeif, gimp_heif, GIMP_TYPE_PLUG_IN)
@@ -185,9 +187,9 @@ heif_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           heif_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            heif_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("HEIF/HEIC"));
 
@@ -303,9 +305,9 @@ heif_create_procedure (GimpPlugIn  *plug_in,
 #if LIBHEIF_HAVE_VERSION(1,8,0)
   else if (! strcmp (name, LOAD_PROC_AV1))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           heif_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            heif_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, "HEIF/AVIF");
 
@@ -415,11 +417,13 @@ heif_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-heif_load (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GFile                *file,
-           const GimpValueArray *args,
-           gpointer              run_data)
+heif_load (GimpProcedure         *procedure,
+           GimpRunMode            run_mode,
+           GFile                 *file,
+           GimpMetadata          *metadata,
+           GimpMetadataLoadFlags *flags,
+           GimpProcedureConfig   *config,
+           gpointer               run_data)
 {
   GimpValueArray    *return_vals;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;

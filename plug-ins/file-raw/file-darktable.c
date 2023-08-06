@@ -54,29 +54,31 @@ struct _DarktableClass
 
 GType                   darktable_get_type         (void) G_GNUC_CONST;
 
-static GList          * darktable_init_procedures  (GimpPlugIn           *plug_in);
-static GimpProcedure  * darktable_create_procedure (GimpPlugIn           *plug_in,
-                                                    const gchar          *name);
+static GList          * darktable_init_procedures  (GimpPlugIn            *plug_in);
+static GimpProcedure  * darktable_create_procedure (GimpPlugIn            *plug_in,
+                                                    const gchar           *name);
 
-static GimpValueArray * darktable_load             (GimpProcedure        *procedure,
-                                                    GimpRunMode           run_mode,
-                                                    GFile                *file,
-                                                    const GimpValueArray *args,
-                                                    gpointer              run_data);
-static GimpValueArray * darktable_load_thumb       (GimpProcedure        *procedure,
-                                                    GFile                *file,
-                                                    gint                  size,
-                                                    const GimpValueArray *args,
-                                                    gpointer              run_data);
+static GimpValueArray * darktable_load             (GimpProcedure         *procedure,
+                                                    GimpRunMode            run_mode,
+                                                    GFile                 *file,
+                                                    GimpMetadata          *metadata,
+                                                    GimpMetadataLoadFlags *flags,
+                                                    GimpProcedureConfig   *config,
+                                                    gpointer               run_data);
+static GimpValueArray * darktable_load_thumb       (GimpProcedure         *procedure,
+                                                    GFile                 *file,
+                                                    gint                   size,
+                                                    const GimpValueArray  *args,
+                                                    gpointer               run_data);
 
-static GimpImage      * load_image                 (GFile                *file,
-                                                    GimpRunMode           run_mode,
-                                                    GError              **error);
-static GimpImage      * load_thumbnail_image       (GFile                *file,
-                                                    gint                  thumb_size,
-                                                    gint                 *width,
-                                                    gint                 *height,
-                                                    GError              **error);
+static GimpImage      * load_image                 (GFile                 *file,
+                                                    GimpRunMode            run_mode,
+                                                    GError               **error);
+static GimpImage      * load_thumbnail_image       (GFile                 *file,
+                                                    gint                   thumb_size,
+                                                    gint                  *width,
+                                                    gint                  *height,
+                                                    GError               **error);
 
 
 G_DEFINE_TYPE (Darktable, darktable, GIMP_TYPE_PLUG_IN)
@@ -266,10 +268,10 @@ darktable_create_procedure (GimpPlugIn  *plug_in,
           load_blurb = g_strdup_printf (format->load_blurb_format, "darktable");
           load_help  = g_strdup_printf (format->load_help_format,  "darktable");
 
-          procedure = gimp_load_procedure_new (plug_in, name,
-                                               GIMP_PDB_PROC_TYPE_PLUGIN,
-                                               darktable_load,
-                                               (gpointer) format, NULL);
+          procedure = gimp_load_procedure_new2 (plug_in, name,
+                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+                                                darktable_load,
+                                                (gpointer) format, NULL);
 
           gimp_procedure_set_documentation (procedure,
                                             load_blurb, load_help, name);
@@ -302,11 +304,13 @@ darktable_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-darktable_load (GimpProcedure        *procedure,
-                GimpRunMode           run_mode,
-                GFile                *file,
-                const GimpValueArray *args,
-                gpointer              run_data)
+darktable_load (GimpProcedure         *procedure,
+                GimpRunMode            run_mode,
+                GFile                 *file,
+                GimpMetadata          *metadata,
+                GimpMetadataLoadFlags *flags,
+                GimpProcedureConfig   *config,
+                gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;

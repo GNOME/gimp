@@ -100,39 +100,41 @@ struct _XpmClass
 
 GType                   xpm_get_type         (void) G_GNUC_CONST;
 
-static GList          * xpm_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * xpm_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * xpm_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * xpm_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * xpm_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * xpm_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GFile                *file,
-                                              GimpMetadata         *metadata,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
+static GimpValueArray * xpm_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * xpm_save             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GimpImage             *image,
+                                              gint                   n_drawables,
+                                              GimpDrawable         **drawables,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
-static GimpImage      * load_image           (GFile               *file,
-                                              GError              **error);
-static guchar         * parse_colors         (XpmImage             *xpm_image);
-static void             parse_image          (GimpImage            *image,
-                                              XpmImage             *xpm_image,
-                                              guchar               *cmap);
-static gboolean         save_image           (GFile                *file,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
-                                              GObject              *config,
-                                              GError              **error);
-static gboolean         save_dialog          (GimpImage            *image,
-                                              GimpProcedure        *procedure,
-                                              GObject              *config);
+static GimpImage      * load_image           (GFile                 *file,
+                                              GError                **error);
+static guchar         * parse_colors         (XpmImage               *xpm_image);
+static void             parse_image          (GimpImage              *image,
+                                              XpmImage               *xpm_image,
+                                              guchar                 *cmap);
+static gboolean         save_image           (GFile                  *file,
+                                              GimpImage              *image,
+                                              GimpDrawable           *drawable,
+                                              GObject                *config,
+                                              GError                **error);
+static gboolean         save_dialog          (GimpImage              *image,
+                                              GimpProcedure          *procedure,
+                                              GObject                *config);
 
 
 G_DEFINE_TYPE (Xpm, xpm, GIMP_TYPE_PLUG_IN)
@@ -190,9 +192,9 @@ xpm_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           xpm_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            xpm_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("X PixMap image"));
 
@@ -267,11 +269,13 @@ xpm_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-xpm_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+xpm_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;

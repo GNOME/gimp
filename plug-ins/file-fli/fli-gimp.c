@@ -90,48 +90,50 @@ struct _FliClass
 
 GType                   fli_get_type         (void) G_GNUC_CONST;
 
-static GList          * fli_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * fli_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+static GList          * fli_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * fli_create_procedure (GimpPlugIn            *plug_in,
+                                              const gchar           *name);
 
-static GimpValueArray * fli_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
-static GimpValueArray * fli_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              GFile                *file,
-                                              GimpMetadata         *metadata,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
-static GimpValueArray * fli_info             (GimpProcedure        *procedure,
-                                              GimpProcedureConfig  *config,
-                                              gpointer              run_data);
+static GimpValueArray * fli_load             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpMetadataLoadFlags *flags,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * fli_save             (GimpProcedure         *procedure,
+                                              GimpRunMode            run_mode,
+                                              GimpImage             *image,
+                                              gint                   n_drawables,
+                                              GimpDrawable         **drawables,
+                                              GFile                 *file,
+                                              GimpMetadata          *metadata,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
+static GimpValueArray * fli_info             (GimpProcedure         *procedure,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
-static GimpImage      * load_image           (GFile                *file,
-                                              GObject              *config,
-                                              GError              **error);
-static gboolean         load_dialog          (GFile                *file,
-                                              GimpProcedure        *procedure,
-                                              GObject              *config);
+static GimpImage      * load_image           (GFile                 *file,
+                                              GObject               *config,
+                                              GError               **error);
+static gboolean         load_dialog          (GFile                 *file,
+                                              GimpProcedure         *procedure,
+                                              GObject               *config);
 
-static gboolean         save_image           (GFile                *file,
-                                              GimpImage            *image,
-                                              GObject              *config,
-                                              GError              **error);
-static gboolean         save_dialog          (GimpImage            *image,
-                                              GimpProcedure        *procedure,
-                                              GObject              *config);
+static gboolean         save_image           (GFile                 *file,
+                                              GimpImage             *image,
+                                              GObject               *config,
+                                              GError               **error);
+static gboolean         save_dialog          (GimpImage             *image,
+                                              GimpProcedure         *procedure,
+                                              GObject               *config);
 
-static gboolean         get_info             (GFile                *file,
-                                              gint32               *width,
-                                              gint32               *height,
-                                              gint32               *frames,
-                                              GError              **error);
+static gboolean         get_info             (GFile                 *file,
+                                              gint32                *width,
+                                              gint32                *height,
+                                              gint32                *frames,
+                                              GError               **error);
 
 
 G_DEFINE_TYPE (Fli, fli, GIMP_TYPE_PLUG_IN)
@@ -175,9 +177,9 @@ fli_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           fli_load, NULL, NULL);
+      procedure = gimp_load_procedure_new2 (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            fli_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("AutoDesk FLIC animation"));
 
@@ -291,21 +293,19 @@ fli_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-fli_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+fli_load (GimpProcedure         *procedure,
+          GimpRunMode            run_mode,
+          GFile                 *file,
+          GimpMetadata          *metadata,
+          GimpMetadataLoadFlags *flags,
+          GimpProcedureConfig   *config,
+          gpointer               run_data)
 {
-  GimpProcedureConfig *config;
-  GimpValueArray      *return_vals;
-  GimpImage           *image;
-  GError              *error = NULL;
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  GError         *error = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -315,16 +315,12 @@ fli_load (GimpProcedure        *procedure,
                                                  NULL);
     }
 
-  image = load_image (file, G_OBJECT (config),
-                      &error);
+  image = load_image (file, G_OBJECT (config), &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
-
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-  g_object_unref (config);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,

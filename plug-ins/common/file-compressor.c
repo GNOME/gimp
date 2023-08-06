@@ -149,57 +149,59 @@ struct _CompressorClass
 
 GType                   compressor_get_type         (void) G_GNUC_CONST;
 
-static GList          * compressor_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * compressor_create_procedure (GimpPlugIn           *plug_in,
-                                                     const gchar          *name);
+static GList          * compressor_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure  * compressor_create_procedure (GimpPlugIn            *plug_in,
+                                                     const gchar           *name);
 
-static GimpValueArray * compressor_save             (GimpProcedure        *procedure,
-                                                     GimpRunMode           run_mode,
-                                                     GimpImage            *image,
-                                                     gint                  n_drawables,
-                                                     GimpDrawable        **drawables,
-                                                     GFile                *file,
-                                                     GimpMetadata         *metadata,
-                                                     GimpProcedureConfig  *config,
+static GimpValueArray * compressor_save             (GimpProcedure         *procedure,
+                                                     GimpRunMode            run_mode,
+                                                     GimpImage             *image,
+                                                     gint                   n_drawables,
+                                                     GimpDrawable         **drawables,
+                                                     GFile                 *file,
+                                                     GimpMetadata          *metadata,
+                                                     GimpProcedureConfig   *config,
+                                                     gpointer               run_data);
+static GimpValueArray * compressor_load             (GimpProcedure         *procedure,
+                                                     GimpRunMode            run_mode,
+                                                     GFile                 *file,
+                                                     GimpMetadata          *metadata,
+                                                     GimpMetadataLoadFlags *flags,
+                                                     GimpProcedureConfig   *config,
                                                      gpointer              run_data);
-static GimpValueArray * compressor_load             (GimpProcedure        *procedure,
-                                                     GimpRunMode           run_mode,
-                                                     GFile                *file,
-                                                     const GimpValueArray *args,
-                                                     gpointer              run_data);
 
-static GimpImage         * load_image     (const CompressorEntry *compressor,
-                                           GFile                 *file,
-                                           gint32                 run_mode,
-                                           GimpPDBStatusType     *status,
-                                           GError               **error);
-static GimpPDBStatusType   save_image     (const CompressorEntry *compressor,
-                                           GFile                 *file,
-                                           GimpImage             *image,
-                                           gint                   n_drawables,
-                                           GimpDrawable         **drawables,
-                                           gint32                 run_mode,
-                                           GError               **error);
+static GimpImage         * load_image               (const CompressorEntry *compressor,
+                                                     GFile                 *file,
+                                                     gint32                 run_mode,
+                                                     GimpPDBStatusType     *status,
+                                                     GError               **error);
+static GimpPDBStatusType   save_image               (const CompressorEntry *compressor,
+                                                     GFile                 *file,
+                                                     GimpImage             *image,
+                                                     gint                   n_drawables,
+                                                     GimpDrawable         **drawables,
+                                                     gint32                 run_mode,
+                                                     GError               **error);
 
-static gboolean            valid_file     (GFile                 *file);
-static const gchar       * find_extension (const CompressorEntry *compressor,
-                                           const gchar           *filename);
+static gboolean            valid_file               (GFile                 *file);
+static const gchar       * find_extension           (const CompressorEntry *compressor,
+                                                     const gchar           *filename);
 
-static gboolean            gzip_load      (GFile                 *infile,
-                                           GFile                 *outfile);
-static gboolean            gzip_save      (GFile                 *infile,
-                                           GFile                 *outfile);
+static gboolean            gzip_load                (GFile                 *infile,
+                                                     GFile                 *outfile);
+static gboolean            gzip_save                (GFile                 *infile,
+                                                     GFile                 *outfile);
 
-static gboolean            bzip2_load     (GFile                 *infile,
-                                           GFile                 *outfile);
-static gboolean            bzip2_save     (GFile                 *infile,
-                                           GFile                 *outfile);
+static gboolean            bzip2_load               (GFile                 *infile,
+                                                     GFile                 *outfile);
+static gboolean            bzip2_save               (GFile                 *infile,
+                                                     GFile                 *outfile);
 
-static gboolean            xz_load        (GFile                 *infile,
-                                           GFile                 *outfile);
-static gboolean            xz_save        (GFile                 *infile,
-                                           GFile                 *outfile);
-static goffset             get_file_info  (GFile                 *file);
+static gboolean            xz_load                  (GFile                 *infile,
+                                                     GFile                 *outfile);
+static gboolean            xz_save                  (GFile                 *infile,
+                                                     GFile                 *outfile);
+static goffset             get_file_info            (GFile                 *file);
 
 
 G_DEFINE_TYPE (Compressor, compressor, GIMP_TYPE_PLUG_IN)
@@ -314,10 +316,10 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
 
       if (! strcmp (name, compressor->load_proc))
         {
-          procedure = gimp_load_procedure_new (plug_in, name,
-                                               GIMP_PDB_PROC_TYPE_PLUGIN,
-                                               compressor_load,
-                                               (gpointer) compressor, NULL);
+          procedure = gimp_load_procedure_new2 (plug_in, name,
+                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+                                                compressor_load,
+                                                (gpointer) compressor, NULL);
 
           gimp_procedure_set_documentation (procedure,
                                             compressor->load_blurb,
@@ -365,11 +367,13 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-compressor_load (GimpProcedure        *procedure,
-                 GimpRunMode           run_mode,
-                 GFile                *file,
-                 const GimpValueArray *args,
-                 gpointer              run_data)
+compressor_load (GimpProcedure         *procedure,
+                 GimpRunMode            run_mode,
+                 GFile                 *file,
+                 GimpMetadata          *metadata,
+                 GimpMetadataLoadFlags *flags,
+                 GimpProcedureConfig   *config,
+                 gpointer               run_data)
 {
   const CompressorEntry *compressor = run_data;
   GimpValueArray        *return_vals;
