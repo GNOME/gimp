@@ -1,3 +1,10 @@
+<!-- ⚠️ IMPORTANT: READ ME! ⚠️
+This is the default template for bug reports.
+For feature requests or performance issues, please switch instead to the appropriate template in the "Choose a template" list.
+
+It is important that you fill all the fields of the template.
+-->
+
 ### Environment/Versions
 
 - GIMP version:
