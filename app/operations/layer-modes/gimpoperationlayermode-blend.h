@@ -36,6 +36,16 @@ void gimp_operation_layer_mode_blend_burn              (GeglOperation *operation
                                                         const gfloat  *layer,
                                                         gfloat        *comp,
                                                         gint           samples);
+void gimp_operation_layer_mode_blend_cancellation_light       (GeglOperation *operation,
+                                                        const gfloat  *in,
+                                                        const gfloat  *layer,
+                                                        gfloat        *comp,
+                                                        gint           samples);
+void gimp_operation_layer_mode_blend_cancellation_light_linear       (GeglOperation *operation,
+                                                        const gfloat  *in,
+                                                        const gfloat  *layer,
+                                                        gfloat        *comp,
+                                                        gint           samples);
 void gimp_operation_layer_mode_blend_darken_only       (GeglOperation *operation,
                                                         const gfloat  *in,
                                                         const gfloat  *layer,
@@ -156,7 +166,22 @@ void gimp_operation_layer_mode_blend_multiply          (GeglOperation *operation
                                                         const gfloat  *layer,
                                                         gfloat        *comp,
                                                         gint           samples);
-void gimp_operation_layer_mode_blend_overlay           (GeglOperation *operation,
+void gimp_operation_layer_mode_blend_multiplyadd_darken_only          (GeglOperation *operation,
+                                                        const gfloat  *in,
+                                                        const gfloat  *layer,
+                                                        gfloat        *comp,
+                                                        gint           samples);
+void gimp_operation_layer_mode_blend_multiplyadd_lighten_only          (GeglOperation *operation,
+                                                        const gfloat  *in,
+                                                        const gfloat  *layer,
+                                                        gfloat        *comp,
+                                                        gint           samples);
+void gimp_operation_layer_mode_blend_overlay_A          (GeglOperation *operation,
+                                                        const gfloat  *in,
+                                                        const gfloat  *layer,
+                                                        gfloat        *comp,
+                                                        gint           samples);
+void gimp_operation_layer_mode_blend_overlay_B          (GeglOperation *operation,
                                                         const gfloat  *in,
                                                         const gfloat  *layer,
                                                         gfloat        *comp,
