@@ -129,6 +129,80 @@ gimp_operation_layer_mode_blend_burn (GeglOperation *operation,
     }
 }
 
+void /* inverse vivid light */
+gimp_operation_layer_mode_blend_cancellation_light (GeglOperation *operation,
+                                             const gfloat  *in,
+                                             const gfloat  *layer,
+                                             gfloat        *comp,
+                                             gint           samples)
+{
+  while (samples--)
+    {
+      if (in[ALPHA] != 0.0f && layer[ALPHA] != 0.0f)
+        {
+          gint c;
+
+          for (c = 0; c < 3; c++)
+            {
+              gfloat val;
+
+              if (layer[c] <= 0.5f)
+                {
+                  val = safe_div (in[c], 2.0f * layer[c]);
+                  val = MIN (val, 1.0f);
+                }
+              else
+                {
+                  val = 1.0f - safe_div (1.0f - in[c], 2.0f * (1.0 - layer[c]));
+                  val = MAX (val, 0.0f);
+                }
+
+              comp[c] = val;
+            }
+        }
+
+      comp[ALPHA] = layer[ALPHA];
+
+      comp  += 4;
+      layer += 4;
+      in    += 4;
+    }
+}
+
+void /* inverse linear light */
+gimp_operation_layer_mode_blend_cancellation_light_linear (GeglOperation *operation,
+                                              const gfloat  *in,
+                                              const gfloat  *layer,
+                                              gfloat        *comp,
+                                              gint           samples)
+{
+  while (samples--)
+    {
+      if (in[ALPHA] != 0.0f && layer[ALPHA] != 0.0f)
+        {
+          gint c;
+
+          for (c = 0; c < 3; c++)
+            {
+              gfloat val;
+
+              if (layer[c] <= 0.5f)
+                val = in[c] - 2.0f * layer[c] - 1.0f;
+              else
+                val = in[c] - 2.0f * (layer[c] - 0.5f);
+
+              comp[c] = val;
+            }
+        }
+
+      comp[ALPHA] = layer[ALPHA];
+
+      comp  += 4;
+      layer += 4;
+      in    += 4;
+    }
+}
+
 void
 gimp_operation_layer_mode_blend_darken_only (GeglOperation *operation,
                                              const gfloat  *in,
@@ -977,7 +1051,90 @@ gimp_operation_layer_mode_blend_multiply (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_overlay (GeglOperation *operation,
+gimp_operation_layer_mode_blend_multiplyadd_darken_only (GeglOperation *operation,
+                                          const gfloat  *in,
+                                          const gfloat  *layer,
+                                          gfloat        *comp,
+                                          gint           samples)
+{
+  while (samples--)
+    {
+      if (in[ALPHA] != 0.0f && layer[ALPHA] != 0.0f)
+        {
+          gint c;
+
+          for (c = 0; c < 3; c++)
+            comp[c] = (1.0 - in[c]) * (layer[c] - 1.0) + in[c];
+        }
+
+      comp[ALPHA] = layer[ALPHA];
+
+      comp  += 4;
+      layer += 4;
+      in    += 4;
+    }
+}
+
+void
+gimp_operation_layer_mode_blend_multiplyadd_lighten_only (GeglOperation *operation,
+                                          const gfloat  *in,
+                                          const gfloat  *layer,
+                                          gfloat        *comp,
+                                          gint           samples)
+{
+  while (samples--)
+    {
+      if (in[ALPHA] != 0.0f && layer[ALPHA] != 0.0f)
+        {
+          gint c;
+
+          for (c = 0; c < 3; c++)
+            comp[c] = in[c] * layer[c] + in[c];
+        }
+
+      comp[ALPHA] = layer[ALPHA];
+
+      comp  += 4;
+      layer += 4;
+      in    += 4;
+    }
+}
+
+void /* overlay type A (multiply-add) */
+gimp_operation_layer_mode_blend_overlay_A (GeglOperation *operation,
+                                         const gfloat  *in,
+                                         const gfloat  *layer,
+                                         gfloat        *comp,
+                                         gint           samples)
+{
+  while (samples--)
+    {
+      if (in[ALPHA] != 0.0f && layer[ALPHA] != 0.0f)
+        {
+          gint c;
+
+          for (c = 0; c < 3; c++)
+            {
+              gfloat val;
+
+              if (in[c] < 0.5f)
+                val = (1.0 - in[c]) * (2.0 * layer[c] - 1.0) + in[c];
+              else
+                val = in[c] * (2.0 * layer[c] - 1.0) + in[c];
+
+              comp[c] = val;
+            }
+        }
+      comp[ALPHA] = layer[ALPHA];
+
+      comp  += 4;
+      layer += 4;
+      in    += 4;
+    }
+}
+
+void /* overlay type B (multiply-screen) */
+gimp_operation_layer_mode_blend_overlay_B (GeglOperation *operation,
                                          const gfloat  *in,
                                          const gfloat  *layer,
                                          gfloat        *comp,
