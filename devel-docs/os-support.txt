@@ -18,9 +18,15 @@ After GIMP 3.0 release, we might get back to depend on Debian Testing.
 ### macOS
 
 Compatibility with 10.13 and over.
-64-bit only.
+
+Hardware:
+* x86_64 (Intel)
+* ARM 64-bit (Apple Silicon)
 
 ### Windows
 
-Windows 7 and over.
-32 and 64-bit.
+Windows 10 and over.
+
+Hardware:
+* x86 32 and 64-bit
+* ARM 64-bit (experimental)
