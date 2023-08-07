@@ -301,6 +301,10 @@ gimp-meson-debian:
     # On commits and merge requests.
     - if: '$CI_PIPELINE_SOURCE == "push"'
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    # Custom builds though web GUI, API or schedules.
+    # This is needed for the BMP image generation for the installer.
+    # See commit e1203e9f76f.
+    - if: '$GIMP_CI_WIN_INSTALLER != null'
     # On releases.
     - if: '$CI_COMMIT_TAG != null'
     # Custom builds though web GUI, API or schedules.
@@ -812,6 +816,8 @@ win-installer-nightly:
   dependencies:
     - packaging-win64-native
     - packaging-win32-native
+    # This is needed for the BMP image generation for the installer.
+    # See commit e1203e9f76f.
     - gimp-meson-debian
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
