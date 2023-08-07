@@ -119,81 +119,55 @@
             ]
         },
         {
-            "name": "openexr",
-            "modules": [
-                {
-                    "name": "ilmbase",
-                    "subdir": "IlmBase",
-                    "config-opts": [
-                        "--disable-static"
-                    ],
-                    "build-options": {
-                        "cxxflags": "-std=c++14",
-                        "env": {
-                            "LDFLAGS": "-lpthread"
-                        }
-                    },
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.9.tar.gz",
-                            "sha256": "05bb9c2da3ff3508eee51c30f59c7f2c59bf068f3b636d12d5991e8bbaf13e01",
-                            "x-checker-data": {
-                                "type": "anitya",
-                                "project-id": 13289,
-                                "stable-only": true,
-                                "versions": {
-                                    "<": "3.0.0"
-                                },
-                                "url-template": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v$version.tar.gz"
-                            }
-                        },
-                        {
-                            "type": "shell",
-                            "commands": [
-                                "cp -p /usr/share/automake-*/config.{sub,guess} ."
-                            ]
-                        }
-                    ]
-                }
-            ],
-            "subdir": "OpenEXR",
+            "name" : "imath",
             "config-opts": [
-                "--disable-static",
-                "--disable-ilmbasetest"
+                "-DBUILD_SHARED_LIBS=ON",
+                "-DBUILD_TESTING=OFF",
+                "-DIMATH_INSTALL_PKG_CONFIG=ON"
+            ],
+
+            "builddir" : true,
+            "buildsystem" : "cmake-ninja",
+            "sources" : [
+                {
+                    "type": "archive",
+                    "url" : "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.1.9.tar.gz",
+                    "sha256": "f1d8aacd46afed958babfced3190d2d3c8209b66da451f556abd6da94c165cf3",
+                    "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 223366,
+                                "stable-only": true,
+                                "url-template": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v$version.tar.gz"
+                            }
+                }
+            ]
+        },
+        {
+            "name" : "openexr",
+            "config-opts": [
+                "-DBUILD_SHARED_LIBS=ON",
+                "-DOPENEXR_INSTALL_EXAMPLES=OFF",
+                "-DBUILD_TESTING=OFF",
+                "-DOPENEXR_INSTALL_PKG_CONFIG=ON"
             ],
             "cleanup": [
                 "/bin",
                 "/share/doc",
                 "/lib/libIlmImfUtil*"
             ],
-            "build-options": {
-                "cxxflags": "-std=c++14"
-            },
-            "sources": [
+            "builddir" : true,
+            "buildsystem" : "cmake-ninja",
+            "sources" : [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.9.tar.gz",
-                    "sha256": "05bb9c2da3ff3508eee51c30f59c7f2c59bf068f3b636d12d5991e8bbaf13e01",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.1.10.tar.gz",
+                    "sha256": "6e0fd3f0eb1cb907bd3593830ea2b3431b85f22a6f18f99f8cfa099fec70067d",
                     "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 13289,
-                        "stable-only": true,
-                        "versions": {
-                            "<": "3.0.0"
-                        },
-                        "url-template": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v$version.tar.gz"
-                    }
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/openexr-no-docs.patch"
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "cp -p /usr/share/automake-*/config.{sub,guess} ."
-                    ]
+                                "type": "anitya",
+                                "project-id": 13289,
+                                "stable-only": true,
+                                "url-template": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v$version.tar.gz"
+                            }
                 }
             ]
         },
