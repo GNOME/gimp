@@ -570,7 +570,7 @@ deps-win64:
     - apt-get update
     - apt-get install -y --no-install-recommends wine wine64
 
-    - git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
+    - git clone --depth=${GIT_DEPTH} https://gitlab.freedesktop.org/crossroad/crossroad.git
     - cd crossroad
     - ./setup.py install --prefix=`pwd`/../.local
     - cd ..
@@ -639,7 +639,7 @@ deps-win32:
     - .cache/crossroad/
     - apt-cache
   before_script:
-    - git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
+    - git clone --depth=${GIT_DEPTH} https://gitlab.freedesktop.org/crossroad/crossroad.git
     - cd crossroad
     - ./setup.py install --prefix=`pwd`/../.local
     - cd ..
