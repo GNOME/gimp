@@ -75,7 +75,8 @@
                     "name": "exiv2",
                     "buildsystem": "cmake-ninja",
                     "config-opts": [
-                        "-DEXIV2_ENABLE_BMFF=ON"
+                        "-DEXIV2_ENABLE_BMFF=ON",
+                        "-DEXIV2_ENABLE_INIH=OFF"
                     ],
                     "builddir": true,
                     "cleanup": [
@@ -85,8 +86,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/Exiv2/exiv2/releases/download/v0.27.6/exiv2-0.27.6-Source.tar.gz",
-                            "sha256": "4c192483a1125dc59a3d70b30d30d32edace9e14adf52802d2f853abf72db8a6",
+                            "url": "https://github.com/Exiv2/exiv2/releases/download/v0.28.0/exiv2-0.28.0-Source.tar.gz",
+                            "sha256": "89af3b5ef7277753ef7a7b5374ae017c6b9e304db3b688f1948e73e103491f3d",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 769,
@@ -106,8 +107,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.gnome.org/sources/gexiv2/0.14/gexiv2-0.14.0.tar.xz",
-                    "sha256": "e58279a6ff20b6f64fa499615da5e9b57cf65ba7850b72fafdf17221a9d6d69e",
+                    "url": "https://download.gnome.org/sources/gexiv2/0.14/gexiv2-0.14.2.tar.xz",
+                    "sha256": "2a0c9cf48fbe8b3435008866ffd40b8eddb0667d2212b42396fdf688e93ce0be",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1626,
@@ -135,8 +136,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.8.tar.gz",
-                            "sha256": "db261a7fcc046ec6634e4c5696a2fc2ce8b55f50aac6abe034308f54c8495f55",
+                            "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.9.tar.gz",
+                            "sha256": "05bb9c2da3ff3508eee51c30f59c7f2c59bf068f3b636d12d5991e8bbaf13e01",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 13289,
@@ -172,8 +173,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.8.tar.gz",
-                    "sha256": "db261a7fcc046ec6634e4c5696a2fc2ce8b55f50aac6abe034308f54c8495f55",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.9.tar.gz",
+                    "sha256": "05bb9c2da3ff3508eee51c30f59c7f2c59bf068f3b636d12d5991e8bbaf13e01",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -235,8 +236,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-23.03.0.tar.xz",
-                    "sha256": "b04148bf849c1965ada7eff6be4685130e3a18a84e0cce73bf9bc472ec32f2b4",
+                    "url": "https://poppler.freedesktop.org/poppler-23.08.0.tar.xz",
+                    "sha256": "4a4bf7fc903b9f1a2ab7d04b7c5d8220db9bc6261cc73fdb9a826dc272f49aa8",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -300,8 +301,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/caolanm/libwmf/archive/refs/tags/v0.2.12.tar.gz",
-                    "sha512": "9280851e560becc91546906b911e0c59a1abd690e10680f6d94a335d66aeaec5eb12ccf2214ee7af2a15729a7b5f8b906022822399b4e2bc12c75a2d75748cab",
+                    "url": "https://github.com/caolanm/libwmf/archive/refs/tags/v0.2.13.tar.gz",
+                    "sha512": "f45a936c9bc98fc1a5f2b0808b497119e4dcd3c132615fdddb7583e5719c7d1d7f85c16ebf313cad453e5b7ae3508bf6b80c4ed2b42322b7dec295d8f4eb86ce",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 230209,
@@ -310,16 +311,10 @@
                     }
                 },
                 {
-                    "type": "patch",
-                    "path": "patches/libwmf-no-freetype-config.patch"
-                },
-                {
                     "type": "shell",
                     "commands": [
                         "cp -p /usr/share/automake-*/config.{sub,guess} .",
-                        "aclocal",
-                        "automake --add-missing",
-                        "autoconf"
+                        "autoreconf -vfi"
                     ]
                 }
             ]
@@ -343,8 +338,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10010/ghostscript-10.01.0.tar.xz",
-                    "sha512": "b679b35bcdcf211d6aa41a571225a50449e7e36def75cf37fee8f06889df3a5a9726a7aef2fd5ae819c2071cb6fcf8712741cd2c131c9341b60936e684bd8d98",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10012/ghostscript-10.01.2.tar.gz",
+                    "sha512": "11887850d440b8bbd8b83b8b58df8c743cf94be8fdbcfbda1a5fce55ce7c6a963d94b41a4ebcf1ba48f64f8af01e76dec789e2711212b1f7a32f98c42d75e0ff",
                     "x-checker-data": {
                         "//": "Bypass broken url-template with anitya checker - See https://github.com/flathub/flatpak-external-data-checker/issues/360",
                         "type": "json",
@@ -498,8 +493,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.21.tar.gz",
-                            "sha256": "f36ba3d7a60e7c8bcc54cd9aaa9b1223dd42eaf02c811791c37e8ca707c241ca",
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.23.tar.gz",
+                            "sha256": "5d9491d07168a5d00116cdc068a40022c3455bf9293c7cb86a65b1054d7e5114",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 2540,
@@ -513,8 +508,10 @@
         },
         {
             "name": "libheif",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
             "config-opts": [
-                "--disable-gdk-pixbuf"
+                "-DWITH_GDK_PIXBUF=OFF"
             ],
             "cleanup": [
                 "/bin",
@@ -534,8 +531,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.11/libde265-1.0.11.tar.gz",
-                            "sha256": "2f8f12cabbdb15e53532b7c1eb964d4e15d444db1be802505e6ac97a25035bab",
+                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.12/libde265-1.0.12.tar.gz",
+                            "sha256": "62185ea2182e68cf68bba20cc6eb4c287407b509cf0a827d7ddb75614db77b5c",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 11239,
@@ -643,8 +640,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/strukturag/libheif/releases/download/v1.15.1/libheif-1.15.1.tar.gz",
-                    "sha256": "28d5a376fe7954d2d03453f983aaa0b7486f475c27c7806bda31df9102325556",
+                    "url": "https://github.com/strukturag/libheif/releases/download/v1.16.2/libheif-1.16.2.tar.gz",
+                    "sha256": "7f97e4205c0bd9f9b8560536c8bd2e841d1c9a6d610401eb3eb87ed9cdfe78ea",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 64439,
@@ -861,8 +858,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/7.1.0/graphviz-7.1.0.tar.gz",
-                            "sha256": "8b28a283644a8442e6925b15d95055228d25172c7c30681810625616cbb23913",
+                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/8.0.5/graphviz-8.0.5.tar.gz",
+                            "sha256": "dd06f45f5bbcb1c7cbc67adab5359da2cd4b40533dc7c7424b3fc0e998bbd6c9",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 1249,
