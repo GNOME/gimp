@@ -42,7 +42,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-29 10:24+0200\n"
-"PO-Revision-Date: 2023-07-26 22:06+0200\n"
+"PO-Revision-Date: 2023-08-08 13:00+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -11123,12 +11123,12 @@ msgstr "Immagine WebP"
 #: ../app/config/config-enums.c:157
 msgctxt "handedness"
 msgid "Left-handed"
-msgstr "Sinistrorso"
+msgstr "Mancino"
 
 #: ../app/config/config-enums.c:158
 msgctxt "handedness"
 msgid "Right-handed"
-msgstr "Destrorso"
+msgstr "Destromano"
 
 #: ../app/config/config-enums.c:186
 msgctxt "help-browser-type"
@@ -17770,7 +17770,7 @@ msgstr "_Modalità puntatore:"
 
 #: ../app/dialogs/preferences-dialog.c:2950
 msgid "Pointer _handedness:"
-msgstr "Durez_za del puntatore:"
+msgstr "_Mano del puntatore:"
 
 #: ../app/dialogs/preferences-dialog.c:2961
 msgid "Image Window Appearance"
