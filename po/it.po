@@ -42,7 +42,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-29 10:24+0200\n"
-"PO-Revision-Date: 2023-08-08 13:00+0200\n"
+"PO-Revision-Date: 2023-08-08 13:20+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -341,9 +341,7 @@ msgstr ""
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
-msgstr ""
-"L'opzione che abilita il supporto a OpenCL è stata spostata sulla scheda del "
-"terreno di gioco nelle preferenze."
+msgstr "L'opzione che abilita il supporto a OpenCL è stata spostata sulla scheda dell'area giochi nelle preferenze."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid ""
@@ -16980,11 +16978,11 @@ msgstr "Importatore immagini RAW"
 
 #: ../app/dialogs/preferences-dialog.c:1618
 msgid "Experimental Playground"
-msgstr "Terreno di gioco sperimentale"
+msgstr "Area giochi sperimentale"
 
 #: ../app/dialogs/preferences-dialog.c:1619
 msgid "Playground"
-msgstr "Terreno di gioco"
+msgstr "Area giochi"
 
 #: ../app/dialogs/preferences-dialog.c:1626
 msgid ""
