@@ -119,30 +119,6 @@
             ]
         },
         {
-            "name" : "imath",
-            "config-opts": [
-                "-DBUILD_SHARED_LIBS=ON",
-                "-DBUILD_TESTING=OFF",
-                "-DIMATH_INSTALL_PKG_CONFIG=ON"
-            ],
-
-            "builddir" : true,
-            "buildsystem" : "cmake-ninja",
-            "sources" : [
-                {
-                    "type": "archive",
-                    "url" : "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.1.9.tar.gz",
-                    "sha256": "f1d8aacd46afed958babfced3190d2d3c8209b66da451f556abd6da94c165cf3",
-                    "x-checker-data": {
-                                "type": "anitya",
-                                "project-id": 223366,
-                                "stable-only": true,
-                                "url-template": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v$version.tar.gz"
-                            }
-                }
-            ]
-        },
-        {
             "name" : "openexr",
             "config-opts": [
                 "-DBUILD_SHARED_LIBS=ON",
@@ -168,6 +144,32 @@
                                 "stable-only": true,
                                 "url-template": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v$version.tar.gz"
                             }
+                }
+            ],
+            "modules": [
+                {
+                    "name" : "imath",
+                    "config-opts": [
+                        "-DBUILD_SHARED_LIBS=ON",
+                        "-DBUILD_TESTING=OFF",
+                        "-DIMATH_INSTALL_PKG_CONFIG=ON"
+                    ],
+
+                    "builddir" : true,
+                    "buildsystem" : "cmake-ninja",
+                    "sources" : [
+                        {
+                            "type": "archive",
+                            "url" : "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.1.9.tar.gz",
+                            "sha256": "f1d8aacd46afed958babfced3190d2d3c8209b66da451f556abd6da94c165cf3",
+                            "x-checker-data": {
+                                        "type": "anitya",
+                                        "project-id": 223366,
+                                        "stable-only": true,
+                                        "url-template": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v$version.tar.gz"
+                                    }
+                        }
+                    ]
                 }
             ]
         },
