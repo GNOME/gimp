@@ -56,6 +56,9 @@ build-image:
     - if: '$GIMP_CI_MESON_GCC != null'
     - if: '$GIMP_CI_MESON_CLANG != null'
     - if: '$GIMP_CI_RASTER_ICONS != null'
+    # This is needed for the BMP image generation for the installer.
+    # See commit e1203e9f76f.
+    - if: '$GIMP_CI_WIN_INSTALLER != null'
   stage: prepare
   variables:
     GIT_STRATEGY: none
@@ -239,6 +242,9 @@ deps-debian:
     - if: '$GIMP_CI_MESON_GCC != null'
     - if: '$GIMP_CI_MESON_CLANG != null'
     - if: '$GIMP_CI_RASTER_ICONS != null'
+    # This is needed for the BMP image generation for the installer.
+    # See commit e1203e9f76f.
+    - if: '$GIMP_CI_WIN_INSTALLER != null'
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   cache:
