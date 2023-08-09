@@ -52,7 +52,7 @@ struct _GimpRemap
   guchar          map[256];
   gint            n_cols;
 
-  GtkBuilder     *builder;
+  GMenu          *menu;
 };
 
 
@@ -146,7 +146,7 @@ gimp_remap_finalize (GObject *object)
 
   G_OBJECT_CLASS (gimp_remap_parent_class)->finalize (object);
 
-  g_clear_object (&remap->builder);
+  g_clear_object (&remap->menu);
 }
 
 static void
@@ -258,7 +258,8 @@ remap_run (GimpProcedure        *procedure,
            const GimpValueArray *args,
            gpointer              run_data)
 {
-  gint i;
+  GMenu *section;
+  gint   i;
 
   GimpRemap *remap = GIMP_REMAP (run_data);
 
@@ -270,36 +271,20 @@ remap_run (GimpProcedure        *procedure,
 #endif
   remap->image = image;
 
-  remap->builder = gtk_builder_new_from_string (
-      "<interface>"
-        "<menu id=\"remap-popup\">"
-          "<section>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Sort on Hue</attribute>"
-              "<attribute name=\"action\">win.sort-hue</attribute>"
-            "</item>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Sort on Saturation</attribute>"
-              "<attribute name=\"action\">win.sort-sat</attribute>"
-            "</item>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Sort on Value</attribute>"
-              "<attribute name=\"action\">win.sort-val</attribute>"
-            "</item>"
-          "</section>"
-          "<section>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Reverse Order</attribute>"
-              "<attribute name=\"action\">win.reverse</attribute>"
-            "</item>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Reset Order</attribute>"
-              "<attribute name=\"action\">win.reset</attribute>"
-            "</item>"
-          "</section>"
-        "</menu>"
-      "</interface>",
-      -1);
+  remap->menu = g_menu_new ();
+
+  section = g_menu_new ();
+  g_menu_append (section, _("Sort on Hue"), "win.sort-hue");
+  g_menu_append (section, _("Sort on Saturation"), "win.sort-sat");
+  g_menu_append (section, _("Sort on Value"), "win.sort-val");
+  g_menu_append_section (remap->menu, NULL, G_MENU_MODEL (section));
+  g_clear_object (&section);
+
+  section = g_menu_new ();
+  g_menu_append (section, _("Reverse Order"), "win.reverse");
+  g_menu_append (section, _("Reset Order"), "win.reset");
+  g_menu_append_section (remap->menu, NULL, G_MENU_MODEL (section));
+  g_clear_object (&section);
 
   gegl_init (NULL, NULL);
 
@@ -636,10 +621,8 @@ remap_popup_menu (GtkWidget      *widget,
                   GimpRemap      *remap)
 {
   GtkWidget  *menu;
-  GMenuModel *model;
 
-  model = G_MENU_MODEL (gtk_builder_get_object (remap->builder, "remap-popup"));
-  menu = gtk_menu_new_from_model (model);
+  menu = gtk_menu_new_from_model (G_MENU_MODEL (remap->menu));
 
   gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET (window), NULL);
   gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
