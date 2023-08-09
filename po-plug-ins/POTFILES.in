@@ -159,6 +159,7 @@ plug-ins/gimpressionist/utils.c
 plug-ins/gradient-flare/gradient-flare.c
 plug-ins/help-browser/dialog.c
 plug-ins/help-browser/help-browser.c
+plug-ins/help-browser/help-menu.ui
 plug-ins/help/gimphelpdomain.c
 plug-ins/help/gimphelplocale.c
 plug-ins/ifs-compose/ifs-compose.c

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <menu id="help_browser_popup_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Back</attribute>
+        <attribute name="action">win.back</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Previous</attribute>
+        <attribute name="action">win.forward</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Reload</attribute>
+        <attribute name="action">win.reload</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Stop</attribute>
+        <attribute name="action">win.stop</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Home</attribute>
+        <attribute name="action">win.home</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">C_opy location</attribute>
+        <attribute name="action">win.copy-location</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">S_how index</attribute>
+        <attribute name="action">win.show-index</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Find</attribute>
+        <attribute name="action">win.find</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Find _Again</attribute>
+        <attribute name="action">win.find-again</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Zoom in</attribute>
+        <attribute name="action">win.zoom-in</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Zoom out</attribute>
+        <attribute name="action">win.zoom-out</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Close</attribute>
+        <attribute name="action">win.close</attribute>
+      </item>
+    </section>
+  </menu>
+  <menu id="help_browser_copy_popup_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Copy selection</attribute>
+        <attribute name="action">win.copy-selection</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

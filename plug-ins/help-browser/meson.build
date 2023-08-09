@@ -8,6 +8,11 @@ plugin_sources = [
   'uri.c',
 ]
 
+plugin_sources += gnome.compile_resources(
+  'help-menus',
+  'help-menus.gresource.xml',
+)
+
 if platform_windows
   plugin_sources += windows.compile_resources(
     gimp_plugins_rc,

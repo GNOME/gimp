@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/gimp/help/">
+    <file preprocess="xml-stripblanks">help-menu.ui</file>
+  </gresource>
+</gresources>
