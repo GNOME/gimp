@@ -104,7 +104,7 @@ struct _GimpColorButtonPrivate
   GtkWidget          *selection;
 
   GSimpleActionGroup *group;
-  GtkBuilder         *builder;
+  GMenu              *menu;
 
   GimpColorConfig    *config;
 };
@@ -344,6 +344,7 @@ gimp_color_button_constructed (GObject *object)
   GimpColorButton        *button = GIMP_COLOR_BUTTON (object);
   GimpColorButtonClass   *klass  = GIMP_COLOR_BUTTON_GET_CLASS (object);
   GimpColorButtonPrivate *priv   = GET_PRIVATE (object);
+  GMenu                  *section;
   gint                    i;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -373,32 +374,19 @@ gimp_color_button_constructed (GObject *object)
                                   G_ACTION_GROUP (priv->group));
 
   /* right-click opens a popup */
-  priv->builder = gtk_builder_new_from_string (
-    "<interface>"
-      "<menu id=\"color-button-popup\">"
-        "<section>"
-          "<item>"
-            "<attribute name=\"label\" translatable=\"yes\">_Foreground Color</attribute>"
-            "<attribute name=\"action\">" GIMP_COLOR_BUTTON_GROUP_PREFIX "." GIMP_COLOR_BUTTON_COLOR_FG "</attribute>"
-          "</item>"
-          "<item>"
-            "<attribute name=\"label\" translatable=\"yes\">_Background Color</attribute>"
-            "<attribute name=\"action\">" GIMP_COLOR_BUTTON_GROUP_PREFIX "." GIMP_COLOR_BUTTON_COLOR_BG "</attribute>"
-          "</item>"
-        "</section>"
-        "<section>"
-          "<item>"
-            "<attribute name=\"label\" translatable=\"yes\">Blac_k</attribute>"
-            "<attribute name=\"action\">" GIMP_COLOR_BUTTON_GROUP_PREFIX "." GIMP_COLOR_BUTTON_COLOR_BLACK "</attribute>"
-          "</item>"
-          "<item>"
-            "<attribute name=\"label\" translatable=\"yes\">_White</attribute>"
-            "<attribute name=\"action\">" GIMP_COLOR_BUTTON_GROUP_PREFIX "." GIMP_COLOR_BUTTON_COLOR_WHITE "</attribute>"
-          "</item>"
-        "</section>"
-      "</menu>"
-    "</interface>",
-    -1);
+  priv->menu = g_menu_new ();
+
+  section = g_menu_new ();
+  g_menu_append (section, _("_Foreground Color"), GIMP_COLOR_BUTTON_GROUP_PREFIX "." GIMP_COLOR_BUTTON_COLOR_FG);
+  g_menu_append (section, _("_Background Color"), GIMP_COLOR_BUTTON_GROUP_PREFIX "." GIMP_COLOR_BUTTON_COLOR_BG);
+  g_menu_append_section (priv->menu, NULL, G_MENU_MODEL (section));
+  g_clear_object (&section);
+
+  section = g_menu_new ();
+  g_menu_append (section, _("Blac_k"), GIMP_COLOR_BUTTON_GROUP_PREFIX "." GIMP_COLOR_BUTTON_COLOR_BLACK);
+  g_menu_append (section, _("_White"), GIMP_COLOR_BUTTON_GROUP_PREFIX "." GIMP_COLOR_BUTTON_COLOR_WHITE);
+  g_menu_append_section (priv->menu, NULL, G_MENU_MODEL (section));
+  g_clear_object (&section);
 }
 
 static void
@@ -407,7 +395,7 @@ gimp_color_button_finalize (GObject *object)
   GimpColorButtonPrivate *priv = GET_PRIVATE (object);
 
   g_clear_pointer (&priv->title, g_free);
-  g_clear_object (&priv->builder);
+  g_clear_object (&priv->menu);
   g_clear_object (&priv->group);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -523,11 +511,9 @@ gimp_color_button_button_press (GtkWidget      *widget,
 
   if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
     {
-      GtkWidget  *menu;
-      GMenuModel *model;
+      GtkWidget *menu;
 
-      model = G_MENU_MODEL (gtk_builder_get_object (priv->builder, "color-button-popup"));
-      menu = gtk_menu_new_from_model (model);
+      menu = gtk_menu_new_from_model (G_MENU_MODEL (priv->menu));
 
       /*gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));*/
       gtk_menu_attach_to_widget (GTK_MENU (menu), widget, NULL);
