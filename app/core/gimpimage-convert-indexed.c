@@ -4466,6 +4466,7 @@ initialize_median_cut (GimpImageBaseType       type,
             case GIMP_CONVERT_DITHER_NODESTRUCT:
             default:
               g_warning("Uh-oh, bad dither type, W1");
+              /* FALLTHROUGH */
             case GIMP_CONVERT_DITHER_NONE:
               quantobj->second_pass_init = median_cut_pass2_rgb_init;
               quantobj->second_pass = median_cut_pass2_no_dither_rgb;
@@ -4493,6 +4494,7 @@ initialize_median_cut (GimpImageBaseType       type,
             case GIMP_CONVERT_DITHER_NODESTRUCT:
             default:
               g_warning("Uh-oh, bad dither type, W2");
+              /* FALLTHROUGH */
             case GIMP_CONVERT_DITHER_NONE:
               quantobj->second_pass_init = median_cut_pass2_gray_init;
               quantobj->second_pass = median_cut_pass2_no_dither_gray;
