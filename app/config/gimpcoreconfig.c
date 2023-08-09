@@ -112,6 +112,7 @@ enum
   PROP_IMPORT_PROMOTE_FLOAT,
   PROP_IMPORT_PROMOTE_DITHER,
   PROP_IMPORT_ADD_ALPHA,
+  PROP_IMPORT_RESIZE_LAYERS,
   PROP_IMPORT_RAW_PLUG_IN,
   PROP_EXPORT_FILE_TYPE,
   PROP_EXPORT_COLOR_PROFILE,
@@ -724,6 +725,13 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_IMPORT_RESIZE_LAYERS,
+                            "import-resize-layers",
+                            "Import resize layers",
+                            IMPORT_RESIZE_LAYERS_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_PATH (object_class, PROP_IMPORT_RAW_PLUG_IN,
                          "import-raw-plug-in",
                          "Import raw plug-in",
@@ -1142,6 +1150,9 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_IMPORT_ADD_ALPHA:
       core_config->import_add_alpha = g_value_get_boolean (value);
       break;
+    case PROP_IMPORT_RESIZE_LAYERS:
+      core_config->import_resize_layers = g_value_get_boolean (value);
+      break;
     case PROP_IMPORT_RAW_PLUG_IN:
       g_free (core_config->import_raw_plug_in);
       core_config->import_raw_plug_in = g_value_dup_string (value);
@@ -1407,6 +1418,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_IMPORT_ADD_ALPHA:
       g_value_set_boolean (value, core_config->import_add_alpha);
+      break;
+    case PROP_IMPORT_RESIZE_LAYERS:
+      g_value_set_boolean (value, core_config->import_resize_layers);
       break;
     case PROP_IMPORT_RAW_PLUG_IN:
       g_value_set_string (value, core_config->import_raw_plug_in);

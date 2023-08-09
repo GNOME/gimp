@@ -223,6 +223,10 @@ _("When promoting imported images to floating point precision, also add " \
 #define IMPORT_ADD_ALPHA_BLURB \
 _("Add an alpha channel to all layers of imported images.")
 
+#define IMPORT_RESIZE_LAYERS_BLURB \
+_("Resize imported layers to fit the existing image, retaining the " \
+  "imported layers' aspect ratio.")
+
 #define IMPORT_RAW_PLUG_IN_BLURB \
 _("Which plug-in to use for importing raw digital camera files.")
 

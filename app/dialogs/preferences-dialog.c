@@ -1591,6 +1591,11 @@ prefs_dialog_new (Gimp       *gimp,
                                    _("_Add an alpha channel to imported images"),
                                    GTK_BOX (vbox2));
 
+  button = prefs_check_button_add (object, "import-resize-layers",
+                                   _("Resi_ze imported layers to fit the "
+                                     "existing canvas"),
+                                   GTK_BOX (vbox2));
+
   grid = prefs_grid_new (GTK_CONTAINER (vbox2));
   button = prefs_enum_combo_box_add (object, "color-profile-policy", 0, 0,
                                      _("Color _profile policy:"),

@@ -29,6 +29,8 @@
 
 #include "gegl/gimp-babl.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdocumentlist.h"
@@ -630,7 +632,57 @@ file_open_layers (Gimp                *gimp,
 
       if (layers)
         {
-          gchar *basename;
+          GimpCoreConfig *config = dest_image->gimp->config;
+          gchar          *basename;
+
+          /* Scale imported layers to fit existing canvas.
+           * Adapted from ofnut's ofn-autoscale-layer.py */
+          if (config->import_resize_layers)
+            {
+              GList                *list;
+              gint                  image_width;
+              gint                  image_height;
+              gdouble               image_ratio;
+
+              image_width  = gimp_image_get_width (dest_image);
+              image_height = gimp_image_get_height (dest_image);
+
+              image_ratio = (gdouble) image_width / (gdouble) image_height;
+
+              for (list = layers; list; list = g_list_next (list))
+                {
+                  gdouble layer_ratio;
+                  gint    layer_width;
+                  gint    layer_height;
+                  gint    resized_width;
+                  gint    resized_height;
+
+                  layer_width  = gimp_item_get_width (GIMP_ITEM (list->data));
+                  layer_height = gimp_item_get_height (GIMP_ITEM (list->data));
+
+                  layer_ratio = (gdouble) layer_width / (gdouble) layer_height;
+
+                  if (layer_ratio > image_ratio)
+                    {
+                      resized_width = image_width;
+                      resized_height = image_width / layer_ratio;
+                    }
+                  else
+                    {
+                      resized_width = image_height * layer_ratio;
+                      resized_height = image_height;
+                    }
+
+                  gimp_item_scale_by_origin (GIMP_ITEM (list->data),
+                                             resized_width, resized_height,
+                                             config->interpolation_type,
+                                             progress, FALSE);
+                  gimp_item_set_offset (GIMP_ITEM (list->data),
+                                        (image_width / resized_width) / 2,
+                                        (image_height / resized_height) / 2);
+                }
+
+            }
 
           basename = g_path_get_basename (gimp_file_get_utf8_name (file));
           file_open_convert_items (dest_image, basename, layers);
