@@ -119,7 +119,35 @@ struct _EXRLoader
       }
     else
       {
-        throw;
+        int         channel_count = 0;
+        const char *channel_name  = NULL;
+
+        for (ChannelList::ConstIterator i = channels_.begin();
+             i != channels_.end(); ++i)
+          {
+            channel_count++;
+
+            pt_ = i.channel().type;
+            channel_name = i.name();
+          }
+
+       /* Assume single channel images are grayscale,
+        * no matter what the channel name is. */
+        if (channel_count == 1)
+          {
+            format_string_ = channel_name;
+            image_type_ = IMAGE_TYPE_UNKNOWN_1_CHANNEL;
+            unknown_channel_name_ = channel_name;
+
+            /* TODO: Pass this information back so it can be displayed
+             * in the UI. */
+            printf ("OpenEXR Warning: Single channel image with unknown "
+                    "channel %s, loading as grayscale\n", channel_name);
+          }
+        else
+          {
+            throw;
+          }
       }
 
     if (channels_.findChannel("A"))
@@ -149,9 +177,9 @@ struct _EXRLoader
       }
   }
 
-  int readPixelRow(char* pixels,
-                   int bpp,
-                   int row)
+  int readPixelRow(char *pixels,
+                   int   bpp,
+                   int   row)
   {
     const int actual_row = data_window_.min.y + row;
     FrameBuffer fb;
@@ -162,6 +190,10 @@ struct _EXRLoader
 
     switch (image_type_)
       {
+      case IMAGE_TYPE_UNKNOWN_1_CHANNEL:
+        fb.insert(unknown_channel_name_, Slice(pt_, base, bpp, 0, 1, 1, 0.5));
+        break;
+
       case IMAGE_TYPE_GRAY:
         fb.insert("Y", Slice(pt_, base, bpp, 0, 1, 1, 0.5));
         if (hasAlpha())
@@ -383,6 +415,7 @@ struct _EXRLoader
   EXRImageType image_type_;
   bool has_alpha_;
   std::string format_string_;
+  std::string unknown_channel_name_;
 };
 
 EXRLoader*

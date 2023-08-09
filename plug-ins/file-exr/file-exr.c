@@ -62,6 +62,8 @@ static GimpImage      * load_image           (GFile                *file,
                                               gboolean              interactive,
                                               GError              **error);
 static void             sanitize_comment     (gchar                *comment);
+void                    load_dialog          (void);
+
 
 
 G_DEFINE_TYPE (Exr, exr, GIMP_TYPE_PLUG_IN)
@@ -236,6 +238,7 @@ load_image (GFile        *file,
       layer_type = has_alpha ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
       break;
     case IMAGE_TYPE_GRAY:
+    case IMAGE_TYPE_UNKNOWN_1_CHANNEL:
       image_type = GIMP_GRAY;
       layer_type = has_alpha ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
       break;
@@ -256,6 +259,10 @@ load_image (GFile        *file,
                    gimp_pdb_get_last_error (gimp_get_pdb ()));
       goto out;
     }
+
+  if (exr_loader_get_image_type (loader) == IMAGE_TYPE_UNKNOWN_1_CHANNEL &&
+      interactive)
+    load_dialog ();
 
   /* try to load an icc profile, it will be generated on the fly if
    * chromaticities are given
@@ -394,4 +401,51 @@ sanitize_comment (gchar *comment)
             *c = '?';
         }
     }
+}
+
+void
+load_dialog (void)
+{
+  GtkWidget *dialog;
+  GtkWidget *label;
+  GtkWidget *vbox;
+  gchar     *label_text;
+
+  gimp_ui_init (PLUG_IN_BINARY);
+
+  dialog = gimp_dialog_new (_("Import OpenEXR"),
+                            "openexr-notice",
+                            NULL, 0, NULL, NULL,
+                            _("_OK"), GTK_RESPONSE_OK,
+                            NULL);
+
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  label_text = g_strdup_printf ("<b>%s</b>\n%s", _("Unknown Channel Name"),
+                                _("The image contains a single unknown channel.\n"
+                                  "It has been converted to grayscale."));
+  label = gtk_label_new (NULL);
+  gtk_label_set_markup (GTK_LABEL (label), label_text);
+
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
+  gtk_widget_show (label);
+
+  g_free (label_text);
+
+  gtk_widget_show (dialog);
+
+  /* run the dialog */
+  gimp_dialog_run (GIMP_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
 }
