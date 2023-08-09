@@ -1710,7 +1710,7 @@ on_date_button_clicked (GtkButton *widget,
     {
       gchar date[25];
       gtk_calendar_get_date (GTK_CALENDAR (calendar), &year, &month, &day);
-      g_sprintf ((gchar*) &date, "%d-%02d-%02d", year, month+1, day);
+      g_sprintf ((gchar*) &date, "%u-%02u-%02uT00:00:00+00:00", year, month+1, day);
       gtk_entry_set_text (GTK_ENTRY (entry_widget), date);
     }
 
@@ -2889,7 +2889,113 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
               g_free (value_utf8);
             }
 
-          if (index > -1)
+          if (index == SPECIAL_PROCESSING_DATE_CREATED)
+            {
+              gchar *date_value      = NULL;
+              gchar *date_time_value = NULL;
+
+              /* XMP: Check if Xmp.photoshop.DateCreated has the same value as
+                 IPTC: Iptc.Application2.DateCreated, and
+                       Iptc.Application2.TimeCreated combined.
+                 If empty, this can be filled from:
+                 Exif: DateTimeOriginal, OffsetTimeOriginal
+               */
+              date_value = gexiv2_metadata_try_get_tag_string (metadata,
+                                                               "Iptc.Application2.DateCreated",
+                                                               NULL);
+              if (date_value)
+                {
+                  gchar *time_value = NULL;
+
+                  time_value = gexiv2_metadata_try_get_tag_string (metadata,
+                                                                   "Iptc.Application2.TimeCreated",
+                                                                   NULL);
+                  if (time_value)
+                    {
+                      date_time_value = g_strconcat (date_value, "T", time_value, NULL);
+                      g_free (time_value);
+
+                      if (! value)
+                        {
+                          /* Copy Xmp value from IPTC values*/
+                          value = date_time_value;
+                          date_time_value = NULL;
+                        }
+                      else if (strcmp (value, date_time_value))
+                        {
+                          g_printerr ("Xmp.Photoshop.DateCreated %s is not the same as "
+                                      "the combined IPTC DateCreated and TimeCreated "
+                                      "values: %s. The IPTC values will be ignored.\n",
+                                      value, date_time_value);
+                        }
+                    }
+                  else
+                    {
+                      if (! value)
+                        {
+                          value = g_strconcat (date_value, "T00:00:00+00:00", NULL);
+                        }
+                      else
+                        {
+                          g_printerr ("Missing IPTC TimeCreated tag. We won't "
+                                      "compare the IPTC DateCreated value"
+                                      "with Xmp.Photoshop.DateCreated.\n");
+                        }
+                    }
+                }
+              else if (! value)
+                {
+                  /* Set initial value from Exif */
+                  date_value = gexiv2_metadata_try_get_tag_string (metadata,
+                                                                   "Exif.Photo.DateTimeOriginal",
+                                                                   NULL);
+                  if (date_value)
+                    {
+                      gchar **date_time_split = NULL;
+
+                      /* Exif has space as separator between date and time,
+                         and no timezone, which is a separate tag. */
+                      date_time_split = g_strsplit (date_value, " ", 2);
+
+                      if (date_time_split[0] != NULL)
+                        {
+                          gchar  *time_zone = NULL;
+
+                          /* Exif uses ':' as date delimiter instead of '-' */
+                          g_strdelimit (date_time_split[0], ":", '-');
+
+                          if (date_time_split[1] != NULL)
+                            {
+                              date_time_value = g_strconcat (date_time_split[0],
+                                                             "T", date_time_split[1],
+                                                             NULL);
+                            }
+                          else
+                            {
+                              date_time_value = g_strconcat (date_time_split[0],
+                                                             "T00:00:00", NULL);
+                            }
+
+                          time_zone = gexiv2_metadata_try_get_tag_string (metadata,
+                                                                          "Exif.Photo.OffsetTimeOriginal",
+                                                                          NULL);
+                          if (time_zone)
+                            {
+                              value = g_strconcat (date_time_value, time_zone, NULL);
+                            }
+                          else
+                            {
+                              value = g_strconcat (date_time_value, "+00:00", NULL);
+                            }
+                          g_free (time_zone);
+                        }
+                      g_strfreev (date_time_split);
+                    }
+                }
+              g_free (date_value);
+              g_free (date_time_value);
+            }
+          else if (index > -1)
             {
               gchar **values;
 
@@ -4929,7 +5035,42 @@ metadata_editor_write_callback (GtkWidget       *dialog,
                 }
 
               index = default_metadata_tags[i].other_tag_index;
-              if (index > -1)
+              if (index == SPECIAL_PROCESSING_DATE_CREATED)
+                {
+                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
+                                                 "Iptc.Application2.DateCreated",
+                                                 NULL);
+                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
+                                                 "Iptc.Application2.TimeCreated",
+                                                 NULL);
+                  if (text_value)
+                    {
+                      gchar **date_time_split = NULL;
+
+                      date_time_split = g_strsplit (text_value, "T", 2);
+                      if (date_time_split[0] != NULL)
+                        {
+                          /* We can't use : as date delimiter for IPTC */
+                          g_strdelimit (date_time_split[0], ":/.", '-');
+
+                          set_tag_string (g_metadata, "Iptc.Application2.DateCreated",
+                                          date_time_split[0], FALSE);
+
+                          if (date_time_split[1] != NULL)
+                            {
+                              set_tag_string (g_metadata, "Iptc.Application2.TimeCreated",
+                                              date_time_split[1], FALSE);
+                            }
+                          else
+                            {
+                              set_tag_string (g_metadata, "Iptc.Application2.TimeCreated",
+                                              "00:00:00+00:00", FALSE);
+                            }
+                        }
+                      g_strfreev (date_time_split);
+                    }
+                }
+              else if (index > -1)
                 {
                   gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
                                                  equivalent_metadata_tags[index].tag,
