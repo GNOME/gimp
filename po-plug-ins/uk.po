@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-22 22:21+0000\n"
-"PO-Revision-Date: 2023-07-23 21:01+0300\n"
+"POT-Creation-Date: 2023-08-09 16:44+0000\n"
+"PO-Revision-Date: 2023-08-09 21:01+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -47,7 +47,7 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:178
 #: plug-ins/gradient-flare/gradient-flare.c:935
-#: plug-ins/ifs-compose/ifs-compose.c:541 plug-ins/imagemap/imap_main.c:636
+#: plug-ins/ifs-compose/ifs-compose.c:541 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:404
 #: plug-ins/map-object/map-object-main.c:496 plug-ins/pagecurl/pagecurl.c:302
 #, c-format
@@ -213,12 +213,10 @@ msgstr "Потренувати козу (Lua)"
 
 #. CANCEL, CLOSE, DELETE_EVENT
 #: extensions/goat-exercises/goat-exercise-lua.lua:172
-#| msgid "Exercise a Vala goat"
 msgid "Exercise a Lua goat"
 msgstr "Потренувати козу Lua"
 
 #: extensions/goat-exercises/goat-exercise-lua.lua:176
-#| msgid "Exercise a goat in the C language"
 msgid "Exercise a goat in the Lua language"
 msgstr "Потренувати козу у мові Lua"
 
@@ -321,7 +319,9 @@ msgid "_Grid"
 msgstr "С_ітка"
 
 #: plug-ins/common/align-layers.c:223 plug-ins/common/grid.c:757
-#: plug-ins/gfig/gfig-dialog.c:1360 plug-ins/imagemap/imap_main.c:1927
+#: plug-ins/gfig/gfig-dialog.c:1360 plug-ins/gfig/gfig-menu.ui:31
+#: plug-ins/imagemap/imap_main.c:1555 plug-ins/imagemap/imap-menu.ui:197
+#: plug-ins/imagemap/imap-menu.ui:289
 msgid "Grid"
 msgstr "Сітка"
 
@@ -514,6 +514,7 @@ msgstr "Перезавантажити зображення"
 #. Zoom Options
 #: plug-ins/common/animation-play.c:849
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:649
+#: plug-ins/imagemap/imap-menu.ui:276
 msgid "Zoom"
 msgstr "Масштаб"
 
@@ -1204,7 +1205,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
-#: plug-ins/gfig/gfig.c:1044 plug-ins/ifs-compose/ifs-compose.c:2468
+#: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2468
 #: plug-ins/lighting/lighting-ui.c:1233
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1245,7 +1246,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1855
-#: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:674
+#: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:527
 #: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
 #: plug-ins/lighting/lighting-ui.c:1377
 #, c-format
@@ -4567,12 +4568,13 @@ msgstr "Візуалізація"
 msgid "B/W"
 msgstr "Ч/Б"
 
-#: plug-ins/common/file-ps.c:3737
+#: plug-ins/common/file-ps.c:3737 plug-ins/imagemap/imap-menu.ui:101
 msgid "Gray"
 msgstr "Сірий"
 
 #: plug-ins/common/file-ps.c:3738 plug-ins/common/file-xpm.c:511
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:169
+#: plug-ins/imagemap/imap-menu.ui:96
 msgid "Color"
 msgstr "Колір"
 
@@ -4830,7 +4832,7 @@ msgstr "Не вдалося прочитати файл QOI"
 msgid "Raw image data"
 msgstr "Raw Image Data"
 
-#: plug-ins/common/file-raw-data.c:414 plug-ins/common/file-raw-data.c:2802
+#: plug-ins/common/file-raw-data.c:414 plug-ins/common/file-raw-data.c:2812
 msgid "Digital Elevation Model data"
 msgstr "Дані цифрової моделі рельєфу"
 
@@ -4867,7 +4869,7 @@ msgstr "Для експортування RAW не передбачено під
 msgid "Could not open '%s' for size verification: %s"
 msgstr "Не вдається відкрити файл «%s» для перевірки розміру: %s"
 
-#: plug-ins/common/file-raw-data.c:2631
+#: plug-ins/common/file-raw-data.c:2641
 msgid "Load Image from Raw Data"
 msgstr "Завантаження зображення з Raw-даних"
 
@@ -4879,118 +4881,118 @@ msgstr "Завантаження зображення з Raw-даних"
 #. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
 #. * 1201 samples with similar overlapping rows and columns."
 #.
-#: plug-ins/common/file-raw-data.c:2690
+#: plug-ins/common/file-raw-data.c:2700
 msgid "SRTM-1 (1 arc-second)"
 msgstr "SRTM-1  (1 кутова сек)"
 
-#: plug-ins/common/file-raw-data.c:2691
+#: plug-ins/common/file-raw-data.c:2701
 msgid "SRTM-3 (3 arc-seconds)"
 msgstr "SRTM-3  (3 кутові сек)"
 
 #. Generic case for any data. Let's leave choice to select the
 #. * right type of raw data.
 #.
-#: plug-ins/common/file-raw-data.c:2702
+#: plug-ins/common/file-raw-data.c:2712
 msgid "RGB 8-bit"
 msgstr "RGB, 8 біт"
 
-#: plug-ins/common/file-raw-data.c:2703
+#: plug-ins/common/file-raw-data.c:2713
 msgid "RGB 16-bit"
 msgstr "RGB, 16 біт"
 
-#: plug-ins/common/file-raw-data.c:2704
+#: plug-ins/common/file-raw-data.c:2714
 msgid "RGB 32-bit"
 msgstr "RGB, 32 біт"
 
-#: plug-ins/common/file-raw-data.c:2706
+#: plug-ins/common/file-raw-data.c:2716
 msgid "RGBA 8-bit"
 msgstr "RGBA, 8 біт"
 
-#: plug-ins/common/file-raw-data.c:2707
+#: plug-ins/common/file-raw-data.c:2717
 msgid "RGBA 16-bit"
 msgstr "RGBA, 16 біт"
 
-#: plug-ins/common/file-raw-data.c:2708
+#: plug-ins/common/file-raw-data.c:2718
 msgid "RGBA 32-bit"
 msgstr "RGBA, 32 біт"
 
-#: plug-ins/common/file-raw-data.c:2710
+#: plug-ins/common/file-raw-data.c:2720
 msgid "RGB565"
 msgstr "RGB565"
 
-#: plug-ins/common/file-raw-data.c:2711
+#: plug-ins/common/file-raw-data.c:2721
 msgid "BGR565"
 msgstr "BGR565"
 
-#: plug-ins/common/file-raw-data.c:2713
+#: plug-ins/common/file-raw-data.c:2723
 msgid "B&W 1 bit"
 msgstr "Чорно-біле, 1 біт"
 
-#: plug-ins/common/file-raw-data.c:2714
+#: plug-ins/common/file-raw-data.c:2724
 msgid "Grayscale 2-bit"
 msgstr "Градації сірого, 2 біт"
 
-#: plug-ins/common/file-raw-data.c:2715
+#: plug-ins/common/file-raw-data.c:2725
 msgid "Grayscale 4-bit"
 msgstr "Градації сірого, 4 біт"
 
-#: plug-ins/common/file-raw-data.c:2716
+#: plug-ins/common/file-raw-data.c:2726
 msgid "Grayscale 8-bit"
 msgstr "Градації сірого, 8 біт"
 
-#: plug-ins/common/file-raw-data.c:2717
+#: plug-ins/common/file-raw-data.c:2727
 msgid "Grayscale 16-bit"
 msgstr "Градації сірого, 16 біт"
 
-#: plug-ins/common/file-raw-data.c:2718
+#: plug-ins/common/file-raw-data.c:2728
 msgid "Grayscale 32-bit"
 msgstr "Градації сірого, 32 біт"
 
-#: plug-ins/common/file-raw-data.c:2720
+#: plug-ins/common/file-raw-data.c:2730
 msgid "Grayscale-Alpha 8-bit"
 msgstr "Градації сірого + альфа, 8 біт"
 
-#: plug-ins/common/file-raw-data.c:2721
+#: plug-ins/common/file-raw-data.c:2731
 msgid "Grayscale-Alpha 16-bit"
 msgstr "Градації сірого + альфа, 16 біт"
 
-#: plug-ins/common/file-raw-data.c:2722
+#: plug-ins/common/file-raw-data.c:2732
 msgid "Grayscale-Alpha 32-bit"
 msgstr "Градації сірого + альфа, 32 біт"
 
-#: plug-ins/common/file-raw-data.c:2724
+#: plug-ins/common/file-raw-data.c:2734
 msgid "Indexed"
 msgstr "Індексований"
 
-#: plug-ins/common/file-raw-data.c:2725
+#: plug-ins/common/file-raw-data.c:2735
 msgid "Indexed Alpha"
 msgstr "Індексоване з альфа-каналом"
 
-#: plug-ins/common/file-raw-data.c:2731
+#: plug-ins/common/file-raw-data.c:2741
 msgid "Unsigned Integer"
 msgstr "Додатне ціле число"
 
-#: plug-ins/common/file-raw-data.c:2732
+#: plug-ins/common/file-raw-data.c:2742
 msgid "Signed Integer"
 msgstr "Ціле зі знаком"
 
-#: plug-ins/common/file-raw-data.c:2733
+#: plug-ins/common/file-raw-data.c:2743
 msgid "Floating Point"
 msgstr "З рухомою крапкою"
 
-#: plug-ins/common/file-raw-data.c:2739
+#: plug-ins/common/file-raw-data.c:2749
 msgid "Little Endian"
 msgstr "Прямий порядок"
 
-#: plug-ins/common/file-raw-data.c:2740
+#: plug-ins/common/file-raw-data.c:2750
 msgid "Big Endian"
 msgstr "Зворотний порядок"
 
-#: plug-ins/common/file-raw-data.c:2746
+#: plug-ins/common/file-raw-data.c:2756
 msgid "Contiguous"
 msgstr "Неперервний"
 
-#: plug-ins/common/file-raw-data.c:2747
+#: plug-ins/common/file-raw-data.c:2757
 msgid "Planar"
 msgstr "Планарний"
 
@@ -4998,60 +5000,60 @@ msgstr "Планарний"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: plug-ins/common/file-raw-data.c:2796
+#: plug-ins/common/file-raw-data.c:2806
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Дані цифрової моделі рельєфу (1 кутова сек)"
 
-#: plug-ins/common/file-raw-data.c:2799
+#: plug-ins/common/file-raw-data.c:2809
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Дані цифрової моделі рельєфу (3 кутові сек)"
 
-#: plug-ins/common/file-raw-data.c:2806
+#: plug-ins/common/file-raw-data.c:2816
 msgid "Image"
 msgstr "Зображення"
 
-#: plug-ins/common/file-raw-data.c:2809
+#: plug-ins/common/file-raw-data.c:2819
 msgid "R, G, B (normal)"
 msgstr "R, G, B (звичайний)"
 
-#: plug-ins/common/file-raw-data.c:2810
+#: plug-ins/common/file-raw-data.c:2820
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (у стилі BMP)"
 
-#: plug-ins/common/file-raw-data.c:2825
+#: plug-ins/common/file-raw-data.c:2835
 msgid "Palette"
 msgstr "Палітра"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:2896
+#: plug-ins/common/file-raw-data.c:2906
 #, c-format
 msgid "_Contiguous (%s)"
 msgstr "_Неперервний (%s)"
 
-#: plug-ins/common/file-raw-data.c:2898
+#: plug-ins/common/file-raw-data.c:2908
 msgid "_Contiguous"
 msgstr "_Неперервний"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:2904
+#: plug-ins/common/file-raw-data.c:2914
 #, c-format
 msgid "_Planar (%s)"
 msgstr "_Планарний (%s)"
 
-#: plug-ins/common/file-raw-data.c:2906
+#: plug-ins/common/file-raw-data.c:2916
 msgid "_Planar"
 msgstr "_Планарний"
 
 #. Palette type combo
-#: plug-ins/common/file-raw-data.c:2928
+#: plug-ins/common/file-raw-data.c:2938
 msgid "_R, G, B (normal)"
 msgstr "_R, G, B (звичайний)"
 
-#: plug-ins/common/file-raw-data.c:2929
+#: plug-ins/common/file-raw-data.c:2939
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (у стилі BMP)"
 
@@ -6818,7 +6820,7 @@ msgid "Wood"
 msgstr "Дерево"
 
 #: plug-ins/common/sphere-designer.c:343 plug-ins/flame/flame.c:820
-#: plug-ins/gfig/gfig-dialog.c:399
+#: plug-ins/gfig/gfig-dialog.c:399 plug-ins/gfig/gfig-menu.ui:79
 msgid "Spiral"
 msgstr "Спіраль"
 
@@ -10121,7 +10123,7 @@ msgstr "Намалювати лінію між контрольними точк
 msgid "Gfig"
 msgstr "Gfig"
 
-#: plug-ins/gfig/gfig-dialog.c:385
+#: plug-ins/gfig/gfig-dialog.c:385 plug-ins/gfig/gfig-menu.ui:44
 msgid "Line"
 msgstr "Лінія"
 
@@ -10130,7 +10132,8 @@ msgid "Create line"
 msgstr "Створити лінію"
 
 #: plug-ins/gfig/gfig-dialog.c:387 plug-ins/gfig/gfig-dialog.c:1440
-#: plug-ins/imagemap/imap_main.c:1944
+#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1572
+#: plug-ins/imagemap/imap-menu.ui:171 plug-ins/imagemap/imap-menu.ui:259
 msgid "Rectangle"
 msgstr "Прямокутник"
 
@@ -10138,9 +10141,10 @@ msgstr "Прямокутник"
 msgid "Create rectangle"
 msgstr "Створити прямокутник"
 
-#: plug-ins/gfig/gfig-dialog.c:389
+#: plug-ins/gfig/gfig-dialog.c:389 plug-ins/gfig/gfig-menu.ui:54
 #: plug-ins/gradient-flare/gradient-flare.c:4021
-#: plug-ins/imagemap/imap_main.c:1946
+#: plug-ins/imagemap/imap_main.c:1574 plug-ins/imagemap/imap-menu.ui:176
+#: plug-ins/imagemap/imap-menu.ui:264
 msgid "Circle"
 msgstr "Коло"
 
@@ -10148,7 +10152,7 @@ msgstr "Коло"
 msgid "Create circle"
 msgstr "Створити коло"
 
-#: plug-ins/gfig/gfig-dialog.c:391
+#: plug-ins/gfig/gfig-dialog.c:391 plug-ins/gfig/gfig-menu.ui:59
 msgid "Ellipse"
 msgstr "Еліпс"
 
@@ -10156,7 +10160,7 @@ msgstr "Еліпс"
 msgid "Create ellipse"
 msgstr "Створити еліпс"
 
-#: plug-ins/gfig/gfig-dialog.c:393
+#: plug-ins/gfig/gfig-dialog.c:393 plug-ins/gfig/gfig-menu.ui:64
 msgid "Arc"
 msgstr "Дуга"
 
@@ -10164,9 +10168,10 @@ msgstr "Дуга"
 msgid "Create arc"
 msgstr "Створити дугу"
 
-#: plug-ins/gfig/gfig-dialog.c:395
+#: plug-ins/gfig/gfig-dialog.c:395 plug-ins/gfig/gfig-menu.ui:69
 #: plug-ins/gradient-flare/gradient-flare.c:4038
-#: plug-ins/imagemap/imap_main.c:1948
+#: plug-ins/imagemap/imap_main.c:1576 plug-ins/imagemap/imap-menu.ui:181
+#: plug-ins/imagemap/imap-menu.ui:269
 msgid "Polygon"
 msgstr "Багатокутник"
 
@@ -10174,7 +10179,7 @@ msgstr "Багатокутник"
 msgid "Create reg polygon"
 msgstr "Створити правильний багатокутник"
 
-#: plug-ins/gfig/gfig-dialog.c:397
+#: plug-ins/gfig/gfig-dialog.c:397 plug-ins/gfig/gfig-menu.ui:74
 msgid "Star"
 msgstr "Зірка"
 
@@ -10186,7 +10191,7 @@ msgstr "Створити зірку"
 msgid "Create spiral"
 msgstr "Створити спіраль"
 
-#: plug-ins/gfig/gfig-dialog.c:401
+#: plug-ins/gfig/gfig-dialog.c:401 plug-ins/gfig/gfig-menu.ui:84
 msgid "Bezier"
 msgstr "Крива Безьє"
 
@@ -10194,7 +10199,7 @@ msgstr "Крива Безьє"
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Створити криву Безьє. Shift + Кнопка миші завершує створення об'єкта."
 
-#: plug-ins/gfig/gfig-dialog.c:404
+#: plug-ins/gfig/gfig-dialog.c:404 plug-ins/gfig/gfig-menu.ui:89
 msgid "Move Object"
 msgstr "Пересунути об'єкт"
 
@@ -10202,7 +10207,7 @@ msgstr "Пересунути об'єкт"
 msgid "Move an object"
 msgstr "Перемістити об'єкт"
 
-#: plug-ins/gfig/gfig-dialog.c:406
+#: plug-ins/gfig/gfig-dialog.c:406 plug-ins/gfig/gfig-menu.ui:94
 msgid "Move Point"
 msgstr "Пересунути точку"
 
@@ -10211,9 +10216,10 @@ msgid "Move a single point"
 msgstr "Перемістити одну точку"
 
 #: plug-ins/gfig/gfig-dialog.c:408 plug-ins/gfig/gfig-dialog.c:1293
-#: plug-ins/imagemap/imap_cmd_copy.c:53
+#: plug-ins/gfig/gfig-menu.ui:99 plug-ins/imagemap/imap_cmd_copy.c:53
 #: plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: plug-ins/imagemap/imap_main.c:1909
+#: plug-ins/imagemap/imap_main.c:1537 plug-ins/imagemap/imap-menu.ui:47
+#: plug-ins/imagemap/imap-menu.ui:330 plug-ins/imagemap/imap-menu.ui:367
 msgid "Copy"
 msgstr "Копіювати"
 
@@ -10221,7 +10227,8 @@ msgstr "Копіювати"
 msgid "Copy an object"
 msgstr "Копіювати об'єкт"
 
-#: plug-ins/gfig/gfig-dialog.c:410 plug-ins/ifs-compose/ifs-compose.c:1008
+#: plug-ins/gfig/gfig-dialog.c:410 plug-ins/gfig/gfig-menu.ui:104
+#: plug-ins/ifs-compose/ifs-compose.c:1008
 #: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
 msgid "Delete"
 msgstr "Видалити"
@@ -10230,7 +10237,8 @@ msgstr "Видалити"
 msgid "Delete an object"
 msgstr "Видалити об'єкт"
 
-#: plug-ins/gfig/gfig-dialog.c:412 plug-ins/imagemap/imap_cmd_select.c:52
+#: plug-ins/gfig/gfig-dialog.c:412 plug-ins/gfig/gfig-menu.ui:109
+#: plug-ins/imagemap/imap_cmd_select.c:52
 msgid "Select"
 msgstr "Вибрати"
 
@@ -10238,7 +10246,7 @@ msgstr "Вибрати"
 msgid "Select an object"
 msgstr "Вибрати об'єкт"
 
-#: plug-ins/gfig/gfig-dialog.c:415
+#: plug-ins/gfig/gfig-dialog.c:415 plug-ins/gfig/gfig-menu.ui:116
 msgid "Raise"
 msgstr "Підняти"
 
@@ -10246,7 +10254,7 @@ msgstr "Підняти"
 msgid "Raise selected object"
 msgstr "Підняти вибрані об'єкти"
 
-#: plug-ins/gfig/gfig-dialog.c:417
+#: plug-ins/gfig/gfig-dialog.c:417 plug-ins/gfig/gfig-menu.ui:120
 msgid "Lower"
 msgstr "Нижче"
 
@@ -10270,7 +10278,7 @@ msgstr "У кінець"
 msgid "Lower selected object to bottom"
 msgstr "Опустити вибрані об'єкт до самого низу"
 
-#: plug-ins/gfig/gfig-dialog.c:424
+#: plug-ins/gfig/gfig-dialog.c:424 plug-ins/gfig/gfig-menu.ui:134
 msgid "Show Previous"
 msgstr "Показати попереднє"
 
@@ -10278,7 +10286,7 @@ msgstr "Показати попереднє"
 msgid "Show previous object"
 msgstr "Показати попередній об'єкт"
 
-#: plug-ins/gfig/gfig-dialog.c:426
+#: plug-ins/gfig/gfig-dialog.c:426 plug-ins/gfig/gfig-menu.ui:138
 msgid "Show Next"
 msgstr "Показати наступне"
 
@@ -10286,7 +10294,7 @@ msgstr "Показати наступне"
 msgid "Show next object"
 msgstr "Показати наступний об'єкт"
 
-#: plug-ins/gfig/gfig-dialog.c:428
+#: plug-ins/gfig/gfig-dialog.c:428 plug-ins/gfig/gfig-menu.ui:142
 msgid "Show All"
 msgstr "Показати всі"
 
@@ -10512,18 +10520,68 @@ msgstr "_Gfig..."
 msgid "Create geometric shapes"
 msgstr "Створити геометричні фігури"
 
-#: plug-ins/gfig/gfig.c:980
+#: plug-ins/gfig/gfig.c:833
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Помилка при збереженні фігури як паразита: не вдається приєднати паразита до "
 "малюнка."
 
-#: plug-ins/gfig/gfig.c:1010
+#: plug-ins/gfig/gfig.c:863
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
 "Помилка при відкриванні тимчасового файлу «%s» для завантаження паразита: %s"
+
+#: plug-ins/gfig/gfig-menu.ui:6 plug-ins/imagemap/imap-menu.ui:5
+#| msgid "_File"
+msgid "File"
+msgstr "Файл"
+
+#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1522
+#: plug-ins/imagemap/imap-menu.ui:8
+msgid "Open"
+msgstr "Відкрити"
+
+#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1524
+#: plug-ins/imagemap/imap-menu.ui:12
+msgid "Save"
+msgstr "Зберегти"
+
+#: plug-ins/gfig/gfig-menu.ui:16 plug-ins/imagemap/imap-menu.ui:22
+#| msgid "_Close"
+msgid "Close"
+msgstr "Закрити"
+
+#: plug-ins/gfig/gfig-menu.ui:21 plug-ins/imagemap/imap-menu.ui:32
+#| msgid "_Edit"
+msgid "Edit"
+msgstr "Зміни"
+
+#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:1010
+#: plug-ins/imagemap/imap_main.c:1530 plug-ins/imagemap/imap-menu.ui:35
+msgid "Undo"
+msgstr "Скасувати"
+
+#: plug-ins/gfig/gfig-menu.ui:27 plug-ins/imagemap/imap_cmd_clear.c:50
+#: plug-ins/imagemap/imap-menu.ui:55
+msgid "Clear"
+msgstr "Очистити"
+
+#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1527
+#: plug-ins/imagemap/imap-menu.ui:77
+msgid "Preferences"
+msgstr "Параметри"
+
+#: plug-ins/gfig/gfig-menu.ui:124
+#| msgid "Top:"
+msgid "Top"
+msgstr "Верх"
+
+#: plug-ins/gfig/gfig-menu.ui:128
+#| msgid "Bottom:"
+msgid "Bottom"
+msgstr "Низ"
 
 #: plug-ins/gimpressionist/brush.c:261
 msgid "Can only save drawables!"
@@ -11622,16 +11680,13 @@ msgstr "Розтягти"
 msgid "New"
 msgstr "Створити"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1010 plug-ins/imagemap/imap_main.c:1902
-msgid "Undo"
-msgstr "Скасувати"
-
-#: plug-ins/ifs-compose/ifs-compose.c:1012 plug-ins/imagemap/imap_main.c:1904
+#: plug-ins/ifs-compose/ifs-compose.c:1012 plug-ins/imagemap/imap_main.c:1532
+#: plug-ins/imagemap/imap-menu.ui:39
 msgid "Redo"
 msgstr "Повернути"
 
 #: plug-ins/ifs-compose/ifs-compose.c:1014
-#: plug-ins/imagemap/imap_cmd_select_all.c:50
+#: plug-ins/imagemap/imap_cmd_select_all.c:50 plug-ins/imagemap/imap-menu.ui:61
 msgid "Select All"
 msgstr "Вибрати все"
 
@@ -11737,10 +11792,6 @@ msgstr "точок"
 msgid "Center _y:"
 msgstr "Центр _Y:"
 
-#: plug-ins/imagemap/imap_cmd_clear.c:50
-msgid "Clear"
-msgstr "Очистити"
-
 #: plug-ins/imagemap/imap_cmd_create.c:57
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:150
 msgid "Create"
@@ -11748,11 +11799,13 @@ msgstr "Створити"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:54
 #: plug-ins/imagemap/imap_cmd_cut_object.c:50
-#: plug-ins/imagemap/imap_main.c:1907
+#: plug-ins/imagemap/imap_main.c:1535 plug-ins/imagemap/imap-menu.ui:43
+#: plug-ins/imagemap/imap-menu.ui:326 plug-ins/imagemap/imap-menu.ui:363
 msgid "Cut"
 msgstr "Вирізати"
 
 #: plug-ins/imagemap/imap_cmd_delete_point.c:60
+#: plug-ins/imagemap/imap-menu.ui:343
 msgid "Delete Point"
 msgstr "Видалити точку"
 
@@ -11863,12 +11916,14 @@ msgid "Guides"
 msgstr "Напрямні"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:61
+#: plug-ins/imagemap/imap-menu.ui:339
 msgid "Insert Point"
 msgstr "Вставити точку"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:52
 #: plug-ins/imagemap/imap_cmd_object_down.c:54
-#: plug-ins/imagemap/imap_menu.c:178
+#: plug-ins/imagemap/imap_menu.c:178 plug-ins/imagemap/imap-menu.ui:238
+#: plug-ins/imagemap/imap-menu.ui:322 plug-ins/imagemap/imap-menu.ui:359
 msgid "Move Down"
 msgstr "Перемістити вниз"
 
@@ -11886,10 +11941,13 @@ msgstr "Перемістити вперед"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:52
 #: plug-ins/imagemap/imap_cmd_object_up.c:54 plug-ins/imagemap/imap_menu.c:176
+#: plug-ins/imagemap/imap-menu.ui:234 plug-ins/imagemap/imap-menu.ui:318
+#: plug-ins/imagemap/imap-menu.ui:355
 msgid "Move Up"
 msgstr "Перемістити вгору"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1911
+#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1539
+#: plug-ins/imagemap/imap-menu.ui:51 plug-ins/imagemap/imap-menu.ui:301
 msgid "Paste"
 msgstr "Вставити"
 
@@ -12058,101 +12116,93 @@ msgstr "_Мапа зображення..."
 msgid "Create a clickable imagemap"
 msgstr "Створити мапу зображення (imagemap)"
 
-#: plug-ins/imagemap/imap_main.c:1024 plug-ins/imagemap/imap_settings.c:170
+#: plug-ins/imagemap/imap_main.c:652 plug-ins/imagemap/imap_settings.c:170
 msgid "<Untitled>"
 msgstr "<Без назви>"
 
-#: plug-ins/imagemap/imap_main.c:1172
+#: plug-ins/imagemap/imap_main.c:800
 msgid "Some data has been changed!"
 msgstr "Деякі дані змінились!"
 
-#: plug-ins/imagemap/imap_main.c:1175
+#: plug-ins/imagemap/imap_main.c:803
 msgid "Do you really want to discard your changes?"
 msgstr "Ви справді хочете відмовитись від змін?"
 
-#: plug-ins/imagemap/imap_main.c:1412
+#: plug-ins/imagemap/imap_main.c:1040
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Файл «%s» збережено."
 
-#: plug-ins/imagemap/imap_main.c:1416
+#: plug-ins/imagemap/imap_main.c:1044
 msgid "Couldn't save file:"
 msgstr "Не вдається зберегти файл:"
 
-#: plug-ins/imagemap/imap_main.c:1429
+#: plug-ins/imagemap/imap_main.c:1057
 msgid "Image size has changed."
 msgstr "Розмір зображення змінено."
 
-#: plug-ins/imagemap/imap_main.c:1430
+#: plug-ins/imagemap/imap_main.c:1058
 msgid "Resize area's?"
 msgstr "Змінити розмір сектора?"
 
-#: plug-ins/imagemap/imap_main.c:1472
+#: plug-ins/imagemap/imap_main.c:1100
 msgid "Couldn't read file:"
 msgstr "Не вдалось зчитати файл:"
 
-#: plug-ins/imagemap/imap_main.c:1525
+#: plug-ins/imagemap/imap_main.c:1153
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: plug-ins/imagemap/imap_main.c:1894
-msgid "Open"
-msgstr "Відкрити"
-
-#: plug-ins/imagemap/imap_main.c:1896
-msgid "Save"
-msgstr "Зберегти"
-
-#: plug-ins/imagemap/imap_main.c:1899
-msgid "Preferences"
-msgstr "Параметри"
-
-#: plug-ins/imagemap/imap_main.c:1914
+#: plug-ins/imagemap/imap_main.c:1542 plug-ins/imagemap/imap-menu.ui:108
+#: plug-ins/imagemap/imap-menu.ui:279
 msgid "Zoom In"
 msgstr "Збільшити"
 
-#: plug-ins/imagemap/imap_main.c:1916
+#: plug-ins/imagemap/imap_main.c:1544 plug-ins/imagemap/imap-menu.ui:112
+#: plug-ins/imagemap/imap-menu.ui:283
 msgid "Zoom Out"
 msgstr "Зменшити"
 
-#: plug-ins/imagemap/imap_main.c:1919
+#: plug-ins/imagemap/imap_main.c:1547
 msgid "Edit Map Info"
 msgstr "Змінити інформацію про мапу"
 
-#: plug-ins/imagemap/imap_main.c:1922
+#: plug-ins/imagemap/imap_main.c:1550
 msgid "Move Area to Front"
 msgstr "Перенести ділянку на передній план"
 
-#: plug-ins/imagemap/imap_main.c:1924
+#: plug-ins/imagemap/imap_main.c:1552
 msgid "Move Area to Bottom"
 msgstr "Перенести ділянку додолу"
 
-#: plug-ins/imagemap/imap_main.c:1942
+#: plug-ins/imagemap/imap_main.c:1570 plug-ins/imagemap/imap-menu.ui:166
+#: plug-ins/imagemap/imap-menu.ui:254
 msgid "Arrow"
 msgstr "Стрілка"
 
-#: plug-ins/imagemap/imap_main.c:1942
+#: plug-ins/imagemap/imap_main.c:1570
 msgid "Select Existing Area"
 msgstr "Вибрати наявну ділянку"
 
-#: plug-ins/imagemap/imap_main.c:1944
+#: plug-ins/imagemap/imap_main.c:1572
 msgid "Define Rectangle area"
 msgstr "Визначити прямокутну ділянку"
 
-#: plug-ins/imagemap/imap_main.c:1946
+#: plug-ins/imagemap/imap_main.c:1574
 msgid "Define Circle/Oval area"
 msgstr "Визначити круглу/овальну ділянку"
 
-#: plug-ins/imagemap/imap_main.c:1948
+#: plug-ins/imagemap/imap_main.c:1576
 msgid "Define Polygon area"
 msgstr "Визначити багатокутну ділянку"
 
-#: plug-ins/imagemap/imap_main.c:1951 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap-menu.ui:310 plug-ins/imagemap/imap-menu.ui:347
 msgid "Edit Area Info..."
 msgstr "Змінити інформацію про ділянку…"
 
-#: plug-ins/imagemap/imap_main.c:1951 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "Змінити інформацію про вибрану ділянку"
 
@@ -12334,6 +12384,121 @@ msgstr "Формат файлу мапи"
 #: plug-ins/imagemap/imap_source.c:68
 msgid "View Source"
 msgstr "Перегляд джерела"
+
+#: plug-ins/imagemap/imap-menu.ui:16
+#| msgid "Save _as"
+msgid "Save As"
+msgstr "Зберегти як"
+
+#: plug-ins/imagemap/imap-menu.ui:26
+#| msgid "_Quit"
+msgid "Quit"
+msgstr "Вийти"
+
+#: plug-ins/imagemap/imap-menu.ui:65
+#| msgid "D_eselect All"
+msgid "Deselect All"
+msgstr "Зняти позначення з усіх"
+
+#: plug-ins/imagemap/imap-menu.ui:71
+#| msgid "Edit Area Info..."
+msgid "Edit Area Info"
+msgstr "Змінити інформацію про ділянку"
+
+#: plug-ins/imagemap/imap-menu.ui:83
+#| msgid "_View"
+msgid "View"
+msgstr "Перегляд"
+
+#: plug-ins/imagemap/imap-menu.ui:86
+msgid "Area List"
+msgstr "Список областей"
+
+#: plug-ins/imagemap/imap-menu.ui:90
+msgid "Source..."
+msgstr "Джерело…"
+
+#: plug-ins/imagemap/imap-menu.ui:116
+#| msgid "_Zoom To"
+msgid "Zoom To"
+msgstr "Масштаб"
+
+#: plug-ins/imagemap/imap-menu.ui:119
+msgid "1:1"
+msgstr "1:1"
+
+#: plug-ins/imagemap/imap-menu.ui:124
+msgid "1:2"
+msgstr "1:2"
+
+#: plug-ins/imagemap/imap-menu.ui:129
+msgid "1:3"
+msgstr "1:3"
+
+#: plug-ins/imagemap/imap-menu.ui:134
+msgid "1:4"
+msgstr "1:4"
+
+#: plug-ins/imagemap/imap-menu.ui:139
+msgid "1:5"
+msgstr "1:5"
+
+#: plug-ins/imagemap/imap-menu.ui:144
+msgid "1:6"
+msgstr "1:6"
+
+#: plug-ins/imagemap/imap-menu.ui:149
+msgid "1:7"
+msgstr "1:7"
+
+#: plug-ins/imagemap/imap-menu.ui:154
+msgid "1:8"
+msgstr "1:8"
+
+#: plug-ins/imagemap/imap-menu.ui:163
+#| msgid "_Mapping"
+msgid "Mappings"
+msgstr "Прив'язки"
+
+#: plug-ins/imagemap/imap-menu.ui:188 plug-ins/imagemap/imap-menu.ui:247
+msgid "Edit Map Info..."
+msgstr "Змінити інформацію про карту…"
+
+#: plug-ins/imagemap/imap-menu.ui:194 plug-ins/imagemap/imap-menu.ui:251
+#| msgid "_Tools"
+msgid "Tools"
+msgstr "Засоби"
+
+#: plug-ins/imagemap/imap-menu.ui:201 plug-ins/imagemap/imap-menu.ui:293
+msgid "Grid Settings..."
+msgstr "Параметри сітки…"
+
+#: plug-ins/imagemap/imap-menu.ui:207
+msgid "Use GIMP Guides..."
+msgstr "Використовувати напрямні GIMP…"
+
+#: plug-ins/imagemap/imap-menu.ui:211 plug-ins/imagemap/imap-menu.ui:297
+msgid "Create Guides..."
+msgstr "Створити напрямні…"
+
+#: plug-ins/imagemap/imap-menu.ui:217
+#| msgid "_Help"
+msgid "Help"
+msgstr "Довідка"
+
+#: plug-ins/imagemap/imap-menu.ui:220
+#| msgid "_Contents"
+msgid "Contents"
+msgstr "Зміст"
+
+#: plug-ins/imagemap/imap-menu.ui:224
+#| msgid "_About"
+msgid "About"
+msgstr "Про програму"
+
+#: plug-ins/imagemap/imap-menu.ui:314 plug-ins/imagemap/imap-menu.ui:351
+msgid "Delete Area"
+msgstr "Вилучити ділянку"
 
 #: plug-ins/lighting/lighting-apply.c:101 plug-ins/lighting/lighting-ui.c:1034
 msgid "Lighting Effects"
@@ -14514,9 +14679,6 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "%s-%d-of-%d-pages"
 #~ msgstr "%s-%d-з-%d-сторінок"
 
-#~ msgid "_File"
-#~ msgstr "_Файл"
-
 #~ msgid "_Open..."
 #~ msgstr "_Відкрити…"
 
@@ -14525,9 +14687,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Save _As..."
 #~ msgstr "Зберегти _як…"
-
-#~ msgid "_Quit"
-#~ msgstr "Ви_йти"
 
 #~ msgid "Cu_t"
 #~ msgstr "Ви_різати"
@@ -14538,20 +14697,8 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "Select _All"
 #~ msgstr "Виді_лити все"
 
-#~ msgid "D_eselect All"
-#~ msgstr "З_няти вибране"
-
 #~ msgid "_Preferences"
 #~ msgstr "_Параметри"
-
-#~ msgid "Delete Area"
-#~ msgstr "Вилучити ділянку"
-
-#~ msgid "_View"
-#~ msgstr "П_ерегляд"
-
-#~ msgid "Source..."
-#~ msgstr "Джерело…"
 
 #~ msgid "Zoom in"
 #~ msgstr "Збільшити"
@@ -14559,38 +14706,8 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "Zoom out"
 #~ msgstr "Зменшити"
 
-#~ msgid "_Zoom To"
-#~ msgstr "Мас_штаб"
-
-#~ msgid "_Mapping"
-#~ msgstr "В_ідбиття"
-
-#~ msgid "Edit Map Info..."
-#~ msgstr "Змінити інформацію про карту…"
-
-#~ msgid "_Tools"
-#~ msgstr "_Засоби"
-
-#~ msgid "Grid Settings..."
-#~ msgstr "Параметри сітки…"
-
-#~ msgid "Use GIMP Guides..."
-#~ msgstr "Використовувати напрямні GIMP…"
-
-#~ msgid "Create Guides..."
-#~ msgstr "Створити напрямні…"
-
-#~ msgid "_Contents"
-#~ msgstr "_Зміст"
-
-#~ msgid "_About"
-#~ msgstr "_Про програму"
-
 #~ msgid "_Zoom"
 #~ msgstr "_Масштаб"
-
-#~ msgid "Area List"
-#~ msgstr "Список областей"
 
 #~ msgid "_Clear"
 #~ msgstr "О_чистити"
