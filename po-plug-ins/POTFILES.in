@@ -139,6 +139,7 @@ plug-ins/gfig/gfig-preview.c
 plug-ins/gfig/gfig-spiral.c
 plug-ins/gfig/gfig-star.c
 plug-ins/gfig/gfig.c
+plug-ins/gfig/gfig-menu.ui
 plug-ins/gimpressionist/brush.c
 plug-ins/gimpressionist/color.c
 plug-ins/gimpressionist/general.c

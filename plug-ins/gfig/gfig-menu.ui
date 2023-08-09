@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<menu id="gfig-menubar">
+  <section>
+    <submenu>
+      <attribute name="label" translatable="yes">File</attribute>
+        <item>
+          <attribute name="label" translatable="yes">Open</attribute>
+          <attribute name="action">app.open</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Save</attribute>
+          <attribute name="action">app.save</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Close</attribute>
+          <attribute name="action">app.close</attribute>
+        </item>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">Edit</attribute>
+        <item>
+          <attribute name="label" translatable="yes">Undo</attribute>
+          <attribute name="action">app.undo</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Clear</attribute>
+          <attribute name="action">app.clear</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Grid</attribute>
+          <attribute name="action">app.grid</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Preferences</attribute>
+          <attribute name="action">app.preferences</attribute>
+        </item>
+    </submenu>
+  </section>
+</menu>
+<menu id="gfig-toolbar">
+  <section>
+    <item>
+      <attribute name="label" translatable="yes">Line</attribute>
+      <attribute name="action">app.shape</attribute>
+      <attribute name="target">line</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Rectangle</attribute>
+      <attribute name="action">app.shape</attribute>
+      <attribute name="target">rectangle</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Circle</attribute>
+      <attribute name="action">app.shape</attribute>
+      <attribute name="target">circle</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Ellipse</attribute>
+      <attribute name="action">app.shape</attribute>
+      <attribute name="target">ellipse</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Arc</attribute>
+      <attribute name="action">app.shape</attribute>
+      <attribute name="target">arc</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Polygon</attribute>
+      <attribute name="action">app.shape</attribute>
+      <attribute name="target">polygon</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Star</attribute>
+      <attribute name="action">app.shape</attribute>
+      <attribute name="target">star</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Spiral</attribute>
+      <attribute name="action">app.shape</attribute>
+      <attribute name="target">spiral</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Bezier</attribute>
+      <attribute name="action">app.shape</attribute>
+      <attribute name="target">bezier</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Move Object</attribute>
+      <attribute name="action">app.shape</attribute>
+      <attribute name="target">move-obj</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Move Point</attribute>
+      <attribute name="action">app.shape</attribute>
+      <attribute name="target">move-point</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Copy</attribute>
+      <attribute name="action">app.shape</attribute>
+      <attribute name="target">copy</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Delete</attribute>
+      <attribute name="action">app.shape</attribute>
+      <attribute name="target">delete</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Select</attribute>
+      <attribute name="action">app.shape</attribute>
+      <attribute name="target">select</attribute>
+    </item>
+  </section>
+  <section>
+    <item>
+      <attribute name="label" translatable="yes">Raise</attribute>
+      <attribute name="action">app.raise</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Lower</attribute>
+      <attribute name="action">app.lower</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Top</attribute>
+      <attribute name="action">app.top</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Bottom</attribute>
+      <attribute name="action">app.bottom</attribute>
+    </item>
+  </section>
+  <section>
+    <item>
+      <attribute name="label" translatable="yes">Show Previous</attribute>
+      <attribute name="action">app.show-prev</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Show Next</attribute>
+      <attribute name="action">app.show-next</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Show All</attribute>
+      <attribute name="action">app.show-all</attribute>
+    </item>
+  </section>
+</menu>
+</interface>

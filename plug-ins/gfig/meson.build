@@ -23,6 +23,11 @@ plugin_sources = [
   gfig_icon_sources,
 ]
 
+plugin_sources += gnome.compile_resources(
+  'gfig-menus',
+  'gfig-menus.gresource.xml',
+)
+
 if platform_windows
   plugin_sources += windows.compile_resources(
     gimp_plugins_rc,
