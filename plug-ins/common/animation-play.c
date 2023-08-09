@@ -78,7 +78,7 @@ struct _GimpPlay
   GtkWidget      *step_button;
   GtkWidget      *rewind_button;
 
-  GtkBuilder     *builder;
+  GMenu          *menu;
 };
 
 
@@ -291,7 +291,6 @@ gimp_play_class_init (GimpPlayClass *klass)
 static void
 gimp_play_init (GimpPlay *play)
 {
-  play->builder = NULL;
 }
 
 static void
@@ -301,7 +300,7 @@ gimp_play_finalize (GObject *object)
 
   G_OBJECT_CLASS (gimp_play_parent_class)->finalize (object);
 
-  g_clear_object (&play->builder);
+  g_clear_object (&play->menu);
 }
 
 static GList *
@@ -355,6 +354,7 @@ play_run (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
+  GMenu    *section;
   GimpPlay *play;
 
   play = GIMP_PLAY (gimp_procedure_get_plug_in (procedure));
@@ -364,58 +364,29 @@ play_run (GimpProcedure        *procedure,
   play->app = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
 #endif
 
-  play->builder = gtk_builder_new_from_string (
-      "<interface>"
-        "<menu id=\"anim-play-popup\">"
-          "<section>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Start playback</attribute>"
-              "<attribute name=\"action\">win.play</attribute>"
-            "</item>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Step back to previous frame</attribute>"
-              "<attribute name=\"action\">win.step-back</attribute>"
-            "</item>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Step to next frame</attribute>"
-              "<attribute name=\"action\">win.step</attribute>"
-            "</item>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Rewind the animation</attribute>"
-              "<attribute name=\"action\">win.rewind</attribute>"
-            "</item>"
-          "</section>"
-          "<section>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Increase the speed of the animation</attribute>"
-              "<attribute name=\"action\">win.speed-down</attribute>"
-            "</item>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Decrease the speed of the animation</attribute>"
-              "<attribute name=\"action\">win.speed-up</attribute>"
-            "</item>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Reset the speed of the animation</attribute>"
-              "<attribute name=\"action\">win.speed-reset</attribute>"
-            "</item>"
-          "</section>"
-          "<section>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Detach the animation from the dialog window</attribute>"
-              "<attribute name=\"action\">win.detach</attribute>"
-            "</item>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Reload the image</attribute>"
-              "<attribute name=\"action\">win.refresh</attribute>"
-            "</item>"
-            "<item>"
-              "<attribute name=\"label\" translatable=\"yes\">Quit</attribute>"
-              "<attribute name=\"action\">win.close</attribute>"
-            "</item>"
-          "</section>"
-        "</menu>"
-      "</interface>",
-      -1);
+  play->menu = g_menu_new ();
+
+  section = g_menu_new ();
+  g_menu_append (section, _("Start playback"), "win.play");
+  g_menu_append (section, _("Step back to previous frame"), "win.step-back");
+  g_menu_append (section, _("Step to next frame"), "win.step");
+  g_menu_append (section, _("Rewind the animation"), "win.rewind");
+  g_menu_append_section (play->menu, NULL, G_MENU_MODEL (section));
+  g_clear_object (&section);
+
+  section = g_menu_new ();
+  g_menu_append (section, _("Increase the speed of the animation"), "win.speed-down");
+  g_menu_append (section, _("Decrease the speed of the animation"), "win.speed-up");
+  g_menu_append (section, _("Reset the speed of the animation"), "win.speed-reset");
+  g_menu_append_section (play->menu, NULL, G_MENU_MODEL (section));
+  g_clear_object (&section);
+
+  section = g_menu_new ();
+  g_menu_append (section, _("Detach the animation from the dialog window"), "win.detach");
+  g_menu_append (section, _("Reload the image"), "win.refresh");
+  g_menu_append (section, _("Quit"), "win.close");
+  g_menu_append_section (play->menu, NULL, G_MENU_MODEL (section));
+  g_clear_object (&section);
 
   gegl_init (NULL, NULL);
 
@@ -446,10 +417,8 @@ popup_menu (GtkWidget      *widget,
             GimpPlay       *play)
 {
   GtkWidget  *menu;
-  GMenuModel *model;
 
-  model = G_MENU_MODEL (gtk_builder_get_object (play->builder, "anim-play-popup"));
-  menu = gtk_menu_new_from_model (model);
+  menu = gtk_menu_new_from_model (G_MENU_MODEL (play->menu));
 
   gtk_menu_attach_to_widget (GTK_MENU (menu), window, NULL);
   gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
