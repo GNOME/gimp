@@ -1787,3 +1787,69 @@ gimp_text_buffer_save (GimpTextBuffer *buffer,
 
   return TRUE;
 }
+
+/**
+ * gimp_text_buffer_get_tags_on_iter:
+ * @buffer: a #GimpTextBuffer
+ * @iter: a position in @buffer
+ *
+ * Returns a list of tags that apply to @iter, in ascending order
+ * of priority (highest-priority tags are last). The GtkTextTag in
+ * the list don’t have a reference added, but you have to free the
+ * list itself.
+ *
+ * Returns: (element-type GtkTextTag) (transfer container): GList of #GtkTextTag
+ */
+GList *
+gimp_text_buffer_get_tags_on_iter (GimpTextBuffer    *buffer,
+                                   const GtkTextIter *iter)
+{
+  GList  *result    = NULL;
+  GSList *tag       = NULL;
+  GSList *tags_list = NULL;
+
+  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
+  g_return_val_if_fail (iter != NULL, NULL);
+  g_return_val_if_fail (gtk_text_iter_get_buffer (iter) == GTK_TEXT_BUFFER (buffer), NULL);
+
+  tags_list = gtk_text_iter_get_tags (iter);
+  for (tag = tags_list; tag != NULL; tag = g_slist_next (tag))
+    {
+      result = g_list_prepend (result, tag->data);
+    }
+  g_slist_free (tags_list);
+
+  result = g_list_reverse (result);
+  return result;
+}
+
+/**
+ * gimp_text_buffer_get_all_tags:
+ * @buffer: a #GimpTextBuffer
+ *
+ * Returns a list of all tags for a @buffer, The GtkTextTag
+ * in the list don’t have a reference added, but you have to
+ * free the list itself.
+ *
+ * Returns: (element-type GtkTextTag) (transfer container): GList of #GtkTextTag
+ */
+GList *
+gimp_text_buffer_get_all_tags (GimpTextBuffer *buffer)
+{
+  GList *result = NULL;
+
+  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
+
+  result = g_list_prepend (result, buffer->bold_tag);
+  result = g_list_prepend (result, buffer->italic_tag);
+  result = g_list_prepend (result, buffer->underline_tag);
+  result = g_list_prepend (result, buffer->strikethrough_tag);
+
+  result = g_list_concat (result, g_list_copy (buffer->size_tags));
+  result = g_list_concat (result, g_list_copy (buffer->baseline_tags));
+  result = g_list_concat (result, g_list_copy (buffer->kerning_tags));
+  result = g_list_concat (result, g_list_copy (buffer->font_tags));
+  result = g_list_concat (result, g_list_copy (buffer->color_tags));
+
+  return result;
+}

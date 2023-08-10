@@ -183,5 +183,8 @@ gboolean         gimp_text_buffer_save              (GimpTextBuffer    *buffer,
                                                      gboolean           selection_only,
                                                      GError           **error);
 
+GList          * gimp_text_buffer_get_tags_on_iter  (GimpTextBuffer    *buffer,
+                                                     const GtkTextIter *iter);
+GList          * gimp_text_buffer_get_all_tags      (GimpTextBuffer    *buffer);
 
 #endif /* __GIMP_TEXT_BUFFER_H__ */
