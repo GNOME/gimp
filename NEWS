@@ -17,11 +17,15 @@ Core:
     * "Snap to Equidistance": allows to snap a layer to be at the same distance
       from a second one that this second one is to a third one, either
       horizontally or vertically.
-    * GIMP is now able to use fonts with custom styles, which Pango is unable to
-      work with.
-    * Font names are not unique anymore, which means that we don't rename
-      identically named fonts with #1 or #2, etc. as we used to do. These fonts
-      with same name are now properly working despite the name clash.
+  - GIMP is now able to use fonts with custom styles, which Pango is unable to
+    work with.
+  - Font names are not unique anymore, which means that GIMP doesn't rename
+    identically named fonts with #1 or #2, etc. as it used to do. These fonts
+    with same name are now properly working despite the name clash.
+  - GimpData now have a concept of collection, which is either a controlled name
+    for internal data, or a string constructed from the local file path for
+    external data. This will be used to serialize data objects hence easily
+    retrieve the proper data even when some data may have duplicate names.
 
 Graphical User Interface:
 
@@ -48,6 +52,8 @@ Graphical User Interface:
     if case was different on any letter. It's just better to always have popup
     with case insensitivity.
     This widget is used for instance for on-canvas font selection.
+  - gimp-tool-text icons in Color and Legacy icon themes were modified with an
+    added light border to make them better visible on dark themes.
 
 Plug-ins:
 
@@ -56,7 +62,25 @@ Plug-ins:
 Translations:
 
   - Many non-translatable strings were made translatable. Various other
-    localization bugs we handled.
+    localization bugs were handled.
+
+API:
+
+  - Changes in libgimpconfig:
+    * GimpConfig serialization doesn't break anymore if one property
+      serialization fails. GIMP will now continue to serialize the rest. In
+      particular, it will allow to retrieve as many arguments as possible
+      between plug-in runs.
+  - Changes in libgimp:
+    * GimpResource can now be (de)serialized using the data name and collection
+      so that we are now able to retrieve a used resource quite reliably between
+      runs.
+
+Build:
+
+  - Windows 10 becomes the new minimal support for the 3.0 stable series on
+    Windows. This bump happens because of end-of-support by Microsoft itself,
+    and also by MSYS2 project which is our base for the official installers.
 
 
 Overview of Changes from GIMP 2.99.14 to GIMP 2.99.16
