@@ -150,6 +150,7 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
                                     param_def->meta.m_color.has_alpha,
                                     &param_def->meta.m_color.default_val,
                                     flags);
+      break;
 
     case GP_PARAM_DEF_TYPE_ID:
       if (! strcmp (param_def->type_name, "GimpParamDisplay"))
