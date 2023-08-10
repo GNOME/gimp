@@ -1389,20 +1389,13 @@ static void
 gimp_text_tool_enter_text (GimpTextTool *text_tool,
                            const gchar  *str)
 {
-  GtkTextBuffer *buffer      = GTK_TEXT_BUFFER (text_tool->buffer);
-  GList         *insert_tags = NULL;
-  GList         *remove_tags = NULL;
+  GtkTextBuffer *buffer;
   gboolean       had_selection;
 
+  buffer        = GTK_TEXT_BUFFER (text_tool->buffer);
   had_selection = gtk_text_buffer_get_has_selection (buffer);
 
   gtk_text_buffer_begin_user_action (buffer);
-
-  if (had_selection && text_tool->style_editor)
-    insert_tags = gimp_text_style_editor_list_tags (GIMP_TEXT_STYLE_EDITOR (text_tool->style_editor),
-                                                    &remove_tags);
-
-  gimp_text_tool_delete_selection (text_tool);
 
   if (! had_selection && text_tool->overwrite_mode && strcmp (str, "\n"))
     {
@@ -1415,9 +1408,23 @@ gimp_text_tool_enter_text (GimpTextTool *text_tool,
         gimp_text_tool_delete_from_cursor (text_tool, GTK_DELETE_CHARS, 1);
     }
 
-  if (had_selection && text_tool->style_editor)
-    gimp_text_buffer_set_insert_tags (text_tool->buffer,
-                                      insert_tags, remove_tags);
+  if (had_selection)
+    {
+      GtkTextIter start, end;
+      GList      *insert_tags = NULL;
+      GList      *remove_tags = NULL;
+
+      gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
+      gtk_text_iter_order (&start, &end);
+
+      insert_tags = gimp_text_buffer_get_tags_on_iter (text_tool->buffer, &start);
+
+      gimp_text_tool_delete_selection (text_tool);
+
+      remove_tags = gimp_text_buffer_get_all_tags (text_tool->buffer);
+      gimp_text_buffer_set_insert_tags (text_tool->buffer,
+                                        insert_tags, remove_tags);
+    }
 
   gimp_text_buffer_insert (text_tool->buffer, str);
 
