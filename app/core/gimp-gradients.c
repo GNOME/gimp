@@ -35,12 +35,13 @@
 #include "gimp-intl.h"
 
 
-#define CUSTOM_KEY         "gimp-gradient-custom"
-#define FG_BG_RGB_KEY      "gimp-gradient-fg-bg-rgb"
-#define FG_BG_HARDEDGE_KEY "gimp-gradient-fg-bg-rgb-hardedge"
-#define FG_BG_HSV_CCW_KEY  "gimp-gradient-fg-bg-hsv-ccw"
-#define FG_BG_HSV_CW_KEY   "gimp-gradient-fg-bg-hsv-cw"
-#define FG_TRANSPARENT_KEY "gimp-gradient-fg-transparent"
+#define CUSTOM_KEY                  "gimp-gradient-custom"
+#define FG_BG_RGB_KEY               "gimp-gradient-fg-bg-rgb"
+#define FG_BG_HARDEDGE_KEY          "gimp-gradient-fg-bg-rgb-hardedge"
+#define FG_BG_HSV_CCW_KEY           "gimp-gradient-fg-bg-hsv-ccw"
+#define FG_BG_HSV_CW_KEY            "gimp-gradient-fg-bg-hsv-cw"
+#define FG_TRANSPARENT_KEY          "gimp-gradient-fg-transparent"
+#define FG_TRANSPARENT_HARDEDGE_KEY "gimp-gradient-fg-transparent-hardedge"
 
 
 /*  local function prototypes  */
@@ -107,6 +108,14 @@ gimp_gradients_init (Gimp *gimp)
                                           FG_TRANSPARENT_KEY);
   gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
   gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT;
+
+  /* FG to Transparent (Hardedge) */
+  gradient = gimp_gradients_add_gradient (gimp,
+                                          _("FG to Transparent (Hardedge)"),
+                                          FG_TRANSPARENT_HARDEDGE_KEY);
+  gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
+  gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT;
+  gradient->segments->type             = GIMP_GRADIENT_SEGMENT_STEP;
 }
 
 GimpGradient *
