@@ -301,11 +301,13 @@ svg_load_thumb (GimpProcedure       *procedure,
                 gpointer             run_data)
 {
   GimpValueArray *return_vals;
-  gint            width  = 0;
-  gint            height = 0;
   GimpImage      *image;
-  GError         *error = NULL;
-  SvgLoadVals     vals  =
+  gint            width        = 0;
+  gint            height       = 0;
+  gint            thumb_width  = 0;
+  gint            thumb_height = 0;
+  GError         *error        = NULL;
+  SvgLoadVals     vals         =
   {
     SVG_DEFAULT_RESOLUTION,
     SVG_PREVIEW_SIZE,
@@ -318,9 +320,24 @@ svg_load_thumb (GimpProcedure       *procedure,
     {
       width  = vals.width;
       height = vals.height;
+      if (width > height)
+        {
+          thumb_width  = size;
+          thumb_height = size * height / width;
+        }
+      else
+        {
+          thumb_width  = size * width / height;
+          thumb_height = size;
+        }
+    }
+  else
+    {
+      thumb_width  = size;
+      thumb_height = size;
     }
 
-  image = load_image (file, width, height, SVG_DEFAULT_RESOLUTION, RSVG_HANDLE_FLAGS_NONE, &error);
+  image = load_image (file, thumb_width, thumb_height, SVG_DEFAULT_RESOLUTION, RSVG_HANDLE_FLAGS_NONE, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
