@@ -167,7 +167,7 @@ static GimpValueArray * xmc_load                     (GimpProcedure         *pro
 static GimpValueArray * xmc_load_thumb               (GimpProcedure         *procedure,
                                                       GFile                 *file,
                                                       gint                   size,
-                                                      const GimpValueArray  *args,
+                                                      GimpProcedureConfig   *config,
                                                       gpointer               run_data);
 static GimpValueArray * xmc_save                     (GimpProcedure         *procedure,
                                                       GimpRunMode            run_mode,
@@ -471,11 +471,11 @@ xmc_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-xmc_load_thumb (GimpProcedure        *procedure,
-                GFile                *file,
-                gint                  size,
-                const GimpValueArray *args,
-                gpointer              run_data)
+xmc_load_thumb (GimpProcedure       *procedure,
+                GFile               *file,
+                gint                 size,
+                GimpProcedureConfig *config,
+                gpointer             run_data)
 {
   GimpValueArray *return_vals;
   gint            width;

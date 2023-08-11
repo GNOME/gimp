@@ -83,7 +83,7 @@ static GimpValueArray * wmf_load             (GimpProcedure         *procedure,
 static GimpValueArray * wmf_load_thumb       (GimpProcedure         *procedure,
                                               GFile                 *file,
                                               gint                   size,
-                                              const GimpValueArray  *args,
+                                              GimpProcedureConfig   *config,
                                               gpointer               run_data);
 
 static GimpImage      * load_image           (GFile                 *file,
@@ -258,16 +258,16 @@ wmf_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-wmf_load_thumb (GimpProcedure        *procedure,
-                GFile                *file,
-                gint                  size,
-                const GimpValueArray *args,
-                gpointer              run_data)
+wmf_load_thumb (GimpProcedure       *procedure,
+                GFile               *file,
+                gint                 size,
+                GimpProcedureConfig *config,
+                gpointer             run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
-  gint            width;
-  gint            height;
+  gint            width     = 0;
+  gint            height    = 0;
   GError         *error     = NULL;
   WmfLoadVals     load_vals = { WMF_DEFAULT_RESOLUTION, 0, 0, };
 
@@ -282,8 +282,8 @@ wmf_load_thumb (GimpProcedure        *procedure,
 
       if ((gdouble) load_vals.width > (gdouble) load_vals.height)
         {
+          load_vals.height *= (size / (gdouble) load_vals.width);
           load_vals.width   = size;
-          load_vals.height *= size / (gdouble) load_vals.width;
         }
       else
         {

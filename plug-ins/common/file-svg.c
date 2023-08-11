@@ -85,7 +85,7 @@ static GimpValueArray * svg_load             (GimpProcedure         *procedure,
 static GimpValueArray * svg_load_thumb       (GimpProcedure         *procedure,
                                               GFile                 *file,
                                               gint                   size,
-                                              const GimpValueArray  *args,
+                                              GimpProcedureConfig   *config,
                                               gpointer               run_data);
 
 static GimpImage         * load_image        (GFile                 *file,
@@ -294,11 +294,11 @@ svg_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-svg_load_thumb (GimpProcedure        *procedure,
-                GFile                *file,
-                gint                  size,
-                const GimpValueArray *args,
-                gpointer              run_data)
+svg_load_thumb (GimpProcedure       *procedure,
+                GFile               *file,
+                gint                 size,
+                GimpProcedureConfig *config,
+                gpointer             run_data)
 {
   GimpValueArray *return_vals;
   gint            width  = 0;

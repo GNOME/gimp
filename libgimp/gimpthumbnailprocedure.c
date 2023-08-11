@@ -141,8 +141,10 @@ gimp_thumbnail_procedure_run (GimpProcedure        *procedure,
   GimpThumbnailProcedure *thumbnail_proc = GIMP_THUMBNAIL_PROCEDURE (procedure);
   GimpValueArray         *remaining;
   GimpValueArray         *return_values;
+  GimpProcedureConfig    *config;
   GFile                  *file;
   gint                    size;
+  GimpPDBStatusType       status = GIMP_PDB_EXECUTION_ERROR;
   gint                    i;
 
   file = GIMP_VALUES_GET_FILE (args, 0);
@@ -157,13 +159,30 @@ gimp_thumbnail_procedure_run (GimpProcedure        *procedure,
       gimp_value_array_append (remaining, value);
     }
 
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, GIMP_RUN_NONINTERACTIVE, remaining);
+  gimp_value_array_unref (remaining);
+
   return_values = thumbnail_proc->priv->run_func (procedure,
                                                   file,
                                                   size,
-                                                  remaining,
+                                                  config,
                                                   thumbnail_proc->priv->run_data);
 
-  gimp_value_array_unref (remaining);
+  if (return_values != NULL                       &&
+      gimp_value_array_length (return_values) > 0 &&
+      G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_values, 0)))
+    status = GIMP_VALUES_GET_ENUM (return_values, 0);
+
+  gimp_procedure_config_end_run (config, status);
+  /* This is debug printing to help plug-in developers figure out best
+   * practices.
+   */
+  if (G_OBJECT (config)->ref_count > 1)
+    g_printerr ("%s: ERROR: the GimpThumbnailProcedure config object was refed "
+                "by plug-in, it MUST NOT do that!\n", G_STRFUNC);
+
+  g_object_unref (config);
 
   return return_values;
 }

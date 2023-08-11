@@ -231,7 +231,7 @@ static GimpValueArray * pdf_load             (GimpProcedure         *procedure,
 static GimpValueArray * pdf_load_thumb       (GimpProcedure         *procedure,
                                               GFile                 *file,
                                               gint                   size,
-                                              const GimpValueArray  *args,
+                                              GimpProcedureConfig   *config,
                                               gpointer               run_data);
 
 static GimpImage       * load_image          (PopplerDocument       *doc,
@@ -575,11 +575,11 @@ pdf_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-pdf_load_thumb (GimpProcedure        *procedure,
-                GFile                *file,
-                gint                  size,
-                const GimpValueArray *args,
-                gpointer              run_data)
+pdf_load_thumb (GimpProcedure       *procedure,
+                GFile               *file,
+                gint                 size,
+                GimpProcedureConfig *config,
+                gpointer             run_data)
 {
   GimpValueArray  *return_vals;
   gdouble          width  = 0;

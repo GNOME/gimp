@@ -68,7 +68,7 @@ static GimpValueArray * darktable_load             (GimpProcedure         *proce
 static GimpValueArray * darktable_load_thumb       (GimpProcedure         *procedure,
                                                     GFile                 *file,
                                                     gint                   size,
-                                                    const GimpValueArray  *args,
+                                                    GimpProcedureConfig   *config,
                                                     gpointer               run_data);
 
 static GimpImage      * load_image                 (GFile                 *file,
@@ -333,11 +333,11 @@ darktable_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-darktable_load_thumb (GimpProcedure        *procedure,
-                      GFile                *file,
-                      gint                  size,
-                      const GimpValueArray *args,
-                      gpointer              run_data)
+darktable_load_thumb (GimpProcedure       *procedure,
+                      GFile               *file,
+                      gint                 size,
+                      GimpProcedureConfig *config,
+                      gpointer             run_data)
 {
   GimpValueArray *return_vals;
   gint            width;

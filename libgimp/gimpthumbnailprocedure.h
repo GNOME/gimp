@@ -34,7 +34,7 @@ G_BEGIN_DECLS
  * @procedure:   the #GimpProcedure that runs.
  * @file:        the #GFile to load the thumbnail from.
  * @size:        the requested thumbnail size.
- * @args:        the @procedure's remaining arguments.
+ * @config:      the @procedure's remaining arguments.
  * @run_data: (closure): the run_data given in gimp_thumbnail_procedure_new().
  *
  * The thumbnail function is run during the lifetime of the GIMP session,
@@ -47,7 +47,7 @@ G_BEGIN_DECLS
 typedef GimpValueArray * (* GimpRunThumbnailFunc) (GimpProcedure        *procedure,
                                                    GFile                *file,
                                                    gint                  size,
-                                                   const GimpValueArray *args,
+                                                   GimpProcedureConfig  *config,
                                                    gpointer              run_data);
 
 

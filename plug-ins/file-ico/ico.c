@@ -86,12 +86,12 @@ static GimpValueArray * ani_load             (GimpProcedure         *procedure,
 static GimpValueArray * ico_load_thumb       (GimpProcedure        *procedure,
                                               GFile                *file,
                                               gint                  size,
-                                              const GimpValueArray *args,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 static GimpValueArray * ani_load_thumb       (GimpProcedure        *procedure,
                                               GFile                *file,
                                               gint                  size,
-                                              const GimpValueArray *args,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 static GimpValueArray * ico_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
@@ -493,11 +493,11 @@ ani_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-ico_load_thumb (GimpProcedure        *procedure,
-                GFile                *file,
-                gint                  size,
-                const GimpValueArray *args,
-                gpointer              run_data)
+ico_load_thumb (GimpProcedure       *procedure,
+                GFile               *file,
+                gint                 size,
+                GimpProcedureConfig *config,
+                gpointer             run_data)
 {
   GimpValueArray *return_vals;
   gint            width;
@@ -535,7 +535,7 @@ static GimpValueArray *
 ani_load_thumb (GimpProcedure        *procedure,
                 GFile                *file,
                 gint                  size,
-                const GimpValueArray *args,
+                GimpProcedureConfig  *config,
                 gpointer              run_data)
 {
   GimpValueArray *return_vals;

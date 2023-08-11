@@ -141,7 +141,7 @@ static GimpValueArray * ps_load             (GimpProcedure         *procedure,
 static GimpValueArray * ps_load_thumb       (GimpProcedure         *procedure,
                                              GFile                 *file,
                                              gint                   size,
-                                             const GimpValueArray  *args,
+                                             GimpProcedureConfig   *config,
                                              gpointer               run_data);
 static GimpValueArray * ps_save             (GimpProcedure         *procedure,
                                              GimpRunMode            run_mode,
@@ -618,22 +618,17 @@ ps_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-ps_load_thumb (GimpProcedure        *procedure,
-               GFile                *file,
-               gint                  size,
-               const GimpValueArray *args,
-               gpointer              run_data)
+ps_load_thumb (GimpProcedure       *procedure,
+               GFile               *file,
+               gint                 size,
+               GimpProcedureConfig *config,
+               gpointer             run_data)
 {
-  GimpProcedureConfig *config;
-  GimpValueArray      *return_vals;
-  GimpImage           *image = NULL;
-  GError              *error = NULL;
+  GimpValueArray *return_vals;
+  GimpImage      *image = NULL;
+  GError         *error = NULL;
 
   gegl_init (NULL, NULL);
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image,
-                                   GIMP_RUN_NONINTERACTIVE, args);
 
   /*  We should look for an embedded preview but for now we
    *  just load the document at a small resolution and the
@@ -642,9 +637,6 @@ ps_load_thumb (GimpProcedure        *procedure,
   check_load_vals (NULL);
 
   image = load_image (file, NULL, &error);
-
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
-  g_object_unref (config);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,

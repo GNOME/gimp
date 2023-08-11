@@ -66,7 +66,7 @@ static GimpValueArray * psd_load             (GimpProcedure         *procedure,
 static GimpValueArray * psd_load_thumb       (GimpProcedure         *procedure,
                                               GFile                 *file,
                                               gint                   size,
-                                              const GimpValueArray  *args,
+                                              GimpProcedureConfig   *config,
                                               gpointer               run_data);
 static GimpValueArray * psd_save             (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
@@ -386,11 +386,11 @@ psd_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-psd_load_thumb (GimpProcedure        *procedure,
-                GFile                *file,
-                gint                  size,
-                const GimpValueArray *args,
-                gpointer              run_data)
+psd_load_thumb (GimpProcedure       *procedure,
+                GFile               *file,
+                gint                 size,
+                GimpProcedureConfig *config,
+                gpointer             run_data)
 {
   GimpValueArray *return_vals;
   gint            width  = 0;

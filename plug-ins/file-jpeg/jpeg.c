@@ -68,7 +68,7 @@ static GimpValueArray * jpeg_load             (GimpProcedure         *procedure,
 static GimpValueArray * jpeg_load_thumb       (GimpProcedure         *procedure,
                                                GFile                 *file,
                                                gint                   size,
-                                               const GimpValueArray  *args,
+                                               GimpProcedureConfig   *config,
                                                gpointer               run_data);
 static GimpValueArray * jpeg_save             (GimpProcedure         *procedure,
                                                GimpRunMode            run_mode,
@@ -371,11 +371,11 @@ jpeg_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-jpeg_load_thumb (GimpProcedure        *procedure,
-                 GFile                *file,
-                 gint                  size,
-                 const GimpValueArray *args,
-                 gpointer              run_data)
+jpeg_load_thumb (GimpProcedure       *procedure,
+                 GFile               *file,
+                 gint                 size,
+                 GimpProcedureConfig *config,
+                 gpointer             run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
