@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-27 13:41+0000\n"
-"PO-Revision-Date: 2023-07-28 05:49+0200\n"
+"POT-Creation-Date: 2023-08-11 07:06+0000\n"
+"PO-Revision-Date: 2023-08-11 09:26+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -10230,10 +10230,13 @@ msgid ""
 "Context-dependent mouse pointers are helpful.  They are enabled by default.  "
 "However, they require overhead that you may want to do without."
 msgstr ""
+"კონტექსტზე დამოკიდებული თაგუნას მაჩვენებლები სასარგებლოა.  ისინი "
+"ნაგულისხმევად ჩართულია.  მაგრამ მათ პროცესორის დამატებითი დატვირთვა მოაქვთ, "
+"რაც ყოველთვის ის არაა, რაც გნებავთ, გქონდეთ."
 
 #: app/config/gimprc-blurbs.h:81
 msgid "Merge menu and title bar (client-side decoration)"
-msgstr ""
+msgstr "მენიუა და სათაურის ზოლების შერწყმა (კლიენტის მხრის დეკორაცია)"
 
 #: app/config/gimprc-blurbs.h:84
 msgid "Show full image content by default."
@@ -12366,29 +12369,33 @@ msgstr "გაფართოების (\"%s\") გამოტოვებ�
 msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr "გაფართოებების საქაღალდეში არსებული უცნობი ფაილის (%s) გამოტოვება.\n"
 
-#: app/core/gimp-gradients.c:64
+#: app/core/gimp-gradients.c:65
 msgid "Custom"
 msgstr "ხელით"
 
-#: app/core/gimp-gradients.c:74
+#: app/core/gimp-gradients.c:75
 msgid "FG to BG (RGB)"
 msgstr "FG-დან BG-მდე (RGB)"
 
-#: app/core/gimp-gradients.c:82
+#: app/core/gimp-gradients.c:83
 msgid "FG to BG (Hardedge)"
 msgstr "FG-დან BG-მდე (სწრაფი გადასვლა)"
 
-#: app/core/gimp-gradients.c:90
+#: app/core/gimp-gradients.c:91
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "FG-დან BG-მდე (HSV საათის საპირისპიროდ)"
 
-#: app/core/gimp-gradients.c:98
+#: app/core/gimp-gradients.c:99
 msgid "FG to BG (HSV clockwise hue)"
 msgstr "FG-დან BG-მდე (HSV საათის მიმართულებით)"
 
-#: app/core/gimp-gradients.c:106
+#: app/core/gimp-gradients.c:107
 msgid "FG to Transparent"
 msgstr "FG-დან გამჭვირვალემდე"
+
+#: app/core/gimp-gradients.c:114
+msgid "FG to Transparent (Hardedge)"
+msgstr "FG-დან გამჭვირვალემდე (Hardedge)"
 
 #. Translator:  This message is displayed while GIMP is waiting for
 #. * some operation to finish.  The %s argument is a message describing
@@ -20066,7 +20073,6 @@ msgstr "%s-ის სახელი ცარიელი ვერ იქნ�
 #.
 #: app/pdb/gimppdb-utils.c:139 app/pdb/gimppdb-utils.c:204
 #, c-format
-#| msgid "Brush '%s' not found"
 msgctxt "PDB-error-message"
 msgid "%s '%s' not found"
 msgstr "%s '%s' ვერ ვიპოვე"
@@ -20077,7 +20083,6 @@ msgstr "%s '%s' ვერ ვიპოვე"
 #.
 #: app/pdb/gimppdb-utils.c:149 app/pdb/gimppdb-utils.c:214
 #, c-format
-#| msgid "Brush '%s' is not editable"
 msgctxt "PDB-error-message"
 msgid "%s '%s' is not editable"
 msgstr "%s '%s' ჩასწორებადი არაა"
@@ -20088,7 +20093,6 @@ msgstr "%s '%s' ჩასწორებადი არაა"
 #.
 #: app/pdb/gimppdb-utils.c:160 app/pdb/gimppdb-utils.c:225
 #, c-format
-#| msgid "Brush '%s' is not renamable"
 msgctxt "PDB-error-message"
 msgid "%s '%s' is not renamable"
 msgstr "%s '%s' სახელგადარქმევადი არაა"
@@ -21414,7 +21418,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr ""
 
-#: app/text/gimpfontfactory.c:400
+#: app/text/gimpfontfactory.c:393
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
