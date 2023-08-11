@@ -11,16 +11,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-31 18:03+0000\n"
-"PO-Revision-Date: 2023-08-02 14:15-0400\n"
-"Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
+"POT-Creation-Date: 2023-08-09 16:44+0000\n"
+"PO-Revision-Date: 2023-08-10 15:03+0800\n"
+"Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.2.2\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Gtranslator 42.0\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -48,7 +48,7 @@ msgstr "在 C 语言中锻炼一只山羊"
 #: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:178
 #: plug-ins/gradient-flare/gradient-flare.c:935
-#: plug-ins/ifs-compose/ifs-compose.c:541 plug-ins/imagemap/imap_main.c:636
+#: plug-ins/ifs-compose/ifs-compose.c:541 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:404
 #: plug-ins/map-object/map-object-main.c:496 plug-ins/pagecurl/pagecurl.c:302
 #, c-format
@@ -134,8 +134,8 @@ msgstr "运行(_R)"
 #, c-format, python-format, lua-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
-"Check out the last version of the source code online by clicking the "
-"\"Source\" button."
+"Check out the last version of the source code online by clicking the \"Source"
+"\" button."
 msgstr ""
 "该插件是用于演示插件创建的“%s”中的一个练习。\n"
 "点击“源代码”按钮可以查看最新版本的在线源代码。"
@@ -316,7 +316,9 @@ msgid "_Grid"
 msgstr "网格(_G)"
 
 #: plug-ins/common/align-layers.c:223 plug-ins/common/grid.c:757
-#: plug-ins/gfig/gfig-dialog.c:1360 plug-ins/imagemap/imap_main.c:1927
+#: plug-ins/gfig/gfig-dialog.c:1360 plug-ins/gfig/gfig-menu.ui:31
+#: plug-ins/imagemap/imap_main.c:1555 plug-ins/imagemap/imap-menu.ui:197
+#: plug-ins/imagemap/imap-menu.ui:289
 msgid "Grid"
 msgstr "网格"
 
@@ -507,6 +509,7 @@ msgstr "重新载入图像"
 #. Zoom Options
 #: plug-ins/common/animation-play.c:849
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:649
+#: plug-ins/imagemap/imap-menu.ui:276
 msgid "Zoom"
 msgstr "缩放"
 
@@ -1194,7 +1197,7 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
-#: plug-ins/gfig/gfig.c:1044 plug-ins/ifs-compose/ifs-compose.c:2468
+#: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2468
 #: plug-ins/lighting/lighting-ui.c:1233
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1235,7 +1238,7 @@ msgstr "加载 CML 探索器参数"
 #: plug-ins/file-psd/psd-save.c:2219 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1855
-#: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:674
+#: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:527
 #: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
 #: plug-ins/lighting/lighting-ui.c:1377
 #, c-format
@@ -4458,12 +4461,13 @@ msgstr "渲染"
 msgid "B/W"
 msgstr "黑/白"
 
-#: plug-ins/common/file-ps.c:3737
+#: plug-ins/common/file-ps.c:3737 plug-ins/imagemap/imap-menu.ui:101
 msgid "Gray"
 msgstr "灰色"
 
 #: plug-ins/common/file-ps.c:3738 plug-ins/common/file-xpm.c:511
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:169
+#: plug-ins/imagemap/imap-menu.ui:96
 msgid "Color"
 msgstr "颜色"
 
@@ -6658,7 +6662,7 @@ msgid "Wood"
 msgstr "木纹"
 
 #: plug-ins/common/sphere-designer.c:343 plug-ins/flame/flame.c:820
-#: plug-ins/gfig/gfig-dialog.c:399
+#: plug-ins/gfig/gfig-dialog.c:399 plug-ins/gfig/gfig-menu.ui:79
 msgid "Spiral"
 msgstr "螺旋"
 
@@ -9870,7 +9874,7 @@ msgstr "在控制点之间连接直线。只在创建曲线时起作用"
 msgid "Gfig"
 msgstr "几何图形（GFig）"
 
-#: plug-ins/gfig/gfig-dialog.c:385
+#: plug-ins/gfig/gfig-dialog.c:385 plug-ins/gfig/gfig-menu.ui:44
 msgid "Line"
 msgstr "线状"
 
@@ -9879,7 +9883,8 @@ msgid "Create line"
 msgstr "创建线段"
 
 #: plug-ins/gfig/gfig-dialog.c:387 plug-ins/gfig/gfig-dialog.c:1440
-#: plug-ins/imagemap/imap_main.c:1944
+#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1572
+#: plug-ins/imagemap/imap-menu.ui:171 plug-ins/imagemap/imap-menu.ui:259
 msgid "Rectangle"
 msgstr "矩形"
 
@@ -9887,9 +9892,10 @@ msgstr "矩形"
 msgid "Create rectangle"
 msgstr "创建矩形"
 
-#: plug-ins/gfig/gfig-dialog.c:389
+#: plug-ins/gfig/gfig-dialog.c:389 plug-ins/gfig/gfig-menu.ui:54
 #: plug-ins/gradient-flare/gradient-flare.c:4021
-#: plug-ins/imagemap/imap_main.c:1946
+#: plug-ins/imagemap/imap_main.c:1574 plug-ins/imagemap/imap-menu.ui:176
+#: plug-ins/imagemap/imap-menu.ui:264
 msgid "Circle"
 msgstr "圆"
 
@@ -9897,7 +9903,7 @@ msgstr "圆"
 msgid "Create circle"
 msgstr "创建圆"
 
-#: plug-ins/gfig/gfig-dialog.c:391
+#: plug-ins/gfig/gfig-dialog.c:391 plug-ins/gfig/gfig-menu.ui:59
 msgid "Ellipse"
 msgstr "椭圆"
 
@@ -9905,7 +9911,7 @@ msgstr "椭圆"
 msgid "Create ellipse"
 msgstr "创建椭圆"
 
-#: plug-ins/gfig/gfig-dialog.c:393
+#: plug-ins/gfig/gfig-dialog.c:393 plug-ins/gfig/gfig-menu.ui:64
 msgid "Arc"
 msgstr "弧线"
 
@@ -9913,9 +9919,10 @@ msgstr "弧线"
 msgid "Create arc"
 msgstr "创建弧线"
 
-#: plug-ins/gfig/gfig-dialog.c:395
+#: plug-ins/gfig/gfig-dialog.c:395 plug-ins/gfig/gfig-menu.ui:69
 #: plug-ins/gradient-flare/gradient-flare.c:4038
-#: plug-ins/imagemap/imap_main.c:1948
+#: plug-ins/imagemap/imap_main.c:1576 plug-ins/imagemap/imap-menu.ui:181
+#: plug-ins/imagemap/imap-menu.ui:269
 msgid "Polygon"
 msgstr "多边形"
 
@@ -9923,7 +9930,7 @@ msgstr "多边形"
 msgid "Create reg polygon"
 msgstr "创建正多边形"
 
-#: plug-ins/gfig/gfig-dialog.c:397
+#: plug-ins/gfig/gfig-dialog.c:397 plug-ins/gfig/gfig-menu.ui:74
 msgid "Star"
 msgstr "星形"
 
@@ -9935,7 +9942,7 @@ msgstr "创建星形"
 msgid "Create spiral"
 msgstr "创建螺旋线"
 
-#: plug-ins/gfig/gfig-dialog.c:401
+#: plug-ins/gfig/gfig-dialog.c:401 plug-ins/gfig/gfig-menu.ui:84
 msgid "Bezier"
 msgstr "贝塞尔"
 
@@ -9943,7 +9950,7 @@ msgstr "贝塞尔"
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "创建贝塞尔曲线。Shift + 按钮结束对象创建。"
 
-#: plug-ins/gfig/gfig-dialog.c:404
+#: plug-ins/gfig/gfig-dialog.c:404 plug-ins/gfig/gfig-menu.ui:89
 msgid "Move Object"
 msgstr "移动对象"
 
@@ -9951,7 +9958,7 @@ msgstr "移动对象"
 msgid "Move an object"
 msgstr "移动一个对象"
 
-#: plug-ins/gfig/gfig-dialog.c:406
+#: plug-ins/gfig/gfig-dialog.c:406 plug-ins/gfig/gfig-menu.ui:94
 msgid "Move Point"
 msgstr "移动点"
 
@@ -9960,9 +9967,10 @@ msgid "Move a single point"
 msgstr "移动一个点"
 
 #: plug-ins/gfig/gfig-dialog.c:408 plug-ins/gfig/gfig-dialog.c:1293
-#: plug-ins/imagemap/imap_cmd_copy.c:53
+#: plug-ins/gfig/gfig-menu.ui:99 plug-ins/imagemap/imap_cmd_copy.c:53
 #: plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: plug-ins/imagemap/imap_main.c:1909
+#: plug-ins/imagemap/imap_main.c:1537 plug-ins/imagemap/imap-menu.ui:47
+#: plug-ins/imagemap/imap-menu.ui:330 plug-ins/imagemap/imap-menu.ui:367
 msgid "Copy"
 msgstr "复制"
 
@@ -9970,7 +9978,8 @@ msgstr "复制"
 msgid "Copy an object"
 msgstr "复制一个对象"
 
-#: plug-ins/gfig/gfig-dialog.c:410 plug-ins/ifs-compose/ifs-compose.c:1008
+#: plug-ins/gfig/gfig-dialog.c:410 plug-ins/gfig/gfig-menu.ui:104
+#: plug-ins/ifs-compose/ifs-compose.c:1008
 #: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
 msgid "Delete"
 msgstr "删除"
@@ -9979,7 +9988,8 @@ msgstr "删除"
 msgid "Delete an object"
 msgstr "删除一个对象"
 
-#: plug-ins/gfig/gfig-dialog.c:412 plug-ins/imagemap/imap_cmd_select.c:52
+#: plug-ins/gfig/gfig-dialog.c:412 plug-ins/gfig/gfig-menu.ui:109
+#: plug-ins/imagemap/imap_cmd_select.c:52
 msgid "Select"
 msgstr "选择"
 
@@ -9987,7 +9997,7 @@ msgstr "选择"
 msgid "Select an object"
 msgstr "选择一个对象"
 
-#: plug-ins/gfig/gfig-dialog.c:415
+#: plug-ins/gfig/gfig-dialog.c:415 plug-ins/gfig/gfig-menu.ui:116
 msgid "Raise"
 msgstr "升高"
 
@@ -9995,7 +10005,7 @@ msgstr "升高"
 msgid "Raise selected object"
 msgstr "升高选中对象"
 
-#: plug-ins/gfig/gfig-dialog.c:417
+#: plug-ins/gfig/gfig-dialog.c:417 plug-ins/gfig/gfig-menu.ui:120
 msgid "Lower"
 msgstr "降低"
 
@@ -10019,7 +10029,7 @@ msgstr "至底"
 msgid "Lower selected object to bottom"
 msgstr "将选中对象降至底端"
 
-#: plug-ins/gfig/gfig-dialog.c:424
+#: plug-ins/gfig/gfig-dialog.c:424 plug-ins/gfig/gfig-menu.ui:134
 msgid "Show Previous"
 msgstr "显示上一个"
 
@@ -10027,7 +10037,7 @@ msgstr "显示上一个"
 msgid "Show previous object"
 msgstr "显示上一个对象"
 
-#: plug-ins/gfig/gfig-dialog.c:426
+#: plug-ins/gfig/gfig-dialog.c:426 plug-ins/gfig/gfig-menu.ui:138
 msgid "Show Next"
 msgstr "显示下一个"
 
@@ -10035,7 +10045,7 @@ msgstr "显示下一个"
 msgid "Show next object"
 msgstr "显示下一个对象"
 
-#: plug-ins/gfig/gfig-dialog.c:428
+#: plug-ins/gfig/gfig-dialog.c:428 plug-ins/gfig/gfig-menu.ui:142
 msgid "Show All"
 msgstr "显示全部"
 
@@ -10259,15 +10269,60 @@ msgstr "几何图形(_G)…"
 msgid "Create geometric shapes"
 msgstr "创建几何图形"
 
-#: plug-ins/gfig/gfig.c:980
+#: plug-ins/gfig/gfig.c:833
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr "试图将图形另存为寄生物时出错：无法添加寄生物到图像。"
 
-#: plug-ins/gfig/gfig.c:1010
+#: plug-ins/gfig/gfig.c:863
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "试图打开临时文件“%s”用于加载寄生物时出错：%s"
+
+#: plug-ins/gfig/gfig-menu.ui:6 plug-ins/imagemap/imap-menu.ui:5
+msgid "File"
+msgstr "文件"
+
+#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1522
+#: plug-ins/imagemap/imap-menu.ui:8
+msgid "Open"
+msgstr "打开"
+
+#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1524
+#: plug-ins/imagemap/imap-menu.ui:12
+msgid "Save"
+msgstr "保存"
+
+#: plug-ins/gfig/gfig-menu.ui:16 plug-ins/imagemap/imap-menu.ui:22
+msgid "Close"
+msgstr "关闭"
+
+#: plug-ins/gfig/gfig-menu.ui:21 plug-ins/imagemap/imap-menu.ui:32
+msgid "Edit"
+msgstr "编辑"
+
+#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:1010
+#: plug-ins/imagemap/imap_main.c:1530 plug-ins/imagemap/imap-menu.ui:35
+msgid "Undo"
+msgstr "撤消"
+
+#: plug-ins/gfig/gfig-menu.ui:27 plug-ins/imagemap/imap_cmd_clear.c:50
+#: plug-ins/imagemap/imap-menu.ui:55
+msgid "Clear"
+msgstr "清除"
+
+#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1527
+#: plug-ins/imagemap/imap-menu.ui:77
+msgid "Preferences"
+msgstr "首选项"
+
+#: plug-ins/gfig/gfig-menu.ui:124
+msgid "Top"
+msgstr "顶部"
+
+#: plug-ins/gfig/gfig-menu.ui:128
+msgid "Bottom"
+msgstr "底部"
 
 #: plug-ins/gimpressionist/brush.c:261
 msgid "Can only save drawables!"
@@ -11358,16 +11413,13 @@ msgstr "拉伸"
 msgid "New"
 msgstr "新建"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1010 plug-ins/imagemap/imap_main.c:1902
-msgid "Undo"
-msgstr "撤消"
-
-#: plug-ins/ifs-compose/ifs-compose.c:1012 plug-ins/imagemap/imap_main.c:1904
+#: plug-ins/ifs-compose/ifs-compose.c:1012 plug-ins/imagemap/imap_main.c:1532
+#: plug-ins/imagemap/imap-menu.ui:39
 msgid "Redo"
 msgstr "重做"
 
 #: plug-ins/ifs-compose/ifs-compose.c:1014
-#: plug-ins/imagemap/imap_cmd_select_all.c:50
+#: plug-ins/imagemap/imap_cmd_select_all.c:50 plug-ins/imagemap/imap-menu.ui:61
 msgid "Select All"
 msgstr "全部选择"
 
@@ -11473,10 +11525,6 @@ msgstr "像素"
 msgid "Center _y:"
 msgstr "中心 Y(_Y)："
 
-#: plug-ins/imagemap/imap_cmd_clear.c:50
-msgid "Clear"
-msgstr "清除"
-
 #: plug-ins/imagemap/imap_cmd_create.c:57
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:150
 msgid "Create"
@@ -11484,11 +11532,13 @@ msgstr "创建"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:54
 #: plug-ins/imagemap/imap_cmd_cut_object.c:50
-#: plug-ins/imagemap/imap_main.c:1907
+#: plug-ins/imagemap/imap_main.c:1535 plug-ins/imagemap/imap-menu.ui:43
+#: plug-ins/imagemap/imap-menu.ui:326 plug-ins/imagemap/imap-menu.ui:363
 msgid "Cut"
 msgstr "剪切"
 
 #: plug-ins/imagemap/imap_cmd_delete_point.c:60
+#: plug-ins/imagemap/imap-menu.ui:343
 msgid "Delete Point"
 msgstr "删除点"
 
@@ -11597,12 +11647,14 @@ msgid "Guides"
 msgstr "参考线"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:61
+#: plug-ins/imagemap/imap-menu.ui:339
 msgid "Insert Point"
 msgstr "插入点"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:52
 #: plug-ins/imagemap/imap_cmd_object_down.c:54
-#: plug-ins/imagemap/imap_menu.c:178
+#: plug-ins/imagemap/imap_menu.c:178 plug-ins/imagemap/imap-menu.ui:238
+#: plug-ins/imagemap/imap-menu.ui:322 plug-ins/imagemap/imap-menu.ui:359
 msgid "Move Down"
 msgstr "下移"
 
@@ -11620,10 +11672,13 @@ msgstr "提到最前"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:52
 #: plug-ins/imagemap/imap_cmd_object_up.c:54 plug-ins/imagemap/imap_menu.c:176
+#: plug-ins/imagemap/imap-menu.ui:234 plug-ins/imagemap/imap-menu.ui:318
+#: plug-ins/imagemap/imap-menu.ui:355
 msgid "Move Up"
 msgstr "上移"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1911
+#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1539
+#: plug-ins/imagemap/imap-menu.ui:51 plug-ins/imagemap/imap-menu.ui:301
 msgid "Paste"
 msgstr "粘贴"
 
@@ -11792,101 +11847,93 @@ msgstr "图像映像(_I)…"
 msgid "Create a clickable imagemap"
 msgstr "创建可点击的图像映像"
 
-#: plug-ins/imagemap/imap_main.c:1024 plug-ins/imagemap/imap_settings.c:170
+#: plug-ins/imagemap/imap_main.c:652 plug-ins/imagemap/imap_settings.c:170
 msgid "<Untitled>"
 msgstr "<未命名>"
 
-#: plug-ins/imagemap/imap_main.c:1172
+#: plug-ins/imagemap/imap_main.c:800
 msgid "Some data has been changed!"
 msgstr "一些数据已改变！"
 
-#: plug-ins/imagemap/imap_main.c:1175
+#: plug-ins/imagemap/imap_main.c:803
 msgid "Do you really want to discard your changes?"
 msgstr "您真的要放弃您的修改吗？"
 
-#: plug-ins/imagemap/imap_main.c:1412
+#: plug-ins/imagemap/imap_main.c:1040
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "文件“%s”已保存。"
 
-#: plug-ins/imagemap/imap_main.c:1416
+#: plug-ins/imagemap/imap_main.c:1044
 msgid "Couldn't save file:"
 msgstr "无法保存文件："
 
-#: plug-ins/imagemap/imap_main.c:1429
+#: plug-ins/imagemap/imap_main.c:1057
 msgid "Image size has changed."
 msgstr "图像大小已改变。"
 
-#: plug-ins/imagemap/imap_main.c:1430
+#: plug-ins/imagemap/imap_main.c:1058
 msgid "Resize area's?"
 msgstr "重置区域大小吗？"
 
-#: plug-ins/imagemap/imap_main.c:1472
+#: plug-ins/imagemap/imap_main.c:1100
 msgid "Couldn't read file:"
 msgstr "无法读取文件："
 
-#: plug-ins/imagemap/imap_main.c:1525
+#: plug-ins/imagemap/imap_main.c:1153
 #, c-format
 msgid "URL: %s"
 msgstr "URL：%s"
 
-#: plug-ins/imagemap/imap_main.c:1894
-msgid "Open"
-msgstr "打开"
-
-#: plug-ins/imagemap/imap_main.c:1896
-msgid "Save"
-msgstr "保存"
-
-#: plug-ins/imagemap/imap_main.c:1899
-msgid "Preferences"
-msgstr "首选项"
-
-#: plug-ins/imagemap/imap_main.c:1914
+#: plug-ins/imagemap/imap_main.c:1542 plug-ins/imagemap/imap-menu.ui:108
+#: plug-ins/imagemap/imap-menu.ui:279
 msgid "Zoom In"
 msgstr "放大"
 
-#: plug-ins/imagemap/imap_main.c:1916
+#: plug-ins/imagemap/imap_main.c:1544 plug-ins/imagemap/imap-menu.ui:112
+#: plug-ins/imagemap/imap-menu.ui:283
 msgid "Zoom Out"
 msgstr "缩小"
 
-#: plug-ins/imagemap/imap_main.c:1919
+#: plug-ins/imagemap/imap_main.c:1547
 msgid "Edit Map Info"
 msgstr "编辑映像信息"
 
-#: plug-ins/imagemap/imap_main.c:1922
+#: plug-ins/imagemap/imap_main.c:1550
 msgid "Move Area to Front"
 msgstr "移动区域至最前"
 
-#: plug-ins/imagemap/imap_main.c:1924
+#: plug-ins/imagemap/imap_main.c:1552
 msgid "Move Area to Bottom"
 msgstr "移动区域至底部"
 
-#: plug-ins/imagemap/imap_main.c:1942
+#: plug-ins/imagemap/imap_main.c:1570 plug-ins/imagemap/imap-menu.ui:166
+#: plug-ins/imagemap/imap-menu.ui:254
 msgid "Arrow"
 msgstr "箭头"
 
-#: plug-ins/imagemap/imap_main.c:1942
+#: plug-ins/imagemap/imap_main.c:1570
 msgid "Select Existing Area"
 msgstr "选择现有区域"
 
-#: plug-ins/imagemap/imap_main.c:1944
+#: plug-ins/imagemap/imap_main.c:1572
 msgid "Define Rectangle area"
 msgstr "定义矩形区域"
 
-#: plug-ins/imagemap/imap_main.c:1946
+#: plug-ins/imagemap/imap_main.c:1574
 msgid "Define Circle/Oval area"
 msgstr "定义圆/椭圆区域"
 
-#: plug-ins/imagemap/imap_main.c:1948
+#: plug-ins/imagemap/imap_main.c:1576
 msgid "Define Polygon area"
 msgstr "定义多边形区域"
 
-#: plug-ins/imagemap/imap_main.c:1951 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap-menu.ui:310 plug-ins/imagemap/imap-menu.ui:347
 msgid "Edit Area Info..."
 msgstr "编辑区域信息…"
 
-#: plug-ins/imagemap/imap_main.c:1951 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "编辑选中区域的信息"
 
@@ -12068,6 +12115,110 @@ msgstr "映像文件格式"
 #: plug-ins/imagemap/imap_source.c:68
 msgid "View Source"
 msgstr "查看源文件"
+
+#: plug-ins/imagemap/imap-menu.ui:16
+msgid "Save As"
+msgstr "另存为"
+
+#: plug-ins/imagemap/imap-menu.ui:26
+msgid "Quit"
+msgstr "退出"
+
+#: plug-ins/imagemap/imap-menu.ui:65
+msgid "Deselect All"
+msgstr "取消全部选择"
+
+#: plug-ins/imagemap/imap-menu.ui:71
+msgid "Edit Area Info"
+msgstr "编辑区域信息"
+
+#: plug-ins/imagemap/imap-menu.ui:83
+msgid "View"
+msgstr "查看"
+
+#: plug-ins/imagemap/imap-menu.ui:86
+msgid "Area List"
+msgstr "区域列表"
+
+#: plug-ins/imagemap/imap-menu.ui:90
+msgid "Source..."
+msgstr "源代码…"
+
+#: plug-ins/imagemap/imap-menu.ui:116
+msgid "Zoom To"
+msgstr "缩放至"
+
+#: plug-ins/imagemap/imap-menu.ui:119
+msgid "1:1"
+msgstr "1:1"
+
+#: plug-ins/imagemap/imap-menu.ui:124
+msgid "1:2"
+msgstr "1:2"
+
+#: plug-ins/imagemap/imap-menu.ui:129
+msgid "1:3"
+msgstr "1:3"
+
+#: plug-ins/imagemap/imap-menu.ui:134
+msgid "1:4"
+msgstr "1:4"
+
+#: plug-ins/imagemap/imap-menu.ui:139
+msgid "1:5"
+msgstr "1:5"
+
+#: plug-ins/imagemap/imap-menu.ui:144
+msgid "1:6"
+msgstr "1:6"
+
+#: plug-ins/imagemap/imap-menu.ui:149
+msgid "1:7"
+msgstr "1:7"
+
+#: plug-ins/imagemap/imap-menu.ui:154
+msgid "1:8"
+msgstr "1:8"
+
+#: plug-ins/imagemap/imap-menu.ui:163
+msgid "Mappings"
+msgstr "映射"
+
+#: plug-ins/imagemap/imap-menu.ui:188 plug-ins/imagemap/imap-menu.ui:247
+msgid "Edit Map Info..."
+msgstr "编辑映射信息…"
+
+#: plug-ins/imagemap/imap-menu.ui:194 plug-ins/imagemap/imap-menu.ui:251
+msgid "Tools"
+msgstr "工具"
+
+#: plug-ins/imagemap/imap-menu.ui:201 plug-ins/imagemap/imap-menu.ui:293
+msgid "Grid Settings..."
+msgstr "网格设置…"
+
+#: plug-ins/imagemap/imap-menu.ui:207
+msgid "Use GIMP Guides..."
+msgstr "使用 GIMP 参考线…"
+
+#: plug-ins/imagemap/imap-menu.ui:211 plug-ins/imagemap/imap-menu.ui:297
+msgid "Create Guides..."
+msgstr "创建参考线…"
+
+#: plug-ins/imagemap/imap-menu.ui:217
+msgid "Help"
+msgstr "帮助"
+
+#: plug-ins/imagemap/imap-menu.ui:220
+msgid "Contents"
+msgstr "内容"
+
+#: plug-ins/imagemap/imap-menu.ui:224
+msgid "About"
+msgstr "关于"
+
+#: plug-ins/imagemap/imap-menu.ui:314 plug-ins/imagemap/imap-menu.ui:351
+msgid "Delete Area"
+msgstr "删除区域"
 
 #: plug-ins/lighting/lighting-apply.c:101 plug-ins/lighting/lighting-ui.c:1034
 msgid "Lighting Effects"
@@ -14204,14 +14355,8 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "Rotate / Scale"
 #~ msgstr "旋转/缩放"
 
-#~ msgid "_File"
-#~ msgstr "文件(_F)"
-
 #~ msgid "Save _As..."
 #~ msgstr "另存为(_A)…"
-
-#~ msgid "_Quit"
-#~ msgstr "退出(_Q)"
 
 #~ msgid "Cu_t"
 #~ msgstr "剪切(_T)"
@@ -14219,20 +14364,8 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "_Paste"
 #~ msgstr "粘贴(_P)"
 
-#~ msgid "D_eselect All"
-#~ msgstr "取消全部选择(_E)"
-
 #~ msgid "_Preferences"
 #~ msgstr "首选项(_P)"
-
-#~ msgid "Delete Area"
-#~ msgstr "删除区域"
-
-#~ msgid "_View"
-#~ msgstr "查看(_V)"
-
-#~ msgid "Source..."
-#~ msgstr "源代码…"
 
 #~ msgid "Zoom in"
 #~ msgstr "放大"
@@ -14240,38 +14373,8 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "Zoom out"
 #~ msgstr "缩小"
 
-#~ msgid "_Zoom To"
-#~ msgstr "缩放至(_Z)"
-
-#~ msgid "_Mapping"
-#~ msgstr "映射(_M)"
-
-#~ msgid "Edit Map Info..."
-#~ msgstr "编辑映射信息…"
-
-#~ msgid "_Tools"
-#~ msgstr "工具(_T)"
-
-#~ msgid "Grid Settings..."
-#~ msgstr "网格设置…"
-
-#~ msgid "Use GIMP Guides..."
-#~ msgstr "使用 GIMP 参考线…"
-
-#~ msgid "Create Guides..."
-#~ msgstr "创建参考线…"
-
-#~ msgid "_Contents"
-#~ msgstr "内容(_C)"
-
-#~ msgid "_About"
-#~ msgstr "关于(_A)"
-
 #~ msgid "_Zoom"
 #~ msgstr "缩放(_Z)"
-
-#~ msgid "Area List"
-#~ msgstr "区域列表"
 
 #~ msgid "Error loading metadata-viewer dialog."
 #~ msgstr "加载元数据查看器对话框出错。"
