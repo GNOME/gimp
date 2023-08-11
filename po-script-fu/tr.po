@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-22 14:38+0000\n"
-"PO-Revision-Date: 2022-12-10 23:53+0300\n"
+"POT-Creation-Date: 2023-07-29 14:59+0000\n"
+"PO-Revision-Date: 2023-07-30 02:53+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2010-10-09 17:28+0000\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: plug-ins/script-fu/script-fu.c:122
 msgid "Script-Fu _Console"
@@ -35,63 +35,63 @@ msgstr "Script-Fu _Uçbirimi"
 msgid "Interactive console for Script-Fu development"
 msgstr "Script-Fu geliştirmesi için etkileşimli uçbirim"
 
-#: plug-ins/script-fu/script-fu.c:310
+#: plug-ins/script-fu/script-fu.c:314
 msgid "_GIMP Online"
 msgstr "Çevrimiçi _GIMP"
 
-#: plug-ins/script-fu/script-fu.c:311
+#: plug-ins/script-fu/script-fu.c:315
 msgid "_User Manual"
 msgstr "_Kullanıcı Kılavuzu"
 
-#: plug-ins/script-fu/script-fu.c:314
+#: plug-ins/script-fu/script-fu.c:318
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:316
+#: plug-ins/script-fu/script-fu.c:320
 msgid "_Test"
 msgstr "_Dene"
 
-#: plug-ins/script-fu/script-fu.c:319
+#: plug-ins/script-fu/script-fu.c:323
 msgid "_Buttons"
 msgstr "_Düğmeler"
 
-#: plug-ins/script-fu/script-fu.c:321
+#: plug-ins/script-fu/script-fu.c:325
 msgid "_Logos"
 msgstr "_Logolar"
 
-#: plug-ins/script-fu/script-fu.c:323
+#: plug-ins/script-fu/script-fu.c:327
 msgid "_Patterns"
 msgstr "_Desenler"
 
-#: plug-ins/script-fu/script-fu.c:326
+#: plug-ins/script-fu/script-fu.c:330
 msgid "_Web Page Themes"
 msgstr "_Ağ Sayfası Temaları"
 
-#: plug-ins/script-fu/script-fu.c:328
+#: plug-ins/script-fu/script-fu.c:332
 msgid "_Alien Glow"
 msgstr "Y_abancı Parıltı"
 
-#: plug-ins/script-fu/script-fu.c:330
+#: plug-ins/script-fu/script-fu.c:334
 msgid "_Beveled Pattern"
 msgstr "_Eğimli Desen"
 
-#: plug-ins/script-fu/script-fu.c:332
+#: plug-ins/script-fu/script-fu.c:336
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: plug-ins/script-fu/script-fu.c:335
+#: plug-ins/script-fu/script-fu.c:339
 msgid "Alpha to _Logo"
 msgstr "Alfadan _Logoya"
 
-#: plug-ins/script-fu/script-fu.c:341
+#: plug-ins/script-fu/script-fu.c:345
 msgid "_Refresh Scripts"
 msgstr "Betikleri _Yenile"
 
-#: plug-ins/script-fu/script-fu.c:346
+#: plug-ins/script-fu/script-fu.c:350
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Kullanılabilir tüm Script-Fu betiklerini yeniden oku"
 
-#: plug-ins/script-fu/script-fu.c:372
+#: plug-ins/script-fu/script-fu.c:376
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -100,65 +100,63 @@ msgstr ""
 "kullanamazsınız. Lütfen tüm Script-Fu pencerelerini kapatın ve yeniden "
 "deneyin."
 
-#: plug-ins/script-fu/script-fu-console.c:110
-#: plug-ins/script-fu/script-fu-console.c:177
-msgid "Script-Fu Console"
-msgstr "Script-Fu Uçbirimi"
+#: plug-ins/script-fu/script-fu-eval.c:50
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "Script-Fu değerlendirme kipi yalnızca etkileşimsiz çağrıma izin verir"
 
-#: plug-ins/script-fu/script-fu-console.c:115
-#: plug-ins/script-fu/script-fu-console.c:281
+#: plug-ins/script-fu/console/script-fu-console.c:125
+msgid "Script Console"
+msgstr "Betik Uçbirimi"
+
+#: plug-ins/script-fu/console/script-fu-console.c:130
+#: plug-ins/script-fu/console/script-fu-console.c:259
 msgid "_Save"
 msgstr "_Kaydet"
 
-#: plug-ins/script-fu/script-fu-console.c:116
+#: plug-ins/script-fu/console/script-fu-console.c:131
 msgid "C_lear"
 msgstr "_Temizle"
 
-#: plug-ins/script-fu/script-fu-console.c:117
-#: plug-ins/script-fu/script-fu-console.c:359
+#: plug-ins/script-fu/console/script-fu-console.c:132
+#: plug-ins/script-fu/console/script-fu-console.c:332
 msgid "_Close"
 msgstr "_Kapat"
 
-# TinyScheme burada marka ismi gibi özel isim
-#: plug-ins/script-fu/script-fu-console.c:173
-msgid "Welcome to TinyScheme"
-msgstr "TinyScheme'ya hoşgeldiniz"
-
-# Scheme burada Scheme programa diline atıf, yani özel isim
-#: plug-ins/script-fu/script-fu-console.c:179
-msgid "Interactive Scheme Development"
-msgstr "Etkileşimli Scheme Geliştirici"
-
-#: plug-ins/script-fu/script-fu-console.c:215
+#: plug-ins/script-fu/console/script-fu-console.c:193
 msgid "_Browse..."
 msgstr "_Gözat..."
 
-#: plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/console/script-fu-console.c:254
 msgid "Save Script-Fu Console Output"
 msgstr "Script-Fu Uçbirimi Çıktısını Kaydet"
 
-#: plug-ins/script-fu/script-fu-console.c:280
+#: plug-ins/script-fu/console/script-fu-console.c:258
 #: plug-ins/script-fu/server/script-fu-server.c:884
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:236
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:218
 msgid "_Cancel"
 msgstr "_İptal"
 
-#: plug-ins/script-fu/script-fu-console.c:325
+#: plug-ins/script-fu/console/script-fu-console.c:301
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Yazma için '%s' açılamadı: %s"
 
-#: plug-ins/script-fu/script-fu-console.c:354
+#: plug-ins/script-fu/console/script-fu-console.c:327
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu Yordam Tarayıcı"
 
-#: plug-ins/script-fu/script-fu-console.c:358
+#: plug-ins/script-fu/console/script-fu-console.c:331
 msgid "_Apply"
 msgstr "_Uygula"
 
-#: plug-ins/script-fu/script-fu-eval.c:50
-msgid "Script-Fu evaluation mode only allows non-interactive invocation"
-msgstr "Script-Fu değerlendirme kipi yalnızca etkileşimsiz çağrıma izin verir"
+# TinyScheme burada marka ismi gibi özel isim
+#: plug-ins/script-fu/console/script-fu-console-total.c:89
+msgid "Welcome to TinyScheme"
+msgstr "TinyScheme'ya hoşgeldiniz"
+
+#: plug-ins/script-fu/console/script-fu-console-total.c:93
+msgid "Scripting GIMP in the Scheme language"
+msgstr "Scheme dilinde GIMP betiği oluşturma"
 
 #: plug-ins/script-fu/server/script-fu-server.c:880
 msgid "Script-Fu Server Options"
@@ -197,70 +195,70 @@ msgstr "Sunucuyu _Başlat..."
 msgid "Server for remote Script-Fu operation"
 msgstr "Uzak Script-Fu işlemi için sunucu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:202
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:184
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu iki betiği aynı anda çalıştıramaz."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:204
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:186
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "\"%s\" betiğini zaten çalıştırıyorsunuz."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:228
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:210
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:235
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:217
 msgid "_Reset"
 msgstr "_Sıfırla"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:237
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:219
 msgid "_OK"
 msgstr "_Tamam"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:291
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:341
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:323
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu Renk Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:468
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:450
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu Dosya Seçimi"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:471
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:453
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu Dizin Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:484
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:466
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu Yazı Tipi Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:492
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:472
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu Palet Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:501
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:479
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu Desen Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:510
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu Renk Geçişi Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:519
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:493
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu Fırça Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:898
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:868
 #, c-format
 msgid "Error while executing %s:"
 msgstr "%s yürütülürken hata:"
@@ -545,14 +543,12 @@ msgstr "Artalan yok (yalnız ayrı katman için)"
 
 #: plug-ins/script-fu/scripts/circuit.scm:142
 #: plug-ins/script-fu/scripts/lava.scm:141
-#: plug-ins/script-fu/scripts/predator.scm:138
 #: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Keep selection"
 msgstr "Seçileni koru"
 
 #: plug-ins/script-fu/scripts/circuit.scm:143
 #: plug-ins/script-fu/scripts/lava.scm:142
-#: plug-ins/script-fu/scripts/predator.scm:139
 msgid "Separate layer"
 msgstr "Ayrı katman"
 
@@ -865,49 +861,40 @@ msgstr "_Basit Nesneler Çizmek"
 msgid "Create and Use _Selections"
 msgstr "_Seçim Oluşturmak ve Kullanmak"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:190
+#: plug-ins/script-fu/scripts/gimp-online.scm:186
 msgid "_Main Web Site"
 msgstr "_Ana Web Sitesi"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: plug-ins/script-fu/scripts/gimp-online.scm:191
-#: plug-ins/script-fu/scripts/gimp-online.scm:204
-#: plug-ins/script-fu/scripts/gimp-online.scm:256
+#: plug-ins/script-fu/scripts/gimp-online.scm:187
+#: plug-ins/script-fu/scripts/gimp-online.scm:200
+#: plug-ins/script-fu/scripts/gimp-online.scm:239
 msgid "Bookmark to the GIMP web site"
 msgstr "GIMP web sitesini görüntüle"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/gimp-online.scm:199
 msgid "_Developer Web Site"
 msgstr "_Geliştirici Web Sitesi"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:216
-msgid "_Roadmap"
+#: plug-ins/script-fu/scripts/gimp-online.scm:212
+msgid "_Roadmaps"
 msgstr "_Yol Haritası"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
+#: plug-ins/script-fu/scripts/gimp-online.scm:213
+msgid "Bookmark to the roadmaps of GIMP"
 msgstr "GIMP yol haritasını görüntüle"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
-msgid "_Wiki"
-msgstr "_Wiki"
-
-# Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "GIMP wiki sayfasını görüntüle"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/gimp-online.scm:225
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Hata Raporları ve Özellik İstekleri"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: plug-ins/script-fu/scripts/gimp-online.scm:243
+#: plug-ins/script-fu/scripts/gimp-online.scm:226
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "GIMP hata izleyicisini görüntüle"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/gimp-online.scm:238
 msgid "_User Manual Web Site"
 msgstr "_Kullanıcı Kılavuzu Web Sitesi"
 
@@ -1172,6 +1159,10 @@ msgstr ""
 "Addaki tüm karakterler görünmez boşluklar veya dosya adlarında "
 "gösterilemeyen karakterlerden oluşuyor."
 
+#: plug-ins/script-fu/scripts/palette-export.scm:264
+msgid "_CSS stylesheet..."
+msgstr "_CSS stil kağıdı..."
+
 #: plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
@@ -1180,13 +1171,25 @@ msgstr ""
 "Etkin paleti, CSS stil sayfası olarak, sınıf adı renk değerine ve renk "
 "özniteliği renge eşit olacak biçimde, dışa aktar"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:290
+msgid "P_HP dictionary..."
+msgstr "P_HP sözlüğü..."
+
 #: plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Etkin paleti bir PHP sözlüğü olarak dışa aktar (ad => renk)"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:322
+msgid "_Python dictionary..."
+msgstr "_Python sözlüğü..."
+
 #: plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Etkin paleti bir Python sözlüğü olarak dışa aktar (ad: renk)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:351
+msgid "_Text file..."
+msgstr "_Metin dosyası..."
 
 #: plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
@@ -1196,11 +1199,15 @@ msgstr ""
 "Paletteki tüm renkleri bir metin dosyasına, her satırda onaltılık bir değer "
 "olacak şekilde (adlar olmadan) yaz"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:398
+msgid "J_ava map..."
+msgstr "J_ava eşlemi..."
+
 #: plug-ins/script-fu/scripts/palette-export.scm:399
-msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
-"Etkin paleti bir Java hashtable olarak dışa aktar java.util."
-"Hashtable<String, Color>"
+"Etkin paleti bir Java hashtable olarak dışa aktar java.util.Hashtable&lt;"
+"String,Color&gt;"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:58
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
@@ -1268,26 +1275,6 @@ msgstr "Gölgenin göreceli uzunluğu"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:211
 msgid "Interpolation"
 msgstr "Aradeğerleme"
-
-#: plug-ins/script-fu/scripts/predator.scm:127
-msgid "_Predator..."
-msgstr "_Yırtıcı..."
-
-#: plug-ins/script-fu/scripts/predator.scm:128
-msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "Seçili bölgeye (veya alfaya) 'Yırtıcı' etkisi uygula"
-
-#: plug-ins/script-fu/scripts/predator.scm:135
-msgid "Edge amount"
-msgstr "Kenar miktarı"
-
-#: plug-ins/script-fu/scripts/predator.scm:136
-msgid "Pixelize"
-msgstr "Pikselleştir"
-
-#: plug-ins/script-fu/scripts/predator.scm:137
-msgid "Pixel amount"
-msgstr "Piksel miktarı"
 
 #: plug-ins/script-fu/scripts/reverse-layers.scm:42
 msgid "Reverse Layer _Order"
