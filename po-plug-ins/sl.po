@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-09 16:44+0000\n"
-"PO-Revision-Date: 2023-08-10 12:54+0200\n"
+"POT-Creation-Date: 2023-08-11 23:15+0000\n"
+"PO-Revision-Date: 2023-08-12 01:20+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -50,7 +50,7 @@ msgstr "Povadi kozo v jeziku C"
 #: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:178
 #: plug-ins/gradient-flare/gradient-flare.c:935
-#: plug-ins/ifs-compose/ifs-compose.c:541 plug-ins/imagemap/imap_main.c:264
+#: plug-ins/ifs-compose/ifs-compose.c:487 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:404
 #: plug-ins/map-object/map-object-main.c:496 plug-ins/pagecurl/pagecurl.c:302
 #, c-format
@@ -68,7 +68,7 @@ msgstr "Povadi kozo (C)"
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
 #: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1348
 #: plug-ins/common/cml-explorer.c:2114 plug-ins/common/cml-explorer.c:2247
-#: plug-ins/common/colormap-remap.c:704 plug-ins/common/compose.c:1183
+#: plug-ins/common/colormap-remap.c:687 plug-ins/common/compose.c:1183
 #: plug-ins/common/curve-bend.c:1203 plug-ins/common/curve-bend.c:1977
 #: plug-ins/common/curve-bend.c:2012 plug-ins/common/depth-merge.c:734
 #: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1164
@@ -97,9 +97,9 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/gradient-flare/gradient-flare.c:2517
 #: plug-ins/gradient-flare/gradient-flare.c:3367
 #: plug-ins/gradient-flare/gradient-flare.c:3479
-#: plug-ins/ifs-compose/ifs-compose.c:962
-#: plug-ins/ifs-compose/ifs-compose.c:2608
-#: plug-ins/ifs-compose/ifs-compose.c:2645 plug-ins/imagemap/imap_browse.c:80
+#: plug-ins/ifs-compose/ifs-compose.c:908
+#: plug-ins/ifs-compose/ifs-compose.c:2554
+#: plug-ins/ifs-compose/ifs-compose.c:2591 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:1038
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
@@ -162,7 +162,7 @@ msgstr "Povadi kozo (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:705
+#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:688
 #: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1204
 #: plug-ins/common/depth-merge.c:735 plug-ins/common/file-heif.c:2352
 #: plug-ins/common/file-pdf-load.c:710 plug-ins/common/file-svg.c:840
@@ -171,8 +171,9 @@ msgstr "Povadi kozo (JavaScript)"
 #: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
 #: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
-#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3533
-#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
+#: plug-ins/common/warp.c:491 plug-ins/file-exr/file-exr.c:419
+#: plug-ins/file-psd/psd-load.c:3533 plug-ins/flame/flame.c:717
+#: plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -180,7 +181,7 @@ msgstr "Povadi kozo (JavaScript)"
 #: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:2518
 #: plug-ins/gradient-flare/gradient-flare.c:3480
-#: plug-ins/ifs-compose/ifs-compose.c:963
+#: plug-ins/ifs-compose/ifs-compose.c:909
 #: plug-ins/imagemap/imap_default_dialog.c:109
 #: plug-ins/lighting/lighting-ui.c:1039
 #: plug-ins/map-object/map-object-ui.c:1318 plug-ins/pagecurl/pagecurl.c:497
@@ -457,108 +458,125 @@ msgstr "Iskanje ozadja animacije ..."
 msgid "Optimizing animation"
 msgstr "Optimiziranje animacije ..."
 
-#: plug-ins/common/animation-play.c:331
+#: plug-ins/common/animation-play.c:330
 msgid "_Playback..."
 msgstr "_Predvajaj …"
 
-#: plug-ins/common/animation-play.c:336
+#: plug-ins/common/animation-play.c:335
 msgid "Preview a GIMP layer-based animation"
 msgstr "Pokaži predogled animacije GIMP na osnovi plasti"
 
+#: plug-ins/common/animation-play.c:370 plug-ins/common/animation-play.c:736
+#: plug-ins/common/animation-play.c:1352
+msgid "Start playback"
+msgstr "Zaženi predvajanje"
+
+#: plug-ins/common/animation-play.c:371 plug-ins/common/animation-play.c:738
+msgid "Step back to previous frame"
+msgstr "Korak na prejšnjo sličico"
+
+#: plug-ins/common/animation-play.c:372 plug-ins/common/animation-play.c:740
+msgid "Step to next frame"
+msgstr "Korak na naslednjo sličico"
+
+#: plug-ins/common/animation-play.c:373 plug-ins/common/animation-play.c:742
+msgid "Rewind the animation"
+msgstr "Previj animacijo na začetek"
+
+#: plug-ins/common/animation-play.c:378
+msgid "Increase the speed of the animation"
+msgstr "Pohitrite animacijo"
+
+#: plug-ins/common/animation-play.c:379
+msgid "Decrease the speed of the animation"
+msgstr "Upočasnite animacijo"
+
+#: plug-ins/common/animation-play.c:380
+msgid "Reset the speed of the animation"
+msgstr "Ponastavite hitrost animacije"
+
+#: plug-ins/common/animation-play.c:385 plug-ins/common/animation-play.c:745
+msgid "Detach the animation from the dialog window"
+msgstr "Odpni animacijo od pogovornega okna"
+
+#: plug-ins/common/animation-play.c:386 plug-ins/common/animation-play.c:747
+msgid "Reload the image"
+msgstr "Ponovno naloži sliko"
+
+#: plug-ins/common/animation-play.c:387 plug-ins/imagemap/imap-menu.ui:26
+msgid "Quit"
+msgstr "Izhod"
+
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:498 plug-ins/common/animation-play.c:556
-#: plug-ins/common/animation-play.c:834
+#: plug-ins/common/animation-play.c:467 plug-ins/common/animation-play.c:525
+#: plug-ins/common/animation-play.c:803
 #, c-format
 msgid "%.1f %%"
 msgstr "%.1f %%"
 
 #. Image Name
-#: plug-ins/common/animation-play.c:689
+#: plug-ins/common/animation-play.c:658
 msgid "Animation Playback:"
 msgstr "Predvajanje animacije:"
 
-#: plug-ins/common/animation-play.c:767 plug-ins/common/animation-play.c:1383
-msgid "Start playback"
-msgstr "Zaženi predvajanje"
-
-#: plug-ins/common/animation-play.c:769
+#: plug-ins/common/animation-play.c:738
 msgid "Step _back"
 msgstr "Korak na_zaj"
 
-#: plug-ins/common/animation-play.c:769
-msgid "Step back to previous frame"
-msgstr "Korak na prejšnjo sličico"
-
-#: plug-ins/common/animation-play.c:771
+#: plug-ins/common/animation-play.c:740
 msgid "_Step"
 msgstr "_Korak"
 
-#: plug-ins/common/animation-play.c:771
-msgid "Step to next frame"
-msgstr "Korak na naslednjo sličico"
-
-#: plug-ins/common/animation-play.c:773
-msgid "Rewind the animation"
-msgstr "Previj animacijo na začetek"
-
-#: plug-ins/common/animation-play.c:776
+#: plug-ins/common/animation-play.c:745
 msgid "Detach"
 msgstr "Odpni"
 
-#: plug-ins/common/animation-play.c:776
-msgid "Detach the animation from the dialog window"
-msgstr "Odpni animacijo od pogovornega okna"
-
-#: plug-ins/common/animation-play.c:778
-msgid "Reload the image"
-msgstr "Ponovno naloži sliko"
-
 #. Zoom Options
-#: plug-ins/common/animation-play.c:849
+#: plug-ins/common/animation-play.c:818
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:649
 #: plug-ins/imagemap/imap-menu.ui:276
 msgid "Zoom"
 msgstr "Povečava"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:859
+#: plug-ins/common/animation-play.c:828
 #, c-format
 msgid "%d fps"
 msgstr "%d sl/s"
 
-#: plug-ins/common/animation-play.c:870
+#: plug-ins/common/animation-play.c:839
 msgid "Default framerate"
 msgstr "Privzeta hitrost sličic"
 
-#: plug-ins/common/animation-play.c:890
+#: plug-ins/common/animation-play.c:859
 msgid "Playback speed"
 msgstr "Hitrost predvajanja"
 
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:901 plug-ins/common/file-gif-save.c:1273
+#: plug-ins/common/animation-play.c:870 plug-ins/common/file-gif-save.c:1273
 msgid "Cumulative layers (combine)"
 msgstr "kumulativne plasti (združuj)"
 
-#: plug-ins/common/animation-play.c:906 plug-ins/common/file-gif-save.c:1275
+#: plug-ins/common/animation-play.c:875 plug-ins/common/file-gif-save.c:1275
 msgid "One frame per layer (replace)"
 msgstr "ena sličica na plast (zamenjaj)"
 
-#: plug-ins/common/animation-play.c:1002
+#: plug-ins/common/animation-play.c:971
 msgid "Memory could not be allocated to the frame container."
 msgstr "Za vsebnik sličic ni bilo mogoče dodeliti pomnilnika."
 
-#: plug-ins/common/animation-play.c:1069
+#: plug-ins/common/animation-play.c:1038
 msgid "Invalid image. Did you close it?"
 msgstr "Neveljavna slika. Ali ste jo zaprli?"
 
-#: plug-ins/common/animation-play.c:1181
+#: plug-ins/common/animation-play.c:1150
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Sličica %d od %d"
 
-#: plug-ins/common/animation-play.c:1383
+#: plug-ins/common/animation-play.c:1352
 msgid "Stop playback"
 msgstr "Zaustavi predvajanje"
 
@@ -634,7 +652,7 @@ msgstr "Navpične"
 #: plug-ins/common/file-tga.c:1117 plug-ins/common/file-wbmp.c:270
 #: plug-ins/common/file-xbm.c:912 plug-ins/common/film.c:811
 #: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
-#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:271
+#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:278
 #: plug-ins/file-faxg3/faxg3.c:574 plug-ins/file-fits/fits.c:701
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
@@ -995,8 +1013,8 @@ msgstr "Naključno zrno"
 #: plug-ins/flame/flame.c:1104
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:801
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1632
-#: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:959
-#: plug-ins/ifs-compose/ifs-compose.c:2646 plug-ins/imagemap/imap_browse.c:81
+#: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:905
+#: plug-ins/ifs-compose/ifs-compose.c:2592 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:608
 #: plug-ins/lighting/lighting-ui.c:1308
 msgid "_Open"
@@ -1012,8 +1030,8 @@ msgstr "_Odpri"
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:818
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1670
 #: plug-ins/gfig/gfig-dialog.c:832 plug-ins/gimpressionist/brush.c:271
-#: plug-ins/ifs-compose/ifs-compose.c:960
-#: plug-ins/ifs-compose/ifs-compose.c:2609 plug-ins/imagemap/imap_file.c:129
+#: plug-ins/ifs-compose/ifs-compose.c:906
+#: plug-ins/ifs-compose/ifs-compose.c:2555 plug-ins/imagemap/imap_file.c:129
 #: plug-ins/lighting/lighting-ui.c:601 plug-ins/lighting/lighting-ui.c:1164
 msgid "_Save"
 msgstr "_Shrani"
@@ -1178,7 +1196,7 @@ msgstr "Graf trenutnih nastavitev"
 #: plug-ins/common/procedure-browser.c:168
 #: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
-#: plug-ins/ifs-compose/ifs-compose.c:1262
+#: plug-ins/ifs-compose/ifs-compose.c:1208
 #: plug-ins/metadata/metadata-viewer.c:272
 msgid "_Close"
 msgstr "Z_apri"
@@ -1205,7 +1223,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
-#: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2468
+#: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2414
 #: plug-ins/lighting/lighting-ui.c:1233
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1288,32 +1306,52 @@ msgstr "_Zamenjaj barvi"
 msgid "Swap two colors in the colormap"
 msgstr "Zamenja dve barvi v katalogu barv"
 
-#: plug-ins/common/colormap-remap.c:423 plug-ins/common/colormap-remap.c:434
-#: plug-ins/common/colormap-remap.c:445
+#: plug-ins/common/colormap-remap.c:277
+msgid "Sort on Hue"
+msgstr "Razvrsti glede na obarvanost"
+
+#: plug-ins/common/colormap-remap.c:278
+msgid "Sort on Saturation"
+msgstr "Razvrsti glede na nasičenost"
+
+#: plug-ins/common/colormap-remap.c:279
+msgid "Sort on Value"
+msgstr "Razvrsti glede na vrednost"
+
+#: plug-ins/common/colormap-remap.c:284
+msgid "Reverse Order"
+msgstr "Preobrni zaporedje"
+
+#: plug-ins/common/colormap-remap.c:285
+msgid "Reset Order"
+msgstr "Ponastavi zaporedje"
+
+#: plug-ins/common/colormap-remap.c:408 plug-ins/common/colormap-remap.c:419
+#: plug-ins/common/colormap-remap.c:430
 msgid "Invalid remap array was passed to remap function"
 msgstr ""
 "Funkciji ponovne preslikave je bila podana neveljavna matrika ponovne "
 "preslikave"
 
-#: plug-ins/common/colormap-remap.c:469
+#: plug-ins/common/colormap-remap.c:454
 msgid "Rearranging the colormap"
 msgstr "Prerazporejanje barv v katalogu ..."
 
-#: plug-ins/common/colormap-remap.c:699
+#: plug-ins/common/colormap-remap.c:682
 msgid "Rearrange Colormap"
 msgstr "Prerazporedi katalog barv"
 
 #. The Reset button
-#: plug-ins/common/colormap-remap.c:703 plug-ins/common/curve-bend.c:1446
+#: plug-ins/common/colormap-remap.c:686 plug-ins/common/curve-bend.c:1446
 #: plug-ins/common/sample-colorize.c:1413
 #: plug-ins/common/sphere-designer.c:2631 plug-ins/common/tile-small.c:531
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:809
-#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:961
+#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:907
 #: plug-ins/selection-to-path/selection-to-path.c:412
 msgid "_Reset"
 msgstr "_Ponastavi"
 
-#: plug-ins/common/colormap-remap.c:805
+#: plug-ins/common/colormap-remap.c:788
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
@@ -1322,7 +1360,7 @@ msgstr ""
 "Prikazane številke so izvirni indeksi.  Desno kliknite za meni z možnostmi "
 "razvrščanja."
 
-#: plug-ins/common/colormap-remap.c:843
+#: plug-ins/common/colormap-remap.c:826
 msgid "Rearrange Colors"
 msgstr "Prerazporedi barve"
 
@@ -2220,7 +2258,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-wbmp.c:176 plug-ins/common/file-wmf.c:1026
 #: plug-ins/common/file-xbm.c:742 plug-ins/common/file-xmc.c:648
 #: plug-ins/common/file-xpm.c:385 plug-ins/common/file-xwd.c:478
-#: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:188
+#: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:190
 #: plug-ins/file-faxg3/faxg3.c:240 plug-ins/file-fli/fli-gimp.c:502
 #: plug-ins/file-icns/file-icns-load.c:507 plug-ins/file-ico/ico-load.c:673
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
@@ -2537,7 +2575,7 @@ msgstr "Zapis GBR ne podpira več plasti."
 msgid "Radiance RGBE"
 msgstr "Sevanje RGBE"
 
-#: plug-ins/common/file-gegl.c:130 plug-ins/file-exr/file-exr.c:106
+#: plug-ins/common/file-gegl.c:130 plug-ins/file-exr/file-exr.c:108
 msgid "OpenEXR image"
 msgstr "Slika OpenEXR"
 
@@ -4145,7 +4183,7 @@ msgstr "Napaka pri branju »%s«. Je datoteka poškodovana?"
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Neznan barvni model v datoteki PNG »%s«."
 
-#: plug-ins/common/file-png.c:915 plug-ins/file-exr/file-exr.c:254
+#: plug-ins/common/file-png.c:915 plug-ins/file-exr/file-exr.c:257
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Nove slike za »%s« ni mogoče ustvariti: %s"
@@ -6081,7 +6119,7 @@ msgstr "Razreži sliko v podslike z uporabo vodil"
 msgid "Guillotine"
 msgstr "Giljotina"
 
-#: plug-ins/common/guillotine.c:266 plug-ins/help-browser/dialog.c:892
+#: plug-ins/common/guillotine.c:266 plug-ins/help-browser/dialog.c:821
 msgid "Untitled"
 msgstr "Neimenovano"
 
@@ -6871,7 +6909,7 @@ msgstr "Pogovorno okno izbire barve"
 
 #. Scale
 #: plug-ins/common/sphere-designer.c:2833 plug-ins/gimpressionist/paper.c:191
-#: plug-ins/ifs-compose/ifs-compose.c:717
+#: plug-ins/ifs-compose/ifs-compose.c:663
 msgid "Scale:"
 msgstr "Merilo:"
 
@@ -6979,7 +7017,7 @@ msgstr "Majhni tlakovci"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:498 plug-ins/ifs-compose/ifs-compose.c:773
+#: plug-ins/common/tile-small.c:498 plug-ins/ifs-compose/ifs-compose.c:719
 msgid "Flip"
 msgstr "Prezrcali"
 
@@ -7258,7 +7296,7 @@ msgstr "Velikost koraka:"
 
 #: plug-ins/common/warp.c:543
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:762
-#: plug-ins/ifs-compose/ifs-compose.c:1293
+#: plug-ins/ifs-compose/ifs-compose.c:1239
 msgid "Iterations:"
 msgstr "Ponovitve:"
 
@@ -7328,7 +7366,7 @@ msgid "Vector mag:"
 msgstr "Mag. vektor:"
 
 #. Angle
-#: plug-ins/common/warp.c:808 plug-ins/ifs-compose/ifs-compose.c:731
+#: plug-ins/common/warp.c:808 plug-ins/ifs-compose/ifs-compose.c:677
 msgid "Angle:"
 msgstr "Kot:"
 
@@ -7845,34 +7883,50 @@ msgstr "Ohrani pokritje preizkusa al_fe"
 msgid "_Alpha test threshold:"
 msgstr "Prag preizkusa _alfe:"
 
-#: plug-ins/file-exr/file-exr.c:109
+#: plug-ins/file-exr/file-exr.c:111
 msgid "Loads files in the OpenEXR file format"
 msgstr "Naloži datoteke v zapisu OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:196
+#: plug-ins/file-exr/file-exr.c:198
 #, c-format
 msgid "Error opening file '%s' for reading"
 msgstr "Napaka pri odpiranju datoteke »%s« za branje"
 
-#: plug-ins/file-exr/file-exr.c:207
+#: plug-ins/file-exr/file-exr.c:209
 #, c-format
 msgid "Error querying image dimensions from '%s'"
 msgstr "Napaka pri poizvedovanju o merah slike iz »%s«"
 
-#: plug-ins/file-exr/file-exr.c:227
+#: plug-ins/file-exr/file-exr.c:229
 #, c-format
 msgid "Error querying image precision from '%s'"
 msgstr "Napaka pri poizvedovanju o natančnosti slike iz »%s«"
 
-#: plug-ins/file-exr/file-exr.c:244
+#: plug-ins/file-exr/file-exr.c:247
 #, c-format
 msgid "Error querying image type from '%s'"
 msgstr "Napaka pri poizvedovanju o vrsti slike iz »%s«"
 
-#: plug-ins/file-exr/file-exr.c:302
+#: plug-ins/file-exr/file-exr.c:309
 #, c-format
 msgid "Error reading pixel data from '%s'"
 msgstr "Napaka pri branju podatkov slikovnih točk iz »%s«"
+
+#: plug-ins/file-exr/file-exr.c:416
+msgid "Import OpenEXR"
+msgstr "Uvozi OpenEXR"
+
+#: plug-ins/file-exr/file-exr.c:430
+msgid "Unknown Channel Name"
+msgstr "Neznano ime kanala"
+
+#: plug-ins/file-exr/file-exr.c:431
+msgid ""
+"The image contains a single unknown channel.\n"
+"It has been converted to grayscale."
+msgstr ""
+"Slika vsebuje en sam neznan kanal.\n"
+"Pretvorjen je v sivinskega."
 
 #: plug-ins/file-faxg3/faxg3.c:134
 msgid "G3 fax image"
@@ -10152,7 +10206,7 @@ msgid "Copy an object"
 msgstr "Kopirajte predmet"
 
 #: plug-ins/gfig/gfig-dialog.c:410 plug-ins/gfig/gfig-menu.ui:104
-#: plug-ins/ifs-compose/ifs-compose.c:1008
+#: plug-ins/ifs-compose/ifs-compose.c:954 plug-ins/ifs-compose/ifs-menus.ui:27
 #: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
 msgid "Delete"
 msgstr "Izbriši"
@@ -10471,7 +10525,8 @@ msgstr "Odpri"
 msgid "Save"
 msgstr "Shrani"
 
-#: plug-ins/gfig/gfig-menu.ui:16 plug-ins/imagemap/imap-menu.ui:22
+#: plug-ins/gfig/gfig-menu.ui:16 plug-ins/help-browser/help-menu.ui:58
+#: plug-ins/imagemap/imap-menu.ui:22
 msgid "Close"
 msgstr "Zapri"
 
@@ -10479,8 +10534,9 @@ msgstr "Zapri"
 msgid "Edit"
 msgstr "Uredi"
 
-#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:1010
-#: plug-ins/imagemap/imap_main.c:1530 plug-ins/imagemap/imap-menu.ui:35
+#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:956
+#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1530
+#: plug-ins/imagemap/imap-menu.ui:35
 msgid "Undo"
 msgstr "Razveljavi"
 
@@ -11406,11 +11462,11 @@ msgid "_Second Flares"
 msgstr "_Sekundarni odbleski"
 
 #. the dialog window
-#: plug-ins/help-browser/dialog.c:261 plug-ins/help-browser/dialog.c:893
+#: plug-ins/help-browser/dialog.c:261 plug-ins/help-browser/dialog.c:822
 msgid "GIMP Help Browser"
 msgstr "Brskalnik pomoči GIMP"
 
-#: plug-ins/help-browser/dialog.c:275
+#: plug-ins/help-browser/dialog.c:275 plug-ins/help-browser/help-menu.ui:14
 msgid "_Reload"
 msgstr "_Ponovno naloži"
 
@@ -11418,7 +11474,7 @@ msgstr "_Ponovno naloži"
 msgid "Reload current page"
 msgstr "Ponovno naloži trenutno stran"
 
-#: plug-ins/help-browser/dialog.c:276
+#: plug-ins/help-browser/dialog.c:276 plug-ins/help-browser/help-menu.ui:18
 msgid "_Stop"
 msgstr "_Ustavi"
 
@@ -11434,24 +11490,64 @@ msgstr "Pojdi na kazalo"
 msgid "Visit the GIMP documentation website"
 msgstr "Obišči spletno stran dokumentacije GIMP"
 
-#: plug-ins/help-browser/dialog.c:1236
+#: plug-ins/help-browser/dialog.c:1165
 msgid "Find:"
 msgstr "Išči:"
 
-#: plug-ins/help-browser/dialog.c:1252
+#: plug-ins/help-browser/dialog.c:1181
 msgctxt "search"
 msgid "_Previous"
 msgstr "Na_zaj"
 
-#: plug-ins/help-browser/dialog.c:1261
+#: plug-ins/help-browser/dialog.c:1190
 msgctxt "search"
 msgid "_Next"
 msgstr "_Naprej"
 
-#: plug-ins/help-browser/dialog.c:1270
+#: plug-ins/help-browser/dialog.c:1199
 msgctxt "search"
 msgid "_Close"
 msgstr "Z_apri"
+
+#: plug-ins/help-browser/help-menu.ui:6
+msgid "_Back"
+msgstr "_Nazaj"
+
+#: plug-ins/help-browser/help-menu.ui:10
+msgid "_Previous"
+msgstr "_Prejšnji"
+
+#: plug-ins/help-browser/help-menu.ui:24
+msgid "_Home"
+msgstr "_Domov"
+
+#: plug-ins/help-browser/help-menu.ui:28
+msgid "C_opy location"
+msgstr "K_opiraj mesto"
+
+#: plug-ins/help-browser/help-menu.ui:32
+msgid "S_how index"
+msgstr "Poka_ži kazalo"
+
+#: plug-ins/help-browser/help-menu.ui:38
+msgid "Find"
+msgstr "Najdi"
+
+#: plug-ins/help-browser/help-menu.ui:42
+msgid "Find _Again"
+msgstr "Najdi _znova"
+
+#: plug-ins/help-browser/help-menu.ui:48
+msgid "Zoom in"
+msgstr "Približaj"
+
+#: plug-ins/help-browser/help-menu.ui:52
+msgid "Zoom out"
+msgstr "Oddalji"
+
+#: plug-ins/help-browser/help-menu.ui:66
+msgid "Copy selection"
+msgstr "Kopiraj izbor"
 
 #: plug-ins/help/gimphelpdomain.c:180
 #, c-format
@@ -11513,7 +11609,7 @@ msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Ustvari fraktal IFS (iterirani sistem funkcij)"
 
 #. X
-#: plug-ins/ifs-compose/ifs-compose.c:689 plug-ins/lighting/lighting-ui.c:546
+#: plug-ins/ifs-compose/ifs-compose.c:635 plug-ins/lighting/lighting-ui.c:546
 #: plug-ins/map-object/map-object-ui.c:663
 #: plug-ins/map-object/map-object-ui.c:717
 #: plug-ins/map-object/map-object-ui.c:977
@@ -11522,7 +11618,7 @@ msgid "X:"
 msgstr "X:"
 
 #. Y
-#: plug-ins/ifs-compose/ifs-compose.c:703 plug-ins/lighting/lighting-ui.c:561
+#: plug-ins/ifs-compose/ifs-compose.c:649 plug-ins/lighting/lighting-ui.c:561
 #: plug-ins/map-object/map-object-ui.c:677
 #: plug-ins/map-object/map-object-ui.c:730
 #: plug-ins/map-object/map-object-ui.c:989
@@ -11532,149 +11628,150 @@ msgid "Y:"
 msgstr "Y:"
 
 #. Asym
-#: plug-ins/ifs-compose/ifs-compose.c:745
+#: plug-ins/ifs-compose/ifs-compose.c:691
 msgid "Asymmetry:"
 msgstr "Asimetričnost:"
 
 #. Shear
-#: plug-ins/ifs-compose/ifs-compose.c:759
+#: plug-ins/ifs-compose/ifs-compose.c:705
 msgid "Shear:"
 msgstr "Nagni:"
 
 #. Simple color control section
-#: plug-ins/ifs-compose/ifs-compose.c:804
+#: plug-ins/ifs-compose/ifs-compose.c:750
 msgid "Simple"
 msgstr "Enostavno"
 
-#: plug-ins/ifs-compose/ifs-compose.c:813
+#: plug-ins/ifs-compose/ifs-compose.c:759
 msgid "IFS Fractal: Target"
 msgstr "Fraktal IFS: cilj"
 
-#: plug-ins/ifs-compose/ifs-compose.c:819
+#: plug-ins/ifs-compose/ifs-compose.c:765
 msgid "Scale hue by:"
 msgstr "Spremeni merilo obarvanosti za:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:834
+#: plug-ins/ifs-compose/ifs-compose.c:780
 msgid "Scale value by:"
 msgstr "Spremeni merilo vrednosti za:"
 
 #. Full color control section
-#: plug-ins/ifs-compose/ifs-compose.c:851
+#: plug-ins/ifs-compose/ifs-compose.c:797
 msgid "Full"
 msgstr "Polno"
 
-#: plug-ins/ifs-compose/ifs-compose.c:859
+#: plug-ins/ifs-compose/ifs-compose.c:805
 msgid "IFS Fractal: Red"
 msgstr "Fraktal IFS: rdeča"
 
-#: plug-ins/ifs-compose/ifs-compose.c:867
+#: plug-ins/ifs-compose/ifs-compose.c:813
 msgid "IFS Fractal: Green"
 msgstr "Fraktal IFS: zelena"
 
-#: plug-ins/ifs-compose/ifs-compose.c:875
+#: plug-ins/ifs-compose/ifs-compose.c:821
 msgid "IFS Fractal: Blue"
 msgstr "Fraktal IFS: modra"
 
-#: plug-ins/ifs-compose/ifs-compose.c:883
+#: plug-ins/ifs-compose/ifs-compose.c:829
 msgid "IFS Fractal: Black"
 msgstr "Fraktal IFS: črna"
 
-#: plug-ins/ifs-compose/ifs-compose.c:955
+#: plug-ins/ifs-compose/ifs-compose.c:901
 msgid "IFS Fractal"
 msgstr "Fraktal IFS"
 
-#: plug-ins/ifs-compose/ifs-compose.c:999 plug-ins/imagemap/imap_cmd_move.c:85
+#: plug-ins/ifs-compose/ifs-compose.c:945 plug-ins/ifs-compose/ifs-menus.ui:6
+#: plug-ins/imagemap/imap_cmd_move.c:85
 #: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Premakni"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1001
+#: plug-ins/ifs-compose/ifs-compose.c:947 plug-ins/ifs-compose/ifs-menus.ui:11
 msgid "Rotate"
 msgstr "Zasukaj"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1003
+#: plug-ins/ifs-compose/ifs-compose.c:949 plug-ins/ifs-compose/ifs-menus.ui:16
 msgid "Stretch"
 msgstr "Raztegni"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1006
+#: plug-ins/ifs-compose/ifs-compose.c:952 plug-ins/ifs-compose/ifs-menus.ui:23
 msgid "New"
 msgstr "Novo"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1012 plug-ins/imagemap/imap_main.c:1532
-#: plug-ins/imagemap/imap-menu.ui:39
+#: plug-ins/ifs-compose/ifs-compose.c:958 plug-ins/ifs-compose/ifs-menus.ui:35
+#: plug-ins/imagemap/imap_main.c:1532 plug-ins/imagemap/imap-menu.ui:39
 msgid "Redo"
 msgstr "Ponovi"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1014
+#: plug-ins/ifs-compose/ifs-compose.c:960 plug-ins/ifs-compose/ifs-menus.ui:39
 #: plug-ins/imagemap/imap_cmd_select_all.c:50 plug-ins/imagemap/imap-menu.ui:61
 msgid "Select All"
 msgstr "Izberi vse"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1016
+#: plug-ins/ifs-compose/ifs-compose.c:962 plug-ins/ifs-compose/ifs-menus.ui:43
 msgid "Recompute Center"
 msgstr "Ponovno izračunaj središče"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1019
+#: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:49
 msgid "Render Options"
 msgstr "Možnosti upodabljanja"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1078
+#: plug-ins/ifs-compose/ifs-compose.c:1024
 msgid "Spatial Transformation"
 msgstr "Prostorska transformacija"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1084
+#: plug-ins/ifs-compose/ifs-compose.c:1030
 msgid "Color Transformation"
 msgstr "Barvna transformacija"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1094
+#: plug-ins/ifs-compose/ifs-compose.c:1040
 msgid "Relative probability:"
 msgstr "Relativna verjetnost:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1258
+#: plug-ins/ifs-compose/ifs-compose.c:1204
 msgid "IFS Fractal Render Options"
 msgstr "Možnosti upodabljanja fraktalov IFS"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1280
+#: plug-ins/ifs-compose/ifs-compose.c:1226
 msgid "Max. memory:"
 msgstr "Največja velikost spomina:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1308
+#: plug-ins/ifs-compose/ifs-compose.c:1254
 msgid "Subdivide:"
 msgstr "Podrazdeli:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1322
+#: plug-ins/ifs-compose/ifs-compose.c:1268
 msgid "Spot radius:"
 msgstr "Radij točke:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1395
+#: plug-ins/ifs-compose/ifs-compose.c:1341
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Upodabljanje IFS (%d/%d)"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1547
+#: plug-ins/ifs-compose/ifs-compose.c:1493
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformacija %s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2473
+#: plug-ins/ifs-compose/ifs-compose.c:2419
 msgid "Save failed"
 msgstr "Shranjevanje neuspešno"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2556
-#: plug-ins/ifs-compose/ifs-compose.c:2569
+#: plug-ins/ifs-compose/ifs-compose.c:2502
+#: plug-ins/ifs-compose/ifs-compose.c:2515
 msgid "Open failed"
 msgstr "Odpiranje neuspešno"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2564
+#: plug-ins/ifs-compose/ifs-compose.c:2510
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Datoteka »%s« najbrž ni fraktalska datoteka IFS."
 
-#: plug-ins/ifs-compose/ifs-compose.c:2604
+#: plug-ins/ifs-compose/ifs-compose.c:2550
 msgid "Save as IFS Fractal file"
 msgstr "Shrani kot datoteko fraktala IFS"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2641
+#: plug-ins/ifs-compose/ifs-compose.c:2587
 msgid "Open IFS Fractal file"
 msgstr "Odpri datoteko fraktala IFS"
 
@@ -12309,10 +12406,6 @@ msgstr "Pokaži izvorno kodo"
 #: plug-ins/imagemap/imap-menu.ui:16
 msgid "Save As"
 msgstr "Shrani kot"
-
-#: plug-ins/imagemap/imap-menu.ui:26
-msgid "Quit"
-msgstr "Izhod"
 
 #: plug-ins/imagemap/imap-menu.ui:65
 msgid "Deselect All"
