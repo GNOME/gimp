@@ -92,17 +92,6 @@ typedef enum
                             (e) == CURL_EDGE_UPPER_RIGHT)
 
 
-/***** Types *****/
-
-typedef struct
-{
-  CurlColors       colors;
-  gdouble          opacity;
-  gboolean         shade;
-  CurlEdge         edge;
-  CurlOrientation  orientation;
-} CurlParams;
-
 typedef struct _Pagecurl      Pagecurl;
 typedef struct _PagecurlClass PagecurlClass;
 
@@ -131,20 +120,22 @@ static GimpValueArray * pagecurl_run              (GimpProcedure        *procedu
                                                    GimpImage            *image,
                                                    gint                  n_drawables,
                                                    GimpDrawable        **drawables,
-                                                   const GimpValueArray *args,
+                                                   GimpProcedureConfig  *config,
                                                    gpointer              run_data);
 
-static void             dialog_scale_update       (GimpLabelSpin        *spin,
-                                                   gdouble              *value);
+static gboolean         dialog                    (GimpProcedure        *procedure,
+                                                   GimpProcedureConfig  *config);
 
-static gboolean         dialog                    (void);
-
-static void             init_calculation          (GimpDrawable     *drawable);
-static GimpLayer      * do_curl_effect            (GimpDrawable     *drawable);
-static void             clear_curled_region       (GimpDrawable     *drawable);
-static GimpLayer      * page_curl                 (GimpDrawable     *drawable);
-static GimpRGB        * get_gradient_samples      (GimpDrawable     *drawable,
-                                                   gboolean          reverse);
+static void             init_calculation          (GimpDrawable         *drawable,
+                                                   GimpProcedureConfig  *config);
+static GimpLayer      * do_curl_effect            (GimpDrawable         *drawable,
+                                                   GimpProcedureConfig  *config);
+static void             clear_curled_region       (GimpDrawable         *drawable,
+                                                   GimpProcedureConfig  *config);
+static GimpLayer      * page_curl                 (GimpDrawable         *drawable,
+                                                   GimpProcedureConfig  *config);
+static GimpRGB        * get_gradient_samples      (GimpDrawable         *drawable,
+                                                   gboolean              reverse);
 
 
 G_DEFINE_TYPE (Pagecurl, pagecurl, GIMP_TYPE_PLUG_IN)
@@ -153,15 +144,9 @@ GIMP_MAIN (PAGECURL_TYPE)
 DEFINE_STD_SET_I18N
 
 
-/***** Variables *****/
-
-static CurlParams curl;
-
 /* Image parameters */
 
 static GimpImage *image      = NULL;
-
-static GtkWidget *curl_image = NULL;
 
 static gint   sel_x, sel_y;
 static gint   true_sel_width, true_sel_height;
@@ -220,9 +205,9 @@ pagecurl_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            pagecurl_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             pagecurl_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -240,33 +225,45 @@ pagecurl_create_procedure (GimpPlugIn  *plug_in,
                                       "Federico Mena Quintero and Simon Budig",
                                       PLUG_IN_VERSION);
 
-      GIMP_PROC_ARG_INT (procedure, "colors",
-                         "Colors",
-                         "FG- and BG-Color (0), Current gradient (1), "
-                         "Current gradient reversed (2)",
-                         CURL_COLORS_FG_BG, CURL_COLORS_LAST, CURL_COLORS_FG_BG,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "colors",
+                            _("Colors"), NULL,
+                            gimp_choice_new_with_values ("fg-bg",                     CURL_COLORS_FG_BG,            _("Foreground / background colors"), NULL,
+                                                         "current-gradient",          CURL_COLORS_GRADIENT,         _("Current gradient"),               NULL,
+                                                         "current-gradient-reversed", CURL_COLORS_GRADIENT_REVERSE, _("Current gradient (reversed)"),    NULL,
+                                                         NULL),
+                            "fg-bg",
+                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "edge",
-                         "Edge",
-                         "Edge to curl (1-4, clockwise, starting in the "
-                         "lower right edge)",
-                         CURL_EDGE_LOWER_RIGHT, CURL_EDGE_UPPER_RIGHT,
-                         CURL_EDGE_LOWER_RIGHT,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "edge",
+                            _("Locatio_n"),
+                            _("Corner which is curled"),
+                            gimp_choice_new_with_values ("upper-left",  CURL_EDGE_UPPER_LEFT,  _("Upper left"),  NULL,
+                                                         "upper-right", CURL_EDGE_UPPER_RIGHT, _("Upper right"), NULL,
+                                                         "lower-left",  CURL_EDGE_LOWER_LEFT,  _("Lower left"),  NULL,
+                                                         "lower-right", CURL_EDGE_LOWER_RIGHT, _("Lower right"), NULL,
+                                                         NULL),
+                            "lower-right",
+                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "orientation",
-                         "Orientation",
-                         "Vertical (0), Horizontal (1)",
-                         CURL_ORIENTATION_VERTICAL, CURL_ORIENTATION_HORIZONTAL,
-                         CURL_ORIENTATION_VERTICAL,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "orientation",
+                            _("Or_ientation"), NULL,
+                            gimp_choice_new_with_values ("vertical",   CURL_ORIENTATION_VERTICAL,   _("Vertical"),   NULL,
+                                                         "horizontal", CURL_ORIENTATION_HORIZONTAL, _("Horizontal"), NULL,
+                                                         NULL),
+                            "vertical",
+                            G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "shade",
-                             "Shade",
-                             "Shade the region under the curl",
+                             _("Sh_ade"),
+                             _("Shade the region under the curl"),
                              TRUE,
                              G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "opacity",
+                            _("Opaci_ty"),
+                            _("Opacity"),
+                            0.0, 1.0, 0.0,
+                            GIMP_PARAM_READWRITE);
 
       GIMP_PROC_VAL_LAYER (procedure, "curl-layer",
                            "Curl layer",
@@ -284,7 +281,7 @@ pagecurl_run (GimpProcedure        *procedure,
               GimpImage            *_image,
               gint                  n_drawables,
               GimpDrawable        **drawables,
-              const GimpValueArray *args,
+              GimpProcedureConfig  *config,
               gpointer              run_data)
 {
   GimpDrawable   *drawable;
@@ -311,11 +308,6 @@ pagecurl_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  curl.colors      = GIMP_VALUES_GET_INT     (args, 0);
-  curl.edge        = GIMP_VALUES_GET_INT     (args, 1);
-  curl.orientation = GIMP_VALUES_GET_INT     (args, 2);
-  curl.shade       = GIMP_VALUES_GET_BOOLEAN (args, 3);
-
   if (! gimp_drawable_mask_intersect (drawable, &sel_x, &sel_y,
                                       &true_sel_width, &true_sel_height))
     {
@@ -332,41 +324,18 @@ pagecurl_run (GimpProcedure        *procedure,
                                                NULL);
     }
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-      /*  Possibly retrieve data  */
-      gimp_get_data (PLUG_IN_PROC, &curl);
-
-      /*  First acquire information with a dialog  */
-      if (! dialog ())
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
-                                                 NULL);
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      /*  Possibly retrieve data  */
-      gimp_get_data (PLUG_IN_PROC, &curl);
-      break;
-
-    default:
-      break;
-    }
+  if (run_mode == GIMP_RUN_INTERACTIVE && ! dialog (procedure, config))
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_CANCEL,
+                                             NULL);
 
   return_vals = gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_LAYER (return_vals, 1, page_curl (drawable));
+  GIMP_VALUES_SET_LAYER (return_vals, 1, page_curl (drawable, config));
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
-
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data (PLUG_IN_PROC, &curl, sizeof (CurlParams));
 
   return return_vals;
 }
@@ -437,20 +406,18 @@ inside_circle (gdouble x,
 /********************************************************************/
 
 static void
-dialog_scale_update (GimpLabelSpin *scale,
-                     gdouble       *value)
+curl_pixbuf_update (GimpProcedureConfig *config,
+                    const GParamSpec    *pspec,
+                    GtkWidget           *curl_image)
 {
-  *value = ((gdouble) gimp_label_spin_get_value (scale)) / 100.0;
-}
+  GdkPixbuf       *pixbuf;
+  gint             index;
+  gchar           *resource;
+  CurlEdge         edge;
+  CurlOrientation  orientation;
 
-static void
-curl_pixbuf_update (void)
-{
-  GdkPixbuf *pixbuf;
-  gint       index;
-  gchar     *resource;
-
-  switch (curl.edge)
+  edge = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "edge");
+  switch (edge)
     {
     case CURL_EDGE_LOWER_RIGHT: index = 0; break;
     case CURL_EDGE_LOWER_LEFT:  index = 1; break;
@@ -460,7 +427,8 @@ curl_pixbuf_update (void)
       return;
     }
 
-  index += curl.orientation * 4;
+  orientation = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "orientation");
+  index += orientation * 4;
 
   resource = g_strdup_printf ("/org/gimp/pagecurl-icons/curl%c.png",
                               '0' + index);
@@ -472,193 +440,37 @@ curl_pixbuf_update (void)
 }
 
 static gboolean
-dialog (void)
+dialog (GimpProcedure       *procedure,
+        GimpProcedureConfig *config)
 {
   /* Missing options: Color-dialogs? / own curl layer ? / transparency
      to original drawable / Warp-curl (unsupported yet) */
-
   GtkWidget *dialog;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *grid;
-  GtkWidget *frame;
-  GtkWidget *button;
-  GtkWidget *combo;
-  GtkWidget *scale;
+  GtkWidget *curl_image;
   gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Pagecurl Effect"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Pagecurl Effect"));
 
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  frame = gimp_frame_new (_("Curl Location"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog), "opacity", 100.0);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "edge", "orientation", "shade", "colors", "opacity", NULL);
 
   curl_image = gtk_image_new ();
 
-  gtk_grid_attach (GTK_GRID (grid), curl_image, 0, 1, 2, 1);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      curl_image, FALSE, FALSE, 0);
   gtk_widget_show (curl_image);
 
-  curl_pixbuf_update ();
+  g_signal_connect (config, "notify",
+                    G_CALLBACK (curl_pixbuf_update),
+                    curl_image);
+  curl_pixbuf_update (config, NULL, curl_image);
 
-  {
-    static const gchar *name[] =
-    {
-      N_("Lower right"),
-      N_("Lower left"),
-      N_("Upper left"),
-      N_("Upper right")
-    };
-    gint i;
-
-    button = NULL;
-    for (i = CURL_EDGE_FIRST; i <= CURL_EDGE_LAST; i++)
-      {
-        button =
-          gtk_radio_button_new_with_label (button == NULL ?
-                                           NULL :
-                                           gtk_radio_button_get_group (GTK_RADIO_BUTTON (button)),
-                                           gettext (name[i - CURL_EDGE_FIRST]));
-
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                      curl.edge == i);
-
-        g_object_set_data (G_OBJECT (button),
-                           "gimp-item-data", GINT_TO_POINTER (i));
-
-        gtk_grid_attach (GTK_GRID (grid), button,
-                         CURL_EDGE_LEFT  (i) ? 0 : 1,
-                         CURL_EDGE_UPPER (i) ? 0 : 2,
-                         1, 1);
-                         // GTK_FILL | GTK_EXPAND, GTK_SHRINK, 0, 0);
-        gtk_widget_show (button);
-
-        g_signal_connect (button, "toggled",
-                          G_CALLBACK (gimp_radio_button_update),
-                          &curl.edge);
-
-        g_signal_connect (button, "toggled",
-                          G_CALLBACK (curl_pixbuf_update),
-                           NULL);
-      }
-  }
-
-  frame = gimp_frame_new (_("Curl Orientation"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
-
-  {
-    static const gchar *name[] =
-    {
-      N_("_Vertical"),
-      N_("_Horizontal")
-    };
-    gint i;
-
-    button = NULL;
-    for (i = 0; i <= CURL_ORIENTATION_LAST; i++)
-      {
-        button = gtk_radio_button_new_with_mnemonic (button == NULL ?
-                                                     NULL :
-                                                     gtk_radio_button_get_group (GTK_RADIO_BUTTON (button)),
-                                                     gettext (name[i]));
-
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                      curl.orientation == i);
-
-        g_object_set_data (G_OBJECT (button),
-                           "gimp-item-data", GINT_TO_POINTER (i));
-
-        gtk_box_pack_end (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-        gtk_widget_show (button);
-
-        g_signal_connect (button, "toggled",
-                          G_CALLBACK (gimp_radio_button_update),
-                          &curl.orientation);
-
-        g_signal_connect (button, "toggled",
-                          G_CALLBACK (curl_pixbuf_update),
-                          NULL);
-      }
-  }
-
-  button = gtk_check_button_new_with_mnemonic (_("_Shade under curl"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), curl.shade);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &curl.shade);
-
-  combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
-
-  gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
-                              GIMP_INT_STORE_VALUE,     CURL_COLORS_GRADIENT_REVERSE,
-                              GIMP_INT_STORE_LABEL,     _("Current gradient (reversed)"),
-                              GIMP_INT_STORE_ICON_NAME, GIMP_ICON_GRADIENT,
-                              -1);
-  gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
-                              GIMP_INT_STORE_VALUE,     CURL_COLORS_GRADIENT,
-                              GIMP_INT_STORE_LABEL,     _("Current gradient"),
-                              GIMP_INT_STORE_ICON_NAME, GIMP_ICON_GRADIENT,
-                              -1);
-  gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
-                              GIMP_INT_STORE_VALUE,     CURL_COLORS_FG_BG,
-                              GIMP_INT_STORE_LABEL,     _("Foreground / background colors"),
-                              GIMP_INT_STORE_ICON_NAME, GIMP_ICON_COLORS_DEFAULT,
-                              -1);
-
-  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
-
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              curl.colors,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &curl.colors, NULL);
-
-  scale = gimp_scale_entry_new (_("_Opacity:"), curl.opacity * 100.0, 0.0, 100.0, 0.0);
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (dialog_scale_update),
-                    &curl.opacity);
-  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 6);
-  gtk_widget_show (scale);
-
-  gtk_widget_show (dialog);
-
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -666,13 +478,17 @@ dialog (void)
 }
 
 static void
-init_calculation (GimpDrawable *drawable)
+init_calculation (GimpDrawable        *drawable,
+                  GimpProcedureConfig *config)
 {
-  gdouble      k;
-  gdouble      alpha, beta;
-  gdouble      angle;
-  GimpVector2  v1, v2;
-  GList       *layers;
+  gdouble          k;
+  gdouble          alpha, beta;
+  gdouble          angle;
+  GimpVector2      v1, v2;
+  GList           *layers;
+  CurlOrientation  orientation;
+
+  orientation = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "orientation");
 
   gimp_layer_add_alpha (GIMP_LAYER (drawable));
 
@@ -683,7 +499,7 @@ init_calculation (GimpDrawable *drawable)
   drawable_position = g_list_index (layers, drawable);
   g_list_free (layers);
 
-  switch (curl.orientation)
+  switch (orientation)
     {
     case CURL_ORIENTATION_VERTICAL:
       sel_width  = true_sel_width;
@@ -736,23 +552,38 @@ init_calculation (GimpDrawable *drawable)
 }
 
 static GimpLayer *
-do_curl_effect (GimpDrawable *drawable)
+do_curl_effect (GimpDrawable        *drawable,
+                GimpProcedureConfig *config)
 {
-  gint          x = 0;
-  gint          y = 0;
-  gboolean      color_image;
-  gint          x1, y1;
-  guint         progress, max_progress;
-  gdouble       intensity, alpha;
-  GimpVector2   v, dl, dr;
-  gdouble       dl_mag, dr_mag, angle, factor;
-  GeglBuffer   *curl_buffer;
-  GimpLayer    *curl_layer;
-  GimpRGB      *grad_samples = NULL;
-  gint          width, height, n_ch;
-  GeglRectangle *roi;
+  gint                x = 0;
+  gint                y = 0;
+  gboolean            color_image;
+  gint                x1, y1;
+  guint               progress, max_progress;
+  gdouble             intensity, alpha;
+  GimpVector2         v, dl, dr;
+  gdouble             dl_mag, dr_mag, angle, factor;
+  GeglBuffer         *curl_buffer;
+  GimpLayer          *curl_layer;
+  GimpRGB            *grad_samples = NULL;
+  gint                width, height, n_ch;
+  GeglRectangle      *roi;
   GeglBufferIterator *iter;
   const Babl         *format;
+  CurlOrientation     orientation;
+  CurlColors          colors;
+  CurlEdge            edge;
+  gboolean            shade;
+  gdouble             opacity;
+
+  orientation = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "orientation");
+  colors      = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "colors");
+  edge        = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "edge");
+
+  g_object_get (config,
+                "shade",   &shade,
+                "opacity", &opacity,
+                NULL);
 
   color_image = gimp_drawable_is_rgb (drawable);
 
@@ -795,7 +626,7 @@ do_curl_effect (GimpDrawable *drawable)
   alpha = acos (gimp_vector2_inner_product (&dl, &dr) / (dl_mag * dr_mag));
 
   /* Gradient Samples */
-  switch (curl.colors)
+  switch (colors)
     {
     case CURL_COLORS_FG_BG:
       break;
@@ -825,16 +656,16 @@ do_curl_effect (GimpDrawable *drawable)
           for (x1 = roi->x; x1 < roi->x + roi->width; x1++)
             {
               /* Map coordinates to get the curl correct... */
-              switch (curl.orientation)
+              switch (orientation)
                 {
                 case CURL_ORIENTATION_VERTICAL:
-                  x = CURL_EDGE_RIGHT (curl.edge) ? x1 : sel_width  - 1 - x1;
-                  y = CURL_EDGE_UPPER (curl.edge) ? y1 : sel_height - 1 - y1;
+                  x = CURL_EDGE_RIGHT (edge) ? x1 : sel_width  - 1 - x1;
+                  y = CURL_EDGE_UPPER (edge) ? y1 : sel_height - 1 - y1;
                   break;
 
                 case CURL_ORIENTATION_HORIZONTAL:
-                  x = CURL_EDGE_LOWER (curl.edge) ? y1 : sel_width  - 1 - y1;
-                  y = CURL_EDGE_LEFT  (curl.edge) ? x1 : sel_height - 1 - x1;
+                  x = CURL_EDGE_LOWER (edge) ? y1 : sel_width  - 1 - y1;
+                  y = CURL_EDGE_LEFT  (edge) ? x1 : sel_height - 1 - x1;
                   break;
                 }
 
@@ -861,14 +692,14 @@ do_curl_effect (GimpDrawable *drawable)
                     {
                       /* Below the curl. */
                       factor = angle / alpha;
-                      gimp_rgba_set (&color, 0, 0, 0, curl.shade ? factor : 0);
+                      gimp_rgba_set (&color, 0, 0, 0, shade ? factor : 0);
                     }
                   else
                     {
                       GimpRGB *gradrgb;
 
                       /* On the curl */
-                      switch (curl.colors)
+                      switch (colors)
                         {
                         case CURL_COLORS_FG_BG:
                           intensity = pow (sin (G_PI * angle / alpha), 1.5);
@@ -876,7 +707,7 @@ do_curl_effect (GimpDrawable *drawable)
                                          intensity * bg_color.r + (1.0 - intensity) * fg_color.r,
                                          intensity * bg_color.g + (1.0 - intensity) * fg_color.g,
                                          intensity * bg_color.b + (1.0 - intensity) * fg_color.b,
-                                         (1.0 - intensity * (1.0 - curl.opacity)));
+                                         (1.0 - intensity * (1.0 - opacity)));
                           break;
 
                         case CURL_COLORS_GRADIENT:
@@ -889,7 +720,7 @@ do_curl_effect (GimpDrawable *drawable)
                           /* Check boundaries */
                           intensity = CLAMP (intensity, 0.0, 1.0);
                           color = *gradrgb;
-                          color.a = gradrgb->a * (1.0 - intensity * (1.0 - curl.opacity));
+                          color.a = gradrgb->a * (1.0 - intensity * (1.0 - opacity));
                           break;
                         }
                     }
@@ -920,20 +751,26 @@ do_curl_effect (GimpDrawable *drawable)
 /************************************************/
 
 static void
-clear_curled_region (GimpDrawable *drawable)
+clear_curled_region (GimpDrawable        *drawable,
+                     GimpProcedureConfig *config)
 {
-  gint          x = 0;
-  gint          y = 0;
-  guint         x1, y1;
-  gfloat       *dest, *src;
-  guint         progress, max_progress;
-  GeglBuffer   *buf;
-  GeglBuffer   *shadow_buf;
-  GeglRectangle *roi;
+  gint                x = 0;
+  gint                y = 0;
+  guint               x1, y1;
+  gfloat             *dest, *src;
+  guint               progress, max_progress;
+  GeglBuffer         *buf;
+  GeglBuffer         *shadow_buf;
+  GeglRectangle      *roi;
   GeglBufferIterator *iter;
-  const Babl   *format;
-  gint          width, height, bpp, n_ch;
-  gint          buf_index;
+  const Babl         *format;
+  gint                width, height, bpp, n_ch;
+  gint                buf_index;
+  CurlOrientation     orientation;
+  CurlEdge            edge;
+
+  orientation = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "orientation");
+  edge        = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config), "edge");
 
   max_progress = 2 * sel_width * sel_height;
   progress = max_progress / 2;
@@ -968,19 +805,19 @@ clear_curled_region (GimpDrawable *drawable)
           for (x1 = roi->x; x1 < roi->x + roi->width; x1++)
             {
               /* Map coordinates to get the curl correct... */
-              switch (curl.orientation)
+              switch (orientation)
                 {
                 case CURL_ORIENTATION_VERTICAL:
-                  x = (CURL_EDGE_RIGHT (curl.edge) ?
+                  x = (CURL_EDGE_RIGHT (edge) ?
                        x1 - sel_x : sel_width  - 1 - (x1 - sel_x));
-                  y = (CURL_EDGE_UPPER (curl.edge) ?
+                  y = (CURL_EDGE_UPPER (edge) ?
                        y1 - sel_y : sel_height - 1 - (y1 - sel_y));
                   break;
 
                 case CURL_ORIENTATION_HORIZONTAL:
-                  x = (CURL_EDGE_LOWER (curl.edge) ?
+                  x = (CURL_EDGE_LOWER (edge) ?
                        y1 - sel_y : sel_width - 1 - (y1 - sel_y));
-                  y = (CURL_EDGE_LEFT (curl.edge)  ?
+                  y = (CURL_EDGE_LEFT (edge)  ?
                        x1 - sel_x : sel_height - 1 - (x1 - sel_x));
                   break;
                 }
@@ -1015,7 +852,8 @@ clear_curled_region (GimpDrawable *drawable)
 }
 
 static GimpLayer *
-page_curl (GimpDrawable *drawable)
+page_curl (GimpDrawable        *drawable,
+           GimpProcedureConfig *config)
 {
   GimpLayer *curl_layer;
 
@@ -1023,11 +861,11 @@ page_curl (GimpDrawable *drawable)
 
   gimp_progress_init (_("Page Curl"));
 
-  init_calculation (drawable);
+  init_calculation (drawable, config);
 
-  curl_layer = do_curl_effect (drawable);
+  curl_layer = do_curl_effect (drawable, config);
 
-  clear_curled_region (drawable);
+  clear_curled_region (drawable, config);
 
   gimp_image_undo_group_end (image);
 
