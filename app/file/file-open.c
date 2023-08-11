@@ -370,7 +370,7 @@ file_open_thumbnail (Gimp           *gimp,
         {
           image = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
-          if (gimp_value_array_length (return_vals) >= 3 &&
+          if (gimp_value_array_length (return_vals) >= 4 &&
               G_VALUE_HOLDS_INT (gimp_value_array_index (return_vals, 2)) &&
               G_VALUE_HOLDS_INT (gimp_value_array_index (return_vals, 3)))
             {
@@ -381,11 +381,11 @@ file_open_thumbnail (Gimp           *gimp,
                 MAX (0, g_value_get_int (gimp_value_array_index (return_vals, 3)));
 
               if (gimp_value_array_length (return_vals) >= 5 &&
-                  G_VALUE_HOLDS_INT (gimp_value_array_index (return_vals, 4)))
+                  G_VALUE_HOLDS_ENUM (gimp_value_array_index (return_vals, 4)))
                 {
-                  gint value = g_value_get_int (gimp_value_array_index (return_vals, 4));
+                  GimpImageType itype = g_value_get_enum (gimp_value_array_index (return_vals, 4));
 
-                  switch (value)
+                  switch (itype)
                     {
                     case GIMP_RGB_IMAGE:
                       *format = gimp_babl_format (GIMP_RGB,
@@ -420,7 +420,7 @@ file_open_thumbnail (Gimp           *gimp,
                         babl_new_palette ("-gimp-indexed-format-dummy",
                                           &rgb, &rgba);
 
-                        if (value == GIMP_INDEXED_IMAGE)
+                        if (itype == GIMP_INDEXED_IMAGE)
                           *format = rgb;
                         else
                           *format = rgba;
