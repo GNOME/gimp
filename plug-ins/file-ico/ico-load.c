@@ -1001,6 +1001,8 @@ ico_load_thumbnail_image (GFile   *file,
   IcoLoadInfo   *info;
   IcoFileHeader  header;
   GimpImage     *image;
+  gint           max_width;
+  gint           max_height;
   gint           w     = 0;
   gint           h     = 0;
   gint           bpp   = 0;
@@ -1042,9 +1044,17 @@ ico_load_thumbnail_image (GFile   *file,
       return NULL;
     }
 
+  max_width  = 0;
+  max_height = 0;
+
   /* Do a quick scan of the icons in the file to find the best match */
   for (i = 0; i < icon_count; i++)
     {
+      if (info[i].width > max_width)
+        max_width = info[i].width;
+      if (info[i].height > max_height)
+        max_height = info[i].height;
+
       if ((info[i].width  > w && w < *width) ||
           (info[i].height > h && h < *height))
         {
@@ -1073,8 +1083,8 @@ ico_load_thumbnail_image (GFile   *file,
                   "Thumbnail", info + match);
   g_free (buf);
 
-  *width  = w;
-  *height = h;
+  *width  = max_width;
+  *height = max_height;
 
   D(("*** thumbnail successfully loaded.\n\n"));
 

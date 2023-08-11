@@ -851,9 +851,9 @@ load_image (GFile   *file,
 static GimpImage *
 load_thumbnail (GFile   *file,
                 gint32   thumb_size,
-                gint32  *thumb_width,
-                gint32  *thumb_height,
-                gint32  *thumb_num_layers,
+                gint32  *img_width,
+                gint32  *img_height,
+                gint32  *num_layers,
                 GError **error)
 {
   /* Return only one frame for thumbnail.
@@ -879,13 +879,13 @@ load_thumbnail (GFile   *file,
   gint           height;
   gint           i;
 
-  g_return_val_if_fail (thumb_width, NULL);
-  g_return_val_if_fail (thumb_height, NULL);
-  g_return_val_if_fail (thumb_num_layers, NULL);
+  g_return_val_if_fail (img_width, NULL);
+  g_return_val_if_fail (img_height, NULL);
+  g_return_val_if_fail (num_layers, NULL);
 
-  *thumb_width      = 0;
-  *thumb_height     = 0;
-  *thumb_num_layers = 0;
+  *img_width  = 0;
+  *img_height = 0;
+  *num_layers = 0;
 
   fp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -937,15 +937,15 @@ load_thumbnail (GFile   *file,
           /* this content is image */
 
           size = READ32 (fp, error)
-          positions[*thumb_num_layers] = READ32 (fp, error)
+          positions[*num_layers] = READ32 (fp, error)
           /* is this image is more preferred than selected before? */
           diff = MAX (thumb_size, size) - MIN (thumb_size, size);
           if (diff < min_diff)
             {/* the image size is closer than current selected image */
               min_diff = diff;
-              sel_num = *thumb_num_layers;
+              sel_num = *num_layers;
             }
-          ++*thumb_num_layers;
+          ++*num_layers;
         }
     }
 
@@ -961,8 +961,8 @@ load_thumbnail (GFile   *file,
   /* get width and height of entire image */
 
   /* Let's make XcursorImages */
-  xcIs = XcursorImagesCreate (*thumb_num_layers);
-  xcIs->nimage = *thumb_num_layers;
+  xcIs = XcursorImagesCreate (*num_layers);
+  xcIs->nimage = *num_layers;
   for (i = 0; i < xcIs->nimage; ++i)
     {
       /* make XcursorImage with no pixel buffer */
@@ -984,13 +984,13 @@ load_thumbnail (GFile   *file,
           thumb_size - min_diff, thumb_size + min_diff);
 
   /* get entire image dimensions */
-  find_hotspots_and_dimensions (xcIs, NULL, NULL, thumb_width, thumb_height);
+  find_hotspots_and_dimensions (xcIs, NULL, NULL, img_width, img_height);
 
   DM_XMC ("width=%i\theight=%i\tnum-layers=%i\n",
-          *thumb_width, *thumb_height, xcIs->nimage);
+          *img_width, *img_height, xcIs->nimage);
 
   /* dimension check */
-  if (*thumb_width > MAX_LOAD_DIMENSION)
+  if (*img_width > MAX_LOAD_DIMENSION)
     {
       g_set_error (error, 0, 0,
                    _("'%s' is too wide for an X cursor."),
@@ -999,7 +999,7 @@ load_thumbnail (GFile   *file,
       return NULL;
     }
 
-  if (*thumb_height > MAX_LOAD_DIMENSION)
+  if (*img_height > MAX_LOAD_DIMENSION)
     {
       g_set_error (error, 0, 0,
                    _("'%s' is too high for an X cursor."),

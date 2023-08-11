@@ -517,7 +517,7 @@ load_thumbnail_image (GFile   *file,
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  *width = *height = thumb_size;
+  *width = *height = 0;
 
   if (g_spawn_sync (NULL,
                     argv,

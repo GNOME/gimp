@@ -40,6 +40,18 @@ G_BEGIN_DECLS
  * The thumbnail function is run during the lifetime of the GIMP session,
  * each time a plug-in thumbnail procedure is called.
  *
+ * [class@ThumbnailProcedure] are always run non-interactively.
+ *
+ * On success, the returned array must contain:
+ * 1. a [class@Image]: this is the only mandatory return value. It should
+ *    ideally be a simple image whose dimensions are closest to @size and meant
+ *    to be displayed as a small static image.
+ * 2. (optional) the full image's width (not the thumbnail's image's), or 0 if
+ *    unknown.
+ * 3. (optional) the full image's height, or 0 if unknown.
+ * 4. (optional) the [enum@ImageType] of the full image.
+ * 5. (optional) the number of layers in the full image.
+ *
  * Returns: (transfer full): the @procedure's return values.
  *
  * Since: 3.0
