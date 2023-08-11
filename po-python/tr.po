@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-21 08:10+0000\n"
-"PO-Revision-Date: 2023-01-24 22:52+0300\n"
+"POT-Creation-Date: 2023-07-26 20:31+0000\n"
+"PO-Revision-Date: 2023-07-30 02:50+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -25,12 +25,30 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-POOTLE-MTIME: 1420937120.000000\n"
 
 #: plug-ins/python/colorxhtml.py:91
 msgid "Save as colored HTML text..."
 msgstr "Renkli HTML metni olarak kaydet..."
+
+#: plug-ins/python/colorxhtml.py:92 plug-ins/python/colorxhtml.py:98
+#: plug-ins/python/gradients-save-as-css.py:124
+#: plug-ins/python/histogram-export.py:204
+#: plug-ins/python/histogram-export.py:246
+#: plug-ins/python/palette-offset.py:145
+#: plug-ins/python/python-console/python-console.py:311
+#: plug-ins/python/spyro-plus.py:1724
+msgid "_Cancel"
+msgstr "İ_ptal Et"
+
+#: plug-ins/python/colorxhtml.py:93 plug-ins/python/colorxhtml.py:99
+#: plug-ins/python/gradients-save-as-css.py:125
+#: plug-ins/python/histogram-export.py:205
+#: plug-ins/python/histogram-export.py:247
+#: plug-ins/python/palette-offset.py:146 plug-ins/python/spyro-plus.py:1725
+msgid "_OK"
+msgstr "_Tamam"
 
 #: plug-ins/python/colorxhtml.py:96
 msgid "Read characters from file..."
@@ -188,6 +206,10 @@ msgstr "_Dosya"
 msgid "Creates a new palette from a given gradient"
 msgstr "Verilen renk geçişini kullanarak yeni palet oluştur"
 
+#: plug-ins/python/gradients-save-as-css.py:228
+msgid "Save as CSS..."
+msgstr "CSS Olarak Kaydet..."
+
 #: plug-ins/python/histogram-export.py:92
 msgid "Pixel count"
 msgstr "Piksel sayısı"
@@ -275,7 +297,7 @@ msgid "Off_set"
 msgstr "Den_gele"
 
 # Normalden farklı çevrildi
-#: plug-ins/python/palette-offset.py:63
+#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:153
 msgid "Offset"
 msgstr "Dengele"
 
@@ -475,13 +497,31 @@ msgstr "Paletteki renkleri kullanarak yeni bir yinelemeli renk geçişi oluştur
 msgid "Python Console"
 msgstr "Python Uçbirimi"
 
+#: plug-ins/python/python-console/python-console.py:79
+#: plug-ins/python/python-console/python-console.py:312
+msgid "_Save"
+msgstr "Kayd_et"
+
+#: plug-ins/python/python-console/python-console.py:80
+msgid "Cl_ear"
+msgstr "_Temizle"
+
 #: plug-ins/python/python-console/python-console.py:81
 msgid "_Browse..."
 msgstr "_Gözat..."
 
+#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:260
+msgid "_Close"
+msgstr "_Kapat"
+
 #: plug-ins/python/python-console/python-console.py:257
 msgid "Python Procedure Browser"
 msgstr "Python Yordam Tarayıcı"
+
+#: plug-ins/python/python-console/python-console.py:259
+msgid "_Apply"
+msgstr "_Uygula"
 
 #: plug-ins/python/python-console/python-console.py:285
 #, python-format
@@ -538,7 +578,7 @@ msgid "Polygon-Star"
 msgstr "Çokgen-Yıldız"
 
 #. Sine wave on a circle ring.
-#: plug-ins/python/spyro-plus.py:162 plug-ins/python/spyro-plus.py:995
+#: plug-ins/python/spyro-plus.py:162 plug-ins/python/spyro-plus.py:994
 msgid "Sine"
 msgstr "Sinüs"
 
@@ -567,64 +607,64 @@ msgstr "Kalem"
 msgid "AirBrush"
 msgstr "Hava Fırçası"
 
-#: plug-ins/python/spyro-plus.py:607
+#: plug-ins/python/spyro-plus.py:606
 msgid "Preview"
 msgstr "Önizle"
 
-#: plug-ins/python/spyro-plus.py:612
+#: plug-ins/python/spyro-plus.py:611
 msgid "Stroke"
 msgstr "Darbe"
 
-#: plug-ins/python/spyro-plus.py:659
+#: plug-ins/python/spyro-plus.py:658
 msgid "PaintBrush"
 msgstr "Boya Fırçası"
 
-#: plug-ins/python/spyro-plus.py:661
+#: plug-ins/python/spyro-plus.py:660
 msgid "Ink"
 msgstr "Mürekkep"
 
-#: plug-ins/python/spyro-plus.py:662
+#: plug-ins/python/spyro-plus.py:661
 msgid "MyPaintBrush"
 msgstr "MyPaintBrush"
 
-#: plug-ins/python/spyro-plus.py:981
+#: plug-ins/python/spyro-plus.py:980
 msgid "Spyrograph"
 msgstr "Spirograf"
 
-#: plug-ins/python/spyro-plus.py:988
+#: plug-ins/python/spyro-plus.py:987
 msgid "Epitrochoid"
 msgstr "Epitrokoit"
 
-#: plug-ins/python/spyro-plus.py:1015
+#: plug-ins/python/spyro-plus.py:1014
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: plug-ins/python/spyro-plus.py:1462
+#: plug-ins/python/spyro-plus.py:1461
 msgid "Curve Type"
 msgstr "Eğri Tipi"
 
-#: plug-ins/python/spyro-plus.py:1463
+#: plug-ins/python/spyro-plus.py:1462
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
 msgstr ""
 "Epitrokoit deseni, hareketli dişlinin sabit dişlinin dışında olduğu zamandır."
 
-#: plug-ins/python/spyro-plus.py:1468
+#: plug-ins/python/spyro-plus.py:1467
 msgid "Tool"
 msgstr "Araç"
 
-#: plug-ins/python/spyro-plus.py:1469
+#: plug-ins/python/spyro-plus.py:1468
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "Desenin çizileceği araç. Önizleme aracı yalnızca hızlı bir şekilde çizer."
 
-#: plug-ins/python/spyro-plus.py:1474
+#: plug-ins/python/spyro-plus.py:1473
 msgid "Long Gradient"
 msgstr "Uzun Renk Geçişi"
 
-#: plug-ins/python/spyro-plus.py:1476
+#: plug-ins/python/spyro-plus.py:1475
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -634,11 +674,11 @@ msgstr ""
 "desenin uzunluğunu eşleştirmek için uzun bir renk geçişi, geçerli renk "
 "geçişi ve renk geçişi aracı ayarlarından yineleme kipine göre kullanır."
 
-#: plug-ins/python/spyro-plus.py:1496
+#: plug-ins/python/spyro-plus.py:1495
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Aşağıdaki sekmelerden birini kullanarak deseni belirtin:"
 
-#: plug-ins/python/spyro-plus.py:1498
+#: plug-ins/python/spyro-plus.py:1497
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -649,18 +689,18 @@ msgstr ""
 "ancak oyuncak setinde bulunan dişli ve delik numaralarını kullanır. Oyuncak "
 "seti kılavuzlarındaki talimatları izlerseniz, sonuçlar benzer olmalıdır."
 
-#: plug-ins/python/spyro-plus.py:1522
+#: plug-ins/python/spyro-plus.py:1521
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
 msgstr ""
 "Sabit dişli diş sayısı. Sabit dişlinin boyutu diş sayısıyla orantılıdır."
 
-#: plug-ins/python/spyro-plus.py:1525 plug-ins/python/spyro-plus.py:1553
+#: plug-ins/python/spyro-plus.py:1524 plug-ins/python/spyro-plus.py:1552
 msgid "Fixed Gear Teeth"
 msgstr "Sabit Dişli Dişleri"
 
-#: plug-ins/python/spyro-plus.py:1533
+#: plug-ins/python/spyro-plus.py:1532
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -668,15 +708,15 @@ msgstr ""
 "Hareketli dişlilerin diş sayısı. Hareket eden dişlinin boyutu diş sayısıyla "
 "orantılıdır."
 
-#: plug-ins/python/spyro-plus.py:1536 plug-ins/python/spyro-plus.py:1558
+#: plug-ins/python/spyro-plus.py:1535 plug-ins/python/spyro-plus.py:1557
 msgid "Moving Gear Teeth"
 msgstr "Hareketli Dişli Dişleri"
 
-#: plug-ins/python/spyro-plus.py:1541
+#: plug-ins/python/spyro-plus.py:1540
 msgid "Hole percent"
 msgstr "Delik yüzdesi"
 
-#: plug-ins/python/spyro-plus.py:1542
+#: plug-ins/python/spyro-plus.py:1541
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -684,11 +724,11 @@ msgstr ""
 "Delik, hareketli dişlinin merkezinden ne kadar uzakta. %100, deliğin "
 "dişlinin kenarında olduğu anlamına gelir."
 
-#: plug-ins/python/spyro-plus.py:1563
+#: plug-ins/python/spyro-plus.py:1562
 msgid "Hole Number"
 msgstr "Delik Sayısı"
 
-#: plug-ins/python/spyro-plus.py:1564
+#: plug-ins/python/spyro-plus.py:1563
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -696,27 +736,27 @@ msgstr ""
 "Delik #1 dişlinin kenarında. Azami delik sayısı merkeze yakındır. Her dişli "
 "için azami delik sayısı farklıdır."
 
-#: plug-ins/python/spyro-plus.py:1575
+#: plug-ins/python/spyro-plus.py:1574
 msgid "Flower Petals"
 msgstr "Çiçek Yaprakları"
 
-#: plug-ins/python/spyro-plus.py:1576
+#: plug-ins/python/spyro-plus.py:1575
 msgid "The number of petals in the pattern."
 msgstr "Desendeki yaprakların sayısı."
 
-#: plug-ins/python/spyro-plus.py:1581
+#: plug-ins/python/spyro-plus.py:1580
 msgid "Petal Skip"
 msgstr "Yaprak Atla"
 
-#: plug-ins/python/spyro-plus.py:1582
+#: plug-ins/python/spyro-plus.py:1581
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "Sonraki yaprağı çizmeyi sürdürmek için yaprak sayısı."
 
-#: plug-ins/python/spyro-plus.py:1587
+#: plug-ins/python/spyro-plus.py:1586
 msgid "Hole Radius(%)"
 msgstr "Boşluk Yarıçapı(%)"
 
-#: plug-ins/python/spyro-plus.py:1588
+#: plug-ins/python/spyro-plus.py:1587
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
@@ -726,11 +766,11 @@ msgstr ""
 "boyutunun yüzdesi olarak verilir. 0 değeri delik oluşturmayacaktır. 99 "
 "değeri kenarda ince çizgi oluşturacaktır."
 
-#: plug-ins/python/spyro-plus.py:1609
+#: plug-ins/python/spyro-plus.py:1608
 msgid "Width(%)"
 msgstr "Genişlik(%)"
 
-#: plug-ins/python/spyro-plus.py:1610
+#: plug-ins/python/spyro-plus.py:1609
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
@@ -739,23 +779,23 @@ msgstr ""
 "Desenin boyutunun yüzdesi olarak desenin genişliği. 1 değeri yalnızca ince "
 "desen çizecektir. 100 değeri tüm sabit dişliyi dolduracaktır."
 
-#: plug-ins/python/spyro-plus.py:1621
+#: plug-ins/python/spyro-plus.py:1620
 msgid "Visual"
 msgstr "Görsel"
 
-#: plug-ins/python/spyro-plus.py:1627
+#: plug-ins/python/spyro-plus.py:1626
 msgid "Toy Kit"
 msgstr "Oyuncak Seti"
 
-#: plug-ins/python/spyro-plus.py:1633
+#: plug-ins/python/spyro-plus.py:1632
 msgid "Gears"
 msgstr "Dişler"
 
-#: plug-ins/python/spyro-plus.py:1646 plug-ins/python/spyro-plus.py:1690
+#: plug-ins/python/spyro-plus.py:1645 plug-ins/python/spyro-plus.py:1689
 msgid "Rotation"
 msgstr "Döndürme"
 
-#: plug-ins/python/spyro-plus.py:1647
+#: plug-ins/python/spyro-plus.py:1646
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -763,11 +803,11 @@ msgstr ""
 "Desenin döndürülme açısı, derece cinsinden. Sabit dişlide, hareketli "
 "dişlinin başlangıç konumu."
 
-#: plug-ins/python/spyro-plus.py:1670
+#: plug-ins/python/spyro-plus.py:1669
 msgid "Shape"
 msgstr "Şekil"
 
-#: plug-ins/python/spyro-plus.py:1671
+#: plug-ins/python/spyro-plus.py:1670
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -781,39 +821,39 @@ msgstr ""
 "kullanın. Seçim, geçerli seçimin sınırlarına sarılacak - dikdörtgen olmayan "
 "bir şey deneyin."
 
-#: plug-ins/python/spyro-plus.py:1680
+#: plug-ins/python/spyro-plus.py:1679
 msgid "Sides"
 msgstr "Yanlar"
 
-#: plug-ins/python/spyro-plus.py:1680
+#: plug-ins/python/spyro-plus.py:1679
 msgid "Number of sides of the shape."
 msgstr "Şeklin yan sayısı."
 
-#: plug-ins/python/spyro-plus.py:1685
+#: plug-ins/python/spyro-plus.py:1684
 msgid "Morph"
 msgstr "Şekil değiştir"
 
-#: plug-ins/python/spyro-plus.py:1685
+#: plug-ins/python/spyro-plus.py:1684
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr "Sabit dişli şeklini değiştir. Yalnızca bazı şekilleri etkiler."
 
-#: plug-ins/python/spyro-plus.py:1690
+#: plug-ins/python/spyro-plus.py:1689
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Sabit dişlinin döndürülme açısı, derece olarak"
 
-#: plug-ins/python/spyro-plus.py:1705
+#: plug-ins/python/spyro-plus.py:1704
 msgid "Margin (px)"
 msgstr "Boşluk (px)"
 
-#: plug-ins/python/spyro-plus.py:1705
+#: plug-ins/python/spyro-plus.py:1704
 msgid "Margin from edge of selection."
 msgstr "Seçim kenarından boşluk."
 
-#: plug-ins/python/spyro-plus.py:1710
+#: plug-ins/python/spyro-plus.py:1709
 msgid "Make width and height equal"
 msgstr "Genişliği ve yüksekliği eşitle"
 
-#: plug-ins/python/spyro-plus.py:1712
+#: plug-ins/python/spyro-plus.py:1711
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -821,11 +861,11 @@ msgstr ""
 "Seçili olmadığında, desen geçerli görseli veya seçimi doldurur. "
 "İşaretlendiğinde, desen aynı genişliğe ve yükseklikte olur ve ortalanır."
 
-#: plug-ins/python/spyro-plus.py:1727
+#: plug-ins/python/spyro-plus.py:1726
 msgid "Re_draw"
 msgstr "Yeni_den Çiz"
 
-#: plug-ins/python/spyro-plus.py:1729
+#: plug-ins/python/spyro-plus.py:1728
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -833,15 +873,15 @@ msgstr ""
 "Eğer ki bir aracın ayarlarını, rengi veya seçimi değiştirirseniz, deseni "
 "önizlemek için bu düğmeye basın."
 
-#: plug-ins/python/spyro-plus.py:1732
+#: plug-ins/python/spyro-plus.py:1731
 msgid "_Reset"
 msgstr "_Sıfırla"
 
-#: plug-ins/python/spyro-plus.py:1740
+#: plug-ins/python/spyro-plus.py:1739
 msgid "Save"
 msgstr "Kaydet"
 
-#: plug-ins/python/spyro-plus.py:1741
+#: plug-ins/python/spyro-plus.py:1740
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
@@ -849,65 +889,65 @@ msgstr ""
 "Yeni katman olarak kaydetmeyi, son etkin katmana yeniden çizmeyi veya yola "
 "kaydetmeyi seç"
 
-#: plug-ins/python/spyro-plus.py:1755
+#: plug-ins/python/spyro-plus.py:1754
 msgid "Spyrogimp"
 msgstr "Spyrogimp"
 
 # Menü ipucu olduğu için cümle sonunda nokta bulunmaması gerekiyor
-#: plug-ins/python/spyro-plus.py:1764 plug-ins/python/spyro-plus.py:2301
+#: plug-ins/python/spyro-plus.py:1763 plug-ins/python/spyro-plus.py:2300
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr "Geçerli araç ayarlarını ve seçimini kullanarak spirograf çiz"
 
-#: plug-ins/python/spyro-plus.py:1777
+#: plug-ins/python/spyro-plus.py:1776
 msgid "Curve Pattern"
 msgstr "Eğri Deseni"
 
-#: plug-ins/python/spyro-plus.py:1780
+#: plug-ins/python/spyro-plus.py:1779
 msgid "Fixed Gear"
 msgstr "Sabit Dişli"
 
-#: plug-ins/python/spyro-plus.py:1783
+#: plug-ins/python/spyro-plus.py:1782
 msgid "Size"
 msgstr "Boyut"
 
-#: plug-ins/python/spyro-plus.py:2139
+#: plug-ins/python/spyro-plus.py:2138
 msgid "Rendering Pattern"
 msgstr "Desen Görselleştiriliyor"
 
-#: plug-ins/python/spyro-plus.py:2151
+#: plug-ins/python/spyro-plus.py:2150
 msgid "Please wait : Rendering Pattern"
 msgstr "Lütfen bekleyin: Desen Görselleştiriliyor"
 
-#: plug-ins/python/spyro-plus.py:2217 plug-ins/python/spyro-plus.py:2218
+#: plug-ins/python/spyro-plus.py:2216 plug-ins/python/spyro-plus.py:2217
 msgid ""
 "The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"
 msgstr "Eğri türü { Spirograf (0), Epitrokoit (1), Sinüs (2), Lissajous(3) }"
 
-#: plug-ins/python/spyro-plus.py:2222 plug-ins/python/spyro-plus.py:2223
+#: plug-ins/python/spyro-plus.py:2221 plug-ins/python/spyro-plus.py:2222
 msgid "Shape of fixed gear"
 msgstr "Sabit dişlinin şekli"
 
-#: plug-ins/python/spyro-plus.py:2227 plug-ins/python/spyro-plus.py:2228
+#: plug-ins/python/spyro-plus.py:2226 plug-ins/python/spyro-plus.py:2227
 msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
 msgstr ""
 "Sabit dişlinin kenar sayısı (3 veya daha çok). Yalnızca bazı şekillerce "
 "kullanılır."
 
-#: plug-ins/python/spyro-plus.py:2232 plug-ins/python/spyro-plus.py:2233
+#: plug-ins/python/spyro-plus.py:2231 plug-ins/python/spyro-plus.py:2232
 msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
 msgstr ""
 "Sabit dişlinin, 0 ile 1 arasında, dönüşüm şekli. Yalnızca bazı şekillerce "
 "kullanılır."
 
-#: plug-ins/python/spyro-plus.py:2237 plug-ins/python/spyro-plus.py:2238
+#: plug-ins/python/spyro-plus.py:2236 plug-ins/python/spyro-plus.py:2237
 msgid "Number of teeth for fixed gear"
 msgstr "Sabit dişlideki diş sayısı"
 
-#: plug-ins/python/spyro-plus.py:2242 plug-ins/python/spyro-plus.py:2243
+#: plug-ins/python/spyro-plus.py:2241 plug-ins/python/spyro-plus.py:2242
 msgid "Number of teeth for moving gear"
 msgstr "Hareketli dişlideki diş sayısı"
 
-#: plug-ins/python/spyro-plus.py:2247 plug-ins/python/spyro-plus.py:2249
+#: plug-ins/python/spyro-plus.py:2246 plug-ins/python/spyro-plus.py:2248
 msgid ""
 "Location of hole in moving gear in percent, where 100 means that the hole is "
 "at the edge of the gear, and 0 means the hole is at the center"
@@ -916,27 +956,27 @@ msgstr ""
 "dişlinin kenarında olduğu, 0 ise deliğin dişlinin merkezinde olduğu anlamına "
 "gelir"
 
-#: plug-ins/python/spyro-plus.py:2254 plug-ins/python/spyro-plus.py:2255
+#: plug-ins/python/spyro-plus.py:2253 plug-ins/python/spyro-plus.py:2254
 msgid "Margin from selection, in pixels"
 msgstr "Seçim kenarından boşluk, piksel cinsinden"
 
-#: plug-ins/python/spyro-plus.py:2259 plug-ins/python/spyro-plus.py:2260
+#: plug-ins/python/spyro-plus.py:2258 plug-ins/python/spyro-plus.py:2259
 msgid "Make height and width equal"
 msgstr "Yüksekliği ve genişliği eşitle"
 
-#: plug-ins/python/spyro-plus.py:2264 plug-ins/python/spyro-plus.py:2265
+#: plug-ins/python/spyro-plus.py:2263 plug-ins/python/spyro-plus.py:2264
 msgid "Pattern rotation, in degrees"
 msgstr "Desen döndürme, derece olarak"
 
-#: plug-ins/python/spyro-plus.py:2269 plug-ins/python/spyro-plus.py:2270
+#: plug-ins/python/spyro-plus.py:2268 plug-ins/python/spyro-plus.py:2269
 msgid "Shape rotation of fixed gear, in degrees"
 msgstr "Sabit dişlinin şekil dönüşü, derece olarak"
 
-#: plug-ins/python/spyro-plus.py:2274 plug-ins/python/spyro-plus.py:2275
+#: plug-ins/python/spyro-plus.py:2273 plug-ins/python/spyro-plus.py:2274
 msgid "Tool to use for drawing the pattern."
 msgstr "Deseni çizmek için kullanılacak araç."
 
-#: plug-ins/python/spyro-plus.py:2279 plug-ins/python/spyro-plus.py:2281
+#: plug-ins/python/spyro-plus.py:2278 plug-ins/python/spyro-plus.py:2280
 msgid ""
 "Whether to apply a long gradient to match the length of the pattern. Only "
 "applicable to some of the tools."
@@ -944,7 +984,7 @@ msgstr ""
 "Desenin uzunluğuna uyması için uzun bir renk geçişi uygulanma durumu. "
 "Yalnızca bazı araçlar için geçerlidir."
 
-#: plug-ins/python/spyro-plus.py:2302
+#: plug-ins/python/spyro-plus.py:2301
 msgid ""
 "Uses current tool settings to draw Spyrograph patterns. The size and "
 "location of the pattern is based on the current selection."
@@ -952,6 +992,6 @@ msgstr ""
 "Spirograf desenler çizmek için şu anki araç ayarlarını kullanır. Desenin "
 "boyutu ve konumu geçerli seçime bağlıdır."
 
-#: plug-ins/python/spyro-plus.py:2305
+#: plug-ins/python/spyro-plus.py:2304
 msgid "Spyrogimp..."
 msgstr "Spyrogimp..."
