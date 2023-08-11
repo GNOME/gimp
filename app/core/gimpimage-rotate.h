@@ -19,14 +19,20 @@
 #define __GIMP_IMAGE_ROTATE_H__
 
 
-void   gimp_image_rotate                   (GimpImage        *image,
-                                            GimpContext      *context,
-                                            GimpRotationType  rotate_type,
-                                            GimpProgress     *progress);
+void   gimp_image_rotate                     (GimpImage        *image,
+                                              GimpContext      *context,
+                                              GimpRotationType  rotate_type,
+                                              GimpProgress     *progress);
 
-void   gimp_image_import_rotation_metadata (GimpImage        *image,
-                                            GimpContext      *context,
-                                            GimpProgress     *progress,
-                                            gboolean          interactive);
+void   gimp_image_import_rotation_metadata   (GimpImage        *image,
+                                              GimpContext      *context,
+                                              GimpProgress     *progress,
+                                              gboolean          interactive);
+
+void   gimp_image_apply_metadata_orientation (GimpImage         *image,
+                                              GimpContext       *context,
+                                              GimpMetadata      *metadata,
+                                              GimpProgress      *progress);
+
 
 #endif /* __GIMP_IMAGE_ROTATE_H__ */

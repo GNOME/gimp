@@ -29,5 +29,12 @@ void           gimp_image_metadata_update_bits_per_sample (GimpImage    *image);
 void           gimp_image_metadata_update_resolution      (GimpImage    *image);
 void           gimp_image_metadata_update_colorspace      (GimpImage    *image);
 
+GimpImage    * gimp_image_metadata_load_thumbnail         (Gimp         *gimp,
+                                                           GFile        *file,
+                                                           gint         *full_image_width,
+                                                           gint         *full_image_height,
+                                                           const Babl  **format,
+                                                           GError      **error);
+
 
 #endif /* __GIMP_IMAGE_METADATA_H__ */

@@ -41,6 +41,7 @@
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
+#include "gimpimage-metadata.h"
 #include "gimpimagefile.h"
 #include "gimppickable.h"
 #include "gimpprogress.h"
@@ -482,19 +483,37 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
           if (error && *error)
             {
               g_printerr ("Info: Thumbnail load procedure failed: %s\n"
-                          "      Falling back to file load procedure.\n",
+                          "      Falling back to metadata or file load.\n",
                           (*error)->message);
               g_clear_error (error);
             }
 
-          image = file_open_image (private->gimp, context, progress,
-                                   private->file,
-                                   FALSE, NULL, GIMP_RUN_NONINTERACTIVE,
-                                   &status, &mime_type, error);
-
+          image = gimp_image_metadata_load_thumbnail (private->gimp, private->file, &width, &height, &format, error);
           if (image)
-            gimp_thumbnail_set_info_from_image (private->thumbnail,
-                                                mime_type, image);
+            {
+              gimp_thumbnail_set_info (private->thumbnail,
+                                       mime_type, width, height,
+                                       format, 0);
+            }
+          else
+            {
+              if (error && *error)
+                {
+                  g_printerr ("Info: metadata load failed: %s\n"
+                              "      Falling back to file load procedure.\n",
+                              (*error)->message);
+                  g_clear_error (error);
+                }
+
+              image = file_open_image (private->gimp, context, progress,
+                                       private->file,
+                                       FALSE, NULL, GIMP_RUN_NONINTERACTIVE,
+                                       &status, &mime_type, error);
+
+              if (image)
+                gimp_thumbnail_set_info_from_image (private->thumbnail,
+                                                    mime_type, image);
+            }
         }
 
       if (image)

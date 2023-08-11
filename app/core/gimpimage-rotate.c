@@ -278,6 +278,17 @@ gimp_image_import_rotation_metadata (GimpImage    *image,
     }
 }
 
+void
+gimp_image_apply_metadata_orientation (GimpImage         *image,
+                                       GimpContext       *context,
+                                       GimpMetadata      *metadata,
+                                       GimpProgress      *progress)
+{
+  gimp_image_metadata_rotate (image, context,
+                              gexiv2_metadata_try_get_orientation (GEXIV2_METADATA (metadata), NULL),
+                              progress);
+}
+
 
 /* Private Functions */
 

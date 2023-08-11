@@ -887,6 +887,11 @@ gimp_image_metadata_save_filter (GimpImage            *image,
           thumbw = EXIF_THUMBNAIL_SIZE * image_width / image_height;
         }
 
+      /* TODO: currently our exported thumbnails are always RGB because
+       * GdkPixbuf only supports RGB so far. While RGB thumbnail may make sense,
+       * even for CMYK images or other color spaces, grayscale images would be
+       * better served with a grayscale thumbnail too.
+       */
       thumb_pixbuf = gimp_image_get_thumbnail (image, thumbw, thumbh,
                                                GIMP_PIXBUF_KEEP_ALPHA);
 
