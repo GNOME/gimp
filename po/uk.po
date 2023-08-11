@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-27 13:41+0000\n"
-"PO-Revision-Date: 2023-07-28 16:38+0300\n"
+"POT-Creation-Date: 2023-08-11 07:30+0000\n"
+"PO-Revision-Date: 2023-08-11 21:44+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -12629,29 +12629,34 @@ msgstr "Пропуск додатків «%s»: %s\n"
 msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr "Пропускаємо невідомий файл «%s» у каталозі додатків.\n"
 
-#: app/core/gimp-gradients.c:64
+#: app/core/gimp-gradients.c:65
 msgid "Custom"
 msgstr "Нетипове"
 
-#: app/core/gimp-gradients.c:74
+#: app/core/gimp-gradients.c:75
 msgid "FG to BG (RGB)"
 msgstr "Передній план до тла (RGB)"
 
-#: app/core/gimp-gradients.c:82
+#: app/core/gimp-gradients.c:83
 msgid "FG to BG (Hardedge)"
 msgstr "Передній план до тла (різкий перехід)"
 
-#: app/core/gimp-gradients.c:90
+#: app/core/gimp-gradients.c:91
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "Основний у фоновий (HSV проти годинникової)"
 
-#: app/core/gimp-gradients.c:98
+#: app/core/gimp-gradients.c:99
 msgid "FG to BG (HSV clockwise hue)"
 msgstr "Основний у фоновий (HSV за годинниковою)"
 
-#: app/core/gimp-gradients.c:106
+#: app/core/gimp-gradients.c:107
 msgid "FG to Transparent"
 msgstr "Передній план до прозорого"
+
+#: app/core/gimp-gradients.c:114
+#| msgid "FG to Transparent"
+msgid "FG to Transparent (Hardedge)"
+msgstr "Передній план до прозорого (різкий перехід)"
 
 #. Translator:  This message is displayed while GIMP is waiting for
 #. * some operation to finish.  The %s argument is a message describing
@@ -20481,7 +20486,6 @@ msgstr "Запис файлу PDB «%s» не вдався: %s"
 #.
 #: app/pdb/gimppdb-utils.c:125 app/pdb/gimppdb-utils.c:190
 #, c-format
-#| msgid "F1 cannot be remapped."
 msgctxt "PDB-error-message"
 msgid "%s name cannot be empty"
 msgstr "Назва %s не може бути порожньою"
@@ -20492,7 +20496,6 @@ msgstr "Назва %s не може бути порожньою"
 #.
 #: app/pdb/gimppdb-utils.c:139 app/pdb/gimppdb-utils.c:204
 #, c-format
-#| msgid "Brush '%s' not found"
 msgctxt "PDB-error-message"
 msgid "%s '%s' not found"
 msgstr "%s «%s» не знайдено"
@@ -20503,7 +20506,6 @@ msgstr "%s «%s» не знайдено"
 #.
 #: app/pdb/gimppdb-utils.c:149 app/pdb/gimppdb-utils.c:214
 #, c-format
-#| msgid "Brush '%s' is not editable"
 msgctxt "PDB-error-message"
 msgid "%s '%s' is not editable"
 msgstr "%s «%s» є непридатним до редагування"
@@ -20514,7 +20516,6 @@ msgstr "%s «%s» є непридатним до редагування"
 #.
 #: app/pdb/gimppdb-utils.c:160 app/pdb/gimppdb-utils.c:225
 #, c-format
-#| msgid "Brush '%s' is not renamable"
 msgctxt "PDB-error-message"
 msgid "%s '%s' is not renamable"
 msgstr "%s «%s» є непридатним до перейменування"
@@ -20664,50 +20665,41 @@ msgid "Procedure name '%s' is not a canonical identifier"
 msgstr "Назва процедури «%s» не є канонічним ідентифікатором"
 
 #: app/pdb/gimppdb-utils.c:804
-#| msgctxt "brushes-action"
-#| msgid "_Delete Brush"
 msgctxt "PDB-error-data-label"
 msgid "Generated brush"
 msgstr "Створений пензель"
 
 #: app/pdb/gimppdb-utils.c:806
-#| msgid "Brush"
 msgctxt "PDB-error-data-label"
 msgid "Brush"
 msgstr "Пензель"
 
 #: app/pdb/gimppdb-utils.c:808
-#| msgid "Pattern"
 msgctxt "PDB-error-data-label"
 msgid "Pattern"
 msgstr "Текстура"
 
 #: app/pdb/gimppdb-utils.c:810
-#| msgid "Gradient"
 msgctxt "PDB-error-data-label"
 msgid "Gradient"
 msgstr "Градієнт"
 
 #: app/pdb/gimppdb-utils.c:812
-#| msgid "Palette"
 msgctxt "PDB-error-data-label"
 msgid "Palette"
 msgstr "Палітра"
 
 #: app/pdb/gimppdb-utils.c:814
-#| msgid "Font"
 msgctxt "PDB-error-data-label"
 msgid "Font"
 msgstr "Шрифт"
 
 #: app/pdb/gimppdb-utils.c:816
-#| msgid "Paint dynamics"
 msgctxt "PDB-error-data-label"
 msgid "Paint dynamics"
 msgstr "Динаміка малювання"
 
 #: app/pdb/gimppdb-utils.c:818
-#| msgid "MyPaint Brush"
 msgctxt "PDB-error-data-label"
 msgid "MyPaint brush"
 msgstr "Пензель MyPaint"
@@ -21879,7 +21871,7 @@ msgstr ""
 "Жебракують філософи при ґанку церкви\n"
 "в Гадячі; ще й шатро їхнє п'яне знаємо."
 
-#: app/text/gimpfontfactory.c:400
+#: app/text/gimpfontfactory.c:393
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
