@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-09 16:44+0000\n"
-"PO-Revision-Date: 2023-08-09 21:01+0300\n"
+"POT-Creation-Date: 2023-08-11 07:31+0000\n"
+"PO-Revision-Date: 2023-08-11 21:46+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -47,7 +47,7 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:215
 #: plug-ins/gimpressionist/gimp.c:178
 #: plug-ins/gradient-flare/gradient-flare.c:935
-#: plug-ins/ifs-compose/ifs-compose.c:541 plug-ins/imagemap/imap_main.c:264
+#: plug-ins/ifs-compose/ifs-compose.c:487 plug-ins/imagemap/imap_main.c:264
 #: plug-ins/lighting/lighting-main.c:404
 #: plug-ins/map-object/map-object-main.c:496 plug-ins/pagecurl/pagecurl.c:302
 #, c-format
@@ -65,7 +65,7 @@ msgstr "Потренувати козу (Сі)"
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
 #: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1348
 #: plug-ins/common/cml-explorer.c:2114 plug-ins/common/cml-explorer.c:2247
-#: plug-ins/common/colormap-remap.c:704 plug-ins/common/compose.c:1183
+#: plug-ins/common/colormap-remap.c:687 plug-ins/common/compose.c:1183
 #: plug-ins/common/curve-bend.c:1203 plug-ins/common/curve-bend.c:1977
 #: plug-ins/common/curve-bend.c:2012 plug-ins/common/depth-merge.c:734
 #: plug-ins/common/file-cel.c:1001 plug-ins/common/file-gif-save.c:1164
@@ -94,9 +94,9 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/gradient-flare/gradient-flare.c:2517
 #: plug-ins/gradient-flare/gradient-flare.c:3367
 #: plug-ins/gradient-flare/gradient-flare.c:3479
-#: plug-ins/ifs-compose/ifs-compose.c:962
-#: plug-ins/ifs-compose/ifs-compose.c:2608
-#: plug-ins/ifs-compose/ifs-compose.c:2645 plug-ins/imagemap/imap_browse.c:80
+#: plug-ins/ifs-compose/ifs-compose.c:908
+#: plug-ins/ifs-compose/ifs-compose.c:2554
+#: plug-ins/ifs-compose/ifs-compose.c:2591 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:1038
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
@@ -159,7 +159,7 @@ msgstr "Потренувати козу (Javascript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:705
+#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:688
 #: plug-ins/common/compose.c:1184 plug-ins/common/curve-bend.c:1204
 #: plug-ins/common/depth-merge.c:735 plug-ins/common/file-heif.c:2352
 #: plug-ins/common/file-pdf-load.c:710 plug-ins/common/file-svg.c:840
@@ -168,8 +168,9 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/smooth-palette.c:512 plug-ins/common/sphere-designer.c:2633
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
 #: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
-#: plug-ins/common/warp.c:491 plug-ins/file-psd/psd-load.c:3533
-#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
+#: plug-ins/common/warp.c:491 plug-ins/file-exr/file-exr.c:419
+#: plug-ins/file-psd/psd-load.c:3533 plug-ins/flame/flame.c:717
+#: plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -177,7 +178,7 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:2518
 #: plug-ins/gradient-flare/gradient-flare.c:3480
-#: plug-ins/ifs-compose/ifs-compose.c:963
+#: plug-ins/ifs-compose/ifs-compose.c:909
 #: plug-ins/imagemap/imap_default_dialog.c:109
 #: plug-ins/lighting/lighting-ui.c:1039
 #: plug-ins/map-object/map-object-ui.c:1318 plug-ins/pagecurl/pagecurl.c:497
@@ -455,108 +456,126 @@ msgstr "Пошук тла анімації"
 msgid "Optimizing animation"
 msgstr "Оптимізація"
 
-#: plug-ins/common/animation-play.c:331
+#: plug-ins/common/animation-play.c:330
 msgid "_Playback..."
 msgstr "_Відтворення…"
 
-#: plug-ins/common/animation-play.c:336
+#: plug-ins/common/animation-play.c:335
 msgid "Preview a GIMP layer-based animation"
 msgstr "Попередній перегляд анімаційного зображення"
 
+#: plug-ins/common/animation-play.c:370 plug-ins/common/animation-play.c:736
+#: plug-ins/common/animation-play.c:1352
+msgid "Start playback"
+msgstr "Почати відтворення"
+
+#: plug-ins/common/animation-play.c:371 plug-ins/common/animation-play.c:738
+msgid "Step back to previous frame"
+msgstr "Крок до попереднього кадру"
+
+#: plug-ins/common/animation-play.c:372 plug-ins/common/animation-play.c:740
+msgid "Step to next frame"
+msgstr "Крок до наступного кадру"
+
+#: plug-ins/common/animation-play.c:373 plug-ins/common/animation-play.c:742
+msgid "Rewind the animation"
+msgstr "Перемотати назад"
+
+#: plug-ins/common/animation-play.c:378
+msgid "Increase the speed of the animation"
+msgstr "Збільшити швидкість відтворення анімації"
+
+#: plug-ins/common/animation-play.c:379
+msgid "Decrease the speed of the animation"
+msgstr "Зменшити швидкість відтворення анімації"
+
+#: plug-ins/common/animation-play.c:380
+#| msgid "Rewind the animation"
+msgid "Reset the speed of the animation"
+msgstr "Встановити звичайну швидкість відтворення анімації"
+
+#: plug-ins/common/animation-play.c:385 plug-ins/common/animation-play.c:745
+msgid "Detach the animation from the dialog window"
+msgstr "Від'єднати анімацію від вікна діалогу"
+
+#: plug-ins/common/animation-play.c:386 plug-ins/common/animation-play.c:747
+msgid "Reload the image"
+msgstr "Перезавантажити зображення"
+
+#: plug-ins/common/animation-play.c:387 plug-ins/imagemap/imap-menu.ui:26
+msgid "Quit"
+msgstr "Вийти"
+
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:498 plug-ins/common/animation-play.c:556
-#: plug-ins/common/animation-play.c:834
+#: plug-ins/common/animation-play.c:467 plug-ins/common/animation-play.c:525
+#: plug-ins/common/animation-play.c:803
 #, c-format
 msgid "%.1f %%"
 msgstr "%.1f %%"
 
 #. Image Name
-#: plug-ins/common/animation-play.c:689
+#: plug-ins/common/animation-play.c:658
 msgid "Animation Playback:"
 msgstr "Відтворення фільму:"
 
-#: plug-ins/common/animation-play.c:767 plug-ins/common/animation-play.c:1383
-msgid "Start playback"
-msgstr "Почати відтворення"
-
-#: plug-ins/common/animation-play.c:769
+#: plug-ins/common/animation-play.c:738
 msgid "Step _back"
 msgstr "Крок на_зад"
 
-#: plug-ins/common/animation-play.c:769
-msgid "Step back to previous frame"
-msgstr "Крок до попереднього кадру"
-
-#: plug-ins/common/animation-play.c:771
+#: plug-ins/common/animation-play.c:740
 msgid "_Step"
 msgstr "_Крок"
 
-#: plug-ins/common/animation-play.c:771
-msgid "Step to next frame"
-msgstr "Крок до наступного кадру"
-
-#: plug-ins/common/animation-play.c:773
-msgid "Rewind the animation"
-msgstr "Перемотати назад"
-
-#: plug-ins/common/animation-play.c:776
+#: plug-ins/common/animation-play.c:745
 msgid "Detach"
 msgstr "Від’єднати"
 
-#: plug-ins/common/animation-play.c:776
-msgid "Detach the animation from the dialog window"
-msgstr "Від'єднати анімацію від вікна діалогу"
-
-#: plug-ins/common/animation-play.c:778
-msgid "Reload the image"
-msgstr "Перезавантажити зображення"
-
 #. Zoom Options
-#: plug-ins/common/animation-play.c:849
+#: plug-ins/common/animation-play.c:818
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:649
 #: plug-ins/imagemap/imap-menu.ui:276
 msgid "Zoom"
 msgstr "Масштаб"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:859
+#: plug-ins/common/animation-play.c:828
 #, c-format
 msgid "%d fps"
 msgstr "%d fps"
 
-#: plug-ins/common/animation-play.c:870
+#: plug-ins/common/animation-play.c:839
 msgid "Default framerate"
 msgstr "Типова частота кадрів"
 
-#: plug-ins/common/animation-play.c:890
+#: plug-ins/common/animation-play.c:859
 msgid "Playback speed"
 msgstr "Швидкість відтворення"
 
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:901 plug-ins/common/file-gif-save.c:1273
+#: plug-ins/common/animation-play.c:870 plug-ins/common/file-gif-save.c:1273
 msgid "Cumulative layers (combine)"
 msgstr "Накладання шарів (об'єднання)"
 
-#: plug-ins/common/animation-play.c:906 plug-ins/common/file-gif-save.c:1275
+#: plug-ins/common/animation-play.c:875 plug-ins/common/file-gif-save.c:1275
 msgid "One frame per layer (replace)"
 msgstr "Один кадр на шар (заміна)"
 
-#: plug-ins/common/animation-play.c:1002
+#: plug-ins/common/animation-play.c:971
 msgid "Memory could not be allocated to the frame container."
 msgstr "Неможливо виділити пам'ять для контейнера кадру."
 
-#: plug-ins/common/animation-play.c:1069
+#: plug-ins/common/animation-play.c:1038
 msgid "Invalid image. Did you close it?"
 msgstr "Некоректне зображення. Ви закрили його?"
 
-#: plug-ins/common/animation-play.c:1181
+#: plug-ins/common/animation-play.c:1150
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Кадр %d з %d"
 
-#: plug-ins/common/animation-play.c:1383
+#: plug-ins/common/animation-play.c:1352
 msgid "Stop playback"
 msgstr "Зупинити відтворення"
 
@@ -632,7 +651,7 @@ msgstr "Вертикально"
 #: plug-ins/common/file-tga.c:1117 plug-ins/common/file-wbmp.c:270
 #: plug-ins/common/file-xbm.c:912 plug-ins/common/film.c:811
 #: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
-#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:271
+#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:278
 #: plug-ins/file-faxg3/faxg3.c:574 plug-ins/file-fits/fits.c:701
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1082
@@ -995,8 +1014,8 @@ msgstr "База випадковості"
 #: plug-ins/flame/flame.c:1104
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:801
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1632
-#: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:959
-#: plug-ins/ifs-compose/ifs-compose.c:2646 plug-ins/imagemap/imap_browse.c:81
+#: plug-ins/gfig/gfig-dialog.c:782 plug-ins/ifs-compose/ifs-compose.c:905
+#: plug-ins/ifs-compose/ifs-compose.c:2592 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:608
 #: plug-ins/lighting/lighting-ui.c:1308
 msgid "_Open"
@@ -1012,8 +1031,8 @@ msgstr "_Відкрити"
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:818
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1670
 #: plug-ins/gfig/gfig-dialog.c:832 plug-ins/gimpressionist/brush.c:271
-#: plug-ins/ifs-compose/ifs-compose.c:960
-#: plug-ins/ifs-compose/ifs-compose.c:2609 plug-ins/imagemap/imap_file.c:129
+#: plug-ins/ifs-compose/ifs-compose.c:906
+#: plug-ins/ifs-compose/ifs-compose.c:2555 plug-ins/imagemap/imap_file.c:129
 #: plug-ins/lighting/lighting-ui.c:601 plug-ins/lighting/lighting-ui.c:1164
 msgid "_Save"
 msgstr "_Зберегти"
@@ -1178,7 +1197,7 @@ msgstr "Графік поточних параметрів"
 #: plug-ins/common/procedure-browser.c:168
 #: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1218 plug-ins/gfig/gfig-dialog.c:1363
-#: plug-ins/ifs-compose/ifs-compose.c:1262
+#: plug-ins/ifs-compose/ifs-compose.c:1208
 #: plug-ins/metadata/metadata-viewer.c:272
 msgid "_Close"
 msgstr "З_акрити"
@@ -1205,7 +1224,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
-#: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2468
+#: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2414
 #: plug-ins/lighting/lighting-ui.c:1233
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1289,30 +1308,50 @@ msgstr "Поміняти _місцями кольори"
 msgid "Swap two colors in the colormap"
 msgstr "Поміняти місцями два кольори на мапі"
 
-#: plug-ins/common/colormap-remap.c:423 plug-ins/common/colormap-remap.c:434
-#: plug-ins/common/colormap-remap.c:445
+#: plug-ins/common/colormap-remap.c:277
+msgid "Sort on Hue"
+msgstr "Відсортувати за тоном"
+
+#: plug-ins/common/colormap-remap.c:278
+msgid "Sort on Saturation"
+msgstr "Відсортувати за насиченістю"
+
+#: plug-ins/common/colormap-remap.c:279
+msgid "Sort on Value"
+msgstr "Відсортувати за яскравістю"
+
+#: plug-ins/common/colormap-remap.c:284
+msgid "Reverse Order"
+msgstr "Зворотний порядок"
+
+#: plug-ins/common/colormap-remap.c:285
+msgid "Reset Order"
+msgstr "Скинути порядок"
+
+#: plug-ins/common/colormap-remap.c:408 plug-ins/common/colormap-remap.c:419
+#: plug-ins/common/colormap-remap.c:430
 msgid "Invalid remap array was passed to remap function"
 msgstr "Функції передано некоректну множину"
 
-#: plug-ins/common/colormap-remap.c:469
+#: plug-ins/common/colormap-remap.c:454
 msgid "Rearranging the colormap"
 msgstr "Перебудова мапи кольорів"
 
-#: plug-ins/common/colormap-remap.c:699
+#: plug-ins/common/colormap-remap.c:682
 msgid "Rearrange Colormap"
 msgstr "Перебудувати мапу кольорів"
 
 #. The Reset button
-#: plug-ins/common/colormap-remap.c:703 plug-ins/common/curve-bend.c:1446
+#: plug-ins/common/colormap-remap.c:686 plug-ins/common/curve-bend.c:1446
 #: plug-ins/common/sample-colorize.c:1413
 #: plug-ins/common/sphere-designer.c:2631 plug-ins/common/tile-small.c:531
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:809
-#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:961
+#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:907
 #: plug-ins/selection-to-path/selection-to-path.c:412
 msgid "_Reset"
 msgstr "_Скинути"
 
-#: plug-ins/common/colormap-remap.c:805
+#: plug-ins/common/colormap-remap.c:788
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
@@ -1321,7 +1360,7 @@ msgstr ""
 "позначається оригінальний індекс кольору. Меню сортування кольорів "
 "викликається правою кнопкою миші."
 
-#: plug-ins/common/colormap-remap.c:843
+#: plug-ins/common/colormap-remap.c:826
 msgid "Rearrange Colors"
 msgstr "Переупорядкувати кольори"
 
@@ -2224,7 +2263,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-wbmp.c:176 plug-ins/common/file-wmf.c:1026
 #: plug-ins/common/file-xbm.c:742 plug-ins/common/file-xmc.c:648
 #: plug-ins/common/file-xpm.c:385 plug-ins/common/file-xwd.c:478
-#: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:188
+#: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:190
 #: plug-ins/file-faxg3/faxg3.c:240 plug-ins/file-fli/fli-gimp.c:502
 #: plug-ins/file-icns/file-icns-load.c:507 plug-ins/file-ico/ico-load.c:673
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
@@ -2543,7 +2582,7 @@ msgstr "Для формату GBR не передбачено підтримку
 msgid "Radiance RGBE"
 msgstr "Radiance RGBE"
 
-#: plug-ins/common/file-gegl.c:130 plug-ins/file-exr/file-exr.c:106
+#: plug-ins/common/file-gegl.c:130 plug-ins/file-exr/file-exr.c:108
 msgid "OpenEXR image"
 msgstr "Зображення OpenEXR"
 
@@ -4166,7 +4205,7 @@ msgstr "Помилка при читанні «%s». Файл пошкоджен
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Невідома модель кольорів у PNG файлі «%s»."
 
-#: plug-ins/common/file-png.c:915 plug-ins/file-exr/file-exr.c:254
+#: plug-ins/common/file-png.c:915 plug-ins/file-exr/file-exr.c:257
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Неможливо створити нове зображення для «%s»: %s"
@@ -6126,7 +6165,7 @@ msgstr "Розрізати зображення на частини, вказа�
 msgid "Guillotine"
 msgstr "Гільйотина"
 
-#: plug-ins/common/guillotine.c:266 plug-ins/help-browser/dialog.c:892
+#: plug-ins/common/guillotine.c:266 plug-ins/help-browser/dialog.c:821
 msgid "Untitled"
 msgstr "Без назви"
 
@@ -6917,7 +6956,7 @@ msgstr "Вікно вибору кольору"
 
 #. Scale
 #: plug-ins/common/sphere-designer.c:2833 plug-ins/gimpressionist/paper.c:191
-#: plug-ins/ifs-compose/ifs-compose.c:717
+#: plug-ins/ifs-compose/ifs-compose.c:663
 msgid "Scale:"
 msgstr "Масштаб:"
 
@@ -7025,7 +7064,7 @@ msgstr "Дрібна черепиця"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:498 plug-ins/ifs-compose/ifs-compose.c:773
+#: plug-ins/common/tile-small.c:498 plug-ins/ifs-compose/ifs-compose.c:719
 msgid "Flip"
 msgstr "Віддзеркалення"
 
@@ -7306,7 +7345,7 @@ msgstr "Розмір кроку:"
 
 #: plug-ins/common/warp.c:543
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:762
-#: plug-ins/ifs-compose/ifs-compose.c:1293
+#: plug-ins/ifs-compose/ifs-compose.c:1239
 msgid "Iterations:"
 msgstr "Число повторів:"
 
@@ -7376,7 +7415,7 @@ msgid "Vector mag:"
 msgstr "Довжина вектора:"
 
 #. Angle
-#: plug-ins/common/warp.c:808 plug-ins/ifs-compose/ifs-compose.c:731
+#: plug-ins/common/warp.c:808 plug-ins/ifs-compose/ifs-compose.c:677
 msgid "Angle:"
 msgstr "Кут:"
 
@@ -7893,34 +7932,50 @@ msgstr "Зберег_ти покриття альфа-тесту"
 msgid "_Alpha test threshold:"
 msgstr "Поріг _альфа-тесту:"
 
-#: plug-ins/file-exr/file-exr.c:109
+#: plug-ins/file-exr/file-exr.c:111
 msgid "Loads files in the OpenEXR file format"
 msgstr "Завантажує файли у форматі OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:196
+#: plug-ins/file-exr/file-exr.c:198
 #, c-format
 msgid "Error opening file '%s' for reading"
 msgstr "Помилка відкривання файлу «%s» для читання"
 
-#: plug-ins/file-exr/file-exr.c:207
+#: plug-ins/file-exr/file-exr.c:209
 #, c-format
 msgid "Error querying image dimensions from '%s'"
 msgstr "Помилка запиту розмірів зображення з «%s»"
 
-#: plug-ins/file-exr/file-exr.c:227
+#: plug-ins/file-exr/file-exr.c:229
 #, c-format
 msgid "Error querying image precision from '%s'"
 msgstr "Помилка запиту точності зображення з «%s»"
 
-#: plug-ins/file-exr/file-exr.c:244
+#: plug-ins/file-exr/file-exr.c:247
 #, c-format
 msgid "Error querying image type from '%s'"
 msgstr "Помилка запиту типу зображення з «%s»"
 
-#: plug-ins/file-exr/file-exr.c:302
+#: plug-ins/file-exr/file-exr.c:309
 #, c-format
 msgid "Error reading pixel data from '%s'"
 msgstr "Помилка зчитування даних точок з «%s»"
+
+#: plug-ins/file-exr/file-exr.c:416
+msgid "Import OpenEXR"
+msgstr "Імпортувати OpenEXR"
+
+#: plug-ins/file-exr/file-exr.c:430
+msgid "Unknown Channel Name"
+msgstr "Невідома назва каналу"
+
+#: plug-ins/file-exr/file-exr.c:431
+msgid ""
+"The image contains a single unknown channel.\n"
+"It has been converted to grayscale."
+msgstr ""
+"У файлі зображення міститься окремий невідомий канал.\n"
+"Кольори каналу перетворено на відтінки сірого."
 
 #: plug-ins/file-faxg3/faxg3.c:134
 msgid "G3 fax image"
@@ -10228,7 +10283,7 @@ msgid "Copy an object"
 msgstr "Копіювати об'єкт"
 
 #: plug-ins/gfig/gfig-dialog.c:410 plug-ins/gfig/gfig-menu.ui:104
-#: plug-ins/ifs-compose/ifs-compose.c:1008
+#: plug-ins/ifs-compose/ifs-compose.c:954 plug-ins/ifs-compose/ifs-menus.ui:27
 #: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
 msgid "Delete"
 msgstr "Видалити"
@@ -10534,7 +10589,6 @@ msgstr ""
 "Помилка при відкриванні тимчасового файлу «%s» для завантаження паразита: %s"
 
 #: plug-ins/gfig/gfig-menu.ui:6 plug-ins/imagemap/imap-menu.ui:5
-#| msgid "_File"
 msgid "File"
 msgstr "Файл"
 
@@ -10548,18 +10602,18 @@ msgstr "Відкрити"
 msgid "Save"
 msgstr "Зберегти"
 
-#: plug-ins/gfig/gfig-menu.ui:16 plug-ins/imagemap/imap-menu.ui:22
-#| msgid "_Close"
+#: plug-ins/gfig/gfig-menu.ui:16 plug-ins/help-browser/help-menu.ui:58
+#: plug-ins/imagemap/imap-menu.ui:22
 msgid "Close"
 msgstr "Закрити"
 
 #: plug-ins/gfig/gfig-menu.ui:21 plug-ins/imagemap/imap-menu.ui:32
-#| msgid "_Edit"
 msgid "Edit"
 msgstr "Зміни"
 
-#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:1010
-#: plug-ins/imagemap/imap_main.c:1530 plug-ins/imagemap/imap-menu.ui:35
+#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:956
+#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1530
+#: plug-ins/imagemap/imap-menu.ui:35
 msgid "Undo"
 msgstr "Скасувати"
 
@@ -10574,12 +10628,10 @@ msgid "Preferences"
 msgstr "Параметри"
 
 #: plug-ins/gfig/gfig-menu.ui:124
-#| msgid "Top:"
 msgid "Top"
 msgstr "Верх"
 
 #: plug-ins/gfig/gfig-menu.ui:128
-#| msgid "Bottom:"
 msgid "Bottom"
 msgstr "Низ"
 
@@ -11486,11 +11538,11 @@ msgid "_Second Flares"
 msgstr "_Другорядні спалахи"
 
 #. the dialog window
-#: plug-ins/help-browser/dialog.c:261 plug-ins/help-browser/dialog.c:893
+#: plug-ins/help-browser/dialog.c:261 plug-ins/help-browser/dialog.c:822
 msgid "GIMP Help Browser"
 msgstr "Перегляд довідки GIMP"
 
-#: plug-ins/help-browser/dialog.c:275
+#: plug-ins/help-browser/dialog.c:275 plug-ins/help-browser/help-menu.ui:14
 msgid "_Reload"
 msgstr "О_новити"
 
@@ -11498,7 +11550,7 @@ msgstr "О_новити"
 msgid "Reload current page"
 msgstr "Повторно завантажити цю сторінку"
 
-#: plug-ins/help-browser/dialog.c:276
+#: plug-ins/help-browser/dialog.c:276 plug-ins/help-browser/help-menu.ui:18
 msgid "_Stop"
 msgstr "З_упинити"
 
@@ -11514,24 +11566,69 @@ msgstr "До змісту"
 msgid "Visit the GIMP documentation website"
 msgstr "Відвідайте сайт документації GIMP"
 
-#: plug-ins/help-browser/dialog.c:1236
+#: plug-ins/help-browser/dialog.c:1165
 msgid "Find:"
 msgstr "Шукати:"
 
-#: plug-ins/help-browser/dialog.c:1252
+#: plug-ins/help-browser/dialog.c:1181
 msgctxt "search"
 msgid "_Previous"
 msgstr "_Попереднє"
 
-#: plug-ins/help-browser/dialog.c:1261
+#: plug-ins/help-browser/dialog.c:1190
 msgctxt "search"
 msgid "_Next"
 msgstr "_Наступне"
 
-#: plug-ins/help-browser/dialog.c:1270
+#: plug-ins/help-browser/dialog.c:1199
 msgctxt "search"
 msgid "_Close"
 msgstr "З_акрити"
+
+#: plug-ins/help-browser/help-menu.ui:6
+#| msgid "Back:"
+msgid "_Back"
+msgstr "_Назад"
+
+#: plug-ins/help-browser/help-menu.ui:10
+msgid "_Previous"
+msgstr "_Попереднє"
+
+#: plug-ins/help-browser/help-menu.ui:24
+#| msgid "Home"
+msgid "_Home"
+msgstr "_Домівка"
+
+#: plug-ins/help-browser/help-menu.ui:28
+msgid "C_opy location"
+msgstr "_Копіювати розташування"
+
+#: plug-ins/help-browser/help-menu.ui:32
+#| msgid "Show Next"
+msgid "S_how index"
+msgstr "_Показати зміст"
+
+#: plug-ins/help-browser/help-menu.ui:38
+#| msgid "Find:"
+msgid "Find"
+msgstr "Знайти"
+
+#: plug-ins/help-browser/help-menu.ui:42
+msgid "Find _Again"
+msgstr "Шукати _далі"
+
+#: plug-ins/help-browser/help-menu.ui:48
+msgid "Zoom in"
+msgstr "Збільшити"
+
+#: plug-ins/help-browser/help-menu.ui:52
+msgid "Zoom out"
+msgstr "Зменшити"
+
+#: plug-ins/help-browser/help-menu.ui:66
+#| msgid "C_opy location"
+msgid "Copy selection"
+msgstr "Копіювати позначене"
 
 #: plug-ins/help/gimphelpdomain.c:180
 #, c-format
@@ -11593,7 +11690,7 @@ msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Створити фрактал Iterated Function System (IFS)"
 
 #. X
-#: plug-ins/ifs-compose/ifs-compose.c:689 plug-ins/lighting/lighting-ui.c:546
+#: plug-ins/ifs-compose/ifs-compose.c:635 plug-ins/lighting/lighting-ui.c:546
 #: plug-ins/map-object/map-object-ui.c:663
 #: plug-ins/map-object/map-object-ui.c:717
 #: plug-ins/map-object/map-object-ui.c:977
@@ -11602,7 +11699,7 @@ msgid "X:"
 msgstr "X:"
 
 #. Y
-#: plug-ins/ifs-compose/ifs-compose.c:703 plug-ins/lighting/lighting-ui.c:561
+#: plug-ins/ifs-compose/ifs-compose.c:649 plug-ins/lighting/lighting-ui.c:561
 #: plug-ins/map-object/map-object-ui.c:677
 #: plug-ins/map-object/map-object-ui.c:730
 #: plug-ins/map-object/map-object-ui.c:989
@@ -11612,149 +11709,150 @@ msgid "Y:"
 msgstr "Y:"
 
 #. Asym
-#: plug-ins/ifs-compose/ifs-compose.c:745
+#: plug-ins/ifs-compose/ifs-compose.c:691
 msgid "Asymmetry:"
 msgstr "Асиметрія:"
 
 #. Shear
-#: plug-ins/ifs-compose/ifs-compose.c:759
+#: plug-ins/ifs-compose/ifs-compose.c:705
 msgid "Shear:"
 msgstr "Нахил:"
 
 #. Simple color control section
-#: plug-ins/ifs-compose/ifs-compose.c:804
+#: plug-ins/ifs-compose/ifs-compose.c:750
 msgid "Simple"
 msgstr "Просте"
 
-#: plug-ins/ifs-compose/ifs-compose.c:813
+#: plug-ins/ifs-compose/ifs-compose.c:759
 msgid "IFS Fractal: Target"
 msgstr "IFS фрактал: ціль"
 
-#: plug-ins/ifs-compose/ifs-compose.c:819
+#: plug-ins/ifs-compose/ifs-compose.c:765
 msgid "Scale hue by:"
 msgstr "Масштабувати відтінок за:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:834
+#: plug-ins/ifs-compose/ifs-compose.c:780
 msgid "Scale value by:"
 msgstr "Масштабувати яскравість за:"
 
 #. Full color control section
-#: plug-ins/ifs-compose/ifs-compose.c:851
+#: plug-ins/ifs-compose/ifs-compose.c:797
 msgid "Full"
 msgstr "Повний"
 
-#: plug-ins/ifs-compose/ifs-compose.c:859
+#: plug-ins/ifs-compose/ifs-compose.c:805
 msgid "IFS Fractal: Red"
 msgstr "IFS фрактал: червоний"
 
-#: plug-ins/ifs-compose/ifs-compose.c:867
+#: plug-ins/ifs-compose/ifs-compose.c:813
 msgid "IFS Fractal: Green"
 msgstr "IFS фрактал: зелений"
 
-#: plug-ins/ifs-compose/ifs-compose.c:875
+#: plug-ins/ifs-compose/ifs-compose.c:821
 msgid "IFS Fractal: Blue"
 msgstr "IFS фрактал: синій"
 
-#: plug-ins/ifs-compose/ifs-compose.c:883
+#: plug-ins/ifs-compose/ifs-compose.c:829
 msgid "IFS Fractal: Black"
 msgstr "IFS фрактал: чорний"
 
-#: plug-ins/ifs-compose/ifs-compose.c:955
+#: plug-ins/ifs-compose/ifs-compose.c:901
 msgid "IFS Fractal"
 msgstr "IFS фрактал"
 
-#: plug-ins/ifs-compose/ifs-compose.c:999 plug-ins/imagemap/imap_cmd_move.c:85
+#: plug-ins/ifs-compose/ifs-compose.c:945 plug-ins/ifs-compose/ifs-menus.ui:6
+#: plug-ins/imagemap/imap_cmd_move.c:85
 #: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Перемістити"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1001
+#: plug-ins/ifs-compose/ifs-compose.c:947 plug-ins/ifs-compose/ifs-menus.ui:11
 msgid "Rotate"
 msgstr "Обернути"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1003
+#: plug-ins/ifs-compose/ifs-compose.c:949 plug-ins/ifs-compose/ifs-menus.ui:16
 msgid "Stretch"
 msgstr "Розтягти"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1006
+#: plug-ins/ifs-compose/ifs-compose.c:952 plug-ins/ifs-compose/ifs-menus.ui:23
 msgid "New"
 msgstr "Створити"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1012 plug-ins/imagemap/imap_main.c:1532
-#: plug-ins/imagemap/imap-menu.ui:39
+#: plug-ins/ifs-compose/ifs-compose.c:958 plug-ins/ifs-compose/ifs-menus.ui:35
+#: plug-ins/imagemap/imap_main.c:1532 plug-ins/imagemap/imap-menu.ui:39
 msgid "Redo"
 msgstr "Повернути"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1014
+#: plug-ins/ifs-compose/ifs-compose.c:960 plug-ins/ifs-compose/ifs-menus.ui:39
 #: plug-ins/imagemap/imap_cmd_select_all.c:50 plug-ins/imagemap/imap-menu.ui:61
 msgid "Select All"
 msgstr "Вибрати все"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1016
+#: plug-ins/ifs-compose/ifs-compose.c:962 plug-ins/ifs-compose/ifs-menus.ui:43
 msgid "Recompute Center"
 msgstr "Переобчислити центр"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1019
+#: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:49
 msgid "Render Options"
 msgstr "Параметри візуалізації"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1078
+#: plug-ins/ifs-compose/ifs-compose.c:1024
 msgid "Spatial Transformation"
 msgstr "Просторове перетворення"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1084
+#: plug-ins/ifs-compose/ifs-compose.c:1030
 msgid "Color Transformation"
 msgstr "Перетворення кольорів"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1094
+#: plug-ins/ifs-compose/ifs-compose.c:1040
 msgid "Relative probability:"
 msgstr "Відносна вірогідність:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1258
+#: plug-ins/ifs-compose/ifs-compose.c:1204
 msgid "IFS Fractal Render Options"
 msgstr "Параметри візуалізації"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1280
+#: plug-ins/ifs-compose/ifs-compose.c:1226
 msgid "Max. memory:"
 msgstr "Макс. пам'ять:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1308
+#: plug-ins/ifs-compose/ifs-compose.c:1254
 msgid "Subdivide:"
 msgstr "Підрозділяти:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1322
+#: plug-ins/ifs-compose/ifs-compose.c:1268
 msgid "Spot radius:"
 msgstr "Радіус плями:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1395
+#: plug-ins/ifs-compose/ifs-compose.c:1341
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Візуалізація IFS (%d/%d)..."
 
-#: plug-ins/ifs-compose/ifs-compose.c:1547
+#: plug-ins/ifs-compose/ifs-compose.c:1493
 #, c-format
 msgid "Transformation %s"
 msgstr "Перетворення %s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2473
+#: plug-ins/ifs-compose/ifs-compose.c:2419
 msgid "Save failed"
 msgstr "Помилка при збереженні"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2556
-#: plug-ins/ifs-compose/ifs-compose.c:2569
+#: plug-ins/ifs-compose/ifs-compose.c:2502
+#: plug-ins/ifs-compose/ifs-compose.c:2515
 msgid "Open failed"
 msgstr "Не вдається відкрити"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2564
+#: plug-ins/ifs-compose/ifs-compose.c:2510
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Файл «%s» не є файлом IFS-фрактала."
 
-#: plug-ins/ifs-compose/ifs-compose.c:2604
+#: plug-ins/ifs-compose/ifs-compose.c:2550
 msgid "Save as IFS Fractal file"
 msgstr "Збереження як файл IFS-фрактала"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2641
+#: plug-ins/ifs-compose/ifs-compose.c:2587
 msgid "Open IFS Fractal file"
 msgstr "Відкривання файлу IFS-фрактала"
 
@@ -12386,27 +12484,18 @@ msgid "View Source"
 msgstr "Перегляд джерела"
 
 #: plug-ins/imagemap/imap-menu.ui:16
-#| msgid "Save _as"
 msgid "Save As"
 msgstr "Зберегти як"
 
-#: plug-ins/imagemap/imap-menu.ui:26
-#| msgid "_Quit"
-msgid "Quit"
-msgstr "Вийти"
-
 #: plug-ins/imagemap/imap-menu.ui:65
-#| msgid "D_eselect All"
 msgid "Deselect All"
 msgstr "Зняти позначення з усіх"
 
 #: plug-ins/imagemap/imap-menu.ui:71
-#| msgid "Edit Area Info..."
 msgid "Edit Area Info"
 msgstr "Змінити інформацію про ділянку"
 
 #: plug-ins/imagemap/imap-menu.ui:83
-#| msgid "_View"
 msgid "View"
 msgstr "Перегляд"
 
@@ -12419,7 +12508,6 @@ msgid "Source..."
 msgstr "Джерело…"
 
 #: plug-ins/imagemap/imap-menu.ui:116
-#| msgid "_Zoom To"
 msgid "Zoom To"
 msgstr "Масштаб"
 
@@ -12456,7 +12544,6 @@ msgid "1:8"
 msgstr "1:8"
 
 #: plug-ins/imagemap/imap-menu.ui:163
-#| msgid "_Mapping"
 msgid "Mappings"
 msgstr "Прив'язки"
 
@@ -12465,7 +12552,6 @@ msgid "Edit Map Info..."
 msgstr "Змінити інформацію про карту…"
 
 #: plug-ins/imagemap/imap-menu.ui:194 plug-ins/imagemap/imap-menu.ui:251
-#| msgid "_Tools"
 msgid "Tools"
 msgstr "Засоби"
 
@@ -12482,17 +12568,14 @@ msgid "Create Guides..."
 msgstr "Створити напрямні…"
 
 #: plug-ins/imagemap/imap-menu.ui:217
-#| msgid "_Help"
 msgid "Help"
 msgstr "Довідка"
 
 #: plug-ins/imagemap/imap-menu.ui:220
-#| msgid "_Contents"
 msgid "Contents"
 msgstr "Зміст"
 
 #: plug-ins/imagemap/imap-menu.ui:224
-#| msgid "_About"
 msgid "About"
 msgstr "Про програму"
 
@@ -14700,12 +14783,6 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "_Preferences"
 #~ msgstr "_Параметри"
 
-#~ msgid "Zoom in"
-#~ msgstr "Збільшити"
-
-#~ msgid "Zoom out"
-#~ msgstr "Зменшити"
-
 #~ msgid "_Zoom"
 #~ msgstr "_Масштаб"
 
@@ -14721,9 +14798,6 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "Lower to _bottom"
 #~ msgstr "_Опустити вниз"
 
-#~ msgid "_Previous"
-#~ msgstr "_Попереднє"
-
 #~ msgid "_Next"
 #~ msgstr "_Наступне"
 
@@ -14732,21 +14806,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Rotate / Scale"
 #~ msgstr "Обертання / масштаб"
-
-#~ msgid "Sort on Hue"
-#~ msgstr "Відсортувати за тоном"
-
-#~ msgid "Sort on Saturation"
-#~ msgstr "Відсортувати за насиченістю"
-
-#~ msgid "Sort on Value"
-#~ msgstr "Відсортувати за яскравістю"
-
-#~ msgid "Reverse Order"
-#~ msgstr "Зворотний порядок"
-
-#~ msgid "Reset Order"
-#~ msgstr "Скинути порядок"
 
 #~ msgid "_Convert text layers to image"
 #~ msgstr "П_еретворити текстові шари на зображення"
@@ -14880,17 +14939,11 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "Go forward one page"
 #~ msgstr "Вперед на одну сторінку"
 
-#~ msgid "C_opy location"
-#~ msgstr "_Копіювати розташування"
-
 #~ msgid "Copy the location of this page to the clipboard"
 #~ msgstr "Копіювати розташування цієї сторінки у буфер обміну"
 
 #~ msgid "Find text in current page"
 #~ msgstr "Знайти текст на наступній сторінці"
-
-#~ msgid "Find _Again"
-#~ msgstr "Шукати _далі"
 
 #~ msgid "Toggle the visibility of the sidebar"
 #~ msgstr "Перемикнути видимість бокової панелі"
