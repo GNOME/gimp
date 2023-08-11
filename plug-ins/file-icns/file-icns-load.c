@@ -544,6 +544,7 @@ icns_load_thumbnail_image (GFile   *file,
                            GError **error)
 {
   gint          w          = 0;
+  gint          target_w   = *width;
   FILE         *fp;
   GimpImage    *image      = NULL;
   IcnsResource *icns;
@@ -582,14 +583,36 @@ icns_load_thumbnail_image (GFile   *file,
   resources = g_new (IcnsResource, 256);
   while (resource_get_next (icns, &resources[nResources++])) {}
 
+  *width  = 0;
+  *height = 0;
   for (i = 0; iconTypes[i].type; i++)
     {
       if ((icns = resource_find (resources, iconTypes[i].type, nResources)))
         {
-          if (iconTypes[i].width > w)
+          if (iconTypes[i].width > w && iconTypes[i].width <= target_w)
             {
               w = iconTypes[i].width;
               match = i;
+            }
+        }
+      *width  = MAX (*width, iconTypes[i].width);
+      *height = MAX (*height, iconTypes[i].height);
+    }
+
+  if (match == -1)
+    {
+      /* We didn't find any icon with size smaller or equal to the target.
+       * Settle with the smallest bigger icon instead.
+       */
+      for (i = 0; iconTypes[i].type; i++)
+        {
+          if ((icns = resource_find (resources, iconTypes[i].type, nResources)))
+            {
+              if (match == -1 || iconTypes[i].width < w)
+                {
+                  w = iconTypes[i].width;
+                  match = i;
+                }
             }
         }
     }
