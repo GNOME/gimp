@@ -874,16 +874,44 @@ dev-docs:
   stage: distribution
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   dependencies:
+    - deps-debian
     - gimp-meson-debian
   artifacts:
     name: "GIMP-sources-${CI_COMMIT_SHORT_SHA}"
     when: always
     expire_in: 2 days
     paths:
+    - babl-api-docs-*.tar.xz
+    - babl-api-docs-*.tar.xz.SHA256SUMS
+    - babl-api-docs-*.tar.xz.SHA512SUMS
+    - gegl-api-docs-*.tar.xz
+    - gegl-api-docs-*.tar.xz.SHA256SUMS
+    - gegl-api-docs-*.tar.xz.SHA512SUMS
     - gimp-api-docs-*.tar.xz
     - gimp-api-docs-*.tar.xz.SHA256SUMS
     - gimp-api-docs-*.tar.xz.SHA512SUMS
   script:
+    - BABL_VER=$(grep BABL_VERSION _babl/_build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')         &&
+      BABL_API_VER=$(grep BABL_API_VERSION _babl/_build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/') &&
+      DIR_NAME=babl-api-docs-$BABL_VER                                                      &&
+      mkdir $DIR_NAME                                                                       &&
+      mv "${INSTALL_PREFIX}/share/doc/babl-$BABL_API_VER" $DIR_NAME/                        &&
+      TAR_NAME="$DIR_NAME.tar.xz"                                                           &&
+      tar -cJf ${TAR_NAME} $DIR_NAME                                                        &&
+      sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                          &&
+      sha512sum $TAR_NAME > ${TAR_NAME}.SHA512SUMS
+    - GEGL_MAJ_VER=$(grep GEGL_MAJOR_VERSION _gegl/_build/config.h |head -1 |sed 's/^[^0-9]*\([0-9]*\).*$/\1/') &&
+      GEGL_MIN_VER=$(grep GEGL_MINOR_VERSION _gegl/_build/config.h |head -1 |sed 's/^[^0-9]*\([0-9]*\).*$/\1/') &&
+      GEGL_MIC_VER=$(grep GEGL_MICRO_VERSION _gegl/_build/config.h |head -1 |sed 's/^[^0-9]*\([0-9]*\).*$/\1/') &&
+      GEGL_VER="$GEGL_MAJ_VER.$GEGL_MIN_VER.$GEGL_MIC_VER"                                  &&
+      GEGL_API_VER="$GEGL_MAJ_VER.$GEGL_MIN_VER"                                            &&
+      DIR_NAME=gegl-api-docs-$GEGL_VER                                                      &&
+      mkdir $DIR_NAME                                                                       &&
+      mv "${INSTALL_PREFIX}/share/doc/gegl-$GEGL_API_VER" $DIR_NAME/                        &&
+      TAR_NAME="$DIR_NAME.tar.xz"                                                           &&
+      tar -cJf ${TAR_NAME} $DIR_NAME                                                        &&
+      sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                          &&
+      sha512sum $TAR_NAME > ${TAR_NAME}.SHA512SUMS
     - GIMP_VER=$(grep GIMP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/') &&
       APP_VER=$(echo $GIMP_VER | sed 's/\([0-9]\+\.[0-9]\+\)\..*/\1/')                      &&
       DIR_NAME=gimp-api-docs-$GIMP_VER                                                      &&
@@ -894,7 +922,7 @@ dev-docs:
       tar -cJf ${TAR_NAME} $DIR_NAME                                                        &&
       sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                          &&
       sha512sum $TAR_NAME > ${TAR_NAME}.SHA512SUMS
-  needs: ["gimp-meson-debian"]
+  needs: ["deps-debian", "gimp-meson-debian"]
 
 win64-nightly:
   rules:
