@@ -27,7 +27,7 @@ GimpValueArray *script_fu_run_image_procedure (GimpProcedure        *procedure,
                                                GimpImage            *image,
                                                guint                 n_drawables,
                                                GimpDrawable        **drawables,
-                                               const GimpValueArray *args,
+                                               GimpProcedureConfig  *config,
                                                gpointer              data);
 
 #endif /*  __SCRIPT_FU_RUN_FUNC__  */

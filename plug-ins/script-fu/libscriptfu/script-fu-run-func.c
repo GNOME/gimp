@@ -53,17 +53,17 @@
  * Since 3.0
  */
 GimpValueArray *
-script_fu_run_image_procedure ( GimpProcedure         *procedure, /* GimpImageProcedure */
-                                GimpRunMode           run_mode,
-                                GimpImage            *image,
-                                guint                 n_drawables,
-                                GimpDrawable        **drawables,
-                                const GimpValueArray *other_args,
-                                gpointer              data)
+script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProcedure */
+                               GimpRunMode           run_mode,
+                               GimpImage            *image,
+                               guint                 n_drawables,
+                               GimpDrawable        **drawables,
+                               GimpProcedureConfig  *config,
+                               gpointer              data)
 {
 
-  GimpValueArray    *result = NULL;
-  SFScript          *script;
+  GimpValueArray *result = NULL;
+  SFScript       *script;
 
   g_debug ("script_fu_run_image_procedure");
   script = script_fu_find_script (gimp_procedure_get_name (procedure));
@@ -77,33 +77,36 @@ script_fu_run_image_procedure ( GimpProcedure         *procedure, /* GimpImagePr
     {
     case GIMP_RUN_INTERACTIVE:
       {
-        if (gimp_value_array_length (other_args) > 0)
+        guint n_specs;
+
+        g_free (g_object_class_list_properties (G_OBJECT_GET_CLASS (config), &n_specs));
+        if (n_specs > 1)
           {
             /* Let user choose "other" args in a dialog, then interpret. Maintain a config. */
-            result = script_fu_dialog_run (procedure, script, image, n_drawables, drawables, other_args);
+            result = script_fu_dialog_run (procedure, script, image, n_drawables, drawables, config);
           }
         else
           {
             /* No "other" args for user to choose. No config to maintain. */
-            result = script_fu_interpret_image_proc (procedure, script, image, n_drawables, drawables, other_args);
+            result = script_fu_interpret_image_proc (procedure, script, image, n_drawables, drawables, config);
           }
         break;
       }
     case GIMP_RUN_NONINTERACTIVE:
       {
         /* A call from another PDB procedure.
-         * Use the given other_args, without interacting with user.
+         * Use the given config, without interacting with user.
          * Since no user interaction, no config to maintain.
          */
-        result = script_fu_interpret_image_proc (procedure, script, image, n_drawables, drawables, other_args);
+        result = script_fu_interpret_image_proc (procedure, script, image, n_drawables, drawables, config);
         break;
       }
     case GIMP_RUN_WITH_LAST_VALS:
       {
         /* User invoked from a menu "Filter>Run with last values".
-         * Do not show dialog. other_args are already last values, from a config.
+         * Do not show dialog. config are already last values.
          */
-        result = script_fu_interpret_image_proc (procedure, script, image, n_drawables, drawables, other_args);
+        result = script_fu_interpret_image_proc (procedure, script, image, n_drawables, drawables, config);
         break;
       }
     default:
@@ -111,6 +114,7 @@ script_fu_run_image_procedure ( GimpProcedure         *procedure, /* GimpImagePr
         result = gimp_procedure_new_return_values (procedure, GIMP_PDB_CALLING_ERROR, NULL);
       }
     }
+
   return result;
 }
 

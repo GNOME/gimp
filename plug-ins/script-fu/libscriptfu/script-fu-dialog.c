@@ -148,18 +148,19 @@ script_fu_dialog_run (GimpProcedure        *procedure,
                       GimpImage            *image,
                       guint                 n_drawables,
                       GimpDrawable        **drawables,
-                      const GimpValueArray *initial_args)
+                      GimpProcedureConfig  *config)
 
 {
   GimpValueArray      *result = NULL;
   GimpProcedureDialog *dialog = NULL;
-  GimpProcedureConfig *config = NULL;
   gboolean             not_canceled;
+  guint                n_specs;
 
   if ( (! G_IS_OBJECT (procedure)) || script == NULL)
     return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, NULL);
 
-  if ( gimp_value_array_length (initial_args) < 1)
+  g_free (g_object_class_list_properties (G_OBJECT_GET_CLASS (config), &n_specs));
+  if (n_specs < 2)
     return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, NULL);
 
   /* We don't prevent concurrent dialogs as in script-fu-interface.c.
@@ -175,21 +176,11 @@ script_fu_dialog_run (GimpProcedure        *procedure,
   /* Script's menu label */
   gimp_ui_init (script_fu_script_get_title (script));
 
-  config = gimp_procedure_create_config (procedure);
 #if DEBUG_CONFIG_PROPERTIES
   dump_properties (config);
-  g_debug ("Len  of initial_args %i", gimp_value_array_length (initial_args) );
+  g_debug ("Len of initial_args %i", n_specs - 1);
+  dump_objects (config);
 #endif
-
-  /* Get saved settings (last values) into the config.
-   * Since run mode is INTERACTIVE, initial_args is moot.
-   * Instead, last used values or default values populate the config.
-   */
-  gimp_procedure_config_begin_run (config, NULL, GIMP_RUN_INTERACTIVE, initial_args);
-  #if DEBUG_CONFIG_PROPERTIES
-
-    dump_objects (config);
-  #endif
 
   /* Create a dialog having properties (describing arguments of the procedure)
    * taken from the config.
@@ -216,22 +207,15 @@ script_fu_dialog_run (GimpProcedure        *procedure,
   not_canceled = gimp_procedure_dialog_run (dialog);
   /* Assert config holds validated arg values from a user interaction. */
 
-  #if DEBUG_CONFIG_PROPERTIES
-    dump_objects (config);
-  #endif
+#if DEBUG_CONFIG_PROPERTIES
+  dump_objects (config);
+#endif
 
   if (not_canceled)
     {
-      GimpValueArray *final_args = gimp_value_array_copy (initial_args);
-
-      /* Store config's values into final_args. */
-      gimp_procedure_config_get_values (config, final_args);
-
       result = script_fu_interpret_image_proc (procedure, script,
                                                image, n_drawables, drawables,
-                                               final_args);
-
-      gimp_value_array_unref (final_args);
+                                               config);
     }
   else
     {
@@ -239,14 +223,6 @@ script_fu_dialog_run (GimpProcedure        *procedure,
     }
 
   gtk_widget_destroy ((GtkWidget*) dialog);
-
-  /* Persist config aka settings for the next run of the plugin.
-   * Passing the GimpPDBStatus from result[0].
-   * We must have a matching end_run for the begin_run, regardless of status.
-   */
-  gimp_procedure_config_end_run (config, g_value_get_enum (gimp_value_array_index (result, 0)));
-
-  g_object_unref (config);
 
   return result;
 }

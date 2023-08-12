@@ -26,6 +26,6 @@ GimpValueArray *script_fu_interpret_image_proc (GimpProcedure        *procedure,
                                                 GimpImage            *image,
                                                 guint                 n_drawables,
                                                 GimpDrawable        **drawables,
-                                                const GimpValueArray *args);
+                                                GimpProcedureConfig  *config);
 
 #endif /* __SCRIPT_FU_COMMAND_H__ */

@@ -160,12 +160,11 @@ script_fu_script_create_PDB_procedure (GimpPlugIn     *plug_in,
       g_debug ("script_fu_script_create_PDB_procedure: %s, plugin type %i, image_proc",
                script->name, plug_in_type);
 
-      procedure = gimp_image_procedure_new (
-                                      plug_in, script->name,
-                                      plug_in_type,
-                                      (GimpRunImageFunc) script_fu_run_image_procedure,
-                                      script, /* user_data, pointer in extension-script-fu process */
-                                      NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, script->name,
+                                             plug_in_type,
+                                             (GimpRunImageFunc2) script_fu_run_image_procedure,
+                                             script, /* user_data, pointer in extension-script-fu process */
+                                             NULL);
 
       script_fu_script_set_proc_metadata (procedure, script);
 

@@ -94,18 +94,26 @@ script_fu_run_command (const gchar  *command,
  * 2) adds actual args image, drawable, etc. for GimpImageProcedure
  */
 GimpValueArray *
-script_fu_interpret_image_proc (
-                            GimpProcedure        *procedure,
-                            SFScript             *script,
-                            GimpImage            *image,
-                            guint                 n_drawables,
-                            GimpDrawable        **drawables,
-                            const GimpValueArray *args)
+script_fu_interpret_image_proc (GimpProcedure        *procedure,
+                                SFScript             *script,
+                                GimpImage            *image,
+                                guint                 n_drawables,
+                                GimpDrawable        **drawables,
+                                GimpProcedureConfig  *config)
 {
   gchar          *command;
   GimpValueArray *result = NULL;
   gboolean        interpretation_result;
   GError         *error = NULL;
+  GimpValueArray *args  = gimp_procedure_new_arguments (procedure);
+  guint           n_specs;
+
+  g_free (g_object_class_list_properties (G_OBJECT_GET_CLASS (config), &n_specs));
+  while (gimp_value_array_length (args) > n_specs - 1)
+    gimp_value_array_remove (args, 0);
+
+  /* Store config's values into args. */
+  gimp_procedure_config_get_values (config, args);
 
   command = script_fu_script_get_command_for_image_proc (script, image, n_drawables, drawables, args);
 
@@ -145,6 +153,8 @@ script_fu_interpret_image_proc (
 
   gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
                                       GIMP_PDB_ERROR_HANDLER_INTERNAL);
+
+  gimp_value_array_unref (args);
 
   return result;
 }

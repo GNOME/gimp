@@ -26,6 +26,6 @@ GimpValueArray *script_fu_dialog_run (GimpProcedure        *procedure,
                                       GimpImage            *image,
                                       guint                 n_drawables,
                                       GimpDrawable        **drawables,
-                                      const GimpValueArray *args);
+                                      GimpProcedureConfig  *config);
 
 #endif /* __SCRIPT_FU_DIALOG_H__ */
