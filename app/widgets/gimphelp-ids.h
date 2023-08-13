@@ -121,6 +121,7 @@
 #define GIMP_HELP_VIEW_SHOW_SCROLLBARS            "gimp-view-show-scrollbars"
 #define GIMP_HELP_VIEW_SHOW_STATUSBAR             "gimp-view-show-statusbar"
 #define GIMP_HELP_VIEW_PADDING_COLOR              "gimp-view-padding-color"
+#define GIMP_HELP_VIEW_CHECK_STYLE                "gimp-view-check-style"
 #define GIMP_HELP_VIEW_SHRINK_WRAP                "gimp-view-shrink-wrap"
 #define GIMP_HELP_VIEW_FULLSCREEN                 "gimp-view-fullscreen"
 #define GIMP_HELP_VIEW_CHANGE_SCREEN              "gimp-view-change-screen"

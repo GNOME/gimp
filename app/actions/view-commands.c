@@ -1121,6 +1121,22 @@ view_padding_color_cmd_callback (GimpAction *action,
 }
 
 void
+view_check_style_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
+{
+  GimpCheckType       check_style;
+  GimpDisplay        *display;
+  return_if_no_display (display, data);
+
+  check_style = (GimpCheckType) g_variant_get_int32 (value);
+
+  g_object_set (display->config,
+                "transparency-type", check_style,
+                NULL);
+}
+
+void
 view_padding_color_in_show_all_cmd_callback (GimpAction *action,
                                              GVariant   *value,
                                              gpointer    data)

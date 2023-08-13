@@ -588,6 +588,51 @@ static const GimpToggleActionEntry view_padding_color_toggle_actions[] =
     GIMP_HELP_VIEW_PADDING_COLOR }
 };
 
+static const GimpEnumActionEntry view_check_style_actions[] =
+{
+  { "view-check-style-light-checks", NULL,
+    NC_("view-check-style", "_Light checks"), NULL, { NULL },
+    NC_("view-check-style", "Use light check style for transparency"),
+    GIMP_CHECK_TYPE_LIGHT_CHECKS, FALSE,
+    GIMP_HELP_VIEW_CHECK_STYLE },
+
+  { "view-check-style-midtone-checks", NULL,
+    NC_("view-check-style", "_Mid-tone checks"), NULL, { NULL },
+    NC_("view-check-style", "Use mid-tone check style for transparency"),
+    GIMP_CHECK_TYPE_GRAY_CHECKS, FALSE,
+    GIMP_HELP_VIEW_CHECK_STYLE },
+
+  { "view-check-style-dark-checks", NULL,
+    NC_("view-check-style", "_Dark checks"), NULL, { NULL },
+    NC_("view-check-style", "Use dark check style for transparency"),
+    GIMP_CHECK_TYPE_DARK_CHECKS, FALSE,
+    GIMP_HELP_VIEW_CHECK_STYLE },
+
+  { "view-check-style-white-checks", NULL,
+    NC_("view-check-style", "_White only"), NULL, { NULL },
+    NC_("view-check-style", "Use solid white for transparency"),
+    GIMP_CHECK_TYPE_WHITE_ONLY, FALSE,
+    GIMP_HELP_VIEW_CHECK_STYLE },
+
+  { "view-check-style-gray-checks", NULL,
+    NC_("view-check-style", "_Gray only"), NULL, { NULL },
+    NC_("view-check-style", "Use solid gray for transparency"),
+    GIMP_CHECK_TYPE_GRAY_ONLY, FALSE,
+    GIMP_HELP_VIEW_CHECK_STYLE },
+
+  { "view-check-style-black-checks", NULL,
+    NC_("view-check-style", "_Black only"), NULL, { NULL },
+    NC_("view-check-style", "Use solid black for transparency"),
+    GIMP_CHECK_TYPE_BLACK_ONLY, FALSE,
+    GIMP_HELP_VIEW_CHECK_STYLE },
+
+  { "view-check-style-custom-checks", NULL,
+    NC_("view-check-style", "_Custom checks"), NULL, { NULL },
+    NC_("view-check-style", "Use custom check colors for transparency"),
+    GIMP_CHECK_TYPE_CUSTOM_CHECKS, FALSE,
+    GIMP_HELP_VIEW_CHECK_STYLE }
+};
+
 static const GimpEnumActionEntry view_scroll_horizontal_actions[] =
 {
   { "view-scroll-horizontal", NULL,
@@ -715,6 +760,11 @@ view_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_toggle_actions (group, "view-padding-color",
                                         view_padding_color_toggle_actions,
                                         G_N_ELEMENTS (view_padding_color_toggle_actions));
+
+  gimp_action_group_add_enum_actions (group, "view-check-style",
+                                      view_check_style_actions,
+                                      G_N_ELEMENTS (view_check_style_actions),
+                                      view_check_style_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, "view-action",
                                       view_scroll_horizontal_actions,
@@ -953,6 +1003,14 @@ view_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("view-padding-color-in-show-all", image);
   SET_ACTIVE    ("view-padding-color-in-show-all", display && options->padding_in_show_all);
+
+  SET_SENSITIVE ("view-check-style-light-checks",   image);
+  SET_SENSITIVE ("view-check-style-midtone-checks", image);
+  SET_SENSITIVE ("view-check-style-dark-checks",    image);
+  SET_SENSITIVE ("view-check-style-white-checks",   image);
+  SET_SENSITIVE ("view-check-style-gray-checks",    image);
+  SET_SENSITIVE ("view-check-style-black-checks",   image);
+  SET_SENSITIVE ("view-check-style-custom-checks",  image);
 
   SET_SENSITIVE ("view-show-menubar",    image);
   SET_ACTIVE    ("view-show-menubar",    display && options->show_menubar);
