@@ -1399,6 +1399,7 @@ gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
 
           sscanf (value, "#%02x%02x%02x", &r, &g, &b);
 
+          gimp_rgb_set_alpha (&color, 1.0);
           gimp_rgb_set_uchar (&color, r, g, b);
 
           return gimp_text_buffer_get_color_tag (buffer, &color);
