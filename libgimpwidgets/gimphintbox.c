@@ -125,7 +125,7 @@ gimp_hint_box_constructed (GObject *object)
   if (image)
     {
       gtk_box_pack_start (GTK_BOX (box), image, FALSE, FALSE, 0);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
     }
 
   label = g_object_new (GTK_TYPE_LABEL,
@@ -140,7 +140,7 @@ gimp_hint_box_constructed (GObject *object)
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 }
 
 static void
