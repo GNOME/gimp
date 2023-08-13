@@ -6,7 +6,6 @@ plugin_sources = [
   'fit.c',
   'math.c',
   'pxl-outline.c',
-  'selection-to-path-dialog.c',
   'selection-to-path.c',
   'spline.c',
   'vector.c',

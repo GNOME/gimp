@@ -217,53 +217,30 @@ fitted_splines (pixel_outline_list_type pixel_outline_list)
 /* Set up the internal parameters from the external ones */
 
 void
-fit_set_params(SELVALS *selVals)
+fit_set_params (GimpProcedureConfig *config)
 {
-  align_threshold = selVals->align_threshold;
-  corner_always_threshold = selVals->corner_always_threshold;
-  corner_surround = selVals->corner_surround;
-  corner_threshold = selVals->corner_threshold;
-  error_threshold = selVals->error_threshold;
-  filter_alternative_surround = selVals->filter_alternative_surround;
-  filter_epsilon = selVals->filter_epsilon;
-  filter_iteration_count = selVals->filter_iteration_count;
-  filter_percent = selVals->filter_percent;
-  filter_secondary_surround = selVals->filter_secondary_surround;
-  filter_surround = selVals->filter_surround;
-  keep_knees = selVals->keep_knees;
-  line_reversion_threshold = selVals->line_reversion_threshold;
-  line_threshold = selVals->line_threshold;
-  reparameterize_improvement = selVals->reparameterize_improvement;
-  reparameterize_threshold = selVals->reparameterize_threshold;
-  subdivide_search = selVals->subdivide_search;
-  subdivide_surround = selVals->subdivide_surround;
-  subdivide_threshold = selVals->subdivide_threshold;
-  tangent_surround = selVals->tangent_surround;
-}
-
-void
-fit_set_default_params(SELVALS *selVals)
-{
-  selVals->align_threshold = align_threshold;
-  selVals->corner_always_threshold = corner_always_threshold;
-  selVals->corner_surround = corner_surround;
-  selVals->corner_threshold = corner_threshold;
-  selVals->error_threshold = error_threshold;
-  selVals->filter_alternative_surround = filter_alternative_surround;
-  selVals->filter_epsilon = filter_epsilon;
-  selVals->filter_iteration_count = filter_iteration_count;
-  selVals->filter_percent = filter_percent;
-  selVals->filter_secondary_surround = filter_secondary_surround;
-  selVals->filter_surround = filter_surround;
-  selVals->keep_knees = keep_knees;
-  selVals->line_reversion_threshold = line_reversion_threshold;
-  selVals->line_threshold = line_threshold;
-  selVals->reparameterize_improvement = reparameterize_improvement;
-  selVals->reparameterize_threshold = reparameterize_threshold;
-  selVals->subdivide_search = subdivide_search;
-  selVals->subdivide_surround = subdivide_surround;
-  selVals->subdivide_threshold = subdivide_threshold;
-  selVals->tangent_surround = tangent_surround;
+  g_object_get (config,
+                "align-threshold",             &align_threshold,
+                "corner-always-threshold",     &corner_always_threshold,
+                "corner-surround",             &corner_surround,
+                "corner-threshold",            &corner_threshold,
+                "error-threshold",             &error_threshold,
+                "filter-alternative-surround", &filter_alternative_surround,
+                "filter-epsilon",              &filter_epsilon,
+                "filter-iteration-count",      &filter_iteration_count,
+                "filter-percent",              &filter_percent,
+                "filter-secondary-surround",   &filter_secondary_surround,
+                "filter-surround",             &filter_surround,
+                "keep-knees",                  &keep_knees,
+                "line-reversion-threshold",    &line_reversion_threshold,
+                "line-threshold",              &line_threshold,
+                "reparametrize-improvement",   &reparameterize_improvement,
+                "reparametrize-threshold",     &reparameterize_threshold,
+                "subdivide-search",            &subdivide_search,
+                "subdivide-surround",          &subdivide_surround,
+                "subdivide-threshold",         &subdivide_threshold,
+                "tangent-surround",            &tangent_surround,
+                NULL);
 }
 
 /* Fit the list of curves CURVE_LIST to a list of splines, and return

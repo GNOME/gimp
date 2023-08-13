@@ -19,6 +19,8 @@
 #ifndef FIT_H
 #define FIT_H
 
+#include "libgimp/gimp.h"
+
 #include "pxl-outline.h"
 #include "spline.h"
 
@@ -47,8 +49,7 @@ extern unsigned tangent_surround;
 
 
 /* Fit splines and lines to LIST.  */
-extern spline_list_array_type fitted_splines (pixel_outline_list_type list);
-void   fit_set_params(SELVALS *);
-void   fit_set_default_params(SELVALS *);
+extern spline_list_array_type fitted_splines (pixel_outline_list_type  list);
+void   fit_set_params                        (GimpProcedureConfig     *config);
 
 #endif /* not FIT_H */
