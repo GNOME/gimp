@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-27 23:50+0000\n"
-"PO-Revision-Date: 2023-04-30 20:03+0800\n"
+"POT-Creation-Date: 2023-08-11 23:00+0000\n"
+"PO-Revision-Date: 2023-08-13 08:01+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -12855,29 +12855,33 @@ msgstr "被粘贴的图层"
 msgid "Global Buffer"
 msgstr "全局缓冲区"
 
-#: ../app/core/gimp-gradients.c:64
+#: ../app/core/gimp-gradients.c:65
 msgid "Custom"
 msgstr "自定义"
 
-#: ../app/core/gimp-gradients.c:74
+#: ../app/core/gimp-gradients.c:75
 msgid "FG to BG (RGB)"
 msgstr "前景到背景（RGB）"
 
-#: ../app/core/gimp-gradients.c:82
+#: ../app/core/gimp-gradients.c:83
 msgid "FG to BG (Hardedge)"
 msgstr "前景到背景（硬边）"
 
-#: ../app/core/gimp-gradients.c:90
+#: ../app/core/gimp-gradients.c:91
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "前景到背景（HSV 逆时针色相）"
 
-#: ../app/core/gimp-gradients.c:98
+#: ../app/core/gimp-gradients.c:99
 msgid "FG to BG (HSV clockwise hue)"
 msgstr "前景到背景（HSV 顺时针色相）"
 
-#: ../app/core/gimp-gradients.c:106
+#: ../app/core/gimp-gradients.c:107
 msgid "FG to Transparent"
 msgstr "前景到透明"
+
+#: ../app/core/gimp-gradients.c:114
+msgid "FG to Transparent (Hardedge)"
+msgstr "前景到透明（硬边）"
 
 #. Translator:  This message is displayed while GIMP is waiting for
 #. * some operation to finish.  The %s argument is a message describing
@@ -15098,7 +15102,7 @@ msgstr ""
 "Tong Hui <tonghuix@gmail.com>, 2015.\n"
 "Tony Chyi <tonychee1989@gmail.com>, 2015.\n"
 "Jeff Bai <jeffbai@aosc.xyz>, 2015.\n"
-"lumingzh <lumingzh@qq.com>, 2016-2019."
+"lumingzh <lumingzh@qq.com>, 2016-2023."
 
 #: ../app/dialogs/about-dialog.c:355
 msgid "Update available!"
