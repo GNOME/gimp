@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -29,6 +30,7 @@
 
 #include "gimpdialog.h"
 #include "gimphelpui.h"
+#include "gimpwidgetsutils.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -58,6 +60,8 @@ struct _GimpDialogPrivate
   GimpHelpFunc  help_func;
   gchar        *help_id;
   GtkWidget    *help_button;
+
+  GBytes       *window_handle;
 };
 
 #define GET_PRIVATE(obj) (((GimpDialog *) (obj))->priv)
@@ -177,6 +181,8 @@ gimp_dialog_constructed (GObject *object)
                                                     _("_Help"),
                                                     GTK_RESPONSE_HELP);
     }
+
+  gimp_widget_set_native_handle (GTK_WIDGET (object), &private->window_handle);
 }
 
 static void
@@ -709,6 +715,26 @@ gimp_dialog_set_alternative_button_order_from_array (GimpDialog *dialog,
   G_GNUC_BEGIN_IGNORE_DEPRECATIONS;
   gtk_dialog_set_alternative_button_order_from_array (GTK_DIALOG (dialog), n_buttons, order);
   G_GNUC_END_IGNORE_DEPRECATIONS;
+}
+
+/**
+ * gimp_dialog_get_native_handle:
+ * @dialog: The #GimpDialog
+ *
+ * Returns an opaque data handle representing the window in the currently
+ * running platform. You should not try to use this directly. Usually this is to
+ * be used in functions such as [func@Gimp.brushes_popup] which will allow the
+ * core process to set this [class@Dialog] as parent to the newly created popup.
+ *
+ * Returns: (transfer none): an opaque [struct@GLib.Bytes] identifying this
+ *                           window.
+ *
+ * Since: 3.0
+ **/
+GBytes *
+gimp_dialog_get_native_handle (GimpDialog *dialog)
+{
+  return dialog->priv->window_handle;
 }
 
 /**

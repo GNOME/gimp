@@ -158,6 +158,7 @@ EXPORTS
 	gimp_dialog_add_button
 	gimp_dialog_add_buttons
 	gimp_dialog_add_buttons_valist
+	gimp_dialog_get_native_handle
 	gimp_dialog_get_type
 	gimp_dialog_new
 	gimp_dialog_new_valist

@@ -98,6 +98,8 @@ void        gimp_dialog_set_alternative_button_order_from_array
                                             gint            n_buttons,
                                             gint           *order);
 
+GBytes    * gimp_dialog_get_native_handle  (GimpDialog     *dialog);
+
 /*  for internal use only!  */
 void        gimp_dialogs_show_help_button  (gboolean        show);
 
