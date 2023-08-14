@@ -25,6 +25,7 @@
 #include "gimpsaveprocedure.h"
 #include "gimppdb_pdb.h"
 
+#include "libgimp-intl.h"
 
 enum
 {
@@ -404,44 +405,44 @@ gimp_save_procedure_add_metadata (GimpSaveProcedure *save_procedure)
 
   if (save_procedure->priv->supports_exif)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-exif",
-                               "Save _Exif",
-                               "Save Exif (Exchangeable image file format) metadata",
+                               _("Save _Exif"),
+                               _("Save Exif (Exchangeable image file format) metadata"),
                                gimp_export_exif (),
                                G_PARAM_READWRITE);
   if (save_procedure->priv->supports_iptc)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-iptc",
-                               "Save _IPTC",
-                               "Save IPTC (International Press Telecommunications Council) metadata",
+                               _("Save _IPTC"),
+                               _("Save IPTC (International Press Telecommunications Council) metadata"),
                                gimp_export_iptc (),
                                G_PARAM_READWRITE);
   if (save_procedure->priv->supports_xmp)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-xmp",
-                               "Save _XMP",
-                               "Save XMP (Extensible Metadata Platform) metadata",
+                               _("Save _XMP"),
+                               _("Save XMP (Extensible Metadata Platform) metadata"),
                                gimp_export_xmp (),
                                G_PARAM_READWRITE);
   if (save_procedure->priv->supports_profile)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
-                               "Save color _profile",
-                               "Save the ICC color profile as metadata",
+                               _("Save color _profile"),
+                               _("Save the ICC color profile as metadata"),
                                gimp_export_color_profile (),
                                G_PARAM_READWRITE);
   if (save_procedure->priv->supports_thumbnail)
     GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-thumbnail",
-                               "Save _thumbnail",
-                               "Save a smaller representation of the image as metadata",
+                               _("Save _thumbnail"),
+                               _("Save a smaller representation of the image as metadata"),
                                gimp_export_thumbnail (),
                                G_PARAM_READWRITE);
   if (save_procedure->priv->supports_comment)
     {
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
-                                 "Save c_omment",
-                                 "Save a comment as metadata",
+                                 _("Save c_omment"),
+                                 _("Save a comment as metadata"),
                                  gimp_export_comment (),
                                  G_PARAM_READWRITE);
       GIMP_PROC_AUX_ARG_STRING (procedure, "gimp-comment",
-                                "Comment",
-                                "Image comment",
+                                _("Comment"),
+                                _("Image comment"),
                                 gimp_get_default_comment (),
                                 G_PARAM_READWRITE);
 

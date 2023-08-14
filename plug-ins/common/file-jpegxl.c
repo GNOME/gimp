@@ -213,8 +213,8 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
-                             "Export as CMY_K",
-                             "Create a CMYK JPEG XL image using the soft-proofing color profile",
+                             _("Export as CMY_K"),
+                             _("Create a CMYK JPEG XL image using the soft-proofing color profile"),
                              FALSE,
                              G_PARAM_READWRITE);
 
