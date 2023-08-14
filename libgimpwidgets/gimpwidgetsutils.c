@@ -1130,20 +1130,20 @@ gimp_widget_set_handle_on_mapped (GtkWidget    *widget,
 #ifdef GDK_WINDOWING_WIN32
   if (GDK_IS_WIN32_WINDOW (surface))
     {
-      guint32 id;
+      HANDLE id;
 
-      id = GPOINTER_TO_INT (GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (widget))));
-      handle = g_bytes_new (&id, sizeof (guint32));
+      id = GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (widget)));
+      handle = g_bytes_new (&id, sizeof (HANDLE));
     }
 #endif
 
 #ifdef GDK_WINDOWING_X11
   if (GDK_IS_X11_WINDOW (surface))
     {
-      guint32 id;
+      Window id;
 
       id = GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (widget)));
-      handle = g_bytes_new (&id, sizeof (guint32));
+      handle = g_bytes_new (&id, sizeof (Window));
     }
 #endif
 #ifdef GDK_WINDOWING_WAYLAND

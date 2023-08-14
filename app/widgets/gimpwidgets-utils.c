@@ -910,25 +910,23 @@ gimp_window_set_hint (GtkWindow      *window,
     }
 }
 
-#ifndef GDK_WINDOWING_WIN32
 /* similar to what we have in libgimp/gimpui.c */
 static GdkWindow *
-gimp_get_foreign_window (guint32 window)
+gimp_get_foreign_window (gpointer window)
 {
 #ifdef GDK_WINDOWING_X11
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
     return gdk_x11_window_foreign_new_for_display (gdk_display_get_default (),
-                                                   window);
+                                                   (Window) window);
 #endif
 
 #ifdef GDK_WINDOWING_WIN32
   return gdk_win32_window_foreign_new_for_display (gdk_display_get_default (),
-                                                   window);
+                                                   (HWND) window);
 #endif
 
   return NULL;
 }
-#endif
 
 void
 gimp_window_set_transient_for (GtkWindow    *window,
@@ -2532,30 +2530,39 @@ gimp_window_transient_on_mapped (GtkWidget    *window,
     }
 #endif
 
-  /* Cross-process transient-for is broken in gdk/win32 <= 2.10.6. It
-   * causes hangs, at least when used as by the gimp and script-fu
-   * processes. In some newer GTK+ version it will be fixed to be a
-   * no-op. If it eventually is fixed to actually work, change this to
-   * a run-time check of GTK+ version. Remember to change also the
-   * function with the same name in libgimp/gimpui.c
-   *
-   * Note: this hanging bug is still happening with GTK+3 as of 2019-10,
-   * with steps described in comment 4 in:
-   * https://bugzilla.gnome.org/show_bug.cgi?id=359538
-   */
-#ifndef GDK_WINDOWING_WIN32
+#ifdef GDK_WINDOWING_X11
+  if (! transient_set && GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
+      GdkWindow *parent;
+      Window    *handle_data;
+      Window     parent_ID;
+      gsize      handle_size;
+
+      handle_data = (Window *) g_bytes_get_data (handle, &handle_size);
+      g_return_val_if_fail (handle_size == sizeof (Window), FALSE);
+      parent_ID = *handle_data;
+
+      parent = gimp_get_foreign_window ((gpointer) parent_ID);
+
+      if (parent)
+        gdk_window_set_transient_for (gtk_widget_get_window (window), parent);
+
+      transient_set = TRUE;
+    }
+#endif
+#ifdef GDK_WINDOWING_WIN32
   if (! transient_set)
     {
       GdkWindow *parent;
-      guint32   *handle_data;
-      guint32    parent_ID;
+      HANDLE    *handle_data;
+      HANDLE     parent_ID;
       gsize      handle_size;
 
-      handle_data = (guint32 *) g_bytes_get_data (handle, &handle_size);
-      g_return_val_if_fail (handle_size == sizeof (guint32), FALSE);
+      handle_data = (HANDLE *) g_bytes_get_data (handle, &handle_size);
+      g_return_val_if_fail (handle_size == sizeof (HANDLE), FALSE);
       parent_ID = *handle_data;
 
-      parent = gimp_get_foreign_window (parent_ID);
+      parent = gimp_get_foreign_window ((gpointer) parent_ID);
 
       if (parent)
         gdk_window_set_transient_for (gtk_widget_get_window (window), parent);
