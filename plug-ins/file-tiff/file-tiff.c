@@ -208,48 +208,48 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                           "tif,tiff");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "bigtiff",
-                             "Export in _BigTIFF variant file format",
-                             "The BigTIFF variant file format uses 64-bit offsets, "
-                             "hence supporting over 4GiB files and bigger",
+                             _("Export in _BigTIFF variant file format"),
+                             _("The BigTIFF variant file format uses 64-bit offsets, "
+                               "hence supporting over 4GiB files and bigger"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "compression",
-                         "Co_mpression",
-                         "Compression type: { NONE (0), LZW (1), PACKBITS (2), "
-                         "DEFLATE (3), JPEG (4), CCITT G3 Fax (5), "
-                         "CCITT G4 Fax (6) }",
+                         _("Co_mpression"),
+                         _("Compression type: { NONE (0), LZW (1), PACKBITS (2), "
+                           "DEFLATE (3), JPEG (4), CCITT G3 Fax (5), "
+                           "CCITT G4 Fax (6) }"),
                          0, 6, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent-pixels",
-                             "Save color _values from transparent pixels",
-                             "Keep the color data masked by an alpha channel "
-                             "intact (do not store premultiplied components)",
+                             _("Save color _values from transparent pixels"),
+                             _("Keep the color data masked by an alpha channel "
+                               "intact (do not store premultiplied components)"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
-                             "Export as CMY_K",
-                             "Create a CMYK TIFF image using the soft-proofing color profile",
+                             _("Export as CMY_K"),
+                             _("Create a CMYK TIFF image using the soft-proofing color profile"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-layers",
-                                 "Save La_yers",
-                                 "Save Layers",
+                                 _("Save La_yers"),
+                                 _("Save Layers"),
                                  TRUE,
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "crop-layers",
-                                 "Crop L_ayers",
-                                 "Crop Layers",
+                                 _("Crop L_ayers"),
+                                 _("Crop Layers"),
                                  TRUE,
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-geotiff",
-                                 "Save _GeoTIFF data",
-                                 "Save GeoTIFF data",
+                                 _("Save _GeoTIFF data"),
+                                 _("Save GeoTIFF data"),
                                  TRUE,
                                  G_PARAM_READWRITE);
 
