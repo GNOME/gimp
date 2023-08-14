@@ -73,6 +73,8 @@ void              gimp_window_set_hint             (GtkWindow            *window
                                                     GimpWindowHint        hint);
 void              gimp_window_set_transient_for    (GtkWindow            *window,
                                                     GimpProgress         *progress);
+void          gimp_window_set_transient_for_handle (GtkWindow            *window,
+                                                    GBytes               *handle);
 void              gimp_widget_set_accel_help       (GtkWidget            *widget,
                                                     GimpAction           *action);
 

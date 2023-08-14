@@ -420,6 +420,8 @@ gimp_brush_select_button_open_popup (GimpBrushSelectButton *self,
                                   mask,
                                   mask.width);
   g_free (mask.mask_data);
+  gdk_window_set_transient_for (gtk_widget_get_window (self->popup),
+                                gtk_widget_get_window (gtk_widget_get_toplevel (GTK_WIDGET (self))));
 }
 
 static void

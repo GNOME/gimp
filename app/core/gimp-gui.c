@@ -404,6 +404,7 @@ gimp_pdb_dialog_new (Gimp          *gimp,
                      GimpContext   *context,
                      GimpProgress  *progress,
                      GimpContainer *container,
+                     GBytes        *parent_handle,
                      const gchar   *title,
                      const gchar   *callback_name,
                      const gchar   *object_name,
@@ -425,7 +426,7 @@ gimp_pdb_dialog_new (Gimp          *gimp,
       va_start (args, object_name);
 
       retval = gimp->gui.pdb_dialog_new (gimp, context, progress,
-                                         container, title,
+                                         container, parent_handle, title,
                                          callback_name, object_name,
                                          args);
 

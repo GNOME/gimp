@@ -50,10 +50,12 @@ brushes_popup_invoker (GimpProcedure         *procedure,
   const gchar *brush_callback;
   const gchar *popup_title;
   const gchar *initial_brush_name;
+  GBytes *parent_window;
 
   brush_callback = g_value_get_string (gimp_value_array_index (args, 0));
   popup_title = g_value_get_string (gimp_value_array_index (args, 1));
   initial_brush_name = g_value_get_string (gimp_value_array_index (args, 2));
+  parent_window = g_value_get_boxed (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -61,6 +63,7 @@ brushes_popup_invoker (GimpProcedure         *procedure,
           ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
                                  gimp_data_factory_get_container (gimp->brush_factory),
+                                 parent_window,
                                  popup_title, brush_callback, initial_brush_name,
                                  NULL))
         success = FALSE;
@@ -165,6 +168,12 @@ register_brush_select_procs (GimpPDB *pdb)
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boxed ("parent-window",
+                                                   "parent window",
+                                                   "An optional parent window handle for the popup to be set transient to",
+                                                   G_TYPE_BYTES,
+                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

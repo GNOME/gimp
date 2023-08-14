@@ -42,6 +42,7 @@
  * @palette_callback: The callback PDB proc to call when user chooses a palette.
  * @popup_title: Title of the palette selection dialog.
  * @initial_palette_name: The name of the palette to set as the initial choice.
+ * @parent_window: An optional parent window handle for the popup to be set transient to.
  *
  * Invokes the Gimp palette selection dialog.
  *
@@ -52,7 +53,8 @@
 gboolean
 gimp_palettes_popup (const gchar *palette_callback,
                      const gchar *popup_title,
-                     const gchar *initial_palette_name)
+                     const gchar *initial_palette_name,
+                     GBytes      *parent_window)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -62,6 +64,7 @@ gimp_palettes_popup (const gchar *palette_callback,
                                           G_TYPE_STRING, palette_callback,
                                           G_TYPE_STRING, popup_title,
                                           G_TYPE_STRING, initial_palette_name,
+                                          G_TYPE_BYTES, parent_window,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),

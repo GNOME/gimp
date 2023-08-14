@@ -38,6 +38,7 @@ typedef void (* GimpResourceChoosedCallback) (GimpResource *resource,
                                               gpointer      owner_data);
 
 const gchar * gimp_resource_select_new       (const gchar                 *title,
+                                              GBytes                      *parent_handle,
                                               GimpResource                *resource,
                                               GType                        resource_type,
                                               GimpResourceChoosedCallback  callback,

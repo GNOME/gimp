@@ -34,7 +34,8 @@ G_BEGIN_DECLS
 
 gboolean gimp_gradients_popup       (const gchar *gradient_callback,
                                      const gchar *popup_title,
-                                     const gchar *initial_gradient_name);
+                                     const gchar *initial_gradient_name,
+                                     GBytes      *parent_window);
 gboolean gimp_gradients_close_popup (const gchar *gradient_callback);
 gboolean gimp_gradients_set_popup   (const gchar *gradient_callback,
                                      const gchar *gradient_name);

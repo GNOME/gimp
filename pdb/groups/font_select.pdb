@@ -29,7 +29,9 @@ sub fonts_popup {
       { name => 'popup_title', type => 'string',
         desc => 'Title of the font selection dialog' },
       { name => 'initial_font_name', type => 'string', null_ok => 1,
-        desc => 'The name of the initial font choice.' }
+        desc => 'The name of the initial font choice.' },
+      { name => 'parent_window', type => 'bytes', null_ok => 1,
+        desc => 'An optional parent window handle for the popup to be set transient to' }
     );
 
     %invoke = (
@@ -40,6 +42,7 @@ sub fonts_popup {
       ! gimp_data_factory_data_wait (gimp->font_factory)     ||
       ! gimp_pdb_dialog_new (gimp, context, progress,
                              gimp_data_factory_get_container (gimp->font_factory),
+                             parent_window,
                              popup_title, font_callback, initial_font_name,
                              NULL))
     success = FALSE;

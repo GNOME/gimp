@@ -245,6 +245,7 @@ create_callback_PDB_procedure_params (GimpProcedure *procedure,
  */
 static gboolean
 popup_remote_chooser (const gchar   *title,
+                      GBytes        *parent_handle,
                       GimpResource  *resource,
                       gchar         *temp_PDB_callback_name,
                       GType          resource_type)
@@ -257,23 +258,23 @@ popup_remote_chooser (const gchar   *title,
 
   if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
     {
-      result = gimp_brushes_popup (temp_PDB_callback_name, title, resource_name);
+      result = gimp_brushes_popup (temp_PDB_callback_name, title, resource_name, parent_handle);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
     {
-      result = gimp_fonts_popup (temp_PDB_callback_name, title, resource_name);
+      result = gimp_fonts_popup (temp_PDB_callback_name, title, resource_name, parent_handle);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
     {
-      result = gimp_gradients_popup (temp_PDB_callback_name, title, resource_name);
+      result = gimp_gradients_popup (temp_PDB_callback_name, title, resource_name, parent_handle);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
     {
-      result = gimp_palettes_popup (temp_PDB_callback_name, title, resource_name);
+      result = gimp_palettes_popup (temp_PDB_callback_name, title, resource_name, parent_handle);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PATTERN))
     {
-      result = gimp_patterns_popup (temp_PDB_callback_name, title, resource_name);
+      result = gimp_patterns_popup (temp_PDB_callback_name, title, resource_name, parent_handle);
     }
   else
     {
@@ -336,6 +337,7 @@ close_remote_chooser (gchar *temp_PDB_callback_name,
  **/
 const gchar *
 gimp_resource_select_new (const gchar                 *title,
+                          GBytes                      *parent_handle,
                           GimpResource                *resource,
                           GType                        resource_type,
                           GimpResourceChoosedCallback  callback,
@@ -377,8 +379,7 @@ gimp_resource_select_new (const gchar                 *title,
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);
 
-  if (popup_remote_chooser (title, resource, temp_PDB_callback_name,
-                            resource_type))
+  if (popup_remote_chooser (title, parent_handle, resource, temp_PDB_callback_name, resource_type))
     {
       /* Allow callbacks to be watched */
       gimp_plug_in_extension_enable (plug_in);

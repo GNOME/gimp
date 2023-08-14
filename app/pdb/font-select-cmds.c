@@ -50,10 +50,12 @@ fonts_popup_invoker (GimpProcedure         *procedure,
   const gchar *font_callback;
   const gchar *popup_title;
   const gchar *initial_font_name;
+  GBytes *parent_window;
 
   font_callback = g_value_get_string (gimp_value_array_index (args, 0));
   popup_title = g_value_get_string (gimp_value_array_index (args, 1));
   initial_font_name = g_value_get_string (gimp_value_array_index (args, 2));
+  parent_window = g_value_get_boxed (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -62,6 +64,7 @@ fonts_popup_invoker (GimpProcedure         *procedure,
           ! gimp_data_factory_data_wait (gimp->font_factory)     ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
                                  gimp_data_factory_get_container (gimp->font_factory),
+                                 parent_window,
                                  popup_title, font_callback, initial_font_name,
                                  NULL))
         success = FALSE;
@@ -169,6 +172,12 @@ register_font_select_procs (GimpPDB *pdb)
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boxed ("parent-window",
+                                                   "parent window",
+                                                   "An optional parent window handle for the popup to be set transient to",
+                                                   G_TYPE_BYTES,
+                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -28,7 +28,9 @@ sub patterns_popup {
       { name => 'popup_title', type => 'string',
         desc => 'Title of the pattern selection dialog' },
       { name => 'initial_pattern_name', type => 'string', null_ok => 1,
-        desc => 'The name of the pattern to set as the initial choice' }
+        desc => 'The name of the pattern to set as the initial choice' },
+      { name => 'parent_window', type => 'bytes', null_ok => 1,
+        desc => 'An optional parent window handle for the popup to be set transient to' }
     );
 
     %invoke = (
@@ -38,6 +40,7 @@ sub patterns_popup {
       ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
       ! gimp_pdb_dialog_new (gimp, context, progress,
                              gimp_data_factory_get_container (gimp->pattern_factory),
+                             parent_window,
                              popup_title, pattern_callback, initial_pattern_name,
                              NULL))
     success = FALSE;

@@ -34,7 +34,8 @@ G_BEGIN_DECLS
 
 gboolean gimp_brushes_popup       (const gchar *brush_callback,
                                    const gchar *popup_title,
-                                   const gchar *initial_brush_name);
+                                   const gchar *initial_brush_name,
+                                   GBytes      *parent_window);
 gboolean gimp_brushes_close_popup (const gchar *brush_callback);
 gboolean gimp_brushes_set_popup   (const gchar *brush_callback,
                                    const gchar *brush_name);

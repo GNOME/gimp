@@ -29,7 +29,9 @@ sub gradients_popup {
       { name => 'popup_title', type => 'string',
         desc => 'Title of the gradient selection dialog' },
       { name => 'initial_gradient_name', type => 'string', null_ok => 1,
-        desc => 'The name of the initial gradient choice' }
+        desc => 'The name of the initial gradient choice' },
+      { name => 'parent_window', type => 'bytes', null_ok => 1,
+        desc => 'An optional parent window handle for the popup to be set transient to' }
       );
 
     %invoke = (
@@ -45,6 +47,7 @@ sub gradients_popup {
       ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
       ! gimp_pdb_dialog_new (gimp, context, progress,
                              gimp_data_factory_get_container (gimp->gradient_factory),
+                             parent_window,
                              popup_title, gradient_callback, initial_gradient_name,
                              NULL))
     success = FALSE;

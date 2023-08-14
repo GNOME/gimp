@@ -153,6 +153,7 @@ static gboolean       gui_pdb_dialog_new         (Gimp                *gimp,
                                                   GimpContext         *context,
                                                   GimpProgress        *progress,
                                                   GimpContainer       *container,
+                                                  GBytes              *parent_handle,
                                                   const gchar         *title,
                                                   const gchar         *callback_name,
                                                   const gchar         *object_name,
@@ -611,6 +612,7 @@ gui_pdb_dialog_new (Gimp          *gimp,
                     GimpContext   *context,
                     GimpProgress  *progress,
                     GimpContainer *container,
+                    GBytes        *parent_handle,
                     const gchar   *title,
                     const gchar   *callback_name,
                     const gchar   *object_name,
@@ -706,17 +708,20 @@ gui_pdb_dialog_new (Gimp          *gimp,
           gtk_widget_show (dialog);
 
           /*  workaround for bug #360106  */
-          {
-            GSource  *source = g_timeout_source_new (100);
-            GClosure *closure;
+            {
+              GSource  *source = g_timeout_source_new (100);
+              GClosure *closure;
 
-            closure = g_cclosure_new_object (G_CALLBACK (gui_pdb_dialog_present),
-                                             G_OBJECT (dialog));
+              closure = g_cclosure_new_object (G_CALLBACK (gui_pdb_dialog_present),
+                                               G_OBJECT (dialog));
 
-            g_source_set_closure (source, closure);
-            g_source_attach (source, NULL);
-            g_source_unref (source);
-          }
+              g_source_set_closure (source, closure);
+              g_source_attach (source, NULL);
+              g_source_unref (source);
+            }
+
+          if (parent_handle != NULL)
+            gimp_window_set_transient_for_handle (GTK_WINDOW (dialog), parent_handle);
 
           return TRUE;
         }

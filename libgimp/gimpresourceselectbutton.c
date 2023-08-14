@@ -506,9 +506,16 @@ gimp_resource_select_button_clicked (GimpResourceSelectButton *self)
     }
   else
     {
+      GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (self));
+      GBytes    *handle   = NULL;
+
+      if (GIMP_IS_DIALOG (toplevel))
+        handle = gimp_dialog_get_native_handle (GIMP_DIALOG (toplevel));
+
       /* Call GimpResourceSelect which dispatches on resource_type. */
       priv->temp_callback_from_remote_dialog =
         gimp_resource_select_new (priv->title,
+                                  handle,
                                   priv->resource,
                                   klass->resource_type,
                                   gimp_resource_select_button_callback,

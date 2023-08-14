@@ -97,6 +97,9 @@ static void         gimp_blink_free_script              (GList        *blink_sce
 static gboolean     gimp_window_transient_on_mapped     (GtkWidget    *widget,
                                                          GdkEventAny  *event,
                                                          GimpProgress *progress);
+static void         gimp_window_set_transient_cb        (GtkWidget    *window,
+                                                         GdkEventAny  *event,
+                                                         GBytes       *handle);
 
 
 GtkWidget *
@@ -938,6 +941,23 @@ gimp_window_set_transient_for (GtkWindow    *window,
 
   if (gtk_widget_get_mapped (GTK_WIDGET (window)))
     gimp_window_transient_on_mapped (GTK_WIDGET (window), NULL, parent);
+}
+
+void
+gimp_window_set_transient_for_handle (GtkWindow *window,
+                                      GBytes    *handle)
+{
+  g_return_if_fail (GTK_IS_WINDOW (window));
+  g_return_if_fail (handle != NULL);
+
+  g_signal_connect_data (window, "map-event",
+                         G_CALLBACK (gimp_window_set_transient_cb),
+                         g_bytes_ref (handle),
+                         (GClosureNotify) g_bytes_unref,
+                         G_CONNECT_AFTER);
+
+  if (gtk_widget_get_mapped (GTK_WIDGET (window)))
+    gimp_window_set_transient_cb (GTK_WIDGET (window), NULL, handle);
 }
 
 static void
@@ -2507,16 +2527,31 @@ gimp_utils_are_menu_path_identical (const gchar  *path1,
 
 static gboolean
 gimp_window_transient_on_mapped (GtkWidget    *window,
-                                 GdkEventAny  *event,
+                                 GdkEventAny  *event G_GNUC_UNUSED,
                                  GimpProgress *progress)
 {
-  GBytes   *handle;
-  gboolean  transient_set = FALSE;
+  GBytes *handle;
 
   handle = gimp_progress_get_window_id (progress);
 
   if (handle == NULL)
     return FALSE;
+
+  gimp_window_set_transient_cb (window, NULL, handle);
+
+  g_bytes_unref (handle);
+
+  return FALSE;
+}
+
+static void
+gimp_window_set_transient_cb (GtkWidget   *window,
+                              GdkEventAny *event G_GNUC_UNUSED,
+                              GBytes      *handle)
+{
+  gboolean transient_set = FALSE;
+
+  g_return_if_fail (handle != NULL);
 
 #ifdef GDK_WINDOWING_WAYLAND
   if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
@@ -2539,7 +2574,7 @@ gimp_window_transient_on_mapped (GtkWidget    *window,
       gsize      handle_size;
 
       handle_data = (Window *) g_bytes_get_data (handle, &handle_size);
-      g_return_val_if_fail (handle_size == sizeof (Window), FALSE);
+      g_return_if_fail (handle_size == sizeof (Window));
       parent_ID = *handle_data;
 
       parent = gimp_get_foreign_window ((gpointer) parent_ID);
@@ -2559,7 +2594,7 @@ gimp_window_transient_on_mapped (GtkWidget    *window,
       gsize      handle_size;
 
       handle_data = (HANDLE *) g_bytes_get_data (handle, &handle_size);
-      g_return_val_if_fail (handle_size == sizeof (HANDLE), FALSE);
+      g_return_if_fail (handle_size == sizeof (HANDLE));
       parent_ID = *handle_data;
 
       parent = gimp_get_foreign_window ((gpointer) parent_ID);
@@ -2570,8 +2605,4 @@ gimp_window_transient_on_mapped (GtkWidget    *window,
       transient_set = TRUE;
     }
 #endif
-
-  g_bytes_unref (handle);
-
-  return FALSE;
 }
