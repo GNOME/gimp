@@ -497,6 +497,7 @@ EXPORTS
 	gimp_widget_get_monitor
 	gimp_widget_set_bound_property
 	gimp_widget_set_identifier
+	gimp_widget_set_native_handle
 	gimp_widget_track_monitor
 	gimp_widgets_error_quark
 	gimp_widgets_init

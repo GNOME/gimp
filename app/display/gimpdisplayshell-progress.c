@@ -99,15 +99,16 @@ gimp_display_shell_progress_pulse (GimpProgress *progress)
   gimp_progress_pulse (GIMP_PROGRESS (statusbar));
 }
 
-static guint32
+static GBytes *
 gimp_display_shell_progress_get_window_id (GimpProgress *progress)
 {
-  GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (progress));
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
+  GBytes           *handle   = NULL;
 
-  if (GTK_IS_WINDOW (toplevel))
-    return gimp_window_get_native_id (GTK_WINDOW (toplevel));
+  if (shell->window_handle)
+    handle = g_bytes_ref (shell->window_handle);
 
-  return 0;
+  return handle;
 }
 
 static gboolean

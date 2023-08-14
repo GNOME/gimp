@@ -38,6 +38,8 @@ struct _GimpFileDialog
 {
   GtkFileChooserDialog  parent_instance;
 
+  GBytes               *window_handle;
+
   Gimp                 *gimp;
   GimpImage            *image;
 

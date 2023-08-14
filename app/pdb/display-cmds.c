@@ -144,20 +144,20 @@ display_get_window_handle_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpDisplay *display;
-  gint window = 0;
+  GBytes *handle = NULL;
 
   display = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      window = (gint32) gimp_get_display_window_id (gimp, display);
+      handle = gimp_get_display_window_id (gimp, display);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (gimp_value_array_index (return_vals, 1), window);
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), handle);
 
   return return_vals;
 }
@@ -326,7 +326,8 @@ register_display_procs (GimpPDB *pdb)
                                "gimp-display-get-window-handle");
   gimp_procedure_set_static_help (procedure,
                                   "Get a handle to the native window for an image display.",
-                                  "This procedure returns a handle to the native window for a given image display. For example in the X backend of GDK, a native window handle is an Xlib XID. A value of 0 is returned for an invalid display or if this function is unimplemented for the windowing system that is being used.",
+                                  "This procedure returns a handle to the native window for a given image display.\n"
+                                  "It can be different types of data depending on the platform you are running on. For example in the X backend of GDK, a native window handle is an Xlib XID whereas on Wayland, it is a string handle. A value of NULL is returned for an invalid display or if this function is unimplemented for the windowing system that is being used.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Sven Neumann <sven@gimp.org>",
@@ -339,11 +340,11 @@ register_display_procs (GimpPDB *pdb)
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("window",
-                                                     "window",
-                                                     "The native window handle or 0",
-                                                     G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("handle",
+                                                       "handle",
+                                                       "The native window handle or NULL",
+                                                       G_TYPE_BYTES,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -447,12 +447,7 @@ gimp_help_browser_error (Gimp         *gimp,
                                            -1);
 
   if (progress)
-    {
-      guint32 window_id = gimp_progress_get_window_id (progress);
-
-      if (window_id)
-        gimp_window_set_transient_for (GTK_WINDOW (dialog), window_id);
-    }
+    gimp_window_set_transient_for (GTK_WINDOW (dialog), progress);
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      "%s", primary);
@@ -781,12 +776,7 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
   idle_help->query_dialog = GTK_DIALOG (dialog);
 
   if (idle_help->progress)
-    {
-      guint32 window_id = gimp_progress_get_window_id (idle_help->progress);
-
-      if (window_id)
-        gimp_window_set_transient_for (GTK_WINDOW (dialog), window_id);
-    }
+    gimp_window_set_transient_for (GTK_WINDOW (dialog), idle_help->progress);
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("The GIMP user manual is not installed "

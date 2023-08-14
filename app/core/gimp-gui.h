@@ -54,7 +54,7 @@ struct _GimpGui
 
   GimpObject   * (* get_window_strategy)    (Gimp                *gimp);
   GimpDisplay  * (* get_empty_display)      (Gimp                *gimp);
-  guint32        (* display_get_window_id)  (GimpDisplay         *display);
+  GBytes       * (* display_get_window_id)  (GimpDisplay         *display);
   GimpDisplay  * (* display_create)         (Gimp                *gimp,
                                              GimpImage           *image,
                                              GimpUnit             unit,
@@ -122,7 +122,7 @@ GimpDisplay  * gimp_get_display_by_id      (Gimp                *gimp,
                                             gint                 ID);
 gint           gimp_get_display_id         (Gimp                *gimp,
                                             GimpDisplay         *display);
-guint32        gimp_get_display_window_id  (Gimp                *gimp,
+GBytes       * gimp_get_display_window_id  (Gimp                *gimp,
                                             GimpDisplay         *display);
 GimpDisplay  * gimp_create_display         (Gimp                *gimp,
                                             GimpImage           *image,

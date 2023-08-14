@@ -89,15 +89,15 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
 
   progress_data = g_slice_new0 (GimpProgressData);
 
-  progress_data->progress_callback = progress_callback;
-  progress_data->vtable.start      = vtable->start;
-  progress_data->vtable.end        = vtable->end;
-  progress_data->vtable.set_text   = vtable->set_text;
-  progress_data->vtable.set_value  = vtable->set_value;
-  progress_data->vtable.pulse      = vtable->pulse;
-  progress_data->vtable.get_window = vtable->get_window;
-  progress_data->data              = user_data;
-  progress_data->data_destroy      = user_data_destroy;
+  progress_data->progress_callback        = progress_callback;
+  progress_data->vtable.start             = vtable->start;
+  progress_data->vtable.end               = vtable->end;
+  progress_data->vtable.set_text          = vtable->set_text;
+  progress_data->vtable.set_value         = vtable->set_value;
+  progress_data->vtable.pulse             = vtable->pulse;
+  progress_data->vtable.get_window_handle = vtable->get_window_handle;
+  progress_data->data                     = user_data;
+  progress_data->data_destroy             = user_data_destroy;
 
   procedure = gimp_procedure_new (plug_in,
                                   progress_callback,
@@ -384,15 +384,16 @@ gimp_temp_progress_run (GimpProcedure       *procedure,
     case GIMP_PROGRESS_COMMAND_GET_WINDOW:
       {
         GimpValueArray *return_vals;
-        guint64         window_id = 0;
+        GBytes         *window_handle = NULL;
 
-        if (progress_data->vtable.get_window)
-          window_id = progress_data->vtable.get_window (progress_data->data);
+        if (progress_data->vtable.get_window_handle)
+          window_handle = progress_data->vtable.get_window_handle (progress_data->data);
 
         return_vals = gimp_procedure_new_return_values (procedure,
                                                         GIMP_PDB_SUCCESS,
                                                         NULL);
-        GIMP_VALUES_SET_DOUBLE (return_vals, 1, window_id);
+        GIMP_VALUES_SET_BYTES (return_vals, 1, window_handle);
+        g_bytes_unref (window_handle);
         g_free (text);
 
         return return_vals;

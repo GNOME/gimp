@@ -205,7 +205,7 @@ gimp_progress_pulse (GimpProgress *progress)
     progress_iface->pulse (progress);
 }
 
-guint32
+GBytes *
 gimp_progress_get_window_id (GimpProgress *progress)
 {
   GimpProgressInterface *progress_iface;
@@ -217,7 +217,7 @@ gimp_progress_get_window_id (GimpProgress *progress)
   if (progress_iface->get_window_id)
     return progress_iface->get_window_id (progress);
 
-  return 0;
+  return NULL;
 }
 
 gboolean

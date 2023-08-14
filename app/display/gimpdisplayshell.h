@@ -51,6 +51,8 @@ struct _GimpDisplayShell
 
   GimpDisplay       *display;
 
+  GBytes            *window_handle;
+
   GimpUIManager     *popup_manager;
   GdkMonitor        *initial_monitor;
 

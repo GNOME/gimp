@@ -136,8 +136,18 @@ screenshot_freedesktop_shoot (GdkMonitor  *monitor,
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
     {
       GdkWindow *window;
+      GBytes    *handle;
+      guint32   *handle_data;
+      guint32    window_id;
+      gsize      handle_size;
 
-      window = gimp_ui_get_progress_window ();
+      handle = gimp_progress_get_window_handle ();
+      handle_data = (guint32 *) g_bytes_get_data (handle, &handle_size);
+      g_return_val_if_fail (handle_size == sizeof (guint32), GIMP_PDB_EXECUTION_ERROR);
+      window_id = *handle_data;
+      g_bytes_unref (handle);
+
+      window = gdk_x11_window_foreign_new_for_display (gdk_display_get_default (), window_id);
       if (window)
         {
           gint id;

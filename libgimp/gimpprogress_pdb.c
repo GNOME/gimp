@@ -219,22 +219,25 @@ gimp_progress_end (void)
 /**
  * gimp_progress_get_window_handle:
  *
- * Returns the native window ID of the toplevel window this plug-in's
+ * Returns the native handle of the toplevel window this plug-in's
  * progress is displayed in.
  *
- * This function returns the native window ID of the toplevel window
- * this plug-in\'s progress is displayed in.
+ * This function returns the native handle allowing to identify the
+ * toplevel window this plug-in's progress is displayed in.
+ * This handle can be of various types (integer, string, etc.)
+ * depending on the platform you are running on which is why it returns
+ * a GBytes. There are usually no reasons to call this directly.
  *
- * Returns: The progress bar's toplevel window.
+ * Returns: (transfer full): The progress bar's toplevel window's handle.
  *
  * Since: 2.2
  **/
-gint
+GBytes *
 gimp_progress_get_window_handle (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint window = 0;
+  GBytes *handle = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
@@ -245,11 +248,11 @@ gimp_progress_get_window_handle (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    window = GIMP_VALUES_GET_INT (return_vals, 1);
+    handle = GIMP_VALUES_DUP_BYTES (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return window;
+  return handle;
 }
 
 /**

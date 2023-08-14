@@ -65,6 +65,8 @@ GimpColorTransform * gimp_widget_get_color_transform (GtkWidget         *widget,
                                                       GimpColorRenderingIntent proof_intent,
                                                       gboolean           proof_bpc);
 
+void                 gimp_widget_set_native_handle    (GtkWidget        *widget,
+                                                       GBytes          **handle);
 
 G_END_DECLS
 

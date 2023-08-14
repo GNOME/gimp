@@ -394,7 +394,7 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_DUP_BYTES(args, n) \
   g_value_dup_boxed (gimp_value_array_index (args, n))
 
-#define GIMP_VALUES_SET_BYTES(args, n, value, length) \
+#define GIMP_VALUES_SET_BYTES(args, n, value) \
   g_value_set_boxed (gimp_value_array_index (args, n), value)
 
 #define GIMP_VALUES_TAKE_BYTES(args, n, value, length) \

@@ -104,7 +104,7 @@ static void     gimp_file_dialog_progress_set_value      (GimpProgress        *p
                                                           gdouble              percentage);
 static gdouble  gimp_file_dialog_progress_get_value      (GimpProgress        *progress);
 static void     gimp_file_dialog_progress_pulse          (GimpProgress        *progress);
-static guint32  gimp_file_dialog_progress_get_window_id  (GimpProgress        *progress);
+static GBytes * gimp_file_dialog_progress_get_window_id  (GimpProgress        *progress);
 
 static void     gimp_file_dialog_add_user_dir            (GimpFileDialog      *dialog,
                                                           GUserDirectory       directory);
@@ -368,6 +368,8 @@ gimp_file_dialog_constructed (GObject *object)
   dialog->progress = gimp_progress_box_new ();
   gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                     dialog->progress, FALSE, FALSE, 0);
+
+  gimp_widget_set_native_handle (GTK_WIDGET (dialog), &dialog->window_handle);
 }
 
 static void
@@ -575,12 +577,12 @@ gimp_file_dialog_progress_pulse (GimpProgress *progress)
     gimp_progress_pulse (GIMP_PROGRESS (dialog->progress));
 }
 
-static guint32
+static GBytes *
 gimp_file_dialog_progress_get_window_id (GimpProgress *progress)
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
 
-  return gimp_window_get_native_id (GTK_WINDOW (dialog));
+  return dialog->window_handle;
 }
 
 

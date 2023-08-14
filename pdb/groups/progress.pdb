@@ -180,17 +180,20 @@ CODE
 }
 
 sub progress_get_window_handle {
-    $blurb = 'Returns the native window ID of the toplevel window this plug-in\'s progress is displayed in.';
+    $blurb = 'Returns the native handle of the toplevel window this plug-in\'s progress is displayed in.';
 
     $help = <<'HELP';
-This function returns the native window ID of the toplevel window this plug-in\'s progress is displayed in.
+This function returns the native handle allowing to identify the toplevel window this plug-in's progress is displayed in.
+
+This handle can be of various types (integer, string, etc.) depending on the platform you are running on which is why it
+returns a GBytes. There are usually no reasons to call this directly.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @outargs = (
-	{ name => 'window', type => 'int32',
-	  desc => 'The progress bar\'s toplevel window' }
+	{ name => 'handle', type => 'bytes',
+	  desc => 'The progress bar\'s toplevel window\'s handle' }
     );
 
     %invoke = (
@@ -201,7 +204,7 @@ HELP
   if (plug_in && plug_in->open)
     {
       if (! gimp->no_interface)
-        window = gimp_plug_in_progress_get_window_id (plug_in);
+        handle = gimp_plug_in_progress_get_window_id (plug_in);
     }
   else
     success = FALSE;

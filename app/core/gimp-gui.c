@@ -321,17 +321,17 @@ gimp_get_empty_display (Gimp *gimp)
   return NULL;
 }
 
-guint32
+GBytes *
 gimp_get_display_window_id (Gimp        *gimp,
                             GimpDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), -1);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), -1);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
 
   if (gimp->gui.display_get_window_id)
     return gimp->gui.display_get_window_id (display);
 
-  return -1;
+  return NULL;
 }
 
 GimpDisplay *

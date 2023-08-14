@@ -145,9 +145,13 @@ sub display_get_window_handle {
 
     $help = <<'HELP';
 This procedure returns a handle to the native window for a given image
-display. For example in the X backend of GDK, a native window handle is
-an Xlib XID. A value of 0 is returned for an invalid display or if this
-function is unimplemented for the windowing system that is being used.
+display.
+
+It can be different types of data depending on the platform you are running on.
+For example in the X backend of GDK, a native window handle is an Xlib
+XID whereas on Wayland, it is a string handle. A value of NULL is
+returned for an invalid display or if this function is unimplemented for
+the windowing system that is being used.
 HELP
 
     &neo_pdb_misc('2005', '2.4');
@@ -158,14 +162,14 @@ HELP
     );
 
     @outargs = (
-        { name => 'window', type => 'int32',
-          desc => 'The native window handle or 0' }
+        { name => 'handle', type => 'bytes',
+          desc => 'The native window handle or NULL' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  window = (gint32) gimp_get_display_window_id (gimp, display);
+  handle = gimp_get_display_window_id (gimp, display);
 }
 CODE
     );

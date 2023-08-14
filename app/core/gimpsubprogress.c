@@ -55,7 +55,7 @@ static void           gimp_sub_progress_set_value     (GimpProgress        *prog
                                                        gdouble              percentage);
 static gdouble        gimp_sub_progress_get_value     (GimpProgress        *progress);
 static void           gimp_sub_progress_pulse         (GimpProgress        *progress);
-static guint32        gimp_sub_progress_get_window_id (GimpProgress        *progress);
+static GBytes       * gimp_sub_progress_get_window_id (GimpProgress        *progress);
 static gboolean       gimp_sub_progress_message       (GimpProgress        *progress,
                                                        Gimp                *gimp,
                                                        GimpMessageSeverity  severity,
@@ -224,7 +224,7 @@ gimp_sub_progress_pulse (GimpProgress *progress)
     gimp_progress_pulse (sub->progress);
 }
 
-static guint32
+static GBytes *
 gimp_sub_progress_get_window_id (GimpProgress *progress)
 {
   GimpSubProgress *sub = GIMP_SUB_PROGRESS (progress);
@@ -232,7 +232,7 @@ gimp_sub_progress_get_window_id (GimpProgress *progress)
   if (sub->progress)
     return gimp_progress_get_window_id (sub->progress);
 
-  return 0;
+  return NULL;
 }
 
 static gboolean

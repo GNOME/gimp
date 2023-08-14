@@ -132,7 +132,7 @@ static GFile        * gui_get_theme_dir          (Gimp                *gimp);
 static GFile        * gui_get_icon_theme_dir     (Gimp                *gimp);
 static GimpObject   * gui_get_window_strategy    (Gimp                *gimp);
 static GimpDisplay  * gui_get_empty_display      (Gimp                *gimp);
-static guint32        gui_display_get_window_id  (GimpDisplay         *display);
+static GBytes       * gui_display_get_window_id  (GimpDisplay         *display);
 static GimpDisplay  * gui_display_create         (Gimp                *gimp,
                                                   GimpImage           *image,
                                                   GimpUnit             unit,
@@ -374,7 +374,7 @@ gui_get_empty_display (Gimp *gimp)
   return display;
 }
 
-static guint32
+static GBytes *
 gui_display_get_window_id (GimpDisplay *display)
 {
   GimpDisplay      *disp  = GIMP_DISPLAY (display);
@@ -382,13 +382,11 @@ gui_display_get_window_id (GimpDisplay *display)
 
   if (shell)
     {
-      GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-
-      if (GTK_IS_WINDOW (toplevel))
-        return gimp_window_get_native_id (GTK_WINDOW (toplevel));
+      if (shell)
+        return g_bytes_ref (shell->window_handle);
     }
 
-  return 0;
+  return NULL;
 }
 
 static GimpDisplay *
@@ -703,12 +701,7 @@ gui_pdb_dialog_new (Gimp          *gimp,
             gimp_docked_set_show_button_bar (GIMP_DOCKED (view), FALSE);
 
           if (progress)
-            {
-              guint32 window_id = gimp_progress_get_window_id (progress);
-
-              if (window_id)
-                gimp_window_set_transient_for (GTK_WINDOW (dialog), window_id);
-            }
+            gimp_window_set_transient_for (GTK_WINDOW (dialog), progress);
 
           gtk_widget_show (dialog);
 

@@ -35,7 +35,7 @@ G_BEGIN_DECLS
 gboolean     gimp_display_id_is_valid       (gint         display_id);
 GimpDisplay* gimp_display_new               (GimpImage   *image);
 gboolean     gimp_display_delete            (GimpDisplay *display);
-gint         gimp_display_get_window_handle (GimpDisplay *display);
+GBytes*      gimp_display_get_window_handle (GimpDisplay *display);
 gboolean     gimp_display_present           (GimpDisplay *display);
 gboolean     gimp_displays_flush            (void);
 gboolean     gimp_displays_reconnect        (GimpImage   *old_image,

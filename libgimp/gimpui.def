@@ -73,8 +73,6 @@ EXPORTS
 	gimp_save_procedure_dialog_add_metadata
 	gimp_save_procedure_dialog_get_type
 	gimp_save_procedure_dialog_new
-	gimp_ui_get_display_window
-	gimp_ui_get_progress_window
 	gimp_ui_init
 	gimp_vectors_combo_box_get_type
 	gimp_vectors_combo_box_new

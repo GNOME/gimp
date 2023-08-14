@@ -189,14 +189,14 @@ progress_get_window_handle_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint window = 0;
+  GBytes *handle = NULL;
 
   GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
     {
       if (! gimp->no_interface)
-        window = gimp_plug_in_progress_get_window_id (plug_in);
+        handle = gimp_plug_in_progress_get_window_id (plug_in);
     }
   else
     success = FALSE;
@@ -205,7 +205,7 @@ progress_get_window_handle_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (gimp_value_array_index (return_vals, 1), window);
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), handle);
 
   return return_vals;
 }
@@ -414,19 +414,20 @@ register_progress_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-progress-get-window-handle");
   gimp_procedure_set_static_help (procedure,
-                                  "Returns the native window ID of the toplevel window this plug-in's progress is displayed in.",
-                                  "This function returns the native window ID of the toplevel window this plug-in\'s progress is displayed in.",
+                                  "Returns the native handle of the toplevel window this plug-in's progress is displayed in.",
+                                  "This function returns the native handle allowing to identify the toplevel window this plug-in's progress is displayed in.\n"
+                                  "This handle can be of various types (integer, string, etc.) depending on the platform you are running on which is why it returns a GBytes. There are usually no reasons to call this directly.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
                                          "Michael Natterer",
                                          "2004");
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("window",
-                                                     "window",
-                                                     "The progress bar's toplevel window",
-                                                     G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("handle",
+                                                       "handle",
+                                                       "The progress bar's toplevel window's handle",
+                                                       G_TYPE_BYTES,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

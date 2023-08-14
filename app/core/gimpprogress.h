@@ -44,7 +44,7 @@ struct _GimpProgressInterface
   gdouble        (* get_value)     (GimpProgress        *progress);
   void           (* pulse)         (GimpProgress        *progress);
 
-  guint32        (* get_window_id) (GimpProgress        *progress);
+  GBytes       * (* get_window_id) (GimpProgress        *progress);
 
   gboolean       (* message)       (GimpProgress        *progress,
                                     Gimp                *gimp,
@@ -74,7 +74,7 @@ void           gimp_progress_set_value        (GimpProgress        *progress,
 gdouble        gimp_progress_get_value        (GimpProgress        *progress);
 void           gimp_progress_pulse            (GimpProgress        *progress);
 
-guint32        gimp_progress_get_window_id    (GimpProgress        *progress);
+GBytes       * gimp_progress_get_window_id    (GimpProgress        *progress);
 
 gboolean       gimp_progress_message          (GimpProgress        *progress,
                                                Gimp                *gimp,

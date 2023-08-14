@@ -57,11 +57,7 @@ G_BEGIN_DECLS
 
 void        gimp_ui_init                          (const gchar *prog_name);
 
-GdkWindow * gimp_ui_get_progress_window           (void);
-
 void        gimp_window_set_transient             (GtkWindow   *window);
-
-GdkWindow * gimp_ui_get_display_window            (GimpDisplay *display);
 void        gimp_window_set_transient_for_display (GtkWindow   *window,
                                                    GimpDisplay *display);
 

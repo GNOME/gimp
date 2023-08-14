@@ -26,6 +26,16 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#ifdef GDK_WINDOWING_WIN32
+#include <gdk/gdkwin32.h>
+#endif
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif
+#ifdef GDK_WINDOWING_WAYLAND
+#include <gdk/gdkwayland.h>
+#endif
+
 #ifdef G_OS_WIN32
 #ifdef _WIN32_WINNT
 #undef _WIN32_WINNT
@@ -59,6 +69,17 @@
  *
  * A collection of helper functions.
  **/
+
+
+#ifdef GDK_WINDOWING_WAYLAND
+static void     gimp_widget_wayland_window_exported  (GdkWindow   *window,
+                                                      const char  *handle,
+                                                      GBytes     **phandle);
+#endif
+
+static gboolean gimp_widget_set_handle_on_mapped     (GtkWidget    *widget,
+                                                      GdkEventAny  *event,
+                                                      GBytes      **phandle);
 
 
 static GtkWidget *
@@ -1035,4 +1056,114 @@ gimp_widget_get_color_transform (GtkWidget               *widget,
     return g_object_ref (cache->transform);
 
   return NULL;
+}
+
+/**
+ * gimp_widget_set_native_handle:
+ * @widget: a #GtkWindow
+ * @handle: (out): pointer to store the native handle as a #GBytes.
+ *
+ * This function is used to store the handle representing @window into
+ * @handle so that it can later be reused to set other windows as
+ * transient to this one (even in other processes, such as plug-ins).
+ *
+ * Depending on the platform, the actual content of @handle can be
+ * various types. Moreover it may be filled asynchronously in a
+ * callback, so you should not assume that @handle is set after running
+ * this function.
+ *
+ * This convenience function is safe to use even before @widget is
+ * visible as it will will the handle once it is mapped.
+ */
+void
+gimp_widget_set_native_handle (GtkWidget  *widget,
+                               GBytes    **handle)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (gtk_widget_get_has_window (widget));
+
+  gtk_widget_add_events (widget, GDK_STRUCTURE_MASK);
+  g_signal_connect (widget, "map-event",
+                    G_CALLBACK (gimp_widget_set_handle_on_mapped),
+                    handle);
+
+  if (gtk_widget_get_mapped (widget))
+    gimp_widget_set_handle_on_mapped (widget, NULL, handle);
+}
+
+
+/* Private functions */
+
+#ifdef GDK_WINDOWING_WAYLAND
+static void
+gimp_widget_wayland_window_exported (GdkWindow   *window,
+                                     const char  *handle,
+                                     GBytes     **phandle)
+{
+  GBytes *wayland_handle;
+
+  wayland_handle = g_bytes_new (handle, strlen (handle));
+
+  g_bytes_unref (*phandle);
+  *phandle = wayland_handle;
+}
+#endif
+
+static gboolean
+gimp_widget_set_handle_on_mapped (GtkWidget    *widget,
+                                  GdkEventAny  *event,
+                                  GBytes      **phandle)
+{
+  GdkWindow *surface;
+  GBytes    *handle   = NULL;
+#if defined (GDK_WINDOWING_WIN32) || defined (GDK_WINDOWING_X11)
+  GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
+
+  widget = toplevel;
+#endif
+
+  g_clear_pointer (phandle, g_bytes_unref);
+
+  surface = gtk_widget_get_window (GTK_WIDGET (widget));
+  g_return_val_if_fail (surface != NULL, FALSE);
+
+#ifdef GDK_WINDOWING_WIN32
+  if (GDK_IS_WIN32_WINDOW (surface))
+    {
+      guint32 id;
+
+      id = GPOINTER_TO_INT (GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (widget))));
+      handle = g_bytes_new (&id, sizeof (guint32));
+    }
+#endif
+
+#ifdef GDK_WINDOWING_X11
+  if (GDK_IS_X11_WINDOW (surface))
+    {
+      guint32 id;
+
+      id = GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (widget)));
+      handle = g_bytes_new (&id, sizeof (guint32));
+    }
+#endif
+#ifdef GDK_WINDOWING_WAYLAND
+  if (GDK_IS_WAYLAND_WINDOW (surface))
+    {
+      /* I don't run this on "realize" event because somehow it locks
+       * the whole processus in Wayland. The "map-event" happens
+       * slightly after the window became visible and I didn't
+       * experience any lock.
+       */
+      if (! gdk_wayland_window_export_handle (surface,
+                                              (GdkWaylandWindowExported) gimp_widget_wayland_window_exported,
+                                              phandle, NULL))
+        g_printerr ("%s: gdk_wayland_window_export_handle() failed. "
+                    "It will not be possible to set windows in other processes as transient to this display shell.\n",
+                    G_STRFUNC);
+    }
+#endif
+
+  *phandle = handle;
+
+  return FALSE;
 }

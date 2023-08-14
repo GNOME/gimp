@@ -156,21 +156,23 @@ gimp_display_delete (GimpDisplay *display)
  * Get a handle to the native window for an image display.
  *
  * This procedure returns a handle to the native window for a given
- * image display. For example in the X backend of GDK, a native window
- * handle is an Xlib XID. A value of 0 is returned for an invalid
- * display or if this function is unimplemented for the windowing
- * system that is being used.
+ * image display.
+ * It can be different types of data depending on the platform you are
+ * running on. For example in the X backend of GDK, a native window
+ * handle is an Xlib XID whereas on Wayland, it is a string handle. A
+ * value of NULL is returned for an invalid display or if this function
+ * is unimplemented for the windowing system that is being used.
  *
- * Returns: The native window handle or 0.
+ * Returns: (transfer full): The native window handle or NULL.
  *
  * Since: 2.4
  **/
-gint
+GBytes *
 gimp_display_get_window_handle (GimpDisplay *display)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint window = 0;
+  GBytes *handle = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DISPLAY, display,
@@ -182,11 +184,11 @@ gimp_display_get_window_handle (GimpDisplay *display)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    window = GIMP_VALUES_GET_INT (return_vals, 1);
+    handle = GIMP_VALUES_DUP_BYTES (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return window;
+  return handle;
 }
 
 /**

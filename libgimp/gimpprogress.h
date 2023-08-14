@@ -79,9 +79,9 @@ typedef void (* GimpProgressVtablePulseFunc) (gpointer user_data);
  * GimpProgressVtableGetWindowFunc:
  * @user_data: (closure): User data
  *
- * Returns: the ID of the window where the progress is displayed.
+ * Returns: the handle of the window where the progress is displayed.
  */
-typedef guint64 (* GimpProgressVtableGetWindowFunc) (gpointer user_data);
+typedef GBytes * (* GimpProgressVtableGetWindowFunc) (gpointer user_data);
 
 
 typedef struct _GimpProgressVtable GimpProgressVtable;
@@ -93,7 +93,7 @@ typedef struct _GimpProgressVtable GimpProgressVtable;
  * @set_text:   sets a new text on the progress.
  * @set_value:  sets a new percentage on the progress.
  * @pulse:      makes the progress pulse.
- * @get_window: returns the ID of the window where the progress is displayed.
+ * @get_window_handle: returns the handle of the window where the progress is displayed.
  * @_gimp_reserved1: reserved pointer for future expansion.
  * @_gimp_reserved2: reserved pointer for future expansion.
  * @_gimp_reserved3: reserved pointer for future expansion.
@@ -110,7 +110,7 @@ struct _GimpProgressVtable
   GimpProgressVtableSetTextFunc   set_text;
   GimpProgressVtableSetValueFunc  set_value;
   GimpProgressVtablePulseFunc     pulse;
-  GimpProgressVtableGetWindowFunc get_window;
+  GimpProgressVtableGetWindowFunc get_window_handle;
 
   /* Padding for future expansion. Must be initialized with NULL! */
   void (* _gimp_reserved1) (void);
