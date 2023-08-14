@@ -349,39 +349,39 @@ raw_create_procedure (GimpPlugIn  *plug_in,
       /* Properties for image data. */
 
       GIMP_PROC_ARG_INT (procedure, "width",
-                         "_Width",
-                         "Image width in number of pixels",
+                         _("_Width"),
+                         _("Image width in number of pixels"),
                          1, GIMP_MAX_IMAGE_SIZE, PREVIEW_SIZE,
                          G_PARAM_READWRITE);
       GIMP_PROC_ARG_INT (procedure, "height",
-                         "_Height",
-                         "Image height in number of pixels",
+                         _("_Height"),
+                         _("Image height in number of pixels"),
                          1, GIMP_MAX_IMAGE_SIZE, PREVIEW_SIZE,
                          G_PARAM_READWRITE);
       GIMP_PROC_ARG_INT (procedure, "offset",
-                         "O_ffset",
-                         "Offset to beginning of image in raw data",
+                         _("O_ffset"),
+                         _("Offset to beginning of image in raw data"),
                          0, GIMP_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "pixel-format",
-                         "Pixel _format",
-                         "The layout of pixel data, such as components and their order",
+                         _("Pixel _format"),
+                         _("The layout of pixel data, such as components and their order"),
                          RAW_RGB_8BPP, RAW_INDEXEDA, RAW_RGB_8BPP,
                          G_PARAM_READWRITE);
       GIMP_PROC_ARG_INT (procedure, "data-type",
-                         "Data t_ype",
-                         "Data type used to represent pixel values { RAW_ENCODING_UNSIGNED (0), RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }",
+                         _("Data t_ype"),
+                         _("Data type used to represent pixel values { RAW_ENCODING_UNSIGNED (0), RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }"),
                          RAW_ENCODING_UNSIGNED, RAW_ENCODING_FLOAT, RAW_ENCODING_UNSIGNED,
                          G_PARAM_READWRITE);
       GIMP_PROC_ARG_INT (procedure, "endianness",
-                         "Endianness",
-                         "Order of sequences of bytes { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }",
+                         _("Endianness"),
+                         _("Order of sequences of bytes { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"),
                          RAW_LITTLE_ENDIAN, RAW_BIG_ENDIAN, RAW_LITTLE_ENDIAN,
                          G_PARAM_READWRITE);
       GIMP_PROC_ARG_INT (procedure, "planar-configuration",
-                         "Planar configuration",
-                         "How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), RAW_PLANAR_SEPARATE (1) }",
+                         _("Planar configuration"),
+                         _("How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), RAW_PLANAR_SEPARATE (1) }"),
                          RAW_PLANAR_CONTIGUOUS, RAW_PLANAR_SEPARATE, RAW_PLANAR_CONTIGUOUS,
                          G_PARAM_READWRITE);
 
@@ -389,19 +389,19 @@ raw_create_procedure (GimpPlugIn  *plug_in,
       /* Properties for palette data. */
 
       GIMP_PROC_ARG_INT (procedure, "palette-offset",
-                         "Pallette Offse_t",
-                         "Offset to beginning of data in the palette file",
+                         _("Palette Offse_t"),
+                         _("Offset to beginning of data in the palette file"),
                          0, GIMP_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
       GIMP_PROC_ARG_INT (procedure, "palette-type",
-                         "Palette's la_yout",
-                         "The layout for the palette's color channels"
-                         "{ RAW_PALETTE_RGB (0), RAW_PALETTE_BGR (1) }",
+                         _("Palette's la_yout"),
+                         _("The layout for the palette's color channels"
+                           "{ RAW_PALETTE_RGB (0), RAW_PALETTE_BGR (1) }"),
                          RAW_PALETTE_RGB, RAW_PALETTE_BGR, RAW_PALETTE_RGB,
                          G_PARAM_READWRITE);
       GIMP_PROC_ARG_FILE (procedure, "palette-file",
-                          "_Palette File",
-                          "The file containing palette data",
+                          _("_Palette File"),
+                          _("The file containing palette data"),
                           G_PARAM_READWRITE);
     }
   else if (! strcmp (name, LOAD_HGT_PROC))
@@ -435,9 +435,9 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                                           "hgt");
 
       GIMP_PROC_ARG_INT (procedure, "sample-spacing",
-                         "_Sample spacing",
-                         "The sample spacing of the data. "
-                         "(0: auto-detect, 1: SRTM-1, 2: SRTM-3 data)",
+                         _("_Sample spacing"),
+                         _("The sample spacing of the data. "
+                           "(0: auto-detect, 1: SRTM-1, 2: SRTM-3 data)"),
                          HGT_SRTM_AUTO_DETECT, HGT_SRTM_3, HGT_SRTM_AUTO_DETECT,
                          G_PARAM_READWRITE);
     }
@@ -464,15 +464,15 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                                           "data,raw");
 
       GIMP_PROC_ARG_INT (procedure, "planar-configuration",
-                         "Planar configuration",
-                         "How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), RAW_PLANAR_SEPARATE (1) }",
+                         _("Planar configuration"),
+                         _("How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), RAW_PLANAR_SEPARATE (1) }"),
                          RAW_PLANAR_CONTIGUOUS, RAW_PLANAR_SEPARATE, RAW_PLANAR_CONTIGUOUS,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "palette-type",
-                         "Palette's layout",
-                         "The layout for the palette's color channels"
-                         "{ RAW_PALETTE_RGB (0), RAW_PALETTE_BGR (1) }",
+                         _("Palette's layout"),
+                         _("The layout for the palette's color channels"
+                           "{ RAW_PALETTE_RGB (0), RAW_PALETTE_BGR (1) }"),
                          RAW_PALETTE_RGB, RAW_PALETTE_BGR, RAW_PALETTE_RGB,
                          G_PARAM_READWRITE);
     }
