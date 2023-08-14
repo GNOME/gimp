@@ -125,7 +125,7 @@ export_file_metadata (metadata_editor *args)
   /* HANDLE IPTC */
   for (i = 0; i < n_equivalent_metadata_tags; i++)
     {
-      int index = equivalent_metadata_tags[i].other_tag_index;
+      int index = equivalent_metadata_tags[i].default_tag_index;
       g_string_append (xmldata, "\t<iptc-tag>\n");
       g_string_append (xmldata, "\t\t<tag-name>");
       g_string_append (xmldata, equivalent_metadata_tags[i].tag);

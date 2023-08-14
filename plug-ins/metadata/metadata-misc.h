@@ -48,6 +48,21 @@ typedef struct
 
 typedef struct
 {
+  gchar        *tag;
+  MetadataMode  mode;
+  gint32        default_tag_index;
+  gint32        exif_tag_index;
+} iptc_tag_info;
+
+typedef struct
+{
+  gint32        xmp_equivalent_index;
+  gchar        *tag;
+  MetadataMode  mode;
+} exif_tag_info;
+
+typedef struct
+{
   gchar  *data;
   gchar  *display;
 } combobox_str_tag;

@@ -145,32 +145,39 @@ const gint n_default_metadata_tags = G_N_ELEMENTS (default_metadata_tags);
  * MODE_SINGLE - for iptc tags that can appear only once,
  * MODE_MULTI  - for iptc tags that are repeatable, i.e. can appear multiple times.
  */
-const metadata_tag equivalent_metadata_tags[] =
+const iptc_tag_info equivalent_metadata_tags[] =
 {
-  { "Iptc.Application2.DateCreated",             MODE_SINGLE, 10,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  0
-  { "Iptc.Application2.TransmissionReference",   MODE_SINGLE, 12,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  1
-  { "Iptc.Application2.SpecialInstructions",     MODE_SINGLE, 13,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  2
-  { "Iptc.Application2.Headline",                MODE_SINGLE, 11,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  3
-  { "Iptc.Application2.Category",                MODE_SINGLE, 56,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  4
-  { "Iptc.Application2.City",                    MODE_SINGLE, 20,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  5
-  { "Iptc.Application2.ProvinceState",           MODE_SINGLE, 21,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  6
-  { "Iptc.Application2.CountryName",             MODE_SINGLE, 22,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  7
-  { "Iptc.Application2.Credit",                  MODE_SINGLE, 24,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  8
-  { "Iptc.Application2.Source",                  MODE_SINGLE, 25,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  9
-  { "Iptc.Application2.SuppCategory",            MODE_MULTI,  57,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 10
-  { "Iptc.Application2.Urgency",                 MODE_COMBO,  26,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 11
-  { "Iptc.Application2.SubLocation",             MODE_SINGLE, 28,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 12
-  { "Iptc.Application2.Byline",                  MODE_SINGLE,  1,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 13
-  { "Iptc.Application2.Caption",                 MODE_SINGLE,  2,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 14
-  { "Iptc.Application2.Keywords",                MODE_MULTI,   3,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 15
-  { "Iptc.Application2.ObjectName",              MODE_SINGLE,  0,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 16
-  { "Iptc.Application2.Copyright",               MODE_SINGLE,  4,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 17
-  { "Iptc.Application2.LocationName",            MODE_MULTI,  16,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 18
-  { "Iptc.Application2.BylineTitle",             MODE_MULTI,   5,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 19
-  { "Iptc.Application2.CountryCode",             MODE_SINGLE, 17,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 20
-  { "Iptc.Application2.Writer",                  MODE_MULTI,   6,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 21
+  { "Iptc.Application2.DateCreated",             MODE_SINGLE, 10, -1 }, //  0
+  { "Iptc.Application2.TransmissionReference",   MODE_SINGLE, 12, -1 }, //  1
+  { "Iptc.Application2.SpecialInstructions",     MODE_SINGLE, 13, -1 }, //  2
+  { "Iptc.Application2.Headline",                MODE_SINGLE, 11, -1 }, //  3
+  { "Iptc.Application2.Category",                MODE_SINGLE, 56, -1 }, //  4
+  { "Iptc.Application2.City",                    MODE_SINGLE, 20, -1 }, //  5
+  { "Iptc.Application2.ProvinceState",           MODE_SINGLE, 21, -1 }, //  6
+  { "Iptc.Application2.CountryName",             MODE_SINGLE, 22, -1 }, //  7
+  { "Iptc.Application2.Credit",                  MODE_SINGLE, 24, -1 }, //  8
+  { "Iptc.Application2.Source",                  MODE_SINGLE, 25, -1 }, //  9
+  { "Iptc.Application2.SuppCategory",            MODE_MULTI,  57, -1 }, // 10
+  { "Iptc.Application2.Urgency",                 MODE_COMBO,  26, -1 }, // 11
+  { "Iptc.Application2.SubLocation",             MODE_SINGLE, 28, -1 }, // 12
+  { "Iptc.Application2.Byline",                  MODE_SINGLE,  1,  0 }, // 13
+  { "Iptc.Application2.Caption",                 MODE_SINGLE,  2,  1 }, // 14
+  { "Iptc.Application2.Keywords",                MODE_MULTI,   3, -1 }, // 15
+  { "Iptc.Application2.ObjectName",              MODE_SINGLE,  0, -1 }, // 16
+  { "Iptc.Application2.Copyright",               MODE_SINGLE,  4,  2 }, // 17
+  { "Iptc.Application2.LocationName",            MODE_MULTI,  16, -1 }, // 18
+  { "Iptc.Application2.BylineTitle",             MODE_MULTI,   5, -1 }, // 19
+  { "Iptc.Application2.CountryCode",             MODE_SINGLE, 17, -1 }, // 20
+  { "Iptc.Application2.Writer",                  MODE_MULTI,   6, -1 }, // 21
 };
 const gint n_equivalent_metadata_tags = G_N_ELEMENTS (equivalent_metadata_tags);
+
+const exif_tag_info exif_equivalent_tags[] =
+{
+  { 1, "Exif.Image.Artist",           MODE_SINGLE}, //  0
+  { 2, "Exif.Image.ImageDescription", MODE_SINGLE}, //  1
+  { 4, "Exif.Image.Copyright",        MODE_SINGLE}, //  2
+};
 
 /* Digital Source Type Combobox Items
  * http://cv.iptc.org/newscodes/digitalsourcetype/

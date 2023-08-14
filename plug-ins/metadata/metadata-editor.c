@@ -2826,6 +2826,37 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
             {
               gchar **equiv_values;
 
+              if (equivalent_metadata_tags[index].exif_tag_index > -1)
+                {
+                  gint32       i_exif       = equivalent_metadata_tags[index].exif_tag_index;
+                  const gchar *exif_tag_str = exif_equivalent_tags[i_exif].tag;
+                  gchar       *exif_value   = NULL;
+
+                  exif_value = gexiv2_metadata_try_get_tag_interpreted_string (metadata,
+                                                                               exif_tag_str,
+                                                                               NULL);
+
+                  if (exif_value)
+                    {
+                      if (! value)
+                        {
+                          value = exif_value;
+                          exif_value = NULL;
+                        }
+                      else
+                        {
+                          if (g_strcmp0 (value, exif_value))
+                            {
+                              g_printerr ("Value of tag %s: '%s' is not the same as %s: '%s'. "
+                                          "Ignoring value of %s.\n",
+                                          default_metadata_tags[equivalent_metadata_tags[index].default_tag_index].tag,
+                                          value, exif_tag_str, exif_value, exif_tag_str);
+                            }
+                        }
+                    }
+                  g_free (exif_value);
+                }
+
               /* These are all IPTC tags some of which can appear multiple times so
                 * we will use get_tag_multiple. Also IPTC most commonly uses UTF-8
                 * not current locale so get_tag_interpreted was wrong anyway.
@@ -2861,6 +2892,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                             }
                         }
                     }
+                  g_strfreev (equiv_values);
                 }
             }
           g_strfreev (values);
@@ -2999,6 +3031,38 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
             {
               gchar **values;
 
+              if (equivalent_metadata_tags[index].exif_tag_index > -1)
+                {
+                  gint32       i_exif       = equivalent_metadata_tags[index].exif_tag_index;
+                  const gchar *exif_tag_str = exif_equivalent_tags[i_exif].tag;
+                  gchar       *exif_value   = NULL;
+
+                  exif_value = gexiv2_metadata_try_get_tag_interpreted_string (metadata,
+                                                                               exif_tag_str,
+                                                                               NULL);
+
+                  if (exif_value)
+                    {
+
+                      if (! value)
+                        {
+                          value = exif_value;
+                          exif_value = NULL;
+                        }
+                      else
+                        {
+                          if (g_strcmp0 (value, exif_value))
+                            {
+                              g_printerr ("Value of tag %s: '%s' is not the same as %s: '%s'. "
+                                          "Ignoring value of %s.\n",
+                                          default_metadata_tags[equivalent_metadata_tags[index].default_tag_index].tag,
+                                          value, exif_tag_str, exif_value, exif_tag_str);
+                            }
+                        }
+                    }
+                  g_free (exif_value);
+                }
+
               /* It's not very likely we will have an XMP tag that can only
                * have a single value instead of an array, which corresponds to
                * an IPTC tag that can have multiple values, but since we
@@ -3059,6 +3123,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                         }
                       value = g_string_free (str, FALSE);
                     }
+                  g_strfreev (values);
                 }
             }
         }
@@ -5078,6 +5143,19 @@ metadata_editor_write_callback (GtkWidget       *dialog,
                   if (*text_value)
                     set_tag_string (g_metadata, equivalent_metadata_tags[index].tag,
                                     text_value, FALSE);
+
+                  if (equivalent_metadata_tags[index].exif_tag_index > -1)
+                    {
+                      gint         i_exif       = equivalent_metadata_tags[index].exif_tag_index;
+                      const gchar *exif_tag_str = exif_equivalent_tags[i_exif].tag;
+
+                      gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
+                                                     exif_tag_str,
+                                                     NULL);
+                      if (*text_value)
+                        set_tag_string (g_metadata, exif_tag_str,
+                                        text_value, FALSE);
+                    }
                 }
             }
         }
@@ -5177,6 +5255,18 @@ metadata_editor_write_callback (GtkWidget       *dialog,
                                    default_metadata_tags[i].tag,
                                    equivalent_metadata_tags[index].tag);
                       }
+                  }
+
+                if (equivalent_metadata_tags[index].exif_tag_index > -1)
+                  {
+                    gint         i_exif       = equivalent_metadata_tags[index].exif_tag_index;
+                    const gchar *exif_tag_str = exif_equivalent_tags[i_exif].tag;
+
+                    gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
+                                                   exif_tag_str,
+                                                   NULL);
+                    if (text && *text)
+                      set_tag_string (g_metadata, exif_tag_str, text, FALSE);
                   }
               }
 
