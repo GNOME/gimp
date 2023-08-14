@@ -340,14 +340,14 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                                 LOAD_THUMB_PROC);
 
       GIMP_PROC_ARG_STRING (procedure, "password",
-                            "PDF password",
-                            "The password to decrypt the encrypted PDF file",
+                            _("PDF password"),
+                            _("The password to decrypt the encrypted PDF file"),
                             NULL,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "reverse-order",
-                             "Load in re_verse order",
-                             "Load PDF pages in reverse order",
+                             _("Load in re_verse order"),
+                             _("Load PDF pages in reverse order"),
                              FALSE,
                              G_PARAM_READWRITE);
 
@@ -371,8 +371,8 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "n-pages",
-                         "N pages",
-                         "Number of pages to load (0 for all)",
+                         _("N pages"),
+                         _("Number of pages to load (0 for all)"),
                          0, G_MAXINT, 0,
                          G_PARAM_READWRITE);
 
@@ -384,8 +384,8 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
        * from one PDF document loaded to another (different) one.
        */
       GIMP_PROC_ARG_INT32_ARRAY (procedure, "pages",
-                                 "Pages",
-                                 "The pages to load in the expected order",
+                                 _("Pages"),
+                                 _("The pages to load in the expected order"),
                                  G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "antialias",

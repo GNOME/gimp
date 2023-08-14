@@ -375,49 +375,49 @@ ps_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_INT (procedure, "resolution",
                          _("Resol_ution"),
-                         "Resolution to interpret image (dpi)",
+                         _("Resolution to interpret image (dpi)"),
                          MIN_RESOLUTION, MAX_RESOLUTION, 100,
                          GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "width",
                          _("_Width"),
-                         "Desired width",
+                         _("Desired width"),
                          1, GIMP_MAX_IMAGE_SIZE, 826,
                          GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "height",
                          _("_Height"),
-                         "Desired height",
+                         _("Desired height"),
                          1, GIMP_MAX_IMAGE_SIZE, 1170,
                          GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "check-bbox",
                              _("Try _Bounding Box"),
-                             "FALSE: Use width/height, TRUE: Use BoundingBox",
+                             _("FALSE: Use width/height, TRUE: Use BoundingBox"),
                              TRUE,
                              GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_STRING (procedure, "pages",
                             _("_Pages"),
-                            "Pages to load (e.g.: 1,3,5-7)",
+                            _("Pages to load (e.g.: 1,3,5-7)"),
                             "1",
                             GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "coloring",
                          _("Coloring"),
-                         "4: b/w, 5: grey, 6: color image, 7: automatic",
+                         _("4: b/w, 5: grey, 6: color image, 7: automatic"),
                          4, 7, 6,
                          GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "text-alpha-bits",
                          _("Text antialiasing"),
-                         "1, 2 or 4",
+                         _("1, 2 or 4"),
                          1, 4, 1,
                          GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "graphoc-alpha-bits",
                          _("Graphic antialiasing"),
-                         "1, 2 or 4",
+                         _("1, 2 or 4"),
                          1, 4, 1,
                          GIMP_PARAM_READWRITE);
     }
@@ -495,40 +495,40 @@ ps_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_DOUBLE (procedure, "width",
                             _("_Width"),
-                            "Width of the image in PostScript file "
-                            "(0: use input image size)",
+                            _("Width of the image in PostScript file "
+                              "(0: use input image size)"),
                             0, GIMP_MAX_IMAGE_SIZE, 287.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "height",
                             _("_Height"),
-                            "Height of the image in PostScript file "
-                            "(0: use input image size)",
+                            _("Height of the image in PostScript file "
+                              "(0: use input image size)"),
                             0, GIMP_MAX_IMAGE_SIZE, 200.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "x-offset",
                             _("_X offset"),
-                            "X-offset to image from lower left corner",
+                            _("X-offset to image from lower left corner"),
                             -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 5.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "y-offset",
                             _("Y o_ffset"),
-                            "Y-offset to image from lower left corner",
+                            _("Y-offset to image from lower left corner"),
                             -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 5.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "unit",
                          _("Unit"),
-                         "Unit for width/height/offset. "
-                         "0: inches, 1: millimeters",
+                         _("Unit for width/height/offset. "
+                         "0: inches, 1: millimeters"),
                          0, 1, 1,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "keep-ratio",
                              _("_Keep aspect ratio"),
-                             "FALSE: use width/height, TRUE: keep aspect ratio",
+                             _("FALSE: use width/height, TRUE: keep aspect ratio"),
                              TRUE,
                              G_PARAM_READWRITE);
 
@@ -540,25 +540,25 @@ ps_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "level",
                              _("PostScript Level _2"),
-                             "FALSE: PostScript Level 1, TRUE: PostScript Level 2",
+                             _("FALSE: PostScript Level 1, TRUE: PostScript Level 2"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "eps-flag",
-                             "Encapsula_ted PostScript",
-                             "FALSE: PostScript, TRUE: Encapsulated PostScript",
+                             _("Encapsula_ted PostScript"),
+                             _("FALSE: PostScript, TRUE: Encapsulated PostScript"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "show-preview",
                              _("_Preview"),
-                             "Show Preview",
+                             _("Show Preview"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "preview",
                          _("Preview Si_ze"),
-                         "0: no preview, >0: max. size of preview",
+                         _("0: no preview, >0: max. size of preview"),
                          0, GIMP_MAX_IMAGE_SIZE, 256,
                          G_PARAM_READWRITE);
     }
