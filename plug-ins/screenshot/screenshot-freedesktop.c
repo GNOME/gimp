@@ -31,6 +31,9 @@
 #ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
 #endif
+#ifdef GDK_WINDOWING_WAYLAND
+#include <gdk/gdkwayland.h>
+#endif
 
 #include "screenshot.h"
 #include "screenshot-freedesktop.h"
@@ -131,21 +134,23 @@ screenshot_freedesktop_shoot (GdkMonitor  *monitor,
   GVariantBuilder *options;
   gchar           *opath         = NULL;
   gchar           *parent_window = NULL;
+#if defined (GDK_WINDOWING_X11) || defined (GDK_WINDOWING_WAYLAND)
+  GBytes          *handle;
+
+  handle = gimp_progress_get_window_handle ();
+#endif
 
 #ifdef GDK_WINDOWING_X11
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
     {
       GdkWindow *window;
-      GBytes    *handle;
       guint32   *handle_data;
       guint32    window_id;
       gsize      handle_size;
 
-      handle = gimp_progress_get_window_handle ();
       handle_data = (guint32 *) g_bytes_get_data (handle, &handle_size);
       g_return_val_if_fail (handle_size == sizeof (guint32), GIMP_PDB_EXECUTION_ERROR);
       window_id = *handle_data;
-      g_bytes_unref (handle);
 
       window = gdk_x11_window_foreign_new_for_display (gdk_display_get_default (), window_id);
       if (window)
@@ -156,6 +161,26 @@ screenshot_freedesktop_shoot (GdkMonitor  *monitor,
           parent_window = g_strdup_printf ("x11:0x%x", id);
         }
     }
+#endif
+#ifdef GDK_WINDOWING_WAYLAND
+  if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+    {
+      char  *handle_data;
+      gchar *handle_str;
+      gsize  handle_size;
+
+      handle_data = (char *) g_bytes_get_data (handle, &handle_size);
+      /* Even though this should be the case by design, this ensures the
+       * string is NULL-terminated to avoid out-of allocated memory access.
+       */
+      handle_str = g_strndup (handle_data, handle_size);
+      parent_window = g_strdup_printf ("wayland:%s", handle_str);
+      g_free (handle_str);
+    }
+#endif
+
+#if defined (GDK_WINDOWING_X11) || defined (GDK_WINDOWING_WAYLAND)
+  g_bytes_unref (handle);
 #endif
 
   options = g_variant_builder_new (G_VARIANT_TYPE ("a{sv}"));
