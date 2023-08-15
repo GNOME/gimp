@@ -783,6 +783,91 @@ gimp_text_serialize_property (GimpConfig       *config,
 
       return TRUE;
     }
+  else if (property_id == PROP_MARKUP)
+    {
+      gchar         *markup = (gchar*)g_value_get_string (value);
+      GRegex        *regex;
+      GimpText      *text;
+      GimpContainer *container;
+      PangoAttrList *attr_list;
+      GimpFont      *font;
+      guint          length;
+      GSList        *list   = NULL;
+      GSList        *fonts  = NULL;
+
+      g_return_val_if_fail (GIMP_IS_TEXT (config), FALSE);
+
+      if (markup == NULL)
+        return FALSE;
+
+      text      = GIMP_TEXT (config);
+      container = gimp_data_factory_get_container (text->gimp->font_factory);
+
+      /*lookupname format is "gimpfont%d" we keep only the "font%d" part
+       * this is to avoid problems when deserializing
+       * e.g. if  there are 2 fonts with lookupname gimpfont17 and gimpfont23
+       * we might replace the first with a font whose lookupname is gimpfont23,
+       * and we might replace the original gimpfont23 with say gimpfont29
+       * this means that all occurences of gimpfont23 turned into gimpfont29
+       */
+      regex  = g_regex_new ("\"gimpfont(\\d+)\"", 0, 0, NULL);
+      markup = g_regex_replace (regex, markup, -1, 0, "\"font\\1\"", 0, NULL);
+
+      gimp_config_writer_open   (writer, "markup");
+      gimp_config_writer_string (writer, markup);
+
+      pango_parse_markup (markup, -1, 0, &attr_list, NULL, NULL, NULL);
+
+      list   = pango_attr_list_get_attributes (attr_list);
+      length = g_slist_length (list);
+
+      for (guint i = 0; i < length; ++i)
+        {
+          PangoAttrFontDesc *attr_font_desc = pango_attribute_as_font_desc ((PangoAttribute*)g_slist_nth_data (list, i));
+
+          if (attr_font_desc != NULL)
+            {
+              gchar *altered_font_name = pango_font_description_to_string (attr_font_desc->desc);
+              gchar *font_name         = g_strdup_printf ("gimp%s", altered_font_name);
+
+              if (g_slist_find_custom (fonts, (gconstpointer) font_name, g_str_equal) == NULL)
+                {
+                  fonts = g_slist_prepend (fonts, (gpointer) font_name);
+
+                  font = GIMP_FONT (gimp_container_search (container,
+                                                           (GimpContainerSearchFunc) gimp_font_match_by_lookup_name,
+                                                           (gpointer) font_name));
+
+                  gimp_config_writer_open   (writer, "markupfont");
+                  /*lookupname format is "font%d" we keep only the "font%d" (see the above comment)*/
+                  gimp_config_writer_string (writer, font_name+4);
+
+                  gimp_config_writer_open   (writer, "font");
+                  GIMP_CONFIG_GET_IFACE     (GIMP_CONFIG (font))->serialize (GIMP_CONFIG (font),
+                                             writer,
+                                             NULL);
+                  gimp_config_writer_close  (writer);
+                  gimp_config_writer_close  (writer);
+                }
+
+              else
+                {
+                  g_free (font_name);
+                }
+              g_free (altered_font_name);
+            }
+        }
+
+      gimp_config_writer_close  (writer);
+
+      g_slist_free_full (fonts, (GDestroyNotify) g_free);
+      g_slist_free_full (list,  (GDestroyNotify) pango_attribute_destroy);
+      pango_attr_list_unref (attr_list);
+      g_free (markup);
+      g_regex_unref (regex);
+
+      return TRUE;
+    }
 
   return FALSE;
 }
@@ -835,6 +920,80 @@ gimp_text_deserialize_property (GimpConfig *object,
           g_value_take_boxed (value, NULL);
           return TRUE;
         }
+    }
+  else if (property_id == PROP_MARKUP)
+    {
+      gchar    *markup;
+      GString  *markup_str;
+      GimpFont *dummy_object = g_object_new (GIMP_TYPE_FONT, NULL);
+
+      gimp_scanner_parse_string (scanner, &markup);
+
+      markup_str = g_string_new (markup);
+
+      /* This is for backward compatibility with older xcf files.*/
+      if (g_scanner_peek_next_token (scanner) == G_TOKEN_STRING)
+        while (g_scanner_peek_next_token (scanner) == G_TOKEN_STRING)
+          {
+            gchar    *markup_fontname;
+            gchar    *escaped_markup_fontname;
+            gchar    *actual_font_lookupname;
+            GimpFont *font;
+
+            gimp_scanner_parse_string (scanner, &markup_fontname);
+
+            font = GIMP_FONT (GIMP_CONFIG_GET_IFACE (dummy_object)->deserialize_create (GIMP_TYPE_FONT,
+                                                                                        scanner,
+                                                                                        -1,
+                                                                                        NULL));
+            escaped_markup_fontname = g_strdup_printf ("\"%s\"", markup_fontname);
+            actual_font_lookupname  = g_strdup_printf ("\"%s\"", gimp_font_get_lookup_name (font));
+            g_string_replace (markup_str, escaped_markup_fontname, actual_font_lookupname, 0);
+
+            g_free (markup_fontname);
+            g_free (escaped_markup_fontname);
+            g_free (actual_font_lookupname);
+            g_object_unref (font);
+          }
+
+      else
+        while (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
+          {
+            gchar    *lookupname;
+            gchar    *escaped_lookupname;
+            gchar    *actual_font_lookupname;
+            GimpFont *font;
+
+            g_scanner_get_next_token  (scanner); /* ( */
+            g_scanner_get_next_token  (scanner); /* "lookupname" */
+            gimp_scanner_parse_string (scanner, &lookupname);
+
+            g_scanner_get_next_token  (scanner); /* ) */
+            g_scanner_get_next_token  (scanner); /* font */
+
+            font = GIMP_FONT (GIMP_CONFIG_GET_IFACE (dummy_object)->deserialize_create (GIMP_TYPE_FONT,
+                                                                                        scanner,
+                                                                                        -1,
+                                                                                        NULL));
+            g_scanner_get_next_token  (scanner); /* ) */
+            g_scanner_get_next_token  (scanner); /* ) */
+
+            escaped_lookupname = g_strdup_printf ("\"%s\"", lookupname);
+            actual_font_lookupname = g_strdup_printf ("\"%s\"", gimp_font_get_lookup_name (font));
+            g_string_replace (markup_str, escaped_lookupname, actual_font_lookupname, 0);
+
+            g_free (lookupname);
+            g_free (escaped_lookupname);
+            g_free (actual_font_lookupname);
+            g_object_unref (font);
+          }
+
+      g_value_set_string (value, markup_str->str);
+
+      g_object_unref (dummy_object);
+      g_string_free  (markup_str, TRUE);
+
+      return TRUE;
     }
 
   return FALSE;

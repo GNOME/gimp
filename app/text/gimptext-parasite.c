@@ -26,6 +26,7 @@
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <pango/pango.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -82,18 +83,75 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
   parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_data_size);
   if (parasite_data)
     {
-      gboolean      is_old       = !g_str_has_prefix (strstr (parasite_data, "\")\n(font"), "\")\n(font \"GimpFont\"");
+      gboolean      is_old       = strstr (parasite_data, "\"GimpFont\"") == NULL;
+      gboolean      has_markup   = g_str_has_prefix (parasite_data, "(markup ");
       GimpParasite *new_parasite = NULL;
       GString      *new_data;
 
       /* This is for backward compatibility with older xcf files.
        * font used to be serialized as a string, but now it is serialized/deserialized as
        * GimpFont, so the object Type name is inserted for the GimpFont deserialization function to be called.
+       * And more importantly, fonts in the markup are extracted into their own fields for deserialization.
        */
       if (is_old)
         {
           new_data = g_string_new (parasite_data);
           g_string_replace (new_data, "\")\n(font", "\")\n(font \"GimpFont\"", 1);
+
+          if (has_markup)
+            {
+              PangoAttrList *attr_list;
+              gchar         *desc;
+              guint          length;
+              GSList        *list             = NULL;
+              GSList        *fonts            = NULL;
+              GString       *markup_fonts     = g_string_new (NULL);
+              glong          markup_start_pos = strstr (parasite_data, "\"<")  - parasite_data + 1;
+              glong          markup_end_pos   = strstr (parasite_data, ">\")") - parasite_data + 1;
+              gchar         *markup_str       = g_utf8_substring (parasite_data,
+                                                                  markup_start_pos,
+                                                                  markup_end_pos);
+              GString       *markup           = g_string_new (markup_str);
+
+              g_string_replace (markup, "\\\"", "\"", 0);
+              pango_parse_markup (markup->str, -1, 0, &attr_list, NULL, NULL, NULL);
+
+              list   = pango_attr_list_get_attributes (attr_list);
+              length = g_slist_length (list);
+
+              for (guint i = 0; i < length; ++i)
+                {
+                  PangoAttrFontDesc *attr_font_desc = pango_attribute_as_font_desc ((PangoAttribute*)g_slist_nth_data (list, i));
+
+                  if (attr_font_desc != NULL)
+                    {
+                      desc = pango_font_description_to_string (attr_font_desc->desc);
+
+                      if (g_slist_find_custom (fonts, (gconstpointer) desc, g_str_equal) == NULL)
+                        {
+                          fonts = g_slist_prepend (fonts, (gpointer) desc);
+                          /*duplicate font name to making parsing easier when deserializing*/
+                          g_string_append_printf (markup_fonts,
+                                                  "\n\"%s\" \"%s\"",
+                                                  desc, desc);
+                        }
+                      else
+                        {
+                          g_free (desc);
+                        }
+                    }
+
+                }
+              g_slist_free_full (fonts, (GDestroyNotify) g_free);
+              g_slist_free_full (list,  (GDestroyNotify) pango_attribute_destroy);
+              pango_attr_list_unref (attr_list);
+
+              g_string_insert  (new_data, markup_end_pos + 1, markup_fonts->str);
+
+              g_free (markup_str);
+              g_string_free (markup_fonts, TRUE);
+              g_string_free (markup, TRUE);
+            }
 
           new_parasite = gimp_parasite_new (gimp_parasite_get_name  (parasite),
                                             gimp_parasite_get_flags (parasite),

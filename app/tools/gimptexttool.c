@@ -290,7 +290,7 @@ gimp_text_tool_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  text_tool->proxy = g_object_new (GIMP_TYPE_TEXT, NULL);
+  text_tool->proxy = g_object_new (GIMP_TYPE_TEXT, "gimp", tool->tool_info->gimp, NULL);
 
   gimp_text_options_connect_text (options, text_tool->proxy);
 
