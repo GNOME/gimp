@@ -117,6 +117,9 @@ static void    cdisplay_clip_warning_update_colors  (CdisplayClipWarning *clip_w
 static const GimpModuleInfo cdisplay_clip_warning_info =
 {
   GIMP_MODULE_ABI_VERSION,
+  /* Translators: "Clip Warning" is the name of a (color) display filter
+   * that highlights pixels outside of the color space range.
+   * Shown as a label description. */
   N_("Clip warning color display filter"),
   "Ell",
   "v1.0",
