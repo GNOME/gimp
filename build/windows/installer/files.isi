@@ -48,8 +48,8 @@ Source: "{#DEPS_DIR}\{#DDIR}\lib\gio\*.dll"; DestDir: "{app}\lib\gio"; Component
 #ifdef PYTHON
 Source: "{#DEPS_DIR}\{#DDIR}\bin\python3w.exe"; DestDir: "{app}\bin"; DestName: "pythonw.exe"; Components: py and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR}\{#DDIR}\bin\python3.exe"; DestDir: "{app}\bin"; DestName: "python.exe"; Components: py and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR}\{#DDIR}\bin\libpython3.10.dll"; DestDir: "{app}\bin"; Components: py and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR}\{#DDIR}\lib\python3.10\*"; DestDir: "{app}\lib\python3.10"; Components: py and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\bin\libpython3.11.dll"; DestDir: "{app}\bin"; Components: py and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\lib\python3.11\*"; DestDir: "{app}\lib\python3.11"; Components: py and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #endif
 
 #ifdef LUA
