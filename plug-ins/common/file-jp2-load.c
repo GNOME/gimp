@@ -285,11 +285,17 @@ jp2_load (GimpProcedure         *procedure,
     default:
       if (! strcmp (gimp_procedure_get_name (procedure), LOAD_J2K_PROC))
         {
+          gint color_space_argument = 0;
+
+          g_object_get (config,
+                        "colorspace", &color_space_argument,
+                        NULL);
+
           /* Order is not the same as OpenJPEG enum on purpose,
            * since it's better to not rely on a given order or
            * on enum values.
            */
-          switch (GIMP_VALUES_GET_INT (args, 0))
+          switch (color_space_argument)
             {
             case 1:
               color_space = OPJ_CLRSPC_GRAY;
