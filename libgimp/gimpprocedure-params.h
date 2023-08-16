@@ -888,6 +888,12 @@ G_BEGIN_DECLS
 
 /*  Resource  */
 
+#define GIMP_PROC_ARG_RESOURCE(procedure, name, nick, blurb, flags)  \
+  gimp_procedure_add_argument (procedure,\
+                               gimp_param_spec_resource (name, nick, blurb,\
+                                                         GIMP_TYPE_RESOURCE,\
+                                                         flags))
+
 #define GIMP_PROC_ARG_BRUSH(procedure, name, nick, blurb, flags)  \
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_brush (name, nick, blurb,\

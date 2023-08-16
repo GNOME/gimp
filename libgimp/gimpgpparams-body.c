@@ -214,6 +214,10 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
                                         param_def->meta.m_id.none_ok,
                                         flags);
 
+      if (! strcmp (param_def->type_name, "GimpParamResource"))
+        return gimp_param_spec_resource (name, nick, blurb,
+                                         param_def->meta.m_id.none_ok, flags);
+
       if (! strcmp (param_def->type_name, "GimpParamBrush"))
         return gimp_param_spec_brush (name, nick, blurb,
                                       param_def->meta.m_id.none_ok, flags);
@@ -385,39 +389,7 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 
       param_def->meta.m_id.none_ok = ispec->none_ok;
     }
-  else if (GIMP_IS_PARAM_SPEC_BRUSH (pspec))
-    {
-      GimpParamSpecResource *rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
-
-      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
-
-      param_def->meta.m_id.none_ok = rspec->none_ok;
-    }
-  else if (GIMP_IS_PARAM_SPEC_PATTERN (pspec))
-    {
-      GimpParamSpecResource *rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
-
-      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
-
-      param_def->meta.m_id.none_ok = rspec->none_ok;
-    }
-  else if (GIMP_IS_PARAM_SPEC_GRADIENT (pspec))
-    {
-      GimpParamSpecResource *rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
-
-      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
-
-      param_def->meta.m_id.none_ok = rspec->none_ok;
-    }
-  else if (GIMP_IS_PARAM_SPEC_PALETTE (pspec))
-    {
-      GimpParamSpecResource *rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
-
-      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
-
-      param_def->meta.m_id.none_ok = rspec->none_ok;
-    }
-  else if (GIMP_IS_PARAM_SPEC_FONT (pspec))
+  else if (GIMP_IS_PARAM_SPEC_RESOURCE (pspec))
     {
       GimpParamSpecResource *rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
 
@@ -474,6 +446,10 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       else if (value_type == GIMP_TYPE_VECTORS)
         {
           type_name = "GimpParamVectors";
+        }
+      else if (value_type == GIMP_TYPE_RESOURCE)
+        {
+          type_name = "GimpParamResource";
         }
       else if (value_type == GIMP_TYPE_BRUSH)
         {
