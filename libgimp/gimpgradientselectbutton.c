@@ -191,6 +191,8 @@ get_gradient_data (GimpGradientSelectButton *self,
       *sample_count = n_samples;
     }
 
+  g_object_unref (gradient);
+
   /* When result is true, caller must free the array. */
   return result;
 }

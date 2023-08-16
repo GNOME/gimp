@@ -235,6 +235,8 @@ gimp_pattern_select_button_get_pattern_image (GimpPatternSelectButton *self)
                            &color_bytes);
   result.pixelels = g_bytes_unref_to_data (color_bytes, &pixelels_size);
 
+  g_object_unref (pattern);
+
   return result;
 }
 

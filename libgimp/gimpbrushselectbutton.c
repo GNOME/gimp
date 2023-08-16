@@ -231,6 +231,7 @@ gimp_brush_select_button_get_brush_bitmap (GimpBrushSelectButton *self)
   result.mask_data = g_bytes_unref_to_data (mask_data, &mask_size);
   /* Discard any color data, bitmap is B&W i.e. i.e. depth one i.e. a mask */
   g_bytes_unref (color_data);
+  g_object_unref (brush);
 
   return result;
 }
