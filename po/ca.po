@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-07-21 19:36+0000\n"
-"PO-Revision-Date: 2023-07-25 18:06+0100\n"
+"PO-Revision-Date: 2023-08-16 18:06+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -322,7 +322,7 @@ msgstr "Pinzells"
 
 #: app/actions/actions.c:118 app/dialogs/dialogs.c:361
 msgid "Buffers"
-msgstr "Porta-retalls del GIMP"
+msgstr "Memòries intermèdies"
 
 #: app/actions/actions.c:121 app/dialogs/dialogs.c:379
 #: app/propgui/gimppropgui-newsprint.c:160 app/widgets/gimppickablepopup.c:247
@@ -2933,12 +2933,12 @@ msgstr "Mostra el diàleg dels estils de lletra"
 #: app/actions/dialogs-actions.c:257
 msgctxt "dialogs-action"
 msgid "B_uffers Dialog"
-msgstr "D_iàleg de la memòria cau"
+msgstr "D_iàleg de les memòries intermèdies"
 
 #: app/actions/dialogs-actions.c:258
 msgctxt "dialogs-action"
 msgid "B_uffers"
-msgstr "_Porta-retalls del GIMP"
+msgstr "_Memòries intermèdies"
 
 #: app/actions/dialogs-actions.c:260
 msgctxt "dialogs-action"
@@ -18382,7 +18382,7 @@ msgstr "Elimina les capes"
 #: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:1081
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
-msgstr "Objecte eliminat del porta-retalls del GIMP"
+msgstr "Objecte eliminat de la memòria intermèdia"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:79
 msgid "Color Display Filters"
