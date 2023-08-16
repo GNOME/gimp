@@ -161,7 +161,7 @@ static gboolean       gui_pdb_dialog_new         (Gimp                *gimp,
 static gboolean       gui_pdb_dialog_set         (Gimp                *gimp,
                                                   GimpContainer       *container,
                                                   const gchar         *callback_name,
-                                                  const gchar         *object_name,
+                                                  GimpObject          *object,
                                                   va_list              args);
 static gboolean       gui_pdb_dialog_close       (Gimp                *gimp,
                                                   GimpContainer       *container,
@@ -740,10 +740,11 @@ static gboolean
 gui_pdb_dialog_set (Gimp          *gimp,
                     GimpContainer *container,
                     const gchar   *callback_name,
-                    const gchar   *object_name,
+                    GimpObject    *object,
                     va_list        args)
 {
   GimpPdbDialogClass *klass = NULL;
+  GimpPdbDialog      *dialog;
 
   if (gimp_container_get_children_type (container) == GIMP_TYPE_BRUSH)
     klass = g_type_class_peek (GIMP_TYPE_BRUSH_SELECT);
@@ -756,33 +757,25 @@ gui_pdb_dialog_set (Gimp          *gimp,
   else if (gimp_container_get_children_type (container) == GIMP_TYPE_PATTERN)
     klass = g_type_class_peek (GIMP_TYPE_PATTERN_SELECT);
 
-  if (klass)
+  g_return_val_if_fail (klass != NULL, FALSE);
+
+  dialog = gimp_pdb_dialog_get_by_callback (klass, callback_name);
+
+  if (dialog != NULL                                                      &&
+      dialog->select_type == gimp_container_get_children_type (container) &&
+      gimp_container_get_child_index (container, object) != -1)
     {
-      GimpPdbDialog *dialog;
+      const gchar *prop_name = va_arg (args, const gchar *);
 
-      dialog = gimp_pdb_dialog_get_by_callback (klass, callback_name);
+      gimp_context_set_by_type (dialog->context, dialog->select_type,
+                                object);
 
-      if (dialog && dialog->select_type == gimp_container_get_children_type (container))
-        {
-          GimpObject *object;
+      if (prop_name)
+        g_object_set_valist (G_OBJECT (dialog), prop_name, args);
 
-          object = gimp_container_get_child_by_name (container, object_name);
+      gtk_window_present (GTK_WINDOW (dialog));
 
-          if (object)
-            {
-              const gchar *prop_name = va_arg (args, const gchar *);
-
-              gimp_context_set_by_type (dialog->context, dialog->select_type,
-                                        object);
-
-              if (prop_name)
-                g_object_set_valist (G_OBJECT (dialog), prop_name, args);
-
-              gtk_window_present (GTK_WINDOW (dialog));
-
-              return TRUE;
-            }
-        }
+      return TRUE;
     }
 
   return FALSE;

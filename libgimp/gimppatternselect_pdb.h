@@ -38,7 +38,7 @@ gboolean gimp_patterns_popup       (const gchar *pattern_callback,
                                     GBytes      *parent_window);
 gboolean gimp_patterns_close_popup (const gchar *pattern_callback);
 gboolean gimp_patterns_set_popup   (const gchar *pattern_callback,
-                                    const gchar *pattern_name);
+                                    GimpPattern *pattern);
 
 
 G_END_DECLS

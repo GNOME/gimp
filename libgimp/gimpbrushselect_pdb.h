@@ -38,7 +38,7 @@ gboolean gimp_brushes_popup       (const gchar *brush_callback,
                                    GBytes      *parent_window);
 gboolean gimp_brushes_close_popup (const gchar *brush_callback);
 gboolean gimp_brushes_set_popup   (const gchar *brush_callback,
-                                   const gchar *brush_name);
+                                   GimpBrush   *brush);
 
 
 G_END_DECLS

@@ -418,32 +418,25 @@ gimp_resource_select_set (const gchar  *temp_pdb_callback,
                           GimpResource *resource,
                           GType         resource_type)
 {
-  gchar *resource_name;
-
-  /* The remote setter is e.g. gimp_fonts_set_popup, a PDB procedure.
-   * It still takes a name aka ID instead of a resource object.
-   */
-  resource_name = gimp_resource_get_name (resource);
-
   if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
     {
-      gimp_fonts_set_popup (temp_pdb_callback, resource_name);
+      gimp_fonts_set_popup (temp_pdb_callback, GIMP_FONT (resource));
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
     {
-      gimp_gradients_set_popup (temp_pdb_callback, resource_name);
+      gimp_gradients_set_popup (temp_pdb_callback, GIMP_GRADIENT (resource));
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
     {
-      gimp_brushes_set_popup (temp_pdb_callback, resource_name);
+      gimp_brushes_set_popup (temp_pdb_callback, GIMP_BRUSH (resource));
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
     {
-      gimp_palettes_set_popup (temp_pdb_callback, resource_name);
+      gimp_palettes_set_popup (temp_pdb_callback, GIMP_PALETTE (resource));
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PATTERN))
     {
-      gimp_patterns_set_popup (temp_pdb_callback, resource_name);
+      gimp_patterns_set_popup (temp_pdb_callback, GIMP_PATTERN (resource));
     }
   else
     {

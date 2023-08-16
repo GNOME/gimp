@@ -123,7 +123,7 @@ gimp_fonts_close_popup (const gchar *font_callback)
 /**
  * gimp_fonts_set_popup:
  * @font_callback: The name of the callback registered in the PDB for the dialog.
- * @font_name: The name of the font to set as selected.
+ * @font: The font to set as selected.
  *
  * Sets the current font in a font selection dialog.
  *
@@ -133,7 +133,7 @@ gimp_fonts_close_popup (const gchar *font_callback)
  **/
 gboolean
 gimp_fonts_set_popup (const gchar *font_callback,
-                      const gchar *font_name)
+                      GimpFont    *font)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -141,7 +141,7 @@ gimp_fonts_set_popup (const gchar *font_callback,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, font_callback,
-                                          G_TYPE_STRING, font_name,
+                                          GIMP_TYPE_FONT, font,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),

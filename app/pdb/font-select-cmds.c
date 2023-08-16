@@ -32,6 +32,7 @@
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpparamspecs.h"
+#include "text/gimpfont.h"
 
 #include "gimppdb.h"
 #include "gimpprocedure.h"
@@ -111,20 +112,18 @@ fonts_set_popup_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   const gchar *font_callback;
-  const gchar *font_name;
+  GimpFont *font;
 
   font_callback = g_value_get_string (gimp_value_array_index (args, 0));
-  font_name = g_value_get_string (gimp_value_array_index (args, 1));
+  font = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
           ! gimp_data_factory_data_wait (gimp->font_factory)     ||
-          ! gimp_pdb_dialog_set (gimp,
-                                 gimp_data_factory_get_container (gimp->font_factory),
-                                 font_callback, font_name,
-                                 NULL))
+          ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->font_factory),
+                                 font_callback, GIMP_OBJECT (font), NULL))
         success = FALSE;
     }
 
@@ -227,12 +226,11 @@ register_font_select_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("font-name",
-                                                       "font name",
-                                                       "The name of the font to set as selected",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               gimp_param_spec_font ("font",
+                                                     "font",
+                                                     "The font to set as selected",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

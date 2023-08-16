@@ -82,8 +82,8 @@ sub palettes_set_popup {
     @inargs = (
       { name => 'palette_callback', type => 'string', non_empty => 1,
         desc => 'The name of the callback registered for this pop-up' },
-      { name => 'palette_name', type => 'string',
-        desc => 'The name of the palette to set as selected' },
+      { name => 'palette', type => 'palette',
+        desc => 'The palette to set as selected' },
     );
 
     %invoke = (
@@ -92,8 +92,7 @@ sub palettes_set_popup {
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
       ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->palette_factory),
-                             palette_callback, palette_name,
-                             NULL))
+                             palette_callback, GIMP_OBJECT (palette), NULL))
     success = FALSE;
 }
 CODE

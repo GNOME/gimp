@@ -32,6 +32,7 @@
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimppattern.h"
 
 #include "gimppdb.h"
 #include "gimpprocedure.h"
@@ -109,18 +110,17 @@ patterns_set_popup_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   const gchar *pattern_callback;
-  const gchar *pattern_name;
+  GimpPattern *pattern;
 
   pattern_callback = g_value_get_string (gimp_value_array_index (args, 0));
-  pattern_name = g_value_get_string (gimp_value_array_index (args, 1));
+  pattern = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
           ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->pattern_factory),
-                                 pattern_callback, pattern_name,
-                                 NULL))
+                                 pattern_callback, GIMP_OBJECT (pattern), NULL))
         success = FALSE;
     }
 
@@ -223,12 +223,11 @@ register_pattern_select_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("pattern-name",
-                                                       "pattern name",
-                                                       "The name of the pattern to set as selected",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               gimp_param_spec_pattern ("pattern",
+                                                        "pattern",
+                                                        "The pattern to set as selected",
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

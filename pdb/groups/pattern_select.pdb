@@ -82,8 +82,8 @@ sub patterns_set_popup {
     @inargs = (
       { name => 'pattern_callback', type => 'string', non_empty => 1,
         desc => 'The name of the callback registered for this pop-up' },
-      { name => 'pattern_name', type => 'string',
-        desc => 'The name of the pattern to set as selected' }
+      { name => 'pattern', type => 'pattern',
+        desc => 'The pattern to set as selected' }
     );
 
     %invoke = (
@@ -92,8 +92,7 @@ sub patterns_set_popup {
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
       ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->pattern_factory),
-                             pattern_callback, pattern_name,
-                             NULL))
+                             pattern_callback, GIMP_OBJECT (pattern), NULL))
     success = FALSE;
 }
 CODE

@@ -82,7 +82,7 @@ struct _GimpGui
   gboolean       (* pdb_dialog_set)         (Gimp                *gimp,
                                              GimpContainer       *container,
                                              const gchar         *callback_name,
-                                             const gchar         *object_name,
+                                             GimpObject          *object,
                                              va_list              args);
   gboolean       (* pdb_dialog_close)       (Gimp                *gimp,
                                              GimpContainer       *container,
@@ -181,7 +181,7 @@ gboolean       gimp_pdb_dialog_new         (Gimp                *gimp,
 gboolean       gimp_pdb_dialog_set         (Gimp                *gimp,
                                             GimpContainer       *container,
                                             const gchar         *callback_name,
-                                            const gchar         *object_name,
+                                            GimpObject          *object,
                                             ...) G_GNUC_NULL_TERMINATED;
 gboolean       gimp_pdb_dialog_close       (Gimp                *gimp,
                                             GimpContainer       *container,

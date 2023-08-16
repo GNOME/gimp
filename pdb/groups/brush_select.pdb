@@ -82,8 +82,8 @@ sub brushes_set_popup {
     @inargs = (
       { name => 'brush_callback', type => 'string', non_empty => 1,
         desc => 'The name of the callback registered for this pop-up' },
-      { name => 'brush_name', type => 'string',
-        desc => 'The name of the brush to set as selected' }
+      { name => 'brush', type => 'brush',
+        desc => 'The brush to set as selected' }
     );
 
     %invoke = (
@@ -92,8 +92,7 @@ sub brushes_set_popup {
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
       ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->brush_factory),
-                             brush_callback, brush_name,
-                             NULL))
+                             brush_callback, GIMP_OBJECT (brush), NULL))
     success = FALSE;
 }
 CODE

@@ -440,7 +440,7 @@ gboolean
 gimp_pdb_dialog_set (Gimp          *gimp,
                      GimpContainer *container,
                      const gchar   *callback_name,
-                     const gchar   *object_name,
+                     GimpObject    *object,
                      ...)
 {
   gboolean retval = FALSE;
@@ -448,16 +448,16 @@ gimp_pdb_dialog_set (Gimp          *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (callback_name != NULL, FALSE);
-  g_return_val_if_fail (object_name != NULL, FALSE);
+  g_return_val_if_fail (object != NULL, FALSE);
 
   if (gimp->gui.pdb_dialog_set)
     {
       va_list args;
 
-      va_start (args, object_name);
+      va_start (args, object);
 
       retval = gimp->gui.pdb_dialog_set (gimp, container, callback_name,
-                                         object_name, args);
+                                         object, args);
 
       va_end (args);
     }

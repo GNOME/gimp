@@ -115,7 +115,7 @@ gimp_palettes_close_popup (const gchar *palette_callback)
 /**
  * gimp_palettes_set_popup:
  * @palette_callback: The name of the callback registered for this pop-up.
- * @palette_name: The name of the palette to set as selected.
+ * @palette: The palette to set as selected.
  *
  * Sets the current palette in a palette selection dialog.
  *
@@ -125,7 +125,7 @@ gimp_palettes_close_popup (const gchar *palette_callback)
  **/
 gboolean
 gimp_palettes_set_popup (const gchar *palette_callback,
-                         const gchar *palette_name)
+                         GimpPalette *palette)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -133,7 +133,7 @@ gimp_palettes_set_popup (const gchar *palette_callback,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, palette_callback,
-                                          G_TYPE_STRING, palette_name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),

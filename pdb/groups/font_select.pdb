@@ -85,8 +85,8 @@ sub fonts_set_popup {
     @inargs = (
       { name => 'font_callback', type => 'string', non_empty => 1,
         desc => 'The name of the callback registered in the PDB for the dialog.' },
-      { name => 'font_name', type => 'string',
-        desc => 'The name of the font to set as selected' }
+      { name => 'font', type => 'font',
+        desc => 'The font to set as selected' }
     );
 
     %invoke = (
@@ -95,10 +95,8 @@ sub fonts_set_popup {
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
       ! gimp_data_factory_data_wait (gimp->font_factory)     ||
-      ! gimp_pdb_dialog_set (gimp,
-                             gimp_data_factory_get_container (gimp->font_factory),
-                             font_callback, font_name,
-                             NULL))
+      ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->font_factory),
+                             font_callback, GIMP_OBJECT (font), NULL))
     success = FALSE;
 }
 CODE

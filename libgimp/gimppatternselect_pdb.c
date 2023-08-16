@@ -115,7 +115,7 @@ gimp_patterns_close_popup (const gchar *pattern_callback)
 /**
  * gimp_patterns_set_popup:
  * @pattern_callback: The name of the callback registered for this pop-up.
- * @pattern_name: The name of the pattern to set as selected.
+ * @pattern: The pattern to set as selected.
  *
  * Sets the current pattern in a pattern selection dialog.
  *
@@ -125,7 +125,7 @@ gimp_patterns_close_popup (const gchar *pattern_callback)
  **/
 gboolean
 gimp_patterns_set_popup (const gchar *pattern_callback,
-                         const gchar *pattern_name)
+                         GimpPattern *pattern)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -133,7 +133,7 @@ gimp_patterns_set_popup (const gchar *pattern_callback,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, pattern_callback,
-                                          G_TYPE_STRING, pattern_name,
+                                          GIMP_TYPE_PATTERN, pattern,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),

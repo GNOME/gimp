@@ -116,18 +116,17 @@ gradients_set_popup_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   const gchar *gradient_callback;
-  const gchar *gradient_name;
+  GimpGradient *gradient;
 
   gradient_callback = g_value_get_string (gimp_value_array_index (args, 0));
-  gradient_name = g_value_get_string (gimp_value_array_index (args, 1));
+  gradient = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
           ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->gradient_factory),
-                                 gradient_callback, gradient_name,
-                                 NULL))
+                                 gradient_callback, GIMP_OBJECT (gradient), NULL))
         success = FALSE;
     }
 
@@ -230,12 +229,11 @@ register_gradient_select_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("gradient-name",
-                                                       "gradient name",
-                                                       "The name of the gradient to set as selected",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               gimp_param_spec_gradient ("gradient",
+                                                         "gradient",
+                                                         "The gradient to set as selected",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

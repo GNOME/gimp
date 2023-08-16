@@ -115,7 +115,7 @@ gimp_brushes_close_popup (const gchar *brush_callback)
 /**
  * gimp_brushes_set_popup:
  * @brush_callback: The name of the callback registered for this pop-up.
- * @brush_name: The name of the brush to set as selected.
+ * @brush: The brush to set as selected.
  *
  * Sets the selected brush in a brush selection dialog.
  *
@@ -125,7 +125,7 @@ gimp_brushes_close_popup (const gchar *brush_callback)
  **/
 gboolean
 gimp_brushes_set_popup (const gchar *brush_callback,
-                        const gchar *brush_name)
+                        GimpBrush   *brush)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -133,7 +133,7 @@ gimp_brushes_set_popup (const gchar *brush_callback,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, brush_callback,
-                                          G_TYPE_STRING, brush_name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),

@@ -115,7 +115,7 @@ gimp_gradients_close_popup (const gchar *gradient_callback)
 /**
  * gimp_gradients_set_popup:
  * @gradient_callback: The name of the callback registered for this pop-up.
- * @gradient_name: The name of the gradient to set as selected.
+ * @gradient: The gradient to set as selected.
  *
  * Sets the current gradient in a gradient selection dialog.
  *
@@ -124,8 +124,8 @@ gimp_gradients_close_popup (const gchar *gradient_callback)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_gradients_set_popup (const gchar *gradient_callback,
-                          const gchar *gradient_name)
+gimp_gradients_set_popup (const gchar  *gradient_callback,
+                          GimpGradient *gradient)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -133,7 +133,7 @@ gimp_gradients_set_popup (const gchar *gradient_callback,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, gradient_callback,
-                                          G_TYPE_STRING, gradient_name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
