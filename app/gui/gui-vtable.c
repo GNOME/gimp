@@ -671,6 +671,11 @@ gui_pdb_dialog_new (Gimp          *gimp,
           GValue     *values       = NULL;
           GtkWidget  *dialog;
           GtkWidget  *view;
+          gboolean    use_header_bar;
+
+          g_object_get (gtk_settings_get_default (),
+                        "gtk-dialogs-use-header", &use_header_bar,
+                        NULL);
 
           names = gimp_properties_append (dialog_type,
                                           &n_properties, names, &values,
@@ -684,6 +689,7 @@ gui_pdb_dialog_new (Gimp          *gimp,
                                           "initial-object", object,
                                           "callback-name",  callback_name,
                                           "menu-factory",   menus_get_global_menu_factory (gimp),
+                                          "use-header-bar", use_header_bar,
                                           NULL);
 
           names = gimp_properties_append_valist (dialog_type,
