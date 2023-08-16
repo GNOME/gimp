@@ -109,8 +109,8 @@ gimp_palette_select_run_callback (GimpPdbDialog  *dialog,
                                              dialog->caller_context,
                                              NULL, error,
                                              dialog->callback_name,
-                                             G_TYPE_STRING,  gimp_object_get_name (object),
-                                             G_TYPE_INT,     gimp_palette_get_n_colors (palette),
-                                             G_TYPE_BOOLEAN, closing,
+                                             GIMP_TYPE_RESOURCE, object,
+                                             G_TYPE_INT,         gimp_palette_get_n_colors (palette),
+                                             G_TYPE_BOOLEAN,     closing,
                                              G_TYPE_NONE);
 }

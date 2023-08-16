@@ -20,27 +20,9 @@
 
 #include "gimp.h"
 
-/* Data bounced back and forth to/from core and libgimp,
- * and here from the temp PDB procedure to the idle func.
- * But it is opaque to core, passed and returned unaltered.
- *
- * Not all fields are meaningful in each direction or transfer.
- * !!! We don't pass resource to core in this struct,
- * only from the temp callback to the idle func.
- *
- * Lifetime is as long as the remote dialog is open.
- * Closing the chooser dialog frees the adaption struct.
- */
 typedef struct
 {
-  /* This portion is passed to and from idle. */
-  guint                idle_id;
-  gint                 resource_id;
-  GType                resource_type;
-  gboolean             closing;
-
-  /* This portion is passed to and from core, and to idle. */
-  gchar                       *temp_PDB_callback_name;
+  GType                        resource_type;
   GimpResourceChoosedCallback  callback;
   gpointer                     owner_data;
   GDestroyNotify               data_destroy;
@@ -49,12 +31,12 @@ typedef struct
 
 /*  local */
 
-static void             gimp_resource_data_free (GimpResourceAdaption *adaption);
+static void             gimp_resource_data_free               (GimpResourceAdaption *adaption);
 
-static GimpValueArray * gimp_temp_resource_run  (GimpProcedure        *procedure,
-                                                 GimpProcedureConfig  *config,
-                                                 gpointer              run_data);
-static gboolean         gimp_temp_resource_idle (GimpResourceAdaption *adaption);
+static GimpValueArray * gimp_temp_resource_run                (GimpProcedure        *procedure,
+                                                               GimpProcedureConfig  *config,
+                                                               gpointer              run_data);
+static gboolean         gimp_resource_select_remove_after_run (const gchar         *procedure_name);
 
 
 /*  public */
@@ -131,11 +113,10 @@ static void
 create_callback_PDB_procedure_params (GimpProcedure *procedure,
                                       GType          resource_type)
 {
-  GIMP_PROC_ARG_STRING (procedure, "resource-name",
-                        "Resource name",
-                        "The resource name",
-                        NULL,
-                        G_PARAM_READWRITE);
+  GIMP_PROC_ARG_RESOURCE (procedure, "resource",
+                          "Resource",
+                          "The resource",
+                          G_PARAM_READWRITE);
 
   /* Create args for the extra, superfluous args that core is passing.*/
   if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
@@ -247,7 +228,7 @@ static gboolean
 popup_remote_chooser (const gchar   *title,
                       GBytes        *parent_handle,
                       GimpResource  *resource,
-                      gchar         *temp_PDB_callback_name,
+                      const gchar   *temp_PDB_callback_name,
                       GType          resource_type)
 {
   gboolean result = FALSE;
@@ -284,52 +265,19 @@ popup_remote_chooser (const gchar   *title,
   return result;
 }
 
-/*Does nothing, quietly, when the remote dialog is not open. */
-static void
-close_remote_chooser (gchar *temp_PDB_callback_name,
-                      GType  resource_type)
-{
-  if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
-    {
-      gimp_fonts_close_popup (temp_PDB_callback_name);
-    }
-  else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
-    {
-      gimp_gradients_close_popup (temp_PDB_callback_name);
-    }
-  else if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
-    {
-      gimp_brushes_close_popup (temp_PDB_callback_name);
-    }
-  else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
-    {
-      gimp_palettes_close_popup (temp_PDB_callback_name);
-    }
-  else if (g_type_is_a (resource_type, GIMP_TYPE_PATTERN))
-    {
-      gimp_patterns_close_popup (temp_PDB_callback_name);
-    }
-  else
-    {
-      g_warning ("%s: unhandled resource type", G_STRFUNC);
-    }
-}
-
 /**
  * gimp_resource_select_new:
- * @title:      Title of the resource selection dialog.
- * @resource:   The resource to set as the initial choice.
- * @resource_type: The type of the subclass of resource.
- * @callback: (scope notified): The callback function to call when a user chooses a resource.
+ * @title:                          Title of the resource selection dialog.
+ * @resource:                       The resource to set as the initial choice.
+ * @resource_type:                  The type of the subclass of [class@Resource].
+ * @callback: (scope notified):     The callback function to call when the user chooses a resource.
  * @owner_data: (closure callback): The run_data given to @callback.
  * @data_destroy: (destroy owner_data): The destroy function for @owner_data.
  *
  * Invoke a resource chooser dialog which may call @callback with the chosen
- * resource and owner's @data.
+ * @resource and @owner_data.
  *
- * A proxy to a remote dialog in core, which knows the model i.e. installed resources.
- *
- * Generic on type of #GimpResource subclass passed in @resource_type.
+ * A proxy to a remote dialog in core, which knows the installed resources.
  *
  * Returns: (transfer none): the name of a temporary PDB procedure. The
  *          string belongs to the resource selection dialog and will be
@@ -349,23 +297,18 @@ gimp_resource_select_new (const gchar                 *title,
   gchar         *temp_PDB_callback_name;
   GimpResourceAdaption  *adaption;
 
-  g_debug ("%s", G_STRFUNC);
-
   g_return_val_if_fail (resource != NULL, NULL);
   g_return_val_if_fail (callback != NULL, NULL);
-  g_return_val_if_fail (resource_type != 0, NULL);
+  g_return_val_if_fail (g_type_is_a (resource_type, GIMP_TYPE_RESOURCE), NULL);
 
   temp_PDB_callback_name = gimp_pdb_temp_procedure_name (gimp_get_pdb ());
 
   adaption = g_slice_new0 (GimpResourceAdaption);
 
-  adaption->temp_PDB_callback_name  = temp_PDB_callback_name;
-  adaption->callback                = callback;
-  adaption->owner_data              = owner_data;
-  adaption->data_destroy            = data_destroy;
-  adaption->resource_type           = resource_type;
-
-  /* !!! Only part of the adaption has been initialized. */
+  adaption->callback      = callback;
+  adaption->owner_data    = owner_data;
+  adaption->data_destroy  = data_destroy;
+  adaption->resource_type = resource_type;
 
   procedure = gimp_procedure_new (plug_in,
                                   temp_PDB_callback_name,
@@ -378,13 +321,14 @@ gimp_resource_select_new (const gchar                 *title,
 
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);
+  g_free (temp_PDB_callback_name);
 
-  if (popup_remote_chooser (title, parent_handle, resource, temp_PDB_callback_name, resource_type))
+  if (popup_remote_chooser (title, parent_handle, resource, gimp_procedure_get_name (procedure), resource_type))
     {
       /* Allow callbacks to be watched */
       gimp_plug_in_extension_enable (plug_in);
 
-      return temp_PDB_callback_name;
+      return gimp_procedure_get_name (procedure);
     }
   else
     {
@@ -395,78 +339,42 @@ gimp_resource_select_new (const gchar                 *title,
 }
 
 
-void
-gimp_resource_select_destroy (const gchar *temp_PDB_callback_name)
-{
-  GimpPlugIn *plug_in = gimp_get_plug_in ();
-
-  g_return_if_fail (temp_PDB_callback_name != NULL);
-
-  gimp_plug_in_remove_temp_procedure (plug_in, temp_PDB_callback_name);
-}
-
-
-/* Set currently selected resource in remote chooser.
+/* gimp_resource_select_set:
+ * @callback_name: a callback name as returned by [func@resource_select_new].
+ * @resource:      a [class@Resource] of type @resource_type.
  *
- * Calls a PDB procedure.
- *
- * Note core is still using string name of resource,
- * so pdb/groups/<foo>_select.pdb, <foo>_set_popup must have type string.
+ * Set currently selected resource in remote chooser.
  */
 void
-gimp_resource_select_set (const gchar  *temp_pdb_callback,
-                          GimpResource *resource,
-                          GType         resource_type)
+gimp_resource_select_set (const gchar  *callback_name,
+                          GimpResource *resource)
 {
+  GType resource_type;
+
+  g_return_if_fail (resource != NULL);
+
+  resource_type = G_TYPE_FROM_INSTANCE (resource);
+  g_return_if_fail (g_type_is_a (resource_type, GIMP_TYPE_RESOURCE));
+
   if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
-    {
-      gimp_fonts_set_popup (temp_pdb_callback, GIMP_FONT (resource));
-    }
+    gimp_fonts_set_popup (callback_name, GIMP_FONT (resource));
   else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
-    {
-      gimp_gradients_set_popup (temp_pdb_callback, GIMP_GRADIENT (resource));
-    }
+    gimp_gradients_set_popup (callback_name, GIMP_GRADIENT (resource));
   else if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
-    {
-      gimp_brushes_set_popup (temp_pdb_callback, GIMP_BRUSH (resource));
-    }
+    gimp_brushes_set_popup (callback_name, GIMP_BRUSH (resource));
   else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
-    {
-      gimp_palettes_set_popup (temp_pdb_callback, GIMP_PALETTE (resource));
-    }
+    gimp_palettes_set_popup (callback_name, GIMP_PALETTE (resource));
   else if (g_type_is_a (resource_type, GIMP_TYPE_PATTERN))
-    {
-      gimp_patterns_set_popup (temp_pdb_callback, GIMP_PATTERN (resource));
-    }
+    gimp_patterns_set_popup (callback_name, GIMP_PATTERN (resource));
   else
-    {
-      g_warning ("%s: unhandled resource type", G_STRFUNC);
-    }
+    g_return_if_reached ();
 }
 
 /*  private functions  */
 
-/* Free a GimpResourceAdaption struct.
- * A GimpResourceAdaption and this func are passed to a GimpProcedure
- * and this func is called back when the procedure is removed.
- *
- * This can be called for the exception: failed to open remote dialog.
- *
- * Each allocated field must be safely freed (not assuming it is valid pointer.)
- */
 static void
 gimp_resource_data_free (GimpResourceAdaption *adaption)
 {
-  if (adaption->idle_id)
-    g_source_remove (adaption->idle_id);
-
-  if (adaption->temp_PDB_callback_name)
-    {
-      close_remote_chooser (adaption->temp_PDB_callback_name,
-                            adaption->resource_type);
-      g_free (adaption->temp_PDB_callback_name);
-    }
-
   if (adaption->data_destroy)
     adaption->data_destroy (adaption->owner_data);
 
@@ -482,48 +390,33 @@ gimp_temp_resource_run (GimpProcedure       *procedure,
                         gpointer             run_data)
 {
   GimpResourceAdaption *adaption = run_data;
-  gchar                *resource_name;
   GimpResource         *resource;
+  gboolean              closing;
 
   g_object_get (config,
-                "resource-name", &resource_name,
-                "closing",       &adaption->closing,
+                "resource", &resource,
+                "closing",  &closing,
                 NULL);
 
-  resource = gimp_resource_get_by_name (adaption->resource_type,
-                                        resource_name);
+  if (adaption->callback)
+    adaption->callback (resource, closing,
+                        adaption->owner_data);
 
-  adaption->resource_id = gimp_resource_get_id (resource);
+  if (closing)
+    g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                     (GSourceFunc) gimp_resource_select_remove_after_run,
+                     g_strdup (gimp_procedure_get_name (procedure)),
+                     g_free);
 
-  if (! adaption->idle_id)
-    adaption->idle_id = g_idle_add ((GSourceFunc) gimp_temp_resource_idle,
-                                    adaption);
-
-  g_free (resource_name);
+  g_object_unref (resource);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static gboolean
-gimp_temp_resource_idle (GimpResourceAdaption *adaption)
+gimp_resource_select_remove_after_run (const gchar *procedure_name)
 {
-  adaption->idle_id = 0;
-
-  if (adaption->callback)
-    adaption->callback (gimp_resource_get_by_id (adaption->resource_id),
-                        adaption->closing,
-                        adaption->owner_data);
-
-  adaption->resource_id = 0;
-
-  if (adaption->closing)
-    {
-      gchar *temp_PDB_callback_name = adaption->temp_PDB_callback_name;
-
-      adaption->temp_PDB_callback_name = NULL;
-      gimp_resource_select_destroy (temp_PDB_callback_name);
-      g_free (temp_PDB_callback_name);
-    }
+  gimp_plug_in_remove_temp_procedure (gimp_get_plug_in (), procedure_name);
 
   return G_SOURCE_REMOVE;
 }

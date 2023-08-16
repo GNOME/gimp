@@ -45,11 +45,8 @@ const gchar * gimp_resource_select_new       (const gchar                 *title
                                               gpointer                     owner_data,
                                               GDestroyNotify               data_destroy);
 
-void          gimp_resource_select_destroy   (const gchar                 *temp_pdb_callback);
-
-void          gimp_resource_select_set       (const gchar                 *temp_pdb_callback,
-                                              GimpResource                *resource,
-                                              GType                        resource_type);
+void          gimp_resource_select_set       (const gchar                 *callback_name,
+                                              GimpResource                *resource);
 
 G_END_DECLS
 

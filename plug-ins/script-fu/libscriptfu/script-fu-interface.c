@@ -646,29 +646,10 @@ script_fu_resource_widget (const gchar   *title,
 static void
 script_fu_interface_quit (SFScript *script)
 {
-  gint i;
-
   g_return_if_fail (script != NULL);
   g_return_if_fail (sf_interface != NULL);
 
   g_free (sf_interface->title);
-
-  for (i = 0; i < script->n_args; i++)
-    switch (script->args[i].type)
-      {
-      case SF_FONT:
-      case SF_PALETTE:
-      case SF_PATTERN:
-      case SF_GRADIENT:
-      case SF_BRUSH:
-        gimp_resource_select_button_close_popup
-          (GIMP_RESOURCE_SELECT_BUTTON (sf_interface->widgets[i]));
-        break;
-
-      default:
-        break;
-      }
-
   g_free (sf_interface->widgets);
   g_free (sf_interface->last_command);
 

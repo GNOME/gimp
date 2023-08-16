@@ -64,7 +64,6 @@ EXPORTS
 	gimp_prop_chooser_gradient_new
 	gimp_prop_chooser_palette_new
 	gimp_prop_chooser_pattern_new
-	gimp_resource_select_button_close_popup
 	gimp_resource_select_button_get_resource
 	gimp_resource_select_button_get_type
 	gimp_resource_select_button_set_clickable

@@ -26,9 +26,7 @@
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_RESOURCE_SELECT_BUTTON (gimp_resource_select_button_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpResourceSelectButton,
-                          gimp_resource_select_button,
-                          GIMP, RESOURCE_SELECT_BUTTON, GtkBox)
+G_DECLARE_DERIVABLE_TYPE (GimpResourceSelectButton, gimp_resource_select_button, GIMP, RESOURCE_SELECT_BUTTON, GtkBox)
 
 struct _GimpResourceSelectButtonClass
 {
@@ -46,18 +44,17 @@ struct _GimpResourceSelectButtonClass
   gpointer padding[8];
 };
 
-GimpResource *gimp_resource_select_button_get_resource (GimpResourceSelectButton *self);
-void          gimp_resource_select_button_set_resource (GimpResourceSelectButton *self,
-                                                        GimpResource             *resource);
+GimpResource * gimp_resource_select_button_get_resource     (GimpResourceSelectButton *self);
+void           gimp_resource_select_button_set_resource     (GimpResourceSelectButton *self,
+                                                             GimpResource             *resource);
 
 /* API from below, used by subclasses e.g. GimpBrushSelectButton */
 
-void      gimp_resource_select_button_set_drag_target  (GimpResourceSelectButton *self,
-                                                        GtkWidget                *drag_region_widget,
-                                                        const GtkTargetEntry     *drag_target);
-void      gimp_resource_select_button_set_clickable    (GimpResourceSelectButton *self,
-                                                        GtkWidget                *widget);
-void      gimp_resource_select_button_close_popup      (GimpResourceSelectButton *self);
+void           gimp_resource_select_button_set_drag_target  (GimpResourceSelectButton *self,
+                                                             GtkWidget                *drag_region_widget,
+                                                             const GtkTargetEntry     *drag_target);
+void           gimp_resource_select_button_set_clickable    (GimpResourceSelectButton *self,
+                                                             GtkWidget                *widget);
 
 G_END_DECLS
 

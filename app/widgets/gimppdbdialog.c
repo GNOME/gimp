@@ -138,7 +138,9 @@ static void
 gimp_pdb_dialog_init (GimpPdbDialog *dialog)
 {
   gtk_dialog_add_button (GTK_DIALOG (dialog),
-                         _("_Close"), GTK_RESPONSE_CLOSE);
+                         _("_OK"), GTK_RESPONSE_OK);
+  gtk_dialog_add_button (GTK_DIALOG (dialog),
+                         _("_Cancel"), GTK_RESPONSE_CANCEL);
 }
 
 static void
@@ -163,8 +165,6 @@ gimp_pdb_dialog_constructed (GObject *object)
   gimp_context_set_by_type (dialog->context, dialog->select_type,
                             dialog->initial_object);
 
-  dialog->initial_object = NULL;
-
   signal_name = gimp_context_type_to_signal_name (dialog->select_type);
 
   g_signal_connect_object (dialog->context, signal_name,
@@ -187,6 +187,7 @@ gimp_pdb_dialog_dispose (GObject *object)
   g_clear_object (&dialog->pdb);
   g_clear_object (&dialog->caller_context);
   g_clear_object (&dialog->context);
+  g_clear_object (&dialog->initial_object);
 
   g_clear_pointer (&dialog->callback_name, g_free);
 
@@ -218,8 +219,7 @@ gimp_pdb_dialog_set_property (GObject      *object,
       break;
 
     case PROP_INITIAL_OBJECT:
-      /* don't ref, see constructor */
-      dialog->initial_object = g_value_get_object (value);
+      dialog->initial_object = g_value_dup_object (value);
       break;
 
     case PROP_CALLBACK_NAME:
@@ -244,9 +244,12 @@ gimp_pdb_dialog_response (GtkDialog *gtk_dialog,
 {
   GimpPdbDialog *dialog = GIMP_PDB_DIALOG (gtk_dialog);
 
+  if (response_id != GTK_RESPONSE_OK)
+    gimp_context_set_by_type (dialog->context, dialog->select_type,
+                              dialog->initial_object);
+
   gimp_pdb_dialog_run_callback (&dialog, TRUE);
-  if (dialog)
-    gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
 void

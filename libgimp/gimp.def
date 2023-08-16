@@ -814,7 +814,6 @@ EXPORTS
 	gimp_resource_is_pattern
  	gimp_resource_is_valid
 	gimp_resource_rename
-	gimp_resource_select_destroy
 	gimp_resource_select_new
 	gimp_resource_select_set
 	gimp_save_procedure_get_support_comment
