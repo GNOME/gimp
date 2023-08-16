@@ -27,8 +27,8 @@ sub palettes_popup {
         desc => 'The callback PDB proc to call when user chooses a palette' },
       { name => 'popup_title', type => 'string',
         desc => 'Title of the palette selection dialog' },
-      { name => 'initial_palette_name', type => 'string', null_ok => 1,
-        desc => 'The name of the palette to set as the initial choice.' },
+      { name => 'initial_palette', type => 'palette', null_ok => 1,
+        desc => 'The palette to set as the initial choice.' },
       { name => 'parent_window', type => 'bytes', null_ok => 1,
         desc => 'An optional parent window handle for the popup to be set transient to' }
     );
@@ -40,9 +40,8 @@ sub palettes_popup {
       ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
       ! gimp_pdb_dialog_new (gimp, context, progress,
                              gimp_data_factory_get_container (gimp->palette_factory),
-                             parent_window,
-                             popup_title, palette_callback, initial_palette_name,
-                             NULL))
+                             parent_window, popup_title, palette_callback,
+                             GIMP_OBJECT (initial_palette), NULL))
     success = FALSE;
 }
 CODE

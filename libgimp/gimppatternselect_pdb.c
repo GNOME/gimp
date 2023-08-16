@@ -41,7 +41,7 @@
  * gimp_patterns_popup:
  * @pattern_callback: The callback PDB proc to call when the user chooses a pattern.
  * @popup_title: Title of the pattern selection dialog.
- * @initial_pattern_name: The name of the pattern to set as the initial choice.
+ * @initial_pattern: The pattern to set as the initial choice.
  * @parent_window: An optional parent window handle for the popup to be set transient to.
  *
  * Invokes the Gimp pattern selection.
@@ -53,7 +53,7 @@
 gboolean
 gimp_patterns_popup (const gchar *pattern_callback,
                      const gchar *popup_title,
-                     const gchar *initial_pattern_name,
+                     GimpPattern *initial_pattern,
                      GBytes      *parent_window)
 {
   GimpValueArray *args;
@@ -63,7 +63,7 @@ gimp_patterns_popup (const gchar *pattern_callback,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, pattern_callback,
                                           G_TYPE_STRING, popup_title,
-                                          G_TYPE_STRING, initial_pattern_name,
+                                          GIMP_TYPE_PATTERN, initial_pattern,
                                           G_TYPE_BYTES, parent_window,
                                           G_TYPE_NONE);
 

@@ -49,7 +49,7 @@
  * gimp_fonts_popup:
  * @font_callback: The callback PDB proc to call when user chooses a font.
  * @popup_title: Title of the font selection dialog.
- * @initial_font_name: The name of the initial font choice.
+ * @initial_font: The name of the initial font choice.
  * @parent_window: An optional parent window handle for the popup to be set transient to.
  *
  * Invokes the Gimp font selection dialog.
@@ -61,7 +61,7 @@
 gboolean
 gimp_fonts_popup (const gchar *font_callback,
                   const gchar *popup_title,
-                  const gchar *initial_font_name,
+                  GimpFont    *initial_font,
                   GBytes      *parent_window)
 {
   GimpValueArray *args;
@@ -71,7 +71,7 @@ gimp_fonts_popup (const gchar *font_callback,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, font_callback,
                                           G_TYPE_STRING, popup_title,
-                                          G_TYPE_STRING, initial_font_name,
+                                          GIMP_TYPE_FONT, initial_font,
                                           G_TYPE_BYTES, parent_window,
                                           G_TYPE_NONE);
 

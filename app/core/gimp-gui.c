@@ -407,7 +407,7 @@ gimp_pdb_dialog_new (Gimp          *gimp,
                      GBytes        *parent_handle,
                      const gchar   *title,
                      const gchar   *callback_name,
-                     const gchar   *object_name,
+                     GimpObject    *object,
                      ...)
 {
   gboolean retval = FALSE;
@@ -423,12 +423,11 @@ gimp_pdb_dialog_new (Gimp          *gimp,
     {
       va_list args;
 
-      va_start (args, object_name);
+      va_start (args, object);
 
       retval = gimp->gui.pdb_dialog_new (gimp, context, progress,
                                          container, parent_handle, title,
-                                         callback_name, object_name,
-                                         args);
+                                         callback_name, object, args);
 
       va_end (args);
     }

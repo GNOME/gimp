@@ -50,12 +50,12 @@ fonts_popup_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   const gchar *font_callback;
   const gchar *popup_title;
-  const gchar *initial_font_name;
+  GimpFont *initial_font;
   GBytes *parent_window;
 
   font_callback = g_value_get_string (gimp_value_array_index (args, 0));
   popup_title = g_value_get_string (gimp_value_array_index (args, 1));
-  initial_font_name = g_value_get_string (gimp_value_array_index (args, 2));
+  initial_font = g_value_get_object (gimp_value_array_index (args, 2));
   parent_window = g_value_get_boxed (gimp_value_array_index (args, 3));
 
   if (success)
@@ -65,9 +65,8 @@ fonts_popup_invoker (GimpProcedure         *procedure,
           ! gimp_data_factory_data_wait (gimp->font_factory)     ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
                                  gimp_data_factory_get_container (gimp->font_factory),
-                                 parent_window,
-                                 popup_title, font_callback, initial_font_name,
-                                 NULL))
+                                 parent_window, popup_title, font_callback,
+                                 GIMP_OBJECT (initial_font), NULL))
         success = FALSE;
     }
 
@@ -165,12 +164,11 @@ register_font_select_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("initial-font-name",
-                                                       "initial font name",
-                                                       "The name of the initial font choice.",
-                                                       FALSE, TRUE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               gimp_param_spec_font ("initial-font",
+                                                     "initial font",
+                                                     "The name of the initial font choice.",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boxed ("parent-window",
                                                    "parent window",

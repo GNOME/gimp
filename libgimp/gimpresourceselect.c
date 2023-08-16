@@ -232,30 +232,26 @@ popup_remote_chooser (const gchar   *title,
                       GType          resource_type)
 {
   gboolean result = FALSE;
-  gchar   *resource_name;
-
-  /* The PDB procedure still takes a name  */
-  resource_name = gimp_resource_get_name (resource);
 
   if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
     {
-      result = gimp_brushes_popup (temp_PDB_callback_name, title, resource_name, parent_handle);
+      result = gimp_brushes_popup (temp_PDB_callback_name, title, GIMP_BRUSH (resource), parent_handle);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
     {
-      result = gimp_fonts_popup (temp_PDB_callback_name, title, resource_name, parent_handle);
+      result = gimp_fonts_popup (temp_PDB_callback_name, title, GIMP_FONT (resource), parent_handle);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
     {
-      result = gimp_gradients_popup (temp_PDB_callback_name, title, resource_name, parent_handle);
+      result = gimp_gradients_popup (temp_PDB_callback_name, title, GIMP_GRADIENT (resource), parent_handle);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
     {
-      result = gimp_palettes_popup (temp_PDB_callback_name, title, resource_name, parent_handle);
+      result = gimp_palettes_popup (temp_PDB_callback_name, title, GIMP_PALETTE (resource), parent_handle);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PATTERN))
     {
-      result = gimp_patterns_popup (temp_PDB_callback_name, title, resource_name, parent_handle);
+      result = gimp_patterns_popup (temp_PDB_callback_name, title, GIMP_PATTERN (resource), parent_handle);
     }
   else
     {

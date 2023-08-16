@@ -41,7 +41,7 @@
  * gimp_brushes_popup:
  * @brush_callback: The callback PDB proc to call when user chooses a brush.
  * @popup_title: Title of the brush selection dialog.
- * @initial_brush_name: The name of the brush to set as the initial choice.
+ * @initial_brush: The brush to set as the initial choice.
  * @parent_window: An optional parent window handle for the popup to be set transient to.
  *
  * Invokes the GIMP brush selection dialog.
@@ -53,7 +53,7 @@
 gboolean
 gimp_brushes_popup (const gchar *brush_callback,
                     const gchar *popup_title,
-                    const gchar *initial_brush_name,
+                    GimpBrush   *initial_brush,
                     GBytes      *parent_window)
 {
   GimpValueArray *args;
@@ -63,7 +63,7 @@ gimp_brushes_popup (const gchar *brush_callback,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, brush_callback,
                                           G_TYPE_STRING, popup_title,
-                                          G_TYPE_STRING, initial_brush_name,
+                                          GIMP_TYPE_BRUSH, initial_brush,
                                           G_TYPE_BYTES, parent_window,
                                           G_TYPE_NONE);
 

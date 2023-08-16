@@ -34,7 +34,7 @@ G_BEGIN_DECLS
 
 gboolean gimp_fonts_popup       (const gchar *font_callback,
                                  const gchar *popup_title,
-                                 const gchar *initial_font_name,
+                                 GimpFont    *initial_font,
                                  GBytes      *parent_window);
 gboolean gimp_fonts_close_popup (const gchar *font_callback);
 gboolean gimp_fonts_set_popup   (const gchar *font_callback,

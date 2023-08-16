@@ -156,7 +156,7 @@ static gboolean       gui_pdb_dialog_new         (Gimp                *gimp,
                                                   GBytes              *parent_handle,
                                                   const gchar         *title,
                                                   const gchar         *callback_name,
-                                                  const gchar         *object_name,
+                                                  GimpObject          *object,
                                                   va_list              args);
 static gboolean       gui_pdb_dialog_set         (Gimp                *gimp,
                                                   GimpContainer       *container,
@@ -615,7 +615,7 @@ gui_pdb_dialog_new (Gimp          *gimp,
                     GBytes        *parent_handle,
                     const gchar   *title,
                     const gchar   *callback_name,
-                    const gchar   *object_name,
+                    GimpObject    *object,
                     va_list        args)
 {
   GType        dialog_type = G_TYPE_NONE;
@@ -656,9 +656,6 @@ gui_pdb_dialog_new (Gimp          *gimp,
   if (dialog_type != G_TYPE_NONE)
     {
       GimpObject *object = NULL;
-
-      if (object_name && strlen (object_name))
-        object = gimp_container_get_child_by_name (container, object_name);
 
       if (! object)
         object = gimp_context_get_by_type (context,

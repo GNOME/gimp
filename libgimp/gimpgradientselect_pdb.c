@@ -41,7 +41,7 @@
  * gimp_gradients_popup:
  * @gradient_callback: The callback PDB proc to call when user chooses a gradient.
  * @popup_title: Title of the gradient selection dialog.
- * @initial_gradient_name: The name of the initial gradient choice.
+ * @initial_gradient: The initial gradient choice.
  * @parent_window: An optional parent window handle for the popup to be set transient to.
  *
  * Invokes the Gimp gradients selection dialog.
@@ -51,10 +51,10 @@
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_gradients_popup (const gchar *gradient_callback,
-                      const gchar *popup_title,
-                      const gchar *initial_gradient_name,
-                      GBytes      *parent_window)
+gimp_gradients_popup (const gchar  *gradient_callback,
+                      const gchar  *popup_title,
+                      GimpGradient *initial_gradient,
+                      GBytes       *parent_window)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -63,7 +63,7 @@ gimp_gradients_popup (const gchar *gradient_callback,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, gradient_callback,
                                           G_TYPE_STRING, popup_title,
-                                          G_TYPE_STRING, initial_gradient_name,
+                                          GIMP_TYPE_GRADIENT, initial_gradient,
                                           G_TYPE_BYTES, parent_window,
                                           G_TYPE_NONE);
 

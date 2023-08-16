@@ -50,12 +50,12 @@ patterns_popup_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   const gchar *pattern_callback;
   const gchar *popup_title;
-  const gchar *initial_pattern_name;
+  GimpPattern *initial_pattern;
   GBytes *parent_window;
 
   pattern_callback = g_value_get_string (gimp_value_array_index (args, 0));
   popup_title = g_value_get_string (gimp_value_array_index (args, 1));
-  initial_pattern_name = g_value_get_string (gimp_value_array_index (args, 2));
+  initial_pattern = g_value_get_object (gimp_value_array_index (args, 2));
   parent_window = g_value_get_boxed (gimp_value_array_index (args, 3));
 
   if (success)
@@ -64,9 +64,8 @@ patterns_popup_invoker (GimpProcedure         *procedure,
           ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
                                  gimp_data_factory_get_container (gimp->pattern_factory),
-                                 parent_window,
-                                 popup_title, pattern_callback, initial_pattern_name,
-                                 NULL))
+                                 parent_window, popup_title, pattern_callback,
+                                 GIMP_OBJECT (initial_pattern), NULL))
         success = FALSE;
     }
 
@@ -162,12 +161,11 @@ register_pattern_select_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("initial-pattern-name",
-                                                       "initial pattern name",
-                                                       "The name of the pattern to set as the initial choice",
-                                                       FALSE, TRUE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               gimp_param_spec_pattern ("initial-pattern",
+                                                        "initial pattern",
+                                                        "The pattern to set as the initial choice",
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boxed ("parent-window",
                                                    "parent window",

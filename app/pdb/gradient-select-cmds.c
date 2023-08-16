@@ -50,12 +50,12 @@ gradients_popup_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   const gchar *gradient_callback;
   const gchar *popup_title;
-  const gchar *initial_gradient_name;
+  GimpGradient *initial_gradient;
   GBytes *parent_window;
 
   gradient_callback = g_value_get_string (gimp_value_array_index (args, 0));
   popup_title = g_value_get_string (gimp_value_array_index (args, 1));
-  initial_gradient_name = g_value_get_string (gimp_value_array_index (args, 2));
+  initial_gradient = g_value_get_object (gimp_value_array_index (args, 2));
   parent_window = g_value_get_boxed (gimp_value_array_index (args, 3));
 
   if (success)
@@ -70,9 +70,8 @@ gradients_popup_invoker (GimpProcedure         *procedure,
           ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
                                  gimp_data_factory_get_container (gimp->gradient_factory),
-                                 parent_window,
-                                 popup_title, gradient_callback, initial_gradient_name,
-                                 NULL))
+                                 parent_window, popup_title, gradient_callback,
+                                 GIMP_OBJECT (initial_gradient), NULL))
         success = FALSE;
     }
 
@@ -168,12 +167,11 @@ register_gradient_select_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("initial-gradient-name",
-                                                       "initial gradient name",
-                                                       "The name of the initial gradient choice",
-                                                       FALSE, TRUE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               gimp_param_spec_gradient ("initial-gradient",
+                                                         "initial gradient",
+                                                         "The initial gradient choice",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boxed ("parent-window",
                                                    "parent window",

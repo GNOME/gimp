@@ -50,12 +50,12 @@ palettes_popup_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   const gchar *palette_callback;
   const gchar *popup_title;
-  const gchar *initial_palette_name;
+  GimpPalette *initial_palette;
   GBytes *parent_window;
 
   palette_callback = g_value_get_string (gimp_value_array_index (args, 0));
   popup_title = g_value_get_string (gimp_value_array_index (args, 1));
-  initial_palette_name = g_value_get_string (gimp_value_array_index (args, 2));
+  initial_palette = g_value_get_object (gimp_value_array_index (args, 2));
   parent_window = g_value_get_boxed (gimp_value_array_index (args, 3));
 
   if (success)
@@ -64,9 +64,8 @@ palettes_popup_invoker (GimpProcedure         *procedure,
           ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
                                  gimp_data_factory_get_container (gimp->palette_factory),
-                                 parent_window,
-                                 popup_title, palette_callback, initial_palette_name,
-                                 NULL))
+                                 parent_window, popup_title, palette_callback,
+                                 GIMP_OBJECT (initial_palette), NULL))
         success = FALSE;
     }
 
@@ -162,12 +161,11 @@ register_palette_select_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("initial-palette-name",
-                                                       "initial palette name",
-                                                       "The name of the palette to set as the initial choice.",
-                                                       FALSE, TRUE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               gimp_param_spec_palette ("initial-palette",
+                                                        "initial palette",
+                                                        "The palette to set as the initial choice.",
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boxed ("parent-window",
                                                    "parent window",
