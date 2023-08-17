@@ -119,7 +119,8 @@ gimp_font_select_button_draw_interior (GimpResourceSelectButton *self)
 
 /**
  * gimp_font_select_button_new:
- * @title: (nullable): Title of the dialog to use or %NULL to use the default title.
+ * @title:    (nullable): Title of the dialog to use or %NULL to use the default title.
+ * @label:    (nullable): Button label or %NULL for no label.
  * @resource: (nullable): Initial font.
  *
  * Creates a new #GtkWidget that lets a user choose a font.
@@ -133,6 +134,7 @@ gimp_font_select_button_draw_interior (GimpResourceSelectButton *self)
  */
 GtkWidget *
 gimp_font_select_button_new (const gchar  *title,
+                             const gchar  *label,
                              GimpResource *resource)
 {
   GtkWidget *self;
@@ -145,10 +147,12 @@ gimp_font_select_button_new (const gchar  *title,
    if (title)
      self = g_object_new (GIMP_TYPE_FONT_SELECT_BUTTON,
                           "title",     title,
+                          "label",     label,
                           "resource",  resource,
                           NULL);
    else
      self = g_object_new (GIMP_TYPE_FONT_SELECT_BUTTON,
+                          "label",     label,
                           "resource",  resource,
                           NULL);
 

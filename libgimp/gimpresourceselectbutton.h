@@ -49,6 +49,8 @@ struct _GimpResourceSelectButtonClass
 GimpResource * gimp_resource_select_button_get_resource     (GimpResourceSelectButton *self);
 void           gimp_resource_select_button_set_resource     (GimpResourceSelectButton *self,
                                                              GimpResource             *resource);
+GtkWidget    * gimp_resource_select_button_get_label        (GimpResourceSelectButton *widget);
+
 
 /* API from below, used by subclasses e.g. GimpBrushSelectButton */
 

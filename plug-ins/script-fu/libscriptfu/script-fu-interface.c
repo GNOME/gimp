@@ -606,23 +606,23 @@ script_fu_resource_widget (const gchar   *title,
 
   if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
     {
-      result_widget = gimp_font_select_button_new (title, resource);
+      result_widget = gimp_font_select_button_new (title, title, resource);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
     {
-      result_widget = gimp_brush_select_button_new (title, resource);
+      result_widget = gimp_brush_select_button_new (title, title, resource);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
     {
-      result_widget = gimp_gradient_select_button_new (title, resource);
+      result_widget = gimp_gradient_select_button_new (title, title, resource);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
     {
-      result_widget = gimp_palette_select_button_new (title, resource);
+      result_widget = gimp_palette_select_button_new (title, title, resource);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PATTERN))
     {
-      result_widget = gimp_pattern_select_button_new (title, resource);
+      result_widget = gimp_pattern_select_button_new (title, title, resource);
     }
   else
     {

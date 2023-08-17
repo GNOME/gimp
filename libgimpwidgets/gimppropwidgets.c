@@ -45,50 +45,49 @@
 
 /*  utility function prototypes  */
 
-static void         set_param_spec     (GObject     *object,
-                                        GtkWidget   *widget,
-                                        GParamSpec  *param_spec);
-static void         set_radio_spec     (GObject     *object,
-                                        GParamSpec  *param_spec);
-static GParamSpec * get_param_spec     (GObject     *object);
+static void         set_param_spec                      (GObject     *object,
+                                                         GtkWidget   *widget,
+                                                         GParamSpec  *param_spec);
+static void         set_radio_spec                      (GObject     *object,
+                                                         GParamSpec  *param_spec);
+static GParamSpec * get_param_spec                      (GObject     *object);
 
-static GParamSpec * find_param_spec    (GObject     *object,
-                                        const gchar *property_name,
-                                        const gchar *strloc);
-static GParamSpec * check_param_spec_quiet (
-                                        GObject     *object,
-                                        const gchar *property_name,
-                                        GType        type,
-                                        const gchar *strloc);
-static GParamSpec * check_param_spec   (GObject     *object,
-                                        const gchar *property_name,
-                                        GType        type,
-                                        const gchar *strloc);
-static GParamSpec * check_param_spec_w (GObject     *object,
-                                        const gchar *property_name,
-                                        GType        type,
-                                        const gchar *strloc);
+static GParamSpec * find_param_spec                     (GObject     *object,
+                                                         const gchar *property_name,
+                                                         const gchar *strloc);
+static GParamSpec * check_param_spec_quiet              (GObject     *object,
+                                                         const gchar *property_name,
+                                                         GType        type,
+                                                         const gchar *strloc);
+static GParamSpec * check_param_spec                    (GObject     *object,
+                                                         const gchar *property_name,
+                                                         GType        type,
+                                                         const gchar *strloc);
+static GParamSpec * check_param_spec_w                  (GObject     *object,
+                                                         const gchar *property_name,
+                                                         GType        type,
+                                                         const gchar *strloc);
 
-static gboolean     get_numeric_values (GObject     *object,
-                                        GParamSpec  *param_spec,
-                                        gdouble     *value,
-                                        gdouble     *lower,
-                                        gdouble     *upper,
-                                        const gchar *strloc);
+static gboolean     get_numeric_values                  (GObject     *object,
+                                                         GParamSpec  *param_spec,
+                                                         gdouble     *value,
+                                                         gdouble     *lower,
+                                                         gdouble     *upper,
+                                                         const gchar *strloc);
 
-static void         connect_notify     (GObject     *config,
-                                        const gchar *property_name,
-                                        GCallback    callback,
-                                        gpointer     callback_data);
+static void         connect_notify                      (GObject     *config,
+                                                         const gchar *property_name,
+                                                         GCallback    callback,
+                                                         gpointer     callback_data);
 
-static gboolean gimp_prop_widget_double_to_factor   (GBinding     *binding,
-                                                     const GValue *from_value,
-                                                     GValue       *to_value,
-                                                     gpointer      user_data);
-static gboolean gimp_prop_widget_double_from_factor (GBinding     *binding,
-                                                     const GValue *from_value,
-                                                     GValue       *to_value,
-                                                     gpointer      user_data);
+static gboolean     gimp_prop_widget_double_to_factor   (GBinding     *binding,
+                                                         const GValue *from_value,
+                                                         GValue       *to_value,
+                                                         gpointer      user_data);
+static gboolean     gimp_prop_widget_double_from_factor (GBinding     *binding,
+                                                         const GValue *from_value,
+                                                         GValue       *to_value,
+                                                         gpointer      user_data);
 
 
 /******************/

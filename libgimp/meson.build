@@ -271,7 +271,7 @@ libgimpui_sources_introspectable = [
   'gimpproceduredialog.c',
   'gimpprocview.c',
   'gimpprogressbar.c',
-  'gimppropchooserfactory.c',
+  'gimppropwidgets.c',
   'gimpresourceselectbutton.c',
   'gimpsaveproceduredialog.c',
   'gimpui.c',
@@ -281,7 +281,6 @@ libgimpui_sources_introspectable = [
 libgimpui_sources = [
   libgimpui_sources_introspectable,
   gimpuimarshal,
-  'gimppropchooser-private.c',
 ]
 
 libgimpui_headers_introspectable = [
@@ -304,7 +303,7 @@ libgimpui_headers_introspectable = [
   'gimpproceduredialog.h',
   'gimpprocview.h',
   'gimpprogressbar.h',
-  'gimppropchooserfactory.h',
+  'gimppropwidgets.h',
   'gimpresourceselectbutton.h',
   'gimpsaveproceduredialog.h',
   'gimpzoompreview.h',

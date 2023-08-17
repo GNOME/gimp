@@ -45,6 +45,13 @@ typedef struct _GimpVectors         GimpVectors;
 
 typedef struct _GimpDisplay         GimpDisplay;
 
+typedef struct _GimpResource        GimpResource;
+typedef struct _GimpBrush           GimpBrush;
+typedef struct _GimpFont            GimpFont;
+typedef struct _GimpGradient        GimpGradient;
+typedef struct _GimpPattern         GimpPattern;
+typedef struct _GimpPalette         GimpPalette;
+
 
 /* FIXME move somewhere else */
 

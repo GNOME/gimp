@@ -38,6 +38,7 @@ G_DECLARE_FINAL_TYPE (GimpGradientSelectButton,
 
 
 GtkWidget * gimp_gradient_select_button_new (const gchar  *title,
+                                             const gchar  *label,
                                              GimpResource *gradient);
 
 

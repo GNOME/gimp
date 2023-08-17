@@ -23,8 +23,8 @@
 #error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PROP_WIDGETS_H__
-#define __GIMP_PROP_WIDGETS_H__
+#ifndef __GIMPWIDGETS_PROP_WIDGETS_H__
+#define __GIMPWIDGETS_PROP_WIDGETS_H__
 
 G_BEGIN_DECLS
 
@@ -252,4 +252,4 @@ GtkWidget     * gimp_prop_icon_image_new          (GObject       *config,
 
 G_END_DECLS
 
-#endif /* __GIMP_PROP_WIDGETS_H__ */
+#endif /* __GIMPWIDGETS_PROP_WIDGETS_H__ */

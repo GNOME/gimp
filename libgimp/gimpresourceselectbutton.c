@@ -78,6 +78,7 @@ enum
 {
   PROP_0,
   PROP_TITLE,
+  PROP_LABEL,
   PROP_RESOURCE,
   N_PROPS
 };
@@ -87,13 +88,16 @@ typedef struct
 {
   GimpResource *resource;
   gchar        *title;
+  gchar        *label;
   gchar        *callback;
-  GtkWidget    *interior_widget;
+
+  GtkWidget    *label_widget;
 } GimpResourceSelectButtonPrivate;
 
 
 /*  local function prototypes  */
 
+static void   gimp_resource_select_button_constructed       (GObject                  *object);
 static void   gimp_resource_select_button_dispose           (GObject                  *object);
 static void   gimp_resource_select_button_finalize          (GObject                  *object);
 
@@ -135,6 +139,7 @@ gimp_resource_select_button_class_init (GimpResourceSelectButtonClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->constructed  = gimp_resource_select_button_constructed;
   object_class->dispose      = gimp_resource_select_button_dispose;
   object_class->finalize     = gimp_resource_select_button_finalize;
   object_class->set_property = gimp_resource_select_button_set_property;
@@ -154,6 +159,21 @@ gimp_resource_select_button_class_init (GimpResourceSelectButtonClass *klass)
                          "Title",
                          "The title to be used for the resource selection popup dialog",
                          "Resource Selection",
+                         GIMP_PARAM_READWRITE |
+                         G_PARAM_CONSTRUCT_ONLY);
+
+  /**
+   * GimpResourceSelectButton:label:
+   *
+   * Label text with mnemonic.
+   *
+   * Since: 3.0
+   */
+  resource_button_props[PROP_LABEL] =
+    g_param_spec_string ("label",
+                         "Label",
+                         "The label to be used next to the button",
+                         NULL,
                          GIMP_PARAM_READWRITE |
                          G_PARAM_CONSTRUCT_ONLY);
 
@@ -199,9 +219,28 @@ gimp_resource_select_button_class_init (GimpResourceSelectButtonClass *klass)
 static void
 gimp_resource_select_button_init (GimpResourceSelectButton *self)
 {
+  GimpResourceSelectButtonPrivate *priv;
+
+  priv = gimp_resource_select_button_get_instance_private (GIMP_RESOURCE_SELECT_BUTTON (self));
+
   gtk_orientable_set_orientation (GTK_ORIENTABLE (self),
                                   GTK_ORIENTATION_HORIZONTAL);
   gtk_box_set_spacing (GTK_BOX (self), 6);
+
+  priv->label_widget = gtk_label_new (NULL);
+  gtk_box_pack_start (GTK_BOX (self), priv->label_widget, FALSE, FALSE, 0);
+}
+
+static void
+gimp_resource_select_button_constructed (GObject *object)
+{
+  GimpResourceSelectButtonPrivate *priv;
+
+  priv = gimp_resource_select_button_get_instance_private (GIMP_RESOURCE_SELECT_BUTTON (object));
+  gtk_label_set_text_with_mnemonic (GTK_LABEL (priv->label_widget), priv->label);
+  gtk_widget_show (GTK_WIDGET (priv->label_widget));
+
+  G_OBJECT_CLASS (gimp_resource_select_button_parent_class)->constructed (object);
 }
 
 static void
@@ -244,6 +283,7 @@ gimp_resource_select_button_finalize (GObject *object)
   GimpResourceSelectButtonPrivate *priv = gimp_resource_select_button_get_instance_private (self);
 
   g_clear_pointer (&priv->title, g_free);
+  g_clear_pointer (&priv->label, g_free);
 
   G_OBJECT_CLASS (gimp_resource_select_button_parent_class)->finalize (object);
 }
@@ -371,6 +411,26 @@ gimp_resource_select_button_set_resource (GimpResourceSelectButton *self,
     }
 }
 
+/**
+ * gimp_resource_select_button_get_label:
+ * @widget: A [class@ResourceSelectButton].
+ *
+ * Returns the label widget.
+ *
+ * Returns: (transfer none): the [class@Gtk.Widget] showing the label text.
+ * Since: 3.0
+ */
+GtkWidget *
+gimp_resource_select_button_get_label (GimpResourceSelectButton *widget)
+{
+  GimpResourceSelectButtonPrivate *priv;
+
+  g_return_val_if_fail (GIMP_IS_RESOURCE_SELECT_BUTTON (widget), NULL);
+
+  priv = gimp_resource_select_button_get_instance_private (widget);
+  return priv->label_widget;
+}
+
 
 /*  private functions  */
 
@@ -408,6 +468,10 @@ gimp_resource_select_button_set_property (GObject      *object,
       priv->title = g_value_dup_string (gvalue);
       break;
 
+    case PROP_LABEL:
+      priv->label = g_value_dup_string (gvalue);
+      break;
+
     case PROP_RESOURCE:
       priv->resource = g_value_get_object (gvalue);
       break;
@@ -431,6 +495,10 @@ gimp_resource_select_button_get_property (GObject    *object,
     {
     case PROP_TITLE:
       g_value_set_string (value, priv->title);
+      break;
+
+    case PROP_LABEL:
+      g_value_set_string (value, priv->label);
       break;
 
     case PROP_RESOURCE:

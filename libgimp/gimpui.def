@@ -58,12 +58,12 @@ EXPORTS
 	gimp_procedure_dialog_set_sensitive_if_in
 	gimp_progress_bar_get_type
 	gimp_progress_bar_new
-	gimp_prop_chooser_brush_new
-	gimp_prop_chooser_factory
-	gimp_prop_chooser_font_new
-	gimp_prop_chooser_gradient_new
-	gimp_prop_chooser_palette_new
-	gimp_prop_chooser_pattern_new
+	gimp_prop_brush_chooser_new
+	gimp_prop_font_chooser_new
+	gimp_prop_gradient_chooser_new
+	gimp_prop_palette_chooser_new
+	gimp_prop_pattern_chooser_new
+	gimp_resource_select_button_get_label
 	gimp_resource_select_button_get_resource
 	gimp_resource_select_button_get_type
 	gimp_resource_select_button_set_clickable

@@ -26,9 +26,10 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "libgimp/gimppropchooser-private.h"
+#include "libgimp/gimppropwidgets.h"
 
 #include "gimp.h"
+#include "gimppropwidgets.h"
 #include "gimpui.h"
 
 #include "gimpprocedureconfig-private.h"
@@ -776,23 +777,23 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
   /* FUTURE: title the chooser more specifically, with a prefix that is the nick of the property. */
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_BRUSH)
     {
-      widget = gimp_prop_chooser_brush_new (G_OBJECT (dialog->priv->config), property, _("Brush Chooser"));
+      widget = gimp_prop_brush_chooser_new (G_OBJECT (dialog->priv->config), property, _("Brush Chooser"));
     }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_FONT)
     {
-      widget = gimp_prop_chooser_font_new (G_OBJECT (dialog->priv->config), property, _("Font Chooser"));
+      widget = gimp_prop_font_chooser_new (G_OBJECT (dialog->priv->config), property, _("Font Chooser"));
     }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_GRADIENT)
     {
-      widget = gimp_prop_chooser_gradient_new (G_OBJECT (dialog->priv->config), property, _("Gradient Chooser"));
+      widget = gimp_prop_gradient_chooser_new (G_OBJECT (dialog->priv->config), property, _("Gradient Chooser"));
     }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_PALETTE)
     {
-      widget = gimp_prop_chooser_palette_new (G_OBJECT (dialog->priv->config), property, _("Palette Chooser"));
+      widget = gimp_prop_palette_chooser_new (G_OBJECT (dialog->priv->config), property, _("Palette Chooser"));
     }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_PATTERN)
     {
-      widget = gimp_prop_chooser_pattern_new (G_OBJECT (dialog->priv->config), property, _("Pattern Chooser"));
+      widget = gimp_prop_pattern_chooser_new (G_OBJECT (dialog->priv->config), property, _("Pattern Chooser"));
     }
   else  if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_ENUM)
     {
@@ -827,15 +828,19 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
   else
     {
       const gchar *tooltip = g_param_spec_get_blurb (pspec);
+
       if (tooltip)
         gimp_help_set_help_data (widget, tooltip, NULL);
-      if (GIMP_IS_LABELED (widget) || label)
-        {
-          if (! label)
-            label = gimp_labeled_get_label (GIMP_LABELED (widget));
 
-          gtk_size_group_add_widget (dialog->priv->label_group, label);
+      if (label == NULL)
+        {
+          if (GIMP_IS_LABELED (widget))
+            label = gimp_labeled_get_label (GIMP_LABELED (widget));
+          else if (GIMP_IS_RESOURCE_SELECT_BUTTON (widget))
+            label = gimp_resource_select_button_get_label (GIMP_RESOURCE_SELECT_BUTTON (widget));
         }
+      if (label != NULL)
+        gtk_size_group_add_widget (dialog->priv->label_group, label);
     }
 
   if ((binding = g_hash_table_lookup (dialog->priv->sensitive_data, property)))
