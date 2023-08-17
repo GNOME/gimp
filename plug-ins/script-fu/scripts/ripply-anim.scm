@@ -31,7 +31,7 @@
     (gimp-image-insert-layer work-image map-layer 0 0)
     (gimp-drawable-edit-fill map-layer FILL-BACKGROUND)
     (plug-in-noisify RUN-NONINTERACTIVE work-image map-layer FALSE 1.0 1.0 1.0 0.0)
-    (plug-in-tile RUN-NONINTERACTIVE work-image map-layer (* width 3) (* height 3) FALSE)
+    (plug-in-tile RUN-NONINTERACTIVE work-image 1 (vector map-layer) (* width 3) (* height 3) FALSE)
     (plug-in-gauss-iir RUN-NONINTERACTIVE work-image map-layer 35 TRUE TRUE)
     (gimp-drawable-equalize map-layer TRUE)
     (plug-in-gauss-rle RUN-NONINTERACTIVE work-image map-layer 5 TRUE TRUE)
