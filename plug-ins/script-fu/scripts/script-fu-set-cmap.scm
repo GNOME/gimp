@@ -25,6 +25,8 @@
 (define (script-fu-make-cmap-array palette)
   (let* (
         (num-colors (car (gimp-palette-get-color-count palette)))
+        ; cons-array is not Scheme standard
+        ; but was in SIOD and is in script-fu-compat.init
         (cmap (cons-array (* num-colors 3) 'byte))
         (color 0)
         (i 0)
@@ -44,7 +46,6 @@
 
 (define (script-fu-set-cmap img drawable palette)
   (gimp-image-set-colormap img
-                           (* (car (gimp-palette-get-color-count palette)) 3)
                            (script-fu-make-cmap-array palette))
   (gimp-displays-flush)
 )
