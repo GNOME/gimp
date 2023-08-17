@@ -207,7 +207,7 @@ script_fu_interface (SFScript  *script,
   sf_interface->widgets = g_new0 (GtkWidget *, script->n_args);
   sf_interface->title   = script_fu_script_get_title (script);
 
-  title = g_strdup_printf (_("Script-Fu: %s"), sf_interface->title);
+  title = g_strdup_printf ("%s", sf_interface->title);
 
   sf_interface->dialog = dialog =
     gimp_dialog_new (title, "gimp-script-fu",
