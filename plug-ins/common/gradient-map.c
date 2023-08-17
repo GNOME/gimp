@@ -479,6 +479,5 @@ get_samples_palette (GimpDrawable *drawable)
                           d_samp);
     }
 
-  g_free (palette);
   return d_samples;
 }
