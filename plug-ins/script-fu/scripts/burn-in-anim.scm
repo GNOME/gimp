@@ -191,7 +191,7 @@
           (gimp-image-remove-layer img    source-layer)
           (gimp-image-remove-layer img bg-source-layer)
 
-          (gimp-image-set-filename img "burn-in")
+          (gimp-image-set-file img "burn-in.xcf")
 
           (if (= optimize TRUE)
               (begin
