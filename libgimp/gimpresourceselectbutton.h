@@ -32,10 +32,12 @@ struct _GimpResourceSelectButtonClass
 {
   GtkBoxClass parent_class;
 
+  /* Signals */
   void (* resource_set) (GimpResourceSelectButton *self,
                          GimpResource             *resource,
                          gboolean                  dialog_closing);
 
+  /* Abstract methods and class variables */
   void (*draw_interior) (GimpResourceSelectButton *self);
 
   GType resource_type;

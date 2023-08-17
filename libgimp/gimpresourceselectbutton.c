@@ -40,10 +40,6 @@
  *
  * A button which pops up a resource selection dialog.
  *
- * Subclasses: GimpFontSelectButton is a minimal one.
- * A subclass provides button trait (clickable),
- * but possibly not a GtkButton and may have many sub widgets.
- *
  * Responsibilities:
  *
  *     - implementing outer container widget,
@@ -67,9 +63,6 @@
  *     - declaring which interior widgets are drag destinations
  *     - declaring which interior widgets are clickable (generate "clicked" signal)
  *     - generate "clicked" (delegating to GtkButton or implementing from mouse events)
- *
- * Class is abstract and cannot be instantiated: no new () method.
- * Instead, instantiate a subclass.
  *
  * Since: 3.0
  **/
@@ -134,8 +127,7 @@ static void   gimp_resource_select_button_set_remote_dialog (GimpResourceSelectB
 static guint resource_button_signals[LAST_SIGNAL] = { 0 };
 static GParamSpec *resource_button_props[N_PROPS] = { NULL, };
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpResourceSelectButton, gimp_resource_select_button,
-                            GTK_TYPE_BOX)
+G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpResourceSelectButton, gimp_resource_select_button, GTK_TYPE_BOX)
 
 
 static void
