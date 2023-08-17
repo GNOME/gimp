@@ -54,22 +54,24 @@ enum
 };
 
 
-static void   gimp_pdb_dialog_constructed     (GObject            *object);
-static void   gimp_pdb_dialog_dispose         (GObject            *object);
-static void   gimp_pdb_dialog_set_property    (GObject            *object,
-                                               guint               property_id,
-                                               const GValue       *value,
-                                               GParamSpec         *pspec);
+static void     gimp_pdb_dialog_constructed       (GObject            *object);
+static void     gimp_pdb_dialog_dispose           (GObject            *object);
+static void     gimp_pdb_dialog_set_property      (GObject            *object,
+                                                   guint               property_id,
+                                                   const GValue       *value,
+                                                   GParamSpec         *pspec);
 
-static void   gimp_pdb_dialog_response        (GtkDialog          *dialog,
-                                               gint                response_id);
+static void     gimp_pdb_dialog_response          (GtkDialog          *dialog,
+                                                   gint                response_id);
 
-static void   gimp_pdb_dialog_context_changed (GimpContext        *context,
-                                               GimpObject         *object,
-                                               GimpPdbDialog      *dialog);
-static void   gimp_pdb_dialog_plug_in_closed  (GimpPlugInManager  *manager,
-                                               GimpPlugIn         *plug_in,
-                                               GimpPdbDialog      *dialog);
+static void     gimp_pdb_dialog_context_changed   (GimpContext        *context,
+                                                   GimpObject         *object,
+                                                   GimpPdbDialog      *dialog);
+static void     gimp_pdb_dialog_plug_in_closed    (GimpPlugInManager  *manager,
+                                                   GimpPlugIn         *plug_in,
+                                                   GimpPdbDialog      *dialog);
+
+static gboolean gimp_pdb_dialog_run_callback_idle (GimpPdbDialog      *dialog);
 
 
 G_DEFINE_ABSTRACT_TYPE (GimpPdbDialog, gimp_pdb_dialog, GIMP_TYPE_DIALOG)
@@ -341,8 +343,47 @@ gimp_pdb_dialog_context_changed (GimpContext   *context,
                                  GimpObject    *object,
                                  GimpPdbDialog *dialog)
 {
+  /* XXX Long explanation below because this was annoying to debug!
+   *
+   * The context might change for 2 reasons: either from code coming from the
+   * plug-in or because of direct GUI interaction with the dialog. This second
+   * case may happen while the plug-in is doing something else completely and
+   * making PDB calls too. If the callback itself triggers the plug-in to run
+   * other PDB calls, we may end up in a case where PDB requests made by the
+   * plug-in receive the wrong result. Here is an actual case I encountered:
+   *
+   * 1. The plug-in calls gimp-gradient-get-uniform-samples to draw a button.
+   * 2. Because you click inside the dialog (using any of the Gimp*Select
+   *    subclasses, e.g. GimpBrushSelect), the core dialog run its callback
+   *    indicating that a resource changed. This is unrelated to step 1. It just
+   *    happens nearly in the same time by a race condition.
+   * 3. The plug-in receives the callback as a temp procedure request, processes
+   *    it first. In particular, as part of the code in libgimp/plug-in, it
+   *    verifies the resource is valid calling gimp-resource-id-is-valid.
+   * 4. Meanwhile, the core returns gimp-gradient-get-uniform-samples result.
+   * 5. The plug-in takes it as a result for gimp-resource-id-is-valid with
+   *    invalid return values (size and types).
+   * 6. Then again, it receives result of gimp-resource-id-is-valid as being the
+   *    result of gimp-gradient-get-uniform-samples, again invalid.
+   *
+   * This scenario mostly happens because the callback is not the consequence of
+   * the plug-in's requests (if the callback from core were the consequence of a
+   * call from the plug-in, the PDB protocol would ensure that every message in
+   * both direction get its return values in the proper order). The problem here
+   * is really that the callback interrupts unexpectedly PDB requests coming
+   * from the plug-in while the plug-in process can't really know that this
+   * callback is not a consequence of its own PDB call.
+   *
+   * Running as idle will make the callback run when the core is not already
+   * processing anything, which should also mean that the plug-in is not waiting
+   * for an unrelated procedure result.
+   * To be fair, I am not 100% sure if a complex race condition may not still
+   * happen, but extensive testing were successful so far.
+   */
   if (object)
-    gimp_pdb_dialog_run_callback (&dialog, FALSE);
+    g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                     (GSourceFunc) gimp_pdb_dialog_run_callback_idle,
+                     g_object_ref (dialog), g_object_unref);
 }
 
 static void
@@ -357,4 +398,12 @@ gimp_pdb_dialog_plug_in_closed (GimpPlugInManager *manager,
           gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
         }
     }
+}
+
+static gboolean
+gimp_pdb_dialog_run_callback_idle (GimpPdbDialog *dialog)
+{
+  gimp_pdb_dialog_run_callback (&dialog, FALSE);
+
+  return G_SOURCE_REMOVE;
 }
