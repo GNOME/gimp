@@ -30,16 +30,16 @@
 #include <libgimp/gimpuitypes.h>
 
 #include <libgimp/gimpaspectpreview.h>
-#include <libgimp/gimpbrushselectbutton.h>
+#include <libgimp/gimpbrushchooser.h>
 #include <libgimp/gimpdrawablepreview.h>
 #include <libgimp/gimpexport.h>
-#include <libgimp/gimpresourceselectbutton.h>
-#include <libgimp/gimpfontselectbutton.h>
-#include <libgimp/gimpgradientselectbutton.h>
+#include <libgimp/gimpresourcechooser.h>
+#include <libgimp/gimpfontchooser.h>
+#include <libgimp/gimpgradientchooser.h>
 #include <libgimp/gimpimagecombobox.h>
 #include <libgimp/gimpitemcombobox.h>
-#include <libgimp/gimppaletteselectbutton.h>
-#include <libgimp/gimppatternselectbutton.h>
+#include <libgimp/gimppalettechooser.h>
+#include <libgimp/gimppatternchooser.h>
 #include <libgimp/gimpprocbrowserdialog.h>
 #include <libgimp/gimpproceduredialog.h>
 #include <libgimp/gimpprocview.h>

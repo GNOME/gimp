@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppatternselectbutton.h
+ * gimpfontchooser.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,25 +22,22 @@
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PATTERN_SELECT_BUTTON_H__
-#define __GIMP_PATTERN_SELECT_BUTTON_H__
+#ifndef __GIMP_FONT_CHOOSER_H__
+#define __GIMP_FONT_CHOOSER_H__
 
-#include <libgimp/gimpresourceselectbutton.h>
+#include <libgimp/gimpresourcechooser.h>
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_PATTERN_SELECT_BUTTON (gimp_pattern_select_button_get_type ())
-G_DECLARE_FINAL_TYPE (GimpPatternSelectButton,
-                      gimp_pattern_select_button,
-                      GIMP, PATTERN_SELECT_BUTTON,
-                      GimpResourceSelectButton)
+#define GIMP_TYPE_FONT_CHOOSER (gimp_font_chooser_get_type ())
+G_DECLARE_FINAL_TYPE (GimpFontChooser, gimp_font_chooser, GIMP, FONT_CHOOSER, GimpResourceChooser)
 
 
-GtkWidget * gimp_pattern_select_button_new (const gchar  *title,
-                                            const gchar  *label,
-                                            GimpResource *resource);
+GtkWidget * gimp_font_chooser_new (const gchar  *title,
+                                   const gchar  *label,
+                                   GimpResource *resource);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_PATTERN_SELECT_BUTTON_H__ */
+#endif /* __GIMP_FONT_CHOOSER_H__ */

@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpbrushselectbutton.h
+ * gimpbrushchooser.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,25 +22,22 @@
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
 
-#ifndef __GIMP_BRUSH_SELECT_BUTTON_H__
-#define __GIMP_BRUSH_SELECT_BUTTON_H__
+#ifndef __GIMP_BRUSH_CHOOSER_H__
+#define __GIMP_BRUSH_CHOOSER_H__
 
-#include <libgimp/gimpresourceselectbutton.h>
+#include <libgimp/gimpresourcechooser.h>
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_BRUSH_SELECT_BUTTON (gimp_brush_select_button_get_type ())
-G_DECLARE_FINAL_TYPE (GimpBrushSelectButton,
-                      gimp_brush_select_button,
-                      GIMP, BRUSH_SELECT_BUTTON,
-                      GimpResourceSelectButton)
+#define GIMP_TYPE_BRUSH_CHOOSER (gimp_brush_chooser_get_type ())
+G_DECLARE_FINAL_TYPE (GimpBrushChooser, gimp_brush_chooser, GIMP, BRUSH_CHOOSER, GimpResourceChooser)
 
 
-GtkWidget * gimp_brush_select_button_new (const gchar  *title,
-                                          const gchar  *label,
-                                          GimpResource *resource);
+GtkWidget * gimp_brush_chooser_new (const gchar  *title,
+                                    const gchar  *label,
+                                    GimpResource *resource);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_BRUSH_SELECT_BUTTON_H__ */
+#endif /* __GIMP_BRUSH_CHOOSER_H__ */

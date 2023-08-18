@@ -58,7 +58,7 @@ gimp_prop_brush_chooser_new (GObject     *config,
                              const gchar *property_name,
                              const gchar *chooser_title)
 {
-  return gimp_prop_resource_chooser_factory (gimp_brush_select_button_new,
+  return gimp_prop_resource_chooser_factory (gimp_brush_chooser_new,
                                              config, property_name, chooser_title);
 }
 
@@ -79,7 +79,7 @@ gimp_prop_font_chooser_new (GObject     *config,
                             const gchar *property_name,
                             const gchar *chooser_title)
 {
-  return gimp_prop_resource_chooser_factory (gimp_font_select_button_new,
+  return gimp_prop_resource_chooser_factory (gimp_font_chooser_new,
                                              config, property_name, chooser_title);
 }
 
@@ -100,7 +100,7 @@ gimp_prop_gradient_chooser_new (GObject     *config,
                                 const gchar *property_name,
                                 const gchar *chooser_title)
 {
-  return gimp_prop_resource_chooser_factory (gimp_gradient_select_button_new,
+  return gimp_prop_resource_chooser_factory (gimp_gradient_chooser_new,
                                              config, property_name, chooser_title);
 }
 
@@ -121,7 +121,7 @@ gimp_prop_palette_chooser_new (GObject     *config,
                                const gchar *property_name,
                                const gchar *chooser_title)
 {
-  return gimp_prop_resource_chooser_factory (gimp_palette_select_button_new,
+  return gimp_prop_resource_chooser_factory (gimp_palette_chooser_new,
                                              config, property_name, chooser_title);
 }
 
@@ -142,7 +142,7 @@ gimp_prop_pattern_chooser_new (GObject     *config,
                                const gchar *property_name,
                                const gchar *chooser_title)
 {
-  return gimp_prop_resource_chooser_factory (gimp_pattern_select_button_new,
+  return gimp_prop_resource_chooser_factory (gimp_pattern_chooser_new,
                                              config, property_name, chooser_title);
 }
 
@@ -175,7 +175,7 @@ gimp_prop_resource_chooser_factory (GimpResourceWidgetCreator  widget_creator_fu
 
   label = g_param_spec_get_nick (param_spec);
 
-  /* Create the wrapped widget. For example, call gimp_font_select_button_new.
+  /* Create the wrapped widget. For example, call gimp_font_chooser_new.
    * When initial_resource is NULL, the widget creator will set it's resource
    * property from context.
    */

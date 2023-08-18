@@ -1159,8 +1159,8 @@ explorer_dialog (void)
                                      &n_gradient_samples,
                                      &gradient_samples);
 
-  gradient_button = gimp_gradient_select_button_new (_("FractalExplorer Gradient"),
-                                                     NULL, GIMP_RESOURCE (gradient));
+  gradient_button = gimp_gradient_chooser_new (_("FractalExplorer Gradient"),
+                                               NULL, GIMP_RESOURCE (gradient));
   g_signal_connect (gradient_button, "resource-set",
                     G_CALLBACK (explorer_gradient_select_callback), NULL);
 

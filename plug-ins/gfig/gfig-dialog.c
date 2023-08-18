@@ -507,8 +507,8 @@ gfig_dialog (GimpGfig *gfig)
 
   /* brush selector in Stroke frame */
   gfig_context->brush_select
-    = gimp_brush_select_button_new ("Brush", "Brush",
-                                    GIMP_RESOURCE (gfig_context->default_style.brush));
+    = gimp_brush_chooser_new ("Brush", "Brush",
+                              GIMP_RESOURCE (gfig_context->default_style.brush));
   g_signal_connect (gfig_context->brush_select, "resource-set",
                     G_CALLBACK (gfig_brush_changed_callback), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), gfig_context->brush_select,
@@ -573,8 +573,8 @@ gfig_dialog (GimpGfig *gfig)
 
   /* A page for the pattern selector */
   gfig_context->pattern_select
-    = gimp_pattern_select_button_new ("Pattern", "Pattern",
-                                      GIMP_RESOURCE (gfig_context->default_style.pattern));
+    = gimp_pattern_chooser_new ("Pattern", "Pattern",
+                                GIMP_RESOURCE (gfig_context->default_style.pattern));
   g_signal_connect (gfig_context->pattern_select, "resource-set",
                     G_CALLBACK (gfig_pattern_changed_callback), NULL);
   gtk_widget_show (gfig_context->pattern_select);
@@ -583,8 +583,8 @@ gfig_dialog (GimpGfig *gfig)
 
   /* A page for the gradient selector */
   gfig_context->gradient_select
-    = gimp_gradient_select_button_new ("Gradient", "Gradient",
-                                       GIMP_RESOURCE (gfig_context->default_style.gradient));
+    = gimp_gradient_chooser_new ("Gradient", "Gradient",
+                                 GIMP_RESOURCE (gfig_context->default_style.gradient));
   g_signal_connect (gfig_context->gradient_select, "resource-set",
                     G_CALLBACK (gfig_gradient_changed_callback), NULL);
   gtk_widget_show (gfig_context->gradient_select);

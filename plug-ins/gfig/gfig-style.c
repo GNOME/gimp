@@ -697,14 +697,14 @@ gfig_style_set_context_from_style (Style *style)
 
   gimp_context_set_brush_default_size ();
 
-  gimp_resource_select_button_set_resource (GIMP_RESOURCE_SELECT_BUTTON (gfig_context->brush_select),
-                                            GIMP_RESOURCE (style->brush));
+  gimp_resource_chooser_set_resource (GIMP_RESOURCE_CHOOSER (gfig_context->brush_select),
+                                      GIMP_RESOURCE (style->brush));
 
-  gimp_resource_select_button_set_resource (GIMP_RESOURCE_SELECT_BUTTON (gfig_context->pattern_select),
-                                            GIMP_RESOURCE (style->pattern));
+  gimp_resource_chooser_set_resource (GIMP_RESOURCE_CHOOSER (gfig_context->pattern_select),
+                                      GIMP_RESOURCE (style->pattern));
 
-  gimp_resource_select_button_set_resource (GIMP_RESOURCE_SELECT_BUTTON (gfig_context->gradient_select),
-                                            GIMP_RESOURCE (style->gradient));
+  gimp_resource_chooser_set_resource (GIMP_RESOURCE_CHOOSER (gfig_context->gradient_select),
+                                      GIMP_RESOURCE (style->gradient));
 
   set_context_bdesc (style->brush);
 

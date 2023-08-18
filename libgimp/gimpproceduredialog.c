@@ -836,8 +836,8 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
         {
           if (GIMP_IS_LABELED (widget))
             label = gimp_labeled_get_label (GIMP_LABELED (widget));
-          else if (GIMP_IS_RESOURCE_SELECT_BUTTON (widget))
-            label = gimp_resource_select_button_get_label (GIMP_RESOURCE_SELECT_BUTTON (widget));
+          else if (GIMP_IS_RESOURCE_CHOOSER (widget))
+            label = gimp_resource_chooser_get_label (GIMP_RESOURCE_CHOOSER (widget));
         }
       if (label != NULL)
         gtk_size_group_add_widget (dialog->priv->label_group, label);

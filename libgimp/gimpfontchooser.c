@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpfontselectbutton.c
+ * gimpfontchooser.c
  * Copyright (C) 2003  Sven Neumann  <sven@gimp.org>
  *
  * This library is free software: you can redistribute it and/or
@@ -29,50 +29,48 @@
 #include "gimp.h"
 
 #include "gimpuitypes.h"
-#include "gimpfontselectbutton.h"
+#include "gimpfontchooser.h"
 #include "gimpuimarshal.h"
 
 #include "libgimp-intl.h"
 
 
 /**
- * SECTION: gimpfontselectbutton
- * @title: GimpFontSelectButton
+ * SECTION: gimpfontchooser
+ * @title: GimpFontChooser
  * @short_description: A button which pops up a font selection dialog.
  *
  * A button which pops up a font selection dialog.
  **/
 
-struct _GimpFontSelectButton
+struct _GimpFontChooser
 {
-  GimpResourceSelectButton  parent_instance;
+  GimpResourceChooser  parent_instance;
 
-  GtkWidget                *label;
+  GtkWidget           *label;
 };
 
 
-static void gimp_font_select_button_draw_interior (GimpResourceSelectButton *self);
+static void gimp_font_chooser_draw_interior (GimpResourceChooser *self);
 
 
 static const GtkTargetEntry drag_target = { "application/x-gimp-font-name", 0, 0 };
 
 
-G_DEFINE_FINAL_TYPE (GimpFontSelectButton,
-                     gimp_font_select_button,
-                     GIMP_TYPE_RESOURCE_SELECT_BUTTON)
+G_DEFINE_FINAL_TYPE (GimpFontChooser, gimp_font_chooser, GIMP_TYPE_RESOURCE_CHOOSER)
 
 
 static void
-gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
+gimp_font_chooser_class_init (GimpFontChooserClass *klass)
 {
-  GimpResourceSelectButtonClass *superclass = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
+  GimpResourceChooserClass *superclass = GIMP_RESOURCE_CHOOSER_CLASS (klass);
 
-  superclass->draw_interior = gimp_font_select_button_draw_interior;
+  superclass->draw_interior = gimp_font_chooser_draw_interior;
   superclass->resource_type = GIMP_TYPE_FONT;
 }
 
 static void
-gimp_font_select_button_init (GimpFontSelectButton *self)
+gimp_font_chooser_init (GimpFontChooser *self)
 {
   GtkWidget *button;
   GtkWidget *hbox;
@@ -93,22 +91,20 @@ gimp_font_select_button_init (GimpFontSelectButton *self)
 
   gtk_widget_show_all (GTK_WIDGET (self));
 
-  gimp_resource_select_button_set_drag_target (GIMP_RESOURCE_SELECT_BUTTON (self),
-                                               hbox,
-                                               &drag_target);
+  gimp_resource_chooser_set_drag_target (GIMP_RESOURCE_CHOOSER (self),
+                                         hbox, &drag_target);
 
-  gimp_resource_select_button_set_clickable (GIMP_RESOURCE_SELECT_BUTTON (self),
-                                             button);
+  gimp_resource_chooser_set_clickable (GIMP_RESOURCE_CHOOSER (self), button);
 }
 
 static void
-gimp_font_select_button_draw_interior (GimpResourceSelectButton *self)
+gimp_font_chooser_draw_interior (GimpResourceChooser *self)
 {
-  GimpFontSelectButton *font_select= GIMP_FONT_SELECT_BUTTON (self);
-  GimpResource         *resource;
-  gchar                *name = NULL;
+  GimpFontChooser *font_select= GIMP_FONT_CHOOSER (self);
+  GimpResource    *resource;
+  gchar           *name = NULL;
 
-  resource = gimp_resource_select_button_get_resource (self);
+  resource = gimp_resource_chooser_get_resource (self);
 
   if (resource)
     name = gimp_resource_get_name (resource);
@@ -118,7 +114,7 @@ gimp_font_select_button_draw_interior (GimpResourceSelectButton *self)
 
 
 /**
- * gimp_font_select_button_new:
+ * gimp_font_chooser_new:
  * @title:    (nullable): Title of the dialog to use or %NULL to use the default title.
  * @label:    (nullable): Button label or %NULL for no label.
  * @resource: (nullable): Initial font.
@@ -133,11 +129,11 @@ gimp_font_select_button_draw_interior (GimpResourceSelectButton *self)
  * Since: 2.4
  */
 GtkWidget *
-gimp_font_select_button_new (const gchar  *title,
-                             const gchar  *label,
-                             GimpResource *resource)
+gimp_font_chooser_new (const gchar  *title,
+                       const gchar  *label,
+                       GimpResource *resource)
 {
-  GtkWidget *self;
+  GtkWidget *chooser;
 
   g_return_val_if_fail (resource == NULL || GIMP_IS_FONT (resource), NULL);
 
@@ -145,18 +141,18 @@ gimp_font_select_button_new (const gchar  *title,
     resource = GIMP_RESOURCE (gimp_context_get_font ());
 
    if (title)
-     self = g_object_new (GIMP_TYPE_FONT_SELECT_BUTTON,
-                          "title",     title,
-                          "label",     label,
-                          "resource",  resource,
-                          NULL);
+     chooser = g_object_new (GIMP_TYPE_FONT_CHOOSER,
+                             "title",     title,
+                             "label",     label,
+                             "resource",  resource,
+                             NULL);
    else
-     self = g_object_new (GIMP_TYPE_FONT_SELECT_BUTTON,
-                          "label",     label,
-                          "resource",  resource,
-                          NULL);
+     chooser = g_object_new (GIMP_TYPE_FONT_CHOOSER,
+                             "label",     label,
+                             "resource",  resource,
+                             NULL);
 
-  gimp_font_select_button_draw_interior (GIMP_RESOURCE_SELECT_BUTTON (self));
+  gimp_font_chooser_draw_interior (GIMP_RESOURCE_CHOOSER (chooser));
 
-  return self;
+  return chooser;
 }

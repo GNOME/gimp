@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpgradientselectbutton.c
+ * gimpgradientchooser.c
  * Copyright (C) 1998 Andy Thomas
  *
  * This library is free software: you can redistribute it and/or
@@ -29,62 +29,62 @@
 #include "gimp.h"
 
 #include "gimpuitypes.h"
-#include "gimpgradientselectbutton.h"
+#include "gimpgradientchooser.h"
 #include "gimpuimarshal.h"
 
 #include "libgimp-intl.h"
 
 
 /**
- * SECTION: gimpgradientselectbutton
- * @title: GimpGradientSelectButton
+ * SECTION: gimpgradientchooser
+ * @title: GimpGradientChooser
  * @short_description: A button which pops up a gradient select dialog.
  *
  * A button which pops up a gradient select dialog.
  **/
 
 
-struct _GimpGradientSelectButton
+struct _GimpGradientChooser
 {
-  GimpResourceSelectButton  parent_instance;
+  GimpResourceChooser  parent_instance;
 
-  GtkWidget                *preview;
+  GtkWidget           *preview;
 };
 
 
 /*  local function prototypes  */
 
-static void gimp_gradient_select_button_draw_interior   (GimpResourceSelectButton *self);
+static void     gimp_gradient_chooser_draw_interior        (GimpResourceChooser *self);
 
-static void gimp_gradient_select_preview_size_allocate  (GtkWidget                *widget,
-                                                         GtkAllocation            *allocation,
-                                                         GimpGradientSelectButton *self);
-static gboolean gimp_gradient_select_preview_draw_handler (GtkWidget                *preview,
-                                                           cairo_t                  *cr,
-                                                           GimpGradientSelectButton *self);
+static void     gimp_gradient_select_preview_size_allocate (GtkWidget           *widget,
+                                                            GtkAllocation       *allocation,
+                                                            GimpGradientChooser *self);
+static gboolean gimp_gradient_select_preview_draw_handler  (GtkWidget           *preview,
+                                                            cairo_t             *cr,
+                                                            GimpGradientChooser *self);
 
 
 static const GtkTargetEntry drag_target = { "application/x-gimp-gradient-name", 0 };
 
-G_DEFINE_FINAL_TYPE (GimpGradientSelectButton,
-                     gimp_gradient_select_button,
-                     GIMP_TYPE_RESOURCE_SELECT_BUTTON)
+G_DEFINE_FINAL_TYPE (GimpGradientChooser,
+                     gimp_gradient_chooser,
+                     GIMP_TYPE_RESOURCE_CHOOSER)
 
 /* Initial dimensions of widget. */
 #define CELL_HEIGHT 18
 #define CELL_WIDTH  84
 
 static void
-gimp_gradient_select_button_class_init (GimpGradientSelectButtonClass *klass)
+gimp_gradient_chooser_class_init (GimpGradientChooserClass *klass)
 {
-  GimpResourceSelectButtonClass *superclass = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
+  GimpResourceChooserClass *superclass = GIMP_RESOURCE_CHOOSER_CLASS (klass);
 
-  superclass->draw_interior = gimp_gradient_select_button_draw_interior;
+  superclass->draw_interior = gimp_gradient_chooser_draw_interior;
   superclass->resource_type = GIMP_TYPE_GRADIENT;
 }
 
 static void
-gimp_gradient_select_button_init (GimpGradientSelectButton *self)
+gimp_gradient_chooser_init (GimpGradientChooser *self)
 {
   GtkWidget *button;
 
@@ -105,25 +105,23 @@ gimp_gradient_select_button_init (GimpGradientSelectButton *self)
 
   gtk_widget_show_all (GTK_WIDGET (self));
 
-  gimp_resource_select_button_set_drag_target (GIMP_RESOURCE_SELECT_BUTTON (self),
-                                               self->preview,
-                                               &drag_target);
+  gimp_resource_chooser_set_drag_target (GIMP_RESOURCE_CHOOSER (self),
+                                         self->preview, &drag_target);
 
-  gimp_resource_select_button_set_clickable (GIMP_RESOURCE_SELECT_BUTTON (self),
-                                             button);
+  gimp_resource_chooser_set_clickable (GIMP_RESOURCE_CHOOSER (self), button);
 }
 
 static void
-gimp_gradient_select_button_draw_interior (GimpResourceSelectButton *self)
+gimp_gradient_chooser_draw_interior (GimpResourceChooser *self)
 {
-  GimpGradientSelectButton *gradient_select = GIMP_GRADIENT_SELECT_BUTTON (self);
+  GimpGradientChooser *gradient_select = GIMP_GRADIENT_CHOOSER (self);
 
   gtk_widget_queue_draw (gradient_select->preview);
 }
 
 
 /**
- * gimp_gradient_select_button_new:
+ * gimp_gradient_chooser_new:
  * @title:    (nullable): Title of the dialog to use or %NULL to use the default title.
  * @label:    (nullable): Button label or %NULL for no label.
  * @gradient: (nullable): Initial gradient.
@@ -136,9 +134,9 @@ gimp_gradient_select_button_draw_interior (GimpResourceSelectButton *self)
  * Since: 2.4
  */
 GtkWidget *
-gimp_gradient_select_button_new (const gchar  *title,
-                                 const gchar  *label,
-                                 GimpResource *gradient)
+gimp_gradient_chooser_new (const gchar  *title,
+                           const gchar  *label,
+                           GimpResource *gradient)
 {
   GtkWidget *self;
 
@@ -146,18 +144,18 @@ gimp_gradient_select_button_new (const gchar  *title,
     gradient = GIMP_RESOURCE (gimp_context_get_gradient ());
 
   if (title)
-    self = g_object_new (GIMP_TYPE_GRADIENT_SELECT_BUTTON,
+    self = g_object_new (GIMP_TYPE_GRADIENT_CHOOSER,
                          "title",    title,
                          "label",     label,
                          "resource", gradient,
                          NULL);
   else
-    self = g_object_new (GIMP_TYPE_GRADIENT_SELECT_BUTTON,
+    self = g_object_new (GIMP_TYPE_GRADIENT_CHOOSER,
                          "label",     label,
                          "resource", gradient,
                          NULL);
 
-  gimp_gradient_select_button_draw_interior (GIMP_RESOURCE_SELECT_BUTTON (self));
+  gimp_gradient_chooser_draw_interior (GIMP_RESOURCE_CHOOSER (self));
 
   return self;
 }
@@ -170,10 +168,10 @@ gimp_gradient_select_button_new (const gchar  *title,
  * Return success.
  */
 static gboolean
-get_gradient_data (GimpGradientSelectButton *self,
-                   gint                      allocation_width,
-                   gint                     *sample_count,
-                   gdouble                 **sample_array)
+get_gradient_data (GimpGradientChooser  *self,
+                   gint                 allocation_width,
+                   gint                 *sample_count,
+                   gdouble             **sample_array)
 {
   GimpGradient *gradient;
   gboolean      result;
@@ -204,9 +202,9 @@ get_gradient_data (GimpGradientSelectButton *self,
 
 /* Called on widget resized. */
 static void
-gimp_gradient_select_preview_size_allocate (GtkWidget                *widget,
-                                            GtkAllocation            *allocation,
-                                            GimpGradientSelectButton *self)
+gimp_gradient_select_preview_size_allocate (GtkWidget           *widget,
+                                            GtkAllocation       *allocation,
+                                            GimpGradientChooser *self)
 {
   /* Do nothing.
    *
@@ -225,10 +223,10 @@ gimp_gradient_select_preview_size_allocate (GtkWidget                *widget,
  * This understands mostly cairo, and little about gradient.
  */
 static void
-gimp_gradient_select_preview_draw (cairo_t   *cr,
-                                   gint       src_width,
-                                   gint       dest_width,
-                                   gdouble   *src)
+gimp_gradient_select_preview_draw (cairo_t *cr,
+                                   gint     src_width,
+                                   gint     dest_width,
+                                   gdouble *src)
 {
   cairo_pattern_t *pattern;
   cairo_surface_t *surface;
@@ -270,8 +268,6 @@ gimp_gradient_select_preview_draw (cairo_t   *cr,
   cairo_paint (cr);
 }
 
-
-
 /* Handles a draw signal.
  * Draw self, i.e. interior of button.
  *
@@ -280,9 +276,9 @@ gimp_gradient_select_preview_draw (cairo_t   *cr,
  * Is passed neither gradient nor attributes of gradient: get them now from self.
  */
 static gboolean
-gimp_gradient_select_preview_draw_handler (GtkWidget                *widget,
-                                           cairo_t                  *cr,
-                                           GimpGradientSelectButton *self)
+gimp_gradient_select_preview_draw_handler (GtkWidget           *widget,
+                                           cairo_t             *cr,
+                                           GimpGradientChooser *self)
 {
   GtkAllocation    allocation;
 

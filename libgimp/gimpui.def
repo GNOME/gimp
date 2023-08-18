@@ -1,8 +1,8 @@
 EXPORTS
 	gimp_aspect_preview_get_type
 	gimp_aspect_preview_new_from_drawable
-	gimp_brush_select_button_get_type
-	gimp_brush_select_button_new
+	gimp_brush_chooser_get_type
+	gimp_brush_chooser_new
 	gimp_channel_combo_box_get_type
 	gimp_channel_combo_box_new
 	gimp_drawable_combo_box_get_type
@@ -13,18 +13,18 @@ EXPORTS
 	gimp_export_dialog_get_content_area
 	gimp_export_dialog_new
 	gimp_export_image
-	gimp_font_select_button_get_type
-	gimp_font_select_button_new
-	gimp_gradient_select_button_get_type
-	gimp_gradient_select_button_new
+	gimp_font_chooser_get_type
+	gimp_font_chooser_new
+	gimp_gradient_chooser_get_type
+	gimp_gradient_chooser_new
 	gimp_image_combo_box_get_type
 	gimp_image_combo_box_new
 	gimp_layer_combo_box_get_type
 	gimp_layer_combo_box_new
-	gimp_palette_select_button_get_type
-	gimp_palette_select_button_new
-	gimp_pattern_select_button_get_type
-	gimp_pattern_select_button_new
+	gimp_palette_chooser_get_type
+	gimp_palette_chooser_new
+	gimp_pattern_chooser_get_type
+	gimp_pattern_chooser_new
 	gimp_proc_browser_dialog_get_selected
 	gimp_proc_browser_dialog_get_type
 	gimp_proc_browser_dialog_new
@@ -63,12 +63,12 @@ EXPORTS
 	gimp_prop_gradient_chooser_new
 	gimp_prop_palette_chooser_new
 	gimp_prop_pattern_chooser_new
-	gimp_resource_select_button_get_label
-	gimp_resource_select_button_get_resource
-	gimp_resource_select_button_get_type
-	gimp_resource_select_button_set_clickable
-	gimp_resource_select_button_set_drag_target
-	gimp_resource_select_button_set_resource
+	gimp_resource_chooser_get_label
+	gimp_resource_chooser_get_resource
+	gimp_resource_chooser_get_type
+	gimp_resource_chooser_set_clickable
+	gimp_resource_chooser_set_drag_target
+	gimp_resource_chooser_set_resource
 	gimp_save_procedure_dialog_add_metadata
 	gimp_save_procedure_dialog_get_type
 	gimp_save_procedure_dialog_new

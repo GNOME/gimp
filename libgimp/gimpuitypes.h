@@ -43,12 +43,12 @@ typedef struct _GimpLayerComboBox        GimpLayerComboBox;
 typedef struct _GimpVectorsComboBox      GimpVectorsComboBox;
 typedef struct _GimpImageComboBox        GimpImageComboBox;
 
-typedef struct _GimpSelectButton         GimpSelectButton;
-typedef struct _GimpBrushSelectButton    GimpBrushSelectButton;
-typedef struct _GimpFontSelectButton     GimpFontSelectButton;
-typedef struct _GimpGradientSelectButton GimpGradientSelectButton;
-typedef struct _GimpPaletteSelectButton  GimpPaletteSelectButton;
-typedef struct _GimpPatternSelectButton  GimpPatternSelectButton;
+typedef struct _GimpResourceChooser      GimpResourceChooser;
+typedef struct _GimpBrushChooser         GimpBrushChooser;
+typedef struct _GimpFontChooser          GimpFontChooser;
+typedef struct _GimpGradientChooser      GimpGradientChooser;
+typedef struct _GimpPaletteChooser       GimpPaletteChooser;
+typedef struct _GimpPatternChooser       GimpPatternChooser;
 
 
 G_END_DECLS

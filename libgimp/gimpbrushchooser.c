@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpbrushselectbutton.c
+ * gimpbrushchooser.c
  * Copyright (C) 1998 Andy Thomas
  *
  * This library is free software: you can redistribute it and/or
@@ -29,15 +29,15 @@
 #include "gimp.h"
 
 #include "gimpuitypes.h"
-#include "gimpbrushselectbutton.h"
+#include "gimpbrushchooser.h"
 #include "gimpuimarshal.h"
 
 #include "libgimp-intl.h"
 
 
 /**
- * SECTION: gimpbrushselectbutton
- * @title: GimpBrushSelectButton
+ * SECTION: gimpbrushchooser
+ * @title: GimpBrushChooser
  * @short_description: A button which pops up a brush selection dialog.
  *
  * A button which pops up a brush selection dialog.
@@ -48,61 +48,61 @@
 
 #define CELL_SIZE 40
 
-struct _GimpBrushSelectButton
+struct _GimpBrushChooser
 {
-  GimpResourceSelectButton  parent_instance;
+  GimpResourceChooser  parent_instance;
 
-  GtkWidget                *preview;
-  GtkWidget                *popup;
+  GtkWidget           *preview;
+  GtkWidget           *popup;
 
-  GimpBrush                *brush;
-  gint                      width;
-  gint                      height;
-  GeglBuffer               *buffer;
-  GeglBuffer               *mask;
+  GimpBrush           *brush;
+  gint                 width;
+  gint                 height;
+  GeglBuffer          *buffer;
+  GeglBuffer          *mask;
 };
 
 
-static void           gimp_brush_select_button_finalize         (GObject                  *object);
+static void           gimp_brush_chooser_finalize         (GObject          *object);
 
-static gboolean       gimp_brush_select_on_preview_events       (GtkWidget             *widget,
-                                                                 GdkEvent              *event,
-                                                                 GimpBrushSelectButton *button);
+static gboolean       gimp_brush_select_on_preview_events (GtkWidget        *widget,
+                                                           GdkEvent         *event,
+                                                           GimpBrushChooser *button);
 
-static void           gimp_brush_select_preview_draw            (GimpBrushSelectButton *chooser,
-                                                                 GimpPreviewArea       *area);
+static void           gimp_brush_select_preview_draw      (GimpBrushChooser *chooser,
+                                                           GimpPreviewArea  *area);
 
-static void           gimp_brush_select_button_draw             (GimpBrushSelectButton *self);
-static void           gimp_brush_select_button_get_brush_bitmap (GimpBrushSelectButton *self,
-                                                                 gint                   width,
-                                                                 gint                   height);
+static void           gimp_brush_chooser_draw             (GimpBrushChooser *self);
+static void           gimp_brush_chooser_get_brush_bitmap (GimpBrushChooser *self,
+                                                           gint              width,
+                                                           gint              height);
 
 /* Popup methods. */
-static void           gimp_brush_select_button_open_popup       (GimpBrushSelectButton *button,
-                                                                 gint                   x,
-                                                                 gint                   y);
-static void           gimp_brush_select_button_close_popup      (GimpBrushSelectButton *button);
+static void           gimp_brush_chooser_open_popup       (GimpBrushChooser *button,
+                                                           gint              x,
+                                                           gint              y);
+static void           gimp_brush_chooser_close_popup      (GimpBrushChooser *button);
 
 
 static const GtkTargetEntry drag_target = { "application/x-gimp-brush-name", 0, 0 };
 
-G_DEFINE_FINAL_TYPE (GimpBrushSelectButton, gimp_brush_select_button, GIMP_TYPE_RESOURCE_SELECT_BUTTON)
+G_DEFINE_FINAL_TYPE (GimpBrushChooser, gimp_brush_chooser, GIMP_TYPE_RESOURCE_CHOOSER)
 
 
 static void
-gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
+gimp_brush_chooser_class_init (GimpBrushChooserClass *klass)
 {
   GObjectClass                  *object_class = G_OBJECT_CLASS (klass);
-  GimpResourceSelectButtonClass *res_class    = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
+  GimpResourceChooserClass *res_class    = GIMP_RESOURCE_CHOOSER_CLASS (klass);
 
-  res_class->draw_interior = (void (*)(GimpResourceSelectButton *)) gimp_brush_select_button_draw;
+  res_class->draw_interior = (void (*)(GimpResourceChooser *)) gimp_brush_chooser_draw;
   res_class->resource_type = GIMP_TYPE_BRUSH;
 
-  object_class->finalize   = gimp_brush_select_button_finalize;
+  object_class->finalize   = gimp_brush_chooser_finalize;
 }
 
 static void
-gimp_brush_select_button_init (GimpBrushSelectButton *chooser)
+gimp_brush_chooser_init (GimpBrushChooser *chooser)
 {
   GtkWidget *widget;
   gint       scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (chooser));
@@ -124,7 +124,7 @@ gimp_brush_select_button_init (GimpBrushSelectButton *chooser)
   gtk_widget_show (chooser->preview);
 
   g_signal_connect_swapped (chooser->preview, "size-allocate",
-                            G_CALLBACK (gimp_brush_select_button_draw),
+                            G_CALLBACK (gimp_brush_chooser_draw),
                             chooser);
 
   g_signal_connect (chooser->preview, "event",
@@ -134,28 +134,28 @@ gimp_brush_select_button_init (GimpBrushSelectButton *chooser)
   widget = gtk_button_new_with_mnemonic (_("_Browse..."));
   gtk_box_pack_start (GTK_BOX (chooser), widget, FALSE, FALSE, 0);
 
-  gimp_resource_select_button_set_drag_target (GIMP_RESOURCE_SELECT_BUTTON (chooser),
+  gimp_resource_chooser_set_drag_target (GIMP_RESOURCE_CHOOSER (chooser),
                                                chooser->preview,
                                                &drag_target);
 
-  gimp_resource_select_button_set_clickable (GIMP_RESOURCE_SELECT_BUTTON (chooser),
+  gimp_resource_chooser_set_clickable (GIMP_RESOURCE_CHOOSER (chooser),
                                              widget);
   gtk_widget_show (widget);
 }
 
 static void
-gimp_brush_select_button_finalize (GObject *object)
+gimp_brush_chooser_finalize (GObject *object)
 {
-  GimpBrushSelectButton *chooser = GIMP_BRUSH_SELECT_BUTTON (object);
+  GimpBrushChooser *chooser = GIMP_BRUSH_CHOOSER (object);
 
   g_clear_object (&chooser->buffer);
   g_clear_object (&chooser->mask);
 
-  G_OBJECT_CLASS (gimp_brush_select_button_parent_class)->finalize (object);
+  G_OBJECT_CLASS (gimp_brush_chooser_parent_class)->finalize (object);
 }
 
 /**
- * gimp_brush_select_button_new:
+ * gimp_brush_chooser_new:
  * @title:    (nullable): Title of the dialog to use or %NULL to use the default title.
  * @label:    (nullable): Button label or %NULL for no label.
  * @resource: (nullable): Initial brush.
@@ -170,9 +170,9 @@ gimp_brush_select_button_finalize (GObject *object)
  * Since: 2.4
  */
 GtkWidget *
-gimp_brush_select_button_new (const gchar  *title,
-                              const gchar  *label,
-                              GimpResource *resource)
+gimp_brush_chooser_new (const gchar  *title,
+                        const gchar  *label,
+                        GimpResource *resource)
 {
   GtkWidget *self;
 
@@ -180,13 +180,13 @@ gimp_brush_select_button_new (const gchar  *title,
     resource = GIMP_RESOURCE (gimp_context_get_brush ());
 
   if (title)
-    self = g_object_new (GIMP_TYPE_BRUSH_SELECT_BUTTON,
+    self = g_object_new (GIMP_TYPE_BRUSH_CHOOSER,
                          "title",     title,
                          "label",     label,
                          "resource",  resource,
                          NULL);
   else
-    self = g_object_new (GIMP_TYPE_BRUSH_SELECT_BUTTON,
+    self = g_object_new (GIMP_TYPE_BRUSH_CHOOSER,
                          "label",     label,
                          "resource",  resource,
                          NULL);
@@ -197,20 +197,20 @@ gimp_brush_select_button_new (const gchar  *title,
 /*  private functions  */
 
 static void
-gimp_brush_select_button_draw (GimpBrushSelectButton *chooser)
+gimp_brush_chooser_draw (GimpBrushChooser *chooser)
 {
   GtkAllocation allocation;
 
   gtk_widget_get_allocation (chooser->preview, &allocation);
 
-  gimp_brush_select_button_get_brush_bitmap (chooser, allocation.width, allocation.height);
+  gimp_brush_chooser_get_brush_bitmap (chooser, allocation.width, allocation.height);
   gimp_brush_select_preview_draw (chooser, GIMP_PREVIEW_AREA (chooser->preview));
 }
 
 static void
-gimp_brush_select_button_get_brush_bitmap (GimpBrushSelectButton *chooser,
-                                           gint                   width,
-                                           gint                   height)
+gimp_brush_chooser_get_brush_bitmap (GimpBrushChooser *chooser,
+                                     gint              width,
+                                     gint              height)
 {
   GimpBrush *brush;
 
@@ -297,9 +297,9 @@ gimp_brush_select_button_get_brush_bitmap (GimpBrushSelectButton *chooser,
 
 /* On mouse events in self's preview, popup a zoom view of entire brush */
 static gboolean
-gimp_brush_select_on_preview_events (GtkWidget             *widget,
-                                     GdkEvent              *event,
-                                     GimpBrushSelectButton *self)
+gimp_brush_select_on_preview_events (GtkWidget        *widget,
+                                     GdkEvent         *event,
+                                     GimpBrushChooser *self)
 {
   GdkEventButton *bevent;
 
@@ -311,7 +311,7 @@ gimp_brush_select_on_preview_events (GtkWidget             *widget,
       if (bevent->button == 1)
         {
           gtk_grab_add (widget);
-          gimp_brush_select_button_open_popup (self,
+          gimp_brush_chooser_open_popup (self,
                                                bevent->x, bevent->y);
         }
       break;
@@ -322,7 +322,7 @@ gimp_brush_select_on_preview_events (GtkWidget             *widget,
       if (bevent->button == 1)
         {
           gtk_grab_remove (widget);
-          gimp_brush_select_button_close_popup (self);
+          gimp_brush_chooser_close_popup (self);
         }
       break;
 
@@ -335,8 +335,8 @@ gimp_brush_select_on_preview_events (GtkWidget             *widget,
 
 /* Draw a GimpPreviewArea with a given bitmap. */
 static void
-gimp_brush_select_preview_draw (GimpBrushSelectButton *chooser,
-                                GimpPreviewArea       *preview)
+gimp_brush_select_preview_draw (GimpBrushChooser *chooser,
+                                GimpPreviewArea  *preview)
 {
   GimpPreviewArea *area = GIMP_PREVIEW_AREA (preview);
   GeglBuffer      *src_buffer;
@@ -394,9 +394,9 @@ gimp_brush_select_preview_draw (GimpBrushSelectButton *chooser,
 /* popup methods. */
 
 static void
-gimp_brush_select_button_open_popup (GimpBrushSelectButton *chooser,
-                                     gint                   x,
-                                     gint                   y)
+gimp_brush_chooser_open_popup (GimpBrushChooser *chooser,
+                               gint              x,
+                               gint              y)
 {
   GtkWidget     *frame;
   GtkWidget     *preview;
@@ -406,7 +406,7 @@ gimp_brush_select_button_open_popup (GimpBrushSelectButton *chooser,
   gint           y_org;
 
   if (chooser->popup)
-    gimp_brush_select_button_close_popup (chooser);
+    gimp_brush_chooser_close_popup (chooser);
 
   if (chooser->width <= CELL_SIZE && chooser->height <= CELL_SIZE)
     return;
@@ -450,7 +450,7 @@ gimp_brush_select_button_open_popup (GimpBrushSelectButton *chooser,
 }
 
 static void
-gimp_brush_select_button_close_popup (GimpBrushSelectButton *self)
+gimp_brush_chooser_close_popup (GimpBrushChooser *self)
 {
   g_clear_pointer (&self->popup, gtk_widget_destroy);
 }
