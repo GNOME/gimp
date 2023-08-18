@@ -60,16 +60,6 @@ gboolean       gimp_resource_is_palette  (GimpResource *resource);
 gboolean       gimp_resource_is_font     (GimpResource *resource);
 
 
-#define GIMP_TYPE_GRADIENT (gimp_gradient_get_type ())
-G_DECLARE_FINAL_TYPE (GimpGradient, gimp_gradient, GIMP, GRADIENT, GimpResource)
-
-#define GIMP_TYPE_PALETTE (gimp_palette_get_type ())
-G_DECLARE_FINAL_TYPE (GimpPalette, gimp_palette, GIMP, PALETTE, GimpResource)
-
-#define GIMP_TYPE_FONT (gimp_font_get_type ())
-G_DECLARE_FINAL_TYPE (GimpFont, gimp_font, GIMP, FONT, GimpResource)
-
-
 G_END_DECLS
 
 #endif /* __GIMP_RESOURCE_H__ */

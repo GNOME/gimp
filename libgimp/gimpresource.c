@@ -458,36 +458,3 @@ gimp_resource_is_font (GimpResource *resource)
 {
   return gimp_resource_id_is_font (gimp_resource_get_id (resource));
 }
-
-
-struct _GimpGradient
-{
-  GimpResource parent_instance;
-};
-
-G_DEFINE_TYPE (GimpGradient, gimp_gradient, GIMP_TYPE_RESOURCE);
-
-static void gimp_gradient_class_init (GimpGradientClass *klass) {}
-static void gimp_gradient_init       (GimpGradient       *self) {}
-
-
-struct _GimpPalette
-{
-  GimpResource parent_instance;
-};
-
-G_DEFINE_TYPE (GimpPalette, gimp_palette, GIMP_TYPE_RESOURCE);
-
-static void gimp_palette_class_init (GimpPaletteClass *klass) {}
-static void gimp_palette_init       (GimpPalette       *self) {}
-
-
-struct _GimpFont
-{
-  GimpResource parent_instance;
-};
-
-G_DEFINE_TYPE (GimpFont, gimp_font, GIMP_TYPE_RESOURCE);
-
-static void gimp_font_class_init (GimpFontClass *klass) {}
-static void gimp_font_init       (GimpFont       *self) {}

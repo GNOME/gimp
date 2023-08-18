@@ -41,7 +41,9 @@
 #include <libgimp/gimpchannel.h>
 #include <libgimp/gimpdisplay.h>
 #include <libgimp/gimpdrawable.h>
+#include <libgimp/gimpfont.h>
 #include <libgimp/gimpgimprc.h>
+#include <libgimp/gimpgradient.h>
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimpimagecolorprofile.h>
 #include <libgimp/gimpimagemetadata.h>
@@ -50,6 +52,7 @@
 #include <libgimp/gimplayer.h>
 #include <libgimp/gimplayermask.h>
 #include <libgimp/gimploadprocedure.h>
+#include <libgimp/gimppalette.h>
 #include <libgimp/gimpparamspecs.h>
 #include <libgimp/gimppattern.h>
 #include <libgimp/gimppdb.h>
