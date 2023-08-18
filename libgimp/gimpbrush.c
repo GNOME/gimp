@@ -41,7 +41,8 @@ static void         gimp_brush_get_data        (GimpBrush  *brush);
 static GeglBuffer * gimp_brush_scale           (GeglBuffer *buffer,
                                                 gint        max_width,
                                                 gint        max_height);
-static const Babl * gimp_brush_data_get_format (gint        bpp);
+static const Babl * gimp_brush_data_get_format (gint        bpp,
+                                                gboolean    with_alpha);
 
 
 static void  gimp_brush_class_init (GimpBrushClass *klass)
@@ -186,14 +187,50 @@ gimp_brush_get_data (GimpBrush *brush)
   color = g_bytes_unref_to_data (color_bytes, &color_size);
 
   brush->mask = gegl_buffer_linear_new_from_data ((const gpointer) mask,
-                                                  gimp_brush_data_get_format (mask_bpp),
+                                                  gimp_brush_data_get_format (mask_bpp, FALSE),
                                                   GEGL_RECTANGLE (0, 0, width, height),
                                                   0, g_free, NULL);
   if (color_bpp > 0)
-    brush->buffer = gegl_buffer_linear_new_from_data ((const gpointer) color,
-                                                      gimp_brush_data_get_format (color_bpp),
-                                                      GEGL_RECTANGLE (0, 0, width, height),
-                                                      0, g_free, NULL);
+    {
+      GeglBufferIterator *gi;
+      GeglBuffer         *buffer;
+
+      buffer = gegl_buffer_linear_new_from_data ((const gpointer) color,
+                                                 gimp_brush_data_get_format (color_bpp, FALSE),
+                                                 GEGL_RECTANGLE (0, 0, width, height),
+                                                 0, g_free, NULL);
+      brush->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                       gimp_brush_data_get_format (color_bpp, TRUE));
+
+      gi = gegl_buffer_iterator_new (brush->buffer, NULL, 0, NULL,
+                                     GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 3);
+      gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (0, 0, width, height),
+                                0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+      gegl_buffer_iterator_add (gi, brush->mask, GEGL_RECTANGLE (0, 0, width, height),
+                                0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+      while (gegl_buffer_iterator_next (gi))
+        {
+          guint8 *out    = gi->items[0].data;
+          guint8 *color  = gi->items[1].data;
+          guint8 *alpha  = gi->items[2].data;
+
+          for (gint i = 0; i < gi->length; i++)
+            {
+              gint c;
+
+              for (c = 0; c < color_bpp; c++)
+                out[c] = color[c];
+
+              out[c] = alpha[0];
+
+              out   += color_bpp + 1;
+              color += color_bpp;
+              alpha += 1;
+            }
+        }
+
+      g_object_unref (buffer);
+    }
 }
 
 static GeglBuffer *
@@ -236,6 +273,7 @@ gimp_brush_scale (GeglBuffer *buffer,
   sink = gegl_node_new_child (graph,
                               "operation", "gegl:buffer-sink",
                               "buffer",    &scaled,
+                              "format",    gegl_buffer_get_format (buffer),
                               NULL);
   gegl_node_link_many (source, op, sink, NULL);
   gegl_node_process (sink);
@@ -246,7 +284,8 @@ gimp_brush_scale (GeglBuffer *buffer,
 }
 
 static const Babl *
-gimp_brush_data_get_format (gint bpp)
+gimp_brush_data_get_format (gint     bpp,
+                            gboolean with_alpha)
 {
   /* It's an ugly way to determine the proper format but gimp_brush_get_pixels()
    * doesn't give more info.
@@ -254,11 +293,15 @@ gimp_brush_data_get_format (gint bpp)
   switch (bpp)
     {
     case 1:
-      return babl_format ("Y' u8");
+      if (! with_alpha)
+        return babl_format ("Y' u8");
+      /* fallthrough */
     case 2:
       return babl_format ("Y'A u8");
     case 3:
-      return babl_format ("R'G'B' u8");
+      if (! with_alpha)
+        return babl_format ("R'G'B' u8");
+      /* fallthrough */
     case 4:
       return babl_format ("R'G'B'A u8");
     default:
