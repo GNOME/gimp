@@ -166,6 +166,9 @@ gimp_tool_options_manager_init (Gimp *gimp)
   g_signal_connect (gimp->config, "notify::global-font",
                     G_CALLBACK (tool_options_manager_global_notify),
                     manager);
+  g_signal_connect (gimp->config, "notify::global-expand",
+                    G_CALLBACK (tool_options_manager_global_notify),
+                    manager);
 
   g_signal_connect (user_context, "tool-changed",
                     G_CALLBACK (tool_options_manager_tool_changed),
@@ -250,6 +253,8 @@ tool_options_manager_get_global_props (GimpCoreConfig *config)
     global_props |= GIMP_CONTEXT_PROP_MASK_GRADIENT;
   if (config->global_font)
     global_props |= GIMP_CONTEXT_PROP_MASK_FONT;
+  if (config->global_expand)
+    global_props |= GIMP_CONTEXT_PROP_MASK_EXPAND;
 
   return global_props;
 }
@@ -352,6 +357,12 @@ tool_options_manager_paint_options_notify (GimpPaintOptions *src,
       tool_info->context_props & GIMP_CONTEXT_PROP_MASK_GRADIENT)
     {
       prop_mask |= GIMP_CONTEXT_PROP_MASK_GRADIENT;
+    }
+
+  if ((active || config->global_expand) &&
+      tool_info->context_props & GIMP_CONTEXT_PROP_MASK_EXPAND)
+    {
+      prop_mask |= GIMP_CONTEXT_PROP_MASK_EXPAND;
     }
 
   if (gimp_paint_options_is_prop (pspec->name, prop_mask))

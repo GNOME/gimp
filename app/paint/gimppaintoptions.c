@@ -1283,9 +1283,18 @@ static const gchar *gradient_props[] =
   "gradient-repeat"
 };
 
+static const gchar *expand_props[] =
+{
+  "expand-use",
+  "expand-amount",
+  "expand-fill-type",
+  "expand-mask-fill-type",
+};
+
 static const gint max_n_props = (G_N_ELEMENTS (brush_props) +
                                  G_N_ELEMENTS (dynamics_props) +
-                                 G_N_ELEMENTS (gradient_props));
+                                 G_N_ELEMENTS (gradient_props) +
+                                 G_N_ELEMENTS (expand_props));
 
 gboolean
 gimp_paint_options_is_prop (const gchar         *prop_name,
@@ -1313,6 +1322,13 @@ gimp_paint_options_is_prop (const gchar         *prop_name,
     {
       for (i = 0; i < G_N_ELEMENTS (gradient_props); i++)
         if (! strcmp (prop_name, gradient_props[i]))
+          return TRUE;
+    }
+
+  if (prop_mask & GIMP_CONTEXT_PROP_MASK_EXPAND)
+    {
+      for (i = 0; i < G_N_ELEMENTS (expand_props); i++)
+        if (! strcmp (prop_name, expand_props[i]))
           return TRUE;
     }
 
@@ -1348,6 +1364,12 @@ gimp_paint_options_copy_props (GimpPaintOptions    *src,
     {
       for (i = 0; i < G_N_ELEMENTS (gradient_props); i++)
         names[n_props++] = gradient_props[i];
+    }
+
+  if (prop_mask & GIMP_CONTEXT_PROP_MASK_EXPAND)
+    {
+      for (i = 0; i < G_N_ELEMENTS (expand_props); i++)
+        names[n_props++] = expand_props[i];
     }
 
   if (n_props > 0)

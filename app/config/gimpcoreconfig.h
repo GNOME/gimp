@@ -78,6 +78,7 @@ struct _GimpCoreConfig
   gboolean                global_palette;
   gboolean                global_gradient;
   gboolean                global_font;
+  gboolean                global_expand;
   GimpTemplate           *default_image;
   GimpGrid               *default_grid;
   gint                    levels_of_undo;

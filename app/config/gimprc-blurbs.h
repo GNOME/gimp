@@ -181,6 +181,9 @@ _("When enabled, the selected pattern will be used for all tools.")
 #define GLOBAL_PALETTE_BLURB \
 "When enabled, the selected palette will be used for all tools."
 
+#define GLOBAL_EXPAND_BLURB \
+"When enabled, the selected auto expand layer settings will be used for all tools."
+
 #define GRADIENT_PATH_BLURB \
 "Sets the gradient search path."
 

@@ -711,6 +711,7 @@ typedef enum  /*< pdb-skip, skip >*/
   GIMP_CONTEXT_PROP_BUFFER      = 18,
   GIMP_CONTEXT_PROP_IMAGEFILE   = 19,
   GIMP_CONTEXT_PROP_TEMPLATE    = 20,
+  GIMP_CONTEXT_PROP_EXPAND      = 21,
 
   GIMP_CONTEXT_PROP_LAST        = GIMP_CONTEXT_PROP_TEMPLATE
 } GimpContextPropType;
@@ -737,6 +738,7 @@ typedef enum  /*< pdb-skip, skip >*/
   GIMP_CONTEXT_PROP_MASK_BUFFER      = 1 << 18,
   GIMP_CONTEXT_PROP_MASK_IMAGEFILE   = 1 << 19,
   GIMP_CONTEXT_PROP_MASK_TEMPLATE    = 1 << 20,
+  GIMP_CONTEXT_PROP_MASK_EXPAND      = 1 << 21,
 
   /*  aliases  */
   GIMP_CONTEXT_PROP_MASK_PAINT = (GIMP_CONTEXT_PROP_MASK_FOREGROUND |
@@ -746,7 +748,8 @@ typedef enum  /*< pdb-skip, skip >*/
                                   GIMP_CONTEXT_PROP_MASK_BRUSH      |
                                   GIMP_CONTEXT_PROP_MASK_DYNAMICS   |
                                   GIMP_CONTEXT_PROP_MASK_PATTERN    |
-                                  GIMP_CONTEXT_PROP_MASK_GRADIENT),
+                                  GIMP_CONTEXT_PROP_MASK_GRADIENT   |
+                                  GIMP_CONTEXT_PROP_MASK_EXPAND),
 
   GIMP_CONTEXT_PROP_MASK_ALL   = (GIMP_CONTEXT_PROP_MASK_IMAGE       |
                                   GIMP_CONTEXT_PROP_MASK_DISPLAY     |

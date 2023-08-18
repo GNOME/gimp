@@ -62,6 +62,7 @@ gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_TYPE_AIRBRUSH_OPTIONS,
                 gimp_airbrush_options_gui,
                 GIMP_PAINT_OPTIONS_CONTEXT_MASK |
+                GIMP_CONTEXT_PROP_MASK_EXPAND   |
                 GIMP_CONTEXT_PROP_MASK_GRADIENT,
                 "gimp-airbrush-tool",
                 _("Airbrush"),

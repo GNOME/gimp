@@ -1852,6 +1852,9 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add_with_icon (object, "global-gradient",
                                     _("_Gradient"), GIMP_ICON_GRADIENT,
                                     GTK_BOX (vbox2), size_group);
+  prefs_check_button_add_with_icon (object, "global-expand",
+                                    _("E_xpand Layers"), GIMP_ICON_TOOL_SCALE,
+                                    GTK_BOX (vbox2), size_group);
 
   /*  Move Tool */
   vbox2 = prefs_frame_new (_("Move Tool"),

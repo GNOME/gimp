@@ -94,6 +94,7 @@ enum
   PROP_GLOBAL_PALETTE,
   PROP_GLOBAL_GRADIENT,
   PROP_GLOBAL_FONT,
+  PROP_GLOBAL_EXPAND,
   PROP_DEFAULT_IMAGE,
   PROP_DEFAULT_GRID,
   PROP_UNDO_LEVELS,
@@ -533,6 +534,13 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                             "global-font",
                             "Global font",
                             GLOBAL_FONT_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_GLOBAL_EXPAND,
+                            "global-expand",
+                            "Global expand",
+                            GLOBAL_EXPAND_BLURB,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -1057,6 +1065,9 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_GLOBAL_FONT:
       core_config->global_font = g_value_get_boolean (value);
       break;
+    case PROP_GLOBAL_EXPAND:
+      core_config->global_expand = g_value_get_boolean (value);
+      break;
     case PROP_DEFAULT_IMAGE:
       if (g_value_get_object (value))
         gimp_config_sync (g_value_get_object (value) ,
@@ -1332,6 +1343,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_GLOBAL_FONT:
       g_value_set_boolean (value, core_config->global_font);
+      break;
+    case PROP_GLOBAL_EXPAND:
+      g_value_set_boolean (value, core_config->global_expand);
       break;
     case PROP_DEFAULT_IMAGE:
       g_value_set_object (value, core_config->default_image);
