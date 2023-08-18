@@ -680,9 +680,9 @@ EXPORTS
 	gimp_param_spec_vectors
 	gimp_param_text_layer_get_type
 	gimp_param_vectors_get_type
+	gimp_pattern_get_buffer
 	gimp_pattern_get_by_name
 	gimp_pattern_get_info
-	gimp_pattern_get_pixels
 	gimp_pattern_get_type
 	gimp_patterns_close_popup
 	gimp_patterns_get_list

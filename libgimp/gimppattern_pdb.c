@@ -126,7 +126,7 @@ gimp_pattern_get_info (GimpPattern *pattern,
 }
 
 /**
- * gimp_pattern_get_pixels:
+ * _gimp_pattern_get_pixels:
  * @pattern: The pattern.
  * @width: (out): The pattern width.
  * @height: (out): The pattern height.
@@ -136,19 +136,18 @@ gimp_pattern_get_info (GimpPattern *pattern,
  * Gets information about the pattern (including pixels).
  *
  * Gets information about the pattern: the pattern extents (width and
- * height), its bpp, and its pixel data. The pixel data is an array in
- * C or a list in some languages.
+ * height), its bpp, and its pixel data.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_pattern_get_pixels (GimpPattern  *pattern,
-                         gint         *width,
-                         gint         *height,
-                         gint         *bpp,
-                         GBytes      **color_bytes)
+_gimp_pattern_get_pixels (GimpPattern  *pattern,
+                          gint         *width,
+                          gint         *height,
+                          gint         *bpp,
+                          GBytes      **color_bytes)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;

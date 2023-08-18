@@ -99,10 +99,10 @@ BLURB
     $help = <<'HELP';
 Gets information about the pattern:
 the pattern extents (width and height), its bpp, and its pixel data.
-The pixel data is an array in C or a list in some languages.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
+    $lib_private = 1;
 
     @inargs = (
       ${pattern_arg_spec}

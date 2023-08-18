@@ -460,17 +460,6 @@ gimp_resource_is_font (GimpResource *resource)
 }
 
 
-struct _GimpPattern
-{
-  GimpResource parent_instance;
-};
-
-G_DEFINE_TYPE (GimpPattern, gimp_pattern, GIMP_TYPE_RESOURCE);
-
-static void gimp_pattern_class_init (GimpPatternClass *klass) {}
-static void gimp_pattern_init       (GimpPattern       *self) {}
-
-
 struct _GimpGradient
 {
   GimpResource parent_instance;

@@ -252,7 +252,7 @@ register_pattern_procs (GimpPDB *pdb)
                                "gimp-pattern-get-pixels");
   gimp_procedure_set_static_help (procedure,
                                   "Gets information about the pattern (including pixels).",
-                                  "Gets information about the pattern: the pattern extents (width and height), its bpp, and its pixel data. The pixel data is an array in C or a list in some languages.",
+                                  "Gets information about the pattern: the pattern extents (width and height), its bpp, and its pixel data.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",

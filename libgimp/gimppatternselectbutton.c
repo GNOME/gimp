@@ -19,10 +19,6 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-/* Similar to gimpbrushselectbutton.c.
- * FUTURE: inherit or share common code.
- */
-
 #include "config.h"
 
 #include <gegl.h>
@@ -45,18 +41,12 @@
  * @short_description: A button which pops up a pattern selection dialog.
  *
  * A button which pops up a pattern selection dialog.
+ *
+ * Note that this widget draws itself using `GEGL` code. You **must** call
+ * [func@Gegl.Init] first to be able to use this chooser.
  **/
 
-#define CELL_SIZE 20
-
-/* An image. pixelels is allocated and must be freed. */
-typedef struct _PreviewImage
-{
-  gint           width;
-  gint           height;
-  gint           bpp;
-  guchar        *pixelels;
-} _PreviewImage;
+#define CELL_SIZE 40
 
 struct _GimpPatternSelectButton
 {
@@ -64,36 +54,33 @@ struct _GimpPatternSelectButton
 
   GtkWidget                *preview;
   GtkWidget                *popup;
+
+  GimpPattern              *pattern;
+  GeglBuffer               *buffer;
+  gint                      width;
+  gint                      height;
 };
 
 /*  local  */
 
-static void gimp_pattern_select_button_draw_interior   (GimpResourceSelectButton *self);
-
-static void     gimp_pattern_select_on_preview_resize  (GimpPatternSelectButton *button);
-static gboolean gimp_pattern_select_on_preview_events  (GtkWidget               *widget,
-                                                        GdkEvent                *event,
-                                                        GimpPatternSelectButton *button);
+static gboolean gimp_pattern_select_on_preview_events        (GtkWidget               *widget,
+                                                              GdkEvent                *event,
+                                                              GimpPatternSelectButton *button);
 
 /* local drawing methods. */
-static void     gimp_pattern_select_preview_draw      (GimpPreviewArea      *area,
-                                                       gint                  x,
-                                                       gint                  y,
-                                                       _PreviewImage         image,
-                                                       gint                  rowstride);
-static void     gimp_pattern_select_preview_fill_draw (GtkWidget             *preview,
-                                                       _PreviewImage         image);
+static void     gimp_pattern_select_preview_fill_draw        (GimpPatternSelectButton *chooser,
+                                                              GimpPreviewArea         *area);
 
-static void          gimp_pattern_select_button_draw              (GimpPatternSelectButton *self);
-static _PreviewImage gimp_pattern_select_button_get_pattern_image (GimpPatternSelectButton *self);
+static void     gimp_pattern_select_button_draw              (GimpResourceSelectButton *self);
+static void     gimp_pattern_select_button_get_pattern_image (GimpPatternSelectButton *self,
+                                                              gint                     width,
+                                                              gint                     height);
 
 /* Popup methods. */
-static void     gimp_pattern_select_button_open_popup  (GimpPatternSelectButton *button,
-                                                        gint                     x,
-                                                        gint                     y);
-static void     gimp_pattern_select_button_close_popup (GimpPatternSelectButton *button);
-
-
+static void     gimp_pattern_select_button_open_popup        (GimpPatternSelectButton *button,
+                                                              gint                     x,
+                                                              gint                     y);
+static void     gimp_pattern_select_button_close_popup       (GimpPatternSelectButton *button);
 
 
 /* A GtkTargetEntry has a string and two ints.
@@ -101,9 +88,7 @@ static void     gimp_pattern_select_button_close_popup (GimpPatternSelectButton 
  */
 static const GtkTargetEntry drag_target = { "application/x-gimp-pattern-name", 0, 0 };
 
-G_DEFINE_FINAL_TYPE (GimpPatternSelectButton,
-                     gimp_pattern_select_button,
-                     GIMP_TYPE_RESOURCE_SELECT_BUTTON)
+G_DEFINE_FINAL_TYPE (GimpPatternSelectButton, gimp_pattern_select_button, GIMP_TYPE_RESOURCE_SELECT_BUTTON)
 
 
 static void
@@ -111,7 +96,7 @@ gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
 {
   GimpResourceSelectButtonClass *superclass = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
 
-  superclass->draw_interior = gimp_pattern_select_button_draw_interior;
+  superclass->draw_interior = gimp_pattern_select_button_draw;
   superclass->resource_type = GIMP_TYPE_PATTERN;
 }
 
@@ -121,18 +106,20 @@ gimp_pattern_select_button_init (GimpPatternSelectButton *self)
   GtkWidget *frame;
   GtkWidget *button;
 
-  frame = gtk_frame_new (NULL);
+  frame = gtk_aspect_frame_new (NULL, 0.5, 0.5, 1.0, FALSE);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (self), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   self->preview = gimp_preview_area_new ();
   gtk_widget_add_events (self->preview,
                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
   gtk_widget_set_size_request (self->preview, CELL_SIZE, CELL_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), self->preview);
+  gtk_widget_show (self->preview);
 
   g_signal_connect_swapped (self->preview, "size-allocate",
-                            G_CALLBACK (gimp_pattern_select_on_preview_resize),
+                            G_CALLBACK (gimp_pattern_select_button_draw),
                             self);
 
   g_signal_connect (self->preview, "event",
@@ -142,22 +129,14 @@ gimp_pattern_select_button_init (GimpPatternSelectButton *self)
   button = gtk_button_new_with_mnemonic (_("_Browse..."));
   gtk_box_pack_start (GTK_BOX (self), button, FALSE, FALSE, 0);
 
-  gtk_widget_show_all (GTK_WIDGET (self));
-
   gimp_resource_select_button_set_drag_target (GIMP_RESOURCE_SELECT_BUTTON (self),
                                                self->preview,
                                                &drag_target);
 
   gimp_resource_select_button_set_clickable (GIMP_RESOURCE_SELECT_BUTTON (self),
                                              button);
+  gtk_widget_show (button);
 }
-
-static void
-gimp_pattern_select_button_draw_interior (GimpResourceSelectButton *self)
-{
-  gimp_pattern_select_button_draw (GIMP_PATTERN_SELECT_BUTTON (self));
-}
-
 
 /**
  * gimp_pattern_select_button_new:
@@ -197,61 +176,51 @@ gimp_pattern_select_button_new (const gchar  *title,
                           "resource",  resource,
                           NULL);
 
-  gimp_pattern_select_button_draw_interior (GIMP_RESOURCE_SELECT_BUTTON (self));
+  gimp_pattern_select_button_draw (GIMP_RESOURCE_SELECT_BUTTON (self));
 
   return self;
 }
 
 
-/* Draw self.
- *
- * This knows that we only draw the preview. Gtk draws the browse button.
- */
 static void
-gimp_pattern_select_button_draw (GimpPatternSelectButton *self)
+gimp_pattern_select_button_draw (GimpResourceSelectButton *chooser)
 {
-  _PreviewImage image;
+  GimpPatternSelectButton *pchooser = GIMP_PATTERN_SELECT_BUTTON (chooser);
+  GtkAllocation            allocation;
 
-  image = gimp_pattern_select_button_get_pattern_image (self);
-  gimp_pattern_select_preview_fill_draw (self->preview, image);
-  g_free (image.pixelels);
+  gtk_widget_get_allocation (pchooser->preview, &allocation);
+
+  gimp_pattern_select_button_get_pattern_image (pchooser, allocation.width, allocation.height);
+  gimp_pattern_select_preview_fill_draw (pchooser, GIMP_PREVIEW_AREA (pchooser->preview));
 }
 
-
-
-/* Return the image of self's pattern.
- * Caller must free pixelels.
- */
-static _PreviewImage
-gimp_pattern_select_button_get_pattern_image (GimpPatternSelectButton *self)
+static void
+gimp_pattern_select_button_get_pattern_image (GimpPatternSelectButton *chooser,
+                                              gint                     width,
+                                              gint                     height)
 {
-  GimpPattern    *pattern;
-  gsize           pixelels_size;
-  GBytes         *color_bytes;
-  _PreviewImage   result;
+  GimpPattern *pattern;
 
-  g_object_get (self, "resource", &pattern, NULL);
+  g_object_get (chooser, "resource", &pattern, NULL);
 
-  gimp_pattern_get_pixels (pattern,
-                           &result.width,
-                           &result.height,
-                           &result.bpp,
-                           &color_bytes);
-  result.pixelels = g_bytes_unref_to_data (color_bytes, &pixelels_size);
+  if (chooser->pattern == pattern &&
+      chooser->width   == width &&
+      chooser->height  == height)
+    {
+      /* Let's assume pattern contents is not changing in a single run. */
+      g_object_unref (pattern);
+      return;
+    }
+
+  g_clear_object (&chooser->buffer);
+
+  chooser->pattern = pattern;
+  chooser->buffer  = gimp_pattern_get_buffer (pattern, width, height, NULL);
+  chooser->width   = gegl_buffer_get_width (chooser->buffer);
+  chooser->height  = gegl_buffer_get_height (chooser->buffer);
 
   g_object_unref (pattern);
-
-  return result;
 }
-
-
-/* On resize event, redraw. */
-static void
-gimp_pattern_select_on_preview_resize (GimpPatternSelectButton *self)
-{
-  gimp_pattern_select_button_draw (self);
-}
-
 
 /* On mouse events in self's preview, popup a zoom view of entire pattern */
 static gboolean
@@ -291,80 +260,70 @@ gimp_pattern_select_on_preview_events (GtkWidget               *widget,
   return FALSE;
 }
 
-/* Draw a GimpPreviewArea with a given image. */
-static void
-gimp_pattern_select_preview_draw (GimpPreviewArea *area,
-                                  gint             x,
-                                  gint             y,
-                                  _PreviewImage    image,
-                                  gint             rowstride)
-{
-  GimpImageType type;
-
-  switch (image.bpp)
-    {
-    case 1:  type = GIMP_GRAY_IMAGE;   break;
-    case 2:  type = GIMP_GRAYA_IMAGE;  break;
-    case 3:  type = GIMP_RGB_IMAGE;    break;
-    case 4:  type = GIMP_RGBA_IMAGE;   break;
-    default:
-      g_warning ("Invalid bpp");
-      return;
-    }
-
-  gimp_preview_area_draw (area,
-                          x, y,
-                          image.width, image.height,
-                          type,
-                          image.pixelels,
-                          rowstride);
-}
-
 /* Fill a GimpPreviewArea with a image then draw. */
 static void
-gimp_pattern_select_preview_fill_draw (GtkWidget      *preview,
-                                       _PreviewImage  image)
+gimp_pattern_select_preview_fill_draw (GimpPatternSelectButton *chooser,
+                                       GimpPreviewArea         *area)
 {
-  GimpPreviewArea *area = GIMP_PREVIEW_AREA (preview);
-  GtkAllocation    allocation;
-  gint             x, y;
-  gint             width, height;
-  _PreviewImage    drawn_image;
+  GeglBuffer    *src_buffer;
+  const Babl    *format;
+  const Babl    *model;
+  guchar        *src;
+  GimpImageType  type;
+  gint           rowstride;
+  GtkAllocation  allocation;
+  gint           x = 0;
+  gint           y = 0;
 
-  gtk_widget_get_allocation (preview, &allocation);
+  gtk_widget_get_allocation (GTK_WIDGET (area), &allocation);
 
-  width  = MIN (image.width,  allocation.width);
-  height = MIN (image.height, allocation.height);
+  /* Fill with white. */
+  if (chooser->width < allocation.width ||
+      chooser->height < allocation.height)
+    {
+      gimp_preview_area_fill (area,
+                              0, 0,
+                              allocation.width,
+                              allocation.height,
+                              0xFF, 0xFF, 0xFF);
 
-  x = ((allocation.width  - width)  / 2);
-  y = ((allocation.height - height) / 2);
+      x = ((allocation.width  - chooser->width)  / 2);
+      y = ((allocation.height - chooser->height) / 2);
+    }
 
-  if (x || y)
-    gimp_preview_area_fill (area,
-                            0, 0,
-                            allocation.width,
-                            allocation.height,
-                            0xFF, 0xFF, 0xFF);
+  /* Draw the pattern. */
+  src_buffer = chooser->buffer;
+  format     = gegl_buffer_get_format (src_buffer);
+  rowstride  = chooser->width * babl_format_get_bytes_per_pixel (format);
+  model      = babl_format_get_model (format);
 
-  /* Draw same data to new bounds.
-   * drawn_image.pixelels points to same array.
-   */
-  drawn_image.width = width;
-  drawn_image.height = height;
-  drawn_image.pixelels = image.pixelels;
-  drawn_image.bpp = image.bpp;
+  if (model == babl_model ("R'G'B'"))
+    type = GIMP_RGB_IMAGE;
+  else if (model == babl_model ("R'G'B'A"))
+    type = GIMP_RGBA_IMAGE;
+  else if (model == babl_model ("Y'"))
+    type = GIMP_GRAY_IMAGE;
+  else if (model == babl_model ("Y'A"))
+    type = GIMP_GRAYA_IMAGE;
+  else
+    /* I just know that we can't have other formats because I set it up this way
+     * in gimp_pattern_get_buffer(). If we make the latter more generic, able to
+     * return more types of pixel data, this should be reviewed. XXX
+     */
+    g_return_if_reached ();
 
-  gimp_pattern_select_preview_draw (area,
-                                    x, y,
-                                    drawn_image,
-                                    image.width * image.bpp );  /* row stride */
-  /* Caller will free image.pixelels */
+  src = g_try_malloc (sizeof (guchar) * rowstride * chooser->height);
+
+  gegl_buffer_get (chooser->buffer, NULL, 1.0, format, src, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+  gimp_preview_area_draw (area, x, y, chooser->width, chooser->height, type, src, rowstride);
+
+  g_free (src);
 }
 
 /* popup methods. */
 
 static void
-gimp_pattern_select_button_open_popup (GimpPatternSelectButton *self,
+gimp_pattern_select_button_open_popup (GimpPatternSelectButton *chooser,
                                        gint                     x,
                                        gint                     y)
 {
@@ -374,54 +333,47 @@ gimp_pattern_select_button_open_popup (GimpPatternSelectButton *self,
   GdkRectangle  workarea;
   gint          x_org;
   gint          y_org;
-  _PreviewImage image;
 
-  if (self->popup)
-    gimp_pattern_select_button_close_popup (self);
+  if (chooser->popup)
+    gimp_pattern_select_button_close_popup (chooser);
 
-  image = gimp_pattern_select_button_get_pattern_image (self);
-
-  if (image.width <= CELL_SIZE && image.height <= CELL_SIZE)
+  if (chooser->width <= CELL_SIZE && chooser->height <= CELL_SIZE)
     return;
 
-  self->popup = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_window_set_type_hint (GTK_WINDOW (self->popup), GDK_WINDOW_TYPE_HINT_DND);
-  gtk_window_set_screen (GTK_WINDOW (self->popup),
-                         gtk_widget_get_screen (GTK_WIDGET (self)));
+  chooser->popup = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_window_set_type_hint (GTK_WINDOW (chooser->popup), GDK_WINDOW_TYPE_HINT_DND);
+  gtk_window_set_screen (GTK_WINDOW (chooser->popup),
+                         gtk_widget_get_screen (GTK_WIDGET (chooser)));
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (self->popup), frame);
+  gtk_container_add (GTK_CONTAINER (chooser->popup), frame);
   gtk_widget_show (frame);
 
   preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview, image.width, image.height);
+  gtk_widget_set_size_request (preview, chooser->width, chooser->height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
   /* decide where to put the popup: near the preview i.e. at mousedown coords */
-  gdk_window_get_origin (gtk_widget_get_window (self->preview),
+  gdk_window_get_origin (gtk_widget_get_window (chooser->preview),
                          &x_org, &y_org);
 
-  monitor = gimp_widget_get_monitor (GTK_WIDGET (self));
+  monitor = gimp_widget_get_monitor (GTK_WIDGET (chooser));
   gdk_monitor_get_workarea (monitor, &workarea);
 
-  x = x_org + x - (image.width  / 2);
-  y = y_org + y - (image.height / 2);
+  x = x_org + x - (chooser->width  / 2);
+  y = y_org + y - (chooser->height / 2);
 
-  x = CLAMP (x, workarea.x, workarea.x + workarea.width  - image.width);
-  y = CLAMP (y, workarea.y, workarea.y + workarea.height - image.height);
+  x = CLAMP (x, workarea.x, workarea.x + workarea.width  - chooser->width);
+  y = CLAMP (y, workarea.y, workarea.y + workarea.height - chooser->height);
 
-  gtk_window_move (GTK_WINDOW (self->popup), x, y);
+  gtk_window_move (GTK_WINDOW (chooser->popup), x, y);
 
-  gtk_widget_show (self->popup);
+  gtk_widget_show (chooser->popup);
 
   /*  Draw popup now. Usual events do not cause a draw. */
-  gimp_pattern_select_preview_draw (GIMP_PREVIEW_AREA (preview),
-                                    0, 0,
-                                    image,
-                                    image.width * image.bpp);
-  g_free (image.pixelels);
+  gimp_pattern_select_preview_fill_draw (chooser, GIMP_PREVIEW_AREA (preview));
 }
 
 static void
