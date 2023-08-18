@@ -1137,7 +1137,7 @@ gimp_color_profile_new_rgb_srgb (void)
   static GimpColorProfile *profile = NULL;
 
   const guint8 *data;
-  gsize         length;
+  gsize         length = 0;
 
   if (G_UNLIKELY (profile == NULL))
     {
@@ -1212,7 +1212,7 @@ gimp_color_profile_new_rgb_srgb_linear (void)
   static GimpColorProfile *profile = NULL;
 
   const guint8 *data;
-  gsize         length;
+  gsize         length = 0;
 
   if (G_UNLIKELY (profile == NULL))
     {
@@ -1291,7 +1291,7 @@ gimp_color_profile_new_rgb_adobe (void)
   static GimpColorProfile *profile = NULL;
 
   const guint8 *data;
-  gsize         length;
+  gsize         length = 0;
 
   if (G_UNLIKELY (profile == NULL))
     {
@@ -1353,7 +1353,7 @@ gimp_color_profile_new_d65_gray_srgb_trc (void)
   static GimpColorProfile *profile = NULL;
 
   const guint8 *data;
-  gsize         length;
+  gsize         length = 0;
 
   if (G_UNLIKELY (profile == NULL))
     {
@@ -1411,7 +1411,7 @@ gimp_color_profile_new_d65_gray_linear (void)
   static GimpColorProfile *profile = NULL;
 
   const guint8 *data;
-  gsize         length;
+  gsize         length = 0;
 
   if (G_UNLIKELY (profile == NULL))
     {
@@ -1477,7 +1477,7 @@ gimp_color_profile_new_d50_gray_lab_trc (void)
   static GimpColorProfile *profile = NULL;
 
   const guint8 *data;
-  gsize         length;
+  gsize         length = 0;
 
   if (G_UNLIKELY (profile == NULL))
     {
