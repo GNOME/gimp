@@ -204,7 +204,7 @@ gimp_brush_get_info (GimpBrush *brush,
 }
 
 /**
- * gimp_brush_get_pixels:
+ * _gimp_brush_get_pixels:
  * @brush: The brush.
  * @width: (out): The brush width.
  * @height: (out): The brush height.
@@ -224,13 +224,13 @@ gimp_brush_get_info (GimpBrush *brush,
  * Since: 2.2
  **/
 gboolean
-gimp_brush_get_pixels (GimpBrush  *brush,
-                       gint       *width,
-                       gint       *height,
-                       gint       *mask_bpp,
-                       GBytes    **mask_bytes,
-                       gint       *color_bpp,
-                       GBytes    **color_bytes)
+_gimp_brush_get_pixels (GimpBrush  *brush,
+                        gint       *width,
+                        gint       *height,
+                        gint       *mask_bpp,
+                        GBytes    **mask_bytes,
+                        gint       *color_bpp,
+                        GBytes    **color_bytes)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;

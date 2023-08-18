@@ -9,10 +9,11 @@ EXPORTS
 	gimp_brush_application_mode_get_type
 	gimp_brush_get_angle
 	gimp_brush_get_aspect_ratio
+	gimp_brush_get_buffer
 	gimp_brush_get_by_name
 	gimp_brush_get_hardness
 	gimp_brush_get_info
-	gimp_brush_get_pixels
+	gimp_brush_get_mask
 	gimp_brush_get_radius
 	gimp_brush_get_shape
 	gimp_brush_get_spacing

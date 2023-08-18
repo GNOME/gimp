@@ -60,9 +60,6 @@ gboolean       gimp_resource_is_palette  (GimpResource *resource);
 gboolean       gimp_resource_is_font     (GimpResource *resource);
 
 
-#define GIMP_TYPE_BRUSH (gimp_brush_get_type ())
-G_DECLARE_FINAL_TYPE (GimpBrush, gimp_brush, GIMP, BRUSH, GimpResource)
-
 #define GIMP_TYPE_PATTERN (gimp_pattern_get_type ())
 G_DECLARE_FINAL_TYPE (GimpPattern, gimp_pattern, GIMP, PATTERN, GimpResource)
 

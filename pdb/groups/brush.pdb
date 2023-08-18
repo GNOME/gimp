@@ -167,6 +167,7 @@ The color bpp is zero and pixels empty when the brush is parametric versus raste
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
+    $lib_private = 1;
 
     @inargs = (
       ${brush_arg_spec}

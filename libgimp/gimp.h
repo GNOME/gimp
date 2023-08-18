@@ -37,6 +37,7 @@
 #include <libgimp/gimptypes.h>
 
 #include <libgimp/gimpbatchprocedure.h>
+#include <libgimp/gimpbrush.h>
 #include <libgimp/gimpchannel.h>
 #include <libgimp/gimpdisplay.h>
 #include <libgimp/gimpdrawable.h>

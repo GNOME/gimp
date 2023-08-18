@@ -460,17 +460,6 @@ gimp_resource_is_font (GimpResource *resource)
 }
 
 
-struct _GimpBrush
-{
-  GimpResource parent_instance;
-};
-
-G_DEFINE_TYPE (GimpBrush, gimp_brush, GIMP_TYPE_RESOURCE);
-
-static void gimp_brush_class_init (GimpBrushClass *klass) {}
-static void gimp_brush_init       (GimpBrush       *self) {}
-
-
 struct _GimpPattern
 {
   GimpResource parent_instance;
