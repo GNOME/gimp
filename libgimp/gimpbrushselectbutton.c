@@ -41,17 +41,12 @@
  * @short_description: A button which pops up a brush selection dialog.
  *
  * A button which pops up a brush selection dialog.
+ *
+ * Note that this widget draws itself using `GEGL` code. You **must** call
+ * [func@Gegl.Init] first to be able to use this chooser.
  **/
 
-#define CELL_SIZE 20
-
-/* A B&W image. mask_data is allocated and must be freed. */
-typedef struct _PreviewBitmap
-{
-  gint           width;
-  gint           height;
-  guchar        *mask_data;
-} _PreviewBitmap;
+#define CELL_SIZE 40
 
 struct _GimpBrushSelectButton
 {
@@ -59,93 +54,105 @@ struct _GimpBrushSelectButton
 
   GtkWidget                *preview;
   GtkWidget                *popup;
+
+  GimpBrush                *brush;
+  gint                      width;
+  gint                      height;
+  GeglBuffer               *buffer;
+  GeglBuffer               *mask;
 };
 
 
-static void gimp_brush_select_button_draw_interior   (GimpResourceSelectButton *self);
+static void           gimp_brush_select_button_finalize         (GObject                  *object);
 
-static void     gimp_brush_select_on_preview_resize  (GimpBrushSelectButton *button);
-static gboolean gimp_brush_select_on_preview_events  (GtkWidget             *widget,
-                                                      GdkEvent              *event,
-                                                      GimpBrushSelectButton *button);
+static gboolean       gimp_brush_select_on_preview_events       (GtkWidget             *widget,
+                                                                 GdkEvent              *event,
+                                                                 GimpBrushSelectButton *button);
 
-static void     gimp_brush_select_preview_draw      (GimpPreviewArea       *area,
-                                                     gint                   x,
-                                                     gint                   y,
-                                                     _PreviewBitmap         mask,
-                                                     gint                   rowstride);
-static void     gimp_brush_select_preview_fill_draw (GtkWidget             *preview,
-                                                     _PreviewBitmap         mask);
+static void           gimp_brush_select_preview_draw            (GimpBrushSelectButton *chooser,
+                                                                 GimpPreviewArea       *area);
 
 static void           gimp_brush_select_button_draw             (GimpBrushSelectButton *self);
-static _PreviewBitmap gimp_brush_select_button_get_brush_bitmap (GimpBrushSelectButton *self);
+static void           gimp_brush_select_button_get_brush_bitmap (GimpBrushSelectButton *self,
+                                                                 gint                   width,
+                                                                 gint                   height);
 
 /* Popup methods. */
-static void     gimp_brush_select_button_open_popup  (GimpBrushSelectButton *button,
-                                                      gint                   x,
-                                                      gint                   y);
-static void     gimp_brush_select_button_close_popup (GimpBrushSelectButton *button);
+static void           gimp_brush_select_button_open_popup       (GimpBrushSelectButton *button,
+                                                                 gint                   x,
+                                                                 gint                   y);
+static void           gimp_brush_select_button_close_popup      (GimpBrushSelectButton *button);
 
 
 static const GtkTargetEntry drag_target = { "application/x-gimp-brush-name", 0, 0 };
 
-G_DEFINE_FINAL_TYPE (GimpBrushSelectButton,
-                     gimp_brush_select_button,
-                     GIMP_TYPE_RESOURCE_SELECT_BUTTON)
+G_DEFINE_FINAL_TYPE (GimpBrushSelectButton, gimp_brush_select_button, GIMP_TYPE_RESOURCE_SELECT_BUTTON)
 
 
 static void
 gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
 {
-  GimpResourceSelectButtonClass *superclass = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
+  GObjectClass                  *object_class = G_OBJECT_CLASS (klass);
+  GimpResourceSelectButtonClass *res_class    = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
 
-  superclass->draw_interior = gimp_brush_select_button_draw_interior;
-  superclass->resource_type = GIMP_TYPE_BRUSH;
+  res_class->draw_interior = (void (*)(GimpResourceSelectButton *)) gimp_brush_select_button_draw;
+  res_class->resource_type = GIMP_TYPE_BRUSH;
+
+  object_class->finalize   = gimp_brush_select_button_finalize;
 }
 
 static void
-gimp_brush_select_button_init (GimpBrushSelectButton *self)
+gimp_brush_select_button_init (GimpBrushSelectButton *chooser)
 {
-  GtkWidget *frame;
-  GtkWidget *button;
+  GtkWidget *widget;
+  gint       scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (chooser));
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (self), frame, FALSE, FALSE, 0);
+  chooser->brush  = NULL;
+  chooser->buffer = NULL;
+  chooser->mask   = NULL;
 
-  self->preview = gimp_preview_area_new ();
-  gtk_widget_add_events (self->preview,
+  widget = gtk_aspect_frame_new (NULL, 0.5, 0.5, 1.0, FALSE);
+  gtk_frame_set_shadow_type (GTK_FRAME (widget), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (chooser), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
+
+  chooser->preview = gimp_preview_area_new ();
+  gtk_widget_add_events (chooser->preview,
                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-  gtk_widget_set_size_request (self->preview, CELL_SIZE, CELL_SIZE);
-  gtk_container_add (GTK_CONTAINER (frame), self->preview);
+  gtk_widget_set_size_request (chooser->preview, scale_factor * CELL_SIZE, scale_factor * CELL_SIZE);
+  gtk_container_add (GTK_CONTAINER (widget), chooser->preview);
+  gtk_widget_show (chooser->preview);
 
-  g_signal_connect_swapped (self->preview, "size-allocate",
-                            G_CALLBACK (gimp_brush_select_on_preview_resize),
-                            self);
+  g_signal_connect_swapped (chooser->preview, "size-allocate",
+                            G_CALLBACK (gimp_brush_select_button_draw),
+                            chooser);
 
-  g_signal_connect (self->preview, "event",
+  g_signal_connect (chooser->preview, "event",
                     G_CALLBACK (gimp_brush_select_on_preview_events),
-                    self);
+                    chooser);
 
-  button = gtk_button_new_with_mnemonic (_("_Browse..."));
-  gtk_box_pack_start (GTK_BOX (self), button, FALSE, FALSE, 0);
+  widget = gtk_button_new_with_mnemonic (_("_Browse..."));
+  gtk_box_pack_start (GTK_BOX (chooser), widget, FALSE, FALSE, 0);
 
-  gtk_widget_show_all (GTK_WIDGET (self));
-
-  gimp_resource_select_button_set_drag_target (GIMP_RESOURCE_SELECT_BUTTON (self),
-                                               self->preview,
+  gimp_resource_select_button_set_drag_target (GIMP_RESOURCE_SELECT_BUTTON (chooser),
+                                               chooser->preview,
                                                &drag_target);
 
-  gimp_resource_select_button_set_clickable (GIMP_RESOURCE_SELECT_BUTTON (self),
-                                             button);
+  gimp_resource_select_button_set_clickable (GIMP_RESOURCE_SELECT_BUTTON (chooser),
+                                             widget);
+  gtk_widget_show (widget);
 }
 
 static void
-gimp_brush_select_button_draw_interior (GimpResourceSelectButton *self)
+gimp_brush_select_button_finalize (GObject *object)
 {
-  gimp_brush_select_button_draw (GIMP_BRUSH_SELECT_BUTTON (self));
-}
+  GimpBrushSelectButton *chooser = GIMP_BRUSH_SELECT_BUTTON (object);
 
+  g_clear_object (&chooser->buffer);
+  g_clear_object (&chooser->mask);
+
+  G_OBJECT_CLASS (gimp_brush_select_button_parent_class)->finalize (object);
+}
 
 /**
  * gimp_brush_select_button_new:
@@ -172,82 +179,121 @@ gimp_brush_select_button_new (const gchar  *title,
   if (resource == NULL)
     resource = GIMP_RESOURCE (gimp_context_get_brush ());
 
-   if (title)
-     self = g_object_new (GIMP_TYPE_BRUSH_SELECT_BUTTON,
-                          "title",     title,
-                          "label",     label,
-                          "resource",  resource,
-                          NULL);
-   else
-     self = g_object_new (GIMP_TYPE_BRUSH_SELECT_BUTTON,
-                          "label",     label,
-                          "resource",  resource,
-                          NULL);
-
-  gimp_brush_select_button_draw_interior (GIMP_RESOURCE_SELECT_BUTTON (self));
+  if (title)
+    self = g_object_new (GIMP_TYPE_BRUSH_SELECT_BUTTON,
+                         "title",     title,
+                         "label",     label,
+                         "resource",  resource,
+                         NULL);
+  else
+    self = g_object_new (GIMP_TYPE_BRUSH_SELECT_BUTTON,
+                         "label",     label,
+                         "resource",  resource,
+                         NULL);
 
   return self;
 }
 
-
 /*  private functions  */
 
-/* Draw self.
- *
- * This knows that we only draw the preview. Gtk draws the browse button.
- */
 static void
-gimp_brush_select_button_draw (GimpBrushSelectButton *self)
+gimp_brush_select_button_draw (GimpBrushSelectButton *chooser)
 {
-  _PreviewBitmap mask;
+  GtkAllocation allocation;
 
-  mask = gimp_brush_select_button_get_brush_bitmap (self);
-  gimp_brush_select_preview_fill_draw (self->preview, mask);
-  g_free (mask.mask_data);
+  gtk_widget_get_allocation (chooser->preview, &allocation);
+
+  gimp_brush_select_button_get_brush_bitmap (chooser, allocation.width, allocation.height);
+  gimp_brush_select_preview_draw (chooser, GIMP_PREVIEW_AREA (chooser->preview));
 }
 
-
-
-/* Return the mask portion of self's brush's data.
- * Caller must free mask_data.
- */
-static _PreviewBitmap
-gimp_brush_select_button_get_brush_bitmap (GimpBrushSelectButton *self)
+static void
+gimp_brush_select_button_get_brush_bitmap (GimpBrushSelectButton *chooser,
+                                           gint                   width,
+                                           gint                   height)
 {
-  GimpBrush                    *brush;
-  gint                          mask_bpp;
-  GBytes                       *mask_data;
-  gsize                         mask_size;
-  gint                          color_bpp;
-  GBytes                       *color_data;
-  _PreviewBitmap                result;
+  GimpBrush *brush;
 
-  g_object_get (self, "resource", &brush, NULL);
+  g_object_get (chooser, "resource", &brush, NULL);
 
-  gimp_brush_get_pixels (brush,
-                         &result.width,
-                         &result.height,
-                         &mask_bpp,
-                         &mask_data,
-                         &color_bpp,
-                         &color_data);
+  if (chooser->brush  == brush &&
+      chooser->width  == width &&
+      chooser->height == height)
+    {
+      /* Let's assume brush contents is not changing in a single run. */
+      g_object_unref (brush);
+      return;
+    }
 
-  result.mask_data = g_bytes_unref_to_data (mask_data, &mask_size);
-  /* Discard any color data, bitmap is B&W i.e. i.e. depth one i.e. a mask */
-  g_bytes_unref (color_data);
+  g_clear_object (&chooser->buffer);
+  g_clear_object (&chooser->mask);
+  chooser->width = chooser->height = 0;
+
+  chooser->brush  = brush;
+  chooser->buffer = gimp_brush_get_buffer (brush, width, height, NULL);
+
+  if (chooser->buffer)
+    {
+      GeglColor *white_color = gegl_color_new ("rgb(1.0,1.0,1.0)");
+      GeglNode  *graph;
+      GeglNode  *white;
+      GeglNode  *source;
+      GeglNode  *op;
+
+      chooser->width  = gegl_buffer_get_width (chooser->buffer);
+      chooser->height = gegl_buffer_get_height (chooser->buffer);
+
+      graph = gegl_node_new ();
+      white = gegl_node_new_child (graph,
+                                   "operation", "gegl:rectangle",
+                                   "x",         0.0,
+                                   "y",         0.0,
+                                   "width",     (gdouble) gegl_buffer_get_width (chooser->buffer),
+                                   "height",    (gdouble) gegl_buffer_get_height (chooser->buffer),
+                                   "color",     white_color,
+                                    NULL);
+      source = gegl_node_new_child (graph,
+                                    "operation", "gegl:buffer-source",
+                                    "buffer",    chooser->buffer,
+                                    NULL);
+      op = gegl_node_new_child (graph,
+                                "operation",   "svg:src-over",
+                                NULL);
+      gegl_node_link_many (white, op, NULL);
+      gegl_node_connect (source, "output", op, "aux");
+      gegl_node_blit_buffer (op, chooser->buffer, NULL, 0, GEGL_ABYSS_NONE);
+
+      g_object_unref (graph);
+      g_object_unref (white_color);
+    }
+  else
+    {
+      GeglBufferIterator *iter;
+
+      chooser->mask   = gimp_brush_get_mask (brush, width, height, NULL);
+      chooser->width  = gegl_buffer_get_width (chooser->mask);
+      chooser->height = gegl_buffer_get_height (chooser->mask);
+
+      /* More common to display mask brushes as black on white. */
+      iter = gegl_buffer_iterator_new (chooser->mask, NULL, 0,
+                                       babl_format ("Y' u8"),
+                                       GEGL_ACCESS_READWRITE,
+                                       GEGL_ABYSS_NONE, 1);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          guint8 *data = iter->items[0].data;
+
+          for (gint i = 0; i < iter->length; i++)
+            {
+              *data = 255 - *data;
+              data++;
+            }
+        }
+    }
+
   g_object_unref (brush);
-
-  return result;
 }
-
-
-/* On resize event, redraw. */
-static void
-gimp_brush_select_on_preview_resize (GimpBrushSelectButton *self)
-{
-  gimp_brush_select_button_draw (self);
-}
-
 
 /* On mouse events in self's preview, popup a zoom view of entire brush */
 static gboolean
@@ -289,144 +335,118 @@ gimp_brush_select_on_preview_events (GtkWidget             *widget,
 
 /* Draw a GimpPreviewArea with a given bitmap. */
 static void
-gimp_brush_select_preview_draw (GimpPreviewArea *area,
-                                gint             x,
-                                gint             y,
-                                _PreviewBitmap   mask,
-                                gint             rowstride)
-{
-  const guchar *src;
-  guchar       *dest;
-  guchar       *buf;
-  gint          i, j;
-
-  buf = g_new (guchar, mask.width * mask.height);
-
-  src  = mask.mask_data;
-  dest = buf;
-
-  for (j = 0; j < mask.height; j++)
-    {
-      const guchar *s = src;
-
-      for (i = 0; i < mask.width; i++, s++, dest++)
-        *dest = 255 - *s;
-
-      src += rowstride;
-    }
-
-  gimp_preview_area_draw (area,
-                          x, y, mask.width, mask.height,
-                          GIMP_GRAY_IMAGE,
-                          buf,
-                          mask.width);
-
-  g_free (buf);
-}
-
-/* Fill a GimpPreviewArea with a bitmap then draw. */
-static void
-gimp_brush_select_preview_fill_draw (GtkWidget      *preview,
-                                     _PreviewBitmap  mask)
+gimp_brush_select_preview_draw (GimpBrushSelectButton *chooser,
+                                GimpPreviewArea       *preview)
 {
   GimpPreviewArea *area = GIMP_PREVIEW_AREA (preview);
+  GeglBuffer      *src_buffer;
+  const Babl      *format;
+  guchar          *src;
+  GimpImageType    type;
+  gint             rowstride;
   GtkAllocation    allocation;
-  gint             x, y;
-  gint             width, height;
-  _PreviewBitmap   drawn_mask;
+  gint             x = 0;
+  gint             y = 0;
 
-  gtk_widget_get_allocation (preview, &allocation);
+  gtk_widget_get_allocation (GTK_WIDGET (preview), &allocation);
 
-  width  = MIN (mask.width,  allocation.width);
-  height = MIN (mask.height, allocation.height);
+  /* Fill with white. */
+  if (chooser->width < allocation.width ||
+      chooser->height < allocation.height)
+    {
+      gimp_preview_area_fill (area,
+                              0, 0,
+                              allocation.width,
+                              allocation.height,
+                              0xFF, 0xFF, 0xFF);
 
-  x = ((allocation.width  - width)  / 2);
-  y = ((allocation.height - height) / 2);
+      x = ((allocation.width  - chooser->width)  / 2);
+      y = ((allocation.height - chooser->height) / 2);
+    }
 
-  if (x || y)
-    gimp_preview_area_fill (area,
-                            0, 0,
-                            allocation.width,
-                            allocation.height,
-                            0xFF, 0xFF, 0xFF);
+  /* Draw the brush. */
+  if (chooser->buffer)
+    {
+      src_buffer = chooser->buffer;
+      format     = gegl_buffer_get_format (src_buffer);
+      rowstride  = chooser->width * babl_format_get_bytes_per_pixel (format);
+      if (babl_format_has_alpha (format))
+        type = GIMP_RGBA_IMAGE;
+      else
+        type = GIMP_RGB_IMAGE;
+    }
+  else
+    {
+      src_buffer = chooser->mask;
+      format     = babl_format ("Y' u8");
+      rowstride  = chooser->width;
+      type       = GIMP_GRAY_IMAGE;
+    }
 
-  /* Draw same data to new bounds.
-   * drawn_mask.mask_data points to same array.
-   */
-  drawn_mask.width = width;
-  drawn_mask.height = height;
-  drawn_mask.mask_data = mask.mask_data;
+  src = g_try_malloc (sizeof (guchar) * rowstride * chooser->height);
 
-  gimp_brush_select_preview_draw (area,
-                                  x, y,
-                                  drawn_mask,
-                                  mask.width);  /* row stride */
-  /* Caller will free mask.mask_data */
+  gegl_buffer_get (src_buffer, NULL, 1.0, format, src, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+  gimp_preview_area_draw (area, x, y, chooser->width, chooser->height, type, src, rowstride);
+
+  g_free (src);
 }
 
 /* popup methods. */
 
 static void
-gimp_brush_select_button_open_popup (GimpBrushSelectButton *self,
+gimp_brush_select_button_open_popup (GimpBrushSelectButton *chooser,
                                      gint                   x,
                                      gint                   y)
 {
-  GtkWidget                    *frame;
-  GtkWidget                    *preview;
-  GdkMonitor                   *monitor;
-  GdkRectangle                  workarea;
-  gint                          x_org;
-  gint                          y_org;
-  _PreviewBitmap mask;
+  GtkWidget     *frame;
+  GtkWidget     *preview;
+  GdkMonitor    *monitor;
+  GdkRectangle   workarea;
+  gint           x_org;
+  gint           y_org;
 
-  if (self->popup)
-    gimp_brush_select_button_close_popup (self);
+  if (chooser->popup)
+    gimp_brush_select_button_close_popup (chooser);
 
-  mask = gimp_brush_select_button_get_brush_bitmap (self);
-
-  if (mask.width <= CELL_SIZE && mask.height <= CELL_SIZE)
+  if (chooser->width <= CELL_SIZE && chooser->height <= CELL_SIZE)
     return;
 
-  self->popup = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_window_set_type_hint (GTK_WINDOW (self->popup), GDK_WINDOW_TYPE_HINT_DND);
-  gtk_window_set_screen (GTK_WINDOW (self->popup),
-                         gtk_widget_get_screen (GTK_WIDGET (self)));
+  chooser->popup = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_window_set_type_hint (GTK_WINDOW (chooser->popup), GDK_WINDOW_TYPE_HINT_DND);
+  gtk_window_set_screen (GTK_WINDOW (chooser->popup),
+                         gtk_widget_get_screen (GTK_WIDGET (chooser)));
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (self->popup), frame);
+  gtk_container_add (GTK_CONTAINER (chooser->popup), frame);
   gtk_widget_show (frame);
 
   preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview, mask.width, mask.height);
+  gtk_widget_set_size_request (preview, chooser->width, chooser->height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
   /* decide where to put the popup: near the preview i.e. at mousedown coords */
-  gdk_window_get_origin (gtk_widget_get_window (self->preview),
+  gdk_window_get_origin (gtk_widget_get_window (chooser->preview),
                          &x_org, &y_org);
 
-  monitor = gimp_widget_get_monitor (GTK_WIDGET (self));
+  monitor = gimp_widget_get_monitor (GTK_WIDGET (chooser));
   gdk_monitor_get_workarea (monitor, &workarea);
 
-  x = x_org + x - (mask.width  / 2);
-  y = y_org + y - (mask.height / 2);
+  x = x_org + x - (chooser->width  / 2);
+  y = y_org + y - (chooser->height / 2);
 
-  x = CLAMP (x, workarea.x, workarea.x + workarea.width  - mask.width);
-  y = CLAMP (y, workarea.y, workarea.y + workarea.height - mask.height);
+  x = CLAMP (x, workarea.x, workarea.x + workarea.width  - chooser->width);
+  y = CLAMP (y, workarea.y, workarea.y + workarea.height - chooser->height);
 
-  gtk_window_move (GTK_WINDOW (self->popup), x, y);
+  gtk_window_move (GTK_WINDOW (chooser->popup), x, y);
 
-  gtk_widget_show (self->popup);
+  gtk_widget_show (chooser->popup);
 
   /*  Draw popup now. Usual events do not cause a draw. */
-  gimp_brush_select_preview_draw (GIMP_PREVIEW_AREA (preview),
-                                  0, 0,
-                                  mask,
-                                  mask.width);
-  g_free (mask.mask_data);
-  gdk_window_set_transient_for (gtk_widget_get_window (self->popup),
-                                gtk_widget_get_window (gtk_widget_get_toplevel (GTK_WIDGET (self))));
+  gimp_brush_select_preview_draw (chooser, GIMP_PREVIEW_AREA (preview));
+  gdk_window_set_transient_for (gtk_widget_get_window (chooser->popup),
+                                gtk_widget_get_window (gtk_widget_get_toplevel (GTK_WIDGET (chooser))));
 }
 
 static void

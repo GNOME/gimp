@@ -18,6 +18,8 @@ gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
 gi.require_version('GimpUi', '3.0')
 from gi.repository import GimpUi
+gi.require_version('Gegl', '0.4')
+from gi.repository import Gegl
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -99,6 +101,7 @@ def test_dialog(procedure, run_mode, image, n_drawables, drawables, args, data):
 
     if run_mode == Gimp.RunMode.INTERACTIVE:
         GimpUi.init('python-fu-test-dialog')
+        Gegl.init(None)
         dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
         dialog.fill(None)
         if not dialog.run():
