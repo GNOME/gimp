@@ -94,6 +94,7 @@ themeui_DATA =	\
 	ui/gimp-handle-v.png	\
 	ui/gimp-line-h.png	\
 	ui/gimp-line-v.png	\
+	ui/gimp-lock-button-prelight.png	\
 	ui/gimp-menu-line-h.png	\
 	ui/gimp-tooltip-bg.png	\
 	ui/list_header.png	\

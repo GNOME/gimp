@@ -2446,4 +2446,21 @@ style "gimp-dark-treeview" = "gimp-dark-default-style"
 
 class "GtkTreeView" style "gimp-dark-treeview"
 
+style "highlight-layer-locks" = "gimp-gtkbutton-style"
+{
+  engine "pixmap"
+    {
+      image
+        {
+          function = BOX
+          state = PRELIGHT
+          recolorable = TRUE
+          file = "ui/gimp-lock-button-prelight.png"
+          border = { 8, 8, 8, 8}
+          stretch = TRUE
+        }
+    }
+}
+
+widget "*gimp_tree_view_lock_box.*Button*" style "highlight-layer-locks"
 # EOF
