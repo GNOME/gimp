@@ -882,8 +882,10 @@
       <section>
         <item><attribute name="action">app.help-help</attribute></item>
         <item><attribute name="action">app.help-context-help</attribute></item>
+        <submenu>
+          <attribute name="label" translatable="yes" context="help-action">_User Manual</attribute>
+        </submenu>
         <item><attribute name="action">app.dialogs-tips</attribute></item>
-        <item><attribute name="action">app.dialogs-about</attribute></item>
         <item><attribute name="action">app.dialogs-welcome</attribute></item>
       </section>
       <section>
@@ -892,12 +894,12 @@
       <section>
         <attribute name="section-name" translatable="no">Programming</attribute>
       </section>
-      <submenu>
-        <attribute name="label" translatable="yes" context="help-action">_GIMP Online</attribute>
-      </submenu>
-      <submenu>
-        <attribute name="label" translatable="yes" context="help-action">_User Manual</attribute>
-      </submenu>
+      <section>
+        <submenu>
+          <attribute name="label" translatable="yes" context="help-action">_GIMP Online</attribute>
+        </submenu>
+        <item><attribute name="action">app.dialogs-about</attribute></item>
+      </section>
     </submenu>
   </menu>
 </interface>
