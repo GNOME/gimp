@@ -23,6 +23,7 @@ gimp_docs = custom_target('gimp-docs',
     '--output-dir=@OUTPUT@',
     '--no-namespace-dir',
     '--content-dir=@0@'.format(meson.current_source_dir()),
+    '--add-include-path=@0@'.format(get_option('prefix') / 'share' / 'gir-1.0'),
     '@INPUT@',
   ],
   depend_files: [
