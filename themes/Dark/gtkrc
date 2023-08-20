@@ -2459,6 +2459,15 @@ style "highlight-layer-locks" = "gimp-gtkbutton-style"
           border = { 8, 8, 8, 8}
           stretch = TRUE
         }
+      image
+        {
+          function = BOX
+          state = ACTIVE
+          recolorable = TRUE
+          file = "ui/gimp-lock-button-active.png"
+          border = { 8, 8, 8, 8}
+          stretch = TRUE
+        }
     }
 }
 
