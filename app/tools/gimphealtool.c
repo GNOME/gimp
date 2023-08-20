@@ -49,6 +49,7 @@ gimp_heal_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_TYPE_SOURCE_OPTIONS,
                 gimp_heal_options_gui,
                 GIMP_PAINT_OPTIONS_CONTEXT_MASK |
+                GIMP_CONTEXT_PROP_MASK_PATTERN  |
                 GIMP_CONTEXT_PROP_MASK_EXPAND,
                 "gimp-heal-tool",
                 _("Healing"),

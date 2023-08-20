@@ -51,6 +51,7 @@ gimp_smudge_tool_register (GimpToolRegisterCallback  callback,
                 gimp_smudge_options_gui,
                 GIMP_PAINT_OPTIONS_CONTEXT_MASK |
                 GIMP_CONTEXT_PROP_MASK_EXPAND   |
+                GIMP_CONTEXT_PROP_MASK_PATTERN  |
                 GIMP_CONTEXT_PROP_MASK_GRADIENT,
                 "gimp-smudge-tool",
                 _("Smudge"),

@@ -65,6 +65,7 @@ gimp_ink_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_CONTEXT_PROP_MASK_BACKGROUND |
                 GIMP_CONTEXT_PROP_MASK_OPACITY    |
                 GIMP_CONTEXT_PROP_MASK_PAINT_MODE |
+                GIMP_CONTEXT_PROP_MASK_PATTERN    |
                 GIMP_CONTEXT_PROP_MASK_EXPAND,
                 "gimp-ink-tool",
                 _("Ink"),

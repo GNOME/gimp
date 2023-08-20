@@ -70,6 +70,7 @@ gimp_convolve_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_TYPE_CONVOLVE_OPTIONS,
                 gimp_convolve_options_gui,
                 GIMP_PAINT_OPTIONS_CONTEXT_MASK |
+                GIMP_CONTEXT_PROP_MASK_PATTERN  |
                 GIMP_CONTEXT_PROP_MASK_EXPAND,
                 "gimp-convolve-tool",
                 _("Blur / Sharpen"),
