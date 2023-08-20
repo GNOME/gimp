@@ -760,6 +760,8 @@ gimp_item_tree_view_get_lock_box (GimpItemTreeView *view)
 
       view->priv->lock_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, button_spacing);
 
+      gtk_widget_set_name (GTK_WIDGET (view->priv->lock_box), "gimp_tree_view_lock_box");
+
       gimp_item_tree_view_add_options (view, _("Lock:"), view->priv->lock_box);
 
       gtk_box_set_child_packing (GTK_BOX (view->priv->options_box),
