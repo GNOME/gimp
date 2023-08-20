@@ -186,9 +186,9 @@ brushdmenuselect (GtkWidget *widget,
 
       for (row = 0, y = y1; y < y2; row++, y++)
         {
-          guchar *tmprow = p->col + row * rowstride;
           guchar *tmprow_ptr;
-	  gint x2 = x1 + w;
+          guchar *tmprow = p->col + row * rowstride;
+          gint    x2     = x1 + w;
 
           gegl_buffer_get (src_buffer, GEGL_RECTANGLE (x1, y, w, 1), 1.0,
                            format, src_row,

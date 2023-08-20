@@ -64,7 +64,7 @@ static GimpValueArray * gimpressionist_run              (GimpProcedure        *p
                                                          GimpImage            *image,
                                                          gint                  n_drawables,
                                                          GimpDrawable        **drawables,
-                                                         const GimpValueArray *args,
+                                                         GimpProcedureConfig  *config,
                                                          gpointer              run_data);
 
 static void             gimpressionist_main             (void);
@@ -110,9 +110,9 @@ gimpressionist_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            gimpressionist_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             gimpressionist_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -124,8 +124,8 @@ gimpressionist_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Performs various artistic "
                                           "operations"),
-                                        "Performs various artistic operations "
-                                        "on an image",
+                                        _("Performs various artistic operations "
+                                          "on an image"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Vidar Madsen <vidar@prosalg.no>",
@@ -133,8 +133,8 @@ gimpressionist_create_procedure (GimpPlugIn  *plug_in,
                                       PLUG_IN_VERSION);
 
       GIMP_PROC_ARG_STRING (procedure, "preset",
-                            "Preset",
-                            "Preset Name",
+                            _("Preset"),
+                            _("Preset Name"),
                             NULL,
                             G_PARAM_READWRITE);
     }
@@ -163,10 +163,10 @@ gimpressionist_run (GimpProcedure        *procedure,
                     GimpImage            *image,
                     gint                  n_drawables,
                     GimpDrawable        **drawables,
-                    const GimpValueArray *args,
+                    GimpProcedureConfig  *config,
                     gpointer              run_data)
 {
-  const gchar *preset_name;
+  gchar *preset_name;
 
   gegl_init (NULL, NULL);
 
@@ -210,7 +210,7 @@ gimpressionist_run (GimpProcedure        *procedure,
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &pcvals);
 
-      if (! create_gimpressionist ())
+      if (! create_gimpressionist (procedure, config))
         {
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_CANCEL,
@@ -219,7 +219,9 @@ gimpressionist_run (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      preset_name = GIMP_VALUES_GET_STRING (args, 0);
+      g_object_get (config,
+                    "preset", &preset_name,
+                    NULL);
 
       if (select_preset (preset_name))
         {
@@ -273,7 +275,7 @@ gimpressionist_run (GimpProcedure        *procedure,
   orientation_map_free_resources ();
   size_map_free_resources ();
 
-return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static const Babl *

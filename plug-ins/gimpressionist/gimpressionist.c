@@ -107,56 +107,27 @@ create_one_column_list (GtkWidget *parent,
   return view;
 }
 
-static void
-dialog_response (GtkWidget *widget,
-                 gint       response_id,
-                 gpointer   data)
-{
-  switch (response_id)
-    {
-    case GTK_RESPONSE_OK:
-      store_values ();
-      pcvals.run = TRUE;
-      gtk_widget_destroy (widget);
-      break;
-
-    default:
-      gtk_widget_destroy (widget);
-      break;
-    }
-}
-
-static GtkWidget *
-create_dialog (void)
+static gboolean
+create_dialog (GimpProcedure       *procedure,
+               GimpProcedureConfig *config)
 {
   GtkWidget *notebook;
   GtkWidget *hbox;
   GtkWidget *preview_box;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("GIMPressionist"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
-
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-
-                            NULL);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("GIMPressionist"));
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (dialog_response),
-                    NULL);
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
@@ -189,19 +160,22 @@ create_dialog (void)
    * */
   restore_values ();
 
-  gtk_widget_show (dialog);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  if (run)
+    store_values ();
 
-  return dialog;
+  gtk_widget_destroy (dialog);
+
+  return run;
 }
 
 gint
-create_gimpressionist (void)
+create_gimpressionist (GimpProcedure       *procedure,
+                       GimpProcedureConfig *config)
 {
   pcvals.run = FALSE;
 
-  create_dialog ();
-
-  gtk_main ();
+  pcvals.run = create_dialog (procedure, config);
 
   return pcvals.run;
 }

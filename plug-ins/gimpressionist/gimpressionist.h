@@ -159,8 +159,9 @@ double getsiz_proto (double x, double y, int n, smvector_t *vec,
                      double smstrexp, int voronoi);
 
 
-void set_colorbrushes (const gchar *fn);
-int  create_gimpressionist (void);
+void set_colorbrushes      (const gchar         *fn);
+int  create_gimpressionist (GimpProcedure       *procedure,
+                            GimpProcedureConfig *config);
 
 double dist (double x, double y, double dx, double dy);
 
