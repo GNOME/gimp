@@ -73,7 +73,7 @@ static GimpValueArray * remap_run              (GimpProcedure        *procedure,
                                                 GimpImage            *image,
                                                 gint                  n_drawables,
                                                 GimpDrawable        **drawables,
-                                                const GimpValueArray *args,
+                                                GimpProcedureConfig  *config,
                                                 gpointer              run_data);
 
 static gboolean         real_remap             (GimpImage            *image,
@@ -173,9 +173,9 @@ remap_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC_REMAP))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            remap_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             remap_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -190,10 +190,10 @@ remap_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Rearrange the colormap"),
-                                        "This procedure takes an indexed "
-                                        "image and lets you alter the "
-                                        "positions of colors in the colormap "
-                                        "without visually changing the image.",
+                                        _("This procedure takes an indexed "
+                                          "image and lets you alter the "
+                                          "positions of colors in the colormap "
+                                          "without visually changing the image."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Mukund Sivaraman <muks@mukund.org>",
@@ -201,15 +201,15 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                                       "June 2006");
 
       GIMP_PROC_ARG_BYTES (procedure, "map",
-                           "Map",
-                           "Remap array for the colormap",
+                           _("Map"),
+                           _("Remap array for the colormap"),
                            G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PLUG_IN_PROC_SWAP))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            remap_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             remap_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -222,11 +222,11 @@ remap_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Swap two colors in the colormap"),
-                                        "This procedure takes an indexed "
-                                        "image and lets you swap the "
-                                        "positions of two colors in the "
-                                        "colormap without visually changing "
-                                        "the image.",
+                                        _("This procedure takes an indexed "
+                                          "image and lets you swap the "
+                                          "positions of two colors in the "
+                                          "colormap without visually changing "
+                                          "the image."),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Mukund Sivaraman <muks@mukund.org>",
@@ -234,14 +234,14 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                                       "June 2006");
 
       GIMP_PROC_ARG_INT (procedure, "index1",
-                         "Index 1",
-                         "First index in the colormap",
+                         _("Index 1"),
+                         _("First index in the colormap"),
                          0, 255, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "index2",
-                         "Index 2",
-                         "Second (other) index in the colormap",
+                         _("Index 2"),
+                         _("Second (other) index in the colormap"),
                          0, 255, 0,
                          G_PARAM_READWRITE);
     }
@@ -255,7 +255,7 @@ remap_run (GimpProcedure        *procedure,
            GimpImage            *image,
            gint                  n_drawables,
            GimpDrawable        **drawables,
-           const GimpValueArray *args,
+           GimpProcedureConfig  *config,
            gpointer              run_data)
 {
   GMenu *section;
@@ -305,8 +305,11 @@ remap_run (GimpProcedure        *procedure,
 
       g_free (gimp_image_get_colormap (image, NULL, &remap->n_cols));
 
-      col_args_bytes = GIMP_VALUES_GET_BYTES (args, 0);
-      col_args       = g_bytes_get_data (col_args_bytes, NULL);
+      g_object_get (config,
+                    "map", &col_args_bytes,
+                    NULL);
+
+      col_args = g_bytes_get_data (col_args_bytes, NULL);
 
       switch (run_mode)
         {
@@ -332,7 +335,6 @@ remap_run (GimpProcedure        *procedure,
           break;
 
         case GIMP_RUN_WITH_LAST_VALS:
-          gimp_get_data (PLUG_IN_PROC_REMAP, remap->map);
           break;
         }
 
@@ -341,19 +343,21 @@ remap_run (GimpProcedure        *procedure,
                                                  GIMP_PDB_EXECUTION_ERROR,
                                                  NULL);
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC_REMAP, remap->map, sizeof (remap->map));
-
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
     }
   else if (strcmp (gimp_procedure_get_name (procedure),
                    PLUG_IN_PROC_SWAP) == 0)
     {
-      gint   index1 = GIMP_VALUES_GET_INT (args, 0);
-      gint   index2 = GIMP_VALUES_GET_INT (args, 1);
       guchar tmp;
       gint   n_cols;
+      gint   index1;
+      gint   index2;
+
+      g_object_get (config,
+                    "index1", &index1,
+                    "index2", &index2,
+                    NULL);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         return gimp_procedure_new_return_values (procedure,
@@ -577,23 +581,26 @@ remap_sort (GtkTreeSortable *store,
                                         GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID, 0);
 }
 
-static void             remap_sort_hue_action  (GSimpleAction        *action,
-                                                GVariant             *parameter,
-                                                gpointer              user_data)
+static void
+remap_sort_hue_action  (GSimpleAction *action,
+                        GVariant      *parameter,
+                        gpointer       user_data)
 {
   remap_sort (GTK_TREE_SORTABLE (store), COLOR_H, GTK_SORT_ASCENDING);
 }
 
-static void             remap_sort_sat_action  (GSimpleAction        *action,
-                                                GVariant             *parameter,
-                                                gpointer              user_data)
+static void
+remap_sort_sat_action  (GSimpleAction *action,
+                        GVariant      *parameter,
+                        gpointer       user_data)
 {
   remap_sort (GTK_TREE_SORTABLE (store), COLOR_S, GTK_SORT_ASCENDING);
 }
 
-static void             remap_sort_val_action  (GSimpleAction        *action,
-                                                GVariant             *parameter,
-                                                gpointer              user_data)
+static void
+remap_sort_val_action  (GSimpleAction *action,
+                         GVariant     *parameter,
+                         gpointer      user_data)
 {
   remap_sort (GTK_TREE_SORTABLE (store), COLOR_V, GTK_SORT_ASCENDING);
 }
@@ -642,9 +649,9 @@ remap_button_press (GtkWidget      *widget,
 }
 
 static void
-remap_response (GtkWidget       *dialog,
-                gint             response_id,
-                GimpRemap       *remap)
+remap_response (GtkWidget *dialog,
+                gint       response_id,
+                GimpRemap *remap)
 {
   switch (response_id)
     {
@@ -690,10 +697,10 @@ remap_dialog (GimpImage *image,
                             NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           RESPONSE_RESET,
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            RESPONSE_RESET,
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
