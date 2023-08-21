@@ -21,6 +21,10 @@
   (plug-in-web-browser "https://docs.gimp.org/")
 )
 
+(define (gimp-help-main)
+  (gimp-help "" "gimp-main")
+)
+
 (define (gimp-help-concepts-usage)
   (gimp-help "" "gimp-concepts-usage")
 )
@@ -156,6 +160,18 @@
 )
 
 (script-fu-menu-register "gimp-help-using-simpleobjects"
+			 "<Image>/Help/User Manual")
+
+(script-fu-register "gimp-help-main"
+   _"_[Table of Contents]"
+   _"Bookmark to the user manual"
+    "Roman Joost <romanofski@gimp.org>"
+    "Roman Joost <romanofski@gimp.org>"
+    "2006"
+    ""
+)
+
+(script-fu-menu-register "gimp-help-main"
 			 "<Image>/Help/User Manual")
 
 
