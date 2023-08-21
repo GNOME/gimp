@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-17 12:09+0000\n"
-"PO-Revision-Date: 2023-07-18 00:07+0300\n"
+"POT-Creation-Date: 2023-08-21 14:32+0000\n"
+"PO-Revision-Date: 2023-08-21 22:59+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -192,11 +192,6 @@ msgstr "скриптфуне може обробляти два сценарії
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Ви вже запустили сценарій \"%s\"."
-
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:210
-#, c-format
-msgid "Script-Fu: %s"
-msgstr "Скриптфу: %s"
 
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:217
 msgid "_Reset"
@@ -668,64 +663,6 @@ msgstr "Непрозорість"
 msgid "Allow resizing"
 msgstr "Дозволити зміну розміру"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "_Erase Every Nth Row..."
-msgstr "О_чистити кожен N-ий рядок…"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:43
-msgid "Erase every nth row or column"
-msgstr "Очистити кожен N-ий рядок чи стовпчик"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Rows/cols"
-msgstr "Рядки/Стовпчики"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Rows"
-msgstr "Рядки"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Columns"
-msgstr "Стовпчики"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Erase/fill"
-msgstr "Очистити/заповнити"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Erase"
-msgstr "Очистити"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Fill with BG"
-msgstr "Заповнити кольором тла"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:57
-msgid "_Erase Every Other Row..."
-msgstr "О_чистити кожен другий рядок…"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:58
-msgid "Erase every other row or column"
-msgstr "Очистити кожен другий рядок чи стовпчик"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Even/odd"
-msgstr "Парні/непарні"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Even"
-msgstr "Парні"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Odd"
-msgstr "Непарні"
-
 #: plug-ins/script-fu/scripts/font-map.scm:161
 msgid "Render _Font Map..."
 msgstr "Створити карту _шрифтів…"
@@ -806,82 +743,85 @@ msgstr "Розмір тіні (%)"
 msgid "Flatten image"
 msgstr "Звести зображення"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:59
+#: plug-ins/script-fu/scripts/gimp-online.scm:63
 msgid "Using _Paths"
 msgstr "_Використання контурів"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:60
-#: plug-ins/script-fu/scripts/gimp-online.scm:73
-#: plug-ins/script-fu/scripts/gimp-online.scm:86
-#: plug-ins/script-fu/scripts/gimp-online.scm:99
-#: plug-ins/script-fu/scripts/gimp-online.scm:112
-#: plug-ins/script-fu/scripts/gimp-online.scm:125
-#: plug-ins/script-fu/scripts/gimp-online.scm:138
-#: plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/gimp-online.scm:64
+#: plug-ins/script-fu/scripts/gimp-online.scm:77
+#: plug-ins/script-fu/scripts/gimp-online.scm:90
+#: plug-ins/script-fu/scripts/gimp-online.scm:103
+#: plug-ins/script-fu/scripts/gimp-online.scm:116
+#: plug-ins/script-fu/scripts/gimp-online.scm:129
+#: plug-ins/script-fu/scripts/gimp-online.scm:142
+#: plug-ins/script-fu/scripts/gimp-online.scm:155
+#: plug-ins/script-fu/scripts/gimp-online.scm:167
 msgid "Bookmark to the user manual"
 msgstr "Посилання на посібник користувача"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:72
+#: plug-ins/script-fu/scripts/gimp-online.scm:76
 msgid "_Preparing your Images for the Web"
 msgstr "Пі_дготовка зображений до публікації у Інтернет"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/gimp-online.scm:89
 msgid "_Working with Digital Camera Photos"
 msgstr "Робота з цифровими _фотографіями"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:98
+#: plug-ins/script-fu/scripts/gimp-online.scm:102
 msgid "Create, Open and Save _Files"
 msgstr "Створення, відкривання та зберігання _файлів"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:111
+#: plug-ins/script-fu/scripts/gimp-online.scm:115
 msgid "_Basic Concepts"
 msgstr "Основні _концепції"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:124
+#: plug-ins/script-fu/scripts/gimp-online.scm:128
 msgid "How to Use _Dialogs"
 msgstr "Як використовувати _діалоги"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:141
 msgid "Drawing _Simple Objects"
 msgstr "_Малювання простих об'єктів"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/gimp-online.scm:154
 msgid "Create and Use _Selections"
 msgstr "Зберегти та використати _вибране"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:186
+#: plug-ins/script-fu/scripts/gimp-online.scm:166
+msgid "_[Table of Contents]"
+msgstr "_[Зміст]"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:202
 msgid "_Main Web Site"
 msgstr "_Головна веб-сторінка"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:187
-#: plug-ins/script-fu/scripts/gimp-online.scm:200
-#: plug-ins/script-fu/scripts/gimp-online.scm:239
+#: plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/gimp-online.scm:216
+#: plug-ins/script-fu/scripts/gimp-online.scm:255
 msgid "Bookmark to the GIMP web site"
 msgstr "Закладка на сайт GIMP"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:199
+#: plug-ins/script-fu/scripts/gimp-online.scm:215
 msgid "_Developer Web Site"
 msgstr "_Веб-сторінка розробників"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:212
-#| msgid "_Roadmap"
+#: plug-ins/script-fu/scripts/gimp-online.scm:228
 msgid "_Roadmaps"
 msgstr "_Плани щодо розробки"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:213
-#| msgid "Bookmark to the roadmap of GIMP"
+#: plug-ins/script-fu/scripts/gimp-online.scm:229
 msgid "Bookmark to the roadmaps of GIMP"
 msgstr "Закладка для сторінки планів щодо розробки GIMP"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:225
+#: plug-ins/script-fu/scripts/gimp-online.scm:241
 msgid "_Bug Reports and Feature Requests"
 msgstr "З_віти щодо вад та запити щодо нових можливостей"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:226
+#: plug-ins/script-fu/scripts/gimp-online.scm:242
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Закладка для сторінки системи стеження за вадами у GIMP"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:238
+#: plug-ins/script-fu/scripts/gimp-online.scm:254
 msgid "_User Manual Web Site"
 msgstr "_Сайт з посібником користувача"
 
@@ -912,24 +852,6 @@ msgstr "Висота"
 #: plug-ins/script-fu/scripts/gradient-example.scm:77
 msgid "Gradient reverse"
 msgstr "Обернути градієнт"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:84
-msgid "_Grid..."
-msgstr "С_ітка…"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:85
-msgid ""
-"Draw a grid as specified by the lists of X and Y locations using the current "
-"brush"
-msgstr "Намалювати поточним пензлем сітку за екстремумами виділення"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:92
-msgid "X divisions"
-msgstr "Горизонталі"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:93
-msgid "Y divisions"
-msgstr "Вертикалі"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
@@ -1191,7 +1113,6 @@ msgid "J_ava map..."
 msgstr "_Мапа Java…"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:399
-#| msgid "Export the active palette as a java.util.Hashtable<String, Color>"
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
 "Експортувати поточну палітру як java.util.Hashtable&lt;Рядок, Колір&gt;"
@@ -1210,19 +1131,15 @@ msgid "Paste the clipboard contents into a new brush"
 msgstr "Вставити зміст буферу у новий пензель"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: plug-ins/script-fu/scripts/select-to-brush.scm:145
 msgid "_Brush name"
 msgstr "_Назва пензля"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
-#: plug-ins/script-fu/scripts/select-to-brush.scm:146
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:107
 msgid "_File name"
 msgstr "Назва _файла"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:72
-#: plug-ins/script-fu/scripts/select-to-brush.scm:147
 msgid "_Spacing"
 msgstr "І_нтервал"
 
@@ -1235,7 +1152,6 @@ msgid "Paste the clipboard contents into a new pattern"
 msgstr "Вставити зміст буферу обміну у нову текстуру"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:106
 msgid "_Pattern name"
 msgstr "Назва _текстури"
 
@@ -1335,15 +1251,15 @@ msgstr "Зсув тіні вздовж Y"
 msgid "Add background"
 msgstr "Додати тло"
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Se_t Colormap..."
 msgstr "_Змінити карту кольорів…"
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:55
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr "Адаптувати карту кольорів зображення до кольорів заданої палітри."
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:62
 msgid "Palette"
 msgstr "Палітра"
 
@@ -1362,30 +1278,6 @@ msgstr "Р_адіус (%)"
 #: plug-ins/script-fu/scripts/selection-round.scm:148
 msgid "Co_ncave"
 msgstr "_Угнуте"
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm:137
-msgid "To _Brush..."
-msgstr "У _пензель…"
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm:138
-msgid "Convert a selection to a brush"
-msgstr "Перетворити виділення у пензель"
-
-#: plug-ins/script-fu/scripts/select-to-image.scm:85
-msgid "To _Image"
-msgstr "У _зображення"
-
-#: plug-ins/script-fu/scripts/select-to-image.scm:86
-msgid "Convert a selection to an image"
-msgstr "Перетворити виділення на зображення"
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:98
-msgid "To _Pattern..."
-msgstr "У _текстуру…"
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:99
-msgid "Convert a selection to a pattern"
-msgstr "Перетворити виділення на текстуру"
 
 #: plug-ins/script-fu/scripts/slide.scm:245
 msgid "_Slide..."
@@ -1593,6 +1485,81 @@ msgstr "Зсув тіні вздовж X"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Зсув тіні вздовж Y"
+
+#, c-format
+#~ msgid "Script-Fu: %s"
+#~ msgstr "Скриптфу: %s"
+
+#~ msgid "_Erase Every Nth Row..."
+#~ msgstr "О_чистити кожен N-ий рядок…"
+
+#~ msgid "Erase every nth row or column"
+#~ msgstr "Очистити кожен N-ий рядок чи стовпчик"
+
+#~ msgid "Rows/cols"
+#~ msgstr "Рядки/Стовпчики"
+
+#~ msgid "Rows"
+#~ msgstr "Рядки"
+
+#~ msgid "Columns"
+#~ msgstr "Стовпчики"
+
+#~ msgid "Erase/fill"
+#~ msgstr "Очистити/заповнити"
+
+#~ msgid "Erase"
+#~ msgstr "Очистити"
+
+#~ msgid "Fill with BG"
+#~ msgstr "Заповнити кольором тла"
+
+#~ msgid "_Erase Every Other Row..."
+#~ msgstr "О_чистити кожен другий рядок…"
+
+#~ msgid "Erase every other row or column"
+#~ msgstr "Очистити кожен другий рядок чи стовпчик"
+
+#~ msgid "Even/odd"
+#~ msgstr "Парні/непарні"
+
+#~ msgid "Even"
+#~ msgstr "Парні"
+
+#~ msgid "Odd"
+#~ msgstr "Непарні"
+
+#~ msgid "_Grid..."
+#~ msgstr "С_ітка…"
+
+#~ msgid ""
+#~ "Draw a grid as specified by the lists of X and Y locations using the "
+#~ "current brush"
+#~ msgstr "Намалювати поточним пензлем сітку за екстремумами виділення"
+
+#~ msgid "X divisions"
+#~ msgstr "Горизонталі"
+
+#~ msgid "Y divisions"
+#~ msgstr "Вертикалі"
+
+#~ msgid "To _Brush..."
+#~ msgstr "У _пензель…"
+
+#~ msgid "Convert a selection to a brush"
+#~ msgstr "Перетворити виділення у пензель"
+
+#~ msgid "To _Image"
+#~ msgstr "У _зображення"
+
+#~ msgid "Convert a selection to an image"
+#~ msgstr "Перетворити виділення на зображення"
+
+#~ msgid "To _Pattern..."
+#~ msgstr "У _текстуру…"
+
+#~ msgid "Convert a selection to a pattern"
+#~ msgstr "Перетворити виділення на текстуру"
 
 #~ msgid "_Wiki"
 #~ msgstr "_Вікі"
