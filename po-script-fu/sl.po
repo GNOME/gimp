@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8 scriptfu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-17 12:09+0000\n"
-"PO-Revision-Date: 2023-07-17 16:47+0200\n"
+"POT-Creation-Date: 2023-08-21 02:13+0000\n"
+"PO-Revision-Date: 2023-08-21 13:39+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -195,11 +195,6 @@ msgstr "Script-Fu ne more obdelati dveh skriptov naenkrat."
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Že poganjate skript \"%s\"."
-
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:210
-#, c-format
-msgid "Script-Fu: %s"
-msgstr "Script-Fu: %s"
 
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:217
 msgid "_Reset"
@@ -671,64 +666,6 @@ msgstr "Prekrivnost"
 msgid "Allow resizing"
 msgstr "Dovoli spreminjanje velikosti"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "_Erase Every Nth Row..."
-msgstr "_Izbriši vsako N-to vrstico …"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:43
-msgid "Erase every nth row or column"
-msgstr "Izbriši vsako n-to vrstico ali stolpec"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Rows/cols"
-msgstr "Vrstice/stolpci"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Rows"
-msgstr "Vrstice"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Columns"
-msgstr "Stolpcev"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Erase/fill"
-msgstr "Izbriši/napolni"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Erase"
-msgstr "Izbriši"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Fill with BG"
-msgstr "Napolni ozadje z vzorcem"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:57
-msgid "_Erase Every Other Row..."
-msgstr "_Izbriši vsako drugo vrstico …"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:58
-msgid "Erase every other row or column"
-msgstr "Izbriši vsako drugo vrstico ali stolpec"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Even/odd"
-msgstr "Sodo/liho"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Even"
-msgstr "Sodo"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Odd"
-msgstr "Liho"
-
 #: plug-ins/script-fu/scripts/font-map.scm:161
 msgid "Render _Font Map..."
 msgstr "_Upodobi tabelo pisave …"
@@ -809,80 +746,85 @@ msgstr "Polnost senc (%)"
 msgid "Flatten image"
 msgstr "Splošči sliko"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:59
+#: plug-ins/script-fu/scripts/gimp-online.scm:63
 msgid "Using _Paths"
 msgstr "Uporaba _poti"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:60
-#: plug-ins/script-fu/scripts/gimp-online.scm:73
-#: plug-ins/script-fu/scripts/gimp-online.scm:86
-#: plug-ins/script-fu/scripts/gimp-online.scm:99
-#: plug-ins/script-fu/scripts/gimp-online.scm:112
-#: plug-ins/script-fu/scripts/gimp-online.scm:125
-#: plug-ins/script-fu/scripts/gimp-online.scm:138
-#: plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/gimp-online.scm:64
+#: plug-ins/script-fu/scripts/gimp-online.scm:77
+#: plug-ins/script-fu/scripts/gimp-online.scm:90
+#: plug-ins/script-fu/scripts/gimp-online.scm:103
+#: plug-ins/script-fu/scripts/gimp-online.scm:116
+#: plug-ins/script-fu/scripts/gimp-online.scm:129
+#: plug-ins/script-fu/scripts/gimp-online.scm:142
+#: plug-ins/script-fu/scripts/gimp-online.scm:155
+#: plug-ins/script-fu/scripts/gimp-online.scm:167
 msgid "Bookmark to the user manual"
 msgstr "Zaznamuj v uporabniškem priročniku"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:72
+#: plug-ins/script-fu/scripts/gimp-online.scm:76
 msgid "_Preparing your Images for the Web"
 msgstr "_Priprava slik za splet"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/gimp-online.scm:89
 msgid "_Working with Digital Camera Photos"
 msgstr "_Delo s fotografijami digitalnega fotoaparata"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:98
+#: plug-ins/script-fu/scripts/gimp-online.scm:102
 msgid "Create, Open and Save _Files"
 msgstr "Ustvarjanje, odpiranje in shranjevanje _datotek"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:111
+#: plug-ins/script-fu/scripts/gimp-online.scm:115
 msgid "_Basic Concepts"
 msgstr "_Osnovni koncepti"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:124
+#: plug-ins/script-fu/scripts/gimp-online.scm:128
 msgid "How to Use _Dialogs"
 msgstr "Kako uporabljamo _pogovorna okna"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:141
 msgid "Drawing _Simple Objects"
 msgstr "Risanje _enostavnih predmetov"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/gimp-online.scm:154
 msgid "Create and Use _Selections"
 msgstr "Ustvarjanje in uporaba _izborov"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:186
+#: plug-ins/script-fu/scripts/gimp-online.scm:166
+msgid "_[Table of Contents]"
+msgstr "_[Kazalo vsebine]"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:202
 msgid "_Main Web Site"
 msgstr "_Glavna spletna stran"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:187
-#: plug-ins/script-fu/scripts/gimp-online.scm:200
-#: plug-ins/script-fu/scripts/gimp-online.scm:239
+#: plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/gimp-online.scm:216
+#: plug-ins/script-fu/scripts/gimp-online.scm:255
 msgid "Bookmark to the GIMP web site"
 msgstr "Zaznamek spletne strani GIMP"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:199
+#: plug-ins/script-fu/scripts/gimp-online.scm:215
 msgid "_Developer Web Site"
 msgstr "_Spletna stran za razvijalce"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:212
+#: plug-ins/script-fu/scripts/gimp-online.scm:228
 msgid "_Roadmaps"
 msgstr "_Razvojni načrti"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:213
+#: plug-ins/script-fu/scripts/gimp-online.scm:229
 msgid "Bookmark to the roadmaps of GIMP"
 msgstr "Zaznamek razvojnih načrtov za GIMP"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:225
+#: plug-ins/script-fu/scripts/gimp-online.scm:241
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Poročila o hroščih in predlogih funkcij"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:226
+#: plug-ins/script-fu/scripts/gimp-online.scm:242
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Zaznamek sledilnika hroščev programa GIMP"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:238
+#: plug-ins/script-fu/scripts/gimp-online.scm:254
 msgid "_User Manual Web Site"
 msgstr "Spletna stran _uporabniškega priročnika"
 
@@ -913,26 +855,6 @@ msgstr "Višina"
 #: plug-ins/script-fu/scripts/gradient-example.scm:77
 msgid "Gradient reverse"
 msgstr "Obratni preliv"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:84
-msgid "_Grid..."
-msgstr "_Mreža …"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:85
-msgid ""
-"Draw a grid as specified by the lists of X and Y locations using the current "
-"brush"
-msgstr ""
-"Nariše mrežo, kot jo določajo seznami postavitev X in Y, z uporabo "
-"trenutnega čopiča"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:92
-msgid "X divisions"
-msgstr "Razdelki X"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:93
-msgid "Y divisions"
-msgstr "Razdelki Y"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
@@ -1209,19 +1131,15 @@ msgid "Paste the clipboard contents into a new brush"
 msgstr "Prilepi vsebino odložišča v nov čopič"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: plug-ins/script-fu/scripts/select-to-brush.scm:145
 msgid "_Brush name"
 msgstr "Ime _čopiča"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
-#: plug-ins/script-fu/scripts/select-to-brush.scm:146
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:107
 msgid "_File name"
 msgstr "Ime _datoteke"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:72
-#: plug-ins/script-fu/scripts/select-to-brush.scm:147
 msgid "_Spacing"
 msgstr "_Razmik"
 
@@ -1234,7 +1152,6 @@ msgid "Paste the clipboard contents into a new pattern"
 msgstr "Prilepi vsebino odložišča v nov vzorec"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:106
 msgid "_Pattern name"
 msgstr "Ime _vzorca"
 
@@ -1334,15 +1251,15 @@ msgstr "Zamik sence po osi Y"
 msgid "Add background"
 msgstr "Dodaj ozadje"
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Se_t Colormap..."
 msgstr "Nas_tavi barvni katalog …"
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:55
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr "Spremeni uporabljenega kataloga barv slike z barvami določene palete."
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:62
 msgid "Palette"
 msgstr "Paleta"
 
@@ -1361,30 +1278,6 @@ msgstr "Po_lmer (%)"
 #: plug-ins/script-fu/scripts/selection-round.scm:148
 msgid "Co_ncave"
 msgstr "V_boči"
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm:137
-msgid "To _Brush..."
-msgstr "V _čopič …"
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm:138
-msgid "Convert a selection to a brush"
-msgstr "Pretvori izbor v čopič"
-
-#: plug-ins/script-fu/scripts/select-to-image.scm:85
-msgid "To _Image"
-msgstr "V _sliko"
-
-#: plug-ins/script-fu/scripts/select-to-image.scm:86
-msgid "Convert a selection to an image"
-msgstr "Pretvori izbor v sliko"
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:98
-msgid "To _Pattern..."
-msgstr "_V vzorec …"
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:99
-msgid "Convert a selection to a pattern"
-msgstr "Pretvori izbor v vzorec"
 
 #: plug-ins/script-fu/scripts/slide.scm:245
 msgid "_Slide..."
