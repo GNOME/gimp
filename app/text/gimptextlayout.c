@@ -658,7 +658,7 @@ gimp_text_layout_position (GimpTextLayout *layout)
       pango_layout_get_pixel_size (layout->layout, &width, NULL);
 
       if ((base_dir == GIMP_TEXT_DIRECTION_LTR && align == PANGO_ALIGN_RIGHT) ||
-          (base_dir == GIMP_TEXT_DIRECTION_RTL && align == PANGO_ALIGN_LEFT) ||
+          (base_dir == GIMP_TEXT_DIRECTION_RTL && align == PANGO_ALIGN_RIGHT) ||
           (base_dir == GIMP_TEXT_DIRECTION_TTB_RTL && align == PANGO_ALIGN_RIGHT) ||
           (base_dir == GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT && align == PANGO_ALIGN_RIGHT) ||
           (base_dir == GIMP_TEXT_DIRECTION_TTB_LTR && align == PANGO_ALIGN_LEFT) ||
