@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-26 20:31+0000\n"
-"PO-Revision-Date: 2023-07-30 02:49+0300\n"
+"POT-Creation-Date: 2023-08-22 16:37+0000\n"
+"PO-Revision-Date: 2023-08-22 22:23+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -170,7 +170,7 @@ msgid "Confirm Save"
 msgstr "Kaydetmeyi Onayla"
 
 #: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:571
+#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:557
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -350,12 +350,12 @@ msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d yordam sorgulamanız ile eşleşiyor"
 
-#: libgimp/gimpprocedure.c:1921
+#: libgimp/gimpprocedure.c:1924
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "'%s' yordamı dönüş değeri döndürmedi"
 
-#: libgimp/gimpprocedure.c:2012
+#: libgimp/gimpprocedure.c:2015
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -364,7 +364,7 @@ msgstr ""
 "'%s' yordamı, '%s' dönüş değeri için yanlış bir değer türünü döndürdü (#%d). "
 "%s istendi, %s alındı."
 
-#: libgimp/gimpprocedure.c:2024
+#: libgimp/gimpprocedure.c:2027
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
@@ -373,7 +373,7 @@ msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için yanlış bir değer türü ile "
 "çağrıldı (#%d). %s istendi, %s alındı."
 
-#: libgimp/gimpprocedure.c:2059
+#: libgimp/gimpprocedure.c:2062
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -382,7 +382,7 @@ msgstr ""
 "'%s' yordamı, '%s' e, '%s' dönüş değeri olarak dönüştü (#%d, %s türü). Bu "
 "değer, istenenin dışındadır."
 
-#: libgimp/gimpprocedure.c:2073
+#: libgimp/gimpprocedure.c:2076
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -391,13 +391,13 @@ msgstr ""
 "'%s' yordamı, '%s' ile, '%s' bağımsız değişkeni için çağrıldı (#%d,%s türü). "
 "Bu değer istenenin dışındadır."
 
-#: libgimp/gimpprocedure.c:2117
+#: libgimp/gimpprocedure.c:2120
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için geçersiz UTF-8 dizgesi döndürdü."
 
-#: libgimp/gimpprocedure.c:2127
+#: libgimp/gimpprocedure.c:2130
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -411,14 +411,14 @@ msgstr ""
 msgid "_Open"
 msgstr "_Aç"
 
-#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:572
+#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:558
 #: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
 #: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
 #: libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Tamam"
 
-#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:570
+#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:556
 msgid "_Reset"
 msgstr "_Sıfırla"
 
@@ -2021,6 +2021,22 @@ msgstr "%s için küçük resim oluşturulamadı: %s"
 msgid "_Search:"
 msgstr "_Ara:"
 
+#: libgimpwidgets/gimpcolorbutton.c:380
+msgid "_Foreground Color"
+msgstr "Ö_nalan Rengi"
+
+#: libgimpwidgets/gimpcolorbutton.c:381
+msgid "_Background Color"
+msgstr "_Artalan Rengi"
+
+#: libgimpwidgets/gimpcolorbutton.c:386
+msgid "Blac_k"
+msgstr "Siya_h"
+
+#: libgimpwidgets/gimpcolorbutton.c:387
+msgid "_White"
+msgstr "_Beyaz"
+
 #: libgimpwidgets/gimpcolorhexentry.c:134
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
@@ -2861,75 +2877,78 @@ msgstr "Duraklarda ön dönüşüm değişikliği"
 msgid "Aces RRT"
 msgstr "Aces RRT"
 
-#: modules/display-filter-clip-warning.c:121
+#. Translators: "Clip Warning" is the name of a (color) display filter
+#. * that highlights pixels outside of the color space range.
+#. * Shown as a label description.
+#: modules/display-filter-clip-warning.c:124
 msgid "Clip warning color display filter"
 msgstr "Kırpma uyarı renrgi ekran süzgeci"
 
-#: modules/display-filter-clip-warning.c:158
+#: modules/display-filter-clip-warning.c:161
 msgid "Show shadows"
 msgstr "Gölgeleri göster"
 
-#: modules/display-filter-clip-warning.c:159
+#: modules/display-filter-clip-warning.c:162
 msgid "Show warning for pixels with a negative component"
 msgstr "Negatif bileşenli pikseller için uyarı göster"
 
-#: modules/display-filter-clip-warning.c:165
+#: modules/display-filter-clip-warning.c:168
 msgid "Shadows color"
 msgstr "Gölge rengi"
 
-#: modules/display-filter-clip-warning.c:166
+#: modules/display-filter-clip-warning.c:169
 msgid "Shadows warning color"
 msgstr "Gölge uyarı rengi"
 
-#: modules/display-filter-clip-warning.c:178
+#: modules/display-filter-clip-warning.c:181
 msgid "Show highlights"
 msgstr "Vurguları göster"
 
-#: modules/display-filter-clip-warning.c:179
+#: modules/display-filter-clip-warning.c:182
 msgid "Show warning for pixels with a component greater than one"
 msgstr "Birden fazla bileşenli pikseller için uyarı göster"
 
-#: modules/display-filter-clip-warning.c:185
+#: modules/display-filter-clip-warning.c:188
 msgid "Highlights color"
 msgstr "Vurgu rengi"
 
-#: modules/display-filter-clip-warning.c:186
+#: modules/display-filter-clip-warning.c:189
 msgid "Highlights warning color"
 msgstr "Vurgu uyarı rengi"
 
-#: modules/display-filter-clip-warning.c:198
+#: modules/display-filter-clip-warning.c:201
 msgid "Show bogus"
 msgstr "Bogus göster"
 
-#: modules/display-filter-clip-warning.c:199
+#: modules/display-filter-clip-warning.c:202
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr "Sonsuz veya NaN bileşenli pikseller için uyarı göster"
 
-#: modules/display-filter-clip-warning.c:205
+#: modules/display-filter-clip-warning.c:208
 msgid "Bogus color"
 msgstr "Bogus rengi"
 
-#: modules/display-filter-clip-warning.c:206
+#: modules/display-filter-clip-warning.c:209
 msgid "Bogus warning color"
 msgstr "Bogus uyarı rengi"
 
-#: modules/display-filter-clip-warning.c:218
+#: modules/display-filter-clip-warning.c:221
 msgid "Include alpha component"
 msgstr "Alfa bileşenini dahil et"
 
-#: modules/display-filter-clip-warning.c:219
+#: modules/display-filter-clip-warning.c:222
 msgid "Include alpha component in the warning"
 msgstr "Alfa bileşenini uyarıya dahil et"
 
-#: modules/display-filter-clip-warning.c:225
+#: modules/display-filter-clip-warning.c:228
 msgid "Include transparent pixels"
 msgstr "Saydam pikselleri dahil et"
 
-#: modules/display-filter-clip-warning.c:226
+#: modules/display-filter-clip-warning.c:229
 msgid "Include fully transparent pixels in the warning"
 msgstr "Tamamen saydam pikselleri uyarıya dahil et"
 
-#: modules/display-filter-clip-warning.c:230
+#: modules/display-filter-clip-warning.c:233
 msgid "Clip Warning"
 msgstr "Kırpma Uyarısı"
 
@@ -2980,15 +2999,3 @@ msgstr "Karşıtlık dönüşleri"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Karşıtlık"
-
-#~ msgid "_Foreground Color"
-#~ msgstr "Ö_nalan Rengi"
-
-#~ msgid "_Background Color"
-#~ msgstr "_Artalan Rengi"
-
-#~ msgid "Blac_k"
-#~ msgstr "Siya_h"
-
-#~ msgid "_White"
-#~ msgstr "_Beyaz"
