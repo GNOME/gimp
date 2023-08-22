@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-11 07:06+0000\n"
-"PO-Revision-Date: 2023-08-11 06:37+0300\n"
+"POT-Creation-Date: 2023-08-15 17:11+0000\n"
+"PO-Revision-Date: 2023-08-16 22:22+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnometurk@gnome.org>\n"
 "Language: tr\n"
@@ -290,11 +290,11 @@ msgstr "Deneysel özellikler ile bir tercihler sayfası göster"
 msgid "Show an image submenu with debug actions"
 msgstr "Hata ayıklama işlemleriyle bir görüntü alt menüsü göster"
 
-#: app/main.c:725
+#: app/main.c:719
 msgid "[FILE|URI...]"
 msgstr "[DOSYA|ADRES...]"
 
-#: app/main.c:753
+#: app/main.c:747
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -302,20 +302,20 @@ msgstr ""
 "GIMP, grafiksel kullanıcı arabirimini başlatamadı.\n"
 "Görüntüleme ortamınız için uygun bir kurulumun var olduğundan emin olun."
 
-#: app/main.c:774
+#: app/main.c:768
 msgid "Another GIMP instance is already running."
 msgstr "Başka bir GIMP zaten çalışıyor."
 
-#: app/main.c:863
+#: app/main.c:857
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP çıktısı. Bu pencereyi kapatmak için herhangi bir karakter girin."
 
-#: app/main.c:864
+#: app/main.c:858
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Bu pencereyi kapatmak için herhangi bir karakter girin)\n"
 
-#: app/main.c:881
+#: app/main.c:875
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP çıktısı. Bu pencereyi küçültebilirsiniz, fakat kapatmayın."
 
@@ -7852,7 +7852,7 @@ msgstr "_Aç"
 #: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:226
 #: app/config/gimpconfig-file.c:72 app/core/gimppalette-import.c:501
 #: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234
-#: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1663
+#: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1664
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "'%s' dosyası okumak için açılamadı: %s"
@@ -12617,10 +12617,8 @@ msgid "FG to Transparent"
 msgstr "ÖA'dan Saydama"
 
 #: app/core/gimp-gradients.c:114
-#, fuzzy
-#| msgid "FG to Transparent"
 msgid "FG to Transparent (Hardedge)"
-msgstr "ÖA'dan Saydama"
+msgstr "ÖA'dan Saydama (Sert Kenarlı)"
 
 #. Translator:  This message is displayed while GIMP is waiting for
 #. * some operation to finish.  The %s argument is a message describing
@@ -27730,17 +27728,17 @@ msgstr "\"%s\" özniteliği, bu bağlamdaki <%s> elemanında geçersizdir"
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "Metnin en dışındaki eleman <markup> olmalıdır, <%s> değil"
 
-#: app/widgets/gimptextbuffer.c:1700
+#: app/widgets/gimptextbuffer.c:1701
 #, c-format
 msgid "Input file '%s' appears truncated: %s"
 msgstr "'%s' girdi dosyası bozulmuş görünüyor: %s"
 
-#: app/widgets/gimptextbuffer.c:1718
+#: app/widgets/gimptextbuffer.c:1719
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "'%s' dosyası içinde geçersiz UTF-8 verisi."
 
-#: app/widgets/gimptextbuffer.c:1769
+#: app/widgets/gimptextbuffer.c:1770
 #, c-format
 msgid "Writing text file '%s' failed: %s"
 msgstr "'%s' metin dosyasına yazma başarısız oldu: %s"
