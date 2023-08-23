@@ -35,6 +35,10 @@
 #include "gimp-intl.h"
 
 
+static gchar * gimp_palette_load_ase_block_name (GInputStream  *input,
+                                                 GError       **error);
+
+
 GList *
 gimp_palette_load (GimpContext   *context,
                    GFile         *file,
@@ -593,6 +597,229 @@ gimp_palette_load_aco (GimpContext   *context,
   return g_list_prepend (NULL, palette);
 }
 
+GList *
+gimp_palette_load_ase (GimpContext   *context,
+                       GFile         *file,
+                       GInputStream  *input,
+                       GError       **error)
+{
+  GimpPalette *palette;
+  gchar       *palette_name;
+  gint         num_cols;
+  gint         i;
+  gchar        header[8];
+  gshort       group;
+  gsize        bytes_read;
+  gboolean     skip_first = FALSE;
+  const Babl  *src_format = NULL;
+  const Babl  *dst_format = babl_format ("R'G'B' double");
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (! g_input_stream_read_all (input, header, sizeof (header),
+                                 &bytes_read, NULL, error) ||
+      bytes_read != sizeof (header))
+    {
+      g_prefix_error (error,
+                      _("Could not read header from palette file '%s': "),
+                      gimp_file_get_utf8_name (file));
+      return NULL;
+    }
+
+  /* Checking header values */
+  if (! g_str_has_prefix (header + 0, "ASEF") ||
+      header[5] != 0x01)
+    {
+      g_prefix_error (error, _("Invalid ASE header: %s"),
+                      gimp_file_get_utf8_name (file));
+      return NULL;
+    }
+
+  if (! g_input_stream_read_all (input, &num_cols, sizeof (num_cols),
+                                 &bytes_read, NULL, error))
+    {
+      g_prefix_error (error,
+                      _("Invalid number of colors in palette."));
+      return NULL;
+    }
+  num_cols = GINT32_FROM_BE (num_cols);
+
+  /* First block contains the palette name if
+   * one is defined. */
+  if (! g_input_stream_read_all (input, &group, sizeof (group),
+                                 &bytes_read, NULL, error))
+    {
+      g_prefix_error (error, _("Invalid ASE file: %s."),
+                      gimp_file_get_utf8_name (file));
+      return NULL;
+    }
+  group = GINT16_FROM_BE (group);
+
+  /* If first marker is 0x01, then the palette has no group name */
+  if (group != 1)
+    {
+      palette_name = gimp_palette_load_ase_block_name (input, error);
+      palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
+      num_cols -= 1;
+    }
+  else
+    {
+      palette_name = g_path_get_basename (gimp_file_get_utf8_name (file));
+      palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
+      skip_first = TRUE;
+    }
+  g_free (palette_name);
+
+  /* Header blocks are considered a "color" so we offset the count here */
+  num_cols -= 1;
+
+  for (i = 0; i < num_cols; i++)
+    {
+      gchar    color_space[4];
+      gchar   *color_name;
+      GimpRGB  color;
+      gshort   spot_color;
+      gfloat  *pixels;
+      gint     components = 0;
+
+      if (! skip_first)
+        {
+          if (! g_input_stream_read_all (input, &group, sizeof (group),
+                                         &bytes_read, NULL, error))
+            {
+              g_printerr ("Invalid ASE color entry: %s.",
+                          gimp_file_get_utf8_name (file));
+              break;
+            }
+        }
+      skip_first = FALSE;
+
+      color_name = gimp_palette_load_ase_block_name (input, error);
+      if (! color_name)
+        break;
+
+      g_input_stream_read_all (input, color_space, sizeof (color_space),
+                               &bytes_read, NULL, error);
+
+      /* Color formats */
+      if (g_str_has_prefix (color_space, "RGB"))
+        {
+          components = 3;
+          src_format = babl_format ("R'G'B' float");
+        }
+      else if (g_str_has_prefix (color_space, "GRAY"))
+        {
+          components = 1;
+          src_format = babl_format ("Y' float");
+        }
+      else if (g_str_has_prefix (color_space, "CMYK"))
+        {
+          components = 4;
+          src_format = babl_format ("CMYK float");
+        }
+      else if (g_str_has_prefix (color_space, "LAB"))
+        {
+          components = 3;
+          src_format = babl_format ("CIE Lab float");
+        }
+
+      if (components == 0)
+        {
+          g_printerr (_("Invalid color components: %s."), color_space);
+          break;
+        }
+
+      pixels = g_malloc (sizeof (gfloat) * components);
+
+      for (gint j = 0; j < components; j++)
+        {
+          gint tmp;
+
+          if (! g_input_stream_read_all (input, &tmp, sizeof (tmp),
+                                         &bytes_read, NULL, error))
+            {
+              g_printerr (_("Invalid ASE color entry: %s."),
+                          gimp_file_get_utf8_name (file));
+              break;
+            }
+
+          /* Convert 4 bytes to a 32bit float value */
+          tmp = GINT32_FROM_BE (tmp);
+          pixels[j] = *(gfloat *) &tmp;
+        }
+
+      /* The L component of LAB goes from 0 to 100 percent */
+      if (g_str_has_prefix (color_space, "LAB"))
+        pixels[0] *= 100;
+
+      babl_process (babl_fish (src_format, dst_format), pixels, &color, 1);
+      g_free (pixels);
+
+      /* TODO: When GIMP supports spot colors, use this information in
+       * the palette. */
+      if (! g_input_stream_read_all (input, &spot_color, sizeof (spot_color),
+                                     &bytes_read, NULL, error))
+        {
+          g_printerr (_("Invalid ASE color entry: %s."),
+                      gimp_file_get_utf8_name (file));
+          break;
+        }
+
+      gimp_palette_add_entry (palette, -1, color_name, &color);
+    }
+
+  return g_list_prepend (NULL, palette);
+}
+
+static gchar *
+gimp_palette_load_ase_block_name (GInputStream  *input,
+                                  GError       **error)
+{
+  gint        block_length;
+  gushort     pal_name_len;
+  gunichar2  *pal_name = NULL;
+  gchar      *pal_name_utf8;
+  gsize       bytes_read;
+
+  if (! g_input_stream_read_all (input, &block_length, sizeof (block_length),
+                                 &bytes_read, NULL, error))
+    {
+      g_printerr (_("Invalid ASE palette name."));
+      return NULL;
+    }
+
+  block_length = GINT32_FROM_BE (block_length);
+
+  if (! g_input_stream_read_all (input, &pal_name_len, sizeof (pal_name_len),
+                                 &bytes_read, NULL, error))
+    {
+      g_printerr (_("Invalid ASE palette name."));
+      return NULL;
+    }
+
+  pal_name_len = GUINT16_FROM_BE (pal_name_len);
+  pal_name     = g_malloc (pal_name_len * 2);
+
+  for (gint i = 0; i < pal_name_len; i++)
+    {
+      if (! g_input_stream_read_all (input, &pal_name[i], 2,
+                                     &bytes_read, NULL, error))
+        {
+          g_printerr (_("Invalid ASE palette name."));
+          g_free (pal_name);
+          return NULL;
+        }
+
+      pal_name[i] = GUINT16_FROM_BE (pal_name[i]);
+    }
+
+  pal_name_utf8 = g_utf16_to_utf8 (pal_name, -1, NULL, NULL, NULL);
+  g_free (pal_name);
+
+  return pal_name_utf8;
+}
 
 GList *
 gimp_palette_load_css (GimpContext   *context,
@@ -691,6 +918,10 @@ gimp_palette_load_detect_format (GFile        *file,
       if (g_str_has_suffix (lower, ".aco"))
         {
           format = GIMP_PALETTE_FILE_FORMAT_ACO;
+        }
+      if (g_str_has_suffix (lower, ".ase"))
+        {
+          format = GIMP_PALETTE_FILE_FORMAT_ASE;
         }
       else if (g_str_has_suffix (lower, ".css"))
         {
