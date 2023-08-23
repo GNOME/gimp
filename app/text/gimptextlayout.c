@@ -765,7 +765,7 @@ gimp_text_layout_position (GimpTextLayout *layout)
       GimpTextDirection base_dir = layout->text->base_dir;
       gint              width;
 
-      pango_layout_get_pixel_size (layout->layout, &width, NULL);
+      width = layout->extents.width;
 
       if ((base_dir == GIMP_TEXT_DIRECTION_LTR && align == PANGO_ALIGN_RIGHT) ||
           (base_dir == GIMP_TEXT_DIRECTION_RTL && align == PANGO_ALIGN_RIGHT) ||
