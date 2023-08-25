@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-11 07:31+0000\n"
-"PO-Revision-Date: 2023-08-11 21:46+0300\n"
+"POT-Creation-Date: 2023-08-25 02:31+0000\n"
+"PO-Revision-Date: 2023-08-25 14:51+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -101,10 +101,10 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:1038
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
 #: plug-ins/map-object/map-object-ui.c:1317
-#: plug-ins/metadata/metadata-editor.c:1181
-#: plug-ins/metadata/metadata-editor.c:1677
-#: plug-ins/metadata/metadata-editor.c:5306
-#: plug-ins/metadata/metadata-editor.c:5341 plug-ins/pagecurl/pagecurl.c:496
+#: plug-ins/metadata/metadata-editor.c:1185
+#: plug-ins/metadata/metadata-editor.c:1681
+#: plug-ins/metadata/metadata-editor.c:5532
+#: plug-ins/metadata/metadata-editor.c:5567 plug-ins/pagecurl/pagecurl.c:496
 #: plug-ins/screenshot/screenshot.c:513
 #: plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_Cancel"
@@ -356,8 +356,8 @@ msgstr "Вирівнювання видимих шарів"
 #: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
 #: plug-ins/common/file-ps.c:3745 plug-ins/common/file-ps.c:3753
 #: plug-ins/common/file-psp.c:840 plug-ins/file-tiff/file-tiff-save.c:1322
-#: plug-ins/metadata/metadata-tags.c:204 plug-ins/metadata/metadata-tags.c:216
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:211 plug-ins/metadata/metadata-tags.c:223
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "None"
 msgstr "Немає"
 
@@ -490,7 +490,6 @@ msgid "Decrease the speed of the animation"
 msgstr "Зменшити швидкість відтворення анімації"
 
 #: plug-ins/common/animation-play.c:380
-#| msgid "Rewind the animation"
 msgid "Reset the speed of the animation"
 msgstr "Встановити звичайну швидкість відтворення анімації"
 
@@ -1246,8 +1245,8 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/file-iff.c:227 plug-ins/common/file-mng.c:1407
 #: plug-ins/common/file-pcx.c:523 plug-ins/common/file-pcx.c:566
 #: plug-ins/common/file-png.c:673 plug-ins/common/file-ps.c:1126
-#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2383
-#: plug-ins/common/file-psp.c:2433 plug-ins/common/file-qoi.c:300
+#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2436
+#: plug-ins/common/file-psp.c:2486 plug-ins/common/file-qoi.c:300
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
 #: plug-ins/common/file-sunras.c:458 plug-ins/common/file-svg.c:365
 #: plug-ins/common/file-svg.c:825 plug-ins/common/file-tga.c:448
@@ -1665,11 +1664,11 @@ msgstr "Покращення зображення за допомогою рет
 msgid "Uniform"
 msgstr "Рівномірний"
 
-#: plug-ins/common/contrast-retinex.c:353 plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/common/contrast-retinex.c:353 plug-ins/metadata/metadata-tags.c:254
 msgid "Low"
 msgstr "Низький"
 
-#: plug-ins/common/contrast-retinex.c:354 plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/common/contrast-retinex.c:354 plug-ins/metadata/metadata-tags.c:254
 msgid "High"
 msgstr "Високий"
 
@@ -4799,7 +4798,7 @@ msgstr "Хибний підблок %s шару, має бути CHANNEL"
 
 #: plug-ins/common/file-psp.c:2145
 msgid "Error reading channel information chunk"
-msgstr "Помилка читання фрагменту інформації каналу"
+msgstr "Помилка читання фрагмента інформації каналу"
 
 #: plug-ins/common/file-psp.c:2168
 #, c-format
@@ -4808,34 +4807,40 @@ msgstr "Хибний тип каналу %d у фрагменті інформа
 
 #: plug-ins/common/file-psp.c:2272 plug-ins/common/file-psp.c:2289
 msgid "Error reading tube data chunk"
-msgstr "Помилка при фрагменту даних тюбика"
+msgstr "Помилка при читання фрагмента даних тюбика"
 
+#: plug-ins/common/file-psp.c:2371 plug-ins/common/file-psp.c:2383
 #: plug-ins/common/file-psp.c:2394
+#| msgid "Error reading color block"
+msgid "Error reading colorprofile chunk"
+msgstr "Помилка під час читання фрагмента профілю кольорів"
+
+#: plug-ins/common/file-psp.c:2447
 msgid "Error reading file header."
 msgstr "Помилка при читанні заголовка файлу."
 
-#: plug-ins/common/file-psp.c:2401
+#: plug-ins/common/file-psp.c:2454
 msgid "Incorrect file signature."
 msgstr "Хибна сигнатура файлу."
 
-#: plug-ins/common/file-psp.c:2415
+#: plug-ins/common/file-psp.c:2468
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Непідтримувана версія формату файлу PSP %d.%d."
 
-#: plug-ins/common/file-psp.c:2435
+#: plug-ins/common/file-psp.c:2488
 msgid "invalid block size"
 msgstr "хибний розмір блока"
 
-#: plug-ins/common/file-psp.c:2444
+#: plug-ins/common/file-psp.c:2497
 msgid "Duplicate General Image Attributes block."
 msgstr "Повторний блок загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:2472
+#: plug-ins/common/file-psp.c:2525
 msgid "Missing General Image Attributes block."
 msgstr "Відсутній блок загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:2588
+#: plug-ins/common/file-psp.c:2644
 msgid "Exporting not implemented yet."
 msgstr "Експорт ще не реалізовано."
 
@@ -9232,7 +9237,7 @@ msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2554
-#: plug-ins/metadata/metadata-editor.c:5307
+#: plug-ins/metadata/metadata-editor.c:5533
 msgid "_Import"
 msgstr "_Імпортувати"
 
@@ -10494,7 +10499,7 @@ msgstr "Тип сітки:"
 
 #: plug-ins/gfig/gfig-dialog.c:1458
 #: plug-ins/gradient-flare/gradient-flare.c:749
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "Normal"
 msgstr "Звичайна"
 
@@ -10655,7 +10660,7 @@ msgstr "Гама:"
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Змінити гаму (яскравість) вибраного пензля"
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1367
+#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1371
 msgid "Select:"
 msgstr "Вибір:"
 
@@ -11586,7 +11591,6 @@ msgid "_Close"
 msgstr "З_акрити"
 
 #: plug-ins/help-browser/help-menu.ui:6
-#| msgid "Back:"
 msgid "_Back"
 msgstr "_Назад"
 
@@ -11595,7 +11599,6 @@ msgid "_Previous"
 msgstr "_Попереднє"
 
 #: plug-ins/help-browser/help-menu.ui:24
-#| msgid "Home"
 msgid "_Home"
 msgstr "_Домівка"
 
@@ -11604,12 +11607,10 @@ msgid "C_opy location"
 msgstr "_Копіювати розташування"
 
 #: plug-ins/help-browser/help-menu.ui:32
-#| msgid "Show Next"
 msgid "S_how index"
 msgstr "_Показати зміст"
 
 #: plug-ins/help-browser/help-menu.ui:38
-#| msgid "Find:"
 msgid "Find"
 msgstr "Знайти"
 
@@ -11626,7 +11627,6 @@ msgid "Zoom out"
 msgstr "Зменшити"
 
 #: plug-ins/help-browser/help-menu.ui:66
-#| msgid "C_opy location"
 msgid "Copy selection"
 msgstr "Копіювати позначене"
 
@@ -13156,7 +13156,7 @@ msgstr "Авторська назва"
 
 #. Description tab
 #: plug-ins/metadata/metadata-editor.c:487
-#: plug-ins/metadata/metadata-editor.c:1212
+#: plug-ins/metadata/metadata-editor.c:1216
 msgid "Description"
 msgstr "Опис"
 
@@ -13542,58 +13542,58 @@ msgstr "З_мінити метадані"
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Редагування метаданих (IPTC, EXIF, XMP)"
 
-#: plug-ins/metadata/metadata-editor.c:1174
+#: plug-ins/metadata/metadata-editor.c:1178
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Редактор метаданих: %s"
 
-#: plug-ins/metadata/metadata-editor.c:1182
+#: plug-ins/metadata/metadata-editor.c:1186
 msgid "_Write Metadata"
 msgstr "За_писати метадані"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1218
+#: plug-ins/metadata/metadata-editor.c:1222
 #: plug-ins/metadata/metadata-viewer.c:401
 msgid "IPTC"
 msgstr "IPTC"
 
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1224
+#: plug-ins/metadata/metadata-editor.c:1228
 msgid "IPTC Extension"
 msgstr "Розширення IPTC"
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1330
+#: plug-ins/metadata/metadata-editor.c:1334
 msgid "Categories"
 msgstr "Категорії"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1336
+#: plug-ins/metadata/metadata-editor.c:1340
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1347
+#: plug-ins/metadata/metadata-editor.c:1351
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1369
+#: plug-ins/metadata/metadata-editor.c:1373
 msgid "Import metadata"
 msgstr "Імпорт метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:1371
+#: plug-ins/metadata/metadata-editor.c:1375
 msgid "Export metadata"
 msgstr "Експортувати метадані"
 
-#: plug-ins/metadata/metadata-editor.c:1674
+#: plug-ins/metadata/metadata-editor.c:1678
 msgid "Choose Date"
 msgstr "Виберіть дату"
 
-#: plug-ins/metadata/metadata-editor.c:1678
+#: plug-ins/metadata/metadata-editor.c:1682
 msgid "Set Date"
 msgstr "Задайте дату"
 
-#: plug-ins/metadata/metadata-editor.c:2412
+#: plug-ins/metadata/metadata-editor.c:2416
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -13609,7 +13609,7 @@ msgstr ""
 "15.30, або 10.45\n"
 "Вилучіть увесь текст, щоб вилучити поточне значення."
 
-#: plug-ins/metadata/metadata-editor.c:2418
+#: plug-ins/metadata/metadata-editor.c:2422
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -13625,248 +13625,248 @@ msgstr ""
 "або футах (фут)\n"
 "Щоб вилучити поточне значення, витріть увесь текст."
 
-#: plug-ins/metadata/metadata-editor.c:2552
+#: plug-ins/metadata/metadata-editor.c:2556
 msgid "Unrated"
 msgstr "Без рейтингу"
 
-#: plug-ins/metadata/metadata-editor.c:4491
+#: plug-ins/metadata/metadata-editor.c:4666
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Не вдалося встановити мітку метаданих %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5303
+#: plug-ins/metadata/metadata-editor.c:5529
 msgid "Import Metadata File"
 msgstr "Імпорт файлу метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:5338
+#: plug-ins/metadata/metadata-editor.c:5564
 msgid "Export Metadata File"
 msgstr "Експорт файлу метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:5342
+#: plug-ins/metadata/metadata-editor.c:5568
 msgid "_Export"
 msgstr "_Експорт"
 
-#: plug-ins/metadata/metadata-tags.c:180 plug-ins/metadata/metadata-tags.c:203
-#: plug-ins/metadata/metadata-tags.c:263 plug-ins/metadata/metadata-tags.c:280
+#: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:210
+#: plug-ins/metadata/metadata-tags.c:270 plug-ins/metadata/metadata-tags.c:287
 msgid "Select a value"
 msgstr "Виберіть значення"
 
-#: plug-ins/metadata/metadata-tags.c:181
+#: plug-ins/metadata/metadata-tags.c:188
 msgid "Original digital capture of a real life scene"
 msgstr "Оригінальний цифровий знімок реальної сцени"
 
-#: plug-ins/metadata/metadata-tags.c:182
+#: plug-ins/metadata/metadata-tags.c:189
 msgid "Digitized from a negative on film"
 msgstr "Оцифровано з плівкового негативу"
 
-#: plug-ins/metadata/metadata-tags.c:183
+#: plug-ins/metadata/metadata-tags.c:190
 msgid "Digitized from a positive on film"
 msgstr "Оцифровано з плівкового позитиву"
 
-#: plug-ins/metadata/metadata-tags.c:184
+#: plug-ins/metadata/metadata-tags.c:191
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Оцифровано з друкованого на непрозорому носії"
 
-#: plug-ins/metadata/metadata-tags.c:185
+#: plug-ins/metadata/metadata-tags.c:192
 msgid "Original media with minor human edits"
 msgstr "Початкові мультимедійні дані із незначними редагуваннями людиною"
 
-#: plug-ins/metadata/metadata-tags.c:186
+#: plug-ins/metadata/metadata-tags.c:193
 msgid "Composite of captured elements"
 msgstr "Композиція зі знятих зображень"
 
-#: plug-ins/metadata/metadata-tags.c:187
+#: plug-ins/metadata/metadata-tags.c:194
 msgid "Algorithmically-enhanced media"
 msgstr "Алгоритмічно удосконалені мультимедійні дані"
 
-#: plug-ins/metadata/metadata-tags.c:188
+#: plug-ins/metadata/metadata-tags.c:195
 msgid "Data-driven media"
 msgstr "Мультимедійні дані на основі числових даних"
 
-#: plug-ins/metadata/metadata-tags.c:189
+#: plug-ins/metadata/metadata-tags.c:196
 msgid "Digital art"
 msgstr "Цифрове мистецтво"
 
-#: plug-ins/metadata/metadata-tags.c:190
+#: plug-ins/metadata/metadata-tags.c:197
 msgid "Virtual recording"
 msgstr "Віртуальний запис"
 
-#: plug-ins/metadata/metadata-tags.c:191
+#: plug-ins/metadata/metadata-tags.c:198
 msgid "Composite including synthetic elements"
 msgstr "Композиція із синтетичними елементами"
 
-#: plug-ins/metadata/metadata-tags.c:192
+#: plug-ins/metadata/metadata-tags.c:199
 msgid "Trained algorithmic media"
 msgstr "Мультимедійні дані на основі глибинного навчання"
 
-#: plug-ins/metadata/metadata-tags.c:193
+#: plug-ins/metadata/metadata-tags.c:200
 msgid "Pure algorithmic media"
 msgstr "Мультимедійні дані, створені лише на основі алгоритмів"
 
-#: plug-ins/metadata/metadata-tags.c:194
+#: plug-ins/metadata/metadata-tags.c:201
 msgid "Created by software"
 msgstr "Створено програмою"
 
-#: plug-ins/metadata/metadata-tags.c:205 plug-ins/metadata/metadata-tags.c:217
+#: plug-ins/metadata/metadata-tags.c:212 plug-ins/metadata/metadata-tags.c:224
 msgid "Not Applicable"
 msgstr "Не застосовується"
 
-#: plug-ins/metadata/metadata-tags.c:206
+#: plug-ins/metadata/metadata-tags.c:213
 msgid "Unlimited Model Releases"
 msgstr "Необмежений реліз моделі"
 
-#: plug-ins/metadata/metadata-tags.c:207
+#: plug-ins/metadata/metadata-tags.c:214
 msgid "Limited or Incomplete Model Releases"
 msgstr "Обмежений або не повний реліз моделі"
 
-#: plug-ins/metadata/metadata-tags.c:218
+#: plug-ins/metadata/metadata-tags.c:225
 msgid "Unlimited Property Releases"
 msgstr "Необмежений реліз власника"
 
-#: plug-ins/metadata/metadata-tags.c:219
+#: plug-ins/metadata/metadata-tags.c:226
 msgid "Limited or Incomplete Property Releases"
 msgstr "Обмежений або не повний реліз власника"
 
-#: plug-ins/metadata/metadata-tags.c:228
+#: plug-ins/metadata/metadata-tags.c:235
 msgid "Age Unknown"
 msgstr "Вік невідомий"
 
-#: plug-ins/metadata/metadata-tags.c:229
+#: plug-ins/metadata/metadata-tags.c:236
 msgid "Age 25 or Over"
 msgstr "25 років або більше"
 
-#: plug-ins/metadata/metadata-tags.c:230
+#: plug-ins/metadata/metadata-tags.c:237
 msgid "Age 24"
 msgstr "24 роки"
 
-#: plug-ins/metadata/metadata-tags.c:231
+#: plug-ins/metadata/metadata-tags.c:238
 msgid "Age 23"
 msgstr "23 роки"
 
-#: plug-ins/metadata/metadata-tags.c:232
+#: plug-ins/metadata/metadata-tags.c:239
 msgid "Age 22"
 msgstr "22 роки"
 
-#: plug-ins/metadata/metadata-tags.c:233
+#: plug-ins/metadata/metadata-tags.c:240
 msgid "Age 21"
 msgstr "21 рік"
 
-#: plug-ins/metadata/metadata-tags.c:234
+#: plug-ins/metadata/metadata-tags.c:241
 msgid "Age 20"
 msgstr "20 років"
 
-#: plug-ins/metadata/metadata-tags.c:235
+#: plug-ins/metadata/metadata-tags.c:242
 msgid "Age 19"
 msgstr "19 років"
 
-#: plug-ins/metadata/metadata-tags.c:236
+#: plug-ins/metadata/metadata-tags.c:243
 msgid "Age 18"
 msgstr "18 років"
 
-#: plug-ins/metadata/metadata-tags.c:237
+#: plug-ins/metadata/metadata-tags.c:244
 msgid "Age 17"
 msgstr "17 років"
 
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:245
 msgid "Age 16"
 msgstr "16 років"
 
-#: plug-ins/metadata/metadata-tags.c:239
+#: plug-ins/metadata/metadata-tags.c:246
 msgid "Age 15"
 msgstr "15 років"
 
-#: plug-ins/metadata/metadata-tags.c:240
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "Age 14 or Under"
 msgstr "14 років або менше"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "2"
 msgstr "2"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "3"
 msgstr "3"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "4"
 msgstr "4"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "6"
 msgstr "6"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "7"
 msgstr "7"
 
-#: plug-ins/metadata/metadata-tags.c:254 plug-ins/metadata/metadata-tags.c:290
-#: plug-ins/metadata/metadata-tags.c:297 plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:261 plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304 plug-ins/metadata/metadata-tags.c:311
 msgid "Unknown"
 msgstr "Невідомо"
 
 #. DO NOT SAVE
-#: plug-ins/metadata/metadata-tags.c:255
+#: plug-ins/metadata/metadata-tags.c:262
 msgid "Copyrighted"
 msgstr "Захищено авторським правом"
 
 #. TRUE
-#: plug-ins/metadata/metadata-tags.c:256
+#: plug-ins/metadata/metadata-tags.c:263
 msgid "Public Domain"
 msgstr "Суспільне надбання"
 
-#: plug-ins/metadata/metadata-tags.c:264
+#: plug-ins/metadata/metadata-tags.c:271
 msgid "Work"
 msgstr "Робочий"
 
-#: plug-ins/metadata/metadata-tags.c:265
+#: plug-ins/metadata/metadata-tags.c:272
 msgid "Cell"
 msgstr "Мобільний"
 
-#: plug-ins/metadata/metadata-tags.c:266
+#: plug-ins/metadata/metadata-tags.c:273
 msgid "Fax"
 msgstr "Факс"
 
-#: plug-ins/metadata/metadata-tags.c:267
+#: plug-ins/metadata/metadata-tags.c:274
 msgid "Home"
 msgstr "Домашній"
 
-#: plug-ins/metadata/metadata-tags.c:268
+#: plug-ins/metadata/metadata-tags.c:275
 msgid "Pager"
 msgstr "Пейджер"
 
-#: plug-ins/metadata/metadata-tags.c:281
+#: plug-ins/metadata/metadata-tags.c:288
 msgid "Male"
 msgstr "Чоловік"
 
-#: plug-ins/metadata/metadata-tags.c:282
+#: plug-ins/metadata/metadata-tags.c:289
 msgid "Female"
 msgstr "Жінка"
 
-#: plug-ins/metadata/metadata-tags.c:283
+#: plug-ins/metadata/metadata-tags.c:290
 msgid "Other"
 msgstr "Інше"
 
-#: plug-ins/metadata/metadata-tags.c:290
+#: plug-ins/metadata/metadata-tags.c:297
 msgid "Above sea level"
 msgstr "Над рівнем моря"
 
-#: plug-ins/metadata/metadata-tags.c:290
+#: plug-ins/metadata/metadata-tags.c:297
 msgid "Below sea level"
 msgstr "Під рівнем моря"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "North"
 msgstr "Північ"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "South"
 msgstr "Південь"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
 msgid "East"
 msgstr "Схід"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
 msgid "West"
 msgstr "Захід"
 
