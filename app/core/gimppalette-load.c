@@ -36,6 +36,7 @@
 
 
 static gchar * gimp_palette_load_ase_block_name (GInputStream  *input,
+                                                 goffset        file_size,
                                                  GError       **error);
 
 
@@ -605,6 +606,7 @@ gimp_palette_load_ase (GimpContext   *context,
 {
   GimpPalette *palette;
   gchar       *palette_name;
+  goffset      file_size;
   gint         num_cols;
   gint         i;
   gchar        header[8];
@@ -618,6 +620,11 @@ gimp_palette_load_ase (GimpContext   *context,
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
+  /* Get file size */
+  g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_END, NULL, error);
+  file_size = g_seekable_tell (G_SEEKABLE (input));
+  g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_SET, NULL, error);
+
   if (! g_input_stream_read_all (input, header, sizeof (header),
                                  &bytes_read, NULL, error) ||
       bytes_read != sizeof (header))
@@ -627,6 +634,7 @@ gimp_palette_load_ase (GimpContext   *context,
                       gimp_file_get_utf8_name (file));
       return NULL;
     }
+
 
   /* Checking header values */
   if (! g_str_has_prefix (header + 0, "ASEF") ||
@@ -645,6 +653,12 @@ gimp_palette_load_ase (GimpContext   *context,
       return NULL;
     }
   num_cols = GINT32_FROM_BE (num_cols);
+  if (num_cols <= 1)
+    {
+      g_prefix_error (error, _("Invalid number of colors: %s."),
+                      gimp_file_get_utf8_name (file));
+      return NULL;
+    }
 
   /* First block contains the palette name if
    * one is defined. */
@@ -660,7 +674,8 @@ gimp_palette_load_ase (GimpContext   *context,
   /* If first marker is 0x01, then the palette has no group name */
   if (group != 1)
     {
-      palette_name = gimp_palette_load_ase_block_name (input, error);
+      palette_name = gimp_palette_load_ase_block_name (input, file_size,
+                                                       error);
       palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
       num_cols -= 1;
     }
@@ -682,7 +697,8 @@ gimp_palette_load_ase (GimpContext   *context,
       GimpRGB  color;
       gshort   spot_color;
       gfloat  *pixels;
-      gint     components = 0;
+      gint     components  = 0;
+      gboolean valid_color = TRUE;
 
       if (! skip_first)
         {
@@ -696,7 +712,7 @@ gimp_palette_load_ase (GimpContext   *context,
         }
       skip_first = FALSE;
 
-      color_name = gimp_palette_load_ase_block_name (input, error);
+      color_name = gimp_palette_load_ase_block_name (input, file_size, error);
       if (! color_name)
         break;
 
@@ -728,6 +744,7 @@ gimp_palette_load_ase (GimpContext   *context,
       if (components == 0)
         {
           g_printerr (_("Invalid color components: %s."), color_space);
+          g_free (color_name);
           break;
         }
 
@@ -742,6 +759,8 @@ gimp_palette_load_ase (GimpContext   *context,
             {
               g_printerr (_("Invalid ASE color entry: %s."),
                           gimp_file_get_utf8_name (file));
+              g_free (color_name);
+              valid_color = FALSE;
               break;
             }
 
@@ -749,6 +768,9 @@ gimp_palette_load_ase (GimpContext   *context,
           tmp = GINT32_FROM_BE (tmp);
           pixels[j] = *(gfloat *) &tmp;
         }
+
+      if (! valid_color)
+        break;
 
       /* The L component of LAB goes from 0 to 100 percent */
       if (g_str_has_prefix (color_space, "LAB"))
@@ -764,10 +786,12 @@ gimp_palette_load_ase (GimpContext   *context,
         {
           g_printerr (_("Invalid ASE color entry: %s."),
                       gimp_file_get_utf8_name (file));
+          g_free (color_name);
           break;
         }
 
       gimp_palette_add_entry (palette, -1, color_name, &color);
+      g_free (color_name);
     }
 
   return g_list_prepend (NULL, palette);
@@ -775,6 +799,7 @@ gimp_palette_load_ase (GimpContext   *context,
 
 static gchar *
 gimp_palette_load_ase_block_name (GInputStream  *input,
+                                  goffset        file_size,
                                   GError       **error)
 {
   gint        block_length;
@@ -791,6 +816,11 @@ gimp_palette_load_ase_block_name (GInputStream  *input,
     }
 
   block_length = GINT32_FROM_BE (block_length);
+  if (block_length <= 0 || block_length > file_size)
+    {
+      g_printerr (_("Invalid ASE block size."));
+      return NULL;
+    }
 
   if (! g_input_stream_read_all (input, &pal_name_len, sizeof (pal_name_len),
                                  &bytes_read, NULL, error))
@@ -800,7 +830,12 @@ gimp_palette_load_ase_block_name (GInputStream  *input,
     }
 
   pal_name_len = GUINT16_FROM_BE (pal_name_len);
-  pal_name     = g_malloc (pal_name_len * 2);
+  if (pal_name_len <= 0 || pal_name_len > file_size)
+    {
+      g_printerr (_("Invalid ASE name size."));
+      return NULL;
+    }
+  pal_name = g_malloc (pal_name_len * 2);
 
   for (gint i = 0; i < pal_name_len; i++)
     {
