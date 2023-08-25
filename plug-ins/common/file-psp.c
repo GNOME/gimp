@@ -2353,6 +2353,59 @@ compression_name (gint compression)
   return NULL;
 }
 
+static gint
+read_colorprofile_block (FILE      *f,
+                         GimpImage *image,
+                         guint      total_len,
+                         PSPimage  *ia,
+                         GError   **error)
+{
+  guint             psp_header_size;
+  guint             icc_profile_size;
+  gchar            *icc_profile;
+  GimpColorProfile *profile;
+
+  if (fread (&psp_header_size, 4, 1, f) < 1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading colorprofile chunk"));
+      return -1;
+    }
+  psp_header_size = GUINT32_FROM_LE (psp_header_size);
+
+  /* The next part is a 2 byte length value, followed by PSP's
+   * internal name for the profile. We'll skip most of it,
+   * except for the last 4 bytes which is the profile size */
+  if (try_fseek (f, psp_header_size - 8, SEEK_CUR, error) < 0 ||
+      fread (&icc_profile_size, 4, 1, f) < 1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading colorprofile chunk"));
+      return -1;
+    }
+  icc_profile_size = GUINT32_FROM_LE (icc_profile_size);
+
+  /* The rest of the code references load_resource_1039 ()
+   * in psd-image-res-load.c */
+  icc_profile = g_malloc (icc_profile_size);
+  if (fread (icc_profile, icc_profile_size, 1, f) < 1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading colorprofile chunk"));
+      return -1;
+    }
+
+  profile = gimp_color_profile_new_from_icc_profile ((guint8 *) icc_profile,
+                                                     icc_profile_size,
+                                                     NULL);
+  gimp_image_set_color_profile (image, profile);
+
+  g_object_unref (profile);
+  g_free (icc_profile);
+
+  return 0;
+}
+
 /* The main function for loading PSP-images
  */
 static GimpImage *
@@ -2523,7 +2576,10 @@ load_image (GFile   *file,
               break;            /* Not yet implemented */
 
             case PSP_COLORPROFILE_BLOCK:
-              break;            /* Not yet implemented */
+              if (read_colorprofile_block (f, image, block_total_len, &ia,
+                                           error) == -1)
+                goto error;
+              break;
 
             case PSP_LAYER_BLOCK:
             case PSP_CHANNEL_BLOCK:
