@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI VERSION\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-27 13:41+0000\n"
-"PO-Revision-Date: 2023-07-29 04:01+0330\n"
-"Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
+"POT-Creation-Date: 2023-08-21 14:30+0000\n"
+"PO-Revision-Date: 2023-08-22 17:39+0330\n"
+"Last-Translator: MohammadSaleh Kamyab <mskf1383@envs.net>\n"
 "Language-Team: Persian <fa@gnome.org>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,4788,-1,-1,-1,-1\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
@@ -251,11 +251,11 @@ msgstr "نمایش یک صفحهٔ ترجیحات با قابلیت‌های آ�
 msgid "Show an image submenu with debug actions"
 msgstr "نمایش یک زیرفهرست تصویر با کنش‌های اشکال‌زدایی"
 
-#: app/main.c:725
+#: app/main.c:719
 msgid "[FILE|URI...]"
 msgstr "[پرونده|نشانی…]"
 
-#: app/main.c:753
+#: app/main.c:747
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -263,20 +263,20 @@ msgstr ""
 "گیمپ نتوانست رابط کاربری گرافیکی را راه‌اندازی کند.\n"
 "مطمئن شوید پیکربندی صحیحی برای محیط گرافیکی‌تان وجود دارد."
 
-#: app/main.c:774
+#: app/main.c:768
 msgid "Another GIMP instance is already running."
 msgstr "یک نمونهٔ دیگر از گیمپ در حال اجرا است."
 
-#: app/main.c:863
+#: app/main.c:857
 msgid "GIMP output. Type any character to close this window."
 msgstr "خروجی گیمپ. یک نویسه وارد کنید تا این پنجره بسته شود."
 
-#: app/main.c:864
+#: app/main.c:858
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(یک نویسه وارد کنید تا این پنجره بسته شود)\n"
 
-#: app/main.c:881
+#: app/main.c:875
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "خروجی گیمپ. می‌توانید این پنجره را حداقل کنید، اما آن را نبندید."
 
@@ -1360,475 +1360,422 @@ msgstr ""
 #: app/actions/context-actions.c:255
 msgctxt "context-action"
 msgid "Foreground Red: Set"
-msgstr "پیش‌زمینهٔ قرمز: تنظیم"
+msgstr "قرمز پیش‌زمینه: تنظیم"
 
 #: app/actions/context-actions.c:259
 msgctxt "context-action"
 msgid "Foreground Red: Set to Minimum"
-msgstr "پیش‌زمینهٔ قرمز: تنظیم به کمینه"
+msgstr "قرمز پیش‌زمینه: تنظیم به کمینه"
 
 #: app/actions/context-actions.c:263
 msgctxt "context-action"
 msgid "Foreground Red: Set to Maximum"
-msgstr "پیش‌زمینهٔ قرمز: تنظیم به بیشینه"
+msgstr "قرمز پیش‌زمینه: تنظیم به بیشینه"
 
 #: app/actions/context-actions.c:267
 msgctxt "context-action"
 msgid "Foreground Red: Decrease by 1%"
-msgstr "پیش‌زمینهٔ قرمز: ‎۱٪ کاهش"
+msgstr "قرمز پیش‌زمینه: ‎۱٪ کاهش"
 
 #: app/actions/context-actions.c:271
 msgctxt "context-action"
 msgid "Foreground Red: Increase by 1%"
-msgstr "پیش‌زمینهٔ قرمز: ‎۱٪ افزایش"
+msgstr "قرمز پیش‌زمینه: ‎۱٪ افزایش"
 
 #: app/actions/context-actions.c:275
 msgctxt "context-action"
 msgid "Foreground Red: Decrease by 10%"
-msgstr "پیش‌زمینهٔ قرمز: ‎۱۰٪ کاهش"
+msgstr "قرمز پیش‌زمینه: ‎۱۰٪ کاهش"
 
 #: app/actions/context-actions.c:279
 msgctxt "context-action"
 msgid "Foreground Red: Increase by 10%"
-msgstr "پیش‌زمینهٔ قرمز: ‎۱۰٪ افزایش"
+msgstr "قرمز پیش‌زمینه: ‎۱۰٪ افزایش"
 
 #: app/actions/context-actions.c:287
 msgctxt "context-action"
 msgid "Foreground Green: Set"
-msgstr "پیش‌زمینهٔ سبز: تنظیم"
+msgstr "سبز پیش‌زمینه: تنظیم"
 
 #: app/actions/context-actions.c:291
 msgctxt "context-action"
 msgid "Foreground Green: Set to Minimum"
-msgstr "پیش‌زمینهٔ سبز: تنظیم به کمینه"
+msgstr "سبز پیش‌زمینه: تنظیم به کمینه"
 
 #: app/actions/context-actions.c:295
 msgctxt "context-action"
 msgid "Foreground Green: Set to Maximum"
-msgstr "پیش‌زمینهٔ سبز: تنظیم به بیشینه"
+msgstr "سبز پیش‌زمینه: تنظیم به بیشینه"
 
 #: app/actions/context-actions.c:299
 msgctxt "context-action"
 msgid "Foreground Green: Decrease by 1%"
-msgstr "پیش‌زمینهٔ سبز: ‎۱٪ کاهش"
+msgstr "سبز پیش‌زمینه: ‎۱٪ کاهش"
 
 #: app/actions/context-actions.c:303
 msgctxt "context-action"
 msgid "Foreground Green: Increase by 1%"
-msgstr "پیش‌زمینهٔ سبز: ‎۱٪ افزایش"
+msgstr "سبز پیش‌زمینه: ‎۱٪ افزایش"
 
 #: app/actions/context-actions.c:307
 msgctxt "context-action"
 msgid "Foreground Green: Decrease by 10%"
-msgstr "پیش‌زمینهٔ سبز: ‎۱۰٪ کاهش"
+msgstr "سبز پیش‌زمینه: ‎۱۰٪ کاهش"
 
 #: app/actions/context-actions.c:311
 msgctxt "context-action"
 msgid "Foreground Green: Increase by 10%"
-msgstr "پیش‌زمینهٔ سبز: ‎۱۰٪ افزایش"
+msgstr "سبز پیش‌زمینه: ‎۱۰٪ افزایش"
 
 #: app/actions/context-actions.c:319
 msgctxt "context-action"
 msgid "Foreground Blue: Set"
-msgstr "پیش‌زمینهٔ آبی: تنظیم"
+msgstr "آبی پیش‌زمینه: تنظیم"
 
 #: app/actions/context-actions.c:323
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Minimum"
-msgstr "پیش‌زمینهٔ آبی: تنظیم به کمینه"
+msgstr "آبی پیش‌زمینه: تنظیم به کمینه"
 
 #: app/actions/context-actions.c:327
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Maximum"
-msgstr "پیش‌زمینهٔ آبی: تنظیم به بیشینه"
+msgstr "آبی پیش‌زمینه: تنظیم به بیشینه"
 
 #: app/actions/context-actions.c:331
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 1%"
-msgstr "پیش‌زمینهٔ آبی: ‎۱٪ کاهش"
+msgstr "آبی پیش‌زمینه: ‎۱٪ کاهش"
 
 #: app/actions/context-actions.c:335
 msgctxt "context-action"
 msgid "Foreground Blue: Increase by 1%"
-msgstr "پیش‌زمینهٔ آبی: ‎۱٪ افزایش"
+msgstr "آبی پیش‌زمینه: ‎۱٪ افزایش"
 
 #: app/actions/context-actions.c:339
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 10%"
-msgstr "پیش‌زمینهٔ آبی: ‎۱۰٪ کاهش"
+msgstr "آبی پیش‌زمینه: ‎۱۰٪ کاهش"
 
 #: app/actions/context-actions.c:343
 msgctxt "context-action"
 msgid "Foreground Blue: Increase by 10%"
-msgstr "پیش‌زمینهٔ آبی: ‎۱۰٪ افزایش"
+msgstr "آبی پیش‌زمینه: ‎۱۰٪ افزایش"
 
 #: app/actions/context-actions.c:351
-#, fuzzy
-#| msgid "Background"
 msgctxt "context-action"
 msgid "Background Red: Set"
-msgstr "_تنظیم به عنوان پس زمینه…"
+msgstr "قرمز پس‌زمینه: تنظیم"
 
 #: app/actions/context-actions.c:355
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Red: Set to Minimum"
-msgstr "برچسب رنگ کانال: تنظیم به قرمز"
+msgstr "قرمز پس‌زمینه: تنظیم به کمینه"
 
 #: app/actions/context-actions.c:359
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Red: Set to Maximum"
-msgstr "برچسب رنگ کانال: تنظیم به قرمز"
+msgstr "قرمز پس‌زمینه: تنظیم به بیشینه"
 
 #: app/actions/context-actions.c:363
 msgctxt "context-action"
 msgid "Background Red: Decrease by 1%"
-msgstr ""
+msgstr "قرمز پس‌زمینه: ‎۱٪ کاهش"
 
 #: app/actions/context-actions.c:367
 msgctxt "context-action"
 msgid "Background Red: Increase by 1%"
-msgstr ""
+msgstr "قرمز پس‌زمینه: ‎۱٪ افزایش"
 
 #: app/actions/context-actions.c:371
 msgctxt "context-action"
 msgid "Background Red: Decrease by 10%"
-msgstr ""
+msgstr "قرمز پس‌زمینه: ‎۱۰٪ کاهش"
 
 #: app/actions/context-actions.c:375
 msgctxt "context-action"
 msgid "Background Red: Increase by 10%"
-msgstr ""
+msgstr "قرمز پس‌زمینه: ‎۱۰٪ افزایش"
 
 #: app/actions/context-actions.c:383
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Green: Set"
-msgstr "_تنظیم به عنوان پس زمینه…"
+msgstr "سبز پس‌زمینه: تنظیم"
 
 #: app/actions/context-actions.c:387
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Green: Set to Minimum"
-msgstr "برچسب رنگ کانال: تنظیم به سبز"
+msgstr "سبز پس‌زمینه: تنظیم به کمینه"
 
 #: app/actions/context-actions.c:391
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Green: Set to Maximum"
-msgstr "برچسب رنگ کانال: تنظیم به سبز"
+msgstr "سبز پس‌زمینه: تنظیم به بیشینه"
 
 #: app/actions/context-actions.c:395
 msgctxt "context-action"
 msgid "Background Green: Decrease by 1%"
-msgstr ""
+msgstr "سبز پس‌زمینه: ‎۱٪ کاهش"
 
 #: app/actions/context-actions.c:399
 msgctxt "context-action"
 msgid "Background Green: Increase by 1%"
-msgstr ""
+msgstr "سبز پس‌زمینه: ‎۱٪ افزایش"
 
 #: app/actions/context-actions.c:403
 msgctxt "context-action"
 msgid "Background Green: Decrease by 10%"
-msgstr ""
+msgstr "سبز پس‌زمینه: ‎۱۰٪ کاهش"
 
 #: app/actions/context-actions.c:407
 msgctxt "context-action"
 msgid "Background Green: Increase by 10%"
-msgstr ""
+msgstr "سبز پس‌زمینه: ‎۱۰٪ افزایش"
 
 #: app/actions/context-actions.c:415
-#, fuzzy
-#| msgid "_Background color:"
 msgctxt "context-action"
 msgid "Background Blue: Set"
-msgstr "_تنظیم به عنوان پس زمینه…"
+msgstr "آبی پس‌زمینه: تنظیم"
 
 #: app/actions/context-actions.c:419
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Blue: Set to Minimum"
-msgstr "برچسب رنگ کانال: تنظیم به آبی"
+msgstr "آبی پس‌زمینه: تنظیم به کمینه"
 
 #: app/actions/context-actions.c:423
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Blue: Set to Maximum"
-msgstr "برچسب رنگ کانال: تنظیم به آبی"
+msgstr "آبی پس‌زمینه: تنظیم به بیشینه"
 
 #: app/actions/context-actions.c:427
 msgctxt "context-action"
 msgid "Background Blue: Decrease by 1%"
-msgstr ""
+msgstr "آبی پس‌زمینه: ‎۱٪ کاهش"
 
 #: app/actions/context-actions.c:431
 msgctxt "context-action"
 msgid "Background Blue: Increase by 1%"
-msgstr ""
+msgstr "آبی پس‌زمینه: ‎۱٪ افزایش"
 
 #: app/actions/context-actions.c:435
 msgctxt "context-action"
 msgid "Background Blue: Decrease by 10%"
-msgstr ""
+msgstr "آبی پس‌زمینه: ‎۱۰٪ کاهش"
 
 #: app/actions/context-actions.c:439
 msgctxt "context-action"
 msgid "Background Blue: Increase by 10%"
-msgstr ""
+msgstr "آبی پس‌زمینه: ‎۱۰٪ افزایش"
 
 #: app/actions/context-actions.c:447
-#, fuzzy
-#| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Hue: Set"
-msgstr "تنظیم رنگ پیش‌زمینه"
+msgstr "فام پیش‌زمینه: تنظیم"
 
 #: app/actions/context-actions.c:451
-#, fuzzy
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Minimum"
-msgstr "رنگ پیش‌زمینه به این مقدار تنظیم شد:"
+msgstr "فام پیش‌زمینه: تنظیم به کمینه"
 
 #: app/actions/context-actions.c:455
-#, fuzzy
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Maximum"
-msgstr "رنگ پیش‌زمینه به این مقدار تنظیم شد:"
+msgstr "فام پیش‌زمینه: تنظیم به بیشینه"
 
 #: app/actions/context-actions.c:459
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 1%"
-msgstr ""
+msgstr "فام پیش‌زمینه: ‎۱٪ کاهش"
 
 #: app/actions/context-actions.c:463
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 1%"
-msgstr ""
+msgstr "فام پیش‌زمینه: ‎۱٪ افزایش"
 
 #: app/actions/context-actions.c:467
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 10%"
-msgstr ""
+msgstr "فام پیش‌زمینه: ‎۱۰٪ کاهش"
 
 #: app/actions/context-actions.c:471
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 10%"
-msgstr ""
+msgstr "فام پیش‌زمینه: ‎۱۰٪ افزایش"
 
 #: app/actions/context-actions.c:479
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Set"
-msgstr "رنگ پیش‌زمینه به این مقدار تنظیم شد:"
+msgstr "اشباع پیش‌زمینه: تنظیم"
 
 #: app/actions/context-actions.c:483
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Minimum"
-msgstr "رنگ پیش‌زمینه به این مقدار تنظیم شد:"
+msgstr "اشباع پیش‌زمینه: تنظیم به کمینه"
 
 #: app/actions/context-actions.c:487
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Maximum"
-msgstr "رنگ پیش‌زمینه به این مقدار تنظیم شد:"
+msgstr "اشباع پیش‌زمینه: تنظیم به بیشینه"
 
 #: app/actions/context-actions.c:491
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 1%"
-msgstr "رنگ پیش‌زمینه"
+msgstr "اشباع پیش‌زمینه: ‎۱٪ کاهش"
 
 #: app/actions/context-actions.c:495
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 1%"
-msgstr "رنگ پیش‌زمینه"
+msgstr "اشباع پیش‌زمینه: ‎۱٪ افزایش"
 
 #: app/actions/context-actions.c:499
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 10%"
-msgstr "رنگ پیش‌زمینه"
+msgstr "اشباع پیش‌زمینه: ‎۱۰٪ کاهش"
 
 #: app/actions/context-actions.c:503
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 10%"
-msgstr "رنگ پیش‌زمینه"
+msgstr "اشباع پیش‌زمینه: ‎۱۰٪ افزایش"
 
 #: app/actions/context-actions.c:511
-#, fuzzy
-#| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Value: Set"
-msgstr "تنظیم رنگ پیش‌زمینه"
+msgstr "مقدار پیش‌زمینه: تنظیم"
 
 #: app/actions/context-actions.c:515
-#, fuzzy
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Value: Set to Minimum"
-msgstr "رنگ پیش‌زمینه به این مقدار تنظیم شد:"
+msgstr "مقدار پیش‌زمینه: تنظیم به کمینه"
 
 #: app/actions/context-actions.c:519
-#, fuzzy
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Value: Set to Maximum"
-msgstr "رنگ پیش‌زمینه به این مقدار تنظیم شد:"
+msgstr "مقدار پیش‌زمینه: تنظیم به بیشینه"
 
 #: app/actions/context-actions.c:523
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 1%"
-msgstr ""
+msgstr "مقدار پیش‌زمینه: ‎۱٪ کاهش"
 
 #: app/actions/context-actions.c:527
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 1%"
-msgstr ""
+msgstr "مقدار پیش‌زمینه: ‎۱٪ افزایش"
 
 #: app/actions/context-actions.c:531
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 10%"
-msgstr ""
+msgstr "مقدار پیش‌زمینه: ‎۱۰٪ کاهش"
 
 #: app/actions/context-actions.c:535
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 10%"
-msgstr ""
+msgstr "مقدار پیش‌زمینه: ‎۱۰٪ افزایش"
 
 #: app/actions/context-actions.c:543
-#, fuzzy
-#| msgid "Background"
 msgctxt "context-action"
 msgid "Background Hue: Set"
-msgstr "_تنظیم به عنوان پس زمینه…"
+msgstr "فام پس‌زمینه: تنظیم"
 
 #: app/actions/context-actions.c:547
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Hue: Set to Minimum"
-msgstr "سبکی گزیده و پس‌زمینه‌ای تنظیم کنید."
+msgstr "فام پس‌زمینه: تنظیم به کمینه"
 
 #: app/actions/context-actions.c:551
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Hue: Set to Maximum"
-msgstr "سبکی گزیده و پس‌زمینه‌ای تنظیم کنید."
+msgstr "فام پس‌زمینه: تنظیم به بیشینه"
 
 #: app/actions/context-actions.c:555
 msgctxt "context-action"
 msgid "Background Hue: Decrease by 1%"
-msgstr ""
+msgstr "فام پس‌زمینه: ‎۱٪ کاهش"
 
 #: app/actions/context-actions.c:559
 msgctxt "context-action"
 msgid "Background Hue: Increase by 1%"
-msgstr ""
+msgstr "فام پس‌زمینه: ‎۱٪ افزایش"
 
 #: app/actions/context-actions.c:563
 msgctxt "context-action"
 msgid "Background Hue: Decrease by 10%"
-msgstr ""
+msgstr "فام پس‌زمینه: ‎۱۰٪ کاهش"
 
 #: app/actions/context-actions.c:567
 msgctxt "context-action"
 msgid "Background Hue: Increase by 10%"
-msgstr ""
+msgstr "فام پس‌زمینه: ‎۱۰٪ افزایش"
 
 #: app/actions/context-actions.c:575
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Saturation: Set"
-msgstr "_تنظیم به عنوان پس زمینه…"
+msgstr "اشباع پس‌زمینه: تنظیم"
 
 #: app/actions/context-actions.c:579
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Saturation: Set to Minimum"
-msgstr "سبکی گزیده و پس‌زمینه‌ای تنظیم کنید."
+msgstr "اشباع پس‌زمینه: تنظیم به کمینه"
 
 #: app/actions/context-actions.c:583
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Saturation: Set to Maximum"
-msgstr "سبکی گزیده و پس‌زمینه‌ای تنظیم کنید."
+msgstr "اشباع پس‌زمینه: تنظیم به بیشینه"
 
 #: app/actions/context-actions.c:587
 msgctxt "context-action"
 msgid "Background Saturation: Decrease by 1%"
-msgstr ""
+msgstr "اشباع پس‌زمینه: ‎۱٪ کاهش"
 
 #: app/actions/context-actions.c:591
 msgctxt "context-action"
 msgid "Background Saturation: Increase by 1%"
-msgstr ""
+msgstr "اشباع پس‌زمینه: ‎۱٪ افزایش"
 
 #: app/actions/context-actions.c:595
 msgctxt "context-action"
 msgid "Background Saturation: Decrease by 10%"
-msgstr ""
+msgstr "اشباع پس‌زمینه: ‎۱۰٪ کاهش"
 
 #: app/actions/context-actions.c:599
 msgctxt "context-action"
 msgid "Background Saturation: Increase by 10%"
-msgstr ""
+msgstr "اشباع پس‌زمینه: ‎۱۰٪ افزایش"
 
 #: app/actions/context-actions.c:607
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Value: Set"
-msgstr "تنظیم مقدار KEY به VALUE"
+msgstr "مقدار پس‌زمینه: تنظیم"
 
 #: app/actions/context-actions.c:611
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Value: Set to Minimum"
-msgstr "تنظیم مقدار KEY به VALUE"
+msgstr "مقدار پس‌زمینه: تنظیم به کمینه"
 
 #: app/actions/context-actions.c:615
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Value: Set to Maximum"
-msgstr "تنظیم مقدار KEY به VALUE"
+msgstr "مقدار پس‌زمینه: تنظیم به بیشینه"
 
 #: app/actions/context-actions.c:619
 msgctxt "context-action"
 msgid "Background Value: Decrease by 1%"
-msgstr ""
+msgstr "مقدار پس‌زمینه: ‎۱٪ کاهش"
 
 #: app/actions/context-actions.c:623
 msgctxt "context-action"
 msgid "Background Value: Increase by 1%"
-msgstr ""
+msgstr "مقدار پس‌زمینه: ‎۱٪ افزایش"
 
 #: app/actions/context-actions.c:627
 msgctxt "context-action"
 msgid "Background Value: Decrease by 10%"
-msgstr ""
+msgstr "مقدار پس‌زمینه: ‎۱۰٪ کاهش"
 
 #: app/actions/context-actions.c:631
 msgctxt "context-action"
 msgid "Background Value: Increase by 10%"
-msgstr ""
+msgstr "مقدار پس‌زمینه: ‎۱۰٪ افزایش"
 
 #: app/actions/context-actions.c:639
 #, fuzzy
@@ -8329,10 +8276,9 @@ msgid "Create a floating selection"
 msgstr "ایجاد گزینشی شناور"
 
 #: app/actions/select-actions.c:68
-#, fuzzy
 msgctxt "select-action"
 msgid "Fea_ther..."
-msgstr "_پر…"
+msgstr "_پرّه‌کاری…"
 
 #: app/actions/select-actions.c:70
 #, fuzzy
@@ -8463,11 +8409,11 @@ msgstr "ایجاد لایه‌ای جدید با آخرین مقدارهای ا�
 
 #: app/actions/select-commands.c:165
 msgid "Feather Selection"
-msgstr "پَرکاری گزینش"
+msgstr "پرّه‌کاری گزینش"
 
 #: app/actions/select-commands.c:169
 msgid "Feather selection by"
-msgstr "پَرکاری گزینش به اندازهٔ"
+msgstr "پرّه‌کاری گزینش به اندازهٔ"
 
 #. Edge lock button
 #: app/actions/select-commands.c:179 app/actions/select-commands.c:256
@@ -8478,6 +8424,7 @@ msgstr "ادامهٔ نواحی _گزیده تا بیرون تصویر"
 #: app/actions/select-commands.c:182
 msgid "When feathering, act as if selected areas continued outside the image."
 msgstr ""
+"هنگام پرّه‌کاری، به عنوان اینکه اگر ناحیهٔ گزیده به برون تصویر ادامه یابد عمل می‌کند."
 
 #: app/actions/select-commands.c:241
 msgid "Shrink Selection"
@@ -8716,7 +8663,7 @@ msgstr "_گشودن"
 #: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:226
 #: app/config/gimpconfig-file.c:72 app/core/gimppalette-import.c:501
 #: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234
-#: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1663
+#: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1664
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "«%s» برای خواندن گشوده نشد: %s"
@@ -12323,13 +12270,15 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:674
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
-msgstr ""
+msgstr "شعاع پیش‌گزیدهٔ پرّه‌کاری را برای محاورهٔ «پرّه‌کاری گزینش» تنظیم می‌کند."
 
 #: app/config/gimprc-blurbs.h:677
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Feather Selection' dialog."
 msgstr ""
+"تنظیم پیش‌گزیدهٔ «ادامهٔ ناحیه‌های گزیده به برون تصویر» را برای محاورهٔ «پرّه‌کاری "
+"گزینش» تنظیم می‌کند."
 
 #: app/config/gimprc-blurbs.h:681
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
@@ -12503,62 +12452,44 @@ msgid "Picked reference object"
 msgstr "شیء ناقص"
 
 #: app/core/core-enums.c:63
-#, fuzzy
-#| msgid "Align top edge of target"
 msgctxt "alignment-type"
 msgid "Align to the left"
-msgstr "ردیف کردن با لبهٔ چپ هدف"
+msgstr "تراز کردن به چپ"
 
 #: app/core/core-enums.c:64
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Flip horizontally"
 msgctxt "alignment-type"
 msgid "Center horizontally"
-msgstr "وسط کردن افقی تصویر"
+msgstr "وسط کردن افقی"
 
 #: app/core/core-enums.c:65
-#, fuzzy
-#| msgid "Align top edge of target"
 msgctxt "alignment-type"
 msgid "Align to the right"
-msgstr "ردیف کردن با لبهٔ راست هدف"
+msgstr "تراز کردن به راست"
 
 #: app/core/core-enums.c:66
-#, fuzzy
-#| msgid "Align center of target"
 msgctxt "alignment-type"
 msgid "Align to the top"
-msgstr "ردیف کردن با لبهٔ بالای هدف"
+msgstr "تراز کردن به بالا"
 
 #: app/core/core-enums.c:67
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Flip vertically"
 msgctxt "alignment-type"
 msgid "Center vertically"
-msgstr "وسط کردن عمودی تصویر"
+msgstr "وسط کردن عمودی"
 
 #: app/core/core-enums.c:68
-#, fuzzy
-#| msgid "Align top edge of target"
 msgctxt "alignment-type"
 msgid "Align to the bottom"
-msgstr "ردیف کردن با پایین هدف"
+msgstr "تراز کردن به پایین"
 
 #: app/core/core-enums.c:69
-#, fuzzy
-#| msgid "Distribute targets evenly in the horizontal"
 msgctxt "alignment-type"
 msgid "Distribute anchor points horizontally evenly"
-msgstr "توزیع اهداف به طور مساوی در راستای افق"
+msgstr "توزیع برابر نقاط لنگر در راستای افق"
 
 #: app/core/core-enums.c:70
-#, fuzzy
-#| msgid "Distribute targets evenly in the vertical"
 msgctxt "alignment-type"
 msgid "Distribute anchor points vertically evenly"
-msgstr "توزیع اهداف به طور مساوی در راستای عمود"
+msgstr "توزیع برابر نقاط لنگر در راستای عمود"
 
 #: app/core/core-enums.c:71
 #, fuzzy
@@ -12602,7 +12533,7 @@ msgstr "نرم"
 #: app/core/core-enums.c:134
 msgctxt "channel-border-style"
 msgid "Feathered"
-msgstr "پردار"
+msgstr "پرّه‌کاری شده"
 
 #: app/core/core-enums.c:170
 msgctxt "color-pick-mode"
@@ -12620,11 +12551,9 @@ msgid "RGB (0..255)"
 msgstr "آر‌جی‌جی (۰..۲۵۵)"
 
 #: app/core/core-enums.c:173
-#, fuzzy
-#| msgid "Grayscale"
 msgctxt "color-pick-mode"
 msgid "Grayscale (%)"
-msgstr "_بی‌رنگ"
+msgstr "خاکستری (٪)"
 
 #: app/core/core-enums.c:174
 msgctxt "color-pick-mode"
@@ -12667,10 +12596,9 @@ msgid "Keep embedded profile"
 msgstr "نگه داشتن نمایهٔ توکار"
 
 #: app/core/core-enums.c:211
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Convert to built-in sRGB or grayscale profile"
-msgstr "تبدیل تصویر به بی‌رنگ"
+msgstr "تبدیل به sRGB توکار یا نمایهٔ خاکستری"
 
 #: app/core/core-enums.c:212
 msgctxt "color-profile-policy"
@@ -13896,29 +13824,35 @@ msgstr "از «%s» می‌گذریم: نگارش قرارداد گیمپ غلط
 msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr ""
 
-#: app/core/gimp-gradients.c:64
+#: app/core/gimp-gradients.c:65
 msgid "Custom"
 msgstr "سفارشی"
 
-#: app/core/gimp-gradients.c:74
+#: app/core/gimp-gradients.c:75
 msgid "FG to BG (RGB)"
 msgstr "پیش‌ز به پس‌ز (RGB)"
 
-#: app/core/gimp-gradients.c:82
+#: app/core/gimp-gradients.c:83
 #, fuzzy
 msgid "FG to BG (Hardedge)"
 msgstr "پیش‌ز به پس‌ز (RGB)"
 
-#: app/core/gimp-gradients.c:90
+#: app/core/gimp-gradients.c:91
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "پیش‌ز به پس‌ز (HSV پادساعتگرد)"
 
-#: app/core/gimp-gradients.c:98
+#: app/core/gimp-gradients.c:99
 msgid "FG to BG (HSV clockwise hue)"
 msgstr "پیش‌ز به پس‌ز (HSV ساعتگرد)"
 
-#: app/core/gimp-gradients.c:106
+#: app/core/gimp-gradients.c:107
 msgid "FG to Transparent"
+msgstr "پیش‌ز به شفاف"
+
+#: app/core/gimp-gradients.c:114
+#, fuzzy
+#| msgid "FG to Transparent"
+msgid "FG to Transparent (Hardedge)"
 msgstr "پیش‌ز به شفاف"
 
 #. Translator:  This message is displayed while GIMP is waiting for
@@ -14384,10 +14318,9 @@ msgid "Channel cannot be lowered more."
 msgstr "نمی‌توان کانال را از این پایین‌تر برد."
 
 #: app/core/gimpchannel.c:293
-#, fuzzy
 msgctxt "undo-type"
 msgid "Feather Channel"
-msgstr "پَرکاری گزینش"
+msgstr "پرّه‌کاری کانال"
 
 #: app/core/gimpchannel.c:294
 #, fuzzy
@@ -14710,12 +14643,11 @@ msgstr "حذف لبه‌های ناصاف"
 #: app/core/gimpfilloptions.c:135 app/tools/gimpbucketfilloptions.c:196
 #: app/tools/gimpselectionoptions.c:88
 msgid "Feather edges"
-msgstr "پَر کاری لبه‌ها"
+msgstr "پرّه‌کاری لبه‌ها"
 
 #: app/core/gimpfilloptions.c:136 app/tools/gimpbucketfilloptions.c:197
-#, fuzzy
 msgid "Enable feathering of fill edges"
-msgstr "بزرگ کردن گزینش"
+msgstr "به کار انداختن پرّه‌کاری لبه‌های رنگ‌آمیزی"
 
 #: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:87
 #: app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
@@ -14727,9 +14659,8 @@ msgstr "ش_عاع"
 
 #: app/core/gimpfilloptions.c:143 app/tools/gimpbucketfilloptions.c:204
 #: app/tools/gimpselectionoptions.c:96
-#, fuzzy
 msgid "Radius of feathering"
-msgstr "ش_عاع"
+msgstr "شعاع پرّه‌کاری"
 
 #: app/core/gimpfilloptions.c:393 app/core/gimpfilloptions.c:515
 #, fuzzy
@@ -15952,7 +15883,7 @@ msgstr "قلم‌ضربه‌ای کردن گزینش"
 #: app/core/gimpselection.c:192
 msgctxt "undo-type"
 msgid "Feather Selection"
-msgstr "پَرکاری گزینش"
+msgstr "پرّه‌کاری گزینش"
 
 #: app/core/gimpselection.c:193
 #, fuzzy
@@ -18647,16 +18578,12 @@ msgstr "مقیاس کردن مسیرهای درون‌ریخته"
 
 #. Feather Selection Dialog
 #: app/dialogs/preferences-dialog.c:2554
-#, fuzzy
-#| msgid "Feather Selection"
 msgid "Feather Selection Dialog"
-msgstr "پَرکاری گزینش به اندازهٔ"
+msgstr "محاورهٔ پرّه‌کاری گزینش"
 
 #: app/dialogs/preferences-dialog.c:2559
-#, fuzzy
-#| msgid "Feather edges"
 msgid "Feather radius:"
-msgstr "ش_عاع"
+msgstr "شعاع پرّه‌کاری:"
 
 #: app/dialogs/preferences-dialog.c:2563 app/dialogs/preferences-dialog.c:2585
 #: app/dialogs/preferences-dialog.c:2602
@@ -22903,21 +22830,16 @@ msgid "Smooth edges"
 msgstr "لبه‌های نرم"
 
 #: app/pdb/gimppdbcontext.c:108
-#, fuzzy
 msgid "Feather"
-msgstr "پَر کاری لبه‌ها"
+msgstr "پرّه‌کاری"
 
 #: app/pdb/gimppdbcontext.c:115
-#, fuzzy
-#| msgid "Feather edges"
 msgid "Feather radius X"
-msgstr "ش_عاع"
+msgstr "شعاع افقی پرّه‌کاری"
 
 #: app/pdb/gimppdbcontext.c:122
-#, fuzzy
-#| msgid "Feather edges"
 msgid "Feather radius Y"
-msgstr "ش_عاع"
+msgstr "شعاع عمودی پرّه‌کاری"
 
 #: app/pdb/gimppdbcontext.c:136
 #, fuzzy
@@ -24188,7 +24110,7 @@ msgstr ""
 "در صورت حذف این چند واژهٔ غلط، به شکیل، ثابت و جامع‌تر ساختن\n"
 "پاراگراف شعر از لحاظ دوری از قافیه‌های اضافه کمک می‌شود."
 
-#: app/text/gimpfontfactory.c:400
+#: app/text/gimpfontfactory.c:393
 #, fuzzy, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -26860,9 +26782,8 @@ msgid "Cloning the foreground object"
 msgstr "در حال شبیه‌سازی «%s»…"
 
 #: app/tools/gimpselectionoptions.c:89
-#, fuzzy
 msgid "Enable feathering of selection edges"
-msgstr "بزرگ کردن گزینش"
+msgstr "به کار انداختن پرّه‌کاری لبه‌های گزینش"
 
 #: app/tools/gimpselectionoptions.c:225 app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
@@ -28493,17 +28414,14 @@ msgid "K:"
 msgstr "ه‍:"
 
 #: app/widgets/gimpcolorframe.c:1152
-#, fuzzy
-#| msgid "Module Folders"
 msgctxt "Color"
 msgid "Profile:"
-msgstr "نمایه"
+msgstr "نمایه:"
 
 #: app/widgets/gimpcolorframe.c:1154
-#, fuzzy
 msgctxt "Color"
 msgid "No Profile"
-msgstr "نمایه"
+msgstr "بدون نمایه"
 
 #: app/widgets/gimpcolorframe.c:1179 app/widgets/gimpcolorframe.c:1180
 #, c-format
@@ -30559,18 +30477,18 @@ msgstr "گونهٔ صفت نامعتبر «%s»"
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr ""
 
-#: app/widgets/gimptextbuffer.c:1700
+#: app/widgets/gimptextbuffer.c:1701
 #, fuzzy, c-format
 #| msgid "Fatal parse error in pattern file '%s': File appears truncated."
 msgid "Input file '%s' appears truncated: %s"
 msgstr "خطای تجزیهٔ مهلک در پروندهٔ الگوی «%s»: پرونده ناقص به نظر می‌رسد."
 
-#: app/widgets/gimptextbuffer.c:1718
+#: app/widgets/gimptextbuffer.c:1719
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "داده‌های یوتی‌اف-۸ نامعتبر در پروندهٔ «‎%s»."
 
-#: app/widgets/gimptextbuffer.c:1769
+#: app/widgets/gimptextbuffer.c:1770
 #, fuzzy, c-format
 #| msgid ""
 #| "Reverting to '%s' failed:\n"
