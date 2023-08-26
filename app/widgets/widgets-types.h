@@ -221,6 +221,7 @@ typedef struct _GimpMeter                    GimpMeter;
 typedef struct _GimpModifiersEditor          GimpModifiersEditor;
 typedef struct _GimpOverlayBox               GimpOverlayBox;
 typedef struct _GimpPickableButton           GimpPickableButton;
+typedef struct _GimpPickableChooser          GimpPickableChooser;
 typedef struct _GimpPickablePopup            GimpPickablePopup;
 typedef struct _GimpPivotSelector            GimpPivotSelector;
 typedef struct _GimpPlugInView               GimpPlugInView;

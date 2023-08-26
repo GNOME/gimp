@@ -1191,9 +1191,7 @@ gimp_container_view_remove (GimpContainerView *view,
 
   if (insert_data)
     {
-      GIMP_CONTAINER_VIEW_GET_IFACE (view)->remove_item (view,
-                                                             viewable,
-                                                             insert_data);
+      GIMP_CONTAINER_VIEW_GET_IFACE (view)->remove_item (view, viewable, insert_data);
 
       g_hash_table_remove (private->item_hash, viewable);
     }

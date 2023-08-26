@@ -161,6 +161,7 @@ libappwidgets_sources = [
   'gimppatternselect.c',
   'gimppdbdialog.c',
   'gimppickablebutton.c',
+  'gimppickablechooser.c',
   'gimppickablepopup.c',
   'gimppivotselector.c',
   'gimppixbuf.c',

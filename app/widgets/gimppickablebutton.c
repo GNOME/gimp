@@ -57,6 +57,10 @@ struct _GimpPickableButtonPrivate
   GimpPickable *pickable;
 
   GtkWidget    *view;
+
+  GBinding     *popup_binding;
+  GtkWidget    *popup;
+  GimpPickable *initial_pickable;
 };
 
 
@@ -74,8 +78,8 @@ static void     gimp_pickable_button_get_property  (GObject            *object,
 
 static void     gimp_pickable_button_clicked       (GtkButton          *button);
 
-static void     gimp_pickable_button_popup_confirm (GimpPickablePopup  *popup,
-                                                    GimpPickableButton *button);
+static void     gimp_pickable_button_popup_confirm (GimpPickableButton *button);
+static void     gimp_pickable_button_popup_cancel  (GimpPickableButton *button);
 static void     gimp_pickable_button_drop_pickable (GtkWidget          *widget,
                                                     gint                x,
                                                     gint                y,
@@ -127,6 +131,7 @@ gimp_pickable_button_init (GimpPickableButton *button)
 
   button->private->view_size         = GIMP_VIEW_SIZE_LARGE;
   button->private->view_border_width = 1;
+  button->private->popup_binding     = NULL;
 
   gimp_dnd_viewable_dest_add  (GTK_WIDGET (button), GIMP_TYPE_LAYER,
                                gimp_pickable_button_drop_pickable,
@@ -178,6 +183,9 @@ gimp_pickable_button_finalize (GObject *object)
   GimpPickableButton *button = GIMP_PICKABLE_BUTTON (object);
 
   g_clear_object (&button->private->context);
+  g_clear_object (&button->private->initial_pickable);
+  if (button->private->popup)
+    gtk_widget_destroy (button->private->popup);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -240,23 +248,39 @@ gimp_pickable_button_clicked (GtkButton *button)
                                    pickable_button->private->view_size,
                                    pickable_button->private->view_border_width);
 
-  g_signal_connect (popup, "confirm",
-                    G_CALLBACK (gimp_pickable_button_popup_confirm),
-                    button);
+  g_signal_connect_swapped (popup, "confirm",
+                            G_CALLBACK (gimp_pickable_button_popup_confirm),
+                            button);
+  g_signal_connect_swapped (popup, "cancel",
+                            G_CALLBACK (gimp_pickable_button_popup_cancel),
+                            button);
+  pickable_button->private->popup_binding = g_object_bind_property (G_OBJECT (button), "pickable",
+                                                                    G_OBJECT (popup),  "pickable",
+                                                                    G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+  pickable_button->private->initial_pickable = pickable_button->private->pickable;
+  if (pickable_button->private->initial_pickable)
+    g_object_ref (pickable_button->private->initial_pickable);
 
+  pickable_button->private->popup = popup;
+  g_signal_connect (popup, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &pickable_button->private->popup);
   gimp_popup_show (GIMP_POPUP (popup), GTK_WIDGET (button));
 }
 
 static void
-gimp_pickable_button_popup_confirm (GimpPickablePopup  *popup,
-                                    GimpPickableButton *button)
+gimp_pickable_button_popup_confirm (GimpPickableButton *button)
 {
-  GimpPickable *pickable = gimp_pickable_popup_get_pickable (popup);
-
-  if (pickable)
-    gimp_pickable_button_set_pickable (button, pickable);
+  g_clear_pointer (&button->private->popup_binding, g_binding_unbind);
+  g_clear_object (&button->private->initial_pickable);
 }
 
+static void
+gimp_pickable_button_popup_cancel (GimpPickableButton *button)
+{
+  gimp_pickable_button_set_pickable (button, button->private->initial_pickable);
+  gimp_pickable_button_popup_confirm (button);
+}
 static void
 gimp_pickable_button_drop_pickable (GtkWidget    *widget,
                                     gint          x,
