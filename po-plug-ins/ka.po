@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-10 23:35+0000\n"
-"PO-Revision-Date: 2023-08-11 09:33+0200\n"
+"POT-Creation-Date: 2023-08-25 20:56+0000\n"
+"PO-Revision-Date: 2023-08-26 05:46+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -98,10 +98,10 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:1038
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
 #: plug-ins/map-object/map-object-ui.c:1317
-#: plug-ins/metadata/metadata-editor.c:1181
-#: plug-ins/metadata/metadata-editor.c:1677
-#: plug-ins/metadata/metadata-editor.c:5306
-#: plug-ins/metadata/metadata-editor.c:5341 plug-ins/pagecurl/pagecurl.c:496
+#: plug-ins/metadata/metadata-editor.c:1185
+#: plug-ins/metadata/metadata-editor.c:1681
+#: plug-ins/metadata/metadata-editor.c:5532
+#: plug-ins/metadata/metadata-editor.c:5567 plug-ins/pagecurl/pagecurl.c:496
 #: plug-ins/screenshot/screenshot.c:513
 #: plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_Cancel"
@@ -343,8 +343,8 @@ msgstr "ხილული ფენების სწორება"
 #: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
 #: plug-ins/common/file-ps.c:3745 plug-ins/common/file-ps.c:3753
 #: plug-ins/common/file-psp.c:840 plug-ins/file-tiff/file-tiff-save.c:1322
-#: plug-ins/metadata/metadata-tags.c:204 plug-ins/metadata/metadata-tags.c:216
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:211 plug-ins/metadata/metadata-tags.c:223
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "None"
 msgstr "არაფერი"
 
@@ -1224,8 +1224,8 @@ msgstr ""
 #: plug-ins/common/file-iff.c:227 plug-ins/common/file-mng.c:1407
 #: plug-ins/common/file-pcx.c:523 plug-ins/common/file-pcx.c:566
 #: plug-ins/common/file-png.c:673 plug-ins/common/file-ps.c:1126
-#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2383
-#: plug-ins/common/file-psp.c:2433 plug-ins/common/file-qoi.c:300
+#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2436
+#: plug-ins/common/file-psp.c:2486 plug-ins/common/file-qoi.c:300
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
 #: plug-ins/common/file-sunras.c:458 plug-ins/common/file-svg.c:365
 #: plug-ins/common/file-svg.c:825 plug-ins/common/file-tga.c:448
@@ -1626,11 +1626,11 @@ msgstr ""
 msgid "Uniform"
 msgstr "ერთგვაროვანი"
 
-#: plug-ins/common/contrast-retinex.c:353 plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/common/contrast-retinex.c:353 plug-ins/metadata/metadata-tags.c:254
 msgid "Low"
 msgstr "დაბალი"
 
-#: plug-ins/common/contrast-retinex.c:354 plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/common/contrast-retinex.c:354 plug-ins/metadata/metadata-tags.c:254
 msgid "High"
 msgstr "მაღალი"
 
@@ -2116,7 +2116,7 @@ msgstr ""
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:194
 #: plug-ins/common/file-ps.c:383 plug-ins/common/file-ps.c:497
-#: plug-ins/imagemap/imap_grid.c:255
+#: plug-ins/common/file-raw-data.c:352 plug-ins/imagemap/imap_grid.c:255
 msgid "_Width"
 msgstr "_სიგანე"
 
@@ -2944,6 +2944,7 @@ msgstr ""
 "ფორმატი)."
 
 #: plug-ins/common/file-heif.c:252 plug-ins/common/file-heif.c:362
+#: plug-ins/file-jpeg/jpeg.c:203
 msgid "_Quality"
 msgstr "_ხარისხი"
 
@@ -3154,7 +3155,8 @@ msgid "The width for each table cell. Can be a number or a percent."
 msgstr ""
 
 #: plug-ins/common/file-html-table.c:201 plug-ins/common/file-ps.c:389
-#: plug-ins/common/file-ps.c:504 plug-ins/imagemap/imap_grid.c:261
+#: plug-ins/common/file-ps.c:504 plug-ins/common/file-raw-data.c:357
+#: plug-ins/imagemap/imap_grid.c:261
 msgid "_Height"
 msgstr "_სიმაღლე"
 
@@ -3408,6 +3410,14 @@ msgstr ""
 
 #: plug-ins/common/file-jpegxl.c:211
 msgid "Store ICC profile to exported JXL file"
+msgstr ""
+
+#: plug-ins/common/file-jpegxl.c:216 plug-ins/file-tiff/file-tiff.c:233
+msgid "Export as CMY_K"
+msgstr "CMYK-ის სახით _გატანა"
+
+#: plug-ins/common/file-jpegxl.c:217
+msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
 msgstr ""
 
 #: plug-ins/common/file-jpegxl.c:2015
@@ -3795,13 +3805,41 @@ msgstr ""
 msgid "Portable Document Format"
 msgstr "PDF"
 
+#: plug-ins/common/file-pdf-load.c:343
+msgid "PDF password"
+msgstr ""
+
+#: plug-ins/common/file-pdf-load.c:344
+msgid "The password to decrypt the encrypted PDF file"
+msgstr ""
+
+#: plug-ins/common/file-pdf-load.c:349
+msgid "Load in re_verse order"
+msgstr "ჩატვირთვა შებრუნებული მიმდევრობით"
+
+#: plug-ins/common/file-pdf-load.c:350
+msgid "Load PDF pages in reverse order"
+msgstr ""
+
 #: plug-ins/common/file-pdf-load.c:367
 msgid "Open pages as"
 msgstr "გვერდის გახსნა, როგორც"
 
-#: plug-ins/common/file-pdf-load.c:368
+#: plug-ins/common/file-pdf-load.c:368 plug-ins/common/file-pdf-load.c:375
 msgid "Number of pages to load (0 for all)"
 msgstr ""
+
+#: plug-ins/common/file-pdf-load.c:374
+msgid "N pages"
+msgstr "N გვერდი"
+
+#: plug-ins/common/file-pdf-load.c:387
+msgid "Pages"
+msgstr "გვერდები"
+
+#: plug-ins/common/file-pdf-load.c:388
+msgid "The pages to load in the expected order"
+msgstr "გვერდების ჩატვირთვის მიმდევრობა"
 
 #: plug-ins/common/file-pdf-load.c:392
 msgid "Use _Anti-aliasing"
@@ -4018,7 +4056,7 @@ msgstr ""
 msgid "Write tIME chunk (PNG metadata)"
 msgstr ""
 
-#: plug-ins/common/file-png.c:269
+#: plug-ins/common/file-png.c:269 plug-ins/file-tiff/file-tiff.c:226
 msgid "Save color _values from transparent pixels"
 msgstr ""
 
@@ -4359,21 +4397,49 @@ msgstr ""
 msgid "Resol_ution"
 msgstr "_გაფართოება"
 
+#: plug-ins/common/file-ps.c:378
+msgid "Resolution to interpret image (dpi)"
+msgstr ""
+
+#: plug-ins/common/file-ps.c:384
+msgid "Desired width"
+msgstr ""
+
+#: plug-ins/common/file-ps.c:390
+msgid "Desired height"
+msgstr "სასურველი სიმაღლე"
+
 #: plug-ins/common/file-ps.c:395
 msgid "Try _Bounding Box"
+msgstr ""
+
+#: plug-ins/common/file-ps.c:396
+msgid "FALSE: Use width/height, TRUE: Use BoundingBox"
 msgstr ""
 
 #: plug-ins/common/file-ps.c:401
 msgid "_Pages"
 msgstr "_გვერდები"
 
+#: plug-ins/common/file-ps.c:402
+msgid "Pages to load (e.g.: 1,3,5-7)"
+msgstr ""
+
 #: plug-ins/common/file-ps.c:407
 msgid "Coloring"
 msgstr "გაფერადება"
 
+#: plug-ins/common/file-ps.c:408
+msgid "4: b/w, 5: grey, 6: color image, 7: automatic"
+msgstr ""
+
 #: plug-ins/common/file-ps.c:413
 msgid "Text antialiasing"
 msgstr "ტექსტის მომრგვალება"
+
+#: plug-ins/common/file-ps.c:414 plug-ins/common/file-ps.c:420
+msgid "1, 2 or 4"
+msgstr ""
 
 #: plug-ins/common/file-ps.c:419
 msgid "Graphic antialiasing"
@@ -4391,21 +4457,45 @@ msgstr "ჩასმული PostScript"
 msgid "EPS"
 msgstr "EPS"
 
+#: plug-ins/common/file-ps.c:498
+msgid "Width of the image in PostScript file (0: use input image size)"
+msgstr ""
+
+#: plug-ins/common/file-ps.c:505
+msgid "Height of the image in PostScript file (0: use input image size)"
+msgstr ""
+
 #: plug-ins/common/file-ps.c:511
 msgid "_X offset"
 msgstr "_X წანაცვლება"
+
+#: plug-ins/common/file-ps.c:512
+msgid "X-offset to image from lower left corner"
+msgstr ""
 
 #: plug-ins/common/file-ps.c:517
 msgid "Y o_ffset"
 msgstr "_Y წანაცვლება"
 
+#: plug-ins/common/file-ps.c:518
+msgid "Y-offset to image from lower left corner"
+msgstr ""
+
 #: plug-ins/common/file-ps.c:523
 msgid "Unit"
 msgstr "საზომი ერთეულები"
 
+#: plug-ins/common/file-ps.c:524
+msgid "Unit for width/height/offset. 0: inches, 1: millimeters"
+msgstr ""
+
 #: plug-ins/common/file-ps.c:530
 msgid "_Keep aspect ratio"
 msgstr "_საწყისი თანაფარდობის შენარჩუნება"
+
+#: plug-ins/common/file-ps.c:531
+msgid "FALSE: use width/height, TRUE: keep aspect ratio"
+msgstr ""
 
 #: plug-ins/common/file-ps.c:536 plug-ins/map-object/map-object-ui.c:1013
 msgid "Rotation"
@@ -4415,13 +4505,33 @@ msgstr "შემობრუნება"
 msgid "PostScript Level _2"
 msgstr "PostScript Level _2"
 
+#: plug-ins/common/file-ps.c:543
+msgid "FALSE: PostScript Level 1, TRUE: PostScript Level 2"
+msgstr ""
+
+#: plug-ins/common/file-ps.c:548
+msgid "Encapsula_ted PostScript"
+msgstr "_ჩასმული PostScript"
+
+#: plug-ins/common/file-ps.c:549
+msgid "FALSE: PostScript, TRUE: Encapsulated PostScript"
+msgstr "ცრუ: PostScript, ჭეშმარიტი: ჩასმული PostScript"
+
 #: plug-ins/common/file-ps.c:554 plug-ins/imagemap/imap_grid.c:298
 msgid "_Preview"
 msgstr "_მინიატურა"
 
+#: plug-ins/common/file-ps.c:555
+msgid "Show Preview"
+msgstr "მინიატურის ჩვენება"
+
 #: plug-ins/common/file-ps.c:560
 msgid "Preview Si_ze"
 msgstr "მინიატურის _ზომა"
+
+#: plug-ins/common/file-ps.c:561
+msgid "0: no preview, >0: max. size of preview"
+msgstr ""
 
 #: plug-ins/common/file-ps.c:722
 msgid "PostScript plug-in does not support multiple layers."
@@ -4652,32 +4762,37 @@ msgstr ""
 msgid "Error reading tube data chunk"
 msgstr ""
 
+#: plug-ins/common/file-psp.c:2371 plug-ins/common/file-psp.c:2383
 #: plug-ins/common/file-psp.c:2394
+msgid "Error reading colorprofile chunk"
+msgstr "ფერის პროფილის ნაწილის წაკითხვა შეუძლებელია"
+
+#: plug-ins/common/file-psp.c:2447
 msgid "Error reading file header."
 msgstr "ფაილის თავსართის წაკითხვის შეცდომა."
 
-#: plug-ins/common/file-psp.c:2401
+#: plug-ins/common/file-psp.c:2454
 msgid "Incorrect file signature."
 msgstr "არასწორი ფაილის ხელმოწერა."
 
-#: plug-ins/common/file-psp.c:2415
+#: plug-ins/common/file-psp.c:2468
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr ""
 
-#: plug-ins/common/file-psp.c:2435
+#: plug-ins/common/file-psp.c:2488
 msgid "invalid block size"
 msgstr "ბლოკის არასწორი ზომა"
 
-#: plug-ins/common/file-psp.c:2444
+#: plug-ins/common/file-psp.c:2497
 msgid "Duplicate General Image Attributes block."
 msgstr ""
 
-#: plug-ins/common/file-psp.c:2472
+#: plug-ins/common/file-psp.c:2525
 msgid "Missing General Image Attributes block."
 msgstr ""
 
-#: plug-ins/common/file-psp.c:2588
+#: plug-ins/common/file-psp.c:2644
 msgid "Exporting not implemented yet."
 msgstr ""
 
@@ -4713,9 +4828,101 @@ msgstr ""
 msgid "Raw image data"
 msgstr ""
 
+#: plug-ins/common/file-raw-data.c:353
+msgid "Image width in number of pixels"
+msgstr ""
+
+#: plug-ins/common/file-raw-data.c:358
+msgid "Image height in number of pixels"
+msgstr ""
+
+#: plug-ins/common/file-raw-data.c:362
+msgid "O_ffset"
+msgstr "_წანაცვლება"
+
+#: plug-ins/common/file-raw-data.c:363
+msgid "Offset to beginning of image in raw data"
+msgstr ""
+
+#: plug-ins/common/file-raw-data.c:368
+msgid "Pixel _format"
+msgstr "_პიქსელის ფორმატი"
+
+#: plug-ins/common/file-raw-data.c:369
+msgid "The layout of pixel data, such as components and their order"
+msgstr ""
+
+#: plug-ins/common/file-raw-data.c:373
+msgid "Data t_ype"
+msgstr ""
+
+#: plug-ins/common/file-raw-data.c:374
+msgid ""
+"Data type used to represent pixel values { RAW_ENCODING_UNSIGNED (0), "
+"RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }"
+msgstr ""
+
+#: plug-ins/common/file-raw-data.c:378
+msgid "Endianness"
+msgstr ""
+
+#: plug-ins/common/file-raw-data.c:379
+msgid ""
+"Order of sequences of bytes { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"
+msgstr ""
+
+#: plug-ins/common/file-raw-data.c:383 plug-ins/common/file-raw-data.c:467
+msgid "Planar configuration"
+msgstr ""
+
+#: plug-ins/common/file-raw-data.c:384 plug-ins/common/file-raw-data.c:468
+msgid ""
+"How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), "
+"RAW_PLANAR_SEPARATE (1) }"
+msgstr ""
+
+#: plug-ins/common/file-raw-data.c:392
+msgid "Palette Offse_t"
+msgstr "პალიტრის _წანაცვლება"
+
+#: plug-ins/common/file-raw-data.c:393
+msgid "Offset to beginning of data in the palette file"
+msgstr ""
+
+#: plug-ins/common/file-raw-data.c:397
+msgid "Palette's la_yout"
+msgstr "პალიტრის _განლაგება"
+
+#: plug-ins/common/file-raw-data.c:398 plug-ins/common/file-raw-data.c:474
+msgid ""
+"The layout for the palette's color channels{ RAW_PALETTE_RGB (0), "
+"RAW_PALETTE_BGR (1) }"
+msgstr ""
+
+#: plug-ins/common/file-raw-data.c:403
+msgid "_Palette File"
+msgstr "_პალიტრის ფაილი"
+
+#: plug-ins/common/file-raw-data.c:404
+msgid "The file containing palette data"
+msgstr ""
+
 #: plug-ins/common/file-raw-data.c:414 plug-ins/common/file-raw-data.c:2812
 msgid "Digital Elevation Model data"
 msgstr ""
+
+#: plug-ins/common/file-raw-data.c:438
+msgid "_Sample spacing"
+msgstr "_სემპლების დაშორება"
+
+#: plug-ins/common/file-raw-data.c:439
+msgid ""
+"The sample spacing of the data. (0: auto-detect, 1: SRTM-1, 2: SRTM-3 data)"
+msgstr ""
+
+#: plug-ins/common/file-raw-data.c:473
+msgid "Palette's layout"
+msgstr "პალიტრის განლაგება"
 
 #: plug-ins/common/file-raw-data.c:481
 msgid "Raw Data"
@@ -8186,16 +8393,100 @@ msgstr "JPEG გამოსახულება"
 msgid "JPEG"
 msgstr "JPEG"
 
+#: plug-ins/file-jpeg/jpeg.c:204
+msgid "Quality of exported image"
+msgstr ""
+
+#: plug-ins/file-jpeg/jpeg.c:209
+msgid "S_moothing"
+msgstr "_დარბილება"
+
+#: plug-ins/file-jpeg/jpeg.c:210
+msgid "Smoothing factor for exported image"
+msgstr ""
+
+#: plug-ins/file-jpeg/jpeg.c:215
+msgid "Optimi_ze"
+msgstr ""
+
+#: plug-ins/file-jpeg/jpeg.c:216
+msgid "Use optimized tables during Huffman coding"
+msgstr ""
+
+#: plug-ins/file-jpeg/jpeg.c:221
+msgid "_Progressive"
+msgstr "_პროგრესული"
+
+#: plug-ins/file-jpeg/jpeg.c:222
+msgid "Create progressive JPEG images"
+msgstr ""
+
+#: plug-ins/file-jpeg/jpeg.c:227
+msgid "Export as CM_YK"
+msgstr "CMYK-ის სახით _გატანა"
+
+#: plug-ins/file-jpeg/jpeg.c:228
+msgid "Create a CMYK JPEG image using the soft-proofing color profile"
+msgstr ""
+
 #: plug-ins/file-jpeg/jpeg.c:233
 msgid "Su_bsampling"
+msgstr ""
+
+#: plug-ins/file-jpeg/jpeg.c:234
+msgid ""
+"Sub-sampling type { 0 == 4:2:0 (chroma quartered), 1 == 4:2:2 (chroma halved "
+"horizontally), 2 == 4:4:4 (best quality), 3 == 4:4:0 (chroma halved "
+"vertically)"
+msgstr ""
+
+#: plug-ins/file-jpeg/jpeg.c:244
+msgid "Baseline"
+msgstr "საბაზისო ხაზი"
+
+#: plug-ins/file-jpeg/jpeg.c:245
+msgid ""
+"Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
+"decoders)"
 msgstr ""
 
 #: plug-ins/file-jpeg/jpeg.c:251
 msgid "Inter_val (MCU rows):"
 msgstr ""
 
+#: plug-ins/file-jpeg/jpeg.c:252
+msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
+msgstr ""
+
 #: plug-ins/file-jpeg/jpeg.c:258
 msgid "_DCT method"
+msgstr ""
+
+#: plug-ins/file-jpeg/jpeg.c:259
+msgid "DCT method to use { INTEGER (0), FIXED (1), FLOAT (2) }"
+msgstr ""
+
+#: plug-ins/file-jpeg/jpeg.c:267
+msgid "_Use quality settings from original image"
+msgstr ""
+
+#: plug-ins/file-jpeg/jpeg.c:268
+msgid ""
+"If the original image was loaded from a JPEG file using non-standard quality "
+"settings (quantization tables), enable this option to get almost the same "
+"quality and file size."
+msgstr ""
+
+#: plug-ins/file-jpeg/jpeg.c:290
+msgid "Sho_w preview in image window"
+msgstr ""
+
+#: plug-ins/file-jpeg/jpeg.c:291
+msgid "Creates a temporary layer with an export preview"
+msgstr ""
+
+#: plug-ins/file-jpeg/jpeg.c:295
+msgid "Use _arithmetic coding"
 msgstr ""
 
 #: plug-ins/file-jpeg/jpeg.c:296
@@ -8634,6 +8925,60 @@ msgstr ""
 msgid "TIFF"
 msgstr "TIFF"
 
+#: plug-ins/file-tiff/file-tiff.c:211
+msgid "Export in _BigTIFF variant file format"
+msgstr ""
+
+#: plug-ins/file-tiff/file-tiff.c:212
+msgid ""
+"The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
+"4GiB files and bigger"
+msgstr ""
+
+#: plug-ins/file-tiff/file-tiff.c:218
+msgid "Co_mpression"
+msgstr "_შეკუმშვა"
+
+#: plug-ins/file-tiff/file-tiff.c:219
+msgid ""
+"Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4), "
+"CCITT G3 Fax (5), CCITT G4 Fax (6) }"
+msgstr ""
+
+#: plug-ins/file-tiff/file-tiff.c:227
+msgid ""
+"Keep the color data masked by an alpha channel intact (do not store "
+"premultiplied components)"
+msgstr ""
+
+#: plug-ins/file-tiff/file-tiff.c:234
+msgid "Create a CMYK TIFF image using the soft-proofing color profile"
+msgstr ""
+
+#: plug-ins/file-tiff/file-tiff.c:239
+msgid "Save La_yers"
+msgstr "ფენების _შენახვა"
+
+#: plug-ins/file-tiff/file-tiff.c:240
+msgid "Save Layers"
+msgstr "ფენების შენახვა"
+
+#: plug-ins/file-tiff/file-tiff.c:245
+msgid "Crop L_ayers"
+msgstr "ფენების _ამოჭრა"
+
+#: plug-ins/file-tiff/file-tiff.c:246
+msgid "Crop Layers"
+msgstr "ფენების ამოჭრა"
+
+#: plug-ins/file-tiff/file-tiff.c:251
+msgid "Save _GeoTIFF data"
+msgstr ""
+
+#: plug-ins/file-tiff/file-tiff.c:252
+msgid "Save GeoTIFF data"
+msgstr ""
+
 #: plug-ins/file-tiff/file-tiff.c:459
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
@@ -8830,7 +9175,7 @@ msgid "Import from TIFF"
 msgstr ""
 
 #: plug-ins/file-tiff/file-tiff-load.c:2554
-#: plug-ins/metadata/metadata-editor.c:5307
+#: plug-ins/metadata/metadata-editor.c:5533
 msgid "_Import"
 msgstr "_იმპორტირება"
 
@@ -10063,7 +10408,7 @@ msgstr "ბადის ტიპი:"
 
 #: plug-ins/gfig/gfig-dialog.c:1458
 #: plug-ins/gradient-flare/gradient-flare.c:749
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "Normal"
 msgstr "ნორმალური"
 
@@ -10221,7 +10566,7 @@ msgstr "გამა:"
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1367
+#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1371
 msgid "Select:"
 msgstr "აირჩიეთ:"
 
@@ -11710,7 +12055,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_grid.c:204
 msgid "Grid Settings"
-msgstr ""
+msgstr "ბადის მორგება"
 
 #: plug-ins/imagemap/imap_grid.c:210
 msgid "_Snap-to grid enabled"
@@ -12059,11 +12404,11 @@ msgstr "1:1"
 
 #: plug-ins/imagemap/imap-menu.ui:124
 msgid "1:2"
-msgstr ""
+msgstr "1:2"
 
 #: plug-ins/imagemap/imap-menu.ui:129
 msgid "1:3"
-msgstr ""
+msgstr "1:3"
 
 #: plug-ins/imagemap/imap-menu.ui:134
 msgid "1:4"
@@ -12071,15 +12416,15 @@ msgstr "1:4"
 
 #: plug-ins/imagemap/imap-menu.ui:139
 msgid "1:5"
-msgstr ""
+msgstr "1:5"
 
 #: plug-ins/imagemap/imap-menu.ui:144
 msgid "1:6"
-msgstr ""
+msgstr "1:6"
 
 #: plug-ins/imagemap/imap-menu.ui:149
 msgid "1:7"
-msgstr ""
+msgstr "1:7"
 
 #: plug-ins/imagemap/imap-menu.ui:154
 msgid "1:8"
@@ -12459,7 +12804,7 @@ msgstr ""
 
 #: plug-ins/map-object/map-object-ui.c:462
 msgid "Plane"
-msgstr ""
+msgstr "ზედაპირი"
 
 #: plug-ins/map-object/map-object-ui.c:463
 msgid "Sphere"
@@ -12511,7 +12856,7 @@ msgstr ""
 
 #: plug-ins/map-object/map-object-ui.c:560
 msgid "_Depth:"
-msgstr ""
+msgstr "_სიღრმე:"
 
 #: plug-ins/map-object/map-object-ui.c:561
 msgid "Antialiasing quality. Higher is better, but slower"
@@ -12695,7 +13040,7 @@ msgstr "ავტორის სათაური"
 
 #. Description tab
 #: plug-ins/metadata/metadata-editor.c:487
-#: plug-ins/metadata/metadata-editor.c:1212
+#: plug-ins/metadata/metadata-editor.c:1216
 msgid "Description"
 msgstr "აღწერა"
 
@@ -13081,58 +13426,58 @@ msgstr ""
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:1174
+#: plug-ins/metadata/metadata-editor.c:1178
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:1182
+#: plug-ins/metadata/metadata-editor.c:1186
 msgid "_Write Metadata"
 msgstr ""
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1218
+#: plug-ins/metadata/metadata-editor.c:1222
 #: plug-ins/metadata/metadata-viewer.c:401
 msgid "IPTC"
 msgstr "IPTC"
 
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1224
+#: plug-ins/metadata/metadata-editor.c:1228
 msgid "IPTC Extension"
 msgstr ""
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1330
+#: plug-ins/metadata/metadata-editor.c:1334
 msgid "Categories"
 msgstr "კატეგორიები"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1336
+#: plug-ins/metadata/metadata-editor.c:1340
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1347
+#: plug-ins/metadata/metadata-editor.c:1351
 msgid "DICOM"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:1369
+#: plug-ins/metadata/metadata-editor.c:1373
 msgid "Import metadata"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:1371
+#: plug-ins/metadata/metadata-editor.c:1375
 msgid "Export metadata"
 msgstr "მეტამონაცემების გატანა"
 
-#: plug-ins/metadata/metadata-editor.c:1674
+#: plug-ins/metadata/metadata-editor.c:1678
 msgid "Choose Date"
 msgstr "აირჩიეთ თარიღი"
 
-#: plug-ins/metadata/metadata-editor.c:1678
+#: plug-ins/metadata/metadata-editor.c:1682
 msgid "Set Date"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:2412
+#: plug-ins/metadata/metadata-editor.c:2416
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -13142,7 +13487,7 @@ msgid ""
 "Delete all text to remove the current value."
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:2418
+#: plug-ins/metadata/metadata-editor.c:2422
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -13152,248 +13497,248 @@ msgid ""
 "Delete all text to remove the current value."
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:2552
+#: plug-ins/metadata/metadata-editor.c:2556
 msgid "Unrated"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:4491
+#: plug-ins/metadata/metadata-editor.c:4666
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "მეტამონაცემების ჭდის %s დაყენების შეცდომა: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5303
+#: plug-ins/metadata/metadata-editor.c:5529
 msgid "Import Metadata File"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:5338
+#: plug-ins/metadata/metadata-editor.c:5564
 msgid "Export Metadata File"
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:5342
+#: plug-ins/metadata/metadata-editor.c:5568
 msgid "_Export"
 msgstr "გატანა"
 
-#: plug-ins/metadata/metadata-tags.c:180 plug-ins/metadata/metadata-tags.c:203
-#: plug-ins/metadata/metadata-tags.c:263 plug-ins/metadata/metadata-tags.c:280
+#: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:210
+#: plug-ins/metadata/metadata-tags.c:270 plug-ins/metadata/metadata-tags.c:287
 msgid "Select a value"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:181
+#: plug-ins/metadata/metadata-tags.c:188
 msgid "Original digital capture of a real life scene"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:182
+#: plug-ins/metadata/metadata-tags.c:189
 msgid "Digitized from a negative on film"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:183
+#: plug-ins/metadata/metadata-tags.c:190
 msgid "Digitized from a positive on film"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:184
+#: plug-ins/metadata/metadata-tags.c:191
 msgid "Digitized from a print on non-transparent medium"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:185
+#: plug-ins/metadata/metadata-tags.c:192
 msgid "Original media with minor human edits"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:186
+#: plug-ins/metadata/metadata-tags.c:193
 msgid "Composite of captured elements"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:187
+#: plug-ins/metadata/metadata-tags.c:194
 msgid "Algorithmically-enhanced media"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:188
+#: plug-ins/metadata/metadata-tags.c:195
 msgid "Data-driven media"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:189
+#: plug-ins/metadata/metadata-tags.c:196
 msgid "Digital art"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:190
+#: plug-ins/metadata/metadata-tags.c:197
 msgid "Virtual recording"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:191
+#: plug-ins/metadata/metadata-tags.c:198
 msgid "Composite including synthetic elements"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:192
+#: plug-ins/metadata/metadata-tags.c:199
 msgid "Trained algorithmic media"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:193
+#: plug-ins/metadata/metadata-tags.c:200
 msgid "Pure algorithmic media"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:194
+#: plug-ins/metadata/metadata-tags.c:201
 msgid "Created by software"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:205 plug-ins/metadata/metadata-tags.c:217
+#: plug-ins/metadata/metadata-tags.c:212 plug-ins/metadata/metadata-tags.c:224
 msgid "Not Applicable"
 msgstr "არ განეკუთვნება"
 
-#: plug-ins/metadata/metadata-tags.c:206
+#: plug-ins/metadata/metadata-tags.c:213
 msgid "Unlimited Model Releases"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:207
+#: plug-ins/metadata/metadata-tags.c:214
 msgid "Limited or Incomplete Model Releases"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:218
+#: plug-ins/metadata/metadata-tags.c:225
 msgid "Unlimited Property Releases"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:219
+#: plug-ins/metadata/metadata-tags.c:226
 msgid "Limited or Incomplete Property Releases"
 msgstr ""
 
-#: plug-ins/metadata/metadata-tags.c:228
+#: plug-ins/metadata/metadata-tags.c:235
 msgid "Age Unknown"
 msgstr "ასაკი უცნობია"
 
-#: plug-ins/metadata/metadata-tags.c:229
+#: plug-ins/metadata/metadata-tags.c:236
 msgid "Age 25 or Over"
 msgstr "ასაკი 25 ან ზემოთ"
 
-#: plug-ins/metadata/metadata-tags.c:230
+#: plug-ins/metadata/metadata-tags.c:237
 msgid "Age 24"
 msgstr "ასაკი 24"
 
-#: plug-ins/metadata/metadata-tags.c:231
+#: plug-ins/metadata/metadata-tags.c:238
 msgid "Age 23"
 msgstr "ასაკი 23"
 
-#: plug-ins/metadata/metadata-tags.c:232
+#: plug-ins/metadata/metadata-tags.c:239
 msgid "Age 22"
 msgstr "ასაკი 22"
 
-#: plug-ins/metadata/metadata-tags.c:233
+#: plug-ins/metadata/metadata-tags.c:240
 msgid "Age 21"
 msgstr "ასაკი 21"
 
-#: plug-ins/metadata/metadata-tags.c:234
+#: plug-ins/metadata/metadata-tags.c:241
 msgid "Age 20"
 msgstr "ასაკი 20"
 
-#: plug-ins/metadata/metadata-tags.c:235
+#: plug-ins/metadata/metadata-tags.c:242
 msgid "Age 19"
 msgstr "ასაკი 19"
 
-#: plug-ins/metadata/metadata-tags.c:236
+#: plug-ins/metadata/metadata-tags.c:243
 msgid "Age 18"
 msgstr "ასაკი 18"
 
-#: plug-ins/metadata/metadata-tags.c:237
+#: plug-ins/metadata/metadata-tags.c:244
 msgid "Age 17"
 msgstr "ასაკი 17"
 
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:245
 msgid "Age 16"
 msgstr "ასაკი 16"
 
-#: plug-ins/metadata/metadata-tags.c:239
+#: plug-ins/metadata/metadata-tags.c:246
 msgid "Age 15"
 msgstr "ასაკი 15"
 
-#: plug-ins/metadata/metadata-tags.c:240
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "Age 14 or Under"
 msgstr "ასაკი 14 ან ქვემოთ"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "2"
 msgstr "2"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "3"
 msgstr "3"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "4"
 msgstr "4"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "6"
 msgstr "6"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "7"
 msgstr "7"
 
-#: plug-ins/metadata/metadata-tags.c:254 plug-ins/metadata/metadata-tags.c:290
-#: plug-ins/metadata/metadata-tags.c:297 plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:261 plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304 plug-ins/metadata/metadata-tags.c:311
 msgid "Unknown"
 msgstr "უცნობი"
 
 #. DO NOT SAVE
-#: plug-ins/metadata/metadata-tags.c:255
+#: plug-ins/metadata/metadata-tags.c:262
 msgid "Copyrighted"
 msgstr "დაცულია საავტორო უფლებებით"
 
 #. TRUE
-#: plug-ins/metadata/metadata-tags.c:256
+#: plug-ins/metadata/metadata-tags.c:263
 msgid "Public Domain"
 msgstr "საჯარო"
 
-#: plug-ins/metadata/metadata-tags.c:264
+#: plug-ins/metadata/metadata-tags.c:271
 msgid "Work"
 msgstr "სამუშაო"
 
-#: plug-ins/metadata/metadata-tags.c:265
+#: plug-ins/metadata/metadata-tags.c:272
 msgid "Cell"
 msgstr "უჯრედი"
 
-#: plug-ins/metadata/metadata-tags.c:266
+#: plug-ins/metadata/metadata-tags.c:273
 msgid "Fax"
 msgstr "ფაქსი"
 
-#: plug-ins/metadata/metadata-tags.c:267
+#: plug-ins/metadata/metadata-tags.c:274
 msgid "Home"
 msgstr "საწყისი"
 
-#: plug-ins/metadata/metadata-tags.c:268
+#: plug-ins/metadata/metadata-tags.c:275
 msgid "Pager"
 msgstr "პეიჯერი"
 
-#: plug-ins/metadata/metadata-tags.c:281
+#: plug-ins/metadata/metadata-tags.c:288
 msgid "Male"
 msgstr "მამრობითი"
 
-#: plug-ins/metadata/metadata-tags.c:282
+#: plug-ins/metadata/metadata-tags.c:289
 msgid "Female"
 msgstr "მდედრობითი"
 
-#: plug-ins/metadata/metadata-tags.c:283
+#: plug-ins/metadata/metadata-tags.c:290
 msgid "Other"
 msgstr "სხვა"
 
-#: plug-ins/metadata/metadata-tags.c:290
+#: plug-ins/metadata/metadata-tags.c:297
 msgid "Above sea level"
 msgstr "ზღვის დონიდან"
 
-#: plug-ins/metadata/metadata-tags.c:290
+#: plug-ins/metadata/metadata-tags.c:297
 msgid "Below sea level"
 msgstr "ზღვის დონეზე დაბლა"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "North"
 msgstr "ჩრდილოეთი"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "South"
 msgstr "სამხრეთი"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
 msgid "East"
 msgstr "აღმოსავლეთი"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
 msgid "West"
 msgstr "დასავლეთი"
 
@@ -13950,9 +14295,6 @@ msgstr ""
 #~ msgctxt "email-address"
 #~ msgid "_From:"
 #~ msgstr "_გამგზავნი:"
-
-#~ msgid "Export Image as XPM"
-#~ msgstr "XPM გამოსახულების სახით გატანა"
 
 #~ msgid "_Black"
 #~ msgstr "_შავი"
