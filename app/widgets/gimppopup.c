@@ -38,6 +38,11 @@ enum
   LAST_SIGNAL
 };
 
+typedef struct _GimpPopupPrivate
+{
+  GtkWidget *parent;
+} GimpPopupPrivate;
+
 
 static gboolean gimp_popup_map_event    (GtkWidget      *widget,
                                          GdkEventAny    *event);
@@ -50,7 +55,7 @@ static void     gimp_popup_real_cancel  (GimpPopup      *popup);
 static void     gimp_popup_real_confirm (GimpPopup      *popup);
 
 
-G_DEFINE_TYPE (GimpPopup, gimp_popup, GTK_TYPE_WINDOW)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpPopup, gimp_popup, GTK_TYPE_WINDOW)
 
 #define parent_class gimp_popup_parent_class
 
@@ -175,7 +180,8 @@ gimp_popup_button_press (GtkWidget      *widget,
                          GdkEventButton *bevent)
 {
   GtkWidget *event_widget;
-  gboolean   cancel = FALSE;
+  gboolean   cancel  = FALSE;
+  gboolean   confirm = FALSE;
 
   event_widget = gtk_get_event_widget ((GdkEvent *) bevent);
 
@@ -200,15 +206,22 @@ gimp_popup_button_press (GtkWidget      *widget,
     }
   else if (gtk_widget_get_toplevel (event_widget) != widget)
     {
+      GimpPopupPrivate *priv;
       /*  the event was on a gimp widget, but not inside the popup  */
 
-      cancel = TRUE;
+      priv = gimp_popup_get_instance_private (GIMP_POPUP (widget));
+      if (event_widget == priv->parent || gtk_widget_is_ancestor (event_widget, priv->parent))
+        confirm = TRUE;
+      else
+        cancel = TRUE;
     }
 
   if (cancel)
     g_signal_emit (widget, popup_signals[CANCEL], 0);
+  else if (confirm)
+    g_signal_emit (widget, popup_signals[CONFIRM], 0);
 
-  return cancel;
+  return (cancel || confirm);
 }
 
 static gboolean
@@ -275,22 +288,38 @@ gimp_popup_real_confirm (GimpPopup *popup)
   gtk_widget_destroy (widget);
 }
 
+/**
+ * gimp_popup_show:
+ * @popup:
+ * @widget: the parent widget which will determine @popup location.
+ *
+ * Shows @popup above @widget. Its placement will be determined relatively to
+ * @widget.
+ * Moreover clicking outside @popup but within @widget will be considered a
+ * "confirm" signal. Typically @widget would be a button. A typical UX could be:
+ * clicking it once would show the popup; clicking it again would confirm the
+ * choice within the popup.
+ */
 void
 gimp_popup_show (GimpPopup *popup,
                  GtkWidget *widget)
 {
-  GdkDisplay     *display;
-  GdkMonitor     *monitor;
-  GtkRequisition  requisition;
-  GtkAllocation   allocation;
-  GdkRectangle    rect;
-  gint            orig_x;
-  gint            orig_y;
-  gint            x;
-  gint            y;
+  GimpPopupPrivate *priv;
+  GdkDisplay       *display;
+  GdkMonitor       *monitor;
+  GtkRequisition    requisition;
+  GtkAllocation     allocation;
+  GdkRectangle      rect;
+  gint              orig_x;
+  gint              orig_y;
+  gint              x;
+  gint              y;
 
   g_return_if_fail (GIMP_IS_POPUP (popup));
   g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  priv = gimp_popup_get_instance_private (popup);
+  priv->parent = widget;
 
   gtk_widget_get_preferred_size (GTK_WIDGET (popup), &requisition, NULL);
 
