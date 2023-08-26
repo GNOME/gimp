@@ -37,6 +37,8 @@ sub gradients_popup {
     %invoke = (
 	code => <<'CODE'
 {
+  GimpContainer *container = gimp_data_factory_get_container (gimp->gradient_factory);
+
   /* Formerly, this procedure had another parameter:
    * the sample size of the gradient's data passed in the changed callback.
    * Now the sample size is determined by core, and in the future,
@@ -46,7 +48,7 @@ sub gradients_popup {
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
       ! gimp_pdb_dialog_new (gimp, context, progress,
-                             gimp_data_factory_get_container (gimp->gradient_factory),
+                             gimp_container_get_children_type (container),
                              parent_window, popup_title, gradient_callback,
                              GIMP_OBJECT (initial_gradient), NULL))
     success = FALSE;
@@ -69,9 +71,12 @@ sub gradients_close_popup {
     %invoke = (
 	code => <<'CODE'
 {
+  GimpContainer *container = gimp_data_factory_get_container (gimp->gradient_factory);
+
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
-      ! gimp_pdb_dialog_close (gimp, gimp_data_factory_get_container (gimp->gradient_factory),
+      ! gimp_pdb_dialog_close (gimp,
+                               gimp_container_get_children_type (container),
                                gradient_callback))
     success = FALSE;
 }
@@ -95,9 +100,12 @@ sub gradients_set_popup {
     %invoke = (
 	code => <<'CODE'
 {
+  GimpContainer *container = gimp_data_factory_get_container (gimp->gradient_factory);
+
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
-      ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->gradient_factory),
+      ! gimp_pdb_dialog_set (gimp,
+                             gimp_container_get_children_type (container),
                              gradient_callback, GIMP_OBJECT (gradient), NULL))
     success = FALSE;
 }
@@ -107,6 +115,7 @@ CODE
 
 
 @headers = qw("core/gimp.h"
+              "core/gimpcontainer.h"
               "core/gimpdatafactory.h"
               "core/gimpgradient.h");
 

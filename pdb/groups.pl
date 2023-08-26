@@ -11,6 +11,7 @@
     drawable
     drawable_color
     drawable_edit
+    drawable_select
     dynamics
     edit
     file

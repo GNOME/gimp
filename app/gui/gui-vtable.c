@@ -58,6 +58,8 @@
 #include "core/gimpcancelable.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
@@ -85,6 +87,7 @@
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimppaletteselect.h"
 #include "widgets/gimppatternselect.h"
+#include "widgets/gimppickableselect.h"
 #include "widgets/gimpprogressdialog.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -152,19 +155,19 @@ static void           gui_free_progress          (Gimp                *gimp,
 static gboolean       gui_pdb_dialog_new         (Gimp                *gimp,
                                                   GimpContext         *context,
                                                   GimpProgress        *progress,
-                                                  GimpContainer       *container,
+                                                  GType                object_type,
                                                   GBytes              *parent_handle,
                                                   const gchar         *title,
                                                   const gchar         *callback_name,
                                                   GimpObject          *object,
                                                   va_list              args);
 static gboolean       gui_pdb_dialog_set         (Gimp                *gimp,
-                                                  GimpContainer       *container,
+                                                  GType                contents_type,
                                                   const gchar         *callback_name,
                                                   GimpObject          *object,
                                                   va_list              args);
 static gboolean       gui_pdb_dialog_close       (Gimp                *gimp,
-                                                  GimpContainer       *container,
+                                                  GType                contents_type,
                                                   const gchar         *callback_name);
 static gboolean       gui_recent_list_add_file   (Gimp                *gimp,
                                                   GFile               *file,
@@ -611,7 +614,7 @@ static gboolean
 gui_pdb_dialog_new (Gimp          *gimp,
                     GimpContext   *context,
                     GimpProgress  *progress,
-                    GimpContainer *container,
+                    GType          contents_type,
                     GBytes        *parent_handle,
                     const gchar   *title,
                     const gchar   *callback_name,
@@ -622,46 +625,48 @@ gui_pdb_dialog_new (Gimp          *gimp,
   const gchar *dialog_role = NULL;
   const gchar *help_id     = NULL;
 
-  if (gimp_container_get_children_type (container) == GIMP_TYPE_BRUSH)
+  if (contents_type == GIMP_TYPE_BRUSH)
     {
       dialog_type = GIMP_TYPE_BRUSH_SELECT;
       dialog_role = "gimp-brush-selection";
       help_id     = GIMP_HELP_BRUSH_DIALOG;
     }
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_FONT)
+  else if (contents_type == GIMP_TYPE_FONT)
     {
       dialog_type = GIMP_TYPE_FONT_SELECT;
       dialog_role = "gimp-font-selection";
       help_id     = GIMP_HELP_FONT_DIALOG;
     }
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_GRADIENT)
+  else if (contents_type == GIMP_TYPE_GRADIENT)
     {
       dialog_type = GIMP_TYPE_GRADIENT_SELECT;
       dialog_role = "gimp-gradient-selection";
       help_id     = GIMP_HELP_GRADIENT_DIALOG;
     }
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_PALETTE)
+  else if (contents_type == GIMP_TYPE_PALETTE)
     {
       dialog_type = GIMP_TYPE_PALETTE_SELECT;
       dialog_role = "gimp-palette-selection";
       help_id     = GIMP_HELP_PALETTE_DIALOG;
     }
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_PATTERN)
+  else if (contents_type == GIMP_TYPE_PATTERN)
     {
       dialog_type = GIMP_TYPE_PATTERN_SELECT;
       dialog_role = "gimp-pattern-selection";
       help_id     = GIMP_HELP_PATTERN_DIALOG;
     }
+  else if (contents_type == GIMP_TYPE_DRAWABLE)
+    {
+      dialog_type = GIMP_TYPE_PICKABLE_SELECT;
+      dialog_role = "gimp-pickable-selection";
+    }
 
   if (dialog_type != G_TYPE_NONE)
     {
-      GimpObject *object = NULL;
+      if (! object && contents_type != GIMP_TYPE_DRAWABLE)
+        object = gimp_context_get_by_type (context, contents_type);
 
-      if (! object)
-        object = gimp_context_get_by_type (context,
-                                           gimp_container_get_children_type (container));
-
-      if (object)
+      if (object || contents_type == GIMP_TYPE_DRAWABLE)
         {
           gint        n_properties = 0;
           gchar     **names        = NULL;
@@ -682,7 +687,7 @@ gui_pdb_dialog_new (Gimp          *gimp,
                                           "help-id",        help_id,
                                           "pdb",            gimp->pdb,
                                           "context",        context,
-                                          "select-type",    gimp_container_get_children_type (container),
+                                          "select-type",    contents_type,
                                           "initial-object", object,
                                           "callback-name",  callback_name,
                                           "menu-factory",   menus_get_global_menu_factory (gimp),
@@ -735,37 +740,65 @@ gui_pdb_dialog_new (Gimp          *gimp,
 
 static gboolean
 gui_pdb_dialog_set (Gimp          *gimp,
-                    GimpContainer *container,
+                    GType          contents_type,
                     const gchar   *callback_name,
                     GimpObject    *object,
                     va_list        args)
 {
-  GimpPdbDialogClass *klass = NULL;
+  GimpPdbDialogClass *klass     = NULL;
+  GimpContainer      *container = NULL;
   GimpPdbDialog      *dialog;
 
-  if (gimp_container_get_children_type (container) == GIMP_TYPE_BRUSH)
-    klass = g_type_class_peek (GIMP_TYPE_BRUSH_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_FONT)
-    klass = g_type_class_peek (GIMP_TYPE_FONT_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_GRADIENT)
-    klass = g_type_class_peek (GIMP_TYPE_GRADIENT_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_PALETTE)
-    klass = g_type_class_peek (GIMP_TYPE_PALETTE_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_PATTERN)
-    klass = g_type_class_peek (GIMP_TYPE_PATTERN_SELECT);
+  if (contents_type == GIMP_TYPE_BRUSH)
+    {
+      klass = g_type_class_peek (GIMP_TYPE_BRUSH_SELECT);
+      container = gimp_data_factory_get_container (gimp->brush_factory);
+    }
+  else if (contents_type == GIMP_TYPE_FONT)
+    {
+      klass = g_type_class_peek (GIMP_TYPE_FONT_SELECT);
+      container = gimp_data_factory_get_container (gimp->font_factory);
+    }
+  else if (contents_type == GIMP_TYPE_GRADIENT)
+    {
+      klass = g_type_class_peek (GIMP_TYPE_GRADIENT_SELECT);
+      container = gimp_data_factory_get_container (gimp->gradient_factory);
+    }
+  else if (contents_type == GIMP_TYPE_PALETTE)
+    {
+      klass = g_type_class_peek (GIMP_TYPE_PALETTE_SELECT);
+      container = gimp_data_factory_get_container (gimp->palette_factory);
+    }
+  else if (contents_type == GIMP_TYPE_PATTERN)
+    {
+      klass = g_type_class_peek (GIMP_TYPE_PATTERN_SELECT);
+      container = gimp_data_factory_get_container (gimp->pattern_factory);
+    }
+  else if (contents_type == GIMP_TYPE_DRAWABLE)
+    {
+      klass = g_type_class_peek (GIMP_TYPE_PICKABLE_SELECT);
+    }
 
   g_return_val_if_fail (klass != NULL, FALSE);
 
   dialog = gimp_pdb_dialog_get_by_callback (klass, callback_name);
 
-  if (dialog != NULL                                                      &&
-      dialog->select_type == gimp_container_get_children_type (container) &&
-      gimp_container_get_child_index (container, object) != -1)
+  if (dialog != NULL                       &&
+      dialog->select_type == contents_type &&
+      (container == NULL || gimp_container_get_child_index (container, object) != -1))
     {
       const gchar *prop_name = va_arg (args, const gchar *);
 
-      gimp_context_set_by_type (dialog->context, dialog->select_type,
-                                object);
+      if (g_type_is_a (contents_type, GIMP_TYPE_RESOURCE))
+        {
+          g_return_val_if_fail (container != NULL, FALSE);
+          gimp_context_set_by_type (dialog->context, dialog->select_type, object);
+        }
+      else
+        {
+          g_return_val_if_fail (klass->set_object != NULL, FALSE);
+          klass->set_object (dialog, object);
+        }
 
       if (prop_name)
         g_object_set_valist (G_OBJECT (dialog), prop_name, args);
@@ -779,22 +812,24 @@ gui_pdb_dialog_set (Gimp          *gimp,
 }
 
 static gboolean
-gui_pdb_dialog_close (Gimp          *gimp,
-                      GimpContainer *container,
-                      const gchar   *callback_name)
+gui_pdb_dialog_close (Gimp        *gimp,
+                      GType        contents_type,
+                      const gchar *callback_name)
 {
   GimpPdbDialogClass *klass = NULL;
 
-  if (gimp_container_get_children_type (container) == GIMP_TYPE_BRUSH)
+  if (contents_type == GIMP_TYPE_BRUSH)
     klass = g_type_class_peek (GIMP_TYPE_BRUSH_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_FONT)
+  else if (contents_type == GIMP_TYPE_FONT)
     klass = g_type_class_peek (GIMP_TYPE_FONT_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_GRADIENT)
+  else if (contents_type == GIMP_TYPE_GRADIENT)
     klass = g_type_class_peek (GIMP_TYPE_GRADIENT_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_PALETTE)
+  else if (contents_type == GIMP_TYPE_PALETTE)
     klass = g_type_class_peek (GIMP_TYPE_PALETTE_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_PATTERN)
+  else if (contents_type == GIMP_TYPE_PATTERN)
     klass = g_type_class_peek (GIMP_TYPE_PATTERN_SELECT);
+  else if (contents_type == GIMP_TYPE_DRAWABLE)
+    klass = g_type_class_peek (GIMP_TYPE_PICKABLE_SELECT);
 
   if (klass)
     {
@@ -802,7 +837,7 @@ gui_pdb_dialog_close (Gimp          *gimp,
 
       dialog = gimp_pdb_dialog_get_by_callback (klass, callback_name);
 
-      if (dialog && dialog->select_type == gimp_container_get_children_type (container))
+      if (dialog && dialog->select_type == contents_type)
         {
           gtk_widget_destroy (GTK_WIDGET (dialog));
           return TRUE;

@@ -32,6 +32,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpresource.h"
 
 #include "pdb/gimppdb.h"
 
@@ -94,6 +95,8 @@ gimp_pdb_dialog_class_init (GimpPdbDialogClass *klass)
   dialog_class->response     = gimp_pdb_dialog_response;
 
   klass->run_callback        = NULL;
+  klass->get_object          = NULL;
+  klass->set_object          = NULL;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
@@ -164,15 +167,19 @@ gimp_pdb_dialog_constructed (GObject *object)
                                       G_OBJECT_TYPE_NAME (object),
                                       NULL);
 
-  gimp_context_set_by_type (dialog->context, dialog->select_type,
-                            dialog->initial_object);
+  if (g_type_is_a (dialog->select_type, GIMP_TYPE_RESOURCE))
+    {
+      gimp_context_set_by_type (dialog->context, dialog->select_type,
+                                dialog->initial_object);
 
-  signal_name = gimp_context_type_to_signal_name (dialog->select_type);
+      signal_name = gimp_context_type_to_signal_name (dialog->select_type);
 
-  g_signal_connect_object (dialog->context, signal_name,
-                           G_CALLBACK (gimp_pdb_dialog_context_changed),
-                           dialog, 0);
-  g_signal_connect_object (dialog->context->gimp->plug_in_manager,
+      g_signal_connect_object (dialog->context, signal_name,
+                               G_CALLBACK (gimp_pdb_dialog_context_changed),
+                               dialog, 0);
+    }
+
+  g_signal_connect_object (dialog->caller_context->gimp->plug_in_manager,
                            "plug-in-closed",
                            G_CALLBACK (gimp_pdb_dialog_plug_in_closed),
                            dialog, 0);
@@ -247,8 +254,20 @@ gimp_pdb_dialog_response (GtkDialog *gtk_dialog,
   GimpPdbDialog *dialog = GIMP_PDB_DIALOG (gtk_dialog);
 
   if (response_id != GTK_RESPONSE_OK)
-    gimp_context_set_by_type (dialog->context, dialog->select_type,
-                              dialog->initial_object);
+    {
+      if (g_type_is_a (dialog->select_type, GIMP_TYPE_RESOURCE))
+        {
+          gimp_context_set_by_type (dialog->context, dialog->select_type,
+                                    dialog->initial_object);
+        }
+      else
+        {
+          GimpPdbDialogClass *klass = GIMP_PDB_DIALOG_GET_CLASS (dialog);
+
+          g_return_if_fail (klass->set_object != NULL);
+          klass->set_object (dialog, dialog->initial_object);
+        }
+    }
 
   gimp_pdb_dialog_run_callback (&dialog, TRUE);
   gtk_widget_destroy (GTK_WIDGET (dialog));
@@ -262,16 +281,26 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog **dialog,
   GimpObject         *object;
 
   g_object_add_weak_pointer (G_OBJECT (*dialog), (gpointer) dialog);
-  object = gimp_context_get_by_type ((*dialog)->context, (*dialog)->select_type);
 
-  if (*dialog && object        &&
+  if (g_type_is_a ((*dialog)->select_type, GIMP_TYPE_RESOURCE))
+    {
+      object = gimp_context_get_by_type ((*dialog)->context, (*dialog)->select_type);
+    }
+  else
+    {
+      g_return_if_fail (klass->get_object != NULL);
+      object = klass->get_object (*dialog);
+    }
+
+  if (*dialog                  &&
       klass->run_callback      &&
       (*dialog)->callback_name &&
       ! (*dialog)->callback_busy)
     {
       (*dialog)->callback_busy = TRUE;
 
-      if (gimp_pdb_lookup_procedure ((*dialog)->pdb, (*dialog)->callback_name))
+      if (gimp_pdb_lookup_procedure ((*dialog)->pdb, (*dialog)->callback_name) &&
+          (object == NULL || g_type_is_a (G_TYPE_FROM_INSTANCE (object), (*dialog)->select_type)))
         {
           GimpValueArray *return_vals;
           GError         *error = NULL;
@@ -289,7 +318,7 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog **dialog,
               else
                 message = _("The corresponding plug-in may have crashed.");
 
-              gimp_message ((*dialog)->context->gimp, G_OBJECT (*dialog),
+              gimp_message ((*dialog)->caller_context->gimp, G_OBJECT (*dialog),
                             GIMP_MESSAGE_ERROR,
                             _("Unable to run %s callback.\n%s"),
                             g_type_name (G_TYPE_FROM_INSTANCE (*dialog)),
@@ -297,7 +326,7 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog **dialog,
             }
           else if (*dialog && error)
             {
-              gimp_message_literal ((*dialog)->context->gimp, G_OBJECT (*dialog),
+              gimp_message_literal ((*dialog)->caller_context->gimp, G_OBJECT (*dialog),
                                     GIMP_MESSAGE_ERROR,
                                     error->message);
               g_error_free (error);

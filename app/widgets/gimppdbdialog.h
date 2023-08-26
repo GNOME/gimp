@@ -69,6 +69,9 @@ struct _GimpPdbDialogClass
                                      GimpObject     *object,
                                      gboolean        closing,
                                      GError        **error);
+  GimpObject     * (* get_object)   (GimpPdbDialog  *dialog);
+  void             (* set_object)   (GimpPdbDialog  *dialog,
+                                     GimpObject     *object);
 };
 
 

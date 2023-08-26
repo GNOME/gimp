@@ -30,6 +30,7 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimppattern.h"
@@ -60,10 +61,12 @@ patterns_popup_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpContainer *container = gimp_data_factory_get_container (gimp->pattern_factory);
+
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
-                                 gimp_data_factory_get_container (gimp->pattern_factory),
+                                 gimp_container_get_children_type (container),
                                  parent_window, popup_title, pattern_callback,
                                  GIMP_OBJECT (initial_pattern), NULL))
         success = FALSE;
@@ -88,9 +91,12 @@ patterns_close_popup_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpContainer *container = gimp_data_factory_get_container (gimp->pattern_factory);
+
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
-          ! gimp_pdb_dialog_close (gimp, gimp_data_factory_get_container (gimp->pattern_factory),
+          ! gimp_pdb_dialog_close (gimp,
+                                   gimp_container_get_children_type (container),
                                    pattern_callback))
         success = FALSE;
     }
@@ -116,9 +122,12 @@ patterns_set_popup_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpContainer *container = gimp_data_factory_get_container (gimp->pattern_factory);
+
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
-          ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->pattern_factory),
+          ! gimp_pdb_dialog_set (gimp,
+                                 gimp_container_get_children_type (container),
                                  pattern_callback, GIMP_OBJECT (pattern), NULL))
         success = FALSE;
     }

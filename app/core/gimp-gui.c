@@ -29,8 +29,10 @@
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdisplay.h"
+#include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpprogress.h"
+#include "gimpresource.h"
 #include "gimpwaitable.h"
 
 #include "about.h"
@@ -403,7 +405,7 @@ gboolean
 gimp_pdb_dialog_new (Gimp          *gimp,
                      GimpContext   *context,
                      GimpProgress  *progress,
-                     GimpContainer *container,
+                     GType          contents_type,
                      GBytes        *parent_handle,
                      const gchar   *title,
                      const gchar   *callback_name,
@@ -415,7 +417,8 @@ gimp_pdb_dialog_new (Gimp          *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+  g_return_val_if_fail (g_type_is_a (contents_type, GIMP_TYPE_RESOURCE) ||
+                        contents_type == GIMP_TYPE_DRAWABLE, FALSE);
   g_return_val_if_fail (title != NULL, FALSE);
   g_return_val_if_fail (callback_name != NULL, FALSE);
 
@@ -426,7 +429,7 @@ gimp_pdb_dialog_new (Gimp          *gimp,
       va_start (args, object);
 
       retval = gimp->gui.pdb_dialog_new (gimp, context, progress,
-                                         container, parent_handle, title,
+                                         contents_type, parent_handle, title,
                                          callback_name, object, args);
 
       va_end (args);
@@ -436,18 +439,19 @@ gimp_pdb_dialog_new (Gimp          *gimp,
 }
 
 gboolean
-gimp_pdb_dialog_set (Gimp          *gimp,
-                     GimpContainer *container,
-                     const gchar   *callback_name,
-                     GimpObject    *object,
+gimp_pdb_dialog_set (Gimp        *gimp,
+                     GType        contents_type,
+                     const gchar *callback_name,
+                     GimpObject  *object,
                      ...)
 {
   gboolean retval = FALSE;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+  g_return_val_if_fail (g_type_is_a (contents_type, GIMP_TYPE_RESOURCE) ||
+                        contents_type == GIMP_TYPE_DRAWABLE, FALSE);
   g_return_val_if_fail (callback_name != NULL, FALSE);
-  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (object == NULL || g_type_is_a (G_TYPE_FROM_INSTANCE (object), contents_type), FALSE);
 
   if (gimp->gui.pdb_dialog_set)
     {
@@ -455,7 +459,7 @@ gimp_pdb_dialog_set (Gimp          *gimp,
 
       va_start (args, object);
 
-      retval = gimp->gui.pdb_dialog_set (gimp, container, callback_name,
+      retval = gimp->gui.pdb_dialog_set (gimp, contents_type, callback_name,
                                          object, args);
 
       va_end (args);
@@ -466,15 +470,16 @@ gimp_pdb_dialog_set (Gimp          *gimp,
 
 gboolean
 gimp_pdb_dialog_close (Gimp          *gimp,
-                       GimpContainer *container,
+                       GType          contents_type,
                        const gchar   *callback_name)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+  g_return_val_if_fail (g_type_is_a (contents_type, GIMP_TYPE_RESOURCE) ||
+                        contents_type == GIMP_TYPE_DRAWABLE, FALSE);
   g_return_val_if_fail (callback_name != NULL, FALSE);
 
   if (gimp->gui.pdb_dialog_close)
-    return gimp->gui.pdb_dialog_close (gimp, container, callback_name);
+    return gimp->gui.pdb_dialog_close (gimp, contents_type, callback_name);
 
   return FALSE;
 }

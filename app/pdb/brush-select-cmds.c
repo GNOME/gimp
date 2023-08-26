@@ -31,6 +31,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpparamspecs.h"
 
@@ -60,10 +61,12 @@ brushes_popup_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-        if (gimp->no_interface ||
+      GimpContainer *container = gimp_data_factory_get_container (gimp->brush_factory);
+
+      if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
-                                 gimp_data_factory_get_container (gimp->brush_factory),
+                                 gimp_container_get_children_type (container),
                                  parent_window, popup_title, brush_callback,
                                  GIMP_OBJECT (initial_brush), NULL))
         success = FALSE;
@@ -88,9 +91,12 @@ brushes_close_popup_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpContainer *container = gimp_data_factory_get_container (gimp->brush_factory);
+
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
-          ! gimp_pdb_dialog_close (gimp, gimp_data_factory_get_container (gimp->brush_factory),
+          ! gimp_pdb_dialog_close (gimp,
+                                   gimp_container_get_children_type (container),
                                    brush_callback))
         success = FALSE;
     }
@@ -116,9 +122,12 @@ brushes_set_popup_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpContainer *container = gimp_data_factory_get_container (gimp->brush_factory);
+
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
-          ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->brush_factory),
+          ! gimp_pdb_dialog_set (gimp,
+                                 gimp_container_get_children_type (container),
                                  brush_callback, GIMP_OBJECT (brush), NULL))
         success = FALSE;
     }

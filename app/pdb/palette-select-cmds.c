@@ -30,6 +30,7 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimppalette.h"
 #include "core/gimpparamspecs.h"
@@ -60,10 +61,12 @@ palettes_popup_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpContainer *container = gimp_data_factory_get_container (gimp->palette_factory);
+
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
-                                 gimp_data_factory_get_container (gimp->palette_factory),
+                                 gimp_container_get_children_type (container),
                                  parent_window, popup_title, palette_callback,
                                  GIMP_OBJECT (initial_palette), NULL))
         success = FALSE;
@@ -88,9 +91,12 @@ palettes_close_popup_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpContainer *container = gimp_data_factory_get_container (gimp->palette_factory);
+
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
-          ! gimp_pdb_dialog_close (gimp, gimp_data_factory_get_container (gimp->palette_factory),
+          ! gimp_pdb_dialog_close (gimp,
+                                   gimp_container_get_children_type (container),
                                    palette_callback))
         success = FALSE;
     }
@@ -116,9 +122,12 @@ palettes_set_popup_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpContainer *container = gimp_data_factory_get_container (gimp->palette_factory);
+
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
-          ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->palette_factory),
+          ! gimp_pdb_dialog_set (gimp,
+                                 gimp_container_get_children_type (container),
                                  palette_callback, GIMP_OBJECT (palette), NULL))
         success = FALSE;
     }

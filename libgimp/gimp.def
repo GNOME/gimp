@@ -244,6 +244,9 @@ EXPORTS
 	gimp_drawable_type
 	gimp_drawable_type_with_alpha
 	gimp_drawable_update
+	gimp_drawables_close_popup
+	gimp_drawables_popup
+	gimp_drawables_set_popup
 	gimp_dynamics_get_list
 	gimp_dynamics_refresh
 	gimp_edit_copy

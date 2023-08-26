@@ -1,0 +1,110 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+sub drawables_popup {
+    $blurb = 'Invokes the drawable selection dialog.';
+    $help  = 'Opens a dialog letting a user choose an drawable.';
+
+    &jehan_pdb_misc('2023');
+
+    @inargs = (
+      { name => 'callback', type => 'string', non_empty => 1,
+        desc => 'The callback PDB proc to call when user chooses an drawable' },
+      { name => 'popup_title', type => 'string',
+        desc => 'Title of the drawable selection dialog' },
+      { name => 'initial_drawable', type => 'drawable', null_ok => 1, no_validate => 1,
+        desc => 'The drawable to set as the initial choice' },
+      { name => 'parent_window', type => 'bytes', null_ok => 1,
+        desc => 'An optional parent window handle for the popup to be set transient to' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->no_interface ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+      ! gimp_pdb_dialog_new (gimp, context, progress,
+                             GIMP_TYPE_DRAWABLE, parent_window,
+                             popup_title, callback, GIMP_OBJECT (initial_drawable),
+                             NULL))
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawables_close_popup {
+    $blurb = 'Close the drawable selection dialog.';
+    $help  = 'Closes an open drawable selection dialog.';
+
+    &jehan_pdb_misc('2023');
+
+    @inargs = (
+      { name => 'callback', type => 'string', non_empty => 1,
+        desc => 'The name of the callback registered for this pop-up' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->no_interface ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+      ! gimp_pdb_dialog_close (gimp, GIMP_TYPE_DRAWABLE, callback))
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawables_set_popup {
+    $blurb = 'Sets the selected drawable in a drawable selection dialog.';
+    $help  = $blurb;
+
+    &jehan_pdb_misc('2023');
+
+    @inargs = (
+      { name => 'callback', type => 'string', non_empty => 1,
+        desc => 'The name of the callback registered for this pop-up' },
+      { name => 'drawable', type => 'drawable', no_validate => 1,
+        desc => 'The drawable to set as selected' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->no_interface ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+      ! gimp_pdb_dialog_set (gimp, GIMP_TYPE_DRAWABLE, callback, GIMP_OBJECT (drawable), NULL))
+    success = FALSE;
+}
+CODE
+    );
+}
+
+@headers = qw("core/gimp.h"
+              "core/gimpdatafactory.h");
+
+@procs = qw(drawables_popup
+            drawables_close_popup
+            drawables_set_popup);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Drawables UI';
+$doc_title = 'gimpdrawableselect';
+$doc_short_desc = 'Methods of a drawable chooser dialog';
+
+1;

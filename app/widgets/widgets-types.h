@@ -164,6 +164,7 @@ typedef struct _GimpFontSelect               GimpFontSelect;
 typedef struct _GimpGradientSelect           GimpGradientSelect;
 typedef struct _GimpPaletteSelect            GimpPaletteSelect;
 typedef struct _GimpPatternSelect            GimpPatternSelect;
+typedef struct _GimpPickableSelect           GimpPickableSelect;
 typedef struct _GimpPdbDialog                GimpPdbDialog;
 
 

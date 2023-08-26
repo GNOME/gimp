@@ -30,9 +30,8 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
-#include "core/gimpgradient.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpparamspecs.h"
 
 #include "gimppdb.h"
@@ -41,7 +40,7 @@
 
 
 static GimpValueArray *
-gradients_popup_invoker (GimpProcedure         *procedure,
+drawables_popup_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -49,32 +48,24 @@ gradients_popup_invoker (GimpProcedure         *procedure,
                          GError               **error)
 {
   gboolean success = TRUE;
-  const gchar *gradient_callback;
+  const gchar *callback;
   const gchar *popup_title;
-  GimpGradient *initial_gradient;
+  GimpDrawable *initial_drawable;
   GBytes *parent_window;
 
-  gradient_callback = g_value_get_string (gimp_value_array_index (args, 0));
+  callback = g_value_get_string (gimp_value_array_index (args, 0));
   popup_title = g_value_get_string (gimp_value_array_index (args, 1));
-  initial_gradient = g_value_get_object (gimp_value_array_index (args, 2));
+  initial_drawable = g_value_get_object (gimp_value_array_index (args, 2));
   parent_window = g_value_get_boxed (gimp_value_array_index (args, 3));
 
   if (success)
     {
-      GimpContainer *container = gimp_data_factory_get_container (gimp->gradient_factory);
-
-      /* Formerly, this procedure had another parameter:
-       * the sample size of the gradient's data passed in the changed callback.
-       * Now the sample size is determined by core, and in the future,
-       * the callback won't return a sample of the data at all.
-       */
-
       if (gimp->no_interface ||
-          ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
-                                 gimp_container_get_children_type (container),
-                                 parent_window, popup_title, gradient_callback,
-                                 GIMP_OBJECT (initial_gradient), NULL))
+                                 GIMP_TYPE_DRAWABLE, parent_window,
+                                 popup_title, callback, GIMP_OBJECT (initial_drawable),
+                                 NULL))
         success = FALSE;
     }
 
@@ -83,7 +74,7 @@ gradients_popup_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-gradients_close_popup_invoker (GimpProcedure         *procedure,
+drawables_close_popup_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -91,19 +82,15 @@ gradients_close_popup_invoker (GimpProcedure         *procedure,
                                GError               **error)
 {
   gboolean success = TRUE;
-  const gchar *gradient_callback;
+  const gchar *callback;
 
-  gradient_callback = g_value_get_string (gimp_value_array_index (args, 0));
+  callback = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      GimpContainer *container = gimp_data_factory_get_container (gimp->gradient_factory);
-
       if (gimp->no_interface ||
-          ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
-          ! gimp_pdb_dialog_close (gimp,
-                                   gimp_container_get_children_type (container),
-                                   gradient_callback))
+          ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+          ! gimp_pdb_dialog_close (gimp, GIMP_TYPE_DRAWABLE, callback))
         success = FALSE;
     }
 
@@ -112,7 +99,7 @@ gradients_close_popup_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-gradients_set_popup_invoker (GimpProcedure         *procedure,
+drawables_set_popup_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -120,21 +107,17 @@ gradients_set_popup_invoker (GimpProcedure         *procedure,
                              GError               **error)
 {
   gboolean success = TRUE;
-  const gchar *gradient_callback;
-  GimpGradient *gradient;
+  const gchar *callback;
+  GimpDrawable *drawable;
 
-  gradient_callback = g_value_get_string (gimp_value_array_index (args, 0));
-  gradient = g_value_get_object (gimp_value_array_index (args, 1));
+  callback = g_value_get_string (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      GimpContainer *container = gimp_data_factory_get_container (gimp->gradient_factory);
-
       if (gimp->no_interface ||
-          ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
-          ! gimp_pdb_dialog_set (gimp,
-                                 gimp_container_get_children_type (container),
-                                 gradient_callback, GIMP_OBJECT (gradient), NULL))
+          ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
+          ! gimp_pdb_dialog_set (gimp, GIMP_TYPE_DRAWABLE, callback, GIMP_OBJECT (drawable), NULL))
         success = FALSE;
     }
 
@@ -143,44 +126,44 @@ gradients_set_popup_invoker (GimpProcedure         *procedure,
 }
 
 void
-register_gradient_select_procs (GimpPDB *pdb)
+register_drawable_select_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
   /*
-   * gimp-gradients-popup
+   * gimp-drawables-popup
    */
-  procedure = gimp_procedure_new (gradients_popup_invoker);
+  procedure = gimp_procedure_new (drawables_popup_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-gradients-popup");
+                               "gimp-drawables-popup");
   gimp_procedure_set_static_help (procedure,
-                                  "Invokes the Gimp gradients selection dialog.",
-                                  "Opens a dialog letting a user choose a gradient.",
+                                  "Invokes the drawable selection dialog.",
+                                  "Opens a dialog letting a user choose an drawable.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
-                                         "Andy Thomas",
-                                         "Andy Thomas",
-                                         "1998");
+                                         "Jehan",
+                                         "Jehan",
+                                         "2023");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("gradient-callback",
-                                                       "gradient callback",
-                                                       "The callback PDB proc to call when user chooses a gradient",
+                               gimp_param_spec_string ("callback",
+                                                       "callback",
+                                                       "The callback PDB proc to call when user chooses an drawable",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("popup-title",
                                                        "popup title",
-                                                       "Title of the gradient selection dialog",
+                                                       "Title of the drawable selection dialog",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_gradient ("initial-gradient",
-                                                         "initial gradient",
-                                                         "The initial gradient choice",
+                               gimp_param_spec_drawable ("initial-drawable",
+                                                         "initial drawable",
+                                                         "The drawable to set as the initial choice",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boxed ("parent-window",
                                                    "parent window",
@@ -191,22 +174,22 @@ register_gradient_select_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-gradients-close-popup
+   * gimp-drawables-close-popup
    */
-  procedure = gimp_procedure_new (gradients_close_popup_invoker);
+  procedure = gimp_procedure_new (drawables_close_popup_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-gradients-close-popup");
+                               "gimp-drawables-close-popup");
   gimp_procedure_set_static_help (procedure,
-                                  "Close the gradient selection dialog.",
-                                  "Closes an open gradient selection dialog.",
+                                  "Close the drawable selection dialog.",
+                                  "Closes an open drawable selection dialog.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
-                                         "Andy Thomas",
-                                         "Andy Thomas",
-                                         "1998");
+                                         "Jehan",
+                                         "Jehan",
+                                         "2023");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("gradient-callback",
-                                                       "gradient callback",
+                               gimp_param_spec_string ("callback",
+                                                       "callback",
                                                        "The name of the callback registered for this pop-up",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
@@ -215,32 +198,32 @@ register_gradient_select_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-gradients-set-popup
+   * gimp-drawables-set-popup
    */
-  procedure = gimp_procedure_new (gradients_set_popup_invoker);
+  procedure = gimp_procedure_new (drawables_set_popup_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-gradients-set-popup");
+                               "gimp-drawables-set-popup");
   gimp_procedure_set_static_help (procedure,
-                                  "Sets the current gradient in a gradient selection dialog.",
-                                  "Sets the current gradient in a gradient selection dialog.",
+                                  "Sets the selected drawable in a drawable selection dialog.",
+                                  "Sets the selected drawable in a drawable selection dialog.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
-                                         "Andy Thomas",
-                                         "Andy Thomas",
-                                         "1998");
+                                         "Jehan",
+                                         "Jehan",
+                                         "2023");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("gradient-callback",
-                                                       "gradient callback",
+                               gimp_param_spec_string ("callback",
+                                                       "callback",
                                                        "The name of the callback registered for this pop-up",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_gradient ("gradient",
-                                                         "gradient",
-                                                         "The gradient to set as selected",
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable to set as selected",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

@@ -73,19 +73,19 @@ struct _GimpGui
   gboolean       (* pdb_dialog_new)         (Gimp                *gimp,
                                              GimpContext         *context,
                                              GimpProgress        *progress,
-                                             GimpContainer       *container,
+                                             GType                contents_type,
                                              GBytes              *parent_handle,
                                              const gchar         *title,
                                              const gchar         *callback_name,
                                              GimpObject          *object,
                                              va_list              args);
   gboolean       (* pdb_dialog_set)         (Gimp                *gimp,
-                                             GimpContainer       *container,
+                                             GType                contents_type,
                                              const gchar         *callback_name,
                                              GimpObject          *object,
                                              va_list              args);
   gboolean       (* pdb_dialog_close)       (Gimp                *gimp,
-                                             GimpContainer       *container,
+                                             GType                contents_type,
                                              const gchar         *callback_name);
   gboolean       (* recent_list_add_file)   (Gimp                *gimp,
                                              GFile               *file,
@@ -172,20 +172,21 @@ GFile        * gimp_get_icon_theme_dir     (Gimp                *gimp);
 gboolean       gimp_pdb_dialog_new         (Gimp                *gimp,
                                             GimpContext         *context,
                                             GimpProgress        *progress,
-                                            GimpContainer       *container,
+                                            GType                contents_type,
                                             GBytes              *parent_handle,
                                             const gchar         *title,
                                             const gchar         *callback_name,
                                             GimpObject          *object,
                                             ...) G_GNUC_NULL_TERMINATED;
 gboolean       gimp_pdb_dialog_set         (Gimp                *gimp,
-                                            GimpContainer       *container,
+                                            GType                contents_type,
                                             const gchar         *callback_name,
                                             GimpObject          *object,
                                             ...) G_GNUC_NULL_TERMINATED;
 gboolean       gimp_pdb_dialog_close       (Gimp                *gimp,
-                                            GimpContainer       *container,
+                                            GType                contents_type,
                                             const gchar         *callback_name);
+
 gboolean       gimp_recent_list_add_file   (Gimp                *gimp,
                                             GFile               *file,
                                             const gchar         *mime_type);
