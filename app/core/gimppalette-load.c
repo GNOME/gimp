@@ -806,6 +806,7 @@ gimp_palette_load_ase_block_name (GInputStream  *input,
   gushort     pal_name_len;
   gunichar2  *pal_name = NULL;
   gchar      *pal_name_utf8;
+  goffset     current_pos;
   gsize       bytes_read;
 
   if (! g_input_stream_read_all (input, &block_length, sizeof (block_length),
@@ -816,7 +817,9 @@ gimp_palette_load_ase_block_name (GInputStream  *input,
     }
 
   block_length = GINT32_FROM_BE (block_length);
-  if (block_length <= 0 || block_length > file_size)
+  current_pos  = g_seekable_tell (G_SEEKABLE (input));
+
+  if (block_length <= 0 || block_length > (file_size - current_pos))
     {
       g_printerr (_("Invalid ASE block size."));
       return NULL;
@@ -830,7 +833,9 @@ gimp_palette_load_ase_block_name (GInputStream  *input,
     }
 
   pal_name_len = GUINT16_FROM_BE (pal_name_len);
-  if (pal_name_len <= 0 || pal_name_len > file_size)
+  current_pos  = g_seekable_tell (G_SEEKABLE (input));
+
+  if (pal_name_len <= 0 || pal_name_len > (file_size - current_pos))
     {
       g_printerr (_("Invalid ASE name size."));
       return NULL;
