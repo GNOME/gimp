@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-25 02:31+0000\n"
-"PO-Revision-Date: 2023-08-25 14:51+0300\n"
+"POT-Creation-Date: 2023-08-25 20:56+0000\n"
+"PO-Revision-Date: 2023-08-26 21:23+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -2162,7 +2162,7 @@ msgstr "Цей додаток намагається вилучити верти
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:194
 #: plug-ins/common/file-ps.c:383 plug-ins/common/file-ps.c:497
-#: plug-ins/imagemap/imap_grid.c:255
+#: plug-ins/common/file-raw-data.c:352 plug-ins/imagemap/imap_grid.c:255
 msgid "_Width"
 msgstr "_Ширина"
 
@@ -3025,6 +3025,7 @@ msgstr ""
 "Зберегти зображення у форматі HEIF (High Efficiency Image File Format)."
 
 #: plug-ins/common/file-heif.c:252 plug-ins/common/file-heif.c:362
+#: plug-ins/file-jpeg/jpeg.c:203
 msgid "_Quality"
 msgstr "Я_кість"
 
@@ -3240,7 +3241,8 @@ msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Ширина кожної комірки. Може бути числом чи відсотком."
 
 #: plug-ins/common/file-html-table.c:201 plug-ins/common/file-ps.c:389
-#: plug-ins/common/file-ps.c:504 plug-ins/imagemap/imap_grid.c:261
+#: plug-ins/common/file-ps.c:504 plug-ins/common/file-raw-data.c:357
+#: plug-ins/imagemap/imap_grid.c:261
 msgid "_Height"
 msgstr "_Висота"
 
@@ -3513,6 +3515,18 @@ msgstr "Зберегти _початковий профіль"
 #: plug-ins/common/file-jpegxl.c:211
 msgid "Store ICC profile to exported JXL file"
 msgstr "Зберегти профіль ICC у експортованому файлі JXL"
+
+#: plug-ins/common/file-jpegxl.c:216 plug-ins/file-tiff/file-tiff.c:233
+#| msgid "Export as _CMYK"
+msgid "Export as CMY_K"
+msgstr "Експортувати як CMY_K"
+
+#: plug-ins/common/file-jpegxl.c:217
+#| msgid "Export a CMYK PSD image using the soft-proofing color profile"
+msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
+msgstr ""
+"Створити зображення JPEG XL CMYK з використанням профілю кольорів із "
+"пробником"
 
 #: plug-ins/common/file-jpegxl.c:2015
 msgid "lightning (fastest)"
@@ -3913,13 +3927,46 @@ msgstr "Помилка при записі до файлу «%s»: %s"
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
+#: plug-ins/common/file-pdf-load.c:343
+msgid "PDF password"
+msgstr "Пароль до PDF"
+
+#: plug-ins/common/file-pdf-load.c:344
+msgid "The password to decrypt the encrypted PDF file"
+msgstr "Пароль для розшифрування зашифрованого файла PDF"
+
+#: plug-ins/common/file-pdf-load.c:349
+#| msgid "Load in reverse order"
+msgid "Load in re_verse order"
+msgstr "Завантажити у зв_оротному порядку"
+
+#: plug-ins/common/file-pdf-load.c:350
+#| msgid "Load in reverse order"
+msgid "Load PDF pages in reverse order"
+msgstr "Завантажити сторінки PDF у зворотному порядку"
+
 #: plug-ins/common/file-pdf-load.c:367
 msgid "Open pages as"
 msgstr "Відкрити сторінки як"
 
-#: plug-ins/common/file-pdf-load.c:368
+#: plug-ins/common/file-pdf-load.c:368 plug-ins/common/file-pdf-load.c:375
 msgid "Number of pages to load (0 for all)"
 msgstr "Кількість сторінок, які слід завантажити (0 — усі)"
+
+#: plug-ins/common/file-pdf-load.c:374
+#| msgid "%s-pages"
+msgid "N pages"
+msgstr "N сторінок"
+
+#: plug-ins/common/file-pdf-load.c:387
+#| msgid "_Pages"
+msgid "Pages"
+msgstr "Сторінки"
+
+#: plug-ins/common/file-pdf-load.c:388
+#| msgid "The average color of the specified border."
+msgid "The pages to load in the expected order"
+msgstr "Сторінки, які слід завантажити в очікуваному порядку"
 
 #: plug-ins/common/file-pdf-load.c:392
 msgid "Use _Anti-aliasing"
@@ -4149,7 +4196,7 @@ msgstr "Записати фрагмент pHYs (метадані PNG)"
 msgid "Write tIME chunk (PNG metadata)"
 msgstr "Записати фрагмент tIME (метадані PNG)"
 
-#: plug-ins/common/file-png.c:269
+#: plug-ins/common/file-png.c:269 plug-ins/file-tiff/file-tiff.c:226
 msgid "Save color _values from transparent pixels"
 msgstr "Зберігати значення _кольору прозорих точок"
 
@@ -4511,21 +4558,52 @@ msgstr "Encapsulated PostScript"
 msgid "Resol_ution"
 msgstr "Розд_ільність"
 
+#: plug-ins/common/file-ps.c:378
+msgid "Resolution to interpret image (dpi)"
+msgstr "Роздільність в обробленому зображенні (т./дюйм)"
+
+#: plug-ins/common/file-ps.c:384
+#| msgid "_Blend width"
+msgid "Desired width"
+msgstr "Бажана ширина"
+
+#: plug-ins/common/file-ps.c:390
+#| msgid "_Number height:"
+msgid "Desired height"
+msgstr "Бажана висота"
+
 #: plug-ins/common/file-ps.c:395
 msgid "Try _Bounding Box"
 msgstr "Спробувати _обмежувальну рамку"
+
+#: plug-ins/common/file-ps.c:396
+msgid "FALSE: Use width/height, TRUE: Use BoundingBox"
+msgstr "FALSE: скористатися шириною/висотою, TRUE: скористатися BoundingBox"
 
 #: plug-ins/common/file-ps.c:401
 msgid "_Pages"
 msgstr "С_торінки"
 
+#: plug-ins/common/file-ps.c:402
+#| msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
+msgid "Pages to load (e.g.: 1,3,5-7)"
+msgstr "Сторінки для завантаження (приклад: 1,3,5-7)"
+
 #: plug-ins/common/file-ps.c:407
 msgid "Coloring"
 msgstr "Фарбування"
 
+#: plug-ins/common/file-ps.c:408
+msgid "4: b/w, 5: grey, 6: color image, 7: automatic"
+msgstr "4: ч/б, 5: сірий, 6: кольорове зображення, 7: автоматичне"
+
 #: plug-ins/common/file-ps.c:413
 msgid "Text antialiasing"
 msgstr "Згладжування тексту"
+
+#: plug-ins/common/file-ps.c:414 plug-ins/common/file-ps.c:420
+msgid "1, 2 or 4"
+msgstr "1, 2 або 4"
 
 #: plug-ins/common/file-ps.c:419
 msgid "Graphic antialiasing"
@@ -4543,21 +4621,50 @@ msgstr "_Інкапсульований PostScript"
 msgid "EPS"
 msgstr "EPS"
 
+#: plug-ins/common/file-ps.c:498
+msgid "Width of the image in PostScript file (0: use input image size)"
+msgstr ""
+"Ширина зображення у файлі PostScript (0: скористатися розміром вхідного"
+" зображення)"
+
+#: plug-ins/common/file-ps.c:505
+msgid "Height of the image in PostScript file (0: use input image size)"
+msgstr ""
+"Висота зображення у файлі PostScript (0: скористатися розміром вхідного"
+" зображення)"
+
 #: plug-ins/common/file-ps.c:511
 msgid "_X offset"
 msgstr "Зсув вздовж _X"
+
+#: plug-ins/common/file-ps.c:512
+msgid "X-offset to image from lower left corner"
+msgstr "Зсув за X зображення від нижнього лівого кута"
 
 #: plug-ins/common/file-ps.c:517
 msgid "Y o_ffset"
 msgstr "Зсув вздовж _Y"
 
+#: plug-ins/common/file-ps.c:518
+msgid "Y-offset to image from lower left corner"
+msgstr "Зсув за Y зображення від нижнього лівого кута"
+
 #: plug-ins/common/file-ps.c:523
 msgid "Unit"
 msgstr "Одиниця"
 
+#: plug-ins/common/file-ps.c:524
+msgid "Unit for width/height/offset. 0: inches, 1: millimeters"
+msgstr "Одиниця для ширини, висоти і зсуву. 0: дюйми, 1: міліметри"
+
 #: plug-ins/common/file-ps.c:530
 msgid "_Keep aspect ratio"
 msgstr "З_берігати пропорції"
+
+#: plug-ins/common/file-ps.c:531
+msgid "FALSE: use width/height, TRUE: keep aspect ratio"
+msgstr ""
+"FALSE: скористатися шириною/висотою, TRUE: зберегти співвідношення розмірів"
 
 #: plug-ins/common/file-ps.c:536 plug-ins/map-object/map-object-ui.c:1013
 msgid "Rotation"
@@ -4567,13 +4674,37 @@ msgstr "Обертання"
 msgid "PostScript Level _2"
 msgstr "PostScript, рівень _2"
 
+#: plug-ins/common/file-ps.c:543
+msgid "FALSE: PostScript Level 1, TRUE: PostScript Level 2"
+msgstr "FALSE: PostScript, рівень 1, TRUE: PostScript, рівень 2"
+
+#: plug-ins/common/file-ps.c:548
+#| msgid "Encapsulated PostScript"
+msgid "Encapsula_ted PostScript"
+msgstr "_Інкапсульований PostScript"
+
+#: plug-ins/common/file-ps.c:549
+#| msgid "Encapsulated PostScript"
+msgid "FALSE: PostScript, TRUE: Encapsulated PostScript"
+msgstr "FALSE: PostScript, TRUE: інкапсульований PostScript"
+
 #: plug-ins/common/file-ps.c:554 plug-ins/imagemap/imap_grid.c:298
 msgid "_Preview"
 msgstr "_Попередній перегляд"
 
+#: plug-ins/common/file-ps.c:555
+#| msgid "Show Previous"
+msgid "Show Preview"
+msgstr "Показати перегляд"
+
 #: plug-ins/common/file-ps.c:560
 msgid "Preview Si_ze"
 msgstr "_Розмір перегляду"
+
+#: plug-ins/common/file-ps.c:561
+msgid "0: no preview, >0: max. size of preview"
+msgstr ""
+"0: без попереднього перегляду, >0: макс. розмір попереднього перегляду"
 
 #: plug-ins/common/file-ps.c:722
 msgid "PostScript plug-in does not support multiple layers."
@@ -4811,7 +4942,6 @@ msgstr "Помилка при читання фрагмента даних тю�
 
 #: plug-ins/common/file-psp.c:2371 plug-ins/common/file-psp.c:2383
 #: plug-ins/common/file-psp.c:2394
-#| msgid "Error reading color block"
 msgid "Error reading colorprofile chunk"
 msgstr "Помилка під час читання фрагмента профілю кольорів"
 
@@ -4876,9 +5006,122 @@ msgstr "Не вдалося прочитати файл QOI"
 msgid "Raw image data"
 msgstr "Raw Image Data"
 
+#: plug-ins/common/file-raw-data.c:353
+#| msgid "Adjust the number of spikes"
+msgid "Image width in number of pixels"
+msgstr "Ширина зображення у кількості пікселях"
+
+#: plug-ins/common/file-raw-data.c:358
+#| msgid "Adjust the number of spikes"
+msgid "Image height in number of pixels"
+msgstr "Висота зображення у кількості пікселях"
+
+#: plug-ins/common/file-raw-data.c:362
+#| msgid "O_ffset:"
+msgid "O_ffset"
+msgstr "_Зсув"
+
+#: plug-ins/common/file-raw-data.c:363
+msgid "Offset to beginning of image in raw data"
+msgstr "Зсув початку зображення у необроблених даних"
+
+#: plug-ins/common/file-raw-data.c:368
+#| msgid "_Pixel format"
+msgid "Pixel _format"
+msgstr "_Формат пікселів"
+
+#: plug-ins/common/file-raw-data.c:369
+msgid "The layout of pixel data, such as components and their order"
+msgstr "Компонування даних пікселів, зокрема компоненти та їхній порядок"
+
+#: plug-ins/common/file-raw-data.c:373
+#| msgid "Default chunks t_ype"
+msgid "Data t_ype"
+msgstr "Т_ип даних"
+
+#: plug-ins/common/file-raw-data.c:374
+msgid ""
+"Data type used to represent pixel values { RAW_ENCODING_UNSIGNED (0), "
+"RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }"
+msgstr ""
+"Тип даних, який використано для представлення значень пікселів {"
+" RAW_ENCODING_UNSIGNED (0), "
+"RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }"
+
+#: plug-ins/common/file-raw-data.c:378
+#| msgid "Big Endian"
+msgid "Endianness"
+msgstr "Порядок байтів"
+
+#: plug-ins/common/file-raw-data.c:379
+msgid ""
+"Order of sequences of bytes { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"
+msgstr ""
+"Порядок послідовностей байтів { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"
+
+#: plug-ins/common/file-raw-data.c:383 plug-ins/common/file-raw-data.c:467
+#| msgid "invalid configuration"
+msgid "Planar configuration"
+msgstr "Площинна конфігурація"
+
+#: plug-ins/common/file-raw-data.c:384 plug-ins/common/file-raw-data.c:468
+msgid ""
+"How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), "
+"RAW_PLANAR_SEPARATE (1) }"
+msgstr ""
+"Як зберігаються дані кольорових пікселів { RAW_PLANAR_CONTIGUOUS (0), "
+"RAW_PLANAR_SEPARATE (1) }"
+
+#: plug-ins/common/file-raw-data.c:392
+#| msgid "Palette Options"
+msgid "Palette Offse_t"
+msgstr "Зс_ув палітри"
+
+#: plug-ins/common/file-raw-data.c:393
+msgid "Offset to beginning of data in the palette file"
+msgstr "Зсув початку даних у файлі палітри"
+
+#: plug-ins/common/file-raw-data.c:397
+#| msgid "Palette Map"
+msgid "Palette's la_yout"
+msgstr "_Компонування палітри"
+
+#: plug-ins/common/file-raw-data.c:398 plug-ins/common/file-raw-data.c:474
+msgid ""
+"The layout for the palette's color channels{ RAW_PALETTE_RGB (0), "
+"RAW_PALETTE_BGR (1) }"
+msgstr ""
+"Компонування для каланів кольорів палітри{ RAW_PALETTE_RGB (0), "
+"RAW_PALETTE_BGR (1) }"
+
+#: plug-ins/common/file-raw-data.c:403
+#| msgid "Pal_ette File:"
+msgid "_Palette File"
+msgstr "Файл _палітри"
+
+#: plug-ins/common/file-raw-data.c:404
+msgid "The file containing palette data"
+msgstr "Файл, що містить дані палітри"
+
 #: plug-ins/common/file-raw-data.c:414 plug-ins/common/file-raw-data.c:2812
 msgid "Digital Elevation Model data"
 msgstr "Дані цифрової моделі рельєфу"
+
+#: plug-ins/common/file-raw-data.c:438
+#| msgid "_Sample Spacing:"
+msgid "_Sample spacing"
+msgstr "_Інтервал вибірки"
+
+#: plug-ins/common/file-raw-data.c:439
+msgid ""
+"The sample spacing of the data. (0: auto-detect, 1: SRTM-1, 2: SRTM-3 data)"
+msgstr ""
+"Інтервали дискретизації даних. (0: автовизначення, 1: SRTM-1, 2: дані SRTM-3)"
+
+#: plug-ins/common/file-raw-data.c:473
+#| msgid "Palette Map"
+msgid "Palette's layout"
+msgstr "Компонування палітри"
 
 #: plug-ins/common/file-raw-data.c:481
 msgid "Raw Data"
@@ -8513,17 +8756,122 @@ msgstr "Перегляд JPEG"
 msgid "JPEG"
 msgstr "JPEG"
 
+#: plug-ins/file-jpeg/jpeg.c:204
+#| msgid "Quality of the image"
+msgid "Quality of exported image"
+msgstr "Якість експортованого зображення"
+
+#: plug-ins/file-jpeg/jpeg.c:209
+#| msgid "S_moothing:"
+msgid "S_moothing"
+msgstr "З_гладжування"
+
+#: plug-ins/file-jpeg/jpeg.c:210
+#| msgid "Bit depth of exported image"
+msgid "Smoothing factor for exported image"
+msgstr "Коефіцієнт згладжування експортованого зображення"
+
+#: plug-ins/file-jpeg/jpeg.c:215
+#| msgid "_Optimize"
+msgid "Optimi_ze"
+msgstr "_Оптимізувати"
+
+#: plug-ins/file-jpeg/jpeg.c:216
+msgid "Use optimized tables during Huffman coding"
+msgstr "Використовувати оптимізовані таблиці під час кодування Гаффмана"
+
+#: plug-ins/file-jpeg/jpeg.c:221
+msgid "_Progressive"
+msgstr "_Прогресивна"
+
+#: plug-ins/file-jpeg/jpeg.c:222
+#| msgid "Create new image"
+msgid "Create progressive JPEG images"
+msgstr "Створити прогресивні JPEG зображення"
+
+#: plug-ins/file-jpeg/jpeg.c:227
+#| msgid "Export as _CMYK"
+msgid "Export as CM_YK"
+msgstr "Експортувати як CM_YK"
+
+#: plug-ins/file-jpeg/jpeg.c:228
+#| msgid "Export a CMYK PSD image using the soft-proofing color profile"
+msgid "Create a CMYK JPEG image using the soft-proofing color profile"
+msgstr ""
+"Створити зображення JPEG CMYK з використанням профілю кольорів із "
+"пробником"
+
 #: plug-ins/file-jpeg/jpeg.c:233
 msgid "Su_bsampling"
 msgstr "С_убдискретизація"
+
+#: plug-ins/file-jpeg/jpeg.c:234
+msgid ""
+"Sub-sampling type { 0 == 4:2:0 (chroma quartered), 1 == 4:2:2 (chroma halved "
+"horizontally), 2 == 4:4:4 (best quality), 3 == 4:4:0 (chroma halved "
+"vertically)"
+msgstr ""
+"Тип субдискретизації { 0 == 4:2:0 (четвертована палітра), 1 == 4:2:2"
+" (палітра, яку розполовинено горизонтально), 2 == 4:4:4 (найкраща якість), 3"
+" == 4:4:0 (палітра, яку розполовинено вертикально)"
+
+#: plug-ins/file-jpeg/jpeg.c:244
+#| msgid "Create line"
+msgid "Baseline"
+msgstr "Базова лінія"
+
+#: plug-ins/file-jpeg/jpeg.c:245
+msgid ""
+"Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
+"decoders)"
+msgstr ""
+"Примусове створення JPEG із базовою лінією (JPEG без базової лінії можуть"
+" читати не усі декодери)"
 
 #: plug-ins/file-jpeg/jpeg.c:251
 msgid "Inter_val (MCU rows):"
 msgstr "І_нтервал (рядки MCU):"
 
+#: plug-ins/file-jpeg/jpeg.c:252
+msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
+msgstr ""
+"Інтервал позначок перезапуску (у рядках MCU, 0 = без позначок перезапуску)"
+
 #: plug-ins/file-jpeg/jpeg.c:258
 msgid "_DCT method"
 msgstr "Метод _DCT"
+
+#: plug-ins/file-jpeg/jpeg.c:259
+msgid "DCT method to use { INTEGER (0), FIXED (1), FLOAT (2) }"
+msgstr ""
+"Метод DCT, яким слід скористатися { INTEGER (0), FIXED (1), FLOAT (2) }"
+
+#: plug-ins/file-jpeg/jpeg.c:267
+msgid "_Use quality settings from original image"
+msgstr "Використовувати характеристики _якості початкового зображення"
+
+#: plug-ins/file-jpeg/jpeg.c:268
+msgid ""
+"If the original image was loaded from a JPEG file using non-standard quality "
+"settings (quantization tables), enable this option to get almost the same "
+"quality and file size."
+msgstr ""
+"Якщо початкове зображення було завантажене з файлу JPEG з нестандартними "
+"параметрами якості (таблиці квантування), використовувати цей параметр для "
+"отримання максимально схожої якості та розміру файлу."
+
+#: plug-ins/file-jpeg/jpeg.c:290
+msgid "Sho_w preview in image window"
+msgstr "_Перегляд у вікні зображення"
+
+#: plug-ins/file-jpeg/jpeg.c:291
+msgid "Creates a temporary layer with an export preview"
+msgstr "Створює тимчасовий шар із попереднім переглядом експортування"
+
+#: plug-ins/file-jpeg/jpeg.c:295
+#| msgid "Use arithmetic _coding"
+msgid "Use _arithmetic coding"
+msgstr "Використати _арифметичне кодування"
 
 #: plug-ins/file-jpeg/jpeg.c:296
 msgid "Older software may have trouble opening arithmetic-coded images"
@@ -8997,6 +9345,76 @@ msgstr "Зображення TIFF або BigTIFF"
 #: plug-ins/file-tiff/file-tiff.c:204
 msgid "TIFF"
 msgstr "TIFF"
+
+#: plug-ins/file-tiff/file-tiff.c:211
+#| msgid "Export image in the QOI file format"
+msgid "Export in _BigTIFF variant file format"
+msgstr "Експортувати у варіантів формату файлів _BigTIFF"
+
+#: plug-ins/file-tiff/file-tiff.c:212
+msgid ""
+"The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
+"4GiB files and bigger"
+msgstr ""
+"Варіант формату файлів BigTIFF використовує 64-бітові відступи, таким чином,"
+" підтримуючи файли розміром 4 ГіБ та більші"
+
+#: plug-ins/file-tiff/file-tiff.c:218
+#| msgid "_Compression:"
+msgid "Co_mpression"
+msgstr "С_тиснення"
+
+#: plug-ins/file-tiff/file-tiff.c:219
+msgid ""
+"Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4), "
+"CCITT G3 Fax (5), CCITT G4 Fax (6) }"
+msgstr ""
+"Тип стискання: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4), "
+"CCITT G3 Fax (5), CCITT G4 Fax (6) }"
+
+#: plug-ins/file-tiff/file-tiff.c:227
+msgid ""
+"Keep the color data masked by an alpha channel intact (do not store "
+"premultiplied components)"
+msgstr ""
+"Зберегти дані кольорів, які замасковано із незмінним альфа-каналом (не"
+" зберігати попередньо перемножені компоненти)"
+
+#: plug-ins/file-tiff/file-tiff.c:234
+#| msgid "Export a CMYK PSD image using the soft-proofing color profile"
+msgid "Create a CMYK TIFF image using the soft-proofing color profile"
+msgstr ""
+"Створити зображення TIFF CMYK з використанням профілю кольорів із "
+"пробником"
+
+#: plug-ins/file-tiff/file-tiff.c:239
+#| msgid "Save layers"
+msgid "Save La_yers"
+msgstr "Зберегти _шари"
+
+#: plug-ins/file-tiff/file-tiff.c:240
+#| msgid "Save layers"
+msgid "Save Layers"
+msgstr "Зберегти шари"
+
+#: plug-ins/file-tiff/file-tiff.c:245
+#| msgid "Crop layers"
+msgid "Crop L_ayers"
+msgstr "Обрізати ш_ари"
+
+#: plug-ins/file-tiff/file-tiff.c:246
+#| msgid "Crop layers"
+msgid "Crop Layers"
+msgstr "Обрізати шари"
+
+#: plug-ins/file-tiff/file-tiff.c:251
+#| msgid "Save GeoTIFF data"
+msgid "Save _GeoTIFF data"
+msgstr "Зберегти дані _GeoTIFF"
+
+#: plug-ins/file-tiff/file-tiff.c:252
+msgid "Save GeoTIFF data"
+msgstr "Зберегти дані GeoTIFF"
 
 #: plug-ins/file-tiff/file-tiff.c:459
 msgid "\"Save layers\" option not set while trying to export multiple layers."
@@ -14609,9 +15027,6 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "_Forever"
 #~ msgstr "_Без обмежень"
 
-#~ msgid "Load in reverse order"
-#~ msgstr "Завантажити у зворотному порядку"
-
 #~ msgid "Export Image as XBM"
 #~ msgstr "Експортувати зображення як XBM"
 
@@ -14897,9 +15312,6 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "Gray 32 bit Little Endian"
 #~ msgstr "Сірий, 32 біт, прямий порядок"
 
-#~ msgid "_Sample Spacing:"
-#~ msgstr "_Простір вибірки:"
-
 #~ msgid "RGB Alpha"
 #~ msgstr "RGB з альфа-каналом"
 
@@ -14911,9 +15323,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Select Palette File"
 #~ msgstr "Виберіть файл палітри"
-
-#~ msgid "Pal_ette File:"
-#~ msgstr "Файл _палітри:"
 
 #~ msgid "Export Image as Raw Data"
 #~ msgstr "Експортувати зображення як дані RAW"
@@ -14990,21 +15399,6 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "_Quality:"
 #~ msgstr "_Якість:"
 
-#~ msgid "_Use quality settings from original image"
-#~ msgstr "Використовувати характеристики _якості початкового зображення"
-
-#~ msgid ""
-#~ "If the original image was loaded from a JPEG file using non-standard "
-#~ "quality settings (quantization tables), enable this option to get almost "
-#~ "the same quality and file size."
-#~ msgstr ""
-#~ "Якщо початкове зображення було завантажене з файлу JPEG з нестандартними "
-#~ "параметрами якості (таблиці квантування), використовувати цей параметр "
-#~ "для отримання максимально схожої якості та розміру файлу."
-
-#~ msgid "Sho_w preview in image window"
-#~ msgstr "_Перегляд у вікні зображення"
-
 #~ msgid "Save _Exif data"
 #~ msgstr "Зберегти дані _Exif"
 
@@ -15014,32 +15408,11 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "Save _thumbnail"
 #~ msgstr "Зберегти _ескіз"
 
-#~ msgid "S_moothing:"
-#~ msgstr "З_гладжування:"
-
-#~ msgid "_Optimize"
-#~ msgstr "_Оптимізувати"
-
-#~ msgid "Use arithmetic _coding"
-#~ msgstr "Використати _арифметичне кодування"
-
-#~ msgid "_Progressive"
-#~ msgstr "_Прогресивна"
-
 #~ msgid "Sa_ve Defaults"
 #~ msgstr "З_апам'ятати ці параметри"
 
-#~ msgid "Save layers"
-#~ msgstr "Зберегти шари"
-
 #~ msgid "Crop layers to image bounds"
 #~ msgstr "Обрізати шари до меж зображення"
-
-#~ msgid "Crop layers"
-#~ msgstr "Обрізати шари"
-
-#~ msgid "Save GeoTIFF data"
-#~ msgstr "Зберегти дані GeoTIFF"
 
 #~ msgid "10 bit/channel (HDR)"
 #~ msgstr "10 біт/канал (HDR)"
