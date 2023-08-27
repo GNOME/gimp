@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-25 20:56+0000\n"
-"PO-Revision-Date: 2023-08-26 05:40+0200\n"
+"POT-Creation-Date: 2023-08-26 14:00+0000\n"
+"PO-Revision-Date: 2023-08-27 16:05+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -467,6 +467,62 @@ msgstr "თარიღი:"
 #: libgimp/gimpprocview.c:269
 msgid "Copyright:"
 msgstr "უფლებები:"
+
+#: libgimp/gimpsaveprocedure.c:408
+msgid "Save _Exif"
+msgstr "_Exif-ის შენახვა"
+
+#: libgimp/gimpsaveprocedure.c:409
+msgid "Save Exif (Exchangeable image file format) metadata"
+msgstr ""
+
+#: libgimp/gimpsaveprocedure.c:414
+msgid "Save _IPTC"
+msgstr "_IPTC-ის შენახვა"
+
+#: libgimp/gimpsaveprocedure.c:415
+msgid "Save IPTC (International Press Telecommunications Council) metadata"
+msgstr ""
+
+#: libgimp/gimpsaveprocedure.c:420
+msgid "Save _XMP"
+msgstr "_XMP-ის შენახვა"
+
+#: libgimp/gimpsaveprocedure.c:421
+msgid "Save XMP (Extensible Metadata Platform) metadata"
+msgstr ""
+
+#: libgimp/gimpsaveprocedure.c:426
+msgid "Save color _profile"
+msgstr "ფერის პროფილის _შენახვა"
+
+#: libgimp/gimpsaveprocedure.c:427
+msgid "Save the ICC color profile as metadata"
+msgstr ""
+
+#: libgimp/gimpsaveprocedure.c:432
+msgid "Save _thumbnail"
+msgstr "მინიატურის _შენახვა"
+
+#: libgimp/gimpsaveprocedure.c:433
+msgid "Save a smaller representation of the image as metadata"
+msgstr ""
+
+#: libgimp/gimpsaveprocedure.c:439
+msgid "Save c_omment"
+msgstr "_კომენტარის შენახვა"
+
+#: libgimp/gimpsaveprocedure.c:440
+msgid "Save a comment as metadata"
+msgstr ""
+
+#: libgimp/gimpsaveprocedure.c:444
+msgid "Comment"
+msgstr "კომენტარი"
+
+#: libgimp/gimpsaveprocedure.c:445
+msgid "Image comment"
+msgstr "გამოსახულების კომენტარი"
 
 #: libgimp/gimpsaveproceduredialog.c:166
 msgid "Metadata"
