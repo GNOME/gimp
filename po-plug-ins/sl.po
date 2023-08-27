@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-11 23:15+0000\n"
-"PO-Revision-Date: 2023-08-12 01:20+0200\n"
+"POT-Creation-Date: 2023-08-25 20:56+0000\n"
+"PO-Revision-Date: 2023-08-27 07:41+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -104,10 +104,10 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:1038
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
 #: plug-ins/map-object/map-object-ui.c:1317
-#: plug-ins/metadata/metadata-editor.c:1181
-#: plug-ins/metadata/metadata-editor.c:1677
-#: plug-ins/metadata/metadata-editor.c:5306
-#: plug-ins/metadata/metadata-editor.c:5341 plug-ins/pagecurl/pagecurl.c:496
+#: plug-ins/metadata/metadata-editor.c:1185
+#: plug-ins/metadata/metadata-editor.c:1681
+#: plug-ins/metadata/metadata-editor.c:5532
+#: plug-ins/metadata/metadata-editor.c:5567 plug-ins/pagecurl/pagecurl.c:496
 #: plug-ins/screenshot/screenshot.c:513
 #: plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_Cancel"
@@ -359,8 +359,8 @@ msgstr "Poravnaj vidne plasti"
 #: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
 #: plug-ins/common/file-ps.c:3745 plug-ins/common/file-ps.c:3753
 #: plug-ins/common/file-psp.c:840 plug-ins/file-tiff/file-tiff-save.c:1322
-#: plug-ins/metadata/metadata-tags.c:204 plug-ins/metadata/metadata-tags.c:216
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:211 plug-ins/metadata/metadata-tags.c:223
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "None"
 msgstr "Brez"
 
@@ -1245,8 +1245,8 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: plug-ins/common/file-iff.c:227 plug-ins/common/file-mng.c:1407
 #: plug-ins/common/file-pcx.c:523 plug-ins/common/file-pcx.c:566
 #: plug-ins/common/file-png.c:673 plug-ins/common/file-ps.c:1126
-#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2383
-#: plug-ins/common/file-psp.c:2433 plug-ins/common/file-qoi.c:300
+#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2436
+#: plug-ins/common/file-psp.c:2486 plug-ins/common/file-qoi.c:300
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
 #: plug-ins/common/file-sunras.c:458 plug-ins/common/file-svg.c:365
 #: plug-ins/common/file-svg.c:825 plug-ins/common/file-tga.c:448
@@ -1663,11 +1663,11 @@ msgstr "Izboljšava slik Retinex"
 msgid "Uniform"
 msgstr "konstantno"
 
-#: plug-ins/common/contrast-retinex.c:353 plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/common/contrast-retinex.c:353 plug-ins/metadata/metadata-tags.c:254
 msgid "Low"
 msgstr "nizko"
 
-#: plug-ins/common/contrast-retinex.c:354 plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/common/contrast-retinex.c:354 plug-ins/metadata/metadata-tags.c:254
 msgid "High"
 msgstr "visoko"
 
@@ -2159,7 +2159,7 @@ msgstr "Iz slike odstrani navpične artefakte v obliki trakov."
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:194
 #: plug-ins/common/file-ps.c:383 plug-ins/common/file-ps.c:497
-#: plug-ins/imagemap/imap_grid.c:255
+#: plug-ins/common/file-raw-data.c:352 plug-ins/imagemap/imap_grid.c:255
 msgid "_Width"
 msgstr "_Širina"
 
@@ -3014,6 +3014,7 @@ msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr "Shrani sliko v zapisu HEIF (High Efficiency Image File Format)."
 
 #: plug-ins/common/file-heif.c:252 plug-ins/common/file-heif.c:362
+#: plug-ins/file-jpeg/jpeg.c:203
 msgid "_Quality"
 msgstr "_Kakovost"
 
@@ -3227,7 +3228,8 @@ msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Širina posamezne celice v tabeli. Možen je vpis števila ali odstotka."
 
 #: plug-ins/common/file-html-table.c:201 plug-ins/common/file-ps.c:389
-#: plug-ins/common/file-ps.c:504 plug-ins/imagemap/imap_grid.c:261
+#: plug-ins/common/file-ps.c:504 plug-ins/common/file-raw-data.c:357
+#: plug-ins/imagemap/imap_grid.c:261
 msgid "_Height"
 msgstr "_Višina"
 
@@ -3501,6 +3503,15 @@ msgstr "Shrani ori_ginalni profil"
 #: plug-ins/common/file-jpegxl.c:211
 msgid "Store ICC profile to exported JXL file"
 msgstr "Shrani profil ICC v izvoženo datoteko JXL"
+
+#: plug-ins/common/file-jpegxl.c:216 plug-ins/file-tiff/file-tiff.c:233
+msgid "Export as CMY_K"
+msgstr "Izvozi kot CMY_K"
+
+#: plug-ins/common/file-jpegxl.c:217
+msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
+msgstr ""
+"Izvozite sliko JPEG XL CMYK z uporabo barvnega profila preverjanja videza"
 
 #: plug-ins/common/file-jpegxl.c:2015
 msgid "lightning (fastest)"
@@ -3897,13 +3908,41 @@ msgstr "Pisanje v datoteko »%s« ni uspelo: %s"
 msgid "Portable Document Format"
 msgstr "PDF (Portable Document Format)"
 
+#: plug-ins/common/file-pdf-load.c:343
+msgid "PDF password"
+msgstr "Geslo PDF"
+
+#: plug-ins/common/file-pdf-load.c:344
+msgid "The password to decrypt the encrypted PDF file"
+msgstr "Geslo za dešifriranje šifrirane datoteke PDF"
+
+#: plug-ins/common/file-pdf-load.c:349
+msgid "Load in re_verse order"
+msgstr "Naloži v _obratnem vrstnem redu"
+
+#: plug-ins/common/file-pdf-load.c:350
+msgid "Load PDF pages in reverse order"
+msgstr "Naloži strani PDF v obratnem vrstnem redu"
+
 #: plug-ins/common/file-pdf-load.c:367
 msgid "Open pages as"
 msgstr "Odpri strani kot"
 
-#: plug-ins/common/file-pdf-load.c:368
+#: plug-ins/common/file-pdf-load.c:368 plug-ins/common/file-pdf-load.c:375
 msgid "Number of pages to load (0 for all)"
 msgstr "Število strani za nalaganje (0 za vse)"
+
+#: plug-ins/common/file-pdf-load.c:374
+msgid "N pages"
+msgstr "N strani"
+
+#: plug-ins/common/file-pdf-load.c:387
+msgid "Pages"
+msgstr "Strani"
+
+#: plug-ins/common/file-pdf-load.c:388
+msgid "The pages to load in the expected order"
+msgstr "Naložene strani v pričakovanem vrstnem redu"
 
 #: plug-ins/common/file-pdf-load.c:392
 msgid "Use _Anti-aliasing"
@@ -4129,7 +4168,7 @@ msgstr "Zapiši kos pHYs (metapodatki PNG)"
 msgid "Write tIME chunk (PNG metadata)"
 msgstr "Zapiši kos tiME (metapodatki PNG)"
 
-#: plug-ins/common/file-png.c:269
+#: plug-ins/common/file-png.c:269 plug-ins/file-tiff/file-tiff.c:226
 msgid "Save color _values from transparent pixels"
 msgstr "Shrani _vrednosti barv iz prosojnih slikovnih točk"
 
@@ -4480,21 +4519,49 @@ msgstr "Slika EPS (Encapsulated PostScript)"
 msgid "Resol_ution"
 msgstr "Lo_čljivost"
 
+#: plug-ins/common/file-ps.c:378
+msgid "Resolution to interpret image (dpi)"
+msgstr "Ločljivost tolmačenja slike (DPI)"
+
+#: plug-ins/common/file-ps.c:384
+msgid "Desired width"
+msgstr "Želena širina"
+
+#: plug-ins/common/file-ps.c:390
+msgid "Desired height"
+msgstr "Želena višina"
+
 #: plug-ins/common/file-ps.c:395
 msgid "Try _Bounding Box"
 msgstr "Pos_kusni obsegajoči okvir"
+
+#: plug-ins/common/file-ps.c:396
+msgid "FALSE: Use width/height, TRUE: Use BoundingBox"
+msgstr "FALSE: uporabi širino/višino, TRUE: uporabite BoundingBox"
 
 #: plug-ins/common/file-ps.c:401
 msgid "_Pages"
 msgstr "_Strani"
 
+#: plug-ins/common/file-ps.c:402
+msgid "Pages to load (e.g.: 1,3,5-7)"
+msgstr "Strani za nalaganje (npr.: 1,3,5-7)"
+
 #: plug-ins/common/file-ps.c:407
 msgid "Coloring"
 msgstr "Obarvanje"
 
+#: plug-ins/common/file-ps.c:408
+msgid "4: b/w, 5: grey, 6: color image, 7: automatic"
+msgstr "4: č/b, 5: sivinsko, 6: barvna slika, 7: samodejno"
+
 #: plug-ins/common/file-ps.c:413
 msgid "Text antialiasing"
 msgstr "Glajenje robov besedila"
+
+#: plug-ins/common/file-ps.c:414 plug-ins/common/file-ps.c:420
+msgid "1, 2 or 4"
+msgstr "1, 2 ali 4"
 
 #: plug-ins/common/file-ps.c:419
 msgid "Graphic antialiasing"
@@ -4512,21 +4579,45 @@ msgstr "Oviti PostScript (EPS)"
 msgid "EPS"
 msgstr "EPS"
 
+#: plug-ins/common/file-ps.c:498
+msgid "Width of the image in PostScript file (0: use input image size)"
+msgstr "Širina slike v datoteki PostScript (0: uporabi vhodno velikost slike)"
+
+#: plug-ins/common/file-ps.c:505
+msgid "Height of the image in PostScript file (0: use input image size)"
+msgstr "Višina slike v datoteki PostScript (0: uporabi vhodno velikost slike)"
+
 #: plug-ins/common/file-ps.c:511
 msgid "_X offset"
 msgstr "Odmik _X"
+
+#: plug-ins/common/file-ps.c:512
+msgid "X-offset to image from lower left corner"
+msgstr "Odmik X od slike iz levega spodnjega kota"
 
 #: plug-ins/common/file-ps.c:517
 msgid "Y o_ffset"
 msgstr "Odmik _Y"
 
+#: plug-ins/common/file-ps.c:518
+msgid "Y-offset to image from lower left corner"
+msgstr "Odmik Y od slike iz levega spodnjega kota"
+
 #: plug-ins/common/file-ps.c:523
 msgid "Unit"
 msgstr "Enota"
 
+#: plug-ins/common/file-ps.c:524
+msgid "Unit for width/height/offset. 0: inches, 1: millimeters"
+msgstr "Enota za širino/višino/zamik. 0: palci, 1: milimetri"
+
 #: plug-ins/common/file-ps.c:530
 msgid "_Keep aspect ratio"
 msgstr "_Ohrani razmerje stranic"
+
+#: plug-ins/common/file-ps.c:531
+msgid "FALSE: use width/height, TRUE: keep aspect ratio"
+msgstr "FALSE: uporabi razmerje širina/višina, TRUE: ohrani razmerje stranic"
 
 #: plug-ins/common/file-ps.c:536 plug-ins/map-object/map-object-ui.c:1013
 msgid "Rotation"
@@ -4536,13 +4627,33 @@ msgstr "Sukanje"
 msgid "PostScript Level _2"
 msgstr "PostScript ravni _2"
 
+#: plug-ins/common/file-ps.c:543
+msgid "FALSE: PostScript Level 1, TRUE: PostScript Level 2"
+msgstr "FALSE: PostScript Level 1, TRUE: PostScript Level 2"
+
+#: plug-ins/common/file-ps.c:548
+msgid "Encapsula_ted PostScript"
+msgstr "Ovi_ti PostScript (EPS)"
+
+#: plug-ins/common/file-ps.c:549
+msgid "FALSE: PostScript, TRUE: Encapsulated PostScript"
+msgstr "FALSE: PostScript, TRUE: oviti PostScript"
+
 #: plug-ins/common/file-ps.c:554 plug-ins/imagemap/imap_grid.c:298
 msgid "_Preview"
 msgstr "_Predogled"
 
+#: plug-ins/common/file-ps.c:555
+msgid "Show Preview"
+msgstr "Pokaži predogled"
+
 #: plug-ins/common/file-ps.c:560
 msgid "Preview Si_ze"
 msgstr "_Velikost predogleda"
+
+#: plug-ins/common/file-ps.c:561
+msgid "0: no preview, >0: max. size of preview"
+msgstr "0: brez predogleda, >0: največja velikost predogleda"
 
 #: plug-ins/common/file-ps.c:722
 msgid "PostScript plug-in does not support multiple layers."
@@ -4777,32 +4888,37 @@ msgstr "Neveljavna vrsta kanala %d v informacijskem koščku kanala"
 msgid "Error reading tube data chunk"
 msgstr "Napaka pri branju kosa podatkov o cevi"
 
+#: plug-ins/common/file-psp.c:2371 plug-ins/common/file-psp.c:2383
 #: plug-ins/common/file-psp.c:2394
+msgid "Error reading colorprofile chunk"
+msgstr "Napaka pri branju kosa podatkov o barvnem profilu"
+
+#: plug-ins/common/file-psp.c:2447
 msgid "Error reading file header."
 msgstr "Napaka pri branju glave datoteke."
 
-#: plug-ins/common/file-psp.c:2401
+#: plug-ins/common/file-psp.c:2454
 msgid "Incorrect file signature."
 msgstr "Neveljaven podpis datoteke."
 
-#: plug-ins/common/file-psp.c:2415
+#: plug-ins/common/file-psp.c:2468
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Nepodprta različica datoteke vrste PSP %d.%d."
 
-#: plug-ins/common/file-psp.c:2435
+#: plug-ins/common/file-psp.c:2488
 msgid "invalid block size"
 msgstr "neveljavna velikost bloka"
 
-#: plug-ins/common/file-psp.c:2444
+#: plug-ins/common/file-psp.c:2497
 msgid "Duplicate General Image Attributes block."
 msgstr "Podvojeni blok splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:2472
+#: plug-ins/common/file-psp.c:2525
 msgid "Missing General Image Attributes block."
 msgstr "Manjkajoči blok splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:2588
+#: plug-ins/common/file-psp.c:2644
 msgid "Exporting not implemented yet."
 msgstr "Izvoz še ni implementiran."
 
@@ -4838,9 +4954,115 @@ msgstr "Branje datoteke QOI ni uspelo"
 msgid "Raw image data"
 msgstr "Surovi podatki slike (RAW)"
 
+#: plug-ins/common/file-raw-data.c:353
+msgid "Image width in number of pixels"
+msgstr "Širina slike v slikovnih točkah"
+
+#: plug-ins/common/file-raw-data.c:358
+msgid "Image height in number of pixels"
+msgstr "Višina slike v slikovnih točkah"
+
+#: plug-ins/common/file-raw-data.c:362
+msgid "O_ffset"
+msgstr "_Zamik"
+
+#: plug-ins/common/file-raw-data.c:363
+msgid "Offset to beginning of image in raw data"
+msgstr "Zamik do začetka slike v neobdelanih podatkih"
+
+#: plug-ins/common/file-raw-data.c:368
+msgid "Pixel _format"
+msgstr "Oblika sli_kovnih točk"
+
+#: plug-ins/common/file-raw-data.c:369
+msgid "The layout of pixel data, such as components and their order"
+msgstr ""
+"Razporeditev podatkov v slikovnih točkah, kot so komponente in njihov vrstni "
+"red"
+
+#: plug-ins/common/file-raw-data.c:373
+msgid "Data t_ype"
+msgstr "Vrsta po_datkov"
+
+#: plug-ins/common/file-raw-data.c:374
+msgid ""
+"Data type used to represent pixel values { RAW_ENCODING_UNSIGNED (0), "
+"RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }"
+msgstr ""
+"Podatkovna vrsta, ki se uporablja za predstavitev vrednosti slikovnih točk "
+"{ RAW_ENCODING_UNSIGNED (0), RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT "
+"(2) }"
+
+#: plug-ins/common/file-raw-data.c:378
+#, fuzzy
+#| msgid "Big Endian"
+msgid "Endianness"
+msgstr "Največje na koncu"
+
+#: plug-ins/common/file-raw-data.c:379
+msgid ""
+"Order of sequences of bytes { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"
+msgstr ""
+"Vrstni red zaporedja bajtov { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"
+
+#: plug-ins/common/file-raw-data.c:383 plug-ins/common/file-raw-data.c:467
+msgid "Planar configuration"
+msgstr "Planarna prilagoditev"
+
+#: plug-ins/common/file-raw-data.c:384 plug-ins/common/file-raw-data.c:468
+msgid ""
+"How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), "
+"RAW_PLANAR_SEPARATE (1) }"
+msgstr ""
+"Kako so shranjeni podatki o barvnih slikovnih točkah { RAW_PLANAR_CONTIGUOUS "
+"(0), RAW_PLANAR_SEPARATE (1) }"
+
+#: plug-ins/common/file-raw-data.c:392
+msgid "Palette Offse_t"
+msgstr "Za_mik palete"
+
+#: plug-ins/common/file-raw-data.c:393
+msgid "Offset to beginning of data in the palette file"
+msgstr "Zamik do začetka podatkov v datoteki palete"
+
+#: plug-ins/common/file-raw-data.c:397
+msgid "Palette's la_yout"
+msgstr "Pos_tavitev palete"
+
+#: plug-ins/common/file-raw-data.c:398 plug-ins/common/file-raw-data.c:474
+msgid ""
+"The layout for the palette's color channels{ RAW_PALETTE_RGB (0), "
+"RAW_PALETTE_BGR (1) }"
+msgstr ""
+"Razporeditev barvnih kanalov palete { RAW_PALETTE_RGB (0), RAW_PALETTE_BGR "
+"(1) }"
+
+#: plug-ins/common/file-raw-data.c:403
+msgid "_Palette File"
+msgstr "_Datoteka palete"
+
+#: plug-ins/common/file-raw-data.c:404
+msgid "The file containing palette data"
+msgstr "Datoteka, ki vsebuje podatke palete"
+
 #: plug-ins/common/file-raw-data.c:414 plug-ins/common/file-raw-data.c:2812
 msgid "Digital Elevation Model data"
 msgstr "Podatki modela digitalnega dviganja"
+
+#: plug-ins/common/file-raw-data.c:438
+msgid "_Sample spacing"
+msgstr "_Vzorčni razmik"
+
+#: plug-ins/common/file-raw-data.c:439
+msgid ""
+"The sample spacing of the data. (0: auto-detect, 1: SRTM-1, 2: SRTM-3 data)"
+msgstr ""
+"Razmik med vzorci podatkov. (0: samodejno zaznaj, 1: podatki SRTM-1, 2: "
+"podatki SRTM-3)"
+
+#: plug-ins/common/file-raw-data.c:473
+msgid "Palette's layout"
+msgstr "Postavitev palete"
 
 #: plug-ins/common/file-raw-data.c:481
 msgid "Raw Data"
@@ -8453,17 +8675,115 @@ msgstr "Slika JPEG"
 msgid "JPEG"
 msgstr "JPEG"
 
+#: plug-ins/file-jpeg/jpeg.c:204
+msgid "Quality of exported image"
+msgstr "Kakovost izvožene slike"
+
+#: plug-ins/file-jpeg/jpeg.c:209
+msgid "S_moothing"
+msgstr "Gla_jenje"
+
+#: plug-ins/file-jpeg/jpeg.c:210
+msgid "Smoothing factor for exported image"
+msgstr "Faktor glajenja izvožene slike"
+
+#: plug-ins/file-jpeg/jpeg.c:215
+msgid "Optimi_ze"
+msgstr "Optimi_ziraj"
+
+#: plug-ins/file-jpeg/jpeg.c:216
+msgid "Use optimized tables during Huffman coding"
+msgstr "Uporabi optimizirane Huffmanove tabele pri kodiranju"
+
+#: plug-ins/file-jpeg/jpeg.c:221
+#, fuzzy
+msgid "_Progressive"
+msgstr "_Napredovano/Progresivno"
+
+#: plug-ins/file-jpeg/jpeg.c:222
+msgid "Create progressive JPEG images"
+msgstr "Ustvari napredne slike JPEG"
+
+#: plug-ins/file-jpeg/jpeg.c:227
+msgid "Export as CM_YK"
+msgstr "Izvozi kot CM_YK"
+
+#: plug-ins/file-jpeg/jpeg.c:228
+msgid "Create a CMYK JPEG image using the soft-proofing color profile"
+msgstr ""
+"Ustvarite sliko JPEG CMYK z uporabo barvnega profila preverjanja videza"
+
 #: plug-ins/file-jpeg/jpeg.c:233
 msgid "Su_bsampling"
 msgstr "Po_dvzorčenje"
+
+#: plug-ins/file-jpeg/jpeg.c:234
+#, fuzzy
+msgid ""
+"Sub-sampling type { 0 == 4:2:0 (chroma quartered), 1 == 4:2:2 (chroma halved "
+"horizontally), 2 == 4:4:4 (best quality), 3 == 4:4:0 (chroma halved "
+"vertically)"
+msgstr ""
+"Vrsta podvzorčenja { 0 == 4:2:0 (kromatska barva četrtinjena), 1 == 4:2:2 "
+"(kromatska barva razpolovljena vodoravno), 2 == 4:4:4 (najboljša kakovost), "
+"3 == 4:4:0 (kromatska barva razpolovljena navpično)"
+
+#: plug-ins/file-jpeg/jpeg.c:244
+msgid "Baseline"
+msgstr "Osnovnica besedila"
+
+#: plug-ins/file-jpeg/jpeg.c:245
+#, fuzzy
+msgid ""
+"Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
+"decoders)"
+msgstr ""
+"Vsili ustvarjanje osnovnega zapisa JPEG (vsi dekoderji ne morejo brati "
+"zapisov JPEG, ki niso osnovni)"
 
 #: plug-ins/file-jpeg/jpeg.c:251
 msgid "Inter_val (MCU rows):"
 msgstr "Inter_val (vrstice MCU):"
 
+#: plug-ins/file-jpeg/jpeg.c:252
+msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
+msgstr ""
+"Interval označevalnikov ponovnega začetka (v vrsticah MCU, 0 = brez "
+"označevalnikov ponovnega začetka)"
+
 #: plug-ins/file-jpeg/jpeg.c:258
 msgid "_DCT method"
 msgstr "Metoda _DCT"
+
+#: plug-ins/file-jpeg/jpeg.c:259
+msgid "DCT method to use { INTEGER (0), FIXED (1), FLOAT (2) }"
+msgstr "Uporabljena metoda DCT { INTEGER (0), FIXED (1), FLOAT (2) }"
+
+#: plug-ins/file-jpeg/jpeg.c:267
+msgid "_Use quality settings from original image"
+msgstr "_Uporabi nastavitve kakovosti iz izvirne slike"
+
+#: plug-ins/file-jpeg/jpeg.c:268
+msgid ""
+"If the original image was loaded from a JPEG file using non-standard quality "
+"settings (quantization tables), enable this option to get almost the same "
+"quality and file size."
+msgstr ""
+"Če je bila izvirna slika naložena iz datoteke JPEG z uporabo nestandardnih "
+"nastavitev kakovosti (kvantizacijske tabele), potrdite to možnost, da dobite "
+"skoraj enako kakovost in velikost datoteke."
+
+#: plug-ins/file-jpeg/jpeg.c:290
+msgid "Sho_w preview in image window"
+msgstr "Poka_ži predogled v oknu slike"
+
+#: plug-ins/file-jpeg/jpeg.c:291
+msgid "Creates a temporary layer with an export preview"
+msgstr "Ustvari trenutno plast s predogledom izvoza"
+
+#: plug-ins/file-jpeg/jpeg.c:295
+msgid "Use _arithmetic coding"
+msgstr "Uporabi _aritmetično kodiranje"
 
 #: plug-ins/file-jpeg/jpeg.c:296
 msgid "Older software may have trouble opening arithmetic-coded images"
@@ -8931,6 +9251,67 @@ msgstr "Slika TIFF ali BigTIFF"
 msgid "TIFF"
 msgstr "TIFF"
 
+#: plug-ins/file-tiff/file-tiff.c:211
+msgid "Export in _BigTIFF variant file format"
+msgstr "Izvozi sliko v zapisu datoteke _BigTIFF"
+
+#: plug-ins/file-tiff/file-tiff.c:212
+msgid ""
+"The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
+"4GiB files and bigger"
+msgstr ""
+"Zapis datotek BigTIFF uporablja 64-bitne zamike, zato podpira tudi datoteke, "
+"večje od 4 GB"
+
+#: plug-ins/file-tiff/file-tiff.c:218
+msgid "Co_mpression"
+msgstr "_Stiskanje"
+
+#: plug-ins/file-tiff/file-tiff.c:219
+msgid ""
+"Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4), "
+"CCITT G3 Fax (5), CCITT G4 Fax (6) }"
+msgstr ""
+"Vrsta stiskanja: (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4), CCITT G3 "
+"Fax (5), CCITT G4 Fax (6) }"
+
+#: plug-ins/file-tiff/file-tiff.c:227
+msgid ""
+"Keep the color data masked by an alpha channel intact (do not store "
+"premultiplied components)"
+msgstr ""
+"Ohrani barvne podatke, ki so maskirani s kanalom alfa, nedotaknjene (ne "
+"shranjuj predhodno pomnoženih komponent)"
+
+#: plug-ins/file-tiff/file-tiff.c:234
+msgid "Create a CMYK TIFF image using the soft-proofing color profile"
+msgstr ""
+"Ustvarite sliko TIFF CMYK z uporabo barvnega profila preverjanja videza"
+
+#: plug-ins/file-tiff/file-tiff.c:239
+msgid "Save La_yers"
+msgstr "Shrani p_lasti"
+
+#: plug-ins/file-tiff/file-tiff.c:240
+msgid "Save Layers"
+msgstr "Shrani plasti"
+
+#: plug-ins/file-tiff/file-tiff.c:245
+msgid "Crop L_ayers"
+msgstr "_Obreži plasti"
+
+#: plug-ins/file-tiff/file-tiff.c:246
+msgid "Crop Layers"
+msgstr "Obreži plasti"
+
+#: plug-ins/file-tiff/file-tiff.c:251
+msgid "Save _GeoTIFF data"
+msgstr "Shrani podatke _GeoTIFF"
+
+#: plug-ins/file-tiff/file-tiff.c:252
+msgid "Save GeoTIFF data"
+msgstr "Shrani podatke GeoTIFF"
+
 #: plug-ins/file-tiff/file-tiff.c:459
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
@@ -9158,7 +9539,7 @@ msgid "Import from TIFF"
 msgstr "Uvozi iz TIFF"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2554
-#: plug-ins/metadata/metadata-editor.c:5307
+#: plug-ins/metadata/metadata-editor.c:5533
 msgid "_Import"
 msgstr "_Uvozi"
 
@@ -10417,7 +10798,7 @@ msgstr "Vrsta mreže:"
 
 #: plug-ins/gfig/gfig-dialog.c:1458
 #: plug-ins/gradient-flare/gradient-flare.c:749
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "Normal"
 msgstr "Navadna"
 
@@ -10578,7 +10959,7 @@ msgstr "Gama:"
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Spremeni gamo (svetlost) izbranega čopiča"
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1367
+#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1371
 msgid "Select:"
 msgstr "Izberite:"
 
@@ -13076,7 +13457,7 @@ msgstr "Naziv avtorja"
 
 #. Description tab
 #: plug-ins/metadata/metadata-editor.c:487
-#: plug-ins/metadata/metadata-editor.c:1212
+#: plug-ins/metadata/metadata-editor.c:1216
 msgid "Description"
 msgstr "Opis"
 
@@ -13464,58 +13845,58 @@ msgstr "Ur_edi metapodatke"
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Urejajte metapodatke (IPTC, EXIF, XMP)"
 
-#: plug-ins/metadata/metadata-editor.c:1174
+#: plug-ins/metadata/metadata-editor.c:1178
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Urejevalnik metapodatkov: %s"
 
-#: plug-ins/metadata/metadata-editor.c:1182
+#: plug-ins/metadata/metadata-editor.c:1186
 msgid "_Write Metadata"
 msgstr "Zapi_ši metapodatke"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1218
+#: plug-ins/metadata/metadata-editor.c:1222
 #: plug-ins/metadata/metadata-viewer.c:401
 msgid "IPTC"
 msgstr "IPTC"
 
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1224
+#: plug-ins/metadata/metadata-editor.c:1228
 msgid "IPTC Extension"
 msgstr "Razširjeni IPTC"
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1330
+#: plug-ins/metadata/metadata-editor.c:1334
 msgid "Categories"
 msgstr "Kategorije"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1336
+#: plug-ins/metadata/metadata-editor.c:1340
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1347
+#: plug-ins/metadata/metadata-editor.c:1351
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1369
+#: plug-ins/metadata/metadata-editor.c:1373
 msgid "Import metadata"
 msgstr "Uvozi metapodatke"
 
-#: plug-ins/metadata/metadata-editor.c:1371
+#: plug-ins/metadata/metadata-editor.c:1375
 msgid "Export metadata"
 msgstr "Izvozi metapodatke"
 
-#: plug-ins/metadata/metadata-editor.c:1674
+#: plug-ins/metadata/metadata-editor.c:1678
 msgid "Choose Date"
 msgstr "Izberite datum"
 
-#: plug-ins/metadata/metadata-editor.c:1678
+#: plug-ins/metadata/metadata-editor.c:1682
 msgid "Set Date"
 msgstr "Določi datum"
 
-#: plug-ins/metadata/metadata-editor.c:2412
+#: plug-ins/metadata/metadata-editor.c:2416
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -13531,7 +13912,7 @@ msgstr ""
 "ali 10.45\n"
 "Izbrišite celotno besedilo, da odstranite trenutno vrednost."
 
-#: plug-ins/metadata/metadata-editor.c:2418
+#: plug-ins/metadata/metadata-editor.c:2422
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -13547,248 +13928,248 @@ msgstr ""
 "(ft).\n"
 "Izbrišite celotno besedilo, da odstranite trenutno vrednost."
 
-#: plug-ins/metadata/metadata-editor.c:2552
+#: plug-ins/metadata/metadata-editor.c:2556
 msgid "Unrated"
 msgstr "Neocenjeno"
 
-#: plug-ins/metadata/metadata-editor.c:4491
+#: plug-ins/metadata/metadata-editor.c:4666
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Značke metapodatkov %s ni mogoče določiti: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5303
+#: plug-ins/metadata/metadata-editor.c:5529
 msgid "Import Metadata File"
 msgstr "Uvoz datoteko metapodatkov"
 
-#: plug-ins/metadata/metadata-editor.c:5338
+#: plug-ins/metadata/metadata-editor.c:5564
 msgid "Export Metadata File"
 msgstr "Izvozi datoteko metapodatkov"
 
-#: plug-ins/metadata/metadata-editor.c:5342
+#: plug-ins/metadata/metadata-editor.c:5568
 msgid "_Export"
 msgstr "I_zvozi"
 
-#: plug-ins/metadata/metadata-tags.c:180 plug-ins/metadata/metadata-tags.c:203
-#: plug-ins/metadata/metadata-tags.c:263 plug-ins/metadata/metadata-tags.c:280
+#: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:210
+#: plug-ins/metadata/metadata-tags.c:270 plug-ins/metadata/metadata-tags.c:287
 msgid "Select a value"
 msgstr "Izberite vrednost"
 
-#: plug-ins/metadata/metadata-tags.c:181
+#: plug-ins/metadata/metadata-tags.c:188
 msgid "Original digital capture of a real life scene"
 msgstr "Izvirni digitalni zajem prizora iz resničnega življenja"
 
-#: plug-ins/metadata/metadata-tags.c:182
+#: plug-ins/metadata/metadata-tags.c:189
 msgid "Digitized from a negative on film"
 msgstr "Digitalizirano iz filmskega negativa"
 
-#: plug-ins/metadata/metadata-tags.c:183
+#: plug-ins/metadata/metadata-tags.c:190
 msgid "Digitized from a positive on film"
 msgstr "Digitalizirano iz filmskega pozitiva"
 
-#: plug-ins/metadata/metadata-tags.c:184
+#: plug-ins/metadata/metadata-tags.c:191
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Digitalizirano s tiska na neprosojnem nosilcu"
 
-#: plug-ins/metadata/metadata-tags.c:185
+#: plug-ins/metadata/metadata-tags.c:192
 msgid "Original media with minor human edits"
 msgstr "Izvirni medij z manjšimi človeškimi popravki"
 
-#: plug-ins/metadata/metadata-tags.c:186
+#: plug-ins/metadata/metadata-tags.c:193
 msgid "Composite of captured elements"
 msgstr "Kompozit zajetih elementov"
 
-#: plug-ins/metadata/metadata-tags.c:187
+#: plug-ins/metadata/metadata-tags.c:194
 msgid "Algorithmically-enhanced media"
 msgstr "Algoritmično izboljšani medij"
 
-#: plug-ins/metadata/metadata-tags.c:188
+#: plug-ins/metadata/metadata-tags.c:195
 msgid "Data-driven media"
 msgstr "Medij, ki temelji na podatkih"
 
-#: plug-ins/metadata/metadata-tags.c:189
+#: plug-ins/metadata/metadata-tags.c:196
 msgid "Digital art"
 msgstr "Digitalna umetnost"
 
-#: plug-ins/metadata/metadata-tags.c:190
+#: plug-ins/metadata/metadata-tags.c:197
 msgid "Virtual recording"
 msgstr "Navidezni posnetek"
 
-#: plug-ins/metadata/metadata-tags.c:191
+#: plug-ins/metadata/metadata-tags.c:198
 msgid "Composite including synthetic elements"
 msgstr "Kompozit, ki vključuje sintetične elemente"
 
-#: plug-ins/metadata/metadata-tags.c:192
+#: plug-ins/metadata/metadata-tags.c:199
 msgid "Trained algorithmic media"
 msgstr "Učeni algoritemski medij"
 
-#: plug-ins/metadata/metadata-tags.c:193
+#: plug-ins/metadata/metadata-tags.c:200
 msgid "Pure algorithmic media"
 msgstr "Čisti algoritemski medij"
 
-#: plug-ins/metadata/metadata-tags.c:194
+#: plug-ins/metadata/metadata-tags.c:201
 msgid "Created by software"
 msgstr "Ustvarjeno s programjem"
 
-#: plug-ins/metadata/metadata-tags.c:205 plug-ins/metadata/metadata-tags.c:217
+#: plug-ins/metadata/metadata-tags.c:212 plug-ins/metadata/metadata-tags.c:224
 msgid "Not Applicable"
 msgstr "Se ne uporabi"
 
-#: plug-ins/metadata/metadata-tags.c:206
+#: plug-ins/metadata/metadata-tags.c:213
 msgid "Unlimited Model Releases"
 msgstr "Neomejeno izdajanje modelov"
 
-#: plug-ins/metadata/metadata-tags.c:207
+#: plug-ins/metadata/metadata-tags.c:214
 msgid "Limited or Incomplete Model Releases"
 msgstr "Omejeno ali nepopolno izdajanje modelov"
 
-#: plug-ins/metadata/metadata-tags.c:218
+#: plug-ins/metadata/metadata-tags.c:225
 msgid "Unlimited Property Releases"
 msgstr "Neomejeno izdajanje lastnosti"
 
-#: plug-ins/metadata/metadata-tags.c:219
+#: plug-ins/metadata/metadata-tags.c:226
 msgid "Limited or Incomplete Property Releases"
 msgstr "Omejeno ali nepopolno izdajanje lastnosti"
 
-#: plug-ins/metadata/metadata-tags.c:228
+#: plug-ins/metadata/metadata-tags.c:235
 msgid "Age Unknown"
 msgstr "Starost ni znana"
 
-#: plug-ins/metadata/metadata-tags.c:229
+#: plug-ins/metadata/metadata-tags.c:236
 msgid "Age 25 or Over"
 msgstr "Starost 25 let ali več"
 
-#: plug-ins/metadata/metadata-tags.c:230
+#: plug-ins/metadata/metadata-tags.c:237
 msgid "Age 24"
 msgstr "Starost 24 let"
 
-#: plug-ins/metadata/metadata-tags.c:231
+#: plug-ins/metadata/metadata-tags.c:238
 msgid "Age 23"
 msgstr "Starost 23 let"
 
-#: plug-ins/metadata/metadata-tags.c:232
+#: plug-ins/metadata/metadata-tags.c:239
 msgid "Age 22"
 msgstr "Starost 22 let"
 
-#: plug-ins/metadata/metadata-tags.c:233
+#: plug-ins/metadata/metadata-tags.c:240
 msgid "Age 21"
 msgstr "Starost 21 let"
 
-#: plug-ins/metadata/metadata-tags.c:234
+#: plug-ins/metadata/metadata-tags.c:241
 msgid "Age 20"
 msgstr "Starost 20 let"
 
-#: plug-ins/metadata/metadata-tags.c:235
+#: plug-ins/metadata/metadata-tags.c:242
 msgid "Age 19"
 msgstr "Starost 19 let"
 
-#: plug-ins/metadata/metadata-tags.c:236
+#: plug-ins/metadata/metadata-tags.c:243
 msgid "Age 18"
 msgstr "Starost 18 let"
 
-#: plug-ins/metadata/metadata-tags.c:237
+#: plug-ins/metadata/metadata-tags.c:244
 msgid "Age 17"
 msgstr "Starost 17 let"
 
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:245
 msgid "Age 16"
 msgstr "Starost 16 let"
 
-#: plug-ins/metadata/metadata-tags.c:239
+#: plug-ins/metadata/metadata-tags.c:246
 msgid "Age 15"
 msgstr "Starost 15 let"
 
-#: plug-ins/metadata/metadata-tags.c:240
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "Age 14 or Under"
 msgstr "Starost 14 let ali manj"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "2"
 msgstr "2"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "3"
 msgstr "3"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "4"
 msgstr "4"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "6"
 msgstr "6"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "7"
 msgstr "7"
 
-#: plug-ins/metadata/metadata-tags.c:254 plug-ins/metadata/metadata-tags.c:290
-#: plug-ins/metadata/metadata-tags.c:297 plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:261 plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304 plug-ins/metadata/metadata-tags.c:311
 msgid "Unknown"
 msgstr "Neznano"
 
 #. DO NOT SAVE
-#: plug-ins/metadata/metadata-tags.c:255
+#: plug-ins/metadata/metadata-tags.c:262
 msgid "Copyrighted"
 msgstr "Avtorsko zaščiteno"
 
 #. TRUE
-#: plug-ins/metadata/metadata-tags.c:256
+#: plug-ins/metadata/metadata-tags.c:263
 msgid "Public Domain"
 msgstr "Javna last"
 
-#: plug-ins/metadata/metadata-tags.c:264
+#: plug-ins/metadata/metadata-tags.c:271
 msgid "Work"
 msgstr "Delo"
 
-#: plug-ins/metadata/metadata-tags.c:265
+#: plug-ins/metadata/metadata-tags.c:272
 msgid "Cell"
 msgstr "Mobilnik"
 
-#: plug-ins/metadata/metadata-tags.c:266
+#: plug-ins/metadata/metadata-tags.c:273
 msgid "Fax"
 msgstr "Faks"
 
-#: plug-ins/metadata/metadata-tags.c:267
+#: plug-ins/metadata/metadata-tags.c:274
 msgid "Home"
 msgstr "Domača številka"
 
-#: plug-ins/metadata/metadata-tags.c:268
+#: plug-ins/metadata/metadata-tags.c:275
 msgid "Pager"
 msgstr "Pozivnik"
 
-#: plug-ins/metadata/metadata-tags.c:281
+#: plug-ins/metadata/metadata-tags.c:288
 msgid "Male"
 msgstr "Moški"
 
-#: plug-ins/metadata/metadata-tags.c:282
+#: plug-ins/metadata/metadata-tags.c:289
 msgid "Female"
 msgstr "Ženska"
 
-#: plug-ins/metadata/metadata-tags.c:283
+#: plug-ins/metadata/metadata-tags.c:290
 msgid "Other"
 msgstr "Drugo"
 
-#: plug-ins/metadata/metadata-tags.c:290
+#: plug-ins/metadata/metadata-tags.c:297
 msgid "Above sea level"
 msgstr "Nadmorska višina"
 
-#: plug-ins/metadata/metadata-tags.c:290
+#: plug-ins/metadata/metadata-tags.c:297
 msgid "Below sea level"
 msgstr "Pod morsko gladino"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "North"
 msgstr "Sever"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "South"
 msgstr "Jug"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
 msgid "East"
 msgstr "Vzhod"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
 msgid "West"
 msgstr "Zahod"
 
