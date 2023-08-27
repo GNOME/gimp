@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-05 13:48+0100\n"
-"PO-Revision-Date: 2023-03-05 13:50+0100\n"
+"POT-Creation-Date: 2023-08-27 16:21+0200\n"
+"PO-Revision-Date: 2023-08-27 16:22+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -13245,29 +13245,33 @@ msgstr "Wklejona warstwa"
 msgid "Global Buffer"
 msgstr "Bufor globalny"
 
-#: ../app/core/gimp-gradients.c:64
+#: ../app/core/gimp-gradients.c:65
 msgid "Custom"
 msgstr "Niestandardowe"
 
-#: ../app/core/gimp-gradients.c:74
+#: ../app/core/gimp-gradients.c:75
 msgid "FG to BG (RGB)"
 msgstr "Kolor pierwszoplanowy na kolor tła (RGB)"
 
-#: ../app/core/gimp-gradients.c:82
+#: ../app/core/gimp-gradients.c:83
 msgid "FG to BG (Hardedge)"
 msgstr "Kolor pierwszoplanowy na kolor tła (twarda krawędź)"
 
-#: ../app/core/gimp-gradients.c:90
+#: ../app/core/gimp-gradients.c:91
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "Kolor pierwszoplanowy na kolor tła (HSV lewoskrętnie)"
 
-#: ../app/core/gimp-gradients.c:98
+#: ../app/core/gimp-gradients.c:99
 msgid "FG to BG (HSV clockwise hue)"
 msgstr "Kolor pierwszoplanowy na kolor tła (barwa HSV prawoskrętnie)"
 
-#: ../app/core/gimp-gradients.c:106
+#: ../app/core/gimp-gradients.c:107
 msgid "FG to Transparent"
 msgstr "Kolor pierwszoplanowy na przezroczystość"
+
+#: ../app/core/gimp-gradients.c:114
+msgid "FG to Transparent (Hardedge)"
+msgstr "Kolor pierwszoplanowy na przezroczystość (twarda krawędź)"
 
 #. Translator:  This message is displayed while GIMP is waiting for
 #. * some operation to finish.  The %s argument is a message describing
@@ -27273,7 +27277,7 @@ msgstr "%g×%g %s"
 msgid "colors"
 msgstr "kolory"
 
-#: ../app/widgets/gimpitemtreeview.c:763
+#: ../app/widgets/gimpitemtreeview.c:765
 msgid "Lock:"
 msgstr "Blokowanie:"
 
