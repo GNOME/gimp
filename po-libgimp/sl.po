@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-11 07:31+0000\n"
-"PO-Revision-Date: 2023-08-12 01:14+0200\n"
+"POT-Creation-Date: 2023-08-26 14:00+0000\n"
+"PO-Revision-Date: 2023-08-27 07:24+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -497,6 +497,63 @@ msgstr "Datum:"
 #: libgimp/gimpprocview.c:269
 msgid "Copyright:"
 msgstr "Nosilec avtorskih pravic:"
+
+#: libgimp/gimpsaveprocedure.c:408
+msgid "Save _Exif"
+msgstr "Shrani _Exif"
+
+#: libgimp/gimpsaveprocedure.c:409
+msgid "Save Exif (Exchangeable image file format) metadata"
+msgstr "Shranite metapodatke Exif (zapis Exchangeable image file)"
+
+#: libgimp/gimpsaveprocedure.c:414
+msgid "Save _IPTC"
+msgstr "Shrani _IPTC"
+
+#: libgimp/gimpsaveprocedure.c:415
+msgid "Save IPTC (International Press Telecommunications Council) metadata"
+msgstr ""
+"Shranite metapodatke IPTC (International Press Telecommunications Council)"
+
+#: libgimp/gimpsaveprocedure.c:420
+msgid "Save _XMP"
+msgstr "Shrani _XMP"
+
+#: libgimp/gimpsaveprocedure.c:421
+msgid "Save XMP (Extensible Metadata Platform) metadata"
+msgstr "Shranite metapodatke XMP (Extensible Metadata Platform)"
+
+#: libgimp/gimpsaveprocedure.c:426
+msgid "Save color _profile"
+msgstr "Shrani barvni _profil"
+
+#: libgimp/gimpsaveprocedure.c:427
+msgid "Save the ICC color profile as metadata"
+msgstr "Shranite barvni profil slike ICC kot metapodatke"
+
+#: libgimp/gimpsaveprocedure.c:432
+msgid "Save _thumbnail"
+msgstr "Shrani _ogledno sliico"
+
+#: libgimp/gimpsaveprocedure.c:433
+msgid "Save a smaller representation of the image as metadata"
+msgstr "Shranite manjšo inačico slike kot metapodatke"
+
+#: libgimp/gimpsaveprocedure.c:439
+msgid "Save c_omment"
+msgstr "Shrani k_omentar"
+
+#: libgimp/gimpsaveprocedure.c:440
+msgid "Save a comment as metadata"
+msgstr "Shrani komentar kot metapodatke"
+
+#: libgimp/gimpsaveprocedure.c:444
+msgid "Comment"
+msgstr "Komentar"
+
+#: libgimp/gimpsaveprocedure.c:445
+msgid "Image comment"
+msgstr "Komentar slike"
 
 #: libgimp/gimpsaveproceduredialog.c:166
 msgid "Metadata"
@@ -2166,6 +2223,22 @@ msgstr "mebibajtov"
 msgid "Gibibyte"
 msgstr "gibibajtov"
 
+#: libgimpwidgets/gimppageselector.c:185
+msgid "N Pages"
+msgstr "N strani"
+
+#: libgimpwidgets/gimppageselector.c:186
+msgid "The number of pages to open"
+msgstr "Število strani, ki jih boste odprli"
+
+#: libgimpwidgets/gimppageselector.c:199
+msgid "Target"
+msgstr "Cilj"
+
+#: libgimpwidgets/gimppageselector.c:200
+msgid "the target to open to"
+msgstr "cilj, kamor bo odprto"
+
 #. Count label
 #: libgimpwidgets/gimppageselector.c:283 libgimpwidgets/gimppageselector.c:1079
 msgid "Nothing selected"
@@ -2869,77 +2942,80 @@ msgstr "Predpreoblikovalna sprememba v postankih"
 msgid "Aces RRT"
 msgstr "Aces RRT"
 
-#: modules/display-filter-clip-warning.c:121
+#. Translators: "Clip Warning" is the name of a (color) display filter
+#. * that highlights pixels outside of the color space range.
+#. * Shown as a label description.
+#: modules/display-filter-clip-warning.c:124
 msgid "Clip warning color display filter"
 msgstr "Filter za prikaz barv opozorila porezave"
 
-#: modules/display-filter-clip-warning.c:158
+#: modules/display-filter-clip-warning.c:161
 msgid "Show shadows"
 msgstr "Pokaži sence"
 
-#: modules/display-filter-clip-warning.c:159
+#: modules/display-filter-clip-warning.c:162
 msgid "Show warning for pixels with a negative component"
 msgstr "Pokaži opozorilo za slikovne točke z negativno komponento"
 
-#: modules/display-filter-clip-warning.c:165
+#: modules/display-filter-clip-warning.c:168
 msgid "Shadows color"
 msgstr "Barva senc"
 
-#: modules/display-filter-clip-warning.c:166
+#: modules/display-filter-clip-warning.c:169
 msgid "Shadows warning color"
 msgstr "Opozorilna barva senc"
 
-#: modules/display-filter-clip-warning.c:178
+#: modules/display-filter-clip-warning.c:181
 msgid "Show highlights"
 msgstr "Pokaži svetle tone"
 
-#: modules/display-filter-clip-warning.c:179
+#: modules/display-filter-clip-warning.c:182
 msgid "Show warning for pixels with a component greater than one"
 msgstr "Pokaži opozorilo za slikovne točke s komponento, večjo od 1"
 
-#: modules/display-filter-clip-warning.c:185
+#: modules/display-filter-clip-warning.c:188
 msgid "Highlights color"
 msgstr "Barva svetlih tonov"
 
-#: modules/display-filter-clip-warning.c:186
+#: modules/display-filter-clip-warning.c:189
 msgid "Highlights warning color"
 msgstr "Opozorilna barva svetlih tonov"
 
-#: modules/display-filter-clip-warning.c:198
+#: modules/display-filter-clip-warning.c:201
 msgid "Show bogus"
 msgstr "Pokaži lažne vrednosti"
 
-#: modules/display-filter-clip-warning.c:199
+#: modules/display-filter-clip-warning.c:202
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr ""
 "Pokaži opozorilo za slikovne točke s komponento, ki je neskončna ali sploh "
 "ni število"
 
-#: modules/display-filter-clip-warning.c:205
+#: modules/display-filter-clip-warning.c:208
 msgid "Bogus color"
 msgstr "Lažna barva"
 
-#: modules/display-filter-clip-warning.c:206
+#: modules/display-filter-clip-warning.c:209
 msgid "Bogus warning color"
 msgstr "Opozorilna barva lažne vrednosti"
 
-#: modules/display-filter-clip-warning.c:218
+#: modules/display-filter-clip-warning.c:221
 msgid "Include alpha component"
 msgstr "Vključi komponento alfa"
 
-#: modules/display-filter-clip-warning.c:219
+#: modules/display-filter-clip-warning.c:222
 msgid "Include alpha component in the warning"
 msgstr "V opozorilo vključi komponento alfa"
 
-#: modules/display-filter-clip-warning.c:225
+#: modules/display-filter-clip-warning.c:228
 msgid "Include transparent pixels"
 msgstr "Vključi prosojne slikovne točke"
 
-#: modules/display-filter-clip-warning.c:226
+#: modules/display-filter-clip-warning.c:229
 msgid "Include fully transparent pixels in the warning"
 msgstr "V opozorilo vključi povsem prosojne slikovne točke"
 
-#: modules/display-filter-clip-warning.c:230
+#: modules/display-filter-clip-warning.c:233
 msgid "Clip Warning"
 msgstr "Opozorilo porezave"
 
