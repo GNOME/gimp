@@ -271,6 +271,7 @@ libgimp_headers = [
 libgimpui_sources_introspectable = [
   'gimpaspectpreview.c',
   'gimpbrushchooser.c',
+  'gimpdrawablechooser.c',
   'gimpdrawablepreview.c',
   'gimpexport.c',
   'gimpfontchooser.c',
@@ -303,6 +304,7 @@ libgimpui_headers_introspectable = [
   # Other headers
   'gimpaspectpreview.h',
   'gimpbrushchooser.h',
+  'gimpdrawablechooser.h',
   'gimpdrawablepreview.h',
   'gimpexport.h',
   'gimpfontchooser.h',

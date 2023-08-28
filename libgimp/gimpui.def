@@ -5,6 +5,11 @@ EXPORTS
 	gimp_brush_chooser_new
 	gimp_channel_combo_box_get_type
 	gimp_channel_combo_box_new
+	gimp_drawable_chooser_get_drawable
+	gimp_drawable_chooser_get_label
+	gimp_drawable_chooser_get_type
+	gimp_drawable_chooser_new
+	gimp_drawable_chooser_set_drawable
 	gimp_drawable_combo_box_get_type
 	gimp_drawable_combo_box_new
 	gimp_drawable_preview_get_drawable
@@ -59,6 +64,7 @@ EXPORTS
 	gimp_progress_bar_get_type
 	gimp_progress_bar_new
 	gimp_prop_brush_chooser_new
+	gimp_prop_drawable_chooser_new
 	gimp_prop_font_chooser_new
 	gimp_prop_gradient_chooser_new
 	gimp_prop_palette_chooser_new

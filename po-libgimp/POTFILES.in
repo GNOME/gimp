@@ -2,18 +2,20 @@
 # marked to allow runtime translation of messages
 
 libgimp/gimp.c
-libgimp/gimpbrushselectbutton.c
+libgimp/gimpbrushchooser.c
+libgimp/gimpdrawablechooser.c
 libgimp/gimpexport.c
 libgimp/gimpimagemetadata.c
 libgimp/gimpimagemetadata-save.c
 libgimp/gimploadprocedure.c
 libgimp/gimpparamspecs-desc.c
-libgimp/gimppatternselectbutton.c
+libgimp/gimppatternchooser.c
 libgimp/gimppdb.c
 libgimp/gimpprocbrowserdialog.c
 libgimp/gimpprocedure.c
 libgimp/gimpproceduredialog.c
 libgimp/gimpprocview.c
+libgimp/gimppropwidgets.c
 libgimp/gimpsaveprocedure.c
 libgimp/gimpsaveproceduredialog.c
 libgimp/gimpunitcache.c

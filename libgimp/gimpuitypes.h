@@ -43,6 +43,8 @@ typedef struct _GimpLayerComboBox        GimpLayerComboBox;
 typedef struct _GimpVectorsComboBox      GimpVectorsComboBox;
 typedef struct _GimpImageComboBox        GimpImageComboBox;
 
+typedef struct _GimpDrawableChooser      GimpDrawableChooser;
+
 typedef struct _GimpResourceChooser      GimpResourceChooser;
 typedef struct _GimpBrushChooser         GimpBrushChooser;
 typedef struct _GimpFontChooser          GimpFontChooser;

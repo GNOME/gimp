@@ -31,9 +31,9 @@
 
 #include <libgimp/gimpaspectpreview.h>
 #include <libgimp/gimpbrushchooser.h>
+#include <libgimp/gimpdrawablechooser.h>
 #include <libgimp/gimpdrawablepreview.h>
 #include <libgimp/gimpexport.h>
-#include <libgimp/gimpresourcechooser.h>
 #include <libgimp/gimpfontchooser.h>
 #include <libgimp/gimpgradientchooser.h>
 #include <libgimp/gimpimagecombobox.h>
@@ -45,6 +45,7 @@
 #include <libgimp/gimpprocview.h>
 #include <libgimp/gimpprogressbar.h>
 #include <libgimp/gimppropwidgets.h>
+#include <libgimp/gimpresourcechooser.h>
 #include <libgimp/gimpsaveproceduredialog.h>
 #include <libgimp/gimpzoompreview.h>
 

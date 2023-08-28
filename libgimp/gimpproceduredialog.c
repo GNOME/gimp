@@ -795,6 +795,10 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
     {
       widget = gimp_prop_pattern_chooser_new (G_OBJECT (dialog->priv->config), property, _("Pattern Chooser"));
     }
+  else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_DRAWABLE)
+    {
+      widget = gimp_prop_drawable_chooser_new (G_OBJECT (dialog->priv->config), property, NULL);
+    }
   else  if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_ENUM)
     {
       GimpIntStore *store;
@@ -838,6 +842,8 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
             label = gimp_labeled_get_label (GIMP_LABELED (widget));
           else if (GIMP_IS_RESOURCE_CHOOSER (widget))
             label = gimp_resource_chooser_get_label (GIMP_RESOURCE_CHOOSER (widget));
+          else if (GIMP_IS_DRAWABLE_CHOOSER (widget))
+            label = gimp_drawable_chooser_get_label (GIMP_DRAWABLE_CHOOSER (widget));
         }
       if (label != NULL)
         gtk_size_group_add_widget (dialog->priv->label_group, label);
@@ -2581,6 +2587,14 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
   if (GIMP_IS_LABELED (widget))
     {
       label = gimp_labeled_get_label (GIMP_LABELED (widget));
+    }
+  else if (GIMP_IS_RESOURCE_CHOOSER (widget))
+    {
+      label = gimp_resource_chooser_get_label (GIMP_RESOURCE_CHOOSER (widget));
+    }
+  else if (GIMP_IS_DRAWABLE_CHOOSER (widget))
+    {
+      label = gimp_drawable_chooser_get_label (GIMP_DRAWABLE_CHOOSER (widget));
     }
   else
     {
