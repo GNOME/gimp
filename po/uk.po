@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-11 07:30+0000\n"
-"PO-Revision-Date: 2023-08-11 21:44+0300\n"
+"POT-Creation-Date: 2023-08-27 16:52+0000\n"
+"PO-Revision-Date: 2023-08-28 20:21+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -260,11 +260,11 @@ msgstr "Показувати сторінку налаштувань із екс
 msgid "Show an image submenu with debug actions"
 msgstr "Показати підменю зображення із пунктами діагностики"
 
-#: app/main.c:725
+#: app/main.c:719
 msgid "[FILE|URI...]"
 msgstr "[ФАЙЛ|URI...]"
 
-#: app/main.c:753
+#: app/main.c:747
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -272,20 +272,20 @@ msgstr ""
 "GIMP не може ініціалізувати графічний інтерфейс.\n"
 "Перевірте правильність параметрів вашого графічного середовища."
 
-#: app/main.c:774
+#: app/main.c:768
 msgid "Another GIMP instance is already running."
 msgstr "Вже запущена інша копія GIMP"
 
-#: app/main.c:863
+#: app/main.c:857
 msgid "GIMP output. Type any character to close this window."
 msgstr "Вивід GIMP. Введіть будь-який символ для закриття цього вікна."
 
-#: app/main.c:864
+#: app/main.c:858
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Введіть будь-який символ для закриття цього вікна.)\n"
 
-#: app/main.c:881
+#: app/main.c:875
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Вивід GIMP. Ви можете згорнути це вікно, але не закривати його."
 
@@ -2522,7 +2522,7 @@ msgstr ""
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2428
 #: app/core/gimppalette.c:428 app/core/gimppalette-import.c:213
-#: app/core/gimppalette-load.c:194 app/dialogs/palette-import-dialog.c:762
+#: app/core/gimppalette-load.c:199 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Без назви"
@@ -7869,7 +7869,7 @@ msgstr "Від_крити"
 #: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:226
 #: app/config/gimpconfig-file.c:72 app/core/gimppalette-import.c:501
 #: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234
-#: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1663
+#: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1664
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Не вдалось відкрити «%s» для зчитування: %s"
@@ -12654,7 +12654,6 @@ msgid "FG to Transparent"
 msgstr "Передній план до прозорого"
 
 #: app/core/gimp-gradients.c:114
-#| msgid "FG to Transparent"
 msgid "FG to Transparent (Hardedge)"
 msgstr "Передній план до прозорого (різкий перехід)"
 
@@ -14331,25 +14330,25 @@ msgstr "Не вдалося перетворити пензель MyPaint з п�
 msgid "%s (occurs %u)"
 msgstr "%s (трапився %u разів)"
 
-#: app/core/gimppalette-import.c:536
+#: app/core/gimppalette-import.c:540
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Невідомий тип файла палітри: %s"
 
-#: app/core/gimppalette-load.c:71
+#: app/core/gimppalette-load.c:76
 msgid "Missing magic header."
 msgstr "Відсутній чарівний заголовок."
 
-#: app/core/gimppalette-load.c:94
+#: app/core/gimppalette-load.c:99
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Неправильний рядок UTF-8 у файлі палітри «%s»"
 
-#: app/core/gimppalette-load.c:114
+#: app/core/gimppalette-load.c:119
 msgid "Invalid column count."
 msgstr "Некоректна кількість стовпчиків."
 
-#: app/core/gimppalette-load.c:121
+#: app/core/gimppalette-load.c:126
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -14358,47 +14357,96 @@ msgstr ""
 "Читається файл палітри «%s»: неправильна кількість стовпчиків у рядку %d. "
 "Використовується типове значення."
 
-#: app/core/gimppalette-load.c:155
+#: app/core/gimppalette-load.c:160
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Читається файл палітри «%s»: відсутній ЧЕРВОНИЙ компонент у рядку %d."
 
-#: app/core/gimppalette-load.c:163
+#: app/core/gimppalette-load.c:168
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "Читається файл палітри «%s»: відсутній ЗЕЛЕНИЙ компонент у рядку %d."
 
-#: app/core/gimppalette-load.c:171
+#: app/core/gimppalette-load.c:176
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Читається файл палітри «%s»: відсутній СИНІЙ компонент у рядку %d."
 
-#: app/core/gimppalette-load.c:181
+#: app/core/gimppalette-load.c:186
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
 "Читається файл палітри «%s»: значення RGB поза межами допустимого діапазону "
 "у рядку %d."
 
-#: app/core/gimppalette-load.c:208 app/core/gimppalette-load.c:458
+#: app/core/gimppalette-load.c:213 app/core/gimppalette-load.c:463
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr ""
 "Читається файл палітри «%s»: прочитано %d кольорів із обірваного файлу: %s"
 
-#: app/core/gimppalette-load.c:230
+#: app/core/gimppalette-load.c:235
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "У рядку %d файла палітри: "
 
-#: app/core/gimppalette-load.c:426
+#: app/core/gimppalette-load.c:431 app/core/gimppalette-load.c:633
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Не вдалось прочитати заголовок з файла палітри «%s»: "
 
-#: app/core/gimppalette-load.c:463
+#: app/core/gimppalette-load.c:468
 msgid "Premature end of file."
 msgstr "Передчасний кінець файлу."
+
+#: app/core/gimppalette-load.c:643
+#, c-format
+#| msgid "Invalid brush hardness."
+msgid "Invalid ASE header: %s"
+msgstr "Некоректний заголовок ASE: %s"
+
+#: app/core/gimppalette-load.c:652
+#| msgid "Maximum number of colors:"
+msgid "Invalid number of colors in palette."
+msgstr "Некоректна кількість кольорів у палітрі."
+
+#: app/core/gimppalette-load.c:658
+#, c-format
+#| msgid "Maximum number of colors:"
+msgid "Invalid number of colors: %s."
+msgstr "Некоректна кількість кольорів: %s."
+
+#: app/core/gimppalette-load.c:668
+#, c-format
+#| msgid "Invalid UTF-8 data in file '%s'."
+msgid "Invalid ASE file: %s."
+msgstr "Некоректний файл ASE: %s."
+
+#: app/core/gimppalette-load.c:746
+#, c-format
+#| msgid "Invalid column count."
+msgid "Invalid color components: %s."
+msgstr "Некоректні компоненти кольору: %s."
+
+#: app/core/gimppalette-load.c:760 app/core/gimppalette-load.c:787
+#, c-format
+#| msgid "Invalid column count."
+msgid "Invalid ASE color entry: %s."
+msgstr "Некоректний запис кольору ASE: %s."
+
+#: app/core/gimppalette-load.c:815 app/core/gimppalette-load.c:831
+#: app/core/gimppalette-load.c:850
+#| msgid "Invalid empty palette name"
+msgid "Invalid ASE palette name."
+msgstr "Некоректна назва палітри ASE."
+
+#: app/core/gimppalette-load.c:824
+msgid "Invalid ASE block size."
+msgstr "Некоректний розмір блоку ASE."
+
+#: app/core/gimppalette-load.c:840
+msgid "Invalid ASE name size."
+msgstr "Некоректний розмір назви ASE."
 
 #: app/core/gimppalettemru.c:123 app/core/gimppalettemru.c:229
 msgid "History Color"
@@ -27769,17 +27817,17 @@ msgstr "У цьому контексті атрибут «%s» є некорек
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "Зовнішнім елементом у тексті повинен бути <markup>, а не <%s>"
 
-#: app/widgets/gimptextbuffer.c:1700
+#: app/widgets/gimptextbuffer.c:1701
 #, c-format
 msgid "Input file '%s' appears truncated: %s"
 msgstr "Файл вхідних даних «%s», ймовірно, обірваний: %s"
 
-#: app/widgets/gimptextbuffer.c:1718
+#: app/widgets/gimptextbuffer.c:1719
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Неправильний рядок UTF-8 у файлі \"%s\"."
 
-#: app/widgets/gimptextbuffer.c:1769
+#: app/widgets/gimptextbuffer.c:1770
 #, c-format
 msgid "Writing text file '%s' failed: %s"
 msgstr "Не вдалося записати текстовий файл «%s»: %s"
@@ -28708,15 +28756,15 @@ msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "Діалоги з підтримкою _прикріплення"
 
-#: menus/image-menu.ui.in.in:896
-msgctxt "help-action"
-msgid "_GIMP Online"
-msgstr "_GIMP в інтернеті"
-
-#: menus/image-menu.ui.in.in:899
+#: menus/image-menu.ui.in.in:886
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "_Посібник користувача"
+
+#: menus/image-menu.ui.in.in:899
+msgctxt "help-action"
+msgid "_GIMP Online"
+msgstr "_GIMP в інтернеті"
 
 #: menus/layers-menu.ui:6
 msgctxt "layers-action"
@@ -28867,9 +28915,6 @@ msgstr "Меню контурів"
 #, c-format
 #~ msgid "Gradient '%s' is not renamable"
 #~ msgstr "Градієнт «%s» не можна перейменовувати"
-
-#~ msgid "Invalid empty palette name"
-#~ msgstr "Некоректна порожня назва набору зразків"
 
 #, c-format
 #~ msgid "Palette '%s' not found"
