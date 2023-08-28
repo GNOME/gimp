@@ -103,6 +103,7 @@ void        gimp_preview_area_fill             (GimpPreviewArea *area,
                                                 guchar           red,
                                                 guchar           green,
                                                 guchar           blue);
+void        gimp_preview_area_reset            (GimpPreviewArea *area);
 
 void        gimp_preview_area_set_offsets      (GimpPreviewArea *area,
                                                 gint             x,

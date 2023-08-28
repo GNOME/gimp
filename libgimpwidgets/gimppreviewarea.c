@@ -572,7 +572,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
   if (! priv->buf)
     {
       priv->rowstride = ((priv->width * 3) + 3) & ~3;
-      priv->buf = g_new (guchar, priv->rowstride * priv->height);
+      priv->buf = g_new0 (guchar, priv->rowstride * priv->height);
     }
 
   size = 1 << (2 + priv->check_size);
@@ -880,7 +880,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
   if (! priv->buf)
     {
       priv->rowstride = ((priv->width * 3) + 3) & ~3;
-      priv->buf = g_new (guchar, priv->rowstride * priv->height);
+      priv->buf = g_new0 (guchar, priv->rowstride * priv->height);
     }
 
   size = 1 << (2 + priv->check_size);
@@ -1279,7 +1279,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
   if (! priv->buf)
     {
       priv->rowstride = ((priv->width * 3) + 3) & ~3;
-      priv->buf = g_new (guchar, priv->rowstride * priv->height);
+      priv->buf = g_new0 (guchar, priv->rowstride * priv->height);
     }
 
   size = 1 << (2 + priv->check_size);
@@ -1852,7 +1852,7 @@ gimp_preview_area_fill (GimpPreviewArea *area,
   if (! priv->buf)
     {
       priv->rowstride = ((priv->width * 3) + 3) & ~3;
-      priv->buf = g_new (guchar, priv->rowstride * priv->height);
+      priv->buf = g_new0 (guchar, priv->rowstride * priv->height);
     }
 
   dest = priv->buf + x * 3 + y * priv->rowstride;
@@ -1873,6 +1873,32 @@ gimp_preview_area_fill (GimpPreviewArea *area,
     }
 
   gimp_preview_area_queue_draw (area, x, y, width, height);
+}
+
+/**
+ * gimp_preview_area_reset:
+ * @area:   a #GimpPreviewArea widget.
+ *
+ * Reset any previous drawing done through [class@Gimp.PreviewArea] functions.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_preview_area_reset (GimpPreviewArea *area)
+{
+  GimpPreviewAreaPrivate *priv = GET_PRIVATE (area);
+  GtkAllocation           allocation;
+
+  if (priv->buf)
+    {
+      g_free (priv->buf);
+
+      priv->buf       = NULL;
+      priv->rowstride = 0;
+    }
+
+  gtk_widget_get_allocation (GTK_WIDGET (area), &allocation);
+  gimp_preview_area_queue_draw (area, 0, 0, allocation.width, allocation.height);
 }
 
 /**
