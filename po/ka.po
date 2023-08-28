@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-11 07:06+0000\n"
-"PO-Revision-Date: 2023-08-11 09:26+0200\n"
+"POT-Creation-Date: 2023-08-27 16:52+0000\n"
+"PO-Revision-Date: 2023-08-28 06:34+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -237,30 +237,30 @@ msgstr "მორგების ფანჯარაში ექსპერ�
 msgid "Show an image submenu with debug actions"
 msgstr "გამოსახულების ქვემენიუს გამართვის ქმედებებით ჩვენება"
 
-#: app/main.c:725
+#: app/main.c:719
 msgid "[FILE|URI...]"
 msgstr "[FILE|URI...]"
 
-#: app/main.c:753
+#: app/main.c:747
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
 
-#: app/main.c:774
+#: app/main.c:768
 msgid "Another GIMP instance is already running."
 msgstr "GIMP-ის კიდევ ერთი ასლი უკვე გაშვებულია."
 
-#: app/main.c:863
+#: app/main.c:857
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP-ის გამოტანა. ფანჯრის დასახურად დააწექით ნებისმიერ კლავიშას."
 
-#: app/main.c:864
+#: app/main.c:858
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(ფანჯრის დასახურად დააჭირეთ ნებისმიერ კლავიშას)\n"
 
-#: app/main.c:881
+#: app/main.c:875
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "GIMP-ის გამოტანა. თქვენ შეგიძლიათ ჩაკეცოთ ფანჯარა, მაგრამ არა მისი დახურვა."
@@ -2475,7 +2475,7 @@ msgstr ""
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2428
 #: app/core/gimppalette.c:428 app/core/gimppalette-import.c:213
-#: app/core/gimppalette-load.c:194 app/dialogs/palette-import-dialog.c:762
+#: app/core/gimppalette-load.c:199 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "უსათაურო"
@@ -7767,7 +7767,7 @@ msgstr "გახსნა"
 #: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:226
 #: app/config/gimpconfig-file.c:72 app/core/gimppalette-import.c:501
 #: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:234
-#: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1663
+#: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1664
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "შეცდომა '%s'-ის კითხვისას: %s"
@@ -14031,25 +14031,25 @@ msgstr "MyPaint-ის ფუნჯის დესერიალიზაც�
 msgid "%s (occurs %u)"
 msgstr "%s (ხდება %u)"
 
-#: app/core/gimppalette-import.c:536
+#: app/core/gimppalette-import.c:540
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "პალტრის ფაილის უცნობი ტიპი: %s"
 
-#: app/core/gimppalette-load.c:71
+#: app/core/gimppalette-load.c:76
 msgid "Missing magic header."
 msgstr "ვერ ვიპოვე magic header."
 
-#: app/core/gimppalette-load.c:94
+#: app/core/gimppalette-load.c:99
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "არასწორი UTF-8 მონაცემები პალიტრის ფაილში '%s'."
 
-#: app/core/gimppalette-load.c:114
+#: app/core/gimppalette-load.c:119
 msgid "Invalid column count."
 msgstr "სვეტების არასწორი რიცხვი."
 
-#: app/core/gimppalette-load.c:121
+#: app/core/gimppalette-load.c:126
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -14058,44 +14058,86 @@ msgstr ""
 "პალეტის ფაილის %s კითხვისას: სვეტების არასწორი რაოდენობა ხაზზე %d. "
 "გამოიყენება ნაგულისხმევი მნიშვნელობები."
 
-#: app/core/gimppalette-load.c:155
+#: app/core/gimppalette-load.c:160
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "პალეტის ფაილის %s კითხვისას: გამოტოვებული წითელი კომპონენტი ხაზზე %d."
 
-#: app/core/gimppalette-load.c:163
+#: app/core/gimppalette-load.c:168
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "პალეტის ფაილის %s კითხვისას: გამოტოვებული მწვანე კომპონენტი ხაზზე %d."
 
-#: app/core/gimppalette-load.c:171
+#: app/core/gimppalette-load.c:176
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "პალეტის ფაილის %s კითხვისას: გამოტოვებული ლურჯი კომპონენტი ხაზზე %d."
 
-#: app/core/gimppalette-load.c:181
+#: app/core/gimppalette-load.c:186
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
 
-#: app/core/gimppalette-load.c:208 app/core/gimppalette-load.c:458
+#: app/core/gimppalette-load.c:213 app/core/gimppalette-load.c:463
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr ""
 
-#: app/core/gimppalette-load.c:230
+#: app/core/gimppalette-load.c:235
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "პალეტის ფაილის ხაზზე %d: "
 
-#: app/core/gimppalette-load.c:426
+#: app/core/gimppalette-load.c:431 app/core/gimppalette-load.c:633
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "პალეტის ფაილ %s-ის ჰედერის კთხვის შეცდომა: "
 
-#: app/core/gimppalette-load.c:463
+#: app/core/gimppalette-load.c:468
 msgid "Premature end of file."
 msgstr "ფაილის მოულოდნელი დასასრული."
+
+#: app/core/gimppalette-load.c:643
+#, c-format
+msgid "Invalid ASE header: %s"
+msgstr "არასწორი ASE თავსართი: %s"
+
+#: app/core/gimppalette-load.c:652
+msgid "Invalid number of colors in palette."
+msgstr "პალიტრაში არსებული ფერების რაოდენობა არასწორია."
+
+#: app/core/gimppalette-load.c:658
+#, c-format
+msgid "Invalid number of colors: %s."
+msgstr "ფერების არასწორი რაოდენობა: %s."
+
+#: app/core/gimppalette-load.c:668
+#, c-format
+msgid "Invalid ASE file: %s."
+msgstr "არასწორი ASE ფაილი: %s."
+
+#: app/core/gimppalette-load.c:746
+#, c-format
+msgid "Invalid color components: %s."
+msgstr "არასწორი ფერის კომპონენტები: %s."
+
+#: app/core/gimppalette-load.c:760 app/core/gimppalette-load.c:787
+#, c-format
+msgid "Invalid ASE color entry: %s."
+msgstr "არასწორი ASE ფერის ჩანაწერი: %s."
+
+#: app/core/gimppalette-load.c:815 app/core/gimppalette-load.c:831
+#: app/core/gimppalette-load.c:850
+msgid "Invalid ASE palette name."
+msgstr "არასწორი ASE პალიტრის სახელი."
+
+#: app/core/gimppalette-load.c:824
+msgid "Invalid ASE block size."
+msgstr "არასწორი ASE ბლოკის ზომა."
+
+#: app/core/gimppalette-load.c:840
+msgid "Invalid ASE name size."
+msgstr "არასწორი ASE სახელის ზომა."
 
 #: app/core/gimppalettemru.c:123 app/core/gimppalettemru.c:229
 msgid "History Color"
@@ -19460,7 +19502,7 @@ msgstr "დონეების პოსტერიზაცია"
 
 #: app/operations/gimpoperationsemiflatten.c:84
 msgid "Replace partial transparency with a color"
-msgstr ""
+msgstr "ნაწილობრივი გამჭვირვალობის ფერით ჩანაცვლება"
 
 #: app/operations/gimpoperationsemiflatten.c:96
 msgid "The color"
@@ -19479,7 +19521,7 @@ msgstr "როგორ ამოვჭრა"
 
 #: app/operations/gimpoperationthreshold.c:85 app/tools/gimpthresholdtool.c:94
 msgid "Reduce image to two colors using a threshold"
-msgstr ""
+msgstr "გამოსახულების ორ ფერამდე შემცირება, საზღვრის გამოყენებით"
 
 #: app/operations/gimpoperationthreshold.c:98
 msgid "Low threshold"
@@ -26849,7 +26891,7 @@ msgstr "აირჩიეთ ქმედება %s %d-ე ღილაკი
 #: app/widgets/gimpmodifierseditor.c:660
 #, c-format
 msgid "Editing modifiers for %s button %d"
-msgstr ""
+msgstr "%s-ის ღილაკის %d მოდიფიკატორების ჩასწორება"
 
 #. TRANSLATORS: %d is a button number, %s is the device (e.g. a mouse) name.
 #: app/widgets/gimpmodifierseditor.c:667
@@ -27180,17 +27222,17 @@ msgstr "ატრიბუტი %s არასწორია %s ელემ�
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr ""
 
-#: app/widgets/gimptextbuffer.c:1700
+#: app/widgets/gimptextbuffer.c:1701
 #, c-format
 msgid "Input file '%s' appears truncated: %s"
 msgstr "როგორც ჩანს, შეყვანის ფაილი '%s' წაკვეთილია: %s"
 
-#: app/widgets/gimptextbuffer.c:1718
+#: app/widgets/gimptextbuffer.c:1719
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "არასწორი UTF-8 მონაცემები ფაილში '%s'."
 
-#: app/widgets/gimptextbuffer.c:1769
+#: app/widgets/gimptextbuffer.c:1770
 #, c-format
 msgid "Writing text file '%s' failed: %s"
 msgstr "ტექსტური ფაილ %s ჩაწერის შეცდომა: %s"
@@ -28100,15 +28142,15 @@ msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_მიმაგრებადი ფანჯრები"
 
-#: menus/image-menu.ui.in.in:896
-msgctxt "help-action"
-msgid "_GIMP Online"
-msgstr "_GIMP-ის ონლაინ რესურსები"
-
-#: menus/image-menu.ui.in.in:899
+#: menus/image-menu.ui.in.in:886
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "მომხმარებლის სახელმძღვ_ანელო"
+
+#: menus/image-menu.ui.in.in:899
+msgctxt "help-action"
+msgid "_GIMP Online"
+msgstr "_GIMP-ის ონლაინ რესურსები"
 
 #: menus/layers-menu.ui:6
 msgctxt "layers-action"
@@ -28259,9 +28301,6 @@ msgstr "კონტურების მენიუ"
 #, c-format
 #~ msgid "Gradient '%s' is not renamable"
 #~ msgstr "გრადიენტ %s-ს სახელი არ ერქმევა"
-
-#~ msgid "Invalid empty palette name"
-#~ msgstr "არასწორი ცარიელი პალიტრის სახელი"
 
 #, c-format
 #~ msgid "Palette '%s' not found"
