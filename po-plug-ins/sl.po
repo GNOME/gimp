@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-25 20:56+0000\n"
-"PO-Revision-Date: 2023-08-27 07:41+0200\n"
+"POT-Creation-Date: 2023-08-27 14:25+0000\n"
+"PO-Revision-Date: 2023-08-28 23:52+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -4994,10 +4994,8 @@ msgstr ""
 "(2) }"
 
 #: plug-ins/common/file-raw-data.c:378
-#, fuzzy
-#| msgid "Big Endian"
 msgid "Endianness"
-msgstr "Največje na koncu"
+msgstr "Največje/najmanjše na koncu"
 
 #: plug-ins/common/file-raw-data.c:379
 msgid ""
@@ -8696,9 +8694,8 @@ msgid "Use optimized tables during Huffman coding"
 msgstr "Uporabi optimizirane Huffmanove tabele pri kodiranju"
 
 #: plug-ins/file-jpeg/jpeg.c:221
-#, fuzzy
 msgid "_Progressive"
-msgstr "_Napredovano/Progresivno"
+msgstr "_Progresivno"
 
 #: plug-ins/file-jpeg/jpeg.c:222
 msgid "Create progressive JPEG images"
@@ -8718,7 +8715,6 @@ msgid "Su_bsampling"
 msgstr "Po_dvzorčenje"
 
 #: plug-ins/file-jpeg/jpeg.c:234
-#, fuzzy
 msgid ""
 "Sub-sampling type { 0 == 4:2:0 (chroma quartered), 1 == 4:2:2 (chroma halved "
 "horizontally), 2 == 4:4:4 (best quality), 3 == 4:4:0 (chroma halved "
@@ -8733,12 +8729,11 @@ msgid "Baseline"
 msgstr "Osnovnica besedila"
 
 #: plug-ins/file-jpeg/jpeg.c:245
-#, fuzzy
 msgid ""
 "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
 "decoders)"
 msgstr ""
-"Vsili ustvarjanje osnovnega zapisa JPEG (vsi dekoderji ne morejo brati "
+"Vsili ustvarjanje osnovnega zapisa JPEG (vsi dekodirniki ne morejo brati "
 "zapisov JPEG, ki niso osnovni)"
 
 #: plug-ins/file-jpeg/jpeg.c:251
