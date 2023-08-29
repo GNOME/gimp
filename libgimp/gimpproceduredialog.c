@@ -206,9 +206,13 @@ gimp_procedure_dialog_constructor (GType                  type,
   gboolean use_header_bar_edited = FALSE;
   gboolean help_func_edited      = FALSE;
 
-  g_object_get (gtk_settings_get_default (),
-                "gtk-dialogs-use-header", &use_header_bar,
-                NULL);
+  if (gtk_settings_get_default () != NULL)
+    g_object_get (gtk_settings_get_default (),
+                  "gtk-dialogs-use-header", &use_header_bar,
+                  NULL);
+  else
+    g_warning ("%s: no default screen. Did you call gimp_ui_init()?", G_STRFUNC);
+
 
   for (guint i = 0; i < n_construct_properties; i++)
     {
