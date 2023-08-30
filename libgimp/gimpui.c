@@ -389,7 +389,10 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
       transient_set = TRUE;
     }
 #endif
-#ifdef GDK_WINDOWING_WIN32
+  /* To know why it is disabled on Win32, see gimp_window_set_transient_cb() in
+   * app/widgets/gimpwidgets-utils.c.
+   */
+#if 0 && defined (GDK_WINDOWING_WIN32)
   if (! transient_set)
     {
       GdkWindow *parent;

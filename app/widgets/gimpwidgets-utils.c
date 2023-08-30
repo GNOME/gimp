@@ -2585,7 +2585,17 @@ gimp_window_set_transient_cb (GtkWidget   *window,
       transient_set = TRUE;
     }
 #endif
-#ifdef GDK_WINDOWING_WIN32
+  /* Cross-process transient-for is broken in gdk/win32. It causes hangs of the
+   * main process and we still don't know why.
+   * If it eventually is fixed to actually work, change this to a run-time check
+   * of GTK+ version. Remember to change also gimp_window_transient_on_mapped()
+   * in libgimp/gimpui.c
+   *
+   * Note: this hanging bug is still happening with GTK+3 as of mid-2023 with
+   * steps described in comment 4 in:
+   * https://bugzilla.gnome.org/show_bug.cgi?id=359538
+   */
+#if 0 && defined (GDK_WINDOWING_WIN32)
   if (! transient_set)
     {
       GdkWindow *parent;
