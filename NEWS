@@ -26,6 +26,8 @@ Core:
     for internal data, or a string constructed from the local file path for
     external data. This will be used to serialize data objects hence easily
     retrieve the proper data even when some data may have duplicate names.
+  - New "FG to Transparent (Hardedge)" gradient.
+  - New Adobe Swatch Exchange palette import support.
 
 Graphical User Interface:
 
@@ -52,12 +54,45 @@ Graphical User Interface:
     if case was different on any letter. It's just better to always have popup
     with case insensitivity.
     This widget is used for instance for on-canvas font selection.
-  - gimp-tool-text icons in Color and Legacy icon themes were modified with an
-    added light border to make them better visible on dark themes.
+  - Some icons were modified with an added light border to make them better
+    visible on dark themes: gimp-tool-text icons in Color and Legacy icon themes
+    and gimp-tool-dodge in Color theme.
+  - Help menu rearranged to be better organized and also to move "About GIMP" as
+    the last item, which is its more conventional position.
+
+Tools:
+
+  - Text tool:
+    * improve markup creation logic when replacing selected text in
+      order not to create useless styling markup interfering with other
+      features.
+    * Alignment for RTL languages is now more consistent with how it works in
+      other software (such as LibreOffice or Scribus).
 
 Plug-ins:
 
   - Farbfeld: new image format import/export support.
+  - OpenEXR:
+    * Files with single channels are always treated as grayscale, even when
+      they use non-conventional channel names. A notice message is also
+      presented to the user in a dialog for information.
+  - Metadata Editor:
+    * Various code cleanups and improvements;
+    * GUI improvements;
+    * Xmp.plus.ImageSupplierName can now only have one value;
+    * Improved Creation date handling;
+    * Synchronization (both for reading and writing) added between some Exif,
+      Xmp and Iptc equivalent tags. On reading, when equivalent tags have
+      different values at load, a terminal warning is now outputted.
+  - Script-fu:
+    * Generated dialog's titles are not prefixed with "Script-Fu: " anymore.
+    * Several scripts were removed and moved to gimp-data-extras: erase-rows,
+      grid-system, select-to-brush, select-to-image, select-to-pattern.
+    * script-fu-copy-visible was removed (and not moved to gimp-data-extras).
+    * New test scripts.
+  - New gimp-help-main script to link to the "Table of Contents" of the manual,
+    added to the "Help > User Manual" submenu.
+  - PSP: added support to load PSP ICC Profile data.
 
 Translations:
 
@@ -81,6 +116,7 @@ Build:
   - Windows 10 becomes the new minimal support for the 3.0 stable series on
     Windows. This bump happens because of end-of-support by Microsoft itself,
     and also by MSYS2 project which is our base for the official installers.
+  - CI now generates babl and GEGL API reference HTML as artifact tarballs.
 
 
 Overview of Changes from GIMP 2.99.14 to GIMP 2.99.16
