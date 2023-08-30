@@ -20,6 +20,7 @@ BEGIN {
     $srcdir   = $ENV{srcdir}   || '.';
     $destdir  = $ENV{destdir}   || '.';
     $builddir = $ENV{builddir} || '.';
+    $topsrcdir = $ENV{topsrcdir} || '.';
 }
 
 use lib $srcdir;
@@ -244,7 +245,7 @@ while (<>) {
 	}
 	$mapping =~ s/,\n\s*$//s;
 
-	$ARGV =~ s@(?:(?:..|app)/)*@@;
+	$ARGV =~ s@($topsrcdir/)?(?:(?:..|app)/)*@@;
 
 	$code .= <<ENTRY;
 :    $enumname =>

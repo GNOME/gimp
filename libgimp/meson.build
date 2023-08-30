@@ -3,7 +3,7 @@
 # Moreover it is generated in 2 steps, first with common mkenums
 # arguments, then concatenating with a "tail" file.
 gimpenums_notail = custom_target('gimpenums.c.notail',
-  input : [ 'gimpenums.h', ],
+  input : [ 'gimpenums.h', stamp_enumcode],
   output: [ 'gimpenums.c.notail', ],
   command: [
     gimp_mkenums,
@@ -14,6 +14,7 @@ gimpenums_notail = custom_target('gimpenums.c.notail',
             + '#include "libgimpbase/gimpbase.h"\n'
             + '#include "libgimpbase/gimpbase-private.h"\n'
             + '#include "libgimpconfig/gimpconfigenums.h"\n'
+            + '#include "pdb/stamp-enumcode.h"\n'
             + '#include "gimpenums.h"\n',
     '--fprod',
       '/* enumerations from "@basename@" */',
@@ -40,7 +41,7 @@ gimpenums_notail = custom_target('gimpenums.c.notail',
       '@endif@',
     '--dtail',
       libgimp_mkenums_dtails,
-    '@INPUT@',
+    '@INPUT0@',
   ],
   capture: true,
 )
