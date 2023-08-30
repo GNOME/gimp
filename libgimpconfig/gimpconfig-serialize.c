@@ -290,14 +290,14 @@ gimp_config_serialize_property (GimpConfig       *config,
 
               gimp_config_writer_printf (writer, "%lu", data_length);
               gimp_config_writer_data (writer, data_length, data);
-
-              success = TRUE;
+            }
+          else
+            {
+              gimp_config_writer_printf (writer, "%s", "NULL");
             }
 
-          if (success)
-            gimp_config_writer_close (writer);
-          else
-            gimp_config_writer_revert (writer);
+          success = TRUE;
+          gimp_config_writer_close (writer);
         }
       else if (G_VALUE_HOLDS_OBJECT (&value) &&
                G_VALUE_TYPE (&value) != G_TYPE_FILE)

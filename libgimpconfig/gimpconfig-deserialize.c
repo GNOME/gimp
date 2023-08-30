@@ -1042,19 +1042,43 @@ gimp_config_deserialize_bytes (GValue     *value,
                                GParamSpec *prop_spec,
                                GScanner   *scanner)
 {
-  GBytes *bytes;
-  guint8 *data;
-  gint    data_length;
+  GTokenType  token;
+  GBytes     *bytes;
+  guint8     *data;
+  gint        data_length;
 
-  if (! gimp_scanner_parse_int (scanner, &data_length))
-    return G_TOKEN_INT;
+  token = g_scanner_peek_next_token (scanner);
 
-  if (! gimp_scanner_parse_data (scanner, data_length, &data))
-    return G_TOKEN_STRING;
+  if (token == G_TOKEN_IDENTIFIER)
+    {
+      g_scanner_get_next_token (scanner);
 
-  bytes = g_bytes_new (data, data_length);
+      if (g_ascii_strcasecmp (scanner->value.v_identifier, "null") != 0)
+        /* Do not fail the whole file parsing. Just output to stderr and assume
+         * a NULL bytes property.
+         */
+        g_printerr ("%s: expected NULL identifier for bytes token '%s', got '%s'. "
+                    "Assuming NULL instead.\n",
+                    G_STRFUNC, prop_spec->name, scanner->value.v_identifier);
 
-  g_value_take_boxed (value, bytes);
+      g_value_set_boxed (value, NULL);
+    }
+  else if (token == G_TOKEN_INT)
+    {
+      if (! gimp_scanner_parse_int (scanner, &data_length))
+        return G_TOKEN_INT;
+
+      if (! gimp_scanner_parse_data (scanner, data_length, &data))
+        return G_TOKEN_STRING;
+
+      bytes = g_bytes_new (data, data_length);
+
+      g_value_take_boxed (value, bytes);
+    }
+  else
+    {
+      return G_TOKEN_INT;
+    }
 
   return G_TOKEN_RIGHT_PAREN;
 }
