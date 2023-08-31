@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-22 16:37+0000\n"
-"PO-Revision-Date: 2023-08-22 22:23+0300\n"
+"POT-Creation-Date: 2023-08-27 05:42+0000\n"
+"PO-Revision-Date: 2023-08-27 11:13+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -501,6 +501,63 @@ msgstr "Tarih:"
 #: libgimp/gimpprocview.c:269
 msgid "Copyright:"
 msgstr "Telif Hakkı:"
+
+#: libgimp/gimpsaveprocedure.c:408
+msgid "Save _Exif"
+msgstr "_Exif Kaydet"
+
+#: libgimp/gimpsaveprocedure.c:409
+msgid "Save Exif (Exchangeable image file format) metadata"
+msgstr "Exif (Exchangeable image file format) üst verilerini kaydet"
+
+#: libgimp/gimpsaveprocedure.c:414
+msgid "Save _IPTC"
+msgstr "_IPTC Kaydet"
+
+#: libgimp/gimpsaveprocedure.c:415
+msgid "Save IPTC (International Press Telecommunications Council) metadata"
+msgstr ""
+"IPTC (International Press Telecommunications Council) üst verilerini kaydet"
+
+#: libgimp/gimpsaveprocedure.c:420
+msgid "Save _XMP"
+msgstr "_XMP Kaydet"
+
+#: libgimp/gimpsaveprocedure.c:421
+msgid "Save XMP (Extensible Metadata Platform) metadata"
+msgstr "XMP (Extensible Metadata Platform) üst verilerini kaydet"
+
+#: libgimp/gimpsaveprocedure.c:426
+msgid "Save color _profile"
+msgstr "Renk profilini _kaydet"
+
+#: libgimp/gimpsaveprocedure.c:427
+msgid "Save the ICC color profile as metadata"
+msgstr "ICC renk profilini üst veri olarak kaydet"
+
+#: libgimp/gimpsaveprocedure.c:432
+msgid "Save _thumbnail"
+msgstr "_Küçük resmi kaydet"
+
+#: libgimp/gimpsaveprocedure.c:433
+msgid "Save a smaller representation of the image as metadata"
+msgstr "Görüntünün küçük bir sunumunu üst veri olarak kaydet"
+
+#: libgimp/gimpsaveprocedure.c:439
+msgid "Save c_omment"
+msgstr "_Yorumu kaydet"
+
+#: libgimp/gimpsaveprocedure.c:440
+msgid "Save a comment as metadata"
+msgstr "Yorumu üst veri olarak kaydet"
+
+#: libgimp/gimpsaveprocedure.c:444
+msgid "Comment"
+msgstr "Yorum"
+
+#: libgimp/gimpsaveprocedure.c:445
+msgid "Image comment"
+msgstr "Görüntü yorumu"
 
 #: libgimp/gimpsaveproceduredialog.c:166
 msgid "Metadata"
@@ -2178,6 +2235,22 @@ msgstr "Mebibayt"
 #: libgimpwidgets/gimpmemsizeentry.c:254
 msgid "Gibibyte"
 msgstr "Gibibayt"
+
+#: libgimpwidgets/gimppageselector.c:185
+msgid "N Pages"
+msgstr "N Sayfa"
+
+#: libgimpwidgets/gimppageselector.c:186
+msgid "The number of pages to open"
+msgstr "Açılacak sayfa sayısı"
+
+#: libgimpwidgets/gimppageselector.c:199
+msgid "Target"
+msgstr "Hedef"
+
+#: libgimpwidgets/gimppageselector.c:200
+msgid "the target to open to"
+msgstr "Açılacak hedef"
 
 #. Count label
 #: libgimpwidgets/gimppageselector.c:283 libgimpwidgets/gimppageselector.c:1079
