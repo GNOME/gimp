@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-15 17:11+0000\n"
-"PO-Revision-Date: 2023-08-16 22:22+0300\n"
+"POT-Creation-Date: 2023-08-27 16:52+0000\n"
+"PO-Revision-Date: 2023-08-29 10:01+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnometurk@gnome.org>\n"
 "Language: tr\n"
@@ -2539,7 +2539,7 @@ msgstr ""
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2428
 #: app/core/gimppalette.c:428 app/core/gimppalette-import.c:213
-#: app/core/gimppalette-load.c:194 app/dialogs/palette-import-dialog.c:762
+#: app/core/gimppalette-load.c:199 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Başlıksız"
@@ -14294,25 +14294,25 @@ msgstr "MyPaint fırçası seri hale getirilemedi."
 msgid "%s (occurs %u)"
 msgstr "%s (%u defa)"
 
-#: app/core/gimppalette-import.c:536
+#: app/core/gimppalette-import.c:540
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Bilinmeyen palet dosyası türü: %s"
 
-#: app/core/gimppalette-load.c:71
+#: app/core/gimppalette-load.c:76
 msgid "Missing magic header."
 msgstr "Eksik sihirli başlık."
 
-#: app/core/gimppalette-load.c:94
+#: app/core/gimppalette-load.c:99
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "'%s' palet dosyası içinde geçersiz UTF-8 dizgesi"
 
-#: app/core/gimppalette-load.c:114
+#: app/core/gimppalette-load.c:119
 msgid "Invalid column count."
 msgstr "Geçersiz sütun sayısı."
 
-#: app/core/gimppalette-load.c:121
+#: app/core/gimppalette-load.c:126
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -14321,44 +14321,86 @@ msgstr ""
 "'%s' palet dosyası okunuyor: %d. satır içindeki sütunların sayısı geçersiz. "
 "Öntanımlı değer kullanılıyor."
 
-#: app/core/gimppalette-load.c:155
+#: app/core/gimppalette-load.c:160
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "'%s' palet dosyası okunuyor: %d. satırda KIRMIZI bileşen kayıp."
 
-#: app/core/gimppalette-load.c:163
+#: app/core/gimppalette-load.c:168
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "'%s' palet dosyası okunuyor: %d. satırda YEŞİL bileşen kayıp."
 
-#: app/core/gimppalette-load.c:171
+#: app/core/gimppalette-load.c:176
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "'%s' palet dosyası okunuyor: %d. satırda MAVİ bileşen kayıp."
 
-#: app/core/gimppalette-load.c:181
+#: app/core/gimppalette-load.c:186
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "'%s' palet dosyası okunuyor: %d. satırda RGB değeri erim dışı."
 
-#: app/core/gimppalette-load.c:208 app/core/gimppalette-load.c:458
+#: app/core/gimppalette-load.c:213 app/core/gimppalette-load.c:463
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr "'%s' palet dosyası okunuyor: Kırpılmış dosyadan %d renkler oku: %s"
 
-#: app/core/gimppalette-load.c:230
+#: app/core/gimppalette-load.c:235
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "Palet dosyasının %d satırında: "
 
-#: app/core/gimppalette-load.c:426
+#: app/core/gimppalette-load.c:431 app/core/gimppalette-load.c:633
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "'%s' palet dosyasından başlık okunamadı: "
 
-#: app/core/gimppalette-load.c:463
+#: app/core/gimppalette-load.c:468
 msgid "Premature end of file."
 msgstr "Belirsiz dosya sonu."
+
+#: app/core/gimppalette-load.c:643
+#, c-format
+msgid "Invalid ASE header: %s"
+msgstr "Geçersiz ASE başlığı: %s"
+
+#: app/core/gimppalette-load.c:652
+msgid "Invalid number of colors in palette."
+msgstr "Paletteki renk sayısı geçersiz."
+
+#: app/core/gimppalette-load.c:658
+#, c-format
+msgid "Invalid number of colors: %s."
+msgstr "Geçersiz renk sayısı: %s."
+
+#: app/core/gimppalette-load.c:668
+#, c-format
+msgid "Invalid ASE file: %s."
+msgstr "Geçersiz ASE dosyası: %s."
+
+#: app/core/gimppalette-load.c:746
+#, c-format
+msgid "Invalid color components: %s."
+msgstr "Geçersiz renk bileşenleri: %s."
+
+#: app/core/gimppalette-load.c:760 app/core/gimppalette-load.c:787
+#, c-format
+msgid "Invalid ASE color entry: %s."
+msgstr "Geçersiz ASE renk girdisi: %s."
+
+#: app/core/gimppalette-load.c:815 app/core/gimppalette-load.c:831
+#: app/core/gimppalette-load.c:850
+msgid "Invalid ASE palette name."
+msgstr "Geçersiz ASE palet adı."
+
+#: app/core/gimppalette-load.c:824
+msgid "Invalid ASE block size."
+msgstr "Geçersiz ASE blok boyutu."
+
+#: app/core/gimppalette-load.c:840
+msgid "Invalid ASE name size."
+msgstr "Geçersiz ASE ad boyutu."
 
 #: app/core/gimppalettemru.c:123 app/core/gimppalettemru.c:229
 msgid "History Color"
@@ -28664,15 +28706,15 @@ msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_Rıhtımlanabilir İletişim Kutuları"
 
-#: menus/image-menu.ui.in.in:896
-msgctxt "help-action"
-msgid "_GIMP Online"
-msgstr "Çevrim İçi _GIMP"
-
-#: menus/image-menu.ui.in.in:899
+#: menus/image-menu.ui.in.in:886
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "_Kullanıcı Kılavuzu"
+
+#: menus/image-menu.ui.in.in:899
+msgctxt "help-action"
+msgid "_GIMP Online"
+msgstr "Çevrim İçi _GIMP"
 
 #: menus/layers-menu.ui:6
 msgctxt "layers-action"
@@ -28823,9 +28865,6 @@ msgstr "Yollar Menüsü"
 #, c-format
 #~ msgid "Gradient '%s' is not renamable"
 #~ msgstr "'%s' renk geçişi yeniden adlandırılabilir değil"
-
-#~ msgid "Invalid empty palette name"
-#~ msgstr "Geçersiz boş palet adı"
 
 #, c-format
 #~ msgid "Palette '%s' not found"
