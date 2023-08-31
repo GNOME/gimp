@@ -8,22 +8,22 @@
 ; The test files might be organized in directories in the repo,
 ; but all flattened into the /tests directory when installed.
 
-; creates images 1-6
+; images
 (testing:load-test "image-new.scm")
 (testing:load-test "image-precision.scm")
 (testing:load-test "image-indexed.scm")
 (testing:load-test "image-grayscale.scm")
 (testing:load-test "image-ops.scm")
+(testing:load-test "image-layers.scm")
 
-(testing:load-test "layer-new.scm") ; image 7 and layer 8
-(testing:load-test "layer-ops.scm") ; image 8 and layer 10
-(testing:load-test "layer-mask.scm") ; image 9 and layer 12 and layerMask 13, 14
+(testing:load-test "layer-new.scm")
+(testing:load-test "layer-ops.scm")
+(testing:load-test "layer-mask.scm")
 ; TODO layer stack ops
 
-(testing:load-test "text-layer-new.scm") ; image 8, layer 15, vectors 16
+(testing:load-test "text-layer-new.scm")
 
-(testing:load-test "vectors-new.scm") ; image 10 and vectors 19
-
+(testing:load-test "vectors-new.scm")
 (testing:load-test "channel-new.scm")
 ; TODO channel-ops.scm
 
@@ -41,24 +41,32 @@
 
 (testing:load-test "resource.scm")
 (testing:load-test "brush.scm")
+(testing:load-test "palette.scm")
 ; TODO other resources gradient, etc
+
+(testing:load-test "buffer.scm")
 
 ; TODO edit ops
 ; TODO undo
-; TODO unit
 ; TODO progress
-; pdb
-; context
+
+; tested in bind-args.scm:
+;   unit
+;   parasite
+
+; pdb the object
 ; gimp the class, gimp-get, gimp-parasite
 
-; parasite is not a class, only methods of other classes
 
 (testing:load-test "misc.scm")
 (testing:load-test "enums.scm")
+(testing:load-test "refresh.scm")
+(testing:load-test "context-get-set.scm")
+(testing:load-test "bind-args.scm")
 
 ; report the result
 (testing:report)
 
-; yield the session result
+; yield the session overall result
 (testing:all-passed?)
 

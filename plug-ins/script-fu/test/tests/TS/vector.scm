@@ -6,6 +6,7 @@
 
 ; make-vector succeeds
 (assert '(make-vector 25))
+; Note vector is anonymous and will be garbage collected
 
 ; make-vector of size 0 succeeds
 (assert '(make-vector 0))

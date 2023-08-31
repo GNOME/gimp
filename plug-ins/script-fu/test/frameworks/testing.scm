@@ -7,7 +7,7 @@
 ; Testing language
 
 ; AssertStmt      ~ (assert '(<code>))
-; AssertErrorStmt ~ (assert-error '(<code>)  <expected error string>)
+; AssertErrorStmt ~ (assert-error '(<code>)  <prefix of expected error string>)
 ; ReportStmt      ~ (testing:report)
 ; LoadStmt        ~ (testing:load-test <filename>)
 ; AllPassedPredicate ~ (testing:all-passed?)
@@ -23,6 +23,7 @@
 
 
 ; Syntax errors
+
 ; The test framework WILL NOT handle syntax errors.
 ; The quoted code under tests must parse without syntax errors.
 ; Some errors that TinyScheme throws ARE syntax errors, but not named such.
@@ -38,6 +39,13 @@
 ; to yield an overall testing result,
 ; when testing is automated.
 
+; Testing error messages
+;
+; Error messages may have details such as line number of error
+; that may change over time.
+; Testing expects that details will be a suffix of the error message.
+; Passing is measured by comparing given expected prefix of error
+; with actual error message.
 
 
 ; Notes on implementation:
@@ -182,21 +190,23 @@
         eval-result)))
 
 ; Record eval-result, a tuple, from eval of code.
-; This knows that a passed assert-error test has don't care result
-; and error-message matching given <foo>
+; This knows that a passed assert-error test has don't care result.
+; Instead, this knows the test passes if given <expected-error>
+; matches a prefix of the actual error message yielded by eval.
 ; <result> is dynamic type returned by eval
 ; <error-message> is type string
-; <code is> a an object? a Scheme text, is a boolean proposition.
+; <code> is a an object? a Scheme text, is a boolean proposition.
 ; <expected-error> is type string
 (define (testing:record-assert-error-result eval-result code expected-error)
   ; debug
   ;(displayln "record-assert-error-result")
   ;(displayln eval-result)
 
-  ; passed?
-  (if (equal?
-        (evalresult-get-error eval-result)
-        expected-error)
+  ; expected error string a prefix of actual error string?
+  (if (string-prefix?
+        expected-error
+        (evalresult-get-error eval-result))
+      ; passed
       (begin
         (testing:log-passed!)
         #t)
@@ -207,6 +217,11 @@
           (evalresult-get-error eval-result)
           expected-error)
         #f)))
+
+; Strict equality of error strings:
+;(if (equal?
+;        (evalresult-get-error eval-result)
+;        expected-error)
 
 
 ; Statments in the testing DSL.
@@ -226,7 +241,7 @@
 
 ; A test of abnormality.
 ; <code> is not expected to yield any particular value
-; <error> is a string for an error that <code> is expected to throw.
+; <error> is a prefix of error string that <code> is expected to throw.
 (define (assert-error code expected-error)
   (let* ((eval-result (harnessed-eval code)))
     ; eval-result is tuple
@@ -235,7 +250,7 @@
       eval-result
       code
       expected-error)
-    ; Returns whether error matches expected error.
+    ; Returns whether error matches expected error prefix.
     ))
 
 
@@ -331,24 +346,45 @@
                str))))
     (rtrim (to-string any))))
 
+; FIXME this is not robust to str2 shorter than str1
+; string-prefix? is in R5RS but not tinyscheme.
+(define (string-prefix? str1 str2)
+  (string=?
+    str1
+    (substring str2 0 (string-length str1))))
+
 
 
 ;     filesystem utility
 
-; Return the fullpath of a test script
+; Return the fullpath of a test script.
+; When fileScm is empty, returns path to dir of test scripts.
 ; From gimp-data-directory i.e. the shared install dir for GIMP
 ; Require filename is string
 ; Require suffix, usually ".scm" on the filename
 
-(define (path-user-script fileScm)
+(define (path-to-test-scripts fileScm)
     (let*   (   (path (string-append gimp-data-directory DIR-SEPARATOR "tests")))
         (if (zero? (string-length fileScm)) path (string-append path DIR-SEPARATOR fileScm))))
 
+(define (path-to-test-images fileScm)
+    (let*   (   (path (string-append gimp-data-directory DIR-SEPARATOR "images")))
+        (if (zero? (string-length fileScm)) path (string-append path DIR-SEPARATOR fileScm))))
 
 ; load a test file, which executes it
-; This knows where GIMP installs test scripts
+; Knows where GIMP installs test scripts
 ;
 ; Subsequently, testing:report will say results
 (define (testing:load-test filename)
-  (gimp-message (path-user-script filename))
-  (load (path-user-script filename)))
+  (gimp-message (path-to-test-scripts filename))
+  (load (path-to-test-scripts filename)))
+
+; Tell Gimp to load a test image
+; Returns ID of image
+; Knows installed image directory (not dedicated to testing but always there.)
+; Accepts image suffixes that Gimp can load.
+; Typical is /usr/local/share/gimp/2.99/images/wilber.png
+(define (testing:load-test-image filename)
+  (gimp-message (path-to-test-images filename))
+  ; unpack ID via car
+  (car (gimp-file-load RUN-NONINTERACTIVE (path-to-test-images filename))))

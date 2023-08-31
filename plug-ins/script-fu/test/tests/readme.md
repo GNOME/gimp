@@ -2,7 +2,7 @@
 
 ## Quick start
 
-0. Rebuild GIMP with the ScriptFu compile option 'no line numbers in error messages' (see below.)
+0. Rebuild GIMP.
 The build must be a non-stable build (nightly/development version.)
 1. View the Gimp Error Console dockable
 2. Open the SF Console
@@ -95,11 +95,17 @@ The test framework and test scripts are only installed in a non-stable build.
 
 The test scripts are intended to be portable across platforms
 and robust to changes in the test scripts.
-To do that requires that TinyScheme be built without the compile option
-to display file and line number in error messages.
-Since file paths change across platforms,
-and since the test scripts should not reference line numbers.
+When testing error conditions (using assert-error)
+the testing framework compares expected prefix of error messages
+with actual error messages.
+To do that requires either that TinyScheme be built without the compile option
+to display file and line number in error messages,
+OR that TinyScheme puts details such as line number as the suffix of error message.
 
+In other words, the testing of error conditions is not exact,
+only a prefix of the error message is compared.
+When you are writing such a test,
+write an expected error string that is a prefix that omits details.
 
 In libscriptfu/tinyscheme/scheme.h :
 ```
@@ -148,13 +154,29 @@ Tests are declarative, short, and readable.
 They may be ordered or have ordered expressions,
 especially when they test side effects on the Gimp state.
 
-### Tests are order dependent
+### Tests can be order independent and repeated
 
-Generally, you cannot run the tests in any order.
-The tests may hardcode GIMP ID's that GIMP assigns,
-thus the test order is also fixed.
+Often, you can run tests in any order and repeat tests, up to a point.
+Then test objects that have accumulated
+might start to interfere with certain tests.
+
+Tests generally should not hardcode GIMP ID's that GIMP assigns.
 
 In general, run a large test, such as pdb.scm or tinyscheme.scm.
+But you can also run a small test such as layer-new.scm.
+Just be aware that if you run tests in an order of your choice,
+and if you repeat tests in the same session,
+you might start to see more errors than on the first run of a test
+after a fresh start of Gimp.
+
+### Some tests require a clean install
+
+Tests of resources may try to create a resource (e.g. brush)
+that a prior run of the test already created
+and that was saved by Gimp as a setting.
+
+For such tests, you may need to test only after a fresh install of Gimp
+(when the set of resources is the set that Gimp installs.)
 
 ### The test framework does not name or number tests
 

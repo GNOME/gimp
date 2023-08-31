@@ -2,18 +2,18 @@
 
 
 
-; setup
-; Reusing image 10
-(define testImage 10)
+;             setup
+
+(define testImage (car (gimp-image-new 21 22 RGB)))
 
 
 ; get-selection yields an ID.
 ; Image always yields a selection object.
 ; It is a singleton.
-(assert `(= (car (gimp-image-get-selection ,testImage))
-            18))
+(define testSelection (car (gimp-image-get-selection testImage)))
 
-(define testSelection 18)
+
+
 
 ; The returned ID is-a Selection
 (assert `(= (car (gimp-item-id-is-selection ,testSelection))

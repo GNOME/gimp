@@ -1,0 +1,1 @@
+See also a plugin in scripts/test/resource-class/

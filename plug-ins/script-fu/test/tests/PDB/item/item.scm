@@ -124,38 +124,90 @@
 )
 
 
-; use image,item instance extant from previous tests.
+; OLD use image,item instance extant from previous tests.
 
-; text layer
-(test-bare-item 15)
-(test-item-in-image 8 15)
-(test-item-parasite 15)
+;        setup
+
+; All the items in the same testImage
+; See earlier tests, where setup is lifted from
+
+(define testImage (testing:load-test-image "wilber.png"))
+(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage ))
+                                  0))
+(define testSelection (car (gimp-image-get-selection testImage)))
+(define
+  testTextLayer
+   (car (gimp-text-fontname
+              testImage
+              -1     ; drawable.  -1 means NULL means create new text layer
+              0 0   ; coords
+              "bar" ; text
+              1     ; border size
+              1     ; antialias true
+              31    ; fontsize
+              PIXELS  ; size units.  !!! See UNIT-PIXEL
+              "fontName" )))
+(define testChannel (car (gimp-channel-new
+            testImage    ; image
+            23 24          ; width, height
+            "Test Channel" ; name
+            50.0           ; opacity
+            "red" )))      ; compositing color
+; must add to image
+(gimp-image-insert-channel
+            testImage
+            testChannel
+            0            ; parent, moot since channel groups not supported
+            0)
+(define
+  testLayerMask
+    (car (gimp-layer-create-mask
+                    testLayer
+                    ADD-MASK-WHITE)))
+; must add to layer
+(gimp-layer-add-mask
+            testLayer
+            testLayerMask)
+(define testPath (car (gimp-vectors-new testImage "Test Path")))
+; must add to image
+(gimp-image-insert-vectors
+                  testImage
+                  testPath
+                  0 0) ; parent=0 position=0
+
+
+
+;                 tests start here
 
 ; layer
-(test-bare-item 12)
-(test-item-in-image 9 12)
-(test-item-parasite 12)
+(test-bare-item testLayer)
+(test-item-in-image testImage testLayer)
+(test-item-parasite testLayer)
+
+; text layer
+(test-bare-item testTextLayer)
+(test-item-in-image testImage testTextLayer)
+(test-item-parasite testTextLayer)
 
 ; layerMask
-(test-bare-item 14)
-(test-item-in-image 9 14)
-(test-item-parasite 14)
+(test-bare-item testLayerMask)
+(test-item-in-image testImage testLayerMask)
+(test-item-parasite testLayerMask)
 
 ; vectors
-; ID 16 is also a vectors named "foo"
-(test-bare-item 19)
-(test-item-in-image 10 19)
-(test-item-parasite 19)
+(test-bare-item testPath)
+(test-item-in-image testImage testPath)
+(test-item-parasite testPath)
 
 ; channel
-(test-bare-item 20)
-(test-item-in-image 10 20)
-(test-item-parasite 20)
+(test-bare-item testChannel)
+(test-item-in-image testImage testChannel)
+(test-item-parasite testChannel)
 
 ; selection
-(test-bare-item 18)
-(test-item-in-image 10 18)
-(test-item-parasite 18)
+(test-bare-item testSelection)
+(test-item-in-image testImage testSelection)
+(test-item-parasite testSelection)
 
 ; TODO other item types e.g. ?
 

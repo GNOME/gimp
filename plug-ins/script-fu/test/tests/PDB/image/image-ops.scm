@@ -1,36 +1,34 @@
 ; Test various operations on image
 
 
-; method new from fresh GIMP state returns ID 2
-(assert '(=
-           (car (gimp-image-new 21 22 RGB))
-            6))
+;              setup
+(define testImage (car (gimp-image-new 21 22 RGB)))
 
 
 ;           transformations
 
 ; flip
-(assert '(gimp-image-flip 6 ORIENTATION-HORIZONTAL))
-(assert '(gimp-image-flip 6 ORIENTATION-VERTICAL))
+(assert `(gimp-image-flip ,testImage ORIENTATION-HORIZONTAL))
+(assert `(gimp-image-flip ,testImage ORIENTATION-VERTICAL))
 ; TODO rotate scale resize policy
 
-(assert-error '(gimp-image-flip 6 ORIENTATION-UNKNOWN)
+(assert-error `(gimp-image-flip ,testImage ORIENTATION-UNKNOWN)
     (string-append
       "Procedure execution of gimp-image-flip failed on invalid input arguments: "
       "Procedure 'gimp-image-flip' has been called with value 'GIMP_ORIENTATION_UNKNOWN'"
       " for argument 'flip-type' (#2, type GimpOrientationType). This value is out of range."))
 
 ; rotate
-(assert '(gimp-image-rotate 6 ROTATE-90))
-(assert '(gimp-image-rotate 6 ROTATE-180))
-(assert '(gimp-image-rotate 6 ROTATE-270))
+(assert `(gimp-image-rotate ,testImage ROTATE-90))
+(assert `(gimp-image-rotate ,testImage ROTATE-180))
+(assert `(gimp-image-rotate ,testImage ROTATE-270))
 
 ; scale
 ; up
-(assert '(gimp-image-scale 6 100 100))
+(assert `(gimp-image-scale ,testImage 100 100))
 
 ; down to min
-(assert '(gimp-image-scale 6 1 1))
+(assert `(gimp-image-scale ,testImage 1 1))
 
 ; up to max
 ; Performance:
@@ -38,33 +36,33 @@
 ; but then seems to slow down testing
 ; unless we scale down afterwards.
 ; This seems glacial if not scaled to 1,1 prior.
-(assert '(gimp-image-scale 6 524288 524288))
+(assert `(gimp-image-scale ,testImage 524288 524288))
 
 ; down to min
-(assert '(gimp-image-scale 6 1 1))
+(assert `(gimp-image-scale ,testImage 1 1))
 
 
 ;          policy ops
 
 ; 0 means non-interactive
-(assert '(gimp-image-policy-color-profile 6 0))
-(assert '(gimp-image-policy-rotate 6 0))
+(assert `(gimp-image-policy-color-profile ,testImage 0))
+(assert `(gimp-image-policy-rotate ,testImage 0))
 
 
 
 ; freezing and unfreezing (avoid updates to dialogs)
 ; Used for performance.
-(assert '(gimp-image-freeze-channels 6))
-(assert '(gimp-image-freeze-layers 6))
-(assert '(gimp-image-freeze-vectors 6))
-(assert '(gimp-image-thaw-channels 6))
-(assert '(gimp-image-thaw-layers 6))
-(assert '(gimp-image-thaw-vectors 6))
+(assert `(gimp-image-freeze-channels ,testImage))
+(assert `(gimp-image-freeze-layers ,testImage))
+(assert `(gimp-image-freeze-vectors ,testImage))
+(assert `(gimp-image-thaw-channels ,testImage))
+(assert `(gimp-image-thaw-layers ,testImage))
+(assert `(gimp-image-thaw-vectors ,testImage))
 
 ; clean-all makes image not dirty
-(assert '(gimp-image-clean-all 6))
-(assert '(=
-            (car (gimp-image-is-dirty 6))
+(assert `(gimp-image-clean-all ,testImage))
+(assert `(=
+            (car (gimp-image-is-dirty ,testImage))
             0))
 
 ; TODO test flatten is effective
@@ -81,5 +79,5 @@
 ; airbrush
 
 ; cannot flatten empty image
-(assert-error '(gimp-image-flatten 6)
+(assert-error `(gimp-image-flatten ,testImage)
   "Procedure execution of gimp-image-flatten failed: Cannot flatten an image without any visible layer.")

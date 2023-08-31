@@ -9,6 +9,8 @@
 ; explaining the limits.
 ; The limits here are from experiments.
 
+; These only test the limits.
+; Methods on the objects (string, vector, etc.) are tested elsewhere.
 
 ;                   Symbol limits
 
@@ -37,6 +39,7 @@
 
 ; succeeds
 (assert '(make-vector 25000))
+; REPL shows as #(() () ... ()) i.e. a vector of NIL, not initialized
 
 ; might not crash?
 (define testVector (make-vector 25001))
