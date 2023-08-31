@@ -42,9 +42,6 @@ static void   gimp_display_bounds_changed_handler (GimpImage      *image,
                                                    gint            old_x,
                                                    gint            old_y,
                                                    GimpDisplay    *display);
-static void   gimp_display_flush_handler          (GimpImage      *image,
-                                                   gboolean        invalidate_preview,
-                                                   GimpDisplay    *display);
 
 
 /*  public functions  */
@@ -67,9 +64,12 @@ gimp_display_connect (GimpDisplay *display)
   g_signal_connect (image, "bounds-changed",
                     G_CALLBACK (gimp_display_bounds_changed_handler),
                     display);
-  g_signal_connect (image, "flush",
-                    G_CALLBACK (gimp_display_flush_handler),
-                    display);
+  g_signal_connect_swapped (image, "flush",
+                            G_CALLBACK (gimp_display_flush),
+                            display);
+  g_signal_connect_swapped (image, "selected-layers-changed",
+                            G_CALLBACK (gimp_display_flush),
+                            display);
 }
 
 void
@@ -84,7 +84,7 @@ gimp_display_disconnect (GimpDisplay *display)
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   g_signal_handlers_disconnect_by_func (image,
-                                        gimp_display_flush_handler,
+                                        gimp_display_flush,
                                         display);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_bounds_changed_handler,
@@ -117,12 +117,4 @@ gimp_display_bounds_changed_handler (GimpImage   *image,
                                      GimpDisplay *display)
 {
   gimp_display_update_bounding_box (display);
-}
-
-static void
-gimp_display_flush_handler (GimpImage   *image,
-                            gboolean     invalidate_preview,
-                            GimpDisplay *display)
-{
-  gimp_display_flush (display);
 }
