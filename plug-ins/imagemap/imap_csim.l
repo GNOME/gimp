@@ -71,21 +71,21 @@ WS	[ \t\n]+
    				   return STRING;
 				}
 
-IMG				return IMG;
+IMG					return IMG;
 
-SRC				return SRC;
+SRC					return SRC;
 
-WIDTH			     	return WIDTH;
+WIDTH				return WIDTH;
 
-HEIGHT			       	return HEIGHT;
+HEIGHT				return HEIGHT;
 
 BORDER				return BORDER;
 
 USEMAP				return USEMAP;
 
-MAP				return START_MAP;
+MAP				    return START_MAP;
 
-\/MAP		       		return END_MAP;
+\/MAP		       	return END_MAP;
 
 NAME				return NAME;
 
@@ -105,7 +105,13 @@ ONFOCUS				return ONFOCUS;
 
 ONBLUR				return ONBLUR;
 
-ALT				return ALT;
+ONCLICK				return ONCLICK;
+
+ACCESSKEY			return ACCESSKEY;
+
+TABINDEX			return TABINDEX;
+
+ALT					return ALT;
 
 HREF				return HREF;
 

@@ -54,8 +54,8 @@ static MapInfo_t *_map_info;
 
 %token<val> IMG SRC WIDTH HEIGHT BORDER USEMAP
 %token<val> START_MAP END_MAP NAME AREA SHAPE COORDS ALT HREF NOHREF
-%token<val> TARGET ONMOUSEOVER ONMOUSEOUT ONFOCUS ONBLUR
-%token<val> AUTHOR DESCRIPTION BEGIN_COMMENT END_COMMENT
+%token<val> TARGET ONMOUSEOVER ONMOUSEOUT ONFOCUS ONBLUR ONCLICK
+%token<val> ACCESSKEY TABINDEX AUTHOR DESCRIPTION BEGIN_COMMENT END_COMMENT
 %token<value> FLOAT
 %token<id> STRING
 
@@ -176,6 +176,9 @@ tag		: shape_tag
 		| onmouseout_tag
 		| onfocus_tag
 		| onblur_tag
+		| onclick_tag
+		| accesskey_tag
+		| tabindex_tag
 		;
 
 shape_tag	: SHAPE '=' STRING
@@ -317,6 +320,27 @@ onfocus_tag	: ONFOCUS '=' STRING
 onblur_tag	: ONBLUR '=' STRING
 		{
 		   object_set_blur(current_object, unescape_text($3));
+		   g_free ($3);
+		}
+		;
+
+onclick_tag	: ONCLICK '=' STRING
+		{
+		   object_set_click(current_object, unescape_text($3));
+		   g_free ($3);
+		}
+		;
+
+accesskey_tag	: ACCESSKEY '=' STRING
+		{
+		   object_set_accesskey(current_object, unescape_text($3));
+		   g_free ($3);
+		}
+		;
+
+tabindex_tag	: TABINDEX '=' STRING
+		{
+		   object_set_tabindex(current_object, unescape_text($3));
 		   g_free ($3);
 		}
 		;

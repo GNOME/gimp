@@ -163,33 +163,41 @@ object_list_remove_geometry_cb(ObjectList_t *list, gpointer id)
 Object_t*
 object_init(Object_t *obj, ObjectClass_t *class)
 {
-   obj->class = class;
-   obj->refcount = 1;
-   obj->selected = FALSE;
-   obj->locked = FALSE;
-   obj->url = g_strdup("");
-   obj->target = g_strdup("");
-   obj->comment = g_strdup("");
-   obj->mouse_over = g_strdup("");
-   obj->mouse_out = g_strdup("");
-   obj->focus = g_strdup("");
-   obj->blur = g_strdup("");
-   return obj;
+  obj->class = class;
+  obj->refcount = 1;
+  obj->selected = FALSE;
+  obj->locked = FALSE;
+  obj->url = g_strdup ("");
+  obj->target = g_strdup ("");
+  obj->comment = g_strdup ("");
+  obj->accesskey = g_strdup ("");
+  obj->tabindex = g_strdup ("");
+  obj->mouse_over = g_strdup ("");
+  obj->mouse_out = g_strdup ("");
+  obj->focus = g_strdup ("");
+  obj->blur = g_strdup ("");
+  obj->click = g_strdup ("");
+
+  return obj;
 }
 
 static void
 object_destruct(Object_t *obj)
 {
-   if (obj->class->destruct)
-      obj->class->destruct(obj);
-   g_free(obj->url);
-   g_free(obj->target);
-   g_free(obj->comment);
-   g_free(obj->mouse_over);
-   g_free(obj->mouse_out);
-   g_free(obj->focus);
-   g_free(obj->blur);
-   g_free(obj);
+  if (obj->class->destruct)
+    obj->class->destruct(obj);
+
+  g_free (obj->url);
+  g_free (obj->target);
+  g_free (obj->comment);
+  g_free (obj->accesskey);
+  g_free (obj->tabindex);
+  g_free (obj->mouse_over);
+  g_free (obj->mouse_out);
+  g_free (obj->focus);
+  g_free (obj->blur);
+  g_free (obj->click);
+  g_free (obj);
 }
 
 Object_t*
@@ -207,37 +215,47 @@ object_unref(Object_t *obj)
 }
 
 Object_t*
-object_clone(Object_t *obj)
+object_clone (Object_t *obj)
 {
-   Object_t *clone = obj->class->clone(obj);
-   clone->class = obj->class;
-   clone->refcount = 1;
-   clone->selected = obj->selected;
-   clone->locked = FALSE;
-   clone->url = g_strdup(obj->url);
-   clone->target = g_strdup(obj->target);
-   clone->comment = g_strdup(obj->comment);
-   clone->mouse_over = g_strdup(obj->mouse_over);
-   clone->mouse_out = g_strdup(obj->mouse_out);
-   clone->focus = g_strdup(obj->focus);
-   clone->blur = g_strdup(obj->blur);
-   return clone;
+  Object_t *clone = obj->class->clone (obj);
+
+  clone->class = obj->class;
+  clone->refcount = 1;
+  clone->selected = obj->selected;
+  clone->locked = FALSE;
+  clone->url = g_strdup (obj->url);
+  clone->target = g_strdup (obj->target);
+  clone->comment = g_strdup (obj->comment);
+  clone->accesskey = g_strdup (obj->accesskey);
+  clone->tabindex = g_strdup (obj->tabindex);
+  clone->mouse_over = g_strdup (obj->mouse_over);
+  clone->mouse_out = g_strdup (obj->mouse_out);
+  clone->focus = g_strdup (obj->focus);
+  clone->blur = g_strdup (obj->blur);
+  clone->click = g_strdup (obj->click);
+
+  return clone;
 }
 
 static Object_t*
-object_copy(Object_t *src, Object_t *des)
+object_copy (Object_t *src, Object_t *des)
 {
-   des->class = src->class;
-   des->selected = src->selected;
-   des->locked = FALSE;
-   g_strreplace(&des->url, src->url);
-   g_strreplace(&des->target, src->target);
-   g_strreplace(&des->comment, src->comment);
-   g_strreplace(&des->mouse_over, src->mouse_over);
-   g_strreplace(&des->mouse_out, src->mouse_out);
-   g_strreplace(&des->focus, src->focus);
-   g_strreplace(&des->blur, src->blur);
-   return des;
+  des->class = src->class;
+  des->selected = src->selected;
+  des->locked = FALSE;
+
+  g_strreplace (&des->url, src->url);
+  g_strreplace (&des->target, src->target);
+  g_strreplace (&des->comment, src->comment);
+  g_strreplace (&des->accesskey, src->accesskey);
+  g_strreplace (&des->tabindex, src->tabindex);
+  g_strreplace (&des->mouse_over, src->mouse_over);
+  g_strreplace (&des->mouse_out, src->mouse_out);
+  g_strreplace (&des->focus, src->focus);
+  g_strreplace (&des->blur, src->blur);
+  g_strreplace (&des->click, src->click);
+
+  return des;
 }
 
 Object_t*
@@ -357,43 +375,65 @@ object_unlock(Object_t *obj)
 void
 object_set_url(Object_t *obj, const gchar *url)
 {
-   g_strreplace(&obj->url, url);
+   g_strreplace (&obj->url, url);
 }
 
 void
 object_set_target(Object_t *obj, const gchar *target)
 {
-   g_strreplace(&obj->target, target);
+   g_strreplace (&obj->target, target);
 }
 
 void
 object_set_comment(Object_t *obj, const gchar *comment)
 {
-   g_strreplace(&obj->comment, comment);
+   g_strreplace (&obj->comment, comment);
+}
+
+void
+object_set_accesskey (Object_t    *obj,
+                      const gchar *accesskey)
+{
+  g_strreplace (&obj->accesskey, accesskey);
+}
+
+void
+object_set_tabindex (Object_t    *obj,
+                     const gchar *tabindex)
+{
+  g_strreplace (&obj->tabindex, tabindex);
 }
 
 void
 object_set_mouse_over(Object_t *obj, const gchar *mouse_over)
 {
-   g_strreplace(&obj->mouse_over, mouse_over);
+   g_strreplace (&obj->mouse_over, mouse_over);
 }
 
 void
 object_set_mouse_out(Object_t *obj, const gchar *mouse_out)
 {
-   g_strreplace(&obj->mouse_out, mouse_out);
+   g_strreplace (&obj->mouse_out, mouse_out);
 }
 
 void
 object_set_focus(Object_t *obj, const gchar *focus)
 {
-   g_strreplace(&obj->focus, focus);
+   g_strreplace (&obj->focus, focus);
 }
 
 void
-object_set_blur(Object_t *obj, const gchar *blur)
+object_set_blur (Object_t    *obj,
+                 const gchar *blur)
 {
-   g_strreplace(&obj->blur, blur);
+  g_strreplace (&obj->blur, blur);
+}
+
+void
+object_set_click (Object_t    *obj,
+                  const gchar *click)
+{
+  g_strreplace (&obj->click, click);
 }
 
 gint
@@ -994,24 +1034,31 @@ write_xml_attrib(const gchar *attrib, const gchar *value,
 }
 
 void
-object_list_write_csim(ObjectList_t *list, gpointer param, OutputFunc_t output)
+object_list_write_csim (ObjectList_t *list,
+                        gpointer      param,
+                        OutputFunc_t  output)
 {
-   GList *p;
-   for (p = list->list; p; p = p->next) {
+  GList *p;
+  for (p = list->list; p; p = p->next)
+    {
       Object_t *obj = (Object_t*) p->data;
 
-      output(param, "<area shape=");
-      obj->class->write_csim(obj, param, output);
+      output (param, "<area shape=");
+      obj->class->write_csim (obj, param, output);
 
-      write_xml_attrib("alt", obj->comment, "", param, output);
-      write_xml_attrib("target", obj->target, "", param, output);
-      write_xml_attrib("onmouseover", obj->mouse_over, "", param, output);
-      write_xml_attrib("onmouseout", obj->mouse_out, "", param, output);
-      write_xml_attrib("onfocus", obj->focus, "", param, output);
-      write_xml_attrib("onblur", obj->blur, "", param, output);
-      write_xml_attrib("href", obj->url, " nohref=\"nohref\"", param, output);
-      output(param," />\n");
-   }
+      write_xml_attrib ("alt", obj->comment, "", param, output);
+      write_xml_attrib ("target", obj->target, "", param, output);
+      write_xml_attrib ("accesskey", obj->accesskey, "", param, output);
+      write_xml_attrib ("tabindex", obj->tabindex, "", param, output);
+
+      write_xml_attrib ("onmouseover", obj->mouse_over, "", param, output);
+      write_xml_attrib ("onmouseout", obj->mouse_out, "", param, output);
+      write_xml_attrib ("onfocus", obj->focus, "", param, output);
+      write_xml_attrib ("onblur", obj->blur, "", param, output);
+      write_xml_attrib ("onclick", obj->click, "", param, output);
+      write_xml_attrib ("href", obj->url, " nohref=\"nohref\"", param, output);
+      output (param," />\n");
+    }
 }
 
 void

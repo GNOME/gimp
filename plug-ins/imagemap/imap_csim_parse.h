@@ -66,12 +66,15 @@ extern int csim_debug;
      ONMOUSEOUT = 275,
      ONFOCUS = 276,
      ONBLUR = 277,
-     AUTHOR = 278,
-     DESCRIPTION = 279,
-     BEGIN_COMMENT = 280,
-     END_COMMENT = 281,
-     FLOAT = 282,
-     STRING = 283
+     ONCLICK = 278,
+     ACCESSKEY = 279,
+     TABINDEX = 280,
+     AUTHOR = 281,
+     DESCRIPTION = 282,
+     BEGIN_COMMENT = 283,
+     END_COMMENT = 284,
+     FLOAT = 285,
+     STRING = 286
    };
 #endif
 /* Tokens.  */
@@ -95,12 +98,15 @@ extern int csim_debug;
 #define ONMOUSEOUT 275
 #define ONFOCUS 276
 #define ONBLUR 277
-#define AUTHOR 278
-#define DESCRIPTION 279
-#define BEGIN_COMMENT 280
-#define END_COMMENT 281
-#define FLOAT 282
-#define STRING 283
+#define ONCLICK 278
+#define ACCESSKEY 279
+#define TABINDEX 280
+#define AUTHOR 281
+#define DESCRIPTION 282
+#define BEGIN_COMMENT 283
+#define END_COMMENT 284
+#define FLOAT 285
+#define STRING 286
 
 
 

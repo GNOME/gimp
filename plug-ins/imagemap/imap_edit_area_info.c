@@ -201,12 +201,15 @@ append_page (GtkWidget *notebook, GtkWidget *page, const gchar *icon_name,
 }
 
 static void
-create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
+create_link_tab (AreaInfoDialog_t *dialog,
+                 GtkWidget        *notebook)
 {
    BrowseWidget_t *browse;
-   GtkWidget *grid, *label;
-   GtkWidget *subgrid, *frame;
-   GSList    *group;
+   GtkWidget      *grid;
+   GtkWidget      *label;
+   GtkWidget      *subgrid;
+   GtkWidget      *frame;
+   GSList         *group;
 
    grid = gtk_grid_new ();
    gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
@@ -228,7 +231,7 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->web_site));
 
    dialog->ftp_site = create_radio_button_in_grid (subgrid, group, 0, 1,
-                                                   _("_Ftp Site"));
+                                                   _("_FTP Site"));
    g_signal_connect(dialog->ftp_site, "toggled",
                     G_CALLBACK (select_ftp_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->ftp_site));
@@ -293,6 +296,12 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    label = create_label_in_grid (grid, 9, 0, _("ALT te_xt: (optional)"));
    dialog->comment = create_entry_in_grid (grid, label, 10, 0);
 
+   label = create_label_in_grid (grid, 12, 0, _("Access _Key: (optional)"));
+   dialog->accesskey = create_entry_in_grid (grid, label, 13, 0);
+
+   label = create_label_in_grid (grid, 15, 0, _("Ta_b Index: (optional)"));
+   dialog->tabindex = create_entry_in_grid (grid, label, 16, 0);
+
    append_page (notebook, grid, GIMP_ICON_WEB, _("_Link"));
 }
 
@@ -344,7 +353,8 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 }
 
 static void
-create_java_script_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
+create_java_script_tab (AreaInfoDialog_t *dialog,
+                        GtkWidget        *notebook)
 {
    GtkWidget *vbox, *grid, *label;
 
@@ -369,6 +379,9 @@ create_java_script_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    label = create_label_in_grid (grid, 9, 0, "on_Blur (HTML 4.0):");
    dialog->blur = create_entry_in_grid (grid, label, 10, 0);
 
+   label = create_label_in_grid (grid, 12, 0, "onC_lick:");
+   dialog->click = create_entry_in_grid (grid, label, 13, 0);
+
    append_page (notebook, vbox, IMAP_JAVA, _("_JavaScript"));
 }
 
@@ -388,24 +401,30 @@ object_was_changed(AreaInfoDialog_t *dialog)
 }
 
 static void
-edit_area_apply_cb(gpointer data)
+edit_area_apply_cb (gpointer data)
 {
-   AreaInfoDialog_t *param = (AreaInfoDialog_t*) data;
-   Object_t *obj = param->obj;
+  AreaInfoDialog_t *param = (AreaInfoDialog_t*) data;
+  Object_t         *obj   = param->obj;
 
-   object_set_url(obj, gtk_entry_get_text(GTK_ENTRY(param->url)));
-   object_set_target(obj, gtk_entry_get_text(GTK_ENTRY(param->target)));
-   object_set_comment(obj, gtk_entry_get_text(GTK_ENTRY(param->comment)));
-   object_set_mouse_over(obj,
-                         gtk_entry_get_text(GTK_ENTRY(param->mouse_over)));
-   object_set_mouse_out(obj, gtk_entry_get_text(GTK_ENTRY(param->mouse_out)));
-   object_set_focus(obj, gtk_entry_get_text(GTK_ENTRY(param->focus)));
-   object_set_blur(obj, gtk_entry_get_text(GTK_ENTRY(param->blur)));
-   object_update(obj, param->infotab);
-   update_shape(obj);
+  object_set_url (obj, gtk_entry_get_text (GTK_ENTRY(param->url)));
+  object_set_target (obj, gtk_entry_get_text (GTK_ENTRY(param->target)));
+  object_set_comment (obj, gtk_entry_get_text (GTK_ENTRY(param->comment)));
+  object_set_accesskey (obj, gtk_entry_get_text (GTK_ENTRY(param->accesskey)));
+  object_set_tabindex (obj, gtk_entry_get_text (GTK_ENTRY(param->tabindex)));
 
-   if (object_was_changed(param))
-      preview_redraw();
+  object_set_mouse_over (obj,
+                         gtk_entry_get_text (GTK_ENTRY (param->mouse_over)));
+  object_set_mouse_out (obj,
+                        gtk_entry_get_text (GTK_ENTRY (param->mouse_out)));
+  object_set_focus (obj, gtk_entry_get_text (GTK_ENTRY (param->focus)));
+  object_set_blur (obj, gtk_entry_get_text (GTK_ENTRY (param->blur)));
+  object_set_click (obj, gtk_entry_get_text (GTK_ENTRY (param->click)));
+
+  object_update (obj, param->infotab);
+  update_shape (obj);
+
+  if (object_was_changed (param))
+    preview_redraw();
 }
 
 static void
@@ -490,31 +509,35 @@ void
 edit_area_info_dialog_show(AreaInfoDialog_t *dialog, Object_t *obj,
                            gboolean add)
 {
-   gchar *title;
+  gchar *title;
 
-   object_unlock(dialog->obj);
-   object_lock(obj);
-   dialog->obj = obj;
-   dialog->clone = object_clone(obj);
-   dialog->add = add;
-   object_fill_info_tab(obj, dialog->infotab);
-   gtk_entry_set_text(GTK_ENTRY(dialog->url), obj->url);
-   gtk_entry_set_text(GTK_ENTRY(dialog->target), obj->target);
-   gtk_entry_set_text(GTK_ENTRY(dialog->comment), obj->comment);
-   gtk_entry_set_text(GTK_ENTRY(dialog->mouse_over), obj->mouse_over);
-   gtk_entry_set_text(GTK_ENTRY(dialog->mouse_out), obj->mouse_out);
-   gtk_entry_set_text(GTK_ENTRY(dialog->focus), obj->focus);
-   gtk_entry_set_text(GTK_ENTRY(dialog->blur), obj->blur);
-   gtk_widget_grab_focus(dialog->url);
+  object_unlock (dialog->obj);
+  object_lock(obj);
+  dialog->obj = obj;
+  dialog->clone = object_clone(obj);
+  dialog->add = add;
+  object_fill_info_tab (obj, dialog->infotab);
+  gtk_entry_set_text (GTK_ENTRY (dialog->url), obj->url);
+  gtk_entry_set_text (GTK_ENTRY (dialog->target), obj->target);
+  gtk_entry_set_text (GTK_ENTRY (dialog->comment), obj->comment);
+  gtk_entry_set_text (GTK_ENTRY (dialog->accesskey), obj->accesskey);
+  gtk_entry_set_text (GTK_ENTRY (dialog->tabindex), obj->tabindex);
 
-   dialog->geometry_cb_id =
-      object_list_add_geometry_cb(obj->list, geometry_changed, dialog);
+  gtk_entry_set_text (GTK_ENTRY (dialog->mouse_over), obj->mouse_over);
+  gtk_entry_set_text (GTK_ENTRY (dialog->mouse_out), obj->mouse_out);
+  gtk_entry_set_text (GTK_ENTRY (dialog->focus), obj->focus);
+  gtk_entry_set_text (GTK_ENTRY (dialog->blur), obj->blur);
+  gtk_entry_set_text (GTK_ENTRY (dialog->click), obj->click);
+  gtk_widget_grab_focus (dialog->url);
 
-   title = g_strdup_printf (_("Area #%d Settings"),
-                            object_get_position_in_list(obj) + 1);
-   default_dialog_set_title(dialog->dialog, title);
-   g_free (title);
-   default_dialog_show(dialog->dialog);
+  dialog->geometry_cb_id =
+     object_list_add_geometry_cb (obj->list, geometry_changed, dialog);
+
+  title = g_strdup_printf (_("Area #%d Settings"),
+                           object_get_position_in_list(obj) + 1);
+  default_dialog_set_title (dialog->dialog, title);
+  g_free (title);
+  default_dialog_show (dialog->dialog);
 }
 
 void
