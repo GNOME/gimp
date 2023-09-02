@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-27 14:25+0000\n"
-"PO-Revision-Date: 2023-08-28 23:52+0200\n"
+"POT-Creation-Date: 2023-09-02 03:31+0000\n"
+"PO-Revision-Date: 2023-09-02 22:38+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -12368,84 +12368,92 @@ msgstr "Prekliči izbor"
 msgid "Unselect All"
 msgstr "Prekliči izbor vseh"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:216
+#: plug-ins/imagemap/imap_edit_area_info.c:219
 msgid "Link Type"
 msgstr "Vrsta povezave"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:225
+#: plug-ins/imagemap/imap_edit_area_info.c:228
 msgid "_Web Site"
 msgstr "_Spletna stran"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:231
-msgid "_Ftp Site"
-msgstr "_Ftp-strežnik"
+#: plug-ins/imagemap/imap_edit_area_info.c:234
+msgid "_FTP Site"
+msgstr "_FTP-strežnik"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:237
+#: plug-ins/imagemap/imap_edit_area_info.c:240
 msgid "_Gopher"
 msgstr "_Gopher"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:243
+#: plug-ins/imagemap/imap_edit_area_info.c:246
 msgid "Ot_her"
 msgstr "_Drugo"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:249
+#: plug-ins/imagemap/imap_edit_area_info.c:252
 msgid "F_ile"
 msgstr "_Datoteka"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:255
+#: plug-ins/imagemap/imap_edit_area_info.c:258
 msgid "WAI_S"
 msgstr "WAI_S"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:261
+#: plug-ins/imagemap/imap_edit_area_info.c:264
 msgid "Tel_net"
 msgstr "Tel_net"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:267
+#: plug-ins/imagemap/imap_edit_area_info.c:270
 msgid "e-_mail"
 msgstr "e-_pošta"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:273
+#: plug-ins/imagemap/imap_edit_area_info.c:276
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr "_URL preusmeritve ob kliku na to področje: (obvezno)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:275
+#: plug-ins/imagemap/imap_edit_area_info.c:278
 msgid "Select HTML file"
 msgstr "Izberite datoteko HTML"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:284
+#: plug-ins/imagemap/imap_edit_area_info.c:287
 msgid "Relati_ve link"
 msgstr "Relati_vna povezava"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:290
+#: plug-ins/imagemap/imap_edit_area_info.c:293
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr ""
 "_Ime/ID ciljnega okvira: (dodatno - uporablja se le za okvirje - FRAMES)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:293
+#: plug-ins/imagemap/imap_edit_area_info.c:296
 msgid "ALT te_xt: (optional)"
 msgstr "_Besedilo ALT: (neobvezno)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:296
+#: plug-ins/imagemap/imap_edit_area_info.c:299
+msgid "Access _Key: (optional)"
+msgstr "_Tipka za dostop: (neobvezno)"
+
+#: plug-ins/imagemap/imap_edit_area_info.c:302
+msgid "Ta_b Index: (optional)"
+msgstr "_Zaporedje ta_bulatork: (neobvezno)"
+
+#: plug-ins/imagemap/imap_edit_area_info.c:305
 msgid "_Link"
 msgstr "_Povezava"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:330
+#: plug-ins/imagemap/imap_edit_area_info.c:339
 msgid "Dimensions"
 msgstr "Mere"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:334
+#: plug-ins/imagemap/imap_edit_area_info.c:343
 msgid "Pre_view"
 msgstr "Pre_dogled"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:372
+#: plug-ins/imagemap/imap_edit_area_info.c:385
 msgid "_JavaScript"
 msgstr "_JavaScript"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:471
+#: plug-ins/imagemap/imap_edit_area_info.c:490
 msgid "Area Settings"
 msgstr "Nastavitve področja"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:513
+#: plug-ins/imagemap/imap_edit_area_info.c:536
 #, c-format
 msgid "Area #%d Settings"
 msgstr "Nastavitve področja #%d"
