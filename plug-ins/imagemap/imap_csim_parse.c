@@ -175,12 +175,15 @@ extern int csim_debug;
      ONMOUSEOUT = 275,
      ONFOCUS = 276,
      ONBLUR = 277,
-     AUTHOR = 278,
-     DESCRIPTION = 279,
-     BEGIN_COMMENT = 280,
-     END_COMMENT = 281,
-     FLOAT = 282,
-     STRING = 283
+     ONCLICK = 278,
+     ACCESSKEY = 279,
+     TABINDEX = 280,
+     AUTHOR = 281,
+     DESCRIPTION = 282,
+     BEGIN_COMMENT = 283,
+     END_COMMENT = 284,
+     FLOAT = 285,
+     STRING = 286
    };
 #endif
 /* Tokens.  */
@@ -204,12 +207,15 @@ extern int csim_debug;
 #define ONMOUSEOUT 275
 #define ONFOCUS 276
 #define ONBLUR 277
-#define AUTHOR 278
-#define DESCRIPTION 279
-#define BEGIN_COMMENT 280
-#define END_COMMENT 281
-#define FLOAT 282
-#define STRING 283
+#define ONCLICK 278
+#define ACCESSKEY 279
+#define TABINDEX 280
+#define AUTHOR 281
+#define DESCRIPTION 282
+#define BEGIN_COMMENT 283
+#define END_COMMENT 284
+#define FLOAT 285
+#define STRING 286
 
 
 
@@ -580,15 +586,16 @@ static const char *const yytname[] =
   "$end", "error", "$undefined", "IMG", "SRC", "WIDTH", "HEIGHT",
   "BORDER", "USEMAP", "START_MAP", "END_MAP", "NAME", "AREA", "SHAPE",
   "COORDS", "ALT", "HREF", "NOHREF", "TARGET", "ONMOUSEOVER", "ONMOUSEOUT",
-  "ONFOCUS", "ONBLUR", "AUTHOR", "DESCRIPTION", "BEGIN_COMMENT",
-  "END_COMMENT", "FLOAT", "STRING", "'<'", "'='", "'>'", "'/'", "$accept",
-  "csim_file", "image", "image_tags", "image_tag", "image_width",
-  "image_height", "integer_value", "start_map", "comment_lines",
-  "comment_line", "real_comment", "author_line", "description_line",
+  "ONFOCUS", "ONBLUR", "ONCLICK", "ACCESSKEY", "TABINDEX", "AUTHOR",
+  "DESCRIPTION", "BEGIN_COMMENT", "END_COMMENT", "FLOAT", "STRING",
+  "'<'", "'='", "'>'", "'/'", "$accept", "csim_file", "image", "image_tags",
+  "image_tag", "image_width", "image_height", "integer_value", "start_map",
+  "comment_lines", "comment_line", "real_comment", "author_line", "description_line",
   "area_list", "area", "xhtml_close", "tag_list", "tag", "shape_tag",
   "coords_tag", "href_tag", "nohref_tag", "optional_value", "alt_tag",
   "target_tag", "onmouseover_tag", "onmouseout_tag", "onfocus_tag",
-  "onblur_tag", "end_map", YY_NULL
+  "onblur_tag", "onclick_tag", "accesskey_tag", "tabindex_tag", "end_map",
+  YY_NULL
 };
 #endif
 
@@ -599,8 +606,8 @@ static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279,   280,   281,   282,   283,    60,
-      61,    62,    47
+     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
+     285,   286,    60,    61,    62,    47
 };
 # endif
 
@@ -1821,6 +1828,30 @@ yyreduce:
 #line 318 "imap_csim.y"
     {
 		   object_set_blur(current_object, unescape_text((yyvsp[(3) - (3)].id)));
+		   g_free ((yyvsp[(3) - (3)].id));
+		}
+    break;
+  case 53:
+/* Line 1787 of yacc.c  */
+#line 325 "imap_csim.y"
+    {
+		   object_set_click(current_object, unescape_text((yyvsp[(3) - (3)].id)));
+		   g_free ((yyvsp[(3) - (3)].id));
+		}
+    break;
+  case 54:
+/* Line 1787 of yacc.c  */
+#line 332 "imap_csim.y"
+    {
+		   object_set_accesskey(current_object, unescape_text((yyvsp[(3) - (3)].id)));
+		   g_free ((yyvsp[(3) - (3)].id));
+		}
+    break;
+  case 55:
+/* Line 1787 of yacc.c  */
+#line 339 "imap_csim.y"
+    {
+		   object_set_tabindex(current_object, unescape_text((yyvsp[(3) - (3)].id)));
 		   g_free ((yyvsp[(3) - (3)].id));
 		}
     break;

@@ -382,8 +382,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 32
-#define YY_END_OF_BUFFER 33
+#define YY_NUM_RULES 35
+#define YY_END_OF_BUFFER 36
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -1036,63 +1036,78 @@ return ONBLUR;
 case 23:
 YY_RULE_SETUP
 #line 108 "imap_csim.l"
-return ALT;
+return ONCLICK;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 110 "imap_csim.l"
-return HREF;
+return ACCESSKEY;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 112 "imap_csim.l"
-return NOHREF;
+return TABINDEX;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 114 "imap_csim.l"
+return ALT;
+	YY_BREAK
+case 27:
+YY_RULE_SETUP
+#line 116 "imap_csim.l"
+return HREF;
+	YY_BREAK
+case 28:
+YY_RULE_SETUP
+#line 118 "imap_csim.l"
+return NOHREF;
+	YY_BREAK
+case 29:
+YY_RULE_SETUP
+#line 120 "imap_csim.l"
 {
 				   BEGIN(quoted_string);
 				}
 	YY_BREAK
-case 27:
+case 30:
 YY_RULE_SETUP
-#line 118 "imap_csim.l"
+#line 124 "imap_csim.l"
 {
 				   BEGIN(INITIAL);
 				   return STRING;
 				}
 	YY_BREAK
-case 28:
+case 31:
 /* rule 28 can match eol */
 YY_RULE_SETUP
-#line 123 "imap_csim.l"
+#line 129 "imap_csim.l"
 {
 				  csim_lval.id = g_strndup (csim_text, csim_leng);
 				}
 	YY_BREAK
-case 29:
+case 32:
 YY_RULE_SETUP
-#line 127 "imap_csim.l"
+#line 133 "imap_csim.l"
 {
                                    csim_lval.value = g_ascii_strtod (csim_text, NULL);
 				   return FLOAT;
 				}
 	YY_BREAK
-case 30:
-/* rule 30 can match eol */
+case 33:
+/* rule 33 can match eol */
 YY_RULE_SETUP
-#line 132 "imap_csim.l"
+#line 138 "imap_csim.l"
 ; /* Eat white space */
 	YY_BREAK
-case 31:
+case 34:
 YY_RULE_SETUP
-#line 134 "imap_csim.l"
+#line 140 "imap_csim.l"
 return *csim_text;
 	YY_BREAK
-case 32:
+case 35:
 YY_RULE_SETUP
-#line 136 "imap_csim.l"
+#line 142 "imap_csim.l"
 ECHO;
 	YY_BREAK
 #line 1099 "<stdout>"

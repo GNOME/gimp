@@ -31,18 +31,21 @@ typedef struct ObjectList_t ObjectList_t;
 #include "imap_menu_funcs.h"
 
 struct Object_t {
-   ObjectClass_t        *class;
-   ObjectList_t         *list;
-   gint                  refcount;
-   gboolean              selected;
-   gboolean              locked;
-   gchar                *url;
-   gchar                *target;
-   gchar                *comment;
-   gchar                *mouse_over;
-   gchar                *mouse_out;
-   gchar                *focus;
-   gchar                *blur;
+  ObjectClass_t        *class;
+  ObjectList_t         *list;
+  gint                  refcount;
+  gboolean              selected;
+  gboolean              locked;
+  gchar                *url;
+  gchar                *target;
+  gchar                *accesskey;
+  gchar                *tabindex;
+  gchar                *comment;
+  gchar                *mouse_over;
+  gchar                *mouse_out;
+  gchar                *focus;
+  gchar                *blur;
+  gchar                *click;
 };
 
 typedef void (*MoveSashFunc_t)(Object_t*, gint, gint);
@@ -87,23 +90,43 @@ void object_unref(Object_t *obj);
 Object_t* object_init(Object_t *obj, ObjectClass_t *class);
 Object_t* object_clone(Object_t *obj);
 Object_t* object_assign(Object_t *src, Object_t *des);
-void object_draw(Object_t *obj, cairo_t *cr);
-void object_edit(Object_t *obj, gboolean add);
-void object_select(Object_t *obj);
-void object_unselect(Object_t *obj);
-void object_move(Object_t *obj, gint dx, gint dy);
-void object_move_sash(Object_t *obj, gint dx, gint dy);
-void object_remove(Object_t *obj);
-void object_lock(Object_t *obj);
-void object_unlock(Object_t *obj);
-void object_set_url(Object_t *obj, const gchar *url);
-void object_set_target(Object_t *obj, const gchar *target);
-void object_set_comment(Object_t *obj, const gchar *comment);
-void object_set_mouse_over(Object_t *obj, const gchar *mouse_over);
-void object_set_mouse_out(Object_t *obj, const gchar *mouse_out);
-void object_set_focus(Object_t *obj, const gchar *focus);
-void object_set_blur(Object_t *obj, const gchar *blur);
-gint object_get_position_in_list(Object_t *obj);
+
+void object_draw                 (Object_t        *obj,
+                                  cairo_t         *cr);
+void object_edit                 (Object_t        *obj,
+                                  gboolean         add);
+void object_select               (Object_t        *obj);
+void object_unselect             (Object_t        *obj);
+void object_move                 (Object_t        *obj,
+                                  gint             dx,
+                                  gint             dy);
+void object_move_sash            (Object_t        *obj,
+                                  gint             dx,
+                                  gint             dy);
+void object_remove               (Object_t        *obj);
+void object_lock                 (Object_t        *obj);
+void object_unlock               (Object_t        *obj);
+void object_set_url              (Object_t        *obj,
+                                  const gchar     *url);
+void object_set_target           (Object_t        *obj,
+                                  const gchar     *target);
+void object_set_comment          (Object_t        *obj,
+                                  const gchar     *comment);
+void object_set_accesskey        (Object_t        *obj,
+                                  const gchar     *accesskey);
+void object_set_tabindex         (Object_t        *obj,
+                                  const gchar     *tabindex);
+void object_set_mouse_over       (Object_t        *obj,
+                                 const gchar      *mouse_over);
+void object_set_mouse_out        (Object_t        *obj,
+                                  const gchar     *mouse_out);
+void object_set_focus            (Object_t        *obj,
+                                  const gchar     *focus);
+void object_set_blur             (Object_t        *obj,
+                                  const gchar     *blur);
+void object_set_click            (Object_t        *obj,
+                                  const gchar     *click);
+gint object_get_position_in_list (Object_t        *obj);
 
 void object_emit_changed_signal(Object_t *obj);
 void object_emit_geometry_signal(Object_t *obj);

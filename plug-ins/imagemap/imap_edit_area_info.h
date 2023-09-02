@@ -53,6 +53,9 @@ struct AreaInfoDialog_t {
    GtkWidget       *mouse_out;
    GtkWidget       *focus;
    GtkWidget       *blur;
+   GtkWidget       *click;
+   GtkWidget       *accesskey;
+   GtkWidget       *tabindex;
    GtkWidget       *browse;
    gpointer         infotab;
    gpointer         geometry_cb_id;
