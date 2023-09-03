@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-11 07:31+0000\n"
-"PO-Revision-Date: 2023-08-11 19:27+0800\n"
+"POT-Creation-Date: 2023-09-02 03:31+0000\n"
+"PO-Revision-Date: 2023-09-03 19:34+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -102,10 +102,10 @@ msgstr "锻炼一只山羊（C）"
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:1038
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
 #: plug-ins/map-object/map-object-ui.c:1317
-#: plug-ins/metadata/metadata-editor.c:1181
-#: plug-ins/metadata/metadata-editor.c:1677
-#: plug-ins/metadata/metadata-editor.c:5306
-#: plug-ins/metadata/metadata-editor.c:5341 plug-ins/pagecurl/pagecurl.c:496
+#: plug-ins/metadata/metadata-editor.c:1185
+#: plug-ins/metadata/metadata-editor.c:1681
+#: plug-ins/metadata/metadata-editor.c:5532
+#: plug-ins/metadata/metadata-editor.c:5567 plug-ins/pagecurl/pagecurl.c:496
 #: plug-ins/screenshot/screenshot.c:513
 #: plug-ins/selection-to-path/selection-to-path.c:413
 msgid "_Cancel"
@@ -353,8 +353,8 @@ msgstr "对齐可见图层"
 #: plug-ins/common/align-layers.c:748 plug-ins/common/align-layers.c:766
 #: plug-ins/common/file-ps.c:3745 plug-ins/common/file-ps.c:3753
 #: plug-ins/common/file-psp.c:840 plug-ins/file-tiff/file-tiff-save.c:1322
-#: plug-ins/metadata/metadata-tags.c:204 plug-ins/metadata/metadata-tags.c:216
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:211 plug-ins/metadata/metadata-tags.c:223
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "None"
 msgstr "无"
 
@@ -1237,8 +1237,8 @@ msgstr "加载 CML 探索器参数"
 #: plug-ins/common/file-iff.c:227 plug-ins/common/file-mng.c:1407
 #: plug-ins/common/file-pcx.c:523 plug-ins/common/file-pcx.c:566
 #: plug-ins/common/file-png.c:673 plug-ins/common/file-ps.c:1126
-#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2383
-#: plug-ins/common/file-psp.c:2433 plug-ins/common/file-qoi.c:300
+#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2436
+#: plug-ins/common/file-psp.c:2486 plug-ins/common/file-qoi.c:300
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
 #: plug-ins/common/file-sunras.c:458 plug-ins/common/file-svg.c:365
 #: plug-ins/common/file-svg.c:825 plug-ins/common/file-tga.c:448
@@ -1642,11 +1642,11 @@ msgstr "Retinex 图像增强"
 msgid "Uniform"
 msgstr "统一"
 
-#: plug-ins/common/contrast-retinex.c:353 plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/common/contrast-retinex.c:353 plug-ins/metadata/metadata-tags.c:254
 msgid "Low"
 msgstr "低"
 
-#: plug-ins/common/contrast-retinex.c:354 plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/common/contrast-retinex.c:354 plug-ins/metadata/metadata-tags.c:254
 msgid "High"
 msgstr "高"
 
@@ -2134,7 +2134,7 @@ msgstr "该插件尝试从图像中移除竖直条纹。"
 
 #: plug-ins/common/destripe.c:141 plug-ins/common/file-html-table.c:194
 #: plug-ins/common/file-ps.c:383 plug-ins/common/file-ps.c:497
-#: plug-ins/imagemap/imap_grid.c:255
+#: plug-ins/common/file-raw-data.c:352 plug-ins/imagemap/imap_grid.c:255
 msgid "_Width"
 msgstr "宽度(_W)"
 
@@ -2969,6 +2969,7 @@ msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr "以 HEIF（高效率图像文件格式）格式保存图像。"
 
 #: plug-ins/common/file-heif.c:252 plug-ins/common/file-heif.c:362
+#: plug-ins/file-jpeg/jpeg.c:203
 msgid "_Quality"
 msgstr "质量(_Q)"
 
@@ -3179,7 +3180,8 @@ msgid "The width for each table cell. Can be a number or a percent."
 msgstr "每个单元格的宽度。可以是一个数字或百分数。"
 
 #: plug-ins/common/file-html-table.c:201 plug-ins/common/file-ps.c:389
-#: plug-ins/common/file-ps.c:504 plug-ins/imagemap/imap_grid.c:261
+#: plug-ins/common/file-ps.c:504 plug-ins/common/file-raw-data.c:357
+#: plug-ins/imagemap/imap_grid.c:261
 msgid "_Height"
 msgstr "高度(_H)"
 
@@ -3445,6 +3447,14 @@ msgstr "保存原始配置文件(_G)"
 #: plug-ins/common/file-jpegxl.c:211
 msgid "Store ICC profile to exported JXL file"
 msgstr "存储 ICC 配置文件至导出的 JXL 文件"
+
+#: plug-ins/common/file-jpegxl.c:216 plug-ins/file-tiff/file-tiff.c:233
+msgid "Export as CMY_K"
+msgstr "导出为 CMYK(_K)"
+
+#: plug-ins/common/file-jpegxl.c:217
+msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
+msgstr "使用软打样色彩配置文件创建 CMYK JPEG XL 图像"
 
 #: plug-ins/common/file-jpegxl.c:2015
 msgid "lightning (fastest)"
@@ -3834,13 +3844,41 @@ msgstr "写入文件“%s”失败：%s"
 msgid "Portable Document Format"
 msgstr "便携式文档格式"
 
+#: plug-ins/common/file-pdf-load.c:343
+msgid "PDF password"
+msgstr "PDF 密码"
+
+#: plug-ins/common/file-pdf-load.c:344
+msgid "The password to decrypt the encrypted PDF file"
+msgstr "解密该加密 PDF 文件的密码"
+
+#: plug-ins/common/file-pdf-load.c:349
+msgid "Load in re_verse order"
+msgstr "逆序加载(_V)"
+
+#: plug-ins/common/file-pdf-load.c:350
+msgid "Load PDF pages in reverse order"
+msgstr "按相反顺序加载 PDF 页面"
+
 #: plug-ins/common/file-pdf-load.c:367
 msgid "Open pages as"
 msgstr "打开页面为"
 
-#: plug-ins/common/file-pdf-load.c:368
+#: plug-ins/common/file-pdf-load.c:368 plug-ins/common/file-pdf-load.c:375
 msgid "Number of pages to load (0 for all)"
 msgstr "要加载的页数（0 为所有）"
+
+#: plug-ins/common/file-pdf-load.c:374
+msgid "N pages"
+msgstr "N 页"
+
+#: plug-ins/common/file-pdf-load.c:387
+msgid "Pages"
+msgstr "页面"
+
+#: plug-ins/common/file-pdf-load.c:388
+msgid "The pages to load in the expected order"
+msgstr "按预期顺序加载的页面"
 
 #: plug-ins/common/file-pdf-load.c:392
 msgid "Use _Anti-aliasing"
@@ -4062,7 +4100,7 @@ msgstr "写入 pHYs 数据块（PNG 元数据）"
 msgid "Write tIME chunk (PNG metadata)"
 msgstr "写入 tIME 数据块（PNG 元数据）"
 
-#: plug-ins/common/file-png.c:269
+#: plug-ins/common/file-png.c:269 plug-ins/file-tiff/file-tiff.c:226
 msgid "Save color _values from transparent pixels"
 msgstr "保存透明像素的颜色值(_V)"
 
@@ -4404,21 +4442,49 @@ msgstr "封装的 PostScript 图像（EPS）"
 msgid "Resol_ution"
 msgstr "分辨率(_U)"
 
+#: plug-ins/common/file-ps.c:378
+msgid "Resolution to interpret image (dpi)"
+msgstr "解析图像使用的分辨率（dpi）"
+
+#: plug-ins/common/file-ps.c:384
+msgid "Desired width"
+msgstr "指定宽度"
+
+#: plug-ins/common/file-ps.c:390
+msgid "Desired height"
+msgstr "指定高度"
+
 #: plug-ins/common/file-ps.c:395
 msgid "Try _Bounding Box"
 msgstr "尝试边界框(_B)"
+
+#: plug-ins/common/file-ps.c:396
+msgid "FALSE: Use width/height, TRUE: Use BoundingBox"
+msgstr "FALSE：使用宽度/高度；TRUE：使用边界框"
 
 #: plug-ins/common/file-ps.c:401
 msgid "_Pages"
 msgstr "页数(_P)"
 
+#: plug-ins/common/file-ps.c:402
+msgid "Pages to load (e.g.: 1,3,5-7)"
+msgstr "加载的页面范围（如：1,3,5-7）"
+
 #: plug-ins/common/file-ps.c:407
 msgid "Coloring"
 msgstr "着色"
 
+#: plug-ins/common/file-ps.c:408
+msgid "4: b/w, 5: grey, 6: color image, 7: automatic"
+msgstr "4：黑白；5：灰度；6：彩色图像；7：自动"
+
 #: plug-ins/common/file-ps.c:413
 msgid "Text antialiasing"
 msgstr "文字抗锯齿"
+
+#: plug-ins/common/file-ps.c:414 plug-ins/common/file-ps.c:420
+msgid "1, 2 or 4"
+msgstr "1, 2 或 4"
 
 #: plug-ins/common/file-ps.c:419
 msgid "Graphic antialiasing"
@@ -4436,21 +4502,45 @@ msgstr "封装的 PostScript"
 msgid "EPS"
 msgstr "EPS"
 
+#: plug-ins/common/file-ps.c:498
+msgid "Width of the image in PostScript file (0: use input image size)"
+msgstr "PostScript 文件中图像的宽度（0：使用输入图像的大小）"
+
+#: plug-ins/common/file-ps.c:505
+msgid "Height of the image in PostScript file (0: use input image size)"
+msgstr "PostScript 文件中图像的高度（0：使用输入图像的大小）"
+
 #: plug-ins/common/file-ps.c:511
 msgid "_X offset"
 msgstr "X 位移(_X)"
+
+#: plug-ins/common/file-ps.c:512
+msgid "X-offset to image from lower left corner"
+msgstr "图像从左下角的 X 轴偏移"
 
 #: plug-ins/common/file-ps.c:517
 msgid "Y o_ffset"
 msgstr "Y 位移(_F)"
 
+#: plug-ins/common/file-ps.c:518
+msgid "Y-offset to image from lower left corner"
+msgstr "图像从左下角的 Y 轴偏移"
+
 #: plug-ins/common/file-ps.c:523
 msgid "Unit"
 msgstr "单位"
 
+#: plug-ins/common/file-ps.c:524
+msgid "Unit for width/height/offset. 0: inches, 1: millimeters"
+msgstr "用于宽度/高度/位移的单位。0：英寸；1：毫米"
+
 #: plug-ins/common/file-ps.c:530
 msgid "_Keep aspect ratio"
 msgstr "保持宽高比(_K)"
+
+#: plug-ins/common/file-ps.c:531
+msgid "FALSE: use width/height, TRUE: keep aspect ratio"
+msgstr "FALSE：使用宽度/高度；TRUE：保持宽高比"
 
 #: plug-ins/common/file-ps.c:536 plug-ins/map-object/map-object-ui.c:1013
 msgid "Rotation"
@@ -4460,13 +4550,33 @@ msgstr "旋转"
 msgid "PostScript Level _2"
 msgstr "PostScript 级别 2(_2)"
 
+#: plug-ins/common/file-ps.c:543
+msgid "FALSE: PostScript Level 1, TRUE: PostScript Level 2"
+msgstr "FALSE：PostScript 级别 1；TRUE：PostScript 级别 2"
+
+#: plug-ins/common/file-ps.c:548
+msgid "Encapsula_ted PostScript"
+msgstr "封装的 PostScript(_T)"
+
+#: plug-ins/common/file-ps.c:549
+msgid "FALSE: PostScript, TRUE: Encapsulated PostScript"
+msgstr "FALSE：PostScript；TRUE：封装的 PostScript"
+
 #: plug-ins/common/file-ps.c:554 plug-ins/imagemap/imap_grid.c:298
 msgid "_Preview"
 msgstr "预览(_P)"
 
+#: plug-ins/common/file-ps.c:555
+msgid "Show Preview"
+msgstr "显示预览"
+
 #: plug-ins/common/file-ps.c:560
 msgid "Preview Si_ze"
 msgstr "预览大小(_Z)"
+
+#: plug-ins/common/file-ps.c:561
+msgid "0: no preview, >0: max. size of preview"
+msgstr "0：无预览；>0：预览的最大尺寸"
 
 #: plug-ins/common/file-ps.c:722
 msgid "PostScript plug-in does not support multiple layers."
@@ -4700,32 +4810,37 @@ msgstr "通道信息数据块中的无效通道类型 %d"
 msgid "Error reading tube data chunk"
 msgstr "读取管道数据块出错"
 
+#: plug-ins/common/file-psp.c:2371 plug-ins/common/file-psp.c:2383
 #: plug-ins/common/file-psp.c:2394
+msgid "Error reading colorprofile chunk"
+msgstr "读取颜色配置文件数据块时出错"
+
+#: plug-ins/common/file-psp.c:2447
 msgid "Error reading file header."
 msgstr "读取文件头部信息出错。"
 
-#: plug-ins/common/file-psp.c:2401
+#: plug-ins/common/file-psp.c:2454
 msgid "Incorrect file signature."
 msgstr "错误的文件签名。"
 
-#: plug-ins/common/file-psp.c:2415
+#: plug-ins/common/file-psp.c:2468
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "不支持的 PSP 文件格式版本 %d.%d。"
 
-#: plug-ins/common/file-psp.c:2435
+#: plug-ins/common/file-psp.c:2488
 msgid "invalid block size"
 msgstr "无效的数据块大小"
 
-#: plug-ins/common/file-psp.c:2444
+#: plug-ins/common/file-psp.c:2497
 msgid "Duplicate General Image Attributes block."
 msgstr "重制通常的图像属性数据块。"
 
-#: plug-ins/common/file-psp.c:2472
+#: plug-ins/common/file-psp.c:2525
 msgid "Missing General Image Attributes block."
 msgstr "缺失通常的图像属性数据块。"
 
-#: plug-ins/common/file-psp.c:2588
+#: plug-ins/common/file-psp.c:2644
 msgid "Exporting not implemented yet."
 msgstr "尚未实现导出功能。"
 
@@ -4761,9 +4876,103 @@ msgstr "读取 QOI 文件失败"
 msgid "Raw image data"
 msgstr "Raw 图像数据"
 
+#: plug-ins/common/file-raw-data.c:353
+msgid "Image width in number of pixels"
+msgstr "图像宽度（像素数量）"
+
+#: plug-ins/common/file-raw-data.c:358
+msgid "Image height in number of pixels"
+msgstr "图像高度（像素数量）"
+
+#: plug-ins/common/file-raw-data.c:362
+msgid "O_ffset"
+msgstr "位移(_F)"
+
+#: plug-ins/common/file-raw-data.c:363
+msgid "Offset to beginning of image in raw data"
+msgstr "在 Raw 数据中图像起始的偏移"
+
+#: plug-ins/common/file-raw-data.c:368
+msgid "Pixel _format"
+msgstr "像素格式(_F)"
+
+#: plug-ins/common/file-raw-data.c:369
+msgid "The layout of pixel data, such as components and their order"
+msgstr "像素数据的布局，比如分量和它们的顺序"
+
+#: plug-ins/common/file-raw-data.c:373
+msgid "Data t_ype"
+msgstr "数据类型(_Y)"
+
+#: plug-ins/common/file-raw-data.c:374
+msgid ""
+"Data type used to represent pixel values { RAW_ENCODING_UNSIGNED (0), "
+"RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }"
+msgstr ""
+"用于表现像素值的数据类型 { RAW 无符号编码（0）、RAW 有符号编码（1）、RAW 浮点"
+"编码（2）}"
+
+#: plug-ins/common/file-raw-data.c:378
+msgid "Endianness"
+msgstr "字节顺序"
+
+#: plug-ins/common/file-raw-data.c:379
+msgid ""
+"Order of sequences of bytes { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"
+msgstr "字节序列的排序 { RAW 小端（0）、RAW 大端（1）}"
+
+#: plug-ins/common/file-raw-data.c:383 plug-ins/common/file-raw-data.c:467
+msgid "Planar configuration"
+msgstr "平面配置"
+
+#: plug-ins/common/file-raw-data.c:384 plug-ins/common/file-raw-data.c:468
+msgid ""
+"How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), "
+"RAW_PLANAR_SEPARATE (1) }"
+msgstr "颜色像素数据的存储方式 { RAW 平面相邻（0）、RAW 平面分离（1）}"
+
+#: plug-ins/common/file-raw-data.c:392
+msgid "Palette Offse_t"
+msgstr "色板位移(_T)"
+
+#: plug-ins/common/file-raw-data.c:393
+msgid "Offset to beginning of data in the palette file"
+msgstr "色板文件中数据起始的偏移"
+
+#: plug-ins/common/file-raw-data.c:397
+msgid "Palette's la_yout"
+msgstr "色板布局(_Y)"
+
+#: plug-ins/common/file-raw-data.c:398 plug-ins/common/file-raw-data.c:474
+msgid ""
+"The layout for the palette's color channels{ RAW_PALETTE_RGB (0), "
+"RAW_PALETTE_BGR (1) }"
+msgstr "色板颜色通道的布局 { RAW 色板 RGB（0）、RAW 色板 BGR（1）}"
+
+#: plug-ins/common/file-raw-data.c:403
+msgid "_Palette File"
+msgstr "色板文件(_P)"
+
+#: plug-ins/common/file-raw-data.c:404
+msgid "The file containing palette data"
+msgstr "该文件包含色板数据"
+
 #: plug-ins/common/file-raw-data.c:414 plug-ins/common/file-raw-data.c:2812
 msgid "Digital Elevation Model data"
 msgstr "数字高程模型数据"
+
+#: plug-ins/common/file-raw-data.c:438
+msgid "_Sample spacing"
+msgstr "采样区间(_S)"
+
+#: plug-ins/common/file-raw-data.c:439
+msgid ""
+"The sample spacing of the data. (0: auto-detect, 1: SRTM-1, 2: SRTM-3 data)"
+msgstr "数据的采样区间。（0：自动检测；1：SRTM-1；2：SRTM-3 数据）"
+
+#: plug-ins/common/file-raw-data.c:473
+msgid "Palette's layout"
+msgstr "色板布局"
 
 #: plug-ins/common/file-raw-data.c:481
 msgid "Raw Data"
@@ -8324,17 +8533,105 @@ msgstr "JPEG 图像"
 msgid "JPEG"
 msgstr "JPEG"
 
+#: plug-ins/file-jpeg/jpeg.c:204
+msgid "Quality of exported image"
+msgstr "导出图像的质量"
+
+#: plug-ins/file-jpeg/jpeg.c:209
+msgid "S_moothing"
+msgstr "平滑(_M)"
+
+#: plug-ins/file-jpeg/jpeg.c:210
+msgid "Smoothing factor for exported image"
+msgstr "导出图像的平滑系数"
+
+#: plug-ins/file-jpeg/jpeg.c:215
+msgid "Optimi_ze"
+msgstr "优化(_Z)"
+
+#: plug-ins/file-jpeg/jpeg.c:216
+msgid "Use optimized tables during Huffman coding"
+msgstr "霍夫曼编码期间使用优化的码表"
+
+#: plug-ins/file-jpeg/jpeg.c:221
+msgid "_Progressive"
+msgstr "渐进(_P)"
+
+#: plug-ins/file-jpeg/jpeg.c:222
+msgid "Create progressive JPEG images"
+msgstr "创建渐进式 JPEG 图像"
+
+#: plug-ins/file-jpeg/jpeg.c:227
+msgid "Export as CM_YK"
+msgstr "导出为 CMYK(_Y)"
+
+#: plug-ins/file-jpeg/jpeg.c:228
+msgid "Create a CMYK JPEG image using the soft-proofing color profile"
+msgstr "使用软打样色彩配置文件创建 CMYK JPEG 图像"
+
 #: plug-ins/file-jpeg/jpeg.c:233
 msgid "Su_bsampling"
-msgstr "下采样(_B)"
+msgstr "次采样(_B)"
+
+#: plug-ins/file-jpeg/jpeg.c:234
+msgid ""
+"Sub-sampling type { 0 == 4:2:0 (chroma quartered), 1 == 4:2:2 (chroma halved "
+"horizontally), 2 == 4:4:4 (best quality), 3 == 4:4:0 (chroma halved "
+"vertically)"
+msgstr ""
+"次采样类型 { 0 == 4:2:0（色度四分）；1 == 4:2:2（色度水平分半）；2 == "
+"4:4:4（最佳质量）；3 == 4:4:0（色度竖直分半）"
+
+#: plug-ins/file-jpeg/jpeg.c:244
+msgid "Baseline"
+msgstr "基线"
+
+#: plug-ins/file-jpeg/jpeg.c:245
+msgid ""
+"Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
+"decoders)"
+msgstr "强制创建基线 JPEG（非基线 JPEG 无法被所有解码器读取）"
 
 #: plug-ins/file-jpeg/jpeg.c:251
 msgid "Inter_val (MCU rows):"
 msgstr "间隔（MCU 行）(_V)："
 
+#: plug-ins/file-jpeg/jpeg.c:252
+msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
+msgstr "重启标记的间隔（在 MCU 行中，0 = 无重启标记）"
+
 #: plug-ins/file-jpeg/jpeg.c:258
 msgid "_DCT method"
 msgstr "DCT 方法(_D)"
+
+#: plug-ins/file-jpeg/jpeg.c:259
+msgid "DCT method to use { INTEGER (0), FIXED (1), FLOAT (2) }"
+msgstr "使用的 DCT 方法 { 整数（0）、定点（1）、浮点（2）}"
+
+#: plug-ins/file-jpeg/jpeg.c:267
+msgid "_Use quality settings from original image"
+msgstr "使用原图像的品质设定(_U)"
+
+#: plug-ins/file-jpeg/jpeg.c:268
+msgid ""
+"If the original image was loaded from a JPEG file using non-standard quality "
+"settings (quantization tables), enable this option to get almost the same "
+"quality and file size."
+msgstr ""
+"如果原图像是从一个使用非标准品质设置(量化表)的 JPEG 文件读入的，启用此选项以"
+"取得几乎一致的品质和文件大小。"
+
+#: plug-ins/file-jpeg/jpeg.c:290
+msgid "Sho_w preview in image window"
+msgstr "在图像窗口中显示预览(_W)"
+
+#: plug-ins/file-jpeg/jpeg.c:291
+msgid "Creates a temporary layer with an export preview"
+msgstr "用导出预览创建一个临时图层"
+
+#: plug-ins/file-jpeg/jpeg.c:295
+msgid "Use _arithmetic coding"
+msgstr "使用算法编码(_A)"
 
 #: plug-ins/file-jpeg/jpeg.c:296
 msgid "Older software may have trouble opening arithmetic-coded images"
@@ -8795,6 +9092,62 @@ msgstr "TIFF 或 BigTIFF 图像"
 msgid "TIFF"
 msgstr "TIFF"
 
+#: plug-ins/file-tiff/file-tiff.c:211
+msgid "Export in _BigTIFF variant file format"
+msgstr "以 BigTIFF 变种文件格式导出(_B)"
+
+#: plug-ins/file-tiff/file-tiff.c:212
+msgid ""
+"The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
+"4GiB files and bigger"
+msgstr "BigTIFF 变种文件格式使用 64 位位移，因此支持大于 4GiB 的文件"
+
+#: plug-ins/file-tiff/file-tiff.c:218
+msgid "Co_mpression"
+msgstr "压缩(_M)"
+
+#: plug-ins/file-tiff/file-tiff.c:219
+msgid ""
+"Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4), "
+"CCITT G3 Fax (5), CCITT G4 Fax (6) }"
+msgstr ""
+"压缩类型：{ 无（0）、LZW（1）、PACKBITS（2）、DEFLATE（3）、JPEG（4）、CCITT "
+"G3 Fax（5）、CCITT G4 Fax（6）}"
+
+#: plug-ins/file-tiff/file-tiff.c:227
+msgid ""
+"Keep the color data masked by an alpha channel intact (do not store "
+"premultiplied components)"
+msgstr "完整保留被透明通道屏蔽的颜色数据（不存储预乘的分量）"
+
+#: plug-ins/file-tiff/file-tiff.c:234
+msgid "Create a CMYK TIFF image using the soft-proofing color profile"
+msgstr "使用软打样色彩配置文件创建 CMYK TIFF 图像"
+
+#: plug-ins/file-tiff/file-tiff.c:239
+msgid "Save La_yers"
+msgstr "保存图层(_Y)"
+
+#: plug-ins/file-tiff/file-tiff.c:240
+msgid "Save Layers"
+msgstr "保存图层"
+
+#: plug-ins/file-tiff/file-tiff.c:245
+msgid "Crop L_ayers"
+msgstr "剪裁图层(_A)"
+
+#: plug-ins/file-tiff/file-tiff.c:246
+msgid "Crop Layers"
+msgstr "剪裁图层"
+
+#: plug-ins/file-tiff/file-tiff.c:251
+msgid "Save _GeoTIFF data"
+msgstr "保存 GeoTIFF 数据(_G)"
+
+#: plug-ins/file-tiff/file-tiff.c:252
+msgid "Save GeoTIFF data"
+msgstr "保存 GeoTIFF 数据"
+
 #: plug-ins/file-tiff/file-tiff.c:459
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr "尝试导出多个图层时未设置“保存图层”选项。"
@@ -8998,7 +9351,7 @@ msgid "Import from TIFF"
 msgstr "从 TIFF 导入"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2554
-#: plug-ins/metadata/metadata-editor.c:5307
+#: plug-ins/metadata/metadata-editor.c:5533
 msgid "_Import"
 msgstr "导入(_I)"
 
@@ -10242,7 +10595,7 @@ msgstr "网格类型："
 
 #: plug-ins/gfig/gfig-dialog.c:1458
 #: plug-ins/gradient-flare/gradient-flare.c:749
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "Normal"
 msgstr "普通"
 
@@ -10400,7 +10753,7 @@ msgstr "伽马："
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "改变所选笔刷的伽马（明亮度）"
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1367
+#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1371
 msgid "Select:"
 msgstr "选择："
 
@@ -11803,83 +12156,91 @@ msgstr "取消选择"
 msgid "Unselect All"
 msgstr "取消全部选择"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:216
+#: plug-ins/imagemap/imap_edit_area_info.c:219
 msgid "Link Type"
 msgstr "链接类型"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:225
+#: plug-ins/imagemap/imap_edit_area_info.c:228
 msgid "_Web Site"
-msgstr "Web 站点(_W)"
+msgstr "_Web 站点"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:231
-msgid "_Ftp Site"
-msgstr "Ftp 站点(_F)"
+#: plug-ins/imagemap/imap_edit_area_info.c:234
+msgid "_FTP Site"
+msgstr "_FTP 站点"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:237
+#: plug-ins/imagemap/imap_edit_area_info.c:240
 msgid "_Gopher"
 msgstr "_Gopher"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:243
+#: plug-ins/imagemap/imap_edit_area_info.c:246
 msgid "Ot_her"
 msgstr "其它(_H)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:249
+#: plug-ins/imagemap/imap_edit_area_info.c:252
 msgid "F_ile"
 msgstr "文件(_I)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:255
+#: plug-ins/imagemap/imap_edit_area_info.c:258
 msgid "WAI_S"
 msgstr "WAI_S"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:261
+#: plug-ins/imagemap/imap_edit_area_info.c:264
 msgid "Tel_net"
 msgstr "Tel_net"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:267
+#: plug-ins/imagemap/imap_edit_area_info.c:270
 msgid "e-_mail"
 msgstr "电子邮件(_M)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:273
+#: plug-ins/imagemap/imap_edit_area_info.c:276
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr "此区域被点击时激活的 URL(_U)：（需要）"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:275
+#: plug-ins/imagemap/imap_edit_area_info.c:278
 msgid "Select HTML file"
 msgstr "选择 HTML 文件"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:284
+#: plug-ins/imagemap/imap_edit_area_info.c:287
 msgid "Relati_ve link"
 msgstr "相关链接(_V)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:290
+#: plug-ins/imagemap/imap_edit_area_info.c:293
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr "目标框架名字/ID(_T)：（可选 - 只对 FRAMES 使用）"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:293
+#: plug-ins/imagemap/imap_edit_area_info.c:296
 msgid "ALT te_xt: (optional)"
 msgstr "ALT 文字(_X)：（可选）"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:296
+#: plug-ins/imagemap/imap_edit_area_info.c:299
+msgid "Access _Key: (optional)"
+msgstr "访问密钥(_K)：（可选）"
+
+#: plug-ins/imagemap/imap_edit_area_info.c:302
+msgid "Ta_b Index: (optional)"
+msgstr "Ta_b 索引：（可选）"
+
+#: plug-ins/imagemap/imap_edit_area_info.c:305
 msgid "_Link"
 msgstr "链接(_L)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:330
+#: plug-ins/imagemap/imap_edit_area_info.c:339
 msgid "Dimensions"
 msgstr "尺寸"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:334
+#: plug-ins/imagemap/imap_edit_area_info.c:343
 msgid "Pre_view"
 msgstr "预览(_V)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:372
+#: plug-ins/imagemap/imap_edit_area_info.c:385
 msgid "_JavaScript"
 msgstr "_JavaScript"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:471
+#: plug-ins/imagemap/imap_edit_area_info.c:490
 msgid "Area Settings"
 msgstr "区域设置"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:513
+#: plug-ins/imagemap/imap_edit_area_info.c:536
 #, c-format
 msgid "Area #%d Settings"
 msgstr "区域 #%d 设置"
@@ -12883,7 +13244,7 @@ msgstr "作者头衔"
 
 #. Description tab
 #: plug-ins/metadata/metadata-editor.c:487
-#: plug-ins/metadata/metadata-editor.c:1212
+#: plug-ins/metadata/metadata-editor.c:1216
 msgid "Description"
 msgstr "描述"
 
@@ -13269,58 +13630,58 @@ msgstr "编辑元数据(_E)"
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "编辑元数据（IPTC，EXIF，XMP）"
 
-#: plug-ins/metadata/metadata-editor.c:1174
+#: plug-ins/metadata/metadata-editor.c:1178
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "元数据编辑器：%s"
 
-#: plug-ins/metadata/metadata-editor.c:1182
+#: plug-ins/metadata/metadata-editor.c:1186
 msgid "_Write Metadata"
 msgstr "写入元数据(_W)"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1218
+#: plug-ins/metadata/metadata-editor.c:1222
 #: plug-ins/metadata/metadata-viewer.c:401
 msgid "IPTC"
 msgstr "IPTC"
 
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1224
+#: plug-ins/metadata/metadata-editor.c:1228
 msgid "IPTC Extension"
 msgstr "IPTC 扩展"
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1330
+#: plug-ins/metadata/metadata-editor.c:1334
 msgid "Categories"
 msgstr "类别"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1336
+#: plug-ins/metadata/metadata-editor.c:1340
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1347
+#: plug-ins/metadata/metadata-editor.c:1351
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1369
+#: plug-ins/metadata/metadata-editor.c:1373
 msgid "Import metadata"
 msgstr "导入元数据"
 
-#: plug-ins/metadata/metadata-editor.c:1371
+#: plug-ins/metadata/metadata-editor.c:1375
 msgid "Export metadata"
 msgstr "导出元数据"
 
-#: plug-ins/metadata/metadata-editor.c:1674
+#: plug-ins/metadata/metadata-editor.c:1678
 msgid "Choose Date"
 msgstr "选择日期"
 
-#: plug-ins/metadata/metadata-editor.c:1678
+#: plug-ins/metadata/metadata-editor.c:1682
 msgid "Set Date"
 msgstr "设置日期"
 
-#: plug-ins/metadata/metadata-editor.c:2412
+#: plug-ins/metadata/metadata-editor.c:2416
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -13335,7 +13696,7 @@ msgstr ""
 "或 10.45\n"
 "删除所有文字可删除当前值。"
 
-#: plug-ins/metadata/metadata-editor.c:2418
+#: plug-ins/metadata/metadata-editor.c:2422
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -13350,248 +13711,248 @@ msgstr ""
 "根据选中的度量类型该值应为米（m）或英尺（ft）\n"
 "删除所有文字可删除当前值。"
 
-#: plug-ins/metadata/metadata-editor.c:2552
+#: plug-ins/metadata/metadata-editor.c:2556
 msgid "Unrated"
 msgstr "未评级"
 
-#: plug-ins/metadata/metadata-editor.c:4491
+#: plug-ins/metadata/metadata-editor.c:4666
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "设置元数据标签“%s”失败：%s"
 
-#: plug-ins/metadata/metadata-editor.c:5303
+#: plug-ins/metadata/metadata-editor.c:5529
 msgid "Import Metadata File"
 msgstr "导入元数据文件"
 
-#: plug-ins/metadata/metadata-editor.c:5338
+#: plug-ins/metadata/metadata-editor.c:5564
 msgid "Export Metadata File"
 msgstr "导出元数据文件"
 
-#: plug-ins/metadata/metadata-editor.c:5342
+#: plug-ins/metadata/metadata-editor.c:5568
 msgid "_Export"
 msgstr "导出(_E)"
 
-#: plug-ins/metadata/metadata-tags.c:180 plug-ins/metadata/metadata-tags.c:203
-#: plug-ins/metadata/metadata-tags.c:263 plug-ins/metadata/metadata-tags.c:280
+#: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:210
+#: plug-ins/metadata/metadata-tags.c:270 plug-ins/metadata/metadata-tags.c:287
 msgid "Select a value"
 msgstr "选择一个值"
 
-#: plug-ins/metadata/metadata-tags.c:181
+#: plug-ins/metadata/metadata-tags.c:188
 msgid "Original digital capture of a real life scene"
 msgstr "真实生活场景的原始数码捕获"
 
-#: plug-ins/metadata/metadata-tags.c:182
+#: plug-ins/metadata/metadata-tags.c:189
 msgid "Digitized from a negative on film"
 msgstr "由电影负片数字化"
 
-#: plug-ins/metadata/metadata-tags.c:183
+#: plug-ins/metadata/metadata-tags.c:190
 msgid "Digitized from a positive on film"
 msgstr "由电影正片数字化"
 
-#: plug-ins/metadata/metadata-tags.c:184
+#: plug-ins/metadata/metadata-tags.c:191
 msgid "Digitized from a print on non-transparent medium"
 msgstr "由不透明媒介上打印的数字化"
 
-#: plug-ins/metadata/metadata-tags.c:185
+#: plug-ins/metadata/metadata-tags.c:192
 msgid "Original media with minor human edits"
 msgstr "带有微小人为编辑的原始多媒体"
 
-#: plug-ins/metadata/metadata-tags.c:186
+#: plug-ins/metadata/metadata-tags.c:193
 msgid "Composite of captured elements"
 msgstr "由捕获的元素合成"
 
-#: plug-ins/metadata/metadata-tags.c:187
+#: plug-ins/metadata/metadata-tags.c:194
 msgid "Algorithmically-enhanced media"
 msgstr "算法增强的多媒体"
 
-#: plug-ins/metadata/metadata-tags.c:188
+#: plug-ins/metadata/metadata-tags.c:195
 msgid "Data-driven media"
 msgstr "数据驱动的多媒体"
 
-#: plug-ins/metadata/metadata-tags.c:189
+#: plug-ins/metadata/metadata-tags.c:196
 msgid "Digital art"
 msgstr "数字艺术"
 
-#: plug-ins/metadata/metadata-tags.c:190
+#: plug-ins/metadata/metadata-tags.c:197
 msgid "Virtual recording"
 msgstr "虚拟录制"
 
-#: plug-ins/metadata/metadata-tags.c:191
+#: plug-ins/metadata/metadata-tags.c:198
 msgid "Composite including synthetic elements"
 msgstr "包含人造元素的合成"
 
-#: plug-ins/metadata/metadata-tags.c:192
+#: plug-ins/metadata/metadata-tags.c:199
 msgid "Trained algorithmic media"
 msgstr "训练的算法媒体"
 
-#: plug-ins/metadata/metadata-tags.c:193
+#: plug-ins/metadata/metadata-tags.c:200
 msgid "Pure algorithmic media"
 msgstr "单纯的算法媒体"
 
-#: plug-ins/metadata/metadata-tags.c:194
+#: plug-ins/metadata/metadata-tags.c:201
 msgid "Created by software"
 msgstr "通过软件创建"
 
-#: plug-ins/metadata/metadata-tags.c:205 plug-ins/metadata/metadata-tags.c:217
+#: plug-ins/metadata/metadata-tags.c:212 plug-ins/metadata/metadata-tags.c:224
 msgid "Not Applicable"
 msgstr "不适用"
 
-#: plug-ins/metadata/metadata-tags.c:206
+#: plug-ins/metadata/metadata-tags.c:213
 msgid "Unlimited Model Releases"
 msgstr "无限制的模特发布"
 
-#: plug-ins/metadata/metadata-tags.c:207
+#: plug-ins/metadata/metadata-tags.c:214
 msgid "Limited or Incomplete Model Releases"
 msgstr "有限或不完全的模特发布"
 
-#: plug-ins/metadata/metadata-tags.c:218
+#: plug-ins/metadata/metadata-tags.c:225
 msgid "Unlimited Property Releases"
 msgstr "无限制的所有权发布"
 
-#: plug-ins/metadata/metadata-tags.c:219
+#: plug-ins/metadata/metadata-tags.c:226
 msgid "Limited or Incomplete Property Releases"
 msgstr "有限或不完全的所有权发布"
 
-#: plug-ins/metadata/metadata-tags.c:228
+#: plug-ins/metadata/metadata-tags.c:235
 msgid "Age Unknown"
 msgstr "未知年龄"
 
-#: plug-ins/metadata/metadata-tags.c:229
+#: plug-ins/metadata/metadata-tags.c:236
 msgid "Age 25 or Over"
 msgstr "25 岁或更大"
 
-#: plug-ins/metadata/metadata-tags.c:230
+#: plug-ins/metadata/metadata-tags.c:237
 msgid "Age 24"
 msgstr "24 岁"
 
-#: plug-ins/metadata/metadata-tags.c:231
+#: plug-ins/metadata/metadata-tags.c:238
 msgid "Age 23"
 msgstr "23 岁"
 
-#: plug-ins/metadata/metadata-tags.c:232
+#: plug-ins/metadata/metadata-tags.c:239
 msgid "Age 22"
 msgstr "22 岁"
 
-#: plug-ins/metadata/metadata-tags.c:233
+#: plug-ins/metadata/metadata-tags.c:240
 msgid "Age 21"
 msgstr "21 岁"
 
-#: plug-ins/metadata/metadata-tags.c:234
+#: plug-ins/metadata/metadata-tags.c:241
 msgid "Age 20"
 msgstr "20 岁"
 
-#: plug-ins/metadata/metadata-tags.c:235
+#: plug-ins/metadata/metadata-tags.c:242
 msgid "Age 19"
 msgstr "19 岁"
 
-#: plug-ins/metadata/metadata-tags.c:236
+#: plug-ins/metadata/metadata-tags.c:243
 msgid "Age 18"
 msgstr "18 岁"
 
-#: plug-ins/metadata/metadata-tags.c:237
+#: plug-ins/metadata/metadata-tags.c:244
 msgid "Age 17"
 msgstr "17 岁"
 
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:245
 msgid "Age 16"
 msgstr "16 岁"
 
-#: plug-ins/metadata/metadata-tags.c:239
+#: plug-ins/metadata/metadata-tags.c:246
 msgid "Age 15"
 msgstr "15 岁"
 
-#: plug-ins/metadata/metadata-tags.c:240
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "Age 14 or Under"
 msgstr "14 岁或更小"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "2"
 msgstr "2"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "3"
 msgstr "3"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "4"
 msgstr "4"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "6"
 msgstr "6"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "7"
 msgstr "7"
 
-#: plug-ins/metadata/metadata-tags.c:254 plug-ins/metadata/metadata-tags.c:290
-#: plug-ins/metadata/metadata-tags.c:297 plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:261 plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304 plug-ins/metadata/metadata-tags.c:311
 msgid "Unknown"
 msgstr "未知"
 
 #. DO NOT SAVE
-#: plug-ins/metadata/metadata-tags.c:255
+#: plug-ins/metadata/metadata-tags.c:262
 msgid "Copyrighted"
 msgstr "已有版权"
 
 #. TRUE
-#: plug-ins/metadata/metadata-tags.c:256
+#: plug-ins/metadata/metadata-tags.c:263
 msgid "Public Domain"
 msgstr "公共域"
 
-#: plug-ins/metadata/metadata-tags.c:264
+#: plug-ins/metadata/metadata-tags.c:271
 msgid "Work"
 msgstr "工作"
 
-#: plug-ins/metadata/metadata-tags.c:265
+#: plug-ins/metadata/metadata-tags.c:272
 msgid "Cell"
 msgstr "手机"
 
-#: plug-ins/metadata/metadata-tags.c:266
+#: plug-ins/metadata/metadata-tags.c:273
 msgid "Fax"
 msgstr "传真"
 
-#: plug-ins/metadata/metadata-tags.c:267
+#: plug-ins/metadata/metadata-tags.c:274
 msgid "Home"
 msgstr "家庭"
 
-#: plug-ins/metadata/metadata-tags.c:268
+#: plug-ins/metadata/metadata-tags.c:275
 msgid "Pager"
 msgstr "寻呼机"
 
-#: plug-ins/metadata/metadata-tags.c:281
+#: plug-ins/metadata/metadata-tags.c:288
 msgid "Male"
 msgstr "雄性"
 
-#: plug-ins/metadata/metadata-tags.c:282
+#: plug-ins/metadata/metadata-tags.c:289
 msgid "Female"
 msgstr "雌性"
 
-#: plug-ins/metadata/metadata-tags.c:283
+#: plug-ins/metadata/metadata-tags.c:290
 msgid "Other"
 msgstr "其它"
 
-#: plug-ins/metadata/metadata-tags.c:290
+#: plug-ins/metadata/metadata-tags.c:297
 msgid "Above sea level"
 msgstr "海平面之上"
 
-#: plug-ins/metadata/metadata-tags.c:290
+#: plug-ins/metadata/metadata-tags.c:297
 msgid "Below sea level"
 msgstr "海平面之下"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "North"
 msgstr "北"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "South"
 msgstr "南"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
 msgid "East"
 msgstr "东"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
 msgid "West"
 msgstr "西"
 
@@ -14314,9 +14675,6 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "%s-%s"
 #~ msgstr "%s-%s"
 
-#~ msgid "Load in reverse order"
-#~ msgstr "逆序加载"
-
 #~ msgid "Export Image as PNM"
 #~ msgstr "导出图像为 PNM"
 
@@ -14528,9 +14886,6 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "Gray 32 bit Little Endian"
 #~ msgstr "灰阶 32 位小端"
 
-#~ msgid "_Sample Spacing:"
-#~ msgstr "采样空间(_S)："
-
 #~ msgid "RGB Alpha"
 #~ msgstr "RGB 透明"
 
@@ -14542,9 +14897,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "Select Palette File"
 #~ msgstr "选择调色板文件"
-
-#~ msgid "Pal_ette File:"
-#~ msgstr "色板文件(_E)："
 
 #~ msgid "Export Image as Raw Data"
 #~ msgstr "导出图像为 Raw 数据"
@@ -14613,20 +14965,6 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "_Quality:"
 #~ msgstr "质量(_Q)："
 
-#~ msgid "_Use quality settings from original image"
-#~ msgstr "使用原图像的品质设定(_U)"
-
-#~ msgid ""
-#~ "If the original image was loaded from a JPEG file using non-standard "
-#~ "quality settings (quantization tables), enable this option to get almost "
-#~ "the same quality and file size."
-#~ msgstr ""
-#~ "如果原图像是从一个使用非标准品质设置(量化表)的 JPEG 文件读入的，启用此选项"
-#~ "以取得几乎一致的品质和文件大小。"
-
-#~ msgid "Sho_w preview in image window"
-#~ msgstr "在图像窗口中显示预览(_W)"
-
 #~ msgid "Save _Exif data"
 #~ msgstr "保存 _Exif 数据"
 
@@ -14636,17 +14974,8 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "Save _thumbnail"
 #~ msgstr "保存缩略图(_T)"
 
-#~ msgid "S_moothing:"
-#~ msgstr "平滑(_M)："
-
 #~ msgid "_Optimize"
 #~ msgstr "优化(_O)"
-
-#~ msgid "Use arithmetic _coding"
-#~ msgstr "使用算法编码(_C)"
-
-#~ msgid "_Progressive"
-#~ msgstr "渐进(_P)"
 
 #~ msgid "Sa_ve Defaults"
 #~ msgstr "保存默认值(_V)"
@@ -14663,18 +14992,8 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "Save thumbnail"
 #~ msgstr "保存缩略图"
 
-#~ msgid "Save layers"
-#~ msgstr "保存图层"
-
 #~ msgid "Crop layers to image bounds"
 #~ msgstr "剪裁图层至图像边界"
-
-#~ msgid "Crop layers"
-#~ msgstr "剪裁图层"
-
-#~| msgid "Save IPTC data"
-#~ msgid "Save GeoTIFF data"
-#~ msgstr "保存 GeoTIFF 数据"
 
 #~ msgid "10 bit/channel (HDR)"
 #~ msgstr "10 位/通道（HDR）"
@@ -16460,9 +16779,6 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "Tile _size:"
 #~ msgstr "瓦片大小(_S)："
 
-#~ msgid "Tile _height:"
-#~ msgstr "瓦片高度(_H)："
-
 #~ msgid "Til_e spacing:"
 #~ msgstr "瓦片间距(_E)："
 
@@ -17260,9 +17576,6 @@ msgstr "从扫描仪/相机传送数据"
 #~ msgid "Warning: unsupported layermode %d saved to XJT"
 #~ msgstr "警告：不支持的图层模式 %d 保存到了 XJT"
 
-#~ msgid "XJT file contains unknown pathtype %d"
-#~ msgstr "XJT 文件含有未知的路径类型 %d"
-
 #~ msgid "Warning: unsupported pathtype %d saved to XJT"
 #~ msgstr "警告：不支持的路径类型 %d 保存到了 XJT"
 
@@ -17274,9 +17587,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "XJT"
 #~ msgstr "XJT"
-
-#~ msgid "Optimize"
-#~ msgstr "优化"
 
 #~ msgid "Clear transparent"
 #~ msgstr "清除透明"
