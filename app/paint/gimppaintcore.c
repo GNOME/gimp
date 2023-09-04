@@ -759,18 +759,19 @@ gimp_paint_core_cancel (GimpPaintCore *core,
           else
             {
               GeglBuffer    *buffer;
+              GeglRectangle  bbox;
 
               /* drawable is expanded only if drawable is layer or layer mask,
                * so drawable cannot be anything else */
               g_return_if_fail (GIMP_IS_LAYER (iter->data) || GIMP_IS_LAYER_MASK (iter->data));
 
-              /* Restore the original content with new size of the buffer and update view it */
-              gimp_gegl_buffer_copy (undo_buffer,
-                                     NULL,
-                                     GEGL_ABYSS_NONE,
-                                     gimp_drawable_get_buffer (iter->data),
-                                     NULL);
-              gimp_drawable_update (iter->data, 0, 0, -1, -1);
+              /* When canceling painting with drawable expansion, ensure that
+               * the drawable display outside the reverted size is not shown. We
+               * cannot use gimp_drawable_update() because it won't work while
+               * painting. Directly emit the "update" signal.
+               * */
+              bbox = gimp_drawable_get_bounding_box (iter->data);
+              g_signal_emit_by_name (iter->data, "update", bbox.x, bbox.y, bbox.width, bbox.height);
 
               /* create a copy of original buffer from undo data */
               buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
