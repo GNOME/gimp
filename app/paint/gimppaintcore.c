@@ -753,7 +753,6 @@ gimp_paint_core_cancel (GimpPaintCore *core,
                                      GEGL_ABYSS_NONE,
                                      gimp_drawable_get_buffer (iter->data),
                                      &rect);
-              g_object_unref (undo_buffer);
 
               gimp_drawable_update (iter->data, x, y, width, height);
             }
@@ -825,7 +824,11 @@ gimp_paint_core_cancel (GimpPaintCore *core,
                                              FALSE);
 
               gimp_drawable_update (iter->data, 0, 0, -1, -1);
+
+              g_object_unref (buffer);
             }
+
+          g_object_unref (undo_buffer);
         }
 
       gimp_viewable_preview_thaw (GIMP_VIEWABLE (iter->data));

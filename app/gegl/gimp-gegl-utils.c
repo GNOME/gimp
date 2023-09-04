@@ -404,6 +404,7 @@ gimp_gegl_buffer_resize (GeglBuffer   *buffer,
             }
 
           g_object_unref (src_profile);
+          g_object_unref (dest_profile);
 
           gegl_buffer_set_pattern (new_buffer, NULL, dest_buffer,
                                    pattern_offset_x, pattern_offset_y);
