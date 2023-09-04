@@ -42,7 +42,7 @@ struct _GimpDrawablePrivate
   cairo_region_t   *paint_copy_region;
   cairo_region_t   *paint_update_region;
 
-  gboolean          no_undo;
+  gboolean          push_resize_undo;
 };
 
 #endif /* __GIMP_DRAWABLE_PRIVATE_H__ */

@@ -1045,21 +1045,21 @@ gimp_paint_core_expand_drawable (GimpPaintCore    *core,
 
       g_object_freeze_notify (G_OBJECT (layer));
 
-      gimp_drawable_disable_undo (GIMP_DRAWABLE (layer));
+      gimp_drawable_disable_resize_undo (GIMP_DRAWABLE (layer));
       GIMP_LAYER_GET_CLASS (layer)->resize (layer, context, fill_type,
                                             new_width, new_height,
                                             *new_off_x, *new_off_y);
-      gimp_drawable_enable_undo (GIMP_DRAWABLE (layer));
+      gimp_drawable_enable_resize_undo (GIMP_DRAWABLE (layer));
 
       if (layer->mask)
         {
           g_object_freeze_notify (G_OBJECT (layer->mask));
 
-          gimp_drawable_disable_undo (GIMP_DRAWABLE (layer->mask));
+          gimp_drawable_disable_resize_undo (GIMP_DRAWABLE (layer->mask));
           GIMP_ITEM_GET_CLASS (layer->mask)->resize (GIMP_ITEM (layer->mask), context,
                                                      mask_fill_type, new_width, new_height,
                                                      *new_off_x, *new_off_y);
-          gimp_drawable_enable_undo (GIMP_DRAWABLE (layer->mask));
+          gimp_drawable_enable_resize_undo (GIMP_DRAWABLE (layer->mask));
 
           g_object_thaw_notify (G_OBJECT (layer->mask));
         }

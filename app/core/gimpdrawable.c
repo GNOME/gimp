@@ -630,7 +630,7 @@ gimp_drawable_resize (GimpItem     *item,
 
   gimp_drawable_set_buffer_full (drawable,
                                  gimp_item_is_attached (item) &&
-                                 (!gimp_drawable_get_undo (drawable)),
+                                 drawable->private->push_resize_undo,
                                  NULL,
                                  new_buffer,
                                  GEGL_RECTANGLE (new_offset_x, new_offset_y,
@@ -1079,7 +1079,7 @@ gimp_drawable_new (GType          type,
   gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
   g_object_unref (buffer);
 
-  gimp_drawable_enable_undo (drawable);
+  gimp_drawable_enable_resize_undo (drawable);
 
   return drawable;
 }
@@ -1682,27 +1682,19 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
 }
 
 void
-gimp_drawable_disable_undo       (GimpDrawable       *drawable)
+gimp_drawable_disable_resize_undo (GimpDrawable *drawable)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  drawable->private->no_undo = FALSE;
+  drawable->private->push_resize_undo = FALSE;
 }
 
 void
-gimp_drawable_enable_undo        (GimpDrawable       *drawable)
+gimp_drawable_enable_resize_undo (GimpDrawable *drawable)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  drawable->private->no_undo = TRUE;
-}
-
-gboolean
-gimp_drawable_get_undo           (GimpDrawable       *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-
-  return !drawable->private->no_undo;
+  drawable->private->push_resize_undo = TRUE;
 }
 
 const Babl *

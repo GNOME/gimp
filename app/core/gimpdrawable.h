@@ -205,9 +205,8 @@ void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
                                                   gint                width,
                                                   gint                height);
 
-void            gimp_drawable_disable_undo       (GimpDrawable       *drawable);
-void            gimp_drawable_enable_undo        (GimpDrawable       *drawable);
-gboolean        gimp_drawable_get_undo           (GimpDrawable       *drawable);
+void           gimp_drawable_disable_resize_undo (GimpDrawable       *drawable);
+void           gimp_drawable_enable_resize_undo  (GimpDrawable       *drawable);
 
 const Babl      * gimp_drawable_get_space            (GimpDrawable    *drawable);
 const Babl      * gimp_drawable_get_format           (GimpDrawable    *drawable);
