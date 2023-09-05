@@ -564,6 +564,10 @@ gimp_action_view_conflict_response (GtkWidget   *dialog,
         {
           GAction *conflict_action;
           gint     start;
+          gchar   *left_paren_ptr = strchr (dup_actions[i], '(');
+
+          if (left_paren_ptr)
+            *left_paren_ptr = '\0';     /* ignore target part of detailed name */
 
           start = g_str_has_prefix (dup_actions[i], "app.") ? 4 : 0;
           conflict_action = g_action_map_lookup_action (G_ACTION_MAP (confirm_data->gimp->app),
@@ -572,6 +576,9 @@ gimp_action_view_conflict_response (GtkWidget   *dialog,
           g_return_if_fail (GIMP_IS_ACTION (conflict_action));
           gimp_action_set_accels (GIMP_ACTION (conflict_action), (const char*[]) { NULL });
         }
+
+      g_strfreev (dup_actions);
+
       gimp_action_set_accels (confirm_data->action, (const char*[]) { accel, NULL });
     }
 
@@ -749,10 +756,18 @@ gimp_action_view_accel_edited (GtkCellRendererAccel *accel,
       if (dup_actions != NULL && dup_actions[0] != NULL)
         {
           GimpAction *conflict_action = NULL;
+          gchar      *left_paren_ptr0 = strchr (dup_actions[0], '(');
+
+          if (left_paren_ptr0)
+            *left_paren_ptr0 = '\0';     /* ignore target part of detailed name */
 
           for (gint i = 0; dup_actions[i] != NULL; i++)
             {
-              gint start;
+              gint   start;
+              gchar *left_paren_ptr1 = strchr (dup_actions[i], '(');
+
+              if (left_paren_ptr1)
+                *left_paren_ptr1 = '\0';     /* ignore target part of detailed name */
 
               start = g_str_has_prefix (dup_actions[i], "app.") ? 4 : 0;
               conflict_action = GIMP_ACTION (g_action_map_lookup_action (G_ACTION_MAP (view->gimp->app),

@@ -37,6 +37,7 @@
 
 #include "gimpaction.h"
 #include "gimpactiongroup.h"
+#include "gimpradioaction.h"
 #include "gimphelp.h"
 #include "gimphelp-ids.h"
 #include "gimpmenu.h"
@@ -1220,7 +1221,23 @@ gimp_ui_manager_image_accels_changed (GimpAction     *action,
 {
   gchar *detailed_action_name;
 
-  detailed_action_name = g_strdup_printf ("app.%s", g_action_get_name (G_ACTION (action)));
+  if (GIMP_IS_RADIO_ACTION (action))
+    {
+      gint value;
+
+      g_object_get ((GObject *) action,
+                    "value", &value,
+                    NULL);
+      detailed_action_name = g_strdup_printf ("app.%s(%i)",
+                                               g_action_get_name (G_ACTION (action)),
+                                               value);
+    }
+  else
+    {
+      detailed_action_name = g_strdup_printf ("app.%s",
+                                               g_action_get_name (G_ACTION (action)));
+    }
+
   gtk_application_set_accels_for_action (GTK_APPLICATION (manager->gimp->app),
                                          detailed_action_name,
                                          accels ? accels : (const gchar *[]) { NULL });

@@ -63,6 +63,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpmessagebox.h"
+#include "widgets/gimpradioaction.h"
 #include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -860,10 +861,26 @@ gui_check_unique_accelerators (Gimp *gimp)
 
   for (gint i = 0; actions[i] != NULL; i++)
     {
-      gchar **accels;
-      gchar  *detailed_name;
+      gchar      **accels;
+      gchar       *detailed_name;
+      GimpAction  *action;
+      gint         value;
 
-      detailed_name = g_strdup_printf ("app.%s", actions[i]);
+      action = (GimpAction *) g_action_map_lookup_action (G_ACTION_MAP (gimp->app), actions[i]);
+
+      if (GIMP_IS_RADIO_ACTION (action))
+        {
+          g_object_get ((GObject *) action,
+                        "value", &value,
+                        NULL);
+          detailed_name = g_strdup_printf ("app.%s(%i)", actions[i],
+                                           value);
+        }
+      else
+        {
+          detailed_name = g_strdup_printf ("app.%s", actions[i]);
+        }
+
       accels = gtk_application_get_accels_for_action (GTK_APPLICATION (gimp->app),
                                                       detailed_name);
       g_free (detailed_name);
@@ -872,10 +889,25 @@ gui_check_unique_accelerators (Gimp *gimp)
         {
           for (gint k = i + 1; actions[k] != NULL; k++)
             {
-              gchar **accels2;
-              gchar  *detailed_name2;
+              gchar      **accels2;
+              gchar       *detailed_name2;
+              GimpAction  *action2;
 
-              detailed_name2 = g_strdup_printf ("app.%s", actions[k]);
+              action2 = (GimpAction *) g_action_map_lookup_action (G_ACTION_MAP (gimp->app), actions[k]);
+
+              if (GIMP_IS_RADIO_ACTION (action2))
+                {
+                  g_object_get ((GObject *) action2,
+                                "value", &value,
+                                NULL);
+                  detailed_name2 = g_strdup_printf ("app.%s(%i)", actions[k],
+                                                    value);
+                }
+              else
+                {
+                  detailed_name2 = g_strdup_printf ("app.%s", actions[k]);
+                }
+
               accels2 = gtk_application_get_accels_for_action (GTK_APPLICATION (gimp->app),
                                                                detailed_name2);
               g_free (detailed_name2);

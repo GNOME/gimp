@@ -30,6 +30,7 @@
 #include "menus-types.h"
 
 #include "widgets/gimpaction.h"
+#include "widgets/gimpradioaction.h"
 
 #include "shortcuts-rc.h"
 
@@ -208,8 +209,25 @@ shortcuts_rc_write (GtkApplication  *application,
 
       action = (GimpAction *) g_action_map_lookup_action (G_ACTION_MAP (application), actions[i]);
 
-      detailed_name  = g_strdup_printf ("app.%s", actions[i]);
-      accels         = gtk_application_get_accels_for_action (application, detailed_name);
+      if (GIMP_IS_RADIO_ACTION (action))
+        {
+          gint value;
+
+          g_object_get ((GObject *) action,
+                        "value",
+                        &value,
+                        NULL);
+          detailed_name = g_strdup_printf ("app.%s(%i)", actions[i],
+                                           value);
+
+        }
+      else
+        {
+          detailed_name = g_strdup_printf ("app.%s", actions[i]);
+        }
+
+      accels = gtk_application_get_accels_for_action (application, detailed_name);
+
       if (gimp_action_use_default_accels (action))
         commented = TRUE;
 
@@ -259,6 +277,10 @@ shortcuts_action_deserialize (GScanner       *scanner,
       for (gint i = 0; dup_actions[i] != NULL; i++)
         {
           GimpAction *conflict_action;
+          gchar      *left_paren_ptr = strchr (dup_actions[i], '(');
+
+          if (left_paren_ptr)
+            *left_paren_ptr = '\0';     /* ignore target part of detailed name */
 
           /* dup_actions[i] will be the detailed name prefixed with "app." */
           if (g_strcmp0 (dup_actions[i] + 4, action_name) == 0)
