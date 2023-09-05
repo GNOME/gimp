@@ -190,7 +190,12 @@ gimp_prop_drawable_chooser_new (GObject     *config,
       gchar *canonical;
 
       canonical = gimp_utils_make_canonical_menu_label (label);
-      title = g_strdup_printf (_("Choose drawable: %s"), canonical);
+      if (g_type_is_a (param_spec->value_type, GIMP_TYPE_LAYER))
+        title = g_strdup_printf (_("Choose layer: %s"), canonical);
+      if (g_type_is_a (param_spec->value_type, GIMP_TYPE_CHANNEL))
+        title = g_strdup_printf (_("Choose channel: %s"), canonical);
+      else
+        title = g_strdup_printf (_("Choose drawable: %s"), canonical);
       g_free (canonical);
     }
   else
@@ -198,7 +203,7 @@ gimp_prop_drawable_chooser_new (GObject     *config,
       title = g_strdup (chooser_title);
     }
 
-  prop_chooser = gimp_drawable_chooser_new (title, label, initial_drawable);
+  prop_chooser = gimp_drawable_chooser_new (title, label, param_spec->value_type, initial_drawable);
   g_clear_object (&initial_drawable);
   g_free (title);
 

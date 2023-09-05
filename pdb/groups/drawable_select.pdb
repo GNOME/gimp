@@ -25,6 +25,8 @@ sub drawables_popup {
         desc => 'The callback PDB proc to call when user chooses an drawable' },
       { name => 'popup_title', type => 'string',
         desc => 'Title of the drawable selection dialog' },
+      { name => 'drawable_type', type => 'string', non_empty => 1,
+        desc => 'The name of the GIMP_TYPE_DRAWABLE subtype' },
       { name => 'initial_drawable', type => 'drawable', null_ok => 1, no_validate => 1,
         desc => 'The drawable to set as the initial choice' },
       { name => 'parent_window', type => 'bytes', null_ok => 1,
@@ -37,8 +39,9 @@ sub drawables_popup {
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
       ! gimp_pdb_dialog_new (gimp, context, progress,
-                             GIMP_TYPE_DRAWABLE, parent_window,
-                             popup_title, callback, GIMP_OBJECT (initial_drawable),
+                             g_type_from_name (drawable_type),
+                             parent_window, popup_title, callback,
+                             GIMP_OBJECT (initial_drawable),
                              NULL))
     success = FALSE;
 }

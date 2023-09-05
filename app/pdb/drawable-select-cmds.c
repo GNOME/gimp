@@ -50,21 +50,24 @@ drawables_popup_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   const gchar *callback;
   const gchar *popup_title;
+  const gchar *drawable_type;
   GimpDrawable *initial_drawable;
   GBytes *parent_window;
 
   callback = g_value_get_string (gimp_value_array_index (args, 0));
   popup_title = g_value_get_string (gimp_value_array_index (args, 1));
-  initial_drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  parent_window = g_value_get_boxed (gimp_value_array_index (args, 3));
+  drawable_type = g_value_get_string (gimp_value_array_index (args, 2));
+  initial_drawable = g_value_get_object (gimp_value_array_index (args, 3));
+  parent_window = g_value_get_boxed (gimp_value_array_index (args, 4));
 
   if (success)
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
-                                 GIMP_TYPE_DRAWABLE, parent_window,
-                                 popup_title, callback, GIMP_OBJECT (initial_drawable),
+                                 g_type_from_name (drawable_type),
+                                 parent_window, popup_title, callback,
+                                 GIMP_OBJECT (initial_drawable),
                                  NULL))
         success = FALSE;
     }
@@ -156,6 +159,13 @@ register_drawable_select_procs (GimpPDB *pdb)
                                                        "popup title",
                                                        "Title of the drawable selection dialog",
                                                        FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("drawable-type",
+                                                       "drawable type",
+                                                       "The name of the GIMP_TYPE_DRAWABLE subtype",
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

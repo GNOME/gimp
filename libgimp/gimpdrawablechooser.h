@@ -34,6 +34,7 @@ G_DECLARE_FINAL_TYPE (GimpDrawableChooser, gimp_drawable_chooser, GIMP, DRAWABLE
 
 GtkWidget *    gimp_drawable_chooser_new          (const gchar          *title,
                                                    const gchar          *label,
+                                                   GType                 drawable_type,
                                                    GimpDrawable         *drawable);
 
 GimpDrawable * gimp_drawable_chooser_get_drawable (GimpDrawableChooser  *chooser);

@@ -151,7 +151,8 @@ gimp_pickable_popup_constructed (GObject *object)
 
   gimp_assert (GIMP_IS_CONTEXT (popup->priv->context));
 
-  popup->priv->chooser = gimp_pickable_chooser_new (popup->priv->context, popup->priv->view_size,
+  popup->priv->chooser = gimp_pickable_chooser_new (popup->priv->context, GIMP_TYPE_PICKABLE,
+                                                    popup->priv->view_size,
                                                     popup->priv->view_border_width);
   gtk_container_add (GTK_CONTAINER (popup), popup->priv->chooser);
   g_signal_connect_swapped (popup->priv->chooser, "notify::pickable",

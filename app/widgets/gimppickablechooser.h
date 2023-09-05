@@ -54,6 +54,7 @@ struct _GimpPickableChooserClass
 GType          gimp_pickable_chooser_get_type     (void) G_GNUC_CONST;
 
 GtkWidget    * gimp_pickable_chooser_new          (GimpContext         *context,
+                                                   GType                pickable_type,
                                                    gint                 view_size,
                                                    gint                 view_border_width);
 

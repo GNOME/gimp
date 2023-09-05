@@ -54,6 +54,7 @@ enum
   PROP_TITLE,
   PROP_LABEL,
   PROP_DRAWABLE,
+  PROP_DRAWABLE_TYPE,
   N_PROPS
 };
 
@@ -61,6 +62,7 @@ struct _GimpDrawableChooser
 {
   GtkBox        parent_instance;
 
+  GType         drawable_type;
   GimpDrawable *drawable;
   gchar        *title;
   gchar        *label;
@@ -167,6 +169,22 @@ gimp_drawable_chooser_class_init (GimpDrawableChooserClass *klass)
                               TRUE,
                               GIMP_PARAM_READWRITE |
                               G_PARAM_EXPLICIT_NOTIFY);
+
+  /**
+   * GimpDrawableChooser:drawable-type:
+   *
+   * Allowed drawable types, which must be either GIMP_TYPE_DRAWABLE or a
+   * subtype.
+   *
+   * Since: 3.0
+   */
+  drawable_button_props[PROP_DRAWABLE_TYPE] =
+    g_param_spec_gtype ("drawable-type",
+                        "Allowed drawable Type",
+                        "The GType of the drawable property",
+                        GIMP_TYPE_DRAWABLE,
+                        G_PARAM_CONSTRUCT_ONLY |
+                        GIMP_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class,
                                      N_PROPS, drawable_button_props);
@@ -275,7 +293,14 @@ gimp_drawable_chooser_set_property (GObject      *object,
       break;
 
     case PROP_DRAWABLE:
+      g_return_if_fail (g_value_get_object (gvalue) == NULL ||
+                        g_type_is_a (G_TYPE_FROM_INSTANCE (g_value_get_object (gvalue)),
+                                     chooser->drawable_type));
       gimp_drawable_chooser_set_drawable (chooser, g_value_get_object (gvalue));
+      break;
+
+    case PROP_DRAWABLE_TYPE:
+      chooser->drawable_type = g_value_get_gtype (gvalue);
       break;
 
     default:
@@ -306,6 +331,10 @@ gimp_drawable_chooser_get_property (GObject    *object,
       g_value_set_object (value, chooser->drawable);
       break;
 
+    case PROP_DRAWABLE_TYPE:
+      g_value_set_gtype (value, chooser->drawable_type);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -316,9 +345,13 @@ gimp_drawable_chooser_get_property (GObject    *object,
  * gimp_drawable_chooser_new:
  * @title:    (nullable): Title of the dialog to use or %NULL to use the default title.
  * @label:    (nullable): Button label or %NULL for no label.
+ * @drawable_type: the acceptable subtype of choosable drawables.
  * @drawable: (nullable): Initial drawable.
  *
- * Creates a new #GtkWidget that lets a user choose a drawable.
+ * Creates a new #GtkWidget that lets a user choose a drawable which must be of
+ * type @drawable_type. @drawable_type of values %G_TYPE_NONE and
+ * %GIMP_TYPE_DRAWABLE are equivalent. Otherwise it must be a subtype of
+ * %GIMP_TYPE_DRAWABLE.
  *
  * When @drawable is %NULL, initial choice is from context.
  *
@@ -329,14 +362,24 @@ gimp_drawable_chooser_get_property (GObject    *object,
 GtkWidget *
 gimp_drawable_chooser_new (const gchar  *title,
                            const gchar  *label,
+                           GType         drawable_type,
                            GimpDrawable *drawable)
 {
   GtkWidget *chooser;
 
+  if (drawable_type == G_TYPE_NONE)
+    drawable_type = GIMP_TYPE_DRAWABLE;
+
+  g_return_val_if_fail (g_type_is_a (drawable_type, GIMP_TYPE_DRAWABLE), NULL);
+  g_return_val_if_fail (drawable == NULL ||
+                        g_type_is_a (G_TYPE_FROM_INSTANCE (drawable), drawable_type),
+                        NULL);
+
   chooser = g_object_new (GIMP_TYPE_DRAWABLE_CHOOSER,
-                          "title",     title,
-                          "label",     label,
-                          "drawable",  drawable,
+                          "title",         title,
+                          "label",         label,
+                          "drawable",      drawable,
+                          "drawable-type", drawable_type,
                           NULL);
 
   return chooser;
@@ -482,7 +525,7 @@ gimp_drawable_chooser_clicked (GimpDrawableChooser *chooser)
       g_free (callback_name);
 
       if (gimp_drawables_popup (gimp_procedure_get_name (callback_procedure), chooser->title,
-                                chooser->drawable, handle))
+                                g_type_name (chooser->drawable_type), chooser->drawable, handle))
         {
           /* Allow callbacks to be watched */
           gimp_plug_in_extension_enable (plug_in);

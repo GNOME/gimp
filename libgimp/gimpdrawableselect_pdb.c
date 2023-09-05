@@ -40,6 +40,7 @@
  * gimp_drawables_popup:
  * @callback: The callback PDB proc to call when user chooses an drawable.
  * @popup_title: Title of the drawable selection dialog.
+ * @drawable_type: The name of the GIMP_TYPE_DRAWABLE subtype.
  * @initial_drawable: The drawable to set as the initial choice.
  * @parent_window: An optional parent window handle for the popup to be set transient to.
  *
@@ -52,6 +53,7 @@
 gboolean
 gimp_drawables_popup (const gchar  *callback,
                       const gchar  *popup_title,
+                      const gchar  *drawable_type,
                       GimpDrawable *initial_drawable,
                       GBytes       *parent_window)
 {
@@ -62,6 +64,7 @@ gimp_drawables_popup (const gchar  *callback,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, callback,
                                           G_TYPE_STRING, popup_title,
+                                          G_TYPE_STRING, drawable_type,
                                           GIMP_TYPE_DRAWABLE, initial_drawable,
                                           G_TYPE_BYTES, parent_window,
                                           G_TYPE_NONE);

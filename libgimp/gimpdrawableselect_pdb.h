@@ -34,6 +34,7 @@ G_BEGIN_DECLS
 
 gboolean gimp_drawables_popup       (const gchar  *callback,
                                      const gchar  *popup_title,
+                                     const gchar  *drawable_type,
                                      GimpDrawable *initial_drawable,
                                      GBytes       *parent_window);
 gboolean gimp_drawables_close_popup (const gchar  *callback);

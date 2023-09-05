@@ -655,18 +655,22 @@ gui_pdb_dialog_new (Gimp          *gimp,
       dialog_role = "gimp-pattern-selection";
       help_id     = GIMP_HELP_PATTERN_DIALOG;
     }
-  else if (contents_type == GIMP_TYPE_DRAWABLE)
+  else if (g_type_is_a (contents_type, GIMP_TYPE_DRAWABLE))
     {
       dialog_type = GIMP_TYPE_PICKABLE_SELECT;
       dialog_role = "gimp-pickable-selection";
     }
+  else
+    {
+      g_return_val_if_reached (FALSE);
+    }
 
   if (dialog_type != G_TYPE_NONE)
     {
-      if (! object && contents_type != GIMP_TYPE_DRAWABLE)
+      if (! object && ! g_type_is_a (contents_type, GIMP_TYPE_DRAWABLE))
         object = gimp_context_get_by_type (context, contents_type);
 
-      if (object || contents_type == GIMP_TYPE_DRAWABLE)
+      if (object || g_type_is_a (contents_type, GIMP_TYPE_DRAWABLE))
         {
           gint        n_properties = 0;
           gchar     **names        = NULL;

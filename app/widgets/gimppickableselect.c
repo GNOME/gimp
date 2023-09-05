@@ -94,7 +94,8 @@ gimp_pickable_select_constructed (GObject *object)
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 
-  select->chooser = gimp_pickable_chooser_new (dialog->context, GIMP_VIEW_SIZE_LARGE, 1);
+  select->chooser = gimp_pickable_chooser_new (dialog->context, dialog->select_type,
+                                               GIMP_VIEW_SIZE_LARGE, 1);
   gimp_pickable_chooser_set_pickable (GIMP_PICKABLE_CHOOSER (select->chooser),
                                       GIMP_PICKABLE (dialog->initial_object));
   g_signal_connect_swapped (select->chooser, "notify::pickable",

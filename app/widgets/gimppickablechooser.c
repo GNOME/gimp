@@ -55,6 +55,7 @@ enum
 {
   PROP_0,
   PROP_CONTEXT,
+  PROP_PICKABLE_TYPE,
   PROP_PICKABLE,
   PROP_VIEW_SIZE,
   PROP_VIEW_BORDER_WIDTH
@@ -62,6 +63,7 @@ enum
 
 struct _GimpPickableChooserPrivate
 {
+  GType         pickable_type;
   GimpPickable *pickable;
   GimpContext  *context;
 
@@ -140,6 +142,13 @@ gimp_pickable_chooser_class_init (GimpPickableChooserClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_PICKABLE_TYPE,
+                                   g_param_spec_gtype ("pickable-type",
+                                                       NULL, NULL,
+                                                       GIMP_TYPE_PICKABLE,
+                                                       GIMP_PARAM_WRITABLE |
+                                                       G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_PICKABLE,
                                    g_param_spec_object ("pickable",
                                                         NULL, NULL,
@@ -172,6 +181,9 @@ gimp_pickable_chooser_init (GimpPickableChooser *chooser)
 
   chooser->priv->view_size         = GIMP_VIEW_SIZE_SMALL;
   chooser->priv->view_border_width = 1;
+
+  chooser->priv->layer_view        = NULL;
+  chooser->priv->channel_view      = NULL;
 }
 
 static void
@@ -239,51 +251,57 @@ gimp_pickable_chooser_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
   gtk_widget_show (notebook);
 
-  chooser->priv->layer_view =
-    gimp_container_tree_view_new (NULL,
-                                  chooser->priv->context,
-                                  chooser->priv->view_size,
-                                  chooser->priv->view_border_width);
-  gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (GIMP_CONTAINER_TREE_VIEW (chooser->priv->layer_view)->view),
-                                    TRUE);
-  gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (chooser->priv->layer_view),
-                                       4 * (chooser->priv->view_size +
-                                            2 * chooser->priv->view_border_width),
-                                       4 * (chooser->priv->view_size +
-                                            2 * chooser->priv->view_border_width));
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            chooser->priv->layer_view,
-                            gtk_label_new (_("Layers")));
-  gtk_widget_show (chooser->priv->layer_view);
+  if (g_type_is_a (GIMP_TYPE_LAYER, chooser->priv->pickable_type))
+    {
+      chooser->priv->layer_view =
+        gimp_container_tree_view_new (NULL,
+                                      chooser->priv->context,
+                                      chooser->priv->view_size,
+                                      chooser->priv->view_border_width);
+      gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (GIMP_CONTAINER_TREE_VIEW (chooser->priv->layer_view)->view),
+                                        TRUE);
+      gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (chooser->priv->layer_view),
+                                           4 * (chooser->priv->view_size +
+                                                2 * chooser->priv->view_border_width),
+                                           4 * (chooser->priv->view_size +
+                                                2 * chooser->priv->view_border_width));
+      gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                                chooser->priv->layer_view,
+                                gtk_label_new (_("Layers")));
+      gtk_widget_show (chooser->priv->layer_view);
 
-  g_signal_connect_object (chooser->priv->layer_view, "activate-item",
-                           G_CALLBACK (gimp_pickable_chooser_item_activate),
-                           G_OBJECT (chooser), 0);
-  g_signal_connect_object (chooser->priv->layer_view, "select-items",
-                           G_CALLBACK (gimp_pickable_chooser_items_selected),
-                           G_OBJECT (chooser), 0);
+      g_signal_connect_object (chooser->priv->layer_view, "activate-item",
+                               G_CALLBACK (gimp_pickable_chooser_item_activate),
+                               G_OBJECT (chooser), 0);
+      g_signal_connect_object (chooser->priv->layer_view, "select-items",
+                               G_CALLBACK (gimp_pickable_chooser_items_selected),
+                               G_OBJECT (chooser), 0);
+    }
 
-  chooser->priv->channel_view =
-    gimp_container_tree_view_new (NULL,
-                                  chooser->priv->context,
-                                  chooser->priv->view_size,
-                                  chooser->priv->view_border_width);
-  gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (chooser->priv->channel_view),
-                                       4 * (chooser->priv->view_size +
-                                            2 * chooser->priv->view_border_width),
-                                       4 * (chooser->priv->view_size +
-                                            2 * chooser->priv->view_border_width));
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            chooser->priv->channel_view,
-                            gtk_label_new (_("Channels")));
-  gtk_widget_show (chooser->priv->channel_view);
+  if (g_type_is_a (GIMP_TYPE_CHANNEL, chooser->priv->pickable_type))
+    {
+      chooser->priv->channel_view =
+        gimp_container_tree_view_new (NULL,
+                                      chooser->priv->context,
+                                      chooser->priv->view_size,
+                                      chooser->priv->view_border_width);
+      gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (chooser->priv->channel_view),
+                                           4 * (chooser->priv->view_size +
+                                                2 * chooser->priv->view_border_width),
+                                           4 * (chooser->priv->view_size +
+                                                2 * chooser->priv->view_border_width));
+      gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                                chooser->priv->channel_view,
+                                gtk_label_new (_("Channels")));
+      gtk_widget_show (chooser->priv->channel_view);
 
-  g_signal_connect_object (chooser->priv->channel_view, "activate-item",
-                           G_CALLBACK (gimp_pickable_chooser_item_activate),
-                           G_OBJECT (chooser), 0);
-  g_signal_connect_object (chooser->priv->channel_view, "select-items",
-                           G_CALLBACK (gimp_pickable_chooser_items_selected),
-                           G_OBJECT (chooser), 0);
+      g_signal_connect_object (chooser->priv->channel_view, "activate-item",
+                               G_CALLBACK (gimp_pickable_chooser_item_activate),
+                               G_OBJECT (chooser), 0);
+      g_signal_connect_object (chooser->priv->channel_view, "select-items",
+                               G_CALLBACK (gimp_pickable_chooser_items_selected),
+                               G_OBJECT (chooser), 0);
+    }
 
   g_signal_connect_object (chooser->priv->context, "image-changed",
                            G_CALLBACK (gimp_pickable_chooser_image_changed),
@@ -328,7 +346,19 @@ gimp_pickable_chooser_set_property (GObject      *object,
       chooser->priv->view_border_width = g_value_get_int (value);
       break;
 
+    case PROP_PICKABLE_TYPE:
+      g_return_if_fail (g_value_get_gtype (value) == GIMP_TYPE_LAYER    ||
+                        g_value_get_gtype (value) == GIMP_TYPE_CHANNEL  ||
+                        g_value_get_gtype (value) == GIMP_TYPE_DRAWABLE ||
+                        g_value_get_gtype (value) == GIMP_TYPE_IMAGE    ||
+                        g_value_get_gtype (value) == GIMP_TYPE_PICKABLE);
+      chooser->priv->pickable_type = g_value_get_gtype (value);
+      break;
+
     case PROP_PICKABLE:
+      g_return_if_fail (g_value_get_object (value) == NULL ||
+                        g_type_is_a (G_TYPE_FROM_INSTANCE (g_value_get_object (value)),
+                                     chooser->priv->pickable_type));
       gimp_pickable_chooser_set_pickable (chooser, g_value_get_object (value));
       break;
 
@@ -352,6 +382,10 @@ gimp_pickable_chooser_get_property (GObject    *object,
       g_value_set_object (value, chooser->priv->context);
       break;
 
+    case PROP_PICKABLE_TYPE:
+      g_value_set_gtype (value, chooser->priv->pickable_type);
+      break;
+
     case PROP_PICKABLE:
       g_value_set_object (value, chooser->priv->pickable);
       break;
@@ -372,6 +406,7 @@ gimp_pickable_chooser_get_property (GObject    *object,
 
 GtkWidget *
 gimp_pickable_chooser_new (GimpContext *context,
+                           GType        pickable_type,
                            gint         view_size,
                            gint         view_border_width)
 {
@@ -384,6 +419,7 @@ gimp_pickable_chooser_new (GimpContext *context,
 
   return g_object_new (GIMP_TYPE_PICKABLE_CHOOSER,
                        "context",           context,
+                       "pickable-type",     pickable_type,
                        "view-size",         view_size,
                        "view-border-width", view_border_width,
                        NULL);
@@ -406,12 +442,20 @@ gimp_pickable_chooser_set_pickable (GimpPickableChooser *chooser,
       g_signal_handlers_disconnect_by_func (chooser->priv->image_view,
                                             G_CALLBACK (gimp_pickable_chooser_items_selected),
                                             chooser);
-      g_signal_handlers_disconnect_by_func (chooser->priv->layer_view,
-                                            G_CALLBACK (gimp_pickable_chooser_items_selected),
-                                            chooser);
-      g_signal_handlers_disconnect_by_func (chooser->priv->channel_view,
-                                            G_CALLBACK (gimp_pickable_chooser_items_selected),
-                                            chooser);
+      if (chooser->priv->layer_view != NULL)
+        g_signal_handlers_disconnect_by_func (chooser->priv->layer_view,
+                                              G_CALLBACK (gimp_pickable_chooser_items_selected),
+                                              chooser);
+      else
+        g_return_if_fail (! GIMP_IS_LAYER (pickable));
+
+      if (chooser->priv->channel_view != NULL)
+        g_signal_handlers_disconnect_by_func (chooser->priv->channel_view,
+                                              G_CALLBACK (gimp_pickable_chooser_items_selected),
+                                              chooser);
+      else
+        g_return_if_fail (! GIMP_IS_CHANNEL (pickable));
+
       if (GIMP_IS_IMAGE (pickable))
         {
           gimp_container_view_select_item (GIMP_CONTAINER_VIEW (chooser->priv->image_view),
@@ -439,12 +483,14 @@ gimp_pickable_chooser_set_pickable (GimpPickableChooser *chooser,
       g_signal_connect_object (chooser->priv->image_view, "select-items",
                                G_CALLBACK (gimp_pickable_chooser_items_selected),
                                G_OBJECT (chooser), 0);
-      g_signal_connect_object (chooser->priv->layer_view, "select-items",
-                               G_CALLBACK (gimp_pickable_chooser_items_selected),
-                               G_OBJECT (chooser), 0);
-      g_signal_connect_object (chooser->priv->channel_view, "select-items",
-                               G_CALLBACK (gimp_pickable_chooser_items_selected),
-                               G_OBJECT (chooser), 0);
+      if (chooser->priv->layer_view != NULL)
+        g_signal_connect_object (chooser->priv->layer_view, "select-items",
+                                 G_CALLBACK (gimp_pickable_chooser_items_selected),
+                                 G_OBJECT (chooser), 0);
+      if (chooser->priv->channel_view != NULL)
+        g_signal_connect_object (chooser->priv->channel_view, "select-items",
+                                 G_CALLBACK (gimp_pickable_chooser_items_selected),
+                                 G_OBJECT (chooser), 0);
     }
 
   if (pickable != chooser->priv->pickable)
@@ -486,23 +532,29 @@ gimp_pickable_chooser_image_changed (GimpContext         *context,
   g_signal_handlers_disconnect_by_func (chooser->priv->image_view,
                                         G_CALLBACK (gimp_pickable_chooser_items_selected),
                                         chooser);
-  g_signal_handlers_disconnect_by_func (chooser->priv->layer_view,
-                                        G_CALLBACK (gimp_pickable_chooser_items_selected),
-                                        chooser);
-  g_signal_handlers_disconnect_by_func (chooser->priv->channel_view,
-                                        G_CALLBACK (gimp_pickable_chooser_items_selected),
-                                        chooser);
-  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (chooser->priv->layer_view),
-                                     layers);
-  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (chooser->priv->channel_view),
-                                     channels);
+  if (chooser->priv->layer_view != NULL)
+    {
+      g_signal_handlers_disconnect_by_func (chooser->priv->layer_view,
+                                            G_CALLBACK (gimp_pickable_chooser_items_selected),
+                                            chooser);
+      gimp_container_view_set_container (GIMP_CONTAINER_VIEW (chooser->priv->layer_view),
+                                         layers);
+      g_signal_connect_object (chooser->priv->layer_view, "select-items",
+                               G_CALLBACK (gimp_pickable_chooser_items_selected),
+                               G_OBJECT (chooser), 0);
+    }
+  if (chooser->priv->channel_view != NULL)
+    {
+      g_signal_handlers_disconnect_by_func (chooser->priv->channel_view,
+                                            G_CALLBACK (gimp_pickable_chooser_items_selected),
+                                            chooser);
+      gimp_container_view_set_container (GIMP_CONTAINER_VIEW (chooser->priv->channel_view),
+                                         channels);
+      g_signal_connect_object (chooser->priv->channel_view, "select-items",
+                               G_CALLBACK (gimp_pickable_chooser_items_selected),
+                               G_OBJECT (chooser), 0);
+    }
   g_signal_connect_object (chooser->priv->image_view, "select-items",
-                           G_CALLBACK (gimp_pickable_chooser_items_selected),
-                           G_OBJECT (chooser), 0);
-  g_signal_connect_object (chooser->priv->layer_view, "select-items",
-                           G_CALLBACK (gimp_pickable_chooser_items_selected),
-                           G_OBJECT (chooser), 0);
-  g_signal_connect_object (chooser->priv->channel_view, "select-items",
                            G_CALLBACK (gimp_pickable_chooser_items_selected),
                            G_OBJECT (chooser), 0);
 }
