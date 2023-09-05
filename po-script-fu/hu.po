@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-26 20:31+0000\n"
-"PO-Revision-Date: 2023-07-29 08:30+0200\n"
+"POT-Creation-Date: 2023-09-03 21:48+0000\n"
+"PO-Revision-Date: 2023-09-05 21:01+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.04.1\n"
+"X-Generator: Lokalize 23.04.3\n"
 
 #: plug-ins/script-fu/script-fu.c:122
 msgid "Script-Fu _Console"
@@ -103,7 +103,6 @@ msgstr ""
 "A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
 
 #: plug-ins/script-fu/console/script-fu-console.c:125
-#| msgid "Script-Fu Console"
 msgid "Script Console"
 msgstr "Parancsfájlkonzol"
 
@@ -201,11 +200,6 @@ msgstr "A Script-Fu nem képes egyszerre több parancsfájlt feldolgozni."
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Már futtatja a(z) „%s” parancsfájlt."
-
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:210
-#, c-format
-msgid "Script-Fu: %s"
-msgstr "Script-Fu: %s"
 
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:217
 msgid "_Reset"
@@ -680,64 +674,6 @@ msgstr "Átlátszatlanság"
 msgid "Allow resizing"
 msgstr "Átméretezés engedélyezése"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "_Erase Every Nth Row..."
-msgstr "_Minden N. sor törlése…"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:43
-msgid "Erase every nth row or column"
-msgstr "Minden N. sor vagy oszlop törlése"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Rows/cols"
-msgstr "Sorok/oszlopok"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Rows"
-msgstr "Sorok"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Columns"
-msgstr "Oszlopok"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Erase/fill"
-msgstr "Törlés/kitöltés"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Erase"
-msgstr "Törlés"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Fill with BG"
-msgstr "Kitöltés háttérszínnel"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:57
-msgid "_Erase Every Other Row..."
-msgstr "_Minden második sor törlése…"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:58
-msgid "Erase every other row or column"
-msgstr "Minden második sor vagy oszlop törlése"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Even/odd"
-msgstr "Páros/páratlan"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Even"
-msgstr "Páros"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Odd"
-msgstr "Páratlan"
-
 #: plug-ins/script-fu/scripts/font-map.scm:161
 msgid "Render _Font Map..."
 msgstr "Betűkészlet-lista _megjelenítése…"
@@ -818,82 +754,85 @@ msgstr "Árnyék szélessége (%)"
 msgid "Flatten image"
 msgstr "Kép lapítása"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:59
+#: plug-ins/script-fu/scripts/gimp-online.scm:63
 msgid "Using _Paths"
 msgstr "Út_vonalak használata"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:60
-#: plug-ins/script-fu/scripts/gimp-online.scm:73
-#: plug-ins/script-fu/scripts/gimp-online.scm:86
-#: plug-ins/script-fu/scripts/gimp-online.scm:99
-#: plug-ins/script-fu/scripts/gimp-online.scm:112
-#: plug-ins/script-fu/scripts/gimp-online.scm:125
-#: plug-ins/script-fu/scripts/gimp-online.scm:138
-#: plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/gimp-online.scm:64
+#: plug-ins/script-fu/scripts/gimp-online.scm:77
+#: plug-ins/script-fu/scripts/gimp-online.scm:90
+#: plug-ins/script-fu/scripts/gimp-online.scm:103
+#: plug-ins/script-fu/scripts/gimp-online.scm:116
+#: plug-ins/script-fu/scripts/gimp-online.scm:129
+#: plug-ins/script-fu/scripts/gimp-online.scm:142
+#: plug-ins/script-fu/scripts/gimp-online.scm:155
+#: plug-ins/script-fu/scripts/gimp-online.scm:167
 msgid "Bookmark to the user manual"
 msgstr "Könyvjelző a felhasználói kézikönyvhöz"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:72
+#: plug-ins/script-fu/scripts/gimp-online.scm:76
 msgid "_Preparing your Images for the Web"
 msgstr "Képek készítése a _webhez"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/gimp-online.scm:89
 msgid "_Working with Digital Camera Photos"
 msgstr "_Digitális kamerák képeinek használata"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:98
+#: plug-ins/script-fu/scripts/gimp-online.scm:102
 msgid "Create, Open and Save _Files"
 msgstr "_Fájlok létrehozása, megnyitása és mentése"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:111
+#: plug-ins/script-fu/scripts/gimp-online.scm:115
 msgid "_Basic Concepts"
 msgstr "_Alapinformációk"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:124
+#: plug-ins/script-fu/scripts/gimp-online.scm:128
 msgid "How to Use _Dialogs"
 msgstr "A _párbeszédablakok használata"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:141
 msgid "Drawing _Simple Objects"
 msgstr "_Egyszerű objektumok rajzolása"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/gimp-online.scm:154
 msgid "Create and Use _Selections"
 msgstr "Kiválasztások _létrehozása és használata"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:186
+#: plug-ins/script-fu/scripts/gimp-online.scm:166
+msgid "_[Table of Contents]"
+msgstr "_[Tartalomjegyzék]"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:202
 msgid "_Main Web Site"
 msgstr "_Fő webhely"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:187
-#: plug-ins/script-fu/scripts/gimp-online.scm:200
-#: plug-ins/script-fu/scripts/gimp-online.scm:239
+#: plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/gimp-online.scm:216
+#: plug-ins/script-fu/scripts/gimp-online.scm:255
 msgid "Bookmark to the GIMP web site"
 msgstr "Könyvjelző a GIMP weblapjához"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:199
+#: plug-ins/script-fu/scripts/gimp-online.scm:215
 msgid "_Developer Web Site"
 msgstr "Fe_jlesztői webhely"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:212
-#| msgid "_Roadmap"
+#: plug-ins/script-fu/scripts/gimp-online.scm:228
 msgid "_Roadmaps"
 msgstr "Ütem_tervek"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:213
-#| msgid "Bookmark to the roadmap of GIMP"
+#: plug-ins/script-fu/scripts/gimp-online.scm:229
 msgid "Bookmark to the roadmaps of GIMP"
 msgstr "Könyvjelző a GIMP ütemterveihez"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:225
+#: plug-ins/script-fu/scripts/gimp-online.scm:241
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Hibajelentések és funkciókérések"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:226
+#: plug-ins/script-fu/scripts/gimp-online.scm:242
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Könyvjelző a GIMP hibakövetőjéhez"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:238
+#: plug-ins/script-fu/scripts/gimp-online.scm:254
 msgid "_User Manual Web Site"
 msgstr "A felhasználói _kézikönyv webhelye"
 
@@ -924,25 +863,6 @@ msgstr "Magasság"
 #: plug-ins/script-fu/scripts/gradient-example.scm:77
 msgid "Gradient reverse"
 msgstr "Fordított színátmenet"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:84
-msgid "_Grid..."
-msgstr "_Rács…"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:85
-msgid ""
-"Draw a grid as specified by the lists of X and Y locations using the current "
-"brush"
-msgstr ""
-"Rács rajzolása a jelenlegi ecsettel az X- illetve Y-koordináták alapján"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:92
-msgid "X divisions"
-msgstr "X-felosztás"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:93
-msgid "Y divisions"
-msgstr "Y-felosztás"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
@@ -1201,10 +1121,10 @@ msgid "J_ava map..."
 msgstr "J_ava-leképezés…"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:399
-#| msgid "Export the active palette as a java.util.Hashtable<String, Color>"
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
-"Az aktív paletta exportálása mint java.util.Hashtable&lt;Karakterlánc,Szín&gt;"
+"Az aktív paletta exportálása mint java.util.Hashtable&lt;Karakterlánc,"
+"Szín&gt;"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:58
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
@@ -1220,19 +1140,15 @@ msgid "Paste the clipboard contents into a new brush"
 msgstr "A vágólap tartalmának beillesztése egy új ecsetbe"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: plug-ins/script-fu/scripts/select-to-brush.scm:145
 msgid "_Brush name"
 msgstr "_Ecset neve"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
-#: plug-ins/script-fu/scripts/select-to-brush.scm:146
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:107
 msgid "_File name"
 msgstr "_Fájlnév"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:72
-#: plug-ins/script-fu/scripts/select-to-brush.scm:147
 msgid "_Spacing"
 msgstr "_Térköz"
 
@@ -1245,7 +1161,6 @@ msgid "Paste the clipboard contents into a new pattern"
 msgstr "A vágólap tartalmának beillesztése egy új mintába"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:106
 msgid "_Pattern name"
 msgstr "_Minta neve"
 
@@ -1349,15 +1264,15 @@ msgstr "Árnyék Y-eltolása"
 msgid "Add background"
 msgstr "Háttér hozzáadása"
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Se_t Colormap..."
 msgstr "Színtérkép _beállítása…"
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:55
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr "Egy kép színtérképének módosítása egy megadott paletta színeire"
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:62
 msgid "Palette"
 msgstr "Paletta"
 
@@ -1376,30 +1291,6 @@ msgstr "_Sugár (%)"
 #: plug-ins/script-fu/scripts/selection-round.scm:148
 msgid "Co_ncave"
 msgstr "_Konkáv"
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm:137
-msgid "To _Brush..."
-msgstr "_Ecsetté…"
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm:138
-msgid "Convert a selection to a brush"
-msgstr "A kijelölés ecsetté alakítása"
-
-#: plug-ins/script-fu/scripts/select-to-image.scm:85
-msgid "To _Image"
-msgstr "Ké_ppé"
-
-#: plug-ins/script-fu/scripts/select-to-image.scm:86
-msgid "Convert a selection to an image"
-msgstr "A kijelölés képpé alakítása"
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:98
-msgid "To _Pattern..."
-msgstr "_Mintává…"
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:99
-msgid "Convert a selection to a pattern"
-msgstr "A kijelölés mintává alakítása"
 
 #: plug-ins/script-fu/scripts/slide.scm:245
 msgid "_Slide..."
