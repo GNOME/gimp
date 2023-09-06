@@ -1255,8 +1255,8 @@ sub vectors_export_to_file {
     $help = <<'HELP';
 This procedure creates an SVG file to save a Vectors object, that is,
 a path.  The resulting file can be edited using a vector graphics
-application, or later reloaded into GIMP.  If you pass 0 as the 'vectors'
-argument, then all paths in the image will be exported.
+application, or later reloaded into GIMP.  Pass %NULL as the 'vectors'
+argument to export all paths in the image.
 HELP
 
     &bill_pdb_misc('2007', '2.6');
@@ -1267,14 +1267,17 @@ HELP
         { name => 'file', type => 'file',
           desc => 'The SVG file to create.' },
         { name => 'vectors', type => 'vectors', no_validate => 1,
-          desc => 'The vectors object to be saved, or 0 for all in the image' }
+          desc => 'The vectors object to export, or %NULL for all in the image' }
     );
 
     %invoke = (
         headers => [ qw("vectors/gimpvectors-export.h") ],
         code    => <<'CODE'
 {
-  GList *vectors_list = g_list_prepend (NULL, vectors);
+  GList *vectors_list = NULL;
+
+  if (vectors != NULL)
+    vectors_list = g_list_prepend (vectors_list, vectors);
 
   success = gimp_vectors_export_file (image, vectors_list, file, error);
 
@@ -1289,9 +1292,9 @@ sub vectors_export_to_string {
 
     $help = <<'HELP';
 This procedure works like gimp_vectors_export_to_file() but creates a string
-rather than a file. The contents are a NUL-terminated string that holds a
-complete XML document.  If you pass 0 as the 'vectors' argument, then all
-paths in the image will be exported.
+rather than a file. The string is NULL-terminated and holds a
+complete XML document.  Pass %NULL as the 'vectors' argument to export
+all paths in the image.
 HELP
 
     &bill_pdb_misc('2007', '2.6');
@@ -1300,7 +1303,7 @@ HELP
         { name => 'image', type => 'image',
           desc => 'The image' },
         { name => 'vectors', type => 'vectors', no_validate => 1,
-          desc => 'The vectors object to save, or 0 for all in the image' }
+          desc => 'The vectors object to export, or %NULL for all in the image' }
     );
 
     @outargs = (
@@ -1312,7 +1315,10 @@ HELP
         headers => [ qw("vectors/gimpvectors-export.h") ],
         code    => <<'CODE'
 {
-  GList *vectors_list = g_list_prepend (NULL, vectors);
+  GList *vectors_list = NULL;
+
+  if (vectors != NULL)
+    vectors_list = g_list_prepend (vectors_list, vectors);
 
   string = gimp_vectors_export_string (image, vectors_list);
   g_list_free (vectors_list);

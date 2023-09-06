@@ -1191,17 +1191,14 @@ gimp_vectors_import_from_string (GimpImage     *image,
  * gimp_vectors_export_to_file:
  * @image: The image.
  * @file: The SVG file to create.
- * @vectors: A vectors object to export, or NULL (0) for all in the image.
+ * @vectors: The vectors object to export, or %NULL for all in the image.
  *
  * save a path as an SVG file.
  *
  * This procedure creates an SVG file to save a Vectors object, that
  * is, a path. The resulting file can be edited using a vector graphics
- * app, or later reloaded into GIMP. When you pass NULL (0) for the
- * 'vectors' argument, this exports all paths in the image.
- * In ScriptFu, a vectors object is represented by an integer ID: pass
- * 0 or -1 or any invalid ID to export all paths. In C or bound
- * languages, pass a NULL object.
+ * application, or later reloaded into GIMP. Pass %NULL as the
+ * 'vectors' argument to export all paths in the image.
  *
  * Returns: TRUE on success.
  *
@@ -1237,14 +1234,14 @@ gimp_vectors_export_to_file (GimpImage   *image,
 /**
  * gimp_vectors_export_to_string:
  * @image: The image.
- * @vectors: A vectors object to export, or NULL (0) for all in the image.
+ * @vectors: The vectors object to export, or %NULL for all in the image.
  *
  * Save a path as an SVG string.
  *
  * This procedure works like gimp_vectors_export_to_file() but creates
  * a string rather than a file. The string is NULL-terminated and holds
- * a complete XML document. When you pass 0 as the 'vectors' argument,
- * this exports all paths in the image.
+ * a complete XML document. Pass %NULL as the 'vectors' argument to
+ * export all paths in the image.
  *
  * Returns: (transfer full):
  *          A string whose contents are a complete SVG document.

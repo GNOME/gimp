@@ -1297,10 +1297,6 @@ vectors_export_to_file_invoker (GimpProcedure         *procedure,
 
       if (vectors != NULL)
         vectors_list = g_list_prepend (vectors_list, vectors);
-      /* ensure vectors_list:
-       *   - is list having one non-null element
-       *   - OR is NULL aka empty list
-       */
 
       success = gimp_vectors_export_file (image, vectors_list, file, error);
 
@@ -1334,10 +1330,6 @@ vectors_export_to_string_invoker (GimpProcedure         *procedure,
 
       if (vectors != NULL)
         vectors_list = g_list_prepend (vectors_list, vectors);
-      /* ensure vectors_list:
-       *   - is list having one non-null element
-       *   - OR is NULL aka empty list
-       */
 
       string = gimp_vectors_export_string (image, vectors_list);
       g_list_free (vectors_list);
@@ -2450,8 +2442,7 @@ register_vectors_procs (GimpPDB *pdb)
                                "gimp-vectors-export-to-file");
   gimp_procedure_set_static_help (procedure,
                                   "save a path as an SVG file.",
-                                  "This procedure creates an SVG file to save a Vectors object, that is, a path. The resulting file can be edited using a vector graphics app, or later reloaded into GIMP. When you pass NULL (0) for the 'vectors' argument, this exports all paths in the image.\n"
-                                  "In ScriptFu, a vectors object is represented by an integer ID: pass 0 or -1 or any invalid ID to export all paths. In C or bound languages, pass a NULL object.",
+                                  "This procedure creates an SVG file to save a Vectors object, that is, a path. The resulting file can be edited using a vector graphics application, or later reloaded into GIMP. Pass %NULL as the 'vectors' argument to export all paths in the image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
@@ -2472,7 +2463,7 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
-                                                        "A vectors object to export, or NULL (0) for all in the image",
+                                                        "The vectors object to export, or %NULL for all in the image",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2486,7 +2477,7 @@ register_vectors_procs (GimpPDB *pdb)
                                "gimp-vectors-export-to-string");
   gimp_procedure_set_static_help (procedure,
                                   "Save a path as an SVG string.",
-                                  "This procedure works like 'gimp-vectors-export-to-file' but creates a string rather than a file. The string is NULL-terminated and holds a complete XML document. When you pass 0 as the 'vectors' argument, this exports all paths in the image.",
+                                  "This procedure works like 'gimp-vectors-export-to-file' but creates a string rather than a file. The string is NULL-terminated and holds a complete XML document. Pass %NULL as the 'vectors' argument to export all paths in the image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
@@ -2501,7 +2492,7 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
-                                                        "A vectors object to export, or NULL (0) for all in the image",
+                                                        "The vectors object to export, or %NULL for all in the image",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
