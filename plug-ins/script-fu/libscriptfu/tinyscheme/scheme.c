@@ -2664,7 +2664,8 @@ static pointer _Error_1(scheme *sc, const char *s, pointer a) {
 
        /* we started from 0 */
        ln++;
-       snprintf(sbuf, STRBUFFSIZE, "(%s : %i) %s", fname, ln, s);
+       /* Err kind s is first, to have a stable prefix for testing. */
+       snprintf(sbuf, STRBUFFSIZE, "%s (%s : %i) ", s, fname, ln);
 
        str = (const char*)sbuf;
      }
