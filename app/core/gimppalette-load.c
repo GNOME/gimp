@@ -762,22 +762,22 @@ gimp_palette_load_ase (GimpContext   *context,
                                &bytes_read, NULL, error);
 
       /* Color formats */
-      if (g_str_has_prefix (color_space, "RGB"))
+      if (g_str_has_prefix (g_strstrip (color_space), "RGB"))
         {
           components = 3;
           src_format = babl_format ("R'G'B' float");
         }
-      else if (g_str_has_prefix (color_space, "GRAY"))
+      else if (g_str_has_prefix (g_strstrip (color_space), "GRAY"))
         {
           components = 1;
           src_format = babl_format ("Y' float");
         }
-      else if (g_str_has_prefix (color_space, "CMYK"))
+      else if (g_str_has_prefix (g_strstrip (color_space), "CMYK"))
         {
           components = 4;
           src_format = babl_format ("CMYK float");
         }
-      else if (g_str_has_prefix (color_space, "LAB"))
+      else if (g_str_has_prefix (g_strstrip (color_space), "LAB"))
         {
           components = 3;
           src_format = babl_format ("CIE Lab float");
