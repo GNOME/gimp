@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-27 16:52+0000\n"
-"PO-Revision-Date: 2023-08-28 20:21+0300\n"
+"POT-Creation-Date: 2023-09-06 04:39+0000\n"
+"PO-Revision-Date: 2023-09-06 20:42+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -260,11 +260,11 @@ msgstr "Показувати сторінку налаштувань із екс
 msgid "Show an image submenu with debug actions"
 msgstr "Показати підменю зображення із пунктами діагностики"
 
-#: app/main.c:719
+#: app/main.c:722
 msgid "[FILE|URI...]"
 msgstr "[ФАЙЛ|URI...]"
 
-#: app/main.c:747
+#: app/main.c:750
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -272,20 +272,20 @@ msgstr ""
 "GIMP не може ініціалізувати графічний інтерфейс.\n"
 "Перевірте правильність параметрів вашого графічного середовища."
 
-#: app/main.c:768
+#: app/main.c:771
 msgid "Another GIMP instance is already running."
 msgstr "Вже запущена інша копія GIMP"
 
-#: app/main.c:857
+#: app/main.c:860
 msgid "GIMP output. Type any character to close this window."
 msgstr "Вивід GIMP. Введіть будь-який символ для закриття цього вікна."
 
-#: app/main.c:858
+#: app/main.c:861
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Введіть будь-який символ для закриття цього вікна.)\n"
 
-#: app/main.c:875
+#: app/main.c:878
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Вивід GIMP. Ви можете згорнути це вікно, але не закривати його."
 
@@ -504,7 +504,7 @@ msgstr "Текст"
 msgid "Text Editor"
 msgstr "Текстовий редактор"
 
-#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:530
+#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:531
 msgid "Tool Options"
 msgstr "Параметри інструменту"
 
@@ -1048,7 +1048,7 @@ msgstr[1] "Опустити канали додолу"
 msgstr[2] "Опустити канали додолу"
 msgstr[3] "Опустити канал додолу"
 
-#: app/actions/channels-commands.c:384 app/core/gimpimage-new.c:506
+#: app/actions/channels-commands.c:384 app/core/gimpimage-new.c:507
 #: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:259
 #: app/widgets/gimplayertreeview.c:1055
 #, c-format
@@ -2440,7 +2440,7 @@ msgstr "240 секунд"
 #: app/display/gimpdisplayshell-scale-dialog.c:123
 #: app/tools/gimpfiltertool.c:364 app/tools/gimpforegroundselecttool.c:331
 #: app/tools/gimptexttool.c:1751 app/tools/gimptransformgridtool.c:1264
-#: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:614
+#: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:463 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:327
@@ -2522,7 +2522,7 @@ msgstr ""
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2428
 #: app/core/gimppalette.c:428 app/core/gimppalette-import.c:213
-#: app/core/gimppalette-load.c:199 app/dialogs/palette-import-dialog.c:762
+#: app/core/gimppalette-load.c:241 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Без назви"
@@ -9914,7 +9914,7 @@ msgstr "Перемістити це вікно на екран %s"
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
-#: app/display/gimpdisplayshell-scale-dialog.c:124 app/gui/gui.c:183
+#: app/display/gimpdisplayshell-scale-dialog.c:124 app/gui/gui.c:184
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
 #: app/widgets/gimpcontrollereditor.c:663 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:176 app/widgets/gimpmodifierseditor.c:685
@@ -11377,7 +11377,7 @@ msgid "The maximum number of actions saved in history."
 msgstr "Максимальна кількість записів дій, які зберігатимуться у журналі."
 
 #: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130
-#: app/core/gimp-units.c:278 app/gui/session.c:309 app/menus/shortcuts-rc.c:158
+#: app/core/gimp-units.c:278 app/gui/session.c:309 app/menus/shortcuts-rc.c:159
 #: app/plug-in/plug-in-rc.c:249 app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "критична помилка лексичного аналізу"
@@ -12556,7 +12556,7 @@ msgstr[1] "Вирізати %d шари"
 msgstr[2] "Вирізати %d шарів"
 msgstr[3] "Вирізати шар"
 
-#: app/core/gimp-edit.c:534 app/core/gimpimage-new.c:553
+#: app/core/gimp-edit.c:534 app/core/gimpimage-new.c:554
 msgid "Pasted Layer"
 msgstr "Вставлений шар"
 
@@ -13137,7 +13137,7 @@ msgstr "Передній план"
 msgid "Foreground color"
 msgstr "Колір переднього плану"
 
-#: app/core/gimpcontext.c:676 app/core/gimpimage-new.c:162
+#: app/core/gimpcontext.c:676 app/core/gimpimage-new.c:163
 msgid "Background"
 msgstr "Тло"
 
@@ -14330,25 +14330,25 @@ msgstr "Не вдалося перетворити пензель MyPaint з п�
 msgid "%s (occurs %u)"
 msgstr "%s (трапився %u разів)"
 
-#: app/core/gimppalette-import.c:540
+#: app/core/gimppalette-import.c:544
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Невідомий тип файла палітри: %s"
 
-#: app/core/gimppalette-load.c:76
+#: app/core/gimppalette-load.c:118
 msgid "Missing magic header."
 msgstr "Відсутній чарівний заголовок."
 
-#: app/core/gimppalette-load.c:99
+#: app/core/gimppalette-load.c:141
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Неправильний рядок UTF-8 у файлі палітри «%s»"
 
-#: app/core/gimppalette-load.c:119
+#: app/core/gimppalette-load.c:161
 msgid "Invalid column count."
 msgstr "Некоректна кількість стовпчиків."
 
-#: app/core/gimppalette-load.c:126
+#: app/core/gimppalette-load.c:168
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -14357,96 +14357,97 @@ msgstr ""
 "Читається файл палітри «%s»: неправильна кількість стовпчиків у рядку %d. "
 "Використовується типове значення."
 
-#: app/core/gimppalette-load.c:160
+#: app/core/gimppalette-load.c:202
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Читається файл палітри «%s»: відсутній ЧЕРВОНИЙ компонент у рядку %d."
 
-#: app/core/gimppalette-load.c:168
+#: app/core/gimppalette-load.c:210
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "Читається файл палітри «%s»: відсутній ЗЕЛЕНИЙ компонент у рядку %d."
 
-#: app/core/gimppalette-load.c:176
+#: app/core/gimppalette-load.c:218
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Читається файл палітри «%s»: відсутній СИНІЙ компонент у рядку %d."
 
-#: app/core/gimppalette-load.c:186
+#: app/core/gimppalette-load.c:228
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
 "Читається файл палітри «%s»: значення RGB поза межами допустимого діапазону "
 "у рядку %d."
 
-#: app/core/gimppalette-load.c:213 app/core/gimppalette-load.c:463
+#: app/core/gimppalette-load.c:255 app/core/gimppalette-load.c:505
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr ""
 "Читається файл палітри «%s»: прочитано %d кольорів із обірваного файлу: %s"
 
-#: app/core/gimppalette-load.c:235
+#: app/core/gimppalette-load.c:277
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "У рядку %d файла палітри: "
 
-#: app/core/gimppalette-load.c:431 app/core/gimppalette-load.c:633
+#: app/core/gimppalette-load.c:473 app/core/gimppalette-load.c:675
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Не вдалось прочитати заголовок з файла палітри «%s»: "
 
-#: app/core/gimppalette-load.c:468
+#: app/core/gimppalette-load.c:510
 msgid "Premature end of file."
 msgstr "Передчасний кінець файлу."
 
-#: app/core/gimppalette-load.c:643
+#: app/core/gimppalette-load.c:685
 #, c-format
-#| msgid "Invalid brush hardness."
 msgid "Invalid ASE header: %s"
 msgstr "Некоректний заголовок ASE: %s"
 
-#: app/core/gimppalette-load.c:652
-#| msgid "Maximum number of colors:"
+#: app/core/gimppalette-load.c:694
 msgid "Invalid number of colors in palette."
 msgstr "Некоректна кількість кольорів у палітрі."
 
-#: app/core/gimppalette-load.c:658
+#: app/core/gimppalette-load.c:700
 #, c-format
-#| msgid "Maximum number of colors:"
 msgid "Invalid number of colors: %s."
 msgstr "Некоректна кількість кольорів: %s."
 
-#: app/core/gimppalette-load.c:668
+#: app/core/gimppalette-load.c:710
 #, c-format
-#| msgid "Invalid UTF-8 data in file '%s'."
 msgid "Invalid ASE file: %s."
 msgstr "Некоректний файл ASE: %s."
 
-#: app/core/gimppalette-load.c:746
+#: app/core/gimppalette-load.c:788
 #, c-format
-#| msgid "Invalid column count."
 msgid "Invalid color components: %s."
 msgstr "Некоректні компоненти кольору: %s."
 
-#: app/core/gimppalette-load.c:760 app/core/gimppalette-load.c:787
+#: app/core/gimppalette-load.c:802 app/core/gimppalette-load.c:829
 #, c-format
-#| msgid "Invalid column count."
 msgid "Invalid ASE color entry: %s."
 msgstr "Некоректний запис кольору ASE: %s."
 
-#: app/core/gimppalette-load.c:815 app/core/gimppalette-load.c:831
-#: app/core/gimppalette-load.c:850
-#| msgid "Invalid empty palette name"
+#: app/core/gimppalette-load.c:857 app/core/gimppalette-load.c:873
+#: app/core/gimppalette-load.c:892
 msgid "Invalid ASE palette name."
 msgstr "Некоректна назва палітри ASE."
 
-#: app/core/gimppalette-load.c:824
+#: app/core/gimppalette-load.c:866
 msgid "Invalid ASE block size."
 msgstr "Некоректний розмір блоку ASE."
 
-#: app/core/gimppalette-load.c:840
+#: app/core/gimppalette-load.c:882
 msgid "Invalid ASE name size."
 msgstr "Некоректний розмір назви ASE."
+
+#: app/core/gimppalette-load.c:1010
+msgid "Unable to read SBZ file"
+msgstr "Не вдалося прочитати дані з файла SBZ"
+
+#: app/core/gimppalette-load.c:1074
+msgid "Unable to open SBZ file"
+msgstr "Не вдалося відкрити файл SBZ"
 
 #: app/core/gimppalettemru.c:123 app/core/gimppalettemru.c:229
 msgid "History Color"
@@ -15313,7 +15314,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Вилучити «%s» зі списку зображень на диску?"
 
-#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:180
+#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:181
 #: app/gui/gui-message.c:268
 msgid "GIMP Message"
 msgstr "Повідомлення GIMP"
@@ -19962,19 +19963,19 @@ msgstr "Значення"
 msgid "The alpha value"
 msgstr "Значення прозорості"
 
-#: app/gui/gui.c:319
+#: app/gui/gui.c:320
 msgid "Image Recovery"
 msgstr "Відновлення зображення"
 
-#: app/gui/gui.c:321
+#: app/gui/gui.c:322
 msgid "_Discard"
 msgstr "Від_кинути"
 
-#: app/gui/gui.c:322
+#: app/gui/gui.c:323
 msgid "_Recover"
 msgstr "Від_новити"
 
-#: app/gui/gui.c:333
+#: app/gui/gui.c:334
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr ""
 "Оце тобі! Здається, роботу GIMP відновлено після аварійного завершення!"
@@ -19985,7 +19986,7 @@ msgstr ""
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:342
+#: app/gui/gui.c:343
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -20003,7 +20004,7 @@ msgstr[3] ""
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:550
+#: app/gui/gui.c:551
 msgid "Documents"
 msgstr "Документи"
 
@@ -20011,12 +20012,12 @@ msgstr "Документи"
 msgid "GIMP Startup"
 msgstr "Запуск GIMP"
 
-#: app/menus/shortcuts-rc.c:144 app/plug-in/plug-in-rc.c:235
+#: app/menus/shortcuts-rc.c:145 app/plug-in/plug-in-rc.c:235
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Пропускається \"%s\": неправильна версія протоколу GIMP."
 
-#: app/menus/shortcuts-rc.c:151
+#: app/menus/shortcuts-rc.c:152
 #, c-format
 msgid "Skipping '%s': wrong shortcutsrc file format version."
 msgstr "Пропускається \"%s\": неправильна версія файлу формату shortcutsrc."
@@ -25612,42 +25613,42 @@ msgstr "Комбінації клавіш"
 msgid "Name"
 msgstr "Назва"
 
-#: app/widgets/gimpactionview.c:609
+#: app/widgets/gimpactionview.c:616
 msgid "Conflicting Shortcuts"
 msgstr "Використані клавіші"
 
-#: app/widgets/gimpactionview.c:615
+#: app/widgets/gimpactionview.c:622
 msgid "_Reassign Shortcut"
 msgstr "_Перепризначити скорочення"
 
-#: app/widgets/gimpactionview.c:631
+#: app/widgets/gimpactionview.c:638
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr ""
 "Клавіші швидкого \"%s\" вже використані у пункті \"%s\" з меню \"%s\"."
 
-#: app/widgets/gimpactionview.c:635
+#: app/widgets/gimpactionview.c:642
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr ""
 "Призначаючи ці клавіші ви відмовляється від доступу по ними до нього \"%s\"."
 
-#: app/widgets/gimpactionview.c:722
+#: app/widgets/gimpactionview.c:729
 msgid "Invalid shortcut."
 msgstr "Некоректна комбінація клавіш"
 
-#: app/widgets/gimpactionview.c:729 app/widgets/gimpactionview.c:807
+#: app/widgets/gimpactionview.c:736 app/widgets/gimpactionview.c:822
 msgid "F1 cannot be remapped."
 msgstr "F1 не можна перевизначити."
 
-#: app/widgets/gimpactionview.c:737
+#: app/widgets/gimpactionview.c:744
 #, c-format
 msgid "Alt+%d is used to switch to display %d and cannot be remapped."
 msgstr ""
 "Alt+%d використовується для перемикання на дисплей %d. Цю комбінацію не "
 "можна пов'язати із іншою дією."
 
-#: app/widgets/gimpactionview.c:775
+#: app/widgets/gimpactionview.c:790
 msgid "Changing shortcut failed."
 msgstr "Не вдалось змінити комбінації клавіші."
 
