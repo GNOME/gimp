@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-07-21 19:36+0000\n"
-"PO-Revision-Date: 2023-08-16 18:06+0100\n"
+"PO-Revision-Date: 2023-09-06 18:06+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -14855,7 +14855,7 @@ msgstr "Grup"
 
 #: app/core/gimptoolpreset.c:150
 msgid "Apply stored FG/BG"
-msgstr "Aplica el primer pla i el fons desats"
+msgstr "Aplica el primer pla i els fons desats"
 
 #: app/core/gimptoolpreset.c:157
 msgid "Apply stored opacity/paint mode"
@@ -23333,12 +23333,12 @@ msgstr ""
 
 #: app/tools/gimpfuzzyselecttool.c:71
 msgid "Fu_zzy Select"
-msgstr "Selecció _de regió contigua"
+msgstr "_Selecció Difusa"
 
 #: app/tools/gimpfuzzyselecttool.c:84
 msgctxt "command"
 msgid "Fuzzy Select"
-msgstr "Selecció difusa"
+msgstr "Selecció Difusa"
 
 #: app/tools/gimpgegltool.c:83 app/tools/gimpgegltool.c:291
 #: app/tools/gimpgegltool.c:292 app/tools/gimpoperationtool.c:131
