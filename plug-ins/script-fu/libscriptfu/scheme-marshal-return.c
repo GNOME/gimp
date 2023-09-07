@@ -25,6 +25,10 @@
 /* When include scheme-private.h, must undef cons macro */
 #undef cons
 
+static pointer marshal_PDB_return_by_arity  (scheme         *sc,
+                                             GimpValueArray *values,
+                                             pointer        *error);
+
 static pointer marshal_returned_PDB_values  (scheme         *sc,
                                              GimpValueArray *values,
                                              pointer        *error);
@@ -34,6 +38,123 @@ static pointer marshal_returned_PDB_value   (scheme        *sc,
                                              guint          array_length,
                                              pointer       *error);
 
+
+/* Marshall a GValueArray returned by a PDB procedure.
+ * From a GValueArray into scheme value or error.
+ *
+ * Understands PDB status values.
+ * Delegates most marshalling to marshal_PDB_return_by_arity.
+ * See its doc string.
+ */
+pointer
+marshal_PDB_return (scheme         *sc,
+                    GimpValueArray *values,
+                    gchar          *proc_name,
+                    pointer        *error)
+{
+  gchar   error_str[1024];
+  pointer result = NULL;
+
+  *error = NULL;
+
+  /* caller asserts status value index 0 exists. */
+  switch (GIMP_VALUES_GET_ENUM (values, 0))
+    {
+    case GIMP_PDB_EXECUTION_ERROR:
+      if (gimp_value_array_length (values) > 1 &&
+          G_VALUE_HOLDS_STRING (gimp_value_array_index (values, 1)))
+        {
+          g_snprintf (error_str, sizeof (error_str),
+                      "Procedure execution of %s failed: %s",
+                      proc_name,
+                      GIMP_VALUES_GET_STRING (values, 1));
+        }
+      else
+        {
+          g_snprintf (error_str, sizeof (error_str),
+                      "Procedure execution of %s failed",
+                      proc_name);
+        }
+        /* not language errors, procedure returned error for unknown reason. */
+      *error = foreign_error (sc, error_str, 0);
+      break;
+
+    case GIMP_PDB_CALLING_ERROR:
+      if (gimp_value_array_length (values) > 1 &&
+          G_VALUE_HOLDS_STRING (gimp_value_array_index (values, 1)))
+        {
+          g_snprintf (error_str, sizeof (error_str),
+                      "Procedure execution of %s failed on invalid input arguments: %s",
+                      proc_name,
+                      GIMP_VALUES_GET_STRING (values, 1));
+        }
+      else
+        {
+          g_snprintf (error_str, sizeof (error_str),
+                      "Procedure execution of %s failed on invalid input arguments",
+                      proc_name);
+        }
+      /* not language errors, GIMP validated the GValueArray
+       * and decided it doesn't match the registered signature
+       * or the procedure decided its preconditions not met (e.g. out of range)
+       */
+      *error = foreign_error (sc, error_str, 0);
+      break;
+
+    case GIMP_PDB_SUCCESS:
+      {
+        pointer marshalling_error;
+
+        result = marshal_PDB_return_by_arity (sc, values, &marshalling_error);
+        if (marshalling_error != NULL)
+          {
+            /* Error marshalling set of values.
+             * Any scheme values already marshalled will be garbage collected.
+             */
+            /* Propagate. */
+            *error = marshalling_error;
+            g_assert (result == NULL);
+          }
+        /* else assert result is not NULL but can be sc->NIL */
+      }
+      break;
+
+    case GIMP_PDB_PASS_THROUGH:
+      /* Should not happen. No plugin in the repo returns this.
+       * See app/pdb/gimp-pdb.c for what little doc there is.
+       * It says there the result should be discarded
+       * in lieu of the subsequent procedure's result.
+       * */
+      g_warning ("Status is PASS_THROUGH, not handled properly.");
+      result = sc->vptr->cons (sc, sc->F, sc->NIL);
+
+    case GIMP_PDB_CANCEL:
+      /* A PDB procedure called interactively showed a dialog which the user cancelled. */
+      g_debug ("cancelled PDB proc returns (#f)");
+      /* A scheme function must return a value.
+       * Return false to indicate canceled. But is not an error.
+       *
+       * This is moot because you can't call a plugin interactively from a script anyway.
+       * (Top level scripts can be called interactively.)
+       *
+       * FUTURE: (when a script can call another script passing run mode INTERACTIVE)
+       * A well written script should not call PDB procedure interactively (cancelable)
+       * without checking whether the result is just #f or the expected value signature.
+       * No PDB procedure returning boolean should be called interactively from ScriptFu
+       * since you can't distinguish canceled from another false result.
+       * You can call such a procedure only for its side effects, if you ignore the result.
+       */
+      /* Returning (#f),
+       * FUTURE: return only #f, no reason to wrap.
+       */
+      result = sc->vptr->cons (sc, sc->F, sc->NIL);
+      break;
+    } /* end switch on PDB status. */
+
+  g_assert (   (result == NULL && *error != NULL)
+            || (result != NULL && *error == NULL));
+  return result;
+}
 
 
 /* Marshall a GValueArray returned by a PDB procedure.
@@ -53,10 +174,10 @@ marshal_PDB_return_by_arity (scheme         *sc,
                              GimpValueArray *values,
                              pointer        *error)
 {
-  /* NULL, not defaulting to empty list. */
+  /* NULL, not defaulting to sc->NIL. */
   pointer result = NULL;
   pointer marshalling_error = NULL;
-  gint return_arity;
+  gint   return_arity;
 
   *error = NULL;
 
@@ -77,6 +198,7 @@ marshal_PDB_return_by_arity (scheme         *sc,
        * FUTURE: return just sc->T, no reason to wrap it.
        * result = sc->T;
        */
+      g_debug ("void PDB proc returns (#t)");
       result = sc->vptr->cons (sc, sc->T, sc->NIL);
     }
   else if (return_arity == 1)
@@ -266,10 +388,10 @@ marshal_returned_PDB_value    (scheme        *sc,
       gchar   *name   = NULL;
 
       if (object)
-        name = gimp_resource_get_name (GIMP_RESOURCE(object));
+        name = gimp_resource_get_name (GIMP_RESOURCE (object));
 
       if (! name)
-        g_warning("PDB procedure returned NULL object.");
+        g_warning ("PDB procedure returned NULL object.");
 
       result = sc->vptr->mk_string (sc, name);
 
@@ -295,7 +417,7 @@ marshal_returned_PDB_value    (scheme        *sc,
         * It is not necessarily an error in the script.
         */
       if (id == -1)
-        g_warning("PDB procedure returned NULL GIMP object.");
+        g_warning ("PDB procedure returned NULL GIMP object.");
 
       g_debug ("PDB procedure returned object ID: %i", id);
 

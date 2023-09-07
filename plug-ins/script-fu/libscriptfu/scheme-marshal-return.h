@@ -18,8 +18,9 @@
 #ifndef __SCHEME_MARSHAL_RETURN_H__
 #define __SCHEME_MARSHAL_RETURN_H__
 
-pointer marshal_PDB_return_by_arity    (scheme         *sc,
-                                        GimpValueArray *values,
-                                        pointer        *error);
+pointer marshal_PDB_return    (scheme         *sc,
+                               GimpValueArray *values,
+                               gchar          *proc_name,
+                               pointer        *error);
 
 #endif /* __SCHEME_MARSHAL_RETURN_H__ */

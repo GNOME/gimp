@@ -1301,91 +1301,19 @@ script_fu_marshal_procedure_call (scheme   *sc,
       return script_error (sc, error_str, 0);
     }
 
-  /* No need to log a string for status, we log the cases, or caller will log it.*/
+  {
+    pointer calling_error;
+    return_val = marshal_PDB_return (sc, values, proc_name, &calling_error);
 
-  switch (GIMP_VALUES_GET_ENUM (values, 0))
-    {
-    case GIMP_PDB_EXECUTION_ERROR:
-      if (gimp_value_array_length (values) > 1 &&
-          G_VALUE_HOLDS_STRING (gimp_value_array_index (values, 1)))
-        {
-          g_snprintf (error_str, sizeof (error_str),
-                      "Procedure execution of %s failed: %s",
-                      proc_name,
-                      GIMP_VALUES_GET_STRING (values, 1));
-        }
-      else
-        {
-          g_snprintf (error_str, sizeof (error_str),
-                      "Procedure execution of %s failed",
-                      proc_name);
-        }
-        /* not language errors, procedure returned error for unknown reason. */
-      return foreign_error (sc, error_str, 0);
-      break;
-
-    case GIMP_PDB_CALLING_ERROR:
-      if (gimp_value_array_length (values) > 1 &&
-          G_VALUE_HOLDS_STRING (gimp_value_array_index (values, 1)))
-        {
-          g_snprintf (error_str, sizeof (error_str),
-                      "Procedure execution of %s failed on invalid input arguments: %s",
-                      proc_name,
-                      GIMP_VALUES_GET_STRING (values, 1));
-        }
-      else
-        {
-          g_snprintf (error_str, sizeof (error_str),
-                      "Procedure execution of %s failed on invalid input arguments",
-                      proc_name);
-        }
-      /* not language errors, GIMP validated the GValueArray
-       * and decided it doesn't match the registered signature
-       * or the procedure decided its preconditions not met (e.g. out of range)
-       */
-      return foreign_error (sc, error_str, 0);
-      break;
-
-    case GIMP_PDB_SUCCESS:
-      {
-        pointer marshalling_error;
-
-        g_debug ("Count of non-status values returned: %d", gimp_value_array_length (values) - 1);
-
-        return_val = marshal_PDB_return_by_arity (sc, values, &marshalling_error);
-        if (marshalling_error != NULL)
-          {
-            /* Error marshalling set of values.
-             * Any scheme values already marshalled will be garbage collected.
-             */
-            return marshalling_error;
-          }
-
-        /* return_val can be sc->NIL */
-      }
-      break;
-
-    case GIMP_PDB_PASS_THROUGH:
-    case GIMP_PDB_CANCEL:   /*  should we do something here?  */
-      g_debug ("Status is PASS_THROUGH or CANCEL");
-      break;
-    } /* end switch on PDB status. */
-
-  /* If we have no non-status return value(s) from PDB call, return
-   * either TRUE or FALSE to indicate if call succeeded.
-   */
-  if (return_val == sc->NIL)
-    {
-      g_debug ("returning with only a status result");
-      if (GIMP_VALUES_GET_ENUM (values, 0) == GIMP_PDB_SUCCESS)
-        return_val = sc->vptr->cons (sc, sc->T, sc->NIL);
-      else
-        return_val = sc->vptr->cons (sc, sc->F, sc->NIL);
-    }
-  else
-    {
-      g_debug ("returning with non-empty result");
-    }
+    /* Now returns error immediately.
+     * Which leaks memory normally freed below.
+     * Most plugins, except extension script-fu, will exit soon anyway.
+     * FUTURE: don't leak.
+     */
+    if (calling_error != NULL)
+      /* calling error is foreign_error or similar. */
+      return calling_error;
+  }
 
   g_free (proc_name);
 
