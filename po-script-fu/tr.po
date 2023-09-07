@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-29 14:59+0000\n"
-"PO-Revision-Date: 2023-07-30 02:53+0300\n"
+"POT-Creation-Date: 2023-09-06 20:17+0000\n"
+"PO-Revision-Date: 2023-09-07 00:26+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -203,11 +203,6 @@ msgstr "Script-Fu iki betiği aynı anda çalıştıramaz."
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "\"%s\" betiğini zaten çalıştırıyorsunuz."
-
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:210
-#, c-format
-msgid "Script-Fu: %s"
-msgstr "Script-Fu: %s"
 
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:217
 msgid "_Reset"
@@ -679,64 +674,6 @@ msgstr "Matlık"
 msgid "Allow resizing"
 msgstr "Yeniden boyutlandırmaya izin ver"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "_Erase Every Nth Row..."
-msgstr "_Her X'inci satırı sil..."
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:43
-msgid "Erase every nth row or column"
-msgstr "Her X'inci satır ve sütunu sil"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Rows/cols"
-msgstr "Satırlar/Sütunlar"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Rows"
-msgstr "Satırlar"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Columns"
-msgstr "Sütunlar"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Erase/fill"
-msgstr "Sil/doldur"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Erase"
-msgstr "Sil"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Fill with BG"
-msgstr "AA ile Doldur"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:57
-msgid "_Erase Every Other Row..."
-msgstr "Öteki Tüm Satırları _Sil..."
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:58
-msgid "Erase every other row or column"
-msgstr "Diğer satır ve sütunları sil"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Even/odd"
-msgstr "Tek/çift"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Even"
-msgstr "Çift"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Odd"
-msgstr "Tek"
-
 #: plug-ins/script-fu/scripts/font-map.scm:161
 msgid "Render _Font Map..."
 msgstr "_Yazı Tipi Eşlemini İşle..."
@@ -817,84 +754,89 @@ msgstr "Gölge ağırlığı (%)"
 msgid "Flatten image"
 msgstr "Görüntüyü düzleştir"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:59
+#: plug-ins/script-fu/scripts/gimp-online.scm:63
 msgid "Using _Paths"
 msgstr "_Yolları Kullanmak"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: plug-ins/script-fu/scripts/gimp-online.scm:60
-#: plug-ins/script-fu/scripts/gimp-online.scm:73
-#: plug-ins/script-fu/scripts/gimp-online.scm:86
-#: plug-ins/script-fu/scripts/gimp-online.scm:99
-#: plug-ins/script-fu/scripts/gimp-online.scm:112
-#: plug-ins/script-fu/scripts/gimp-online.scm:125
-#: plug-ins/script-fu/scripts/gimp-online.scm:138
-#: plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/gimp-online.scm:64
+#: plug-ins/script-fu/scripts/gimp-online.scm:77
+#: plug-ins/script-fu/scripts/gimp-online.scm:90
+#: plug-ins/script-fu/scripts/gimp-online.scm:103
+#: plug-ins/script-fu/scripts/gimp-online.scm:116
+#: plug-ins/script-fu/scripts/gimp-online.scm:129
+#: plug-ins/script-fu/scripts/gimp-online.scm:142
+#: plug-ins/script-fu/scripts/gimp-online.scm:155
+#: plug-ins/script-fu/scripts/gimp-online.scm:167
 msgid "Bookmark to the user manual"
 msgstr "Kullanıcı kılavuzunu görüntüle"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:72
+#: plug-ins/script-fu/scripts/gimp-online.scm:76
 msgid "_Preparing your Images for the Web"
 msgstr "Web İçin Kendi Görüntülerinizi _Hazırlamak"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/gimp-online.scm:89
 msgid "_Working with Digital Camera Photos"
 msgstr "Sayısal Kamera Görüntüleri İle _Çalışmak"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:98
+#: plug-ins/script-fu/scripts/gimp-online.scm:102
 msgid "Create, Open and Save _Files"
 msgstr "_Dosyaları Oluşturmak, Açmak ve Kaydetmek"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:111
+#: plug-ins/script-fu/scripts/gimp-online.scm:115
 msgid "_Basic Concepts"
 msgstr "_Temel Kavramlar"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:124
+#: plug-ins/script-fu/scripts/gimp-online.scm:128
 msgid "How to Use _Dialogs"
 msgstr "İletişim _Kutuları Nasıl Kullanılır"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:141
 msgid "Drawing _Simple Objects"
 msgstr "_Basit Nesneler Çizmek"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/gimp-online.scm:154
 msgid "Create and Use _Selections"
 msgstr "_Seçim Oluşturmak ve Kullanmak"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:186
+#: plug-ins/script-fu/scripts/gimp-online.scm:166
+msgid "_[Table of Contents]"
+msgstr "İçindekiler"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:202
 msgid "_Main Web Site"
 msgstr "_Ana Web Sitesi"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: plug-ins/script-fu/scripts/gimp-online.scm:187
-#: plug-ins/script-fu/scripts/gimp-online.scm:200
-#: plug-ins/script-fu/scripts/gimp-online.scm:239
+#: plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/gimp-online.scm:216
+#: plug-ins/script-fu/scripts/gimp-online.scm:255
 msgid "Bookmark to the GIMP web site"
 msgstr "GIMP web sitesini görüntüle"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:199
+#: plug-ins/script-fu/scripts/gimp-online.scm:215
 msgid "_Developer Web Site"
 msgstr "_Geliştirici Web Sitesi"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:212
+#: plug-ins/script-fu/scripts/gimp-online.scm:228
 msgid "_Roadmaps"
 msgstr "_Yol Haritası"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: plug-ins/script-fu/scripts/gimp-online.scm:213
+#: plug-ins/script-fu/scripts/gimp-online.scm:229
 msgid "Bookmark to the roadmaps of GIMP"
 msgstr "GIMP yol haritasını görüntüle"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:225
+#: plug-ins/script-fu/scripts/gimp-online.scm:241
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Hata Raporları ve Özellik İstekleri"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: plug-ins/script-fu/scripts/gimp-online.scm:226
+#: plug-ins/script-fu/scripts/gimp-online.scm:242
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "GIMP hata izleyicisini görüntüle"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:238
+#: plug-ins/script-fu/scripts/gimp-online.scm:254
 msgid "_User Manual Web Site"
 msgstr "_Kullanıcı Kılavuzu Web Sitesi"
 
@@ -926,25 +868,6 @@ msgstr "Yükseklik"
 msgid "Gradient reverse"
 msgstr "Tersten renk geçişi"
 
-#: plug-ins/script-fu/scripts/grid-system.scm:84
-msgid "_Grid..."
-msgstr "_Izgara..."
-
-#: plug-ins/script-fu/scripts/grid-system.scm:85
-msgid ""
-"Draw a grid as specified by the lists of X and Y locations using the current "
-"brush"
-msgstr ""
-"Geçerli fırçayı kullanarak, X ve Y konumlarınca belirlenmiş bir ızgara çiz"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:92
-msgid "X divisions"
-msgstr "X bölümleri"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:93
-msgid "Y divisions"
-msgstr "Y bölümleri"
-
 #: plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
 msgstr "_Seçimden Yeni Kılavuzlar"
@@ -955,7 +878,7 @@ msgstr "Geçerli seçimin sınırlayıcı kutusu etrafında dört kılavuz oluş
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
-msgstr "Yeni Kılavuz (_yüzde olarak)"
+msgstr "Yeni Kılavuz (_Yüzde Olarak)..."
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:28
 msgid "Add a guide at the position specified as a percentage of the image size"
@@ -1223,19 +1146,15 @@ msgid "Paste the clipboard contents into a new brush"
 msgstr "Panodaki içeriği yeni fırçaya yapıştır"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: plug-ins/script-fu/scripts/select-to-brush.scm:145
 msgid "_Brush name"
 msgstr "_Fırça adı"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
-#: plug-ins/script-fu/scripts/select-to-brush.scm:146
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:107
 msgid "_File name"
 msgstr "_Dosya adı"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:72
-#: plug-ins/script-fu/scripts/select-to-brush.scm:147
 msgid "_Spacing"
 msgstr "_Boşluk"
 
@@ -1248,7 +1167,6 @@ msgid "Paste the clipboard contents into a new pattern"
 msgstr "Pano içeriğini yeni bir desene yapıştır"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:106
 msgid "_Pattern name"
 msgstr "_Desen adı"
 
@@ -1350,15 +1268,15 @@ msgstr "Y konum gölgesi"
 msgid "Add background"
 msgstr "Artalan ekle"
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Se_t Colormap..."
 msgstr "Renk Eşlemi _Ata..."
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:55
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr "Görüntünün renk eşlemini geçerli palet renklerine cevir."
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:62
 msgid "Palette"
 msgstr "Palet"
 
@@ -1377,30 +1295,6 @@ msgstr "Y_arıçap (%)"
 #: plug-ins/script-fu/scripts/selection-round.scm:148
 msgid "Co_ncave"
 msgstr "İç _bükey"
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm:137
-msgid "To _Brush..."
-msgstr "_Fırçaya..."
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm:138
-msgid "Convert a selection to a brush"
-msgstr "Seçimi fırçaya dönüştür"
-
-#: plug-ins/script-fu/scripts/select-to-image.scm:85
-msgid "To _Image"
-msgstr "_Görüntüye"
-
-#: plug-ins/script-fu/scripts/select-to-image.scm:86
-msgid "Convert a selection to an image"
-msgstr "Seçimi görüntüye dönüştür"
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:98
-msgid "To _Pattern..."
-msgstr "_Desene..."
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:99
-msgid "Convert a selection to a pattern"
-msgstr "Seçimi desene dönüştür"
 
 #: plug-ins/script-fu/scripts/slide.scm:245
 msgid "_Slide..."
