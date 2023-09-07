@@ -1347,51 +1347,29 @@ script_fu_marshal_procedure_call (scheme   *sc,
       break;
 
     case GIMP_PDB_SUCCESS:
-      g_debug ("Count of non-status values returned: %d", gimp_value_array_length (values) - 1);
+      {
+        pointer marshalling_error;
 
-      /* Counting down, i.e. traversing in reverse.
-       * i+1 is the current index.  i is the preceding value.
-       * When at the current index is an array, preceding value (at i) is array length.
-       */
-      for (i = gimp_value_array_length (values) - 2; i >= 0; --i)
-        {
-          GValue *value = gimp_value_array_index (values, i + 1);
-          pointer scheme_value;
-          pointer error = NULL;
-          gint32  array_length = 0;
+        g_debug ("Count of non-status values returned: %d", gimp_value_array_length (values) - 1);
 
-          g_debug ("Return value %d is type %s", i+1, G_VALUE_TYPE_NAME (value));
+        return_val = marshal_returned_PDB_values (sc, values, &marshalling_error);
+        if (marshalling_error != NULL)
+          {
+            /* Error marshalling set of values.
+             * Any scheme values already marshalled will be garbage collected.
+             */
+            return marshalling_error;
+          }
 
-          /* In some cases previous value is array_length. */
-          if (   GIMP_VALUE_HOLDS_INT32_ARRAY (value)
-              || GIMP_VALUE_HOLDS_FLOAT_ARRAY (value)
-              || GIMP_VALUE_HOLDS_RGB_ARRAY   (value))
-            {
-              array_length = GIMP_VALUES_GET_INT (values, i);
-            }
-
-          scheme_value = marshal_returned_PDB_value (sc, value, array_length, &error);
-
-          if (error == NULL)
-            {
-              /* Prepend to scheme list of returned values and continue iteration. */
-              return_val = sc->vptr->cons (sc, scheme_value, return_val);
-            }
-          else
-            {
-              /* Error marshalling a single return value.
-               * Any scheme values already marshalled will be garbage collected.
-               */
-              return error;
-            }
-        }
+        /* return_val can be sc->NIL */
+      }
       break;
 
     case GIMP_PDB_PASS_THROUGH:
     case GIMP_PDB_CANCEL:   /*  should we do something here?  */
       g_debug ("Status is PASS_THROUGH or CANCEL");
       break;
-    }
+    } /* end switch on PDB status. */
 
   /* If we have no non-status return value(s) from PDB call, return
    * either TRUE or FALSE to indicate if call succeeded.

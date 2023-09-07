@@ -18,6 +18,10 @@
 #ifndef __SCHEME_MARSHAL_RETURN_H__
 #define __SCHEME_MARSHAL_RETURN_H__
 
+pointer       marshal_returned_PDB_values    (scheme         *sc,
+                                              GimpValueArray *values,
+                                              pointer        *error);
+
 pointer       marshal_returned_PDB_value    (scheme        *sc,
                                                 GValue        *value,
                                                 guint          array_length,

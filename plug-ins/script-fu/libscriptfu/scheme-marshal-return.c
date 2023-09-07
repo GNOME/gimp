@@ -26,16 +26,96 @@
 #undef cons
 
 
+
+
+/* Marshall a set of values returned by a PDB procedure.
+ * From a GValueArray into scheme list.
+ *
+ * Returns a scheme "pointer" type referencing the scheme list.
+ *
+ * Either returns a non-null scheme value and sets error to null,
+ * or sets error and returns a null scheme value.
+ * IOW, error is an OUT argument.
+ *
+ * The returned scheme value is scheme type list.
+ * The list can be non-homogenous (elements of different scheme types.)
+ *
+ * The returned list may be empty or have only a single element.
+ * FUTURE:
+ * When a PDB procedure returns a single value (which can be a container)
+ * do not wrap it in a list.
+ * It will be an error to call this function
+ * for PDB procedures that return a single value or return void.
+ * IOW, for PDB procedures of return arity < 2.
+ */
+pointer
+marshal_returned_PDB_values (scheme         *sc,
+                             GimpValueArray *values,
+                             pointer        *error)
+{
+  /* Result is empty list. */
+  pointer result = sc->NIL;
+
+  *error = NULL;
+
+  /* Counting down, i.e. traversing in reverse.
+  * i+1 is the current index.  i is the preceding value.
+  * When at the current index is an array, preceding value (at i) is array length.
+  */
+  for (gint i = gimp_value_array_length (values) - 2; i >= 0; --i)
+    {
+      GValue *value = gimp_value_array_index (values, i + 1);
+      pointer scheme_value;
+      pointer single_error = NULL;
+      gint32  array_length = 0;
+
+      g_debug ("Return value %d is type %s", i+1, G_VALUE_TYPE_NAME (value));
+
+      /* In some cases previous value is array_length. */
+      if (   GIMP_VALUE_HOLDS_INT32_ARRAY (value)
+          || GIMP_VALUE_HOLDS_FLOAT_ARRAY (value)
+          || GIMP_VALUE_HOLDS_RGB_ARRAY   (value))
+        {
+          array_length = GIMP_VALUES_GET_INT (values, i);
+        }
+
+      scheme_value = marshal_returned_PDB_value (sc, value, array_length, &single_error);
+
+      if (single_error == NULL)
+        {
+          /* Prepend to scheme list of returned values and continue iteration. */
+          result = sc->vptr->cons (sc, scheme_value, result);
+        }
+      else
+        {
+          /* Error marshalling a single return value.
+          * Any scheme values already marshalled will be garbage collected.
+          */
+          /* Propagate error to caller. */
+          *error = single_error;
+          /* null C pointer not the same as pointer to scheme NIL */
+          result = NULL;
+          break;
+        }
+    }
+
+  g_assert (   (result == NULL && *error != NULL)
+            || (result != NULL && *error == NULL));
+  /* result can be sc->NIL i.e. empty list. */
+  return result;
+}
+
+
+/* This function is only used in this file.
+ * FUTURE: call when the PDB procedure returns arity 1.
+ */
+
 /* The below code for array results is not safe.
  * It implicitly requires, but does not explicitly check,
  * that the returned length equals the actual length of the returned array,
  * and iterates over the returned array assuming it has the returned length.
  * It could read past the end of the array.
  */
-
-
-
-
 
 /* Convert a GValue from C type to Scheme type.
  *
