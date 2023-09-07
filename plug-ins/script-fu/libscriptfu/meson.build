@@ -6,6 +6,7 @@ subdir('ftx')
 libscriptfu_sources = [
   'scheme-wrapper.c',
   'scheme-marshal.c',
+  'scheme-marshal-return.c',
   'script-fu-interface.c',
   'script-fu-regex.c',
   'script-fu-script.c',
@@ -19,7 +20,7 @@ libscriptfu_sources = [
   'script-fu-register.c',
   'script-fu-dialog.c',
   'script-fu-run-func.c',
-  'script-fu-command.c'
+  'script-fu-command.c',
 ]
 
 # !! just "library(...)" which means shared versus static depends on configuration of project.
