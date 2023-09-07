@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-27 16:52+0000\n"
-"PO-Revision-Date: 2023-08-28 23:54+0200\n"
+"POT-Creation-Date: 2023-09-06 04:39+0000\n"
+"PO-Revision-Date: 2023-09-07 09:32+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -260,11 +260,11 @@ msgstr "Pokaži stran nastavitev s poskusnimi funkcionalnostmi"
 msgid "Show an image submenu with debug actions"
 msgstr "Pokaži podmeni slike z dejanji razhroščevanja"
 
-#: app/main.c:719
+#: app/main.c:722
 msgid "[FILE|URI...]"
 msgstr "[DATOTEKA|URI...]"
 
-#: app/main.c:747
+#: app/main.c:750
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -272,20 +272,20 @@ msgstr ""
 "GIMP ne more inicializirati grafičnega uporabniškega vmesnika.\n"
 "Prepričajte se, da obstaja prava nastavitev za vaše zaslonsko okolje."
 
-#: app/main.c:768
+#: app/main.c:771
 msgid "Another GIMP instance is already running."
 msgstr "GIMP je že zagnan."
 
-#: app/main.c:857
+#: app/main.c:860
 msgid "GIMP output. Type any character to close this window."
 msgstr "Izhod GIMP. Pritisnite kateri koli znak, da se okno zapre."
 
-#: app/main.c:858
+#: app/main.c:861
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Pritisnite katero koli tipko, da zaprete to okno)\n"
 
-#: app/main.c:875
+#: app/main.c:878
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Izhod programa GIMP. To okno lahko pomanjšate, vendar ga ne zapirajte."
 
@@ -505,7 +505,7 @@ msgstr "Orodje za besedilo"
 msgid "Text Editor"
 msgstr "Urejevalnik besedila"
 
-#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:530
+#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:531
 msgid "Tool Options"
 msgstr "Možnosti orodja"
 
@@ -1049,7 +1049,7 @@ msgstr[1] "Spusti kanal na dno"
 msgstr[2] "Spusti kanala na dno"
 msgstr[3] "Spusti kanale na dno"
 
-#: app/actions/channels-commands.c:384 app/core/gimpimage-new.c:506
+#: app/actions/channels-commands.c:384 app/core/gimpimage-new.c:507
 #: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:259
 #: app/widgets/gimplayertreeview.c:1055
 #, c-format
@@ -2440,7 +2440,7 @@ msgstr "240 s"
 #: app/display/gimpdisplayshell-scale-dialog.c:123
 #: app/tools/gimpfiltertool.c:364 app/tools/gimpforegroundselecttool.c:331
 #: app/tools/gimptexttool.c:1751 app/tools/gimptransformgridtool.c:1264
-#: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:614
+#: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:463 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:327
@@ -2522,7 +2522,7 @@ msgstr ""
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2428
 #: app/core/gimppalette.c:428 app/core/gimppalette-import.c:213
-#: app/core/gimppalette-load.c:199 app/dialogs/palette-import-dialog.c:762
+#: app/core/gimppalette-load.c:241 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Neimenovano"
@@ -9896,7 +9896,7 @@ msgstr "Pomakni okno na zaslon %s"
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
-#: app/display/gimpdisplayshell-scale-dialog.c:124 app/gui/gui.c:183
+#: app/display/gimpdisplayshell-scale-dialog.c:124 app/gui/gui.c:184
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
 #: app/widgets/gimpcontrollereditor.c:663 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:176 app/widgets/gimpmodifierseditor.c:685
@@ -11339,7 +11339,7 @@ msgid "The maximum number of actions saved in history."
 msgstr "Največje število dejanj, shranjenih v zgodovini."
 
 #: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130
-#: app/core/gimp-units.c:278 app/gui/session.c:309 app/menus/shortcuts-rc.c:158
+#: app/core/gimp-units.c:278 app/gui/session.c:309 app/menus/shortcuts-rc.c:159
 #: app/plug-in/plug-in-rc.c:249 app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "usodna razčlenitvena napaka"
@@ -12515,7 +12515,7 @@ msgstr[1] "Izreži %d plast"
 msgstr[2] "Izreži %d plasti"
 msgstr[3] "Izreži %d plasti"
 
-#: app/core/gimp-edit.c:534 app/core/gimpimage-new.c:553
+#: app/core/gimp-edit.c:534 app/core/gimpimage-new.c:554
 msgid "Pasted Layer"
 msgstr "Prilepljena plast"
 
@@ -13098,7 +13098,7 @@ msgstr "Ospredje"
 msgid "Foreground color"
 msgstr "Barva ospredja"
 
-#: app/core/gimpcontext.c:676 app/core/gimpimage-new.c:162
+#: app/core/gimpcontext.c:676 app/core/gimpimage-new.c:163
 msgid "Background"
 msgstr "Ozadje"
 
@@ -14285,25 +14285,25 @@ msgstr "Čopiča MyPaint ni mogoče deserializirati."
 msgid "%s (occurs %u)"
 msgstr "%s (se pojavi %u)"
 
-#: app/core/gimppalette-import.c:540
+#: app/core/gimppalette-import.c:544
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Neznana vrsta datoteke palete: %s"
 
-#: app/core/gimppalette-load.c:76
+#: app/core/gimppalette-load.c:118
 msgid "Missing magic header."
 msgstr "Manjka čarovna glava."
 
-#: app/core/gimppalette-load.c:99
+#: app/core/gimppalette-load.c:141
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Neveljaven niz UTF-8 v datoteki palete »%s«"
 
-#: app/core/gimppalette-load.c:119
+#: app/core/gimppalette-load.c:161
 msgid "Invalid column count."
 msgstr "Neveljavno število stolpcev."
 
-#: app/core/gimppalette-load.c:126
+#: app/core/gimppalette-load.c:168
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -14312,90 +14312,98 @@ msgstr ""
 "Branje datoteke palete »%s«: Nepravilno število stolpcev v vrstici %d. "
 "Uporabljena bo privzeta vrednost."
 
-#: app/core/gimppalette-load.c:160
+#: app/core/gimppalette-load.c:202
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr ""
 "Branje datoteke palete »%s«: V vrstici %d manjka rdeča komponenta (RED)."
 
-#: app/core/gimppalette-load.c:168
+#: app/core/gimppalette-load.c:210
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr ""
 "Branje datoteke palete »%s«: V vrstici %d manjka zelena komponenta (GREEN)."
 
-#: app/core/gimppalette-load.c:176
+#: app/core/gimppalette-load.c:218
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr ""
 "Branje datoteke palete »%s«: V vrstici %d manjka modra komponenta (BLUE)."
 
-#: app/core/gimppalette-load.c:186
+#: app/core/gimppalette-load.c:228
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
 "Branje datoteke palete »%s«: V vrstici %d je vrednost RGB izven dosega."
 
-#: app/core/gimppalette-load.c:213 app/core/gimppalette-load.c:463
+#: app/core/gimppalette-load.c:255 app/core/gimppalette-load.c:505
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr "Branje datoteke palete »%s«: prebranih %d barv prekinjene datoteke: %s"
 
-#: app/core/gimppalette-load.c:235
+#: app/core/gimppalette-load.c:277
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "V vrstici %d datoteke palete: "
 
-#: app/core/gimppalette-load.c:431 app/core/gimppalette-load.c:633
+#: app/core/gimppalette-load.c:473 app/core/gimppalette-load.c:675
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Ni mogoče brati glave iz datoteke palete ‘%s’: "
 
-#: app/core/gimppalette-load.c:468
+#: app/core/gimppalette-load.c:510
 msgid "Premature end of file."
 msgstr "Predčasen konec datoteke."
 
-#: app/core/gimppalette-load.c:643
+#: app/core/gimppalette-load.c:685
 #, c-format
 msgid "Invalid ASE header: %s"
 msgstr "Neveljavna glava ASE: %s"
 
-#: app/core/gimppalette-load.c:652
+#: app/core/gimppalette-load.c:694
 msgid "Invalid number of colors in palette."
 msgstr "Neveljavno število barv v paleti."
 
-#: app/core/gimppalette-load.c:658
+#: app/core/gimppalette-load.c:700
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "Neveljavno število barv: %s."
 
-#: app/core/gimppalette-load.c:668
+#: app/core/gimppalette-load.c:710
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "Neveljavna datoteka ASE: %s."
 
-#: app/core/gimppalette-load.c:746
+#: app/core/gimppalette-load.c:788
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "Neveljavne komponente barve: %s."
 
-#: app/core/gimppalette-load.c:760 app/core/gimppalette-load.c:787
+#: app/core/gimppalette-load.c:802 app/core/gimppalette-load.c:829
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "Neveljaven barvni vnos ASE: %s."
 
-#: app/core/gimppalette-load.c:815 app/core/gimppalette-load.c:831
-#: app/core/gimppalette-load.c:850
+#: app/core/gimppalette-load.c:857 app/core/gimppalette-load.c:873
+#: app/core/gimppalette-load.c:892
 msgid "Invalid ASE palette name."
 msgstr "Neveljavno ime palete ASE."
 
-#: app/core/gimppalette-load.c:824
+#: app/core/gimppalette-load.c:866
 msgid "Invalid ASE block size."
 msgstr "Neveljavna velikost bloka ASE."
 
-#: app/core/gimppalette-load.c:840
+#: app/core/gimppalette-load.c:882
 msgid "Invalid ASE name size."
 msgstr "Neveljavna velikost imena ASE."
+
+#: app/core/gimppalette-load.c:1010
+msgid "Unable to read SBZ file"
+msgstr "Datoteke SBZ ni mogoče prebrati"
+
+#: app/core/gimppalette-load.c:1074
+msgid "Unable to open SBZ file"
+msgstr "Datoteke SBZ ni mogoče odpreti"
 
 #: app/core/gimppalettemru.c:123 app/core/gimppalettemru.c:229
 msgid "History Color"
@@ -15257,7 +15265,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Ste prepričani, da želite izbrisati »%s« s seznama in z diska?"
 
-#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:180
+#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:181
 #: app/gui/gui-message.c:268
 msgid "GIMP Message"
 msgstr "Sporočilo GIMP"
@@ -19886,19 +19894,19 @@ msgstr "Vrednost"
 msgid "The alpha value"
 msgstr "Vrednost alfe"
 
-#: app/gui/gui.c:319
+#: app/gui/gui.c:320
 msgid "Image Recovery"
 msgstr "Obnovitev slike"
 
-#: app/gui/gui.c:321
+#: app/gui/gui.c:322
 msgid "_Discard"
 msgstr "_Zavrzi"
 
-#: app/gui/gui.c:322
+#: app/gui/gui.c:323
 msgid "_Recover"
 msgstr "_Obnovi"
 
-#: app/gui/gui.c:333
+#: app/gui/gui.c:334
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "Ojoj! Videti je, da se je GIMP obnovil iz sesutja!"
 
@@ -19908,7 +19916,7 @@ msgstr "Ojoj! Videti je, da se je GIMP obnovil iz sesutja!"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:342
+#: app/gui/gui.c:343
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -19926,7 +19934,7 @@ msgstr[3] ""
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:550
+#: app/gui/gui.c:551
 msgid "Documents"
 msgstr "Dokumenti"
 
@@ -19934,12 +19942,12 @@ msgstr "Dokumenti"
 msgid "GIMP Startup"
 msgstr "Zagon GIMP-a"
 
-#: app/menus/shortcuts-rc.c:144 app/plug-in/plug-in-rc.c:235
+#: app/menus/shortcuts-rc.c:145 app/plug-in/plug-in-rc.c:235
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Preskakovanje »%s«: napačna različica protokola GIMP."
 
-#: app/menus/shortcuts-rc.c:151
+#: app/menus/shortcuts-rc.c:152
 #, c-format
 msgid "Skipping '%s': wrong shortcutsrc file format version."
 msgstr "Preskakovanje »%s«: napačna različica zapisa datoteke shortcutsrc."
@@ -25506,40 +25514,40 @@ msgstr "Bližnjica"
 msgid "Name"
 msgstr "Ime"
 
-#: app/widgets/gimpactionview.c:609
+#: app/widgets/gimpactionview.c:616
 msgid "Conflicting Shortcuts"
 msgstr "Bližnjice so si nasprotujoče"
 
-#: app/widgets/gimpactionview.c:615
+#: app/widgets/gimpactionview.c:622
 msgid "_Reassign Shortcut"
 msgstr "_Prerazporedi bližnjico"
 
-#: app/widgets/gimpactionview.c:631
+#: app/widgets/gimpactionview.c:638
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "Bližnjica »%s« je že zasedena s »%s« iz skupine »%s«."
 
-#: app/widgets/gimpactionview.c:635
+#: app/widgets/gimpactionview.c:642
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Z novo določitvijo bližnjice boste le-to odstranili od »%s«."
 
-#: app/widgets/gimpactionview.c:722
+#: app/widgets/gimpactionview.c:729
 msgid "Invalid shortcut."
 msgstr "Neveljavna bližnjica."
 
-#: app/widgets/gimpactionview.c:729 app/widgets/gimpactionview.c:807
+#: app/widgets/gimpactionview.c:736 app/widgets/gimpactionview.c:822
 msgid "F1 cannot be remapped."
 msgstr "F1 ni mogoče preslikati."
 
-#: app/widgets/gimpactionview.c:737
+#: app/widgets/gimpactionview.c:744
 #, c-format
 msgid "Alt+%d is used to switch to display %d and cannot be remapped."
 msgstr ""
 "Izmenjalka+%d se uporablja za preklop na zaslon %d in je ni mogoče "
 "preslikati."
 
-#: app/widgets/gimpactionview.c:775
+#: app/widgets/gimpactionview.c:790
 msgid "Changing shortcut failed."
 msgstr "Sprememba bližnjice ni uspela."
 
