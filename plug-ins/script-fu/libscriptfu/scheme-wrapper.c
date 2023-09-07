@@ -1352,7 +1352,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
         g_debug ("Count of non-status values returned: %d", gimp_value_array_length (values) - 1);
 
-        return_val = marshal_returned_PDB_values (sc, values, &marshalling_error);
+        return_val = marshal_PDB_return_by_arity (sc, values, &marshalling_error);
         if (marshalling_error != NULL)
           {
             /* Error marshalling set of values.

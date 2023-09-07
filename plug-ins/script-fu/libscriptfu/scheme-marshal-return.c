@@ -25,7 +25,96 @@
 /* When include scheme-private.h, must undef cons macro */
 #undef cons
 
+static pointer marshal_returned_PDB_values  (scheme         *sc,
+                                             GimpValueArray *values,
+                                             pointer        *error);
 
+static pointer marshal_returned_PDB_value   (scheme        *sc,
+                                             GValue        *value,
+                                             guint          array_length,
+                                             pointer       *error);
+
+
+
+/* Marshall a GValueArray returned by a PDB procedure.
+ * From a GValueArray into scheme value.
+ *
+ * Understands the return arity of PDB procedures.
+ *
+ * Returns a scheme "pointer" type referencing the scheme return value.
+ *
+ * The return value is a list.
+ * FUTURE: value is either a single value or a list.
+ *
+ * Same error return as marshal_returned_PDB_values.
+ */
+pointer
+marshal_PDB_return_by_arity (scheme         *sc,
+                             GimpValueArray *values,
+                             pointer        *error)
+{
+  /* NULL, not defaulting to empty list. */
+  pointer result = NULL;
+  pointer marshalling_error = NULL;
+  gint return_arity;
+
+  *error = NULL;
+
+  /* values has an extra status value over the return arity of the procedure.
+   * This is actual signature of the returned values.
+   * Could compare with the declared formal signature.
+   */
+  return_arity = gimp_value_array_length (values) - 1;
+
+  /* Require caller ensured there is a status value. */
+  g_assert (return_arity >= 0);
+
+  if (return_arity == 0)
+    {
+      /* PDB procedure returns void.
+       * Every scheme function must return a value.
+       * Return (#t)
+       * FUTURE: return just sc->T, no reason to wrap it.
+       * result = sc->T;
+       */
+      result = sc->vptr->cons (sc, sc->T, sc->NIL);
+    }
+  else if (return_arity == 1)
+    {
+      /* Unary result.
+       * Return a list wrapping the result.
+       * FUTURE: return just unwrapped result (which can itself be a list.)
+       * i.e. just call marshal_returned_PDB_value (singular)
+       */
+      result = marshal_returned_PDB_values (sc, values, &marshalling_error);
+      if (marshalling_error != NULL)
+        {
+          /* Propagate error. */
+          *error = marshalling_error;
+        }
+    }
+  else /* >1 */
+    {
+      /* Many result values.
+       * Return a list wrapping the results. Similar to Python tuple return.
+       */
+      result = marshal_returned_PDB_values (sc, values, &marshalling_error);
+      if (marshalling_error != NULL)
+        {
+          /* Propagate error. */
+          *error = marshalling_error;
+        }
+    }
+  g_assert (   (result == NULL && *error != NULL)
+            || (result != NULL && *error == NULL));
+  /* result is: (#t) or sc->NIL i.e. empty list or a non-empty list. */
+  /* FUTURE result is: #t or an atom or a vector
+   * or empty list or a non-empty list.
+   * A non-empty list is either a single result that itself is a list
+   * or a list wrapping a multiple result.
+   */
+  return result;
+}
 
 
 /* Marshall a set of values returned by a PDB procedure.
@@ -48,7 +137,7 @@
  * for PDB procedures that return a single value or return void.
  * IOW, for PDB procedures of return arity < 2.
  */
-pointer
+static pointer
 marshal_returned_PDB_values (scheme         *sc,
                              GimpValueArray *values,
                              pointer        *error)
@@ -106,9 +195,6 @@ marshal_returned_PDB_values (scheme         *sc,
 }
 
 
-/* This function is only used in this file.
- * FUTURE: call when the PDB procedure returns arity 1.
- */
 
 /* The below code for array results is not safe.
  * It implicitly requires, but does not explicitly check,
@@ -138,7 +224,7 @@ marshal_returned_PDB_values (scheme         *sc,
  * !!! Returns a scheme number (0 or 1) for C type boolean.
  * FUTURE: return atoms #f and #t.
  */
-pointer
+static pointer
 marshal_returned_PDB_value    (scheme        *sc,
                                GValue        *value,
                                guint          array_length,
