@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-27 05:42+0000\n"
-"PO-Revision-Date: 2023-08-27 11:16+0300\n"
+"POT-Creation-Date: 2023-09-06 20:17+0000\n"
+"PO-Revision-Date: 2023-09-07 18:28+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -595,7 +595,7 @@ msgstr "Görüntüyü pencere gölgelerindeki boyalı kısma benzet"
 
 #: plug-ins/common/blinds.c:154
 msgid "_Displacement"
-msgstr "Yer Değiştirme"
+msgstr "_Yer Değiştirme"
 
 #: plug-ins/common/blinds.c:155
 msgid "Angle of Displacement"
@@ -2208,7 +2208,7 @@ msgstr ""
 
 #: plug-ins/common/file-aa.c:155
 msgid "_Format"
-msgstr "Biçim"
+msgstr "_Biçim"
 
 #: plug-ins/common/file-aa.c:156
 msgid "File type to use"
@@ -2565,7 +2565,7 @@ msgstr "Fırça boşluğu"
 
 #: plug-ins/common/file-gbr.c:157 plug-ins/common/file-pat.c:136
 msgid "_Description"
-msgstr "Açıklama"
+msgstr "_Açıklama"
 
 #: plug-ins/common/file-gbr.c:158
 msgid "Short description of the brush"
@@ -4527,7 +4527,7 @@ msgstr "PostScript belgesi"
 
 #: plug-ins/common/file-ps.c:353
 msgid "Encapsulated PostScript image"
-msgstr "Encapsulated PostScript (EPS) görüntüsü"
+msgstr "Kapsüllenmiş PostScript (EPS) görüntüsü"
 
 #: plug-ins/common/file-ps.c:377
 msgid "Resol_ution"
@@ -4535,7 +4535,7 @@ msgstr "Çö_zünürlük"
 
 #: plug-ins/common/file-ps.c:378
 msgid "Resolution to interpret image (dpi)"
-msgstr ""
+msgstr "Görüntünün yorumlanacağı çözünürlük (dpi)"
 
 #: plug-ins/common/file-ps.c:384
 msgid "Desired width"
@@ -4567,7 +4567,7 @@ msgstr "Renklendirme"
 
 #: plug-ins/common/file-ps.c:408
 msgid "4: b/w, 5: grey, 6: color image, 7: automatic"
-msgstr ""
+msgstr "4: s/b, 5: gri, 6: renkli görüntü, 7: kendiliğinden"
 
 #: plug-ins/common/file-ps.c:413
 msgid "Text antialiasing"
@@ -4587,7 +4587,7 @@ msgstr "PS"
 
 #: plug-ins/common/file-ps.c:468
 msgid "Encapsulated PostScript"
-msgstr "Encapsulated PostScript"
+msgstr "Kapsüllenmiş PostScript"
 
 #: plug-ins/common/file-ps.c:479
 msgid "EPS"
@@ -4596,10 +4596,14 @@ msgstr "EPS"
 #: plug-ins/common/file-ps.c:498
 msgid "Width of the image in PostScript file (0: use input image size)"
 msgstr ""
+"PostScript dosyasındaki görüntünün genişliği (0: girdi görüntüsü boyutunu "
+"kullan)"
 
 #: plug-ins/common/file-ps.c:505
 msgid "Height of the image in PostScript file (0: use input image size)"
 msgstr ""
+"PostScript dosyasındaki görüntünün yüksekliği (0: girdi görüntüsü boyutunu "
+"kullan)"
 
 #: plug-ins/common/file-ps.c:511
 msgid "_X offset"
@@ -4607,7 +4611,7 @@ msgstr "_X konumu"
 
 #: plug-ins/common/file-ps.c:512
 msgid "X-offset to image from lower left corner"
-msgstr ""
+msgstr "Sol alt köşeden görüntüye X konumu"
 
 #: plug-ins/common/file-ps.c:517
 msgid "Y o_ffset"
@@ -4615,7 +4619,7 @@ msgstr "_Y konumu"
 
 #: plug-ins/common/file-ps.c:518
 msgid "Y-offset to image from lower left corner"
-msgstr ""
+msgstr "Sol alt köşeden görüntüye Y konumu"
 
 #: plug-ins/common/file-ps.c:523
 msgid "Unit"
@@ -4623,7 +4627,7 @@ msgstr "Birim"
 
 #: plug-ins/common/file-ps.c:524
 msgid "Unit for width/height/offset. 0: inches, 1: millimeters"
-msgstr ""
+msgstr "Genişlik/yükseklik/konum için birim. 0: inç, 1: milimetre"
 
 #: plug-ins/common/file-ps.c:530
 msgid "_Keep aspect ratio"
@@ -4631,7 +4635,7 @@ msgstr "En-Boy oranını _koru"
 
 #: plug-ins/common/file-ps.c:531
 msgid "FALSE: use width/height, TRUE: keep aspect ratio"
-msgstr ""
+msgstr "FALSE: use width/height, TRUE: keep aspect ratio"
 
 #: plug-ins/common/file-ps.c:536 plug-ins/map-object/map-object-ui.c:1013
 msgid "Rotation"
@@ -4643,11 +4647,11 @@ msgstr "_PostScript Düzey 2"
 
 #: plug-ins/common/file-ps.c:543
 msgid "FALSE: PostScript Level 1, TRUE: PostScript Level 2"
-msgstr ""
+msgstr "FALSE: PostScript Düzey 1, TRUE: PostScript Düzey 2"
 
 #: plug-ins/common/file-ps.c:548
 msgid "Encapsula_ted PostScript"
-msgstr "Kapsüllenmiş PostScript"
+msgstr "_Kapsüllenmiş PostScript"
 
 #: plug-ins/common/file-ps.c:549
 msgid "FALSE: PostScript, TRUE: Encapsulated PostScript"
@@ -4655,7 +4659,7 @@ msgstr "FALSE: PostScript, TRUE: Kapsüllenmiş PostScript"
 
 #: plug-ins/common/file-ps.c:554 plug-ins/imagemap/imap_grid.c:298
 msgid "_Preview"
-msgstr "Ö_nizleme"
+msgstr "Ö_n izleme"
 
 #: plug-ins/common/file-ps.c:555
 msgid "Show Preview"
@@ -4667,7 +4671,7 @@ msgstr "Ön İzleme _Boyutu"
 
 #: plug-ins/common/file-ps.c:561
 msgid "0: no preview, >0: max. size of preview"
-msgstr ""
+msgstr "0: ön izleme yok, >0: ön izlemenin azami boyutu"
 
 #: plug-ins/common/file-ps.c:722
 msgid "PostScript plug-in does not support multiple layers."
@@ -4691,9 +4695,10 @@ msgstr "%s-sayfa"
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "PostScript dışa aktarma, alfa kanal içeren görüntüleri işleyemez"
 
+# Başlıkta geçiyor, ing burada devam cont. tense değil.
 #: plug-ins/common/file-ps.c:3729
 msgid "Rendering"
-msgstr "İşleniyor"
+msgstr "İşleme"
 
 #. Coloring
 #: plug-ins/common/file-ps.c:3736
@@ -4724,7 +4729,7 @@ msgstr "Sayfalar:"
 
 #: plug-ins/common/file-ps.c:3785
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr "Yüklenecek sayfalar (ör.: 1-4 veya 1,3,5-7)"
+msgstr "Yüklenecek sayfalar (ör.: 1-4 ya da 1,3,5-7)"
 
 #: plug-ins/common/file-ps.c:3791
 msgid "Open as"
@@ -4984,7 +4989,7 @@ msgstr "_Konum"
 
 #: plug-ins/common/file-raw-data.c:363
 msgid "Offset to beginning of image in raw data"
-msgstr ""
+msgstr "Ham verideki görüntünün başlangıç konumu"
 
 #: plug-ins/common/file-raw-data.c:368
 msgid "Pixel _format"
@@ -4992,7 +4997,7 @@ msgstr "_Piksel biçimi"
 
 #: plug-ins/common/file-raw-data.c:369
 msgid "The layout of pixel data, such as components and their order"
-msgstr ""
+msgstr "Bileşenler ve bunların sırası gibi piksel verilerinin düzeni"
 
 #: plug-ins/common/file-raw-data.c:373
 msgid "Data t_ype"
@@ -5003,6 +5008,8 @@ msgid ""
 "Data type used to represent pixel values { RAW_ENCODING_UNSIGNED (0), "
 "RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }"
 msgstr ""
+"Piksel değerlerini temsilde kullanılan veri türü { RAW_ENCODING_UNSIGNED "
+"(0), RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }"
 
 #: plug-ins/common/file-raw-data.c:378
 msgid "Endianness"
@@ -5011,7 +5018,7 @@ msgstr "Endian"
 #: plug-ins/common/file-raw-data.c:379
 msgid ""
 "Order of sequences of bytes { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"
-msgstr ""
+msgstr "Bayt dizilerinin sırası { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }"
 
 #: plug-ins/common/file-raw-data.c:383 plug-ins/common/file-raw-data.c:467
 msgid "Planar configuration"
@@ -5022,6 +5029,8 @@ msgid ""
 "How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), "
 "RAW_PLANAR_SEPARATE (1) }"
 msgstr ""
+"Renkli piksel verilerinin nasıl saklandığı { RAW_PLANAR_CONTIGUOUS (0), "
+"RAW_PLANAR_SEPARATE (1) }"
 
 #: plug-ins/common/file-raw-data.c:392
 msgid "Palette Offse_t"
@@ -5029,7 +5038,7 @@ msgstr "Palet K_onumu"
 
 #: plug-ins/common/file-raw-data.c:393
 msgid "Offset to beginning of data in the palette file"
-msgstr ""
+msgstr "Palet dosyasındaki verilerin başlangıcına konumu"
 
 #: plug-ins/common/file-raw-data.c:397
 msgid "Palette's la_yout"
@@ -5040,6 +5049,8 @@ msgid ""
 "The layout for the palette's color channels{ RAW_PALETTE_RGB (0), "
 "RAW_PALETTE_BGR (1) }"
 msgstr ""
+"Paletin renk kanalları için düzen { RAW_PALETTE_RGB (0), RAW_PALETTE_BGR "
+"(1) }"
 
 #: plug-ins/common/file-raw-data.c:403
 msgid "_Palette File"
@@ -5061,6 +5072,8 @@ msgstr "_Örnek Boşluğu"
 msgid ""
 "The sample spacing of the data. (0: auto-detect, 1: SRTM-1, 2: SRTM-3 data)"
 msgstr ""
+"Verilerin örnek aralığı. (0: kendiliğinden algıla, 1: SRTM-1, 2: SRTM-3 "
+"verileri)"
 
 #: plug-ins/common/file-raw-data.c:473
 msgid "Palette's layout"
@@ -5156,7 +5169,7 @@ msgstr "BGR565"
 
 #: plug-ins/common/file-raw-data.c:2723
 msgid "B&W 1 bit"
-msgstr "B&W 1 bit"
+msgstr "S/B 1 bit"
 
 #: plug-ins/common/file-raw-data.c:2724
 msgid "Grayscale 2-bit"
@@ -5412,7 +5425,7 @@ msgstr "SVG İşleniyor"
 
 #: plug-ins/common/file-svg.c:384
 msgid "Rendered SVG"
-msgstr "SVG Tarandı"
+msgstr "SVG İşlendi"
 
 #: plug-ins/common/file-svg.c:581 plug-ins/common/file-wmf.c:401
 #, c-format
@@ -5519,7 +5532,7 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:1052
 msgid "Merge imported paths"
-msgstr "İçe aktarılmış yolları _birleştir"
+msgstr "İçe aktarılmış yolları birleştir"
 
 #: plug-ins/common/file-tga.c:260 plug-ins/common/file-tga.c:286
 msgid "TarGA image"
@@ -7941,7 +7954,7 @@ msgstr "Varsa mipmapları yükle"
 
 #: plug-ins/file-dds/dds.c:171
 msgid "Automatically decode YCoCg/AE_xp images when detected"
-msgstr "Algılandığında, YCoCg/AExp görüntülerini kendiliğinden çözümle"
+msgstr "Algılandığında, YCoCg/AE_xp görüntülerini kendiliğinden çözümle"
 
 #: plug-ins/file-dds/dds.c:172
 msgid "Decode YCoCg/AExp images when detected"
@@ -8576,6 +8589,8 @@ msgid ""
 "Called non-interactively with %d and %d hotspot coordinates with an image of "
 "%d icons."
 msgstr ""
+"Etkileşimsiz olarak %3$d simgeli bir görüntü ile %1$d ve %2$d etkin nokta "
+"koordinatları ile çağrıldı."
 
 #: plug-ins/file-ico/ico.c:168 plug-ins/file-ico/ico.c:291
 msgid "Microsoft Windows icon"
@@ -8700,7 +8715,7 @@ msgstr "_Eniyile"
 
 #: plug-ins/file-jpeg/jpeg.c:216
 msgid "Use optimized tables during Huffman coding"
-msgstr ""
+msgstr "Huffman kodlaması sırasında eniyilenmiş tabloları kullan"
 
 #: plug-ins/file-jpeg/jpeg.c:221
 msgid "_Progressive"
@@ -8728,16 +8743,21 @@ msgid ""
 "horizontally), 2 == 4:4:4 (best quality), 3 == 4:4:0 (chroma halved "
 "vertically)"
 msgstr ""
+"Alt örnekleme türü { 0 == 4:2:0 (renk saflığı çeyreğe indirilmiş), 1 == "
+"4:2:2 (renk saflığı yatay olarak yarıya indirilmiş), 2 == 4:4:4 (en iyi "
+"kalite), 3 == 4:4:0 (renk saflığı dikey olarak yarıya indirilmiş)"
 
 #: plug-ins/file-jpeg/jpeg.c:244
 msgid "Baseline"
-msgstr "Taban çizgisi"
+msgstr "Temel"
 
 #: plug-ins/file-jpeg/jpeg.c:245
 msgid ""
 "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all "
 "decoders)"
 msgstr ""
+"Temel JPEG oluşturmaya zorla (temel olmayan JPEGʼler tüm kod çözücülerce "
+"okunamaz)"
 
 #: plug-ins/file-jpeg/jpeg.c:251
 msgid "Inter_val (MCU rows):"
@@ -8746,6 +8766,8 @@ msgstr "_Aralık (MCU satırları)"
 #: plug-ins/file-jpeg/jpeg.c:252
 msgid "Interval of restart markers (in MCU rows, 0 = no restart markers)"
 msgstr ""
+"Yeniden başlatma işaretçilerinin aralığı (MCU satırlarında, 0 = yeniden "
+"başlatma işaretçisi yok)"
 
 #: plug-ins/file-jpeg/jpeg.c:258
 msgid "_DCT method"
@@ -8766,6 +8788,9 @@ msgid ""
 "settings (quantization tables), enable this option to get almost the same "
 "quality and file size."
 msgstr ""
+"Eğer özgün görüntü standart olmayan kalite ayarları (niceleme tabloları) "
+"kullanan bir JPEG dosyasından yüklenmişse; bu seçeneği, aynı kaliteye ve "
+"dosya boyutuna yakın sonuçlar elde etmek için etkinleştirin."
 
 #: plug-ins/file-jpeg/jpeg.c:290
 msgid "Sho_w preview in image window"
@@ -8773,7 +8798,7 @@ msgstr "Ön izlemeyi görüntü penceresinde göste_r"
 
 #: plug-ins/file-jpeg/jpeg.c:291
 msgid "Creates a temporary layer with an export preview"
-msgstr ""
+msgstr "Dışa aktarma ön izlemesine sahip geçici katman oluşturur"
 
 #: plug-ins/file-jpeg/jpeg.c:295
 msgid "Use _arithmetic coding"
@@ -9255,6 +9280,8 @@ msgid ""
 "The BigTIFF variant file format uses 64-bit offsets, hence supporting over "
 "4GiB files and bigger"
 msgstr ""
+"BigTIFF türev dosya biçimi 64 bitlik ofsetler kullanır, dolayısıyla 4GiB ve "
+"daha büyük dosyaları destekler"
 
 #: plug-ins/file-tiff/file-tiff.c:218
 msgid "Co_mpression"
@@ -9265,12 +9292,16 @@ msgid ""
 "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4), "
 "CCITT G3 Fax (5), CCITT G4 Fax (6) }"
 msgstr ""
+"Sıkıştırma türü: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4), "
+"CCITT G3 Fax (5), CCITT G4 Fax (6) }"
 
 #: plug-ins/file-tiff/file-tiff.c:227
 msgid ""
 "Keep the color data masked by an alpha channel intact (do not store "
 "premultiplied components)"
 msgstr ""
+"Alfa kanalı tarafından maskelenen renk verilerini olduğu gibi koru (önceden "
+"çoğaltılmış bileşenleri saklama)"
 
 #: plug-ins/file-tiff/file-tiff.c:234
 msgid "Create a CMYK TIFF image using the soft-proofing color profile"
@@ -10031,9 +10062,10 @@ msgstr "Alev"
 msgid "_Edit"
 msgstr "_Düzenle"
 
+# Başlıkta geçiyor, ing burada devam cont. tense değil.
 #: plug-ins/flame/flame.c:1127
 msgid "_Rendering"
-msgstr "_İşleniyor"
+msgstr "_İşleme"
 
 #: plug-ins/flame/flame.c:1137
 msgid "_Brightness:"
@@ -12368,84 +12400,91 @@ msgstr "Seçme"
 msgid "Unselect All"
 msgstr "Seçimi Temizle"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:216
+#: plug-ins/imagemap/imap_edit_area_info.c:219
 msgid "Link Type"
 msgstr "Bağlantı Türü"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:225
+#: plug-ins/imagemap/imap_edit_area_info.c:228
 msgid "_Web Site"
 msgstr "_Web Sitesi"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:231
-msgid "_Ftp Site"
+#: plug-ins/imagemap/imap_edit_area_info.c:234
+msgid "_FTP Site"
 msgstr "_Ftp Sitesi"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:237
+#: plug-ins/imagemap/imap_edit_area_info.c:240
 msgid "_Gopher"
 msgstr "_Gopher"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:243
+#: plug-ins/imagemap/imap_edit_area_info.c:246
 msgid "Ot_her"
 msgstr "D_iğer"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:249
+#: plug-ins/imagemap/imap_edit_area_info.c:252
 msgid "F_ile"
 msgstr "_Dosya"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:255
+#: plug-ins/imagemap/imap_edit_area_info.c:258
 msgid "WAI_S"
 msgstr "WAI_S"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:261
+#: plug-ins/imagemap/imap_edit_area_info.c:264
 msgid "Tel_net"
 msgstr "Tel_net"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:267
+#: plug-ins/imagemap/imap_edit_area_info.c:270
 msgid "e-_mail"
 msgstr "e-_posta"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:273
+#: plug-ins/imagemap/imap_edit_area_info.c:276
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr "Bu alana tıklandığında etkinleştirilecek _URL: (gerekli)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:275
+#: plug-ins/imagemap/imap_edit_area_info.c:278
 msgid "Select HTML file"
 msgstr "HTML dosyası seç"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:284
+#: plug-ins/imagemap/imap_edit_area_info.c:287
 msgid "Relati_ve link"
-msgstr "Nis_pi bağlantı"
-
-#: plug-ins/imagemap/imap_edit_area_info.c:290
-msgid "_Target frame name/ID: (optional - used for FRAMES only)"
-msgstr ""
-"_Hedef çerçeve adı/ID: (isteğe bağlı - yalnızca ÇERÇEVELER için kullanılır)"
+msgstr "Gör_eli bağlantı"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:293
+msgid "_Target frame name/ID: (optional - used for FRAMES only)"
+msgstr "_Hedef kare adı/ID: (isteğe bağlı - yalnızca KARELER için kullanılır)"
+
+#: plug-ins/imagemap/imap_edit_area_info.c:296
 msgid "ALT te_xt: (optional)"
 msgstr "ALT me_tin: (isteğe bağlı)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:296
+#: plug-ins/imagemap/imap_edit_area_info.c:299
+msgid "Access _Key: (optional)"
+msgstr "Erişim _Anahtarı: (isteğe bağlı)"
+
+#: plug-ins/imagemap/imap_edit_area_info.c:302
+msgid "Ta_b Index: (optional)"
+msgstr "Ta_b İndeksi: (isteğe bağlı)"
+
+#: plug-ins/imagemap/imap_edit_area_info.c:305
 msgid "_Link"
 msgstr "_Bağlantı"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:330
+#: plug-ins/imagemap/imap_edit_area_info.c:339
 msgid "Dimensions"
 msgstr "Boyutlar"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:334
+#: plug-ins/imagemap/imap_edit_area_info.c:343
 msgid "Pre_view"
-msgstr "Ön_izleme"
+msgstr "Ön _izleme"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:372
+#: plug-ins/imagemap/imap_edit_area_info.c:385
 msgid "_JavaScript"
 msgstr "_JavaScript"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:471
+#: plug-ins/imagemap/imap_edit_area_info.c:490
 msgid "Area Settings"
 msgstr "Alan Ayarları"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:513
+#: plug-ins/imagemap/imap_edit_area_info.c:536
 #, c-format
 msgid "Area #%d Settings"
 msgstr "Alan #%d Ayarları"
@@ -13428,7 +13467,7 @@ msgstr "Nesne Eşleme"
 
 #: plug-ins/map-object/map-object-ui.c:1370
 msgid "_Preview!"
-msgstr "Ön_izleme!"
+msgstr "Ön _izleme!"
 
 #: plug-ins/map-object/map-object-ui.c:1400
 msgid "Show _wireframe"
