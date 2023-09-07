@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-27 16:52+0000\n"
-"PO-Revision-Date: 2023-08-29 10:01+0300\n"
+"POT-Creation-Date: 2023-09-06 20:17+0000\n"
+"PO-Revision-Date: 2023-09-07 01:06+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnometurk@gnome.org>\n"
 "Language: tr\n"
@@ -290,11 +290,11 @@ msgstr "Deneysel özellikler ile bir tercihler sayfası göster"
 msgid "Show an image submenu with debug actions"
 msgstr "Hata ayıklama işlemleriyle bir görüntü alt menüsü göster"
 
-#: app/main.c:719
+#: app/main.c:722
 msgid "[FILE|URI...]"
 msgstr "[DOSYA|ADRES...]"
 
-#: app/main.c:747
+#: app/main.c:750
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -302,20 +302,20 @@ msgstr ""
 "GIMP, grafiksel kullanıcı arabirimini başlatamadı.\n"
 "Görüntüleme ortamınız için uygun bir kurulumun var olduğundan emin olun."
 
-#: app/main.c:768
+#: app/main.c:771
 msgid "Another GIMP instance is already running."
 msgstr "Başka bir GIMP zaten çalışıyor."
 
-#: app/main.c:857
+#: app/main.c:860
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP çıktısı. Bu pencereyi kapatmak için herhangi bir karakter girin."
 
-#: app/main.c:858
+#: app/main.c:861
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Bu pencereyi kapatmak için herhangi bir karakter girin)\n"
 
-#: app/main.c:875
+#: app/main.c:878
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP çıktısı. Bu pencereyi küçültebilirsiniz, fakat kapatmayın."
 
@@ -534,7 +534,7 @@ msgstr "Metin Aracı"
 msgid "Text Editor"
 msgstr "Metin Düzenleyici"
 
-#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:530
+#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:531
 msgid "Tool Options"
 msgstr "Araç Seçenekleri"
 
@@ -1067,7 +1067,7 @@ msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "Kanalları En Alta İndir"
 
-#: app/actions/channels-commands.c:384 app/core/gimpimage-new.c:506
+#: app/actions/channels-commands.c:384 app/core/gimpimage-new.c:507
 #: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:259
 #: app/widgets/gimplayertreeview.c:1055
 #, c-format
@@ -2457,7 +2457,7 @@ msgstr "240 Saniye"
 #: app/display/gimpdisplayshell-scale-dialog.c:123
 #: app/tools/gimpfiltertool.c:364 app/tools/gimpforegroundselecttool.c:331
 #: app/tools/gimptexttool.c:1751 app/tools/gimptransformgridtool.c:1264
-#: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:614
+#: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:463 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:327
@@ -2539,7 +2539,7 @@ msgstr ""
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2428
 #: app/core/gimppalette.c:428 app/core/gimppalette-import.c:213
-#: app/core/gimppalette-load.c:199 app/dialogs/palette-import-dialog.c:762
+#: app/core/gimppalette-load.c:241 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Başlıksız"
@@ -9879,7 +9879,7 @@ msgstr "Bu pencereyi %s ekranına taşı"
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
-#: app/display/gimpdisplayshell-scale-dialog.c:124 app/gui/gui.c:183
+#: app/display/gimpdisplayshell-scale-dialog.c:124 app/gui/gui.c:184
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
 #: app/widgets/gimpcontrollereditor.c:663 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:176 app/widgets/gimpmodifierseditor.c:685
@@ -11338,7 +11338,7 @@ msgid "The maximum number of actions saved in history."
 msgstr "Geçmişte kaydedilecek en fazla işlem sayısı."
 
 #: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130
-#: app/core/gimp-units.c:278 app/gui/session.c:309 app/menus/shortcuts-rc.c:158
+#: app/core/gimp-units.c:278 app/gui/session.c:309 app/menus/shortcuts-rc.c:159
 #: app/plug-in/plug-in-rc.c:249 app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "ölümcül ayrıştırma hatası"
@@ -12516,7 +12516,7 @@ msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
 msgstr[0] "%d Katmanı Kes"
 
-#: app/core/gimp-edit.c:534 app/core/gimpimage-new.c:553
+#: app/core/gimp-edit.c:534 app/core/gimpimage-new.c:554
 msgid "Pasted Layer"
 msgstr "Yapıştırılan Katman"
 
@@ -13095,7 +13095,7 @@ msgstr "Önalan"
 msgid "Foreground color"
 msgstr "Önalan rengi"
 
-#: app/core/gimpcontext.c:676 app/core/gimpimage-new.c:162
+#: app/core/gimpcontext.c:676 app/core/gimpimage-new.c:163
 msgid "Background"
 msgstr "Artalan"
 
@@ -14294,25 +14294,25 @@ msgstr "MyPaint fırçası seri hale getirilemedi."
 msgid "%s (occurs %u)"
 msgstr "%s (%u defa)"
 
-#: app/core/gimppalette-import.c:540
+#: app/core/gimppalette-import.c:544
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Bilinmeyen palet dosyası türü: %s"
 
-#: app/core/gimppalette-load.c:76
+#: app/core/gimppalette-load.c:118
 msgid "Missing magic header."
 msgstr "Eksik sihirli başlık."
 
-#: app/core/gimppalette-load.c:99
+#: app/core/gimppalette-load.c:141
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "'%s' palet dosyası içinde geçersiz UTF-8 dizgesi"
 
-#: app/core/gimppalette-load.c:119
+#: app/core/gimppalette-load.c:161
 msgid "Invalid column count."
 msgstr "Geçersiz sütun sayısı."
 
-#: app/core/gimppalette-load.c:126
+#: app/core/gimppalette-load.c:168
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -14321,86 +14321,94 @@ msgstr ""
 "'%s' palet dosyası okunuyor: %d. satır içindeki sütunların sayısı geçersiz. "
 "Öntanımlı değer kullanılıyor."
 
-#: app/core/gimppalette-load.c:160
+#: app/core/gimppalette-load.c:202
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "'%s' palet dosyası okunuyor: %d. satırda KIRMIZI bileşen kayıp."
 
-#: app/core/gimppalette-load.c:168
+#: app/core/gimppalette-load.c:210
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "'%s' palet dosyası okunuyor: %d. satırda YEŞİL bileşen kayıp."
 
-#: app/core/gimppalette-load.c:176
+#: app/core/gimppalette-load.c:218
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "'%s' palet dosyası okunuyor: %d. satırda MAVİ bileşen kayıp."
 
-#: app/core/gimppalette-load.c:186
+#: app/core/gimppalette-load.c:228
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "'%s' palet dosyası okunuyor: %d. satırda RGB değeri erim dışı."
 
-#: app/core/gimppalette-load.c:213 app/core/gimppalette-load.c:463
+#: app/core/gimppalette-load.c:255 app/core/gimppalette-load.c:505
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr "'%s' palet dosyası okunuyor: Kırpılmış dosyadan %d renkler oku: %s"
 
-#: app/core/gimppalette-load.c:235
+#: app/core/gimppalette-load.c:277
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "Palet dosyasının %d satırında: "
 
-#: app/core/gimppalette-load.c:431 app/core/gimppalette-load.c:633
+#: app/core/gimppalette-load.c:473 app/core/gimppalette-load.c:675
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "'%s' palet dosyasından başlık okunamadı: "
 
-#: app/core/gimppalette-load.c:468
+#: app/core/gimppalette-load.c:510
 msgid "Premature end of file."
 msgstr "Belirsiz dosya sonu."
 
-#: app/core/gimppalette-load.c:643
+#: app/core/gimppalette-load.c:685
 #, c-format
 msgid "Invalid ASE header: %s"
 msgstr "Geçersiz ASE başlığı: %s"
 
-#: app/core/gimppalette-load.c:652
+#: app/core/gimppalette-load.c:694
 msgid "Invalid number of colors in palette."
 msgstr "Paletteki renk sayısı geçersiz."
 
-#: app/core/gimppalette-load.c:658
+#: app/core/gimppalette-load.c:700
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "Geçersiz renk sayısı: %s."
 
-#: app/core/gimppalette-load.c:668
+#: app/core/gimppalette-load.c:710
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "Geçersiz ASE dosyası: %s."
 
-#: app/core/gimppalette-load.c:746
+#: app/core/gimppalette-load.c:788
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "Geçersiz renk bileşenleri: %s."
 
-#: app/core/gimppalette-load.c:760 app/core/gimppalette-load.c:787
+#: app/core/gimppalette-load.c:802 app/core/gimppalette-load.c:829
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "Geçersiz ASE renk girdisi: %s."
 
-#: app/core/gimppalette-load.c:815 app/core/gimppalette-load.c:831
-#: app/core/gimppalette-load.c:850
+#: app/core/gimppalette-load.c:857 app/core/gimppalette-load.c:873
+#: app/core/gimppalette-load.c:892
 msgid "Invalid ASE palette name."
 msgstr "Geçersiz ASE palet adı."
 
-#: app/core/gimppalette-load.c:824
+#: app/core/gimppalette-load.c:866
 msgid "Invalid ASE block size."
 msgstr "Geçersiz ASE blok boyutu."
 
-#: app/core/gimppalette-load.c:840
+#: app/core/gimppalette-load.c:882
 msgid "Invalid ASE name size."
 msgstr "Geçersiz ASE ad boyutu."
+
+#: app/core/gimppalette-load.c:1010
+msgid "Unable to read SBZ file"
+msgstr "SBZ dosyası okunamadı"
+
+#: app/core/gimppalette-load.c:1074
+msgid "Unable to open SBZ file"
+msgstr "SBZ dosyası açılamadı"
 
 #: app/core/gimppalettemru.c:123 app/core/gimppalettemru.c:229
 msgid "History Color"
@@ -15258,7 +15266,7 @@ msgstr "Nesneyi Sil"
 #: app/dialogs/data-delete-dialog.c:106
 #, c-format
 msgid "Delete '%s'?"
-msgstr "Sil '%s'?"
+msgstr "'%s' silinsin mi?"
 
 #: app/dialogs/data-delete-dialog.c:109
 #, c-format
@@ -15266,7 +15274,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "'%s', listeden kaldırmak ve diskten silmek istediğinize emin misiniz?"
 
-#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:180
+#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:181
 #: app/gui/gui-message.c:268
 msgid "GIMP Message"
 msgstr "GIMP İletisi"
@@ -18381,7 +18389,7 @@ msgstr "Açı:"
 
 #: app/display/gimpdisplayshell-rotate-dialog.c:165
 msgid "degrees"
-msgstr "dereceler"
+msgstr "derece"
 
 #: app/display/gimpdisplayshell-scale-dialog.c:116
 msgid "Zoom Ratio"
@@ -19937,19 +19945,19 @@ msgstr "Değer"
 msgid "The alpha value"
 msgstr "Alfa değeri"
 
-#: app/gui/gui.c:319
+#: app/gui/gui.c:320
 msgid "Image Recovery"
 msgstr "Görüntü Kurtar"
 
-#: app/gui/gui.c:321
+#: app/gui/gui.c:322
 msgid "_Discard"
 msgstr "Va_zgeç"
 
-#: app/gui/gui.c:322
+#: app/gui/gui.c:323
 msgid "_Recover"
 msgstr "Kurta_r"
 
-#: app/gui/gui.c:333
+#: app/gui/gui.c:334
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "Hımm! GIMP bir çökmeden kurtulmuş gibi görünüyor!"
 
@@ -19959,7 +19967,7 @@ msgstr "Hımm! GIMP bir çökmeden kurtulmuş gibi görünüyor!"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:342
+#: app/gui/gui.c:343
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -19970,7 +19978,7 @@ msgstr[0] "%d görüntü çökmeden etkilendi. Denemek ve kurtarmak ister misini
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:550
+#: app/gui/gui.c:551
 msgid "Documents"
 msgstr "Belgeler"
 
@@ -19978,12 +19986,12 @@ msgstr "Belgeler"
 msgid "GIMP Startup"
 msgstr "GIMP Başlangıcı"
 
-#: app/menus/shortcuts-rc.c:144 app/plug-in/plug-in-rc.c:235
+#: app/menus/shortcuts-rc.c:145 app/plug-in/plug-in-rc.c:235
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "'%s' atlanıyor: yanlış GIMP iletişim kuralı sürümü."
 
-#: app/menus/shortcuts-rc.c:151
+#: app/menus/shortcuts-rc.c:152
 #, c-format
 msgid "Skipping '%s': wrong shortcutsrc file format version."
 msgstr "'%s' geçiliyor: yanlış shortcutsrc dosya biçimi sürümü."
@@ -25563,39 +25571,39 @@ msgstr "Kısayol"
 msgid "Name"
 msgstr "Ad"
 
-#: app/widgets/gimpactionview.c:609
+#: app/widgets/gimpactionview.c:616
 msgid "Conflicting Shortcuts"
 msgstr "Çelişen Kısayollar"
 
-#: app/widgets/gimpactionview.c:615
+#: app/widgets/gimpactionview.c:622
 msgid "_Reassign Shortcut"
 msgstr "Kısayolu Yeniden A_ta"
 
-#: app/widgets/gimpactionview.c:631
+#: app/widgets/gimpactionview.c:638
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr ""
 "\"%s\" kısayolu zaten \"%s\" tarafından \"%s\" kümesinden alınmış durumda."
 
-#: app/widgets/gimpactionview.c:635
+#: app/widgets/gimpactionview.c:642
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Kısayolu yeniden atamak \"%s\" üzerinden kaldırılmasına neden olacak."
 
-#: app/widgets/gimpactionview.c:722
+#: app/widgets/gimpactionview.c:729
 msgid "Invalid shortcut."
 msgstr "Geçersiz kısayol."
 
-#: app/widgets/gimpactionview.c:729 app/widgets/gimpactionview.c:807
+#: app/widgets/gimpactionview.c:736 app/widgets/gimpactionview.c:822
 msgid "F1 cannot be remapped."
 msgstr "F1 yeniden yönlendirilemez."
 
-#: app/widgets/gimpactionview.c:737
+#: app/widgets/gimpactionview.c:744
 #, c-format
 msgid "Alt+%d is used to switch to display %d and cannot be remapped."
 msgstr "Alt+%d %d ekranına geçiş için kullanıldı ve yeniden yönlendirilemez."
 
-#: app/widgets/gimpactionview.c:775
+#: app/widgets/gimpactionview.c:790
 msgid "Changing shortcut failed."
 msgstr "Kısayol değiştirilemedi."
 
@@ -26073,7 +26081,7 @@ msgstr ""
 
 #: app/widgets/gimpcontrollerlist.c:543
 msgid "Remove Controller?"
-msgstr "Denetleyiciyi Kaldır?"
+msgstr "Denetleyici Kaldırılsın Mı?"
 
 #: app/widgets/gimpcontrollerlist.c:548
 msgid "_Disable Controller"
@@ -26086,7 +26094,7 @@ msgstr "Denetleyiciyi _Kaldır"
 #: app/widgets/gimpcontrollerlist.c:562
 #, c-format
 msgid "Remove Controller '%s'?"
-msgstr "%s Denetleyicisini Kaldır?"
+msgstr "%s Denetleyicisi Kaldırılsın Mı?"
 
 #: app/widgets/gimpcontrollerlist.c:566
 msgid ""
@@ -26669,7 +26677,7 @@ msgstr "Aygıt Ayarlarını Sil"
 #: app/widgets/gimpdeviceeditor.c:558
 #, c-format
 msgid "Delete \"%s\"?"
-msgstr "Sil \"%s\"?"
+msgstr "\"%s\" silinsin mi?"
 
 #: app/widgets/gimpdeviceeditor.c:561
 msgid ""
