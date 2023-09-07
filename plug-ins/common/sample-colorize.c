@@ -32,10 +32,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-/* Some useful macros */
-#define RESPONSE_RESET      1
-#define RESPONSE_GET_COLORS 2
-
 #define PLUG_IN_PROC        "plug-in-sample-colorize"
 #define PLUG_IN_BINARY      "sample-colorize"
 #define PLUG_IN_ROLE        "gimp-sample-colorize"
@@ -84,10 +80,8 @@ typedef struct
 {
   GimpDrawable *dst;
   gint32        sample_id;
+  GimpDrawable *sample;
 
-  gint32 hold_inten;       /* TRUE or FALSE */
-  gint32 orig_inten;       /* TRUE or FALSE */
-  gint32 rnd_subcolors;    /* TRUE or FALSE */
   gint32 guess_missing;    /* TRUE or FALSE */
   gint32 lvl_in_min;       /* 0 up to 254 */
   gint32 lvl_in_max;       /* 1 up to 255 */
@@ -105,27 +99,24 @@ typedef struct
 
 typedef struct
 {
-  GtkWidget     *dialog;
-  GtkWidget     *sample_preview;
-  GtkWidget     *dst_preview;
-  GtkWidget     *sample_colortab_preview;
-  GtkWidget     *sample_drawarea;
-  GtkWidget     *in_lvl_gray_preview;
-  GtkWidget     *in_lvl_drawarea;
-  GtkAdjustment *adj_lvl_in_min;
-  GtkAdjustment *adj_lvl_in_max;
-  GtkAdjustment *adj_lvl_in_gamma;
-  GtkAdjustment *adj_lvl_out_min;
-  GtkAdjustment *adj_lvl_out_max;
-  GtkWidget     *orig_inten_button;
-  gint           active_slider;
-  gint           slider_pos[5];  /*  positions for the five sliders  */
+  GimpProcedureConfig *config;
 
-  gboolean       enable_preview_update;
-  gboolean       sample_show_selection;
-  gboolean       dst_show_selection;
-  gboolean       sample_show_color;
-  gboolean       dst_show_color;
+  GtkWidget           *dialog;
+  GtkWidget           *sample_preview;
+  GtkWidget           *dst_preview;
+  GtkWidget           *sample_colortab_preview;
+  GtkWidget           *sample_drawarea;
+  GtkWidget           *in_lvl_gray_preview;
+  GtkWidget           *in_lvl_drawarea;
+  GtkWidget           *sample_button;
+  gint                 active_slider;
+  gint                 slider_pos[5];  /*  positions for the five sliders  */
+
+  gboolean             enable_preview_update;
+  gboolean             sample_show_selection;
+  gboolean             dst_show_selection;
+  gboolean             sample_show_color;
+  gboolean             dst_show_color;
 } t_samp_interface;
 
 
@@ -197,12 +188,15 @@ static GimpValueArray * colorize_run              (GimpProcedure        *procedu
                                                    GimpImage            *image,
                                                    gint                  n_drawables,
                                                    GimpDrawable        **drawables,
-                                                   const GimpValueArray *args,
+                                                   GimpProcedureConfig  *config,
                                                    gpointer              run_data);
 
-static gint             main_colorize             (gint          mc_flags);
+static gint             main_colorize             (gint                  mc_flags,
+                                                   GimpProcedureConfig  *config);
 static void             get_filevalues            (void);
-static void             smp_dialog                (void);
+static gboolean         smp_dialog                (GimpProcedure        *procedure,
+                                                   GimpProcedureConfig  *config);
+
 static void             refresh_dst_preview       (GtkWidget    *preview,
                                                    guchar       *src_buffer);
 static void             update_preview            (GimpDrawable *drawable);
@@ -228,7 +222,9 @@ static void             init_gdrw                 (t_GDRW       *gdrw,
 static void             end_gdrw                  (t_GDRW       *gdrw);
 static void             remap_pixel               (guchar       *pixel,
                                                    const guchar *original,
-                                                   gint          bpp2);
+                                                   gint          bpp2,
+                                                   GimpProcedureConfig
+                                                                *config);
 static void             guess_missing_colors      (void);
 static void             fill_missing_colors       (void);
 static void             smp_get_colors            (GtkWidget    *dialog);
@@ -243,7 +239,7 @@ DEFINE_STD_SET_I18N
 
 
 static t_samp_interface  g_di;  /* global dialog interface variables */
-static t_values          g_values = { NULL, -1, 1, 1, 0, 1, 0, 255, 1.0, 0, 255, 5.5 };
+static t_values          g_values = { NULL, -1, NULL, 1, 0, 255, 1.0, 0, 255, 5.5 };
 static t_samp_table_elem g_lum_tab[256];
 static guchar            g_lvl_trans_tab[256];
 static guchar            g_out_trans_tab[256];
@@ -319,9 +315,9 @@ colorize_create_procedure (GimpPlugIn  *plug_in,
         " (the image with the dst_drawable is converted to RGB if necessary)"
         " The sample_drawable should be of type RGB or RGBA";
 
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            colorize_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             colorize_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -333,7 +329,7 @@ colorize_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Colorize image using a sample "
                                           "image as a guide"),
-                                        help_string,
+                                        _(help_string),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Wolfgang Hofer",
@@ -341,67 +337,67 @@ colorize_create_procedure (GimpPlugIn  *plug_in,
                                       "02/2000");
 
       GIMP_PROC_ARG_DRAWABLE (procedure, "sample-drawable",
-                              "Sample drawable",
-                              "Sample drawable (should be of Type RGB or RGBA)",
+                              _("Sample drawable"),
+                              _("Sample drawable (should be of Type RGB or RGBA)"),
                               TRUE,
                               G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "hold-inten",
-                             "Hold inten",
-                             "Hold brightness intensity levels",
+                             _("Hold _intensity"),
+                             _("Hold brightness intensity levels"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "orig-inten",
-                             "Orig inten",
-                             "TRUE: hold brightness of original intensity "
-                             "levels, "
-                             "FALSE: Hold Intensity of input levels",
+                             _("Original i_ntensity"),
+                             _("TRUE: hold brightness of original intensity "
+                               "levels, "
+                               "FALSE: Hold Intensity of input levels"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "rnd-subcolors",
-                             "Rnd subcolors",
-                             "TRUE: Use all subcolors of same intensity, "
-                             "FALSE: Use only one color per intensity",
+                             _("Us_e subcolors"),
+                             _("TRUE: Use all subcolors of same intensity, "
+                               "FALSE: Use only one color per intensity"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "guess-missing",
-                             "Guess missing",
-                             "TRUE: guess samplecolors for the missing "
-                             "intensity values, "
-                             "FALSE: use only colors found in the sample",
+                             _("Smooth sam_ples"),
+                             _("TRUE: guess samplecolors for the missing "
+                               "intensity values, "
+                               "FALSE: use only colors found in the sample"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "in-low",
-                         "In low",
-                         "Intensity of lowest input",
+                         _("_Low"),
+                         _("Intensity of lowest input"),
                          0, 254, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "in-high",
-                         "In high",
-                         "Intensity of highest input",
+                         _("_High"),
+                         _("Intensity of highest input"),
                          1, 255, 255,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "gamma",
-                            "Gamma",
-                            "Gamma adjustment factor, 1.0 is linear",
-                            0.1, 1.0, 1.0,
+                            _("Ga_mma"),
+                            _("Gamma adjustment factor, 1.0 is linear"),
+                            0.1, 10.0, 1.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "out-low",
-                         "out low",
-                         "Lowest sample color intensity",
+                         _("Lo_w"),
+                         _("Lowest sample color intensity"),
                          0, 254, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "ouz-high",
-                         "Out high",
-                         "Highest sample color intensity",
+      GIMP_PROC_ARG_INT (procedure, "out-high",
+                         _("Hi_gh"),
+                         _("Highest sample color intensity"),
                          1, 255, 255,
                          G_PARAM_READWRITE);
     }
@@ -415,7 +411,7 @@ colorize_run (GimpProcedure        *procedure,
               GimpImage            *image,
               gint                  n_drawables,
               GimpDrawable        **drawables,
-              const GimpValueArray *args,
+              GimpProcedureConfig  *config,
               gpointer              run_data)
 {
   const gchar  *env;
@@ -448,17 +444,18 @@ colorize_run (GimpProcedure        *procedure,
     g_printf ("sample colorize run\n");
   g_show_progress = FALSE;
 
-  g_values.lvl_out_min  = 0;
-  g_values.lvl_out_max  = 255;
-  g_values.lvl_in_gamma = 1.0;
-  g_values.lvl_in_min   = 0;
-  g_values.lvl_in_max   = 255;
+  g_di.config = config;
+  g_object_get (config,
+                "sample-drawable", &g_values.sample,
+                "guess_missing",   &g_values.guess_missing,
+                "in-low",          &g_values.lvl_in_min,
+                "in-high",         &g_values.lvl_in_max,
+                "gamma",           &g_values.lvl_in_gamma,
+                "out-low",         &g_values.lvl_out_min,
+                "out-high",        &g_values.lvl_out_max,
+                NULL);
 
-  /* Possibly retrieve data from a previous run */
-  gimp_get_data (PLUG_IN_PROC, &g_values);
-  if (g_values.sample_id == SMP_GRADIENT ||
-      g_values.sample_id == SMP_INV_GRADIENT)
-    g_values.sample_id = -1;
+  g_values.sample_id = -1;
 
   /* fix value */
   g_values.tol_col_err = 5.5;
@@ -475,27 +472,31 @@ colorize_run (GimpProcedure        *procedure,
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-          smp_dialog ();
+          if (! smp_dialog (procedure, config))
+            {
+              return gimp_procedure_new_return_values (procedure,
+                                                       GIMP_PDB_CANCEL,
+                                                       NULL);
+            }
+
+          g_show_progress = TRUE;
+          if (main_colorize (MC_DST_REMAP, config) == 0)
+            {
+              gimp_displays_flush ();
+              g_show_progress = FALSE;
+            }
+
           free_colors ();
-          gimp_set_data (PLUG_IN_PROC, &g_values, sizeof (t_values));
           gimp_displays_flush ();
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
-          g_values.sample_id     = GIMP_VALUES_GET_DRAWABLE_ID (args, 0);
-          g_values.hold_inten    = GIMP_VALUES_GET_BOOLEAN     (args, 1);
-          g_values.orig_inten    = GIMP_VALUES_GET_BOOLEAN     (args, 2);
-          g_values.rnd_subcolors = GIMP_VALUES_GET_BOOLEAN     (args, 3);
-          g_values.guess_missing = GIMP_VALUES_GET_BOOLEAN     (args, 4);
-          g_values.lvl_in_min    = GIMP_VALUES_GET_INT         (args, 5);
-          g_values.lvl_in_max    = GIMP_VALUES_GET_INT         (args, 6);
-          g_values.lvl_in_gamma  = GIMP_VALUES_GET_DOUBLE      (args, 7);
-          g_values.lvl_out_min   = GIMP_VALUES_GET_INT         (args, 8);
-          g_values.lvl_out_max   = GIMP_VALUES_GET_INT         (args, 9);
+          if (g_values.sample)
+            g_values.sample_id = gimp_item_get_id (GIMP_ITEM (g_values.sample));
 
-          if (main_colorize (MC_GET_SAMPLE_COLORS) >= 0)
+          if (main_colorize (MC_GET_SAMPLE_COLORS, config) >= 0)
             {
-              main_colorize (MC_DST_REMAP);
+              main_colorize (MC_DST_REMAP, config);
             }
           else
             {
@@ -525,51 +526,20 @@ colorize_run (GimpProcedure        *procedure,
  */
 
 static void
-smp_response_callback (GtkWidget *widget,
-                       gint       response_id)
-{
-  switch (response_id)
-    {
-    case RESPONSE_RESET:
-      g_values.lvl_in_min    = 0;
-      g_values.lvl_in_max    = 255;
-      g_values.lvl_in_gamma  = 1.0;
-      g_values.lvl_out_min   = 0;
-      g_values.lvl_out_max   = 255;
-
-      levels_update (ALL);
-      break;
-
-    case RESPONSE_GET_COLORS:
-      smp_get_colors (widget);
-      break;
-
-    case GTK_RESPONSE_APPLY:
-      g_show_progress = TRUE;
-      if (main_colorize (MC_DST_REMAP) == 0)
-        {
-          gimp_displays_flush ();
-          g_show_progress = FALSE;
-          return;
-        }
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
-                                         GTK_RESPONSE_APPLY, FALSE);
-      break;
-
-    default:
-      gtk_widget_destroy (widget);
-      gtk_main_quit ();
-      break;
-    }
-}
-
-static void
 smp_toggle_callback (GtkWidget *widget,
                      gpointer   data)
 {
-  gboolean *toggle_val = (gboolean *)data;
+  gboolean  hold_inten;
+  gboolean  orig_inten;
+  gboolean  rnd_subcolors;
+  gboolean  guess_missing;
 
-  *toggle_val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+  g_object_get (g_di.config,
+                "hold-inten",    &hold_inten,
+                "orig-inten",    &orig_inten,
+                "rnd_subcolors", &rnd_subcolors,
+                "guess_missing", &guess_missing,
+                NULL);
 
   if ((data == &g_di.sample_show_selection) ||
       (data == &g_di.sample_show_color))
@@ -585,23 +555,20 @@ smp_toggle_callback (GtkWidget *widget,
        return;
     }
 
-  if ((data == &g_values.hold_inten) ||
-      (data == &g_values.orig_inten) ||
-      (data == &g_values.rnd_subcolors))
+  if (hold_inten || orig_inten || rnd_subcolors)
     {
-      if (g_di.orig_inten_button)
-        gtk_widget_set_sensitive (g_di.orig_inten_button,g_values.hold_inten);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (g_di.dialog),
+                                           "orig-inten", hold_inten, NULL,
+                                           NULL, FALSE);
+
       refresh_dst_preview (g_di.dst_preview,  &g_dst_preview_buffer[0]);
     }
 
-  if (data == &g_values.guess_missing)
-    {
-      if (g_values.guess_missing)
-        guess_missing_colors ();
-      else
-        fill_missing_colors ();
-      smp_get_colors (NULL);
-    }
+    if (guess_missing)
+      guess_missing_colors ();
+    else
+      fill_missing_colors ();
+    smp_get_colors (NULL);
 }
 
 static void
@@ -621,17 +588,15 @@ smp_sample_combo_callback (GtkWidget *widget)
       if (g_di.sample_preview)
         clear_preview (g_di.sample_preview);
 
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (g_di.dialog),
-                                         GTK_RESPONSE_APPLY, TRUE);
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (g_di.dialog),
-                                         RESPONSE_GET_COLORS, FALSE);
+      if (g_di.sample_button)
+        gtk_widget_set_sensitive (g_di.sample_button, FALSE);
     }
   else
     {
       update_preview (gimp_drawable_get_by_id (g_values.sample_id));
 
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (g_di.dialog),
-                                         RESPONSE_GET_COLORS, TRUE);
+      if (g_di.sample_button)
+        gtk_widget_set_sensitive (g_di.sample_button, TRUE);
     }
 }
 
@@ -646,8 +611,8 @@ smp_dest_combo_callback (GtkWidget *widget)
 
   update_preview (g_values.dst);
 
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (g_di.dialog),
-                                     RESPONSE_GET_COLORS, TRUE);
+  if (g_di.sample_button)
+    gtk_widget_set_sensitive (g_di.sample_button, TRUE);
 }
 
 static gint
@@ -664,12 +629,17 @@ smp_constrain (GimpImage *image,
 
 
 static void
-smp_adj_lvl_in_max_upd_callback (GtkAdjustment *adjustment)
+smp_adj_lvl_in_max_upd_callback (GObject          *config,
+                                 const GParamSpec *pspec,
+                                 gpointer         *data)
 {
   gint32 value;
   gint   upd_flags;
 
-  value = CLAMP ((gtk_adjustment_get_value (adjustment)), 1, 255);
+  g_object_get (config,
+                "in-high", &value,
+                NULL);
+  value = CLAMP (value, 1, 255);
 
   if (value != g_values.lvl_in_max)
     {
@@ -685,12 +655,17 @@ smp_adj_lvl_in_max_upd_callback (GtkAdjustment *adjustment)
 }
 
 static void
-smp_adj_lvl_in_min_upd_callback (GtkAdjustment *adjustment)
+smp_adj_lvl_in_min_upd_callback (GObject          *config,
+                                 const GParamSpec *pspec,
+                                 gpointer         *data)
 {
-  double value;
+  gint32 value;
   gint   upd_flags;
 
-  value = CLAMP ((gtk_adjustment_get_value (adjustment)), 0, 254);
+  g_object_get (config,
+                "in-low", &value,
+                NULL);
+  value = CLAMP (value, 0, 254);
 
   if (value != g_values.lvl_in_min)
     {
@@ -706,11 +681,16 @@ smp_adj_lvl_in_min_upd_callback (GtkAdjustment *adjustment)
 }
 
 static void
-smp_text_gamma_upd_callback (GtkAdjustment *adjustment)
+smp_text_gamma_upd_callback (GObject          *config,
+                             const GParamSpec *pspec,
+                             gpointer         *data)
 {
   double value;
 
-  value = CLAMP ((gtk_adjustment_get_value (adjustment)), 0.1, 10.0);
+  g_object_get (config,
+                "gamma", &value,
+                NULL);
+  value = CLAMP (value, 0.1, 10.0);
 
   if (value != g_values.lvl_in_gamma)
     {
@@ -720,12 +700,17 @@ smp_text_gamma_upd_callback (GtkAdjustment *adjustment)
 }
 
 static void
-smp_adj_lvl_out_max_upd_callback (GtkAdjustment *adjustment)
+smp_adj_lvl_out_max_upd_callback (GObject          *config,
+                                  const GParamSpec *pspec,
+                                  gpointer         *data)
 {
   gint32 value;
   gint   upd_flags;
 
-  value = CLAMP ((gtk_adjustment_get_value (adjustment)), 1, 255);
+  g_object_get (config,
+                "out-high", &value,
+                NULL);
+  value = CLAMP (value, 1, 255);
 
   if (value != g_values.lvl_out_max)
     {
@@ -741,17 +726,22 @@ smp_adj_lvl_out_max_upd_callback (GtkAdjustment *adjustment)
 }
 
 static void
-smp_adj_lvl_out_min_upd_callback (GtkAdjustment *adjustment)
+smp_adj_lvl_out_min_upd_callback (GObject          *config,
+                                  const GParamSpec *pspec,
+                                  gpointer         *data)
 {
-  double value;
+  gint32 value;
   gint   upd_flags;
 
-  value = CLAMP ((gtk_adjustment_get_value (adjustment)), 0, 254);
+  g_object_get (config,
+                "out-low", &value,
+                NULL);
+  value = CLAMP (value, 0, 254);
 
   if (value != g_values.lvl_out_min)
     {
       g_values.lvl_out_min = value;
-      upd_flags = OUTPUT_SLIDERS | OUTPUT_LEVELS | DRAW  | REFRESH_DST;
+      upd_flags = OUTPUT_SLIDERS | OUTPUT_LEVELS | DRAW | REFRESH_DST;
       if (g_values.lvl_out_min > g_values.lvl_out_max)
         {
           g_values.lvl_out_max = g_values.lvl_out_min;
@@ -799,7 +789,7 @@ refresh_dst_preview (GtkWidget *preview,
             {
               if (g_di.dst_show_color)
                 {
-                  remap_pixel (ptr, src_ptr, 3);
+                  remap_pixel (ptr, src_ptr, 3, g_di.config);
                 }
               else
                 {
@@ -1043,9 +1033,10 @@ smp_get_colors (GtkWidget *dialog)
 
   update_preview (gimp_drawable_get_by_id (g_values.sample_id));
 
-  if (dialog && main_colorize (MC_GET_SAMPLE_COLORS) >= 0)  /* do not colorize, just analyze sample colors */
-    gtk_dialog_set_response_sensitive (GTK_DIALOG (g_di.dialog),
-                                       GTK_RESPONSE_APPLY, TRUE);
+  /* do not colorize, just analyze sample colors */
+  if (dialog)
+    main_colorize (MC_GET_SAMPLE_COLORS, g_di.config);
+
   for (i = 0; i < GRADIENT_HEIGHT; i++)
     memcpy (buffer + i * 3 * DA_WIDTH, g_sample_color_tab, 3 * DA_WIDTH);
 
@@ -1074,20 +1065,25 @@ levels_update (gint update)
 
   /* update the spinbutton entry widgets */
   if (update & LOW_INPUT)
-    gtk_adjustment_set_value (g_di.adj_lvl_in_min,
-                              g_values.lvl_in_min);
+    g_object_set (g_di.config,
+                  "in-low", g_values.lvl_in_min,
+                  NULL);
   if (update & GAMMA)
-    gtk_adjustment_set_value (g_di.adj_lvl_in_gamma,
-                              g_values.lvl_in_gamma);
+    g_object_set (g_di.config,
+                  "gamma", g_values.lvl_in_gamma,
+                  NULL);
   if (update & HIGH_INPUT)
-    gtk_adjustment_set_value (g_di.adj_lvl_in_max,
-                              g_values.lvl_in_max);
+    g_object_set (g_di.config,
+                  "in-high", g_values.lvl_in_max,
+                  NULL);
   if (update & LOW_OUTPUT)
-    gtk_adjustment_set_value (g_di.adj_lvl_out_min,
-                              g_values.lvl_out_min);
+    g_object_set (g_di.config,
+                  "out-low", g_values.lvl_out_min,
+                  NULL);
   if (update & HIGH_OUTPUT)
-    gtk_adjustment_set_value (g_di.adj_lvl_out_max,
-                              g_values.lvl_out_max);
+    g_object_set (g_di.config,
+                  "out-high", g_values.lvl_out_max,
+                  NULL);
   if (update & INPUT_LEVELS)
     {
       guchar buffer[DA_WIDTH * GRADIENT_HEIGHT];
@@ -1374,8 +1370,9 @@ level_out_draw (GtkWidget *widget,
  *        The Interactive Dialog
  * ============================================================================
  */
-static void
-smp_dialog (void)
+static gboolean
+smp_dialog (GimpProcedure       *procedure,
+            GimpProcedureConfig *config)
 {
   GtkWidget     *dialog;
   GtkWidget     *hbox;
@@ -1385,9 +1382,8 @@ smp_dialog (void)
   GtkWidget     *check_button;
   GtkWidget     *label;
   GtkWidget     *combo;
-  GtkWidget     *spinbutton;
-  GtkAdjustment *data;
   gint           ty;
+  gboolean       run;
 
   /* set flags for check buttons from mode value bits */
   if (g_Sdebug)
@@ -1399,36 +1395,15 @@ smp_dialog (void)
   g_di.dst_show_selection    = TRUE;
   g_di.dst_show_color        = TRUE;
   g_di.sample_show_color     = TRUE;
-  g_di.orig_inten_button     = NULL;
 
   /* Init GTK  */
   gimp_ui_init (PLUG_IN_BINARY);
 
   /* Main Dialog */
   g_di.dialog = dialog =
-    gimp_dialog_new (_("Sample Colorize"), PLUG_IN_ROLE,
-                     NULL, 0,
-                     gimp_standard_help_func, PLUG_IN_PROC,
-
-                     _("_Reset"),             RESPONSE_RESET,
-                     _("Get _Sample Colors"), RESPONSE_GET_COLORS,
-                     _("_Close"),             GTK_RESPONSE_CLOSE,
-                     _("_Apply"),             GTK_RESPONSE_APPLY,
-
-                     NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           RESPONSE_GET_COLORS,
-                                           RESPONSE_RESET,
-                                           GTK_RESPONSE_APPLY,
-                                           GTK_RESPONSE_CLOSE,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (smp_response_callback),
-                    NULL);
+    gimp_procedure_dialog_new (procedure,
+                               GIMP_PROCEDURE_CONFIG (config),
+                               _("Sample Colorize"));
 
   /* grid for values */
   grid = gtk_grid_new ();
@@ -1481,7 +1456,6 @@ smp_dialog (void)
   gtk_widget_show (combo);
 
   ty++;
-
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_grid_attach (GTK_GRID (grid), hbox, 0, ty, 2, 1);
@@ -1602,9 +1576,10 @@ smp_dialog (void)
   g_signal_connect (g_di.in_lvl_drawarea, "event",
                     G_CALLBACK (level_in_events),
                     NULL);
-  g_signal_connect (g_di.in_lvl_drawarea, "draw",
-                    G_CALLBACK (level_in_draw),
-                    NULL);
+  /* TODO: Fix crash when editing inputs with this enabled */
+  /* g_signal_connect (g_di.in_lvl_drawarea, "draw",
+                       G_CALLBACK (level_in_draw),
+                       NULL); */
 
   gtk_widget_show (vbox2);
   gtk_widget_show (frame);
@@ -1644,157 +1619,115 @@ smp_dialog (void)
   gtk_widget_show (vbox2);
   gtk_widget_show (frame);
 
-
   ty++;
 
-  /*  Horizontal box for INPUT levels text widget  */
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
-  gtk_grid_attach (GTK_GRID (grid), hbox, 0, ty, 2, 1);
+  /*  GimpProcedureDialog  */
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "input-label", _("Input levels:"), FALSE,
+                                   FALSE);
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog), "in-low",
+                                    GIMP_TYPE_SPIN_BUTTON);
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog), "gamma",
+                                    GIMP_TYPE_SPIN_BUTTON);
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog), "in-high",
+                                    GIMP_TYPE_SPIN_BUTTON);
 
-  label = gtk_label_new (_("Input levels:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  /* min input spinbutton */
-  data = gtk_adjustment_new ((gfloat)g_values.lvl_in_min, 0.0, 254.0, 1, 10, 0);
-  g_di.adj_lvl_in_min = data;
-
-  spinbutton = gimp_spin_button_new (g_di.adj_lvl_in_min, 0.5, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  g_signal_connect (g_di.adj_lvl_in_min, "value-changed",
+  g_signal_connect (config, "notify::in-low",
                     G_CALLBACK (smp_adj_lvl_in_min_upd_callback),
-                    &g_di);
-
-  /* input gamma spinbutton */
-  data = gtk_adjustment_new ((gfloat)g_values.lvl_in_gamma, 0.1, 10.0, 0.02, 0.2, 0);
-  g_di.adj_lvl_in_gamma = data;
-
-  spinbutton = gimp_spin_button_new (g_di.adj_lvl_in_gamma, 0.5, 2);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  g_signal_connect (g_di.adj_lvl_in_gamma, "value-changed",
+                    NULL);
+  g_signal_connect (config, "notify::gamma",
                     G_CALLBACK (smp_text_gamma_upd_callback),
-                    &g_di);
-
-  /* high input spinbutton */
-  data = gtk_adjustment_new ((gfloat)g_values.lvl_in_max, 1.0, 255.0, 1, 10, 0);
-  g_di.adj_lvl_in_max = data;
-
-  spinbutton = gimp_spin_button_new (g_di.adj_lvl_in_max, 0.5, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  g_signal_connect (g_di.adj_lvl_in_max, "value-changed",
+                    NULL);
+  g_signal_connect (config, "notify::in-high",
                     G_CALLBACK (smp_adj_lvl_in_max_upd_callback),
-                    &g_di);
+                    NULL);
 
-  gtk_widget_show (hbox);
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "low-hbox","input-label", "in-low",
+                                         "gamma", "in-high", NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  gtk_widget_set_halign (hbox, GTK_ALIGN_CENTER);
 
-  /*  Horizontal box for OUTPUT levels text widget  */
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
-  gtk_grid_attach (GTK_GRID (grid), hbox, 3, ty, 2, 1);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "output-label", _("Output levels:"), FALSE,
+                                   FALSE);
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog), "out-low",
+                                    GIMP_TYPE_SPIN_BUTTON);
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog), "out-high",
+                                    GIMP_TYPE_SPIN_BUTTON);
 
-  label = gtk_label_new (_("Output levels:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  /*  min output spinbutton */
-  data = gtk_adjustment_new ((gfloat)g_values.lvl_out_min, 0.0, 254.0, 1, 10, 0);
-  g_di.adj_lvl_out_min = data;
-
-  spinbutton = gimp_spin_button_new (g_di.adj_lvl_out_min, 0.5, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  g_signal_connect (g_di.adj_lvl_out_min, "value-changed",
+  g_signal_connect (config, "notify::out-low",
                     G_CALLBACK (smp_adj_lvl_out_min_upd_callback),
-                    &g_di);
-
-  /* high output spinbutton */
-  data = gtk_adjustment_new ((gfloat)g_values.lvl_out_max, 0.0, 255.0, 1, 10, 0);
-  g_di.adj_lvl_out_max = data;
-
-  spinbutton = gimp_spin_button_new (g_di.adj_lvl_out_max, 0.5, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  g_signal_connect (g_di.adj_lvl_out_max, "value-changed",
+                    NULL);
+  g_signal_connect (config, "notify::out-high",
                     G_CALLBACK (smp_adj_lvl_out_max_upd_callback),
-                    &g_di);
+                    NULL);
 
-  gtk_widget_show (hbox);
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "high-hbox","output-label", "out-low",
+                                         "out-high", NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  gtk_widget_set_halign (hbox, GTK_ALIGN_CENTER);
 
-  ty++;
+  /* Checkboxes */
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "intensity-hbox", "hold-inten",
+                                         "orig-inten", NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  gtk_widget_set_halign (hbox, GTK_ALIGN_CENTER);
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_grid_attach (GTK_GRID (grid), hbox, 0, ty, 2, 1);
-  gtk_widget_show (hbox);
-
-  /* check button */
-  check_button = gtk_check_button_new_with_mnemonic (_("Hold _intensity"));
-  gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
-  gtk_widget_show (check_button);
-
-  g_signal_connect (check_button, "toggled",
+  g_signal_connect (config, "notify::hold-inten",
                     G_CALLBACK (smp_toggle_callback),
-                    &g_values.hold_inten);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
-                                g_values.hold_inten);
-
-  /* check button */
-  check_button = gtk_check_button_new_with_mnemonic (_("Original i_ntensity"));
-  g_di.orig_inten_button = check_button;
-  gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
-  gtk_widget_set_sensitive (g_di.orig_inten_button, g_values.hold_inten);
-  gtk_widget_show (check_button);
-
-  g_signal_connect (check_button, "toggled",
+                    NULL);
+  g_signal_connect (config, "notify::orig-inten",
                     G_CALLBACK (smp_toggle_callback),
-                    &g_values.orig_inten);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
-                                g_values.orig_inten);
+                    NULL);
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-  gtk_grid_attach (GTK_GRID (grid), hbox, 3, ty, 2, 1);
-  gtk_widget_show (hbox);
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "sample-hbox", "rnd-subcolors",
+                                         "guess-missing", NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  gtk_widget_set_halign (hbox, GTK_ALIGN_CENTER);
 
-  /* check button */
-  check_button = gtk_check_button_new_with_mnemonic (_("Us_e subcolors"));
-  gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
-  gtk_widget_show (check_button);
-
-  g_signal_connect (check_button, "toggled",
+  g_signal_connect (config, "notify::rnd-subcolors",
                     G_CALLBACK (smp_toggle_callback),
-                    &g_values.rnd_subcolors);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
-                                g_values.rnd_subcolors);
-
-  /* check button */
-  check_button = gtk_check_button_new_with_mnemonic (_("S_mooth samples"));
-  gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
-  gtk_widget_show (check_button);
-
-  g_signal_connect (check_button, "toggled",
+                    NULL);
+  g_signal_connect (config, "notify::guess-missing",
                     G_CALLBACK (smp_toggle_callback),
-                    &g_values.guess_missing);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
-                                g_values.guess_missing);
+                    NULL);
 
-  ty++;
+  g_di.sample_button = gtk_button_new_with_mnemonic (_("Get _Sample Colors"));
+  gtk_box_pack_start (GTK_BOX (hbox), g_di.sample_button, FALSE, FALSE, 12);
+  g_signal_connect (g_di.sample_button, "clicked",
+                    G_CALLBACK (smp_get_colors),
+                    dialog);
+  gtk_widget_set_visible (g_di.sample_button, TRUE);
 
   gtk_widget_show (grid);
-  gtk_widget_show (frame);
 
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "slider-row", "low-hbox",
+                                         "high-hbox", NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                         "check-row", "intensity-hbox",
+                                         "sample-hbox", NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+
+  vbox2 = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                          "option-box", "slider-row",
+                                          "check-row", NULL);
+  gtk_box_set_spacing (GTK_BOX (vbox2), 12);
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "option-box", NULL);
   gtk_widget_show (dialog);
 
   /* set old_id's different (to force updates of the previews) */
@@ -1803,7 +1736,10 @@ smp_dialog (void)
   update_preview (g_values.dst);
   levels_update (INPUT_SLIDERS | INPUT_LEVELS | DRAW);
 
-  gtk_main ();
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
+  return run;
 }
 
 /* -----------------------------
@@ -1912,26 +1848,6 @@ print_transtable (FILE *fp)
       fprintf (fp, "LVL_TRANS [%03d]  in_lvl: %3d  out_lvl: %3d\n",
                idx, (int)g_lvl_trans_tab[idx], (int)g_out_trans_tab[idx]);
     }
-}
-
-static void
-print_values (FILE *fp)
-{
-  if (fp == NULL)
-    return;
-
-  fprintf (fp, "sample_colorize: params\n");
-  fprintf (fp, "g_values.hold_inten     :%d\n", (int)g_values.hold_inten);
-  fprintf (fp, "g_values.orig_inten     :%d\n", (int)g_values.orig_inten);
-  fprintf (fp, "g_values.rnd_subcolors  :%d\n", (int)g_values.rnd_subcolors);
-  fprintf (fp, "g_values.guess_missing  :%d\n", (int)g_values.guess_missing);
-  fprintf (fp, "g_values.lvl_in_min     :%d\n", (int)g_values.lvl_in_min);
-  fprintf (fp, "g_values.lvl_in_max     :%d\n", (int)g_values.lvl_in_max);
-  fprintf (fp, "g_values.lvl_in_gamma   :%f\n", g_values.lvl_in_gamma);
-  fprintf (fp, "g_values.lvl_out_min    :%d\n", (int)g_values.lvl_out_min);
-  fprintf (fp, "g_values.lvl_out_max    :%d\n", (int)g_values.lvl_out_max);
-
-  fprintf (fp, "g_values.tol_col_err    :%f\n", g_values.tol_col_err);
 }
 
 /* -----------------------------
@@ -2663,7 +2579,6 @@ sample_analyze (t_GDRW *sample_gdrw)
   prot_fp = NULL;
   if (g_Sdebug)
     prot_fp = g_fopen ("sample_colors.dump", "w");
-  print_values (prot_fp);
 
   /* ------------------------------------------------
    * foreach pixel in the SAMPLE_drawable:
@@ -2813,28 +2728,38 @@ rnd_remap (gint32  lum,
 }
 
 static void
-remap_pixel (guchar       *pixel,
-             const guchar *original,
-             gint          bpp2)
+remap_pixel (guchar              *pixel,
+             const guchar        *original,
+             gint                 bpp2,
+             GimpProcedureConfig *config)
 {
-  guchar mapped_color[4];
-  gint   lum;
-  double orig_lum, mapped_lum;
-  double grn, red, blu;
-  double mg,  mr,  mb;
-  double dg,  dr,  db;
-  double dlum;
+  guchar   mapped_color[4];
+  gint     lum;
+  gdouble  orig_lum, mapped_lum;
+  gdouble  grn, red, blu;
+  gdouble  mg,  mr,  mb;
+  gdouble  dg,  dr,  db;
+  gdouble  dlum;
+  gboolean hold_inten    = FALSE;
+  gboolean orig_inten    = FALSE;
+  gboolean rnd_subcolors = FALSE;
+
+  g_object_get (config,
+                "hold-inten",    &hold_inten,
+                "orig-inten",    &orig_inten,
+                "rnd-subcolors", &rnd_subcolors,
+                NULL);
 
   /* get brightness from (uncolorized) original */
   lum = g_out_trans_tab[g_lvl_trans_tab[LUMINOSITY_1 (original)]];
-  if (g_values.rnd_subcolors)
+  if (rnd_subcolors)
     rnd_remap (lum, mapped_color);
   else
     memcpy (mapped_color, &g_sample_color_tab[3 * lum], 3);
 
-  if (g_values.hold_inten)
+  if (hold_inten)
     {
-      if (g_values.orig_inten)
+      if (orig_inten)
         orig_lum = LUMINOSITY_0(original);
       else
         orig_lum = 100.0 * g_lvl_trans_tab[LUMINOSITY_1 (original)];
@@ -3015,10 +2940,11 @@ remap_pixel (guchar       *pixel,
 }
 
 static void
-colorize_func (const guchar *src,
-               guchar       *dest,
-               gint          bpp,
-               gboolean      has_alpha)
+colorize_func (const guchar        *src,
+               guchar              *dest,
+               gint                 bpp,
+               gboolean             has_alpha,
+               GimpProcedureConfig *config)
 {
   if (has_alpha)
     {
@@ -3026,11 +2952,12 @@ colorize_func (const guchar *src,
       dest[bpp] = src[bpp];
     }
 
-  remap_pixel (dest, src, bpp);
+  remap_pixel (dest, src, bpp, config);
 }
 
 static void
-colorize_drawable (GimpDrawable *drawable)
+colorize_drawable (GimpDrawable        *drawable,
+                   GimpProcedureConfig *config)
 {
   GeglBuffer         *src_buffer;
   GeglBuffer         *dest_buffer;
@@ -3089,7 +3016,7 @@ colorize_drawable (GimpDrawable *drawable)
 
           while (pixels--)
             {
-              colorize_func (s, d, bpp, has_alpha);
+              colorize_func (s, d, bpp, has_alpha, config);
 
               s += bpp;
               d += bpp;
@@ -3117,7 +3044,8 @@ colorize_drawable (GimpDrawable *drawable)
 
 /* colorize dst_drawable like sample_drawable */
 static int
-main_colorize (gint mc_flags)
+main_colorize (gint                 mc_flags,
+               GimpProcedureConfig *config)
 {
   t_GDRW   sample_gdrw;
   gboolean sample_drawable = FALSE;
@@ -3160,7 +3088,7 @@ main_colorize (gint mc_flags)
           gimp_image_convert_rgb (gimp_item_get_image (GIMP_ITEM (g_values.dst)));
         }
 
-      colorize_drawable (g_values.dst);
+      colorize_drawable (g_values.dst, config);
     }
 
   if (sample_drawable)
