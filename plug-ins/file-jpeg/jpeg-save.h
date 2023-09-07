@@ -24,10 +24,11 @@ extern GimpDrawable    *drawable_global;
 
 
 gboolean    save_image         (GFile                *file,
-                                GimpProcedureConfig *config,
+                                GimpProcedureConfig  *config,
                                 GimpImage            *image,
                                 GimpDrawable         *drawable,
                                 GimpImage            *orig_image,
+                                GimpRunMode           run_mode,
                                 gboolean              preview,
                                 GError              **error);
 gboolean    save_dialog        (GimpProcedure        *procedure,

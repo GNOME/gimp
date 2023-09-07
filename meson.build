@@ -667,7 +667,13 @@ libtiff = dependency('libtiff-4', version: '>=' + libtiff_minver)
 MIMEtypes += 'image/tiff'
 
 
-libjpeg = dependency('libjpeg')
+mozjpeg = dependency('mozjpeg', required: get_option('mozjpeg'))
+if mozjpeg.found()
+  libjpeg = mozjpeg
+else
+  libjpeg = dependency('libjpeg')
+endif
+conf.set('HAVE_MOZJPEG', mozjpeg.found())
 MIMEtypes += 'image/jpeg'
 
 
@@ -1952,6 +1958,7 @@ final_message = [
 '''  Detailed backtraces:       @0@'''.format(detailed_backtraces),
 '''  Binary symlinks:           @0@'''.format(enable_default_bin),
 '''  OpenMP:                    @0@'''.format(have_openmp),
+'''  MozJPEG:                   @0@'''.format(mozjpeg.found()),
 '',
 '''Optional Plug-Ins:''',
 '''  Ascii Art:           @0@'''.format(libaa.found()),

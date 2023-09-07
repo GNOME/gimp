@@ -301,6 +301,11 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                                  _("Use restart mar_kers"),
                                  NULL, FALSE,
                                  G_PARAM_READWRITE);
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-mozjpeg",
+                                 _("Value file size over encoding speed (using MozJPEG)"),
+                                 _("Use MozJPEG optimizations for better quality/filesize ratio, with slower encoding."),
+                                 FALSE,
+                                 G_PARAM_READWRITE);
 
       gimp_save_procedure_set_support_exif      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
       gimp_save_procedure_set_support_iptc      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
@@ -597,8 +602,8 @@ jpeg_save (GimpProcedure        *procedure,
   if (status == GIMP_PDB_SUCCESS)
     {
       if (! save_image (file, config,
-                        image, drawables[0], orig_image, FALSE,
-                        &error))
+                        image, drawables[0], orig_image,
+                        run_mode, FALSE, &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }

@@ -44,6 +44,7 @@ option('ilbm',              type: 'feature', value: 'auto', description: 'Amiga 
 option('jpeg2000',          type: 'feature', value: 'auto', description: 'Jpeg-2000 support')
 option('jpeg-xl',           type: 'feature', value: 'auto', description: 'JPEG XL support')
 option('mng',               type: 'feature', value: 'auto', description: 'Mng support')
+option('mozjpeg',           type: 'feature', value: 'auto', description: 'Build JPEG support with mozjpeg specifically')
 option('openexr',           type: 'feature', value: 'auto', description: 'Openexr support')
 option('openmp',            type: 'feature', value: 'auto', description: 'OpenMP support')
 option('print',             type: 'boolean', value: true,   description: 'Print support')

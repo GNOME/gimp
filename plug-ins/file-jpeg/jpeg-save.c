@@ -198,6 +198,7 @@ save_image (GFile                *file,
             GimpImage            *image,
             GimpDrawable         *drawable,
             GimpImage            *orig_image,
+            GimpRunMode           run_mode,
             gboolean              preview,
             GError              **error)
 {
@@ -236,6 +237,7 @@ save_image (GFile                *file,
   gint             orig_num_quant_tables = -1;
   gboolean         use_arithmetic_coding = FALSE;
   gboolean         use_restart           = FALSE;
+  gboolean         mozjpeg               = FALSE;
   gchar           *comment;
 
   g_object_get (config,
@@ -248,6 +250,7 @@ save_image (GFile                *file,
                 "baseline",                  &baseline,
                 "restart",                   &restart,
                 "dct",                       &dct,
+                "use-mozjpeg",               &mozjpeg,
 
                 /* Original quality settings. */
                 "use-original-quality",      &use_orig_quality,
@@ -261,6 +264,16 @@ save_image (GFile                *file,
                 "gimp-comment",              &comment,
 
                 NULL);
+
+  if (run_mode == GIMP_RUN_NONINTERACTIVE && mozjpeg)
+    {
+#ifndef HAVE_MOZJPEG
+      g_set_error_literal (error, GIMP_PLUG_IN_ERROR, 0,
+                           _("GIMP was not compiled with MozJPEG. "
+                             "The argument 'use-mozjpeg' cannot be set to TRUE."));
+      return FALSE;
+#endif
+    }
 
   quality = (gint) (dquality * 100.0 + 0.5);
 
@@ -489,6 +502,13 @@ save_image (GFile                *file,
                               drawable_type == GIMP_RGBA_IMAGE)
         ? JCS_RGB : JCS_GRAYSCALE;
     }
+
+#ifdef HAVE_MOZJPEG
+  if (! mozjpeg)
+    /* Disable mozjpeg code path (upstream jpeg-turbo normal algorithm). */
+    jpeg_c_set_int_param (&cinfo, JINT_COMPRESS_PROFILE, JCP_FASTEST);
+#endif
+
   /* Now use the library's routine to set default compression parameters.
    * (You must set at least cinfo.in_color_space before calling this,
    * since the defaults depend on the source color space.)
@@ -795,6 +815,7 @@ make_preview (GimpProcedureConfig *config)
                   preview_image,
                   drawable_global,
                   orig_image_global,
+                  GIMP_RUN_NONINTERACTIVE,
                   TRUE, NULL);
 
       g_object_unref (file);
@@ -995,6 +1016,9 @@ save_dialog (GimpProcedure       *procedure,
                                   "restart-frame",
                                   "sub-sampling",
                                   "dct",
+#ifdef HAVE_MOZJPEG
+                                  "use-mozjpeg",
+#endif
                                   NULL);
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "advanced-frame", "advanced-title", FALSE,
