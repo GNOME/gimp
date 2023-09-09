@@ -24,9 +24,11 @@ if not stable
     'tests' / 'PDB' / 'selection' / 'selection.scm',
     'tests' / 'PDB' / 'selection' / 'selection-from.scm',
     'tests' / 'PDB' / 'resource' / 'resource.scm',
+    'tests' / 'PDB' / 'resource' / 'resource-ops.scm',
     'tests' / 'PDB' / 'resource' / 'brush.scm',
     'tests' / 'PDB' / 'resource' / 'palette.scm',
     'tests' / 'PDB' / 'context' / 'context-get-set.scm',
+    'tests' / 'PDB' / 'context' / 'context-resource.scm',
     # TODO context push pop list-paint-methods
     'tests' / 'PDB' / 'buffer.scm',
     'tests' / 'PDB' / 'misc.scm',

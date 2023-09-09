@@ -360,7 +360,7 @@ marshal_returned_PDB_value    (scheme        *sc,
 
   /* Order is important.
     * GFile before other objects.
-    * GIMP resource objects before GIMP Image, Drawable, etc. objects.
+    * GIMP Image, Drawable, etc. objects.
     * Alternatively, more specific tests.
     */
   if (G_VALUE_TYPE (value) == G_TYPE_FILE)
@@ -381,28 +381,12 @@ marshal_returned_PDB_value    (scheme        *sc,
         }
       /* Ensure result holds a string, possibly empty. */
     }
-  else if (GIMP_VALUE_HOLDS_RESOURCE (value))
-    {
-      /* ScriptFu represents resource objects by ther unique string ID's. */
-      GObject *object = g_value_get_object (value);
-      gchar   *name   = NULL;
-
-      if (object)
-        name = gimp_resource_get_name (GIMP_RESOURCE (object));
-
-      if (! name)
-        g_warning ("PDB procedure returned NULL object.");
-
-      result = sc->vptr->mk_string (sc, name);
-
-      g_free (name);
-    }
   else if (G_VALUE_HOLDS_OBJECT (value))
     {
       /* G_VALUE_HOLDS_OBJECT only ensures value derives from GObject.
         * Could be a GIMP or a GLib type.
         * Here we handle GIMP types, which all have an id property.
-        * Resources have a string ID and Images and Drawables etc. have an int ID.
+        * Resources, Images, Drawables etc. have an int ID.
         */
       GObject *object = g_value_get_object (value);
       gint     id     = -1;

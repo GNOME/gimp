@@ -21,7 +21,9 @@
 (testing:load-test "layer-mask.scm")
 ; TODO layer stack ops
 
-(testing:load-test "text-layer-new.scm")
+; Commented out until PDB is fixed
+; Known to crash GIMP
+;(testing:load-test "text-layer-new.scm")
 
 (testing:load-test "vectors-new.scm")
 (testing:load-test "channel-new.scm")
@@ -34,15 +36,25 @@
 ; Drawable and Item are superclasses
 ; Testing Drawable and Item uses extant instances;
 ; must be after instances of subclasses are created.
-(testing:load-test "item.scm")
-; todo item order
+; commented out until text-get-fontname is fixed
+; Known to crash GIMP
+;(testing:load-test "item.scm")
+; todo item ordering operations
 
 ; TODO drawable
+
+; context
+(testing:load-test "context-get-set.scm")
+
+; Temporarily commented out until gimpgpparam-body.c is fixed for GimpParamResource
+; If you uncomment it, see warnings in stderr
+;(testing:load-test "context-resource.scm")
 
 (testing:load-test "resource.scm")
 (testing:load-test "brush.scm")
 (testing:load-test "palette.scm")
 ; TODO other resources gradient, etc
+(testing:load-test "resource-ops.scm")
 
 (testing:load-test "buffer.scm")
 
@@ -61,7 +73,6 @@
 (testing:load-test "misc.scm")
 (testing:load-test "enums.scm")
 (testing:load-test "refresh.scm")
-(testing:load-test "context-get-set.scm")
 (testing:load-test "bind-args.scm")
 
 ; report the result

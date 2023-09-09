@@ -1257,15 +1257,20 @@ script_fu_marshal_procedure_call (scheme   *sc,
         }
       else if (GIMP_VALUE_HOLDS_RESOURCE (&value))
         {
-          if (! sc->vptr->is_string (sc->vptr->pair_car (a)))
-            return script_type_error (sc, "string", i, proc_name);
+          if (! sc->vptr->is_integer (sc->vptr->pair_car (a)))
+            return script_type_error (sc, "integer", i, proc_name);
           else
             {
               /* Create new instance of a resource object. */
               GimpResource *resource;
-              GType         type = G_VALUE_TYPE (&value);
-              const gchar  *name = sc->vptr->string_value (sc->vptr->pair_car (a));
-              resource = gimp_resource_get_by_name (type, name);
+
+              gint resource_id = sc->vptr->ivalue (sc->vptr->pair_car (a));
+              /* Superclass is Resource, subclass is e.g. Brush.
+               * Superclass is abstract, can't instantiate it.
+               * This returns an instance of the appropriate subclass for the ID.
+               * ID's are unique across all instances of Resource.
+               */
+             resource = gimp_resource_get_by_id (resource_id);
 
               g_value_set_object (&value, resource);
             }

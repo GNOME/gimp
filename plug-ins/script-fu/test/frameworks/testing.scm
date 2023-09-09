@@ -346,12 +346,20 @@
                str))))
     (rtrim (to-string any))))
 
-; FIXME this is not robust to str2 shorter than str1
+
 ; string-prefix? is in R5RS but not tinyscheme.
+; string-prefix? is in various SRFI's but we don't have them here
+; So yet again, we need to implement it de novo
 (define (string-prefix? str1 str2)
-  (string=?
-    str1
-    (substring str2 0 (string-length str1))))
+  ; if str1 is longer than str2, it is not a prefix
+  (if (> (string-length str1) (string-length str2))
+    #f
+    ; else str2 is longer str2 than str1.
+    ; str1 is a prefix if the leading substring of str2,
+    ; that is the length of str1, equals str1.
+    (string=?
+      str1
+      (substring str2 0 (string-length str1)))))
 
 
 
