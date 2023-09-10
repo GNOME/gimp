@@ -59,42 +59,42 @@ static const LayerModeMapping layer_mode_map[] =
 /*  Name             PSD     GIMP                                   Exact?  */
 
   /* Normal (ps3) */
-  { "Normal",        "norm", GIMP_LAYER_MODE_NORMAL,                TRUE },
   { "Normal",        "norm", GIMP_LAYER_MODE_NORMAL_LEGACY,         TRUE },
+  { "Normal",        "norm", GIMP_LAYER_MODE_NORMAL,                TRUE },
 
   /* Dissolve (ps3) */
   { "Dissolve",      "diss", GIMP_LAYER_MODE_DISSOLVE,              TRUE },
 
   /* Multiply (ps3) */
-  { "Multiply",      "mul ", GIMP_LAYER_MODE_MULTIPLY,              TRUE },
   { "Multiply",      "mul ", GIMP_LAYER_MODE_MULTIPLY_LEGACY,       TRUE },
+  { "Multiply",      "mul ", GIMP_LAYER_MODE_MULTIPLY,              TRUE },
 
   /* Screen (ps3) */
-  { "Screen",        "scrn", GIMP_LAYER_MODE_SCREEN,                TRUE },
   { "Screen",        "scrn", GIMP_LAYER_MODE_SCREEN_LEGACY,         TRUE },
+  { "Screen",        "scrn", GIMP_LAYER_MODE_SCREEN,                TRUE },
 
   /* Overlay (ps3) */
   { "Overlay",       "over", GIMP_LAYER_MODE_OVERLAY,               TRUE },
 
   /* Difference (ps3) */
-  { "Difference",    "diff", GIMP_LAYER_MODE_DIFFERENCE,            TRUE },
   { "Difference",    "diff", GIMP_LAYER_MODE_DIFFERENCE_LEGACY,     TRUE },
+  { "Difference",    "diff", GIMP_LAYER_MODE_DIFFERENCE,            TRUE },
 
   /* Linear Dodge (cs2) */
-  { "Linear Dodge",  "lddg", GIMP_LAYER_MODE_ADDITION,              TRUE },
   { "Linear Dodge",  "lddg", GIMP_LAYER_MODE_ADDITION_LEGACY,       TRUE },
+  { "Linear Dodge",  "lddg", GIMP_LAYER_MODE_ADDITION,              TRUE },
 
   /* Subtract (??) */
-  { "Subtract",      "fsub", GIMP_LAYER_MODE_SUBTRACT,              TRUE },
   { "Subtract",      "fsub", GIMP_LAYER_MODE_SUBTRACT_LEGACY,       TRUE },
+  { "Subtract",      "fsub", GIMP_LAYER_MODE_SUBTRACT,              TRUE },
 
   /* Darken (ps3) */
-  { "Darken",        "dark", GIMP_LAYER_MODE_DARKEN_ONLY,           TRUE },
   { "Darken",        "dark", GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY,    TRUE },
+  { "Darken",        "dark", GIMP_LAYER_MODE_DARKEN_ONLY,           TRUE },
 
   /* Lighten (ps3) */
-  { "Ligten",        "lite", GIMP_LAYER_MODE_LIGHTEN_ONLY,          TRUE },
   { "Ligten",        "lite", GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,   TRUE },
+  { "Ligten",        "lite", GIMP_LAYER_MODE_LIGHTEN_ONLY,          TRUE },
 
   /* Hue (ps3) */
   { "Hue",           "hue ", GIMP_LAYER_MODE_LCH_HUE,               FALSE },
@@ -118,20 +118,20 @@ static const LayerModeMapping layer_mode_map[] =
   { "Luminosity",    "lum ", GIMP_LAYER_MODE_LUMINANCE,             FALSE },
 
   /* Divide (??) */
-  { "Divide",        "fdiv", GIMP_LAYER_MODE_DIVIDE,                TRUE },
   { "Divide",        "fdiv", GIMP_LAYER_MODE_DIVIDE_LEGACY,         TRUE },
+  { "Divide",        "fdiv", GIMP_LAYER_MODE_DIVIDE,                TRUE },
 
   /* Color Dodge (ps6) */
-  { "Color Dodge",   "div ", GIMP_LAYER_MODE_DODGE,                 TRUE },
   { "Color Dodge",   "div ", GIMP_LAYER_MODE_DODGE_LEGACY,          TRUE },
+  { "Color Dodge",   "div ", GIMP_LAYER_MODE_DODGE,                 TRUE },
 
   /* Color Burn (ps6) */
-  { "Color Burn",    "idiv", GIMP_LAYER_MODE_BURN,                  TRUE },
   { "Color Burn",    "idiv", GIMP_LAYER_MODE_BURN_LEGACY,           TRUE },
+  { "Color Burn",    "idiv", GIMP_LAYER_MODE_BURN,                  TRUE },
 
   /* Hard Light (ps3) */
-  { "Hard Light",    "hLit", GIMP_LAYER_MODE_HARDLIGHT,             TRUE },
   { "Hard Light",    "hLit", GIMP_LAYER_MODE_HARDLIGHT_LEGACY,      TRUE },
+  { "Hard Light",    "hLit", GIMP_LAYER_MODE_HARDLIGHT,             TRUE },
 
   /* Soft Light (ps3) */
   { "Soft Light",    "sLit", GIMP_LAYER_MODE_SOFTLIGHT,             FALSE },
