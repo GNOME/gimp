@@ -23,6 +23,7 @@
         (theNumber inNumber)
         (theSize (min theWidth theHeight))
         (theStain 0)
+        (theSpread 0)
         )
 
     (gimp-context-push)
@@ -42,6 +43,7 @@
       (gimp-drawable-edit-clear theStain)
 
       (let ((blobSize (/ (rand (- theSize 40)) (+ (rand 3) 1))))
+        (if (< blobSize 32) (set! blobSize 32))
         (gimp-image-select-ellipse theImage
 				   CHANNEL-OP-REPLACE
 				   (/ (- theSize blobSize) 2)
@@ -49,17 +51,24 @@
 				   blobSize blobSize)
       )
 
+      ; clamp the spread value to the 'plug-in-spread' limits
+      (set! theSpread (/ theSize 25))
+      (if (> theSpread 200) (set! theSpread 200))
+
       (script-fu-distress-selection theImage theStain
                                     (- (* (+ (rand 15) 1) (+ (rand 15) 1)) 1)
-                                    (/ theSize 25) 4 2 TRUE TRUE)
+                                    theSpread 4 2 TRUE TRUE)
 
       (gimp-context-set-gradient "Coffee")
 
-      (gimp-drawable-edit-gradient-fill theStain
-					GRADIENT-SHAPEBURST-DIMPLED 0
-					FALSE 0 0
-					TRUE
-					0 0 0 0)
+      ; only fill if there is a selection
+      (if (> (car (gimp-selection-bounds theImage)) 0)
+        (gimp-drawable-edit-gradient-fill theStain
+            GRADIENT-SHAPEBURST-DIMPLED 0
+            FALSE 0 0
+            TRUE
+            0 0 0 0)
+      )
 
       (gimp-layer-set-offsets theStain
                               (- (rand theWidth) (/ theSize 2))
