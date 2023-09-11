@@ -419,6 +419,8 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_widget_set_halign (frame, GTK_ALIGN_CENTER);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (center_right_vbox), frame, FALSE, FALSE, 0);
+  gtk_style_context_add_class (gtk_widget_get_style_context (frame),
+                               "gimp-offset-area-frame");
   gtk_widget_show (frame);
 
   private->area = gimp_offset_area_new (width, height);

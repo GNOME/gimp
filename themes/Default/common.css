@@ -378,6 +378,12 @@ border {
   border: 0px;
 }
 
+/* The border around GimpOffsetArea frame in resize dialogs */
+.gimp-offset-area-frame {
+  border: solid 2px @stronger-border-color;
+  background-color: @widget-bg-color;
+}
+
 /* For dropdown menus (e.g. "px" when creating a new image */
 #gtk-combobox-popup-menu {
   background-color: @bg-color;
