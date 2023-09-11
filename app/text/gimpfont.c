@@ -124,9 +124,6 @@ static GimpTempBuf * gimp_font_get_new_preview    (GimpViewable          *viewab
                                                    gint                   width,
                                                    gint                   height);
 
-static const gchar * gimp_font_get_sample_string  (PangoContext         *context,
-                                                   PangoFontDescription *font_desc);
-
 static void          gimp_font_config_iface_init  (GimpConfigInterface  *iface);
 static gboolean      gimp_font_serialize          (GimpConfig           *config,
                                                    GimpConfigWriter     *writer,
@@ -138,6 +135,15 @@ static GimpConfig  * gimp_font_deserialize_create (GType                 type,
 
 static gint64        gimp_font_get_memsize        (GimpObject           *object,
                                                    gint64               *gui_size);
+
+static inline gboolean gimp_font_covers_string    (PangoFont            *font,
+                                                   const gchar          *sample);
+static hb_tag_t      get_hb_table_type            (PangoOTTableType      table_type);
+static const gchar * gimp_font_get_sample_string  (PangoContext         *context,
+                                                   PangoFontDescription *font_desc);
+
+static const gchar * gimp_font_get_hash           (GimpFont             *font);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpFont, gimp_font, GIMP_TYPE_DATA,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
@@ -167,34 +173,8 @@ gimp_font_serialize (GimpConfig       *config,
   if (font == GIMP_FONT (gimp_font_get_standard ()))
     return TRUE;
 
-  /* Computing the hash is expensive, so it's only done when serializing, then it's cached,
-   * or it's done when deserializing in case the hash hasn't been computed for that particular font.
-   */
-  if (font->hash == NULL)
-    {
-      PangoFontDescription *pfd        = pango_font_description_from_string (font->lookup_name);
-      PangoFcFont          *pango_font = PANGO_FC_FONT (pango_context_load_font (font->pango_context, pfd));
-      GChecksum            *checksum   = g_checksum_new (G_CHECKSUM_SHA256);
-      gchar                *file;
-      hb_blob_t            *hb_blob;
-      guint                 length;
-      const char           *hb_data;
-
-      FcPatternGetString (pango_fc_font_get_pattern (pango_font), FC_FILE, 0, (FcChar8 **) &file);
-
-      hb_blob  = hb_blob_create_from_file (file);
-      hb_data  = hb_blob_get_data (hb_blob, &length);
-      g_checksum_update (checksum, (const guchar*)hb_data, length);
-      font->hash = g_strdup (g_checksum_get_string (checksum));
-
-      pango_font_description_free (pfd);
-      g_object_unref (pango_font);
-      hb_blob_destroy (hb_blob);
-      g_checksum_free (checksum);
-    }
-
   gimp_config_writer_open   (writer, "fonthash");
-  gimp_config_writer_string (writer, font->hash);
+  gimp_config_writer_string (writer, gimp_font_get_hash (font));
   gimp_config_writer_close  (writer);
 
   gimp_config_writer_open   (writer, "fullname");
@@ -248,7 +228,6 @@ gimp_font_deserialize_create (GType     type,
   gint           font_count              = gimp_container_get_n_children (fonts_container);
   gint           largest_similarity      = 0;
   gint           similar_fonts           = 0;
-  gboolean       match_found             = FALSE;
   gint           i;
   gchar         *fonthash;
   gchar         *fullname;
@@ -345,12 +324,13 @@ gimp_font_deserialize_create (GType     type,
   for (i = 0; i < font_count; i++)
     {
       gint current_font_similarity = 0;
+
       font = GIMP_FONT (gimp_container_get_child_by_index (fonts_container, i));
 
       if (font->hash != NULL && !g_strcmp0 (font->hash, fonthash))
         {
           most_similar_font_index = i;
-          match_found = TRUE;
+          similar_fonts           = 1;
           break;
         }
 
@@ -392,6 +372,10 @@ gimp_font_deserialize_create (GType     type,
         {
           largest_similarity      = current_font_similarity;
           most_similar_font_index = i;
+          similar_fonts           = 1;
+        }
+      else if (current_font_similarity == largest_similarity)
+        {
           similar_fonts++;
         }
     }
@@ -399,8 +383,8 @@ gimp_font_deserialize_create (GType     type,
     /* In case there are multiple font with identical info,
      * the font file hash should be used for comparison.
      */
-    if (!match_found && similar_fonts > 1)
-      for (i = 0; i < font_count; i++)
+    if (similar_fonts > 1)
+      for (i = 0; i < font_count && similar_fonts > 0; i++)
         {
           gint current_font_similarity = 0;
           font = GIMP_FONT (gimp_container_get_child_by_index (fonts_container, i));
@@ -437,34 +421,12 @@ gimp_font_deserialize_create (GType     type,
 
           if (current_font_similarity == largest_similarity)
             {
-              if (font->hash == NULL)
-                {
-                  PangoFontDescription *pfd        = pango_font_description_from_string (font->lookup_name);
-                  PangoFcFont          *pango_font = PANGO_FC_FONT (pango_context_load_font (font->pango_context, pfd));
-                  GChecksum            *checksum   = g_checksum_new (G_CHECKSUM_SHA256);
-                  gchar                *file;
-                  hb_blob_t            *hb_blob;
-                  guint                 length;
-                  const char           *hb_data;
-
-                  FcPatternGetString (pango_fc_font_get_pattern (pango_font), FC_FILE, 0, (FcChar8 **) &file);
-
-                  hb_blob  = hb_blob_create_from_file (file);
-                  hb_data  = hb_blob_get_data (hb_blob, &length);
-                  g_checksum_update (checksum, (const guchar*)hb_data, length);
-                  font->hash = g_strdup (g_checksum_get_string (checksum));
-
-                  pango_font_description_free (pfd);
-                  g_object_unref (pango_font);
-                  hb_blob_destroy (hb_blob);
-                  g_checksum_free (checksum);
-                }
-
-              if (!g_strcmp0 (font->hash, fonthash))
+              if (g_strcmp0 (gimp_font_get_hash (font), fonthash) == 0)
                 {
                   most_similar_font_index = i;
                   break;
                 }
+              similar_fonts--;
             }
         }
 
@@ -777,7 +739,7 @@ gimp_font_get_standard (void)
                                         NULL));;
 
      /* pango_font_description_from_string doesn't accept NULL */
-      GIMP_FONT (standard_font)->lookup_name = "";
+      GIMP_FONT (standard_font)->lookup_name = g_strdup ("");
       gimp_data_clean (standard_font);
       gimp_data_make_internal (standard_font, "gimp-font-standard");
     }
@@ -785,6 +747,8 @@ gimp_font_get_standard (void)
   return standard_font;
 }
 
+
+/* Private functions */
 
 static inline gboolean
 gimp_font_covers_string (PangoFont   *font,
@@ -1294,4 +1258,37 @@ gimp_font_get_sample_string (PangoContext         *context,
   /* Final fallback */
   DEBUGPRINT (("=> fallback, use Aa\n"));
   return "Aa";
+}
+
+static const gchar *
+gimp_font_get_hash (GimpFont *font)
+{
+  /* Computing the hash is expensive, so it's only done in a few case, such as
+   * when serializing, when a similar fonts at deserialization looks like it
+   * could be a good identity candidate.
+   */
+  if (font->hash == NULL)
+    {
+      PangoFontDescription *pfd        = pango_font_description_from_string (font->lookup_name);
+      PangoFcFont          *pango_font = PANGO_FC_FONT (pango_context_load_font (font->pango_context, pfd));
+      GChecksum            *checksum   = g_checksum_new (G_CHECKSUM_SHA256);
+      gchar                *file;
+      hb_blob_t            *hb_blob;
+      guint                 length;
+      const char           *hb_data;
+
+      FcPatternGetString (pango_fc_font_get_pattern (pango_font), FC_FILE, 0, (FcChar8 **) &file);
+
+      hb_blob  = hb_blob_create_from_file (file);
+      hb_data  = hb_blob_get_data (hb_blob, &length);
+      g_checksum_update (checksum, (const guchar*) hb_data, length);
+      font->hash = g_strdup (g_checksum_get_string (checksum));
+
+      pango_font_description_free (pfd);
+      g_object_unref (pango_font);
+      hb_blob_destroy (hb_blob);
+      g_checksum_free (checksum);
+    }
+
+  return font->hash;
 }
