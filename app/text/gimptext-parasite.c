@@ -137,7 +137,7 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
                         {
                           desc = pango_font_description_to_string (attr_font_desc->desc);
 
-                          if (g_slist_find_custom (fonts, (gconstpointer) desc, g_str_equal) == NULL)
+                          if (g_slist_find_custom (fonts, (gconstpointer) desc, (GCompareFunc) g_strcmp0) == NULL)
                             {
                               fonts = g_slist_prepend (fonts, (gpointer) desc);
                               /*duplicate font name to making parsing easier when deserializing*/

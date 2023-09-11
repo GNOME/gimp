@@ -830,7 +830,7 @@ gimp_text_serialize_property (GimpConfig       *config,
               gchar *altered_font_name = pango_font_description_to_string (attr_font_desc->desc);
               gchar *font_name         = g_strdup_printf ("gimp%s", altered_font_name);
 
-              if (g_slist_find_custom (fonts, (gconstpointer) font_name, g_str_equal) == NULL)
+              if (g_slist_find_custom (fonts, (gconstpointer) font_name, (GCompareFunc) g_strcmp0) == NULL)
                 {
                   fonts = g_slist_prepend (fonts, (gpointer) font_name);
 
@@ -933,60 +933,71 @@ gimp_text_deserialize_property (GimpConfig *object,
 
       /* This is for backward compatibility with older xcf files.*/
       if (g_scanner_peek_next_token (scanner) == G_TOKEN_STRING)
-        while (g_scanner_peek_next_token (scanner) == G_TOKEN_STRING)
-          {
-            gchar    *markup_fontname;
-            gchar    *escaped_markup_fontname;
-            gchar    *actual_font_lookupname;
-            GimpFont *font;
+        {
+          while (g_scanner_peek_next_token (scanner) == G_TOKEN_STRING)
+            {
+              gchar    *markup_fontname;
+              gchar    *replaced_markup;
+              gchar    *new_markup;
+              GimpFont *font;
 
-            gimp_scanner_parse_string (scanner, &markup_fontname);
+              gimp_scanner_parse_string (scanner, &markup_fontname);
 
-            font = GIMP_FONT (GIMP_CONFIG_GET_IFACE (dummy_object)->deserialize_create (GIMP_TYPE_FONT,
-                                                                                        scanner,
-                                                                                        -1,
-                                                                                        NULL));
-            escaped_markup_fontname = g_strdup_printf ("\"%s\"", markup_fontname);
-            actual_font_lookupname  = g_strdup_printf ("\"%s\"", gimp_font_get_lookup_name (font));
-            g_string_replace (markup_str, escaped_markup_fontname, actual_font_lookupname, 0);
+              font = GIMP_FONT (GIMP_CONFIG_GET_IFACE (dummy_object)->deserialize_create (GIMP_TYPE_FONT,
+                                                                                          scanner,
+                                                                                          -1,
+                                                                                          NULL));
+              replaced_markup = g_markup_printf_escaped (" font=\"%s\"", markup_fontname);
+              new_markup      = g_strdup_printf (" gimpfont=\"%s\"", gimp_font_get_lookup_name (font));
+              g_string_replace (markup_str, replaced_markup, new_markup, 0);
 
-            g_free (markup_fontname);
-            g_free (escaped_markup_fontname);
-            g_free (actual_font_lookupname);
-            g_object_unref (font);
-          }
-
+              g_free (markup_fontname);
+              g_free (replaced_markup);
+              g_free (new_markup);
+              g_object_unref (font);
+            }
+          /* We avoid the edge case when actual fonts are called "gimpfont%d"
+           * and their replacement name chains to each other by marking already
+           * processed font as "gimpfont=". Then we clean up this fake attribute
+           * name in the end.
+           * This is not a problem with the new format as font are stored as
+           * "font%d" (see comment in gimp_text_serialize_property()).
+           */
+          g_string_replace (markup_str, " gimpfont=\"", " font=\"", 0);
+        }
       else
-        while (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
-          {
-            gchar    *lookupname;
-            gchar    *escaped_lookupname;
-            gchar    *actual_font_lookupname;
-            GimpFont *font;
+        {
+          while (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
+            {
+              gchar    *lookupname;
+              gchar    *replaced_markup;
+              gchar    *new_markup;
+              GimpFont *font;
 
-            g_scanner_get_next_token  (scanner); /* ( */
-            g_scanner_get_next_token  (scanner); /* "lookupname" */
-            gimp_scanner_parse_string (scanner, &lookupname);
+              g_scanner_get_next_token  (scanner); /* ( */
+              g_scanner_get_next_token  (scanner); /* "lookupname" */
+              gimp_scanner_parse_string (scanner, &lookupname);
 
-            g_scanner_get_next_token  (scanner); /* ) */
-            g_scanner_get_next_token  (scanner); /* font */
+              g_scanner_get_next_token  (scanner); /* ) */
+              g_scanner_get_next_token  (scanner); /* font */
 
-            font = GIMP_FONT (GIMP_CONFIG_GET_IFACE (dummy_object)->deserialize_create (GIMP_TYPE_FONT,
-                                                                                        scanner,
-                                                                                        -1,
-                                                                                        NULL));
-            g_scanner_get_next_token  (scanner); /* ) */
-            g_scanner_get_next_token  (scanner); /* ) */
+              font = GIMP_FONT (GIMP_CONFIG_GET_IFACE (dummy_object)->deserialize_create (GIMP_TYPE_FONT,
+                                                                                          scanner,
+                                                                                          -1,
+                                                                                          NULL));
+              g_scanner_get_next_token  (scanner); /* ) */
+              g_scanner_get_next_token  (scanner); /* ) */
 
-            escaped_lookupname = g_strdup_printf ("\"%s\"", lookupname);
-            actual_font_lookupname = g_strdup_printf ("\"%s\"", gimp_font_get_lookup_name (font));
-            g_string_replace (markup_str, escaped_lookupname, actual_font_lookupname, 0);
+              replaced_markup = g_markup_printf_escaped (" font=\"%s\"", lookupname);
+              new_markup      = g_strdup_printf (" font=\"%s\"", gimp_font_get_lookup_name (font));
+              g_string_replace (markup_str, replaced_markup, new_markup, 0);
 
-            g_free (lookupname);
-            g_free (escaped_lookupname);
-            g_free (actual_font_lookupname);
-            g_object_unref (font);
-          }
+              g_free (lookupname);
+              g_free (replaced_markup);
+              g_free (new_markup);
+              g_object_unref (font);
+            }
+        }
 
       g_value_set_string (value, markup_str->str);
 
