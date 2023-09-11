@@ -700,6 +700,7 @@ gimp_font_factory_load_names (GimpContainer *container,
     {
       PangoFontDescription *pfd;
       GString              *xml;
+      GString              *xml_bold_variant;
       gchar                *fontformat;
       gchar                *family           = NULL;
       gchar                *style            = NULL;
@@ -792,18 +793,32 @@ gimp_font_factory_load_names (GimpContainer *container,
 
       xml = g_string_new ("<?xml version=\"1.0\"?>\n<match>");
 
+      /*We can't use faux bold (sometimes real bold) unless it is specified in fontconfig*/
+      xml_bold_variant = g_string_new ("<?xml version=\"1.0\"?>\n<match>");
+
       g_string_append_printf (xml,
                               "<test name=\"family\"><string>%s</string></test>",
                               newname);
+      g_string_append_printf (xml_bold_variant,
+                              "<test name=\"family\"><string>%s</string></test>",
+                              newname);
+      g_string_append (xml_bold_variant,
+                       "<test name=\"weight\" compare=\"eq\"><const>bold</const></test>");
 
       escaped_fullname = g_markup_escape_text (fullname, -1);
       g_string_append_printf (xml,
                               "<edit name=\"fullname\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
                               escaped_fullname);
+      g_string_append_printf (xml_bold_variant,
+                              "<edit name=\"fullname\" mode=\"prepend\" binding=\"strong\"><string>%s</string></edit>",
+                              escaped_fullname);
       g_free (escaped_fullname);
 
       family = g_markup_escape_text (family, -1);
       g_string_append_printf (xml,
+                              "<edit name=\"family\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
+                              family);
+      g_string_append_printf (xml_bold_variant,
                               "<edit name=\"family\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
                               family);
       g_free (family);
@@ -812,12 +827,18 @@ gimp_font_factory_load_names (GimpContainer *container,
       g_string_append_printf (xml,
                               "<edit name=\"file\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
                               escaped_file);
+      g_string_append_printf (xml_bold_variant,
+                              "<edit name=\"file\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
+                              escaped_file);
       g_free (escaped_file);
 
       if (psname != NULL)
         {
           psname = g_markup_escape_text (psname, -1);
           g_string_append_printf (xml,
+                                  "<edit name=\"postscriptname\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
+                                  psname);
+          g_string_append_printf (xml_bold_variant,
                                   "<edit name=\"postscriptname\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
                                   psname);
           g_free (psname);
@@ -829,36 +850,64 @@ gimp_font_factory_load_names (GimpContainer *container,
           g_string_append_printf (xml,
                                   "<edit name=\"style\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
                                   style);
+          g_string_append_printf (xml_bold_variant,
+                                  "<edit name=\"style\" mode=\"assign\" binding=\"strong\"><string>%s</string></edit>",
+                                  style);
           g_free (style);
         }
 
+      g_string_append (xml_bold_variant, "<edit name=\"weight\" mode=\"assign\" binding=\"strong\"><const>bold</const></edit>");
+
       if (weight != -1)
         g_string_append_printf (xml,
-                                "<edit name=\"weight\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
+                                "<edit name=\"weight\" mode=\"prepend\" binding=\"strong\"><int>%i</int></edit>",
                                 weight);
 
       if (width != -1)
-        g_string_append_printf (xml,
-                                "<edit name=\"width\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
-                                width);
+        {
+          g_string_append_printf (xml,
+                                  "<edit name=\"width\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
+                                  width);
+          g_string_append_printf (xml_bold_variant,
+                                  "<edit name=\"width\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
+                                  width);
+        }
 
       if (slant != -1)
-        g_string_append_printf (xml,
-                                "<edit name=\"slant\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
-                                slant);
+        {
+          g_string_append_printf (xml,
+                                  "<edit name=\"slant\" mode=\"prepend\" binding=\"strong\"><int>%i</int></edit>",
+                                  slant);
+          g_string_append_printf (xml_bold_variant,
+                                  "<edit name=\"slant\" mode=\"prepend\" binding=\"strong\"><int>%i</int></edit>",
+                                  slant);
+        }
 
       if (fontversion != -1)
-        g_string_append_printf (xml,
-                                "<edit name=\"fontversion\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
-                                fontversion);
+        {
+          g_string_append_printf (xml,
+                                  "<edit name=\"fontversion\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
+                                  fontversion);
+          g_string_append_printf (xml_bold_variant,
+                                  "<edit name=\"fontversion\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
+                                  fontversion);
+        }
 
       if (index != -1)
-        g_string_append_printf (xml,
-                                "<edit name=\"index\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
-                                index);
+        {
+          g_string_append_printf (xml,
+                                  "<edit name=\"index\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
+                                  index);
+          g_string_append_printf (xml_bold_variant,
+                                  "<edit name=\"index\" mode=\"assign\" binding=\"strong\"><int>%i</int></edit>",
+                                  index);
+        }
+
 
       g_string_append (xml, "</match>\n");
+      g_string_append (xml_bold_variant, "</match>\n");
 
+      FcConfigParseAndLoadFromMemory (FcConfigGetCurrent (), (const FcChar8 *) xml_bold_variant->str, FcTrue);
       FcConfigParseAndLoadFromMemory (FcConfigGetCurrent (), (const FcChar8 *) xml->str, FcTrue);
 
       pfd = pango_font_description_from_string (newname);
@@ -873,6 +922,7 @@ gimp_font_factory_load_names (GimpContainer *container,
       pango_font_description_free (pfd);
       g_free (newname);
       g_string_free (xml, TRUE);
+      g_string_free (xml_bold_variant, TRUE);
     }
 
   if (n_ignored > 0)
