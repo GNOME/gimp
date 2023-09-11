@@ -191,9 +191,10 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
 static void
 gimp_text_layer_init (GimpTextLayer *layer)
 {
-  layer->text          = NULL;
-  layer->text_parasite = NULL;
-  layer->private       = gimp_text_layer_get_instance_private (layer);
+  layer->text                 = NULL;
+  layer->text_parasite        = NULL;
+  layer->text_parasite_is_old = FALSE;
+  layer->private              = gimp_text_layer_get_instance_private (layer);
 }
 
 static void
@@ -300,7 +301,10 @@ gimp_text_layer_duplicate (GimpItem *item,
 
       /*  this is just the parasite name, not a pointer to the parasite  */
       if (layer->text_parasite)
-        new_layer->text_parasite = layer->text_parasite;
+        {
+          new_layer->text_parasite        = layer->text_parasite;
+          new_layer->text_parasite_is_old = layer->text_parasite_is_old;
+        }
 
       new_layer->private->base_dir = layer->private->base_dir;
     }
@@ -617,7 +621,8 @@ gimp_text_layer_text_changed (GimpTextLayer *layer)
        */
       gimp_item_parasite_detach (GIMP_ITEM (layer), layer->text_parasite,
                                  FALSE);
-      layer->text_parasite = NULL;
+      layer->text_parasite        = NULL;
+      layer->text_parasite_is_old = FALSE;
     }
 
   if (layer->text->box_mode == GIMP_TEXT_BOX_DYNAMIC)

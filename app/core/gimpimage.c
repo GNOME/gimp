@@ -82,6 +82,8 @@
 #include "gimptemplate.h"
 #include "gimpundostack.h"
 
+#include "text/gimptextlayer.h"
+
 #include "vectors/gimpvectors.h"
 
 #include "gimp-log.h"
@@ -2961,6 +2963,17 @@ gimp_image_get_xcf_version (GimpImage    *image,
                                        "GIMP 3.0"));
           version = MAX (17, version);
         }
+
+      if (GIMP_IS_TEXT_LAYER (layer) &&
+          /* If we loaded an old XCF and didn't touch the text layers, then we
+           * just resave the text layer as-is. No need to bump the XCF version.
+           */
+          ! GIMP_TEXT_LAYER (layer)->text_parasite_is_old)
+        {
+          ADD_REASON (g_strdup_printf (_("Format of font information in text layer was changed in %s"),
+                                       "GIMP 3.0"));
+          version = MAX (19, version);
+        }
     }
   g_list_free (items);
 
@@ -3127,6 +3140,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 16:
     case 17:
     case 18:
+    case 19:
       if (gimp_version)   *gimp_version   = 300;
       if (version_string) *version_string = "GIMP 3.0";
       break;

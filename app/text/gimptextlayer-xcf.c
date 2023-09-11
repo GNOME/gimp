@@ -58,6 +58,7 @@ gimp_text_layer_xcf_load_hack (GimpLayer **layer)
   const gchar        *name;
   GimpText           *text = NULL;
   const GimpParasite *parasite;
+  gboolean            before_xcf_v19 = FALSE;
 
   g_return_val_if_fail (layer != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (*layer), FALSE);
@@ -71,6 +72,7 @@ gimp_text_layer_xcf_load_hack (GimpLayer **layer)
 
       text = gimp_text_from_parasite (parasite,
                                       gimp_item_get_image (GIMP_ITEM (*layer))->gimp,
+                                      &before_xcf_v19,
                                       &error);
 
       if (error)
@@ -94,7 +96,10 @@ gimp_text_layer_xcf_load_hack (GimpLayer **layer)
       parasite = gimp_item_parasite_find (GIMP_ITEM (*layer), name);
 
       if (parasite)
-        text = gimp_text_from_gdyntext_parasite (parasite);
+        {
+          text = gimp_text_from_gdyntext_parasite (parasite);
+          before_xcf_v19 = TRUE;
+        }
     }
 
   if (text)
@@ -102,7 +107,8 @@ gimp_text_layer_xcf_load_hack (GimpLayer **layer)
       *layer = gimp_text_layer_from_layer (*layer, text);
 
       /*  let the text layer knows what parasite was used to create it  */
-      GIMP_TEXT_LAYER (*layer)->text_parasite = name;
+      GIMP_TEXT_LAYER (*layer)->text_parasite        = name;
+      GIMP_TEXT_LAYER (*layer)->text_parasite_is_old = before_xcf_v19;
     }
 
   return (text != NULL);

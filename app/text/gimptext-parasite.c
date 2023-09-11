@@ -67,6 +67,7 @@ gimp_text_to_parasite (GimpText *text)
 GimpText *
 gimp_text_from_parasite (const GimpParasite  *parasite,
                          Gimp                *gimp,
+                         gboolean            *before_xcf_v19,
                          GError             **error)
 {
   GimpText *text;
@@ -83,17 +84,17 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
   parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_data_size);
   if (parasite_data)
     {
-      gboolean      is_old       = strstr (parasite_data, "\"GimpFont\"") == NULL;
       gboolean      has_markup   = g_str_has_prefix (parasite_data, "(markup ");
       GimpParasite *new_parasite = NULL;
       GString      *new_data;
 
+      *before_xcf_v19 = (strstr (parasite_data, "\"GimpFont\"") == NULL);
       /* This is for backward compatibility with older xcf files.
        * font used to be serialized as a string, but now it is serialized/deserialized as
        * GimpFont, so the object Type name is inserted for the GimpFont deserialization function to be called.
        * And more importantly, fonts in the markup are extracted into their own fields for deserialization.
        */
-      if (is_old)
+      if (*before_xcf_v19)
         {
           new_data = g_string_new (parasite_data);
           g_string_replace (new_data, "\")\n(font", "\")\n(font \"GimpFont\"", 1);

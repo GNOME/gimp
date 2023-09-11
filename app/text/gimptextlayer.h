@@ -41,10 +41,11 @@ struct _GimpTextLayer
   GimpLayer     layer;
 
   GimpText     *text;
-  const gchar  *text_parasite;  /*  parasite name that this text was set from,
-                                 *  and that should be removed when the text
-                                 *  is changed.
-                                 */
+  const gchar  *text_parasite;        /* parasite name that this text was set from,
+                                       * and that should be removed when the text
+                                       * is changed.
+                                       */
+  gboolean      text_parasite_is_old; /* Format before XCF 19. */
   gboolean      auto_rename;
   gboolean      modified;
 
