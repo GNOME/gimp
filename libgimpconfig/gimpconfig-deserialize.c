@@ -735,37 +735,43 @@ gimp_config_deserialize_object (GValue     *value,
 {
   GimpConfigInterface *config_iface;
   GimpConfig          *prop_object;
+  GType                type;
 
   g_object_get_property (G_OBJECT (config), prop_spec->name, value);
 
   prop_object = g_value_get_object (value);
 
+  /*  if the object property is not GIMP_CONFIG_PARAM_AGGREGATE, read
+   *  the type of the object.
+   */
+  if (! (prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE))
+    {
+      gchar *type_name;
+
+      if (! gimp_scanner_parse_string (scanner, &type_name))
+        return G_TOKEN_STRING;
+
+      if (! (type_name && *type_name))
+        {
+          g_scanner_error (scanner, "Type name is empty");
+          g_free (type_name);
+          return G_TOKEN_NONE;
+        }
+
+      type = g_type_from_name (type_name);
+      g_free (type_name);
+
+      if (! g_type_is_a (type, prop_spec->value_type))
+        return G_TOKEN_STRING;
+    }
+
   if (! prop_object)
     {
-      /*  if the object property is not GIMP_CONFIG_PARAM_AGGREGATE, read
-       *  the type of the object and create it
+      /*  if the object property is not GIMP_CONFIG_PARAM_AGGREGATE,
+       *  create the object.
        */
       if (! (prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE))
         {
-          gchar *type_name;
-          GType  type;
-
-          if (! gimp_scanner_parse_string (scanner, &type_name))
-            return G_TOKEN_STRING;
-
-          if (! (type_name && *type_name))
-            {
-              g_scanner_error (scanner, "Type name is empty");
-              g_free (type_name);
-              return G_TOKEN_NONE;
-            }
-
-          type = g_type_from_name (type_name);
-          g_free (type_name);
-
-          if (! g_type_is_a (type, prop_spec->value_type))
-            return G_TOKEN_STRING;
-
           prop_object = g_object_new (type, NULL);
 
           g_value_take_object (value, prop_object);

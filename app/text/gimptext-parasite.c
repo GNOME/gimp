@@ -36,6 +36,7 @@
 
 #include "core/gimperror.h"
 
+#include "gimpfont.h"
 #include "gimptext.h"
 #include "gimptext-parasite.h"
 #include "gimptext-xlfd.h"
@@ -80,6 +81,7 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   text = g_object_new (GIMP_TYPE_TEXT, "gimp", gimp, NULL);
+  g_object_set (text, "font", gimp_font_get_standard(), NULL);
 
   parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_data_size);
   if (parasite_data)
@@ -88,7 +90,7 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
       GimpParasite *new_parasite = NULL;
       GString      *new_data;
 
-      *before_xcf_v19 = (strstr (parasite_data, "\"GimpFont\"") == NULL);
+      *before_xcf_v19 = (strstr (parasite_data, "(font \"GimpFont\"") == NULL);
       /* This is for backward compatibility with older xcf files.
        * font used to be serialized as a string, but now it is serialized/deserialized as
        * GimpFont, so the object Type name is inserted for the GimpFont deserialization function to be called.
@@ -101,57 +103,70 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
 
           if (has_markup)
             {
-              PangoAttrList *attr_list;
-              gchar         *desc;
-              guint          length;
-              GSList        *list             = NULL;
-              GSList        *fonts            = NULL;
-              GString       *markup_fonts     = g_string_new (NULL);
-              glong          markup_start_pos = strstr (parasite_data, "\"<")  - parasite_data + 1;
-              glong          markup_end_pos   = strstr (parasite_data, ">\")") - parasite_data + 1;
-              gchar         *markup_str       = g_utf8_substring (parasite_data,
-                                                                  markup_start_pos,
-                                                                  markup_end_pos);
-              GString       *markup           = g_string_new (markup_str);
+              char *markup_start = strstr (parasite_data, "\"<");
+              char *markup_end   = strstr (parasite_data, ">\")");
 
-              g_string_replace (markup, "\\\"", "\"", 0);
-              pango_parse_markup (markup->str, -1, 0, &attr_list, NULL, NULL, NULL);
-
-              list   = pango_attr_list_get_attributes (attr_list);
-              length = g_slist_length (list);
-
-              for (guint i = 0; i < length; ++i)
+              if (markup_start != NULL && markup_end != NULL)
                 {
-                  PangoAttrFontDesc *attr_font_desc = pango_attribute_as_font_desc ((PangoAttribute*)g_slist_nth_data (list, i));
+                  PangoAttrList *attr_list;
+                  gchar         *desc;
+                  guint          length;
+                  GSList        *list             = NULL;
+                  GSList        *fonts            = NULL;
+                  GString       *markup_fonts     = g_string_new (NULL);
+                  glong          markup_start_pos;
+                  glong          markup_end_pos;
+                  gchar         *markup_str;
+                  GString       *markup;
 
-                  if (attr_font_desc != NULL)
+                  markup_start_pos = (glong) (markup_start - parasite_data) + 1;
+                  markup_end_pos   = (glong) (markup_end - parasite_data) + 1;
+                  markup_str       = g_utf8_substring (parasite_data, markup_start_pos, markup_end_pos);
+                  markup           = g_string_new (markup_str);
+                  g_string_replace (markup, "\\\"", "\"", 0);
+                  pango_parse_markup (markup->str, -1, 0, &attr_list, NULL, NULL, NULL);
+
+                  list   = pango_attr_list_get_attributes (attr_list);
+                  length = g_slist_length (list);
+
+                  for (guint i = 0; i < length; ++i)
                     {
-                      desc = pango_font_description_to_string (attr_font_desc->desc);
+                      PangoAttrFontDesc *attr_font_desc = pango_attribute_as_font_desc ((PangoAttribute*)g_slist_nth_data (list, i));
 
-                      if (g_slist_find_custom (fonts, (gconstpointer) desc, g_str_equal) == NULL)
+                      if (attr_font_desc != NULL)
                         {
-                          fonts = g_slist_prepend (fonts, (gpointer) desc);
-                          /*duplicate font name to making parsing easier when deserializing*/
-                          g_string_append_printf (markup_fonts,
-                                                  "\n\"%s\" \"%s\"",
-                                                  desc, desc);
-                        }
-                      else
-                        {
-                          g_free (desc);
+                          desc = pango_font_description_to_string (attr_font_desc->desc);
+
+                          if (g_slist_find_custom (fonts, (gconstpointer) desc, g_str_equal) == NULL)
+                            {
+                              fonts = g_slist_prepend (fonts, (gpointer) desc);
+                              /*duplicate font name to making parsing easier when deserializing*/
+                              g_string_append_printf (markup_fonts,
+                                                      "\n\"%s\" \"%s\"",
+                                                      desc, desc);
+                            }
+                          else
+                            {
+                              g_free (desc);
+                            }
                         }
                     }
+                  g_slist_free_full (fonts, (GDestroyNotify) g_free);
+                  g_slist_free_full (list,  (GDestroyNotify) pango_attribute_destroy);
+                  pango_attr_list_unref (attr_list);
 
+                  g_string_insert (new_data, markup_end_pos + 1, markup_fonts->str);
+
+                  g_free (markup_str);
+                  g_string_free (markup_fonts, TRUE);
+                  g_string_free (markup, TRUE);
                 }
-              g_slist_free_full (fonts, (GDestroyNotify) g_free);
-              g_slist_free_full (list,  (GDestroyNotify) pango_attribute_destroy);
-              pango_attr_list_unref (attr_list);
-
-              g_string_insert  (new_data, markup_end_pos + 1, markup_fonts->str);
-
-              g_free (markup_str);
-              g_string_free (markup_fonts, TRUE);
-              g_string_free (markup, TRUE);
+              else
+                {
+                  /* We could not find the markup delimiters. */
+                  g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                                       _("Invalid markup format in text parasite"));
+                }
             }
 
           new_parasite = gimp_parasite_new (gimp_parasite_get_name  (parasite),
@@ -163,12 +178,12 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
           g_string_free (new_data, TRUE);
         }
 
-      parasite_data = g_strndup (parasite_data, parasite_data_size);
-      gimp_config_deserialize_parasite (GIMP_CONFIG (text),
-                                        parasite,
-                                        NULL,
-                                        error);
-      g_free (parasite_data);
+      if (error == NULL || *error == NULL)
+        gimp_config_deserialize_parasite (GIMP_CONFIG (text),
+                                          parasite,
+                                          NULL,
+                                          error);
+
       gimp_parasite_free (new_parasite);
     }
   else
