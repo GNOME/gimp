@@ -412,11 +412,12 @@ endif
 
 conf.set_quoted('MYPAINT_BRUSHES_DIR', mypaint_brushes_dir)
 
-pangocairo_minver = '1.44.0'
-pangocairo        = dependency('pangocairo',         version: '>='+pangocairo_minver)
-pangoft2          = dependency('pangoft2',           version: '>=1.29.4')
-rsvg_minver       = '2.40.6'
-rsvg              = dependency('librsvg-2.0',        version: '>='+rsvg_minver)
+pango_minver = '1.50.0'
+pangocairo   = dependency('pango',       version: '>='+pango_minver)
+pangocairo   = dependency('pangocairo',  version: '>='+pango_minver)
+pangoft2     = dependency('pangoft2',    version: '>='+pango_minver)
+rsvg_minver  = '2.40.6'
+rsvg         = dependency('librsvg-2.0', version: '>='+rsvg_minver)
 
 conf.set('PANGO_DISABLE_DEPRECATED',pangocairo.version().version_compare('<1.43'))
 
@@ -1696,7 +1697,7 @@ install_conf.set('LIBMYPAINT_REQUIRED_VERSION',   libmypaint_minver)
 install_conf.set('LIBPNG_REQUIRED_VERSION',       libpng_minver)
 install_conf.set('OPENEXR_REQUIRED_VERSION',      openexr_minver)
 install_conf.set('OPENJPEG_REQUIRED_VERSION',     openjpeg_minver)
-install_conf.set('PANGOCAIRO_REQUIRED_VERSION',   pangocairo_minver)
+install_conf.set('PANGO_REQUIRED_VERSION',        pango_minver)
 install_conf.set('POPPLER_DATA_REQUIRED_VERSION', poppler_data_minver)
 install_conf.set('POPPLER_REQUIRED_VERSION',      poppler_minver)
 install_conf.set('PYTHON3_REQUIRED_VERSION',      python3_minver)

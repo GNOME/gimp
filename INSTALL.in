@@ -77,7 +77,7 @@ help in that regard:
 
   4. You need to have installed GTK version @GTK_REQUIRED_VERSION@ or newer.
      GIMP also needs a recent version of GLib (>= @GLIB_REQUIRED_VERSION@), GDK-Pixbuf
-     (>= @GDK_PIXBUF_REQUIRED_VERSION@), and Pango (>= @PANGOCAIRO_REQUIRED_VERSION@). Sources for these can be grabbed
+     (>= @GDK_PIXBUF_REQUIRED_VERSION@), and Pango (>= @PANGO_REQUIRED_VERSION@). Sources for these can be grabbed
      from https://download.gnome.org/sources/.
 
   5. We use cairo >= @CAIRO_REQUIRED_VERSION@, which is hosted at
@@ -247,7 +247,7 @@ help in that regard:
      libtiff              @LIBTIFF_REQUIRED_VERSION@
      Little CMS           @LCMS_REQUIRED_VERSION@
      mypaint-brushes-1.0
-     pangocairo           @PANGOCAIRO_REQUIRED_VERSION@
+     pangocairo           @PANGO_REQUIRED_VERSION@
      poppler-data         @POPPLER_DATA_REQUIRED_VERSION@
      zlib
 
