@@ -76,7 +76,9 @@ static void swatchbooker_load_text          (GMarkupParseContext *context,
                                              gpointer             user_data,
                                              GError             **error);
 
-
+static gchar * gimp_palette_load_acb_string     (GInputStream  *input,
+                                                 goffset        file_size,
+                                                 GError       **error);
 static gchar * gimp_palette_load_ase_block_name (GInputStream  *input,
                                                  goffset        file_size,
                                                  GError       **error);
@@ -638,6 +640,354 @@ gimp_palette_load_aco (GimpContext   *context,
     }
 
   return g_list_prepend (NULL, palette);
+}
+
+GList *
+gimp_palette_load_acb (GimpContext   *context,
+                       GFile         *file,
+                       GInputStream  *input,
+                       GError       **error)
+{
+  GimpPalette  *palette;
+  gchar         header[4];
+  gshort        version;
+  gchar       **palette_strings;
+  gchar        *palette_name;
+  gchar       **palette_prefix;
+  gchar       **palette_suffix;
+  gchar        *description;
+  gushort       number_of_colors;
+  gushort       page;
+  gushort       color_space;
+  const Babl   *src_format = NULL;
+  const Babl   *dst_format = babl_format ("R'G'B' double");
+  gint          i;
+  goffset       file_size;
+  gsize         bytes_read;
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  /* Get file size */
+  g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_END, NULL, error);
+  file_size = g_seekable_tell (G_SEEKABLE (input));
+  g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_SET, NULL, error);
+
+  if (! g_input_stream_read_all (input, header, sizeof (header),
+                                 &bytes_read, NULL, error) ||
+      bytes_read != sizeof (header))
+    {
+      g_prefix_error (error,
+                      _("Could not read header from palette file '%s': "),
+                      gimp_file_get_utf8_name (file));
+      return NULL;
+    }
+
+  /* Version and ID */
+  if (! g_input_stream_read_all (input, &version, sizeof (version),
+                                 &bytes_read, NULL, error))
+    {
+      g_prefix_error (error, _("Invalid ACB palette version."));
+      return NULL;
+    }
+  version = GUINT16_FROM_BE (version);
+  if (version != 1)
+    {
+      g_prefix_error (error, _("GIMP only supports version 1 ACB palettes"));
+      return NULL;
+    }
+
+  if (! g_input_stream_read_all (input, &version, sizeof (version),
+                                 &bytes_read, NULL, error))
+    {
+      g_prefix_error (error, _("Invalid ACB palette identifier."));
+      return NULL;
+    }
+
+  /* Color Book name and palette prefix/suffix */
+  palette_name = gimp_palette_load_acb_string (input, file_size, error);
+  if (palette_name)
+    palette_strings = g_strsplit (palette_name, "=", -1);
+  if (! palette_name || g_strv_length (palette_strings) != 2)
+    {
+      if (palette_name)
+        {
+          g_strfreev (palette_strings);
+          g_free (palette_name);
+        }
+      g_prefix_error (error, _("Invalid ACB palette name."));
+      return NULL;
+    }
+  palette = GIMP_PALETTE (gimp_palette_new (context, palette_strings[1]));
+
+  g_strfreev (palette_strings);
+  g_free (palette_name);
+
+  palette_name = gimp_palette_load_acb_string (input, file_size, error);
+  if (palette_name)
+    palette_prefix = g_strsplit (palette_name, "=", -1);
+  if (! palette_name || g_strv_length (palette_prefix) != 2)
+    {
+      if (palette_name)
+        {
+          g_strfreev (palette_prefix);
+          g_free (palette_name);
+        }
+      g_prefix_error (error, _("Invalid ACB palette prefix."));
+      return NULL;
+    }
+  g_free (palette_name);
+
+  palette_name = gimp_palette_load_acb_string (input, file_size, error);
+  if (palette_name)
+    palette_suffix = g_strsplit (palette_name, "=", -1);
+  if (! palette_name || g_strv_length (palette_suffix) != 2)
+    {
+      if (palette_name)
+        {
+          g_strfreev (palette_suffix);
+          g_free (palette_name);
+        }
+      g_prefix_error (error, _("Invalid ACB palette suffix."));
+      return NULL;
+    }
+  g_free (palette_name);
+
+  /* Description (currently unused) */
+  description = gimp_palette_load_acb_string (input, file_size,
+                                              error);
+  g_free (description);
+
+  /* Number of colors */
+  if (! g_input_stream_read_all (input, &number_of_colors,
+                                 sizeof (number_of_colors), &bytes_read, NULL,
+                                 error))
+    {
+      g_strfreev (palette_prefix);
+      g_strfreev (palette_suffix);
+
+      g_prefix_error (error, _("Invalid number of colors in palette."));
+      return NULL;
+    }
+  number_of_colors = GUINT16_FROM_BE (number_of_colors);
+  if (number_of_colors <= 1)
+    {
+      g_prefix_error (error, _("Invalid number of colors: %s."),
+                      gimp_file_get_utf8_name (file));
+      return NULL;
+    }
+
+  /* Page information (currently unused) */
+  if (! g_input_stream_read_all (input, &page, sizeof (page),
+                                 &bytes_read, NULL, error))
+    {
+      g_strfreev (palette_prefix);
+      g_strfreev (palette_suffix);
+
+      g_prefix_error (error, _("Invalid ACB palette page info."));
+      return NULL;
+    }
+  if (! g_input_stream_read_all (input, &page, sizeof (page),
+                                 &bytes_read, NULL, error))
+    {
+      g_strfreev (palette_prefix);
+      g_strfreev (palette_suffix);
+
+      g_prefix_error (error, _("Invalid ACB palette page info."));
+      return NULL;
+    }
+
+  /* Color Model */
+  if (! g_input_stream_read_all (input, &color_space, sizeof (color_space),
+                                 &bytes_read, NULL, error))
+    {
+      g_strfreev (palette_prefix);
+      g_strfreev (palette_suffix);
+
+      g_prefix_error (error, _("Invalid ACB palette color space."));
+      return NULL;
+    }
+  color_space = GUINT16_FROM_BE (color_space);
+
+  if (color_space == 0)
+    {
+      src_format = babl_format ("R'G'B' u8");
+    }
+  else if (color_space == 2)
+    {
+      src_format = babl_format ("cmyk u8");
+    }
+  else if (color_space == 7)
+    {
+      src_format = babl_format ("CIE Lab u8");
+    }
+  else
+    {
+      g_strfreev (palette_prefix);
+      g_strfreev (palette_suffix);
+
+      g_prefix_error (error, _("Invalid ACB palette color space."));
+      return NULL;
+    }
+
+  /* Color records */
+  for (i = 0; i < number_of_colors; i++)
+    {
+      gchar     color_code[6];
+      gchar    *palette_entry     = NULL;
+      gchar    *full_palette_name = NULL;
+      void     *pixels            = NULL;
+      gboolean  color_ok          = FALSE;
+      GimpRGB   color;
+
+      palette_entry = gimp_palette_load_acb_string (input, file_size,
+                                                    error);
+
+      if (palette_entry)
+        full_palette_name = g_strdup_printf ("%s%s %s", palette_prefix[1],
+                                             palette_entry, palette_suffix[1]);
+
+      /* Color Code (not used) */
+      if (! g_input_stream_read_all (input, color_code, sizeof (color_code),
+                                     &bytes_read, NULL, error))
+        {
+          g_free (palette_entry);
+          g_free (full_palette_name);
+
+          g_printerr ("Invalid ACB palette color code");
+          break;
+        }
+
+      if (color_space == 0)
+        {
+          gchar rgb[3];
+
+          if (! g_input_stream_read_all (input, rgb, sizeof (rgb),
+                                         &bytes_read, NULL, error))
+            {
+              g_free (palette_entry);
+              g_free (full_palette_name);
+
+              g_printerr ("Invalid ACB palette colors");
+              break;
+            }
+
+          pixels   = rgb;
+          color_ok = TRUE;
+        }
+      else if (color_space == 2)
+        {
+          gchar cmyk[4];
+
+          if (! g_input_stream_read_all (input, cmyk, sizeof (cmyk),
+                                         &bytes_read, NULL, error))
+            {
+              g_free (palette_entry);
+              g_free (full_palette_name);
+
+              g_printerr ("Invalid ACB palette colors");
+              break;
+            }
+
+          for (gint j = 0; j < 4; j++)
+            cmyk[j] = ((255 - cmyk[j]) / 2.55f) + 0.5f;
+
+          pixels   = cmyk;
+          color_ok = TRUE;
+        }
+      else if (color_space == 7)
+        {
+          gchar lab[3];
+
+          if (! g_input_stream_read_all (input, lab, sizeof (lab),
+                                         &bytes_read, NULL, error))
+            {
+              g_free (palette_entry);
+              g_free (full_palette_name);
+
+              g_printerr ("Invalid ACB palette colors");
+              break;
+            }
+
+          lab[0] = (lab[0] / 2.55f) + 0.5f;
+          lab[1] = lab[1] - 128;
+          lab[2] = lab[2] - 128;
+
+          pixels   = lab;
+          color_ok = TRUE;
+        }
+
+      if (color_ok && palette_entry)
+        {
+          babl_process (babl_fish (src_format, dst_format), (gdouble *) pixels,
+                        &color, 1);
+          gimp_palette_add_entry (palette, -1, full_palette_name, &color);
+        }
+
+      g_free (palette_entry);
+      g_free (full_palette_name);
+
+      if (! color_ok)
+        {
+          g_printerr ("Invalid ACB palette colors");
+          break;
+        }
+    }
+
+  g_strfreev (palette_prefix);
+  g_strfreev (palette_suffix);
+
+  return g_list_prepend (NULL, palette);
+}
+
+static gchar *
+gimp_palette_load_acb_string (GInputStream  *input,
+                              goffset        file_size,
+                              GError       **error)
+{
+  gint        pal_name_len;
+  gunichar2  *pal_name = NULL;
+  gchar      *pal_name_utf8;
+  goffset     current_pos;
+  gsize       bytes_read;
+
+  if (! g_input_stream_read_all (input, &pal_name_len, sizeof (pal_name_len),
+                                 &bytes_read, NULL, error))
+    {
+      g_printerr (_("Invalid ACB palette name."));
+      return NULL;
+    }
+
+  pal_name_len = GUINT32_FROM_BE (pal_name_len);
+  current_pos  = g_seekable_tell (G_SEEKABLE (input));
+
+  if (pal_name_len <= 0 || pal_name_len > (file_size - current_pos))
+    {
+      if (pal_name_len != 0)
+        g_printerr (_("Invalid ACB name size."));
+
+      return NULL;
+    }
+  pal_name = g_malloc (pal_name_len * 2);
+
+  for (gint i = 0; i < pal_name_len; i++)
+    {
+      if (! g_input_stream_read_all (input, &pal_name[i], 2,
+                                     &bytes_read, NULL, error))
+        {
+          g_printerr (_("Invalid ACB palette name."));
+          g_free (pal_name);
+          return NULL;
+        }
+
+      pal_name[i] = GUINT16_FROM_BE (pal_name[i]);
+    }
+
+  pal_name_utf8 = g_utf16_to_utf8 (pal_name, pal_name_len, NULL, NULL, NULL);
+  g_free (pal_name);
+
+  return pal_name_utf8;
 }
 
 GList *
@@ -1342,6 +1692,10 @@ gimp_palette_load_detect_format (GFile        *file,
       else if (g_str_has_prefix (header, "JASC-PAL"))
         {
           format = GIMP_PALETTE_FILE_FORMAT_PSP_PAL;
+        }
+      else if (g_str_has_prefix (header, "8BCB"))
+        {
+          format = GIMP_PALETTE_FILE_FORMAT_ACB;
         }
     }
 

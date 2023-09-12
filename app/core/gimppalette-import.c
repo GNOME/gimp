@@ -526,6 +526,10 @@ gimp_palette_import_from_file (GimpContext  *context,
       palette_list = gimp_palette_load_aco (context, file, input, error);
       break;
 
+    case GIMP_PALETTE_FILE_FORMAT_ACB:
+      palette_list = gimp_palette_load_acb (context, file, input, error);
+      break;
+
     case GIMP_PALETTE_FILE_FORMAT_ASE:
       palette_list = gimp_palette_load_ase (context, file, input, error);
       break;
