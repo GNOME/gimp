@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-06 04:39+0000\n"
-"PO-Revision-Date: 2023-09-07 09:32+0200\n"
+"POT-Creation-Date: 2023-09-12 14:25+0000\n"
+"PO-Revision-Date: 2023-09-12 18:13+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2520,7 +2520,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2428
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2430
 #: app/core/gimppalette.c:428 app/core/gimppalette-import.c:213
 #: app/core/gimppalette-load.c:241 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
@@ -6933,7 +6933,7 @@ msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "Odstrani %d plasti"
 
-#: app/actions/layers-commands.c:994 app/text/gimptextlayer.c:581
+#: app/actions/layers-commands.c:994 app/text/gimptextlayer.c:585
 msgid "Discard Text Information"
 msgstr "Zavrži besedilne podatke"
 
@@ -13146,7 +13146,7 @@ msgid "Palette"
 msgstr "Paleta"
 
 #: app/core/gimpcontext.c:742 app/core/gimpcontext.c:743
-#: app/tools/gimptextoptions.c:795
+#: app/tools/gimptextoptions.c:800
 msgid "Font"
 msgstr "Pisava"
 
@@ -13176,7 +13176,7 @@ msgstr "kopija"
 msgid "%s copy"
 msgstr "Kopija %s"
 
-#: app/core/gimpdatafactory.c:630 app/tools/gimptextoptions.c:776
+#: app/core/gimpdatafactory.c:630 app/tools/gimptextoptions.c:781
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Nalaganje pisav (to lahko traja dlje časa …)"
@@ -13219,7 +13219,7 @@ msgstr "Napaka pri nalaganju »%s«"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:95
 #: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:443
+#: app/xcf/xcf.c:444
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "»%s« ni mogoče odpreti za branje: "
@@ -13325,7 +13325,7 @@ msgstr "Slog po meri"
 
 #: app/core/gimpfilloptions.c:128 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:81
-#: app/tools/gimptextoptions.c:176
+#: app/tools/gimptextoptions.c:178
 msgid "Antialiasing"
 msgstr "Glajenje robov"
 
@@ -13515,167 +13515,172 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Preoblikuj skupino plasti"
 
-#: app/core/gimpimage.c:707 app/widgets/gimpsymmetryeditor.c:182
+#: app/core/gimpimage.c:709 app/widgets/gimpsymmetryeditor.c:182
 msgid "Symmetry"
 msgstr "Simetrija"
 
-#: app/core/gimpimage.c:2673
+#: app/core/gimpimage.c:2675
 msgid " (exported)"
 msgstr " (izvožena)"
 
-#: app/core/gimpimage.c:2677
+#: app/core/gimpimage.c:2679
 msgid " (overwritten)"
 msgstr " (prepisana)"
 
-#: app/core/gimpimage.c:2686
+#: app/core/gimpimage.c:2688
 msgid " (imported)"
 msgstr " (uvožena)"
 
-#: app/core/gimpimage.c:2859 app/core/gimpimage.c:2873
-#: app/core/gimpimage.c:2916
+#: app/core/gimpimage.c:2861 app/core/gimpimage.c:2875
+#: app/core/gimpimage.c:2918
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Način plasti »%s« je bil dodan v %s"
 
-#: app/core/gimpimage.c:2931
+#: app/core/gimpimage.c:2933
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Skupine plasti so bile dodane v %s"
 
-#: app/core/gimpimage.c:2938
+#: app/core/gimpimage.c:2940
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Maske na skupinah plasti so bile dodane v %s"
 
-#: app/core/gimpimage.c:2945
+#: app/core/gimpimage.c:2947
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Zaklepi položaja na skupinah plasti so bili dodani v %s"
 
-#: app/core/gimpimage.c:2952
+#: app/core/gimpimage.c:2954
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Zaklepi kanala alfa na skupinah plasti so bili dodani v %s"
 
-#: app/core/gimpimage.c:2960 app/core/gimpimage.c:2974
+#: app/core/gimpimage.c:2962 app/core/gimpimage.c:2987
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Zaklepi vidnosti so bili dodani v %s"
 
-#: app/core/gimpimage.c:2983
+#: app/core/gimpimage.c:2973
+#, c-format
+msgid "Format of font information in text layer was changed in %s"
+msgstr "Oblika informacij o pisavi v plasti besedila je bila spremenjena v %s"
+
+#: app/core/gimpimage.c:2996
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Izbor več plasti je bil dodan v %s"
 
-#: app/core/gimpimage.c:2995
+#: app/core/gimpimage.c:3008
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Podpora za barvne značke v poti je bila dodana v %s"
 
-#: app/core/gimpimage.c:3002
+#: app/core/gimpimage.c:3015
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Shranjevanje zaklepov v poteh je bilo dodano v %s"
 
-#: app/core/gimpimage.c:3016
+#: app/core/gimpimage.c:3029
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Slike z visoko bitno globino so dodane v %s"
 
-#: app/core/gimpimage.c:3024
+#: app/core/gimpimage.c:3037
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Kodiranje slik z visoko bitno globino je bilo popravljeno v %s"
 
-#: app/core/gimpimage.c:3032
+#: app/core/gimpimage.c:3045
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "V %s je bilo dodano notranje stiskanje zlib"
 
-#: app/core/gimpimage.c:3049
+#: app/core/gimpimage.c:3062
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Podpora za slikovne datoteke, večje od 4 GB, je bila dodana v %s"
 
-#: app/core/gimpimage.c:3056
+#: app/core/gimpimage.c:3069
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Izbor več plasti je bil dodan v %s"
 
-#: app/core/gimpimage.c:3073
+#: app/core/gimpimage.c:3086
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Vodila izven platna dodana v %s"
 
-#: app/core/gimpimage.c:3084
+#: app/core/gimpimage.c:3097
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 "Element določen in iskanje vzorca v imenu elementa so bili dodani v %s."
 
-#: app/core/gimpimage.c:3090
+#: app/core/gimpimage.c:3103
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Izbor več kanalov je bil dodan v %s"
 
-#: app/core/gimpimage.c:3195
+#: app/core/gimpimage.c:3209
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Spremeni ločljivost slike"
 
-#: app/core/gimpimage.c:3247
+#: app/core/gimpimage.c:3261
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Spremeni enoto slike"
 
-#: app/core/gimpimage.c:4300
+#: app/core/gimpimage.c:4314
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 "Preverjanje veljavnosti parazita »gimp-comment« ni uspelo: komentar vsebuje "
 "neveljaven UTF-8"
 
-#: app/core/gimpimage.c:4362
+#: app/core/gimpimage.c:4376
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Sliki dodaj zajedalca"
 
-#: app/core/gimpimage.c:4407
+#: app/core/gimpimage.c:4421
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Odstrani zajedalca s slike"
 
-#: app/core/gimpimage.c:5242
+#: app/core/gimpimage.c:5256
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodaj plast"
 
-#: app/core/gimpimage.c:5286 app/core/gimpimage.c:5317
+#: app/core/gimpimage.c:5300 app/core/gimpimage.c:5331
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Odstrani plast"
 
-#: app/core/gimpimage.c:5311
+#: app/core/gimpimage.c:5325
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Odstrani plavajoči izbor"
 
-#: app/core/gimpimage.c:5835
+#: app/core/gimpimage.c:5849
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodaj kanal"
 
-#: app/core/gimpimage.c:5865 app/core/gimpimage.c:5890
+#: app/core/gimpimage.c:5879 app/core/gimpimage.c:5904
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Odstrani kanal"
 
-#: app/core/gimpimage.c:5950
+#: app/core/gimpimage.c:5964
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodaj pot"
 
-#: app/core/gimpimage.c:5985 app/core/gimpimage.c:5993
+#: app/core/gimpimage.c:5999 app/core/gimpimage.c:6007
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Odstrani pot"
@@ -14568,7 +14573,7 @@ msgid "Line width"
 msgstr "Širina črte"
 
 #: app/core/gimpstrokeoptions.c:168 app/core/gimptemplate.c:158
-#: app/tools/gimptextoptions.c:163 app/tools/gimptextoptions.c:306
+#: app/tools/gimptextoptions.c:165 app/tools/gimptextoptions.c:308
 msgid "Unit"
 msgstr "Enota"
 
@@ -14584,7 +14589,7 @@ msgstr "Slog stikališča"
 msgid "Miter limit"
 msgstr "Meja sredice"
 
-#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:323
+#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:325
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -15713,7 +15718,7 @@ msgstr "Odmik X:"
 msgid "Offset Y:"
 msgstr "Odmik Y:"
 
-#: app/dialogs/layer-options-dialog.c:377 app/dialogs/resize-dialog.c:508
+#: app/dialogs/layer-options-dialog.c:377 app/dialogs/resize-dialog.c:510
 #: app/widgets/gimptemplateeditor.c:489
 msgid "_Fill with:"
 msgstr "_Napolni z:"
@@ -16521,7 +16526,7 @@ msgstr "Uporabniški vmesnik"
 msgid "Interface"
 msgstr "Vmesnik"
 
-#: app/dialogs/preferences-dialog.c:1917 app/tools/gimptextoptions.c:193
+#: app/dialogs/preferences-dialog.c:1917 app/tools/gimptextoptions.c:195
 msgid "Language"
 msgstr "Jezik"
 
@@ -17717,29 +17722,29 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #. Button to center the image on canvas just below the preview.
-#: app/dialogs/resize-dialog.c:444
+#: app/dialogs/resize-dialog.c:446
 msgid "C_enter"
 msgstr "Sr_edinsko"
 
-#: app/dialogs/resize-dialog.c:470
+#: app/dialogs/resize-dialog.c:472
 msgid "Resize _layers:"
 msgstr "Spremeni velikost _plasti:"
 
-#: app/dialogs/resize-dialog.c:518
+#: app/dialogs/resize-dialog.c:520
 msgid "Resize _text layers"
 msgstr "Spremeni velikost plastem z _besedilom"
 
-#: app/dialogs/resize-dialog.c:529
+#: app/dialogs/resize-dialog.c:531
 msgid "Resizing text layers will make them uneditable"
 msgstr ""
 "Stresanje plasti besedila bo povzročilo, da jih ne bo več mogoče urejati"
 
-#: app/dialogs/resize-dialog.c:751
+#: app/dialogs/resize-dialog.c:753
 #, c-format
 msgid "Scale template to %.2f ppi"
 msgstr "Umeri predlogo na %.2f ppi"
 
-#: app/dialogs/resize-dialog.c:756
+#: app/dialogs/resize-dialog.c:758
 #, c-format
 msgid "Set image to %.2f ppi"
 msgstr "Nastavi sliko na %.2f ppi"
@@ -21227,21 +21232,21 @@ msgstr "Veter"
 msgid "Resource '%s' is not renamable"
 msgstr "Vira »%s« ni mogoče preimenovati"
 
-#: app/pdb/text-layer-cmds.c:97
+#: app/pdb/text-layer-cmds.c:98
 msgid "Failed to create text layer"
 msgstr "Ustvarjanje plasti besedila ni uspelo"
 
-#: app/pdb/text-layer-cmds.c:161 app/pdb/text-layer-cmds.c:295
-#: app/pdb/text-layer-cmds.c:360 app/pdb/text-layer-cmds.c:419
-#: app/pdb/text-layer-cmds.c:477 app/pdb/text-layer-cmds.c:535
-#: app/pdb/text-layer-cmds.c:593 app/pdb/text-layer-cmds.c:651
-#: app/pdb/text-layer-cmds.c:709 app/pdb/text-layer-cmds.c:765
-#: app/pdb/text-layer-cmds.c:823 app/pdb/text-layer-cmds.c:881
-#: app/pdb/text-layer-cmds.c:939 app/pdb/text-layer-cmds.c:974
+#: app/pdb/text-layer-cmds.c:162 app/pdb/text-layer-cmds.c:300
+#: app/pdb/text-layer-cmds.c:365 app/pdb/text-layer-cmds.c:424
+#: app/pdb/text-layer-cmds.c:482 app/pdb/text-layer-cmds.c:540
+#: app/pdb/text-layer-cmds.c:598 app/pdb/text-layer-cmds.c:656
+#: app/pdb/text-layer-cmds.c:714 app/pdb/text-layer-cmds.c:770
+#: app/pdb/text-layer-cmds.c:828 app/pdb/text-layer-cmds.c:886
+#: app/pdb/text-layer-cmds.c:944 app/pdb/text-layer-cmds.c:979
 msgid "Set text layer attribute"
 msgstr "Določite atribute plasti besedila"
 
-#: app/pdb/text-layer-cmds.c:230
+#: app/pdb/text-layer-cmds.c:231
 msgid "Set text layer markup"
 msgstr "Določite označevanje plasti besedila"
 
@@ -21834,7 +21839,7 @@ msgstr "Ta operacija nima lastnosti, ki bi jih lahko spremenili"
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
-#: app/text/gimpfont.c:52
+#: app/text/gimpfont.c:56
 msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
@@ -21855,7 +21860,11 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Dodaj plast besedila"
 
-#: app/text/gimptext-parasite.c:95
+#: app/text/gimptext-parasite.c:168
+msgid "Invalid markup format in text parasite"
+msgstr "Nepravilna oblika označevanja v besedilnem parazitu"
+
+#: app/text/gimptext-parasite.c:192
 msgid "Empty text parasite"
 msgstr "Sprazni parazit besedila"
 
@@ -21891,15 +21900,15 @@ msgstr "Zasukaj plast besedila"
 msgid "Transform Text Layer"
 msgstr "Preoblikuj plast besedila"
 
-#: app/text/gimptextlayer.c:716
+#: app/text/gimptextlayer.c:721
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Zaradi odsotnosti vseh pisav funkcionalnost besedila ni na voljo."
 
-#: app/text/gimptextlayer.c:779
+#: app/text/gimptextlayer.c:784
 msgid "Empty Text Layer"
 msgstr "Sprazni plast besedila"
 
-#: app/text/gimptextlayer.c:947
+#: app/text/gimptextlayer.c:952
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -21907,7 +21916,7 @@ msgstr ""
 "Besedila ni mogoče upodobiti. Najbrž je preveliko. Okrajšajte ga ali "
 "uporabite manjšo pisavo."
 
-#: app/text/gimptextlayer-xcf.c:80
+#: app/text/gimptextlayer-xcf.c:82
 #, c-format
 msgid ""
 "Problems parsing the text parasite for layer '%s':\n"
@@ -21922,7 +21931,7 @@ msgstr ""
 "Nekatere lastnosti besedila so morda napačne. Če plasti z besedilom ne "
 "želite urejati, je skrb odveč."
 
-#: app/text/gimptextlayout.c:594
+#: app/text/gimptextlayout.c:596
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -23306,7 +23315,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:851
+#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:856
 msgid "Color:"
 msgstr "Barva:"
 
@@ -24155,7 +24164,7 @@ msgstr "Trenutna"
 msgid "Fixed"
 msgstr "Nespremenljivo"
 
-#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:809
+#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:814
 msgid "Size:"
 msgstr "Velikost:"
 
@@ -24431,66 +24440,66 @@ msgstr "Kliknite za razmazanje"
 msgid "Click to smudge the line"
 msgstr "Kliknite za razmaz črte"
 
-#: app/tools/gimptextoptions.c:164
+#: app/tools/gimptextoptions.c:166
 msgid "Font size unit"
 msgstr "Enota velikosti pisave"
 
-#: app/tools/gimptextoptions.c:169 app/tools/gimptextoptions.c:170
+#: app/tools/gimptextoptions.c:171 app/tools/gimptextoptions.c:172
 msgid "Font size"
 msgstr "Velikost pisave"
 
-#: app/tools/gimptextoptions.c:183
+#: app/tools/gimptextoptions.c:185
 msgid "Hinting"
 msgstr "Namigovanje"
 
-#: app/tools/gimptextoptions.c:184
+#: app/tools/gimptextoptions.c:186
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Namigovanje popravi obris pisave tako, da ta ostane ostra pri majhnih "
 "velikostih."
 
-#: app/tools/gimptextoptions.c:194
+#: app/tools/gimptextoptions.c:196
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "Jezik besedila lahko vpliva na to, kako bo besedilo upodobljeno."
 
-#: app/tools/gimptextoptions.c:208
+#: app/tools/gimptextoptions.c:210
 msgid "Justify"
 msgstr "Poravnaj obojestransko"
 
-#: app/tools/gimptextoptions.c:209
+#: app/tools/gimptextoptions.c:211
 msgid "Text alignment"
 msgstr "Poravnava besedila"
 
-#: app/tools/gimptextoptions.c:216
+#: app/tools/gimptextoptions.c:218
 msgid "Indentation"
 msgstr "Zamikanje"
 
-#: app/tools/gimptextoptions.c:217
+#: app/tools/gimptextoptions.c:219
 msgid "Indentation of the first line"
 msgstr "Zamik prve vrstice"
 
-#: app/tools/gimptextoptions.c:224
+#: app/tools/gimptextoptions.c:226
 msgid "Line spacing"
 msgstr "Razmik med vrsticami"
 
-#: app/tools/gimptextoptions.c:225
+#: app/tools/gimptextoptions.c:227
 msgid "Adjust line spacing"
 msgstr "Prilagodi razmik vrstic"
 
-#: app/tools/gimptextoptions.c:232
+#: app/tools/gimptextoptions.c:234
 msgid "Letter spacing"
 msgstr "Razmik med črkami"
 
-#: app/tools/gimptextoptions.c:233
+#: app/tools/gimptextoptions.c:235
 msgid "Adjust letter spacing"
 msgstr "Prilagodi razmik črk"
 
-#: app/tools/gimptextoptions.c:240
+#: app/tools/gimptextoptions.c:242
 msgid "Box"
 msgstr "Polje"
 
-#: app/tools/gimptextoptions.c:241
+#: app/tools/gimptextoptions.c:243
 msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
@@ -24498,63 +24507,63 @@ msgstr ""
 "Ali besedilo poteka po pravokotnem liku ali pa se premakne v novo vrstico, "
 "ko pritisnete tipko Enter"
 
-#: app/tools/gimptextoptions.c:249
+#: app/tools/gimptextoptions.c:251
 msgid "Use editor window"
 msgstr "Uporabi okno urejevalnika"
 
-#: app/tools/gimptextoptions.c:250
+#: app/tools/gimptextoptions.c:252
 msgid "Use an external editor window for text entry"
 msgstr "Za vnos besedila uporabi okno zunanjega urejevalnika."
 
-#: app/tools/gimptextoptions.c:256
+#: app/tools/gimptextoptions.c:258
 msgid "Show on-canvas editor"
 msgstr "Pokaži urejevalnik na platnu"
 
-#: app/tools/gimptextoptions.c:257
+#: app/tools/gimptextoptions.c:259
 msgid "Show on-canvas text editor"
 msgstr "Pokaži urejevalnik besedila na platnu"
 
-#: app/tools/gimptextoptions.c:299
+#: app/tools/gimptextoptions.c:301
 msgid "Outline width"
 msgstr "Širina orisa"
 
-#: app/tools/gimptextoptions.c:300
+#: app/tools/gimptextoptions.c:302
 msgid "Adjust outline width"
 msgstr "Prilagodi širino orisa"
 
-#: app/tools/gimptextoptions.c:307
+#: app/tools/gimptextoptions.c:309
 msgid "Outline width unit"
 msgstr "Enota širine orisa"
 
-#: app/tools/gimptextoptions.c:322
+#: app/tools/gimptextoptions.c:324
 msgid "Outline miter limit"
 msgstr "Meja sredice orisa"
 
-#: app/tools/gimptextoptions.c:840
+#: app/tools/gimptextoptions.c:845
 msgid "Hinting:"
 msgstr "Namigovanje:"
 
-#: app/tools/gimptextoptions.c:844
+#: app/tools/gimptextoptions.c:849
 msgid "Text Color"
 msgstr "Barva besedila"
 
-#: app/tools/gimptextoptions.c:857
+#: app/tools/gimptextoptions.c:862
 msgid "Style:"
 msgstr "Slog:"
 
-#: app/tools/gimptextoptions.c:861
+#: app/tools/gimptextoptions.c:866
 msgid "Outline Options"
 msgstr "Možnosti orisa"
 
-#: app/tools/gimptextoptions.c:882
+#: app/tools/gimptextoptions.c:887
 msgid "Justify:"
 msgstr "Poravnaj:"
 
-#: app/tools/gimptextoptions.c:912
+#: app/tools/gimptextoptions.c:917
 msgid "Box:"
 msgstr "Polje:"
 
-#: app/tools/gimptextoptions.c:952
+#: app/tools/gimptextoptions.c:957
 msgid "Language:"
 msgstr "Jezik:"
 
@@ -28125,40 +28134,40 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Stanje in opis"
 
-#: app/xcf/xcf.c:120 app/xcf/xcf.c:188
+#: app/xcf/xcf.c:121 app/xcf/xcf.c:189
 msgid "GIMP XCF image"
 msgstr "slika GIMP XCF"
 
-#: app/xcf/xcf.c:265 app/xcf/xcf.c:354
+#: app/xcf/xcf.c:266 app/xcf/xcf.c:355
 msgid "Memory Stream"
 msgstr "Pomnilniški tok"
 
-#: app/xcf/xcf.c:276
+#: app/xcf/xcf.c:277
 #, c-format
 msgid "Opening '%s'"
 msgstr "Odpiranje »%s«"
 
-#: app/xcf/xcf.c:318
+#: app/xcf/xcf.c:319
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Napaka XCF: nepodprta različica datoteke XCF %d"
 
-#: app/xcf/xcf.c:377
+#: app/xcf/xcf.c:378
 #, c-format
 msgid "Saving '%s'"
 msgstr "Shranjevanje »%s«"
 
-#: app/xcf/xcf.c:385
+#: app/xcf/xcf.c:386
 #, c-format
 msgid "Closing '%s'"
 msgstr "Zapiranje »%s«"
 
-#: app/xcf/xcf.c:403
+#: app/xcf/xcf.c:404
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Napaka pri pisanju »%s«: "
 
-#: app/xcf/xcf.c:491
+#: app/xcf/xcf.c:492
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Napaka pri ustvarjanju ‘%s’: "
