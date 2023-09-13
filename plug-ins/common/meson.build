@@ -21,7 +21,7 @@ common_plugins_list = [
   { 'name': 'destripe', },
   { 'name': 'file-cel', },
   { 'name': 'file-compressor',
-    'deps': [ gegl, gdk_pixbuf, cairo, gio, liblzma, bz2, zlib, ],
+    'deps': [ gegl, gdk_pixbuf, cairo, gio, liblzma, pango, bz2, zlib, ],
   },
   { 'name': 'file-csource', },
   { 'name': 'file-desktop-link',

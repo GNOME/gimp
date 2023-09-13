@@ -255,26 +255,26 @@ text_layer_get_font_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpTextLayer *layer;
-  gchar *font = NULL;
+  GimpFont *font = NULL;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      GimpFont *font_obj;
-
       g_object_get (gimp_text_layer_get_text (layer),
-                    "font", &font_obj,
+                    "font", &font,
                     NULL);
-      font = g_strdup (gimp_font_get_lookup_name (font_obj));
-      g_object_unref (font_obj);
+      /* The GimpText keeps a reference. Therefore unref before returning the
+       * pointer so that we don't leak a reference.
+       */
+      g_object_unref (font);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), font);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), font);
 
   return return_vals;
 }
@@ -289,10 +289,10 @@ text_layer_set_font_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpTextLayer *layer;
-  const gchar *font;
+  GimpFont *font;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
-  font = g_value_get_string (gimp_value_array_index (args, 1));
+  font = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -1182,7 +1182,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                "gimp-text-layer-get-font");
   gimp_procedure_set_static_help (procedure,
                                   "Get the font from a text layer as string.",
-                                  "This procedure returns the name of the font from a text layer.",
+                                  "This procedure returns the font from a text layer.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Marcus Heese <heese@cip.ifi.lmu.de>",
@@ -1195,12 +1195,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                                            FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("font",
-                                                           "font",
-                                                           "The font which is used in the specified text layer.",
-                                                           FALSE, FALSE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_font ("font",
+                                                         "font",
+                                                         "The font which is used in the specified text layer.",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1225,12 +1224,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                                            FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("font",
-                                                       "font",
-                                                       "The new font to use",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               gimp_param_spec_font ("font",
+                                                     "font",
+                                                     "The new font to use",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

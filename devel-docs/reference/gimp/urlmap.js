@@ -8,4 +8,5 @@ baseURLs = [
   [ 'GdkPixbuf', 'https://docs.gtk.org/gdk-pixbuf/' ],
   [ 'Gio',       'https://docs.gtk.org/gio/' ],
   [ 'Gtk',       'https://docs.gtk.org/gtk3/' ],
+  [ 'Pango',     'https://docs.gtk.org/Pango/' ],
 ]

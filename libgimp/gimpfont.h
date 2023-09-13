@@ -38,6 +38,9 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GimpFont, gimp_font, GIMP, FONT, GimpResource)
 
 
+PangoFontDescription * gimp_font_get_pango_font_description (GimpFont *font);
+
+
 G_END_DECLS
 
 #endif /* __GIMP_FONT_H__ */

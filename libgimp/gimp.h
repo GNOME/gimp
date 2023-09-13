@@ -25,6 +25,7 @@
 #include <glib-object.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <pango/pango.h>
 
 #include <libgimpbase/gimpbase.h>
 #include <libgimpcolor/gimpcolor.h>

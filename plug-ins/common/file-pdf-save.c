@@ -641,7 +641,7 @@ get_missing_fonts (GList *layers)
         }
       else if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
         {
-          gchar                *font_family;
+          GimpFont             *gimp_font;
           PangoFontDescription *font_description;
           PangoFontDescription *font_description2;
           PangoFontMap         *fontmap;
@@ -651,8 +651,8 @@ get_missing_fonts (GList *layers)
           fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
           context = pango_font_map_create_context (fontmap);
 
-          font_family = gimp_text_layer_get_font (GIMP_TEXT_LAYER (layer));
-          font_description = pango_font_description_from_string (font_family);
+          gimp_font        = gimp_text_layer_get_font (GIMP_TEXT_LAYER (layer));
+          font_description = gimp_font_get_pango_font_description (gimp_font);
 
           font = pango_font_map_load_font (fontmap, context, font_description);
           font_description2 = pango_font_describe (font);
@@ -669,7 +669,6 @@ get_missing_fonts (GList *layers)
           g_object_unref (font);
           pango_font_description_free (font_description);
           pango_font_description_free (font_description2);
-          g_free (font_family);
           g_object_unref (context);
           g_object_unref (fontmap);
         }
@@ -1599,7 +1598,6 @@ drawText (GimpLayer *layer,
   GimpImageType         type   = gimp_drawable_type (GIMP_DRAWABLE (layer));
   gchar                *text   = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer));
   gchar                *markup = gimp_text_layer_get_markup (GIMP_TEXT_LAYER (layer));
-  gchar                *font_family;
   gchar                *language;
   cairo_font_options_t *options;
   gint                  x;
@@ -1614,6 +1612,7 @@ drawText (GimpLayer *layer,
   GimpTextDirection     dir;
   PangoLayout          *layout;
   PangoContext         *context;
+  GimpFont             *font;
   PangoFontDescription *font_description;
   gdouble               indent;
   gdouble               line_spacing;
@@ -1676,6 +1675,15 @@ drawText (GimpLayer *layer,
    */
   fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
 
+  /* Font */
+  font = gimp_text_layer_get_font (GIMP_TEXT_LAYER (layer));
+  font_description = gimp_font_get_pango_font_description (font);
+
+  /* This function breaks rendering with some fonts if it's called before
+   * gimp_font_get_pango_font_description(). I'm still unsure why yet it
+   * probably means there is a bug somewhere we must fix. Until then, let's make
+   * sure we keep this order. XXX
+   */
   pango_cairo_font_map_set_resolution (PANGO_CAIRO_FONT_MAP (fontmap), y_res);
 
   context = pango_font_map_create_context (fontmap);
@@ -1687,7 +1695,7 @@ drawText (GimpLayer *layer,
   language = gimp_text_layer_get_language (GIMP_TEXT_LAYER (layer));
   if (language)
     pango_context_set_language (context,
-                                pango_language_from_string(language));
+                                pango_language_from_string (language));
 
   /* Text Direction */
   dir = gimp_text_layer_get_base_direction (GIMP_TEXT_LAYER (layer));
@@ -1736,14 +1744,6 @@ drawText (GimpLayer *layer,
    */
   layout = pango_layout_new (context);
   pango_layout_set_wrap (layout, PANGO_WRAP_WORD_CHAR);
-
-  /* Font */
-  font_family = gimp_text_layer_get_font (GIMP_TEXT_LAYER (layer));
-
-  /* We need to find a way to convert GIMP's returned font name to a
-   * normal Pango name... Hopefully GIMP 2.8 with Pango will fix it.
-   */
-  font_description = pango_font_description_from_string (font_family);
 
   /* Font Size */
   size = gimp_text_layer_get_font_size (GIMP_TEXT_LAYER (layer), &unit);
@@ -1825,7 +1825,6 @@ drawText (GimpLayer *layer,
   pango_cairo_show_layout (cr, layout);
 
   g_free (text);
-  g_free (font_family);
   g_free (language);
 
   g_object_unref (layout);

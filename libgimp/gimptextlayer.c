@@ -121,6 +121,7 @@ static GimpLayer *
 gimp_text_layer_copy (GimpLayer *layer)
 {
   GimpTextLayer *new_layer;
+  GimpFont      *font;
   gchar         *text;
   gchar         *fontname;
   gdouble        size;
@@ -129,7 +130,8 @@ gimp_text_layer_copy (GimpLayer *layer)
   g_return_val_if_fail (GIMP_IS_TEXT_LAYER (layer), NULL);
 
   text      = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer));
-  fontname  = gimp_text_layer_get_font (GIMP_TEXT_LAYER (layer));
+  font      = gimp_text_layer_get_font (GIMP_TEXT_LAYER (layer));
+  fontname  = gimp_resource_get_name (GIMP_RESOURCE (font));
   size      = gimp_text_layer_get_font_size (GIMP_TEXT_LAYER (layer), &unit);
   new_layer = gimp_text_layer_new (gimp_item_get_image (GIMP_ITEM (layer)),
                                    text, fontname, size, unit);

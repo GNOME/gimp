@@ -61,6 +61,11 @@ search_index = true
   description = "A 2D graphics library with support for multiple output devices"
   docs_url = "https://www.cairographics.org/manual/"
 
+  [dependencies."Pango-1.0"]
+  name = "Pango"
+  description = "Internationalized text layout and rendering"
+  docs_url = "https://docs.gtk.org/Pango/"
+
 [theme]
 name = "basic"
 show_index_summary = true

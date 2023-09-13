@@ -254,20 +254,19 @@ gimp_text_layer_set_markup (GimpTextLayer *layer,
  *
  * Get the font from a text layer as string.
  *
- * This procedure returns the name of the font from a text layer.
+ * This procedure returns the font from a text layer.
  *
- * Returns: (transfer full):
+ * Returns: (transfer none):
  *          The font which is used in the specified text layer.
- *          The returned value must be freed with g_free().
  *
  * Since: 2.6
  **/
-gchar *
+GimpFont *
 gimp_text_layer_get_font (GimpTextLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *font = NULL;
+  GimpFont *font = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_TEXT_LAYER, layer,
@@ -279,7 +278,7 @@ gimp_text_layer_get_font (GimpTextLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    font = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    font = GIMP_VALUES_GET_FONT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -301,7 +300,7 @@ gimp_text_layer_get_font (GimpTextLayer *layer)
  **/
 gboolean
 gimp_text_layer_set_font (GimpTextLayer *layer,
-                          const gchar   *font)
+                          GimpFont      *font)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -309,7 +308,7 @@ gimp_text_layer_set_font (GimpTextLayer *layer,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_TEXT_LAYER, layer,
-                                          G_TYPE_STRING, font,
+                                          GIMP_TYPE_FONT, font,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),

@@ -413,7 +413,7 @@ endif
 conf.set_quoted('MYPAINT_BRUSHES_DIR', mypaint_brushes_dir)
 
 pango_minver = '1.50.0'
-pangocairo   = dependency('pango',       version: '>='+pango_minver)
+pango        = dependency('pango',       version: '>='+pango_minver)
 pangocairo   = dependency('pangocairo',  version: '>='+pango_minver)
 pangoft2     = dependency('pangoft2',    version: '>='+pango_minver)
 rsvg_minver  = '2.40.6'

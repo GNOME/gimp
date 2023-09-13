@@ -294,6 +294,7 @@ EXPORTS
 	gimp_floating_sel_remove
 	gimp_floating_sel_to_layer
 	gimp_font_get_by_name
+	gimp_font_get_pango_font_description
 	gimp_font_get_type
 	gimp_fonts_close_popup
 	gimp_fonts_get_list

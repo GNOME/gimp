@@ -231,7 +231,7 @@ sub text_layer_get_font {
     $blurb = 'Get the font from a text layer as string.';
 
     $help = <<'HELP';
-This procedure returns the name of the font from a text layer.
+This procedure returns the font from a text layer.
 HELP
 
     &marcus_pdb_misc('2008', '2.6');
@@ -242,20 +242,20 @@ HELP
     );
 
     @outargs = (
-        { name => 'font', type => 'string',
+        { name => 'font', type => 'font',
           desc => 'The font which is used in the specified text layer.' }
     );
     
     %invoke = (
         code => <<'CODE'
 {
-  GimpFont *font_obj;
-
   g_object_get (gimp_text_layer_get_text (layer),
-                "font", &font_obj,
+                "font", &font,
                 NULL);
-  font = g_strdup (gimp_font_get_lookup_name (font_obj));
-  g_object_unref (font_obj);
+  /* The GimpText keeps a reference. Therefore unref before returning the
+   * pointer so that we don't leak a reference.
+   */
+  g_object_unref (font);
 }
 CODE
     );
@@ -273,7 +273,7 @@ HELP
     @inargs = (
         { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
-        { name => 'font', type => 'string',
+        { name => 'font', type => 'font',
           desc => 'The new font to use' }
     );
 

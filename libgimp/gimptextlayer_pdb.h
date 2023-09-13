@@ -43,9 +43,9 @@ gboolean                       gimp_text_layer_set_text           (GimpTextLayer
 gchar*                         gimp_text_layer_get_markup         (GimpTextLayer         *layer);
 gboolean                       gimp_text_layer_set_markup         (GimpTextLayer         *layer,
                                                                    const gchar           *markup);
-gchar*                         gimp_text_layer_get_font           (GimpTextLayer         *layer);
+GimpFont*                      gimp_text_layer_get_font           (GimpTextLayer         *layer);
 gboolean                       gimp_text_layer_set_font           (GimpTextLayer         *layer,
-                                                                   const gchar           *font);
+                                                                   GimpFont              *font);
 gdouble                        gimp_text_layer_get_font_size      (GimpTextLayer         *layer,
                                                                    GimpUnit              *unit);
 gboolean                       gimp_text_layer_set_font_size      (GimpTextLayer         *layer,

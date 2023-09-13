@@ -344,6 +344,8 @@ libgimp = library('gimp-'+ gimp_api_version,
     gegl,
     gexiv2,
     drmingw,
+    pango,
+    pangoft2,
   ],
   sources: [
     pdbgen
@@ -465,6 +467,7 @@ else
     'Gio-2.0',
     'GLib-2.0',
     'GObject-2.0',
+    'Pango-1.0',
   ]
 
   gir_args = [
