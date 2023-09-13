@@ -63,14 +63,14 @@ text_layer_new_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   const gchar *text;
-  const gchar *fontname;
+  GimpFont *font;
   gdouble size;
   GimpUnit unit;
   GimpTextLayer *layer = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   text = g_value_get_string (gimp_value_array_index (args, 1));
-  fontname = g_value_get_string (gimp_value_array_index (args, 2));
+  font = g_value_get_object (gimp_value_array_index (args, 2));
   size = g_value_get_double (gimp_value_array_index (args, 3));
   unit = g_value_get_int (gimp_value_array_index (args, 4));
 
@@ -83,7 +83,7 @@ text_layer_new_invoker (GimpProcedure         *procedure,
 
       gimp_text = g_object_new (GIMP_TYPE_TEXT,
                                 "text",           text,
-                                "font",           fontname,
+                                "font",           font,
                                 "font-size",      size,
                                 "font-size-unit", unit,
                                 "color",          &color,
@@ -1024,12 +1024,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("fontname",
-                                                       "fontname",
-                                                       "The name of the font",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               gimp_param_spec_font ("font",
+                                                     "font",
+                                                     "The font to write the text with",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",

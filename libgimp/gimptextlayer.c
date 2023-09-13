@@ -82,11 +82,11 @@ gimp_text_layer_get_by_id (gint32 layer_id)
 
 /**
  * gimp_text_layer_new:
- * @image:    The image to which to add the layer.
- * @text:     The text to generate (in UTF-8 encoding).
- * @fontname: The name of the font.
- * @size:     The size of text in either pixels or points.
- * @unit:     The units of specified size.
+ * @image: The image to which to add the layer.
+ * @text:  The text to generate (in UTF-8 encoding).
+ * @font:  The name of the font.
+ * @size:  The size of text in either pixels or points.
+ * @unit:  The units of specified size.
  *
  * Create a new layer.
  *
@@ -107,11 +107,11 @@ gimp_text_layer_get_by_id (gint32 layer_id)
 GimpTextLayer *
 gimp_text_layer_new (GimpImage   *image,
                      const gchar *text,
-                     const gchar *fontname,
+                     GimpFont    *font,
                      gdouble      size,
                      GimpUnit     unit)
 {
-  return _gimp_text_layer_new (image, text, fontname, size, unit);
+  return _gimp_text_layer_new (image, text, font, size, unit);
 }
 
 
@@ -121,9 +121,8 @@ static GimpLayer *
 gimp_text_layer_copy (GimpLayer *layer)
 {
   GimpTextLayer *new_layer;
-  GimpFont      *font;
   gchar         *text;
-  gchar         *fontname;
+  GimpFont      *font;
   gdouble        size;
   GimpUnit       unit;
 
@@ -131,12 +130,10 @@ gimp_text_layer_copy (GimpLayer *layer)
 
   text      = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer));
   font      = gimp_text_layer_get_font (GIMP_TEXT_LAYER (layer));
-  fontname  = gimp_resource_get_name (GIMP_RESOURCE (font));
   size      = gimp_text_layer_get_font_size (GIMP_TEXT_LAYER (layer), &unit);
   new_layer = gimp_text_layer_new (gimp_item_get_image (GIMP_ITEM (layer)),
-                                   text, fontname, size, unit);
+                                   text, font, size, unit);
   g_free (text);
-  g_free (fontname);
 
   return GIMP_LAYER (new_layer);
 }

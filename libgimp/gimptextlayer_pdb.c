@@ -40,7 +40,7 @@
  * _gimp_text_layer_new:
  * @image: The image.
  * @text: The text to generate (in UTF-8 encoding).
- * @fontname: The name of the font.
+ * @font: The font to write the text with.
  * @size: The size of text in either pixels or points.
  * @unit: The units of specified size.
  *
@@ -60,7 +60,7 @@
 GimpTextLayer *
 _gimp_text_layer_new (GimpImage   *image,
                       const gchar *text,
-                      const gchar *fontname,
+                      GimpFont    *font,
                       gdouble      size,
                       GimpUnit     unit)
 {
@@ -71,7 +71,7 @@ _gimp_text_layer_new (GimpImage   *image,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_STRING, text,
-                                          G_TYPE_STRING, fontname,
+                                          GIMP_TYPE_FONT, font,
                                           G_TYPE_DOUBLE, size,
                                           GIMP_TYPE_UNIT, unit,
                                           G_TYPE_NONE);

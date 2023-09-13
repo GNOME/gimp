@@ -34,7 +34,7 @@ G_BEGIN_DECLS
 
 G_GNUC_INTERNAL GimpTextLayer* _gimp_text_layer_new               (GimpImage             *image,
                                                                    const gchar           *text,
-                                                                   const gchar           *fontname,
+                                                                   GimpFont              *font,
                                                                    gdouble                size,
                                                                    GimpUnit               unit);
 gchar*                         gimp_text_layer_get_text           (GimpTextLayer         *layer);

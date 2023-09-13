@@ -39,7 +39,7 @@ GimpTextLayer * gimp_text_layer_get_by_id (gint32       layer_id);
 
 GimpTextLayer * gimp_text_layer_new       (GimpImage   *image,
                                            const gchar *text,
-                                           const gchar *fontname,
+                                           GimpFont    *font,
                                            gdouble      size,
                                            GimpUnit     unit);
 
