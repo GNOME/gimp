@@ -1,25 +1,25 @@
 # Swedish messages for GIMP Script-Fu.
-# Copyright © 2000-2003, 2007, 2008, 2011, 2015, 2017-2020, 2022 Free Software Foundation, Inc.
+# Copyright © 2000-2003, 2007, 2008, 2011, 2015, 2017-2020, 2022, 2023 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Tomas Ögren <stric@ing.umu.se>, 2001.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2011.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020, 2022.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020, 2022, 2023.
 # Sebastian Rasmussen <sebras@gmail.com>, 2015, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-03-12 21:03+0000\n"
-"PO-Revision-Date: 2022-03-15 18:16+0100\n"
+"POT-Creation-Date: 2023-08-21 02:01+0000\n"
+"PO-Revision-Date: 2023-08-21 08:28+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -818,88 +818,93 @@ msgstr "Skuggvikt (%)"
 msgid "Flatten image"
 msgstr "Platta till bilden"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:63
 msgid "Using _Paths"
 msgstr "Användning av _banor"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:64
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:77
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:90
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:103
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:116
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:129
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:142
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:155
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:167
 msgid "Bookmark to the user manual"
 msgstr "Bokmärke till användarhandboken"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:76
 msgid "_Preparing your Images for the Web"
 msgstr "_Förbered dina bilder för webben"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:89
 msgid "_Working with Digital Camera Photos"
 msgstr "Arbeta med digital_kamerabilder"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:102
 msgid "Create, Open and Save _Files"
 msgstr "Skapa, öppna och spara _filer"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:115
 msgid "_Basic Concepts"
 msgstr "_Grundläggande koncept"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:128
 msgid "How to Use _Dialogs"
 msgstr "Hur man använder _dialogrutor"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:141
 msgid "Drawing _Simple Objects"
 msgstr "Rita _enkla objekt"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:154
 msgid "Create and Use _Selections"
 msgstr "Skapa och använd _markeringar"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:166
+msgid "_[Table of Contents]"
+msgstr "_[Innehållsförteckning]"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:206
 msgid "_Main Web Site"
 msgstr "_Huvudwebbplats"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:207
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:220
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:272
 msgid "Bookmark to the GIMP web site"
 msgstr "Bokmärke till GIMP:s webbplats"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:219
 msgid "_Developer Web Site"
 msgstr "Webbplats för _utvecklare"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:232
 msgid "_Roadmap"
 msgstr "Färd_plan"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:233
 msgid "Bookmark to the roadmap of GIMP"
 msgstr "Bokmärke till GIMP:s färdplan"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:245
 msgid "_Wiki"
 msgstr "_Wiki"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:246
 msgid "Bookmark to the wiki of GIMP"
 msgstr "Bokmärke till GIMP:s wiki"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:258
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Felrapporter och önskemål om funktionalitet"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:259
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Bokmärke till GIMP:s felrapporteringssystem"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:271
 msgid "_User Manual Web Site"
 msgstr "Webbplats för _användarhandbok"
 
