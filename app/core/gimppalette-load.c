@@ -1247,7 +1247,7 @@ gimp_palette_load_ase_block_name (GInputStream  *input,
       pal_name[i] = GUINT16_FROM_BE (pal_name[i]);
     }
 
-  pal_name_utf8 = g_utf16_to_utf8 (pal_name, -1, NULL, NULL, NULL);
+  pal_name_utf8 = g_utf16_to_utf8 (pal_name, pal_name_len, NULL, NULL, NULL);
   g_free (pal_name);
 
   return pal_name_utf8;
