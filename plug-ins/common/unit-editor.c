@@ -45,7 +45,6 @@ enum
   PLURAL,
   UNIT,
   USER_UNIT,
-  BG_COLOR,
   NUM_COLUMNS
 };
 
@@ -220,8 +219,7 @@ on_app_activate (GApplication *gapp, gpointer user_data)
                                    G_TYPE_STRING,    /*  SINGULAR      */
                                    G_TYPE_STRING,    /*  PLURAL        */
                                    GIMP_TYPE_UNIT,   /*  UNIT          */
-                                   G_TYPE_BOOLEAN,   /*  USER_UNIT     */
-                                   GDK_TYPE_RGBA);   /*  BG_COLOR      */
+                                   G_TYPE_BOOLEAN);  /*  USER_UNIT     */
 
   self->tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
   g_object_unref (list_store);
@@ -318,9 +316,8 @@ on_app_activate (GApplication *gapp, gpointer user_data)
   col =
     gtk_tree_view_column_new_with_attributes (gettext (columns[SAVE].title),
                                               rend,
-                                              "active",               SAVE,
-                                              "activatable",          USER_UNIT,
-                                              "cell-background-rgba", BG_COLOR,
+                                              "active",      SAVE,
+                                              "activatable", USER_UNIT,
                                               NULL);
 
   gtk_tree_view_append_column (GTK_TREE_VIEW (self->tv), col);
@@ -347,8 +344,7 @@ on_app_activate (GApplication *gapp, gpointer user_data)
       col =
         gtk_tree_view_column_new_with_attributes (gettext (columns[i].title),
                                                   gtk_cell_renderer_text_new (),
-                                                  "text",                 i,
-                                                  "cell-background-rgba", BG_COLOR,
+                                                  "text", i,
                                                   NULL);
 
       gtk_tree_view_append_column (GTK_TREE_VIEW (self->tv), col);
@@ -732,18 +728,12 @@ unit_list_init (GtkTreeView *tv)
   GtkTreeIter   iter;
   gint          num_units;
   GimpUnit      unit;
-  GdkRGBA       color;
 
   list_store = GTK_LIST_STORE (gtk_tree_view_get_model (tv));
 
   gtk_list_store_clear (list_store);
 
   num_units = gimp_unit_get_number_of_units ();
-
-  color.red   = 0.87;
-  color.green = 0.87;
-  color.blue  = 1;
-  color.alpha = 1;
 
   for (unit = GIMP_UNIT_INCH; unit < num_units; unit++)
     {
@@ -761,9 +751,6 @@ unit_list_init (GtkTreeView *tv)
                           PLURAL,       gimp_unit_get_plural (unit),
                           UNIT,         unit,
                           USER_UNIT,    user_unit,
-
-                          user_unit ? -1 : BG_COLOR, &color,
-
                           -1);
     }
 
