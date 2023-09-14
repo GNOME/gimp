@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-24 09:45+0000\n"
-"PO-Revision-Date: 2023-02-25 14:14+0100\n"
+"POT-Creation-Date: 2023-08-20 11:06+0000\n"
+"PO-Revision-Date: 2023-09-15 00:14+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -1161,7 +1161,7 @@ msgstr "Proceduren att behandla satskommandon med"
 
 #: ../app/main.c:243
 msgid "Send messages to console instead of using a dialog"
-msgstr "Skicka meddelanden till konsolen istället för att använda en dialog"
+msgstr "Skicka meddelanden till konsolen i stället för att använda en dialog"
 
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:249
@@ -5979,7 +5979,8 @@ msgstr "Sök igenom installerade typsnitt igen"
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
-"Det finns inga senaste inställningar för ”%s”, visar filterdialogen istället."
+"Det finns inga senaste inställningar för ”%s”, visar filterdialogen i "
+"stället."
 
 #: ../app/actions/gradient-editor-actions.c:46
 msgctxt "gradient-editor-action"
@@ -13162,30 +13163,34 @@ msgstr "Inklistrat lager"
 msgid "Global Buffer"
 msgstr "Allmän buffert"
 
-#: ../app/core/gimp-gradients.c:64
+#: ../app/core/gimp-gradients.c:65
 msgid "Custom"
 msgstr "Anpassad"
 
-#: ../app/core/gimp-gradients.c:74
+#: ../app/core/gimp-gradients.c:75
 msgid "FG to BG (RGB)"
 msgstr "FG till BG (RGB)"
 
-#: ../app/core/gimp-gradients.c:82
+#: ../app/core/gimp-gradients.c:83
 msgid "FG to BG (Hardedge)"
-msgstr "FG till BG (Hardedge)"
+msgstr "FG till BG (Hård kant)"
 
-#: ../app/core/gimp-gradients.c:90
+#: ../app/core/gimp-gradients.c:91
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "FG till BG (NMI moturs)"
 
 # NMI = Nyans Mättnad Intensitet
-#: ../app/core/gimp-gradients.c:98
+#: ../app/core/gimp-gradients.c:99
 msgid "FG to BG (HSV clockwise hue)"
 msgstr "FG till BG (NMI medurs-nyans)"
 
-#: ../app/core/gimp-gradients.c:106
+#: ../app/core/gimp-gradients.c:107
 msgid "FG to Transparent"
 msgstr "FG till Transparent"
+
+#: ../app/core/gimp-gradients.c:114
+msgid "FG to Transparent (Hardedge)"
+msgstr "FG till Transparent (Hård kant)"
 
 #. Translator:  This message is displayed while GIMP is waiting for
 #. * some operation to finish.  The %s argument is a message describing
@@ -14766,7 +14771,7 @@ msgstr "Kan inte byta namn på lagermasker."
 
 #: ../app/core/gimplineart.c:338 ../app/core/gimplineart.c:339
 msgid "Select transparent pixels instead of gray ones"
-msgstr "Markera transparenta bildpunkter istället för gråa"
+msgstr "Markera transparenta bildpunkter i stället för gråa"
 
 #: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:188
 msgid "Line art detection threshold"
@@ -15851,7 +15856,7 @@ msgid ""
 "save the image to the GIMP XCF format, use File→Save instead."
 msgstr ""
 "Du kan använda denna dialogruta för att exportera till olika filformat. Om "
-"du vill spara bilden till formatet GIMP XCF, använd istället Arkiv→Spara."
+"du vill spara bilden till formatet GIMP XCF, använd i stället Arkiv→Spara."
 
 #: ../app/dialogs/file-save-dialog.c:622
 msgid "Take me to the Save dialog"
@@ -17391,8 +17396,8 @@ msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
 msgstr ""
-"GIMP:s hjälpläsare verkar inte vara installerad. Använder webbläsaren "
-"istället."
+"GIMP:s hjälpläsare verkar inte vara installerad. Använder webbläsaren i "
+"stället."
 
 #. Action Search
 #: ../app/dialogs/preferences-dialog.c:2664
@@ -21021,8 +21026,8 @@ msgstr ""
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
-"Bildupplösningen är utanför intervallet, använder standardupplösningen "
-"istället."
+"Bildupplösningen är utanför intervallet, använder standardupplösningen i "
+"stället."
 
 #: ../app/pdb/image-select-cmds.c:302 ../app/pdb/selection-tools-cmds.c:223
 #: ../app/tools/gimpfreeselecttool.c:105
@@ -26915,7 +26920,7 @@ msgid ""
 "You may instead use the web browser for reading the help pages."
 msgstr ""
 "Insticksmodulen för GIMP:s hjälpläsare verkar saknas i din installation. Du "
-"kan istället använda webbläsaren för att läsa hjälpsidorna."
+"kan i stället använda webbläsaren för att läsa hjälpsidorna."
 
 #: ../app/widgets/gimphelp.c:419
 msgid "Help browser doesn't start"
@@ -26927,7 +26932,7 @@ msgstr "Kunde inte starta insticksmodulen GIMP-hjälpläsare."
 
 #: ../app/widgets/gimphelp.c:422
 msgid "You may instead use the web browser for reading the help pages."
-msgstr "Du kan istället använda webbläsaren för att läsa hjälpsidorna."
+msgstr "Du kan i stället använda webbläsaren för att läsa hjälpsidorna."
 
 #: ../app/widgets/gimphelp.c:448
 msgid "Use _Web Browser"
@@ -27145,7 +27150,7 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "färger"
 
-#: ../app/widgets/gimpitemtreeview.c:763
+#: ../app/widgets/gimpitemtreeview.c:765
 msgid "Lock:"
 msgstr "Lås:"
 
