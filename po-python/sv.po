@@ -1,5 +1,5 @@
 # Swedish messages for GIMP Python.
-# Copyright © 2000-2003, 2007-2010, 2016, 2020, 2021, 2022, 2023 Free Software Foundation, Inc.
+# Copyright © 2000-2003, 2007-2010, 2015, 2016, 2020-2023 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Tomas Ögren <stric@ing.umu.se>, 2001.
@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-15 14:42+0000\n"
-"PO-Revision-Date: 2023-07-15 16:48+0200\n"
+"POT-Creation-Date: 2023-07-25 21:27+0000\n"
+"PO-Revision-Date: 2023-07-25 23:30+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -198,6 +198,10 @@ msgstr "_Fil"
 msgid "Creates a new palette from a given gradient"
 msgstr "Skapar en ny palett från en angiven gradient"
 
+#: plug-ins/python/gradients-save-as-css.py:228
+msgid "Save as CSS..."
+msgstr "Spara som CSS…"
+
 #: plug-ins/python/histogram-export.py:92
 msgid "Pixel count"
 msgstr "Antal bildpunkter"
@@ -282,7 +286,7 @@ msgstr "Palett"
 msgid "Off_set"
 msgstr "Po_sition"
 
-#: plug-ins/python/palette-offset.py:63
+#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:153
 msgid "Offset"
 msgstr "Position"
 
