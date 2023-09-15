@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-13 19:02+0000\n"
-"PO-Revision-Date: 2023-09-14 09:11+0800\n"
+"POT-Creation-Date: 2023-09-14 23:23+0000\n"
+"PO-Revision-Date: 2023-09-15 09:12+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -2508,7 +2508,7 @@ msgstr ""
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2430
 #: app/core/gimppalette.c:428 app/core/gimppalette-import.c:213
-#: app/core/gimppalette-load.c:241 app/dialogs/palette-import-dialog.c:762
+#: app/core/gimppalette-load.c:243 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "无标题"
@@ -14009,117 +14009,155 @@ msgstr "并行转化 MyPaint 笔刷失败。"
 msgid "%s (occurs %u)"
 msgstr "%s（发生 %u）"
 
-#: app/core/gimppalette-import.c:544
+#: app/core/gimppalette-import.c:548
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "未知类型的色板文件：%s"
 
-#: app/core/gimppalette-load.c:118
+#: app/core/gimppalette-load.c:120
 msgid "Missing magic header."
 msgstr "缺少魔数。"
 
-#: app/core/gimppalette-load.c:141
+#: app/core/gimppalette-load.c:143
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "色板文件“%s”中含有无效的 UTF-8 字符串"
 
-#: app/core/gimppalette-load.c:161
+#: app/core/gimppalette-load.c:163
 msgid "Invalid column count."
 msgstr "无效的列数。"
 
-#: app/core/gimppalette-load.c:168
+#: app/core/gimppalette-load.c:170
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr "读取色板文件“%s”：第 %d 行中列数目无效。使用默认值。"
 
-#: app/core/gimppalette-load.c:202
+#: app/core/gimppalette-load.c:204
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "读取色板文件“%s”：第 %d 行缺少红色分量。"
 
-#: app/core/gimppalette-load.c:210
+#: app/core/gimppalette-load.c:212
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "读取色板文件“%s”：第 %d 行缺少绿色分量。"
 
-#: app/core/gimppalette-load.c:218
+#: app/core/gimppalette-load.c:220
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "读取色板文件“%s”：第 %d 行缺少蓝色分量。"
 
-#: app/core/gimppalette-load.c:228
+#: app/core/gimppalette-load.c:230
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "读取色板文件“%s”：第 %d 行 RGB 取值超出范围。"
 
-#: app/core/gimppalette-load.c:255 app/core/gimppalette-load.c:505
+#: app/core/gimppalette-load.c:257 app/core/gimppalette-load.c:507
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr "读取色板文件“%s”：从被截断的文件中读取了 %d 个颜色：%s"
 
-#: app/core/gimppalette-load.c:277
+#: app/core/gimppalette-load.c:279
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "色板文件的第 %d 行："
 
-#: app/core/gimppalette-load.c:473 app/core/gimppalette-load.c:675
+#: app/core/gimppalette-load.c:475 app/core/gimppalette-load.c:682
+#: app/core/gimppalette-load.c:1025
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "无法从色板文件“%s”中读取文件头："
 
-#: app/core/gimppalette-load.c:510
+#: app/core/gimppalette-load.c:512
 msgid "Premature end of file."
 msgstr "过早的文件结尾。"
 
-#: app/core/gimppalette-load.c:685
-#, c-format
-msgid "Invalid ASE header: %s"
-msgstr "无效的 ASE 文件头：%s"
+#: app/core/gimppalette-load.c:691
+msgid "Invalid ACB palette version."
+msgstr "无效的 ACB 色板版本。"
 
-#: app/core/gimppalette-load.c:694
+#: app/core/gimppalette-load.c:697
+msgid "GIMP only supports version 1 ACB palettes"
+msgstr "GIMP 仅支持版本 1 的 ACB 色板"
+
+#: app/core/gimppalette-load.c:704
+msgid "Invalid ACB palette identifier."
+msgstr "无效的 ACB 色板标识符。"
+
+#: app/core/gimppalette-load.c:719 app/core/gimppalette-load.c:958
+#: app/core/gimppalette-load.c:979
+msgid "Invalid ACB palette name."
+msgstr "无效的 ACB 色板名称。"
+
+#: app/core/gimppalette-load.c:737
+msgid "Invalid ACB palette prefix."
+msgstr "无效的 ACB 色板前缀。"
+
+#: app/core/gimppalette-load.c:752
+msgid "Invalid ACB palette suffix."
+msgstr "无效的 ACB 色板后缀。"
+
+#: app/core/gimppalette-load.c:770 app/core/gimppalette-load.c:1044
 msgid "Invalid number of colors in palette."
 msgstr "无效的色板颜色数量。"
 
-#: app/core/gimppalette-load.c:700
+#: app/core/gimppalette-load.c:776 app/core/gimppalette-load.c:1050
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "无效的颜色数量：%s。"
 
-#: app/core/gimppalette-load.c:710
+#: app/core/gimppalette-load.c:788 app/core/gimppalette-load.c:797
+msgid "Invalid ACB palette page info."
+msgstr "无效的 ACB 色板页面信息。"
+
+#: app/core/gimppalette-load.c:808 app/core/gimppalette-load.c:830
+msgid "Invalid ACB palette color space."
+msgstr "无效的 ACB 色板色彩空间。"
+
+#: app/core/gimppalette-load.c:968
+msgid "Invalid ACB name size."
+msgstr "无效的 ACB 名称大小。"
+
+#: app/core/gimppalette-load.c:1035
+#, c-format
+msgid "Invalid ASE header: %s"
+msgstr "无效的 ASE 文件头：%s"
+
+#: app/core/gimppalette-load.c:1060
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "无效的 ASE 文件：%s。"
 
-#: app/core/gimppalette-load.c:788
+#: app/core/gimppalette-load.c:1138
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "无效的颜色分量：%s。"
 
-#: app/core/gimppalette-load.c:802 app/core/gimppalette-load.c:829
+#: app/core/gimppalette-load.c:1152 app/core/gimppalette-load.c:1179
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "无效的 ASE 颜色条目：%s。"
 
-#: app/core/gimppalette-load.c:857 app/core/gimppalette-load.c:873
-#: app/core/gimppalette-load.c:892
+#: app/core/gimppalette-load.c:1207 app/core/gimppalette-load.c:1223
+#: app/core/gimppalette-load.c:1242
 msgid "Invalid ASE palette name."
 msgstr "无效的 ASE 色板名称。"
 
-#: app/core/gimppalette-load.c:866
+#: app/core/gimppalette-load.c:1216
 msgid "Invalid ASE block size."
 msgstr "无效的 ASE 块大小。"
 
-#: app/core/gimppalette-load.c:882
+#: app/core/gimppalette-load.c:1232
 msgid "Invalid ASE name size."
 msgstr "无效的 ASE 名称大小。"
 
-#: app/core/gimppalette-load.c:1010
+#: app/core/gimppalette-load.c:1360
 msgid "Unable to read SBZ file"
 msgstr "无法读取 SBZ 文件"
 
-#: app/core/gimppalette-load.c:1074
+#: app/core/gimppalette-load.c:1424
 msgid "Unable to open SBZ file"
 msgstr "无法打开 SBZ 文件"
 
