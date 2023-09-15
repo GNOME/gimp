@@ -82,11 +82,11 @@ static const LayerModeMapping layer_mode_map[] =
 
   /* Linear Dodge (cs2) */
   { "Linear Dodge",  "lddg", GIMP_LAYER_MODE_ADDITION_LEGACY,       TRUE },
-  { "Linear Dodge",  "lddg", GIMP_LAYER_MODE_ADDITION,              TRUE },
+  { "Linear Dodge",  "lddg", GIMP_LAYER_MODE_ADDITION,              FALSE },
 
   /* Subtract (??) */
   { "Subtract",      "fsub", GIMP_LAYER_MODE_SUBTRACT_LEGACY,       TRUE },
-  { "Subtract",      "fsub", GIMP_LAYER_MODE_SUBTRACT,              TRUE },
+  { "Subtract",      "fsub", GIMP_LAYER_MODE_SUBTRACT,              FALSE },
 
   /* Darken (ps3) */
   { "Darken",        "dark", GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY,    TRUE },
@@ -119,15 +119,15 @@ static const LayerModeMapping layer_mode_map[] =
 
   /* Divide (??) */
   { "Divide",        "fdiv", GIMP_LAYER_MODE_DIVIDE_LEGACY,         TRUE },
-  { "Divide",        "fdiv", GIMP_LAYER_MODE_DIVIDE,                TRUE },
+  { "Divide",        "fdiv", GIMP_LAYER_MODE_DIVIDE,                FALSE },
 
   /* Color Dodge (ps6) */
   { "Color Dodge",   "div ", GIMP_LAYER_MODE_DODGE_LEGACY,          TRUE },
-  { "Color Dodge",   "div ", GIMP_LAYER_MODE_DODGE,                 TRUE },
+  { "Color Dodge",   "div ", GIMP_LAYER_MODE_DODGE,                 FALSE },
 
   /* Color Burn (ps6) */
   { "Color Burn",    "idiv", GIMP_LAYER_MODE_BURN_LEGACY,           TRUE },
-  { "Color Burn",    "idiv", GIMP_LAYER_MODE_BURN,                  TRUE },
+  { "Color Burn",    "idiv", GIMP_LAYER_MODE_BURN,                  FALSE },
 
   /* Hard Light (ps3) */
   { "Hard Light",    "hLit", GIMP_LAYER_MODE_HARDLIGHT_LEGACY,      TRUE },
@@ -145,16 +145,16 @@ static const LayerModeMapping layer_mode_map[] =
   { "Pin Light",     "pLit", GIMP_LAYER_MODE_PIN_LIGHT,             TRUE },
 
   /* Linear Light (ps7)*/
-  { "Linear Light",  "lLit", GIMP_LAYER_MODE_LINEAR_LIGHT,          TRUE },
+  { "Linear Light",  "lLit", GIMP_LAYER_MODE_LINEAR_LIGHT,          FALSE },
 
   /* Hard Mix (CS)*/
-  { "Hard Mix",      "hMix", GIMP_LAYER_MODE_HARD_MIX,              TRUE },
+  { "Hard Mix",      "hMix", GIMP_LAYER_MODE_HARD_MIX,              FALSE },
 
   /* Exclusion (ps6) */
   { "Exclusion",     "smud", GIMP_LAYER_MODE_EXCLUSION,             TRUE },
 
   /* Linear Burn (ps7)*/
-  { "Linear Burn",   "lbrn", GIMP_LAYER_MODE_LINEAR_BURN,           TRUE },
+  { "Linear Burn",   "lbrn", GIMP_LAYER_MODE_LINEAR_BURN,           FALSE },
 
   /* Darker Color (??)*/
   { "Darker Color",  "dkCl", GIMP_LAYER_MODE_LUMA_DARKEN_ONLY,      FALSE },
