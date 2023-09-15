@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-12 14:25+0000\n"
-"PO-Revision-Date: 2023-09-12 18:13+0200\n"
+"POT-Creation-Date: 2023-09-14 23:23+0000\n"
+"PO-Revision-Date: 2023-09-15 22:38+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2522,7 +2522,7 @@ msgstr ""
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2430
 #: app/core/gimppalette.c:428 app/core/gimppalette-import.c:213
-#: app/core/gimppalette-load.c:241 app/dialogs/palette-import-dialog.c:762
+#: app/core/gimppalette-load.c:243 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Neimenovano"
@@ -14290,25 +14290,25 @@ msgstr "Čopiča MyPaint ni mogoče deserializirati."
 msgid "%s (occurs %u)"
 msgstr "%s (se pojavi %u)"
 
-#: app/core/gimppalette-import.c:544
+#: app/core/gimppalette-import.c:548
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Neznana vrsta datoteke palete: %s"
 
-#: app/core/gimppalette-load.c:118
+#: app/core/gimppalette-load.c:120
 msgid "Missing magic header."
 msgstr "Manjka čarovna glava."
 
-#: app/core/gimppalette-load.c:141
+#: app/core/gimppalette-load.c:143
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Neveljaven niz UTF-8 v datoteki palete »%s«"
 
-#: app/core/gimppalette-load.c:161
+#: app/core/gimppalette-load.c:163
 msgid "Invalid column count."
 msgstr "Neveljavno število stolpcev."
 
-#: app/core/gimppalette-load.c:168
+#: app/core/gimppalette-load.c:170
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -14317,96 +14317,134 @@ msgstr ""
 "Branje datoteke palete »%s«: Nepravilno število stolpcev v vrstici %d. "
 "Uporabljena bo privzeta vrednost."
 
-#: app/core/gimppalette-load.c:202
+#: app/core/gimppalette-load.c:204
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr ""
 "Branje datoteke palete »%s«: V vrstici %d manjka rdeča komponenta (RED)."
 
-#: app/core/gimppalette-load.c:210
+#: app/core/gimppalette-load.c:212
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr ""
 "Branje datoteke palete »%s«: V vrstici %d manjka zelena komponenta (GREEN)."
 
-#: app/core/gimppalette-load.c:218
+#: app/core/gimppalette-load.c:220
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr ""
 "Branje datoteke palete »%s«: V vrstici %d manjka modra komponenta (BLUE)."
 
-#: app/core/gimppalette-load.c:228
+#: app/core/gimppalette-load.c:230
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
 "Branje datoteke palete »%s«: V vrstici %d je vrednost RGB izven dosega."
 
-#: app/core/gimppalette-load.c:255 app/core/gimppalette-load.c:505
+#: app/core/gimppalette-load.c:257 app/core/gimppalette-load.c:507
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr "Branje datoteke palete »%s«: prebranih %d barv prekinjene datoteke: %s"
 
-#: app/core/gimppalette-load.c:277
+#: app/core/gimppalette-load.c:279
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "V vrstici %d datoteke palete: "
 
-#: app/core/gimppalette-load.c:473 app/core/gimppalette-load.c:675
+#: app/core/gimppalette-load.c:475 app/core/gimppalette-load.c:682
+#: app/core/gimppalette-load.c:1025
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Ni mogoče brati glave iz datoteke palete ‘%s’: "
 
-#: app/core/gimppalette-load.c:510
+#: app/core/gimppalette-load.c:512
 msgid "Premature end of file."
 msgstr "Predčasen konec datoteke."
 
-#: app/core/gimppalette-load.c:685
-#, c-format
-msgid "Invalid ASE header: %s"
-msgstr "Neveljavna glava ASE: %s"
+#: app/core/gimppalette-load.c:691
+msgid "Invalid ACB palette version."
+msgstr "Neveljavno različica palete ACB."
 
-#: app/core/gimppalette-load.c:694
+#: app/core/gimppalette-load.c:697
+msgid "GIMP only supports version 1 ACB palettes"
+msgstr "GIMP podpira le palete ACB različice 1"
+
+#: app/core/gimppalette-load.c:704
+msgid "Invalid ACB palette identifier."
+msgstr "Neveljaven identifikator palete ACB."
+
+#: app/core/gimppalette-load.c:719 app/core/gimppalette-load.c:958
+#: app/core/gimppalette-load.c:979
+msgid "Invalid ACB palette name."
+msgstr "Neveljavno ime palete ACB."
+
+#: app/core/gimppalette-load.c:737
+msgid "Invalid ACB palette prefix."
+msgstr "Neveljavna predpona palete ACB."
+
+#: app/core/gimppalette-load.c:752
+msgid "Invalid ACB palette suffix."
+msgstr "Neveljavna pripona palete ACB."
+
+#: app/core/gimppalette-load.c:770 app/core/gimppalette-load.c:1044
 msgid "Invalid number of colors in palette."
 msgstr "Neveljavno število barv v paleti."
 
-#: app/core/gimppalette-load.c:700
+#: app/core/gimppalette-load.c:776 app/core/gimppalette-load.c:1050
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "Neveljavno število barv: %s."
 
-#: app/core/gimppalette-load.c:710
+#: app/core/gimppalette-load.c:788 app/core/gimppalette-load.c:797
+msgid "Invalid ACB palette page info."
+msgstr "Neveljavne informacije o strani palete ACB."
+
+#: app/core/gimppalette-load.c:808 app/core/gimppalette-load.c:830
+msgid "Invalid ACB palette color space."
+msgstr "Neveljaven barvni prostor palete ACB."
+
+#: app/core/gimppalette-load.c:968
+msgid "Invalid ACB name size."
+msgstr "Neveljavna velikost imena ACB."
+
+#: app/core/gimppalette-load.c:1035
+#, c-format
+msgid "Invalid ASE header: %s"
+msgstr "Neveljavna glava ASE: %s"
+
+#: app/core/gimppalette-load.c:1060
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "Neveljavna datoteka ASE: %s."
 
-#: app/core/gimppalette-load.c:788
+#: app/core/gimppalette-load.c:1138
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "Neveljavne komponente barve: %s."
 
-#: app/core/gimppalette-load.c:802 app/core/gimppalette-load.c:829
+#: app/core/gimppalette-load.c:1152 app/core/gimppalette-load.c:1179
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "Neveljaven barvni vnos ASE: %s."
 
-#: app/core/gimppalette-load.c:857 app/core/gimppalette-load.c:873
-#: app/core/gimppalette-load.c:892
+#: app/core/gimppalette-load.c:1207 app/core/gimppalette-load.c:1223
+#: app/core/gimppalette-load.c:1242
 msgid "Invalid ASE palette name."
 msgstr "Neveljavno ime palete ASE."
 
-#: app/core/gimppalette-load.c:866
+#: app/core/gimppalette-load.c:1216
 msgid "Invalid ASE block size."
 msgstr "Neveljavna velikost bloka ASE."
 
-#: app/core/gimppalette-load.c:882
+#: app/core/gimppalette-load.c:1232
 msgid "Invalid ASE name size."
 msgstr "Neveljavna velikost imena ASE."
 
-#: app/core/gimppalette-load.c:1010
+#: app/core/gimppalette-load.c:1360
 msgid "Unable to read SBZ file"
 msgstr "Datoteke SBZ ni mogoče prebrati"
 
-#: app/core/gimppalette-load.c:1074
+#: app/core/gimppalette-load.c:1424
 msgid "Unable to open SBZ file"
 msgstr "Datoteke SBZ ni mogoče odpreti"
 
