@@ -231,7 +231,7 @@ scrollbar slider {
 }
 
 /* Removes black border around scrolled windows */
-scrolledwindow viewport grid {
+scrolledwindow viewport grid, scrolledwindow viewport box {
    border-radius: 1px;
    border: 0px solid @bg-color;
 }
