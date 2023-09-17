@@ -311,11 +311,18 @@ get_cylinder_image_color (gint    image,
 /****************************************/
 
 gint
-image_setup (GimpDrawable *drawable,
-             gint          interactive)
+image_setup (GimpDrawable        *drawable,
+             gint                 interactive,
+             GimpProcedureConfig *config)
 {
+  gboolean transparent_background;
+
   input_drawable  = drawable;
   output_drawable = drawable;
+
+  g_object_get (config,
+                "transparent_background", &transparent_background,
+                NULL);
 
   if (! gimp_drawable_mask_intersect (drawable, &border_x, &border_y,
                                       &border_w, &border_h))
@@ -328,7 +335,7 @@ image_setup (GimpDrawable *drawable,
 
   maxcounter = (glong) width * (glong) height;
 
-  if (mapvals.transparent_background == TRUE)
+  if (transparent_background == TRUE)
     {
       gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
     }

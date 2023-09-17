@@ -66,7 +66,7 @@ static GimpValueArray * map_run              (GimpProcedure        *procedure,
                                               GimpImage            *image,
                                               gint                  n_drawables,
                                               GimpDrawable        **drawables,
-                                              const GimpValueArray *args,
+                                              GimpProcedureConfig  *config,
                                               gpointer              run_data);
 
 static void             set_default_settings (void);
@@ -110,9 +110,9 @@ map_create_procedure (GimpPlugIn  *plug_in,
     {
       GimpRGB white = { 1.0, 1.0, 1.0, 1.0 };
 
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            map_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             map_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -131,261 +131,298 @@ map_create_procedure (GimpPlugIn  *plug_in,
                                       "Tom Bech & Federico Mena Quintero",
                                       "Version 1.2.0, July 16 1998");
 
-      GIMP_PROC_ARG_INT (procedure, "map-type",
-                         "Map type",
-                         "Type of mapping (0=plane, 1=sphere, 2=box, "
-                         "3=cylinder)",
-                         0, 2, MAP_PLANE,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "map-type",
+                            _("Ma_p to"),
+                            _("Type of mapping"),
+                            gimp_choice_new_with_values ("map-plane",    MAP_PLANE,    _("Plane"),    NULL,
+                                                         "map-sphere",   MAP_SPHERE,   _("Sphere"),   NULL,
+                                                         "map-box",      MAP_BOX,      _("Box"),      NULL,
+                                                         "map-cylinder", MAP_CYLINDER, _("Cylinder"), NULL,
+                                                         NULL),
+                            "map-plane",
+                            G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "viewpoint-x",
-                            "Viewpoint X",
-                            "Position of viewpoint (x,y,z)",
+                            _("X"),
+                            _("Position of viewpoint (x,y,z)"),
                             -G_MAXDOUBLE, G_MAXDOUBLE, 0.5,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "viewpoint-y",
-                            "Viewpoint Y",
-                            "Position of viewpoint (x,y,z)",
+                            _("Y"),
+                            _("Position of viewpoint (x,y,z)"),
                             -G_MAXDOUBLE, G_MAXDOUBLE, 0.5,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "viewpoint-z",
-                            "Viewpoint Z",
-                            "Position of viewpoint (x,y,z)",
+                            _("Z"),
+                            _("Position of viewpoint (x,y,z)"),
                             -G_MAXDOUBLE, G_MAXDOUBLE, 2.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "position-x",
-                            "Position X",
-                            "Object position (x,y,z)",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.5,
+                            _("Position X"),
+                            _("Object position (x,y,z)"),
+                            -1.0, 2.0, 0.5,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "position-y",
-                            "Position Y",
-                            "Object position (x,y,z)",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.5,
+                            _("Position Y"),
+                            _("Object position (x,y,z)"),
+                            -1.0, 2.0, 0.5,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "position-z",
-                            "Position Z",
-                            "Object position (x,y,z)",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                            _("Position Z"),
+                            _("Object position (x,y,z)"),
+                            -1.0, 2.0, 0.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "first-axis-x",
-                            "First axis X",
-                            "First axis of object (x,y,z)",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1.0,
+                            _("X"),
+                            _("First axis of object (x,y,z)"),
+                            -1.0, 2.0, 1.0,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "first-axis-y",
-                            "First axis y",
-                            "First axis of object (x,y,z)",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                            _("y"),
+                            _("First axis of object (x,y,z)"),
+                            -1.0, 2.0, 0.0,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "first-axis-z",
-                            "First axis Z",
-                            "First axis of object (x,y,z)",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                            _("Z"),
+                            _("First axis of object (x,y,z)"),
+                            -1.0, 2.0, 0.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "second-axis-x",
-                            "Second axis X",
-                            "Second axis of object (x,y,z)",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                            _("X"),
+                            _("Second axis of object (x,y,z)"),
+                            -1.0, 2.0, 0.0,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "second-axis-y",
-                            "Second axis Y",
-                            "Second axis of object (x,y,z)",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1.0,
+                            _("Y"),
+                            _("Second axis of object (x,y,z)"),
+                            -1.0, 2.0, 1.0,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "second-axis-z",
-                            "Second axis Z",
-                            "Second axis of object (x,y,z)",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                            _("Z"),
+                            _("Second axis of object (x,y,z)"),
+                            -1.0, 2.0, 0.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "rotation-angle-x",
-                            "Rotation angle X",
-                            "Rotation about X axis in degrees",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                            _("Angle X"),
+                            _("Rotation about X axis in degrees"),
+                            -180, 180, 0.0,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "rotation-angle-y",
-                            "Rotation angle Y",
-                            "Rotation about Y axis in degrees",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                            _("Angle Y"),
+                            _("Rotation about Y axis in degrees"),
+                            -180, 180, 0.0,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "rotation-angle-z",
-                            "Rotation angle Z",
-                            "Rotation about Z axis in degrees",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                            _("Angle Z"),
+                            _("Rotation about Z axis in degrees"),
+                            -180, 180, 0.0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "light-type",
-                         "Light type",
-                         "Type of lightsource (0=point, 1=directional, 2=none)",
-                         0, 2, POINT_LIGHT,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "light-type",
+                            _("Light source type"),
+                            _("Type of lightsource"),
+                            gimp_choice_new_with_values ("point-light",       POINT_LIGHT,       _("Point Light"),       NULL,
+                                                         "directional-light", DIRECTIONAL_LIGHT, _("Directional Light"), NULL,
+                                                         "no-light",          NO_LIGHT,          _("No Light"),          NULL,
+                                                         NULL),
+                            "point-light",
+                            G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_RGB (procedure, "light-color",
-                         "Light color",
-                         "Light source color",
+                         _("Light source color"),
+                         _("Light source color"),
                          TRUE, &white,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "light-position-x",
-                            "Light position X",
-                            "Light source position (x,y,z)",
+                            _("Light position X"),
+                            _("Light source position (x,y,z)"),
                             -G_MAXDOUBLE, G_MAXDOUBLE, -0.5,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "light-position-y",
-                            "Light position Y",
-                            "Light source position (x,y,z)",
+                            _("Light position Y"),
+                            _("Light source position (x,y,z)"),
                             -G_MAXDOUBLE, G_MAXDOUBLE, -0.5,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "light-position-z",
-                            "Light position Z",
-                            "Light source position (x,y,z)",
+                            _("Light position Z"),
+                            _("Light source position (x,y,z)"),
                             -G_MAXDOUBLE, G_MAXDOUBLE, 2.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "light-direction-x",
-                            "Light direction X",
-                            "Light source direction (x,y,z)",
+                            _("Light direction X"),
+                            _("Light source direction (x,y,z)"),
                             -G_MAXDOUBLE, G_MAXDOUBLE, -1.0,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "light-direction-y",
-                            "Light direction Y",
-                            "Light source direction (x,y,z)",
+                            _("Light direction Y"),
+                            _("Light source direction (x,y,z)"),
                             -G_MAXDOUBLE, G_MAXDOUBLE, -1.0,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "light-direction-z",
-                            "Light direction Z",
-                            "Light source direction (x,y,z)",
+                            _("Light direction Z"),
+                            _("Light source direction (x,y,z)"),
                             -G_MAXDOUBLE, G_MAXDOUBLE, 1.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "ambient-intensity",
-                            "Ambient intensity",
-                            "Material ambient intensity",
+                            _("Ambient"),
+                            _("Material ambient intensity"),
                             0, 1, 0.3,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "diffuse-intensity",
-                            "Diffuse intensity",
-                            "Material diffuse intensity",
+                            _("Diffuse"),
+                            _("Material diffuse intensity"),
                             0, 1, 1.0,
                             G_PARAM_READWRITE);
 
+      /* Reflectivity */
       GIMP_PROC_ARG_DOUBLE (procedure, "diffuse-reflectivity",
-                            "Diffuse reflectivity",
-                            "Material diffuse reflectivity",
+                            _("Diffuse"),
+                            _("Material diffuse reflectivity"),
                             0, 1, 0.5,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "specular-reflectivity",
-                            "Specular reflectivity",
-                            "Material specular reflectivity",
+                            _("Specular"),
+                            _("Material specular reflectivity"),
                             0, 1, 0.5,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "highlight",
-                            "Highlight",
-                            "Material highlight (note, it's exponential)",
+                            _("Highlight"),
+                            _("Material highlight "
+                              "(note, it's exponential)"),
                             0, G_MAXDOUBLE, 27.0,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "antialiasing",
-                             "Antialiasing",
-                             "Apply antialiasing",
+                             _("Antialia_sing"),
+                             _("Apply antialiasing"),
                              TRUE,
                              G_PARAM_READWRITE);
+      GIMP_PROC_ARG_DOUBLE (procedure, "depth",
+                            _("Depth"),
+                            _("Antialiasing quality. Higher is better, "
+                              "but slower"),
+                            1.0, 5.0, 3.0,
+                            G_PARAM_READWRITE);
+      GIMP_PROC_ARG_DOUBLE (procedure, "threshold",
+                            _("Threshold"),
+                            _("Stop when pixel differences are smaller than "
+                              "this value"),
+                            0.001, 1000.0, 0.250,
+                            G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "tiled",
-                             "Tiled",
-                             "Tile source image",
+                             _("Tile so_urce image"),
+                             _("Tile source image"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "new-image",
-                             "New image",
-                             "Create a new image",
+                             _("Create new ima_ge"),
+                             _("Create a new image"),
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "new-layer",
+                             _("Create new layer"),
+                             _("Create a new layer when applying filter"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "transparent-background",
-                             "Transparent background",
-                             "Make background transparent",
+                             _("_Transparent background"),
+                             _("Make background transparent"),
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "radius",
-                            "Radius",
-                            "Sphere/cylinder radius (only used when "
-                            "maptype=1 or 3)",
+      /* Sphere Options */
+      GIMP_PROC_ARG_DOUBLE (procedure, "sphere-radius",
+                            _("R_adius"),
+                            _("Sphere radius"),
                             0, G_MAXDOUBLE, 0.25,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "x-scale",
-                            "X scale",
-                            "Box X size",
-                            0, G_MAXDOUBLE, 0.5,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "y-scale",
-                            "Y scale",
-                            "Box Y size",
-                            0, G_MAXDOUBLE, 0.5,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "z-scale",
-                            "Z scale",
-                            "Box Z size",
-                            0, G_MAXDOUBLE, 0.5,
-                            G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_DOUBLE (procedure, "cylinder-length",
-                            "Cylinder length",
-                            "Cylinder length",
-                            0, G_MAXDOUBLE, 0.25,
-                            G_PARAM_READWRITE);
-
+      /* Box Options */
       GIMP_PROC_ARG_DRAWABLE (procedure, "box-front-drawable",
-                              "Box front drawable",
-                              "Box front face (set these to NULL if not used)",
+                              _("Fro_nt"),
+                              _("Box front face "
+                                "(set this to NULL if not used)"),
                               TRUE,
                               G_PARAM_READWRITE);
       GIMP_PROC_ARG_DRAWABLE (procedure, "box-back-drawable",
-                              "Box back drawable",
-                              "Box back face",
+                              _("B_ack"),
+                              _("Box back face"),
                               TRUE,
                               G_PARAM_READWRITE);
       GIMP_PROC_ARG_DRAWABLE (procedure, "box-top-drawable",
-                              "Box top drawable",
-                              "Box top face",
+                              _("To_p"),
+                              _("Box top face"),
                               TRUE,
                               G_PARAM_READWRITE);
       GIMP_PROC_ARG_DRAWABLE (procedure, "box-bottom-drawable",
-                              "Box bottom drawable",
-                              "Box bottom face",
+                              _("Bo_ttom"),
+                              _("Box bottom face"),
                               TRUE,
                               G_PARAM_READWRITE);
       GIMP_PROC_ARG_DRAWABLE (procedure, "box-left-drawable",
-                              "Box left drawable",
-                              "Box left face",
+                              _("Le_ft"),
+                              _("Box left face"),
                               TRUE,
                               G_PARAM_READWRITE);
       GIMP_PROC_ARG_DRAWABLE (procedure, "box-right-drawable",
-                              "Box right drawable",
-                              "Box right face",
+                              _("Ri_ght"),
+                              _("Box right face"),
                               TRUE,
                               G_PARAM_READWRITE);
 
+      GIMP_PROC_ARG_DOUBLE (procedure, "x-scale",
+                            _("Scale X"),
+                            _("Box X size"),
+                            0, G_MAXDOUBLE, 0.5,
+                            G_PARAM_READWRITE);
+      GIMP_PROC_ARG_DOUBLE (procedure, "y-scale",
+                            _("Scale Y"),
+                            _("Box Y size"),
+                            0, G_MAXDOUBLE, 0.5,
+                            G_PARAM_READWRITE);
+      GIMP_PROC_ARG_DOUBLE (procedure, "z-scale",
+                            _("Scale Z"),
+                            _("Box Z size"),
+                            0, G_MAXDOUBLE, 0.5,
+                            G_PARAM_READWRITE);
+
+      /* Cylinder options */
       GIMP_PROC_ARG_DRAWABLE (procedure, "cyl-top-drawable",
-                              "Cyl top drawable",
-                              "Cylinder top face (set these to NULL if not used)",
+                              _("_Top"),
+                              _("Cylinder top face "
+                                "(set this to NULL if not used)"),
                               TRUE,
                               G_PARAM_READWRITE);
       GIMP_PROC_ARG_DRAWABLE (procedure, "cyl-bottom-drawable",
-                              "Cyl bottom drawable",
-                              "Cylinder bottom face",
+                              _("_Bottom"),
+                              _("Cylinder bottom face "
+                                "(set this to NULL if not used)"),
                               TRUE,
                               G_PARAM_READWRITE);
+      GIMP_PROC_ARG_DOUBLE (procedure, "cylinder-radius",
+                            _("R_adius"),
+                            _("Cylinder radius"),
+                            0, G_MAXDOUBLE, 0.25,
+                            G_PARAM_READWRITE);
+      GIMP_PROC_ARG_DOUBLE (procedure, "cylinder-length",
+                            _("Cylinder length"),
+                            _("Cylinder length"),
+                            0, G_MAXDOUBLE, 0.25,
+                            G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -478,7 +515,7 @@ map_run (GimpProcedure        *procedure,
          GimpImage            *_image,
          gint                  n_drawables,
          GimpDrawable        **drawables,
-         const GimpValueArray *args,
+         GimpProcedureConfig  *config,
          gpointer              run_data)
 {
   GimpDrawable *drawable;
@@ -510,97 +547,44 @@ map_run (GimpProcedure        *procedure,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &mapvals);
       check_drawables (drawable);
 
-      if (! main_dialog (drawable))
+      if (! main_dialog (procedure, config, drawable))
         {
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_CANCEL,
                                                    NULL);
         }
 
+      copy_from_config (config);
       compute_image ();
-
-      gimp_set_data (PLUG_IN_PROC, &mapvals, sizeof (MapObjectValues));
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &mapvals);
       check_drawables (drawable);
 
-      if (! image_setup (drawable, FALSE))
+      if (! image_setup (drawable, FALSE, config))
         {
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_SUCCESS,
                                                    NULL);
         }
 
+      copy_from_config (config);
       compute_image ();
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      mapvals.maptype                 = GIMP_VALUES_GET_INT     (args, 0);
-      mapvals.viewpoint.x             = GIMP_VALUES_GET_DOUBLE  (args, 1);
-      mapvals.viewpoint.y             = GIMP_VALUES_GET_DOUBLE  (args, 2);
-      mapvals.viewpoint.z             = GIMP_VALUES_GET_DOUBLE  (args, 3);
-      mapvals.position.x              = GIMP_VALUES_GET_DOUBLE  (args, 4);
-      mapvals.position.y              = GIMP_VALUES_GET_DOUBLE  (args, 5);
-      mapvals.position.z              = GIMP_VALUES_GET_DOUBLE  (args, 6);
-      mapvals.firstaxis.x             = GIMP_VALUES_GET_DOUBLE  (args, 7);
-      mapvals.firstaxis.y             = GIMP_VALUES_GET_DOUBLE  (args, 8);
-      mapvals.firstaxis.z             = GIMP_VALUES_GET_DOUBLE  (args, 9);
-      mapvals.secondaxis.x            = GIMP_VALUES_GET_DOUBLE  (args, 10);
-      mapvals.secondaxis.y            = GIMP_VALUES_GET_DOUBLE  (args, 11);
-      mapvals.secondaxis.z            = GIMP_VALUES_GET_DOUBLE  (args, 12);
-      mapvals.alpha                   = GIMP_VALUES_GET_DOUBLE  (args, 13);
-      mapvals.beta                    = GIMP_VALUES_GET_DOUBLE  (args, 14);
-      mapvals.gamma                   = GIMP_VALUES_GET_DOUBLE  (args, 15);
-      mapvals.lightsource.type        = GIMP_VALUES_GET_INT     (args, 16);
-
-      GIMP_VALUES_GET_RGB (args, 17, &mapvals.lightsource.color);
-
-      mapvals.lightsource.position.x  = GIMP_VALUES_GET_DOUBLE  (args, 18);
-      mapvals.lightsource.position.y  = GIMP_VALUES_GET_DOUBLE  (args, 19);
-      mapvals.lightsource.position.z  = GIMP_VALUES_GET_DOUBLE  (args, 20);
-      mapvals.lightsource.direction.x = GIMP_VALUES_GET_DOUBLE  (args, 21);
-      mapvals.lightsource.direction.y = GIMP_VALUES_GET_DOUBLE  (args, 22);
-      mapvals.lightsource.direction.z = GIMP_VALUES_GET_DOUBLE  (args, 23);
-      mapvals.material.ambient_int    = GIMP_VALUES_GET_DOUBLE  (args, 24);
-      mapvals.material.diffuse_int    = GIMP_VALUES_GET_DOUBLE  (args, 25);
-      mapvals.material.diffuse_ref    = GIMP_VALUES_GET_DOUBLE  (args, 26);
-      mapvals.material.specular_ref   = GIMP_VALUES_GET_DOUBLE  (args, 27);
-      mapvals.material.highlight      = GIMP_VALUES_GET_DOUBLE  (args, 28);
-      mapvals.antialiasing            = GIMP_VALUES_GET_BOOLEAN (args, 29);
-      mapvals.tiled                   = GIMP_VALUES_GET_BOOLEAN (args, 30);
-      mapvals.create_new_image        = GIMP_VALUES_GET_BOOLEAN (args, 31);
-      mapvals.transparent_background  = GIMP_VALUES_GET_BOOLEAN (args, 32);
-      mapvals.radius                  =
-      mapvals.cylinder_radius         = GIMP_VALUES_GET_DOUBLE  (args, 33);
-      mapvals.scale.x                 = GIMP_VALUES_GET_DOUBLE  (args, 34);
-      mapvals.scale.y                 = GIMP_VALUES_GET_DOUBLE  (args, 35);
-      mapvals.scale.z                 = GIMP_VALUES_GET_DOUBLE  (args, 36);
-      mapvals.cylinder_length         = GIMP_VALUES_GET_DOUBLE  (args, 37);
-
-      for (i = 0; i < 6; i++)
-        {
-          mapvals.boxmap_id[i] = GIMP_VALUES_GET_DRAWABLE_ID (args, 38 + i);
-        }
-
-      for (i = 0; i < 2; i++)
-        {
-          mapvals.cylindermap_id[i] = GIMP_VALUES_GET_DRAWABLE_ID (args, 44 + i);
-        }
-
       check_drawables (drawable);
 
-      if (! image_setup (drawable, FALSE))
+      if (! image_setup (drawable, FALSE, config))
         {
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_SUCCESS,
                                                    NULL);
         }
 
+      copy_from_config (config);
       compute_image ();
       break;
     }

@@ -326,3 +326,90 @@ compute_image (void)
 
   gimp_image_undo_group_end (new_image);
 }
+
+void
+copy_from_config (GimpProcedureConfig *config)
+{
+  GimpDrawable *box_front  = NULL;
+  GimpDrawable *box_back   = NULL;
+  GimpDrawable *box_top    = NULL;
+  GimpDrawable *box_bottom = NULL;
+  GimpDrawable *box_left   = NULL;
+  GimpDrawable *box_right  = NULL;
+  GimpDrawable *cyl_top    = NULL;
+  GimpDrawable *cyl_bottom = NULL;
+
+  mapvals.maptype = gimp_procedure_config_get_choice_id (config, "map-type");
+
+  mapvals.lightsource.type =
+    gimp_procedure_config_get_choice_id (config, "light-type");
+
+  g_object_get (config,
+                "viewpoint-x",            &mapvals.viewpoint.x,
+                "viewpoint-y",            &mapvals.viewpoint.y,
+                "viewpoint-z",            &mapvals.viewpoint.z,
+                "position-x",             &mapvals.position.x,
+                "position-y",             &mapvals.position.y,
+                "position-z",             &mapvals.position.z,
+                "first-axis-x",           &mapvals.firstaxis.x,
+                "first-axis-y",           &mapvals.firstaxis.y,
+                "first-axis-z",           &mapvals.firstaxis.z,
+                "second-axis-x",          &mapvals.secondaxis.x,
+                "second-axis-y",          &mapvals.secondaxis.y,
+                "second-axis-z",          &mapvals.secondaxis.z,
+                "rotation-angle-x",       &mapvals.alpha,
+                "rotation-angle-y",       &mapvals.beta,
+                "rotation-angle-z",       &mapvals.gamma,
+                "light-color",            &mapvals.lightsource.color,
+                "light-position-x",       &mapvals.lightsource.position.x,
+                "light-position-y",       &mapvals.lightsource.position.y,
+                "light-position-z",       &mapvals.lightsource.position.z,
+                "light-direction-x",      &mapvals.lightsource.direction.x,
+                "light-direction-y",      &mapvals.lightsource.direction.y,
+                "light-direction-z",      &mapvals.lightsource.direction.z,
+                "ambient-intensity",      &mapvals.material.ambient_int,
+                "diffuse-intensity",      &mapvals.material.diffuse_int,
+                "diffuse-reflectivity",   &mapvals.material.diffuse_ref,
+                "specular-reflectivity",  &mapvals.material.specular_ref,
+                "highlight",              &mapvals.material.highlight,
+                "antialiasing",           &mapvals.antialiasing,
+                "depth",                  &mapvals.maxdepth,
+                "threshold",              &mapvals.pixelthreshold,
+                "tiled",                  &mapvals.tiled,
+                "new-image",              &mapvals.create_new_image,
+                "new-layer",              &mapvals.create_new_layer,
+                "transparent-background", &mapvals.transparent_background,
+                "sphere-radius",          &mapvals.radius,
+                "box-front-drawable",     &box_front,
+                "box-back-drawable",      &box_back,
+                "box-top-drawable",       &box_top,
+                "box-bottom-drawable",    &box_bottom,
+                "box-left-drawable",      &box_left,
+                "box-right-drawable",     &box_right,
+                "x-scale",                &mapvals.scale.x,
+                "y-scale",                &mapvals.scale.y,
+                "z-scale",                &mapvals.scale.z,
+                "cyl-top-drawable",       &cyl_top,
+                "cyl-bottom-drawable",    &cyl_bottom,
+                "cylinder-radius",        &mapvals.cylinder_radius,
+                "cylinder-length",        &mapvals.cylinder_length,
+                NULL);
+
+  if (box_front)
+    mapvals.boxmap_id[0] = gimp_item_get_id (GIMP_ITEM (box_front));
+  if (box_back)
+    mapvals.boxmap_id[1] = gimp_item_get_id (GIMP_ITEM (box_back));
+  if (box_top)
+    mapvals.boxmap_id[2] = gimp_item_get_id (GIMP_ITEM (box_top));
+  if (box_bottom)
+    mapvals.boxmap_id[3] = gimp_item_get_id (GIMP_ITEM (box_bottom));
+  if (box_left)
+    mapvals.boxmap_id[4] = gimp_item_get_id (GIMP_ITEM (box_left));
+  if (box_right)
+    mapvals.boxmap_id[5] = gimp_item_get_id (GIMP_ITEM (box_right));
+
+  if (cyl_top)
+    mapvals.cylindermap_id[0] = gimp_item_get_id (GIMP_ITEM (cyl_top));
+  if (cyl_bottom)
+    mapvals.cylindermap_id[0] = gimp_item_get_id (GIMP_ITEM (cyl_bottom));
+}

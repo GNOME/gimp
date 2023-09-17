@@ -31,7 +31,9 @@ extern gint border_x1, border_y1, border_x2, border_y2;
 /* ============================ */
 
 extern gint        image_setup              (GimpDrawable *drawable,
-                                             gint          interactive);
+                                             gint          interactive,
+                                             GimpProcedureConfig
+                                                          *config);
 extern glong       in_xy_to_index           (gint          x,
                                              gint          y);
 extern glong       out_xy_to_index          (gint          x,
