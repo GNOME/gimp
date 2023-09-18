@@ -28,7 +28,7 @@ struct _GimpContainerTreeViewPrivate
 
   GtkCellRenderer    *name_cell;
 
-  GtkWidget          *multi_selection_label;
+  GtkWidget          *selection_label;
 
   GList              *editable_cells;
   gchar              *editing_path;

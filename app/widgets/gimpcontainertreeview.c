@@ -288,17 +288,17 @@ gimp_container_tree_view_constructed (GObject *object)
   gimp_container_view_set_dnd_widget (view, GTK_WIDGET (tree_view->view));
 
   tree_view->main_column = gtk_tree_view_column_new ();
-  tree_view->priv->multi_selection_label = gtk_label_new (NULL);
-  gtk_label_set_selectable (GTK_LABEL (tree_view->priv->multi_selection_label), TRUE);
+  tree_view->priv->selection_label = gtk_label_new (NULL);
+  gtk_label_set_selectable (GTK_LABEL (tree_view->priv->selection_label), TRUE);
   gtk_tree_view_column_set_widget (tree_view->main_column,
-                                   tree_view->priv->multi_selection_label);
-  g_signal_connect (tree_view->priv->multi_selection_label, "notify::label",
+                                   tree_view->priv->selection_label);
+  g_signal_connect (tree_view->priv->selection_label, "notify::label",
                     G_CALLBACK (gimp_container_tree_view_selection_label_notify),
                     tree_view);
-  g_signal_connect (tree_view->priv->multi_selection_label, "notify::selection-bound",
+  g_signal_connect (tree_view->priv->selection_label, "notify::selection-bound",
                     G_CALLBACK (gimp_container_tree_view_selection_label_notify),
                     tree_view);
-  gtk_widget_show (tree_view->priv->multi_selection_label);
+  gtk_widget_show (tree_view->priv->selection_label);
   gtk_tree_view_insert_column (tree_view->view, tree_view->main_column, 0);
 
   gtk_tree_view_set_expander_column (tree_view->view, tree_view->main_column);
@@ -971,20 +971,30 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
   if (free_paths)
     g_list_free_full (paths, (GDestroyNotify) gtk_tree_path_free);
 
-  if (g_list_length (items) > 1)
+  if (g_list_length (items) > 0)
     {
       gchar *str;
 
-      str = g_strdup_printf (ngettext ("%d item selected", "%d items selected",
-                                       g_list_length (items)),
-                             g_list_length (items));
-      gtk_label_set_text (GTK_LABEL (tree_view->priv->multi_selection_label), str);
+      if (g_list_length (items) > 1)
+        {
+          str = g_strdup_printf (ngettext ("%d item selected", "%d items selected",
+                                           g_list_length (items)),
+                                 g_list_length (items));
+        }
+      else
+        {
+          GimpItem *tmp;
+
+          tmp = (GimpItem *) g_list_first (items)->data;
+          str = g_strdup_printf ("%s", gimp_object_get_name (tmp));
+        }
+      gtk_label_set_text (GTK_LABEL (tree_view->priv->selection_label), str);
       g_free (str);
-      gtk_widget_show (tree_view->priv->multi_selection_label);
+      gtk_widget_set_visible (tree_view->priv->selection_label, TRUE);
     }
   else
     {
-      gtk_widget_hide (tree_view->priv->multi_selection_label);
+      gtk_widget_set_visible (tree_view->priv->selection_label, FALSE);
     }
 
   return TRUE;
