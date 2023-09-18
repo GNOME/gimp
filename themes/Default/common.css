@@ -127,6 +127,11 @@ notebook stack {
   background-color: @bg-color;
 }
 
+notebook header {
+  background-color: @bg-color;
+  border-color: @strong-border-color;
+}
+
 /* Use this to make a border or padding around each tab */
 notebook header tabs tab {
   padding: 1px;
@@ -234,10 +239,6 @@ scrollbar slider {
 scrolledwindow viewport grid, scrolledwindow viewport box {
    border-radius: 1px;
    border: 0px solid @bg-color;
-}
-
-notebook header {
-  background-color: @bg-color;
 }
 
 GimpRuler {
