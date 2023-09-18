@@ -434,6 +434,13 @@ menu separator {
   margin: 0;
 }
 
+/* Defines the border around the Save Image actionbar options */
+actionbar revealer box {
+  border-width: 0px;
+  border-top-width: 1px;
+  border-top-color: @strong-border-color;
+}
+
 /* Sidebar in File > Open */
 
 /* The background to either side of the directory buttons.
