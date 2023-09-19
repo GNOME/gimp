@@ -431,6 +431,7 @@ menu box {
  * with a different background color. Let's get rid of it.
  */
 menu separator {
+  background-color: @stronger-border-color;
   margin: 0;
 }
 
