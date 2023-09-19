@@ -415,6 +415,10 @@ menuitem *:hover {
   background: @extreme-selected-color;
 }
 
+menuitem check {
+  border-color: @fg-color;
+}
+
 /* "Add Tab" menu in dockable dialog */
 menu {
   background-color: @bg-color;
