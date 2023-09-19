@@ -257,7 +257,7 @@ gimp_help_get_installed_languages (void)
           while ((info = g_file_enumerator_next_file (enumerator,
                                                       NULL, NULL)))
             {
-              if (g_file_info_get_file_type (info) == G_FILE_TYPE_DIRECTORY)
+              if (g_file_info_get_attribute_uint32 (info, G_FILE_ATTRIBUTE_STANDARD_TYPE) == G_FILE_TYPE_DIRECTORY)
                 {
                   GFile *locale_dir;
                   GFile *file;

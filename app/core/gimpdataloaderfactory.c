@@ -382,13 +382,13 @@ gimp_data_loader_factory_load_directory (GimpDataFactory *factory,
           GFileType  file_type;
           GFile     *child;
 
-          if (g_file_info_get_is_hidden (info))
+          if (g_file_info_get_attribute_boolean (info, G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN))
             {
               g_object_unref (info);
               continue;
             }
 
-          file_type = g_file_info_get_file_type (info);
+          file_type = g_file_info_get_attribute_uint32 (info, G_FILE_ATTRIBUTE_STANDARD_TYPE);
           child     = g_file_enumerator_get_child (enumerator, info);
 
           if (file_type == G_FILE_TYPE_DIRECTORY)

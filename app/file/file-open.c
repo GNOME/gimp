@@ -130,7 +130,7 @@ file_open_image (Gimp                *gimp,
       if (! info)
         return NULL;
 
-      if (g_file_info_get_file_type (info) != G_FILE_TYPE_REGULAR)
+      if (g_file_info_get_attribute_uint32 (info, G_FILE_ATTRIBUTE_STANDARD_TYPE) != G_FILE_TYPE_REGULAR)
         {
           g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                _("Not a regular file"));

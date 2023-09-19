@@ -338,7 +338,7 @@ gimp_image_prop_view_label_set_filesize (GtkWidget *label,
 
       if (info)
         {
-          goffset  size = g_file_info_get_size (info);
+          goffset  size = g_file_info_get_attribute_uint64 (info, G_FILE_ATTRIBUTE_STANDARD_SIZE);
           gchar   *str  = g_format_size (size);
 
           gtk_label_set_text (GTK_LABEL (label), str);

@@ -1027,7 +1027,7 @@ get_file_info (GFile *file)
 
   if (info)
     {
-      size = g_file_info_get_size (info);
+      size = g_file_info_get_attribute_uint64 (info, G_FILE_ATTRIBUTE_STANDARD_SIZE);
 
       g_object_unref (info);
     }

@@ -595,7 +595,7 @@ splash_image_load_from_file (GFile    *file,
     {
       const gchar *content_type;
 
-      content_type = g_file_info_get_content_type (info);
+      content_type = g_file_info_get_attribute_string (info, G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE);
       if (content_type)
         {
           gchar *mime_type;

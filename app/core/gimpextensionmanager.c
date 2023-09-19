@@ -1018,7 +1018,7 @@ gimp_extension_manager_search_directory (GimpExtensionManager *manager,
         {
           GFile *subdir;
 
-          if (g_file_info_get_is_hidden (info))
+          if (g_file_info_get_attribute_boolean (info, G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN))
             {
               g_object_unref (info);
               continue;

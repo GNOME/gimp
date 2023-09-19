@@ -571,7 +571,7 @@ tiff_io_get_file_size (thandle_t handle)
     }
   else
     {
-      size = g_file_info_get_size (info);
+      size = g_file_info_get_attribute_uint64 (info, G_FILE_ATTRIBUTE_STANDARD_SIZE);
       g_object_unref (info);
     }
 

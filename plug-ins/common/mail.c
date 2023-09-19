@@ -392,7 +392,7 @@ send_image (GObject       *config,
       while ((info = g_file_enumerator_next_file (enumerator,
                                                   NULL, NULL)))
         {
-          if (g_file_info_get_file_type (info) == G_FILE_TYPE_REGULAR)
+          if (g_file_info_get_attribute_uint32 (info, G_FILE_ATTRIBUTE_STANDARD_TYPE) == G_FILE_TYPE_REGULAR)
             {
               GFile *file = g_file_enumerator_get_child (enumerator, info);
               g_file_delete (file, NULL, NULL);

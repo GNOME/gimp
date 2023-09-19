@@ -96,8 +96,8 @@ icon_themes_init (Gimp *gimp)
               while ((info = g_file_enumerator_next_file (enumerator,
                                                           NULL, NULL)))
                 {
-                  if (! g_file_info_get_is_hidden (info) &&
-                      g_file_info_get_file_type (info) == G_FILE_TYPE_DIRECTORY)
+                  if (! g_file_info_get_attribute_boolean (info, G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN) &&
+                      g_file_info_get_attribute_uint32 (info, G_FILE_ATTRIBUTE_STANDARD_TYPE) == G_FILE_TYPE_DIRECTORY)
                     {
                       GFile *file;
                       GFile *index_theme;

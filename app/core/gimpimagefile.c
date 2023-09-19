@@ -452,7 +452,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
                                          G_FILE_QUERY_INFO_NONE,
                                          NULL, NULL);
 
-          regular  = (g_file_info_get_file_type (file_info) == G_FILE_TYPE_REGULAR);
+          regular  = (g_file_info_get_attribute_uint32 (file_info, G_FILE_ATTRIBUTE_STANDARD_TYPE) == G_FILE_TYPE_REGULAR);
           readable = g_file_info_get_attribute_boolean (file_info,
                                                         G_FILE_ATTRIBUTE_ACCESS_CAN_READ);
 
@@ -715,7 +715,7 @@ gimp_imagefile_icon_callback (GObject      *source_object,
 
   if (file_info)
     {
-      private->icon = g_object_ref (g_file_info_get_icon (file_info));
+      private->icon = g_object_ref (G_ICON (g_file_info_get_attribute_object (file_info, G_FILE_ATTRIBUTE_STANDARD_ICON)));
       g_object_unref (file_info);
     }
 

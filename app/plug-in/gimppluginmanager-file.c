@@ -683,7 +683,7 @@ file_check_single_magic (const gchar  *offset,
           if (! info)
             return FILE_MATCH_NONE;
 
-          fileval = g_file_info_get_size (info);
+          fileval = g_file_info_get_attribute_uint64 (info, G_FILE_ATTRIBUTE_STANDARD_SIZE);
           g_object_unref (info);
         }
       else if (offs >= 0 &&

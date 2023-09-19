@@ -381,10 +381,10 @@ gimp_module_db_load_directory (GimpModuleDB *db,
 
       while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
         {
-          GFileType file_type = g_file_info_get_file_type (info);
+          GFileType file_type = g_file_info_get_attribute_uint32 (info, G_FILE_ATTRIBUTE_STANDARD_TYPE);
 
          if (file_type == G_FILE_TYPE_REGULAR &&
-             ! g_file_info_get_is_hidden (info))
+             ! g_file_info_get_attribute_boolean (info, G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN))
             {
               GFile *child = g_file_enumerator_get_child (enumerator, info);
 

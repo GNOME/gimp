@@ -730,7 +730,7 @@ gimp_file_is_executable (GFile *file)
 
   if (info)
     {
-      GFileType    file_type = g_file_info_get_file_type (info);
+      GFileType    file_type = g_file_info_get_attribute_uint32 (info, G_FILE_ATTRIBUTE_STANDARD_TYPE);
       const gchar *filename  = g_file_info_get_name (info);
 
       if (file_type == G_FILE_TYPE_REGULAR &&

@@ -269,7 +269,7 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
         {
           GFile *child;
 
-          if (g_file_info_get_is_hidden (info))
+          if (g_file_info_get_attribute_boolean (info, G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN))
             {
               g_object_unref (info);
               continue;
@@ -305,7 +305,7 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
                       gchar *file_name;
                       char  *ext;
 
-                      if (g_file_info_get_is_hidden (info2))
+                      if (g_file_info_get_attribute_boolean (info2, G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN))
                         {
                           g_object_unref (info2);
                           continue;

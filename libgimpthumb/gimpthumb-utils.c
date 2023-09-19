@@ -556,7 +556,7 @@ gimp_thumb_file_test (const gchar *filename,
                                             G_FILE_ATTRIBUTE_TIME_MODIFIED);
 
       if (size)
-        *size = g_file_info_get_size (info);
+        *size = g_file_info_get_attribute_uint64 (info, G_FILE_ATTRIBUTE_STANDARD_SIZE);
 
       if (err_no)
         *err_no = 0;

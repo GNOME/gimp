@@ -216,7 +216,7 @@ gimp_color_profile_new_from_file (GFile   *file,
         {
           GInputStream *input;
 
-          length = g_file_info_get_size (info);
+          length = g_file_info_get_attribute_uint64 (info, G_FILE_ATTRIBUTE_STANDARD_SIZE);
           data   = g_malloc (length);
 
           g_object_unref (info);
