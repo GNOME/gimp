@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-06 20:17+0000\n"
-"PO-Revision-Date: 2023-09-07 01:06+0300\n"
+"POT-Creation-Date: 2023-09-14 23:23+0000\n"
+"PO-Revision-Date: 2023-09-19 23:49+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnometurk@gnome.org>\n"
 "Language: tr\n"
@@ -2537,9 +2537,9 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2428
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2430
 #: app/core/gimppalette.c:428 app/core/gimppalette-import.c:213
-#: app/core/gimppalette-load.c:241 app/dialogs/palette-import-dialog.c:762
+#: app/core/gimppalette-load.c:243 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Başlıksız"
@@ -6928,7 +6928,7 @@ msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "%d Katmanı Kaldır"
 
-#: app/actions/layers-commands.c:994 app/text/gimptextlayer.c:581
+#: app/actions/layers-commands.c:994 app/text/gimptextlayer.c:585
 msgid "Discard Text Information"
 msgstr "Metin Bilgisinden Vazgeç"
 
@@ -13143,7 +13143,7 @@ msgid "Palette"
 msgstr "Palet"
 
 #: app/core/gimpcontext.c:742 app/core/gimpcontext.c:743
-#: app/tools/gimptextoptions.c:795
+#: app/tools/gimptextoptions.c:800
 msgid "Font"
 msgstr "Yazı tipi"
 
@@ -13173,7 +13173,7 @@ msgstr "kopyala"
 msgid "%s copy"
 msgstr "%s kopyası"
 
-#: app/core/gimpdatafactory.c:630 app/tools/gimptextoptions.c:776
+#: app/core/gimpdatafactory.c:630 app/tools/gimptextoptions.c:781
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Yazı tipleri yükleniyor (bu biraz zaman alabilir...)"
@@ -13216,7 +13216,7 @@ msgstr "'%s' yüklenirken hata"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:95
 #: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:443
+#: app/xcf/xcf.c:444
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "'%s' dosyası okumak için açılamadı: "
@@ -13323,7 +13323,7 @@ msgstr "Özel biçem"
 # Menü öğesi olmadığı için tümce düzeni tercih edildi
 #: app/core/gimpfilloptions.c:128 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:81
-#: app/tools/gimptextoptions.c:176
+#: app/tools/gimptextoptions.c:178
 msgid "Antialiasing"
 msgstr "Kenar yumuşatma"
 
@@ -13515,181 +13515,187 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Katman Kümesini Dönüştür"
 
-#: app/core/gimpimage.c:707 app/widgets/gimpsymmetryeditor.c:182
+#: app/core/gimpimage.c:709 app/widgets/gimpsymmetryeditor.c:182
 msgid "Symmetry"
 msgstr "Simetri"
 
-#: app/core/gimpimage.c:2673
+#: app/core/gimpimage.c:2675
 msgid " (exported)"
 msgstr " (dışa aktarılmış)"
 
-#: app/core/gimpimage.c:2677
+#: app/core/gimpimage.c:2679
 msgid " (overwritten)"
 msgstr " (üstüne yazılmış)"
 
-#: app/core/gimpimage.c:2686
+#: app/core/gimpimage.c:2688
 msgid " (imported)"
 msgstr " (içe aktarılmış)"
 
 # Hata mesajı: İkinci S Gimp ve sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2859 app/core/gimpimage.c:2873
-#: app/core/gimpimage.c:2916
+#: app/core/gimpimage.c:2861 app/core/gimpimage.c:2875
+#: app/core/gimpimage.c:2918
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "'%s' katman kipi %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2931
+#: app/core/gimpimage.c:2933
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Katman kümeleri %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2938
+#: app/core/gimpimage.c:2940
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Katman kümelerindeki maskeler %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2945
+#: app/core/gimpimage.c:2947
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Katman kümelerindeki konum kilitleri %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2952
+#: app/core/gimpimage.c:2954
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Katman kümelerindeki alfa kanalı kilitleri %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2960 app/core/gimpimage.c:2974
+#: app/core/gimpimage.c:2962 app/core/gimpimage.c:2987
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Görünürlük kilitleri %s ile eklendi"
 
+# %s burada GIMP 3.0 şeklinde sürümü belirtmek için kullanılıyor.
+#: app/core/gimpimage.c:2973
+#, c-format
+msgid "Format of font information in text layer was changed in %s"
+msgstr "Metin katmanındaki yazı tipi bilgilerinin biçimi %s ile değiştirildi"
+
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2983
+#: app/core/gimpimage.c:2996
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Çoklu yol seçimi %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:2995
+#: app/core/gimpimage.c:3008
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Renk etiketlerinin yola kaydedilmesi %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3002
+#: app/core/gimpimage.c:3015
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Kilitlerin yola kaydedilmesi %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3016
+#: app/core/gimpimage.c:3029
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Yüksek bit derinlikli görüntüler %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3024
+#: app/core/gimpimage.c:3037
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Yüksek bit derinlikli görüntülerin kodlaması %s ile düzeltildi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3032
+#: app/core/gimpimage.c:3045
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Dahili zlib sıkıştırması %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3049
+#: app/core/gimpimage.c:3062
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr " 4 GB’dan büyük görüntü dosyaları desteği %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3056
+#: app/core/gimpimage.c:3069
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Çoklu katman seçimi %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3073
+#: app/core/gimpimage.c:3086
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Tuval dışı kılavuzlar %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3084
+#: app/core/gimpimage.c:3097
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Öge seti ve öge adlarında desen araması %s ile eklendi"
 
 # Hata mesajı: S burada Gimp sürümünü belirtmeye yarıyor.
-#: app/core/gimpimage.c:3090
+#: app/core/gimpimage.c:3103
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Çoklu kanal seçimi %s ile eklendi"
 
-#: app/core/gimpimage.c:3195
+#: app/core/gimpimage.c:3209
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Görüntü Çözünürlüğünü Değiştir"
 
-#: app/core/gimpimage.c:3247
+#: app/core/gimpimage.c:3261
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Görüntü Birimini Değiştir"
 
-#: app/core/gimpimage.c:4300
+#: app/core/gimpimage.c:4314
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr "'gimp-comment' parasit doğrulanamadı: yorum geçersiz UTF-8 içeriyor"
 
-#: app/core/gimpimage.c:4362
+#: app/core/gimpimage.c:4376
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Görüntüye Parazit İliştir"
 
-#: app/core/gimpimage.c:4407
+#: app/core/gimpimage.c:4421
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Görüntüden Paraziti Kaldır"
 
-#: app/core/gimpimage.c:5242
+#: app/core/gimpimage.c:5256
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Katman Ekle"
 
-#: app/core/gimpimage.c:5286 app/core/gimpimage.c:5317
+#: app/core/gimpimage.c:5300 app/core/gimpimage.c:5331
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Katmanı Kaldır"
 
-#: app/core/gimpimage.c:5311
+#: app/core/gimpimage.c:5325
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Yüzen Seçimi Kaldır"
 
-#: app/core/gimpimage.c:5835
+#: app/core/gimpimage.c:5849
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Kanal Ekle"
 
-#: app/core/gimpimage.c:5865 app/core/gimpimage.c:5890
+#: app/core/gimpimage.c:5879 app/core/gimpimage.c:5904
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Kanalı Kaldır"
 
-#: app/core/gimpimage.c:5950
+#: app/core/gimpimage.c:5964
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Yol Ekle"
 
-#: app/core/gimpimage.c:5985 app/core/gimpimage.c:5993
+#: app/core/gimpimage.c:5999 app/core/gimpimage.c:6007
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Yolu Kaldır"
@@ -14294,25 +14300,25 @@ msgstr "MyPaint fırçası seri hale getirilemedi."
 msgid "%s (occurs %u)"
 msgstr "%s (%u defa)"
 
-#: app/core/gimppalette-import.c:544
+#: app/core/gimppalette-import.c:548
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Bilinmeyen palet dosyası türü: %s"
 
-#: app/core/gimppalette-load.c:118
+#: app/core/gimppalette-load.c:120
 msgid "Missing magic header."
 msgstr "Eksik sihirli başlık."
 
-#: app/core/gimppalette-load.c:141
+#: app/core/gimppalette-load.c:143
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "'%s' palet dosyası içinde geçersiz UTF-8 dizgesi"
 
-#: app/core/gimppalette-load.c:161
+#: app/core/gimppalette-load.c:163
 msgid "Invalid column count."
 msgstr "Geçersiz sütun sayısı."
 
-#: app/core/gimppalette-load.c:168
+#: app/core/gimppalette-load.c:170
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -14321,92 +14327,130 @@ msgstr ""
 "'%s' palet dosyası okunuyor: %d. satır içindeki sütunların sayısı geçersiz. "
 "Öntanımlı değer kullanılıyor."
 
-#: app/core/gimppalette-load.c:202
+#: app/core/gimppalette-load.c:204
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "'%s' palet dosyası okunuyor: %d. satırda KIRMIZI bileşen kayıp."
 
-#: app/core/gimppalette-load.c:210
+#: app/core/gimppalette-load.c:212
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "'%s' palet dosyası okunuyor: %d. satırda YEŞİL bileşen kayıp."
 
-#: app/core/gimppalette-load.c:218
+#: app/core/gimppalette-load.c:220
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "'%s' palet dosyası okunuyor: %d. satırda MAVİ bileşen kayıp."
 
-#: app/core/gimppalette-load.c:228
+#: app/core/gimppalette-load.c:230
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "'%s' palet dosyası okunuyor: %d. satırda RGB değeri erim dışı."
 
-#: app/core/gimppalette-load.c:255 app/core/gimppalette-load.c:505
+#: app/core/gimppalette-load.c:257 app/core/gimppalette-load.c:507
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr "'%s' palet dosyası okunuyor: Kırpılmış dosyadan %d renkler oku: %s"
 
-#: app/core/gimppalette-load.c:277
+#: app/core/gimppalette-load.c:279
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "Palet dosyasının %d satırında: "
 
-#: app/core/gimppalette-load.c:473 app/core/gimppalette-load.c:675
+#: app/core/gimppalette-load.c:475 app/core/gimppalette-load.c:682
+#: app/core/gimppalette-load.c:1025
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "'%s' palet dosyasından başlık okunamadı: "
 
-#: app/core/gimppalette-load.c:510
+#: app/core/gimppalette-load.c:512
 msgid "Premature end of file."
 msgstr "Belirsiz dosya sonu."
 
-#: app/core/gimppalette-load.c:685
-#, c-format
-msgid "Invalid ASE header: %s"
-msgstr "Geçersiz ASE başlığı: %s"
+#: app/core/gimppalette-load.c:691
+msgid "Invalid ACB palette version."
+msgstr "ACB palet sürümü geçersiz."
 
-#: app/core/gimppalette-load.c:694
+#: app/core/gimppalette-load.c:697
+msgid "GIMP only supports version 1 ACB palettes"
+msgstr "GIMP yalnızca ACB sürüm 1 paletlerini destekler"
+
+#: app/core/gimppalette-load.c:704
+msgid "Invalid ACB palette identifier."
+msgstr "ACB palet tanımlayıcı geçersiz."
+
+#: app/core/gimppalette-load.c:719 app/core/gimppalette-load.c:958
+#: app/core/gimppalette-load.c:979
+msgid "Invalid ACB palette name."
+msgstr "ACB palet adı geçersiz."
+
+#: app/core/gimppalette-load.c:737
+msgid "Invalid ACB palette prefix."
+msgstr "ACB palet ön eki geçersiz."
+
+#: app/core/gimppalette-load.c:752
+msgid "Invalid ACB palette suffix."
+msgstr "ACB palet son eki geçersiz."
+
+#: app/core/gimppalette-load.c:770 app/core/gimppalette-load.c:1044
 msgid "Invalid number of colors in palette."
 msgstr "Paletteki renk sayısı geçersiz."
 
-#: app/core/gimppalette-load.c:700
+#: app/core/gimppalette-load.c:776 app/core/gimppalette-load.c:1050
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "Geçersiz renk sayısı: %s."
 
-#: app/core/gimppalette-load.c:710
+#: app/core/gimppalette-load.c:788 app/core/gimppalette-load.c:797
+msgid "Invalid ACB palette page info."
+msgstr "ACB palet sayfa bilgisi geçersiz."
+
+#: app/core/gimppalette-load.c:808 app/core/gimppalette-load.c:830
+msgid "Invalid ACB palette color space."
+msgstr "ACB palet renk uzayı geçersiz."
+
+#: app/core/gimppalette-load.c:968
+msgid "Invalid ACB name size."
+msgstr "ACB palet ad boyutu geçersiz."
+
+#: app/core/gimppalette-load.c:1035
+#, c-format
+msgid "Invalid ASE header: %s"
+msgstr "Geçersiz ASE başlığı: %s"
+
+#: app/core/gimppalette-load.c:1060
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "Geçersiz ASE dosyası: %s."
 
-#: app/core/gimppalette-load.c:788
+#: app/core/gimppalette-load.c:1138
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "Geçersiz renk bileşenleri: %s."
 
-#: app/core/gimppalette-load.c:802 app/core/gimppalette-load.c:829
+#: app/core/gimppalette-load.c:1152 app/core/gimppalette-load.c:1179
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "Geçersiz ASE renk girdisi: %s."
 
-#: app/core/gimppalette-load.c:857 app/core/gimppalette-load.c:873
-#: app/core/gimppalette-load.c:892
+#: app/core/gimppalette-load.c:1207 app/core/gimppalette-load.c:1223
+#: app/core/gimppalette-load.c:1242
 msgid "Invalid ASE palette name."
 msgstr "Geçersiz ASE palet adı."
 
-#: app/core/gimppalette-load.c:866
+#: app/core/gimppalette-load.c:1216
 msgid "Invalid ASE block size."
 msgstr "Geçersiz ASE blok boyutu."
 
-#: app/core/gimppalette-load.c:882
+#: app/core/gimppalette-load.c:1232
 msgid "Invalid ASE name size."
 msgstr "Geçersiz ASE ad boyutu."
 
-#: app/core/gimppalette-load.c:1010
+#: app/core/gimppalette-load.c:1360
 msgid "Unable to read SBZ file"
 msgstr "SBZ dosyası okunamadı"
 
-#: app/core/gimppalette-load.c:1074
+#: app/core/gimppalette-load.c:1424
 msgid "Unable to open SBZ file"
 msgstr "SBZ dosyası açılamadı"
 
@@ -14574,7 +14618,7 @@ msgid "Line width"
 msgstr "Çizgi genişliği"
 
 #: app/core/gimpstrokeoptions.c:168 app/core/gimptemplate.c:158
-#: app/tools/gimptextoptions.c:163 app/tools/gimptextoptions.c:306
+#: app/tools/gimptextoptions.c:165 app/tools/gimptextoptions.c:308
 msgid "Unit"
 msgstr "Birim"
 
@@ -14590,7 +14634,7 @@ msgstr "Birleştirme biçemi"
 msgid "Miter limit"
 msgstr "Köşe sınırı"
 
-#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:323
+#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:325
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -15723,7 +15767,7 @@ msgstr "X Konumu:"
 msgid "Offset Y:"
 msgstr "Y Konumu:"
 
-#: app/dialogs/layer-options-dialog.c:377 app/dialogs/resize-dialog.c:508
+#: app/dialogs/layer-options-dialog.c:377 app/dialogs/resize-dialog.c:510
 #: app/widgets/gimptemplateeditor.c:489
 msgid "_Fill with:"
 msgstr "_Doldur:"
@@ -16538,7 +16582,7 @@ msgstr "Kullanıcı Arabirimi"
 msgid "Interface"
 msgstr "Arabirim"
 
-#: app/dialogs/preferences-dialog.c:1917 app/tools/gimptextoptions.c:193
+#: app/dialogs/preferences-dialog.c:1917 app/tools/gimptextoptions.c:195
 msgid "Language"
 msgstr "Dil"
 
@@ -17734,29 +17778,29 @@ msgid "_Y:"
 msgstr "_Y:"
 
 #. Button to center the image on canvas just below the preview.
-#: app/dialogs/resize-dialog.c:444
+#: app/dialogs/resize-dialog.c:446
 msgid "C_enter"
 msgstr "M_erkez"
 
-#: app/dialogs/resize-dialog.c:470
+#: app/dialogs/resize-dialog.c:472
 msgid "Resize _layers:"
 msgstr "Ka_tmanları yeniden boyutlandır:"
 
-#: app/dialogs/resize-dialog.c:518
+#: app/dialogs/resize-dialog.c:520
 msgid "Resize _text layers"
 msgstr "_Metin katmanını yeniden boyutlandır"
 
-#: app/dialogs/resize-dialog.c:529
+#: app/dialogs/resize-dialog.c:531
 msgid "Resizing text layers will make them uneditable"
 msgstr ""
 "Metin katmanlarını yeniden boyutlandırmak onları düzenlenemez hale getirir"
 
-#: app/dialogs/resize-dialog.c:751
+#: app/dialogs/resize-dialog.c:753
 #, c-format
 msgid "Scale template to %.2f ppi"
 msgstr "Şablonu %.2f ppiʼye ölçekle"
 
-#: app/dialogs/resize-dialog.c:756
+#: app/dialogs/resize-dialog.c:758
 #, c-format
 msgid "Set image to %.2f ppi"
 msgstr "Görüntüyü %.2f ppiʼye ayarla"
@@ -21280,21 +21324,21 @@ msgstr "Rüzgar"
 msgid "Resource '%s' is not renamable"
 msgstr "'%s' kaynağı yeniden adlandırılamaz"
 
-#: app/pdb/text-layer-cmds.c:97
+#: app/pdb/text-layer-cmds.c:98
 msgid "Failed to create text layer"
 msgstr "Metin katmanı oluşturulamadı"
 
-#: app/pdb/text-layer-cmds.c:161 app/pdb/text-layer-cmds.c:295
-#: app/pdb/text-layer-cmds.c:360 app/pdb/text-layer-cmds.c:419
-#: app/pdb/text-layer-cmds.c:477 app/pdb/text-layer-cmds.c:535
-#: app/pdb/text-layer-cmds.c:593 app/pdb/text-layer-cmds.c:651
-#: app/pdb/text-layer-cmds.c:709 app/pdb/text-layer-cmds.c:765
-#: app/pdb/text-layer-cmds.c:823 app/pdb/text-layer-cmds.c:881
-#: app/pdb/text-layer-cmds.c:939 app/pdb/text-layer-cmds.c:974
+#: app/pdb/text-layer-cmds.c:162 app/pdb/text-layer-cmds.c:300
+#: app/pdb/text-layer-cmds.c:365 app/pdb/text-layer-cmds.c:424
+#: app/pdb/text-layer-cmds.c:482 app/pdb/text-layer-cmds.c:540
+#: app/pdb/text-layer-cmds.c:598 app/pdb/text-layer-cmds.c:656
+#: app/pdb/text-layer-cmds.c:714 app/pdb/text-layer-cmds.c:770
+#: app/pdb/text-layer-cmds.c:828 app/pdb/text-layer-cmds.c:886
+#: app/pdb/text-layer-cmds.c:944 app/pdb/text-layer-cmds.c:979
 msgid "Set text layer attribute"
 msgstr "Metin katmanı özniteliğini ayarla"
 
-#: app/pdb/text-layer-cmds.c:230
+#: app/pdb/text-layer-cmds.c:231
 msgid "Set text layer markup"
 msgstr "Metin katmanı işaretlemesini ayarla"
 
@@ -21885,7 +21929,7 @@ msgstr "Bu işlem hiçbir düzenlenebilir özellik içermez"
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
-#: app/text/gimpfont.c:52
+#: app/text/gimpfont.c:56
 msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
@@ -21906,7 +21950,11 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Metin Katmanı Ekle"
 
-#: app/text/gimptext-parasite.c:95
+#: app/text/gimptext-parasite.c:168
+msgid "Invalid markup format in text parasite"
+msgstr "Metin parazitinde geçersiz işaretleme biçimi"
+
+#: app/text/gimptext-parasite.c:192
 msgid "Empty text parasite"
 msgstr "Metin parazitini boşalt"
 
@@ -21942,15 +21990,15 @@ msgstr "Metin Katmanını Döndür"
 msgid "Transform Text Layer"
 msgstr "Metin Katmanını Dönüştür"
 
-#: app/text/gimptextlayer.c:716
+#: app/text/gimptextlayer.c:721
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Hiçbir yazı tipi olmaması , metin işlevi kullanılamaz."
 
-#: app/text/gimptextlayer.c:779
+#: app/text/gimptextlayer.c:784
 msgid "Empty Text Layer"
 msgstr "Boş Metin Katmanı"
 
-#: app/text/gimptextlayer.c:947
+#: app/text/gimptextlayer.c:952
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -21958,7 +22006,7 @@ msgstr ""
 "Metniniz görselleştirilemiyor. Çok büyük olmasından kaynaklanabilir. Lütfen "
 "daha kısa hale getirin ya da daha küçük yazı tipi kullanın."
 
-#: app/text/gimptextlayer-xcf.c:80
+#: app/text/gimptextlayer-xcf.c:82
 #, c-format
 msgid ""
 "Problems parsing the text parasite for layer '%s':\n"
@@ -21973,7 +22021,7 @@ msgstr ""
 "Bazı metin özellikleri yanlış olabilir. Metin katmanını düzenlemek "
 "istemedikçe, bunun hakkında endişelenmenize gerek yok."
 
-#: app/text/gimptextlayout.c:594
+#: app/text/gimptextlayout.c:596
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -23348,7 +23396,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:851
+#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:856
 msgid "Color:"
 msgstr "Renk:"
 
@@ -24203,7 +24251,7 @@ msgstr "Geçerli"
 msgid "Fixed"
 msgstr "Sabit"
 
-#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:809
+#: app/tools/gimprectangleoptions.c:1006 app/tools/gimptextoptions.c:814
 msgid "Size:"
 msgstr "Boyut:"
 
@@ -24478,66 +24526,66 @@ msgstr "Lekelemek için tıklayın"
 msgid "Click to smudge the line"
 msgstr "Çizgiyi lekelemek için tıklayın"
 
-#: app/tools/gimptextoptions.c:164
+#: app/tools/gimptextoptions.c:166
 msgid "Font size unit"
 msgstr "Yazı tipi boyutu birimi"
 
-#: app/tools/gimptextoptions.c:169 app/tools/gimptextoptions.c:170
+#: app/tools/gimptextoptions.c:171 app/tools/gimptextoptions.c:172
 msgid "Font size"
 msgstr "Yazı Tipi Boyutu"
 
-#: app/tools/gimptextoptions.c:183
+#: app/tools/gimptextoptions.c:185
 msgid "Hinting"
 msgstr "İpucu"
 
-#: app/tools/gimptextoptions.c:184
+#: app/tools/gimptextoptions.c:186
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Dokunma, yazı tipi dış çizgisini, küçük boyutlu canlı bit eşlem oluşturmak "
 "için değiştirir"
 
-#: app/tools/gimptextoptions.c:194
+#: app/tools/gimptextoptions.c:196
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "Metin dili, metnin görselleştirme şeklini etkileyebilir."
 
-#: app/tools/gimptextoptions.c:208
+#: app/tools/gimptextoptions.c:210
 msgid "Justify"
 msgstr "Hizala"
 
-#: app/tools/gimptextoptions.c:209
+#: app/tools/gimptextoptions.c:211
 msgid "Text alignment"
 msgstr "Metin hizalaması"
 
-#: app/tools/gimptextoptions.c:216
+#: app/tools/gimptextoptions.c:218
 msgid "Indentation"
 msgstr "Girinti"
 
-#: app/tools/gimptextoptions.c:217
+#: app/tools/gimptextoptions.c:219
 msgid "Indentation of the first line"
 msgstr "İlk satırın girintili yazımı"
 
-#: app/tools/gimptextoptions.c:224
+#: app/tools/gimptextoptions.c:226
 msgid "Line spacing"
 msgstr "Çizgi boşluğu"
 
-#: app/tools/gimptextoptions.c:225
+#: app/tools/gimptextoptions.c:227
 msgid "Adjust line spacing"
 msgstr "Satır boşluğunu ayarla"
 
-#: app/tools/gimptextoptions.c:232
+#: app/tools/gimptextoptions.c:234
 msgid "Letter spacing"
 msgstr "Harf boşluğu"
 
-#: app/tools/gimptextoptions.c:233
+#: app/tools/gimptextoptions.c:235
 msgid "Adjust letter spacing"
 msgstr "Harf boşluğunu ayarla"
 
-#: app/tools/gimptextoptions.c:240
+#: app/tools/gimptextoptions.c:242
 msgid "Box"
 msgstr "Kutu"
 
-#: app/tools/gimptextoptions.c:241
+#: app/tools/gimptextoptions.c:243
 msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
@@ -24545,63 +24593,63 @@ msgstr ""
 "Enter tuşuna bastığınızda metnin yeni bir satıra kaydırılması veya "
 "dikdörtgen şekil içine devam edip etmemesi"
 
-#: app/tools/gimptextoptions.c:249
+#: app/tools/gimptextoptions.c:251
 msgid "Use editor window"
 msgstr "Düzenleyici penceresini kullan"
 
-#: app/tools/gimptextoptions.c:250
+#: app/tools/gimptextoptions.c:252
 msgid "Use an external editor window for text entry"
 msgstr "Metin girişi için dış metin düzenleyici kullan"
 
-#: app/tools/gimptextoptions.c:256
+#: app/tools/gimptextoptions.c:258
 msgid "Show on-canvas editor"
 msgstr "Tuvalde düzenleyici göster"
 
-#: app/tools/gimptextoptions.c:257
+#: app/tools/gimptextoptions.c:259
 msgid "Show on-canvas text editor"
 msgstr "Tuvalde metin düzenleyici göster"
 
-#: app/tools/gimptextoptions.c:299
+#: app/tools/gimptextoptions.c:301
 msgid "Outline width"
 msgstr "Çerçeve genişliği"
 
-#: app/tools/gimptextoptions.c:300
+#: app/tools/gimptextoptions.c:302
 msgid "Adjust outline width"
 msgstr "Çerçeve genişliğini ayarla"
 
-#: app/tools/gimptextoptions.c:307
+#: app/tools/gimptextoptions.c:309
 msgid "Outline width unit"
 msgstr "Çerçeve genişliği birimi"
 
-#: app/tools/gimptextoptions.c:322
+#: app/tools/gimptextoptions.c:324
 msgid "Outline miter limit"
 msgstr "Çerçeve gönye sınırı"
 
-#: app/tools/gimptextoptions.c:840
+#: app/tools/gimptextoptions.c:845
 msgid "Hinting:"
 msgstr "İpucu:"
 
-#: app/tools/gimptextoptions.c:844
+#: app/tools/gimptextoptions.c:849
 msgid "Text Color"
 msgstr "Metin Rengi"
 
-#: app/tools/gimptextoptions.c:857
+#: app/tools/gimptextoptions.c:862
 msgid "Style:"
 msgstr "Biçem:"
 
-#: app/tools/gimptextoptions.c:861
+#: app/tools/gimptextoptions.c:866
 msgid "Outline Options"
 msgstr "Çerçeve Seçenekleri"
 
-#: app/tools/gimptextoptions.c:882
+#: app/tools/gimptextoptions.c:887
 msgid "Justify:"
 msgstr "Hizala:"
 
-#: app/tools/gimptextoptions.c:912
+#: app/tools/gimptextoptions.c:917
 msgid "Box:"
 msgstr "Kutu:"
 
-#: app/tools/gimptextoptions.c:952
+#: app/tools/gimptextoptions.c:957
 msgid "Language:"
 msgstr "Dil:"
 
@@ -28182,40 +28230,40 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Durum ve açıklama"
 
-#: app/xcf/xcf.c:120 app/xcf/xcf.c:188
+#: app/xcf/xcf.c:121 app/xcf/xcf.c:189
 msgid "GIMP XCF image"
 msgstr "GIMP XCF görüntüsü"
 
-#: app/xcf/xcf.c:265 app/xcf/xcf.c:354
+#: app/xcf/xcf.c:266 app/xcf/xcf.c:355
 msgid "Memory Stream"
 msgstr "Bellek Akışı"
 
-#: app/xcf/xcf.c:276
+#: app/xcf/xcf.c:277
 #, c-format
 msgid "Opening '%s'"
 msgstr "'%s' açılıyor"
 
-#: app/xcf/xcf.c:318
+#: app/xcf/xcf.c:319
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF hatası: desteklenmeyen %d XCF dosya sürümüyle karşılaşıldı"
 
-#: app/xcf/xcf.c:377
+#: app/xcf/xcf.c:378
 #, c-format
 msgid "Saving '%s'"
 msgstr "'%s' kaydediliyor"
 
-#: app/xcf/xcf.c:385
+#: app/xcf/xcf.c:386
 #, c-format
 msgid "Closing '%s'"
 msgstr "'%s' kapatılıyor"
 
-#: app/xcf/xcf.c:403
+#: app/xcf/xcf.c:404
 #, c-format
 msgid "Error writing '%s': "
 msgstr "'%s' yazma hatası: "
 
-#: app/xcf/xcf.c:491
+#: app/xcf/xcf.c:492
 #, c-format
 msgid "Error creating '%s': "
 msgstr "'%s' oluşturulurken hata: "
