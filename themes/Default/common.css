@@ -340,7 +340,7 @@ checkbutton:hover, checkbutton.text-button:hover, checkbutton:hover label, radio
   background-color: @hover-color;
 }
 
-checkbutton check, radiobutton radio {
+checkbutton check, radiobutton radio, treeview.view check {
   background-image: none;
   background-color: @extreme-bg-color;
   border: 1px solid @stronger-border-color;
