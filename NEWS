@@ -27,7 +27,24 @@ Core:
     external data. This will be used to serialize data objects hence easily
     retrieve the proper data even when some data may have duplicate names.
   - New "FG to Transparent (Hardedge)" gradient.
-  - New Adobe Swatch Exchange palette import support.
+  - New palette import supports:
+    * Adobe Swatch Exchange
+    * SwatchBooker
+    * Adobe Color Book (ACB)
+  - More robust support for ASE palette loading, by stripping space paddings and
+    being more warry of maliciously built files with invalid string data.
+  - Artifically set PANGOCAIRO_BACKEND=fc when running on Windows to use the
+    fontconfig backend, which enables anti-aliasing on Windows, unlike the
+    default pangocairo backend.
+  - XCF:
+    * Font information are more accurately stored (not only the font name, but
+      also storing various other attributes and even a file hash in the ideal
+      case where the exact same font file is available), allowing to find the
+      right font (if installed) on load with less errors.
+    * As a consequence of the previous point, new files with text layers will be
+      saved as a bumped XCF 19 version.
+    * Older XCF versions with text layers can still be saved using older XCF
+      versions as long as the text layers are untouched in an edit session.
 
 Graphical User Interface:
 
@@ -59,6 +76,8 @@ Graphical User Interface:
     and gimp-tool-dodge in Color theme.
   - Help menu rearranged to be better organized and also to move "About GIMP" as
     the last item, which is its more conventional position.
+  - Many fixes to the default themes (including several cases of CSS rules
+    leaking from system themes).
 
 Tools:
 
@@ -93,6 +112,13 @@ Plug-ins:
   - New gimp-help-main script to link to the "Table of Contents" of the manual,
     added to the "Help > User Manual" submenu.
   - PSP: added support to load PSP ICC Profile data.
+  - Image Map: two new fields to the HTML Link tab and one new field to the
+    Javascript tab for area properties:
+    * accesskey: The same as the mnemonic key shortcuts in GTK, to activate an
+      area of the image map. Depending on the OS, you either hold ALT or
+      ALT+SHIFT and this key.
+    * tabindex: What order to select the area when the user presses Tab.
+    * onClick: Run a Javascript function when the user clicks on the area.
 
 Translations:
 
@@ -117,6 +143,11 @@ Build:
     Windows. This bump happens because of end-of-support by Microsoft itself,
     and also by MSYS2 project which is our base for the official installers.
   - CI now generates babl and GEGL API reference HTML as artifact tarballs.
+  - New meson options -Dfits and -Dopenmp to enable/disable respectively FITS or
+    OpenMP support more explicitly (allowing to bypass auto-detection).
+  - Pango 1.50 or higher is now required as a result of using
+    pango_attribute_as_font_desc(). Also pango, pangocairo and pangoft2 now use
+    the same minimum version requirement.
 
 
 Overview of Changes from GIMP 2.99.14 to GIMP 2.99.16
