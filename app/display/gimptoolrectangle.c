@@ -4206,11 +4206,12 @@ void
 gimp_tool_rectangle_frame_item (GimpToolRectangle *rectangle,
                                 GimpItem          *item)
 {
-  GimpDisplayShell *shell;
-  gint              offset_x;
-  gint              offset_y;
-  gint              width;
-  gint              height;
+  GimpDisplayShell      *shell;
+  gint                   offset_x;
+  gint                   offset_y;
+  gint                   width;
+  gint                   height;
+  GimpRectangleFunction  old_function;
 
   g_return_if_fail (GIMP_IS_TOOL_RECTANGLE (rectangle));
   g_return_if_fail (GIMP_IS_ITEM (item));
@@ -4226,6 +4227,7 @@ gimp_tool_rectangle_frame_item (GimpToolRectangle *rectangle,
 
   gimp_item_get_offset (item, &offset_x, &offset_y);
 
+  old_function = rectangle->private->function;
   gimp_tool_rectangle_set_function (rectangle, GIMP_TOOL_RECTANGLE_CREATING);
 
   g_object_set (rectangle,
@@ -4239,6 +4241,7 @@ gimp_tool_rectangle_frame_item (GimpToolRectangle *rectangle,
    * if this function is ever moved out of the text tool code.
    */
   gimp_tool_rectangle_set_constraint (rectangle, GIMP_RECTANGLE_CONSTRAIN_NONE);
+  gimp_tool_rectangle_set_function (rectangle, old_function);
 }
 
 void
