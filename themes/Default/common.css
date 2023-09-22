@@ -323,6 +323,11 @@ spinbutton, entry {
   border-color: @strong-border-color;
 }
 
+/* Styling for the +/- buttons */
+spinbutton button.up, spinbutton button.down {
+  background-color: @bg-color;
+}
+
 GimpSpinScale entry progress {
   background-color: @extreme-selected-color;
   border-width:     0px;
