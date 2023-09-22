@@ -263,7 +263,7 @@ gimp_font_deserialize_create (GType     type,
    */
   if (g_scanner_peek_next_token (scanner) == G_TOKEN_STRING)
     {
-      gchar* font_name;
+      gchar* font_name = NULL;
 
       gimp_scanner_parse_string (scanner, &font_name);
 
@@ -281,6 +281,8 @@ gimp_font_deserialize_create (GType     type,
         font = GIMP_FONT (gimp_font_get_standard ());
       else
         g_object_ref (font);
+
+      g_free (font_name);
 
       return GIMP_CONFIG (GIMP_FONT (font));
     }

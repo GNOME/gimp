@@ -923,7 +923,7 @@ gimp_text_deserialize_property (GimpConfig *object,
     }
   else if (property_id == PROP_MARKUP)
     {
-      gchar    *markup;
+      gchar    *markup       = NULL;
       GString  *markup_str;
       GimpFont *dummy_object = g_object_new (GIMP_TYPE_FONT, NULL);
 
@@ -936,7 +936,7 @@ gimp_text_deserialize_property (GimpConfig *object,
         {
           while (g_scanner_peek_next_token (scanner) == G_TOKEN_STRING)
             {
-              gchar    *markup_fontname;
+              gchar    *markup_fontname = NULL;
               gchar    *replaced_markup;
               gchar    *new_markup;
               GimpFont *font;
@@ -969,7 +969,7 @@ gimp_text_deserialize_property (GimpConfig *object,
         {
           while (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
             {
-              gchar    *lookupname;
+              gchar    *lookupname = NULL;
               gchar    *replaced_markup;
               gchar    *new_markup;
               GimpFont *font;
@@ -1003,6 +1003,7 @@ gimp_text_deserialize_property (GimpConfig *object,
 
       g_object_unref (dummy_object);
       g_string_free  (markup_str, TRUE);
+      g_free (markup);
 
       return TRUE;
     }
