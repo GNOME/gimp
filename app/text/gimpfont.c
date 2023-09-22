@@ -61,6 +61,20 @@
 
 enum
 {
+  GIMP_FONT_SYMBOL_FONTHASH,
+  GIMP_FONT_SYMBOL_FULLNAME,
+  GIMP_FONT_SYMBOL_FAMILY,
+  GIMP_FONT_SYMBOL_STYLE,
+  GIMP_FONT_SYMBOL_PSNAME,
+  GIMP_FONT_SYMBOL_INDEX,
+  GIMP_FONT_SYMBOL_WEIGHT,
+  GIMP_FONT_SYMBOL_SLANT,
+  GIMP_FONT_SYMBOL_WIDTH,
+  GIMP_FONT_SYMBOL_FONTVERSION
+};
+
+enum
+{
   PROP_0,
   PROP_PANGO_CONTEXT
 };
@@ -230,16 +244,18 @@ gimp_font_deserialize_create (GType     type,
   GList         *similar_fonts           = NULL;
   GList         *iter;
   gint           i;
-  gchar         *fonthash;
-  gchar         *fullname;
-  gchar         *family;
-  gchar         *psname;
-  gchar         *style;
-  gint           index;
-  gint           weight;
-  gint           slant;
-  gint           width;
-  gint           fontversion;
+  gchar         *fonthash                = NULL;
+  gchar         *fullname                = NULL;
+  gchar         *family                  = NULL;
+  gchar         *psname                  = NULL;
+  gchar         *style                   = NULL;
+  gint           index                   = -1;
+  gint           weight                  = -1;
+  gint           slant                   = -1;
+  gint           width                   = -1;
+  gint           fontversion             = -1;
+  guint          scope_id;
+  guint          old_scope_id;
 
   /* This is for backward compatibility with older xcf files.
    * The font used to be serialized as a string containing
@@ -272,55 +288,111 @@ gimp_font_deserialize_create (GType     type,
   if (g_scanner_peek_next_token (scanner) == G_TOKEN_RIGHT_PAREN)
     return GIMP_CONFIG (GIMP_FONT (gimp_font_get_standard ()));
 
-  g_scanner_get_next_token  (scanner); /* ( */
-  g_scanner_get_next_token  (scanner); /* "fonthash" */
-  gimp_scanner_parse_string (scanner, &fonthash);
-  g_scanner_get_next_token  (scanner); /* ) */
+  scope_id = g_type_qname (type);
+  old_scope_id = g_scanner_set_scope (scanner, scope_id);
 
-  g_scanner_get_next_token  (scanner); /* ( */
-  g_scanner_get_next_token  (scanner); /* "fullname" */
-  gimp_scanner_parse_string (scanner, &fullname);
-  g_scanner_get_next_token  (scanner); /* ) */
+  g_scanner_scope_add_symbol (scanner, scope_id, "fonthash",
+                              GINT_TO_POINTER (GIMP_FONT_SYMBOL_FONTHASH));
+  g_scanner_scope_add_symbol (scanner, scope_id, "fullname",
+                              GINT_TO_POINTER (GIMP_FONT_SYMBOL_FULLNAME));
+  g_scanner_scope_add_symbol (scanner, scope_id, "family",
+                              GINT_TO_POINTER (GIMP_FONT_SYMBOL_FAMILY));
+  g_scanner_scope_add_symbol (scanner, scope_id, "style",
+                              GINT_TO_POINTER (GIMP_FONT_SYMBOL_STYLE));
+  g_scanner_scope_add_symbol (scanner, scope_id, "psname",
+                              GINT_TO_POINTER (GIMP_FONT_SYMBOL_PSNAME));
+  g_scanner_scope_add_symbol (scanner, scope_id, "index",
+                              GINT_TO_POINTER (GIMP_FONT_SYMBOL_INDEX));
+  g_scanner_scope_add_symbol (scanner, scope_id, "weight",
+                              GINT_TO_POINTER (GIMP_FONT_SYMBOL_WEIGHT));
+  g_scanner_scope_add_symbol (scanner, scope_id, "slant",
+                              GINT_TO_POINTER (GIMP_FONT_SYMBOL_SLANT));
+  g_scanner_scope_add_symbol (scanner, scope_id, "width",
+                              GINT_TO_POINTER (GIMP_FONT_SYMBOL_WIDTH));
+  g_scanner_scope_add_symbol (scanner, scope_id, "fontversion",
+                              GINT_TO_POINTER (GIMP_FONT_SYMBOL_FONTVERSION));
 
-  g_scanner_get_next_token  (scanner); /* ( */
-  g_scanner_get_next_token  (scanner); /* "family" */
-  gimp_scanner_parse_string (scanner, &family);
-  g_scanner_get_next_token  (scanner); /* ) */
+  while (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
+    {
+      GTokenType token;
 
-  g_scanner_get_next_token  (scanner); /* ( */
-  g_scanner_get_next_token  (scanner); /* "style" */
-  gimp_scanner_parse_string (scanner, &style);
-  g_scanner_get_next_token  (scanner); /* ) */
+      g_scanner_get_next_token  (scanner); /* ( */
 
-  g_scanner_get_next_token  (scanner); /* ( */
-  g_scanner_get_next_token  (scanner); /* "psname" */
-  gimp_scanner_parse_string (scanner, &psname);
-  g_scanner_get_next_token  (scanner); /* ( */
+      token = g_scanner_get_next_token (scanner);
 
-  g_scanner_get_next_token  (scanner); /* ( */
-  g_scanner_get_next_token  (scanner); /* "font index" */
-  gimp_scanner_parse_int    (scanner, &index);
-  g_scanner_get_next_token  (scanner); /* ) */
+      if (token != G_TOKEN_SYMBOL)
+        {
+          /* When encountering an unknown symbol, we simply ignore its contents
+           * (up to the next closing parenthese). This would allow us to load
+           * future XCF files in case we add new fields to recognize fonts
+           * without having to bump the XCF version (just ignoring unknown
+           * fields). We still output a small message on stderr.
+           */
+          if (token == G_TOKEN_IDENTIFIER)
+            g_printerr ("%s: ignoring unknown symbol '%s'.\n", G_STRFUNC, scanner->value.v_string);
+          else
+            g_printerr ("%s: ignoring unknown token %d.\n", G_STRFUNC, token);
 
-  g_scanner_get_next_token (scanner); /* ( */
-  g_scanner_get_next_token (scanner); /* "weight" */
-  gimp_scanner_parse_int   (scanner, &weight);
-  g_scanner_get_next_token (scanner); /* ) */
+          while ((token = g_scanner_get_next_token (scanner)) != G_TOKEN_EOF)
+            {
+              if (token == G_TOKEN_RIGHT_PAREN)
+                break;
+            }
 
-  g_scanner_get_next_token (scanner); /* ( */
-  g_scanner_get_next_token (scanner); /* "slant" */
-  gimp_scanner_parse_int   (scanner, &slant);
-  g_scanner_get_next_token (scanner); /* ) */
+          continue;
+        }
 
-  g_scanner_get_next_token (scanner); /* ( */
-  g_scanner_get_next_token (scanner); /* "width" */
-  gimp_scanner_parse_int   (scanner, &width);
-  g_scanner_get_next_token (scanner); /* ) */
+      switch (GPOINTER_TO_INT (scanner->value.v_symbol))
+        {
+        case GIMP_FONT_SYMBOL_FONTHASH:
+          gimp_scanner_parse_string (scanner, &fonthash);
+          break;
+        case GIMP_FONT_SYMBOL_FULLNAME:
+          gimp_scanner_parse_string (scanner, &fullname);
+          break;
+        case GIMP_FONT_SYMBOL_FAMILY:
+          gimp_scanner_parse_string (scanner, &family);
+          break;
+        case GIMP_FONT_SYMBOL_STYLE:
+          gimp_scanner_parse_string (scanner, &style);
+          break;
+        case GIMP_FONT_SYMBOL_PSNAME:
+          gimp_scanner_parse_string (scanner, &psname);
+          break;
+        case GIMP_FONT_SYMBOL_INDEX:
+          gimp_scanner_parse_int (scanner, &index);
+          break;
+        case GIMP_FONT_SYMBOL_WEIGHT:
+          gimp_scanner_parse_int (scanner, &weight);
+          break;
+        case GIMP_FONT_SYMBOL_SLANT:
+          gimp_scanner_parse_int (scanner, &slant);
+          break;
+        case GIMP_FONT_SYMBOL_WIDTH:
+          gimp_scanner_parse_int (scanner, &width);
+          break;
+        case GIMP_FONT_SYMBOL_FONTVERSION:
+          gimp_scanner_parse_int (scanner, &fontversion);
+          break;
+        default:
+          break;
+        }
 
-  g_scanner_get_next_token (scanner); /* ( */
-  g_scanner_get_next_token (scanner); /* "fontversion" */
-  gimp_scanner_parse_int   (scanner, &fontversion);
-  g_scanner_get_next_token (scanner); /* ) */
+      if (g_scanner_get_next_token (scanner) != G_TOKEN_RIGHT_PAREN)
+        break;
+    }
+
+  g_scanner_scope_remove_symbol (scanner, scope_id, "fonthash");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "fullname");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "family");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "style");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "psname");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "index");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "weight");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "slant");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "width");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "fontversion");
+  g_scanner_set_scope (scanner, old_scope_id);
 
   for (i = 0; i < font_count; i++)
     {
@@ -328,7 +400,7 @@ gimp_font_deserialize_create (GType     type,
 
       font = GIMP_FONT (gimp_container_get_child_by_index (fonts_container, i));
 
-      if (font->hash != NULL && !g_strcmp0 (font->hash, fonthash))
+      if (fonthash != NULL && font->hash != NULL && !g_strcmp0 (font->hash, fonthash))
         {
           most_similar_font_index = i;
           g_clear_pointer (&similar_fonts, g_list_free);
@@ -339,19 +411,19 @@ gimp_font_deserialize_create (GType     type,
        * hence their higher importance in measuring similarity.
        */
 
-      if (!g_strcmp0 (font->fullname, fullname))
+      if (fullname != NULL && !g_strcmp0 (font->fullname, fullname))
         current_font_similarity += 5;
 
-      if (!g_strcmp0 (font->family, family))
+      if (family != NULL && !g_strcmp0 (font->family, family))
         current_font_similarity += 5;
 
-      if (font->psname != NULL && !g_strcmp0 (font->psname, psname))
+      if (psname != NULL && font->psname != NULL && !g_strcmp0 (font->psname, psname))
         current_font_similarity += 5;
 
       if (current_font_similarity < 5)
         continue;
 
-      if (font->style != NULL && !g_strcmp0 (font->style, style))
+      if (style != NULL && font->style != NULL && !g_strcmp0 (font->style, style))
         current_font_similarity++;
 
       if (font->weight != -1 && font->weight == weight)
