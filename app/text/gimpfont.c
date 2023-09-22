@@ -227,7 +227,8 @@ gimp_font_deserialize_create (GType     type,
   gint           most_similar_font_index = -1;
   gint           font_count              = gimp_container_get_n_children (fonts_container);
   gint           largest_similarity      = 0;
-  gint           similar_fonts           = 0;
+  GList         *similar_fonts           = NULL;
+  GList         *iter;
   gint           i;
   gchar         *fonthash;
   gchar         *fullname;
@@ -330,7 +331,7 @@ gimp_font_deserialize_create (GType     type,
       if (font->hash != NULL && !g_strcmp0 (font->hash, fonthash))
         {
           most_similar_font_index = i;
-          similar_fonts           = 1;
+          g_clear_pointer (&similar_fonts, g_list_free);
           break;
         }
 
@@ -372,63 +373,31 @@ gimp_font_deserialize_create (GType     type,
         {
           largest_similarity      = current_font_similarity;
           most_similar_font_index = i;
-          similar_fonts           = 1;
+          g_clear_pointer (&similar_fonts, g_list_free);
+          similar_fonts = g_list_prepend (similar_fonts, GINT_TO_POINTER (i));
         }
       else if (current_font_similarity == largest_similarity)
         {
-          similar_fonts++;
+          similar_fonts = g_list_prepend (similar_fonts, GINT_TO_POINTER (i));
         }
     }
 
-    /* In case there are multiple font with identical info,
-     * the font file hash should be used for comparison.
-     */
-    if (similar_fonts > 1)
-      for (i = 0; i < font_count && similar_fonts > 0; i++)
+  /* In case there are multiple font with identical info,
+   * the font file hash should be used for comparison.
+   */
+  if (g_list_length (similar_fonts) == 1)
+    g_clear_pointer (&similar_fonts, g_list_free);
+  for (iter = similar_fonts; iter; iter = iter->next)
+    {
+      i    = GPOINTER_TO_INT (iter->data);
+      font = GIMP_FONT (gimp_container_get_child_by_index (fonts_container, i));
+
+      if (g_strcmp0 (gimp_font_get_hash (font), fonthash) == 0)
         {
-          gint current_font_similarity = 0;
-          font = GIMP_FONT (gimp_container_get_child_by_index (fonts_container, i));
-
-          if (!g_strcmp0 (font->fullname, fullname))
-            current_font_similarity += 5;
-
-          if (!g_strcmp0 (font->family, family))
-            current_font_similarity += 5;
-
-          if (font->psname != NULL && !g_strcmp0 (font->psname, psname))
-            current_font_similarity += 5;
-
-          if (current_font_similarity < 5)
-            continue;
-
-          if (font->style != NULL && !g_strcmp0 (font->style, style))
-            current_font_similarity++;
-
-          if (font->weight != -1 && font->weight == weight)
-            current_font_similarity++;
-
-          if (font->width != -1 && font->width == width)
-            current_font_similarity++;
-
-          if (font->slant != -1 && font->slant == slant)
-            current_font_similarity++;
-
-          if (font->index != -1 && font->index == index)
-            current_font_similarity++;
-
-          if (font->fontversion != -1 && font->fontversion == fontversion)
-            current_font_similarity++;
-
-          if (current_font_similarity == largest_similarity)
-            {
-              if (g_strcmp0 (gimp_font_get_hash (font), fonthash) == 0)
-                {
-                  most_similar_font_index = i;
-                  break;
-                }
-              similar_fonts--;
-            }
+          most_similar_font_index = i;
+          break;
         }
+    }
 
   if (most_similar_font_index > -1)
     {
@@ -440,6 +409,7 @@ gimp_font_deserialize_create (GType     type,
       font = GIMP_FONT (gimp_font_get_standard ());
     }
 
+  g_list_free (similar_fonts);
   g_free (fonthash);
   g_free (fullname);
   g_free (family);
