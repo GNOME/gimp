@@ -1279,8 +1279,17 @@ read_color_block (FILE      *f,
     }
 
   color_palette_entries = GUINT32_FROM_LE (entry_count);
+  /* TODO: GIMP currently only supports a maximum of 256 colors
+   * in an indexed image. If this changes, we can change this check */
+  if (color_palette_entries > 256)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error: Unsupported palette size"));
+      return -1;
+    }
+
   /* psp color palette entries are stored as RGBA so 4 bytes per entry
-     where the fourth bytes is always zero */
+   * where the fourth bytes is always zero */
   pal_size = color_palette_entries * 4;
   color_palette = g_malloc (pal_size);
   if (fread (color_palette, pal_size, 1, f) < 1)
