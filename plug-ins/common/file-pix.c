@@ -106,6 +106,8 @@ static GimpValueArray * pix_save             (GimpProcedure        *procedure,
 
 static GimpImage      * load_image           (GFile                *file,
                                               GError              **error);
+static GimpImage      * load_esm_image       (GInputStream          *input,
+                                              GError               **error);
 static gboolean         save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
@@ -170,9 +172,9 @@ pix_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files of the Alias|Wavefront "
-                                        "Pix file format",
+                                        "or Esm Software Pix file format",
                                         "Loads files of the Alias|Wavefront "
-                                        "Pix file format",
+                                        "or Esm Software Pix file format",
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Michael Taylor",
@@ -181,6 +183,10 @@ pix_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pix,matte,mask,alpha,als");
+      /* Magic Number for Esm Software PIX files */
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "0,string,Esm Software PIX file");
+
     }
   else if (! strcmp (name, SAVE_PROC))
     {
@@ -371,7 +377,7 @@ load_image (GFile   *file,
   GimpImageType      gdtype;
   guchar            *dest;
   guchar            *dest_base;
-  GimpImage         *image;
+  GimpImage         *image = NULL;
   GimpLayer         *layer;
   gushort            width, height, depth;
   gint               i, j, tile_height, row;
@@ -413,6 +419,28 @@ load_image (GFile   *file,
     }
   else
     {
+      /* Check if this is Esm Software PIX file format */
+      gchar esm_header[22];
+      gsize bytes_read;
+
+      g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_SET, NULL, NULL);
+      if (g_input_stream_read_all (input, &esm_header, sizeof (esm_header),
+                                   &bytes_read, NULL, NULL))
+        {
+          esm_header[21] = '\0';
+
+          if (g_str_has_prefix (esm_header, "Esm Software PIX file"))
+            image = load_esm_image (input, error);
+
+          if (image)
+            {
+              g_object_unref (input);
+              gimp_progress_update (1.0);
+
+              return image;
+            }
+        }
+
       /* Header is invalid */
       g_object_unref (input);
       return NULL;
@@ -526,6 +554,73 @@ load_image (GFile   *file,
   g_object_unref (input);
 
   gimp_progress_update (1.0);
+
+  return image;
+}
+
+static GimpImage *
+load_esm_image (GInputStream  *input,
+                GError       **error)
+{
+  GimpImage      *image       = NULL;
+  GimpValueArray *return_vals = NULL;
+  GFile          *temp_file   = NULL;
+  FILE           *fp;
+  goffset         file_size;
+
+  g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_END, NULL, error);
+  file_size = g_seekable_tell (G_SEEKABLE (input));
+  g_seekable_seek (G_SEEKABLE (input), 21, G_SEEK_SET, NULL, error);
+
+  /* Esm Software PIX format is just a JPEG with an extra 21 byte header */
+  temp_file = gimp_temp_file ("jpeg");
+  fp = g_fopen (g_file_peek_path (temp_file), "wb");
+
+  if (! fp)
+    {
+      g_file_delete (temp_file, NULL, NULL);
+      g_object_unref (temp_file);
+
+      g_message (_("Error trying to open temporary JPEG file '%s' "
+                   "for Esm Software pix loading: %s"),
+                 gimp_file_get_utf8_name (temp_file),
+                 g_strerror (errno));
+      return NULL;
+    }
+  else
+    {
+      guchar buffer[file_size - 21];
+
+      if (! g_input_stream_read_all (input, buffer, sizeof (buffer),
+                                     NULL, NULL, error))
+        {
+          g_file_delete (temp_file, NULL, NULL);
+          g_object_unref (temp_file);
+
+          g_printerr (_("Invalid Esm Software PIX file"));
+          return NULL;
+        }
+
+      fwrite (buffer, sizeof (guchar), file_size, fp);
+      fclose (fp);
+
+      return_vals =
+        gimp_pdb_run_procedure (gimp_get_pdb (),
+                                "file-jpeg-load",
+                                GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
+                                G_TYPE_FILE,        temp_file,
+                                G_TYPE_NONE);
+
+      if (return_vals)
+        {
+          image = g_value_get_object (gimp_value_array_index (return_vals, 1));
+
+          gimp_value_array_unref (return_vals);
+        }
+
+      g_file_delete (temp_file, NULL, NULL);
+      g_object_unref (temp_file);
+    }
 
   return image;
 }
