@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-27 23:50+0000\n"
-"PO-Revision-Date: 2023-04-30 19:32+0800\n"
+"POT-Creation-Date: 2023-09-24 10:30+0000\n"
+"PO-Revision-Date: 2023-09-24 19:41+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: Gtranslator 42.0\n"
+"X-Generator: Gtranslator 45.1\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -51,7 +51,7 @@ msgstr "对齐可见图层"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1127 ../plug-ins/common/file-heif.c:1942
+#: ../plug-ins/common/file-gif-save.c:1127 ../plug-ins/common/file-heif.c:1927
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:708
 #: ../plug-ins/common/file-pdf-load.c:1356
@@ -116,7 +116,7 @@ msgstr "取消(_C)"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1943
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1928
 #: ../plug-ins/common/file-pdf-load.c:709 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
@@ -1073,7 +1073,7 @@ msgstr "加载 CML 探索器参数"
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
 #: ../plug-ins/common/file-ps.c:1075 ../plug-ins/common/file-ps.c:3397
-#: ../plug-ins/common/file-psp.c:2228 ../plug-ins/common/file-psp.c:2278
+#: ../plug-ins/common/file-psp.c:2237 ../plug-ins/common/file-psp.c:2287
 #: ../plug-ins/common/file-raw-data.c:477
 #: ../plug-ins/common/file-raw-data.c:1284 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:647
@@ -2221,7 +2221,7 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #.
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:895
 #: ../plug-ins/common/file-html-table.c:238
-#: ../plug-ins/common/file-jpegxl.c:778 ../plug-ins/common/file-pcx.c:761
+#: ../plug-ins/common/file-jpegxl.c:787 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1278
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1221
@@ -2599,59 +2599,59 @@ msgstr "加载 HEIF 图像失败：输入的文件未包含可读取图像"
 msgid "image content"
 msgstr "图像内容"
 
-#: ../plug-ins/common/file-heif.c:1362
+#: ../plug-ins/common/file-heif.c:1361
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "正在使用 %2$s 编码器导出“%1$s”"
 
-#: ../plug-ins/common/file-heif.c:1413 ../plug-ins/common/file-heif.c:1667
+#: ../plug-ins/common/file-heif.c:1412 ../plug-ins/common/file-heif.c:1652
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "编码 HEIF 图像失败：%s"
 
-#: ../plug-ins/common/file-heif.c:1704
+#: ../plug-ins/common/file-heif.c:1689
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "写入 HEIF 图像失败：%s"
 
-#: ../plug-ins/common/file-heif.c:1793
+#: ../plug-ins/common/file-heif.c:1778
 msgid "primary"
 msgstr "主要"
 
-#: ../plug-ins/common/file-heif.c:1938
+#: ../plug-ins/common/file-heif.c:1923
 msgid "Load HEIF Image"
 msgstr "载入 HEIF 图像"
 
-#: ../plug-ins/common/file-heif.c:1952
+#: ../plug-ins/common/file-heif.c:1937
 msgid "Select Image"
 msgstr "选择图像"
 
-#: ../plug-ins/common/file-heif.c:2118
+#: ../plug-ins/common/file-heif.c:2103
 msgid "Nearly _lossless"
 msgstr "接近无损(_L)"
 
-#: ../plug-ins/common/file-heif.c:2122 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2107 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "质量(_Q)："
 
-#: ../plug-ins/common/file-heif.c:2165
+#: ../plug-ins/common/file-heif.c:2150
 msgid "Bit depth:"
 msgstr "位深："
 
-#: ../plug-ins/common/file-heif.c:2171
+#: ../plug-ins/common/file-heif.c:2156
 msgid "8 bit/channel"
 msgstr "8 位/通道"
 
-#: ../plug-ins/common/file-heif.c:2172
+#: ../plug-ins/common/file-heif.c:2157
 msgid "10 bit/channel"
 msgstr "10 位/通道"
 
-#: ../plug-ins/common/file-heif.c:2173
+#: ../plug-ins/common/file-heif.c:2158
 msgid "12 bit/channel"
 msgstr "12 位/通道"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2182 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2167 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:404
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
 msgid "Save color _profile"
@@ -3718,97 +3718,102 @@ msgstr "读取创建者关键词数据出错"
 msgid "Error reading color block"
 msgstr "读取颜色数据块时出错"
 
-#: ../plug-ins/common/file-psp.c:1138
+#: ../plug-ins/common/file-psp.c:1136
+#, c-format
+msgid "Error: Unsupported palette size"
+msgstr "错误：不支持的色板大小"
+
+#: ../plug-ins/common/file-psp.c:1147
 #, c-format
 msgid "Error reading color palette"
 msgstr "读取颜色色板时出错"
 
-#: ../plug-ins/common/file-psp.c:1564 ../plug-ins/common/file-psp.c:1578
+#: ../plug-ins/common/file-psp.c:1573 ../plug-ins/common/file-psp.c:1587
 #, c-format
 msgid "zlib error"
 msgstr "zlib 错误"
 
-#: ../plug-ins/common/file-psp.c:1641 ../plug-ins/common/file-psp.c:1675
-#: ../plug-ins/common/file-psp.c:1685
+#: ../plug-ins/common/file-psp.c:1650 ../plug-ins/common/file-psp.c:1684
+#: ../plug-ins/common/file-psp.c:1694
 #, c-format
 msgid "Error reading layer extension information"
 msgstr "读取图层扩展信息时出错"
 
-#: ../plug-ins/common/file-psp.c:1662
+#: ../plug-ins/common/file-psp.c:1671
 #, c-format
 msgid "Error reading block information"
 msgstr "读取数据块信息时出错"
 
-#: ../plug-ins/common/file-psp.c:1742
+#: ../plug-ins/common/file-psp.c:1751
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "无效的图层子数据块 %s，应该为图层"
 
-#: ../plug-ins/common/file-psp.c:1773 ../plug-ins/common/file-psp.c:1830
+#: ../plug-ins/common/file-psp.c:1782 ../plug-ins/common/file-psp.c:1839
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "读取图层信息数据块出错"
 
-#: ../plug-ins/common/file-psp.c:1872
+#: ../plug-ins/common/file-psp.c:1881
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "无效的图层尺寸：%dx%d"
 
-#: ../plug-ins/common/file-psp.c:1933
+#: ../plug-ins/common/file-psp.c:1942
 #, c-format
 msgid "Error creating layer"
 msgstr "创建图层出错"
 
-#: ../plug-ins/common/file-psp.c:1978
+#: ../plug-ins/common/file-psp.c:1987
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "无效的图层子数据块 %s，应该为通道"
 
-#: ../plug-ins/common/file-psp.c:1994
+#: ../plug-ins/common/file-psp.c:2003
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "读取通道信息数据块出错"
 
-#: ../plug-ins/common/file-psp.c:2017
+#: ../plug-ins/common/file-psp.c:2026
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "通道信息数据块中的无效通道类型 %d"
 
-#: ../plug-ins/common/file-psp.c:2121 ../plug-ins/common/file-psp.c:2138
+#: ../plug-ins/common/file-psp.c:2130 ../plug-ins/common/file-psp.c:2147
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "读取管道数据块出错"
 
-#: ../plug-ins/common/file-psp.c:2239
+#: ../plug-ins/common/file-psp.c:2248
 #, c-format
 msgid "Error reading file header."
 msgstr "读取文件头部信息出错。"
 
-#: ../plug-ins/common/file-psp.c:2246
+#: ../plug-ins/common/file-psp.c:2255
 #, c-format
 msgid "Incorrect file signature."
 msgstr "错误的文件签名。"
 
-#: ../plug-ins/common/file-psp.c:2260
+#: ../plug-ins/common/file-psp.c:2269
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "不支持的 PSP 文件格式版本 %d.%d。"
 
-#: ../plug-ins/common/file-psp.c:2280
+#: ../plug-ins/common/file-psp.c:2289
 msgid "invalid block size"
 msgstr "无效的数据块大小"
 
-#: ../plug-ins/common/file-psp.c:2289
+#: ../plug-ins/common/file-psp.c:2298
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "重制通常的图像属性数据块。"
 
-#: ../plug-ins/common/file-psp.c:2319
+#: ../plug-ins/common/file-psp.c:2328
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "缺失通常的图像属性数据块。"
 
-#: ../plug-ins/common/file-psp.c:2433
+#: ../plug-ins/common/file-psp.c:2442
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "尚未实现导出功能。"
@@ -4064,8 +4069,8 @@ msgstr "无法对未知的图像类型操作"
 #: ../plug-ins/common/file-sunras.c:1158 ../plug-ins/common/file-sunras.c:1252
 #: ../plug-ins/common/file-sunras.c:1335 ../plug-ins/common/file-sunras.c:1434
 #: ../plug-ins/common/file-xwd.c:1429 ../plug-ins/common/file-xwd.c:1532
-#: ../plug-ins/common/file-xwd.c:1691 ../plug-ins/common/file-xwd.c:1906
-#: ../plug-ins/common/file-xwd.c:2064 ../plug-ins/common/file-xwd.c:2327
+#: ../plug-ins/common/file-xwd.c:1691 ../plug-ins/common/file-xwd.c:1914
+#: ../plug-ins/common/file-xwd.c:2072 ../plug-ins/common/file-xwd.c:2335
 #: ../plug-ins/file-fits/fits.c:804
 msgid "EOF encountered on reading"
 msgstr "读入时遇到文件结束符"
@@ -4635,7 +4640,7 @@ msgstr "无法打开“%s”并写入："
 msgid "Error exporting '%s': "
 msgstr "导出“%s”时出错："
 
-#: ../plug-ins/common/file-xwd.c:1762 ../plug-ins/common/file-xwd.c:2160
+#: ../plug-ins/common/file-xwd.c:1770 ../plug-ins/common/file-xwd.c:2168
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "XWD 文件“%s”已损坏。"
@@ -13173,9 +13178,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "Could not allocate a new image."
 #~ msgstr "无法分配新图像。"
-
-#~ msgid "Error reading palette."
-#~ msgstr "读取色板出错。"
 
 #~ msgid "Invalid DDS format magic number."
 #~ msgstr "无效的 DDS 格式魔法数字。"
