@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-23 20:36+0000\n"
-"PO-Revision-Date: 2023-09-23 23:13+0200\n"
+"POT-Creation-Date: 2023-09-23 22:01+0000\n"
+"PO-Revision-Date: 2023-09-24 08:13+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -646,7 +646,7 @@ msgstr "Navpične"
 #: plug-ins/common/file-gif-load.c:1097 plug-ins/common/file-iff.c:343
 #: plug-ins/common/file-jp2-load.c:1317 plug-ins/common/file-pcx.c:742
 #: plug-ins/common/file-pcx.c:750 plug-ins/common/file-pcx.c:758
-#: plug-ins/common/file-pix.c:422 plug-ins/common/file-png.c:950
+#: plug-ins/common/file-pix.c:450 plug-ins/common/file-png.c:950
 #: plug-ins/common/file-pnm.c:869 plug-ins/common/file-qoi.c:321
 #: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1083
 #: plug-ins/common/file-tga.c:1117 plug-ins/common/file-wbmp.c:270
@@ -2251,7 +2251,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:877 plug-ins/common/file-jp2-load.c:1091
 #: plug-ins/common/file-pcx.c:515 plug-ins/common/file-pcx.c:558
-#: plug-ins/common/file-pdf-load.c:879 plug-ins/common/file-pix.c:381
+#: plug-ins/common/file-pdf-load.c:879 plug-ins/common/file-pix.c:387
 #: plug-ins/common/file-png.c:665 plug-ins/common/file-pnm.c:714
 #: plug-ins/common/file-ps.c:1116 plug-ins/common/file-raw-data.c:1665
 #: plug-ins/common/file-sunras.c:450 plug-ins/common/file-tga.c:440
@@ -2334,7 +2334,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-farbfeld.c:373
 #: plug-ins/common/file-gif-save.c:917 plug-ins/common/file-html-table.c:364
 #: plug-ins/common/file-jpegxl.c:1383 plug-ins/common/file-pcx.c:1114
-#: plug-ins/common/file-pix.c:560 plug-ins/common/file-png.c:1494
+#: plug-ins/common/file-pix.c:655 plug-ins/common/file-png.c:1494
 #: plug-ins/common/file-pnm.c:1635 plug-ins/common/file-ps.c:1338
 #: plug-ins/common/file-qoi.c:375 plug-ins/common/file-sunras.c:629
 #: plug-ins/common/file-tga.c:1230 plug-ins/common/file-xbm.c:1051
@@ -4116,13 +4116,26 @@ msgstr "Napaka! Če želite shraniti datoteko, morate dodati vsaj eno sliko!"
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Velikosti slike ni mogoče obvladati (širina ali višina)."
 
-#: plug-ins/common/file-pix.c:169 plug-ins/common/file-pix.c:196
+#: plug-ins/common/file-pix.c:171 plug-ins/common/file-pix.c:202
 msgid "Alias Pix image"
 msgstr "Slika Alias PIX"
 
-#: plug-ins/common/file-pix.c:285
+#: plug-ins/common/file-pix.c:291
 msgid "PIX format does not support multiple layers."
 msgstr "Zapis PIX ne podpira več plasti."
+
+#: plug-ins/common/file-pix.c:584
+#, c-format
+msgid ""
+"Error trying to open temporary JPEG file '%s' for Esm Software pix loading: "
+"%s"
+msgstr ""
+"Napaka pri odpiranju začasne datoteke JPEG »%s« pri nalaganju zapisa Esm "
+"Software PIX: %s"
+
+#: plug-ins/common/file-pix.c:600
+msgid "Invalid Esm Software PIX file"
+msgstr "Neveljavna datoteka Esm Software PIX"
 
 #: plug-ins/common/file-png.c:180 plug-ins/common/file-png.c:210
 msgid "PNG image"
