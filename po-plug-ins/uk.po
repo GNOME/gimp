@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-02 03:31+0000\n"
-"PO-Revision-Date: 2023-09-02 19:26+0300\n"
+"POT-Creation-Date: 2023-09-24 13:35+0000\n"
+"PO-Revision-Date: 2023-09-24 18:52+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -644,7 +644,7 @@ msgstr "Вертикально"
 #: plug-ins/common/file-gif-load.c:1097 plug-ins/common/file-iff.c:343
 #: plug-ins/common/file-jp2-load.c:1317 plug-ins/common/file-pcx.c:742
 #: plug-ins/common/file-pcx.c:750 plug-ins/common/file-pcx.c:758
-#: plug-ins/common/file-pix.c:422 plug-ins/common/file-png.c:950
+#: plug-ins/common/file-pix.c:450 plug-ins/common/file-png.c:950
 #: plug-ins/common/file-pnm.c:869 plug-ins/common/file-qoi.c:321
 #: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1083
 #: plug-ins/common/file-tga.c:1117 plug-ins/common/file-wbmp.c:270
@@ -1245,8 +1245,8 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/file-iff.c:227 plug-ins/common/file-mng.c:1407
 #: plug-ins/common/file-pcx.c:523 plug-ins/common/file-pcx.c:566
 #: plug-ins/common/file-png.c:673 plug-ins/common/file-ps.c:1126
-#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2436
-#: plug-ins/common/file-psp.c:2486 plug-ins/common/file-qoi.c:300
+#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2445
+#: plug-ins/common/file-psp.c:2495 plug-ins/common/file-qoi.c:300
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
 #: plug-ins/common/file-sunras.c:458 plug-ins/common/file-svg.c:365
 #: plug-ins/common/file-svg.c:825 plug-ins/common/file-tga.c:448
@@ -2255,7 +2255,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:877 plug-ins/common/file-jp2-load.c:1091
 #: plug-ins/common/file-pcx.c:515 plug-ins/common/file-pcx.c:558
-#: plug-ins/common/file-pdf-load.c:879 plug-ins/common/file-pix.c:381
+#: plug-ins/common/file-pdf-load.c:879 plug-ins/common/file-pix.c:387
 #: plug-ins/common/file-png.c:665 plug-ins/common/file-pnm.c:714
 #: plug-ins/common/file-ps.c:1116 plug-ins/common/file-raw-data.c:1665
 #: plug-ins/common/file-sunras.c:450 plug-ins/common/file-tga.c:440
@@ -2338,7 +2338,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-farbfeld.c:373
 #: plug-ins/common/file-gif-save.c:917 plug-ins/common/file-html-table.c:364
 #: plug-ins/common/file-jpegxl.c:1383 plug-ins/common/file-pcx.c:1114
-#: plug-ins/common/file-pix.c:560 plug-ins/common/file-png.c:1494
+#: plug-ins/common/file-pix.c:655 plug-ins/common/file-png.c:1494
 #: plug-ins/common/file-pnm.c:1635 plug-ins/common/file-ps.c:1338
 #: plug-ins/common/file-qoi.c:375 plug-ins/common/file-sunras.c:629
 #: plug-ins/common/file-tga.c:1230 plug-ins/common/file-xbm.c:1051
@@ -4137,13 +4137,27 @@ msgstr ""
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Неможливо опрацювати розмір (ширину чи висоту) зображення."
 
-#: plug-ins/common/file-pix.c:169 plug-ins/common/file-pix.c:196
+#: plug-ins/common/file-pix.c:171 plug-ins/common/file-pix.c:202
 msgid "Alias Pix image"
 msgstr "Зображення Alias Pix"
 
-#: plug-ins/common/file-pix.c:285
+#: plug-ins/common/file-pix.c:291
 msgid "PIX format does not support multiple layers."
 msgstr "Для формату PIX не передбачено підтримку декількох шарів."
+
+#: plug-ins/common/file-pix.c:584
+#, c-format
+#| msgid "Error trying to open temporary file '%s' for parasite loading: %s"
+msgid ""
+"Error trying to open temporary JPEG file '%s' for Esm Software pix loading: "
+"%s"
+msgstr ""
+"Помилка при відкриванні тимчасового файла JPEG «%s» для завантаження PIX Esm"
+" Software: %s"
+
+#: plug-ins/common/file-pix.c:600
+msgid "Invalid Esm Software PIX file"
+msgstr "Некоректний файл PIX Esm Software"
 
 #: plug-ins/common/file-png.c:180 plug-ins/common/file-png.c:210
 msgid "PNG image"
@@ -4874,90 +4888,95 @@ msgstr "Помилка зчитування даних ключового сло
 msgid "Error reading color block"
 msgstr "Помилка під час читання блоку кольорів"
 
-#: plug-ins/common/file-psp.c:1289
+#: plug-ins/common/file-psp.c:1287
+#| msgid "Error reading palette. "
+msgid "Error: Unsupported palette size"
+msgstr "Помилка: непідтримуваний розмір палітри"
+
+#: plug-ins/common/file-psp.c:1298
 msgid "Error reading color palette"
 msgstr "Помилка під час читання палітри кольорів"
 
-#: plug-ins/common/file-psp.c:1715 plug-ins/common/file-psp.c:1729
+#: plug-ins/common/file-psp.c:1724 plug-ins/common/file-psp.c:1738
 msgid "zlib error"
 msgstr "Помилка zlib"
 
-#: plug-ins/common/file-psp.c:1792 plug-ins/common/file-psp.c:1826
-#: plug-ins/common/file-psp.c:1836
+#: plug-ins/common/file-psp.c:1801 plug-ins/common/file-psp.c:1835
+#: plug-ins/common/file-psp.c:1845
 msgid "Error reading layer extension information"
 msgstr "Помилка зчитування даних щодо розширення шару"
 
-#: plug-ins/common/file-psp.c:1813
+#: plug-ins/common/file-psp.c:1822
 msgid "Error reading block information"
 msgstr "Помилка зчитування блокових даних"
 
-#: plug-ins/common/file-psp.c:1893
+#: plug-ins/common/file-psp.c:1902
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Хибний підблок шару %s, має бути LAYER"
 
-#: plug-ins/common/file-psp.c:1924 plug-ins/common/file-psp.c:1981
+#: plug-ins/common/file-psp.c:1933 plug-ins/common/file-psp.c:1990
 msgid "Error reading layer information chunk"
 msgstr "Помилка зчитування інформаційного сегменту шару"
 
-#: plug-ins/common/file-psp.c:2023
+#: plug-ins/common/file-psp.c:2032
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Хибні розміри шару: %dx%d"
 
-#: plug-ins/common/file-psp.c:2084
+#: plug-ins/common/file-psp.c:2093
 msgid "Error creating layer"
 msgstr "Помилка при створенні шару"
 
-#: plug-ins/common/file-psp.c:2129
+#: plug-ins/common/file-psp.c:2138
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Хибний підблок %s шару, має бути CHANNEL"
 
-#: plug-ins/common/file-psp.c:2145
+#: plug-ins/common/file-psp.c:2154
 msgid "Error reading channel information chunk"
 msgstr "Помилка читання фрагмента інформації каналу"
 
-#: plug-ins/common/file-psp.c:2168
+#: plug-ins/common/file-psp.c:2177
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Хибний тип каналу %d у фрагменті інформації каналу"
 
-#: plug-ins/common/file-psp.c:2272 plug-ins/common/file-psp.c:2289
+#: plug-ins/common/file-psp.c:2281 plug-ins/common/file-psp.c:2298
 msgid "Error reading tube data chunk"
 msgstr "Помилка при читання фрагмента даних тюбика"
 
-#: plug-ins/common/file-psp.c:2371 plug-ins/common/file-psp.c:2383
-#: plug-ins/common/file-psp.c:2394
+#: plug-ins/common/file-psp.c:2380 plug-ins/common/file-psp.c:2392
+#: plug-ins/common/file-psp.c:2403
 msgid "Error reading colorprofile chunk"
 msgstr "Помилка під час читання фрагмента профілю кольорів"
 
-#: plug-ins/common/file-psp.c:2447
+#: plug-ins/common/file-psp.c:2456
 msgid "Error reading file header."
 msgstr "Помилка при читанні заголовка файлу."
 
-#: plug-ins/common/file-psp.c:2454
+#: plug-ins/common/file-psp.c:2463
 msgid "Incorrect file signature."
 msgstr "Хибна сигнатура файлу."
 
-#: plug-ins/common/file-psp.c:2468
+#: plug-ins/common/file-psp.c:2477
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Непідтримувана версія формату файлу PSP %d.%d."
 
-#: plug-ins/common/file-psp.c:2488
+#: plug-ins/common/file-psp.c:2497
 msgid "invalid block size"
 msgstr "хибний розмір блока"
 
-#: plug-ins/common/file-psp.c:2497
+#: plug-ins/common/file-psp.c:2506
 msgid "Duplicate General Image Attributes block."
 msgstr "Повторний блок загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:2525
+#: plug-ins/common/file-psp.c:2534
 msgid "Missing General Image Attributes block."
 msgstr "Відсутній блок загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:2644
+#: plug-ins/common/file-psp.c:2653
 msgid "Exporting not implemented yet."
 msgstr "Експорт ще не реалізовано."
 
@@ -12456,7 +12475,6 @@ msgid "_Web Site"
 msgstr "_Веб-сторінка"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:234
-#| msgid "_Ftp Site"
 msgid "_FTP Site"
 msgstr "_FTP-сайт"
 
@@ -12505,12 +12523,10 @@ msgid "ALT te_xt: (optional)"
 msgstr "_Текст ALT: (необов'язково)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:299
-#| msgid "ALT te_xt: (optional)"
 msgid "Access _Key: (optional)"
 msgstr "К_люч доступу: (необов'язковий)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:302
-#| msgid "ALT te_xt: (optional)"
 msgid "Ta_b Index: (optional)"
 msgstr "_Індекс вкладки: (необов'язковий)"
 
