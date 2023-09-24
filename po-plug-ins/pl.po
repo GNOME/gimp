@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-18 11:45+0100\n"
-"PO-Revision-Date: 2023-02-18 11:48+0100\n"
+"POT-Creation-Date: 2023-09-24 13:39+0200\n"
+"PO-Revision-Date: 2023-09-24 13:40+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -51,10 +51,10 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1908
+#: ../plug-ins/common/file-gif-save.c:1127 ../plug-ins/common/file-heif.c:1927
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:708
-#: ../plug-ins/common/file-pdf-load.c:1338
+#: ../plug-ins/common/file-pdf-load.c:1356
 #: ../plug-ins/common/file-pdf-save.c:1020 ../plug-ins/common/file-ps.c:3447
 #: ../plug-ins/common/file-raw-data.c:1816 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
@@ -116,7 +116,7 @@ msgstr "_Anuluj"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1909
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1928
 #: ../plug-ins/common/file-pdf-load.c:709 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
@@ -380,12 +380,12 @@ msgstr "Prędkość odtwarzania"
 
 #. 2 styles of default frame disposals: cumulative layers and one frame per layer.
 #: ../plug-ins/common/animation-play.c:931
-#: ../plug-ins/common/file-gif-save.c:1321
+#: ../plug-ins/common/file-gif-save.c:1336
 msgid "Cumulative layers (combine)"
 msgstr "Kumulacja warstw (składanie)"
 
 #: ../plug-ins/common/animation-play.c:935
-#: ../plug-ins/common/file-gif-save.c:1323
+#: ../plug-ins/common/file-gif-save.c:1338
 msgid "One frame per layer (replace)"
 msgstr "Jedna klatka na warstwę (zastępowanie)"
 
@@ -1075,7 +1075,7 @@ msgstr "Wczytanie parametrów przeglądarki CML"
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
 #: ../plug-ins/common/file-ps.c:1075 ../plug-ins/common/file-ps.c:3397
-#: ../plug-ins/common/file-psp.c:2228 ../plug-ins/common/file-psp.c:2278
+#: ../plug-ins/common/file-psp.c:2237 ../plug-ins/common/file-psp.c:2287
 #: ../plug-ins/common/file-raw-data.c:477
 #: ../plug-ins/common/file-raw-data.c:1284 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:647
@@ -2145,7 +2145,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:338
 #: ../plug-ins/common/file-gegl.c:322 ../plug-ins/common/file-gif-load.c:353
-#: ../plug-ins/common/file-heif.c:703 ../plug-ins/common/file-jp2-load.c:1077
+#: ../plug-ins/common/file-heif.c:737 ../plug-ins/common/file-jp2-load.c:1077
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1059
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1067
@@ -2233,9 +2233,9 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych palety"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:880
+#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:895
 #: ../plug-ins/common/file-html-table.c:238
-#: ../plug-ins/common/file-jpegxl.c:778 ../plug-ins/common/file-pcx.c:761
+#: ../plug-ins/common/file-jpegxl.c:787 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1278
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1221
@@ -2442,13 +2442,13 @@ msgstr ""
 "GIF: nieudokumentowany typ łączenia %d nie jest obsługiwany. Animacja może "
 "być odtwarzana w nieoczekiwany sposób, zmieni się ona również po zapisaniu."
 
-#: ../plug-ins/common/file-gif-save.c:541
+#: ../plug-ins/common/file-gif-save.c:556
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr ""
 "Nie można w prosty sposób bardziej zredukować kolorów. Eksportowanie bez "
 "przezroczystości."
 
-#: ../plug-ins/common/file-gif-save.c:660
+#: ../plug-ins/common/file-gif-save.c:675
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -2457,7 +2457,7 @@ msgstr ""
 "Nie można wyeksportować „%s”. Format GIF nie obsługuje obrazów większych niż "
 "%d pikseli wzdłuż lub wszerz."
 
-#: ../plug-ins/common/file-gif-save.c:773
+#: ../plug-ins/common/file-gif-save.c:788
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -2465,19 +2465,19 @@ msgstr ""
 "Format GIF obsługuje jedynie komentarze zapisane w 7-bitowym kodowaniu "
 "ASCII. Komentarz nie został zapisany."
 
-#: ../plug-ins/common/file-gif-save.c:853
+#: ../plug-ins/common/file-gif-save.c:868
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nie można eksportować obrazów RGB w formacie GIF. Należy najpierw "
 "skonwertować obraz do odcieni szarości lub do trybu indeksowanego."
 
-#: ../plug-ins/common/file-gif-save.c:1058
+#: ../plug-ins/common/file-gif-save.c:1073
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 "Wstawiono opóźnienie, aby uniknąć animacji pochłaniającej moc procesora."
 
-#: ../plug-ins/common/file-gif-save.c:1107
+#: ../plug-ins/common/file-gif-save.c:1122
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2485,11 +2485,11 @@ msgstr ""
 "Eksportowany obraz w formacie GIF zawiera warstwy, które wykraczają poza "
 "granice obrazu."
 
-#: ../plug-ins/common/file-gif-save.c:1113
+#: ../plug-ins/common/file-gif-save.c:1128
 msgid "Cr_op"
 msgstr "_Przytnij"
 
-#: ../plug-ins/common/file-gif-save.c:1124
+#: ../plug-ins/common/file-gif-save.c:1139
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2497,11 +2497,11 @@ msgstr ""
 "W formacie GIF takie sytuacje nie są dopuszczalne. Można wybrać między "
 "przycięciem wszystkich warstw do granic obrazu lub anulowaniem eksportu."
 
-#: ../plug-ins/common/file-gif-save.c:1258
+#: ../plug-ins/common/file-gif-save.c:1273
 msgid "GIF"
 msgstr "GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1266
+#: ../plug-ins/common/file-gif-save.c:1281
 #, c-format
 msgid ""
 "Error loading UI file '%s':\n"
@@ -2510,11 +2510,11 @@ msgstr ""
 "Błąd podczas wczytywania pliku interfejsu użytkownika „%s”:\n"
 "%s"
 
-#: ../plug-ins/common/file-gif-save.c:1319
+#: ../plug-ins/common/file-gif-save.c:1334
 msgid "I don't care"
 msgstr "Bez znaczenia"
 
-#: ../plug-ins/common/file-gif-save.c:1340
+#: ../plug-ins/common/file-gif-save.c:1355
 msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
@@ -2523,7 +2523,7 @@ msgstr ""
 "Eksportowany obraz ma tylko jedną warstwę."
 
 #. translators: the %d is *always* 240 here
-#: ../plug-ins/common/file-gif-save.c:2556
+#: ../plug-ins/common/file-gif-save.c:2571
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Długość domyślnego komentarza jest ograniczona do %d znaków."
@@ -2584,11 +2584,11 @@ msgstr "Rzędy:"
 msgid "C source code header"
 msgstr "Nagłówek kodu źródłowego języka C"
 
-#: ../plug-ins/common/file-heif.c:143
+#: ../plug-ins/common/file-heif.c:147
 msgid "Loads HEIF images"
 msgstr "Wczytuje obrazy HEIF"
 
-#: ../plug-ins/common/file-heif.c:144
+#: ../plug-ins/common/file-heif.c:148
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -2596,95 +2596,95 @@ msgstr ""
 "Wczytywanie obrazów przechowywanych w formacie HEIF (High Efficiency Image "
 "File Format). Typowe przyrostki plików HEIF to .heif i .heic."
 
-#: ../plug-ins/common/file-heif.c:150 ../plug-ins/common/file-heif.c:179
+#: ../plug-ins/common/file-heif.c:154 ../plug-ins/common/file-heif.c:183
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: ../plug-ins/common/file-heif.c:173
+#: ../plug-ins/common/file-heif.c:177
 msgid "Exports HEIF images"
 msgstr "Eksportuje obrazy HEIF"
 
-#: ../plug-ins/common/file-heif.c:174
+#: ../plug-ins/common/file-heif.c:178
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr "Zapis obrazów w formacie HEIF (High Efficiency Image File Format)."
 
-#: ../plug-ins/common/file-heif.c:194
+#: ../plug-ins/common/file-heif.c:198
 msgid "Exports AVIF images"
 msgstr "Eksportuje obrazy AVIF"
 
-#: ../plug-ins/common/file-heif.c:195
+#: ../plug-ins/common/file-heif.c:199
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Zapis obrazów w formacie AVIF (AV1 Image File Format)"
 
-#: ../plug-ins/common/file-heif.c:742 ../plug-ins/common/file-heif.c:775
-#: ../plug-ins/common/file-heif.c:814 ../plug-ins/common/file-heif.c:880
+#: ../plug-ins/common/file-heif.c:776 ../plug-ins/common/file-heif.c:809
+#: ../plug-ins/common/file-heif.c:848 ../plug-ins/common/file-heif.c:914
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Wczytanie pliku HEIF się nie powiodło: %s"
 
-#: ../plug-ins/common/file-heif.c:764
+#: ../plug-ins/common/file-heif.c:798
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Wczytanie obrazu HEIF się nie powiodło: plik wejściowy nie zawiera "
 "odczytywalnych obrazów"
 
-#: ../plug-ins/common/file-heif.c:1007
+#: ../plug-ins/common/file-heif.c:1041
 msgid "image content"
 msgstr "zawartość obrazu"
 
-#: ../plug-ins/common/file-heif.c:1328
+#: ../plug-ins/common/file-heif.c:1361
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Eksportowanie „%s” za pomocą kodera %s"
 
-#: ../plug-ins/common/file-heif.c:1379 ../plug-ins/common/file-heif.c:1633
+#: ../plug-ins/common/file-heif.c:1412 ../plug-ins/common/file-heif.c:1652
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Zakodowanie obrazu HEIF się nie powiodło: %s"
 
-#: ../plug-ins/common/file-heif.c:1670
+#: ../plug-ins/common/file-heif.c:1689
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Zapisanie obrazu HEIF się nie powiodło: %s"
 
-#: ../plug-ins/common/file-heif.c:1759
+#: ../plug-ins/common/file-heif.c:1778
 msgid "primary"
 msgstr "główny"
 
-#: ../plug-ins/common/file-heif.c:1904
+#: ../plug-ins/common/file-heif.c:1923
 msgid "Load HEIF Image"
 msgstr "Wczytanie obrazu HEIF"
 
-#: ../plug-ins/common/file-heif.c:1918
+#: ../plug-ins/common/file-heif.c:1937
 msgid "Select Image"
 msgstr "Wybór obrazu"
 
-#: ../plug-ins/common/file-heif.c:2084
+#: ../plug-ins/common/file-heif.c:2103
 msgid "Nearly _lossless"
 msgstr "_Prawie bezstratne"
 
-#: ../plug-ins/common/file-heif.c:2088 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2107 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Jakość:"
 
-#: ../plug-ins/common/file-heif.c:2131
+#: ../plug-ins/common/file-heif.c:2150
 msgid "Bit depth:"
 msgstr "Głębia bitowa:"
 
-#: ../plug-ins/common/file-heif.c:2137
+#: ../plug-ins/common/file-heif.c:2156
 msgid "8 bit/channel"
 msgstr "8 bitów/kanał"
 
-#: ../plug-ins/common/file-heif.c:2138
+#: ../plug-ins/common/file-heif.c:2157
 msgid "10 bit/channel"
 msgstr "10 bitów/kanał"
 
-#: ../plug-ins/common/file-heif.c:2139
+#: ../plug-ins/common/file-heif.c:2158
 msgid "12 bit/channel"
 msgstr "12 bitów/kanał"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2148 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2167 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:404
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
 msgid "Save color _profile"
@@ -3168,49 +3168,49 @@ msgstr "%s-%s"
 msgid "%s-pages"
 msgstr "%s-stron"
 
-#: ../plug-ins/common/file-pdf-load.c:1334
+#: ../plug-ins/common/file-pdf-load.c:1352
 msgid "Import from PDF"
 msgstr "Import z PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1339 ../plug-ins/common/file-ps.c:3448
+#: ../plug-ins/common/file-pdf-load.c:1357 ../plug-ins/common/file-ps.c:3448
 #: ../plug-ins/file-tiff/file-tiff-load.c:2665
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "Zai_mportuj"
 
-#: ../plug-ins/common/file-pdf-load.c:1372
+#: ../plug-ins/common/file-pdf-load.c:1390
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Błąd podczas uzyskiwania liczby stron z podanego pliku PDF."
 
 #. "Load in reverse order" toggle button
-#: ../plug-ins/common/file-pdf-load.c:1416
+#: ../plug-ins/common/file-pdf-load.c:1435
 msgid "Load in reverse order"
 msgstr "Wczytanie w odwróconej kolejności"
 
-#: ../plug-ins/common/file-pdf-load.c:1434
+#: ../plug-ins/common/file-pdf-load.c:1453
 msgid "_Width (pixels):"
 msgstr "_Szerokość (piksele):"
 
-#: ../plug-ins/common/file-pdf-load.c:1435
+#: ../plug-ins/common/file-pdf-load.c:1454
 msgid "_Height (pixels):"
 msgstr "_Wysokość (piksele):"
 
-#: ../plug-ins/common/file-pdf-load.c:1437
+#: ../plug-ins/common/file-pdf-load.c:1456
 msgid "_Resolution:"
 msgstr "_Rozdzielczość:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1448
+#: ../plug-ins/common/file-pdf-load.c:1467
 msgid "Use _Anti-aliasing"
 msgstr "Użycie _wygładzania"
 
 #. White Background
-#: ../plug-ins/common/file-pdf-load.c:1457
+#: ../plug-ins/common/file-pdf-load.c:1476
 msgid "_Fill transparent areas with white"
 msgstr "_Wypełnienie przezroczystych obszarów białym kolorem"
 
-#: ../plug-ins/common/file-pdf-load.c:1743
-#: ../plug-ins/common/file-pdf-load.c:1744 ../plug-ins/common/file-svg.c:852
+#: ../plug-ins/common/file-pdf-load.c:1762
+#: ../plug-ins/common/file-pdf-load.c:1763 ../plug-ins/common/file-svg.c:852
 #: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
@@ -3770,97 +3770,102 @@ msgstr "Błąd podczas odczytywania danych słowa kluczowego twórcy"
 msgid "Error reading color block"
 msgstr "Błąd podczas odczytywania bloku koloru"
 
-#: ../plug-ins/common/file-psp.c:1138
+#: ../plug-ins/common/file-psp.c:1136
+#, c-format
+msgid "Error: Unsupported palette size"
+msgstr "Błąd: nieobsługiwany rozmiar palety"
+
+#: ../plug-ins/common/file-psp.c:1147
 #, c-format
 msgid "Error reading color palette"
 msgstr "Błąd podczas odczytywania palety kolorów"
 
-#: ../plug-ins/common/file-psp.c:1564 ../plug-ins/common/file-psp.c:1578
+#: ../plug-ins/common/file-psp.c:1573 ../plug-ins/common/file-psp.c:1587
 #, c-format
 msgid "zlib error"
 msgstr "Błąd biblioteki zlib"
 
-#: ../plug-ins/common/file-psp.c:1641 ../plug-ins/common/file-psp.c:1675
-#: ../plug-ins/common/file-psp.c:1685
+#: ../plug-ins/common/file-psp.c:1650 ../plug-ins/common/file-psp.c:1684
+#: ../plug-ins/common/file-psp.c:1694
 #, c-format
 msgid "Error reading layer extension information"
 msgstr "Błąd podczas odczytywania informacji o rozszerzeniu warstwy"
 
-#: ../plug-ins/common/file-psp.c:1662
+#: ../plug-ins/common/file-psp.c:1671
 #, c-format
 msgid "Error reading block information"
 msgstr "Błąd podczas odczytywania informacji o bloku"
 
-#: ../plug-ins/common/file-psp.c:1742
+#: ../plug-ins/common/file-psp.c:1751
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Nieprawidłowy podblok %s warstwy, powinien wynosić „LAYER”"
 
-#: ../plug-ins/common/file-psp.c:1773 ../plug-ins/common/file-psp.c:1830
+#: ../plug-ins/common/file-psp.c:1782 ../plug-ins/common/file-psp.c:1839
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Błąd podczas odczytywania fragmentu informacji o warstwie"
 
-#: ../plug-ins/common/file-psp.c:1872
+#: ../plug-ins/common/file-psp.c:1881
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Nieprawidłowe wymiary warstwy: %d×%d"
 
-#: ../plug-ins/common/file-psp.c:1933
+#: ../plug-ins/common/file-psp.c:1942
 #, c-format
 msgid "Error creating layer"
 msgstr "Błąd podczas tworzenia warstwy"
 
-#: ../plug-ins/common/file-psp.c:1978
+#: ../plug-ins/common/file-psp.c:1987
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Nieprawidłowy podblok %s warstwy, powinien wynosić „CHANNEL”"
 
-#: ../plug-ins/common/file-psp.c:1994
+#: ../plug-ins/common/file-psp.c:2003
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Błąd podczas odczytywania fragmentu informacji o kanale"
 
-#: ../plug-ins/common/file-psp.c:2017
+#: ../plug-ins/common/file-psp.c:2026
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Nieprawidłowy typ kanału %d we fragmencie informacji o kanale"
 
-#: ../plug-ins/common/file-psp.c:2121 ../plug-ins/common/file-psp.c:2138
+#: ../plug-ins/common/file-psp.c:2130 ../plug-ins/common/file-psp.c:2147
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Błąd podczas odczytywania fragmentu danych o rurze"
 
-#: ../plug-ins/common/file-psp.c:2239
+#: ../plug-ins/common/file-psp.c:2248
 #, c-format
 msgid "Error reading file header."
 msgstr "Błąd podczas odczytywania nagłówka pliku."
 
-#: ../plug-ins/common/file-psp.c:2246
+#: ../plug-ins/common/file-psp.c:2255
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Niepoprawny podpis pliku."
 
-#: ../plug-ins/common/file-psp.c:2260
+#: ../plug-ins/common/file-psp.c:2269
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Nieobsługiwana wersja formatu pliku PSP %d.%d."
 
-#: ../plug-ins/common/file-psp.c:2280
+#: ../plug-ins/common/file-psp.c:2289
 msgid "invalid block size"
 msgstr "nieprawidłowy rozmiar bloku"
 
-#: ../plug-ins/common/file-psp.c:2289
+#: ../plug-ins/common/file-psp.c:2298
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Podwójny blok ogólnych atrybutów obrazu."
 
-#: ../plug-ins/common/file-psp.c:2319
+#: ../plug-ins/common/file-psp.c:2328
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Brak bloku ogólnych atrybutów obrazu."
 
-#: ../plug-ins/common/file-psp.c:2433
+#: ../plug-ins/common/file-psp.c:2442
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Eksportowanie nie jest jeszcze zaimplementowane."
@@ -4120,8 +4125,8 @@ msgstr "Nie można wykonywać tego działania na nieznanych typach obrazów"
 #: ../plug-ins/common/file-sunras.c:1158 ../plug-ins/common/file-sunras.c:1252
 #: ../plug-ins/common/file-sunras.c:1335 ../plug-ins/common/file-sunras.c:1434
 #: ../plug-ins/common/file-xwd.c:1429 ../plug-ins/common/file-xwd.c:1532
-#: ../plug-ins/common/file-xwd.c:1691 ../plug-ins/common/file-xwd.c:1906
-#: ../plug-ins/common/file-xwd.c:2064 ../plug-ins/common/file-xwd.c:2327
+#: ../plug-ins/common/file-xwd.c:1691 ../plug-ins/common/file-xwd.c:1914
+#: ../plug-ins/common/file-xwd.c:2072 ../plug-ins/common/file-xwd.c:2335
 #: ../plug-ins/file-fits/fits.c:804
 msgid "EOF encountered on reading"
 msgstr "Podczas odczytu napotkano koniec pliku"
@@ -4721,7 +4726,7 @@ msgstr "Nie można otworzyć pliku „%s” do zapisania: "
 msgid "Error exporting '%s': "
 msgstr "Błąd podczas eksportowania pliku „%s”: "
 
-#: ../plug-ins/common/file-xwd.c:1762 ../plug-ins/common/file-xwd.c:2160
+#: ../plug-ins/common/file-xwd.c:1770 ../plug-ins/common/file-xwd.c:2168
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "Plik XWD %s jest uszkodzony."
