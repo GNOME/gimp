@@ -98,10 +98,11 @@ static GimpValueArray * explorer_run              (GimpProcedure        *procedu
                                                    GimpImage            *image,
                                                    gint                  n_drawables,
                                                    GimpDrawable        **drawables,
-                                                   const GimpValueArray *args,
+                                                   GimpProcedureConfig  *config,
                                                    gpointer              run_data);
 
-static void       explorer                         (GimpDrawable       *drawable);
+static void       explorer                         (GimpDrawable        *drawable,
+                                                    GimpProcedureConfig *config);
 
 static void       delete_dialog_callback           (GtkWidget          *widget,
                                                     gboolean            value,
@@ -230,9 +231,9 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                            explorer_run, NULL, NULL);
+      procedure = gimp_image_procedure_new2 (plug_in, name,
+                                             GIMP_PDB_PROC_TYPE_PLUGIN,
+                                             explorer_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -252,122 +253,149 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
                                       "www.multimania.com/cotting)",
                                       "December, 1998");
 
-      GIMP_PROC_ARG_INT (procedure, "fractal-type",
-                         "Fractal type",
-                         "0: Mandelbrot; 1: Julia; 2: Barnsley 1; "
-                         "3: Barnsley 2; 4: Barnsley 3; 5: Spider; "
-                         "6: ManOWar; 7: Lambda; 8: Sierpinski",
-                         0, 8, 0,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "fractal-type",
+                            _("Fr_actal Type"),
+                            _("Type of Fractal Pattern"),
+                            gimp_choice_new_with_values ("mandelbrot", 0, _("Mandelbrot"), NULL,
+                                                         "julia",      1, _("Julia"),      NULL,
+                                                         "barnsley-1", 2, _("Barnsley 1"), NULL,
+                                                         "barnsley-2", 3, _("Barnsley 2"), NULL,
+                                                         "barnsley-3", 4, _("Barnsley 3"), NULL,
+                                                         "spider",     5, _("Spider"),     NULL,
+                                                         "man-o-war",  6, _("Man-o-War"),  NULL,
+                                                         "lambda",     7, _("Lambda"),     NULL,
+                                                         "sierpinski", 8, _("Sierpinski"), NULL,
+                                                         NULL),
+                            "mandelbrot",
+                            G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "xmin",
-                            "X min",
-                            "xmin fractal image delimiter",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            _("Lef_t"),
+                            _("X min fractal image delimiter"),
+                            -3.000, 3.000, -2.000,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "xmax",
-                            "X max",
-                            "xmax fractal image delimiter",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            _("Ri_ght"),
+                            _("X max fractal image delimiter"),
+                            -3.000, 3.000, 2.000,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "ymin",
-                            "Y min",
-                            "ymin fractal image delimiter",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            _("To_p"),
+                            _("y min fractal image delimiter"),
+                            -3.000, 3.000, -1.500,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "ymax",
-                            "Y max",
-                            "ymax fractal image delimiter",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            _("_Bottom"),
+                            _("ymax fractal image delimiter"),
+                            -3.000, 3.000, 1.500,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "iter",
-                            "Iter",
-                            "Iteration value",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            _("Iteratio_ns"),
+                            _("Iteration value"),
+                            1, 1000, 50,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "cx",
-                            "CX",
-                            "cx value (only Julia)",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            _("C_X"),
+                            _("cx value"),
+                            -2.5000, 2.5000, -0.75,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "cy",
-                            "CY",
-                            "cy value (only Julia)",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            _("C_Y"),
+                            _("cy value"),
+                            -2.5000, 2.5000, -0.2,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "color-mode",
-                         "Color mode",
-                         "0: Apply colormap as specified by the parameters "
-                         "below; 1: Apply active gradient to final image",
+                         _("Color mode"),
+                         _("0: Apply colormap as specified by the parameters "
+                           "below; 1: Apply active gradient to final image"),
                          0, 1, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "red-stretch",
-                            "Red stretch",
-                            "Red stretching factor",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            _("Red stretch"),
+                            _("Red stretching factor"),
+                            0, 1, 1,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "green-stretch",
-                            "Green stretch",
-                            "Green stretching factor",
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            _("Green stretch"),
+                            _("Green stretching factor"),
+                            0, 1, 1,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "blues-tretch",
-                            "Blue stretch",
-                            "Blue stretching factor",
-                            -G_MAXDOUBLE,G_MAXDOUBLE, 0,
+      GIMP_PROC_ARG_DOUBLE (procedure, "blue-stretch",
+                            _("Blue stretch"),
+                            _("Blue stretching factor"),
+                            0, 1, 1,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "red-mode",
-                         "Red mode",
-                         "Red application mode (0:SIN; 1:COS; 2:NONE)",
-                         0, 2, 0,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "red-mode",
+                            _("_Red"),
+                            _("Red application mode"),
+                            gimp_choice_new_with_values ("red-sin",  0, _("Sine"),   NULL,
+                                                         "red-cos",  1, _("Cosine"), NULL,
+                                                         "red-none", 2, _("None"),   NULL,
+                                                         NULL),
+                            "red-cos",
+                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "green-mode",
-                         "Green mode",
-                         "Green application mode (0:SIN; 1:COS; 2:NONE)",
-                         0, 2, 0,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "green-mode",
+                            _("_Green"),
+                            _("Green application mode"),
+                            gimp_choice_new_with_values ("green-sin",  0, _("Sine"),   NULL,
+                                                         "green-cos",  1, _("Cosine"), NULL,
+                                                         "green-none", 2, _("None"),   NULL,
+                                                         NULL),
+                            "green-cos",
+                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "blue-mode",
-                         "Blue mode",
-                         "Blue application mode (0:SIN; 1:COS; 2:NONE)",
-                         0, 2, 0,
-                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_CHOICE (procedure, "blue-mode",
+                            _("_Blue"),
+                            _("Blue application mode"),
+                            gimp_choice_new_with_values ("blue-sin",  0, _("Sine"),   NULL,
+                                                         "blue-cos",  1, _("Cosine"), NULL,
+                                                         "blue-none", 2, _("None"),   NULL,
+                                                         NULL),
+                            "blue-sin",
+                            G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "red-invert",
-                             "Red invert",
+                             _("In_version"),
                              "Red inversion mode",
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "green-invert",
-                             "Green invert",
+                             "I_nversion",
                              "Green inversion mode",
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "blue-invert",
-                             "Blue invert",
+                             "_Inversion",
                              "Blue inversion mode",
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "n-colors",
-                         "N volors",
-                         "Number of Colors for mapping",
+                         _("_Number of colors"),
+                         _("Number of Colors for mapping"),
                          2, 8192, 512,
                          G_PARAM_READWRITE);
+      GIMP_PROC_ARG_BOOLEAN (procedure, "use-loglog-smoothing",
+                             "_Use log log smoothing",
+                             "Use log log smoothing to eliminate "
+                             "\"banding\" in the result",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
     }
 
   return procedure;
@@ -379,7 +407,7 @@ explorer_run (GimpProcedure        *procedure,
               GimpImage            *image,
               gint                  n_drawables,
               GimpDrawable        **drawables,
-              const GimpValueArray *args,
+              GimpProcedureConfig  *config,
               gpointer              run_data)
 {
   GimpDrawable      *drawable;
@@ -430,73 +458,44 @@ explorer_run (GimpProcedure        *procedure,
   preview_width  = MAX (pwidth, 2);
   preview_height = MAX (pheight, 2);
 
+  wvals.config = config;
+
   /* See how we will run */
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      /* Possibly retrieve data */
-      gimp_get_data ("plug-in-fractalexplorer", &wvals);
-
       /* Get information from the dialog */
-      if (! explorer_dialog ())
+      if (! explorer_dialog (procedure, config))
         return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
                                                  NULL);
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      wvals.fractaltype  = GIMP_VALUES_GET_INT    (args, 0);
-      wvals.xmin         = GIMP_VALUES_GET_DOUBLE (args, 1);
-      wvals.xmax         = GIMP_VALUES_GET_DOUBLE (args, 2);
-      wvals.ymin         = GIMP_VALUES_GET_DOUBLE (args, 4);
-      wvals.ymax         = GIMP_VALUES_GET_DOUBLE (args, 4);
-      wvals.iter         = GIMP_VALUES_GET_DOUBLE (args, 5);
-      wvals.cx           = GIMP_VALUES_GET_DOUBLE (args, 6);
-      wvals.cy           = GIMP_VALUES_GET_DOUBLE (args, 7);
-      wvals.colormode    = GIMP_VALUES_GET_INT    (args, 8);
-      wvals.redstretch   = GIMP_VALUES_GET_DOUBLE (args, 9);
-      wvals.greenstretch = GIMP_VALUES_GET_DOUBLE (args, 10);
-      wvals.bluestretch  = GIMP_VALUES_GET_DOUBLE (args, 11);
-      wvals.redmode      = GIMP_VALUES_GET_INT    (args, 12);
-      wvals.greenmode    = GIMP_VALUES_GET_INT    (args, 13);
-      wvals.bluemode     = GIMP_VALUES_GET_INT    (args, 14);
-      wvals.redinvert    = GIMP_VALUES_GET_INT    (args, 15);
-      wvals.greeninvert  = GIMP_VALUES_GET_INT    (args, 16);
-      wvals.blueinvert   = GIMP_VALUES_GET_INT    (args, 17);
-      wvals.ncolors      = GIMP_VALUES_GET_INT    (args, 18);
-
-      make_color_map ();
-      break;
-
     case GIMP_RUN_WITH_LAST_VALS:
-      /* Possibly retrieve data */
-      gimp_get_data ("plug-in-fractalexplorer", &wvals);
-      make_color_map ();
+      make_color_map (config);
       break;
 
     default:
       break;
     }
 
-  xmin = wvals.xmin;
-  xmax = wvals.xmax;
-  ymin = wvals.ymin;
-  ymax = wvals.ymax;
-  cx = wvals.cx;
-  cy = wvals.cy;
+  g_object_get (config,
+                "xmin", &xmin,
+                "xmax", &xmax,
+                "ymin", &ymin,
+                "ymax", &ymax,
+                "cx",   &cx,
+                "cy",   &cy,
+                NULL);
 
   if (status == GIMP_PDB_SUCCESS)
     {
       gimp_progress_init (_("Rendering fractal"));
 
-      explorer (drawable);
+      explorer (drawable, config);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
-
-      /* Store data */
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug-in-fractalexplorer",
-                       &wvals, sizeof (explorer_vals_t));
     }
 
   return gimp_procedure_new_return_values (procedure, status, NULL);
@@ -507,7 +506,8 @@ explorer_run (GimpProcedure        *procedure,
  *********************************************************************/
 
 static void
-explorer (GimpDrawable *drawable)
+explorer (GimpDrawable        *drawable,
+          GimpProcedureConfig *config)
 {
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
@@ -567,7 +567,8 @@ explorer (GimpDrawable *drawable)
                            dest_row,
                            row,
                            w,
-                           bpp);
+                           bpp,
+                           config);
 
       gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x, row, w, 1), 0,
                        format, dest_row,
@@ -595,11 +596,12 @@ explorer (GimpDrawable *drawable)
  *********************************************************************/
 
 void
-explorer_render_row (const guchar *src_row,
-                     guchar       *dest_row,
-                     gint          row,
-                     gint          row_width,
-                     gint          bpp)
+explorer_render_row (const guchar        *src_row,
+                     guchar              *dest_row,
+                     gint                 row,
+                     gint                 row_width,
+                     gint                 bpp,
+                     GimpProcedureConfig *config)
 {
   gint    col;
   gdouble a;
@@ -622,21 +624,31 @@ explorer_render_row (const guchar *src_row,
   gdouble cy;
   gint    counter;
   gint    color;
+  gdouble iter;
   gint    iteration;
   gint    useloglog;
+  gint    n_colors;
+  gint    fractal_type;
   gdouble log2;
 
-  cx = wvals.cx;
-  cy = wvals.cy;
-  useloglog = wvals.useloglog;
-  iteration = wvals.iter;
-  log2 = log (2.0);
+  g_object_get (config,
+                "cx",                   &cx,
+                "cy",                   &cy,
+                "iter",                 &iter,
+                "use-loglog-smoothing", &useloglog,
+                "n-colors",             &n_colors,
+                NULL);
+  fractal_type =
+    gimp_procedure_config_get_choice_id (wvals.config, "fractal-type");
+
+  iteration = (gint) iter;
+  log2      = log (2.0);
 
   for (col = 0; col < row_width; col++)
     {
       a = xmin + (double) col * xdiff;
       b = ymin + (double) row * ydiff;
-      if (wvals.fractaltype != 0)
+      if (fractal_type != 0)
         {
           tmpx = x = a;
           tmpy = y = b;
@@ -652,7 +664,7 @@ explorer_render_row (const guchar *src_row,
           oldx=x;
           oldy=y;
 
-          switch (wvals.fractaltype)
+          switch (fractal_type)
             {
             case TYPE_MANDELBROT:
               xx = x * x - y * y + a;
@@ -776,7 +788,7 @@ explorer_render_row (const guchar *src_row,
           adjust = 0.0;
         }
 
-      color = (int) (((counter - adjust) * (wvals.ncolors - 1)) / iteration);
+      color = (int) (((counter - adjust) * (n_colors - 1)) / iteration);
       if (bpp >= 3)
         {
           dest_row[col * bpp + 0] = colormap[color].r;
@@ -947,10 +959,119 @@ static void
 activate_fractal (fractalexplorerOBJ *sel_obj)
 {
   current_obj = sel_obj;
-  wvals = current_obj->opts;
-  dialog_change_scale ();
-  set_cmap_preview ();
-  dialog_update_preview ();
+
+  g_object_set (wvals.config,
+                "xmin",          current_obj->opts.xmin,
+                "xmax",          current_obj->opts.xmax,
+                "ymin",          current_obj->opts.ymin,
+                "ymax",          current_obj->opts.ymax,
+                "iter",          current_obj->opts.iter,
+                "cx",            current_obj->opts.cx,
+                "cy",            current_obj->opts.cy,
+                "red-stretch",   current_obj->opts.redstretch,
+                "green-stretch", current_obj->opts.greenstretch,
+                "blue-stretch",  current_obj->opts.bluestretch,
+                "color-mode",    current_obj->opts.colormode,
+                "red-invert",    current_obj->opts.redinvert,
+                "green-invert",  current_obj->opts.greeninvert,
+                "blue-invert",   current_obj->opts.blueinvert,
+                NULL);
+
+  switch (current_obj->opts.fractaltype)
+    {
+    case 0:
+      g_object_set (wvals.config, "fractal-type", "mandelbrot", NULL);
+      break;
+
+    case 1:
+      g_object_set (wvals.config, "fractal-type", "julia", NULL);
+      break;
+
+    case 2:
+      g_object_set (wvals.config, "fractal-type", "barnsley-1", NULL);
+      break;
+
+    case 3:
+      g_object_set (wvals.config, "fractal-type", "barnsley-2", NULL);
+      break;
+
+    case 4:
+      g_object_set (wvals.config, "fractal-type", "barnsley-3", NULL);
+      break;
+
+    case 5:
+      g_object_set (wvals.config, "fractal-type", "spider", NULL);
+      break;
+
+    case 6:
+      g_object_set (wvals.config, "fractal-type", "man-o-war", NULL);
+      break;
+
+    case 7:
+      g_object_set (wvals.config, "fractal-type", "lambda", NULL);
+      break;
+
+    case 8:
+      g_object_set (wvals.config, "fractal-type", "sierpinski", NULL);
+      break;
+
+    default:
+      break;
+    }
+  switch (current_obj->opts.redmode)
+    {
+    case 0:
+      g_object_set (wvals.config, "red-mode", "red-sin", NULL);
+      break;
+
+    case 1:
+      g_object_set (wvals.config, "red-mode", "red-cos", NULL);
+      break;
+
+    case 2:
+      g_object_set (wvals.config, "red-mode", "red-none", NULL);
+      break;
+
+    default:
+      break;
+    }
+  switch (current_obj->opts.greenmode)
+    {
+    case 0:
+      g_object_set (wvals.config, "green-mode", "green-sin", NULL);
+      break;
+
+    case 1:
+      g_object_set (wvals.config, "green-mode", "green-cos", NULL);
+      break;
+
+    case 2:
+      g_object_set (wvals.config, "green-mode", "green-none", NULL);
+      break;
+
+    default:
+      break;
+    }
+  switch (current_obj->opts.bluemode)
+    {
+    case 0:
+      g_object_set (wvals.config, "blue-mode", "blue-sin", NULL);
+      break;
+
+    case 1:
+      g_object_set (wvals.config, "blue-mode", "blue-cos", NULL);
+      break;
+
+    case 2:
+      g_object_set (wvals.config, "blue-mode", "blue-none", NULL);
+      break;
+
+    default:
+      break;
+    }
+
+  set_cmap_preview (wvals.config);
+  dialog_update_preview (wvals.config);
 }
 
 static void
