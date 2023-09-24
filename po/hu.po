@@ -10,21 +10,21 @@
 # Árpád Bíró <biro arpad at gmail dot com>, 2004, 2007, 2008.
 # Gábor Kelemen <kelemeng at gnome dot hu>, 2007, 2008, 2009, 2016.
 # Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2016, 2018, 2019, 2020, 2021, 2022, 2023.
-# Balázs Meskó <mesko.balazs at fsf dot hu>, 2017, 2018, 2019, 2020, 2021, 2022.
+# Balázs Meskó <mesko.balazs at fsf dot hu>, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 # Gabor Kelemen <kelemeng at ubuntu dot com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-03-07 22:36+0000\n"
-"PO-Revision-Date: 2023-03-15 00:53+0100\n"
+"POT-Creation-Date: 2023-09-24 11:51+0000\n"
+"PO-Revision-Date: 2023-09-24 15:35+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
-"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.08.2\n"
+"X-Generator: Lokalize 23.04.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
@@ -86,7 +86,6 @@ msgid "A new stable releases with a lot of bug fixes and a few enhancements:"
 msgstr "Egy új stabil kiadás sok hibajavítással és néhány fejlesztéssel:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
-#| msgid "Open the palette selection dialog"
 msgid "New template selector in \"Canvas Size\" dialog"
 msgstr "Új sablonválasztó a „Rajzvászon mérete” párbeszédablakban"
 
@@ -95,8 +94,8 @@ msgid ""
 "\"Change Color\" dialogs: color scale (0..255/0..100) and models (LCh/HSV) "
 "settings remembered across sessions"
 msgstr ""
-"„Szín megváltoztatása” párbeszédablakok: a színskála (0..255/0..100) és a"
-" modell (LCh/HSV) beállítások megjegyzésre kerülnek a munkamenetek között"
+"„Szín megváltoztatása” párbeszédablakok: a színskála (0..255/0..100) és a "
+"modell (LCh/HSV) beállítások megjegyzésre kerülnek a munkamenetek között"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "New header with \"visible\" and \"link\" icons in item dockables"
@@ -132,19 +131,18 @@ msgid ""
 "More plug-ins got bug-fixes: DDS, WebP, Flame, Animation Playback, HEIF, "
 "Dicom and Help"
 msgstr ""
-"Több bővítmény kapott hibajavításokat: DDS, WebP, Láng, Animáció lejátszása,"
-" HEIF, Dicom és Súgó"
+"Több bővítmény kapott hibajavításokat: DDS, WebP, Láng, Animáció lejátszása, "
+"HEIF, Dicom és Súgó"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid ""
 "Color picking on X11 will ignore the Wayland portal; new implementation for "
 "color picking on Windows"
 msgstr ""
-"A színválasztás X11-en mellőzni fogja a Wayland portált, a színválasztás új"
-" megvalósítása Windowson"
+"A színválasztás X11-en mellőzni fogja a Wayland portált, a színválasztás új "
+"megvalósítása Windowson"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
-#| msgid "Check for updates"
 msgid "Check for updates fixed on macOS"
 msgstr "A frissítések keresése javítva lett macOS alatt"
 
@@ -3603,7 +3601,7 @@ msgstr "Eszközbeá_llítások"
 #: ../app/actions/dialogs-actions.c:54
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
-msgstr "Az eszközbeállítási párbeszédablak megnyitása"
+msgstr "Az „Eszközbeállítások” párbeszédablak megnyitása"
 
 #: ../app/actions/dialogs-actions.c:59
 msgctxt "dialogs-action"
@@ -3623,7 +3621,7 @@ msgstr "_Szimmetrikus festés"
 #: ../app/actions/dialogs-actions.c:66
 msgctxt "dialogs-action"
 msgid "Open the symmetry dialog"
-msgstr "A szimmetrikus párbeszédablak megnyitása"
+msgstr "A „Szimmetrikus festés” párbeszédablak megnyitása"
 
 #: ../app/actions/dialogs-actions.c:71
 msgctxt "dialogs-action"
@@ -3714,7 +3712,7 @@ msgstr "_Mutató"
 #: ../app/actions/dialogs-actions.c:120
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
-msgstr "A „Mutatóinformációk” párbeszédablak megnyitása"
+msgstr "A „Mutató” információs párbeszédablak megnyitása"
 
 #: ../app/actions/dialogs-actions.c:125
 msgctxt "dialogs-action"
@@ -3934,7 +3932,7 @@ msgstr "Bemenet_i eszközök"
 #: ../app/actions/dialogs-actions.c:257
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
-msgstr "A „Bemeneti eszközök beállítása” ablak megnyitása"
+msgstr "A bemeneti eszközök szerkesztőjének megnyitása"
 
 #: ../app/actions/dialogs-actions.c:262
 msgctxt "dialogs-action"
@@ -3944,7 +3942,7 @@ msgstr "Gyorsbille_ntyűk"
 #: ../app/actions/dialogs-actions.c:263
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
-msgstr "A „Gyorsbillentyűk beállítása” párbeszédablak megnyitása"
+msgstr "A gyorsbillentyűk szerkesztőjének megnyitása"
 
 # TODO: ellenorzendo a mnemonic
 #: ../app/actions/dialogs-actions.c:268
@@ -7011,7 +7009,6 @@ msgid "Converting to '%s'"
 msgstr "Átalakítás erre: „%s”"
 
 #: ../app/actions/image-commands.c:1433
-#| msgid "Set Image Canvas Size"
 msgid "Change Canvas Size"
 msgstr "Rajzvászon méretének módosítása"
 
@@ -13304,29 +13301,34 @@ msgstr "Beillesztett réteg"
 msgid "Global Buffer"
 msgstr "Globális tároló"
 
-#: ../app/core/gimp-gradients.c:64
+#: ../app/core/gimp-gradients.c:65
 msgid "Custom"
 msgstr "Egyéni"
 
-#: ../app/core/gimp-gradients.c:74
+#: ../app/core/gimp-gradients.c:75
 msgid "FG to BG (RGB)"
 msgstr "Előtérből háttérbe (RGB)"
 
-#: ../app/core/gimp-gradients.c:82
+#: ../app/core/gimp-gradients.c:83
 msgid "FG to BG (Hardedge)"
 msgstr "Előtérből háttérbe (Éles határ)"
 
-#: ../app/core/gimp-gradients.c:90
+#: ../app/core/gimp-gradients.c:91
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "Előtérből háttérbe (HSV óramutató járásával ellentétes)"
 
-#: ../app/core/gimp-gradients.c:98
+#: ../app/core/gimp-gradients.c:99
 msgid "FG to BG (HSV clockwise hue)"
 msgstr "Előtérből háttérbe (HSV óramutató járása szerinti színezet)"
 
-#: ../app/core/gimp-gradients.c:106
+#: ../app/core/gimp-gradients.c:107
 msgid "FG to Transparent"
 msgstr "Előtérből átlátszóba"
+
+#: ../app/core/gimp-gradients.c:114
+#| msgid "FG to Transparent"
+msgid "FG to Transparent (Hardedge)"
+msgstr "Előtérből átlátszóba (éles határ)"
 
 #. Translator:  This message is displayed while GIMP is waiting for
 #. * some operation to finish.  The %s argument is a message describing
@@ -18198,7 +18200,6 @@ msgid "_Resize"
 msgstr "Á_tméretezés"
 
 #: ../app/dialogs/resize-dialog.c:294
-#| msgid "Replicate Selection"
 msgid "Reset the template selection"
 msgstr "Sablon kiválasztásának visszaállítása"
 
@@ -18251,13 +18252,11 @@ msgstr "A szövegrétegek átméretezése szerkeszthetetlenné teszi őket"
 
 #: ../app/dialogs/resize-dialog.c:759
 #, c-format
-#| msgid "_Scale imported paths to fit image"
 msgid "Scale template to %.2f ppi"
 msgstr "Sablon átméretezése %.2f képpont/hüvelykre"
 
 #: ../app/dialogs/resize-dialog.c:764
 #, c-format
-#| msgid "Converting image to %s"
 msgid "Set image to %.2f ppi"
 msgstr "Kép beállítása %.2f képpont/hüvelykre"
 
@@ -20726,8 +20725,6 @@ msgid "Foreground Select"
 msgstr "Előtér-kijelölés"
 
 #: ../app/pdb/drawable-color-cmds.c:331
-#| msgctxt "filters-action"
-#| msgid "_Extract Component..."
 msgctxt "undo-type"
 msgid "Extract Component"
 msgstr "Összetevő kinyerése"
@@ -20743,8 +20740,6 @@ msgid "Invert"
 msgstr "Megfordítás"
 
 #: ../app/pdb/drawable-color-cmds.c:745
-#| msgctxt "filters-action"
-#| msgid "S_hadows-Highlights..."
 msgctxt "undo-type"
 msgid "Shadows-Highlights"
 msgstr "Árnyékok-kiemelések"
@@ -22144,7 +22139,7 @@ msgstr "Szövegréteg hozzáadása"
 
 #: ../app/text/gimptext-parasite.c:101
 msgid "Empty text parasite"
-msgstr "Üres szöveg-élősködő"
+msgstr "Üres szövegélősködő"
 
 #: ../app/text/gimptextlayer.c:155
 msgid "Text Layer"
@@ -22207,7 +22202,7 @@ msgid ""
 "Some text properties may be wrong. Unless you want to edit the text layer, "
 "you don't need to worry about this."
 msgstr ""
-"Probléma lépett fel a(z) „%s” réteg szöveg-élősködőjének elemzésekor:\n"
+"Probléma lépett fel a(z) „%s” réteg szövegélősködőjének elemzésekor:\n"
 "%s\n"
 "\n"
 "Lehetséges, hogy bizonyos szövegtulajdonságok helytelenek. Ha nem kívánja "
@@ -27323,7 +27318,7 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "színek"
 
-#: ../app/widgets/gimpitemtreeview.c:763
+#: ../app/widgets/gimpitemtreeview.c:765
 msgid "Lock:"
 msgstr "Zárolás:"
 
@@ -27850,7 +27845,6 @@ msgid "[ Base Image ]"
 msgstr "[ Kiindulási kép ]"
 
 #: ../app/widgets/gimpvectorstreeview.c:111
-#| msgid "Lock _alpha"
 msgid "Lock path"
 msgstr "Útvonal zárolása"
 
