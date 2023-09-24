@@ -49,10 +49,6 @@ void   view_zoom_explicit_cmd_callback              (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
 
-/* not a GimpActionCallback */
-void   view_zoom_other_cmd_callback                 (GimpAction *action,
-                                                     gpointer    data);
-
 void   view_show_all_cmd_callback                   (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);

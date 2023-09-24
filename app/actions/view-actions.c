@@ -367,66 +367,86 @@ static const GimpEnumActionEntry view_zoom_actions[] =
     GIMP_HELP_VIEW_ZOOM_IN }
 };
 
-static const GimpRadioActionEntry view_zoom_explicit_actions[] =
+static const GimpEnumActionEntry view_zoom_explicit_actions[] =
 {
   { "view-zoom-16-1", NULL,
-    NC_("view-zoom-action", "1_6:1  (1600%)"), NULL, { "5", "KP_5", NULL },
+    NC_("view-zoom-action", "Zoom 16:1 (1600%)"),
+    NC_("view-zoom-action", "1_6:1  (1600%)"),
+    { "5", "KP_5", NULL },
     NC_("view-zoom-action", "Zoom 16:1"),
-    160000,
+    160000, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-8-1", NULL,
-    NC_("view-zoom-action", "_8:1  (800%)"), NULL, { "4", "KP_4", NULL },
+    NC_("view-zoom-action", "Zoom 8:1 (800%)"),
+    NC_("view-zoom-action", "_8:1  (800%)"),
+    { "4", "KP_4", NULL },
     NC_("view-zoom-action", "Zoom 8:1"),
-    80000,
+    80000, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-4-1", NULL,
-    NC_("view-zoom-action", "_4:1  (400%)"), NULL, { "3", "KP_3", NULL },
+    NC_("view-zoom-action", "Zoom 4:1 (400%)"),
+    NC_("view-zoom-action", "_4:1  (400%)"),
+    { "3", "KP_3", NULL },
     NC_("view-zoom-action", "Zoom 4:1"),
-    40000,
+    40000, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-2-1", NULL,
-    NC_("view-zoom-action", "_2:1  (200%)"), NULL, { "2", "KP_2", NULL },
+    NC_("view-zoom-action", "Zoom 2:1 (200%)"),
+    NC_("view-zoom-action", "_2:1  (200%)"),
+    { "2", "KP_2", NULL },
     NC_("view-zoom-action", "Zoom 2:1"),
-    20000,
+    20000, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-1-1", GIMP_ICON_ZOOM_ORIGINAL,
-    NC_("view-zoom-action", "_1:1  (100%)"), NULL, { "1", "KP_1", NULL },
+    NC_("view-zoom-action", "Zoom 1:1 (100%)"),
+    NC_("view-zoom-action", "_1:1  (100%)"),
+    { "1", "KP_1", NULL },
     NC_("view-zoom-action", "Zoom 1:1"),
-    10000,
+    10000, FALSE,
     GIMP_HELP_VIEW_ZOOM_100 },
 
   { "view-zoom-1-2", NULL,
-    NC_("view-zoom-action", "1:_2  (50%)"), NULL, { "<shift>2", "<shift>KP_2", NULL },
+    NC_("view-zoom-action", "Zoom 1:2 (50%)"),
+    NC_("view-zoom-action", "1:_2  (50%)"),
+    { "<shift>2", "<shift>KP_2", NULL },
     NC_("view-zoom-action", "Zoom 1:2"),
-    5000,
+    5000, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-1-4", NULL,
-    NC_("view-zoom-action", "1:_4  (25%)"), NULL, { "<shift>3", "<shift>KP_3", NULL },
+    NC_("view-zoom-action", "Zoom 1:4 (25%)"),
+    NC_("view-zoom-action", "1:_4  (25%)"),
+    { "<shift>3", "<shift>KP_3", NULL },
     NC_("view-zoom-action", "Zoom 1:4"),
-    2500,
+    2500, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-1-8", NULL,
-    NC_("view-zoom-action", "1:_8  (12.5%)"), NULL, { "<shift>4", "<shift>KP_4", NULL },
+    NC_("view-zoom-action", "Zoom 1:8 (12.5%)"),
+    NC_("view-zoom-action", "1:_8  (12.5%)"),
+    { "<shift>4", "<shift>KP_4", NULL },
     NC_("view-zoom-action", "Zoom 1:8"),
-    1250,
+    1250, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-1-16", NULL,
-    NC_("view-zoom-action", "1:1_6  (6.25%)"), NULL, { "<shift>5", "<shift>KP_5", NULL },
+    NC_("view-zoom-action", "Zoom 1:16 (6.25%)"),
+    NC_("view-zoom-action", "1:1_6  (6.25%)"),
+    { "<shift>5", "<shift>KP_5", NULL },
     NC_("view-zoom-action", "Zoom 1:16"),
-    625,
+    625, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-other", NULL,
-    NC_("view-zoom-action", "Othe_r zoom factor..."), NULL, { NULL },
     NC_("view-zoom-action", "Set a custom zoom factor"),
-    0,
+    NC_("view-zoom-action", "Othe_r zoom factor..."),
+    { NULL },
+    NC_("view-zoom-action", "Set a custom zoom factor"),
+    0, TRUE,
     GIMP_HELP_VIEW_ZOOM_OTHER }
 };
 
@@ -648,8 +668,6 @@ static const GimpEnumActionEntry view_scroll_vertical_actions[] =
 void
 view_actions_setup (GimpActionGroup *group)
 {
-  GimpAction *action;
-
   gimp_action_group_add_actions (group, "view-action",
                                  view_actions,
                                  G_N_ELEMENTS (view_actions));
@@ -663,12 +681,10 @@ view_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (view_zoom_actions),
                                       view_zoom_cmd_callback);
 
-  gimp_action_group_add_radio_actions (group, "view-zoom-action",
-                                       view_zoom_explicit_actions,
-                                       G_N_ELEMENTS (view_zoom_explicit_actions),
-                                       NULL,
-                                       10000,
-                                       view_zoom_explicit_cmd_callback);
+  gimp_action_group_add_enum_actions (group, "view-zoom-action",
+                                      view_zoom_explicit_actions,
+                                      G_N_ELEMENTS (view_zoom_explicit_actions),
+                                      view_zoom_explicit_cmd_callback);
 
   gimp_action_group_add_toggle_actions (group, "view-action",
                                         view_flip_actions,
@@ -709,15 +725,6 @@ view_actions_setup (GimpActionGroup *group)
                                       view_scroll_vertical_actions,
                                       G_N_ELEMENTS (view_scroll_vertical_actions),
                                       view_scroll_vertical_cmd_callback);
-
-  /*  connect "activate" of view-zoom-other manually so it can be
-   *  selected even if it's the active item of the radio group
-   */
-  action = gimp_action_group_get_action (group, "view-zoom-other");
-
-  g_signal_connect (action, "activate",
-                    G_CALLBACK (view_zoom_other_cmd_callback),
-                    group->user_data);
 
   g_signal_connect_object (group->gimp->config, "notify::check-type",
                            G_CALLBACK (view_actions_check_type_notify),
@@ -983,55 +990,20 @@ static void
 view_actions_set_zoom (GimpActionGroup  *group,
                        GimpDisplayShell *shell)
 {
-  const gchar     *action = NULL;
   GimpImageWindow *window;
   GimpMenuModel   *model;
   gchar           *str;
   gchar           *label;
-  guint            scale;
 
   g_object_get (shell->zoom,
                 "percentage", &str,
                 NULL);
-
-  scale = ROUND (gimp_zoom_model_get_factor (shell->zoom) * 1000);
-
-  switch (scale)
-    {
-    case 16000:  action = "view-zoom-16-1";  break;
-    case  8000:  action = "view-zoom-8-1";   break;
-    case  4000:  action = "view-zoom-4-1";   break;
-    case  2000:  action = "view-zoom-2-1";   break;
-    case  1000:  action = "view-zoom-1-1";   break;
-    case   500:  action = "view-zoom-1-2";   break;
-    case   250:  action = "view-zoom-1-4";   break;
-    case   125:  action = "view-zoom-1-8";   break;
-    case    63:
-    case    62:  action = "view-zoom-1-16";  break;
-    }
-
-  if (! action)
-    {
-      action = "view-zoom-other";
-
-      label = g_strdup_printf (_("Othe_r (%s)..."), str);
-      gimp_action_group_set_action_label (group, action, label);
-      g_free (label);
-
-      shell->other_scale = gimp_zoom_model_get_factor (shell->zoom);
-    }
-
-  gimp_action_group_set_action_active (group, action, TRUE);
 
   window = gimp_display_shell_get_window (shell);
   model  = gimp_image_window_get_menubar_model (window);
   label  = g_strdup_printf (_("_Zoom (%s)"), str);
   gimp_menu_model_set_title (model, "/View/Zoom", label);
   g_free (label);
-
-  /* flag as dirty */
-  shell->other_scale = - fabs (shell->other_scale);
-
   g_free (str);
 }
 

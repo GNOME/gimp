@@ -28,6 +28,7 @@
 #include "core/gimp.h"
 #include "core/gimpviewable.h"
 
+#include "widgets/gimpaction.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -50,6 +51,9 @@ typedef struct
   GtkAdjustment    *scale_adj;
   GtkAdjustment    *num_adj;
   GtkAdjustment    *denom_adj;
+
+  gdouble           prev_scale;
+  gdouble          *other_scale;
 } ScaleDialogData;
 
 
@@ -77,6 +81,8 @@ static void  update_zoom_values                       (GtkAdjustment    *adj,
 void
 gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 {
+  /*  scale factor entered in Zoom->Other*/
+  static gdouble   other_scale = 0.0;
   ScaleDialogData *data;
   GimpImage       *image;
   GtkWidget       *toplevel;
@@ -94,19 +100,21 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
       return;
     }
 
-  if (SCALE_EQUALS (shell->other_scale, 0.0))
+  data = g_slice_new (ScaleDialogData);
+  data->prev_scale  = other_scale;
+  data->other_scale = &other_scale;
+
+  if (SCALE_EQUALS (other_scale, 0.0))
     {
       /* other_scale not yet initialized */
-      shell->other_scale = gimp_zoom_model_get_factor (shell->zoom);
+      other_scale = gimp_zoom_model_get_factor (shell->zoom);
     }
 
   image = gimp_display_get_image (shell->display);
 
-  data = g_slice_new (ScaleDialogData);
-
   data->shell = shell;
   data->model = g_object_new (GIMP_TYPE_ZOOM_MODEL,
-                              "value", fabs (shell->other_scale),
+                              "value", fabs (other_scale),
                               NULL);
 
   g_set_weak_pointer
@@ -185,7 +193,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                             _("Zoom:"), 0.0, 0.5,
                             hbox, 1);
 
-  data->scale_adj = gtk_adjustment_new (fabs (shell->other_scale) * 100,
+  data->scale_adj = gtk_adjustment_new (other_scale * 100,
                                         100.0 / 256.0, 25600.0,
                                         10, 50, 0);
   spin = gimp_spin_button_new (data->scale_adj, 1.0, 2);
@@ -215,7 +223,10 @@ gimp_display_shell_scale_dialog_response (GtkWidget       *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      gdouble scale;
+      GAction *action;
+      gchar   *label;
+      gchar   *zoom_str;
+      gdouble  scale;
 
       scale = gtk_adjustment_get_value (dialog->scale_adj);
 
@@ -223,14 +234,32 @@ gimp_display_shell_scale_dialog_response (GtkWidget       *widget,
                                 GIMP_ZOOM_TO,
                                 scale / 100.0,
                                 GIMP_ZOOM_FOCUS_BEST_GUESS);
+
+      g_object_get (dialog->shell->zoom,
+                    "percentage", &zoom_str,
+                    NULL);
+
+      /* Change the "view-zoom-other" label. */
+      action = g_action_map_lookup_action (G_ACTION_MAP (dialog->shell->display->gimp->app),
+                                           "view-zoom-other");
+
+      label = g_strdup_printf (_("Othe_r (%s)..."), zoom_str);
+      gimp_action_set_short_label (GIMP_ACTION (action), label);
+      g_free (label);
+
+      label = g_strdup_printf (_("Custom Zoom (%s)..."), zoom_str);
+      gimp_action_set_label (GIMP_ACTION (action), label);
+      g_free (label);
+
+      g_free (zoom_str);
     }
   else
     {
       /*  need to emit "scaled" to get the menu updated  */
       gimp_display_shell_scaled (dialog->shell);
-    }
 
-  dialog->shell->other_scale = - fabs (dialog->shell->other_scale);
+      *(dialog->other_scale) = dialog->prev_scale;
+    }
 
   gtk_widget_destroy (dialog->shell->scale_dialog);
 }
@@ -267,6 +296,8 @@ update_zoom_values (GtkAdjustment   *adj,
 
       gtk_adjustment_set_value (dialog->num_adj, num);
       gtk_adjustment_set_value (dialog->denom_adj, denom);
+
+      *(dialog->other_scale) = scale / 100.0;
     }
   else /* fraction adjustments */
     {
@@ -274,6 +305,8 @@ update_zoom_values (GtkAdjustment   *adj,
                gtk_adjustment_get_value (dialog->denom_adj));
 
       gtk_adjustment_set_value (dialog->scale_adj, scale * 100);
+
+      *(dialog->other_scale) = scale;
     }
 
   g_signal_handlers_unblock_by_func (dialog->scale_adj,

@@ -284,22 +284,7 @@ view_zoom_explicit_cmd_callback (GimpAction *action,
                                   (gdouble) factor / 10000,
                                   GIMP_ZOOM_FOCUS_RETAIN_CENTERING_ELSE_BEST_GUESS);
     }
-}
-
-/* not a GimpActionCallback */
-void
-view_zoom_other_cmd_callback (GimpAction *action,
-                              gpointer    data)
-{
-  GimpDisplayShell *shell;
-  return_if_no_shell (shell, data);
-
-  /* check if we are activated by the user or from
-   * view_actions_set_zoom(), also this is really a GtkToggleAction
-   * NOT a GimpToggleAction
-   */
-  if (gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action)) &&
-      shell->other_scale != gimp_zoom_model_get_factor (shell->zoom))
+  else
     {
       gimp_display_shell_scale_dialog (shell);
     }
