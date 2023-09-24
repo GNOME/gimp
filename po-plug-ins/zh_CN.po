@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-02 03:31+0000\n"
-"PO-Revision-Date: 2023-09-03 19:34+0800\n"
+"POT-Creation-Date: 2023-09-23 22:01+0000\n"
+"PO-Revision-Date: 2023-09-24 19:40+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: Gtranslator 42.0\n"
+"X-Generator: Gtranslator 45.1\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -134,8 +134,8 @@ msgstr "运行(_R)"
 #, c-format, python-format, lua-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
-"Check out the last version of the source code online by clicking the \"Source"
-"\" button."
+"Check out the last version of the source code online by clicking the "
+"\"Source\" button."
 msgstr ""
 "该插件是用于演示插件创建的“%s”中的一个练习。\n"
 "点击“源代码”按钮可以查看最新版本的在线源代码。"
@@ -639,7 +639,7 @@ msgstr "竖直"
 #: plug-ins/common/file-gif-load.c:1097 plug-ins/common/file-iff.c:343
 #: plug-ins/common/file-jp2-load.c:1317 plug-ins/common/file-pcx.c:742
 #: plug-ins/common/file-pcx.c:750 plug-ins/common/file-pcx.c:758
-#: plug-ins/common/file-pix.c:422 plug-ins/common/file-png.c:950
+#: plug-ins/common/file-pix.c:450 plug-ins/common/file-png.c:950
 #: plug-ins/common/file-pnm.c:869 plug-ins/common/file-qoi.c:321
 #: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1083
 #: plug-ins/common/file-tga.c:1117 plug-ins/common/file-wbmp.c:270
@@ -1237,8 +1237,8 @@ msgstr "加载 CML 探索器参数"
 #: plug-ins/common/file-iff.c:227 plug-ins/common/file-mng.c:1407
 #: plug-ins/common/file-pcx.c:523 plug-ins/common/file-pcx.c:566
 #: plug-ins/common/file-png.c:673 plug-ins/common/file-ps.c:1126
-#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2436
-#: plug-ins/common/file-psp.c:2486 plug-ins/common/file-qoi.c:300
+#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2445
+#: plug-ins/common/file-psp.c:2495 plug-ins/common/file-qoi.c:300
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
 #: plug-ins/common/file-sunras.c:458 plug-ins/common/file-svg.c:365
 #: plug-ins/common/file-svg.c:825 plug-ins/common/file-tga.c:448
@@ -2224,7 +2224,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:877 plug-ins/common/file-jp2-load.c:1091
 #: plug-ins/common/file-pcx.c:515 plug-ins/common/file-pcx.c:558
-#: plug-ins/common/file-pdf-load.c:879 plug-ins/common/file-pix.c:381
+#: plug-ins/common/file-pdf-load.c:879 plug-ins/common/file-pix.c:387
 #: plug-ins/common/file-png.c:665 plug-ins/common/file-pnm.c:714
 #: plug-ins/common/file-ps.c:1116 plug-ins/common/file-raw-data.c:1665
 #: plug-ins/common/file-sunras.c:450 plug-ins/common/file-tga.c:440
@@ -2305,7 +2305,7 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-farbfeld.c:373
 #: plug-ins/common/file-gif-save.c:917 plug-ins/common/file-html-table.c:364
 #: plug-ins/common/file-jpegxl.c:1383 plug-ins/common/file-pcx.c:1114
-#: plug-ins/common/file-pix.c:560 plug-ins/common/file-png.c:1494
+#: plug-ins/common/file-pix.c:655 plug-ins/common/file-png.c:1494
 #: plug-ins/common/file-pnm.c:1635 plug-ins/common/file-ps.c:1338
 #: plug-ins/common/file-qoi.c:375 plug-ins/common/file-sunras.c:629
 #: plug-ins/common/file-tga.c:1230 plug-ins/common/file-xbm.c:1051
@@ -4048,13 +4048,24 @@ msgstr "错误！为了保存该文件，应该添加至少一副图像！"
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "无法处理该图像的尺寸（无论宽度或高度）。"
 
-#: plug-ins/common/file-pix.c:169 plug-ins/common/file-pix.c:196
+#: plug-ins/common/file-pix.c:171 plug-ins/common/file-pix.c:202
 msgid "Alias Pix image"
 msgstr "别名 Pix 图像"
 
-#: plug-ins/common/file-pix.c:285
+#: plug-ins/common/file-pix.c:291
 msgid "PIX format does not support multiple layers."
 msgstr "PIX 格式不支持多图层。"
+
+#: plug-ins/common/file-pix.c:584
+#, c-format
+msgid ""
+"Error trying to open temporary JPEG file '%s' for Esm Software pix loading: "
+"%s"
+msgstr "试图打开临时 JPEG 文件“%s”用于加载 Esm 软件的 pix 文件时出错：%s"
+
+#: plug-ins/common/file-pix.c:600
+msgid "Invalid Esm Software PIX file"
+msgstr "无效的 Esm 软件 PIX 文件"
 
 #: plug-ins/common/file-png.c:180 plug-ins/common/file-png.c:210
 msgid "PNG image"
@@ -4757,90 +4768,94 @@ msgstr "读取创建者关键词数据出错"
 msgid "Error reading color block"
 msgstr "读取颜色数据块时出错"
 
-#: plug-ins/common/file-psp.c:1289
+#: plug-ins/common/file-psp.c:1287
+msgid "Error: Unsupported palette size"
+msgstr "错误：不支持的色板大小"
+
+#: plug-ins/common/file-psp.c:1298
 msgid "Error reading color palette"
 msgstr "读取颜色色板时出错"
 
-#: plug-ins/common/file-psp.c:1715 plug-ins/common/file-psp.c:1729
+#: plug-ins/common/file-psp.c:1724 plug-ins/common/file-psp.c:1738
 msgid "zlib error"
 msgstr "zlib 错误"
 
-#: plug-ins/common/file-psp.c:1792 plug-ins/common/file-psp.c:1826
-#: plug-ins/common/file-psp.c:1836
+#: plug-ins/common/file-psp.c:1801 plug-ins/common/file-psp.c:1835
+#: plug-ins/common/file-psp.c:1845
 msgid "Error reading layer extension information"
 msgstr "读取图层扩展信息时出错"
 
-#: plug-ins/common/file-psp.c:1813
+#: plug-ins/common/file-psp.c:1822
 msgid "Error reading block information"
 msgstr "读取数据块信息时出错"
 
-#: plug-ins/common/file-psp.c:1893
+#: plug-ins/common/file-psp.c:1902
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "无效的图层子数据块 %s，应该为图层"
 
-#: plug-ins/common/file-psp.c:1924 plug-ins/common/file-psp.c:1981
+#: plug-ins/common/file-psp.c:1933 plug-ins/common/file-psp.c:1990
 msgid "Error reading layer information chunk"
 msgstr "读取图层信息数据块出错"
 
-#: plug-ins/common/file-psp.c:2023
+#: plug-ins/common/file-psp.c:2032
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "无效的图层尺寸：%dx%d"
 
-#: plug-ins/common/file-psp.c:2084
+#: plug-ins/common/file-psp.c:2093
 msgid "Error creating layer"
 msgstr "创建图层出错"
 
-#: plug-ins/common/file-psp.c:2129
+#: plug-ins/common/file-psp.c:2138
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "无效的图层子数据块 %s，应该为通道"
 
-#: plug-ins/common/file-psp.c:2145
+#: plug-ins/common/file-psp.c:2154
 msgid "Error reading channel information chunk"
 msgstr "读取通道信息数据块出错"
 
-#: plug-ins/common/file-psp.c:2168
+#: plug-ins/common/file-psp.c:2177
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "通道信息数据块中的无效通道类型 %d"
 
-#: plug-ins/common/file-psp.c:2272 plug-ins/common/file-psp.c:2289
+#: plug-ins/common/file-psp.c:2281 plug-ins/common/file-psp.c:2298
 msgid "Error reading tube data chunk"
 msgstr "读取管道数据块出错"
 
-#: plug-ins/common/file-psp.c:2371 plug-ins/common/file-psp.c:2383
-#: plug-ins/common/file-psp.c:2394
+#: plug-ins/common/file-psp.c:2380 plug-ins/common/file-psp.c:2392
+#: plug-ins/common/file-psp.c:2403
 msgid "Error reading colorprofile chunk"
 msgstr "读取颜色配置文件数据块时出错"
 
-#: plug-ins/common/file-psp.c:2447
+#: plug-ins/common/file-psp.c:2456
 msgid "Error reading file header."
 msgstr "读取文件头部信息出错。"
 
-#: plug-ins/common/file-psp.c:2454
+#: plug-ins/common/file-psp.c:2463
 msgid "Incorrect file signature."
 msgstr "错误的文件签名。"
 
-#: plug-ins/common/file-psp.c:2468
+#: plug-ins/common/file-psp.c:2477
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "不支持的 PSP 文件格式版本 %d.%d。"
 
-#: plug-ins/common/file-psp.c:2488
+#: plug-ins/common/file-psp.c:2497
 msgid "invalid block size"
 msgstr "无效的数据块大小"
 
-#: plug-ins/common/file-psp.c:2497
+#: plug-ins/common/file-psp.c:2506
 msgid "Duplicate General Image Attributes block."
 msgstr "重制通常的图像属性数据块。"
 
-#: plug-ins/common/file-psp.c:2525
+#: plug-ins/common/file-psp.c:2534
 msgid "Missing General Image Attributes block."
 msgstr "缺失通常的图像属性数据块。"
 
-#: plug-ins/common/file-psp.c:2644
+#: plug-ins/common/file-psp.c:2653
 msgid "Exporting not implemented yet."
 msgstr "尚未实现导出功能。"
 
@@ -8579,8 +8594,8 @@ msgid ""
 "horizontally), 2 == 4:4:4 (best quality), 3 == 4:4:0 (chroma halved "
 "vertically)"
 msgstr ""
-"次采样类型 { 0 == 4:2:0（色度四分）；1 == 4:2:2（色度水平分半）；2 == "
-"4:4:4（最佳质量）；3 == 4:4:0（色度竖直分半）"
+"次采样类型 { 0 == 4:2:0（色度四分）；1 == 4:2:2（色度水平分半）；2 == 4:4:4"
+"（最佳质量）；3 == 4:4:0（色度竖直分半）"
 
 #: plug-ins/file-jpeg/jpeg.c:244
 msgid "Baseline"
