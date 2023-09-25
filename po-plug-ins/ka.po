@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-25 20:56+0000\n"
-"PO-Revision-Date: 2023-08-26 05:46+0200\n"
+"POT-Creation-Date: 2023-09-24 21:54+0000\n"
+"PO-Revision-Date: 2023-09-25 05:50+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -629,7 +629,7 @@ msgstr "ვერტიკალური"
 #: plug-ins/common/file-gif-load.c:1097 plug-ins/common/file-iff.c:343
 #: plug-ins/common/file-jp2-load.c:1317 plug-ins/common/file-pcx.c:742
 #: plug-ins/common/file-pcx.c:750 plug-ins/common/file-pcx.c:758
-#: plug-ins/common/file-pix.c:422 plug-ins/common/file-png.c:950
+#: plug-ins/common/file-pix.c:450 plug-ins/common/file-png.c:950
 #: plug-ins/common/file-pnm.c:869 plug-ins/common/file-qoi.c:321
 #: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:1083
 #: plug-ins/common/file-tga.c:1117 plug-ins/common/file-wbmp.c:270
@@ -1224,8 +1224,8 @@ msgstr ""
 #: plug-ins/common/file-iff.c:227 plug-ins/common/file-mng.c:1407
 #: plug-ins/common/file-pcx.c:523 plug-ins/common/file-pcx.c:566
 #: plug-ins/common/file-png.c:673 plug-ins/common/file-ps.c:1126
-#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2436
-#: plug-ins/common/file-psp.c:2486 plug-ins/common/file-qoi.c:300
+#: plug-ins/common/file-ps.c:3636 plug-ins/common/file-psp.c:2445
+#: plug-ins/common/file-psp.c:2495 plug-ins/common/file-qoi.c:300
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
 #: plug-ins/common/file-sunras.c:458 plug-ins/common/file-svg.c:365
 #: plug-ins/common/file-svg.c:825 plug-ins/common/file-tga.c:448
@@ -2206,7 +2206,7 @@ msgstr ""
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:402
 #: plug-ins/common/file-heif.c:877 plug-ins/common/file-jp2-load.c:1091
 #: plug-ins/common/file-pcx.c:515 plug-ins/common/file-pcx.c:558
-#: plug-ins/common/file-pdf-load.c:879 plug-ins/common/file-pix.c:381
+#: plug-ins/common/file-pdf-load.c:879 plug-ins/common/file-pix.c:387
 #: plug-ins/common/file-png.c:665 plug-ins/common/file-pnm.c:714
 #: plug-ins/common/file-ps.c:1116 plug-ins/common/file-raw-data.c:1665
 #: plug-ins/common/file-sunras.c:450 plug-ins/common/file-tga.c:440
@@ -2287,7 +2287,7 @@ msgstr ""
 #: plug-ins/common/file-cel.c:840 plug-ins/common/file-farbfeld.c:373
 #: plug-ins/common/file-gif-save.c:917 plug-ins/common/file-html-table.c:364
 #: plug-ins/common/file-jpegxl.c:1383 plug-ins/common/file-pcx.c:1114
-#: plug-ins/common/file-pix.c:560 plug-ins/common/file-png.c:1494
+#: plug-ins/common/file-pix.c:655 plug-ins/common/file-png.c:1494
 #: plug-ins/common/file-pnm.c:1635 plug-ins/common/file-ps.c:1338
 #: plug-ins/common/file-qoi.c:375 plug-ins/common/file-sunras.c:629
 #: plug-ins/common/file-tga.c:1230 plug-ins/common/file-xbm.c:1051
@@ -4004,12 +4004,23 @@ msgstr ""
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
 
-#: plug-ins/common/file-pix.c:169 plug-ins/common/file-pix.c:196
+#: plug-ins/common/file-pix.c:171 plug-ins/common/file-pix.c:202
 msgid "Alias Pix image"
 msgstr ""
 
-#: plug-ins/common/file-pix.c:285
+#: plug-ins/common/file-pix.c:291
 msgid "PIX format does not support multiple layers."
+msgstr ""
+
+#: plug-ins/common/file-pix.c:584
+#, c-format
+msgid ""
+"Error trying to open temporary JPEG file '%s' for Esm Software pix loading: "
+"%s"
+msgstr ""
+
+#: plug-ins/common/file-pix.c:600
+msgid "Invalid Esm Software PIX file"
 msgstr ""
 
 #: plug-ins/common/file-png.c:180 plug-ins/common/file-png.c:210
@@ -4709,90 +4720,94 @@ msgstr ""
 msgid "Error reading color block"
 msgstr ""
 
-#: plug-ins/common/file-psp.c:1289
+#: plug-ins/common/file-psp.c:1287
+msgid "Error: Unsupported palette size"
+msgstr "შეცდომა: მხარდაუჭერელი პალიტრის ზომა"
+
+#: plug-ins/common/file-psp.c:1298
 msgid "Error reading color palette"
 msgstr ""
 
-#: plug-ins/common/file-psp.c:1715 plug-ins/common/file-psp.c:1729
+#: plug-ins/common/file-psp.c:1724 plug-ins/common/file-psp.c:1738
 msgid "zlib error"
 msgstr "zlib-ის შეცდომა"
 
-#: plug-ins/common/file-psp.c:1792 plug-ins/common/file-psp.c:1826
-#: plug-ins/common/file-psp.c:1836
+#: plug-ins/common/file-psp.c:1801 plug-ins/common/file-psp.c:1835
+#: plug-ins/common/file-psp.c:1845
 msgid "Error reading layer extension information"
 msgstr ""
 
-#: plug-ins/common/file-psp.c:1813
+#: plug-ins/common/file-psp.c:1822
 msgid "Error reading block information"
 msgstr ""
 
-#: plug-ins/common/file-psp.c:1893
+#: plug-ins/common/file-psp.c:1902
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr ""
 
-#: plug-ins/common/file-psp.c:1924 plug-ins/common/file-psp.c:1981
+#: plug-ins/common/file-psp.c:1933 plug-ins/common/file-psp.c:1990
 msgid "Error reading layer information chunk"
 msgstr ""
 
-#: plug-ins/common/file-psp.c:2023
+#: plug-ins/common/file-psp.c:2032
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr ""
 
-#: plug-ins/common/file-psp.c:2084
+#: plug-ins/common/file-psp.c:2093
 msgid "Error creating layer"
 msgstr "ფენის შექმნის სეცდომა"
 
-#: plug-ins/common/file-psp.c:2129
+#: plug-ins/common/file-psp.c:2138
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr ""
 
-#: plug-ins/common/file-psp.c:2145
+#: plug-ins/common/file-psp.c:2154
 msgid "Error reading channel information chunk"
 msgstr ""
 
-#: plug-ins/common/file-psp.c:2168
+#: plug-ins/common/file-psp.c:2177
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr ""
 
-#: plug-ins/common/file-psp.c:2272 plug-ins/common/file-psp.c:2289
+#: plug-ins/common/file-psp.c:2281 plug-ins/common/file-psp.c:2298
 msgid "Error reading tube data chunk"
 msgstr ""
 
-#: plug-ins/common/file-psp.c:2371 plug-ins/common/file-psp.c:2383
-#: plug-ins/common/file-psp.c:2394
+#: plug-ins/common/file-psp.c:2380 plug-ins/common/file-psp.c:2392
+#: plug-ins/common/file-psp.c:2403
 msgid "Error reading colorprofile chunk"
 msgstr "ფერის პროფილის ნაწილის წაკითხვა შეუძლებელია"
 
-#: plug-ins/common/file-psp.c:2447
+#: plug-ins/common/file-psp.c:2456
 msgid "Error reading file header."
 msgstr "ფაილის თავსართის წაკითხვის შეცდომა."
 
-#: plug-ins/common/file-psp.c:2454
+#: plug-ins/common/file-psp.c:2463
 msgid "Incorrect file signature."
 msgstr "არასწორი ფაილის ხელმოწერა."
 
-#: plug-ins/common/file-psp.c:2468
+#: plug-ins/common/file-psp.c:2477
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr ""
 
-#: plug-ins/common/file-psp.c:2488
+#: plug-ins/common/file-psp.c:2497
 msgid "invalid block size"
 msgstr "ბლოკის არასწორი ზომა"
 
-#: plug-ins/common/file-psp.c:2497
+#: plug-ins/common/file-psp.c:2506
 msgid "Duplicate General Image Attributes block."
 msgstr ""
 
-#: plug-ins/common/file-psp.c:2525
+#: plug-ins/common/file-psp.c:2534
 msgid "Missing General Image Attributes block."
 msgstr ""
 
-#: plug-ins/common/file-psp.c:2644
+#: plug-ins/common/file-psp.c:2653
 msgid "Exporting not implemented yet."
 msgstr ""
 
@@ -8903,7 +8918,7 @@ msgstr ""
 #: plug-ins/file-sgi/sgi.c:655
 #, c-format
 msgid "Could not open '%s' for writing."
-msgstr ""
+msgstr "'%s'-ის ჩასაწერად გახსნის შეცდომა."
 
 #: plug-ins/file-sgi/sgi.c:745
 msgid "No compression"
@@ -11960,83 +11975,91 @@ msgstr "მონიშვნის მოხსნა"
 msgid "Unselect All"
 msgstr "მონიშვნის ყველაფერზე მოხსნა"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:216
+#: plug-ins/imagemap/imap_edit_area_info.c:219
 msgid "Link Type"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:225
+#: plug-ins/imagemap/imap_edit_area_info.c:228
 msgid "_Web Site"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:231
-msgid "_Ftp Site"
+#: plug-ins/imagemap/imap_edit_area_info.c:234
+msgid "_FTP Site"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:237
+#: plug-ins/imagemap/imap_edit_area_info.c:240
 msgid "_Gopher"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:243
+#: plug-ins/imagemap/imap_edit_area_info.c:246
 msgid "Ot_her"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:249
+#: plug-ins/imagemap/imap_edit_area_info.c:252
 msgid "F_ile"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:255
+#: plug-ins/imagemap/imap_edit_area_info.c:258
 msgid "WAI_S"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:261
+#: plug-ins/imagemap/imap_edit_area_info.c:264
 msgid "Tel_net"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:267
+#: plug-ins/imagemap/imap_edit_area_info.c:270
 msgid "e-_mail"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:273
+#: plug-ins/imagemap/imap_edit_area_info.c:276
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:275
+#: plug-ins/imagemap/imap_edit_area_info.c:278
 msgid "Select HTML file"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:284
+#: plug-ins/imagemap/imap_edit_area_info.c:287
 msgid "Relati_ve link"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:290
+#: plug-ins/imagemap/imap_edit_area_info.c:293
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:293
+#: plug-ins/imagemap/imap_edit_area_info.c:296
 msgid "ALT te_xt: (optional)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:296
+#: plug-ins/imagemap/imap_edit_area_info.c:299
+msgid "Access _Key: (optional)"
+msgstr ""
+
+#: plug-ins/imagemap/imap_edit_area_info.c:302
+msgid "Ta_b Index: (optional)"
+msgstr ""
+
+#: plug-ins/imagemap/imap_edit_area_info.c:305
 msgid "_Link"
 msgstr "_ბმული"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:330
+#: plug-ins/imagemap/imap_edit_area_info.c:339
 msgid "Dimensions"
 msgstr "ზომები"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:334
+#: plug-ins/imagemap/imap_edit_area_info.c:343
 msgid "Pre_view"
 msgstr "გადახედვა"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:372
+#: plug-ins/imagemap/imap_edit_area_info.c:385
 msgid "_JavaScript"
 msgstr "_JavaScript"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:471
+#: plug-ins/imagemap/imap_edit_area_info.c:490
 msgid "Area Settings"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:513
+#: plug-ins/imagemap/imap_edit_area_info.c:536
 #, c-format
 msgid "Area #%d Settings"
 msgstr ""
