@@ -492,12 +492,11 @@ switch {
   border: 1px solid @stronger-border-color;
 }
 
-/* The switch button is quite hard to understand without color IMO. So
- * accept a bit of color here as an exception to indicate the checked
- * state, even though this is globally a neutral gray theme.
+/* The switch button is hard to understand without color.
+ * Let's indicate the checked state with foreground color.
  */
 switch:checked {
-  background-color: rgb(200,200,255);
+  background-color: @fg-color;
 }
 
 /* This prevents the 1/0 labels from appearing inside the switch slider */
