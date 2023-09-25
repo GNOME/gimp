@@ -561,6 +561,9 @@ _("When enabled, symbolic icons will be preferred if available.")
 #define ICON_THEME_PATH_BLURB \
 "Sets the icon theme search path."
 
+#define FONT_SIZE_BLURB \
+_("Tweak font size of the graphical interface.")
+
 #define IMAGE_CONVERT_PROFILE_INTENT_BLURB \
 _("Sets the default rendering intent for the 'Convert to Color Profile' dialog.")
 

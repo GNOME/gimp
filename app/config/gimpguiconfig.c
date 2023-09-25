@@ -76,6 +76,7 @@ enum
   PROP_ICON_THEME_PATH,
   PROP_ICON_THEME,
   PROP_PREFER_SYMBOLIC_ICONS,
+  PROP_FONT_RELATIVE_SIZE,
   PROP_USE_HELP,
   PROP_SHOW_HELP_BUTTON,
   PROP_HELP_LOCALES,
@@ -357,6 +358,13 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             PREFER_SYMBOLIC_ICONS_BLURB,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FONT_RELATIVE_SIZE,
+                           "font-relative-size",
+                           "Tweak font-size from the theme",
+                           FONT_SIZE_BLURB,
+                           0.5, 2.0, 1.0,
+                           GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_HELP,
                             "use-help",
@@ -695,6 +703,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_PREFER_SYMBOLIC_ICONS:
       gui_config->prefer_symbolic_icons = g_value_get_boolean (value);
       break;
+    case PROP_FONT_RELATIVE_SIZE:
+      gui_config->font_relative_size = g_value_get_double (value);
+      break;
     case PROP_USE_HELP:
       gui_config->use_help = g_value_get_boolean (value);
       break;
@@ -871,6 +882,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_PREFER_SYMBOLIC_ICONS:
       g_value_set_boolean (value, gui_config->prefer_symbolic_icons);
+      break;
+    case PROP_FONT_RELATIVE_SIZE:
+      g_value_set_double (value, gui_config->font_relative_size);
       break;
     case PROP_USE_HELP:
       g_value_set_boolean (value, gui_config->use_help);

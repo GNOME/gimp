@@ -155,6 +155,11 @@ static void   prefs_gui_config_notify_icon_size    (GObject       *config,
                                                     GtkRange      *range);
 static void   prefs_icon_size_value_changed        (GtkRange      *range,
                                                     GimpGuiConfig *config);
+static void   prefs_gui_config_notify_font_size    (GObject       *config,
+                                                    GParamSpec    *pspec,
+                                                    GtkRange      *range);
+static void   prefs_font_size_value_changed        (GtkRange      *range,
+                                                    GimpGuiConfig *config);
 
 
 /*  private variables  */
@@ -968,6 +973,38 @@ prefs_gui_config_notify_icon_size (GObject    *config,
   gtk_range_set_value (range, (gdouble) size);
   g_signal_handlers_unblock_by_func (range,
                                      G_CALLBACK (prefs_icon_size_value_changed),
+                                     config);
+}
+
+static void
+prefs_font_size_value_changed (GtkRange      *range,
+                               GimpGuiConfig *config)
+{
+  gdouble value = gtk_range_get_value (range);
+
+  g_signal_handlers_block_by_func (config,
+                                   G_CALLBACK (prefs_gui_config_notify_font_size),
+                                   range);
+  g_object_set (G_OBJECT (config),
+                "font-relative-size", value / 100.0,
+                NULL);
+  g_signal_handlers_unblock_by_func (config,
+                                     G_CALLBACK (prefs_gui_config_notify_font_size),
+                                     range);
+}
+
+static void
+prefs_gui_config_notify_font_size (GObject    *config,
+                                   GParamSpec *pspec,
+                                   GtkRange   *range)
+{
+  g_signal_handlers_block_by_func (range,
+                                   G_CALLBACK (prefs_font_size_value_changed),
+                                   config);
+  gtk_range_set_value (range,
+                       GIMP_GUI_CONFIG (config)->font_relative_size * 100.0);
+  g_signal_handlers_unblock_by_func (range,
+                                     G_CALLBACK (prefs_font_size_value_changed),
                                      config);
 }
 
@@ -2108,6 +2145,31 @@ prefs_dialog_new (Gimp       *gimp,
                       GIMP_GUI_CONFIG (object));
     g_signal_connect (G_OBJECT (object), "notify::custom-icon-size",
                       G_CALLBACK (prefs_gui_config_notify_icon_size),
+                      scale);
+    gtk_box_pack_start (GTK_BOX (vbox3), scale, FALSE, FALSE, 0);
+    gtk_widget_show (scale);
+
+    /* Font sizes. */
+    vbox3 = prefs_frame_new (_("Font Scaling"), GTK_CONTAINER (vbox2), FALSE);
+    gimp_help_set_help_data (vbox3,
+                             _("Font scaling will not work with themes using absolute sizes."),
+                             NULL);
+    scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL,
+                                      50, 200, 10);
+    gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_BOTTOM);
+    gtk_scale_add_mark (GTK_SCALE (scale), 50.0, GTK_POS_BOTTOM,
+                        _("50%"));
+    gtk_scale_add_mark (GTK_SCALE (scale), 100.0, GTK_POS_BOTTOM,
+                        _("100%"));
+    gtk_scale_add_mark (GTK_SCALE (scale), 200.0, GTK_POS_BOTTOM,
+                        _("200%"));
+    gtk_range_set_value (GTK_RANGE (scale),
+                         (gdouble) GIMP_GUI_CONFIG (object)->font_relative_size * 100.0);
+    g_signal_connect (G_OBJECT (scale), "value-changed",
+                      G_CALLBACK (prefs_font_size_value_changed),
+                      GIMP_GUI_CONFIG (object));
+    g_signal_connect (G_OBJECT (object), "notify::font-relative-size",
+                      G_CALLBACK (prefs_gui_config_notify_font_size),
                       scale);
     gtk_box_pack_start (GTK_BOX (vbox3), scale, FALSE, FALSE, 0);
     gtk_widget_show (scale);
