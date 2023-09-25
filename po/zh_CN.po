@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-14 23:23+0000\n"
-"PO-Revision-Date: 2023-09-15 09:12+0800\n"
+"POT-Creation-Date: 2023-09-24 21:51+0000\n"
+"PO-Revision-Date: 2023-09-25 09:22+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -31,7 +31,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: Gtranslator 42.0\n"
+"X-Generator: Gtranslator 45.1\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -2423,7 +2423,7 @@ msgstr "240 秒"
 #: app/display/gimpdisplayshell-close.c:181
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
-#: app/display/gimpdisplayshell-scale-dialog.c:123
+#: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:364 app/tools/gimpforegroundselecttool.c:331
 #: app/tools/gimptexttool.c:1751 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
@@ -9382,406 +9382,446 @@ msgstr "放大很多"
 
 #: app/actions/view-actions.c:373
 msgctxt "view-zoom-action"
+msgid "Zoom 16:1 (1600%)"
+msgstr "缩放 16:1 (1600%)"
+
+#: app/actions/view-actions.c:374
+msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: app/actions/view-actions.c:374
+#: app/actions/view-actions.c:376
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "缩放 16:1"
 
-#: app/actions/view-actions.c:379
+#: app/actions/view-actions.c:381
+msgctxt "view-zoom-action"
+msgid "Zoom 8:1 (800%)"
+msgstr "缩放 8:1 (800%)"
+
+#: app/actions/view-actions.c:382
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: app/actions/view-actions.c:380
+#: app/actions/view-actions.c:384
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "缩放 8:1"
 
-#: app/actions/view-actions.c:385
+#: app/actions/view-actions.c:389
+msgctxt "view-zoom-action"
+msgid "Zoom 4:1 (400%)"
+msgstr "缩放 4:1 (400%)"
+
+#: app/actions/view-actions.c:390
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: app/actions/view-actions.c:386
+#: app/actions/view-actions.c:392
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "缩放 4:1"
 
-#: app/actions/view-actions.c:391
+#: app/actions/view-actions.c:397
+msgctxt "view-zoom-action"
+msgid "Zoom 2:1 (200%)"
+msgstr "缩放 2:1 (200%)"
+
+#: app/actions/view-actions.c:398
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: app/actions/view-actions.c:392
+#: app/actions/view-actions.c:400
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "缩放 2:1"
 
-#: app/actions/view-actions.c:397
+#: app/actions/view-actions.c:405
+msgctxt "view-zoom-action"
+msgid "Zoom 1:1 (100%)"
+msgstr "缩放 1:1 (100%)"
+
+#: app/actions/view-actions.c:406
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: app/actions/view-actions.c:398
+#: app/actions/view-actions.c:408
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "缩放 1:1"
 
-#: app/actions/view-actions.c:403
+#: app/actions/view-actions.c:413
+msgctxt "view-zoom-action"
+msgid "Zoom 1:2 (50%)"
+msgstr "缩放 1:2 (50%)"
+
+#: app/actions/view-actions.c:414
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
-#: app/actions/view-actions.c:404
+#: app/actions/view-actions.c:416
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "缩放 1:2"
 
-#: app/actions/view-actions.c:409
+#: app/actions/view-actions.c:421
+msgctxt "view-zoom-action"
+msgid "Zoom 1:4 (25%)"
+msgstr "缩放 1:4 (25%)"
+
+#: app/actions/view-actions.c:422
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
-#: app/actions/view-actions.c:410
+#: app/actions/view-actions.c:424
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "缩放 1:4"
 
-#: app/actions/view-actions.c:415
+#: app/actions/view-actions.c:429
+msgctxt "view-zoom-action"
+msgid "Zoom 1:8 (12.5%)"
+msgstr "缩放 1:8 (12.5%)"
+
+#: app/actions/view-actions.c:430
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
-#: app/actions/view-actions.c:416
+#: app/actions/view-actions.c:432
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "缩放 1:8"
 
-#: app/actions/view-actions.c:421
+#: app/actions/view-actions.c:437
+msgctxt "view-zoom-action"
+msgid "Zoom 1:16 (6.25%)"
+msgstr "缩放 1:16 (6.25%)"
+
+#: app/actions/view-actions.c:438
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
-#: app/actions/view-actions.c:422
+#: app/actions/view-actions.c:440
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "缩放 1:16"
 
-#: app/actions/view-actions.c:427
-msgctxt "view-zoom-action"
-msgid "Othe_r zoom factor..."
-msgstr "其他缩放比例(_R)…"
-
-#: app/actions/view-actions.c:428
+#: app/actions/view-actions.c:445 app/actions/view-actions.c:448
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "设置自定义缩放比例"
 
-#: app/actions/view-actions.c:436
+#: app/actions/view-actions.c:446
+msgctxt "view-zoom-action"
+msgid "Othe_r zoom factor..."
+msgstr "其他缩放比例(_R)…"
+
+#: app/actions/view-actions.c:456
 msgctxt "view-action"
 msgid "Flip _Horizontally"
 msgstr "水平翻转(_H)"
 
-#: app/actions/view-actions.c:437
+#: app/actions/view-actions.c:457
 msgctxt "view-action"
 msgid "Flip the view horizontally"
 msgstr "水平翻转视图"
 
-#: app/actions/view-actions.c:443
+#: app/actions/view-actions.c:463
 msgctxt "view-action"
 msgid "Flip _Vertically"
 msgstr "竖直翻转(_V)"
 
-#: app/actions/view-actions.c:444
+#: app/actions/view-actions.c:464
 msgctxt "view-action"
 msgid "Flip the view vertically"
 msgstr "竖直翻转视图"
 
-#: app/actions/view-actions.c:453
+#: app/actions/view-actions.c:473
 msgctxt "view-action"
 msgid "Display Rotation Absolute Angle Set"
 msgstr "显示旋转绝对角度设定"
 
-#: app/actions/view-actions.c:459
+#: app/actions/view-actions.c:479
 msgctxt "view-action"
 msgid "_Reset Rotate"
 msgstr "重置旋转(_R)"
 
-#: app/actions/view-actions.c:461
+#: app/actions/view-actions.c:481
 msgctxt "view-action"
 msgid "Reset the angle of rotation to 0°"
 msgstr "重置旋转角度至 0°"
 
-#: app/actions/view-actions.c:469
+#: app/actions/view-actions.c:489
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "顺时钟旋转 15° (_C)"
 
-#: app/actions/view-actions.c:470
+#: app/actions/view-actions.c:490
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the right"
 msgstr "将视图向右旋转 15 度"
 
-#: app/actions/view-actions.c:475
+#: app/actions/view-actions.c:495
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "顺时针旋转 90° (_C)"
 
-#: app/actions/view-actions.c:476
+#: app/actions/view-actions.c:496
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the right"
 msgstr "将视图向右旋转 90 度"
 
-#: app/actions/view-actions.c:481
+#: app/actions/view-actions.c:501
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "旋转 _180°"
 
-#: app/actions/view-actions.c:482
+#: app/actions/view-actions.c:502
 msgctxt "view-action"
 msgid "Turn the view upside-down"
 msgstr "使视图上下颠倒"
 
-#: app/actions/view-actions.c:487
+#: app/actions/view-actions.c:507
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "逆时针旋转 90° (_W)"
 
-#: app/actions/view-actions.c:488
+#: app/actions/view-actions.c:508
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the left"
 msgstr "将视图向左旋转 90 度"
 
-#: app/actions/view-actions.c:493
+#: app/actions/view-actions.c:513
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "逆时针旋转 15° (_W)"
 
-#: app/actions/view-actions.c:494
+#: app/actions/view-actions.c:514
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the left"
 msgstr "将视图向左旋转 15 度"
 
-#: app/actions/view-actions.c:502
+#: app/actions/view-actions.c:522
 msgctxt "view-action"
 msgid "_Perceptual"
 msgstr "感知(_P)"
 
-#: app/actions/view-actions.c:503
+#: app/actions/view-actions.c:523
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
 msgstr "显示渲染效果是可感知的"
 
-#: app/actions/view-actions.c:508
+#: app/actions/view-actions.c:528
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
 msgstr "相关色度(_R)"
 
-#: app/actions/view-actions.c:509
+#: app/actions/view-actions.c:529
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
 msgstr "显示渲染效果是相关色度的"
 
-#: app/actions/view-actions.c:514
+#: app/actions/view-actions.c:534
 msgctxt "view-action"
 msgid "_Saturation"
 msgstr "饱和度(_S)"
 
-#: app/actions/view-actions.c:515
+#: app/actions/view-actions.c:535
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
 msgstr "显示渲染效果是色饱和的"
 
-#: app/actions/view-actions.c:520
+#: app/actions/view-actions.c:540
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
 msgstr "绝对色度(_A)"
 
-#: app/actions/view-actions.c:521
+#: app/actions/view-actions.c:541
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
 msgstr "显示渲染效果是绝对色度的"
 
-#: app/actions/view-actions.c:529
+#: app/actions/view-actions.c:549
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "来自主题(_T)"
 
-#: app/actions/view-actions.c:530
+#: app/actions/view-actions.c:550
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "使用当前主题的背景色"
 
-#: app/actions/view-actions.c:535
+#: app/actions/view-actions.c:555
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "浅色方格的颜色(_L)"
 
-#: app/actions/view-actions.c:536
+#: app/actions/view-actions.c:556
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "使用浅色方格的颜色"
 
-#: app/actions/view-actions.c:541
+#: app/actions/view-actions.c:561
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "深色方格的颜色(_D)"
 
-#: app/actions/view-actions.c:542
+#: app/actions/view-actions.c:562
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "使用深色方格的颜色"
 
-#: app/actions/view-actions.c:547
+#: app/actions/view-actions.c:567
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "自定义颜色(_C)…"
 
-#: app/actions/view-actions.c:548
+#: app/actions/view-actions.c:568
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "使用任意颜色"
 
-#: app/actions/view-actions.c:553
+#: app/actions/view-actions.c:573
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "按首选项设定(_P)"
 
-#: app/actions/view-actions.c:555
+#: app/actions/view-actions.c:575
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "将填充颜色重置为在首选项中的配置"
 
-#: app/actions/view-actions.c:563
+#: app/actions/view-actions.c:583
 msgctxt "view-padding-color"
 msgid "Keep Padding in \"Show _All\" Mode"
 msgstr "在“显示全部”模式保持衬垫"
 
-#: app/actions/view-actions.c:565
+#: app/actions/view-actions.c:585
 msgctxt "view-padding-color"
 msgid "Keep canvas padding when \"View -> Show All\" is enabled"
 msgstr "“视图->显示全部”启用时保持画布衬垫"
 
-#: app/actions/view-actions.c:574
+#: app/actions/view-actions.c:594
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
 msgstr "设置水平滚动位移"
 
-#: app/actions/view-actions.c:579
+#: app/actions/view-actions.c:599
 msgctxt "view-action"
 msgid "Scroll to left border"
 msgstr "滚动到左边界"
 
-#: app/actions/view-actions.c:584
+#: app/actions/view-actions.c:604
 msgctxt "view-action"
 msgid "Scroll to right border"
 msgstr "滚动到右边界"
 
-#: app/actions/view-actions.c:589
+#: app/actions/view-actions.c:609
 msgctxt "view-action"
 msgid "Scroll left"
 msgstr "左滚"
 
-#: app/actions/view-actions.c:594
+#: app/actions/view-actions.c:614
 msgctxt "view-action"
 msgid "Scroll right"
 msgstr "右滚"
 
-#: app/actions/view-actions.c:599
+#: app/actions/view-actions.c:619
 msgctxt "view-action"
 msgid "Scroll page left"
 msgstr "页面向左滚动"
 
-#: app/actions/view-actions.c:604
+#: app/actions/view-actions.c:624
 msgctxt "view-action"
 msgid "Scroll page right"
 msgstr "页面向右滚动"
 
-#: app/actions/view-actions.c:612
+#: app/actions/view-actions.c:632
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
 msgstr "设置竖直滚动位移"
 
-#: app/actions/view-actions.c:617
+#: app/actions/view-actions.c:637
 msgctxt "view-action"
 msgid "Scroll to top border"
 msgstr "滚动到上边界"
 
-#: app/actions/view-actions.c:622
+#: app/actions/view-actions.c:642
 msgctxt "view-action"
 msgid "Scroll to bottom border"
 msgstr "滚动到下边界"
 
-#: app/actions/view-actions.c:627
+#: app/actions/view-actions.c:647
 msgctxt "view-action"
 msgid "Scroll up"
 msgstr "上滚"
 
-#: app/actions/view-actions.c:632
+#: app/actions/view-actions.c:652
 msgctxt "view-action"
 msgid "Scroll down"
 msgstr "下滚"
 
-#: app/actions/view-actions.c:637
+#: app/actions/view-actions.c:657
 msgctxt "view-action"
 msgid "Scroll page up"
 msgstr "页面向上滚动"
 
-#: app/actions/view-actions.c:642
+#: app/actions/view-actions.c:662
 msgctxt "view-action"
 msgid "Scroll page down"
 msgstr "页面向下滚动"
 
-#: app/actions/view-actions.c:841
+#: app/actions/view-actions.c:848
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "恢复缩放 (%d%%)(_V)"
 
-#: app/actions/view-actions.c:849
+#: app/actions/view-actions.c:856
 msgid "Re_vert Zoom"
 msgstr "恢复缩放(_V)"
 
-#: app/actions/view-actions.c:1017
-#, c-format
-msgid "Othe_r (%s)..."
-msgstr "其他 (%s)(_R)…"
-
-#: app/actions/view-actions.c:1028
+#: app/actions/view-actions.c:1004
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "缩放 (%s)(_Z)"
 
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
-#: app/actions/view-actions.c:1052
+#: app/actions/view-actions.c:1024
 msgid "(H+V) "
 msgstr "(H+V) "
 
 #. please preserve the trailing space
 #. H: Horizontal
-#: app/actions/view-actions.c:1058
+#: app/actions/view-actions.c:1030
 msgid "(H) "
 msgstr "(H+V) "
 
 #. please preserve the trailing space
 #. V: Vertical
-#: app/actions/view-actions.c:1064
+#: app/actions/view-actions.c:1036
 msgid "(V) "
 msgstr "(V) "
 
-#: app/actions/view-actions.c:1073
+#: app/actions/view-actions.c:1045
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "翻转%s和旋转(%d°)(_F)"
 
-#: app/actions/view-commands.c:1089
+#: app/actions/view-commands.c:1074
 msgid "Set Canvas Padding Color"
 msgstr "设置画布衬垫的颜色"
 
-#: app/actions/view-commands.c:1091
+#: app/actions/view-commands.c:1076
 msgid "Set Custom Canvas Padding Color"
 msgstr "设置自定义画布衬垫的颜色"
 
@@ -9805,7 +9845,7 @@ msgstr "移动此窗口至屏幕 %s"
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
-#: app/display/gimpdisplayshell-scale-dialog.c:124 app/gui/gui.c:184
+#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:184
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
 #: app/widgets/gimpcontrollereditor.c:663 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:176 app/widgets/gimpmodifierseditor.c:685
@@ -10188,8 +10228,8 @@ msgstr "路径"
 #: app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "当启用时，当对应的图像窗口获得焦点时，图像将成为激活图像。这对使用“单击获取焦"
 "点”的窗口管理器有用。"
@@ -18083,21 +18123,31 @@ msgstr "角度："
 msgid "degrees"
 msgstr "度"
 
-#: app/display/gimpdisplayshell-scale-dialog.c:116
+#: app/display/gimpdisplayshell-scale-dialog.c:124
 msgid "Zoom Ratio"
 msgstr "缩放比率"
 
-#: app/display/gimpdisplayshell-scale-dialog.c:118
+#: app/display/gimpdisplayshell-scale-dialog.c:126
 msgid "Select Zoom Ratio"
 msgstr "选择缩放比率"
 
-#: app/display/gimpdisplayshell-scale-dialog.c:160
+#: app/display/gimpdisplayshell-scale-dialog.c:168
 msgid "Zoom ratio:"
 msgstr "缩放比率："
 
-#: app/display/gimpdisplayshell-scale-dialog.c:185
+#: app/display/gimpdisplayshell-scale-dialog.c:193
 msgid "Zoom:"
 msgstr "缩放："
+
+#: app/display/gimpdisplayshell-scale-dialog.c:246
+#, c-format
+msgid "Othe_r (%s)..."
+msgstr "其他 (%s)(_R)…"
+
+#: app/display/gimpdisplayshell-scale-dialog.c:250
+#, c-format
+msgid "Custom Zoom (%s)..."
+msgstr "自定义缩放 (%s)…"
 
 #: app/display/gimpdisplayshell-title.c:299
 msgid "(modified)"
@@ -20433,8 +20483,8 @@ msgstr "“%s”过程返回了错误的值类型用于返回值“%s” (#%d) �
 #: app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
 "调用“%s”过程使用了错误的值类型用于参数“%s” (#%d) 。需要 %s，但获得 %s。"
 
