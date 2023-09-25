@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-04-17 15:40+0000\n"
-"PO-Revision-Date: 2023-04-20 07:30+0200\n"
+"POT-Creation-Date: 2023-09-24 18:10+0000\n"
+"PO-Revision-Date: 2023-09-25 05:51+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -34,6 +34,9 @@ msgid ""
 "distributed program for such tasks as photo retouching, image composition "
 "and image authoring."
 msgstr ""
+"GIMP-ი 'GNU Image Manipulation Program'-ის აბრევიატურას ნიშნავს. ის "
+"თავისუფლად გავრცელებადი პროგრამაა ისეთი ამოცანებით, როგორიცაა გამოსახულების "
+"რედაქტირება."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:4
 msgid ""
@@ -41,6 +44,9 @@ msgid ""
 "expert quality photo retouching program, an online batch processing system, "
 "a mass production image renderer, an image format converter, etc."
 msgstr ""
+"მას ბევრი შესაძლებლობა გააჩნია. შეგიძლიათ, გამოიყენოთ, როგორც მარტივი "
+"სახატავი პროგრამა, ისე მძლავრი ფოტოების დასამუშავებლად, გამოსახულების "
+"ფორმატის შესაცვლელად, რენდერისთვის და ა.შ."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:5
 msgid ""
@@ -973,11 +979,11 @@ msgstr "ალტერნატიული სისტემური session
 
 #: ../app/main.c:233
 msgid "Batch command to run (can be used multiple times)"
-msgstr ""
+msgstr "ბევრი ბრძანების გაშვება (შეგიძლიათ ბევრჯერ გამოიყენოთ)"
 
 #: ../app/main.c:238
 msgid "The procedure to process batch commands with"
-msgstr ""
+msgstr "პროცედურა ბევრი ბრძანების ერთდროულად გასაშვებად"
 
 #: ../app/main.c:243
 msgid "Send messages to console instead of using a dialog"
@@ -995,7 +1001,7 @@ msgstr "გამართვა ავარიის შემთხვევ�
 
 #: ../app/main.c:260
 msgid "Enable non-fatal debugging signal handlers"
-msgstr ""
+msgstr "არაფატალური გამართვის სიგნალის დამმუშავებლების ჩართვა"
 
 #: ../app/main.c:265
 msgid "Make all warnings fatal"
@@ -3306,7 +3312,7 @@ msgstr "ზრდა_დი"
 
 #: ../app/actions/dashboard-commands.c:231
 msgid "Produce complete log even if not properly terminated"
-msgstr ""
+msgstr "სრული ჟურნალის ჩაწერა მაშინაც კი, როცა პროგრამა არასწორად დასრულდება"
 
 #: ../app/actions/dashboard-commands.c:294
 msgid "Add Marker"
@@ -7496,7 +7502,7 @@ msgstr "ალფას დადება მონიშნულზე"
 #: ../app/actions/layers-actions.c:532
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
-msgstr ""
+msgstr "მონიშნულის ფენის ალფა არხით ჩანაცვლება"
 
 #: ../app/actions/layers-actions.c:537
 msgctxt "layers-action"
@@ -8109,7 +8115,7 @@ msgstr "მონიშნულის ჩასწორების მენ�
 #: ../app/actions/select-actions.c:47
 msgctxt "select-action"
 msgid "_Select"
-msgstr ""
+msgstr "_არჩევა"
 
 #: ../app/actions/select-actions.c:50
 msgctxt "select-action"
@@ -11037,6 +11043,9 @@ msgid ""
 "Context-dependent mouse pointers are helpful.  They are enabled by default.  "
 "However, they require overhead that you may want to do without."
 msgstr ""
+"კონტექსტზე დამოკიდებული თაგუნას მაჩვენებლები სასარგებლოა.  ისინი "
+"ნაგულისხმევად ჩართულია.  მაგრამ მათ პროცესორის დამატებითი დატვირთვა მოაქვთ, "
+"რაც ყოველთვის ის არაა, რაც გნებავთ, გქონდეთ."
 
 #: ../app/config/gimprc-blurbs.h:84
 msgid "Show full image content by default."
@@ -11185,13 +11194,15 @@ msgstr "გასატანი ფაილის ნაგულისხმ�
 
 #: ../app/config/gimprc-blurbs.h:248
 msgid "Try generating debug data for bug reporting when appropriate."
-msgstr ""
+msgstr "შეცდომის ანგარიშის მონაცემების გენერაციის მცდელობა, როცა საჭიროა."
 
 #: ../app/config/gimprc-blurbs.h:251
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
+"თუ ჩართულია, ეს დარწმუნება, რომ გახსნისას გამოსახულებას სრულად დაინახავთ. "
+"წინააღმდეგ შემთხვევაში ის 1:1 მასშტაბით გაიხსნება."
 
 #: ../app/config/gimprc-blurbs.h:255
 msgid ""
@@ -11446,6 +11457,7 @@ msgstr "GIMP-ის ერთფანჯრიანი რეჟიმში �
 #: ../app/config/gimprc-blurbs.h:458
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr ""
+"დოკების და სხვა ფანჯრების დამალვა და მხოლოდ გამოსახულების ფანრების დატოვება."
 
 #: ../app/config/gimprc-blurbs.h:461
 msgid "Show the image tabs bar in single window mode."
@@ -11473,7 +11485,7 @@ msgstr "შეუმჩნეველი ასლის გადაღებ�
 
 #: ../app/config/gimprc-blurbs.h:479
 msgid "What to do when the space bar is pressed in the image window."
-msgstr ""
+msgstr "რა ხდება, როცა გამოსახულების ფანჯარაში გამოტოვების ღილაკს დააწვებით."
 
 #: ../app/config/gimprc-blurbs.h:482
 msgid "The compression method used for tile data stored in the swap file."
@@ -11806,7 +11818,7 @@ msgstr "ხელსაწყოების პანელის თავზ�
 
 #: ../app/config/gimprc-blurbs.h:698
 msgid "Sets the manner in which transparency is displayed in images."
-msgstr ""
+msgstr "აყენებს გამოსახულებებში გამჭვირვალობის ჩვენების მანერას."
 
 #: ../app/config/gimprc-blurbs.h:701
 msgid "Sets the size of the checkerboard used to display transparency."
@@ -12832,29 +12844,33 @@ msgstr "ჩასმული ფენა"
 msgid "Global Buffer"
 msgstr "გლობალური ბაფერი"
 
-#: ../app/core/gimp-gradients.c:64
+#: ../app/core/gimp-gradients.c:65
 msgid "Custom"
 msgstr "ხელით"
 
-#: ../app/core/gimp-gradients.c:74
+#: ../app/core/gimp-gradients.c:75
 msgid "FG to BG (RGB)"
 msgstr "FG-დან BG-მდე (RGB)"
 
-#: ../app/core/gimp-gradients.c:82
+#: ../app/core/gimp-gradients.c:83
 msgid "FG to BG (Hardedge)"
 msgstr "FG-დან BG-მდე (სწრაფი გადასვლა)"
 
-#: ../app/core/gimp-gradients.c:90
+#: ../app/core/gimp-gradients.c:91
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "FG-დან BG-მდე (HSV საათის საპირისპიროდ)"
 
-#: ../app/core/gimp-gradients.c:98
+#: ../app/core/gimp-gradients.c:99
 msgid "FG to BG (HSV clockwise hue)"
 msgstr "FG-დან BG-მდე (HSV საათის მიმართულებით)"
 
-#: ../app/core/gimp-gradients.c:106
+#: ../app/core/gimp-gradients.c:107
 msgid "FG to Transparent"
 msgstr "FG-დან გამჭვირვალემდე"
+
+#: ../app/core/gimp-gradients.c:114
+msgid "FG to Transparent (Hardedge)"
+msgstr "FG-დან გამჭვირვალემდე (Hardedge)"
 
 #. Translator:  This message is displayed while GIMP is waiting for
 #. * some operation to finish.  The %s argument is a message describing
@@ -14102,7 +14118,7 @@ msgstr "ფენების ჯგუფის შერწყმა შეუ
 
 #: ../app/core/gimpimage-merge.c:299
 msgid "The layer to merge down to is locked."
-msgstr ""
+msgstr "შესარწყამი ფენა დაბლოკილია."
 
 #: ../app/core/gimpimage-merge.c:311
 msgid "There is no visible layer to merge down to."
@@ -15200,7 +15216,7 @@ msgstr "აირჩიეთ რბილი პროფილი"
 #: ../app/dialogs/color-profile-dialog.c:209
 #: ../app/tools/gimpforegroundselecttool.c:321
 msgid "_Select"
-msgstr ""
+msgstr "_არჩევა"
 
 #: ../app/dialogs/color-profile-dialog.c:212
 msgid "New Color Profile"
@@ -16421,7 +16437,7 @@ msgstr "N-წერტილოვანი დეფორმაციის �
 
 #: ../app/dialogs/preferences-dialog.c:1657
 msgid "_Seamless Clone tool"
-msgstr ""
+msgstr "_შეუმჩნეველი ასლის გადაღების ხელსაწყო"
 
 #: ../app/dialogs/preferences-dialog.c:1667
 #: ../app/dialogs/preferences-dialog.c:1668
@@ -16977,6 +16993,8 @@ msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
 msgstr ""
+"GIMP-ის დახმარების ბრაუზერი, როგორც ჩანს, დაყენებული არაა. გამოვიყენებ ვებ "
+"ბრაუზერს."
 
 #. Action Search
 #: ../app/dialogs/preferences-dialog.c:2664
@@ -19542,7 +19560,7 @@ msgstr "დონეების პოსტერიზაცია"
 
 #: ../app/operations/gimpoperationsemiflatten.c:84
 msgid "Replace partial transparency with a color"
-msgstr ""
+msgstr "ნაწილობრივი გამჭვირვალობის ფერით ჩანაცვლება"
 
 #: ../app/operations/gimpoperationsemiflatten.c:96
 msgid "The color"
@@ -19567,7 +19585,7 @@ msgstr ""
 #: ../app/operations/gimpoperationthreshold.c:84
 #: ../app/tools/gimpthresholdtool.c:94
 msgid "Reduce image to two colors using a threshold"
-msgstr ""
+msgstr "გამოსახულების ორ ფერამდე შემცირება, საზღვრის გამოყენებით"
 
 #: ../app/operations/gimpoperationthreshold.c:97
 msgid "Low threshold"
@@ -23206,11 +23224,11 @@ msgstr "წონის ფუნქციის გამოყენება"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:105
 msgid "Control points influence"
-msgstr ""
+msgstr "საკონტროლო წერტილების გავლენა"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:106
 msgid "Amount of control points' influence"
-msgstr ""
+msgstr "საკონტროლო წერტილების გავლენის რაოდენობა"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:112
 #: ../app/tools/gimpnpointdeformationoptions.c:113
@@ -23298,7 +23316,7 @@ msgstr "გახადე გამ_ჭვირვალე"
 
 #: ../app/tools/gimpoperationtool.c:137
 msgid "Operation Tool: Use an arbitrary GEGL operation"
-msgstr ""
+msgstr "ოპერაციის ხელსაწყო: გამოიყენეთ თვითნებური GEGL ოპერაცია"
 
 #: ../app/tools/gimpoperationtool.c:621
 msgid "Aux\\1 Input"
@@ -23318,7 +23336,7 @@ msgstr "ფუნჯის ჩასწორება"
 
 #: ../app/tools/gimppaintoptions-gui.c:169
 msgid "Reset size to brush's native size"
-msgstr ""
+msgstr "ზომის ფუნჯის საკუთარ ზომაზე დაბრუნება"
 
 #: ../app/tools/gimppaintoptions-gui.c:177
 msgid "Reset aspect ratio to brush's native aspect ratio"
@@ -26578,7 +26596,7 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "ფერები"
 
-#: ../app/widgets/gimpitemtreeview.c:763
+#: ../app/widgets/gimpitemtreeview.c:765
 msgid "Lock:"
 msgstr "დაბლოკვა:"
 
@@ -26877,7 +26895,7 @@ msgstr ""
 #: ../app/widgets/gimptextbuffer.c:1711
 #, c-format
 msgid "Input file '%s' appears truncated: %s"
-msgstr ""
+msgstr "როგორც ჩანს, შეყვანის ფაილი '%s' წაკვეთილია: %s"
 
 #: ../app/widgets/gimptextbuffer.c:1729
 #, c-format
@@ -27330,12 +27348,13 @@ msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr ""
+"ეს XCF ფაილი დაზიანებულია!  ჩავტვირთე, რამდენიც შემეძლო, მაგრამ დაზიანებულია."
 
 #: ../app/xcf/xcf-load.c:734
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
-msgstr ""
+msgstr "ეს XCF ფაილი დაზიანებულია!  მონაცემები ნაწილობრივაც კი ვერ ამოვიღე."
 
 #: ../app/xcf/xcf-load.c:825
 msgid ""
