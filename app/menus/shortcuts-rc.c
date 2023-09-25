@@ -269,9 +269,20 @@ shortcuts_action_deserialize (GScanner       *scanner,
   builder = g_strv_builder_new ();
   while (gimp_scanner_parse_string (scanner, &accel))
     {
-      gchar    **dup_actions;
-      gboolean   add_accel = TRUE;
+      gchar           **dup_actions;
+      gboolean          add_accel = TRUE;
+      guint             accelerator_key  = 0;
+      GdkModifierType   accelerator_mods = 0;
 
+      gtk_accelerator_parse (accel, &accelerator_key, &accelerator_mods);
+      if (accelerator_key == 0 && accelerator_mods == 0)
+        {
+          g_printerr ("INFO: invalid accelerator '%s' on '%s'.\n"
+                      "      Removing this accelerator.\n",
+                      accel, action_name);
+          g_free (accel);
+          continue;
+        }
       dup_actions = gtk_application_get_actions_for_accel (application, accel);
 
       for (gint i = 0; dup_actions[i] != NULL; i++)
