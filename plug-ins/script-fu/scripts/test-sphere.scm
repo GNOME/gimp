@@ -23,77 +23,57 @@
 ; SF-COLOR "label" "color"
 ;
 ; ----------------------------------------------------------------------
-; SF-FONT
-; creates a font-selection widget in the dialog. It returns a font.
+; Resources: Brush, Font, Gradient, Palette, Pattern
 ;
-; There are two gimp-text procedures to use a font:
+; Resources are Gimp objects for installed data such as fonts.
+
+; Resources have a unique integer ID for the lifetime of a Gimp session.
+; In ScriptFu, a resource argument is bound to an integer ID.
 ;
-;  (gimp-text-font image drawable
-;                      x-pos y-pos text border antialias size font)
-;  (gimp-text-get-extents-font text size font))
+; Resources have names, often unique, but not always.
+; For example, fonts from different collections of fonts might
+; have the same names.
 ;
-; Usage:
-; SF-FONT "label" "font name"
+; ScriptFu v3 does not let you name a default resource.
+; In v2, the third term of a triplet named a default resource.
+; In v3, the third term is just a placeholder and is ignored.
+; This is compatible with v2 scripts, but any default
+; in a v2 script will be ignored in v3.
+; (Similarly as for SF-IMAGE.)
+;
+; In the code below, a default name is shown,
+; but is ignored since v3.
+; Some even name resources that are not installed with Gimp any longer.
+;
+; In non-interactive mode, a resource argument in ScriptFu
+; is an integer ID passed by the caller.
+;
+; In interactive mode, the widget to choose a resource
+; initially shows a resource from the context.
+; The user can choose a different value.
+;
+; The resource chooser widgets are buttons.
+; The choice is previewed in the label of the button,
+; or in a preview window beside the button.
+; Clicking the button shows another dialog for choosing.
+; Clicking a preview window shows an enlarged view of the choice.
 ;
 ; ----------------------------------------------------------------------
 ; SF-BRUSH
-; is only useful in interactive mode. It will create a widget in the control
-; dialog. The widget consists of a preview area (which when pressed will
-; produce a popup preview ) and a button with the "..." label. The button will
-; popup a dialog where brushes can be selected and each of the
-; characteristics of the brush can be modified.
-;
-; The actual value returned when the script is invoked is a list
-; consisting of Brush name, opacity, spacing and brush mode in the same
-; units as passed in as the default value.
 ;
 ; Usage:
-; SF-BRUSH "Brush" '("Circle (03)" 100 44 0)
-;
-; Here the brush dialog will be popped up with a default brush of Circle (03)
-; opacity 100 spacing 44 and paint mode of Normal (value 0).
-; If this selection was unchanged the value passed to the function as a
-; parameter would be '("Circle (03)" 100 44 0).
-;
+; SF-BRUSH "Brush to paint with" ""
+
+; Note that v2 required a list for the third argument, the default.
+; If you need the spacing attribute of the brush, get it from the brush.
+; If you want to set opacity and mode when painting with the brush,
+; declare more arguments and set them into a temporary context.
 ; ----------------------------------------------------------------------
-; SF-PATTERN
-; Only useful in interactive mode. It will create a widget in the control
-; dialog. The widget consists of a preview area (which when pressed will
-; produce a popup preview ) and a button with the "..." label. The button will
-; popup a dialog where patterns can be selected.
-;
 ; Usage:
-; SF-PATTERN "Pattern" "Maple Leaves"
-;
-; The value returned when the script is invoked is a string containing the
-; pattern name. If the above selection was not altered the string would
-; contain "Maple Leaves"
-;
-; ----------------------------------------------------------------------
-; SF-GRADIENT
-; Only useful in interactive mode. It will create a widget in the control
-; dialog. The widget consists of a button containing a preview of the selected
-; gradient. If the button is pressed a gradient selection dialog will popup.
-;
-; Usage:
-; SF-GRADIENT "Gradient" "Deep Sea"
-;
-; The value returned when the script is invoked is a string containing the
-; gradient name. If the above selection was not altered the string would
-; contain "Deep Sea"
-;
-; ----------------------------------------------------------------------
-; SF-PALETTE
-; Only useful in interactive mode. It will create a widget in the control
-; dialog. The widget consists of a button containing a preview of the selected
-; palette. If the button is pressed a palette selection dialog will popup.
-;
-; Usage:
-; SF-PALETTE "Palette" "Named Colors"
-;
-; The value returned when the script is invoked is a string containing the
-; palette name. If the above selection was not altered the string would
-; contain "Named Colors"
+; SF-FONT     "Font to render with"     ""
+; SF-GRADIENT "Gradient to render with" ""
+; SF-PALETTE  "Palette to render with"  ""
+; SF-PATTERN  "Pattern to render with"  ""
 ;
 ; ----------------------------------------------------------------------
 ; SF-FILENAME

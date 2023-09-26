@@ -35,6 +35,7 @@
 #include "script-fu-interface.h"
 #include "script-fu-scripts.h"
 #include "script-fu-script.h"
+#include "script-fu-arg.h"
 
 #include "script-fu-intl.h"
 
@@ -87,7 +88,7 @@ static void   script_fu_resource_set_handler (gpointer       data,
                                               gboolean       closing);
 
 static GtkWidget * script_fu_resource_widget (const gchar   *title,
-                                              gchar        **id,
+                                              gint32        *model,
                                               GType          resource_type);
 
 static void   script_fu_flush_events         (void);
@@ -172,6 +173,8 @@ script_fu_interface (SFScript  *script,
   gint          i;
 
   static gboolean gtk_initted = FALSE;
+
+  g_debug ("%s", G_STRFUNC);
 
   /* Simply return if there is already an interface. This is an
    * ugly workaround for the fact that we can not process two
@@ -463,35 +466,40 @@ script_fu_interface (SFScript  *script,
           break;
 
         case SF_FONT:
-          widget = script_fu_resource_widget (_("Script-Fu Font Selection"),
-                                              &arg->value.sfa_font,
+          script_fu_arg_init_resource (arg, GIMP_TYPE_FONT);
+          widget = script_fu_resource_widget (label_text,
+                                              &arg->value.sfa_resource,
                                               GIMP_TYPE_FONT);
           break;
 
         case SF_PALETTE:
-          widget = script_fu_resource_widget (_("Script-Fu Palette Selection"),
-                                              &arg->value.sfa_palette,
+          script_fu_arg_init_resource (arg, GIMP_TYPE_PALETTE);
+          widget = script_fu_resource_widget (label_text,
+                                              &arg->value.sfa_resource,
                                               GIMP_TYPE_PALETTE);
           break;
 
         case SF_PATTERN:
           left_align = TRUE;
-          widget = script_fu_resource_widget (_("Script-Fu Pattern Selection"),
-                                              &arg->value.sfa_pattern,
+          script_fu_arg_init_resource (arg, GIMP_TYPE_PATTERN);
+          widget = script_fu_resource_widget (label_text,
+                                              &arg->value.sfa_resource,
                                               GIMP_TYPE_PATTERN);
           break;
 
         case SF_GRADIENT:
           left_align = TRUE;
-          widget = script_fu_resource_widget (_("Script-Fu Gradient Selection"),
-                                              &arg->value.sfa_gradient,
+          script_fu_arg_init_resource (arg, GIMP_TYPE_GRADIENT);
+          widget = script_fu_resource_widget (label_text,
+                                              &arg->value.sfa_resource,
                                               GIMP_TYPE_GRADIENT);
           break;
 
         case SF_BRUSH:
           left_align = TRUE;
-          widget = script_fu_resource_widget (_("Script-Fu Brush Selection"),
-                                              &arg->value.sfa_brush,
+          script_fu_arg_init_resource (arg, GIMP_TYPE_BRUSH);
+          widget = script_fu_resource_widget (label_text,
+                                              &arg->value.sfa_resource,
                                               GIMP_TYPE_BRUSH);
           break;
 
@@ -592,37 +600,41 @@ script_fu_interface (SFScript  *script,
 }
 
 /* Return a widget for choosing a resource.
- * Generic on type.
+ * Dispatch on resource type.
+ * Widget will show initial choice from context.
+ * Widget will update model if user touches widget.
  */
-GtkWidget *
+static GtkWidget *
 script_fu_resource_widget (const gchar   *title,
-                           gchar        **id_handle,
+                           gint32        *model,
                            GType          resource_type)
 {
   GtkWidget    *result_widget = NULL;
-  GimpResource *resource;
 
-  resource = gimp_resource_get_by_name (resource_type, *id_handle);
+  g_debug ("%s type: %ld", G_STRFUNC, resource_type);
 
+  /* Passing NULL resource sets initial choice to resource from context.
+   * Passing empty string for outer widget label, since we provide our own.
+   */
   if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
     {
-      result_widget = gimp_font_chooser_new (title, title, resource);
+      result_widget = gimp_font_chooser_new (title, "", NULL);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
     {
-      result_widget = gimp_brush_chooser_new (title, title, resource);
+      result_widget = gimp_brush_chooser_new (title, "", NULL);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
     {
-      result_widget = gimp_gradient_chooser_new (title, title, resource);
+      result_widget = gimp_gradient_chooser_new (title, "", NULL);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
     {
-      result_widget = gimp_palette_chooser_new (title, title, resource);
+      result_widget = gimp_palette_chooser_new (title, "", NULL);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PATTERN))
     {
-      result_widget = gimp_pattern_chooser_new (title, title, resource);
+      result_widget = gimp_pattern_chooser_new (title, "", NULL);
     }
   else
     {
@@ -633,11 +645,11 @@ script_fu_resource_widget (const gchar   *title,
   {
     /* All resource widgets emit signal resource-set
      * Connect to our handler which will be passed the id_handle,
-     * the place to store the ID of the new choice of resource.
+     * the model of the new choice of resource.
      */
     g_signal_connect_swapped (result_widget, "resource-set",
                               G_CALLBACK (script_fu_resource_set_handler),
-                              id_handle);
+                              model);  /* data */
   }
 
   return result_widget;
@@ -683,25 +695,21 @@ script_fu_combo_callback (GtkWidget *widget,
 }
 
 /* Handle resource-set signal.
- * Store id of newly chosen resource in SF local cache of args.
+ * Store id of newly chosen resource in SF local cache of args,
+ * at the integer location passed by pointer in "data"
  *
  * Note the callback is the same for all resource types.
- * The callback passes only the resource, and no attributes of the resource,
- * except it's ID.
+ * The callback passes the resource, and no attributes of the resource.
  */
 static void
 script_fu_resource_set_handler (gpointer      data,  /* callback "data" */
                                 gpointer      resource,
                                 gboolean      closing)
 {
-  gchar **id_handle = data;
+  gint32 *id_pointer = data;
 
-  /* Free any existing copy of the id string. */
-  if (*id_handle)
-    g_free (*id_handle);
-
-  /* We don't own the resource, nor its string.  Copy the string. */
-  *id_handle = g_strdup (gimp_resource_get_name (resource));
+  /* Store integer ID, not pointer to Resource.  We bind to integer ID. */
+  *id_pointer = gimp_resource_get_id (resource);
 
   if (closing) script_fu_activate_main_dialog ();
 }
@@ -771,30 +779,22 @@ script_fu_response (GtkWidget *widget,
   script_fu_flush_events ();
 }
 
+/* Update model for all widgets that
+ * don't have callbacks that update the model.
+ * Only the text and string widgets don't.
+ *
+ * The model is the arg.value field.
+ */
 static void
-script_fu_ok (SFScript *script)
+script_fu_update_models (SFScript *script)
 {
-  GString *output;
-  gchar   *command;
-  gint     i;
-
-  for (i = 0; i < script->n_args; i++)
+  for (gint i = 0; i < script->n_args; i++)
     {
       SFArgValue *arg_value = &script->args[i].value;
       GtkWidget  *widget    = sf_interface->widgets[i];
 
       switch (script->args[i].type)
         {
-        case SF_IMAGE:
-        case SF_DRAWABLE:
-        case SF_LAYER:
-        case SF_CHANNEL:
-        case SF_VECTORS:
-        case SF_DISPLAY:
-        case SF_COLOR:
-        case SF_TOGGLE:
-          break;
-
         case SF_VALUE:
         case SF_STRING:
           g_free (arg_value->sfa_value);
@@ -820,20 +820,19 @@ script_fu_ok (SFScript *script)
                                                              FALSE);
           }
           break;
-
-        case SF_ADJUSTMENT:
-        case SF_FILENAME:
-        case SF_DIRNAME:
-        case SF_FONT:
-        case SF_PALETTE:
-        case SF_PATTERN:
-        case SF_GRADIENT:
-        case SF_BRUSH:
-        case SF_OPTION:
-        case SF_ENUM:
-          break;
         }
     }
+}
+
+
+/* Handler for event: OK button clicked. */
+static void
+script_fu_ok (SFScript *script)
+{
+  GString *output;
+  gchar   *command;
+
+  script_fu_update_models (script);
 
   command = script_fu_script_get_command (script);
 
@@ -946,15 +945,8 @@ script_fu_reset (SFScript *script)
                                          value->sfa_file.filename);
           break;
 
-        /* Reset should get the initial/default value that the plugin author
-         * declared by name in the SF- declaration.
-         * Said name is a string stored in the default_value.sfa_font
-         *
-         * But this code goes away when ScriptFu uses GimpProcedureDialog.
-         * Rather than make this temporary code do the correct thing,
-         * instead simply pass NULL to reset to the value from context.
-         * It is extremely unlikely that any user depends on or will notice
-         * this temporaryily slightly changed behavior.
+        /* Pass NULL to reset to the value from context.
+         * Since v3, script author cannot specify default resource by name.
          */
         case SF_FONT:
         case SF_PALETTE:

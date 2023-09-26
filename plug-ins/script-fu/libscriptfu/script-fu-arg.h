@@ -36,4 +36,7 @@ void        script_fu_arg_generate_name_and_nick  (SFArg        *arg,
                                                    const gchar **name,
                                                    const gchar **nick);
 
+void        script_fu_arg_init_resource           (SFArg *arg,
+                                                   GType resource_type);
+
 #endif /*  __SCRIPT_FU_ARG__  */

@@ -1283,6 +1283,8 @@ script_fu_marshal_procedure_call (scheme   *sc,
                * ID's are unique across all instances of Resource.
                */
              resource = gimp_resource_get_by_id (resource_id);
+              if (resource == NULL)
+                g_warning ("%s: passing null Resource, invalid ID.", G_STRFUNC);
 
               g_value_set_object (&value, resource);
             }

@@ -94,6 +94,7 @@ script_fu_arg_free (SFArg *arg)
 
   switch (arg->type)
     {
+    /* Integer ID's: primitives not needing free. */
     case SF_IMAGE:
     case SF_DRAWABLE:
     case SF_LAYER:
@@ -102,6 +103,13 @@ script_fu_arg_free (SFArg *arg)
     case SF_DISPLAY:
     case SF_COLOR:
     case SF_TOGGLE:
+
+    case SF_BRUSH:
+    case SF_FONT:
+    case SF_GRADIENT:
+    case SF_PALETTE:
+    case SF_PATTERN:
+
       break;
 
     case SF_VALUE:
@@ -118,36 +126,6 @@ script_fu_arg_free (SFArg *arg)
     case SF_DIRNAME:
       g_free (arg->default_value.sfa_file.filename);
       g_free (arg->value.sfa_file.filename);
-      break;
-
-    /* FUTURE: font..gradient could all use the same code.
-     * Since the type in the union are all the same: gchar*.
-     * That is, group these cases with SF_VALUE.
-     * But this method should go away altogether.
-     */
-    case SF_FONT:
-      g_free (arg->default_value.sfa_font);
-      g_free (arg->value.sfa_font);
-      break;
-
-    case SF_PALETTE:
-      g_free (arg->default_value.sfa_palette);
-      g_free (arg->value.sfa_palette);
-      break;
-
-    case SF_PATTERN:
-      g_free (arg->default_value.sfa_pattern);
-      g_free (arg->value.sfa_pattern);
-      break;
-
-    case SF_GRADIENT:
-      g_free (arg->default_value.sfa_gradient);
-      g_free (arg->value.sfa_gradient);
-      break;
-
-    case SF_BRUSH:
-      g_free (arg->default_value.sfa_brush);
-      g_free (arg->value.sfa_brush);
       break;
 
     case SF_OPTION:
@@ -176,6 +154,13 @@ script_fu_arg_reset (SFArg *arg, gboolean should_reset_ids)
     case SF_CHANNEL:
     case SF_VECTORS:
     case SF_DISPLAY:
+
+    case SF_BRUSH:
+    case SF_FONT:
+    case SF_GRADIENT:
+    case SF_PALETTE:
+    case SF_PATTERN:
+
       if (should_reset_ids)
         {
           /* !!! Use field name "sfa_image"; all these cases have same type in union.
@@ -210,35 +195,6 @@ script_fu_arg_reset (SFArg *arg, gboolean should_reset_ids)
     case SF_DIRNAME:
       g_free (value->sfa_file.filename);
       value->sfa_file.filename = g_strdup (default_value->sfa_file.filename);
-      break;
-
-    /* FUTURE: font..gradient could all use the same code.
-     * Since the type in the union are all the same: gchar*.
-     * That is, group these cases with SF_VALUE.
-     */
-    case SF_FONT:
-      g_free (value->sfa_font);
-      value->sfa_font = g_strdup (default_value->sfa_font);
-      break;
-
-    case SF_PALETTE:
-      g_free (value->sfa_palette);
-      value->sfa_palette = g_strdup (default_value->sfa_palette);
-      break;
-
-    case SF_PATTERN:
-      g_free (value->sfa_pattern);
-      value->sfa_pattern = g_strdup (default_value->sfa_pattern);
-      break;
-
-    case SF_GRADIENT:
-      g_free (value->sfa_gradient);
-      value->sfa_gradient = g_strdup (default_value->sfa_gradient);
-      break;
-
-    case SF_BRUSH:
-      g_free (value->sfa_brush);
-      value->sfa_brush = g_strdup (default_value->sfa_brush);
       break;
 
     case SF_OPTION:
@@ -482,6 +438,14 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
     case SF_CHANNEL:
     case SF_VECTORS:
     case SF_DISPLAY:
+
+    /* The GValue is a GObject of type inheriting GimpResource, having id prop */
+    case SF_BRUSH:
+    case SF_FONT:
+    case SF_GRADIENT:
+    case SF_PALETTE:
+    case SF_PATTERN:
+
       {
         GObject *object = g_value_get_object (gvalue);
         gint     id     = -1;
@@ -580,25 +544,6 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
       }
       break;
 
-    case SF_FONT:
-    case SF_PALETTE:
-    case SF_PATTERN:
-    case SF_GRADIENT:
-    case SF_BRUSH:
-      {
-        /* The GValue is a GObject of type inheriting GimpResource */
-        GimpResource *resource;
-        gchar        *name = NULL;
-
-        resource = g_value_get_object (gvalue);
-
-        if (resource)
-          name = gimp_resource_get_name (resource);
-
-        g_string_append_printf (result_string, "\"%s\"", name);
-      }
-      break;
-
     case SF_OPTION:
       append_int_repr_from_gvalue (result_string, gvalue);
       break;
@@ -644,6 +589,12 @@ script_fu_arg_append_repr_from_self (SFArg       *arg,
     case SF_CHANNEL:
     case SF_VECTORS:
     case SF_DISPLAY:
+
+    case SF_BRUSH:
+    case SF_FONT:
+    case SF_GRADIENT:
+    case SF_PALETTE:
+    case SF_PATTERN:
       g_string_append_printf (result_string, "%d", arg_value->sfa_image);
       break;
 
@@ -695,26 +646,6 @@ script_fu_arg_append_repr_from_self (SFArg       *arg,
         g_string_append_printf (result_string, "\"%s\"", tmp);
         g_free (tmp);
       }
-      break;
-
-    case SF_FONT:
-      g_string_append_printf (result_string, "\"%s\"", arg_value->sfa_font);
-      break;
-
-    case SF_PALETTE:
-      g_string_append_printf (result_string, "\"%s\"", arg_value->sfa_palette);
-      break;
-
-    case SF_PATTERN:
-      g_string_append_printf (result_string, "\"%s\"", arg_value->sfa_pattern);
-      break;
-
-    case SF_GRADIENT:
-      g_string_append_printf (result_string, "\"%s\"", arg_value->sfa_gradient);
-      break;
-
-    case SF_BRUSH:
-      g_string_append_printf (result_string, "\"%s\"", arg_value->sfa_brush);
       break;
 
     case SF_OPTION:
@@ -876,6 +807,38 @@ script_fu_arg_generate_name_and_nick (SFArg        *arg,
 
   /* nick is what the script author said describes the arg */
   *returned_nick = arg->label;
+}
+
+
+/* Init the value of an SFArg that is a resource.
+ * In case user does not touch a widget.
+ * Cannot be called at registration time.
+ * Init to value from context, the same as a widget
+ * will do when passed a NULL initial resource.
+ */
+void
+script_fu_arg_init_resource (SFArg *arg, GType resource_type)
+{
+  GimpResource *resource;
+
+  if (resource_type == GIMP_TYPE_BRUSH)
+    resource = GIMP_RESOURCE (gimp_context_get_brush ());
+  else if (resource_type == GIMP_TYPE_FONT)
+    resource = GIMP_RESOURCE (gimp_context_get_font ());
+  else if (resource_type == GIMP_TYPE_GRADIENT)
+    resource = GIMP_RESOURCE (gimp_context_get_gradient ());
+  else if (resource_type == GIMP_TYPE_PALETTE)
+    resource = GIMP_RESOURCE (gimp_context_get_palette ());
+  else if (resource_type == GIMP_TYPE_PATTERN)
+    resource = GIMP_RESOURCE (gimp_context_get_pattern ());
+  else
+    {
+      g_warning ("%s: Failed get resource from context", G_STRFUNC);
+      arg->value.sfa_resource = -1;
+      return;
+    }
+
+  arg->value.sfa_resource = gimp_resource_get_id (resource);
 }
 
 

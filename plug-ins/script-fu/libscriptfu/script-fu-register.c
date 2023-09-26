@@ -287,54 +287,18 @@ script_fu_parse_default_spec (scheme   *sc,
       break;
 
     case SF_FONT:
-      if (!sc->vptr->is_string (default_spec))
-        return registration_error (sc, "font defaults must be strings");
-
-      arg->default_value.sfa_font =
-        g_strdup (sc->vptr->string_value (default_spec));
-      break;
-
     case SF_PALETTE:
-      if (!sc->vptr->is_string (default_spec))
-        return registration_error (sc, "palette defaults must be strings");
-
-      arg->default_value.sfa_palette =
-        g_strdup (sc->vptr->string_value (default_spec));
-      break;
-
     case SF_PATTERN:
-      if (!sc->vptr->is_string (default_spec))
-        return registration_error (sc, "pattern defaults must be strings");
-
-      arg->default_value.sfa_pattern =
-        g_strdup (sc->vptr->string_value (default_spec));
-      break;
-
     case SF_BRUSH:
-      {
-        pointer brush_list;
-
-        if (!sc->vptr->is_list (sc, default_spec))
-          return registration_error (sc, "brush defaults must be a list");
-
-        /* In v2, the list had name, opacity, spacing, and paint_mode.
-         * In v3, we only use the name and the widget is a simple brush chooser.
-         * A script that wants user to choose opacity and spacing must
-         * use separate arguments for that.
-         * FUTURE: not a list, only a name
-         */
-        brush_list = default_spec;
-        arg->default_value.sfa_brush =
-          g_strdup (sc->vptr->string_value (sc->vptr->pair_car (brush_list)));
-      }
-      break;
-
     case SF_GRADIENT:
-      if (!sc->vptr->is_string (default_spec))
-        return registration_error (sc, "gradient defaults must be strings");
-
-      arg->default_value.sfa_gradient =
-        g_strdup (sc->vptr->string_value (default_spec));
+      /* Ignore default_spec given by author, it is just placeholder in script.
+       * We can't look up resource by name at registration time.
+       * The ParamSpecResource does not conveniently take a default.
+       * It makes no sense to set objects for defaults.
+       * Compare to SF_IMAGE.
+       * Since v3.
+       */
+      arg->default_value.sfa_resource = -1;
       break;
 
     case SF_OPTION:

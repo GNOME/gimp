@@ -50,6 +50,8 @@ typedef struct
   gint   history;
 } SFEnum;
 
+typedef gint32 SFResourceType;
+
 typedef union
 {
   gint32         sfa_image;
@@ -63,11 +65,7 @@ typedef union
   gchar         *sfa_value;
   SFAdjustment   sfa_adjustment;
   SFFilename     sfa_file;
-  gchar         *sfa_font;
-  gchar         *sfa_gradient;
-  gchar         *sfa_palette;
-  gchar         *sfa_pattern;
-  gchar         *sfa_brush;
+  SFResourceType sfa_resource;
   SFOption       sfa_option;
   SFEnum         sfa_enum;
 } SFArgValue;
