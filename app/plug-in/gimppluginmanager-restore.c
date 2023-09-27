@@ -661,10 +661,11 @@ gimp_plug_in_manager_add_from_file (GimpPlugInManager *manager,
   basename = g_path_get_basename (filename);
   g_free (filename);
 
-  /* When we scan build dirs for plug-ins, there will be some
+  /* When we scan build dirs for plug-ins, there might be some
    * executable files that are not plug-ins that we want to ignore,
-   * for example plug-ins/common/mkgen.pl if
-   * GIMP_TESTING_PLUGINDIRS=plug-ins/common
+   * for example back with autotools, there used to be a file
+   * plug-ins/common/mkgen.pl if GIMP_TESTING_PLUGINDIRS=plug-ins/common
+   * Such files should be listed in GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES
    */
   if (gimp_plug_in_manager_ignore_plugin_basename (basename))
     {

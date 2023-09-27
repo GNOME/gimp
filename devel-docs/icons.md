@@ -66,14 +66,11 @@ Please make sure that you provide both the Symbolic as well as the Color
 icons. You are welcome to add a raster version for Legacy, but this is
 not mandatory anymore.
 
-- Add the icons in relevant listing files in `icons/icon-lists/` then
-  run `tools/generate-icon-makefiles.py` which will regenerate files for
-  the autotools build integrating your new icons and `touch` the
-  `meson.build` files to make sure the next build will trigger a
-  reconfiguration. The meson build indeed also uses the same listing
-  files so you only have to add your icon names in the right categories,
-  run the script and you are done.
-
+- Add the icons in relevant listing files in `icons/icon-lists/` then run
+  `touch icons/Color/meson.build icons/Symbolic/meson.build` to force-trigger
+  their re-processing (hence re-configuration) at next build. Otherwise even
+  with image list changed, meson might not see it as it uses the list from the
+  last configuration.
 
 ### Pixel perfection
 
