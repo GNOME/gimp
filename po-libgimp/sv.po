@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-15 14:41+0000\n"
-"PO-Revision-Date: 2023-07-15 13:57+0200\n"
+"POT-Creation-Date: 2023-08-26 19:07+0000\n"
+"PO-Revision-Date: 2023-09-27 21:27+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -167,7 +167,7 @@ msgid "Confirm Save"
 msgstr "Bekräfta sparande"
 
 #: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:571
+#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:557
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -348,12 +348,12 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedur matchar din sökning"
 msgstr[1] "%d procedurer matchar din sökning"
 
-#: libgimp/gimpprocedure.c:1925
+#: libgimp/gimpprocedure.c:1924
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Proceduren ”%s” returnerade inga svarsvärden"
 
-#: libgimp/gimpprocedure.c:2016
+#: libgimp/gimpprocedure.c:2015
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -362,7 +362,7 @@ msgstr ""
 "Proceduren ”%s” returnerade en felaktig värdetyp för svarsvärdet ”%s” (nr. "
 "%d). Förväntade %s, fick %s."
 
-#: libgimp/gimpprocedure.c:2028
+#: libgimp/gimpprocedure.c:2027
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
@@ -371,7 +371,7 @@ msgstr ""
 "Proceduren ”%s” har anropats med en felaktig värdetyp för argumentet "
 "”%s” (nr. %d). Förväntade %s, fick %s."
 
-#: libgimp/gimpprocedure.c:2063
+#: libgimp/gimpprocedure.c:2062
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -380,7 +380,7 @@ msgstr ""
 "Proceduren ”%s” returnerade ”%s” som svarsvärde ”%s” (nr. %d, typ %s). Det "
 "här värdet är utanför intervallet."
 
-#: libgimp/gimpprocedure.c:2077
+#: libgimp/gimpprocedure.c:2076
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -389,13 +389,13 @@ msgstr ""
 "Proceduren ”%s” har anropats med värdet ”%s” för argumentet ”%s” (nr. %d, "
 "typ %s). Det här värdet är utanför intervallet."
 
-#: libgimp/gimpprocedure.c:2121
+#: libgimp/gimpprocedure.c:2120
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "Proceduren ”%s” returnerade en ogiltig UTF-8-sträng för argumentet ”%s”."
 
-#: libgimp/gimpprocedure.c:2131
+#: libgimp/gimpprocedure.c:2130
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -408,14 +408,14 @@ msgstr ""
 msgid "_Open"
 msgstr "_Öppna"
 
-#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:572
+#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:558
 #: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
 #: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
 #: libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_OK"
 
-#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:570
+#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:556
 msgid "_Reset"
 msgstr "_Återställ"
 
@@ -498,6 +498,62 @@ msgstr "Datum:"
 #: libgimp/gimpprocview.c:269
 msgid "Copyright:"
 msgstr "Copyright:"
+
+#: libgimp/gimpsaveprocedure.c:408
+msgid "Save _Exif"
+msgstr "Spara _Exif"
+
+#: libgimp/gimpsaveprocedure.c:409
+msgid "Save Exif (Exchangeable image file format) metadata"
+msgstr "Spara Exif-metadata (Exchangeable image file format)"
+
+#: libgimp/gimpsaveprocedure.c:414
+msgid "Save _IPTC"
+msgstr "Spara _IPTC"
+
+#: libgimp/gimpsaveprocedure.c:415
+msgid "Save IPTC (International Press Telecommunications Council) metadata"
+msgstr "Spara IPTC-metadata (International Press Telecommunications Council)"
+
+#: libgimp/gimpsaveprocedure.c:420
+msgid "Save _XMP"
+msgstr "Spara _XMP"
+
+#: libgimp/gimpsaveprocedure.c:421
+msgid "Save XMP (Extensible Metadata Platform) metadata"
+msgstr "Spara XMP-metadata (Extensible Metadata Platform)"
+
+#: libgimp/gimpsaveprocedure.c:426
+msgid "Save color _profile"
+msgstr "Spara färg_profil"
+
+#: libgimp/gimpsaveprocedure.c:427
+msgid "Save the ICC color profile as metadata"
+msgstr "Spara ICC-färgprofilen som metadata"
+
+#: libgimp/gimpsaveprocedure.c:432
+msgid "Save _thumbnail"
+msgstr "Spara _miniatyrbild"
+
+#: libgimp/gimpsaveprocedure.c:433
+msgid "Save a smaller representation of the image as metadata"
+msgstr "Spara en mindre representation av bilden som metadata"
+
+#: libgimp/gimpsaveprocedure.c:439
+msgid "Save c_omment"
+msgstr "Spara k_ommentar"
+
+#: libgimp/gimpsaveprocedure.c:440
+msgid "Save a comment as metadata"
+msgstr "Spara en kommentar som metadata"
+
+#: libgimp/gimpsaveprocedure.c:444
+msgid "Comment"
+msgstr "Kommentar"
+
+#: libgimp/gimpsaveprocedure.c:445
+msgid "Image comment"
+msgstr "Bildkommentar"
 
 #: libgimp/gimpsaveproceduredialog.c:166
 msgid "Metadata"
@@ -1576,32 +1632,32 @@ msgstr "Tolkning av IPTC-data misslyckades."
 msgid "Parsing XMP data failed."
 msgstr "Misslyckades med tolkning av XMP-data."
 
-#: libgimpbase/gimputils.c:219 libgimpbase/gimputils.c:224
+#: libgimpbase/gimputils.c:220 libgimpbase/gimputils.c:225
 msgid "(invalid UTF-8 string)"
 msgstr "(ogiltig UTF-8-sträng)"
 
-#: libgimpbase/gimputils.c:394
+#: libgimpbase/gimputils.c:395
 msgid "File path is NULL"
 msgstr "Filsökväg är NULL"
 
-#: libgimpbase/gimputils.c:402
+#: libgimpbase/gimputils.c:403
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Fel vid konvertering av UTF-8-filnamn till breda tecken"
 
-#: libgimpbase/gimputils.c:410
+#: libgimpbase/gimputils.c:411
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() misslyckades"
 
-#: libgimpbase/gimputils.c:449
+#: libgimpbase/gimputils.c:450
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Kan inte konvertera ”%s” till en giltig NSURL."
 
-#: libgimpbase/gimputils.c:477
+#: libgimpbase/gimputils.c:478
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Misslyckades med att ansluta till org.freedesktop.FileManager1: "
 
-#: libgimpbase/gimputils.c:501
+#: libgimpbase/gimputils.c:502
 msgid "Calling ShowItems failed: "
 msgstr "Misslyckades med att anropa ShowItems: "
 
@@ -1990,7 +2046,7 @@ msgid ""
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 "Kan inte fastställa en giltig katalog för miniatyrbilder.\n"
-"Miniatyrbilder kommer istället att lagras i mappen för temporärfiler (%s)."
+"Miniatyrbilder kommer i stället att lagras i mappen för temporärfiler (%s)."
 
 #: libgimpthumb/gimpthumb-utils.c:299 libgimpthumb/gimpthumb-utils.c:367
 #, c-format
@@ -2009,6 +2065,22 @@ msgstr "Kunde inte skapa miniatyrbild för %s: %s"
 #: libgimpwidgets/gimpbrowser.c:141
 msgid "_Search:"
 msgstr "_Sök:"
+
+#: libgimpwidgets/gimpcolorbutton.c:380
+msgid "_Foreground Color"
+msgstr "_Förgrundsfärg"
+
+#: libgimpwidgets/gimpcolorbutton.c:381
+msgid "_Background Color"
+msgstr "_Bakgrundsfärg"
+
+#: libgimpwidgets/gimpcolorbutton.c:386
+msgid "Blac_k"
+msgstr "_Svart"
+
+#: libgimpwidgets/gimpcolorbutton.c:387
+msgid "_White"
+msgstr "_Vit"
 
 #: libgimpwidgets/gimpcolorhexentry.c:134
 msgid ""
@@ -2147,6 +2219,22 @@ msgstr "mebibyte"
 #: libgimpwidgets/gimpmemsizeentry.c:254
 msgid "Gibibyte"
 msgstr "gibibyte"
+
+#: libgimpwidgets/gimppageselector.c:185
+msgid "N Pages"
+msgstr "N sidor"
+
+#: libgimpwidgets/gimppageselector.c:186
+msgid "The number of pages to open"
+msgstr "Antalet sidor att öppna"
+
+#: libgimpwidgets/gimppageselector.c:199
+msgid "Target"
+msgstr "Mål"
+
+#: libgimpwidgets/gimppageselector.c:200
+msgid "the target to open to"
+msgstr "målet att öppna till"
 
 #. Count label
 #: libgimpwidgets/gimppageselector.c:283 libgimpwidgets/gimppageselector.c:1079
@@ -2848,75 +2936,78 @@ msgstr "Ändring före transform i stopp"
 msgid "Aces RRT"
 msgstr "Aces RRT"
 
-#: modules/display-filter-clip-warning.c:121
+#. Translators: "Clip Warning" is the name of a (color) display filter
+#. * that highlights pixels outside of the color space range.
+#. * Shown as a label description.
+#: modules/display-filter-clip-warning.c:124
 msgid "Clip warning color display filter"
 msgstr "Klippvarningsfärgvisningsfilter"
 
-#: modules/display-filter-clip-warning.c:158
+#: modules/display-filter-clip-warning.c:161
 msgid "Show shadows"
 msgstr "Visa skuggor"
 
-#: modules/display-filter-clip-warning.c:159
+#: modules/display-filter-clip-warning.c:162
 msgid "Show warning for pixels with a negative component"
 msgstr "Visa varning för bildpunkter med en negativ komponent"
 
-#: modules/display-filter-clip-warning.c:165
+#: modules/display-filter-clip-warning.c:168
 msgid "Shadows color"
 msgstr "Skuggfärg"
 
-#: modules/display-filter-clip-warning.c:166
+#: modules/display-filter-clip-warning.c:169
 msgid "Shadows warning color"
 msgstr "Varningsfärg för skuggor"
 
-#: modules/display-filter-clip-warning.c:178
+#: modules/display-filter-clip-warning.c:181
 msgid "Show highlights"
 msgstr "Visa högdagrar"
 
-#: modules/display-filter-clip-warning.c:179
+#: modules/display-filter-clip-warning.c:182
 msgid "Show warning for pixels with a component greater than one"
 msgstr "Visa varning för bildpunkter med en komponent som är större än ett"
 
-#: modules/display-filter-clip-warning.c:185
+#: modules/display-filter-clip-warning.c:188
 msgid "Highlights color"
 msgstr "Högdagerfärg"
 
-#: modules/display-filter-clip-warning.c:186
+#: modules/display-filter-clip-warning.c:189
 msgid "Highlights warning color"
 msgstr "Varningsfärg för högdagrar"
 
-#: modules/display-filter-clip-warning.c:198
+#: modules/display-filter-clip-warning.c:201
 msgid "Show bogus"
 msgstr "Visa felaktiga"
 
-#: modules/display-filter-clip-warning.c:199
+#: modules/display-filter-clip-warning.c:202
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr "Visa varning för bildpunkter med en komponent som är oändlig eller NaN"
 
-#: modules/display-filter-clip-warning.c:205
+#: modules/display-filter-clip-warning.c:208
 msgid "Bogus color"
 msgstr "Felaktig färg"
 
-#: modules/display-filter-clip-warning.c:206
+#: modules/display-filter-clip-warning.c:209
 msgid "Bogus warning color"
 msgstr "Varningsfärg för felaktigheter"
 
-#: modules/display-filter-clip-warning.c:218
+#: modules/display-filter-clip-warning.c:221
 msgid "Include alpha component"
 msgstr "Inkludera alfakomponent"
 
-#: modules/display-filter-clip-warning.c:219
+#: modules/display-filter-clip-warning.c:222
 msgid "Include alpha component in the warning"
 msgstr "Inkludera alfakomponent i varningen"
 
-#: modules/display-filter-clip-warning.c:225
+#: modules/display-filter-clip-warning.c:228
 msgid "Include transparent pixels"
 msgstr "Inkludera transparenta bildpunkter"
 
-#: modules/display-filter-clip-warning.c:226
+#: modules/display-filter-clip-warning.c:229
 msgid "Include fully transparent pixels in the warning"
 msgstr "Inkludera helt transparenta bildpunkter i varningen"
 
-#: modules/display-filter-clip-warning.c:230
+#: modules/display-filter-clip-warning.c:233
 msgid "Clip Warning"
 msgstr "Klippvarning"
 
@@ -2968,18 +3059,6 @@ msgstr "Kontrastcykler"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrast"
-
-#~ msgid "_Foreground Color"
-#~ msgstr "_Förgrundsfärg"
-
-#~ msgid "_Background Color"
-#~ msgstr "_Bakgrundsfärg"
-
-#~ msgid "Blac_k"
-#~ msgstr "_Svart"
-
-#~ msgid "_White"
-#~ msgstr "_Vit"
 
 #~ msgid "Brush Selection"
 #~ msgstr "Penselval"
