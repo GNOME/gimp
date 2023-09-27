@@ -46,6 +46,7 @@ add_bom ()
 
 
 download_lang Basque.isl
+download_lang Belarusian.isl
 download_lang ChineseSimplified.isl
 download_lang ChineseTraditional.isl
 # Supposed to be UTF-8 yet missing BOM.

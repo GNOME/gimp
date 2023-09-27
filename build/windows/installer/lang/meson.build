@@ -8,6 +8,7 @@ ms_installer_config_xml = i18n.merge_file(
 )
 
 languages = [
+  { 'code': 'be',    },
   { 'code': 'bg',    },
   { 'code': 'ca',    },
   { 'code': 'cs',    },

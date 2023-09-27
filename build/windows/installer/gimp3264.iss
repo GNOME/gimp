@@ -187,6 +187,7 @@ PrivilegesRequiredOverridesAllowed=dialog
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl,lang\en.setup.isl"
+Name: "be"; MessagesFile: "compiler:Languages\Unofficial\Belarusian.isl,lang\be.setup.isl"
 Name: "bg"; MessagesFile: "compiler:Languages\Bulgarian.isl,lang\bg.setup.isl"
 Name: "ca"; MessagesFile: "compiler:Languages\Catalan.isl,lang\ca.setup.isl"
 Name: "cs"; MessagesFile: "compiler:Languages\Czech.isl,lang\cs.setup.isl"
