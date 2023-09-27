@@ -36,6 +36,13 @@ foreach install : install_icons
   endforeach
 
   install_data(icons, install_dir: gimpiconsdir / theme / outdir / 'apps')
+
+  wilber_eek = '@0@/gimp-wilber-eek@1@'.format(indir, suffix)
+  if wilber_eek in icons
+    install_data(wilber_eek,
+                 rename: 'image-missing@0@'.format(suffix),
+                 install_dir: gimpiconsdir / theme / outdir / 'apps')
+  endif
 endforeach
 
 icons_core = [ '64/dialog-question.png', ]

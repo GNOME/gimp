@@ -41,6 +41,18 @@ foreach install : install_icons
   endforeach
 
   install_data(icons, install_dir: gimpiconsdir / theme / outdir / 'apps')
+
+  wilber_eek = '@0@/gimp-wilber-eek@1@'.format(indir, suffix)
+  if wilber_eek in icons
+    # Note: since this is just a copy of gimp-wilber-week, we could just do a
+    # symlink with install_symlink(), but this is only available in meson 0.61.0
+    # and looking at its code, it would apparently fail if symlinks are not
+    # available in the target OS (instead of silently and intelligently falling
+    # back to doing a copy).
+    install_data(wilber_eek,
+                 rename: 'image-missing@0@'.format(suffix),
+                 install_dir: gimpiconsdir / theme / outdir / 'apps')
+  endif
 endforeach
 
 icons_core = [ '64/gimp-question.png', ]
