@@ -7,10 +7,14 @@ if [[ "$MSYSTEM" == "MINGW32" ]]; then
     export MSYS2_ARCH="i686"
     export MSYS2_PREFIX="/c/msys64/mingw32"
     export GIMP_OPTIONS="-Dvala=disabled"
-else
+elif [[ "$MSYSTEM" == "MINGW64" ]]; then
     export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
     export MSYS2_PREFIX="/c/msys64/mingw64/"
+else # [[ "$MSYSTEM" == "CLANGARM64" ]];
+    export ARTIFACTS_SUFFIX="-arm64"
+    export MSYS2_ARCH="clang-aarch64"
+    export MSYS2_PREFIX="/c/msys64/clangarm64/"
 fi
 
 export ACLOCAL_FLAGS="-I${MSYS2_PREFIX}/share/aclocal"
@@ -75,6 +79,7 @@ pacman --noconfirm -S --needed \
 # XXX We've got a weird error when the prefix is in the current dir.
 # Until we figure it out, this trick seems to work, even though it's
 # completely ridiculous.
+rm -fr ~/_install${ARTIFACTS_SUFFIX}
 mv "_install${ARTIFACTS_SUFFIX}" ~
 
 export GIMP_PREFIX="`realpath ~/_install`${ARTIFACTS_SUFFIX}"

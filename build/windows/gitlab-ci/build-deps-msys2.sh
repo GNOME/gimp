@@ -10,12 +10,18 @@ if [[ "$MSYSTEM" == "MINGW32" ]]; then
     export BABL_OPTIONS="-Denable-vapi=false"
     export GEGL_OPTIONS="-Dvapigen=disabled"
     export MSYS_PREFIX="/c/msys64/mingw32/"
-else
+elif [[ "$MSYSTEM" == "MINGW64" ]]; then
     export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
     export BABL_OPTIONS=""
     export GEGL_OPTIONS=""
     export MSYS_PREFIX="/c/msys64/mingw64/"
+else # [[ "$MSYSTEM" == "CLANGARM64" ]];
+    export ARTIFACTS_SUFFIX="-arm64"
+    export MSYS2_ARCH="clang-aarch64"
+    export BABL_OPTIONS=""
+    export GEGL_OPTIONS=""
+    export MSYS_PREFIX="/c/msys64/clangarm64/"
 fi
 
 # Update everything
