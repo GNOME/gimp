@@ -10,6 +10,11 @@
 
 @import url("common.css");
 
+/* Highlight icons in Grid View when hovered over */
+iconview:hover {
+  background-color: @fg-color;
+}
+
 /*
  * Paned separator handles
  */
