@@ -18,6 +18,9 @@
 #ifndef __SCRIPT_FU_ERRORS_H__
 #define __SCRIPT_FU_ERRORS_H__
 
+pointer registration_error (scheme        *sc,
+                            const gchar   *error_message);
+
 pointer script_error (scheme        *sc,
                       const gchar   *error_message,
                       const pointer  a);

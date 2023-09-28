@@ -44,6 +44,24 @@
   };
 
 
+/* Called on event: language error in author's script,
+ * in the Scheme arg spec for a PDB registered argument.
+ * Returns an error which the caller must return to its caller.
+ */
+pointer registration_error (scheme        *sc,
+                            const gchar   *error)
+{
+  gchar  error_message[1024];
+
+  g_debug ("%s", error);
+  /* Prefix with name of SF function that discovered error. */
+  g_snprintf (error_message, sizeof (error_message),
+              "script-fu-register: %s",
+              error);
+  return foreign_error (sc, error_message, 0);
+}
+
+
 /*
  * Called on event: language error in the author's script.
  * Logs the error and returns a foreign_error.
