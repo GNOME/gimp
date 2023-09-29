@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-15 14:23+0000\n"
-"PO-Revision-Date: 2023-07-15 16:45+0200\n"
+"POT-Creation-Date: 2023-09-26 10:35+0000\n"
+"PO-Revision-Date: 2023-09-29 23:01+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -194,11 +194,6 @@ msgstr "Script-Fu kan inte köra två skript på samma gång."
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Du kör redan skriptet ”%s”."
-
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:210
-#, c-format
-msgid "Script-Fu: %s"
-msgstr "Script-Fu: %s"
 
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:217
 msgid "_Reset"
@@ -573,23 +568,23 @@ msgstr "Höjd"
 msgid "Depth"
 msgstr "Djup"
 
-#: plug-ins/script-fu/scripts/coffee.scm:36
+#: plug-ins/script-fu/scripts/coffee.scm:37
 msgid "Stain"
 msgstr "Stänk"
 
-#: plug-ins/script-fu/scripts/coffee.scm:82
+#: plug-ins/script-fu/scripts/coffee.scm:91
 msgid "_Coffee Stain..."
 msgstr "_Kaffefläck…"
 
-#: plug-ins/script-fu/scripts/coffee.scm:83
+#: plug-ins/script-fu/scripts/coffee.scm:92
 msgid "Add realistic looking coffee stains to the image"
 msgstr "Lägg till realistiska kaffefläckar till bilden"
 
-#: plug-ins/script-fu/scripts/coffee.scm:90
+#: plug-ins/script-fu/scripts/coffee.scm:99
 msgid "Stains"
 msgstr "Stänk"
 
-#: plug-ins/script-fu/scripts/coffee.scm:91
+#: plug-ins/script-fu/scripts/coffee.scm:100
 msgid "Darken only"
 msgstr "Mörka endast"
 
@@ -671,64 +666,6 @@ msgstr "Opacitet"
 msgid "Allow resizing"
 msgstr "Tillåt storleksändring"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "_Erase Every Nth Row..."
-msgstr "_Radera var N:e rad…"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:43
-msgid "Erase every nth row or column"
-msgstr "Radera var n:e rad eller kolumn"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Rows/cols"
-msgstr "Rader/Kolumner"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Rows"
-msgstr "Rader"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:50
-#: plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Columns"
-msgstr "Kolumner"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Erase/fill"
-msgstr "Ta bort/Fyll"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Erase"
-msgstr "Ta bort"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:52
-#: plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Fill with BG"
-msgstr "Fyll med bakgrund"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:57
-msgid "_Erase Every Other Row..."
-msgstr "_Radera varannan rad…"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:58
-msgid "Erase every other row or column"
-msgstr "Radera varannan rad eller kolumn"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Even/odd"
-msgstr "Jämn/Udda"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Even"
-msgstr "Jämn"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Odd"
-msgstr "Udda"
-
 #: plug-ins/script-fu/scripts/font-map.scm:161
 msgid "Render _Font Map..."
 msgstr "Rendera typsnitts_karta…"
@@ -809,80 +746,85 @@ msgstr "Skuggvikt (%)"
 msgid "Flatten image"
 msgstr "Platta till bilden"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:59
+#: plug-ins/script-fu/scripts/gimp-online.scm:63
 msgid "Using _Paths"
 msgstr "Användning av _banor"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:60
-#: plug-ins/script-fu/scripts/gimp-online.scm:73
-#: plug-ins/script-fu/scripts/gimp-online.scm:86
-#: plug-ins/script-fu/scripts/gimp-online.scm:99
-#: plug-ins/script-fu/scripts/gimp-online.scm:112
-#: plug-ins/script-fu/scripts/gimp-online.scm:125
-#: plug-ins/script-fu/scripts/gimp-online.scm:138
-#: plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/gimp-online.scm:64
+#: plug-ins/script-fu/scripts/gimp-online.scm:77
+#: plug-ins/script-fu/scripts/gimp-online.scm:90
+#: plug-ins/script-fu/scripts/gimp-online.scm:103
+#: plug-ins/script-fu/scripts/gimp-online.scm:116
+#: plug-ins/script-fu/scripts/gimp-online.scm:129
+#: plug-ins/script-fu/scripts/gimp-online.scm:142
+#: plug-ins/script-fu/scripts/gimp-online.scm:155
+#: plug-ins/script-fu/scripts/gimp-online.scm:167
 msgid "Bookmark to the user manual"
 msgstr "Bokmärke till användarhandboken"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:72
+#: plug-ins/script-fu/scripts/gimp-online.scm:76
 msgid "_Preparing your Images for the Web"
 msgstr "_Förbered dina bilder för webben"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/gimp-online.scm:89
 msgid "_Working with Digital Camera Photos"
 msgstr "Arbeta med digital_kamerabilder"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:98
+#: plug-ins/script-fu/scripts/gimp-online.scm:102
 msgid "Create, Open and Save _Files"
 msgstr "Skapa, öppna och spara _filer"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:111
+#: plug-ins/script-fu/scripts/gimp-online.scm:115
 msgid "_Basic Concepts"
 msgstr "_Grundläggande koncept"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:124
+#: plug-ins/script-fu/scripts/gimp-online.scm:128
 msgid "How to Use _Dialogs"
 msgstr "Hur man använder _dialogrutor"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:141
 msgid "Drawing _Simple Objects"
 msgstr "Rita _enkla objekt"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/gimp-online.scm:154
 msgid "Create and Use _Selections"
 msgstr "Skapa och använd _markeringar"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:186
+#: plug-ins/script-fu/scripts/gimp-online.scm:166
+msgid "_[Table of Contents]"
+msgstr "_[Innehållsförteckning]"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:202
 msgid "_Main Web Site"
 msgstr "_Huvudwebbplats"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:187
-#: plug-ins/script-fu/scripts/gimp-online.scm:200
-#: plug-ins/script-fu/scripts/gimp-online.scm:239
+#: plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/gimp-online.scm:216
+#: plug-ins/script-fu/scripts/gimp-online.scm:255
 msgid "Bookmark to the GIMP web site"
 msgstr "Bokmärke till GIMPs webbplats"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:199
+#: plug-ins/script-fu/scripts/gimp-online.scm:215
 msgid "_Developer Web Site"
 msgstr "Webbplats för _utvecklare"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:212
+#: plug-ins/script-fu/scripts/gimp-online.scm:228
 msgid "_Roadmaps"
 msgstr "Färd_planer"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:213
+#: plug-ins/script-fu/scripts/gimp-online.scm:229
 msgid "Bookmark to the roadmaps of GIMP"
 msgstr "Bokmärke till GIMPs färdplaner"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:225
+#: plug-ins/script-fu/scripts/gimp-online.scm:241
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Felrapporter och önskemål om funktionalitet"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:226
+#: plug-ins/script-fu/scripts/gimp-online.scm:242
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Bokmärke till GIMPs felrapporteringssystem"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:238
+#: plug-ins/script-fu/scripts/gimp-online.scm:254
 msgid "_User Manual Web Site"
 msgstr "Webbplats för _användarhandbok"
 
@@ -913,26 +855,6 @@ msgstr "Höjd"
 #: plug-ins/script-fu/scripts/gradient-example.scm:77
 msgid "Gradient reverse"
 msgstr "Omvänd gradient"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:84
-msgid "_Grid..."
-msgstr "_Rutnät…"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:85
-msgid ""
-"Draw a grid as specified by the lists of X and Y locations using the current "
-"brush"
-msgstr ""
-"Rita ett rutnät angivet av listorna för X- och Y-koordinaterna med aktuell "
-"pensel"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:92
-msgid "X divisions"
-msgstr "X-delar"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:93
-msgid "Y divisions"
-msgstr "Y-delar"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
@@ -1151,6 +1073,10 @@ msgstr ""
 "Alla tecken i namnet är antingen blanksteg eller tecken som inte får "
 "förekomma i filnamn."
 
+#: plug-ins/script-fu/scripts/palette-export.scm:264
+msgid "_CSS stylesheet..."
+msgstr "_CSS-stilmall…"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
@@ -1159,13 +1085,25 @@ msgstr ""
 "Exportera den aktiva paletten som en CSS-stilmall med färgnamnen som deras "
 "klassnamn samt själva färgen som färgattributet"
 
+#: plug-ins/script-fu/scripts/palette-export.scm:290
+msgid "P_HP dictionary..."
+msgstr "P_HP-lexikon…"
+
 #: plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
-msgstr "Exportera den aktiva paletten som ett PHP-dictionary (namn => färg)"
+msgstr "Exportera den aktiva paletten som ett PHP-lexikon (namn => färg)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:322
+msgid "_Python dictionary..."
+msgstr "_Python-lexikon…"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
-msgstr "Exportera den aktiva paletten som ett Python-dictionary (namn: färg)"
+msgstr "Exportera den aktiva paletten som ett Python-lexikon (namn: färg)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:351
+msgid "_Text file..."
+msgstr "_Textfil…"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
@@ -1174,6 +1112,10 @@ msgid ""
 msgstr ""
 "Skriv alla färgerna i en palett till en textfil, ett hexadecimalt värde per "
 "rad (inga namn)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:398
+msgid "J_ava map..."
+msgstr "J_ava-avbildning…"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:399
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
@@ -1194,19 +1136,15 @@ msgid "Paste the clipboard contents into a new brush"
 msgstr "Klistra in urklippets innehåll till en ny pensel"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: plug-ins/script-fu/scripts/select-to-brush.scm:145
 msgid "_Brush name"
 msgstr "P_enselnamn"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
-#: plug-ins/script-fu/scripts/select-to-brush.scm:146
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:107
 msgid "_File name"
 msgstr "_Filnamn"
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:72
-#: plug-ins/script-fu/scripts/select-to-brush.scm:147
 msgid "_Spacing"
 msgstr "Me_llanrum"
 
@@ -1219,7 +1157,6 @@ msgid "Paste the clipboard contents into a new pattern"
 msgstr "Klistra in urklippets innehåll till ett nytt mönster"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:106
 msgid "_Pattern name"
 msgstr "_Mönsternamn"
 
@@ -1322,15 +1259,15 @@ msgstr "Y-avstånd för skugga"
 msgid "Add background"
 msgstr "Lägg till bakgrund"
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Se_t Colormap..."
 msgstr "S_täll in färgkarta…"
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:55
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr "Ändra färgkartan för en bild till färgerna i en angiven palett."
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:62
 msgid "Palette"
 msgstr "Palett"
 
@@ -1349,30 +1286,6 @@ msgstr "R_adie (%)"
 #: plug-ins/script-fu/scripts/selection-round.scm:148
 msgid "Co_ncave"
 msgstr "Ko_nkav"
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm:137
-msgid "To _Brush..."
-msgstr "Till _pensel…"
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm:138
-msgid "Convert a selection to a brush"
-msgstr "Konvertera en markering till en pensel"
-
-#: plug-ins/script-fu/scripts/select-to-image.scm:85
-msgid "To _Image"
-msgstr "Till _bild"
-
-#: plug-ins/script-fu/scripts/select-to-image.scm:86
-msgid "Convert a selection to an image"
-msgstr "Konvertera en markering till en bild"
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:98
-msgid "To _Pattern..."
-msgstr "Till _mönster…"
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm:99
-msgid "Convert a selection to a pattern"
-msgstr "Konvertera en markering till ett mönster"
 
 #: plug-ins/script-fu/scripts/slide.scm:245
 msgid "_Slide..."
@@ -1581,6 +1494,83 @@ msgstr "X-avstånd för skuggkastning"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Y-avstånd för skuggkastning"
+
+#, c-format
+#~ msgid "Script-Fu: %s"
+#~ msgstr "Script-Fu: %s"
+
+#~ msgid "_Erase Every Nth Row..."
+#~ msgstr "_Radera var N:e rad…"
+
+#~ msgid "Erase every nth row or column"
+#~ msgstr "Radera var n:e rad eller kolumn"
+
+#~ msgid "Rows/cols"
+#~ msgstr "Rader/Kolumner"
+
+#~ msgid "Rows"
+#~ msgstr "Rader"
+
+#~ msgid "Columns"
+#~ msgstr "Kolumner"
+
+#~ msgid "Erase/fill"
+#~ msgstr "Ta bort/Fyll"
+
+#~ msgid "Erase"
+#~ msgstr "Ta bort"
+
+#~ msgid "Fill with BG"
+#~ msgstr "Fyll med bakgrund"
+
+#~ msgid "_Erase Every Other Row..."
+#~ msgstr "_Radera varannan rad…"
+
+#~ msgid "Erase every other row or column"
+#~ msgstr "Radera varannan rad eller kolumn"
+
+#~ msgid "Even/odd"
+#~ msgstr "Jämn/Udda"
+
+#~ msgid "Even"
+#~ msgstr "Jämn"
+
+#~ msgid "Odd"
+#~ msgstr "Udda"
+
+#~ msgid "_Grid..."
+#~ msgstr "_Rutnät…"
+
+#~ msgid ""
+#~ "Draw a grid as specified by the lists of X and Y locations using the "
+#~ "current brush"
+#~ msgstr ""
+#~ "Rita ett rutnät angivet av listorna för X- och Y-koordinaterna med "
+#~ "aktuell pensel"
+
+#~ msgid "X divisions"
+#~ msgstr "X-delar"
+
+#~ msgid "Y divisions"
+#~ msgstr "Y-delar"
+
+#~ msgid "To _Brush..."
+#~ msgstr "Till _pensel…"
+
+#~ msgid "Convert a selection to a brush"
+#~ msgstr "Konvertera en markering till en pensel"
+
+#~ msgid "To _Image"
+#~ msgstr "Till _bild"
+
+#~ msgid "Convert a selection to an image"
+#~ msgstr "Konvertera en markering till en bild"
+
+#~ msgid "To _Pattern..."
+#~ msgstr "Till _mönster…"
+
+#~ msgid "Convert a selection to a pattern"
+#~ msgstr "Konvertera en markering till ett mönster"
 
 #~ msgid "_Wiki"
 #~ msgstr "_Wiki"
@@ -2419,9 +2409,6 @@ msgstr "Y-avstånd för skuggkastning"
 
 #~ msgid "Fill angle"
 #~ msgstr "Fyllningsvinkel"
-
-#~ msgid "Text C_ircle..."
-#~ msgstr "Textc_irkel..."
 
 #~ msgid ""
 #~ "Create a textured logo with highlights, shadows, and a mosaic background"
