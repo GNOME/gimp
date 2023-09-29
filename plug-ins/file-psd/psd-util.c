@@ -583,6 +583,7 @@ decode_packbits (const gchar *src,
             {
               IFDBG(2) g_debug ("Overrun in packbits replicate of %d chars", n - unpack_left);
               error_code = 2;
+              break;
             }
           memset (dst, *src, n);
           src++;
