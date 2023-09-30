@@ -22,6 +22,11 @@ else # [[ "$MSYSTEM" == "CLANGARM64" ]];
     export GIMP_DISTRIB=`realpath ./gimp-arm64`
 fi
 
+export OPTIONAL_PACKAGES=""
+if [[ "$MSYSTEM" != "CLANGARM64" ]]; then
+  export OPTIONAL_PACKAGES="mingw-w64-$MSYS2_ARCH-luajit mingw-w64-$MSYS2_ARCH-lua51-lgi"
+fi
+
 # Update everything
 pacman --noconfirm -Suy
 
@@ -31,6 +36,8 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-binutils \
     mingw-w64-$MSYS2_ARCH-toolchain \
     mingw-w64-$MSYS2_ARCH-ccache \
+    \
+    $OPTIONAL_PACKAGES \
     \
     mingw-w64-$MSYS2_ARCH-aalib \
     mingw-w64-$MSYS2_ARCH-appstream-glib \
@@ -59,8 +66,6 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-libspiro \
     mingw-w64-$MSYS2_ARCH-libwebp \
     mingw-w64-$MSYS2_ARCH-libwmf \
-    mingw-w64-$MSYS2_ARCH-lua51-lgi \
-    mingw-w64-$MSYS2_ARCH-luajit \
     mingw-w64-$MSYS2_ARCH-maxflow \
     mingw-w64-$MSYS2_ARCH-mypaint-brushes \
     mingw-w64-$MSYS2_ARCH-openexr \
@@ -122,8 +127,10 @@ cp -fr ${MSYS_PREFIX}/share/libwmf ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/mypaint-data ${GIMP_DISTRIB}/share/
 cp -fr ${MSYS_PREFIX}/share/poppler ${GIMP_DISTRIB}/share/
 
-cp -fr ${MSYS_PREFIX}/share/lua/ ${GIMP_DISTRIB}/share/
-cp -fr ${MSYS_PREFIX}/lib/lua/ ${GIMP_DISTRIB}/lib/
+if [[ "$MSYSTEM" != "CLANGARM64" ]]; then
+  cp -fr ${MSYS_PREFIX}/share/lua/ ${GIMP_DISTRIB}/share/
+  cp -fr ${MSYS_PREFIX}/lib/lua/ ${GIMP_DISTRIB}/lib/
+fi
 
 # XXX Are these themes really needed?
 cp -fr ${MSYS_PREFIX}/share/themes ${GIMP_DISTRIB}/share/
@@ -172,8 +179,10 @@ python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/python3w.exe ${G
 cp -fr ${MSYS_PREFIX}/bin/python3.exe ${GIMP_DISTRIB}/bin/
 python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/python3.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
 
-cp -fr ${MSYS_PREFIX}/bin/luajit.exe ${GIMP_DISTRIB}/bin/
-python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/luajit.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+if [[ "$MSYSTEM" != "CLANGARM64" ]]; then
+  cp -fr ${MSYS_PREFIX}/bin/luajit.exe ${GIMP_DISTRIB}/bin/
+  python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/luajit.exe ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list
+fi
 
 # Executable for "gegl:introspect" from graphviz package.
 cp -fr ${MSYS_PREFIX}/bin/dot.exe ${GIMP_DISTRIB}/bin/
