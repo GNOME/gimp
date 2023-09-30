@@ -156,6 +156,11 @@ notebook header tabs tab > box > button
   margin-right: 5px;
 }
 
+/* The Close button on image tabs */
+.reorderable-page button {
+  background-color: transparent;
+}
+
 /* The background of many dialogs, e.g. Preferences and gimpcolordialog */
 .vertical {
   color: @fg-color;
@@ -277,6 +282,7 @@ paned menu separator {
 
 button {
   background-image: none;
+  background-color: @bg-color;
   text-shadow: 0 0;
 }
 
