@@ -32,6 +32,12 @@
   color: @fg-color;
 }
 
+/* Titlebar color when window is out of focus */
+.csd, .titlebar:backdrop, .titlebar label:backdrop, menubar:backdrop
+{
+  background-color: @hover-color;
+}
+
 /* TreeViews, e.g. in a file picker or the Prefs dialog */
 .view {
   background-color: @extreme-bg-color;
