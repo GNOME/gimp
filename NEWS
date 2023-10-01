@@ -45,6 +45,7 @@ Core:
       saved as a bumped XCF 19 version.
     * Older XCF versions with text layers can still be saved using older XCF
       versions as long as the text layers are untouched in an edit session.
+  - "view-zoom-*" actions are not radio actions anymore.
 
 Graphical User Interface:
 
@@ -78,6 +79,11 @@ Graphical User Interface:
     the last item, which is its more conventional position.
   - Many fixes to the default themes (including several cases of CSS rules
     leaking from system themes).
+  - New settings in Preferences to set the interface base font size (this won't
+    work as well, or at all, for themes which would set absolute font sizes).
+  - "gimp-wilber-eek" icon is now reused as generic "image-missing" icon too.
+  - In dockables' grid view, the hovered icon is now highlighted with a
+    contrasted border.
 
 Tools:
 
@@ -111,7 +117,9 @@ Plug-ins:
     * New test scripts.
   - New gimp-help-main script to link to the "Table of Contents" of the manual,
     added to the "Help > User Manual" submenu.
-  - PSP: added support to load PSP ICC Profile data.
+  - PSP:
+    * added support to load PSP ICC Profile data.
+    * fixed vulnerabilities: ZDI-CAN-22096, ZDI-CAN-22097.
   - Image Map: two new fields to the HTML Link tab and one new field to the
     Javascript tab for area properties:
     * accesskey: The same as the mnemonic key shortcuts in GTK, to activate an
@@ -119,11 +127,14 @@ Plug-ins:
       ALT+SHIFT and this key.
     * tabindex: What order to select the area when the user presses Tab.
     * onClick: Run a Javascript function when the user clicks on the area.
+  - Esm Software PIX: new import support.
+  - PSD: fixed vulnerabilities: ZDI-CAN-22094.
 
 Translations:
 
   - Many non-translatable strings were made translatable. Various other
     localization bugs were handled.
+  - New Belarusian translation in the Windows installer.
 
 API:
 
