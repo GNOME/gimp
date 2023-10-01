@@ -290,7 +290,7 @@ gimp_resource_chooser_finalize (GObject *object)
 
 /**
  * gimp_resource_chooser_set_drag_target:
- * @self:               A [class@ResourceChooser]
+ * @chooser:            A [class@ResourceChooser]
  * @drag_region_widget: An interior widget to be a droppable region
  *                      and emit "drag-data-received" signal
  * @drag_target:        The drag target to accept
@@ -304,11 +304,11 @@ gimp_resource_chooser_finalize (GObject *object)
  * Since: 3.0
  **/
 void
-gimp_resource_chooser_set_drag_target (GimpResourceChooser  *self,
+gimp_resource_chooser_set_drag_target (GimpResourceChooser  *chooser,
                                        GtkWidget            *drag_region_widget,
                                        const GtkTargetEntry *drag_target)
 {
-  g_return_if_fail (GIMP_IS_RESOURCE_CHOOSER (self));
+  g_return_if_fail (GIMP_IS_RESOURCE_CHOOSER (chooser));
   g_return_if_fail (drag_target != NULL);
   g_return_if_fail (drag_region_widget != NULL);
 
@@ -319,16 +319,16 @@ gimp_resource_chooser_set_drag_target (GimpResourceChooser  *self,
                      drag_target, 1,  /* Pass array of size 1 */
                      GDK_ACTION_COPY);
 
-  /* connect drag_region_widget's drag_received signal to self's callback. */
+  /* connect drag_region_widget's drag_received signal to chooser's callback. */
   g_signal_connect_swapped (drag_region_widget, "drag-data-received",
                             G_CALLBACK (gimp_resource_select_drag_data_received),
-                            self);
+                            chooser);
 }
 
 /**
  * gimp_resource_chooser_set_clickable:
- * @self:   A [class@ResourceChooser]
- * @widget: An interior widget that emits "clicked" signal
+ * @chooser: A [class@ResourceChooser]
+ * @widget:  An interior widget that emits "clicked" signal
  *
  * Called by a subclass init to specialize the instance.
  *
@@ -339,22 +339,22 @@ gimp_resource_chooser_set_drag_target (GimpResourceChooser  *self,
  * Since: 3.0
  **/
 void
-gimp_resource_chooser_set_clickable (GimpResourceChooser *self,
+gimp_resource_chooser_set_clickable (GimpResourceChooser *chooser,
                                      GtkWidget           *widget)
 {
-  g_return_if_fail (GIMP_IS_RESOURCE_CHOOSER (self));
+  g_return_if_fail (GIMP_IS_RESOURCE_CHOOSER (chooser));
   g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   /* Require the widget have a signal "clicked", usually a button. */
   g_signal_connect_swapped (widget, "clicked",
                             G_CALLBACK (gimp_resource_chooser_clicked),
-                            self);
+                            chooser);
 }
 
 /**
  * gimp_resource_chooser_get_resource:
- * @self: A #GimpResourceChooser
+ * @chooser: A #GimpResourceChooser
  *
  * Gets the currently selected resource.
  *
@@ -363,20 +363,20 @@ gimp_resource_chooser_set_clickable (GimpResourceChooser *self,
  * Since: 3.0
  */
 GimpResource *
-gimp_resource_chooser_get_resource (GimpResourceChooser *self)
+gimp_resource_chooser_get_resource (GimpResourceChooser *chooser)
 {
   GimpResourceChooserPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_RESOURCE_CHOOSER (self), NULL);
+  g_return_val_if_fail (GIMP_IS_RESOURCE_CHOOSER (chooser), NULL);
 
-  priv = gimp_resource_chooser_get_instance_private (self);
+  priv = gimp_resource_chooser_get_instance_private (chooser);
 
   return priv->resource;
 }
 
 /**
  * gimp_resource_chooser_set_resource:
- * @self: A #GimpResourceChooser
+ * @chooser: A #GimpResourceChooser
  * @resource: Resource to set.
  *
  * Sets the currently selected resource.
@@ -385,15 +385,15 @@ gimp_resource_chooser_get_resource (GimpResourceChooser *self)
  * Since: 3.0
  */
 void
-gimp_resource_chooser_set_resource (GimpResourceChooser *self,
+gimp_resource_chooser_set_resource (GimpResourceChooser *chooser,
                                     GimpResource        *resource)
 {
   GimpResourceChooserPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_RESOURCE_CHOOSER (self));
+  g_return_if_fail (GIMP_IS_RESOURCE_CHOOSER (chooser));
   g_return_if_fail (resource != NULL);
 
-  priv = gimp_resource_chooser_get_instance_private (self);
+  priv = gimp_resource_chooser_get_instance_private (chooser);
 
   if (priv->callback)
     {
@@ -402,12 +402,12 @@ gimp_resource_chooser_set_resource (GimpResourceChooser *self,
        * (since all views of the resource must be consistent.)
        * That will call back, which will change our own view of the resource.
        */
-      gimp_resource_chooser_set_remote_dialog (self, resource);
+      gimp_resource_chooser_set_remote_dialog (chooser, resource);
     }
   else
     {
       /* Call our own setter. */
-      gimp_resource_chooser_callback (resource, FALSE, self);
+      gimp_resource_chooser_callback (resource, FALSE, chooser);
     }
 }
 

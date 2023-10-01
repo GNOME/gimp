@@ -81,10 +81,10 @@ gimp_pattern_finalize (GObject *object)
  * If @max_width or @max_height are %NULL, the buffer is returned in the pattern's
  * native size.
  *
- * Make sure you called [func@Gegl.Init] before calling any function using
+ * Make sure you called [func@Gegl.init] before calling any function using
  * `GEGL`.
  *
- * Returns: (transfer full): a [Gegl@Buffer].
+ * Returns: (transfer full): a [class@Gegl.Buffer].
 */
 GeglBuffer *
 gimp_pattern_get_buffer (GimpPattern *pattern,

@@ -88,10 +88,10 @@ gimp_brush_finalize (GObject *object)
  * When the brush is parametric or a raster mask, only the mask (as returned by
  * [method@Gimp.Brush.get_mask]) will be set. The returned buffer will be NULL.
  *
- * Make sure you called [func@Gegl.Init] before calling any function using
+ * Make sure you called [func@Gegl.init] before calling any function using
  * `GEGL`.
  *
- * Returns: (transfer full): a [Gegl@Buffer] of %NULL if the brush is parametric
+ * Returns: (transfer full): a [class@Gegl.Buffer] of %NULL if the brush is parametric
  *                           or mask only.
 */
 GeglBuffer *
@@ -128,10 +128,10 @@ gimp_brush_get_buffer (GimpBrush  *brush,
  * If @max_width or @max_height are %NULL, the buffer is returned in the brush's
  * native size.
  *
- * Make sure you called [func@Gegl.Init] before calling any function using
+ * Make sure you called [func@Gegl.init] before calling any function using
  * `GEGL`.
  *
- * Returns: (transfer full): a [Gegl@Buffer] representing the @brush mask.
+ * Returns: (transfer full): a [class@Gegl.Buffer] representing the @brush mask.
 */
 GeglBuffer *
 gimp_brush_get_mask (GimpBrush  *brush,

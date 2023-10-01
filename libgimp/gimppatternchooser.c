@@ -43,7 +43,7 @@
  * A button which pops up a pattern selection dialog.
  *
  * Note that this widget draws itself using `GEGL` code. You **must** call
- * [func@Gegl.Init] first to be able to use this chooser.
+ * [func@Gegl.init] first to be able to use this chooser.
  **/
 
 #define CELL_SIZE 40

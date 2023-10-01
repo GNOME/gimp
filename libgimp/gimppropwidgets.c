@@ -45,11 +45,11 @@ static gchar      * gimp_utils_make_canonical_menu_label (const gchar           
  * gimp_prop_brush_chooser_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of a [class@Gimp.Brush] property.
- * @title: (nullable): title for the poppable dialog.
+ * @chooser_title: (nullable): title for the poppable dialog.
  *
- * Creates a [class@Gimp.BrushSelectButton] controlled by the specified property.
+ * Creates a [class@Gimp.Brush.Chooser] controlled by the specified property.
  *
- * Returns: (transfer full): A new [class@Gimp.BrushSelectButton].
+ * Returns: (transfer full): A new [class@GimpUi.BrushChooser].
  *
  * Since: 3.0
  */
@@ -66,11 +66,11 @@ gimp_prop_brush_chooser_new (GObject     *config,
  * gimp_prop_font_chooser_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of a [class@Gimp.Font] property.
- * @title: (nullable): title for the poppable dialog.
+ * @chooser_title: (nullable): title for the poppable dialog.
  *
- * Creates a [class@Gimp.FontSelectButton] controlled by the specified property.
+ * Creates a [class@GimpUi.FontChooser] controlled by the specified property.
  *
- * Returns: (transfer full): A new [class@Gimp.FontSelectButton].
+ * Returns: (transfer full): A new [class@GimpUi.FontChooser].
  *
  * Since: 3.0
  */
@@ -87,11 +87,11 @@ gimp_prop_font_chooser_new (GObject     *config,
  * gimp_prop_gradient_chooser_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of a [class@Gimp.Gradient] property.
- * @title: (nullable): title for the poppable dialog.
+ * @chooser_title: (nullable): title for the poppable dialog.
  *
- * Creates a [class@Gimp.GradientSelectButton] controlled by the specified property.
+ * Creates a [class@GimpUi.GradientChooser] controlled by the specified property.
  *
- * Returns: (transfer full): A new [class@Gimp.GradientSelectButton].
+ * Returns: (transfer full): A new [class@GimpUi.GradientChooser].
  *
  * Since: 3.0
  */
@@ -108,11 +108,11 @@ gimp_prop_gradient_chooser_new (GObject     *config,
  * gimp_prop_palette_chooser_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of a [class@Gimp.Palette] property.
- * @title: (nullable): title for the poppable dialog.
+ * @chooser_title: (nullable): title for the poppable dialog.
  *
- * Creates a [class@Gimp.PaletteSelectButton] controlled by the specified property.
+ * Creates a [class@GimpUi.PaletteChooser] controlled by the specified property.
  *
- * Returns: (transfer full): A new [class@Gimp.PaletteSelectButton].
+ * Returns: (transfer full): A new [class@GimpUi.PaletteChooser].
  *
  * Since: 3.0
  */
@@ -129,11 +129,11 @@ gimp_prop_palette_chooser_new (GObject     *config,
  * gimp_prop_pattern_chooser_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of a [class@Gimp.Pattern] property.
- * @title: (nullable): title for the poppable dialog.
+ * @chooser_title: (nullable): title for the poppable dialog.
  *
- * Creates a [class@Gimp.PatternSelectButton] controlled by the specified property.
+ * Creates a [class@GimpUi.PatternChooser] controlled by the specified property.
  *
- * Returns: (transfer full): A new [class@Gimp.PatternSelectButton].
+ * Returns: (transfer full): A new [class@GimpUi.PatternChooser].
  *
  * Since: 3.0
  */
@@ -150,11 +150,11 @@ gimp_prop_pattern_chooser_new (GObject     *config,
  * gimp_prop_drawable_chooser_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of a [class@Gimp.Drawable] property.
- * @title: (nullable): title for the poppable dialog.
+ * @chooser_title: (nullable): title for the poppable dialog.
  *
- * Creates a [class@Gimp.DrawableChooser] controlled by the specified property.
+ * Creates a [class@GimpUi.DrawableChooser] controlled by the specified property.
  *
- * Returns: (transfer full): A new [class@Gimp.DrawableChooser].
+ * Returns: (transfer full): A new [class@GimpUi.DrawableChooser].
  *
  * Since: 3.0
  */

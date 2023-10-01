@@ -355,7 +355,7 @@ gimp_drawable_chooser_get_property (GObject    *object,
  *
  * When @drawable is %NULL, initial choice is from context.
  *
- * Returns: A [class@Gimp.DrawableChooser.
+ * Returns: A [class@GimpUi.DrawableChooser.
  *
  * Since: 3.0
  */

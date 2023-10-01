@@ -1879,7 +1879,7 @@ gimp_preview_area_fill (GimpPreviewArea *area,
  * gimp_preview_area_reset:
  * @area:   a #GimpPreviewArea widget.
  *
- * Reset any previous drawing done through [class@Gimp.PreviewArea] functions.
+ * Reset any previous drawing done through [class@GimpUi.PreviewArea] functions.
  *
  * Since: 3.0
  **/
