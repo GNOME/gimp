@@ -110,7 +110,7 @@ map_create_procedure (GimpPlugIn  *plug_in,
     {
       GimpRGB white = { 1.0, 1.0, 1.0, 1.0 };
 
-      procedure = gimp_image_procedure_new2 (plug_in, name,
+      procedure = gimp_image_procedure_new (plug_in, name,
                                              GIMP_PDB_PROC_TYPE_PLUGIN,
                                              map_run, NULL, NULL);
 

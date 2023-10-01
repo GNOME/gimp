@@ -154,9 +154,9 @@ print_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PRINT_PROC_NAME))
     {
-      procedure = gimp_image_procedure_new2 (plug_in, name,
-                                             GIMP_PDB_PROC_TYPE_PLUGIN,
-                                             print_run, NULL, NULL);
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            print_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -182,9 +182,9 @@ print_create_procedure (GimpPlugIn  *plug_in,
 #ifndef EMBED_PAGE_SETUP
   else if (! strcmp (name, PAGE_SETUP_PROC_NAME))
     {
-      procedure = gimp_image_procedure_new2 (plug_in, name,
-                                             GIMP_PDB_PROC_TYPE_PLUGIN,
-                                             print_run, NULL, NULL);
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            print_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 

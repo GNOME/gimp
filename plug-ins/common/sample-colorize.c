@@ -315,9 +315,9 @@ colorize_create_procedure (GimpPlugIn  *plug_in,
         " (the image with the dst_drawable is converted to RGB if necessary)"
         " The sample_drawable should be of type RGB or RGBA";
 
-      procedure = gimp_image_procedure_new2 (plug_in, name,
-                                             GIMP_PDB_PROC_TYPE_PLUGIN,
-                                             colorize_run, NULL, NULL);
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            colorize_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
       gimp_procedure_set_sensitivity_mask (procedure,

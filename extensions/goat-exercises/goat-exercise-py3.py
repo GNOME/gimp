@@ -37,8 +37,8 @@ class Goat (Gimp.PlugIn):
 
     def do_create_procedure(self, name):
         procedure = Gimp.ImageProcedure.new(self, name,
-                                       Gimp.PDBProcType.PLUGIN,
-                                       self.run, None)
+                                            Gimp.PDBProcType.PLUGIN,
+                                            self.run, None)
 
         procedure.set_image_types("*")
         procedure.set_sensitivity_mask (Gimp.ProcedureSensitivityMask.DRAWABLE)
@@ -54,7 +54,7 @@ class Goat (Gimp.PlugIn):
 
         return procedure
 
-    def run(self, procedure, run_mode, image, n_drawables, drawables, args, run_data):
+    def run(self, procedure, run_mode, image, n_drawables, drawables, config, run_data):
         if n_drawables != 1:
             msg = _("Procedure '{}' only works with one drawable.").format(procedure.get_name())
             error = GLib.Error.new_literal(Gimp.PlugIn.error_quark(), msg, 0)

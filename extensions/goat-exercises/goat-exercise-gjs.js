@@ -72,7 +72,7 @@ var Goat = GObject.registerClass({
         return procedure;
     }
 
-    run(procedure, run_mode, image, drawables, args, run_data) {
+    run(procedure, run_mode, image, drawables, config, run_data) {
         /* TODO: localization. */
 
         if (drawables.length != 1) {

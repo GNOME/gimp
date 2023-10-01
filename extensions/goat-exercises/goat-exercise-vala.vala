@@ -57,7 +57,7 @@ public class Goat : Gimp.PlugIn {
                              Gimp.RunMode run_mode,
                              Gimp.Image image,
                              Gimp.Drawable[] drawables,
-                             Gimp.ValueArray args) {
+                             Gimp.ProcedureConfig config) {
     var drawable = drawables[0];
 
     if (run_mode == Gimp.RunMode.INTERACTIVE) {

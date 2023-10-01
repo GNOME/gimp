@@ -41,7 +41,7 @@ function _(message)
   return GLib.dgettext(nil, message);
 end
 
-function run(procedure, run_mode, image, drawables, args, run_data)
+function run(procedure, run_mode, image, drawables, config, run_data)
   -- procedure:new_return_values() crashes LGI so we construct the
   -- GimpValueArray manually.
   local retval = Gimp.ValueArray(1)
