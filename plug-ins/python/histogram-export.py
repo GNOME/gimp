@@ -96,9 +96,8 @@ output_format_enum = StringEnum(
 
 
 def histogram_export(procedure, img, layers, gio_file,
-                     bucket_size, sample_average, output_format,
-                     progress_bar):
-    layers = img.get_selected_layers()
+                     bucket_size, sample_average, output_format):
+    layers = img.list_selected_layers()
     layer = layers[0]
     if sample_average:
         new_img = img.duplicate()
@@ -151,16 +150,12 @@ def histogram_export(procedure, img, layers, gio_file,
                 writer.writerow(row)
 
                 # Update progress bar
-                if progress_bar:
-                    fraction = i / max_index
-                    # Only update the progress bar if it changed at least 1% .
-                    new_percent = math.floor(fraction * 100)
-                    if new_percent != progress_bar_int_percent:
-                        progress_bar_int_percent = new_percent
-                        progress_bar.set_fraction(fraction)
-                        # Make sure the progress bar gets drawn on screen.
-                        while Gtk.events_pending():
-                            Gtk.main_iteration()
+                fraction = i / max_index
+                # Only update the progress bar if it changed at least 1% .
+                new_percent = math.floor(fraction * 100)
+                if new_percent != progress_bar_int_percent:
+                    progress_bar_int_percent = new_percent
+                Gimp.progress_update(fraction)
     except IsADirectoryError:
         return procedure.new_return_values(Gimp.PDBStatusType.EXECUTION_ERROR,
                                            GLib.Error(_("File is either a directory or file name is empty.")))
@@ -177,112 +172,21 @@ def histogram_export(procedure, img, layers, gio_file,
     return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
 
-def run(procedure, run_mode, image, n_layers, layers, args, data):
-    gio_file = args.index(0)
-    bucket_size = args.index(1)
-    sample_average = args.index(2)
-    output_format = args.index(3)
-
-    progress_bar = None
-    config = None
-
+def run(procedure, run_mode, image, n_layers, layers, config, data):
     if run_mode == Gimp.RunMode.INTERACTIVE:
-
-        config = procedure.create_config()
-
-        # Set properties from arguments. These properties will be changed by the UI.
-        #config.set_property("file", gio_file)
-        #config.set_property("bucket_size", bucket_size)
-        #config.set_property("sample_average", sample_average)
-        #config.set_property("output_format", output_format)
-        config.begin_run(image, run_mode, args)
-
         GimpUi.init("histogram-export.py")
-        use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
-        dialog = GimpUi.Dialog(use_header_bar=use_header_bar,
-                             title=_("Histogram Export..."))
-        dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
-        dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
 
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
-                       homogeneous=False, spacing=10)
-        dialog.get_content_area().add(vbox)
-        vbox.show()
+        dialog = GimpUi.ProcedureDialog.new(procedure, config, _("Histogram Export..."))
+        dialog.fill(None)
 
-        # Create grid to set all the properties inside.
-        grid = Gtk.Grid()
-        grid.set_column_homogeneous(False)
-        grid.set_border_width(10)
-        grid.set_column_spacing(10)
-        grid.set_row_spacing(10)
-        vbox.add(grid)
-        grid.show()
-
-        # UI for the file parameter
-
-        def choose_file(widget):
-            if file_chooser_dialog.run() == Gtk.ResponseType.OK:
-                if file_chooser_dialog.get_file() is not None:
-                    config.set_property("file", file_chooser_dialog.get_file())
-                    file_entry.set_text(file_chooser_dialog.get_file().get_path())
-            file_chooser_dialog.hide()
-
-        file_chooser_button = Gtk.Button.new_with_mnemonic(label=_("_File..."))
-        grid.attach(file_chooser_button, 0, 0, 1, 1)
-        file_chooser_button.show()
-        file_chooser_button.connect("clicked", choose_file)
-
-        file_entry = Gtk.Entry.new()
-        grid.attach(file_entry, 1, 0, 1, 1)
-        file_entry.set_width_chars(40)
-        file_entry.set_placeholder_text(_("Choose export file..."))
-        if gio_file is not None:
-            file_entry.set_text(gio_file.get_path())
-        file_entry.show()
-
-        file_chooser_dialog = Gtk.FileChooserDialog(use_header_bar=use_header_bar,
-                                                    title=_("Histogram Export file..."),
-                                                    action=Gtk.FileChooserAction.SAVE)
-        file_chooser_dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
-        file_chooser_dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
-
-        # Bucket size parameter
-        label = Gtk.Label.new_with_mnemonic(_("_Bucket Size"))
-        grid.attach(label, 0, 1, 1, 1)
-        label.show()
-        spin = GimpUi.prop_spin_button_new(config, "bucket_size", step_increment=0.001, page_increment=0.1, digits=3)
-        grid.attach(spin, 1, 1, 1, 1)
-        spin.show()
-
-        # Sample average parameter
-        spin = GimpUi.prop_check_button_new(config, "sample_average", _("Sample _Average"))
-        spin.set_tooltip_text(_("If checked, the histogram is generated from merging all visible layers."
-                                " Otherwise, the histogram is only for the current layer."))
-        grid.attach(spin, 1, 2, 1, 1)
-        spin.show()
-
-        # Output format parameter
-        label = Gtk.Label.new_with_mnemonic(_("_Output Format"))
-        grid.attach(label, 0, 3, 1, 1)
-        label.show()
-        combo = GimpUi.prop_string_combo_box_new(config, "output_format", output_format_enum.get_tree_model(), 0, 1)
-        grid.attach(combo, 1, 3, 1, 1)
-        combo.show()
-
-        progress_bar = Gtk.ProgressBar()
-        vbox.add(progress_bar)
-        progress_bar.show()
-
-        dialog.show()
-        if dialog.run() != Gtk.ResponseType.OK:
+        if not dialog.run():
             return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
                                                GLib.Error())
 
-        # Extract values from UI
-        gio_file = Gio.file_new_for_path(file_entry.get_text())  # config.get_property("file")
-        bucket_size = config.get_property("bucket_size")
-        sample_average = config.get_property("sample_average")
-        output_format = config.get_property("output_format")
+    gio_file       = config.get_property('file')
+    bucket_size    = config.get_property("bucket-size")
+    sample_average = config.get_property("sample-average")
+    output_format  = config.get_property("output-format")
 
     if gio_file is None:
         error = 'No file given'
@@ -290,11 +194,7 @@ def run(procedure, run_mode, image, n_layers, layers, args, data):
                                            GLib.Error(error))
 
     result = histogram_export(procedure, image, layers, gio_file,
-                              bucket_size, sample_average, output_format, progress_bar)
-
-    # If the execution was successful, save parameters so they will be restored next time we show dialog.
-    if result.index(0) == Gimp.PDBStatusType.SUCCESS and config is not None:
-        config.end_run(Gimp.PDBStatusType.SUCCESS)
+                              bucket_size, sample_average, output_format)
 
     return result
 
@@ -303,31 +203,24 @@ class HistogramExport(Gimp.PlugIn):
 
     ## Parameters ##
     __gproperties__ = {
-        # "filename": (str,
-        #              # TODO: I wanted this property to be a path (and not just str) , so I could use
-        #              # prop_file_chooser_button_new to open a file dialog. However, it fails without an error message.
-        #              # Gimp.ConfigPath,
-        #              _("Histogram _File"),
-        #              _("Histogram _File"),
-        #              "histogram_export.csv",
-        #              # Gimp.ConfigPathType.FILE,
-        #              GObject.ParamFlags.READWRITE),
+        # TODO: GFile props still don't have labels + only load existing files
+        # (here we likely want to create a new file).
         "file": (Gio.File,
                  _("Histogram _File"),
                  "Histogram export file",
                  GObject.ParamFlags.READWRITE),
-        "bucket_size":  (float,
+        "bucket-size":  (float,
                          _("_Bucket Size"),
                          "Bucket Size",
                          0.001, 1.0, 0.01,
                          GObject.ParamFlags.READWRITE),
-        "sample_average": (bool,
+        "sample-average": (bool,
                            _("Sample _Average"),
                            "Sample Average",
                            False,
                            GObject.ParamFlags.READWRITE),
-        "output_format": (str,
-                          _("Output format"),
+        "output-format": (str,
+                          _("Output _format"),
                           "Output format: 'pixel count', 'normalized', 'percent'",
                           "pixel count",
                           GObject.ParamFlags.READWRITE),
@@ -359,9 +252,9 @@ class HistogramExport(Gimp.PlugIn):
             procedure.add_menu_path("<Image>/Colors/Info/")
 
             procedure.add_argument_from_property(self, "file")
-            procedure.add_argument_from_property(self, "bucket_size")
-            procedure.add_argument_from_property(self, "sample_average")
-            procedure.add_argument_from_property(self, "output_format")
+            procedure.add_argument_from_property(self, "bucket-size")
+            procedure.add_argument_from_property(self, "sample-average")
+            procedure.add_argument_from_property(self, "output-format")
 
         return procedure
 
