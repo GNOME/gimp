@@ -46,6 +46,24 @@ Core:
     * Older XCF versions with text layers can still be saved using older XCF
       versions as long as the text layers are untouched in an edit session.
   - "view-zoom-*" actions are not radio actions anymore.
+  - Improve thumbnail loading algorithm:
+    1. If there is a GimpThumbnailProcedure, it is run first.
+    2. Otherwise we check if a thumbnail is in the metadata.
+    3. As last resort, we just load the full image.
+  - Generic inter-process transient window reimplemented using opaque GBytes
+    window identifiers instead of guint32. The goal is to have windows created
+    by plug-ins be transient to the calling core image window, but also the
+    other way around: some core dialogs are generated through PDB calls (in
+    particular resource and drawable chooser dialogs created by gimp_*_popup()
+    functions) and should be transient to plug-in dialogs.
+    This works on X11 and Wayland (the Wayland implementation is new, previous
+    code was X11-only). It should work on Windows too (code exists) but this was
+    left disabled as it leads to core process hanging (as described in
+    https://bugzilla.gnome.org/show_bug.cgi?id=359538) and is pending debugging.
+    There is no macOS implementation yet, and it seems to be missing from GDK as
+    well.
+  - GimpPdbDialog (e.g. resource chooser dialogs) are now set to system defaults
+    for whether or not they use a header bar.
 
 Graphical User Interface:
 
@@ -129,6 +147,9 @@ Plug-ins:
     * onClick: Run a Javascript function when the user clicks on the area.
   - Esm Software PIX: new import support.
   - PSD: fixed vulnerabilities: ZDI-CAN-22094.
+  - DDS: fixed vulnerabilities: ZDI-CAN-22093.
+  - All plug-ins were ported to the new Gimp*Procedure API using
+    GimpProcedureConfig instead of GimpValueArray arguments).
 
 Translations:
 
@@ -143,10 +164,140 @@ API:
       serialization fails. GIMP will now continue to serialize the rest. In
       particular, it will allow to retrieve as many arguments as possible
       between plug-in runs.
+    * GBytes (de)serialization support added. It supports gracefully a NULL
+      GBytes value.
   - Changes in libgimp:
     * GimpResource can now be (de)serialized using the data name and collection
       so that we are now able to retrieve a used resource quite reliably between
       runs.
+    * For GimpProcedure with no run-mode parameter, the run-mode is considered
+      non-interactive (e.g. for decision algorithm about whether to reuse
+      previous settings or not).
+    * Arguments of type GimpResource and its subtypes are now supported and
+      GimpProcedureDialog will generate appropriate chooser widgets.
+    * Arguments of type GimpLayer and GimpChannel will have a proper widget
+      generated (GimpDrawableChooser) by GimpProcedureDialog, limited to only
+      the proper drawable subtype.
+    * All GimpProcedure and its subtypes now have a run() method using a
+      GimpConfig instead of a GimpValueArray. In particular, the type of the run
+      argument changed in gimp_procedure_new(), gimp_batch_procedure_new(),
+      gimp_image_procedure_new(), gimp_load_procedure_new(),
+      gimp_save_procedure_new() and gimp_thumbnail_procedure_new().
+      The following 2 run function types had further evolutions:
+      + GimpRunLoadFunc: by default, a GimpLoadProcedure will try and load
+        metadata from a file (if Exiv2 knows the format). The run() function
+        will be allowed to edit the GimpMetadata object but also the load flags
+        before it is actually attached to the image, allowing plug-ins to have
+        custom metadata handling code when needed.
+      + GimpRunSaveFunc: metadata handling is integrated in this new version of
+        the API, since the run() function will pass a prepared metadata object,
+        which can be modified by plug-in code (if needed). This GimpMetadata
+        object will be stored automatically by the GimpSaveProcedure
+        infrastructure if the mimetype argument is set in
+        gimp_save_procedure_new().
+    * New functions:
+      + gimp_procedure_dialog_set_sensitive_if_in()
+      + gimp_procedure_dialog_set_ok_label()
+      + gimp_procedure_dialog_fill_notebook()
+      + gimp_procedure_dialog_fill_notebook_list()
+      + gimp_procedure_dialog_fill_paned()
+      + gimp_procedure_config_get_choice_id()
+      + gimp_prop_brush_chooser_new()
+      + gimp_prop_font_chooser_new()
+      + gimp_prop_gradient_chooser_new()
+      + gimp_prop_palette_chooser_new()
+      + gimp_prop_pattern_chooser_new()
+      + gimp_resource_select_button_get_label()
+      + gimp_pattern_get_buffer()
+      + gimp_drawables_close_popup()
+      + gimp_drawables_popup()
+      + gimp_drawables_set_popup()
+      + gimp_prop_drawable_chooser_new()
+      + gimp_font_get_pango_font_description()
+    * Modified functions:
+      + gimp_procedure_dialog_get_label():
+        1. Added `is_markup` and `with_mnemonic` boolean arguments.
+        2. `label_id` argument can be a string property to sync to, or a new
+           widget ID to create, using `text` as initialization contents.
+      + gimp_label_spin_set_increments(): made more generic and robust to handle
+        integer spin or modifyable min/max.
+      + gimp_param_spec_get_desc():
+        - Also handles new GimpChoice arguments by listing all valid string
+          values for a given argument.
+        - Returned string is now pango-markup formatted.
+      + gimp_display_get_window_handle() and gimp_progress_get_window_handle():
+        the return value is now an opaque GBytes which is to be interpreted
+        differently depending on the running platform.
+      + All gimp_*_popup() functions now have a `parent_window` argument which
+        is the opaque window handle of the calling plug-in dialog, such as can
+        be returned by gimp_dialog_get_native_handle().
+      + gimp_brush_get_pixels() replaced by gimp_brush_get_buffer() and
+        gimp_brush_get_mask().
+      + gimp_text_layer_set_font() now uses a GimpFont.
+      + gimp_text_layer_get_font() now returns a GimpFont.
+      + gimp_text_layer_new() now uses a GimpFont.
+    * New classes:
+      + GimpPickableSelect
+      + GimpDrawableChooser
+    * Modified classes or structure:
+      + GimpProgress:
+        - GimpProgressVtableGetWindowFunc function type now returns GBytes.
+        - get_window() abstract method is renamed get_window_handle().
+      + GimpResourceSelectButton:
+        - Class made abstract.
+        - It now has a label which is used in the size group in
+          GimpProcedureDialog.
+      + GimpBrushSelectButton: big UX improvements.
+      + GimpPatternSelectButton: big UX improvements.
+      + All Gimp*SelectButton widgets were renamed to Gimp*Chooser.
+    * New GimpProcedure argument types:
+      + GimpChoice: this will replace cases when we used to use int arguments to
+        represent custom enum types, which was particularly non-usable when the
+        list of valid choices was long and the string docs was not kept
+        up-to-date.
+        It comes with GIMP_PROC_ARG_CHOICE(), GIMP_PROC_AUX_ARG_CHOICE(),
+        GIMP_PROC_VAL_CHOICE(), GIMP_VALUES_GET_CHOICE() and
+        GIMP_VALUES_SET_CHOICE() macros.
+        The advantages of this new type:
+        - No need to keep the list of valid choices up-to-date anymore within
+          the docs string.
+        - Since the docs string doesn't contain long list of arguments, we don't
+          have long opaque and non-understandable tooltips assigned to graphical
+          interface widgets.
+        - Calling a PDB procedure with a human-readable string is much more
+          understandable than with an opaque int.
+        - This type handles invalid input for generic error handling.
+        - We can easily generate a list of the valid string values. E.g. this is
+          now used in the Procedure Browser through gimp_param_spec_get_desc().
+        - Choices can be made insensitive if needed.
+        - A proper widget (GimpStringComboBox) will be generated by
+          GimpProcedureDialog by default.
+  - Changes in libgimpbase:
+    * New classes:
+      + GimpChoice: meant to represent a list of allowed strings values.
+  - Changes in libgimpwidgets:
+    * New functions:
+      + gimp_widget_set_native_handle()
+      + gimp_dialog_get_native_handle()
+      + gimp_preview_area_reset()
+    * New classes:
+      + GimpLabelStringWidget: makes any widget with a "value" string property
+        into a GimpLabeled.
+    * Modified classes:
+      + GimpStringComboBox:
+        - add a "value" string property to GimpStringComboBox (which makes it
+          usable by GimpLabelStringWidget).
+        - New method gimp_string_combo_box_set_sensitivity()
+  - Changes in libgimpui:
+    * Modified functions:
+      + gimp_window_set_transient_for_display() and gimp_window_set_transient()
+        now use an internal implementation similar to core
+        gimp_window_set_transient_for(), with the same improvements (works even
+        at construction when the window is not visible yet + works for Wayland
+        too).
+    * Removed functions:
+      - gimp_ui_get_progress_window()
+      - gimp_ui_get_display_window()
 
 Build:
 
