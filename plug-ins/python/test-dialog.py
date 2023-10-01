@@ -92,13 +92,10 @@ def process_args(brush, font, gradient, palette, pattern):
     return
 
 
-def test_dialog(procedure, run_mode, image, n_drawables, drawables, args, data):
+def test_dialog(procedure, run_mode, image, n_drawables, drawables, config, data):
     '''
     Just a standard shell for a plugin.
     '''
-    config = procedure.create_config()
-    config.begin_run(image, run_mode, args)
-
     if run_mode == Gimp.RunMode.INTERACTIVE:
         GimpUi.init('python-fu-test-dialog')
         Gegl.init(None)
@@ -124,8 +121,6 @@ def test_dialog(procedure, run_mode, image, n_drawables, drawables, args, data):
     Gimp.displays_flush()
 
     Gimp.context_pop()
-
-    config.end_run(Gimp.PDBStatusType.SUCCESS)
 
     return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 

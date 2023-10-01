@@ -2212,7 +2212,7 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
 
     ## Parameters ##
     __gproperties__ = {
-        "curve_type" : (int,
+        "curve-type" : (int,
                         _("The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"),
                         _("The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"),
                         0, 3, 0,
@@ -2232,17 +2232,17 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
                   _("Morph shape of fixed gear, between 0 and 1. Only used by some shapes."),
                   0.0, 1.0, 0.0,
                   GObject.ParamFlags.READWRITE),
-        "fixed_teeth": (int,
+        "fixed-teeth": (int,
                         _("Number of teeth for fixed gear"),
                         _("Number of teeth for fixed gear"),
                         0, GLib.MAXINT, 96,
                         GObject.ParamFlags.READWRITE),
-        "moving_teeth": (int,
+        "moving-teeth": (int,
                          _("Number of teeth for moving gear"),
                          _("Number of teeth for moving gear"),
                          0, GLib.MAXINT, 36,
                          GObject.ParamFlags.READWRITE),
-        "hole_percent": (float,
+        "hole-percent": (float,
                          _("Location of hole in moving gear in percent, where 100 means that "
                          "the hole is at the edge of the gear, and 0 means the hole is at the center"),
                          _("Location of hole in moving gear in percent, where 100 means that "
@@ -2254,17 +2254,17 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
                    _("Margin from selection, in pixels"),
                    0, GLib.MAXINT, 0,
                    GObject.ParamFlags.READWRITE),
-        "equal_w_h": (bool,
+        "equal-w-h": (bool,
                       _("Make height and width equal"),
                       _("Make height and width equal"),
                       False,
                       GObject.ParamFlags.READWRITE),
-        "pattern_rotation": (float,
+        "pattern-rotation": (float,
                              _("Pattern rotation, in degrees"),
                              _("Pattern rotation, in degrees"),
                              -360.0, 360.0, 0.0,
                              GObject.ParamFlags.READWRITE),
-        "shape_rotation": (float,
+        "shape-rotation": (float,
                            _("Shape rotation of fixed gear, in degrees"),
                            _("Shape rotation of fixed gear, in degrees"),
                            -360.0, 360.0, 0.0,
@@ -2274,7 +2274,7 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
                  _("Tool to use for drawing the pattern."),
                  0, GLib.MAXINT, 1,
                  GObject.ParamFlags.READWRITE),
-        "long_gradient" : (bool,
+        "long-gradient" : (bool,
                            _("Whether to apply a long gradient to match the length of the pattern. "
                            "Only applicable to some of the tools."),
                            _("Whether to apply a long gradient to match the length of the pattern. "
@@ -2307,37 +2307,37 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
                                       "2018")
             procedure.add_menu_path ("<Image>/Filters/Render/")
 
-            procedure.add_argument_from_property(self, "curve_type")
+            procedure.add_argument_from_property(self, "curve-type")
             procedure.add_argument_from_property(self, "shape")
             procedure.add_argument_from_property(self, "sides")
             procedure.add_argument_from_property(self, "morph")
-            procedure.add_argument_from_property(self, "fixed_teeth")
-            procedure.add_argument_from_property(self, "moving_teeth")
+            procedure.add_argument_from_property(self, "fixed-teeth")
+            procedure.add_argument_from_property(self, "moving-teeth")
             procedure.add_argument_from_property(self, "hole_percent")
             procedure.add_argument_from_property(self, "margin")
-            procedure.add_argument_from_property(self, "equal_w_h")
-            procedure.add_argument_from_property(self, "pattern_rotation")
-            procedure.add_argument_from_property(self, "shape_rotation")
+            procedure.add_argument_from_property(self, "equal-w-h")
+            procedure.add_argument_from_property(self, "pattern-rotation")
+            procedure.add_argument_from_property(self, "shape-rotation")
             procedure.add_argument_from_property(self, "tool")
-            procedure.add_argument_from_property(self, "long_gradient")
+            procedure.add_argument_from_property(self, "long-gradient")
 
         return procedure
 
     # Implementation of plugin.
-    def plug_in_spyrogimp(self, procedure, run_mode, image, n_layers, layers, args, data):
-        curve_type=args.index(0)
-        shape=args.index(1)
-        sides=args.index(2)
-        morph=args.index(3)
-        fixed_teeth=args.index(4)
-        moving_teeth=args.index(5)
-        hole_percent=args.index(6)
-        margin=args.index(7)
-        equal_w_h=args.index(8)
-        pattern_rotation=args.index(9)
-        shape_rotation=args.index(10)
-        tool=args.index(11)
-        long_gradient=args.index(12)
+    def plug_in_spyrogimp(self, procedure, run_mode, image, n_layers, layers, config, data):
+        curve_type=config.get_property('curve-type')
+        shape=config.get_property('shape')
+        sides=config.get_property('sides')
+        morph=config.get_property('morph')
+        fixed_teeth=config.get_property('fixed-teeth')
+        moving_teeth=config.get_property('moving-teeth')
+        hole_percent=config.get_property('hole-percent')
+        margin=config.get_property('margin')
+        equal_w_h=config.get_property('equal-w-h')
+        pattern_rotation=config.get_property('pattern-rotation')
+        shape_rotation=config.get_property('shape-rotation')
+        tool=config.get_property('tool')
+        long_gradient=config.get_property('long-gradient')
 
         if run_mode == Gimp.RunMode.NONINTERACTIVE:
             pp = PatternParameters()

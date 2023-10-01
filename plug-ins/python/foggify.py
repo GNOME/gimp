@@ -29,10 +29,7 @@ def N_(message): return message
 def _(message): return GLib.dgettext(None, message)
 
 
-def foggify(procedure, run_mode, image, n_drawables, drawables, args, data):
-    config = procedure.create_config()
-    config.begin_run(image, run_mode, args)
-
+def foggify(procedure, run_mode, image, n_drawables, drawables, config, data):
     if run_mode == Gimp.RunMode.INTERACTIVE:
         GimpUi.init('python-fu-foggify')
         dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
@@ -89,8 +86,6 @@ def foggify(procedure, run_mode, image, n_drawables, drawables, args, data):
 
     image.undo_group_end()
     Gimp.context_pop()
-
-    config.end_run(Gimp.PDBStatusType.SUCCESS)
 
     return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
