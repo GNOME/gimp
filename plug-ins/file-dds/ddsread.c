@@ -109,6 +109,7 @@ read_dds (gchar    *filename,
   guchar *pixels;
   gchar *tmp;
   FILE *fp;
+  gsize file_size;
   dds_header_t hdr;
   dds_header_dx10_t dx10hdr;
   dds_load_info_t d;
@@ -129,6 +130,10 @@ read_dds (gchar    *filename,
       g_message ("Error opening file.\n");
       return GIMP_PDB_EXECUTION_ERROR;
     }
+
+  fseek (fp, 0L, SEEK_END);
+  file_size = ftell (fp);
+  fseek (fp, 0, SEEK_SET);
 
   if (strrchr (filename, '/'))
     tmp = g_strdup_printf ("Loading %s:", strrchr (filename, '/') + 1);
@@ -184,6 +189,16 @@ read_dds (gchar    *filename,
         {
           hdr.pitch_or_linsize = hdr.height * hdr.width * (hdr.pixelfmt.bpp >> 3);
         }
+    }
+
+  /* verify header information is accurate */
+  if (hdr.depth < 1                                       ||
+      (hdr.pitch_or_linsize > (file_size - sizeof (hdr))) ||
+      (((guint64) hdr.height * hdr.width * hdr.depth) > (file_size - sizeof (hdr))))
+    {
+      fclose (fp);
+      g_message ("Invalid or corrupted DDS header\n");
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 
   if (hdr.pixelfmt.flags & DDPF_FOURCC)
