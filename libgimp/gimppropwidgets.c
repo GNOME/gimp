@@ -20,14 +20,11 @@
 
 #include "libgimp-intl.h"
 
-/**
- * SECTION: gimppropwidgets
- * @title: GimpPropWidgets
- * @short_description: Editable views on #GObject properties.
- *
- * Editable views on #GObject properties of types from libgimp, such as
+/*
+ * This is a complement of libgimpwidgets/gimppropwidgets.c
+ * These are property functions for types from libgimp, such as
  * [class@Gimp.Resource] or [class@Gimp.Item] subclasses.
- **/
+ */
 
 
 typedef GtkWidget* (*GimpResourceWidgetCreator) (const gchar  *title,
