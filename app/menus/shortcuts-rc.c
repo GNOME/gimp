@@ -24,7 +24,6 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpbase/gimpprotocol.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "menus-types.h"
@@ -52,8 +51,7 @@ static GTokenType shortcuts_action_deserialize (GScanner       *scanner,
 
 enum
 {
-  PROTOCOL_VERSION = 1,
-  FILE_VERSION,
+  FILE_VERSION = 1,
   ACTION,
 };
 
@@ -64,8 +62,7 @@ shortcuts_rc_parse (GtkApplication  *application,
                     GError         **error)
 {
   GScanner   *scanner;
-  gint        protocol_version = GIMP_PROTOCOL_VERSION;
-  gint        file_version     = SHORTCUTS_RC_FILE_VERSION;
+  gint        file_version = SHORTCUTS_RC_FILE_VERSION;
   GTokenType  token;
 
   g_return_val_if_fail (GTK_IS_APPLICATION (application), FALSE);
@@ -78,9 +75,6 @@ shortcuts_rc_parse (GtkApplication  *application,
     return FALSE;
 
   g_scanner_scope_add_symbol (scanner, 0,
-                              "protocol-version",
-                              GINT_TO_POINTER (PROTOCOL_VERSION));
-  g_scanner_scope_add_symbol (scanner, 0,
                               "file-version",
                               GINT_TO_POINTER (FILE_VERSION));
   g_scanner_scope_add_symbol (scanner, 0,
@@ -88,9 +82,9 @@ shortcuts_rc_parse (GtkApplication  *application,
 
   token = G_TOKEN_LEFT_PAREN;
 
-  while (protocol_version == GIMP_PROTOCOL_VERSION     &&
-         file_version     == SHORTCUTS_RC_FILE_VERSION &&
-         g_scanner_peek_next_token (scanner) == token)
+  while (g_scanner_peek_next_token (scanner) == token ||
+         (token == G_TOKEN_SYMBOL &&
+          g_scanner_peek_next_token (scanner) == G_TOKEN_IDENTIFIER))
     {
       token = g_scanner_get_next_token (scanner);
 
@@ -103,12 +97,6 @@ shortcuts_rc_parse (GtkApplication  *application,
         case G_TOKEN_SYMBOL:
           switch (GPOINTER_TO_INT (scanner->value.v_symbol))
             {
-            case PROTOCOL_VERSION:
-              token = G_TOKEN_INT;
-              if (gimp_scanner_parse_int (scanner, &protocol_version))
-                token = G_TOKEN_RIGHT_PAREN;
-              break;
-
             case FILE_VERSION:
               token = G_TOKEN_INT;
               if (gimp_scanner_parse_int (scanner, &file_version))
@@ -123,7 +111,17 @@ shortcuts_rc_parse (GtkApplication  *application,
             default:
               break;
             }
-              break;
+          break;
+
+        case G_TOKEN_IDENTIFIER:
+          g_printerr ("%s: ignoring unknown symbol '%s'.\n", G_STRFUNC, scanner->value.v_string);
+          while ((token = g_scanner_get_next_token (scanner)) != G_TOKEN_EOF)
+            {
+              if (token == G_TOKEN_RIGHT_PAREN)
+                break;
+            }
+          token = G_TOKEN_LEFT_PAREN;
+          break;
 
         case G_TOKEN_RIGHT_PAREN:
           token = G_TOKEN_LEFT_PAREN;
@@ -134,25 +132,16 @@ shortcuts_rc_parse (GtkApplication  *application,
         }
     }
 
-  if (protocol_version != GIMP_PROTOCOL_VERSION     ||
-      file_version     != SHORTCUTS_RC_FILE_VERSION ||
-      token            != G_TOKEN_LEFT_PAREN)
+  if (file_version != SHORTCUTS_RC_FILE_VERSION)
     {
-      if (protocol_version != GIMP_PROTOCOL_VERSION)
-        {
-          g_set_error (error,
-                       GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_VERSION,
-                       _("Skipping '%s': wrong GIMP protocol version."),
-                       gimp_file_get_utf8_name (file));
-        }
-      else if (file_version != SHORTCUTS_RC_FILE_VERSION)
-        {
-          g_set_error (error,
-                       GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_VERSION,
-                       _("Skipping '%s': wrong shortcutsrc file format version."),
-                       gimp_file_get_utf8_name (file));
-        }
-      else if (token != G_TOKEN_ERROR)
+      g_printerr (_("Wrong shortcutsrc (%s) file format version: %d (expected: %d). "
+                    "We tried to load shortcuts as well as possible.\n"),
+                   gimp_file_get_utf8_name (file),
+                   file_version, SHORTCUTS_RC_FILE_VERSION);
+    }
+  if (token != G_TOKEN_LEFT_PAREN)
+    {
+      if (token != G_TOKEN_ERROR)
         {
           g_scanner_get_next_token (scanner);
           g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
@@ -189,10 +178,6 @@ shortcuts_rc_write (GtkApplication  *application,
     return FALSE;
 
   actions = g_action_group_list_actions (G_ACTION_GROUP (application));
-
-  gimp_config_writer_open (writer, "protocol-version");
-  gimp_config_writer_printf (writer, "%d", GIMP_PROTOCOL_VERSION);
-  gimp_config_writer_close (writer);
 
   gimp_config_writer_open (writer, "file-version");
   gimp_config_writer_printf (writer, "%d", SHORTCUTS_RC_FILE_VERSION);
