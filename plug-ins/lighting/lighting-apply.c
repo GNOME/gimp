@@ -151,3 +151,118 @@ compute_image (void)
       gimp_displays_flush ();
     }
 }
+
+void
+copy_from_config (GimpProcedureConfig *config)
+{
+  GimpDrawable *temp_bump_map_drawable = NULL;
+  GimpDrawable *temp_env_map_drawable  = NULL;
+  GimpRGB      *color_1;
+  GimpRGB      *color_2;
+  GimpRGB      *color_3;
+  GimpRGB      *color_4;
+  GimpRGB      *color_5;
+  GimpRGB      *color_6;
+
+  g_object_get (config,
+                "distance", &mapvals.viewpoint.z,
+                "do-bumpmap", &mapvals.bump_mapped,
+                "do-envmap", &mapvals.env_mapped,
+                "antialiasing", &mapvals.antialiasing,
+                "new-image", &mapvals.create_new_image,
+                "transparent-background", &mapvals.transparent_background,
+
+                "light-color-1", &color_1,
+                "light-intensity-1", &mapvals.lightsource[0].intensity,
+                "light-position-x-1", &mapvals.lightsource[0].position.x,
+                "light-position-y-1", &mapvals.lightsource[0].position.y,
+                "light-position-z-1", &mapvals.lightsource[0].position.z,
+                "light-direction-x-1", &mapvals.lightsource[0].direction.x,
+                "light-direction-y-1", &mapvals.lightsource[0].direction.y,
+                "light-direction-z-1", &mapvals.lightsource[0].direction.z,
+
+                "isolate", &mapvals.light_isolated,
+                "ambient-intensity", &mapvals.material.ambient_int,
+                "diffuse-intensity", &mapvals.material.diffuse_int,
+                "diffuse-reflectivity", &mapvals.material.diffuse_ref,
+                "specular-reflectivity", &mapvals.material.specular_ref,
+                "highlight", &mapvals.material.highlight,
+                "metallic", &mapvals.material.metallic,
+
+                "light-color-2", &color_2,
+                "light-intensity-2", &mapvals.lightsource[1].intensity,
+                "light-position-x-2", &mapvals.lightsource[1].position.x,
+                "light-position-y-2", &mapvals.lightsource[1].position.y,
+                "light-position-z-2", &mapvals.lightsource[1].position.z,
+                "light-direction-x-2", &mapvals.lightsource[1].direction.x,
+                "light-direction-y-2", &mapvals.lightsource[1].direction.y,
+                "light-direction-z-2", &mapvals.lightsource[1].direction.z,
+                "light-color-3", &color_3,
+                "light-intensity-3", &mapvals.lightsource[2].intensity,
+                "light-position-x-3", &mapvals.lightsource[2].position.x,
+                "light-position-y-3", &mapvals.lightsource[2].position.y,
+                "light-position-z-3", &mapvals.lightsource[2].position.z,
+                "light-direction-x-3", &mapvals.lightsource[2].direction.x,
+                "light-direction-y-3", &mapvals.lightsource[2].direction.y,
+                "light-direction-z-3", &mapvals.lightsource[2].direction.z,
+                "light-color-4", &color_4,
+                "light-intensity-4", &mapvals.lightsource[3].intensity,
+                "light-position-x-4", &mapvals.lightsource[3].position.x,
+                "light-position-y-4", &mapvals.lightsource[3].position.y,
+                "light-position-z-4", &mapvals.lightsource[3].position.z,
+                "light-direction-x-4", &mapvals.lightsource[3].direction.x,
+                "light-direction-y-4", &mapvals.lightsource[3].direction.y,
+                "light-direction-z-4", &mapvals.lightsource[3].direction.z,
+                "light-color-5", &color_5,
+                "light-intensity-5", &mapvals.lightsource[4].intensity,
+                "light-position-x-5", &mapvals.lightsource[4].position.x,
+                "light-position-y-5", &mapvals.lightsource[4].position.y,
+                "light-position-z-5", &mapvals.lightsource[4].position.z,
+                "light-direction-x-5", &mapvals.lightsource[4].direction.x,
+                "light-direction-y-5", &mapvals.lightsource[4].direction.y,
+                "light-direction-z-5", &mapvals.lightsource[4].direction.z,
+                "light-color-6", &color_6,
+                "light-intensity-6", &mapvals.lightsource[5].intensity,
+                "light-position-x-6", &mapvals.lightsource[5].position.x,
+                "light-position-y-6", &mapvals.lightsource[5].position.y,
+                "light-position-z-6", &mapvals.lightsource[5].position.z,
+                "light-direction-x-6", &mapvals.lightsource[5].direction.x,
+                "light-direction-y-6", &mapvals.lightsource[5].direction.y,
+                "light-direction-z-6", &mapvals.lightsource[5].direction.z,
+                "bump-drawable", &temp_bump_map_drawable,
+                "env-drawable", &temp_env_map_drawable,
+                NULL);
+
+  if (color_1)
+    gimp_rgba_set (&mapvals.lightsource[0].color, color_1->r, color_1->g, color_1->b, 1.0);
+  if (color_2)
+    gimp_rgba_set (&mapvals.lightsource[1].color, color_2->r, color_2->g, color_2->b, 1.0);
+  if (color_3)
+    gimp_rgba_set (&mapvals.lightsource[2].color, color_3->r, color_3->g, color_3->b, 1.0);
+  if (color_4)
+    gimp_rgba_set (&mapvals.lightsource[3].color, color_4->r, color_4->g, color_4->b, 1.0);
+  if (color_5)
+    gimp_rgba_set (&mapvals.lightsource[4].color, color_5->r, color_5->g, color_5->b, 1.0);
+  if (color_6)
+    gimp_rgba_set (&mapvals.lightsource[5].color, color_6->r, color_6->g, color_6->b, 1.0);
+
+  mapvals.bumpmaptype    = gimp_procedure_config_get_choice_id (config, "bumpmap-type");
+  mapvals.light_selected = gimp_procedure_config_get_choice_id (config, "which-light");
+
+  mapvals.lightsource[0].type = gimp_procedure_config_get_choice_id (config, "light-type-1");
+  mapvals.lightsource[1].type = gimp_procedure_config_get_choice_id (config, "light-type-2");
+  mapvals.lightsource[2].type = gimp_procedure_config_get_choice_id (config, "light-type-3");
+  mapvals.lightsource[3].type = gimp_procedure_config_get_choice_id (config, "light-type-4");
+  mapvals.lightsource[4].type = gimp_procedure_config_get_choice_id (config, "light-type-5");
+  mapvals.lightsource[5].type = gimp_procedure_config_get_choice_id (config, "light-type-6");
+
+  if (temp_bump_map_drawable)
+    mapvals.bumpmap_id = gimp_item_get_id (GIMP_ITEM (temp_bump_map_drawable));
+  else
+    mapvals.bumpmap_id = -1;
+
+  if (temp_env_map_drawable)
+    mapvals.envmap_id = gimp_item_get_id (GIMP_ITEM (temp_env_map_drawable));
+  else
+    mapvals.envmap_id = -1;
+}

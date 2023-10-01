@@ -39,7 +39,6 @@
 extern LightingValues mapvals;
 
 static GtkWidget   *appwin            = NULL;
-static GtkNotebook *options_note_book = NULL;
 
 GtkWidget *previewarea                = NULL;
 
@@ -50,166 +49,94 @@ GtkWidget *spin_dir_x                 = NULL;
 GtkWidget *spin_dir_y                 = NULL;
 GtkWidget *spin_dir_z                 = NULL;
 
-static GtkWidget *colorbutton;
-static GtkWidget *light_type_combo;
-static GtkWidget *lightselect_combo;
-static GtkWidget *spin_intensity;
-static GtkWidget *isolate_button;
 static gchar     *lighting_effects_path = NULL;
 
-static void create_main_notebook      (GtkWidget       *container);
+static void     update_preview         (GimpProcedureConfig *config);
 
-static void toggle_update             (GtkWidget       *widget,
-                                       gpointer         data);
-
-static void     distance_update       (GimpLabelSpin   *scale,
-                                       gpointer         data);
-
-static gboolean  bumpmap_constrain    (GimpImage       *image,
-                                       GimpItem        *item,
-                                       gpointer         data);
-static gboolean  envmap_constrain     (GimpImage       *image,
-                                       GimpItem        *item,
-                                       gpointer         data);
-static void     envmap_combo_callback (GtkWidget       *widget,
-                                       gpointer         data);
-static void     save_lighting_preset  (GtkWidget       *widget,
-                                       gpointer         data);
-static void     save_preset_response  (GtkFileChooser  *chooser,
-                                       gint             response_id,
-                                       gpointer         data);
-static void     load_lighting_preset  (GtkWidget       *widget,
-                                       gpointer         data);
-static void     load_preset_response  (GtkFileChooser  *chooser,
-                                       gint             response_id,
-                                       gpointer         data);
-static void     lightselect_callback  (GimpIntComboBox *combo,
-                                       gpointer         data);
-static void     apply_settings        (GtkWidget       *widget,
-                                       gpointer         data);
-static void     isolate_selected_light (GtkWidget      *widget,
-                                        gpointer        data);
-
-static GtkWidget * spin_button_new     (GtkAdjustment **adjustment,  /* return value */
-                                        gdouble         value,
-                                        gdouble         lower,
-                                        gdouble         upper,
-                                        gdouble         step_increment,
-                                        gdouble         page_increment,
-                                        gdouble         page_size,
-                                        gdouble         climb_rate,
-                                        guint           digits);
-
-/**********************/
-/* Std. toggle update */
-/**********************/
-
-static void
-toggle_update (GtkWidget *widget,
-               gpointer   data)
-{
-  gimp_toggle_button_update (widget, data);
-
-  preview_compute ();
-  gtk_widget_queue_draw (previewarea);
-}
-
-
-static void
-distance_update (GimpLabelSpin *scale,
-                 gpointer       data)
-{
-  mapvals.viewpoint.z = gimp_label_spin_get_value (scale);
-
-  preview_compute ();
-  gtk_widget_queue_draw (previewarea);
-}
-
+static void     save_lighting_preset   (GtkWidget           *widget,
+                                        gpointer             data);
+static void     save_preset_response   (GtkFileChooser      *chooser,
+                                        gint                 response_id,
+                                        gpointer             data);
+static void     load_lighting_preset   (GtkWidget           *widget,
+                                        gpointer             data);
+static void     load_preset_response   (GtkFileChooser      *chooser,
+                                        gint                 response_id,
+                                        gpointer             data);
+static void     light_source_changed   (GtkWidget           *widget,
+                                        gpointer             data);
+static void     apply_settings         (GimpProcedureConfig *config);
+static void     isolate_selected_light (GimpProcedureConfig *config);
 
 /*****************************************/
 /* Main window light type menu callback. */
 /*****************************************/
 
 static void
-apply_settings (GtkWidget *widget,
-                gpointer   data)
+apply_settings (GimpProcedureConfig *config)
 {
-  gint valid;
-  gint type;
-  gint k    = mapvals.light_selected;
+  gint k       = mapvals.light_selected;
+  gchar *pos_x = g_strdup_printf (("light-position-x-%d"), k + 1);
+  gchar *pos_y = g_strdup_printf (("light-position-y-%d"), k + 1);
+  gchar *pos_z = g_strdup_printf (("light-position-z-%d"), k + 1);
+  gchar *dir_x = g_strdup_printf (("light-direction-x-%d"), k + 1);
+  gchar *dir_y = g_strdup_printf (("light-direction-y-%d"), k + 1);
+  gchar *dir_z = g_strdup_printf (("light-direction-z-%d"), k + 1);
 
-  if (mapvals.update_enabled)
+  switch (mapvals.lightsource[k].type)
     {
-      valid = gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (light_type_combo),
-                                             &type);
-      if (valid)
-        mapvals.lightsource[k].type = type;
-
-      gimp_color_button_get_color (GIMP_COLOR_BUTTON (colorbutton),
-                                   &mapvals.lightsource[k].color);
-
-      mapvals.lightsource[k].position.x
-        = gtk_spin_button_get_value (GTK_SPIN_BUTTON(spin_pos_x));
-      mapvals.lightsource[k].position.y
-        = gtk_spin_button_get_value (GTK_SPIN_BUTTON(spin_pos_y));
-      mapvals.lightsource[k].position.z
-        = gtk_spin_button_get_value (GTK_SPIN_BUTTON(spin_pos_z));
-
-      mapvals.lightsource[k].direction.x
-        = gtk_spin_button_get_value (GTK_SPIN_BUTTON(spin_dir_x));
-      mapvals.lightsource[k].direction.y
-        = gtk_spin_button_get_value (GTK_SPIN_BUTTON(spin_dir_y));
-      mapvals.lightsource[k].direction.z
-        = gtk_spin_button_get_value (GTK_SPIN_BUTTON(spin_dir_z));
-
-      mapvals.lightsource[k].intensity
-        = gtk_spin_button_get_value (GTK_SPIN_BUTTON(spin_intensity));
-
-      interactive_preview_callback(NULL);
+    case NO_LIGHT:
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), pos_x,
+                                           FALSE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), pos_y,
+                                           FALSE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), pos_z,
+                                           FALSE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), dir_x,
+                                           FALSE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), dir_y,
+                                           FALSE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), dir_z,
+                                           FALSE, NULL, NULL, FALSE);
+      break;
+    case POINT_LIGHT:
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), pos_x,
+                                           TRUE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), pos_y,
+                                           TRUE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), pos_z,
+                                           TRUE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), dir_x,
+                                           FALSE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), dir_y,
+                                           FALSE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), dir_z,
+                                           FALSE, NULL, NULL, FALSE);
+      break;
+    case DIRECTIONAL_LIGHT:
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), pos_x,
+                                           FALSE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), pos_y,
+                                           FALSE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), pos_z,
+                                           FALSE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), dir_x,
+                                           TRUE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), dir_y,
+                                           TRUE, NULL, NULL, FALSE);
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (appwin), dir_z,
+                                           TRUE, NULL, NULL, FALSE);
+      break;
+    default:
+      break;
     }
 
-  if (widget == light_type_combo)
-    {
-      switch (mapvals.lightsource[k].type)
-        {
-        case NO_LIGHT:
-          gtk_widget_set_sensitive (spin_pos_x, FALSE);
-          gtk_widget_set_sensitive (spin_pos_y, FALSE);
-          gtk_widget_set_sensitive (spin_pos_z, FALSE);
-          gtk_widget_set_sensitive (spin_dir_x, FALSE);
-          gtk_widget_set_sensitive (spin_dir_y, FALSE);
-          gtk_widget_set_sensitive (spin_dir_z, FALSE);
-          break;
-        case POINT_LIGHT:
-          gtk_widget_set_sensitive (spin_pos_x, TRUE);
-          gtk_widget_set_sensitive (spin_pos_y, TRUE);
-          gtk_widget_set_sensitive (spin_pos_z, TRUE);
-          gtk_widget_set_sensitive (spin_dir_x, FALSE);
-          gtk_widget_set_sensitive (spin_dir_y, FALSE);
-          gtk_widget_set_sensitive (spin_dir_z, FALSE);
-          break;
-        case DIRECTIONAL_LIGHT:
-          gtk_widget_set_sensitive (spin_pos_x, FALSE);
-          gtk_widget_set_sensitive (spin_pos_y, FALSE);
-          gtk_widget_set_sensitive (spin_pos_z, FALSE);
-          gtk_widget_set_sensitive (spin_dir_x, TRUE);
-          gtk_widget_set_sensitive (spin_dir_y, TRUE);
-          gtk_widget_set_sensitive (spin_dir_z, TRUE);
-          break;
-        default:
-          break;
-        }
-    }
-}
-
-static void
-mapmenu2_callback (GtkWidget *widget,
-                   gpointer   data)
-{
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
-
-  preview_compute ();
-  gtk_widget_queue_draw (previewarea);
+  g_free (pos_x);
+  g_free (pos_y);
+  g_free (pos_z);
+  g_free (dir_x);
+  g_free (dir_y);
+  g_free (dir_z);
 }
 
 /******************************************/
@@ -223,781 +150,16 @@ preview_callback (GtkWidget *widget)
   gtk_widget_queue_draw (previewarea);
 }
 
-
-
-
-/*********************************************/
-/* Main window "-" (zoom in) button callback */
-/*********************************************/
-/*
 static void
-zoomout_callback (GtkWidget *widget)
+update_preview (GimpProcedureConfig *config)
 {
-  mapvals.preview_zoom_factor *= 0.5;
-  draw_preview_image (TRUE);
-}
-*/
-/*********************************************/
-/* Main window "+" (zoom out) button callback */
-/*********************************************/
-/*
-static void
-zoomin_callback (GtkWidget *widget)
-{
-  mapvals.preview_zoom_factor *= 2.0;
-  draw_preview_image (TRUE);
-}
-*/
-/**********************************************/
-/* Main window "Apply" button callback.       */
-/* Render to GIMP image, close down and exit. */
-/**********************************************/
+  copy_from_config (config);
+  isolate_selected_light (config);
 
-static gint
-bumpmap_constrain (GimpImage *image,
-                   GimpItem  *item,
-                   gpointer   data)
-{
-  GimpDrawable *dr = gimp_drawable_get_by_id (mapvals.drawable_id);
+  apply_settings (config);
 
-  return  ((gimp_drawable_get_width (GIMP_DRAWABLE (item)) ==
-            gimp_drawable_get_width (dr)) &&
-           (gimp_drawable_get_height (GIMP_DRAWABLE (item)) ==
-            gimp_drawable_get_height (dr)));
-}
-
-static gint
-envmap_constrain (GimpImage *image,
-                  GimpItem  *item,
-                  gpointer   data)
-{
-  return (! gimp_drawable_is_gray   (GIMP_DRAWABLE (item)) &&
-          ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item)));
-}
-
-static void
-envmap_combo_callback (GtkWidget *widget,
-                       gpointer   data)
-{
-  GimpDrawable *env;
-
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                 &mapvals.envmap_id);
-
-  env = gimp_drawable_get_by_id (mapvals.envmap_id);
-
-  env_width  = gimp_drawable_get_width  (env);
-  env_height = gimp_drawable_get_height (env);
-}
-
-/***********************/
-/* Dialog constructors */
-/***********************/
-
-static GtkWidget *
-create_options_page (void)
-{
-  GtkWidget     *page;
-  GtkWidget     *frame;
-  GtkWidget     *vbox;
-  GtkWidget     *toggle;
-  GtkWidget     *scale;
-
-  page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (page), 12);
-
-  /* General options */
-
-  frame = gimp_frame_new (_("General Options"));
-  gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("T_ransparent background"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                mapvals.transparent_background);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (toggle_update),
-                    &mapvals.transparent_background);
-  gtk_widget_show (toggle);
-
-  gimp_help_set_help_data (toggle,
-                           _("Make destination image transparent where bump "
-                             "height is zero"),NULL);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("Cre_ate new image"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                mapvals.create_new_image);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mapvals.create_new_image);
-  gtk_widget_show (toggle);
-
-  gimp_help_set_help_data (toggle,
-                           _("Create a new image when applying filter"), NULL);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("High _quality preview"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                mapvals.previewquality);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (toggle_update),
-                    &mapvals.previewquality);
-  gtk_widget_show (toggle);
-
-  gimp_help_set_help_data (toggle,
-                           _("Enable/disable high quality preview"), NULL);
-
-  scale = gimp_scale_entry_new (_("Distance:"), mapvals.viewpoint.z, 0.0, 2.0, 3);
-  gimp_help_set_help_data (scale,
-                           "Distance of observer from surface",
-                           "plug-in-lighting");
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (distance_update),
-                    NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 12);
-  gtk_widget_show (scale);
-
-  gtk_widget_show (page);
-
-  return page;
-}
-
-/******************************/
-/* Create light settings page */
-/******************************/
-
-static GtkWidget *
-create_light_page (void)
-{
-  GtkWidget     *page;
-  GtkWidget     *frame;
-  GtkWidget     *grid;
-  GtkWidget     *button;
-  GtkAdjustment *adj;
-  GtkWidget     *label;
-  gint           k = mapvals.light_selected;
-
-  page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (page), 12);
-
-  frame = gimp_frame_new (_("Light Settings"));
-  gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
-
-  lightselect_combo =  gimp_int_combo_box_new (_("Light 1"),        0,
-                                               _("Light 2"),        1,
-                                               _("Light 3"),        2,
-                                               _("Light 4"),        3,
-                                               _("Light 5"),        4,
-                                               _("Light 6"),        5,
-                                               NULL);
-  gtk_widget_set_margin_end (lightselect_combo, 12);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (lightselect_combo), k);
-  gtk_grid_attach (GTK_GRID (grid), lightselect_combo, 0, 0, 2, 1);
-  g_signal_connect (lightselect_combo, "changed",
-                    G_CALLBACK (lightselect_callback), NULL);
-  gtk_widget_show (lightselect_combo);
-
-  /* row labels */
-  label = gtk_label_new (_("Type:"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (_("Color:"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
-  gtk_widget_show (label);
-
-  light_type_combo =
-    gimp_int_combo_box_new (C_("light-source", "None"), NO_LIGHT,
-                            _("Directional"),           DIRECTIONAL_LIGHT,
-                            _("Point"),                 POINT_LIGHT,
-                            /* _("Spot"),               SPOT_LIGHT, */
-                            NULL);
-  gtk_widget_set_margin_end (light_type_combo, 12);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (light_type_combo),
-                                 mapvals.lightsource[k].type);
-  gtk_grid_attach (GTK_GRID (grid), light_type_combo, 1, 1, 1, 1);
-  gtk_widget_show (light_type_combo);
-
-  g_signal_connect (light_type_combo, "changed",
-                    G_CALLBACK (apply_settings),
-                    NULL);
-
-  gimp_help_set_help_data (light_type_combo,
-                           _("Type of light source to apply"), NULL);
-
-  colorbutton = gimp_color_button_new (_("Select lightsource color"),
-                                          64, 16,
-                                          &mapvals.lightsource[k].color,
-                                          GIMP_COLOR_AREA_FLAT);
-  gtk_widget_set_halign (colorbutton, GTK_ALIGN_START);
-  gtk_widget_set_margin_end (colorbutton, 12);
-  gimp_color_button_set_update (GIMP_COLOR_BUTTON (colorbutton), TRUE);
-  gtk_widget_show (colorbutton);
-  gtk_grid_attach (GTK_GRID (grid), colorbutton, 1, 2, 1, 1);
-
-  g_signal_connect (colorbutton, "color-changed",
-                    G_CALLBACK (apply_settings),
-                    NULL);
-
-  gimp_help_set_help_data (colorbutton,
-                           _("Set light source color"), NULL);
-
-
-  spin_intensity = spin_button_new (&adj,
-                                    mapvals.lightsource[k].intensity,
-                                    0.0, 100.0,
-                                    0.01, 0.1, 0.0, 0.0, 2);
-  gtk_widget_set_halign (spin_intensity, GTK_ALIGN_START);
-  gtk_widget_set_margin_end (spin_intensity, 12);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
-                            _("_Intensity:"), 0.0, 0.5,
-                            spin_intensity, 1);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (apply_settings),
-                    NULL);
-
-  gimp_help_set_help_data (spin_intensity,
-                           _("Light intensity"), NULL);
-
-
-  label = gtk_label_new (_("Position"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_grid_attach (GTK_GRID (grid), label, 3, 0, 1, 1);
-  gtk_widget_show (label);
-
-  spin_pos_x = spin_button_new (&adj,
-                                mapvals.lightsource[k].position.x,
-                                -100.0, 100.0,
-                                0.1, 1.0, 0.0, 0.0, 2);
-  gtk_widget_set_halign (spin_pos_x, GTK_ALIGN_START);
-  gtk_widget_set_margin_end (spin_pos_x, 12);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 2, 1,
-                            _("_X:"), 0.0, 0.5,
-                            spin_pos_x, 1);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (apply_settings),
-                    NULL);
-
-  gimp_help_set_help_data (spin_pos_x,
-                           _("Light source X position in XYZ space"), NULL);
-
-  spin_pos_y = spin_button_new (&adj,
-                                mapvals.lightsource[k].position.y,
-                                -100.0, 100.0,
-                                0.1, 1.0, 0.0, 0.0, 2);
-  gtk_widget_set_halign (spin_pos_y, GTK_ALIGN_START);
-  gtk_widget_set_margin_end (spin_pos_y, 12);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 2, 2,
-                            _("_Y:"), 0.0, 0.5,
-                            spin_pos_y, 1);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (apply_settings),
-                    NULL);
-
-  gimp_help_set_help_data (spin_pos_y,
-                           _("Light source Y position in XYZ space"), NULL);
-
-  spin_pos_z = spin_button_new (&adj,
-                                mapvals.lightsource[k].position.z,
-                                -100.0, 100.0,
-                                0.1, 1.0, 0.0, 0.0, 2);
-  gtk_widget_set_halign (spin_pos_z, GTK_ALIGN_START);
-  gtk_widget_set_margin_end (spin_pos_z, 12);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 2, 3,
-                            _("_Z:"), 0.0, 0.5,
-                            spin_pos_z, 1);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (apply_settings),
-                    NULL);
-
-  gimp_help_set_help_data (spin_pos_z,
-                           _("Light source Z position in XYZ space"), NULL);
-
-
-  label = gtk_label_new (_("Direction"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_grid_attach (GTK_GRID (grid), label, 5, 0, 1, 1);
-  gtk_widget_show (label);
-
-  spin_dir_x = spin_button_new (&adj,
-                                mapvals.lightsource[k].direction.x,
-                                -100.0, 100.0, 0.1, 1.0, 0.0, 0.0, 2);
-  gtk_widget_set_halign (spin_dir_x, GTK_ALIGN_START);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 4, 1,
-                            _("X:"), 0.0, 0.5,
-                            spin_dir_x, 1);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (apply_settings),
-                    NULL);
-
-  gimp_help_set_help_data (spin_dir_x,
-                           _("Light source X direction in XYZ space"), NULL);
-
-  spin_dir_y = spin_button_new (&adj,
-                                mapvals.lightsource[k].direction.y,
-                                -100.0, 100.0, 0.1, 1.0, 0.0, 0.0, 2);
-  gtk_widget_set_halign (spin_dir_y, GTK_ALIGN_START);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 4, 2,
-                            _("Y:"), 0.0, 0.5,
-                            spin_dir_y, 1);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (apply_settings),
-                    NULL);
-
-  gimp_help_set_help_data (spin_dir_y,
-                           _("Light source Y direction in XYZ space"), NULL);
-
-  spin_dir_z = spin_button_new (&adj,
-                                mapvals.lightsource[k].direction.z,
-                                -100.0, 100.0, 0.1, 1.0, 0.0, 0.0, 2);
-  gtk_widget_set_halign (spin_dir_z, GTK_ALIGN_START);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 4, 3,
-                            _("Z:"), 0.0, 0.5,
-                            spin_dir_z, 1);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (apply_settings),
-                    NULL);
-
-  gimp_help_set_help_data (spin_dir_z,
-                           _("Light source Z direction in XYZ space"),
-                           NULL);
-
-  isolate_button = gtk_check_button_new_with_mnemonic (_("I_solate"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (isolate_button),
-                                mapvals.light_isolated);
-  g_signal_connect (isolate_button, "toggled",
-                    G_CALLBACK (isolate_selected_light),
-                    NULL);
-  gtk_grid_attach (GTK_GRID (grid), isolate_button, 0, 5, 1, 1);
-  gtk_widget_show (isolate_button);
-
-  label = gtk_label_new (_("Lighting preset:"));
-  gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-  gtk_grid_attach (GTK_GRID (grid), label, 0, 6, 2, 1);
-  gtk_widget_show (label);
-
-  button = gtk_button_new_with_mnemonic (_("_Save"));
-  gtk_grid_attach (GTK_GRID (grid), button, 2, 6, 2, 1);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (save_lighting_preset),
-                    NULL);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_mnemonic (_("_Open"));
-  gtk_grid_attach (GTK_GRID (grid), button, 4, 6, 2, 1);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (load_lighting_preset),
-                    NULL);
-  gtk_widget_show (button);
-
-  gtk_widget_show (page);
-
-  return page;
-}
-
-/*********************************/
-/* Create material settings page */
-/*********************************/
-
-static GtkWidget *
-create_material_page (void)
-{
-  GtkSizeGroup  *group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-  GtkWidget     *page;
-  GtkWidget     *frame;
-  GtkWidget     *grid;
-  GtkWidget     *label;
-  GtkWidget     *hbox;
-  GtkWidget     *spinbutton;
-  GtkWidget     *image;
-  GtkWidget     *button;
-  GtkAdjustment *adj;
-
-  page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (page), 12);
-
-  frame = gimp_frame_new (_("Material Properties"));
-  gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_widget_set_halign (hbox, GTK_ALIGN_START);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (hbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
-  /* Ambient intensity */
-
-  image = gtk_image_new_from_icon_name (LIGHTING_INTENSITY_AMBIENT_LOW,
-                                        GTK_ICON_SIZE_BUTTON);
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                                    _("_Glowing:"), 0.0, 0.5,
-                                    image, 1);
-  gtk_size_group_add_widget (group, label);
-
-  spinbutton = spin_button_new (&adj, mapvals.material.ambient_int,
-                                0, G_MAXFLOAT, 0.01, 0.1, 0.0, 0.0, 2);
-  gtk_grid_attach (GTK_GRID (grid), spinbutton, 2, 0, 1, 1);
-  gtk_widget_show (spinbutton);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &mapvals.material.ambient_int);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (interactive_preview_callback),
-                    NULL);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-  gimp_help_set_help_data (spinbutton,
-                           _("Amount of original color to show where no "
-                             "direct light falls"), NULL);
-
-  image = gtk_image_new_from_icon_name (LIGHTING_INTENSITY_AMBIENT_HIGH,
-                                        GTK_ICON_SIZE_BUTTON);
-  gtk_grid_attach (GTK_GRID (grid), image, 3, 0, 1, 1);
-  gtk_widget_show (image);
-
-  /* Diffuse intensity */
-
-  image = gtk_image_new_from_icon_name (LIGHTING_INTENSITY_DIFFUSE_LOW,
-                                        GTK_ICON_SIZE_BUTTON);
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                                    _("_Bright:"), 0.0, 0.5,
-                                    image, 1);
-  gtk_size_group_add_widget (group, label);
-
-  spinbutton = spin_button_new (&adj, mapvals.material.diffuse_int,
-                                0, G_MAXFLOAT, 0.01, 0.1, 0.0, 0.0, 2);
-  gtk_grid_attach (GTK_GRID (grid), spinbutton, 2, 1, 1, 1);
-  gtk_widget_show (spinbutton);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &mapvals.material.diffuse_int);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (interactive_preview_callback),
-                    NULL);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-  gimp_help_set_help_data (spinbutton,
-                           _("Intensity of original color when lit by a light "
-                             "source"), NULL);
-
-  image = gtk_image_new_from_icon_name (LIGHTING_INTENSITY_DIFFUSE_HIGH,
-                                        GTK_ICON_SIZE_BUTTON);
-  gtk_grid_attach (GTK_GRID (grid), image, 3, 1, 1, 1);
-  gtk_widget_show (image);
-
-  /* Specular reflection */
-
-  image = gtk_image_new_from_icon_name (LIGHTING_REFLECTIVITY_SPECULAR_LOW,
-                                        GTK_ICON_SIZE_BUTTON);
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
-                                    _("_Shiny:"), 0.0, 0.5,
-                                    image, 1);
-  gtk_size_group_add_widget (group, label);
-
-  spinbutton = spin_button_new (&adj, mapvals.material.specular_ref,
-                                0, G_MAXFLOAT, 0.01, 0.1, 0.0, 0.0, 2);
-  gtk_grid_attach (GTK_GRID (grid), spinbutton, 2, 2, 1, 1);
-  gtk_widget_show (spinbutton);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &mapvals.material.specular_ref);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (interactive_preview_callback),
-                    NULL);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-  gimp_help_set_help_data (spinbutton,
-                           _("Controls how intense the highlights will be"),
-                           NULL);
-
-  image = gtk_image_new_from_icon_name (LIGHTING_REFLECTIVITY_SPECULAR_HIGH,
-                                        GTK_ICON_SIZE_BUTTON);
-  gtk_grid_attach (GTK_GRID (grid), image, 3, 2, 1, 1);
-  gtk_widget_show (image);
-
-  /* Highlight */
-  image = gtk_image_new_from_icon_name (LIGHTING_REFLECTIVITY_HIGHLIGHT_LOW,
-                                        GTK_ICON_SIZE_BUTTON);
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
-                                    _("_Polished:"), 0.0, 0.5,
-                                    image, 1);
-  gtk_size_group_add_widget (group, label);
-
-  spinbutton = spin_button_new (&adj, mapvals.material.highlight,
-                                0, G_MAXFLOAT, 0.01, 0.1, 0.0, 0.0, 2);
-  gtk_grid_attach (GTK_GRID (grid), spinbutton, 2, 3, 1, 1);
-  gtk_widget_show (spinbutton);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &mapvals.material.highlight);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (interactive_preview_callback),
-                    NULL);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-  gimp_help_set_help_data (spinbutton,
-                           _("Higher values makes the highlights more focused"),
-                           NULL);
-
-  image = gtk_image_new_from_icon_name (LIGHTING_REFLECTIVITY_HIGHLIGHT_HIGH,
-                                        GTK_ICON_SIZE_BUTTON);
-  gtk_grid_attach (GTK_GRID (grid), image, 3, 3, 1, 1);
-  gtk_widget_show (image);
-
-  /* Metallic */
-  button = gtk_check_button_new_with_mnemonic (_("_Metallic"));
-  gtk_grid_attach (GTK_GRID (grid), button, 0, 4, 3, 1);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mapvals.material.metallic);
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (interactive_preview_callback),
-                    NULL);
-
-  gtk_widget_show (page);
-
-  return page;
-}
-
-/* Create Bump mapping page */
-
-static GtkWidget *
-create_bump_page (void)
-{
-  GtkWidget     *page;
-  GtkWidget     *toggle;
-  GtkWidget     *frame;
-  GtkWidget     *grid;
-  GtkWidget     *combo;
-  GtkWidget     *spinbutton;
-  GtkAdjustment *adj;
-
-  page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (page), 12);
-
-  frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("E_nable bump mapping"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                mapvals.bump_mapped);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mapvals.bump_mapped);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (interactive_preview_callback),
-                    NULL);
-
-  gimp_help_set_help_data (toggle,
-                           _("Enable/disable bump-mapping (image depth)"),
-                           NULL);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
-
-  g_object_bind_property (toggle, "active",
-                          grid,  "sensitive",
-                          G_BINDING_SYNC_CREATE);
-
-  combo = gimp_drawable_combo_box_new (bumpmap_constrain, NULL, NULL);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), mapvals.bumpmap_id,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &mapvals.bumpmap_id, NULL);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (mapmenu2_callback),
-                    &mapvals.bumpmap_id);
-
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("Bumpm_ap image:"), 0.0, 0.5,
-                            combo, 1);
-
-  combo = gimp_int_combo_box_new (_("Linear"),      LINEAR_MAP,
-                                  _("Logarithmic"), LOGARITHMIC_MAP,
-                                  _("Sinusoidal"),  SINUSOIDAL_MAP,
-                                  _("Spherical"),   SPHERICAL_MAP,
-                                  NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                 mapvals.bumpmaptype);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (mapmenu2_callback),
-                    &mapvals.bumpmaptype);
-
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("Cu_rve:"), 0.0, 0.5, combo, 1);
-
-  spinbutton = spin_button_new (&adj, mapvals.bumpmax,
-                                0, G_MAXFLOAT, 0.01, 0.1, 0.0, 0.0, 2);
-  gtk_widget_set_halign (spinbutton, GTK_ALIGN_START);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
-                            _("Ma_ximum height:"), 0.0, 0.5,
-                            spinbutton, 1);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &mapvals.bumpmax);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (interactive_preview_callback),
-                    NULL);
-
-  gimp_help_set_help_data (spinbutton,
-                           _("Maximum height for bumps"),
-                           NULL);
-
-  gtk_widget_show (page);
-
-  return page;
-}
-
-static GtkWidget *
-create_environment_page (void)
-{
-  GtkWidget *page;
-  GtkWidget *toggle;
-  GtkWidget *grid;
-  GtkWidget *frame;
-  GtkWidget *combo;
-
-  page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (page), 12);
-
-  frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("E_nable environment mapping"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                mapvals.env_mapped);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mapvals.env_mapped);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (interactive_preview_callback),
-                    NULL);
-
-  gimp_help_set_help_data (toggle,
-                           _("Enable/disable environment-mapping (reflection)"),
-                           NULL);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
-
-  g_object_bind_property (toggle, "active",
-                          grid,   "sensitive",
-                          G_BINDING_SYNC_CREATE);
-
-  combo = gimp_drawable_combo_box_new (envmap_constrain, NULL, NULL);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), mapvals.envmap_id,
-                              G_CALLBACK (envmap_combo_callback),
-                              NULL, NULL);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("En_vironment image:"), 0.0, 0.5,
-                            combo, 1);
-
-  gimp_help_set_help_data (combo, _("Environment image to use"), NULL);
-
-  gtk_widget_show (page);
-
-  return page;
-}
-
-/*****************************/
-/* Create notebook and pages */
-/*****************************/
-
-static void
-create_main_notebook (GtkWidget *container)
-{
-  GtkWidget *page;
-
-  options_note_book = GTK_NOTEBOOK (gtk_notebook_new ());
-  gtk_container_add (GTK_CONTAINER (container),
-                     GTK_WIDGET (options_note_book));
-
-  page = create_options_page ();
-  gtk_notebook_append_page (options_note_book, page,
-                            gtk_label_new_with_mnemonic (_("Op_tions")));
-
-  page = create_light_page ();
-  gtk_notebook_append_page (options_note_book, page,
-                            gtk_label_new_with_mnemonic (_("_Light")));
-
-  page = create_material_page ();
-  gtk_notebook_append_page (options_note_book, page,
-                            gtk_label_new_with_mnemonic (_("_Material")));
-
-  page = create_bump_page ();
-  gtk_notebook_append_page (options_note_book, page,
-                            gtk_label_new_with_mnemonic (_("_Bump Map")));
-
-  page = create_environment_page ();
-  gtk_notebook_append_page (options_note_book, page,
-                            gtk_label_new_with_mnemonic (_("_Environment Map")));
-
-  /*
-  if (mapvals.bump_mapped == TRUE)
-    {
-      bump_page = create_bump_page ();
-      bump_page_pos = g_list_length (options_note_book->children);
-      gtk_notebook_append_page (options_note_book, bump_page,
-                                gtk_label_new (_("Bumpmap")));
-    }
-
-  if (mapvals.env_mapped == TRUE)
-    {
-      env_page = create_environment_page ();
-      env_page_pos = g_list_length (options_note_book->children);
-      gtk_notebook_append_page (options_note_book, env_page,
-                                gtk_label_new (_("Environment")));
-    }
-  */
-  gtk_widget_show (GTK_WIDGET (options_note_book));
+  preview_compute ();
+  gtk_widget_queue_draw (previewarea);
 }
 
 /********************************/
@@ -1005,7 +167,9 @@ create_main_notebook (GtkWidget *container)
 /********************************/
 
 gboolean
-main_dialog (GimpDrawable *drawable)
+main_dialog (GimpProcedure       *procedure,
+             GimpProcedureConfig *config,
+             GimpDrawable        *drawable)
 {
   GtkWidget *main_hbox;
   GtkWidget *vbox;
@@ -1013,6 +177,8 @@ main_dialog (GimpDrawable *drawable)
   GtkWidget *frame;
   GtkWidget *button;
   GtkWidget *toggle;
+  GtkWidget *combo;
+  GtkWidget *image;
   gchar     *path;
   gboolean   run = FALSE;
 
@@ -1031,34 +197,15 @@ main_dialog (GimpDrawable *drawable)
 
   lighting_icons_init ();
 
-  appwin = gimp_dialog_new (_("Lighting Effects"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
-
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (appwin),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (appwin));
-
-  main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (appwin))),
-                      main_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (main_hbox);
+  appwin = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Lighting Effects"));
 
   /* Create the Preview */
   /* ================== */
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   /* Add preview widget and various buttons to the first part */
   /* ======================================================== */
@@ -1116,7 +263,432 @@ main_dialog (GimpDrawable *drawable)
                            _("Enable/disable real time preview of changes"),
                            NULL);
 
-  create_main_notebook (main_hbox);
+  /* GimpProcedureDialog begins here */
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
+                                   "options-tab", _("Op_tions"), FALSE, TRUE);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
+                                   "light-tab", _("_Light"), FALSE, TRUE);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
+                                   "material-tab", _("_Material"), FALSE, TRUE);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
+                                   "bump-map-tab", _("_Bump Map"), FALSE, TRUE);
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
+                                   "environment-map-tab", _("_Environment Map"),
+                                   FALSE, TRUE);
+
+  /* Options tab */
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
+                                   "general-options", _("General Options"),
+                                   FALSE, FALSE);
+  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+                                        "distance", 1.0);
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "general-box",
+                                  "transparent-background",
+                                  "new-image",
+                                  "antialiasing",
+                                  "distance",
+                                  NULL);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (appwin),
+                                    "options-frame",
+                                    "general-options", FALSE,
+                                    "general-box");
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "options-box",
+                                  "options-frame", NULL);
+
+  g_signal_connect (config, "notify::transparent-background",
+                    G_CALLBACK (update_preview),
+                    config);
+  g_signal_connect (config, "notify::new-image",
+                    G_CALLBACK (update_preview),
+                    config);
+  g_signal_connect (config, "notify::antialiasing",
+                    G_CALLBACK (update_preview),
+                    config);
+  g_signal_connect (config, "notify::distance",
+                    G_CALLBACK (update_preview),
+                    config);
+
+  /* Light tab */
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
+                                   "light-label", _("Light Settings"),
+                                   FALSE, FALSE);
+
+  for (gint i = 1; i <= 6; i++)
+    {
+      gchar *temp_box;
+      gchar *temp_label;
+      gchar *temp_field_1;
+      gchar *temp_field_2;
+      gchar *temp_field_3;
+      gchar *temp_notify;
+
+      temp_label = g_strdup_printf (_("light-color-label-%d"), i);
+      gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
+                                       temp_label, _("Color"),
+                                       FALSE, FALSE);
+      g_free (temp_label);
+      temp_label = g_strdup_printf (_("light-position-label-%d"), i);
+      gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
+                                       temp_label, _("Position"),
+                                       FALSE, FALSE);
+      g_free (temp_label);
+      temp_label = g_strdup_printf (_("light-direction-label-%d"), i);
+      gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
+                                       temp_label, _("Direction"),
+                                       FALSE, FALSE);
+      g_free (temp_label);
+
+      temp_box = g_strdup_printf (("light-color-vbox-%d"), i);
+      temp_label = g_strdup_printf (("light-color-label-%d"), i);
+      temp_field_1 = g_strdup_printf (("light-type-%d"), i);
+      temp_field_2 = g_strdup_printf (("light-color-%d"), i);
+      temp_field_3 = g_strdup_printf (("light-intensity-%d"), i);
+      gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), temp_box,
+                                      temp_label,
+                                      temp_field_1,
+                                      temp_field_2,
+                                      temp_field_3,
+                                      NULL);
+
+      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_1);
+      g_signal_connect (config, temp_notify,
+                        G_CALLBACK (update_preview),
+                        config);
+      g_free (temp_notify);
+      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_2);
+      g_signal_connect (config, temp_notify,
+                        G_CALLBACK (update_preview),
+                        config);
+      g_free (temp_notify);
+      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_3);
+      g_signal_connect (config, temp_notify,
+                        G_CALLBACK (update_preview),
+                        config);
+      g_free (temp_notify);
+
+      g_free (temp_box);
+      g_free (temp_label);
+      g_free (temp_field_1);
+      g_free (temp_field_2);
+      g_free (temp_field_3);
+
+      temp_box = g_strdup_printf (_("light-position-vbox-%d"), i);
+      temp_label = g_strdup_printf (("light-position-label-%d"), i);
+      temp_field_1 = g_strdup_printf (("light-position-x-%d"), i);
+      temp_field_2 = g_strdup_printf (("light-position-y-%d"), i);
+      temp_field_3 = g_strdup_printf (("light-position-z-%d"), i);
+      gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), temp_box,
+                                      temp_label,
+                                      temp_field_1,
+                                      temp_field_2,
+                                      temp_field_3,
+                                      NULL);
+
+      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_1);
+      g_signal_connect (config, temp_notify,
+                        G_CALLBACK (update_preview),
+                        config);
+      g_free (temp_notify);
+      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_2);
+      g_signal_connect (config, temp_notify,
+                        G_CALLBACK (update_preview),
+                        config);
+      g_free (temp_notify);
+      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_3);
+      g_signal_connect (config, temp_notify,
+                        G_CALLBACK (update_preview),
+                        config);
+      g_free (temp_notify);
+
+      g_free (temp_box);
+      g_free (temp_label);
+      g_free (temp_field_1);
+      g_free (temp_field_2);
+      g_free (temp_field_3);
+
+      temp_box = g_strdup_printf (("light-direction-vbox-%d"), i);
+      temp_label = g_strdup_printf (("light-direction-label-%d"), i);
+      temp_field_1 = g_strdup_printf (("light-direction-x-%d"), i);
+      temp_field_2 = g_strdup_printf (("light-direction-y-%d"), i);
+      temp_field_3 = g_strdup_printf (("light-direction-z-%d"), i);
+      gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), temp_box,
+                                      temp_label,
+                                      temp_field_1,
+                                      temp_field_2,
+                                      temp_field_3,
+                                      NULL);
+
+      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_1);
+      g_signal_connect (config, temp_notify,
+                        G_CALLBACK (update_preview),
+                        config);
+      g_free (temp_notify);
+      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_2);
+      g_signal_connect (config, temp_notify,
+                        G_CALLBACK (update_preview),
+                        config);
+      g_free (temp_notify);
+      temp_notify = g_strdup_printf (_("notify::%s"), temp_field_3);
+      g_signal_connect (config, temp_notify,
+                        G_CALLBACK (update_preview),
+                        config);
+      g_free (temp_notify);
+
+      g_free (temp_box);
+      g_free (temp_label);
+      g_free (temp_field_1);
+      g_free (temp_field_2);
+      g_free (temp_field_3);
+
+      temp_box = g_strdup_printf (("light-hbox-%d"), i);
+      temp_field_1 = g_strdup_printf (("light-color-vbox-%d"), i);
+      temp_field_2 = g_strdup_printf (("light-position-vbox-%d"), i);
+      temp_field_3 = g_strdup_printf (("light-direction-vbox-%d"), i);
+      hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), temp_box,
+                                             temp_field_1,
+                                             temp_field_2,
+                                             temp_field_3,
+                                             NULL);
+      g_free (temp_box);
+      g_free (temp_field_1);
+      g_free (temp_field_2);
+      g_free (temp_field_3);
+      gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                      GTK_ORIENTATION_HORIZONTAL);
+    }
+
+  combo = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (appwin),
+                                            "which-light", G_TYPE_NONE);
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "light-settings-box",
+                                  "which-light",
+                                  "light-hbox-1",
+                                  "light-hbox-2",
+                                  "light-hbox-3",
+                                  "light-hbox-4",
+                                  "light-hbox-5",
+                                  "light-hbox-6",
+                                  "isolate",
+                                  NULL);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (appwin),
+                                    "light-frame",
+                                    "light-label", FALSE,
+                                    "light-settings-box");
+
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
+                                   "preset-label", _("Lighting presets: "),
+                                   FALSE, FALSE);
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "preset-hbox",
+                                         "preset-label", NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  gtk_widget_set_halign (hbox, GTK_ALIGN_END);
+
+  button = gtk_button_new_with_mnemonic (_("_Save"));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (save_lighting_preset),
+                    NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (button, TRUE);
+  button = gtk_button_new_with_mnemonic (_("_Open"));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (load_lighting_preset),
+                    NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (button, TRUE);
+
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "light-box",
+                                  "light-frame", "preset-hbox", NULL);
+
+  g_signal_connect (config, "notify::which-light",
+                    G_CALLBACK (update_preview),
+                    config);
+  g_signal_connect (config, "notify::isolate",
+                    G_CALLBACK (update_preview),
+                    config);
+
+  /* Material Tab */
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
+                                   "material-label", _("Material Properties"),
+                                   FALSE, FALSE);
+
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "glowing-hbox",
+                                         "ambient-intensity",
+                                         NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  image = gtk_image_new_from_icon_name (LIGHTING_INTENSITY_AMBIENT_LOW,
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (hbox), image, 0);
+  gtk_widget_set_visible (image, TRUE);
+  image = gtk_image_new_from_icon_name (LIGHTING_INTENSITY_AMBIENT_HIGH,
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_set_visible (image, TRUE);
+
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "bright-hbox",
+                                         "diffuse-intensity",
+                                         NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  image = gtk_image_new_from_icon_name (LIGHTING_INTENSITY_DIFFUSE_LOW,
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_set_visible (image, TRUE);
+  gtk_box_reorder_child (GTK_BOX (hbox), image, 0);
+  image = gtk_image_new_from_icon_name (LIGHTING_INTENSITY_DIFFUSE_HIGH,
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_set_visible (image, TRUE);
+
+
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "diffuse-reflect-hbox",
+                                         "diffuse-reflectivity",
+                                         NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  image = gtk_image_new_from_icon_name (LIGHTING_REFLECTIVITY_DIFFUSE_LOW,
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_set_visible (image, TRUE);
+  gtk_box_reorder_child (GTK_BOX (hbox), image, 0);
+  image = gtk_image_new_from_icon_name (LIGHTING_REFLECTIVITY_DIFFUSE_HIGH,
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_set_visible (image, TRUE);
+
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "shiny-hbox",
+                                         "specular-reflectivity",
+                                         NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  image = gtk_image_new_from_icon_name (LIGHTING_REFLECTIVITY_SPECULAR_LOW,
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_set_visible (image, TRUE);
+  gtk_box_reorder_child (GTK_BOX (hbox), image, 0);
+  image = gtk_image_new_from_icon_name (LIGHTING_REFLECTIVITY_SPECULAR_HIGH,
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_set_visible (image, TRUE);
+
+  hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "polished-hbox",
+                                         "highlight",
+                                         NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  image = gtk_image_new_from_icon_name (LIGHTING_REFLECTIVITY_HIGHLIGHT_LOW,
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_set_visible (image, TRUE);
+  gtk_box_reorder_child (GTK_BOX (hbox), image, 0);
+  image = gtk_image_new_from_icon_name (LIGHTING_REFLECTIVITY_HIGHLIGHT_HIGH,
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_set_visible (image, TRUE);
+
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "material-values-box",
+                                  "glowing-hbox",
+                                  "bright-hbox",
+                                  "diffuse-reflect-hbox",
+                                  "shiny-hbox",
+                                  "polished-hbox",
+                                  "metallic",
+                                  NULL);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (appwin),
+                                    "material-frame",
+                                    "material-label", FALSE,
+                                    "material-values-box");
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "material-box",
+                                  "material-frame", NULL);
+
+  g_signal_connect (config, "notify::ambient-intensity",
+                    G_CALLBACK (update_preview),
+                    config);
+  g_signal_connect (config, "notify::diffuse-intensity",
+                    G_CALLBACK (update_preview),
+                    config);
+  g_signal_connect (config, "notify::diffuse-reflectivity",
+                    G_CALLBACK (update_preview),
+                    config);
+  g_signal_connect (config, "notify::specular-reflectivity",
+                    G_CALLBACK (update_preview),
+                    config);
+  g_signal_connect (config, "notify::highlight",
+                    G_CALLBACK (update_preview),
+                    config);
+  g_signal_connect (config, "notify::metallic",
+                    G_CALLBACK (update_preview),
+                    config);
+
+  /* Bump Map Tab */
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin),
+                                  "bump-map-options-box",
+                                  "bump-drawable",
+                                  "bumpmap-type",
+                                  "bumpmap-max-height",
+                                  NULL);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (appwin),
+                                    "bump-map-frame",
+                                    "do-bumpmap", FALSE,
+                                    "bump-map-options-box");
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin), "bump-map-box",
+                                  "bump-map-frame",
+                                  NULL);
+
+  g_signal_connect (config, "notify::do-bumpmap",
+                    G_CALLBACK (update_preview),
+                    config);
+  g_signal_connect (config, "notify::bump-drawable",
+                    G_CALLBACK (update_preview),
+                    config);
+  g_signal_connect (config, "notify::bumpmap-type",
+                    G_CALLBACK (update_preview),
+                    config);
+  g_signal_connect (config, "notify::bumpmap-max-height",
+                    G_CALLBACK (update_preview),
+                    config);
+
+  /* Environment Map Tab */
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (appwin),
+                                    "environment-map-frame",
+                                    "do-envmap", FALSE,
+                                    "env-drawable");
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin),
+                                  "environment-map-box",
+                                  "environment-map-frame",
+                                  NULL);
+
+  g_signal_connect (config, "notify::do-envmap",
+                    G_CALLBACK (update_preview),
+                    config);
+  g_signal_connect (config, "notify::env-drawable",
+                    G_CALLBACK (update_preview),
+                    config);
+
+  /* Create Notebook */
+  gimp_procedure_dialog_fill_notebook (GIMP_PROCEDURE_DIALOG (appwin),
+                                       "main-notebook",
+                                       "options-tab", "options-box",
+                                       "light-tab", "light-box",
+                                       "material-tab", "material-box",
+                                       "bump-map-tab", "bump-map-box",
+                                       "environment-map-tab", "environment-map-box",
+                                       NULL);
+
+  light_source_changed (combo, config);
+
+  /* Create overall layout */
+  main_hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin),
+                                              "main-hbox",
+                                              "main-notebook",
+                                              NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (main_hbox),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (main_hbox), vbox, 0);
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (appwin), "main-hbox", NULL);
 
   gtk_widget_show (appwin);
 
@@ -1132,8 +704,11 @@ main_dialog (GimpDrawable *drawable)
   if (image_setup (drawable, TRUE))
     preview_compute ();
 
-  if (gimp_dialog_run (GIMP_DIALOG (appwin)) == GTK_RESPONSE_OK)
-    run = TRUE;
+  g_signal_connect (combo, "value-changed",
+                    G_CALLBACK (light_source_changed),
+                    config);
+
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (appwin));
 
   if (preview_rgb_data != NULL)
     g_free (preview_rgb_data);
@@ -1447,111 +1022,76 @@ load_preset_response (GtkFileChooser *chooser,
         }
 
       g_free (filename);
-
-      lightselect_callback (GIMP_INT_COMBO_BOX (lightselect_combo), NULL);
    }
 
   gtk_widget_destroy (GTK_WIDGET (chooser));
   interactive_preview_callback (GTK_WIDGET (chooser));
 }
 
-
 static void
-lightselect_callback (GimpIntComboBox *combo,
-                      gpointer         data)
+light_source_changed (GtkWidget *widget,
+                      gpointer   data)
 {
-  gint valid;
-  gint j, k;
+  gint                 light_source;
+  gboolean             isolate = FALSE;
+  GimpProcedureConfig *config  = (GimpProcedureConfig *) data;
 
-  valid = gimp_int_combo_box_get_active (combo, &k);
+  light_source = gimp_procedure_config_get_choice_id (config, "which_light") + 1;
+  g_object_get (config,
+                "isolate", &isolate,
+                NULL);
 
- if (valid)
+  for (gint i = 1; i <= 6; i++)
     {
-      mapvals.update_enabled = FALSE;  /* prevent apply_settings() */
+      GtkWidget *hbox;
+      gchar     *temp_box;
 
-      mapvals.light_selected = k;
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (light_type_combo),
-                                     mapvals.lightsource[k].type);
-      gimp_color_button_set_color (GIMP_COLOR_BUTTON (colorbutton),
-                                   &mapvals.lightsource[k].color);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_x),
-                                 mapvals.lightsource[k].position.x);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_y),
-                                 mapvals.lightsource[k].position.y);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_z),
-                                 mapvals.lightsource[k].position.z);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_x),
-                                 mapvals.lightsource[k].direction.x);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_y),
-                                 mapvals.lightsource[k].direction.y);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_z),
-                                 mapvals.lightsource[k].direction.z);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_intensity),
-                                 mapvals.lightsource[k].intensity);
+      temp_box = g_strdup_printf (_("light-hbox-%d"), i);
+      hbox = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (appwin),
+                                               temp_box, G_TYPE_NONE);
+      g_free (temp_box);
 
-      mapvals.update_enabled = TRUE;
+      if (i == light_source)
+        gtk_widget_set_visible (hbox, TRUE);
+      else
+        gtk_widget_set_visible (hbox, FALSE);
 
-      /* if we are isolating a light, need to switch */
-      if (mapvals.light_isolated)
+      if (isolate)
         {
-          for (j = 0; j < NUM_LIGHTS; j++)
-            if (j == mapvals.light_selected)
-              mapvals.lightsource[j].active = TRUE;
-            else
-              mapvals.lightsource[j].active = FALSE;
+          if (i == light_source)
+            mapvals.lightsource[i - 1].active = TRUE;
+          else
+            mapvals.lightsource[i - 1].active = FALSE;
         }
-
-      interactive_preview_callback (NULL);
     }
+
+  mapvals.light_selected = gimp_procedure_config_get_choice_id (config, "which-light");
+  apply_settings (config);
+  if (previewarea != NULL && GTK_IS_WIDGET (previewarea))
+    update_preview (config);
 }
 
 static void
-isolate_selected_light (GtkWidget *widget,
-                        gpointer   data)
+isolate_selected_light (GimpProcedureConfig *config)
 {
-  gint  k;
+  gint     k;
+  gboolean isolate;
 
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+  g_object_get (config,
+                "isolate", &isolate,
+                NULL);
+
+  if (isolate)
     {
-      mapvals.light_isolated = TRUE;
-
       for (k = 0; k < NUM_LIGHTS; k++)
-        if (k == mapvals.light_selected)
+        if (k == (mapvals.light_selected))
           mapvals.lightsource[k].active = TRUE;
         else
           mapvals.lightsource[k].active = FALSE;
     }
   else
     {
-      mapvals.light_isolated = FALSE;
-
       for (k = 0; k < NUM_LIGHTS; k++)
         mapvals.lightsource[k].active = TRUE;
     }
-
-  interactive_preview_callback (NULL);
-}
-
-static GtkWidget *
-spin_button_new (GtkAdjustment **adjustment,  /* return value */
-                 gdouble         value,
-                 gdouble         lower,
-                 gdouble         upper,
-                 gdouble         step_increment,
-                 gdouble         page_increment,
-                 gdouble         page_size,
-                 gdouble         climb_rate,
-                 guint           digits)
-{
-  GtkWidget *spinbutton;
-
-  *adjustment = gtk_adjustment_new (value, lower, upper,
-                                    step_increment, page_increment, 0);
-
-  spinbutton = gimp_spin_button_new (*adjustment,
-                                     climb_rate, digits);
-
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-
-  return spinbutton;
 }

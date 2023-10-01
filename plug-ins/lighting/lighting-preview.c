@@ -377,15 +377,18 @@ preview_compute (void)
 
   compute_preview_rectangle (&startx, &starty, &pw, &ph);
 
-  cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
-  gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
-  g_object_unref (cursor);
+  if (GDK_IS_WINDOW (gtk_widget_get_window (previewarea)))
+    {
+      cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
+      gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
+      g_object_unref (cursor);
 
-  compute_preview (startx, starty, pw, ph);
-  cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
-  gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
-  g_object_unref (cursor);
-  gdk_display_flush (display);
+      compute_preview (startx, starty, pw, ph);
+      cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
+      gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
+      g_object_unref (cursor);
+      gdk_display_flush (display);
+    }
 }
 
 
@@ -458,22 +461,31 @@ interactive_preview_callback (GtkWidget *widget)
 static gboolean
 interactive_preview_timer_callback (gpointer data)
 {
-  gint k = mapvals.light_selected;
+  gint   k     = mapvals.light_selected;
+  gchar *pos_x = g_strdup_printf (("light-position-x-%d"), k + 1);
+  gchar *pos_y = g_strdup_printf (("light-position-y-%d"), k + 1);
+  gchar *pos_z = g_strdup_printf (("light-position-z-%d"), k + 1);
+  gchar *dir_x = g_strdup_printf (("light-direction-x-%d"), k + 1);
+  gchar *dir_y = g_strdup_printf (("light-direction-y-%d"), k + 1);
+  gchar *dir_z = g_strdup_printf (("light-direction-z-%d"), k + 1);
 
   mapvals.update_enabled = FALSE;  /* disable apply_settings() */
 
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_x),
-                             mapvals.lightsource[k].position.x);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_y),
-                             mapvals.lightsource[k].position.y);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_z),
-                             mapvals.lightsource[k].position.z);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_x),
-                             mapvals.lightsource[k].direction.x);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_y),
-                             mapvals.lightsource[k].direction.y);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_z),
-                             mapvals.lightsource[k].direction.z);
+  g_object_set (mapvals.config,
+                pos_x, mapvals.lightsource[k].position.x,
+                pos_y, mapvals.lightsource[k].position.y,
+                pos_z, mapvals.lightsource[k].position.z,
+                dir_x, mapvals.lightsource[k].direction.x,
+                dir_y, mapvals.lightsource[k].direction.y,
+                dir_z, mapvals.lightsource[k].direction.z,
+                NULL);
+
+  g_free (pos_x);
+  g_free (pos_y);
+  g_free (pos_z);
+  g_free (dir_x);
+  g_free (dir_y);
+  g_free (dir_z);
 
   mapvals.update_enabled = TRUE;
 

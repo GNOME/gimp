@@ -63,6 +63,8 @@ typedef struct
   gint32       bumpmap_id;
   gint32       envmap_id;
 
+  GimpProcedureConfig *config;
+
   /* Render variables */
   /* ================ */
 
