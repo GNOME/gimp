@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-25 21:06+0000\n"
-"PO-Revision-Date: 2023-09-26 19:12+0800\n"
+"POT-Creation-Date: 2023-10-01 23:57+0000\n"
+"PO-Revision-Date: 2023-10-02 18:57+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -333,7 +333,7 @@ msgid "Buffers"
 msgstr "缓冲区"
 
 #: app/actions/actions.c:121 app/dialogs/dialogs.c:379
-#: app/propgui/gimppropgui-newsprint.c:160 app/widgets/gimppickablepopup.c:247
+#: app/propgui/gimppropgui-newsprint.c:160
 msgid "Channels"
 msgstr "通道"
 
@@ -441,12 +441,11 @@ msgid "Image"
 msgstr "图像"
 
 #: app/actions/actions.c:193 app/dialogs/dialogs.c:337
-#: app/widgets/gimppickablepopup.c:177
 msgid "Images"
 msgstr "图像"
 
 #: app/actions/actions.c:196 app/dialogs/dialogs.c:375
-#: app/dialogs/resize-dialog.c:171 app/widgets/gimppickablepopup.c:228
+#: app/dialogs/resize-dialog.c:171
 msgid "Layers"
 msgstr "图层"
 
@@ -2430,9 +2429,10 @@ msgstr "240 秒"
 #: app/widgets/gimpcolordialog.c:463 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:327
-#: app/widgets/gimphelp.c:439 app/widgets/gimphelp.c:779
+#: app/widgets/gimphelp.c:439 app/widgets/gimphelp.c:774
 #: app/widgets/gimpiconpicker.c:484 app/widgets/gimpmodifierseditor.c:684
-#: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:711
+#: app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91
+#: app/widgets/gimpsettingsbox.c:711
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -9849,6 +9849,7 @@ msgstr "移动此窗口至屏幕 %s"
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
 #: app/widgets/gimpcontrollereditor.c:663 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:176 app/widgets/gimpmodifierseditor.c:685
+#: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
 msgstr "确定(_O)"
 
@@ -11150,7 +11151,7 @@ msgid "The maximum number of actions saved in history."
 msgstr "历史中保存动作的最大数量。"
 
 #: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130
-#: app/core/gimp-units.c:278 app/gui/session.c:309 app/menus/shortcuts-rc.c:159
+#: app/core/gimp-units.c:278 app/gui/session.c:309 app/menus/shortcuts-rc.c:148
 #: app/plug-in/plug-in-rc.c:249 app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "严重解析错误"
@@ -12422,7 +12423,7 @@ msgstr "前景到透明（硬边）"
 #. * some operation to finish.  The %s argument is a message describing
 #. * the operation.
 #.
-#: app/core/gimp-gui.c:209
+#: app/core/gimp-gui.c:211
 #, c-format
 msgid "Please wait: %s\n"
 msgstr "请稍候：%s\n"
@@ -13738,53 +13739,53 @@ msgstr "缩放图像"
 msgid "Can't undo %s"
 msgstr "无法撤消 %s"
 
-#: app/core/gimpimagefile.c:751
+#: app/core/gimpimagefile.c:770
 msgid "Folder"
 msgstr "文件夹"
 
-#: app/core/gimpimagefile.c:756
+#: app/core/gimpimagefile.c:775
 msgid "Special File"
 msgstr "特殊文件"
 
-#: app/core/gimpimagefile.c:772
+#: app/core/gimpimagefile.c:791
 msgid "Remote File"
 msgstr "远程文件"
 
-#: app/core/gimpimagefile.c:791
+#: app/core/gimpimagefile.c:810
 msgid "Click to create preview"
 msgstr "单击生成预览"
 
-#: app/core/gimpimagefile.c:797
+#: app/core/gimpimagefile.c:816
 msgid "Loading preview..."
 msgstr "正在加载预览…"
 
-#: app/core/gimpimagefile.c:803
+#: app/core/gimpimagefile.c:822
 msgid "Preview is out of date"
 msgstr "预览已经过时"
 
-#: app/core/gimpimagefile.c:809
+#: app/core/gimpimagefile.c:828
 msgid "Cannot create preview"
 msgstr "无法生成预览"
 
-#: app/core/gimpimagefile.c:819
+#: app/core/gimpimagefile.c:838
 msgid "(Preview may be out of date)"
 msgstr "（预览可能已经过时）"
 
 #. pixel size
-#: app/core/gimpimagefile.c:828 app/widgets/gimpimagepropview.c:437
+#: app/core/gimpimagefile.c:847 app/widgets/gimpimagepropview.c:437
 #: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:734
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d 像素"
 
-#: app/core/gimpimagefile.c:851 app/display/gimpdisplayshell-title.c:358
+#: app/core/gimpimagefile.c:870 app/display/gimpdisplayshell-title.c:358
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "%d 个图层"
 
-#: app/core/gimpimagefile.c:899
+#: app/core/gimpimagefile.c:918
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "无法打开缩略图“%s”：%s"
@@ -14262,7 +14263,7 @@ msgstr ""
 "不支持的图案尺寸 %d x %d。\n"
 "GIMP 图案的最大尺寸为 %d x %d。"
 
-#: app/core/gimppdbprogress.c:268
+#: app/core/gimppdbprogress.c:267
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr "无法执行 %s 回调。相应的插件可能已崩溃。"
@@ -15348,8 +15349,7 @@ msgstr "图像属性"
 #: app/tools/gimpcolorpickertool.c:351 app/tools/gimpgradienttool-editor.c:1811
 #: app/tools/gimpmeasuretool.c:746 app/widgets/gimpcontrollerlist.c:625
 #: app/widgets/gimpcriticaldialog.c:206 app/widgets/gimpcriticaldialog.c:228
-#: app/widgets/gimppdbdialog.c:141 app/widgets/gimpsettingsbox.c:642
-#: app/widgets/gimptexteditor.c:167
+#: app/widgets/gimpsettingsbox.c:642 app/widgets/gimptexteditor.c:167
 msgid "_Close"
 msgstr "关闭(_C)"
 
@@ -17970,23 +17970,23 @@ msgstr "高"
 msgid "_Sample Merged"
 msgstr "位样合并(_S)"
 
-#: app/display/gimpdisplayshell.c:521
+#: app/display/gimpdisplayshell.c:525
 msgid "Access the image menu"
 msgstr "获取图像菜单"
 
-#: app/display/gimpdisplayshell.c:669
+#: app/display/gimpdisplayshell.c:675
 msgid "Zoom image when window size changes"
 msgstr "当窗口大小改变时缩放图像"
 
-#: app/display/gimpdisplayshell.c:698
+#: app/display/gimpdisplayshell.c:704
 msgid "Toggle Quick Mask"
 msgstr "切换快速蒙版"
 
-#: app/display/gimpdisplayshell.c:713
+#: app/display/gimpdisplayshell.c:719
 msgid "Navigate the image display"
 msgstr "导航图像显示"
 
-#: app/display/gimpdisplayshell.c:766 app/display/gimpdisplayshell.c:1472
+#: app/display/gimpdisplayshell.c:772 app/display/gimpdisplayshell.c:1489
 #: app/widgets/gimptoolbox.c:252
 msgid "Drop image files here to open them"
 msgstr "拖动图像到此处以打开"
@@ -19707,15 +19707,14 @@ msgstr "文档"
 msgid "GIMP Startup"
 msgstr "GIMP 启动"
 
-#: app/menus/shortcuts-rc.c:145 app/plug-in/plug-in-rc.c:235
+#: app/menus/shortcuts-rc.c:137
 #, c-format
-msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr "跳过“%s”：错误的 GIMP 协议版本。"
-
-#: app/menus/shortcuts-rc.c:152
-#, c-format
-msgid "Skipping '%s': wrong shortcutsrc file format version."
-msgstr "跳过“%s”：错误的 shortcutsrc 文件格式版本。"
+msgid ""
+"Wrong shortcutsrc (%s) file format version: %d (expected: %d). We tried to "
+"load shortcuts as well as possible.\n"
+msgstr ""
+"错误的 shortcutsrc（%s）文件格式版本：%d（需要的：%d）。我们已尝试尽可能尝试"
+"加载快捷键。\n"
 
 #: app/paint/gimpairbrush.c:80 app/tools/gimpairbrushtool.c:67
 msgid "Airbrush"
@@ -21183,6 +21182,11 @@ msgid ""
 msgstr ""
 "“%s”执行错误：\n"
 "%s"
+
+#: app/plug-in/plug-in-rc.c:235
+#, c-format
+msgid "Skipping '%s': wrong GIMP protocol version."
+msgstr "跳过“%s”：错误的 GIMP 协议版本。"
 
 #: app/plug-in/plug-in-rc.c:242
 #, c-format
@@ -26541,16 +26545,16 @@ msgstr "全部导出图像"
 msgid "_Help"
 msgstr "帮助(_H)"
 
-#: app/widgets/gimpfiledialog.c:759
+#: app/widgets/gimpfiledialog.c:761
 msgid "Show _All Files"
 msgstr "显示全部文件(_A)"
 
-#: app/widgets/gimpfiledialog.c:791
+#: app/widgets/gimpfiledialog.c:793
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "选择文件类型 (%s)(_T)"
 
-#: app/widgets/gimpfiledialog.c:793
+#: app/widgets/gimpfiledialog.c:795
 msgid "Select File _Type"
 msgstr "选择文件类型 (_T)"
 
@@ -26714,35 +26718,35 @@ msgstr "作为替代您可以使用网络浏览器阅读帮助页面。"
 msgid "Use _Web Browser"
 msgstr "使用网页浏览器(_W)"
 
-#: app/widgets/gimphelp.c:776
+#: app/widgets/gimphelp.c:771
 msgid "GIMP user manual is missing"
 msgstr "GIMP 用户手册缺失"
 
-#: app/widgets/gimphelp.c:792
+#: app/widgets/gimphelp.c:782
 msgid "The GIMP user manual is not installed in your language."
 msgstr "GIMP 用户指南未安装您的语言版本。"
 
-#: app/widgets/gimphelp.c:803
+#: app/widgets/gimphelp.c:793
 msgid "Read Selected _Language"
 msgstr "阅读选择的语言(_L)"
 
-#: app/widgets/gimphelp.c:807
+#: app/widgets/gimphelp.c:797
 msgid "Available manuals..."
 msgstr "可用手册…"
 
-#: app/widgets/gimphelp.c:819
+#: app/widgets/gimphelp.c:809
 msgid ""
 "You may either select a manual in another language or read the online "
 "version."
 msgstr "您可以选择其他语言的手册或阅读在线版本。"
 
-#: app/widgets/gimphelp.c:825
+#: app/widgets/gimphelp.c:815
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
 msgstr "您可以选择安装额外的帮助包，或修改首选项以使用在线版本。"
 
-#: app/widgets/gimphelp.c:830
+#: app/widgets/gimphelp.c:820
 msgid "Read _Online"
 msgstr "在线阅读(_O)"
 
@@ -27059,11 +27063,11 @@ msgstr "编辑色板颜色"
 msgid "Edit Color Palette Entry"
 msgstr "编辑色板颜色项"
 
-#: app/widgets/gimppdbdialog.c:285
+#: app/widgets/gimppdbdialog.c:319
 msgid "The corresponding plug-in may have crashed."
 msgstr "相应的插件可能已崩溃。"
 
-#: app/widgets/gimppdbdialog.c:289
+#: app/widgets/gimppdbdialog.c:323
 #, c-format
 msgid ""
 "Unable to run %s callback.\n"
@@ -27071,10 +27075,6 @@ msgid ""
 msgstr ""
 "无法运行 %s 调用。\n"
 "%s"
-
-#: app/widgets/gimppickablepopup.c:204 app/widgets/gimppickablepopup.c:421
-msgid "Select an image in the left pane"
-msgstr "在左侧面板中选择图像"
 
 #: app/widgets/gimppluginview.c:146
 msgid "Plug-In"
@@ -27601,22 +27601,22 @@ msgstr "打开调色板选择对话框"
 msgid "Open the font selection dialog"
 msgstr "打开字体选择对话框"
 
-#: app/widgets/gimpwidgets-utils.c:650
+#: app/widgets/gimpwidgets-utils.c:658
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s（尝试 %s）"
 
-#: app/widgets/gimpwidgets-utils.c:650
+#: app/widgets/gimpwidgets-utils.c:658
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:654
+#: app/widgets/gimpwidgets-utils.c:662
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s（尝试 %s, %s）"
 
-#: app/widgets/gimpwidgets-utils.c:658
+#: app/widgets/gimpwidgets-utils.c:666
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s（尝试 %s, %s, %s）"
@@ -27626,12 +27626,12 @@ msgstr "%s（尝试 %s, %s, %s）"
 #. * (e.g. a checkbox settings) displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1506
+#: app/widgets/gimpwidgets-utils.c:1460
 #, c-format
 msgid "Switch \"%s\" ON"
 msgstr "开启“%s”"
 
-#: app/widgets/gimpwidgets-utils.c:1508
+#: app/widgets/gimpwidgets-utils.c:1462
 #, c-format
 msgid "Switch \"%s\" OFF"
 msgstr "关闭“%s”"
@@ -27641,7 +27641,7 @@ msgstr "关闭“%s”"
 #. * multi-choice settings displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1527
+#: app/widgets/gimpwidgets-utils.c:1481
 #, c-format
 msgid "Select \"%s\""
 msgstr "选择“%s”"
@@ -27649,27 +27649,27 @@ msgstr "选择“%s”"
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
-#: app/widgets/gimpwidgets-utils.c:1550
+#: app/widgets/gimpwidgets-utils.c:1504
 #, c-format
 msgid "Activate the \"%s\" tool"
 msgstr "激活“%s”工具"
 
-#: app/widgets/gimpwidgets-utils.c:2149
+#: app/widgets/gimpwidgets-utils.c:2103
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "内置灰度 (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2156
+#: app/widgets/gimpwidgets-utils.c:2110
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "内置 RGB (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2176
+#: app/widgets/gimpwidgets-utils.c:2130
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "首选灰度 (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2185
+#: app/widgets/gimpwidgets-utils.c:2139
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "首选 RGB (%s)"
@@ -28396,6 +28396,13 @@ msgstr "撤消历史菜单"
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "路径菜单"
+
+#, c-format
+#~ msgid "Skipping '%s': wrong shortcutsrc file format version."
+#~ msgstr "跳过“%s”：错误的 shortcutsrc 文件格式版本。"
+
+#~ msgid "Select an image in the left pane"
+#~ msgstr "在左侧面板中选择图像"
 
 #~ msgid "Invalid empty brush name"
 #~ msgstr "无效的空笔刷名字"
