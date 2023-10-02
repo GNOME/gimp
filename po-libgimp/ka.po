@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-26 14:00+0000\n"
-"PO-Revision-Date: 2023-08-27 16:05+0200\n"
+"POT-Creation-Date: 2023-10-02 00:02+0000\n"
+"PO-Revision-Date: 2023-10-02 14:27+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -17,11 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
-#: libgimp/gimpbrushselectbutton.c:130 libgimp/gimppatternselectbutton.c:142
+#: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
 msgstr "_დათვალიერება..."
+
+#: libgimp/gimpdrawablechooser.c:238
+msgid "Browse..."
+msgstr "დათვალიერება..."
 
 #: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
 #, c-format
@@ -153,7 +157,7 @@ msgid "Confirm Save"
 msgstr "შენახვის დადასტურება"
 
 #: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:557
+#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -175,7 +179,7 @@ msgid "_Ignore"
 msgstr "_იგნორი"
 
 #: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
-#: libgimp/gimpproceduredialog.c:277
+#: libgimp/gimpproceduredialog.c:296 libgimp/gimpproceduredialog.c:569
 msgid "_Export"
 msgstr "_გატანა"
 
@@ -208,18 +212,28 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:397
+#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:396
 #, c-format
 msgid "Export Image as %s"
 msgstr "გამოსახულების გატანა, როგორც %s"
 
-#: libgimp/gimpimagemetadata.c:284
+#: libgimp/gimpimagemetadata.c:283
 msgid "Background"
 msgstr "ფონი"
 
 #: libgimp/gimpimagemetadata-save.c:760 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
+
+#: libgimp/gimploadprocedure.c:260
+msgid ""
+"This file loading plug-in returned SUCCESS as a status without an image. "
+"This is a bug in the plug-in code. Contact the plug-in developer."
+msgstr ""
+
+#: libgimp/gimpparamspecs-desc.c:54
+msgid "Allowed values:"
+msgstr ""
 
 #. procedure executed successfully
 #: libgimp/gimppdb.c:552
@@ -327,108 +341,108 @@ msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d დამთხვევა"
 
-#: libgimp/gimpprocedure.c:1924
+#: libgimp/gimpprocedure.c:1959
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "პროცედურამ %s გასაბრუნებელი მნიშვნელობები არ დააბრუნა"
 
-#: libgimp/gimpprocedure.c:2015
+#: libgimp/gimpprocedure.c:2050
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2027
+#: libgimp/gimpprocedure.c:2062
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
 "'%s' (#%d). Expected %s, got %s."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2062
+#: libgimp/gimpprocedure.c:2097
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2076
+#: libgimp/gimpprocedure.c:2111
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2120
+#: libgimp/gimpprocedure.c:2155
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2130
+#: libgimp/gimpprocedure.c:2165
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr ""
 
-#: libgimp/gimpproceduredialog.c:275
+#: libgimp/gimpproceduredialog.c:294 libgimp/gimpproceduredialog.c:567
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_გახსნა"
 
-#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:558
-#: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libgimp/gimpproceduredialog.c:298 libgimp/gimpproceduredialog.c:571
+#: libgimpwidgets/gimpcolorbutton.c:558 libgimpwidgets/gimpfileentry.c:467
+#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
+#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_დიახ"
 
-#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:556
+#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:556
 msgid "_Reset"
 msgstr "_საწყისი მნიშვნელობებზე დაბრუნება"
 
-#: libgimp/gimpproceduredialog.c:339
+#: libgimp/gimpproceduredialog.c:359
 msgid "_Load Saved Settings"
 msgstr "შენახული პარამეტრების წაკითხვა"
 
-#: libgimp/gimpproceduredialog.c:340
+#: libgimp/gimpproceduredialog.c:360
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr ""
 
-#: libgimp/gimpproceduredialog.c:352
+#: libgimp/gimpproceduredialog.c:372
 msgid "_Save Settings"
 msgstr "პარამეტრების შენახვა"
 
-#: libgimp/gimpproceduredialog.c:353
+#: libgimp/gimpproceduredialog.c:373
 msgid "Store current settings for later reuse"
 msgstr ""
 
-#: libgimp/gimpproceduredialog.c:734
+#: libgimp/gimpproceduredialog.c:784
 msgid "Brush Chooser"
 msgstr "ფუნჯის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:738
+#: libgimp/gimpproceduredialog.c:788
 msgid "Font Chooser"
 msgstr "ფონტის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:742
+#: libgimp/gimpproceduredialog.c:792
 msgid "Gradient Chooser"
 msgstr "გრადიენტის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:746
+#: libgimp/gimpproceduredialog.c:796
 msgid "Palette Chooser"
 msgstr "პალიტრის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:750
+#: libgimp/gimpproceduredialog.c:800
 msgid "Pattern Chooser"
 msgstr "შაბლონის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:2128
+#: libgimp/gimpproceduredialog.c:2492
 msgid "Reset to _Initial Values"
 msgstr "საწყის მნიშვნელობებზე დაბრუნება"
 
-#: libgimp/gimpproceduredialog.c:2137
+#: libgimp/gimpproceduredialog.c:2501
 msgid "Reset to _Factory Defaults"
 msgstr "ქარხნულ _პარამეტრებზე დაბრუნება"
 
@@ -468,59 +482,74 @@ msgstr "თარიღი:"
 msgid "Copyright:"
 msgstr "უფლებები:"
 
-#: libgimp/gimpsaveprocedure.c:408
+#: libgimp/gimppropwidgets.c:191
+#, c-format
+msgid "Choose layer: %s"
+msgstr ""
+
+#: libgimp/gimppropwidgets.c:193
+#, c-format
+msgid "Choose channel: %s"
+msgstr "აირჩიეთ არხი: %s"
+
+#: libgimp/gimppropwidgets.c:195
+#, c-format
+msgid "Choose drawable: %s"
+msgstr ""
+
+#: libgimp/gimpsaveprocedure.c:460
 msgid "Save _Exif"
 msgstr "_Exif-ის შენახვა"
 
-#: libgimp/gimpsaveprocedure.c:409
+#: libgimp/gimpsaveprocedure.c:461
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr ""
 
-#: libgimp/gimpsaveprocedure.c:414
+#: libgimp/gimpsaveprocedure.c:466
 msgid "Save _IPTC"
 msgstr "_IPTC-ის შენახვა"
 
-#: libgimp/gimpsaveprocedure.c:415
+#: libgimp/gimpsaveprocedure.c:467
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
 
-#: libgimp/gimpsaveprocedure.c:420
+#: libgimp/gimpsaveprocedure.c:472
 msgid "Save _XMP"
 msgstr "_XMP-ის შენახვა"
 
-#: libgimp/gimpsaveprocedure.c:421
+#: libgimp/gimpsaveprocedure.c:473
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr ""
 
-#: libgimp/gimpsaveprocedure.c:426
+#: libgimp/gimpsaveprocedure.c:478
 msgid "Save color _profile"
 msgstr "ფერის პროფილის _შენახვა"
 
-#: libgimp/gimpsaveprocedure.c:427
+#: libgimp/gimpsaveprocedure.c:479
 msgid "Save the ICC color profile as metadata"
 msgstr ""
 
-#: libgimp/gimpsaveprocedure.c:432
+#: libgimp/gimpsaveprocedure.c:484
 msgid "Save _thumbnail"
 msgstr "მინიატურის _შენახვა"
 
-#: libgimp/gimpsaveprocedure.c:433
+#: libgimp/gimpsaveprocedure.c:485
 msgid "Save a smaller representation of the image as metadata"
 msgstr ""
 
-#: libgimp/gimpsaveprocedure.c:439
+#: libgimp/gimpsaveprocedure.c:491
 msgid "Save c_omment"
 msgstr "_კომენტარის შენახვა"
 
-#: libgimp/gimpsaveprocedure.c:440
+#: libgimp/gimpsaveprocedure.c:492
 msgid "Save a comment as metadata"
 msgstr ""
 
-#: libgimp/gimpsaveprocedure.c:444
+#: libgimp/gimpsaveprocedure.c:496
 msgid "Comment"
 msgstr "კომენტარი"
 
-#: libgimp/gimpsaveprocedure.c:445
+#: libgimp/gimpsaveprocedure.c:497
 msgid "Image comment"
 msgstr "გამოსახულების კომენტარი"
 
@@ -1879,28 +1908,28 @@ msgstr ""
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr ""
 
-#: libgimpconfig/gimpconfig-deserialize.c:117
+#: libgimpconfig/gimpconfig-deserialize.c:120
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "ტოკენის (%s) მნიშვნელობა სწორ UTF-8 ტიპის სტრიქონს არ წარმოადგენს"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:485
+#: libgimpconfig/gimpconfig-deserialize.c:492
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 
-#: libgimpconfig/gimpconfig-deserialize.c:600
+#: libgimpconfig/gimpconfig-deserialize.c:607
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr ""
 
-#: libgimpconfig/gimpconfig-deserialize.c:615
+#: libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr ""
 
-#: libgimpconfig/gimpconfig-deserialize.c:684
+#: libgimpconfig/gimpconfig-deserialize.c:691
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr ""
@@ -2095,7 +2124,7 @@ msgstr "ძველი:"
 msgid "HTML _notation:"
 msgstr "HTML ნოტაცია:"
 
-#: libgimpwidgets/gimpdialog.c:177
+#: libgimpwidgets/gimpdialog.c:181
 msgid "_Help"
 msgstr "_დახმარება"
 
@@ -2229,6 +2258,8 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
+"დააწკაპუნეთ პიპეტზე, შემდეგ კი დააწკაპუნეთ ნებისმიერ ადგილას ეკრანზე, რათა "
+"ის ფერი აირჩიოთ."
 
 #. toggle button to (de)activate the instant preview
 #: libgimpwidgets/gimppreview.c:288
@@ -2251,7 +2282,7 @@ msgstr ""
 msgid "Custom Checks Color 2"
 msgstr ""
 
-#: libgimpwidgets/gimppropwidgets.c:2475
+#: libgimpwidgets/gimppropwidgets.c:2474
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
