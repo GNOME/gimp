@@ -198,6 +198,7 @@ gimp_container_class_init (GimpContainerClass *klass)
   klass->search                  = NULL;
   klass->get_unique_names        = NULL;
   klass->get_child_by_name       = NULL;
+  klass->get_children_by_name    = NULL;
   klass->get_child_by_index      = NULL;
   klass->get_child_index         = NULL;
 
@@ -879,6 +880,34 @@ gimp_container_get_unique_names (GimpContainer *container)
     return GIMP_CONTAINER_GET_CLASS (container)->get_unique_names (container);
 
   return FALSE;
+}
+
+GList *
+gimp_container_get_children_by_name (GimpContainer *container,
+                                     const gchar   *name)
+{
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+
+  if (!name)
+    return NULL;
+
+  if (GIMP_CONTAINER_GET_CLASS (container)->get_children_by_name != NULL &&
+      ! gimp_container_get_unique_names (container))
+    {
+      return GIMP_CONTAINER_GET_CLASS (container)->get_children_by_name (container,
+                                                                         name);
+    }
+  else
+    {
+      GimpObject *child;
+
+      child = GIMP_CONTAINER_GET_CLASS (container)->get_child_by_name (container, name);
+
+      if (child != NULL)
+        return g_list_prepend (NULL, child);
+      else
+        return NULL;
+    }
 }
 
 GimpObject *

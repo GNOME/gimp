@@ -72,6 +72,8 @@ static GimpObject * gimp_list_search             (GimpContainer           *conta
                                                   GimpContainerSearchFunc  func,
                                                   gpointer                 user_data);
 static gboolean     gimp_list_get_unique_names   (GimpContainer           *container);
+static GList    * gimp_list_get_children_by_name (GimpContainer           *container,
+                                                  const gchar             *name);
 static GimpObject * gimp_list_get_child_by_name  (GimpContainer           *container,
                                                   const gchar             *name);
 static GimpObject * gimp_list_get_child_by_index (GimpContainer           *container,
@@ -97,23 +99,24 @@ gimp_list_class_init (GimpListClass *klass)
   GimpObjectClass    *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpContainerClass *container_class   = GIMP_CONTAINER_CLASS (klass);
 
-  object_class->finalize              = gimp_list_finalize;
-  object_class->set_property          = gimp_list_set_property;
-  object_class->get_property          = gimp_list_get_property;
+  object_class->finalize                = gimp_list_finalize;
+  object_class->set_property            = gimp_list_set_property;
+  object_class->get_property            = gimp_list_get_property;
 
-  gimp_object_class->get_memsize      = gimp_list_get_memsize;
+  gimp_object_class->get_memsize        = gimp_list_get_memsize;
 
-  container_class->add                = gimp_list_add;
-  container_class->remove             = gimp_list_remove;
-  container_class->reorder            = gimp_list_reorder;
-  container_class->clear              = gimp_list_clear;
-  container_class->have               = gimp_list_have;
-  container_class->foreach            = gimp_list_foreach;
-  container_class->search             = gimp_list_search;
-  container_class->get_unique_names   = gimp_list_get_unique_names;
-  container_class->get_child_by_name  = gimp_list_get_child_by_name;
-  container_class->get_child_by_index = gimp_list_get_child_by_index;
-  container_class->get_child_index    = gimp_list_get_child_index;
+  container_class->add                  = gimp_list_add;
+  container_class->remove               = gimp_list_remove;
+  container_class->reorder              = gimp_list_reorder;
+  container_class->clear                = gimp_list_clear;
+  container_class->have                 = gimp_list_have;
+  container_class->foreach              = gimp_list_foreach;
+  container_class->search               = gimp_list_search;
+  container_class->get_unique_names     = gimp_list_get_unique_names;
+  container_class->get_children_by_name = gimp_list_get_children_by_name;
+  container_class->get_child_by_name    = gimp_list_get_child_by_name;
+  container_class->get_child_by_index   = gimp_list_get_child_by_index;
+  container_class->get_child_index      = gimp_list_get_child_index;
 
   g_object_class_install_property (object_class, PROP_UNIQUE_NAMES,
                                    g_param_spec_boolean ("unique-names",
@@ -363,6 +366,29 @@ gimp_list_get_unique_names (GimpContainer *container)
   GimpList *list = GIMP_LIST (container);
 
   return list->unique_names;
+}
+
+static GList *
+gimp_list_get_children_by_name (GimpContainer *container,
+                                const gchar   *name)
+{
+  GimpList *list     = GIMP_LIST (container);
+  GList    *children = NULL;
+  GList    *iter;
+
+  for (iter = list->queue->head; iter; iter = g_list_next (iter))
+    {
+      GimpObject *object = iter->data;
+
+      if (! strcmp (gimp_object_get_name (object), name))
+        {
+          children = g_list_prepend (children, object);
+          if (list->unique_names)
+            return children;
+        }
+    }
+
+  return children;
 }
 
 static GimpObject *

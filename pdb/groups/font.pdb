@@ -19,9 +19,61 @@
 # The invoke code is compiled on the app side.
 # The invoke code must assign to each result var
 
+sub fonts_get_by_name {
+    $blurb = "Returns the fonts with the given name.";
+    $help  = "Returns the fonts with the given name. There may be more than one.";
+
+    &jehan_pdb_misc('2023', '3.0');
+
+    @inargs = (
+      { name => 'name', type => 'string', non_empty => 1,
+        desc => 'The name of the font' }
+    );
+
+    @outargs = (
+      { name => 'fonts', type => 'fontarray', non_empty => 0,
+        desc => 'The fonts with the given name',
+        array => { name => 'num_fonts',
+                   desc => 'The number of fonts with the given name' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GList *list;
+
+  list = gimp_pdb_get_resources (gimp, GIMP_TYPE_FONT, name, GIMP_PDB_DATA_ACCESS_READ, error);
+
+  if (list == NULL)
+    success = FALSE;
+
+  num_fonts = g_list_length (list);
+
+  if (num_fonts > 0)
+    {
+      gint i = 0;
+
+      fonts = g_new (GimpFont *, num_fonts);
+
+      for (GList *iter = list; i < num_fonts; i++, iter = g_list_next (iter))
+        fonts[i] = g_object_ref (iter->data);
+    }
+  g_list_free (list);
+}
+CODE
+    );
+}
+
 sub font_get_by_name {
-    $blurb = "Returns the font with the given name.";
-    $help  = "Returns the font with the given name.";
+    $blurb = "Returns a font with the given name.";
+    $help = <<HELP;
+If several fonts are named identically, the one which is returned by this
+function should be considered random. This can be used when you know you won't
+have multiple fonts of this name or that you don't want to choose
+(non-interactive scripts, etc.).
+
+If you need more control, you should use gimp_fonts_get_by_name() instead.
+HELP
 
     &mitch_pdb_misc('2023', '3.0');
 
@@ -50,7 +102,7 @@ CODE
 @headers = qw("core/gimp.h"
               "gimppdb-utils.h");
 
-@procs = qw(font_get_by_name);
+@procs = qw(font_get_by_name fonts_get_by_name);
 
 %exports = (app => [@procs], lib => [@procs]);
 

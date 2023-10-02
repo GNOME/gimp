@@ -71,6 +71,57 @@ font_get_by_name_invoker (GimpProcedure         *procedure,
   return return_vals;
 }
 
+static GimpValueArray *
+fonts_get_by_name_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *name;
+  gint num_fonts = 0;
+  GimpFont **fonts = NULL;
+
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GList *list;
+
+      list = gimp_pdb_get_resources (gimp, GIMP_TYPE_FONT, name, GIMP_PDB_DATA_ACCESS_READ, error);
+
+      if (list == NULL)
+        success = FALSE;
+
+      num_fonts = g_list_length (list);
+
+      if (num_fonts > 0)
+        {
+          gint i = 0;
+
+          fonts = g_new (GimpFont *, num_fonts);
+
+          for (GList *iter = list; i < num_fonts; i++, iter = g_list_next (iter))
+            fonts[i] = g_object_ref (iter->data);
+        }
+      g_list_free (list);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_fonts);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_FONT, (GObject **) fonts, num_fonts);
+    }
+
+  return return_vals;
+}
+
 void
 register_font_procs (GimpPDB *pdb)
 {
@@ -83,8 +134,9 @@ register_font_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-font-get-by-name");
   gimp_procedure_set_static_help (procedure,
-                                  "Returns the font with the given name.",
-                                  "Returns the font with the given name.",
+                                  "Returns a font with the given name.",
+                                  "If several fonts are named identically, the one which is returned by this function should be considered random. This can be used when you know you won't have multiple fonts of this name or that you don't want to choose (non-interactive scripts, etc.).\n"
+                                  "If you need more control, you should use 'gimp-fonts-get-by-name' instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -103,6 +155,42 @@ register_font_procs (GimpPDB *pdb)
                                                          "The font",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-fonts-get-by-name
+   */
+  procedure = gimp_procedure_new (fonts_get_by_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-fonts-get-by-name");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the fonts with the given name.",
+                                  "Returns the fonts with the given name. There may be more than one.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2023");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the font",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_int ("num-fonts",
+                                                     "num fonts",
+                                                     "The number of fonts with the given name",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_object_array ("fonts",
+                                                                 "fonts",
+                                                                 "The fonts with the given name",
+                                                                 GIMP_TYPE_FONT,
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

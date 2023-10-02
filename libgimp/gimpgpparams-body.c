@@ -672,6 +672,10 @@ gimp_gp_param_to_value (gpointer        gimp,
             {
               objects[i] = (GObject *) get_display_by_id (gimp, id);
             }
+          else if (g_type_is_a (object_type, GIMP_TYPE_RESOURCE))
+            {
+              objects[i] = (GObject *) get_resource_by_id (id);
+            }
 
           if (objects[i])
             g_object_ref (objects[i]);
@@ -992,6 +996,10 @@ gimp_value_to_gp_param (const GValue *value,
                 {
                   param->data.d_id_array.data[i] =
                     gimp_display_get_id (GIMP_DISPLAY (array->data[i]));
+                }
+              else if (GIMP_IS_RESOURCE (array->data[i]))
+                {
+                  param->data.d_id_array.data[i] = get_resource_id (array->data[i]);
                 }
               else
                 {

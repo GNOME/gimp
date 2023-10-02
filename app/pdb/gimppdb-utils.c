@@ -101,6 +101,91 @@ gimp_pdb_get_data_factory (Gimp  *gimp,
   g_return_val_if_reached (NULL);
 }
 
+GList *
+gimp_pdb_get_resources (Gimp               *gimp,
+                        GType               data_type,
+                        const gchar        *name,
+                        GimpPDBDataAccess   access,
+                        GError            **error)
+{
+  GList           *resources;
+  GimpDataFactory *factory;
+  GimpContainer   *container;
+  const gchar     *label;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  label = gimp_pdb_get_data_label (data_type);
+
+  if (! name || ! strlen (name))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   /* TRANSLATOR: %s is a data label from the
+                    * PDB-error-data-label context.
+                    */
+                   C_("PDB-error-message", "%s name cannot be empty"),
+                   g_type_name (data_type));
+      return NULL;
+    }
+
+  factory = gimp_pdb_get_data_factory (gimp, data_type);
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
+
+  container = gimp_data_factory_get_container (factory);
+  resources = gimp_container_get_children_by_name (container, name);
+
+  if (! resources && ! strcmp (name, "Standard"))
+    {
+      GimpData *resource;
+
+      resource = gimp_data_factory_data_get_standard (factory, gimp_get_user_context (gimp));
+      g_return_val_if_fail (resource != NULL, NULL);
+      resources = g_list_prepend (NULL, resource);
+    }
+
+  if (! resources)
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   /* TRANSLATOR: the first %s is a data label from the
+                    * PDB-error-data-label context. The second %s is a data
+                    * name.
+                    */
+                   C_("PDB-error-message", "%s '%s' not found"), label, name);
+    }
+  else if ((access & GIMP_PDB_DATA_ACCESS_WRITE) ||
+           (access & GIMP_PDB_DATA_ACCESS_RENAME))
+    {
+      for (GList *iter = resources; iter; iter = iter->next)
+        {
+          if ((access & GIMP_PDB_DATA_ACCESS_WRITE) &&
+              ! gimp_data_is_writable (GIMP_DATA (iter->data)))
+            {
+              g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                           /* TRANSLATOR: the first %s is a data label from the
+                            * PDB-error-data-label context. The second %s is a data
+                            * name.
+                            */
+                           C_("PDB-error-message", "%s '%s' is not editable"), label, name);
+              return NULL;
+            }
+          else if ((access & GIMP_PDB_DATA_ACCESS_RENAME) &&
+                   ! gimp_viewable_is_name_editable (GIMP_VIEWABLE (iter->data)))
+            {
+              g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                           /* TRANSLATOR: the first %s is a data label from the
+                            * PDB-error-data-label context. The second %s is a data
+                            * name.
+                            */
+                           C_("PDB-error-message", "%s '%s' is not renamable"), label, name);
+              return NULL;
+            }
+        }
+    }
+
+  return resources;
+}
+
 GimpResource *
 gimp_pdb_get_resource (Gimp               *gimp,
                        GType               data_type,
