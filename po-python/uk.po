@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-26 20:31+0000\n"
-"PO-Revision-Date: 2023-07-28 16:35+0300\n"
+"POT-Creation-Date: 2023-10-02 00:04+0000\n"
+"PO-Revision-Date: 2023-10-02 09:55+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -24,20 +24,16 @@ msgid "Save as colored HTML text..."
 msgstr "Зберегти як кольоровий текст HTML…"
 
 #: plug-ins/python/colorxhtml.py:92 plug-ins/python/colorxhtml.py:98
-#: plug-ins/python/gradients-save-as-css.py:124
-#: plug-ins/python/histogram-export.py:204
-#: plug-ins/python/histogram-export.py:246
-#: plug-ins/python/palette-offset.py:145
+#: plug-ins/python/gradients-save-as-css.py:116
+#: plug-ins/python/palette-offset.py:135
 #: plug-ins/python/python-console/python-console.py:311
 #: plug-ins/python/spyro-plus.py:1724
 msgid "_Cancel"
 msgstr "_Скасувати"
 
 #: plug-ins/python/colorxhtml.py:93 plug-ins/python/colorxhtml.py:99
-#: plug-ins/python/gradients-save-as-css.py:125
-#: plug-ins/python/histogram-export.py:205
-#: plug-ins/python/histogram-export.py:247
-#: plug-ins/python/palette-offset.py:146 plug-ins/python/spyro-plus.py:1725
+#: plug-ins/python/gradients-save-as-css.py:117
+#: plug-ins/python/palette-offset.py:136 plug-ins/python/spyro-plus.py:1725
 msgid "_OK"
 msgstr "_Гаразд"
 
@@ -87,119 +83,118 @@ msgstr "Записати окремий файл CSS"
 msgid "Saving as colored XHTML"
 msgstr "Збереження кольорового XHTML"
 
-#: plug-ins/python/colorxhtml.py:284 plug-ins/python/colorxhtml.py:285
+#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
 msgid "_Read characters from file, if true, or use text entry"
 msgstr "Якщо «true», _читати символи з файла, інакше — із введеного тексту"
 
-#: plug-ins/python/colorxhtml.py:289 plug-ins/python/colorxhtml.py:290
+#: plug-ins/python/colorxhtml.py:291 plug-ins/python/colorxhtml.py:292
 msgid "_File to read or characters to use"
 msgstr "_Файл що читається або символи, що використовуються"
 
-#: plug-ins/python/colorxhtml.py:294 plug-ins/python/colorxhtml.py:295
+#: plug-ins/python/colorxhtml.py:296 plug-ins/python/colorxhtml.py:297
 msgid "Fo_nt size in pixels"
 msgstr "_Кегль шрифту у точках"
 
-#: plug-ins/python/colorxhtml.py:299 plug-ins/python/colorxhtml.py:300
+#: plug-ins/python/colorxhtml.py:301 plug-ins/python/colorxhtml.py:302
 msgid "_Write a separate CSS file"
 msgstr "З_аписати окремий файл CSS"
 
-#: plug-ins/python/colorxhtml.py:320
+#: plug-ins/python/colorxhtml.py:322
 msgid "Save as colored HTML text"
 msgstr "Зберегти як кольоровий текст HTML"
 
-#: plug-ins/python/colorxhtml.py:323
+#: plug-ins/python/colorxhtml.py:325
 msgid "Colored HTML text"
 msgstr "Кольровий текст HTML"
 
-#: plug-ins/python/foggify.py:104
+#: plug-ins/python/foggify.py:99
 msgid "Layer _name"
 msgstr "_Назва шару"
 
-#: plug-ins/python/foggify.py:105
+#: plug-ins/python/foggify.py:100
 msgid "Layer name"
 msgstr "Назва шару"
 
-#: plug-ins/python/foggify.py:106
+#: plug-ins/python/foggify.py:101
 msgid "Clouds"
 msgstr "Хмари"
 
-#: plug-ins/python/foggify.py:109
+#: plug-ins/python/foggify.py:104
 msgid "_Turbulence"
 msgstr "_Турбулентність"
 
-#: plug-ins/python/foggify.py:110
+#: plug-ins/python/foggify.py:105
 msgid "Turbulence"
 msgstr "Турбулентність"
 
-#: plug-ins/python/foggify.py:114
+#: plug-ins/python/foggify.py:109
 msgid "O_pacity"
 msgstr "Н_епрозорість"
 
-#: plug-ins/python/foggify.py:115
+#: plug-ins/python/foggify.py:110
 msgid "Opacity"
 msgstr "Непрозорість"
 
-#: plug-ins/python/foggify.py:124
+#: plug-ins/python/foggify.py:119
 msgid "_Fog color"
 msgstr "Колір т_уману"
 
-#: plug-ins/python/foggify.py:125
+#: plug-ins/python/foggify.py:120
 msgid "Fog color"
 msgstr "Колір туману"
 
-#: plug-ins/python/foggify.py:141
+#: plug-ins/python/foggify.py:136
 msgid "Add a layer of fog"
 msgstr "Додати шар туману"
 
-#: plug-ins/python/foggify.py:142
+#: plug-ins/python/foggify.py:137
 msgid "Adds a layer of fog to the image."
 msgstr "Додає шар туману на зображення."
 
-#: plug-ins/python/foggify.py:144
+#: plug-ins/python/foggify.py:139
 msgid "_Fog..."
 msgstr "_Туман..."
 
-#: plug-ins/python/gradients-save-as-css.py:105
-#: plug-ins/python/histogram-export.py:230
+#: plug-ins/python/gradients-save-as-css.py:97
 msgid "_File..."
 msgstr "_Файл…"
 
-#: plug-ins/python/gradients-save-as-css.py:113
+#: plug-ins/python/gradients-save-as-css.py:105
 msgid "Choose CSS file..."
 msgstr "Виберіть файл CSS…"
 
-#: plug-ins/python/gradients-save-as-css.py:122
+#: plug-ins/python/gradients-save-as-css.py:114
 msgid "Save as CSS file..."
 msgstr "Зберегти як файл CSS…"
 
-#: plug-ins/python/gradients-save-as-css.py:201
+#: plug-ins/python/gradients-save-as-css.py:190
 #: plug-ins/python/palette-sort.py:345
 #: plug-ins/python/python-console/python-console.py:336
 msgid "Run mode"
 msgstr "Режим виконання"
 
-#: plug-ins/python/gradients-save-as-css.py:202
+#: plug-ins/python/gradients-save-as-css.py:191
 #: plug-ins/python/python-console/python-console.py:336
 msgid "The run mode"
 msgstr "Режим виконання"
 
-#: plug-ins/python/gradients-save-as-css.py:206
+#: plug-ins/python/gradients-save-as-css.py:195
 msgid "_Gradient to use"
 msgstr "Г_радієнт для використання"
 
-#: plug-ins/python/gradients-save-as-css.py:209
+#: plug-ins/python/gradients-save-as-css.py:198
 msgid "_File"
 msgstr "_Файл"
 
-#: plug-ins/python/gradients-save-as-css.py:225
-#: plug-ins/python/gradients-save-as-css.py:226
+#: plug-ins/python/gradients-save-as-css.py:214
+#: plug-ins/python/gradients-save-as-css.py:215
 msgid "Creates a new palette from a given gradient"
 msgstr "Створює палітру з вказаного градієнта"
 
-#: plug-ins/python/gradients-save-as-css.py:228
-#| msgid "Save as CSS file..."
-msgid "Save as CSS..."
-msgstr "Зберегти як CSS…"
+#: plug-ins/python/gradients-save-as-css.py:217
+#| msgid "Save as CSS..."
+msgid "Save Gradient as CSS..."
+msgstr "Зберегти градієнт як CSS…"
 
 #: plug-ins/python/histogram-export.py:92
 msgid "Pixel count"
@@ -213,72 +208,46 @@ msgstr "Нормалізовано"
 msgid "Percent"
 msgstr "Відсоток"
 
-#: plug-ins/python/histogram-export.py:166
+#: plug-ins/python/histogram-export.py:161
 msgid "File is either a directory or file name is empty."
 msgstr "Або файл є каталогом, або назва файла є порожньою."
 
-#: plug-ins/python/histogram-export.py:169
+#: plug-ins/python/histogram-export.py:164
 msgid "Directory not found."
 msgstr "Каталог не знайдено."
 
-#: plug-ins/python/histogram-export.py:203
+#: plug-ins/python/histogram-export.py:179
 msgid "Histogram Export..."
 msgstr "Експортувати гістограму…"
 
-#: plug-ins/python/histogram-export.py:238
-msgid "Choose export file..."
-msgstr "Виберіть файл для експортування…"
-
-#: plug-ins/python/histogram-export.py:244
-msgid "Histogram Export file..."
-msgstr "Файл експортування гістограми…"
-
-#. Bucket size parameter
-#: plug-ins/python/histogram-export.py:250
-#: plug-ins/python/histogram-export.py:320
-msgid "_Bucket Size"
-msgstr "_Розмір ділянки"
-
-#. Sample average parameter
-#: plug-ins/python/histogram-export.py:258
-#: plug-ins/python/histogram-export.py:325
-msgid "Sample _Average"
-msgstr "_Середнє за вибіркою"
-
-#: plug-ins/python/histogram-export.py:259
-msgid ""
-"If checked, the histogram is generated from merging all visible layers. "
-"Otherwise, the histogram is only for the current layer."
-msgstr ""
-"Якщо позначено, гістограму буде створено на основі об'єднання усіх видимих "
-"шарів. Якщо не позначено, гістограму буде створено лише на основі поточного "
-"шару."
-
-#. Output format parameter
-#: plug-ins/python/histogram-export.py:265
-msgid "_Output Format"
-msgstr "Формат _виведення"
-
-#: plug-ins/python/histogram-export.py:316
+#: plug-ins/python/histogram-export.py:209
 msgid "Histogram _File"
 msgstr "_Файл гістограми"
 
-#: plug-ins/python/histogram-export.py:330
-msgid "Output format"
-msgstr "Формат виводу"
+#: plug-ins/python/histogram-export.py:213
+msgid "_Bucket Size"
+msgstr "_Розмір ділянки"
 
-#: plug-ins/python/histogram-export.py:352
+#: plug-ins/python/histogram-export.py:218
+msgid "Sample _Average"
+msgstr "_Середнє за вибіркою"
+
+#: plug-ins/python/histogram-export.py:223
+#| msgid "Output format"
+msgid "Output _format"
+msgstr "_Формат виводу"
+
+#: plug-ins/python/histogram-export.py:245
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Експорт гістограми зображення до текстового файлу (CSV)"
 
-#: plug-ins/python/histogram-export.py:355
+#: plug-ins/python/histogram-export.py:248
 msgid "_Export histogram..."
 msgstr "_Експортувати гістограму..."
 
 #: plug-ins/python/palette-offset.py:50 plug-ins/python/palette-offset.py:51
 #: plug-ins/python/palette-sort.py:351 plug-ins/python/palette-sort.py:403
 #: plug-ins/python/palette-sort.py:404
-#: plug-ins/python/palette-to-gradient.py:135
 msgid "Palette"
 msgstr "Палітра"
 
@@ -286,7 +255,7 @@ msgstr "Палітра"
 msgid "Off_set"
 msgstr "Зс_ув"
 
-#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:153
+#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:143
 msgid "Offset"
 msgstr "Зсув"
 
@@ -308,7 +277,7 @@ msgstr "_Зсув палітри..."
 msgid "Offset the colors in a palette"
 msgstr "Зсунути кольори на палітрі"
 
-#: plug-ins/python/palette-offset.py:143
+#: plug-ins/python/palette-offset.py:133
 msgid "Offset Palette..."
 msgstr "Зсув палітри…"
 
@@ -393,6 +362,7 @@ msgid "Partitioned"
 msgstr "Поділене"
 
 #: plug-ins/python/palette-sort.py:350
+#: plug-ins/python/palette-to-gradient.py:129
 msgid "_Palette"
 msgstr "_Палітра"
 
@@ -452,32 +422,32 @@ msgstr "Впорядкувати _палітру…"
 msgid "Sort the colors in a palette"
 msgstr "Впорядкувати кольори на палітрі"
 
-#: plug-ins/python/palette-to-gradient.py:147
-#: plug-ins/python/palette-to-gradient.py:148
+#: plug-ins/python/palette-to-gradient.py:141
+#: plug-ins/python/palette-to-gradient.py:142
 msgid "The newly created gradient"
 msgstr "Новостворений градієнт"
 
-#: plug-ins/python/palette-to-gradient.py:170
+#: plug-ins/python/palette-to-gradient.py:164
 msgid "Palette to _Gradient"
 msgstr "Палітра на _градієнт"
 
-#: plug-ins/python/palette-to-gradient.py:171
+#: plug-ins/python/palette-to-gradient.py:165
 msgid "Create a gradient using colors from the palette"
 msgstr "Створити градієнт, використовуючи кольори палітри"
 
-#: plug-ins/python/palette-to-gradient.py:172
+#: plug-ins/python/palette-to-gradient.py:166
 msgid "Create a new gradient using colors from the palette."
 msgstr "Створити градієнт, використовуючи кольори палітри."
 
-#: plug-ins/python/palette-to-gradient.py:175
+#: plug-ins/python/palette-to-gradient.py:169
 msgid "Palette to _Repeating Gradient"
 msgstr "П_алітра на градієнт, що повторюється"
 
-#: plug-ins/python/palette-to-gradient.py:176
+#: plug-ins/python/palette-to-gradient.py:170
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Створити з кольорів палітри градієнт, що повторюється"
 
-#: plug-ins/python/palette-to-gradient.py:177
+#: plug-ins/python/palette-to-gradient.py:171
 msgid "Create a new repeating gradient using colors from the palette."
 msgstr "Створити з кольорів палітри градієнт, що повторюється."
 
@@ -995,6 +965,23 @@ msgstr ""
 #: plug-ins/python/spyro-plus.py:2304
 msgid "Spyrogimp..."
 msgstr "Спіроґімп…"
+
+#~ msgid "Choose export file..."
+#~ msgstr "Виберіть файл для експортування…"
+
+#~ msgid "Histogram Export file..."
+#~ msgstr "Файл експортування гістограми…"
+
+#~ msgid ""
+#~ "If checked, the histogram is generated from merging all visible layers. "
+#~ "Otherwise, the histogram is only for the current layer."
+#~ msgstr ""
+#~ "Якщо позначено, гістограму буде створено на основі об'єднання усіх "
+#~ "видимих шарів. Якщо не позначено, гістограму буде створено лише на основі "
+#~ "поточного шару."
+
+#~ msgid "_Output Format"
+#~ msgstr "Формат _виведення"
 
 #~ msgid "palette_from_gradient (gradient, number, segment_colors) -> None"
 #~ msgstr "palette_from_gradient (градієнт, число, кольори_сегмента) -> Нічого"
