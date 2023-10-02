@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-26 14:00+0000\n"
-"PO-Revision-Date: 2023-08-27 07:24+0200\n"
+"POT-Creation-Date: 2023-10-02 00:02+0000\n"
+"PO-Revision-Date: 2023-10-02 16:46+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -23,9 +23,13 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: libgimp/gimpbrushselectbutton.c:130 libgimp/gimppatternselectbutton.c:142
+#: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
 msgstr "Pre_brskaj ..."
+
+#: libgimp/gimpdrawablechooser.c:238
+msgid "Browse..."
+msgstr "Prebrskaj ..."
 
 #: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
 #, c-format
@@ -162,7 +166,7 @@ msgid "Confirm Save"
 msgstr "Potrditev shranjevanja"
 
 #: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:557
+#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -184,7 +188,7 @@ msgid "_Ignore"
 msgstr "_Prezri"
 
 #: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
-#: libgimp/gimpproceduredialog.c:277
+#: libgimp/gimpproceduredialog.c:296 libgimp/gimpproceduredialog.c:569
 msgid "_Export"
 msgstr "_Izvozi"
 
@@ -223,18 +227,30 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:397
+#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:396
 #, c-format
 msgid "Export Image as %s"
 msgstr "Izvozi sliko kot %s"
 
-#: libgimp/gimpimagemetadata.c:284
+#: libgimp/gimpimagemetadata.c:283
 msgid "Background"
 msgstr "Ozadje"
 
 #: libgimp/gimpimagemetadata-save.c:760 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
+
+#: libgimp/gimploadprocedure.c:260
+msgid ""
+"This file loading plug-in returned SUCCESS as a status without an image. "
+"This is a bug in the plug-in code. Contact the plug-in developer."
+msgstr ""
+"Ta vstavek za nalaganje datotek je vrnil stanje SUCCESS (uspešno) brez "
+"slike. To je napaka v kodi vstavka. Obrnite se na razvijalca vstavka."
+
+#: libgimp/gimpparamspecs-desc.c:54
+msgid "Allowed values:"
+msgstr "Dovoljene vrednosti:"
 
 #. procedure executed successfully
 #: libgimp/gimppdb.c:552
@@ -348,12 +364,12 @@ msgstr[1] "%d procedura se ujema z vašim povpraševanjem"
 msgstr[2] "%d proceduri se ujemata z vašim povpraševanjem"
 msgstr[3] "%d procedure se ujemajo z vašim povpraševanjem"
 
-#: libgimp/gimpprocedure.c:1924
+#: libgimp/gimpprocedure.c:1959
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedura »%s« ni vrnila nobenih vrednosti"
 
-#: libgimp/gimpprocedure.c:2015
+#: libgimp/gimpprocedure.c:2050
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -362,7 +378,7 @@ msgstr ""
 "Procedura »%s« je vrnila napačno vrsto vrnjene vrednosti »%s« (#%d). "
 "Pričakovana vrednost %s, prejeta %s."
 
-#: libgimp/gimpprocedure.c:2027
+#: libgimp/gimpprocedure.c:2062
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -371,7 +387,7 @@ msgstr ""
 "Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta »%s« (#"
 "%d). Pričakovano %s, prejeto %s."
 
-#: libgimp/gimpprocedure.c:2062
+#: libgimp/gimpprocedure.c:2097
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -380,7 +396,7 @@ msgstr ""
 "Procedura »%s« je vrnila »%s« kot vrnjeno vrednost »%s« (#%d, vrsta %s). Ta "
 "vrednost je izven dovoljenega obsega."
 
-#: libgimp/gimpprocedure.c:2076
+#: libgimp/gimpprocedure.c:2111
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -389,12 +405,12 @@ msgstr ""
 "Klic procedure »%s« ima vrednost »%s« za argument »%s« (#%d, vrsta %s). Ta "
 "vrednost je zunaj dovoljenega obsega."
 
-#: libgimp/gimpprocedure.c:2120
+#: libgimp/gimpprocedure.c:2155
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Procedura »%s« je vrnila neveljaven niz UTF-8 za argument »%s«."
 
-#: libgimp/gimpprocedure.c:2130
+#: libgimp/gimpprocedure.c:2165
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -402,63 +418,63 @@ msgid ""
 msgstr ""
 "Procedura »%s« je bila klicana z neveljavnim nizom UTF-8 za argument »%s«."
 
-#: libgimp/gimpproceduredialog.c:275
+#: libgimp/gimpproceduredialog.c:294 libgimp/gimpproceduredialog.c:567
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Odpri"
 
-#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:558
-#: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libgimp/gimpproceduredialog.c:298 libgimp/gimpproceduredialog.c:571
+#: libgimpwidgets/gimpcolorbutton.c:558 libgimpwidgets/gimpfileentry.c:467
+#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
+#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "V _redu"
 
-#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:556
+#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:556
 msgid "_Reset"
 msgstr "_Ponastavi"
 
-#: libgimp/gimpproceduredialog.c:339
+#: libgimp/gimpproceduredialog.c:359
 msgid "_Load Saved Settings"
 msgstr "_Naloži shranjene nastavitve"
 
-#: libgimp/gimpproceduredialog.c:340
+#: libgimp/gimpproceduredialog.c:360
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Naloži nastavitve, shranjene s funkcijo Shrani nastavitve"
 
-#: libgimp/gimpproceduredialog.c:352
+#: libgimp/gimpproceduredialog.c:372
 msgid "_Save Settings"
 msgstr "_Shrani nastavitve"
 
-#: libgimp/gimpproceduredialog.c:353
+#: libgimp/gimpproceduredialog.c:373
 msgid "Store current settings for later reuse"
 msgstr "Shrani trenutne nastavitve za kasnejšo rabo"
 
-#: libgimp/gimpproceduredialog.c:734
+#: libgimp/gimpproceduredialog.c:784
 msgid "Brush Chooser"
 msgstr "Izbirnik čopičev"
 
-#: libgimp/gimpproceduredialog.c:738
+#: libgimp/gimpproceduredialog.c:788
 msgid "Font Chooser"
 msgstr "Izbirnik pisav"
 
-#: libgimp/gimpproceduredialog.c:742
+#: libgimp/gimpproceduredialog.c:792
 msgid "Gradient Chooser"
 msgstr "Izbirnik prelivov"
 
-#: libgimp/gimpproceduredialog.c:746
+#: libgimp/gimpproceduredialog.c:796
 msgid "Palette Chooser"
 msgstr "Izbirnik palet"
 
-#: libgimp/gimpproceduredialog.c:750
+#: libgimp/gimpproceduredialog.c:800
 msgid "Pattern Chooser"
 msgstr "Izbirnik vzorcev"
 
-#: libgimp/gimpproceduredialog.c:2128
+#: libgimp/gimpproceduredialog.c:2492
 msgid "Reset to _Initial Values"
 msgstr "Ponastavi na _začetne vrednosti"
 
-#: libgimp/gimpproceduredialog.c:2137
+#: libgimp/gimpproceduredialog.c:2501
 msgid "Reset to _Factory Defaults"
 msgstr "Ponastavi na _tovarniške vrednosti"
 
@@ -498,60 +514,75 @@ msgstr "Datum:"
 msgid "Copyright:"
 msgstr "Nosilec avtorskih pravic:"
 
-#: libgimp/gimpsaveprocedure.c:408
+#: libgimp/gimppropwidgets.c:191
+#, c-format
+msgid "Choose layer: %s"
+msgstr "Izberi plast: %s"
+
+#: libgimp/gimppropwidgets.c:193
+#, c-format
+msgid "Choose channel: %s"
+msgstr "Izberi kanal: %s"
+
+#: libgimp/gimppropwidgets.c:195
+#, c-format
+msgid "Choose drawable: %s"
+msgstr "Izberi risani predmet: %s"
+
+#: libgimp/gimpsaveprocedure.c:460
 msgid "Save _Exif"
 msgstr "Shrani _Exif"
 
-#: libgimp/gimpsaveprocedure.c:409
+#: libgimp/gimpsaveprocedure.c:461
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Shranite metapodatke Exif (zapis Exchangeable image file)"
 
-#: libgimp/gimpsaveprocedure.c:414
+#: libgimp/gimpsaveprocedure.c:466
 msgid "Save _IPTC"
 msgstr "Shrani _IPTC"
 
-#: libgimp/gimpsaveprocedure.c:415
+#: libgimp/gimpsaveprocedure.c:467
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
 "Shranite metapodatke IPTC (International Press Telecommunications Council)"
 
-#: libgimp/gimpsaveprocedure.c:420
+#: libgimp/gimpsaveprocedure.c:472
 msgid "Save _XMP"
 msgstr "Shrani _XMP"
 
-#: libgimp/gimpsaveprocedure.c:421
+#: libgimp/gimpsaveprocedure.c:473
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "Shranite metapodatke XMP (Extensible Metadata Platform)"
 
-#: libgimp/gimpsaveprocedure.c:426
+#: libgimp/gimpsaveprocedure.c:478
 msgid "Save color _profile"
 msgstr "Shrani barvni _profil"
 
-#: libgimp/gimpsaveprocedure.c:427
+#: libgimp/gimpsaveprocedure.c:479
 msgid "Save the ICC color profile as metadata"
 msgstr "Shranite barvni profil slike ICC kot metapodatke"
 
-#: libgimp/gimpsaveprocedure.c:432
+#: libgimp/gimpsaveprocedure.c:484
 msgid "Save _thumbnail"
 msgstr "Shrani _ogledno sliico"
 
-#: libgimp/gimpsaveprocedure.c:433
+#: libgimp/gimpsaveprocedure.c:485
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Shranite manjšo inačico slike kot metapodatke"
 
-#: libgimp/gimpsaveprocedure.c:439
+#: libgimp/gimpsaveprocedure.c:491
 msgid "Save c_omment"
 msgstr "Shrani k_omentar"
 
-#: libgimp/gimpsaveprocedure.c:440
+#: libgimp/gimpsaveprocedure.c:492
 msgid "Save a comment as metadata"
 msgstr "Shrani komentar kot metapodatke"
 
-#: libgimp/gimpsaveprocedure.c:444
+#: libgimp/gimpsaveprocedure.c:496
 msgid "Comment"
 msgstr "Komentar"
 
-#: libgimp/gimpsaveprocedure.c:445
+#: libgimp/gimpsaveprocedure.c:497
 msgid "Image comment"
 msgstr "Komentar slike"
 
@@ -1939,30 +1970,30 @@ msgstr "Barvni profil ‘%s’ ni za sivinski barvni prostor."
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Barvni profil ‘%s’ ni za barvni prostor CMYK."
 
-#: libgimpconfig/gimpconfig-deserialize.c:117
+#: libgimpconfig/gimpconfig-deserialize.c:120
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "vrednost za žeton %s ni veljaven niz UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:485
+#: libgimpconfig/gimpconfig-deserialize.c:492
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "za logični žeton %s je pričakovana vrednost »yes« ali »no«, vrnjena vrednost "
 "pa je »%s«"
 
-#: libgimpconfig/gimpconfig-deserialize.c:600
+#: libgimpconfig/gimpconfig-deserialize.c:607
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "neveljavna vrednost »%s« za žeton %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:615
+#: libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "neveljavna vrednost »%ld« za žeton %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:684
+#: libgimpconfig/gimpconfig-deserialize.c:691
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "pri razčlenjevanju žetona »%s«: %s"
@@ -2163,7 +2194,7 @@ msgstr "Staro:"
 msgid "HTML _notation:"
 msgstr "Zapis _HTML:"
 
-#: libgimpwidgets/gimpdialog.c:177
+#: libgimpwidgets/gimpdialog.c:181
 msgid "_Help"
 msgstr "Po_moč"
 
@@ -2324,7 +2355,7 @@ msgstr "Barva 1 šahovnice po meri"
 msgid "Custom Checks Color 2"
 msgstr "Barva 2 šahovnice po meri"
 
-#: libgimpwidgets/gimppropwidgets.c:2475
+#: libgimpwidgets/gimppropwidgets.c:2474
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
