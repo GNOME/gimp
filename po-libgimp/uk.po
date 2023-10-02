@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-26 14:00+0000\n"
-"PO-Revision-Date: 2023-08-26 21:42+0300\n"
+"POT-Creation-Date: 2023-10-02 00:02+0000\n"
+"PO-Revision-Date: 2023-10-02 09:54+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -20,9 +20,14 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 
-#: libgimp/gimpbrushselectbutton.c:130 libgimp/gimppatternselectbutton.c:142
+#: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
 msgstr "Ви_брати…"
+
+#: libgimp/gimpdrawablechooser.c:238
+#| msgid "_Browse..."
+msgid "Browse..."
+msgstr "Вибрати…"
 
 #: libgimp/gimpexport.c:332 libgimp/gimpexport.c:368
 #, c-format
@@ -159,7 +164,7 @@ msgid "Confirm Save"
 msgstr "Підтвердження збереження"
 
 #: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:557
+#: libgimp/gimpproceduredialog.c:324 libgimpwidgets/gimpcolorbutton.c:557
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -181,7 +186,7 @@ msgid "_Ignore"
 msgstr "_Ігнорувати"
 
 #: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
-#: libgimp/gimpproceduredialog.c:277
+#: libgimp/gimpproceduredialog.c:296 libgimp/gimpproceduredialog.c:569
 msgid "_Export"
 msgstr "_Експорт"
 
@@ -220,18 +225,31 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:397
+#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:396
 #, c-format
 msgid "Export Image as %s"
 msgstr "Експортувати зображення як %s"
 
-#: libgimp/gimpimagemetadata.c:284
+#: libgimp/gimpimagemetadata.c:283
 msgid "Background"
 msgstr "Тло"
 
 #: libgimp/gimpimagemetadata-save.c:760 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
+
+#: libgimp/gimploadprocedure.c:260
+msgid ""
+"This file loading plug-in returned SUCCESS as a status without an image. "
+"This is a bug in the plug-in code. Contact the plug-in developer."
+msgstr ""
+"Цей додаток завантаження файлів повернув повідомлення SUCCESS як стан без"
+" зображення. Це вада у програмному коді додатка. Повідомте про неї"
+" розробника додатка."
+
+#: libgimp/gimpparamspecs-desc.c:54
+msgid "Allowed values:"
+msgstr "Дозволені значення:"
 
 #. procedure executed successfully
 #: libgimp/gimppdb.c:552
@@ -343,12 +361,12 @@ msgstr[0] "%d процедура збігається із запитом"
 msgstr[1] "%d процедури збігають із запитом"
 msgstr[2] "%d процедур збігають із запитом"
 
-#: libgimp/gimpprocedure.c:1924
+#: libgimp/gimpprocedure.c:1959
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Процедура «%s» не повернула жодного значення"
 
-#: libgimp/gimpprocedure.c:2015
+#: libgimp/gimpprocedure.c:2050
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -357,7 +375,7 @@ msgstr ""
 "Процедура «%s» повернула некоректний тип значення для значення результату "
 "«%s» (#%d). Очікувався %s, отримано %s."
 
-#: libgimp/gimpprocedure.c:2027
+#: libgimp/gimpprocedure.c:2062
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
@@ -366,7 +384,7 @@ msgstr ""
 "Процедура «%s» викликана з деяким значенням аргументу «%s» (#%d). "
 "Очікувалось %s, отримано %s."
 
-#: libgimp/gimpprocedure.c:2062
+#: libgimp/gimpprocedure.c:2097
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -375,7 +393,7 @@ msgstr ""
 "Процедура «%s» повернула «%s» як значення «%s» (#%d, тип %s). Значення "
 "знаходиться поза межами припустимого діапазону"
 
-#: libgimp/gimpprocedure.c:2076
+#: libgimp/gimpprocedure.c:2111
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -384,12 +402,12 @@ msgstr ""
 "Процедура «%s» викликана із значенням «%s» аргументу «%s» (#%d, тип %s). "
 "Значення знаходиться поза межами допустимого діапазону."
 
-#: libgimp/gimpprocedure.c:2120
+#: libgimp/gimpprocedure.c:2155
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Процедура «%s» повернула некоректний рядок UTF-8 для аргументу «%s»"
 
-#: libgimp/gimpprocedure.c:2130
+#: libgimp/gimpprocedure.c:2165
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -397,66 +415,66 @@ msgid ""
 msgstr ""
 "Процедуру «%s» було викликано з некоректним рядком UTF-8 для аргументу «%s»."
 
-#: libgimp/gimpproceduredialog.c:275
+#: libgimp/gimpproceduredialog.c:294 libgimp/gimpproceduredialog.c:567
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Відкрити"
 
-#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:558
-#: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
+#: libgimp/gimpproceduredialog.c:298 libgimp/gimpproceduredialog.c:571
+#: libgimpwidgets/gimpcolorbutton.c:558 libgimpwidgets/gimpfileentry.c:467
+#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
+#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Гаразд"
 
-#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:556
+#: libgimp/gimpproceduredialog.c:306 libgimpwidgets/gimpcolorbutton.c:556
 msgid "_Reset"
 msgstr "С_кинути"
 
-#: libgimp/gimpproceduredialog.c:339
+#: libgimp/gimpproceduredialog.c:359
 msgid "_Load Saved Settings"
 msgstr "З_авантажити збережені параметри"
 
-#: libgimp/gimpproceduredialog.c:340
+#: libgimp/gimpproceduredialog.c:360
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr ""
 "Завантажити параметри, які було збережено за допомогою кнопки «Зберегти "
 "параметри»"
 
-#: libgimp/gimpproceduredialog.c:352
+#: libgimp/gimpproceduredialog.c:372
 msgid "_Save Settings"
 msgstr "З_берегти параметри"
 
-#: libgimp/gimpproceduredialog.c:353
+#: libgimp/gimpproceduredialog.c:373
 msgid "Store current settings for later reuse"
 msgstr ""
 "Зберегти поточні значення параметрів для подальшого повторного використання"
 
-#: libgimp/gimpproceduredialog.c:734
+#: libgimp/gimpproceduredialog.c:784
 msgid "Brush Chooser"
 msgstr "Вибір пензля"
 
-#: libgimp/gimpproceduredialog.c:738
+#: libgimp/gimpproceduredialog.c:788
 msgid "Font Chooser"
 msgstr "Вибір шрифту"
 
-#: libgimp/gimpproceduredialog.c:742
+#: libgimp/gimpproceduredialog.c:792
 msgid "Gradient Chooser"
 msgstr "Вибір градієнта"
 
-#: libgimp/gimpproceduredialog.c:746
+#: libgimp/gimpproceduredialog.c:796
 msgid "Palette Chooser"
 msgstr "Вибір палітри"
 
-#: libgimp/gimpproceduredialog.c:750
+#: libgimp/gimpproceduredialog.c:800
 msgid "Pattern Chooser"
 msgstr "Вибір текстури"
 
-#: libgimp/gimpproceduredialog.c:2128
+#: libgimp/gimpproceduredialog.c:2492
 msgid "Reset to _Initial Values"
 msgstr "Повернути до по_чаткових значень"
 
-#: libgimp/gimpproceduredialog.c:2137
+#: libgimp/gimpproceduredialog.c:2501
 msgid "Reset to _Factory Defaults"
 msgstr "Повернути до стандартних _початкових значень"
 
@@ -496,63 +514,76 @@ msgstr "Дата:"
 msgid "Copyright:"
 msgstr "Авторські права:"
 
-#: libgimp/gimpsaveprocedure.c:408
+#: libgimp/gimppropwidgets.c:191
+#, c-format
+msgid "Choose layer: %s"
+msgstr "Вибір шару: %s"
+
+#: libgimp/gimppropwidgets.c:193
+#, c-format
+#| msgid "Channel:"
+msgid "Choose channel: %s"
+msgstr "Вибір каналу: %s"
+
+#: libgimp/gimppropwidgets.c:195
+#, c-format
+msgid "Choose drawable: %s"
+msgstr "Вибір малюнка: %s"
+
+#: libgimp/gimpsaveprocedure.c:460
 msgid "Save _Exif"
 msgstr "Зберегти _Exif"
 
-#: libgimp/gimpsaveprocedure.c:409
+#: libgimp/gimpsaveprocedure.c:461
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Зберегти метадані Exif (Exchangeable image file format)"
 
-#: libgimp/gimpsaveprocedure.c:414
+#: libgimp/gimpsaveprocedure.c:466
 msgid "Save _IPTC"
 msgstr "Зберегти _IPTC"
 
-#: libgimp/gimpsaveprocedure.c:415
+#: libgimp/gimpsaveprocedure.c:467
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
 "Зберегти метадані IPTC (International Press Telecommunications Council)"
 
-#: libgimp/gimpsaveprocedure.c:420
+#: libgimp/gimpsaveprocedure.c:472
 msgid "Save _XMP"
 msgstr "Зберегти дані _XMP"
 
-#: libgimp/gimpsaveprocedure.c:421
+#: libgimp/gimpsaveprocedure.c:473
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "Зберегти метадані XMP (Extensible Metadata Platform)"
 
-#: libgimp/gimpsaveprocedure.c:426
-#| msgid "Monitor profile"
+#: libgimp/gimpsaveprocedure.c:478
 msgid "Save color _profile"
 msgstr "Зберегти _профіль кольорів"
 
-#: libgimp/gimpsaveprocedure.c:427
+#: libgimp/gimpsaveprocedure.c:479
 msgid "Save the ICC color profile as metadata"
 msgstr "Зберегти профіль кольорів ICC як метадані"
 
-#: libgimp/gimpsaveprocedure.c:432
+#: libgimp/gimpsaveprocedure.c:484
 msgid "Save _thumbnail"
 msgstr "Зберегти _ескіз"
 
-#: libgimp/gimpsaveprocedure.c:433
+#: libgimp/gimpsaveprocedure.c:485
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Зберегти зменшену версію зображення як метадані"
 
-#: libgimp/gimpsaveprocedure.c:439
+#: libgimp/gimpsaveprocedure.c:491
 msgid "Save c_omment"
 msgstr "З_берегти коментар"
 
-#: libgimp/gimpsaveprocedure.c:440
+#: libgimp/gimpsaveprocedure.c:492
 msgid "Save a comment as metadata"
 msgstr "Зберегти коментар як метадані"
 
-#: libgimp/gimpsaveprocedure.c:444
+#: libgimp/gimpsaveprocedure.c:496
 msgid "Comment"
 msgstr "Коментар"
 
-#: libgimp/gimpsaveprocedure.c:445
-#| msgctxt "icon-type"
-#| msgid "Image file"
+#: libgimp/gimpsaveprocedure.c:497
 msgid "Image comment"
 msgstr "Коментар до зображення"
 
@@ -1946,28 +1977,28 @@ msgstr "Колірний профіль '%s' не для колірного пр
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Колірний профіль '%s' не для колірного простору CMYK."
 
-#: libgimpconfig/gimpconfig-deserialize.c:117
+#: libgimpconfig/gimpconfig-deserialize.c:120
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "значення для маркера %s не є коректним рядком UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:485
+#: libgimpconfig/gimpconfig-deserialize.c:492
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "очікувалось 'yes' або 'no' для булевого маркера %s, отримано '%s'"
 
-#: libgimpconfig/gimpconfig-deserialize.c:600
+#: libgimpconfig/gimpconfig-deserialize.c:607
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "неправильне значення '%s' для маркера %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:615
+#: libgimpconfig/gimpconfig-deserialize.c:622
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "неправильне значення '%ld' для маркера %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:684
+#: libgimpconfig/gimpconfig-deserialize.c:691
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "при синтаксичному розборі маркера '%s': %s"
@@ -2166,7 +2197,7 @@ msgstr "Старий:"
 msgid "HTML _notation:"
 msgstr "_Нотація HTML:"
 
-#: libgimpwidgets/gimpdialog.c:177
+#: libgimpwidgets/gimpdialog.c:181
 msgid "_Help"
 msgstr "_Довідка"
 
@@ -2227,8 +2258,6 @@ msgid "Gibibyte"
 msgstr "Гібібайт"
 
 #: libgimpwidgets/gimppageselector.c:185
-#| msgctxt "page-selector-target"
-#| msgid "Images"
 msgid "N Pages"
 msgstr "N сторінок"
 
@@ -2237,8 +2266,6 @@ msgid "The number of pages to open"
 msgstr "Кількість сторінок, які слід відкрити"
 
 #: libgimpwidgets/gimppageselector.c:199
-#| msgctxt "check-size"
-#| msgid "Large"
 msgid "Target"
 msgstr "Ціль"
 
@@ -2330,7 +2357,7 @@ msgstr "Колір 1 нетипових клітинок"
 msgid "Custom Checks Color 2"
 msgstr "Колір 2 нетипових клітинок"
 
-#: libgimpwidgets/gimppropwidgets.c:2475
+#: libgimpwidgets/gimppropwidgets.c:2474
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
