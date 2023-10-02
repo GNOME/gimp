@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-07-25 21:27+0000\n"
-"PO-Revision-Date: 2023-07-26 10:56+0200\n"
+"POT-Creation-Date: 2023-10-02 00:04+0000\n"
+"PO-Revision-Date: 2023-10-02 16:47+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org\n"
 "Language: sl\n"
@@ -29,20 +29,16 @@ msgid "Save as colored HTML text..."
 msgstr "Shrani kot barvano besedilo HTML ..."
 
 #: plug-ins/python/colorxhtml.py:92 plug-ins/python/colorxhtml.py:98
-#: plug-ins/python/gradients-save-as-css.py:124
-#: plug-ins/python/histogram-export.py:204
-#: plug-ins/python/histogram-export.py:246
-#: plug-ins/python/palette-offset.py:145
+#: plug-ins/python/gradients-save-as-css.py:116
+#: plug-ins/python/palette-offset.py:135
 #: plug-ins/python/python-console/python-console.py:311
 #: plug-ins/python/spyro-plus.py:1724
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
 #: plug-ins/python/colorxhtml.py:93 plug-ins/python/colorxhtml.py:99
-#: plug-ins/python/gradients-save-as-css.py:125
-#: plug-ins/python/histogram-export.py:205
-#: plug-ins/python/histogram-export.py:247
-#: plug-ins/python/palette-offset.py:146 plug-ins/python/spyro-plus.py:1725
+#: plug-ins/python/gradients-save-as-css.py:117
+#: plug-ins/python/palette-offset.py:136 plug-ins/python/spyro-plus.py:1725
 msgid "_OK"
 msgstr "V _redu"
 
@@ -92,119 +88,118 @@ msgstr "Zapiši ločeno datoteko CSS"
 msgid "Saving as colored XHTML"
 msgstr "Shranjevanje v obliki barvnega XHTML"
 
-#: plug-ins/python/colorxhtml.py:284 plug-ins/python/colorxhtml.py:285
+#: plug-ins/python/colorxhtml.py:286 plug-ins/python/colorxhtml.py:287
 msgid "_Read characters from file, if true, or use text entry"
 msgstr ""
 "_Preberi znake iz datoteke, če je potrjeno, ali uporabite besedilni vnos"
 
-#: plug-ins/python/colorxhtml.py:289 plug-ins/python/colorxhtml.py:290
+#: plug-ins/python/colorxhtml.py:291 plug-ins/python/colorxhtml.py:292
 msgid "_File to read or characters to use"
 msgstr "_Datoteka za branje ali znaki za uporabo"
 
-#: plug-ins/python/colorxhtml.py:294 plug-ins/python/colorxhtml.py:295
+#: plug-ins/python/colorxhtml.py:296 plug-ins/python/colorxhtml.py:297
 msgid "Fo_nt size in pixels"
 msgstr "Veli_kost pisave v točkah"
 
-#: plug-ins/python/colorxhtml.py:299 plug-ins/python/colorxhtml.py:300
+#: plug-ins/python/colorxhtml.py:301 plug-ins/python/colorxhtml.py:302
 msgid "_Write a separate CSS file"
 msgstr "Zapiši _ločeno datoteko CSS"
 
-#: plug-ins/python/colorxhtml.py:320
+#: plug-ins/python/colorxhtml.py:322
 msgid "Save as colored HTML text"
 msgstr "Shrani kot barvano besedilo HTML"
 
-#: plug-ins/python/colorxhtml.py:323
+#: plug-ins/python/colorxhtml.py:325
 msgid "Colored HTML text"
 msgstr "Barvano besedilo HTML"
 
-#: plug-ins/python/foggify.py:104
+#: plug-ins/python/foggify.py:99
 msgid "Layer _name"
 msgstr "Im_e plasti"
 
-#: plug-ins/python/foggify.py:105
+#: plug-ins/python/foggify.py:100
 msgid "Layer name"
 msgstr "Ime plasti"
 
-#: plug-ins/python/foggify.py:106
+#: plug-ins/python/foggify.py:101
 msgid "Clouds"
 msgstr "Oblaki"
 
-#: plug-ins/python/foggify.py:109
+#: plug-ins/python/foggify.py:104
 msgid "_Turbulence"
 msgstr "_Turbulenca"
 
-#: plug-ins/python/foggify.py:110
+#: plug-ins/python/foggify.py:105
 msgid "Turbulence"
 msgstr "Turbulenca"
 
-#: plug-ins/python/foggify.py:114
+#: plug-ins/python/foggify.py:109
 msgid "O_pacity"
 msgstr "_Prekrivnost"
 
-#: plug-ins/python/foggify.py:115
+#: plug-ins/python/foggify.py:110
 msgid "Opacity"
 msgstr "Prekrivnost"
 
-#: plug-ins/python/foggify.py:124
+#: plug-ins/python/foggify.py:119
 msgid "_Fog color"
 msgstr "Barva me_gle"
 
-#: plug-ins/python/foggify.py:125
+#: plug-ins/python/foggify.py:120
 msgid "Fog color"
 msgstr "Barva megle"
 
-#: plug-ins/python/foggify.py:141
+#: plug-ins/python/foggify.py:136
 msgid "Add a layer of fog"
 msgstr "Dodaj plast megle"
 
-#: plug-ins/python/foggify.py:142
+#: plug-ins/python/foggify.py:137
 msgid "Adds a layer of fog to the image."
 msgstr "Sliki doda plast megle."
 
-#: plug-ins/python/foggify.py:144
+#: plug-ins/python/foggify.py:139
 msgid "_Fog..."
 msgstr "_Megla ..."
 
-#: plug-ins/python/gradients-save-as-css.py:105
-#: plug-ins/python/histogram-export.py:230
+#: plug-ins/python/gradients-save-as-css.py:97
 msgid "_File..."
 msgstr "_Datoteka ..."
 
-#: plug-ins/python/gradients-save-as-css.py:113
+#: plug-ins/python/gradients-save-as-css.py:105
 msgid "Choose CSS file..."
 msgstr "Izberite datoteko CSS …"
 
-#: plug-ins/python/gradients-save-as-css.py:122
+#: plug-ins/python/gradients-save-as-css.py:114
 msgid "Save as CSS file..."
 msgstr "Shrani kot datoteko CSS …"
 
-#: plug-ins/python/gradients-save-as-css.py:201
+#: plug-ins/python/gradients-save-as-css.py:190
 #: plug-ins/python/palette-sort.py:345
 #: plug-ins/python/python-console/python-console.py:336
 msgid "Run mode"
 msgstr "Izvajalni način"
 
-#: plug-ins/python/gradients-save-as-css.py:202
+#: plug-ins/python/gradients-save-as-css.py:191
 #: plug-ins/python/python-console/python-console.py:336
 msgid "The run mode"
 msgstr "Izvajalni način"
 
-#: plug-ins/python/gradients-save-as-css.py:206
+#: plug-ins/python/gradients-save-as-css.py:195
 msgid "_Gradient to use"
 msgstr "_Preliv za uporabo"
 
-#: plug-ins/python/gradients-save-as-css.py:209
+#: plug-ins/python/gradients-save-as-css.py:198
 msgid "_File"
 msgstr "_Datoteka"
 
-#: plug-ins/python/gradients-save-as-css.py:225
-#: plug-ins/python/gradients-save-as-css.py:226
+#: plug-ins/python/gradients-save-as-css.py:214
+#: plug-ins/python/gradients-save-as-css.py:215
 msgid "Creates a new palette from a given gradient"
 msgstr "Ustvari novo paleto iz danega preliva"
 
-#: plug-ins/python/gradients-save-as-css.py:228
-msgid "Save as CSS..."
-msgstr "Shrani kot CSS …"
+#: plug-ins/python/gradients-save-as-css.py:217
+msgid "Save Gradient as CSS..."
+msgstr "Shrani preliv kot CSS …"
 
 #: plug-ins/python/histogram-export.py:92
 msgid "Pixel count"
@@ -218,71 +213,45 @@ msgstr "Normalizirano"
 msgid "Percent"
 msgstr "Odstotek"
 
-#: plug-ins/python/histogram-export.py:166
+#: plug-ins/python/histogram-export.py:161
 msgid "File is either a directory or file name is empty."
 msgstr "Datoteka je mapa ali pa je ime datoteke prazno."
 
-#: plug-ins/python/histogram-export.py:169
+#: plug-ins/python/histogram-export.py:164
 msgid "Directory not found."
 msgstr "Mape ni mogoče najti."
 
-#: plug-ins/python/histogram-export.py:203
+#: plug-ins/python/histogram-export.py:179
 msgid "Histogram Export..."
 msgstr "Izvozi histogram ..."
 
-#: plug-ins/python/histogram-export.py:238
-msgid "Choose export file..."
-msgstr "Izberite izvozno datoteko …"
-
-#: plug-ins/python/histogram-export.py:244
-msgid "Histogram Export file..."
-msgstr "_Izvozna datoteka histograma …"
-
-#. Bucket size parameter
-#: plug-ins/python/histogram-export.py:250
-#: plug-ins/python/histogram-export.py:320
-msgid "_Bucket Size"
-msgstr "Velikost _vedra"
-
-#. Sample average parameter
-#: plug-ins/python/histogram-export.py:258
-#: plug-ins/python/histogram-export.py:325
-msgid "Sample _Average"
-msgstr "Vzorči povpre_čje"
-
-#: plug-ins/python/histogram-export.py:259
-msgid ""
-"If checked, the histogram is generated from merging all visible layers. "
-"Otherwise, the histogram is only for the current layer."
-msgstr ""
-"Če je možnost potrjena, bo histogram tvorjen s spajanjem vseh vidnih plasti. "
-"Sicer histogram velja samo za trenutni sloj."
-
-#. Output format parameter
-#: plug-ins/python/histogram-export.py:265
-msgid "_Output Format"
-msgstr "_Izhodni zapis"
-
-#: plug-ins/python/histogram-export.py:316
+#: plug-ins/python/histogram-export.py:209
 msgid "Histogram _File"
 msgstr "_Datoteka histograma"
 
-#: plug-ins/python/histogram-export.py:330
-msgid "Output format"
-msgstr "Izhodni zapis"
+#: plug-ins/python/histogram-export.py:213
+msgid "_Bucket Size"
+msgstr "Velikost _vedra"
 
-#: plug-ins/python/histogram-export.py:352
+#: plug-ins/python/histogram-export.py:218
+msgid "Sample _Average"
+msgstr "Vzorči povpre_čje"
+
+#: plug-ins/python/histogram-export.py:223
+msgid "Output _format"
+msgstr "Izho_dni zapis"
+
+#: plug-ins/python/histogram-export.py:245
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Izvozi histogram slike v besedilno datoteko (CSV)"
 
-#: plug-ins/python/histogram-export.py:355
+#: plug-ins/python/histogram-export.py:248
 msgid "_Export histogram..."
 msgstr "_Izvozi histogram ..."
 
 #: plug-ins/python/palette-offset.py:50 plug-ins/python/palette-offset.py:51
 #: plug-ins/python/palette-sort.py:351 plug-ins/python/palette-sort.py:403
 #: plug-ins/python/palette-sort.py:404
-#: plug-ins/python/palette-to-gradient.py:135
 msgid "Palette"
 msgstr "Paleta"
 
@@ -290,7 +259,7 @@ msgstr "Paleta"
 msgid "Off_set"
 msgstr "_Zamik"
 
-#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:153
+#: plug-ins/python/palette-offset.py:63 plug-ins/python/palette-offset.py:143
 msgid "Offset"
 msgstr "Zamik"
 
@@ -310,7 +279,7 @@ msgstr "_Zamakni paleto ..."
 msgid "Offset the colors in a palette"
 msgstr "Zamakni barve palete"
 
-#: plug-ins/python/palette-offset.py:143
+#: plug-ins/python/palette-offset.py:133
 msgid "Offset Palette..."
 msgstr "Zamakni paleto ..."
 
@@ -395,6 +364,7 @@ msgid "Partitioned"
 msgstr "Razdeljeno"
 
 #: plug-ins/python/palette-sort.py:350
+#: plug-ins/python/palette-to-gradient.py:129
 msgid "_Palette"
 msgstr "_Paleta"
 
@@ -454,32 +424,32 @@ msgstr "_Razvrsti paleto ..."
 msgid "Sort the colors in a palette"
 msgstr "Razvrsti barve na paleti"
 
-#: plug-ins/python/palette-to-gradient.py:147
-#: plug-ins/python/palette-to-gradient.py:148
+#: plug-ins/python/palette-to-gradient.py:141
+#: plug-ins/python/palette-to-gradient.py:142
 msgid "The newly created gradient"
 msgstr "Novo ustvarjeni preliv"
 
-#: plug-ins/python/palette-to-gradient.py:170
+#: plug-ins/python/palette-to-gradient.py:164
 msgid "Palette to _Gradient"
 msgstr "Paleta v _preliv"
 
-#: plug-ins/python/palette-to-gradient.py:171
+#: plug-ins/python/palette-to-gradient.py:165
 msgid "Create a gradient using colors from the palette"
 msgstr "Ustvari preliv z uporabo barv iz palete"
 
-#: plug-ins/python/palette-to-gradient.py:172
+#: plug-ins/python/palette-to-gradient.py:166
 msgid "Create a new gradient using colors from the palette."
 msgstr "Ustvarite nov preliv z uporabo barv iz palete."
 
-#: plug-ins/python/palette-to-gradient.py:175
+#: plug-ins/python/palette-to-gradient.py:169
 msgid "Palette to _Repeating Gradient"
 msgstr "Paleta v _ponavljajoči preliv"
 
-#: plug-ins/python/palette-to-gradient.py:176
+#: plug-ins/python/palette-to-gradient.py:170
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Ustvari ponavljajoči preliv z uporabo barv iz palete"
 
-#: plug-ins/python/palette-to-gradient.py:177
+#: plug-ins/python/palette-to-gradient.py:171
 msgid "Create a new repeating gradient using colors from the palette."
 msgstr "Ustvarite nov ponavljajoči preliv z uporabo barv iz palete."
 
