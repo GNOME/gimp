@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-24 21:54+0000\n"
-"PO-Revision-Date: 2023-09-25 05:50+0200\n"
+"POT-Creation-Date: 2023-10-01 18:27+0000\n"
+"PO-Revision-Date: 2023-10-02 14:25+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -1232,7 +1232,7 @@ msgstr ""
 #: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:750
 #: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:897
 #: plug-ins/common/file-xwd.c:486 plug-ins/common/sphere-designer.c:2090
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:156
 #: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:396
 #: plug-ins/file-fli/fli-gimp.c:459 plug-ins/file-fli/fli-gimp.c:510
 #: plug-ins/file-icns/file-icns-load.c:515
@@ -7726,42 +7726,46 @@ msgstr ""
 msgid "Converts alpha exponent encoded pixels to RGB"
 msgstr ""
 
-#: plug-ins/file-dds/ddsread.c:366
+#: plug-ins/file-dds/ddsread.c:222
+msgid "Invalid or corrupted DDS header"
+msgstr "არასწორი ან დაზიანებული DDS თავსართი"
+
+#: plug-ins/file-dds/ddsread.c:382
 msgid "Could not allocate a new image."
 msgstr "ახალი გამოსახულების გამოყოფის შეცდომა."
 
-#: plug-ins/file-dds/ddsread.c:377
+#: plug-ins/file-dds/ddsread.c:393
 msgid "Error reading palette."
 msgstr "პალიტრის კითხვის შეცდომა."
 
-#: plug-ins/file-dds/ddsread.c:660
+#: plug-ins/file-dds/ddsread.c:676
 msgid "Invalid DDS format magic number."
 msgstr ""
 
-#: plug-ins/file-dds/ddsread.c:739
+#: plug-ins/file-dds/ddsread.c:755
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr ""
 
-#: plug-ins/file-dds/ddsread.c:750
+#: plug-ins/file-dds/ddsread.c:766
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr ""
 
-#: plug-ins/file-dds/ddsread.c:801
+#: plug-ins/file-dds/ddsread.c:817
 msgid "Invalid pixel format."
 msgstr "არასწორი პიქსელის ფორმატი."
 
-#: plug-ins/file-dds/ddsread.c:970
+#: plug-ins/file-dds/ddsread.c:986
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr ""
 
-#: plug-ins/file-dds/ddsread.c:1135 plug-ins/file-dds/ddsread.c:1174
+#: plug-ins/file-dds/ddsread.c:1151 plug-ins/file-dds/ddsread.c:1190
 msgid "Unexpected EOF.\n"
 msgstr "მოულოდნელი EOF.\n"
 
-#: plug-ins/file-dds/ddsread.c:1514
+#: plug-ins/file-dds/ddsread.c:1530
 msgid "Open DDS"
 msgstr "DDS-ის გახსნა"
 
