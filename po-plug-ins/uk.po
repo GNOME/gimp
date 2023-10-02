@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-24 13:35+0000\n"
-"PO-Revision-Date: 2023-09-24 18:52+0300\n"
+"POT-Creation-Date: 2023-10-01 18:27+0000\n"
+"PO-Revision-Date: 2023-10-02 09:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -1253,7 +1253,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:750
 #: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:897
 #: plug-ins/common/file-xwd.c:486 plug-ins/common/sphere-designer.c:2090
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:156
 #: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:396
 #: plug-ins/file-fli/fli-gimp.c:459 plug-ins/file-fli/fli-gimp.c:510
 #: plug-ins/file-icns/file-icns-load.c:515
@@ -4147,13 +4147,12 @@ msgstr "Для формату PIX не передбачено підтримку
 
 #: plug-ins/common/file-pix.c:584
 #, c-format
-#| msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgid ""
 "Error trying to open temporary JPEG file '%s' for Esm Software pix loading: "
 "%s"
 msgstr ""
-"Помилка при відкриванні тимчасового файла JPEG «%s» для завантаження PIX Esm"
-" Software: %s"
+"Помилка при відкриванні тимчасового файла JPEG «%s» для завантаження PIX Esm "
+"Software: %s"
 
 #: plug-ins/common/file-pix.c:600
 msgid "Invalid Esm Software PIX file"
@@ -4889,7 +4888,6 @@ msgid "Error reading color block"
 msgstr "Помилка під час читання блоку кольорів"
 
 #: plug-ins/common/file-psp.c:1287
-#| msgid "Error reading palette. "
 msgid "Error: Unsupported palette size"
 msgstr "Помилка: непідтримуваний розмір палітри"
 
@@ -8039,42 +8037,47 @@ msgstr "Декодувати Alpha exponent"
 msgid "Converts alpha exponent encoded pixels to RGB"
 msgstr "Перетворює кодовані у альфа-степеневі пікселі до RGB"
 
-#: plug-ins/file-dds/ddsread.c:366
+#: plug-ins/file-dds/ddsread.c:222
+#| msgid "Invalid keyword chunk header"
+msgid "Invalid or corrupted DDS header"
+msgstr "Некоректний або пошкоджений заголовок DDS"
+
+#: plug-ins/file-dds/ddsread.c:382
 msgid "Could not allocate a new image."
 msgstr "Не вдалося розмістити нове зображення."
 
-#: plug-ins/file-dds/ddsread.c:377
+#: plug-ins/file-dds/ddsread.c:393
 msgid "Error reading palette."
 msgstr "Помилка під час спроби читання палітри."
 
-#: plug-ins/file-dds/ddsread.c:660
+#: plug-ins/file-dds/ddsread.c:676
 msgid "Invalid DDS format magic number."
 msgstr "Некоректна контрольна сума у форматі DOS."
 
-#: plug-ins/file-dds/ddsread.c:739
+#: plug-ins/file-dds/ddsread.c:755
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Некоректне значення бітів на піксель для даних RGB: %d"
 
-#: plug-ins/file-dds/ddsread.c:750
+#: plug-ins/file-dds/ddsread.c:766
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Некоректне значення бітів на піксель для даних освітленості: %d"
 
-#: plug-ins/file-dds/ddsread.c:801
+#: plug-ins/file-dds/ddsread.c:817
 msgid "Invalid pixel format."
 msgstr "Некоректний піксельний формат."
 
-#: plug-ins/file-dds/ddsread.c:970
+#: plug-ins/file-dds/ddsread.c:986
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "Непідтримуваний формат DXGI (%d)"
 
-#: plug-ins/file-dds/ddsread.c:1135 plug-ins/file-dds/ddsread.c:1174
+#: plug-ins/file-dds/ddsread.c:1151 plug-ins/file-dds/ddsread.c:1190
 msgid "Unexpected EOF.\n"
 msgstr "Неочікуваний кінець файла.\n"
 
-#: plug-ins/file-dds/ddsread.c:1514
+#: plug-ins/file-dds/ddsread.c:1530
 msgid "Open DDS"
 msgstr "Відкрити DDS"
 
