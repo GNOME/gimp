@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-23 22:01+0000\n"
-"PO-Revision-Date: 2023-09-24 08:13+0200\n"
+"POT-Creation-Date: 2023-10-01 18:27+0000\n"
+"PO-Revision-Date: 2023-10-02 16:49+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1253,7 +1253,7 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:750
 #: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:897
 #: plug-ins/common/file-xwd.c:486 plug-ins/common/sphere-designer.c:2090
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:156
 #: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:396
 #: plug-ins/file-fli/fli-gimp.c:459 plug-ins/file-fli/fli-gimp.c:510
 #: plug-ins/file-icns/file-icns-load.c:515
@@ -7985,42 +7985,46 @@ msgstr "Dekodiraj eksponent alfa"
 msgid "Converts alpha exponent encoded pixels to RGB"
 msgstr "Pretvori kodirane slikovne točke z eksponentom alfe v RGB."
 
-#: plug-ins/file-dds/ddsread.c:366
+#: plug-ins/file-dds/ddsread.c:222
+msgid "Invalid or corrupted DDS header"
+msgstr "Neveljavna ali okvarjena glava DDS"
+
+#: plug-ins/file-dds/ddsread.c:382
 msgid "Could not allocate a new image."
 msgstr "Nove slike ni mogoče alocirati."
 
-#: plug-ins/file-dds/ddsread.c:377
+#: plug-ins/file-dds/ddsread.c:393
 msgid "Error reading palette."
 msgstr "Napaka pri branju palete."
 
-#: plug-ins/file-dds/ddsread.c:660
+#: plug-ins/file-dds/ddsread.c:676
 msgid "Invalid DDS format magic number."
 msgstr "Neveljavno magično število zapisa DDS."
 
-#: plug-ins/file-dds/ddsread.c:739
+#: plug-ins/file-dds/ddsread.c:755
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Neveljavna vrednost bpp za podatke RGB: %d"
 
-#: plug-ins/file-dds/ddsread.c:750
+#: plug-ins/file-dds/ddsread.c:766
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Neveljavna vrednost bpp za podatke svetlosti: %d"
 
-#: plug-ins/file-dds/ddsread.c:801
+#: plug-ins/file-dds/ddsread.c:817
 msgid "Invalid pixel format."
 msgstr "Neveljavna oblika slikovnih točk."
 
-#: plug-ins/file-dds/ddsread.c:970
+#: plug-ins/file-dds/ddsread.c:986
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "Nepodprta zapis DXGI (%d)"
 
-#: plug-ins/file-dds/ddsread.c:1135 plug-ins/file-dds/ddsread.c:1174
+#: plug-ins/file-dds/ddsread.c:1151 plug-ins/file-dds/ddsread.c:1190
 msgid "Unexpected EOF.\n"
 msgstr "Nepričakovan konec datoteke (EOF).\n"
 
-#: plug-ins/file-dds/ddsread.c:1514
+#: plug-ins/file-dds/ddsread.c:1530
 msgid "Open DDS"
 msgstr "Odpri DDS"
 
