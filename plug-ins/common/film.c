@@ -778,9 +778,6 @@ draw_number (GimpLayer *layer,
   GimpImage *image;
   GimpLayer *text_layer;
   gint       text_width, text_height, text_ascent, descent;
-  gchar     *fontname;
-
-  fontname = gimp_resource_get_name (GIMP_RESOURCE (font));
 
   g_snprintf (buf, sizeof (buf), "%d", num);
 
@@ -801,11 +798,9 @@ draw_number (GimpLayer *layer,
       if ((k & 1) == 0)
         delta = -delta;
 
-      success = gimp_text_get_extents_fontname (buf,
-                                                height + delta, GIMP_PIXELS,
-                                                fontname,
-                                                &text_width, &text_height,
-                                                &text_ascent, &descent);
+      success = gimp_text_get_extents_font (buf, height + delta, font,
+                                            &text_width, &text_height,
+                                            &text_ascent, &descent);
 
       if (success)
         {
@@ -814,11 +809,10 @@ draw_number (GimpLayer *layer,
         }
     }
 
-  text_layer = gimp_text_fontname (image, GIMP_DRAWABLE (layer),
-                                   x, y + descent / 2,
-                                   buf, 1, FALSE,
-                                   height, GIMP_PIXELS,
-                                   fontname);
+  text_layer = gimp_text_font (image, GIMP_DRAWABLE (layer),
+                               x, y + descent / 2,
+                               buf, 1, FALSE,
+                               height, font);
 
   if (! text_layer)
     g_message ("draw_number: Error in drawing text\n");

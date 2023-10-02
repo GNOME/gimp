@@ -32,24 +32,22 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpLayer* gimp_text_fontname             (GimpImage    *image,
-                                           GimpDrawable *drawable,
-                                           gdouble       x,
-                                           gdouble       y,
-                                           const gchar  *text,
-                                           gint          border,
-                                           gboolean      antialias,
-                                           gdouble       size,
-                                           GimpSizeType  size_type,
-                                           const gchar  *fontname);
-gboolean   gimp_text_get_extents_fontname (const gchar  *text,
-                                           gdouble       size,
-                                           GimpSizeType  size_type,
-                                           const gchar  *fontname,
-                                           gint         *width,
-                                           gint         *height,
-                                           gint         *ascent,
-                                           gint         *descent);
+GimpLayer* gimp_text_font             (GimpImage    *image,
+                                       GimpDrawable *drawable,
+                                       gdouble       x,
+                                       gdouble       y,
+                                       const gchar  *text,
+                                       gint          border,
+                                       gboolean      antialias,
+                                       gdouble       size,
+                                       GimpFont     *font);
+gboolean   gimp_text_get_extents_font (const gchar  *text,
+                                       gdouble       size,
+                                       GimpFont     *font,
+                                       gint         *width,
+                                       gint         *height,
+                                       gint         *ascent,
+                                       gint         *descent);
 
 
 G_END_DECLS

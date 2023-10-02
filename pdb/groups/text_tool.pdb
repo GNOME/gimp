@@ -16,24 +16,21 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub text_fontname {
+sub text_font {
     $blurb = <<'BLURB';
 Add text at the specified location as a floating selection or a new layer.
 BLURB
 
     $help = <<'HELP';
-This tool requires a fontname matching an installed PangoFT2 font.
-You can specify the fontsize in units of pixels
-or points, and the appropriate metric is specified using the size_type
-argument. The x and y parameters together control the placement of the new
-text by specifying the upper left corner of the text bounding box. If the
-specified drawable parameter is valid, the text will be created as a floating
-selection attached to the drawable. If the drawable parameter is not valid
-(%NULL), the text will appear as a new layer. Finally, a border can be specified
-around the final rendered text. The border is measured in pixels. Parameter
-size-type is not used and is currently ignored. If you need to display a font
-in points, divide the size in points by 72.0 and multiply it by the image's
-vertical resolution.
+The x and y parameters together control the placement of the new text by
+specifying the upper left corner of the text bounding box. If the specified
+drawable parameter is valid, the text will be created as a floating selection
+attached to the drawable. If the drawable parameter is not valid (%NULL), the
+text will appear as a new layer. Finally, a border can be specified around the
+final rendered text. The border is measured in pixels.
+
+The size is always in pixels. If you need to display a font in points, divide
+the size in points by 72.0 and multiply it by the image's vertical resolution.
 HELP
 
     &std_pdb_misc;
@@ -57,11 +54,9 @@ HELP
         { name => 'antialias', type => 'boolean',
           desc => 'Antialiasing' },
         { name => 'size', type => '0 < float',
-          desc => 'The size of text in either pixels or points' },
-        { name => 'size_type', type => 'enum GimpSizeType', dead => 1,
-          desc => 'The units of specified size' },
-        { name => 'fontname', type => 'string',
-          desc => 'The name of the font' }
+          desc => 'The size of text in pixels' },
+        { name => 'font', type => 'font',
+          desc => 'The font' }
     );
 
     @outargs = (
@@ -79,29 +74,24 @@ HELP
     success = FALSE;
 
   if (success)
-    {
-      gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
-
-      text_layer = text_render (image, drawable, context,
-                                x, y, real_fontname, text,
-                                border, antialias);
-
-      g_free (real_fontname);
-    }
+    text_layer = text_render (image, drawable, context,
+                              x, y, font, size, text,
+                              border, antialias);
 }
 CODE
     );
 }
 
-sub text_get_extents_fontname {
+sub text_get_extents_font {
     $blurb = 'Get extents of the bounding box for the specified text.';
 
     $help = <<'HELP';
 This tool returns the width and height of a bounding box for the specified text
 string with the specified font information. Ascent and descent for the
-specified font are returned as well. Parameter size-type is not used and is
-currently ignored. If you need to display a font in points, divide the
-size in points by 72.0 and multiply it by the vertical resolution of the
+specified font are returned as well.
+
+The size is always in pixels. If you need to display a font in points, divide
+the size in points by 72.0 and multiply it by the vertical resolution of the
 image you are taking into account.
 HELP
 
@@ -114,9 +104,7 @@ HELP
           desc => 'The text to generate (in UTF-8 encoding)' },
         { name => 'size', type => '0 < float',
           desc => 'The size of text in either pixels or points' },
-        { name => 'size_type', type => 'enum GimpSizeType', dead => 1,
-          desc => 'The units of specified size' },
-        { name => 'fontname', type => 'string',
+        { name => 'font', type => 'font',
           desc => 'The name of the font' }
     );
 
@@ -134,14 +122,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
-
   success = text_get_extents (gimp,
-                              real_fontname, text,
+                              font, size, text,
                               &width, &height,
                               &ascent, &descent);
-
-  g_free (real_fontname);
 }
 CODE
     );
@@ -152,8 +136,8 @@ CODE
               "text/gimptext-compat.h"
               "gimppdb-utils.h");
 
-@procs = qw(text_fontname
-            text_get_extents_fontname);
+@procs = qw(text_font
+            text_get_extents_font);
 
 %exports = (app => [@procs], lib => [@procs]);
 

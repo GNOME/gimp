@@ -35,6 +35,7 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimpparamspecs.h"
+#include "text/gimpfont.h"
 #include "text/gimptext-compat.h"
 
 #include "gimppdb.h"
@@ -44,12 +45,12 @@
 
 
 static GimpValueArray *
-text_fontname_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
-                       GError               **error)
+text_font_invoker (GimpProcedure         *procedure,
+                   Gimp                  *gimp,
+                   GimpContext           *context,
+                   GimpProgress          *progress,
+                   const GimpValueArray  *args,
+                   GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -61,7 +62,7 @@ text_fontname_invoker (GimpProcedure         *procedure,
   gint border;
   gboolean antialias;
   gdouble size;
-  const gchar *fontname;
+  GimpFont *font;
   GimpLayer *text_layer = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
@@ -72,7 +73,7 @@ text_fontname_invoker (GimpProcedure         *procedure,
   border = g_value_get_int (gimp_value_array_index (args, 5));
   antialias = g_value_get_boolean (gimp_value_array_index (args, 6));
   size = g_value_get_double (gimp_value_array_index (args, 7));
-  fontname = g_value_get_string (gimp_value_array_index (args, 9));
+  font = g_value_get_object (gimp_value_array_index (args, 8));
 
   if (success)
     {
@@ -83,15 +84,9 @@ text_fontname_invoker (GimpProcedure         *procedure,
         success = FALSE;
 
       if (success)
-        {
-          gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
-
-          text_layer = text_render (image, drawable, context,
-                                    x, y, real_fontname, text,
-                                    border, antialias);
-
-          g_free (real_fontname);
-        }
+        text_layer = text_render (image, drawable, context,
+                                  x, y, font, size, text,
+                                  border, antialias);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -104,18 +99,18 @@ text_fontname_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-text_get_extents_fontname_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
-                                   GError               **error)
+text_get_extents_font_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *text;
   gdouble size;
-  const gchar *fontname;
+  GimpFont *font;
   gint width = 0;
   gint height = 0;
   gint ascent = 0;
@@ -123,18 +118,14 @@ text_get_extents_fontname_invoker (GimpProcedure         *procedure,
 
   text = g_value_get_string (gimp_value_array_index (args, 0));
   size = g_value_get_double (gimp_value_array_index (args, 1));
-  fontname = g_value_get_string (gimp_value_array_index (args, 3));
+  font = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
-      gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
-
       success = text_get_extents (gimp,
-                                  real_fontname, text,
+                                  font, size, text,
                                   &width, &height,
                                   &ascent, &descent);
-
-      g_free (real_fontname);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -157,14 +148,15 @@ register_text_tool_procs (GimpPDB *pdb)
   GimpProcedure *procedure;
 
   /*
-   * gimp-text-fontname
+   * gimp-text-font
    */
-  procedure = gimp_procedure_new (text_fontname_invoker);
+  procedure = gimp_procedure_new (text_font_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-text-fontname");
+                               "gimp-text-font");
   gimp_procedure_set_static_help (procedure,
                                   "Add text at the specified location as a floating selection or a new layer.",
-                                  "This tool requires a fontname matching an installed PangoFT2 font. You can specify the fontsize in units of pixels or points, and the appropriate metric is specified using the size_type argument. The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box. If the specified drawable parameter is valid, the text will be created as a floating selection attached to the drawable. If the drawable parameter is not valid (%NULL), the text will appear as a new layer. Finally, a border can be specified around the final rendered text. The border is measured in pixels. Parameter size-type is not used and is currently ignored. If you need to display a font in points, divide the size in points by 72.0 and multiply it by the image's vertical resolution.",
+                                  "The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box. If the specified drawable parameter is valid, the text will be created as a floating selection attached to the drawable. If the drawable parameter is not valid (%NULL), the text will appear as a new layer. Finally, a border can be specified around the final rendered text. The border is measured in pixels.\n"
+                                  "The size is always in pixels. If you need to display a font in points, divide the size in points by 72.0 and multiply it by the image's vertical resolution.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Martin Edlman & Sven Neumann",
@@ -216,23 +208,15 @@ register_text_tool_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",
-                                                    "The size of text in either pixels or points",
+                                                    "The size of text in pixels",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("size-type",
-                                                  "size type",
-                                                  "The units of specified size",
-                                                  GIMP_TYPE_SIZE_TYPE,
-                                                  GIMP_PIXELS,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("fontname",
-                                                       "fontname",
-                                                       "The name of the font",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               gimp_param_spec_font ("font",
+                                                     "font",
+                                                     "The font",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer ("text-layer",
                                                           "text layer",
@@ -243,14 +227,15 @@ register_text_tool_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-text-get-extents-fontname
+   * gimp-text-get-extents-font
    */
-  procedure = gimp_procedure_new (text_get_extents_fontname_invoker);
+  procedure = gimp_procedure_new (text_get_extents_font_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-text-get-extents-fontname");
+                               "gimp-text-get-extents-font");
   gimp_procedure_set_static_help (procedure,
                                   "Get extents of the bounding box for the specified text.",
-                                  "This tool returns the width and height of a bounding box for the specified text string with the specified font information. Ascent and descent for the specified font are returned as well. Parameter size-type is not used and is currently ignored. If you need to display a font in points, divide the size in points by 72.0 and multiply it by the vertical resolution of the image you are taking into account.",
+                                  "This tool returns the width and height of a bounding box for the specified text string with the specified font information. Ascent and descent for the specified font are returned as well.\n"
+                                  "The size is always in pixels. If you need to display a font in points, divide the size in points by 72.0 and multiply it by the vertical resolution of the image you are taking into account.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Martin Edlman & Sven Neumann",
@@ -270,19 +255,11 @@ register_text_tool_procs (GimpPDB *pdb)
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("size-type",
-                                                  "size type",
-                                                  "The units of specified size",
-                                                  GIMP_TYPE_SIZE_TYPE,
-                                                  GIMP_PIXELS,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("fontname",
-                                                       "fontname",
-                                                       "The name of the font",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               gimp_param_spec_font ("font",
+                                                     "font",
+                                                     "The name of the font",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
                                                      "width",

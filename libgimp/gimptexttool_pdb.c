@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_text_fontname:
+ * gimp_text_font:
  * @image: The image.
  * @drawable: (nullable): The affected drawable: (%NULL for a new text layer).
  * @x: The x coordinate for the left of the text bounding box.
@@ -45,41 +45,36 @@
  * @text: The text to generate (in UTF-8 encoding).
  * @border: The size of the border.
  * @antialias: Antialiasing.
- * @size: The size of text in either pixels or points.
- * @size_type: The units of specified size.
- * @fontname: The name of the font.
+ * @size: The size of text in pixels.
+ * @font: The font.
  *
  * Add text at the specified location as a floating selection or a new
  * layer.
  *
- * This tool requires a fontname matching an installed PangoFT2 font.
- * You can specify the fontsize in units of pixels or points, and the
- * appropriate metric is specified using the size_type argument. The x
- * and y parameters together control the placement of the new text by
- * specifying the upper left corner of the text bounding box. If the
- * specified drawable parameter is valid, the text will be created as a
- * floating selection attached to the drawable. If the drawable
- * parameter is not valid (%NULL), the text will appear as a new layer.
- * Finally, a border can be specified around the final rendered text.
- * The border is measured in pixels. Parameter size-type is not used
- * and is currently ignored. If you need to display a font in points,
- * divide the size in points by 72.0 and multiply it by the image's
- * vertical resolution.
+ * The x and y parameters together control the placement of the new
+ * text by specifying the upper left corner of the text bounding box.
+ * If the specified drawable parameter is valid, the text will be
+ * created as a floating selection attached to the drawable. If the
+ * drawable parameter is not valid (%NULL), the text will appear as a
+ * new layer. Finally, a border can be specified around the final
+ * rendered text. The border is measured in pixels.
+ * The size is always in pixels. If you need to display a font in
+ * points, divide the size in points by 72.0 and multiply it by the
+ * image's vertical resolution.
  *
  * Returns: (nullable) (transfer none):
  *          The new text layer or %NULL if no layer was created.
  **/
 GimpLayer *
-gimp_text_fontname (GimpImage    *image,
-                    GimpDrawable *drawable,
-                    gdouble       x,
-                    gdouble       y,
-                    const gchar  *text,
-                    gint          border,
-                    gboolean      antialias,
-                    gdouble       size,
-                    GimpSizeType  size_type,
-                    const gchar  *fontname)
+gimp_text_font (GimpImage    *image,
+                GimpDrawable *drawable,
+                gdouble       x,
+                gdouble       y,
+                const gchar  *text,
+                gint          border,
+                gboolean      antialias,
+                gdouble       size,
+                GimpFont     *font)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -94,12 +89,11 @@ gimp_text_fontname (GimpImage    *image,
                                           G_TYPE_INT, border,
                                           G_TYPE_BOOLEAN, antialias,
                                           G_TYPE_DOUBLE, size,
-                                          GIMP_TYPE_SIZE_TYPE, size_type,
-                                          G_TYPE_STRING, fontname,
+                                          GIMP_TYPE_FONT, font,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-fontname",
+                                              "gimp-text-font",
                                               args);
   gimp_value_array_unref (args);
 
@@ -112,11 +106,10 @@ gimp_text_fontname (GimpImage    *image,
 }
 
 /**
- * gimp_text_get_extents_fontname:
+ * gimp_text_get_extents_font:
  * @text: The text to generate (in UTF-8 encoding).
  * @size: The size of text in either pixels or points.
- * @size_type: The units of specified size.
- * @fontname: The name of the font.
+ * @font: The name of the font.
  * @width: (out): The width of the specified font.
  * @height: (out): The height of the specified font.
  * @ascent: (out): The ascent of the specified font.
@@ -126,23 +119,21 @@ gimp_text_fontname (GimpImage    *image,
  *
  * This tool returns the width and height of a bounding box for the
  * specified text string with the specified font information. Ascent
- * and descent for the specified font are returned as well. Parameter
- * size-type is not used and is currently ignored. If you need to
- * display a font in points, divide the size in points by 72.0 and
- * multiply it by the vertical resolution of the image you are taking
- * into account.
+ * and descent for the specified font are returned as well.
+ * The size is always in pixels. If you need to display a font in
+ * points, divide the size in points by 72.0 and multiply it by the
+ * vertical resolution of the image you are taking into account.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_text_get_extents_fontname (const gchar  *text,
-                                gdouble       size,
-                                GimpSizeType  size_type,
-                                const gchar  *fontname,
-                                gint         *width,
-                                gint         *height,
-                                gint         *ascent,
-                                gint         *descent)
+gimp_text_get_extents_font (const gchar *text,
+                            gdouble      size,
+                            GimpFont    *font,
+                            gint        *width,
+                            gint        *height,
+                            gint        *ascent,
+                            gint        *descent)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -151,12 +142,11 @@ gimp_text_get_extents_fontname (const gchar  *text,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, text,
                                           G_TYPE_DOUBLE, size,
-                                          GIMP_TYPE_SIZE_TYPE, size_type,
-                                          G_TYPE_STRING, fontname,
+                                          GIMP_TYPE_FONT, font,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-text-get-extents-fontname",
+                                              "gimp-text-get-extents-font",
                                               args);
   gimp_value_array_unref (args);
 
