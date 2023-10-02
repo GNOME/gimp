@@ -810,7 +810,7 @@ draw_number (GimpLayer *layer,
     }
 
   text_layer = gimp_text_font (image, GIMP_DRAWABLE (layer),
-                               x, y + descent / 2,
+                               x, y - descent / 2,
                                buf, 1, FALSE,
                                height, font);
 
