@@ -143,7 +143,7 @@ text_get_extents (Gimp        *gimp,
   gchar                *real_fontname;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (GIMP_IS_FONT (font), NULL);
+  g_return_val_if_fail (GIMP_IS_FONT (font), FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
 
   if (! gimp_data_factory_data_wait (gimp->font_factory))
