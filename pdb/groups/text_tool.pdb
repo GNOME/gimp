@@ -87,12 +87,17 @@ sub text_get_extents_font {
 
     $help = <<'HELP';
 This tool returns the width and height of a bounding box for the specified text
-string with the specified font information. Ascent and descent for the
-specified font are returned as well.
+rendered with the specified font information. Ascent and descent of the glyph
+extents are returned as well.
 
-The size is always in pixels. If you need to display a font in points, divide
-the size in points by 72.0 and multiply it by the vertical resolution of the
-image you are taking into account.
+The ascent is the distance from the baseline to the highest point of the
+character. This is positive if the glyph ascends above the baseline.
+The descent is the distance from the baseline to the lowest point of the
+character. This is positive if the glyph descends below the baseline.
+
+The size is always in pixels. If you need to set a font in points, divide the
+size in points by 72.0 and multiply it by the vertical resolution of the image
+you are taking into account.
 HELP
 
     &std_pdb_misc;
@@ -110,13 +115,13 @@ HELP
 
     @outargs = (
         { name => 'width', type => 'int32', void_ret => 1,
-          desc => 'The width of the specified font' },
+          desc => 'The width of the glyph extents' },
         { name => 'height', type => 'int32',
-          desc => 'The height of the specified font' },
+          desc => 'The height of the glyph extents' },
         { name => 'ascent', type => 'int32',
-          desc => 'The ascent of the specified font' },
+          desc => 'The ascent of the glyph extents' },
         { name => 'descent', type => 'int32',
-          desc => 'The descent of the specified font' }
+          desc => 'The descent of the glyph extents' }
     );
 
     %invoke = (

@@ -110,19 +110,24 @@ gimp_text_font (GimpImage    *image,
  * @text: The text to generate (in UTF-8 encoding).
  * @size: The size of text in either pixels or points.
  * @font: The name of the font.
- * @width: (out): The width of the specified font.
- * @height: (out): The height of the specified font.
- * @ascent: (out): The ascent of the specified font.
- * @descent: (out): The descent of the specified font.
+ * @width: (out): The width of the glyph extents.
+ * @height: (out): The height of the glyph extents.
+ * @ascent: (out): The ascent of the glyph extents.
+ * @descent: (out): The descent of the glyph extents.
  *
  * Get extents of the bounding box for the specified text.
  *
  * This tool returns the width and height of a bounding box for the
- * specified text string with the specified font information. Ascent
- * and descent for the specified font are returned as well.
- * The size is always in pixels. If you need to display a font in
- * points, divide the size in points by 72.0 and multiply it by the
- * vertical resolution of the image you are taking into account.
+ * specified text rendered with the specified font information. Ascent
+ * and descent of the glyph extents are returned as well.
+ * The ascent is the distance from the baseline to the highest point of
+ * the character. This is positive if the glyph ascends above the
+ * baseline. The descent is the distance from the baseline to the
+ * lowest point of the character. This is positive if the glyph
+ * descends below the baseline.
+ * The size is always in pixels. If you need to set a font in points,
+ * divide the size in points by 72.0 and multiply it by the vertical
+ * resolution of the image you are taking into account.
  *
  * Returns: TRUE on success.
  **/

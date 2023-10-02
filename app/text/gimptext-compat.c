@@ -191,7 +191,7 @@ text_get_extents (Gimp        *gimp,
       if (ascent)
         *ascent = PANGO_ASCENT (rect);
       if (descent)
-        *descent = - PANGO_DESCENT (rect);
+        *descent = PANGO_DESCENT (rect);
     }
 
   g_object_unref (layout);

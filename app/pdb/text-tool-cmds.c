@@ -234,8 +234,9 @@ register_text_tool_procs (GimpPDB *pdb)
                                "gimp-text-get-extents-font");
   gimp_procedure_set_static_help (procedure,
                                   "Get extents of the bounding box for the specified text.",
-                                  "This tool returns the width and height of a bounding box for the specified text string with the specified font information. Ascent and descent for the specified font are returned as well.\n"
-                                  "The size is always in pixels. If you need to display a font in points, divide the size in points by 72.0 and multiply it by the vertical resolution of the image you are taking into account.",
+                                  "This tool returns the width and height of a bounding box for the specified text rendered with the specified font information. Ascent and descent of the glyph extents are returned as well.\n"
+                                  "The ascent is the distance from the baseline to the highest point of the character. This is positive if the glyph ascends above the baseline. The descent is the distance from the baseline to the lowest point of the character. This is positive if the glyph descends below the baseline.\n"
+                                  "The size is always in pixels. If you need to set a font in points, divide the size in points by 72.0 and multiply it by the vertical resolution of the image you are taking into account.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Martin Edlman & Sven Neumann",
@@ -263,25 +264,25 @@ register_text_tool_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
                                                      "width",
-                                                     "The width of the specified font",
+                                                     "The width of the glyph extents",
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("height",
                                                      "height",
-                                                     "The height of the specified font",
+                                                     "The height of the glyph extents",
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("ascent",
                                                      "ascent",
-                                                     "The ascent of the specified font",
+                                                     "The ascent of the glyph extents",
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("descent",
                                                      "descent",
-                                                     "The descent of the specified font",
+                                                     "The descent of the glyph extents",
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
