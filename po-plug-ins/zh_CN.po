@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-23 22:01+0000\n"
-"PO-Revision-Date: 2023-09-24 19:40+0800\n"
+"POT-Creation-Date: 2023-10-01 18:27+0000\n"
+"PO-Revision-Date: 2023-10-02 18:54+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1245,7 +1245,7 @@ msgstr "加载 CML 探索器参数"
 #: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:750
 #: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:897
 #: plug-ins/common/file-xwd.c:486 plug-ins/common/sphere-designer.c:2090
-#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:156
 #: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:396
 #: plug-ins/file-fli/fli-gimp.c:459 plug-ins/file-fli/fli-gimp.c:510
 #: plug-ins/file-icns/file-icns-load.c:515
@@ -7852,42 +7852,46 @@ msgstr "解码透明指数"
 msgid "Converts alpha exponent encoded pixels to RGB"
 msgstr "将透明指数编码的像素转换为 RGB"
 
-#: plug-ins/file-dds/ddsread.c:366
+#: plug-ins/file-dds/ddsread.c:222
+msgid "Invalid or corrupted DDS header"
+msgstr "无效或损坏的 DDS 头部信息"
+
+#: plug-ins/file-dds/ddsread.c:382
 msgid "Could not allocate a new image."
 msgstr "无法分配新图像。"
 
-#: plug-ins/file-dds/ddsread.c:377
+#: plug-ins/file-dds/ddsread.c:393
 msgid "Error reading palette."
 msgstr "读取色板出错。"
 
-#: plug-ins/file-dds/ddsread.c:660
+#: plug-ins/file-dds/ddsread.c:676
 msgid "Invalid DDS format magic number."
 msgstr "无效的 DDS 格式魔法数字。"
 
-#: plug-ins/file-dds/ddsread.c:739
+#: plug-ins/file-dds/ddsread.c:755
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "用于 RGB 数据的无效 bpp 值：%d"
 
-#: plug-ins/file-dds/ddsread.c:750
+#: plug-ins/file-dds/ddsread.c:766
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "用于亮度数据的无效 bpp 值：%d"
 
-#: plug-ins/file-dds/ddsread.c:801
+#: plug-ins/file-dds/ddsread.c:817
 msgid "Invalid pixel format."
 msgstr "无效的像素格式。"
 
-#: plug-ins/file-dds/ddsread.c:970
+#: plug-ins/file-dds/ddsread.c:986
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "不支持的 DXGI 格式（%d）"
 
-#: plug-ins/file-dds/ddsread.c:1135 plug-ins/file-dds/ddsread.c:1174
+#: plug-ins/file-dds/ddsread.c:1151 plug-ins/file-dds/ddsread.c:1190
 msgid "Unexpected EOF.\n"
 msgstr "意料之外的文件尾。\n"
 
-#: plug-ins/file-dds/ddsread.c:1514
+#: plug-ins/file-dds/ddsread.c:1530
 msgid "Open DDS"
 msgstr "打开 DDS"
 
