@@ -670,18 +670,13 @@ gimp_data_factory_data_new (GimpDataFactory *factory,
 
       if (data)
         {
-          GFile  *writable_dir;
           GError *error = NULL;
 
-          writable_dir = gimp_data_factory_get_save_dir (factory, &error);
-          if (writable_dir != NULL)
-            gimp_data_create_filename (data, writable_dir);
-          else
-            g_critical ("%s: no save directory: %s", G_STRFUNC, error->message);
+          if (! gimp_data_factory_data_save_single (factory, data, &error))
+            g_critical ("%s: data saving failed: %s", G_STRFUNC, error->message);
 
           gimp_container_add (priv->container, GIMP_OBJECT (data));
           g_object_unref (data);
-          g_object_unref (writable_dir);
           g_clear_error (&error);
 
           return data;
