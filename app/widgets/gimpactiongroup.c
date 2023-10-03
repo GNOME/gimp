@@ -390,7 +390,87 @@ gimp_action_group_add_action_with_accel (GimpActionGroup    *group,
 
       if ((accelerators != NULL && accelerators[0] != NULL &&
            g_strcmp0 (accelerators[0], "") != 0))
-        gimp_action_set_default_accels (action, (const gchar **) accelerators);
+        {
+          guint       i = 0;
+          GdkDisplay *display;
+          GdkKeymap  *keymap;
+          gchar      *accel_strs[] = { NULL, NULL, NULL, NULL};
+
+          display = gdk_display_get_default ();
+          keymap = gdk_keymap_get_for_display (display);
+
+          while (accelerators[i] != NULL)
+            {
+              /**
+               * Shifted numeric key accelerators ("<shift>0" .. "<shift>9") do
+               * not work with GTK3 so the following code converts these
+               * accelerators to the shifted character (or the un-shifted
+               * character in the case of an azerty keyboard for example) that
+               * relates to the selected numeric character. This takes into
+               * account the keyboard layout that is being used when GIMP starts.
+               * This means that the appropriate characters will be shown for the
+               * shortcuts in the menus and keyboard preferences.
+               **/
+              guint           accelerator_key;
+              GdkModifierType accelerator_modifier;
+              gboolean        accelerator_string_set;
+
+              accelerator_string_set = FALSE;
+
+              gtk_accelerator_parse (accelerators[i],
+                                     &accelerator_key,
+                                     &accelerator_modifier);
+
+              if ((accelerator_key >= '0') &&
+                  (accelerator_key <= '9') &&
+                  (accelerator_modifier == GDK_SHIFT_MASK))
+                {
+                  gboolean      result;
+                  gint          count;
+                  GdkKeymapKey  key;
+                  GdkKeymapKey *keys = NULL;
+                  guint         non_number_keyval;
+
+                  result = gdk_keymap_get_entries_for_keyval (keymap,
+                                                              accelerator_key,
+                                                              &keys,
+                                                              &count);
+                  if (result && (count > 0))
+                    {
+                      key.keycode = keys[0].keycode;
+                      key.group   = 0;
+                      key.level   = 1;
+
+                      non_number_keyval = gdk_keymap_lookup_key (keymap, &key);
+
+                      if (non_number_keyval == accelerator_key)
+                        {
+                          /**
+                           * the number shifted is the number - assume keyboard
+                           * such as azerty where the numbers are on the shifted
+                           * key and the other characters are obtained without
+                           * the shift
+                           **/
+                          key.level = 0;
+                          non_number_keyval = gdk_keymap_lookup_key (keymap, &key);
+                        }
+                      accel_strs[i] = g_strdup (gdk_keyval_name (non_number_keyval));
+                      accelerator_string_set = TRUE;
+                    }
+                  g_free (keys);
+                }
+
+              if (! accelerator_string_set)
+                accel_strs[i] = g_strdup (accelerators[i]);
+
+              i++;
+            }
+          gimp_action_set_default_accels (action, (const gchar **) accel_strs);
+
+          /* free up to 3 accelerator strings (4th entry is always NULL) */
+          for (guint i = 0; i < 3; i++)
+            g_free (accel_strs[i]);
+        }
 
       gimp_action_set_group (action, group);
     }
