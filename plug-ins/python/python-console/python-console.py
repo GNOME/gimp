@@ -51,6 +51,7 @@ def run(procedure, config, data):
                  'Gdk': gi.repository.Gdk,
                  'Gegl': gi.repository.Gegl,
                  'Gimp': gi.repository.Gimp,
+                 'GimpUi': gi.repository.GimpUi,
                  'Gio': gi.repository.Gio,
                  'Gtk': gi.repository.Gtk,
                  'GdkPixbuf': gi.repository.GdkPixbuf,
