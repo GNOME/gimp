@@ -689,6 +689,39 @@ gimp_action_use_default_accels (GimpAction *action)
   return TRUE;
 }
 
+gboolean
+gimp_action_is_default_accel (GimpAction  *action,
+                              const gchar *accel)
+{
+  gchar           **default_accels;
+  guint             accelerator_key  = 0;
+  GdkModifierType   accelerator_mods = 0;
+
+  g_return_val_if_fail (GIMP_IS_ACTION (action), TRUE);
+  g_return_val_if_fail (accel != NULL, TRUE);
+
+  gtk_accelerator_parse (accel, &accelerator_key, &accelerator_mods);
+  g_return_val_if_fail (accelerator_key != 0 || accelerator_mods == 0, FALSE);
+
+  default_accels = GET_PRIVATE (action)->default_accels;
+
+  if (default_accels == NULL)
+    return FALSE;
+
+  for (gint i = 0; default_accels[i] != NULL; i++)
+    {
+      guint           default_key;
+      GdkModifierType default_mods;
+
+      gtk_accelerator_parse (default_accels[i], &default_key, &default_mods);
+
+      if (default_key == accelerator_key && default_mods == accelerator_mods)
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
 const gchar *
 gimp_action_get_menu_path (GimpAction *action)
 {

@@ -921,12 +921,26 @@ gui_check_unique_accelerators (Gimp *gimp)
                       gchar   **disabled_accels;
                       gint      len;
                       gint      remove;
+                      gboolean  print_warning = TRUE;
 
+                      action = g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
+                                                           actions[i]);
                       /* Just keep the first one (no reason other than we have
                        * to choose), unless it's a secondary shortcut, and the
                        * second is a primary shortcut.
                        */
-                      if (l == 0 && j != 0)
+                      if ((l == 0 && j != 0) ||
+                          /* If the first action is one of "view-zoom-1-*" and
+                           * the shortcut default, we assume it's because of our
+                           * trick to transform `Shift+num` shortcuts based on
+                           * layout and we happen to be on a layout where it
+                           * clashes with other shortcuts. In this case, we
+                           * drop the duplicate shortcut on the zoom action. See
+                           * special code in
+                           * gimp_action_group_add_action_with_accel()
+                           */
+                          (g_str_has_prefix (actions[i], "view-zoom-1-") &&
+                           gimp_action_is_default_accel (GIMP_ACTION (action), accels[j])))
                         {
                           disabled_action = actions[i];
                           disabled_accels = accels;
@@ -938,6 +952,20 @@ gui_check_unique_accelerators (Gimp *gimp)
                           disabled_accels = accels2;
                           remove = l;
                         }
+
+                      action = g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
+                                                           disabled_action);
+
+                      if (g_str_has_prefix (disabled_action, "view-zoom-1-") &&
+                          gimp_action_is_default_accel (GIMP_ACTION (action), disabled_accels[remove]))
+                        /* We drop the shortcut **silently** because it will be
+                         * a case where we have 2 default accelerators clashing
+                         * (because of the conversion code) while not being a
+                         * real bug. Clashes with custom accelerators are
+                         * handled by shortcuts_action_deserialize().
+                         */
+                        print_warning = FALSE;
+
                       /* Remove only the duplicate shortcut but keep others. */
                       len = g_strv_length (disabled_accels);
                       g_free (disabled_accels[remove]);
@@ -945,12 +973,11 @@ gui_check_unique_accelerators (Gimp *gimp)
                                &disabled_accels[remove + 1],
                                sizeof (char *) * (len - remove));
 
-                      g_printerr ("Actions \"%s\" and \"%s\" use the same accelerator.\n"
-                                  "  Disabling the accelerator on \"%s\".\n",
-                                  actions[i], actions[k], disabled_action);
+                      if (print_warning)
+                        g_printerr ("Actions \"%s\" and \"%s\" use the same accelerator.\n"
+                                    "  Disabling the accelerator on \"%s\".\n",
+                                    actions[i], actions[k], disabled_action);
 
-                      action = g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
-                                                           disabled_action);
                       gimp_action_set_accels (GIMP_ACTION (action),
                                               (const gchar **) disabled_accels);
                     }
