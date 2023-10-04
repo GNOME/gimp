@@ -581,6 +581,9 @@ create_hole_rgb (gint width,
   guchar *hole, *top, *bottom;
   gint    radius, length, k;
 
+  if (width <= 0 || height <= 0)
+    return NULL;
+
   hole = g_new (guchar, width * height * 3);
 
   /* Fill a rectangle with white */
@@ -589,7 +592,7 @@ create_hole_rgb (gint width,
   if (radius > width / 2)
     radius = width / 2;
   top = hole;
-  bottom = hole + (height-1)*width*3;
+  bottom = hole + (height-1) * width * 3;
   for (k = radius-1; k > 0; k--)  /* Rounding corners */
     {
       length = (int)(radius - sqrt ((gdouble) (radius * radius - k * k))
