@@ -54,13 +54,6 @@ static void lightmenu_callback         (GtkWidget           *widget,
 static void preview_callback           (GtkWidget           *widget,
                                         gpointer             data);
 
-static gint box_constrain              (GimpImage           *image,
-                                        GimpItem            *item,
-                                        gpointer             data);
-static gint cylinder_constrain         (GimpImage           *image,
-                                        GimpItem            *item,
-                                        gpointer             data);
-
 
 /******************************************************/
 /* Update angle & position (redraw grid if necessary) */
@@ -227,29 +220,6 @@ zoomed_callback (GimpZoomModel *model)
   compute_preview_image ();
 
   gtk_widget_queue_draw (previewarea);
-}
-
-/**********************************************/
-/* Main window "Apply" button callback.       */
-/* Render to GIMP image, close down and exit. */
-/**********************************************/
-
-static gint
-box_constrain (GimpImage *image,
-               GimpItem  *item,
-               gpointer   data)
-{
-  return (gimp_drawable_is_rgb (GIMP_DRAWABLE (item)) &&
-          ! gimp_drawable_is_indexed (GIMP_DRAWABLE (item)));
-}
-
-static gint
-cylinder_constrain (GimpImage *image,
-                    GimpItem  *item,
-                    gpointer   data)
-{
-  return (gimp_drawable_is_rgb (GIMP_DRAWABLE (item)) &&
-          ! gimp_drawable_is_indexed (GIMP_DRAWABLE (item)));
 }
 
 /******************************/
@@ -460,16 +430,16 @@ main_dialog (GimpProcedure       *procedure,
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
                                    "options-tab", _("O_ptions"), FALSE, TRUE);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
-                                   "light-tab", _("_Light"), FALSE, TRUE);
+                                   "light-tab", _("Li_ght"), FALSE, TRUE);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
                                    "viewpoint-tab", _("_Viewpoint"), FALSE, TRUE);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
                                    "material-tab", _("_Material"), FALSE, TRUE);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
-                                   "orientation-tab", _("O_rientation"),
+                                   "orientation-tab", _("Orient_ation"),
                                    FALSE, TRUE);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
-                                   "sphere-tab", _("_Sphere"), FALSE, TRUE);
+                                   "sphere-tab", _("Sp_here"), FALSE, TRUE);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
                                    "box-tab", _("_Box"), FALSE, TRUE);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),

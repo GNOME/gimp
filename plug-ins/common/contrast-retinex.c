@@ -374,11 +374,11 @@ retinex (GObject      *config,
          GimpDrawable *drawable,
          GimpPreview  *preview)
 {
-  GeglBuffer *src_buffer;
+  GeglBuffer *src_buffer = NULL;
   GeglBuffer *dest_buffer;
-  const Babl *format;
-  guchar     *src  = NULL;
-  guchar     *psrc = NULL;
+  const Babl *format     = NULL;
+  guchar     *src        = NULL;
+  guchar     *psrc       = NULL;
   gint        x, y, width, height;
   gint        size, bytes;
 
@@ -441,7 +441,8 @@ retinex (GObject      *config,
                        format, psrc,
                        GEGL_AUTO_ROWSTRIDE);
 
-      g_object_unref (src_buffer);
+      if (src_buffer)
+        g_object_unref (src_buffer);
       g_object_unref (dest_buffer);
 
       gimp_progress_update (1.0);

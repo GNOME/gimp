@@ -351,14 +351,6 @@ static void             p_delta_gint32                (gint32        *val,
                                                        gint32         val_to,
                                                        gint32         total_steps,
                                                        gdouble        current_step);
-static void             p_copy_points                 (BenderDialog  *cd,
-                                                       int            outline,
-                                                       int            xy,
-                                                       int            argc,
-                                                       const gdouble *floatarray);
-static void             p_copy_yval                   (BenderDialog  *cd,
-                                                       int            outline,
-                                                       GBytes        *bytes);
 static int              p_save_pointfile              (BenderDialog  *cd,
                                                        const gchar   *filename);
 
@@ -716,8 +708,6 @@ bender_run (GimpProcedure        *procedure,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      /* gimp_get_data (PLUG_IN_PROC, &g_bndvals); */
-
       /* Get information from the dialog */
       cd = do_dialog (procedure, config, active_drawable);
       cd->show_progress = TRUE;
@@ -730,24 +720,6 @@ bender_run (GimpProcedure        *procedure,
       cd->show_progress = TRUE;
       cd->drawable      = active_drawable;
       cd->config        = config;
-
-      /*p_copy_points (cd, OUTLINE_UPPER, 0,
-                     GIMP_VALUES_GET_INT         (args, 5),
-                     GIMP_VALUES_GET_FLOAT_ARRAY (args, 6));
-      p_copy_points (cd, OUTLINE_UPPER, 1,
-                     GIMP_VALUES_GET_INT         (args, 7),
-                     GIMP_VALUES_GET_FLOAT_ARRAY (args, 8));
-      p_copy_points (cd, OUTLINE_LOWER, 0,
-                     GIMP_VALUES_GET_INT         (args, 9),
-                     GIMP_VALUES_GET_FLOAT_ARRAY (args, 10));
-      p_copy_points (cd, OUTLINE_LOWER, 1,
-                     GIMP_VALUES_GET_INT         (args, 11),
-                     GIMP_VALUES_GET_FLOAT_ARRAY (args, 12));
-
-      p_copy_yval (cd, OUTLINE_UPPER,
-                   GIMP_VALUES_GET_BYTES (args, 13));
-      p_copy_yval (cd, OUTLINE_LOWER,
-                   GIMP_VALUES_GET_BYTES (args, 14));*/
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -1039,47 +1011,6 @@ p_delta_gint32 (gint32  *val,
 
   delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
   *val  = val_from + delta;
-}
-
-static void
-p_copy_points (BenderDialog  *cd,
-               int            outline,
-               int            xy,
-               int            argc,
-               const gdouble *floatarray)
-{
-  int j;
-
-  for (j = 0; j < 17; j++)
-    {
-      cd->points[outline][j][xy] = -1;
-    }
-
-  for (j = 0; j < argc; j++)
-    {
-      cd->points[outline][j][xy] = floatarray[j];
-    }
-}
-
-static void
-p_copy_yval (BenderDialog *cd,
-             int           outline,
-             GBytes       *bytes)
-{
-  const guint8 *array = g_bytes_get_data (bytes, NULL);
-  guchar fill = MIDDLE;
-
-  for (int j = 0; j < 256; j++)
-    {
-      if (j < g_bytes_get_size (bytes))
-        {
-          fill = cd->curve[outline][j] = array[j];
-        }
-      else
-        {
-          cd->curve[outline][j] = fill;
-        }
-    }
 }
 
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */

@@ -132,7 +132,7 @@ map_create_procedure (GimpPlugIn  *plug_in,
                                       "Version 1.2.0, July 16 1998");
 
       GIMP_PROC_ARG_CHOICE (procedure, "map-type",
-                            _("Ma_p to"),
+                            _("Map _to"),
                             _("Type of mapping"),
                             gimp_choice_new_with_values ("map-plane",    MAP_PLANE,    _("Plane"),    NULL,
                                                          "map-sphere",   MAP_SPHERE,   _("Sphere"),   NULL,
@@ -233,7 +233,7 @@ map_create_procedure (GimpPlugIn  *plug_in,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_RGB (procedure, "light-color",
-                         _("Light source color"),
+                         _("Light source _color"),
                          _("Light source color"),
                          TRUE, &white,
                          G_PARAM_READWRITE);
@@ -271,32 +271,32 @@ map_create_procedure (GimpPlugIn  *plug_in,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "ambient-intensity",
-                            _("Ambient"),
+                            _("Ambie_nt"),
                             _("Material ambient intensity"),
                             0, 1, 0.3,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "diffuse-intensity",
-                            _("Diffuse"),
+                            _("_D_iffuse"),
                             _("Material diffuse intensity"),
                             0, 1, 1.0,
                             G_PARAM_READWRITE);
 
       /* Reflectivity */
       GIMP_PROC_ARG_DOUBLE (procedure, "diffuse-reflectivity",
-                            _("Diffuse"),
+                            _("Di_ffuse"),
                             _("Material diffuse reflectivity"),
                             0, 1, 0.5,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "specular-reflectivity",
-                            _("Specular"),
+                            _("Spec_ular"),
                             _("Material specular reflectivity"),
                             0, 1, 0.5,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "highlight",
-                            _("Highlight"),
+                            _("Highligh_t"),
                             _("Material highlight "
                               "(note, it's exponential)"),
                             0, G_MAXDOUBLE, 27.0,
@@ -308,45 +308,45 @@ map_create_procedure (GimpPlugIn  *plug_in,
                              TRUE,
                              G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "depth",
-                            _("Depth"),
+                            _("_Depth"),
                             _("Antialiasing quality. Higher is better, "
                               "but slower"),
                             1.0, 5.0, 3.0,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "threshold",
-                            _("Threshold"),
+                            _("Thr_eshold"),
                             _("Stop when pixel differences are smaller than "
                               "this value"),
                             0.001, 1000.0, 0.250,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "tiled",
-                             _("Tile so_urce image"),
+                             _("_Tile source image"),
                              _("Tile source image"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "new-image",
-                             _("Create new ima_ge"),
+                             _("Create _new image"),
                              _("Create a new image"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "new-layer",
-                             _("Create new layer"),
+                             _("Create ne_w layer"),
                              _("Create a new layer when applying filter"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "transparent-background",
-                             _("_Transparent background"),
+                             _("Transparent bac_kground"),
                              _("Make background transparent"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       /* Sphere Options */
       GIMP_PROC_ARG_DOUBLE (procedure, "sphere-radius",
-                            _("R_adius"),
+                            _("Radi_us"),
                             _("Sphere radius"),
                             0, G_MAXDOUBLE, 0.25,
                             G_PARAM_READWRITE);
@@ -414,12 +414,12 @@ map_create_procedure (GimpPlugIn  *plug_in,
                               TRUE,
                               G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "cylinder-radius",
-                            _("R_adius"),
+                            _("Radi_us"),
                             _("Cylinder radius"),
                             0, G_MAXDOUBLE, 0.25,
                             G_PARAM_READWRITE);
       GIMP_PROC_ARG_DOUBLE (procedure, "cylinder-length",
-                            _("Cylinder length"),
+                            _("Cylin_der length"),
                             _("Cylinder length"),
                             0, G_MAXDOUBLE, 0.25,
                             G_PARAM_READWRITE);
@@ -519,7 +519,6 @@ map_run (GimpProcedure        *procedure,
          gpointer              run_data)
 {
   GimpDrawable *drawable;
-  gint          i;
 
   gegl_init (NULL, NULL);
 

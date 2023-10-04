@@ -557,7 +557,7 @@ load_image (GFile     *file,
 
       if (GifScreen.AspectRatio != 0 && GifScreen.AspectRatio != 49)
         {
-          // Byte overflow is allowed per the GIF specification
+          /* Byte overflow is allowed per the GIF specification */
           guint8 par = GifScreen.AspectRatio + 15;
 
           if (par > 0)
