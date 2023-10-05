@@ -176,6 +176,9 @@ gimp_ui_init (const gchar *prog_name)
   g_idle_add (gimp_osx_focus_window, NULL);
 #endif
 
+  /* Some widgets use GEGL buffers for thumbnails, previews, etc. */
+  gegl_init (NULL, NULL);
+
   gimp_ui_initialized = TRUE;
 }
 
