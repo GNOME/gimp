@@ -641,33 +641,25 @@ gimp_image_set_colormap (GimpImage    *image,
  * are returned in RGB[A] or GRAY[A] format. The bpp return value
  * gives the number of bytes per pixel in the image.
  *
- * Returns: (array) (transfer full): the thumbnail data.
+ * Returns: (transfer full): the thumbnail data.
  **/
-guchar *
+GBytes *
 gimp_image_get_thumbnail_data (GimpImage *image,
                                gint      *width,
                                gint      *height,
                                gint      *bpp)
 {
-  gint    ret_width;
-  gint    ret_height;
   GBytes *image_bytes;
-  guchar *image_data;
-  gsize   data_size;
 
   _gimp_image_thumbnail (image,
                          *width,
                          *height,
-                         &ret_width,
-                         &ret_height,
+                         width,
+                         height,
                          bpp,
                          &image_bytes);
-  image_data = g_bytes_unref_to_data (image_bytes, &data_size);
 
-  *width  = ret_width;
-  *height = ret_height;
-
-  return image_data;
+  return image_bytes;
 }
 
 /**
@@ -693,7 +685,8 @@ gimp_image_get_thumbnail (GimpImage              *image,
   gint    thumb_width  = width;
   gint    thumb_height = height;
   gint    thumb_bpp;
-  guchar *data;
+  GBytes *data;
+  gsize   data_size;
 
   g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
   g_return_val_if_fail (height > 0 && height <= 1024, NULL);
@@ -703,7 +696,7 @@ gimp_image_get_thumbnail (GimpImage              *image,
                                         &thumb_height,
                                         &thumb_bpp);
   if (data)
-    return _gimp_pixbuf_from_data (data,
+    return _gimp_pixbuf_from_data (g_bytes_unref_to_data (data, &data_size),
                                    thumb_width, thumb_height, thumb_bpp,
                                    alpha);
   else

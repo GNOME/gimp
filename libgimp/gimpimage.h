@@ -65,7 +65,7 @@ gboolean       gimp_image_set_colormap       (GimpImage    *image,
                                               const guchar *colormap,
                                               gint          num_colors);
 
-guchar       * gimp_image_get_thumbnail_data (GimpImage    *image,
+GBytes       * gimp_image_get_thumbnail_data (GimpImage    *image,
                                               gint         *width,
                                               gint         *height,
                                               gint         *bpp);
