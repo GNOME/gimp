@@ -1093,7 +1093,7 @@ Enable the Paint Select tool.  Possible values are yes and no.
 .TP
 (color-profile-policy ask)
 
-How to handle embedded color profiles when opening a file.  Possible values
+What to do when opening a file with an embedded ICC color profile.  Possible values
 are ask, keep, convert-builtin and convert-preferred.
 
 .TP

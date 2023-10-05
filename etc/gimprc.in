@@ -867,7 +867,7 @@
 # 
 # (playground-paint-select-tool no)
 
-# How to handle embedded color profiles when opening a file.  Possible values
+# What to do when opening a file with an embedded ICC color profile.  Possible values
 # are ask, keep, convert-builtin and convert-preferred.
 # 
 # (color-profile-policy ask)

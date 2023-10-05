@@ -50,7 +50,7 @@ _("Timestamp of the last update check.")
 "Defines the color management behavior."
 
 #define COLOR_PROFILE_POLICY_BLURB \
-_("How to handle embedded color profiles when opening a file.")
+_("What to do when opening a file with an embedded ICC color profile.")
 
 #define COLOR_PROFILE_PATH_BLURB \
 _("Sets the default folder path for all color profile file dialogs.")
