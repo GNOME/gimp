@@ -77,6 +77,8 @@ static void     gimp_widget_wayland_window_exported  (GdkWindow   *window,
                                                       GBytes     **phandle);
 #endif
 
+static void     gimp_widget_set_handle_on_realize    (GtkWidget    *widget,
+                                                      GBytes      **phandle);
 static gboolean gimp_widget_set_handle_on_mapped     (GtkWidget    *widget,
                                                       GdkEventAny  *event,
                                                       GBytes      **phandle);
@@ -1073,21 +1075,38 @@ gimp_widget_get_color_transform (GtkWidget               *widget,
  * this function.
  *
  * This convenience function is safe to use even before @widget is
- * visible as it will will the handle once it is mapped.
+ * visible as it will set the handle once it is mapped.
  */
 void
 gimp_widget_set_native_handle (GtkWidget  *widget,
                                GBytes    **handle)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
-  g_return_if_fail (gtk_widget_get_has_window (widget));
+  g_return_if_fail (handle != NULL && *handle == NULL);
 
-  gtk_widget_add_events (widget, GDK_STRUCTURE_MASK);
-  g_signal_connect (widget, "map-event",
-                    G_CALLBACK (gimp_widget_set_handle_on_mapped),
-                    handle);
+  /* This may seem overly complicated but there is a reason: "map-event" can
+   * only be received by widgets with their own windows (see description of
+   * gtk_widget_set_events()). Instead we could just use "realize" which is
+   * received by every widgets (even by the ones whose window actually belongs
+   * to a parent widget), but this causes process locks on Wayland (see comment
+   * in gimp_widget_set_handle_on_mapped()).
+   * This is why we do this weird case-based dance.
+   */
+  if (gtk_widget_get_has_window (widget))
+    {
+      gtk_widget_add_events (widget, GDK_STRUCTURE_MASK);
+      g_signal_connect (widget, "map-event",
+                        G_CALLBACK (gimp_widget_set_handle_on_mapped),
+                        handle);
+    }
+  else
+    {
+      g_signal_connect (widget, "realize",
+                        G_CALLBACK (gimp_widget_set_handle_on_realize),
+                        handle);
+    }
 
-  if (gtk_widget_get_mapped (widget))
+  if (gtk_widget_get_realized (widget))
     gimp_widget_set_handle_on_mapped (widget, NULL, handle);
 }
 
@@ -1108,6 +1127,21 @@ gimp_widget_wayland_window_exported (GdkWindow   *window,
   *phandle = wayland_handle;
 }
 #endif
+
+static void
+gimp_widget_set_handle_on_realize (GtkWidget  *widget,
+                                   GBytes    **phandle)
+{
+  GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
+
+  gtk_widget_add_events (toplevel, GDK_STRUCTURE_MASK);
+  g_signal_connect (toplevel, "map-event",
+                    G_CALLBACK (gimp_widget_set_handle_on_mapped),
+                    phandle);
+
+  if (gtk_widget_get_mapped (toplevel))
+    gimp_widget_set_handle_on_mapped (widget, NULL, phandle);
+}
 
 static gboolean
 gimp_widget_set_handle_on_mapped (GtkWidget    *widget,
