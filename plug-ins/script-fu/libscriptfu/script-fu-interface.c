@@ -196,6 +196,7 @@ script_fu_interface (SFScript  *script,
   if (!gtk_initted)
     {
       gimp_ui_init ("script-fu");
+      gegl_init (NULL, NULL);
 
       gtk_initted = TRUE;
     }
