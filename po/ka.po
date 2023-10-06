@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-01 23:57+0000\n"
-"PO-Revision-Date: 2023-10-02 14:29+0200\n"
+"POT-Creation-Date: 2023-10-06 19:35+0000\n"
+"PO-Revision-Date: 2023-10-06 22:40+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -10251,8 +10251,8 @@ msgid "Timestamp of the last update check."
 msgstr "განახლების უკანასკნელი შემოწმების დროის შტამპი."
 
 #: app/config/gimprc-blurbs.h:53
-msgid "How to handle embedded color profiles when opening a file."
-msgstr "ფაილის გახსნისას მასში ჩადგმული ფერის პროფილების დამუშავების ხერხები."
+msgid "What to do when opening a file with an embedded ICC color profile."
+msgstr "რა მოხდება ჩაშენებული ICC ფერის პროფილის მქონე ფაილის გახსნისას."
 
 #: app/config/gimprc-blurbs.h:56
 msgid "Sets the default folder path for all color profile file dialogs."
@@ -12963,7 +12963,7 @@ msgid "Tool Preset"
 msgstr "ხელსაწყოს პრესეტი"
 
 #: app/core/gimpdatafactory.c:388 app/core/gimpdatafactory.c:422
-#: app/core/gimpdatafactory.c:762 app/core/gimpdatafactory.c:793
+#: app/core/gimpdatafactory.c:768 app/core/gimpdatafactory.c:799
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -12989,7 +12989,7 @@ msgstr "კოპირება %s"
 msgid "Loading fonts (this may take a while...)"
 msgstr "ფონტების ჩატვირთვა (დაელოდეთ...)"
 
-#: app/core/gimpdatafactory.c:967
+#: app/core/gimpdatafactory.c:973
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -12997,14 +12997,14 @@ msgid ""
 "dialog's 'Folders' section."
 msgstr ""
 
-#: app/core/gimpdatafactory.c:986
+#: app/core/gimpdatafactory.c:992
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
 "your data search path. You probably edited the gimprc file manually, please "
 "fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
 
-#: app/core/gimpdatafactory.c:996
+#: app/core/gimpdatafactory.c:1002
 msgid "You don't have any writable data folder configured."
 msgstr "მონაცემების არცერთი საქაღალდე ჩაწერადი არაა."
 
@@ -18188,7 +18188,7 @@ msgid "(clean)"
 msgstr "(სუფთა)"
 
 #: app/display/gimpdisplayshell-title.c:374
-#: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1118
+#: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1198
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
 #: app/widgets/gimpdeviceinfo.c:1078 app/widgets/gimpdeviceinfo.c:1103
 msgid "(none)"
@@ -20226,7 +20226,8 @@ msgstr "PDB ფაილის %s ჩაწერის შეცდომა: %
 #. TRANSLATOR: %s is a data label from the
 #. * PDB-error-data-label context.
 #.
-#: app/pdb/gimppdb-utils.c:125 app/pdb/gimppdb-utils.c:190
+#: app/pdb/gimppdb-utils.c:127 app/pdb/gimppdb-utils.c:210
+#: app/pdb/gimppdb-utils.c:275
 #, c-format
 msgctxt "PDB-error-message"
 msgid "%s name cannot be empty"
@@ -20236,7 +20237,8 @@ msgstr "%s-ის სახელი ცარიელი ვერ იქნ�
 #. * PDB-error-data-label context. The second %s is a data
 #. * name.
 #.
-#: app/pdb/gimppdb-utils.c:139 app/pdb/gimppdb-utils.c:204
+#: app/pdb/gimppdb-utils.c:154 app/pdb/gimppdb-utils.c:224
+#: app/pdb/gimppdb-utils.c:289
 #, c-format
 msgctxt "PDB-error-message"
 msgid "%s '%s' not found"
@@ -20246,7 +20248,8 @@ msgstr "%s '%s' ვერ ვიპოვე"
 #. * PDB-error-data-label context. The second %s is a data
 #. * name.
 #.
-#: app/pdb/gimppdb-utils.c:149 app/pdb/gimppdb-utils.c:214
+#: app/pdb/gimppdb-utils.c:169 app/pdb/gimppdb-utils.c:234
+#: app/pdb/gimppdb-utils.c:299
 #, c-format
 msgctxt "PDB-error-message"
 msgid "%s '%s' is not editable"
@@ -20256,50 +20259,51 @@ msgstr "%s '%s' ჩასწორებადი არაა"
 #. * PDB-error-data-label context. The second %s is a data
 #. * name.
 #.
-#: app/pdb/gimppdb-utils.c:160 app/pdb/gimppdb-utils.c:225
+#: app/pdb/gimppdb-utils.c:180 app/pdb/gimppdb-utils.c:245
+#: app/pdb/gimppdb-utils.c:310
 #, c-format
 msgctxt "PDB-error-message"
 msgid "%s '%s' is not renamable"
 msgstr "%s '%s' სახელგადარქმევადი არაა"
 
-#: app/pdb/gimppdb-utils.c:248
+#: app/pdb/gimppdb-utils.c:333
 #, c-format
 msgid "Brush '%s' is not a generated brush"
 msgstr "ფუნჯი %s არ წარმოადგენს გენერირებულ ფუნჯს"
 
-#: app/pdb/gimppdb-utils.c:268
+#: app/pdb/gimppdb-utils.c:353
 msgid "Invalid empty buffer name"
 msgstr "ცარიელი ბაფერის არასწორი სახელი"
 
-#: app/pdb/gimppdb-utils.c:278
+#: app/pdb/gimppdb-utils.c:363
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "ბაფერი სახელით %s არ არსებობს"
 
-#: app/pdb/gimppdb-utils.c:297
+#: app/pdb/gimppdb-utils.c:382
 msgid "Invalid empty paint method name"
 msgstr "ხატვის მეთოდის სახელი არ შეიძლება ცარიელი იყოს"
 
-#: app/pdb/gimppdb-utils.c:307
+#: app/pdb/gimppdb-utils.c:392
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "ხატვის მეთოდი არ არსებობს: %s"
 
-#: app/pdb/gimppdb-utils.c:326
+#: app/pdb/gimppdb-utils.c:411
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr ""
 "ელემენტ %s-ის (%d) შეცვლა შეუძლებელი იმიტომ, რომ ის არ არის გამოსახულებაზე "
 "დამატებული"
 
-#: app/pdb/gimppdb-utils.c:336
+#: app/pdb/gimppdb-utils.c:421
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr ""
 "ელემენტ %s-ის (%d) შეცვლა შეუძლებელია იმიტომ, რომ ის სხვა გამოსახულებაზეა "
 "მიმაგრებული"
 
-#: app/pdb/gimppdb-utils.c:362
+#: app/pdb/gimppdb-utils.c:447
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
@@ -20308,7 +20312,7 @@ msgstr ""
 "ელემენტ %s-ის (%d) შეცვლა შეუძლებელია იმიტომ, რომ ის არ წარმოადგენს "
 "ელემენტების ხის პირდაპირ შთამომავალს"
 
-#: app/pdb/gimppdb-utils.c:390
+#: app/pdb/gimppdb-utils.c:475
 #, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
@@ -20317,28 +20321,28 @@ msgstr ""
 "ელემენტების '%s' (%d) და '%s' (%d) ერთად გამოყენება შეუძლებელია. ისინი არ "
 "მიეკუთვნებიან ელემენტების ერთიდაიგივე ხეს"
 
-#: app/pdb/gimppdb-utils.c:415
+#: app/pdb/gimppdb-utils.c:500
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
 msgstr "ელემენტ %s-ის (%d) არ შეძლება %s (%d)-ის წინაპარი იყოს"
 
-#: app/pdb/gimppdb-utils.c:439
+#: app/pdb/gimppdb-utils.c:524
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "ელემენტ %s-ის (%d) უკვე დაემატა გამოსახულებას"
 
-#: app/pdb/gimppdb-utils.c:447
+#: app/pdb/gimppdb-utils.c:532
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "ელემენტის '%s' (%d) არასწორ გამოსახულებაზე დამატების მცდელობა"
 
-#: app/pdb/gimppdb-utils.c:474
+#: app/pdb/gimppdb-utils.c:559
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
 "ელემენტ %s-ის (%d) შეცვლა შეუძლებელია იმიტომ, რომ მისი შემცველობა ჩაკეტილია"
 
-#: app/pdb/gimppdb-utils.c:484
+#: app/pdb/gimppdb-utils.c:569
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
@@ -20346,103 +20350,103 @@ msgstr ""
 "ელემენტ %s-ის (%d) შეცვლა შეუძლებელია იმიტომ, რომ მისი მდებარეობა და "
 "შემცველობა ჩაკეტილია"
 
-#: app/pdb/gimppdb-utils.c:504
+#: app/pdb/gimppdb-utils.c:589
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
 msgstr ""
 "ელემენტ %s-ის (%d) შეცვლა შეუძლებელია იმიტომ რომ ის არ წარმოადგენს ჯგუფურ "
 "ელემენტს"
 
-#: app/pdb/gimppdb-utils.c:524
+#: app/pdb/gimppdb-utils.c:609
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr "ელემენტ %s-ის (%d) შეცვლა შეუძლებელია. ის ჯგუფურ ელემენტს წარმოადგენს"
 
-#: app/pdb/gimppdb-utils.c:545
+#: app/pdb/gimppdb-utils.c:630
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr ""
 "ფენა '%s' (%d)-ის გამოყენება შეუძლებელია. ის არ წარმოადგენს ტექსტურ ფენას"
 
-#: app/pdb/gimppdb-utils.c:586
+#: app/pdb/gimppdb-utils.c:671
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
 "გამოსახულება '%s' (%d) %s ტიპისაა, მაგრამ მოველოდი %s ტიპის გამოსახულებას"
 
-#: app/pdb/gimppdb-utils.c:609
+#: app/pdb/gimppdb-utils.c:694
 #, c-format
 msgid "Image '%s' (%d) must not be of type '%s'"
 msgstr "გამოსახულება '%s' (%d) '%s' ტიპის არ უნდა იყოს"
 
-#: app/pdb/gimppdb-utils.c:629
+#: app/pdb/gimppdb-utils.c:714
 #, c-format
 msgid ""
 "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
 "expected"
 msgstr ""
 
-#: app/pdb/gimppdb-utils.c:652
+#: app/pdb/gimppdb-utils.c:737
 #, c-format
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "გამოსახულება '%s' (%d) '%s' სიზუსტის არ უნდა იყოს"
 
-#: app/pdb/gimppdb-utils.c:676 app/pdb/image-guides-cmds.c:181
+#: app/pdb/gimppdb-utils.c:761 app/pdb/image-guides-cmds.c:181
 #, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
 msgstr ""
 
-#: app/pdb/gimppdb-utils.c:699 app/pdb/image-sample-points-cmds.c:146
+#: app/pdb/gimppdb-utils.c:784 app/pdb/image-sample-points-cmds.c:146
 #, c-format
 msgid "Image '%s' (%d) does not contain sample point with ID %d"
 msgstr ""
 
-#: app/pdb/gimppdb-utils.c:727
+#: app/pdb/gimppdb-utils.c:812
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr ""
 
-#: app/pdb/gimppdb-utils.c:743
+#: app/pdb/gimppdb-utils.c:828
 #, c-format
 msgid "Procedure name '%s' is not a canonical identifier"
 msgstr "პროცედურის სახელი '%s' კანონიკური იდენტიფიკატორი არაა"
 
-#: app/pdb/gimppdb-utils.c:804
+#: app/pdb/gimppdb-utils.c:889
 msgctxt "PDB-error-data-label"
 msgid "Generated brush"
 msgstr "გენერირებული ფუნჯი"
 
-#: app/pdb/gimppdb-utils.c:806
+#: app/pdb/gimppdb-utils.c:891
 msgctxt "PDB-error-data-label"
 msgid "Brush"
 msgstr "ფუნჯი"
 
-#: app/pdb/gimppdb-utils.c:808
+#: app/pdb/gimppdb-utils.c:893
 msgctxt "PDB-error-data-label"
 msgid "Pattern"
 msgstr "შაბლონი"
 
-#: app/pdb/gimppdb-utils.c:810
+#: app/pdb/gimppdb-utils.c:895
 msgctxt "PDB-error-data-label"
 msgid "Gradient"
 msgstr "გრადიენტი"
 
-#: app/pdb/gimppdb-utils.c:812
+#: app/pdb/gimppdb-utils.c:897
 msgctxt "PDB-error-data-label"
 msgid "Palette"
 msgstr "პალიტრა"
 
-#: app/pdb/gimppdb-utils.c:814
+#: app/pdb/gimppdb-utils.c:899
 msgctxt "PDB-error-data-label"
 msgid "Font"
 msgstr "ფონტი"
 
-#: app/pdb/gimppdb-utils.c:816
+#: app/pdb/gimppdb-utils.c:901
 msgctxt "PDB-error-data-label"
 msgid "Paint dynamics"
 msgstr "ხატვის დინამიკა"
 
-#: app/pdb/gimppdb-utils.c:818
+#: app/pdb/gimppdb-utils.c:903
 msgctxt "PDB-error-data-label"
 msgid "MyPaint brush"
 msgstr "MyPaint-ის ფუნჯი"
@@ -21597,7 +21601,7 @@ msgstr ""
 "ზოგიერთი ფონტის ჩატვირთვის შეცდომა:\n"
 "%s"
 
-#: app/text/gimptext-compat.c:110 app/tools/gimptexttool.c:1623
+#: app/text/gimptext-compat.c:99 app/tools/gimptexttool.c:1623
 msgid "Add Text Layer"
 msgstr "ტექსტური ფენის დამატება"
 
@@ -25179,7 +25183,7 @@ msgstr "%s-დან კონტურების შემოტანის 
 msgid "_Search:"
 msgstr "_ძებნა:"
 
-#: app/widgets/gimpactiongroup.c:1115
+#: app/widgets/gimpactiongroup.c:1195
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -28374,6 +28378,10 @@ msgstr "დაბრუნების ისტორია"
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "კონტურების მენიუ"
+
+#~ msgid "How to handle embedded color profiles when opening a file."
+#~ msgstr ""
+#~ "ფაილის გახსნისას მასში ჩადგმული ფერის პროფილების დამუშავების ხერხები."
 
 #, c-format
 #~ msgid "Skipping '%s': wrong shortcutsrc file format version."
