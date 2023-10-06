@@ -30,6 +30,7 @@
 #include "gimp-memsize.h"
 #include "gimpdata.h"
 #include "gimpidtable.h"
+#include "gimpimage.h"
 #include "gimptag.h"
 #include "gimptagged.h"
 
@@ -47,6 +48,7 @@ enum
   PROP_0,
   PROP_ID,
   PROP_FILE,
+  PROP_IMAGE,
   PROP_WRITABLE,
   PROP_DELETABLE,
   PROP_MIME_TYPE
@@ -55,8 +57,10 @@ enum
 
 struct _GimpDataPrivate
 {
-  gint    ID;
-  GFile  *file;
+  gint       ID;
+  GFile     *file;
+  GimpImage *image;
+
   GQuark  mime_type;
   guint   writable  : 1;
   guint   deletable : 1;
@@ -168,6 +172,11 @@ gimp_data_class_init (GimpDataClass *klass)
                                                         G_TYPE_FILE,
                                                         GIMP_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_IMAGE,
+                                   g_param_spec_object ("image", NULL, NULL,
+                                                        GIMP_TYPE_IMAGE,
+                                                        GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_WRITABLE,
                                    g_param_spec_boolean ("writable", NULL, NULL,
                                                          FALSE,
@@ -264,6 +273,12 @@ gimp_data_set_property (GObject      *object,
                           private->deletable);
       break;
 
+    case PROP_IMAGE:
+      gimp_data_set_image (data,
+                           g_value_get_object (value),
+                           private->writable,
+                           private->deletable);
+      break;
     case PROP_WRITABLE:
       private->writable = g_value_get_boolean (value);
       break;
@@ -301,6 +316,10 @@ gimp_data_get_property (GObject    *object,
 
     case PROP_FILE:
       g_value_set_object (value, private->file);
+      break;
+
+    case PROP_IMAGE:
+      g_value_set_object (value, private->image);
       break;
 
     case PROP_WRITABLE:
@@ -458,7 +477,7 @@ gimp_data_get_identifier (GimpTagged *tagged)
   gchar           *identifier = NULL;
   gchar           *collection = NULL;
 
-  g_return_val_if_fail (private->internal || private->file != NULL, NULL);
+  g_return_val_if_fail (private->internal || private->file != NULL || private->image != NULL, NULL);
 
   collection = gimp_data_get_collection (data);
   /* The identifier is guaranteed to be unique because we use 2 directory
@@ -499,7 +518,7 @@ gimp_data_get_collection (GimpData *data)
   GimpDataPrivate *private    = GIMP_DATA_GET_PRIVATE (data);
   gchar           *collection = NULL;
 
-  g_return_val_if_fail (private->internal || private->file != NULL, NULL);
+  g_return_val_if_fail (private->internal || private->file != NULL || private->image != NULL, NULL);
 
   if (private->file)
     {
@@ -546,6 +565,10 @@ gimp_data_get_collection (GimpData *data)
         }
 
       g_free (path);
+    }
+  else if (private->image)
+    {
+      collection = g_strdup_printf ("[image-id-%d]", gimp_image_get_id (private->image));
     }
   else if (private->internal)
     {
@@ -599,7 +622,7 @@ gimp_data_save (GimpData  *data,
 
   g_return_val_if_fail (private->writable == TRUE, FALSE);
 
-  if (private->internal)
+  if (private->internal || private->image != NULL)
     {
       private->dirty = FALSE;
       return TRUE;
@@ -858,6 +881,8 @@ gimp_data_set_file (GimpData *data,
   if (private->internal)
     return;
 
+  g_return_if_fail (private->image == NULL);
+
   g_set_object (&private->file, file);
 
   private->writable  = FALSE;
@@ -931,6 +956,53 @@ gimp_data_get_file (GimpData *data)
   private = GIMP_DATA_GET_PRIVATE (data);
 
   return private->file;
+}
+
+/**
+ * gimp_data_set_image:
+ * @data:     A #GimpData object
+ * @image:    Image to assign to @data.
+ * @writable: %TRUE if we want to be able to write to this file.
+ * @deletable: %TRUE if we want to be able to delete this file.
+ *
+ * This function assigns an image to @data. This can only be done if no file has
+ * been assigned (a non-internal data can be attached either to a file or to an
+ * image).
+ **/
+void
+gimp_data_set_image (GimpData  *data,
+                     GimpImage *image,
+                     gboolean   writable,
+                     gboolean   deletable)
+{
+  GimpDataPrivate *private;
+
+  g_return_if_fail (GIMP_IS_DATA (data));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_DATA_GET_PRIVATE (data);
+
+  if (private->internal)
+    return;
+
+  g_return_if_fail (private->file == NULL);
+
+  g_set_object (&private->image, image);
+
+  private->writable  = writable  ? TRUE : FALSE;
+  private->deletable = deletable ? TRUE : FALSE;
+}
+
+GimpImage *
+gimp_data_get_image (GimpData *data)
+{
+  GimpDataPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
+
+  private = GIMP_DATA_GET_PRIVATE (data);
+
+  return private->image;
 }
 
 /**

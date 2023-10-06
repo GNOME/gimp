@@ -534,7 +534,7 @@ gimp_color_history_color_changed (GtkWidget *widget,
 
   gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &color);
 
-  gimp_palette_set_entry_color (palette, GPOINTER_TO_INT (data), &color);
+  gimp_palette_set_entry_color (palette, GPOINTER_TO_INT (data), &color, FALSE);
 }
 
 static void

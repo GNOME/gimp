@@ -52,6 +52,9 @@ struct _GimpPalette
 struct _GimpPaletteClass
 {
   GimpDataClass  parent_class;
+
+  void (* entry_changed) (GimpPalette *palette,
+                          gint         index);
 };
 
 
@@ -81,7 +84,8 @@ gboolean           gimp_palette_set_entry       (GimpPalette      *palette,
                                                  const GimpRGB    *color);
 gboolean           gimp_palette_set_entry_color (GimpPalette      *palette,
                                                  gint              position,
-                                                 const GimpRGB    *color);
+                                                 const GimpRGB    *color,
+                                                 gboolean          push_undo_if_image);
 gboolean           gimp_palette_set_entry_name  (GimpPalette      *palette,
                                                  gint              position,
                                                  const gchar      *name);

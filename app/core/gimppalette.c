@@ -29,6 +29,8 @@
 #include "core-types.h"
 
 #include "gimp-memsize.h"
+#include "gimpimage.h"
+#include "gimpimage-undo-push.h"
 #include "gimppalette.h"
 #include "gimppalette-load.h"
 #include "gimppalette-save.h"
@@ -39,6 +41,12 @@
 
 
 #define RGB_EPSILON 1e-6
+
+enum
+{
+  ENTRY_CHANGED,
+  LAST_SIGNAL
+};
 
 
 /*  local function prototypes  */
@@ -71,6 +79,8 @@ static gchar       * gimp_palette_get_description   (GimpViewable         *viewa
 static const gchar * gimp_palette_get_extension     (GimpData             *data);
 static void          gimp_palette_copy              (GimpData             *data,
                                                      GimpData             *src_data);
+static void          gimp_palette_real_entry_changed (GimpPalette         *palette,
+                                                      gint                 index);
 
 static void          gimp_palette_entry_free        (GimpPaletteEntry     *entry);
 static gint64        gimp_palette_entry_get_memsize (GimpPaletteEntry     *entry,
@@ -84,6 +94,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpPalette, gimp_palette, GIMP_TYPE_DATA,
 
 #define parent_class gimp_palette_parent_class
 
+static guint signals[LAST_SIGNAL] = { 0 };
 
 static void
 gimp_palette_class_init (GimpPaletteClass *klass)
@@ -92,6 +103,14 @@ gimp_palette_class_init (GimpPaletteClass *klass)
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
+
+  signals[ENTRY_CHANGED] = g_signal_new ("entry-changed",
+                                         G_TYPE_FROM_CLASS (klass),
+                                         G_SIGNAL_RUN_FIRST,
+                                         G_STRUCT_OFFSET (GimpPaletteClass, entry_changed),
+                                         NULL, NULL, NULL,
+                                         G_TYPE_NONE, 1,
+                                         G_TYPE_INT);
 
   object_class->finalize            = gimp_palette_finalize;
 
@@ -106,6 +125,8 @@ gimp_palette_class_init (GimpPaletteClass *klass)
   data_class->save                  = gimp_palette_save;
   data_class->get_extension         = gimp_palette_get_extension;
   data_class->copy                  = gimp_palette_copy;
+
+  klass->entry_changed              = gimp_palette_real_entry_changed;
 }
 
 static void
@@ -340,6 +361,16 @@ gimp_palette_copy (GimpData *data,
   gimp_data_thaw (data);
 }
 
+static void
+gimp_palette_real_entry_changed (GimpPalette *palette,
+                                 gint         index)
+{
+  GimpImage *image = gimp_data_get_image (GIMP_DATA (palette));
+
+  if (image != NULL)
+    gimp_image_colormap_changed (image, index);
+}
+
 static gchar *
 gimp_palette_get_checksum (GimpTagged *tagged)
 {
@@ -402,10 +433,16 @@ gimp_palette_move_entry (GimpPalette      *palette,
 
   if (g_list_find (palette->colors, entry))
     {
+      gint old_position = g_list_index (palette->colors, entry);
+
       palette->colors = g_list_remove (palette->colors,
                                        entry);
       palette->colors = g_list_insert (palette->colors,
                                        entry, position);
+
+      if (! gimp_data_is_frozen (GIMP_DATA (palette)))
+        for (gint i = MIN (position, old_position); i <= MAX (position, old_position); i++)
+          g_signal_emit (palette, signals[ENTRY_CHANGED], 0, i);
 
       gimp_data_dirty (GIMP_DATA (palette));
     }
@@ -438,6 +475,10 @@ gimp_palette_add_entry (GimpPalette   *palette,
 
   palette->n_colors += 1;
 
+  if (! gimp_data_is_frozen (GIMP_DATA (palette)))
+    for (gint i = position; i < palette->n_colors; i++)
+      g_signal_emit (palette, signals[ENTRY_CHANGED], 0, i);
+
   gimp_data_dirty (GIMP_DATA (palette));
 
   return entry;
@@ -452,11 +493,17 @@ gimp_palette_delete_entry (GimpPalette      *palette,
 
   if (g_list_find (palette->colors, entry))
     {
+      gint old_position = g_list_index (palette->colors, entry);
+
       gimp_palette_entry_free (entry);
 
       palette->colors = g_list_remove (palette->colors, entry);
 
       palette->n_colors--;
+
+      if (! gimp_data_is_frozen (GIMP_DATA (palette)))
+        for (gint i = old_position; i < palette->n_colors; i++)
+          g_signal_emit (palette, signals[ENTRY_CHANGED], 0, i);
 
       gimp_data_dirty (GIMP_DATA (palette));
     }
@@ -485,6 +532,9 @@ gimp_palette_set_entry (GimpPalette   *palette,
 
   entry->name = g_strdup (name);
 
+  if (! gimp_data_is_frozen (GIMP_DATA (palette)))
+    g_signal_emit (palette, signals[ENTRY_CHANGED], 0, position);
+
   gimp_data_dirty (GIMP_DATA (palette));
 
   return TRUE;
@@ -493,7 +543,8 @@ gimp_palette_set_entry (GimpPalette   *palette,
 gboolean
 gimp_palette_set_entry_color (GimpPalette   *palette,
                               gint           position,
-                              const GimpRGB *color)
+                              const GimpRGB *color,
+                              gboolean       push_undo_if_image)
 {
   GimpPaletteEntry *entry;
 
@@ -505,7 +556,14 @@ gimp_palette_set_entry_color (GimpPalette   *palette,
   if (! entry)
     return FALSE;
 
+  if (push_undo_if_image && gimp_data_get_image (GIMP_DATA (palette)))
+    gimp_image_undo_push_image_colormap (gimp_data_get_image (GIMP_DATA (palette)),
+                                         C_("undo-type", "Change Colormap entry"));
+
   entry->color = *color;
+
+  if (! gimp_data_is_frozen (GIMP_DATA (palette)))
+    g_signal_emit (palette, signals[ENTRY_CHANGED], 0, position);
 
   gimp_data_dirty (GIMP_DATA (palette));
 
@@ -530,6 +588,9 @@ gimp_palette_set_entry_name (GimpPalette *palette,
     g_free (entry->name);
 
   entry->name = g_strdup (name);
+
+  if (! gimp_data_is_frozen (GIMP_DATA (palette)))
+    g_signal_emit (palette, signals[ENTRY_CHANGED], 0, position);
 
   gimp_data_dirty (GIMP_DATA (palette));
 

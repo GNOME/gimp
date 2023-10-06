@@ -372,7 +372,7 @@ palette_entry_set_color_invoker (GimpProcedure         *procedure,
   if (success)
     {
       if (gimp_data_is_writable (GIMP_DATA (palette)))
-        success = gimp_palette_set_entry_color (palette, entry_num, &color);
+        success = gimp_palette_set_entry_color (palette, entry_num, &color, TRUE);
       else
         success = FALSE;
     }

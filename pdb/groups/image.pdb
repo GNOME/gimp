@@ -1563,6 +1563,36 @@ CODE
     );
 }
 
+sub image_get_palette {
+    $blurb = "Returns the image's colormap";
+
+    $help = <<'HELP';
+This procedure returns the image's colormap as a GimpPalette.
+If the image is not in Indexed color mode, %NULL is returned.
+HELP
+
+    &jehan_pdb_misc('2023', '3.0');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'colormap', type => 'palette',
+          desc => "The image's colormap." }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-colormap.h") ],
+        code => <<'CODE'
+{
+  colormap = gimp_image_get_colormap_palette (image);
+}
+CODE
+    );
+}
+
 sub image_get_metadata {
     $blurb = "Returns the image's metadata.";
     $help  = 'Returns exif/iptc/xmp metadata from the image.';
@@ -3207,6 +3237,7 @@ CODE
             image_flatten image_merge_visible_layers image_merge_down
             image_merge_layer_group
             image_get_colormap image_set_colormap
+            image_get_palette
             image_get_metadata image_set_metadata
             image_clean_all image_is_dirty
             image_thumbnail

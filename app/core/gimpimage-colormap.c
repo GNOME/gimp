@@ -76,7 +76,7 @@ gimp_image_colormap_init (GimpImage *image)
 
   gimp_palette_set_columns (private->palette, 16);
 
-  gimp_data_make_internal (GIMP_DATA (private->palette), palette_id);
+  gimp_data_set_image (GIMP_DATA (private->palette), image, TRUE, FALSE);
 
   palettes = gimp_data_factory_get_container (image->gimp->palette_factory);
 
@@ -315,9 +315,8 @@ gimp_image_set_colormap (GimpImage    *image,
       gimp_image_colormap_set_palette_entry (image, &color, i);
     }
 
-  gimp_data_thaw (GIMP_DATA (private->palette));
-
   gimp_image_colormap_changed (image, -1);
+  gimp_data_thaw (GIMP_DATA (private->palette));
 }
 
 void

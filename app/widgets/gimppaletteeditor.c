@@ -556,7 +556,7 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
         case GIMP_COLOR_PICK_STATE_UPDATE:
         case GIMP_COLOR_PICK_STATE_END:
           gimp_palette_set_entry_color (GIMP_PALETTE (data),
-                                        index, color);
+                                        index, color, FALSE);
           break;
         }
     }

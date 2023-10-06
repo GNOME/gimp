@@ -51,6 +51,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 #include "core/gimplayer.h"
+#include "core/gimppalette.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimppickable.h"
 #include "core/gimpprogress.h"
@@ -1569,6 +1570,35 @@ image_set_colormap_invoker (GimpProcedure         *procedure,
 
   return gimp_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_get_palette_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpImage *image;
+  GimpPalette *colormap = NULL;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      colormap = gimp_image_get_colormap_palette (image);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_object (gimp_value_array_index (return_vals, 1), colormap);
+
+  return return_vals;
 }
 
 static GimpValueArray *
@@ -4349,6 +4379,35 @@ register_image_procs (GimpPDB *pdb)
                                                    "The new colormap values",
                                                    G_TYPE_BYTES,
                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-palette
+   */
+  procedure = gimp_procedure_new (image_get_palette_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-palette");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the image's colormap",
+                                  "This procedure returns the image's colormap as a GimpPalette. If the image is not in Indexed color mode, %NULL is returned.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2023");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_palette ("colormap",
+                                                            "colormap",
+                                                            "The image's colormap.",
+                                                            FALSE,
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

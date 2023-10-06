@@ -1822,6 +1822,43 @@ _gimp_image_set_colormap (GimpImage *image,
 }
 
 /**
+ * gimp_image_get_palette:
+ * @image: The image.
+ *
+ * Returns the image's colormap
+ *
+ * This procedure returns the image's colormap as a GimpPalette. If the
+ * image is not in Indexed color mode, %NULL is returned.
+ *
+ * Returns: (transfer none): The image's colormap.
+ *
+ * Since: 3.0
+ **/
+GimpPalette *
+gimp_image_get_palette (GimpImage *image)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpPalette *colormap = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-get-palette",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    colormap = GIMP_VALUES_GET_PALETTE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return colormap;
+}
+
+/**
  * _gimp_image_get_metadata:
  * @image: The image.
  *

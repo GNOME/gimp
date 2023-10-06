@@ -407,6 +407,7 @@ EXPORTS
 	gimp_image_get_layers
 	gimp_image_get_metadata
 	gimp_image_get_name
+	gimp_image_get_palette
 	gimp_image_get_parasite
 	gimp_image_get_parasite_list
 	gimp_image_get_precision

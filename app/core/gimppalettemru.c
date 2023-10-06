@@ -213,7 +213,7 @@ gimp_palette_mru_add (GimpPaletteMru *mru,
           /*  Even though they are nearly the same color, let's make them
            *  exactly equal.
            */
-          gimp_palette_set_entry_color (palette, 0, color);
+          gimp_palette_set_entry_color (palette, 0, color, FALSE);
 
           return;
         }

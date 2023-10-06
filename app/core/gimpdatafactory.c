@@ -399,6 +399,9 @@ gimp_data_factory_real_data_save (GimpDataFactory *factory)
       GimpData *data  = list->data;
       GError   *error = NULL;
 
+      if (gimp_data_get_image (data))
+        continue;
+
       if (! gimp_data_get_file (data))
         gimp_data_create_filename (data, writable_dir);
 
@@ -752,7 +755,7 @@ gimp_data_factory_data_save_single (GimpDataFactory  *factory,
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! gimp_data_is_dirty (data))
+  if (! gimp_data_is_dirty (data) || gimp_data_get_image (data))
     return TRUE;
 
   if (! gimp_data_get_file (data))

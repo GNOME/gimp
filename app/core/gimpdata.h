@@ -98,6 +98,11 @@ void          gimp_data_set_file         (GimpData     *data,
                                           gboolean      writable,
                                           gboolean      deletable);
 GFile       * gimp_data_get_file         (GimpData     *data);
+void          gimp_data_set_image        (GimpData     *data,
+                                          GimpImage    *image,
+                                          gboolean      writable,
+                                          gboolean      deletable);
+GimpImage   * gimp_data_get_image        (GimpData     *data);
 
 void          gimp_data_create_filename  (GimpData     *data,
                                           GFile        *dest_dir);

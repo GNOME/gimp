@@ -118,6 +118,7 @@ GimpLayer*               gimp_image_merge_layer_group          (GimpImage       
 G_GNUC_INTERNAL GBytes*  _gimp_image_get_colormap              (GimpImage           *image);
 G_GNUC_INTERNAL gboolean _gimp_image_set_colormap              (GimpImage           *image,
                                                                 GBytes              *colormap);
+GimpPalette*             gimp_image_get_palette                (GimpImage           *image);
 G_GNUC_INTERNAL gchar*   _gimp_image_get_metadata              (GimpImage           *image);
 G_GNUC_INTERNAL gboolean _gimp_image_set_metadata              (GimpImage           *image,
                                                                 const gchar         *metadata_string);
