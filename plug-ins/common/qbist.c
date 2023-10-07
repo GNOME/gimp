@@ -320,7 +320,6 @@ qbist_run (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      gimp_procedure_config_end_run (config, GIMP_PDB_CALLING_ERROR);
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_CALLING_ERROR,
                                                NULL);
