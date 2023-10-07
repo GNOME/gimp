@@ -229,5 +229,4 @@ plug-ins/screenshot/screenshot-win32.c
 plug-ins/screenshot/screenshot-x11.c
 plug-ins/selection-to-path/pxl-outline.c
 plug-ins/selection-to-path/selection-to-path.c
-plug-ins/selection-to-path/selection-to-path-dialog.c
 plug-ins/twain/twain.c
