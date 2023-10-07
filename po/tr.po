@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-09-29 21:02+0000\n"
-"PO-Revision-Date: 2023-09-30 00:22+0300\n"
+"POT-Creation-Date: 2023-10-04 12:21+0000\n"
+"PO-Revision-Date: 2023-10-06 04:09+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnometurk@gnome.org>\n"
 "Language: tr\n"
@@ -363,7 +363,7 @@ msgid "Buffers"
 msgstr "Tamponlar"
 
 #: app/actions/actions.c:121 app/dialogs/dialogs.c:379
-#: app/propgui/gimppropgui-newsprint.c:160 app/widgets/gimppickablepopup.c:247
+#: app/propgui/gimppropgui-newsprint.c:160
 msgid "Channels"
 msgstr "Kanallar"
 
@@ -471,12 +471,11 @@ msgid "Image"
 msgstr "Görüntü"
 
 #: app/actions/actions.c:193 app/dialogs/dialogs.c:337
-#: app/widgets/gimppickablepopup.c:177
 msgid "Images"
 msgstr "Görüntüler"
 
 #: app/actions/actions.c:196 app/dialogs/dialogs.c:375
-#: app/dialogs/resize-dialog.c:171 app/widgets/gimppickablepopup.c:228
+#: app/dialogs/resize-dialog.c:171
 msgid "Layers"
 msgstr "Katmanlar"
 
@@ -2461,9 +2460,10 @@ msgstr "240 Saniye"
 #: app/widgets/gimpcolordialog.c:463 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:327
-#: app/widgets/gimphelp.c:439 app/widgets/gimphelp.c:779
+#: app/widgets/gimphelp.c:439 app/widgets/gimphelp.c:774
 #: app/widgets/gimpiconpicker.c:484 app/widgets/gimpmodifierseditor.c:684
-#: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:711
+#: app/widgets/gimppdbdialog.c:148 app/widgets/gimpprogressdialog.c:91
+#: app/widgets/gimpsettingsbox.c:711
 msgid "_Cancel"
 msgstr "_İptal"
 
@@ -5607,7 +5607,7 @@ msgstr "Görüntü boyutlarını ayarla"
 #: app/actions/image-actions.c:103
 msgctxt "image-action"
 msgid "Fit Canvas to L_ayers"
-msgstr "Tuvali Katmalara U_ydur"
+msgstr "Tuvali Katmanlara U_ydur"
 
 #: app/actions/image-actions.c:104
 msgctxt "image-action"
@@ -9923,6 +9923,7 @@ msgstr "Bu pencereyi %s ekranına taşı"
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
 #: app/widgets/gimpcontrollereditor.c:663 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:176 app/widgets/gimpmodifierseditor.c:685
+#: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
 msgstr "_Tamam"
 
@@ -11382,7 +11383,7 @@ msgid "The maximum number of actions saved in history."
 msgstr "Geçmişte kaydedilecek en fazla işlem sayısı."
 
 #: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130
-#: app/core/gimp-units.c:278 app/gui/session.c:309 app/menus/shortcuts-rc.c:159
+#: app/core/gimp-units.c:278 app/gui/session.c:309 app/menus/shortcuts-rc.c:148
 #: app/plug-in/plug-in-rc.c:249 app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "ölümcül ayrıştırma hatası"
@@ -12668,7 +12669,7 @@ msgstr "ÖA'dan Saydama (Sert Kenarlı)"
 #. * some operation to finish.  The %s argument is a message describing
 #. * the operation.
 #.
-#: app/core/gimp-gui.c:209
+#: app/core/gimp-gui.c:211
 #, c-format
 msgid "Please wait: %s\n"
 msgstr "Lütfen bekleyin: %s\n"
@@ -13196,7 +13197,7 @@ msgid "Tool Preset"
 msgstr "Araç Önayarları"
 
 #: app/core/gimpdatafactory.c:388 app/core/gimpdatafactory.c:422
-#: app/core/gimpdatafactory.c:762 app/core/gimpdatafactory.c:793
+#: app/core/gimpdatafactory.c:768 app/core/gimpdatafactory.c:799
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -13222,7 +13223,7 @@ msgstr "%s kopyası"
 msgid "Loading fonts (this may take a while...)"
 msgstr "Yazı tipleri yükleniyor (bu biraz zaman alabilir...)"
 
-#: app/core/gimpdatafactory.c:967
+#: app/core/gimpdatafactory.c:973
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -13233,7 +13234,7 @@ msgstr ""
 "klasörü oluşturun veya Tercihler iletişim kutusunun 'Klasörler' bölümünden "
 "yapılandırmanızı düzeltin."
 
-#: app/core/gimpdatafactory.c:986
+#: app/core/gimpdatafactory.c:992
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
 "your data search path. You probably edited the gimprc file manually, please "
@@ -13243,7 +13244,7 @@ msgstr ""
 "yolunuzun bir parçası değil. Muhtemelen gimprc dosyasını elle düzenlediniz. "
 "Lütfen Tercihler iletişim kutusunun 'Klasörler' bölümünden bunu düzeltin."
 
-#: app/core/gimpdatafactory.c:996
+#: app/core/gimpdatafactory.c:1002
 msgid "You don't have any writable data folder configured."
 msgstr "Yapılandırılmış, yazılabilir bir veri klasörüne sahip değilsiniz."
 
@@ -14025,53 +14026,53 @@ msgstr "Görüntüyü Ölçekle"
 msgid "Can't undo %s"
 msgstr "Geriye alınamıyor: %s"
 
-#: app/core/gimpimagefile.c:751
+#: app/core/gimpimagefile.c:770
 msgid "Folder"
 msgstr "Klasör"
 
-#: app/core/gimpimagefile.c:756
+#: app/core/gimpimagefile.c:775
 msgid "Special File"
 msgstr "Özel Dosya"
 
-#: app/core/gimpimagefile.c:772
+#: app/core/gimpimagefile.c:791
 msgid "Remote File"
 msgstr "Uzak Dosya"
 
-#: app/core/gimpimagefile.c:791
+#: app/core/gimpimagefile.c:810
 msgid "Click to create preview"
 msgstr "Önizleme oluşturmak için tıklayın"
 
-#: app/core/gimpimagefile.c:797
+#: app/core/gimpimagefile.c:816
 msgid "Loading preview..."
 msgstr "Önizleme yükleniyor..."
 
-#: app/core/gimpimagefile.c:803
+#: app/core/gimpimagefile.c:822
 msgid "Preview is out of date"
 msgstr "Önizleme geçerliliğini yitirmiş"
 
-#: app/core/gimpimagefile.c:809
+#: app/core/gimpimagefile.c:828
 msgid "Cannot create preview"
 msgstr "Önizleme oluşturulamıyor"
 
-#: app/core/gimpimagefile.c:819
+#: app/core/gimpimagefile.c:838
 msgid "(Preview may be out of date)"
 msgstr "(Önizleme geçerliliğini yitirmiş olabilir)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:828 app/widgets/gimpimagepropview.c:437
+#: app/core/gimpimagefile.c:847 app/widgets/gimpimagepropview.c:437
 #: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:734
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d piksel"
 
-#: app/core/gimpimagefile.c:851 app/display/gimpdisplayshell-title.c:358
+#: app/core/gimpimagefile.c:870 app/display/gimpdisplayshell-title.c:358
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "%d katman"
 
-#: app/core/gimpimagefile.c:899
+#: app/core/gimpimagefile.c:918
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Küçük resim '%s' açılamadı: %s"
@@ -14556,7 +14557,7 @@ msgstr ""
 "Desteklenmeyen desen boyutları %d x %d.\n"
 "GIMP Desenleri azami %d x %d boyutlarında olmalıdır."
 
-#: app/core/gimppdbprogress.c:268
+#: app/core/gimppdbprogress.c:267
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
@@ -15644,8 +15645,7 @@ msgstr "Görüntü Özellikleri"
 #: app/tools/gimpcolorpickertool.c:351 app/tools/gimpgradienttool-editor.c:1811
 #: app/tools/gimpmeasuretool.c:746 app/widgets/gimpcontrollerlist.c:625
 #: app/widgets/gimpcriticaldialog.c:206 app/widgets/gimpcriticaldialog.c:228
-#: app/widgets/gimppdbdialog.c:141 app/widgets/gimpsettingsbox.c:642
-#: app/widgets/gimptexteditor.c:167
+#: app/widgets/gimpsettingsbox.c:642 app/widgets/gimptexteditor.c:167
 msgid "_Close"
 msgstr "_Kapat"
 
@@ -18312,23 +18312,23 @@ msgstr "Y"
 msgid "_Sample Merged"
 msgstr "_Birleştirilmiş Örnek"
 
-#: app/display/gimpdisplayshell.c:521
+#: app/display/gimpdisplayshell.c:525
 msgid "Access the image menu"
 msgstr "Görüntü menüsüne erişim"
 
-#: app/display/gimpdisplayshell.c:669
+#: app/display/gimpdisplayshell.c:675
 msgid "Zoom image when window size changes"
 msgstr "Pencere boyutu değiştiğinde görüntüye yakınlaştır"
 
-#: app/display/gimpdisplayshell.c:698
+#: app/display/gimpdisplayshell.c:704
 msgid "Toggle Quick Mask"
 msgstr "Hızlı Maskeyi Değiştir"
 
-#: app/display/gimpdisplayshell.c:713
+#: app/display/gimpdisplayshell.c:719
 msgid "Navigate the image display"
 msgstr "Görüntü ekranında dolaş"
 
-#: app/display/gimpdisplayshell.c:766 app/display/gimpdisplayshell.c:1472
+#: app/display/gimpdisplayshell.c:772 app/display/gimpdisplayshell.c:1489
 #: app/widgets/gimptoolbox.c:252
 msgid "Drop image files here to open them"
 msgstr "Görüntü dosyalarını açmak için buraya bırakın"
@@ -18535,7 +18535,7 @@ msgid "(clean)"
 msgstr "(temiz)"
 
 #: app/display/gimpdisplayshell-title.c:374
-#: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1118
+#: app/display/gimpdisplayshell-title.c:383 app/widgets/gimpactiongroup.c:1198
 #: app/widgets/gimpbuffersourcebox.c:166 app/widgets/gimpbuffersourcebox.c:296
 #: app/widgets/gimpdeviceinfo.c:1078 app/widgets/gimpdeviceinfo.c:1103
 msgid "(none)"
@@ -20104,15 +20104,14 @@ msgstr "Belgeler"
 msgid "GIMP Startup"
 msgstr "GIMP Başlangıcı"
 
-#: app/menus/shortcuts-rc.c:145 app/plug-in/plug-in-rc.c:235
+#: app/menus/shortcuts-rc.c:137
 #, c-format
-msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr "'%s' atlanıyor: yanlış GIMP iletişim kuralı sürümü."
-
-#: app/menus/shortcuts-rc.c:152
-#, c-format
-msgid "Skipping '%s': wrong shortcutsrc file format version."
-msgstr "'%s' geçiliyor: yanlış shortcutsrc dosya biçimi sürümü."
+msgid ""
+"Wrong shortcutsrc (%s) file format version: %d (expected: %d). We tried to "
+"load shortcuts as well as possible.\n"
+msgstr ""
+"Yanlış shortcutsrc (%s) dosya biçimi sürümü: %d (beklenen: %d). Kısayolları "
+"olabildiğince yüklemeye çalıştık.\n"
 
 #: app/paint/gimpairbrush.c:80 app/tools/gimpairbrushtool.c:67
 msgid "Airbrush"
@@ -20622,7 +20621,8 @@ msgstr "'%s' PDB dosyasına yazma başarısız oldu: %s"
 #. TRANSLATOR: %s is a data label from the
 #. * PDB-error-data-label context.
 #.
-#: app/pdb/gimppdb-utils.c:125 app/pdb/gimppdb-utils.c:190
+#: app/pdb/gimppdb-utils.c:127 app/pdb/gimppdb-utils.c:210
+#: app/pdb/gimppdb-utils.c:275
 #, c-format
 msgctxt "PDB-error-message"
 msgid "%s name cannot be empty"
@@ -20632,7 +20632,8 @@ msgstr "%s adı boş olamaz"
 #. * PDB-error-data-label context. The second %s is a data
 #. * name.
 #.
-#: app/pdb/gimppdb-utils.c:139 app/pdb/gimppdb-utils.c:204
+#: app/pdb/gimppdb-utils.c:154 app/pdb/gimppdb-utils.c:224
+#: app/pdb/gimppdb-utils.c:289
 #, c-format
 msgctxt "PDB-error-message"
 msgid "%s '%s' not found"
@@ -20642,7 +20643,8 @@ msgstr "%s '%s' bulunamadı"
 #. * PDB-error-data-label context. The second %s is a data
 #. * name.
 #.
-#: app/pdb/gimppdb-utils.c:149 app/pdb/gimppdb-utils.c:214
+#: app/pdb/gimppdb-utils.c:169 app/pdb/gimppdb-utils.c:234
+#: app/pdb/gimppdb-utils.c:299
 #, c-format
 msgctxt "PDB-error-message"
 msgid "%s '%s' is not editable"
@@ -20652,53 +20654,54 @@ msgstr "%s '%s' düzenlenebilir değil"
 #. * PDB-error-data-label context. The second %s is a data
 #. * name.
 #.
-#: app/pdb/gimppdb-utils.c:160 app/pdb/gimppdb-utils.c:225
+#: app/pdb/gimppdb-utils.c:180 app/pdb/gimppdb-utils.c:245
+#: app/pdb/gimppdb-utils.c:310
 #, c-format
 msgctxt "PDB-error-message"
 msgid "%s '%s' is not renamable"
 msgstr "%s '%s' yeniden adlandırılabilir değil"
 
-#: app/pdb/gimppdb-utils.c:248
+#: app/pdb/gimppdb-utils.c:333
 #, c-format
 msgid "Brush '%s' is not a generated brush"
 msgstr "'%s' fırçası oluşturulmuş bir fırça değil"
 
-#: app/pdb/gimppdb-utils.c:268
+#: app/pdb/gimppdb-utils.c:353
 msgid "Invalid empty buffer name"
 msgstr "Geçersiz boş tampon adı"
 
-#: app/pdb/gimppdb-utils.c:278
+#: app/pdb/gimppdb-utils.c:363
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "'%s' adlandırılmış tampon bulunanamadı"
 
-#: app/pdb/gimppdb-utils.c:297
+#: app/pdb/gimppdb-utils.c:382
 msgid "Invalid empty paint method name"
 msgstr "Geçersiz boş boyama yöntemi adı"
 
-#: app/pdb/gimppdb-utils.c:307
+#: app/pdb/gimppdb-utils.c:392
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "'%s' boyama yöntemi yok"
 
-#: app/pdb/gimppdb-utils.c:326
+#: app/pdb/gimppdb-utils.c:411
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr "'%s' (%d) ögesi kullanılamadı çünkü bir görüntüye eklenmemiş"
 
-#: app/pdb/gimppdb-utils.c:336
+#: app/pdb/gimppdb-utils.c:421
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr "'%s' (%d) ögesi kullanılamadı çünkü başka bir görüntüye iliştirilmiş"
 
-#: app/pdb/gimppdb-utils.c:362
+#: app/pdb/gimppdb-utils.c:447
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
 "tree"
 msgstr "'%s' (%d) ögesi kullanılamadı çünkü öge ağacının doğrudan üyesi değil"
 
-#: app/pdb/gimppdb-utils.c:390
+#: app/pdb/gimppdb-utils.c:475
 #, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
@@ -20707,59 +20710,59 @@ msgstr ""
 "'%s' (%d) ve '%s' (%d) ögesi kullanılamadı çünkü aynı öge ağacının parçaları "
 "değil"
 
-#: app/pdb/gimppdb-utils.c:415
+#: app/pdb/gimppdb-utils.c:500
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
 msgstr "'%s' (%d) ögesi '%s' (%d)'nin atası olmamalıdır"
 
-#: app/pdb/gimppdb-utils.c:439
+#: app/pdb/gimppdb-utils.c:524
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "'%s' (%d) ögesi zaten bir görüntüye eklenmiş"
 
-#: app/pdb/gimppdb-utils.c:447
+#: app/pdb/gimppdb-utils.c:532
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "'%s' (%d) ögesi yanlış görünüye eklenmeye çalışılıyor"
 
-#: app/pdb/gimppdb-utils.c:474
+#: app/pdb/gimppdb-utils.c:559
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr "'%s' (%d) ögesi değiştirilemedi çünkü içeriği kilitlenmiş"
 
-#: app/pdb/gimppdb-utils.c:484
+#: app/pdb/gimppdb-utils.c:569
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
 msgstr "'%s' (%d) ögesi değiştirilemez çünkü konumu ve boyutu kilitli"
 
-#: app/pdb/gimppdb-utils.c:504
+#: app/pdb/gimppdb-utils.c:589
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
 msgstr "'%s' (%d) ögesi kullanılamadı çünkü bu bir küme ögesi değil"
 
-#: app/pdb/gimppdb-utils.c:524
+#: app/pdb/gimppdb-utils.c:609
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr "'%s' (%d) ögesi değiştirilemedi çünkü bu bir küme ögesidir"
 
-#: app/pdb/gimppdb-utils.c:545
+#: app/pdb/gimppdb-utils.c:630
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr "'%s' (%d) katmanı kullanılamadı çünkü bir metin katmanı değil"
 
-#: app/pdb/gimppdb-utils.c:586
+#: app/pdb/gimppdb-utils.c:671
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
 "'%s' (%d) görüntüsü '%s' türünde, ancak '%s' türündeki bir görüntü bekleniyor"
 
-#: app/pdb/gimppdb-utils.c:609
+#: app/pdb/gimppdb-utils.c:694
 #, c-format
 msgid "Image '%s' (%d) must not be of type '%s'"
 msgstr "'%s' (%d) görüntüsü '%s' türünde olmamalıdır"
 
-#: app/pdb/gimppdb-utils.c:629
+#: app/pdb/gimppdb-utils.c:714
 #, c-format
 msgid ""
 "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
@@ -20768,67 +20771,67 @@ msgstr ""
 "'%s' (%d) görüntüsü '%s' hassasiyetinde, fakat '%s' hassasiyetinde bir "
 "görüntü bekleniyor"
 
-#: app/pdb/gimppdb-utils.c:652
+#: app/pdb/gimppdb-utils.c:737
 #, c-format
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "'%s' (%d) görüntüsü '%s' hassasiyetinde olmamalıdır"
 
-#: app/pdb/gimppdb-utils.c:676 app/pdb/image-guides-cmds.c:181
+#: app/pdb/gimppdb-utils.c:761 app/pdb/image-guides-cmds.c:181
 #, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
 msgstr "'%s' (%d) görüntüsü %d kimlikle beraber kılavuz içeremez"
 
-#: app/pdb/gimppdb-utils.c:699 app/pdb/image-sample-points-cmds.c:146
+#: app/pdb/gimppdb-utils.c:784 app/pdb/image-sample-points-cmds.c:146
 #, c-format
 msgid "Image '%s' (%d) does not contain sample point with ID %d"
 msgstr "'%s' (%d) görüntüsü %d kimlikli beraber örnek noktası içeremez"
 
-#: app/pdb/gimppdb-utils.c:727
+#: app/pdb/gimppdb-utils.c:812
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "%d vektörel nesnesi %d kimliği ile bir darbe içermiyor"
 
-#: app/pdb/gimppdb-utils.c:743
+#: app/pdb/gimppdb-utils.c:828
 #, c-format
 msgid "Procedure name '%s' is not a canonical identifier"
 msgstr "Yordam adı '%s' kalıcı tanımlayıcı değil"
 
-#: app/pdb/gimppdb-utils.c:804
+#: app/pdb/gimppdb-utils.c:889
 msgctxt "PDB-error-data-label"
 msgid "Generated brush"
 msgstr "Oluşturulan fırça"
 
-#: app/pdb/gimppdb-utils.c:806
+#: app/pdb/gimppdb-utils.c:891
 msgctxt "PDB-error-data-label"
 msgid "Brush"
 msgstr "Fırça"
 
-#: app/pdb/gimppdb-utils.c:808
+#: app/pdb/gimppdb-utils.c:893
 msgctxt "PDB-error-data-label"
 msgid "Pattern"
 msgstr "Desen"
 
-#: app/pdb/gimppdb-utils.c:810
+#: app/pdb/gimppdb-utils.c:895
 msgctxt "PDB-error-data-label"
 msgid "Gradient"
 msgstr "Renk Geçişi"
 
-#: app/pdb/gimppdb-utils.c:812
+#: app/pdb/gimppdb-utils.c:897
 msgctxt "PDB-error-data-label"
 msgid "Palette"
 msgstr "Palet"
 
-#: app/pdb/gimppdb-utils.c:814
+#: app/pdb/gimppdb-utils.c:899
 msgctxt "PDB-error-data-label"
 msgid "Font"
 msgstr "Yazı tipi"
 
-#: app/pdb/gimppdb-utils.c:816
+#: app/pdb/gimppdb-utils.c:901
 msgctxt "PDB-error-data-label"
 msgid "Paint dynamics"
 msgstr "Boyama hareketleri"
 
-#: app/pdb/gimppdb-utils.c:818
+#: app/pdb/gimppdb-utils.c:903
 msgctxt "PDB-error-data-label"
 msgid "MyPaint brush"
 msgstr "MyPaint Fırçası"
@@ -21613,6 +21616,11 @@ msgstr ""
 "'%s' için uygulama hatası:\n"
 "%s"
 
+#: app/plug-in/plug-in-rc.c:235
+#, c-format
+msgid "Skipping '%s': wrong GIMP protocol version."
+msgstr "'%s' atlanıyor: yanlış GIMP iletişim kuralı sürümü."
+
 #: app/plug-in/plug-in-rc.c:242
 #, c-format
 msgid "Skipping '%s': wrong pluginrc file format version."
@@ -22020,7 +22028,7 @@ msgstr ""
 "Kimi yazı tipleri yüklenemedi:\n"
 "%s"
 
-#: app/text/gimptext-compat.c:110 app/tools/gimptexttool.c:1623
+#: app/text/gimptext-compat.c:99 app/tools/gimptexttool.c:1623
 msgid "Add Text Layer"
 msgstr "Metin Katmanı Ekle"
 
@@ -25205,7 +25213,7 @@ msgid ""
 "%s  Subtract\n"
 "%s  Intersect"
 msgstr ""
-"Seçimden Yola\n"
+"Yoldan Seçime\n"
 "%s  Ekle\n"
 "%s  Çıkar\n"
 "%s  Kesiştir"
@@ -25676,7 +25684,7 @@ msgstr "'%s' dosyasından yollar içe aktarılamadı: %s"
 msgid "_Search:"
 msgstr "_Ara:"
 
-#: app/widgets/gimpactiongroup.c:1115
+#: app/widgets/gimpactiongroup.c:1195
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -27060,16 +27068,16 @@ msgstr "Tüm dışa aktarılan görüntüler"
 msgid "_Help"
 msgstr "_Yardım"
 
-#: app/widgets/gimpfiledialog.c:759
+#: app/widgets/gimpfiledialog.c:761
 msgid "Show _All Files"
 msgstr "Tüm _Dosyaları Göster"
 
-#: app/widgets/gimpfiledialog.c:791
+#: app/widgets/gimpfiledialog.c:793
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "_Dosya Türünü Seç (%s)"
 
-#: app/widgets/gimpfiledialog.c:793
+#: app/widgets/gimpfiledialog.c:795
 msgid "Select File _Type"
 msgstr "Dosya _Türünü Seç"
 
@@ -27238,30 +27246,30 @@ msgstr ""
 msgid "Use _Web Browser"
 msgstr "A_ğ Tarayıcısını Kullan"
 
-#: app/widgets/gimphelp.c:776
+#: app/widgets/gimphelp.c:771
 msgid "GIMP user manual is missing"
 msgstr "GIMP kullanıcı kılavuzu kayıp"
 
-#: app/widgets/gimphelp.c:792
+#: app/widgets/gimphelp.c:782
 msgid "The GIMP user manual is not installed in your language."
 msgstr "GIMP kullanıcı kılavuzu dilinizde yüklü değil."
 
-#: app/widgets/gimphelp.c:803
+#: app/widgets/gimphelp.c:793
 msgid "Read Selected _Language"
 msgstr "Seçilen _Dili Oku"
 
-#: app/widgets/gimphelp.c:807
+#: app/widgets/gimphelp.c:797
 msgid "Available manuals..."
 msgstr "Kullanılabilir kılavuzlar..."
 
-#: app/widgets/gimphelp.c:819
+#: app/widgets/gimphelp.c:809
 msgid ""
 "You may either select a manual in another language or read the online "
 "version."
 msgstr ""
 "Başka dildeki bir kılavuzu seçebilir veya çevrimiçi sürümü okuyabilirsiniz."
 
-#: app/widgets/gimphelp.c:825
+#: app/widgets/gimphelp.c:815
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -27269,7 +27277,7 @@ msgstr ""
 "Eklenebilir yardım paketini kurabilirsiniz ya da tercihlerinizi değiştirerek "
 "çevrimiçi sürümü kullanabilirsiniz."
 
-#: app/widgets/gimphelp.c:830
+#: app/widgets/gimphelp.c:820
 msgid "Read _Online"
 msgstr "Çevrimiçi _Oku"
 
@@ -27592,11 +27600,11 @@ msgstr "Palet Rengini Düzenle"
 msgid "Edit Color Palette Entry"
 msgstr "Renk Paleti Girişini Düzenle"
 
-#: app/widgets/gimppdbdialog.c:285
+#: app/widgets/gimppdbdialog.c:319
 msgid "The corresponding plug-in may have crashed."
 msgstr "İlgili uyumlu eklenti çökmüş olabilir."
 
-#: app/widgets/gimppdbdialog.c:289
+#: app/widgets/gimppdbdialog.c:323
 #, c-format
 msgid ""
 "Unable to run %s callback.\n"
@@ -27604,10 +27612,6 @@ msgid ""
 msgstr ""
 "%s geri çağırmasını çalıştırmak olanaksız.\n"
 "%s"
-
-#: app/widgets/gimppickablepopup.c:204 app/widgets/gimppickablepopup.c:421
-msgid "Select an image in the left pane"
-msgstr "Sol bölümden bir görüntü seç"
 
 #: app/widgets/gimppluginview.c:146
 msgid "Plug-In"
@@ -28141,22 +28145,22 @@ msgstr "Palet seçim iletişim kutusunu aç"
 msgid "Open the font selection dialog"
 msgstr "Yazı tipi seçim iletişim kutusunu aç"
 
-#: app/widgets/gimpwidgets-utils.c:650
+#: app/widgets/gimpwidgets-utils.c:658
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (%s dene)"
 
-#: app/widgets/gimpwidgets-utils.c:650
+#: app/widgets/gimpwidgets-utils.c:658
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:654
+#: app/widgets/gimpwidgets-utils.c:662
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (%s, %s dene)"
 
-#: app/widgets/gimpwidgets-utils.c:658
+#: app/widgets/gimpwidgets-utils.c:666
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (%s, %s, %s dene)"
@@ -28166,12 +28170,12 @@ msgstr "%s (%s, %s, %s dene)"
 #. * (e.g. a checkbox settings) displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1506
+#: app/widgets/gimpwidgets-utils.c:1460
 #, c-format
 msgid "Switch \"%s\" ON"
 msgstr "\"%s\" Aç"
 
-#: app/widgets/gimpwidgets-utils.c:1508
+#: app/widgets/gimpwidgets-utils.c:1462
 #, c-format
 msgid "Switch \"%s\" OFF"
 msgstr "\"%s\" Kapat"
@@ -28181,7 +28185,7 @@ msgstr "\"%s\" Kapat"
 #. * multi-choice settings displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1527
+#: app/widgets/gimpwidgets-utils.c:1481
 #, c-format
 msgid "Select \"%s\""
 msgstr "\"%s\" seç"
@@ -28189,27 +28193,27 @@ msgstr "\"%s\" seç"
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
-#: app/widgets/gimpwidgets-utils.c:1550
+#: app/widgets/gimpwidgets-utils.c:1504
 #, c-format
 msgid "Activate the \"%s\" tool"
 msgstr "\"%s\" aracını etkinleştir"
 
-#: app/widgets/gimpwidgets-utils.c:2149
+#: app/widgets/gimpwidgets-utils.c:2103
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Yerleşik gri tonlamalı (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2156
+#: app/widgets/gimpwidgets-utils.c:2110
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Yerleşik RGB (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2176
+#: app/widgets/gimpwidgets-utils.c:2130
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Yeğlenen gri tonlamalı (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2185
+#: app/widgets/gimpwidgets-utils.c:2139
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Yeğlenen RGB (%s)"
@@ -28940,6 +28944,13 @@ msgstr "Geri Alma Geçmişi Menüsü"
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Yollar Menüsü"
+
+#, c-format
+#~ msgid "Skipping '%s': wrong shortcutsrc file format version."
+#~ msgstr "'%s' geçiliyor: yanlış shortcutsrc dosya biçimi sürümü."
+
+#~ msgid "Select an image in the left pane"
+#~ msgstr "Sol bölümden bir görüntü seç"
 
 #~ msgid "Invalid empty brush name"
 #~ msgstr "Geçersiz boş fırça adı"
