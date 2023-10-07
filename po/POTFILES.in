@@ -602,6 +602,7 @@ app/widgets/gimpopendialog.c
 app/widgets/gimpoverlaydialog.c
 app/widgets/gimppaletteeditor.c
 app/widgets/gimppdbdialog.c
+app/widgets/gimppickablechooser.c
 app/widgets/gimppickablepopup.c
 app/widgets/gimppluginview.c
 app/widgets/gimpprogressdialog.c
