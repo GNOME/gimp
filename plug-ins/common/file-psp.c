@@ -2362,6 +2362,66 @@ compression_name (gint compression)
 }
 
 static gint
+read_selection_block (FILE      *f,
+                      GimpImage *image,
+                      guint      total_len,
+                      PSPimage  *ia,
+                      GError   **error)
+{
+  gsize   current_location;
+  gsize   file_size;
+  guint32 chunk_size;
+  guint32 rect[4];
+
+  current_location = ftell (f);
+  fseek (f, 0, SEEK_END);
+  file_size = ftell (f);
+  fseek (f, current_location, SEEK_SET);
+
+  if (fread (&chunk_size, 4, 1, f) < 1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading selection chunk"));
+      return -1;
+    }
+  chunk_size = GUINT32_FROM_LE (chunk_size);
+
+  current_location = ftell (f);
+  if (chunk_size > (file_size - current_location))
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Invalid selection chunk size"));
+      return -1;
+    }
+
+  if (fread (&rect, 16, 1, f) < 1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading selection chunk"));
+      return -1;
+    }
+
+  swab_rect (rect);
+  gimp_image_select_rectangle (image, GIMP_CHANNEL_OP_ADD,
+                               rect[0], rect[1],
+                               rect[2] - rect[0],
+                               rect[3] - rect[1]);
+
+  /* The file format specifies multiple selections, but
+   * as of PSP 8 they only allow one. Skipping the remaining
+   * information in the block. */
+  total_len -= sizeof (guint32) + sizeof (rect);
+  if (try_fseek (f, total_len, SEEK_SET, error) < 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading end of selection chunk"));
+      return -1;
+    }
+
+  return 0;
+}
+
+static gint
 read_colorprofile_block (FILE      *f,
                          GimpImage *image,
                          guint      total_len,
@@ -2552,7 +2612,10 @@ load_image (GFile   *file,
               break;
 
             case PSP_SELECTION_BLOCK:
-              break;            /* Not yet implemented */
+              if (read_selection_block (f, image, block_total_len, &ia,
+                                        error) == -1)
+                goto error;
+              break;
 
             case PSP_ALPHA_BANK_BLOCK:
               break;            /* Not yet implemented */
