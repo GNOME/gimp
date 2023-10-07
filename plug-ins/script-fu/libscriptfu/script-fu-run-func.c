@@ -175,8 +175,11 @@ script_fu_run_procedure (GimpProcedure       *procedure,
       }
 
     case GIMP_RUN_NONINTERACTIVE:
-      /*  Make sure all the arguments are there  */
-      if (n_pspecs != script->n_args + n_aux_args + 1)
+      /* Verify actual args count equals declared arg count.
+       * Scripts declare args except run_mode (SF hides it.)
+       * pspecs have run_mode and one extra internal pspec, thus +2.
+       */
+      if (n_pspecs != script->n_args + n_aux_args + 2)
         status = GIMP_PDB_CALLING_ERROR;
 
       if (status == GIMP_PDB_SUCCESS)
