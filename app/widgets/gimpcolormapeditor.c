@@ -43,29 +43,33 @@
 #include "gimp-intl.h"
 
 
-static void gimp_colormap_editor_docked_iface_init (GimpDockedInterface  *face);
+static void       gimp_colormap_editor_docked_iface_init  (GimpDockedInterface   *face);
 
-static void   gimp_colormap_editor_constructed     (GObject              *object);
-static void   gimp_colormap_editor_dispose         (GObject              *object);
+static void       gimp_colormap_editor_constructed        (GObject               *object);
+static void       gimp_colormap_editor_dispose            (GObject               *object);
 
-static void   gimp_colormap_editor_unmap           (GtkWidget            *widget);
+static void       gimp_colormap_editor_unmap              (GtkWidget             *widget);
 
-static void   gimp_colormap_editor_set_context     (GimpDocked           *docked,
-                                                    GimpContext          *context);
+static void       gimp_colormap_editor_set_context        (GimpDocked            *docked,
+                                                           GimpContext           *context);
 
-static void   gimp_colormap_editor_color_update    (GimpColorDialog      *dialog,
-                                                    const GimpRGB        *color,
-                                                    GimpColorDialogState  state,
-                                                    GimpColormapEditor   *editor);
+static void       gimp_colormap_editor_color_update       (GimpColorDialog       *dialog,
+                                                          const GimpRGB          *color,
+                                                          GimpColorDialogState    state,
+                                                          GimpColormapEditor     *editor);
 
-static gboolean   gimp_colormap_editor_entry_button_press (GtkWidget     *widget,
-                                                           GdkEvent      *event,
-                                                           gpointer       user_data);
-static gboolean   gimp_colormap_editor_entry_popup     (GtkWidget            *widget,
-                                                        gpointer              user_data);
-static void   gimp_colormap_editor_color_clicked   (GimpColormapEditor   *editor,
-                                                    GimpPaletteEntry     *entry,
-                                                    GdkModifierType       state);
+static gboolean   gimp_colormap_editor_entry_button_press (GtkWidget             *widget,
+                                                           GdkEvent              *event,
+                                                           gpointer               user_data);
+static gboolean   gimp_colormap_editor_entry_popup        (GtkWidget             *widget,
+                                                           gpointer               user_data);
+static void       gimp_colormap_editor_color_clicked      (GimpColormapEditor    *editor,
+                                                           GimpPaletteEntry      *entry,
+                                                           GdkModifierType        state);
+static void       gimp_colormap_editor_notify_index       (GimpColormapSelection *selection,
+                                                           const GParamSpec      *pspec,
+                                                           GimpColormapEditor    *editor);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpColormapEditor, gimp_colormap_editor,
                          GIMP_TYPE_IMAGE_EDITOR,
@@ -122,6 +126,9 @@ gimp_colormap_editor_constructed (GObject *object)
 
   gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap",
                                  "colormap-edit-color",
+                                 NULL);
+  gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap",
+                                 "colormap-delete-color",
                                  NULL);
 
   gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap",
@@ -192,6 +199,9 @@ gimp_colormap_editor_set_context (GimpDocked  *docked,
                         editor);
       g_signal_connect (editor->selection, "popup-menu",
                         G_CALLBACK (gimp_colormap_editor_entry_popup),
+                        editor);
+      g_signal_connect (editor->selection, "notify::index",
+                        G_CALLBACK (gimp_colormap_editor_notify_index),
                         editor);
     }
 }
@@ -275,6 +285,43 @@ gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
   g_free (desc);
 
   gtk_window_present (GTK_WINDOW (editor->color_dialog));
+}
+
+void
+gimp_colormap_editor_delete_color (GimpColormapEditor *editor)
+{
+  GimpColormapSelection *selection;
+  GimpImage             *image;
+  gint                   index;
+
+  g_return_if_fail (GIMP_IS_COLORMAP_EDITOR (editor));
+  g_return_if_fail (gimp_colormap_editor_is_color_deletable (editor));
+
+  image     = GIMP_IMAGE_EDITOR (editor)->image;
+  selection = GIMP_COLORMAP_SELECTION (editor->selection);
+  index     = gimp_colormap_selection_get_index (selection, NULL);
+
+  gimp_image_delete_colormap_entry (image, index, TRUE);
+}
+
+gboolean
+gimp_colormap_editor_is_color_deletable (GimpColormapEditor *editor)
+{
+  GimpColormapSelection *selection;
+  GimpImage             *image;
+  gint                   index;
+
+  g_return_val_if_fail (GIMP_IS_COLORMAP_EDITOR (editor), FALSE);
+
+  image     = GIMP_IMAGE_EDITOR (editor)->image;
+  selection = GIMP_COLORMAP_SELECTION (editor->selection);
+  index     = gimp_colormap_selection_get_index (selection, NULL);
+
+  if (index == -1)
+    /* No colormap. */
+    return FALSE;
+  else
+    return ! gimp_image_colormap_is_index_used (image, index);
 }
 
 gint
@@ -406,4 +453,17 @@ gimp_colormap_editor_color_clicked (GimpColormapEditor *editor,
     gimp_context_set_background (image_editor->context, &entry->color);
   else
     gimp_context_set_foreground (image_editor->context, &entry->color);
+}
+
+static void
+gimp_colormap_editor_notify_index (GimpColormapSelection *selection,
+                                   const GParamSpec      *pspec,
+                                   GimpColormapEditor    *editor)
+{
+  g_return_if_fail (GIMP_IS_COLORMAP_EDITOR (editor));
+
+  gimp_editor_set_action_sensitive (GIMP_EDITOR (editor), "colormap",
+                                    "colormap-delete-color",
+                                    gimp_colormap_editor_is_color_deletable (editor),
+                                    _("The color is used in this indexed image"));
 }

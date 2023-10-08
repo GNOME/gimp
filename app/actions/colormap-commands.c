@@ -47,6 +47,16 @@ colormap_edit_color_cmd_callback (GimpAction *action,
 }
 
 void
+colormap_delete_color_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
+{
+  GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
+
+  gimp_colormap_editor_delete_color (editor);
+}
+
+void
 colormap_add_color_cmd_callback (GimpAction *action,
                                  GVariant   *value,
                                  gpointer    data)

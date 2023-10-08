@@ -53,7 +53,8 @@
 enum
 {
   PROP_0,
-  PROP_CONTEXT
+  PROP_CONTEXT,
+  PROP_INDEX
 };
 
 enum
@@ -165,6 +166,10 @@ gimp_colormap_selection_class_init (GimpColormapSelectionClass* klass)
                                                         GIMP_TYPE_CONTEXT,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_INDEX,
+                                   g_param_spec_int ("index", NULL, NULL,
+                                                     0, G_MAXINT, 0,
+                                                     GIMP_PARAM_READABLE));
 }
 
 static void
@@ -280,6 +285,9 @@ gimp_colormap_selection_get_property (GObject    *object,
     {
     case PROP_CONTEXT:
       g_value_set_object (value, selection->context);
+      break;
+    case PROP_INDEX:
+      g_value_set_int (value, selection->col_index);
       break;
 
     default:
@@ -429,6 +437,7 @@ gimp_colormap_selection_set_index (GimpColormapSelection *selection,
 
       selection->col_index = index;
 
+      g_object_notify (G_OBJECT (selection), "index");
       gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (selection->view),
                                       gimp_palette_get_entry (palette, index));
 

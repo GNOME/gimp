@@ -46,19 +46,21 @@ struct _GimpColormapEditorClass
 };
 
 
-GType       gimp_colormap_editor_get_type   (void) G_GNUC_CONST;
+GType       gimp_colormap_editor_get_type           (void) G_GNUC_CONST;
 
-GtkWidget * gimp_colormap_editor_new        (GimpMenuFactory    *menu_factory);
+GtkWidget * gimp_colormap_editor_new                (GimpMenuFactory    *menu_factory);
 
-void        gimp_colormap_editor_edit_color (GimpColormapEditor *editor);
+void        gimp_colormap_editor_edit_color         (GimpColormapEditor *editor);
+void        gimp_colormap_editor_delete_color       (GimpColormapEditor *editor);
+gboolean    gimp_colormap_editor_is_color_deletable (GimpColormapEditor *editor);
 
-gint        gimp_colormap_editor_get_index  (GimpColormapEditor *editor,
-                                             const GimpRGB      *search);
-gboolean    gimp_colormap_editor_set_index  (GimpColormapEditor *editor,
-                                             gint                index,
-                                             GimpRGB            *color);
+gint        gimp_colormap_editor_get_index          (GimpColormapEditor *editor,
+                                                     const GimpRGB      *search);
+gboolean    gimp_colormap_editor_set_index          (GimpColormapEditor *editor,
+                                                     gint                index,
+                                                     GimpRGB            *color);
 
-gint        gimp_colormap_editor_max_index  (GimpColormapEditor *editor);
+gint        gimp_colormap_editor_max_index          (GimpColormapEditor *editor);
 
 
 #endif /* __GIMP_COLORMAP_EDITOR_H__ */

@@ -3,6 +3,7 @@
 <interface>
   <menu id="/colormap-popup">
     <item><attribute name="action">colormap.colormap-edit-color</attribute></item>
+    <item><attribute name="action">colormap.colormap-delete-color</attribute></item>
     <item><attribute name="action">colormap.colormap-add-color-from-fg</attribute></item>
     <item><attribute name="action">colormap.colormap-add-color-from-bg</attribute></item>
     <section>

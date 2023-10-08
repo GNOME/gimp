@@ -775,6 +775,31 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 }
 
 void
+gimp_editor_set_action_sensitive (GimpEditor  *editor,
+                                  const gchar *group_name,
+                                  const gchar *action_name,
+                                  gboolean     sensitive,
+                                  const gchar *reason)
+{
+  GimpActionGroup *group;
+  GimpAction      *action;
+
+  g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
+  g_return_val_if_fail (action_name != NULL, NULL);
+  g_return_val_if_fail (editor->priv->ui_manager != NULL, NULL);
+
+  group = gimp_ui_manager_get_action_group (editor->priv->ui_manager,
+                                            group_name);
+
+  g_return_val_if_fail (group != NULL, NULL);
+
+  action = gimp_action_group_get_action (group, action_name);
+  g_return_val_if_fail (action != NULL, NULL);
+
+  gimp_action_set_sensitive (action, sensitive, reason);
+}
+
+void
 gimp_editor_set_show_name (GimpEditor *editor,
                            gboolean    show)
 {

@@ -22,6 +22,9 @@
 void   colormap_edit_color_cmd_callback   (GimpAction *action,
                                            GVariant   *value,
                                            gpointer    data);
+void   colormap_delete_color_cmd_callback (GimpAction *action,
+                                           GVariant   *value,
+                                           gpointer    data);
 void   colormap_add_color_cmd_callback    (GimpAction *action,
                                            GVariant   *value,
                                            gpointer    data);

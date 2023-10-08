@@ -30,6 +30,7 @@
 #include "core/gimpimage-colormap.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpcolormapeditor.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "actions.h"
@@ -45,6 +46,12 @@ static const GimpActionEntry colormap_actions[] =
     NC_("colormap-action", "_Edit Color..."), NULL, { NULL },
     NC_("colormap-action", "Edit this color"),
     colormap_edit_color_cmd_callback,
+    GIMP_HELP_INDEXED_PALETTE_EDIT },
+
+  { "colormap-delete-color", GIMP_ICON_EDIT_DELETE,
+    NC_("colormap-action", "_Delete Color..."), NULL, { NULL },
+    NC_("colormap-action", "Delete this color"),
+    colormap_delete_color_cmd_callback,
     GIMP_HELP_INDEXED_PALETTE_EDIT }
 };
 
@@ -112,13 +119,14 @@ void
 colormap_actions_update (GimpActionGroup *group,
                          gpointer         data)
 {
-  GimpImage   *image            = action_data_get_image (data);
-  GimpContext *context          = action_data_get_context (data);
-  gboolean     indexed          = FALSE;
-  gboolean     drawable_indexed = FALSE;
-  gint         num_colors       = 0;
-  GimpRGB      fg;
-  GimpRGB      bg;
+  GimpColormapEditor *editor           = GIMP_COLORMAP_EDITOR (data);
+  GimpImage          *image            = action_data_get_image (data);
+  GimpContext        *context          = action_data_get_context (data);
+  gboolean            indexed          = FALSE;
+  gboolean            drawable_indexed = FALSE;
+  gint                num_colors       = 0;
+  GimpRGB             fg;
+  GimpRGB             bg;
 
   if (image)
     {
@@ -150,6 +158,9 @@ colormap_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("colormap-edit-color",
                  indexed && num_colors > 0);
+  SET_SENSITIVE ("colormap-delete-color",
+                 indexed && num_colors > 0 &&
+                 gimp_colormap_editor_is_color_deletable (editor));
 
   SET_SENSITIVE ("colormap-add-color-from-fg",
                  indexed && num_colors < 256);
