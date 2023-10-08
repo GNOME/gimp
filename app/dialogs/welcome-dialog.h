@@ -22,7 +22,8 @@
 #define __WELCOME_DIALOG_H__
 
 
-GtkWidget * welcome_dialog_create (Gimp *gimp);
+GtkWidget * welcome_dialog_create (Gimp     *gimp,
+                                   gboolean  show_welcome_page);
 
 
 #endif /* __WELCOME_DIALOG_H__ */

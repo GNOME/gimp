@@ -25,104 +25,378 @@
 #ifdef GDK_WINDOWING_WAYLAND
 #include <gdk/gdkwayland.h>
 #endif
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
+#include "libgimpthumb/gimpthumb.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "dialogs-types.h"
 
+#include "gimp-version.h"
+
+#include "config/gimprc.h"
+
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpimagefile.h"
 
+#include "dialogs/file-open-dialog.h"
+
+#include "file/file-open.h"
+
+#include "gui/icon-themes.h"
+#include "gui/themes.h"
+
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpprefsbox.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "preferences-dialog-utils.h"
 #include "welcome-dialog.h"
 #include "welcome-dialog-data.h"
 
 #include "gimp-intl.h"
 
 
-static void   welcome_dialog_release_item_activated (GtkListBox    *listbox,
-                                                     GtkListBoxRow *row,
-                                                     gpointer       user_data);
-static void   welcome_add_link                      (GtkGrid        *grid,
-                                                     gint            column,
-                                                     gint           *row,
-                                                     const gchar    *emoji,
-                                                     const gchar    *title,
-                                                     const gchar    *link);
-static void   welcome_size_allocate                 (GtkWidget      *welcome_dialog,
-                                                     GtkAllocation  *allocation,
-                                                     gpointer        user_data);
+static GtkWidget * welcome_dialog_new                (Gimp          *gimp,
+                                                      GimpConfig    *config,
+                                                      gboolean       show_welcome_page);
+static void   welcome_dialog_response                (GtkWidget     *widget,
+                                                      gint           response_id,
+                                                      GtkWidget     *dialog);
+static void   welcome_dialog_release_item_activated  (GtkListBox    *listbox,
+                                                      GtkListBoxRow *row,
+                                                      gpointer       user_data);
+static void   welcome_add_link                       (GtkGrid        *grid,
+                                                      gint            column,
+                                                      gint           *row,
+                                                      const gchar    *emoji,
+                                                      const gchar    *title,
+                                                      const gchar    *link);
+static void   welcome_size_allocate                  (GtkWidget      *welcome_dialog,
+                                                      GtkAllocation  *allocation,
+                                                      gpointer        user_data);
+static void   welcome_dialog_create_welcome_page     (Gimp           *gimp,
+                                                      GtkWidget      *welcome_dialog,
+                                                      GtkWidget      *main_vbox);
+static void   welcome_dialog_create_personalize_page (Gimp           *gimp,
+                                                      GimpConfig     *config,
+                                                      GtkWidget      *welcome_dialog,
+                                                      GtkWidget      *main_vbox);
+static void   welcome_dialog_create_contribute_page  (Gimp           *gimp,
+                                                      GtkWidget      *welcome_dialog,
+                                                      GtkWidget      *main_vbox);
+static void   welcome_dialog_create_creation_page    (Gimp           *gimp,
+                                                      GtkWidget      *welcome_dialog,
+                                                      GtkWidget      *main_vbox);
+static void   welcome_dialog_create_release_page     (Gimp           *gimp,
+                                                      GtkWidget      *welcome_dialog,
+                                                      GtkWidget      *main_vbox);
 
+static void   welcome_dialog_new_image_dialog        (GtkWidget      *button,
+                                                      GtkWidget      *welcome_dialog);
+static void   welcome_dialog_open_image_dialog       (GtkWidget      *button,
+                                                      GtkWidget      *welcome_dialog);
+static void   welcome_dialog_new_dialog_close        (GtkWidget      *dialog,
+                                                      GtkWidget      *welcome_dialog);
+static void   welcome_dialog_new_dialog_response     (GtkWidget      *dialog,
+                                                      gint            response_id,
+                                                      GtkWidget      *welcome_dialog);
+static void   welcome_dialog_open_dialog_close       (GtkWidget      *dialog,
+                                                      GtkWidget      *welcome_dialog);
+static void   welcome_open_activated_callback        (GtkListBox     *listbox,
+                                                      GtkListBoxRow  *row,
+                                                      GtkWidget      *welcome_dialog);
+static void   welcome_open_multiple_callback         (GtkWidget      *button,
+                                                      GtkListBox     *listbox);
+
+static GtkWidget *welcome_dialog;
 
 GtkWidget *
-welcome_dialog_create (Gimp *gimp)
+welcome_dialog_create (Gimp     *gimp,
+                       gboolean  show_welcome_page)
 {
-  GtkWidget  *welcome_dialog;
-  GList      *windows;
-
-  GtkWidget  *main_vbox;
-  GtkWidget  *stack;
-  GtkWidget  *grid;
-  GtkWidget  *switcher;
-
-  GtkWidget  *scrolled_window;
-  GtkWidget  *vbox;
-  GtkWidget  *hbox;
-  GtkWidget  *image;
-  GtkWidget  *listbox;
-  GtkWidget  *widget;
-
-  gchar      *release_link;
-  gchar      *title;
-  gchar      *markup;
-  gchar      *tmp;
-  gint        row;
+  GimpConfig *config;
+  GimpConfig *config_copy;
+  GimpConfig *config_orig;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONFIG (gimp->edit_config), NULL);
+
+  if (welcome_dialog)
+    return welcome_dialog;
+
+  /*  turn off autosaving while the prefs dialog is open  */
+  gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), FALSE);
+
+  config       = GIMP_CONFIG (gimp->edit_config);
+  config_copy  = gimp_config_duplicate (config);
+  config_orig  = gimp_config_duplicate (config);
+
+  g_signal_connect_object (config, "notify",
+                           G_CALLBACK (prefs_config_notify),
+                           config_copy, 0);
+  g_signal_connect_object (config_copy, "notify",
+                           G_CALLBACK (prefs_config_copy_notify),
+                           config, 0);
+
+  g_set_weak_pointer (&welcome_dialog,
+                      welcome_dialog_new (gimp, config_copy, show_welcome_page));
+
+  g_object_set_data (G_OBJECT (welcome_dialog), "gimp", gimp);
+
+  g_object_set_data_full (G_OBJECT (welcome_dialog), "config-copy", config_copy,
+                          (GDestroyNotify) g_object_unref);
+  g_object_set_data_full (G_OBJECT (welcome_dialog), "config-orig", config_orig,
+                          (GDestroyNotify) g_object_unref);
+
+  gtk_style_context_add_class (gtk_widget_get_style_context (welcome_dialog),
+                               "gimp-welcome-dialog");
+
+  return welcome_dialog;
+}
+
+static GtkWidget *
+welcome_dialog_new (Gimp       *gimp,
+                    GimpConfig *config,
+                    gboolean    show_welcome_page)
+{
+  GtkWidget   *dialog;
+  GList       *windows;
+  GtkWidget   *switcher;
+  GtkWidget   *stack;
+  GtkWidget   *tree_view;
+  GtkTreeIter  top_iter;
+
+  GtkWidget   *prefs_box;
+  GtkWidget   *main_vbox;
+  GtkWidget   *toggle;
+
+  gchar       *title;
 
   /* Translators: the %s string will be the version, e.g. "3.0". */
   title = g_strdup_printf (_("Welcome to GIMP %s"), GIMP_VERSION);
   windows = gimp_get_image_windows (gimp);
-  welcome_dialog = gimp_dialog_new (title,
-                                    "gimp-welcome-dialog",
-                                    windows ?  windows->data : NULL,
-                                    0, NULL, NULL,
-                                    NULL);
+  dialog = gimp_dialog_new (title,
+                            "gimp-welcome-dialog",
+                            windows ?  windows->data : NULL,
+                            0, NULL, NULL,
+                            _("_Close"), GTK_RESPONSE_CLOSE,
+                            NULL);
   g_list_free (windows);
-  gtk_window_set_position (GTK_WINDOW (welcome_dialog), GTK_WIN_POS_CENTER_ON_PARENT);
+  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER_ON_PARENT);
   g_free (title);
 
-  g_signal_connect (welcome_dialog,
-                    "response",
-                    G_CALLBACK (gtk_widget_destroy),
-                    NULL);
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (welcome_dialog_response),
+                    dialog);
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  /*****************/
+  /* Page Switcher */
+  /*****************/
+  switcher  = gtk_stack_switcher_new ();
+  prefs_box = gimp_prefs_box_new ();
+  stack     = gimp_prefs_box_get_stack (GIMP_PREFS_BOX (prefs_box));
+
+  gimp_prefs_box_set_header_visible (GIMP_PREFS_BOX (prefs_box), FALSE);
+  gtk_stack_switcher_set_stack (GTK_STACK_SWITCHER (switcher),
+                                GTK_STACK (stack));
+  gtk_container_set_border_width (GTK_CONTAINER (switcher), 6);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      switcher, FALSE, FALSE, 0);
+  gtk_widget_set_halign (switcher, GTK_ALIGN_CENTER);
+  gtk_widget_set_visible (switcher, TRUE);
+
+  gtk_container_set_border_width (GTK_CONTAINER (prefs_box), 12);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      prefs_box, TRUE, TRUE, 0);
+  gtk_widget_set_visible (prefs_box, TRUE);
+
+  tree_view = gimp_prefs_box_get_tree_view (GIMP_PREFS_BOX (prefs_box));
+  /* Hide the side panel selection since we're using GtkStackSwitcher */
+  gtk_widget_set_visible (gtk_widget_get_parent (tree_view), FALSE);
+
+  g_object_set_data (G_OBJECT (dialog), "prefs-box", prefs_box);
+
+  main_vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                       "gimp-wilber",
+                                       _("Welcome"),
+                                       _("Welcome"),
+                                       "gimp-welcome",
+                                       NULL,
+                                       &top_iter);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (welcome_dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
 
-  stack = gtk_stack_new ();
-  gtk_box_pack_start (GTK_BOX (main_vbox), stack, TRUE, TRUE, 0);
-  gtk_widget_show (stack);
+  welcome_dialog_create_welcome_page (gimp, dialog, main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
+
+  main_vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                       "gimp-wilber",
+                                       _("Personalize"),
+                                       _("Personalize"),
+                                       "gimp-welcome-personalize",
+                                       NULL,
+                                       &top_iter);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+
+  welcome_dialog_create_personalize_page (gimp, config, dialog, main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
+
+  main_vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                       "gimp-wilber",
+                                       _("Contribute"),
+                                       _("Contribute"),
+                                       "gimp-welcome-contribute",
+                                       NULL,
+                                       &top_iter);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+
+  welcome_dialog_create_contribute_page (gimp, dialog, main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
+
+  main_vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                       "gimp-wilber",
+                                       _("Create"),
+                                       _("Create"),
+                                       "gimp-welcome-create",
+                                       NULL,
+                                       &top_iter);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+
+  welcome_dialog_create_creation_page (gimp, dialog, main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
+
+  /* If dialog is set to always show on load, switch to the Create page */
+  if (! show_welcome_page)
+    gtk_stack_set_visible_child_name (GTK_STACK (stack), "gimp-welcome-create");
+
+  main_vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                       "gimp-wilber",
+                                       _("Release Notes"),
+                                       _("Release Notes"),
+                                       "gimp-welcome-release_notes",
+                                       NULL,
+                                       &top_iter);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+
+  welcome_dialog_create_release_page (gimp, dialog, main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
+
+  /* "Always show welcome dialog" checkbox */
+  toggle = prefs_check_button_add (G_OBJECT (config), "show-welcome-dialog",
+                                   _("Show Welcome Dialog On Start "
+                                     "(You can show it again from the \"Help\" menu)"),
+                                   GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))));
+  gtk_widget_set_margin_start (toggle, 8);
+
+  return dialog;
+}
+
+static void
+welcome_dialog_response (GtkWidget *widget,
+                         gint       response_id,
+                         GtkWidget *dialog)
+{
+  Gimp    *gimp = g_object_get_data (G_OBJECT (dialog), "gimp");
+  GObject *config_copy;
+  GList   *restart_diff;
+  GList   *confirm_diff;
+  GList   *list;
+
+  config_copy = g_object_get_data (G_OBJECT (dialog), "config-copy");
+
+  /*  destroy config_orig  */
+  g_object_set_data (G_OBJECT (dialog), "config-orig", NULL);
+
+  gtk_widget_set_sensitive (GTK_WIDGET (dialog), FALSE);
+
+  confirm_diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
+                                   config_copy,
+                                   GIMP_CONFIG_PARAM_CONFIRM);
+
+  g_object_freeze_notify (G_OBJECT (gimp->edit_config));
+
+  for (list = confirm_diff; list; list = g_list_next (list))
+    {
+      GParamSpec *param_spec = list->data;
+      GValue      value      = G_VALUE_INIT;
+
+      g_value_init (&value, param_spec->value_type);
+
+      g_object_get_property (config_copy,
+                             param_spec->name, &value);
+      g_object_set_property (G_OBJECT (gimp->edit_config),
+                             param_spec->name, &value);
+
+      g_value_unset (&value);
+    }
+
+  g_object_thaw_notify (G_OBJECT (gimp->edit_config));
+
+  g_list_free (confirm_diff);
+
+  gimp_rc_save (GIMP_RC (gimp->edit_config));
+
+  /*  spit out a solely informational warning about changed values
+   *  which need restart
+   */
+  restart_diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
+                                   G_OBJECT (gimp->config),
+                                   GIMP_CONFIG_PARAM_RESTART);
+
+  if (restart_diff)
+    {
+      GString *string;
+
+      string = g_string_new (_("You will have to restart GIMP for "
+                               "the following changes to take effect:"));
+      g_string_append (string, "\n\n");
+
+      for (list = restart_diff; list; list = g_list_next (list))
+        {
+          GParamSpec *param_spec = list->data;
+
+          /* The first 3 bytes are the bullet unicode character
+           * for doing a list (U+2022).
+           */
+          g_string_append_printf (string, "\xe2\x80\xa2 %s\n", g_param_spec_get_nick (param_spec));
+        }
+
+      prefs_message (dialog, GTK_MESSAGE_INFO, FALSE, string->str);
+
+      g_string_free (string, TRUE);
+    }
+
+  g_list_free (restart_diff);
+
+  gtk_widget_destroy (dialog);
+}
+
+static void
+welcome_dialog_create_welcome_page (Gimp      *gimp,
+                                    GtkWidget *welcome_dialog,
+                                    GtkWidget *main_vbox)
+{
+  GtkWidget  *grid;
+  GtkWidget  *image;
+  GtkWidget  *widget;
+
+  gchar      *markup;
+  gchar      *tmp;
+  gint        row;
 
   /****************/
   /* Welcome page */
   /****************/
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_stack_add_titled (GTK_STACK (stack), vbox, "welcome",
-                        _("Welcome"));
-  gtk_widget_show (vbox);
-
   image = gtk_image_new_from_icon_name ("gimp-wilber",
                                         GTK_ICON_SIZE_DIALOG);
   gtk_widget_set_valign (image, GTK_ALIGN_CENTER);
-  gtk_box_pack_start (GTK_BOX (vbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
+  gtk_box_pack_start (GTK_BOX (main_vbox), image, FALSE, FALSE, 0);
+  gtk_widget_set_visible (image, TRUE);
 
   g_signal_connect (welcome_dialog,
                     "size-allocate",
@@ -130,6 +404,12 @@ welcome_dialog_create (Gimp *gimp)
                     image);
 
   /* Welcome title. */
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_homogeneous (GTK_GRID (grid), TRUE);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 0);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, TRUE, TRUE, 0);
+  gtk_widget_set_visible (grid, TRUE);
 
   /* Translators: the %s string will be the version, e.g. "3.0". */
   tmp = g_strdup_printf (_("You installed GIMP %s!"), GIMP_VERSION);
@@ -141,19 +421,13 @@ welcome_dialog_create (Gimp *gimp)
   gtk_label_set_selectable (GTK_LABEL (widget), TRUE);
   gtk_label_set_justify (GTK_LABEL (widget), GTK_JUSTIFY_CENTER);
   gtk_label_set_line_wrap (GTK_LABEL (widget), FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), widget, TRUE, TRUE, 0);
-  gtk_widget_show (widget);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_homogeneous (GTK_GRID (grid), TRUE);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 0);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), grid, TRUE, TRUE, 0);
-  gtk_widget_show (grid);
+  gtk_widget_set_margin_bottom (widget, 10);
+  gtk_grid_attach (GTK_GRID (grid), widget, 0, 0, 2, 1);
+  gtk_widget_set_visible (widget, TRUE);
 
   /* Welcome message: left */
 
-  markup = _("GIMP is a Free Software for image authoring and manipulation.\n"
+  markup = _("GIMP is Free Software for image authoring and manipulation.\n"
              "Want to know more?");
 
   widget = gtk_label_new (NULL);
@@ -174,11 +448,11 @@ welcome_dialog_create (Gimp *gimp)
   gtk_widget_set_margin_bottom (widget, 10);
   gtk_label_set_markup (GTK_LABEL (widget), markup);
 
-  gtk_grid_attach (GTK_GRID (grid), widget, 0, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), widget, 0, 1, 1, 1);
 
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
-  row = 1;
+  row = 2;
   welcome_add_link (GTK_GRID (grid), 0, &row,
                     /* "globe with meridians" emoticone in UTF-8. */
                     "\xf0\x9f\x8c\x90",
@@ -199,7 +473,7 @@ welcome_dialog_create (Gimp *gimp)
 
   /* Welcome message: right */
 
-  markup = _("GIMP is a Community Software under the GNU general public license v3.\n"
+  markup = _("GIMP is Community Software under the GNU general public license v3.\n"
              "Want to contribute?");
 
   widget = gtk_label_new (NULL);
@@ -216,11 +490,11 @@ welcome_dialog_create (Gimp *gimp)
   gtk_widget_set_margin_bottom (widget, 10);
   gtk_label_set_markup (GTK_LABEL (widget), markup);
 
-  gtk_grid_attach (GTK_GRID (grid), widget, 1, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), widget, 1, 1, 1, 1);
 
-  gtk_widget_show (widget);
+  gtk_widget_set_visible (widget, TRUE);
 
-  row = 1;
+  row = 2;
   welcome_add_link (GTK_GRID (grid), 1, &row,
                     /* "keyboard" emoticone in UTF-8. */
                     "\xe2\x8c\xa8",
@@ -231,27 +505,440 @@ welcome_dialog_create (Gimp *gimp)
                     "\xf0\x9f\x92\x8c",
                     _("Donating"),
                     "https://www.gimp.org/donating/");
+}
+
+static void
+welcome_dialog_create_personalize_page (Gimp       *gimp,
+                                        GimpConfig *config,
+                                        GtkWidget  *welcome_dialog,
+                                        GtkWidget  *main_vbox)
+{
+  GtkSizeGroup  *size_group = NULL;
+  GtkWidget     *scale;
+  GtkListStore  *store;
+
+  GtkWidget     *vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *combo_hbox;
+  GtkWidget     *label;
+  GtkWidget     *widget;
+  GtkWidget     *button;
+  GtkWidget     *grid;
+
+  GObject       *object;
+
+  gchar        **themes;
+  gint           n_themes;
+
+  object = G_OBJECT (config);
+
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
+  /* Themes */
+  vbox = prefs_frame_new (_("Theme"), GTK_CONTAINER (main_vbox), FALSE);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
+  gtk_widget_set_halign (GTK_WIDGET (hbox), GTK_ALIGN_START);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_set_visible (hbox, TRUE);
+
+  grid = prefs_grid_new (GTK_CONTAINER (hbox));
+  button = prefs_enum_combo_box_add (object, "theme-color-scheme", 0, 0,
+                                     _("Color scheme"), GTK_GRID (grid),
+                                     0, NULL);
+
+  /* Icon Theme */
+  store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+  themes = icon_themes_list_themes (gimp, &n_themes);
+  for (gint i = 0; i < n_themes; i++)
+    gtk_list_store_insert_with_values (store, NULL,
+                                       -1,
+                                       0, themes[i],
+                                       1, themes[i],
+                                       -1);
+  g_strfreev (themes);
+
+  widget = gimp_prop_string_combo_box_new (object, "icon-theme",
+                                           GTK_TREE_MODEL (store), 0, 1);
+  gtk_widget_set_visible (widget, TRUE);
+  label  = gtk_label_new (_("Icon theme"));
+  gtk_widget_set_visible (label, TRUE);
+
+  combo_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+  gtk_widget_set_halign (GTK_WIDGET (combo_hbox), GTK_ALIGN_START);
+  gtk_widget_set_visible (combo_hbox, TRUE);
+  gtk_box_pack_start (GTK_BOX (combo_hbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (combo_hbox), widget, FALSE, FALSE, 0);
+
+  gtk_box_pack_start (GTK_BOX (hbox), combo_hbox, FALSE, FALSE, 0);
+  g_object_unref (store);
+
+  prefs_check_button_add (object, "prefer-symbolic-icons",
+                          _("Use symbolic icons if available"),
+                          GTK_BOX (hbox));
+
+
+  vbox = prefs_frame_new (_("Icon Scaling"), GTK_CONTAINER (main_vbox), FALSE);
+
+  button = prefs_check_button_add (object, "override-theme-icon-size",
+                                   _("_Override icon sizes set by the theme"),
+                                   GTK_BOX (vbox));
+
+  scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL,
+                                    0.0, 3.0, 1.0);
+  /* 'draw_value' updates round_digits. So set it first. */
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+  gtk_range_set_round_digits (GTK_RANGE (scale), 0.0);
+  gtk_scale_add_mark (GTK_SCALE (scale), 0.0, GTK_POS_BOTTOM,
+                      _("Small"));
+  gtk_scale_add_mark (GTK_SCALE (scale), 1.0, GTK_POS_BOTTOM,
+                      _("Medium"));
+  gtk_scale_add_mark (GTK_SCALE (scale), 2.0, GTK_POS_BOTTOM,
+                      _("Large"));
+  gtk_scale_add_mark (GTK_SCALE (scale), 3.0, GTK_POS_BOTTOM,
+                      _("Huge"));
+  gtk_range_set_value (GTK_RANGE (scale),
+                       (gdouble) GIMP_GUI_CONFIG (object)->custom_icon_size);
+  g_signal_connect (G_OBJECT (scale), "value-changed",
+                    G_CALLBACK (prefs_icon_size_value_changed),
+                    GIMP_GUI_CONFIG (object));
+  g_signal_connect (G_OBJECT (object), "notify::custom-icon-size",
+                    G_CALLBACK (prefs_gui_config_notify_icon_size),
+                    scale);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_set_visible (scale, TRUE);
+
+  g_object_bind_property (button, "active",
+                          scale,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
+
+  vbox = prefs_frame_new (_("Font Scaling"), GTK_CONTAINER (main_vbox), FALSE);
+  gimp_help_set_help_data (vbox,
+                           _("Font scaling will not work with themes using absolute sizes."),
+                           NULL);
+  scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL,
+                                    50, 200, 10);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_BOTTOM);
+  gtk_scale_add_mark (GTK_SCALE (scale), 50.0, GTK_POS_BOTTOM,
+                      _("50%"));
+  gtk_scale_add_mark (GTK_SCALE (scale), 100.0, GTK_POS_BOTTOM,
+                      _("100%"));
+  gtk_scale_add_mark (GTK_SCALE (scale), 200.0, GTK_POS_BOTTOM,
+                      _("200%"));
+  gtk_range_set_value (GTK_RANGE (scale),
+                       (gdouble) GIMP_GUI_CONFIG (object)->font_relative_size * 100.0);
+  g_signal_connect (G_OBJECT (scale), "value-changed",
+                    G_CALLBACK (prefs_font_size_value_changed),
+                    GIMP_GUI_CONFIG (object));
+  g_signal_connect (G_OBJECT (object), "notify::font-relative-size",
+                    G_CALLBACK (prefs_gui_config_notify_font_size),
+                    scale);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_set_visible (scale, TRUE);
+
+#ifdef HAVE_ISO_CODES
+  vbox = prefs_frame_new (_("GUI Language (requires restart)"),
+                          GTK_CONTAINER (main_vbox), FALSE);
+  prefs_language_combo_box_add (object, "language", GTK_BOX (vbox));
+#endif
+
+  vbox = prefs_frame_new (_("Additional Customizations"), GTK_CONTAINER (main_vbox), FALSE);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_set_visible (hbox, TRUE);
+
+#ifndef GDK_WINDOWING_QUARTZ
+  prefs_check_button_add (object, "custom-title-bar",
+                          _("Merge menu and title bar (requires restart)"),
+                          GTK_BOX (hbox));
+#endif
+
+#ifdef CHECK_UPDATE
+  if (gimp_version_check_update ())
+    {
+      prefs_switch_add (object, "check-updates",
+                        _("Enable check for updates (requires internet)"),
+                        GTK_BOX (hbox),
+                        size_group);
+    }
+#endif
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_set_visible (hbox, TRUE);
+
+  prefs_switch_add (object, "toolbox-groups",
+                    _("Use tool _groups"),
+                    GTK_BOX (hbox),
+                    NULL);
+
+  g_clear_object (&size_group);
+}
+
+static void
+welcome_dialog_create_creation_page (Gimp       *gimp,
+                                     GtkWidget  *welcome_dialog,
+                                     GtkWidget  *main_vbox)
+{
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *button;
+  GtkWidget *listbox;
+  gint       num_images;
+  gint       list_count;
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_set_visible (hbox, TRUE);
+
+  vbox = prefs_frame_new (_("Create a New Image"), GTK_CONTAINER (hbox),
+                          FALSE);
+
+  button = gtk_button_new_with_mnemonic (_("C_reate"));
+  /* Balancing the indent from the frame */
+  gtk_widget_set_margin_end (button, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (button, TRUE);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (welcome_dialog_new_image_dialog),
+                    welcome_dialog);
+
+  vbox = prefs_frame_new (_("Open an Existing Image"), GTK_CONTAINER (hbox),
+                          FALSE);
+
+  button = gtk_button_new_with_mnemonic (_("_Open"));
+  gtk_widget_set_margin_end (button, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (button, TRUE);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (welcome_dialog_open_image_dialog),
+                    welcome_dialog);
+
+  /* Recent Files */
+  vbox = prefs_frame_new (_("Recent Images"), GTK_CONTAINER (main_vbox),
+                          FALSE);
+
+  listbox = gtk_list_box_new ();
+  gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
+                                   GTK_SELECTION_MULTIPLE);
+  gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (listbox),
+                                             FALSE);
+  gtk_container_add (GTK_CONTAINER (vbox), listbox);
+  gtk_widget_set_visible (listbox, TRUE);
+
+  num_images = gimp_container_get_n_children (gimp->documents);
+  list_count = (num_images <= 8) ? num_images : 8;
+
+  for (gint i = 0; i < list_count; i++)
+    {
+      GimpImagefile *imagefile = NULL;
+      GtkWidget     *row;
+      GtkWidget     *grid;
+      GtkWidget     *name_label;
+      GtkWidget     *thumbnail = NULL;
+      GFile         *file;
+      GimpThumbnail *icon;
+      const gchar   *name;
+      gchar         *basename;
+      gchar         *escaped;
+
+      imagefile = (GimpImagefile *)
+        gimp_container_get_child_by_index (gimp->documents, i);
+
+      file = gimp_imagefile_get_file (imagefile);
+
+      name     = gimp_file_get_utf8_name (file);
+      basename = g_path_get_basename (name);
+
+      escaped = gimp_escape_uline (basename);
+      g_free (basename);
+
+      /* If the file is not found, remove it and try to
+       * load another one if possible */
+      if (! g_file_test (name, G_FILE_TEST_IS_REGULAR))
+        {
+          g_free (escaped);
+
+          if (list_count < num_images)
+            list_count++;
+
+          continue;
+        }
+
+      row = gtk_list_box_row_new ();
+      g_object_set_data_full (G_OBJECT (row),
+                              "file", file,
+                              NULL);
+
+      grid = gtk_grid_new ();
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 12);
+      gtk_container_add (GTK_CONTAINER (row), grid);
+
+      icon = gimp_imagefile_get_thumbnail (imagefile);
+      if (icon)
+        {
+          GdkPixbuf *pixbuf = NULL;
+
+          pixbuf = gimp_thumbnail_load_thumb (icon, 1, NULL);
+          if (! pixbuf)
+            pixbuf = gimp_widget_load_icon (grid, GIMP_ICON_DIALOG_QUESTION,
+                                            32);
+
+          if (pixbuf)
+            {
+              pixbuf = gdk_pixbuf_scale_simple (pixbuf,
+                                                32, 32,
+                                                GDK_INTERP_BILINEAR);
+
+              thumbnail = gtk_image_new_from_pixbuf (pixbuf);
+            }
+        }
+
+      if (thumbnail)
+        gtk_grid_attach (GTK_GRID (grid), thumbnail, 1, 0, 1, 1);
+
+      name_label = gtk_label_new (escaped);
+      g_free (escaped);
+      g_object_set (name_label, "xalign", 0.0, NULL);
+      gtk_grid_attach (GTK_GRID (grid), name_label, 2, 0, 1, 1);
+
+      gtk_widget_show_all (row);
+      gtk_list_box_insert (GTK_LIST_BOX (listbox), row, -1);
+    }
+
+  g_signal_connect (listbox, "row-activated",
+                    G_CALLBACK (welcome_open_activated_callback),
+                    welcome_dialog);
+
+  button = gtk_button_new_with_mnemonic (_("O_pen Selected Images"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (button, TRUE);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (welcome_open_multiple_callback),
+                    listbox);
+}
+
+static void
+welcome_dialog_create_contribute_page (Gimp       *gimp,
+                                       GtkWidget  *welcome_dialog,
+                                       GtkWidget  *main_vbox)
+{
+  GtkWidget *hbox;
+  GtkWidget *vbox;
+  GtkWidget *button;
+  GtkWidget *label;
+
+  gchar     *markup;
+  gchar     *tmp;
+
+  gtk_box_set_spacing (GTK_BOX (main_vbox), 2);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_set_visible (hbox, TRUE);
+
+  tmp = g_strdup_printf (_("Ways to contribute"));
+  markup = g_strdup_printf ("<big>%s</big>", tmp);
+  g_free (tmp);
+  label = gtk_label_new (NULL);
+  gtk_label_set_markup (GTK_LABEL (label), markup);
+  g_free (markup);
+  gtk_box_set_center_widget (GTK_BOX (hbox), label);
+  gtk_widget_set_visible (label, TRUE);
+
+  vbox = prefs_frame_new (_("Report Bugs"), GTK_CONTAINER (main_vbox), FALSE);
+
+  tmp = g_strdup_printf (_("As any application, GIMP is not bug-free, so "
+                           "reporting bugs that you encounter is very "
+                           "important to the development."));
+  label = gtk_label_new (tmp);
+  g_free (tmp);
+  gtk_label_set_max_width_chars (GTK_LABEL (label), 30);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_set_visible (label, TRUE);
+  button = gtk_link_button_new_with_label ("https://www.gimp.org/bugs/", "Report Bugs");
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (button, TRUE);
+
+  vbox = prefs_frame_new (_("Write Code"), GTK_CONTAINER (main_vbox), FALSE);
+
+  tmp = g_strdup_printf (_("Our Developer Website is where you want to start "
+                           "learning about being a code contributor."));
+  label = gtk_label_new (tmp);
+  g_free (tmp);
+  gtk_label_set_max_width_chars (GTK_LABEL (label), 30);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_set_visible (label, TRUE);
+  button = gtk_link_button_new_with_label ("https://developer.gimp.org/", "Write Code");
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (button, TRUE);
+
+  vbox = prefs_frame_new (_("Translate"), GTK_CONTAINER (main_vbox), FALSE);
+
+  tmp = g_strdup_printf (_("Contact the respective translation team for your "
+                           "language"));
+  label = gtk_label_new (tmp);
+  g_free (tmp);
+  gtk_label_set_max_width_chars (GTK_LABEL (label), 30);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_set_visible (label, TRUE);
+  button = gtk_link_button_new_with_label ("https://l10n.gnome.org/teams/", "Translate");
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (button, TRUE);
+
+  vbox = prefs_frame_new (_("Donate"), GTK_CONTAINER (main_vbox), FALSE);
+
+  tmp = g_strdup_printf (_("Donating money is important: it makes GIMP "
+                           "sustainable."));
+  label = gtk_label_new (tmp);
+  g_free (tmp);
+  gtk_label_set_max_width_chars (GTK_LABEL (label), 30);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_set_visible (label, TRUE);
+  button = gtk_link_button_new_with_label ("https://liberapay.com/GIMP/donate", "Donate via Liberapay");
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (button, TRUE);
+  button = gtk_link_button_new_with_label ("https://www.gimp.org/donating/", "Other donation options");
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (button, TRUE);
+}
+
+static void
+welcome_dialog_create_release_page (Gimp      *gimp,
+                                    GtkWidget *welcome_dialog,
+                                    GtkWidget *main_vbox)
+{
+  GtkWidget  *scrolled_window;
+  GtkWidget  *hbox;
+  GtkWidget  *image;
+  GtkWidget  *listbox;
+  GtkWidget  *widget;
+
+  gchar      *release_link;
+  gchar      *markup;
+  gchar      *tmp;
 
   /*****************/
   /* Release Notes */
   /*****************/
-
   if (gimp_welcome_dialog_n_items > 0)
     {
       gint n_demos = 0;
 
-      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-      gtk_stack_add_titled (GTK_STACK (stack), vbox, "release-notes",
-                            _("Release Notes"));
-      gtk_widget_show (vbox);
-
       /* Release note title. */
-
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_set_visible (hbox, TRUE);
 
       /* Translators: the %s string will be the version, e.g. "3.0". */
       tmp = g_strdup_printf (_("GIMP %s Release Notes"), GIMP_VERSION);
@@ -264,13 +951,13 @@ welcome_dialog_create (Gimp *gimp)
       gtk_label_set_justify (GTK_LABEL (widget), GTK_JUSTIFY_CENTER);
       gtk_label_set_line_wrap (GTK_LABEL (widget), FALSE);
       gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
-      gtk_widget_show (widget);
+      gtk_widget_set_visible (widget, TRUE);
 
       image = gtk_image_new_from_icon_name ("gimp-user-manual",
                                             GTK_ICON_SIZE_DIALOG);
       gtk_widget_set_valign (image, GTK_ALIGN_START);
       gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-      gtk_widget_show (image);
+      gtk_widget_set_visible (image, TRUE);
 
       /* Release note introduction. */
 
@@ -292,8 +979,8 @@ welcome_dialog_create (Gimp *gimp)
           gtk_label_set_selectable (GTK_LABEL (widget), FALSE);
           gtk_label_set_justify (GTK_LABEL (widget), GTK_JUSTIFY_LEFT);
           gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
-          gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
-          gtk_widget_show (widget);
+          gtk_box_pack_start (GTK_BOX (main_vbox), widget, FALSE, FALSE, 0);
+          gtk_widget_set_visible (widget, TRUE);
 
           g_string_free (introduction, TRUE);
         }
@@ -301,8 +988,8 @@ welcome_dialog_create (Gimp *gimp)
       /* Release note's change items. */
 
       scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-      gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
-      gtk_widget_show (scrolled_window);
+      gtk_box_pack_start (GTK_BOX (main_vbox), scrolled_window, TRUE, TRUE, 0);
+      gtk_widget_set_visible (scrolled_window, TRUE);
 
       listbox = gtk_list_box_new ();
 
@@ -347,7 +1034,7 @@ welcome_dialog_create (Gimp *gimp)
       g_signal_connect (listbox, "row-activated",
                         G_CALLBACK (welcome_dialog_release_item_activated),
                         gimp);
-      gtk_widget_show (listbox);
+      gtk_widget_set_visible (listbox, TRUE);
 
       if (n_demos > 0)
         {
@@ -355,14 +1042,14 @@ welcome_dialog_create (Gimp *gimp)
            * ability.
            */
           hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-          gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-          gtk_widget_show (hbox);
+          gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+          gtk_widget_set_visible (hbox, TRUE);
 
           image = gtk_image_new_from_icon_name ("dialog-information",
                                                 GTK_ICON_SIZE_MENU);
           gtk_widget_set_valign (image, GTK_ALIGN_CENTER);
           gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-          gtk_widget_show (image);
+          gtk_widget_set_visible (image, TRUE);
 
           widget = gtk_label_new (NULL);
           tmp = g_strdup_printf (_("Click on release items with a %s bullet point to get a tour."),
@@ -372,7 +1059,7 @@ welcome_dialog_create (Gimp *gimp)
           gtk_label_set_markup (GTK_LABEL (widget), markup);
           g_free (markup);
           gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-          gtk_widget_show (widget);
+          gtk_widget_set_visible (widget, TRUE);
 
           /* TODO: if a demo changed settings, should we add a "reset"
            * button to get back to previous state?
@@ -381,8 +1068,8 @@ welcome_dialog_create (Gimp *gimp)
 
       /* Link to full release notes on web site at the bottom. */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_set_visible (hbox, TRUE);
 
       if (GIMP_MINOR_VERSION % 2 == 0)
         release_link = g_strdup_printf ("https://www.gimp.org/release-notes/gimp-%d.%d.html",
@@ -391,36 +1078,193 @@ welcome_dialog_create (Gimp *gimp)
         release_link = g_strdup ("https://www.gimp.org/");
 
       widget = gtk_link_button_new_with_label (release_link, _("Learn more"));
-      gtk_widget_show (widget);
+      gtk_widget_set_visible (widget, TRUE);
       gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
       g_free (release_link);
+    }
+}
 
-      /*****************/
-      /* Task switcher */
-      /*****************/
+/* Actions */
+static void
+welcome_dialog_new_image_dialog (GtkWidget *button,
+                                 GtkWidget *welcome_dialog)
+{
+  GtkWidget *dialog;
 
-      switcher = gtk_stack_switcher_new ();
-      gtk_stack_switcher_set_stack (GTK_STACK_SWITCHER (switcher),
-                                    GTK_STACK (stack));
-      gtk_box_pack_start (GTK_BOX (main_vbox), switcher, FALSE, FALSE, 0);
-      gtk_widget_set_halign (switcher, GTK_ALIGN_CENTER);
-      gtk_widget_show (switcher);
+  dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
+                                           gimp_widget_get_monitor (welcome_dialog),
+                                           NULL /*ui_manager*/,
+                                           welcome_dialog,
+                                           "gimp-image-new-dialog", -1, FALSE);
+
+  if (dialog)
+    {
+      gtk_widget_set_visible (welcome_dialog, FALSE);
+
+      gtk_window_present (GTK_WINDOW (dialog));
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (welcome_dialog_new_dialog_response),
+                        welcome_dialog);
+      g_signal_connect (dialog, "destroy",
+                        G_CALLBACK (welcome_dialog_new_dialog_close),
+                        welcome_dialog);
+    }
+}
+
+static void
+welcome_dialog_open_image_dialog (GtkWidget *button,
+                                  GtkWidget *welcome_dialog)
+{
+  Gimp      *gimp = g_object_get_data (G_OBJECT (welcome_dialog), "gimp");
+  GtkWidget *dialog;
+
+  dialog = file_open_dialog_new (gimp);
+
+  if (dialog)
+    {
+      gtk_widget_set_visible (welcome_dialog, FALSE);
+
+      gtk_window_present (GTK_WINDOW (dialog));
+
+      g_signal_connect (dialog, "destroy",
+                        G_CALLBACK (welcome_dialog_open_dialog_close),
+                        welcome_dialog);
+    }
+}
+
+static void
+welcome_dialog_new_dialog_close (GtkWidget *dialog,
+                                 GtkWidget *welcome_dialog)
+{
+  /* Reshow Welcome Dialog if secondary dialogue is cancelled */
+  if (welcome_dialog)
+    gtk_widget_set_visible (welcome_dialog, TRUE);
+}
+
+static void
+welcome_dialog_new_dialog_response (GtkWidget *dialog,
+                                    gint       response_id,
+                                    GtkWidget *welcome_dialog)
+{
+  switch (response_id)
+    {
+    case GTK_RESPONSE_OK:
+      g_signal_handlers_disconnect_by_func (dialog,
+                                            welcome_dialog_new_dialog_close,
+                                            welcome_dialog);
+      gtk_widget_destroy (welcome_dialog);
+      break;
+
+    default:
+      break;
+    }
+}
+
+static void
+welcome_dialog_open_dialog_close (GtkWidget *dialog,
+                                  GtkWidget *welcome_dialog)
+{
+  GSList *files = NULL;
+
+  files = gtk_file_chooser_get_files (GTK_FILE_CHOOSER (dialog));
+
+  if (files && welcome_dialog)
+    {
+      gtk_widget_destroy (welcome_dialog);
+      g_slist_free_full (files, (GDestroyNotify) g_object_unref);
+      return;
     }
 
-  /**************/
-  /* Info label */
-  /**************/
+  if (welcome_dialog)
+    gtk_widget_set_visible (welcome_dialog, TRUE);
+}
 
-  widget = gtk_label_new (NULL);
-  markup = g_strdup_printf ("<small>%s</small>",
-                            _("This welcome dialog is only shown at first launch. "
-                              "You can show it again from the \"Help\" menu."));
-  gtk_label_set_markup (GTK_LABEL (widget), markup);
-  g_free (markup);
-  gtk_widget_show (widget);
-  gtk_box_pack_start (GTK_BOX (main_vbox), widget, FALSE, FALSE, 0);
+static void
+welcome_open_activated_callback (GtkListBox    *listbox,
+                                 GtkListBoxRow *row,
+                                 GtkWidget     *welcome_dialog)
+{
+  GimpImage         *image   = NULL;
+  Gimp              *gimp    = g_object_get_data (G_OBJECT (welcome_dialog), "gimp");
+  GFile             *file    = NULL;
+  const gchar       *name;
+  GimpPDBStatusType  status;
+  GtkWidget         *parent;
+  GError            *error   = NULL;
 
-  return welcome_dialog;
+  g_return_if_fail (row != NULL);
+
+  parent = gtk_widget_get_parent (welcome_dialog);
+  file   = g_object_get_data (G_OBJECT (row), "file");
+  name   = gimp_file_get_utf8_name (file);
+
+  if (file && g_file_test (name, G_FILE_TEST_IS_REGULAR))
+    image = file_open_with_display (gimp, gimp_get_user_context (gimp), NULL, file, FALSE,
+                                    NULL, &status, NULL);
+
+  if (! image && status != GIMP_PDB_CANCEL)
+    {
+      gimp_message (gimp, G_OBJECT (parent), GIMP_MESSAGE_ERROR,
+                    _("Opening '%s' failed:\n\n%s"),
+                    gimp_file_get_utf8_name (file), error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      gtk_widget_destroy (welcome_dialog);
+    }
+}
+
+static void
+welcome_open_multiple_callback (GtkWidget  *button,
+                                GtkListBox *listbox)
+{
+  GList      *rows    = NULL;
+  Gimp       *gimp    = NULL;
+  GError     *error   = NULL;
+  GtkWidget  *parent;
+
+  if (! welcome_dialog)
+    return;
+
+  gimp = g_object_get_data (G_OBJECT (welcome_dialog), "gimp");
+
+  parent = gtk_widget_get_parent (welcome_dialog);
+
+  rows = gtk_list_box_get_selected_rows (listbox);
+  if (rows)
+    {
+      gtk_widget_set_sensitive (button, FALSE);
+      gtk_widget_set_sensitive (GTK_WIDGET (listbox), FALSE);
+
+      for (GList *iter = rows; iter; iter = iter->next)
+        {
+          GFile             *file  = NULL;
+          GimpImage         *image = NULL;
+          const gchar       *name;
+          GimpPDBStatusType  status;
+
+          file = g_object_get_data (G_OBJECT (iter->data), "file");
+          name = gimp_file_get_utf8_name (file);
+
+          if (file && g_file_test (name, G_FILE_TEST_IS_REGULAR))
+            image = file_open_with_display (gimp, gimp_get_user_context (gimp),
+                                            NULL, file, FALSE, NULL, &status,
+                                            NULL);
+
+          if (! image && status != GIMP_PDB_CANCEL)
+            {
+              gimp_message (gimp, G_OBJECT (parent), GIMP_MESSAGE_ERROR,
+                            _("Opening '%s' failed:\n\n%s"),
+                            gimp_file_get_utf8_name (file), error->message);
+              g_clear_error (&error);
+            }
+        }
+
+      g_list_free (rows);
+    }
+
+  gtk_widget_destroy (welcome_dialog);
 }
 
 static void
@@ -558,17 +1402,17 @@ welcome_add_link (GtkGrid     *grid,
    * aligned with the top text.
    */
   gtk_widget_set_margin_start (hbox, 10);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   ++(*row);
 
   icon = gtk_label_new (emoji);
   gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
-  gtk_widget_show (icon);
+  gtk_widget_set_visible (icon, TRUE);
 
   button = gtk_link_button_new_with_label (link, title);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 }
 
 static void
@@ -594,26 +1438,12 @@ welcome_size_allocate (GtkWidget     *welcome_dialog,
 
   monitor = gimp_get_monitor_at_pointer ();
   gdk_monitor_get_workarea (monitor, &workarea);
-#ifdef GDK_WINDOWING_WAYLAND
-  if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
-    {
-      /* See the long comment in app/gui/splash.c on why we do this
-       * weird stuff for Wayland only.
-       * See also #5322.
-       */
-      min_width  = workarea.width  / 8;
-      min_height = workarea.height / 8;
-      max_width  = workarea.width  / 4;
-      max_height = workarea.height / 4;
-    }
-  else
-#endif
-    {
-      min_width  = workarea.width  / 4;
-      min_height = workarea.height / 4;
-      max_width  = workarea.width  / 2;
-      max_height = workarea.height / 2;
-    }
+
+  min_width  = workarea.width  / 8;
+  min_height = workarea.height / 8;
+  max_width  = workarea.width  / 4;
+  max_height = workarea.height / 4;
+
   image_width = allocation->width + 20;
   image_height = allocation->height + 20;
 
@@ -637,7 +1467,7 @@ welcome_size_allocate (GtkWidget     *welcome_dialog,
     }
   g_object_unref (splash_file);
 
-  gtk_widget_show (image);
+  gtk_widget_set_visible (image, TRUE);
 
   gtk_window_set_resizable (GTK_WINDOW (welcome_dialog), FALSE);
 }

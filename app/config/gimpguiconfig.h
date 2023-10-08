@@ -81,6 +81,7 @@ struct _GimpGuiConfig
   GimpWindowHint       dock_window_hint;
   GimpHandedness       cursor_handedness;
   gboolean             custom_title_bar;
+  gboolean             show_welcome_dialog;
 
   /* experimental playground */
   gboolean             playground_npd_tool;
@@ -94,7 +95,7 @@ struct _GimpGuiConfig
   GimpPosition         tabs_position;
   gint                 last_tip_shown;
 
-  /* Currently ignored snce "gtk-can-change-accels" settings got deprecated in
+  /* Currently ignored since "gtk-can-change-accels" settings got deprecated in
    * GTK+ 3.10.
    */
   gboolean             can_change_accels;

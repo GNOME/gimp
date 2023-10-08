@@ -50,6 +50,7 @@ struct _GimpPrefsBoxPrivate
   GtkTreeStore *store;
   GtkWidget    *tree_view;
   GtkWidget    *stack;
+  GtkWidget    *header;
   GtkWidget    *label;
   GtkWidget    *image;
 
@@ -91,7 +92,6 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   GtkTreeSelection    *sel;
   GtkWidget           *frame;
   GtkWidget           *hbox;
-  GtkWidget           *ebox;
   GtkWidget           *vbox;
 
   box->priv = gimp_prefs_box_get_instance_private (box);
@@ -157,16 +157,16 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   gtk_box_pack_start (GTK_BOX (box), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  ebox = gtk_event_box_new ();
-  gtk_widget_set_state_flags (ebox, GTK_STATE_FLAG_SELECTED, TRUE);
-  gtk_style_context_add_class (gtk_widget_get_style_context (ebox),
+  private->header = gtk_event_box_new ();
+  gtk_widget_set_state_flags (private->header, GTK_STATE_FLAG_SELECTED, TRUE);
+  gtk_style_context_add_class (gtk_widget_get_style_context (private->header),
                                GTK_STYLE_CLASS_VIEW);
-  gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, TRUE, 0);
-  gtk_widget_show (ebox);
+  gtk_box_pack_start (GTK_BOX (vbox), private->header, FALSE, TRUE, 0);
+  gtk_widget_show (private->header);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_container_add (GTK_CONTAINER (ebox), hbox);
+  gtk_container_add (GTK_CONTAINER (private->header), hbox);
   gtk_widget_show (hbox);
 
   private->label = gtk_label_new (NULL);
@@ -273,8 +273,8 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
   private = GET_PRIVATE (box);
 
   page_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_stack_add_named (GTK_STACK (private->stack), page_vbox,
-                       help_id /* EEK */);
+  gtk_stack_add_titled (GTK_STACK (private->stack), page_vbox,
+                        help_id, page_title);
   gtk_widget_show (page_vbox);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
@@ -303,7 +303,7 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
                       COLUMN_TREE_LABEL,     tree_label,
                       COLUMN_PAGE_ICON_NAME, icon_name,
                       COLUMN_PAGE_ICON_SIZE, private->page_icon_size,
-                      COLUMN_PAGE_TITLE ,    page_title,
+                      COLUMN_PAGE_TITLE,     page_title,
                       COLUMN_PAGE_HELP_ID,   help_id,
                       -1);
 
@@ -360,6 +360,19 @@ gimp_prefs_box_get_current_help_id (GimpPrefsBox *box)
     }
 
   return NULL;
+}
+
+void
+gimp_prefs_box_set_header_visible (GimpPrefsBox *box,
+                                   gboolean      header_visible)
+{
+  GimpPrefsBoxPrivate *private;
+
+  g_return_if_fail (GIMP_IS_PREFS_BOX (box));
+
+  private = GET_PRIVATE (box);
+
+  gtk_widget_set_visible (private->header, header_visible);
 }
 
 void
@@ -429,4 +442,12 @@ gimp_prefs_box_get_tree_view (GimpPrefsBox *box)
   g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
 
   return GET_PRIVATE (box)->tree_view;
+}
+
+GtkWidget *
+gimp_prefs_box_get_stack (GimpPrefsBox *box)
+{
+  g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
+
+  return GET_PRIVATE (box)->stack;
 }

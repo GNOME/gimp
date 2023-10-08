@@ -98,6 +98,7 @@ enum
   PROP_SHOW_TABS,
   PROP_TABS_POSITION,
   PROP_LAST_TIP_SHOWN,
+  PROP_SHOW_WELCOME_DIALOG,
 
   /* ignored, only for backward compatibility: */
   PROP_CURSOR_FORMAT,
@@ -512,6 +513,14 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                                      G_PARAM_CONSTRUCT |
                                                      GIMP_PARAM_STATIC_STRINGS));
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_WELCOME_DIALOG,
+                            "show-welcome-dialog",
+                            "Show Welcome Dialog each time",
+                            NULL, TRUE,
+                            G_PARAM_READWRITE |
+                            G_PARAM_CONSTRUCT |
+                            GIMP_PARAM_STATIC_STRINGS);
+
   /*  only for backward compatibility:  */
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_CURSOR_FORMAT,
                          "cursor-format",
@@ -766,6 +775,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_LAST_TIP_SHOWN:
       gui_config->last_tip_shown = g_value_get_int (value);
       break;
+    case PROP_SHOW_WELCOME_DIALOG:
+      gui_config->show_welcome_dialog = g_value_get_boolean (value);
+      break;
 
     case PROP_CURSOR_FORMAT:
     case PROP_INFO_WINDOW_PER_DISPLAY:
@@ -943,6 +955,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_LAST_TIP_SHOWN:
       g_value_set_int (value, gui_config->last_tip_shown);
+      break;
+    case PROP_SHOW_WELCOME_DIALOG:
+      g_value_set_boolean (value, gui_config->show_welcome_dialog);
       break;
 
     case PROP_CURSOR_FORMAT:

@@ -61,6 +61,8 @@ GtkWidget   * gimp_prefs_box_add_page              (GimpPrefsBox *box,
 const gchar * gimp_prefs_box_get_current_icon_name (GimpPrefsBox *box);
 const gchar * gimp_prefs_box_get_current_help_id   (GimpPrefsBox *box);
 
+void          gimp_prefs_box_set_header_visible    (GimpPrefsBox *box,
+                                                    gboolean      header_visible);
 void          gimp_prefs_box_set_page_scrollable   (GimpPrefsBox *box,
                                                     GtkWidget    *page,
                                                     gboolean      scrollable);
@@ -69,6 +71,7 @@ GtkWidget   * gimp_prefs_box_set_page_resettable   (GimpPrefsBox *box,
                                                     const gchar  *label);
 
 GtkWidget   * gimp_prefs_box_get_tree_view         (GimpPrefsBox *box);
+GtkWidget   * gimp_prefs_box_get_stack             (GimpPrefsBox *box);
 
 
 #endif  /*  __GIMP_PREFS_BOX_H__  */

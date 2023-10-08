@@ -21,9 +21,12 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "dialogs-types.h"
+
+#include "config/gimprc.h"
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimppropwidgets.h"
@@ -425,4 +428,165 @@ prefs_compression_combo_box_add (GObject      *config,
     prefs_widget_add_aligned (combo, label, grid, grid_top, FALSE, group);
 
   return combo;
+}
+
+void
+prefs_message (GtkWidget      *dialog,
+               GtkMessageType  type,
+               gboolean        destroy_with_parent,
+               const gchar    *message)
+{
+  GtkWidget *message_dialog;
+
+  message_dialog = gtk_message_dialog_new (GTK_WINDOW (dialog),
+                                           destroy_with_parent ?
+                                           GTK_DIALOG_DESTROY_WITH_PARENT : 0,
+                                           type, GTK_BUTTONS_OK,
+                                           "%s", message);
+
+  gtk_dialog_run (GTK_DIALOG (message_dialog));
+
+  gtk_widget_destroy (message_dialog);
+}
+
+void
+prefs_config_notify (GObject    *config,
+                     GParamSpec *param_spec,
+                     GObject    *config_copy)
+{
+  GValue global_value = G_VALUE_INIT;
+  GValue copy_value   = G_VALUE_INIT;
+
+  g_value_init (&global_value, param_spec->value_type);
+  g_value_init (&copy_value,   param_spec->value_type);
+
+  g_object_get_property (config,      param_spec->name, &global_value);
+  g_object_get_property (config_copy, param_spec->name, &copy_value);
+
+  if (g_param_values_cmp (param_spec, &global_value, &copy_value))
+    {
+      g_signal_handlers_block_by_func (config_copy,
+                                       prefs_config_copy_notify,
+                                       config);
+
+      g_object_set_property (config_copy, param_spec->name, &global_value);
+
+      g_signal_handlers_unblock_by_func (config_copy,
+                                         prefs_config_copy_notify,
+                                         config);
+    }
+
+  g_value_unset (&global_value);
+  g_value_unset (&copy_value);
+}
+
+void
+prefs_config_copy_notify (GObject    *config_copy,
+                          GParamSpec *param_spec,
+                          GObject    *config)
+{
+  GValue copy_value   = G_VALUE_INIT;
+  GValue global_value = G_VALUE_INIT;
+
+  g_value_init (&copy_value,   param_spec->value_type);
+  g_value_init (&global_value, param_spec->value_type);
+
+  g_object_get_property (config_copy, param_spec->name, &copy_value);
+  g_object_get_property (config,      param_spec->name, &global_value);
+
+  if (g_param_values_cmp (param_spec, &copy_value, &global_value))
+    {
+      if (param_spec->flags & GIMP_CONFIG_PARAM_CONFIRM)
+        {
+#ifdef GIMP_CONFIG_DEBUG
+          g_print ("NOT Applying prefs change of '%s' to edit_config "
+                   "because it needs confirmation\n",
+                   param_spec->name);
+#endif
+        }
+      else
+        {
+#ifdef GIMP_CONFIG_DEBUG
+          g_print ("Applying prefs change of '%s' to edit_config\n",
+                   param_spec->name);
+#endif
+          g_signal_handlers_block_by_func (config,
+                                           prefs_config_notify,
+                                           config_copy);
+
+          g_object_set_property (config, param_spec->name, &copy_value);
+
+          g_signal_handlers_unblock_by_func (config,
+                                             prefs_config_notify,
+                                             config_copy);
+        }
+    }
+
+  g_value_unset (&copy_value);
+  g_value_unset (&global_value);
+}
+
+void
+prefs_font_size_value_changed (GtkRange      *range,
+                               GimpGuiConfig *config)
+{
+  gdouble value = gtk_range_get_value (range);
+
+  g_signal_handlers_block_by_func (config,
+                                   G_CALLBACK (prefs_gui_config_notify_font_size),
+                                   range);
+  g_object_set (G_OBJECT (config),
+                "font-relative-size", value / 100.0,
+                NULL);
+  g_signal_handlers_unblock_by_func (config,
+                                     G_CALLBACK (prefs_gui_config_notify_font_size),
+                                     range);
+}
+
+void
+prefs_gui_config_notify_font_size (GObject    *config,
+                                   GParamSpec *pspec,
+                                   GtkRange   *range)
+{
+  g_signal_handlers_block_by_func (range,
+                                   G_CALLBACK (prefs_font_size_value_changed),
+                                   config);
+  gtk_range_set_value (range,
+                       GIMP_GUI_CONFIG (config)->font_relative_size * 100.0);
+  g_signal_handlers_unblock_by_func (range,
+                                     G_CALLBACK (prefs_font_size_value_changed),
+                                     config);
+}
+
+void
+prefs_icon_size_value_changed (GtkRange      *range,
+                               GimpGuiConfig *config)
+{
+  gint value = (gint) gtk_range_get_value (range);
+
+  g_signal_handlers_block_by_func (config,
+                                   G_CALLBACK (prefs_gui_config_notify_icon_size),
+                                   range);
+  g_object_set (G_OBJECT (config),
+                "custom-icon-size", (GimpIconSize) value,
+                NULL);
+  g_signal_handlers_unblock_by_func (config,
+                                     G_CALLBACK (prefs_gui_config_notify_icon_size),
+                                     range);
+}
+
+void
+prefs_gui_config_notify_icon_size (GObject    *config,
+                                   GParamSpec *pspec,
+                                   GtkRange   *range)
+{
+  GimpIconSize size = GIMP_GUI_CONFIG (config)->custom_icon_size;
+
+  g_signal_handlers_block_by_func (range,
+                                   G_CALLBACK (prefs_icon_size_value_changed),
+                                   config);
+  gtk_range_set_value (range, (gdouble) size);
+  g_signal_handlers_unblock_by_func (range,
+                                     G_CALLBACK (prefs_icon_size_value_changed),
+                                     config);
 }
